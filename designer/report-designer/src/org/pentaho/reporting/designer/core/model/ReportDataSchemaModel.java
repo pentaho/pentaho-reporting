@@ -17,20 +17,23 @@
 
 package org.pentaho.reporting.designer.core.model;
 
-import org.pentaho.reporting.designer.core.settings.WorkspaceSettings;
 import org.pentaho.reporting.designer.core.util.exceptions.UncaughtExceptionsModel;
 import org.pentaho.reporting.engine.classic.core.AbstractReportDefinition;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
-import org.pentaho.reporting.engine.classic.core.MetaAttributeNames;
 import org.pentaho.reporting.engine.classic.core.designtime.DesignTimeDataSchemaModel;
-import org.pentaho.reporting.engine.classic.core.wizard.DataAttributeContext;
-import org.pentaho.reporting.engine.classic.core.wizard.DataAttributes;
+import org.pentaho.reporting.engine.classic.core.designtime.DesignTimeDataSchemaModelChangeTracker;
 
 public class ReportDataSchemaModel extends DesignTimeDataSchemaModel
 {
-  public ReportDataSchemaModel(final MasterReport masterReportElement, final AbstractReportDefinition report)
+  public ReportDataSchemaModel(final MasterReport masterReportElement,
+                               final AbstractReportDefinition report)
   {
     super(masterReportElement, report);
+  }
+
+  protected DesignTimeDataSchemaModelChangeTracker createChangeTracker()
+  {
+    return new EmptyTracker();
   }
 
   protected void handleError(final Throwable e)
@@ -38,24 +41,21 @@ public class ReportDataSchemaModel extends DesignTimeDataSchemaModel
     UncaughtExceptionsModel.getInstance().addException(e);
   }
 
-  public static boolean isFiltered(final DataAttributes attributes, final DataAttributeContext context)
-  {
-    if (attributes == null)
+  private static final class EmptyTracker implements DesignTimeDataSchemaModelChangeTracker {
+    public void updateChangeTrackers()
     {
-      return true;
+
     }
 
-    final Object o =
-        attributes.getMetaAttribute(MetaAttributeNames.Core.NAMESPACE, MetaAttributeNames.Core.INDEXED_COLUMN,
-            Boolean.class, context);
-    if (Boolean.TRUE.equals(o))
+    public boolean isReportChanged()
     {
-      if (WorkspaceSettings.getInstance().isShowIndexColumns())
-      {
-        return false;
-      }
-      return true;
+      return false;
     }
-    return false;
+
+    public boolean isReportQueryChanged()
+    {
+      return false;
+    }
   }
+
 }

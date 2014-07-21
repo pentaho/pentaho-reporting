@@ -57,7 +57,7 @@ public abstract class AbstractContentProducerTemplate implements FastExportTempl
   {
     try
     {
-      DynamicStyleKey dynamicStyleKey = DynamicStyleKey.create(band);
+      DynamicStyleKey dynamicStyleKey = DynamicStyleKey.create(band, runtime);
       FormattedDataBuilder messageFormatSupport = bandFormatter.get(dynamicStyleKey);
       if (messageFormatSupport == null)
       {
@@ -99,7 +99,7 @@ public abstract class AbstractContentProducerTemplate implements FastExportTempl
   }
 
   protected FormattedDataBuilder createTemplate(final Band band,
-                                              final ExpressionRuntime runtime)
+                                                final ExpressionRuntime runtime)
       throws ReportProcessingException, ContentProcessingException
   {
     FastExportTemplateProducer templateListener = createTemplateProducer();

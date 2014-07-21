@@ -35,11 +35,16 @@ public class DefaultTableMetaData
     this.columnAttributes = new ArrayList<DefaultDataAttributes>(colCount);
     for (int i = 0; i < colCount; i++)
     {
-      addRow();
+      addColumn();
     }
   }
 
-  public void addRow()
+  @Deprecated
+  public void addRow() {
+    addColumn();
+  }
+
+  public void addColumn()
   {
     columnAttributes.add(new DefaultDataAttributes());
   }

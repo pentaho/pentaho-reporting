@@ -31,6 +31,7 @@ import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.BorderFactory;
 import javax.swing.DefaultListModel;
+import javax.swing.DropMode;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
@@ -47,6 +48,7 @@ import javax.swing.event.ListSelectionListener;
 
 import org.pentaho.reporting.designer.core.Messages;
 import org.pentaho.reporting.designer.core.ReportDesignerContext;
+import org.pentaho.reporting.designer.core.editor.ReportDataChangeListener;
 import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
 import org.pentaho.reporting.designer.core.util.IconLoader;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
@@ -54,6 +56,7 @@ import org.pentaho.reporting.engine.classic.core.CrosstabGroup;
 import org.pentaho.reporting.engine.classic.core.elementfactory.CrosstabBuilder;
 import org.pentaho.reporting.engine.classic.core.elementfactory.CrosstabDetail;
 import org.pentaho.reporting.engine.classic.core.elementfactory.CrosstabDimension;
+import org.pentaho.reporting.engine.classic.core.wizard.ContextAwareDataSchemaModel;
 import org.pentaho.reporting.libraries.designtime.swing.BorderlessButton;
 import org.pentaho.reporting.libraries.designtime.swing.CommonDialog;
 import org.pentaho.reporting.libraries.designtime.swing.LibSwingUtil;
@@ -63,7 +66,7 @@ import org.pentaho.reporting.libraries.designtime.swing.bulk.RemoveBulkAction;
 import org.pentaho.reporting.libraries.designtime.swing.bulk.SortBulkDownAction;
 import org.pentaho.reporting.libraries.designtime.swing.bulk.SortBulkUpAction;
 
-public class CreateCrosstabDialog extends CommonDialog
+public class CreateCrosstabDialog extends CommonDialog implements ReportDataChangeListener
 {
   private class AddListSelectionAction extends AbstractAction implements ListSelectionListener
   {
@@ -429,6 +432,14 @@ public class CreateCrosstabDialog extends CommonDialog
     return availableFieldsModel;
   }
 
+  public void dataModelChanged(final ReportDocumentContext context)
+  {
+    final ContextAwareDataSchemaModel dataSchemaModel = context.getReportDataSchemaModel();
+    final String[] columnNames = dataSchemaModel.getColumnNames();
+    final DefaultListModel availableFieldsModel = getAvailableFieldsModel();
+    availableFieldsModel.setBulkData(columnNames);
+  }
+
   public CrosstabGroup createCrosstab(final ReportDesignerContext designerContext,
                                       final ReportDocumentContext reportRenderContext)
   {
@@ -441,9 +452,8 @@ public class CreateCrosstabDialog extends CommonDialog
 
     try
     {
-      final String[] columnNames = reportRenderContext.getReportDataSchemaModel().getColumnNames();
-      final DefaultBulkListModel availableFieldsModel = getAvailableFieldsModel();
-      availableFieldsModel.setBulkData(columnNames);
+      reportRenderContext.addReportDataChangeListener(this);
+      dataModelChanged(reportRenderContext);
 
       if (performEdit() == false)
       {

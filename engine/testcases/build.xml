@@ -14,8 +14,15 @@
 		and works with the build-res/subfloor.xml file.
 	</description>
 
-    <property file="${user.home}/.pentaho-reporting-build-settings.properties"
+  <property file="${user.home}/.pentaho-reporting-build-settings.properties"
                 description="Per user override settings-file for all pentaho-reporting projects." />
+
+  <!-- Define the default location of the common build file -->
+  <property name="reporting.build.file" value="../../build-res/reporting-shared.xml"
+            description="This is the location of the standardized build-res/reporting-shared.xml file"/>
+
+  <!-- Import the build-res/subfloor.xml file which contains all the default tasks -->
+  <import file="${reporting.build.file}"/>
 
 	<!-- Define the default location of the common build file -->
 	<property name="common.build.file" value="./build-res/subfloor.xml"
@@ -24,100 +31,20 @@
 	<!-- Import the build-res/subfloor.xml file which contains all the default tasks -->
 	<import file="${common.build.file}"/>
 
-    <!--=======================================================================
-        continuous
+   <!-- Need src.dir to exist even though this project only has testsrc -->
+   <target name="init" depends="subfloor.init" >
+     <mkdir dir="${src.dir}" />
+   </target>
 
-        Runs a typical continuous integration build including project dist,
-        test, and coverage artifacts
-        ====================================================================-->
-    <target name="continuous" depends="build"/>
-
-
-    <!--=======================================================================
-        continuous-testless
-
-        Runs a typical continuous integration build including project dist,
-        and coverage artifacts
-        ====================================================================-->
-    <target name="continuous-testless" />
-
-
-    <!--=======================================================================
-        continuous
-
-        Runs a typical continuous integration build including project dist,
-        test, and coverage artifacts
-        ====================================================================-->
-    <target name="continuous-local" depends="build"/>
-
-
-    <!--=======================================================================
-        continuous-testless
-
-        Runs a typical continuous integration build including project dist,
-        and coverage artifacts
-        ====================================================================-->
-    <target name="continuous-local-testless" />
-
-  <!--=======================================================================
-      continuous-junit
-
-      Runs a typical continuous integration build including project dist,
-      and test artifacts
-      ====================================================================-->
-  <target name="continuous-local-junit" depends="build-testless,test,publish-local" />
-
-  <!--=======================================================================
-      continuous-junit
-
-      Runs a typical continuous integration build including project dist,
-      and test artifacts
-      ====================================================================-->
-  <target name="continuous-junit" depends="build,publish" />
-
-  <!-- Until CM-466 is fixed, hot-patch it -->
-  <target name="install-ivy" depends="subfloor.install-ivy">
-    <ivy:settings url="${ivy.settingsurl}" />
-  </target>
-
-    <!--
-      AS STATED ABOVE, THE ONLY TASKS THAT SHOULD EXIST IN THIS BUILD FILE ARE
-      THE TASKS THAT NEED TO DIFFER FROM THE DEFAULT IMPLEMENTATION OF THE TASKS
-      FOUND IN build-res/subfloor.xml.
+  <!-- Needs to handle dist-source and dist-javadoc targets multibuilds
+       These do nothing in an testcase build, so don't call out to subfloor
     -->
-
-	<!-- Override default dist target to do a dist-full instead -->
-	<target name="dist" depends="dist-full"/>
-
-     <!-- Need src.dir to exist even though this project only has testsrc -->
-     <target name="init" depends="subfloor.init" >
-       <mkdir dir="${src.dir}" />
-     </target>
-
-    <!-- Needs to handle dist-source and dist-javadoc targets multibuilds
-         These do nothing in an testcase build, so don't call out to subfloor
-      -->
-    <target name="dist-source" depends="dist" />
-    <target name="dist-javadoc" depends="dist" />
-    <target name="source.zip" />
-    <target name="source.targz" />
-    <target name="javadoc" />
-    <target name="javadoc.zip" />
-    <target name="javadoc.targz" />
-
-
-    <target name="longrun-test" depends="clean-all,resolve">
-        <antcall target="test">
-            <param name="junit.sysprop.org.pentaho.reporting.engine.classic.test.ExecuteLongRunningTest" value="true"/>
-            <param name="junit.forkmode" value="${junit.longrun.forkmode}"/>
-        </antcall>
-    </target>
-
-    <target name="longrun-cobertura" depends="clean-all,resolve">
-        <antcall target="cobertura">
-            <param name="junit.sysprop.org.pentaho.reporting.engine.classic.test.ExecuteLongRunningTest" value="true"/>
-            <param name="junit.forkmode" value="${junit.longrun.forkmode}"/>
-        </antcall>
-    </target>
+  <target name="dist-source" depends="dist" />
+  <target name="dist-javadoc" depends="dist" />
+  <target name="source.zip" />
+  <target name="source.targz" />
+  <target name="javadoc" />
+  <target name="javadoc.zip" />
+  <target name="javadoc.targz" />
 
 </project>

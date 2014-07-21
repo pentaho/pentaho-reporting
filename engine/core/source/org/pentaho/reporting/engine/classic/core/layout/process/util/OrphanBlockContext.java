@@ -86,9 +86,9 @@ public class OrphanBlockContext implements OrphanContext
       if (orphanCount < orphans && orphans > 0)
       {
         orphanSize.add(box);
-        orphanCount += 1;
         box.setRestrictFinishedClearOut(RenderBox.RestrictFinishClearOut.LEAF);
       }
+      orphanCount += 1;
       currentNode = null;
     }
 
@@ -104,8 +104,8 @@ public class OrphanBlockContext implements OrphanContext
     {
       orphanSize.add(box);
       box.getParent().setRestrictFinishedClearOut(RenderBox.RestrictFinishClearOut.RESTRICTED);
-      orphanCount += 1;
     }
+    orphanCount += box.getOrphanLeafCount();
 
     currentNode = null;
     if (parent != null)
@@ -150,6 +150,7 @@ public class OrphanBlockContext implements OrphanContext
       constraintSize = getOrphanValue();
     }
     box.setOrphanConstraintSize(Math.max(0, constraintSize - box.getCachedY()));
+    box.setOrphanLeafCount(orphanCount);
 
     final boolean incomplete = box.isOpen() || box.getContentRefCount() > 0;
     if (breakMarkerSeen == false && incomplete)

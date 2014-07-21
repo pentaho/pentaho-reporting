@@ -29,6 +29,7 @@ import javax.swing.tree.TreePath;
 
 import org.pentaho.reporting.designer.core.actions.report.EditParametersAction;
 import org.pentaho.reporting.designer.core.actions.report.EditQueryAction;
+import org.pentaho.reporting.designer.core.editor.ReportDataChangeListener;
 import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
 import org.pentaho.reporting.designer.core.model.selection.DocumentContextSelectionModel;
 import org.pentaho.reporting.designer.core.settings.SettingsListener;
@@ -53,13 +54,26 @@ import org.pentaho.reporting.engine.classic.core.event.ReportModelListener;
 import org.pentaho.reporting.engine.classic.core.function.Expression;
 import org.pentaho.reporting.engine.classic.core.parameters.ParameterDefinitionEntry;
 import org.pentaho.reporting.engine.classic.core.parameters.ReportParameterDefinition;
+import org.pentaho.reporting.libraries.base.util.DebugLog;
 
 public class DataReportTree extends AbstractReportTree
 {
-  private class ReportUpdateHandler implements ReportModelListener
+  private class ReportUpdateHandler implements ReportModelListener, ReportDataChangeListener
   {
     private ReportUpdateHandler()
     {
+    }
+
+    public void dataModelChanged(final ReportDocumentContext context)
+    {
+      final AbstractReportDataTreeModel realModel = getDataTreeModel();
+      if (realModel == null)
+      {
+        return;
+      }
+
+      DebugLog.log("Data Changed, Update tree");
+      realModel.fireQueryChanged(renderContext.getReportDefinition().getQuery());
     }
 
     public void nodeChanged(final ReportModelEvent event)
@@ -539,12 +553,14 @@ public class DataReportTree extends AbstractReportTree
     {
       this.renderContext.getSelectionModel().removeReportSelectionListener(getSelectionHandler());
       this.renderContext.getReportDefinition().removeReportModelListener(updateHandler);
+      this.renderContext.removeReportDataChangeListener(updateHandler);
     }
     this.renderContext = renderContext;
     if (this.renderContext != null)
     {
       this.renderContext.getSelectionModel().addReportSelectionListener(getSelectionHandler());
       this.renderContext.getReportDefinition().addReportModelListener(updateHandler);
+      this.renderContext.addReportDataChangeListener(updateHandler);
     }
     updateFromRenderContext();
     restoreState();

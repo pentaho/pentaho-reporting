@@ -17,6 +17,8 @@
 
 package org.pentaho.reporting.engine.classic.core.layout.model.table;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.pentaho.reporting.engine.classic.core.ReportAttributeMap;
 import org.pentaho.reporting.engine.classic.core.filter.types.AutoLayoutBoxType;
 import org.pentaho.reporting.engine.classic.core.layout.model.AutoRenderBox;
@@ -29,7 +31,6 @@ import org.pentaho.reporting.engine.classic.core.metadata.ElementType;
 import org.pentaho.reporting.engine.classic.core.states.ReportStateKey;
 import org.pentaho.reporting.engine.classic.core.style.StyleSheet;
 import org.pentaho.reporting.engine.classic.core.util.InstanceID;
-import org.pentaho.reporting.libraries.base.util.DebugLog;
 
 /**
  * A table section box does not much rendering or layouting at all. It
@@ -43,6 +44,7 @@ import org.pentaho.reporting.libraries.base.util.DebugLog;
  */
 public class TableRowRenderBox extends RenderBox
 {
+  private static final Log logger = LogFactory.getLog(TableRowRenderBox.class);
   private int rowIndex;
   private boolean bodySection;
 
@@ -173,13 +175,19 @@ public class TableRowRenderBox extends RenderBox
 
     if (child.getNodeType() == LayoutNodeTypes.TYPE_BOX_BREAKMARK)
     {
-      DebugLog.log("WARN: BREAK MARKER INSIDE TABLE ROW");
+      if (logger.isDebugEnabled())
+      {
+        logger.debug("WARN: BREAK MARKER INSIDE TABLE ROW");
+      }
       return false;
     }
 
     if (child.getNodeType() == LayoutNodeTypes.TYPE_BOX_PROGRESS_MARKER)
     {
-      DebugLog.log("WARN: PROGRESS MARKER INSIDE TABLE ROW");
+      if (logger.isDebugEnabled())
+      {
+        logger.debug("WARN: PROGRESS MARKER INSIDE TABLE ROW");
+      }
       return true;
     }
 

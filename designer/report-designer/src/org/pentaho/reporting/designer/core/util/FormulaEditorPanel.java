@@ -41,12 +41,12 @@ import org.pentaho.openformula.ui.FieldDefinition;
 import org.pentaho.openformula.ui.FormulaEditorDialog;
 import org.pentaho.reporting.designer.core.ReportDesignerContext;
 import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
-import org.pentaho.reporting.designer.core.model.ReportDataSchemaModel;
 import org.pentaho.reporting.engine.classic.core.MetaAttributeNames;
 import org.pentaho.reporting.engine.classic.core.StaticDataRow;
 import org.pentaho.reporting.engine.classic.core.function.GenericExpressionRuntime;
 import org.pentaho.reporting.engine.classic.core.function.ReportFormulaContext;
 import org.pentaho.reporting.engine.classic.core.layout.output.DefaultProcessingContext;
+import org.pentaho.reporting.engine.classic.core.wizard.ContextAwareDataSchemaModel;
 import org.pentaho.reporting.engine.classic.core.wizard.DataAttributes;
 import org.pentaho.reporting.engine.classic.core.wizard.DataSchema;
 import org.pentaho.reporting.engine.classic.core.wizard.DefaultDataAttributeContext;
@@ -331,7 +331,7 @@ public class FormulaEditorPanel extends JPanel
       return EMPTY_FIELDS;
     }
 
-    final ReportDataSchemaModel model = renderContext.getReportDataSchemaModel();
+    final ContextAwareDataSchemaModel model = renderContext.getReportDataSchemaModel();
     final String[] columnNames = model.getColumnNames();
     final ArrayList<FieldDefinition> fields = new ArrayList<FieldDefinition>(columnNames.length);
     final DataSchema dataSchema = model.getDataSchema();

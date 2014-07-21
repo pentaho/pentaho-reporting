@@ -1,0 +1,5 @@
+<project name="distribute" basedir="." default="copy">
+  <import file="multibuild.xml"/>
+
+
+</project>

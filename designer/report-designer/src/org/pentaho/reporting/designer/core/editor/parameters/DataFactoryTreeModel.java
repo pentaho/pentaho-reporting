@@ -28,14 +28,6 @@ import org.pentaho.reporting.engine.classic.core.CompoundDataFactory;
 import org.pentaho.reporting.engine.classic.core.DataFactory;
 import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
 
-/**
- * Todo: Document me!
- * <p/>
- * Date: 09.04.2009
- * Time: 15:07:09
- *
- * @author Thomas Morgner.
- */
 public class DataFactoryTreeModel implements TreeModel
 {
   private ArrayList<DataFactoryWrapper> root;

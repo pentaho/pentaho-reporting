@@ -25,6 +25,6 @@ public final class KettleDataFactoryTestGenerator
 
   public static void main(final String[] args) throws Exception
   {
-    KettleDataFactoryTest._main(args);
+    KettleDataFactoryTest.generate();
   }
 }

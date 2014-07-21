@@ -20,6 +20,7 @@ package org.pentaho.reporting.engine.classic.core.modules.output.fast.validator;
 import java.util.HashSet;
 
 import org.pentaho.reporting.engine.classic.core.AbstractReportDefinition;
+import org.pentaho.reporting.engine.classic.core.AttributeNames;
 import org.pentaho.reporting.engine.classic.core.CrosstabGroup;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
 import org.pentaho.reporting.engine.classic.core.ReportElement;
@@ -63,7 +64,7 @@ public class ReportStructureValidator extends AbstractStructureVisitor
     traverseSectionWithSubReports(section);
   }
 
-  private boolean checkInlineSubReport(final AbstractReportDefinition reportDefinition)
+  private boolean isInlineSubReport(final SubReport reportDefinition)
   {
     Section parentSection = reportDefinition.getParentSection();
     if (parentSection instanceof RootLevelBand == false)
@@ -72,7 +73,7 @@ public class ReportStructureValidator extends AbstractStructureVisitor
     }
 
     RootLevelBand rlb = (RootLevelBand) parentSection;
-    for (SubReport s : rlb.getSubReports())
+    for (final SubReport s : rlb.getSubReports())
     {
       if (s == reportDefinition)
       {
@@ -87,6 +88,18 @@ public class ReportStructureValidator extends AbstractStructureVisitor
   {
     traverseStyleExpressions(element);
 
+    if (element.getAttribute(AttributeNames.Core.NAMESPACE, AttributeNames.Core.RICH_TEXT_TYPE) != null)
+    {
+      valid = false;
+      return;
+    }
+
+    if (element.getAttributeExpression(AttributeNames.Core.NAMESPACE, AttributeNames.Core.RICH_TEXT_TYPE) != null)
+    {
+      valid = false;
+      return;
+    }
+
     if (element instanceof AbstractReportDefinition)
     {
       AbstractReportDefinition report = (AbstractReportDefinition) element;
@@ -97,20 +110,20 @@ public class ReportStructureValidator extends AbstractStructureVisitor
           continue;
         }
         valid = false;
+        return;
       }
 
       if (report instanceof SubReport)
       {
-        if (checkInlineSubReport(report))
+        final SubReport sr = (SubReport) report;
+        if (isInlineSubReport(sr))
         {
           valid = false;
           return;
         }
-        return;
       }
     }
-
-    if (element instanceof CrosstabGroup)
+    else if (element instanceof CrosstabGroup)
     {
       valid = false;
     }

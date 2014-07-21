@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/build-res/build-res.iml" filepath="$PROJECT_DIR$/build-res/build-res.iml" />
       <module fileurl="file://$PROJECT_DIR$/libraries/configuration-editor/configuration-editor.iml" filepath="$PROJECT_DIR$/libraries/configuration-editor/configuration-editor.iml" group="libraries" />
       <module fileurl="file://$PROJECT_DIR$/engine/core/core.iml" filepath="$PROJECT_DIR$/engine/core/core.iml" group="engine" />
       <module fileurl="file://$PROJECT_DIR$/designer/datasource-editor-cda/datasource-editor-cda.iml" filepath="$PROJECT_DIR$/designer/datasource-editor-cda/datasource-editor-cda.iml" group="datasource-editors" />

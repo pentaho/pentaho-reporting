@@ -1,6 +1,19 @@
 Pentaho Reporting
 =================
 
+0. Maven Warning
+----------------
+
+If you intend to use Maven to use Pentaho Reporting, be aware that Maven does
+not resolve correctly against Pentaho's repository. The Pentaho build process
+produces invalid snapshot builds.
+
+To fix that, run the build with the ant-property set to:
+
+reporting.build.file=${REPORTING_SOURCES}/build-res/report-shared-experimental.xml
+
+A local publish will work fine as long as you use ivy to resolve the dependencies.
+
 
 1. Introduction
 ---------------
@@ -204,7 +217,7 @@ third party libraries used in the code.
 
 On a command line in the project directory, call
 
-	ant -f multibuild.xml resolve
+	ant resolve
 
 to download all libraries.
 
@@ -215,7 +228,7 @@ start our IntelliJ project.
 
 To build all projects locally, invoke
 
-	ant -f multibuild.xml continuous-local-testless
+	ant continuous-local-testless
 
 to run.
 
@@ -225,7 +238,7 @@ If you feel paranoid and want to run the tests while building, then use the
 tests. Expect to wait an hour while all tests run.
 
 
-	ant -f multibuild.xml continuous-local
+	ant continuous-local
 
 
 After the process is finished, you will find “Report Designer” zip and tar.gz

@@ -26,15 +26,16 @@ import org.pentaho.reporting.engine.classic.core.AttributeNames;
 import org.pentaho.reporting.engine.classic.core.Band;
 import org.pentaho.reporting.engine.classic.core.ReportElement;
 import org.pentaho.reporting.engine.classic.core.Section;
+import org.pentaho.reporting.engine.classic.core.function.ExpressionRuntime;
 import org.pentaho.reporting.engine.classic.core.layout.style.SimpleStyleSheet;
 import org.pentaho.reporting.engine.classic.core.style.StyleKey;
 import org.pentaho.reporting.engine.classic.core.util.AbstractStructureVisitor;
 import org.pentaho.reporting.engine.classic.core.util.InstanceID;
+import org.pentaho.reporting.libraries.base.util.ArgumentNullException;
 import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
 
 public class DynamicStyleKey
 {
-
   private static class StyleInfoCollection
   {
     private static class StyleInfo
@@ -83,10 +84,12 @@ public class DynamicStyleKey
     private ArrayList<StyleInfo> styleInfo;
     private Integer hashCode;
     private long styleChangeTracker;
+    private boolean nullValue;
 
-    private StyleInfoCollection(int length)
+    private StyleInfoCollection(int length, boolean nullValue)
     {
-      styleInfo = new ArrayList<StyleInfo>(length);
+      this.styleInfo = new ArrayList<StyleInfo>(length);
+      this.nullValue = nullValue;
     }
 
     public void add(StyleKey k, Object o)
@@ -124,7 +127,10 @@ public class DynamicStyleKey
       {
         return false;
       }
-
+      if (nullValue != that.nullValue)
+      {
+        return false;
+      }
       return true;
     }
 
@@ -132,7 +138,7 @@ public class DynamicStyleKey
     {
       if (hashCode == null)
       {
-        hashCode = styleInfo.hashCode();
+        hashCode = styleInfo.hashCode() + 23 * (nullValue ? 1 : 0);
       }
       return hashCode;
     }
@@ -189,9 +195,9 @@ public class DynamicStyleKey
     return hashCode;
   }
 
-  public static DynamicStyleKey create(Band band)
+  public static DynamicStyleKey create(Band band, ExpressionRuntime runtime)
   {
-    Map<InstanceID, StyleInfoCollection> style = new DynamicStyleKeyProducer().collect(band);
+    Map<InstanceID, StyleInfoCollection> style = new DynamicStyleKeyProducer().collect(band, runtime);
     return new DynamicStyleKey(band.getObjectID(), style);
   }
 
@@ -199,9 +205,14 @@ public class DynamicStyleKey
   {
     private HashMap<InstanceID, StyleKey[]> dynamicTemplateInfo;
     private HashMap<InstanceID, StyleInfoCollection> styleInfo;
+    private ExpressionRuntime runtime;
 
-    public Map<InstanceID, StyleInfoCollection> collect(Band band)
+    public Map<InstanceID, StyleInfoCollection> collect(Band band, ExpressionRuntime runtime)
     {
+      ArgumentNullException.validate("band", band);
+      ArgumentNullException.validate("runtime", runtime);
+
+      this.runtime = runtime;
       dynamicTemplateInfo = (HashMap<InstanceID, StyleKey[]>)
           band.getAttribute(AttributeNames.Internal.NAMESPACE, AttributeNames.Internal.FAST_EXPORT_DYNAMIC_STASH);
       if (dynamicTemplateInfo == null)
@@ -227,18 +238,22 @@ public class DynamicStyleKey
         return;
       }
 
+      Object value = element.getElementType().getValue(runtime, element);
+      boolean empty = isEmpty(value);
+
       StyleInfoCollection lastCollection = (StyleInfoCollection)
           element.getAttribute(AttributeNames.Internal.NAMESPACE, AttributeNames.Internal.FAST_EXPORT_ELEMENT_STASH);
       SimpleStyleSheet computedStyle = element.getComputedStyle();
       if (lastCollection != null &&
-          lastCollection.getStyleChangeTracker() == computedStyle.getChangeTrackerHash())
+          lastCollection.getStyleChangeTracker() == computedStyle.getChangeTrackerHash() &&
+          lastCollection.nullValue == empty)
       {
         // no changes
         styleInfo.put(element.getObjectID(), lastCollection);
         return;
       }
 
-      StyleInfoCollection collection = new StyleInfoCollection(styleIndex.length);
+      StyleInfoCollection collection = new StyleInfoCollection(styleIndex.length, empty);
       collection.setStyleChangeTracker(computedStyle.getChangeTrackerHash());
       for (StyleKey styleKey : styleIndex)
       {
@@ -246,5 +261,19 @@ public class DynamicStyleKey
       }
       styleInfo.put(element.getObjectID(), collection);
     }
+
+    private boolean isEmpty(Object o)
+    {
+      if (o == null)
+      {
+        return true;
+      }
+      if ("".equals(o))
+      {
+        return true;
+      }
+      return false;
+    }
   }
+
 }

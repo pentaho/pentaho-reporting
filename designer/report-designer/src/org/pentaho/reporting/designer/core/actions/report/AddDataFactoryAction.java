@@ -27,7 +27,6 @@ import javax.swing.table.TableModel;
 import org.pentaho.reporting.designer.core.actions.AbstractReportContextAction;
 import org.pentaho.reporting.designer.core.actions.ActionMessages;
 import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
-import org.pentaho.reporting.designer.core.model.ReportDataSchemaModel;
 import org.pentaho.reporting.designer.core.util.ReportDesignerDesignTimeContext;
 import org.pentaho.reporting.designer.core.util.exceptions.UncaughtExceptionsModel;
 import org.pentaho.reporting.designer.core.util.undo.AttributeEditUndoEntry;
@@ -40,6 +39,7 @@ import org.pentaho.reporting.engine.classic.core.designtime.DataFactoryChange;
 import org.pentaho.reporting.engine.classic.core.designtime.DataSourcePlugin;
 import org.pentaho.reporting.engine.classic.core.designtime.DefaultDataFactoryChangeRecorder;
 import org.pentaho.reporting.engine.classic.core.metadata.DataFactoryMetaData;
+import org.pentaho.reporting.engine.classic.core.wizard.ContextAwareDataSchemaModel;
 import org.pentaho.reporting.libraries.base.util.StringUtils;
 
 public class AddDataFactoryAction extends AbstractReportContextAction
@@ -87,8 +87,8 @@ public class AddDataFactoryAction extends AbstractReportContextAction
     }
     finally
     {
-      final ReportDataSchemaModel dataSchemaModel = activeContext.getReportDataSchemaModel();
-      if (dataSchemaModel != null && dataSchemaModel.getDataFactoryException() != null)
+      final ContextAwareDataSchemaModel dataSchemaModel = activeContext.getReportDataSchemaModel();
+      if (dataSchemaModel.getDataFactoryException() != null)
       {
         UncaughtExceptionsModel.getInstance().addException(dataSchemaModel.getDataFactoryException());
       }

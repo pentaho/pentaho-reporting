@@ -68,6 +68,8 @@ public abstract class RenderBox extends RenderNode
   private int descendantCount;
   private int markedContentRefCount;
   private int appliedContentRefCount;
+  private int orphanLeafCount;
+  private int widowLeafCount;
   private BoxDefinition boxDefinition;
   private StaticBoxLayoutProperties staticBoxLayoutProperties;
   private RenderNode firstChildNode;
@@ -1263,7 +1265,7 @@ public abstract class RenderBox extends RenderNode
     setMarkedOpen(isAppliedOpen());
     this.markedContentRefCount = appliedContentRefCount;
     this.markedPinPosition = appliedPinPosition;
-    this.overflowAreaHeight = 0;
+    this.overflowAreaHeight = getCachedHeight();
     this.overflowAreaWidth = 0;
     // todo PRD-4606
     resetCacheState(false);
@@ -1394,7 +1396,7 @@ public abstract class RenderBox extends RenderNode
 
   public long getOverflowAreaHeight()
   {
-    return Math.max (getHeight(), overflowAreaHeight);
+    return overflowAreaHeight;
   }
 
   public void setOverflowAreaHeight(final long overflowAreaHeight)
@@ -1416,18 +1418,18 @@ public abstract class RenderBox extends RenderNode
   {
     if (width > overflowAreaWidth)
     {
-      this.overflowAreaWidth = width;
+      setOverflowAreaWidth(width);
     }
     if (height > overflowAreaHeight)
     {
-      this.overflowAreaHeight = height;
+      setOverflowAreaHeight(height);
     }
   }
 
   public void apply()
   {
     super.apply();
-    this.overflowAreaHeight = 0;
+    this.overflowAreaHeight = getCachedHeight();
     this.staticBoxPropertiesAge = getChangeTracker();
     this.tableValidationAge = getChangeTracker();
   }
@@ -1635,5 +1637,25 @@ public abstract class RenderBox extends RenderNode
         isProcessKeyFinish() == isFinishedPaginate() &&
         this.processKeyContentRefCount == getDescendantCount());
 
+  }
+
+  public int getOrphanLeafCount()
+  {
+    return orphanLeafCount;
+  }
+
+  public void setOrphanLeafCount(final int orphanLeafCount)
+  {
+    this.orphanLeafCount = orphanLeafCount;
+  }
+
+  public int getWidowLeafCount()
+  {
+    return widowLeafCount;
+  }
+
+  public void setWidowLeafCount(final int widowLeafCount)
+  {
+    this.widowLeafCount = widowLeafCount;
   }
 }

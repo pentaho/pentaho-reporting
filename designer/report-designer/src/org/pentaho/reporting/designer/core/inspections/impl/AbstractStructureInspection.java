@@ -23,7 +23,6 @@ import org.pentaho.reporting.designer.core.ReportDesignerContext;
 import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
 import org.pentaho.reporting.designer.core.inspections.Inspection;
 import org.pentaho.reporting.designer.core.inspections.InspectionResultListener;
-import org.pentaho.reporting.designer.core.model.ReportDataSchemaModel;
 import org.pentaho.reporting.engine.classic.core.AbstractReportDefinition;
 import org.pentaho.reporting.engine.classic.core.CompoundDataFactory;
 import org.pentaho.reporting.engine.classic.core.DataFactory;
@@ -39,6 +38,7 @@ import org.pentaho.reporting.engine.classic.core.metadata.ExpressionRegistry;
 import org.pentaho.reporting.engine.classic.core.parameters.ParameterDefinitionEntry;
 import org.pentaho.reporting.engine.classic.core.parameters.ReportParameterDefinition;
 import org.pentaho.reporting.engine.classic.core.style.StyleKey;
+import org.pentaho.reporting.engine.classic.core.wizard.ContextAwareDataSchemaModel;
 
 public abstract class AbstractStructureInspection implements Inspection
 {
@@ -51,7 +51,7 @@ public abstract class AbstractStructureInspection implements Inspection
                       final InspectionResultListener resultHandler) throws ReportDataFactoryException
   {
     final AbstractReportDefinition reportDefinition = reportRenderContext.getReportDefinition();
-    final ReportDataSchemaModel model = reportRenderContext.getReportDataSchemaModel();
+    final ContextAwareDataSchemaModel model = reportRenderContext.getReportDataSchemaModel();
     final String[] columnNames = model.getColumnNames();
 
     if (reportDefinition instanceof MasterReport)
@@ -109,10 +109,10 @@ public abstract class AbstractStructureInspection implements Inspection
   }
 
   protected void inspectElement(final ReportDesignerContext designerContext,
-                                         final ReportDocumentContext reportRenderContext,
-                                         final InspectionResultListener resultHandler,
-                                         final String[] columnNames,
-                                         final ReportElement element)
+                                final ReportDocumentContext reportRenderContext,
+                                final InspectionResultListener resultHandler,
+                                final String[] columnNames,
+                                final ReportElement element)
   {
 
   }
@@ -165,14 +165,14 @@ public abstract class AbstractStructureInspection implements Inspection
   {
   }
 
-  protected void traverseStyleExpressions (final ReportDesignerContext designerContext,
-                                            final ReportDocumentContext reportRenderContext,
-                                            final InspectionResultListener resultHandler,
-                                            final String[] columnNames,
-                                            final ReportElement element)
+  protected void traverseStyleExpressions(final ReportDesignerContext designerContext,
+                                          final ReportDocumentContext reportRenderContext,
+                                          final InspectionResultListener resultHandler,
+                                          final String[] columnNames,
+                                          final ReportElement element)
   {
 
-    final Map<StyleKey,Expression> map = element.getStyleExpressions();
+    final Map<StyleKey, Expression> map = element.getStyleExpressions();
     for (final Map.Entry<StyleKey, Expression> entry : map.entrySet())
     {
       final StyleKey styleKey = entry.getKey();
@@ -197,22 +197,22 @@ public abstract class AbstractStructureInspection implements Inspection
     }
   }
 
-  protected void inspectStyleExpression (final ReportDesignerContext designerContext,
-                                            final ReportDocumentContext reportRenderContext,
-                                            final InspectionResultListener resultHandler,
-                                            final String[] columnNames,
-                                            final ReportElement element,
-                                            final StyleKey styleKey,
-                                            final Expression expression,
-                                            final ExpressionMetaData expressionMetaData)
+  protected void inspectStyleExpression(final ReportDesignerContext designerContext,
+                                        final ReportDocumentContext reportRenderContext,
+                                        final InspectionResultListener resultHandler,
+                                        final String[] columnNames,
+                                        final ReportElement element,
+                                        final StyleKey styleKey,
+                                        final Expression expression,
+                                        final ExpressionMetaData expressionMetaData)
   {
   }
 
   protected void inspectExpression(final ReportDesignerContext designerContext,
-                                            final ReportDocumentContext reportRenderContext,
-                                            final InspectionResultListener resultHandler,
-                                            final String[] columnNames,
-                                            final Expression expression)
+                                   final ReportDocumentContext reportRenderContext,
+                                   final InspectionResultListener resultHandler,
+                                   final String[] columnNames,
+                                   final Expression expression)
   {
     final String expressionName = expression.getClass().getName();
     if (ExpressionRegistry.getInstance().isExpressionRegistered(expressionName) == false)
@@ -229,11 +229,11 @@ public abstract class AbstractStructureInspection implements Inspection
   }
 
   protected void inspectExpression(final ReportDesignerContext designerContext,
-                                            final ReportDocumentContext reportRenderContext,
-                                            final InspectionResultListener resultHandler,
-                                            final String[] columnNames,
-                                            final Expression expression,
-                                            final ExpressionMetaData expressionMetaData)
+                                   final ReportDocumentContext reportRenderContext,
+                                   final InspectionResultListener resultHandler,
+                                   final String[] columnNames,
+                                   final Expression expression,
+                                   final ExpressionMetaData expressionMetaData)
   {
   }
 

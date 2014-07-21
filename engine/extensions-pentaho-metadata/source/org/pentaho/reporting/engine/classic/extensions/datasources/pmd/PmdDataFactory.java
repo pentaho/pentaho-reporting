@@ -160,6 +160,19 @@ public class PmdDataFactory extends SimplePmdDataFactory
     return scriptingSupport.postProcessResult(queryName, parameters, tableModel);
   }
 
+  public TableModel queryDesignTimeStructure(final String queryName,
+                                             final DataRow parameters) throws ReportDataFactoryException
+  {
+    final String query = scriptingSupport.computeQuery(queryName, parameters);
+    if (query == null)
+    {
+      throw new ReportDataFactoryException("No such query: " + queryName);
+    }
+
+    TableModel tableModel = super.queryDesignTimeStructure(query, parameters);
+    return scriptingSupport.postProcessResult(queryName, parameters, tableModel);
+  }
+
   protected String computedQuery(final String queryName, final DataRow parameters) throws ReportDataFactoryException
   {
     return scriptingSupport.computeQuery(queryName, parameters);

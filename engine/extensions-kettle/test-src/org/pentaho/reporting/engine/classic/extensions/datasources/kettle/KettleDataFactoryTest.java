@@ -31,7 +31,7 @@ public class KettleDataFactoryTest extends DataSourceTestBase
   private static final String STEP = "Formula";
 
   private static final String[][] QUERIES_AND_RESULTS = new String[][]{
-      {QUERY, "query-1.txt"}
+      {QUERY, "query-1.txt", "design-time-query-1.txt"}
   };
 
   public KettleDataFactoryTest()
@@ -58,16 +58,22 @@ public class KettleDataFactoryTest extends DataSourceTestBase
     runTest(QUERIES_AND_RESULTS);
   }
 
+  public void testDesignTimeSupport() throws Exception
+  {
+    runTestDesignTime(QUERIES_AND_RESULTS);
+  }
+
   protected String getTestDirectory()
   {
     return "test-src";
   }
 
-  public static void _main(String[] args) throws Exception
+  public static void generate() throws Exception
   {
     final KettleDataFactoryTest test = new KettleDataFactoryTest();
     test.setUp();
     test.runGenerate(QUERIES_AND_RESULTS);
+    test.runGenerateDesignTime(QUERIES_AND_RESULTS);
   }
 
   protected DataFactory createDataFactory(final String query) throws ReportDataFactoryException

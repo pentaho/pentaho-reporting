@@ -42,7 +42,6 @@ import org.pentaho.reporting.engine.classic.core.ReportDataFactoryException;
 import org.pentaho.reporting.engine.classic.core.StaticDataRow;
 import org.pentaho.reporting.engine.classic.core.designtime.datafactory.DesignTimeDataFactoryContext;
 import org.pentaho.reporting.engine.classic.core.metadata.DataFactoryMetaData;
-import org.pentaho.reporting.engine.classic.core.metadata.DataFactoryRegistry;
 import org.pentaho.reporting.engine.classic.core.testsupport.DataSourceTestBase;
 import org.pentaho.reporting.engine.classic.core.util.CloseableTableModel;
 import org.pentaho.reporting.engine.classic.core.wizard.ConceptQueryMapper;
@@ -93,7 +92,7 @@ public class PentahoMetaDataTest extends DataSourceTestBase
           stream.close();
         }
       }
-      catch (Exception e)
+      catch (final Exception e)
       {
         throw new ReportDataFactoryException("The Specified XMI File is invalid: " + xmiFile, e);
       }
@@ -225,23 +224,12 @@ public class PentahoMetaDataTest extends DataSourceTestBase
       "</mql>";
 
   public static final String[][] QUERIES_AND_RESULTS = new String[][]{
-      {QUERY, "query-results.txt"},
-      {PARAMETRIZED_QUERY, "query-results-2.txt"},
-  };
-
-  public static final String[][] QUERIES_AND_RESULTS_GEN = new String[][]{
-      {QUERY, "query-results.txt"},
-      {PARAMETRIZED_QUERY, "query-results-2.txt"},
-      {MULTIPLE_AGG_QUERY, "agg-query-results.txt"},
+      {QUERY, "query-results.txt", "design-time-query-results.txt"},
+  //    {PARAMETRIZED_QUERY, "query-results-2.txt", "design-time-query-results-2.txt"},
   };
 
   public PentahoMetaDataTest()
   {
-  }
-
-  public PentahoMetaDataTest(final String s)
-  {
-    super(s);
   }
 
   protected DataFactory createDataFactory(final String query) throws ReportDataFactoryException
@@ -281,7 +269,6 @@ public class PentahoMetaDataTest extends DataSourceTestBase
         assertEquals("BC_EMPLOYEES_EMAIL", names[3]);
 
         final DataAttributes attributes = dataSchema.getAttributes(names[2]);
-        attributes.toString();
         // assert that formatting-label is not a default mapper
         final ConceptQueryMapper mapper = attributes.getMetaAttributeMapper(MetaAttributeNames.Formatting.NAMESPACE,
             MetaAttributeNames.Formatting.LABEL);
@@ -426,6 +413,7 @@ public class PentahoMetaDataTest extends DataSourceTestBase
     pmdDataFactory.initialize(new DesignTimeDataFactoryContext());
 
     generate(pmdDataFactory, "agg-query-results.txt");
+    generateDesignTime(pmdDataFactory, "design-time-agg-query-results.txt");
   }
 
   public void testParameter() throws ReportDataFactoryException

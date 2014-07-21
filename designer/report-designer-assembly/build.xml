@@ -1,10 +1,10 @@
 <!--===========================================================================
   This is the build file for the Pentaho BI Platform API project.
-  
+
   This build file will use the build-res/subfloor.xml file as the default build
   process and should only override the tasks that need to differ from
   the common build file.
-  
+
   See build-res/subfloor.xml for more details
 ============================================================================-->
 <project name="report-designer-assembly" basedir="." default="dist" xmlns:ivy="antlib:org.apache.ivy.ant">
@@ -15,361 +15,58 @@
   </description>
 
   <property environment="env"/>
+
   <property file="${user.home}/.pentaho-reporting-build-settings.properties"
             description="Per user override settings-file for all pentaho-reporting projects."/>
 
   <!-- Define the default location of the common build file -->
+  <property name="reporting.build.file" value="../../build-res/reporting-shared.xml"
+            description="This is the location of the standardized build-res/reporting-shared.xml file"/>
+  <!--
+  Defines whether the build is run in parallel or sequential.
+  The sequential build is the default setting, is always included and provides essential targets.
+  The parallel build overrides some targets of the sequential build for parallel execution.
+  -->
+  <property name="assembly.strategy" value="sequential"/>
+
+  <property name="reporting.build-pkg-strategy.file" value="./build.assembly.${assembly.strategy}.xml"
+            description="This is the location of the standardized build-res/reporting-shared.xml file"/>
+
+  <property name="reporting.build-pkg.file" value="./build.assembly.sequential.xml"
+            description="This is the location of the standardized build-res/reporting-shared.xml file"/>
+
+  <!-- Define the default location of the common build file -->
   <property name="common.build.file" value="./build-res/subfloor.xml"
             description="This is the location of the standardized build-res/subfloor.xml file"/>
+  <property name="common.build-pkg.file" value="./build-res/subfloor-pkg.xml"
+            description="This is the location of the standardized build-res/subfloor.xml file"/>
 
-  <!-- Properties -->
-  <property name="lib.dir" value="${basedir}/lib"/>
-  <property name="runtime-lib.dir" value="${basedir}/runtime-lib"/>
-  <property name="driver-lib.dir" value="${lib.dir}/jdbc"/>
-  <property name="resource.dir" value="${basedir}/resource"/>
-  <property name="kettle-plugins.dir" value="plugins"/>
-  <property name="doc.dir" value="${resource.dir}/docs"/>
-  <property name="dist.base-name" value="prd"/>
-  <property name="dist.type" value="ce"/>
-  <property name="dist.name" value="${dist.base-name}-${dist.type}"/>
-  <property name="resource-mac.dir" value="${basedir}/resource.mac"/>
-  <property name="resource-dev.dir" value="${basedir}/devresource"/>
-
-  <property name="stage.dir.mac" value="${basedir}/stage-mac"/>
-  <property name="report-designer.dir.mac" value="${stage.dir.mac}/Pentaho Report Designer.app"/>
-  <property name="report-designer.dir.mac.java" value="${report-designer.dir.mac}/Contents/Java"/>
-
-  <property name="stage.dir.winlinux" value="${basedir}/stage-winlinux"/>
-  <property name="report-designer.dir.winlinux" value="${stage.dir.winlinux}/report-designer"/>
-
-  <!-- Import the build-res/subfloor.xml file which contains all the default tasks -->
+  <import file="${reporting.build-pkg-strategy.file}" optional="true"/>
+  <import file="${reporting.build-pkg.file}"/>
+  <import file="${reporting.build.file}"/>
   <import file="${common.build.file}"/>
-  <import file="./build-res/subfloor-pkg.xml"/>
+  <import file="${common.build-pkg.file}"/>
 
-  <property name="pdi-plugins.stage.dir" value="${stage.dir}/plugins"/>
-	
-  <!-- - - - - - - - - - - - - - - - - - 
+  <!-- - - - - - - - - - - - - - - - - -
     Macro for making resolving ivy a 1 liner.  Tasks using this must depend on install-ivy.                      
   - - - - - - - - - - - - - - - - - -->
   <macrodef name="ivy-resolve">
-    <attribute name="ivyfile" default="${ivyfile}" />
-    <attribute name="conf" default="default" />
+    <attribute name="ivyfile" default="${ivyfile}"/>
+    <attribute name="conf" default="default"/>
     <attribute name="directory"/>
     <sequential>
-      <mkdir dir="@{directory}" />
-      <ivy:resolve file="@{ivyfile}" conf="@{conf}" />
-      <ivy:retrieve conf="@{conf}" pattern="@{directory}/[module](-[classifier]).[ext]" />
+      <mkdir dir="@{directory}"/>
+      <ivy:resolve file="@{ivyfile}" conf="@{conf}"/>
+      <ivy:retrieve conf="@{conf}" pattern="@{directory}/[module](-[classifier]).[ext]"/>
     </sequential>
   </macrodef>
 
-  <!--
-    AS STATED ABOVE, THE ONLY TASKS THAT SHOULD EXIST IN THIS BUILD FILE ARE
-    THE TASKS THAT NEED TO DIFFER FROM THE DEFAULT IMPLEMENTATION OF THE TASKS
-    FOUND IN build-res/subfloor.xml.
-  -->
-
-  <!-- Add the runtime lib directory to the list that gets cleaned up with the jars -->
-  <target name="clean-jars" description="Cleans the libraries that have been downloaded"
-          depends="subfloor.clean-jars">
-    <delete dir="${runtime-lib.dir}"/>
-  </target>
-
-  <!-- Add the stage directory to the list that gets cleaned up -->
-  <target name="clean" description="Cleans all the work files" depends="subfloor.clean">
-    <delete dir="${stage.dir.mac}"/>
-    <delete dir="${stage.dir.winlinux}"/>
-  </target>
-
-  <!-- There is nothing to compile or jar -->
-  <target name="compile"/>
-  <target name="jar"/>
-
-  <!-- Change the resolve to only do default, runtime, and drivers -->
-  <target name="resolve" depends="resolve-default, resolve-runtime, resolve-drivers, resolve-plugins, extract-plugins"
-          description="Retrieves all the dependent libraries"/>
-
-  <!-- Resolve the runtime dependency group -->
-  <target name="resolve-runtime" depends="resolve-init" description="Retrieves runtime configuration dependencies">
-    <ivy:resolve file="${ivy.artifact.ivyfilename}" conf="runtime"/>
-    <ivy:retrieve conf="runtime" pattern="${runtime-lib.dir}/[module]-[revision](-[classifier]).[ext]"/>
-  </target>
-
-  <!-- Resolve the runtime driver dependency group -->
-  <target name="resolve-drivers" depends="resolve-init" description="Retrieves runtime configuration dependencies">
-    <ivy:resolve file="${ivy.artifact.ivyfilename}" conf="runtime"/>
-    <ivy:retrieve conf="drivers" pattern="${driver-lib.dir}/[module]-[revision](-[classifier]).[ext]"/>
-  </target>
-
-  <target name="resolve-default" depends="resolve-init">
-    <ivy:resolve file="${ivy.artifact.ivyfilename}" conf="default"/>
-    <ivy:retrieve conf="default" pattern="${lib.dir}/[module]-[revision](-[classifier]).[ext]"/>
-  </target>
-
-  <target name="resolve-test" depends="resolve-init">
-    <ivy:resolve file="${ivy.artifact.ivyfilename}" conf="test"/>
-    <ivy:retrieve conf="test" pattern="${testlib.dir}/[module]-[revision](-[classifier]).[ext]"/>
-  </target>
-
-  <target name="resolve-codegen" depends="resolve-init">
-    <ivy:resolve file="${ivy.artifact.ivyfilename}" conf="codegen"/>
-    <ivy:retrieve conf="codegen" pattern="${lib.dir}/[module]-[revision](-[classifier]).[ext]"/>
-  </target>
-
-  <!-- - - - - - - - - - - - - - - - - -
-      target: resolve-plugins
-     - - - - - - - - - - - - - - - - - -->
-  <target name="resolve-plugins" depends="resolve-init">
-    <ivy:resolve file="${ivyfile}" conf="plugin"/>
-    <ivy:retrieve conf="plugin" pattern="${pdi-plugins.stage.dir}/[module]-[revision](-[classifier]).[ext]"/>
-  </target>
-
-  <!-- Makes sure the directories exist which will be used -->
-  <target name="init" description="Initializes the build process">
-    <mkdir dir="${lib.dir}"/>
-    <mkdir dir="${runtime-lib.dir}"/>
-    <mkdir dir="${dist.dir}"/>
-    <mkdir dir="${stage.dir.mac}"/>
-    <mkdir dir="${stage.dir.winlinux}"/>
-    <!-- Create standard extension points for users to drop in own stuff. -->
-    <mkdir dir="${lib.dir}/ext"/>
-
-  </target>
-
-  <target name="extract-plugins">
-    <!-- extract plugins -->
-    <unzip dest="${pdi-plugins.stage.dir}">
-      <fileset dir="${pdi-plugins.stage.dir}">
-        <include name="**/*.zip"/>
-      </fileset>
-    </unzip>
-
-    <!-- PRD uses this marker to tell Kettle where the plugins live. Kettle still assumes
-         that its installation directory is the working directory. This assumption has been
-         wrong since Windows XP, MacOS-X 10.7 and is wrong on most Unix environments. -->
-    <touch file="${pdi-plugins.stage.dir}/.kettle-plugin-directory-marker"/>
-
-    <!-- cleanup zip files -->
-    <delete>
-      <fileset dir="${pdi-plugins.stage.dir}" includes="**/*.zip"/>
-    </delete>
-  </target>
-
-  <target name="stage-plugins-winlinux" depends="init, extract-plugins">
-    <copy todir="${report-designer.dir.winlinux}/${kettle-plugins.dir}">
-      <fileset dir="${pdi-plugins.stage.dir}"/>
-    </copy>
-
-  </target>
-
-  <target name="stage-plugins-mac" depends="init, extract-plugins">
-    <copy todir="${report-designer.dir.mac}/${kettle-plugins.dir}">
-      <fileset dir="${pdi-plugins.stage.dir}"/>
-    </copy>
-  </target>
-
-  <!--=======================================================================
-      install-mac-app-bundler
-
-    (Fetches and) installs the MacApp Bundler for use by this ant script
-    ====================================================================-->
-  <target name="install-mac-app-bundler" depends="install-ivy" if="mac.java.runtime.home">
-    <if>
-      <istrue value="${mac-app-bundler.isinstalled}"/>
-      <then>
-        <echo message="Skipping Mac App Bundler install.  Mac App Bundler been configured by the build"/>
-      </then>
-      <else>
-        <taskdef-with-ivy organisation="com.oracle"
-                          module="appbundler"
-                          revision="1.0"
-                          classname="com.oracle.appbundler.AppBundlerTask"
-                          task-name="bundleapp"/>
-        <property name="mac-app-bundler.isinstalled" value="true"/>
-      </else>
-    </if>
-  </target>
-
-
-  <target name="stage-mac" depends="init, install-mac-app-bundler" if="mac.java.runtime.home">
-    <echo>Using JDK from ${mac.java.runtime.home}</echo>
-    <bundleapp outputdirectory="${stage.dir.mac}"
-               name="Pentaho Report Designer"
-               displayname="Pentaho Report Designer"
-               identifier="org.pentaho.reporting.designer.ReportDesigner"
-               shortversion="${project.revision}"
-               copyright="Copyright (c) 2008 - 2013 Pentaho Corporation.  All rights reserved. This program is free software; you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License, version 2.1 as published by the Free Software Foundation."
-               mainclassname="org.pentaho.commons.launcher.Launcher"
-               icon="${resource-mac.dir}/Contents/Resources/pentaho_reporting.icns">
-      <runtime dir="${mac.java.runtime.home}"/>
-      <classpath file="${runtime-lib.dir}/pentaho-application-launcher-${dependency.launcher.revision}.jar"/>
-      <option value="-Dapple.laf.useScreenMenuBar=true"/>
-      <option value="-Xms256m"/>
-      <option value="-Xmx512m"/>
-    </bundleapp>
-
-    <loadfile property="bundle.document.types" srcFile="${resource-mac.dir}/Contents/BundleDocumentTypes.txt"/>
-
-    <!-- this task adds additional key/values to the info.plist that can't be created with the 
-    	 bundleapp task -->
-    <replaceregexp file="${stage.dir.mac}/Pentaho Report Designer.app/Contents/Info.plist"
-                   match="&lt;/dict&gt;\s*&lt;/plist&gt;"
-                   replace="${bundle.document.types}"
-      />
-  	
-    <!-- launcher.properties is different now.  It also need to go into the Java directory with the class that is going to be run from the stub -->
-    <copy file="${resource-mac.dir}/Contents/Resources/Java/launcher.properties"
-          todir="${report-designer.dir.mac.java}"/>
-
-    <!-- put the other resources into the root of the .app -->
-    <copy todir="${report-designer.dir.mac}" overwrite="true">
-      <fileset dir="${resource.dir}"/>
-    </copy>
-    <copy todir="${report-designer.dir.mac}/lib" flatten="false" overwrite="true">
-      <fileset dir="${lib.dir}"/>
-    </copy>
-
-    <antcall target="stage-plugins-mac"/>
-
-  </target>
-
-  <target name="dist-mac" depends="stage-mac" if="mac.java.runtime.home">
-    <zip destfile="${dist.dir}/${dist.name}-mac-${project.revision}.zip">
-      <zipfileset dir="${stage.dir.mac}" filemode="755">
-        <include name="**/*.sh"/>
-        <include name="**/run-mailcap"/>
-        <include name="**/*.command"/>
-        <include name="**/JavaAppLauncher"/>
-      </zipfileset>
-      <zipfileset dir="${stage.dir.mac}">
-        <exclude name="**/*.sh"/>
-        <exclude name="**/run-mailcap"/>
-        <exclude name="**/.command"/>
-        <exclude name="**/JavaAppLauncher"/>
-      </zipfileset>
-    </zip>
-  </target>
-
-  <!-- Stages the distribution files for the windows and linux platforms -->
-  <target name="stage-winlinux" depends="stage-plugins-winlinux">
-    <mkdir dir="${report-designer.dir.winlinux}"/>
-    <copy todir="${report-designer.dir.winlinux}" overwrite="true">
-      <fileset dir="${resource.dir}">
-        <exclude name="docs/*"/>
-      </fileset>
-      <fileset dir="${runtime-lib.dir}">
-        <include name="**/*.jar"/>
-      </fileset>
-    </copy>
-
-    <copy todir="${report-designer.dir.winlinux}/docs" overwrite="true">
-      <fileset dir="${doc.dir}">
-        <include name="**/*"/>
-      </fileset>
-    </copy>
-
-    <move file="${report-designer.dir.winlinux}/pentaho-application-launcher-${dependency.launcher.revision}.jar"
-          tofile="${report-designer.dir.winlinux}/launcher.jar"/>
-
-    <copy todir="${report-designer.dir.winlinux}/lib" flatten="false" overwrite="true">
-      <fileset dir="${lib.dir}"/>
-    </copy>
-
-  </target>
-
-  <!-- Creates a distribution for the windows and linux platforms -->
-  <target name="dist-winlinux" depends="stage-winlinux">
-    <zip destfile="${dist.dir}/${dist.name}-${project.revision}.zip">
-      <zipfileset dir="${stage.dir.winlinux}" filemode="755">
-        <include name="**/*.sh"/>
-        <include name="**/JavaApplicationStub"/>
-        <include name="**/run-mailcap"/>
-      </zipfileset>
-      <zipfileset dir="${stage.dir.winlinux}">
-        <exclude name="**/*.sh"/>
-        <exclude name="**/JavaApplicationStub"/>
-        <exclude name="**/run-mailcap"/>
-      </zipfileset>
-    </zip>
-  </target>
-
-	
   <target name="resolve-pdf-docs" depends="install-ivy">
     <delete dir="resource/docs"/>
-    <ivy-resolve conf="pdf-docs" directory="resource/docs" />
+    <ivy-resolve conf="pdf-docs" directory="resource/docs"/>
   </target>
-	
-	
+
   <!-- The dist target is where everything is assembled -->
   <target name="dist" depends="clean-all, init, resolve, resolve-pdf-docs, dist-winlinux, dist-mac"
           description="Creates the distributables for the Report Designer"/>
-
-
-  <!--=======================================================================
-      continuous
-
-      Runs a typical continuous integration build including project dist,
-      test, and coverage artifacts
-      ====================================================================-->
-  <target name="continuous" depends="dist"/>
-
-
-  <!--=======================================================================
-      continuous-testless
-
-      Runs a typical continuous integration build including project dist,
-      and coverage artifacts
-      ====================================================================-->
-  <target name="continuous-testless" depends="dist"/>
-
-  <!--=======================================================================
-      continuous
-
-      Runs a typical continuous integration build including project dist,
-      test, and coverage artifacts
-      ====================================================================-->
-  <target name="continuous-local" depends="dist"/>
-
-
-  <!--=======================================================================
-      continuous-testless
-
-      Runs a typical continuous integration build including project dist,
-      and coverage artifacts
-      ====================================================================-->
-  <target name="continuous-local-testless" depends="dist"/>
-
-  <!--=======================================================================
-      continuous-junit
-
-      Runs a typical continuous integration build including project dist,
-      and test artifacts
-      ====================================================================-->
-  <target name="continuous-local-junit" depends="build-testless,test,publish-local"/>
-
-  <!--=======================================================================
-      continuous-junit
-
-      Runs a typical continuous integration build including project dist,
-      and test artifacts
-      ====================================================================-->
-  <target name="continuous-junit" depends="build,publish"/>
-
-  <!-- Until CM-466 is fixed, hot-patch it -->
-  <target name="install-ivy" depends="subfloor.install-ivy">
-    <ivy:settings url="${ivy.settingsurl}"/>
-  </target>
-
-  <!-- Needs to handle dist-source and dist-javadoc targets multibuilds
-       These do nothing in an assembly build, so don't call out to subfloor
-    -->
-  <target name="dist-source" depends="dist"/>
-  <target name="dist-javadoc" depends="dist"/>
-  <target name="source.zip"/>
-  <target name="source.targz"/>
-  <target name="javadoc"/>
-  <target name="javadoc.zip"/>
-  <target name="javadoc.targz"/>
-  <target name="maven-publish-sources"/>
-
-
 </project>

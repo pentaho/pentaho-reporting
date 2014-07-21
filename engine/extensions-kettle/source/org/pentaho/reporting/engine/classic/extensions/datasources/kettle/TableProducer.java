@@ -29,7 +29,7 @@ import org.pentaho.di.trans.step.RowListener;
 import org.pentaho.reporting.engine.classic.core.ReportDataFactoryException;
 import org.pentaho.reporting.engine.classic.core.util.TypedTableModel;
 
-class TableProducer implements RowListener
+public class TableProducer implements RowListener
 {
   private TypedTableModel tableModel;
   private int rowsWritten;
@@ -40,7 +40,7 @@ class TableProducer implements RowListener
   private boolean firstCall;
   private boolean error;
 
-  TableProducer(final RowMetaInterface rowMeta, final int queryLimit, final boolean stopOnError)
+  public TableProducer(final RowMetaInterface rowMeta, final int queryLimit, final boolean stopOnError)
   {
     this.rowMeta = rowMeta;
     this.queryLimit = queryLimit;
@@ -110,17 +110,17 @@ class TableProducer implements RowListener
       }
       tableModel.addRow(dataRow);
     }
-    catch (KettleValueException kve)
+    catch (final KettleValueException kve)
     {
       throw new KettleStepException(kve);
     }
-    catch (Exception e)
+    catch (final Exception e)
     {
       throw new KettleStepException(e);
     }
   }
 
-  private TypedTableModel createTableModel(final RowMetaInterface rowMeta)
+  protected TypedTableModel createTableModel(final RowMetaInterface rowMeta)
   {
     final int colCount = rowMeta.size();
     final String fieldNames[] = new String[colCount];

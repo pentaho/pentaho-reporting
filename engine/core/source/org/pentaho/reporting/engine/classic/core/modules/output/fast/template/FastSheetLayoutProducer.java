@@ -34,23 +34,23 @@ import org.pentaho.reporting.engine.classic.core.modules.output.fast.FastExportT
 import org.pentaho.reporting.engine.classic.core.modules.output.table.base.SheetLayout;
 import org.pentaho.reporting.engine.classic.core.modules.output.table.base.TableLayoutProducer;
 import org.pentaho.reporting.engine.classic.core.states.DefaultPerformanceMonitorContext;
-import org.pentaho.reporting.engine.classic.core.util.InstanceID;
 
 public class FastSheetLayoutProducer implements FastExportTemplate
 {
   private OutputProcessorMetaData metaData;
   private SheetLayout sharedSheetLayout;
-  private HashSet<InstanceID> processedBands;
+  private HashSet<DynamicStyleKey> processedBands;
 
   public FastSheetLayoutProducer(final SheetLayout sharedSheetLayout)
   {
     this.sharedSheetLayout = sharedSheetLayout;
-    this.processedBands = new HashSet<InstanceID>();
+    this.processedBands = new HashSet<DynamicStyleKey>();
   }
 
   public void write(final Band band, final ExpressionRuntime runtime) throws InvalidReportStateException
   {
-    if (processedBands.contains(band.getObjectID()))
+    DynamicStyleKey dynamicStyleKey = DynamicStyleKey.create(band, runtime);
+    if (processedBands.contains(dynamicStyleKey))
     {
       return;
     }
@@ -63,7 +63,7 @@ public class FastSheetLayoutProducer implements FastExportTemplate
 
       FastSheetLayoutProducer.performLayout(band, runtime, op);
 
-      processedBands.add(band.getObjectID());
+      processedBands.add(dynamicStyleKey);
     }
     catch (ContentProcessingException e)
     {

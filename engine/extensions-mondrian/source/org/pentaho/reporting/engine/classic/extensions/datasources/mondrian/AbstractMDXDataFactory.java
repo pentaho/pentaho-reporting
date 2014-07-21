@@ -51,6 +51,7 @@ import mondrian.olap.type.NumericType;
 import mondrian.olap.type.SetType;
 import mondrian.olap.type.StringType;
 import mondrian.olap.type.Type;
+import mondrian.server.Statement;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.pentaho.reporting.engine.classic.core.AbstractDataFactory;
@@ -444,156 +445,20 @@ public abstract class AbstractMDXDataFactory extends AbstractDataFactory
         throw new ReportDataFactoryException("Factory is closed.");
       }
 
-      final Object queryTimeout = parameters.get(DataFactory.QUERY_TIMEOUT);
-      final int queryTimeoutValue;
-      if (queryTimeout instanceof Number)
-      {
-        final Number i = (Number) queryTimeout;
-        queryTimeoutValue = i.intValue();
-      }
-      else
-      {
-        // means unlimited ...
-        queryTimeoutValue = 0;
-      }
-
       final MDXCompiler compiler = new MDXCompiler(parameters, getLocale());
       final String mdxQuery = compiler.translateAndLookup(rawMdxQuery, parameters);
       // Alternatively, JNDI is possible. Maybe even more ..
       final Query query = connection.parseQuery(mdxQuery);
+      final Statement statement = query.getStatement();
+      final int queryTimeoutValue = calculateQueryTimeOut(parameters);
       if (queryTimeoutValue > 0)
       {
-        query.setQueryTimeoutMillis(queryTimeoutValue * 1000);
+        statement.setQueryTimeoutMillis(queryTimeoutValue * 1000);
       }
 
-      final Parameter[] parameterDefs = query.getParameters();
-      for (int i = 0; i < parameterDefs.length; i++)
-      {
-        final Parameter def = parameterDefs[i];
-        Object parameterValue = parameters.get(def.getName());
-        final Object processedParamValue;
-        final Type parameterType = def.getType();
+      parametrizeQuery(parameters, query);
 
-        // Mondrian doesn't handle null MemberType/SetType parameters well (http://jira.pentaho.com/browse/MONDRIAN-745)
-        // If parameterValue is null, give it the default value
-        try
-        {
-          if (parameterValue == null && (parameterType instanceof MemberType || parameterType instanceof SetType))
-          {
-            parameterValue = def.getDefaultExp().toString();
-          }
-        }
-        catch (Exception e)
-        {
-          // Ignore - this is a safety procedure anyway
-        }
-
-        if (parameterValue != null)
-        {
-
-          if (parameterType instanceof StringType)
-          {
-            if (!(parameterValue instanceof String))
-            {
-              throw new ReportDataFactoryException(parameterValue + " is incorrect for type " + parameterType);
-            }
-            processedParamValue = parameterValue;
-          }
-          else if (parameterType instanceof NumericType)
-          {
-            if (!(parameterValue instanceof Number))
-            {
-              throw new ReportDataFactoryException(parameterValue + " is incorrect for type " + parameterType);
-            }
-            processedParamValue = parameterValue;
-          }
-          else if (parameterType instanceof MemberType)
-          {
-            final MemberType memberType = (MemberType) parameterType;
-            final Hierarchy hierarchy = memberType.getHierarchy();
-            if (parameterValue instanceof String)
-            {
-              final Member member = findMember(query, hierarchy, query.getCube(), String.valueOf(parameterValue));
-              if (member != null)
-              {
-                processedParamValue = new MemberExpr(member);
-              }
-              else
-              {
-                processedParamValue = null;
-              }
-            }
-            else
-            {
-              if (!(parameterValue instanceof OlapElement))
-              {
-                throw new ReportDataFactoryException(parameterValue + " is incorrect for type " + parameterType);
-              }
-              else
-              {
-                processedParamValue = parameterValue;
-              }
-            }
-          }
-          else if (parameterType instanceof SetType)
-          {
-            final SetType setType = (SetType) parameterType;
-            final Hierarchy hierarchy = setType.getHierarchy();
-            if (parameterValue instanceof String)
-            {
-              final String rawString = (String) parameterValue;
-              final String[] memberStr = rawString.replaceFirst("^ *\\{", "").replaceFirst("} *$", "").split(",");
-              final List<Member> list = new ArrayList<Member>(memberStr.length);
-
-              for (int j = 0; j < memberStr.length; j++)
-              {
-                final String str = memberStr[j];
-                final Member member = findMember(query, hierarchy, query.getCube(), String.valueOf(str));
-                if (member != null)
-                {
-                  list.add(member);
-                }
-              }
-
-              processedParamValue = list;
-            }
-            else
-            {
-              if (!(parameterValue instanceof OlapElement))
-              {
-                throw new ReportDataFactoryException(parameterValue + " is incorrect for type " + parameterType);
-              }
-              else
-              {
-                processedParamValue = parameterValue;
-              }
-            }
-          }
-          else
-          {
-            processedParamValue = parameterValue;
-          }
-        }
-        else
-        {
-          processedParamValue = null;
-        }
-
-        // Mondrian allows null values to be passed in, so we'll go ahead and 
-        // convert null values to their defaults for now until MONDRIAN-745 is
-        // resolved.
-
-        final Exp exp = def.getDefaultExp();
-        if (processedParamValue == null && exp != null && exp instanceof Literal)
-        {
-          def.setValue(((Literal) exp).getValue());
-        }
-        else
-        {
-          def.setValue(processedParamValue);
-        }
-      }
-
+      //noinspection deprecation
       final Result resultSet = connection.execute(query);
       if (resultSet == null)
       {
@@ -605,6 +470,156 @@ public abstract class AbstractMDXDataFactory extends AbstractDataFactory
     {
       throw new ReportDataFactoryException("Failed to create datasource:" + e.getLocalizedMessage(), e);
     }
+  }
+
+  private void parametrizeQuery(final DataRow parameters, final Query query) throws ReportDataFactoryException
+  {
+    final Parameter[] parameterDefs = query.getParameters();
+    for (int i = 0; i < parameterDefs.length; i++)
+    {
+      final Parameter def = parameterDefs[i];
+      final Type parameterType = def.getType();
+      final Object parameterValue = preprocessMemberParameter(def, parameters, parameterType);
+      final Object processedParamValue = computeParameterValue(query, parameterValue, parameterType);
+
+      // Mondrian allows null values to be passed in, so we'll go ahead and
+      // convert null values to their defaults for now until MONDRIAN-745 is
+      // resolved.
+
+      final Exp exp = def.getDefaultExp();
+      if (processedParamValue == null && exp != null && exp instanceof Literal)
+      {
+        Literal exp1 = (Literal) exp;
+        def.setValue(exp1.getValue());
+      }
+      else
+      {
+        def.setValue(processedParamValue);
+      }
+    }
+  }
+
+  private Object preprocessMemberParameter(final Parameter def,
+                                           final DataRow parameters,
+                                           final Type parameterType)
+  {
+    Object parameterValue = parameters.get(def.getName());
+    // Mondrian doesn't handle null MemberType/SetType parameters well (http://jira.pentaho.com/browse/MONDRIAN-745)
+    // If parameterValue is null, give it the default value
+    if (parameterValue != null)
+    {
+      return parameterValue;
+    }
+    try
+    {
+      if (parameterType instanceof MemberType || parameterType instanceof SetType)
+      {
+        return def.getDefaultExp().toString();
+      }
+    }
+    catch (final Exception e)
+    {
+      // Ignore - this is a safety procedure anyway
+    }
+    return null;
+  }
+
+  private Object computeParameterValue(final Query query,
+                                       final Object parameterValue,
+                                       final Type parameterType) throws ReportDataFactoryException
+  {
+    final Object processedParamValue;
+    if (parameterValue != null)
+    {
+
+      if (parameterType instanceof StringType)
+      {
+        if (!(parameterValue instanceof String))
+        {
+          throw new ReportDataFactoryException(parameterValue + " is incorrect for type " + parameterType);
+        }
+        processedParamValue = parameterValue;
+      }
+      else if (parameterType instanceof NumericType)
+      {
+        if (!(parameterValue instanceof Number))
+        {
+          throw new ReportDataFactoryException(parameterValue + " is incorrect for type " + parameterType);
+        }
+        processedParamValue = parameterValue;
+      }
+      else if (parameterType instanceof MemberType)
+      {
+        final MemberType memberType = (MemberType) parameterType;
+        final Hierarchy hierarchy = memberType.getHierarchy();
+        if (parameterValue instanceof String)
+        {
+          final Member member = findMember(query, hierarchy, query.getCube(), String.valueOf(parameterValue));
+          if (member != null)
+          {
+            processedParamValue = new MemberExpr(member);
+          }
+          else
+          {
+            processedParamValue = null;
+          }
+        }
+        else
+        {
+          if (!(parameterValue instanceof OlapElement))
+          {
+            throw new ReportDataFactoryException(parameterValue + " is incorrect for type " + parameterType);
+          }
+          else
+          {
+            processedParamValue = parameterValue;
+          }
+        }
+      }
+      else if (parameterType instanceof SetType)
+      {
+        final SetType setType = (SetType) parameterType;
+        final Hierarchy hierarchy = setType.getHierarchy();
+        if (parameterValue instanceof String)
+        {
+          final String rawString = (String) parameterValue;
+          final String[] memberStr = rawString.replaceFirst("^ *\\{", "").replaceFirst("} *$", "").split(",");
+          final List<Member> list = new ArrayList<Member>(memberStr.length);
+
+          for (int j = 0; j < memberStr.length; j++)
+          {
+            final String str = memberStr[j];
+            final Member member = findMember(query, hierarchy, query.getCube(), String.valueOf(str));
+            if (member != null)
+            {
+              list.add(member);
+            }
+          }
+
+          processedParamValue = list;
+        }
+        else
+        {
+          if (!(parameterValue instanceof OlapElement))
+          {
+            throw new ReportDataFactoryException(parameterValue + " is incorrect for type " + parameterType);
+          }
+          else
+          {
+            processedParamValue = parameterValue;
+          }
+        }
+      }
+      else
+      {
+        processedParamValue = parameterValue;
+      }
+    }
+    else
+    {
+      processedParamValue = null;
+    }
+    return processedParamValue;
   }
 
   private Member findMember(final Query query,

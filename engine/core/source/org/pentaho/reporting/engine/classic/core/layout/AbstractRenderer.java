@@ -237,7 +237,7 @@ public abstract class AbstractRenderer implements Renderer
         processingContext.getOutputProcessorMetaData().isFeatureSupported(OutputProcessorFeature.DESIGNTIME) == false;
     this.wrapProgressMarkerInSection = "true".equals(metaData.getConfiguration().getConfigProperty
         ("org.pentaho.reporting.engine.classic.core.legacy.WrapProgressMarkerInSection"));
-    paragraphLineBreakStep.initialize(metaData);
+
     staticPropertiesStep.initialize(metaData, processingContext);
     canvasMinorAxisLayoutStep.initialize(metaData, processingContext);
     minorAxisLayoutStep.initialize(metaData);

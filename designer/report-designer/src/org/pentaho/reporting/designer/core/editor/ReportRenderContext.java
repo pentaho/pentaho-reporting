@@ -21,12 +21,14 @@ import java.awt.Image;
 import java.beans.BeanInfo;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
-import java.util.TreeSet;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 import org.pentaho.reporting.designer.core.Messages;
 import org.pentaho.reporting.designer.core.ReportDesignerBoot;
@@ -36,8 +38,12 @@ import org.pentaho.reporting.designer.core.auth.ReportAuthenticationStore;
 import org.pentaho.reporting.designer.core.editor.report.layouting.SharedElementRenderer;
 import org.pentaho.reporting.designer.core.inspections.AutoInspectionRunner;
 import org.pentaho.reporting.designer.core.inspections.InspectionResultListener;
+import org.pentaho.reporting.designer.core.inspections.InspectionRunner;
+import org.pentaho.reporting.designer.core.inspections.NoOpInspectionRunner;
 import org.pentaho.reporting.designer.core.model.ModelUtility;
-import org.pentaho.reporting.designer.core.model.ReportDataSchemaModel;
+import org.pentaho.reporting.designer.core.model.data.AsynchronousDataSchemaManager;
+import org.pentaho.reporting.designer.core.model.data.DataSchemaManager;
+import org.pentaho.reporting.designer.core.model.data.SynchronousDataSchemaManager;
 import org.pentaho.reporting.designer.core.model.selection.DefaultReportSelectionModel;
 import org.pentaho.reporting.designer.core.model.selection.DocumentContextSelectionModel;
 import org.pentaho.reporting.designer.core.util.undo.UndoManager;
@@ -50,6 +56,8 @@ import org.pentaho.reporting.engine.classic.core.RootLevelBand;
 import org.pentaho.reporting.engine.classic.core.Section;
 import org.pentaho.reporting.engine.classic.core.event.ReportModelEvent;
 import org.pentaho.reporting.engine.classic.core.event.ReportModelListener;
+import org.pentaho.reporting.engine.classic.core.wizard.ContextAwareDataSchemaModel;
+import org.pentaho.reporting.libraries.base.util.ArgumentNullException;
 import org.pentaho.reporting.libraries.base.util.IOUtils;
 import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
 import org.pentaho.reporting.libraries.base.util.StringUtils;
@@ -69,7 +77,7 @@ public class ReportRenderContext implements ReportDocumentContext
   {
     private ReportRenderContext context;
 
-    protected ReportNameUpdateHandler(ReportRenderContext context)
+    protected ReportNameUpdateHandler(final ReportRenderContext context)
     {
       this.context = context;
       this.context.setTabName(computeTabName(this.context.getReportDefinition()));
@@ -145,7 +153,7 @@ public class ReportRenderContext implements ReportDocumentContext
         if (element instanceof Element)
         {
           final List<Element> selectedElements = selectionModel.getSelectedElementsOfType(Element.class);
-          for (Element selectedElement : selectedElements)
+          for (final Element selectedElement : selectedElements)
           {
             if (ModelUtility.isDescendant(reportDefinition, selectedElement) == false)
             {
@@ -175,24 +183,31 @@ public class ReportRenderContext implements ReportDocumentContext
     }
   }
 
+  private class DataSchemaManagerUpdateHandler implements ChangeListener {
+    public void stateChanged(final ChangeEvent e)
+    {
+      fireDataSourceChangedEvent();
+    }
+  }
+
   private static final String AUTHENTICATION_STORE_PROPERTY = "authentication-store";
 
-  private PropertyChangeSupport propertyChangeSupport;
-  private SharedElementRenderer sharedRenderer;
-  private TreeSet<Integer> expandedNodes;
-  private long changeTracker;
-  private ZoomModel zoomModel;
-  private MasterReport masterReportElement;
-  private AbstractReportDefinition reportDefinition;
-  private DocumentContextSelectionModel selectionModel;
-  private UndoManager undo;
-  private ReportDataSchemaModel reportDataSchemaModel;
-  private AutoInspectionRunner inspectionRunner;
-  private NodeDeleteListener deleteListener;
-  private HashMap<String, Object> properties;
-  private boolean bandedContext;
+  private final PropertyChangeSupport propertyChangeSupport;
+  private final SharedElementRenderer sharedRenderer;
+  private final ZoomModel zoomModel;
+  private final MasterReport masterReportElement;
+  private final AbstractReportDefinition reportDefinition;
+  private final DocumentContextSelectionModel selectionModel;
+  private final InspectionRunner inspectionRunner;
+  private final UndoManager undo;
+  private final NodeDeleteListener deleteListener;
+  private final HashMap<String, Object> properties;
+  private final DataSchemaManager dataSchemaManager;
+  private final boolean bandedContext;
+  private final ArrayList<ReportDataChangeListener> dataChangeListeners;
   private String tabName;
   private Icon icon;
+  private long changeTracker;
 
   public ReportRenderContext(final MasterReport masterReport)
   {
@@ -222,6 +237,7 @@ public class ReportRenderContext implements ReportDocumentContext
       throw new NullPointerException();
     }
 
+    this.dataChangeListeners = new ArrayList<ReportDataChangeListener>();
     this.propertyChangeSupport = new PropertyChangeSupport(this);
 
     this.selectionModel = new DefaultReportSelectionModel();
@@ -233,28 +249,24 @@ public class ReportRenderContext implements ReportDocumentContext
     this.reportDefinition.addReportModelListener(deleteListener);
     this.reportDefinition.addReportModelListener(new ReportNameUpdateHandler(this));
 
-    this.expandedNodes = new TreeSet<Integer>();
-
     this.zoomModel = new ZoomModel();
     this.zoomModel.addZoomModelListener(new ZoomUpdateHandler());
 
     this.bandedContext = computeBandedContext(parentContext);
 
-    this.reportDataSchemaModel = new ReportDataSchemaModel(masterReportElement, report);
+    this.dataSchemaManager = new AsynchronousDataSchemaManager(masterReportElement, report);
+    this.dataSchemaManager.addChangeListener(new DataSchemaManagerUpdateHandler());
+
     if (!computationTarget)
     {
       this.inspectionRunner = new AutoInspectionRunner(this);
       this.reportDefinition.addReportModelListener(inspectionRunner);
-
-      final Object o = this.reportDefinition.getAttribute(ReportDesignerBoot.DESIGNER_NAMESPACE, "undo"); // NON-NLS
-      if (o instanceof UndoManager)
-      {
-        this.undo = (UndoManager) o;
-      }
-      else
-      {
-        this.undo = new UndoManager();
-      }
+      this.undo = createUndoManager();
+    }
+    else
+    {
+      this.inspectionRunner = NoOpInspectionRunner.INSTANCE;
+      this.undo = null;
     }
 
     final Object f = this.reportDefinition.getAttribute(ReportDesignerBoot.DESIGNER_NAMESPACE, ReportDesignerBoot.ZOOM);
@@ -278,8 +290,19 @@ public class ReportRenderContext implements ReportDocumentContext
 
     prepareAuthenticationStore(globalAuthenticationStore);
     prepareIcon();
+  }
 
-
+  private UndoManager createUndoManager()
+  {
+    final Object o = this.reportDefinition.getAttribute(ReportDesignerBoot.DESIGNER_NAMESPACE, "undo"); // NON-NLS
+    if (o instanceof UndoManager)
+    {
+      return (UndoManager) o;
+    }
+    else
+    {
+      return new UndoManager();
+    }
   }
 
   private void prepareAuthenticationStore(final GlobalAuthenticationStore globalAuthenticationStore)
@@ -301,6 +324,28 @@ public class ReportRenderContext implements ReportDocumentContext
     else
     {
       icon = null;
+    }
+  }
+
+  public void addReportDataChangeListener(final ReportDataChangeListener l)
+  {
+    ArgumentNullException.validate("l", l);
+    dataChangeListeners.add(l);
+  }
+
+  public void removeReportDataChangeListener(final ReportDataChangeListener l)
+  {
+    ArgumentNullException.validate("l", l);
+    dataChangeListeners.remove(l);
+  }
+
+  protected void fireDataSourceChangedEvent() {
+    if (dataChangeListeners.isEmpty()) {
+      return;
+    }
+    for (final ReportDataChangeListener listener : dataChangeListeners)
+    {
+      listener.dataModelChanged(this);
     }
   }
 
@@ -351,12 +396,12 @@ public class ReportRenderContext implements ReportDocumentContext
     return selectionModel;
   }
 
-  public ReportDataSchemaModel getReportDataSchemaModel()
+  public ContextAwareDataSchemaModel getReportDataSchemaModel()
   {
-    return reportDataSchemaModel;
+    return dataSchemaManager.getModel();
   }
 
-  public AutoInspectionRunner getInspectionRunner()
+  protected InspectionRunner getInspectionRunner()
   {
     return inspectionRunner;
   }
@@ -381,6 +426,7 @@ public class ReportRenderContext implements ReportDocumentContext
     return reportDefinition;
   }
 
+  @Deprecated
   public PageDefinition getPageDefinition()
   {
     return masterReportElement.getPageDefinition();
@@ -408,11 +454,9 @@ public class ReportRenderContext implements ReportDocumentContext
 
   public void dispose()
   {
-    if (inspectionRunner != null)
-    {
-      this.inspectionRunner.dispose();
-      this.reportDefinition.removeReportModelListener(inspectionRunner);
-    }
+    this.dataSchemaManager.close();
+    this.inspectionRunner.dispose();
+    this.reportDefinition.removeReportModelListener(inspectionRunner);
     this.reportDefinition.removeReportModelListener(deleteListener);
   }
 
@@ -434,21 +478,6 @@ public class ReportRenderContext implements ReportDocumentContext
   public HashMap<String, Object> getProperties()
   {
     return properties;
-  }
-
-  public void addExpandedNode(final int aRow)
-  {
-    expandedNodes.add(aRow);
-  }
-
-  public void removeExpandedNode(final int aRow)
-  {
-    expandedNodes.remove(aRow);
-  }
-
-  public Object[] getExpandedNodes()
-  {
-    return expandedNodes.toArray();
   }
 
   public AuthenticationStore getAuthenticationStore()

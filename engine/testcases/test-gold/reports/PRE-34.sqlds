@@ -8,7 +8,7 @@
         xmlns:html="http://www.w3.org/1999/xhtml">
   <connection>
     <driver>org.hsqldb.jdbcDriver</driver>
-    <url>jdbc:hsqldb:./sql/sampledata</url>
+    <url>jdbc:hsqldb:mem:SampleData</url>
     <properties>
       <property name="user">sa</property>
       <property name="pass"></property>

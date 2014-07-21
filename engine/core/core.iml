@@ -67,6 +67,7 @@
         <jarDirectory url="file://$MODULE_DIR$/test-lib" recursive="false" type="SOURCES" />
       </library>
     </orderEntry>
+    <orderEntry type="library" name="jdbc" level="application" />
   </component>
   <component name="copyright">
     <Base>

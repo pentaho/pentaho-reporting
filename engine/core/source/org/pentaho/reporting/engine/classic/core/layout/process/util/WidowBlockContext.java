@@ -87,9 +87,9 @@ public class WidowBlockContext implements WidowContext
       if (widowCount < widows && widows > 0)
       {
         widowSize.add(box);
-        widowCount += 1;
         box.setRestrictFinishedClearOut(RenderBox.RestrictFinishClearOut.LEAF);
       }
+      widowCount += 1;
       currentNode = null;
     }
 
@@ -105,9 +105,8 @@ public class WidowBlockContext implements WidowContext
     {
       widowSize.add(box);
       box.getParent().setRestrictFinishedClearOut(RenderBox.RestrictFinishClearOut.RESTRICTED);
-      widowCount += 1;
     }
-
+    widowCount += box.getWidowLeafCount();
 
     currentNode = null;
     if (parent != null)
@@ -155,6 +154,7 @@ public class WidowBlockContext implements WidowContext
     }
     box.setWidowConstraintSizeWithKeepTogether(constraintSize);
     box.setWidowConstraintSize(box.getCachedY2() - widowValue);
+    box.setWidowLeafCount(widowCount);
 
     if (breakMarkerSeen == false && box.isInvalidWidowOrphanNode() == false)
     {

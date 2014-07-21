@@ -42,6 +42,7 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.table.TableCellEditor;
 
 import org.pentaho.reporting.designer.core.ReportDesignerContext;
+import org.pentaho.reporting.designer.core.editor.ReportDataChangeListener;
 import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
 import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
 import org.pentaho.reporting.designer.core.util.IconLoader;
@@ -56,7 +57,7 @@ import org.pentaho.reporting.libraries.designtime.swing.propertyeditors.TagListT
  * @author Ezequiel Cuellar
  */
 
-public class SubReportParameterDialog extends CommonDialog
+public class SubReportParameterDialog extends CommonDialog implements ReportDataChangeListener
 {
   public static class EditResult
   {
@@ -145,6 +146,8 @@ public class SubReportParameterDialog extends CommonDialog
   private TagListTableCellEditor importOuterTableCellEditor;
   private TagListTableCellEditor exportInnerTableCellEditor;
   private TagListTableCellEditor exportOuterTableCellEditor;
+  private ReportDocumentContext activeReportContext;
+  private ReportDocumentContext parentReportContext;
 
   public SubReportParameterDialog()
   {
@@ -235,23 +238,53 @@ public class SubReportParameterDialog extends CommonDialog
     return mainPanel;
   }
 
+  public void dataModelChanged(final ReportDocumentContext context)
+  {
+    configureEditors();
+  }
+
   public EditResult performEdit(final ReportDesignerContext context,
                                 final ParameterMapping[] importParameters,
                                 final ParameterMapping[] exportParameters)
   {
-    configureEditors(context);
-
-    final ParameterMappingTableModel importModel = (ParameterMappingTableModel) importTable.getModel();
-    importModel.setMappings(importParameters);
-
-    final ParameterMappingTableModel exportModel = (ParameterMappingTableModel) exportTable.getModel();
-    exportModel.setMappings(exportParameters);
-
-    if (performEdit() == false)
+    try
     {
-      return null;
+      this.activeReportContext = context.getActiveContext();
+      if (activeReportContext == null)
+      {
+        throw new IllegalStateException("ActiveContext should not be null when editing a report.");
+      }
+      this.activeReportContext.addReportDataChangeListener(this);
+
+      this.parentReportContext = findParentContext(context);
+      if (this.parentReportContext != null)
+      {
+        this.parentReportContext.addReportDataChangeListener(this);
+      }
+
+      configureEditors();
+
+      final ParameterMappingTableModel importModel = (ParameterMappingTableModel) importTable.getModel();
+      importModel.setMappings(importParameters);
+
+      final ParameterMappingTableModel exportModel = (ParameterMappingTableModel) exportTable.getModel();
+      exportModel.setMappings(exportParameters);
+
+      if (performEdit() == false)
+      {
+        return null;
+      }
+      return saveParameters();
     }
-    return saveParameters();
+    finally
+    {
+      if (activeReportContext != null) {
+        activeReportContext.removeReportDataChangeListener(this);
+      }
+      if (parentReportContext != null) {
+        parentReportContext.removeReportDataChangeListener(this);
+      }
+    }
   }
 
   private String[] add(final String value, final String[] base)
@@ -262,19 +295,27 @@ public class SubReportParameterDialog extends CommonDialog
     return tmp.toArray(new String[tmp.size()]);
   }
 
-  private String[] collectParentContextFields(final ReportDesignerContext context)
+  private String[] collectParentContextFields()
   {
+    if (parentReportContext == null)
+    {
+      return new String[0];
+    }
+    return parentReportContext.getReportDataSchemaModel().getColumnNames();
+  }
 
+  private ReportDocumentContext findParentContext(final ReportDesignerContext context)
+  {
     final ReportDocumentContext activeContext = context.getActiveContext();
     final Section parentSection = activeContext.getReportDefinition().getParentSection();
     if (parentSection == null)
     {
-      return new String[0];
+      return null;
     }
     final ReportDefinition parentReport = parentSection.getReportDefinition();
     if (parentReport == null)
     {
-      return new String[0];
+      return null;
     }
 
     final int contextCount = context.getReportRenderContextCount();
@@ -283,26 +324,15 @@ public class SubReportParameterDialog extends CommonDialog
       final ReportRenderContext contextAt = context.getReportRenderContext(i);
       if (parentReport == contextAt.getReportDefinition())
       {
-        return contextAt.getReportDataSchemaModel().getColumnNames();
+        return contextAt;
       }
     }
-    return new String[0];
+    return null;
   }
 
-  private void configureEditors(final ReportDesignerContext context)
+  private void configureEditors()
   {
-    if (context == null)
-    {
-      return;
-    }
-
-    final ReportDocumentContext activeContext = context.getActiveContext();
-    if (activeContext == null)
-    {
-      return;
-    }
-
-    String[] parentNames = collectParentContextFields(context);
+    String[] parentNames = collectParentContextFields();
     importOuterTableCellEditor.setTags(add("*", parentNames));
     exportOuterTableCellEditor.setTags(parentNames);
 
@@ -310,7 +340,7 @@ public class SubReportParameterDialog extends CommonDialog
     // list for both the import and export panels
     List<String> columnNames = new ArrayList<String>();
     columnNames.add("*");
-    columnNames.addAll(Arrays.asList(activeContext.getReportDataSchemaModel().getColumnNames()));
+    columnNames.addAll(Arrays.asList(activeReportContext.getReportDataSchemaModel().getColumnNames()));
 
     List<String> l = new LinkedList<String>(Arrays.asList(parentNames));
     l.removeAll(columnNames);

@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="Encoding" useUTFGuessing="true" native2AsciiForPropertiesFiles="false" defaultCharsetForPropertiesFiles="ISO-8859-1">
+    <file url="file://$PROJECT_DIR$/engine/extensions-pentaho-metadata/test/org/pentaho/reporting/engine/classic/extensions/datasources/pmd/design-time-query-results.txt" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/engine/extensions-pentaho-metadata/test/org/pentaho/reporting/engine/classic/extensions/datasources/pmd/query-results-2.txt" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/engine/extensions-pentaho-metadata/test/org/pentaho/reporting/engine/classic/extensions/datasources/pmd/query-results.txt" charset="UTF-8" />
     <file url="PROJECT" charset="US-ASCII" />
   </component>
 </project>

@@ -55,6 +55,12 @@ public class TypedMetaTableModel extends TypedTableModel implements MetaTableMod
     tableMetaData = new DefaultTableMetaData(columnNames.length);
   }
 
+  public void addColumn(final String name, final Class<?> type)
+  {
+    super.addColumn(name, type);
+    tableMetaData.addColumn();
+  }
+
   public DataAttributes getCellDataAttributes(final int row, final int column)
   {
     return EmptyDataAttributes.INSTANCE;

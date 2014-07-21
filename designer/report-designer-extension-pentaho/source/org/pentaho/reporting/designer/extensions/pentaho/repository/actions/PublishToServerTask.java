@@ -1,13 +1,18 @@
 package org.pentaho.reporting.designer.extensions.pentaho.repository.actions;
 
 import java.awt.Component;
+import java.awt.Cursor;
+
 import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.commons.vfs.FileObject;
 import org.pentaho.reporting.designer.core.ReportDesignerBoot;
 import org.pentaho.reporting.designer.core.ReportDesignerContext;
 import org.pentaho.reporting.designer.core.auth.AuthenticationData;
+import org.pentaho.reporting.designer.core.util.exceptions.UncaughtExceptionsModel;
 import org.pentaho.reporting.designer.extensions.pentaho.repository.Messages;
 import org.pentaho.reporting.designer.extensions.pentaho.repository.util.PublishUtil;
 import org.pentaho.reporting.engine.classic.core.AttributeNames;
@@ -15,6 +20,7 @@ import org.pentaho.reporting.engine.classic.core.MasterReport;
 import org.pentaho.reporting.libraries.docbundle.DocumentMetaData;
 import org.pentaho.reporting.libraries.docbundle.ODFMetaAttributeNames;
 import org.pentaho.reporting.libraries.docbundle.WriteableDocumentMetaData;
+import org.pentaho.reporting.libraries.pensol.JCRSolutionFileSystem;
 
 public class PublishToServerTask implements AuthenticatedServerTask
 {
@@ -66,6 +72,21 @@ public class PublishToServerTask implements AuthenticatedServerTask
       int responseCode = PublishUtil.publish(data, selectedReport, loginData);
       
       if (responseCode == 200) {
+        final Component glassPane = SwingUtilities.getRootPane(uiContext).getGlassPane();
+        try {
+          glassPane.setVisible(true);
+          glassPane.setCursor(new Cursor(Cursor.WAIT_CURSOR));
+
+          FileObject fileSystemRoot = PublishUtil.createVFSConnection(loginData);
+          final JCRSolutionFileSystem fileSystem = (JCRSolutionFileSystem) fileSystemRoot.getFileSystem();
+          fileSystem.getLocalFileModel().refresh();
+        } catch (Exception e1) {
+          UncaughtExceptionsModel.getInstance().addException(e1);
+        }
+        finally {
+          glassPane.setVisible(false);
+          glassPane.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));          
+        }
         if (JOptionPane.showConfirmDialog(uiContext,
             Messages.getInstance().getString("PublishToServerAction.Successful.LaunchNow"),
             Messages.getInstance().getString("PublishToServerAction.Successful.LaunchTitle"),

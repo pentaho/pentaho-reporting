@@ -10,6 +10,7 @@
     <conf name="runtime"/>
     <conf name="drivers"/>
     <conf name="plugin"/>
+    <conf name="oss-licenses" />
   </configurations>
 
   <publications>
@@ -141,6 +142,10 @@
 		<artifact name="report_designer_user_guide" type="pdf" />
 	</dependency>
 	
+    <!--  OSS Licenses file -->
+    <dependency org="pentaho" name="oss-licenses" rev="${dependency.oss-licenses.revision}" conf="oss-licenses->default">
+	   <artifact name="oss-licenses" type="zip" />
+    </dependency>
 
     <!-- Prevent the inclusion of jars that should not make it into the final assembly -->
     <exclude org="javax.servlet" module="servlet-api"/>
