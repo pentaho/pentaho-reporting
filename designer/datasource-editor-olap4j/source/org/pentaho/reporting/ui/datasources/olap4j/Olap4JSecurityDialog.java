@@ -24,24 +24,19 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.HeadlessException;
 import java.awt.Insets;
-import java.util.Locale;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import org.pentaho.reporting.engine.classic.core.designtime.DesignTimeContext;
-import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
-import org.pentaho.reporting.libraries.base.util.ResourceBundleSupport;
 import org.pentaho.reporting.libraries.base.util.StringUtils;
 import org.pentaho.reporting.libraries.designtime.swing.CommonDialog;
-import org.pentaho.reporting.ui.datasources.jdbc.JdbcDataSourceModule;
 
 public class Olap4JSecurityDialog extends CommonDialog
 {
   private JComboBox roleFieldBox;
   private JComboBox jdbcUserFieldBox;
   private JComboBox jdbcPasswordFieldBox;
-  private ResourceBundleSupport bundleSupport;
 
   public Olap4JSecurityDialog(final DesignTimeContext context)
       throws HeadlessException
@@ -65,10 +60,7 @@ public class Olap4JSecurityDialog extends CommonDialog
 
   protected void init(final DesignTimeContext context)
   {
-    this.bundleSupport = new ResourceBundleSupport(Locale.getDefault(), JdbcDataSourceModule.MESSAGES,
-        ObjectUtilities.getClassLoader(JdbcDataSourceModule.class));
-
-    setTitle(bundleSupport.getString("Olap4JSecurityDialog.Title"));
+    setTitle(Messages.getString("Olap4JSecurityDialog.Title"));
 
     final String[] reportFields = context.getDataSchemaModel().getColumnNames();
     jdbcPasswordFieldBox = new JComboBox(reportFields);
@@ -100,7 +92,7 @@ public class Olap4JSecurityDialog extends CommonDialog
     gbc.fill = GridBagConstraints.HORIZONTAL;
     gbc.weightx = 1;
     gbc.insets = new Insets(5, 5, 5, 5);
-    contentPane.add(new JLabel(bundleSupport.getString("Olap4JSecurityDialog.Role.FieldValue")), gbc);
+    contentPane.add(new JLabel(Messages.getString("Olap4JSecurityDialog.Role.FieldValue")), gbc);
 
     gbc = new GridBagConstraints();
     gbc.gridx = 1;
@@ -116,7 +108,7 @@ public class Olap4JSecurityDialog extends CommonDialog
     gbc.fill = GridBagConstraints.HORIZONTAL;
     gbc.weightx = 1;
     gbc.insets = new Insets(5, 5, 5, 5);
-    contentPane.add(new JLabel(bundleSupport.getString("Olap4JSecurityDialog.JDBCUser.FieldValue")), gbc);
+    contentPane.add(new JLabel(Messages.getString("Olap4JSecurityDialog.JDBCUser.FieldValue")), gbc);
 
     gbc = new GridBagConstraints();
     gbc.gridx = 1;
@@ -132,7 +124,7 @@ public class Olap4JSecurityDialog extends CommonDialog
     gbc.fill = GridBagConstraints.HORIZONTAL;
     gbc.weightx = 1;
     gbc.insets = new Insets(5, 5, 5, 5);
-    contentPane.add(new JLabel(bundleSupport.getString("Olap4JSecurityDialog.JDBCPassword.FieldValue")), gbc);
+    contentPane.add(new JLabel(Messages.getString("Olap4JSecurityDialog.JDBCPassword.FieldValue")), gbc);
 
     gbc = new GridBagConstraints();
     gbc.gridx = 1;
