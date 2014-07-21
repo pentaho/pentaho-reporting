@@ -689,8 +689,8 @@ public abstract class Olap4JDataSourceEditor extends CommonDialog
     dialogContent.add(BorderLayout.CENTER, queryContentPanel);
 
     final JTabbedPane tabbedPane = new JTabbedPane();
-    tabbedPane.addTab(Messages.getString("MondrianDataSourceEditor.DataSource"), dialogContent);
-    tabbedPane.addTab(Messages.getString("MondrianDataSourceEditor.GlobalScripting"), createGlobalScriptTab());
+    tabbedPane.addTab(Messages.getString("Olap4JDataSourceEditor.DataSource"), dialogContent);
+    tabbedPane.addTab(Messages.getString("Olap4JDataSourceEditor.GlobalScripting"), createGlobalScriptTab());
 
     final JPanel contentPane = new JPanel(new BorderLayout());
     contentPane.add(BorderLayout.SOUTH, createPreviewButtonsPanel());
