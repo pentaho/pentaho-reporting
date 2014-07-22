@@ -73,11 +73,11 @@
     <attribute namespace="http://reporting.pentaho.org/namespaces/engine/attributes/crosstab"
                name="normalization-mode"
                mandatory="false"
-               expert="false"
+               expert="true"
                hidden="false"
-               preferred="true"
+               preferred="false"
                design-time-value="true"
-               computed="true"
+               computed="false"
                value-type="org.pentaho.reporting.engine.classic.core.CrosstabNormalizationMode"
                value-role="Value"
                propertyEditor="org.pentaho.reporting.engine.classic.core.metadata.propertyeditors.CrosstabNormalizationModePropertyEditor"/>
@@ -89,7 +89,7 @@
                hidden="false"
                preferred="true"
                design-time-value="true"
-               computed="true"
+               computed="false"
                value-type="org.pentaho.reporting.engine.classic.core.CrosstabDetailMode"
                value-role="Value"
                propertyEditor="org.pentaho.reporting.engine.classic.core.metadata.propertyeditors.CrosstabDetailModePropertyEditor"/>
@@ -101,7 +101,7 @@
                hidden="false"
                preferred="true"
                design-time-value="true"
-               computed="true"
+               computed="false"
                value-type="java.lang.Boolean"
                value-role="Value"/>
 
@@ -112,7 +112,7 @@
                hidden="false"
                preferred="true"
                design-time-value="true"
-               computed="true"
+               computed="false"
                value-type="java.lang.Boolean"
                value-role="Value"/>
 
@@ -123,7 +123,7 @@
                hidden="false"
                preferred="true"
                design-time-value="true"
-               computed="true"
+               computed="false"
                value-type="[Ljava.lang.String;"
                value-role="Field"/>
 
@@ -151,7 +151,7 @@
                expert="false"
                hidden="false"
                design-time-value="true"
-               computed="true"
+               computed="false"
                value-type="java.lang.String"
                value-role="Field"/>
 
@@ -195,7 +195,7 @@
                hidden="false"
                preferred="true"
                design-time-value="true"
-               computed="true"
+               computed="false"
                value-type="java.lang.Integer"
                value-role="Value"/>
 
@@ -206,7 +206,7 @@
                hidden="false"
                preferred="true"
                design-time-value="true"
-               computed="true"
+               computed="false"
                value-type="org.pentaho.reporting.engine.classic.core.CrosstabHeaderMode"
                value-role="Value"
                propertyEditor="org.pentaho.reporting.engine.classic.core.metadata.propertyeditors.CrosstabHeaderModePropertyEditor"/>
@@ -218,7 +218,7 @@
                hidden="false"
                preferred="true"
                design-time-value="true"
-               computed="true"
+               computed="false"
                value-type="org.pentaho.reporting.engine.classic.core.CrosstabSummaryPosition"
                value-role="Value"
                propertyEditor="org.pentaho.reporting.engine.classic.core.metadata.propertyeditors.CrosstabSummaryPositionPropertyEditor"/>
@@ -230,7 +230,7 @@
                hidden="false"
                preferred="true"
                design-time-value="true"
-               computed="true"
+               computed="false"
                value-type="java.lang.Boolean"
                value-role="Field"/>
 
@@ -240,7 +240,7 @@
                expert="false"
                hidden="false"
                design-time-value="true"
-               computed="true"
+               computed="false"
                value-type="java.lang.String"
                value-role="Field"/>
 
@@ -286,7 +286,7 @@
                hidden="false"
                preferred="true"
                design-time-value="true"
-               computed="true"
+               computed="false"
                value-type="org.pentaho.reporting.engine.classic.core.CrosstabHeaderMode"
                value-role="Value"
                propertyEditor="org.pentaho.reporting.engine.classic.core.metadata.propertyeditors.CrosstabHeaderModePropertyEditor"/>
@@ -298,7 +298,7 @@
                hidden="false"
                preferred="true"
                design-time-value="true"
-               computed="true"
+               computed="false"
                value-type="org.pentaho.reporting.engine.classic.core.CrosstabSummaryPosition"
                value-role="Value"
                propertyEditor="org.pentaho.reporting.engine.classic.core.metadata.propertyeditors.CrosstabSummaryPositionPropertyEditor"/>
@@ -310,7 +310,7 @@
                hidden="false"
                preferred="true"
                design-time-value="true"
-               computed="true"
+               computed="false"
                value-type="java.lang.Boolean"
                value-role="Field"/>
 
@@ -320,7 +320,7 @@
                expert="false"
                hidden="false"
                design-time-value="true"
-               computed="true"
+               computed="false"
                value-type="java.lang.String"
                value-role="Field"/>
 
@@ -382,7 +382,7 @@
                hidden="false"
                preferred="true"
                design-time-value="true"
-               computed="true"
+               computed="false"
                value-type="java.lang.String"
                value-role="Field"/>
 
@@ -393,7 +393,7 @@
                hidden="false"
                preferred="true"
                design-time-value="true"
-               computed="true"
+               computed="false"
                value-type="java.lang.String"
                value-role="Field"/>
 
