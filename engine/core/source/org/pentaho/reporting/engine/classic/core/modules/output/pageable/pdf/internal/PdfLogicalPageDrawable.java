@@ -349,8 +349,8 @@ public class PdfLogicalPageDrawable extends LogicalPageDrawable
     final long posY = renderableText.getY();
     final float x1 = (float) (StrictGeomUtility.toExternalValue(posX));
 
-    final boolean hasRotation = RotationUtils.hasRotation( renderableText.getParent() )
-        || ( renderableText.getParent() != null && RotationUtils.hasRotation( renderableText.getParent().getParent() ) );
+    final boolean hasRotation = false;/* RotationUtils.hasRotation( renderableText.getParent() )
+        || ( renderableText.getParent() != null && RotationUtils.hasRotation( renderableText.getParent().getParent() ) );*/
     float[] rotationMatrix = null;
 
 
