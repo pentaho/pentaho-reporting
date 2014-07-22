@@ -33,8 +33,6 @@ import org.pentaho.reporting.engine.classic.core.wizard.DefaultDataAttributeCont
 public class LabelType extends AbstractElementType
 {
   public static final ElementType INSTANCE = new LabelType();
-  
-  private boolean isPdf;
 
   public LabelType()
   {
@@ -67,7 +65,7 @@ public class LabelType extends AbstractElementType
     }
     final float rotation = RotationUtils.getRotation(element);
 
-    isPdf = isPdf || AbstractReportProcessor.isPdf.get() == null || AbstractReportProcessor.isPdf.get();
+    final boolean isPdf = AbstractReportProcessor.isPdf.get() == null || AbstractReportProcessor.isPdf.get();
 
     return rotation == RotationUtils.NO_ROTATION ? String.valueOf(retval) :
       isPdf ? new ReportDrawableRotatedComponent( String.valueOf(retval), rotation, element ) : String.valueOf(retval);

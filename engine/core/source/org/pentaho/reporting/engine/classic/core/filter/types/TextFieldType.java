@@ -30,8 +30,6 @@ import org.pentaho.reporting.engine.classic.core.util.RotationUtils;
 public class TextFieldType extends AbstractElementType
 {
   public static final ElementType INSTANCE = new TextFieldType();
-  
-  private boolean isPdf;
 
   public TextFieldType()
   {
@@ -81,7 +79,7 @@ public class TextFieldType extends AbstractElementType
 
     final float rotation = RotationUtils.getRotation(element);
     
-    isPdf = isPdf || AbstractReportProcessor.isPdf.get() == null || AbstractReportProcessor.isPdf.get();
+    final boolean isPdf = AbstractReportProcessor.isPdf.get() == null || AbstractReportProcessor.isPdf.get();
 
     return rotation == RotationUtils.NO_ROTATION ? String.valueOf(retval) :
       isPdf ? new ReportDrawableRotatedComponent( String.valueOf(retval), rotation, element ) : String.valueOf(retval);

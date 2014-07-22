@@ -40,8 +40,6 @@ public class NumberFieldType extends AbstractElementType implements RawDataSourc
           "#########################################################" +
           "#########################################################" +
           "#########################################################";
-  
-  private boolean isPdf;
 
   public static class NumberFieldTypeContext
   {
@@ -213,7 +211,7 @@ public class NumberFieldType extends AbstractElementType implements RawDataSourc
 
       final float rotation = RotationUtils.getRotation(element);
 
-      isPdf = isPdf || AbstractReportProcessor.isPdf.get() == null || AbstractReportProcessor.isPdf.get();
+      final boolean isPdf = AbstractReportProcessor.isPdf.get() == null || AbstractReportProcessor.isPdf.get();
 
       return rotation == RotationUtils.NO_ROTATION ? value :
         isPdf ? new ReportDrawableRotatedComponent( value, rotation, element ) : value;
