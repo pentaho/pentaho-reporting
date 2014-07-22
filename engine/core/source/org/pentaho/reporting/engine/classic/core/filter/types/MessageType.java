@@ -32,6 +32,8 @@ import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
 public class MessageType extends AbstractElementType
 {
   public static final MessageType INSTANCE = new MessageType();
+  
+  private boolean isPdf;
 
   public static class MessageTypeContext
   {
@@ -109,7 +111,7 @@ public class MessageType extends AbstractElementType
 
     final float rotation = RotationUtils.getRotation(element);
 
-    final boolean isPdf = AbstractReportProcessor.isPdf.get() == null || AbstractReportProcessor.isPdf.get();
+    isPdf = isPdf || AbstractReportProcessor.isPdf.get() == null || AbstractReportProcessor.isPdf.get();
 
     return rotation == RotationUtils.NO_ROTATION ? valueAsString :
       isPdf ? new ReportDrawableRotatedComponent( valueAsString, rotation, element ) : valueAsString;

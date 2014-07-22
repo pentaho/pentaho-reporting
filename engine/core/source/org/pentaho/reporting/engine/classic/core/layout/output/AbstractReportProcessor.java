@@ -34,6 +34,7 @@ import org.pentaho.reporting.engine.classic.core.event.ReportProgressListener;
 import org.pentaho.reporting.engine.classic.core.function.OutputFunction;
 import org.pentaho.reporting.engine.classic.core.layout.AbstractRenderer;
 import org.pentaho.reporting.engine.classic.core.layout.Renderer;
+import org.pentaho.reporting.engine.classic.core.modules.output.pageable.graphics.internal.GraphicsOutputProcessor;
 import org.pentaho.reporting.engine.classic.core.modules.output.pageable.pdf.PdfOutputProcessor;
 import org.pentaho.reporting.engine.classic.core.states.CollectingReportErrorHandler;
 import org.pentaho.reporting.engine.classic.core.states.IgnoreEverythingReportErrorHandler;
@@ -459,6 +460,8 @@ public abstract class AbstractReportProcessor implements ReportProcessor
     }
 
     final long start = System.currentTimeMillis();
+    
+    isPdf.set(this.outputProcessor instanceof PdfOutputProcessor || this.outputProcessor instanceof GraphicsOutputProcessor);
 
     // every report processing starts with an StartState.
     final DefaultProcessingContext processingContext = createProcessingContext();
@@ -1661,8 +1664,6 @@ public abstract class AbstractReportProcessor implements ReportProcessor
     {
       final long startTime = System.currentTimeMillis();
       
-      isPdf.set(this.outputProcessor instanceof PdfOutputProcessor);
-
       fireProcessingStarted(new ReportProgressEvent(this));
 
       if (isPaginated() == false)

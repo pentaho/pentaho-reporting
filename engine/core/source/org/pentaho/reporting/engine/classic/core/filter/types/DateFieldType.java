@@ -46,6 +46,8 @@ public class DateFieldType extends AbstractElementType implements RawDataSource
 
   public static final DateFieldType INSTANCE = new DateFieldType();
   public static final String DEFAULT_FORMAT = "dd.MM.yyyy HH:mm:ss";
+  
+  private boolean isPdf;
 
   public DateFieldType()
   {
@@ -199,7 +201,7 @@ public class DateFieldType extends AbstractElementType implements RawDataSource
 
       final float rotation = RotationUtils.getRotation(element);
 
-      final boolean isPdf = AbstractReportProcessor.isPdf.get() == null || AbstractReportProcessor.isPdf.get();
+      isPdf = isPdf || AbstractReportProcessor.isPdf.get() == null || AbstractReportProcessor.isPdf.get();
 
       return rotation == RotationUtils.NO_ROTATION ? value :
         isPdf ? new ReportDrawableRotatedComponent( value, rotation, element ) : value;
