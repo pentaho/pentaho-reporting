@@ -24,6 +24,7 @@ import org.pentaho.reporting.engine.classic.core.ReportElement;
 import org.pentaho.reporting.engine.classic.core.filter.FormatSpecification;
 import org.pentaho.reporting.engine.classic.core.filter.RawDataSource;
 import org.pentaho.reporting.engine.classic.core.function.ExpressionRuntime;
+import org.pentaho.reporting.engine.classic.core.layout.output.AbstractReportProcessor;
 import org.pentaho.reporting.engine.classic.core.metadata.ElementMetaData;
 import org.pentaho.reporting.engine.classic.core.util.ReportDrawableRotatedComponent;
 import org.pentaho.reporting.engine.classic.core.util.RotationUtils;
@@ -210,7 +211,10 @@ public class NumberFieldType extends AbstractElementType implements RawDataSourc
 
       final float rotation = RotationUtils.getRotation(element);
 
-      return rotation == RotationUtils.NO_ROTATION ? value : new ReportDrawableRotatedComponent( value, rotation, element );
+      final boolean isPdf = AbstractReportProcessor.isPdf.get() == null || AbstractReportProcessor.isPdf.get();
+
+      return rotation == RotationUtils.NO_ROTATION ? value :
+        isPdf ? new ReportDrawableRotatedComponent( value, rotation, element ) : value;
     }
     catch (Exception e)
     {

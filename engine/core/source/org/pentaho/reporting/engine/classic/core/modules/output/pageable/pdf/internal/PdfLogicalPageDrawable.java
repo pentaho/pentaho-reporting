@@ -35,6 +35,7 @@ import com.lowagie.text.pdf.PdfOutline;
 import com.lowagie.text.pdf.PdfString;
 import com.lowagie.text.pdf.PdfTextArray;
 import com.lowagie.text.pdf.PdfWriter;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.pentaho.reporting.engine.classic.core.AttributeNames;
@@ -46,6 +47,7 @@ import org.pentaho.reporting.engine.classic.core.imagemap.ImageMap;
 import org.pentaho.reporting.engine.classic.core.imagemap.ImageMapEntry;
 import org.pentaho.reporting.engine.classic.core.layout.model.InlineRenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.LogicalPageBox;
+import org.pentaho.reporting.engine.classic.core.layout.model.ParagraphRenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.PhysicalPageBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderNode;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderableReplacedContentBox;
@@ -60,6 +62,7 @@ import org.pentaho.reporting.engine.classic.core.style.BandStyleKeys;
 import org.pentaho.reporting.engine.classic.core.style.ElementStyleKeys;
 import org.pentaho.reporting.engine.classic.core.style.StyleSheet;
 import org.pentaho.reporting.engine.classic.core.style.TextStyleKeys;
+import org.pentaho.reporting.engine.classic.core.util.RotationUtils;
 import org.pentaho.reporting.engine.classic.core.util.geom.StrictGeomUtility;
 import org.pentaho.reporting.libraries.base.util.LFUMap;
 import org.pentaho.reporting.libraries.base.util.StringUtils;
@@ -346,6 +349,19 @@ public class PdfLogicalPageDrawable extends LogicalPageDrawable
     final long posY = renderableText.getY();
     final float x1 = (float) (StrictGeomUtility.toExternalValue(posX));
 
+    final boolean hasRotation = RotationUtils.hasRotation( renderableText.getParent() )
+        || ( renderableText.getParent() != null && RotationUtils.hasRotation( renderableText.getParent().getParent() ) );
+    float[] rotationMatrix = null;
+
+
+    if( hasRotation ){
+      if( RotationUtils.NO_ROTATION != RotationUtils.getRotation( renderableText.getParent() ) ){
+        rotationMatrix = RotationUtils.getRotationMatrix( RotationUtils.getRotation(renderableText.getParent()) );
+      }else if( RotationUtils.NO_ROTATION != RotationUtils.getRotation( renderableText.getParent().getParent() ) ){
+        rotationMatrix = RotationUtils.getRotationMatrix(RotationUtils.getRotation(renderableText.getParent().getParent()));
+      }
+    }
+
     final PdfContentByte cb;
     PdfTextSpec textSpec = (PdfTextSpec) getTextSpec();
     if (textSpec == null)
@@ -420,17 +436,37 @@ public class PdfLogicalPageDrawable extends LogicalPageDrawable
           baseFont.getFontDescriptor(BaseFont.ITALICANGLE, textSpec.getFontSize());
       if (italicAngle == 0)
       {
-        // italics requested, but the font itself does not supply italics gylphs.
-        cb.setTextMatrix(1, 0, PdfLogicalPageDrawable.ITALIC_ANGLE, 1, x1 + translateX, y);
+        if( hasRotation )
+        {
+          float rX = x1 + translateX; //original
+          float rY = y; //original
+          cb.setTextMatrix(rotationMatrix[0], rotationMatrix[1], rotationMatrix[2], rotationMatrix[3], rX, rY);
+        }else
+        {
+          // italics requested, but the font itself does not supply italics gylphs.
+          cb.setTextMatrix(1, 0, PdfLogicalPageDrawable.ITALIC_ANGLE, 1, x1 + translateX, y);
+        }
       }
       else
       {
-        cb.setTextMatrix(x1 + translateX, y);
+        if( hasRotation ) {
+          float rX = x1 + translateX; //original
+          float rY = y; //original
+          cb.setTextMatrix( rotationMatrix[0], rotationMatrix[1], rotationMatrix[2] , rotationMatrix[3], rX, rY);
+        }else{
+          cb.setTextMatrix(x1 + translateX, y);
+        }
       }
     }
     else
     {
-      cb.setTextMatrix(x1 + translateX, y);
+      if( hasRotation ) {
+        float rX = x1 + translateX; //original
+        float rY = y; //original
+        cb.setTextMatrix( rotationMatrix[0], rotationMatrix[1], rotationMatrix[2] , rotationMatrix[3], rX, rY);
+      }else{
+        cb.setTextMatrix(x1 + translateX, y);
+      }
     }
 
     final OutputProcessorMetaData metaData = getMetaData();
@@ -474,6 +510,7 @@ public class PdfLogicalPageDrawable extends LogicalPageDrawable
       {
         textArray.add(buffer.toString());
       }
+
       cb.showText(textArray);
     }
   }

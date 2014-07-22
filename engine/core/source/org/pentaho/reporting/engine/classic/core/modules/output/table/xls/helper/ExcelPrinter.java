@@ -76,6 +76,8 @@ import org.pentaho.reporting.engine.classic.core.style.StyleSheet;
 import org.pentaho.reporting.engine.classic.core.util.IReportDrawableRotated;
 import org.pentaho.reporting.engine.classic.core.util.ImageUtils;
 import org.pentaho.reporting.engine.classic.core.util.IntegerCache;
+import org.pentaho.reporting.engine.classic.core.util.ReportDrawableRotatedComponent;
+import org.pentaho.reporting.engine.classic.core.util.RotationUtils;
 import org.pentaho.reporting.engine.classic.core.util.geom.StrictBounds;
 import org.pentaho.reporting.engine.classic.core.util.geom.StrictGeomUtility;
 import org.pentaho.reporting.libraries.base.config.Configuration;
@@ -569,8 +571,8 @@ public class ExcelPrinter
           if (((IReportDrawableRotated) drawable.getBackend()).drawRotatedComponent(cell, IReportDrawableRotated.Type.XLS_XLSX))
           {
             return true;
-            // if incompatible angle value then proceed onto exporting as image
           }
+          // if incompatible angle value then proceed onto exporting as image
         } catch( IOException e ){
           ExcelPrinter.logger.error( e );
           return false;
@@ -622,6 +624,9 @@ public class ExcelPrinter
           "Excel-Cells cannot contain formulas longer than 1023 characters. Converting excel formula into plain text");
     }
 
+    if( RotationUtils.hasRotation( content ) ){
+      ReportDrawableRotatedComponent.drawExcel( cell, new Float( RotationUtils.getRotation( content ) ).intValue() );
+    }
     if (value instanceof RichTextString)
     {
       cell.setCellValue((RichTextString) value);

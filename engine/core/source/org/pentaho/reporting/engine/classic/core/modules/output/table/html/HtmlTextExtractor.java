@@ -54,6 +54,8 @@ import org.pentaho.reporting.engine.classic.core.style.ElementStyleKeys;
 import org.pentaho.reporting.engine.classic.core.style.StyleSheet;
 import org.pentaho.reporting.engine.classic.core.style.VerticalTextAlign;
 import org.pentaho.reporting.engine.classic.core.util.IReportDrawableRotated;
+import org.pentaho.reporting.engine.classic.core.util.ReportDrawableRotatedComponent;
+import org.pentaho.reporting.engine.classic.core.util.RotationUtils;
 import org.pentaho.reporting.engine.classic.core.util.geom.StrictBounds;
 import org.pentaho.reporting.engine.classic.core.util.geom.StrictGeomUtility;
 import org.pentaho.reporting.libraries.base.util.StringUtils;
@@ -152,7 +154,16 @@ public class HtmlTextExtractor extends DefaultTextExtractor
       final int nodeType = content.getNodeType();
       if (nodeType == LayoutNodeTypes.TYPE_BOX_PARAGRAPH)
       {
-        processParagraphCell((ParagraphRenderBox) content);
+        if( RotationUtils.hasRotation( content ) ){
+          /* we need a distinct object for each component */
+          IReportDrawableRotated rotate = new ReportDrawableRotatedComponent( RotationUtils.getRotation( content ), content );
+          
+          rotate.startDrawHtml( xmlWriter );//, RotationUtils.getRotation( content ) );
+          processParagraphCell((ParagraphRenderBox) content);
+          rotate.finishDrawHtml( xmlWriter );
+        }else{
+          processParagraphCell((ParagraphRenderBox) content);
+        }
       }
       else if (nodeType == LayoutNodeTypes.TYPE_BOX_CONTENT)
       {
@@ -934,12 +945,6 @@ public class HtmlTextExtractor extends DefaultTextExtractor
     {
       // render it into an Buffered image and make it a PNG file.
       final DrawableWrapper drawable = (DrawableWrapper) rawObject;
-      
-      if (drawable.getBackend() instanceof IReportDrawableRotated)
-      {
-        this.result = ( (IReportDrawableRotated) drawable.getBackend() ).drawRotatedComponent( xmlWriter , IReportDrawableRotated.Type.HTML );
-        return;
-      }
       
       final StrictBounds cb = new StrictBounds(node.getX(), node.getY(), node.getWidth(), node.getHeight());
       final ImageContainer image = RenderUtility.createImageFromDrawable(drawable, cb, node,

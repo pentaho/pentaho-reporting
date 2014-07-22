@@ -18,9 +18,7 @@
 package org.pentaho.reporting.engine.classic.core.util;
 
 import java.awt.Dimension;
-import java.awt.Font;
 import java.awt.Graphics2D;
-import java.awt.font.FontRenderContext;
 import java.awt.font.LineBreakMeasurer;
 import java.awt.font.TextLayout;
 import java.awt.geom.AffineTransform;
@@ -33,11 +31,11 @@ import java.util.ArrayList;
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.xssf.usermodel.XSSFCell;
-import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 import org.pentaho.reporting.engine.classic.core.ElementAlignment;
 import org.pentaho.reporting.engine.classic.core.ReportElement;
 import org.pentaho.reporting.engine.classic.core.ResourceBundleFactory;
 import org.pentaho.reporting.engine.classic.core.imagemap.ImageMap;
+import org.pentaho.reporting.engine.classic.core.layout.model.RenderBox;
 import org.pentaho.reporting.engine.classic.core.modules.output.table.html.helper.DefaultStyleBuilder;
 import org.pentaho.reporting.engine.classic.core.modules.output.table.html.helper.StyleBuilder;
 import org.pentaho.reporting.engine.classic.core.style.ElementStyleKeys;
@@ -52,7 +50,8 @@ public class ReportDrawableRotatedComponent implements IReportDrawableRotated
   private final Float rotationDegree;
   private final Double rotationRadian;
   private final String text;
-  private final ReportElement element;
+  private ReportElement element;
+  private RenderBox renderBox;
 
   public ReportDrawableRotatedComponent(final String someText,
                                         final Float someRotation,
@@ -62,6 +61,15 @@ public class ReportDrawableRotatedComponent implements IReportDrawableRotated
     this.rotationDegree = someRotation;
     this.rotationRadian = Math.toRadians(someRotation.doubleValue());
     this.element = someElement;
+  }
+  
+  public ReportDrawableRotatedComponent(final Float someRotation,
+      final RenderBox renderBox)
+  {
+    this.text = null;
+    this.rotationDegree = someRotation;
+    this.rotationRadian = Math.toRadians(someRotation.doubleValue());
+    this.renderBox = renderBox;
   }
 
   public void draw(final Graphics2D graphics2D, final Rectangle2D bounds)
@@ -371,7 +379,7 @@ public class ReportDrawableRotatedComponent implements IReportDrawableRotated
         return drawHtml(componentWriter);
 
       case XLS_XLSX:
-        return drawExcel(componentWriter);
+        return false;//drawExcel(componentWriter);
 
       case PDF:
         // already been done at this.draw()
@@ -383,126 +391,67 @@ public class ReportDrawableRotatedComponent implements IReportDrawableRotated
     return true;
   }
 
+  public static void drawExcel(Cell cell, int rotation ) {
 
-  public boolean drawExcel(Object writer) throws IOException
-  {
-
-    if (!(writer instanceof Cell))
-    {
-      return false;
+    if ( cell == null || rotation == 0 ) {
+      return;
     }
 
-    int rotate = getRotationDegree().intValue();
     // transform angle values [270,360] => [-90,0] , [-360,-270] => [0,90]
-    if (rotate >= 270 && rotate <= 360)
-    {
-      rotate = rotate - 360;
+    if (rotation >= 270 && rotation <= 360) {
+      rotation = rotation - 360;
+
+    } else if (rotation >= -360 && rotation <= -270) {
+      rotation = rotation + 360;
     }
-    else if (rotate >= -360 && rotate <= -270)
-    {
-      rotate = rotate + 360;
-    }
+
     // if in range [-90,90] export as cell with rotated text, else export as image
-    if (((Cell) writer) instanceof HSSFCell)
-    {
+    if ( cell instanceof HSSFCell ) {
       // XLS
-      if (rotate >= -90 && rotate <= 90)
+      if (rotation >= -90 && rotation <= 90)
       {
-        ((Cell) writer).getCellStyle().setRotation((short) rotate);
-        ((Cell) writer).setCellValue(getText());
-        return true;
+        cell.getCellStyle().setRotation( (short) rotation );
+        return;
       }
-    }
-    else if (((Cell) writer) instanceof XSSFCell)
-    {
+
+    } else if ( cell instanceof XSSFCell ) {
       //XLSX
-      if (rotate >= 0 && rotate <= 90)
-      {
-        XSSFCellStyle style = ((XSSFCell) writer).getCellStyle();
-        style.setRotation((short) (rotate));
-        ((XSSFCell) writer).setCellStyle(style);
-        ((XSSFCell) writer).setCellValue(getText());
-        return true;
-      }
-      else if (rotate >= -90 && rotate < 0)
-      {
+      if ( rotation >= 0 && rotation <= 90 ) {
+
+        cell.getCellStyle().setRotation( (short) rotation );
+        return;
+
+      } else if ( rotation >= -90 && rotation < 0 ) {
         // XLSX works funny [-90,0[  => ]90,180]
-        XSSFCellStyle style = ((XSSFCell) writer).getCellStyle();
-        style.setRotation((short) (90 + -1 * rotate));
-        ((XSSFCell) writer).setCellStyle(style);
-        ((XSSFCell) writer).setCellValue(getText());
-        return true;
+        cell.getCellStyle().setRotation( (short) (90 + -1 * rotation ) );
+        return;
       }
     }
-    return false;
+  }
+  
+  public boolean drawHtml(Object writer) throws IOException
+  {
+    startDrawHtml(writer);
+    ((XmlWriter) writer).writeText( this.text );
+    finishDrawHtml(writer);
+    return true;
   }
 
-  public boolean drawHtml(Object writer) throws IOException
+  public void startDrawHtml(Object writer) throws IOException
   {
 
     if (!(writer instanceof XmlWriter))
     {
-      return false;
+      return;// false;
     }
     
     /* get directions */
-    final String vAlign = String.valueOf(getElement().getStyle().getStyleProperty(ElementStyleKeys.VALIGNMENT));
-    final String hAlign = String.valueOf(getElement().getStyle().getStyleProperty(ElementStyleKeys.ALIGNMENT));
-    final Double borderBottomWidth = Double.valueOf( element.getStyle().getDoubleStyleProperty(ElementStyleKeys.BORDER_BOTTOM_WIDTH, 0d) );
-    final Double borderTopWidth = Double.valueOf( element.getStyle().getDoubleStyleProperty(ElementStyleKeys.BORDER_TOP_WIDTH, 0d) );
-    final Double borderLeftWidth = Double.valueOf( element.getStyle().getDoubleStyleProperty(ElementStyleKeys.BORDER_LEFT_WIDTH, 0d) );
-    final Double borderRightWidth = Double.valueOf( element.getStyle().getDoubleStyleProperty(ElementStyleKeys.BORDER_RIGHT_WIDTH, 0d) );
-    
-    final Font font = new Font( 
-        String.valueOf(element.getStyle().getStyleProperty(TextStyleKeys.FONT)).equals( "null") ? Font.SERIF : String.valueOf(element.getStyle().getStyleProperty(TextStyleKeys.FONT)),
-            Font.PLAIN, element.getStyle().getIntStyleProperty(TextStyleKeys.FONTSIZE, 10) );
-    AffineTransform at = new AffineTransform();
-    final FontRenderContext frc = new FontRenderContext(at, true, true);
-    /* Process multiple lines if needed */
-    AttributedString aSText = new AttributedString(this.text, font.getAttributes());
-    AttributedCharacterIterator aCIText = aSText.getIterator();
-    final LineBreakMeasurer lBMText = new LineBreakMeasurer(aCIText, frc);
-    lBMText.setPosition(aCIText.getBeginIndex());
-    
-    /* some spacing to improve visualization, half FONTSIZE */
-    final float s = 1f;
-    
-    /* calculate max break width allowed (value is hypotenuse or bounds width or bounds height), include border width */
-    float breakWidth, breakWidthIE10;
-    if (this.rotationDegree == 90f || this.rotationDegree == -270f || this.rotationDegree == 270f || this.rotationDegree == -90f ){
-      breakWidth = (float)element.getStyle().getDoubleStyleProperty(ElementStyleKeys.MIN_HEIGHT, 0d) - (s*2f+borderTopWidth.floatValue()+borderBottomWidth.floatValue());
-      breakWidthIE10 = breakWidth - 2f*(float)element.getStyle().getIntStyleProperty(TextStyleKeys.FONTSIZE, 10);
-    }else if (this.rotationDegree == 0f || this.rotationDegree == 360f || this.rotationDegree == 180f || this.rotationDegree == -180f ){
-      breakWidth = (float)element.getStyle().getDoubleStyleProperty(ElementStyleKeys.MIN_WIDTH, 0d) - (s*2f+borderLeftWidth.floatValue()+borderRightWidth.floatValue());
-      breakWidthIE10 = breakWidth - 2f*(float)element.getStyle().getIntStyleProperty(TextStyleKeys.FONTSIZE, 10);
-    }else{
-      breakWidth = (float)( Math.sqrt( Math.pow( (element.getStyle().getDoubleStyleProperty(ElementStyleKeys.MIN_HEIGHT, 0d) -borderTopWidth.floatValue() -borderBottomWidth.floatValue()),2d)
-          + Math.pow( (element.getStyle().getDoubleStyleProperty(ElementStyleKeys.MIN_WIDTH, 0d) -borderLeftWidth.floatValue() -borderRightWidth.floatValue()),2d) )) - s*2f;
-      breakWidthIE10 = breakWidth - 2f*(float)element.getStyle().getIntStyleProperty(TextStyleKeys.FONTSIZE, 10);
-    }
-    
-    /* Break text into several lines and calculate maxTextHeight */
-    ArrayList<String> lines = new ArrayList<String>(5), linesIE10 = new ArrayList<String>(5);
-    int firstCharIdx=0, lastCharIdx = 0;
-    if ( String.valueOf(element.getStyle().getStyleProperty(TextStyleKeys.TEXT_WRAP)).equals( "null" ) ||
-        String.valueOf(element.getStyle().getStyleProperty(TextStyleKeys.TEXT_WRAP)).equals( TextWrap.WRAP.toString() ) ) {
-      while (lBMText.getPosition() < aCIText.getEndIndex()) {
-        firstCharIdx = lastCharIdx;
-        lastCharIdx += lBMText.nextLayout(breakWidth).getCharacterCount();
-        lines.add( this.text.substring( firstCharIdx, lastCharIdx ).trim() );
-      }
-      lBMText.setPosition(aCIText.getBeginIndex());
-      firstCharIdx=0;
-      lastCharIdx = 0;
-      while (lBMText.getPosition() < aCIText.getEndIndex()) {
-        firstCharIdx = lastCharIdx;
-        lastCharIdx += lBMText.nextLayout(breakWidthIE10).getCharacterCount();
-        linesIE10.add( this.text.substring( firstCharIdx, lastCharIdx ).trim() );
-      }
-    }else if ( String.valueOf(element.getStyle().getStyleProperty(TextStyleKeys.TEXT_WRAP)).equals( TextWrap.NONE.toString() ) ) {
-      lines.add( this.text );
-      linesIE10.add( this.text );
-    }
+    final String vAlign = String.valueOf(renderBox.getStyleSheet().getStyleProperty(ElementStyleKeys.VALIGNMENT));
+    final String hAlign = String.valueOf(renderBox.getStyleSheet().getStyleProperty(ElementStyleKeys.ALIGNMENT));
+    /*final Double borderBottomWidth = Double.valueOf( renderBox.getStyleSheet().getDoubleStyleProperty(ElementStyleKeys.BORDER_BOTTOM_WIDTH, 0d) );
+    final Double borderTopWidth = Double.valueOf( renderBox.getStyleSheet().getDoubleStyleProperty(ElementStyleKeys.BORDER_TOP_WIDTH, 0d) );
+    final Double borderLeftWidth = Double.valueOf( renderBox.getStyleSheet().getDoubleStyleProperty(ElementStyleKeys.BORDER_LEFT_WIDTH, 0d) );
+    final Double borderRightWidth = Double.valueOf( renderBox.getStyleSheet().getDoubleStyleProperty(ElementStyleKeys.BORDER_RIGHT_WIDTH, 0d) );*/
 
     /* IE8 rotates clockwise */
     String cos = String.valueOf( (Math.round(1e5*Math.cos(-1d*getRotationDegree().doubleValue() * Math.PI / 180d))/1e5) ),
@@ -511,27 +460,66 @@ public class ReportDrawableRotatedComponent implements IReportDrawableRotated
 
     /* uniquely identify each rotated component's DIV */
     final String rotationComponentId = "r" + this.hashCode();
+    
     ((XmlWriter) writer).writeText("<div id='"+rotationComponentId+"' style='display: inline-block; white-space: nowrap;'></div>\n");
     /* client-side transformations */
     ((XmlWriter) writer).writeText("<script>\n");
-    ((XmlWriter) writer).writeText("(function(){\n");
+    ((XmlWriter) writer).writeText("(function(text){\n");
+    
+    ((XmlWriter) writer).writeText(" var container = document.getElementById('"+rotationComponentId+"');\n");
+    ((XmlWriter) writer).writeText(" container.innerHTML = text;\n");
 
   /* start IE 8 JS */
     ((XmlWriter) writer).writeText("if( (navigator.userAgent.toLowerCase().indexOf('msie') != -1) && parseInt(navigator.userAgent.toLowerCase().split('msie')[1]) == 8){\n");
     
     ((XmlWriter) writer).writeText("window.attachEvent('onload', function(){\n");
     
-    ((XmlWriter) writer).writeText(" var container = document.getElementById('"+rotationComponentId+"');\n");
-    ((XmlWriter) writer).writeText(" var containerStyle = ' "+DefaultStyleBuilder.CSSKeys.MS_FILTER.getCssName() + ":" + "progid:DXImageTransform.Microsoft.Matrix("
-        + " M11=" + cos + ",M12=" + M12 + ",M21=" + sin + ",M22=" + cos + ",sizingMethod=\\'auto expand\\'); display: inline-block; white-space: nowrap;';\n");
-    ((XmlWriter) writer).writeText(" container.innerHTML = '"+lines.get( 0 ));
-    for (int i=1; i<lines.size(); i++){
-      ((XmlWriter) writer).writeText("<br>"+lines.get( i ));
-    }
-    ((XmlWriter) writer).writeText("';\n"
-      + " var h=0, v=0;\n");
+    ((XmlWriter) writer).writeText(" var borderRightWidth = container.parentNode.currentStyle.borderRightWidth.replace(/([0-9]+)pt/g, function(m,g){return Math.round(parseInt(g,10)*96/72);});\n");
+    ((XmlWriter) writer).writeText(" var borderLeftWidth = container.parentNode.currentStyle.borderLeftWidth.replace(/([0-9]+)pt/g, function(m,g){return Math.round(parseInt(g,10)*96/72);});\n");
+    ((XmlWriter) writer).writeText(" var borderBottomWidth = container.parentNode.currentStyle.borderBottomWidth.replace(/([0-9]+)pt/g, function(m,g){return Math.round(parseInt(g,10)*96/72);});\n");
+    ((XmlWriter) writer).writeText(" var borderTopWidth = container.parentNode.currentStyle.borderTopWidth.replace(/([0-9]+)pt/g, function(m,g){return Math.round(parseInt(g,10)*96/72);});\n");
+    
     /* Fix initial positioning for rotation/translation and control wrapping */
-    ((XmlWriter) writer).writeText(" container.parentNode.setAttribute('style','white-space: normal; text-align: left; vertical-align: top;');\n");
+    ((XmlWriter) writer).writeText(" var containerStyle = 'display: inline-block;';\n");
+    if ( String.valueOf(renderBox.getStyleSheet().getStyleProperty(TextStyleKeys.TEXT_WRAP)).equals( "null" ) ||
+        String.valueOf(renderBox.getStyleSheet().getStyleProperty(TextStyleKeys.TEXT_WRAP)).equals( TextWrap.WRAP.toString() ) ) {
+      
+      if( rotationDegree == 90f || rotationDegree == -90f || rotationDegree == 270f || rotationDegree == -270f ){
+        ((XmlWriter) writer).writeText(" if (container.offsetWidth > container.parentNode.offsetHeight){\n" );
+        ((XmlWriter) writer).writeText("  containerStyle += ' width: '+( container.parentNode.offsetHeight -(parseInt(borderTopWidth)?parseInt(borderTopWidth):0) -(parseInt(borderBottomWidth)?parseInt(borderBottomWidth):0) )+'px;  white-space: pre-wrap;';\n");
+        // set some styling before rotation logic execution
+        ((XmlWriter) writer).writeText("  container.setAttribute('style', containerStyle);\n");
+        ((XmlWriter) writer).writeText(" }\n" );
+      }else if (this.rotationDegree==180f || this.rotationDegree==-180f){
+        ((XmlWriter) writer).writeText(" if (container.offsetWidth > container.parentNode.offsetWidth){\n" );
+        ((XmlWriter) writer).writeText("  containerStyle += ' width: '+( container.parentNode.offsetWidth -(parseInt(borderLeftWidth)?parseInt(borderLeftWidth):0) -(parseInt(borderRightWidth)?parseInt(borderRightWidth):0) )+'px; white-space: pre-wrap;  ';\n");
+        // set some styling before rotation logic execution
+        ((XmlWriter) writer).writeText("  container.setAttribute('style', containerStyle);\n");
+        ((XmlWriter) writer).writeText(" }\n" );
+      }else{ // diagonal
+        // width > hypotenuse
+        ((XmlWriter) writer).writeText(" var hypo = Math.sqrt("
+            + "Math.pow(container.parentNode.offsetWidth -(parseInt(borderLeftWidth)?parseInt(borderLeftWidth):0) -(parseInt(borderRightWidth)?parseInt(borderRightWidth):0),2),"
+            + "Math.pow(container.parentNode.offsetHeight -(parseInt(borderTopWidth)?parseInt(borderTopWidth):0) -(parseInt(borderBottomWidth)?parseInt(borderBottomWidth):0),2));\n");
+        ((XmlWriter) writer).writeText(" if (container.offsetWidth > hypo){\n" );
+        ((XmlWriter) writer).writeText("  containerStyle += ' width: '+hypo+'px; white-space: pre-wrap;';\n");
+        // set some styling before rotation logic execution
+        ((XmlWriter) writer).writeText("  container.setAttribute('style', containerStyle);\n");
+        ((XmlWriter) writer).writeText(" }\n" );
+      }
+    }
+    
+    /* write CSS transformation matrix */
+    ((XmlWriter) writer).writeText(" containerStyle += ' "+DefaultStyleBuilder.CSSKeys.MS_FILTER.getCssName() + ":" + "progid:DXImageTransform.Microsoft.Matrix("
+        + " M11=" + cos + ",M12=" + M12 + ",M21=" + sin + ",M22=" + cos + ",sizingMethod=\\'auto expand\\');';\n");//white-space: nowrap;';\n");
+    
+    /* some spacing to improve visualization, half FONTSIZE */
+    final float s = 2f;
+
+    ((XmlWriter) writer).writeText(" var h=0, v=0;\n");
+    /* Fix initial positioning for rotation/translation and control wrapping */
+    ((XmlWriter) writer).writeText(" container.parentNode.setAttribute('style','white-space: nowrap; text-align: left; vertical-align: top;');\n");
+    
     /* horizontal translation IE8 */
     if (hAlign.equals("null") || hAlign.equals(ElementAlignment.LEFT.toString()) || hAlign.equals(ElementAlignment.JUSTIFY.toString()))
     {
@@ -550,8 +538,8 @@ public class ReportDrawableRotatedComponent implements IReportDrawableRotated
         ((XmlWriter) writer).writeText(" containerStyle += ' text-align: right;';\n");
       }
       
-      ((XmlWriter) writer).writeText(" var borderRightWidth = container.parentNode.currentStyle.borderRightWidth.replace(/([0-9]+)pt/g, function(m,g){return Math.round(parseInt(g,10)*96/72);});\n");
-      ((XmlWriter) writer).writeText(" var borderLeftWidth = container.parentNode.currentStyle.borderLeftWidth.replace(/([0-9]+)pt/g, function(m,g){return Math.round(parseInt(g,10)*96/72);});\n");
+      //((XmlWriter) writer).writeText(" var borderRightWidth = container.parentNode.currentStyle.borderRightWidth.replace(/([0-9]+)pt/g, function(m,g){return Math.round(parseInt(g,10)*96/72);});\n");
+      //((XmlWriter) writer).writeText(" var borderLeftWidth = container.parentNode.currentStyle.borderLeftWidth.replace(/([0-9]+)pt/g, function(m,g){return Math.round(parseInt(g,10)*96/72);});\n");
       
       if (this.rotationDegree == 180 || this.rotationDegree == -180){
         ((XmlWriter) writer).writeText(" h = (container.parentNode.offsetWidth - (parseInt(borderRightWidth)?parseInt(borderRightWidth):0) - (parseInt(borderLeftWidth)?parseInt(borderLeftWidth):0) ) - "+s+" - container.offsetWidth;\n");
@@ -560,6 +548,14 @@ public class ReportDrawableRotatedComponent implements IReportDrawableRotated
       }else{
         ((XmlWriter) writer).writeText(" h = (container.parentNode.offsetWidth - (parseInt(borderRightWidth)?parseInt(borderRightWidth):0) - (parseInt(borderLeftWidth)?parseInt(borderLeftWidth):0) ) - "+s+" - container.offsetWidth*Math.abs("+cos+") - container.offsetHeight*Math.abs("+sin+");\n");
       }
+      /*
+      if (this.rotationDegree == 180 || this.rotationDegree == -180){
+        ((XmlWriter) writer).writeText(" h = (container.parentNode.offsetWidth ) - "+s+" - container.offsetWidth;\n");
+      }else if (this.rotationDegree % 90 == 0){
+        ((XmlWriter) writer).writeText(" h = (container.parentNode.offsetWidth ) - "+s+" - container.offsetHeight;\n");
+      }else{
+        ((XmlWriter) writer).writeText(" h = (container.parentNode.offsetWidth ) - "+s+" - container.offsetWidth*Math.abs("+cos+") - container.offsetHeight*Math.abs("+sin+");\n");
+      }*/
     }
     else if (hAlign.equals(ElementAlignment.CENTER.toString()))
     {
@@ -567,9 +563,10 @@ public class ReportDrawableRotatedComponent implements IReportDrawableRotated
         ((XmlWriter) writer).writeText(" containerStyle += ' text-align: center;';\n");
       }
       
+      
       // remove border left
-      ((XmlWriter) writer).writeText(" var borderRightWidth = container.parentNode.currentStyle.borderRightWidth.replace(/([0-9]+)pt/g, function(m,g){return Math.round(parseInt(g,10)*96/72);});\n");
-      ((XmlWriter) writer).writeText(" var borderLeftWidth = container.parentNode.currentStyle.borderLeftWidth.replace(/([0-9]+)pt/g, function(m,g){return Math.round(parseInt(g,10)*96/72);});\n");
+      //((XmlWriter) writer).writeText(" var borderRightWidth = container.parentNode.currentStyle.borderRightWidth.replace(/([0-9]+)pt/g, function(m,g){return Math.round(parseInt(g,10)*96/72);});\n");
+      //((XmlWriter) writer).writeText(" var borderLeftWidth = container.parentNode.currentStyle.borderLeftWidth.replace(/([0-9]+)pt/g, function(m,g){return Math.round(parseInt(g,10)*96/72);});\n");
       
       if (this.rotationDegree == 180 || this.rotationDegree == -180){
         ((XmlWriter) writer).writeText(" h = ((container.parentNode.offsetWidth - (parseInt(borderRightWidth)?parseInt(borderRightWidth):0) - (parseInt(borderLeftWidth)?parseInt(borderLeftWidth):0) ) - container.offsetWidth) / 2;\n");
@@ -578,6 +575,14 @@ public class ReportDrawableRotatedComponent implements IReportDrawableRotated
       }else{
         ((XmlWriter) writer).writeText(" h = ((container.parentNode.offsetWidth - (parseInt(borderRightWidth)?parseInt(borderRightWidth):0) - (parseInt(borderLeftWidth)?parseInt(borderLeftWidth):0) ) - container.offsetWidth*Math.abs("+cos+") - container.offsetHeight*Math.abs("+sin+")) / 2;\n");
       }
+      /*
+      if (this.rotationDegree == 180 || this.rotationDegree == -180){
+        ((XmlWriter) writer).writeText(" h = (container.parentNode.offsetWidth - container.offsetWidth) / 2;\n");
+      }else if (this.rotationDegree % 90 == 0){
+        ((XmlWriter) writer).writeText(" h = (container.parentNode.offsetWidth - container.offsetHeight) / 2;\n");
+      }else{
+        ((XmlWriter) writer).writeText(" h = (container.parentNode.offsetWidth - container.offsetWidth*Math.abs("+cos+") - container.offsetHeight*Math.abs("+sin+")) / 2;\n");
+      }*/
     }
     
     /* vertical translation IE8 */
@@ -597,8 +602,10 @@ public class ReportDrawableRotatedComponent implements IReportDrawableRotated
       }else if (this.rotationDegree == -90 || this.rotationDegree == 270){
         ((XmlWriter) writer).writeText(" containerStyle += ' text-align: right;';\n");
       }
-      ((XmlWriter) writer).writeText(" var borderBottomWidth = container.parentNode.currentStyle.borderBottomWidth.replace(/([0-9]+)pt/g, function(m,g){return Math.round(parseInt(g,10)*96/72);});\n");
-      ((XmlWriter) writer).writeText(" var borderTopWidth = container.parentNode.currentStyle.borderTopWidth.replace(/([0-9]+)pt/g, function(m,g){return Math.round(parseInt(g,10)*96/72);});\n");
+      
+      //((XmlWriter) writer).writeText(" var borderBottomWidth = container.parentNode.currentStyle.borderBottomWidth.replace(/([0-9]+)pt/g, function(m,g){return Math.round(parseInt(g,10)*96/72);});\n");
+      //((XmlWriter) writer).writeText(" var borderTopWidth = container.parentNode.currentStyle.borderTopWidth.replace(/([0-9]+)pt/g, function(m,g){return Math.round(parseInt(g,10)*96/72);});\n");
+      
       if (this.rotationDegree == 180 || this.rotationDegree == -180){
         ((XmlWriter) writer).writeText(" v = container.parentNode.offsetHeight - container.offsetHeight - (parseInt(borderBottomWidth)?parseInt(borderBottomWidth):0) - "+s+";\n");
       }else if (this.rotationDegree % 90 == 0){
@@ -606,13 +613,23 @@ public class ReportDrawableRotatedComponent implements IReportDrawableRotated
       }else{
         ((XmlWriter) writer).writeText(" v = container.parentNode.offsetHeight - container.offsetWidth*Math.abs("+cos+") - container.offsetHeight*Math.abs("+sin+") - (parseInt(borderBottomWidth)?parseInt(borderBottomWidth):0) - "+s+";\n");
       }
+      
+      /*
+      if (this.rotationDegree == 180 || this.rotationDegree == -180){
+        ((XmlWriter) writer).writeText(" v = container.parentNode.offsetHeight - container.offsetHeight - "+s+";\n");
+      }else if (this.rotationDegree % 90 == 0){
+        ((XmlWriter) writer).writeText(" v = container.parentNode.offsetHeight - container.offsetWidth - "+s+";\n");
+      }else{
+        ((XmlWriter) writer).writeText(" v = container.parentNode.offsetHeight - container.offsetWidth*Math.abs("+cos+") - container.offsetHeight*Math.abs("+sin+") - "+s+";\n");
+      }*/
     }
     else if (vAlign.equals(ElementAlignment.MIDDLE.toString()))
     {
       if (this.rotationDegree == 90 || this.rotationDegree == -270 || this.rotationDegree == -90 || this.rotationDegree == 270){
         ((XmlWriter) writer).writeText(" containerStyle += ' text-align: center;';\n");
       }
-      ((XmlWriter) writer).writeText(" var borderBottomWidth = container.parentNode.currentStyle.borderBottomWidth.replace(/([0-9]+)pt/g, function(m,g){return Math.round(parseInt(g,10)*96/72);});\n");
+      
+      //((XmlWriter) writer).writeText(" var borderBottomWidth = container.parentNode.currentStyle.borderBottomWidth.replace(/([0-9]+)pt/g, function(m,g){return Math.round(parseInt(g,10)*96/72);});\n");
       
       if (this.rotationDegree == 180 || this.rotationDegree == -180){
         ((XmlWriter) writer).writeText(" v = ( container.parentElement.offsetHeight - (parseInt(borderBottomWidth)?parseInt(borderBottomWidth):0) - container.offsetHeight ) / 2;\n");
@@ -621,47 +638,126 @@ public class ReportDrawableRotatedComponent implements IReportDrawableRotated
       }else{
         ((XmlWriter) writer).writeText(" v = (container.parentNode.offsetHeight - (parseInt(borderBottomWidth)?parseInt(borderBottomWidth):0) - container.offsetWidth*Math.abs("+cos+") - container.offsetHeight*Math.abs("+sin+")) / 2;\n");
       }
+      
+      /*
+      if (this.rotationDegree == 180 || this.rotationDegree == -180){
+        ((XmlWriter) writer).writeText(" v = ( container.parentElement.offsetHeight - container.offsetHeight ) / 2;\n");
+      }else if (this.rotationDegree % 90 == 0){
+        ((XmlWriter) writer).writeText(" v = (container.parentNode.offsetHeight - container.offsetWidth) / 2;\n");
+      }else{
+        ((XmlWriter) writer).writeText(" v = (container.parentNode.offsetHeight - container.offsetWidth*Math.abs("+cos+") - container.offsetHeight*Math.abs("+sin+")) / 2;\n");
+      }*/
     }
     ((XmlWriter) writer).writeText(" containerStyle += ' margin-left:'+h+'px; margin-top:'+v+'px;';\n");
     ((XmlWriter) writer).writeText(" container.setAttribute('style',containerStyle);\n");
     /* end IE8 JS */
+    
+    ((XmlWriter) writer).writeText("});\n}else{\n");
+    
+    /* start non-IE8 JS */
+    
+    
+    ((XmlWriter) writer).writeText("window.addEventListener('load', function(){\n");
+    
+    ((XmlWriter) writer).writeText(" var borderBottomWidth = getComputedStyle(container.parentNode,null).getPropertyValue('border-bottom-width');"
+        + " if(borderBottomWidth.indexOf('px') > -1){\n"
+        + "  borderBottomWidth = borderBottomWidth.replace(/([0-9]+)px/g, function(m,g){return Math.round(parseInt(g,10));});\n"
+        + " }else if(borderBottomWidth.indexOf('pt') > -1){\n"
+        + "  borderBottomWidth = borderBottomWidth.replace(/([0-9]+)pt/g, function(m,g){return Math.round(parseInt(g,10)*96/72);});\n"
+        + " }\n");
+    ((XmlWriter) writer).writeText(" var borderTopWidth = getComputedStyle(container.parentNode,null).getPropertyValue('border-top-width');"
+        + " if(borderTopWidth.indexOf('px') > -1){\n"
+        + "  borderTopWidth = borderTopWidth.replace(/([0-9]+)px/g, function(m,g){return Math.round(parseInt(g,10));});\n"
+        + " }else if(borderTopWidth.indexOf('pt') > -1){\n"
+        + "  borderTopWidth = borderTopWidth.replace(/([0-9]+)pt/g, function(m,g){return Math.round(parseInt(g,10)*96/72);});\n"
+        + " }\n");
+    ((XmlWriter) writer).writeText(" var borderRightWidth = getComputedStyle(container.parentNode,null).getPropertyValue('border-right-width');\n"
+        + " if(borderRightWidth.indexOf('px') > -1){\n"
+        + "  borderRightWidth = borderRightWidth.replace(/([0-9]+)px/g, function(m,g){return Math.round(parseInt(g,10));});\n"
+        + " }else if(borderRightWidth.indexOf('pt') > -1){\n"
+        + "  borderRightWidth = borderRightWidth.replace(/([0-9]+)pt/g, function(m,g){return Math.round(parseInt(g,10)*96/72);});\n"
+        + " }\n");
+    ((XmlWriter) writer).writeText(" var borderLeftWidth = getComputedStyle(container.parentNode,null).getPropertyValue('border-left-width');\n"
+        + " if(borderLeftWidth.indexOf('px') > -1){\n"
+        + "  borderLeftWidth = borderLeftWidth.replace(/([0-9]+)px/g, function(m,g){return Math.round(parseInt(g,10));});\n"
+        + " }else if(borderLeftWidth.indexOf('pt') > -1){\n"
+        + "  borderLeftWidth = borderLeftWidth.replace(/([0-9]+)pt/g, function(m,g){return Math.round(parseInt(g,10)*96/72);});\n"
+        + " }\n");
+    
+    /* Fix initial positioning for rotation/translation and control wrapping */
+    ((XmlWriter) writer).writeText(" var containerStyle = 'display: inline-block;';\n");
+    if ( String.valueOf(renderBox.getStyleSheet().getStyleProperty(TextStyleKeys.TEXT_WRAP)).equals( "null" ) ||
+        String.valueOf(renderBox.getStyleSheet().getStyleProperty(TextStyleKeys.TEXT_WRAP)).equals( TextWrap.WRAP.toString() ) ) {
+      
+      if( rotationDegree == 90f || rotationDegree == -90f || rotationDegree == 270f || rotationDegree == -270f ){
+        ((XmlWriter) writer).writeText(" if (container.offsetWidth > container.parentNode.offsetHeight){\n" );
+        
+        ((XmlWriter) writer).writeText("  containerStyle += ' white-space: pre-wrap;  width: '+( container.parentNode.offsetHeight -(parseInt(borderBottomWidth)?parseInt(borderBottomWidth):0) -(parseInt(borderTopWidth)?parseInt(borderTopWidth):0) )+'px;';\n");
+        //((XmlWriter) writer).writeText("  containerStyle += ' white-space: pre-wrap;  width: '+( container.parentNode.offsetHeight )+'px;';\n");
+        // set some styling before rotation logic execution
+        ((XmlWriter) writer).writeText("  container.setAttribute('style', containerStyle);\n");
+        ((XmlWriter) writer).writeText(" }\n" );
+      }else if (this.rotationDegree==180f || this.rotationDegree==-180f){
+        ((XmlWriter) writer).writeText(" if (container.offsetWidth > container.parentNode.offsetWidth){\n" );
+        
+        ((XmlWriter) writer).writeText("  containerStyle += ' white-space: pre-wrap;  width: '+( container.parentNode.offsetWidth -(parseInt(borderRightWidth)?parseInt(borderRightWidth):0) -(parseInt(borderLeftWidth)?parseInt(borderLeftWidth):0) )+'px;';\n");
+        //((XmlWriter) writer).writeText("  containerStyle += ' white-space: pre-wrap;  width: '+( container.parentNode.offsetWidth )+'px;';\n");
+        // set some styling before rotation logic execution
+        ((XmlWriter) writer).writeText("  container.setAttribute('style', containerStyle);\n");
+        ((XmlWriter) writer).writeText(" }\n" );
+      }else{ // diagonal
+        
+        // width > hypotenuse
+        ((XmlWriter) writer).writeText(" var hypo = Math.sqrt("
+            + "Math.pow(container.parentNode.offsetWidth -(parseInt(borderRightWidth)?parseInt(borderRightWidth):0) -(parseInt(borderLeftWidth)?parseInt(borderLeftWidth):0),2),"
+            + "Math.pow(container.parentNode.offsetHeight -(parseInt(borderBottomWidth)?parseInt(borderBottomWidth):0) -(parseInt(borderTopWidth)?parseInt(borderTopWidth):0),2));\n");
+        ((XmlWriter) writer).writeText(" if (container.offsetWidth > hypo){\n" );
+        /*((XmlWriter) writer).writeText(" var hypo = Math.sqrt("
+            + "Math.pow(container.parentNode.offsetWidth,2),"
+            + "Math.pow(container.parentNode.offsetHeight,2));\n");
+        ((XmlWriter) writer).writeText(" if (container.offsetWidth > hypo){\n" );*/
+        
+        ((XmlWriter) writer).writeText("  containerStyle += ' white-space: pre-wrap;  width: '+hypo+'px;';\n");
+        // set some styling before rotation logic execution
+        ((XmlWriter) writer).writeText("  container.setAttribute('style', containerStyle);\n");
+        ((XmlWriter) writer).writeText(" }\n" );
+      }
+
+    }/*else if ( String.valueOf(renderBox.getStyleSheet().getStyleProperty(TextStyleKeys.TEXT_WRAP)).equals( TextWrap.NONE.toString() ) ) {
+      ((XmlWriter) writer).writeText(" container.parentNode.setAttribute('style','white-space: normal;');\n");
+      ((XmlWriter) writer).writeText("var containerStyle = 'display: inline-block; ");// white-space: nowrap; ");
+    }*/
+    
+    //((XmlWriter) writer).writeText(" var parentStyle = 'white-space: nowrap;';\n");
+    ((XmlWriter) writer).writeText(" container.parentNode.setAttribute('style','white-space: nowrap;');\n");
     
     /* non-IE8 rotate counter clockwise */
     cos = String.valueOf( (Math.round(1e5*Math.cos(getRotationDegree().doubleValue() * Math.PI / 180d))/1e5) );
     M12 = String.valueOf( (Math.round(-1e5*Math.sin(getRotationDegree().doubleValue() * Math.PI / 180d))/1e5) );
     sin = String.valueOf( (Math.round(1e5*Math.sin(getRotationDegree().doubleValue() * Math.PI / 180d))/1e5) );
     
-    ((XmlWriter) writer).writeText("});\n}else{\n");
-    ((XmlWriter) writer).writeText("window.addEventListener('load', function(){\n");
+    /* transformation matrix */
+    ((XmlWriter) writer).writeText(" var mStr= 'matrix(" + cos + "," + M12 + "," + sin + "," + cos + ",';\n");
+    //String mStr = "matrix(" + cos + "," + M12 + "," + sin + "," + cos + ",";
     
-    ((XmlWriter) writer).writeText(" var container = document.getElementById('"+rotationComponentId+"');\n");
+    //((XmlWriter) writer).writeText("var containerStyle = 'display: inline-block; ';\n");
+    // repete to maintain wrapping if necessary, no?
+    /*if( rotationDegree == 90f || rotationDegree == -90f || rotationDegree == 270f || rotationDegree == -270f ){
+      ((XmlWriter) writer).writeText(" if (container.offsetWidth > container.parentNode.offsetHeight){\n" );
+      ((XmlWriter) writer).writeText("  containerStyle += ' white-space: pre-wrap;  width: '+container.parentNode.offsetHeight+'px;';\n");
+      
+      ((XmlWriter) writer).writeText(" }\n" );
+    }else if (this.rotationDegree==180f || this.rotationDegree==-180f){ // ignoring diagonals
+      ((XmlWriter) writer).writeText(" if (container.offsetWidth > container.parentNode.offsetWidth){\n" );
+      ((XmlWriter) writer).writeText("  containerStyle += ' white-space: pre-wrap;  width: '+container.parentNode.offsetWidth+'px;';\n");
+      
+      /* horizontal translation * /
+      /* vertical translation * /
     
-    /* Fix initial positioning for rotation/translation and control wrapping */
-    ((XmlWriter) writer).writeText(" container.parentNode.setAttribute('style','white-space: normal;');\n");
-    
-    ((XmlWriter) writer).writeText(" var lines = ['"+lines.get( 0 )+"'");
-    for (int i=1; i<lines.size(); i++){
-      ((XmlWriter) writer).writeText(",'"+lines.get( i )+"'");
+      ((XmlWriter) writer).writeText(" }\n" );
     }
-    ((XmlWriter) writer).writeText("];\n");
-    ((XmlWriter) writer).writeText(" var linesIE10 = ['"+linesIE10.get( 0 )+"'");
-    for (int i=1; i<linesIE10.size(); i++){
-      ((XmlWriter) writer).writeText(",'"+linesIE10.get( i )+"'");
-    }
-    ((XmlWriter) writer).writeText("];\n");
-    
-    /* start non-IE8 JS */
-    ((XmlWriter) writer).writeText(" var s = "+s+";\n"
-        + " if( (navigator.userAgent.toLowerCase().indexOf('msie') != -1) && parseInt(navigator.userAgent.toLowerCase().split('msie')[1]) <= 10){\n"
-        + "  container.innerHTML = linesIE10[0];\n"
-        + "  for (var i=1; i<linesIE10.length; i++) {\n   container.innerHTML += '<br>'+linesIE10[i];\n  }\n"
-        + " }else{\n"
-        + "  container.innerHTML = lines[0];\n"
-        + "  for (var i=1; i<lines.length; i++) {\n   container.innerHTML += '<br>'+lines[i];\n  }\n"
-        + " }\n"
-        /* transformation matrix */
-        + " var mStr= 'matrix(" + cos + "," + M12 + "," + sin + "," + cos + ",';\n");
-    ((XmlWriter) writer).writeText("var containerStyle = 'display: inline-block; white-space: nowrap; ';\n");
+    */
+  
     /* horizontal translation */
     if (hAlign.equals("null") || hAlign.equals(String.valueOf(ElementAlignment.LEFT)) || hAlign.equals(String.valueOf(ElementAlignment.JUSTIFY)))
     {
@@ -675,7 +771,7 @@ public class ReportDrawableRotatedComponent implements IReportDrawableRotated
       if(this.rotationDegree==180f || this.rotationDegree==-180f){
         ((XmlWriter) writer).writeText(" containerStyle += ' text-align: left;';\n");
       }
-      
+      /*
       ((XmlWriter) writer).writeText(" var borderRightWidth = getComputedStyle(container.parentNode,null).getPropertyValue('border-right-width');\n"
           + " if(borderRightWidth.indexOf('px') > -1){\n"
           + "  borderRightWidth = borderRightWidth.replace(/([0-9]+)px/g, function(m,g){return Math.round(parseInt(g,10));});\n"
@@ -688,34 +784,26 @@ public class ReportDrawableRotatedComponent implements IReportDrawableRotated
           + " }else if(borderLeftWidth.indexOf('pt') > -1){\n"
           + "  borderLeftWidth = borderLeftWidth.replace(/([0-9]+)pt/g, function(m,g){return Math.round(parseInt(g,10)*96/72);});\n"
           + " }\n");
-      
+     
       ((XmlWriter) writer).writeText(" if (container.parentNode.offsetWidth >= container.offsetWidth){\n"
         + "   mStr += ( container.offsetWidth/2 -(container.offsetWidth/2)*Math.abs(" + cos + ") -(container.offsetHeight/2)*Math.abs(" + sin + ") )+',';\n"
         + " }else{\n"
         + "   mStr += ( container.parentNode.offsetWidth-(container.offsetWidth/2) -(container.offsetWidth/2)*Math.abs(" + cos + ") -(container.offsetHeight/2)*Math.abs(" + sin + ") -(parseInt(borderRightWidth)?parseInt(borderRightWidth):0) -(parseInt(borderLeftWidth)?parseInt(borderLeftWidth):0) -"+s+" )+',';\n"
         + " }\n");
+      */
+      ((XmlWriter) writer).writeText(" if (container.parentNode.offsetWidth >= container.offsetWidth){\n"
+          + "   mStr += ( container.offsetWidth/2 -(container.offsetWidth/2)*Math.abs(" + cos + ") -(container.offsetHeight/2)*Math.abs(" + sin + ") )+',';\n"
+          + " }else{\n"
+          + "   mStr += ( -(container.offsetWidth/2) +(container.parentNode.offsetWidth-borderRightWidth-borderLeftWidth-container.offsetHeight) +(container.offsetWidth/2)*Math.abs(" + cos + ") +(container.offsetHeight/2)*Math.abs(" + sin + ") )+',';\n"
+          + " }\n");
     }
     else if (hAlign.equals(String.valueOf(ElementAlignment.CENTER)))
     {
       if(this.rotationDegree != 90f && this.rotationDegree!=-270f && this.rotationDegree!=-90f && this.rotationDegree!=270f && this.rotationDegree!=180f && this.rotationDegree!=-180f){
         ((XmlWriter) writer).writeText(" containerStyle += ' text-align: center;';\n");
       }
-      
-      ((XmlWriter) writer).writeText(" var borderLeftWidth = getComputedStyle(container.parentNode,null).getPropertyValue('border-left-width');\n"
-          + " if(borderLeftWidth.indexOf('px') > -1){\n"
-          + "  borderLeftWidth = borderLeftWidth.replace(/([0-9]+)px/g, function(m,g){return Math.round(parseInt(g,10));});\n"
-          + " }else if(borderLeftWidth.indexOf('pt') > -1){\n"
-          + "  borderLeftWidth = borderLeftWidth.replace(/([0-9]+)pt/g, function(m,g){return Math.round(parseInt(g,10)*96/72);});\n"
-          + " }\n");
-      ((XmlWriter) writer).writeText(" var borderRightWidth = getComputedStyle(container.parentNode,null).getPropertyValue('border-right-width');\n"
-          + " if(borderRightWidth.indexOf('px') > -1){\n"
-          + "  borderRightWidth = borderRightWidth.replace(/([0-9]+)px/g, function(m,g){return Math.round(parseInt(g,10));});\n"
-          + " }else if(borderRightWidth.indexOf('pt') > -1){\n"
-          + "  borderRightWidth = borderRightWidth.replace(/([0-9]+)pt/g, function(m,g){return Math.round(parseInt(g,10)*96/72);});\n"
-          + " }\n");
-      
       ((XmlWriter) writer).writeText("  if (container.parentNode.offsetWidth < container.offsetWidth){\n"
-          + "  mStr += ((container.parentNode.offsetWidth-borderLeftWidth-borderRightWidth)/2 - container.offsetWidth/2)+',';\n"
+          + "  mStr += ((container.parentNode.offsetWidth)/2 -borderRightWidth -container.offsetWidth/2)+',';\n"
           + " }else{\n"
           + "  mStr += '0,';\n"
           + " }\n");
@@ -727,7 +815,9 @@ public class ReportDrawableRotatedComponent implements IReportDrawableRotated
         ((XmlWriter) writer).writeText(" containerStyle += ' text-align: right;';\n");
       }else if (this.rotationDegree==-90 || this.rotationDegree==270){
         ((XmlWriter) writer).writeText(" containerStyle += ' text-align: left;';\n");
-      }
+      }/*else if (this.rotationDegree==180 || this.rotationDegree==-180){
+        ((XmlWriter) writer).writeText(" container.parentNode. += ' text-align: left;';\n");
+      }*/
       ((XmlWriter) writer).writeText(" mStr += (-container.offsetTop -container.offsetHeight/2 +(container.offsetHeight/2)*Math.abs("+cos+") +(container.offsetWidth/2)*Math.abs("+sin+"))+');';\n");
     }
     else if (vAlign.equals(String.valueOf(ElementAlignment.BOTTOM)))
@@ -737,7 +827,7 @@ public class ReportDrawableRotatedComponent implements IReportDrawableRotated
       }else if (this.rotationDegree==-90f || this.rotationDegree==270f){
         ((XmlWriter) writer).writeText(" containerStyle += ' text-align: right;';\n");
       }
-      
+      /*
       ((XmlWriter) writer).writeText(" var borderBottomWidth = getComputedStyle(container.parentNode,null).getPropertyValue('border-bottom-width');"
           + " if(borderBottomWidth.indexOf('px') > -1){\n"
           + "  borderBottomWidth = borderBottomWidth.replace(/([0-9]+)px/g, function(m,g){return Math.round(parseInt(g,10));});\n"
@@ -756,6 +846,13 @@ public class ReportDrawableRotatedComponent implements IReportDrawableRotated
       }else{
         ((XmlWriter) writer).writeText(" mStr += (container.parentNode.offsetHeight -(container.offsetHeight/2+container.offsetTop) -(container.offsetHeight/2)*Math.abs("+cos+") -(container.offsetWidth/2)*Math.abs("+sin+") -(parseInt(borderBottomWidth)?parseInt(borderBottomWidth):0) -(parseInt(borderTopWidth)?parseInt(borderTopWidth):0) -"+s+" )+');';\n");
       }
+      */
+      if (this.rotationDegree==180f || this.rotationDegree==-180f){
+       // ((XmlWriter) writer).writeText(" mStr += (container.parentNode.offsetHeight -(container.offsetHeight+container.offsetTop) -"+s+" )+');';\n");
+        ((XmlWriter) writer).writeText(" mStr += '0);';\n");
+      }else{
+        ((XmlWriter) writer).writeText(" mStr += (container.offsetHeight/2 -(container.offsetWidth/2)*Math.abs("+sin+") -(container.offsetHeight/2)*Math.abs("+cos+") -"+s+" )+');';\n");
+      }
     }
     else if (vAlign.equals(String.valueOf(ElementAlignment.MIDDLE)))
     {
@@ -764,6 +861,7 @@ public class ReportDrawableRotatedComponent implements IReportDrawableRotated
       }
       ((XmlWriter) writer).writeText(" mStr += '0);';\n");
     }
+    
     /* CSS3 IE 10.0, Firefox 16, Opera 12.1 */
     ((XmlWriter) writer).writeText(" containerStyle += '" + StyleBuilder.CSSKeys.TRANSFORM.getCssName() + ":'+mStr\n"
     /* IE 9.0 */
@@ -779,7 +877,10 @@ public class ReportDrawableRotatedComponent implements IReportDrawableRotated
   // end non-IE8 JS
     
     ((XmlWriter) writer).writeText("}, false);\n");
-    ((XmlWriter) writer).writeText("}\n})();\n</script>");
-    return true;
+    ((XmlWriter) writer).writeText("}\n})('");
+  }
+  
+  public void finishDrawHtml(Object writer) throws IOException{
+    ((XmlWriter) writer).writeText("');\n</script>");
   }
 }

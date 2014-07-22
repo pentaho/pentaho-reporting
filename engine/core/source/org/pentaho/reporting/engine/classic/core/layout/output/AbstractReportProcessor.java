@@ -34,6 +34,7 @@ import org.pentaho.reporting.engine.classic.core.event.ReportProgressListener;
 import org.pentaho.reporting.engine.classic.core.function.OutputFunction;
 import org.pentaho.reporting.engine.classic.core.layout.AbstractRenderer;
 import org.pentaho.reporting.engine.classic.core.layout.Renderer;
+import org.pentaho.reporting.engine.classic.core.modules.output.pageable.pdf.PdfOutputProcessor;
 import org.pentaho.reporting.engine.classic.core.states.CollectingReportErrorHandler;
 import org.pentaho.reporting.engine.classic.core.states.IgnoreEverythingReportErrorHandler;
 import org.pentaho.reporting.engine.classic.core.states.InitialLayoutProcess;
@@ -97,6 +98,8 @@ public abstract class AbstractReportProcessor implements ReportProcessor
    * An internal flag that is only valid after the pagination has started.
    */
   private boolean pagebreaksSupported;
+  
+  public static ThreadLocal<Boolean> isPdf = new ThreadLocal<Boolean>();
 
   protected AbstractReportProcessor(final MasterReport report,
                                     final OutputProcessor outputProcessor)
@@ -1657,6 +1660,8 @@ public abstract class AbstractReportProcessor implements ReportProcessor
     try
     {
       final long startTime = System.currentTimeMillis();
+      
+      isPdf.set(this.outputProcessor instanceof PdfOutputProcessor);
 
       fireProcessingStarted(new ReportProgressEvent(this));
 
