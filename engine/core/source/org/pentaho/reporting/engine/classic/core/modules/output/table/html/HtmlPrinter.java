@@ -1431,6 +1431,11 @@ public abstract class HtmlPrinter implements HtmlContentGenerator
           this.xmlWriter = new XmlWriter(writer, td);
           this.xmlWriter.addImpliedNamespace(HtmlPrinter.XHTML_NAMESPACE, "");
           this.xmlWriter.setHtmlCompatiblityMode(true);
+          for (int i = 0; i < HtmlPrinter.XHTML_HEADER.length; i++)
+          {
+            xmlWriter.writeText(HtmlPrinter.XHTML_HEADER[i]);
+            xmlWriter.writeNewLine();
+          }
         }
 
         final ReportAttributeMap map = logicalPage.getAttributes();

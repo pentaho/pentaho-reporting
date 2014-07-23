@@ -518,7 +518,10 @@ public class ReportDrawableRotatedComponent implements IReportDrawableRotated
 
     ((XmlWriter) writer).writeText(" var h=0, v=0;\n");
     /* Fix initial positioning for rotation/translation and control wrapping */
-    ((XmlWriter) writer).writeText(" container.parentNode.setAttribute('style','white-space: nowrap; text-align: left; vertical-align: top;');\n");
+    //((XmlWriter) writer).writeText(" container.parentNode.setAttribute('style','white-space: nowrap; text-align: left; vertical-align: top;');\n");
+    ((XmlWriter) writer).writeText(" container.parentNode.style.whiteSpace = 'nowrap';\n ");
+    ((XmlWriter) writer).writeText(" container.parentNode.style.textAlign = 'left';\n ");
+    ((XmlWriter) writer).writeText(" container.parentNode.style.verticalAlign = 'top';\n ");
     
     /* horizontal translation IE8 */
     if (hAlign.equals("null") || hAlign.equals(ElementAlignment.LEFT.toString()) || hAlign.equals(ElementAlignment.JUSTIFY.toString()))
@@ -729,7 +732,7 @@ public class ReportDrawableRotatedComponent implements IReportDrawableRotated
     }*/
     
     //((XmlWriter) writer).writeText(" var parentStyle = 'white-space: nowrap;';\n");
-    ((XmlWriter) writer).writeText(" container.parentNode.setAttribute('style','white-space: nowrap;');\n");
+    ((XmlWriter) writer).writeText(" container.parentNode.style.whiteSpace = 'nowrap';\n");
     
     /* non-IE8 rotate counter clockwise */
     cos = String.valueOf( (Math.round(1e5*Math.cos(getRotationDegree().doubleValue() * Math.PI / 180d))/1e5) );
