@@ -37,6 +37,7 @@ import org.pentaho.reporting.engine.classic.core.layout.output.OutputProcessorMe
 import org.pentaho.reporting.engine.classic.core.layout.process.IterateStructuralProcessStep;
 import org.pentaho.reporting.engine.classic.core.layout.process.RevalidateTextEllipseProcessStep;
 import org.pentaho.reporting.engine.classic.core.layout.text.GlyphList;
+import org.pentaho.reporting.engine.classic.core.util.RotationUtils;
 import org.pentaho.reporting.engine.classic.core.util.geom.StrictBounds;
 import org.pentaho.reporting.libraries.fonts.encoding.CodePointBuffer;
 
@@ -379,12 +380,27 @@ public class DefaultTextExtractor extends IterateStructuralProcessStep
     //final long y2 = box.getY() + box.getHeight();
     final long contentAreaX1 = box.getContentAreaX1();
     contentAreaX2 = box.getContentAreaX2();
-
+    
+    final boolean hasRotation = RotationUtils.hasRotation( box );
+    long contentAreaRotation = contentAreaX2;
+    final float rotation = RotationUtils.getRotation( box );
+    if ( hasRotation && rotation != 180 && rotation != -180){
+      if (rotation % 90 == 0 ){
+        // vertical
+        contentAreaRotation = box.getOverflowAreaHeight();
+      }else{
+        // diagonal
+        contentAreaRotation = (long)(
+            box.getOverflowAreaWidth() * Math.abs( Math.cos( Math.toRadians( rotation) ) ) +
+            box.getOverflowAreaHeight() * Math.abs( Math.sin( Math.toRadians( rotation ) ) ) );
+      }
+    }
+    
     RenderBox lineBox = (RenderBox) box.getFirstChild();
     while (lineBox != null)
     {
       manualBreak = false;
-      processTextLine(lineBox, contentAreaX1, contentAreaX2);
+      processTextLine(lineBox, contentAreaX1, contentAreaRotation );
       if (manualBreak)
       {
         addLinebreak();
