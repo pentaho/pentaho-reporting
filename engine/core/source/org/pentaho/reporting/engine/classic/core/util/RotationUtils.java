@@ -39,6 +39,10 @@ public class RotationUtils
     return NO_ROTATION != getRotation( content );
   }
 
+  public static boolean hasRotation( float rotation ){
+    return NO_ROTATION != rotation;
+  }
+
   public static float getRotation( RenderBox content ){
     if( content == null || content.getAttributes() == null ){
       return NO_ROTATION;
@@ -175,5 +179,53 @@ public class RotationUtils
 
 
     return rotatedY;
+  }
+
+  public static boolean isVerticalOrientation( RenderBox box ){
+    return box != null && isVerticalOrientation(getRotation(box));
+  }
+
+  public static boolean isVerticalOrientation( float rotation ){
+    return Math.abs( rotation ) == 90  || Math.abs( rotation ) == 270;
+  }
+
+  public static boolean isHorizontalOrientation( RenderBox box ){
+    return box != null && isHorizontalOrientation( getRotation( box ) );
+  }
+
+  public static boolean isHorizontalOrientation( float rotation ){
+    return Math.abs( rotation ) == NO_ROTATION  || Math.abs( rotation ) == 180;
+  }
+
+  public static boolean isOrientationFacingUpwards( float rotation ){
+    return rotation == 90  || rotation == -270;
+  }
+
+  public static boolean isOrientationFacingDownwards( float rotation ){
+    return rotation == -90  || rotation == 270;
+  }
+
+  public static long calculateBoxHeight( RenderBox box ){
+
+    long height = 0;
+
+    if( box != null ){
+
+      height = box.getHeight();
+
+      // remove ellipse from the box height ( write area )
+      height = box.getTextEllipseBox() != null ? ( height - box.getTextEllipseBox().getWidth() ) : height;
+
+      // remove padding from the box height ( write area )
+      height = box.getBoxDefinition() != null ?
+          ( height - box.getBoxDefinition().getPaddingTop() - box.getBoxDefinition().getPaddingBottom() ) : height;
+
+      // remove border width from the box height ( write area )
+      height = box.getStaticBoxLayoutProperties() != null ?
+          ( height - box.getStaticBoxLayoutProperties().getBorderTop() - box.getStaticBoxLayoutProperties().getBorderBottom() )
+          : height;
+    }
+
+    return height;
   }
 }

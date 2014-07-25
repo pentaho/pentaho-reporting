@@ -25,6 +25,7 @@ import org.pentaho.reporting.engine.classic.core.layout.text.GlyphList;
 import org.pentaho.reporting.engine.classic.core.metadata.ElementType;
 import org.pentaho.reporting.engine.classic.core.style.StyleSheet;
 import org.pentaho.reporting.engine.classic.core.util.InstanceID;
+import org.pentaho.reporting.engine.classic.core.util.RotationUtils;
 import org.pentaho.reporting.engine.classic.core.util.geom.StrictGeomUtility;
 import org.pentaho.reporting.libraries.fonts.encoding.CodePointBuffer;
 import org.pentaho.reporting.libraries.fonts.text.Spacing;
@@ -274,15 +275,44 @@ public final class RenderableText extends RenderNode
 
   public int computeMaximumTextSize(final long contentX2)
   {
-    final int length = getLength();
-    final long x = getX();
-    if (contentX2 >= (x + getWidth()))
+    int length = getLength();
+    long x = getX();
+    long y = getY();
+    GlyphList gs = getGlyphs();
+
+    long runningPos = x;
+    long contentArea = contentX2;
+    long endOfWord = x + getWidth();
+
+
+    boolean hasTopParent = this.getParent() != null && this.getParent().getParent() != null;
+    RenderBox topParent = hasTopParent ? this.getParent().getParent() : null;
+
+    boolean hasRotation = hasTopParent ? RotationUtils.hasRotation(topParent) : false;
+
+    // check if a rotation is applied, and is not one that still keeps the text aligned with the X axis [-180,180]
+    if (hasRotation && !RotationUtils.isHorizontalOrientation(( topParent )))
+    {
+      // applied rotation aligns the text with the Y axis [-270,-90,90,270]
+      if ( RotationUtils.isVerticalOrientation( topParent ) )
+      {
+        runningPos = y;
+        endOfWord = y + getWidth();
+        contentArea = RotationUtils.calculateBoxHeight( topParent ) + topParent.getY(); // box height
+      }
+      else
+      {
+        // TODO diagonal rotations (ex: 45 degrees)
+      }
+    }
+
+    // do calculations
+
+    if ( contentArea >= endOfWord )
     {
       return length;
     }
 
-    final GlyphList gs = getGlyphs();
-    long runningPos = x;
     final int offset = getOffset();
     final int maxPos = offset + length;
 
@@ -294,11 +324,11 @@ public final class RenderableText extends RenderNode
       {
         runningPos += g.getSpacing().getMinimum();
       }
-      if (runningPos > contentX2)
+      if (runningPos > contentArea)
       {
         return Math.max(0, i - offset);
       }
     }
     return length;
-  }
+    }
 }

@@ -17,7 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.core.layout.process;
 
-import org.pentaho.reporting.engine.classic.core.AttributeNames;
 import org.pentaho.reporting.engine.classic.core.ReportAttributeMap;
 import org.pentaho.reporting.engine.classic.core.layout.TextCache;
 import org.pentaho.reporting.engine.classic.core.layout.model.InlineRenderBox;
@@ -29,10 +28,8 @@ import org.pentaho.reporting.engine.classic.core.layout.model.context.StaticBoxL
 import org.pentaho.reporting.engine.classic.core.layout.output.OutputProcessorMetaData;
 import org.pentaho.reporting.engine.classic.core.layout.text.DefaultRenderableTextFactory;
 import org.pentaho.reporting.engine.classic.core.layout.text.RenderableTextFactory;
-import org.pentaho.reporting.engine.classic.core.style.StyleKey;
 import org.pentaho.reporting.engine.classic.core.style.StyleSheet;
 import org.pentaho.reporting.engine.classic.core.style.TextStyleKeys;
-import org.pentaho.reporting.engine.classic.core.util.RotationUtils;
 import org.pentaho.reporting.libraries.fonts.encoding.CodePointBuffer;
 import org.pentaho.reporting.libraries.fonts.encoding.manual.Utf16LE;
 
@@ -99,26 +96,11 @@ public final class RevalidateTextEllipseProcessStep extends IterateStructuralPro
     final BoxDefinition bdef = box.getBoxDefinition();
     final long boxContentX2 = (box.getX() + box.getWidth() - bdef.getPaddingRight() - sblp.getBorderRight());
     final RenderBox textEllipseBox;
-    
-    /*
-    final boolean hasRotation = RotationUtils.hasRotation( box );
-    
-    long contentAreaRotation = getContentAreaX2();
-    if ( hasRotation && RotationUtils.getRotation( box.getParent() ) != 180 &&
-        RotationUtils.getRotation( box.getParent() ) != -180){
-      if (RotationUtils.getRotation( box.getParent() ) % 90 == 0 ){
-        // vertical
-        contentAreaRotation = box.getParent().getOverflowAreaHeight();
-      }else{
-        contentAreaRotation = (long)( contentAreaRotation * Math.abs( Math.cos( Math.toRadians( RotationUtils.getRotation( box.getParent() ) ) ) ) +
-            box.getParent().getOverflowAreaHeight() * Math.abs( Math.sin( Math.toRadians( RotationUtils.getRotation( box.getParent() ) ) ) ) );
-      }
-    }*/
-    
+
     if (boxContentX2 > getContentAreaX2() )
     { 
       // This is an overflow. Compute the text-ellipse ..
-      textEllipseBox = processTextEllipse(box, getContentAreaX2(), RotationUtils.hasRotation( box.getParent() ));
+      textEllipseBox = processTextEllipse(box, getContentAreaX2());
       box.setTextEllipseBox(textEllipseBox);
     }else{
       textEllipseBox = null;
@@ -126,7 +108,7 @@ public final class RevalidateTextEllipseProcessStep extends IterateStructuralPro
     return true;
   }
 
-  private RenderBox processTextEllipse(final RenderBox box, final long x2, final boolean hasRotation)
+  private RenderBox processTextEllipse(final RenderBox box, final long x2)
   {    
     final StyleSheet style = box.getStyleSheet();
     final String reslit = (String) style.getStyleProperty(TextStyleKeys.RESERVED_LITERAL, ellipseOverride);
@@ -144,7 +126,7 @@ public final class RevalidateTextEllipseProcessStep extends IterateStructuralPro
     {
       textEllipse.addGeneratedChilds(result.getText());
       textEllipse.addGeneratedChilds(result.getFinish());
-      performTextEllipseLayout(textEllipse, x2, hasRotation);
+      performTextEllipseLayout(textEllipse, x2);
       return textEllipse;
     }
     if (buffer != null)
@@ -164,11 +146,11 @@ public final class RevalidateTextEllipseProcessStep extends IterateStructuralPro
     textEllipse.addGeneratedChilds(finishNodes);
     textCache.store(style.getId(), style.getChangeTracker(),
         map.getChangeTracker(), reslit, style, map, renderNodes, finishNodes);
-    performTextEllipseLayout(textEllipse, x2, hasRotation);
+    performTextEllipseLayout(textEllipse, x2);
     return textEllipse;
   }
 
-  private void performTextEllipseLayout(final RenderBox box, final long x2, final boolean hasRotation)
+  private void performTextEllipseLayout(final RenderBox box, final long x2)
   {
     // we do assume that the text-ellipse box is a simple box with no sub-boxes.
     if (box == null)
@@ -177,41 +159,24 @@ public final class RevalidateTextEllipseProcessStep extends IterateStructuralPro
     }
     long x = x2;
     RenderNode node = box.getLastChild();
-    if(hasRotation){//rotate 90
-      long y = x2;
-      while (node != null)
-      {
-        final long nodeWidth = x2;
-        node.setX(0);
-        node.setHeight(0);
-        node.setY(y - nodeWidth);
-        node.setHeight(x2);
-  
-        node = node.getNext();
-        y -= nodeWidth;
-      }
-      box.setX(x);
-      box.setWidth(x2 - x);
-      box.setContentAreaX1(x);
-      box.setContentAreaX2(x2 - x);
-    }else{
-      while (node != null)
-      {
-        final long nodeWidth = node.getMaximumBoxWidth();
-        node.setX(x - nodeWidth);
-        node.setWidth(node.getMaximumBoxWidth());
-        node.setY(box.getY());
-        node.setHeight(box.getHeight());
-  
-        node = node.getNext();
-        x -= nodeWidth;
-      }
-      box.setX(x);
-      box.setWidth(x2 - x);
-      box.setContentAreaX1(x);
-      box.setContentAreaX2(x2 - x);
+
+    while (node != null)
+    {
+      final long nodeWidth = node.getMaximumBoxWidth();
+      node.setX(x - nodeWidth);
+      node.setWidth(node.getMaximumBoxWidth());
+      node.setY(box.getY());
+      node.setHeight(box.getHeight());
+
+      node = node.getNext();
+      x -= nodeWidth;
     }
+    box.setX(x);
+    box.setWidth(x2 - x);
+    box.setContentAreaX1(x);
+    box.setContentAreaX2(x2 - x);
   }
+
 
   protected void processParagraphChilds(final ParagraphRenderBox box)
   {

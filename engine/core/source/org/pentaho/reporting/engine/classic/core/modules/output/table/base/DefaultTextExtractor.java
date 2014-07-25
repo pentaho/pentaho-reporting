@@ -380,27 +380,12 @@ public class DefaultTextExtractor extends IterateStructuralProcessStep
     //final long y2 = box.getY() + box.getHeight();
     final long contentAreaX1 = box.getContentAreaX1();
     contentAreaX2 = box.getContentAreaX2();
-    
-    final boolean hasRotation = RotationUtils.hasRotation( box );
-    long contentAreaRotation = contentAreaX2;
-    final float rotation = RotationUtils.getRotation( box );
-    if ( hasRotation && rotation != 180 && rotation != -180){
-      if (rotation % 90 == 0 ){
-        // vertical
-        contentAreaRotation = box.getOverflowAreaHeight();
-      }else{
-        // diagonal
-        contentAreaRotation = (long)(
-            box.getOverflowAreaWidth() * Math.abs( Math.cos( Math.toRadians( rotation) ) ) +
-            box.getOverflowAreaHeight() * Math.abs( Math.sin( Math.toRadians( rotation ) ) ) );
-      }
-    }
-    
+
     RenderBox lineBox = (RenderBox) box.getFirstChild();
     while (lineBox != null)
     {
       manualBreak = false;
-      processTextLine(lineBox, contentAreaX1, contentAreaRotation );
+      processTextLine(lineBox, contentAreaX1, contentAreaX2 );
       if (manualBreak)
       {
         addLinebreak();
@@ -450,6 +435,27 @@ public class DefaultTextExtractor extends IterateStructuralProcessStep
 
     this.textLineOverflow =
         ((lineBox.getX() + lineBox.getWidth()) > contentAreaX2) && overflowProperty == false;
+
+    // check if a rotation is applied, and is not one that still keeps the text aligned with the X axis [-180,180]
+    if( RotationUtils.hasRotation( lineBox.getParent() ) && !RotationUtils.isHorizontalOrientation( lineBox.getParent() ) ){
+
+      final boolean overflowPropertyY = lineBox.getParent().getStaticBoxLayoutProperties().isOverflowY();
+
+      // applied rotation aligns the text with the Y axis [-270,-90,90,270]
+      if( RotationUtils.isVerticalOrientation( lineBox.getParent() ) ) {
+
+        long textSize = lineBox.getWidth();
+        long boxHeight = RotationUtils.calculateBoxHeight( lineBox.getParent() );
+
+        // we only allow the text to overflow out of its container
+        // box if 'OverflowY' property was not explicitly set to true
+        textLineOverflow = !overflowPropertyY && ( textSize > boxHeight );
+
+      } else {
+        // TODO diagonal rotations (ex: 45 degrees)
+      }
+    }
+
 
     if (textLineOverflow)
     {
