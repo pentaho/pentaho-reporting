@@ -22,6 +22,7 @@ import java.util.Random;
 import org.pentaho.reporting.engine.classic.core.AttributeNames;
 import org.pentaho.reporting.engine.classic.core.ReportElement;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderBox;
+import org.pentaho.reporting.engine.classic.core.layout.model.RenderNode;
 import org.pentaho.reporting.libraries.xmlns.writer.XmlWriter;
 
 public class RotationUtils
@@ -197,8 +198,16 @@ public class RotationUtils
     return Math.abs( rotation ) == NO_ROTATION  || Math.abs( rotation ) == 180;
   }
 
+  public static boolean isOrientationFacingUpwards( RenderBox box ){
+    return box != null && isOrientationFacingUpwards(getRotation(box));
+  }
+
   public static boolean isOrientationFacingUpwards( float rotation ){
     return rotation == 90  || rotation == -270;
+  }
+
+  public static boolean isOrientationFacingDownwards( RenderBox box ){
+    return box != null && isOrientationFacingDownwards( getRotation( box ) );
   }
 
   public static boolean isOrientationFacingDownwards( float rotation ){
@@ -211,21 +220,131 @@ public class RotationUtils
 
     if( box != null ){
 
+      boolean hasParent = box.getParent() != null;
+      RenderBox parent = hasParent ? box.getParent() : null;
+
       height = box.getHeight();
 
-      // remove ellipse from the box height ( write area )
-      height = box.getTextEllipseBox() != null ? ( height - box.getTextEllipseBox().getWidth() ) : height;
+      // remove padding from the box height
+      if( box.getBoxDefinition() != null && box.getBoxDefinition().getPaddingTop() > 0 ){
+        height -= box.getBoxDefinition().getPaddingTop();
+      } else if( hasParent && parent.getBoxDefinition() != null ){
+        height -= parent.getBoxDefinition().getPaddingTop();
+      }
 
-      // remove padding from the box height ( write area )
-      height = box.getBoxDefinition() != null ?
-          ( height - box.getBoxDefinition().getPaddingTop() - box.getBoxDefinition().getPaddingBottom() ) : height;
+      if( box.getBoxDefinition() != null && box.getBoxDefinition().getPaddingBottom() > 0 ){
+        height -= box.getBoxDefinition().getPaddingBottom();
+      } else if( hasParent && parent.getBoxDefinition() != null ){
+        height -= parent.getBoxDefinition().getPaddingBottom();
+      }
 
-      // remove border width from the box height ( write area )
-      height = box.getStaticBoxLayoutProperties() != null ?
-          ( height - box.getStaticBoxLayoutProperties().getBorderTop() - box.getStaticBoxLayoutProperties().getBorderBottom() )
-          : height;
+      // remove border width from the box height
+      if( box.getStaticBoxLayoutProperties() != null && box.getStaticBoxLayoutProperties().getBorderTop() > 0 ){
+        height -= box.getStaticBoxLayoutProperties().getBorderTop();
+      } else if( hasParent && parent.getStaticBoxLayoutProperties() != null ){
+        height -= parent.getStaticBoxLayoutProperties().getBorderTop();
+      }
+
+      if( box.getStaticBoxLayoutProperties() != null && box.getStaticBoxLayoutProperties().getBorderBottom() > 0 ){
+        height -= box.getStaticBoxLayoutProperties().getBorderBottom();
+      } else if( hasParent && parent.getStaticBoxLayoutProperties() != null ){
+        height -= parent.getStaticBoxLayoutProperties().getBorderBottom();
+      }
+
+      // remove margin width from the box height
+      if( box.getStaticBoxLayoutProperties() != null && box.getStaticBoxLayoutProperties().getMarginTop() > 0 ){
+        height -= box.getStaticBoxLayoutProperties().getMarginTop();
+      } else if( hasParent && parent.getStaticBoxLayoutProperties() != null ){
+        height -= parent.getStaticBoxLayoutProperties().getMarginTop();
+      }
+
+      if( box.getStaticBoxLayoutProperties() != null && box.getStaticBoxLayoutProperties().getMarginBottom() > 0 ){
+        height -= box.getStaticBoxLayoutProperties().getMarginBottom();
+      } else if( hasParent && parent.getStaticBoxLayoutProperties() != null ){
+        height -= parent.getStaticBoxLayoutProperties().getMarginBottom();
+      }
     }
 
     return height;
+  }
+
+  public static long calculateBoxWidth( RenderBox box ){
+
+    long width = 0;
+
+    if( box != null ){
+
+      boolean hasParent = box.getParent() != null;
+      RenderBox parent = hasParent ? box.getParent() : null;
+
+      width = box.getWidth();
+
+      // remove padding from the box height
+      if( box.getBoxDefinition() != null && box.getBoxDefinition().getPaddingLeft() > 0 ){
+        width -= box.getBoxDefinition().getPaddingLeft();
+      } else if( hasParent && parent.getBoxDefinition() != null ){
+        width -= parent.getBoxDefinition().getPaddingLeft();
+      }
+
+      if( box.getBoxDefinition() != null && box.getBoxDefinition().getPaddingRight() > 0 ){
+        width -= box.getBoxDefinition().getPaddingRight();
+      } else if( hasParent && parent.getBoxDefinition() != null ){
+        width -= parent.getBoxDefinition().getPaddingRight();
+      }
+
+      // remove border width from the box height
+      if( box.getStaticBoxLayoutProperties() != null && box.getStaticBoxLayoutProperties().getBorderLeft() > 0 ){
+        width -= box.getStaticBoxLayoutProperties().getBorderLeft();
+      } else if( hasParent && parent.getStaticBoxLayoutProperties() != null ){
+        width -= parent.getStaticBoxLayoutProperties().getBorderLeft();
+      }
+
+      if( box.getStaticBoxLayoutProperties() != null && box.getStaticBoxLayoutProperties().getBorderRight() > 0 ){
+        width -= box.getStaticBoxLayoutProperties().getBorderRight();
+      } else if( hasParent && parent.getStaticBoxLayoutProperties() != null ){
+        width -= parent.getStaticBoxLayoutProperties().getBorderRight();
+      }
+
+      // remove margin width from the box height
+      if( box.getStaticBoxLayoutProperties() != null && box.getStaticBoxLayoutProperties().getMarginLeft() > 0 ){
+        width -= box.getStaticBoxLayoutProperties().getMarginLeft();
+      } else if( hasParent && parent.getStaticBoxLayoutProperties() != null ){
+        width -= parent.getStaticBoxLayoutProperties().getMarginLeft();
+      }
+
+      if( box.getStaticBoxLayoutProperties() != null && box.getStaticBoxLayoutProperties().getMarginRight() > 0 ){
+        width -= box.getStaticBoxLayoutProperties().getMarginRight();
+      } else if( hasParent && parent.getStaticBoxLayoutProperties() != null ){
+        width -= parent.getStaticBoxLayoutProperties().getMarginRight();
+      }
+    }
+    return width;
+  }
+
+  public static long calculateBoxArea( RenderBox box, long lineHeight ){
+
+    if( box != null ){
+
+      long boxHeight = RotationUtils.calculateBoxHeight( box );
+      long boxWidth = RotationUtils.calculateBoxWidth( box );
+      return Math.max( 0 , boxHeight * ( new Double ( Math.floor( boxWidth / lineHeight ) ).intValue() ) );
+    }
+    return 0;
+  }
+
+  public static long calculateFullTextSize( RenderBox box ){
+
+    long lineWidth = 0;
+
+    if( box != null && box.getChildCount() > 0 ){
+
+      RenderNode n = box.getFirstChild();
+
+      while( n != null ){
+        lineWidth += n.getWidth();
+        n = n.getNext();
+      }
+    }
+    return lineWidth;
   }
 }

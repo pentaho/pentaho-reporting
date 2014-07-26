@@ -444,12 +444,15 @@ public class DefaultTextExtractor extends IterateStructuralProcessStep
       // applied rotation aligns the text with the Y axis [-270,-90,90,270]
       if( RotationUtils.isVerticalOrientation( lineBox.getParent() ) ) {
 
-        long textSize = lineBox.getWidth();
-        long boxHeight = RotationUtils.calculateBoxHeight( lineBox.getParent() );
+        boolean isASingleTextLine = lineBox.getParent().getChildCount() == 1;
 
-        // we only allow the text to overflow out of its container
-        // box if 'OverflowY' property was not explicitly set to true
-        textLineOverflow = !overflowPropertyY && ( textSize > boxHeight );
+        long boxArea = isASingleTextLine ? lineBox.getParent().getHeight() :
+            RotationUtils.calculateBoxArea( lineBox.getParent() , lineBox.getHeight() );
+
+        long textSize = isASingleTextLine ? lineBox.getWidth() :
+            RotationUtils.calculateFullTextSize( lineBox.getParent() );
+
+        textLineOverflow = !overflowPropertyY && ( textSize > boxArea );
 
       } else {
         // TODO diagonal rotations (ex: 45 degrees)

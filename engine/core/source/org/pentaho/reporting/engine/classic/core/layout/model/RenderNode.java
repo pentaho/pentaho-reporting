@@ -26,7 +26,6 @@ import org.pentaho.reporting.engine.classic.core.style.ElementStyleKeys;
 import org.pentaho.reporting.engine.classic.core.style.StyleSheet;
 import org.pentaho.reporting.engine.classic.core.style.VerticalTextAlign;
 import org.pentaho.reporting.engine.classic.core.util.InstanceID;
-import org.pentaho.reporting.engine.classic.core.util.RotationUtils;
 import org.pentaho.reporting.engine.classic.core.util.geom.StrictBounds;
 import org.pentaho.reporting.libraries.base.config.Configuration;
 
@@ -872,27 +871,6 @@ public abstract class RenderNode implements Cloneable
 
     long x2 = x + width;
     long y2 = y + height;
-
-    // check if a rotation is applied, and is not one that still keeps the text aligned with the X axis [-180,180]
-    if( RotationUtils.hasRotation( getParent() ) && !RotationUtils.isHorizontalOrientation( getParent() )
-        && getParent().getBoxDefinition() != null ) {
-
-      // applied rotation aligns the text with the Y axis [-270,-90,90,270]
-      if( RotationUtils.isVerticalOrientation( getParent() ) ){
-
-        //drawAreaX1 -= getParent().getBoxDefinition().getPaddingLeft();
-        //drawAreaX1 -= getParent().getBoxDefinition().getPaddingRight();
-
-        if( getParent().getBoxDefinition().getBorder() != null ){
-
-          //drawAreaX1 -= getParent().getBoxDefinition().getBorder().getLeft().getWidth();
-          //drawAreaX1 -= getParent().getBoxDefinition().getBorder().getRight().getWidth();
-        }
-
-      }else {
-        // TODO diagonal rotations (ex: 45 degrees)
-      }
-    }
 
     if (width == 0)
     {
