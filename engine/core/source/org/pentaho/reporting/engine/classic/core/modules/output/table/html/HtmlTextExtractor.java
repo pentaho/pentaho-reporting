@@ -18,12 +18,10 @@
 package org.pentaho.reporting.engine.classic.core.modules.output.table.html;
 
 import java.io.IOException;
-import java.text.DecimalFormat;
 import java.text.NumberFormat;
 
 import org.pentaho.reporting.engine.classic.core.AttributeNames;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
-import org.pentaho.reporting.engine.classic.core.ElementAlignment;
 import org.pentaho.reporting.engine.classic.core.ImageContainer;
 import org.pentaho.reporting.engine.classic.core.InvalidReportStateException;
 import org.pentaho.reporting.engine.classic.core.ReportAttributeMap;
@@ -52,7 +50,6 @@ import org.pentaho.reporting.engine.classic.core.modules.output.table.html.helpe
 import org.pentaho.reporting.engine.classic.core.modules.output.table.html.helper.StyleManager;
 import org.pentaho.reporting.engine.classic.core.style.ElementStyleKeys;
 import org.pentaho.reporting.engine.classic.core.style.StyleSheet;
-import org.pentaho.reporting.engine.classic.core.style.VerticalTextAlign;
 import org.pentaho.reporting.engine.classic.core.util.IReportDrawableRotated;
 import org.pentaho.reporting.engine.classic.core.util.ReportDrawableRotatedComponent;
 import org.pentaho.reporting.engine.classic.core.util.RotationUtils;
@@ -88,7 +85,6 @@ public class HtmlTextExtractor extends DefaultTextExtractor
   private static final String PT_UNIT = "pt";
   private static final String PX_UNIT = "px";
   private static final String ALT_ATTR = "alt";
-  private static final String DEG_UNIT = "deg";
 
   private OutputProcessorMetaData metaData;
   private XmlWriter xmlWriter;

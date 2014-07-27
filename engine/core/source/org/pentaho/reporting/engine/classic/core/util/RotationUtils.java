@@ -57,31 +57,6 @@ public class RotationUtils
     return rotation == 90 || rotation == -90 || rotation == 270 || rotation == -270;
   }
 
-
-  public static XmlWriter wrapContentInRotationDiv( XmlWriter xmlWriter , float rotation ) throws IOException {
-
-    if( xmlWriter == null || rotation == NO_ROTATION ){
-      return xmlWriter;
-    }
-
-    int rotatedDivId = new Random().nextInt( 10000 ) + 1;
-
-    StringBuffer sb = new StringBuffer("<div id=\"rotated_").append( rotatedDivId ).append("\" ");
-    sb.append("style= width: '+container.parentNode.offset" ).append( isRotationOverXaxis( rotation ) ? "Height" : "Width" ).append( "'px; " );
-    sb.append("height: '+container.parentNode.offset" ).append( isRotationOverXaxis( rotation ) ? "Width" : "Height" ).append( "'px; " );
-
-    sb.append( " transform:matrix(0.0,-1.0,1.0,0.0,0,113.5); " );
-    sb.append( " -ms-transform:matrix(0.0,-1.0,1.0,0.0,0,113.5); " );
-    sb.append( " -webkit-transform:matrix(0.0,-1.0,1.0,0.0,0,113.5); " );
-    sb.append( " -o-transform:matrix(0.0,-1.0,1.0,0.0,0,113.5); " );
-
-    sb.append( ">" );
-
-    xmlWriter.writeText( sb.toString() );
-
-    return xmlWriter;
-  }
-
   public static XmlWriter closeRotationDiv( XmlWriter xmlWriter ) throws IOException {
 
     if( xmlWriter == null ){
@@ -157,31 +132,6 @@ public class RotationUtils
     return matrix;
   }
 
-  public static float calculateRotatedX( float x , float textHeight, float rotation ){
-    return calculateRotatedX( x , textHeight, getRotationMatrix( rotation) );
-  }
-
-  public static float calculateRotatedY( float y , float textHeight, float rotation ){
-    return calculateRotatedY( y , textHeight, getRotationMatrix( rotation) );
-  }
-
-  public static float calculateRotatedX( float x , float textHeight, float[] rotationMatrix ){
-
-    float rotatedX = x;
-
-
-    return rotatedX;
-  }
-
-  public static float calculateRotatedY( float y , float textHeight, float[] rotationMatrix ){
-
-
-    float rotatedY = y;
-
-
-    return rotatedY;
-  }
-
   public static boolean isVerticalOrientation( RenderBox box ){
     return box != null && isVerticalOrientation(getRotation(box));
   }
@@ -196,22 +146,6 @@ public class RotationUtils
 
   public static boolean isHorizontalOrientation( float rotation ){
     return Math.abs( rotation ) == NO_ROTATION  || Math.abs( rotation ) == 180;
-  }
-
-  public static boolean isOrientationFacingUpwards( RenderBox box ){
-    return box != null && isOrientationFacingUpwards(getRotation(box));
-  }
-
-  public static boolean isOrientationFacingUpwards( float rotation ){
-    return rotation == 90  || rotation == -270;
-  }
-
-  public static boolean isOrientationFacingDownwards( RenderBox box ){
-    return box != null && isOrientationFacingDownwards( getRotation( box ) );
-  }
-
-  public static boolean isOrientationFacingDownwards( float rotation ){
-    return rotation == -90  || rotation == 270;
   }
 
   public static long calculateBoxHeight( RenderBox box ){
@@ -321,30 +255,4 @@ public class RotationUtils
     return width;
   }
 
-  public static long calculateBoxArea( RenderBox box, long lineHeight ){
-
-    if( box != null ){
-
-      long boxHeight = RotationUtils.calculateBoxHeight( box );
-      long boxWidth = RotationUtils.calculateBoxWidth( box );
-      return Math.max( 0 , boxHeight * ( new Double ( Math.floor( boxWidth / lineHeight ) ).intValue() ) );
-    }
-    return 0;
-  }
-
-  public static long calculateFullTextSize( RenderBox box ){
-
-    long lineWidth = 0;
-
-    if( box != null && box.getChildCount() > 0 ){
-
-      RenderNode n = box.getFirstChild();
-
-      while( n != null ){
-        lineWidth += n.getWidth();
-        n = n.getNext();
-      }
-    }
-    return lineWidth;
-  }
 }

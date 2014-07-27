@@ -30,7 +30,6 @@ import java.util.HashMap;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.Cell;
@@ -45,8 +44,6 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.apache.poi.ss.util.CellRangeAddress;
-import org.apache.poi.xssf.usermodel.XSSFCell;
-import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 import org.apache.poi.xssf.usermodel.XSSFPicture;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.pentaho.reporting.engine.classic.core.AttributeNames;
@@ -73,7 +70,6 @@ import org.pentaho.reporting.engine.classic.core.modules.output.table.base.Table
 import org.pentaho.reporting.engine.classic.core.modules.output.table.base.TableRectangle;
 import org.pentaho.reporting.engine.classic.core.style.ElementStyleKeys;
 import org.pentaho.reporting.engine.classic.core.style.StyleSheet;
-import org.pentaho.reporting.engine.classic.core.util.IReportDrawableRotated;
 import org.pentaho.reporting.engine.classic.core.util.ImageUtils;
 import org.pentaho.reporting.engine.classic.core.util.IntegerCache;
 import org.pentaho.reporting.engine.classic.core.util.ReportDrawableRotatedComponent;
@@ -564,19 +560,8 @@ public class ExcelPrinter
     else if (value instanceof DrawableWrapper)
     {
       final DrawableWrapper drawable = (DrawableWrapper) value;
-      if ( drawable.getBackend() instanceof IReportDrawableRotated )
-      {
-        try
-        {
-          if (((IReportDrawableRotated) drawable.getBackend()).drawRotatedComponent(cell, IReportDrawableRotated.Type.XLS_XLSX))
-          {
-            return true;
-          }
-          // if incompatible angle value then proceed onto exporting as image
-        } catch( IOException e ){
-          ExcelPrinter.logger.error( e );
-          return false;
-        }
+      if( RotationUtils.hasRotation( content ) ){
+        ReportDrawableRotatedComponent.drawExcel( cell, new Float( RotationUtils.getRotation( content ) ).intValue() );
       }
       final RenderNode rawSource = textExtractor.getRawSource();
       final StrictBounds contentBounds = new StrictBounds

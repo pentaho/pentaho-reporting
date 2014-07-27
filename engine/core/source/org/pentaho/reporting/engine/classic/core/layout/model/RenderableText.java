@@ -24,7 +24,6 @@ import org.pentaho.reporting.engine.classic.core.layout.text.Glyph;
 import org.pentaho.reporting.engine.classic.core.layout.text.GlyphList;
 import org.pentaho.reporting.engine.classic.core.metadata.ElementType;
 import org.pentaho.reporting.engine.classic.core.style.StyleSheet;
-import org.pentaho.reporting.engine.classic.core.style.TextStyleKeys;
 import org.pentaho.reporting.engine.classic.core.util.InstanceID;
 import org.pentaho.reporting.engine.classic.core.util.RotationUtils;
 import org.pentaho.reporting.engine.classic.core.util.geom.StrictGeomUtility;
@@ -274,80 +273,52 @@ public final class RenderableText extends RenderNode
     return fontMetricsValue * conversionFactor;
   }
 
-  public int computeMaximumTextSize(final long contentX2)
+  public int computeMaximumTextSize(final long contentArea)
   {
-    int length = getLength();
-    long x = getX();
-    long y = getY();
-    GlyphList gs = getGlyphs();
-
-    long runningPos = x;
-    long contentArea = contentX2;
-    long endOfWord = x + getWidth();
-    int textDirection = 1; // left-to-right and up-to-down text directions
-    int ellipseLengthCorrection = 0;
-
-    boolean hasTopParent = this.getParent() != null && this.getParent().getParent() != null;
-    RenderBox topParent = hasTopParent ? this.getParent().getParent() : null;
-
-    boolean hasRotation = hasTopParent ? RotationUtils.hasRotation(topParent) : false;
-
-    // check if a rotation is applied, and is not one that still keeps the text aligned with the X axis [-180,180]
-    if (hasRotation && !RotationUtils.isHorizontalOrientation(( topParent )))
-    {
-      // applied rotation aligns the text with the Y axis [-270,-90,90,270]
-      if ( RotationUtils.isVerticalOrientation( topParent ) )
-      {
-        // first we see if we really need to iterate through all glyphs, or
-        // if this is a basic case where all of the text fits inside the box
-
-        boolean isASingleTextLine = topParent.getChildCount() == 1;
-
-        long boxArea = isASingleTextLine ? topParent.getHeight() : RotationUtils.calculateBoxArea( topParent , getHeight() );
-
-        long textSize = isASingleTextLine ? getWidth() : RotationUtils.calculateFullTextSize( topParent );
-
-        if ( boxArea >= textSize ) {
-          return length;
-        }
-
-        // we really need to iterate through all glyphs
-        String ellipse =  (String) getStyleSheet().getStyleProperty( TextStyleKeys.RESERVED_LITERAL );
-        ellipseLengthCorrection = ellipse != null ? ellipse.length() : 0;
-        textDirection = RotationUtils.isOrientationFacingDownwards( topParent ) ? 1 : -1;
-        contentArea = y + boxArea;
-        endOfWord = y + ( textDirection * getWidth() );
-        runningPos = y;
+    final int length = getLength();
+    final long minCoord, maxCoord;
+    final RenderBox topParent = this.getParent().getParent();
+    if ( RotationUtils.isVerticalOrientation( topParent ) ){
+      minCoord = topParent.getY()
+          + topParent.getBoxDefinition().getPaddingTop()
+          + topParent.getStaticBoxLayoutProperties().getBorderTop();
+      if( this.getParent().getTextEllipseBox() != null ){
+        // has ellipse
+        maxCoord = minCoord + getWidth();
+      }else{
+        // write it all, TODO overflow restrictions
+        maxCoord = -1;
       }
-      else
-      {
-        // TODO diagonal rotations (ex: 45 degrees)
-      }
+    }else{
+      // TODO diagonal
+      minCoord = getX();
+      maxCoord = minCoord + getWidth();
     }
 
-    // do calculations
-
-    if ( contentArea >= endOfWord )
+    if (contentArea >= maxCoord)
     {
       return length;
     }
 
+    final GlyphList gs = getGlyphs();
+    long runningPos = minCoord;
     final int offset = getOffset();
     final int maxPos = offset + length;
 
     for (int i = offset; i < maxPos; i++)
     {
       final Glyph g = gs.getGlyph(i);
-      runningPos += ( textDirection * RenderableText.convert(g.getWidth() ) );
+      runningPos += RenderableText.convert(g.getWidth());
       if (i != offset)
       {
-        runningPos += ( textDirection *  g.getSpacing().getMinimum() );
+        runningPos += g.getSpacing().getMinimum();
       }
-      if ( ( textDirection == 1 && runningPos > contentArea ) || ( textDirection == -1 && runningPos < contentArea ) )
+      if (runningPos > contentArea)
       {
-        return Math.max( 0, i - offset - ellipseLengthCorrection );
+        return Math.max(0, i - offset);
       }
     }
     return length;
-    }
+  }
+
 }

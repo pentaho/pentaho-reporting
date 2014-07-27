@@ -37,8 +37,6 @@ public interface IReportDrawableRotated extends ReportDrawable
   public Float getRotationDegree();
 
   public ReportElement getElement();
-
-  public boolean drawRotatedComponent( Object componentWriter , Type componentType ) throws IOException;
   
   public void startDrawHtml(Object writer) throws IOException;
   

@@ -30,6 +30,7 @@ import org.pentaho.reporting.engine.classic.core.layout.text.DefaultRenderableTe
 import org.pentaho.reporting.engine.classic.core.layout.text.RenderableTextFactory;
 import org.pentaho.reporting.engine.classic.core.style.StyleSheet;
 import org.pentaho.reporting.engine.classic.core.style.TextStyleKeys;
+import org.pentaho.reporting.engine.classic.core.util.RotationUtils;
 import org.pentaho.reporting.libraries.fonts.encoding.CodePointBuffer;
 import org.pentaho.reporting.libraries.fonts.encoding.manual.Utf16LE;
 
@@ -94,13 +95,29 @@ public final class RevalidateTextEllipseProcessStep extends IterateStructuralPro
 
     final StaticBoxLayoutProperties sblp = box.getStaticBoxLayoutProperties();
     final BoxDefinition bdef = box.getBoxDefinition();
-    final long boxContentX2 = (box.getX() + box.getWidth() - bdef.getPaddingRight() - sblp.getBorderRight());
     final RenderBox textEllipseBox;
+    
+    final long maxLineWritableCoord, overflow;
+    
+    if( RotationUtils.isVerticalOrientation( box.getParent() ) ){
+      // applied rotation aligns the text with the Y axis [-270,-90,90,270]
+      // assuming we can always simulate a -90º rotated paragraphBox (vertical down orientation)
+      maxLineWritableCoord = (box.getY() + box.getWidth() - bdef.getPaddingBottom() - sblp.getBorderBottom());
+      overflow = box.getParent().getY() + box.getParent().getHeight()
+          - box.getParent().getBoxDefinition().getPaddingBottom()
+          - box.getParent().getStaticBoxLayoutProperties().getBorderBottom();
+    }else{ // TODO diagonal rotations (ex: 45 degrees)
+      maxLineWritableCoord = (box.getX() + box.getWidth() - bdef.getPaddingRight() - sblp.getBorderRight());
+      overflow = contentAreaX2;
+    }
 
-    if (boxContentX2 > getContentAreaX2() )
+    /* box.getParent() */
+    if (maxLineWritableCoord > overflow )
     { 
       // This is an overflow. Compute the text-ellipse ..
-      textEllipseBox = processTextEllipse(box, getContentAreaX2());
+      
+      // simulating rotation calcs
+      textEllipseBox = processTextEllipse(box, contentAreaX2);
       box.setTextEllipseBox(textEllipseBox);
     }else{
       textEllipseBox = null;
