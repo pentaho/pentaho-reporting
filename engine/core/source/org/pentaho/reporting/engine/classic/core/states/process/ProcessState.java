@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.List;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.EventListenerList;
@@ -64,10 +65,12 @@ import org.pentaho.reporting.engine.classic.core.function.sys.WizardItemHideFunc
 import org.pentaho.reporting.engine.classic.core.layout.InlineSubreportMarker;
 import org.pentaho.reporting.engine.classic.core.layout.output.OutputProcessorFeature;
 import org.pentaho.reporting.engine.classic.core.layout.output.OutputProcessorMetaData;
+import org.pentaho.reporting.engine.classic.core.sorting.SortConstraint;
 import org.pentaho.reporting.engine.classic.core.parameters.DefaultParameterContext;
 import org.pentaho.reporting.engine.classic.core.parameters.ReportParameterDefinition;
 import org.pentaho.reporting.engine.classic.core.parameters.ReportParameterValidator;
 import org.pentaho.reporting.engine.classic.core.parameters.ValidationResult;
+import org.pentaho.reporting.engine.classic.core.sorting.SortingDataFactory;
 import org.pentaho.reporting.engine.classic.core.states.DataFactoryManager;
 import org.pentaho.reporting.engine.classic.core.states.DefaultGroupSizeRecorder;
 import org.pentaho.reporting.engine.classic.core.states.DefaultGroupingState;
@@ -300,7 +303,9 @@ public class ProcessState implements ReportState
         processedReport.getAttribute(AttributeNames.Core.NAMESPACE, AttributeNames.Core.DATA_CACHE);
     final boolean dataCacheEnabled = designtime == false && Boolean.FALSE.equals(dataCacheEnabledRaw) == false;
 
-    final CachingDataFactory dataFactory = new CachingDataFactory(lookupDataFactory(processedReport), dataCacheEnabled);
+    final DataFactory sortingDataFactory =
+        new SortingDataFactory(lookupDataFactory(processedReport), performanceMonitorContext);
+    final CachingDataFactory dataFactory = new CachingDataFactory(sortingDataFactory, dataCacheEnabled);
     dataFactory.initialize(new ProcessingDataFactoryContext(processingContext, dataFactory));
 
     final FunctionStorageKey functionStorageKey = FunctionStorageKey.createKey(null, processedReport);
@@ -317,13 +322,15 @@ public class ProcessState implements ReportState
         AttributeNames.Internal.QUERY_LIMIT), queryLimitDefault);
     final Object queryTimeoutRaw = evaluateExpression(processedReport.getAttributeExpression(AttributeNames.Internal.NAMESPACE,
         AttributeNames.Internal.QUERY_TIMEOUT), queryTimeoutDefault);
+    final List<SortConstraint> sortOrder = lookupSortOrder(processedReport);
+
     this.query = (String) ConverterRegistry.convert(queryRaw, String.class, processedReport.getQuery());
     this.queryLimit = (Integer) ConverterRegistry.convert(queryLimitRaw, Integer.class, queryLimitDefault);
     this.queryTimeout = (Integer) ConverterRegistry.convert(queryTimeoutRaw, Integer.class, queryTimeoutDefault);
 
     DefaultFlowController postQueryFlowController = flowController.performQuery
         (dataFactory, query, queryLimit.intValue(), queryTimeout.intValue(),
-            processingContext.getResourceBundleFactory());
+            processingContext.getResourceBundleFactory(), sortOrder);
 
     final MasterReportProcessPreprocessor postProcessor = new MasterReportProcessPreprocessor(postQueryFlowController);
     final MasterReport fullReport = postProcessor.invokePreProcessing(processedReport);
@@ -369,6 +376,16 @@ public class ProcessState implements ReportState
       this.recorder = new EmptyGroupSizeRecorder();
     }
     this.processKey = createKey();
+  }
+
+  private List<SortConstraint> lookupSortOrder(final AbstractReportDefinition report)
+  {
+    Object attribute = report.getAttribute
+        (AttributeNames.Internal.NAMESPACE, AttributeNames.Internal.COMPUTED_SORT_CONSTRAINTS);
+    if (attribute instanceof List<?>) {
+      return (List<SortConstraint>) attribute;
+    }
+    return Collections.emptyList();
   }
 
   private void initializeProcessingContext(final ProcessingContext processingContext, final MasterReport report)
@@ -461,7 +478,7 @@ public class ProcessState implements ReportState
     this.groupSequenceCounter.set(0, -1);
     this.recorder = (GroupSizeRecorder) parentState.recorder.clone();
     this.recorder.reset();
-
+    this.performanceMonitorContext = parentState.performanceMonitorContext;
     this.reportInstancesShareConnection = parentState.reportInstancesShareConnection;
     this.groupStarts = new FastStack<GroupStartRecord>();
     this.parentSubReportState = parentState;
@@ -539,7 +556,8 @@ public class ProcessState implements ReportState
         else
         {
           // subreport comes with an own factory, so open the gates ..
-          final CachingDataFactory cdataFactory = new CachingDataFactory(subreportDf, dataCacheEnabled);
+          final DataFactory sortingDataFactory = new SortingDataFactory(subreportDf, performanceMonitorContext);
+          final CachingDataFactory cdataFactory = new CachingDataFactory(sortingDataFactory, dataCacheEnabled);
           final ProcessingContext context = postPreProcessingFlowController.getReportContext();
           cdataFactory.initialize(new ProcessingDataFactoryContext(context, cdataFactory));
           dataFactoryManager.store(functionStorageKey, cdataFactory, isReportsShareConnections(preDataSubReport));
@@ -572,9 +590,11 @@ public class ProcessState implements ReportState
       this.query = (String) ConverterRegistry.convert(queryRaw, String.class, queryDefined);
       this.queryLimit = (Integer) ConverterRegistry.convert(queryLimitRaw, Integer.class, queryLimitDefault);
       this.queryTimeout = (Integer) ConverterRegistry.convert(queryTimeoutRaw, Integer.class, queryTimeoutDefault);
+      final List<SortConstraint> sortOrder = lookupSortOrder(preDataSubReport);
+
 
       DefaultFlowController postQueryFlowController = flowController.performSubReportQuery
-          (query, queryLimit.intValue(), queryTimeout.intValue(), exportMappings);
+          (query, queryLimit.intValue(), queryTimeout.intValue(), exportMappings, sortOrder);
       final ProxyDataSchemaDefinition schemaDefinition =
           new ProxyDataSchemaDefinition(preDataSubReport.getDataSchemaDefinition(),
               postQueryFlowController.getMasterRow().getDataSchemaDefinition());

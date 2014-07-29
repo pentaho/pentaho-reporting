@@ -117,6 +117,7 @@
     <xs:attribute type="xs:string" name="compatibility-level" use="optional"/>
     <xs:attribute type="xs:boolean" name="auto-process" use="optional"/>
     <xs:attribute type="xs:boolean" name="execute-in-design-mode" use="optional"/>
+    <xs:attribute type="xs:unsignedInt" name="priority" use="optional"/>
   </xs:complexType>
 
   <xs:complexType name="style-group-refType">

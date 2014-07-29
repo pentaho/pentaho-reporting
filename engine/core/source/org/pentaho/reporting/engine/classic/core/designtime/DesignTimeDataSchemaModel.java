@@ -18,6 +18,7 @@
 package org.pentaho.reporting.engine.classic.core.designtime;
 
 import java.util.Date;
+import java.util.List;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
@@ -38,6 +39,10 @@ import org.pentaho.reporting.engine.classic.core.cache.IndexedTableModel;
 import org.pentaho.reporting.engine.classic.core.designtime.datafactory.DesignTimeDataFactoryContext;
 import org.pentaho.reporting.engine.classic.core.function.Expression;
 import org.pentaho.reporting.engine.classic.core.parameters.ParameterDefinitionEntry;
+import org.pentaho.reporting.engine.classic.core.sorting.SortConstraint;
+import org.pentaho.reporting.engine.classic.core.sorting.SortOrderReportPreProcessor;
+import org.pentaho.reporting.engine.classic.core.sorting.SortingDataFactory;
+import org.pentaho.reporting.engine.classic.core.states.NoOpPerformanceMonitorContext;
 import org.pentaho.reporting.engine.classic.core.states.QueryDataRowWrapper;
 import org.pentaho.reporting.engine.classic.core.states.datarow.EmptyTableModel;
 import org.pentaho.reporting.engine.classic.core.util.CloseableTableModel;
@@ -136,14 +141,17 @@ public class DesignTimeDataSchemaModel extends AbstractDesignTimeDataSchemaModel
 
     try
     {
-      final CachingDataFactory dataFactory = new CachingDataFactory(createDataFactory(parent), true);
+      final CachingDataFactory dataFactory =
+          new CachingDataFactory(new SortingDataFactory(createDataFactory(parent), new NoOpPerformanceMonitorContext()), true);
       final MasterReport masterReport = getMasterReportElement();
 
       dataFactory.initialize(new DesignTimeDataFactoryContext(masterReport));
 
       try
       {
-        final TableModel reportData = queryReportData(parent.getQuery(), parent.getQueryTimeout(), dataFactory);
+        List<SortConstraint> sortConstraints = new SortOrderReportPreProcessor().computeSortConstraints(parent);
+        final TableModel reportData = queryReportData
+            (parent.getQuery(), parent.getQueryTimeout(), dataFactory, sortConstraints);
         final DataSchema dataSchema = dataSchemaCompiler.compile
             (reportData, expressions, parameterRow, parameterDefinitions, masterReport.getReportEnvironment());
         // this.columnNames = collectColumnNames(reportData, parameterRow, expressions);
@@ -196,7 +204,8 @@ public class DesignTimeDataSchemaModel extends AbstractDesignTimeDataSchemaModel
 
   private TableModel queryReportData(final String query,
                                      final int queryTimeout,
-                                     final DataFactory dataFactory)
+                                     final DataFactory dataFactory,
+                                     final List<SortConstraint> sortConstraints)
       throws ReportDataFactoryException
   {
     if (offlineTableModel == null || changeTracker.isReportQueryChanged())
@@ -211,11 +220,13 @@ public class DesignTimeDataSchemaModel extends AbstractDesignTimeDataSchemaModel
         else if (dataFactory instanceof DataFactoryDesignTimeSupport)
         {
           final DataFactoryDesignTimeSupport dts = (DataFactoryDesignTimeSupport) dataFactory;
-          reportData = dts.queryDesignTimeStructure(query, new QueryDataRowWrapper(new StaticDataRow(), 1, queryTimeout));
+          reportData = dts.queryDesignTimeStructure
+              (query, new QueryDataRowWrapper(new StaticDataRow(), queryTimeout, 1, sortConstraints));
         }
         else
         {
-          reportData = dataFactory.queryData(query, new QueryDataRowWrapper(new StaticDataRow(), 1, queryTimeout));
+          reportData = dataFactory.queryData
+              (query, new QueryDataRowWrapper(new StaticDataRow(), queryTimeout, 1, sortConstraints));
         }
 
         offlineTableModel = new OfflineTableModel(reportData, new DefaultDataAttributeContext());

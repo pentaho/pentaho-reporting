@@ -41,6 +41,7 @@ public interface DataFactory extends Serializable, Cloneable
    * of this parameter is implementation dependent.
    */
   public static final String QUERY_TIMEOUT = "::org.pentaho.reporting::query-timeout";
+  public static final String QUERY_SORT = "::org.pentaho.reporting::query-sort";
 
   /**
    * Queries a datasource. The string 'query' defines the name of the query. The Parameterset given here may contain

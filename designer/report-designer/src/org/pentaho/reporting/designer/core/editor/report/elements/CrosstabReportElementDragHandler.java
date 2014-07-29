@@ -86,6 +86,7 @@ public class CrosstabReportElementDragHandler extends AbstractSubReportElementDr
     final CrosstabElement visualElement = new CrosstabElement();
     visualElement.setElementType(type);
     visualElement.setRootGroup(new CrosstabGroup());
+    visualElement.setAutoSort(Boolean.TRUE);
 
     // Hide all bands except for Details
     visualElement.getPageHeader().setAttribute(ReportDesignerParserModule.NAMESPACE, ReportDesignerParserModule.HIDE_IN_LAYOUT_GUI_ATTRIBUTE, Boolean.TRUE);

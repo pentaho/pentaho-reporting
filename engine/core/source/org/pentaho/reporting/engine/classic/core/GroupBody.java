@@ -28,4 +28,6 @@ public abstract class GroupBody extends Section
   protected GroupBody()
   {
   }
+
+  public abstract Group getGroup();
 }

@@ -29,6 +29,7 @@
     <attribute-group-ref ref="common-attributes"/>
     <attribute-group-ref ref="interactivity"/>
     <attribute-group-ref ref="group-data-body"/>
+    <attribute-group-ref ref="sorting-order"/>
 
     <style-group-ref ref="borders"/>
     <style-group-ref ref="common"/>
@@ -376,6 +377,7 @@
     <attribute-group-ref ref="common-attributes"/>
     <attribute-group-ref ref="interactivity"/>
     <attribute-group-ref ref="relational-group"/>
+    <attribute-group-ref ref="sorting-order"/>
 
     <attribute namespace="http://reporting.pentaho.org/namespaces/engine/attributes/core"
                name="group-fields"

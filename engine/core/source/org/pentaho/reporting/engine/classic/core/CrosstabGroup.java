@@ -23,6 +23,7 @@ import java.util.Collections;
 import java.util.List;
 
 import org.pentaho.reporting.engine.classic.core.filter.types.bands.CrosstabGroupType;
+import org.pentaho.reporting.engine.classic.core.sorting.SortConstraint;
 
 /**
  * A crosstab group represents the page, row, column and detail sections of a cube. The other axises are handled as
@@ -428,5 +429,10 @@ public class CrosstabGroup extends Group
       return fields.clone();
     }
     return EMPTY_FIELDS;
+  }
+
+  public List<SortConstraint> getSortingConstraint()
+  {
+    return mapFields(getPaddingFields());
   }
 }

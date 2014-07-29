@@ -372,6 +372,12 @@
                value-role="Value"/>
   </attribute-group>
 
+  <attribute-group name="sorting-order"
+                   bundle-name="org.pentaho.reporting.engine.classic.core.metadata.messages">
+
+  </attribute-group>
+
+
   <attribute-group name="sub-report-attributes"
                    bundle-name="org.pentaho.reporting.engine.classic.core.metadata.messages">
 
@@ -443,6 +449,17 @@
                design-time-value="true"
                hidden="false"
                value-type="java.lang.Integer"
+               value-role="Value"/>
+
+    <attribute namespace="http://reporting.pentaho.org/namespaces/engine/attributes/core"
+               name="auto-sort"
+               mandatory="false"
+               expert="false"
+               computed="false"
+               transient="false"
+               design-time-value="true"
+               hidden="false"
+               value-type="java.lang.Boolean"
                value-role="Value"/>
 
     <attribute namespace="http://reporting.pentaho.org/namespaces/engine/attributes/internal"

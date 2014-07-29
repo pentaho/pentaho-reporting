@@ -105,6 +105,7 @@ public class EmbeddedWizard
       final MasterReport report = new MasterReport();
       report.setDataFactory(new CompoundDataFactory());
       report.setQuery(null);
+      report.setAutoSort(Boolean.TRUE);
       wizardController.getEditorModel().setReportDefinition(report, false);
     }
 

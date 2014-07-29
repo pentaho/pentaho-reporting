@@ -18,6 +18,8 @@
 package org.pentaho.reporting.engine.classic.core.states.datarow;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import javax.swing.table.TableModel;
 
 import org.pentaho.reporting.engine.classic.core.DataFactory;
@@ -32,6 +34,7 @@ import org.pentaho.reporting.engine.classic.core.ResourceBundleFactory;
 import org.pentaho.reporting.engine.classic.core.event.ReportEvent;
 import org.pentaho.reporting.engine.classic.core.function.Expression;
 import org.pentaho.reporting.engine.classic.core.function.ProcessingContext;
+import org.pentaho.reporting.engine.classic.core.sorting.SortConstraint;
 import org.pentaho.reporting.engine.classic.core.states.LengthLimitingTableModel;
 import org.pentaho.reporting.engine.classic.core.states.PerformanceMonitorContext;
 import org.pentaho.reporting.engine.classic.core.states.QueryDataRowWrapper;
@@ -177,12 +180,26 @@ public final class DefaultFlowController
    * @param queryTimeout
    * @return
    * @throws ReportDataFactoryException
+   * @deprecated
    */
+  @Deprecated
   public DefaultFlowController performQuery(final DataFactory dataFactory,
                                             final String query,
                                             final int queryLimit,
                                             final int queryTimeout,
                                             final ResourceBundleFactory resourceBundleFactory)
+      throws ReportDataFactoryException
+  {
+    List<SortConstraint> objects = Collections.emptyList();
+    return performQuery(dataFactory, query, queryLimit, queryTimeout, resourceBundleFactory, objects);
+  }
+
+  public DefaultFlowController performQuery(final DataFactory dataFactory,
+                                            final String query,
+                                            final int queryLimit,
+                                            final int queryTimeout,
+                                            final ResourceBundleFactory resourceBundleFactory,
+                                            final List<SortConstraint> sortOrder)
       throws ReportDataFactoryException
   {
     if (dataFactory == null)
@@ -199,7 +216,7 @@ public final class DefaultFlowController
             (reportContext, dataFactory, new ParameterDataRow(parameters), resourceBundleFactory);
     final TableModel tableData = performQueryData
         (masterRowWithoutData.getDataFactory(), query, queryLimit, queryTimeout,
-            masterRowWithoutData.getGlobalView(), false);
+            masterRowWithoutData.getGlobalView(), false, sortOrder);
     final MasterDataRow masterRow = masterRowWithoutData.deriveWithQueryData(tableData);
 
     final DefaultFlowController fc = new DefaultFlowController(this, masterRow);
@@ -228,9 +245,10 @@ public final class DefaultFlowController
     final MasterDataRow masterRowWithoutData =
         dataRow.deriveSubDataRow
             (reportContext, dataFactory, new ParameterDataRow(parameters), resourceBundleFactory);
+    List<SortConstraint> objects = Collections.emptyList();
     final TableModel tableData = performQueryData
         (masterRowWithoutData.getDataFactory(), query, queryLimit, queryTimeout,
-            masterRowWithoutData.getGlobalView(), true);
+            masterRowWithoutData.getGlobalView(), true, objects);
     final MasterDataRow masterRow = masterRowWithoutData.deriveWithQueryData(tableData);
 
     final DefaultFlowController fc = new DefaultFlowController(this, masterRow);
@@ -245,7 +263,8 @@ public final class DefaultFlowController
                                       final int queryLimit,
                                       final int queryTimeout,
                                       final DataRow parameters,
-                                      final boolean designTime)
+                                      final boolean designTime,
+                                      final List<SortConstraint> sortConstraints)
       throws ReportDataFactoryException
   {
     if (dataFactory == null)
@@ -266,7 +285,7 @@ public final class DefaultFlowController
         (PerformanceTags.REPORT_QUERY, new FormattedMessage("query={%s}", query));
     try
     {
-      DataRow params = new QueryDataRowWrapper(parameters, queryLimit, queryTimeout);
+      DataRow params = new QueryDataRowWrapper(parameters, queryTimeout, queryLimit, sortConstraints);
       TableModel reportData;
       if (designTime && dataFactory instanceof DataFactoryDesignTimeSupport) {
         DataFactoryDesignTimeSupport designTimeSupport = (DataFactoryDesignTimeSupport) dataFactory;
@@ -326,11 +345,22 @@ public final class DefaultFlowController
     return fc;
   }
 
-
+  @Deprecated
   public DefaultFlowController performSubReportQuery(final String query,
                                                      final int queryLimit,
                                                      final int queryTimeout,
                                                      final ParameterMapping[] outputParameters)
+      throws ReportDataFactoryException
+  {
+    List<SortConstraint> con = Collections.emptyList();
+    return performSubReportQuery(query, queryLimit, queryTimeout, outputParameters, con);
+  }
+
+  public DefaultFlowController performSubReportQuery(final String query,
+                                                     final int queryLimit,
+                                                     final int queryTimeout,
+                                                     final ParameterMapping[] outputParameters,
+                                                     final List<SortConstraint> sortConstraints)
       throws ReportDataFactoryException
   {
     if (outputParameters == null)
@@ -341,8 +371,8 @@ public final class DefaultFlowController
     final MasterDataRow subReportDataRow = this.dataRow;
     // perform the query ...
     // add the resultset ...
-    final TableModel tableData = performQueryData
-        (subReportDataRow.getDataFactory(), query, queryLimit, queryTimeout, subReportDataRow.getGlobalView(), false);
+    final TableModel tableData = performQueryData(subReportDataRow.getDataFactory(),
+        query, queryLimit, queryTimeout, subReportDataRow.getGlobalView(), false, sortConstraints);
     final MasterDataRow masterRow = subReportDataRow.deriveWithQueryData(tableData);
 
     if (isGlobalImportOrExport(outputParameters))

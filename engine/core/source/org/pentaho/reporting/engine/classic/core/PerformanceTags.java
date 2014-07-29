@@ -34,6 +34,7 @@ public final class PerformanceTags
   public static final String REPORT_GENERATE = "pentaho.report.processing.generate";
   public static final String REPORT_GENERATE_OUTPUT = "pentaho.report.processing.generate.output";
 
+  public static final String REPORT_QUERY_SORT = "pentaho.report.processing.query.sort";
   public static final String REPORT_QUERY = "pentaho.report.processing.query";
   public static final String REPORT_PARAMETER = "pentaho.report.parameter";
   public static final String REPORT_PARAMETER_QUERY = "pentaho.report.parameter.query";

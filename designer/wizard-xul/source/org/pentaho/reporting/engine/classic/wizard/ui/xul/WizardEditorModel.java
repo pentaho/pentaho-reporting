@@ -87,6 +87,7 @@ public class WizardEditorModel extends XulEventSourceAdapter
   private static MasterReport createDefaultReport()
   {
     final MasterReport report = new MasterReport();
+    report.setAutoSort(Boolean.TRUE);
     report.setDataFactory(new CompoundDataFactory());
     report.setQuery(null);
     return report;
