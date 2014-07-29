@@ -99,7 +99,6 @@ public class ReportDrawableRotatedComponent implements IReportDrawableRotated
     }else{
       breakWidth = (float)( Math.sqrt( Math.pow( (element.getStyle().getDoubleStyleProperty(ElementStyleKeys.MIN_HEIGHT, 0d) -borderTopWidth.floatValue() -borderBottomWidth.floatValue()),2d)
           + Math.pow( (element.getStyle().getDoubleStyleProperty(ElementStyleKeys.MIN_WIDTH, 0d) -borderLeftWidth.floatValue() -borderRightWidth.floatValue()),2d) )) - s*2f;
-      
     }
     
     /* max width of any line, to help translations */
@@ -126,11 +125,9 @@ public class ReportDrawableRotatedComponent implements IReportDrawableRotated
     /* save original coordinates */
     AffineTransform originalAT = graphics2D.getTransform();
     
-    // translate coordinates
     float translateX = 0f, translateY = 0f, textWidth, textHeight, drawX, drawY;
-    // half dimension
-    final float centerX = (float) bounds.getMaxX() / 2f,
-        centerY = (float) bounds.getMaxY() / 2f;
+    
+    final float centerX = (float) bounds.getMaxX() / 2f, centerY = (float) bounds.getMaxY() / 2f;
 
     /* Draw line(s) */
     for (int i = 0; i < lines.size(); i++) {
@@ -344,26 +341,6 @@ public class ReportDrawableRotatedComponent implements IReportDrawableRotated
   {
   }
 
-  public String getText()
-  {
-    return this.text;
-  }
-
-  public Double getRotationRadian()
-  {
-    return this.rotationRadian;
-  }
-
-  public Float getRotationDegree()
-  {
-    return this.rotationDegree;
-  }
-
-  public ReportElement getElement()
-  {
-    return this.element;
-  }
-
   public static void drawExcel(Cell cell, int rotation ) {
 
     if ( cell == null || rotation == 0 ) {
@@ -401,14 +378,6 @@ public class ReportDrawableRotatedComponent implements IReportDrawableRotated
       }
     }
   }
-  
-  public boolean drawHtml(Object writer) throws IOException
-  {
-    startDrawHtml(writer);
-    ((XmlWriter) writer).writeText( this.text );
-    finishDrawHtml(writer);
-    return true;
-  }
 
   public void startDrawHtml(Object writer) throws IOException
   {
@@ -423,9 +392,9 @@ public class ReportDrawableRotatedComponent implements IReportDrawableRotated
     final String hAlign = String.valueOf(renderBox.getStyleSheet().getStyleProperty(ElementStyleKeys.ALIGNMENT));
 
     /* IE8 rotates clockwise */
-    String cos = String.valueOf( (Math.round(1e5*Math.cos(-1d*getRotationDegree().doubleValue() * Math.PI / 180d))/1e5) ),
-        M12 = String.valueOf( (Math.round(1e5*Math.sin(getRotationDegree().doubleValue() * Math.PI / 180d))/1e5) ),
-        sin = String.valueOf( (Math.round(-1e5*Math.sin(getRotationDegree().doubleValue() * Math.PI / 180d))/1e5) );
+    String cos = String.valueOf( (Math.round(1e5*Math.cos(-1d*rotationDegree.doubleValue() * Math.PI / 180d))/1e5) ),
+        M12 = String.valueOf( (Math.round(1e5*Math.sin(rotationDegree.doubleValue() * Math.PI / 180d))/1e5) ),
+        sin = String.valueOf( (Math.round(-1e5*Math.sin(rotationDegree.doubleValue() * Math.PI / 180d))/1e5) );
 
     /* uniquely identify each rotated component's DIV */
     final String rotationComponentId = "r" + this.hashCode();
@@ -648,9 +617,9 @@ public class ReportDrawableRotatedComponent implements IReportDrawableRotated
     ((XmlWriter) writer).writeText(" container.parentNode.style.whiteSpace = 'nowrap';\n");
     
     /* non-IE8 rotate counter clockwise */
-    cos = String.valueOf( (Math.round(1e5*Math.cos(getRotationDegree().doubleValue() * Math.PI / 180d))/1e5) );
-    M12 = String.valueOf( (Math.round(-1e5*Math.sin(getRotationDegree().doubleValue() * Math.PI / 180d))/1e5) );
-    sin = String.valueOf( (Math.round(1e5*Math.sin(getRotationDegree().doubleValue() * Math.PI / 180d))/1e5) );
+    cos = String.valueOf( (Math.round(1e5*Math.cos(rotationDegree.doubleValue() * Math.PI / 180d))/1e5) );
+    M12 = String.valueOf( (Math.round(-1e5*Math.sin(rotationDegree.doubleValue() * Math.PI / 180d))/1e5) );
+    sin = String.valueOf( (Math.round(1e5*Math.sin(rotationDegree.doubleValue() * Math.PI / 180d))/1e5) );
     
     /* transformation matrix */
     ((XmlWriter) writer).writeText(" var mStr= 'matrix(" + cos + "," + M12 + "," + sin + "," + cos + ",';\n");

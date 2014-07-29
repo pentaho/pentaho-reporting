@@ -111,7 +111,6 @@ public final class RevalidateTextEllipseProcessStep extends IterateStructuralPro
       overflow = contentAreaX2;
     }
 
-    /* box.getParent() */
     if (maxLineWritableCoord > overflow )
     { 
       // This is an overflow. Compute the text-ellipse ..

@@ -154,7 +154,7 @@ public class HtmlTextExtractor extends DefaultTextExtractor
           /* we need a distinct object for each component */
           IReportDrawableRotated rotate = new ReportDrawableRotatedComponent( RotationUtils.getRotation( content ), content );
           
-          rotate.startDrawHtml( xmlWriter );//, RotationUtils.getRotation( content ) );
+          rotate.startDrawHtml( xmlWriter );
           processParagraphCell((ParagraphRenderBox) content);
           rotate.finishDrawHtml( xmlWriter );
         }else{
@@ -941,7 +941,6 @@ public class HtmlTextExtractor extends DefaultTextExtractor
     {
       // render it into an Buffered image and make it a PNG file.
       final DrawableWrapper drawable = (DrawableWrapper) rawObject;
-      
       final StrictBounds cb = new StrictBounds(node.getX(), node.getY(), node.getWidth(), node.getHeight());
       final ImageContainer image = RenderUtility.createImageFromDrawable(drawable, cb, node,
           metaData);

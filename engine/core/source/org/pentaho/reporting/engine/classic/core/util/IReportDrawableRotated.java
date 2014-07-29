@@ -19,24 +19,12 @@ package org.pentaho.reporting.engine.classic.core.util;
 import java.awt.Dimension;
 import java.io.IOException;
 
-import org.pentaho.reporting.engine.classic.core.ReportElement;
-
 public interface IReportDrawableRotated extends ReportDrawable
 {
-
-  public static enum Type { HTML , PDF , XLS_XLSX };
 
   public boolean isKeepAspectRatio();
 
   public Dimension getPreferredSize();
-
-  public String getText();
-
-  public Double getRotationRadian();
-
-  public Float getRotationDegree();
-
-  public ReportElement getElement();
   
   public void startDrawHtml(Object writer) throws IOException;
   

@@ -468,7 +468,7 @@ public class DefaultTextExtractor extends IterateStructuralProcessStep
 
     /* Account for rotations in text overflow calculation TODO */
     
-    // check if a rotation is applied, and is not one that still keeps the text aligned with the X axis [-180,180]
+    // check if a rotation is applied, and is not one that still keeps the text aligned with the X axis [0, -180,180]
     if( RotationUtils.isVerticalOrientation( lineBox.getParent() ) ){
       // applied rotation aligns the text with the Y axis [-270,-90,90,270]
       // assuming we can always simulate a -90º rotated paragraphBox (vertical down orientation)

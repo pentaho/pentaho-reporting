@@ -560,9 +560,6 @@ public class ExcelPrinter
     else if (value instanceof DrawableWrapper)
     {
       final DrawableWrapper drawable = (DrawableWrapper) value;
-      if( RotationUtils.hasRotation( content ) ){
-        ReportDrawableRotatedComponent.drawExcel( cell, new Float( RotationUtils.getRotation( content ) ).intValue() );
-      }
       final RenderNode rawSource = textExtractor.getRawSource();
       final StrictBounds contentBounds = new StrictBounds
           (rawSource.getX(), rawSource.getY() + contentOffset, rawSource.getWidth(), rawSource.getHeight());
