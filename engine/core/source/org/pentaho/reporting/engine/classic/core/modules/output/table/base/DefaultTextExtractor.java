@@ -398,23 +398,6 @@ public class DefaultTextExtractor extends IterateStructuralProcessStep
     
     final long contentAreaX1 = box.getContentAreaX1();
     contentAreaX2 = box.getContentAreaX2();
-    
-    /* Account for rotations in text overflow calculation TODO */
-    /*if( RotationUtils.isVerticalOrientation( box ) ){
-      // applied rotation aligns the text with the Y axis [-270,-90,90,270]
-
-      // debug if Top vs Bottom is relative TODO
-      contentAreaMinCoord = box.getY()
-          + box.getBoxDefinition().getPaddingTop()
-          + box.getStaticBoxLayoutProperties().getBorderTop();// 26
-      contentAreaMaxCoord = contentAreaMinCoord + box.getOverflowAreaHeight()
-          - box.getBoxDefinition().getPaddingBottom()
-          - box.getStaticBoxLayoutProperties().getBorderBottom();
-      
-    }else{ // TODO diagonal rotations (ex: 45 degrees)
-      contentAreaMinCoord = box.getContentAreaX1();// 26
-      contentAreaMaxCoord = box.getContentAreaX2();
-    }*/
 
     RenderBox lineBox = (RenderBox) box.getFirstChild();
     while (lineBox != null)
@@ -466,12 +449,11 @@ public class DefaultTextExtractor extends IterateStructuralProcessStep
     }
     ellipseDrawn = false;
 
-    /* Account for rotations in text overflow calculation TODO */
+    /* Account for rotations in text overflow calculation */
     
     // check if a rotation is applied, and is not one that still keeps the text aligned with the X axis [0, -180,180]
     if( RotationUtils.isVerticalOrientation( lineBox.getParent() ) ){
       // applied rotation aligns the text with the Y axis [-270,-90,90,270]
-      // assuming we can always simulate a -90º rotated paragraphBox (vertical down orientation)
       final long contentAreaY2 = lineBox.getY() + lineBox.getParent().getOverflowAreaHeight()
           - lineBox.getParent().getBoxDefinition().getPaddingBottom()
           - lineBox.getParent().getStaticBoxLayoutProperties().getBorderBottom();
