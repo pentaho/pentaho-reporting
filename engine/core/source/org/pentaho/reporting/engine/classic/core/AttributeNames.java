@@ -167,6 +167,8 @@ public class AttributeNames
 
     public static final String FAST_EXPORT_DYNAMIC_STASH = "fast-export-dynamic-style-stash";
     public static final String FAST_EXPORT_ELEMENT_STASH = "fast-export-element-style-stash";
+    public static final String COMPUTED_SORT_CONSTRAINTS = "computed-sort-constraints";
+
     private Internal()
     {
     }
@@ -231,6 +233,8 @@ public class AttributeNames
     public static final String STYLE_CLASS = "style-class";
 
     public static final String COMPLEX_TEXT = "complex-text";
+    public static final String AUTOSORT = "auto-sort";
+    public static final String SORT_ORDER = "sort-order";
 
     private Core()
     {

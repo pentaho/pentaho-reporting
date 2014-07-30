@@ -7,6 +7,10 @@
                  bundle-name="org.pentaho.reporting.engine.classic.core.wizard.AggregateFieldPreProcessorBundle"
                  expert="false" hidden="true" preferred="false" auto-process="true" priority="5000"/>
 
+  <pre-processor class="org.pentaho.reporting.engine.classic.core.sorting.SortOrderReportPreProcessor"
+                 bundle-name="org.pentaho.reporting.engine.classic.core.sorting.SortOrderReportPreProcessorBundle"
+                 expert="false" hidden="true" preferred="false" auto-process="true" priority="5000"/>
+
   <pre-processor class="org.pentaho.reporting.engine.classic.core.wizard.RelationalAutoGeneratorPreProcessor"
                  bundle-name="org.pentaho.reporting.engine.classic.core.wizard.RelationalAutoGeneratorPreProcessorBundle"
                  expert="false" hidden="false" preferred="false"/>

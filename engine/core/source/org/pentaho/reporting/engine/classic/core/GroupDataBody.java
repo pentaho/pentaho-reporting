@@ -39,6 +39,11 @@ public class GroupDataBody extends GroupBody
     registerAsChild(detailsFooter);
   }
 
+  public Group getGroup()
+  {
+    return null;
+  }
+
   public NoDataBand getNoDataBand()
   {
     return noDataBand;

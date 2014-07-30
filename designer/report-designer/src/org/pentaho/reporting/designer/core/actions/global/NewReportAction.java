@@ -73,6 +73,7 @@ public final class NewReportAction extends AbstractDesignerContextAction
   public static MasterReport prepareMasterReport()
   {
     final MasterReport report = new MasterReport();
+    report.setAutoSort(Boolean.TRUE);
     report.setDataFactory(new CompoundDataFactory());
     report.setQuery(null);
     report.getRelationalGroup(0).getHeader().setAttribute(ReportDesignerParserModule.NAMESPACE, ReportDesignerParserModule.HIDE_IN_LAYOUT_GUI_ATTRIBUTE, Boolean.TRUE);

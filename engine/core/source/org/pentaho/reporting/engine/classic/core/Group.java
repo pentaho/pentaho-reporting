@@ -17,6 +17,10 @@
 
 package org.pentaho.reporting.engine.classic.core;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.pentaho.reporting.engine.classic.core.sorting.SortConstraint;
 import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
 import org.pentaho.reporting.libraries.base.util.StringUtils;
 
@@ -155,7 +159,7 @@ public abstract class Group extends Section
     return name;
   }
 
-  public String getName ()
+  public String getName()
   {
     final String name = super.getName();
     if (StringUtils.isEmpty(name))
@@ -174,7 +178,7 @@ public abstract class Group extends Section
     {
       return true;
     }
-    
+
     return ObjectUtilities.equal(name, getGeneratedName());
   }
 
@@ -192,5 +196,36 @@ public abstract class Group extends Section
     }
 
     return "::group-" + parentGroupCounter;
+  }
+
+  public abstract List<SortConstraint> getSortingConstraint();
+
+  protected List<SortConstraint> mapFields(List<String> fields)
+  {
+    boolean ascending = isAscendingSortOrder();
+    final ArrayList<SortConstraint> c = new ArrayList<SortConstraint>(fields.size());
+    for (final String field : fields)
+    {
+      if (!StringUtils.isEmpty(field))
+      {
+        c.add(new SortConstraint(field, ascending));
+      }
+    }
+    return c;
+  }
+
+  public boolean isAscendingSortOrder()
+  {
+    Object attribute = getAttribute(AttributeNames.Core.NAMESPACE, AttributeNames.Core.SORT_ORDER);
+    if (Boolean.FALSE.equals(attribute))
+    {
+      return false;
+    }
+    return true;
+  }
+
+  public void setAscendingSortOrder(final Boolean order)
+  {
+    setAttribute(AttributeNames.Core.NAMESPACE, AttributeNames.Core.SORT_ORDER, order);
   }
 }

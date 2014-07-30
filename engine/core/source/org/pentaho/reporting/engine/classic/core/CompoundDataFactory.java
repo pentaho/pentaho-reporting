@@ -83,6 +83,12 @@ public class CompoundDataFactory extends AbstractDataFactory implements Compound
   public TableModel queryDesignTimeStructureFreeForm(final String query,
                                                      final DataRow parameters) throws ReportDataFactoryException
   {
+    return postProcess(query, parameters, queryDesignTimeStructFreeFormInternal(query, parameters));
+  }
+
+  private TableModel queryDesignTimeStructFreeFormInternal(final String query,
+                                                           final DataRow parameters) throws ReportDataFactoryException
+  {
     for (int i = 0; i < dataFactories.size(); i++)
     {
       final DataFactory dataFactory = dataFactories.get(i);
@@ -111,6 +117,12 @@ public class CompoundDataFactory extends AbstractDataFactory implements Compound
 
   public TableModel queryFreeForm(final String query, final DataRow parameters) throws ReportDataFactoryException
   {
+    return postProcess(query, parameters, queryFreeFormInternal(query, parameters));
+  }
+
+  private TableModel queryFreeFormInternal(final String query,
+                                           final DataRow parameters) throws ReportDataFactoryException
+  {
     for (int i = 0; i < dataFactories.size(); i++)
     {
       final DataFactory dataFactory = dataFactories.get(i);
@@ -133,6 +145,12 @@ public class CompoundDataFactory extends AbstractDataFactory implements Compound
 
   public TableModel queryDesignTimeStructureStatic(final String query,
                                                    final DataRow parameters) throws ReportDataFactoryException
+  {
+    return postProcess(query, parameters, queryDesignTimeStructStaticInternal(query, parameters));
+  }
+
+  private TableModel queryDesignTimeStructStaticInternal(final String query,
+                                                         final DataRow parameters) throws ReportDataFactoryException
   {
     for (int i = 0; i < dataFactories.size(); i++)
     {
@@ -160,6 +178,16 @@ public class CompoundDataFactory extends AbstractDataFactory implements Compound
   }
 
   public TableModel queryStatic(final String query, final DataRow parameters) throws ReportDataFactoryException
+  {
+    return postProcess(query, parameters, queryStaticInternal(query, parameters));
+  }
+
+  protected TableModel postProcess(final String query, final DataRow parameters, final TableModel tableModel)
+  {
+    return tableModel;
+  }
+
+  private TableModel queryStaticInternal(final String query, final DataRow parameters) throws ReportDataFactoryException
   {
     for (int i = 0; i < dataFactories.size(); i++)
     {
@@ -225,14 +253,21 @@ public class CompoundDataFactory extends AbstractDataFactory implements Compound
    */
   public DataFactory derive()
   {
-    final CompoundDataFactory cdf = (CompoundDataFactory) clone();
-    cdf.dataFactories = (ArrayList<DataFactory>) dataFactories.clone();
-    cdf.dataFactories.clear();
+    final CompoundDataFactory cdf = deriveEmpty();
+
     for (int i = 0; i < dataFactories.size(); i++)
     {
       final DataFactory dataFactory = dataFactories.get(i);
       cdf.dataFactories.add(dataFactory.derive());
     }
+    return cdf;
+  }
+
+  public CompoundDataFactory deriveEmpty()
+  {
+    final CompoundDataFactory cdf = (CompoundDataFactory) clone();
+    cdf.dataFactories = (ArrayList<DataFactory>) dataFactories.clone();
+    cdf.dataFactories.clear();
     return cdf;
   }
 
@@ -413,6 +448,45 @@ public class CompoundDataFactory extends AbstractDataFactory implements Compound
     return normalize(dataFactory, true);
   }
 
+  protected CompoundDataFactory normalizeInternal(boolean derive)
+  {
+    final CompoundDataFactory retval = deriveEmpty();
+    final int size = size();
+    for (int i = 0; i < size; i++)
+    {
+      final DataFactory original = getReference(i);
+      if (original instanceof CompoundDataFactory)
+      {
+        final CompoundDataFactory container = normalize(original, derive);
+        final int containerSize = container.size();
+        for (int x = 0; x < containerSize; x++)
+        {
+          if (derive)
+          {
+            retval.add(container.getReference(x));
+          }
+          else
+          {
+            retval.addRaw(container.getReference(x));
+          }
+        }
+      }
+      else
+      {
+        if (derive)
+        {
+          retval.add(original);
+        }
+        else
+        {
+          retval.addRaw(original);
+        }
+
+      }
+    }
+    return retval;
+  }
+
   public static CompoundDataFactory normalize(final DataFactory dataFactory,
                                               final boolean derive)
   {
@@ -445,41 +519,7 @@ public class CompoundDataFactory extends AbstractDataFactory implements Compound
       return cdf;
     }
 
-    final CompoundDataFactory retval = new CompoundDataFactory();
-    final int size = cdf.size();
-    for (int i = 0; i < size; i++)
-    {
-      final DataFactory original = cdf.getReference(i);
-      if (original instanceof CompoundDataFactory)
-      {
-        final CompoundDataFactory container = normalize(original, derive);
-        final int containerSize = container.size();
-        for (int x = 0; x < containerSize; x++)
-        {
-          if (derive)
-          {
-            retval.add(container.getReference(x));
-          }
-          else
-          {
-            retval.addRaw(container.getReference(x));
-          }
-        }
-      }
-      else
-      {
-        if (derive)
-        {
-          retval.add(original);
-        }
-        else
-        {
-          retval.addRaw(original);
-        }
-
-      }
-    }
-    return retval;
+    return cdf.normalizeInternal(derive);
   }
 
   public String[] getQueryNames()

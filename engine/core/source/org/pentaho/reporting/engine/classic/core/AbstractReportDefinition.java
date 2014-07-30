@@ -17,14 +17,11 @@
 
 package org.pentaho.reporting.engine.classic.core;
 
-import java.io.IOException;
-import java.io.ObjectInputStream;
 import java.util.ArrayList;
 import javax.swing.event.EventListenerList;
 
 import org.pentaho.reporting.engine.classic.core.designtime.Change;
 import org.pentaho.reporting.engine.classic.core.designtime.DesignTimeUtil;
-import org.pentaho.reporting.engine.classic.core.designtime.StyleChange;
 import org.pentaho.reporting.engine.classic.core.event.ReportModelEvent;
 import org.pentaho.reporting.engine.classic.core.event.ReportModelListener;
 import org.pentaho.reporting.engine.classic.core.filter.types.bands.DetailsFooterType;
@@ -1245,6 +1242,7 @@ public abstract class AbstractReportDefinition extends Section
 
   /**
    * This method has only meaning for master-reports. This handle will be removed in the next majore release.
+   *
    * @return
    */
   @Deprecated
@@ -1376,6 +1374,21 @@ public abstract class AbstractReportDefinition extends Section
     if (body instanceof CrosstabCellBody)
     {
       return (CrosstabCellBody) body;
+    }
+    return null;
+  }
+
+  public void setAutoSort(Boolean sort)
+  {
+    setAttribute(AttributeNames.Core.NAMESPACE, AttributeNames.Core.AUTOSORT, sort);
+  }
+
+  public Boolean getAutoSort()
+  {
+    Object attribute = getAttribute(AttributeNames.Core.NAMESPACE, AttributeNames.Core.AUTOSORT);
+    if (attribute instanceof Boolean)
+    {
+      return (Boolean) attribute;
     }
     return null;
   }

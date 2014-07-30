@@ -17,9 +17,13 @@
 
 package org.pentaho.reporting.engine.classic.core.states;
 
+import java.util.Collections;
+import java.util.List;
+
 import org.pentaho.reporting.engine.classic.core.DataFactory;
 import org.pentaho.reporting.engine.classic.core.DataRow;
-import org.pentaho.reporting.engine.classic.core.util.IntegerCache;
+import org.pentaho.reporting.engine.classic.core.sorting.SortConstraint;
+import org.pentaho.reporting.libraries.base.util.ArgumentNullException;
 
 /**
  * A data-row wrapper that adds a new artificial parameter to the original datarow that holds the query-limit.
@@ -28,32 +32,48 @@ import org.pentaho.reporting.engine.classic.core.util.IntegerCache;
  */
 public class QueryDataRowWrapper implements DataRow
 {
-  private DataRow backend;
-  private Integer queryTimeout;
-  private Integer queryLimit;
+  private final List<SortConstraint> sortConstraints;
+  private final DataRow backend;
+  private final Integer queryTimeout;
+  private final Integer queryLimit;
 
+  @Deprecated
   public QueryDataRowWrapper(final DataRow backend,
                              final Integer queryTimeout,
                              final Integer queryLimit)
   {
-    if (backend == null)
-    {
-      throw new NullPointerException();
-    }
+    this(backend, queryTimeout, queryLimit, workAroundBrokenJavaGenerics());
+  }
+
+  public QueryDataRowWrapper(final DataRow backend,
+                             final Integer queryTimeout,
+                             final Integer queryLimit,
+                             final List<SortConstraint> sortConstraints)
+  {
+    ArgumentNullException.validate("backend", backend);
+    ArgumentNullException.validate("sortConstraints", sortConstraints);
+
     this.backend = backend;
     this.queryTimeout = queryTimeout;
     this.queryLimit = queryLimit;
+    this.sortConstraints = sortConstraints;
   }
 
+  @Deprecated
   public QueryDataRowWrapper(final DataRow backend, final int queryLimit, final int queryTimeout)
   {
-    if (backend == null)
-    {
-      throw new NullPointerException();
-    }
-    this.backend = backend;
-    this.queryTimeout = IntegerCache.getInteger(queryTimeout);
-    this.queryLimit = IntegerCache.getInteger(queryLimit);
+    this(backend, queryLimit, queryTimeout, workAroundBrokenJavaGenerics());
+  }
+
+  private static List<SortConstraint> workAroundBrokenJavaGenerics()
+  {
+    return Collections.emptyList();
+  }
+
+  public QueryDataRowWrapper(final DataRow backend, final int queryTimeout, final int queryLimit,
+                             final List<SortConstraint> sortConstraints)
+  {
+    this(backend, Integer.valueOf(queryTimeout), Integer.valueOf(queryLimit), sortConstraints);
   }
 
   /**
@@ -75,16 +95,21 @@ public class QueryDataRowWrapper implements DataRow
     {
       return queryTimeout;
     }
+    if (DataFactory.QUERY_SORT.equals(col))
+    {
+      return sortConstraints;
+    }
     return backend.get(col);
   }
 
   public String[] getColumnNames()
   {
     final String[] cols = backend.getColumnNames();
-    final String[] retval = new String[cols.length + 2];
-    System.arraycopy(cols, 0, retval, 2, cols.length);
+    final String[] retval = new String[cols.length + 3];
+    System.arraycopy(cols, 0, retval, 3, cols.length);
     retval[0] = DataFactory.QUERY_LIMIT;
     retval[1] = DataFactory.QUERY_TIMEOUT;
+    retval[2] = DataFactory.QUERY_SORT;
     return retval;
   }
 
@@ -101,6 +126,10 @@ public class QueryDataRowWrapper implements DataRow
       return false;
     }
     if (DataFactory.QUERY_TIMEOUT.equals(name))
+    {
+      return false;
+    }
+    if (DataFactory.QUERY_SORT.equals(name))
     {
       return false;
     }

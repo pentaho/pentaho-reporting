@@ -17,7 +17,11 @@
 
 package org.pentaho.reporting.engine.classic.core;
 
+import java.util.Collections;
+import java.util.List;
+
 import org.pentaho.reporting.engine.classic.core.filter.types.bands.CrosstabOtherGroupType;
+import org.pentaho.reporting.engine.classic.core.sorting.SortConstraint;
 
 /**
  * Can have either a row- or a column body.
@@ -289,5 +293,10 @@ public class CrosstabOtherGroup extends Group
       return true;
     }
     return false;
+  }
+
+  public List<SortConstraint> getSortingConstraint()
+  {
+    return mapFields(Collections.singletonList(getField()));
   }
 }

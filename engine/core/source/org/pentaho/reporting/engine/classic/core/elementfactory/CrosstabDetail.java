@@ -19,20 +19,21 @@ package org.pentaho.reporting.engine.classic.core.elementfactory;
 
 import java.io.Serializable;
 
+import org.pentaho.reporting.engine.classic.core.function.AggregationFunction;
 import org.pentaho.reporting.engine.classic.core.function.ItemCountFunction;
 
 public class CrosstabDetail implements Serializable, Cloneable
 {
   private String title;
   private String field;
-  private Class aggregation;
+  private Class<? extends AggregationFunction> aggregation;
 
   public CrosstabDetail(final String fieldName)
   {
     this(fieldName, null, ItemCountFunction.class);
   }
 
-  public CrosstabDetail(final String field, final String title, final Class aggregation)
+  public CrosstabDetail(final String field, final String title, final Class<? extends AggregationFunction> aggregation)
   {
     this.title = title;
     this.field = field;
@@ -59,12 +60,12 @@ public class CrosstabDetail implements Serializable, Cloneable
     this.field = field;
   }
 
-  public Class getAggregation()
+  public Class<? extends AggregationFunction> getAggregation()
   {
     return aggregation;
   }
 
-  public void setAggregation(final Class aggregation)
+  public void setAggregation(final Class<? extends AggregationFunction> aggregation)
   {
     this.aggregation = aggregation;
   }

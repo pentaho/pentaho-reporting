@@ -19,7 +19,7 @@ package org.pentaho.reporting.engine.classic.core.states.crosstab;
 
 import java.util.Comparator;
 
-public class CrosstabKeyComparator implements Comparator
+public class CrosstabKeyComparator implements Comparator<Object[]>
 {
   public static final CrosstabKeyComparator INSTANCE = new CrosstabKeyComparator();
 
@@ -45,16 +45,15 @@ public class CrosstabKeyComparator implements Comparator
    * Generally speaking, any comparator that violates this condition should clearly indicate this fact.  The recommended
    * language is "Note: this comparator imposes orderings that are inconsistent with equals."
    *
-   * @param o1 the first object to be compared.
-   * @param o2 the second object to be compared.
+   * @param key1 the first object to be compared.
+   * @param key2 the second object to be compared.
    * @return a negative integer, zero, or a positive integer as the first argument is less than, equal to, or greater
    *         than the second.
    * @throws ClassCastException if the arguments' types prevent them from being compared by this Comparator.
    */
-  public int compare(final Object o1, final Object o2)
+  @SuppressWarnings("unchecked")
+  public int compare(final Object[] key1, final Object[] key2)
   {
-    final Object[] key1 = (Object[]) o1;
-    final Object[] key2 = (Object[]) o2;
     if (key1 == null || key2 == null)
     {
       throw new IllegalArgumentException("All keys must be non-null");
@@ -102,8 +101,8 @@ public class CrosstabKeyComparator implements Comparator
       {
         try
         {
-          final Comparable c1 = (Comparable) value1;
-          final Comparable c2 = (Comparable) value2;
+          final Comparable<Object> c1 = (Comparable<Object>) value1;
+          final Comparable<Object> c2 = (Comparable<Object>) value2;
           final int result = c1.compareTo(c2);
           if (result == 0)
           {
@@ -111,7 +110,7 @@ public class CrosstabKeyComparator implements Comparator
           }
           return result;
         }
-        catch (Exception cce)
+        catch (final Exception cce)
         {
           // some comparables behave really weird ..
         }

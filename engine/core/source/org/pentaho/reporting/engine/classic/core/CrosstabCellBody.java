@@ -39,6 +39,10 @@ public class CrosstabCellBody extends GroupBody
     registerAsChild(detailsHeader);
   }
 
+  public Group getGroup()
+  {
+    return null;
+  }
 
   /**
    * Returns the group header. <P> The group header is a report band that contains elements that should be printed at
@@ -443,4 +447,8 @@ public class CrosstabCellBody extends GroupBody
     return b;
   }
 
+  public Group getSubGroup()
+  {
+    return null;
+  }
 }

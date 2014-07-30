@@ -23,6 +23,7 @@ import java.util.Collections;
 import java.util.List;
 
 import org.pentaho.reporting.engine.classic.core.filter.types.bands.RelationalGroupType;
+import org.pentaho.reporting.engine.classic.core.sorting.SortConstraint;
 import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
 
 /**
@@ -310,6 +311,7 @@ public class RelationalGroup extends Group
     return false;
   }
 
+  @Deprecated
   public GroupDataBody findGroupDataBody()
   {
     final GroupBody body = getBody();
@@ -423,5 +425,10 @@ public class RelationalGroup extends Group
       default:
         throw new IndexOutOfBoundsException();
     }
+  }
+
+  public List<SortConstraint> getSortingConstraint()
+  {
+    return mapFields(getFields());
   }
 }
