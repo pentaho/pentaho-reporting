@@ -130,7 +130,7 @@ public final class PreviewHtmlAction extends AbstractReportContextAction
             final HtmlOutputProcessor outputProcessor = new StreamHtmlOutputProcessor(report.getConfiguration());
             final HtmlPrinter printer = new AllItemsHtmlPrinter(report.getResourceManager());
             printer.setContentWriter(targetRoot, new DefaultNameGenerator(targetRoot, "index", "html"));
-            printer.setDataWriter(null, null); //$NON-NLS-1$
+            printer.setDataWriter(targetRoot, new DefaultNameGenerator(targetRoot, "content")); //$NON-NLS-1$
             printer.setUrlRewriter(new FileSystemURLRewriter());
             outputProcessor.setPrinter(printer);
             reportProcessor = new StreamReportProcessor(report, outputProcessor);
@@ -139,7 +139,7 @@ public final class PreviewHtmlAction extends AbstractReportContextAction
           {
             FastHtmlContentItems printer = new FastHtmlContentItems();
             printer.setContentWriter(targetRoot, new DefaultNameGenerator(targetRoot, "index", "html"));
-            printer.setDataWriter(null, null); //$NON-NLS-1$
+            printer.setDataWriter(targetRoot, new DefaultNameGenerator(targetRoot, "content")); //$NON-NLS-1$
             printer.setUrlRewriter(new FileSystemURLRewriter());
             reportProcessor = new FastHtmlExportProcessor(report, printer);
           }
@@ -156,7 +156,7 @@ public final class PreviewHtmlAction extends AbstractReportContextAction
           final File previewFile = new File(tempDir, "index.html");//$NON-NLS-1$
           ExternalToolLauncher.openURL(previewFile.toURI().toURL().toExternalForm());
         }
-        catch (Exception e1)
+        catch (final Exception e1)
         {
           UncaughtExceptionsModel.getInstance().addException(e1);
           progressDialog.dispose();
@@ -168,7 +168,7 @@ public final class PreviewHtmlAction extends AbstractReportContextAction
         tempDir.deleteOnExit();
         markDirectoryContentAsDeletable(tempDir);
       }
-      catch (IOException e)
+      catch (final IOException e)
       {
         UncaughtExceptionsModel.getInstance().addException(e);
       }
