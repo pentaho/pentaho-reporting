@@ -159,7 +159,7 @@ public abstract class Group extends Section
     return name;
   }
 
-  public String getName ()
+  public String getName()
   {
     final String name = super.getName();
     if (StringUtils.isEmpty(name))
@@ -178,7 +178,7 @@ public abstract class Group extends Section
     {
       return true;
     }
-    
+
     return ObjectUtilities.equal(name, getGeneratedName());
   }
 
@@ -206,20 +206,26 @@ public abstract class Group extends Section
     final ArrayList<SortConstraint> c = new ArrayList<SortConstraint>(fields.size());
     for (final String field : fields)
     {
-      c.add(new SortConstraint(field, ascending));
+      if (!StringUtils.isEmpty(field))
+      {
+        c.add(new SortConstraint(field, ascending));
+      }
     }
     return c;
   }
 
-  public boolean isAscendingSortOrder() {
+  public boolean isAscendingSortOrder()
+  {
     Object attribute = getAttribute(AttributeNames.Core.NAMESPACE, AttributeNames.Core.SORT_ORDER);
-    if (Boolean.FALSE.equals(attribute)) {
+    if (Boolean.FALSE.equals(attribute))
+    {
       return false;
     }
     return true;
   }
 
-  public void setAscendingSortOrder(final Boolean order) {
+  public void setAscendingSortOrder(final Boolean order)
+  {
     setAttribute(AttributeNames.Core.NAMESPACE, AttributeNames.Core.SORT_ORDER, order);
   }
 }

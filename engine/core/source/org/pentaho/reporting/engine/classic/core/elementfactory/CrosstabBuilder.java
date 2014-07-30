@@ -38,6 +38,7 @@ import org.pentaho.reporting.engine.classic.core.designtime.DesignTimeDataSchema
 import org.pentaho.reporting.engine.classic.core.filter.types.LabelType;
 import org.pentaho.reporting.engine.classic.core.filter.types.NumberFieldType;
 import org.pentaho.reporting.engine.classic.core.filter.types.TextFieldType;
+import org.pentaho.reporting.engine.classic.core.function.AggregationFunction;
 import org.pentaho.reporting.engine.classic.core.metadata.ElementType;
 import org.pentaho.reporting.engine.classic.core.style.BandStyleKeys;
 import org.pentaho.reporting.engine.classic.core.style.ElementStyleKeys;
@@ -214,7 +215,7 @@ public class CrosstabBuilder
     details.add(detail);
   }
 
-  public void addDetails(final String field, final Class aggregation)
+  public void addDetails(final String field, final Class<? extends AggregationFunction> aggregation)
   {
     details.add(new CrosstabDetail(field, field, aggregation));
   }
@@ -367,7 +368,7 @@ public class CrosstabBuilder
   }
 
   private Element createFieldItem(final String fieldName,
-                                  final Class aggregationType,
+                                  final Class<? extends AggregationFunction> aggregationType,
                                   final boolean split)
   {
     final ElementType targetType;

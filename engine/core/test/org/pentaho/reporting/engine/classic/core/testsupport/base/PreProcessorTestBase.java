@@ -17,17 +17,18 @@
 
 package org.pentaho.reporting.engine.classic.core.testsupport.base;
 
+import java.util.Collections;
+
 import org.junit.Before;
 import org.junit.Test;
-import org.pentaho.reporting.engine.classic.core.AttributeNames;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
 import org.pentaho.reporting.engine.classic.core.ReportPreProcessor;
 import org.pentaho.reporting.engine.classic.core.ReportProcessingException;
 import org.pentaho.reporting.engine.classic.core.cache.CachingDataFactory;
-import org.pentaho.reporting.engine.classic.core.designtime.DesignTimeUtil;
 import org.pentaho.reporting.engine.classic.core.function.ProcessingDataFactoryContext;
 import org.pentaho.reporting.engine.classic.core.layout.output.DefaultProcessingContext;
+import org.pentaho.reporting.engine.classic.core.sorting.SortConstraint;
 import org.pentaho.reporting.engine.classic.core.states.NoOpPerformanceMonitorContext;
 import org.pentaho.reporting.engine.classic.core.states.PerformanceMonitorContext;
 import org.pentaho.reporting.engine.classic.core.states.StateUtilities;
@@ -61,8 +62,8 @@ public abstract class PreProcessorTestBase
    * @return
    * @throws org.pentaho.reporting.engine.classic.core.ReportProcessingException
    */
-  protected static MasterReport materialize(final MasterReport report,
-                                          final ReportPreProcessor processor) throws ReportProcessingException
+  protected MasterReport materialize(final MasterReport report,
+                                            final ReportPreProcessor processor) throws ReportProcessingException
   {
     final PerformanceMonitorContext pmc = new NoOpPerformanceMonitorContext();
     final DefaultProcessingContext processingContext = new DefaultProcessingContext(report);
@@ -76,21 +77,25 @@ public abstract class PreProcessorTestBase
     {
       final DefaultFlowController postQueryFlowController = flowController.performQuery
           (dataFactory, report.getQuery(), report.getQueryLimit(),
-              report.getQueryTimeout(), flowController.getMasterRow().getResourceBundleFactory());
+              report.getQueryTimeout(), flowController.getMasterRow().getResourceBundleFactory(),
+              Collections.<SortConstraint>emptyList());
 
-      final Object originalEnable =
-          report.getAttribute(AttributeNames.Wizard.NAMESPACE, AttributeNames.Wizard.ENABLE);
-      report.setAttribute(AttributeNames.Wizard.NAMESPACE, AttributeNames.Wizard.ENABLE, Boolean.TRUE);
-      final MasterReport masterReport = processor.performPreProcessing(report, postQueryFlowController);
-      masterReport.setAttribute(AttributeNames.Wizard.NAMESPACE, AttributeNames.Wizard.ENABLE, originalEnable);
-
-      masterReport.setName(null);
-      DesignTimeUtil.resetDocumentMetaData(masterReport);
-      return masterReport;
+      return processor.performPreProcessing(report, postQueryFlowController);
     }
     finally
     {
       dataFactory.close();
     }
+  }
+
+  protected MasterReport materializePreData(MasterReport report, ReportPreProcessor reportPreProcessor)
+      throws ReportProcessingException
+  {
+    final PerformanceMonitorContext pmc = new NoOpPerformanceMonitorContext();
+    final DefaultProcessingContext processingContext = new DefaultProcessingContext(report);
+    final DataSchemaDefinition definition = report.getDataSchemaDefinition();
+    final DefaultFlowController flowController = new DefaultFlowController(processingContext,
+        definition, StateUtilities.computeParameterValueSet(report), pmc);
+    return reportPreProcessor.performPreDataProcessing(report, flowController);
   }
 }

@@ -93,7 +93,11 @@ public class SortingDataFactory extends CompoundDataFactory
           int idxParsed = Integer.parseInt(idx);
           if (idxParsed >= 0 && idxParsed < tableModel.getColumnCount())
           {
-            result.add(new SortConstraint(tableModel.getColumnName(idxParsed), constraint.isAscending()));
+            String columnName = tableModel.getColumnName(idxParsed);
+            if (!StringUtils.isEmpty(columnName))
+            {
+              result.add(new SortConstraint(columnName, constraint.isAscending()));
+            }
           }
           else
           {

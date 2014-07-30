@@ -30,6 +30,7 @@ import org.pentaho.reporting.engine.classic.core.SimplePageDefinition;
 import org.pentaho.reporting.engine.classic.core.TableDataFactory;
 import org.pentaho.reporting.engine.classic.core.designtime.DesignTimeDataSchemaModel;
 import org.pentaho.reporting.engine.classic.core.elementfactory.CrosstabBuilder;
+import org.pentaho.reporting.engine.classic.core.function.AggregationFunction;
 import org.pentaho.reporting.engine.classic.core.function.Expression;
 import org.pentaho.reporting.engine.classic.core.function.ValidateFunctionResultExpression;
 import org.pentaho.reporting.engine.classic.core.modules.gui.base.PreviewDialog;
@@ -37,6 +38,7 @@ import org.pentaho.reporting.engine.classic.core.testsupport.DebugReportRunner;
 import org.pentaho.reporting.engine.classic.core.testsupport.RelationalReportBuilder;
 import org.pentaho.reporting.engine.classic.core.util.PageSize;
 import org.pentaho.reporting.engine.classic.core.util.TypedTableModel;
+import org.pentaho.reporting.engine.classic.core.wizard.ContextAwareDataSchemaModel;
 import org.pentaho.reporting.libraries.designtime.swing.LibSwingUtil;
 
 public abstract class ExpressionTestBase
@@ -85,7 +87,11 @@ public abstract class ExpressionTestBase
   @Test
   public void testCrosstabReport() throws Exception
   {
-    final MasterReport report = configureReport(createCrosstabReport(createTableModel()), false);
+    MasterReport crosstabReport = createCrosstabReport(createTableModel());
+    if (crosstabReport == null)
+      return;
+
+    final MasterReport report = configureReport(crosstabReport, false);
 
     DebugReportRunner.execGraphics2D(report);
   }
@@ -137,20 +143,26 @@ public abstract class ExpressionTestBase
 
   protected MasterReport createCrosstabReport(final TableModel tableModel)
   {
+    Expression dummy = create("dummy", null, null);
+    if (dummy instanceof AggregationFunction == false)
+    {
+      return null;
+    }
+
+    AggregationFunction function = (AggregationFunction) dummy;
+
     final MasterReport report = new MasterReport();
     report.setPageDefinition(new SimplePageDefinition(PageSize.A3, PageFormat.LANDSCAPE, new Insets(0, 0, 0, 0)));
     report.setDataFactory(new TableDataFactory("query", tableModel));
     report.setQuery("query");
-    final DesignTimeDataSchemaModel dataSchemaModel = new DesignTimeDataSchemaModel(report);
-
-    Expression dummy = create("dummy", null, null);
+    final ContextAwareDataSchemaModel dataSchemaModel = new DesignTimeDataSchemaModel(report);
 
     final CrosstabBuilder builder = new CrosstabBuilder(dataSchemaModel);
     builder.addRowDimension(ROW_DIMENSION_A);
     builder.addRowDimension(ROW_DIMENSION_B);
     builder.addColumnDimension(COLUMN_DIMENSION_A);
     builder.addColumnDimension(COLUMN_DIMENSION_B);
-    builder.addDetails(VALUE, dummy.getClass());
+    builder.addDetails(VALUE, function.getClass());
     report.setRootGroup(builder.create());
     return report;
   }
@@ -204,7 +216,11 @@ public abstract class ExpressionTestBase
 
   protected void showCrosstabDialog()
   {
-    PreviewDialog dialog = new PreviewDialog(configureReport(createCrosstabReport(createTableModel()), false));
+    MasterReport crosstabReport = createCrosstabReport(createTableModel());
+    if (crosstabReport == null)
+      return;
+
+    PreviewDialog dialog = new PreviewDialog(configureReport(crosstabReport, false));
     dialog.setModal(true);
     dialog.pack();
     LibSwingUtil.centerFrameOnScreen(dialog);
