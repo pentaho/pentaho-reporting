@@ -465,10 +465,19 @@ public class ClassicEngineBoot extends AbstractBoot
                                                final int prptVersionMinorRaw,
                                                final int prptVersionPatchRaw)
   {
-    final int releaseMajor = ParserUtil.parseInt(ClassicEngineInfo.getInstance().getReleaseMajor(), -1);
-    final int releaseMinor = ParserUtil.parseInt(ClassicEngineInfo.getInstance().getReleaseMinor(), -1);
-    final int releasePatch = ParserUtil.parseInt(ClassicEngineInfo.getInstance().getReleaseMilestone(), -1);
-    if (releaseMajor <= 0 || releaseMinor <= 0 || releasePatch <= 0)
+    return getInstance().isValidVersion(prptVersionMajorRaw, prptVersionMinorRaw, prptVersionPatchRaw,
+        ClassicEngineInfo.getInstance());
+  }
+
+  protected VersionValidity isValidVersion(final int prptVersionMajorRaw,
+                                           final int prptVersionMinorRaw,
+                                           final int prptVersionPatchRaw,
+                                           final ProjectInformation info)
+  {
+    final int releaseMajor = ParserUtil.parseInt(info.getReleaseMajor(), 999);
+    final int releaseMinor = ParserUtil.parseInt(info.getReleaseMinor(), 999);
+    final int releasePatch = ParserUtil.parseInt(info.getReleaseMilestone(), 999);
+    if (computeVersionId(prptVersionMajorRaw, prptVersionMinorRaw, prptVersionPatchRaw) == VERSION_TRUNK)
     {
       return VersionValidity.VALID;
     }
