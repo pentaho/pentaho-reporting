@@ -165,9 +165,9 @@ public class VersionHelper
       version = "TRUNK.development";
       title = projectInformation.getInternalName();
       productId = projectInformation.getInternalName();
-      releaseMajor = "0";
-      releaseMinor = "0";
-      releaseMilestone = "0";
+      releaseMajor = "999";
+      releaseMinor = "999";
+      releaseMilestone = "999";
       releaseCandidateToken = "snapshot";
       releaseBuildNumber = "0";
       releaseNumber = createReleaseVersion();
@@ -198,9 +198,9 @@ public class VersionHelper
         version = "TRUNK.development";
       }
 
-      releaseMajor = "0";
-      releaseMinor = "0";
-      releaseMilestone = "0";
+      releaseMajor = "999";
+      releaseMinor = "999";
+      releaseMilestone = "999";
       releaseCandidateToken = "snapshot";
       releaseBuildNumber = "0";
       if (version.startsWith("TRUNK") == false)
