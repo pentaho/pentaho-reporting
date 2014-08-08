@@ -207,6 +207,10 @@ public class JFreeChartReportDrawable implements ReportDrawable
         {
           entry.setAttribute(LibXmlInfo.XHTML_NAMESPACE, "href", hrefValue);
         }
+        else
+        {
+          entry.setAttribute(LibXmlInfo.XHTML_NAMESPACE, "href", "#");
+        }
         if (StringUtils.isEmpty(tooltipValue) == false)
         {
           entry.setAttribute(LibXmlInfo.XHTML_NAMESPACE, "title", tooltipValue);

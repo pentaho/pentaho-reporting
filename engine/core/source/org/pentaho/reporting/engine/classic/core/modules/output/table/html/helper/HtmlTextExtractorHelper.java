@@ -436,9 +436,13 @@ public class HtmlTextExtractorHelper
       attrList.setAttribute(HtmlPrinter.XHTML_NAMESPACE, ALT_ATTR, String.valueOf(altText));
     }
     // width and height and scaling and so on ..
+
+    // BI-SERVER 11651: The extractImageMap function will fill the "attrList" parameter with the name
+    // of the image map, if there is one. So we have to call this method first.
+    final ImageMap imageMap = extractImageMap(attrs, drawable, width, height, name, attrList);
+
     writeImageTag(styleSheet, width, height, contentWidth, contentHeight, attrList);
 
-    final ImageMap imageMap = extractImageMap(attrs, drawable, width, height, name, attrList);
     if (imageMap != null)
     {
       ImageMapWriter.writeImageMap(xmlWriter, imageMap, RenderUtility.getNormalizationScale(metaData));
