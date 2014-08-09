@@ -81,39 +81,49 @@ public class FieldCellRenderer extends DefaultTableCellRenderer
     }
     else
     {
-      final String displayName = (String) attributes.getMetaAttribute
-          (MetaAttributeNames.Formatting.NAMESPACE, MetaAttributeNames.Formatting.LABEL,
-              String.class, model.getDataAttributeContext());
-      setText(formatFieldType(displayName, fieldNode.getFieldName(), fieldNode.getFieldClass()));
-      final Object source = attributes.getMetaAttribute
-          (MetaAttributeNames.Core.NAMESPACE, MetaAttributeNames.Core.SOURCE, String.class,
-              model.getDataAttributeContext());
-      if (MetaAttributeNames.Core.SOURCE_VALUE_ENVIRONMENT.equals(source))
-      {
-        setIcon(IconLoader.getInstance().getPropertiesDataSetIcon());
-      }
-      else if (MetaAttributeNames.Core.SOURCE_VALUE_EXPRESSION.equals(source))
-      {
-        setIcon(IconLoader.getInstance().getFunctionIcon());
-      }
-      else if (MetaAttributeNames.Core.SOURCE_VALUE_PARAMETER.equals(source))
-      {
-        setIcon(IconLoader.getInstance().getParameterIcon());
-      }
-      else if (MetaAttributeNames.Core.SOURCE_VALUE_TABLE.equals(source))
-      {
-        setIcon(IconLoader.getInstance().getDataSetsIcon());
-      }
-      else
-      {
-        setIcon(IconLoader.getInstance().getBlankDocumentIcon());
-      }
+      configureFieldText(fieldNode, model, attributes);
+      configureFieldIcon(model, attributes);
     }
-
-
     return this;
   }
 
+  protected void configureFieldText(final ReportFieldNode fieldNode,
+                                    final ContextAwareDataSchemaModel model,
+                                    final DataAttributes attributes)
+  {
+    final String displayName = (String) attributes.getMetaAttribute
+        (MetaAttributeNames.Formatting.NAMESPACE, MetaAttributeNames.Formatting.LABEL,
+            String.class, model.getDataAttributeContext());
+    setText(formatFieldType(displayName, fieldNode.getFieldName(), fieldNode.getFieldClass()));
+  }
+
+  protected void configureFieldIcon(final ContextAwareDataSchemaModel model,
+                                    final DataAttributes attributes)
+  {
+    final Object source = attributes.getMetaAttribute
+        (MetaAttributeNames.Core.NAMESPACE, MetaAttributeNames.Core.SOURCE, String.class,
+            model.getDataAttributeContext());
+    if (MetaAttributeNames.Core.SOURCE_VALUE_ENVIRONMENT.equals(source))
+    {
+      setIcon(IconLoader.getInstance().getPropertiesDataSetIcon());
+    }
+    else if (MetaAttributeNames.Core.SOURCE_VALUE_EXPRESSION.equals(source))
+    {
+      setIcon(IconLoader.getInstance().getFunctionIcon());
+    }
+    else if (MetaAttributeNames.Core.SOURCE_VALUE_PARAMETER.equals(source))
+    {
+      setIcon(IconLoader.getInstance().getParameterIcon());
+    }
+    else if (MetaAttributeNames.Core.SOURCE_VALUE_TABLE.equals(source))
+    {
+      setIcon(IconLoader.getInstance().getDataSetsIcon());
+    }
+    else
+    {
+      setIcon(IconLoader.getInstance().getBlankDocumentIcon());
+    }
+  }
 
   private String formatFieldType(final String displayName,
                                  final String fieldName,

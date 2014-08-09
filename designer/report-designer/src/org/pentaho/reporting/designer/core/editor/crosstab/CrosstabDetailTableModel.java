@@ -167,6 +167,7 @@ public class CrosstabDetailTableModel extends AbstractTableModel implements Bulk
       final Object o = data[i];
       this.data.add((CrosstabDetail) o);
     }
+    fireTableDataChanged();
   }
 
   public Class getClassForCell(final int row, final int col)

@@ -3,6 +3,7 @@
 
   <data-factory name="org.pentaho.reporting.engine.classic.core.CompoundDataFactory"
                 bundle-name="org.pentaho.reporting.engine.classic.core.CompoundDataFactoryBundle"
+                impl="org.pentaho.reporting.engine.classic.core.CompoundDataFactoryCore"
                 hidden="true"/>
 
   <data-factory name="org.pentaho.reporting.engine.classic.core.ExternalDataFactory"
@@ -19,10 +20,16 @@
 
   <data-factory name="org.pentaho.reporting.engine.classic.core.states.CascadingDataFactory"
                 bundle-name="org.pentaho.reporting.engine.classic.core.states.CascadingDataFactoryBundle"
+                impl="org.pentaho.reporting.engine.classic.core.CompoundDataFactoryCore"
                 hidden="true" expert="true"/>
 
   <data-factory name="org.pentaho.reporting.engine.classic.core.cache.CachingDataFactory"
                 bundle-name="org.pentaho.reporting.engine.classic.core.cache.CachingDataFactoryBundle"
+                hidden="true" expert="true"/>
+
+  <data-factory name="org.pentaho.reporting.engine.classic.core.sorting.SortingDataFactory"
+                bundle-name="org.pentaho.reporting.engine.classic.core.sorting.SortingDataFactoryBundle"
+                impl="org.pentaho.reporting.engine.classic.core.sorting.SortingDataFactoryCore"
                 hidden="true" expert="true"/>
 
   <data-factory name="org.pentaho.reporting.engine.classic.core.states.DesignTimeDataFactory"

@@ -27,6 +27,7 @@ import org.pentaho.reporting.designer.core.util.table.GroupedMetaTableModel;
 import org.pentaho.reporting.engine.classic.core.AttributeNames;
 import org.pentaho.reporting.engine.classic.core.CrosstabDetailMode;
 import org.pentaho.reporting.engine.classic.core.CrosstabGroup;
+import org.pentaho.reporting.engine.classic.core.elementfactory.CrosstabBuilder;
 import org.pentaho.reporting.engine.classic.core.filter.types.AutoLayoutBoxType;
 import org.pentaho.reporting.engine.classic.core.filter.types.bands.CrosstabGroupType;
 import org.pentaho.reporting.engine.classic.core.style.ElementStyleKeys;
@@ -144,7 +145,7 @@ public class CrosstabOptionsPane extends JComponent
 
   public void setAllowMetaDataStyling(final Boolean allowMetaDataStyling)
   {
-    tableModel.setAttributeOption (AutoLayoutBoxType.INSTANCE,
+    tableModel.setAttributeOption(AutoLayoutBoxType.INSTANCE,
         AttributeNames.Wizard.NAMESPACE, AttributeNames.Wizard.ALLOW_METADATA_STYLING, allowMetaDataStyling);
   }
 
@@ -156,7 +157,7 @@ public class CrosstabOptionsPane extends JComponent
 
   public void setAllowMetaDataAttributes(final Boolean allowMetaDataAttributes)
   {
-    tableModel.setAttributeOption (AutoLayoutBoxType.INSTANCE,
+    tableModel.setAttributeOption(AutoLayoutBoxType.INSTANCE,
         AttributeNames.Wizard.NAMESPACE, AttributeNames.Wizard.ALLOW_METADATA_ATTRIBUTES, allowMetaDataAttributes);
   }
 
@@ -168,6 +169,54 @@ public class CrosstabOptionsPane extends JComponent
   public void setValuesOnGroup(final CrosstabGroup crosstabGroup)
   {
     tableModel.copyInto(crosstabGroup);
+  }
+
+  public void configureCrosstabBuilder(final CrosstabBuilder builder)
+  {
+    builder.setMinimumWidth(getMinWidth());
+    builder.setMinimumHeight(getMinHeight());
+    builder.setPrefWidth(getPrefWidth());
+    builder.setPrefHeight(getPrefHeight());
+    builder.setMaximumWidth(getMaxWidth());
+    builder.setMaximumHeight(getMaxHeight());
+    builder.setAllowMetaDataAttributes(getAllowMetaDataAttributes());
+    builder.setAllowMetaDataStyling(getAllowMetaDataStyling());
+  }
+
+  public void configureFromCrosstabBuilder(final CrosstabBuilder builder)
+  {
+    if (builder.getMaximumHeight() != null)
+    {
+      setMaxHeight(builder.getMaximumHeight());
+    }
+    if (builder.getMaximumWidth() != null)
+    {
+      setMaxWidth(builder.getMaximumWidth());
+    }
+    if (builder.getPrefHeight() != null)
+    {
+      setPrefHeight(builder.getPrefHeight());
+    }
+    if (builder.getPrefWidth() != null)
+    {
+      setPrefWidth(builder.getPrefWidth());
+    }
+    if (builder.getMinimumHeight() != null)
+    {
+      setMinHeight(builder.getMinimumHeight());
+    }
+    if (builder.getMinimumWidth() != null)
+    {
+      setMinWidth(builder.getMinimumWidth());
+    }
+    if (builder.getAllowMetaDataAttributes() != null)
+    {
+      setAllowMetaDataAttributes(builder.getAllowMetaDataAttributes());
+    }
+    if (builder.getAllowMetaDataStyling() != null)
+    {
+      setAllowMetaDataStyling(builder.getAllowMetaDataStyling());
+    }
   }
 
   public void setReportDesignerContext(final ReportDesignerContext newContext)

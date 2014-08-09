@@ -168,6 +168,7 @@ public class CachingDataFactory extends AbstractDataFactory implements CompoundD
       }
       if (model != null)
       {
+        logger.debug("Returning cached data for query '" + query + "'.");
         return wrapAsIndexed(model);
       }
     }
@@ -209,6 +210,7 @@ public class CachingDataFactory extends AbstractDataFactory implements CompoundD
       }
       if (model != null)
       {
+        logger.debug("Returning cached data for design-time query '" + query + "'.");
         return wrapAsIndexed(model);
       }
     }
@@ -249,6 +251,7 @@ public class CachingDataFactory extends AbstractDataFactory implements CompoundD
       }
       if (model != null)
       {
+        logger.debug("Returning cached data for query '" + query + "'.");
         return wrapAsIndexed(model);
       }
     }
@@ -289,6 +292,7 @@ public class CachingDataFactory extends AbstractDataFactory implements CompoundD
       }
       if (model != null)
       {
+        logger.debug("Returning cached data for query '" + query + "'.");
         return wrapAsIndexed(model);
       }
     }
@@ -348,6 +352,7 @@ public class CachingDataFactory extends AbstractDataFactory implements CompoundD
       }
       if (model != null)
       {
+        logger.debug("Returning cached data for query '" + query + "'.");
         return wrapAsIndexed(model);
       }
     }
@@ -376,6 +381,7 @@ public class CachingDataFactory extends AbstractDataFactory implements CompoundD
       final TableModel model = dataCache.get(key);
       if (model != null)
       {
+        logger.debug("Returning cached data for design-time query '" + query + "'.");
         return wrapAsIndexed(model);
       }
     }
@@ -427,53 +433,50 @@ public class CachingDataFactory extends AbstractDataFactory implements CompoundD
   {
     try
     {
-      final DataFactory dataFactoryForQuery = backend.getDataFactoryForQuery(query);
-      final DataCacheKey key;
-      if (dataFactoryForQuery != null && dataCache != null)
+      if (dataCache == null)
       {
-        // search the datafactory that executes a query
-        // metadata: query fields that are used
-        // metadata: get a query-string hash-object (or the raw query)
-        final DataFactoryMetaData metaData = dataFactoryForQuery.getMetaData();
-        final String[] referencedFields = metaData.getReferencedFields(dataFactoryForQuery, query, parameters);
-        if (referencedFields != null)
+        return null;
+      }
+
+      final DataCacheKey key;
+      DataFactoryMetaData metaData = backend.getMetaData();
+
+      final String[] referencedFields = metaData.getReferencedFields(backend, query, parameters);
+      if (referencedFields != null)
+      {
+        final Object queryHash = metaData.getQueryHash(backend, query, parameters);
+        if (queryHash == null)
         {
-          final Object queryHash = metaData.getQueryHash(dataFactoryForQuery, query, parameters);
-          if (queryHash == null)
-          {
-            key = null;
-          }
-          else
-          {
-            key = new DataCacheKey();
-            for (int i = 0; i < referencedFields.length; i++)
-            {
-              final String field = referencedFields[i];
-              key.addParameter(field, parameters.get(field));
-            }
-
-            key.addAttribute(DataCacheKey.QUERY_CACHE, queryHash);
-            key.addAttribute(DataFactoryDesignTimeSupport.DESIGN_TIME, designTime);
-
-            // The data cache maps are immutable - make sure of it.
-            key.makeReadOnly();
-          }
+          logger.debug("Query hash is null, caching is disabled for query '" + query + "'.");
+          key = null;
         }
         else
         {
-          key = null;
+          key = new DataCacheKey();
+          for (int i = 0; i < referencedFields.length; i++)
+          {
+            final String field = referencedFields[i];
+            key.addParameter(field, parameters.get(field));
+          }
+
+          key.addAttribute(DataCacheKey.QUERY_CACHE, queryHash);
+          key.addAttribute(DataFactoryDesignTimeSupport.DESIGN_TIME, designTime);
+
+          // The data cache maps are immutable - make sure of it.
+          key.makeReadOnly();
         }
       }
       else
       {
+        logger.debug("No Referenced fields, caching is disabled for query '" + query + "'.");
         key = null;
       }
       return key;
     }
-    catch (MetaDataLookupException mle)
+    catch (final MetaDataLookupException mle)
     {
-      logger.error
-          ("Data-source used for query '" + query + "' does not provide metadata. Caching will be disabled.", mle);
+      logger.error (String.format
+          ("Data-source used for query '%s' does not provide metadata. Caching will be disabled.", query), mle);
       return null;
     }
   }

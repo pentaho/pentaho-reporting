@@ -29,5 +29,6 @@ public class CrosstabElement extends SubReport
   public CrosstabElement()
   {
     setElementType(CrosstabElementType.INSTANCE);
+    setRootGroup(new CrosstabGroup());
   }
 }

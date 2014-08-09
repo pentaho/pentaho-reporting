@@ -33,11 +33,6 @@ import org.pentaho.reporting.designer.core.editor.groups.EditGroupsDialog;
 import org.pentaho.reporting.designer.core.util.IconLoader;
 import org.pentaho.reporting.libraries.designtime.swing.LibSwingUtil;
 
-/**
- * Todo: Document Me
- *
- * @author Thomas Morgner
- */
 public class EditGroupsAction extends AbstractReportContextAction
 {
   public EditGroupsAction()

@@ -21,11 +21,6 @@ import javax.swing.Action;
 
 import org.pentaho.reporting.designer.core.actions.ActionMessages;
 
-/**
- * Todo: Document Me
- *
- * @author Thomas Morgner
- */
 public class MenuEditGroupsAction extends EditGroupsAction
 {
   public MenuEditGroupsAction()

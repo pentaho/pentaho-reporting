@@ -90,6 +90,48 @@ public class CrosstabDimension implements Serializable, Cloneable
     this.summaryTitle = summaryTitle;
   }
 
+  public boolean equals(final Object o)
+  {
+    if (this == o)
+    {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass())
+    {
+      return false;
+    }
+
+    final CrosstabDimension that = (CrosstabDimension) o;
+
+    if (printSummary != that.printSummary)
+    {
+      return false;
+    }
+    if (field != null ? !field.equals(that.field) : that.field != null)
+    {
+      return false;
+    }
+    if (summaryTitle != null ? !summaryTitle.equals(that.summaryTitle) : that.summaryTitle != null)
+    {
+      return false;
+    }
+    if (title != null ? !title.equals(that.title) : that.title != null)
+    {
+      return false;
+    }
+
+    return true;
+  }
+
+  public int hashCode()
+  {
+    int result = field != null ? field.hashCode() : 0;
+    result = 31 * result + (title != null ? title.hashCode() : 0);
+    result = 31 * result + (printSummary ? 1 : 0);
+    result = 31 * result + (summaryTitle != null ? summaryTitle.hashCode() : 0);
+    return result;
+  }
+
   public CrosstabDimension clone()
   {
     try

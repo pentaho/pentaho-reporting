@@ -129,6 +129,27 @@ public class HashNMap<K,V> implements Serializable, Cloneable
   }
 
   /**
+   * Retrieves the last value registered for an key or null if there was no
+   * such key in the list.
+   *
+   * @param key the key.
+   * @return the value.
+   */
+  public V getLast(final K key)
+  {
+    final List<V> v = this.table.get(key);
+    if (v == null)
+    {
+      return null;
+    }
+    if (v.size() == 0)
+    {
+      return null;
+    }
+    return v.get(v.size() - 1);
+  }
+
+  /**
    * Retrieves the n-th value registered for an key or null if there was no
    * such key in the list. An index out of bounds exception is thrown if
    * there are less than n elements registered to this key.

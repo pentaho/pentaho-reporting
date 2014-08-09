@@ -29,6 +29,7 @@ import org.pentaho.reporting.designer.core.actions.AbstractElementSelectionActio
 import org.pentaho.reporting.designer.core.actions.ActionMessages;
 import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
 import org.pentaho.reporting.designer.core.editor.crosstab.CreateCrosstabDialog;
+import org.pentaho.reporting.designer.core.editor.crosstab.CrosstabEditSupport;
 import org.pentaho.reporting.designer.core.model.ModelUtility;
 import org.pentaho.reporting.designer.core.model.selection.DocumentContextSelectionModel;
 import org.pentaho.reporting.designer.core.settings.SettingsListener;
@@ -49,94 +50,6 @@ import org.pentaho.reporting.libraries.designtime.swing.LibSwingUtil;
 
 public final class InsertCrosstabGroupAction extends AbstractElementSelectionAction implements SettingsListener
 {
-  private static class InsertGroupOnReportUndoEntry implements UndoEntry
-  {
-    private static final long serialVersionUID = -6048384734272767240L;
-    private Group newRootGroup;
-    private Group oldRootGroup;
-
-    private InsertGroupOnReportUndoEntry(final Group oldRootGroup, final Group newRootGroup)
-    {
-      this.oldRootGroup = oldRootGroup;
-      this.newRootGroup = newRootGroup;
-    }
-
-    public void undo(final ReportDocumentContext renderContext)
-    {
-      final AbstractReportDefinition report = renderContext.getReportDefinition();
-      report.setRootGroup(oldRootGroup);
-    }
-
-    public void redo(final ReportDocumentContext renderContext)
-    {
-      final AbstractReportDefinition report = renderContext.getReportDefinition();
-      final SubGroupBody body = new SubGroupBody();
-      newRootGroup.setBody(body);
-      report.setRootGroup(newRootGroup);
-      body.setGroup(oldRootGroup);
-    }
-
-    public UndoEntry merge(final UndoEntry newEntry)
-    {
-      return null;
-    }
-  }
-
-  private static class InsertGroupOnGroupUndoEntry implements UndoEntry
-  {
-    private InstanceID target;
-    private Group newRootGroup;
-    private Group oldRootGroup;
-
-    private InsertGroupOnGroupUndoEntry(final InstanceID target,
-                                        final Group oldRootGroup,
-                                        final Group newRootGroup)
-    {
-      this.target = target;
-      this.oldRootGroup = oldRootGroup;
-      this.newRootGroup = newRootGroup;
-    }
-
-    public void undo(final ReportDocumentContext renderContext)
-    {
-      final RelationalGroup selectedGroup = (RelationalGroup)
-          ModelUtility.findElementById(renderContext.getReportDefinition(), target);
-      final GroupBody bodyElement = selectedGroup.getBody();
-      if (bodyElement instanceof SubGroupBody == false)
-      {
-        throw new IllegalStateException();
-      }
-
-      final SubGroupBody subGroupBodyReportElement = (SubGroupBody) bodyElement;
-      subGroupBodyReportElement.setGroup(oldRootGroup);
-    }
-
-    public void redo(final ReportDocumentContext renderContext)
-    {
-      final RelationalGroup selectedGroup = (RelationalGroup)
-          ModelUtility.findElementById(renderContext.getReportDefinition(), target);
-
-      final GroupBody bodyElement = selectedGroup.getBody();
-      if (bodyElement instanceof SubGroupBody == false)
-      {
-        throw new IllegalStateException();
-      }
-
-      final SubGroupBody subGroupBodyReportElement = (SubGroupBody) bodyElement;
-      final Group oldBodyContent = subGroupBodyReportElement.getGroup();
-
-      final SubGroupBody body = new SubGroupBody();
-      newRootGroup.setBody(body);
-      subGroupBodyReportElement.setGroup(newRootGroup);
-      body.setGroup(oldBodyContent);
-    }
-
-    public UndoEntry merge(final UndoEntry newEntry)
-    {
-      return null;
-    }
-  }
-
   private static class InsertGroupOnDetailsUndoEntry implements UndoEntry
   {
     private InstanceID target;
@@ -164,7 +77,7 @@ public final class InsertCrosstabGroupAction extends AbstractElementSelectionAct
     {
       final RelationalGroup selectedGroup = (RelationalGroup)
           ModelUtility.findElementById(renderContext.getReportDefinition(), target);
-      installCrosstabIntoLastGroup(selectedGroup, newGroup);
+      CrosstabEditSupport.installCrosstabIntoLastGroup(selectedGroup, newGroup);
     }
 
     public UndoEntry merge(final UndoEntry newEntry)
@@ -227,7 +140,7 @@ public final class InsertCrosstabGroupAction extends AbstractElementSelectionAct
       }
 
 
-      final CrosstabGroup newGroup = dialog.createCrosstab(context, context.getActiveContext());
+      final CrosstabGroup newGroup = dialog.createCrosstab(context, null);
       if (newGroup == null)
       {
         return;
@@ -238,7 +151,7 @@ public final class InsertCrosstabGroupAction extends AbstractElementSelectionAct
         final Group rootGroup = report.getRootGroup();
         report.setRootGroup(newGroup);
         activeContext.getUndo().addChange(ActionMessages.getString("InsertCrosstabGroupAction.UndoName"),
-            new InsertGroupOnReportUndoEntry(rootGroup, newGroup));
+            new CrosstabEditSupport.EditGroupOnReportUndoEntry(rootGroup, newGroup));
       }
 
       if (selectedElement instanceof RelationalGroup == false)
@@ -256,31 +169,22 @@ public final class InsertCrosstabGroupAction extends AbstractElementSelectionAct
         subGroupBodyReportElement.setGroup(newGroup);
 
         activeContext.getUndo().addChange(ActionMessages.getString("InsertGroupAction.UndoName"),
-            new InsertGroupOnGroupUndoEntry(selectedGroup.getObjectID(), oldBodyContent, newGroup));
+            new CrosstabEditSupport.EditGroupOnGroupUndoEntry(selectedGroup.getObjectID(), oldBodyContent, newGroup));
       }
       else if (bodyElement instanceof GroupDataBody)
       {
         // we cannot simply insert the group-data body into the crosstab. We need to locate the
         // innermost group and need to place the body there.
-        final GroupDataBody oldBody = installCrosstabIntoLastGroup(selectedGroup, newGroup);
+        final GroupDataBody oldBody = CrosstabEditSupport.installCrosstabIntoLastGroup(selectedGroup, newGroup);
         getActiveContext().getUndo().addChange(ActionMessages.getString("InsertGroupAction.UndoName"),
             new InsertGroupOnDetailsUndoEntry(selectedGroup.getObjectID(), newGroup, oldBody));
 
       }
     }
-    catch (Exception ex)
+    catch (final Exception ex)
     {
       UncaughtExceptionsModel.getInstance().addException(ex);
     }
-  }
-
-  protected static GroupDataBody installCrosstabIntoLastGroup(final RelationalGroup selectedGroup,
-                                                       final CrosstabGroup newGroup)
-  {
-    final GroupDataBody oldBody = (GroupDataBody) selectedGroup.getBody();
-    // install the new crosstab group into the group
-    selectedGroup.setBody(new SubGroupBody(newGroup));
-    return oldBody;
   }
 
   protected void updateSelection()

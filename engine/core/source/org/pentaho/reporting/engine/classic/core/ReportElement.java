@@ -87,6 +87,7 @@ public interface ReportElement extends Cloneable, Serializable
   public void setAttribute(final String namespace, final String name, final Object value, final boolean notifyChange);
 
   public Object getAttribute(String namespace, String name);
+  public <TS> TS getAttributeTyped(final String namespace, final String attribute, final Class<TS> filter);
 
   public String[] getAttributeNamespaces();
 

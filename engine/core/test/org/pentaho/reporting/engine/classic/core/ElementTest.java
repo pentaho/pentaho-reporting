@@ -25,6 +25,9 @@ import java.io.ObjectOutputStream;
 import java.util.Arrays;
 
 import junit.framework.TestCase;
+import org.junit.Assert;
+import org.pentaho.reporting.engine.classic.core.filter.types.LabelType;
+import org.pentaho.reporting.engine.classic.core.filter.types.NumberFieldType;
 
 public class ElementTest extends TestCase
 {
@@ -220,5 +223,18 @@ public class ElementTest extends TestCase
       assertEquals(Arrays.asList(names), Arrays.asList(e.getAttributeNames(namespace)));
 
     }
+  }
+
+  public void testCopyInto() {
+    Element e1 = new Element();
+    e1.setElementType(LabelType.INSTANCE);
+
+    Element e2 = new Element();
+    e2.setElementType(NumberFieldType.INSTANCE);
+
+    e2.copyInto(e1);
+
+    Assert.assertEquals(LabelType.INSTANCE, e1.getElementType());
+    Assert.assertEquals(NumberFieldType.INSTANCE, e2.getElementType());
   }
 }
