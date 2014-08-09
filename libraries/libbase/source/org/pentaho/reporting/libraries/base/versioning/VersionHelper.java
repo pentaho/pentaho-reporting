@@ -72,14 +72,15 @@ public class VersionHelper
 
   private static final Log logger = LogFactory.getLog(VersionHelper.class);
   private static final ManifestCache manifestCache = new ManifestCache();
+  public static final String SNAPSHOT_TOKEN = "SNAPSHOT";
   private String version;
   private String title;
   private String productId;
   private String releaseMilestone;
   private String releaseMinor;
   private String releaseMajor;
-  private String releaseCandidateToken;
   private String releaseNumber;
+  private String releasePatch;
   private String releaseBuildNumber;
   private ProjectInformation projectInformation;
 
@@ -137,7 +138,7 @@ public class VersionHelper
           }
           else
           {
-            manifestCache.set(maybeTitle, urlAsText, maybeManifest);
+            manifestCache.set(null, urlAsText, maybeManifest);
           }
         }
 
@@ -168,8 +169,8 @@ public class VersionHelper
       releaseMajor = "999";
       releaseMinor = "999";
       releaseMilestone = "999";
-      releaseCandidateToken = "snapshot";
-      releaseBuildNumber = "0";
+      releasePatch = "0";
+      releaseBuildNumber = SNAPSHOT_TOKEN;
       releaseNumber = createReleaseVersion();
     }
   }
@@ -193,59 +194,8 @@ public class VersionHelper
 
       title = getValue(attr, "Implementation-Title", maybeTitle);
       version = getValue(attr, "Implementation-Version", "");
-      if (version.length() == 0)
-      {
-        version = "TRUNK.development";
-      }
 
-      releaseMajor = "999";
-      releaseMinor = "999";
-      releaseMilestone = "999";
-      releaseCandidateToken = "snapshot";
-      releaseBuildNumber = "0";
-      if (version.startsWith("TRUNK") == false)
-      {
-        // format is something like 3.8.0[.x]-GA.12345
-        final int dashPos = version.indexOf('-');
-        final String versionNumber;
-        final String implIndicator;
-        if (dashPos != -1)
-        {
-          versionNumber = version.substring(0, dashPos);
-          implIndicator = version.substring(dashPos + 1);
-        }
-        else
-        {
-          versionNumber = version;
-          implIndicator = "";
-        }
-        if (StringUtils.isEmpty(versionNumber) == false)
-        {
-          final StringTokenizer tokNum = new StringTokenizer(versionNumber, ".");
-          if (tokNum.hasMoreTokens())
-          {
-            releaseMajor = tokNum.nextToken();
-          }
-          if (tokNum.hasMoreTokens())
-          {
-            releaseMinor = tokNum.nextToken();
-          }
-          if (tokNum.hasMoreTokens())
-          {
-            releaseMilestone = tokNum.nextToken();
-          }
-          final StringTokenizer tokImpl = new StringTokenizer(implIndicator, ".");
-          if (tokImpl.hasMoreTokens())
-          {
-            releaseCandidateToken = tokImpl.nextToken();
-          }
-          if (tokImpl.hasMoreTokens())
-          {
-            releaseBuildNumber = tokImpl.nextToken();
-          }
-        }
-      }
-      releaseNumber = createReleaseVersion();
+      parseVersion(version);
 
       productId = maybeTitle;
       if (productId.length() == 0)
@@ -259,6 +209,63 @@ public class VersionHelper
     {
       return false;
     }
+  }
+
+  protected void parseVersion(String version)
+  {
+    if (version == null || version.length() == 0)
+    {
+      version = "TRUNK.development";
+    }
+
+    releaseMajor = "999";
+    releaseMinor = "999";
+    releaseMilestone = "999";
+    releasePatch = "0";
+    releaseBuildNumber = SNAPSHOT_TOKEN;
+    if (version.startsWith("TRUNK") == false)
+    {
+      // format is something like 3.8.0[.x]-GA.12345
+      final int dashPos = version.indexOf('-');
+      final String versionNumber;
+      final String implIndicator;
+      if (dashPos != -1)
+      {
+        versionNumber = version.substring(0, dashPos);
+        implIndicator = version.substring(dashPos + 1);
+      }
+      else
+      {
+        versionNumber = version;
+        implIndicator = "";
+      }
+      if (StringUtils.isEmpty(versionNumber) == false)
+      {
+        final StringTokenizer tokNum = new StringTokenizer(versionNumber, ".");
+        if (tokNum.hasMoreTokens())
+        {
+          releaseMajor = tokNum.nextToken();
+        }
+        if (tokNum.hasMoreTokens())
+        {
+          releaseMinor = tokNum.nextToken();
+        }
+        if (tokNum.hasMoreTokens())
+        {
+          releaseMilestone = tokNum.nextToken();
+        }
+        if (tokNum.hasMoreTokens())
+        {
+          releasePatch = tokNum.nextToken();
+        }
+        final StringTokenizer tokImpl = new StringTokenizer(implIndicator, ".");
+        if (tokImpl.hasMoreTokens())
+        {
+          releaseBuildNumber = tokImpl.nextToken();
+        }
+      }
+    }
+    releaseNumber = createReleaseVersion();
   }
 
   /**
@@ -324,10 +331,10 @@ public class VersionHelper
     buffer.append(releaseMinor);
     buffer.append('.');
     buffer.append(releaseMilestone);
-    if (releaseCandidateToken.length() > 0)
+    if (releasePatch.length() > 0)
     {
       buffer.append('-');
-      buffer.append(releaseCandidateToken);
+      buffer.append(releasePatch);
     }
     if (releaseBuildNumber.length() > 0)
     {
@@ -370,7 +377,7 @@ public class VersionHelper
   }
 
   /**
-   * Returns the release milestone number.
+   * Returns the release milestone number. Defaults to 999 if not given in the manifest.
    *
    * @return the milestone number.
    */
@@ -380,7 +387,7 @@ public class VersionHelper
   }
 
   /**
-   * Returns the release minor number.
+   * Returns the release minor number. Defaults to 999 if not given in the manifest.
    *
    * @return the minor version number.
    */
@@ -390,7 +397,7 @@ public class VersionHelper
   }
 
   /**
-   * Returns the release major number.
+   * Returns the release major number. Defaults to 999 if not given in the manifest.
    *
    * @return the major version number.
    */
@@ -400,13 +407,25 @@ public class VersionHelper
   }
 
   /**
-   * Returns the release candidate token.
+   * Returns the release candidate token. Defaults to 999 if not given in the manifest.
    *
    * @return the candidate token.
+   * @deprecated No longer used.
    */
+  @Deprecated
   public String getReleaseCandidateToken()
   {
-    return releaseCandidateToken;
+    return "";
+  }
+
+  /**
+   * Returns the release patch number. Defaults to zero if not given in the manifest.
+   *
+   * @return the patch version number.
+   */
+  public String getReleasePatch()
+  {
+    return releasePatch;
   }
 
   /**
