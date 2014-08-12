@@ -519,6 +519,12 @@ public final class GlobalMasterRow implements MasterDataRow
     {
       throw new NullPointerException();
     }
+
+    if (paddingData != null && !paddingData.isCrosstabActive())
+    {
+      paddingData.refresh(this.globalView);
+    }
+
     if (expressionDataRow != null)
     {
       expressionDataRow.refresh();
@@ -592,9 +598,9 @@ public final class GlobalMasterRow implements MasterDataRow
     final GlobalMasterRow copy = derive();
     copy.globalView = storedGlobalView.derive();
     copy.paddingData = storedPaddingData.clone();
-    copy.paddingData.refresh(copy.globalView);
     copy.expressionDataRow = expressionDataRow.derive(copy.globalView, copy, false);
     copy.refresh();
+
     return copy;
   }
 
