@@ -17,65 +17,57 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.output.fast.template;
 
+import org.pentaho.reporting.engine.classic.core.AttributeNames;
+import org.pentaho.reporting.engine.classic.core.Band;
+import org.pentaho.reporting.engine.classic.core.ReportElement;
+import org.pentaho.reporting.engine.classic.core.Section;
+import org.pentaho.reporting.engine.classic.core.function.ExpressionRuntime;
+import org.pentaho.reporting.engine.classic.core.layout.style.SimpleStyleSheet;
+import org.pentaho.reporting.engine.classic.core.style.StyleKey;
+import org.pentaho.reporting.engine.classic.core.util.AbstractStructureVisitor;
+import org.pentaho.reporting.engine.classic.core.util.InstanceID;
+import org.pentaho.reporting.libraries.base.util.ArgumentNullException;
+import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.pentaho.reporting.engine.classic.core.AttributeNames;
-import org.pentaho.reporting.engine.classic.core.Band;
-import org.pentaho.reporting.engine.classic.core.ReportElement;
-import org.pentaho.reporting.engine.classic.core.Section;
-import org.pentaho.reporting.engine.classic.core.layout.style.SimpleStyleSheet;
-import org.pentaho.reporting.engine.classic.core.style.StyleKey;
-import org.pentaho.reporting.engine.classic.core.util.AbstractStructureVisitor;
-import org.pentaho.reporting.engine.classic.core.util.InstanceID;
-import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
+public class DynamicStyleKey {
 
-public class DynamicStyleKey
-{
-
-  private static class StyleInfoCollection
-  {
-    private static class StyleInfo
-    {
+  private static class StyleInfoCollection {
+    private static class StyleInfo {
       private int styleKeyIndex;
       private Object styleValue;
 
-      private StyleInfo(final int styleKeyIndex, final Object styleValue)
-      {
+      private StyleInfo( final int styleKeyIndex, final Object styleValue ) {
         this.styleKeyIndex = styleKeyIndex;
         this.styleValue = styleValue;
       }
 
-      public boolean equals(final Object o)
-      {
-        if (this == o)
-        {
+      public boolean equals( final Object o ) {
+        if ( this == o ) {
           return true;
         }
-        if (o == null || getClass() != o.getClass())
-        {
+        if ( o == null || getClass() != o.getClass() ) {
           return false;
         }
 
         final StyleInfo styleInfo = (StyleInfo) o;
 
-        if (styleKeyIndex != styleInfo.styleKeyIndex)
-        {
+        if ( styleKeyIndex != styleInfo.styleKeyIndex ) {
           return false;
         }
-        if (styleValue != null ? !styleValue.equals(styleInfo.styleValue) : styleInfo.styleValue != null)
-        {
+        if ( styleValue != null ? !styleValue.equals( styleInfo.styleValue ) : styleInfo.styleValue != null ) {
           return false;
         }
         return true;
       }
 
-      public int hashCode()
-      {
+      public int hashCode() {
         int result = styleKeyIndex;
-        result = 31 * result + (styleValue != null ? styleValue.hashCode() : 0);
+        result = 31 * result + ( styleValue != null ? styleValue.hashCode() : 0 );
         return result;
       }
     }
@@ -83,56 +75,51 @@ public class DynamicStyleKey
     private ArrayList<StyleInfo> styleInfo;
     private Integer hashCode;
     private long styleChangeTracker;
+    private boolean nullValue;
 
-    private StyleInfoCollection(int length)
-    {
-      styleInfo = new ArrayList<StyleInfo>(length);
+    private StyleInfoCollection( int length, boolean nullValue ) {
+      styleInfo = new ArrayList<StyleInfo>( length );
+      this.nullValue = nullValue;
     }
 
-    public void add(StyleKey k, Object o)
-    {
-      styleInfo.add(new StyleInfo(k.getIdentifier(), o));
+    public void add( StyleKey k, Object o ) {
+      styleInfo.add( new StyleInfo( k.getIdentifier(), o ) );
     }
 
-    public long getStyleChangeTracker()
-    {
+    public long getStyleChangeTracker() {
       return styleChangeTracker;
     }
 
-    private void setStyleChangeTracker(final long styleChangeTracker)
-    {
+    private void setStyleChangeTracker( final long styleChangeTracker ) {
       this.styleChangeTracker = styleChangeTracker;
     }
 
-    public boolean equals(final Object o)
-    {
-      if (this == o)
-      {
+    public boolean equals( final Object o ) {
+      if ( this == o ) {
         return true;
       }
-      if (o == null || getClass() != o.getClass())
-      {
+      if ( o == null || getClass() != o.getClass() ) {
         return false;
       }
       final StyleInfoCollection that = (StyleInfoCollection) o;
-      if (ObjectUtilities.equal(hashCode, that.hashCode) == false)
-      {
+      if ( ObjectUtilities.equal( hashCode, that.hashCode ) == false ) {
         return false;
       }
 
-      if (!styleInfo.equals(that.styleInfo))
-      {
+      if ( !styleInfo.equals( that.styleInfo ) ) {
+        return false;
+      }
+
+      if ( nullValue != that.nullValue ) {
         return false;
       }
 
       return true;
     }
 
-    public int hashCode()
-    {
-      if (hashCode == null)
-      {
-        hashCode = styleInfo.hashCode();
+    public int hashCode() {
+      if ( hashCode == null ) {
+        hashCode = styleInfo.hashCode() + 23 * ( nullValue ? 1 : 0 );
       }
       return hashCode;
     }
@@ -142,46 +129,37 @@ public class DynamicStyleKey
   private Map<InstanceID, StyleInfoCollection> dynamicStylePerElement;
   private Integer hashCode;
 
-  private DynamicStyleKey(final InstanceID rootBandId,
-                          final Map<InstanceID, StyleInfoCollection> dynamicStylePerElement)
-  {
+  private DynamicStyleKey( final InstanceID rootBandId,
+      final Map<InstanceID, StyleInfoCollection> dynamicStylePerElement ) {
     this.rootBandId = rootBandId;
     this.dynamicStylePerElement = dynamicStylePerElement;
   }
 
-  public boolean equals(final Object o)
-  {
-    if (this == o)
-    {
+  public boolean equals( final Object o ) {
+    if ( this == o ) {
       return true;
     }
-    if (o == null || getClass() != o.getClass())
-    {
+    if ( o == null || getClass() != o.getClass() ) {
       return false;
     }
 
     final DynamicStyleKey that = (DynamicStyleKey) o;
-    if (ObjectUtilities.equal(hashCode, that.hashCode) == false)
-    {
+    if ( ObjectUtilities.equal( hashCode, that.hashCode ) == false ) {
       return false;
     }
 
-    if (!dynamicStylePerElement.equals(that.dynamicStylePerElement))
-    {
+    if ( !dynamicStylePerElement.equals( that.dynamicStylePerElement ) ) {
       return false;
     }
-    if (!rootBandId.equals(that.rootBandId))
-    {
+    if ( !rootBandId.equals( that.rootBandId ) ) {
       return false;
     }
 
     return true;
   }
 
-  public int hashCode()
-  {
-    if (hashCode == null)
-    {
+  public int hashCode() {
+    if ( hashCode == null ) {
       int result = rootBandId.hashCode();
       result = 31 * result + dynamicStylePerElement.hashCode();
       hashCode = result;
@@ -189,62 +167,72 @@ public class DynamicStyleKey
     return hashCode;
   }
 
-  public static DynamicStyleKey create(Band band)
-  {
-    Map<InstanceID, StyleInfoCollection> style = new DynamicStyleKeyProducer().collect(band);
-    return new DynamicStyleKey(band.getObjectID(), style);
+  public static DynamicStyleKey create( Band band, ExpressionRuntime runtime ) {
+    Map<InstanceID, StyleInfoCollection> style = new DynamicStyleKeyProducer().collect( band, runtime );
+    return new DynamicStyleKey( band.getObjectID(), style );
   }
 
-  private static class DynamicStyleKeyProducer extends AbstractStructureVisitor
-  {
+  private static class DynamicStyleKeyProducer extends AbstractStructureVisitor {
     private HashMap<InstanceID, StyleKey[]> dynamicTemplateInfo;
     private HashMap<InstanceID, StyleInfoCollection> styleInfo;
+    private ExpressionRuntime runtime;
 
-    public Map<InstanceID, StyleInfoCollection> collect(Band band)
-    {
-      dynamicTemplateInfo = (HashMap<InstanceID, StyleKey[]>)
-          band.getAttribute(AttributeNames.Internal.NAMESPACE, AttributeNames.Internal.FAST_EXPORT_DYNAMIC_STASH);
-      if (dynamicTemplateInfo == null)
-      {
+    public Map<InstanceID, StyleInfoCollection> collect( Band band, ExpressionRuntime runtime ) {
+      ArgumentNullException.validate( "band", band );
+      ArgumentNullException.validate( "runtime", runtime );
+      dynamicTemplateInfo =
+          (HashMap<InstanceID, StyleKey[]>) band.getAttribute( AttributeNames.Internal.NAMESPACE,
+              AttributeNames.Internal.FAST_EXPORT_DYNAMIC_STASH );
+      if ( dynamicTemplateInfo == null ) {
         return Collections.emptyMap();
       }
+      this.runtime = runtime;
       styleInfo = new HashMap<InstanceID, StyleInfoCollection>();
-      inspectElement(band);
-      traverseSection(band);
+      inspectElement( band );
+      traverseSection( band );
       return styleInfo;
     }
 
-    protected void traverseSection(final Section section)
-    {
-      traverseSectionWithoutSubReports(section);
+    protected void traverseSection( final Section section ) {
+      traverseSectionWithoutSubReports( section );
     }
 
-    protected void inspectElement(final ReportElement element)
-    {
-      StyleKey[] styleIndex = dynamicTemplateInfo.get(element.getObjectID());
-      if (styleIndex == null || styleIndex.length == 0)
-      {
+    protected void inspectElement( final ReportElement element ) {
+      StyleKey[] styleIndex = dynamicTemplateInfo.get( element.getObjectID() );
+      if ( styleIndex == null || styleIndex.length == 0 ) {
         return;
       }
 
-      StyleInfoCollection lastCollection = (StyleInfoCollection)
-          element.getAttribute(AttributeNames.Internal.NAMESPACE, AttributeNames.Internal.FAST_EXPORT_ELEMENT_STASH);
+      Object value = element.getElementType().getValue( runtime, element );
+      boolean empty = isEmpty( value );
+
+      StyleInfoCollection lastCollection =
+          (StyleInfoCollection) element.getAttribute( AttributeNames.Internal.NAMESPACE,
+              AttributeNames.Internal.FAST_EXPORT_ELEMENT_STASH );
       SimpleStyleSheet computedStyle = element.getComputedStyle();
-      if (lastCollection != null &&
-          lastCollection.getStyleChangeTracker() == computedStyle.getChangeTrackerHash())
-      {
+      if ( lastCollection != null && lastCollection.getStyleChangeTracker() == computedStyle.getChangeTrackerHash()
+          && lastCollection.nullValue == empty ) {
         // no changes
-        styleInfo.put(element.getObjectID(), lastCollection);
+        styleInfo.put( element.getObjectID(), lastCollection );
         return;
       }
 
-      StyleInfoCollection collection = new StyleInfoCollection(styleIndex.length);
-      collection.setStyleChangeTracker(computedStyle.getChangeTrackerHash());
-      for (StyleKey styleKey : styleIndex)
-      {
-        collection.add(styleKey, computedStyle.getStyleProperty(styleKey));
+      StyleInfoCollection collection = new StyleInfoCollection( styleIndex.length, empty );
+      collection.setStyleChangeTracker( computedStyle.getChangeTrackerHash() );
+      for ( StyleKey styleKey : styleIndex ) {
+        collection.add( styleKey, computedStyle.getStyleProperty( styleKey ) );
       }
-      styleInfo.put(element.getObjectID(), collection);
+      styleInfo.put( element.getObjectID(), collection );
+    }
+
+    private boolean isEmpty( Object o ) {
+      if ( o == null ) {
+        return true;
+      }
+      if ( "".equals( o ) ) {
+        return true;
+      }
+      return false;
     }
   }
 }

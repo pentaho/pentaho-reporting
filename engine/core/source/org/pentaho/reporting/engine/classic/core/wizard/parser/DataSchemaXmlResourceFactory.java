@@ -24,7 +24,7 @@ import org.pentaho.reporting.libraries.xmlns.parser.AbstractXmlResourceFactory;
 import org.pentaho.reporting.libraries.xmlns.parser.XmlFactoryModule;
 import org.pentaho.reporting.libraries.xmlns.parser.XmlFactoryModuleRegistry;
 
-public class DataSchemaXmlResourceFactory extends AbstractXmlResourceFactory
+public class DataSchemaXmlResourceFactory extends AbstractXmlResourceFactory 
 {
   private static final XmlFactoryModuleRegistry registry = new XmlFactoryModuleRegistry();
 

@@ -17,8 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.output.fast.validator;
 
-import java.util.ArrayList;
-
 import org.pentaho.reporting.engine.classic.core.AbstractReportDefinition;
 import org.pentaho.reporting.engine.classic.core.ItemBand;
 import org.pentaho.reporting.engine.classic.core.ReportElement;
@@ -34,98 +32,78 @@ import org.pentaho.reporting.engine.classic.core.util.AbstractStructureVisitor;
 import org.pentaho.reporting.engine.classic.core.util.InstanceID;
 import org.pentaho.reporting.libraries.base.util.HashNMap;
 
-public class DynamicReportStyleAnalyzer extends AbstractStructureVisitor
-{
+import java.util.ArrayList;
+
+public class DynamicReportStyleAnalyzer extends AbstractStructureVisitor {
   private HashNMap<String, StyleKey> styleByElementName;
   private HashNMap<InstanceID, StyleKey> styleById;
   private ArrayList<Section> rootBands;
 
-  public DynamicReportStyleAnalyzer()
-  {
+  public DynamicReportStyleAnalyzer() {
     styleByElementName = new HashNMap<String, StyleKey>();
     styleById = new HashNMap<InstanceID, StyleKey>();
     rootBands = new ArrayList<Section>();
   }
 
-  public void compute(final AbstractReportDefinition report)
-  {
-    inspect(report);
+  public void compute( final AbstractReportDefinition report ) {
+    inspect( report );
 
-    DynamicStyleRootBandAnalyzer rootBandAnalyzer = new DynamicStyleRootBandAnalyzer(styleByElementName, styleById);
-    for (Section element : rootBands)
-    {
-      rootBandAnalyzer.compute(element);
+    DynamicStyleRootBandAnalyzer rootBandAnalyzer = new DynamicStyleRootBandAnalyzer();
+    for ( Section element : rootBands ) {
+      rootBandAnalyzer.compute( element );
     }
   }
 
-  protected void inspectExpression(final AbstractReportDefinition report, final Expression expression)
-  {
-    if (expression instanceof RowBandingFunction)
-    {
-      handleRowBanding(report, (RowBandingFunction) expression);
+  protected void inspectExpression( final AbstractReportDefinition report, final Expression expression ) {
+    if ( expression instanceof RowBandingFunction ) {
+      handleRowBanding( report, (RowBandingFunction) expression );
     }
 
-    if (expression instanceof ItemHideFunction)
-    {
-      handleItemHide((ItemHideFunction) expression);
+    if ( expression instanceof ItemHideFunction ) {
+      handleItemHide( (ItemHideFunction) expression );
     }
 
-    if (expression instanceof ElementTrafficLightFunction)
-    {
-      handleTrafficLightFunction((ElementTrafficLightFunction) expression);
+    if ( expression instanceof ElementTrafficLightFunction ) {
+      handleTrafficLightFunction( (ElementTrafficLightFunction) expression );
     }
   }
 
-  private void handleRowBanding(final AbstractReportDefinition report, final RowBandingFunction rb)
-  {
+  private void handleRowBanding( final AbstractReportDefinition report, final RowBandingFunction rb ) {
     String element = rb.getElement();
-    if (element == null)
-    {
+    if ( element == null ) {
       ItemBand itemBand = report.getItemBand();
-      if (itemBand != null)
-      {
-        styleById.add(itemBand.getObjectID(), ElementStyleKeys.BACKGROUND_COLOR);
+      if ( itemBand != null ) {
+        styleById.add( itemBand.getObjectID(), ElementStyleKeys.BACKGROUND_COLOR );
       }
-    }
-    else
-    {
-      styleByElementName.add(element, ElementStyleKeys.BACKGROUND_COLOR);
+    } else {
+      styleByElementName.add( element, ElementStyleKeys.BACKGROUND_COLOR );
     }
   }
 
-  private void handleItemHide(final ItemHideFunction rb)
-  {
+  private void handleItemHide( final ItemHideFunction rb ) {
     String element = rb.getElement();
-    styleByElementName.add(element, ElementStyleKeys.VISIBLE);
+    styleByElementName.add( element, ElementStyleKeys.VISIBLE );
   }
 
-  private void handleTrafficLightFunction(final ElementTrafficLightFunction rb)
-  {
+  private void handleTrafficLightFunction( final ElementTrafficLightFunction rb ) {
     String element = rb.getElement();
-    if (element == null)
-    {
+    if ( element == null ) {
       return;
     }
-    if (rb.isDefineBackground())
-    {
-      styleByElementName.add(element, ElementStyleKeys.BACKGROUND_COLOR);
-    }
-    else
-    {
-      styleByElementName.add(element, ElementStyleKeys.PAINT);
+    if ( rb.isDefineBackground() ) {
+      styleByElementName.add( element, ElementStyleKeys.BACKGROUND_COLOR );
+    } else {
+      styleByElementName.add( element, ElementStyleKeys.PAINT );
     }
   }
 
-  protected void traverseSection(final Section section)
-  {
-    traverseSectionWithoutSubReports(section);
+  protected void traverseSection( final Section section ) {
+    traverseSectionWithoutSubReports( section );
   }
 
-  protected void inspectElement(final ReportElement element)
-  {
-    if (element instanceof RootLevelBand && element instanceof Section)
-    {
-      rootBands.add((Section) element);
+  protected void inspectElement( final ReportElement element ) {
+    if ( element instanceof RootLevelBand && element instanceof Section ) {
+      rootBands.add( (Section) element );
     }
   }
 }
