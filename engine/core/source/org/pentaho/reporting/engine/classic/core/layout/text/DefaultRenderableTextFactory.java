@@ -191,8 +191,8 @@ public final class DefaultRenderableTextFactory implements RenderableTextFactory
                                      final int offset,
                                      final int length)
   {
-    int clusterStartIdx = -1;
     final int maxLen = Math.min(length + offset, text.length);
+    int clusterStartIdx = offset < maxLen ? 0: -1;
     for (int i = offset; i < maxLen; i++)
     {
       final int codePoint = text[i];
