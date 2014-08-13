@@ -56,7 +56,7 @@
       Runs a typical continuous integration build including project dist,
       and test artifacts
       ====================================================================-->
-  <target name="continuous-local-junit" depends="build-testless,test,publish-local" />
+  <target name="continuous-local-junit" depends="build-testless,publish-local" />
 
   <!--=======================================================================
       continuous-junit

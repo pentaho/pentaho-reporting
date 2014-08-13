@@ -72,7 +72,7 @@
       Runs a typical continuous integration build including project dist,
       and test artifacts
       ====================================================================-->
-  <target name="continuous-local-junit" depends="build-testless,test,publish-local" />
+  <target name="continuous-local-junit" depends="dist" />
 
   <!--=======================================================================
       continuous-junit
@@ -80,7 +80,7 @@
       Runs a typical continuous integration build including project dist,
       and test artifacts
       ====================================================================-->
-  <target name="continuous-junit" depends="build,publish" />
+  <target name="continuous-junit" depends="dist" />
 
   <!-- Until CM-466 is fixed, hot-patch it -->
   <target name="install-ivy" depends="subfloor.install-ivy">
