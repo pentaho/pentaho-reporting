@@ -25,7 +25,6 @@ import junit.framework.TestCase;
 import org.junit.Assert;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.pentaho.reporting.engine.classic.core.CrosstabElement;
-import org.pentaho.reporting.engine.classic.core.Element;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
 import org.pentaho.reporting.engine.classic.core.NoDataBand;
 import org.pentaho.reporting.engine.classic.core.SimplePageDefinition;
@@ -81,8 +80,10 @@ public class CrosstabRenderTest extends TestCase
 
   public void testClone() throws ResourceException
   {
+    CrosstabElement element = new CrosstabElement();
+
     final MasterReport report = new MasterReport();
-    report.getReportHeader().addElement(new CrosstabElement());
+    report.getReportHeader().addElement(element);
 
     CrosstabElement ct0 = (CrosstabElement) report.getReportHeader().getElement(0);
     NoDataBand noDataBand0 = ct0.getNoDataBand();

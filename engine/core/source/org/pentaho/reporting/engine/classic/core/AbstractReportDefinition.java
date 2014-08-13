@@ -26,7 +26,6 @@ import org.pentaho.reporting.engine.classic.core.event.ReportModelEvent;
 import org.pentaho.reporting.engine.classic.core.event.ReportModelListener;
 import org.pentaho.reporting.engine.classic.core.filter.types.bands.DetailsFooterType;
 import org.pentaho.reporting.engine.classic.core.filter.types.bands.DetailsHeaderType;
-import org.pentaho.reporting.engine.classic.core.filter.types.bands.NoDataBandType;
 import org.pentaho.reporting.engine.classic.core.function.Expression;
 import org.pentaho.reporting.engine.classic.core.function.ExpressionCollection;
 import org.pentaho.reporting.engine.classic.core.function.StructureFunction;
@@ -432,13 +431,25 @@ public abstract class AbstractReportDefinition extends Section
   }
 
   /**
-   * Returns the report's watermark band.
+   * Returns the report's no-data band.
    *
-   * @return the watermark band (never <code>null</code>).
+   * @return the no-data band (never <code>null</code>).
    */
   public NoDataBand getNoDataBand()
   {
-    return (NoDataBand) getInnerMostGroup().getChildElementByType(NoDataBandType.INSTANCE);
+    Group innerMostRelationalGroup = getInnerMostRelationalGroup();
+    if (innerMostRelationalGroup instanceof CrosstabGroup)
+    {
+      CrosstabGroup cg = (CrosstabGroup) innerMostRelationalGroup;
+      return cg.getNoDataBand();
+    }
+    GroupBody body = innerMostRelationalGroup.getBody();
+    if (body instanceof GroupDataBody)
+    {
+      GroupDataBody gd = (GroupDataBody) body;
+      return gd.getNoDataBand();
+    }
+    return null;
   }
 
   /**
@@ -481,31 +492,16 @@ public abstract class AbstractReportDefinition extends Section
   private Group getInnerMostGroup()
   {
     Group existingGroup = rootGroup;
-    GroupBody gb = existingGroup.getBody();
-    while (gb != null)
+    while (existingGroup != null)
     {
-      final int count = gb.getElementCount();
-      GroupBody locatedBody = null;
-      for (int i = 0; i < count; i++)
+      Group next = existingGroup.getBody().getGroup();
+      if (next == null)
       {
-        final ReportElement element = gb.getElement(i);
-        if (element instanceof Group)
-        {
-          existingGroup = (Group) element;
-          locatedBody = existingGroup.getBody();
-          break;
-        }
+        return existingGroup;
       }
-      if (locatedBody == null)
-      {
-        gb = null;
-      }
-      else
-      {
-        gb = locatedBody;
-      }
+      existingGroup = next;
     }
-    return existingGroup;
+    throw new IllegalStateException("We shall never reach this point.");
   }
 
   private Group getInnerMostRelationalGroup()
