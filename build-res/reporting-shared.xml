@@ -47,6 +47,7 @@
       <antcall target="resolve"/>
       <antcall target="test">
           <param name="junit.sysprop.org.pentaho.reporting.engine.classic.test.ExecuteLongRunningTest" value="true"/>
+          <param name="junit.sysprop.contiperf.active" value="true"/>
           <param name="junit.forkmode" value="${junit.longrun.forkmode}"/>
       </antcall>
   </target>
@@ -56,6 +57,7 @@
       <antcall target="resolve"/>
       <antcall target="cobertura">
           <param name="junit.sysprop.org.pentaho.reporting.engine.classic.test.ExecuteLongRunningTest" value="true"/>
+          <param name="junit.sysprop.contiperf.active" value="false"/>
           <param name="junit.forkmode" value="${junit.longrun.forkmode}"/>
       </antcall>
   </target>

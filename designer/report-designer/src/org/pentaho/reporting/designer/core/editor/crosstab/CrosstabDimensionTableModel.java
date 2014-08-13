@@ -198,5 +198,6 @@ public class CrosstabDimensionTableModel extends AbstractTableModel implements B
       final Object o = data[i];
       this.data.add((CrosstabDimension) o);
     }
+    fireTableDataChanged();
   }
 }

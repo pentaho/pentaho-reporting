@@ -446,9 +446,4 @@ public class CrosstabCellBody extends GroupBody
     }
     return b;
   }
-
-  public Group getSubGroup()
-  {
-    return null;
-  }
 }

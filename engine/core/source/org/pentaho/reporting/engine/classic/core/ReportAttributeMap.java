@@ -81,6 +81,16 @@ public class ReportAttributeMap<T> extends AttributeMap<T>
     return changeTracker;
   }
 
+  public <TS extends T> TS getAttributeTyped(final String namespace, final String attribute, final Class<TS> filter)
+  {
+    T val = getAttribute(namespace, attribute);
+    if (filter.isInstance(val))
+    {
+      return filter.cast(val);
+    }
+    return null;
+  }
+
   @Override
   public T setAttribute(final String namespace, final String attribute, final T value)
   {

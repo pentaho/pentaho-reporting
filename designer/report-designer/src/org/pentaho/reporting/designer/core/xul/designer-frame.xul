@@ -105,6 +105,8 @@
                   pen:action="org.pentaho.reporting.designer.core.actions.selection.DeselectAllAction"/>
         <menuitem id="edit.groups"
                   pen:action="org.pentaho.reporting.designer.core.actions.report.MenuEditGroupsAction"/>
+        <menuitem id="edit.crosstab"
+                  pen:action="org.pentaho.reporting.designer.core.actions.report.MenuEditCrosstabAction"/>
         <menuseparator id="edit.insert-point"/>
         <menuseparator/>
         <menuitem id="edit.settings"
@@ -538,7 +540,7 @@
       <menuitem id="popup-Groups.delete"
                 pen:action="org.pentaho.reporting.designer.core.actions.global.DeleteAction"/>
     </popup>
-
+<!--
     <popup id="popup-Group">
       <menuitem id="popup-Group.edit-current-group"
                 pen:action="org.pentaho.reporting.designer.core.actions.elements.EditGroupAction"/>
@@ -564,7 +566,7 @@
       <menuitem id="popup-Group.paste-format"
                 pen:action="org.pentaho.reporting.designer.core.actions.elements.PasteFormatAction"/>
     </popup>
-
+-->
     <popup id="popup-RelationalGroup">
       <menuitem id="popup-RelationalGroup.edit-current-group"
                 pen:action="org.pentaho.reporting.designer.core.actions.elements.EditGroupAction"/>
@@ -587,7 +589,7 @@
 
     <popup id="popup-CrosstabGroup">
       <menuitem id="popup-CrosstabGroup.edit-current-group"
-                pen:action="org.pentaho.reporting.designer.core.actions.elements.EditGroupAction"/>
+                pen:action="org.pentaho.reporting.designer.core.actions.elements.EditCrosstabAction"/>
       <menuitem id="popup-CrosstabGroup.insert-crosstab-column-group"
                 pen:action="org.pentaho.reporting.designer.core.actions.elements.InsertCrosstabOtherGroupAction"/>
       <menuitem id="popup-CrosstabGroup.insert-crosstab-row-group"
@@ -608,8 +610,6 @@
     </popup>
 
     <popup id="popup-CrosstabOtherGroup">
-      <menuitem id="popup-CrosstabOtherGroup.edit-current-group"
-                pen:action="org.pentaho.reporting.designer.core.actions.elements.EditGroupAction"/>
       <menuitem id="popup-CrosstabOtherGroup.insert-crosstab-column-group"
                 pen:action="org.pentaho.reporting.designer.core.actions.elements.InsertCrosstabOtherGroupAction"/>
       <menuitem id="popup-CrosstabOtherGroup.insert-crosstab-row-group"
@@ -630,8 +630,6 @@
     </popup>
 
     <popup id="popup-CrosstabRowGroup">
-      <menuitem id="popup-CrosstabRowGroup.edit-current-group"
-                pen:action="org.pentaho.reporting.designer.core.actions.elements.EditGroupAction"/>
       <menuitem id="popup-CrosstabRowGroup.insert-crosstab-row-group"
                 pen:action="org.pentaho.reporting.designer.core.actions.elements.InsertCrosstabRowGroupAction"/>
       <menuitem id="popup-CrosstabRowGroup.insert-crosstab-row-group"
@@ -650,8 +648,6 @@
     </popup>
 
     <popup id="popup-CrosstabColumnGroup">
-      <menuitem id="popup-CrosstabColumnGroup.edit-current-group"
-                pen:action="org.pentaho.reporting.designer.core.actions.elements.EditGroupAction"/>
       <menuitem id="popup-CrosstabColumnGroup.insert-crosstab-row-group"
                 pen:action="org.pentaho.reporting.designer.core.actions.elements.InsertCrosstabColumnGroupAction"/>
       <menuseparator/>

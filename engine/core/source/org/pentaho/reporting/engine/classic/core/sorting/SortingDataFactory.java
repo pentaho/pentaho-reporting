@@ -53,21 +53,25 @@ public class SortingDataFactory extends CompoundDataFactory
   {
     if (tableModel == null)
     {
+      logger.debug("No data, therefore no sorting.");
       return null;
     }
     if (tableModel.getRowCount() == 1 || tableModel.getColumnCount() == 0)
     {
+      logger.debug("Empty data, therefore no sorting.");
       return tableModel;
     }
     Object o = parameters.get(DataFactory.QUERY_SORT);
     if ((o instanceof List<?>) == false)
     {
+      logger.debug("Sort constraints are not in list format.");
       return tableModel;
     }
     List<SortConstraint> sort = validate((List<?>) o);
     List<SortConstraint> resolvedConstraints = resolveColumnAliases(tableModel, sort);
     if (resolvedConstraints.isEmpty())
     {
+      logger.debug("Resolved sort constraints are empty.");
       return tableModel;
     }
 

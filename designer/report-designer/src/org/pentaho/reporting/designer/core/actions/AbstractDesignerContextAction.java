@@ -18,10 +18,8 @@
 package org.pentaho.reporting.designer.core.actions;
 
 import javax.swing.AbstractAction;
-import javax.swing.Action;
 
 import org.pentaho.reporting.designer.core.ReportDesignerContext;
-import org.pentaho.reporting.designer.core.util.IconLoader;
 
 public abstract class AbstractDesignerContextAction extends AbstractAction implements DesignerContextAction
 {

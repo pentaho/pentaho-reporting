@@ -364,6 +364,11 @@ public class Element implements DataTarget, ReportElement
     return cachedAttributes;
   }
 
+  public <TS> TS getAttributeTyped(final String namespace, final String attribute, final Class<TS> filter)
+  {
+    return attributes.getAttributeTyped(namespace, attribute, filter);
+  }
+
   public void setElementType(final ElementType elementType)
   {
     if (elementType == null)
@@ -1264,6 +1269,11 @@ public class Element implements DataTarget, ReportElement
           continue;
         }
         if (attributeDescription.isComputed())
+        {
+          continue;
+        }
+        if (AttributeNames.Core.ELEMENT_TYPE.equals(name) &&
+            AttributeNames.Core.NAMESPACE.equals(namespace))
         {
           continue;
         }
