@@ -22,7 +22,9 @@ import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.pentaho.reporting.engine.classic.core.Element;
 import org.pentaho.reporting.engine.classic.core.ReportAttributeMap;
 import org.pentaho.reporting.engine.classic.core.filter.types.LegacyType;
+import org.pentaho.reporting.engine.classic.core.filter.types.TextFieldType;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderNode;
+import org.pentaho.reporting.engine.classic.core.layout.model.RenderableText;
 import org.pentaho.reporting.engine.classic.core.layout.style.SimpleStyleSheet;
 import org.pentaho.reporting.engine.classic.core.layout.text.DefaultRenderableTextFactory;
 import org.pentaho.reporting.engine.classic.core.modules.output.table.html.helper.HtmlOutputProcessorMetaData;
@@ -188,5 +190,27 @@ public class TextTest extends TestCase
             ReportAttributeMap.EMPTY_MAP);
     final RenderNode[] finishNodes = textFactory.finishText();
 
+  }
+
+  public void testTextWithFirstSpetialSimbol() throws Exception
+  {
+    final DefaultRenderableTextFactory textFactory = new DefaultRenderableTextFactory
+        (new HtmlOutputProcessorMetaData(
+            HtmlOutputProcessorMetaData.PAGINATION_NONE));
+    textFactory.startText();
+
+    String sourceText = new String(new char[]{768, 768, 69, 114, 114, 111, 114}); // String sourceText = "?Error";
+    CodePointBuffer buffer = Utf16LE.getInstance().decodeString(sourceText, null);
+    final int[] data = buffer.getBuffer();
+
+    textFactory.createText(data, 0, buffer.getLength(), new SimpleStyleSheet(ElementDefaultStyleSheet.getDefaultStyle()), TextFieldType.INSTANCE, new InstanceID(),
+        ReportAttributeMap.EMPTY_MAP);
+    final RenderNode[] finishNodes = textFactory.finishText();
+
+    assertNotNull(finishNodes);
+    assertEquals(finishNodes.length, 1);
+    assertTrue(finishNodes[0] instanceof RenderableText);
+    RenderableText textNode = (RenderableText) finishNodes[0];
+    assertEquals(textNode.getRawText(), Utf16LE.getInstance().encodeString(buffer));
   }
 }
