@@ -17,8 +17,11 @@
 
 package org.pentaho.reporting.engine.classic.core.designtime.compat;
 
+import org.pentaho.reporting.engine.classic.core.AbstractReportDefinition;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.pentaho.reporting.engine.classic.core.CrosstabGroup;
+import org.pentaho.reporting.engine.classic.core.Group;
+import org.pentaho.reporting.engine.classic.core.GroupBody;
 import org.pentaho.reporting.engine.classic.core.ReportElement;
 import org.pentaho.reporting.engine.classic.core.RootLevelBand;
 import org.pentaho.reporting.engine.classic.core.Section;
@@ -79,6 +82,14 @@ public class LayoutCompatibility_5_0_Converter extends AbstractCompatibilityConv
       // make sure that they do not appear by default.
       final CrosstabGroup g = (CrosstabGroup) element;
       g.setPrintDetailsHeader(false);
+    }
+
+    if (element instanceof AbstractReportDefinition ||
+        element instanceof Group ||
+        element instanceof GroupBody)
+    {
+      // users may have set all sorts of random values. We need to auto-correct that.
+      element.getStyle().setStyleProperty(BandStyleKeys.LAYOUT, null);
     }
 
     final Section parentSection = element.getParentSection();
