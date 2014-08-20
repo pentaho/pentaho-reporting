@@ -51,7 +51,7 @@ public class CrosstabOptionsPane extends JComponent
   {
     final CrosstabOptionsTableModel crosstabOptionsTableModel = new CrosstabOptionsTableModel();
     crosstabOptionsTableModel.addAttributeOption(CrosstabGroupType.INSTANCE,
-        AttributeNames.Crosstab.NAMESPACE, AttributeNames.Crosstab.DETAIL_MODE, CrosstabDetailMode.first);
+        AttributeNames.Crosstab.NAMESPACE, AttributeNames.Crosstab.DETAIL_MODE, CrosstabDetailMode.last);
     crosstabOptionsTableModel.addAttributeOption(CrosstabGroupType.INSTANCE,
         AttributeNames.Crosstab.NAMESPACE, AttributeNames.Crosstab.NORMALIZATION_MODE, null);
     crosstabOptionsTableModel.addAttributeOption(CrosstabGroupType.INSTANCE,
