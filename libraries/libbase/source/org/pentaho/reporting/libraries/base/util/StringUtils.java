@@ -389,4 +389,67 @@ public final class StringUtils
   {
     return ((s1 == null && s2 == null) || (s1 != null && s1.equalsIgnoreCase(s2)));
   }
+
+  /**
+   * Checks whether or not a String consists only of spaces.
+   *
+   * @param str The string to check
+   * @return true if the string has nothing but spaces.
+   */
+  public static final boolean onlySpaces(String str)
+  {
+    for (int i = 0; i < str.length(); i++)
+    {
+      if (!isSpace(str.charAt(i)))
+      {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  /**
+   * Determines whether or not a character is considered a space. A character is considered a space in Kettle if it is a
+   * space, a tab, a newline or a cariage return.
+   *
+   * @param c The character to verify if it is a space.
+   * @return true if the character is a space. false otherwise.
+   */
+  public static final boolean isSpace(char c)
+  {
+    return c == ' ' || c == '\t' || c == '\r' || c == '\n' || Character.isWhitespace(c);
+  }
+
+  /**
+   * Trims a string: removes the leading and trailing spaces of a String.
+   *
+   * @param str The string to trim
+   * @return The trimmed string.
+   */
+  public static final String trim(String str)
+  {
+    if (str == null)
+    {
+      return null;
+    }
+
+    int max = str.length() - 1;
+    int min = 0;
+
+    while (min <= max && isSpace(str.charAt(min)))
+    {
+      min++;
+    }
+    while (max >= 0 && isSpace(str.charAt(max)))
+    {
+      max--;
+    }
+
+    if (max < min)
+    {
+      return "";
+    }
+
+    return str.substring(min, max + 1);
+  }
 }
