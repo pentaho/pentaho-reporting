@@ -28,7 +28,9 @@ import java.util.Set;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.pentaho.reporting.libraries.base.util.SqlScriptUtils;
 import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
+import org.pentaho.reporting.libraries.base.util.StringUtils;
 
 public class DriverConnectionProvider implements ConnectionProvider
 {
@@ -145,6 +147,12 @@ public class DriverConnectionProvider implements ConnectionProvider
     {
       throw new SQLException("Driver Manager returned no connection. Your java-implementation is weird.");
     }
+    String sqlConnect = p.getProperty("SQL_CONNECT");
+    if (!StringUtils.isEmpty(sqlConnect))
+    {
+      SqlScriptUtils.execStatements(sqlConnect, connection, false);
+    }
+
     return connection;
   }
 
