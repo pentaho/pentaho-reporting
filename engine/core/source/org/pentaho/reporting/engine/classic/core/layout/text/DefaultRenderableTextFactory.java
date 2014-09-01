@@ -288,7 +288,26 @@ public final class DefaultRenderableTextFactory implements RenderableTextFactory
     for (int i = 0; i < extraCharCount; i++)
     {
       final int extraChar = text[offset + i + 1];
-      dims = fontSizeProducer.getCharacterSize(extraChar, dims);
+
+      /**
+       * Characters of type DIRECTIONALITY_NONSPACING_MARK should *not* be accounted for
+       * when calculating the glyph width/length, as they represent marks to be pre/post
+       * composed to the adjacent character
+       *
+       * Here's an example of such a mark (in Thai language):
+       *
+       * http://www.fileformat.info/info/unicode/char/e49/index.htm
+       *
+       * that char will be composed with
+       *
+       * http://www.fileformat.info/info/unicode/char/0e02/index.htm
+       *
+       * to form a new char, where the mark lies above the character
+       */
+      if( Character.isDefined( extraChar )
+          && Character.getDirectionality( extraChar ) != Character.DIRECTIONALITY_NONSPACING_MARK ) {
+        dims = fontSizeProducer.getCharacterSize(extraChar, dims);
+      }
       width = Math.max(width, (dims.getWidth() & 0x7FFFFFFF));
       height = Math.max(height, (dims.getHeight() & 0x7FFFFFFF));
       breakweight = breakOpportunityProducer.createBreakOpportunity(extraChar);
