@@ -1,0 +1,66 @@
+<Schema name="SteelWheels-backlog-348">
+	<Cube name="SteelWheelsSales" cache="true" enabled="true">
+		<Table name="ORDERFACT">
+		</Table>
+		<Dimension foreignKey="CUSTOMERNUMBER" name="Markets">
+			<Hierarchy hasAll="true" allMemberName="All Markets" primaryKey="CUSTOMERNUMBER" primaryKeyTable="">
+				<Table name="CUSTOMER_W_TER">
+				</Table>
+				<Level name="Territory" column="TERRITORY" type="String" uniqueMembers="true" levelType="Regular" hideMemberIf="Never">
+				</Level>
+				<Level name="Country" column="COUNTRY" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
+				</Level>
+				<Level name="State Province" column="STATE" type="String" uniqueMembers="true" levelType="Regular" hideMemberIf="Never">
+				</Level>
+			</Hierarchy>
+			<Hierarchy name="City" hasAll="true" allMemberName="All Markets" primaryKey="CUSTOMERNUMBER" primaryKeyTable="">
+				<Table name="CUSTOMER_W_TER">
+				</Table>
+				<Level name="City" column="CITY" type="String" uniqueMembers="true" levelType="Regular" hideMemberIf="Never">
+				</Level>
+			</Hierarchy>
+		</Dimension>
+		<Dimension foreignKey="CUSTOMERNUMBER" name="Customers">
+			<Hierarchy hasAll="true" allMemberName="All Customers" primaryKey="CUSTOMERNUMBER">
+				<Table name="CUSTOMER_W_TER">
+				</Table>
+				<Level name="Customer" column="CUSTOMERNAME" type="String" uniqueMembers="true" levelType="Regular" hideMemberIf="Never">
+				</Level>
+			</Hierarchy>
+		</Dimension>
+		<Dimension foreignKey="PRODUCTCODE" name="Product">
+			<Hierarchy name="" hasAll="true" allMemberName="All Products" primaryKey="PRODUCTCODE" primaryKeyTable="PRODUCTS" caption="">
+				<Table name="PRODUCTS">
+				</Table>
+				<Level name="Line" table="PRODUCTS" column="PRODUCTLINE" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
+				</Level>
+				<Level name="Vendor" table="PRODUCTS" column="PRODUCTVENDOR" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
+				</Level>
+				<Level name="Product" table="PRODUCTS" column="PRODUCTNAME" type="String" uniqueMembers="true" levelType="Regular" hideMemberIf="Never">
+				</Level>
+			</Hierarchy>
+		</Dimension>
+		<Dimension type="TimeDimension" foreignKey="TIME_ID" name="Time">
+			<Hierarchy hasAll="true" allMemberName="All Years" primaryKey="TIME_ID">
+				<Table name="DIM_TIME">
+				</Table>
+				<Level name="Years" column="YEAR_ID" type="Integer" uniqueMembers="true" levelType="TimeYears" hideMemberIf="Never">
+				</Level>
+				<Level name="Quarters" column="QTR_NAME" ordinalColumn="QTR_ID" type="String" uniqueMembers="false" levelType="TimeQuarters" hideMemberIf="Never">
+				</Level>
+				<Level name="Months" column="MONTH_NAME" ordinalColumn="MONTH_ID" type="String" uniqueMembers="false" levelType="TimeMonths" hideMemberIf="Never">
+				</Level>
+			</Hierarchy>
+		</Dimension>
+		<Dimension foreignKey="STATUS" name="Order Status">
+			<Hierarchy hasAll="true" allMemberName="All Status Types" primaryKey="STATUS">
+				<Level name="Type" column="STATUS" type="String" uniqueMembers="true" levelType="Regular" hideMemberIf="Never">
+				</Level>
+			</Hierarchy>
+		</Dimension>
+		<Measure name="Quantity" column="QUANTITYORDERED" formatString="#,###" aggregator="sum">
+		</Measure>
+		<Measure name="Sales" column="TOTALPRICE" formatString="#,###" aggregator="sum">
+		</Measure>
+	</Cube>
+</Schema>

@@ -20,7 +20,7 @@ package org.pentaho.reporting.engine.classic.extensions.datasources.mondrian;
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
-
+import java.util.Set;
 import javax.swing.table.AbstractTableModel;
 
 import mondrian.olap.Axis;
@@ -29,7 +29,6 @@ import mondrian.olap.Dimension;
 import mondrian.olap.Member;
 import mondrian.olap.Position;
 import mondrian.olap.Result;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.pentaho.reporting.engine.classic.core.MetaAttributeNames;
@@ -277,8 +276,8 @@ public class BandedMDXTableModel extends AbstractTableModel
     }
     if (rowLimit > 0)
     {
-      rowCount = Math.min (rowLimit, rowCount);
-    }    
+      rowCount = Math.min(rowLimit, rowCount);
+    }
   }
 
   public int getRowCount()
@@ -325,19 +324,20 @@ public class BandedMDXTableModel extends AbstractTableModel
       return cell.getValue();
     }
 
-    Member contextMember = getContextMember(dimension, columnIndex, cellKey);
-    String name = contextMember.getParentMember() == null ? contextMember.getName() : null;
-    while (contextMember != null)
+    Set<Member> candidates = getCandidateMembers(dimension, columnIndex, cellKey);
+    String name = null;
+    for (Member candidate : candidates)
     {
-      if (contextMember.getLevel().getUniqueName().equals(getColumnName(columnIndex)))
+      name = candidate.getParentMember() == null ? candidate.getName() : null;
+      Member contextMember = searchContextMemberOfParents(candidate, columnIndex);
+      if (contextMember != null)
       {
         return contextMember.getName();
       }
-      contextMember = contextMember.getParentMember();
     }
     return name;
   }
-  
+
   public Class<?> getColumnClass(final int columnIndex)
   {
     if (getRowCount() == 0)
@@ -361,7 +361,7 @@ public class BandedMDXTableModel extends AbstractTableModel
       return Object.class;
     }
   }
-  
+
   private int[] computeCellKey(final int rowIndex, final int columnIndex)
   {
     final int correctedColIndex;
@@ -382,7 +382,7 @@ public class BandedMDXTableModel extends AbstractTableModel
     {
       correctedColIndex = 0;
     }
-    
+
     final int[] cellKey = new int[axesSize.length];
     int tmpRowIdx = rowIndex;
     if (axesSize.length > 0)
@@ -406,10 +406,12 @@ public class BandedMDXTableModel extends AbstractTableModel
     return cellKey;
   }
 
-  private Member getContextMember(final Dimension dimension,
-                                  final int columnIndex,
-                                  final int[] cellKey)
+  private Set<Member> getCandidateMembers(final Dimension dimension,
+                                          final int columnIndex,
+                                          final int[] cellKey)
   {
+    Set<Member> resultMembers = new LinkedHashSet<Member>();
+
     final int axisIndex = columnToAxisPosition[columnIndex];
     final Axis[] axes = resultSet.getAxes();
     final Axis axis = axes[axisIndex];
@@ -417,7 +419,7 @@ public class BandedMDXTableModel extends AbstractTableModel
     final List<Position> positionList = axis.getPositions();
     if (positionList.isEmpty())
     {
-      return null;
+      return resultMembers;
     }
 
     final Position position = positionList.get(posIndex);
@@ -426,10 +428,10 @@ public class BandedMDXTableModel extends AbstractTableModel
       final Member member = position.get(i);
       if (dimension.equals(member.getDimension()))
       {
-        return member;
+        resultMembers.add(member);
       }
     }
-    return null;
+    return resultMembers;
   }
 
   public void close()
@@ -465,16 +467,15 @@ public class BandedMDXTableModel extends AbstractTableModel
       return new MDXMetaDataCellAttributes(EmptyDataAttributes.INSTANCE, cell);
     }
 
-    Member contextMember = getContextMember(dimension, columnIndex, cellKey);
-    while (contextMember != null)
+    Set<Member> candidates = getCandidateMembers(dimension, columnIndex, cellKey);
+    for (Member candidate : candidates)
     {
-      if (contextMember.getLevel().getUniqueName().equals(getColumnName(columnIndex)))
+      Member contextMember = searchContextMemberOfParents(candidate, columnIndex);
+      if (contextMember != null)
       {
         return new MDXMetaDataMemberAttributes(EmptyDataAttributes.INSTANCE, contextMember);
       }
-      contextMember = contextMember.getParentMember();
     }
-
     return EmptyDataAttributes.INSTANCE;
   }
 
@@ -501,4 +502,19 @@ public class BandedMDXTableModel extends AbstractTableModel
         MetaAttributeNames.Core.CROSSTAB_MODE, DefaultConceptQueryMapper.INSTANCE, MetaAttributeNames.Core.CROSSTAB_VALUE_NORMALIZED);
     return dataAttributes;
   }
+
+  private Member searchContextMemberOfParents(final Member member, final int columnIndex)
+  {
+    Member candidate = member;
+    while (candidate != null)
+    {
+      if (candidate.getLevel().getUniqueName().equals(getColumnName(columnIndex)))
+      {
+        return candidate;
+      }
+      candidate = candidate.getParentMember();
+    }
+    return null;
+  }
+
 }
