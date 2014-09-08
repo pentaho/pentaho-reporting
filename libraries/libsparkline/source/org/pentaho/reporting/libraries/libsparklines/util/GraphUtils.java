@@ -130,13 +130,11 @@ public final class GraphUtils
       return -1;
     }
 
-    final float max1 = max < 0 ? -max : max;
-    final float min1 = min < 0 ? -min : min;
-    final float distance = max1 + min1;
+    final float distance = max - min;
 
     final float axe = distance / 2f;
-    final float delta = max1 - axe;
-    return delta > 0 ? axe + delta * 2 : axe;
+    final float delta = max - axe;
+    return axe + delta;
   }
 }
 
