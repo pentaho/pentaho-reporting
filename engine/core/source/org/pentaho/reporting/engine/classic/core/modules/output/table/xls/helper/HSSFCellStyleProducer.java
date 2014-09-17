@@ -152,7 +152,7 @@ public class HSSFCellStyleProducer implements CellStyleProducer
         throw new NullPointerException();
       }
 
-      this.dataStyle = -1;
+      this.dataStyle = 0;
       this.color = HSSFColor.AUTOMATIC.index;
       this.colorBottom = HSSFColor.AUTOMATIC.index;
       this.colorLeft = HSSFColor.AUTOMATIC.index;
@@ -656,7 +656,10 @@ public class HSSFCellStyleProducer implements CellStyleProducer
       hssfCellStyle.setVerticalAlignment(styleKey.getVerticalAlignment());
       hssfCellStyle.setFont(workbook.getFontAt(styleKey.getFont()));
       hssfCellStyle.setWrapText(styleKey.isWrapText());
-      hssfCellStyle.setDataFormat(styleKey.getDataStyle());
+      if (styleKey.getDataStyle() >= 0)
+      {
+        hssfCellStyle.setDataFormat(styleKey.getDataStyle());
+      }
     }
     if (bg != null)
     {
@@ -667,29 +670,29 @@ public class HSSFCellStyleProducer implements CellStyleProducer
         {
           hssfCellStyle.setBorderBottom(styleKey.getBorderStrokeBottom());
           xssfCellStyle.setBorderColor(XSSFCellBorder.BorderSide.BOTTOM,
-              new XSSFColor(styleKey.getExtendedColorBottom()));
+              createXSSFColor(styleKey.getExtendedColorBottom()));
         }
         if (BorderStyle.NONE.equals(bg.getTop().getBorderStyle()) == false)
         {
           hssfCellStyle.setBorderTop(styleKey.getBorderStrokeTop());
           xssfCellStyle.setBorderColor(XSSFCellBorder.BorderSide.TOP,
-              new XSSFColor(styleKey.getExtendedColorTop()));
+              createXSSFColor(styleKey.getExtendedColorTop()));
         }
         if (BorderStyle.NONE.equals(bg.getLeft().getBorderStyle()) == false)
         {
           hssfCellStyle.setBorderLeft(styleKey.getBorderStrokeLeft());
           xssfCellStyle.setBorderColor(XSSFCellBorder.BorderSide.LEFT,
-              new XSSFColor(styleKey.getExtendedColorLeft()));
+              createXSSFColor(styleKey.getExtendedColorLeft()));
         }
         if (BorderStyle.NONE.equals(bg.getRight().getBorderStyle()) == false)
         {
           hssfCellStyle.setBorderRight(styleKey.getBorderStrokeRight());
           xssfCellStyle.setBorderColor(XSSFCellBorder.BorderSide.RIGHT,
-              new XSSFColor(styleKey.getExtendedColorRight()));
+              createXSSFColor(styleKey.getExtendedColorRight()));
         }
         if (bg.getBackgroundColor() != null)
         {
-          xssfCellStyle.setFillForegroundColor(new XSSFColor(styleKey.getExtendedColor()));
+          xssfCellStyle.setFillForegroundColor(createXSSFColor(styleKey.getExtendedColor()));
           hssfCellStyle.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
         }
       }
@@ -726,6 +729,12 @@ public class HSSFCellStyleProducer implements CellStyleProducer
 
     styleCache.put(styleKey, hssfCellStyle);
     return hssfCellStyle;
+  }
+
+  private XSSFColor createXSSFColor(final Color clr)
+  {
+    byte[] rgb = {(byte) 255, (byte) clr.getRed(), (byte) clr.getGreen(), (byte) clr.getBlue()};
+    return new XSSFColor(rgb);
   }
 
   /**
