@@ -55,7 +55,7 @@ public class ReportStructureValidator extends AbstractStructureVisitor
   public boolean isValidForFastProcessing(MasterReport report)
   {
     valid = true;
-    traverseSection(report);
+    inspect(report);
     return valid;
   }
 
