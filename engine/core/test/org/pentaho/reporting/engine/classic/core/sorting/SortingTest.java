@@ -233,4 +233,23 @@ public class SortingTest
 
     int i = DebugReportRunner.execGraphics2D(report);
   }
+
+  @Test
+  public void testCrosstabSorting()
+  {
+    List<SortConstraint> sc = new ArrayList<SortConstraint>();
+    sc.add(new SortConstraint("A", true));
+    sc.add(new SortConstraint("B", true));
+
+    MasterReport report = new MasterReport();
+    report.setQuery("default");
+    report.setDataFactory(new ValidateDataFactory("default", new DefaultTableModel(10, 10), sc));
+    report.setAttribute(AttributeNames.Core.NAMESPACE, AttributeNames.Core.AUTOSORT, true);
+    RelationalGroup rootGroup = (RelationalGroup) report.getRootGroup();
+    rootGroup.setFields(Arrays.asList("A", "B"));
+
+    int i = DebugReportRunner.execGraphics2D(report);
+  }
+
+
 }
