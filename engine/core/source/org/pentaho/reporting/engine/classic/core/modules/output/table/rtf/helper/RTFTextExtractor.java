@@ -46,6 +46,7 @@ import org.pentaho.reporting.engine.classic.core.style.ElementStyleKeys;
 import org.pentaho.reporting.engine.classic.core.style.StyleSheet;
 import org.pentaho.reporting.engine.classic.core.style.TextStyleKeys;
 import org.pentaho.reporting.engine.classic.core.util.geom.StrictBounds;
+import org.pentaho.reporting.engine.classic.core.util.geom.StrictGeomUtility;
 import org.pentaho.reporting.libraries.base.util.FastStack;
 import org.pentaho.reporting.libraries.fonts.itext.BaseFontFontMetrics;
 import org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper;
@@ -367,6 +368,9 @@ public class RTFTextExtractor extends DefaultTextExtractor
 
   protected void processRenderableContent(final RenderableReplacedContentBox node)
   {
+    float targetWidth = (float) StrictGeomUtility.toExternalValue(node.getWidth());
+    float targetHeight = (float) StrictGeomUtility.toExternalValue(node.getHeight());
+
     try
     {
       final RenderableReplacedContent rpc = node.getContent();
@@ -384,6 +388,8 @@ public class RTFTextExtractor extends DefaultTextExtractor
           currentContext.add(getText());
           clearText();
         }
+
+        image.scaleToFit(targetWidth, targetHeight);
         currentContext.add(image);
       }
       else if (rawObject instanceof DrawableWrapper)
@@ -408,6 +414,7 @@ public class RTFTextExtractor extends DefaultTextExtractor
           currentContext.add(getText());
           clearText();
         }
+        image.scaleToFit(targetWidth, targetHeight);
         currentContext.add(image);
       }
     }
