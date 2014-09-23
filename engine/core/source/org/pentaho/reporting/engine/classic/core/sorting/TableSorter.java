@@ -24,17 +24,22 @@ import java.util.Comparator;
 import java.util.HashMap;
 import javax.swing.table.TableModel;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
-import org.pentaho.reporting.engine.classic.core.states.crosstab.CrosstabKeyComparator;
 
 public class TableSorter
 {
+  private static final Log logger = LogFactory.getLog(TableSorter.class);
+
   private TableModel model;
   private SortConstraint[] constraints;
   private Tuple[] sortData;
   private HashMap<String, Integer> columnNames;
 
-  public TableSorter(){}
+  public TableSorter()
+  {
+  }
 
   public TableSorter init(final TableModel model, final SortConstraint[] constraints)
   {
@@ -68,9 +73,13 @@ public class TableSorter
     for (final SortConstraint constraint : constraints)
     {
       int idx = findIndex(constraint.getField());
-      if (idx > 0)
+      if (idx >= 0)
       {
         index.add(new Tuple(idx, constraint));
+      }
+      else
+      {
+        logger.debug ("Sort constraint contained references invalid column '" + constraint.getField() + "'");
       }
     }
     return index.toArray(new Tuple[index.size()]);
