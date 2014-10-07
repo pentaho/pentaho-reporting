@@ -19,7 +19,7 @@
                 description="Per user override settings-file for all pentaho-reporting projects." />
 
   <!-- Define the default location of the common build file -->
-  <property name="reporting.build.file" value="./build-res/reporting-shared.xml"
+  <property name="reporting.build.file" value="../../build-res/reporting-shared.xml"
             description="This is the location of the standardized build-res/reporting-shared.xml file"/>
 
   <!-- Import the build-res/subfloor.xml file which contains all the default tasks -->
