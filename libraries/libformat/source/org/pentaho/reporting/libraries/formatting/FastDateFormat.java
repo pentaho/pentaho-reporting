@@ -47,7 +47,7 @@ public class FastDateFormat implements FastFormat
    */
   public FastDateFormat(final String pattern)
   {
-    this(pattern, Locale.getDefault());
+    this(pattern, Locale.getDefault(), TimeZone.getDefault());
   }
 
   /**
@@ -80,6 +80,7 @@ public class FastDateFormat implements FastFormat
     this.pattern = pattern;
     this.locale = locale;
     this.dateFormat = new SimpleDateFormat(pattern, new DateFormatSymbols(locale));
+    this.dateFormat.setTimeZone(timeZone);
   }
 
   /**
@@ -95,12 +96,30 @@ public class FastDateFormat implements FastFormat
    */
   public FastDateFormat(final int dateStyle, final int timeStyle, final Locale locale)
   {
+    this(dateStyle, timeStyle, locale, TimeZone.getDefault());
+  }
+
+  /**
+   * Creates a new date-format for the given default date and time style along with a TimeZone.
+   *
+   * @param dateStyle the date-style, one of DateFormat#SHORT, DateFormat#MEDIUM, DateFormat#LONG, DateFormat#FULL
+   *                  or -1 for none.
+   * @param timeStyle the date-style, one of DateFormat#SHORT, DateFormat#MEDIUM, DateFormat#LONG, DateFormat#FULL
+   *                  or -1 for none.
+   * @param locale    the locale.
+   * @param timeZone  the timeZone to which dates are interpreted.
+   * @throws IllegalArgumentException if both date and time-style are set to -1.
+   * @see DateFormat#getDateTimeInstance(int, int, Locale)
+   */
+  public FastDateFormat(final int dateStyle, final int timeStyle, final Locale locale, final TimeZone timeZone)
+  {
     if (locale == null)
     {
       throw new NullPointerException();
     }
 
     this.locale = locale;
+    this.timeZone = timeZone;
 
     final DateFormat dateFormat = DateFormat.getDateTimeInstance(dateStyle, timeStyle, locale);
     if (dateFormat instanceof SimpleDateFormat)
@@ -185,6 +204,8 @@ public class FastDateFormat implements FastFormat
       }
       this.dateFormat = new SimpleDateFormat(pattern, new DateFormatSymbols(locale));
     }
+
+    this.dateFormat.setTimeZone(timeZone);
   }
 
   /**
@@ -286,5 +307,7 @@ public class FastDateFormat implements FastFormat
   public void setTimeZone(final TimeZone timeZone)
   {
     this.timeZone = timeZone;
+    this.dateFormat = (SimpleDateFormat) dateFormat.clone();
+    this.dateFormat.setTimeZone(timeZone);
   }
 }

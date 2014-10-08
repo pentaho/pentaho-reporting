@@ -547,6 +547,7 @@ public class Element implements DataTarget, ReportElement
       e.datasource = datasource.clone();
       e.parent = null;
       e.style.updateElementReference(e);
+      e.elementContext = null;
 
       if (attributeExpressions != null)
       {

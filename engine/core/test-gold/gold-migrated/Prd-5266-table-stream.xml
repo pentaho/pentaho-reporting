@@ -1,0 +1,136 @@
+<?xml version="1.0"?>
+<layout-output xmlns="http://reporting.pentaho.org/namespaces/output/layout-output/table/1.0">
+  <table col-count="2" row-count="3">
+    <cols>
+      <column width="100"/>
+      <column width="368"/>
+    </cols>
+    <row height="20">
+      <cell row-span="1" col-span="1">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="Date Field"/>
+        <line type="ParagraphPoolBox" x="0.0" y="0.0" width="45.54" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="0.0" y="0.0" width="21.11" height="10.0">Date</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="23.88" y="0.0" width="21.66" height="10.0">Field</text>
+        </line>
+      </cell>
+      <cell row-span="1" col-span="1">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="date-field"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="report.date"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:format-string="MMM-dd-yyyy HH:mm:ss,SSS ZZZ"/>
+        <line type="ParagraphPoolBox" x="100.0" y="0.0" width="145.03" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="100.0" y="0.0" width="55.57" height="10.0">Apr-07-2011</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="158.34" y="0.0" width="58.35" height="10.0">10:00:00,000</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="219.46" y="0.0" width="25.57" height="10.0">-0500</text>
+        </line>
+      </cell>
+    </row>
+    <row height="34">
+      <cell row-span="1" col-span="1">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="Message Field"/>
+        <line type="ParagraphPoolBox" x="0.0" y="20.0" width="65.0" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="0.0" y="20.0" width="40.57" height="10.0">Message</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="43.34" y="20.0" width="21.66" height="10.0">Field</text>
+        </line>
+      </cell>
+      <cell row-span="1" col-span="1">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="message"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="$(report.date,date,MMM-dd-yyyy HH:mm:ss,SSS ZZZ)"/>
+        <line type="ParagraphPoolBox" x="100.0" y="20.0" width="145.03" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="100.0" y="20.0" width="55.57" height="10.0">Apr-07-2011</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="158.34" y="20.0" width="58.35" height="10.0">10:00:00,000</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="219.46" y="20.0" width="25.57" height="10.0">-0500</text>
+        </line>
+      </cell>
+    </row>
+    <row height="66">
+      <empty-cell/>
+      <cell row-span="1" col-span="1">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="Both fields should display the same vlaue, and both should be in TimeZone EST (-0500). If your current locale uses this timezone as default, change the report's locale to something else via the File-&gt;Configuration dialog."/>
+        <line type="ParagraphPoolBox" x="100.0" y="54.0" width="227.0" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="true" font-style-underline="false" font-style-strikethrough="false">
+          <text x="100.0" y="54.0" width="20.55" height="10.0">Both</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="123.32" y="54.0" width="23.33" height="10.0">fields</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="149.42" y="54.0" width="29.46" height="10.0">should</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="181.65" y="54.0" width="31.12" height="10.0">display</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="215.54" y="54.0" width="13.89" height="10.0">the</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="232.2" y="54.0" width="24.45" height="10.0">same</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="259.42" y="54.0" width="26.67" height="10.0">vlaue,</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="288.86" y="54.0" width="16.68" height="10.0">and</text>
+        </line>
+        <line type="ParagraphPoolBox" x="100.0" y="64.0" width="227.0" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="true" font-style-underline="false" font-style-strikethrough="false">
+          <text x="100.0" y="64.0" width="19.45" height="10.0">both</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="122.22" y="64.0" width="29.46" height="10.0">should</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="154.45" y="64.0" width="11.12" height="10.0">be</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="168.34" y="64.0" width="7.78" height="10.0">in</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="178.89" y="64.0" width="44.99" height="10.0">TimeZone</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="226.65" y="64.0" width="19.42" height="10.0">EST</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="248.84" y="64.0" width="35.0" height="10.0">(-0500).</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="286.61" y="64.0" width="5.54" height="10.0">If</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="294.92" y="64.0" width="19.45" height="10.0">your</text>
+        </line>
+        <line type="ParagraphPoolBox" x="100.0" y="74.0" width="227.0" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="true" font-style-underline="false" font-style-strikethrough="false">
+          <text x="100.0" y="74.0" width="31.11" height="10.0">current</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="133.88" y="74.0" width="26.12" height="10.0">locale</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="162.77" y="74.0" width="21.12" height="10.0">uses</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="186.66" y="74.0" width="15.55" height="10.0">this</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="204.98" y="74.0" width="40.56" height="10.0">timezone</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="248.31" y="74.0" width="10.56" height="10.0">as</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="261.64" y="74.0" width="32.77" height="10.0">default,</text>
+        </line>
+        <line type="ParagraphPoolBox" x="100.0" y="84.0" width="227.0" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="true" font-style-underline="false" font-style-strikethrough="false">
+          <text x="100.0" y="84.0" width="32.8" height="10.0">change</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="135.57" y="84.0" width="13.89" height="10.0">the</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="152.23" y="84.0" width="33.01" height="10.0">report's</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="188.01" y="84.0" width="26.12" height="10.0">locale</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="216.9" y="84.0" width="8.33" height="10.0">to</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="228.0" y="84.0" width="46.12" height="10.0">something</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="276.89" y="84.0" width="18.34" height="10.0">else</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="298.0" y="84.0" width="12.78" height="10.0">via</text>
+        </line>
+        <line type="ParagraphPoolBox" x="100.0" y="94.0" width="133.59" height="10.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="true" font-style-underline="false" font-style-strikethrough="false">
+          <text x="100.0" y="94.0" width="13.89" height="10.0">the</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="116.66" y="94.0" width="84.71" height="10.0">File-&gt;Configuration</text>
+          <spacer width="2.77" height="0.0" preserve="true"/>
+          <text x="204.14" y="94.0" width="29.45" height="10.0">dialog.</text>
+        </line>
+      </cell>
+    </row>
+  </table>
+</layout-output>

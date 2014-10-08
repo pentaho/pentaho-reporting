@@ -18,24 +18,30 @@
 package org.pentaho.reporting.libraries.formatting;
 
 import java.util.Date;
+import java.util.Locale;
+import java.util.TimeZone;
 
-import junit.framework.TestCase;
+import org.junit.Assert;
+import org.junit.Test;
 
-public class MessageFormatTest extends TestCase
+public class MessageFormatTest
 {
   public MessageFormatTest()
   {
   }
 
-  public MessageFormatTest(final String name)
-  {
-    super(name);
-  }
-
+  @Test
   public void testNonCrash()
   {
     FastMessageFormat messageFormat = new FastMessageFormat("{0,date,dd MMM yyyy}");
-    System.out.println (messageFormat.format(new Object[]{new Date()}));
+    Assert.assertEquals("26 Nov 1973", messageFormat.format(new Object[]{new Date(123123123123l)}));
+  }
+
+  @Test
+  public void testLocaleAndTimezoneApplied() {
+    FastMessageFormat messageFormat = new FastMessageFormat("{0,date,full} {1,number,#,###.##}", Locale.GERMAN, TimeZone.getTimeZone("PST"));
+    Assert.assertEquals("Sonntag, 25. November 1973 16:52 Uhr PST 1.234,57",
+        messageFormat.format(new Object[]{new Date(123123123123l), new Double(1234.567)}));
 
   }
 

@@ -18,6 +18,7 @@
 package org.pentaho.reporting.engine.classic.core.filter.types;
 
 import java.util.Locale;
+import java.util.TimeZone;
 
 import org.pentaho.reporting.engine.classic.core.AttributeNames;
 import org.pentaho.reporting.engine.classic.core.ReportElement;
@@ -94,9 +95,15 @@ public class MessageType extends AbstractElementType
     final Locale newLocale = resourceBundleFactory.getLocale();
     if (ObjectUtilities.equal(newLocale, messageFormatFilter.getLocale()) == false)
     {
-      messageFormatFilter.setLocale(resourceBundleFactory.getLocale());
+      messageFormatFilter.setLocale(newLocale);
     }
     
+    final TimeZone newTimeZone = resourceBundleFactory.getTimeZone();
+    if (ObjectUtilities.equal(newTimeZone, messageFormatFilter.getTimeZone()) == false)
+    {
+      messageFormatFilter.setTimeZone(newTimeZone);
+    }
+
     final Object value = messageFormatFilter.performFormat(runtime.getDataRow());
     if (value == null)
     {

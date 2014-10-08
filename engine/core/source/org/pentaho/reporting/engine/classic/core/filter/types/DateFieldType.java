@@ -194,7 +194,7 @@ public class DateFieldType extends AbstractElementType implements RawDataSource
 
       return context.dateFormat.format(retval);
     }
-    catch (Exception e)
+    catch (final Exception e)
     {
       return element.getAttribute(AttributeNames.Core.NAMESPACE, AttributeNames.Core.NULL_VALUE);
     }

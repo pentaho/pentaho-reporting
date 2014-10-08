@@ -18,6 +18,7 @@
 package org.pentaho.reporting.engine.classic.core.filter;
 
 import java.util.Locale;
+import java.util.TimeZone;
 
 import org.pentaho.reporting.engine.classic.core.ReportElement;
 import org.pentaho.reporting.engine.classic.core.ResourceBundleFactory;
@@ -46,6 +47,7 @@ public class MessageFormatFilter implements DataSource
    * The current locale.
    */
   private transient Locale locale;
+  private transient TimeZone timeZone;
 
   /**
    * Default constructor. <P> Uses a general number format for the current locale.
@@ -100,6 +102,12 @@ public class MessageFormatFilter implements DataSource
     {
       messageFormatSupport.setLocale(resourceBundleFactory.getLocale());
       locale = newLocale;
+    }
+    final TimeZone newTimeZone = resourceBundleFactory.getTimeZone();
+    if (ObjectUtilities.equal(newTimeZone, timeZone) == false)
+    {
+      messageFormatSupport.setTimeZone(newTimeZone);
+      timeZone = newTimeZone;
     }
     return messageFormatSupport.performFormat(runtime.getDataRow());
   }
