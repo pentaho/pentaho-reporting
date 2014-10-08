@@ -19,6 +19,8 @@ package org.pentaho.reporting.engine.classic.core.modules.output.table.xls.helpe
 
 import java.awt.Color;
 
+import org.apache.poi.xssf.usermodel.XSSFColor;
+
 public class XSSFExcelColorProducer implements ExcelColorProducer
 {
   public XSSFExcelColorProducer()
@@ -27,6 +29,7 @@ public class XSSFExcelColorProducer implements ExcelColorProducer
 
   public short getNearestColor(final Color awtColor)
   {
-    return -1;
+    XSSFColor color = new XSSFColor( awtColor );
+    return color.getIndexed();
   }
 }
