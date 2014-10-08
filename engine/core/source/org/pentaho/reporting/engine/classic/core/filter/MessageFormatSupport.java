@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.Locale;
+import java.util.TimeZone;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -136,6 +137,9 @@ public class MessageFormatSupport implements Serializable, Cloneable
    * The current locale of the message format.
    */
   private transient Locale locale;
+
+  private transient TimeZone timeZone;
+
   /**
    * An internal list of all parameters.
    */
@@ -208,7 +212,10 @@ public class MessageFormatSupport implements Serializable, Cloneable
 
       if (fields.length > 0)
       {
-        this.format = new FastMessageFormat(this.compiledFormat);
+        final Locale locale = this.locale == null ? Locale.getDefault() : this.locale;
+        final TimeZone timeZone = this.timeZone == null ? TimeZone.getDefault() : this.timeZone;
+
+        this.format = new FastMessageFormat(this.compiledFormat, locale, timeZone);
         if (nullString != null)
         {
           this.format.setNullString(nullString);
@@ -298,6 +305,25 @@ public class MessageFormatSupport implements Serializable, Cloneable
       return;
     }
     this.locale = locale;
+    this.parameters = null;
+    this.oldParameters = null;
+    this.cachedValue = null;
+    this.fields = null;
+    this.format = null;
+  }
+
+  public TimeZone getTimeZone()
+  {
+    return timeZone;
+  }
+
+  public void setTimeZone(final TimeZone timeZone)
+  {
+    if (ObjectUtilities.equal(timeZone, this.timeZone))
+    {
+      return;
+    }
+    this.timeZone = timeZone;
     this.parameters = null;
     this.oldParameters = null;
     this.cachedValue = null;

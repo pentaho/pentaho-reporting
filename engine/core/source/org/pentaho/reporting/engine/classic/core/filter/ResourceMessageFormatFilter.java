@@ -99,10 +99,8 @@ public class ResourceMessageFormatFilter implements DataSource
 
     try
     {
-      final ResourceBundleFactory resourceBundleFactory =
-          runtime.getResourceBundleFactory();
-      final ResourceBundle bundle =
-          resourceBundleFactory.getResourceBundle(resourceId);
+      final ResourceBundleFactory resourceBundleFactory = runtime.getResourceBundleFactory();
+      final ResourceBundle bundle = resourceBundleFactory.getResourceBundle(resourceId);
 
       // update the format string, if neccessary ...
       if (ObjectUtilities.equal(formatKey, appliedFormatKey) == false)
@@ -113,6 +111,7 @@ public class ResourceMessageFormatFilter implements DataSource
       }
 
       messageFormatSupport.setLocale(resourceBundleFactory.getLocale());
+      messageFormatSupport.setTimeZone(resourceBundleFactory.getTimeZone());
       return messageFormatSupport.performFormat(runtime.getDataRow());
     }
     catch (MissingResourceException mre)

@@ -20,6 +20,9 @@ package org.pentaho.reporting.libraries.formatting;
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Locale;
+import java.util.TimeZone;
+
+import org.pentaho.reporting.libraries.base.util.ArgumentNullException;
 
 /**
  * A wrapper around the java.text.MessageFormat class. This wrapper limits the possible interactions with
@@ -44,6 +47,7 @@ public class FastMessageFormat implements FastFormat
   private String nullString;
   private transient StringBuffer buffer;
   private DummyFieldPosition fieldPosition;
+  private TimeZone timeZone;
 
   /**
    * Creates a new default message format object for the given pattern using the default locale as locale.
@@ -63,17 +67,19 @@ public class FastMessageFormat implements FastFormat
    */
   public FastMessageFormat(final String pattern, final Locale locale)
   {
-    if (pattern == null)
-    {
-      throw new NullPointerException();
-    }
-    if (locale == null)
-    {
-      throw new NullPointerException();
-    }
+    this(pattern, locale, TimeZone.getDefault());
+  }
+
+  public FastMessageFormat(final String pattern, final Locale locale, final TimeZone timeZone)
+  {
+    ArgumentNullException.validate("timeZone", timeZone);
+    ArgumentNullException.validate("pattern", pattern);
+    ArgumentNullException.validate("locale", locale);
+
     this.pattern = pattern;
     this.locale = locale;
     this.nullString = "<null>";
+    this.timeZone = timeZone;
 
     final String[] arguments = new String[3];
     int argumentIndex = 0;
@@ -219,29 +225,29 @@ public class FastMessageFormat implements FastFormat
     {
       if ("short".equals(argPattern))
       {
-        return new FastDateFormat(0, DateFormat.SHORT, locale);
+        return new FastDateFormat(0, DateFormat.SHORT, locale, timeZone);
       }
       else if ("medium".equals(argPattern))
       {
-        return new FastDateFormat(0, DateFormat.MEDIUM, locale);
+        return new FastDateFormat(0, DateFormat.MEDIUM, locale, timeZone);
       }
       else if ("long".equals(argPattern))
       {
-        return new FastDateFormat(0, DateFormat.LONG, locale);
+        return new FastDateFormat(0, DateFormat.LONG, locale, timeZone);
       }
       else if ("full".equals(argPattern))
       {
-        return new FastDateFormat(0, DateFormat.FULL, locale);
+        return new FastDateFormat(0, DateFormat.FULL, locale, timeZone);
       }
       else
       {
         if (argPattern == null)
         {
-          return new FastDateFormat(0, DateFormat.MEDIUM, locale);
+          return new FastDateFormat(0, DateFormat.MEDIUM, locale, timeZone);
         }
         else
         {
-          return new FastDateFormat(argPattern, locale);
+          return new FastDateFormat(argPattern, locale, timeZone);
         }
       }
     }
@@ -249,29 +255,29 @@ public class FastMessageFormat implements FastFormat
     {
       if ("short".equals(argPattern))
       {
-        return new FastDateFormat(DateFormat.SHORT, 0, locale);
+        return new FastDateFormat(DateFormat.SHORT, 0, locale, timeZone);
       }
       else if ("medium".equals(argPattern))
       {
-        return new FastDateFormat(DateFormat.MEDIUM, 0, locale);
+        return new FastDateFormat(DateFormat.MEDIUM, 0, locale, timeZone);
       }
       else if ("long".equals(argPattern))
       {
-        return new FastDateFormat(DateFormat.LONG, 0, locale);
+        return new FastDateFormat(DateFormat.LONG, 0, locale, timeZone);
       }
       else if ("full".equals(argPattern))
       {
-        return new FastDateFormat(DateFormat.FULL, 0, locale);
+        return new FastDateFormat(DateFormat.FULL, 0, locale, timeZone);
       }
       else
       {
         if (argPattern == null)
         {
-          return new FastDateFormat(DateFormat.MEDIUM, 0, locale);
+          return new FastDateFormat(DateFormat.MEDIUM, 0, locale, timeZone);
         }
         else
         {
-          return new FastDateFormat(argPattern, locale);
+          return new FastDateFormat(argPattern, locale, timeZone);
         }
       }
     }
@@ -279,29 +285,29 @@ public class FastMessageFormat implements FastFormat
     {
       if ("short".equals(argPattern))
       {
-        return new FastDateFormat(DateFormat.SHORT, DateFormat.SHORT, locale);
+        return new FastDateFormat(DateFormat.SHORT, DateFormat.SHORT, locale, timeZone);
       }
       else if ("medium".equals(argPattern))
       {
-        return new FastDateFormat(DateFormat.MEDIUM, DateFormat.MEDIUM, locale);
+        return new FastDateFormat(DateFormat.MEDIUM, DateFormat.MEDIUM, locale, timeZone);
       }
       else if ("long".equals(argPattern))
       {
-        return new FastDateFormat(DateFormat.LONG, DateFormat.LONG, locale);
+        return new FastDateFormat(DateFormat.LONG, DateFormat.LONG, locale, timeZone);
       }
       else if ("full".equals(argPattern))
       {
-        return new FastDateFormat(DateFormat.FULL, DateFormat.FULL, locale);
+        return new FastDateFormat(DateFormat.FULL, DateFormat.FULL, locale, timeZone);
       }
       else
       {
         if (argPattern == null)
         {
-          return new FastDateFormat(0, DateFormat.MEDIUM, locale);
+          return new FastDateFormat(0, DateFormat.MEDIUM, locale, timeZone);
         }
         else
         {
-          return new FastDateFormat(argPattern, locale);
+          return new FastDateFormat(argPattern, locale, timeZone);
         }
       }
 
@@ -386,6 +392,15 @@ public class FastMessageFormat implements FastFormat
     return locale;
   }
 
+  /**
+   * Returns the current time-zone for date formats.
+   *
+   * @return the current time zone, never null.
+   */
+  public TimeZone getTimeZone()
+  {
+    return timeZone;
+  }
 
   /**
    * Returns the currently active pattern.
