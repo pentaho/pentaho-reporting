@@ -794,10 +794,10 @@ public class DefaultLayoutModelBuilder implements LayoutModelBuilder, Cloneable
     box = (RenderBox) rootBox.findNodeById(insertationPoint);
     if (box == null)
     {
-      throw new IllegalStateException("Unable to locate insertation point for subreport: " + insertationPoint);
+      dontPushBoxToContext();
+    } else {
+      pushBoxToContext(box, false);
     }
-
-    pushBoxToContext(box, false);
   }
 
   protected void pushBoxToContext(final RenderBox box, final boolean empty)
@@ -807,6 +807,10 @@ public class DefaultLayoutModelBuilder implements LayoutModelBuilder, Cloneable
     this.textProducer.startText();
   }
 
+  protected void dontPushBoxToContext() {
+    this.context = new DummyLayoutModelBuilderContext(this.context);
+    this.context.setEmpty(true);
+  }
 
   public void startSubFlow(final ReportElement element)
   {
