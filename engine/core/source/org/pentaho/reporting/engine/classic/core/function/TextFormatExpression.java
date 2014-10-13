@@ -28,8 +28,8 @@ import org.apache.commons.logging.LogFactory;
 import org.pentaho.reporting.engine.classic.core.DataRow;
 import org.pentaho.reporting.engine.classic.core.ResourceBundleFactory;
 import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
+import org.pentaho.reporting.libraries.base.util.URLEncoder;
 import org.pentaho.reporting.libraries.formatting.FastMessageFormat;
-import org.pentaho.reporting.libraries.formula.util.URLEncoder;
 
 /**
  * A TextFormatExpression uses a java.text.MessageFormat to concat and format one or more values evaluated from an

@@ -27,7 +27,7 @@ import org.pentaho.reporting.engine.classic.core.ResourceBundleFactory;
 import org.pentaho.reporting.engine.classic.core.filter.MessageFormatSupport;
 import org.pentaho.reporting.engine.classic.core.function.AbstractExpression;
 import org.pentaho.reporting.engine.classic.core.function.Expression;
-import org.pentaho.reporting.libraries.formula.util.URLEncoder;
+import org.pentaho.reporting.libraries.base.util.URLEncoder;
 
 /**
  * Formats a message using named parameters. The parameters are resolved against the current

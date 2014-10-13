@@ -20,7 +20,7 @@ package org.pentaho.reporting.engine.classic.core.function.strings;
 import java.io.UnsupportedEncodingException;
 
 import org.pentaho.reporting.engine.classic.core.function.AbstractExpression;
-import org.pentaho.reporting.libraries.formula.util.URLEncoder;
+import org.pentaho.reporting.libraries.base.util.URLEncoder;
 
 /**
  * Performs an URL encoding on the value read from the given field. As the URL-encoding schema is a binary encoding, a
