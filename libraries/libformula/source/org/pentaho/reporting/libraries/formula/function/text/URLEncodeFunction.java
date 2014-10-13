@@ -19,6 +19,7 @@ package org.pentaho.reporting.libraries.formula.function.text;
 
 import java.io.UnsupportedEncodingException;
 
+import org.pentaho.reporting.libraries.base.util.URLEncoder;
 import org.pentaho.reporting.libraries.formula.EvaluationException;
 import org.pentaho.reporting.libraries.formula.FormulaContext;
 import org.pentaho.reporting.libraries.formula.LibFormulaErrorValue;
@@ -27,7 +28,6 @@ import org.pentaho.reporting.libraries.formula.function.ParameterCallback;
 import org.pentaho.reporting.libraries.formula.lvalues.TypeValuePair;
 import org.pentaho.reporting.libraries.formula.typing.Type;
 import org.pentaho.reporting.libraries.formula.typing.coretypes.TextType;
-import org.pentaho.reporting.libraries.formula.util.URLEncoder;
 
 /**
  * This function encodes a given text using the URL-Encoding schema. An optional
