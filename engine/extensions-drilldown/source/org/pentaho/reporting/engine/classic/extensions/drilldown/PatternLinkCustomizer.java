@@ -22,10 +22,10 @@ import java.text.MessageFormat;
 
 import org.pentaho.reporting.engine.classic.core.util.beans.BeanException;
 import org.pentaho.reporting.engine.classic.core.util.beans.ConverterRegistry;
+import org.pentaho.reporting.libraries.base.util.URLEncoder;
 import org.pentaho.reporting.libraries.formula.EvaluationException;
 import org.pentaho.reporting.libraries.formula.FormulaContext;
 import org.pentaho.reporting.libraries.formula.LibFormulaErrorValue;
-import org.pentaho.reporting.libraries.formula.util.URLEncoder;
 
 public class PatternLinkCustomizer implements LinkCustomizer
 {
