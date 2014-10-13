@@ -17,8 +17,10 @@
 
 package org.pentaho.reporting.engine.classic.extensions.datasources.kettle;
 
+import java.net.URL;
+
+import org.junit.Assert;
 import org.pentaho.reporting.engine.classic.core.DataFactory;
-import org.pentaho.reporting.engine.classic.core.ParameterMapping;
 import org.pentaho.reporting.engine.classic.core.ReportDataFactoryException;
 import org.pentaho.reporting.engine.classic.core.StaticDataRow;
 import org.pentaho.reporting.engine.classic.core.designtime.datafactory.DesignTimeDataFactoryContext;
@@ -75,8 +77,11 @@ public class BigDataKettleFactoryTest extends DataSourceTestBase
   {
     try
     {
+      URL res = getClass().getResource("embedded-row-gen.ktr");
+      Assert.assertNotNull(res);
+
       ResourceManager mgr = new ResourceManager();
-      ResourceKey key = mgr.createKey(getClass().getResource("embedded-row-gen.ktr"));
+      ResourceKey key = mgr.createKey(res);
       final byte[] resource = mgr.load(key).getResource(mgr);
       final EmbeddedKettleTransformationProducer producer =
           new EmbeddedKettleTransformationProducer(new FormulaArgument[0], new FormulaParameter[0], "dummy-id", resource);
@@ -97,7 +102,7 @@ public class BigDataKettleFactoryTest extends DataSourceTestBase
     final KettleDataFactory kettleDataFactory = new KettleDataFactory();
     kettleDataFactory.initialize(new DesignTimeDataFactoryContext());
     kettleDataFactory.setQuery("default",
-        new KettleTransFromFileProducer(QUERY, STEP, new String[0], new ParameterMapping[0]));
+        new KettleTransFromFileProducer(QUERY, STEP, new FormulaArgument[0], new FormulaParameter[0]));
 
     final DataFactoryMetaData metaData = kettleDataFactory.getMetaData();
     final Object queryHash = metaData.getQueryHash(kettleDataFactory, "default", new StaticDataRow());
@@ -106,9 +111,9 @@ public class BigDataKettleFactoryTest extends DataSourceTestBase
     final KettleDataFactory kettleDataFactory2 = new KettleDataFactory();
     kettleDataFactory2.initialize(new DesignTimeDataFactoryContext());
     kettleDataFactory2.setQuery("default",
-        new KettleTransFromFileProducer(QUERY + "2", STEP, new String[0], new ParameterMapping[0]));
+        new KettleTransFromFileProducer(QUERY + "2", STEP, new FormulaArgument[0], new FormulaParameter[0]));
     kettleDataFactory2.setQuery("default2",
-        new KettleTransFromFileProducer(QUERY, STEP, new String[0], new ParameterMapping[0]));
+        new KettleTransFromFileProducer(QUERY, STEP, new FormulaArgument[0], new FormulaParameter[0]));
 
     assertNotEquals("Physical Query is not the same", queryHash, metaData.getQueryHash(kettleDataFactory2, "default", new StaticDataRow()));
     assertEquals("Physical Query is the same", queryHash, metaData.getQueryHash(kettleDataFactory2, "default2", new StaticDataRow()));
@@ -118,12 +123,12 @@ public class BigDataKettleFactoryTest extends DataSourceTestBase
   {
     final KettleDataFactory kettleDataFactory = new KettleDataFactory();
     kettleDataFactory.initialize(new DesignTimeDataFactoryContext());
-    final ParameterMapping[] parameterMappings = {
-        new ParameterMapping("name", "kettle-name"),
-        new ParameterMapping("name2", "k3"),
-        new ParameterMapping("name", "k2")
+    final FormulaParameter[] parameterMappings = {
+        FormulaParameter.create("name", "kettle-name"),
+        FormulaParameter.create("name2", "k3"),
+        FormulaParameter.create("name", "k2")
     };
-    final String[] argumentNames = {"arg0"};
+    final FormulaArgument[] argumentNames = {FormulaArgument.create("arg0")};
     kettleDataFactory.setQuery("default",
         new KettleTransFromFileProducer(QUERY, STEP, argumentNames, parameterMappings));
 

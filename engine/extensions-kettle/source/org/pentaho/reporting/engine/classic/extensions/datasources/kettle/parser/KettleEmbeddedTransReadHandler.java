@@ -76,10 +76,12 @@ public class KettleEmbeddedTransReadHandler extends AbstractKettleTransformation
     try
     {
       byte[] bytes = loadDataFromBundle(resourceName);
-      return new EmbeddedKettleTransformationProducer(getDefinedArgumentNames(),
+      EmbeddedKettleTransformationProducer kprod = new EmbeddedKettleTransformationProducer(getDefinedArgumentNames(),
           getDefinedVariableNames(),
           pluginId,
           bytes);
+      kprod.setStopOnError(isStopOnError());
+      return kprod;
     }
     catch (final Exception e)
     {
@@ -96,11 +98,4 @@ public class KettleEmbeddedTransReadHandler extends AbstractKettleTransformation
     final ResourceData data = manager.load(derivedKey);
     return data.getResource(manager);
   }
-
-  public EmbeddedKettleTransformationProducer getTransformationProducer() throws SAXException
-  {
-    return getObject();
-  }
-
-
 }

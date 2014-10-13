@@ -36,6 +36,7 @@ public abstract class AbstractKettleTransformationProducerReadHandler
 {
   private static final Log logger = LogFactory.getLog(AbstractKettleTransformationProducerReadHandler.class);
 
+  private boolean stopOnError;
   private String name;
   private String stepName;
   private String username;
@@ -85,6 +86,9 @@ public abstract class AbstractKettleTransformationProducerReadHandler
     {
       logger.warn("Required attribute 'step' is not defined. This query may not work correctly.");
     }
+
+    // if undefined or invalid value, default to safe option of stopping.
+    stopOnError = !"false".equals(attrs.getValue(getUri(), "stop-on-error"));
   }
 
   /**
@@ -171,7 +175,12 @@ public abstract class AbstractKettleTransformationProducerReadHandler
     return definedVariableNames;
   }
 
-  public KettleTransformationProducer getTransformationProducer() throws SAXException
+  public boolean isStopOnError()
+  {
+    return stopOnError;
+  }
+
+  public final KettleTransformationProducer getTransformationProducer() throws SAXException
   {
     return getObject();
   }

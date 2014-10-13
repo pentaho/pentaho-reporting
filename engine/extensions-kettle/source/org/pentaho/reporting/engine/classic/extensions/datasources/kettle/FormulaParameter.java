@@ -55,6 +55,12 @@ public class FormulaParameter implements Serializable
     return args;
   }
 
+  public static FormulaParameter create(final String reportFieldName, final String transformationParameterName)
+  {
+    String formula = '=' + FormulaUtil.quoteReference(reportFieldName);
+    return new FormulaParameter(transformationParameterName, formula);
+  }
+
   public static ParameterMapping[] convert(final FormulaParameter[] args)
   {
     final ArrayList<ParameterMapping> textList = new ArrayList<ParameterMapping>();
