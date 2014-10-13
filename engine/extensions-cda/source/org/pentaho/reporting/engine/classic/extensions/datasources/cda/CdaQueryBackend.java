@@ -23,6 +23,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+
 import javax.swing.table.TableModel;
 
 import org.pentaho.reporting.engine.classic.core.DataFactoryContext;
@@ -34,7 +35,7 @@ import org.pentaho.reporting.engine.classic.core.util.TypedTableModel;
 import org.pentaho.reporting.libraries.base.config.Configuration;
 import org.pentaho.reporting.libraries.base.util.CSVQuoter;
 import org.pentaho.reporting.libraries.base.util.StringUtils;
-import org.pentaho.reporting.libraries.formula.util.URLEncoder;
+import org.pentaho.reporting.libraries.base.util.URLEncoder;
 
 /**
  * Abstract Class that will be extended by each implementation of CDA invocation LOCAL or HTTP
