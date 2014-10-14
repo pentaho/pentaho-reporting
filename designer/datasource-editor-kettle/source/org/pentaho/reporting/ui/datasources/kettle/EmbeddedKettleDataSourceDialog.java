@@ -113,6 +113,7 @@ public class EmbeddedKettleDataSourceDialog extends KettleDataSourceDialog
           datasourcePanel.repaint();
         }
 
+        getStopOnErrorsCheckBox().setSelected(selectedQuery.isStopOnErrors());
         editParameterAction.setEnabled(true);
       }
       catch (Exception e1)

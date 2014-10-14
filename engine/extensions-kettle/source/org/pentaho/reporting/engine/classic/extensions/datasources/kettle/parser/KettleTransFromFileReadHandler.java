@@ -62,8 +62,10 @@ public class KettleTransFromFileReadHandler extends AbstractKettleTransformation
    */
   public KettleTransformationProducer getObject()
   {
-    return new KettleTransFromFileProducer
+    KettleTransFromFileProducer kettleTransFromFileProducer = new KettleTransFromFileProducer
         (getRepositoryName(), fileName, getStepName(), getUsername(), getPassword(),
             getDefinedArgumentNames(), getDefinedVariableNames());
+    kettleTransFromFileProducer.setStopOnError(isStopOnError());
+    return kettleTransFromFileProducer;
   }
 }

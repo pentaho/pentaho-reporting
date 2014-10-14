@@ -73,6 +73,7 @@ public class FileKettleQueryEntry extends KettleQueryEntry
       AbstractKettleTransformationProducer p = (AbstractKettleTransformationProducer) producer;
       setArguments(p.getArguments());
       setParameters(p.getParameter());
+      setStopOnErrors(p.isStopOnError());
     }
   }
 
@@ -145,6 +146,8 @@ public class FileKettleQueryEntry extends KettleQueryEntry
     final FormulaParameter[] varNames = getParameters();
     final String file = getFile();
     final String selectedStep = getSelectedStep();
-    return new KettleTransFromFileProducer(file, selectedStep, argumentFields, varNames);
+    KettleTransFromFileProducer kettleTransFromFileProducer = new KettleTransFromFileProducer(file, selectedStep, argumentFields, varNames);
+    kettleTransFromFileProducer.setStopOnError(isStopOnErrors());
+    return kettleTransFromFileProducer;
   }
 }

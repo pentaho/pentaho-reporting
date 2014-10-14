@@ -43,6 +43,10 @@ public class FormulaArgument implements Serializable
     return formula;
   }
 
+  public static FormulaArgument create(final String reportField) {
+    return new FormulaArgument('=' + FormulaUtil.quoteReference(reportField));
+  }
+
   public static FormulaArgument[] convert(final String[] definedArgumentNames)
   {
     final FormulaArgument[] args = new FormulaArgument[definedArgumentNames.length];

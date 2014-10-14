@@ -47,11 +47,14 @@ import org.pentaho.reporting.engine.classic.core.SubReport;
 import org.pentaho.reporting.engine.classic.core.designtime.datafactory.DesignTimeDataFactoryContext;
 import org.pentaho.reporting.engine.classic.core.modules.misc.tablemodel.TableModelInfo;
 import org.pentaho.reporting.engine.classic.core.modules.parser.bundle.writer.BundleWriter;
+import org.pentaho.reporting.engine.classic.core.modules.parser.bundle.writer.BundleWriterException;
 import org.pentaho.reporting.engine.classic.core.util.CloseableTableModel;
 import org.pentaho.reporting.libraries.base.util.DebugLog;
 import org.pentaho.reporting.libraries.base.util.MemoryByteArrayOutputStream;
 import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
+import org.pentaho.reporting.libraries.repository.ContentIOException;
 import org.pentaho.reporting.libraries.resourceloader.Resource;
+import org.pentaho.reporting.libraries.resourceloader.ResourceException;
 import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 
 public abstract class DataSourceTestBase extends TestCase
@@ -172,22 +175,28 @@ public abstract class DataSourceTestBase extends TestCase
       final String resultFile = queriesAndResults[i][1];
       final DataFactory dataFactory = createDataFactory(query);
 
-      final MasterReport report = new MasterReport();
-      report.setDataFactory(dataFactory);
+      final DataFactory e2 = loadAndSaveOnReport(dataFactory);
 
-      final MemoryByteArrayOutputStream bout = new MemoryByteArrayOutputStream();
-      BundleWriter.writeReportToZipStream(report, bout);
-      final ResourceManager mgr = new ResourceManager();
-      mgr.registerDefaults();
-
-      final Resource resource = mgr.createDirectly(bout.toByteArray(), MasterReport.class);
-      final MasterReport r2 = (MasterReport) resource.getResource();
-      final DataFactory e2 = r2.getDataFactory();
       assertNotNull(e2); // cannot assert equals, as this is not implemented ...
       initializeDataFactory(e2);
       final String queryResult = performQueryTest(e2);
       compareLineByLine(resultFile, queryResult);
     }
+  }
+
+  public static DataFactory loadAndSaveOnReport(final DataFactory dataFactory) throws IOException, BundleWriterException, ContentIOException, ResourceException
+  {
+    final MasterReport report = new MasterReport();
+    report.setDataFactory(dataFactory);
+
+    final MemoryByteArrayOutputStream bout = new MemoryByteArrayOutputStream();
+    BundleWriter.writeReportToZipStream(report, bout);
+    final ResourceManager mgr = new ResourceManager();
+    mgr.registerDefaults();
+
+    final Resource resource = mgr.createDirectly(bout.toByteArray(), MasterReport.class);
+    final MasterReport r2 = (MasterReport) resource.getResource();
+    return r2.getDataFactory();
   }
 
   protected void runTest(final String[][] queriesAndResults) throws Exception

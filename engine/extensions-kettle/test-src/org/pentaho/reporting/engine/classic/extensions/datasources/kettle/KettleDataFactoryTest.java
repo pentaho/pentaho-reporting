@@ -109,12 +109,13 @@ public class KettleDataFactoryTest extends DataSourceTestBase
   {
     final KettleDataFactory kettleDataFactory = new KettleDataFactory();
     kettleDataFactory.initialize(new DesignTimeDataFactoryContext());
-    final ParameterMapping[] parameterMappings = {
-        new ParameterMapping("name", "kettle-name"),
-        new ParameterMapping("name2", "k3"),
-        new ParameterMapping("name", "k2")
+    final FormulaParameter[] parameterMappings = {
+        FormulaParameter.create("name", "kettle-name"),
+        FormulaParameter.create("name2", "k3"),
+        FormulaParameter.create("name", "k2")
     };
-    final String[] argumentNames = {"arg0"};
+    final FormulaArgument[] argumentNames = {FormulaArgument.create("arg0")};
+
     kettleDataFactory.setQuery("default", new KettleTransFromFileProducer(QUERY, STEP, argumentNames, parameterMappings));
 
     final DataFactoryMetaData metaData = kettleDataFactory.getMetaData();
