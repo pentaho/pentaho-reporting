@@ -44,6 +44,7 @@ import org.pentaho.reporting.engine.classic.core.DataFactoryContext;
 import org.pentaho.reporting.engine.classic.core.DataRow;
 import org.pentaho.reporting.engine.classic.core.ParameterMapping;
 import org.pentaho.reporting.engine.classic.core.ReportDataFactoryException;
+import org.pentaho.reporting.libraries.base.util.ArgumentNullException;
 import org.pentaho.reporting.libraries.formula.EvaluationException;
 import org.pentaho.reporting.libraries.formula.FormulaContext;
 import org.pentaho.reporting.libraries.formula.parser.ParseException;
@@ -257,6 +258,9 @@ public abstract class AbstractKettleTransformationProducer implements KettleTran
                                  final DataFactoryContext context)
       throws KettleException, ReportDataFactoryException
   {
+    ArgumentNullException.validate("context", context);
+    ArgumentNullException.validate("parameters", parameters);
+
     String targetStepName = getStepName();
     if (targetStepName == null)
     {
@@ -310,6 +314,11 @@ public abstract class AbstractKettleTransformationProducer implements KettleTran
       trans.cleanup();
       currentlyRunningTransformation = null;
     }
+    if (trans.getErrors() != 0 && isStopOnError()) {
+      throw new ReportDataFactoryException(String.format
+          ("Transformation reported %d records with errors and stop-on-error is true. Aborting.", trans.getErrors()));
+    }
+
     return tableProducer.getTableModel();
   }
 

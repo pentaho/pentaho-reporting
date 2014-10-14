@@ -24,6 +24,7 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.File;
 import java.util.HashSet;
 import java.util.List;
@@ -32,6 +33,7 @@ import javax.swing.Action;
 import javax.swing.BorderFactory;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
@@ -43,6 +45,8 @@ import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.SwingUtilities;
 import javax.swing.border.EmptyBorder;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.event.ListSelectionEvent;
@@ -279,24 +283,28 @@ public class KettleDataSourceDialog extends CommonDialog
         refreshStepList(fe);
         stepsList.setEnabled(true);
         editParameterAction.setEnabled(true);
+        stopOnErrorsCheckBox.setEnabled(true);
       }
       catch (ReportDataFactoryException rdfe)
       {
         logger.warn("Non-critical failure while executing the query", rdfe);
         stepsList.setEnabled(false);
         editParameterAction.setEnabled(false);
+        stopOnErrorsCheckBox.setEnabled(false);
       }
       catch (Exception e1)
       {
         designTimeContext.error(e1);
         stepsList.setEnabled(false);
         editParameterAction.setEnabled(false);
+        stopOnErrorsCheckBox.setEnabled(false);
       }
       catch (Throwable t1)
       {
         designTimeContext.error(new RuntimeException("Fatal error", t1));
         stepsList.setEnabled(false);
         editParameterAction.setEnabled(false);
+        stopOnErrorsCheckBox.setEnabled(false);
       }
       finally
       {
@@ -361,6 +369,8 @@ public class KettleDataSourceDialog extends CommonDialog
         fileTextField.setEnabled(false);
         stepsList.setEnabled(false);
         editParameterAction.setEnabled(false);
+        stopOnErrorsCheckBox.setEnabled(false);
+        stopOnErrorsCheckBox.setSelected(false);
         handleSelection(value);
         return;
       }
@@ -373,6 +383,8 @@ public class KettleDataSourceDialog extends CommonDialog
       {
         nameTextField.setText(value.getName());
         editParameterAction.setEnabled(true);
+        stopOnErrorsCheckBox.setSelected(value.isStopOnErrors());
+        stopOnErrorsCheckBox.setEnabled(true);
         handleSelection(value);
       }
       finally
@@ -396,24 +408,29 @@ public class KettleDataSourceDialog extends CommonDialog
         fileTextField.setText(selectedQuery.getFile());
         refreshStepList(selectedQuery);
         stepsList.setEnabled(true);
+        editParameterAction.setEnabled(true);
+        stopOnErrorsCheckBox.setEnabled(true);
       }
       catch (ReportDataFactoryException rdfe)
       {
         logger.warn("Non-critical failure while executing the query", rdfe);
         stepsList.setEnabled(false);
         editParameterAction.setEnabled(false);
+        stopOnErrorsCheckBox.setEnabled(false);
       }
       catch (Exception e1)
       {
         designTimeContext.error(e1);
         stepsList.setEnabled(false);
         editParameterAction.setEnabled(false);
+        stopOnErrorsCheckBox.setEnabled(false);
       }
       catch (Throwable t1)
       {
         designTimeContext.error(new RuntimeException("Fatal error", t1));
         stepsList.setEnabled(false);
         editParameterAction.setEnabled(false);
+        stopOnErrorsCheckBox.setEnabled(false);
       }
     }
   }
@@ -666,6 +683,16 @@ public class KettleDataSourceDialog extends CommonDialog
     }
   }
 
+  private class StopOnErrorSync implements ActionListener {
+    public void actionPerformed(final ActionEvent e)
+    {
+      KettleQueryEntry selectedQuery = getSelectedQuery();
+      if (selectedQuery != null) {
+        selectedQuery.setStopOnErrors(stopOnErrorsCheckBox.isSelected());
+      }
+    }
+  }
+
   private static final Log logger = LogFactory.getLog(KettleDataSourceDialog.class);
 
   private DesignTimeContext designTimeContext;
@@ -676,7 +703,8 @@ public class KettleDataSourceDialog extends CommonDialog
   private DefaultListModel queryListModel;
   private boolean inUpdateFromList;
   private Action editParameterAction;
-  private Action previewAction;
+  private PreviewAction previewAction;
+  private JCheckBox stopOnErrorsCheckBox;
 
   public KettleDataSourceDialog(final DesignTimeContext designTimeContext, final JDialog parent)
   {
@@ -705,6 +733,10 @@ public class KettleDataSourceDialog extends CommonDialog
 
     this.designTimeContext = designTimeContext;
 
+    stopOnErrorsCheckBox = new JCheckBox(Messages.getString("KettleDataSourceDialog.StopOnErrors"));
+    stopOnErrorsCheckBox.setEnabled(false);
+    stopOnErrorsCheckBox.addActionListener(new StopOnErrorSync());
+
     editParameterAction = new EditParameterAction();
     editParameterAction.setEnabled(false);
 
@@ -715,6 +747,8 @@ public class KettleDataSourceDialog extends CommonDialog
     queryNameList.setVisibleRowCount(5);
     queryNameList.addListSelectionListener(getQueryNameListener());
 
+    previewAction = new PreviewAction();
+
     fileTextField = new JTextField(30);
     fileTextField.setEnabled(false);
     fileTextField.getDocument().addDocumentListener(new FileSyncHandler());
@@ -722,6 +756,7 @@ public class KettleDataSourceDialog extends CommonDialog
     stepsList = new JList();
     stepsList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
     stepsList.addListSelectionListener(new StepsListListener());
+    stepsList.addListSelectionListener(previewAction);
 
     nameTextField = new JTextField(30);
     nameTextField.setEnabled(false);
@@ -732,6 +767,11 @@ public class KettleDataSourceDialog extends CommonDialog
     setModal(true);
 
     super.init();
+  }
+
+  protected JCheckBox getStopOnErrorsCheckBox()
+  {
+    return stopOnErrorsCheckBox;
   }
 
   protected Action getPreviewAction()
@@ -771,25 +811,8 @@ public class KettleDataSourceDialog extends CommonDialog
 
   protected Component createContentPane()
   {
-    previewAction = new PreviewAction();
-
-    stepsList.addListSelectionListener((PreviewAction) previewAction);
-
-    final RemoveQueryAction removeQueryAction = new RemoveQueryAction();
-    queryNameList.addListSelectionListener(removeQueryAction);
-
-    final JPanel previewAndParameterPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT, 5, 5));
-    previewAndParameterPanel.add(new JButton(editParameterAction));
-    previewAndParameterPanel.add(new JButton(previewAction));
-
-    final JPanel queryListButtonsPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-    queryListButtonsPanel.add(new BorderlessButton(new AddQueryAction()));
-    queryListButtonsPanel.add(new BorderlessButton(removeQueryAction));
-
-    final JPanel queryListPanel = new JPanel(new BorderLayout());
-    queryListPanel.setBorder(BorderFactory.createEmptyBorder(0, 5, 5, 0));
-    queryListPanel.add(new JScrollPane(queryNameList), BorderLayout.CENTER);
-    queryListPanel.add(queryListButtonsPanel, BorderLayout.NORTH);
+    final JPanel previewAndParameterPanel = createTransformParameterPanel();
+    final JPanel queryListPanel = createQueryListPanel();
 
     final JPanel mainPanel = new JPanel(new GridBagLayout());
     mainPanel.setBorder(new EmptyBorder(5, 5, 0, 5));
@@ -824,12 +847,42 @@ public class KettleDataSourceDialog extends CommonDialog
     gbc.anchor = GridBagConstraints.WEST;
     mainPanel.add(previewAndParameterPanel, gbc);
 
-
     final JPanel panel = new JPanel();
     panel.setLayout(new BorderLayout());
     panel.add(mainPanel, BorderLayout.EAST);
     panel.add(queryListPanel, BorderLayout.CENTER);
     return panel;
+  }
+
+  private JPanel createQueryListPanel()
+  {
+    final RemoveQueryAction removeQueryAction = new RemoveQueryAction();
+    queryNameList.addListSelectionListener(removeQueryAction);
+
+    final JPanel queryListButtonsPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+    queryListButtonsPanel.add(new BorderlessButton(new AddQueryAction()));
+    queryListButtonsPanel.add(new BorderlessButton(removeQueryAction));
+
+    final JPanel queryListPanel = new JPanel(new BorderLayout());
+    queryListPanel.setBorder(BorderFactory.createEmptyBorder(0, 5, 5, 0));
+    queryListPanel.add(new JScrollPane(queryNameList), BorderLayout.CENTER);
+    queryListPanel.add(queryListButtonsPanel, BorderLayout.NORTH);
+    return queryListPanel;
+  }
+
+  private JPanel createTransformParameterPanel()
+  {
+    final JPanel stopOnErrorsPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT, 5, 5));
+    stopOnErrorsPanel.add(stopOnErrorsCheckBox);
+
+    final JPanel previewAndParameterPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT, 5, 5));
+    previewAndParameterPanel.add(new JButton(editParameterAction));
+    previewAndParameterPanel.add(new JButton(previewAction));
+
+    final JPanel transParameterPanel = new JPanel(new BorderLayout());
+    transParameterPanel.add(stopOnErrorsPanel, BorderLayout.NORTH);
+    transParameterPanel.add(previewAndParameterPanel, BorderLayout.CENTER);
+    return transParameterPanel;
   }
 
   protected JPanel createDatasourcePanel()
@@ -894,6 +947,7 @@ public class KettleDataSourceDialog extends CommonDialog
     for (final KettleQueryEntry queryEntry : getQueryEntries())
     {
       final KettleTransformationProducer producer = queryEntry.createProducer();
+
       kettleDataFactory.setQuery(queryEntry.getName(), producer);
     }
 

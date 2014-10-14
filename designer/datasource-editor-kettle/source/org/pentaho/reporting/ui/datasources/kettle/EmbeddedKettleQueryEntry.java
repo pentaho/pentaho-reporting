@@ -87,6 +87,7 @@ public class EmbeddedKettleQueryEntry extends KettleQueryEntry
     EmbeddedKettleQueryEntry entry = new EmbeddedKettleQueryEntry(name, producer.getPluginId(), dialogHelper);
     entry.setArguments(producer.getArguments());
     entry.setParameters(producer.getParameter());
+    entry.setStopOnErrors(producer.isStopOnError());
     return entry;
   }
 
@@ -118,7 +119,10 @@ public class EmbeddedKettleQueryEntry extends KettleQueryEntry
   public KettleTransformationProducer createProducer()
       throws KettleException
   {
-    return new EmbeddedKettleTransformationProducer(getArguments(), getParameters(), pluginId, dialogHelper.getRawData());
+    EmbeddedKettleTransformationProducer p =
+        new EmbeddedKettleTransformationProducer(getArguments(), getParameters(), pluginId, dialogHelper.getRawData());
+    p.setStopOnError(isStopOnErrors());
+    return p;
   }
 
   public JComponent createUI() throws ReportDataFactoryException

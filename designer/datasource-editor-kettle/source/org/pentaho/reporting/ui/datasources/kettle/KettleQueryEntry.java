@@ -39,6 +39,7 @@ public abstract class KettleQueryEntry
   private TransformationParameterHelper parameterHelper;
   private boolean validated;
   private PropertyChangeSupport propertyChangeSupport;
+  private boolean stopOnErrors;
 
   public KettleQueryEntry(final String aName)
   {
@@ -46,6 +47,17 @@ public abstract class KettleQueryEntry
     this.name = aName;
     this.arguments = new FormulaArgument[0];
     this.parameters = new FormulaParameter[0];
+    this.stopOnErrors = true;
+  }
+
+  public void setStopOnErrors(final boolean stopOnErrors)
+  {
+    this.stopOnErrors = stopOnErrors;
+  }
+
+  public boolean isStopOnErrors()
+  {
+    return stopOnErrors;
   }
 
   public void addPropertyChangeListener(final PropertyChangeListener listener)
