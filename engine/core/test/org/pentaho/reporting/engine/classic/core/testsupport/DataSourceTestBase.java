@@ -311,14 +311,14 @@ public abstract class DataSourceTestBase extends TestCase
       String lineSource = compareReader.readLine();
       while (lineResult != null && lineSource != null)
       {
-        assertEquals("Failure in line " + line, lineSource, lineResult);
+        assertEquals("Failure in line " + line + " (file: " + sourceFile + ")", lineSource, lineResult);
         line += 1;
         lineResult = resultReader.readLine();
         lineSource = compareReader.readLine();
       }
 
-      assertNull("Extra lines encountered in live-result " + line, lineResult);
-      assertNull("Extra lines encountered in recorded result " + line, lineSource);
+      assertNull("Extra lines encountered in live-result " + line + " (file: " + sourceFile + ")", lineResult);
+      assertNull("Extra lines encountered in recorded result " + line + " (file: " + sourceFile + ")", lineSource);
     }
     finally
     {
