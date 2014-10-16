@@ -22,6 +22,7 @@ import org.pentaho.reporting.engine.classic.core.wizard.DataAttributeContext;
 import org.pentaho.reporting.engine.classic.core.wizard.DataAttributes;
 import org.pentaho.reporting.engine.classic.core.wizard.ConceptQueryMapper;
 import org.pentaho.reporting.engine.classic.core.wizard.DefaultConceptQueryMapper;
+import org.pentaho.reporting.libraries.base.util.ArgumentNullException;
 import org.pentaho.reporting.libraries.base.util.StringUtils;
 
 /**
@@ -53,14 +54,9 @@ public class MDXMetaDataCellAttributes implements DataAttributes
   public MDXMetaDataCellAttributes(final DataAttributes backend,
                                final Cell cell)
   {
-    if (cell == null)
-    {
-      throw new NullPointerException();
-    }
-    if (backend == null)
-    {
-      throw new NullPointerException();
-    }
+    ArgumentNullException.validate("cell", cell);
+    ArgumentNullException.validate("backend", backend);
+
     this.cell = cell;
     this.backend = backend;
   }

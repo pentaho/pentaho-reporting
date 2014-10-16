@@ -27,47 +27,18 @@ import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.pentaho.reporting.engine.classic.core.DataFactory;
 import org.pentaho.reporting.engine.classic.core.ParameterDataRow;
 import org.pentaho.reporting.engine.classic.core.ReportDataFactoryException;
-import org.pentaho.reporting.engine.classic.core.cache.CachingDataFactory;
-import org.pentaho.reporting.engine.classic.core.modules.misc.tablemodel.TableModelInfo;
 import org.pentaho.reporting.engine.classic.core.testsupport.DebugJndiContextFactoryBuilder;
 import org.pentaho.reporting.libraries.designtime.swing.background.DataPreviewDialog;
 
 public class Prd5276Test
 {
-  private static final String query = "SELECT\n" +
-      " {[Time].[Years].[2003] : [Time].[Years].[2005]} ON COLUMNS,\n" +
-      "NON EMPTY(\n" +
-      "Union ( \n" +
-      "[Product].Children * {[Markets].[All Markets], [Markets].Children},\n" +
-      "[Product].[All Products] * [Markets].[All Markets] \n" +
-      ") \n" +
-      ") ON ROWS\n" +
-      "FROM [SteelWheelsSales]\n" +
-      "WHERE [Measures].[Quantity]\n";
+  private static final String query = MondrianTestUtil.QUERY_UNION_OK;
 
-  private static final String queryFlipped = "SELECT\n" +
-      " {[Time].[Years].[2003] : [Time].[Years].[2005]} ON ROWS,\n" +
-      "NON EMPTY(\n" +
-      "Union ( \n" +
-      "[Product].Children * {[Markets].[All Markets], [Markets].Children},\n" +
-      "[Product].[All Products] * [Markets].[All Markets] \n" +
-      ") \n" +
-      ") ON COLUMNS\n" +
-      "FROM [SteelWheelsSales]\n" +
-      "WHERE [Measures].[Quantity]\n";
+  private static final String queryFlipped = MondrianTestUtil.QUERY_UNION_FLIPPED;
 
-  private static final String queryBroken = "SELECT\n" +
-      " {[Time].[Years].[2003] : [Time].[Years].[2005]} ON COLUMNS,\n" +
-      "NON EMPTY(\n" +
-      "Union ( \n" +
-      "[Product].[All Products] * [Markets].[All Markets], \n" +
-      "[Product].Children * {[Markets].[All Markets], [Markets].Children}\n" +
-      ") \n" +
-      ") ON ROWS\n" +
-      "FROM [SteelWheelsSales]\n" +
-      "WHERE [Measures].[Quantity]\n";
+  private static final String queryBroken = MondrianTestUtil.QUERY_UNION_BROKEN;
 
-
+  private static final String queryMultipleH = "SELECT [Product].Children ON COLUMNS, Hierarchize({[Time].[Years].Members, [Time].[Quarters].Members, [Time].[Months].Members}) ON ROWS FROM [SteelWheelsSales]";
 
   @Before
   public void setUp() throws Exception
@@ -81,10 +52,10 @@ public class Prd5276Test
 
 
   /**
-   *  Validates that queries with empty results (no rows or no columns)
-   *  are correctly handled by CachingDataFactory.
-   *
-   *   http://jira.pentaho.com/browse/PRD-4628
+   * Validates that queries with empty results (no rows or no columns)
+   * are correctly handled by CachingDataFactory.
+   * <p/>
+   * http://jira.pentaho.com/browse/PRD-4628
    */
   @Test
   public void testQuery() throws ReportDataFactoryException
@@ -95,6 +66,7 @@ public class Prd5276Test
 
     Assert.assertEquals("[Markets].[(All)]", tableModel.getColumnName(1));
     Assert.assertEquals("[Product].[Line]", tableModel.getColumnName(2));
+    Assert.assertNotNull(tableModel.getValueAt(0, 3));
     Assert.assertNotNull(tableModel.getValueAt(1, 1));
     Assert.assertNotNull(tableModel.getValueAt(2, 2));
 
@@ -102,10 +74,10 @@ public class Prd5276Test
   }
 
   /**
-   *  Validates that queries with empty results (no rows or no columns)
-   *  are correctly handled by CachingDataFactory.
-   *
-   *   http://jira.pentaho.com/browse/PRD-4628
+   * Validates that queries with empty results (no rows or no columns)
+   * are correctly handled by CachingDataFactory.
+   * <p/>
+   * http://jira.pentaho.com/browse/PRD-4628
    */
   @Test
   public void testQueryOK() throws ReportDataFactoryException
@@ -113,6 +85,21 @@ public class Prd5276Test
     DataFactory dataFactory = createDataFactory(query);
     final TableModel tableModel = dataFactory.queryData("default", new ParameterDataRow());
 //    new DataPreviewDialog().showData(tableModel);
+
+    Assert.assertEquals("[Markets].[(All)]", tableModel.getColumnName(2));
+    Assert.assertEquals("[Product].[Line]", tableModel.getColumnName(1));
+    Assert.assertNotNull(tableModel.getValueAt(1, 1));
+    Assert.assertNotNull(tableModel.getValueAt(2, 2));
+
+//    TableModelInfo.printTableModel(tableModel);
+  }
+
+  @Test
+  public void testQueryMultipleH() throws ReportDataFactoryException
+  {
+    DataFactory dataFactory = createDataFactory(queryMultipleH);
+    final TableModel tableModel = dataFactory.queryData("default", new ParameterDataRow());
+    new DataPreviewDialog().showData(tableModel);
 
     Assert.assertEquals("[Markets].[(All)]", tableModel.getColumnName(2));
     Assert.assertEquals("[Product].[Line]", tableModel.getColumnName(1));

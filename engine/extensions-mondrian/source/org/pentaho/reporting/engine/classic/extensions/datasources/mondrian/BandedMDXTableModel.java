@@ -18,11 +18,10 @@
 package org.pentaho.reporting.engine.classic.extensions.datasources.mondrian;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
-import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
-import java.util.Set;
 import javax.swing.table.AbstractTableModel;
 
 import mondrian.olap.Axis;
@@ -41,7 +40,10 @@ import org.pentaho.reporting.engine.classic.core.wizard.DataAttributes;
 import org.pentaho.reporting.engine.classic.core.wizard.DefaultConceptQueryMapper;
 import org.pentaho.reporting.engine.classic.core.wizard.DefaultDataAttributes;
 import org.pentaho.reporting.engine.classic.core.wizard.EmptyDataAttributes;
-import org.pentaho.reporting.libraries.base.util.DebugLog;
+import org.pentaho.reporting.engine.classic.extensions.datasources.mondrian.util.MemberAddingStrategy;
+import org.pentaho.reporting.engine.classic.extensions.datasources.mondrian.util.ResultSetOrderMemberAddingStrategy;
+import org.pentaho.reporting.engine.classic.extensions.datasources.mondrian.util.SortedMemberAddingStrategy;
+import org.pentaho.reporting.libraries.base.util.ArgumentNullException;
 import org.pentaho.reporting.libraries.base.util.FastStack;
 
 /**
@@ -55,8 +57,7 @@ import org.pentaho.reporting.libraries.base.util.FastStack;
  * @author : Thomas Morgner
  */
 @SuppressWarnings({"UnnecessaryUnboxing"})
-public class BandedMDXTableModel extends AbstractTableModel
-    implements CloseableTableModel, MetaTableModel
+public class BandedMDXTableModel extends AbstractTableModel implements CloseableTableModel, MetaTableModel
 {
   private static final Log logger = LogFactory.getLog(DenormalizedMDXTableModel.class);
 
@@ -68,14 +69,19 @@ public class BandedMDXTableModel extends AbstractTableModel
   private IntList columnToAxisPosition;
   private List<Member> columnToMemberMapping;
   private List<String> columnNames;
+  private boolean membersOnAxisSorted;
 
   public BandedMDXTableModel(final Result resultSet, final int rowLimit)
   {
-    if (resultSet == null)
-    {
-      throw new NullPointerException("ResultSet returned was null");
-    }
+    this(resultSet, rowLimit, false);
+  }
+
+  public BandedMDXTableModel(final Result resultSet, final int rowLimit, final boolean membersOnAxisSorted)
+  {
+    ArgumentNullException.validate("resultSet", resultSet);
+
     this.resultSet = resultSet;
+    this.membersOnAxisSorted = membersOnAxisSorted;
 
     // rowcount is the product of all axis-sizes. If an axis contains more than one member, then
     // Mondrian already performs the crossjoin for us.
@@ -127,24 +133,26 @@ public class BandedMDXTableModel extends AbstractTableModel
       final Axis axis = axes[axesIndex];
       final List<Position> positions = axis.getPositions();
 
-      final LinkedHashMap<String, Member> columnNamesSet = new LinkedHashMap<String, Member>();
+      final MemberAddingStrategy strategy =
+          membersOnAxisSorted ? new SortedMemberAddingStrategy(positions) : new ResultSetOrderMemberAddingStrategy();
+
       for (int positionsIndex = 0; positionsIndex < positions.size(); positionsIndex++)
       {
         final Position position = positions.get(positionsIndex);
         for (int positionIndex = 0; positionIndex < position.size(); positionIndex++)
         {
           Member m = position.get(positionIndex);
-          computeDeepColumnNames(m, columnNamesSet);
+          computeDeepColumnNames(m, strategy);
         }
       }
 
+      Collection<Member> columnNamesSet = strategy.values();
       if (columnNamesSet.size() != axesMembers[axesIndex])
       {
         logger.error("ERROR: Number of names is not equal the pre-counted number.");
       }
 
-
-      columnToMemberMapper.addAll(columnNamesSet.values());
+      columnToMemberMapper.addAll(columnNamesSet);
     }
     return columnToMemberMapper;
   }
@@ -174,7 +182,8 @@ public class BandedMDXTableModel extends AbstractTableModel
     }
 
     final int[] axesMembers = new int[axes.length];
-    for (int idx = 1; idx < membersPerAxis.length; idx += 1) {
+    for (int idx = 1; idx < membersPerAxis.length; idx += 1)
+    {
       IntList memberList = membersPerAxis[idx];
 
       int memberCount = 0;
@@ -296,8 +305,8 @@ public class BandedMDXTableModel extends AbstractTableModel
    *
    * @param m
    */
-  protected LinkedHashMap<String, Member> computeDeepColumnNames(Member m,
-                                                                 LinkedHashMap<String, Member> memberToNameMapping)
+  protected void computeDeepColumnNames(Member m,
+                                        MemberAddingStrategy memberToNameMapping)
   {
     final FastStack<Member> memberStack = new FastStack<Member>();
     while (m != null)
@@ -309,13 +318,8 @@ public class BandedMDXTableModel extends AbstractTableModel
     while (memberStack.isEmpty() == false)
     {
       m = memberStack.pop();
-      final String name = m.getLevel().getUniqueName();
-      if (memberToNameMapping.containsKey(name) == false)
-      {
-        memberToNameMapping.put(name, m);
-      }
+      memberToNameMapping.add(m);
     }
-    return memberToNameMapping;
   }
 
   /**
@@ -375,33 +379,22 @@ public class BandedMDXTableModel extends AbstractTableModel
     if (isMeasureColumn(columnIndex))
     {
       final int[] cellKey = computeCellKey(rowIndex, columnIndex);
-      try
+      final Cell cell = resultSet.getCell(cellKey);
+      if (cell.isNull())
       {
-        final Cell cell = resultSet.getCell(cellKey);
-        if (cell.isNull())
-        {
-          return null;
-        }
-        return cell.getValue();
-      }catch (NullPointerException npe) {
-        DebugLog.logHere();
+        return null;
       }
+      return cell.getValue();
     }
 
     final int[] cellKey = computeCellKey(rowIndex, columnIndex);
-    final Member m = columnToMemberMapping.get(columnIndex);
-    Set<Member> candidates = getCandidateMembers(m.getDimension(), columnIndex, cellKey);
-    String name = null;
-    for (Member candidate : candidates)
+
+    Member candidateMember = getCandidateMembers(columnIndex, cellKey);
+    if (candidateMember != null)
     {
-      name = candidate.getParentMember() == null ? candidate.getName() : null;
-      Member contextMember = searchContextMemberOfParents(candidate, columnIndex);
-      if (contextMember != null)
-      {
-        return contextMember.getName();
-      }
+      return candidateMember.getName();
     }
-    return name;
+    return null;
   }
 
   public Class<?> getColumnClass(final int columnIndex)
@@ -430,6 +423,12 @@ public class BandedMDXTableModel extends AbstractTableModel
 
   private int[] computeCellKey(final int rowIndex, final int columnIndex)
   {
+    final int[] cellKey = new int[axesSize.length];
+    if (axesSize.length == 0)
+    {
+      return cellKey;
+    }
+
     final int correctedColIndex;
     if (axesSize.length > 0)
     {
@@ -449,12 +448,9 @@ public class BandedMDXTableModel extends AbstractTableModel
       correctedColIndex = 0;
     }
 
-    final int[] cellKey = new int[axesSize.length];
+    cellKey[0] = correctedColIndex;
+
     int tmpRowIdx = rowIndex;
-    if (axesSize.length > 0)
-    {
-      cellKey[0] = correctedColIndex;
-    }
     for (int i = 1; i < axesSize.length; i++)
     {
       final int axisSize = axesSize[i];
@@ -472,32 +468,80 @@ public class BandedMDXTableModel extends AbstractTableModel
     return cellKey;
   }
 
-  private Set<Member> getCandidateMembers(final Dimension dimension,
-                                          final int columnIndex,
-                                          final int[] cellKey)
+  private Member getCandidateMembers(final int columnIndex,
+                                     final int[] cellKey)
   {
-    Set<Member> resultMembers = new LinkedHashSet<Member>();
 
     final int axisIndex = columnToAxisPosition.get(columnIndex);
     final Axis[] axes = resultSet.getAxes();
     final Axis axis = axes[axisIndex];
-    final int posIndex = cellKey[axisIndex];
+
     final List<Position> positionList = axis.getPositions();
     if (positionList.isEmpty())
     {
-      return resultMembers;
+      return null;
     }
 
+    final int posIndex = cellKey[axisIndex];
     final Position position = positionList.get(posIndex);
+
+    final Member memberByName = findMemberByName(position, columnIndex);
+    if (memberByName != null)
+    {
+      return memberByName;
+    }
+    return findRootMember(position, columnIndex);
+  }
+
+  private Member findRootMember(final List<Member> position, final int columnIndex)
+  {
+    final Dimension dimension = columnToMemberMapping.get(columnIndex).getDimension();
     for (int i = 0; i < position.size(); i++)
     {
       final Member member = position.get(i);
       if (dimension.equals(member.getDimension()))
       {
-        resultMembers.add(member);
+        if (member.getParentMember() == null)
+        {
+          return member;
+        }
       }
     }
-    return resultMembers;
+    return null;
+  }
+
+  private Member findMemberByName(final List<Member> position, final int columnIndex)
+  {
+    final Dimension dimension = columnToMemberMapping.get(columnIndex).getDimension();
+    for (int i = 0; i < position.size(); i++)
+    {
+      final Member member = position.get(i);
+      if (dimension.equals(member.getDimension()))
+      {
+        Member match = searchContextMemberOfParents(member, columnIndex);
+        if (match != null)
+        {
+          return match;
+        }
+      }
+    }
+    return null;
+  }
+
+  private Member searchContextMemberOfParents(final Member member, final int columnIndex)
+  {
+    String columnName = getColumnName(columnIndex);
+
+    Member candidate = member;
+    while (candidate != null)
+    {
+      if (candidate.getLevel().getUniqueName().equals(columnName))
+      {
+        return candidate;
+      }
+      candidate = candidate.getParentMember();
+    }
+    return null;
   }
 
   public void close()
@@ -523,29 +567,26 @@ public class BandedMDXTableModel extends AbstractTableModel
       throw new IndexOutOfBoundsException();
     }
 
-
-    if (isMeasureColumn(columnIndex)) {
+    if (isMeasureColumn(columnIndex))
+    {
       final int[] cellKey = computeCellKey(rowIndex, columnIndex);
       final Cell cell = resultSet.getCell(cellKey);
       return new MDXMetaDataCellAttributes(EmptyDataAttributes.INSTANCE, cell);
     }
 
     final int[] cellKey = computeCellKey(rowIndex, columnIndex);
-    final Member m = columnToMemberMapping.get(columnIndex);
-    Set<Member> candidates = getCandidateMembers(m.getDimension(), columnIndex, cellKey);
-    for (Member candidate : candidates)
+    Member contextMember = getCandidateMembers(columnIndex, cellKey);
+    if (contextMember != null)
     {
-      Member contextMember = searchContextMemberOfParents(candidate, columnIndex);
-      if (contextMember != null)
-      {
-        return new MDXMetaDataMemberAttributes(EmptyDataAttributes.INSTANCE, contextMember);
-      }
+      return new MDXMetaDataMemberAttributes(EmptyDataAttributes.INSTANCE, contextMember);
     }
     return EmptyDataAttributes.INSTANCE;
   }
 
-  private boolean isMeasureColumn(final int columnIndex) {
-    if (columnIndex >= columnToMemberMapping.size()) {
+  private boolean isMeasureColumn(final int columnIndex)
+  {
+    if (columnIndex >= columnToMemberMapping.size())
+    {
       return true;
     }
     return false;
@@ -573,20 +614,6 @@ public class BandedMDXTableModel extends AbstractTableModel
     dataAttributes.setMetaAttribute(MetaAttributeNames.Core.NAMESPACE,
         MetaAttributeNames.Core.CROSSTAB_MODE, DefaultConceptQueryMapper.INSTANCE, MetaAttributeNames.Core.CROSSTAB_VALUE_NORMALIZED);
     return dataAttributes;
-  }
-
-  private Member searchContextMemberOfParents(final Member member, final int columnIndex)
-  {
-    Member candidate = member;
-    while (candidate != null)
-    {
-      if (candidate.getLevel().getUniqueName().equals(getColumnName(columnIndex)))
-      {
-        return candidate;
-      }
-      candidate = candidate.getParentMember();
-    }
-    return null;
   }
 
 }

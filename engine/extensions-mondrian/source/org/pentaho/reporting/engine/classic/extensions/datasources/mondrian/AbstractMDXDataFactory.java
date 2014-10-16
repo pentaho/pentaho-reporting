@@ -57,6 +57,7 @@ import org.apache.commons.logging.LogFactory;
 import org.pentaho.reporting.engine.classic.core.AbstractDataFactory;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.pentaho.reporting.engine.classic.core.DataFactory;
+import org.pentaho.reporting.engine.classic.core.DataFactoryContext;
 import org.pentaho.reporting.engine.classic.core.DataRow;
 import org.pentaho.reporting.engine.classic.core.ReportDataFactoryException;
 import org.pentaho.reporting.engine.classic.core.util.PropertyLookupParser;
@@ -76,7 +77,6 @@ import org.pentaho.reporting.libraries.formatting.FastMessageFormat;
  */
 public abstract class AbstractMDXDataFactory extends AbstractDataFactory
 {
-
   /**
    * The message compiler maps all named references into numeric references.
    */
@@ -187,6 +187,7 @@ public abstract class AbstractMDXDataFactory extends AbstractDataFactory
   private transient Connection connection;
   private static final String[] EMPTY_QUERYNAMES = new String[0];
   private static final Log logger = LogFactory.getLog(AbstractMDXDataFactory.class);
+  private boolean membersOnAxisSorted;
 
   public AbstractMDXDataFactory()
   {
@@ -217,6 +218,16 @@ public abstract class AbstractMDXDataFactory extends AbstractDataFactory
   public void setDynamicSchemaProcessor(final String dynamicSchemaProcessor)
   {
     this.dynamicSchemaProcessor = dynamicSchemaProcessor;
+  }
+
+  public boolean isMembersOnAxisSorted()
+  {
+    return membersOnAxisSorted;
+  }
+
+  public void setMembersOnAxisSorted(final boolean membersOnAxisSorted)
+  {
+    this.membersOnAxisSorted = membersOnAxisSorted;
   }
 
   public Boolean isUseSchemaPool()
@@ -1230,5 +1241,12 @@ public abstract class AbstractMDXDataFactory extends AbstractDataFactory
     {
       throw new ReportDataFactoryException("Failed to create datasource:" + e.getLocalizedMessage(), e);
     }
+  }
+
+  public void initialize(final DataFactoryContext dataFactoryContext) throws ReportDataFactoryException
+  {
+    super.initialize(dataFactoryContext);
+    membersOnAxisSorted = "true".equals
+        (dataFactoryContext.getConfiguration().getConfigProperty(MondrianDataFactoryModule.MEMBER_ON_AXIS_SORTED_KEY));
   }
 }
