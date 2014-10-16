@@ -1,0 +1,1206 @@
+Tablemodel contains 36 rows.
+Column: 0 Name=Product; DataType=class java.lang.String
+Column: 1 Name=Markets; DataType=class java.lang.String
+Column: 2 Name=Markets{2}; DataType=class java.lang.String
+Column: 3 Name=2003/Time; DataType=class java.lang.Double
+Column: 4 Name=2004/Time; DataType=class java.lang.Double
+Column: 5 Name=2005/Time; DataType=class java.lang.Double
+Checking the data inside
+ValueAt (0, 0) is in a typed column and is of type class java.lang.String
+ValueAt (0, 1) is in a typed column and is of type class java.lang.String
+ValueAt (0, 2) is in a typed column and is of type class java.lang.String
+ValueAt (0, 3) is in a typed column and is of type class java.lang.Double
+ValueAt (0, 4) is in a typed column and is of type class java.lang.Double
+ValueAt (0, 5) is in a typed column and is of type class java.lang.Double
+ValueAt (1, 0) is in a typed column and is of type class java.lang.String
+ValueAt (1, 1) is in a typed column and is of type class java.lang.String
+ValueAt (1, 2) is in a typed column and is of type class java.lang.String
+ValueAt (1, 3) is in a typed column and is of type class java.lang.Double
+ValueAt (1, 4) is in a typed column and is of type class java.lang.Double
+ValueAt (1, 5) is in a typed column and is of type class java.lang.Double
+ValueAt (2, 0) is in a typed column and is of type class java.lang.String
+ValueAt (2, 1) is in a typed column and is of type class java.lang.String
+ValueAt (2, 2) is in a typed column and is of type class java.lang.String
+ValueAt (2, 3) is in a typed column and is of type class java.lang.Double
+ValueAt (2, 4) is in a typed column and is of type class java.lang.Double
+ValueAt (2, 5) is in a typed column and is of type class java.lang.Double
+ValueAt (3, 0) is in a typed column and is of type class java.lang.String
+ValueAt (3, 1) is in a typed column and is of type class java.lang.String
+ValueAt (3, 2) is in a typed column and is of type class java.lang.String
+ValueAt (3, 3) is in a typed column and is of type class java.lang.Double
+ValueAt (3, 4) is in a typed column and is of type class java.lang.Double
+ValueAt (3, 5) is in a typed column and is of type class java.lang.Double
+ValueAt (4, 0) is in a typed column and is of type class java.lang.String
+ValueAt (4, 1) is in a typed column and is of type class java.lang.String
+ValueAt (4, 2) is in a typed column and is of type class java.lang.String
+ValueAt (4, 3) is in a typed column and is of type class java.lang.Double
+ValueAt (4, 4) is in a typed column and is of type class java.lang.Double
+ValueAt (4, 5) is in a typed column and is of type class java.lang.Double
+ValueAt (5, 0) is in a typed column and is of type class java.lang.String
+ValueAt (5, 1) is in a typed column and is of type class java.lang.String
+ValueAt (5, 2) is in a typed column and is of type class java.lang.String
+ValueAt (5, 3) is in a typed column and is of type class java.lang.Double
+ValueAt (5, 4) is in a typed column and is of type class java.lang.Double
+ValueAt (5, 5) is in a typed column and is of type class java.lang.Double
+ValueAt (6, 0) is in a typed column and is of type class java.lang.String
+ValueAt (6, 1) is in a typed column and is of type class java.lang.String
+ValueAt (6, 2) is in a typed column and is of type class java.lang.String
+ValueAt (6, 3) is in a typed column and is of type class java.lang.Double
+ValueAt (6, 4) is in a typed column and is of type class java.lang.Double
+ValueAt (6, 5) is in a typed column and is of type class java.lang.Double
+ValueAt (7, 0) is in a typed column and is of type class java.lang.String
+ValueAt (7, 1) is in a typed column and is of type class java.lang.String
+ValueAt (7, 2) is in a typed column and is of type class java.lang.String
+ValueAt (7, 3) is in a typed column and is of type class java.lang.Double
+ValueAt (7, 4) is in a typed column and is of type class java.lang.Double
+ValueAt (7, 5) is in a typed column and is of type class java.lang.Double
+ValueAt (8, 0) is in a typed column and is of type class java.lang.String
+ValueAt (8, 1) is in a typed column and is of type class java.lang.String
+ValueAt (8, 2) is in a typed column and is of type class java.lang.String
+ValueAt (8, 3) is in a typed column and is of type class java.lang.Double
+ValueAt (8, 4) is in a typed column and is of type class java.lang.Double
+ValueAt (8, 5) is in a typed column and is of type class java.lang.Double
+ValueAt (9, 0) is in a typed column and is of type class java.lang.String
+ValueAt (9, 1) is in a typed column and is of type class java.lang.String
+ValueAt (9, 2) is in a typed column and is of type class java.lang.String
+ValueAt (9, 3) is in a typed column and is of type class java.lang.Double
+ValueAt (9, 4) is in a typed column and is of type class java.lang.Double
+ValueAt (9, 5) is in a typed column and is of type class java.lang.Double
+ValueAt (10, 0) is in a typed column and is of type class java.lang.String
+ValueAt (10, 1) is in a typed column and is of type class java.lang.String
+ValueAt (10, 2) is in a typed column and is of type class java.lang.String
+ValueAt (10, 3) is in a typed column and is of type class java.lang.Double
+ValueAt (10, 4) is in a typed column and is of type class java.lang.Double
+ValueAt (10, 5) is in a typed column and is of type class java.lang.Double
+ValueAt (11, 0) is in a typed column and is of type class java.lang.String
+ValueAt (11, 1) is in a typed column and is of type class java.lang.String
+ValueAt (11, 2) is in a typed column and is of type class java.lang.String
+ValueAt (11, 3) is in a typed column and is of type class java.lang.Double
+ValueAt (11, 4) is in a typed column and is of type class java.lang.Double
+ValueAt (11, 5) is in a typed column and is of type class java.lang.Double
+ValueAt (12, 0) is in a typed column and is of type class java.lang.String
+ValueAt (12, 1) is in a typed column and is of type class java.lang.String
+ValueAt (12, 2) is in a typed column and is of type class java.lang.String
+ValueAt (12, 3) is in a typed column and is of type class java.lang.Double
+ValueAt (12, 4) is in a typed column and is of type class java.lang.Double
+ValueAt (12, 5) is in a typed column and is of type class java.lang.Double
+ValueAt (13, 0) is in a typed column and is of type class java.lang.String
+ValueAt (13, 1) is in a typed column and is of type class java.lang.String
+ValueAt (13, 2) is in a typed column and is of type class java.lang.String
+ValueAt (13, 3) is in a typed column and is of type class java.lang.Double
+ValueAt (13, 4) is in a typed column and is of type class java.lang.Double
+ValueAt (13, 5) is in a typed column and is of type class java.lang.Double
+ValueAt (14, 0) is in a typed column and is of type class java.lang.String
+ValueAt (14, 1) is in a typed column and is of type class java.lang.String
+ValueAt (14, 2) is in a typed column and is of type class java.lang.String
+ValueAt (14, 3) is in a typed column and is of type class java.lang.Double
+ValueAt (14, 4) is in a typed column and is of type class java.lang.Double
+ValueAt (14, 5) is null
+ValueAt (15, 0) is in a typed column and is of type class java.lang.String
+ValueAt (15, 1) is in a typed column and is of type class java.lang.String
+ValueAt (15, 2) is in a typed column and is of type class java.lang.String
+ValueAt (15, 3) is in a typed column and is of type class java.lang.Double
+ValueAt (15, 4) is in a typed column and is of type class java.lang.Double
+ValueAt (15, 5) is in a typed column and is of type class java.lang.Double
+ValueAt (16, 0) is in a typed column and is of type class java.lang.String
+ValueAt (16, 1) is in a typed column and is of type class java.lang.String
+ValueAt (16, 2) is in a typed column and is of type class java.lang.String
+ValueAt (16, 3) is in a typed column and is of type class java.lang.Double
+ValueAt (16, 4) is in a typed column and is of type class java.lang.Double
+ValueAt (16, 5) is in a typed column and is of type class java.lang.Double
+ValueAt (17, 0) is in a typed column and is of type class java.lang.String
+ValueAt (17, 1) is in a typed column and is of type class java.lang.String
+ValueAt (17, 2) is in a typed column and is of type class java.lang.String
+ValueAt (17, 3) is null
+ValueAt (17, 4) is in a typed column and is of type class java.lang.Double
+ValueAt (17, 5) is in a typed column and is of type class java.lang.Double
+ValueAt (18, 0) is in a typed column and is of type class java.lang.String
+ValueAt (18, 1) is in a typed column and is of type class java.lang.String
+ValueAt (18, 2) is in a typed column and is of type class java.lang.String
+ValueAt (18, 3) is in a typed column and is of type class java.lang.Double
+ValueAt (18, 4) is in a typed column and is of type class java.lang.Double
+ValueAt (18, 5) is in a typed column and is of type class java.lang.Double
+ValueAt (19, 0) is in a typed column and is of type class java.lang.String
+ValueAt (19, 1) is in a typed column and is of type class java.lang.String
+ValueAt (19, 2) is in a typed column and is of type class java.lang.String
+ValueAt (19, 3) is in a typed column and is of type class java.lang.Double
+ValueAt (19, 4) is in a typed column and is of type class java.lang.Double
+ValueAt (19, 5) is in a typed column and is of type class java.lang.Double
+ValueAt (20, 0) is in a typed column and is of type class java.lang.String
+ValueAt (20, 1) is in a typed column and is of type class java.lang.String
+ValueAt (20, 2) is in a typed column and is of type class java.lang.String
+ValueAt (20, 3) is in a typed column and is of type class java.lang.Double
+ValueAt (20, 4) is in a typed column and is of type class java.lang.Double
+ValueAt (20, 5) is in a typed column and is of type class java.lang.Double
+ValueAt (21, 0) is in a typed column and is of type class java.lang.String
+ValueAt (21, 1) is in a typed column and is of type class java.lang.String
+ValueAt (21, 2) is in a typed column and is of type class java.lang.String
+ValueAt (21, 3) is in a typed column and is of type class java.lang.Double
+ValueAt (21, 4) is in a typed column and is of type class java.lang.Double
+ValueAt (21, 5) is in a typed column and is of type class java.lang.Double
+ValueAt (22, 0) is in a typed column and is of type class java.lang.String
+ValueAt (22, 1) is in a typed column and is of type class java.lang.String
+ValueAt (22, 2) is in a typed column and is of type class java.lang.String
+ValueAt (22, 3) is in a typed column and is of type class java.lang.Double
+ValueAt (22, 4) is in a typed column and is of type class java.lang.Double
+ValueAt (22, 5) is null
+ValueAt (23, 0) is in a typed column and is of type class java.lang.String
+ValueAt (23, 1) is in a typed column and is of type class java.lang.String
+ValueAt (23, 2) is in a typed column and is of type class java.lang.String
+ValueAt (23, 3) is in a typed column and is of type class java.lang.Double
+ValueAt (23, 4) is in a typed column and is of type class java.lang.Double
+ValueAt (23, 5) is in a typed column and is of type class java.lang.Double
+ValueAt (24, 0) is in a typed column and is of type class java.lang.String
+ValueAt (24, 1) is in a typed column and is of type class java.lang.String
+ValueAt (24, 2) is in a typed column and is of type class java.lang.String
+ValueAt (24, 3) is in a typed column and is of type class java.lang.Double
+ValueAt (24, 4) is null
+ValueAt (24, 5) is in a typed column and is of type class java.lang.Double
+ValueAt (25, 0) is in a typed column and is of type class java.lang.String
+ValueAt (25, 1) is in a typed column and is of type class java.lang.String
+ValueAt (25, 2) is in a typed column and is of type class java.lang.String
+ValueAt (25, 3) is in a typed column and is of type class java.lang.Double
+ValueAt (25, 4) is in a typed column and is of type class java.lang.Double
+ValueAt (25, 5) is in a typed column and is of type class java.lang.Double
+ValueAt (26, 0) is in a typed column and is of type class java.lang.String
+ValueAt (26, 1) is in a typed column and is of type class java.lang.String
+ValueAt (26, 2) is in a typed column and is of type class java.lang.String
+ValueAt (26, 3) is in a typed column and is of type class java.lang.Double
+ValueAt (26, 4) is in a typed column and is of type class java.lang.Double
+ValueAt (26, 5) is in a typed column and is of type class java.lang.Double
+ValueAt (27, 0) is in a typed column and is of type class java.lang.String
+ValueAt (27, 1) is in a typed column and is of type class java.lang.String
+ValueAt (27, 2) is in a typed column and is of type class java.lang.String
+ValueAt (27, 3) is in a typed column and is of type class java.lang.Double
+ValueAt (27, 4) is in a typed column and is of type class java.lang.Double
+ValueAt (27, 5) is in a typed column and is of type class java.lang.Double
+ValueAt (28, 0) is in a typed column and is of type class java.lang.String
+ValueAt (28, 1) is in a typed column and is of type class java.lang.String
+ValueAt (28, 2) is in a typed column and is of type class java.lang.String
+ValueAt (28, 3) is in a typed column and is of type class java.lang.Double
+ValueAt (28, 4) is in a typed column and is of type class java.lang.Double
+ValueAt (28, 5) is in a typed column and is of type class java.lang.Double
+ValueAt (29, 0) is in a typed column and is of type class java.lang.String
+ValueAt (29, 1) is in a typed column and is of type class java.lang.String
+ValueAt (29, 2) is in a typed column and is of type class java.lang.String
+ValueAt (29, 3) is in a typed column and is of type class java.lang.Double
+ValueAt (29, 4) is in a typed column and is of type class java.lang.Double
+ValueAt (29, 5) is null
+ValueAt (30, 0) is in a typed column and is of type class java.lang.String
+ValueAt (30, 1) is in a typed column and is of type class java.lang.String
+ValueAt (30, 2) is in a typed column and is of type class java.lang.String
+ValueAt (30, 3) is in a typed column and is of type class java.lang.Double
+ValueAt (30, 4) is in a typed column and is of type class java.lang.Double
+ValueAt (30, 5) is in a typed column and is of type class java.lang.Double
+ValueAt (31, 0) is in a typed column and is of type class java.lang.String
+ValueAt (31, 1) is in a typed column and is of type class java.lang.String
+ValueAt (31, 2) is in a typed column and is of type class java.lang.String
+ValueAt (31, 3) is in a typed column and is of type class java.lang.Double
+ValueAt (31, 4) is in a typed column and is of type class java.lang.Double
+ValueAt (31, 5) is in a typed column and is of type class java.lang.Double
+ValueAt (32, 0) is in a typed column and is of type class java.lang.String
+ValueAt (32, 1) is in a typed column and is of type class java.lang.String
+ValueAt (32, 2) is in a typed column and is of type class java.lang.String
+ValueAt (32, 3) is in a typed column and is of type class java.lang.Double
+ValueAt (32, 4) is in a typed column and is of type class java.lang.Double
+ValueAt (32, 5) is in a typed column and is of type class java.lang.Double
+ValueAt (33, 0) is in a typed column and is of type class java.lang.String
+ValueAt (33, 1) is in a typed column and is of type class java.lang.String
+ValueAt (33, 2) is in a typed column and is of type class java.lang.String
+ValueAt (33, 3) is in a typed column and is of type class java.lang.Double
+ValueAt (33, 4) is in a typed column and is of type class java.lang.Double
+ValueAt (33, 5) is in a typed column and is of type class java.lang.Double
+ValueAt (34, 0) is in a typed column and is of type class java.lang.String
+ValueAt (34, 1) is in a typed column and is of type class java.lang.String
+ValueAt (34, 2) is in a typed column and is of type class java.lang.String
+ValueAt (34, 3) is in a typed column and is of type class java.lang.Double
+ValueAt (34, 4) is in a typed column and is of type class java.lang.Double
+ValueAt (34, 5) is in a typed column and is of type class java.lang.Double
+ValueAt (35, 0) is in a typed column and is of type class java.lang.String
+ValueAt (35, 1) is in a typed column and is of type class java.lang.String
+ValueAt (35, 2) is in a typed column and is of type class java.lang.String
+ValueAt (35, 3) is in a typed column and is of type class java.lang.Double
+ValueAt (35, 4) is in a typed column and is of type class java.lang.Double
+ValueAt (35, 5) is in a typed column and is of type class java.lang.Double
+Tablemodel contains 36 rows.
+Checking the attributes inside
+CellAttribute(0, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACKGROUND_COLOR]=null
+CellAttribute(0, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_FLAGS]=0
+CellAttribute(0, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_NAME]=null
+CellAttribute(0, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_SIZE]=null
+CellAttribute(0, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FOREGROUND_COLOR]=null
+CellAttribute(0, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FORMAT_STRING]=#,###
+CellAttribute(0, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:LANGUAGE]=null
+CellAttribute(0, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACKGROUND_COLOR]=null
+CellAttribute(0, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_FLAGS]=0
+CellAttribute(0, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_NAME]=null
+CellAttribute(0, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_SIZE]=null
+CellAttribute(0, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FOREGROUND_COLOR]=null
+CellAttribute(0, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FORMAT_STRING]=#,###
+CellAttribute(0, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:LANGUAGE]=null
+CellAttribute(0, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACKGROUND_COLOR]=null
+CellAttribute(0, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_FLAGS]=0
+CellAttribute(0, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_NAME]=null
+CellAttribute(0, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_SIZE]=null
+CellAttribute(0, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FOREGROUND_COLOR]=null
+CellAttribute(0, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FORMAT_STRING]=#,###
+CellAttribute(0, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:LANGUAGE]=null
+CellAttribute(1, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACKGROUND_COLOR]=null
+CellAttribute(1, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_FLAGS]=0
+CellAttribute(1, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_NAME]=null
+CellAttribute(1, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_SIZE]=null
+CellAttribute(1, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FOREGROUND_COLOR]=null
+CellAttribute(1, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FORMAT_STRING]=#,###
+CellAttribute(1, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:LANGUAGE]=null
+CellAttribute(1, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACKGROUND_COLOR]=null
+CellAttribute(1, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_FLAGS]=0
+CellAttribute(1, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_NAME]=null
+CellAttribute(1, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_SIZE]=null
+CellAttribute(1, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FOREGROUND_COLOR]=null
+CellAttribute(1, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FORMAT_STRING]=#,###
+CellAttribute(1, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:LANGUAGE]=null
+CellAttribute(1, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACKGROUND_COLOR]=null
+CellAttribute(1, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_FLAGS]=0
+CellAttribute(1, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_NAME]=null
+CellAttribute(1, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_SIZE]=null
+CellAttribute(1, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FOREGROUND_COLOR]=null
+CellAttribute(1, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FORMAT_STRING]=#,###
+CellAttribute(1, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:LANGUAGE]=null
+CellAttribute(2, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACKGROUND_COLOR]=null
+CellAttribute(2, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_FLAGS]=0
+CellAttribute(2, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_NAME]=null
+CellAttribute(2, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_SIZE]=null
+CellAttribute(2, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FOREGROUND_COLOR]=null
+CellAttribute(2, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FORMAT_STRING]=#,###
+CellAttribute(2, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:LANGUAGE]=null
+CellAttribute(2, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACKGROUND_COLOR]=null
+CellAttribute(2, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_FLAGS]=0
+CellAttribute(2, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_NAME]=null
+CellAttribute(2, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_SIZE]=null
+CellAttribute(2, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FOREGROUND_COLOR]=null
+CellAttribute(2, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FORMAT_STRING]=#,###
+CellAttribute(2, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:LANGUAGE]=null
+CellAttribute(2, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACKGROUND_COLOR]=null
+CellAttribute(2, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_FLAGS]=0
+CellAttribute(2, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_NAME]=null
+CellAttribute(2, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_SIZE]=null
+CellAttribute(2, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FOREGROUND_COLOR]=null
+CellAttribute(2, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FORMAT_STRING]=#,###
+CellAttribute(2, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:LANGUAGE]=null
+CellAttribute(3, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACKGROUND_COLOR]=null
+CellAttribute(3, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_FLAGS]=0
+CellAttribute(3, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_NAME]=null
+CellAttribute(3, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_SIZE]=null
+CellAttribute(3, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FOREGROUND_COLOR]=null
+CellAttribute(3, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FORMAT_STRING]=#,###
+CellAttribute(3, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:LANGUAGE]=null
+CellAttribute(3, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACKGROUND_COLOR]=null
+CellAttribute(3, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_FLAGS]=0
+CellAttribute(3, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_NAME]=null
+CellAttribute(3, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_SIZE]=null
+CellAttribute(3, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FOREGROUND_COLOR]=null
+CellAttribute(3, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FORMAT_STRING]=#,###
+CellAttribute(3, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:LANGUAGE]=null
+CellAttribute(3, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACKGROUND_COLOR]=null
+CellAttribute(3, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_FLAGS]=0
+CellAttribute(3, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_NAME]=null
+CellAttribute(3, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_SIZE]=null
+CellAttribute(3, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FOREGROUND_COLOR]=null
+CellAttribute(3, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FORMAT_STRING]=#,###
+CellAttribute(3, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:LANGUAGE]=null
+CellAttribute(4, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACKGROUND_COLOR]=null
+CellAttribute(4, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_FLAGS]=0
+CellAttribute(4, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_NAME]=null
+CellAttribute(4, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_SIZE]=null
+CellAttribute(4, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FOREGROUND_COLOR]=null
+CellAttribute(4, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FORMAT_STRING]=#,###
+CellAttribute(4, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:LANGUAGE]=null
+CellAttribute(4, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACKGROUND_COLOR]=null
+CellAttribute(4, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_FLAGS]=0
+CellAttribute(4, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_NAME]=null
+CellAttribute(4, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_SIZE]=null
+CellAttribute(4, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FOREGROUND_COLOR]=null
+CellAttribute(4, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FORMAT_STRING]=#,###
+CellAttribute(4, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:LANGUAGE]=null
+CellAttribute(4, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACKGROUND_COLOR]=null
+CellAttribute(4, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_FLAGS]=0
+CellAttribute(4, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_NAME]=null
+CellAttribute(4, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_SIZE]=null
+CellAttribute(4, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FOREGROUND_COLOR]=null
+CellAttribute(4, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FORMAT_STRING]=#,###
+CellAttribute(4, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:LANGUAGE]=null
+CellAttribute(5, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACKGROUND_COLOR]=null
+CellAttribute(5, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_FLAGS]=0
+CellAttribute(5, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_NAME]=null
+CellAttribute(5, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_SIZE]=null
+CellAttribute(5, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FOREGROUND_COLOR]=null
+CellAttribute(5, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FORMAT_STRING]=#,###
+CellAttribute(5, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:LANGUAGE]=null
+CellAttribute(5, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACKGROUND_COLOR]=null
+CellAttribute(5, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_FLAGS]=0
+CellAttribute(5, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_NAME]=null
+CellAttribute(5, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_SIZE]=null
+CellAttribute(5, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FOREGROUND_COLOR]=null
+CellAttribute(5, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FORMAT_STRING]=#,###
+CellAttribute(5, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:LANGUAGE]=null
+CellAttribute(5, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACKGROUND_COLOR]=null
+CellAttribute(5, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_FLAGS]=0
+CellAttribute(5, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_NAME]=null
+CellAttribute(5, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_SIZE]=null
+CellAttribute(5, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FOREGROUND_COLOR]=null
+CellAttribute(5, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FORMAT_STRING]=#,###
+CellAttribute(5, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:LANGUAGE]=null
+CellAttribute(6, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACKGROUND_COLOR]=null
+CellAttribute(6, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_FLAGS]=0
+CellAttribute(6, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_NAME]=null
+CellAttribute(6, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_SIZE]=null
+CellAttribute(6, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FOREGROUND_COLOR]=null
+CellAttribute(6, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FORMAT_STRING]=#,###
+CellAttribute(6, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:LANGUAGE]=null
+CellAttribute(6, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACKGROUND_COLOR]=null
+CellAttribute(6, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_FLAGS]=0
+CellAttribute(6, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_NAME]=null
+CellAttribute(6, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_SIZE]=null
+CellAttribute(6, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FOREGROUND_COLOR]=null
+CellAttribute(6, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FORMAT_STRING]=#,###
+CellAttribute(6, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:LANGUAGE]=null
+CellAttribute(6, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACKGROUND_COLOR]=null
+CellAttribute(6, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_FLAGS]=0
+CellAttribute(6, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_NAME]=null
+CellAttribute(6, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_SIZE]=null
+CellAttribute(6, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FOREGROUND_COLOR]=null
+CellAttribute(6, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FORMAT_STRING]=#,###
+CellAttribute(6, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:LANGUAGE]=null
+CellAttribute(7, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACKGROUND_COLOR]=null
+CellAttribute(7, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_FLAGS]=0
+CellAttribute(7, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_NAME]=null
+CellAttribute(7, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_SIZE]=null
+CellAttribute(7, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FOREGROUND_COLOR]=null
+CellAttribute(7, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FORMAT_STRING]=#,###
+CellAttribute(7, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:LANGUAGE]=null
+CellAttribute(7, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACKGROUND_COLOR]=null
+CellAttribute(7, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_FLAGS]=0
+CellAttribute(7, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_NAME]=null
+CellAttribute(7, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_SIZE]=null
+CellAttribute(7, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FOREGROUND_COLOR]=null
+CellAttribute(7, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FORMAT_STRING]=#,###
+CellAttribute(7, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:LANGUAGE]=null
+CellAttribute(7, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACKGROUND_COLOR]=null
+CellAttribute(7, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_FLAGS]=0
+CellAttribute(7, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_NAME]=null
+CellAttribute(7, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_SIZE]=null
+CellAttribute(7, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FOREGROUND_COLOR]=null
+CellAttribute(7, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FORMAT_STRING]=#,###
+CellAttribute(7, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:LANGUAGE]=null
+CellAttribute(8, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACKGROUND_COLOR]=null
+CellAttribute(8, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_FLAGS]=0
+CellAttribute(8, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_NAME]=null
+CellAttribute(8, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_SIZE]=null
+CellAttribute(8, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FOREGROUND_COLOR]=null
+CellAttribute(8, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FORMAT_STRING]=#,###
+CellAttribute(8, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:LANGUAGE]=null
+CellAttribute(8, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACKGROUND_COLOR]=null
+CellAttribute(8, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_FLAGS]=0
+CellAttribute(8, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_NAME]=null
+CellAttribute(8, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_SIZE]=null
+CellAttribute(8, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FOREGROUND_COLOR]=null
+CellAttribute(8, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FORMAT_STRING]=#,###
+CellAttribute(8, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:LANGUAGE]=null
+CellAttribute(8, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACKGROUND_COLOR]=null
+CellAttribute(8, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_FLAGS]=0
+CellAttribute(8, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_NAME]=null
+CellAttribute(8, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_SIZE]=null
+CellAttribute(8, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FOREGROUND_COLOR]=null
+CellAttribute(8, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FORMAT_STRING]=#,###
+CellAttribute(8, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:LANGUAGE]=null
+CellAttribute(9, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACKGROUND_COLOR]=null
+CellAttribute(9, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_FLAGS]=0
+CellAttribute(9, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_NAME]=null
+CellAttribute(9, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_SIZE]=null
+CellAttribute(9, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FOREGROUND_COLOR]=null
+CellAttribute(9, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FORMAT_STRING]=#,###
+CellAttribute(9, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:LANGUAGE]=null
+CellAttribute(9, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACKGROUND_COLOR]=null
+CellAttribute(9, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_FLAGS]=0
+CellAttribute(9, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_NAME]=null
+CellAttribute(9, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_SIZE]=null
+CellAttribute(9, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FOREGROUND_COLOR]=null
+CellAttribute(9, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FORMAT_STRING]=#,###
+CellAttribute(9, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:LANGUAGE]=null
+CellAttribute(9, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACKGROUND_COLOR]=null
+CellAttribute(9, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_FLAGS]=0
+CellAttribute(9, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_NAME]=null
+CellAttribute(9, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_SIZE]=null
+CellAttribute(9, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FOREGROUND_COLOR]=null
+CellAttribute(9, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FORMAT_STRING]=#,###
+CellAttribute(9, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:LANGUAGE]=null
+CellAttribute(10, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACKGROUND_COLOR]=null
+CellAttribute(10, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_FLAGS]=0
+CellAttribute(10, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_NAME]=null
+CellAttribute(10, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_SIZE]=null
+CellAttribute(10, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FOREGROUND_COLOR]=null
+CellAttribute(10, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FORMAT_STRING]=#,###
+CellAttribute(10, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:LANGUAGE]=null
+CellAttribute(10, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACKGROUND_COLOR]=null
+CellAttribute(10, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_FLAGS]=0
+CellAttribute(10, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_NAME]=null
+CellAttribute(10, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_SIZE]=null
+CellAttribute(10, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FOREGROUND_COLOR]=null
+CellAttribute(10, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FORMAT_STRING]=#,###
+CellAttribute(10, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:LANGUAGE]=null
+CellAttribute(10, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACKGROUND_COLOR]=null
+CellAttribute(10, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_FLAGS]=0
+CellAttribute(10, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_NAME]=null
+CellAttribute(10, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_SIZE]=null
+CellAttribute(10, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FOREGROUND_COLOR]=null
+CellAttribute(10, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FORMAT_STRING]=#,###
+CellAttribute(10, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:LANGUAGE]=null
+CellAttribute(11, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACKGROUND_COLOR]=null
+CellAttribute(11, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_FLAGS]=0
+CellAttribute(11, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_NAME]=null
+CellAttribute(11, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_SIZE]=null
+CellAttribute(11, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FOREGROUND_COLOR]=null
+CellAttribute(11, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FORMAT_STRING]=#,###
+CellAttribute(11, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:LANGUAGE]=null
+CellAttribute(11, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACKGROUND_COLOR]=null
+CellAttribute(11, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_FLAGS]=0
+CellAttribute(11, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_NAME]=null
+CellAttribute(11, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_SIZE]=null
+CellAttribute(11, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FOREGROUND_COLOR]=null
+CellAttribute(11, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FORMAT_STRING]=#,###
+CellAttribute(11, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:LANGUAGE]=null
+CellAttribute(11, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACKGROUND_COLOR]=null
+CellAttribute(11, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_FLAGS]=0
+CellAttribute(11, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_NAME]=null
+CellAttribute(11, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_SIZE]=null
+CellAttribute(11, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FOREGROUND_COLOR]=null
+CellAttribute(11, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FORMAT_STRING]=#,###
+CellAttribute(11, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:LANGUAGE]=null
+CellAttribute(12, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACKGROUND_COLOR]=null
+CellAttribute(12, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_FLAGS]=0
+CellAttribute(12, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_NAME]=null
+CellAttribute(12, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_SIZE]=null
+CellAttribute(12, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FOREGROUND_COLOR]=null
+CellAttribute(12, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FORMAT_STRING]=#,###
+CellAttribute(12, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:LANGUAGE]=null
+CellAttribute(12, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACKGROUND_COLOR]=null
+CellAttribute(12, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_FLAGS]=0
+CellAttribute(12, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_NAME]=null
+CellAttribute(12, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_SIZE]=null
+CellAttribute(12, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FOREGROUND_COLOR]=null
+CellAttribute(12, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FORMAT_STRING]=#,###
+CellAttribute(12, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:LANGUAGE]=null
+CellAttribute(12, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACKGROUND_COLOR]=null
+CellAttribute(12, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_FLAGS]=0
+CellAttribute(12, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_NAME]=null
+CellAttribute(12, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_SIZE]=null
+CellAttribute(12, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FOREGROUND_COLOR]=null
+CellAttribute(12, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FORMAT_STRING]=#,###
+CellAttribute(12, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:LANGUAGE]=null
+CellAttribute(13, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACKGROUND_COLOR]=null
+CellAttribute(13, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_FLAGS]=0
+CellAttribute(13, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_NAME]=null
+CellAttribute(13, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_SIZE]=null
+CellAttribute(13, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FOREGROUND_COLOR]=null
+CellAttribute(13, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FORMAT_STRING]=#,###
+CellAttribute(13, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:LANGUAGE]=null
+CellAttribute(13, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACKGROUND_COLOR]=null
+CellAttribute(13, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_FLAGS]=0
+CellAttribute(13, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_NAME]=null
+CellAttribute(13, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_SIZE]=null
+CellAttribute(13, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FOREGROUND_COLOR]=null
+CellAttribute(13, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FORMAT_STRING]=#,###
+CellAttribute(13, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:LANGUAGE]=null
+CellAttribute(13, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACKGROUND_COLOR]=null
+CellAttribute(13, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_FLAGS]=0
+CellAttribute(13, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_NAME]=null
+CellAttribute(13, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_SIZE]=null
+CellAttribute(13, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FOREGROUND_COLOR]=null
+CellAttribute(13, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FORMAT_STRING]=#,###
+CellAttribute(13, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:LANGUAGE]=null
+CellAttribute(14, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACKGROUND_COLOR]=null
+CellAttribute(14, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_FLAGS]=0
+CellAttribute(14, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_NAME]=null
+CellAttribute(14, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_SIZE]=null
+CellAttribute(14, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FOREGROUND_COLOR]=null
+CellAttribute(14, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FORMAT_STRING]=#,###
+CellAttribute(14, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:LANGUAGE]=null
+CellAttribute(14, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACKGROUND_COLOR]=null
+CellAttribute(14, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_FLAGS]=0
+CellAttribute(14, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_NAME]=null
+CellAttribute(14, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_SIZE]=null
+CellAttribute(14, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FOREGROUND_COLOR]=null
+CellAttribute(14, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FORMAT_STRING]=#,###
+CellAttribute(14, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:LANGUAGE]=null
+CellAttribute(14, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACKGROUND_COLOR]=null
+CellAttribute(14, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_FLAGS]=0
+CellAttribute(14, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_NAME]=null
+CellAttribute(14, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_SIZE]=null
+CellAttribute(14, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FOREGROUND_COLOR]=null
+CellAttribute(14, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FORMAT_STRING]=#,###
+CellAttribute(14, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:LANGUAGE]=null
+CellAttribute(15, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACKGROUND_COLOR]=null
+CellAttribute(15, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_FLAGS]=0
+CellAttribute(15, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_NAME]=null
+CellAttribute(15, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_SIZE]=null
+CellAttribute(15, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FOREGROUND_COLOR]=null
+CellAttribute(15, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FORMAT_STRING]=#,###
+CellAttribute(15, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:LANGUAGE]=null
+CellAttribute(15, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACKGROUND_COLOR]=null
+CellAttribute(15, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_FLAGS]=0
+CellAttribute(15, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_NAME]=null
+CellAttribute(15, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_SIZE]=null
+CellAttribute(15, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FOREGROUND_COLOR]=null
+CellAttribute(15, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FORMAT_STRING]=#,###
+CellAttribute(15, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:LANGUAGE]=null
+CellAttribute(15, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACKGROUND_COLOR]=null
+CellAttribute(15, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_FLAGS]=0
+CellAttribute(15, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_NAME]=null
+CellAttribute(15, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_SIZE]=null
+CellAttribute(15, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FOREGROUND_COLOR]=null
+CellAttribute(15, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FORMAT_STRING]=#,###
+CellAttribute(15, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:LANGUAGE]=null
+CellAttribute(16, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACKGROUND_COLOR]=null
+CellAttribute(16, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_FLAGS]=0
+CellAttribute(16, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_NAME]=null
+CellAttribute(16, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_SIZE]=null
+CellAttribute(16, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FOREGROUND_COLOR]=null
+CellAttribute(16, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FORMAT_STRING]=#,###
+CellAttribute(16, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:LANGUAGE]=null
+CellAttribute(16, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACKGROUND_COLOR]=null
+CellAttribute(16, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_FLAGS]=0
+CellAttribute(16, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_NAME]=null
+CellAttribute(16, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_SIZE]=null
+CellAttribute(16, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FOREGROUND_COLOR]=null
+CellAttribute(16, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FORMAT_STRING]=#,###
+CellAttribute(16, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:LANGUAGE]=null
+CellAttribute(16, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACKGROUND_COLOR]=null
+CellAttribute(16, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_FLAGS]=0
+CellAttribute(16, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_NAME]=null
+CellAttribute(16, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_SIZE]=null
+CellAttribute(16, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FOREGROUND_COLOR]=null
+CellAttribute(16, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FORMAT_STRING]=#,###
+CellAttribute(16, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:LANGUAGE]=null
+CellAttribute(17, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACKGROUND_COLOR]=null
+CellAttribute(17, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_FLAGS]=0
+CellAttribute(17, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_NAME]=null
+CellAttribute(17, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_SIZE]=null
+CellAttribute(17, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FOREGROUND_COLOR]=null
+CellAttribute(17, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FORMAT_STRING]=#,###
+CellAttribute(17, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:LANGUAGE]=null
+CellAttribute(17, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACKGROUND_COLOR]=null
+CellAttribute(17, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_FLAGS]=0
+CellAttribute(17, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_NAME]=null
+CellAttribute(17, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_SIZE]=null
+CellAttribute(17, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FOREGROUND_COLOR]=null
+CellAttribute(17, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FORMAT_STRING]=#,###
+CellAttribute(17, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:LANGUAGE]=null
+CellAttribute(17, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACKGROUND_COLOR]=null
+CellAttribute(17, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_FLAGS]=0
+CellAttribute(17, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_NAME]=null
+CellAttribute(17, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_SIZE]=null
+CellAttribute(17, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FOREGROUND_COLOR]=null
+CellAttribute(17, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FORMAT_STRING]=#,###
+CellAttribute(17, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:LANGUAGE]=null
+CellAttribute(18, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACKGROUND_COLOR]=null
+CellAttribute(18, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_FLAGS]=0
+CellAttribute(18, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_NAME]=null
+CellAttribute(18, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_SIZE]=null
+CellAttribute(18, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FOREGROUND_COLOR]=null
+CellAttribute(18, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FORMAT_STRING]=#,###
+CellAttribute(18, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:LANGUAGE]=null
+CellAttribute(18, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACKGROUND_COLOR]=null
+CellAttribute(18, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_FLAGS]=0
+CellAttribute(18, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_NAME]=null
+CellAttribute(18, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_SIZE]=null
+CellAttribute(18, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FOREGROUND_COLOR]=null
+CellAttribute(18, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FORMAT_STRING]=#,###
+CellAttribute(18, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:LANGUAGE]=null
+CellAttribute(18, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACKGROUND_COLOR]=null
+CellAttribute(18, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_FLAGS]=0
+CellAttribute(18, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_NAME]=null
+CellAttribute(18, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_SIZE]=null
+CellAttribute(18, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FOREGROUND_COLOR]=null
+CellAttribute(18, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FORMAT_STRING]=#,###
+CellAttribute(18, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:LANGUAGE]=null
+CellAttribute(19, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACKGROUND_COLOR]=null
+CellAttribute(19, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_FLAGS]=0
+CellAttribute(19, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_NAME]=null
+CellAttribute(19, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_SIZE]=null
+CellAttribute(19, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FOREGROUND_COLOR]=null
+CellAttribute(19, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FORMAT_STRING]=#,###
+CellAttribute(19, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:LANGUAGE]=null
+CellAttribute(19, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACKGROUND_COLOR]=null
+CellAttribute(19, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_FLAGS]=0
+CellAttribute(19, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_NAME]=null
+CellAttribute(19, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_SIZE]=null
+CellAttribute(19, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FOREGROUND_COLOR]=null
+CellAttribute(19, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FORMAT_STRING]=#,###
+CellAttribute(19, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:LANGUAGE]=null
+CellAttribute(19, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACKGROUND_COLOR]=null
+CellAttribute(19, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_FLAGS]=0
+CellAttribute(19, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_NAME]=null
+CellAttribute(19, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_SIZE]=null
+CellAttribute(19, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FOREGROUND_COLOR]=null
+CellAttribute(19, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FORMAT_STRING]=#,###
+CellAttribute(19, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:LANGUAGE]=null
+CellAttribute(20, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACKGROUND_COLOR]=null
+CellAttribute(20, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_FLAGS]=0
+CellAttribute(20, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_NAME]=null
+CellAttribute(20, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_SIZE]=null
+CellAttribute(20, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FOREGROUND_COLOR]=null
+CellAttribute(20, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FORMAT_STRING]=#,###
+CellAttribute(20, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:LANGUAGE]=null
+CellAttribute(20, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACKGROUND_COLOR]=null
+CellAttribute(20, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_FLAGS]=0
+CellAttribute(20, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_NAME]=null
+CellAttribute(20, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_SIZE]=null
+CellAttribute(20, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FOREGROUND_COLOR]=null
+CellAttribute(20, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FORMAT_STRING]=#,###
+CellAttribute(20, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:LANGUAGE]=null
+CellAttribute(20, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACKGROUND_COLOR]=null
+CellAttribute(20, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_FLAGS]=0
+CellAttribute(20, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_NAME]=null
+CellAttribute(20, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_SIZE]=null
+CellAttribute(20, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FOREGROUND_COLOR]=null
+CellAttribute(20, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FORMAT_STRING]=#,###
+CellAttribute(20, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:LANGUAGE]=null
+CellAttribute(21, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACKGROUND_COLOR]=null
+CellAttribute(21, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_FLAGS]=0
+CellAttribute(21, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_NAME]=null
+CellAttribute(21, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_SIZE]=null
+CellAttribute(21, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FOREGROUND_COLOR]=null
+CellAttribute(21, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FORMAT_STRING]=#,###
+CellAttribute(21, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:LANGUAGE]=null
+CellAttribute(21, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACKGROUND_COLOR]=null
+CellAttribute(21, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_FLAGS]=0
+CellAttribute(21, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_NAME]=null
+CellAttribute(21, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_SIZE]=null
+CellAttribute(21, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FOREGROUND_COLOR]=null
+CellAttribute(21, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FORMAT_STRING]=#,###
+CellAttribute(21, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:LANGUAGE]=null
+CellAttribute(21, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACKGROUND_COLOR]=null
+CellAttribute(21, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_FLAGS]=0
+CellAttribute(21, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_NAME]=null
+CellAttribute(21, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_SIZE]=null
+CellAttribute(21, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FOREGROUND_COLOR]=null
+CellAttribute(21, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FORMAT_STRING]=#,###
+CellAttribute(21, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:LANGUAGE]=null
+CellAttribute(22, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACKGROUND_COLOR]=null
+CellAttribute(22, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_FLAGS]=0
+CellAttribute(22, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_NAME]=null
+CellAttribute(22, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_SIZE]=null
+CellAttribute(22, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FOREGROUND_COLOR]=null
+CellAttribute(22, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FORMAT_STRING]=#,###
+CellAttribute(22, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:LANGUAGE]=null
+CellAttribute(22, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACKGROUND_COLOR]=null
+CellAttribute(22, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_FLAGS]=0
+CellAttribute(22, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_NAME]=null
+CellAttribute(22, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_SIZE]=null
+CellAttribute(22, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FOREGROUND_COLOR]=null
+CellAttribute(22, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FORMAT_STRING]=#,###
+CellAttribute(22, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:LANGUAGE]=null
+CellAttribute(22, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACKGROUND_COLOR]=null
+CellAttribute(22, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_FLAGS]=0
+CellAttribute(22, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_NAME]=null
+CellAttribute(22, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_SIZE]=null
+CellAttribute(22, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FOREGROUND_COLOR]=null
+CellAttribute(22, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FORMAT_STRING]=#,###
+CellAttribute(22, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:LANGUAGE]=null
+CellAttribute(23, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACKGROUND_COLOR]=null
+CellAttribute(23, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_FLAGS]=0
+CellAttribute(23, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_NAME]=null
+CellAttribute(23, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_SIZE]=null
+CellAttribute(23, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FOREGROUND_COLOR]=null
+CellAttribute(23, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FORMAT_STRING]=#,###
+CellAttribute(23, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:LANGUAGE]=null
+CellAttribute(23, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACKGROUND_COLOR]=null
+CellAttribute(23, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_FLAGS]=0
+CellAttribute(23, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_NAME]=null
+CellAttribute(23, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_SIZE]=null
+CellAttribute(23, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FOREGROUND_COLOR]=null
+CellAttribute(23, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FORMAT_STRING]=#,###
+CellAttribute(23, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:LANGUAGE]=null
+CellAttribute(23, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACKGROUND_COLOR]=null
+CellAttribute(23, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_FLAGS]=0
+CellAttribute(23, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_NAME]=null
+CellAttribute(23, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_SIZE]=null
+CellAttribute(23, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FOREGROUND_COLOR]=null
+CellAttribute(23, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FORMAT_STRING]=#,###
+CellAttribute(23, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:LANGUAGE]=null
+CellAttribute(24, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACKGROUND_COLOR]=null
+CellAttribute(24, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_FLAGS]=0
+CellAttribute(24, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_NAME]=null
+CellAttribute(24, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_SIZE]=null
+CellAttribute(24, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FOREGROUND_COLOR]=null
+CellAttribute(24, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FORMAT_STRING]=#,###
+CellAttribute(24, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:LANGUAGE]=null
+CellAttribute(24, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACKGROUND_COLOR]=null
+CellAttribute(24, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_FLAGS]=0
+CellAttribute(24, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_NAME]=null
+CellAttribute(24, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_SIZE]=null
+CellAttribute(24, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FOREGROUND_COLOR]=null
+CellAttribute(24, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FORMAT_STRING]=#,###
+CellAttribute(24, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:LANGUAGE]=null
+CellAttribute(24, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACKGROUND_COLOR]=null
+CellAttribute(24, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_FLAGS]=0
+CellAttribute(24, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_NAME]=null
+CellAttribute(24, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_SIZE]=null
+CellAttribute(24, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FOREGROUND_COLOR]=null
+CellAttribute(24, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FORMAT_STRING]=#,###
+CellAttribute(24, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:LANGUAGE]=null
+CellAttribute(25, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACKGROUND_COLOR]=null
+CellAttribute(25, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_FLAGS]=0
+CellAttribute(25, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_NAME]=null
+CellAttribute(25, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_SIZE]=null
+CellAttribute(25, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FOREGROUND_COLOR]=null
+CellAttribute(25, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FORMAT_STRING]=#,###
+CellAttribute(25, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:LANGUAGE]=null
+CellAttribute(25, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACKGROUND_COLOR]=null
+CellAttribute(25, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_FLAGS]=0
+CellAttribute(25, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_NAME]=null
+CellAttribute(25, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_SIZE]=null
+CellAttribute(25, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FOREGROUND_COLOR]=null
+CellAttribute(25, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FORMAT_STRING]=#,###
+CellAttribute(25, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:LANGUAGE]=null
+CellAttribute(25, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACKGROUND_COLOR]=null
+CellAttribute(25, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_FLAGS]=0
+CellAttribute(25, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_NAME]=null
+CellAttribute(25, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_SIZE]=null
+CellAttribute(25, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FOREGROUND_COLOR]=null
+CellAttribute(25, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FORMAT_STRING]=#,###
+CellAttribute(25, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:LANGUAGE]=null
+CellAttribute(26, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACKGROUND_COLOR]=null
+CellAttribute(26, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_FLAGS]=0
+CellAttribute(26, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_NAME]=null
+CellAttribute(26, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_SIZE]=null
+CellAttribute(26, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FOREGROUND_COLOR]=null
+CellAttribute(26, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FORMAT_STRING]=#,###
+CellAttribute(26, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:LANGUAGE]=null
+CellAttribute(26, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACKGROUND_COLOR]=null
+CellAttribute(26, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_FLAGS]=0
+CellAttribute(26, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_NAME]=null
+CellAttribute(26, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_SIZE]=null
+CellAttribute(26, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FOREGROUND_COLOR]=null
+CellAttribute(26, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FORMAT_STRING]=#,###
+CellAttribute(26, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:LANGUAGE]=null
+CellAttribute(26, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACKGROUND_COLOR]=null
+CellAttribute(26, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_FLAGS]=0
+CellAttribute(26, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_NAME]=null
+CellAttribute(26, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_SIZE]=null
+CellAttribute(26, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FOREGROUND_COLOR]=null
+CellAttribute(26, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FORMAT_STRING]=#,###
+CellAttribute(26, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:LANGUAGE]=null
+CellAttribute(27, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACKGROUND_COLOR]=null
+CellAttribute(27, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_FLAGS]=0
+CellAttribute(27, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_NAME]=null
+CellAttribute(27, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_SIZE]=null
+CellAttribute(27, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FOREGROUND_COLOR]=null
+CellAttribute(27, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FORMAT_STRING]=#,###
+CellAttribute(27, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:LANGUAGE]=null
+CellAttribute(27, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACKGROUND_COLOR]=null
+CellAttribute(27, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_FLAGS]=0
+CellAttribute(27, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_NAME]=null
+CellAttribute(27, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_SIZE]=null
+CellAttribute(27, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FOREGROUND_COLOR]=null
+CellAttribute(27, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FORMAT_STRING]=#,###
+CellAttribute(27, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:LANGUAGE]=null
+CellAttribute(27, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACKGROUND_COLOR]=null
+CellAttribute(27, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_FLAGS]=0
+CellAttribute(27, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_NAME]=null
+CellAttribute(27, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_SIZE]=null
+CellAttribute(27, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FOREGROUND_COLOR]=null
+CellAttribute(27, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FORMAT_STRING]=#,###
+CellAttribute(27, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:LANGUAGE]=null
+CellAttribute(28, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACKGROUND_COLOR]=null
+CellAttribute(28, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_FLAGS]=0
+CellAttribute(28, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_NAME]=null
+CellAttribute(28, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_SIZE]=null
+CellAttribute(28, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FOREGROUND_COLOR]=null
+CellAttribute(28, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FORMAT_STRING]=#,###
+CellAttribute(28, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:LANGUAGE]=null
+CellAttribute(28, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACKGROUND_COLOR]=null
+CellAttribute(28, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_FLAGS]=0
+CellAttribute(28, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_NAME]=null
+CellAttribute(28, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_SIZE]=null
+CellAttribute(28, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FOREGROUND_COLOR]=null
+CellAttribute(28, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FORMAT_STRING]=#,###
+CellAttribute(28, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:LANGUAGE]=null
+CellAttribute(28, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACKGROUND_COLOR]=null
+CellAttribute(28, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_FLAGS]=0
+CellAttribute(28, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_NAME]=null
+CellAttribute(28, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_SIZE]=null
+CellAttribute(28, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FOREGROUND_COLOR]=null
+CellAttribute(28, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FORMAT_STRING]=#,###
+CellAttribute(28, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:LANGUAGE]=null
+CellAttribute(29, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACKGROUND_COLOR]=null
+CellAttribute(29, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_FLAGS]=0
+CellAttribute(29, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_NAME]=null
+CellAttribute(29, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_SIZE]=null
+CellAttribute(29, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FOREGROUND_COLOR]=null
+CellAttribute(29, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FORMAT_STRING]=#,###
+CellAttribute(29, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:LANGUAGE]=null
+CellAttribute(29, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACKGROUND_COLOR]=null
+CellAttribute(29, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_FLAGS]=0
+CellAttribute(29, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_NAME]=null
+CellAttribute(29, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_SIZE]=null
+CellAttribute(29, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FOREGROUND_COLOR]=null
+CellAttribute(29, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FORMAT_STRING]=#,###
+CellAttribute(29, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:LANGUAGE]=null
+CellAttribute(29, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACKGROUND_COLOR]=null
+CellAttribute(29, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_FLAGS]=0
+CellAttribute(29, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_NAME]=null
+CellAttribute(29, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_SIZE]=null
+CellAttribute(29, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FOREGROUND_COLOR]=null
+CellAttribute(29, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FORMAT_STRING]=#,###
+CellAttribute(29, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:LANGUAGE]=null
+CellAttribute(30, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACKGROUND_COLOR]=null
+CellAttribute(30, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_FLAGS]=0
+CellAttribute(30, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_NAME]=null
+CellAttribute(30, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_SIZE]=null
+CellAttribute(30, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FOREGROUND_COLOR]=null
+CellAttribute(30, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FORMAT_STRING]=#,###
+CellAttribute(30, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:LANGUAGE]=null
+CellAttribute(30, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACKGROUND_COLOR]=null
+CellAttribute(30, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_FLAGS]=0
+CellAttribute(30, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_NAME]=null
+CellAttribute(30, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_SIZE]=null
+CellAttribute(30, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FOREGROUND_COLOR]=null
+CellAttribute(30, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FORMAT_STRING]=#,###
+CellAttribute(30, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:LANGUAGE]=null
+CellAttribute(30, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACKGROUND_COLOR]=null
+CellAttribute(30, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_FLAGS]=0
+CellAttribute(30, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_NAME]=null
+CellAttribute(30, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_SIZE]=null
+CellAttribute(30, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FOREGROUND_COLOR]=null
+CellAttribute(30, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FORMAT_STRING]=#,###
+CellAttribute(30, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:LANGUAGE]=null
+CellAttribute(31, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACKGROUND_COLOR]=null
+CellAttribute(31, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_FLAGS]=0
+CellAttribute(31, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_NAME]=null
+CellAttribute(31, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_SIZE]=null
+CellAttribute(31, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FOREGROUND_COLOR]=null
+CellAttribute(31, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FORMAT_STRING]=#,###
+CellAttribute(31, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:LANGUAGE]=null
+CellAttribute(31, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACKGROUND_COLOR]=null
+CellAttribute(31, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_FLAGS]=0
+CellAttribute(31, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_NAME]=null
+CellAttribute(31, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_SIZE]=null
+CellAttribute(31, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FOREGROUND_COLOR]=null
+CellAttribute(31, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FORMAT_STRING]=#,###
+CellAttribute(31, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:LANGUAGE]=null
+CellAttribute(31, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACKGROUND_COLOR]=null
+CellAttribute(31, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_FLAGS]=0
+CellAttribute(31, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_NAME]=null
+CellAttribute(31, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_SIZE]=null
+CellAttribute(31, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FOREGROUND_COLOR]=null
+CellAttribute(31, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FORMAT_STRING]=#,###
+CellAttribute(31, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:LANGUAGE]=null
+CellAttribute(32, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACKGROUND_COLOR]=null
+CellAttribute(32, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_FLAGS]=0
+CellAttribute(32, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_NAME]=null
+CellAttribute(32, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_SIZE]=null
+CellAttribute(32, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FOREGROUND_COLOR]=null
+CellAttribute(32, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FORMAT_STRING]=#,###
+CellAttribute(32, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:LANGUAGE]=null
+CellAttribute(32, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACKGROUND_COLOR]=null
+CellAttribute(32, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_FLAGS]=0
+CellAttribute(32, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_NAME]=null
+CellAttribute(32, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_SIZE]=null
+CellAttribute(32, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FOREGROUND_COLOR]=null
+CellAttribute(32, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FORMAT_STRING]=#,###
+CellAttribute(32, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:LANGUAGE]=null
+CellAttribute(32, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACKGROUND_COLOR]=null
+CellAttribute(32, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_FLAGS]=0
+CellAttribute(32, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_NAME]=null
+CellAttribute(32, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_SIZE]=null
+CellAttribute(32, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FOREGROUND_COLOR]=null
+CellAttribute(32, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FORMAT_STRING]=#,###
+CellAttribute(32, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:LANGUAGE]=null
+CellAttribute(33, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACKGROUND_COLOR]=null
+CellAttribute(33, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_FLAGS]=0
+CellAttribute(33, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_NAME]=null
+CellAttribute(33, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_SIZE]=null
+CellAttribute(33, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FOREGROUND_COLOR]=null
+CellAttribute(33, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FORMAT_STRING]=#,###
+CellAttribute(33, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:LANGUAGE]=null
+CellAttribute(33, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACKGROUND_COLOR]=null
+CellAttribute(33, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_FLAGS]=0
+CellAttribute(33, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_NAME]=null
+CellAttribute(33, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_SIZE]=null
+CellAttribute(33, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FOREGROUND_COLOR]=null
+CellAttribute(33, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FORMAT_STRING]=#,###
+CellAttribute(33, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:LANGUAGE]=null
+CellAttribute(33, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACKGROUND_COLOR]=null
+CellAttribute(33, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_FLAGS]=0
+CellAttribute(33, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_NAME]=null
+CellAttribute(33, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_SIZE]=null
+CellAttribute(33, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FOREGROUND_COLOR]=null
+CellAttribute(33, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FORMAT_STRING]=#,###
+CellAttribute(33, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:LANGUAGE]=null
+CellAttribute(34, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACKGROUND_COLOR]=null
+CellAttribute(34, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_FLAGS]=0
+CellAttribute(34, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_NAME]=null
+CellAttribute(34, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_SIZE]=null
+CellAttribute(34, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FOREGROUND_COLOR]=null
+CellAttribute(34, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FORMAT_STRING]=#,###
+CellAttribute(34, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:LANGUAGE]=null
+CellAttribute(34, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACKGROUND_COLOR]=null
+CellAttribute(34, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_FLAGS]=0
+CellAttribute(34, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_NAME]=null
+CellAttribute(34, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_SIZE]=null
+CellAttribute(34, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FOREGROUND_COLOR]=null
+CellAttribute(34, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FORMAT_STRING]=#,###
+CellAttribute(34, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:LANGUAGE]=null
+CellAttribute(34, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACKGROUND_COLOR]=null
+CellAttribute(34, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_FLAGS]=0
+CellAttribute(34, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_NAME]=null
+CellAttribute(34, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_SIZE]=null
+CellAttribute(34, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FOREGROUND_COLOR]=null
+CellAttribute(34, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FORMAT_STRING]=#,###
+CellAttribute(34, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:LANGUAGE]=null
+CellAttribute(35, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACKGROUND_COLOR]=null
+CellAttribute(35, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_FLAGS]=0
+CellAttribute(35, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_NAME]=null
+CellAttribute(35, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_SIZE]=null
+CellAttribute(35, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FOREGROUND_COLOR]=null
+CellAttribute(35, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FORMAT_STRING]=#,###
+CellAttribute(35, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:LANGUAGE]=null
+CellAttribute(35, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACKGROUND_COLOR]=null
+CellAttribute(35, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_FLAGS]=0
+CellAttribute(35, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_NAME]=null
+CellAttribute(35, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_SIZE]=null
+CellAttribute(35, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FOREGROUND_COLOR]=null
+CellAttribute(35, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FORMAT_STRING]=#,###
+CellAttribute(35, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:LANGUAGE]=null
+CellAttribute(35, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACKGROUND_COLOR]=null
+CellAttribute(35, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_FLAGS]=0
+CellAttribute(35, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_NAME]=null
+CellAttribute(35, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_SIZE]=null
+CellAttribute(35, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FOREGROUND_COLOR]=null
+CellAttribute(35, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FORMAT_STRING]=#,###
+CellAttribute(35, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:LANGUAGE]=null
+Tablemodel contains 36 rows.
+Column: 0 Name=Product; DataType=class java.lang.String
+Column: 1 Name=Markets; DataType=class java.lang.String
+Column: 2 Name=Markets{2}; DataType=class java.lang.String
+Column: 3 Name=2003/Time; DataType=class java.lang.Double
+Column: 4 Name=2004/Time; DataType=class java.lang.Double
+Column: 5 Name=2005/Time; DataType=class java.lang.Double
+Checking the data inside
+ValueAt (0, 0) is 'All Products'
+ValueAt (0, 1) is 'All Markets'
+ValueAt (0, 2) is 'Markets'
+ValueAt (0, 3) is '36439.0'
+ValueAt (0, 4) is '49417.0'
+ValueAt (0, 5) is '19475.0'
+ValueAt (1, 0) is 'Classic Cars'
+ValueAt (1, 1) is 'All Markets'
+ValueAt (1, 2) is 'Markets'
+ValueAt (1, 3) is '12762.0'
+ValueAt (1, 4) is '16085.0'
+ValueAt (1, 5) is '6705.0'
+ValueAt (2, 0) is 'Classic Cars'
+ValueAt (2, 1) is 'APAC'
+ValueAt (2, 2) is 'Markets'
+ValueAt (2, 3) is '1052.0'
+ValueAt (2, 4) is '1785.0'
+ValueAt (2, 5) is '1015.0'
+ValueAt (3, 0) is 'Classic Cars'
+ValueAt (3, 1) is 'EMEA'
+ValueAt (3, 2) is 'Markets'
+ValueAt (3, 3) is '5853.0'
+ValueAt (3, 4) is '8976.0'
+ValueAt (3, 5) is '3463.0'
+ValueAt (4, 0) is 'Classic Cars'
+ValueAt (4, 1) is 'Japan'
+ValueAt (4, 2) is 'Markets'
+ValueAt (4, 3) is '898.0'
+ValueAt (4, 4) is '307.0'
+ValueAt (4, 5) is '122.0'
+ValueAt (5, 0) is 'Classic Cars'
+ValueAt (5, 1) is 'NA'
+ValueAt (5, 2) is 'Markets'
+ValueAt (5, 3) is '4959.0'
+ValueAt (5, 4) is '5017.0'
+ValueAt (5, 5) is '2105.0'
+ValueAt (6, 0) is 'Motorcycles'
+ValueAt (6, 1) is 'All Markets'
+ValueAt (6, 2) is 'Markets'
+ValueAt (6, 3) is '4031.0'
+ValueAt (6, 4) is '5906.0'
+ValueAt (6, 5) is '2771.0'
+ValueAt (7, 0) is 'Motorcycles'
+ValueAt (7, 1) is 'APAC'
+ValueAt (7, 2) is 'Markets'
+ValueAt (7, 3) is '654.0'
+ValueAt (7, 4) is '540.0'
+ValueAt (7, 5) is '658.0'
+ValueAt (8, 0) is 'Motorcycles'
+ValueAt (8, 1) is 'EMEA'
+ValueAt (8, 2) is 'Markets'
+ValueAt (8, 3) is '1428.0'
+ValueAt (8, 4) is '2177.0'
+ValueAt (8, 5) is '1501.0'
+ValueAt (9, 0) is 'Motorcycles'
+ValueAt (9, 1) is 'Japan'
+ValueAt (9, 2) is 'Markets'
+ValueAt (9, 3) is '205.0'
+ValueAt (9, 4) is '380.0'
+ValueAt (9, 5) is '44.0'
+ValueAt (10, 0) is 'Motorcycles'
+ValueAt (10, 1) is 'NA'
+ValueAt (10, 2) is 'Markets'
+ValueAt (10, 3) is '1744.0'
+ValueAt (10, 4) is '2809.0'
+ValueAt (10, 5) is '568.0'
+ValueAt (11, 0) is 'Planes'
+ValueAt (11, 1) is 'All Markets'
+ValueAt (11, 2) is 'Markets'
+ValueAt (11, 3) is '3833.0'
+ValueAt (11, 4) is '5820.0'
+ValueAt (11, 5) is '2207.0'
+ValueAt (12, 0) is 'Planes'
+ValueAt (12, 1) is 'APAC'
+ValueAt (12, 2) is 'Markets'
+ValueAt (12, 3) is '456.0'
+ValueAt (12, 4) is '723.0'
+ValueAt (12, 5) is '151.0'
+ValueAt (13, 0) is 'Planes'
+ValueAt (13, 1) is 'EMEA'
+ValueAt (13, 2) is 'Markets'
+ValueAt (13, 3) is '1723.0'
+ValueAt (13, 4) is '2326.0'
+ValueAt (13, 5) is '1464.0'
+ValueAt (14, 0) is 'Planes'
+ValueAt (14, 1) is 'Japan'
+ValueAt (14, 2) is 'Markets'
+ValueAt (14, 3) is '677.0'
+ValueAt (14, 4) is '547.0'
+ValueAt (14, 5) is 'null'
+ValueAt (15, 0) is 'Planes'
+ValueAt (15, 1) is 'NA'
+ValueAt (15, 2) is 'Markets'
+ValueAt (15, 3) is '977.0'
+ValueAt (15, 4) is '2224.0'
+ValueAt (15, 5) is '592.0'
+ValueAt (16, 0) is 'Ships'
+ValueAt (16, 1) is 'All Markets'
+ValueAt (16, 2) is 'Markets'
+ValueAt (16, 3) is '2844.0'
+ValueAt (16, 4) is '4309.0'
+ValueAt (16, 5) is '1346.0'
+ValueAt (17, 0) is 'Ships'
+ValueAt (17, 1) is 'APAC'
+ValueAt (17, 2) is 'Markets'
+ValueAt (17, 3) is 'null'
+ValueAt (17, 4) is '396.0'
+ValueAt (17, 5) is '32.0'
+ValueAt (18, 0) is 'Ships'
+ValueAt (18, 1) is 'EMEA'
+ValueAt (18, 2) is 'Markets'
+ValueAt (18, 3) is '1968.0'
+ValueAt (18, 4) is '2144.0'
+ValueAt (18, 5) is '696.0'
+ValueAt (19, 0) is 'Ships'
+ValueAt (19, 1) is 'Japan'
+ValueAt (19, 2) is 'Markets'
+ValueAt (19, 3) is '174.0'
+ValueAt (19, 4) is '127.0'
+ValueAt (19, 5) is '81.0'
+ValueAt (20, 0) is 'Ships'
+ValueAt (20, 1) is 'NA'
+ValueAt (20, 2) is 'Markets'
+ValueAt (20, 3) is '702.0'
+ValueAt (20, 4) is '1642.0'
+ValueAt (20, 5) is '537.0'
+ValueAt (21, 0) is 'Trains'
+ValueAt (21, 1) is 'All Markets'
+ValueAt (21, 2) is 'Markets'
+ValueAt (21, 3) is '1000.0'
+ValueAt (21, 4) is '1409.0'
+ValueAt (21, 5) is '409.0'
+ValueAt (22, 0) is 'Trains'
+ValueAt (22, 1) is 'APAC'
+ValueAt (22, 2) is 'Markets'
+ValueAt (22, 3) is '33.0'
+ValueAt (22, 4) is '106.0'
+ValueAt (22, 5) is 'null'
+ValueAt (23, 0) is 'Trains'
+ValueAt (23, 1) is 'EMEA'
+ValueAt (23, 2) is 'Markets'
+ValueAt (23, 3) is '384.0'
+ValueAt (23, 4) is '977.0'
+ValueAt (23, 5) is '183.0'
+ValueAt (24, 0) is 'Trains'
+ValueAt (24, 1) is 'Japan'
+ValueAt (24, 2) is 'Markets'
+ValueAt (24, 3) is '174.0'
+ValueAt (24, 4) is 'null'
+ValueAt (24, 5) is '49.0'
+ValueAt (25, 0) is 'Trains'
+ValueAt (25, 1) is 'NA'
+ValueAt (25, 2) is 'Markets'
+ValueAt (25, 3) is '409.0'
+ValueAt (25, 4) is '326.0'
+ValueAt (25, 5) is '177.0'
+ValueAt (26, 0) is 'Trucks and Buses'
+ValueAt (26, 1) is 'All Markets'
+ValueAt (26, 2) is 'Markets'
+ValueAt (26, 3) is '4056.0'
+ValueAt (26, 4) is '5024.0'
+ValueAt (26, 5) is '1921.0'
+ValueAt (27, 0) is 'Trucks and Buses'
+ValueAt (27, 1) is 'APAC'
+ValueAt (27, 2) is 'Markets'
+ValueAt (27, 3) is '91.0'
+ValueAt (27, 4) is '801.0'
+ValueAt (27, 5) is '488.0'
+ValueAt (28, 0) is 'Trucks and Buses'
+ValueAt (28, 1) is 'EMEA'
+ValueAt (28, 2) is 'Markets'
+ValueAt (28, 3) is '2261.0'
+ValueAt (28, 4) is '1558.0'
+ValueAt (28, 5) is '836.0'
+ValueAt (29, 0) is 'Trucks and Buses'
+ValueAt (29, 1) is 'Japan'
+ValueAt (29, 2) is 'Markets'
+ValueAt (29, 3) is '415.0'
+ValueAt (29, 4) is '102.0'
+ValueAt (29, 5) is 'null'
+ValueAt (30, 0) is 'Trucks and Buses'
+ValueAt (30, 1) is 'NA'
+ValueAt (30, 2) is 'Markets'
+ValueAt (30, 3) is '1289.0'
+ValueAt (30, 4) is '2563.0'
+ValueAt (30, 5) is '597.0'
+ValueAt (31, 0) is 'Vintage Cars'
+ValueAt (31, 1) is 'All Markets'
+ValueAt (31, 2) is 'Markets'
+ValueAt (31, 3) is '7913.0'
+ValueAt (31, 4) is '10864.0'
+ValueAt (31, 5) is '4116.0'
+ValueAt (32, 0) is 'Vintage Cars'
+ValueAt (32, 1) is 'APAC'
+ValueAt (32, 2) is 'Markets'
+ValueAt (32, 3) is '1243.0'
+ValueAt (32, 4) is '1587.0'
+ValueAt (32, 5) is '1067.0'
+ValueAt (33, 0) is 'Vintage Cars'
+ValueAt (33, 1) is 'EMEA'
+ValueAt (33, 2) is 'Markets'
+ValueAt (33, 3) is '3094.0'
+ValueAt (33, 4) is '5472.0'
+ValueAt (33, 5) is '1094.0'
+ValueAt (34, 0) is 'Vintage Cars'
+ValueAt (34, 1) is 'Japan'
+ValueAt (34, 2) is 'Markets'
+ValueAt (34, 3) is '308.0'
+ValueAt (34, 4) is '229.0'
+ValueAt (34, 5) is '84.0'
+ValueAt (35, 0) is 'Vintage Cars'
+ValueAt (35, 1) is 'NA'
+ValueAt (35, 2) is 'Markets'
+ValueAt (35, 3) is '3268.0'
+ValueAt (35, 4) is '3576.0'
+ValueAt (35, 5) is '1871.0'
