@@ -104,6 +104,7 @@ public class PublishRestUtil {
 	 * @param fileName
 	 * @param fileInputStream
 	 * @param overwriteIfExists
+	 * @param fileNameOverride
 	 * @return http response code
 	 */
 	public int publishFile(String repositoryPath, String fileName, InputStream fileInputStream, boolean overwriteIfExists) throws IOException {
@@ -117,8 +118,9 @@ public class PublishRestUtil {
 			part.field("importDir", repositoryPath, MediaType.MULTIPART_FORM_DATA_TYPE);
 			part.field("fileUpload", fileInputStream, MediaType.MULTIPART_FORM_DATA_TYPE);
 			part.field("overwriteFile", String.valueOf(overwriteIfExists), MediaType.MULTIPART_FORM_DATA_TYPE);
-
-			part.getField("fileUpload").setContentDisposition(FormDataContentDisposition.name("fileUpload").fileName(URLEncoder.encode( fileName, "utf-8") ).build());
+			part.field( "fileNameOverride", fileName, MediaType.MULTIPART_FORM_DATA_TYPE );
+			
+			part.getField("fileUpload").setContentDisposition(FormDataContentDisposition.name("fileUpload").fileName( fileName ).build());
 
       WebResource.Builder builder = resource.type(MediaType.MULTIPART_FORM_DATA);
 			ClientResponse response =  builder.post(ClientResponse.class, part);
