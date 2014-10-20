@@ -18,9 +18,7 @@
 package org.pentaho.reporting.engine.classic.extensions.datasources.mondrian;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
-import java.util.LinkedHashSet;
 import java.util.List;
 import javax.swing.table.AbstractTableModel;
 
@@ -40,11 +38,8 @@ import org.pentaho.reporting.engine.classic.core.wizard.DataAttributes;
 import org.pentaho.reporting.engine.classic.core.wizard.DefaultConceptQueryMapper;
 import org.pentaho.reporting.engine.classic.core.wizard.DefaultDataAttributes;
 import org.pentaho.reporting.engine.classic.core.wizard.EmptyDataAttributes;
-import org.pentaho.reporting.engine.classic.extensions.datasources.mondrian.util.MemberAddingStrategy;
-import org.pentaho.reporting.engine.classic.extensions.datasources.mondrian.util.ResultSetOrderMemberAddingStrategy;
-import org.pentaho.reporting.engine.classic.extensions.datasources.mondrian.util.SortedMemberAddingStrategy;
+import org.pentaho.reporting.engine.classic.extensions.datasources.mondrian.util.ResultSetProcessingLib;
 import org.pentaho.reporting.libraries.base.util.ArgumentNullException;
-import org.pentaho.reporting.libraries.base.util.FastStack;
 
 /**
  * This tablemodel performs some preprocessing to get multi-dimensional resultset (with row and column headers) into a
@@ -69,19 +64,19 @@ public class BandedMDXTableModel extends AbstractTableModel implements Closeable
   private IntList columnToAxisPosition;
   private List<Member> columnToMemberMapping;
   private List<String> columnNames;
-  private boolean membersOnAxisSorted;
 
+  @Deprecated
   public BandedMDXTableModel(final Result resultSet, final int rowLimit)
   {
     this(resultSet, rowLimit, false);
   }
 
-  public BandedMDXTableModel(final Result resultSet, final int rowLimit, final boolean membersOnAxisSorted)
+  public BandedMDXTableModel(final Result resultSet, final int rowLimit,
+                             final boolean membersOnAxisSorted)
   {
     ArgumentNullException.validate("resultSet", resultSet);
 
     this.resultSet = resultSet;
-    this.membersOnAxisSorted = membersOnAxisSorted;
 
     // rowcount is the product of all axis-sizes. If an axis contains more than one member, then
     // Mondrian already performs the crossjoin for us.
@@ -91,14 +86,15 @@ public class BandedMDXTableModel extends AbstractTableModel implements Closeable
     final Axis[] axes = this.resultSet.getAxes();
 
 
-    this.axesSize = computeItemsPerAxis(axes);
+    this.axesSize = ResultSetProcessingLib.computeItemsPerAxis(axes);
     this.rowCount = computeRowCount(axesSize);
 
-    final int[] axesMembers = computeTotalColumnsPerAxis(axes);
+    final int[] axesMembers = ResultSetProcessingLib.computeTotalColumnsPerAxis(axes, 1, membersOnAxisSorted);
 
-    this.columnCount = computeColumnCount(axesMembers);
-    this.columnToAxisPosition = computeColumnToAxisMapping(axes, axesMembers);
-    this.columnToMemberMapping = Collections.unmodifiableList(computeColumnToMemberMapping(axes, axesMembers));
+    this.columnCount = computeColumnCount(axesMembers, this.axesSize);
+    this.columnToAxisPosition = ResultSetProcessingLib.computeColumnToAxisMapping(axes, axesMembers, columnCount, 1);
+    this.columnToMemberMapping = Collections.unmodifiableList
+        (ResultSetProcessingLib.computeColumnToMemberMapping(axes, axesMembers, 1, membersOnAxisSorted));
     this.columnNames = computeColumnNames(axes, columnToMemberMapping);
 
     if (rowLimit > 0)
@@ -107,159 +103,19 @@ public class BandedMDXTableModel extends AbstractTableModel implements Closeable
     }
   }
 
-  protected int computeColumnCount(final int[] axesMembers)
+  protected int computeColumnCount(final int[] axesMembers, final int[] axesSize)
   {
-    int columnCount;
     if (axesSize.length == 0)
     {
-      columnCount = 1;
+      return 1;
     }
-    else // if (axesSize.length > 0)
+
+    int columnCount = axesSize[0];
+    for (int i = 1; i < axesMembers.length; i++)
     {
-      columnCount = axesSize[0];
-      for (int i = 1; i < axesMembers.length; i++)
-      {
-        columnCount += axesMembers[i];
-      }
+      columnCount += axesMembers[i];
     }
     return columnCount;
-  }
-
-  protected ArrayList<Member> computeColumnToMemberMapping(final Axis[] axes, final int[] axesMembers)
-  {
-    final ArrayList<Member> columnToMemberMapper = new ArrayList<Member>();
-    for (int axesIndex = axes.length - 1; axesIndex >= 1; axesIndex -= 1)
-    {
-      final Axis axis = axes[axesIndex];
-      final List<Position> positions = axis.getPositions();
-
-      final MemberAddingStrategy strategy =
-          membersOnAxisSorted ? new SortedMemberAddingStrategy(positions) : new ResultSetOrderMemberAddingStrategy();
-
-      for (int positionsIndex = 0; positionsIndex < positions.size(); positionsIndex++)
-      {
-        final Position position = positions.get(positionsIndex);
-        for (int positionIndex = 0; positionIndex < position.size(); positionIndex++)
-        {
-          Member m = position.get(positionIndex);
-          computeDeepColumnNames(m, strategy);
-        }
-      }
-
-      Collection<Member> columnNamesSet = strategy.values();
-      if (columnNamesSet.size() != axesMembers[axesIndex])
-      {
-        logger.error("ERROR: Number of names is not equal the pre-counted number.");
-      }
-
-      columnToMemberMapper.addAll(columnNamesSet);
-    }
-    return columnToMemberMapper;
-  }
-
-  protected IntList computeColumnToAxisMapping(final Axis[] axes, final int[] axesMembers)
-  {
-    IntList columnToAxisPosition = new IntList(columnCount);
-    for (int axesIndex = axes.length - 1; axesIndex >= 1; axesIndex -= 1)
-    {
-      int memberCntAxis = axesMembers[axesIndex];
-      for (int x = 0; x < memberCntAxis; x += 1)
-      {
-        columnToAxisPosition.add(axesIndex);
-      }
-    }
-    return columnToAxisPosition;
-  }
-
-  protected int[] computeTotalColumnsPerAxis(final Axis[] axes)
-  {
-    final IntList[] membersPerAxis = new IntList[axes.length];
-    // Axis contains (zero or more) positions, which contains (zero or more) members
-    for (int axesIndex = axes.length - 1; axesIndex >= 1; axesIndex -= 1)
-    {
-      final Axis axis = axes[axesIndex];
-      membersPerAxis[axesIndex] = computeMemberCountForAxis(axis);
-    }
-
-    final int[] axesMembers = new int[axes.length];
-    for (int idx = 1; idx < membersPerAxis.length; idx += 1)
-    {
-      IntList memberList = membersPerAxis[idx];
-
-      int memberCount = 0;
-      for (int i = 0; i < memberList.size(); i++)
-      {
-        memberCount += memberList.get(i);
-      }
-      axesMembers[idx] = memberCount;
-    }
-    return axesMembers;
-  }
-
-  protected IntList computeMemberCountForAxis(final Axis axis)
-  {
-    final List<Position> positions = axis.getPositions();
-
-    final IntList memberList = new IntList(10);
-    for (int positionsIndex = 0; positionsIndex < positions.size(); positionsIndex++)
-    {
-      final Position position = positions.get(positionsIndex);
-      for (int positionIndex = 0; positionIndex < position.size(); positionIndex++)
-      {
-        final LinkedHashSet<String> columnNamesSet = new LinkedHashSet<String>();
-        Member m = position.get(positionIndex);
-        while (m != null)
-        {
-          final String name = m.getLevel().getUniqueName();
-          if (columnNamesSet.contains(name) == false)
-          {
-            columnNamesSet.add(name);
-          }
-          m = m.getParentMember();
-        }
-
-        int hierarchyLevelCount = columnNamesSet.size();
-        if (memberList.size() <= positionIndex)
-        {
-          memberList.add(hierarchyLevelCount);
-        }
-        else
-        {
-          final int existingLevel = memberList.get(positionIndex);
-          if (existingLevel < hierarchyLevelCount)
-          {
-            memberList.set(positionIndex, hierarchyLevelCount);
-          }
-        }
-      }
-    }
-    return memberList;
-  }
-
-  protected List<String> computeColumnNames(final Axis[] axes,
-                                            final List<Member> columnToMemberMapper)
-  {
-    ArrayList<String> columnNames = new ArrayList<String>();
-    for (final Member member : columnToMemberMapper)
-    {
-      columnNames.add(member.getLevel().getUniqueName());
-    }
-    if (axes.length > 0)
-    {
-      // now create the column names for the column-axis
-      final Axis axis = axes[0];
-      final List<Position> positions = axis.getPositions();
-      for (int i = 0; i < positions.size(); i++)
-      {
-        final Position position = positions.get(i);
-        columnNames.add(computeUniqueColumnName(position));
-      }
-    }
-    else
-    {
-      columnNames.add("Measure");
-    }
-    return Collections.unmodifiableList(columnNames);
   }
 
   protected int computeRowCount(final int[] axesSize)
@@ -282,67 +138,30 @@ public class BandedMDXTableModel extends AbstractTableModel implements Closeable
     }
   }
 
-  protected int[] computeItemsPerAxis(final Axis[] axes)
+  public static List<String> computeColumnNames(final Axis[] axes,
+                                                final List<Member> columnToMemberMapper)
   {
-    int[] axesSize = new int[axes.length];
-    // process the column axis first ..
-    if (axesSize.length > 0)
+    ArrayList<String> columnNames = new ArrayList<String>();
+    for (final Member member : columnToMemberMapper)
     {
-      final Axis columnAxis = axes[0];
-      axesSize[0] = columnAxis.getPositions().size();
-
-      for (int axesIndex = axes.length - 1; axesIndex >= 1; axesIndex -= 1)
+      columnNames.add(member.getLevel().getUniqueName());
+    }
+    if (axes.length > 0)
+    {
+      // now create the column names for the column-axis
+      final Axis axis = axes[0];
+      final List<Position> positions = axis.getPositions();
+      for (int i = 0; i < positions.size(); i++)
       {
-        final Axis axis = axes[axesIndex];
-        axesSize[axesIndex] = axis.getPositions().size();
+        final Position position = positions.get(i);
+        columnNames.add(ResultSetProcessingLib.computeUniqueColumnName(position));
       }
     }
-    return axesSize;
-  }
-
-  /**
-   * Computes a set of column names starting with the deepest parent up to the member actually found on the axis.
-   *
-   * @param m
-   */
-  protected void computeDeepColumnNames(Member m,
-                                        MemberAddingStrategy memberToNameMapping)
-  {
-    final FastStack<Member> memberStack = new FastStack<Member>();
-    while (m != null)
+    else
     {
-      memberStack.push(m);
-      m = m.getParentMember();
+      columnNames.add("Measure");
     }
-
-    while (memberStack.isEmpty() == false)
-    {
-      m = memberStack.pop();
-      memberToNameMapping.add(m);
-    }
-  }
-
-  /**
-   * Column axis members can be nested (having multiple dimensions or multiple levels of the same dimension) and
-   * thus the Member's unique name is not necessarily unique across the whole context (same year mentioned for
-   * different product lines, for example). So we need to compute that name recursively.
-   *
-   * @param position The OLAP position, a list of members uniquely specifying a cell-position.
-   * @return the computed name, usually jus a concat of all levels.
-   */
-  protected String computeUniqueColumnName(final Position position)
-  {
-    final StringBuilder positionName = new StringBuilder(100);
-    for (int j = 0; j < position.size(); j++)
-    {
-      if (j != 0)
-      {
-        positionName.append('/');
-      }
-      final Member member = position.get(j);
-      positionName.append(MondrianUtil.getUniqueMemberName(member));
-    }
-    return positionName.toString();
+    return Collections.unmodifiableList(columnNames);
   }
 
   public int getRowCount()
@@ -374,7 +193,6 @@ public class BandedMDXTableModel extends AbstractTableModel implements Closeable
     {
       throw new IndexOutOfBoundsException();
     }
-
 
     if (isMeasureColumn(columnIndex))
     {

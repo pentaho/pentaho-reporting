@@ -37,25 +37,25 @@ public class SortedMemberAddingStrategy implements MemberAddingStrategy
   {
     private Map<Dimension, Integer> dimensionOrder;
 
-    public MemberComparator(List<Position> positions)
+    public MemberComparator(final List<Position> positions)
     {
       LinkedHashSet<Dimension> dimensionInOrder = new LinkedHashSet<Dimension>();
-      for (Position position : positions)
+      for (final Position position : positions)
       {
-        for (Member member : position)
+        for (final Member member : position)
         {
           dimensionInOrder.add(member.getDimension());
         }
       }
 
       dimensionOrder = new HashMap<Dimension, Integer>();
-      for (Dimension dimension : dimensionInOrder)
+      for (final Dimension dimension : dimensionInOrder)
       {
         dimensionOrder.put(dimension, dimensionOrder.size());
       }
     }
 
-    private int getDimensionPositionOnAxis(Dimension d)
+    private int getDimensionPositionOnAxis(final Dimension d)
     {
       Integer integer = dimensionOrder.get(d);
       if (integer != null)

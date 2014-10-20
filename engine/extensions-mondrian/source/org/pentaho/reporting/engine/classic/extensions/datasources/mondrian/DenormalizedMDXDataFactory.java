@@ -44,6 +44,7 @@ public class DenormalizedMDXDataFactory extends AbstractNamedMDXDataFactory
   public TableModel queryData(final String queryName, final DataRow parameters) throws ReportDataFactoryException
   {
     final Result cellSet = performQuery(queryName, parameters);
-    return postProcess(queryName, parameters, new DenormalizedMDXTableModel(cellSet));
+    return postProcess(queryName, parameters, new DenormalizedMDXTableModel
+        (cellSet, extractQueryLimit(parameters), isMembersOnAxisSorted()));
   }
 }

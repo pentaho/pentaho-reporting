@@ -100,7 +100,6 @@ public class Prd5276Test
   {
     DataFactory dataFactory = createDataFactory(queryMultipleH);
     final TableModel tableModel = dataFactory.queryData("default", new ParameterDataRow());
-    new DataPreviewDialog().showData(tableModel);
 
     Assert.assertEquals("[Markets].[(All)]", tableModel.getColumnName(2));
     Assert.assertEquals("[Product].[Line]", tableModel.getColumnName(1));
