@@ -27,6 +27,7 @@ import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.pentaho.reporting.engine.classic.core.DataFactory;
 import org.pentaho.reporting.engine.classic.core.ParameterDataRow;
 import org.pentaho.reporting.engine.classic.core.ReportDataFactoryException;
+import org.pentaho.reporting.engine.classic.core.designtime.datafactory.DesignTimeDataFactoryContext;
 import org.pentaho.reporting.engine.classic.core.testsupport.DebugJndiContextFactoryBuilder;
 import org.pentaho.reporting.libraries.designtime.swing.background.DataPreviewDialog;
 
@@ -122,6 +123,7 @@ public class Prd5276Test
     mondrianDataFactory.setJdbcUser("sa");
     mondrianDataFactory.setJdbcPassword("");
     mondrianDataFactory.setQuery("default", query, null, null);
+    mondrianDataFactory.initialize(new DesignTimeDataFactoryContext());
     return mondrianDataFactory;
   }
 }

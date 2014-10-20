@@ -25,6 +25,9 @@ public class BandedMDXTableModelTest extends DataSourceTestBase
 {
 
   private static final String QUERY_BY_HIERARCHY = "SELECT {[Measures].[Quantity]} ON COLUMNS, TOPCOUNT(NONEMPTYCROSSJOIN([Markets].[Country].MEMBERS,[Markets.City].[City].MEMBERS), 5) ON ROWS FROM [SteelWheelsSales]";
+  private static final String[][] QUERIES_AND_RESULTS = new String[][]{
+      {QUERY_BY_HIERARCHY, "steelwheels_hierarchy_result.txt"}
+  };
 
   protected DataFactory createDataFactory(final String query) throws ReportDataFactoryException
   {
@@ -39,9 +42,14 @@ public class BandedMDXTableModelTest extends DataSourceTestBase
 
   public void testQuery() throws Exception
   {
-    String[][] QUERIES_AND_RESULTS = new String[][]{
-        {QUERY_BY_HIERARCHY, "steelwheels_hierarchy_result.txt"}
-    };
     runTest(QUERIES_AND_RESULTS);
   }
+
+  public static void _main(String[] args) throws Exception
+  {
+    final BandedMDXTableModelTest test = new BandedMDXTableModelTest();
+    test.setUp();
+    test.runGenerate(QUERIES_AND_RESULTS);
+  }
+
 }

@@ -26,6 +26,7 @@ import java.util.Map;
 import java.util.TreeSet;
 
 import mondrian.olap.Dimension;
+import mondrian.olap.Hierarchy;
 import mondrian.olap.Level;
 import mondrian.olap.Member;
 import mondrian.olap.Position;
@@ -72,6 +73,14 @@ public class SortedMemberAddingStrategy implements MemberAddingStrategy
       if (dimOrder != 0)
       {
         return dimOrder;
+      }
+
+      Hierarchy h1 = o1.getHierarchy();
+      Hierarchy h2 = o2.getHierarchy();
+      int hierarchyOrder = h1.getName().compareTo(h2.getName());
+      if (hierarchyOrder != 0)
+      {
+        return hierarchyOrder;
       }
 
       Level level1 = o1.getLevel();

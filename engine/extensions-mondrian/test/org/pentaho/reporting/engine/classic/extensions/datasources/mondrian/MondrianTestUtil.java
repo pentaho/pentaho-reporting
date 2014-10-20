@@ -18,6 +18,9 @@
 
 package org.pentaho.reporting.engine.classic.extensions.datasources.mondrian;
 
+import java.util.Locale;
+import java.util.TimeZone;
+
 public class MondrianTestUtil
 {
   /**
@@ -176,6 +179,10 @@ public class MondrianTestUtil
 
   public static void main(String[] args) throws Exception
   {
+    Locale.setDefault(Locale.US);
+    TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
+
+    BandedMDXTableModelTest._main(args);
     BandedQueryDataSourceDriverTest._main(args);
     DenormalizedDataSourceDriverTest._main(args);
     LegacyBandedDataSourceDriverTest._main(args);
