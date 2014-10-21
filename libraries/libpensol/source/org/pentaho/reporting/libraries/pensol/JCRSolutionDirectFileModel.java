@@ -349,7 +349,8 @@ public class JCRSolutionDirectFileModel implements SolutionFileModel {
       @FormDataParam("retainOwnership") String retainOwnership,
       @FormDataParam("charSet") String charSet,
       @FormDataParam("logLevel") String logLevel,
-      @FormDataParam("fileUpload") FormDataContentDisposition fileInfo )
+      @FormDataParam("fileUpload") FormDataContentDisposition fileInfo,
+      @FormDataParam("fileNameOverried) String fileNameOveride )
     */
     logger.debug( "setData: " + fullName );
 
@@ -360,7 +361,7 @@ public class JCRSolutionDirectFileModel implements SolutionFileModel {
       .name( name )
       .fileName( name )
       .build();
-    Response response = this.importRes.doPostImport( parent, stream, "true", null, "true", "true", null, "WARN", fd );
+    Response response = this.importRes.doPostImport( parent, stream, "true", null, "true", "true", null, "WARN", fd, null );
     throwExceptionOnBadResponse( response );
   }
 
