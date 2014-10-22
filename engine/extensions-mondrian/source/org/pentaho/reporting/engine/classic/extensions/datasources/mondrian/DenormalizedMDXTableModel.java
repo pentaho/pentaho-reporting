@@ -60,6 +60,7 @@ public class DenormalizedMDXTableModel extends AbstractTableModel implements Clo
   private Result resultSet;
   private int rowCount;
 
+  @Deprecated
   public DenormalizedMDXTableModel(final Result resultSet)
   {
     this(resultSet, 0, false);

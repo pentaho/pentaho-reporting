@@ -138,7 +138,7 @@ public class BandedMDXTableModel extends AbstractTableModel implements Closeable
     }
   }
 
-  public static List<String> computeColumnNames(final Axis[] axes,
+  protected List<String> computeColumnNames(final Axis[] axes,
                                                 final List<Member> columnToMemberMapper)
   {
     ArrayList<String> columnNames = new ArrayList<String>();
