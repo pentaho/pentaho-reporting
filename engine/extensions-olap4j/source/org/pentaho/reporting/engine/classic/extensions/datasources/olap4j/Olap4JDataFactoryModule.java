@@ -48,6 +48,7 @@ public class Olap4JDataFactoryModule extends AbstractModule
       "org.pentaho.reporting.engine.classic.extensions.datasources.olap4j.tag-def.";
   public static final String CONNECTION_WRITER_PREFIX =
       "org.pentaho.reporting.engine.classic.extensions.datasources.olap4j.writer.handler.sql-connection-provider.";
+  public static final String MEMBER_ON_AXIS_SORTED_KEY = "org.pentaho.reporting.engine.classic.extensions.datasources.olap4j.MembersOnAxisSorted";
 
 
   public Olap4JDataFactoryModule() throws ModuleInitializeException

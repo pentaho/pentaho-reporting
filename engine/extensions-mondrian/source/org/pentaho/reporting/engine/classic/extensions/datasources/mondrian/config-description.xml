@@ -92,5 +92,18 @@
     <description>Internal Configuration setting. Do not modify.</description>
     <text/>
   </key>
+  <key name="org.pentaho.reporting.engine.classic.extensions.datasources.mondrian.MembersOnAxisSorted" global="false" hidden="false">
+    <description>Defines whether members on an axis are sorted by dimension and hierarchy level. If set to 'false' members are
+sorted by access-order, which is determined by walking through the result set and recording the appearance of members on the axis.
+Access-order can return changing column orders depending on how the MDX query is structured.
+
+This defaults to 'true' to give reports a well-defined column order that matches the results seen by other OLAP tools.
+Set this setting to 'false' to restore access-order, which was the default in older releases.
+    </description>
+    <enum>
+      <text>true</text>
+      <text>false</text>
+    </enum>
+  </key>
 
 </config-description>

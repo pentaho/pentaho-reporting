@@ -1,0 +1,1084 @@
+Tablemodel contains 5 rows.
+Column: 0 Name=[Markets].[(All)]; DataType=class java.lang.String
+Column: 1 Name=[Markets].[Territory]; DataType=class java.lang.String
+Column: 2 Name=[Markets].[Country]; DataType=class java.lang.String
+Column: 3 Name=[Markets.City].[(All)]; DataType=class java.lang.String
+Column: 4 Name=[Markets.City].[City]; DataType=class java.lang.String
+Column: 5 Name=[Measures].[Quantity]; DataType=class java.lang.Double
+Checking the data inside
+ValueAt (0, 0) is in a typed column and is of type class java.lang.String
+ValueAt (0, 1) is in a typed column and is of type class java.lang.String
+ValueAt (0, 2) is in a typed column and is of type class java.lang.String
+ValueAt (0, 3) is in a typed column and is of type class java.lang.String
+ValueAt (0, 4) is in a typed column and is of type class java.lang.String
+ValueAt (0, 5) is in a typed column and is of type class java.lang.Double
+ValueAt (1, 0) is in a typed column and is of type class java.lang.String
+ValueAt (1, 1) is in a typed column and is of type class java.lang.String
+ValueAt (1, 2) is in a typed column and is of type class java.lang.String
+ValueAt (1, 3) is in a typed column and is of type class java.lang.String
+ValueAt (1, 4) is in a typed column and is of type class java.lang.String
+ValueAt (1, 5) is in a typed column and is of type class java.lang.Double
+ValueAt (2, 0) is in a typed column and is of type class java.lang.String
+ValueAt (2, 1) is in a typed column and is of type class java.lang.String
+ValueAt (2, 2) is in a typed column and is of type class java.lang.String
+ValueAt (2, 3) is in a typed column and is of type class java.lang.String
+ValueAt (2, 4) is in a typed column and is of type class java.lang.String
+ValueAt (2, 5) is in a typed column and is of type class java.lang.Double
+ValueAt (3, 0) is in a typed column and is of type class java.lang.String
+ValueAt (3, 1) is in a typed column and is of type class java.lang.String
+ValueAt (3, 2) is in a typed column and is of type class java.lang.String
+ValueAt (3, 3) is in a typed column and is of type class java.lang.String
+ValueAt (3, 4) is in a typed column and is of type class java.lang.String
+ValueAt (3, 5) is in a typed column and is of type class java.lang.Double
+ValueAt (4, 0) is in a typed column and is of type class java.lang.String
+ValueAt (4, 1) is in a typed column and is of type class java.lang.String
+ValueAt (4, 2) is in a typed column and is of type class java.lang.String
+ValueAt (4, 3) is in a typed column and is of type class java.lang.String
+ValueAt (4, 4) is in a typed column and is of type class java.lang.String
+ValueAt (4, 5) is in a typed column and is of type class java.lang.Double
+TableAttribute [http://reporting.pentaho.org/namespaces/engine/meta-attributes/core:crosstab-mode]=normalized
+Tablemodel contains 5 rows.
+Checking the attributes inside
+CellAttribute(0, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:$visible]=null
+CellAttribute(0, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACK_COLOR]=null
+CellAttribute(0, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CATALOG_NAME]=null
+CellAttribute(0, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CHILDREN_CARDINALITY]=5
+CellAttribute(0, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CUBE_NAME]=null
+CellAttribute(0, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:DEPTH]=null
+CellAttribute(0, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:DESCRIPTION]=null
+CellAttribute(0, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:DIMENSION_UNIQUE_NAME]=[Markets]
+CellAttribute(0, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:DISPLAY_INFO]=null
+CellAttribute(0, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_FLAGS]=null
+CellAttribute(0, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_NAME]=null
+CellAttribute(0, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_SIZE]=null
+CellAttribute(0, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FORE_COLOR]=null
+CellAttribute(0, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FORMAT_STRING]=null
+CellAttribute(0, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:HIERARCHY_UNIQUE_NAME]=[Markets]
+CellAttribute(0, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:IS_DATAMEMBER]=null
+CellAttribute(0, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:IS_PLACEHOLDERMEMBER]=null
+CellAttribute(0, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:LANGUAGE]=null
+CellAttribute(0, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:LEVEL_NUMBER]=0
+CellAttribute(0, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:LEVEL_UNIQUE_NAME]=[Markets].[(All)]
+CellAttribute(0, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MDX::ALL_MEMBER]=true
+CellAttribute(0, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MDX::CALCULATED]=false
+CellAttribute(0, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MDX::CAPTION]=LocalizedString{description=false, member=[Markets].[All Markets]}
+CellAttribute(0, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MDX::DESCRIPTION]=LocalizedString{description=false, member=[Markets].[All Markets]}
+CellAttribute(0, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MDX::HIDDEN]=false
+CellAttribute(0, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MEMBER_CAPTION]=All Markets
+CellAttribute(0, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MEMBER_GUID]=null
+CellAttribute(0, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MEMBER_KEY]=0
+CellAttribute(0, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MEMBER_NAME]=All Markets
+CellAttribute(0, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MEMBER_ORDINAL]=0
+CellAttribute(0, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MEMBER_TYPE]=2
+CellAttribute(0, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MEMBER_UNIQUE_NAME]=[Markets].[All Markets]
+CellAttribute(0, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:PARENT_COUNT]=0
+CellAttribute(0, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:PARENT_LEVEL]=0
+CellAttribute(0, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:PARENT_UNIQUE_NAME]=null
+CellAttribute(0, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:SCHEMA_NAME]=SteelWheels-backlog-348
+CellAttribute(0, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=null
+CellAttribute(0, 1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:$visible]=null
+CellAttribute(0, 1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACK_COLOR]=null
+CellAttribute(0, 1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CATALOG_NAME]=null
+CellAttribute(0, 1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CHILDREN_CARDINALITY]=3
+CellAttribute(0, 1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CUBE_NAME]=null
+CellAttribute(0, 1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:DEPTH]=null
+CellAttribute(0, 1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:DESCRIPTION]=null
+CellAttribute(0, 1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:DIMENSION_UNIQUE_NAME]=[Markets]
+CellAttribute(0, 1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:DISPLAY_INFO]=null
+CellAttribute(0, 1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_FLAGS]=null
+CellAttribute(0, 1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_NAME]=null
+CellAttribute(0, 1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_SIZE]=null
+CellAttribute(0, 1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FORE_COLOR]=null
+CellAttribute(0, 1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FORMAT_STRING]=null
+CellAttribute(0, 1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:HIERARCHY_UNIQUE_NAME]=[Markets]
+CellAttribute(0, 1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:IS_DATAMEMBER]=null
+CellAttribute(0, 1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:IS_PLACEHOLDERMEMBER]=null
+CellAttribute(0, 1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:LANGUAGE]=null
+CellAttribute(0, 1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:LEVEL_NUMBER]=1
+CellAttribute(0, 1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:LEVEL_UNIQUE_NAME]=[Markets].[Territory]
+CellAttribute(0, 1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MDX::ALL_MEMBER]=false
+CellAttribute(0, 1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MDX::CALCULATED]=false
+CellAttribute(0, 1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MDX::CAPTION]=LocalizedString{description=false, member=[Markets].[APAC]}
+CellAttribute(0, 1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MDX::DESCRIPTION]=LocalizedString{description=false, member=[Markets].[APAC]}
+CellAttribute(0, 1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MDX::HIDDEN]=false
+CellAttribute(0, 1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MEMBER_CAPTION]=APAC
+CellAttribute(0, 1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MEMBER_GUID]=null
+CellAttribute(0, 1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MEMBER_KEY]=APAC
+CellAttribute(0, 1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MEMBER_NAME]=APAC
+CellAttribute(0, 1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MEMBER_ORDINAL]=-1
+CellAttribute(0, 1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MEMBER_TYPE]=1
+CellAttribute(0, 1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MEMBER_UNIQUE_NAME]=[Markets].[APAC]
+CellAttribute(0, 1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:PARENT_COUNT]=1
+CellAttribute(0, 1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:PARENT_LEVEL]=0
+CellAttribute(0, 1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:PARENT_UNIQUE_NAME]=[Markets].[All Markets]
+CellAttribute(0, 1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:SCHEMA_NAME]=SteelWheels-backlog-348
+CellAttribute(0, 1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=null
+CellAttribute(0, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:$visible]=null
+CellAttribute(0, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACK_COLOR]=null
+CellAttribute(0, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CATALOG_NAME]=null
+CellAttribute(0, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CHILDREN_CARDINALITY]=3
+CellAttribute(0, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CUBE_NAME]=null
+CellAttribute(0, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:DEPTH]=null
+CellAttribute(0, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:DESCRIPTION]=null
+CellAttribute(0, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:DIMENSION_UNIQUE_NAME]=[Markets]
+CellAttribute(0, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:DISPLAY_INFO]=null
+CellAttribute(0, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_FLAGS]=null
+CellAttribute(0, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_NAME]=null
+CellAttribute(0, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_SIZE]=null
+CellAttribute(0, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FORE_COLOR]=null
+CellAttribute(0, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FORMAT_STRING]=null
+CellAttribute(0, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:HIERARCHY_UNIQUE_NAME]=[Markets]
+CellAttribute(0, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:IS_DATAMEMBER]=null
+CellAttribute(0, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:IS_PLACEHOLDERMEMBER]=null
+CellAttribute(0, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:LANGUAGE]=null
+CellAttribute(0, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:LEVEL_NUMBER]=2
+CellAttribute(0, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:LEVEL_UNIQUE_NAME]=[Markets].[Country]
+CellAttribute(0, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MDX::ALL_MEMBER]=false
+CellAttribute(0, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MDX::CALCULATED]=false
+CellAttribute(0, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MDX::CAPTION]=LocalizedString{description=false, member=[Markets].[APAC].[Australia]}
+CellAttribute(0, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MDX::DESCRIPTION]=LocalizedString{description=false, member=[Markets].[APAC].[Australia]}
+CellAttribute(0, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MDX::HIDDEN]=false
+CellAttribute(0, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MEMBER_CAPTION]=Australia
+CellAttribute(0, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MEMBER_GUID]=null
+CellAttribute(0, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MEMBER_KEY]=Australia
+CellAttribute(0, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MEMBER_NAME]=Australia
+CellAttribute(0, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MEMBER_ORDINAL]=-1
+CellAttribute(0, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MEMBER_TYPE]=1
+CellAttribute(0, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MEMBER_UNIQUE_NAME]=[Markets].[APAC].[Australia]
+CellAttribute(0, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:PARENT_COUNT]=1
+CellAttribute(0, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:PARENT_LEVEL]=1
+CellAttribute(0, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:PARENT_UNIQUE_NAME]=[Markets].[APAC]
+CellAttribute(0, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:SCHEMA_NAME]=SteelWheels-backlog-348
+CellAttribute(0, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=null
+CellAttribute(0, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:$visible]=null
+CellAttribute(0, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACK_COLOR]=null
+CellAttribute(0, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CATALOG_NAME]=null
+CellAttribute(0, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CHILDREN_CARDINALITY]=95
+CellAttribute(0, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CUBE_NAME]=null
+CellAttribute(0, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:DEPTH]=null
+CellAttribute(0, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:DESCRIPTION]=null
+CellAttribute(0, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:DIMENSION_UNIQUE_NAME]=[Markets]
+CellAttribute(0, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:DISPLAY_INFO]=null
+CellAttribute(0, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_FLAGS]=null
+CellAttribute(0, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_NAME]=null
+CellAttribute(0, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_SIZE]=null
+CellAttribute(0, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FORE_COLOR]=null
+CellAttribute(0, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FORMAT_STRING]=null
+CellAttribute(0, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:HIERARCHY_UNIQUE_NAME]=[Markets.City]
+CellAttribute(0, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:IS_DATAMEMBER]=null
+CellAttribute(0, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:IS_PLACEHOLDERMEMBER]=null
+CellAttribute(0, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:LANGUAGE]=null
+CellAttribute(0, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:LEVEL_NUMBER]=0
+CellAttribute(0, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:LEVEL_UNIQUE_NAME]=[Markets.City].[(All)]
+CellAttribute(0, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MDX::ALL_MEMBER]=true
+CellAttribute(0, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MDX::CALCULATED]=false
+CellAttribute(0, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MDX::CAPTION]=LocalizedString{description=false, member=[Markets.City].[All Markets]}
+CellAttribute(0, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MDX::DESCRIPTION]=LocalizedString{description=false, member=[Markets.City].[All Markets]}
+CellAttribute(0, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MDX::HIDDEN]=false
+CellAttribute(0, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MEMBER_CAPTION]=All Markets
+CellAttribute(0, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MEMBER_GUID]=null
+CellAttribute(0, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MEMBER_KEY]=0
+CellAttribute(0, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MEMBER_NAME]=All Markets
+CellAttribute(0, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MEMBER_ORDINAL]=0
+CellAttribute(0, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MEMBER_TYPE]=2
+CellAttribute(0, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MEMBER_UNIQUE_NAME]=[Markets.City].[All Markets]
+CellAttribute(0, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:PARENT_COUNT]=0
+CellAttribute(0, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:PARENT_LEVEL]=0
+CellAttribute(0, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:PARENT_UNIQUE_NAME]=null
+CellAttribute(0, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:SCHEMA_NAME]=SteelWheels-backlog-348
+CellAttribute(0, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=null
+CellAttribute(0, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:$visible]=null
+CellAttribute(0, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACK_COLOR]=null
+CellAttribute(0, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CATALOG_NAME]=null
+CellAttribute(0, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CHILDREN_CARDINALITY]=0
+CellAttribute(0, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CUBE_NAME]=null
+CellAttribute(0, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:DEPTH]=null
+CellAttribute(0, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:DESCRIPTION]=null
+CellAttribute(0, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:DIMENSION_UNIQUE_NAME]=[Markets]
+CellAttribute(0, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:DISPLAY_INFO]=null
+CellAttribute(0, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_FLAGS]=null
+CellAttribute(0, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_NAME]=null
+CellAttribute(0, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_SIZE]=null
+CellAttribute(0, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FORE_COLOR]=null
+CellAttribute(0, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FORMAT_STRING]=null
+CellAttribute(0, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:HIERARCHY_UNIQUE_NAME]=[Markets.City]
+CellAttribute(0, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:IS_DATAMEMBER]=null
+CellAttribute(0, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:IS_PLACEHOLDERMEMBER]=null
+CellAttribute(0, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:LANGUAGE]=null
+CellAttribute(0, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:LEVEL_NUMBER]=1
+CellAttribute(0, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:LEVEL_UNIQUE_NAME]=[Markets.City].[City]
+CellAttribute(0, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MDX::ALL_MEMBER]=false
+CellAttribute(0, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MDX::CALCULATED]=false
+CellAttribute(0, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MDX::CAPTION]=LocalizedString{description=false, member=[Markets.City].[Chatswood]}
+CellAttribute(0, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MDX::DESCRIPTION]=LocalizedString{description=false, member=[Markets.City].[Chatswood]}
+CellAttribute(0, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MDX::HIDDEN]=false
+CellAttribute(0, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MEMBER_CAPTION]=Chatswood
+CellAttribute(0, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MEMBER_GUID]=null
+CellAttribute(0, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MEMBER_KEY]=Chatswood
+CellAttribute(0, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MEMBER_NAME]=Chatswood
+CellAttribute(0, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MEMBER_ORDINAL]=-1
+CellAttribute(0, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MEMBER_TYPE]=1
+CellAttribute(0, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MEMBER_UNIQUE_NAME]=[Markets.City].[Chatswood]
+CellAttribute(0, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:PARENT_COUNT]=1
+CellAttribute(0, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:PARENT_LEVEL]=0
+CellAttribute(0, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:PARENT_UNIQUE_NAME]=[Markets.City].[All Markets]
+CellAttribute(0, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:SCHEMA_NAME]=SteelWheels-backlog-348
+CellAttribute(0, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=null
+CellAttribute(0, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:ACTION_TYPE]=256
+CellAttribute(0, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACK_COLOR]=null
+CellAttribute(0, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CELL_EVALUATION_LIST]=null
+CellAttribute(0, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CELL_ORDINAL]=0
+CellAttribute(0, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:DATATYPE]=Numeric
+CellAttribute(0, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_FLAGS]=0
+CellAttribute(0, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_NAME]=null
+CellAttribute(0, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_SIZE]=null
+CellAttribute(0, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FORE_COLOR]=null
+CellAttribute(0, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FORMATTED_VALUE]=1,601
+CellAttribute(0, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FORMAT_STRING]=#,###
+CellAttribute(0, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:LANGUAGE]=null
+CellAttribute(0, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:NON_EMPTY_BEHAVIOR]=null
+CellAttribute(0, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:SOLVE_ORDER]=0
+CellAttribute(0, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:UPDATEABLE]=null
+CellAttribute(0, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=1601.0
+CellAttribute(1, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:$visible]=null
+CellAttribute(1, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACK_COLOR]=null
+CellAttribute(1, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CATALOG_NAME]=null
+CellAttribute(1, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CHILDREN_CARDINALITY]=5
+CellAttribute(1, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CUBE_NAME]=null
+CellAttribute(1, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:DEPTH]=null
+CellAttribute(1, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:DESCRIPTION]=null
+CellAttribute(1, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:DIMENSION_UNIQUE_NAME]=[Markets]
+CellAttribute(1, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:DISPLAY_INFO]=null
+CellAttribute(1, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_FLAGS]=null
+CellAttribute(1, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_NAME]=null
+CellAttribute(1, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_SIZE]=null
+CellAttribute(1, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FORE_COLOR]=null
+CellAttribute(1, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FORMAT_STRING]=null
+CellAttribute(1, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:HIERARCHY_UNIQUE_NAME]=[Markets]
+CellAttribute(1, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:IS_DATAMEMBER]=null
+CellAttribute(1, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:IS_PLACEHOLDERMEMBER]=null
+CellAttribute(1, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:LANGUAGE]=null
+CellAttribute(1, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:LEVEL_NUMBER]=0
+CellAttribute(1, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:LEVEL_UNIQUE_NAME]=[Markets].[(All)]
+CellAttribute(1, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MDX::ALL_MEMBER]=true
+CellAttribute(1, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MDX::CALCULATED]=false
+CellAttribute(1, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MDX::CAPTION]=LocalizedString{description=false, member=[Markets].[All Markets]}
+CellAttribute(1, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MDX::DESCRIPTION]=LocalizedString{description=false, member=[Markets].[All Markets]}
+CellAttribute(1, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MDX::HIDDEN]=false
+CellAttribute(1, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MEMBER_CAPTION]=All Markets
+CellAttribute(1, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MEMBER_GUID]=null
+CellAttribute(1, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MEMBER_KEY]=0
+CellAttribute(1, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MEMBER_NAME]=All Markets
+CellAttribute(1, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MEMBER_ORDINAL]=0
+CellAttribute(1, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MEMBER_TYPE]=2
+CellAttribute(1, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MEMBER_UNIQUE_NAME]=[Markets].[All Markets]
+CellAttribute(1, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:PARENT_COUNT]=0
+CellAttribute(1, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:PARENT_LEVEL]=0
+CellAttribute(1, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:PARENT_UNIQUE_NAME]=null
+CellAttribute(1, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:SCHEMA_NAME]=SteelWheels-backlog-348
+CellAttribute(1, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=null
+CellAttribute(1, 1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:$visible]=null
+CellAttribute(1, 1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACK_COLOR]=null
+CellAttribute(1, 1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CATALOG_NAME]=null
+CellAttribute(1, 1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CHILDREN_CARDINALITY]=3
+CellAttribute(1, 1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CUBE_NAME]=null
+CellAttribute(1, 1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:DEPTH]=null
+CellAttribute(1, 1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:DESCRIPTION]=null
+CellAttribute(1, 1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:DIMENSION_UNIQUE_NAME]=[Markets]
+CellAttribute(1, 1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:DISPLAY_INFO]=null
+CellAttribute(1, 1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_FLAGS]=null
+CellAttribute(1, 1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_NAME]=null
+CellAttribute(1, 1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_SIZE]=null
+CellAttribute(1, 1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FORE_COLOR]=null
+CellAttribute(1, 1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FORMAT_STRING]=null
+CellAttribute(1, 1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:HIERARCHY_UNIQUE_NAME]=[Markets]
+CellAttribute(1, 1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:IS_DATAMEMBER]=null
+CellAttribute(1, 1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:IS_PLACEHOLDERMEMBER]=null
+CellAttribute(1, 1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:LANGUAGE]=null
+CellAttribute(1, 1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:LEVEL_NUMBER]=1
+CellAttribute(1, 1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:LEVEL_UNIQUE_NAME]=[Markets].[Territory]
+CellAttribute(1, 1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MDX::ALL_MEMBER]=false
+CellAttribute(1, 1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MDX::CALCULATED]=false
+CellAttribute(1, 1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MDX::CAPTION]=LocalizedString{description=false, member=[Markets].[APAC]}
+CellAttribute(1, 1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MDX::DESCRIPTION]=LocalizedString{description=false, member=[Markets].[APAC]}
+CellAttribute(1, 1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MDX::HIDDEN]=false
+CellAttribute(1, 1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MEMBER_CAPTION]=APAC
+CellAttribute(1, 1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MEMBER_GUID]=null
+CellAttribute(1, 1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MEMBER_KEY]=APAC
+CellAttribute(1, 1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MEMBER_NAME]=APAC
+CellAttribute(1, 1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MEMBER_ORDINAL]=-1
+CellAttribute(1, 1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MEMBER_TYPE]=1
+CellAttribute(1, 1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MEMBER_UNIQUE_NAME]=[Markets].[APAC]
+CellAttribute(1, 1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:PARENT_COUNT]=1
+CellAttribute(1, 1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:PARENT_LEVEL]=0
+CellAttribute(1, 1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:PARENT_UNIQUE_NAME]=[Markets].[All Markets]
+CellAttribute(1, 1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:SCHEMA_NAME]=SteelWheels-backlog-348
+CellAttribute(1, 1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=null
+CellAttribute(1, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:$visible]=null
+CellAttribute(1, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACK_COLOR]=null
+CellAttribute(1, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CATALOG_NAME]=null
+CellAttribute(1, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CHILDREN_CARDINALITY]=3
+CellAttribute(1, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CUBE_NAME]=null
+CellAttribute(1, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:DEPTH]=null
+CellAttribute(1, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:DESCRIPTION]=null
+CellAttribute(1, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:DIMENSION_UNIQUE_NAME]=[Markets]
+CellAttribute(1, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:DISPLAY_INFO]=null
+CellAttribute(1, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_FLAGS]=null
+CellAttribute(1, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_NAME]=null
+CellAttribute(1, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_SIZE]=null
+CellAttribute(1, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FORE_COLOR]=null
+CellAttribute(1, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FORMAT_STRING]=null
+CellAttribute(1, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:HIERARCHY_UNIQUE_NAME]=[Markets]
+CellAttribute(1, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:IS_DATAMEMBER]=null
+CellAttribute(1, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:IS_PLACEHOLDERMEMBER]=null
+CellAttribute(1, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:LANGUAGE]=null
+CellAttribute(1, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:LEVEL_NUMBER]=2
+CellAttribute(1, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:LEVEL_UNIQUE_NAME]=[Markets].[Country]
+CellAttribute(1, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MDX::ALL_MEMBER]=false
+CellAttribute(1, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MDX::CALCULATED]=false
+CellAttribute(1, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MDX::CAPTION]=LocalizedString{description=false, member=[Markets].[APAC].[Australia]}
+CellAttribute(1, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MDX::DESCRIPTION]=LocalizedString{description=false, member=[Markets].[APAC].[Australia]}
+CellAttribute(1, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MDX::HIDDEN]=false
+CellAttribute(1, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MEMBER_CAPTION]=Australia
+CellAttribute(1, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MEMBER_GUID]=null
+CellAttribute(1, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MEMBER_KEY]=Australia
+CellAttribute(1, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MEMBER_NAME]=Australia
+CellAttribute(1, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MEMBER_ORDINAL]=-1
+CellAttribute(1, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MEMBER_TYPE]=1
+CellAttribute(1, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MEMBER_UNIQUE_NAME]=[Markets].[APAC].[Australia]
+CellAttribute(1, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:PARENT_COUNT]=1
+CellAttribute(1, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:PARENT_LEVEL]=1
+CellAttribute(1, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:PARENT_UNIQUE_NAME]=[Markets].[APAC]
+CellAttribute(1, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:SCHEMA_NAME]=SteelWheels-backlog-348
+CellAttribute(1, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=null
+CellAttribute(1, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:$visible]=null
+CellAttribute(1, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACK_COLOR]=null
+CellAttribute(1, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CATALOG_NAME]=null
+CellAttribute(1, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CHILDREN_CARDINALITY]=95
+CellAttribute(1, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CUBE_NAME]=null
+CellAttribute(1, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:DEPTH]=null
+CellAttribute(1, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:DESCRIPTION]=null
+CellAttribute(1, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:DIMENSION_UNIQUE_NAME]=[Markets]
+CellAttribute(1, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:DISPLAY_INFO]=null
+CellAttribute(1, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_FLAGS]=null
+CellAttribute(1, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_NAME]=null
+CellAttribute(1, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_SIZE]=null
+CellAttribute(1, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FORE_COLOR]=null
+CellAttribute(1, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FORMAT_STRING]=null
+CellAttribute(1, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:HIERARCHY_UNIQUE_NAME]=[Markets.City]
+CellAttribute(1, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:IS_DATAMEMBER]=null
+CellAttribute(1, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:IS_PLACEHOLDERMEMBER]=null
+CellAttribute(1, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:LANGUAGE]=null
+CellAttribute(1, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:LEVEL_NUMBER]=0
+CellAttribute(1, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:LEVEL_UNIQUE_NAME]=[Markets.City].[(All)]
+CellAttribute(1, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MDX::ALL_MEMBER]=true
+CellAttribute(1, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MDX::CALCULATED]=false
+CellAttribute(1, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MDX::CAPTION]=LocalizedString{description=false, member=[Markets.City].[All Markets]}
+CellAttribute(1, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MDX::DESCRIPTION]=LocalizedString{description=false, member=[Markets.City].[All Markets]}
+CellAttribute(1, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MDX::HIDDEN]=false
+CellAttribute(1, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MEMBER_CAPTION]=All Markets
+CellAttribute(1, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MEMBER_GUID]=null
+CellAttribute(1, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MEMBER_KEY]=0
+CellAttribute(1, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MEMBER_NAME]=All Markets
+CellAttribute(1, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MEMBER_ORDINAL]=0
+CellAttribute(1, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MEMBER_TYPE]=2
+CellAttribute(1, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MEMBER_UNIQUE_NAME]=[Markets.City].[All Markets]
+CellAttribute(1, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:PARENT_COUNT]=0
+CellAttribute(1, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:PARENT_LEVEL]=0
+CellAttribute(1, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:PARENT_UNIQUE_NAME]=null
+CellAttribute(1, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:SCHEMA_NAME]=SteelWheels-backlog-348
+CellAttribute(1, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=null
+CellAttribute(1, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:$visible]=null
+CellAttribute(1, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACK_COLOR]=null
+CellAttribute(1, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CATALOG_NAME]=null
+CellAttribute(1, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CHILDREN_CARDINALITY]=0
+CellAttribute(1, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CUBE_NAME]=null
+CellAttribute(1, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:DEPTH]=null
+CellAttribute(1, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:DESCRIPTION]=null
+CellAttribute(1, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:DIMENSION_UNIQUE_NAME]=[Markets]
+CellAttribute(1, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:DISPLAY_INFO]=null
+CellAttribute(1, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_FLAGS]=null
+CellAttribute(1, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_NAME]=null
+CellAttribute(1, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_SIZE]=null
+CellAttribute(1, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FORE_COLOR]=null
+CellAttribute(1, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FORMAT_STRING]=null
+CellAttribute(1, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:HIERARCHY_UNIQUE_NAME]=[Markets.City]
+CellAttribute(1, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:IS_DATAMEMBER]=null
+CellAttribute(1, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:IS_PLACEHOLDERMEMBER]=null
+CellAttribute(1, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:LANGUAGE]=null
+CellAttribute(1, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:LEVEL_NUMBER]=1
+CellAttribute(1, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:LEVEL_UNIQUE_NAME]=[Markets.City].[City]
+CellAttribute(1, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MDX::ALL_MEMBER]=false
+CellAttribute(1, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MDX::CALCULATED]=false
+CellAttribute(1, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MDX::CAPTION]=LocalizedString{description=false, member=[Markets.City].[Glen Waverly]}
+CellAttribute(1, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MDX::DESCRIPTION]=LocalizedString{description=false, member=[Markets.City].[Glen Waverly]}
+CellAttribute(1, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MDX::HIDDEN]=false
+CellAttribute(1, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MEMBER_CAPTION]=Glen Waverly
+CellAttribute(1, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MEMBER_GUID]=null
+CellAttribute(1, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MEMBER_KEY]=Glen Waverly
+CellAttribute(1, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MEMBER_NAME]=Glen Waverly
+CellAttribute(1, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MEMBER_ORDINAL]=-1
+CellAttribute(1, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MEMBER_TYPE]=1
+CellAttribute(1, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MEMBER_UNIQUE_NAME]=[Markets.City].[Glen Waverly]
+CellAttribute(1, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:PARENT_COUNT]=1
+CellAttribute(1, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:PARENT_LEVEL]=0
+CellAttribute(1, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:PARENT_UNIQUE_NAME]=[Markets.City].[All Markets]
+CellAttribute(1, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:SCHEMA_NAME]=SteelWheels-backlog-348
+CellAttribute(1, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=null
+CellAttribute(1, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:ACTION_TYPE]=256
+CellAttribute(1, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACK_COLOR]=null
+CellAttribute(1, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CELL_EVALUATION_LIST]=null
+CellAttribute(1, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CELL_ORDINAL]=1
+CellAttribute(1, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:DATATYPE]=Numeric
+CellAttribute(1, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_FLAGS]=0
+CellAttribute(1, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_NAME]=null
+CellAttribute(1, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_SIZE]=null
+CellAttribute(1, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FORE_COLOR]=null
+CellAttribute(1, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FORMATTED_VALUE]=705
+CellAttribute(1, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FORMAT_STRING]=#,###
+CellAttribute(1, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:LANGUAGE]=null
+CellAttribute(1, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:NON_EMPTY_BEHAVIOR]=null
+CellAttribute(1, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:SOLVE_ORDER]=0
+CellAttribute(1, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:UPDATEABLE]=null
+CellAttribute(1, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=705.0
+CellAttribute(2, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:$visible]=null
+CellAttribute(2, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACK_COLOR]=null
+CellAttribute(2, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CATALOG_NAME]=null
+CellAttribute(2, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CHILDREN_CARDINALITY]=5
+CellAttribute(2, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CUBE_NAME]=null
+CellAttribute(2, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:DEPTH]=null
+CellAttribute(2, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:DESCRIPTION]=null
+CellAttribute(2, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:DIMENSION_UNIQUE_NAME]=[Markets]
+CellAttribute(2, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:DISPLAY_INFO]=null
+CellAttribute(2, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_FLAGS]=null
+CellAttribute(2, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_NAME]=null
+CellAttribute(2, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_SIZE]=null
+CellAttribute(2, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FORE_COLOR]=null
+CellAttribute(2, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FORMAT_STRING]=null
+CellAttribute(2, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:HIERARCHY_UNIQUE_NAME]=[Markets]
+CellAttribute(2, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:IS_DATAMEMBER]=null
+CellAttribute(2, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:IS_PLACEHOLDERMEMBER]=null
+CellAttribute(2, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:LANGUAGE]=null
+CellAttribute(2, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:LEVEL_NUMBER]=0
+CellAttribute(2, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:LEVEL_UNIQUE_NAME]=[Markets].[(All)]
+CellAttribute(2, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MDX::ALL_MEMBER]=true
+CellAttribute(2, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MDX::CALCULATED]=false
+CellAttribute(2, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MDX::CAPTION]=LocalizedString{description=false, member=[Markets].[All Markets]}
+CellAttribute(2, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MDX::DESCRIPTION]=LocalizedString{description=false, member=[Markets].[All Markets]}
+CellAttribute(2, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MDX::HIDDEN]=false
+CellAttribute(2, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MEMBER_CAPTION]=All Markets
+CellAttribute(2, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MEMBER_GUID]=null
+CellAttribute(2, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MEMBER_KEY]=0
+CellAttribute(2, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MEMBER_NAME]=All Markets
+CellAttribute(2, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MEMBER_ORDINAL]=0
+CellAttribute(2, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MEMBER_TYPE]=2
+CellAttribute(2, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MEMBER_UNIQUE_NAME]=[Markets].[All Markets]
+CellAttribute(2, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:PARENT_COUNT]=0
+CellAttribute(2, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:PARENT_LEVEL]=0
+CellAttribute(2, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:PARENT_UNIQUE_NAME]=null
+CellAttribute(2, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:SCHEMA_NAME]=SteelWheels-backlog-348
+CellAttribute(2, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=null
+CellAttribute(2, 1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:$visible]=null
+CellAttribute(2, 1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACK_COLOR]=null
+CellAttribute(2, 1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CATALOG_NAME]=null
+CellAttribute(2, 1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CHILDREN_CARDINALITY]=3
+CellAttribute(2, 1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CUBE_NAME]=null
+CellAttribute(2, 1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:DEPTH]=null
+CellAttribute(2, 1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:DESCRIPTION]=null
+CellAttribute(2, 1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:DIMENSION_UNIQUE_NAME]=[Markets]
+CellAttribute(2, 1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:DISPLAY_INFO]=null
+CellAttribute(2, 1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_FLAGS]=null
+CellAttribute(2, 1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_NAME]=null
+CellAttribute(2, 1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_SIZE]=null
+CellAttribute(2, 1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FORE_COLOR]=null
+CellAttribute(2, 1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FORMAT_STRING]=null
+CellAttribute(2, 1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:HIERARCHY_UNIQUE_NAME]=[Markets]
+CellAttribute(2, 1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:IS_DATAMEMBER]=null
+CellAttribute(2, 1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:IS_PLACEHOLDERMEMBER]=null
+CellAttribute(2, 1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:LANGUAGE]=null
+CellAttribute(2, 1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:LEVEL_NUMBER]=1
+CellAttribute(2, 1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:LEVEL_UNIQUE_NAME]=[Markets].[Territory]
+CellAttribute(2, 1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MDX::ALL_MEMBER]=false
+CellAttribute(2, 1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MDX::CALCULATED]=false
+CellAttribute(2, 1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MDX::CAPTION]=LocalizedString{description=false, member=[Markets].[APAC]}
+CellAttribute(2, 1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MDX::DESCRIPTION]=LocalizedString{description=false, member=[Markets].[APAC]}
+CellAttribute(2, 1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MDX::HIDDEN]=false
+CellAttribute(2, 1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MEMBER_CAPTION]=APAC
+CellAttribute(2, 1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MEMBER_GUID]=null
+CellAttribute(2, 1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MEMBER_KEY]=APAC
+CellAttribute(2, 1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MEMBER_NAME]=APAC
+CellAttribute(2, 1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MEMBER_ORDINAL]=-1
+CellAttribute(2, 1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MEMBER_TYPE]=1
+CellAttribute(2, 1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MEMBER_UNIQUE_NAME]=[Markets].[APAC]
+CellAttribute(2, 1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:PARENT_COUNT]=1
+CellAttribute(2, 1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:PARENT_LEVEL]=0
+CellAttribute(2, 1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:PARENT_UNIQUE_NAME]=[Markets].[All Markets]
+CellAttribute(2, 1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:SCHEMA_NAME]=SteelWheels-backlog-348
+CellAttribute(2, 1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=null
+CellAttribute(2, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:$visible]=null
+CellAttribute(2, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACK_COLOR]=null
+CellAttribute(2, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CATALOG_NAME]=null
+CellAttribute(2, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CHILDREN_CARDINALITY]=3
+CellAttribute(2, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CUBE_NAME]=null
+CellAttribute(2, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:DEPTH]=null
+CellAttribute(2, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:DESCRIPTION]=null
+CellAttribute(2, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:DIMENSION_UNIQUE_NAME]=[Markets]
+CellAttribute(2, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:DISPLAY_INFO]=null
+CellAttribute(2, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_FLAGS]=null
+CellAttribute(2, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_NAME]=null
+CellAttribute(2, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_SIZE]=null
+CellAttribute(2, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FORE_COLOR]=null
+CellAttribute(2, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FORMAT_STRING]=null
+CellAttribute(2, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:HIERARCHY_UNIQUE_NAME]=[Markets]
+CellAttribute(2, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:IS_DATAMEMBER]=null
+CellAttribute(2, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:IS_PLACEHOLDERMEMBER]=null
+CellAttribute(2, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:LANGUAGE]=null
+CellAttribute(2, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:LEVEL_NUMBER]=2
+CellAttribute(2, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:LEVEL_UNIQUE_NAME]=[Markets].[Country]
+CellAttribute(2, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MDX::ALL_MEMBER]=false
+CellAttribute(2, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MDX::CALCULATED]=false
+CellAttribute(2, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MDX::CAPTION]=LocalizedString{description=false, member=[Markets].[APAC].[Australia]}
+CellAttribute(2, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MDX::DESCRIPTION]=LocalizedString{description=false, member=[Markets].[APAC].[Australia]}
+CellAttribute(2, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MDX::HIDDEN]=false
+CellAttribute(2, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MEMBER_CAPTION]=Australia
+CellAttribute(2, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MEMBER_GUID]=null
+CellAttribute(2, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MEMBER_KEY]=Australia
+CellAttribute(2, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MEMBER_NAME]=Australia
+CellAttribute(2, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MEMBER_ORDINAL]=-1
+CellAttribute(2, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MEMBER_TYPE]=1
+CellAttribute(2, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MEMBER_UNIQUE_NAME]=[Markets].[APAC].[Australia]
+CellAttribute(2, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:PARENT_COUNT]=1
+CellAttribute(2, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:PARENT_LEVEL]=1
+CellAttribute(2, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:PARENT_UNIQUE_NAME]=[Markets].[APAC]
+CellAttribute(2, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:SCHEMA_NAME]=SteelWheels-backlog-348
+CellAttribute(2, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=null
+CellAttribute(2, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:$visible]=null
+CellAttribute(2, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACK_COLOR]=null
+CellAttribute(2, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CATALOG_NAME]=null
+CellAttribute(2, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CHILDREN_CARDINALITY]=95
+CellAttribute(2, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CUBE_NAME]=null
+CellAttribute(2, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:DEPTH]=null
+CellAttribute(2, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:DESCRIPTION]=null
+CellAttribute(2, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:DIMENSION_UNIQUE_NAME]=[Markets]
+CellAttribute(2, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:DISPLAY_INFO]=null
+CellAttribute(2, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_FLAGS]=null
+CellAttribute(2, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_NAME]=null
+CellAttribute(2, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_SIZE]=null
+CellAttribute(2, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FORE_COLOR]=null
+CellAttribute(2, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FORMAT_STRING]=null
+CellAttribute(2, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:HIERARCHY_UNIQUE_NAME]=[Markets.City]
+CellAttribute(2, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:IS_DATAMEMBER]=null
+CellAttribute(2, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:IS_PLACEHOLDERMEMBER]=null
+CellAttribute(2, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:LANGUAGE]=null
+CellAttribute(2, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:LEVEL_NUMBER]=0
+CellAttribute(2, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:LEVEL_UNIQUE_NAME]=[Markets.City].[(All)]
+CellAttribute(2, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MDX::ALL_MEMBER]=true
+CellAttribute(2, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MDX::CALCULATED]=false
+CellAttribute(2, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MDX::CAPTION]=LocalizedString{description=false, member=[Markets.City].[All Markets]}
+CellAttribute(2, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MDX::DESCRIPTION]=LocalizedString{description=false, member=[Markets.City].[All Markets]}
+CellAttribute(2, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MDX::HIDDEN]=false
+CellAttribute(2, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MEMBER_CAPTION]=All Markets
+CellAttribute(2, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MEMBER_GUID]=null
+CellAttribute(2, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MEMBER_KEY]=0
+CellAttribute(2, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MEMBER_NAME]=All Markets
+CellAttribute(2, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MEMBER_ORDINAL]=0
+CellAttribute(2, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MEMBER_TYPE]=2
+CellAttribute(2, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MEMBER_UNIQUE_NAME]=[Markets.City].[All Markets]
+CellAttribute(2, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:PARENT_COUNT]=0
+CellAttribute(2, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:PARENT_LEVEL]=0
+CellAttribute(2, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:PARENT_UNIQUE_NAME]=null
+CellAttribute(2, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:SCHEMA_NAME]=SteelWheels-backlog-348
+CellAttribute(2, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=null
+CellAttribute(2, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:$visible]=null
+CellAttribute(2, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACK_COLOR]=null
+CellAttribute(2, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CATALOG_NAME]=null
+CellAttribute(2, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CHILDREN_CARDINALITY]=0
+CellAttribute(2, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CUBE_NAME]=null
+CellAttribute(2, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:DEPTH]=null
+CellAttribute(2, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:DESCRIPTION]=null
+CellAttribute(2, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:DIMENSION_UNIQUE_NAME]=[Markets]
+CellAttribute(2, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:DISPLAY_INFO]=null
+CellAttribute(2, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_FLAGS]=null
+CellAttribute(2, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_NAME]=null
+CellAttribute(2, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_SIZE]=null
+CellAttribute(2, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FORE_COLOR]=null
+CellAttribute(2, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FORMAT_STRING]=null
+CellAttribute(2, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:HIERARCHY_UNIQUE_NAME]=[Markets.City]
+CellAttribute(2, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:IS_DATAMEMBER]=null
+CellAttribute(2, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:IS_PLACEHOLDERMEMBER]=null
+CellAttribute(2, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:LANGUAGE]=null
+CellAttribute(2, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:LEVEL_NUMBER]=1
+CellAttribute(2, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:LEVEL_UNIQUE_NAME]=[Markets.City].[City]
+CellAttribute(2, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MDX::ALL_MEMBER]=false
+CellAttribute(2, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MDX::CALCULATED]=false
+CellAttribute(2, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MDX::CAPTION]=LocalizedString{description=false, member=[Markets.City].[Melbourne]}
+CellAttribute(2, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MDX::DESCRIPTION]=LocalizedString{description=false, member=[Markets.City].[Melbourne]}
+CellAttribute(2, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MDX::HIDDEN]=false
+CellAttribute(2, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MEMBER_CAPTION]=Melbourne
+CellAttribute(2, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MEMBER_GUID]=null
+CellAttribute(2, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MEMBER_KEY]=Melbourne
+CellAttribute(2, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MEMBER_NAME]=Melbourne
+CellAttribute(2, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MEMBER_ORDINAL]=-1
+CellAttribute(2, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MEMBER_TYPE]=1
+CellAttribute(2, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MEMBER_UNIQUE_NAME]=[Markets.City].[Melbourne]
+CellAttribute(2, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:PARENT_COUNT]=1
+CellAttribute(2, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:PARENT_LEVEL]=0
+CellAttribute(2, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:PARENT_UNIQUE_NAME]=[Markets.City].[All Markets]
+CellAttribute(2, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:SCHEMA_NAME]=SteelWheels-backlog-348
+CellAttribute(2, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=null
+CellAttribute(2, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:ACTION_TYPE]=256
+CellAttribute(2, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACK_COLOR]=null
+CellAttribute(2, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CELL_EVALUATION_LIST]=null
+CellAttribute(2, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CELL_ORDINAL]=2
+CellAttribute(2, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:DATATYPE]=Numeric
+CellAttribute(2, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_FLAGS]=0
+CellAttribute(2, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_NAME]=null
+CellAttribute(2, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_SIZE]=null
+CellAttribute(2, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FORE_COLOR]=null
+CellAttribute(2, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FORMATTED_VALUE]=1,926
+CellAttribute(2, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FORMAT_STRING]=#,###
+CellAttribute(2, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:LANGUAGE]=null
+CellAttribute(2, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:NON_EMPTY_BEHAVIOR]=null
+CellAttribute(2, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:SOLVE_ORDER]=0
+CellAttribute(2, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:UPDATEABLE]=null
+CellAttribute(2, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=1926.0
+CellAttribute(3, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:$visible]=null
+CellAttribute(3, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACK_COLOR]=null
+CellAttribute(3, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CATALOG_NAME]=null
+CellAttribute(3, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CHILDREN_CARDINALITY]=5
+CellAttribute(3, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CUBE_NAME]=null
+CellAttribute(3, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:DEPTH]=null
+CellAttribute(3, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:DESCRIPTION]=null
+CellAttribute(3, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:DIMENSION_UNIQUE_NAME]=[Markets]
+CellAttribute(3, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:DISPLAY_INFO]=null
+CellAttribute(3, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_FLAGS]=null
+CellAttribute(3, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_NAME]=null
+CellAttribute(3, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_SIZE]=null
+CellAttribute(3, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FORE_COLOR]=null
+CellAttribute(3, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FORMAT_STRING]=null
+CellAttribute(3, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:HIERARCHY_UNIQUE_NAME]=[Markets]
+CellAttribute(3, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:IS_DATAMEMBER]=null
+CellAttribute(3, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:IS_PLACEHOLDERMEMBER]=null
+CellAttribute(3, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:LANGUAGE]=null
+CellAttribute(3, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:LEVEL_NUMBER]=0
+CellAttribute(3, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:LEVEL_UNIQUE_NAME]=[Markets].[(All)]
+CellAttribute(3, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MDX::ALL_MEMBER]=true
+CellAttribute(3, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MDX::CALCULATED]=false
+CellAttribute(3, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MDX::CAPTION]=LocalizedString{description=false, member=[Markets].[All Markets]}
+CellAttribute(3, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MDX::DESCRIPTION]=LocalizedString{description=false, member=[Markets].[All Markets]}
+CellAttribute(3, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MDX::HIDDEN]=false
+CellAttribute(3, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MEMBER_CAPTION]=All Markets
+CellAttribute(3, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MEMBER_GUID]=null
+CellAttribute(3, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MEMBER_KEY]=0
+CellAttribute(3, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MEMBER_NAME]=All Markets
+CellAttribute(3, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MEMBER_ORDINAL]=0
+CellAttribute(3, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MEMBER_TYPE]=2
+CellAttribute(3, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MEMBER_UNIQUE_NAME]=[Markets].[All Markets]
+CellAttribute(3, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:PARENT_COUNT]=0
+CellAttribute(3, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:PARENT_LEVEL]=0
+CellAttribute(3, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:PARENT_UNIQUE_NAME]=null
+CellAttribute(3, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:SCHEMA_NAME]=SteelWheels-backlog-348
+CellAttribute(3, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=null
+CellAttribute(3, 1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:$visible]=null
+CellAttribute(3, 1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACK_COLOR]=null
+CellAttribute(3, 1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CATALOG_NAME]=null
+CellAttribute(3, 1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CHILDREN_CARDINALITY]=3
+CellAttribute(3, 1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CUBE_NAME]=null
+CellAttribute(3, 1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:DEPTH]=null
+CellAttribute(3, 1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:DESCRIPTION]=null
+CellAttribute(3, 1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:DIMENSION_UNIQUE_NAME]=[Markets]
+CellAttribute(3, 1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:DISPLAY_INFO]=null
+CellAttribute(3, 1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_FLAGS]=null
+CellAttribute(3, 1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_NAME]=null
+CellAttribute(3, 1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_SIZE]=null
+CellAttribute(3, 1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FORE_COLOR]=null
+CellAttribute(3, 1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FORMAT_STRING]=null
+CellAttribute(3, 1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:HIERARCHY_UNIQUE_NAME]=[Markets]
+CellAttribute(3, 1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:IS_DATAMEMBER]=null
+CellAttribute(3, 1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:IS_PLACEHOLDERMEMBER]=null
+CellAttribute(3, 1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:LANGUAGE]=null
+CellAttribute(3, 1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:LEVEL_NUMBER]=1
+CellAttribute(3, 1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:LEVEL_UNIQUE_NAME]=[Markets].[Territory]
+CellAttribute(3, 1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MDX::ALL_MEMBER]=false
+CellAttribute(3, 1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MDX::CALCULATED]=false
+CellAttribute(3, 1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MDX::CAPTION]=LocalizedString{description=false, member=[Markets].[APAC]}
+CellAttribute(3, 1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MDX::DESCRIPTION]=LocalizedString{description=false, member=[Markets].[APAC]}
+CellAttribute(3, 1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MDX::HIDDEN]=false
+CellAttribute(3, 1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MEMBER_CAPTION]=APAC
+CellAttribute(3, 1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MEMBER_GUID]=null
+CellAttribute(3, 1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MEMBER_KEY]=APAC
+CellAttribute(3, 1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MEMBER_NAME]=APAC
+CellAttribute(3, 1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MEMBER_ORDINAL]=-1
+CellAttribute(3, 1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MEMBER_TYPE]=1
+CellAttribute(3, 1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MEMBER_UNIQUE_NAME]=[Markets].[APAC]
+CellAttribute(3, 1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:PARENT_COUNT]=1
+CellAttribute(3, 1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:PARENT_LEVEL]=0
+CellAttribute(3, 1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:PARENT_UNIQUE_NAME]=[Markets].[All Markets]
+CellAttribute(3, 1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:SCHEMA_NAME]=SteelWheels-backlog-348
+CellAttribute(3, 1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=null
+CellAttribute(3, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:$visible]=null
+CellAttribute(3, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACK_COLOR]=null
+CellAttribute(3, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CATALOG_NAME]=null
+CellAttribute(3, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CHILDREN_CARDINALITY]=3
+CellAttribute(3, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CUBE_NAME]=null
+CellAttribute(3, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:DEPTH]=null
+CellAttribute(3, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:DESCRIPTION]=null
+CellAttribute(3, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:DIMENSION_UNIQUE_NAME]=[Markets]
+CellAttribute(3, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:DISPLAY_INFO]=null
+CellAttribute(3, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_FLAGS]=null
+CellAttribute(3, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_NAME]=null
+CellAttribute(3, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_SIZE]=null
+CellAttribute(3, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FORE_COLOR]=null
+CellAttribute(3, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FORMAT_STRING]=null
+CellAttribute(3, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:HIERARCHY_UNIQUE_NAME]=[Markets]
+CellAttribute(3, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:IS_DATAMEMBER]=null
+CellAttribute(3, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:IS_PLACEHOLDERMEMBER]=null
+CellAttribute(3, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:LANGUAGE]=null
+CellAttribute(3, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:LEVEL_NUMBER]=2
+CellAttribute(3, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:LEVEL_UNIQUE_NAME]=[Markets].[Country]
+CellAttribute(3, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MDX::ALL_MEMBER]=false
+CellAttribute(3, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MDX::CALCULATED]=false
+CellAttribute(3, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MDX::CAPTION]=LocalizedString{description=false, member=[Markets].[APAC].[Australia]}
+CellAttribute(3, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MDX::DESCRIPTION]=LocalizedString{description=false, member=[Markets].[APAC].[Australia]}
+CellAttribute(3, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MDX::HIDDEN]=false
+CellAttribute(3, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MEMBER_CAPTION]=Australia
+CellAttribute(3, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MEMBER_GUID]=null
+CellAttribute(3, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MEMBER_KEY]=Australia
+CellAttribute(3, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MEMBER_NAME]=Australia
+CellAttribute(3, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MEMBER_ORDINAL]=-1
+CellAttribute(3, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MEMBER_TYPE]=1
+CellAttribute(3, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MEMBER_UNIQUE_NAME]=[Markets].[APAC].[Australia]
+CellAttribute(3, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:PARENT_COUNT]=1
+CellAttribute(3, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:PARENT_LEVEL]=1
+CellAttribute(3, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:PARENT_UNIQUE_NAME]=[Markets].[APAC]
+CellAttribute(3, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:SCHEMA_NAME]=SteelWheels-backlog-348
+CellAttribute(3, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=null
+CellAttribute(3, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:$visible]=null
+CellAttribute(3, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACK_COLOR]=null
+CellAttribute(3, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CATALOG_NAME]=null
+CellAttribute(3, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CHILDREN_CARDINALITY]=95
+CellAttribute(3, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CUBE_NAME]=null
+CellAttribute(3, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:DEPTH]=null
+CellAttribute(3, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:DESCRIPTION]=null
+CellAttribute(3, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:DIMENSION_UNIQUE_NAME]=[Markets]
+CellAttribute(3, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:DISPLAY_INFO]=null
+CellAttribute(3, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_FLAGS]=null
+CellAttribute(3, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_NAME]=null
+CellAttribute(3, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_SIZE]=null
+CellAttribute(3, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FORE_COLOR]=null
+CellAttribute(3, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FORMAT_STRING]=null
+CellAttribute(3, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:HIERARCHY_UNIQUE_NAME]=[Markets.City]
+CellAttribute(3, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:IS_DATAMEMBER]=null
+CellAttribute(3, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:IS_PLACEHOLDERMEMBER]=null
+CellAttribute(3, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:LANGUAGE]=null
+CellAttribute(3, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:LEVEL_NUMBER]=0
+CellAttribute(3, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:LEVEL_UNIQUE_NAME]=[Markets.City].[(All)]
+CellAttribute(3, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MDX::ALL_MEMBER]=true
+CellAttribute(3, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MDX::CALCULATED]=false
+CellAttribute(3, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MDX::CAPTION]=LocalizedString{description=false, member=[Markets.City].[All Markets]}
+CellAttribute(3, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MDX::DESCRIPTION]=LocalizedString{description=false, member=[Markets.City].[All Markets]}
+CellAttribute(3, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MDX::HIDDEN]=false
+CellAttribute(3, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MEMBER_CAPTION]=All Markets
+CellAttribute(3, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MEMBER_GUID]=null
+CellAttribute(3, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MEMBER_KEY]=0
+CellAttribute(3, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MEMBER_NAME]=All Markets
+CellAttribute(3, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MEMBER_ORDINAL]=0
+CellAttribute(3, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MEMBER_TYPE]=2
+CellAttribute(3, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MEMBER_UNIQUE_NAME]=[Markets.City].[All Markets]
+CellAttribute(3, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:PARENT_COUNT]=0
+CellAttribute(3, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:PARENT_LEVEL]=0
+CellAttribute(3, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:PARENT_UNIQUE_NAME]=null
+CellAttribute(3, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:SCHEMA_NAME]=SteelWheels-backlog-348
+CellAttribute(3, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=null
+CellAttribute(3, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:$visible]=null
+CellAttribute(3, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACK_COLOR]=null
+CellAttribute(3, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CATALOG_NAME]=null
+CellAttribute(3, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CHILDREN_CARDINALITY]=0
+CellAttribute(3, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CUBE_NAME]=null
+CellAttribute(3, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:DEPTH]=null
+CellAttribute(3, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:DESCRIPTION]=null
+CellAttribute(3, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:DIMENSION_UNIQUE_NAME]=[Markets]
+CellAttribute(3, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:DISPLAY_INFO]=null
+CellAttribute(3, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_FLAGS]=null
+CellAttribute(3, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_NAME]=null
+CellAttribute(3, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_SIZE]=null
+CellAttribute(3, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FORE_COLOR]=null
+CellAttribute(3, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FORMAT_STRING]=null
+CellAttribute(3, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:HIERARCHY_UNIQUE_NAME]=[Markets.City]
+CellAttribute(3, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:IS_DATAMEMBER]=null
+CellAttribute(3, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:IS_PLACEHOLDERMEMBER]=null
+CellAttribute(3, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:LANGUAGE]=null
+CellAttribute(3, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:LEVEL_NUMBER]=1
+CellAttribute(3, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:LEVEL_UNIQUE_NAME]=[Markets.City].[City]
+CellAttribute(3, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MDX::ALL_MEMBER]=false
+CellAttribute(3, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MDX::CALCULATED]=false
+CellAttribute(3, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MDX::CAPTION]=LocalizedString{description=false, member=[Markets.City].[North Sydney]}
+CellAttribute(3, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MDX::DESCRIPTION]=LocalizedString{description=false, member=[Markets.City].[North Sydney]}
+CellAttribute(3, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MDX::HIDDEN]=false
+CellAttribute(3, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MEMBER_CAPTION]=North Sydney
+CellAttribute(3, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MEMBER_GUID]=null
+CellAttribute(3, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MEMBER_KEY]=North Sydney
+CellAttribute(3, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MEMBER_NAME]=North Sydney
+CellAttribute(3, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MEMBER_ORDINAL]=-1
+CellAttribute(3, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MEMBER_TYPE]=1
+CellAttribute(3, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MEMBER_UNIQUE_NAME]=[Markets.City].[North Sydney]
+CellAttribute(3, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:PARENT_COUNT]=1
+CellAttribute(3, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:PARENT_LEVEL]=0
+CellAttribute(3, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:PARENT_UNIQUE_NAME]=[Markets.City].[All Markets]
+CellAttribute(3, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:SCHEMA_NAME]=SteelWheels-backlog-348
+CellAttribute(3, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=null
+CellAttribute(3, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:ACTION_TYPE]=256
+CellAttribute(3, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACK_COLOR]=null
+CellAttribute(3, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CELL_EVALUATION_LIST]=null
+CellAttribute(3, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CELL_ORDINAL]=3
+CellAttribute(3, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:DATATYPE]=Numeric
+CellAttribute(3, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_FLAGS]=0
+CellAttribute(3, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_NAME]=null
+CellAttribute(3, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_SIZE]=null
+CellAttribute(3, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FORE_COLOR]=null
+CellAttribute(3, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FORMATTED_VALUE]=1,469
+CellAttribute(3, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FORMAT_STRING]=#,###
+CellAttribute(3, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:LANGUAGE]=null
+CellAttribute(3, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:NON_EMPTY_BEHAVIOR]=null
+CellAttribute(3, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:SOLVE_ORDER]=0
+CellAttribute(3, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:UPDATEABLE]=null
+CellAttribute(3, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=1469.0
+CellAttribute(4, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:$visible]=null
+CellAttribute(4, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACK_COLOR]=null
+CellAttribute(4, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CATALOG_NAME]=null
+CellAttribute(4, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CHILDREN_CARDINALITY]=5
+CellAttribute(4, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CUBE_NAME]=null
+CellAttribute(4, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:DEPTH]=null
+CellAttribute(4, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:DESCRIPTION]=null
+CellAttribute(4, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:DIMENSION_UNIQUE_NAME]=[Markets]
+CellAttribute(4, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:DISPLAY_INFO]=null
+CellAttribute(4, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_FLAGS]=null
+CellAttribute(4, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_NAME]=null
+CellAttribute(4, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_SIZE]=null
+CellAttribute(4, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FORE_COLOR]=null
+CellAttribute(4, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FORMAT_STRING]=null
+CellAttribute(4, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:HIERARCHY_UNIQUE_NAME]=[Markets]
+CellAttribute(4, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:IS_DATAMEMBER]=null
+CellAttribute(4, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:IS_PLACEHOLDERMEMBER]=null
+CellAttribute(4, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:LANGUAGE]=null
+CellAttribute(4, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:LEVEL_NUMBER]=0
+CellAttribute(4, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:LEVEL_UNIQUE_NAME]=[Markets].[(All)]
+CellAttribute(4, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MDX::ALL_MEMBER]=true
+CellAttribute(4, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MDX::CALCULATED]=false
+CellAttribute(4, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MDX::CAPTION]=LocalizedString{description=false, member=[Markets].[All Markets]}
+CellAttribute(4, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MDX::DESCRIPTION]=LocalizedString{description=false, member=[Markets].[All Markets]}
+CellAttribute(4, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MDX::HIDDEN]=false
+CellAttribute(4, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MEMBER_CAPTION]=All Markets
+CellAttribute(4, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MEMBER_GUID]=null
+CellAttribute(4, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MEMBER_KEY]=0
+CellAttribute(4, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MEMBER_NAME]=All Markets
+CellAttribute(4, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MEMBER_ORDINAL]=0
+CellAttribute(4, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MEMBER_TYPE]=2
+CellAttribute(4, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MEMBER_UNIQUE_NAME]=[Markets].[All Markets]
+CellAttribute(4, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:PARENT_COUNT]=0
+CellAttribute(4, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:PARENT_LEVEL]=0
+CellAttribute(4, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:PARENT_UNIQUE_NAME]=null
+CellAttribute(4, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:SCHEMA_NAME]=SteelWheels-backlog-348
+CellAttribute(4, 0) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=null
+CellAttribute(4, 1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:$visible]=null
+CellAttribute(4, 1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACK_COLOR]=null
+CellAttribute(4, 1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CATALOG_NAME]=null
+CellAttribute(4, 1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CHILDREN_CARDINALITY]=3
+CellAttribute(4, 1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CUBE_NAME]=null
+CellAttribute(4, 1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:DEPTH]=null
+CellAttribute(4, 1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:DESCRIPTION]=null
+CellAttribute(4, 1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:DIMENSION_UNIQUE_NAME]=[Markets]
+CellAttribute(4, 1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:DISPLAY_INFO]=null
+CellAttribute(4, 1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_FLAGS]=null
+CellAttribute(4, 1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_NAME]=null
+CellAttribute(4, 1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_SIZE]=null
+CellAttribute(4, 1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FORE_COLOR]=null
+CellAttribute(4, 1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FORMAT_STRING]=null
+CellAttribute(4, 1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:HIERARCHY_UNIQUE_NAME]=[Markets]
+CellAttribute(4, 1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:IS_DATAMEMBER]=null
+CellAttribute(4, 1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:IS_PLACEHOLDERMEMBER]=null
+CellAttribute(4, 1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:LANGUAGE]=null
+CellAttribute(4, 1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:LEVEL_NUMBER]=1
+CellAttribute(4, 1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:LEVEL_UNIQUE_NAME]=[Markets].[Territory]
+CellAttribute(4, 1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MDX::ALL_MEMBER]=false
+CellAttribute(4, 1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MDX::CALCULATED]=false
+CellAttribute(4, 1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MDX::CAPTION]=LocalizedString{description=false, member=[Markets].[APAC]}
+CellAttribute(4, 1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MDX::DESCRIPTION]=LocalizedString{description=false, member=[Markets].[APAC]}
+CellAttribute(4, 1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MDX::HIDDEN]=false
+CellAttribute(4, 1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MEMBER_CAPTION]=APAC
+CellAttribute(4, 1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MEMBER_GUID]=null
+CellAttribute(4, 1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MEMBER_KEY]=APAC
+CellAttribute(4, 1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MEMBER_NAME]=APAC
+CellAttribute(4, 1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MEMBER_ORDINAL]=-1
+CellAttribute(4, 1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MEMBER_TYPE]=1
+CellAttribute(4, 1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MEMBER_UNIQUE_NAME]=[Markets].[APAC]
+CellAttribute(4, 1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:PARENT_COUNT]=1
+CellAttribute(4, 1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:PARENT_LEVEL]=0
+CellAttribute(4, 1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:PARENT_UNIQUE_NAME]=[Markets].[All Markets]
+CellAttribute(4, 1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:SCHEMA_NAME]=SteelWheels-backlog-348
+CellAttribute(4, 1) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=null
+CellAttribute(4, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:$visible]=null
+CellAttribute(4, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACK_COLOR]=null
+CellAttribute(4, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CATALOG_NAME]=null
+CellAttribute(4, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CHILDREN_CARDINALITY]=3
+CellAttribute(4, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CUBE_NAME]=null
+CellAttribute(4, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:DEPTH]=null
+CellAttribute(4, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:DESCRIPTION]=null
+CellAttribute(4, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:DIMENSION_UNIQUE_NAME]=[Markets]
+CellAttribute(4, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:DISPLAY_INFO]=null
+CellAttribute(4, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_FLAGS]=null
+CellAttribute(4, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_NAME]=null
+CellAttribute(4, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_SIZE]=null
+CellAttribute(4, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FORE_COLOR]=null
+CellAttribute(4, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FORMAT_STRING]=null
+CellAttribute(4, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:HIERARCHY_UNIQUE_NAME]=[Markets]
+CellAttribute(4, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:IS_DATAMEMBER]=null
+CellAttribute(4, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:IS_PLACEHOLDERMEMBER]=null
+CellAttribute(4, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:LANGUAGE]=null
+CellAttribute(4, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:LEVEL_NUMBER]=2
+CellAttribute(4, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:LEVEL_UNIQUE_NAME]=[Markets].[Country]
+CellAttribute(4, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MDX::ALL_MEMBER]=false
+CellAttribute(4, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MDX::CALCULATED]=false
+CellAttribute(4, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MDX::CAPTION]=LocalizedString{description=false, member=[Markets].[APAC].[Australia]}
+CellAttribute(4, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MDX::DESCRIPTION]=LocalizedString{description=false, member=[Markets].[APAC].[Australia]}
+CellAttribute(4, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MDX::HIDDEN]=false
+CellAttribute(4, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MEMBER_CAPTION]=Australia
+CellAttribute(4, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MEMBER_GUID]=null
+CellAttribute(4, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MEMBER_KEY]=Australia
+CellAttribute(4, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MEMBER_NAME]=Australia
+CellAttribute(4, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MEMBER_ORDINAL]=-1
+CellAttribute(4, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MEMBER_TYPE]=1
+CellAttribute(4, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MEMBER_UNIQUE_NAME]=[Markets].[APAC].[Australia]
+CellAttribute(4, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:PARENT_COUNT]=1
+CellAttribute(4, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:PARENT_LEVEL]=1
+CellAttribute(4, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:PARENT_UNIQUE_NAME]=[Markets].[APAC]
+CellAttribute(4, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:SCHEMA_NAME]=SteelWheels-backlog-348
+CellAttribute(4, 2) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=null
+CellAttribute(4, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:$visible]=null
+CellAttribute(4, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACK_COLOR]=null
+CellAttribute(4, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CATALOG_NAME]=null
+CellAttribute(4, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CHILDREN_CARDINALITY]=95
+CellAttribute(4, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CUBE_NAME]=null
+CellAttribute(4, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:DEPTH]=null
+CellAttribute(4, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:DESCRIPTION]=null
+CellAttribute(4, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:DIMENSION_UNIQUE_NAME]=[Markets]
+CellAttribute(4, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:DISPLAY_INFO]=null
+CellAttribute(4, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_FLAGS]=null
+CellAttribute(4, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_NAME]=null
+CellAttribute(4, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_SIZE]=null
+CellAttribute(4, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FORE_COLOR]=null
+CellAttribute(4, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FORMAT_STRING]=null
+CellAttribute(4, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:HIERARCHY_UNIQUE_NAME]=[Markets.City]
+CellAttribute(4, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:IS_DATAMEMBER]=null
+CellAttribute(4, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:IS_PLACEHOLDERMEMBER]=null
+CellAttribute(4, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:LANGUAGE]=null
+CellAttribute(4, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:LEVEL_NUMBER]=0
+CellAttribute(4, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:LEVEL_UNIQUE_NAME]=[Markets.City].[(All)]
+CellAttribute(4, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MDX::ALL_MEMBER]=true
+CellAttribute(4, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MDX::CALCULATED]=false
+CellAttribute(4, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MDX::CAPTION]=LocalizedString{description=false, member=[Markets.City].[All Markets]}
+CellAttribute(4, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MDX::DESCRIPTION]=LocalizedString{description=false, member=[Markets.City].[All Markets]}
+CellAttribute(4, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MDX::HIDDEN]=false
+CellAttribute(4, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MEMBER_CAPTION]=All Markets
+CellAttribute(4, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MEMBER_GUID]=null
+CellAttribute(4, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MEMBER_KEY]=0
+CellAttribute(4, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MEMBER_NAME]=All Markets
+CellAttribute(4, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MEMBER_ORDINAL]=0
+CellAttribute(4, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MEMBER_TYPE]=2
+CellAttribute(4, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MEMBER_UNIQUE_NAME]=[Markets.City].[All Markets]
+CellAttribute(4, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:PARENT_COUNT]=0
+CellAttribute(4, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:PARENT_LEVEL]=0
+CellAttribute(4, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:PARENT_UNIQUE_NAME]=null
+CellAttribute(4, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:SCHEMA_NAME]=SteelWheels-backlog-348
+CellAttribute(4, 3) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=null
+CellAttribute(4, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:$visible]=null
+CellAttribute(4, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACK_COLOR]=null
+CellAttribute(4, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CATALOG_NAME]=null
+CellAttribute(4, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CHILDREN_CARDINALITY]=0
+CellAttribute(4, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CUBE_NAME]=null
+CellAttribute(4, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:DEPTH]=null
+CellAttribute(4, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:DESCRIPTION]=null
+CellAttribute(4, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:DIMENSION_UNIQUE_NAME]=[Markets]
+CellAttribute(4, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:DISPLAY_INFO]=null
+CellAttribute(4, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_FLAGS]=null
+CellAttribute(4, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_NAME]=null
+CellAttribute(4, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_SIZE]=null
+CellAttribute(4, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FORE_COLOR]=null
+CellAttribute(4, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FORMAT_STRING]=null
+CellAttribute(4, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:HIERARCHY_UNIQUE_NAME]=[Markets.City]
+CellAttribute(4, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:IS_DATAMEMBER]=null
+CellAttribute(4, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:IS_PLACEHOLDERMEMBER]=null
+CellAttribute(4, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:LANGUAGE]=null
+CellAttribute(4, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:LEVEL_NUMBER]=1
+CellAttribute(4, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:LEVEL_UNIQUE_NAME]=[Markets.City].[City]
+CellAttribute(4, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MDX::ALL_MEMBER]=false
+CellAttribute(4, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MDX::CALCULATED]=false
+CellAttribute(4, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MDX::CAPTION]=LocalizedString{description=false, member=[Markets.City].[South Brisbane]}
+CellAttribute(4, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MDX::DESCRIPTION]=LocalizedString{description=false, member=[Markets.City].[South Brisbane]}
+CellAttribute(4, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MDX::HIDDEN]=false
+CellAttribute(4, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MEMBER_CAPTION]=South Brisbane
+CellAttribute(4, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MEMBER_GUID]=null
+CellAttribute(4, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MEMBER_KEY]=South Brisbane
+CellAttribute(4, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MEMBER_NAME]=South Brisbane
+CellAttribute(4, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MEMBER_ORDINAL]=-1
+CellAttribute(4, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MEMBER_TYPE]=1
+CellAttribute(4, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:MEMBER_UNIQUE_NAME]=[Markets.City].[South Brisbane]
+CellAttribute(4, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:PARENT_COUNT]=1
+CellAttribute(4, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:PARENT_LEVEL]=0
+CellAttribute(4, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:PARENT_UNIQUE_NAME]=[Markets.City].[All Markets]
+CellAttribute(4, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:SCHEMA_NAME]=SteelWheels-backlog-348
+CellAttribute(4, 4) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=null
+CellAttribute(4, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:ACTION_TYPE]=256
+CellAttribute(4, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:BACK_COLOR]=null
+CellAttribute(4, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CELL_EVALUATION_LIST]=null
+CellAttribute(4, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:CELL_ORDINAL]=4
+CellAttribute(4, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:DATATYPE]=Numeric
+CellAttribute(4, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_FLAGS]=0
+CellAttribute(4, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_NAME]=null
+CellAttribute(4, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FONT_SIZE]=null
+CellAttribute(4, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FORE_COLOR]=null
+CellAttribute(4, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FORMATTED_VALUE]=545
+CellAttribute(4, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:FORMAT_STRING]=#,###
+CellAttribute(4, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:LANGUAGE]=null
+CellAttribute(4, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:NON_EMPTY_BEHAVIOR]=null
+CellAttribute(4, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:SOLVE_ORDER]=0
+CellAttribute(4, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:UPDATEABLE]=null
+CellAttribute(4, 5) [http://reporting.pentaho.org/namespaces/engine/meta-attributes/mdx:VALUE]=545.0
+Tablemodel contains 5 rows.
+Column: 0 Name=[Markets].[(All)]; DataType=class java.lang.String
+Column: 1 Name=[Markets].[Territory]; DataType=class java.lang.String
+Column: 2 Name=[Markets].[Country]; DataType=class java.lang.String
+Column: 3 Name=[Markets.City].[(All)]; DataType=class java.lang.String
+Column: 4 Name=[Markets.City].[City]; DataType=class java.lang.String
+Column: 5 Name=[Measures].[Quantity]; DataType=class java.lang.Double
+Checking the data inside
+ValueAt (0, 0) is 'All Markets'
+ValueAt (0, 1) is 'APAC'
+ValueAt (0, 2) is 'Australia'
+ValueAt (0, 3) is 'All Markets'
+ValueAt (0, 4) is 'Chatswood'
+ValueAt (0, 5) is '1601.0'
+ValueAt (1, 0) is 'All Markets'
+ValueAt (1, 1) is 'APAC'
+ValueAt (1, 2) is 'Australia'
+ValueAt (1, 3) is 'All Markets'
+ValueAt (1, 4) is 'Glen Waverly'
+ValueAt (1, 5) is '705.0'
+ValueAt (2, 0) is 'All Markets'
+ValueAt (2, 1) is 'APAC'
+ValueAt (2, 2) is 'Australia'
+ValueAt (2, 3) is 'All Markets'
+ValueAt (2, 4) is 'Melbourne'
+ValueAt (2, 5) is '1926.0'
+ValueAt (3, 0) is 'All Markets'
+ValueAt (3, 1) is 'APAC'
+ValueAt (3, 2) is 'Australia'
+ValueAt (3, 3) is 'All Markets'
+ValueAt (3, 4) is 'North Sydney'
+ValueAt (3, 5) is '1469.0'
+ValueAt (4, 0) is 'All Markets'
+ValueAt (4, 1) is 'APAC'
+ValueAt (4, 2) is 'Australia'
+ValueAt (4, 3) is 'All Markets'
+ValueAt (4, 4) is 'South Brisbane'
+ValueAt (4, 5) is '545.0'

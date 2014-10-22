@@ -54,6 +54,7 @@ public class MondrianDataFactoryModule extends AbstractModule
   public static final String CUBEFILE_WRITER_PREFIX ="org.pentaho.reporting.engine.classic.extensions.datasources.mondrian.writer.cubefile-provider.";
   public static final String CUBEFILE_BUNDLEWRITER_PREFIX ="org.pentaho.reporting.engine.classic.extensions.datasources.mondrian.bundle-writer.cubefile-provider.";
 
+  public static final String MEMBER_ON_AXIS_SORTED_KEY = "org.pentaho.reporting.engine.classic.extensions.datasources.mondrian.MembersOnAxisSorted";
 
   public MondrianDataFactoryModule() throws ModuleInitializeException
   {

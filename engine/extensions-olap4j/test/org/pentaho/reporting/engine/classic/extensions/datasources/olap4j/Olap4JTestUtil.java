@@ -114,6 +114,48 @@ public class Olap4JTestUtil
       "ON ROWS\n" +
       "from [SteelWheelsSales]\n";
 
+  public static final String QUERY_UNION_OK = "SELECT\n" +
+      " {[Time].[Years].[2003] : [Time].[Years].[2005]} ON COLUMNS,\n" +
+      "NON EMPTY(\n" +
+      "Union ( \n" +
+      "[Product].Children * {[Markets].[All Markets], [Markets].Children},\n" +
+      "[Product].[All Products] * [Markets].[All Markets] \n" +
+      ") \n" +
+      ") ON ROWS\n" +
+      "FROM [SteelWheelsSales]\n" +
+      "WHERE [Measures].[Quantity]\n";
+
+  public static final String QUERY_UNION_FLIPPED = "SELECT\n" +
+      " {[Time].[Years].[2003] : [Time].[Years].[2005]} ON ROWS,\n" +
+      "NON EMPTY(\n" +
+      "Union ( \n" +
+      "[Product].Children * {[Markets].[All Markets], [Markets].Children},\n" +
+      "[Product].[All Products] * [Markets].[All Markets] \n" +
+      ") \n" +
+      ") ON COLUMNS\n" +
+      "FROM [SteelWheelsSales]\n" +
+      "WHERE [Measures].[Quantity]\n";
+
+  public static final String QUERY_UNION_BROKEN = "SELECT\n" +
+      " {[Time].[Years].[2003] : [Time].[Years].[2005]} ON COLUMNS,\n" +
+      "NON EMPTY(\n" +
+      "Union ( \n" +
+      "[Product].[All Products] * [Markets].[All Markets], \n" +
+      "[Product].Children * {[Markets].[All Markets], [Markets].Children}\n" +
+      ") \n" +
+      ") ON ROWS\n" +
+      "FROM [SteelWheelsSales]\n" +
+      "WHERE [Measures].[Quantity]\n";
+
+  private static final String QUERY_10 = "select NON EMPTY {[Measures].[Quantity],[Measures].[Sales]} ON COLUMNS,\n" +
+      "NON EMPTY ([Time].Children) ON ROWS\n" +
+      "from [SteelWheelsSales]";
+
+  private static final String QUERY_11 =
+      "SELECT [Product].Children ON COLUMNS, " +
+          "Hierarchize({[Time].[Years].Members, [Time].[Quarters].Members, [Time].[Months].Members}) ON ROWS " +
+          "FROM [SteelWheelsSales]";
+
   public static String[][] createQueryArray(final String id)
   {
     return new String[][]{
@@ -127,6 +169,11 @@ public class Olap4JTestUtil
         {QUERY_7, "query7" + id + "-results.txt"},
         {QUERY_8, "query8" + id + "-results.txt"},
         {QUERY_9, "query9" + id + "-results.txt"},
+        {QUERY_UNION_OK, "query-prd-5276-1" + id + "-results.txt"},
+        {QUERY_UNION_BROKEN, "query-prd-5276-2" + id + "-results.txt"},
+        {QUERY_UNION_FLIPPED, "query-prd-5276-3" + id + "-results.txt"},
+        {QUERY_10, "query10" + id + "-results.txt"},
+        {QUERY_11, "query11" + id + "-results.txt"},
     };
   }
 
@@ -138,5 +185,6 @@ public class Olap4JTestUtil
     BandedOlap4JDriverTest._main(args);
     DenormalizedOlap4JDriverTest._main(args);
     LegacyBandedOlap4JDriverTest._main(args);
+    BandedMDXTableModelTest._main(args);
   }
 }

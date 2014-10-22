@@ -126,16 +126,25 @@ public class DataPreviewDialog extends JDialog
 
     // Get the results ... or throw the exception that was generated
     final TableModel rawTableModel = previewWorker.getResultTableModel();
+    if (showData(rawTableModel))
+    {
+      return;
+    }
+    previewWorker.close();
+  }
+
+  public boolean showData(final TableModel rawTableModel)
+  {
     if (rawTableModel == null)
     {
       // User must have hit cancel
-      return;
+      return true;
     }
 
     LibSwingUtil.centerDialogInParent(this);
     table.setModel(rawTableModel);
 
     setVisible(true);
-    previewWorker.close();
+    return false;
   }
 }

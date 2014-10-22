@@ -48,9 +48,10 @@ public class BandedMDXDataFactory extends AbstractNamedMDXDataFactory
     try
     {
       final QueryResultWrapper cellSet = performQuery(queryName, parameters);
-      return postProcess(queryName, parameters, new BandedMDXTableModel(cellSet, extractQueryLimit(parameters)));
+      return postProcess(queryName, parameters,
+          new BandedMDXTableModel(cellSet, extractQueryLimit(parameters), isMembersOnAxisSorted()));
     }
-    catch (SQLException sqE)
+    catch (final SQLException sqE)
     {
       throw new ReportDataFactoryException("Failed to execute query", sqE);
     }

@@ -52,6 +52,6 @@ public class SimpleBandedMDXDataFactory extends AbstractMDXDataFactory
   public TableModel queryData(final String queryName, final DataRow parameters) throws ReportDataFactoryException
   {
     final Result cellSet = performQuery(queryName, parameters);
-    return new BandedMDXTableModel(cellSet, extractQueryLimit(parameters));
+    return new BandedMDXTableModel(cellSet, extractQueryLimit(parameters), isMembersOnAxisSorted());
   }
 }

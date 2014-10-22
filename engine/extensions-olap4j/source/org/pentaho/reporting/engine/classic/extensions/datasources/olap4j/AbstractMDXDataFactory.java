@@ -50,6 +50,7 @@ import org.olap4j.type.Type;
 import org.pentaho.reporting.engine.classic.core.AbstractDataFactory;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.pentaho.reporting.engine.classic.core.DataFactory;
+import org.pentaho.reporting.engine.classic.core.DataFactoryContext;
 import org.pentaho.reporting.engine.classic.core.DataRow;
 import org.pentaho.reporting.engine.classic.core.ReportDataFactoryException;
 import org.pentaho.reporting.engine.classic.core.util.PropertyLookupParser;
@@ -151,6 +152,7 @@ public abstract class AbstractMDXDataFactory extends AbstractDataFactory
   private String jdbcUserField;
   private String jdbcPasswordField;
   private String roleField;
+  private boolean membersOnAxisSorted;
 
   public AbstractMDXDataFactory(final OlapConnectionProvider connectionProvider)
   {
@@ -178,6 +180,16 @@ public abstract class AbstractMDXDataFactory extends AbstractDataFactory
   public OlapConnectionProvider getConnectionProvider()
   {
     return connectionProvider;
+  }
+
+  public boolean isMembersOnAxisSorted()
+  {
+    return membersOnAxisSorted;
+  }
+
+  public void setMembersOnAxisSorted(final boolean membersOnAxisSorted)
+  {
+    this.membersOnAxisSorted = membersOnAxisSorted;
   }
 
   public String getJdbcUserField()
@@ -888,5 +900,12 @@ public abstract class AbstractMDXDataFactory extends AbstractDataFactory
     list.add(translateQuery(queryRaw));
     list.add(connection);
     return list;
+  }
+
+  public void initialize(final DataFactoryContext dataFactoryContext) throws ReportDataFactoryException
+  {
+    super.initialize(dataFactoryContext);
+    membersOnAxisSorted = "true".equals
+        (dataFactoryContext.getConfiguration().getConfigProperty(Olap4JDataFactoryModule.MEMBER_ON_AXIS_SORTED_KEY));
   }
 }
