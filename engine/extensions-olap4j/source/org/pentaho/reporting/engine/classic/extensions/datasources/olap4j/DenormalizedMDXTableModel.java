@@ -20,7 +20,7 @@ package org.pentaho.reporting.engine.classic.extensions.datasources.olap4j;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.LinkedHashSet;
+import java.util.Collections;
 import java.util.List;
 import javax.swing.table.AbstractTableModel;
 
@@ -35,11 +35,13 @@ import org.olap4j.metadata.Member;
 import org.pentaho.reporting.engine.classic.core.MetaAttributeNames;
 import org.pentaho.reporting.engine.classic.core.MetaTableModel;
 import org.pentaho.reporting.engine.classic.core.util.CloseableTableModel;
+import org.pentaho.reporting.engine.classic.core.util.IntList;
 import org.pentaho.reporting.engine.classic.core.wizard.DataAttributes;
+import org.pentaho.reporting.engine.classic.core.wizard.DefaultConceptQueryMapper;
 import org.pentaho.reporting.engine.classic.core.wizard.DefaultDataAttributes;
 import org.pentaho.reporting.engine.classic.core.wizard.EmptyDataAttributes;
-import org.pentaho.reporting.engine.classic.core.wizard.DefaultConceptQueryMapper;
-import org.pentaho.reporting.libraries.base.util.FastStack;
+import org.pentaho.reporting.engine.classic.extensions.datasources.olap4j.util.ResultSetProcessingLib;
+import org.pentaho.reporting.libraries.base.util.ArgumentNullException;
 
 /**
  * Axis indexes are predefined: 0 = Columns, 1 = rows, 2 = pages, 3 = sections, 4 = Chapters, 5 and greater: unnamed) Up
@@ -51,196 +53,104 @@ import org.pentaho.reporting.libraries.base.util.FastStack;
 public class DenormalizedMDXTableModel extends AbstractTableModel implements CloseableTableModel, MetaTableModel
 {
   private static final Log logger = LogFactory.getLog(DenormalizedMDXTableModel.class);
+  private final List<Member> columnToMemberMapping;
 
-  private boolean noMeasures;
-  private CellSet resultSet;
+  private final CellSet resultSet;
   private int rowCount;
-  private int columnCount;
-  private String[] columnNames;
-  private int[] axesSize;
-  private int[] columnToAxisPosition;
-  private Dimension[] columnToDimensionMapping;
-  private QueryResultWrapper resultWrapper;
+  private final int columnCount;
+  private final List<String> columnNames;
+  private final int[] axesSize;
+  private final IntList columnToAxisPosition;
+  private final QueryResultWrapper resultWrapper;
 
-  public DenormalizedMDXTableModel(final QueryResultWrapper resultWrapper)
+  @Deprecated
+  public DenormalizedMDXTableModel(final QueryResultWrapper resultSet)
   {
-    if (resultWrapper == null)
-    {
-      throw new NullPointerException("ResultSet returned was null");
-    }
+    this(resultSet, 0, false);
+  }
+
+  public DenormalizedMDXTableModel(final QueryResultWrapper resultWrapper,
+                                   final int rowLimit,
+                                   final boolean membersOnAxisSorted)
+  {
+    ArgumentNullException.validate("resultWrapper", resultWrapper);
+
     this.resultWrapper = resultWrapper;
     this.resultSet = resultWrapper.getCellSet();
-
-    // rowcount is the product of all axis-sizes. If an axis contains more than one member, then
-    // Mondrian already performs the crossjoin for us.
-
-    // column count is the sum of the maximum of all hierachy levels of all axis.
-
     final List<CellSetAxis> axes = this.resultSet.getAxes();
-    this.rowCount = 0;
-    this.axesSize = new int[axes.size()];
-    final int[] axesMembers = new int[axes.size()];
-    final List<Dimension>[] dimensionsForMembersPerAxis = new List[axes.size()];
-    final List<Integer>[] membersPerAxis = new List[axes.size()];
 
-    // Axis contains (zero or more) positions, which contains (zero or more) members
-    for (int axesIndex = axes.size() - 1; axesIndex >= 0; axesIndex -= 1)
+    this.axesSize = ResultSetProcessingLib.computeItemsPerAxis(axes);
+    this.rowCount = computeRowCount(axesSize);
+    final int[] axesMembers = ResultSetProcessingLib.computeTotalColumnsPerAxis(axes, 0, membersOnAxisSorted);
+
+    this.columnCount = computeColumnCount(axesMembers);
+    this.columnToAxisPosition = ResultSetProcessingLib.computeColumnToAxisMapping(axes, axesMembers, columnCount, 0);
+    this.columnToMemberMapping = Collections.unmodifiableList
+        (ResultSetProcessingLib.computeColumnToMemberMapping(axes, axesMembers, 0, membersOnAxisSorted));
+    this.columnNames = computeColumnNames(columnToMemberMapping);
+
+    if (rowLimit > 0)
     {
-      final CellSetAxis axis = axes.get(axesIndex);
-      final List<Position> positions = axis.getPositions();
+      rowCount = Math.min(rowLimit, rowCount);
+    }
+  }
 
-      axesSize[axesIndex] = positions.size();
-      if (positions.isEmpty())
-      {
-        noMeasures = true;
-      }
-
-      final ArrayList<Integer> memberList = new ArrayList<Integer>();
-      final ArrayList<Dimension> dimensionsForMembers = new ArrayList<Dimension>();
-      for (int positionsIndex = 0; positionsIndex < positions.size(); positionsIndex++)
-      {
-        final Position position = positions.get(positionsIndex);
-        final List<Member> members = position.getMembers();
-        for (int positionIndex = 0; positionIndex < members.size(); positionIndex++)
-        {
-          final LinkedHashSet<String> columnNamesSet = new LinkedHashSet<String>();
-          Member m = members.get(positionIndex);
-          final Dimension dimension = m.getDimension();
-          while (m != null)
-          {
-            final String name = m.getLevel().getUniqueName();
-            if (columnNamesSet.contains(name) == false)
-            {
-              columnNamesSet.add(name);
-            }
-            m = m.getParentMember();
-          }
-
-          final int hierarchyLevelCount = columnNamesSet.size();
-
-          if (memberList.size() <= positionIndex)
-          {
-            memberList.add(hierarchyLevelCount);
-            dimensionsForMembers.add(dimension);
-          }
-          else
-          {
-            final Integer existingLevel = memberList.get(positionIndex);
-            if (existingLevel.intValue() < hierarchyLevelCount)
-            {
-              memberList.set(positionIndex, hierarchyLevelCount);
-              dimensionsForMembers.set(positionIndex, dimension);
-            }
-          }
-        }
-      }
-
-      int memberCount = 0;
-      for (int i = 0; i < memberList.size(); i++)
-      {
-        memberCount += memberList.get(i);
-      }
-      axesMembers[axesIndex] = memberCount;
-      dimensionsForMembersPerAxis[axesIndex] = dimensionsForMembers;
-      membersPerAxis[axesIndex] = memberList;
+  private List<String> computeColumnNames(final List<Member> columnToMemberMapper)
+  {
+    ArrayList<String> columnNames = new ArrayList<String>();
+    for (final Member member : columnToMemberMapper)
+    {
+      columnNames.add(member.getLevel().getUniqueName());
     }
 
-    if (axesSize.length > 0)
+    final Member measureName = computeMeasureName(resultSet);
+    if (measureName != null)
     {
-      rowCount = axesSize[0];
-      for (int i = 1; i < axesSize.length; i++)
-      {
-        final int size = axesSize[i];
-        rowCount *= size;
-      }
+      columnNames.add(measureName.getUniqueName());
+    }
+    else
+    {
+      columnNames.add("Measure");
+    }
+    return columnNames;
+  }
+
+  private int computeColumnCount(final int[] axesMembers)
+  {
+    if (axesMembers.length == 0)
+    {
+      return 1;
     }
 
-    rowCount = Math.max(1, rowCount);
+    boolean emptyAxisFound = false;
+    int columnCount = 0;
     for (int i = 0; i < axesMembers.length; i++)
     {
       columnCount += axesMembers[i];
+      if (axesMembers[i] == 0)
+      {
+        emptyAxisFound = true;
+      }
     }
 
-    if (noMeasures == false)
+    if (!emptyAxisFound)
     {
       columnCount += 1;
     }
 
-    columnNames = new String[columnCount];
-    columnToDimensionMapping = new Dimension[columnCount];
-    columnToAxisPosition = new int[columnCount];
+    return columnCount;
+  }
 
-    int columnIndex = 0;
-    int dimColIndex = 0;
-
-    final FastStack memberStack = new FastStack();
-    for (int axesIndex = axes.size() - 1; axesIndex >= 0; axesIndex -= 1)
+  private int computeRowCount(final int[] axesSize)
+  {
+    int rowCount = 1;
+    for (int i = 0; i < axesSize.length; i++)
     {
-      final CellSetAxis axis = axes.get(axesIndex);
-      final List<Position> positions = axis.getPositions();
-      final LinkedHashSet<String> columnNamesSet = new LinkedHashSet<String>();
-      for (int positionsIndex = 0; positionsIndex < positions.size(); positionsIndex++)
-      {
-        final Position position = positions.get(positionsIndex);
-        final List<Member> members = position.getMembers();
-        for (int positionIndex = 0; positionIndex < members.size(); positionIndex++)
-        {
-          memberStack.clear();
-          Member m = members.get(positionIndex);
-          while (m != null)
-          {
-            memberStack.push(m);
-            m = m.getParentMember();
-          }
-
-          while (memberStack.isEmpty() == false)
-          {
-            m = (Member) memberStack.pop();
-            final String name = m.getLevel().getUniqueName();
-            if (columnNamesSet.contains(name) == false)
-            {
-              columnNamesSet.add(name);
-            }
-          }
-        }
-      }
-
-      if (columnNamesSet.size() != axesMembers[axesIndex])
-      {
-        logger.error("ERROR: Number of names is not equal the pre-counted number.");
-      }
-
-      final List<Dimension> dimForMemberPerAxis = dimensionsForMembersPerAxis[axesIndex];
-      final List<Integer> memberCntPerAxis = membersPerAxis[axesIndex];
-      for (int i = 0; i < memberCntPerAxis.size(); i++)
-      {
-        final Integer count = memberCntPerAxis.get(i);
-        final Dimension dim = dimForMemberPerAxis.get(i);
-        for (int x = 0; x < count.intValue(); x += 1)
-        {
-          this.columnToDimensionMapping[dimColIndex + x] = dim;
-          this.columnToAxisPosition[dimColIndex + x] = axesIndex;
-        }
-        dimColIndex = count.intValue() + dimColIndex;
-      }
-
-      final String[] names = columnNamesSet.toArray(new String[columnNamesSet.size()]);
-      System.arraycopy(names, 0, this.columnNames, columnIndex, names.length);
-      columnIndex += names.length;
+      final int size = axesSize[i];
+      rowCount *= size;
     }
 
-    if (noMeasures == false)
-    {
-      final Member measureName = computeMeasureName(resultSet);
-      if (measureName != null)
-      {
-        columnNames[columnIndex] = measureName.getUniqueName();
-      }
-      else
-      {
-        columnNames[columnIndex] = "Measure";
-      }
-    }
+    return Math.max(1, rowCount);
   }
 
   private static Member computeMeasureName(final CellSet resultSet)
@@ -287,7 +197,7 @@ public class DenormalizedMDXTableModel extends AbstractTableModel implements Clo
    */
   public String getColumnName(final int column)
   {
-    return columnNames[column];
+    return columnNames.get(column);
   }
 
   public Class getColumnClass(final int columnIndex)
@@ -308,7 +218,7 @@ public class DenormalizedMDXTableModel extends AbstractTableModel implements Clo
         return targetClassObj.getClass();
       }
     }
-    catch (Exception e)
+    catch (final Exception e)
     {
       return Object.class;
     }
@@ -317,75 +227,142 @@ public class DenormalizedMDXTableModel extends AbstractTableModel implements Clo
   public Object getValueAt(final int rowIndex,
                            final int columnIndex)
   {
-    if (columnIndex >= columnNames.length)
+    if (columnIndex >= columnNames.size())
     {
       throw new IndexOutOfBoundsException();
     }
 
-    final List<Integer> cellKey = new ArrayList(axesSize.length);
+    if (isMeasureColumn(columnIndex))
+    {
+      final List<Integer> cellKey = computeCellKey(rowIndex);
+      try
+      {
+        final Cell cell = resultSet.getCell(cellKey);
+        if (cell.isNull())
+        {
+          return null;
+        }
+        return cell.getValue();
+      }
+      catch (final NullPointerException pe)
+      {
+        pe.printStackTrace();
+      }
+    }
+
+    final List<Integer> cellKey = computeCellKey(rowIndex);
+    Member candidateMember = getCandidateMembers(columnIndex, cellKey);
+    if (candidateMember != null)
+    {
+      return candidateMember.getName();
+    }
+    return null;
+  }
+
+  private boolean isMeasureColumn(final int columnIndex)
+  {
+    if (columnIndex >= columnToMemberMapping.size())
+    {
+      return true;
+    }
+    return false;
+  }
+
+  private List<Integer> computeCellKey(final int rowIndex)
+  {
+    final List<Integer> cellKey = new ArrayList<Integer>(axesSize.length);
     int tmpRowIdx = rowIndex;
     for (int i = 0; i < axesSize.length; i++)
     {
       final int axisSize = axesSize[i];
       if (axisSize == 0)
       {
-        cellKey.add(Integer.valueOf(0));
+        cellKey.add(0);
       }
       else
       {
         final int pos = tmpRowIdx % axisSize;
-        cellKey.add(Integer.valueOf(pos));
+        cellKey.add(pos);
         tmpRowIdx = tmpRowIdx / axisSize;
       }
     }
 
-    // user asked for a dimension ...
-    final Dimension dimension = columnToDimensionMapping[columnIndex];
-    if (dimension == null)
-    {
-      final Cell cell = resultSet.getCell(cellKey);
-      if (cell.isNull())
-      {
-        return null;
-      }
-      return cell.getValue();
-    }
-
-    Member contextMember = getContextMember(dimension, columnIndex, cellKey);
-    final String name = contextMember.getParentMember() == null ? contextMember.getName() : null;
-    while (contextMember != null)
-    {
-      if (contextMember.getLevel().getUniqueName().equals(getColumnName(columnIndex)))
-      {
-        return contextMember.getName();
-      }
-      contextMember = contextMember.getParentMember();
-    }
-    return name;
+    return cellKey;
   }
 
-  private Member getContextMember(final Dimension dimension,
-                                  final int columnIndex,
-                                  final List<Integer> cellKey)
+
+  private Member getCandidateMembers(final int columnIndex,
+                                     final List<Integer> cellKey)
   {
-    final int axisIndex = columnToAxisPosition[columnIndex];
-    final CellSetAxis axis = resultSet.getAxes().get(axisIndex);
-    final Integer posIndex = cellKey.get(axisIndex);
+
+    final int axisIndex = columnToAxisPosition.get(columnIndex);
+    final List<CellSetAxis> axes = resultSet.getAxes();
+    final CellSetAxis axis = axes.get(axisIndex);
+
     final List<Position> positionList = axis.getPositions();
     if (positionList.isEmpty())
     {
       return null;
     }
 
+    final int posIndex = cellKey.get(axisIndex);
     final Position position = positionList.get(posIndex);
-    final List<Member> memberList = position.getMembers();
-    for (int i = 0; i < memberList.size(); i++)
+
+    final Member memberByName = findMemberByName(position.getMembers(), columnIndex);
+    if (memberByName != null)
     {
-      final Member member = memberList.get(i);
+      return memberByName;
+    }
+    return findRootMember(position.getMembers(), columnIndex);
+  }
+
+  private Member findRootMember(final List<Member> position, final int columnIndex)
+  {
+    final Dimension dimension = columnToMemberMapping.get(columnIndex).getDimension();
+    for (int i = 0; i < position.size(); i++)
+    {
+      final Member member = position.get(i);
       if (dimension.equals(member.getDimension()))
       {
-        return member;
+        if (member.getParentMember() == null)
+        {
+          return member;
+        }
       }
+    }
+    return null;
+  }
+
+  private Member findMemberByName(final List<Member> position, final int columnIndex)
+  {
+    final Dimension dimension = columnToMemberMapping.get(columnIndex).getDimension();
+    for (int i = 0; i < position.size(); i++)
+    {
+      final Member member = position.get(i);
+      if (dimension.equals(member.getDimension()))
+      {
+        Member match = searchContextMemberOfParents(member, columnIndex);
+        if (match != null)
+        {
+          return match;
+        }
+      }
+    }
+    return null;
+  }
+
+  private Member searchContextMemberOfParents(final Member member, final int columnIndex)
+  {
+    String columnName = getColumnName(columnIndex);
+
+    Member candidate = member;
+    while (candidate != null)
+    {
+      if (candidate.getLevel().getUniqueName().equals(columnName))
+      {
+        return candidate;
+      }
+      candidate = candidate.getParentMember();
     }
     return null;
   }
@@ -396,7 +373,7 @@ public class DenormalizedMDXTableModel extends AbstractTableModel implements Clo
     {
       resultSet.close();
     }
-    catch (SQLException e)
+    catch (final SQLException e)
     {
       // ignore, but log.
     }
@@ -405,7 +382,7 @@ public class DenormalizedMDXTableModel extends AbstractTableModel implements Clo
       final Statement statement = resultWrapper.getStatement();
       statement.close();
     }
-    catch (SQLException e)
+    catch (final SQLException e)
     {
       // ignore ..
     }
@@ -424,46 +401,24 @@ public class DenormalizedMDXTableModel extends AbstractTableModel implements Clo
    */
   public DataAttributes getCellDataAttributes(final int rowIndex, final int columnIndex)
   {
-    if (columnIndex >= columnNames.length)
+    if (columnIndex >= columnNames.size())
     {
       throw new IndexOutOfBoundsException();
     }
 
-    final List<Integer> cellKey = new ArrayList(axesSize.length);
-    int tmpRowIdx = rowIndex;
-    for (int i = 0; i < axesSize.length; i++)
+    if (isMeasureColumn(columnIndex))
     {
-      final int axisSize = axesSize[i];
-      if (axisSize == 0)
-      {
-        cellKey.add(Integer.valueOf(tmpRowIdx));
-      }
-      else
-      {
-        final int pos = tmpRowIdx % axisSize;
-        cellKey.add(Integer.valueOf(pos));
-        tmpRowIdx = tmpRowIdx / axisSize;
-      }
-    }
-
-    // user asked for a dimension ...
-    final Dimension dimension = columnToDimensionMapping[columnIndex];
-    if (dimension == null || noMeasures == false)
-    {
+      final List<Integer> cellKey = computeCellKey(rowIndex);
       final Cell cell = resultSet.getCell(cellKey);
       return new MDXMetaDataCellAttributes(EmptyDataAttributes.INSTANCE, cell);
     }
 
-    Member contextMember = getContextMember(dimension, columnIndex, cellKey);
-    while (contextMember != null)
+    final List<Integer> cellKey = computeCellKey(rowIndex);
+    Member contextMember = getCandidateMembers(columnIndex, cellKey);
+    if (contextMember != null)
     {
-      if (contextMember.getLevel().getUniqueName().equals(getColumnName(columnIndex)))
-      {
-        return new MDXMetaDataMemberAttributes(EmptyDataAttributes.INSTANCE, contextMember);
-      }
-      contextMember = contextMember.getParentMember();
+      return new MDXMetaDataMemberAttributes(EmptyDataAttributes.INSTANCE, contextMember);
     }
-
     return EmptyDataAttributes.INSTANCE;
   }
 
@@ -487,7 +442,7 @@ public class DenormalizedMDXTableModel extends AbstractTableModel implements Clo
   {
     final DefaultDataAttributes dataAttributes = new DefaultDataAttributes();
     dataAttributes.setMetaAttribute(MetaAttributeNames.Core.NAMESPACE,
-        MetaAttributeNames.Core.CROSSTAB_MODE, DefaultConceptQueryMapper.INSTANCE,  MetaAttributeNames.Core.CROSSTAB_VALUE_NORMALIZED);
+        MetaAttributeNames.Core.CROSSTAB_MODE, DefaultConceptQueryMapper.INSTANCE, MetaAttributeNames.Core.CROSSTAB_VALUE_NORMALIZED);
     return dataAttributes;
   }
 }

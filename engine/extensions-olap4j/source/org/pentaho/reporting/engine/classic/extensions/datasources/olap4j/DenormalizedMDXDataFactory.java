@@ -48,9 +48,10 @@ public class DenormalizedMDXDataFactory extends AbstractNamedMDXDataFactory
     try
     {
       final QueryResultWrapper cellSet = performQuery(queryName, parameters);
-      return postProcess(queryName, parameters, new DenormalizedMDXTableModel(cellSet));
+      return postProcess(queryName, parameters,
+          new DenormalizedMDXTableModel(cellSet, extractQueryLimit(parameters), isMembersOnAxisSorted()));
     }
-    catch (SQLException sqE)
+    catch (final SQLException sqE)
     {
       throw new ReportDataFactoryException("Failed to execute query", sqE);
     }
