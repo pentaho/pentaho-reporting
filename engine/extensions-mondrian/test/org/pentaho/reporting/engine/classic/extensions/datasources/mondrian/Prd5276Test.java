@@ -65,8 +65,8 @@ public class Prd5276Test
     final TableModel tableModel = dataFactory.queryData("default", new ParameterDataRow());
 //    new DataPreviewDialog().showData(tableModel);
 
-    Assert.assertEquals("[Markets].[(All)]", tableModel.getColumnName(1));
-    Assert.assertEquals("[Product].[Line]", tableModel.getColumnName(2));
+    Assert.assertEquals("[Markets].[(All)]", tableModel.getColumnName(2));
+    Assert.assertEquals("[Product].[Line]", tableModel.getColumnName(1));
     Assert.assertNotNull(tableModel.getValueAt(0, 3));
     Assert.assertNotNull(tableModel.getValueAt(1, 1));
     Assert.assertNotNull(tableModel.getValueAt(2, 2));
@@ -101,8 +101,8 @@ public class Prd5276Test
     DataFactory dataFactory = createDataFactory(queryMultipleH);
     final TableModel tableModel = dataFactory.queryData("default", new ParameterDataRow());
 
-    Assert.assertEquals("[Markets].[(All)]", tableModel.getColumnName(2));
-    Assert.assertEquals("[Product].[Line]", tableModel.getColumnName(1));
+    Assert.assertEquals("[Time].[Quarters]", tableModel.getColumnName(2));
+    Assert.assertEquals("[Time].[Years]", tableModel.getColumnName(1));
     Assert.assertNotNull(tableModel.getValueAt(1, 1));
     Assert.assertNotNull(tableModel.getValueAt(2, 2));
 
