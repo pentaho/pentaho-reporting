@@ -155,10 +155,14 @@ public class MondrianTestUtil
       "SELECT [Product].Children ON COLUMNS, " +
           "Hierarchize({[Time].[Years].Members, [Time].[Quarters].Members, [Time].[Months].Members}) ON ROWS " +
           "FROM [SteelWheelsSales]";
+  private static final String QUERY_X =
+      "select [Markets].Children ON COLUMNS, [Time].Children ON ROWS from [SteelWheelsSales]";
+
 
   public static String[][] createQueryArray(final String id)
   {
     return new String[][]{
+        {QUERY_X, "queryX" + id + "-results.txt"},
         {QUERY_1, "query1" + id + "-results.txt"},
         {QUERY_2, "query2" + id + "-results.txt"},
         {QUERY_3, "query3" + id + "-results.txt"},
