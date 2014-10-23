@@ -283,7 +283,7 @@ public class StyleDefinitionEditorDialog extends CommonDialog
       }
 
       final ElementStyleRule rule = (ElementStyleRule) maybeRule;
-      addRulePane(rule.clone());
+      addRulePane(rule);
     }
   }
 
