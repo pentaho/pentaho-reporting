@@ -44,7 +44,11 @@ public class EditStyleDefinitionAction extends AbstractReportContextAction
   public void actionPerformed(final ActionEvent e)
   {
     final MasterReport masterReportElement = getActiveContext().getContextRoot();
-    final ElementStyleDefinition styleDefinition = masterReportElement.getStyleDefinition();
+    ElementStyleDefinition styleDefinition = masterReportElement.getStyleDefinition();
+    if(styleDefinition != null) 
+    {
+      styleDefinition = styleDefinition.clone();
+    }
 
     final ReportDesignerContext context = getReportDesignerContext();
     final StyleDefinitionEditorDialog dialog = StyleDefinitionEditorDialog.createDialog(context.getView().getParent(), context);
