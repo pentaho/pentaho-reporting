@@ -85,9 +85,9 @@ public abstract class FormulaTestBase extends TestCase
       final Comparable<Object> expectedComparable = (Comparable<Object>) expected;
       try
       {
-        assertTrue(String.format
-                ("For formula [%s]\n - Expected \"%s\"\n but found \"%s\"", formulaText, expected, formulaResult),
-            resultComparable.compareTo(formulaResult) == 0);
+        int compareResult = resultComparable.compareTo(expectedComparable);
+        assertTrue(String.format("For formula [%s]\n - Expected \"%s\"\n but found \"%s\"",
+                formulaText, expected, formulaResult), compareResult == 0);
       }
       catch (final ClassCastException cce)
       {

@@ -366,7 +366,7 @@ public class DefaultTypeRegistry implements TypeRegistry
     return computeStringValue(value);
   }
 
-  private String computeStringValue(final Object retval)
+  private String computeStringValue(final Object retval) throws EvaluationException
   {
     if (retval instanceof Clob)
     {
@@ -379,11 +379,93 @@ public class DefaultTypeRegistry implements TypeRegistry
         return null;
       }
     }
+    if (retval instanceof String) {
+      return (String) retval;
+    }
     if (retval != null)
     {
-      return retval.toString();
+      return unwrap(retval, new StringBuilder()).toString();
     }
     return null;
+  }
+
+  private StringBuilder unwrap(final Object retval, final StringBuilder b) throws EvaluationException
+  {
+    if (retval.getClass().isArray())
+    {
+      return unwrapArray(retval, b);
+    }
+    if (retval instanceof Sequence)
+    {
+      return unwrapSequence((Sequence) retval, b);
+    }
+    if (retval instanceof ArrayCallback)
+    {
+      return unwrapArrayCallback((ArrayCallback) retval, b);
+    }
+    if (retval instanceof Collection) {
+      return unwrapCollection((Collection<?>) retval, b);
+    }
+    return b.append(retval);
+  }
+
+  private StringBuilder unwrapCollection(final Collection<?> retval, final StringBuilder b) throws EvaluationException
+  {
+    final Iterator<?> it = retval.iterator();
+    while (it.hasNext())
+    {
+      unwrap(it.next(), b);
+      if (it.hasNext())
+      {
+        b.append(", ");
+      }
+    }
+    return b;
+  }
+
+  private StringBuilder unwrapSequence(final Sequence retval, final StringBuilder b) throws EvaluationException
+  {
+    while (retval.hasNext())
+    {
+      unwrap(retval.next(), b);
+      if (retval.hasNext())
+      {
+        b.append(", ");
+      }
+    }
+    return b;
+  }
+
+  private StringBuilder unwrapArrayCallback(final ArrayCallback retval, final StringBuilder b) throws EvaluationException
+  {
+    int rc = retval.getRowCount();
+    int cc = retval.getColumnCount();
+    for (int r = 0; r < rc; r += 1)
+    {
+      for (int c = 0; c < cc; c += 1)
+      {
+        if (r != 0 || c != 0)
+        {
+          b.append(", ");
+        }
+        unwrap(retval.getValue(r, c), b);
+      }
+    }
+    return b;
+  }
+
+  private StringBuilder unwrapArray(final Object retval, final StringBuilder b) throws EvaluationException
+  {
+    int length = Array.getLength(retval);
+    for (int i = 0; i < length; i += 1)
+    {
+      if (i != 0)
+      {
+        b.append(", ");
+      }
+      unwrap(Array.get(retval, i), b);
+    }
+    return b;
   }
 
   public Boolean convertToLogical(final Type type1, final Object value)
@@ -429,15 +511,23 @@ public class DefaultTypeRegistry implements TypeRegistry
     if (type1.isFlagSet(Type.TEXT_TYPE))
     {
       // no need to convert it to String
-      final String str = computeStringValue(value);
-      if ("TRUE".equalsIgnoreCase(str))
+      try
       {
-        return Boolean.TRUE;
+        final String str = computeStringValue(value);
+        if ("TRUE".equalsIgnoreCase(str))
+        {
+          return Boolean.TRUE;
+        }
+        else if ("FALSE".equalsIgnoreCase(str))
+        {
+          return Boolean.FALSE;
+        }
       }
-      else if ("FALSE".equalsIgnoreCase(str))
+      catch (final EvaluationException e)
       {
-        return Boolean.FALSE;
+        throw TypeConversionException.getInstance();
       }
+
     }
 
     throw TypeConversionException.getInstance();
