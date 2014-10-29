@@ -17,15 +17,24 @@
 
 package org.pentaho.reporting.engine.classic.core.function.formula;
 
+import java.lang.reflect.Array;
 import java.net.URL;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 
-import junit.framework.Assert;
 import junit.framework.TestCase;
+import org.junit.Assert;
 import org.pentaho.reporting.engine.classic.core.AttributeNames;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
+import org.pentaho.reporting.engine.classic.core.DataFactory;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
+import org.pentaho.reporting.engine.classic.core.TableDataFactory;
 import org.pentaho.reporting.engine.classic.core.function.FormulaExpression;
+import org.pentaho.reporting.engine.classic.core.function.ReportFormulaContext;
+import org.pentaho.reporting.engine.classic.core.testsupport.DebugExpressionRuntime;
 import org.pentaho.reporting.engine.classic.core.testsupport.DebugReportRunner;
+import org.pentaho.reporting.libraries.formula.DefaultFormulaContext;
+import org.pentaho.reporting.libraries.formula.Formula;
 import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 
 public class MultiValueQueryFunctionTest extends TestCase
@@ -87,7 +96,30 @@ public class MultiValueQueryFunctionTest extends TestCase
     }
     catch (Exception e)
     {
+      // ignored
     }
+  }
 
+  public void testLimit() throws Exception
+  {
+    final TableModel table = new DefaultTableModel(new Object[]{"Column"}, 100);
+
+    final TableDataFactory tdf = new TableDataFactory();
+    tdf.addTable("query", table);
+
+    DebugExpressionRuntime rt = new DebugExpressionRuntime()
+    {
+      public DataFactory getDataFactory()
+      {
+        return tdf;
+      }
+    };
+    ReportFormulaContext fc = new ReportFormulaContext(new DefaultFormulaContext(), rt);
+    final Formula f = new Formula("MULTIVALUEQUERY(\"query\"; \"Column\"; 0; 5)");
+    f.initialize(fc);
+    final Object v = f.evaluate();
+    Assert.assertNotNull(v);
+    Assert.assertTrue(v.getClass().isArray());
+    Assert.assertEquals(5, Array.getLength(v));
   }
 }
