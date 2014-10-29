@@ -41,6 +41,8 @@ public final class CSVQuoter
    */
   private String doubleQuate;
 
+  private boolean forceQuote;
+
   /**
    * Creates a new CSVQuoter, which uses a comma as the default separator.
    */
@@ -68,6 +70,12 @@ public final class CSVQuoter
    */
   public CSVQuoter(final char separator, final char quate)
   {
+    this(separator, quate, false);
+  }
+
+  public CSVQuoter(final char separator, final char quate, final boolean forceQuoting)
+  {
+    this.forceQuote = forceQuoting;
     this.separator = separator;
     this.quate = quate;
     this.doubleQuate = String.valueOf(quate) + quate;
@@ -82,7 +90,7 @@ public final class CSVQuoter
    */
   public String doQuoting (final String original)
   {
-    if (isQuotingNeeded(original))
+    if (forceQuote || isQuotingNeeded(original))
     {
       final StringBuffer retval = new StringBuffer(original.length() + 5); // a safe guess most of the time.
       retval.append(quate);
