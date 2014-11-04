@@ -45,6 +45,34 @@ public class DateDifFunctionTest extends FormulaTestBase
             {"DATEDIF(DATE(1995;1;1);DATE(1999;6;15); \"ym\")", new BigDecimal(5)},
             {"DATEDIF(DATE(1995;1;1);DATE(1999;6;15); \"yd\")", new BigDecimal(165)},
             {"DATEDIF(DATE(1995;1;1);DATE(1999;6;15); \"md\")", new BigDecimal(14)},
+
+            {"DATEDIF(DATE(2011;2;5);DATE(2012;2;4); \"yd\")", new BigDecimal(364)},
+
+            {"DATEDIF(DATE(2012;2;5); DATE(2014;1;1); \"ym\")", new BigDecimal(10)},
+            {"DATEDIF(DATE(2012;2;5); DATE(2014;1;1); \"yd\")", new BigDecimal(331) },
+            {"DATEDIF(DATE(2012;2;5); DATE(2014;1;1); \"md\")", new BigDecimal(27) },
+            {"DATEDIF(DATE(2012;2;5); DATE(2014;1;1); \"y\")", new BigDecimal(1) },
+            {"DATEDIF(DATE(2012;2;5); DATE(2014;1;1); \"m\")", new BigDecimal(22) },
+
+            {"DATEDIF(DATE(2012;2;5); DATE(2014;1;1); \"d\")", new BigDecimal(696) },
+            {"DATEDIF(DATE(2012;2;5); DATE(2014;1;1); \"m\")", new BigDecimal(22) },
+
+            {"DATEDIF(DATE(2012;2;5);DATE(2013;2;4); \"y\")", new BigDecimal(0)},
+            {"DATEDIF(DATE(2012;2;5);DATE(2013;2;5); \"y\")", new BigDecimal(1)},
+            {"DATEDIF(DATE(2012;2;5);DATE(2013;2;6); \"y\")", new BigDecimal(1)},
+
+            {"DATEDIF(DATE(2012;2;5);DATE(2013;2;4); \"ym\")", new BigDecimal(11)},
+            {"DATEDIF(DATE(2012;2;5);DATE(2013;2;5); \"ym\")", new BigDecimal(0)},
+            {"DATEDIF(DATE(2012;2;5);DATE(2013;2;6); \"ym\")", new BigDecimal(0)},
+
+            {"DATEDIF(DATE(2012;2;5);DATE(2013;2;4); \"yd\")", new BigDecimal(365)},
+            {"DATEDIF(DATE(2012;2;5);DATE(2013;2;5); \"yd\")", new BigDecimal(0)},
+            {"DATEDIF(DATE(2012;2;5);DATE(2013;2;6); \"yd\")", new BigDecimal(1)},
+            {"DATEDIF(DATE(2011;2;5);DATE(2012;2;5); \"yd\")", new BigDecimal(0)},
+            {"DATEDIF(DATE(2011;2;5);DATE(2012;2;6); \"yd\")", new BigDecimal(1)},
+            {"DATEDIF(DATE(2011;2;5);DATE(2013;2;4); \"yd\")", new BigDecimal(364)},
+            {"DATEDIF(DATE(2011;2;5);DATE(2013;2;5); \"yd\")", new BigDecimal(0)},
+            {"DATEDIF(DATE(2011;2;5);DATE(2013;2;6); \"yd\")", new BigDecimal(1)},
         };
   }
 

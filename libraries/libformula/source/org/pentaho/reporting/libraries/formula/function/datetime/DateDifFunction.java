@@ -17,23 +17,23 @@
 
 package org.pentaho.reporting.libraries.formula.function.datetime;
 
+import java.math.BigDecimal;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Locale;
 import java.util.TimeZone;
-import java.math.BigDecimal;
 
 import org.pentaho.reporting.libraries.formula.EvaluationException;
 import org.pentaho.reporting.libraries.formula.FormulaContext;
 import org.pentaho.reporting.libraries.formula.LibFormulaErrorValue;
 import org.pentaho.reporting.libraries.formula.LocalizationContext;
-import org.pentaho.reporting.libraries.formula.util.NumberUtil;
 import org.pentaho.reporting.libraries.formula.function.Function;
 import org.pentaho.reporting.libraries.formula.function.ParameterCallback;
 import org.pentaho.reporting.libraries.formula.lvalues.TypeValuePair;
 import org.pentaho.reporting.libraries.formula.typing.TypeRegistry;
 import org.pentaho.reporting.libraries.formula.typing.coretypes.NumberType;
+import org.pentaho.reporting.libraries.formula.util.NumberUtil;
 
 /**
  * This function returns the number of years, months, or days between two date
@@ -66,7 +66,7 @@ public class DateDifFunction implements Function
 
   public String getCanonicalName()
   {
-    return "DATEDIF";
+    return "DATEDIF"; // NON-NLS
   }
 
   public TypeValuePair evaluate(final FormulaContext context,
@@ -88,23 +88,15 @@ public class DateDifFunction implements Function
           LibFormulaErrorValue.ERROR_INVALID_ARGUMENT_VALUE);
     }
 
+    long days = computeDays(parameters, typeRegistry);
+
     if (DateDifFunction.DAYS_CODE.equals(formatCode))
     {
-      final Number date1 = typeRegistry.convertToNumber
-          (parameters.getType(0), parameters.getValue(0));
-      final Number date2 = typeRegistry.convertToNumber
-          (parameters.getType(1), parameters.getValue(1));
-
-      final BigDecimal dn1 = NumberUtil.performIntRounding(NumberUtil.getAsBigDecimal(date1));
-      final BigDecimal dn2 = NumberUtil.performIntRounding(NumberUtil.getAsBigDecimal(date2));
-      //noinspection UnpredictableBigDecimalConstructorCall
-      return new TypeValuePair(NumberType.GENERIC_NUMBER, new BigDecimal(dn2.longValue() - dn1.longValue()));
+      return new TypeValuePair(NumberType.GENERIC_NUMBER, new BigDecimal(days));
     }
 
-    final Date date1 = typeRegistry.convertToDate
-        (parameters.getType(0), parameters.getValue(0));
-    final Date date2 = typeRegistry.convertToDate
-        (parameters.getType(1), parameters.getValue(1));
+    final Date date1 = typeRegistry.convertToDate(parameters.getType(0), parameters.getValue(0));
+    final Date date2 = typeRegistry.convertToDate(parameters.getType(1), parameters.getValue(1));
 
     if (date1 == null || date2 == null)
     {
@@ -114,68 +106,161 @@ public class DateDifFunction implements Function
     final LocalizationContext localizationContext = context.getLocalizationContext();
     final TimeZone timeZone = localizationContext.getTimeZone();
     final Locale locale = localizationContext.getLocale();
-    final GregorianCalendar calandar1 =
-        new GregorianCalendar(timeZone, locale);
-    calandar1.setTime(date1);
+    final GregorianCalendar calandar1 = new GregorianCalendar(timeZone, locale);
+    calandar1.setTime(min(date1, date2));
 
-    final GregorianCalendar calandar2 =
-        new GregorianCalendar(timeZone, locale);
-    calandar2.setTime(date2);
+    final GregorianCalendar calandar2 = new GregorianCalendar(timeZone, locale);
+    calandar2.setTime(max(date1, date2));
 
-    final int res;
+    int sign = (date1.getTime() < date2.getTime()) ? 1 : -1;
+    final long res = sign * computeDateDifference(formatCode, calandar1, calandar2, days);
 
+    return new TypeValuePair(NumberType.GENERIC_NUMBER, new BigDecimal(res));
+  }
+
+  protected long computeDays(final ParameterCallback parameters,
+                             final TypeRegistry typeRegistry) throws EvaluationException
+  {
+    final Number date1 = typeRegistry.convertToNumber(parameters.getType(0), parameters.getValue(0));
+    final Number date2 = typeRegistry.convertToNumber(parameters.getType(1), parameters.getValue(1));
+
+    final BigDecimal dn1 = NumberUtil.performIntRounding(NumberUtil.getAsBigDecimal(date1));
+    final BigDecimal dn2 = NumberUtil.performIntRounding(NumberUtil.getAsBigDecimal(date2));
+    return dn2.longValue() - dn1.longValue();
+  }
+
+  protected long computeDateDifference(final String formatCode,
+                                       final GregorianCalendar min,
+                                       final GregorianCalendar max,
+                                       final long days) throws EvaluationException
+  {
     if (DateDifFunction.YEARS_CODE.equals(formatCode))
     {
-      res = Math.abs(calandar2.get(Calendar.YEAR) - calandar1.get(Calendar.YEAR));
+      // done
+      return computeYears(min, max);
     }
     else if (DateDifFunction.MONTHS_CODE.equals(formatCode))
     {
-      final int month1 = calandar1.get(Calendar.MONTH);
-      final int month2 = calandar2.get(Calendar.MONTH);
-      final int year1 = calandar1.get(Calendar.YEAR);
-      final int year2 = calandar2.get(Calendar.YEAR);
-
-      res = Math.abs(year2 - year1) * 12 + Math.abs(month2 - month1);
+      // done
+      return computeMonths(min, max);
     }
     else if (DateDifFunction.DAYS_IGNORING_MONTHS_YEARS.equals(formatCode))
     {
-      // The number of days between Date1 and Date2, as if Date1 and
-      // Date2 were in the same month and the same year.
+      return computeMonthDays(min, max);
 
-      // Not sure what happens to leap years, so this solution may be invalid.
-      calandar1.set(Calendar.YEAR, calandar2.get(Calendar.YEAR));
-      calandar1.set(Calendar.MONTH, calandar2.get(Calendar.MONTH));
-
-      res = Math.abs(calandar2.get(Calendar.DAY_OF_MONTH) -
-                     calandar1.get(Calendar.DAY_OF_MONTH));
     }
     else if (DateDifFunction.MONTHS_IGNORING_YEARS.equals(formatCode))
     {
-      final int month1 = calandar1.get(Calendar.MONTH);
-      final int month2 = calandar2.get(Calendar.MONTH);
-
-      res = Math.abs(month2 - month1);
+      // done
+      return computeYearMonth(min, max);
     }
     else if (DateDifFunction.DAYS_IGNORING_YEARS.equals(formatCode))
     {
-      //Isn't that a stupid case? How could we count the days while ignoring
-      //how much days there are in each months without using the year?
-
-      // The number of days between Date1 and Date2, as if Date1 and Date2
-      // were in the same year.
-
-      // Not sure what happens to leap years, so this solution may be invalid.
-      calandar1.set(Calendar.YEAR, calandar2.get(Calendar.YEAR));
-      final int dayOne = calandar1.get(Calendar.DAY_OF_YEAR);
-      final int dayTwo = calandar2.get(Calendar.DAY_OF_YEAR);
-      res = Math.abs(dayOne - dayTwo);
+      // done
+      return computeYearDays(min, max, days);
     }
     else
     {
       throw EvaluationException.getInstance(LibFormulaErrorValue.ERROR_INVALID_ARGUMENT_VALUE);
     }
+  }
 
-    //noinspection UnpredictableBigDecimalConstructorCall
-    return new TypeValuePair(NumberType.GENERIC_NUMBER, new BigDecimal((double) res));
+  private long computeYearDays(final GregorianCalendar min, final GregorianCalendar max, final long dayDiff)
+  {
+    final int year1 = min.get(Calendar.YEAR);
+    final int year2 = max.get(Calendar.YEAR);
+    if (year1 == year2)
+    {
+      // simple case: We are within the same year
+      return Math.abs(dayDiff);
+    }
+
+    final int dayMinDate = min.get(Calendar.DAY_OF_YEAR);
+    final int dayMaxDate = max.get(Calendar.DAY_OF_YEAR);
+    if (dayMinDate <= dayMaxDate)
+    {
+      return dayMaxDate - dayMinDate;
+    }
+
+    int daysInMinYear = min.getActualMaximum(Calendar.DAY_OF_YEAR);
+    int daysToEndOfYear = daysInMinYear - dayMinDate;
+    return dayMaxDate + daysToEndOfYear;
+  }
+
+
+  private long computeYearMonth(final GregorianCalendar min, final GregorianCalendar max)
+  {
+    return computeMonths(min, max) % 12;
+  }
+
+  private long computeMonthDays(final GregorianCalendar min, final GregorianCalendar max)
+  {
+    // The number of days between Date1 and Date2, as if Date1 and
+    // Date2 were in the same month and the same year.
+    int dayMin = min.get(Calendar.DAY_OF_MONTH);
+    int dayMax = max.get(Calendar.DAY_OF_MONTH);
+    if (dayMin <= dayMax) {
+      return dayMax - dayMin;
+    }
+
+    int maxDaysInMonth = max.getActualMaximum(Calendar.DAY_OF_MONTH);
+    return maxDaysInMonth + dayMax - dayMin;
+  }
+
+  private int addFieldLoop(final GregorianCalendar c, final GregorianCalendar target, final int field)
+  {
+    c.set(Calendar.MILLISECOND, 0);
+    c.set(Calendar.SECOND, 0);
+    c.set(Calendar.MINUTE, 0);
+    c.set(Calendar.HOUR_OF_DAY, 0);
+
+    target.set(Calendar.MILLISECOND, 0);
+    target.set(Calendar.SECOND, 0);
+    target.set(Calendar.MINUTE, 0);
+    target.set(Calendar.HOUR_OF_DAY, 0);
+
+    if (c.getTimeInMillis() == target.getTimeInMillis())
+    {
+      return 0;
+    }
+
+    int count = 0;
+    while (true)
+    {
+      c.add(field, 1);
+      if (c.getTimeInMillis() > target.getTimeInMillis())
+      {
+        return count;
+      }
+      count += 1;
+    }
+  }
+
+  private long computeMonths(final GregorianCalendar min, final GregorianCalendar max)
+  {
+    return addFieldLoop(min, max, Calendar.MONTH);
+  }
+
+  private long computeYears(final GregorianCalendar min, final GregorianCalendar max)
+  {
+    return addFieldLoop(min, max, Calendar.YEAR);
+  }
+
+  private Date min(final Date d1, final Date d2)
+  {
+    if (d1.getTime() < d2.getTime())
+    {
+      return d1;
+    }
+    return d2;
+  }
+
+  private Date max(final Date d1, final Date d2)
+  {
+    if (d1.getTime() >= d2.getTime())
+    {
+      return d1;
+    }
+    return d2;
   }
 }
