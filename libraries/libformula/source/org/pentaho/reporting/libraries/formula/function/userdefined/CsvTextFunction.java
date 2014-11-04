@@ -82,7 +82,7 @@ public class CsvTextFunction implements Function
 
     if (doQuoting == false)
     {
-      StringBuffer b = new StringBuffer();
+      StringBuilder b = new StringBuilder();
       while (sequence.hasNext())
       {
         final Object o = sequence.next();
@@ -99,8 +99,8 @@ public class CsvTextFunction implements Function
     }
     else
     {
-      final CSVQuoter quoter = new CSVQuoter(quote.charAt(0), quote.charAt(0));
-      StringBuffer b = new StringBuffer();
+      final CSVQuoter quoter = new CSVQuoter(quote.charAt(0), quote.charAt(0), true);
+      StringBuilder b = new StringBuilder();
       while (sequence.hasNext())
       {
         final Object o = sequence.next();
