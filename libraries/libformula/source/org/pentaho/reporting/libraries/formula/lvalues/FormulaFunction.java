@@ -269,7 +269,7 @@ public class FormulaFunction extends AbstractLValue
    */
   public boolean isConstant()
   {
-    if (metaData.isVolatile())
+    if (metaData == null || metaData.isVolatile())
     {
       return false;
     }

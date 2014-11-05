@@ -220,9 +220,17 @@ public class Term extends AbstractLValue
 
   public String toString()
   {
-    final StringBuffer b = new StringBuffer(100);
+    return toString(false);
+  }
 
-    b.append('(');
+  public String toString(final boolean root)
+  {
+    final StringBuilder b = new StringBuilder(100);
+
+    if (!root)
+    {
+      b.append('(');
+    }
     b.append(headValue);
     if (operands != null && operators != null)
     {
@@ -234,7 +242,10 @@ public class Term extends AbstractLValue
         b.append(value);
       }
     }
-    b.append(')');
+    if (!root)
+    {
+      b.append(')');
+    }
     return b.toString();
   }
 
