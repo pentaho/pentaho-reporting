@@ -24,6 +24,7 @@ import java.util.regex.Pattern;
 
 import org.pentaho.reporting.libraries.base.util.ArgumentNullException;
 import org.pentaho.reporting.libraries.base.util.DebugLog;
+import org.pentaho.reporting.libraries.formula.DefaultFormulaContext;
 import org.pentaho.reporting.libraries.formula.Formula;
 import org.pentaho.reporting.libraries.formula.FormulaContext;
 import org.pentaho.reporting.libraries.formula.lvalues.ContextLookup;
@@ -203,10 +204,17 @@ public class FormulaUtil
 
   public static String createCellUITextFromFormula(final String formula)
   {
+    return createCellUITextFromFormula(formula, new DefaultFormulaContext());
+  }
+
+  public static String createCellUITextFromFormula(final String formula, final FormulaContext context)
+  {
     try
     {
       final FormulaParser parser = new FormulaParser();
       final LValue lValue = parser.parse(formula);
+      lValue.initialize(context);
+
       if (lValue.isConstant())
       {
         if (lValue instanceof StaticValue)
@@ -220,12 +228,18 @@ public class FormulaUtil
           return String.valueOf(o);
         }
       }
+      else if (lValue instanceof ContextLookup)
+      {
+        ContextLookup l = (ContextLookup) lValue;
+        return l.toString();
+      }
 
-      final String cellText = lValue.toString();
+      final String cellText = formula;
       return cellText.startsWith("=") ? cellText : "=" + cellText;
     }
     catch (Exception e)
     {
+      e.printStackTrace();
       return formula;
     }
   }
@@ -258,7 +272,7 @@ public class FormulaUtil
         }
       }
 
-      final String cellText = lValue.toString();
+      final String cellText = formula;
       return cellText.startsWith("=") ? cellText : "=" + cellText;
     }
     catch (Exception e)

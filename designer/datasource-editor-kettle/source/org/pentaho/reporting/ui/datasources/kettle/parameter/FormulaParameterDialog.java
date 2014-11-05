@@ -146,7 +146,9 @@ public class FormulaParameterDialog extends CommonDialog
     ArrayList<FormulaParameterEntity> l = new ArrayList<FormulaParameterEntity>();
     for (FormulaArgument argumentName : argumentNames)
     {
-      l.add(FormulaParameterEntity.createArgument(argumentName.getFormula()));
+      FormulaParameterEntity e =  new FormulaParameterEntity
+          (FormulaParameterEntity.Type.ARGUMENT, "Argument " + (l.size() + 1), argumentName.getFormula());
+      l.add(e);
     }
     HashSet<String> usedNames = new HashSet<String>();
     for (FormulaParameter parameterMapping : parameterMappings)

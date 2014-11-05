@@ -67,7 +67,8 @@ public class FormulaParameterEditor extends JComponent
       final FormulaParameterEntity[] data2 = new FormulaParameterEntity[data.length + 1];
       System.arraycopy(data, 0, data2, 0, data.length);
 
-      data2[data.length] = new FormulaParameterEntity(FormulaParameterEntity.Type.ARGUMENT, String.valueOf(data.length), null);
+      data2[data.length] = new FormulaParameterEntity(FormulaParameterEntity.Type.ARGUMENT,
+          String.format("ZZZ%012d", System.currentTimeMillis()), null);
       parameterTableModel.setData(data2);
     }
   }
