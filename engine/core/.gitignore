@@ -1,3 +1,4 @@
 test-output
 contiperf-report
 performance
+*.bin

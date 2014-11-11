@@ -25,3 +25,5 @@ build-res/module-scripts/
 .idea/dictionaries/
 .idea/inspectionProfiles/
 *.lck
+target
+
