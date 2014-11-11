@@ -200,6 +200,9 @@ public class FileDataSourceMgmtService implements DataSourceMgmtService
     {
       return;
     }
+    if (!target.exists()) {
+      return;
+    }
 
     synchronized (this)
     {
@@ -231,11 +234,25 @@ public class FileDataSourceMgmtService implements DataSourceMgmtService
       }
       catch (ResourceException e)
       {
-        logger.error("Unable to parse datasource declaration.", e);
+        if (logger.isDebugEnabled())
+        {
+          logger.error("Unable to parse datasource declaration.", e);
+        }
+        else
+        {
+          logger.error("Unable to parse datasource declaration: " + e);
+        }
       }
       catch (IOException e)
       {
-        logger.error("Unable to parse datasource declaration.", e);
+        if (logger.isDebugEnabled())
+        {
+          logger.error("Unable to parse datasource declaration.", e);
+        }
+        else
+        {
+          logger.error("Unable to parse datasource declaration: " + e);
+        }
       }
       finally
       {
