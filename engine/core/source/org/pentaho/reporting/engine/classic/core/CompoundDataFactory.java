@@ -214,12 +214,12 @@ public class CompoundDataFactory extends AbstractDataFactory implements Compound
     ArgumentNullException.validate("query", query);
     ArgumentNullException.validate("parameters", parameters);
 
-    final TableModel staticResult = queryStatic(query, parameters);
+    final TableModel staticResult = queryDesignTimeStructureStatic(query, parameters);
     if (staticResult != null)
     {
       return staticResult;
     }
-    final TableModel freeFormResult = queryFreeForm(query, parameters);
+    final TableModel freeFormResult = queryDesignTimeStructureFreeForm(query, parameters);
     if (freeFormResult != null)
     {
       return freeFormResult;
