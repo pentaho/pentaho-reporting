@@ -17,15 +17,12 @@
 
 package org.pentaho.reporting.engine.classic.wizard.ui.xul.util;
 
-import java.beans.PropertyChangeListener;
-
 import org.pentaho.reporting.engine.classic.core.MetaAttributeNames;
 import org.pentaho.reporting.engine.classic.core.wizard.DataAttributes;
 import org.pentaho.reporting.engine.classic.core.wizard.DataSchema;
 import org.pentaho.reporting.engine.classic.core.wizard.DefaultDataAttributeContext;
-import org.pentaho.ui.xul.XulEventSource;
-
-public class SourceFieldDefinition implements XulEventSource
+//
+public class SourceFieldDefinition 
 {
   private String displayName;
   private String fieldName;
@@ -75,14 +72,6 @@ public class SourceFieldDefinition implements XulEventSource
   public String getFieldName()
   {
     return fieldName;
-  }
-
-  public void addPropertyChangeListener(final PropertyChangeListener listener)
-  {
-  }
-
-  public void removePropertyChangeListener(final PropertyChangeListener listener)
-  {
   }
 
 }
