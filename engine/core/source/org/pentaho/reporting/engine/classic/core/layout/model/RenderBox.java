@@ -140,6 +140,7 @@ public abstract class RenderBox extends RenderNode
     this.stateKey = stateKey;
     this.descendantCount = 1;
     this.restrictFinishClearOut = RestrictFinishClearOut.UNRESTRICTED;
+    this.breakIndicator = BreakIndicator.NO_MANUAL_BREAK;
   }
 
   public RenderBox create(final StyleSheet styleSheet)
