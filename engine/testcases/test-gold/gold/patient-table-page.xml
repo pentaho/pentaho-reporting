@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <layout-output xmlns="http://reporting.pentaho.org/namespaces/output/layout-output/table/1.0">
-  <table col-count="5" row-count="13">
+  <table col-count="5" row-count="14">
     <cols>
       <column width="10"/>
       <column width="65"/>
@@ -158,6 +158,14 @@
         </line>
       </cell>
     </row>
+    <row height="220">
+      <empty-cell>
+      </empty-cell>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+      <empty-cell/>
+    </row>
     <row height="100">
       <empty-cell>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="group-footer"/>
@@ -166,10 +174,10 @@
       <cell row-span="1" col-span="2">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="Allergy Notes"/>
-        <line type="ParagraphPoolBox" x="10.0" y="330.0" width="53.487" height="9.0" color="black" font-face="SansSerif" font-size="9" font-style-bold="true" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-          <text x="10.0" y="330.0" width="27.495" height="9.0">Allergy</text>
+        <line type="ParagraphPoolBox" x="10.0" y="550.0" width="53.487" height="9.0" color="black" font-face="SansSerif" font-size="9" font-style-bold="true" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="10.0" y="550.0" width="27.495" height="9.0">Allergy</text>
           <spacer width="2.493" height="0.0" preserve="true"/>
-          <text x="39.988" y="330.0" width="23.499" height="9.0">Notes</text>
+          <text x="39.988" y="550.0" width="23.499" height="9.0">Notes</text>
         </line>
       </cell>
       <spanned-cell/>
@@ -181,17 +189,17 @@
       <cell row-span="1" col-span="2">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="Health Level"/>
-        <line type="ParagraphPoolBox" x="10.0" y="430.0" width="50.004" height="9.0" color="black" font-face="SansSerif" font-size="9" font-style-bold="true" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-          <text x="10.0" y="430.0" width="26.001" height="9.0">Health</text>
+        <line type="ParagraphPoolBox" x="10.0" y="650.0" width="50.004" height="9.0" color="black" font-face="SansSerif" font-size="9" font-style-bold="true" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="10.0" y="650.0" width="26.001" height="9.0">Health</text>
           <spacer width="2.493" height="0.0" preserve="true"/>
-          <text x="38.494" y="430.0" width="21.51" height="9.0">Level</text>
+          <text x="38.494" y="650.0" width="21.51" height="9.0">Level</text>
         </line>
       </cell>
       <spanned-cell/>
       <empty-cell/>
       <empty-cell/>
     </row>
-    <row height="372">
+    <row height="152">
       <empty-cell/>
       <empty-cell/>
       <empty-cell/>
