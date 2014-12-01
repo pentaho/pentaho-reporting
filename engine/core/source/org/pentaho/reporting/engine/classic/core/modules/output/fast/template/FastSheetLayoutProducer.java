@@ -21,6 +21,7 @@ import java.util.HashSet;
 
 import org.pentaho.reporting.engine.classic.core.Band;
 import org.pentaho.reporting.engine.classic.core.InvalidReportStateException;
+import org.pentaho.reporting.engine.classic.core.MasterReport;
 import org.pentaho.reporting.engine.classic.core.ReportDefinition;
 import org.pentaho.reporting.engine.classic.core.ReportProcessingException;
 import org.pentaho.reporting.engine.classic.core.function.ExpressionRuntime;
@@ -30,10 +31,13 @@ import org.pentaho.reporting.engine.classic.core.layout.model.LogicalPageBox;
 import org.pentaho.reporting.engine.classic.core.layout.output.ContentProcessingException;
 import org.pentaho.reporting.engine.classic.core.layout.output.OutputProcessor;
 import org.pentaho.reporting.engine.classic.core.layout.output.OutputProcessorMetaData;
+import org.pentaho.reporting.engine.classic.core.layout.style.SimpleStyleSheet;
 import org.pentaho.reporting.engine.classic.core.modules.output.fast.FastExportTemplate;
 import org.pentaho.reporting.engine.classic.core.modules.output.table.base.SheetLayout;
 import org.pentaho.reporting.engine.classic.core.modules.output.table.base.TableLayoutProducer;
 import org.pentaho.reporting.engine.classic.core.states.DefaultPerformanceMonitorContext;
+import org.pentaho.reporting.engine.classic.core.style.ResolverStyleSheet;
+import org.pentaho.reporting.engine.classic.core.style.resolver.SimpleStyleResolver;
 
 public class FastSheetLayoutProducer implements FastExportTemplate
 {
@@ -113,8 +117,10 @@ public class FastSheetLayoutProducer implements FastExportTemplate
                                    final OutputProcessor outputTarget)
       throws ReportProcessingException, ContentProcessingException
   {
+    MasterReport report = createDummyReport(band);
+
     StreamingRenderer renderer = new StreamingRenderer(outputTarget);
-    renderer.startReport(band.getReportDefinition(), runtime.getProcessingContext(), new DefaultPerformanceMonitorContext());
+    renderer.startReport(report, runtime.getProcessingContext(), new DefaultPerformanceMonitorContext());
     renderer.startSection(Renderer.SectionType.NORMALFLOW);
     renderer.add(band, runtime);
     renderer.endSection();
@@ -128,4 +134,18 @@ public class FastSheetLayoutProducer implements FastExportTemplate
     renderer.processPage(null, null, true);
   }
 
+  protected static MasterReport createDummyReport(final Band band)
+  {
+    ReportDefinition masterReport = band.getMasterReport();
+
+    MasterReport dummy = new MasterReport();
+    dummy.copyAttributes(masterReport.getAttributes());
+    dummy.setPageDefinition(masterReport.getPageDefinition());
+
+    SimpleStyleResolver simpleStyleResolver = new SimpleStyleResolver(true);
+    ResolverStyleSheet resolveStyleSheet = new ResolverStyleSheet();
+    simpleStyleResolver.resolve(dummy, resolveStyleSheet);
+    dummy.setComputedStyle(new SimpleStyleSheet(resolveStyleSheet));
+    return dummy;
+  }
 }
