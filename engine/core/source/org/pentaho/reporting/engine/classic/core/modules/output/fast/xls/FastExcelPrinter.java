@@ -112,7 +112,7 @@ public class FastExcelPrinter extends ExcelPrinterBase
       closeSheet();
     }
 
-    if (sheet == null)
+    if (cellHeights.length > 0 && sheet == null)
     {
       SheetPropertyCollector collector = new SheetPropertyCollector();
       String sheetName = collector.compute(band);
@@ -120,6 +120,7 @@ public class FastExcelPrinter extends ExcelPrinterBase
       configureSheetColumnWidths(sheet, sheetLayout, sheetLayout.getColumnCount());
       configureSheetPaperSize(sheet, new PhysicalPageBox(pageDefinition.getPageFormat(0), 0, 0));
       configureSheetProperties(sheet, collector);
+      rowOffset = 0;
     }
 
     for (int r = 0; r < cellHeights.length; r += 1)

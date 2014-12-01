@@ -44,6 +44,7 @@ public class SheetPropertyCollector extends AbstractStructureVisitor implements 
   public String compute(Band band)
   {
     sheetName = null;
+    inspectElement(band);
     traverseSection(band);
     if (sheetName == null)
     {
