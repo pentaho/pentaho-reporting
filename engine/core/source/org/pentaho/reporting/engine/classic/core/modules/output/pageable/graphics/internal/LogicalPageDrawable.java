@@ -920,10 +920,21 @@ public class LogicalPageDrawable extends IterateStructuralProcessStep implements
     this.textSpec = null;
 
     RenderBox lineBox = (RenderBox) box.getFirstChild();
-    while (lineBox != null)
-    {
-      processTextLine(lineBox, contentAreaX1, contentAreaX2);
-      lineBox = (RenderBox) lineBox.getNext();
+    if (lineBox != null) {
+      final boolean needClipping = lineBox.getHeight() > box.getHeight() && !box.isBoxOverflowX();
+      if (needClipping) {
+        // clip
+        StrictBounds safeBounds = new StrictBounds(lineBox.getX(), lineBox.getY(), lineBox.getWidth() * 3 / 2, lineBox.getHeight());
+        clip(safeBounds);
+      }
+      while (lineBox != null)
+      {
+        processTextLine(lineBox, contentAreaX1, contentAreaX2);
+        lineBox = (RenderBox) lineBox.getNext();
+      }
+      if (needClipping) {
+        clearClipping();
+      }
     }
 
     if (textSpec != null)
@@ -1640,6 +1651,8 @@ public class LogicalPageDrawable extends IterateStructuralProcessStep implements
     graphics.dispose();
     graphics = graphicsContexts.pop();
   }
+
+
 
   public Graphics2D getGraphics()
   {

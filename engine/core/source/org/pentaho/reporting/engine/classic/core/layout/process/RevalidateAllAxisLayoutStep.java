@@ -280,6 +280,8 @@ public final class RevalidateAllAxisLayoutStep //extends IterateSimpleStructureP
     final boolean overflowX = paragraph.getStaticBoxLayoutProperties().isOverflowX();
     RenderNode node = paragraph.getFirstChild();
     ParagraphPoolBox prev = null;
+    boolean first = metaData.isFeatureSupported
+        (OutputProcessorFeature.BooleanOutputProcessorFeature.ALWAYS_PRINT_FIRST_LINE_OF_TEXT);
     while (node != null)
     {
       // all childs of the linebox container must be inline boxes. They
@@ -294,12 +296,12 @@ public final class RevalidateAllAxisLayoutStep //extends IterateSimpleStructureP
       // Process the current line.
       final long y = inlineRenderBox.getCachedY();
       final long height = inlineRenderBox.getCachedHeight();
-      if (y + height <= paragraphBottom)
+      if (first || y + height <= paragraphBottom)
       {
-
         // Node will fit, so we can allow it ..
         prev = inlineRenderBox;
         node = node.getNext();
+        first = false;
         continue;
       }
 

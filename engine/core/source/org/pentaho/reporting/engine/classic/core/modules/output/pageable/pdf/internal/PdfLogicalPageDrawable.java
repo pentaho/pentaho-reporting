@@ -74,7 +74,6 @@ import org.pentaho.reporting.engine.classic.core.style.TextDirection;
 import org.pentaho.reporting.engine.classic.core.style.TextStyleKeys;
 import org.pentaho.reporting.engine.classic.core.util.TypedMapWrapper;
 import org.pentaho.reporting.engine.classic.core.util.geom.StrictGeomUtility;
-import org.pentaho.reporting.libraries.base.util.DebugLog;
 import org.pentaho.reporting.libraries.base.util.LFUMap;
 import org.pentaho.reporting.libraries.base.util.StringUtils;
 import org.pentaho.reporting.libraries.base.util.WaitingImageObserver;
@@ -548,6 +547,7 @@ public class PdfLogicalPageDrawable extends LogicalPageDrawable
       }
     }
   }
+
   private static final float SAFETY_MARGIN = 0.1f;
 
   private float computeTrailingSafetyMargin(final RenderableComplexText node)
@@ -635,7 +635,7 @@ public class PdfLogicalPageDrawable extends LogicalPageDrawable
       {
         throw new InvalidReportStateException
             ("iText signaled an error when printing text. Failing to prevent silent data-loss: Width=" +
-            ct.getFilledWidth());
+                ct.getFilledWidth());
       }
     }
     catch (DocumentException e)
@@ -689,7 +689,8 @@ public class PdfLogicalPageDrawable extends LogicalPageDrawable
         float delta = ((urx - llx) - filledWidth) / 2;
         ct.setSimpleColumn(urx + delta, lly, urx - delta, ury, leading, alignment);
       }
-      else {
+      else
+      {
         ct.setSimpleColumn(llx, lly, urx, ury, leading, alignment);
       }
       return ct;
@@ -739,7 +740,7 @@ public class PdfLogicalPageDrawable extends LogicalPageDrawable
         if (image != null)
         {
           Chunk chunk = new Chunk(image, 0, 0);
-        //  chunk.setFont(font);
+          //  chunk.setFont(font);
           p.add(chunk);
         }
       }

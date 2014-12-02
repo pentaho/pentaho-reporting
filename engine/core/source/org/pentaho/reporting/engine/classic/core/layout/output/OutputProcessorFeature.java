@@ -167,6 +167,8 @@ public abstract class OutputProcessorFeature implements Serializable
       new BooleanOutputProcessorFeature("assume-overflow-y");
   public static final BooleanOutputProcessorFeature DIRECT_RICHTEXT_RENDERING =
       new BooleanOutputProcessorFeature("direct-rich-text-rendering");
+  public static final BooleanOutputProcessorFeature ALWAYS_PRINT_FIRST_LINE_OF_TEXT =
+      new BooleanOutputProcessorFeature("always-print-first-line-of-text");
 
   private String name;
   private int hashCode;
