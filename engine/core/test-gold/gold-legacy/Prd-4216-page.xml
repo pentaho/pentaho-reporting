@@ -55,16 +55,25 @@
               <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
               <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="TotalPageItemCountFunction0"/>
               <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="headerpageitem"/>
+              <line type="ParagraphPoolBox" x="111.0" y="104.0" width="26.688" height="24.0" color="black" font-face="Serif" font-size="24" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <text x="111.0" y="104.0" width="26.688" height="24.0">12</text>
+              </line>
             </p>
             <p name="headerlabel" type="ParagraphRenderBox" x="0.0" y="104.0" width="328.0" height="20.0" color="black" font-face="Serif" font-size="24" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
               <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
               <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="headerlabel"/>
               <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="Header:"/>
+              <line type="ParagraphPoolBox" x="0.0" y="104.0" width="85.344" height="24.0" color="black" font-face="Serif" font-size="24" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <text x="0.0" y="104.0" width="85.344" height="24.0">Header:</text>
+              </line>
             </p>
             <p name="headerpageitem" type="ParagraphRenderBox" x="303.0" y="104.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="24" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
               <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
               <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="TotalPageItemCountFunction2"/>
               <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="headerpageitem"/>
+              <line type="ParagraphPoolBox" x="303.0" y="104.0" width="26.688" height="24.0" color="black" font-face="Serif" font-size="24" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <text x="303.0" y="104.0" width="26.688" height="24.0">23</text>
+              </line>
             </p>
           </canvas>
         </block>
@@ -77,11 +86,17 @@
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="TotalPageItemCountFunction0"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="totalPageIdetail"/>
+                <line type="ParagraphPoolBox" x="0.0" y="124.0" width="31.136" height="28.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                  <text x="0.0" y="124.0" width="31.136" height="28.0">12</text>
+                </line>
               </p>
               <p name="totalPageIdetail" type="ParagraphRenderBox" x="219.0" y="124.0" width="193.0" height="20.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="TotalPageItemCountFunction2"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="totalPageIdetail"/>
+                <line type="ParagraphPoolBox" x="219.0" y="124.0" width="31.136" height="28.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                  <text x="219.0" y="124.0" width="31.136" height="28.0">23</text>
+                </line>
               </p>
             </canvas>
           </block>
@@ -92,11 +107,17 @@
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="TotalPageItemCountFunction0"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="totalPageIdetail"/>
+                <line type="ParagraphPoolBox" x="0.0" y="144.0" width="31.136" height="28.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                  <text x="0.0" y="144.0" width="31.136" height="28.0">12</text>
+                </line>
               </p>
               <p name="totalPageIdetail" type="ParagraphRenderBox" x="219.0" y="144.0" width="193.0" height="20.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="TotalPageItemCountFunction2"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="totalPageIdetail"/>
+                <line type="ParagraphPoolBox" x="219.0" y="144.0" width="31.136" height="28.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                  <text x="219.0" y="144.0" width="31.136" height="28.0">23</text>
+                </line>
               </p>
             </canvas>
           </block>
@@ -107,11 +128,17 @@
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="TotalPageItemCountFunction0"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="totalPageIdetail"/>
+                <line type="ParagraphPoolBox" x="0.0" y="164.0" width="31.136" height="28.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                  <text x="0.0" y="164.0" width="31.136" height="28.0">12</text>
+                </line>
               </p>
               <p name="totalPageIdetail" type="ParagraphRenderBox" x="219.0" y="164.0" width="193.0" height="20.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="TotalPageItemCountFunction2"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="totalPageIdetail"/>
+                <line type="ParagraphPoolBox" x="219.0" y="164.0" width="31.136" height="28.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                  <text x="219.0" y="164.0" width="31.136" height="28.0">23</text>
+                </line>
               </p>
             </canvas>
           </block>
@@ -122,11 +149,17 @@
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="TotalPageItemCountFunction0"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="totalPageIdetail"/>
+                <line type="ParagraphPoolBox" x="0.0" y="184.0" width="31.136" height="28.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                  <text x="0.0" y="184.0" width="31.136" height="28.0">12</text>
+                </line>
               </p>
               <p name="totalPageIdetail" type="ParagraphRenderBox" x="219.0" y="184.0" width="193.0" height="20.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="TotalPageItemCountFunction2"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="totalPageIdetail"/>
+                <line type="ParagraphPoolBox" x="219.0" y="184.0" width="31.136" height="28.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                  <text x="219.0" y="184.0" width="31.136" height="28.0">23</text>
+                </line>
               </p>
             </canvas>
           </block>
@@ -137,11 +170,17 @@
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="TotalPageItemCountFunction0"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="totalPageIdetail"/>
+                <line type="ParagraphPoolBox" x="0.0" y="204.0" width="31.136" height="28.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                  <text x="0.0" y="204.0" width="31.136" height="28.0">12</text>
+                </line>
               </p>
               <p name="totalPageIdetail" type="ParagraphRenderBox" x="219.0" y="204.0" width="193.0" height="20.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="TotalPageItemCountFunction2"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="totalPageIdetail"/>
+                <line type="ParagraphPoolBox" x="219.0" y="204.0" width="31.136" height="28.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                  <text x="219.0" y="204.0" width="31.136" height="28.0">23</text>
+                </line>
               </p>
             </canvas>
           </block>
@@ -152,11 +191,17 @@
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="TotalPageItemCountFunction0"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="totalPageIdetail"/>
+                <line type="ParagraphPoolBox" x="0.0" y="224.0" width="31.136" height="28.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                  <text x="0.0" y="224.0" width="31.136" height="28.0">12</text>
+                </line>
               </p>
               <p name="totalPageIdetail" type="ParagraphRenderBox" x="219.0" y="224.0" width="193.0" height="20.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="TotalPageItemCountFunction2"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="totalPageIdetail"/>
+                <line type="ParagraphPoolBox" x="219.0" y="224.0" width="31.136" height="28.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                  <text x="219.0" y="224.0" width="31.136" height="28.0">23</text>
+                </line>
               </p>
             </canvas>
           </block>
@@ -167,11 +212,17 @@
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="TotalPageItemCountFunction0"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="totalPageIdetail"/>
+                <line type="ParagraphPoolBox" x="0.0" y="244.0" width="31.136" height="28.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                  <text x="0.0" y="244.0" width="31.136" height="28.0">12</text>
+                </line>
               </p>
               <p name="totalPageIdetail" type="ParagraphRenderBox" x="219.0" y="244.0" width="193.0" height="20.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="TotalPageItemCountFunction2"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="totalPageIdetail"/>
+                <line type="ParagraphPoolBox" x="219.0" y="244.0" width="31.136" height="28.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                  <text x="219.0" y="244.0" width="31.136" height="28.0">23</text>
+                </line>
               </p>
             </canvas>
           </block>
@@ -182,11 +233,17 @@
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="TotalPageItemCountFunction0"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="totalPageIdetail"/>
+                <line type="ParagraphPoolBox" x="0.0" y="264.0" width="31.136" height="28.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                  <text x="0.0" y="264.0" width="31.136" height="28.0">12</text>
+                </line>
               </p>
               <p name="totalPageIdetail" type="ParagraphRenderBox" x="219.0" y="264.0" width="193.0" height="20.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="TotalPageItemCountFunction2"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="totalPageIdetail"/>
+                <line type="ParagraphPoolBox" x="219.0" y="264.0" width="31.136" height="28.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                  <text x="219.0" y="264.0" width="31.136" height="28.0">23</text>
+                </line>
               </p>
             </canvas>
           </block>
@@ -197,11 +254,17 @@
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="TotalPageItemCountFunction0"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="totalPageIdetail"/>
+                <line type="ParagraphPoolBox" x="0.0" y="284.0" width="31.136" height="28.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                  <text x="0.0" y="284.0" width="31.136" height="28.0">12</text>
+                </line>
               </p>
               <p name="totalPageIdetail" type="ParagraphRenderBox" x="219.0" y="284.0" width="193.0" height="20.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="TotalPageItemCountFunction2"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="totalPageIdetail"/>
+                <line type="ParagraphPoolBox" x="219.0" y="284.0" width="31.136" height="28.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                  <text x="219.0" y="284.0" width="31.136" height="28.0">23</text>
+                </line>
               </p>
             </canvas>
           </block>
@@ -212,11 +275,17 @@
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="TotalPageItemCountFunction0"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="totalPageIdetail"/>
+                <line type="ParagraphPoolBox" x="0.0" y="304.0" width="31.136" height="28.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                  <text x="0.0" y="304.0" width="31.136" height="28.0">12</text>
+                </line>
               </p>
               <p name="totalPageIdetail" type="ParagraphRenderBox" x="219.0" y="304.0" width="193.0" height="20.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="TotalPageItemCountFunction2"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="totalPageIdetail"/>
+                <line type="ParagraphPoolBox" x="219.0" y="304.0" width="31.136" height="28.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                  <text x="219.0" y="304.0" width="31.136" height="28.0">23</text>
+                </line>
               </p>
             </canvas>
           </block>
@@ -227,11 +296,17 @@
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="TotalPageItemCountFunction0"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="totalPageIdetail"/>
+                <line type="ParagraphPoolBox" x="0.0" y="324.0" width="31.136" height="28.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                  <text x="0.0" y="324.0" width="31.136" height="28.0">12</text>
+                </line>
               </p>
               <p name="totalPageIdetail" type="ParagraphRenderBox" x="219.0" y="324.0" width="193.0" height="20.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="TotalPageItemCountFunction2"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="totalPageIdetail"/>
+                <line type="ParagraphPoolBox" x="219.0" y="324.0" width="31.136" height="28.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                  <text x="219.0" y="324.0" width="31.136" height="28.0">23</text>
+                </line>
               </p>
             </canvas>
           </block>
@@ -242,11 +317,17 @@
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="TotalPageItemCountFunction0"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="totalPageIdetail"/>
+                <line type="ParagraphPoolBox" x="0.0" y="344.0" width="31.136" height="28.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                  <text x="0.0" y="344.0" width="31.136" height="28.0">12</text>
+                </line>
               </p>
               <p name="totalPageIdetail" type="ParagraphRenderBox" x="219.0" y="344.0" width="193.0" height="20.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="TotalPageItemCountFunction2"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="totalPageIdetail"/>
+                <line type="ParagraphPoolBox" x="219.0" y="344.0" width="31.136" height="28.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                  <text x="219.0" y="344.0" width="31.136" height="28.0">23</text>
+                </line>
               </p>
             </canvas>
           </block>
@@ -258,16 +339,26 @@
               <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="text-field"/>
               <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="TotalPageItemCountFunction0"/>
               <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="footerpageitem"/>
+              <line type="ParagraphPoolBox" x="100.0" y="364.0" width="26.688" height="24.0" color="black" font-face="Serif" font-size="24" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <text x="100.0" y="364.0" width="26.688" height="24.0">12</text>
+              </line>
             </p>
             <p name="footer" type="ParagraphRenderBox" x="0.0" y="364.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="24" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
               <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
               <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="footer"/>
               <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="Footer: "/>
+              <line type="ParagraphPoolBox" x="0.0" y="364.0" width="82.608" height="24.0" color="black" font-face="Serif" font-size="24" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <text x="0.0" y="364.0" width="75.96" height="24.0">Footer:</text>
+                <spacer width="6.648" height="0.0" preserve="true"/>
+              </line>
             </p>
             <p name="footerpageitem" type="ParagraphRenderBox" x="303.0" y="364.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="24" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
               <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="text-field"/>
               <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="TotalPageItemCountFunction2"/>
               <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="footerpageitem"/>
+              <line type="ParagraphPoolBox" x="303.0" y="364.0" width="26.688" height="24.0" color="black" font-face="Serif" font-size="24" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <text x="303.0" y="364.0" width="26.688" height="24.0">23</text>
+              </line>
             </p>
           </canvas>
         </block>
@@ -282,16 +373,25 @@
               <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
               <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="TotalPageItemCountFunction0"/>
               <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="headerpageitem"/>
+              <line type="ParagraphPoolBox" x="111.0" y="404.0" width="26.688" height="24.0" color="black" font-face="Serif" font-size="24" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <text x="111.0" y="404.0" width="26.688" height="24.0">11</text>
+              </line>
             </p>
             <p name="headerlabel" type="ParagraphRenderBox" x="0.0" y="404.0" width="328.0" height="20.0" color="black" font-face="Serif" font-size="24" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
               <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
               <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="headerlabel"/>
               <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="Header:"/>
+              <line type="ParagraphPoolBox" x="0.0" y="404.0" width="85.344" height="24.0" color="black" font-face="Serif" font-size="24" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <text x="0.0" y="404.0" width="85.344" height="24.0">Header:</text>
+              </line>
             </p>
             <p name="headerpageitem" type="ParagraphRenderBox" x="303.0" y="404.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="24" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
               <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
               <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="TotalPageItemCountFunction2"/>
               <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="headerpageitem"/>
+              <line type="ParagraphPoolBox" x="303.0" y="404.0" width="26.688" height="24.0" color="black" font-face="Serif" font-size="24" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <text x="303.0" y="404.0" width="26.688" height="24.0">23</text>
+              </line>
             </p>
           </canvas>
         </block>
@@ -304,11 +404,17 @@
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="TotalPageItemCountFunction0"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="totalPageIdetail"/>
+                <line type="ParagraphPoolBox" x="0.0" y="424.0" width="31.136" height="28.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                  <text x="0.0" y="424.0" width="31.136" height="28.0">11</text>
+                </line>
               </p>
               <p name="totalPageIdetail" type="ParagraphRenderBox" x="219.0" y="424.0" width="193.0" height="20.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="TotalPageItemCountFunction2"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="totalPageIdetail"/>
+                <line type="ParagraphPoolBox" x="219.0" y="424.0" width="31.136" height="28.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                  <text x="219.0" y="424.0" width="31.136" height="28.0">23</text>
+                </line>
               </p>
             </canvas>
           </block>
@@ -319,11 +425,17 @@
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="TotalPageItemCountFunction0"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="totalPageIdetail"/>
+                <line type="ParagraphPoolBox" x="0.0" y="444.0" width="31.136" height="28.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                  <text x="0.0" y="444.0" width="31.136" height="28.0">11</text>
+                </line>
               </p>
               <p name="totalPageIdetail" type="ParagraphRenderBox" x="219.0" y="444.0" width="193.0" height="20.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="TotalPageItemCountFunction2"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="totalPageIdetail"/>
+                <line type="ParagraphPoolBox" x="219.0" y="444.0" width="31.136" height="28.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                  <text x="219.0" y="444.0" width="31.136" height="28.0">23</text>
+                </line>
               </p>
             </canvas>
           </block>
@@ -334,11 +446,17 @@
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="TotalPageItemCountFunction0"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="totalPageIdetail"/>
+                <line type="ParagraphPoolBox" x="0.0" y="464.0" width="31.136" height="28.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                  <text x="0.0" y="464.0" width="31.136" height="28.0">11</text>
+                </line>
               </p>
               <p name="totalPageIdetail" type="ParagraphRenderBox" x="219.0" y="464.0" width="193.0" height="20.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="TotalPageItemCountFunction2"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="totalPageIdetail"/>
+                <line type="ParagraphPoolBox" x="219.0" y="464.0" width="31.136" height="28.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                  <text x="219.0" y="464.0" width="31.136" height="28.0">23</text>
+                </line>
               </p>
             </canvas>
           </block>
@@ -349,11 +467,17 @@
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="TotalPageItemCountFunction0"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="totalPageIdetail"/>
+                <line type="ParagraphPoolBox" x="0.0" y="484.0" width="31.136" height="28.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                  <text x="0.0" y="484.0" width="31.136" height="28.0">11</text>
+                </line>
               </p>
               <p name="totalPageIdetail" type="ParagraphRenderBox" x="219.0" y="484.0" width="193.0" height="20.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="TotalPageItemCountFunction2"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="totalPageIdetail"/>
+                <line type="ParagraphPoolBox" x="219.0" y="484.0" width="31.136" height="28.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                  <text x="219.0" y="484.0" width="31.136" height="28.0">23</text>
+                </line>
               </p>
             </canvas>
           </block>
@@ -364,11 +488,17 @@
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="TotalPageItemCountFunction0"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="totalPageIdetail"/>
+                <line type="ParagraphPoolBox" x="0.0" y="504.0" width="31.136" height="28.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                  <text x="0.0" y="504.0" width="31.136" height="28.0">11</text>
+                </line>
               </p>
               <p name="totalPageIdetail" type="ParagraphRenderBox" x="219.0" y="504.0" width="193.0" height="20.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="TotalPageItemCountFunction2"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="totalPageIdetail"/>
+                <line type="ParagraphPoolBox" x="219.0" y="504.0" width="31.136" height="28.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                  <text x="219.0" y="504.0" width="31.136" height="28.0">23</text>
+                </line>
               </p>
             </canvas>
           </block>
@@ -379,11 +509,17 @@
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="TotalPageItemCountFunction0"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="totalPageIdetail"/>
+                <line type="ParagraphPoolBox" x="0.0" y="524.0" width="31.136" height="28.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                  <text x="0.0" y="524.0" width="31.136" height="28.0">11</text>
+                </line>
               </p>
               <p name="totalPageIdetail" type="ParagraphRenderBox" x="219.0" y="524.0" width="193.0" height="20.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="TotalPageItemCountFunction2"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="totalPageIdetail"/>
+                <line type="ParagraphPoolBox" x="219.0" y="524.0" width="31.136" height="28.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                  <text x="219.0" y="524.0" width="31.136" height="28.0">23</text>
+                </line>
               </p>
             </canvas>
           </block>
@@ -394,11 +530,17 @@
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="TotalPageItemCountFunction0"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="totalPageIdetail"/>
+                <line type="ParagraphPoolBox" x="0.0" y="544.0" width="31.136" height="28.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                  <text x="0.0" y="544.0" width="31.136" height="28.0">11</text>
+                </line>
               </p>
               <p name="totalPageIdetail" type="ParagraphRenderBox" x="219.0" y="544.0" width="193.0" height="20.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="TotalPageItemCountFunction2"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="totalPageIdetail"/>
+                <line type="ParagraphPoolBox" x="219.0" y="544.0" width="31.136" height="28.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                  <text x="219.0" y="544.0" width="31.136" height="28.0">23</text>
+                </line>
               </p>
             </canvas>
           </block>
@@ -409,11 +551,17 @@
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="TotalPageItemCountFunction0"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="totalPageIdetail"/>
+                <line type="ParagraphPoolBox" x="0.0" y="564.0" width="31.136" height="28.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                  <text x="0.0" y="564.0" width="31.136" height="28.0">11</text>
+                </line>
               </p>
               <p name="totalPageIdetail" type="ParagraphRenderBox" x="219.0" y="564.0" width="193.0" height="20.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="TotalPageItemCountFunction2"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="totalPageIdetail"/>
+                <line type="ParagraphPoolBox" x="219.0" y="564.0" width="31.136" height="28.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                  <text x="219.0" y="564.0" width="31.136" height="28.0">23</text>
+                </line>
               </p>
             </canvas>
           </block>
@@ -424,11 +572,17 @@
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="TotalPageItemCountFunction0"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="totalPageIdetail"/>
+                <line type="ParagraphPoolBox" x="0.0" y="584.0" width="31.136" height="28.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                  <text x="0.0" y="584.0" width="31.136" height="28.0">11</text>
+                </line>
               </p>
               <p name="totalPageIdetail" type="ParagraphRenderBox" x="219.0" y="584.0" width="193.0" height="20.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="TotalPageItemCountFunction2"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="totalPageIdetail"/>
+                <line type="ParagraphPoolBox" x="219.0" y="584.0" width="31.136" height="28.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                  <text x="219.0" y="584.0" width="31.136" height="28.0">23</text>
+                </line>
               </p>
             </canvas>
           </block>
@@ -439,11 +593,17 @@
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="TotalPageItemCountFunction0"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="totalPageIdetail"/>
+                <line type="ParagraphPoolBox" x="0.0" y="604.0" width="31.136" height="28.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                  <text x="0.0" y="604.0" width="31.136" height="28.0">11</text>
+                </line>
               </p>
               <p name="totalPageIdetail" type="ParagraphRenderBox" x="219.0" y="604.0" width="193.0" height="20.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="TotalPageItemCountFunction2"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="totalPageIdetail"/>
+                <line type="ParagraphPoolBox" x="219.0" y="604.0" width="31.136" height="28.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                  <text x="219.0" y="604.0" width="31.136" height="28.0">23</text>
+                </line>
               </p>
             </canvas>
           </block>
@@ -454,11 +614,17 @@
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="TotalPageItemCountFunction0"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="totalPageIdetail"/>
+                <line type="ParagraphPoolBox" x="0.0" y="624.0" width="31.136" height="28.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                  <text x="0.0" y="624.0" width="31.136" height="28.0">11</text>
+                </line>
               </p>
               <p name="totalPageIdetail" type="ParagraphRenderBox" x="219.0" y="624.0" width="193.0" height="20.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="TotalPageItemCountFunction2"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="totalPageIdetail"/>
+                <line type="ParagraphPoolBox" x="219.0" y="624.0" width="31.136" height="28.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                  <text x="219.0" y="624.0" width="31.136" height="28.0">23</text>
+                </line>
               </p>
             </canvas>
           </block>
@@ -529,11 +695,17 @@
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="TotalPageItemCountFunction0"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="totalPageIdetail"/>
+                <line type="ParagraphPoolBox" x="0.0" y="84.0" width="31.136" height="28.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                  <text x="0.0" y="84.0" width="31.136" height="28.0">25</text>
+                </line>
               </p>
               <p name="totalPageIdetail" type="ParagraphRenderBox" x="219.0" y="84.0" width="193.0" height="20.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="TotalPageItemCountFunction2"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="totalPageIdetail"/>
+                <line type="ParagraphPoolBox" x="219.0" y="84.0" width="31.136" height="28.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                  <text x="219.0" y="84.0" width="31.136" height="28.0">25</text>
+                </line>
               </p>
             </canvas>
           </block>
@@ -544,11 +716,17 @@
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="TotalPageItemCountFunction0"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="totalPageIdetail"/>
+                <line type="ParagraphPoolBox" x="0.0" y="104.0" width="31.136" height="28.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                  <text x="0.0" y="104.0" width="31.136" height="28.0">25</text>
+                </line>
               </p>
               <p name="totalPageIdetail" type="ParagraphRenderBox" x="219.0" y="104.0" width="193.0" height="20.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="TotalPageItemCountFunction2"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="totalPageIdetail"/>
+                <line type="ParagraphPoolBox" x="219.0" y="104.0" width="31.136" height="28.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                  <text x="219.0" y="104.0" width="31.136" height="28.0">25</text>
+                </line>
               </p>
             </canvas>
           </block>
@@ -559,11 +737,17 @@
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="TotalPageItemCountFunction0"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="totalPageIdetail"/>
+                <line type="ParagraphPoolBox" x="0.0" y="124.0" width="31.136" height="28.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                  <text x="0.0" y="124.0" width="31.136" height="28.0">25</text>
+                </line>
               </p>
               <p name="totalPageIdetail" type="ParagraphRenderBox" x="219.0" y="124.0" width="193.0" height="20.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="TotalPageItemCountFunction2"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="totalPageIdetail"/>
+                <line type="ParagraphPoolBox" x="219.0" y="124.0" width="31.136" height="28.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                  <text x="219.0" y="124.0" width="31.136" height="28.0">25</text>
+                </line>
               </p>
             </canvas>
           </block>
@@ -574,11 +758,17 @@
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="TotalPageItemCountFunction0"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="totalPageIdetail"/>
+                <line type="ParagraphPoolBox" x="0.0" y="144.0" width="31.136" height="28.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                  <text x="0.0" y="144.0" width="31.136" height="28.0">25</text>
+                </line>
               </p>
               <p name="totalPageIdetail" type="ParagraphRenderBox" x="219.0" y="144.0" width="193.0" height="20.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="TotalPageItemCountFunction2"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="totalPageIdetail"/>
+                <line type="ParagraphPoolBox" x="219.0" y="144.0" width="31.136" height="28.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                  <text x="219.0" y="144.0" width="31.136" height="28.0">25</text>
+                </line>
               </p>
             </canvas>
           </block>
@@ -589,11 +779,17 @@
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="TotalPageItemCountFunction0"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="totalPageIdetail"/>
+                <line type="ParagraphPoolBox" x="0.0" y="164.0" width="31.136" height="28.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                  <text x="0.0" y="164.0" width="31.136" height="28.0">25</text>
+                </line>
               </p>
               <p name="totalPageIdetail" type="ParagraphRenderBox" x="219.0" y="164.0" width="193.0" height="20.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="TotalPageItemCountFunction2"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="totalPageIdetail"/>
+                <line type="ParagraphPoolBox" x="219.0" y="164.0" width="31.136" height="28.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                  <text x="219.0" y="164.0" width="31.136" height="28.0">25</text>
+                </line>
               </p>
             </canvas>
           </block>
@@ -604,11 +800,17 @@
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="TotalPageItemCountFunction0"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="totalPageIdetail"/>
+                <line type="ParagraphPoolBox" x="0.0" y="184.0" width="31.136" height="28.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                  <text x="0.0" y="184.0" width="31.136" height="28.0">25</text>
+                </line>
               </p>
               <p name="totalPageIdetail" type="ParagraphRenderBox" x="219.0" y="184.0" width="193.0" height="20.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="TotalPageItemCountFunction2"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="totalPageIdetail"/>
+                <line type="ParagraphPoolBox" x="219.0" y="184.0" width="31.136" height="28.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                  <text x="219.0" y="184.0" width="31.136" height="28.0">25</text>
+                </line>
               </p>
             </canvas>
           </block>
@@ -619,11 +821,17 @@
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="TotalPageItemCountFunction0"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="totalPageIdetail"/>
+                <line type="ParagraphPoolBox" x="0.0" y="204.0" width="31.136" height="28.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                  <text x="0.0" y="204.0" width="31.136" height="28.0">25</text>
+                </line>
               </p>
               <p name="totalPageIdetail" type="ParagraphRenderBox" x="219.0" y="204.0" width="193.0" height="20.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="TotalPageItemCountFunction2"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="totalPageIdetail"/>
+                <line type="ParagraphPoolBox" x="219.0" y="204.0" width="31.136" height="28.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                  <text x="219.0" y="204.0" width="31.136" height="28.0">25</text>
+                </line>
               </p>
             </canvas>
           </block>
@@ -634,11 +842,17 @@
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="TotalPageItemCountFunction0"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="totalPageIdetail"/>
+                <line type="ParagraphPoolBox" x="0.0" y="224.0" width="31.136" height="28.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                  <text x="0.0" y="224.0" width="31.136" height="28.0">25</text>
+                </line>
               </p>
               <p name="totalPageIdetail" type="ParagraphRenderBox" x="219.0" y="224.0" width="193.0" height="20.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="TotalPageItemCountFunction2"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="totalPageIdetail"/>
+                <line type="ParagraphPoolBox" x="219.0" y="224.0" width="31.136" height="28.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                  <text x="219.0" y="224.0" width="31.136" height="28.0">25</text>
+                </line>
               </p>
             </canvas>
           </block>
@@ -649,11 +863,17 @@
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="TotalPageItemCountFunction0"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="totalPageIdetail"/>
+                <line type="ParagraphPoolBox" x="0.0" y="244.0" width="31.136" height="28.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                  <text x="0.0" y="244.0" width="31.136" height="28.0">25</text>
+                </line>
               </p>
               <p name="totalPageIdetail" type="ParagraphRenderBox" x="219.0" y="244.0" width="193.0" height="20.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="TotalPageItemCountFunction2"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="totalPageIdetail"/>
+                <line type="ParagraphPoolBox" x="219.0" y="244.0" width="31.136" height="28.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                  <text x="219.0" y="244.0" width="31.136" height="28.0">25</text>
+                </line>
               </p>
             </canvas>
           </block>
@@ -664,11 +884,17 @@
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="TotalPageItemCountFunction0"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="totalPageIdetail"/>
+                <line type="ParagraphPoolBox" x="0.0" y="264.0" width="31.136" height="28.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                  <text x="0.0" y="264.0" width="31.136" height="28.0">25</text>
+                </line>
               </p>
               <p name="totalPageIdetail" type="ParagraphRenderBox" x="219.0" y="264.0" width="193.0" height="20.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="TotalPageItemCountFunction2"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="totalPageIdetail"/>
+                <line type="ParagraphPoolBox" x="219.0" y="264.0" width="31.136" height="28.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                  <text x="219.0" y="264.0" width="31.136" height="28.0">25</text>
+                </line>
               </p>
             </canvas>
           </block>
@@ -679,11 +905,17 @@
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="TotalPageItemCountFunction0"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="totalPageIdetail"/>
+                <line type="ParagraphPoolBox" x="0.0" y="284.0" width="31.136" height="28.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                  <text x="0.0" y="284.0" width="31.136" height="28.0">25</text>
+                </line>
               </p>
               <p name="totalPageIdetail" type="ParagraphRenderBox" x="219.0" y="284.0" width="193.0" height="20.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="TotalPageItemCountFunction2"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="totalPageIdetail"/>
+                <line type="ParagraphPoolBox" x="219.0" y="284.0" width="31.136" height="28.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                  <text x="219.0" y="284.0" width="31.136" height="28.0">25</text>
+                </line>
               </p>
             </canvas>
           </block>
@@ -694,11 +926,17 @@
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="TotalPageItemCountFunction0"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="totalPageIdetail"/>
+                <line type="ParagraphPoolBox" x="0.0" y="304.0" width="31.136" height="28.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                  <text x="0.0" y="304.0" width="31.136" height="28.0">25</text>
+                </line>
               </p>
               <p name="totalPageIdetail" type="ParagraphRenderBox" x="219.0" y="304.0" width="193.0" height="20.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="TotalPageItemCountFunction2"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="totalPageIdetail"/>
+                <line type="ParagraphPoolBox" x="219.0" y="304.0" width="31.136" height="28.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                  <text x="219.0" y="304.0" width="31.136" height="28.0">25</text>
+                </line>
               </p>
             </canvas>
           </block>
@@ -709,11 +947,17 @@
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="TotalPageItemCountFunction0"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="totalPageIdetail"/>
+                <line type="ParagraphPoolBox" x="0.0" y="324.0" width="31.136" height="28.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                  <text x="0.0" y="324.0" width="31.136" height="28.0">25</text>
+                </line>
               </p>
               <p name="totalPageIdetail" type="ParagraphRenderBox" x="219.0" y="324.0" width="193.0" height="20.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="TotalPageItemCountFunction2"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="totalPageIdetail"/>
+                <line type="ParagraphPoolBox" x="219.0" y="324.0" width="31.136" height="28.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                  <text x="219.0" y="324.0" width="31.136" height="28.0">25</text>
+                </line>
               </p>
             </canvas>
           </block>
@@ -724,11 +968,17 @@
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="TotalPageItemCountFunction0"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="totalPageIdetail"/>
+                <line type="ParagraphPoolBox" x="0.0" y="344.0" width="31.136" height="28.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                  <text x="0.0" y="344.0" width="31.136" height="28.0">25</text>
+                </line>
               </p>
               <p name="totalPageIdetail" type="ParagraphRenderBox" x="219.0" y="344.0" width="193.0" height="20.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="TotalPageItemCountFunction2"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="totalPageIdetail"/>
+                <line type="ParagraphPoolBox" x="219.0" y="344.0" width="31.136" height="28.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                  <text x="219.0" y="344.0" width="31.136" height="28.0">25</text>
+                </line>
               </p>
             </canvas>
           </block>
@@ -739,11 +989,17 @@
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="TotalPageItemCountFunction0"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="totalPageIdetail"/>
+                <line type="ParagraphPoolBox" x="0.0" y="364.0" width="31.136" height="28.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                  <text x="0.0" y="364.0" width="31.136" height="28.0">25</text>
+                </line>
               </p>
               <p name="totalPageIdetail" type="ParagraphRenderBox" x="219.0" y="364.0" width="193.0" height="20.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="TotalPageItemCountFunction2"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="totalPageIdetail"/>
+                <line type="ParagraphPoolBox" x="219.0" y="364.0" width="31.136" height="28.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                  <text x="219.0" y="364.0" width="31.136" height="28.0">25</text>
+                </line>
               </p>
             </canvas>
           </block>
@@ -754,11 +1010,17 @@
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="TotalPageItemCountFunction0"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="totalPageIdetail"/>
+                <line type="ParagraphPoolBox" x="0.0" y="384.0" width="31.136" height="28.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                  <text x="0.0" y="384.0" width="31.136" height="28.0">25</text>
+                </line>
               </p>
               <p name="totalPageIdetail" type="ParagraphRenderBox" x="219.0" y="384.0" width="193.0" height="20.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="TotalPageItemCountFunction2"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="totalPageIdetail"/>
+                <line type="ParagraphPoolBox" x="219.0" y="384.0" width="31.136" height="28.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                  <text x="219.0" y="384.0" width="31.136" height="28.0">25</text>
+                </line>
               </p>
             </canvas>
           </block>
@@ -769,11 +1031,17 @@
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="TotalPageItemCountFunction0"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="totalPageIdetail"/>
+                <line type="ParagraphPoolBox" x="0.0" y="404.0" width="31.136" height="28.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                  <text x="0.0" y="404.0" width="31.136" height="28.0">25</text>
+                </line>
               </p>
               <p name="totalPageIdetail" type="ParagraphRenderBox" x="219.0" y="404.0" width="193.0" height="20.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="TotalPageItemCountFunction2"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="totalPageIdetail"/>
+                <line type="ParagraphPoolBox" x="219.0" y="404.0" width="31.136" height="28.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                  <text x="219.0" y="404.0" width="31.136" height="28.0">25</text>
+                </line>
               </p>
             </canvas>
           </block>
@@ -784,11 +1052,17 @@
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="TotalPageItemCountFunction0"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="totalPageIdetail"/>
+                <line type="ParagraphPoolBox" x="0.0" y="424.0" width="31.136" height="28.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                  <text x="0.0" y="424.0" width="31.136" height="28.0">25</text>
+                </line>
               </p>
               <p name="totalPageIdetail" type="ParagraphRenderBox" x="219.0" y="424.0" width="193.0" height="20.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="TotalPageItemCountFunction2"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="totalPageIdetail"/>
+                <line type="ParagraphPoolBox" x="219.0" y="424.0" width="31.136" height="28.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                  <text x="219.0" y="424.0" width="31.136" height="28.0">25</text>
+                </line>
               </p>
             </canvas>
           </block>
@@ -799,11 +1073,17 @@
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="TotalPageItemCountFunction0"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="totalPageIdetail"/>
+                <line type="ParagraphPoolBox" x="0.0" y="444.0" width="31.136" height="28.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                  <text x="0.0" y="444.0" width="31.136" height="28.0">25</text>
+                </line>
               </p>
               <p name="totalPageIdetail" type="ParagraphRenderBox" x="219.0" y="444.0" width="193.0" height="20.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="TotalPageItemCountFunction2"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="totalPageIdetail"/>
+                <line type="ParagraphPoolBox" x="219.0" y="444.0" width="31.136" height="28.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                  <text x="219.0" y="444.0" width="31.136" height="28.0">25</text>
+                </line>
               </p>
             </canvas>
           </block>
@@ -814,11 +1094,17 @@
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="TotalPageItemCountFunction0"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="totalPageIdetail"/>
+                <line type="ParagraphPoolBox" x="0.0" y="464.0" width="31.136" height="28.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                  <text x="0.0" y="464.0" width="31.136" height="28.0">25</text>
+                </line>
               </p>
               <p name="totalPageIdetail" type="ParagraphRenderBox" x="219.0" y="464.0" width="193.0" height="20.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="TotalPageItemCountFunction2"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="totalPageIdetail"/>
+                <line type="ParagraphPoolBox" x="219.0" y="464.0" width="31.136" height="28.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                  <text x="219.0" y="464.0" width="31.136" height="28.0">25</text>
+                </line>
               </p>
             </canvas>
           </block>
@@ -829,11 +1115,17 @@
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="TotalPageItemCountFunction0"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="totalPageIdetail"/>
+                <line type="ParagraphPoolBox" x="0.0" y="484.0" width="31.136" height="28.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                  <text x="0.0" y="484.0" width="31.136" height="28.0">25</text>
+                </line>
               </p>
               <p name="totalPageIdetail" type="ParagraphRenderBox" x="219.0" y="484.0" width="193.0" height="20.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="TotalPageItemCountFunction2"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="totalPageIdetail"/>
+                <line type="ParagraphPoolBox" x="219.0" y="484.0" width="31.136" height="28.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                  <text x="219.0" y="484.0" width="31.136" height="28.0">25</text>
+                </line>
               </p>
             </canvas>
           </block>
@@ -844,11 +1136,17 @@
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="TotalPageItemCountFunction0"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="totalPageIdetail"/>
+                <line type="ParagraphPoolBox" x="0.0" y="504.0" width="31.136" height="28.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                  <text x="0.0" y="504.0" width="31.136" height="28.0">25</text>
+                </line>
               </p>
               <p name="totalPageIdetail" type="ParagraphRenderBox" x="219.0" y="504.0" width="193.0" height="20.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="TotalPageItemCountFunction2"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="totalPageIdetail"/>
+                <line type="ParagraphPoolBox" x="219.0" y="504.0" width="31.136" height="28.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                  <text x="219.0" y="504.0" width="31.136" height="28.0">25</text>
+                </line>
               </p>
             </canvas>
           </block>
@@ -859,11 +1157,17 @@
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="TotalPageItemCountFunction0"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="totalPageIdetail"/>
+                <line type="ParagraphPoolBox" x="0.0" y="524.0" width="31.136" height="28.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                  <text x="0.0" y="524.0" width="31.136" height="28.0">25</text>
+                </line>
               </p>
               <p name="totalPageIdetail" type="ParagraphRenderBox" x="219.0" y="524.0" width="193.0" height="20.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="TotalPageItemCountFunction2"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="totalPageIdetail"/>
+                <line type="ParagraphPoolBox" x="219.0" y="524.0" width="31.136" height="28.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                  <text x="219.0" y="524.0" width="31.136" height="28.0">25</text>
+                </line>
               </p>
             </canvas>
           </block>
@@ -874,11 +1178,17 @@
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="TotalPageItemCountFunction0"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="totalPageIdetail"/>
+                <line type="ParagraphPoolBox" x="0.0" y="544.0" width="31.136" height="28.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                  <text x="0.0" y="544.0" width="31.136" height="28.0">25</text>
+                </line>
               </p>
               <p name="totalPageIdetail" type="ParagraphRenderBox" x="219.0" y="544.0" width="193.0" height="20.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="TotalPageItemCountFunction2"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="totalPageIdetail"/>
+                <line type="ParagraphPoolBox" x="219.0" y="544.0" width="31.136" height="28.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                  <text x="219.0" y="544.0" width="31.136" height="28.0">25</text>
+                </line>
               </p>
             </canvas>
           </block>
@@ -889,11 +1199,17 @@
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="TotalPageItemCountFunction0"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="totalPageIdetail"/>
+                <line type="ParagraphPoolBox" x="0.0" y="564.0" width="31.136" height="28.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                  <text x="0.0" y="564.0" width="31.136" height="28.0">25</text>
+                </line>
               </p>
               <p name="totalPageIdetail" type="ParagraphRenderBox" x="219.0" y="564.0" width="193.0" height="20.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="TotalPageItemCountFunction2"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="totalPageIdetail"/>
+                <line type="ParagraphPoolBox" x="219.0" y="564.0" width="31.136" height="28.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                  <text x="219.0" y="564.0" width="31.136" height="28.0">25</text>
+                </line>
               </p>
             </canvas>
           </block>
@@ -905,16 +1221,26 @@
               <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="text-field"/>
               <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="TotalPageItemCountFunction0"/>
               <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="footerpageitem"/>
+              <line type="ParagraphPoolBox" x="100.0" y="584.0" width="26.688" height="24.0" color="black" font-face="Serif" font-size="24" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <text x="100.0" y="584.0" width="26.688" height="24.0">25</text>
+              </line>
             </p>
             <p name="footer" type="ParagraphRenderBox" x="0.0" y="584.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="24" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
               <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
               <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="footer"/>
               <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="Footer: "/>
+              <line type="ParagraphPoolBox" x="0.0" y="584.0" width="82.608" height="24.0" color="black" font-face="Serif" font-size="24" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <text x="0.0" y="584.0" width="75.96" height="24.0">Footer:</text>
+                <spacer width="6.648" height="0.0" preserve="true"/>
+              </line>
             </p>
             <p name="footerpageitem" type="ParagraphRenderBox" x="303.0" y="584.0" width="100.0" height="20.0" color="black" font-face="Serif" font-size="24" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
               <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="text-field"/>
               <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="TotalPageItemCountFunction2"/>
               <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="footerpageitem"/>
+              <line type="ParagraphPoolBox" x="303.0" y="584.0" width="26.688" height="24.0" color="black" font-face="Serif" font-size="24" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <text x="303.0" y="584.0" width="26.688" height="24.0">25</text>
+              </line>
             </p>
           </canvas>
         </block>

@@ -23,6 +23,18 @@
             <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="message"/>
             <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="$(report.date, date, MMMM dd, yyyy @ hh:mm )"/>
             <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/html" autoGenNs:xml-id="rpt-page-header-rt"/>
+            <line type="ParagraphPoolBox" x="703.603" y="0.0" width="94.617" height="12.269" color="#5985b6" font-face="Arial" font-size="9" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+              <text x="703.603" y="0.0" width="17.991" height="12.269">April</text>
+              <spacer width="2.493" height="0.0" preserve="true"/>
+              <text x="724.087" y="0.0" width="12.501" height="12.269">07,</text>
+              <spacer width="2.493" height="0.0" preserve="true"/>
+              <text x="739.081" y="0.0" width="20.016" height="12.269">2011</text>
+              <spacer width="2.493" height="0.0" preserve="true"/>
+              <text x="761.59" y="0.0" width="9.135" height="12.269">@</text>
+              <spacer width="2.493" height="0.0" preserve="true"/>
+              <text x="773.218" y="0.0" width="22.509" height="12.269">03:00</text>
+              <spacer width="2.493" height="0.0" preserve="true"/>
+            </line>
           </p>
         </canvas>
       </block>
@@ -2161,6 +2173,18 @@
             <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="message"/>
             <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="$(report.date, date, MMMM dd, yyyy @ hh:mm )"/>
             <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/html" autoGenNs:xml-id="rpt-page-header-rt"/>
+            <line type="ParagraphPoolBox" x="703.603" y="0.0" width="94.617" height="12.269" color="#5985b6" font-face="Arial" font-size="9" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+              <text x="703.603" y="0.0" width="17.991" height="12.269">April</text>
+              <spacer width="2.493" height="0.0" preserve="true"/>
+              <text x="724.087" y="0.0" width="12.501" height="12.269">07,</text>
+              <spacer width="2.493" height="0.0" preserve="true"/>
+              <text x="739.081" y="0.0" width="20.016" height="12.269">2011</text>
+              <spacer width="2.493" height="0.0" preserve="true"/>
+              <text x="761.59" y="0.0" width="9.135" height="12.269">@</text>
+              <spacer width="2.493" height="0.0" preserve="true"/>
+              <text x="773.218" y="0.0" width="22.509" height="12.269">03:00</text>
+              <spacer width="2.493" height="0.0" preserve="true"/>
+            </line>
           </p>
         </canvas>
       </block>

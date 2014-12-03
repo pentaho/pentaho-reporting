@@ -32,6 +32,33 @@
           <p type="ParagraphRenderBox" x="0.0" y="30.0" width="468.0" height="12.0" color="black" font-face="Serif" font-size="20" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
             <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
             <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="A label represents static text. Labels do not change during the report processing."/>
+            <line type="ParagraphPoolBox" x="0.0" y="30.0" width="713.24" height="20.0" color="black" font-face="Serif" font-size="20" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+              <text x="0.0" y="30.0" width="13.32" height="20.0">A</text>
+              <spacer width="5.54" height="0.0" preserve="true"/>
+              <text x="18.86" y="30.0" width="42.24" height="20.0">label</text>
+              <spacer width="5.54" height="0.0" preserve="true"/>
+              <text x="66.64" y="30.0" width="94.46" height="20.0">represents</text>
+              <spacer width="5.54" height="0.0" preserve="true"/>
+              <text x="166.64" y="30.0" width="46.64" height="20.0">static</text>
+              <spacer width="5.54" height="0.0" preserve="true"/>
+              <text x="218.82" y="30.0" width="37.74" height="20.0">text.</text>
+              <spacer width="5.54" height="0.0" preserve="true"/>
+              <text x="262.1" y="30.0" width="58.92" height="20.0">Labels</text>
+              <spacer width="5.54" height="0.0" preserve="true"/>
+              <text x="326.56" y="30.0" width="22.24" height="20.0">do</text>
+              <spacer width="5.54" height="0.0" preserve="true"/>
+              <text x="354.34" y="30.0" width="27.78" height="20.0">not</text>
+              <spacer width="5.54" height="0.0" preserve="true"/>
+              <text x="387.66" y="30.0" width="65.6" height="20.0">change</text>
+              <spacer width="5.54" height="0.0" preserve="false"/>
+              <text x="458.8" y="30.0" width="55.58" height="20.0">during</text>
+              <spacer width="5.54" height="0.0" preserve="true"/>
+              <text x="519.92" y="30.0" width="27.78" height="20.0">the</text>
+              <spacer width="5.54" height="0.0" preserve="true"/>
+              <text x="553.24" y="30.0" width="52.22" height="20.0">report</text>
+              <spacer width="5.54" height="0.0" preserve="true"/>
+              <text x="611.0" y="30.0" width="102.24" height="20.0">processing.</text>
+            </line>
           </p>
           <p type="ParagraphRenderBox" x="0.0" y="50.0" width="400.0" height="15.0" color="black" font-face="Serif" font-size="12" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
             <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>

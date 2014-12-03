@@ -107,7 +107,7 @@
         </block>
       </auto>
     </page-area>
-    <block name="Logical-Page-Content-Area" type="BlockRenderBox" x="0.0" y="0.0" width="575.0" height="450.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+    <block name="Logical-Page-Content-Area" type="BlockRenderBox" x="0.0" y="0.0" width="575.0" height="670.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
       <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="master-report"/>
       <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Patient Form Demo"/>
       <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/internal" autoGenNs:query="default"/>
@@ -115,11 +115,11 @@
         <block type="ProgressMarkerRenderBox" x="0.0" y="0.0" width="575.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
         </block>
       </block>
-      <block name="::group-0" type="AutoRenderBox" x="0.0" y="0.0" width="575.0" height="450.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+      <block name="::group-0" type="AutoRenderBox" x="0.0" y="0.0" width="575.0" height="670.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="relational-group"/>
-        <block type="AutoRenderBox" x="0.0" y="0.0" width="575.0" height="450.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+        <block type="AutoRenderBox" x="0.0" y="0.0" width="575.0" height="670.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
           <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="sub-group-body"/>
-          <block name="Patient-Group" type="AutoRenderBox" x="0.0" y="0.0" width="575.0" height="450.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <block name="Patient-Group" type="AutoRenderBox" x="0.0" y="0.0" width="575.0" height="670.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
             <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="relational-group"/>
             <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:group-fields="patient"/>
             <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Patient-Group"/>
@@ -220,26 +220,26 @@
             <block type="AutoRenderBox" x="0.0" y="330.0" width="575.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
               <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="group-data-body"/>
             </block>
-            <block name="Section-0" type="AutoRenderBox" x="0.0" y="330.0" width="575.0" height="120.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-              <canvas name="footer" type="CanvasRenderBox" x="0.0" y="330.0" width="575.0" height="120.0" color="black" font-face="Serif" font-size="9" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+            <block name="Section-0" type="AutoRenderBox" x="0.0" y="330.0" width="575.0" height="340.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+              <canvas name="footer" type="CanvasRenderBox" x="0.0" y="550.0" width="575.0" height="120.0" color="black" font-face="Serif" font-size="9" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="group-footer"/>
                 <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="footer"/>
-                <p type="ParagraphRenderBox" x="10.0" y="330.0" width="200.0" height="20.0" color="black" font-face="SansSerif" font-size="9" font-style-bold="true" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <p type="ParagraphRenderBox" x="10.0" y="550.0" width="200.0" height="20.0" color="black" font-face="SansSerif" font-size="9" font-style-bold="true" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                   <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
                   <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="Allergy Notes"/>
-                  <line type="ParagraphPoolBox" x="10.0" y="330.0" width="53.487" height="9.0" color="black" font-face="SansSerif" font-size="9" font-style-bold="true" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-                    <text x="10.0" y="330.0" width="27.495" height="9.0">Allergy</text>
+                  <line type="ParagraphPoolBox" x="10.0" y="550.0" width="53.487" height="9.0" color="black" font-face="SansSerif" font-size="9" font-style-bold="true" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                    <text x="10.0" y="550.0" width="27.495" height="9.0">Allergy</text>
                     <spacer width="2.493" height="0.0" preserve="true"/>
-                    <text x="39.988" y="330.0" width="23.499" height="9.0">Notes</text>
+                    <text x="39.988" y="550.0" width="23.499" height="9.0">Notes</text>
                   </line>
                 </p>
-                <p type="ParagraphRenderBox" x="10.0" y="430.0" width="100.0" height="20.0" color="black" font-face="SansSerif" font-size="9" font-style-bold="true" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <p type="ParagraphRenderBox" x="10.0" y="650.0" width="100.0" height="20.0" color="black" font-face="SansSerif" font-size="9" font-style-bold="true" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
                   <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
                   <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="Health Level"/>
-                  <line type="ParagraphPoolBox" x="10.0" y="430.0" width="50.004" height="9.0" color="black" font-face="SansSerif" font-size="9" font-style-bold="true" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-                    <text x="10.0" y="430.0" width="26.001" height="9.0">Health</text>
+                  <line type="ParagraphPoolBox" x="10.0" y="650.0" width="50.004" height="9.0" color="black" font-face="SansSerif" font-size="9" font-style-bold="true" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                    <text x="10.0" y="650.0" width="26.001" height="9.0">Health</text>
                     <spacer width="2.493" height="0.0" preserve="true"/>
-                    <text x="38.494" y="430.0" width="21.51" height="9.0">Level</text>
+                    <text x="38.494" y="650.0" width="21.51" height="9.0">Level</text>
                   </line>
                 </p>
               </canvas>
@@ -247,8 +247,8 @@
           </block>
         </block>
       </block>
-      <block name="Section-0" type="AutoRenderBox" x="0.0" y="450.0" width="575.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
-        <block type="ProgressMarkerRenderBox" x="0.0" y="450.0" width="575.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+      <block name="Section-0" type="AutoRenderBox" x="0.0" y="670.0" width="575.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+        <block type="ProgressMarkerRenderBox" x="0.0" y="670.0" width="575.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
         </block>
       </block>
     </block>

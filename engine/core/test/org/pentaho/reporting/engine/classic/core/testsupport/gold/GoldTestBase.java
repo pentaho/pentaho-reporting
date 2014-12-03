@@ -679,6 +679,6 @@ public class GoldTestBase
 
   protected FilesystemFilter createReportFilter()
   {
-    return new FilesystemFilter(".prpt", "Reports");
+    return new FilesystemFilter(new String[]{".prpt", ".report", ".xml"}, "Reports", false);
   }
 }

@@ -399,16 +399,33 @@
               <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="message"/>
               <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:null-value="&quot; &quot;"/>
               <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="Report Title"/>
+              <line type="ParagraphPoolBox" x="0.0" y="562.0" width="51.64" height="10.0" color="black" font-face="Abberancy" font-size="10" font-style-bold="true" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <text x="0.0" y="562.0" width="30.0" height="10.0">Report</text>
+                <spacer width="2.77" height="0.0" preserve="true"/>
+                <text x="32.77" y="562.0" width="18.87" height="10.0">Title</text>
+              </line>
             </p>
             <p type="ParagraphRenderBox" x="254.76" y="562.0" width="254.76" height="9.0" color="black" font-face="Abberancy" font-size="10" font-style-bold="true" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
               <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="message"/>
               <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:null-value="&quot; &quot;"/>
               <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="$(PageofPages)"/>
+              <line type="ParagraphPoolBox" x="372.425" y="562.0" width="19.43" height="10.0" color="black" font-face="Abberancy" font-size="10" font-style-bold="true" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <text x="372.425" y="562.0" width="5.56" height="10.0">1</text>
+                <spacer width="2.77" height="0.0" preserve="true"/>
+                <text x="380.755" y="562.0" width="2.77" height="10.0">/</text>
+                <spacer width="2.77" height="0.0" preserve="true"/>
+                <text x="386.295" y="562.0" width="5.56" height="10.0">1</text>
+              </line>
             </p>
             <p type="ParagraphRenderBox" x="509.52" y="562.0" width="262.48" height="9.0" color="black" font-face="Abberancy" font-size="10" font-style-bold="true" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
               <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="message"/>
               <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:null-value="&quot; &quot;"/>
               <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="Report SubTitle"/>
+              <line type="ParagraphPoolBox" x="702.58" y="562.0" width="69.42" height="10.0" color="black" font-face="Abberancy" font-size="10" font-style-bold="true" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <text x="702.58" y="562.0" width="30.0" height="10.0">Report</text>
+                <spacer width="2.77" height="0.0" preserve="true"/>
+                <text x="735.35" y="562.0" width="36.65" height="10.0">SubTitle</text>
+              </line>
             </p>
           </canvas>
         </canvas>

@@ -84,249 +84,335 @@
       </empty-cell>
       <empty-cell background-color="#b5acac">
       </empty-cell>
-      <empty-cell background-color="#b5acac">
+      <cell background-color="#b5acac" row-span="1" col-span="1">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="TotalPageItemCountFunction0"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="headerpageitem"/>
-      </empty-cell>
+        <line type="ParagraphPoolBox" x="111.0" y="20.0" width="26.688" height="24.0" color="black" font-face="Serif" font-size="24" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="111.0" y="20.0" width="26.688" height="24.0">12</text>
+        </line>
+      </cell>
       <empty-cell background-color="#b5acac">
       </empty-cell>
       <empty-cell background-color="#b5acac">
       </empty-cell>
-      <empty-cell background-color="#b5acac">
+      <cell background-color="#b5acac" row-span="1" col-span="1">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="TotalPageItemCountFunction2"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="headerpageitem"/>
-      </empty-cell>
+        <line type="ParagraphPoolBox" x="303.0" y="20.0" width="26.688" height="24.0" color="black" font-face="Serif" font-size="24" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="303.0" y="20.0" width="26.688" height="24.0">48</text>
+        </line>
+      </cell>
     </row>
     <row height="20">
-      <empty-cell>
+      <cell row-span="1" col-span="4">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="TotalPageItemCountFunction0"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="totalPageIdetail"/>
-      </empty-cell>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell>
+        <line type="ParagraphPoolBox" x="0.0" y="40.0" width="31.136" height="28.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="0.0" y="40.0" width="31.136" height="28.0">12</text>
+        </line>
+      </cell>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <cell row-span="1" col-span="3">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="TotalPageItemCountFunction2"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="totalPageIdetail"/>
-      </empty-cell>
-      <empty-cell/>
-      <empty-cell/>
+        <line type="ParagraphPoolBox" x="219.0" y="40.0" width="31.136" height="28.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="219.0" y="40.0" width="31.136" height="28.0">48</text>
+        </line>
+      </cell>
+      <spanned-cell/>
+      <spanned-cell/>
     </row>
     <row height="20">
-      <empty-cell>
+      <cell row-span="1" col-span="4">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="TotalPageItemCountFunction0"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="totalPageIdetail"/>
-      </empty-cell>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell>
+        <line type="ParagraphPoolBox" x="0.0" y="60.0" width="31.136" height="28.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="0.0" y="60.0" width="31.136" height="28.0">12</text>
+        </line>
+      </cell>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <cell row-span="1" col-span="3">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="TotalPageItemCountFunction2"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="totalPageIdetail"/>
-      </empty-cell>
-      <empty-cell/>
-      <empty-cell/>
+        <line type="ParagraphPoolBox" x="219.0" y="60.0" width="31.136" height="28.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="219.0" y="60.0" width="31.136" height="28.0">48</text>
+        </line>
+      </cell>
+      <spanned-cell/>
+      <spanned-cell/>
     </row>
     <row height="20">
-      <empty-cell>
+      <cell row-span="1" col-span="4">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="TotalPageItemCountFunction0"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="totalPageIdetail"/>
-      </empty-cell>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell>
+        <line type="ParagraphPoolBox" x="0.0" y="80.0" width="31.136" height="28.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="0.0" y="80.0" width="31.136" height="28.0">12</text>
+        </line>
+      </cell>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <cell row-span="1" col-span="3">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="TotalPageItemCountFunction2"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="totalPageIdetail"/>
-      </empty-cell>
-      <empty-cell/>
-      <empty-cell/>
+        <line type="ParagraphPoolBox" x="219.0" y="80.0" width="31.136" height="28.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="219.0" y="80.0" width="31.136" height="28.0">48</text>
+        </line>
+      </cell>
+      <spanned-cell/>
+      <spanned-cell/>
     </row>
     <row height="20">
-      <empty-cell>
+      <cell row-span="1" col-span="4">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="TotalPageItemCountFunction0"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="totalPageIdetail"/>
-      </empty-cell>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell>
+        <line type="ParagraphPoolBox" x="0.0" y="100.0" width="31.136" height="28.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="0.0" y="100.0" width="31.136" height="28.0">12</text>
+        </line>
+      </cell>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <cell row-span="1" col-span="3">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="TotalPageItemCountFunction2"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="totalPageIdetail"/>
-      </empty-cell>
-      <empty-cell/>
-      <empty-cell/>
+        <line type="ParagraphPoolBox" x="219.0" y="100.0" width="31.136" height="28.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="219.0" y="100.0" width="31.136" height="28.0">48</text>
+        </line>
+      </cell>
+      <spanned-cell/>
+      <spanned-cell/>
     </row>
     <row height="20">
-      <empty-cell>
+      <cell row-span="1" col-span="4">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="TotalPageItemCountFunction0"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="totalPageIdetail"/>
-      </empty-cell>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell>
+        <line type="ParagraphPoolBox" x="0.0" y="120.0" width="31.136" height="28.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="0.0" y="120.0" width="31.136" height="28.0">12</text>
+        </line>
+      </cell>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <cell row-span="1" col-span="3">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="TotalPageItemCountFunction2"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="totalPageIdetail"/>
-      </empty-cell>
-      <empty-cell/>
-      <empty-cell/>
+        <line type="ParagraphPoolBox" x="219.0" y="120.0" width="31.136" height="28.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="219.0" y="120.0" width="31.136" height="28.0">48</text>
+        </line>
+      </cell>
+      <spanned-cell/>
+      <spanned-cell/>
     </row>
     <row height="20">
-      <empty-cell>
+      <cell row-span="1" col-span="4">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="TotalPageItemCountFunction0"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="totalPageIdetail"/>
-      </empty-cell>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell>
+        <line type="ParagraphPoolBox" x="0.0" y="140.0" width="31.136" height="28.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="0.0" y="140.0" width="31.136" height="28.0">12</text>
+        </line>
+      </cell>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <cell row-span="1" col-span="3">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="TotalPageItemCountFunction2"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="totalPageIdetail"/>
-      </empty-cell>
-      <empty-cell/>
-      <empty-cell/>
+        <line type="ParagraphPoolBox" x="219.0" y="140.0" width="31.136" height="28.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="219.0" y="140.0" width="31.136" height="28.0">48</text>
+        </line>
+      </cell>
+      <spanned-cell/>
+      <spanned-cell/>
     </row>
     <row height="20">
-      <empty-cell>
+      <cell row-span="1" col-span="4">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="TotalPageItemCountFunction0"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="totalPageIdetail"/>
-      </empty-cell>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell>
+        <line type="ParagraphPoolBox" x="0.0" y="160.0" width="31.136" height="28.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="0.0" y="160.0" width="31.136" height="28.0">12</text>
+        </line>
+      </cell>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <cell row-span="1" col-span="3">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="TotalPageItemCountFunction2"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="totalPageIdetail"/>
-      </empty-cell>
-      <empty-cell/>
-      <empty-cell/>
+        <line type="ParagraphPoolBox" x="219.0" y="160.0" width="31.136" height="28.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="219.0" y="160.0" width="31.136" height="28.0">48</text>
+        </line>
+      </cell>
+      <spanned-cell/>
+      <spanned-cell/>
     </row>
     <row height="20">
-      <empty-cell>
+      <cell row-span="1" col-span="4">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="TotalPageItemCountFunction0"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="totalPageIdetail"/>
-      </empty-cell>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell>
+        <line type="ParagraphPoolBox" x="0.0" y="180.0" width="31.136" height="28.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="0.0" y="180.0" width="31.136" height="28.0">12</text>
+        </line>
+      </cell>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <cell row-span="1" col-span="3">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="TotalPageItemCountFunction2"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="totalPageIdetail"/>
-      </empty-cell>
-      <empty-cell/>
-      <empty-cell/>
+        <line type="ParagraphPoolBox" x="219.0" y="180.0" width="31.136" height="28.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="219.0" y="180.0" width="31.136" height="28.0">48</text>
+        </line>
+      </cell>
+      <spanned-cell/>
+      <spanned-cell/>
     </row>
     <row height="20">
-      <empty-cell>
+      <cell row-span="1" col-span="4">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="TotalPageItemCountFunction0"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="totalPageIdetail"/>
-      </empty-cell>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell>
+        <line type="ParagraphPoolBox" x="0.0" y="200.0" width="31.136" height="28.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="0.0" y="200.0" width="31.136" height="28.0">12</text>
+        </line>
+      </cell>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <cell row-span="1" col-span="3">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="TotalPageItemCountFunction2"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="totalPageIdetail"/>
-      </empty-cell>
-      <empty-cell/>
-      <empty-cell/>
+        <line type="ParagraphPoolBox" x="219.0" y="200.0" width="31.136" height="28.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="219.0" y="200.0" width="31.136" height="28.0">48</text>
+        </line>
+      </cell>
+      <spanned-cell/>
+      <spanned-cell/>
     </row>
     <row height="20">
-      <empty-cell>
+      <cell row-span="1" col-span="4">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="TotalPageItemCountFunction0"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="totalPageIdetail"/>
-      </empty-cell>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell>
+        <line type="ParagraphPoolBox" x="0.0" y="220.0" width="31.136" height="28.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="0.0" y="220.0" width="31.136" height="28.0">12</text>
+        </line>
+      </cell>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <cell row-span="1" col-span="3">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="TotalPageItemCountFunction2"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="totalPageIdetail"/>
-      </empty-cell>
-      <empty-cell/>
-      <empty-cell/>
+        <line type="ParagraphPoolBox" x="219.0" y="220.0" width="31.136" height="28.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="219.0" y="220.0" width="31.136" height="28.0">48</text>
+        </line>
+      </cell>
+      <spanned-cell/>
+      <spanned-cell/>
     </row>
     <row height="20">
-      <empty-cell>
+      <cell row-span="1" col-span="4">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="TotalPageItemCountFunction0"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="totalPageIdetail"/>
-      </empty-cell>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell>
+        <line type="ParagraphPoolBox" x="0.0" y="240.0" width="31.136" height="28.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="0.0" y="240.0" width="31.136" height="28.0">12</text>
+        </line>
+      </cell>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <cell row-span="1" col-span="3">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="TotalPageItemCountFunction2"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="totalPageIdetail"/>
-      </empty-cell>
-      <empty-cell/>
-      <empty-cell/>
+        <line type="ParagraphPoolBox" x="219.0" y="240.0" width="31.136" height="28.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="219.0" y="240.0" width="31.136" height="28.0">48</text>
+        </line>
+      </cell>
+      <spanned-cell/>
+      <spanned-cell/>
     </row>
     <row height="20">
-      <empty-cell>
+      <cell row-span="1" col-span="4">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="TotalPageItemCountFunction0"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="totalPageIdetail"/>
-      </empty-cell>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell>
+        <line type="ParagraphPoolBox" x="0.0" y="260.0" width="31.136" height="28.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="0.0" y="260.0" width="31.136" height="28.0">12</text>
+        </line>
+      </cell>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <cell row-span="1" col-span="3">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="TotalPageItemCountFunction2"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="totalPageIdetail"/>
-      </empty-cell>
-      <empty-cell/>
-      <empty-cell/>
+        <line type="ParagraphPoolBox" x="219.0" y="260.0" width="31.136" height="28.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="219.0" y="260.0" width="31.136" height="28.0">48</text>
+        </line>
+      </cell>
+      <spanned-cell/>
+      <spanned-cell/>
     </row>
     <row height="20">
-      <empty-cell background-color="#e0cece">
+      <cell background-color="#e0cece" row-span="1" col-span="2">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="footer"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="Footer: "/>
-      </empty-cell>
-      <empty-cell background-color="#e0cece">
-      </empty-cell>
-      <empty-cell background-color="#e0cece">
+        <line type="ParagraphPoolBox" x="0.0" y="280.0" width="82.608" height="24.0" color="black" font-face="Serif" font-size="24" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="0.0" y="280.0" width="75.96" height="24.0">Footer:</text>
+          <spacer width="6.648" height="0.0" preserve="true"/>
+        </line>
+      </cell>
+      <spanned-cell/>
+      <cell background-color="#e0cece" row-span="1" col-span="2">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="text-field"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="TotalPageItemCountFunction0"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="footerpageitem"/>
-      </empty-cell>
+        <line type="ParagraphPoolBox" x="100.0" y="280.0" width="26.688" height="24.0" color="black" font-face="Serif" font-size="24" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="100.0" y="280.0" width="26.688" height="24.0">12</text>
+        </line>
+      </cell>
+      <spanned-cell/>
       <empty-cell background-color="#e0cece">
       </empty-cell>
       <empty-cell background-color="#e0cece">
       </empty-cell>
-      <empty-cell background-color="#e0cece">
-      </empty-cell>
-      <empty-cell background-color="#e0cece">
+      <cell background-color="#e0cece" row-span="1" col-span="1">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="text-field"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="TotalPageItemCountFunction2"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="footerpageitem"/>
-      </empty-cell>
+        <line type="ParagraphPoolBox" x="303.0" y="280.0" width="26.688" height="24.0" color="black" font-face="Serif" font-size="24" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="303.0" y="280.0" width="26.688" height="24.0">48</text>
+        </line>
+      </cell>
     </row>
     <row height="20">
       <empty-cell background-color="#b5acac">
@@ -355,657 +441,887 @@
       </empty-cell>
       <empty-cell background-color="#b5acac">
       </empty-cell>
-      <empty-cell background-color="#b5acac">
+      <cell background-color="#b5acac" row-span="1" col-span="1">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="TotalPageItemCountFunction0"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="headerpageitem"/>
-      </empty-cell>
+        <line type="ParagraphPoolBox" x="111.0" y="320.0" width="26.688" height="24.0" color="black" font-face="Serif" font-size="24" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="111.0" y="320.0" width="26.688" height="24.0">36</text>
+        </line>
+      </cell>
       <empty-cell background-color="#b5acac">
       </empty-cell>
       <empty-cell background-color="#b5acac">
       </empty-cell>
-      <empty-cell background-color="#b5acac">
+      <cell background-color="#b5acac" row-span="1" col-span="1">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="TotalPageItemCountFunction2"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="headerpageitem"/>
-      </empty-cell>
+        <line type="ParagraphPoolBox" x="303.0" y="320.0" width="26.688" height="24.0" color="black" font-face="Serif" font-size="24" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="303.0" y="320.0" width="26.688" height="24.0">48</text>
+        </line>
+      </cell>
     </row>
     <row height="20">
-      <empty-cell>
+      <cell row-span="1" col-span="4">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="TotalPageItemCountFunction0"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="totalPageIdetail"/>
-      </empty-cell>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell>
+        <line type="ParagraphPoolBox" x="0.0" y="340.0" width="31.136" height="28.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="0.0" y="340.0" width="31.136" height="28.0">36</text>
+        </line>
+      </cell>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <cell row-span="1" col-span="3">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="TotalPageItemCountFunction2"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="totalPageIdetail"/>
-      </empty-cell>
-      <empty-cell/>
-      <empty-cell/>
+        <line type="ParagraphPoolBox" x="219.0" y="340.0" width="31.136" height="28.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="219.0" y="340.0" width="31.136" height="28.0">48</text>
+        </line>
+      </cell>
+      <spanned-cell/>
+      <spanned-cell/>
     </row>
     <row height="20">
-      <empty-cell>
+      <cell row-span="1" col-span="4">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="TotalPageItemCountFunction0"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="totalPageIdetail"/>
-      </empty-cell>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell>
+        <line type="ParagraphPoolBox" x="0.0" y="360.0" width="31.136" height="28.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="0.0" y="360.0" width="31.136" height="28.0">36</text>
+        </line>
+      </cell>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <cell row-span="1" col-span="3">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="TotalPageItemCountFunction2"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="totalPageIdetail"/>
-      </empty-cell>
-      <empty-cell/>
-      <empty-cell/>
+        <line type="ParagraphPoolBox" x="219.0" y="360.0" width="31.136" height="28.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="219.0" y="360.0" width="31.136" height="28.0">48</text>
+        </line>
+      </cell>
+      <spanned-cell/>
+      <spanned-cell/>
     </row>
     <row height="20">
-      <empty-cell>
+      <cell row-span="1" col-span="4">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="TotalPageItemCountFunction0"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="totalPageIdetail"/>
-      </empty-cell>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell>
+        <line type="ParagraphPoolBox" x="0.0" y="380.0" width="31.136" height="28.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="0.0" y="380.0" width="31.136" height="28.0">36</text>
+        </line>
+      </cell>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <cell row-span="1" col-span="3">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="TotalPageItemCountFunction2"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="totalPageIdetail"/>
-      </empty-cell>
-      <empty-cell/>
-      <empty-cell/>
+        <line type="ParagraphPoolBox" x="219.0" y="380.0" width="31.136" height="28.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="219.0" y="380.0" width="31.136" height="28.0">48</text>
+        </line>
+      </cell>
+      <spanned-cell/>
+      <spanned-cell/>
     </row>
     <row height="20">
-      <empty-cell>
+      <cell row-span="1" col-span="4">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="TotalPageItemCountFunction0"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="totalPageIdetail"/>
-      </empty-cell>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell>
+        <line type="ParagraphPoolBox" x="0.0" y="400.0" width="31.136" height="28.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="0.0" y="400.0" width="31.136" height="28.0">36</text>
+        </line>
+      </cell>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <cell row-span="1" col-span="3">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="TotalPageItemCountFunction2"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="totalPageIdetail"/>
-      </empty-cell>
-      <empty-cell/>
-      <empty-cell/>
+        <line type="ParagraphPoolBox" x="219.0" y="400.0" width="31.136" height="28.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="219.0" y="400.0" width="31.136" height="28.0">48</text>
+        </line>
+      </cell>
+      <spanned-cell/>
+      <spanned-cell/>
     </row>
     <row height="20">
-      <empty-cell>
+      <cell row-span="1" col-span="4">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="TotalPageItemCountFunction0"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="totalPageIdetail"/>
-      </empty-cell>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell>
+        <line type="ParagraphPoolBox" x="0.0" y="420.0" width="31.136" height="28.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="0.0" y="420.0" width="31.136" height="28.0">36</text>
+        </line>
+      </cell>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <cell row-span="1" col-span="3">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="TotalPageItemCountFunction2"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="totalPageIdetail"/>
-      </empty-cell>
-      <empty-cell/>
-      <empty-cell/>
+        <line type="ParagraphPoolBox" x="219.0" y="420.0" width="31.136" height="28.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="219.0" y="420.0" width="31.136" height="28.0">48</text>
+        </line>
+      </cell>
+      <spanned-cell/>
+      <spanned-cell/>
     </row>
     <row height="20">
-      <empty-cell>
+      <cell row-span="1" col-span="4">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="TotalPageItemCountFunction0"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="totalPageIdetail"/>
-      </empty-cell>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell>
+        <line type="ParagraphPoolBox" x="0.0" y="440.0" width="31.136" height="28.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="0.0" y="440.0" width="31.136" height="28.0">36</text>
+        </line>
+      </cell>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <cell row-span="1" col-span="3">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="TotalPageItemCountFunction2"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="totalPageIdetail"/>
-      </empty-cell>
-      <empty-cell/>
-      <empty-cell/>
+        <line type="ParagraphPoolBox" x="219.0" y="440.0" width="31.136" height="28.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="219.0" y="440.0" width="31.136" height="28.0">48</text>
+        </line>
+      </cell>
+      <spanned-cell/>
+      <spanned-cell/>
     </row>
     <row height="20">
-      <empty-cell>
+      <cell row-span="1" col-span="4">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="TotalPageItemCountFunction0"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="totalPageIdetail"/>
-      </empty-cell>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell>
+        <line type="ParagraphPoolBox" x="0.0" y="460.0" width="31.136" height="28.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="0.0" y="460.0" width="31.136" height="28.0">36</text>
+        </line>
+      </cell>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <cell row-span="1" col-span="3">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="TotalPageItemCountFunction2"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="totalPageIdetail"/>
-      </empty-cell>
-      <empty-cell/>
-      <empty-cell/>
+        <line type="ParagraphPoolBox" x="219.0" y="460.0" width="31.136" height="28.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="219.0" y="460.0" width="31.136" height="28.0">48</text>
+        </line>
+      </cell>
+      <spanned-cell/>
+      <spanned-cell/>
     </row>
     <row height="20">
-      <empty-cell>
+      <cell row-span="1" col-span="4">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="TotalPageItemCountFunction0"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="totalPageIdetail"/>
-      </empty-cell>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell>
+        <line type="ParagraphPoolBox" x="0.0" y="480.0" width="31.136" height="28.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="0.0" y="480.0" width="31.136" height="28.0">36</text>
+        </line>
+      </cell>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <cell row-span="1" col-span="3">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="TotalPageItemCountFunction2"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="totalPageIdetail"/>
-      </empty-cell>
-      <empty-cell/>
-      <empty-cell/>
+        <line type="ParagraphPoolBox" x="219.0" y="480.0" width="31.136" height="28.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="219.0" y="480.0" width="31.136" height="28.0">48</text>
+        </line>
+      </cell>
+      <spanned-cell/>
+      <spanned-cell/>
     </row>
     <row height="20">
-      <empty-cell>
+      <cell row-span="1" col-span="4">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="TotalPageItemCountFunction0"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="totalPageIdetail"/>
-      </empty-cell>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell>
+        <line type="ParagraphPoolBox" x="0.0" y="500.0" width="31.136" height="28.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="0.0" y="500.0" width="31.136" height="28.0">36</text>
+        </line>
+      </cell>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <cell row-span="1" col-span="3">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="TotalPageItemCountFunction2"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="totalPageIdetail"/>
-      </empty-cell>
-      <empty-cell/>
-      <empty-cell/>
+        <line type="ParagraphPoolBox" x="219.0" y="500.0" width="31.136" height="28.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="219.0" y="500.0" width="31.136" height="28.0">48</text>
+        </line>
+      </cell>
+      <spanned-cell/>
+      <spanned-cell/>
     </row>
     <row height="20">
-      <empty-cell>
+      <cell row-span="1" col-span="4">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="TotalPageItemCountFunction0"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="totalPageIdetail"/>
-      </empty-cell>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell>
+        <line type="ParagraphPoolBox" x="0.0" y="520.0" width="31.136" height="28.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="0.0" y="520.0" width="31.136" height="28.0">36</text>
+        </line>
+      </cell>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <cell row-span="1" col-span="3">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="TotalPageItemCountFunction2"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="totalPageIdetail"/>
-      </empty-cell>
-      <empty-cell/>
-      <empty-cell/>
+        <line type="ParagraphPoolBox" x="219.0" y="520.0" width="31.136" height="28.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="219.0" y="520.0" width="31.136" height="28.0">48</text>
+        </line>
+      </cell>
+      <spanned-cell/>
+      <spanned-cell/>
     </row>
     <row height="20">
-      <empty-cell>
+      <cell row-span="1" col-span="4">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="TotalPageItemCountFunction0"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="totalPageIdetail"/>
-      </empty-cell>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell>
+        <line type="ParagraphPoolBox" x="0.0" y="540.0" width="31.136" height="28.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="0.0" y="540.0" width="31.136" height="28.0">36</text>
+        </line>
+      </cell>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <cell row-span="1" col-span="3">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="TotalPageItemCountFunction2"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="totalPageIdetail"/>
-      </empty-cell>
-      <empty-cell/>
-      <empty-cell/>
+        <line type="ParagraphPoolBox" x="219.0" y="540.0" width="31.136" height="28.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="219.0" y="540.0" width="31.136" height="28.0">48</text>
+        </line>
+      </cell>
+      <spanned-cell/>
+      <spanned-cell/>
     </row>
     <row height="20">
-      <empty-cell>
+      <cell row-span="1" col-span="4">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="TotalPageItemCountFunction0"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="totalPageIdetail"/>
-      </empty-cell>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell>
+        <line type="ParagraphPoolBox" x="0.0" y="560.0" width="31.136" height="28.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="0.0" y="560.0" width="31.136" height="28.0">36</text>
+        </line>
+      </cell>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <cell row-span="1" col-span="3">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="TotalPageItemCountFunction2"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="totalPageIdetail"/>
-      </empty-cell>
-      <empty-cell/>
-      <empty-cell/>
+        <line type="ParagraphPoolBox" x="219.0" y="560.0" width="31.136" height="28.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="219.0" y="560.0" width="31.136" height="28.0">48</text>
+        </line>
+      </cell>
+      <spanned-cell/>
+      <spanned-cell/>
     </row>
     <row height="20">
-      <empty-cell>
+      <cell row-span="1" col-span="4">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="TotalPageItemCountFunction0"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="totalPageIdetail"/>
-      </empty-cell>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell>
+        <line type="ParagraphPoolBox" x="0.0" y="580.0" width="31.136" height="28.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="0.0" y="580.0" width="31.136" height="28.0">36</text>
+        </line>
+      </cell>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <cell row-span="1" col-span="3">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="TotalPageItemCountFunction2"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="totalPageIdetail"/>
-      </empty-cell>
-      <empty-cell/>
-      <empty-cell/>
+        <line type="ParagraphPoolBox" x="219.0" y="580.0" width="31.136" height="28.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="219.0" y="580.0" width="31.136" height="28.0">48</text>
+        </line>
+      </cell>
+      <spanned-cell/>
+      <spanned-cell/>
     </row>
     <row height="20">
-      <empty-cell>
+      <cell row-span="1" col-span="4">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="TotalPageItemCountFunction0"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="totalPageIdetail"/>
-      </empty-cell>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell>
+        <line type="ParagraphPoolBox" x="0.0" y="600.0" width="31.136" height="28.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="0.0" y="600.0" width="31.136" height="28.0">36</text>
+        </line>
+      </cell>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <cell row-span="1" col-span="3">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="TotalPageItemCountFunction2"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="totalPageIdetail"/>
-      </empty-cell>
-      <empty-cell/>
-      <empty-cell/>
+        <line type="ParagraphPoolBox" x="219.0" y="600.0" width="31.136" height="28.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="219.0" y="600.0" width="31.136" height="28.0">48</text>
+        </line>
+      </cell>
+      <spanned-cell/>
+      <spanned-cell/>
     </row>
     <row height="20">
-      <empty-cell>
+      <cell row-span="1" col-span="4">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="TotalPageItemCountFunction0"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="totalPageIdetail"/>
-      </empty-cell>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell>
+        <line type="ParagraphPoolBox" x="0.0" y="620.0" width="31.136" height="28.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="0.0" y="620.0" width="31.136" height="28.0">36</text>
+        </line>
+      </cell>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <cell row-span="1" col-span="3">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="TotalPageItemCountFunction2"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="totalPageIdetail"/>
-      </empty-cell>
-      <empty-cell/>
-      <empty-cell/>
+        <line type="ParagraphPoolBox" x="219.0" y="620.0" width="31.136" height="28.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="219.0" y="620.0" width="31.136" height="28.0">48</text>
+        </line>
+      </cell>
+      <spanned-cell/>
+      <spanned-cell/>
     </row>
     <row height="20">
-      <empty-cell>
+      <cell row-span="1" col-span="4">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="TotalPageItemCountFunction0"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="totalPageIdetail"/>
-      </empty-cell>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell>
+        <line type="ParagraphPoolBox" x="0.0" y="640.0" width="31.136" height="28.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="0.0" y="640.0" width="31.136" height="28.0">36</text>
+        </line>
+      </cell>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <cell row-span="1" col-span="3">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="TotalPageItemCountFunction2"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="totalPageIdetail"/>
-      </empty-cell>
-      <empty-cell/>
-      <empty-cell/>
+        <line type="ParagraphPoolBox" x="219.0" y="640.0" width="31.136" height="28.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="219.0" y="640.0" width="31.136" height="28.0">48</text>
+        </line>
+      </cell>
+      <spanned-cell/>
+      <spanned-cell/>
     </row>
     <row height="20">
-      <empty-cell>
+      <cell row-span="1" col-span="4">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="TotalPageItemCountFunction0"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="totalPageIdetail"/>
-      </empty-cell>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell>
+        <line type="ParagraphPoolBox" x="0.0" y="660.0" width="31.136" height="28.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="0.0" y="660.0" width="31.136" height="28.0">36</text>
+        </line>
+      </cell>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <cell row-span="1" col-span="3">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="TotalPageItemCountFunction2"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="totalPageIdetail"/>
-      </empty-cell>
-      <empty-cell/>
-      <empty-cell/>
+        <line type="ParagraphPoolBox" x="219.0" y="660.0" width="31.136" height="28.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="219.0" y="660.0" width="31.136" height="28.0">48</text>
+        </line>
+      </cell>
+      <spanned-cell/>
+      <spanned-cell/>
     </row>
     <row height="20">
-      <empty-cell>
+      <cell row-span="1" col-span="4">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="TotalPageItemCountFunction0"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="totalPageIdetail"/>
-      </empty-cell>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell>
+        <line type="ParagraphPoolBox" x="0.0" y="680.0" width="31.136" height="28.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="0.0" y="680.0" width="31.136" height="28.0">36</text>
+        </line>
+      </cell>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <cell row-span="1" col-span="3">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="TotalPageItemCountFunction2"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="totalPageIdetail"/>
-      </empty-cell>
-      <empty-cell/>
-      <empty-cell/>
+        <line type="ParagraphPoolBox" x="219.0" y="680.0" width="31.136" height="28.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="219.0" y="680.0" width="31.136" height="28.0">48</text>
+        </line>
+      </cell>
+      <spanned-cell/>
+      <spanned-cell/>
     </row>
     <row height="20">
-      <empty-cell>
+      <cell row-span="1" col-span="4">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="TotalPageItemCountFunction0"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="totalPageIdetail"/>
-      </empty-cell>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell>
+        <line type="ParagraphPoolBox" x="0.0" y="700.0" width="31.136" height="28.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="0.0" y="700.0" width="31.136" height="28.0">36</text>
+        </line>
+      </cell>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <cell row-span="1" col-span="3">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="TotalPageItemCountFunction2"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="totalPageIdetail"/>
-      </empty-cell>
-      <empty-cell/>
-      <empty-cell/>
+        <line type="ParagraphPoolBox" x="219.0" y="700.0" width="31.136" height="28.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="219.0" y="700.0" width="31.136" height="28.0">48</text>
+        </line>
+      </cell>
+      <spanned-cell/>
+      <spanned-cell/>
     </row>
     <row height="20">
-      <empty-cell>
+      <cell row-span="1" col-span="4">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="TotalPageItemCountFunction0"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="totalPageIdetail"/>
-      </empty-cell>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell>
+        <line type="ParagraphPoolBox" x="0.0" y="720.0" width="31.136" height="28.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="0.0" y="720.0" width="31.136" height="28.0">36</text>
+        </line>
+      </cell>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <cell row-span="1" col-span="3">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="TotalPageItemCountFunction2"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="totalPageIdetail"/>
-      </empty-cell>
-      <empty-cell/>
-      <empty-cell/>
+        <line type="ParagraphPoolBox" x="219.0" y="720.0" width="31.136" height="28.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="219.0" y="720.0" width="31.136" height="28.0">48</text>
+        </line>
+      </cell>
+      <spanned-cell/>
+      <spanned-cell/>
     </row>
     <row height="20">
-      <empty-cell>
+      <cell row-span="1" col-span="4">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="TotalPageItemCountFunction0"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="totalPageIdetail"/>
-      </empty-cell>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell>
+        <line type="ParagraphPoolBox" x="0.0" y="740.0" width="31.136" height="28.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="0.0" y="740.0" width="31.136" height="28.0">36</text>
+        </line>
+      </cell>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <cell row-span="1" col-span="3">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="TotalPageItemCountFunction2"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="totalPageIdetail"/>
-      </empty-cell>
-      <empty-cell/>
-      <empty-cell/>
+        <line type="ParagraphPoolBox" x="219.0" y="740.0" width="31.136" height="28.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="219.0" y="740.0" width="31.136" height="28.0">48</text>
+        </line>
+      </cell>
+      <spanned-cell/>
+      <spanned-cell/>
     </row>
     <row height="20">
-      <empty-cell>
+      <cell row-span="1" col-span="4">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="TotalPageItemCountFunction0"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="totalPageIdetail"/>
-      </empty-cell>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell>
+        <line type="ParagraphPoolBox" x="0.0" y="760.0" width="31.136" height="28.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="0.0" y="760.0" width="31.136" height="28.0">36</text>
+        </line>
+      </cell>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <cell row-span="1" col-span="3">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="TotalPageItemCountFunction2"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="totalPageIdetail"/>
-      </empty-cell>
-      <empty-cell/>
-      <empty-cell/>
+        <line type="ParagraphPoolBox" x="219.0" y="760.0" width="31.136" height="28.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="219.0" y="760.0" width="31.136" height="28.0">48</text>
+        </line>
+      </cell>
+      <spanned-cell/>
+      <spanned-cell/>
     </row>
     <row height="20">
-      <empty-cell>
+      <cell row-span="1" col-span="4">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="TotalPageItemCountFunction0"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="totalPageIdetail"/>
-      </empty-cell>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell>
+        <line type="ParagraphPoolBox" x="0.0" y="780.0" width="31.136" height="28.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="0.0" y="780.0" width="31.136" height="28.0">36</text>
+        </line>
+      </cell>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <cell row-span="1" col-span="3">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="TotalPageItemCountFunction2"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="totalPageIdetail"/>
-      </empty-cell>
-      <empty-cell/>
-      <empty-cell/>
+        <line type="ParagraphPoolBox" x="219.0" y="780.0" width="31.136" height="28.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="219.0" y="780.0" width="31.136" height="28.0">48</text>
+        </line>
+      </cell>
+      <spanned-cell/>
+      <spanned-cell/>
     </row>
     <row height="20">
-      <empty-cell>
+      <cell row-span="1" col-span="4">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="TotalPageItemCountFunction0"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="totalPageIdetail"/>
-      </empty-cell>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell>
+        <line type="ParagraphPoolBox" x="0.0" y="800.0" width="31.136" height="28.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="0.0" y="800.0" width="31.136" height="28.0">36</text>
+        </line>
+      </cell>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <cell row-span="1" col-span="3">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="TotalPageItemCountFunction2"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="totalPageIdetail"/>
-      </empty-cell>
-      <empty-cell/>
-      <empty-cell/>
+        <line type="ParagraphPoolBox" x="219.0" y="800.0" width="31.136" height="28.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="219.0" y="800.0" width="31.136" height="28.0">48</text>
+        </line>
+      </cell>
+      <spanned-cell/>
+      <spanned-cell/>
     </row>
     <row height="20">
-      <empty-cell>
+      <cell row-span="1" col-span="4">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="TotalPageItemCountFunction0"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="totalPageIdetail"/>
-      </empty-cell>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell>
+        <line type="ParagraphPoolBox" x="0.0" y="820.0" width="31.136" height="28.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="0.0" y="820.0" width="31.136" height="28.0">36</text>
+        </line>
+      </cell>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <cell row-span="1" col-span="3">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="TotalPageItemCountFunction2"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="totalPageIdetail"/>
-      </empty-cell>
-      <empty-cell/>
-      <empty-cell/>
+        <line type="ParagraphPoolBox" x="219.0" y="820.0" width="31.136" height="28.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="219.0" y="820.0" width="31.136" height="28.0">48</text>
+        </line>
+      </cell>
+      <spanned-cell/>
+      <spanned-cell/>
     </row>
     <row height="20">
-      <empty-cell>
+      <cell row-span="1" col-span="4">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="TotalPageItemCountFunction0"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="totalPageIdetail"/>
-      </empty-cell>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell>
+        <line type="ParagraphPoolBox" x="0.0" y="840.0" width="31.136" height="28.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="0.0" y="840.0" width="31.136" height="28.0">36</text>
+        </line>
+      </cell>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <cell row-span="1" col-span="3">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="TotalPageItemCountFunction2"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="totalPageIdetail"/>
-      </empty-cell>
-      <empty-cell/>
-      <empty-cell/>
+        <line type="ParagraphPoolBox" x="219.0" y="840.0" width="31.136" height="28.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="219.0" y="840.0" width="31.136" height="28.0">48</text>
+        </line>
+      </cell>
+      <spanned-cell/>
+      <spanned-cell/>
     </row>
     <row height="20">
-      <empty-cell>
+      <cell row-span="1" col-span="4">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="TotalPageItemCountFunction0"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="totalPageIdetail"/>
-      </empty-cell>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell>
+        <line type="ParagraphPoolBox" x="0.0" y="860.0" width="31.136" height="28.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="0.0" y="860.0" width="31.136" height="28.0">36</text>
+        </line>
+      </cell>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <cell row-span="1" col-span="3">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="TotalPageItemCountFunction2"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="totalPageIdetail"/>
-      </empty-cell>
-      <empty-cell/>
-      <empty-cell/>
+        <line type="ParagraphPoolBox" x="219.0" y="860.0" width="31.136" height="28.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="219.0" y="860.0" width="31.136" height="28.0">48</text>
+        </line>
+      </cell>
+      <spanned-cell/>
+      <spanned-cell/>
     </row>
     <row height="20">
-      <empty-cell>
+      <cell row-span="1" col-span="4">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="TotalPageItemCountFunction0"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="totalPageIdetail"/>
-      </empty-cell>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell>
+        <line type="ParagraphPoolBox" x="0.0" y="880.0" width="31.136" height="28.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="0.0" y="880.0" width="31.136" height="28.0">36</text>
+        </line>
+      </cell>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <cell row-span="1" col-span="3">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="TotalPageItemCountFunction2"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="totalPageIdetail"/>
-      </empty-cell>
-      <empty-cell/>
-      <empty-cell/>
+        <line type="ParagraphPoolBox" x="219.0" y="880.0" width="31.136" height="28.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="219.0" y="880.0" width="31.136" height="28.0">48</text>
+        </line>
+      </cell>
+      <spanned-cell/>
+      <spanned-cell/>
     </row>
     <row height="20">
-      <empty-cell>
+      <cell row-span="1" col-span="4">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="TotalPageItemCountFunction0"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="totalPageIdetail"/>
-      </empty-cell>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell>
+        <line type="ParagraphPoolBox" x="0.0" y="900.0" width="31.136" height="28.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="0.0" y="900.0" width="31.136" height="28.0">36</text>
+        </line>
+      </cell>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <cell row-span="1" col-span="3">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="TotalPageItemCountFunction2"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="totalPageIdetail"/>
-      </empty-cell>
-      <empty-cell/>
-      <empty-cell/>
+        <line type="ParagraphPoolBox" x="219.0" y="900.0" width="31.136" height="28.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="219.0" y="900.0" width="31.136" height="28.0">48</text>
+        </line>
+      </cell>
+      <spanned-cell/>
+      <spanned-cell/>
     </row>
     <row height="20">
-      <empty-cell>
+      <cell row-span="1" col-span="4">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="TotalPageItemCountFunction0"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="totalPageIdetail"/>
-      </empty-cell>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell>
+        <line type="ParagraphPoolBox" x="0.0" y="920.0" width="31.136" height="28.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="0.0" y="920.0" width="31.136" height="28.0">36</text>
+        </line>
+      </cell>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <cell row-span="1" col-span="3">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="TotalPageItemCountFunction2"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="totalPageIdetail"/>
-      </empty-cell>
-      <empty-cell/>
-      <empty-cell/>
+        <line type="ParagraphPoolBox" x="219.0" y="920.0" width="31.136" height="28.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="219.0" y="920.0" width="31.136" height="28.0">48</text>
+        </line>
+      </cell>
+      <spanned-cell/>
+      <spanned-cell/>
     </row>
     <row height="20">
-      <empty-cell>
+      <cell row-span="1" col-span="4">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="TotalPageItemCountFunction0"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="totalPageIdetail"/>
-      </empty-cell>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell>
+        <line type="ParagraphPoolBox" x="0.0" y="940.0" width="31.136" height="28.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="0.0" y="940.0" width="31.136" height="28.0">36</text>
+        </line>
+      </cell>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <cell row-span="1" col-span="3">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="TotalPageItemCountFunction2"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="totalPageIdetail"/>
-      </empty-cell>
-      <empty-cell/>
-      <empty-cell/>
+        <line type="ParagraphPoolBox" x="219.0" y="940.0" width="31.136" height="28.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="219.0" y="940.0" width="31.136" height="28.0">48</text>
+        </line>
+      </cell>
+      <spanned-cell/>
+      <spanned-cell/>
     </row>
     <row height="20">
-      <empty-cell>
+      <cell row-span="1" col-span="4">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="TotalPageItemCountFunction0"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="totalPageIdetail"/>
-      </empty-cell>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell>
+        <line type="ParagraphPoolBox" x="0.0" y="960.0" width="31.136" height="28.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="0.0" y="960.0" width="31.136" height="28.0">36</text>
+        </line>
+      </cell>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <cell row-span="1" col-span="3">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="TotalPageItemCountFunction2"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="totalPageIdetail"/>
-      </empty-cell>
-      <empty-cell/>
-      <empty-cell/>
+        <line type="ParagraphPoolBox" x="219.0" y="960.0" width="31.136" height="28.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="219.0" y="960.0" width="31.136" height="28.0">48</text>
+        </line>
+      </cell>
+      <spanned-cell/>
+      <spanned-cell/>
     </row>
     <row height="20">
-      <empty-cell>
+      <cell row-span="1" col-span="4">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="TotalPageItemCountFunction0"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="totalPageIdetail"/>
-      </empty-cell>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell>
+        <line type="ParagraphPoolBox" x="0.0" y="980.0" width="31.136" height="28.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="0.0" y="980.0" width="31.136" height="28.0">36</text>
+        </line>
+      </cell>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <cell row-span="1" col-span="3">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="TotalPageItemCountFunction2"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="totalPageIdetail"/>
-      </empty-cell>
-      <empty-cell/>
-      <empty-cell/>
+        <line type="ParagraphPoolBox" x="219.0" y="980.0" width="31.136" height="28.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="219.0" y="980.0" width="31.136" height="28.0">48</text>
+        </line>
+      </cell>
+      <spanned-cell/>
+      <spanned-cell/>
     </row>
     <row height="20">
-      <empty-cell>
+      <cell row-span="1" col-span="4">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="TotalPageItemCountFunction0"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="totalPageIdetail"/>
-      </empty-cell>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell>
+        <line type="ParagraphPoolBox" x="0.0" y="1000.0" width="31.136" height="28.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="0.0" y="1000.0" width="31.136" height="28.0">36</text>
+        </line>
+      </cell>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <cell row-span="1" col-span="3">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="TotalPageItemCountFunction2"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="totalPageIdetail"/>
-      </empty-cell>
-      <empty-cell/>
-      <empty-cell/>
+        <line type="ParagraphPoolBox" x="219.0" y="1000.0" width="31.136" height="28.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="219.0" y="1000.0" width="31.136" height="28.0">48</text>
+        </line>
+      </cell>
+      <spanned-cell/>
+      <spanned-cell/>
     </row>
     <row height="20">
-      <empty-cell>
+      <cell row-span="1" col-span="4">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="TotalPageItemCountFunction0"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="totalPageIdetail"/>
-      </empty-cell>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell>
+        <line type="ParagraphPoolBox" x="0.0" y="1020.0" width="31.136" height="28.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="0.0" y="1020.0" width="31.136" height="28.0">36</text>
+        </line>
+      </cell>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <cell row-span="1" col-span="3">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="TotalPageItemCountFunction2"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="totalPageIdetail"/>
-      </empty-cell>
-      <empty-cell/>
-      <empty-cell/>
+        <line type="ParagraphPoolBox" x="219.0" y="1020.0" width="31.136" height="28.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="219.0" y="1020.0" width="31.136" height="28.0">48</text>
+        </line>
+      </cell>
+      <spanned-cell/>
+      <spanned-cell/>
     </row>
     <row height="20">
-      <empty-cell>
+      <cell row-span="1" col-span="4">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="TotalPageItemCountFunction0"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="totalPageIdetail"/>
-      </empty-cell>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell/>
-      <empty-cell>
+        <line type="ParagraphPoolBox" x="0.0" y="1040.0" width="31.136" height="28.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="0.0" y="1040.0" width="31.136" height="28.0">36</text>
+        </line>
+      </cell>
+      <spanned-cell/>
+      <spanned-cell/>
+      <spanned-cell/>
+      <cell row-span="1" col-span="3">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="number-field"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="TotalPageItemCountFunction2"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="totalPageIdetail"/>
-      </empty-cell>
-      <empty-cell/>
-      <empty-cell/>
+        <line type="ParagraphPoolBox" x="219.0" y="1040.0" width="31.136" height="28.0" color="black" font-face="Serif" font-size="28" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="219.0" y="1040.0" width="31.136" height="28.0">48</text>
+        </line>
+      </cell>
+      <spanned-cell/>
+      <spanned-cell/>
     </row>
     <row height="20">
-      <empty-cell background-color="#e0cece">
+      <cell background-color="#e0cece" row-span="1" col-span="2">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="footer"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="Footer: "/>
-      </empty-cell>
-      <empty-cell background-color="#e0cece">
-      </empty-cell>
-      <empty-cell background-color="#e0cece">
+        <line type="ParagraphPoolBox" x="0.0" y="1060.0" width="82.608" height="24.0" color="black" font-face="Serif" font-size="24" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="0.0" y="1060.0" width="75.96" height="24.0">Footer:</text>
+          <spacer width="6.648" height="0.0" preserve="true"/>
+        </line>
+      </cell>
+      <spanned-cell/>
+      <cell background-color="#e0cece" row-span="1" col-span="2">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="text-field"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="TotalPageItemCountFunction0"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="footerpageitem"/>
-      </empty-cell>
+        <line type="ParagraphPoolBox" x="100.0" y="1060.0" width="26.688" height="24.0" color="black" font-face="Serif" font-size="24" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="100.0" y="1060.0" width="26.688" height="24.0">36</text>
+        </line>
+      </cell>
+      <spanned-cell/>
       <empty-cell background-color="#e0cece">
       </empty-cell>
       <empty-cell background-color="#e0cece">
       </empty-cell>
-      <empty-cell background-color="#e0cece">
-      </empty-cell>
-      <empty-cell background-color="#e0cece">
+      <cell background-color="#e0cece" row-span="1" col-span="1">
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="text-field"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:field="TotalPageItemCountFunction2"/>
         <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="footerpageitem"/>
-      </empty-cell>
+        <line type="ParagraphPoolBox" x="303.0" y="1060.0" width="26.688" height="24.0" color="black" font-face="Serif" font-size="24" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <text x="303.0" y="1060.0" width="26.688" height="24.0">48</text>
+        </line>
+      </cell>
     </row>
   </table>
 </layout-output>
