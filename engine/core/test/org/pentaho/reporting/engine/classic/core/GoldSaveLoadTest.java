@@ -29,6 +29,7 @@ import org.junit.Test;
 import org.pentaho.reporting.engine.classic.core.modules.parser.bundle.writer.BundleWriter;
 import org.pentaho.reporting.engine.classic.core.testsupport.DebugReportRunner;
 import org.pentaho.reporting.engine.classic.core.testsupport.gold.GoldTestBase;
+import org.pentaho.reporting.libraries.base.util.FilesystemFilter;
 import org.pentaho.reporting.libraries.base.util.MemoryByteArrayOutputStream;
 import org.pentaho.reporting.libraries.resourceloader.Resource;
 import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
@@ -63,6 +64,17 @@ public class GoldSaveLoadTest extends GoldTestBase
       return;
     }
     runAllGoldReports();
+  }
+
+  /**
+   * Load/Save does not work on legacy reports. We can only read them, not write them.
+   *
+   * @return
+   */
+  protected FilesystemFilter createReportFilter()
+  {
+    return new FilesystemFilter
+        (new String[]{".prpt"}, "Reports", false);
   }
 
   @Test

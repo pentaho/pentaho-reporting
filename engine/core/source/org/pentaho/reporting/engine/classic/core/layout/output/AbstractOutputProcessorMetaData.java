@@ -479,6 +479,11 @@ public abstract class AbstractOutputProcessorMetaData implements OutputProcessor
     {
       addFeature(OutputProcessorFeature.LEGACY_LINEHEIGHT_CALC);
     }
+    if (extendedConfig.getBoolProperty
+        ("org.pentaho.reporting.engine.classic.core.layout.AlwaysPrintFirstLineOfText", true))
+    {
+      addFeature(OutputProcessorFeature.ALWAYS_PRINT_FIRST_LINE_OF_TEXT);
+    }
     if (extendedConfig.getBoolProperty(ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY, false) == true)
     {
       addFeature(OutputProcessorFeature.COMPLEX_TEXT);

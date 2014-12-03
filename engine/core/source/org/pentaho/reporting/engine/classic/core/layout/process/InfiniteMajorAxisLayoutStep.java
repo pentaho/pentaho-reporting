@@ -481,7 +481,6 @@ public final class InfiniteMajorAxisLayoutStep extends AbstractMajorAxisLayoutSt
 
   protected void processParagraphChilds(final ParagraphRenderBox box)
   {
-    // todo Arabic text
     if(complexText) {
       processBoxChilds(box);
     }
