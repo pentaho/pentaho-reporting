@@ -399,11 +399,11 @@ public class DebugReportRunner
     }
   }
 
-  private static class InterceptingXmlPageOutputProcessor extends XmlPageOutputProcessor
+  public static class InterceptingXmlPageOutputProcessor extends XmlPageOutputProcessor
   {
     private List<LogicalPageBox> logicalPageBox;
 
-    private InterceptingXmlPageOutputProcessor(final OutputStream outputStream,
+    public InterceptingXmlPageOutputProcessor(final OutputStream outputStream,
                                                final OutputProcessorMetaData metaData)
     {
       super(outputStream, metaData);

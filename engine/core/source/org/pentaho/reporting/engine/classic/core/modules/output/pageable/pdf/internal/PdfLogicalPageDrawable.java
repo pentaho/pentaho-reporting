@@ -145,6 +145,7 @@ public class PdfLogicalPageDrawable extends LogicalPageDrawable
   private LFUMap<ResourceKey, com.lowagie.text.Image> imageCache;
   private char version;
   private PdfImageHandler imageHandler;
+  private boolean legacyLineHeightCalc;
 
   public PdfLogicalPageDrawable(final PdfWriter writer,
                                 final LFUMap<ResourceKey, com.lowagie.text.Image> imageCache,
@@ -188,11 +189,17 @@ public class PdfLogicalPageDrawable extends LogicalPageDrawable
     }
     this.globalEmbed = getMetaData().isFeatureSupported(OutputProcessorFeature.EMBED_ALL_FONTS);
     this.imageHandler = new PdfImageHandler(metaData, resourceManager, imageCache);
+    this.legacyLineHeightCalc = metaData.isFeatureSupported(OutputProcessorFeature.LEGACY_LINEHEIGHT_CALC);
   }
 
   public PdfOutputProcessorMetaData getMetaData()
   {
     return (PdfOutputProcessorMetaData) super.getMetaData();
+  }
+
+  protected float getGlobalHeight()
+  {
+    return globalHeight;
   }
 
   /**
@@ -401,7 +408,15 @@ public class PdfLogicalPageDrawable extends LogicalPageDrawable
 
     final BaseFontFontMetrics baseFontRecord = textSpec.getFontMetrics();
     final BaseFont baseFont = baseFontRecord.getBaseFont();
-    final float ascent = baseFont.getFontDescriptor(BaseFont.BBOXURY, textSpec.getFontSize());
+    final float ascent;
+    if (legacyLineHeightCalc) {
+      final float awtAscent = baseFont.getFontDescriptor(BaseFont.AWT_ASCENT, textSpec.getFontSize());
+      final float awtLeading = baseFont.getFontDescriptor(BaseFont.AWT_LEADING, textSpec.getFontSize());
+      ascent = awtAscent + awtLeading;
+    }
+    else {
+      ascent = baseFont.getFontDescriptor(BaseFont.BBOXURY, textSpec.getFontSize());
+    }
     final float y2 = (float) (StrictGeomUtility.toExternalValue(posY) + ascent);
     final float y = globalHeight - y2;
 
