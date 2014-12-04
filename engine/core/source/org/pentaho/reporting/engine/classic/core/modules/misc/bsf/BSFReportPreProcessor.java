@@ -25,6 +25,7 @@ import org.pentaho.reporting.engine.classic.core.ReportDataFactoryException;
 import org.pentaho.reporting.engine.classic.core.ReportProcessingException;
 import org.pentaho.reporting.engine.classic.core.SubReport;
 import org.pentaho.reporting.engine.classic.core.states.datarow.DefaultFlowController;
+import org.pentaho.reporting.libraries.base.util.StringUtils;
 
 public class BSFReportPreProcessor extends AbstractReportPreProcessor
 {
@@ -70,7 +71,7 @@ public class BSFReportPreProcessor extends AbstractReportPreProcessor
   public MasterReport performPreDataProcessing(final MasterReport definition,
                                                final DefaultFlowController flowController) throws ReportProcessingException
   {
-    if (script == null || language == null)
+    if (preDataScript == null || language == null || StringUtils.isEmpty(preDataScript, true))
     {
       return definition;
     }
@@ -97,7 +98,7 @@ public class BSFReportPreProcessor extends AbstractReportPreProcessor
   public MasterReport performPreProcessing(final MasterReport definition,
                                            final DefaultFlowController flowController) throws ReportProcessingException
   {
-    if (script == null || language == null)
+    if (script == null || language == null || StringUtils.isEmpty(script, true))
     {
       return definition;
     }
