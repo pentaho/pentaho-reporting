@@ -41,12 +41,11 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JSplitPane;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.SwingUtilities;
 import javax.swing.border.EmptyBorder;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.event.ListSelectionEvent;
@@ -847,10 +846,10 @@ public class KettleDataSourceDialog extends CommonDialog
     gbc.anchor = GridBagConstraints.WEST;
     mainPanel.add(previewAndParameterPanel, gbc);
 
-    final JPanel panel = new JPanel();
-    panel.setLayout(new BorderLayout());
-    panel.add(mainPanel, BorderLayout.EAST);
-    panel.add(queryListPanel, BorderLayout.CENTER);
+    final JSplitPane panel = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
+    panel.setLeftComponent(queryListPanel);
+    panel.setRightComponent(mainPanel);
+    panel.setDividerLocation(250);
     return panel;
   }
 
