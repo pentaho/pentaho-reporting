@@ -20,6 +20,7 @@ package org.pentaho.reporting.designer.core.editor.drilldown.model;
 import java.io.Serializable;
 import java.util.Locale;
 
+import org.pentaho.reporting.engine.classic.core.metadata.MaturityLevel;
 import org.pentaho.reporting.engine.classic.core.metadata.MetaData;
 
 public class DrillDownParameter implements MetaData, Serializable
@@ -237,6 +238,11 @@ public class DrillDownParameter implements MetaData, Serializable
   public boolean isHidden()
   {
     return false;
+  }
+
+  public MaturityLevel getFeatureMaturityLevel()
+  {
+    return MaturityLevel.Production;
   }
 
   public boolean isExperimental()

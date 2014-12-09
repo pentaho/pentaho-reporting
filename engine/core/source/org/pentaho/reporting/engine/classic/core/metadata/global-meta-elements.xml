@@ -1200,7 +1200,8 @@
                value-role="Content"/>
   </attribute-group>
 
-  <attribute-group name="resource-label">
+  <attribute-group name="resource-label"
+                   bundle-name="org.pentaho.reporting.engine.classic.core.metadata.messages">
     <attribute namespace="http://reporting.pentaho.org/namespaces/engine/attributes/core"
                name="value"
                mandatory="false"

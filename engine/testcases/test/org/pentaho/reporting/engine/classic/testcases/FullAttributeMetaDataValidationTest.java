@@ -15,33 +15,25 @@
 * Copyright (c) 2001 - 2013 Object Refinery Ltd, Pentaho Corporation and Contributors..  All rights reserved.
 */
 
-package org.pentaho.reporting.engine.classic.core.metadata.parser;
+package org.pentaho.reporting.engine.classic.testcases;
 
-import org.pentaho.reporting.engine.classic.core.metadata.AttributeMetaData;
-import org.pentaho.reporting.engine.classic.core.metadata.DefaultAttributeMetaData;
-import org.pentaho.reporting.engine.classic.core.metadata.builder.AttributeMetaDataBuilder;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.junit.Test;
+import org.pentaho.reporting.engine.classic.core.meta.AttributeMetaDataValidationTest;
 
-public class AttributeDefinition
+@SuppressWarnings("HardCodedStringLiteral")
+public class FullAttributeMetaDataValidationTest extends AttributeMetaDataValidationTest
 {
-  private AttributeMetaDataBuilder builder;
+  private static final Log logger = LogFactory.getLog(FullAttributeMetaDataValidationTest.class);
 
-  public AttributeDefinition(final AttributeMetaDataBuilder builder)
+  public FullAttributeMetaDataValidationTest()
   {
-    this.builder = builder.clone();
   }
 
-  public String getNamespace()
+  @Test
+  public void testMetaData()
   {
-    return builder.getNamespace();
-  }
-
-  public String getName()
-  {
-    return builder.getName();
-  }
-
-  public AttributeMetaData build()
-  {
-    return new DefaultAttributeMetaData(builder);
+    super.testMetaData();
   }
 }

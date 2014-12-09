@@ -23,8 +23,13 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.pentaho.reporting.engine.classic.core.Element;
 import org.pentaho.reporting.engine.classic.core.function.Expression;
+import org.pentaho.reporting.engine.classic.core.metadata.builder.MetaDataBuilder;
+import org.pentaho.reporting.engine.classic.core.metadata.builder.ReportPreProcessorPropertyMetaDataBuilder;
+import org.pentaho.reporting.engine.classic.core.metadata.propertyeditors.SharedPropertyDescriptorProxy;
 import org.pentaho.reporting.libraries.base.util.ArgumentNullException;
 import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
 import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
@@ -32,14 +37,14 @@ import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 public class DefaultReportPreProcessorPropertyMetaData extends AbstractMetaData
     implements ReportPreProcessorPropertyMetaData
 {
+  private static final Log logger = LogFactory.getLog(DefaultReportPreProcessorPropertyMetaData.class);
+
   private boolean mandatory;
   private String propertyRole;
-  private String propertyEditorClass;
   private boolean computed;
   private ReportPreProcessorPropertyCore reportPreProcessorCore;
-
-  private transient PropertyDescriptor propertyDescriptor;
-  private transient SharedBeanInfo beanInfo;
+  private SharedPropertyDescriptorProxy propertyDescriptor;
+  private Class<? extends PropertyEditor> propertyEditorClass;
 
   public DefaultReportPreProcessorPropertyMetaData(final String name,
                                                    final String bundleLocation,
@@ -53,20 +58,36 @@ public class DefaultReportPreProcessorPropertyMetaData extends AbstractMetaData
                                                    final SharedBeanInfo beanInfo,
                                                    final String propertyEditorClass,
                                                    final ReportPreProcessorPropertyCore reportPreProcessorCore,
-                                                   final boolean experimental,
+                                                   final MaturityLevel maturityLevel,
                                                    final int compatibilityLevel)
   {
-    super(name, bundleLocation, "property.", expert, preferred, hidden, deprecated, experimental, compatibilityLevel);
+    super(name, bundleLocation, "property.", expert, preferred, hidden, deprecated, maturityLevel, compatibilityLevel);
     ArgumentNullException.validate("propertyRole", propertyRole);
     ArgumentNullException.validate("beanInfo", beanInfo);
     ArgumentNullException.validate("reportPreProcessorCore", reportPreProcessorCore);
 
-    this.beanInfo = beanInfo;
+    this.propertyDescriptor = new SharedPropertyDescriptorProxy(beanInfo, name);
     this.reportPreProcessorCore = reportPreProcessorCore;
     this.computed = computed;
-    this.propertyEditorClass = propertyEditorClass;
+    this.propertyEditorClass = ObjectUtilities.loadAndValidate
+        (propertyEditorClass, DefaultExpressionPropertyMetaData.class, PropertyEditor.class);
     this.mandatory = mandatory;
     this.propertyRole = propertyRole;
+  }
+
+  public DefaultReportPreProcessorPropertyMetaData(final ReportPreProcessorPropertyMetaDataBuilder builder)
+  {
+    super(builder);
+    this.propertyDescriptor = builder.getDescriptor();
+    this.computed = builder.isComputed();
+    this.reportPreProcessorCore = builder.getCore();
+    this.propertyEditorClass = builder.getEditor();
+    this.mandatory = builder.isMandatory();
+    this.propertyRole = builder.getValueRole();
+
+    ArgumentNullException.validate("propertyRole", propertyRole);
+    ArgumentNullException.validate("propertyDescriptor", propertyDescriptor);
+    ArgumentNullException.validate("reportPreProcessorCore", reportPreProcessorCore);
   }
 
   public boolean isComputed()
@@ -76,11 +97,7 @@ public class DefaultReportPreProcessorPropertyMetaData extends AbstractMetaData
 
   public Class getPropertyType()
   {
-    if (propertyDescriptor == null)
-    {
-      propertyDescriptor = beanInfo.getPropertyDescriptor(getName());
-    }
-    return propertyDescriptor.getPropertyType();
+    return getBeanDescriptor().getPropertyType();
   }
 
   public String getPropertyRole()
@@ -118,11 +135,7 @@ public class DefaultReportPreProcessorPropertyMetaData extends AbstractMetaData
 
   public PropertyDescriptor getBeanDescriptor()
   {
-    if (propertyDescriptor == null)
-    {
-      propertyDescriptor = beanInfo.getPropertyDescriptor(getName());
-    }
-    return propertyDescriptor;
+    return propertyDescriptor.get();
   }
 
   public PropertyEditor getEditor()
@@ -131,27 +144,19 @@ public class DefaultReportPreProcessorPropertyMetaData extends AbstractMetaData
     {
       return null;
     }
-    return ObjectUtilities.loadAndInstantiate
-        (propertyEditorClass, DefaultAttributeMetaData.class, PropertyEditor.class);
+    try
+    {
+      return propertyEditorClass.newInstance();
+    }
+    catch (Exception e)
+    {
+      logger.warn("Property editor for expression property '" + getName() + "' threw an Exception on instantiate", e);
+      return null;
+    }
   }
 
   public String[] getExtraCalculationFields()
   {
     return reportPreProcessorCore.getExtraCalculationFields(this);
-  }
-
-  private void writeObject(ObjectOutputStream out)
-     throws IOException
-  {
-    out.defaultWriteObject();
-    out.writeObject(beanInfo.getBeanClass());
-  }
-
-  private void readObject(ObjectInputStream in)
-     throws IOException, ClassNotFoundException
-  {
-    in.defaultReadObject();
-    final Class c = (Class) in.readObject();
-    beanInfo = new SharedBeanInfo(c);
   }
 }

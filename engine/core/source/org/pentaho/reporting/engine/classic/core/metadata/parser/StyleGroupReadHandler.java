@@ -19,6 +19,7 @@ package org.pentaho.reporting.engine.classic.core.metadata.parser;
 
 import java.util.ArrayList;
 
+import org.pentaho.reporting.engine.classic.core.metadata.builder.StyleMetaDataBuilder;
 import org.pentaho.reporting.libraries.xmlns.parser.AbstractXmlReadHandler;
 import org.pentaho.reporting.libraries.xmlns.parser.ParseException;
 import org.pentaho.reporting.libraries.xmlns.parser.XmlReadHandler;
@@ -90,8 +91,15 @@ public class StyleGroupReadHandler extends AbstractXmlReadHandler
    */
   protected void doneParsing() throws SAXException
   {
-    final StyleReadHandler[] attributes = styleHandlers.toArray(new StyleReadHandler[styleHandlers.size()]);
-    group = new StyleGroup(name, attributes);
+    final ArrayList<StyleMetaDataBuilder> styles = new ArrayList<StyleMetaDataBuilder>();
+    for (final StyleReadHandler styleHandler : styleHandlers)
+    {
+      if (styleHandler.getBuilder().getKey() == null) {
+        throw new IllegalStateException();
+      }
+      styles.add(styleHandler.getBuilder().clone());
+    }
+    group = new StyleGroup(name, styles);
     styleGroups.addStyleGroup(group);
   }
 

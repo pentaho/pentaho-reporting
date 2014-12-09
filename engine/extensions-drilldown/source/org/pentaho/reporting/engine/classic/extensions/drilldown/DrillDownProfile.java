@@ -22,6 +22,7 @@ import java.util.Locale;
 import java.util.Map;
 
 import org.pentaho.reporting.engine.classic.core.metadata.AbstractMetaData;
+import org.pentaho.reporting.engine.classic.core.metadata.MaturityLevel;
 
 public class DrillDownProfile extends AbstractMetaData
 {
@@ -37,10 +38,10 @@ public class DrillDownProfile extends AbstractMetaData
                           final boolean deprecated,
                           final Class linkCustomizerType,
                           final Map<String,String> attributes,
-                          final boolean experimental,
+                          final MaturityLevel maturityLevel,
                           final int compatibilityLevel)
   {
-    super(name, bundleLocation, keyPrefix, expert, preferred, hidden, deprecated, experimental, compatibilityLevel);
+    super(name, bundleLocation, keyPrefix, expert, preferred, hidden, deprecated, maturityLevel, compatibilityLevel);
     this.linkCustomizerType = linkCustomizerType;
     this.attributes = new HashMap<String,String>(attributes);
   }
@@ -48,7 +49,7 @@ public class DrillDownProfile extends AbstractMetaData
   public DrillDownProfile(final Class linkCustomizerType)
   {
     this("", "org.pentaho.reporting.engine.classic.extensions.drilldown.drilldown-profile",
-        "", false, false, false, false, linkCustomizerType, new HashMap<String,String>(), false, -1);
+        "", false, false, false, false, linkCustomizerType, new HashMap<String,String>(), MaturityLevel.Limited, -1);
   }
 
   public Class getLinkCustomizerType()

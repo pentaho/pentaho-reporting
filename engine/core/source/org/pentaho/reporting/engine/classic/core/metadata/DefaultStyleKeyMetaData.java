@@ -19,6 +19,7 @@ package org.pentaho.reporting.engine.classic.core.metadata;
 
 import java.beans.PropertyEditor;
 
+import org.pentaho.reporting.engine.classic.core.metadata.builder.StyleMetaDataBuilder;
 import org.pentaho.reporting.engine.classic.core.style.StyleKey;
 import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
 
@@ -35,12 +36,18 @@ public class DefaultStyleKeyMetaData extends AbstractMetaData implements StyleMe
                                  final boolean preferred,
                                  final boolean hidden,
                                  final boolean deprecated,
-                                 final boolean experimental,
+                                 final MaturityLevel maturityLevel,
                                  final int compatibilityLevel)
   {
-    super(key.getName(), bundleLocation, keyPrefix, expert, preferred, hidden, deprecated, experimental, compatibilityLevel);
+    super(key.getName(), bundleLocation, keyPrefix, expert, preferred, hidden, deprecated, maturityLevel, compatibilityLevel);
     this.key = key;
     this.propertyEditor = propertyEditor;
+  }
+
+  public DefaultStyleKeyMetaData(final StyleMetaDataBuilder builder)
+  {
+    super(builder);
+    this.key = builder.getKey();
   }
 
   public PropertyEditor getEditor()
@@ -58,6 +65,7 @@ public class DefaultStyleKeyMetaData extends AbstractMetaData implements StyleMe
     return key;
   }
 
+  @Deprecated
   public String getPropertyEditor()
   {
     return propertyEditor;

@@ -20,6 +20,7 @@ package org.pentaho.reporting.engine.classic.core.metadata;
 import java.io.IOException;
 import java.net.URL;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -32,7 +33,7 @@ public class DataFactoryRegistry
   private static final Log logger = LogFactory.getLog(DataFactoryRegistry.class);
   private static DataFactoryRegistry instance;
 
-  private HashMap backend;
+  private LinkedHashMap<String,DataFactoryMetaData> backend;
   private ResourceManager resourceManager;
 
   public static synchronized DataFactoryRegistry getInstance()
@@ -47,7 +48,7 @@ public class DataFactoryRegistry
   private DataFactoryRegistry()
   {
     this.resourceManager = new ResourceManager();
-    this.backend = new HashMap();
+    this.backend = new LinkedHashMap<String, DataFactoryMetaData>();
   }
 
   public void registerFromXml(final URL dataFactoryMetaSource) throws IOException
@@ -99,7 +100,7 @@ public class DataFactoryRegistry
 
   public DataFactoryMetaData[] getAll()
   {
-    return (DataFactoryMetaData[]) backend.values().toArray(new DataFactoryMetaData[backend.size()]);
+    return backend.values().toArray(new DataFactoryMetaData[backend.size()]);
   }
 
   public boolean isRegistered(final String identifier)
@@ -117,7 +118,7 @@ public class DataFactoryRegistry
     {
       throw new NullPointerException();
     }
-    final DataFactoryMetaData retval = (DataFactoryMetaData) backend.get(identifier);
+    final DataFactoryMetaData retval = backend.get(identifier);
     if (retval == null)
     {
       throw new MetaDataLookupException("Unable to locate metadata for data-factory type " + identifier);

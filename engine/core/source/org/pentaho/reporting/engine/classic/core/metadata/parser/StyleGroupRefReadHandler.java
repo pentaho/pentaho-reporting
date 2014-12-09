@@ -17,10 +17,11 @@
 
 package org.pentaho.reporting.engine.classic.core.metadata.parser;
 
-import java.util.HashMap;
+import java.util.Map;
 
 import org.pentaho.reporting.engine.classic.core.metadata.DefaultStyleKeyMetaData;
 import org.pentaho.reporting.engine.classic.core.metadata.StyleMetaData;
+import org.pentaho.reporting.engine.classic.core.metadata.builder.StyleMetaDataBuilder;
 import org.pentaho.reporting.engine.classic.core.style.StyleKey;
 import org.pentaho.reporting.libraries.xmlns.parser.AbstractXmlReadHandler;
 import org.pentaho.reporting.libraries.xmlns.parser.ParseException;
@@ -29,7 +30,7 @@ import org.xml.sax.SAXException;
 
 public class StyleGroupRefReadHandler extends AbstractXmlReadHandler
 {
-  private HashMap<StyleKey,StyleMetaData> styles;
+  private Map<StyleKey, StyleMetaData> styles;
   private GlobalMetaDefinition styleGroups;
   private String bundle;
 
@@ -39,7 +40,7 @@ public class StyleGroupRefReadHandler extends AbstractXmlReadHandler
    * @param bundle      the default resource-bundle that is used if the group defines no own bundle.
    * @noinspection AssignmentToCollectionOrArrayFieldFromParameter
    */
-  public StyleGroupRefReadHandler(final HashMap<StyleKey,StyleMetaData> styles,
+  public StyleGroupRefReadHandler(final Map<StyleKey, StyleMetaData> styles,
                                   final GlobalMetaDefinition styleGroups,
                                   final String bundle)
   {
@@ -68,30 +69,15 @@ public class StyleGroupRefReadHandler extends AbstractXmlReadHandler
           ("Attribute 'ref' is invalid. There is no style-group '" + name + "' defined.", getLocator());
     }
 
-    final StyleReadHandler[] data = group.getMetaData();
-    for (int i = 0; i < data.length; i++)
+    for (StyleMetaDataBuilder handler : group.getMetaData())
     {
-      final StyleReadHandler handler = data[i];
-      final String keyName = handler.getName();
-      final StyleKey key = StyleKey.getStyleKey(keyName);
-      if (key == null)
+      final StyleKey key = handler.getKey();
+      if (handler.getBundleLocation() == null)
       {
-        throw new ParseException("There is no such key '" + keyName + "' defined.");
-      }
-      final String bundle;
-      if (handler.getBundleName() != null)
-      {
-        bundle = handler.getBundleName();
-      }
-      else
-      {
-        bundle = this.bundle;
+        handler = handler.clone().bundle(this.bundle, "style.");
       }
 
-      final DefaultStyleKeyMetaData metaData = new DefaultStyleKeyMetaData
-          (key, handler.getPropertyEditor(), bundle, "style.",
-              handler.isExpert(), handler.isPreferred(), handler.isHidden(), handler.isDeprecated(),
-              handler.isExperimental(), handler.getCompatibilityLevel());
+      final DefaultStyleKeyMetaData metaData = new DefaultStyleKeyMetaData(handler);
       styles.put(key, metaData);
     }
   }

@@ -17,36 +17,26 @@
 
 package org.pentaho.reporting.engine.classic.core.metadata.parser;
 
+import java.beans.PropertyEditor;
+
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.pentaho.reporting.engine.classic.core.metadata.DefaultExpressionPropertyCore;
 import org.pentaho.reporting.engine.classic.core.metadata.DefaultExpressionPropertyMetaData;
 import org.pentaho.reporting.engine.classic.core.metadata.ExpressionPropertyCore;
 import org.pentaho.reporting.engine.classic.core.metadata.ExpressionPropertyMetaData;
 import org.pentaho.reporting.engine.classic.core.metadata.SharedBeanInfo;
-import org.pentaho.reporting.engine.classic.core.modules.parser.base.ReportParserUtil;
+import org.pentaho.reporting.engine.classic.core.metadata.builder.ExpressionPropertyMetaDataBuilder;
 import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
-import org.pentaho.reporting.libraries.xmlns.parser.AbstractXmlReadHandler;
 import org.pentaho.reporting.libraries.xmlns.parser.ParseException;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 
-public class ExpressionPropertyReadHandler extends AbstractXmlReadHandler
+public class ExpressionPropertyReadHandler extends AbstractMetaDataReadHandler
 {
-  private String name;
-  private boolean preferred;
-  private boolean mandatory;
-  private boolean expert;
-  private boolean hidden;
-  private String valueRole;
-  private boolean deprecated;
   private SharedBeanInfo beanInfo;
   private String bundleLocation;
-  private String propertyEditorClass;
-  private boolean computed;
-  private ExpressionPropertyCore expressionPropertyCore;
   private boolean validatePropertiesOnBoot;
-  private boolean experimental;
-  private int compatibilityLevel;
+  private ExpressionPropertyMetaDataBuilder builder;
 
   public ExpressionPropertyReadHandler(final SharedBeanInfo beanInfo,
                                        final String bundleLocation)
@@ -55,6 +45,13 @@ public class ExpressionPropertyReadHandler extends AbstractXmlReadHandler
         ("org.pentaho.reporting.engine.classic.core.metadata.StrictValidation"));
     this.beanInfo = beanInfo;
     this.bundleLocation = bundleLocation;
+
+    this.builder = new ExpressionPropertyMetaDataBuilder();
+  }
+
+  public ExpressionPropertyMetaDataBuilder getBuilder()
+  {
+    return builder;
   }
 
   /**
@@ -65,38 +62,29 @@ public class ExpressionPropertyReadHandler extends AbstractXmlReadHandler
    */
   protected void startParsing(final Attributes attrs) throws SAXException
   {
-    name = attrs.getValue(getUri(), "name");
-    if (name == null)
-    {
-      throw new ParseException("Attribute 'name' is undefined", getLocator());
-    }
+    super.startParsing(attrs);
 
-    experimental = "true".equals(attrs.getValue(getUri(), "experimental")); // NON-NLS
-    compatibilityLevel = ReportParserUtil.parseVersion(attrs.getValue(getUri(), "compatibility-level"));
-    mandatory = "true".equals(attrs.getValue(getUri(), "mandatory")); // NON-NLS
-    expert = "true".equals(attrs.getValue(getUri(), "expert")); // NON-NLS
-    hidden = "true".equals(attrs.getValue(getUri(), "hidden")); // NON-NLS
-    preferred = "true".equals(attrs.getValue(getUri(), "preferred")); // NON-NLS
-    deprecated = "true".equals(attrs.getValue(getUri(), "deprecated")); // NON-NLS
-    computed = "true".equals(attrs.getValue(getUri(), "computed")); // NON-NLS
-
-    valueRole = attrs.getValue(getUri(), "value-role"); // NON-NLS
-    if (valueRole == null)
-    {
-      valueRole = "Value"; // NON-NLS
-    }
-    
-    propertyEditorClass = attrs.getValue(getUri(), "propertyEditor"); // NON-NLS
+    getBuilder().mandatory("true".equals(attrs.getValue(getUri(), "mandatory"))); // NON-NLS
+    getBuilder().computed("true".equals(attrs.getValue(getUri(), "computed"))); // NON-NLS
+    getBuilder().valueRole(parseValueRole(attrs));
+    getBuilder().editor(parsePropertyEditor(attrs));
+    getBuilder().core(parsePropertyCore(attrs));
+    getBuilder().bundle(getEffectiveBundle(), "property.");
+    getBuilder().descriptorFromParent(beanInfo.getBeanClass());
 
     if (validatePropertiesOnBoot)
     {
-      if (beanInfo.getPropertyDescriptor(name) == null)
+      if (beanInfo.getPropertyDescriptor(getName()) == null)
       {
-        throw new ParseException("Attribute 'name' with value '" + name + "' does not reference a valid property. ["
+        throw new ParseException("Attribute 'name' with value '" + getName() + "' does not reference a valid property. ["
             + beanInfo.getBeanClass() + "]", getLocator());
       }
     }
+  }
 
+  private ExpressionPropertyCore parsePropertyCore(final Attributes attrs) throws ParseException
+  {
+    final ExpressionPropertyCore expressionPropertyCore;
     final String metaDataCoreClass = attrs.getValue(getUri(), "impl"); // NON-NLS
     if (metaDataCoreClass != null)
     {
@@ -111,41 +99,33 @@ public class ExpressionPropertyReadHandler extends AbstractXmlReadHandler
     {
       expressionPropertyCore = new DefaultExpressionPropertyCore();
     }
+    return expressionPropertyCore;
   }
 
-  public String getName()
+  private Class<? extends PropertyEditor> parsePropertyEditor(final Attributes attrs)
   {
-    return name;
+    String propertyEditorClass = attrs.getValue(getUri(), "propertyEditor"); // NON-NLS
+    return ObjectUtilities.loadAndValidate(propertyEditorClass, ExpressionPropertyReadHandler.class, PropertyEditor.class);
   }
 
-  public boolean isPreferred()
+  private String parseValueRole(final Attributes attrs)
   {
-    return preferred;
+    String valueRole = attrs.getValue(getUri(), "value-role"); // NON-NLS
+    if (valueRole == null)
+    {
+      valueRole = "Value"; // NON-NLS
+    }
+    return valueRole;
   }
 
   public boolean isMandatory()
   {
-    return mandatory;
-  }
-
-  public boolean isExpert()
-  {
-    return expert;
-  }
-
-  public boolean isDeprecated()
-  {
-    return deprecated;
-  }
-
-  public boolean isHidden()
-  {
-    return hidden;
+    return getBuilder().isMandatory();
   }
 
   public String getValueRole()
   {
-    return valueRole;
+    return getBuilder().getValueRole();
   }
 
   /**
@@ -156,8 +136,14 @@ public class ExpressionPropertyReadHandler extends AbstractXmlReadHandler
    */
   public ExpressionPropertyMetaData getObject() throws SAXException
   {
-    return new DefaultExpressionPropertyMetaData
-        (name, bundleLocation, expert, preferred, hidden, deprecated, mandatory, computed, valueRole,
-            beanInfo, propertyEditorClass, expressionPropertyCore, experimental, compatibilityLevel);
+    return new DefaultExpressionPropertyMetaData(getBuilder());
+  }
+
+  public String getEffectiveBundle()
+  {
+    if (getBundle() != null) {
+      return getBundle();
+    }
+    return bundleLocation;
   }
 }

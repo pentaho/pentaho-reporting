@@ -18,190 +18,66 @@
 package org.pentaho.reporting.engine.classic.core.meta;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Locale;
+import java.util.List;
 
-import junit.framework.TestCase;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.pentaho.reporting.engine.classic.core.metadata.AttributeMetaData;
 import org.pentaho.reporting.engine.classic.core.metadata.ElementMetaData;
 import org.pentaho.reporting.engine.classic.core.metadata.ElementTypeRegistry;
 import org.pentaho.reporting.engine.classic.core.metadata.StyleMetaData;
-import org.pentaho.reporting.libraries.base.util.HashNMap;
+import org.pentaho.reporting.engine.classic.core.testsupport.base.MetaDataValidationTestBase;
 
 @SuppressWarnings("HardCodedStringLiteral")
-public class AttributeMetaDataValidationTest extends TestCase
+public class AttributeMetaDataValidationTest extends MetaDataValidationTestBase<ElementMetaData>
 {
   private static final Log logger = LogFactory.getLog(AttributeMetaDataValidationTest.class);
-  private ArrayList<String> missingProperties;
 
   public AttributeMetaDataValidationTest()
   {
   }
 
-  public void setUp() throws Exception
-  {
-    ClassicEngineBoot.getInstance().start();
-  }
-
+  @Test
   public void testMetaData()
   {
-    int invalidExpressionsCounter = 0;
-    final HashNMap<String,ElementMetaData> expressionsByGroup = new HashNMap<String,ElementMetaData>();
-    missingProperties = new ArrayList<String>();
 
     final ElementTypeRegistry registry = ElementTypeRegistry.getInstance();
     final ElementMetaData[] elementMetaDatas = registry.getAllElementTypes();
-    for (int i = 0; i < elementMetaDatas.length; i++)
-    {
-      final ElementMetaData metaData = elementMetaDatas[i];
-      if (metaData == null)
-      {
-        logger.warn("Null Expression encountered");
-        continue;
-      }
 
-      missingProperties.clear();
+    List<ElementMetaData> failedOnes = super.performTest(elementMetaDatas);
 
-      try
-      {
-        final Object type = metaData.create();
-      }
-      catch (InstantiationException e)
-      {
-        fail("metadata creation failed");
-
-      }
-
-      final String typeName = metaData.getName();
-      logger.debug("Processing " + typeName);
-
-      final Locale locale = Locale.getDefault();
-      final String displayName = metaData.getDisplayName(locale);
-      if (isValid(displayName) == false)
-      {
-        logger.warn("ElementType '" + typeName + ": No valid display name");
-      }
-      if (metaData.isDeprecated())
-      {
-        final String deprecateMessage = metaData.getDeprecationMessage(locale);
-        if (isValid(deprecateMessage) == false)
-        {
-          logger.warn("ElementType '" + typeName + ": No valid deprecate message");
-        }
-      }
-      final String grouping = metaData.getGrouping(locale);
-      if (isValid(grouping) == false)
-      {
-        logger.warn("ElementType '" + typeName + ": No valid grouping message");
-      }
-
-      expressionsByGroup.add(grouping, metaData);
-
-      final StyleMetaData[] styleMetaDatas = metaData.getStyleDescriptions();
-      for (int j = 0; j < styleMetaDatas.length; j++)
-      {
-        final StyleMetaData propertyMetaData = styleMetaDatas[j];
-        final String propertyDisplayName = propertyMetaData.getDisplayName(locale);
-        if (isValid(propertyDisplayName) == false)
-        {
-          logger.warn("ElementType '" + typeName + ": Style " + propertyMetaData.getName() + ": No DisplayName");
-        }
-
-        final String propertyGrouping = propertyMetaData.getGrouping(locale);
-        if (isValid(propertyGrouping) == false)
-        {
-          logger.warn("ElementType '" + typeName + ": Style " + propertyMetaData.getName() + ": Grouping is not valid");
-        }
-        if (propertyMetaData.isDeprecated())
-        {
-          final String deprecateMessage = propertyMetaData.getDeprecationMessage(locale);
-          if (isValid(deprecateMessage) == false)
-          {
-            logger.warn(
-                "ElementType '" + typeName + ": Style " + propertyMetaData.getName() + ": No valid deprecate message");
-          }
-        }
-      }
-
-
-      final AttributeMetaData[] attributeMetaDatas = metaData.getAttributeDescriptions();
-      for (int j = 0; j < attributeMetaDatas.length; j++)
-      {
-        final AttributeMetaData propertyMetaData = attributeMetaDatas[j];
-        final String propertyDisplayName = propertyMetaData.getDisplayName(locale);
-        if (isValid(propertyDisplayName) == false)
-        {
-          logger.warn("ElementType '" + typeName + ": Attr " + propertyMetaData.getName() + ": No DisplayName");
-        }
-
-        final String propertyGrouping = propertyMetaData.getGrouping(locale);
-        if (isValid(propertyGrouping) == false)
-        {
-          logger.warn("ElementType '" + typeName + ": Attr " + propertyMetaData.getName() + ": Grouping is not valid");
-        }
-        if (propertyMetaData.isDeprecated())
-        {
-          final String deprecateMessage = propertyMetaData.getDeprecationMessage(locale);
-          if (isValid(deprecateMessage) == false)
-          {
-            logger.warn(
-                "ElementType '" + typeName + ": Attr " + propertyMetaData.getName() + ": No valid deprecate message");
-          }
-        }
-      }
-
-      System.err.flush();
-      try
-      {
-        Thread.sleep(25);
-      }
-      catch (InterruptedException e)
-      {
-      }
-
-      for (int x = 0; x < missingProperties.size(); x++)
-      {
-        final String property = missingProperties.get(x);
-        System.out.println(property);
-      }
-
-      if (missingProperties.isEmpty() == false)
-      {
-        invalidExpressionsCounter += 1;
-        missingProperties.clear();
-      }
-      System.out.flush();
-      try
-      {
-        Thread.sleep(25);
-      }
-      catch (InterruptedException e)
-      {
-      }
-    }
-
-    assertEquals(0, invalidExpressionsCounter);
-
+    Assert.assertEquals(new ArrayList<ElementMetaData>(), failedOnes);
   }
 
-  private boolean isValid(final String translation)
+  protected void performTestOnElement(final ElementMetaData metaData)
   {
-    if (translation == null)
-    {
-      return false;
-    }
-    if (translation.length() > 2 &&
-        translation.charAt(0) == '!' &&
-        translation.charAt(translation.length() - 1) == '!')
-    {
-      final String retval = translation.substring(1, translation.length() - 1);
-      missingProperties.add(retval);
-      return false;
-    }
-    return true;
-  }
+    final String typeName = metaData.getName();
+    logger.debug("Processing " + typeName);
 
+    try
+    {
+      final Object type = metaData.create();
+    }
+    catch (InstantiationException e)
+    {
+      Assert.fail("metadata creation failed");
+
+    }
+
+    validate(metaData);
+
+    for (StyleMetaData md : metaData.getStyleDescriptions())
+    {
+      validate(md);
+    }
+
+    for (AttributeMetaData md : metaData.getAttributeDescriptions())
+    {
+      validate(md);
+    }
+  }
 }

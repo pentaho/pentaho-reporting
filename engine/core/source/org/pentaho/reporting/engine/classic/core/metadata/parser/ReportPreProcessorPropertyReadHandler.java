@@ -17,15 +17,16 @@
 
 package org.pentaho.reporting.engine.classic.core.metadata.parser;
 
+import java.beans.PropertyEditor;
+
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.pentaho.reporting.engine.classic.core.metadata.DefaultReportPreProcessorPropertyCore;
 import org.pentaho.reporting.engine.classic.core.metadata.DefaultReportPreProcessorPropertyMetaData;
 import org.pentaho.reporting.engine.classic.core.metadata.ReportPreProcessorPropertyCore;
 import org.pentaho.reporting.engine.classic.core.metadata.ReportPreProcessorPropertyMetaData;
 import org.pentaho.reporting.engine.classic.core.metadata.SharedBeanInfo;
-import org.pentaho.reporting.engine.classic.core.modules.parser.base.ReportParserUtil;
+import org.pentaho.reporting.engine.classic.core.metadata.builder.ReportPreProcessorPropertyMetaDataBuilder;
 import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
-import org.pentaho.reporting.libraries.xmlns.parser.AbstractXmlReadHandler;
 import org.pentaho.reporting.libraries.xmlns.parser.ParseException;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
@@ -33,31 +34,28 @@ import org.xml.sax.SAXException;
 /**
  * @noinspection HardCodedStringLiteral
  */
-public class ReportPreProcessorPropertyReadHandler extends AbstractXmlReadHandler
+public class ReportPreProcessorPropertyReadHandler extends AbstractMetaDataReadHandler
 {
   private boolean validatePropertiesOnBoot;
-  private String name;
-  private boolean preferred;
-  private boolean mandatory;
-  private boolean expert;
-  private boolean hidden;
-  private String valueRole;
-  private boolean deprecated;
-  private SharedBeanInfo expression;
+  private SharedBeanInfo beanInfo;
   private String bundleLocation;
-  private String propertyEditorClass;
-  private boolean computed;
-  private ReportPreProcessorPropertyCore reportPreProcessorPropertyCore;
-  private boolean experimental;
-  private int compatibilityLevel;
 
-  public ReportPreProcessorPropertyReadHandler(final SharedBeanInfo expression,
+  private ReportPreProcessorPropertyMetaDataBuilder builder;
+
+  public ReportPreProcessorPropertyReadHandler(final SharedBeanInfo beanInfo,
                                                final String bundleLocation)
   {
     this.validatePropertiesOnBoot = "true".equals(ClassicEngineBoot.getInstance().getGlobalConfig().getConfigProperty
         ("org.pentaho.reporting.engine.classic.core.metadata.StrictValidation"));
-    this.expression = expression;
+    this.beanInfo = beanInfo;
     this.bundleLocation = bundleLocation;
+
+    this.builder = new ReportPreProcessorPropertyMetaDataBuilder();
+  }
+
+  public ReportPreProcessorPropertyMetaDataBuilder getBuilder()
+  {
+    return builder;
   }
 
   /**
@@ -68,88 +66,78 @@ public class ReportPreProcessorPropertyReadHandler extends AbstractXmlReadHandle
    */
   protected void startParsing(final Attributes attrs) throws SAXException
   {
-    name = attrs.getValue(getUri(), "name");
-    if (name == null)
-    {
-      throw new ParseException("Attribute 'name' is undefined", getLocator());
-    }
-
-    mandatory = "true".equals(attrs.getValue(getUri(), "mandatory"));
-    expert = "true".equals(attrs.getValue(getUri(), "expert"));
-    hidden = "true".equals(attrs.getValue(getUri(), "hidden"));
-    preferred = "true".equals(attrs.getValue(getUri(), "preferred"));
-    deprecated = "true".equals(attrs.getValue(getUri(), "deprecated"));
-    computed = "true".equals(attrs.getValue(getUri(), "computed"));
-    experimental = "true".equals(attrs.getValue(getUri(), "experimental")); // NON-NLS
-    compatibilityLevel = ReportParserUtil.parseVersion(attrs.getValue(getUri(), "compatibility-level"));
-
-    valueRole = attrs.getValue(getUri(), "value-role");
-    if (valueRole == null)
-    {
-      valueRole = "Value";
-    }
-
-    propertyEditorClass = attrs.getValue(getUri(), "propertyEditor");
+    super.startParsing(attrs);
+    getBuilder().mandatory("true".equals(attrs.getValue(getUri(), "mandatory"))); // NON-NLS
+    getBuilder().computed("true".equals(attrs.getValue(getUri(), "computed"))); // NON-NLS
+    getBuilder().valueRole(parseValueRole(attrs));
+    getBuilder().editor(parsePropertyEditor(attrs));
+    getBuilder().core(parsePropertyCore(attrs));
+    getBuilder().bundle(getEffectiveBundle(), "property.");
+    getBuilder().descriptorFromParent(beanInfo.getBeanClass());
 
     if (validatePropertiesOnBoot)
     {
-      if (expression.getPropertyDescriptor(name) == null)
+      if (beanInfo.getPropertyDescriptor(getName()) == null)
       {
-        throw new ParseException("Attribute 'name' with value '" + name + "' does not reference a valid property. ["
-            + expression + "]", getLocator());
+        throw new ParseException("Attribute 'name' with value '" + getName() + "' does not reference a valid property. ["
+            + beanInfo + "]", getLocator());
       }
     }
+  }
 
+  public String getEffectiveBundle()
+  {
+    if (getBundle() != null)
+    {
+      return getBundle();
+    }
+    return bundleLocation;
+  }
 
+  private ReportPreProcessorPropertyCore parsePropertyCore(final Attributes attrs) throws ParseException
+  {
+    final ReportPreProcessorPropertyCore core;
     final String metaDataCoreClass = attrs.getValue(getUri(), "impl"); // NON-NLS
     if (metaDataCoreClass != null)
     {
-      reportPreProcessorPropertyCore = ObjectUtilities.loadAndInstantiate
+      core = ObjectUtilities.loadAndInstantiate
           (metaDataCoreClass, ReportPreProcessorPropertyReadHandler.class, ReportPreProcessorPropertyCore.class);
-      if (reportPreProcessorPropertyCore == null)
+      if (core == null)
       {
         throw new ParseException("Attribute 'impl' references a invalid ReportPreProcessorPropertyCore implementation.", getLocator());
       }
+      return core;
     }
     else
     {
-      reportPreProcessorPropertyCore = new DefaultReportPreProcessorPropertyCore();
+      return new DefaultReportPreProcessorPropertyCore();
     }
   }
 
-  public String getName()
+  private Class<? extends PropertyEditor> parsePropertyEditor(final Attributes attrs)
   {
-    return name;
+    String propertyEditorClass = attrs.getValue(getUri(), "propertyEditor"); // NON-NLS
+    return ObjectUtilities.loadAndValidate(propertyEditorClass, ExpressionPropertyReadHandler.class, PropertyEditor.class);
   }
 
-  public boolean isPreferred()
+  private String parseValueRole(final Attributes attrs)
   {
-    return preferred;
+    String valueRole = attrs.getValue(getUri(), "value-role"); // NON-NLS
+    if (valueRole == null)
+    {
+      valueRole = "Value"; // NON-NLS
+    }
+    return valueRole;
   }
 
   public boolean isMandatory()
   {
-    return mandatory;
-  }
-
-  public boolean isExpert()
-  {
-    return expert;
-  }
-
-  public boolean isDeprecated()
-  {
-    return deprecated;
-  }
-
-  public boolean isHidden()
-  {
-    return hidden;
+    return getBuilder().isMandatory();
   }
 
   public String getValueRole()
   {
-    return valueRole;
+    return getBuilder().getValueRole();
   }
 
   /**
@@ -160,9 +148,6 @@ public class ReportPreProcessorPropertyReadHandler extends AbstractXmlReadHandle
    */
   public ReportPreProcessorPropertyMetaData getObject() throws SAXException
   {
-    return new DefaultReportPreProcessorPropertyMetaData
-        (name, bundleLocation, expert, preferred, hidden, deprecated, mandatory,
-            computed, valueRole, expression, propertyEditorClass, reportPreProcessorPropertyCore,
-            experimental, compatibilityLevel);
+    return new DefaultReportPreProcessorPropertyMetaData(getBuilder());
   }
 }

@@ -17,6 +17,13 @@
 
 package org.pentaho.reporting.engine.classic.core.metadata.parser;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
+import org.pentaho.reporting.engine.classic.core.metadata.builder.StyleMetaDataBuilder;
+import org.pentaho.reporting.libraries.base.util.ArgumentNullException;
+
 /**
  * A internal helper object to store an attribute-group definition.
  *
@@ -25,20 +32,15 @@ package org.pentaho.reporting.engine.classic.core.metadata.parser;
 public class StyleGroup
 {
   private String name;
-  private StyleReadHandler[] metaData;
+  private ArrayList<StyleMetaDataBuilder> metaData;
 
-  public StyleGroup(final String name, final StyleReadHandler[] metaData)
+  public StyleGroup(final String name, final Collection<StyleMetaDataBuilder> metaData)
   {
-    if (name == null)
-    {
-      throw new NullPointerException();
-    }
-    if (metaData == null)
-    {
-      throw new NullPointerException();
-    }
+    ArgumentNullException.validate("name", name);
+    ArgumentNullException.validate("metaData", metaData);
+
     this.name = name;
-    this.metaData = (StyleReadHandler[]) metaData.clone();
+    this.metaData = new ArrayList<StyleMetaDataBuilder>(metaData);
   }
 
   public String getName()
@@ -46,8 +48,8 @@ public class StyleGroup
     return name;
   }
 
-  public StyleReadHandler[] getMetaData()
+  public List<StyleMetaDataBuilder> getMetaData()
   {
-    return (StyleReadHandler[]) metaData.clone();
+    return (List<StyleMetaDataBuilder>) metaData.clone();
   }
 }

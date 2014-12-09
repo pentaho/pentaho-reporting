@@ -29,6 +29,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import org.pentaho.reporting.engine.classic.core.metadata.MaturityLevel;
 import org.pentaho.reporting.engine.classic.extensions.drilldown.DrillDownProfile;
 import org.pentaho.reporting.libraries.designtime.swing.CommonDialog;
 
@@ -215,7 +216,7 @@ public abstract class AbstractDrillDownEditor extends CommonDialog
   public DrillDownProfile createFromUI()
   {
     return new DrillDownProfile(getProfileName(), getBundleName(), getProfileName() + ".",
-        isExpert(), isPreferred(), isHidden(), isDeprecated(), getCustomizerType(), getAttributes(), false, -1);
+        isExpert(), isPreferred(), isHidden(), isDeprecated(), getCustomizerType(), getAttributes(), MaturityLevel.Limited, -1);
   }
 
   protected abstract Map<String, String> getAttributes();

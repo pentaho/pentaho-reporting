@@ -27,6 +27,7 @@ import java.util.Map;
 
 import org.pentaho.reporting.engine.classic.core.function.Expression;
 import org.pentaho.reporting.engine.classic.core.function.Function;
+import org.pentaho.reporting.engine.classic.core.metadata.builder.ExpressionMetaDataBuilder;
 
 public class DefaultExpressionMetaData extends AbstractMetaData implements ExpressionMetaData
 {
@@ -34,9 +35,9 @@ public class DefaultExpressionMetaData extends AbstractMetaData implements Expre
   public static final int ELEMENT_LAYOUT_PROCESSOR = 1;
   public static final int GLOBAL_LAYOUT_PROCESSOR = 2;
 
-  private Class expressionType;
-  private Class resultType;
-  private HashMap<String,ExpressionPropertyMetaData> properties;
+  private Class<? extends Expression> expressionType;
+  private Class<?> resultType;
+  private HashMap<String, ExpressionPropertyMetaData> properties;
   private int layoutProcessorMode;
 
   private transient SharedBeanInfo beanInfo;
@@ -48,16 +49,16 @@ public class DefaultExpressionMetaData extends AbstractMetaData implements Expre
                                    final boolean preferred,
                                    final boolean hidden,
                                    final boolean deprecated,
-                                   final Class expressionType,
-                                   final Class resultType,
-                                   final Map<String,ExpressionPropertyMetaData> attributes,
+                                   final Class<? extends Expression> expressionType,
+                                   final Class<?> resultType,
+                                   final Map<String, ExpressionPropertyMetaData> attributes,
                                    final SharedBeanInfo beanInfo,
                                    final int layoutProcessorMode,
-                                   final boolean experimental,
+                                   final MaturityLevel maturityLevel,
                                    final int compatibilityLevel)
   {
     super(expressionType.getName(), bundleLocation, "",
-        expert, preferred, hidden, deprecated, experimental, compatibilityLevel);
+        expert, preferred, hidden, deprecated, maturityLevel, compatibilityLevel);
     if (resultType == null)
     {
       throw new NullPointerException();
@@ -74,8 +75,19 @@ public class DefaultExpressionMetaData extends AbstractMetaData implements Expre
     this.expressionType = expressionType;
     this.layoutProcessorMode = layoutProcessorMode;
     this.resultType = resultType;
-    this.properties = new HashMap<String,ExpressionPropertyMetaData>(attributes);
+    this.properties = new HashMap<String, ExpressionPropertyMetaData>(attributes);
     this.beanInfo = beanInfo;
+  }
+
+  public DefaultExpressionMetaData(final ExpressionMetaDataBuilder builder)
+  {
+    super(builder);
+    this.expressionType = builder.getImpl();
+    this.layoutProcessorMode = builder.getLayoutComputation();
+    this.resultType = builder.getResultType();
+    this.properties = builder.getProperties();
+
+    this.beanInfo = new SharedBeanInfo(expressionType);
   }
 
   protected String computePrefix(final String keyPrefix, final String name)
@@ -107,7 +119,7 @@ public class DefaultExpressionMetaData extends AbstractMetaData implements Expre
   {
     try
     {
-      return (Expression) expressionType.newInstance();
+      return expressionType.newInstance();
     }
     catch (Exception e)
     {
@@ -188,14 +200,14 @@ public class DefaultExpressionMetaData extends AbstractMetaData implements Expre
   }
 
   private void writeObject(ObjectOutputStream out)
-     throws IOException
+      throws IOException
   {
     out.defaultWriteObject();
     out.writeObject(beanInfo.getBeanClass());
   }
 
   private void readObject(ObjectInputStream in)
-     throws IOException, ClassNotFoundException
+      throws IOException, ClassNotFoundException
   {
     in.defaultReadObject();
     final Class c = (Class) in.readObject();

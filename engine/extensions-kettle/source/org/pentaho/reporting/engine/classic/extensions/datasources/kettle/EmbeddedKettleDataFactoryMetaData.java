@@ -23,6 +23,7 @@ import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.pentaho.reporting.engine.classic.core.DataFactory;
 import org.pentaho.reporting.engine.classic.core.designtime.DataSourcePlugin;
 import org.pentaho.reporting.engine.classic.core.metadata.DefaultDataFactoryMetaData;
+import org.pentaho.reporting.engine.classic.core.metadata.MaturityLevel;
 
 public class EmbeddedKettleDataFactoryMetaData extends DefaultDataFactoryMetaData
 {
@@ -51,7 +52,7 @@ public class EmbeddedKettleDataFactoryMetaData extends DefaultDataFactoryMetaDat
         true,  // editable
         false, // free-form
         false, // metadata-source
-        false, // experimental
+        MaturityLevel.Production, // experimental
         new KettleDataFactoryCore(),
         ClassicEngineBoot.computeVersionId(4, 0, 0));
 

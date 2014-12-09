@@ -17,33 +17,49 @@
 
 package org.pentaho.reporting.engine.classic.core.metadata;
 
+import java.util.List;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.pentaho.reporting.engine.classic.core.ReportProcessTask;
+import org.pentaho.reporting.engine.classic.core.metadata.builder.ReportProcessTaskMetaDataBuilder;
 
 public class DefaultReportProcessTaskMetaData extends AbstractMetaData implements ReportProcessTaskMetaData
 {
   private static final Log logger = LogFactory.getLog(DefaultReportProcessTaskMetaData.class);
-  private Class implementation;
-  private String configurationPrefix;
+
+  private Class<? extends ReportProcessTask> implementation;
   private String[] aliases;
 
+  @Deprecated
   public DefaultReportProcessTaskMetaData(final String name,
                                           final String bundleLocation,
                                           final boolean expert,
                                           final boolean preferred,
                                           final boolean hidden,
                                           final boolean deprecated,
-                                          final boolean experimental,
+                                          final MaturityLevel maturityLevel,
                                           final int compatibilityLevel,
-                                          final Class implementation,
+                                          final Class<? extends ReportProcessTask> implementation,
                                           final String configurationPrefix,
                                           final String[] aliases)
   {
-    super(name, bundleLocation, "", expert, preferred, hidden, deprecated, experimental, compatibilityLevel);
+    super(name, bundleLocation, "", expert, preferred, hidden, deprecated, maturityLevel, compatibilityLevel);
     this.implementation = implementation;
-    this.configurationPrefix = configurationPrefix;
     this.aliases = aliases.clone();
+  }
+
+  public DefaultReportProcessTaskMetaData(final ReportProcessTaskMetaDataBuilder builder)
+  {
+    super(builder);
+    this.implementation = builder.getImplementation();
+    List<String> aliasList = builder.getAliases();
+    this.aliases = aliasList.toArray(new String[aliasList.size()]);
+  }
+
+  protected String computePrefix(final String keyPrefix, final String name)
+  {
+    return "";
   }
 
   public String[] getAlias()
@@ -55,10 +71,11 @@ public class DefaultReportProcessTaskMetaData extends AbstractMetaData implement
   {
     try
     {
-      return (ReportProcessTask) implementation.newInstance();
+      return implementation.newInstance();
     }
-    catch (Throwable e)
+    catch (final Throwable e)
     {
+      logger.warn("Unable to instantiate ReportProcessTask", e);
       throw new IllegalStateException(e);
     }
   }

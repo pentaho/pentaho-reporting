@@ -20,7 +20,7 @@ package org.pentaho.reporting.engine.classic.core.metadata.parser;
 import org.pentaho.reporting.engine.classic.core.metadata.DataFactoryCore;
 import org.pentaho.reporting.engine.classic.core.metadata.DefaultDataFactoryCore;
 import org.pentaho.reporting.engine.classic.core.metadata.DefaultDataFactoryMetaData;
-import org.pentaho.reporting.engine.classic.core.modules.parser.base.ReportParserUtil;
+import org.pentaho.reporting.engine.classic.core.metadata.builder.DataFactoryMetaDataBuilder;
 import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
 import org.pentaho.reporting.libraries.xmlns.parser.ParseException;
 import org.xml.sax.Attributes;
@@ -28,16 +28,16 @@ import org.xml.sax.SAXException;
 
 public class DataFactoryReadHandler extends AbstractMetaDataReadHandler
 {
-  private String bundleName;
-  private boolean editable;
-  private boolean freeformQuery;
-  private boolean formattingMetadataSource;
-  private DataFactoryCore dataFactoryCore;
-  private int compatibilityLevel;
-  private String keyPrefix;
+  private DataFactoryMetaDataBuilder builder;
 
   public DataFactoryReadHandler()
   {
+    builder = new DataFactoryMetaDataBuilder();
+  }
+
+  public DataFactoryMetaDataBuilder getBuilder()
+  {
+    return builder;
   }
 
   /**
@@ -49,32 +49,40 @@ public class DataFactoryReadHandler extends AbstractMetaDataReadHandler
   protected void startParsing(final Attributes attrs) throws SAXException
   {
     super.startParsing(attrs);
-    compatibilityLevel = ReportParserUtil.parseVersion(attrs.getValue(getUri(), "compatibility-level"));// NON-NLS
-    keyPrefix = attrs.getValue(getUri(), "key-prefix"); // NON-NLS
+    final String editable = attrs.getValue(getUri(), "editable"); // NON-NLS
+    getBuilder().editable(editable == null || "true".equals(editable));
+    getBuilder().freeformQuery("true".equals(attrs.getValue(getUri(), "freeform-query"))); // NON-NLS
+    getBuilder().formattingMetadataSource("true".equals(attrs.getValue(getUri(), "metadata-source"))); // NON-NLS
+    getBuilder().dataFactoryCore(parseDataFactoryCore(attrs));
+    getBuilder().bundle(getBundle(), parseKeyPrefix(attrs));
+  }
+
+  private String parseKeyPrefix(final Attributes attrs)
+  {
+    String keyPrefix = attrs.getValue(getUri(), "key-prefix"); // NON-NLS
     if (keyPrefix == null)
     {
       keyPrefix = "";
     }
-    final String editable = attrs.getValue(getUri(), "editable"); // NON-NLS
-    this.editable = editable == null || "true".equals(editable);
-    freeformQuery = "true".equals(attrs.getValue(getUri(), "freeform-query")); // NON-NLS
-    formattingMetadataSource = "true".equals(attrs.getValue(getUri(), "metadata-source")); // NON-NLS
+    return keyPrefix;
+  }
 
-    bundleName = attrs.getValue(getUri(), "bundle-name"); // NON-NLS
-
+  private DataFactoryCore parseDataFactoryCore(final Attributes attrs) throws ParseException
+  {
     final String metaDataCoreClass = attrs.getValue(getUri(), "impl"); // NON-NLS
     if (metaDataCoreClass != null)
     {
-      dataFactoryCore = ObjectUtilities.loadAndInstantiate
+      DataFactoryCore dataFactoryCore = ObjectUtilities.loadAndInstantiate
           (metaDataCoreClass, DataFactoryReadHandler.class, DataFactoryCore.class);
       if (dataFactoryCore == null)
       {
         throw new ParseException("Attribute 'impl' references a invalid DataFactoryPropertyCore implementation.", getLocator());
       }
+      return dataFactoryCore;
     }
     else
     {
-      dataFactoryCore = new DefaultDataFactoryCore();
+      return new DefaultDataFactoryCore();
     }
   }
 
@@ -95,9 +103,6 @@ public class DataFactoryReadHandler extends AbstractMetaDataReadHandler
    */
   public Object getObject() throws SAXException
   {
-    return new DefaultDataFactoryMetaData
-        (getName(), bundleName, keyPrefix, isExpert(), isPreferred(), isHidden(), isDeprecated(),
-            editable, freeformQuery, formattingMetadataSource, isExperimental(),
-            dataFactoryCore, compatibilityLevel);
+    return new DefaultDataFactoryMetaData(getBuilder());
   }
 }

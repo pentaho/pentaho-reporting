@@ -17,9 +17,16 @@
 
 package org.pentaho.reporting.engine.classic.core.metadata.parser;
 
+import java.beans.PropertyEditor;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.pentaho.reporting.engine.classic.core.metadata.AttributeCore;
+import org.pentaho.reporting.engine.classic.core.metadata.AttributeMetaData;
 import org.pentaho.reporting.engine.classic.core.metadata.DefaultAttributeCore;
+import org.pentaho.reporting.engine.classic.core.metadata.DefaultAttributeMetaData;
 import org.pentaho.reporting.engine.classic.core.metadata.ElementTypeRegistry;
+import org.pentaho.reporting.engine.classic.core.metadata.builder.AttributeMetaDataBuilder;
 import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
 import org.pentaho.reporting.libraries.xmlns.parser.ParseException;
 import org.xml.sax.Attributes;
@@ -27,21 +34,20 @@ import org.xml.sax.SAXException;
 
 public class AttributeReadHandler extends AbstractMetaDataReadHandler
 {
-  private String namespace;
-  private String namespacePrefix;
-  private boolean mandatory;
-  private boolean computed;
-  private boolean transientFlag;
-  private Class<?> valueType;
-  private String valueRole;
-  private boolean bulk;
-  private String propertyEditor;
-  private boolean designTimeValue;
-  private AttributeCore attributeCore;
+  private static final Log logger = LogFactory.getLog(AttributeReadHandler.class);
+  private AttributeMetaDataBuilder builder;
+  private String prefix;
 
-  public AttributeReadHandler(final String bundle)
+  public AttributeReadHandler(final String defaultBundle, final String prefix)
   {
-    super(bundle);
+    super(defaultBundle);
+    this.prefix = prefix;
+    this.builder = new AttributeMetaDataBuilder();
+  }
+
+  public AttributeMetaDataBuilder getBuilder()
+  {
+    return builder;
   }
 
   /**
@@ -53,46 +59,37 @@ public class AttributeReadHandler extends AbstractMetaDataReadHandler
   protected void startParsing(final Attributes attrs) throws SAXException
   {
     super.startParsing(attrs);
-    namespace = attrs.getValue(getUri(), "namespace"); // NON-NLS
-    if (namespace == null)
-    {
-      throw new ParseException("Attribute 'namespace' is undefined", getLocator());
-    }
+    getBuilder().namespace(parseNamespace(attrs));
+    getBuilder().namespacePrefix(parseNamespacePrefix(attrs));
+    getBuilder().mandatory("true".equals(attrs.getValue(getUri(), "mandatory"))); // NON-NLS
+    getBuilder().computed("true".equals(attrs.getValue(getUri(), "computed"))); // NON-NLS
+    getBuilder().transientFlag("true".equals(attrs.getValue(getUri(), "transient"))); // NON-NLS
+    getBuilder().bulk("true".equals(attrs.getValue(getUri(), "prefer-bulk"))); // NON-NLS
+    getBuilder().designTime("true".equals(attrs.getValue(getUri(), "design-time-value"))); // NON-NLS
+    getBuilder().targetClass(parseValueType(attrs));
+    getBuilder().valueRole(parseValueRole(attrs));
+    getBuilder().propertyEditor(ObjectUtilities.loadAndValidate
+        (attrs.getValue(getUri(), "propertyEditor"), AttributeReadHandler.class, PropertyEditor.class)); // NON-NLS
+    getBuilder().core(parseAttributeCore(attrs));
+    getBuilder().bundle(getBundle(), computePrefix());
+  }
 
-    namespacePrefix = attrs.getValue(getUri(), "namespace-prefix"); // NON-NLS
+  private String computePrefix() {
+    final String namespace = getNamespace();
+    final String attrName = getName();
+    final String namespacePrefix = ElementTypeRegistry.getInstance().getNamespacePrefix(namespace);
     if (namespacePrefix == null)
     {
-      namespacePrefix = ElementTypeRegistry.getInstance().getNamespacePrefix(namespace);
-    }
-    mandatory = "true".equals(attrs.getValue(getUri(), "mandatory")); // NON-NLS
-    computed = "true".equals(attrs.getValue(getUri(), "computed")); // NON-NLS
-    transientFlag = "true".equals(attrs.getValue(getUri(), "transient")); // NON-NLS
-    bulk = "true".equals(attrs.getValue(getUri(), "prefer-bulk")); // NON-NLS
-    designTimeValue = "true".equals(attrs.getValue(getUri(), "design-time-value")); // NON-NLS
-
-    final String valueTypeText = attrs.getValue(getUri(), "value-type"); // NON-NLS
-    if (valueTypeText == null)
-    {
-      throw new ParseException("Attribute 'value-type' is undefined", getLocator());
-    }
-    try
-    {
-      final ClassLoader classLoader = ObjectUtilities.getClassLoader(getClass());
-      valueType = Class.forName(valueTypeText, false, classLoader);
-    }
-    catch (Exception e)
-    {
-      throw new ParseException("Attribute 'value-type' is not valid", e, getLocator());
+      logger.warn("Invalid namespace-prefix, skipping attribute " + namespace + ':' + attrName); // NON-NLS
+      return null;
     }
 
-    valueRole = attrs.getValue(getUri(), "value-role"); // NON-NLS
-    if (valueRole == null)
-    {
-      valueRole = "Value"; // NON-NLS
-    }
+    return prefix + "attribute." + namespacePrefix + '.';// NON-NLS
+  }
 
-    propertyEditor = attrs.getValue(getUri(), "propertyEditor"); // NON-NLS
-
+  private AttributeCore parseAttributeCore(final Attributes attrs) throws ParseException
+  {
+    final AttributeCore attributeCore;
     final String metaDataCoreClass = attrs.getValue(getUri(), "impl"); // NON-NLS
     if (metaDataCoreClass != null)
     {
@@ -107,51 +104,100 @@ public class AttributeReadHandler extends AbstractMetaDataReadHandler
     {
       attributeCore = new DefaultAttributeCore();
     }
+    return attributeCore;
+  }
+
+  private String parseValueRole(final Attributes attrs)
+  {
+    String valueRole = attrs.getValue(getUri(), "value-role"); // NON-NLS
+    if (valueRole == null)
+    {
+      valueRole = "Value"; // NON-NLS
+    }
+    return valueRole;
+  }
+
+  private Class<?> parseValueType(final Attributes attrs) throws ParseException
+  {
+    final String valueTypeText = attrs.getValue(getUri(), "value-type"); // NON-NLS
+    if (valueTypeText == null)
+    {
+      throw new ParseException("Attribute 'value-type' is undefined", getLocator());
+    }
+    try
+    {
+      final ClassLoader classLoader = ObjectUtilities.getClassLoader(getClass());
+      return Class.forName(valueTypeText, false, classLoader);
+    }
+    catch (final Exception e)
+    {
+      throw new ParseException("Attribute 'value-type' is not valid", e, getLocator());
+    }
+  }
+
+  private String parseNamespace(final Attributes attrs) throws ParseException
+  {
+    String namespace = attrs.getValue(getUri(), "namespace");
+    if (namespace == null)
+    {
+      throw new ParseException("Attribute 'namespace' is undefined", getLocator());
+    }
+    return namespace;
+  }
+
+  private String parseNamespacePrefix(final Attributes attrs) throws ParseException
+  {
+    String namespacePrefix = attrs.getValue(getUri(), "namespace-prefix"); // NON-NLS
+    if (namespacePrefix == null)
+    {
+      namespacePrefix = ElementTypeRegistry.getInstance().getNamespacePrefix(parseNamespace(attrs));
+    }
+    return namespacePrefix;
   }
 
   public AttributeCore getAttributeCore()
   {
-    return attributeCore;
+    return getBuilder().getCore();
   }
 
   public String getPropertyEditor()
   {
-    return propertyEditor;
+    return getBuilder().getPropertyEditor().getName();
   }
 
   public String getNamespace()
   {
-    return namespace;
+    return getBuilder().getNamespace();
   }
 
   public boolean isMandatory()
   {
-    return mandatory;
+    return getBuilder().isMandatory();
   }
 
   public boolean isComputed()
   {
-    return computed;
+    return getBuilder().isComputed();
   }
 
   public boolean isTransient()
   {
-    return transientFlag;
+    return getBuilder().isTransientFlag();
   }
 
-  public Class getValueType()
+  public Class<?> getValueType()
   {
-    return valueType;
+    return getBuilder().getTargetClass();
   }
 
   public boolean isBulk()
   {
-    return bulk;
+    return getBuilder().isBulk();
   }
 
   public String getValueRole()
   {
-    return valueRole;
+    return getBuilder().getValueRole();
   }
 
   /**
@@ -162,13 +208,11 @@ public class AttributeReadHandler extends AbstractMetaDataReadHandler
    */
   public AttributeDefinition getObject() throws SAXException
   {
-    return new AttributeDefinition(namespace, namespacePrefix, getName(), isPreferred(), mandatory,
-        isExpert(), isHidden(), computed, transientFlag, valueType, valueRole, propertyEditor,
-        isDeprecated(), bulk, designTimeValue, getBundle(), attributeCore, isExperimental(), getCompatibilityLevel());
+    return new AttributeDefinition(getBuilder());
   }
 
-  public boolean isDesignTimeValue()
+  public AttributeMetaData getMetaData()
   {
-    return designTimeValue;
+    return new DefaultAttributeMetaData(getBuilder());
   }
 }
