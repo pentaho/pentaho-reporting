@@ -96,14 +96,11 @@ public class ExpressionsParameterInspection extends AbstractStructureInspection
         {
           continue;
         }
-        if (WorkspaceSettings.getInstance().isShowExpertItems() == false && metaData.isExpert())
+        if (!WorkspaceSettings.getInstance().isVisible(metaData))
         {
           continue;
         }
-        if (WorkspaceSettings.getInstance().isShowDeprecatedItems() == false && metaData.isDeprecated())
-        {
-          continue;
-        }
+
         final Object o = utility.getProperty(metaData.getName());
         if (metaData.isMandatory() && o == null)
         {
@@ -176,11 +173,7 @@ public class ExpressionsParameterInspection extends AbstractStructureInspection
         {
           continue;
         }
-        if (WorkspaceSettings.getInstance().isShowExpertItems() == false && metaData.isExpert())
-        {
-          continue;
-        }
-        if (WorkspaceSettings.getInstance().isShowDeprecatedItems() == false && metaData.isDeprecated())
+        if (!WorkspaceSettings.getInstance().isVisible(metaData))
         {
           continue;
         }
@@ -298,11 +291,7 @@ public class ExpressionsParameterInspection extends AbstractStructureInspection
         {
           continue;
         }
-        if (WorkspaceSettings.getInstance().isShowExpertItems() == false && metaData.isExpert())
-        {
-          continue;
-        }
-        if (WorkspaceSettings.getInstance().isShowDeprecatedItems() == false && metaData.isDeprecated())
+        if (!WorkspaceSettings.getInstance().isVisible(metaData))
         {
           continue;
         }

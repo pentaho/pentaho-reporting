@@ -216,7 +216,7 @@ public abstract class AbstractDrillDownEditor extends CommonDialog
   public DrillDownProfile createFromUI()
   {
     return new DrillDownProfile(getProfileName(), getBundleName(), getProfileName() + ".",
-        isExpert(), isPreferred(), isHidden(), isDeprecated(), getCustomizerType(), getAttributes(), MaturityLevel.Limited, -1);
+        isExpert(), isPreferred(), isHidden(), isDeprecated(), getCustomizerType(), getAttributes(), MaturityLevel.Production, -1);
   }
 
   protected abstract Map<String, String> getAttributes();

@@ -190,7 +190,7 @@ public class ActionSwingMenuitem extends SwingElement implements DesignerContext
     return String.valueOf(menuitem.getText().charAt(menuitem.getDisplayedMnemonicIndex()));
   }
 
-  protected Action getActionImpl()
+  public Action getActionImpl()
   {
     return action;
   }
@@ -349,7 +349,7 @@ public class ActionSwingMenuitem extends SwingElement implements DesignerContext
   {
     super.setVisible(visible);
     menuitem.setVisible(visible);
-    
+
     final XulComponent parent = getParent();
     if (parent instanceof AbstractXulComponent)
     {

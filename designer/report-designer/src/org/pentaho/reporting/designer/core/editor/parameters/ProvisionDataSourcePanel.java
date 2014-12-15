@@ -66,6 +66,7 @@ import org.pentaho.reporting.engine.classic.core.designtime.datafactory.DesignTi
 import org.pentaho.reporting.engine.classic.core.metadata.DataFactoryMetaData;
 import org.pentaho.reporting.engine.classic.core.metadata.DataFactoryRegistry;
 import org.pentaho.reporting.engine.classic.core.metadata.GroupedMetaDataComparator;
+import org.pentaho.reporting.engine.classic.core.metadata.MaturityLevel;
 import org.pentaho.reporting.engine.classic.core.wizard.DataSchemaModel;
 import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
 import org.pentaho.reporting.libraries.designtime.swing.BorderlessButton;
@@ -414,6 +415,11 @@ public class ProvisionDataSourcePanel extends JPanel
     public DataFactoryContext getDataFactoryContext()
     {
       return new DesignTimeDataFactoryContext(reportDesignerContext.getActiveContext().getContextRoot());
+    }
+
+    public MaturityLevel getMaturityLevel()
+    {
+      return WorkspaceSettings.getInstance().getMaturityLevel();
     }
   }
 

@@ -25,6 +25,7 @@ import org.pentaho.reporting.engine.classic.core.AbstractReportDefinition;
 import org.pentaho.reporting.engine.classic.core.DataFactoryContext;
 import org.pentaho.reporting.engine.classic.core.designtime.DesignTimeContext;
 import org.pentaho.reporting.engine.classic.core.designtime.datafactory.DesignTimeDataFactoryContext;
+import org.pentaho.reporting.engine.classic.core.metadata.MaturityLevel;
 import org.pentaho.reporting.engine.classic.core.modules.gui.commonswing.ExceptionDialog;
 import org.pentaho.reporting.engine.classic.core.wizard.DataSchemaModel;
 import org.pentaho.reporting.libraries.designtime.swing.settings.DefaultLocaleSettings;
@@ -117,5 +118,10 @@ public class DefaultWizardDesignTimeContext implements DesignTimeContext
       return parentContext.getDataFactoryContext();
     }
     return new DesignTimeDataFactoryContext();
+  }
+
+  public MaturityLevel getMaturityLevel()
+  {
+    return parentContext.getMaturityLevel();
   }
 }

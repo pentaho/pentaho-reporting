@@ -256,11 +256,7 @@ public class FormulaErrorInspection extends AbstractStructureInspection
         {
           continue;
         }
-        if (WorkspaceSettings.getInstance().isShowExpertItems() == false && metaData.isExpert())
-        {
-          continue;
-        }
-        if (WorkspaceSettings.getInstance().isShowDeprecatedItems() == false && metaData.isDeprecated())
+        if (!WorkspaceSettings.getInstance().isVisible(metaData))
         {
           continue;
         }

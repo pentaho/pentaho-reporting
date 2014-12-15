@@ -62,19 +62,13 @@ public class ExpressionUtil
   {
     final ArrayList<ExpressionMetaData> allRealExpressions = new ArrayList<ExpressionMetaData>();
     final ArrayList<ExpressionMetaData> allExpressions = new ArrayList<ExpressionMetaData>();
-    final ExpressionMetaData[] allExpressionMetaDatas = ExpressionRegistry.getInstance().getAllExpressionMetaDatas();
-    for (int i = 0; i < allExpressionMetaDatas.length; i++)
+    for (final ExpressionMetaData metaData : ExpressionRegistry.getInstance().getAllExpressionMetaDatas())
     {
-      final ExpressionMetaData metaData = allExpressionMetaDatas[i];
       if (metaData.isHidden())
       {
         continue;
       }
-      if (WorkspaceSettings.getInstance().isShowExpertItems() == false && metaData.isExpert())
-      {
-        continue;
-      }
-      if (WorkspaceSettings.getInstance().isShowDeprecatedItems() == false && metaData.isDeprecated())
+      if (!WorkspaceSettings.getInstance().isVisible(metaData))
       {
         continue;
       }

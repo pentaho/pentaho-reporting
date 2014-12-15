@@ -38,6 +38,7 @@ import org.pentaho.reporting.designer.core.util.undo.UndoManager;
 import org.pentaho.reporting.engine.classic.core.AttributeNames;
 import org.pentaho.reporting.engine.classic.core.Band;
 import org.pentaho.reporting.engine.classic.core.event.ReportModelEvent;
+import org.pentaho.reporting.engine.classic.core.metadata.MaturityLevel;
 import org.pentaho.reporting.engine.classic.core.style.BandStyleKeys;
 import org.pentaho.reporting.engine.classic.core.style.ElementStyleKeys;
 import org.pentaho.reporting.engine.classic.core.style.ElementStyleSheet;
@@ -61,7 +62,7 @@ public class InsertTableAction extends AbstractElementSelectionAction implements
   protected static final Float DEFAULT_HEIGHT = new Float(20);
 
   private boolean expert;
-  private boolean experimental;
+  private MaturityLevel maturityLevel;
   private boolean deprecated;
 
   /**
@@ -82,7 +83,7 @@ public class InsertTableAction extends AbstractElementSelectionAction implements
 
     setEnabled(false);
 
-    experimental = true;
+    maturityLevel = MaturityLevel.Snapshot;
     expert = true;
     deprecated = false;
 
@@ -105,7 +106,7 @@ public class InsertTableAction extends AbstractElementSelectionAction implements
       setVisible(false);
       return;
     }
-    if (WorkspaceSettings.getInstance().isExperimentalFeaturesVisible() == false && experimental)
+    if (!WorkspaceSettings.getInstance().isMatureFeature(maturityLevel))
     {
       setVisible(false);
       return;

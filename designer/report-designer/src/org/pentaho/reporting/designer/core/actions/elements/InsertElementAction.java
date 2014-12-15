@@ -71,9 +71,6 @@ public class InsertElementAction extends AbstractElementSelectionAction implemen
   protected static final Float DEFAULT_HEIGHT = new Float(20);
 
   private ElementMetaData metaData;
-  private boolean expert;
-  private boolean experimental;
-  private boolean deprecated;
 
   /**
    * This is a listener on the global focus manager and gets called whenever the focus changed.
@@ -97,10 +94,6 @@ public class InsertElementAction extends AbstractElementSelectionAction implemen
 
     setEnabled(false);
 
-    experimental = metaData.isExperimental();
-    expert = metaData.isExpert();
-    deprecated = metaData.isDeprecated();
-
     // update from system clipboard status
     focusTracker = new FocusUpdateHandler();
     
@@ -110,26 +103,10 @@ public class InsertElementAction extends AbstractElementSelectionAction implemen
 
   public void settingsChanged()
   {
-    if (WorkspaceSettings.getInstance().isShowExpertItems() == false && expert)
-    {
-      setVisible(false);
-      return;
-    }
-    if (WorkspaceSettings.getInstance().isShowDeprecatedItems() == false && deprecated)
-    {
-      setVisible(false);
-      return;
-    }
-    if (WorkspaceSettings.getInstance().isExperimentalFeaturesVisible() == false && experimental)
-    {
-      setVisible(false);
-      return;
-    }
-
-    setVisible(true);
+    setVisible(WorkspaceSettings.getInstance().isVisible(metaData));
   }
 
-  protected void selectedElementPropertiesChanged(ReportModelEvent event)
+  protected void selectedElementPropertiesChanged(final ReportModelEvent event)
   {
   }
 

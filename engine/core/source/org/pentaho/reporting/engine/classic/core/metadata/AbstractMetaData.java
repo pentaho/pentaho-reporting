@@ -27,7 +27,6 @@ import java.util.MissingResourceException;
 
 import org.pentaho.reporting.engine.classic.core.metadata.builder.MetaDataBuilder;
 import org.pentaho.reporting.libraries.base.util.ArgumentNullException;
-import org.pentaho.reporting.libraries.base.util.DebugLog;
 import org.pentaho.reporting.libraries.base.util.Messages;
 import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
 import org.pentaho.reporting.libraries.base.util.StringUtils;
@@ -73,7 +72,8 @@ public abstract class AbstractMetaData implements Serializable, MetaData
     computeBundleProperties();
   }
 
-  protected AbstractMetaData(final MetaDataBuilder builder) {
+  protected AbstractMetaData(final MetaDataBuilder builder)
+  {
     this(builder.getName(), builder.getBundleLocation(), builder.getKeyPrefix(), builder.isExpert(),
         builder.isPreferred(), builder.isHidden(), builder.isDeprecated(), builder.getMaturityLevel(),
         builder.getCompatibilityLevel());
@@ -134,7 +134,7 @@ public abstract class AbstractMetaData implements Serializable, MetaData
     return compatibilityLevel;
   }
 
-  protected String computePrefix(String keyPrefix, String name)
+  protected String computePrefix(final String keyPrefix, final String name)
   {
     return keyPrefix + name;
   }
@@ -185,7 +185,7 @@ public abstract class AbstractMetaData implements Serializable, MetaData
       }
       return getBundle(locale).strictString(key);
     }
-    catch (MissingResourceException mre)
+    catch (final MissingResourceException mre)
     {
       return null;
     }
@@ -353,7 +353,7 @@ public abstract class AbstractMetaData implements Serializable, MetaData
     {
       return getBundle(locale).getOptionalString(key);
     }
-    catch (MissingResourceException e)
+    catch (final MissingResourceException e)
     {
       return null;
     }

@@ -122,7 +122,7 @@ public abstract class AbstractMetaDataReadHandler extends AbstractXmlReadHandler
     }
     else
     {
-      return MaturityLevel.Limited;
+      return MaturityLevel.Production;
     }
   }
 

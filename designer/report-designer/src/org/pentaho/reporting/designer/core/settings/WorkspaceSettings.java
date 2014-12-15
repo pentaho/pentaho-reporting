@@ -26,6 +26,8 @@ import java.util.prefs.Preferences;
 
 import org.pentaho.reporting.designer.core.util.DrawSelectionType;
 import org.pentaho.reporting.designer.core.util.Unit;
+import org.pentaho.reporting.engine.classic.core.metadata.MaturityLevel;
+import org.pentaho.reporting.engine.classic.core.metadata.MetaData;
 import org.pentaho.reporting.engine.classic.core.util.geom.StrictGeomUtility;
 import org.pentaho.reporting.libraries.base.util.StringUtils;
 import org.pentaho.reporting.libraries.designtime.swing.ColorUtility;
@@ -59,7 +61,7 @@ public class WorkspaceSettings implements LocaleSettings
   private static final String EXPERIMENTAL_FEATURES_KEY = "ExperimentalFeatures";
   private static final String NON_CORE_FEATURES_KEY = "NonCoreFeatures";
   private static final String DEBUG_FEATURES_KEY = "DebugFeatures";
-
+  private static final String MATURITY_LEVEL_KEY = "MaturityLevel";
   private static final String FIELD_SELECTOR_VISIBLE_KEY = "FieldSelectorVisible";
   private static final String DRAW_SELECTION_TYPE_KEY = "DrawSelectionType";
   private static final String SNAP_TO_GUIDE_LINES_KEY = "SnapToGuideLines";
@@ -455,9 +457,66 @@ public class WorkspaceSettings implements LocaleSettings
 
   public boolean isExperimentalFeaturesVisible()
   {
-    return properties.getBoolean(EXPERIMENTAL_FEATURES_KEY, false);
+    return getMaturityLevel().isExperimental();
   }
 
+  public MaturityLevel getMaturityLevel() {
+    String defaultValue = properties.getBoolean(EXPERIMENTAL_FEATURES_KEY, false) ?
+        MaturityLevel.Development.toString() : MaturityLevel.Production.toString();
+
+
+    try {
+      String s = properties.get(MATURITY_LEVEL_KEY, defaultValue);
+      return MaturityLevel.valueOf(s);
+    }
+    catch (IllegalArgumentException e) {
+      return MaturityLevel.Production;
+    }
+  }
+
+  public boolean isMatureFeature(final MaturityLevel ml) {
+    return (getMaturityLevel().isMature(ml));
+  }
+
+  public boolean isMatureFeature(final MetaData ml) {
+    if (ml == null) {
+      return false;
+    }
+    return (getMaturityLevel().isMature(ml.getFeatureMaturityLevel()));
+  }
+
+  public boolean isVisible(final MetaData ml) {
+    if (ml == null) {
+      return false;
+    }
+    if (!isMatureFeature(ml)) {
+      return false;
+    }
+    if (isShowExpertItems() == false && ml.isExpert())
+    {
+      return false;
+    }
+    if (isShowDeprecatedItems() == false && ml.isDeprecated())
+    {
+      return false;
+    }
+
+    return true;
+  }
+
+
+  public void setMaturityLevel(final MaturityLevel ml) {
+    if (ml == null) {
+      properties.remove(MATURITY_LEVEL_KEY);
+    }
+    else
+    {
+      properties.put(MATURITY_LEVEL_KEY, ml.toString());
+    }
+    fireSettingsChanged();
+  }
+
+  @Deprecated
   public void setExperimentalFeaturesVisible(final boolean snapToGrid)
   {
     properties.put(EXPERIMENTAL_FEATURES_KEY, String.valueOf(snapToGrid));
@@ -475,11 +534,13 @@ public class WorkspaceSettings implements LocaleSettings
     fireSettingsChanged();
   }
 
+  @Deprecated
   public boolean isNonCoreFeaturesVisible()
   {
     return properties.getBoolean(NON_CORE_FEATURES_KEY, false);
   }
 
+  @Deprecated
   public void setNonCoreFeaturesVisible(final boolean snapToGrid)
   {
     properties.put(NON_CORE_FEATURES_KEY, String.valueOf(snapToGrid));

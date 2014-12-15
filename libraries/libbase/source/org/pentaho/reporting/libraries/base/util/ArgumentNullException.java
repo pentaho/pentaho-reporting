@@ -34,7 +34,8 @@ public class ArgumentNullException extends IllegalArgumentException
 
   public static void validate(final String field, final Object o)
   {
-    if (o == null)
+    if (o == null) {
       throw new ArgumentNullException(field);
+    }
   }
 }

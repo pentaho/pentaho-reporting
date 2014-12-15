@@ -49,7 +49,7 @@ public class DrillDownProfile extends AbstractMetaData
   public DrillDownProfile(final Class linkCustomizerType)
   {
     this("", "org.pentaho.reporting.engine.classic.extensions.drilldown.drilldown-profile",
-        "", false, false, false, false, linkCustomizerType, new HashMap<String,String>(), MaturityLevel.Limited, -1);
+        "", false, false, false, false, linkCustomizerType, new HashMap<String,String>(), MaturityLevel.Production, -1);
   }
 
   public Class getLinkCustomizerType()

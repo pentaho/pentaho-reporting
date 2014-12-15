@@ -17,13 +17,13 @@
 
 package org.pentaho.reporting.engine.classic.core.metadata;
 
-public enum MaturityLevel
+public enum MaturityLevel implements Comparable<MaturityLevel>
 {
   Development(true), Snapshot(true), Limited(false), Production(false);
 
   private boolean experimental;
 
-  MaturityLevel(boolean experimental)
+  MaturityLevel(final boolean experimental)
   {
     this.experimental = experimental;
   }
@@ -31,5 +31,9 @@ public enum MaturityLevel
   public boolean isExperimental()
   {
     return experimental;
+  }
+
+  public boolean isMature(final MaturityLevel ml) {
+    return ml.ordinal() >= this.ordinal();
   }
 }

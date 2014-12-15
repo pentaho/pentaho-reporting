@@ -239,11 +239,7 @@ public class ExpressionPropertiesTableModel
     {
       return true;
     }
-    if (WorkspaceSettings.getInstance().isShowExpertItems() == false && metaData.isExpert())
-    {
-      return true;
-    }
-    if (WorkspaceSettings.getInstance().isShowDeprecatedItems() == false && metaData.isDeprecated())
+    if (!WorkspaceSettings.getInstance().isVisible(metaData))
     {
       return true;
     }

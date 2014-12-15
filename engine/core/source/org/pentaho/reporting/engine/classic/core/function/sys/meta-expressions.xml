@@ -24,7 +24,7 @@
   <expression class="org.pentaho.reporting.engine.classic.core.function.sys.SheetNameFunction"
               bundle-name="org.pentaho.reporting.engine.classic.core.function.sys.SheetNameFunctionBundle"
               layout-processor-mode="global"
-              result="java.lang.Object" expert="true" hidden="true" preferred="false">
+              result="java.lang.Object" expert="true" hidden="true" preferred="false" deprecated="true">
     <property name="dependencyLevel" mandatory="false" preferred="false" value-role="Value" expert="true"
               hidden="false"/>
     <property name="element" mandatory="false" preferred="false" value-role="ElementName" expert="false"
@@ -43,7 +43,7 @@
 
   <expression class="org.pentaho.reporting.engine.classic.core.function.sys.SingleValueQueryFunction"
               bundle-name="org.pentaho.reporting.engine.classic.core.function.sys.SingleValueQueryFunctionBundle"
-              result="java.lang.Object" expert="false" hidden="false" preferred="false">
+              result="java.lang.Object" expert="false" hidden="false" preferred="false" deprecated="true">
     <property name="queryTimeout" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
     <property name="dependencyLevel" mandatory="false" preferred="false" value-role="Value" expert="true"
               hidden="false"/>
@@ -109,7 +109,7 @@
 
   <expression class="org.pentaho.reporting.engine.classic.core.function.sys.CrosstabColumnSequenceFunction"
               bundle-name="org.pentaho.reporting.engine.classic.core.function.sys.CrosstabColumnSequenceFunctionBundle"
-              result="java.lang.Number" expert="true" hidden="false" preferred="false" experimental="true">
+              result="java.lang.Number" expert="true" hidden="false" preferred="false" maturity-level="Limited">
     <property name="dependencyLevel" mandatory="false" preferred="false" value-role="Value" expert="true"
               hidden="false"/>
     <property name="crosstabFilterGroup" mandatory="false" preferred="false" value-role="Group" expert="false" hidden="false"/>

@@ -521,11 +521,7 @@ public class LegacyChartEditModel
       {
         continue;
       }
-      if (WorkspaceSettings.getInstance().isShowExpertItems() == false && data.isExpert())
-      {
-        continue;
-      }
-      if (WorkspaceSettings.getInstance().isShowDeprecatedItems() == false && data.isDeprecated())
+      if (!WorkspaceSettings.getInstance().isVisible(data))
       {
         continue;
       }

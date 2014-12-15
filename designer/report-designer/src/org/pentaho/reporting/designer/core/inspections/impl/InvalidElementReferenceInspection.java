@@ -84,11 +84,7 @@ public class InvalidElementReferenceInspection extends AbstractStructureInspecti
         {
           continue;
         }
-        if (WorkspaceSettings.getInstance().isShowExpertItems() == false && metaData.isExpert())
-        {
-          continue;
-        }
-        if (WorkspaceSettings.getInstance().isShowDeprecatedItems() == false && metaData.isDeprecated())
+        if (!WorkspaceSettings.getInstance().isVisible(metaData))
         {
           continue;
         }

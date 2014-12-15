@@ -212,7 +212,7 @@ public class Pre497Test extends TestCase
 
     public boolean isExperimental()
     {
-      return parent.isExperimental();
+      return getFeatureMaturityLevel().isExperimental();
     }
 
     public int getCompatibilityLevel()

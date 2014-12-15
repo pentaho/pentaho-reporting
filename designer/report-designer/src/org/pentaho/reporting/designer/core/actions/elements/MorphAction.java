@@ -17,7 +17,9 @@
 
 package org.pentaho.reporting.designer.core.actions.elements;
 
+import java.awt.Image;
 import java.awt.event.ActionEvent;
+import java.beans.BeanInfo;
 import java.text.DecimalFormat;
 import java.text.Format;
 import java.text.MessageFormat;
@@ -26,6 +28,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import javax.swing.Action;
+import javax.swing.ImageIcon;
 
 import org.pentaho.reporting.designer.core.actions.AbstractElementSelectionAction;
 import org.pentaho.reporting.designer.core.actions.ActionMessages;
@@ -59,20 +62,20 @@ public final class MorphAction extends AbstractElementSelectionAction implements
   private static final String VALUE_ATTRIBUTE = AttributeNames.Core.VALUE;
   private static final String FORMAT_ATTRIBUTE = AttributeNames.Core.FORMAT_STRING;
 
+  private final ElementMetaData metaData;
   private ElementType targetElementType;
-  private boolean expert;
-  private boolean experimental;
-  private boolean deprecated;
 
   public MorphAction(final ElementType elementType)
   {
     targetElementType = elementType;
-    final ElementMetaData metaData = elementType.getMetaData();
+    this.metaData = elementType.getMetaData();
     putValue(Action.NAME, metaData.getDisplayName(Locale.getDefault()));
 
-    experimental = metaData.isExperimental();
-    expert = metaData.isExpert();
-    deprecated = metaData.isDeprecated();
+    final Image image = metaData.getIcon(Locale.getDefault(), BeanInfo.ICON_COLOR_32x32);
+    if (image != null)
+    {
+      putValue(Action.SMALL_ICON, new ImageIcon(image));
+    }
 
     settingsChanged();
     WorkspaceSettings.getInstance().addSettingsListener(this);
@@ -84,23 +87,7 @@ public final class MorphAction extends AbstractElementSelectionAction implements
 
   public void settingsChanged()
   {
-    if (WorkspaceSettings.getInstance().isShowExpertItems() == false && expert)
-    {
-      setVisible(false);
-      return;
-    }
-    if (WorkspaceSettings.getInstance().isShowDeprecatedItems() == false && deprecated)
-    {
-      setVisible(false);
-      return;
-    }
-    if (WorkspaceSettings.getInstance().isExperimentalFeaturesVisible() == false && experimental)
-    {
-      setVisible(false);
-      return;
-    }
-
-    setVisible(true);
+    setVisible(WorkspaceSettings.getInstance().isVisible(metaData));
   }
 
   /**

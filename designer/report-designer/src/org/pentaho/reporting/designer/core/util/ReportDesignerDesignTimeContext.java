@@ -28,6 +28,7 @@ import org.pentaho.reporting.engine.classic.core.AbstractReportDefinition;
 import org.pentaho.reporting.engine.classic.core.DataFactoryContext;
 import org.pentaho.reporting.engine.classic.core.designtime.DesignTimeContext;
 import org.pentaho.reporting.engine.classic.core.designtime.datafactory.DesignTimeDataFactoryContext;
+import org.pentaho.reporting.engine.classic.core.metadata.MaturityLevel;
 import org.pentaho.reporting.engine.classic.core.wizard.DataSchemaModel;
 import org.pentaho.reporting.libraries.designtime.swing.LibSwingUtil;
 import org.pentaho.reporting.libraries.designtime.swing.settings.LocaleSettings;
@@ -94,6 +95,11 @@ public class ReportDesignerDesignTimeContext implements DesignTimeContext
   public boolean isShowDeprecatedItems()
   {
     return WorkspaceSettings.getInstance().isShowDeprecatedItems();
+  }
+
+  public MaturityLevel getMaturityLevel()
+  {
+    return WorkspaceSettings.getInstance().getMaturityLevel();
   }
 
   public DataFactoryContext getDataFactoryContext()

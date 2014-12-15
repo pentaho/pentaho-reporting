@@ -5,22 +5,14 @@
            xmlns="http://reporting.pentaho.org/namespaces/engine/classic/metadata/1.0"
            targetNamespace="http://reporting.pentaho.org/namespaces/engine/classic/metadata/1.0">
 
-
-  <xs:complexType name="preProcessorType">
-    <xs:sequence>
-      <xs:element type="propertyType" name="property" maxOccurs="unbounded" minOccurs="0"/>
-    </xs:sequence>
-    <xs:attribute type="xs:string" name="class"/>
-    <xs:attribute type="xs:string" name="bundle-name" use="required"/>
-    <xs:attribute type="xs:boolean" name="expert" use="optional"/>
-    <xs:attribute type="xs:boolean" name="hidden" use="optional"/>
-    <xs:attribute type="xs:boolean" name="deprecated" use="optional"/>
-    <xs:attribute type="xs:boolean" name="preferred" use="optional"/>
-    <xs:attribute type="xs:boolean" name="auto-process" use="optional"/>
-    <xs:attribute type="xs:integer" name="priority" use="optional"/>
-    <xs:attribute type="xs:boolean" name="execute-in-design-mode" use="optional"/>
-    <xs:attribute type="xs:string" name="compatibility-level" use="optional"/>
-  </xs:complexType>
+  <xs:simpleType name="maturityLevelAttr">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Development" />
+      <xs:enumeration value="Snapshot" />
+      <xs:enumeration value="Limited" />
+      <xs:enumeration value="Production" />
+    </xs:restriction>
+  </xs:simpleType>
 
   <xs:complexType name="expressionType">
     <xs:sequence>
@@ -35,6 +27,8 @@
     <xs:attribute type="xs:boolean" name="preferred" use="optional"/>
     <xs:attribute type="xs:string" name="layout-processor-mode" use="optional"/>
     <xs:attribute type="xs:string" name="compatibility-level" use="optional"/>
+    <xs:attribute type="xs:boolean" name="experimental" use="optional"/>
+    <xs:attribute type="maturityLevelAttr" name="maturity-level" use="optional"/>
   </xs:complexType>
 
   <xs:complexType name="propertyType">
@@ -74,7 +68,6 @@
     <xs:attribute type="xs:string" name="bundle-name" use="required"/>
     <xs:attribute type="xs:string" name="implementation" use="required"/>
     <xs:attribute type="xs:boolean" name="expert" use="optional"/>
-    <xs:attribute type="xs:boolean" name="experimental" use="optional"/>
     <xs:attribute type="xs:boolean" name="hidden" use="optional"/>
     <xs:attribute type="xs:boolean" name="preferred" use="optional"/>
     <xs:attribute type="xs:boolean" name="deprecated" use="optional"/>
@@ -83,6 +76,8 @@
     <xs:attribute type="xs:string" name="type-classification" use="optional"/>
     <xs:attribute type="xs:string" name="content-type" use="optional"/>
     <xs:attribute type="xs:string" name="namespace" use="optional"/>
+    <xs:attribute type="xs:boolean" name="experimental" use="optional"/>
+    <xs:attribute type="maturityLevelAttr" name="maturity-level" use="optional"/>
   </xs:complexType>
 
   <xs:complexType name="dataFactoryType">
@@ -94,11 +89,12 @@
     <xs:attribute type="xs:boolean" name="preferred" use="optional"/>
     <xs:attribute type="xs:boolean" name="deprecated" use="optional"/>
     <xs:attribute type="xs:boolean" name="editable" use="optional"/>
-    <xs:attribute type="xs:boolean" name="experimental" use="optional"/>
     <xs:attribute type="xs:boolean" name="freeform-query" use="optional"/>
     <xs:attribute type="xs:boolean" name="metadata-source" use="optional"/>
     <xs:attribute type="xs:string" name="compatibility-level" use="optional"/>
     <xs:attribute type="xs:string" name="impl" use="optional"/>
+    <xs:attribute type="xs:boolean" name="experimental" use="optional"/>
+    <xs:attribute type="maturityLevelAttr" name="maturity-level" use="optional"/>
   </xs:complexType>
 
   <xs:complexType name="reportPreProcessorType">
@@ -112,12 +108,13 @@
     <xs:attribute type="xs:boolean" name="hidden" use="optional"/>
     <xs:attribute type="xs:boolean" name="preferred" use="optional"/>
     <xs:attribute type="xs:boolean" name="deprecated" use="optional"/>
-    <xs:attribute type="xs:boolean" name="experimental" use="optional"/>
     <xs:attribute type="xs:boolean" name="metadata-source" use="optional"/>
     <xs:attribute type="xs:string" name="compatibility-level" use="optional"/>
     <xs:attribute type="xs:boolean" name="auto-process" use="optional"/>
     <xs:attribute type="xs:boolean" name="execute-in-design-mode" use="optional"/>
     <xs:attribute type="xs:unsignedInt" name="priority" use="optional"/>
+    <xs:attribute type="xs:boolean" name="experimental" use="optional"/>
+    <xs:attribute type="maturityLevelAttr" name="maturity-level" use="optional"/>
   </xs:complexType>
 
   <xs:complexType name="style-group-refType">
@@ -148,6 +145,8 @@
         <xs:attribute type="xs:boolean" name="design-time-value" use="optional"/>
         <xs:attribute type="xs:string" name="bundle-name" use="optional"/>
         <xs:attribute type="xs:string" name="compatibility-level" use="optional"/>
+        <xs:attribute type="xs:boolean" name="experimental" use="optional"/>
+        <xs:attribute type="maturityLevelAttr" name="maturity-level" use="optional"/>
       </xs:extension>
     </xs:simpleContent>
   </xs:complexType>
@@ -163,6 +162,8 @@
         <xs:attribute type="xs:string" name="propertyEditor" use="optional"/>
         <xs:attribute type="xs:string" name="bundle-name" use="optional"/>
         <xs:attribute type="xs:string" name="compatibility-level" use="optional"/>
+        <xs:attribute type="xs:boolean" name="experimental" use="optional"/>
+        <xs:attribute type="maturityLevelAttr" name="maturity-level" use="optional"/>
       </xs:extension>
     </xs:simpleContent>
   </xs:complexType>

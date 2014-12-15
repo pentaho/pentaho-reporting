@@ -48,6 +48,9 @@ import org.pentaho.reporting.designer.core.settings.NumberFormatModel;
 import org.pentaho.reporting.designer.core.settings.SettingsMessages;
 import org.pentaho.reporting.designer.core.settings.WorkspaceSettings;
 import org.pentaho.reporting.designer.core.util.IconLoader;
+import org.pentaho.reporting.engine.classic.core.metadata.MaturityLevel;
+import org.pentaho.reporting.libraries.designtime.swing.KeyedComboBoxModel;
+import org.pentaho.reporting.libraries.designtime.swing.VerticalLayout;
 
 /**
  * User: Martin Date: 01.03.2006 Time: 18:15:58
@@ -163,9 +166,7 @@ public class GeneralSettingsPanel extends JPanel implements SettingsPlugin
   private JCheckBox showExpertItems;
   private JCheckBox openLastReport;
   private JCheckBox showDeprecatedItems;
-  private JCheckBox showNonCoreItems;
   private JCheckBox showDebugItems;
-  private JCheckBox experimentalFeatures;
   private JCheckBox notifyDevBuilds;
   private JCheckBox enableVersionChecker;
   private LookAndFeelModel lookAndFeelModel;
@@ -177,6 +178,7 @@ public class GeneralSettingsPanel extends JPanel implements SettingsPlugin
   private String[] numberFormats;
   private DateFormatModel dateFormatModel;
   private NumberFormatModel numberFormatModel;
+  private KeyedComboBoxModel<MaturityLevel, String> maturityLevelModel;
 
   public GeneralSettingsPanel()
   {
@@ -184,6 +186,11 @@ public class GeneralSettingsPanel extends JPanel implements SettingsPlugin
 
     dateFormatModel = new DateFormatModel();
     numberFormatModel = new NumberFormatModel();
+    maturityLevelModel = new KeyedComboBoxModel<MaturityLevel, String>();
+    maturityLevelModel.add(MaturityLevel.Production, MaturityLevel.Production.toString());
+    maturityLevelModel.add(MaturityLevel.Limited, MaturityLevel.Limited.toString());
+    maturityLevelModel.add(MaturityLevel.Development, MaturityLevel.Development.toString());
+    maturityLevelModel.add(MaturityLevel.Snapshot, MaturityLevel.Snapshot.toString());
 
     dateFormats = new String[0];
     numberFormats = new String[0];
@@ -210,10 +217,6 @@ public class GeneralSettingsPanel extends JPanel implements SettingsPlugin
     notifyDevBuilds.setSelected(workspaceSettings.isNotifyForAllBuilds());
     notifyDevBuilds.setEnabled(workspaceSettings.isUseVersionChecker());
 
-    experimentalFeatures = new JCheckBox
-        (SettingsMessages.getInstance().getString("GeneralSettingsPanel.EnableExperimentalFeatures"));
-    experimentalFeatures.setSelected(workspaceSettings.isExperimentalFeaturesVisible());
-
     showIndexColumns = new JCheckBox
         (SettingsMessages.getInstance().getString("GeneralSettingsPanel.ShowIndexColumns"));
     showIndexColumns.setSelected(workspaceSettings.isShowIndexColumns());
@@ -225,10 +228,6 @@ public class GeneralSettingsPanel extends JPanel implements SettingsPlugin
         (SettingsMessages.getInstance().getString("GeneralSettingsPanel.ShowExpertItems"));
     showExpertItems.setSelected(workspaceSettings.isShowExpertItems());
     
-    showNonCoreItems = new JCheckBox
-        (SettingsMessages.getInstance().getString("GeneralSettingsPanel.ShowNonCoreItems"));
-    showNonCoreItems.setSelected(workspaceSettings.isNonCoreFeaturesVisible());
-
     showDebugItems = new JCheckBox
         (SettingsMessages.getInstance().getString("GeneralSettingsPanel.ShowDebugItems"));
     showDebugItems.setSelected(workspaceSettings.isDebugFeaturesVisible());
@@ -314,73 +313,22 @@ public class GeneralSettingsPanel extends JPanel implements SettingsPlugin
   private JPanel createOtherSettings()
   {
     final JPanel updatesPanel = new JPanel();
-    updatesPanel.setLayout(new GridBagLayout());
+    updatesPanel.setLayout(new VerticalLayout(5, VerticalLayout.LEFT, VerticalLayout.TOP));
     updatesPanel.setBorder(BorderFactory.createTitledBorder
         (SettingsMessages.getInstance().getString("GeneralSettingsPanel.OtherSettings")));
 
-    GridBagConstraints c = new GridBagConstraints();
-    c.gridx = 0;
-    c.gridy = 0;
-    c.gridwidth = 2;
-    c.weightx = 1;
-    c.fill = GridBagConstraints.HORIZONTAL;
-    c.anchor = GridBagConstraints.WEST;
-    updatesPanel.add(showIndexColumns, c);
 
-    c = new GridBagConstraints();
-    c.gridx = 0;
-    c.gridy = 1;
-    c.gridwidth = 2;
-    c.weightx = 1;
-    c.fill = GridBagConstraints.HORIZONTAL;
-    c.anchor = GridBagConstraints.WEST;
-    updatesPanel.add(experimentalFeatures, c);
+    JComboBox maturityLevel = new JComboBox(maturityLevelModel);
+    JLabel maturityLevelLabel = new JLabel
+        (SettingsMessages.getInstance().getString("GeneralSettingsPanel.MaturityLevel"));
 
-    c = new GridBagConstraints();
-    c.gridx = 0;
-    c.gridy = 2;
-    c.gridwidth = 2;
-    c.weightx = 1;
-    c.fill = GridBagConstraints.HORIZONTAL;
-    c.anchor = GridBagConstraints.WEST;
-    updatesPanel.add(showDeprecatedItems, c);
-
-    c = new GridBagConstraints();
-    c.gridx = 0;
-    c.gridy = 3;
-    c.gridwidth = 2;
-    c.weightx = 1;
-    c.fill = GridBagConstraints.HORIZONTAL;
-    c.anchor = GridBagConstraints.WEST;
-    updatesPanel.add(showExpertItems, c);
-
-    c = new GridBagConstraints();
-    c.gridx = 0;
-    c.gridy = 4;
-    c.gridwidth = 2;
-    c.weightx = 1;
-    c.fill = GridBagConstraints.HORIZONTAL;
-    c.anchor = GridBagConstraints.WEST;
-    updatesPanel.add(showNonCoreItems, c);
-
-    c = new GridBagConstraints();
-    c.gridx = 0;
-    c.gridy = 5;
-    c.gridwidth = 2;
-    c.weightx = 1;
-    c.fill = GridBagConstraints.HORIZONTAL;
-    c.anchor = GridBagConstraints.WEST;
-    updatesPanel.add(showDebugItems, c);
-
-    c = new GridBagConstraints();
-    c.gridx = 0;
-    c.gridy = 6;
-    c.gridwidth = 2;
-    c.weightx = 1;
-    c.fill = GridBagConstraints.HORIZONTAL;
-    c.anchor = GridBagConstraints.WEST;
-    updatesPanel.add(openLastReport, c);
-
+    updatesPanel.add(showIndexColumns);
+    updatesPanel.add(maturityLevelLabel);
+    updatesPanel.add(maturityLevel);
+    updatesPanel.add(showDeprecatedItems);
+    updatesPanel.add(showExpertItems);
+    updatesPanel.add(showDebugItems);
+    updatesPanel.add(openLastReport);
     return updatesPanel;
   }
 
@@ -393,15 +341,6 @@ public class GeneralSettingsPanel extends JPanel implements SettingsPlugin
         (SettingsMessages.getInstance().getString("GeneralSettingsPanel.DataFormatSettings")));
 
     GridBagConstraints c = new GridBagConstraints();
-    c.gridx = 0;
-    c.gridy = 0;
-    c.gridwidth = 2;
-    c.weightx = 1;
-    c.fill = GridBagConstraints.HORIZONTAL;
-    c.anchor = GridBagConstraints.WEST;
-    updatesPanel.add(experimentalFeatures, c);
-
-    c = new GridBagConstraints();
     c.gridx = 0;
     c.gridy = 10;
     c.gridwidth = 1;
@@ -488,7 +427,7 @@ public class GeneralSettingsPanel extends JPanel implements SettingsPlugin
 
   public void apply()
   {
-    WorkspaceSettings.getInstance().setExperimentalFeaturesVisible(experimentalFeatures.isSelected());
+    WorkspaceSettings.getInstance().setMaturityLevel(maturityLevelModel.getSelectedKey());
     WorkspaceSettings.getInstance().setNotifyForAllBuilds(notifyDevBuilds.isSelected());
     WorkspaceSettings.getInstance().setUseVersionChecker(enableVersionChecker.isSelected());
     WorkspaceSettings.getInstance().setDateFormatPattern(dateFormatField.getText());
@@ -497,7 +436,6 @@ public class GeneralSettingsPanel extends JPanel implements SettingsPlugin
     WorkspaceSettings.getInstance().setShowIndexColumns(showIndexColumns.isSelected());
     WorkspaceSettings.getInstance().setShowDeprecatedItems(showDeprecatedItems.isSelected());
     WorkspaceSettings.getInstance().setShowExpertItems(showExpertItems.isSelected());
-    WorkspaceSettings.getInstance().setNonCoreFeaturesVisible(showNonCoreItems.isSelected());
     WorkspaceSettings.getInstance().setDebugFeaturesVisible(showDebugItems.isSelected());
     WorkspaceSettings.getInstance().setReopenLastReport(openLastReport.isSelected());
     if (lookAndFeelModel.getSelectedItem() != null)
@@ -514,14 +452,13 @@ public class GeneralSettingsPanel extends JPanel implements SettingsPlugin
     dateFormatField.setText(WorkspaceSettings.getInstance().getDateFormatPattern());
     datetimeFormatField.setText(WorkspaceSettings.getInstance().getDatetimeFormatPattern());
     timeFormatField.setText(WorkspaceSettings.getInstance().getTimeFormatPattern());
-    experimentalFeatures.setSelected(WorkspaceSettings.getInstance().isExperimentalFeaturesVisible());
+    maturityLevelModel.setSelectedKey(WorkspaceSettings.getInstance().getMaturityLevel());
     lookAndFeelModel.setSelectedItem(WorkspaceSettings.getInstance().getLNF());
     notifyDevBuilds.setSelected(WorkspaceSettings.getInstance().isNotifyForAllBuilds());
     enableVersionChecker.setSelected(WorkspaceSettings.getInstance().isUseVersionChecker());
     showIndexColumns.setSelected(WorkspaceSettings.getInstance().isShowIndexColumns());
     showDeprecatedItems.setSelected(WorkspaceSettings.getInstance().isShowDeprecatedItems());
     showExpertItems.setSelected(WorkspaceSettings.getInstance().isShowExpertItems());
-    showNonCoreItems.setSelected(WorkspaceSettings.getInstance().isNonCoreFeaturesVisible());
     showDebugItems.setSelected(WorkspaceSettings.getInstance().isDebugFeaturesVisible());
     openLastReport.setSelected(WorkspaceSettings.getInstance().isReopenLastReport());
     

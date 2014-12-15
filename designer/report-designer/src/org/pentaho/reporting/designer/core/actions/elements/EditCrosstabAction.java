@@ -43,6 +43,7 @@ import org.pentaho.reporting.engine.classic.core.Group;
 import org.pentaho.reporting.engine.classic.core.Section;
 import org.pentaho.reporting.engine.classic.core.SubGroupBody;
 import org.pentaho.reporting.engine.classic.core.event.ReportModelEvent;
+import org.pentaho.reporting.engine.classic.core.filter.types.CrosstabElementType;
 import org.pentaho.reporting.libraries.designtime.swing.LibSwingUtil;
 
 public class EditCrosstabAction extends AbstractElementSelectionAction implements SettingsListener
@@ -58,7 +59,7 @@ public class EditCrosstabAction extends AbstractElementSelectionAction implement
     putValue(Action.ACCELERATOR_KEY, ActionMessages.getOptionalKeyStroke("EditCrosstabAction.Accelerator"));
     putValue(Action.SMALL_ICON, IconLoader.getInstance().getGenericSquare());
 
-    setVisible(WorkspaceSettings.getInstance().isExperimentalFeaturesVisible());
+    setVisible(WorkspaceSettings.getInstance().isVisible(CrosstabElementType.INSTANCE.getMetaData()));
     WorkspaceSettings.getInstance().addSettingsListener(this);
   }
 
@@ -238,6 +239,6 @@ public class EditCrosstabAction extends AbstractElementSelectionAction implement
 
   public void settingsChanged()
   {
-    setVisible(WorkspaceSettings.getInstance().isExperimentalFeaturesVisible());
+    setVisible(WorkspaceSettings.getInstance().isVisible(CrosstabElementType.INSTANCE.getMetaData()));
   }
 }

@@ -58,11 +58,6 @@ import org.pentaho.reporting.engine.classic.core.parameters.ParameterDefinitionE
 import org.pentaho.reporting.engine.classic.core.parameters.ReportParameterDefinition;
 import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
 
-/**
- * Todo: Document Me
- *
- * @author Thomas Morgner
- */
 public class ContextMenuUtility
 {
   private ContextMenuUtility()
@@ -204,15 +199,7 @@ public class ContextMenuUtility
       {
         continue;
       }
-      if (WorkspaceSettings.getInstance().isShowExpertItems() == false && data.isExpert())
-      {
-        continue;
-      }
-      if (WorkspaceSettings.getInstance().isShowDeprecatedItems() == false && data.isDeprecated())
-      {
-        continue;
-      }
-      if (WorkspaceSettings.getInstance().isExperimentalFeaturesVisible() == false && data.isExperimental())
+      if (!WorkspaceSettings.getInstance().isVisible(data))
       {
         continue;
       }
@@ -235,15 +222,7 @@ public class ContextMenuUtility
       {
         continue;
       }
-      if (WorkspaceSettings.getInstance().isShowExpertItems() == false && data.isExpert())
-      {
-        continue;
-      }
-      if (WorkspaceSettings.getInstance().isShowDeprecatedItems() == false && data.isDeprecated())
-      {
-        continue;
-      }
-      if (WorkspaceSettings.getInstance().isExperimentalFeaturesVisible() == false && data.isExperimental())
+      if (!WorkspaceSettings.getInstance().isVisible(data))
       {
         continue;
       }

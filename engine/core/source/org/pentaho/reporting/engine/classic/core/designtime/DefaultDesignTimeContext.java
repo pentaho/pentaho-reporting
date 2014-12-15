@@ -22,6 +22,7 @@ import java.awt.Window;
 import org.pentaho.reporting.engine.classic.core.AbstractReportDefinition;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.pentaho.reporting.engine.classic.core.designtime.datafactory.DesignTimeDataFactoryContext;
+import org.pentaho.reporting.engine.classic.core.metadata.MaturityLevel;
 import org.pentaho.reporting.engine.classic.core.wizard.ContextAwareDataSchemaModel;
 import org.pentaho.reporting.engine.classic.core.wizard.ContextAwareDataSchemaModelFactory;
 import org.pentaho.reporting.engine.classic.core.wizard.DataSchemaModel;
@@ -110,5 +111,10 @@ public class DefaultDesignTimeContext implements DesignTimeContext
   public DesignTimeDataFactoryContext getDataFactoryContext()
   {
     return dataFactoryContext;
+  }
+
+  public MaturityLevel getMaturityLevel()
+  {
+    return MaturityLevel.Snapshot;
   }
 }
