@@ -19,12 +19,17 @@ package org.pentaho.reporting.engine.classic.core.metadata;
 
 import java.beans.PropertyEditor;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.pentaho.reporting.engine.classic.core.ReportElement;
+import org.pentaho.reporting.engine.classic.core.metadata.builder.AttributeMetaDataBuilder;
 import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
 import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 
 public class DefaultAttributeMetaData extends AbstractMetaData implements AttributeMetaData
 {
+  private static final Log logger = LogFactory.getLog(DefaultAttributeMetaData.class);
+
   private String valueRole;
   private boolean bulk;
   private String namespace;
@@ -43,14 +48,15 @@ public class DefaultAttributeMetaData extends AbstractMetaData implements Attrib
    */
   private boolean transientFlag;
 
-  private String propertyEditorClass;
+  private Class<? extends PropertyEditor> propertyEditorClass;
   private boolean designTimeValue;
   private AttributeCore attributeCore;
 
   /**
    * Creates an expert, non-preferred, hidden, non-mandatory, non-computed and non-transient attribute.
+   * <p/>
    * This is a suitable constructor to declare internal attributes that should not be edited by an end-user
-   * in the report-designer.
+   * in the report-designer. This constructor is only used for testing.
    *
    * @param namespace
    * @param name
@@ -69,7 +75,36 @@ public class DefaultAttributeMetaData extends AbstractMetaData implements Attrib
                                   final int compatibilityLevel)
   {
     this(namespace, name, bundleLocation, keyPrefix, null, targetClass, true, false, true, false, false, false, false,
-        VALUEROLE_VALUE, false, designTimeValue, new DefaultAttributeCore(), false, compatibilityLevel);
+        VALUEROLE_VALUE, false, designTimeValue, new DefaultAttributeCore(), MaturityLevel.Production, compatibilityLevel);
+  }
+
+  public DefaultAttributeMetaData(final AttributeMetaDataBuilder builder)
+  {
+    super(builder);
+
+    this.attributeCore = builder.getCore();
+    this.propertyEditorClass = builder.getPropertyEditor();
+    this.namespace = builder.getNamespace();
+    this.targetClass = builder.getTargetClass();
+    this.mandatory = builder.isMandatory();
+    this.computed = builder.isComputed();
+    this.transientFlag = builder.isTransientFlag();
+    this.valueRole = builder.getValueRole();
+    this.bulk = builder.isBulk();
+    this.designTimeValue = builder.isDesignTime();
+
+    if (namespace == null)
+    {
+      throw new NullPointerException();
+    }
+    if (attributeCore == null)
+    {
+      throw new NullPointerException();
+    }
+    if (targetClass == null)
+    {
+      throw new NullPointerException();
+    }
   }
 
   public DefaultAttributeMetaData(final String namespace,
@@ -89,10 +124,10 @@ public class DefaultAttributeMetaData extends AbstractMetaData implements Attrib
                                   final boolean bulk,
                                   final boolean designTimeValue,
                                   final AttributeCore attributeCore,
-                                  final boolean experimental,
-                                   final int compatibilityLevel)
+                                  final MaturityLevel maturityLevel,
+                                  final int compatibilityLevel)
   {
-    super(name, bundleLocation, keyPrefix, expert, preferred, hidden, deprecated, experimental, compatibilityLevel);
+    super(name, bundleLocation, keyPrefix, expert, preferred, hidden, deprecated, maturityLevel, compatibilityLevel);
     if (namespace == null)
     {
       throw new NullPointerException();
@@ -107,7 +142,7 @@ public class DefaultAttributeMetaData extends AbstractMetaData implements Attrib
     }
 
     this.attributeCore = attributeCore;
-    this.propertyEditorClass = propertyEditorClass;
+    this.propertyEditorClass = validatePropertyEditor(propertyEditorClass);
     this.namespace = namespace;
     this.targetClass = targetClass;
     this.mandatory = mandatory;
@@ -116,6 +151,11 @@ public class DefaultAttributeMetaData extends AbstractMetaData implements Attrib
     this.valueRole = valueRole;
     this.bulk = bulk;
     this.designTimeValue = designTimeValue;
+  }
+
+  private Class<? extends PropertyEditor> validatePropertyEditor(final String className)
+  {
+    return ObjectUtilities.loadAndValidate(className, DefaultAttributeMetaData.class, PropertyEditor.class);
   }
 
   /**
@@ -170,9 +210,17 @@ public class DefaultAttributeMetaData extends AbstractMetaData implements Attrib
     {
       return null;
     }
-    return ObjectUtilities.loadAndInstantiate
-        (propertyEditorClass, DefaultAttributeMetaData.class, PropertyEditor.class);
+    try
+    {
+      return propertyEditorClass.newInstance();
+    }
+    catch (Exception e)
+    {
+      logger.warn("Property editor threw error on instantiation", e);
+      return null;
+    }
   }
+
 
   public String[] getReferencedFields(final ReportElement element, final Object attributeValue)
   {

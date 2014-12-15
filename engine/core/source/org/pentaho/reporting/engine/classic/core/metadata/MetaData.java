@@ -59,7 +59,10 @@ public interface MetaData
 
   public boolean isHidden();
 
+  @Deprecated
   public boolean isExperimental();
+
+  public MaturityLevel getFeatureMaturityLevel();
 
   public int getCompatibilityLevel();
 

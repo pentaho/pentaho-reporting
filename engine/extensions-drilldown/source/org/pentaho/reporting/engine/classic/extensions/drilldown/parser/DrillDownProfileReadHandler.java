@@ -20,6 +20,7 @@ package org.pentaho.reporting.engine.classic.extensions.drilldown.parser;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import org.pentaho.reporting.engine.classic.core.metadata.parser.AbstractMetaDataReadHandler;
 import org.pentaho.reporting.engine.classic.extensions.drilldown.DrillDownProfile;
 import org.pentaho.reporting.engine.classic.extensions.drilldown.LinkCustomizer;
 import org.pentaho.reporting.engine.classic.extensions.drilldown.PatternLinkCustomizer;
@@ -31,18 +32,12 @@ import org.pentaho.reporting.libraries.xmlns.parser.XmlReadHandler;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 
-public class DrillDownProfileReadHandler extends AbstractXmlReadHandler
+public class DrillDownProfileReadHandler extends AbstractMetaDataReadHandler
 {
   private ArrayList<PropertyReadHandler> attributes;
-  private String bundleName;
   private Class linkCustomizerType;
-  private String name;
   private String prefix;
 
-  private boolean expert;
-  private boolean hidden;
-  private boolean preferred;
-  private boolean deprecated;
   private String group;
 
   public DrillDownProfileReadHandler(final String group)
@@ -59,20 +54,7 @@ public class DrillDownProfileReadHandler extends AbstractXmlReadHandler
    */
   protected void startParsing(final Attributes attrs) throws SAXException
   {
-    name = attrs.getValue(getUri(), "name"); // NON-NLS
-    if (name == null)
-    {
-      throw new ParseException("Attribute 'name' is undefined.", getLocator()); // NON-NLS
-    }
-    bundleName = attrs.getValue(getUri(), "bundle-name"); // NON-NLS
-    if (bundleName == null)
-    {
-      throw new ParseException("Attribute 'bundle-name' is undefined.", getLocator()); // NON-NLS
-    }
-    expert = "true".equals(attrs.getValue(getUri(), "expert")); // NON-NLS
-    hidden = "true".equals(attrs.getValue(getUri(), "hidden")); // NON-NLS
-    preferred = "true".equals(attrs.getValue(getUri(), "preferred")); // NON-NLS
-    deprecated = "true".equals(attrs.getValue(getUri(), "deprecated")); // NON-NLS
+    super.startParsing(attrs);
 
     final String valueTypeText = attrs.getValue(getUri(), "class"); // NON-NLS
     if (valueTypeText != null)
@@ -145,6 +127,6 @@ public class DrillDownProfileReadHandler extends AbstractXmlReadHandler
     }
     attrMap.put("group", group); // NON-NLS
     return new DrillDownProfile
-        (name, bundleName, prefix, expert, preferred, hidden, deprecated, linkCustomizerType, attrMap, false, -1);
+        (getName(), getBundle(), prefix, isExpert(), isPreferred(), isHidden(), isDeprecated(), linkCustomizerType, attrMap, getMaturityLevel(), -1);
   }
 }

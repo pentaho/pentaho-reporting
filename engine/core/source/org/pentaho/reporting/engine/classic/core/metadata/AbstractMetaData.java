@@ -25,6 +25,8 @@ import java.net.URL;
 import java.util.Locale;
 import java.util.MissingResourceException;
 
+import org.pentaho.reporting.engine.classic.core.metadata.builder.MetaDataBuilder;
+import org.pentaho.reporting.libraries.base.util.ArgumentNullException;
 import org.pentaho.reporting.libraries.base.util.Messages;
 import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
 import org.pentaho.reporting.libraries.base.util.StringUtils;
@@ -50,15 +52,12 @@ public abstract class AbstractMetaData implements Serializable, MetaData
   private String itemOrdinalKey;
   private String keyPrefixAndName;
   private String deprecationKey;
-  private boolean experimental;
+  private MaturityLevel maturityLevel;
   private int compatibilityLevel;
 
   protected AbstractMetaData(final MetaData metaData)
   {
-    if (metaData == null)
-    {
-      throw new NullPointerException();
-    }
+    ArgumentNullException.validate("metaData", metaData);
 
     this.name = metaData.getName();
     this.keyPrefix = metaData.getKeyPrefix();
@@ -67,10 +66,17 @@ public abstract class AbstractMetaData implements Serializable, MetaData
     this.preferred = metaData.isPreferred();
     this.hidden = metaData.isHidden();
     this.deprecated = metaData.isDeprecated();
-    this.experimental = metaData.isExperimental();
+    this.maturityLevel = metaData.getFeatureMaturityLevel();
     this.compatibilityLevel = metaData.getCompatibilityLevel();
 
     computeBundleProperties();
+  }
+
+  protected AbstractMetaData(final MetaDataBuilder builder)
+  {
+    this(builder.getName(), builder.getBundleLocation(), builder.getKeyPrefix(), builder.isExpert(),
+        builder.isPreferred(), builder.isHidden(), builder.isDeprecated(), builder.getMaturityLevel(),
+        builder.getCompatibilityLevel());
   }
 
   protected AbstractMetaData(final String name,
@@ -80,23 +86,15 @@ public abstract class AbstractMetaData implements Serializable, MetaData
                              final boolean preferred,
                              final boolean hidden,
                              final boolean deprecated,
-                             final boolean experimental,
+                             final MaturityLevel maturityLevel,
                              final int compatibilityLevel)
   {
-    if (name == null)
-    {
-      throw new NullPointerException();
-    }
-    if (bundleLocation == null)
-    {
-      throw new NullPointerException();
-    }
-    if (keyPrefix == null)
-    {
-      throw new NullPointerException();
-    }
+    ArgumentNullException.validate("name", name);
+    ArgumentNullException.validate("bundleLocation", bundleLocation);
+    ArgumentNullException.validate("keyPrefix", keyPrefix);
+
     this.compatibilityLevel = compatibilityLevel;
-    this.experimental = experimental;
+    this.maturityLevel = maturityLevel;
     this.name = name;
     this.bundleLocation = bundleLocation;
     this.keyPrefix = keyPrefix;
@@ -136,14 +134,14 @@ public abstract class AbstractMetaData implements Serializable, MetaData
     return compatibilityLevel;
   }
 
-  protected String computePrefix(String keyPrefix, String name)
+  protected String computePrefix(final String keyPrefix, final String name)
   {
     return keyPrefix + name;
   }
 
   public boolean isExperimental()
   {
-    return experimental;
+    return maturityLevel.isExperimental();
   }
 
   public boolean isDeprecated()
@@ -187,7 +185,7 @@ public abstract class AbstractMetaData implements Serializable, MetaData
       }
       return getBundle(locale).strictString(key);
     }
-    catch (MissingResourceException mre)
+    catch (final MissingResourceException mre)
     {
       return null;
     }
@@ -355,9 +353,14 @@ public abstract class AbstractMetaData implements Serializable, MetaData
     {
       return getBundle(locale).getOptionalString(key);
     }
-    catch (MissingResourceException e)
+    catch (final MissingResourceException e)
     {
       return null;
     }
+  }
+
+  public MaturityLevel getFeatureMaturityLevel()
+  {
+    return maturityLevel;
   }
 }

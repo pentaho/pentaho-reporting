@@ -19,25 +19,29 @@ package org.pentaho.reporting.engine.classic.core.metadata;
 
 import java.beans.PropertyDescriptor;
 import java.beans.PropertyEditor;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.pentaho.reporting.engine.classic.core.Element;
 import org.pentaho.reporting.engine.classic.core.function.Expression;
+import org.pentaho.reporting.engine.classic.core.metadata.builder.ExpressionPropertyMetaDataBuilder;
+import org.pentaho.reporting.engine.classic.core.metadata.propertyeditors.SharedPropertyDescriptorProxy;
+import org.pentaho.reporting.libraries.base.util.ArgumentNullException;
 import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
 import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 
 public class DefaultExpressionPropertyMetaData extends AbstractMetaData implements ExpressionPropertyMetaData
 {
+  private static final Log logger = LogFactory.getLog(DefaultExpressionPropertyMetaData.class);
+
   private boolean mandatory;
   private String propertyRole;
-  private String propertyEditorClass;
+  private Class<? extends PropertyEditor> propertyEditorClass;
   private boolean computed;
   private ExpressionPropertyCore expressionPropertyCore;
-  private transient PropertyDescriptor propertyDescriptor;
-  private transient SharedBeanInfo beanInfo;
+  private SharedPropertyDescriptorProxy propertyDescriptor;
 
+  @Deprecated
   public DefaultExpressionPropertyMetaData(final String name,
                                            final String bundleLocation,
                                            final boolean expert,
@@ -50,29 +54,37 @@ public class DefaultExpressionPropertyMetaData extends AbstractMetaData implemen
                                            final SharedBeanInfo beanInfo,
                                            final String propertyEditorClass,
                                            final ExpressionPropertyCore expressionPropertyCore,
-                                           final boolean experimental,
+                                           final MaturityLevel maturityLevel,
                                            final int compatibilityLevel)
   {
-    super(name, bundleLocation, "property.", expert, preferred, hidden, deprecated, experimental, compatibilityLevel);
-    if (propertyRole == null)
-    {
-      throw new NullPointerException();
-    }
-    if (beanInfo == null)
-    {
-      throw new NullPointerException();
-    }
-    if (expressionPropertyCore == null)
-    {
-      throw new NullPointerException();
-    }
+    super(name, bundleLocation, "property.", expert, preferred, hidden, deprecated, maturityLevel, compatibilityLevel);
+    ArgumentNullException.validate("propertyRole", propertyRole);
+    ArgumentNullException.validate("beanInfo", beanInfo);
+    ArgumentNullException.validate("expressionPropertyCore", expressionPropertyCore);
 
-    this.beanInfo = beanInfo;
+    this.propertyDescriptor = new SharedPropertyDescriptorProxy(beanInfo, name);
     this.computed = computed;
     this.expressionPropertyCore = expressionPropertyCore;
-    this.propertyEditorClass = propertyEditorClass;
+    this.propertyEditorClass = ObjectUtilities.loadAndValidate
+        (propertyEditorClass, DefaultExpressionPropertyMetaData.class, PropertyEditor.class);
     this.mandatory = mandatory;
     this.propertyRole = propertyRole;
+  }
+
+  public DefaultExpressionPropertyMetaData(final ExpressionPropertyMetaDataBuilder builder)
+  {
+    super(builder);
+    this.propertyDescriptor = builder.getDescriptor();
+    this.computed = builder.isComputed();
+    this.expressionPropertyCore = builder.getCore();
+    this.propertyEditorClass = builder.getEditor();
+    this.mandatory = builder.isMandatory();
+    this.propertyRole = builder.getValueRole();
+
+
+    ArgumentNullException.validate("propertyRole", propertyRole);
+    ArgumentNullException.validate("propertyDescriptor", propertyDescriptor);
+    ArgumentNullException.validate("expressionPropertyCore", expressionPropertyCore);
   }
 
   public boolean isComputed()
@@ -80,13 +92,9 @@ public class DefaultExpressionPropertyMetaData extends AbstractMetaData implemen
     return computed;
   }
 
-  public Class getPropertyType()
+  public Class<?> getPropertyType()
   {
-    if (propertyDescriptor == null)
-    {
-      propertyDescriptor = beanInfo.getPropertyDescriptor(getName());
-    }
-    return propertyDescriptor.getPropertyType();
+    return getBeanDescriptor().getPropertyType();
   }
 
   public String getPropertyRole()
@@ -123,13 +131,9 @@ public class DefaultExpressionPropertyMetaData extends AbstractMetaData implemen
         (this, expression, attributeValue, reportElement, resourceManager);
   }
 
-  public PropertyDescriptor getBeanDescriptor()
+  public PropertyDescriptor getBeanDescriptor() throws IllegalStateException
   {
-    if (propertyDescriptor == null)
-    {
-      propertyDescriptor = beanInfo.getPropertyDescriptor(getName());
-    }
-    return propertyDescriptor;
+    return propertyDescriptor.get();
   }
 
   public PropertyEditor getEditor()
@@ -138,27 +142,19 @@ public class DefaultExpressionPropertyMetaData extends AbstractMetaData implemen
     {
       return null;
     }
-    return ObjectUtilities.loadAndInstantiate
-        (propertyEditorClass, DefaultAttributeMetaData.class, PropertyEditor.class);
+    try
+    {
+      return propertyEditorClass.newInstance();
+    }
+    catch (Exception e)
+    {
+      logger.warn("Property editor for expression property '" + getName() + "' threw an Exception on instantiate", e);
+      return null;
+    }
   }
 
   public String[] getExtraCalculationFields()
   {
     return expressionPropertyCore.getExtraCalculationFields(this);
-  }
-
-  private void writeObject(ObjectOutputStream out)
-     throws IOException
-  {
-    out.defaultWriteObject();
-    out.writeObject(beanInfo.getBeanClass());
-  }
-
-  private void readObject(ObjectInputStream in)
-     throws IOException, ClassNotFoundException
-  {
-    in.defaultReadObject();
-    final Class c = (Class) in.readObject();
-    beanInfo = new SharedBeanInfo(c);
   }
 }

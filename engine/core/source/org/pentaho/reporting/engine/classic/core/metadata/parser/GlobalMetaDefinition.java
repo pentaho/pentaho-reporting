@@ -17,20 +17,20 @@
 
 package org.pentaho.reporting.engine.classic.core.metadata.parser;
 
-import java.util.HashMap;
-import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import org.pentaho.reporting.engine.classic.core.metadata.builder.StyleMetaDataBuilder;
+
 public class GlobalMetaDefinition implements Cloneable
 {
-  private HashMap<String,StyleGroup> styleGroups;
-  private HashMap<String,AttributeGroup> attributeGroups;
+  private LinkedHashMap<String, StyleGroup> styleGroups;
+  private LinkedHashMap<String, AttributeGroup> attributeGroups;
 
   public GlobalMetaDefinition()
   {
-    styleGroups = new HashMap<String,StyleGroup>();
-    attributeGroups = new HashMap<String,AttributeGroup>();
+    styleGroups = new LinkedHashMap<String, StyleGroup>();
+    attributeGroups = new LinkedHashMap<String, AttributeGroup>();
   }
 
   public void addAttributeGroup(final AttributeGroup group)
@@ -74,9 +74,9 @@ public class GlobalMetaDefinition implements Cloneable
   {
     final GlobalMetaDefinition definition = (GlobalMetaDefinition) super.clone();
     //noinspection unchecked
-    definition.styleGroups = (HashMap<String,StyleGroup>) styleGroups.clone();
+    definition.styleGroups = (LinkedHashMap<String, StyleGroup>) styleGroups.clone();
     //noinspection unchecked
-    definition.attributeGroups = (HashMap<String,AttributeGroup>) attributeGroups.clone();
+    definition.attributeGroups = (LinkedHashMap<String, AttributeGroup>) attributeGroups.clone();
     return definition;
   }
 
@@ -88,10 +88,8 @@ public class GlobalMetaDefinition implements Cloneable
     }
     mergeStyles(definition);
 
-    final Iterator<Map.Entry<String, AttributeGroup>> iterator = definition.attributeGroups.entrySet().iterator();
-    while (iterator.hasNext())
+    for (final Map.Entry<String, AttributeGroup> entry : definition.attributeGroups.entrySet())
     {
-      final Map.Entry<String, AttributeGroup> entry = iterator.next();
       final AttributeGroup styleGroup = this.attributeGroups.get(entry.getKey());
       if (styleGroup == null)
       {
@@ -100,18 +98,14 @@ public class GlobalMetaDefinition implements Cloneable
       }
       final AttributeGroup entryGroup = entry.getValue();
       final String name = styleGroup.getName();
-      final LinkedHashMap<String,AttributeDefinition> styles = new LinkedHashMap<String,AttributeDefinition>();
-      final AttributeDefinition[] data = styleGroup.getMetaData();
-      for (int i = 0; i < data.length; i++)
+      final LinkedHashMap<String, AttributeDefinition> styles = new LinkedHashMap<String, AttributeDefinition>();
+      for (final AttributeDefinition handler : styleGroup.getMetaData())
       {
-        final AttributeDefinition handler = data[i];
         styles.put(handler.getName(), handler);
       }
 
-      final AttributeDefinition[] entryData = entryGroup.getMetaData();
-      for (int i = 0; i < entryData.length; i++)
+      for (final AttributeDefinition handler : entryGroup.getMetaData())
       {
-        final AttributeDefinition handler = entryData[i];
         styles.put(handler.getName(), handler);
       }
 
@@ -122,34 +116,27 @@ public class GlobalMetaDefinition implements Cloneable
 
   private void mergeStyles(final GlobalMetaDefinition definition)
   {
-    final Iterator<Map.Entry<String, StyleGroup>> iterator = definition.styleGroups.entrySet().iterator();
-    while (iterator.hasNext())
+    for (final Map.Entry<String, StyleGroup> entry : definition.styleGroups.entrySet())
     {
-      final Map.Entry<String, StyleGroup> entry = iterator.next();
       final StyleGroup styleGroup = this.styleGroups.get(entry.getKey());
       if (styleGroup == null)
       {
         addStyleGroup(entry.getValue());
         continue;
       }
-      final StyleGroup entryGroup = entry.getValue();
-      final String name = styleGroup.getName();
-      final LinkedHashMap<String,StyleReadHandler> styles = new LinkedHashMap<String,StyleReadHandler>();
-      final StyleReadHandler[] data = styleGroup.getMetaData();
-      for (int i = 0; i < data.length; i++)
+
+      final LinkedHashMap<String, StyleMetaDataBuilder> styles = new LinkedHashMap<String, StyleMetaDataBuilder>();
+      for (final StyleMetaDataBuilder handler : styleGroup.getMetaData())
       {
-        final StyleReadHandler handler = data[i];
         styles.put(handler.getName(), handler);
       }
 
-      final StyleReadHandler[] entryData = entryGroup.getMetaData();
-      for (int i = 0; i < entryData.length; i++)
+      for (final StyleMetaDataBuilder handler : entry.getValue().getMetaData())
       {
-        final StyleReadHandler handler = entryData[i];
         styles.put(handler.getName(), handler);
       }
 
-      addStyleGroup(new StyleGroup(name, styles.values().toArray(new StyleReadHandler[styles.size()])));
+      addStyleGroup(new StyleGroup(styleGroup.getName(), styles.values()));
     }
   }
 }

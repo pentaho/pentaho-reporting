@@ -75,7 +75,7 @@ public class AttributeGroupReadHandler extends AbstractXmlReadHandler
     }
     if ("attribute".equals(tagName))
     {
-      final AttributeReadHandler handler = new AttributeReadHandler(bundle);
+      final AttributeReadHandler handler = new AttributeReadHandler(bundle, "");
       attributeHandlers.add(handler);
       return handler;
     }

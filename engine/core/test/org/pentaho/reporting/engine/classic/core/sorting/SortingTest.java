@@ -40,6 +40,7 @@ import org.pentaho.reporting.engine.classic.core.TableDataFactory;
 import org.pentaho.reporting.engine.classic.core.designtime.DataSourcePlugin;
 import org.pentaho.reporting.engine.classic.core.metadata.DataFactoryMetaData;
 import org.pentaho.reporting.engine.classic.core.metadata.DataFactoryRegistry;
+import org.pentaho.reporting.engine.classic.core.metadata.MaturityLevel;
 import org.pentaho.reporting.engine.classic.core.metadata.ResourceReference;
 import org.pentaho.reporting.engine.classic.core.testsupport.DebugReportRunner;
 import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
@@ -70,6 +71,11 @@ public class SortingTest
     public Image getIcon(final Locale locale, final int iconKind)
     {
       return null;
+    }
+
+    public MaturityLevel getFeatureMaturityLevel()
+    {
+      return MaturityLevel.Limited;
     }
 
     public String[] getReferencedFields(final DataFactory element, final String queryName, final DataRow parameter)

@@ -34,6 +34,7 @@ import org.pentaho.reporting.engine.classic.core.CrosstabRowGroupBody;
 import org.pentaho.reporting.engine.classic.core.Group;
 import org.pentaho.reporting.engine.classic.core.GroupBody;
 import org.pentaho.reporting.engine.classic.core.event.ReportModelEvent;
+import org.pentaho.reporting.engine.classic.core.filter.types.CrosstabElementType;
 import org.pentaho.reporting.engine.classic.core.util.InstanceID;
 
 /**
@@ -52,7 +53,8 @@ public final class InsertCrosstabRowGroupAction extends AbstractElementSelection
     putValue(Action.MNEMONIC_KEY, ActionMessages.getOptionalMnemonic("InsertCrosstabRowGroupAction.Mnemonic"));
     putValue(Action.ACCELERATOR_KEY, ActionMessages.getOptionalKeyStroke("InsertCrosstabRowGroupAction.Accelerator"));
     putValue(Action.SMALL_ICON, IconLoader.getInstance().getGenericSquare());
-    setVisible(WorkspaceSettings.getInstance().isExperimentalFeaturesVisible());
+
+    setVisible(WorkspaceSettings.getInstance().isVisible(CrosstabElementType.INSTANCE.getMetaData()));
     WorkspaceSettings.getInstance().addSettingsListener(this);
   }
 
@@ -168,6 +170,6 @@ public final class InsertCrosstabRowGroupAction extends AbstractElementSelection
   
   public void settingsChanged()
   {
-    setVisible(WorkspaceSettings.getInstance().isExperimentalFeaturesVisible());
+    setVisible(WorkspaceSettings.getInstance().isVisible(CrosstabElementType.INSTANCE.getMetaData()));
   }
 }

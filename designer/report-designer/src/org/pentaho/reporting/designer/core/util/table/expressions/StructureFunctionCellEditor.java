@@ -177,19 +177,13 @@ public class StructureFunctionCellEditor implements TableCellEditor
     final DefaultComboBoxModel model = new DefaultComboBoxModel();
     model.addElement(null);
 
-    final ExpressionMetaData[] datas = ExpressionRegistry.getInstance().getAllExpressionMetaDatas();
-    for (int i = 0; i < datas.length; i++)
+    for (final ExpressionMetaData expressionMetaData : ExpressionRegistry.getInstance().getAllExpressionMetaDatas())
     {
-      final ExpressionMetaData expressionMetaData = datas[i];
       if (expressionMetaData.isHidden())
       {
         continue;
       }
-      if (WorkspaceSettings.getInstance().isShowExpertItems() == false && expressionMetaData.isExpert())
-      {
-        continue;
-      }
-      if (WorkspaceSettings.getInstance().isShowDeprecatedItems() == false && expressionMetaData.isDeprecated())
+      if (!WorkspaceSettings.getInstance().isVisible(expressionMetaData))
       {
         continue;
       }

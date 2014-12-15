@@ -24,19 +24,21 @@ import java.util.Map;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.pentaho.reporting.engine.classic.core.metadata.builder.ElementMetaDataBuilder;
 import org.pentaho.reporting.engine.classic.core.style.StyleKey;
 import org.pentaho.reporting.libraries.xmlns.common.AttributeMap;
 
 public class DefaultElementMetaData extends AbstractMetaData implements ElementMetaData
 {
   private static final Log logger = LogFactory.getLog(DefaultElementMetaData.class);
+
   private transient AttributeMetaData[] attributesAsArray;
+  private transient StyleMetaData[] stylesArray;
   private AttributeMap<AttributeMetaData> attributes;
-  private HashMap<StyleKey, StyleMetaData> styles;
+  private Map<StyleKey, StyleMetaData> styles;
   private Class<? extends ElementType> elementType;
   private TypeClassification reportElementType;
   private Class<?> contentType;
-  private transient StyleMetaData[] stylesArray;
   private String namespace;
 
   public DefaultElementMetaData(final String name,
@@ -52,10 +54,10 @@ public class DefaultElementMetaData extends AbstractMetaData implements ElementM
                                 final Map<StyleKey, StyleMetaData> styles,
                                 final Class<? extends ElementType> elementType,
                                 final Class<?> contentType,
-                                final boolean experimental,
+                                final MaturityLevel maturityLevel,
                                 final int compatibilityLevel)
   {
-    super(name, bundleLocation, keyPrefix, expert, preferred, hidden, deprecated, experimental, compatibilityLevel);
+    super(name, bundleLocation, keyPrefix, expert, preferred, hidden, deprecated, maturityLevel, compatibilityLevel);
     if (styles == null)
     {
       throw new NullPointerException();
@@ -83,6 +85,22 @@ public class DefaultElementMetaData extends AbstractMetaData implements ElementM
     this.styles = new HashMap<StyleKey, StyleMetaData>(styles);
     this.elementType = elementType;
     this.namespace = namespace;
+  }
+
+  public DefaultElementMetaData(final ElementMetaDataBuilder builder)
+  {
+    super(builder);
+    this.contentType = builder.getContentType();
+    this.reportElementType = builder.getReportElementType();
+    this.attributes = builder.getAttributes();
+    this.styles = builder.getStyles();
+    this.elementType = builder.getElementType();
+    this.namespace = builder.getNamespace();
+
+    if (this.namespace == null)
+    {
+      throw new IllegalArgumentException();
+    }
   }
 
   public DefaultElementMetaData(final ElementMetaData metaData)

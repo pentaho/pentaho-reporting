@@ -20,10 +20,10 @@ package org.pentaho.reporting.libraries.base.util;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.reflect.Array;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
-import java.lang.reflect.Array;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -114,12 +114,12 @@ public final class ObjectUtilities
       return false;
     }
   }
-  
+
   /**
-   * Performs a comparison on two file objects to determine if they refer to the 
+   * Performs a comparison on two file objects to determine if they refer to the
    * same file. The <code>File.equals()</code> method requires that the files refer
    * to the same file in the same way (relative vs. absolute).
-   * 
+   *
    * @param file1 the first file (<code>null</code> permitted).
    * @param file2 the second file (<code>null</code> permitted).
    * @return <code>true</code> if the files refer to the same file, <code>false</code> otherwise
@@ -136,7 +136,7 @@ public final class ObjectUtilities
       {
         return file1.getCanonicalFile().equals(file2.getCanonicalFile());
       }
-      catch(IOException ioe)
+      catch (IOException ioe)
       {
         // There was an error accessing the filesystem
         return file1.equals(file2);
@@ -368,7 +368,7 @@ public final class ObjectUtilities
    * @return the url of the resource or null, if not found.
    */
   public static InputStream getResourceRelativeAsStream
-      (final String name, final Class context)
+  (final String name, final Class context)
   {
     final URL url = getResourceRelative(name, context);
     if (url == null)
@@ -410,8 +410,8 @@ public final class ObjectUtilities
    * @return the instantiated object, which is guaranteed to be of the given type, or null, if an error occured.
    */
   public static <T> T loadAndInstantiate(final String className,
-                                          final Class source,
-                                          final Class<T> type)
+                                         final Class source,
+                                         final Class<T> type)
   {
     if (className == null || className.length() == 0)
     {
@@ -460,6 +460,56 @@ public final class ObjectUtilities
     return null;
   }
 
+  public static <T> Class<? extends T> loadAndValidate(final String className,
+                                                       final Class source,
+                                                       final Class<T> type)
+  {
+    if (className == null || className.length() == 0)
+    {
+      return null;
+    }
+    try
+    {
+      final ClassLoader loader = getClassLoader(source);
+      final Class c = Class.forName(className, false, loader);
+      if (type != null && type.isAssignableFrom(c) == false)
+      {
+        // this is unacceptable and means someone messed up the configuration
+        LOGGER.warn("Specified class " + className + " is not of expected type " + type);
+        return null;
+      }
+      //noinspection unchecked
+      return (Class<? extends T>) c;
+    }
+    catch (ClassNotFoundException e)
+    {
+      if (LOGGER.isDebugEnabled())
+      {
+        LOGGER.debug("Specified class " + className + " does not exist.", e);
+      }
+      // sometimes, this one is expected.
+    }
+    catch (NoClassDefFoundError e)
+    {
+      if (LOGGER.isDebugEnabled())
+      {
+        LOGGER.debug("Specified class " + className + " cannot be loaded [NOCLASSDEFERROR].", e);
+      }
+    }
+    catch (Throwable e)
+    {
+      // this is more severe than a class not being found at all
+      if (LOGGER.isDebugEnabled())
+      {
+        LOGGER.info("Specified class " + className + " failed to instantiate correctly.", e);
+      }
+      else
+      {
+        LOGGER.info("Specified class " + className + " failed to instantiate correctly.");
+      }
+    }
+    return null;
+  }
 
   /**
    * Checks whether the current JDK is at least JDK 1.4.

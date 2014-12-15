@@ -25,6 +25,7 @@ import junit.framework.TestCase;
 import org.pentaho.reporting.engine.classic.core.metadata.DataFactoryRegistry;
 import org.pentaho.reporting.engine.classic.core.metadata.DefaultDataFactoryCore;
 import org.pentaho.reporting.engine.classic.core.metadata.DefaultDataFactoryMetaData;
+import org.pentaho.reporting.engine.classic.core.metadata.MaturityLevel;
 import org.pentaho.reporting.engine.classic.core.metadata.MetaDataLookupException;
 import org.pentaho.reporting.engine.classic.core.util.ReportParameterValues;
 
@@ -119,7 +120,7 @@ public class CompoundDataFactoryTest extends TestCase
         false,
         true, // freeform
         false,
-        false,
+        MaturityLevel.Limited,
         new DefaultDataFactoryCore(), -1);
 
     try
@@ -153,7 +154,7 @@ public class CompoundDataFactoryTest extends TestCase
         false,
         false, // freeform
         false,
-        false,
+        MaturityLevel.Limited,
         new DefaultDataFactoryCore(), -1);
 
     try
@@ -186,7 +187,7 @@ public class CompoundDataFactoryTest extends TestCase
         false,
         true, // freeform
         false,
-        false,
+        MaturityLevel.Limited,
         new DefaultDataFactoryCore(), -1);
 
     try
@@ -223,7 +224,7 @@ public class CompoundDataFactoryTest extends TestCase
         false,
         false, // freeform
         false,
-        false,
+        MaturityLevel.Limited,
         new DefaultDataFactoryCore(), -1);
 
     try

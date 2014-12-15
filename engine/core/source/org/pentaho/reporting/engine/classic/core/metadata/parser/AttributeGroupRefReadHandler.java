@@ -20,7 +20,6 @@ package org.pentaho.reporting.engine.classic.core.metadata.parser;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.pentaho.reporting.engine.classic.core.metadata.AttributeMetaData;
-import org.pentaho.reporting.engine.classic.core.metadata.DefaultAttributeMetaData;
 import org.pentaho.reporting.libraries.xmlns.common.AttributeMap;
 import org.pentaho.reporting.libraries.xmlns.parser.AbstractXmlReadHandler;
 import org.pentaho.reporting.libraries.xmlns.parser.ParseException;
@@ -32,11 +31,9 @@ public class AttributeGroupRefReadHandler extends AbstractXmlReadHandler
   private static final Log logger = LogFactory.getLog(AttributeGroupRefReadHandler.class);
   private AttributeMap<AttributeMetaData> attributes;
   private GlobalMetaDefinition attributeGroups;
-  private String bundle;
 
   public AttributeGroupRefReadHandler(final AttributeMap<AttributeMetaData> attributes,
-                                      final GlobalMetaDefinition attributeGroups,
-                                      final String bundle)
+                                      final GlobalMetaDefinition attributeGroups)
   {
     if (attributes == null)
     {
@@ -49,7 +46,6 @@ public class AttributeGroupRefReadHandler extends AbstractXmlReadHandler
 
     this.attributes = attributes;
     this.attributeGroups = attributeGroups;
-    this.bundle = bundle;
   }
 
   /**
@@ -76,34 +72,11 @@ public class AttributeGroupRefReadHandler extends AbstractXmlReadHandler
     for (int i = 0; i < data.length; i++)
     {
       final AttributeDefinition handler = data[i];
-      final String namespace = handler.getNamespace();
-      final String attrName = handler.getName();
-      final String namespacePrefix = handler.getNamespacePrefix();
-      if (namespacePrefix == null)
+      final AttributeMetaData metaData = handler.build();
+      if (metaData != null)
       {
-        logger.warn("Invalid namespace-prefix, skipping attribute " + namespace + ':' + attrName);
-        continue;
+        attributes.setAttribute(metaData.getNameSpace(), metaData.getName(), metaData);
       }
-
-      final String prefix;
-      final String attributeBundle;
-      if (handler.getBundleName() == null)
-      {
-        attributeBundle = this.bundle;
-      }
-      else
-      {
-        attributeBundle = handler.getBundleName();
-      }
-      prefix = "attribute." + namespacePrefix + '.';
-      final DefaultAttributeMetaData metaData = new DefaultAttributeMetaData
-          (namespace, attrName, attributeBundle, prefix,
-              handler.getPropertyEditor(), handler.getValueType(), handler.isExpert(),
-              handler.isPreferred(), handler.isHidden(), handler.isDeprecated(), handler.isMandatory(),
-              handler.isComputed(), handler.isTransient(), handler.getValueRole(), handler.isBulk(),
-              handler.isDesignTimeValue(), handler.getAttributeCore(), handler.isExperimental(),
-              handler.getCompatibilityLevel());
-      attributes.setAttribute(namespace, attrName, metaData);
     }
   }
 

@@ -23,6 +23,7 @@ import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.pentaho.reporting.engine.classic.core.DataFactory;
 import org.pentaho.reporting.engine.classic.core.DataRow;
 import org.pentaho.reporting.engine.classic.core.designtime.DataSourcePlugin;
+import org.pentaho.reporting.engine.classic.core.metadata.builder.DataFactoryMetaDataBuilder;
 import org.pentaho.reporting.libraries.base.config.Configuration;
 import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
 import org.pentaho.reporting.libraries.base.util.StringUtils;
@@ -32,7 +33,7 @@ public class DefaultDataFactoryMetaData extends AbstractMetaData implements Data
 {
   private static final Log logger = LogFactory.getLog(DefaultDataFactoryMetaData.class);
 
-  private Class editorClass;
+  private Class<?> editorClass;
   private boolean editable;
   private boolean freeformQuery;
   private boolean formattingMetadataSource;
@@ -48,12 +49,12 @@ public class DefaultDataFactoryMetaData extends AbstractMetaData implements Data
                                     final boolean editable,
                                     final boolean freeformQuery,
                                     final boolean formattingMetadataSource,
-                                    final boolean experimental,
+                                    final MaturityLevel maturityLevel,
                                     final DataFactoryCore dataFactoryCore,
                                     final int compatibilityLevel)
   {
     super(dataFactory, bundleLocation, keyPrefix, expert,
-        preferred, hidden, deprecated, experimental, compatibilityLevel);
+        preferred, hidden, deprecated, maturityLevel, compatibilityLevel);
     if (dataFactoryCore == null)
     {
       throw new NullPointerException();
@@ -63,6 +64,21 @@ public class DefaultDataFactoryMetaData extends AbstractMetaData implements Data
     this.freeformQuery = freeformQuery;
     this.formattingMetadataSource = formattingMetadataSource;
     this.dataFactoryCore = dataFactoryCore;
+  }
+
+  public DefaultDataFactoryMetaData(final DataFactoryMetaDataBuilder builder)
+  {
+    super(builder);
+    this.editable = builder.isEditable();
+    this.freeformQuery = builder.isFreeformQuery();
+    this.formattingMetadataSource = builder.isFormattingMetadataSource();
+    this.dataFactoryCore = builder.getDataFactoryCore();
+    this.editorClass = builder.getEditorClass();
+
+    if (dataFactoryCore == null)
+    {
+      throw new NullPointerException();
+    }
   }
 
   protected String computePrefix(final String keyPrefix, final String name)

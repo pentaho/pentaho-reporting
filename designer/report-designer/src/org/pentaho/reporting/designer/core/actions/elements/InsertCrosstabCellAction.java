@@ -32,6 +32,7 @@ import org.pentaho.reporting.designer.core.util.undo.UndoEntry;
 import org.pentaho.reporting.engine.classic.core.CrosstabCell;
 import org.pentaho.reporting.engine.classic.core.CrosstabCellBody;
 import org.pentaho.reporting.engine.classic.core.event.ReportModelEvent;
+import org.pentaho.reporting.engine.classic.core.filter.types.CrosstabElementType;
 import org.pentaho.reporting.engine.classic.core.util.InstanceID;
 
 /**
@@ -50,7 +51,8 @@ public final class InsertCrosstabCellAction extends AbstractElementSelectionActi
     putValue(Action.MNEMONIC_KEY, ActionMessages.getOptionalMnemonic("InsertCrosstabCellAction.Mnemonic"));
     putValue(Action.ACCELERATOR_KEY, ActionMessages.getOptionalKeyStroke("InsertCrosstabCellAction.Accelerator"));
     putValue(Action.SMALL_ICON, IconLoader.getInstance().getGenericSquare());
-    setVisible(WorkspaceSettings.getInstance().isExperimentalFeaturesVisible());
+
+    setVisible(WorkspaceSettings.getInstance().isVisible(CrosstabElementType.INSTANCE.getMetaData()));
     WorkspaceSettings.getInstance().addSettingsListener(this);
   }
 
@@ -161,6 +163,6 @@ public final class InsertCrosstabCellAction extends AbstractElementSelectionActi
   
   public void settingsChanged()
   {
-    setVisible(WorkspaceSettings.getInstance().isExperimentalFeaturesVisible());
+    setVisible(WorkspaceSettings.getInstance().isVisible(CrosstabElementType.INSTANCE.getMetaData()));
   }
 }

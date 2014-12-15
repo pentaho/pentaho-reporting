@@ -35,6 +35,7 @@ import org.pentaho.reporting.engine.classic.core.designtime.DataSourcePlugin;
 import org.pentaho.reporting.engine.classic.core.function.AbstractExpression;
 import org.pentaho.reporting.engine.classic.core.metadata.DataFactoryMetaData;
 import org.pentaho.reporting.engine.classic.core.metadata.DataFactoryRegistry;
+import org.pentaho.reporting.engine.classic.core.metadata.MaturityLevel;
 import org.pentaho.reporting.engine.classic.core.metadata.ResourceReference;
 import org.pentaho.reporting.engine.classic.core.modules.misc.datafactory.StaticDataFactory;
 import org.pentaho.reporting.engine.classic.core.testsupport.DebugReportRunner;
@@ -79,6 +80,11 @@ public class Pre497Test extends TestCase
     public TrackingDataFactoryMetaData()
     {
       this.parent = DataFactoryRegistry.getInstance().getMetaData(StaticDataFactory.class.getName());
+    }
+
+    public MaturityLevel getFeatureMaturityLevel()
+    {
+      return MaturityLevel.Limited;
     }
 
     public Image getIcon(final Locale locale, final int iconKind)
@@ -206,7 +212,7 @@ public class Pre497Test extends TestCase
 
     public boolean isExperimental()
     {
-      return parent.isExperimental();
+      return getFeatureMaturityLevel().isExperimental();
     }
 
     public int getCompatibilityLevel()

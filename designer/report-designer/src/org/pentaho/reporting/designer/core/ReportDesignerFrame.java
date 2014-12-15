@@ -44,6 +44,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
@@ -95,6 +96,7 @@ import org.pentaho.reporting.designer.core.editor.fieldselector.FieldSelectorPal
 import org.pentaho.reporting.designer.core.editor.palette.PaletteButton;
 import org.pentaho.reporting.designer.core.frame.RecentFilesUpdateHandler;
 import org.pentaho.reporting.designer.core.inspections.InspectionSidePanePanel;
+import org.pentaho.reporting.designer.core.settings.SettingsListener;
 import org.pentaho.reporting.designer.core.settings.WorkspaceSettings;
 import org.pentaho.reporting.designer.core.status.StatusBar;
 import org.pentaho.reporting.designer.core.util.IconLoader;
@@ -111,6 +113,7 @@ import org.pentaho.reporting.designer.core.xul.XulDesignerFrame;
 import org.pentaho.reporting.engine.classic.core.metadata.ElementMetaData;
 import org.pentaho.reporting.engine.classic.core.metadata.ElementTypeRegistry;
 import org.pentaho.reporting.engine.classic.core.metadata.GroupedMetaDataComparator;
+import org.pentaho.reporting.engine.classic.core.metadata.MaturityLevel;
 import org.pentaho.reporting.engine.classic.extensions.modules.sbarcodes.BarcodeTypePropertyEditor;
 import org.pentaho.reporting.libraries.base.util.DebugLog;
 import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
@@ -750,6 +753,7 @@ public class ReportDesignerFrame extends JFrame
   }
 
   private static final Log logger = LogFactory.getLog(ReportDesignerFrame.class);
+  private final VisibleElementsUpdateHandler visibleElementsUpdateHandler;
   private JTabbedPane reportEditorPane;
   private GlobalPane dockingPane;
   private StatusBar statusBar;
@@ -762,6 +766,7 @@ public class ReportDesignerFrame extends JFrame
   private WelcomePane welcomePane;
   private FieldSelectorPaletteDialog fieldSelectorPaletteDialog;
   private TreeSidePanel treePanel;
+  private JComponent paletteToolBar;
 
   public ReportDesignerFrame() throws XulException
   {
@@ -800,12 +805,14 @@ public class ReportDesignerFrame extends JFrame
 
     initializeToolWindows();
 
+    paletteToolBar = createPaletteToolBar();
+
     final JPanel contentPane = new JPanel();
     contentPane.setLayout(new BorderLayout());
     contentPane.add(context.getToolBar("main-toolbar"), BorderLayout.NORTH); // NON-NLS
     contentPane.add(dockingPane, BorderLayout.CENTER);
     contentPane.add(statusBar, BorderLayout.SOUTH);
-    contentPane.add(createPaletteToolBar(), BorderLayout.WEST);
+    contentPane.add(paletteToolBar, BorderLayout.WEST);
     setContentPane(contentPane);
 
     setJMenuBar(createMenuBar());
@@ -844,6 +851,9 @@ public class ReportDesignerFrame extends JFrame
         DebugLog.log("Failed to activate MacOS-X integration", e); // NON-NLS
       }
     }
+
+    visibleElementsUpdateHandler = new VisibleElementsUpdateHandler();
+    WorkspaceSettings.getInstance().addSettingsListener(visibleElementsUpdateHandler);
   }
 
   public void initWindowLocations(final File[] filesToOpen)
@@ -941,42 +951,44 @@ public class ReportDesignerFrame extends JFrame
   private void createInsertElementsMenu()
   {
     final XulMenupopup insertElementsMenu = context.getView().getXulComponent("insert-elements-popup", XulMenupopup.class);// NON-NLS
-    if (insertElementsMenu != null)
+    if (insertElementsMenu == null)
     {
-      final ElementMetaData[] datas = ElementTypeRegistry.getInstance().getAllElementTypes();
-      Arrays.sort(datas, new GroupedMetaDataComparator());
-      Object grouping = null;
-      boolean firstElement = true;
-      for (int i = 0; i < datas.length; i++)
+      return;
+    }
+
+    final ElementMetaData[] datas = ElementTypeRegistry.getInstance().getAllElementTypes();
+    Arrays.sort(datas, new GroupedMetaDataComparator());
+    Object grouping = null;
+    boolean firstElement = true;
+    for (int i = 0; i < datas.length; i++)
+    {
+      final ElementMetaData data = datas[i];
+      if (data.isHidden())
       {
-        final ElementMetaData data = datas[i];
-        if (data.isHidden())
-        {
-          continue;
-        }
-        
-        final String currentGrouping = data.getGrouping(Locale.getDefault());
-        if (firstElement == false)
-        {
-          if (ObjectUtilities.equal(currentGrouping, grouping) == false)
-          {
-            grouping = currentGrouping;
-            SwingMenuseparator separator = new SwingMenuseparator(null, null, null, "menuseparator");
-            insertElementsMenu.addChild(separator);
-          }
-        }
-        else
+        continue;
+      }
+
+      final String currentGrouping = data.getGrouping(Locale.getDefault());
+      if (firstElement == false)
+      {
+        if (ObjectUtilities.equal(currentGrouping, grouping) == false)
         {
           grouping = currentGrouping;
-          firstElement = false;
+          SwingMenuseparator separator = new SwingMenuseparator(null, null, null, "menuseparator");
+          insertElementsMenu.addChild(separator);
         }
-        
-        final InsertElementAction action = new InsertElementAction(data);
-        action.setReportDesignerContext(context);
-        ActionSwingMenuitem menuItem = new ActionSwingMenuitem(ActionSwingMenuitem.MENUITEM);
-        menuItem.setAction(action);
-        insertElementsMenu.addChild(menuItem);
       }
+      else
+      {
+        grouping = currentGrouping;
+        firstElement = false;
+      }
+
+      final InsertElementAction action = new InsertElementAction(data);
+      action.setReportDesignerContext(context);
+      ActionSwingMenuitem menuItem = new ActionSwingMenuitem(ActionSwingMenuitem.MENUITEM);
+      menuItem.setAction(action);
+      insertElementsMenu.addChild(menuItem);
     }
   }
 
@@ -1018,18 +1030,22 @@ public class ReportDesignerFrame extends JFrame
 
   private void createSamplesMenu()
   {
-    final XulComponent samplesopup = context.getView().getXulComponent("help-samples-popup", XulMenupopup.class);// NON-NLS
-    if (samplesopup == null)
+    final XulMenupopup samplesPopup = context.getView().getXulComponent("help-samples-popup", XulMenupopup.class);// NON-NLS
+    if (samplesPopup == null)
     {
       return;
     }
 
-    final XulMenupopup xulMenupopup = (XulMenupopup) samplesopup;
+    for (final XulComponent childNode : new ArrayList<XulComponent>(samplesPopup.getChildNodes()))
+    {
+      samplesPopup.removeChild(childNode);
+    }
+
     final TreeModel treeModel = SamplesTreeBuilder.getSampleTreeModel();
     final Object root = treeModel.getRoot();
     try
     {
-      insertReports(treeModel, root, xulMenupopup);
+      insertReports(treeModel, root, samplesPopup);
     }
     catch (XulException e)
     {
@@ -1155,8 +1171,8 @@ public class ReportDesignerFrame extends JFrame
   private Category createStructureTreeToolWindow()
   {
     return new Category(IconLoader.getInstance().getReportTreeIcon(),
-            Messages.getString("StructureView.Title"),// NON-NLS
-            treePanel);
+        Messages.getString("StructureView.Title"),// NON-NLS
+        treePanel);
 
   }
 
@@ -1199,11 +1215,7 @@ public class ReportDesignerFrame extends JFrame
       {
         continue;
       }
-      if (WorkspaceSettings.getInstance().isShowExpertItems() == false && data.isExpert())
-      {
-        continue;
-      }
-      if (WorkspaceSettings.getInstance().isShowDeprecatedItems() == false && data.isDeprecated())
+      if (!WorkspaceSettings.getInstance().isVisible(data))
       {
         continue;
       }
@@ -1245,19 +1257,11 @@ public class ReportDesignerFrame extends JFrame
       {
         continue;
       }
-      if (WorkspaceSettings.getInstance().isShowExpertItems() == false && data.isExpert())
-      {
-        continue;
-      }
-      if (WorkspaceSettings.getInstance().isShowDeprecatedItems() == false && data.isDeprecated())
-      {
-        continue;
-      }
-      if (WorkspaceSettings.getInstance().isExperimentalFeaturesVisible() == false && data.isExperimental())
-      {
-        continue;
-      }
 
+      if (!WorkspaceSettings.getInstance().isVisible(data))
+      {
+        continue;
+      }
 
       final String currentGrouping = data.getGrouping(Locale.getDefault());
       if (firstElement == false)
@@ -1393,5 +1397,67 @@ public class ReportDesignerFrame extends JFrame
     }
 
     updateFrameTitle();
+  }
+
+  private class VisibleElementsUpdateHandler implements SettingsListener
+  {
+    private boolean deprecated;
+    private boolean expert;
+    private MaturityLevel maturityLevel;
+
+    private VisibleElementsUpdateHandler()
+    {
+      deprecated = WorkspaceSettings.getInstance().isShowDeprecatedItems();
+      expert = WorkspaceSettings.getInstance().isShowExpertItems();
+      maturityLevel = WorkspaceSettings.getInstance().getMaturityLevel();
+    }
+
+    public void settingsChanged()
+    {
+      if (isChanged())
+      {
+        try
+        {
+          // throw away the old model and re-parse the XUL file from scratch.
+          // This is easier than trying to patch a wild and undocumented implementation of the Xul backend
+          viewController.initializeXulDesignerFrame(context);
+
+          getContentPane().remove(paletteToolBar);
+          paletteToolBar = createPaletteToolBar();
+          getContentPane().add(paletteToolBar, BorderLayout.WEST);
+
+          setJMenuBar(createMenuBar());
+
+          revalidate();
+          repaint();
+        }
+        catch (XulException e)
+        {
+          UncaughtExceptionsModel.getInstance().addException(e);
+        }
+
+
+        deprecated = WorkspaceSettings.getInstance().isShowDeprecatedItems();
+        expert = WorkspaceSettings.getInstance().isShowExpertItems();
+        maturityLevel = WorkspaceSettings.getInstance().getMaturityLevel();
+      }
+    }
+
+    private boolean isChanged()
+    {
+      if (WorkspaceSettings.getInstance().isShowDeprecatedItems() != deprecated)
+      {
+        return true;
+      }
+      if (WorkspaceSettings.getInstance().isShowExpertItems() != expert)
+      {
+        return true;
+      }
+      if (WorkspaceSettings.getInstance().getMaturityLevel() != maturityLevel)
+      {
+        return true;
+      }
+      return false;
+    }
   }
 }

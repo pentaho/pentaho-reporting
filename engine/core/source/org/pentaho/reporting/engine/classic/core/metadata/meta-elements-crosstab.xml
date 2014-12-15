@@ -409,7 +409,7 @@
     <style-group-ref ref="bands"/>
   </element>
 
-  <element name="crosstab-report" experimental="true" hidden="false" preferred="true"
+  <element name="crosstab-report" maturity-level="Limited" hidden="false" preferred="true"
            bundle-name="org.pentaho.reporting.engine.classic.core.metadata.messages"
            implementation="org.pentaho.reporting.engine.classic.core.filter.types.CrosstabElementType"
            type-classification="subreport"

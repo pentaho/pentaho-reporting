@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import org.pentaho.reporting.engine.classic.core.ReportProcessTask;
 import org.pentaho.reporting.engine.classic.core.metadata.DefaultReportProcessTaskMetaData;
 import org.pentaho.reporting.engine.classic.core.metadata.ReportProcessTaskMetaData;
+import org.pentaho.reporting.engine.classic.core.metadata.builder.ReportProcessTaskMetaDataBuilder;
 import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
 import org.pentaho.reporting.libraries.xmlns.parser.ParseException;
 import org.pentaho.reporting.libraries.xmlns.parser.StringReadHandler;
@@ -34,15 +35,18 @@ import org.xml.sax.SAXException;
  */
 public class ReportProcessTaskReadHandler extends AbstractMetaDataReadHandler
 {
-  private String bundleName;
-  private Class expressionClass;
-  private String[] aliases;
-  private String configurationPrefix;
   private ArrayList<StringReadHandler> aliasReadHandlers;
+  private ReportProcessTaskMetaDataBuilder builder;
 
   public ReportProcessTaskReadHandler()
   {
     aliasReadHandlers = new ArrayList<StringReadHandler>();
+    builder = new ReportProcessTaskMetaDataBuilder();
+  }
+
+  public ReportProcessTaskMetaDataBuilder getBuilder()
+  {
+    return builder;
   }
 
   /**
@@ -54,22 +58,26 @@ public class ReportProcessTaskReadHandler extends AbstractMetaDataReadHandler
   protected void startParsing(final Attributes attrs) throws SAXException
   {
     super.startParsing(attrs);
-    bundleName = attrs.getValue(getUri(), "bundle-name");
-    configurationPrefix = attrs.getValue(getUri(), "configuration-prefix");
+    getBuilder().implementation(parseImpl(attrs));
+    getBuilder().bundle(getBundle(), "");
+  }
 
-    final String valueTypeText = attrs.getValue(getUri(), "class");
-    if (valueTypeText == null)
+  private Class<? extends ReportProcessTask> parseImpl(final Attributes attrs) throws ParseException
+  {
+    final String implText = attrs.getValue(getUri(), "class");
+    if (implText == null)
     {
       throw new ParseException("Attribute 'class' is undefined", getLocator());
     }
     try
     {
-      final ClassLoader loader = ObjectUtilities.getClassLoader(ExpressionReadHandler.class);
-      expressionClass = Class.forName(valueTypeText, false, loader);
-      if (ReportProcessTask.class.isAssignableFrom(expressionClass) == false)
+      Class<? extends ReportProcessTask> c =
+          ObjectUtilities.loadAndValidate(implText, ReportProcessTaskReadHandler.class, ReportProcessTask.class);
+      if (c == null)
       {
         throw new ParseException("Attribute 'class' is not valid", getLocator());
       }
+      return c;
     }
     catch (ParseException pe)
     {
@@ -100,11 +108,10 @@ public class ReportProcessTaskReadHandler extends AbstractMetaDataReadHandler
 
   protected void doneParsing() throws SAXException
   {
-    aliases = new String[aliasReadHandlers.size()];
     for (int i = 0; i < aliasReadHandlers.size(); i++)
     {
       final StringReadHandler readHandler = aliasReadHandlers.get(i);
-      aliases[i] = readHandler.getResult();
+      getBuilder().alias(readHandler.getResult());
     }
   }
 
@@ -116,8 +123,6 @@ public class ReportProcessTaskReadHandler extends AbstractMetaDataReadHandler
    */
   public ReportProcessTaskMetaData getObject() throws SAXException
   {
-    return new DefaultReportProcessTaskMetaData(getName(), bundleName,
-        isExpert(), isPreferred(), isHidden(), isDeprecated(), isExperimental(),
-        getCompatibilityLevel(), expressionClass, configurationPrefix, aliases);
+    return new DefaultReportProcessTaskMetaData(getBuilder());
   }
 }

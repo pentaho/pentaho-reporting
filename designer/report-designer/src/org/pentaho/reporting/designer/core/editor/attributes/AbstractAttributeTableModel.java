@@ -316,11 +316,7 @@ public abstract class AbstractAttributeTableModel
           {
             continue;
           }
-          if (WorkspaceSettings.getInstance().isShowExpertItems() == false && data.isExpert())
-          {
-            continue;
-          }
-          if (WorkspaceSettings.getInstance().isShowDeprecatedItems() == false && data.isDeprecated())
+          if (!WorkspaceSettings.getInstance().isVisible(data))
           {
             continue;
           }
@@ -355,11 +351,7 @@ public abstract class AbstractAttributeTableModel
         {
           continue;
         }
-        if (WorkspaceSettings.getInstance().isShowExpertItems() == false && data.isExpert())
-        {
-          continue;
-        }
-        if (WorkspaceSettings.getInstance().isShowDeprecatedItems() == false && data.isDeprecated())
+        if (!WorkspaceSettings.getInstance().isVisible(data))
         {
           continue;
         }
@@ -453,14 +445,8 @@ public abstract class AbstractAttributeTableModel
           attributes.setAttribute(namespace, name, Boolean.FALSE);
           continue;
         }
-        if (WorkspaceSettings.getInstance().isShowExpertItems() == false && data.isExpert())
+        if (!WorkspaceSettings.getInstance().isVisible(data))
         {
-          attributes.setAttribute(namespace, name, Boolean.FALSE);
-          continue;
-        }
-        if (WorkspaceSettings.getInstance().isShowDeprecatedItems() == false && data.isDeprecated())
-        {
-          attributes.setAttribute(namespace, name, Boolean.FALSE);
           continue;
         }
 

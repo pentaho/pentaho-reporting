@@ -17,29 +17,36 @@
 
 package org.pentaho.reporting.engine.classic.core.metadata.parser;
 
-import org.pentaho.reporting.engine.classic.core.modules.parser.base.ReportParserUtil;
-import org.pentaho.reporting.libraries.xmlns.parser.AbstractXmlReadHandler;
+import org.pentaho.reporting.engine.classic.core.metadata.DefaultStyleKeyMetaData;
+import org.pentaho.reporting.engine.classic.core.metadata.StyleMetaData;
+import org.pentaho.reporting.engine.classic.core.metadata.builder.StyleMetaDataBuilder;
+import org.pentaho.reporting.engine.classic.core.style.StyleKey;
 import org.pentaho.reporting.libraries.xmlns.parser.ParseException;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 
-/** @noinspection HardCodedStringLiteral*/
-public class StyleReadHandler extends AbstractXmlReadHandler
+/**
+ * @noinspection HardCodedStringLiteral
+ */
+public class StyleReadHandler extends AbstractMetaDataReadHandler
 {
-  private String bundleName;
-  private String name;
-  private String propertyEditor;
-  private boolean preferred;
-  private boolean mandatory;
-  private boolean expert;
-  private boolean hidden;
-  private boolean deprecated;
-  private boolean experimental;
-  private int compatibilityLevel;
+  private String defaultBundleName;
+  private StyleMetaDataBuilder builder;
 
   public StyleReadHandler(final String bundleName)
   {
-    this.bundleName = bundleName;
+    this.defaultBundleName = bundleName;
+    this.builder = new StyleMetaDataBuilder();
+  }
+
+  public StyleMetaDataBuilder getBuilder()
+  {
+    return builder;
+  }
+
+  protected boolean isDerivedName()
+  {
+    return true;
   }
 
   /**
@@ -50,71 +57,23 @@ public class StyleReadHandler extends AbstractXmlReadHandler
    */
   protected void startParsing(final Attributes attrs) throws SAXException
   {
-    name = attrs.getValue(getUri(), "name");
-    if (name == null)
+    super.startParsing(attrs);
+
+    getBuilder().key(StyleKey.getStyleKey(parseName(attrs)));
+
+    if (getBundle() != null)
     {
-      throw new ParseException("Attribute 'name' is undefined", getLocator());
+      getBuilder().bundle(getBundle(), "style.");
     }
-
-    experimental = "true".equals(attrs.getValue(getUri(), "experimental")); // NON-NLS
-    compatibilityLevel = ReportParserUtil.parseVersion(attrs.getValue(getUri(), "compatibility-level"));
-    mandatory = "true".equals(attrs.getValue(getUri(), "mandatory"));
-    expert = "true".equals(attrs.getValue(getUri(), "expert"));
-    hidden = "true".equals(attrs.getValue(getUri(), "hidden"));
-    preferred = "true".equals(attrs.getValue(getUri(), "preferred"));
-    deprecated = "true".equals(attrs.getValue(getUri(), "deprecated"));
-    propertyEditor = attrs.getValue(getUri(), "propertyEditor");
-
-    final String bundleFromAttributes = attrs.getValue(getUri(), "bundle-name");
-    if (bundleFromAttributes != null)
-    {
-      bundleName = bundleFromAttributes;
+    else {
+      getBuilder().bundle(getDefaultBundleName(), "style.");
     }
   }
 
-  public String getPropertyEditor()
-  {
-    return propertyEditor;
-  }
-
-  public boolean isDeprecated()
-  {
-    return deprecated;
-  }
-
-  public String getName()
-  {
-    return name;
-  }
-
-  public boolean isPreferred()
-  {
-    return preferred;
-  }
-
+  @Deprecated
   public boolean isMandatory()
   {
-    return mandatory;
-  }
-
-  public boolean isExpert()
-  {
-    return expert;
-  }
-
-  public boolean isHidden()
-  {
-    return hidden;
-  }
-
-  public boolean isExperimental()
-  {
-    return experimental;
-  }
-
-  public int getCompatibilityLevel()
-  {
-    return compatibilityLevel;
+    return false;
   }
 
   /**
@@ -128,8 +87,19 @@ public class StyleReadHandler extends AbstractXmlReadHandler
     return this;
   }
 
+  @Deprecated
   public String getBundleName()
   {
-    return bundleName;
+    return getDefaultBundleName();
+  }
+
+  public String getDefaultBundleName()
+  {
+    return defaultBundleName;
+  }
+
+  public StyleMetaData getMetaData()
+  {
+    return new DefaultStyleKeyMetaData(getBuilder());
   }
 }

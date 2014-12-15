@@ -85,6 +85,10 @@ public class ReportProcessTaskRegistry
     this.exportTypes.put(exportTask.getName(), exportTask);
   }
 
+  public ReportProcessTaskMetaData[] getAll() {
+    return this.exportTypes.values().toArray(new ReportProcessTaskMetaData[this.exportTypes.size()]);
+  }
+
   public String[] getExportTypes()
   {
     return exportTypes.keySet().toArray(new String[exportTypes.size()]);
