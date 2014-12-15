@@ -24,6 +24,7 @@ import java.util.TimeZone;
 import java.util.prefs.BackingStoreException;
 import java.util.prefs.Preferences;
 
+import org.pentaho.reporting.designer.core.ReportDesignerBoot;
 import org.pentaho.reporting.designer.core.util.DrawSelectionType;
 import org.pentaho.reporting.designer.core.util.Unit;
 import org.pentaho.reporting.engine.classic.core.metadata.MaturityLevel;
@@ -461,8 +462,18 @@ public class WorkspaceSettings implements LocaleSettings
   }
 
   public MaturityLevel getMaturityLevel() {
+    MaturityLevel ml = MaturityLevel.Limited;
+    try {
+      final String matLevel = ReportDesignerBoot.getInstance().getGlobalConfig().getConfigProperty
+          ("org.pentaho.reporting.designer.core.settings.MaturityLevel");
+      ml = MaturityLevel.valueOf(matLevel);
+    }
+    catch (final IllegalArgumentException e) {
+      ml = MaturityLevel.Production;
+    }
+
     String defaultValue = properties.getBoolean(EXPERIMENTAL_FEATURES_KEY, false) ?
-        MaturityLevel.Development.toString() : MaturityLevel.Production.toString();
+        MaturityLevel.Development.toString() : ml.toString();
 
 
     try {
