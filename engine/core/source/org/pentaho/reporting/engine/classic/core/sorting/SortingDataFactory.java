@@ -30,6 +30,7 @@ import org.pentaho.reporting.engine.classic.core.DataRow;
 import org.pentaho.reporting.engine.classic.core.PerformanceTags;
 import org.pentaho.reporting.engine.classic.core.states.PerformanceMonitorContext;
 import org.pentaho.reporting.libraries.base.util.ArgumentNullException;
+import org.pentaho.reporting.libraries.base.util.DebugLog;
 import org.pentaho.reporting.libraries.base.util.PerformanceLoggingStopWatch;
 import org.pentaho.reporting.libraries.base.util.StringUtils;
 
@@ -86,6 +87,7 @@ public class SortingDataFactory extends CompoundDataFactory
       String field = constraint.getField();
       if (StringUtils.isEmpty(field))
       {
+        DebugLog.log("Sort field is empty");
         continue;
       }
 
@@ -101,6 +103,9 @@ public class SortingDataFactory extends CompoundDataFactory
             if (!StringUtils.isEmpty(columnName))
             {
               result.add(new SortConstraint(columnName, constraint.isAscending()));
+            }
+            else {
+              DebugLog.log("Resolved column name for column at index " + idxParsed + " is empty.");
             }
           }
           else

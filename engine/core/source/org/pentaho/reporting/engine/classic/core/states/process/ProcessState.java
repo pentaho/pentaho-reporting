@@ -378,7 +378,7 @@ public class ProcessState implements ReportState
     this.processKey = createKey();
   }
 
-  private List<SortConstraint> lookupSortOrder(final AbstractReportDefinition report)
+  private List<SortConstraint> lookupSortOrder(final ReportDefinition report)
   {
     Object attribute = report.getAttribute
         (AttributeNames.Internal.NAMESPACE, AttributeNames.Internal.COMPUTED_SORT_CONSTRAINTS);
@@ -902,7 +902,8 @@ public class ProcessState implements ReportState
     final DefaultFlowController fc = state.getFlowController();
     final DefaultFlowController cfc = fc.restart();
     final DefaultFlowController qfc = cfc.performQuery
-        (dataFactory, query, queryLimit.intValue(), queryTimeout.intValue(), fc.getMasterRow().getResourceBundleFactory());
+        (dataFactory, query, queryLimit.intValue(), queryTimeout.intValue(),
+            fc.getMasterRow().getResourceBundleFactory(), lookupSortOrder(state.report));
     final Expression[] expressions = getFunctionStorage().restore
         (FunctionStorageKey.createKey(null, state.getReport()));
     final DefaultFlowController efc = qfc.activateExpressions(expressions, true);

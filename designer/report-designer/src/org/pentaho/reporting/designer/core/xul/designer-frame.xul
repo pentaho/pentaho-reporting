@@ -428,6 +428,20 @@
                 pen:action="org.pentaho.reporting.designer.core.actions.elements.PasteFormatAction"/>
     </popup>
 
+    <popup id="popup-CrosstabElement">
+      <menuitem id="popup-ReportDefinition.insert-group"
+                pen:action="org.pentaho.reporting.designer.core.actions.elements.InsertGroupAction"/>
+      <menuitem id="popup-ReportDefinition.insert-crosstab-group"
+                pen:action="org.pentaho.reporting.designer.core.actions.elements.EditCrosstabAction"/>
+      <menuseparator/>
+      <menuitem id="popup-ReportDefinition.copy"
+                pen:action="org.pentaho.reporting.designer.core.actions.global.CopyAction"/>
+      <menuitem id="popup-ReportDefinition.paste"
+                pen:action="org.pentaho.reporting.designer.core.actions.global.PasteAction"/>
+      <menuitem id="popup-ReportDefinition.paste-format"
+                pen:action="org.pentaho.reporting.designer.core.actions.elements.PasteFormatAction"/>
+    </popup>
+
     <popup id="popup-Query">
       <menuitem id="popup-Query.activate.query"
                 pen:action="org.pentaho.reporting.designer.core.actions.report.ActivateQueryAction"/>
@@ -540,33 +554,7 @@
       <menuitem id="popup-Groups.delete"
                 pen:action="org.pentaho.reporting.designer.core.actions.global.DeleteAction"/>
     </popup>
-<!--
-    <popup id="popup-Group">
-      <menuitem id="popup-Group.edit-current-group"
-                pen:action="org.pentaho.reporting.designer.core.actions.elements.EditGroupAction"/>
-      <menuitem id="popup-Group.insert-group"
-                pen:action="org.pentaho.reporting.designer.core.actions.elements.InsertGroupAction"/>
-      <menuitem id="popup-Group.insert-crosstab-column-group"
-                pen:action="org.pentaho.reporting.designer.core.actions.elements.InsertCrosstabGroupAction"/>
-      <menuitem id="popup-Group.insert-crosstab-column-group"
-                pen:action="org.pentaho.reporting.designer.core.actions.elements.InsertCrosstabOtherGroupAction"/>
-      <menuitem id="popup-Group.insert-crosstab-row-group"
-                pen:action="org.pentaho.reporting.designer.core.actions.elements.InsertCrosstabRowGroupAction"/>
-      <menuitem id="popup-Group.insert-crosstab-row-group"
-                pen:action="org.pentaho.reporting.designer.core.actions.elements.InsertCrosstabColumnGroupAction"/>
-      <menuseparator/>
-      <menuitem id="popup-Group.layer-up"
-                pen:action="org.pentaho.reporting.designer.core.actions.elements.LayerUpAction"/>
-      <menuitem id="popup-Group.layer-down"
-                pen:action="org.pentaho.reporting.designer.core.actions.elements.LayerDownAction"/>
-      <menuseparator/>
-      <menuitem id="popup-Group.cut" pen:action="org.pentaho.reporting.designer.core.actions.global.CutAction"/>
-      <menuitem id="popup-Group.copy" pen:action="org.pentaho.reporting.designer.core.actions.global.CopyAction"/>
-      <menuitem id="popup-Group.paste" pen:action="org.pentaho.reporting.designer.core.actions.global.PasteAction"/>
-      <menuitem id="popup-Group.paste-format"
-                pen:action="org.pentaho.reporting.designer.core.actions.elements.PasteFormatAction"/>
-    </popup>
--->
+
     <popup id="popup-RelationalGroup">
       <menuitem id="popup-RelationalGroup.edit-current-group"
                 pen:action="org.pentaho.reporting.designer.core.actions.elements.EditGroupAction"/>

@@ -40,6 +40,7 @@ import org.pentaho.reporting.engine.classic.core.Band;
 import org.pentaho.reporting.engine.classic.core.CompoundDataFactory;
 import org.pentaho.reporting.engine.classic.core.CrosstabCellBody;
 import org.pentaho.reporting.engine.classic.core.CrosstabColumnGroup;
+import org.pentaho.reporting.engine.classic.core.CrosstabElement;
 import org.pentaho.reporting.engine.classic.core.CrosstabGroup;
 import org.pentaho.reporting.engine.classic.core.CrosstabOtherGroup;
 import org.pentaho.reporting.engine.classic.core.CrosstabRowGroup;
@@ -77,6 +78,9 @@ public class ContextMenuUtility
       ReportRenderContext doc = (ReportRenderContext) activeContext;
       if (selectedElement == doc.getReportDefinition())
       {
+        if (selectedElement instanceof CrosstabElement) {
+          return view.getPopupMenu("popup-CrosstabElement");// NON-NLS
+        }
         return view.getPopupMenu("popup-ReportDefinition");// NON-NLS
       }
     }
