@@ -291,7 +291,10 @@ public class PasteAction extends AbstractElementSelectionAction implements Chang
       {
         subReport.addInputParameter(entry.getName(), entry.getName());
       }
-      subReport.addInputParameter("*", "*");
+      if (subReport.getInputMappings().length == 0)
+      {
+        subReport.addInputParameter("*", "*");
+      }
 
       subReport.setElementType(SubReportType.INSTANCE);
       if (result == 0)

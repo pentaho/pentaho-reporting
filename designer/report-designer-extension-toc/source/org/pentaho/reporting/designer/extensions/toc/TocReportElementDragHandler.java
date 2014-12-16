@@ -23,9 +23,9 @@ import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 
 import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
-import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
 import org.pentaho.reporting.designer.core.editor.report.ReportElementEditorContext;
 import org.pentaho.reporting.designer.core.editor.report.elements.AbstractSubReportElementDragHandler;
+import org.pentaho.reporting.designer.core.editor.report.elements.SubreportConfigureHandler;
 import org.pentaho.reporting.designer.core.util.undo.BandedSubreportEditUndoEntry;
 import org.pentaho.reporting.designer.core.util.undo.ElementEditUndoEntry;
 import org.pentaho.reporting.designer.core.util.undo.UndoManager;
@@ -36,7 +36,6 @@ import org.pentaho.reporting.engine.classic.core.metadata.ElementMetaData;
 import org.pentaho.reporting.engine.classic.core.metadata.ElementType;
 import org.pentaho.reporting.engine.classic.core.style.ElementStyleKeys;
 import org.pentaho.reporting.engine.classic.core.style.ElementStyleSheet;
-import org.pentaho.reporting.engine.classic.extensions.parsers.reportdesigner.ReportDesignerParserModule;
 import org.pentaho.reporting.engine.classic.extensions.toc.TocElement;
 
 public class TocReportElementDragHandler extends AbstractSubReportElementDragHandler
@@ -51,13 +50,7 @@ public class TocReportElementDragHandler extends AbstractSubReportElementDragHan
   {
     final ElementType type = elementMetaData.create();
     final TocElement visualElement = new TocElement();
-    visualElement.setAutoSort(Boolean.TRUE);
-    visualElement.getRelationalGroup(0).getHeader().setAttribute(ReportDesignerParserModule.NAMESPACE, ReportDesignerParserModule.HIDE_IN_LAYOUT_GUI_ATTRIBUTE, Boolean.TRUE);
-    visualElement.getRelationalGroup(0).getFooter().setAttribute(ReportDesignerParserModule.NAMESPACE, ReportDesignerParserModule.HIDE_IN_LAYOUT_GUI_ATTRIBUTE, Boolean.TRUE);
-    visualElement.getDetailsFooter().setAttribute(ReportDesignerParserModule.NAMESPACE, ReportDesignerParserModule.HIDE_IN_LAYOUT_GUI_ATTRIBUTE, Boolean.TRUE);
-    visualElement.getDetailsHeader().setAttribute(ReportDesignerParserModule.NAMESPACE, ReportDesignerParserModule.HIDE_IN_LAYOUT_GUI_ATTRIBUTE, Boolean.TRUE);
-    visualElement.getNoDataBand().setAttribute(ReportDesignerParserModule.NAMESPACE, ReportDesignerParserModule.HIDE_IN_LAYOUT_GUI_ATTRIBUTE, Boolean.TRUE);
-    visualElement.getWatermark().setAttribute(ReportDesignerParserModule.NAMESPACE, ReportDesignerParserModule.HIDE_IN_LAYOUT_GUI_ATTRIBUTE, Boolean.TRUE);
+    SubreportConfigureHandler.configureDefaults(visualElement);
     type.configureDesignTimeDefaults(visualElement, Locale.getDefault());
 
     final ElementStyleSheet styleSheet = visualElement.getStyle();
@@ -72,18 +65,18 @@ public class TocReportElementDragHandler extends AbstractSubReportElementDragHan
                                  final Point2D point)
   {
     final Element rootBand = findRootBand(dragContext, point);
-    SwingUtilities.invokeLater(new SubreportConfigureHandler
+    SwingUtilities.invokeLater(new TocReportConfigureHandler
         ((TocElement) visualElement, target, dragContext, rootBand == target));
   }
 
-  private static class SubreportConfigureHandler implements Runnable
+  private static class TocReportConfigureHandler implements Runnable
   {
     private TocElement subReport;
     private Band parent;
     private ReportElementEditorContext dragContext;
     private boolean rootband;
 
-    private SubreportConfigureHandler(final TocElement subReport,
+    private TocReportConfigureHandler(final TocElement subReport,
                                       final Band parent,
                                       final ReportElementEditorContext dragContext,
                                       final boolean rootband)

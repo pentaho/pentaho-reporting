@@ -28,6 +28,8 @@ import javax.swing.ImageIcon;
 import org.pentaho.reporting.designer.core.actions.AbstractElementSelectionAction;
 import org.pentaho.reporting.designer.core.actions.ActionMessages;
 import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
+import org.pentaho.reporting.designer.core.editor.report.elements.CrosstabConfigureHandler;
+import org.pentaho.reporting.designer.core.editor.report.elements.SubreportConfigureHandler;
 import org.pentaho.reporting.designer.core.model.selection.DocumentContextSelectionModel;
 import org.pentaho.reporting.designer.core.settings.SettingsListener;
 import org.pentaho.reporting.designer.core.settings.WorkspaceSettings;
@@ -35,6 +37,7 @@ import org.pentaho.reporting.designer.core.util.exceptions.UncaughtExceptionsMod
 import org.pentaho.reporting.designer.core.util.undo.ElementEditUndoEntry;
 import org.pentaho.reporting.designer.core.util.undo.UndoManager;
 import org.pentaho.reporting.engine.classic.core.Band;
+import org.pentaho.reporting.engine.classic.core.CrosstabElement;
 import org.pentaho.reporting.engine.classic.core.DetailsFooter;
 import org.pentaho.reporting.engine.classic.core.DetailsHeader;
 import org.pentaho.reporting.engine.classic.core.Element;
@@ -76,7 +79,7 @@ public class InsertElementAction extends AbstractElementSelectionAction implemen
    * This is a listener on the global focus manager and gets called whenever the focus changed.
    * The inspection thinks that this reference should be removed, but as long as the hard-reference
    * is here, this listener will not be garbage collected.
-   * 
+   *
    * @noinspection FieldCanBeLocal
    */
   private FocusUpdateHandler focusTracker;
@@ -85,7 +88,7 @@ public class InsertElementAction extends AbstractElementSelectionAction implemen
   {
     this.metaData = metaData;
     putValue(Action.NAME, ActionMessages.getString("InsertElementAction.Name", metaData.getDisplayName(Locale.getDefault())));
-    
+
     final Image image = metaData.getIcon(Locale.getDefault(), BeanInfo.ICON_COLOR_32x32);
     if (image != null)
     {
@@ -96,7 +99,7 @@ public class InsertElementAction extends AbstractElementSelectionAction implemen
 
     // update from system clipboard status
     focusTracker = new FocusUpdateHandler();
-    
+
     settingsChanged();
     WorkspaceSettings.getInstance().addSettingsListener(this);
   }
@@ -186,37 +189,64 @@ public class InsertElementAction extends AbstractElementSelectionAction implemen
     {
       final ElementType type = metaData.create();
       final Element visualElement = (Element) type.create();
-      if (visualElement instanceof SubReport)
+      if (isSubReportProhibited(band, visualElement))
       {
-        final Element rootBand = findRootBand(band);
-        if (rootBand == null ||
-            rootBand instanceof PageHeader ||
-            rootBand instanceof PageFooter ||
-            rootBand instanceof DetailsHeader ||
-            rootBand instanceof DetailsFooter ||
-            rootBand instanceof Watermark)
-        {
-          return;
-        }
+        return;
       }
-      
+
       final ElementStyleSheet styleSheet = visualElement.getStyle();
       styleSheet.setStyleProperty(ElementStyleKeys.MIN_WIDTH, DEFAULT_WIDTH);
       styleSheet.setStyleProperty(ElementStyleKeys.MIN_HEIGHT, DEFAULT_HEIGHT);
 
       type.configureDesignTimeDefaults(visualElement, Locale.getDefault());
 
-
-      final ReportDocumentContext context = getActiveContext();
-      final UndoManager undo = context.getUndo();
-      undo.addChange(ActionMessages.getString("InsertElementAction.UndoName"),
-          new ElementEditUndoEntry(band.getObjectID(), band.getElementCount(), null, visualElement));
-      band.addElement(visualElement);
+      if (visualElement instanceof CrosstabElement)
+      {
+        CrosstabElement sr = (CrosstabElement) visualElement;
+        CrosstabConfigureHandler.configureDefaults(sr);
+        CrosstabConfigureHandler handler = new CrosstabConfigureHandler
+            (sr, band, getReportDesignerContext(), getActiveContext());
+        handler.run();
+      }
+      else if (visualElement instanceof SubReport)
+      {
+        SubReport sr = (SubReport) visualElement;
+        SubreportConfigureHandler.configureDefaults(sr);
+        SubreportConfigureHandler handler = new SubreportConfigureHandler
+            (sr, band, getReportDesignerContext(), getActiveContext());
+        handler.run();
+      }
+      else
+      {
+        final ReportDocumentContext context = getActiveContext();
+        final UndoManager undo = context.getUndo();
+        undo.addChange(ActionMessages.getString("InsertElementAction.UndoName"),
+            new ElementEditUndoEntry(band.getObjectID(), band.getElementCount(), null, visualElement));
+        band.addElement(visualElement);
+      }
     }
-    catch (Exception ex)
+    catch (final Exception ex)
     {
       UncaughtExceptionsModel.getInstance().addException(ex);
     }
+  }
+
+  protected boolean isSubReportProhibited(final Band band, final Element visualElement)
+  {
+    if (visualElement instanceof SubReport)
+    {
+      final Element rootBand = findRootBand(band);
+      if (rootBand == null ||
+          rootBand instanceof PageHeader ||
+          rootBand instanceof PageFooter ||
+          rootBand instanceof DetailsHeader ||
+          rootBand instanceof DetailsFooter ||
+          rootBand instanceof Watermark)
+      {
+        return true;
+      }
+    }
+    return false;
   }
 
   private Element findRootBand(Element element)
