@@ -32,12 +32,14 @@ import javax.swing.BorderFactory;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
+import javax.swing.SpinnerModel;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -51,11 +53,6 @@ import org.pentaho.reporting.engine.classic.core.style.ElementStyleSheet;
 import org.pentaho.reporting.libraries.designtime.swing.ColorComboBox;
 import org.pentaho.reporting.libraries.designtime.swing.EllipsisButton;
 
-/**
- * Todo: Document Me
- *
- * @author Thomas Morgner
- */
 public class BorderPropertiesPane extends JPanel
 {
   private class BorderSelectionUpdateHandler implements BorderSelectionListener
@@ -219,6 +216,24 @@ public class BorderPropertiesPane extends JPanel
     }
   }
 
+  private static class FloatSpinner extends JSpinner {
+    public FloatSpinner()
+    {
+      super(createSpinnerModel());
+    }
+
+    protected JComponent createEditor(final SpinnerModel model)
+    {
+      return new NumberEditor(this, "0.0##");
+    }
+
+    protected static SpinnerNumberModel createSpinnerModel()
+    {
+      return new SpinnerNumberModel(new Float(0), new Float(0), new Float(Short.MAX_VALUE), new Float(1));
+    }
+
+  }
+
 
   private JSpinner cornerWidth;
   private JSpinner cornerHeight;
@@ -236,7 +251,6 @@ public class BorderPropertiesPane extends JPanel
 
   public BorderPropertiesPane()
   {
-
     final BorderStyleUpdateHandler updateHandler = new BorderStyleUpdateHandler();
     styleList = new JList(createBorderStyleModel());
     styleList.addListSelectionListener(updateHandler);
@@ -246,14 +260,14 @@ public class BorderPropertiesPane extends JPanel
     minimumWidth = new JTextField();
     minimumHeight = new JTextField();
 
-    paddingTop = new JSpinner(new SpinnerNumberModel(0, 0, Short.MAX_VALUE, 1));
-    paddingLeft = new JSpinner(new SpinnerNumberModel(0, 0, Short.MAX_VALUE, 1));
-    paddingBottom = new JSpinner(new SpinnerNumberModel(0, 0, Short.MAX_VALUE, 1));
-    paddingRight = new JSpinner(new SpinnerNumberModel(0, 0, Short.MAX_VALUE, 1));
+    paddingTop = new FloatSpinner();
+    paddingLeft = new FloatSpinner();
+    paddingBottom = new FloatSpinner();
+    paddingRight = new FloatSpinner();
 
-    cornerWidth = new JSpinner(new SpinnerNumberModel(0, 0, Short.MAX_VALUE, 1));
+    cornerWidth = new FloatSpinner();
     cornerWidth.addChangeListener(updateHandler);
-    cornerHeight = new JSpinner(new SpinnerNumberModel(0, 0, Short.MAX_VALUE, 1));
+    cornerHeight = new FloatSpinner();
     cornerHeight.addChangeListener(updateHandler);
 
     borderEditorPanel = new BorderRenderPanel();
@@ -262,7 +276,7 @@ public class BorderPropertiesPane extends JPanel
     borderEditorPanel.setMaximumSize(new Dimension(250, 250));
     borderEditorPanel.getSelectionModel().addBorderSelectionListener(new BorderSelectionUpdateHandler());
 
-    borderWidth = new JSpinner(new SpinnerNumberModel(0, 0, Short.MAX_VALUE, 1));
+    borderWidth = new FloatSpinner();
     borderWidth.addChangeListener(updateHandler);
 
     final JPanel borderCornerCarrier = new JPanel(new GridBagLayout());
@@ -373,7 +387,6 @@ public class BorderPropertiesPane extends JPanel
     linestylePanel.setBorder(BorderFactory.createTitledBorder(Messages.getString("BorderPropertiesPane.LineStyle")));
     linestylePanel.add(styleListPanel, BorderLayout.CENTER);
     linestylePanel.add(styleColorPanel, BorderLayout.SOUTH);
-
 
     final JPanel paddingPanel = new JPanel();
     paddingPanel.setLayout(new GridBagLayout());
