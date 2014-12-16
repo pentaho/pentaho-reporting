@@ -266,7 +266,7 @@
     <property name="linesLabelFont" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"
               propertyEditor="org.pentaho.reporting.engine.classic.extensions.legacy.charts.propertyeditor.FontStringPropertyEditor"/>
     <property name="linesTickLabelFont" mandatory="false" preferred="false" value-role="Value" expert="false"
-              hidden="false"
+              hidden="false" deprecated="true"
               propertyEditor="org.pentaho.reporting.engine.classic.extensions.legacy.charts.propertyeditor.FontStringPropertyEditor"/>
     <property name="markersVisible" mandatory="false" preferred="false" value-role="Value" expert="false"
               hidden="false"/>
