@@ -50,9 +50,11 @@ public class BarLineChartExpression extends BarChartExpression implements MultiP
 
   private String linesDataSource;
   private String secondValueAxisLabel; //$NON-NLS-1$
-  private ArrayList lineSeriesColor;
+  private ArrayList<String> lineSeriesColor;
 
   private String linesLabelFont; //$NON-NLS-1$
+
+  @Deprecated
   private String linesTickLabelFont; //$NON-NLS-1$
   private String lineTicksLabelFormat; //$NON-NLS-1$
 
@@ -75,7 +77,7 @@ public class BarLineChartExpression extends BarChartExpression implements MultiP
   //constructor
   public BarLineChartExpression()
   {
-    lineSeriesColor = new ArrayList();
+    lineSeriesColor = new ArrayList<String>();
     secondValueAxisLabel = "";
     linesLabelFont = "SansSerif--8";
     linesTickLabelFont = "SansSerif--8";
@@ -189,7 +191,7 @@ public class BarLineChartExpression extends BarChartExpression implements MultiP
   public Expression getInstance()
   {
     final BarLineChartExpression chartExpression = (BarLineChartExpression) super.getInstance();
-    chartExpression.lineSeriesColor = (ArrayList) lineSeriesColor.clone();
+    chartExpression.lineSeriesColor = (ArrayList<String>) lineSeriesColor.clone();
     return chartExpression;
   }
 
@@ -223,11 +225,13 @@ public class BarLineChartExpression extends BarChartExpression implements MultiP
     this.linesLabelFont = linesLabelFont;
   }
 
+  @Deprecated
   public String getLinesTickLabelFont()
   {
     return linesTickLabelFont;
   }
 
+  @Deprecated
   public void setLinesTickLabelFont(final String linesTickLabelFont)
   {
     this.linesTickLabelFont = linesTickLabelFont;
