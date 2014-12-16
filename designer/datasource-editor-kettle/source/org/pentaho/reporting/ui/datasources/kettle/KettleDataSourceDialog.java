@@ -284,21 +284,21 @@ public class KettleDataSourceDialog extends CommonDialog
         editParameterAction.setEnabled(true);
         stopOnErrorsCheckBox.setEnabled(true);
       }
-      catch (ReportDataFactoryException rdfe)
+      catch (final ReportDataFactoryException rdfe)
       {
         logger.warn("Non-critical failure while executing the query", rdfe);
         stepsList.setEnabled(false);
         editParameterAction.setEnabled(false);
         stopOnErrorsCheckBox.setEnabled(false);
       }
-      catch (Exception e1)
+      catch (final Exception e1)
       {
         designTimeContext.error(e1);
         stepsList.setEnabled(false);
         editParameterAction.setEnabled(false);
         stopOnErrorsCheckBox.setEnabled(false);
       }
-      catch (Throwable t1)
+      catch (final Throwable t1)
       {
         designTimeContext.error(new RuntimeException("Fatal error", t1));
         stepsList.setEnabled(false);
@@ -321,7 +321,7 @@ public class KettleDataSourceDialog extends CommonDialog
     final String selectedStepName = fe.getSelectedStep();
     if (selectedStepName != null)
     {
-      for (StepMeta stepMeta : data)
+      for (final StepMeta stepMeta : data)
       {
         if (selectedStepName.equals(stepMeta.getName()))
         {
@@ -392,7 +392,7 @@ public class KettleDataSourceDialog extends CommonDialog
       }
     }
 
-    protected void handleSelection(KettleQueryEntry value)
+    protected void handleSelection(final KettleQueryEntry value)
     {
       if (value instanceof FileKettleQueryEntry)
       {
@@ -400,7 +400,7 @@ public class KettleDataSourceDialog extends CommonDialog
       }
     }
 
-    protected void handleSelection(FileKettleQueryEntry selectedQuery)
+    protected void handleSelection(final FileKettleQueryEntry selectedQuery)
     {
       try
       {
@@ -410,21 +410,21 @@ public class KettleDataSourceDialog extends CommonDialog
         editParameterAction.setEnabled(true);
         stopOnErrorsCheckBox.setEnabled(true);
       }
-      catch (ReportDataFactoryException rdfe)
+      catch (final ReportDataFactoryException rdfe)
       {
         logger.warn("Non-critical failure while executing the query", rdfe);
         stepsList.setEnabled(false);
         editParameterAction.setEnabled(false);
         stopOnErrorsCheckBox.setEnabled(false);
       }
-      catch (Exception e1)
+      catch (final Exception e1)
       {
         designTimeContext.error(e1);
         stepsList.setEnabled(false);
         editParameterAction.setEnabled(false);
         stopOnErrorsCheckBox.setEnabled(false);
       }
-      catch (Throwable t1)
+      catch (final Throwable t1)
       {
         designTimeContext.error(new RuntimeException("Fatal error", t1));
         stepsList.setEnabled(false);
@@ -452,7 +452,7 @@ public class KettleDataSourceDialog extends CommonDialog
         queryListModel.addElement(newQuery);
         queryNameList.setSelectedValue(newQuery, true);
       }
-      catch (KettleException e1)
+      catch (final KettleException e1)
       {
         getDesignTimeContext().error(e1);
       }
@@ -531,7 +531,7 @@ public class KettleDataSourceDialog extends CommonDialog
               Messages.getString("KettleDataSourceDialog.PreviewError.Message"), factoryException);
         }
       }
-      catch (Exception ex)
+      catch (final Exception ex)
       {
         ExceptionDialog.showExceptionDialog(KettleDataSourceDialog.this,
             Messages.getString("KettleDataSourceDialog.PreviewError.Title"),
@@ -607,7 +607,7 @@ public class KettleDataSourceDialog extends CommonDialog
       {
         resultTableModel = dataFactory.queryData(query, new ReportParameterValues());
       }
-      catch (ReportDataFactoryException e)
+      catch (final ReportDataFactoryException e)
       {
         exception = e;
       }
@@ -658,11 +658,11 @@ public class KettleDataSourceDialog extends CommonDialog
         queryEntry.setArguments(editResult.getArgumentNames());
         queryEntry.setParameters(editResult.getParameterMappings());
       }
-      catch (Exception e1)
+      catch (final Exception e1)
       {
         designTimeContext.error(e1);
       }
-      catch (Throwable t1)
+      catch (final Throwable t1)
       {
         designTimeContext.error(new RuntimeException("Fatal error", t1));
       }
@@ -933,7 +933,8 @@ public class KettleDataSourceDialog extends CommonDialog
 
   }
 
-  public KettleDataFactory performConfiguration(DesignTimeContext context, final KettleDataFactory dataFactory,
+  public KettleDataFactory performConfiguration(final DesignTimeContext context,
+                                                final KettleDataFactory dataFactory,
                                                 final String queryName) throws KettleException
   {
     configureFromDataFactory(dataFactory, queryName);
@@ -999,13 +1000,13 @@ public class KettleDataSourceDialog extends CommonDialog
     return true;
   }
 
-  protected KettleQueryEntry createNewQueryEntry(String queryName) throws KettleException
+  protected KettleQueryEntry createNewQueryEntry(final String queryName) throws KettleException
   {
     return new FileKettleQueryEntry(queryName);
   }
 
-  protected KettleQueryEntry createQueryEntry(String queryName,
-                                              KettleTransformationProducer producer)
+  protected KettleQueryEntry createQueryEntry(final String queryName,
+                                              final KettleTransformationProducer producer)
       throws KettleException
   {
     return new FileKettleQueryEntry(queryName, producer);

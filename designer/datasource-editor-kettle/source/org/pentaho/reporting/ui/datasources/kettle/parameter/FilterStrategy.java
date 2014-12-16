@@ -1,8 +1,8 @@
 package org.pentaho.reporting.ui.datasources.kettle.parameter;
 
-import org.pentaho.reporting.libraries.designtime.swing.table.GroupingModel;
+import javax.swing.table.TableModel;
 
-public interface FilterStrategy<T extends GroupingModel>
+public interface FilterStrategy<T extends TableModel>
 {
   boolean isAcceptedRow(final int row, final T parentModel);
 }

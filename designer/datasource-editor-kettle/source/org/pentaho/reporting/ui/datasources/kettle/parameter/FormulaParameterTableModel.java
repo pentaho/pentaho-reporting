@@ -18,81 +18,16 @@
 package org.pentaho.reporting.ui.datasources.kettle.parameter;
 
 import java.beans.PropertyEditor;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashSet;
 import javax.swing.table.AbstractTableModel;
 
 import org.pentaho.reporting.libraries.designtime.swing.table.GroupingHeader;
-import org.pentaho.reporting.libraries.designtime.swing.table.GroupingModel;
-import org.pentaho.reporting.libraries.designtime.swing.table.SortableTableModel;
-import org.pentaho.reporting.libraries.designtime.swing.table.TableStyle;
-import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
 import org.pentaho.reporting.libraries.designtime.swing.table.PropertyTableModel;
 
-public class FormulaParameterTableModel extends AbstractTableModel
-    implements PropertyTableModel, GroupingModel, SortableTableModel
+public class FormulaParameterTableModel extends AbstractTableModel implements PropertyTableModel
 {
-  private static class PlainParameterComparator implements Comparator<FormulaParameterEntity>
-  {
-    public int compare(final FormulaParameterEntity parameter1, final FormulaParameterEntity parameter2)
-    {
-      if (parameter1 == null && parameter2 == null)
-      {
-        return 0;
-      }
-      if (parameter1 == null)
-      {
-        return -1;
-      }
-      if (parameter2 == null)
-      {
-        return 1;
-      }
-
-      return parameter1.getName().compareTo(parameter2.getName());
-    }
-  }
-
-  private static class GroupedParameterComparator implements Comparator<FormulaParameterEntity>
-  {
-    public int compare(final FormulaParameterEntity parameter1, final FormulaParameterEntity parameter2)
-    {
-      if (parameter1 == null && parameter2 == null)
-      {
-        return 0;
-      }
-      if (parameter1 == null)
-      {
-        return -1;
-      }
-      if (parameter2 == null)
-      {
-        return 1;
-      }
-      final FormulaParameterEntity.Type type1 = parameter1.getType();
-      final FormulaParameterEntity.Type type2 = parameter2.getType();
-      final int compareType = type1.compareTo(type2);
-      if (compareType != 0)
-      {
-        return compareType;
-      }
-      return parameter1.getName().compareTo(parameter2.getName());
-    }
-  }
-
   private static final FormulaParameterEntity[] EMPTY_ELEMENTS = new FormulaParameterEntity[0];
-  private static final GroupingHeader[] EMPTY_GROUPINGS = new GroupingHeader[0];
 
-  private HashSet<String> filteredParameterNames;
-  private String[] filteredParameterNamesArray;
-  
-  private GroupingHeader[] groupings;
-  private TableStyle tableStyle;
   private FormulaParameterEntity[] elements;
-  private FormulaParameterEntity[] groupedElements;
 
   /**
    * Constructs a default <code>DefaultTableModel</code>
@@ -100,12 +35,7 @@ public class FormulaParameterTableModel extends AbstractTableModel
    */
   public FormulaParameterTableModel()
   {
-    this.filteredParameterNamesArray = new String[0];
-    this.filteredParameterNames = new HashSet<String>();
-    this.tableStyle = TableStyle.GROUPED;
     this.elements = EMPTY_ELEMENTS;
-    this.groupings = EMPTY_GROUPINGS;
-    this.groupedElements = EMPTY_ELEMENTS;
   }
 
   /**
@@ -119,7 +49,7 @@ public class FormulaParameterTableModel extends AbstractTableModel
    */
   public int getRowCount()
   {
-    return groupedElements.length;
+    return elements.length;
   }
 
   /**
@@ -152,113 +82,9 @@ public class FormulaParameterTableModel extends AbstractTableModel
     return Messages.getInstance().getString("FormulaParameterTableModel.Value");
   }
 
-
-  public TableStyle getTableStyle()
-  {
-    return tableStyle;
-  }
-
-  public void setTableStyle(final TableStyle tableStyle)
-  {
-    if (tableStyle == null)
-    {
-      throw new NullPointerException();
-    }
-    this.tableStyle = tableStyle;
-    updateData(getData());
-  }
-
-  private FormulaParameterEntity[] filter(final FormulaParameterEntity[] elements)
-  {
-    final ArrayList<FormulaParameterEntity> retval = new ArrayList<FormulaParameterEntity>(elements.length);
-    for (int i = 0; i < elements.length; i++)
-    {
-      final FormulaParameterEntity element = elements[i];
-      if (filteredParameterNames.contains(element.getName()))
-      {
-        continue;
-      }
-      retval.add(element);
-    }
-    return retval.toArray(new FormulaParameterEntity[retval.size()]);
-  }
-
   protected void updateData(final FormulaParameterEntity[] elements)
   {
     this.elements = elements.clone();
-
-    final FormulaParameterEntity[] metaData = filter(elements);
-    if (tableStyle == TableStyle.ASCENDING)
-    {
-      Arrays.sort(metaData, new PlainParameterComparator());
-      this.groupings = new GroupingHeader[metaData.length];
-      this.groupedElements = metaData;
-    }
-    else if (tableStyle == TableStyle.DESCENDING)
-    {
-      Arrays.sort(metaData, Collections.reverseOrder(new PlainParameterComparator()));
-      this.groupings = new GroupingHeader[metaData.length];
-      this.groupedElements = metaData;
-    }
-    else
-    {
-      Arrays.sort(metaData, new GroupedParameterComparator());
-
-      int groupCount = 0;
-      if (metaData.length > 0)
-      {
-        FormulaParameterEntity.Type oldValue = null;
-
-        for (int i = 0; i < metaData.length; i++)
-        {
-          if (groupCount == 0)
-          {
-            groupCount = 1;
-            final FormulaParameterEntity firstdata = metaData[i];
-            oldValue = firstdata.getType();
-            continue;
-          }
-
-          final FormulaParameterEntity data = metaData[i];
-          final FormulaParameterEntity.Type grouping = data.getType();
-          if ((ObjectUtilities.equal(oldValue, grouping)) == false)
-          {
-            oldValue = grouping;
-            groupCount += 1;
-          }
-        }
-      }
-
-      final FormulaParameterEntity[] groupedMetaData = new FormulaParameterEntity[metaData.length + groupCount];
-      this.groupings = new GroupingHeader[groupedMetaData.length];
-      int targetIdx = 0;
-      GroupingHeader group = null;
-      for (int sourceIdx = 0; sourceIdx < metaData.length; sourceIdx++)
-      {
-        final FormulaParameterEntity data = metaData[sourceIdx];
-        if (sourceIdx == 0)
-        {
-          group = new GroupingHeader(data.getType().toString());
-          groupings[targetIdx] = group;
-          targetIdx += 1;
-        }
-        else
-        {
-          final String newgroup = data.getType().toString();
-          if ((ObjectUtilities.equal(newgroup, group.getHeaderText())) == false)
-          {
-            group = new GroupingHeader(newgroup);
-            groupings[targetIdx] = group;
-            targetIdx += 1;
-          }
-        }
-
-        groupings[targetIdx] = group;
-        groupedMetaData[targetIdx] = data;
-        targetIdx += 1;
-      }
-      this.groupedElements = groupedMetaData;
-    }
 
     fireTableDataChanged();
   }
@@ -273,10 +99,10 @@ public class FormulaParameterTableModel extends AbstractTableModel
    */
   public Object getValueAt(final int rowIndex, final int columnIndex)
   {
-    final FormulaParameterEntity metaData = groupedElements[rowIndex];
+    final FormulaParameterEntity metaData = elements[rowIndex];
     if (metaData == null)
     {
-      return groupings[rowIndex];
+      return elements[rowIndex];
     }
 
     switch (columnIndex)
@@ -299,7 +125,7 @@ public class FormulaParameterTableModel extends AbstractTableModel
    */
   public boolean isCellEditable(final int rowIndex, final int columnIndex)
   {
-    final FormulaParameterEntity metaData = groupedElements[rowIndex];
+    final FormulaParameterEntity metaData = elements[rowIndex];
     if (metaData == null)
     {
       return false;
@@ -308,7 +134,7 @@ public class FormulaParameterTableModel extends AbstractTableModel
     switch (columnIndex)
     {
       case 0:
-        return metaData.getType() == FormulaParameterEntity.Type.ARGUMENT;
+        return metaData.getType() == FormulaParameterEntity.Type.PARAMETER;
       case 1:
         return true;
       default:
@@ -319,7 +145,7 @@ public class FormulaParameterTableModel extends AbstractTableModel
 
   public void setValueAt(final Object aValue, final int rowIndex, final int columnIndex)
   {
-    final FormulaParameterEntity metaData = groupedElements[rowIndex];
+    final FormulaParameterEntity metaData = elements[rowIndex];
     if (metaData == null)
     {
       return;
@@ -356,7 +182,7 @@ public class FormulaParameterTableModel extends AbstractTableModel
 
   public Class getClassForCell(final int row, final int column)
   {
-    final FormulaParameterEntity metaData = groupedElements[row];
+    final FormulaParameterEntity metaData = elements[row];
     if (metaData == null)
     {
       return GroupingHeader.class;
@@ -375,30 +201,6 @@ public class FormulaParameterTableModel extends AbstractTableModel
     return null;
   }
 
-  public GroupingHeader getGroupHeader(final int index)
-  {
-    return groupings[index];
-  }
-
-  public boolean isHeaderRow(final int index)
-  {
-    return groupedElements[index] == null;
-  }
-
-  public String[] getFilteredParameterNames()
-  {
-    return filteredParameterNamesArray.clone();
-  }
-
-  public void setFilteredParameterNames(final String[] names)
-  {
-    this.filteredParameterNamesArray = names.clone();
-    this.filteredParameterNames.clear();
-    this.filteredParameterNames.addAll(Arrays.asList(names));
-
-    updateData(elements);
-  }
-
   public void setData(final FormulaParameterEntity[] parameter)
   {
     updateData(parameter);
@@ -409,14 +211,9 @@ public class FormulaParameterTableModel extends AbstractTableModel
     return elements.clone();
   }
 
-  public FormulaParameterEntity[] getGroupedData()
-  {
-    return groupedElements.clone();
-  }
-
   public FormulaParameterEntity.Type getParameterType(final int row)
   {
-    final FormulaParameterEntity downParameter = groupedElements[row];
+    final FormulaParameterEntity downParameter = elements[row];
     if (downParameter != null)
     {
       return downParameter.getType();
