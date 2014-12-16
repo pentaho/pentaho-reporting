@@ -23,9 +23,9 @@ import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 
 import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
-import org.pentaho.reporting.designer.core.editor.ReportRenderContext;
 import org.pentaho.reporting.designer.core.editor.report.ReportElementEditorContext;
 import org.pentaho.reporting.designer.core.editor.report.elements.AbstractSubReportElementDragHandler;
+import org.pentaho.reporting.designer.core.editor.report.elements.SubreportConfigureHandler;
 import org.pentaho.reporting.designer.core.util.undo.BandedSubreportEditUndoEntry;
 import org.pentaho.reporting.designer.core.util.undo.ElementEditUndoEntry;
 import org.pentaho.reporting.designer.core.util.undo.UndoManager;
@@ -51,13 +51,8 @@ public class IndexReportElementDragHandler extends AbstractSubReportElementDragH
   {
     final ElementType type = elementMetaData.create();
     final IndexElement visualElement = new IndexElement();
-    visualElement.setAutoSort(Boolean.TRUE);
-    visualElement.getRelationalGroup(0).getHeader().setAttribute(ReportDesignerParserModule.NAMESPACE, ReportDesignerParserModule.HIDE_IN_LAYOUT_GUI_ATTRIBUTE, Boolean.TRUE);
-    visualElement.getRelationalGroup(0).getFooter().setAttribute(ReportDesignerParserModule.NAMESPACE, ReportDesignerParserModule.HIDE_IN_LAYOUT_GUI_ATTRIBUTE, Boolean.TRUE);
-    visualElement.getDetailsFooter().setAttribute(ReportDesignerParserModule.NAMESPACE, ReportDesignerParserModule.HIDE_IN_LAYOUT_GUI_ATTRIBUTE, Boolean.TRUE);
-    visualElement.getDetailsHeader().setAttribute(ReportDesignerParserModule.NAMESPACE, ReportDesignerParserModule.HIDE_IN_LAYOUT_GUI_ATTRIBUTE, Boolean.TRUE);
-    visualElement.getNoDataBand().setAttribute(ReportDesignerParserModule.NAMESPACE, ReportDesignerParserModule.HIDE_IN_LAYOUT_GUI_ATTRIBUTE, Boolean.TRUE);
-    visualElement.getWatermark().setAttribute(ReportDesignerParserModule.NAMESPACE, ReportDesignerParserModule.HIDE_IN_LAYOUT_GUI_ATTRIBUTE, Boolean.TRUE);
+    SubreportConfigureHandler.configureDefaults(visualElement);
+
     type.configureDesignTimeDefaults(visualElement, Locale.getDefault());
     final ElementStyleSheet styleSheet = visualElement.getStyle();
     styleSheet.setStyleProperty(ElementStyleKeys.MIN_WIDTH, DEFAULT_WIDTH);
@@ -71,18 +66,18 @@ public class IndexReportElementDragHandler extends AbstractSubReportElementDragH
                                  final Point2D point)
   {
     final Element rootBand = findRootBand(dragContext, point);
-    SwingUtilities.invokeLater(new SubreportConfigureHandler
+    SwingUtilities.invokeLater(new IndexReportConfigureHandler
         ((IndexElement) visualElement, target, dragContext, rootBand == target));
   }
 
-  private static class SubreportConfigureHandler implements Runnable
+  private static class IndexReportConfigureHandler implements Runnable
   {
     private IndexElement subReport;
     private Band parent;
     private ReportElementEditorContext dragContext;
     private boolean rootband;
 
-    private SubreportConfigureHandler(final IndexElement subReport,
+    private IndexReportConfigureHandler(final IndexElement subReport,
                                       final Band parent,
                                       final ReportElementEditorContext dragContext,
                                       final boolean rootband)
@@ -98,13 +93,13 @@ public class IndexReportElementDragHandler extends AbstractSubReportElementDragH
       if (rootband)
       {
         final int result = JOptionPane.showOptionDialog(dragContext.getRepresentationContainer(),
-            Messages.getInstance().getString("TocElementDragHandler.BandedOrInlineSubreportQuestion"),
-            Messages.getInstance().getString("TocElementDragHandler.InsertSubreport"),
+            Messages.getInstance().getString("IndexElementDragHandler.BandedOrInlineSubreportQuestion"),
+            Messages.getInstance().getString("IndexElementDragHandler.InsertSubreport"),
             JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, null,
-            new String[]{Messages.getInstance().getString("TocElementDragHandler.Inline"),
-                Messages.getInstance().getString("TocElementDragHandler.Banded"),
-                Messages.getInstance().getString("TocElementDragHandler.Cancel")},
-            Messages.getInstance().getString("TocElementDragHandler.Inline"));
+            new String[]{Messages.getInstance().getString("IndexElementDragHandler.Inline"),
+                Messages.getInstance().getString("IndexElementDragHandler.Banded"),
+                Messages.getInstance().getString("IndexElementDragHandler.Cancel")},
+            Messages.getInstance().getString("IndexElementDragHandler.Inline"));
         if (result == JOptionPane.CLOSED_OPTION || result == 2)
         {
           return;
@@ -114,7 +109,7 @@ public class IndexReportElementDragHandler extends AbstractSubReportElementDragH
         {
           final ReportDocumentContext context = dragContext.getRenderContext();
           final UndoManager undo = context.getUndo();
-          undo.addChange(Messages.getInstance().getString("TocElementDragHandler.UndoEntry"),
+          undo.addChange(Messages.getInstance().getString("IndexElementDragHandler.UndoEntry"),
               new ElementEditUndoEntry(parent.getObjectID(), parent.getElementCount(), null, subReport));
           parent.addElement(subReport);
         }
@@ -124,7 +119,7 @@ public class IndexReportElementDragHandler extends AbstractSubReportElementDragH
 
           final ReportDocumentContext context = dragContext.getRenderContext();
           final UndoManager undo = context.getUndo();
-          undo.addChange(Messages.getInstance().getString("TocElementDragHandler.UndoEntry"),
+          undo.addChange(Messages.getInstance().getString("IndexElementDragHandler.UndoEntry"),
               new BandedSubreportEditUndoEntry(parent.getObjectID(), arb.getSubReportCount(), null, subReport));
           arb.addSubReport(subReport);
         }
@@ -133,7 +128,7 @@ public class IndexReportElementDragHandler extends AbstractSubReportElementDragH
       {
         final ReportDocumentContext context = dragContext.getRenderContext();
         final UndoManager undo = context.getUndo();
-        undo.addChange(Messages.getInstance().getString("TocElementDragHandler.UndoEntry"),
+        undo.addChange(Messages.getInstance().getString("IndexElementDragHandler.UndoEntry"),
             new ElementEditUndoEntry(parent.getObjectID(), parent.getElementCount(), null, subReport));
         parent.addElement(subReport);
       }

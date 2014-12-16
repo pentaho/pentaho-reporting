@@ -70,4 +70,5 @@ public abstract class AbstractSubReportElementDragHandler extends AbstractReport
 
     return dragContext.getDefaultElement();
   }
+
 }
