@@ -11,7 +11,9 @@ public class FormulaParameterEntity
   private String name;
   private String value;
 
-  public FormulaParameterEntity(final Type type, final String name, final String value)
+  public FormulaParameterEntity(final Type type,
+                                final String name,
+                                final String value)
   {
     this.type = type;
     this.name = name;
@@ -48,6 +50,7 @@ public class FormulaParameterEntity
     return getName();
   }
 
+  @Deprecated
   public static FormulaParameterEntity createArgument(String value)
   {
     return new FormulaParameterEntity(Type.ARGUMENT, "Argument", value);

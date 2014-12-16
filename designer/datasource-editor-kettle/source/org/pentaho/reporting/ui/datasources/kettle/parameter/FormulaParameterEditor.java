@@ -46,6 +46,30 @@ import org.pentaho.reporting.libraries.formula.FormulaContext;
 @SuppressWarnings("HardCodedStringLiteral")
 public class FormulaParameterEditor extends JComponent
 {
+  private class AddArgumentAction extends AbstractAction
+  {
+    /**
+     * Defines an <code>Action</code> object with a default
+     * description string and default icon.
+     */
+    private AddArgumentAction()
+    {
+      putValue(Action.SMALL_ICON, IconLoader.getInstance().getAddIcon());
+      putValue(Action.SHORT_DESCRIPTION, Messages.getInstance().getString("FormulaParameterEditor.Add"));
+    }
+
+    /**
+     * Invoked when an action occurs.
+     */
+    public void actionPerformed(final ActionEvent e)
+    {
+      FormulaParameterEntity entity = new FormulaParameterEntity(FormulaParameterEntity.Type.ARGUMENT,
+          String.format("ZZZ%012d", System.currentTimeMillis()), null);
+      int idx = argumentParameterTable.getSelectedRow();
+      insertNewEntry(idx, entity);
+    }
+  }
+
   private class AddParameterAction extends AbstractAction
   {
     /**
@@ -63,13 +87,10 @@ public class FormulaParameterEditor extends JComponent
      */
     public void actionPerformed(final ActionEvent e)
     {
-      final FormulaParameterEntity[] data = parameterTableModel.getData();
-      final FormulaParameterEntity[] data2 = new FormulaParameterEntity[data.length + 1];
-      System.arraycopy(data, 0, data2, 0, data.length);
-
-      data2[data.length] = new FormulaParameterEntity(FormulaParameterEntity.Type.ARGUMENT,
-          String.format("ZZZ%012d", System.currentTimeMillis()), null);
-      parameterTableModel.setData(data2);
+      String parameterName = "parameter";
+      FormulaParameterEntity entity = new FormulaParameterEntity(FormulaParameterEntity.Type.PARAMETER, parameterName, null);
+      int idx = systemParameterTable.getSelectedRow();
+      insertNewEntry(idx, entity);
     }
   }
 
@@ -126,7 +147,7 @@ public class FormulaParameterEditor extends JComponent
         return;
       }
 
-      final FormulaParameterEntity[] data = parameterTableModel.getGroupedData();
+      final FormulaParameterEntity[] data = parameterTableModel.getData();
       final ListSelectionModel listSelectionModel = table.getSelectionModel();
       final ArrayList<FormulaParameterEntity> result = new ArrayList<FormulaParameterEntity>(data.length);
       for (int i = 0; i < data.length; i++)
@@ -136,8 +157,7 @@ public class FormulaParameterEditor extends JComponent
         {
           continue;
         }
-        if (listSelectionModel.isSelectedIndex(model.mapFromModel(i)) == false ||
-            parameter.getType() != FormulaParameterEntity.Type.ARGUMENT)
+        if (listSelectionModel.isSelectedIndex(model.mapFromModel(i)) == false)
         {
           result.add(data[i]);
         }
@@ -173,18 +193,18 @@ public class FormulaParameterEditor extends JComponent
   private FormulaParameterTableModel parameterTableModel;
 
   private FormulaFragmentCellEditor systemParameterEditor;
-  private FormulaFragmentCellEditor manualParameterEditor;
+  private FormulaFragmentCellEditor argumentParameterEditor;
 
   private PropertyTable systemParameterTable;
-  private PropertyTable manualParameterTable;
-  private RemoveParameterAction manualParameterRemoveAction;
+  private PropertyTable argumentParameterTable;
+  private RemoveParameterAction removeParameterAction;
+  private RemoveParameterAction removeArgumentAction;
   private AddParameterAction addParameterAction;
+  private AddArgumentAction addArgumentAction;
 
   public FormulaParameterEditor()
   {
     setLayout(new BorderLayout());
-
-    addParameterAction = new AddParameterAction();
 
     parameterTableModel = new FormulaParameterTableModel();
     parameterTableModel.addTableModelListener(new ParameterChangeHandler());
@@ -192,19 +212,25 @@ public class FormulaParameterEditor extends JComponent
     systemParameterEditor = new FormulaFragmentCellEditor();
     systemParameterTable = new PropertyTable();
     systemParameterTable.setDefaultEditor(String.class, systemParameterEditor);
+    systemParameterTable.setDefaultEditor(FormulaParameterEntity.class, new FormulaParameterEntityCellEditor());
     systemParameterTable.setDefaultRenderer(String.class, new FormulaFragmentCellRenderer());
     systemParameterTable.setModel
         (new FilteringParameterTableModel(new FormulaParameterFilterStrategy(FormulaParameterEntity.Type.PARAMETER), parameterTableModel));
 
     FilteringParameterTableModel dataModel = new FilteringParameterTableModel
         (new FormulaParameterFilterStrategy(FormulaParameterEntity.Type.ARGUMENT), parameterTableModel);
-    manualParameterEditor = new FormulaFragmentCellEditor();
-    manualParameterTable = new PropertyTable();
-    manualParameterTable.setDefaultEditor(String.class, manualParameterEditor);
-    manualParameterTable.setDefaultRenderer(String.class, new FormulaFragmentCellRenderer());
-    manualParameterTable.setDefaultRenderer(FormulaParameterEntity.class, new ArgumentCountCellRenderer());
-    manualParameterTable.setModel(dataModel);
-    manualParameterRemoveAction = new RemoveParameterAction(manualParameterTable);
+    argumentParameterEditor = new FormulaFragmentCellEditor();
+    argumentParameterTable = new PropertyTable();
+    argumentParameterTable.setDefaultEditor(String.class, argumentParameterEditor);
+    argumentParameterTable.setDefaultRenderer(String.class, new FormulaFragmentCellRenderer());
+    argumentParameterTable.setDefaultRenderer(FormulaParameterEntity.class, new ArgumentCountCellRenderer());
+    argumentParameterTable.setModel(dataModel);
+
+    removeParameterAction = new RemoveParameterAction(systemParameterTable);
+    removeArgumentAction = new RemoveParameterAction(argumentParameterTable);
+
+    addParameterAction = new AddParameterAction();
+    addArgumentAction = new AddArgumentAction();
 
     rebuildUi();
   }
@@ -214,10 +240,11 @@ public class FormulaParameterEditor extends JComponent
     removeAll();
     final JPanel systemTablePanel = new JPanel(new BorderLayout());
     systemTablePanel.add(new JScrollPane(systemParameterTable), BorderLayout.CENTER);
+    systemTablePanel.add(createButtonPanel(addParameterAction, removeParameterAction), BorderLayout.NORTH);
 
     final JPanel manualTablePanel = new JPanel(new BorderLayout());
-    manualTablePanel.add(new JScrollPane(manualParameterTable), BorderLayout.CENTER);
-    manualTablePanel.add(createButtonPanel(), BorderLayout.NORTH);
+    manualTablePanel.add(new JScrollPane(argumentParameterTable), BorderLayout.CENTER);
+    manualTablePanel.add(createButtonPanel(addArgumentAction, removeArgumentAction), BorderLayout.NORTH);
 
     final JTabbedPane tabbedPane = new JTabbedPane();
     tabbedPane.addTab(Messages.getInstance().getString("FormulaParameterEditor.Tab.Parameter"), systemTablePanel);
@@ -226,19 +253,19 @@ public class FormulaParameterEditor extends JComponent
     add(tabbedPane, BorderLayout.CENTER);
   }
 
-  private JPanel createButtonPanel()
+  private JPanel createButtonPanel(final Action addAction, final Action removeAction)
   {
     final JPanel buttonPanel = new JPanel();
     buttonPanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
-    buttonPanel.add(new BorderlessButton(addParameterAction));
-    buttonPanel.add(new BorderlessButton(manualParameterRemoveAction));
+    buttonPanel.add(new BorderlessButton(addAction));
+    buttonPanel.add(new BorderlessButton(removeAction));
     return buttonPanel;
   }
 
   public void setFields(final FieldDefinition[] fields)
   {
     systemParameterEditor.setFields(fields);
-    manualParameterEditor.setFields(fields);
+    argumentParameterEditor.setFields(fields);
   }
 
   public void setFormulaParameter(final FormulaParameterEntity[] parameter)
@@ -256,27 +283,33 @@ public class FormulaParameterEditor extends JComponent
     return parameterTableModel.getData();
   }
 
-  public String[] getFilteredParameterNames()
-  {
-    return parameterTableModel.getFilteredParameterNames();
-  }
-
-  public void setFilteredParameterNames(final String[] names)
-  {
-    parameterTableModel.setFilteredParameterNames(names);
-  }
-
   public void setEnabled(final boolean enabled)
   {
     super.setEnabled(enabled);
     systemParameterTable.setEnabled(enabled);
-    manualParameterTable.setEnabled(enabled);
-    manualParameterRemoveAction.setEnabled(enabled);
+    argumentParameterTable.setEnabled(enabled);
+    removeParameterAction.setEnabled(enabled);
+    removeArgumentAction.setEnabled(enabled);
     addParameterAction.setEnabled(enabled);
+    addArgumentAction.setEnabled(enabled);
   }
 
-  public void setFormulaContext(FormulaContext context)
+  public void setFormulaContext(final FormulaContext context)
   {
-    manualParameterEditor.setFormulaContext(context);
+    argumentParameterEditor.setFormulaContext(context);
   }
+
+  protected void insertNewEntry(final int idx, final FormulaParameterEntity entity)
+  {
+    final FormulaParameterEntity[] data = parameterTableModel.getData();
+    final ArrayList<FormulaParameterEntity> data2 = new ArrayList<FormulaParameterEntity>(Arrays.asList(data));
+    if (idx == -1) {
+      data2.add(entity);
+    }
+    else {
+      data2.add(idx, entity);
+    }
+    parameterTableModel.setData(data2.toArray(new FormulaParameterEntity[data2.size()]));
+  }
+
 }

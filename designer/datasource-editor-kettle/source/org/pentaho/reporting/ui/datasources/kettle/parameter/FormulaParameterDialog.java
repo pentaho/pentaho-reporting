@@ -105,7 +105,7 @@ public class FormulaParameterDialog extends CommonDialog
   {
     FormulaParameterEntity[] formulaParameter = editor.getFormulaParameter();
     List<FormulaParameter> l = new ArrayList<FormulaParameter>();
-    for (FormulaParameterEntity entity : formulaParameter)
+    for (final FormulaParameterEntity entity : formulaParameter)
     {
       if (entity.getType() != FormulaParameterEntity.Type.PARAMETER)
       {
@@ -126,7 +126,7 @@ public class FormulaParameterDialog extends CommonDialog
   {
     FormulaParameterEntity[] formulaParameter = editor.getFormulaParameter();
     List<FormulaArgument> l = new ArrayList<FormulaArgument>();
-    for (FormulaParameterEntity entity : formulaParameter)
+    for (final FormulaParameterEntity entity : formulaParameter)
     {
       if (entity.getType() != FormulaParameterEntity.Type.ARGUMENT)
       {
@@ -144,20 +144,20 @@ public class FormulaParameterDialog extends CommonDialog
                                          final KettleParameterInfo[] transformationParameters)
   {
     ArrayList<FormulaParameterEntity> l = new ArrayList<FormulaParameterEntity>();
-    for (FormulaArgument argumentName : argumentNames)
+    for (final FormulaArgument argumentName : argumentNames)
     {
       FormulaParameterEntity e =  new FormulaParameterEntity
           (FormulaParameterEntity.Type.ARGUMENT, "Argument " + (l.size() + 1), argumentName.getFormula());
       l.add(e);
     }
     HashSet<String> usedNames = new HashSet<String>();
-    for (FormulaParameter parameterMapping : parameterMappings)
+    for (final FormulaParameter parameterMapping : parameterMappings)
     {
       l.add(new FormulaParameterEntity(FormulaParameterEntity.Type.PARAMETER,
           parameterMapping.getName(), parameterMapping.getFormula()));
       usedNames.add(parameterMapping.getName());
     }
-    for (KettleParameterInfo transformationParameter : transformationParameters)
+    for (final KettleParameterInfo transformationParameter : transformationParameters)
     {
       if (usedNames.contains(transformationParameter.getName()))
       {
