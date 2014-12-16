@@ -168,7 +168,7 @@ public class CachingDataFactory extends AbstractDataFactory implements CompoundD
       }
       if (model != null)
       {
-        logger.debug("Returning cached data for query '" + query + "'.");
+        logger.debug("Returning cached data for static query '" + query + "'.");
         return wrapAsIndexed(model);
       }
     }
@@ -251,7 +251,7 @@ public class CachingDataFactory extends AbstractDataFactory implements CompoundD
       }
       if (model != null)
       {
-        logger.debug("Returning cached data for query '" + query + "'.");
+        logger.debug("Returning cached data for freeform query '" + query + "'.");
         return wrapAsIndexed(model);
       }
     }
@@ -292,7 +292,7 @@ public class CachingDataFactory extends AbstractDataFactory implements CompoundD
       }
       if (model != null)
       {
-        logger.debug("Returning cached data for query '" + query + "'.");
+        logger.debug("Returning cached data for free-form design time query '" + query + "'.");
         return wrapAsIndexed(model);
       }
     }
@@ -526,6 +526,7 @@ public class CachingDataFactory extends AbstractDataFactory implements CompoundD
           CachingDataFactory.printTableModelContents(dataFromQuery);
         }
         // totally new query here.
+        CachingDataFactory.logger.debug("Query returned a data-set for query '" + query + '\'');
         return dataFromQuery;
       }
     }

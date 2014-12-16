@@ -23,14 +23,17 @@ import javax.swing.table.TableModel;
 import org.pentaho.reporting.engine.classic.core.MetaTableModel;
 import org.pentaho.reporting.engine.classic.core.wizard.DataAttributes;
 import org.pentaho.reporting.engine.classic.core.wizard.EmptyDataAttributes;
+import org.pentaho.reporting.libraries.base.util.ArgumentNullException;
 
 public class MetaNormalizedTableModel implements MetaTableModel
 {
   private MetaTableModel metaTableModel;
   private TableModel tableModel;
 
-  public MetaNormalizedTableModel(TableModel model)
+  public MetaNormalizedTableModel(final TableModel model)
   {
+    ArgumentNullException.validate("model", model);
+
     tableModel = model;
     if (model instanceof MetaTableModel)
     {

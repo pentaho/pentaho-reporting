@@ -45,6 +45,8 @@ import javax.swing.ListModel;
 import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
 
 import org.pentaho.reporting.designer.core.Messages;
 import org.pentaho.reporting.designer.core.ReportDesignerContext;
@@ -200,6 +202,13 @@ public class CreateCrosstabDialog extends CommonDialog implements ReportDataChan
     }
   }
 
+  private class MonitorMandatoryDimensionsHandler implements TableModelListener {
+    public void tableChanged(final TableModelEvent e)
+    {
+      validateInputs(false);
+    }
+  }
+
   private DraggableJList otherFields;
   private DraggableCrosstabDimensionTable rowFields;
   private DraggableCrosstabDimensionTable columnFields;
@@ -250,9 +259,11 @@ public class CreateCrosstabDialog extends CommonDialog implements ReportDataChan
     otherFields.setCellRenderer(fieldListCellRenderer);
 
     rowsFieldsModel = new CrosstabDimensionTableModel();
+    rowsFieldsModel.addTableModelListener(new MonitorMandatoryDimensionsHandler());
     rowFields = new DraggableCrosstabDimensionTable(rowsFieldsModel);
 
     columnsFieldsModel = new CrosstabDimensionTableModel();
+    columnsFieldsModel.addTableModelListener(new MonitorMandatoryDimensionsHandler());
     columnFields = new DraggableCrosstabDimensionTable(columnsFieldsModel);
 
     detailFieldsModel = new CrosstabDetailTableModel();
@@ -501,6 +512,7 @@ public class CreateCrosstabDialog extends CommonDialog implements ReportDataChan
 
       reportRenderContext.addReportDataChangeListener(this);
       dataModelChanged(reportRenderContext);
+      validateInputs(false);
 
       if (performEdit() == false)
       {
@@ -554,6 +566,23 @@ public class CreateCrosstabDialog extends CommonDialog implements ReportDataChan
       this.optionsPane.setReportDesignerContext(null);
     }
   }
+
+  protected boolean validateInputs(final boolean onConfirm)
+  {
+    boolean retval = true;
+    if (columnsFieldsModel.size() < 1)
+    {
+      retval = false;
+    }
+    if (rowsFieldsModel.size() < 1)
+    {
+      retval = false;
+    }
+
+    getConfirmAction().setEnabled(retval);
+    return retval;
+  }
+
 
   private void configureBuilderFromOptions(final CrosstabBuilder builder)
   {

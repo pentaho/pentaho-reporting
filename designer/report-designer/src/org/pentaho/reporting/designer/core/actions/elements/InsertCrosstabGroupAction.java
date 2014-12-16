@@ -90,7 +90,6 @@ public final class InsertCrosstabGroupAction extends AbstractElementSelectionAct
   private static final long serialVersionUID = 6766753579037904765L;
 
   public InsertCrosstabGroupAction()
-
   {
     putValue(Action.NAME, ActionMessages.getString("InsertCrosstabGroupAction.Text"));
     putValue(Action.SHORT_DESCRIPTION, ActionMessages.getString("InsertCrosstabGroupAction.Description"));
@@ -140,6 +139,12 @@ public final class InsertCrosstabGroupAction extends AbstractElementSelectionAct
         dialog = new CreateCrosstabDialog();
       }
 
+      if (selectedElement != report &&
+          selectedElement instanceof RelationalGroup == false)
+      {
+        return;
+      }
+
 
       final CrosstabGroup newGroup = dialog.createCrosstab(context, null);
       if (newGroup == null)
@@ -153,14 +158,10 @@ public final class InsertCrosstabGroupAction extends AbstractElementSelectionAct
         report.setRootGroup(newGroup);
         activeContext.getUndo().addChange(ActionMessages.getString("InsertCrosstabGroupAction.UndoName"),
             new CrosstabEditSupport.EditGroupOnReportUndoEntry(rootGroup, newGroup));
-      }
-
-      if (selectedElement instanceof RelationalGroup == false)
-      {
         return;
       }
-      final RelationalGroup selectedGroup = (RelationalGroup) selectedElement;
 
+      final RelationalGroup selectedGroup = (RelationalGroup) selectedElement;
       final GroupBody bodyElement = selectedGroup.getBody();
       if (bodyElement instanceof SubGroupBody)
       {
