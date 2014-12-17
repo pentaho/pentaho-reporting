@@ -89,7 +89,7 @@ public class WorkspaceSettings implements LocaleSettings
   private static final String GUIDE_COLOR = "GuideColor";
   private static final String ALIGNMENT_HINT_COLOR = "AlignmentHintColor";
   private static final String OVERLAP_HINT_COLOR = "OverlapErrorColor";
-  
+
   private static final Color GRID_COLOR_DEFAULT = new Color(228, 228, 228);
   private static final Color GUIDE_COLOR_DEFAULT = new Color(0, 139, 237);
   private static final Color ALIGNMENT_HINT_COLOR_DEFAULT = new Color(228, 228, 228);
@@ -461,46 +461,64 @@ public class WorkspaceSettings implements LocaleSettings
     return getMaturityLevel().isExperimental();
   }
 
-  public MaturityLevel getMaturityLevel() {
-    MaturityLevel ml = MaturityLevel.Limited;
-    try {
+  public MaturityLevel getMaturityLevel()
+  {
+    MaturityLevel ml = MaturityLevel.Production;
+    try
+    {
       final String matLevel = ReportDesignerBoot.getInstance().getGlobalConfig().getConfigProperty
           ("org.pentaho.reporting.designer.core.settings.MaturityLevel");
-      ml = MaturityLevel.valueOf(matLevel);
+      if (matLevel != null)
+      {
+        ml = MaturityLevel.valueOf(matLevel);
+      }
     }
-    catch (final IllegalArgumentException e) {
+    catch (final IllegalArgumentException e)
+    {
+      // ignore ..
       ml = MaturityLevel.Production;
     }
 
     String defaultValue = properties.getBoolean(EXPERIMENTAL_FEATURES_KEY, false) ?
         MaturityLevel.Development.toString() : ml.toString();
 
-
-    try {
+    try
+    {
       String s = properties.get(MATURITY_LEVEL_KEY, defaultValue);
-      return MaturityLevel.valueOf(s);
+      if (s != null)
+      {
+        return MaturityLevel.valueOf(s);
+      }
     }
-    catch (IllegalArgumentException e) {
-      return MaturityLevel.Production;
+    catch (IllegalArgumentException e)
+    {
+      // ignore ..
     }
+    return MaturityLevel.Production;
   }
 
-  public boolean isMatureFeature(final MaturityLevel ml) {
+  public boolean isMatureFeature(final MaturityLevel ml)
+  {
     return (getMaturityLevel().isMature(ml));
   }
 
-  public boolean isMatureFeature(final MetaData ml) {
-    if (ml == null) {
+  public boolean isMatureFeature(final MetaData ml)
+  {
+    if (ml == null)
+    {
       return false;
     }
     return (getMaturityLevel().isMature(ml.getFeatureMaturityLevel()));
   }
 
-  public boolean isVisible(final MetaData ml) {
-    if (ml == null) {
+  public boolean isVisible(final MetaData ml)
+  {
+    if (ml == null)
+    {
       return false;
     }
-    if (!isMatureFeature(ml)) {
+    if (!isMatureFeature(ml))
+    {
       return false;
     }
     if (isShowExpertItems() == false && ml.isExpert())
@@ -516,8 +534,10 @@ public class WorkspaceSettings implements LocaleSettings
   }
 
 
-  public void setMaturityLevel(final MaturityLevel ml) {
-    if (ml == null) {
+  public void setMaturityLevel(final MaturityLevel ml)
+  {
+    if (ml == null)
+    {
       properties.remove(MATURITY_LEVEL_KEY);
     }
     else
