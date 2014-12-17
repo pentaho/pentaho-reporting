@@ -39,6 +39,26 @@ public class DefaultDataFactoryMetaData extends AbstractMetaData implements Data
   private boolean formattingMetadataSource;
   private DataFactoryCore dataFactoryCore;
 
+  @Deprecated
+  public DefaultDataFactoryMetaData(final String dataFactory,
+                                     final String bundleLocation,
+                                     final String keyPrefix,
+                                     final boolean expert,
+                                     final boolean preferred,
+                                     final boolean hidden,
+                                     final boolean deprecated,
+                                     final boolean editable,
+                                     final boolean freeformQuery,
+                                     final boolean formattingMetadataSource,
+                                     final boolean experimental,
+                                     final DataFactoryCore dataFactoryCore,
+                                     final int compatibilityLevel)
+  {
+    this(dataFactory, bundleLocation, keyPrefix, expert, preferred, hidden, deprecated, editable,
+        freeformQuery, formattingMetadataSource,
+        experimental ? MaturityLevel.Development : MaturityLevel.Production, dataFactoryCore, compatibilityLevel);
+  }
+
   public DefaultDataFactoryMetaData(final String dataFactory,
                                     final String bundleLocation,
                                     final String keyPrefix,
