@@ -21,7 +21,6 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 
 import org.pentaho.metadata.model.concept.IConcept;
-import org.pentaho.metadata.model.concept.Property;
 import org.pentaho.reporting.engine.classic.core.wizard.ConceptQueryMapper;
 import org.pentaho.reporting.engine.classic.core.wizard.DataAttributeContext;
 import org.pentaho.reporting.engine.classic.core.wizard.DataAttributes;
@@ -128,11 +127,7 @@ public class PentahoMetaDataAttributes implements DataAttributes
 
     if (PmdDataFactoryModule.META_DOMAIN.equals(domain))
     {
-      final Property property = concept.getProperty(name);
-      Object value = null;
-      if ( property != null ) {
-        value = property.getValue();
-      }
+      final Object value = concept.getProperty(name);
       if (value == null)
       {
         return defaultValue;

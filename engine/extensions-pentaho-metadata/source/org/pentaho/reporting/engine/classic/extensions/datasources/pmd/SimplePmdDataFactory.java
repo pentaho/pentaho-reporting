@@ -17,6 +17,7 @@
 
 package org.pentaho.reporting.engine.classic.extensions.datasources.pmd;
 
+import java.sql.Blob;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -26,18 +27,17 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-
 import javax.swing.table.TableModel;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.omg.CORBA.UNKNOWN;
 import org.pentaho.di.core.database.DatabaseInterface;
 import org.pentaho.di.core.database.DatabaseMeta;
 import org.pentaho.metadata.messages.LocaleHelper;
 import org.pentaho.metadata.model.LogicalColumn;
 import org.pentaho.metadata.model.LogicalTable;
 import org.pentaho.metadata.model.SqlPhysicalModel;
-import org.pentaho.metadata.model.concept.Property;
 import org.pentaho.metadata.model.concept.types.DataType;
 import org.pentaho.metadata.query.impl.sql.MappedQuery;
 import org.pentaho.metadata.query.impl.sql.SqlGenerator;
@@ -57,6 +57,7 @@ import org.pentaho.reporting.engine.classic.core.ResourceBundleFactory;
 import org.pentaho.reporting.engine.classic.core.modules.misc.datafactory.sql.SimpleSQLReportDataFactory;
 import org.pentaho.reporting.engine.classic.core.util.ReportParameterValues;
 import org.pentaho.reporting.engine.classic.core.util.TypedMetaTableModel;
+import org.pentaho.reporting.engine.classic.core.util.TypedTableModel;
 import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
 
 /**
@@ -244,7 +245,7 @@ public class SimplePmdDataFactory extends AbstractDataFactory
         throw new ReportDataFactoryException("Failed to generate SQL. No valid SqlGenerator class found.");//$NON-NLS-1$
       }
 
-      final Map<String, Property> parameterMap = convertDataRowToMap(parameters);
+      final Map<String, Object> parameterMap = convertDataRowToMap(parameters);
       final IMetadataDomainRepository domainRepository = getDomainRepository();
       Locale locale = computeLocale();
       return sqlGenerator.generateSql(queryObject, locale.toString(), domainRepository, databaseMeta, parameterMap, true);
@@ -278,15 +279,15 @@ public class SimplePmdDataFactory extends AbstractDataFactory
     return locale;
   }
 
-  private Map<String, Property> convertDataRowToMap(final DataRow parameters)
+  private Map<String, Object> convertDataRowToMap(final DataRow parameters)
   {
     // convert DataRow into Map<String,Object>
-    final Map<String, Property> parameterMap = new HashMap<String, Property>();
+    final Map<String, Object> parameterMap = new HashMap<String, Object>();
     final String[] columnNames = parameters.getColumnNames();
     for (int i = 0; i < columnNames.length; i++)
     {
       final String key = columnNames[i];
-      final Property value = new Property( parameters.get(key) );
+      final Object value = parameters.get(key);
       parameterMap.put(key, value);
     }
     return parameterMap;
@@ -426,11 +427,7 @@ public class SimplePmdDataFactory extends AbstractDataFactory
 	    if ( (existingQueryLimitObj == null) ||
 	    		( (existingQueryLimitObj instanceof Number) && ( ((Number)existingQueryLimitObj).intValue() == -1)) ) { // If null, or if default of -1
 	      // Limit isn't in the parameters - check the model and see if it's defined.
-	      Property property = queryObject.getLogicalModel().getProperty("max_rows"); //$NON-NLS-1$
-	      Object maxRowsProperty = null;
-	      if ( property != null ) {
-	        maxRowsProperty = property.getValue();
-	      }
+	      Object maxRowsProperty = queryObject.getLogicalModel().getProperty("max_rows"); //$NON-NLS-1$
 	      if (maxRowsProperty != null && maxRowsProperty instanceof Number) {
 	    	  // max_rows is provided in the model - add it to the computed parameter set
 	          int maxRowsVal = ((Number)maxRowsProperty).intValue();
@@ -443,27 +440,23 @@ public class SimplePmdDataFactory extends AbstractDataFactory
     }
   }
 
-  private void computeQueryTimeout( final Query queryObject, final ReportParameterValues computedParameterSet ) {
+  private void computeQueryTimeout(final Query queryObject, final ReportParameterValues computedParameterSet)
+  {
     try {
-      Object existingQueryTimeoutObj = computedParameterSet.get( DataFactory.QUERY_TIMEOUT );
-      if ( ( existingQueryTimeoutObj == null ) ||
-          // If null, or if default of 0
-          ( ( existingQueryTimeoutObj instanceof Number ) && ( ( (Number) existingQueryTimeoutObj ).intValue() == 0 ) ) ) {
-        // Timeout isn't in the parameters - check the model and see if it's defined.
-        Property property = queryObject.getLogicalModel().getProperty( "timeout" ); //$NON-NLS-1$
-        Object timeoutProperty = null;
-        if ( property != null ) {
-          timeoutProperty = property.getValue();
-        }
-        if ( timeoutProperty != null && timeoutProperty instanceof Number ) {
-          // timeout is provided in the model - add it to the computed parameter set
-          int timeoutVal = ( (Number) timeoutProperty ).intValue();
-          computedParameterSet.put( DataFactory.QUERY_TIMEOUT, timeoutVal );
-        }
-      }
-    } catch ( final Exception ex ) {
-      // This shouldn't stop the operation from happening, but we need to log the error.
-      logger.error( "ERROR_0001 - Could not read query timeout from model.", ex );
+	    Object existingQueryTimeoutObj = computedParameterSet.get(DataFactory.QUERY_TIMEOUT);
+	    if ( (existingQueryTimeoutObj == null) ||
+	    		( (existingQueryTimeoutObj instanceof Number) && ( ((Number)existingQueryTimeoutObj).intValue() == 0)) ) { // If null, or if default of 0
+	      // Timeout isn't in the parameters - check the model and see if it's defined.
+	      Object timeoutProperty = queryObject.getLogicalModel().getProperty("timeout"); //$NON-NLS-1$
+	      if (timeoutProperty != null && timeoutProperty instanceof Number) {
+	    	  // timeout is provided in the model - add it to the computed parameter set
+	          int timeoutVal = ((Number)timeoutProperty).intValue();
+	          computedParameterSet.put(DataFactory.QUERY_TIMEOUT, timeoutVal);
+	      }
+	    }
+    } catch (final Exception ex) {
+    	// This shouldn't stop the operation from happening, but we need to log the error.
+    	logger.error("ERROR_0001 - Could not read query timeout from model.", ex);
     }
   }
 
