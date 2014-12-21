@@ -39,7 +39,6 @@ import org.pentaho.metadata.model.LogicalColumn;
 import org.pentaho.metadata.model.LogicalTable;
 import org.pentaho.metadata.model.SqlPhysicalModel;
 import org.pentaho.metadata.model.concept.types.DataType;
-import org.pentaho.metadata.model.concept.Property;
 import org.pentaho.metadata.query.impl.sql.MappedQuery;
 import org.pentaho.metadata.query.impl.sql.SqlGenerator;
 import org.pentaho.metadata.query.model.Parameter;
@@ -246,7 +245,7 @@ public class SimplePmdDataFactory extends AbstractDataFactory
         throw new ReportDataFactoryException("Failed to generate SQL. No valid SqlGenerator class found.");//$NON-NLS-1$
       }
 
-      final Map<String, Property> parameterMap = convertDataRowToMap(parameters);
+      final Map<String, Object> parameterMap = convertDataRowToMap(parameters);
       final IMetadataDomainRepository domainRepository = getDomainRepository();
       Locale locale = computeLocale();
       return sqlGenerator.generateSql(queryObject, locale.toString(), domainRepository, databaseMeta, parameterMap, true);
@@ -280,15 +279,15 @@ public class SimplePmdDataFactory extends AbstractDataFactory
     return locale;
   }
 
-  private Map<String, Property> convertDataRowToMap(final DataRow parameters)
+  private Map<String, Object> convertDataRowToMap(final DataRow parameters)
   {
     // convert DataRow into Map<String,Object>
-    final Map<String, Property> parameterMap = new HashMap<String, Property>();
+    final Map<String, Object> parameterMap = new HashMap<String, Object>();
     final String[] columnNames = parameters.getColumnNames();
     for (int i = 0; i < columnNames.length; i++)
     {
       final String key = columnNames[i];
-      final Property value = (Property)parameters.get(key);
+      final Object value = parameters.get(key);
       parameterMap.put(key, value);
     }
     return parameterMap;
