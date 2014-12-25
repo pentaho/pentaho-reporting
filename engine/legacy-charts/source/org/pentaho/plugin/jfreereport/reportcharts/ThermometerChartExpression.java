@@ -17,6 +17,8 @@
 
 package org.pentaho.plugin.jfreereport.reportcharts;
 
+import java.awt.Color;
+import java.awt.Paint;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
@@ -47,6 +49,12 @@ public class ThermometerChartExpression extends AbstractChartExpression
   private int bulbRadius;
   private int columnRadius;
   private String thermometerUnits;
+  private int criticalRangeHigh;
+  private int criticalRangeLow;
+  private int warningRangeHigh;
+  private int warningRangeLow;
+  private int normalRangeHigh;
+  private int normalRangeLow;
 
   private static final Map<String, Integer> THERMOMETER_UNITS;
 
@@ -90,11 +98,77 @@ public class ThermometerChartExpression extends AbstractChartExpression
     this.thermometerUnits = thermometerUnits;
   }
 
+  public int getCriticalRangeHigh()
+  {
+    return this.criticalRangeHigh;
+  }
+
+  public void setCriticalRangeHigh(int criticalRangeHigh)
+  {
+    this.criticalRangeHigh = criticalRangeHigh;
+  }
+
+  public int getCriticalRangeLow()
+  {
+    return this.criticalRangeLow;
+  }
+
+  public void setCriticalRangeLow(int criticalRangeLow)
+  {
+    this.criticalRangeLow = criticalRangeLow;
+  }
+
+  public int getWarningRangeHigh()
+  {
+    return this.warningRangeHigh;
+  }
+
+  public void setWarningRangeHigh(int warningRangeHigh)
+  {
+    this.warningRangeHigh = warningRangeHigh;
+  }
+
+  public int getWarningRangeLow()
+  {
+    return this.warningRangeLow;
+  }
+
+  public void setWarningRangeLow(int warningRangeLow)
+  {
+    this.warningRangeLow = warningRangeLow;
+  }
+
+  public int getNormalRangeHigh()
+  {
+    return this.normalRangeHigh;
+  }
+
+  public void setNormalRangeHigh(int normalRangeHigh)
+  {
+    this.normalRangeHigh = normalRangeHigh;
+  }
+
+  public int getNormalRangeLow()
+  {
+    return this.normalRangeLow;
+  }
+
+  public void setNormalRangeLow(int normalRangeLow)
+  {
+    this.normalRangeLow = normalRangeLow;
+  }
+
   public ThermometerChartExpression()
   {
     this.bulbRadius = ThermometerPlotDefaults.getDefaultBulbRadius();
     this.columnRadius = ThermometerPlotDefaults.getDefaultColumnRadius();
     this.thermometerUnits = null;
+    criticalRangeHigh = 100;
+    criticalRangeLow = 75;
+    warningRangeHigh = 75;
+    warningRangeLow = 30;
+    normalRangeHigh = 30;
+    normalRangeLow = 0;
   }
 
   protected JFreeChart computeChart(final Dataset dataset)
@@ -107,19 +181,6 @@ public class ThermometerChartExpression extends AbstractChartExpression
 
     final ThermometerPlot plot = new ThermometerPlot(thermometerDataset);
     return new JFreeChart(computeTitle(), JFreeChart.DEFAULT_TITLE_FONT, plot, true);
-
-    /*
-    if (isThreeD())
-    {
-      // return ChartFactory.createPieChart3D(computeTitle(), pieDataset, isShowLegend(), false, false);
-    }
-    else
-    {
-      // return ChartFactory.createPieChart(computeTitle(), pieDataset, isShowLegend(), false, false);
-    }
-
-    return null;
-    */
   }
 
   protected void configureChart(final JFreeChart chart)
@@ -141,6 +202,9 @@ public class ThermometerChartExpression extends AbstractChartExpression
     }
     thermometerPlot.setBulbRadius(getBulbRadius());
     thermometerPlot.setColumnRadius(getColumnRadius());
+    thermometerPlot.setSubrange(ThermometerPlot.CRITICAL, getCriticalRangeLow(), getCriticalRangeHigh());
+    thermometerPlot.setSubrange(ThermometerPlot.WARNING, getWarningRangeLow(), getWarningRangeHigh());
+    thermometerPlot.setSubrange(ThermometerPlot.NORMAL, getNormalRangeLow(), getNormalRangeHigh());
   }
 
 }
