@@ -17,8 +17,6 @@
 
 package org.pentaho.plugin.jfreereport.reportcharts;
 
-import java.awt.Color;
-import java.awt.Paint;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
