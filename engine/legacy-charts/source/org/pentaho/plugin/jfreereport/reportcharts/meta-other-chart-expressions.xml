@@ -400,21 +400,13 @@
               hidden="false"/>
     <property name="showBorder" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
     <property name="showLegend" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
-    <!--
-    <property name="threeD" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
-    -->
+
     <property name="title" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="true"/>
     <property name="titleFont" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"
               propertyEditor="org.pentaho.reporting.engine.classic.extensions.legacy.charts.propertyeditor.FontStringPropertyEditor"/>
     <property name="postProcessingLanguage" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"
               propertyEditor="org.pentaho.reporting.engine.classic.core.modules.misc.bsf.BSFScriptableLanguagesPropertyEditor"/>
     <property name="postProcessingScript" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
-    <!--
-    <property name="urlFormula" mandatory="false" preferred="false" value-role="Formula" expert="false" hidden="false"
-              impl="org.pentaho.plugin.jfreereport.reportcharts.metadata.PieChartFormulaExpressionPropertyCore"/>
-    <property name="tooltipFormula" mandatory="false" preferred="false" value-role="Formula" expert="false" hidden="false"
-              impl="org.pentaho.plugin.jfreereport.reportcharts.metadata.PieChartFormulaExpressionPropertyCore"/>
-    -->
 
     <property name="bulbRadius" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
     <property name="columnRadius" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
