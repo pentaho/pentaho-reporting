@@ -304,8 +304,9 @@ public class LegacyChartType extends ContentFieldType
     }
     if (aExpression instanceof ThermometerChartExpression)
     {
-      final DefaultValueDataset dataset = new DefaultValueDataset(new Double(64.0));
+      final DefaultValueDataset dataset = new DefaultValueDataset(new Double(65.0));
       final ThermometerPlot plot = new ThermometerPlot(dataset);
+
       return new JFreeChart("Thermometer Chart", JFreeChart.DEFAULT_TITLE_FONT, plot, true);
     }
     return null;

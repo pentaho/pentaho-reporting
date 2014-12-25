@@ -400,7 +400,9 @@
               hidden="false"/>
     <property name="showBorder" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
     <property name="showLegend" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
+    <!--
     <property name="threeD" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
+    -->
     <property name="title" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="true"/>
     <property name="titleFont" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"
               propertyEditor="org.pentaho.reporting.engine.classic.extensions.legacy.charts.propertyeditor.FontStringPropertyEditor"/>
@@ -417,7 +419,13 @@
     <property name="bulbRadius" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
     <property name="columnRadius" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
     <property name="thermometerUnits" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"
-      propertyEditor="org.pentaho.reporting.engine.classic.extensions.legacy.charts.propertyeditor.ThermometerUnitsPropertyEditor"/>
+              propertyEditor="org.pentaho.reporting.engine.classic.extensions.legacy.charts.propertyeditor.ThermometerUnitsPropertyEditor"/>
+    <property name="criticalRangeHigh" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
+    <property name="criticalRangeLow" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
+    <property name="warningRangeHigh" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
+    <property name="warningRangeLow" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
+    <property name="normalRangeHigh" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
+    <property name="normalRangeLow" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
   </expression>
 
 </meta-data>
