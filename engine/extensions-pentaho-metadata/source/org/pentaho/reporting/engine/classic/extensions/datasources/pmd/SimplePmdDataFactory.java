@@ -20,6 +20,7 @@ package org.pentaho.reporting.engine.classic.extensions.datasources.pmd;
 import java.sql.Blob;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.sql.SQLTimeoutException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -27,6 +28,7 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+
 import javax.swing.table.TableModel;
 
 import org.apache.commons.logging.Log;
@@ -53,6 +55,7 @@ import org.pentaho.reporting.engine.classic.core.DataFactory;
 import org.pentaho.reporting.engine.classic.core.DataRow;
 import org.pentaho.reporting.engine.classic.core.MetaTableModel;
 import org.pentaho.reporting.engine.classic.core.ReportDataFactoryException;
+import org.pentaho.reporting.engine.classic.core.ReportDataFactoryQueryTimeoutException;
 import org.pentaho.reporting.engine.classic.core.ResourceBundleFactory;
 import org.pentaho.reporting.engine.classic.core.modules.misc.datafactory.sql.SimpleSQLReportDataFactory;
 import org.pentaho.reporting.engine.classic.core.util.ReportParameterValues;
@@ -333,9 +336,15 @@ public class SimplePmdDataFactory extends AbstractDataFactory
       // MetaTableModel
       return new PmdMetaTableModel((MetaTableModel) tableModel, queryObject.getSelections());
     }
+    //it catch exception only for java 1.6 and jdbc 4
+    catch (final SQLTimeoutException e)
+    {
+      throw new ReportDataFactoryQueryTimeoutException();
+    }
     catch (final SQLException e)
     {
-      throw new ReportDataFactoryException("The generated SQL-query did not execute successfully.", e);
+      //it catch other exception end timeout for jdbc3, so add message from jdbc driver to message
+      throw new ReportDataFactoryException("SQL-query did not execute successfully. " + e.getMessage(), e);
     }
 
   }
@@ -758,6 +767,7 @@ public class SimplePmdDataFactory extends AbstractDataFactory
       }
     }
     retval.add(DataFactory.QUERY_LIMIT);
+    retval.add(DataFactory.QUERY_TIMEOUT);
     return retval.toArray(new String[retval.size()]);
   }
 

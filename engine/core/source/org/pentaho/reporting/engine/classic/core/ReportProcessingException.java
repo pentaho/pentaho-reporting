@@ -25,6 +25,11 @@ package org.pentaho.reporting.engine.classic.core;
 public class ReportProcessingException extends Exception
 {
   /**
+   * 
+   */
+  private static final long serialVersionUID = 3416682538157508440L;
+
+  /**
    * Creates an exception.
    *
    * @param message the exception message.
@@ -55,4 +60,25 @@ public class ReportProcessingException extends Exception
   {
     super(message);
   }
+  
+  /**
+   * Creates an exception.
+   *
+   * @param ex      the parent exception.
+   */
+  public ReportProcessingException(final Throwable ex)
+  {
+    super(ex);
+  }
+  
+  /**
+   * Creates an exception.
+   *
+   * @param ex      the parent exception.
+   */
+  public ReportProcessingException(final Exception ex)
+  {
+    super(ex);
+  }
+  
 }

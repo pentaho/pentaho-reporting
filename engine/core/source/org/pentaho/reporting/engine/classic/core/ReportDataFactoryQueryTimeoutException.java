@@ -17,51 +17,24 @@
 
 package org.pentaho.reporting.engine.classic.core;
 
-/**
- * A report data factory exception is thrown whenever querying a datasource failed for some reason.
- *
- * @author Thomas Morgner
- */
-public class ReportDataFactoryException extends ReportProcessingException
-{
+public class ReportDataFactoryQueryTimeoutException extends ReportDataFactoryException {
+  
   /**
-   * Creates an exception.
+   * A report data factory exception is thrown whenever querying a datasource failed for timeout exception
    *
-   * @param message the exception message.
    */
-  public ReportDataFactoryException(final String message)
-  {
-    super(message);
+  public ReportDataFactoryQueryTimeoutException() {
+    super("Statement cancelled due to timeout or client request");
+  }
+ 
+  
+  public ReportDataFactoryQueryTimeoutException( String message ) {
+    super( message );
   }
 
   /**
-   * Creates an exception.
-   *
-   * @param message the exception message.
-   * @param ex      the parent exception.
+   * 
    */
-  public ReportDataFactoryException(final String message, final Throwable ex)
-  {
-    super(message, ex);
-  }
-  
-  /**
-   * Creates an exception.
-   *
-   * @param ex      the parent exception.
-   */
-  public ReportDataFactoryException(final Throwable ex)
-  {
-    super(ex);
-  }
-  
-  /**
-   * Creates an exception.
-   *
-   * @param ex      the parent exception.
-   */
-  public ReportDataFactoryException(final Exception ex)
-  {
-    super(ex);
-  }
+  private static final long serialVersionUID = -3461480070128356838L;
+
 }
