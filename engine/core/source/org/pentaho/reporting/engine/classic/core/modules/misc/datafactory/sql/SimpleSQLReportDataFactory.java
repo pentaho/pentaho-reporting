@@ -22,6 +22,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.SQLTimeoutException;
 import java.sql.Statement;
 import java.sql.Timestamp;
 import java.sql.Types;
@@ -29,6 +30,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.LinkedHashSet;
+
 import javax.swing.table.TableModel;
 
 import org.apache.commons.logging.Log;
@@ -38,6 +40,7 @@ import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.pentaho.reporting.engine.classic.core.DataFactory;
 import org.pentaho.reporting.engine.classic.core.DataRow;
 import org.pentaho.reporting.engine.classic.core.ReportDataFactoryException;
+import org.pentaho.reporting.engine.classic.core.ReportDataFactoryQueryTimeoutException;
 import org.pentaho.reporting.libraries.base.config.Configuration;
 import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
 
@@ -204,13 +207,12 @@ public class SimpleSQLReportDataFactory extends AbstractDataFactory
       }
 
       return parametrizeAndQuery(parameters, translatedQuery, preparedParameterNames);
-    }
-    catch (Exception e)
-    {
+    //it catch exception only for java 1.6 and jdbc 4
+    } catch (SQLTimeoutException e) {
+      throw  new ReportDataFactoryQueryTimeoutException();
+    } catch (Exception e) {
       throw new ReportDataFactoryException("Failed at query: " + query, e); //$NON-NLS-1$
-    }
-    finally
-    {
+    } finally {
       currentRunningStatement = null;
     }
   }
