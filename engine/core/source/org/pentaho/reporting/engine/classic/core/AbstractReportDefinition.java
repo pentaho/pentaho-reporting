@@ -847,6 +847,24 @@ public abstract class AbstractReportDefinition extends Section
         AttributeNames.Internal.QUERY_LIMIT, IntegerCache.getInteger(queryLimit));
   }
 
+  public int getUserQueryLimit()
+  {
+    final Object queryLimitText =
+        getAttribute(AttributeNames.Internal.NAMESPACE, AttributeNames.Internal.QUERY_LIMIT_USER);
+    if (queryLimitText instanceof Number)
+    {
+      final Number n = (Number) queryLimitText;
+      return n.intValue();
+    }
+    return -1;
+  }
+
+  public void setUserQueryLimit(final int queryLimit)
+  {
+    setAttribute(AttributeNames.Internal.NAMESPACE,
+        AttributeNames.Internal.QUERY_LIMIT_USER, IntegerCache.getInteger(queryLimit));
+  }
+
   /**
    * Returns a new query or query-name that is used when retrieving the data from the data-factory.
    *
