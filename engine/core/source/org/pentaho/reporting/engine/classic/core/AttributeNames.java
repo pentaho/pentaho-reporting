@@ -155,7 +155,7 @@ public class AttributeNames
     public static final String EXCEL_CELL_FORMAT_AUTOCOMPUTE = "excel-cellformat-auto-compute";
     public static final String QUERY = "query";
     public static final String QUERY_LIMIT = "query-limit";
-    public static final String QUERY_LIMIT_REACHED = "query-limit-reached";
+    public static final String QUERY_LIMIT_USER = "query-limit-user";
     public static final String QUERY_TIMEOUT = "query-timeout";
     public static final String FILEFORMAT = "file-format";
     public static final String GENERATED_AGGREGATE_FUNCTION = "auto-generated-aggregate-function";
