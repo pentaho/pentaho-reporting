@@ -21,13 +21,15 @@ import org.jfree.data.category.CategoryDataset;
 import org.jfree.data.general.PieDataset;
 import org.jfree.data.xy.XYDataset;
 import org.jfree.data.xy.XYZDataset;
+import org.jfree.data.general.ValueDataset;
 
 public enum ChartDataSource
 {
   CATEGORY(CategoryDataset.class),
   PIE(PieDataset.class),
   XY(XYDataset.class),
-  XYZ(XYZDataset.class);
+  XYZ(XYZDataset.class),
+  VALUE(ValueDataset.class);
 
   private Class resultType;
 
