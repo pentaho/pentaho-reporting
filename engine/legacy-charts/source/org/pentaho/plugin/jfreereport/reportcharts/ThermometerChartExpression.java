@@ -17,36 +17,18 @@
 
 package org.pentaho.plugin.jfreereport.reportcharts;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
-
 import org.jfree.chart.JFreeChart;
-import org.jfree.chart.plot.ThermometerPlot;
 import org.jfree.chart.plot.Plot;
+import org.jfree.chart.plot.ThermometerPlot;
 import org.jfree.data.general.Dataset;
 import org.jfree.data.general.ValueDataset;
 
-final class ThermometerPlotDefaults extends ThermometerPlot
-{
-  public static final int getDefaultBulbRadius()
-  {
-    return ThermometerPlot.DEFAULT_BULB_RADIUS;
-  }
-
-  public static final int getDefaultColumnRadius()
-  {
-    return ThermometerPlot.DEFAULT_COLUMN_RADIUS;
-  }
-}
-
+@SuppressWarnings("UnusedDeclaration")
 public class ThermometerChartExpression extends AbstractChartExpression
 {
-  private static final long serialVersionUID = 1L; // TODO
-
   private int bulbRadius;
   private int columnRadius;
-  private String thermometerUnits;
+  private ThermometerUnit thermometerUnits;
   private int criticalRangeHigh;
   private int criticalRangeLow;
   private int warningRangeHigh;
@@ -54,24 +36,12 @@ public class ThermometerChartExpression extends AbstractChartExpression
   private int normalRangeHigh;
   private int normalRangeLow;
 
-  private static final Map<String, Integer> THERMOMETER_UNITS;
-
-  static
-  {
-    final Map<String, Integer> unitMap = new HashMap<String, Integer>();
-    unitMap.put("celcius", ThermometerPlot.UNITS_CELCIUS);
-    unitMap.put("farenheit", ThermometerPlot.UNITS_FAHRENHEIT);
-    unitMap.put("kelvin", ThermometerPlot.UNITS_KELVIN);
-    unitMap.put("none", ThermometerPlot.UNITS_NONE);
-    THERMOMETER_UNITS = Collections.unmodifiableMap(unitMap);
-  }
-
   public int getBulbRadius()
   {
     return this.bulbRadius;
   }
 
-  public void setBulbRadius(int bulbRadius)
+  public void setBulbRadius(final int bulbRadius)
   {
     this.bulbRadius = bulbRadius;
   }
@@ -81,17 +51,17 @@ public class ThermometerChartExpression extends AbstractChartExpression
     return this.columnRadius;
   }
 
-  public void setColumnRadius(int columnRadius)
+  public void setColumnRadius(final int columnRadius)
   {
     this.columnRadius = columnRadius;
   }
 
-  public String getThermometerUnits()
+  public ThermometerUnit getThermometerUnits()
   {
     return this.thermometerUnits;
   }
 
-  public void setThermometerUnits(String thermometerUnits)
+  public void setThermometerUnits(final ThermometerUnit thermometerUnits)
   {
     this.thermometerUnits = thermometerUnits;
   }
@@ -101,7 +71,7 @@ public class ThermometerChartExpression extends AbstractChartExpression
     return this.criticalRangeHigh;
   }
 
-  public void setCriticalRangeHigh(int criticalRangeHigh)
+  public void setCriticalRangeHigh(final int criticalRangeHigh)
   {
     this.criticalRangeHigh = criticalRangeHigh;
   }
@@ -111,7 +81,7 @@ public class ThermometerChartExpression extends AbstractChartExpression
     return this.criticalRangeLow;
   }
 
-  public void setCriticalRangeLow(int criticalRangeLow)
+  public void setCriticalRangeLow(final int criticalRangeLow)
   {
     this.criticalRangeLow = criticalRangeLow;
   }
@@ -121,7 +91,7 @@ public class ThermometerChartExpression extends AbstractChartExpression
     return this.warningRangeHigh;
   }
 
-  public void setWarningRangeHigh(int warningRangeHigh)
+  public void setWarningRangeHigh(final int warningRangeHigh)
   {
     this.warningRangeHigh = warningRangeHigh;
   }
@@ -131,7 +101,7 @@ public class ThermometerChartExpression extends AbstractChartExpression
     return this.warningRangeLow;
   }
 
-  public void setWarningRangeLow(int warningRangeLow)
+  public void setWarningRangeLow(final int warningRangeLow)
   {
     this.warningRangeLow = warningRangeLow;
   }
@@ -141,7 +111,7 @@ public class ThermometerChartExpression extends AbstractChartExpression
     return this.normalRangeHigh;
   }
 
-  public void setNormalRangeHigh(int normalRangeHigh)
+  public void setNormalRangeHigh(final int normalRangeHigh)
   {
     this.normalRangeHigh = normalRangeHigh;
   }
@@ -151,7 +121,7 @@ public class ThermometerChartExpression extends AbstractChartExpression
     return this.normalRangeLow;
   }
 
-  public void setNormalRangeLow(int normalRangeLow)
+  public void setNormalRangeLow(final int normalRangeLow)
   {
     this.normalRangeLow = normalRangeLow;
   }
@@ -186,8 +156,7 @@ public class ThermometerChartExpression extends AbstractChartExpression
     super.configureChart(chart);
 
     final Plot plot = chart.getPlot();
-    final ThermometerPlot thermometerPlot = (ThermometerPlot)plot;
-    final ValueDataset valueDS = thermometerPlot.getDataset();
+    final ThermometerPlot thermometerPlot = (ThermometerPlot) plot;
 
     if (isShowBorder() == false || isChartSectionOutline() == false)
     {
@@ -195,8 +164,9 @@ public class ThermometerChartExpression extends AbstractChartExpression
       thermometerPlot.setOutlineVisible(false);
     }
 
-    if (getThermometerUnits() != null) {
-      thermometerPlot.setUnits(THERMOMETER_UNITS.get(getThermometerUnits().toLowerCase()));
+    if (getThermometerUnits() != null)
+    {
+      thermometerPlot.setUnits(getThermometerUnits().getUnitConstant());
     }
     thermometerPlot.setBulbRadius(getBulbRadius());
     thermometerPlot.setColumnRadius(getColumnRadius());
@@ -205,4 +175,16 @@ public class ThermometerChartExpression extends AbstractChartExpression
     thermometerPlot.setSubrange(ThermometerPlot.NORMAL, getNormalRangeLow(), getNormalRangeHigh());
   }
 
+  private static class ThermometerPlotDefaults extends ThermometerPlot
+  {
+    public static int getDefaultBulbRadius()
+    {
+      return ThermometerPlot.DEFAULT_BULB_RADIUS;
+    }
+
+    public static int getDefaultColumnRadius()
+    {
+      return ThermometerPlot.DEFAULT_COLUMN_RADIUS;
+    }
+  }
 }

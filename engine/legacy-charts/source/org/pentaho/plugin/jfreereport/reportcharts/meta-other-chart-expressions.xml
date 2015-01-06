@@ -350,7 +350,7 @@
   <expression class="org.pentaho.plugin.jfreereport.reportcharts.ThermometerChartExpression"
               bundle-name="org.pentaho.plugin.jfreereport.reportcharts.ThermometerChartExpressionBundle"
               result="org.jfree.chart.JFreeChart"
-              expert="false" hidden="false" preferred="false">
+              expert="false" hidden="false" preferred="false" maturity-level="Limited">
     <property name="legendTextColor" mandatory="false" preferred="false" value-role="Value" expert="false"
               hidden="false"/>
     <property name="plotBackgroundColor" mandatory="false" preferred="false" value-role="Value" expert="false"
