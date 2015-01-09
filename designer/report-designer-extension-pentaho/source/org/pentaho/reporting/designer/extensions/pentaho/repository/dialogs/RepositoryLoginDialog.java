@@ -49,7 +49,6 @@ import org.pentaho.reporting.designer.extensions.pentaho.repository.util.Publish
 import org.pentaho.reporting.designer.extensions.pentaho.repository.util.PublishUtil;
 import org.pentaho.reporting.libraries.base.util.StringUtils;
 import org.pentaho.reporting.libraries.designtime.swing.CommonDialog;
-import org.pentaho.reporting.libraries.designtime.swing.KeyedComboBoxModel;
 
 public class RepositoryLoginDialog extends CommonDialog
 {
@@ -79,8 +78,6 @@ public class RepositoryLoginDialog extends CommonDialog
   private JCheckBox rememberSettings;
   private ReportDesignerContext context;
   private DefaultComboBoxModel urlModel;
-  private JComboBox versionCombo;
-  private KeyedComboBoxModel<Integer, String> versionModel;
   private boolean loginForPublish;
 
   public RepositoryLoginDialog(final Dialog owner,
@@ -244,12 +241,6 @@ public class RepositoryLoginDialog extends CommonDialog
     userField.setAction(getConfirmAction());
     userPasswordField.setAction(getConfirmAction());
 
-    versionModel = new KeyedComboBoxModel<Integer, String>();
-    versionModel.add(PublishUtil.SERVER_VERSION_SUGAR, Messages.getInstance().getString("RepositoryLoginDialog.Version.5"));
-    versionModel.add(PublishUtil.SERVER_VERSION_LEGACY, Messages.getInstance().getString("RepositoryLoginDialog.Version.4x"));
-    versionModel.setSelectedKey(PublishUtil.SERVER_VERSION_SUGAR);
-    versionCombo = new JComboBox(versionModel);
-
     super.init();
   }
 
@@ -311,21 +302,6 @@ public class RepositoryLoginDialog extends CommonDialog
     c.weightx = 1.0;
     serverPanel.add(timeoutField, c);
 
-    if (WorkspaceSettings.getInstance().isShowExpertItems() && loginForPublish == false)
-    {
-      c.insets = new Insets(0, 20, 5, 20);
-      c.gridy = 4;
-      c.fill = GridBagConstraints.HORIZONTAL;
-      c.anchor = GridBagConstraints.WEST;
-      serverPanel.add(new JLabel(Messages.getInstance().getString("RepositoryLoginDialog.Version")), c);
-
-      c.gridy = 5;
-      c.insets = new Insets(0, 20, 5, 20);
-      c.anchor = GridBagConstraints.WEST;
-      c.fill = GridBagConstraints.HORIZONTAL;
-      c.weightx = 1.0;
-      serverPanel.add(versionCombo, c);
-    }
     serverPanel.setBorder(BorderFactory.createTitledBorder(Messages.getInstance().getString("RepositoryLoginDialog.Server")));
     return serverPanel;
   }
@@ -370,12 +346,7 @@ public class RepositoryLoginDialog extends CommonDialog
 
   public int getVersion ()
   {
-    final Integer selectedKey = versionModel.getSelectedKey();
-    if (selectedKey == null || loginForPublish)
-    {
-      return 5;
-    }
-    return selectedKey.intValue();
+    return 5;
   }
   
   public String getUsername()
