@@ -17,99 +17,71 @@
 
 package org.pentaho.reporting.engine.classic.extensions.charting;
 
-import java.io.UnsupportedEncodingException;
-
 import org.pentaho.reporting.engine.classic.core.AttributeNames;
 import org.pentaho.reporting.engine.classic.core.ReportElement;
 import org.pentaho.reporting.engine.classic.core.filter.types.ContentType;
-import org.pentaho.reporting.engine.classic.core.filter.types.ElementTypeUtils;
 import org.pentaho.reporting.engine.classic.core.function.ExpressionRuntime;
-import org.pentaho.reporting.engine.classic.core.metadata.ElementMetaData;
-import org.pentaho.reporting.engine.classic.core.metadata.ElementTypeRegistry;
-import org.pentaho.reporting.libraries.resourceloader.Resource;
-import org.pentaho.reporting.libraries.resourceloader.ResourceKey;
-import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
-import org.w3c.dom.Document;
+import org.pentaho.reporting.engine.classic.core.function.ProcessingContext;
+import pt.webdetails.cgg.scripts.CompoundScriptResourceLoader;
+import pt.webdetails.cgg.scripts.DefaultScriptFactory;
+import pt.webdetails.cgg.scripts.SystemScriptResourceLoader;
+import pt.webdetails.cgg.scripts.VirtualScriptResourceLoader;
 
 public class ChartElementType extends ContentType
 {
-  private transient ElementMetaData elementType;
+  public static final ChartElementType INSTANCE = new ChartElementType();
 
   public ChartElementType()
   {
+    super("chart");
   }
 
-  public ElementMetaData getMetaData()
-  {
-    if (elementType == null)
-    {
-      elementType = ElementTypeRegistry.getInstance().getElementType("pentaho-chartbeans");
-    }
-    return elementType;
-  }
-
-  protected Object queryChartValue(final ReportElement element)
+  protected String queryChartValue(final ReportElement element)
   {
     if (element == null)
     {
       throw new NullPointerException("Element must never be null.");
     }
 
+    // todo: Allow CLOBs and other object types as well.
     final Object attribute = element.getAttribute(ChartingModule.NAMESPACE, "chart-definition");
-    if (attribute != null)
+    if (attribute instanceof String)
     {
-      return attribute;
+      return (String) attribute;
     }
     return null;
   }
 
+  public Object getDesignValue(final ExpressionRuntime runtime, final ReportElement element)
+  {
+    return "Chart";
+  }
 
   public Object getValue(final ExpressionRuntime runtime,
                          final ReportElement element)
   {
-    Object rawValue = queryChartValue(element);
-    if (rawValue instanceof String)
-    {
-      try
-      {
-        rawValue = String.valueOf(rawValue).getBytes("UTF-8");
-      }
-      catch (UnsupportedEncodingException e)
-      {
-        e.printStackTrace();
-      }
-    }
-    else
-    {
-      rawValue = ElementTypeUtils.queryFieldOrValue(runtime, element);
-      if (rawValue == null)
-      {
-        return filter(runtime, element,
-            element.getAttribute(AttributeNames.Core.NAMESPACE, AttributeNames.Core.NULL_VALUE));
-      }
-    }
-
-    try
-    {
-      final ResourceManager resourceManager = runtime.getProcessingContext().getResourceManager();
-      final ResourceKey chartKey;
-      if (rawValue instanceof String)
-      {
-        chartKey = resourceManager.deriveKey(runtime.getProcessingContext().getContentBase(), (String) rawValue);
-      }
-      else
-      {
-        chartKey = resourceManager.createKey(rawValue);
-      }
-
-      final Resource res = resourceManager.create(chartKey, null, Document.class);
-
-      return null;
-    }
-    catch (Throwable e)
+    String rawValue = queryChartValue(element);
+    if (rawValue == null)
     {
       return filter(runtime, element,
           element.getAttribute(AttributeNames.Core.NAMESPACE, AttributeNames.Core.NULL_VALUE));
     }
+
+    VirtualScriptResourceLoader vloader = new VirtualScriptResourceLoader();
+    vloader.put("*basescript*", rawValue);
+
+    ProcessingContext processingContext = runtime.getProcessingContext();
+    CompoundScriptResourceLoader loader = new CompoundScriptResourceLoader(vloader,
+        new ResourceBundleScriptLoader(processingContext.getResourceManager(), processingContext.getContentBase()),
+        new SystemScriptResourceLoader());
+    DefaultScriptFactory scriptFactory = new DefaultScriptFactory();
+    scriptFactory.setResourceLoader(loader);
+
+    RawCgg cgg = new RawCgg();
+    cgg.setScriptFactory(scriptFactory);
+
+    CggDrawable drawable = new CggDrawable(cgg, "*basescript*");
+    drawable.setParameter(runtime.getDataRow());
+    return drawable;
   }
 }
