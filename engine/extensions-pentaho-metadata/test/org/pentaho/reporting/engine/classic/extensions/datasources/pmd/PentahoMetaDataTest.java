@@ -432,13 +432,13 @@ public class PentahoMetaDataTest extends DataSourceTestBase
     assertEquals(3, fields.length);
     assertEquals("oStatus", fields[0]);
     assertEquals(DataFactory.QUERY_LIMIT, fields[1]);
-    assertEquals(DataFactory.QUERY_TIMEOUT, fields[1]);
+    assertEquals(DataFactory.QUERY_TIMEOUT, fields[2]);
 
     final String[] fields2 = metaData.getReferencedFields(pmdDataFactory, "default2", new StaticDataRow());
     assertNotNull(fields2);
     assertEquals(2, fields2.length);
     assertEquals(DataFactory.QUERY_LIMIT, fields2[0]);
-    assertEquals(DataFactory.QUERY_TIMEOUT, fields2[0]);
+    assertEquals(DataFactory.QUERY_TIMEOUT, fields2[1]);
   }
 
   public void testSaveAndLoad() throws Exception
