@@ -51,6 +51,7 @@ public class PentahoSolutionFileProvider extends AbstractOriginatingFileProvider
       Capability.GET_LAST_MODIFIED,
       Capability.LIST_CHILDREN,
       Capability.READ_CONTENT,
+      Capability.WRITE_CONTENT,
       Capability.CREATE,
       Capability.FS_ATTRIBUTES,
       Capability.URI ) );
