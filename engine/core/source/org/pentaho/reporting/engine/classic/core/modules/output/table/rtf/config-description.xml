@@ -3,8 +3,7 @@
 
   <key name="org.pentaho.reporting.engine.classic.core.modules.output.table.rtf.EnableImages" global="false" hidden="false">
     <description>Defines, whether the RTF-Export should try to contain images.
-Currently, this is not a safe method, you might easily encounter
-OutOfMemoryExceptions, so use that option with care.</description>
+Currently, this is not a safe method, you might easily encounter OutOfMemoryExceptions, so use that option with care.</description>
     <enum>
       <text>true</text>
       <text>false</text>
@@ -15,7 +14,21 @@ OutOfMemoryExceptions, so use that option with care.</description>
     <class instanceof="org.pentaho.reporting.libraries.base.boot.Module"/>
   </key>
   <key name="org.pentaho.reporting.engine.classic.core.modules.output.table.rtf.ShapeAsContent" global="false" hidden="false">
-    <description></description>
+    <description>Defines whether shapes shall be exported as images to the RTF document. Regardless of this setting, certain shapes will be treated as background and border definitions.</description>
+    <enum>
+      <text>true</text>
+      <text>false</text>
+    </enum>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.output.table.rtf.StrictLayout" global="false" hidden="false">
+    <description>Defines whether a stricter, but more accurate layout algorithm should be applied. Setting this property to false will greatly reduce the table complexity.</description>
+    <enum>
+      <text>true</text>
+      <text>false</text>
+    </enum>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.output.table.rtf.DeviceResolution" global="false" hidden="false">
+    <description>Adjusts the resolution of the images embedded in the RTF document. By default we use 96 DPI, which is the common default among all browsers.</description>
     <text/>
   </key>
 
