@@ -184,13 +184,16 @@ public class GeneralSettingsPanel extends JPanel implements SettingsPlugin
   {
     setLayout(new BorderLayout());
 
+    SettingsMessages messages = SettingsMessages.getInstance();
+
     dateFormatModel = new DateFormatModel();
     numberFormatModel = new NumberFormatModel();
     maturityLevelModel = new KeyedComboBoxModel<MaturityLevel, String>();
-    maturityLevelModel.add(MaturityLevel.Production, MaturityLevel.Production.toString());
-    maturityLevelModel.add(MaturityLevel.Limited, MaturityLevel.Limited.toString());
-    maturityLevelModel.add(MaturityLevel.Development, MaturityLevel.Development.toString());
-    maturityLevelModel.add(MaturityLevel.Snapshot, MaturityLevel.Snapshot.toString());
+    maturityLevelModel.add(MaturityLevel.Production, messages.getString("MaturityLevel.Production"));
+    maturityLevelModel.add(MaturityLevel.Limited, messages.getString("MaturityLevel.Limited"));
+    maturityLevelModel.add(MaturityLevel.Community, messages.getString("MaturityLevel.Community"));
+    maturityLevelModel.add(MaturityLevel.Snapshot, messages.getString("MaturityLevel.Snapshot"));
+//    maturityLevelModel.add(MaturityLevel.Development, messages.getString("MaturityLevel.Development"));
 
     dateFormats = new String[0];
     numberFormats = new String[0];
@@ -207,34 +210,34 @@ public class GeneralSettingsPanel extends JPanel implements SettingsPlugin
     lookAndFeelModel = new LookAndFeelModel();
     lookAndFeelModel.setSelectedItem(workspaceSettings.getLNF());
 
-    enableVersionChecker = new JCheckBox(SettingsMessages.getInstance().getString
+    enableVersionChecker = new JCheckBox(messages.getString
         ("GeneralSettingsPanel.EnableVersionChecker"));
     enableVersionChecker.setSelected(workspaceSettings.isUseVersionChecker());
     enableVersionChecker.addChangeListener(new EnableVersionCheckerSelectionHandler());
 
     notifyDevBuilds = new JCheckBox
-        (SettingsMessages.getInstance().getString("GeneralSettingsPanel.NotifyUnsupportedVersions"));
+        (messages.getString("GeneralSettingsPanel.NotifyUnsupportedVersions"));
     notifyDevBuilds.setSelected(workspaceSettings.isNotifyForAllBuilds());
     notifyDevBuilds.setEnabled(workspaceSettings.isUseVersionChecker());
 
     showIndexColumns = new JCheckBox
-        (SettingsMessages.getInstance().getString("GeneralSettingsPanel.ShowIndexColumns"));
+        (messages.getString("GeneralSettingsPanel.ShowIndexColumns"));
     showIndexColumns.setSelected(workspaceSettings.isShowIndexColumns());
 
     showDeprecatedItems = new JCheckBox
-        (SettingsMessages.getInstance().getString("GeneralSettingsPanel.ShowDeprecatedItems"));
+        (messages.getString("GeneralSettingsPanel.ShowDeprecatedItems"));
     showDeprecatedItems.setSelected(workspaceSettings.isShowDeprecatedItems());
     showExpertItems = new JCheckBox
-        (SettingsMessages.getInstance().getString("GeneralSettingsPanel.ShowExpertItems"));
+        (messages.getString("GeneralSettingsPanel.ShowExpertItems"));
     showExpertItems.setSelected(workspaceSettings.isShowExpertItems());
     
     showDebugItems = new JCheckBox
-        (SettingsMessages.getInstance().getString("GeneralSettingsPanel.ShowDebugItems"));
+        (messages.getString("GeneralSettingsPanel.ShowDebugItems"));
     showDebugItems.setSelected(workspaceSettings.isDebugFeaturesVisible());
 
 
     openLastReport = new JCheckBox
-        (SettingsMessages.getInstance().getString("GeneralSettingsPanel.OpenLastReport"));
+        (messages.getString("GeneralSettingsPanel.OpenLastReport"));
     openLastReport.setSelected(workspaceSettings.isShowExpertItems());
 
     final JPanel contentPanel = new JPanel();
@@ -260,6 +263,12 @@ public class GeneralSettingsPanel extends JPanel implements SettingsPlugin
 
     c.gridx = 0;
     c.gridy = 3;
+    c.weightx = 1;
+    c.fill = GridBagConstraints.HORIZONTAL;
+    contentPanel.add(createFeatureSettings(), c);
+
+    c.gridx = 0;
+    c.gridy = 4;
     c.weightx = 1;
     c.fill = GridBagConstraints.HORIZONTAL;
     contentPanel.add(createOtherSettings(), c);
@@ -310,6 +319,26 @@ public class GeneralSettingsPanel extends JPanel implements SettingsPlugin
     return updatesPanel;
   }
 
+  private JPanel createFeatureSettings()
+  {
+    final JPanel updatesPanel = new JPanel();
+    updatesPanel.setLayout(new VerticalLayout(5, VerticalLayout.LEFT, VerticalLayout.TOP));
+    updatesPanel.setBorder(BorderFactory.createTitledBorder
+        (SettingsMessages.getInstance().getString("GeneralSettingsPanel.ReportFeatureSettings")));
+
+
+    JComboBox maturityLevel = new JComboBox(maturityLevelModel);
+    JLabel maturityLevelLabel = new JLabel
+        (SettingsMessages.getInstance().getString("GeneralSettingsPanel.MaturityLevel"));
+
+    updatesPanel.add(maturityLevelLabel);
+    updatesPanel.add(maturityLevel);
+    updatesPanel.add(showDeprecatedItems);
+    updatesPanel.add(showExpertItems);
+    return updatesPanel;
+  }
+
+
   private JPanel createOtherSettings()
   {
     final JPanel updatesPanel = new JPanel();
@@ -317,16 +346,7 @@ public class GeneralSettingsPanel extends JPanel implements SettingsPlugin
     updatesPanel.setBorder(BorderFactory.createTitledBorder
         (SettingsMessages.getInstance().getString("GeneralSettingsPanel.OtherSettings")));
 
-
-    JComboBox maturityLevel = new JComboBox(maturityLevelModel);
-    JLabel maturityLevelLabel = new JLabel
-        (SettingsMessages.getInstance().getString("GeneralSettingsPanel.MaturityLevel"));
-
     updatesPanel.add(showIndexColumns);
-    updatesPanel.add(maturityLevelLabel);
-    updatesPanel.add(maturityLevel);
-    updatesPanel.add(showDeprecatedItems);
-    updatesPanel.add(showExpertItems);
     updatesPanel.add(showDebugItems);
     updatesPanel.add(openLastReport);
     return updatesPanel;
