@@ -365,7 +365,7 @@
     <property name="itemsLabelVisible" mandatory="false" preferred="false" value-role="Value" expert="false"
               hidden="false"
               propertyEditor="org.pentaho.reporting.engine.classic.extensions.legacy.charts.propertyeditor.ItemLabelPrintedPropertyEditor"/>
-    <property name="seriesColor" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"
+    <property name="seriesColor" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="true"
               propertyEditor="org.pentaho.reporting.engine.classic.extensions.legacy.charts.propertyeditor.ColorPropertyEditor"/>
     <property name="titleField" mandatory="false" preferred="false" value-role="Field" expert="false" hidden="false"/>
     <property name="titleText" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
@@ -418,6 +418,16 @@
     <property name="warningRangeLow" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
     <property name="normalRangeHigh" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
     <property name="normalRangeLow" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
+    <property name="normalRangeColor" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"
+              propertyEditor="org.pentaho.reporting.libraries.designtime.swing.propertyeditors.ColorPropertyEditor"/>
+    <property name="warningRangeColor" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"
+              propertyEditor="org.pentaho.reporting.libraries.designtime.swing.propertyeditors.ColorPropertyEditor"/>
+    <property name="criticalRangeColor" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"
+              propertyEditor="org.pentaho.reporting.libraries.designtime.swing.propertyeditors.ColorPropertyEditor"/>
+    <property name="thermometerPaint" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"
+              propertyEditor="org.pentaho.reporting.libraries.designtime.swing.propertyeditors.ColorPropertyEditor"/>
+    <property name="mercuryPaint" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"
+              propertyEditor="org.pentaho.reporting.libraries.designtime.swing.propertyeditors.ColorPropertyEditor"/>
   </expression>
 
 </meta-data>
