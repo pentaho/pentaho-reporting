@@ -17,6 +17,8 @@
 
 package org.pentaho.plugin.jfreereport.reportcharts;
 
+import java.awt.Color;
+
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.Plot;
 import org.jfree.chart.plot.ThermometerPlot;
@@ -35,6 +37,54 @@ public class ThermometerChartExpression extends AbstractChartExpression
   private int warningRangeLow;
   private int normalRangeHigh;
   private int normalRangeLow;
+  private Color mercuryPaint;
+  private Color thermometerPaint;
+  private Color warningRangeColor;
+  private Color criticalRangeColor;
+  private Color normalRangeColor;
+
+  public ThermometerChartExpression()
+  {
+    this.bulbRadius = ThermometerPlotDefaults.getDefaultBulbRadius();
+    this.columnRadius = ThermometerPlotDefaults.getDefaultColumnRadius();
+    this.thermometerUnits = null;
+    criticalRangeHigh = 100;
+    criticalRangeLow = 75;
+    warningRangeHigh = 75;
+    warningRangeLow = 30;
+    normalRangeHigh = 30;
+    normalRangeLow = 0;
+  }
+
+  public Color getWarningRangeColor()
+  {
+    return warningRangeColor;
+  }
+
+  public void setWarningRangeColor(final Color warningRangeColor)
+  {
+    this.warningRangeColor = warningRangeColor;
+  }
+
+  public Color getCriticalRangeColor()
+  {
+    return criticalRangeColor;
+  }
+
+  public void setCriticalRangeColor(final Color criticalRangeColor)
+  {
+    this.criticalRangeColor = criticalRangeColor;
+  }
+
+  public Color getNormalRangeColor()
+  {
+    return normalRangeColor;
+  }
+
+  public void setNormalRangeColor(final Color normalRangeColor)
+  {
+    this.normalRangeColor = normalRangeColor;
+  }
 
   public int getBulbRadius()
   {
@@ -126,18 +176,26 @@ public class ThermometerChartExpression extends AbstractChartExpression
     this.normalRangeLow = normalRangeLow;
   }
 
-  public ThermometerChartExpression()
+  public Color getMercuryPaint()
   {
-    this.bulbRadius = ThermometerPlotDefaults.getDefaultBulbRadius();
-    this.columnRadius = ThermometerPlotDefaults.getDefaultColumnRadius();
-    this.thermometerUnits = null;
-    criticalRangeHigh = 100;
-    criticalRangeLow = 75;
-    warningRangeHigh = 75;
-    warningRangeLow = 30;
-    normalRangeHigh = 30;
-    normalRangeLow = 0;
+    return mercuryPaint;
   }
+
+  public void setMercuryPaint(final Color mercuryPaint)
+  {
+    this.mercuryPaint = mercuryPaint;
+  }
+
+  public Color getThermometerPaint()
+  {
+    return thermometerPaint;
+  }
+
+  public void setThermometerPaint(final Color thermometerPaint)
+  {
+    this.thermometerPaint = thermometerPaint;
+  }
+
 
   protected JFreeChart computeChart(final Dataset dataset)
   {
@@ -168,11 +226,34 @@ public class ThermometerChartExpression extends AbstractChartExpression
     {
       thermometerPlot.setUnits(getThermometerUnits().getUnitConstant());
     }
+    thermometerPlot.setLowerBound(Math.min(getCriticalRangeLow(), Math.min(getNormalRangeLow(), getWarningRangeLow())));
+    thermometerPlot.setUpperBound(Math.max(getCriticalRangeHigh(), Math.max(getNormalRangeHigh(), getWarningRangeHigh())));
     thermometerPlot.setBulbRadius(getBulbRadius());
     thermometerPlot.setColumnRadius(getColumnRadius());
     thermometerPlot.setSubrange(ThermometerPlot.CRITICAL, getCriticalRangeLow(), getCriticalRangeHigh());
     thermometerPlot.setSubrange(ThermometerPlot.WARNING, getWarningRangeLow(), getWarningRangeHigh());
     thermometerPlot.setSubrange(ThermometerPlot.NORMAL, getNormalRangeLow(), getNormalRangeHigh());
+    if (getMercuryPaint() != null)
+    {
+      thermometerPlot.setMercuryPaint(getMercuryPaint());
+    }
+    if (getThermometerPaint() != null)
+    {
+      thermometerPlot.setThermometerPaint(getThermometerPaint());
+    }
+
+    if (getCriticalRangeColor() != null)
+    {
+      thermometerPlot.setSubrangePaint(ThermometerPlot.CRITICAL, getCriticalRangeColor());
+    }
+    if (getWarningRangeColor() != null)
+    {
+      thermometerPlot.setSubrangePaint(ThermometerPlot.WARNING, getWarningRangeColor());
+    }
+    if (getNormalRangeColor() != null)
+    {
+      thermometerPlot.setSubrangePaint(ThermometerPlot.NORMAL, getNormalRangeColor());
+    }
   }
 
   private static class ThermometerPlotDefaults extends ThermometerPlot
