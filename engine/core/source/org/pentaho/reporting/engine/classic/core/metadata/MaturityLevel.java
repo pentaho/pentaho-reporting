@@ -19,7 +19,7 @@ package org.pentaho.reporting.engine.classic.core.metadata;
 
 public enum MaturityLevel implements Comparable<MaturityLevel>
 {
-  Development(true), Snapshot(true), Limited(false), Production(false);
+  Development(true), Snapshot(true), Community(false), Limited(false), Production(false);
 
   private boolean experimental;
 
