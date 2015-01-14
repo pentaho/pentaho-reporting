@@ -155,7 +155,7 @@ public class MigrationDialog extends CommonDialog
       return;
     }
 
-    if (SaveReportAction.saveReport(designerContext, reportRenderContext, this) == false)
+    if ((new SaveReportAction()).saveReport(designerContext, reportRenderContext, this) == false)
     {
       return;
     }
