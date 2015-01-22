@@ -44,7 +44,6 @@ import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
 public enum ChartType
 {
   BAR(ChartDataSource.CATEGORY, BarChartExpression.class, CategorySetDataCollector.class),
-  THERMOMETER(ChartDataSource.VALUE, ThermometerChartExpression.class, ValueDataSetCollector.class),
   LINE(ChartDataSource.CATEGORY, LineChartExpression.class, CategorySetDataCollector.class),
   AREA(ChartDataSource.CATEGORY, AreaChartExpression.class, CategorySetDataCollector.class),
   PIE(ChartDataSource.PIE, PieChartExpression.class, PieDataSetCollector.class),
@@ -61,7 +60,8 @@ public enum ChartType
   WATERFALL(ChartDataSource.CATEGORY, WaterfallChartExpressions.class, CategorySetDataCollector.class),
   RADAR(ChartDataSource.CATEGORY, RadarChartExpression.class, CategorySetDataCollector.class),
   XY_AREA_LINE(ChartDataSource.XY, ChartDataSource.XY, "secondaryDataSet",
-      XYAreaLineChartExpression.class, XYSeriesCollector.class, XYSeriesCollector.class);
+      XYAreaLineChartExpression.class, XYSeriesCollector.class, XYSeriesCollector.class),
+  THERMOMETER(ChartDataSource.VALUE, ThermometerChartExpression.class, ValueDataSetCollector.class);
 
   private ChartDataSource datasource;
   private ChartDataSource secondaryDataSource;
