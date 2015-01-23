@@ -28,7 +28,6 @@ import org.jfree.chart.plot.CategoryPlot;
 import org.jfree.chart.plot.DatasetRenderingOrder;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.plot.SpiderWebPlot;
-import org.jfree.chart.plot.ThermometerPlot;
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.renderer.category.BarRenderer;
 import org.jfree.chart.renderer.category.LineAndShapeRenderer;
@@ -37,7 +36,6 @@ import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
 import org.jfree.data.category.CategoryDataset;
 import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.data.general.DefaultPieDataset;
-import org.jfree.data.general.DefaultValueDataset;
 import org.jfree.data.general.PieDataset;
 import org.jfree.data.xy.DefaultIntervalXYDataset;
 import org.jfree.data.xy.DefaultXYZDataset;
@@ -61,7 +59,6 @@ import org.pentaho.plugin.jfreereport.reportcharts.XYAreaChartExpression;
 import org.pentaho.plugin.jfreereport.reportcharts.XYAreaLineChartExpression;
 import org.pentaho.plugin.jfreereport.reportcharts.XYBarChartExpression;
 import org.pentaho.plugin.jfreereport.reportcharts.XYLineChartExpression;
-import org.pentaho.plugin.jfreereport.reportcharts.ThermometerChartExpression;
 import org.pentaho.reporting.engine.classic.core.AttributeNames;
 import org.pentaho.reporting.engine.classic.core.ReportElement;
 import org.pentaho.reporting.engine.classic.core.filter.types.ContentFieldType;
@@ -301,13 +298,6 @@ public class LegacyChartType extends ContentFieldType
     {
       final SpiderWebPlot plot = new SpiderWebPlot(createDataset());
       return new JFreeChart("Radar Chart", JFreeChart.DEFAULT_TITLE_FONT, plot, true);
-    }
-    if (aExpression instanceof ThermometerChartExpression)
-    {
-      final DefaultValueDataset dataset = new DefaultValueDataset(new Double(65.0));
-      final ThermometerPlot plot = new ThermometerPlot(dataset);
-
-      return new JFreeChart("Thermometer Chart", JFreeChart.DEFAULT_TITLE_FONT, plot, true);
     }
     return null;
   }
