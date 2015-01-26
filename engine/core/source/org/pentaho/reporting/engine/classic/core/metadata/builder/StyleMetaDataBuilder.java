@@ -17,14 +17,22 @@
 
 package org.pentaho.reporting.engine.classic.core.metadata.builder;
 
+import java.beans.PropertyEditor;
+
 import org.pentaho.reporting.engine.classic.core.style.StyleKey;
 
 public class StyleMetaDataBuilder extends MetaDataBuilder<StyleMetaDataBuilder>
 {
   private StyleKey key;
+  private Class<? extends PropertyEditor> propertyEditor;
 
   public StyleMetaDataBuilder()
   {
+  }
+
+  public StyleMetaDataBuilder propertyEditor(Class<? extends PropertyEditor> propertyEditor) {
+    this.propertyEditor = propertyEditor;
+    return self();
   }
 
   public StyleMetaDataBuilder key(StyleKey key)
@@ -49,5 +57,10 @@ public class StyleMetaDataBuilder extends MetaDataBuilder<StyleMetaDataBuilder>
   public StyleKey getKey()
   {
     return key;
+  }
+
+  public Class<? extends PropertyEditor> getPropertyEditor()
+  {
+    return propertyEditor;
   }
 }
