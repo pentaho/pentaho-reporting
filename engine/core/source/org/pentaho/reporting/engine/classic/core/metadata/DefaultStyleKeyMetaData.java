@@ -19,14 +19,17 @@ package org.pentaho.reporting.engine.classic.core.metadata;
 
 import java.beans.PropertyEditor;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.pentaho.reporting.engine.classic.core.metadata.builder.StyleMetaDataBuilder;
 import org.pentaho.reporting.engine.classic.core.style.StyleKey;
 import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
 
 public class DefaultStyleKeyMetaData extends AbstractMetaData implements StyleMetaData
 {
+  private static final Log logger = LogFactory.getLog(DefaultStyleKeyMetaData.class);
   private StyleKey key;
-  private String propertyEditor;
+  private Class<? extends PropertyEditor> propertyEditorClass;
 
   public DefaultStyleKeyMetaData(final StyleKey key,
                                  final String propertyEditor,
@@ -41,18 +44,36 @@ public class DefaultStyleKeyMetaData extends AbstractMetaData implements StyleMe
   {
     super(key.getName(), bundleLocation, keyPrefix, expert, preferred, hidden, deprecated, maturityLevel, compatibilityLevel);
     this.key = key;
-    this.propertyEditor = propertyEditor;
+    this.propertyEditorClass = validatePropertyEditor(propertyEditor);
   }
 
   public DefaultStyleKeyMetaData(final StyleMetaDataBuilder builder)
   {
     super(builder);
     this.key = builder.getKey();
+    this.propertyEditorClass = builder.getPropertyEditor();
+  }
+
+  private Class<? extends PropertyEditor> validatePropertyEditor(final String className)
+  {
+    return ObjectUtilities.loadAndValidate(className, DefaultAttributeMetaData.class, PropertyEditor.class);
   }
 
   public PropertyEditor getEditor()
   {
-    return ObjectUtilities.loadAndInstantiate(propertyEditor, DefaultStyleKeyMetaData.class, PropertyEditor.class);
+    if (propertyEditorClass == null)
+    {
+      return null;
+    }
+    try
+    {
+      return propertyEditorClass.newInstance();
+    }
+    catch (Exception e)
+    {
+      logger.warn("Property editor threw error on instantiation", e);
+      return null;
+    }
   }
 
   public Class getTargetType()
@@ -68,7 +89,10 @@ public class DefaultStyleKeyMetaData extends AbstractMetaData implements StyleMe
   @Deprecated
   public String getPropertyEditor()
   {
-    return propertyEditor;
+    if(propertyEditorClass == null) {
+      return null;
+    }
+    return propertyEditorClass.getSimpleName();
   }
 
   public boolean equals(final Object o)
