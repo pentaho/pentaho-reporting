@@ -19,15 +19,11 @@ package org.pentaho.reporting.engine.classic.core.metadata;
 
 import java.beans.PropertyDescriptor;
 import java.beans.PropertyEditor;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.pentaho.reporting.engine.classic.core.Element;
 import org.pentaho.reporting.engine.classic.core.function.Expression;
-import org.pentaho.reporting.engine.classic.core.metadata.builder.MetaDataBuilder;
 import org.pentaho.reporting.engine.classic.core.metadata.builder.ReportPreProcessorPropertyMetaDataBuilder;
 import org.pentaho.reporting.engine.classic.core.metadata.propertyeditors.SharedPropertyDescriptorProxy;
 import org.pentaho.reporting.libraries.base.util.ArgumentNullException;
