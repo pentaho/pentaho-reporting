@@ -70,7 +70,7 @@ public class PublishToServerAction extends AbstractReportContextAction
           JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE);
       if (option == JOptionPane.YES_OPTION)
       {
-        if (SaveReportAction.saveReport
+        if ((new SaveReportAction()).saveReport
             (reportDesignerContext, activeContext, reportDesignerContext.getView().getParent()) == false)
         {
           return;
