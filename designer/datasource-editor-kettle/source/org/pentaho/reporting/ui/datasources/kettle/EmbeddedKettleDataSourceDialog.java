@@ -169,7 +169,6 @@ public class EmbeddedKettleDataSourceDialog extends KettleDataSourceDialog
 
       setPanelEnabled(false, datasourcePanel);
     }
-    validateInputs(false);
   }
 
   protected String getDialogTitle()
@@ -213,9 +212,7 @@ public class EmbeddedKettleDataSourceDialog extends KettleDataSourceDialog
       valid = (val == JOptionPane.OK_OPTION);
     }
 
-    boolean validDialog = valid && super.validateInputs(onConfirm);
-    getConfirmAction().setEnabled(validDialog);
-    return validDialog;
+    return valid && super.validateInputs(onConfirm);
   }
 
   public KettleDataFactory performConfiguration(DesignTimeContext context,
