@@ -194,6 +194,7 @@ public class DefaultXulDrillDownController implements XulDrillDownController
       table.setExtraFields(fields);
       table.setReportDesignerContext(reportDesignerContext);
       table.setDrillDownParameter(model.getDrillDownParameter());
+      table.setHideParameterUi(model.getDrillDownConfig().endsWith("-no-parameter"));
       table.addPropertyChangeListener(DrillDownParameterTable.DRILL_DOWN_PARAMETER_PROPERTY, new TableModelBinding());
     }
 
