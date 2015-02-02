@@ -250,6 +250,10 @@ public class ProvisionDataSourcePanel extends JPanel
       {
         continue;
       }
+      if (!WorkspaceSettings.getInstance().isVisible(data))
+      {
+        continue;
+      }
 
       final String currentGrouping = data.getGrouping(Locale.getDefault());
       final Boolean isMultiGrouping = groupMap.get(currentGrouping);
