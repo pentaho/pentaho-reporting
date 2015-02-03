@@ -41,6 +41,7 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSeparator;
 import javax.swing.JSpinner;
@@ -60,6 +61,8 @@ import javax.swing.tree.TreePath;
 
 import org.pentaho.reporting.designer.core.ReportDesignerContext;
 import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
+import org.pentaho.reporting.designer.core.settings.ui.ValidationMessage;
+import org.pentaho.reporting.designer.core.settings.ui.ValidationResult;
 import org.pentaho.reporting.designer.core.util.FormulaEditorDataModel;
 import org.pentaho.reporting.designer.core.util.FormulaEditorPanel;
 import org.pentaho.reporting.designer.core.util.exceptions.UncaughtExceptionsModel;
@@ -108,6 +111,9 @@ import org.pentaho.reporting.libraries.xmlns.common.ParserUtil;
 
 public class ParameterDialog extends CommonDialog implements FormulaEditorDataModel
 {
+  private static final ValidationMessage.Severity[] ALL_SEVERITIES = new ValidationMessage.Severity[] {
+    ValidationMessage.Severity.WARN, ValidationMessage.Severity.ERROR };
+
   private class TypeListener implements ListDataListener
   {
     public void intervalAdded(final ListDataEvent e)
@@ -1423,4 +1429,35 @@ public class ParameterDialog extends CommonDialog implements FormulaEditorDataMo
   {
     return parameter;
   }
+
+  @Override
+  protected boolean validateInputs( boolean onConfirm ) {
+    final ValidationResult validationResult = this.validate( new ValidationResult() );
+    final ValidationMessage[] validationMessages = validationResult.getValidationMessages( ALL_SEVERITIES );
+
+    if ( validationMessages.length == 0 ) {
+      return true;
+    }
+
+    final StringBuilder messages = new StringBuilder( 100 );
+    for ( final ValidationMessage validationMessage : validationMessages ) {
+      messages.append( validationMessage.getMessage() );
+      messages.append( '\n' );
+    }
+
+    JOptionPane.showMessageDialog( ParameterDialog.this, messages, Messages.getString( "ParameterDialog.ErrorTitle" ),
+        JOptionPane.WARNING_MESSAGE );
+
+    return false;
+  }
+
+  private ValidationResult validate( ValidationResult validationResult ) {
+    if ( StringUtils.isEmpty( this.nameTextField.getText() ) ) {
+      final String nameCaption = Messages.getString( "ParameterDialog.Name" );
+      validationResult.addValidationMessage( new ValidationMessage( ValidationMessage.Severity.ERROR, Messages
+          .getString( "ParameterDialog.ValueMustBeSetMessage", nameCaption ) ) );
+    }
+    return validationResult;
+  }
+  
 }
