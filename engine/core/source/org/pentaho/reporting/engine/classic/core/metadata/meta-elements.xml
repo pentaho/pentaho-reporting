@@ -550,6 +550,16 @@
     <attribute-group-ref ref="interactivity"/>
     <attribute-group-ref ref="watermark"/>
 
+    <attribute namespace="http://reporting.pentaho.org/namespaces/engine/attributes/core"
+               name="printed-on-top"
+               mandatory="false"
+               expert="true"
+               hidden="false"
+               design-time-value="true"
+               computed="false"
+               value-type="java.lang.Boolean"
+               value-role="Value"/>
+
     <style-group-ref ref="borders"/>
     <style-group-ref ref="common"/>
     <style-group-ref ref="text"/>

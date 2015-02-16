@@ -24,6 +24,14 @@
     </enum>
   </key>
 
+  <key name="org.pentaho.reporting.engine.classic.core.WatermarkPrintedOnTopOfContent" global="false" hidden="false">
+    <description>Defines whether the watermark band is printed on top of all content (true, overlaying the page content) or whether it shall be printed beneath the page content (false, default)</description>
+    <enum>
+      <text>true</text>
+      <text>false</text>
+    </enum>
+  </key>
+
   <key name="org.pentaho.reporting.engine.classic.core.UseNativeScaling" global="false" hidden="false">
     <description>Defines whether image scaling in the reporting engine uses the built-in Graphics2D scaling or a slower but higher quality algorithm that scales images in several steps to reduce artifacts.
 

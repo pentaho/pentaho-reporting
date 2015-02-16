@@ -517,6 +517,12 @@ public abstract class AbstractOutputProcessorMetaData implements OutputProcessor
     {
       setNumericFeatureValue(OutputProcessorFeature.DEVICE_RESOLUTION, 72);
     }
+    if ("true".equals(configuration.getConfigProperty
+        ("org.pentaho.reporting.engine.classic.core.WatermarkPrintedOnTopOfContent")))
+    {
+      addFeature(OutputProcessorFeature.WATERMARK_PRINTED_ON_TOP);
+    }
+
   }
 
   public Configuration getConfiguration()

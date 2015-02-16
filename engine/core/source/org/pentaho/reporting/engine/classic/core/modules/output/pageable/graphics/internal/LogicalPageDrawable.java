@@ -484,7 +484,13 @@ public class LogicalPageDrawable extends IterateStructuralProcessStep implements
 
   protected void processRootBand(final StrictBounds pageBounds)
   {
-    startProcessing(rootBox.getWatermarkArea());
+    final Shape clip = this.graphics.getClip();
+
+    boolean watermarkOnTop = getMetaData().isFeatureSupported(OutputProcessorFeature.WATERMARK_PRINTED_ON_TOP);
+    if (!watermarkOnTop)
+    {
+      startProcessing(rootBox.getWatermarkArea());
+    }
 
     final BlockRenderBox headerArea = rootBox.getHeaderArea();
     final BlockRenderBox footerArea = rootBox.getFooterArea();
@@ -501,7 +507,6 @@ public class LogicalPageDrawable extends IterateStructuralProcessStep implements
 
     final double headerHeight = StrictGeomUtility.toExternalValue(drawArea.getHeight());
 
-    final Shape clip = this.graphics.getClip();
     setDrawArea(headerBounds);
     this.graphics.clip(createClipRect(drawArea));
     startProcessing(headerArea);
@@ -538,6 +543,14 @@ public class LogicalPageDrawable extends IterateStructuralProcessStep implements
     startProcessing(footerArea);
 
     setDrawArea(pageBounds);
+    this.graphics.setClip(clip);
+
+    if (watermarkOnTop)
+    {
+      startProcessing(rootBox.getWatermarkArea());
+      this.graphics.setClip(clip);
+    }
+
   }
 
   protected Rectangle2D createClipRect(final StrictBounds bounds)
@@ -920,9 +933,11 @@ public class LogicalPageDrawable extends IterateStructuralProcessStep implements
     this.textSpec = null;
 
     RenderBox lineBox = (RenderBox) box.getFirstChild();
-    if (lineBox != null) {
+    if (lineBox != null)
+    {
       final boolean needClipping = lineBox.getHeight() > box.getHeight() && !box.isBoxOverflowX();
-      if (needClipping) {
+      if (needClipping)
+      {
         // clip
         StrictBounds safeBounds = new StrictBounds(lineBox.getX(), lineBox.getY(), lineBox.getWidth() * 3 / 2, lineBox.getHeight());
         clip(safeBounds);
@@ -932,7 +947,8 @@ public class LogicalPageDrawable extends IterateStructuralProcessStep implements
         processTextLine(lineBox, contentAreaX1, contentAreaX2);
         lineBox = (RenderBox) lineBox.getNext();
       }
-      if (needClipping) {
+      if (needClipping)
+      {
         clearClipping();
       }
     }
@@ -1651,7 +1667,6 @@ public class LogicalPageDrawable extends IterateStructuralProcessStep implements
     graphics.dispose();
     graphics = graphicsContexts.pop();
   }
-
 
 
   public Graphics2D getGraphics()
