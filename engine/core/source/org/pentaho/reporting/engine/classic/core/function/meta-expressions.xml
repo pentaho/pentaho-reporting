@@ -7,7 +7,7 @@
               hidden="false"/>
     <property name="formula" mandatory="false" preferred="false" value-role="Formula" expert="false" hidden="false"/>
     <property name="name" mandatory="true" preferred="true" value-role="Name" expert="false" hidden="false"/>
-    <property name="failOnError" mandatory="true" preferred="false" value-role="Value" expert="true" hidden="false"/>
+    <property name="failOnError" mandatory="false" preferred="false" value-role="Value" expert="true" hidden="false"/>
   </expression>
 
   <expression class="org.pentaho.reporting.engine.classic.core.function.ItemHideFunction"
@@ -267,7 +267,7 @@
     <property name="formula" mandatory="false" preferred="false" value-role="Formula" expert="false" hidden="false"/>
     <property name="initial" mandatory="false" preferred="false" value-role="Formula" expert="false" hidden="false"/>
     <property name="name" mandatory="true" preferred="true" value-role="Name" expert="false" hidden="false"/>
-    <property name="failOnError" mandatory="true" preferred="false" value-role="Value" expert="true" hidden="false"/>
+    <property name="failOnError" mandatory="false" preferred="false" value-role="Value" expert="true" hidden="false"/>
   </expression>
 
   <expression class="org.pentaho.reporting.engine.classic.core.function.TotalItemCountFunction"
