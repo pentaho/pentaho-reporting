@@ -236,6 +236,7 @@ public class AttributeNames
     public static final String COMPLEX_TEXT = "complex-text";
     public static final String AUTOSORT = "auto-sort";
     public static final String SORT_ORDER = "sort-order";
+    public static final String WATERMARK_PRINTED_ON_TOP = "printed-on-top";
 
     private Core()
     {

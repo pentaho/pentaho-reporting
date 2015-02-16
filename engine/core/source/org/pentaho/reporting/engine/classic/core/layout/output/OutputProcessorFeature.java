@@ -169,6 +169,8 @@ public abstract class OutputProcessorFeature implements Serializable
       new BooleanOutputProcessorFeature("direct-rich-text-rendering");
   public static final BooleanOutputProcessorFeature ALWAYS_PRINT_FIRST_LINE_OF_TEXT =
       new BooleanOutputProcessorFeature("always-print-first-line-of-text");
+  public static final BooleanOutputProcessorFeature WATERMARK_PRINTED_ON_TOP =
+      new BooleanOutputProcessorFeature("watermark-print-on-top");
 
   private String name;
   private int hashCode;

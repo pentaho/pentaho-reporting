@@ -401,6 +401,9 @@ public class ProcessState implements ReportState
     setConfigurationIfDefined(hc,
         "org.pentaho.reporting.engine.classic.core.layout.fontrenderer.ComplexTextLayout",
         report.getAttribute(AttributeNames.Core.NAMESPACE, AttributeNames.Core.COMPLEX_TEXT));
+    setConfigurationIfDefined(hc,
+        "org.pentaho.reporting.engine.classic.core.WatermarkPrintedOnTopOfContent",
+        report.getWatermark().getAttribute(AttributeNames.Core.NAMESPACE, AttributeNames.Core.WATERMARK_PRINTED_ON_TOP));
 
     return hc;
   }
