@@ -36,7 +36,7 @@ public class LikeFunctionDescription extends AbstractFunctionDescription
 
   public LikeFunctionDescription()
   {
-    super("Like", "org.pentaho.reporting.libraries.formula.function.database.Like-Function");
+    super("LIKE", "org.pentaho.reporting.libraries.formula.function.database.Like-Function");
   }
 
   public FunctionCategory getCategory()
