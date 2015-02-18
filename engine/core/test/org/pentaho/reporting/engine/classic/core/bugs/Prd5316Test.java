@@ -21,8 +21,10 @@ import java.util.HashMap;
 import javax.swing.table.TableModel;
 
 import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
@@ -92,10 +94,10 @@ public class Prd5316Test
     }
   }
 
-  private String cache;
+  private static String cache;
 
-  @Before
-  public void setUp() throws Exception
+  @BeforeClass
+  public static void setUp() throws Exception
   {
     ClassicEngineBoot boot = ClassicEngineBoot.getInstance();
     boot.start();
@@ -103,8 +105,8 @@ public class Prd5316Test
     boot.getEditableConfig().setConfigProperty(DataCache.class.getName(), TestCacheBackend.class.getName());
   }
 
-  @After
-  public void tearDown() throws Exception
+  @AfterClass
+  public static void tearDown() throws Exception
   {
     TestCacheBackend cacheInstance = (TestCacheBackend) DataCacheFactory.getCache();
     cacheInstance.clearAll();
@@ -112,6 +114,12 @@ public class Prd5316Test
     ClassicEngineBoot boot = ClassicEngineBoot.getInstance();
 
     boot.getEditableConfig().setConfigProperty(DataCache.class.getName(), cache);
+  }
+
+  @Before
+  public void clearCacheJustInCase() throws Exception
+  {
+    DataCacheFactory.getCache().getCacheManager().clearAll();
   }
 
   @Test
