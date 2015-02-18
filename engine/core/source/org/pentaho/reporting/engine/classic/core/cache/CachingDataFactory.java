@@ -346,7 +346,7 @@ public class CachingDataFactory extends AbstractDataFactory implements CompoundD
     if (key != null)
     {
       TableModel model = sessionCache.get(key);
-      if (model != null)
+      if (model == null)
       {
         model = dataCache.get(key);
       }
