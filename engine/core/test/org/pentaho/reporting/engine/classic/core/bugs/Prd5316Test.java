@@ -20,7 +20,6 @@ package org.pentaho.reporting.engine.classic.core.bugs;
 import java.util.HashMap;
 import javax.swing.table.TableModel;
 
-import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
@@ -39,7 +38,6 @@ import org.pentaho.reporting.engine.classic.core.parameters.DefaultParameterCont
 import org.pentaho.reporting.engine.classic.core.parameters.DefaultReportParameterValidator;
 import org.pentaho.reporting.engine.classic.core.parameters.ValidationResult;
 import org.pentaho.reporting.engine.classic.core.testsupport.DebugReportRunner;
-import org.pentaho.reporting.libraries.base.util.DebugLog;
 import org.pentaho.reporting.libraries.resourceloader.ResourceException;
 import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 
@@ -58,7 +56,6 @@ public class Prd5316Test
 
     public TableModel get(final DataCacheKey key)
     {
-      DebugLog.log("GET");
       getCount += 1;
       return cache.get(key);
     }
@@ -99,6 +96,8 @@ public class Prd5316Test
   @BeforeClass
   public static void setUp() throws Exception
   {
+    DataCacheFactory.notifyCacheShutdown(DataCacheFactory.getCache());
+
     ClassicEngineBoot boot = ClassicEngineBoot.getInstance();
     boot.start();
     cache = boot.getGlobalConfig().getConfigProperty(DataCache.class.getName());
@@ -114,6 +113,8 @@ public class Prd5316Test
     ClassicEngineBoot boot = ClassicEngineBoot.getInstance();
 
     boot.getEditableConfig().setConfigProperty(DataCache.class.getName(), cache);
+
+    DataCacheFactory.notifyCacheShutdown(DataCacheFactory.getCache());
   }
 
   @Before
@@ -144,7 +145,8 @@ public class Prd5316Test
   }
 
   @Test
-  public void testReportRunCache() throws Exception {
+  public void testReportRunCache() throws Exception
+  {
     Assert.assertEquals(EhCacheDataCache.class.getName(), cache);
     Assert.assertEquals(TestCacheBackend.class.getName(),
         ClassicEngineBoot.getInstance().getGlobalConfig().getConfigProperty(DataCache.class.getName()));
