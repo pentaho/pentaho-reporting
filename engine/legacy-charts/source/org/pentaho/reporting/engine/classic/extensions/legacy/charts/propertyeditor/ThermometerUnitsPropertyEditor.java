@@ -15,31 +15,15 @@
 * Copyright (c) 2002-2013 Pentaho Corporation..  All rights reserved.
 */
 
-package org.pentaho.reporting.designer.extensions.legacycharts;
+package org.pentaho.reporting.engine.classic.extensions.legacy.charts.propertyeditor;
 
-import org.jfree.data.category.CategoryDataset;
-import org.jfree.data.general.PieDataset;
-import org.jfree.data.xy.XYDataset;
-import org.jfree.data.xy.XYZDataset;
-import org.jfree.data.general.ValueDataset;
+import org.pentaho.plugin.jfreereport.reportcharts.ThermometerUnit;
+import org.pentaho.reporting.engine.classic.core.metadata.propertyeditors.EnumPropertyEditor;
 
-public enum ChartDataSource
+public class ThermometerUnitsPropertyEditor extends EnumPropertyEditor
 {
-  CATEGORY(CategoryDataset.class),
-  PIE(PieDataset.class),
-  XY(XYDataset.class),
-  XYZ(XYZDataset.class),
-  VALUE(ValueDataset.class);
-
-  private Class resultType;
-
-  private ChartDataSource(final Class resultType)
+  public ThermometerUnitsPropertyEditor()
   {
-    this.resultType = resultType;
-  }
-
-  public Class getResultType()
-  {
-    return resultType;
+    super(ThermometerUnit.class, true);
   }
 }

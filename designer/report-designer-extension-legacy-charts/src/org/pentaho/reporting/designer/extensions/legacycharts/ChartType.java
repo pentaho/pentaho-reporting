@@ -28,6 +28,7 @@ import org.pentaho.plugin.jfreereport.reportcharts.PieChartExpression;
 import org.pentaho.plugin.jfreereport.reportcharts.RadarChartExpression;
 import org.pentaho.plugin.jfreereport.reportcharts.RingChartExpression;
 import org.pentaho.plugin.jfreereport.reportcharts.ScatterPlotChartExpression;
+import org.pentaho.plugin.jfreereport.reportcharts.ThermometerChartExpression;
 import org.pentaho.plugin.jfreereport.reportcharts.WaterfallChartExpressions;
 import org.pentaho.plugin.jfreereport.reportcharts.XYAreaChartExpression;
 import org.pentaho.plugin.jfreereport.reportcharts.XYBarChartExpression;
@@ -35,6 +36,7 @@ import org.pentaho.plugin.jfreereport.reportcharts.XYLineChartExpression;
 import org.pentaho.plugin.jfreereport.reportcharts.XYAreaLineChartExpression;
 import org.pentaho.plugin.jfreereport.reportcharts.collectors.CategorySetDataCollector;
 import org.pentaho.plugin.jfreereport.reportcharts.collectors.PieDataSetCollector;
+import org.pentaho.plugin.jfreereport.reportcharts.collectors.ValueDataSetCollector;
 import org.pentaho.plugin.jfreereport.reportcharts.collectors.XYSeriesCollector;
 import org.pentaho.plugin.jfreereport.reportcharts.collectors.XYZSeriesCollector;
 import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
@@ -42,7 +44,6 @@ import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
 public enum ChartType
 {
   BAR(ChartDataSource.CATEGORY, BarChartExpression.class, CategorySetDataCollector.class),
-
   LINE(ChartDataSource.CATEGORY, LineChartExpression.class, CategorySetDataCollector.class),
   AREA(ChartDataSource.CATEGORY, AreaChartExpression.class, CategorySetDataCollector.class),
   PIE(ChartDataSource.PIE, PieChartExpression.class, PieDataSetCollector.class),
@@ -59,7 +60,8 @@ public enum ChartType
   WATERFALL(ChartDataSource.CATEGORY, WaterfallChartExpressions.class, CategorySetDataCollector.class),
   RADAR(ChartDataSource.CATEGORY, RadarChartExpression.class, CategorySetDataCollector.class),
   XY_AREA_LINE(ChartDataSource.XY, ChartDataSource.XY, "secondaryDataSet",
-      XYAreaLineChartExpression.class, XYSeriesCollector.class, XYSeriesCollector.class);
+      XYAreaLineChartExpression.class, XYSeriesCollector.class, XYSeriesCollector.class),
+  THERMOMETER(ChartDataSource.VALUE, ThermometerChartExpression.class, ValueDataSetCollector.class);
 
   private ChartDataSource datasource;
   private ChartDataSource secondaryDataSource;

@@ -15,25 +15,26 @@
  *  Copyright (c) 2006 - 2009 Pentaho Corporation..  All rights reserved.
  */
 
-package org.pentaho.reporting.engine.classic.core.metadata;
+package org.pentaho.plugin.jfreereport.reportcharts;
 
-public enum MaturityLevel implements Comparable<MaturityLevel>
+import org.jfree.chart.plot.ThermometerPlot;
+
+public enum ThermometerUnit
 {
-  Development(true), Snapshot(true), Community(false), Limited(false), Production(false);
+  None(ThermometerPlot.UNITS_NONE),
+  Fahrenheit(ThermometerPlot.UNITS_FAHRENHEIT),
+  Celsius(ThermometerPlot.UNITS_CELCIUS),
+  Kelvin(ThermometerPlot.UNITS_KELVIN);
 
-  private boolean experimental;
+  private int unitConstant;
 
-  MaturityLevel(final boolean experimental)
+  ThermometerUnit(final int unitConstant)
   {
-    this.experimental = experimental;
+    this.unitConstant = unitConstant;
   }
 
-  public boolean isExperimental()
+  public int getUnitConstant()
   {
-    return experimental;
-  }
-
-  public boolean isMature(final MaturityLevel ml) {
-    return ml.ordinal() >= this.ordinal();
+    return unitConstant;
   }
 }

@@ -17,11 +17,13 @@
 
 package org.pentaho.reporting.engine.classic.core.metadata.parser;
 
+import java.beans.PropertyEditor;
+
 import org.pentaho.reporting.engine.classic.core.metadata.DefaultStyleKeyMetaData;
 import org.pentaho.reporting.engine.classic.core.metadata.StyleMetaData;
 import org.pentaho.reporting.engine.classic.core.metadata.builder.StyleMetaDataBuilder;
 import org.pentaho.reporting.engine.classic.core.style.StyleKey;
-import org.pentaho.reporting.libraries.xmlns.parser.ParseException;
+import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 
@@ -60,12 +62,15 @@ public class StyleReadHandler extends AbstractMetaDataReadHandler
     super.startParsing(attrs);
 
     getBuilder().key(StyleKey.getStyleKey(parseName(attrs)));
+    getBuilder().propertyEditor(ObjectUtilities.loadAndValidate
+        (attrs.getValue(getUri(), "propertyEditor"), AttributeReadHandler.class, PropertyEditor.class)); // NON-NLS
 
     if (getBundle() != null)
     {
       getBuilder().bundle(getBundle(), "style.");
     }
-    else {
+    else
+    {
       getBuilder().bundle(getDefaultBundleName(), "style.");
     }
   }

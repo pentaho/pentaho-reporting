@@ -15,25 +15,32 @@
  *  Copyright (c) 2006 - 2009 Pentaho Corporation..  All rights reserved.
  */
 
-package org.pentaho.reporting.engine.classic.core.metadata;
+package org.pentaho.reporting.libraries.formula;
 
-public enum MaturityLevel implements Comparable<MaturityLevel>
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+import org.pentaho.reporting.libraries.formula.function.FunctionDescription;
+import org.pentaho.reporting.libraries.formula.function.FunctionRegistry;
+
+public class Prd5297Test
 {
-  Development(true), Snapshot(true), Community(false), Limited(false), Production(false);
-
-  private boolean experimental;
-
-  MaturityLevel(final boolean experimental)
+  @Before
+  public void setUp() throws Exception
   {
-    this.experimental = experimental;
+    LibFormulaBoot.getInstance().start();
   }
 
-  public boolean isExperimental()
+  @Test
+  public void testFunctionMetaData()
   {
-    return experimental;
-  }
-
-  public boolean isMature(final MaturityLevel ml) {
-    return ml.ordinal() >= this.ordinal();
+    DefaultFormulaContext ctx = new DefaultFormulaContext();
+    FunctionRegistry functionRegistry = ctx.getFunctionRegistry();
+    for (final String name : functionRegistry.getFunctionNames())
+    {
+      FunctionDescription metaData = functionRegistry.getMetaData(name);
+      Assert.assertEquals(name, metaData.getCanonicalName());
+      Assert.assertEquals(name, functionRegistry.createFunction(name).getCanonicalName());
+    }
   }
 }

@@ -34,7 +34,7 @@ public class CleanFunctionDescription extends AbstractFunctionDescription
 
   public CleanFunctionDescription()
   {
-    super("Clean", "org.pentaho.reporting.libraries.formula.function.text.Clean-Function");
+    super("CLEAN", "org.pentaho.reporting.libraries.formula.function.text.Clean-Function");
   }
 
   public FunctionCategory getCategory()

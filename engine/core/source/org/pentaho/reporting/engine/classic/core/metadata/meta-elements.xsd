@@ -9,6 +9,7 @@
     <xs:restriction base="xs:string">
       <xs:enumeration value="Development" />
       <xs:enumeration value="Snapshot" />
+      <xs:enumeration value="Community" />
       <xs:enumeration value="Limited" />
       <xs:enumeration value="Production" />
     </xs:restriction>

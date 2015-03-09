@@ -436,6 +436,13 @@ public class JCRSolutionFileModel implements SolutionFileModel
         throw new FileSystemException("ERROR_FAILED", status);
       }
     }
+
+    try {
+      // Perhaps a New file was created. Refresh local tree model.
+      this.refresh();
+    } catch ( IOException e ) {
+      // Ignore if unable to refresh
+    }
   }
 
   public String[] getChilds(final FileName name) throws FileSystemException

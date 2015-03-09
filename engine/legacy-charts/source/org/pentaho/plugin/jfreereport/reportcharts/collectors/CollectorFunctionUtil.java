@@ -21,6 +21,7 @@ import java.math.BigDecimal;
 
 import org.jfree.data.category.CategoryDataset;
 import org.jfree.data.general.PieDataset;
+import org.jfree.data.general.ValueDataset;
 import org.jfree.data.time.TimeSeries;
 import org.jfree.data.time.TimeSeriesCollection;
 
@@ -46,6 +47,19 @@ public class CollectorFunctionUtil
     try
     {
       return dataset.getValue(seriesName);
+    }
+    catch (Exception ignored)
+    {
+      // dataset.getValue throws exceptions if the keys dont match ..
+    }
+    return null;
+  }
+
+  public static Number queryExistingValueFromDataSet(final ValueDataset dataset)
+  {
+    try
+    {
+      return dataset.getValue();
     }
     catch (Exception ignored)
     {

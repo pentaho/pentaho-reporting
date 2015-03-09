@@ -39,6 +39,7 @@ import org.pentaho.reporting.engine.classic.core.layout.model.table.TableRenderB
 import org.pentaho.reporting.engine.classic.core.layout.model.table.TableRowRenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.table.TableSectionRenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.output.LogicalPageKey;
+import org.pentaho.reporting.engine.classic.core.layout.output.OutputProcessorFeature;
 import org.pentaho.reporting.engine.classic.core.layout.output.OutputProcessorMetaData;
 import org.pentaho.reporting.engine.classic.core.layout.output.PhysicalPageKey;
 import org.pentaho.reporting.engine.classic.core.layout.process.IterateStructuralProcessStep;
@@ -70,6 +71,7 @@ public class TextDocumentWriter extends IterateStructuralProcessStep
   private CodePointBuffer codePointBuffer;
   private boolean ellipseDrawn;
   private boolean clipOnWordBoundary;
+  private boolean watermarkOnTop;
 
   public TextDocumentWriter(final OutputProcessorMetaData metaData,
                             final PrinterDriver driver,
@@ -104,13 +106,16 @@ public class TextDocumentWriter extends IterateStructuralProcessStep
     this.clipOnWordBoundary = "true".equals
         (metaData.getConfiguration().getConfigProperty(
             "org.pentaho.reporting.engine.classic.core.LastLineBreaksOnWordBoundary"));
+    this.watermarkOnTop = metaData.isFeatureSupported(OutputProcessorFeature.WATERMARK_PRINTED_ON_TOP);
   }
 
 
+  @Deprecated
   public void close()
   {
   }
 
+  @Deprecated
   public void open()
   {
 
@@ -134,7 +139,7 @@ public class TextDocumentWriter extends IterateStructuralProcessStep
     drawArea = new StrictBounds(page.getGlobalX(), page.getGlobalY(),
         page.getWidth(), page.getHeight());
     plainTextPage = new PlainTextPage(paper, driver, encoding);
-    startProcessing(logicalPage);
+    processPageBox(logicalPage);
     plainTextPage.writePage();
   }
 
@@ -151,8 +156,25 @@ public class TextDocumentWriter extends IterateStructuralProcessStep
 
     drawArea = new StrictBounds(0, 0, logicalPage.getWidth(), logicalPage.getHeight());
     plainTextPage = new PlainTextPage(paper, driver, encoding);
-    startProcessing(logicalPage);
+    processPageBox(logicalPage);
     plainTextPage.writePage();
+  }
+
+  protected void processPageBox(LogicalPageBox box) {
+    if (startBlockBox(box))
+    {
+      if (!watermarkOnTop)
+        startProcessing(box.getWatermarkArea());
+
+      startProcessing(box.getHeaderArea());
+      processBoxChilds(box);
+      startProcessing(box.getRepeatFooterArea());
+      startProcessing(box.getFooterArea());
+      if (watermarkOnTop)
+        startProcessing(box.getWatermarkArea());
+    }
+    finishBlockBox(box);
+
   }
 
   protected boolean startBlockBox(final BlockRenderBox box)

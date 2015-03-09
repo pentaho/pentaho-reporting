@@ -31,5 +31,27 @@ Currently, this is not a safe method, you might easily encounter OutOfMemoryExce
     <description>Adjusts the resolution of the images embedded in the RTF document. By default we use 96 DPI, which is the common default among all browsers.</description>
     <text/>
   </key>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.output.table.rtf.TreatEllipseAsRectangle" global="false" hidden="false">
+    <description>Defines whether ellipse-shapes are treated as if they are ordinary rectangles, so that they end up as background for a cell.</description>
+    <enum>
+      <text>true</text>
+      <text>false</text>
+    </enum>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.output.table.rtf.UsePageBands" global="false" hidden="false">
+    <description>Defines, whether the table-export should export the page-bands (page-header, page-footer, and repeating group-header and -footer).</description>
+    <enum>
+      <text>true</text>
+      <text>false</text>
+    </enum>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.output.table.rtf.Author" global="false" hidden="false">
+    <description>Defines a author for generated RTF documents.</description>
+    <text/>
+  </key>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.output.table.rtf.Title" global="false" hidden="false">
+    <description>Defines the default title for generated RTF documents.</description>
+    <text/>
+  </key>
 
 </config-description>

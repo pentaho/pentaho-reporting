@@ -29,7 +29,7 @@ public class NaFunctionDescription extends AbstractFunctionDescription
 
   public NaFunctionDescription()
   {
-    super("ISNA", "org.pentaho.reporting.libraries.formula.function.information.Na-Function");
+    super("NA", "org.pentaho.reporting.libraries.formula.function.information.Na-Function");
   }
 
   public FunctionCategory getCategory()

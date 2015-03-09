@@ -166,6 +166,12 @@ public class PageableTextOutputProcessor extends AbstractPageableOutputProcessor
           writer = new TextDocumentWriter(metaData, driver, this.encoding);
         }
         writer.open();
+
+        final byte[] sequence = PlainTextReportUtil.getInitSequence(metaData.getConfiguration());
+        if (sequence != null)
+        {
+          driver.printRaw(sequence);
+        }
       }
       writer.processLogicalPage(key, logicalPage);
     }
