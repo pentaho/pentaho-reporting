@@ -134,7 +134,7 @@ public class FastExcelPrinter extends ExcelPrinterBase
     for (final CellLayoutInfo layoutInfo : backgroundCells)
     {
       int col = layoutInfo.getX1();
-      int row = layoutInfo.getY1();
+      int row = layoutInfo.getY1() + rowOffset;
       final Cell cell = getCellAt(col, row);
       final CellStyle style = getCellStyleProducer().createCellStyle(null, null, layoutInfo.getBackground());
       if (style != null)
