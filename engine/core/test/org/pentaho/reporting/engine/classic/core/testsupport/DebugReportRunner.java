@@ -24,6 +24,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
@@ -742,6 +743,19 @@ public class DebugReportRunner
     if (file == null)
     {
       throw new ResourceException("Unable to locate report '" + name + "' in the golden samples.");
+    }
+
+    final ResourceManager mgr = new ResourceManager();
+    mgr.registerDefaults();
+    return (MasterReport) mgr.createDirectly(file, MasterReport.class).getResource();
+  }
+
+  public static MasterReport parseLocalReport(final String name, Class<?> context) throws ResourceException
+  {
+    final URL file = context.getResource(name);
+    if (file == null)
+    {
+      throw new ResourceException("Unable to locate report '" + name + "' near class " + context);
     }
 
     final ResourceManager mgr = new ResourceManager();
