@@ -101,7 +101,7 @@ public class CommonStyleReadHandler extends AbstractXmlReadHandler implements St
     final String widowsOrphanOptOut = attrs.getValue(getUri(), ElementStyleKeys.WIDOW_ORPHAN_OPT_OUT.getName());
     if (widowsOrphanOptOut != null)
     {
-      styleSheet.setStyleProperty(ElementStyleKeys.WIDOW_ORPHAN_OPT_OUT, ReportParserUtil.parseBoolean(widows, getLocator()));
+      styleSheet.setStyleProperty(ElementStyleKeys.WIDOW_ORPHAN_OPT_OUT, ReportParserUtil.parseBoolean(widowsOrphanOptOut, getLocator()));
     }
 
     final String orphans = attrs.getValue(getUri(), ElementStyleKeys.ORPHANS.getName());
