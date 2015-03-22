@@ -2,6 +2,7 @@
 
   <data-factory name="org.pentaho.reporting.engine.classic.extensions.datasources.cda.CdaDataFactory"
                 expert="true" maturity-level="Community"
-                bundle-name="org.pentaho.reporting.engine.classic.extensions.datasources.cda.CdaDataFactoryBundle"/>
+                bundle-name="org.pentaho.reporting.engine.classic.extensions.datasources.cda.CdaDataFactoryBundle"
+                impl="org.pentaho.reporting.engine.classic.extensions.datasources.cda.CdaDataFactoryCore"/>
 
 </meta-data>
