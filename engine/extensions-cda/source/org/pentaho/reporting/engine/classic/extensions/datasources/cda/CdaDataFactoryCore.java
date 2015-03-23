@@ -60,7 +60,7 @@ public class CdaDataFactoryCore extends DefaultDataFactoryCore
     final ArrayList<Object> list = new ArrayList<Object>();
 
     list.add(df.getPath());
-    list.add(df.getQueryEntry(queryName).hashCode());
+    list.add(df.getQueryEntry(queryName));
     list.add(df.getBaseUrl());
     list.add(df.getUsername());
 
