@@ -115,6 +115,7 @@
               hidden="false"/>
     <property name="rangeMaximum" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
     <property name="rangeMinimum" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
+    <property name="scaleFactor" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
     <property name="rangeStickyZero" mandatory="false" preferred="false" value-role="Value" expert="false"
               hidden="false"/>
     <property name="rangeTickFormat" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="true"
@@ -305,6 +306,7 @@
               hidden="false"/>
     <property name="rangeMaximum" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
     <property name="rangeMinimum" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
+    <property name="scaleFactor" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
     <property name="rangeStickyZero" mandatory="false" preferred="false" value-role="Value" expert="false"
               hidden="false"/>
     <property name="rangeTickFont" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
@@ -444,6 +446,7 @@
               hidden="false"/>
     <property name="rangeMaximum" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
     <property name="rangeMinimum" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
+    <property name="scaleFactor" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
     <property name="rangeStickyZero" mandatory="false" preferred="false" value-role="Value" expert="false"
               hidden="false"/>
     <property name="rangeTickFont" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
@@ -581,6 +584,7 @@
               hidden="false"/>
     <property name="rangeMaximum" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
     <property name="rangeMinimum" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
+    <property name="scaleFactor" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
     <property name="rangeStickyZero" mandatory="false" preferred="false" value-role="Value" expert="false"
               hidden="false"/>
     <property name="rangeTickFont" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
@@ -715,6 +719,7 @@
               hidden="false"/>
     <property name="rangeMaximum" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
     <property name="rangeMinimum" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
+    <property name="scaleFactor" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
     <property name="rangeStickyZero" mandatory="false" preferred="false" value-role="Value" expert="false"
               hidden="false"/>
     <property name="rangeTickFont" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>

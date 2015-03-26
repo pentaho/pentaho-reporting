@@ -66,6 +66,8 @@ public abstract class CategoricalChartExpression extends AbstractChartExpression
 {
   private static final long serialVersionUID = -402500824047401239L;
 
+  private static final double DEFAULT_SCALE_FACTOR = 1.0;
+
   private String valueAxisLabel;
   private String categoryAxisLabel;
   private boolean horizontal;
@@ -94,6 +96,7 @@ public abstract class CategoricalChartExpression extends AbstractChartExpression
   private Class rangeTimePeriod;
   private double rangePeriodCount;
   private boolean autoRange;
+  private double scaleFactor;
 
   private Double lowerMargin;
   private Double upperMargin;
@@ -108,6 +111,7 @@ public abstract class CategoricalChartExpression extends AbstractChartExpression
     showGridlines = true;
     rangePeriodCount = 0;
     autoRange = true;
+    scaleFactor = DEFAULT_SCALE_FACTOR;
   }
 
   public Font getCategoryTitleFont()
@@ -476,6 +480,16 @@ public abstract class CategoricalChartExpression extends AbstractChartExpression
     this.autoRange = autoRange;
   }
 
+  public double getScaleFactor()
+  {
+    return scaleFactor;
+  }
+
+  public void setScaleFactor(final double scaleFactor)
+  {
+    this.scaleFactor = scaleFactor;
+  }
+
   protected JFreeChart computeChart(final Dataset dataset)
   {
     if (dataset instanceof CategoryDataset == false)
@@ -642,6 +656,11 @@ public abstract class CategoricalChartExpression extends AbstractChartExpression
     }
 
 
+    configureRangeAxis(cpl, labelFont);
+  }
+
+  protected void configureRangeAxis(final CategoryPlot cpl, final Font labelFont)
+  {
     final ValueAxis rangeAxis = cpl.getRangeAxis();
     if (rangeAxis instanceof NumberAxis)
     {
@@ -739,9 +758,44 @@ public abstract class CategoricalChartExpression extends AbstractChartExpression
       }
       else
       {
-        rangeAxis.setUpperBound(getRangeMaximum());
-        rangeAxis.setLowerBound(getRangeMinimum());
-        rangeAxis.setAutoRange(isAutoRange());
+        if (isAutoRange())
+        {
+          rangeAxis.setAutoRange(isAutoRange());
+        }
+        else
+        {
+          double factor = getScaleFactor();
+          if (factor > DEFAULT_SCALE_FACTOR)
+          {
+            // PRD-5340 hack
+            // this method is invoked after all series were populated
+            // hence the axis already has the graph's max and min values;
+            double lower = rangeAxis.getLowerBound();
+            if (lower < 0)
+            {
+              lower *= factor;
+            }
+            else if (lower > 0)
+            {
+              lower /= factor;
+            }
+
+            double upper = rangeAxis.getUpperBound();
+            if (upper > 0)
+            {
+              upper *= factor;
+            }
+            else if (upper < 0)
+            {
+              upper /= factor;
+            }
+            rangeAxis.setRange(lower, upper);
+          } else {
+            // the 'scaleFactor' property is left intact or has an incorrect value
+            rangeAxis.setUpperBound(getRangeMaximum());
+            rangeAxis.setLowerBound(getRangeMinimum());
+          }
+        }
       }
     }
   }
