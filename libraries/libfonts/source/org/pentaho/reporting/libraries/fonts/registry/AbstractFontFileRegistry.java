@@ -381,7 +381,7 @@ public abstract class AbstractFontFileRegistry implements FontRegistry
           final int lastSlash = token.lastIndexOf('/');
           if (lastSlash != -1)
           {
-            fontPath = token.substring(0, lastSlash) + lastSlash + "Fonts";
+            fontPath = token.substring(0, lastSlash) + fs + "Fonts";
             break;
           }
         }
