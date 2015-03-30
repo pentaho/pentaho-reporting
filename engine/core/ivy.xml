@@ -37,11 +37,30 @@
       <dependency org="${library.group}" name="flute" rev="${dependency.reporting-library.revision}" transitive="true" changing="true" />
 
       <!--  external dependencies -->
-      <dependency org="org.apache.poi" name="poi-ooxml-schemas" rev="3.9" conf="default_external->default"/>
-      <dependency org="org.apache.poi" name="poi-ooxml" rev="3.9" conf="default_external->default"/>
+      <!--
+       Ivy apparently ignores global exclude rules from time to time. I no longer care. Lets put exclude
+        statements everywhere and pray, this is ivy for you!
+      -->
+      <dependency org="org.apache.poi" name="poi-ooxml-schemas" rev="3.9" conf="default_external->default">
+        <exclude org="log4j" module="log4j"/>
+        <exclude org="commons-logging" module="commons-logging"/>
+        <exclude org="xml-apis" module="xml-apis"/>
+        <exclude org="org.apache.geronimo.specs" module="geronimo-stax-api_1.0_spec"/>
+        <exclude org="stax" module="stax-api"/>
+      </dependency>
+      <dependency org="org.apache.poi" name="poi-ooxml" rev="3.9" conf="default_external->default">
+        <exclude org="log4j" module="log4j"/>
+        <exclude org="commons-logging" module="commons-logging"/>
+        <exclude org="xml-apis" module="xml-apis"/>
+        <exclude org="org.apache.geronimo.specs" module="geronimo-stax-api_1.0_spec"/>
+        <exclude org="stax" module="stax-api"/>
+      </dependency>
       <dependency org="org.apache.poi" name="poi" rev="3.9" transitive="true" conf="default_external->default">
         <exclude org="log4j" module="log4j"/>
         <exclude org="commons-logging" module="commons-logging"/>
+        <exclude org="xml-apis" module="xml-apis"/>
+        <exclude org="org.apache.geronimo.specs" module="geronimo-stax-api_1.0_spec"/>
+        <exclude org="stax" module="stax-api"/>
       </dependency>
       <dependency org="pentaho" name="pentaho-database-model" rev="${dependency.pentaho-database-model.revision}"
                   changing="true" conf="default_external->default"/>
