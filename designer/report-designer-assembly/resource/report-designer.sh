@@ -1,7 +1,7 @@
 #!/bin/sh
 
 #
-#  WARNING: Pentaho Report Designer needs JDK 1.6 or newer to run.
+#  WARNING: Pentaho Report Designer needs JDK 1.7 or newer to run.
 #
 
 DIR_REL=`dirname $0`
