@@ -17,11 +17,15 @@
 
 package org.pentaho.reporting.engine.classic.core;
 
+import java.net.URL;
+import java.security.CodeSource;
 import javax.xml.XMLConstants;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
+import org.junit.Assert;
 import org.junit.Test;
+import org.pentaho.reporting.libraries.base.util.DebugLog;
 
 public class IvyTest
 {
@@ -38,6 +42,22 @@ public class IvyTest
     catch (ParserConfigurationException e)
     {
       // ignored, we are fishing for AbstractMethodError here.
+    }
+  }
+
+  @Test
+  public void report_xml_apis_location()
+  {
+    CodeSource cs = DocumentBuilderFactory.class.getProtectionDomain().getCodeSource();
+    URL url = cs == null ? null : cs.getLocation();
+    try
+    {
+      ivy_Is_Broken_And_Pulls_In_Old_XML_API_Jars();
+      DebugLog.log(url);
+    }
+    catch (Throwable t)
+    {
+      Assert.fail("Offending code found. in jar " + url + " (null means JDK bootstap code)");
     }
   }
 }
