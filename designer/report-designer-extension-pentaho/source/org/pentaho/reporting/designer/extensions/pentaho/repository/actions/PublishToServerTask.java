@@ -94,6 +94,12 @@ public class PublishToServerTask implements AuthenticatedServerTask
         {
           PublishUtil.launchReportOnServer(loginData.getUrl(), selectedReport);
         }
+      } else if ( responseCode == 403 ) {
+        logger.error( "Publish failed. Server responded with status-code " + responseCode );
+        JOptionPane.showMessageDialog( uiContext, 
+            Messages.getInstance().getString( "PublishToServerAction.FailedAccess" ),
+            Messages.getInstance().getString( "PublishToServerAction.FailedAccessTitle" ),
+            JOptionPane.ERROR_MESSAGE );
       } else {
         logger.error("Publish failed. Server responded with status-code " + responseCode);
         showErrorMessage();
