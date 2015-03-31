@@ -55,6 +55,8 @@ public class AbstractFontFileRegistryTest
   private void assertRegistersWindowsFontPaths(String directories, String expectedFontPath)
   {
     doReturn("windows").when(registry).safeSystemGetProperty(eq("os.name"), anyString());
+    doReturn("\\").when(registry).safeSystemGetProperty(eq("file.separator"), anyString());
+    doReturn(";").when(registry).safeSystemGetProperty(eq("path.separator"), anyString());
     doReturn(directories).when(registry).safeSystemGetProperty(eq("java.library.path"), anyString());
 
     doNothing().when(registry).loadFromCache(anyString());
@@ -66,6 +68,12 @@ public class AbstractFontFileRegistryTest
     registry.registerDefaultFontPath();
     verify(registry, atLeastOnce()).registerFontPath(captor.capture(), ArgumentCaptor.forClass(String.class).capture());
 
-    assertEquals(expectedFontPath, captor.getAllValues().get(0).getAbsolutePath());
+    String actual = captor.getAllValues().get(0).getAbsolutePath();
+    // this test is likely to be run on Linux by CI
+    // since we cannot prevent inserting slash as a file separator by java.io.File,
+    // we are forced to replace it manually
+    actual = actual.replaceAll("/","\\\\");
+    // Linux also adds current dir to the path it cannot recognize, so let's check the end of the resulting path
+    assertTrue(actual, actual.endsWith(expectedFontPath));
   }
 }
