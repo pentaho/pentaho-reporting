@@ -48,8 +48,9 @@ public class IvyTest
   @Test
   public void report_xml_apis_location()
   {
-    CodeSource cs = DocumentBuilderFactory.class.getProtectionDomain().getCodeSource();
-    URL url = cs == null ? null : cs.getLocation();
+    Class<?> aClass = DocumentBuilderFactory.newInstance().getClass();
+    CodeSource cs = aClass.getProtectionDomain().getCodeSource();
+    String url = aClass.toString() + " - " + ((cs == null) ? "From Bootstrap": cs.getLocation());
     try
     {
       ivy_Is_Broken_And_Pulls_In_Old_XML_API_Jars();
@@ -57,7 +58,7 @@ public class IvyTest
     }
     catch (Throwable t)
     {
-      Assert.fail("Offending code found. in jar " + url + " (null means JDK bootstap code)");
+      Assert.fail("Offending code found. in jar " + url);
     }
   }
 }
