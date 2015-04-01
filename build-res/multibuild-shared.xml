@@ -1,7 +1,7 @@
 <!--===========================================================================
 This is the build file for the collection of Shims modules to provide support
 ============================================================================-->
-  
+
 <project name="multimodule-build-shared">
 
   <description>
@@ -22,7 +22,7 @@ This is the build file for the collection of Shims modules to provide support
   <property name="antcontrib.build.cache.dir"
             value="${subfloor.resources.dir}/ant-contrib"
             description="Directory where the Ant-Contrib jar (and dependencies) is placed after it is auto-downloaded by the build" />
-  
+
   <!-- These are the modules this script should build in the proper order-->
   <!-- EXAMPLE: "core,extensions,extensions-cda,extensions-charting,extensions-drilldown,extensions-kettle,extensions-mondrian,extensions-olap4j,extensions-openerp,extensions-pentaho-metadata,extensions-sampledata,extensions-scripting,extensions-toc,extensions-xpath,extensions-xquery,legacy-charts,legacy-functions,extensions-reportdesigner-parser,demo,samples" -->
   <property name="modules" value="DEFINE_ME" />
@@ -90,8 +90,8 @@ This is the build file for the collection of Shims modules to provide support
 
 
   <target name="init" depends="install-antcontrib" />
-  
- 
+
+
   <!-- Runs "clean-all" on the modules defined in the property "modules" -->
   <target name="clean-all" depends="init">
     <for list="${modules}" param="module" trim="true">
@@ -129,7 +129,7 @@ This is the build file for the collection of Shims modules to provide support
       </sequential>
     </for>
   </target>
-  
+
   <target name="test" depends="init">
     <for list="${modules}" param="module" trim="true">
       <sequential>
@@ -169,7 +169,7 @@ This is the build file for the collection of Shims modules to provide support
       </sequential>
     </for>
   </target>
-  
+
   <target name="continuous" depends="init">
     <for list="${modules}" param="module" trim="true">
       <sequential>
@@ -263,7 +263,43 @@ This is the build file for the collection of Shims modules to provide support
         <copy file="${local.file.to.copy}" todir="@{module}/build-res"/>
       </sequential>
     </for>
-
   </target>
 
-</project> 
+  <!-- Runs "jacoco" on the modules defined in the property "modules" -->
+  <target name="jacoco" depends="init">
+    <for list="${modules}" param="module" trim="true">
+      <sequential>
+        <ant antfile="build.xml" dir="@{module}" useNativeBasedir="true" inheritall="false" target="subfloor.jacoco"/>
+      </sequential>
+    </for>
+  </target>
+
+  <!-- Runs "sonar" on the modules defined in the property "modules" -->
+  <target name="sonar" depends="init">
+    <for list="${modules}" param="module" trim="true">
+      <sequential>
+        <ant antfile="build.xml" dir="@{module}" useNativeBasedir="true" inheritall="false" target="subfloor.sonar"/>
+      </sequential>
+    </for>
+  </target>
+
+  <!-- Runs "build-sonar" on the modules defined in the property "modules" -->
+  <target name="build-sonar" depends="init">
+    <for list="${modules}" param="module" trim="true">
+      <sequential>
+        <ant antfile="build.xml" dir="@{module}" useNativeBasedir="true" inheritall="false" target="subfloor.build-sonar"/>
+      </sequential>
+    </for>
+  </target>
+
+  <!-- Runs "continuous-sonar" on the modules defined in the property "modules" -->
+  <target name="continuous-sonar" depends="init">
+    <for list="${modules}" param="module" trim="true">
+      <sequential>
+        <ant antfile="build.xml" dir="@{module}" useNativeBasedir="true" inheritall="false" target="subfloor.continuous-sonar"/>
+      </sequential>
+    </for>
+  </target>
+
+
+</project>
