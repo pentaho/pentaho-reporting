@@ -303,9 +303,9 @@ public class RepositoryPublishDialog extends RepositoryOpenDialog
     keyedComboBoxModel.add(null, null);
     keyedComboBoxModel.add(PdfPageableModule.PDF_EXPORT_TYPE, Messages.getInstance().getString("RepositoryPublishDialog.ExportType.PDF"));
     keyedComboBoxModel.add(HtmlTableModule.TABLE_HTML_STREAM_EXPORT_TYPE, Messages.getInstance().getString("RepositoryPublishDialog.ExportType.HTMLStream"));
-    keyedComboBoxModel.add(ExcelTableModule.EXCEL_FLOW_EXPORT_TYPE, Messages.getInstance().getString("RepositoryPublishDialog.ExportType.XLS"));
-    keyedComboBoxModel.add(ExcelTableModule.XLSX_FLOW_EXPORT_TYPE, Messages.getInstance().getString("RepositoryPublishDialog.ExportType.XLSX"));
     keyedComboBoxModel.add(CSVTableModule.TABLE_CSV_STREAM_EXPORT_TYPE, Messages.getInstance().getString("RepositoryPublishDialog.ExportType.CSV"));
+    keyedComboBoxModel.add(ExcelTableModule.XLSX_FLOW_EXPORT_TYPE, Messages.getInstance().getString("RepositoryPublishDialog.ExportType.XLSX"));
+    keyedComboBoxModel.add(ExcelTableModule.EXCEL_FLOW_EXPORT_TYPE, Messages.getInstance().getString("RepositoryPublishDialog.ExportType.XLS"));
     keyedComboBoxModel.add(RTFTableModule.TABLE_RTF_FLOW_EXPORT_TYPE, Messages.getInstance().getString("RepositoryPublishDialog.ExportType.RTF"));
     keyedComboBoxModel.add(PlainTextPageableModule.PLAINTEXT_EXPORT_TYPE, Messages.getInstance().getString("RepositoryPublishDialog.ExportType.TEXT"));
     keyedComboBoxModel.add(HtmlTableModule.TABLE_HTML_PAGE_EXPORT_TYPE, Messages.getInstance().getString("RepositoryPublishDialog.ExportType.HTMLPage"));
