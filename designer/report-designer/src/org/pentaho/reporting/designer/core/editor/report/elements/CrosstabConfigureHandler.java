@@ -17,10 +17,6 @@
 
 package org.pentaho.reporting.designer.core.editor.report.elements;
 
-import java.awt.Component;
-import java.awt.Dialog;
-import java.awt.Frame;
-import java.awt.Window;
 import java.awt.event.ActionEvent;
 import javax.swing.JOptionPane;
 
@@ -29,7 +25,6 @@ import org.pentaho.reporting.designer.core.ReportDesignerBoot;
 import org.pentaho.reporting.designer.core.ReportDesignerContext;
 import org.pentaho.reporting.designer.core.actions.elements.InsertCrosstabGroupAction;
 import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
-import org.pentaho.reporting.designer.core.editor.parameters.SubReportDataSourceDialog;
 import org.pentaho.reporting.designer.core.editor.report.ReportElementEditorContext;
 import org.pentaho.reporting.designer.core.util.exceptions.UncaughtExceptionsModel;
 import org.pentaho.reporting.designer.core.util.undo.BandedSubreportEditUndoEntry;
@@ -41,33 +36,14 @@ import org.pentaho.reporting.engine.classic.core.Band;
 import org.pentaho.reporting.engine.classic.core.CrosstabElement;
 import org.pentaho.reporting.engine.classic.core.ReportDataFactoryException;
 import org.pentaho.reporting.engine.classic.extensions.parsers.reportdesigner.ReportDesignerParserModule;
-import org.pentaho.reporting.libraries.base.util.ArgumentNullException;
-import org.pentaho.reporting.libraries.designtime.swing.LibSwingUtil;
 
-public class CrosstabConfigureHandler implements Runnable
+public class CrosstabConfigureHandler extends AbstractSubreportHandler<CrosstabElement>
 {
-  private final Component component;
-  private final ReportDesignerContext designerContext;
-  private final ReportDocumentContext renderContext;
-  private final CrosstabElement subReport;
-  private final Band parent;
-  private final boolean rootband;
-
   public CrosstabConfigureHandler(final CrosstabElement subReport,
                                   final Band parent,
-                                  final ReportElementEditorContext dragContext,
-                                  final boolean rootband)
+                                  final ReportElementEditorContext dragContext, final boolean rootband)
   {
-    ArgumentNullException.validate("subReport", subReport);
-    ArgumentNullException.validate("parent", parent);
-    ArgumentNullException.validate("dragContext", dragContext);
-
-    this.subReport = subReport;
-    this.parent = parent;
-    this.component = dragContext.getRepresentationContainer();
-    this.designerContext = dragContext.getDesignerContext();
-    this.renderContext = dragContext.getRenderContext();
-    this.rootband = rootband;
+    super(subReport, parent, dragContext, rootband);
   }
 
   public CrosstabConfigureHandler(final CrosstabElement subReport,
@@ -75,21 +51,10 @@ public class CrosstabConfigureHandler implements Runnable
                                   final ReportDesignerContext designerContext,
                                   final ReportDocumentContext renderContext)
   {
-    ArgumentNullException.validate("subReport", subReport);
-    ArgumentNullException.validate("parent", parent);
-    ArgumentNullException.validate("designerContext", designerContext);
-    ArgumentNullException.validate("renderContext", renderContext);
-
-    this.subReport = subReport;
-    this.parent = parent;
-    this.component = designerContext.getView().getParent();
-    this.designerContext = designerContext;
-    this.renderContext = renderContext;
-    this.rootband = parent instanceof AbstractRootLevelBand;
+    super(subReport, parent, designerContext, renderContext);
   }
 
-
-  public void run()
+  boolean showConfirmationDialog()
   {
     final UndoManager undo = renderContext.getUndo();
     if (rootband)
@@ -104,7 +69,7 @@ public class CrosstabConfigureHandler implements Runnable
           Messages.getString("CrosstabReportElementDragHandler.Inline"));
       if (result == JOptionPane.CLOSED_OPTION || result == 2)
       {
-        return;
+        return false;
       }
 
       if (result == 0)
@@ -127,10 +92,12 @@ public class CrosstabConfigureHandler implements Runnable
           new ElementEditUndoEntry(parent.getObjectID(), parent.getElementCount(), null, subReport));
       parent.addElement(subReport);
     }
+    return true;
+  }
 
-    final Window window = LibSwingUtil.getWindowAncestor(designerContext.getView().getParent());
+  void createSubReportTab()
+  {
     final AbstractReportDefinition reportDefinition = designerContext.getActiveContext().getReportDefinition();
-
     try
     {
       // Create the new subreport tab - this is where the contents of the Crosstab
@@ -145,39 +112,16 @@ public class CrosstabConfigureHandler implements Runnable
     {
       UncaughtExceptionsModel.getInstance().addException(e);
     }
-
-
-    // Prompt user to either create or use an existing data-source.
-    final SubReportDataSourceDialog crosstabDataSourceDialog;
-    if (window instanceof Dialog)
-    {
-      crosstabDataSourceDialog = new SubReportDataSourceDialog((Dialog) window);
-    }
-    else if (window instanceof Frame)
-    {
-      crosstabDataSourceDialog = new SubReportDataSourceDialog((Frame) window);
-    }
-    else
-    {
-      crosstabDataSourceDialog = new SubReportDataSourceDialog();
-    }
-
-    // User has prompted to select a data-source.  Get the selected query
-    final String queryName = crosstabDataSourceDialog.performSelection(designerContext);
-    if (queryName != null)
-    {
-      subReport.setQuery(queryName);
-
-      // Invoke Crosstab dialog
-      final InsertCrosstabGroupAction crosstabAction = new InsertCrosstabGroupAction();
-      crosstabAction.setReportDesignerContext(designerContext);
-      crosstabAction.actionPerformed(new ActionEvent(this, ActionEvent.ACTION_PERFORMED, ""));
-    }
-
-    subReport.addInputParameter("*", "*");
-
-    renderContext.getSelectionModel().setSelectedElements(new Object[]{subReport});
   }
+
+  void doSetQuery(final String queryName)
+  {
+    // Invoke Crosstab dialog
+    final InsertCrosstabGroupAction crosstabAction = new InsertCrosstabGroupAction();
+    crosstabAction.setReportDesignerContext(designerContext);
+    crosstabAction.actionPerformed(new ActionEvent(this, ActionEvent.ACTION_PERFORMED, ""));
+  }
+
 
   public static void configureDefaults(final CrosstabElement visualElement)
   {

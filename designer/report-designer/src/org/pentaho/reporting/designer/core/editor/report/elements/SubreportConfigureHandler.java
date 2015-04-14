@@ -17,16 +17,11 @@
 
 package org.pentaho.reporting.designer.core.editor.report.elements;
 
-import java.awt.Component;
-import java.awt.Dialog;
-import java.awt.Frame;
-import java.awt.Window;
 import javax.swing.JOptionPane;
 
 import org.pentaho.reporting.designer.core.Messages;
 import org.pentaho.reporting.designer.core.ReportDesignerContext;
 import org.pentaho.reporting.designer.core.editor.ReportDocumentContext;
-import org.pentaho.reporting.designer.core.editor.parameters.SubReportDataSourceDialog;
 import org.pentaho.reporting.designer.core.editor.report.ReportElementEditorContext;
 import org.pentaho.reporting.designer.core.util.exceptions.UncaughtExceptionsModel;
 import org.pentaho.reporting.designer.core.util.undo.BandedSubreportEditUndoEntry;
@@ -38,33 +33,15 @@ import org.pentaho.reporting.engine.classic.core.Band;
 import org.pentaho.reporting.engine.classic.core.ReportDataFactoryException;
 import org.pentaho.reporting.engine.classic.core.SubReport;
 import org.pentaho.reporting.engine.classic.extensions.parsers.reportdesigner.ReportDesignerParserModule;
-import org.pentaho.reporting.libraries.base.util.ArgumentNullException;
-import org.pentaho.reporting.libraries.designtime.swing.LibSwingUtil;
 
-public class SubreportConfigureHandler implements Runnable
+public class SubreportConfigureHandler extends AbstractSubreportHandler<SubReport>
 {
-  private final Component component;
-  private final ReportDesignerContext designerContext;
-  private final ReportDocumentContext renderContext;
-  private final SubReport subReport;
-  private final Band parent;
-  private final boolean rootband;
 
   public SubreportConfigureHandler(final SubReport subReport,
                                    final Band parent,
-                                   final ReportElementEditorContext dragContext,
-                                   final boolean rootband)
+                                   final ReportElementEditorContext dragContext, final boolean rootband)
   {
-    ArgumentNullException.validate("subReport", subReport);
-    ArgumentNullException.validate("parent", parent);
-    ArgumentNullException.validate("dragContext", dragContext);
-
-    this.subReport = subReport;
-    this.parent = parent;
-    this.component = dragContext.getRepresentationContainer();
-    this.designerContext = dragContext.getDesignerContext();
-    this.renderContext = dragContext.getRenderContext();
-    this.rootband = rootband;
+    super(subReport, parent, dragContext, rootband);
   }
 
   public SubreportConfigureHandler(final SubReport subReport,
@@ -72,20 +49,10 @@ public class SubreportConfigureHandler implements Runnable
                                    final ReportDesignerContext designerContext,
                                    final ReportDocumentContext renderContext)
   {
-    ArgumentNullException.validate("subReport", subReport);
-    ArgumentNullException.validate("parent", parent);
-    ArgumentNullException.validate("designerContext", designerContext);
-    ArgumentNullException.validate("renderContext", renderContext);
-
-    this.subReport = subReport;
-    this.parent = parent;
-    this.component = designerContext.getView().getParent();
-    this.designerContext = designerContext;
-    this.renderContext = renderContext;
-    this.rootband = parent instanceof AbstractRootLevelBand;
+    super(subReport, parent, designerContext, renderContext);
   }
 
-  public void run()
+  boolean showConfirmationDialog()
   {
     final UndoManager undo = renderContext.getUndo();
     if (rootband)
@@ -100,7 +67,7 @@ public class SubreportConfigureHandler implements Runnable
           Messages.getString("SubreportReportElementDragHandler.Inline"));
       if (result == JOptionPane.CLOSED_OPTION || result == 2)
       {
-        return;
+        return false;
       }
 
       if (result == 0)
@@ -123,10 +90,12 @@ public class SubreportConfigureHandler implements Runnable
           new ElementEditUndoEntry(parent.getObjectID(), parent.getElementCount(), null, subReport));
       parent.addElement(subReport);
     }
+    return true;
+  }
 
-    final Window window = LibSwingUtil.getWindowAncestor(designerContext.getView().getParent());
+  void createSubReportTab()
+  {
     final AbstractReportDefinition reportDefinition = designerContext.getActiveContext().getReportDefinition();
-
     try
     {
       // Create the new subreport tab and update the active context to point to new subreport.
@@ -139,31 +108,6 @@ public class SubreportConfigureHandler implements Runnable
     {
       UncaughtExceptionsModel.getInstance().addException(e);
     }
-
-    // Prompt user to either create or use an existing data-source.
-    final SubReportDataSourceDialog subreportDataSourceDialog;
-    if (window instanceof Dialog)
-    {
-      subreportDataSourceDialog = new SubReportDataSourceDialog((Dialog) window);
-    }
-    else if (window instanceof Frame)
-    {
-      subreportDataSourceDialog = new SubReportDataSourceDialog((Frame) window);
-    }
-    else
-    {
-      subreportDataSourceDialog = new SubReportDataSourceDialog();
-    }
-
-    final String queryName = subreportDataSourceDialog.performSelection(designerContext);
-    if (queryName != null)
-    {
-      subReport.setQuery(queryName);
-    }
-
-    subReport.addInputParameter("*", "*");
-
-    renderContext.getSelectionModel().setSelectedElements(new Object[]{subReport});
   }
 
   public static void configureDefaults(final SubReport visualElement) {
