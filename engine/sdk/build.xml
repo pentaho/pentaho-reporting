@@ -62,7 +62,7 @@
           Ensures that all the required directories exist before processing
           a build.
           ====================================================================-->
-    <target name="init">
+    <target name="init" depends="subfloor.init">
       <mkdir dir="${dist.dir}" />
       <mkdir dir="${lib.dir}" />
     </target>
@@ -72,7 +72,7 @@
 
           Cleans up any files from previous executions of this script
           ====================================================================-->
-    <target name="clean">
+    <target name="clean" depends="subfloor.clean">
         <delete dir="${stage.dir}" failonerror="false" />
         <delete dir="${dist.dir}" failonerror="false" />
     </target>
@@ -118,24 +118,24 @@
                 <include name="*.war" />
             </fileset>
         </copy>
-    	
+
 
     	<!-- Use ivy to get the required libraries -->
         <antcall target="resolve-default">
             <param name="lib.dir" value="${stage.sample.lib.dir}" />
         </antcall>
-        
+
         <!-- Update the classpath information for the eclipse project -->
         <antcall target="create-dot-classpath">
         	<param name="basedir" value="${stage.sample.dir}"/>
         	<param name="lib.dir"  value="${stage.sample.lib.dir}"/>
         </antcall>
     </target>
-    
-    
+
+
 	<!--=======================================================================
 	      create-dot-classpath
-	 
+
 	      Creates the Eclipse .classpath file from the resolved
 	      classpath from Ant.
 	    ====================================================================-->
@@ -168,15 +168,15 @@
             </zipfileset>
         </zip>
     </target>
-	
-	
+
+
 	<!--========================================================================
 		override subfloor and do nothing since we have no source dir
 		=======================================================================-->
 	<target name="dist-javadoc" />
-	
-	
-	
+
+
+
 	<!-- ======================================== EULA assembly packaging ========================================= -->
 
 	<target name="package-eula">
@@ -193,7 +193,7 @@
 		<condition property="isWindows">
 		    <os family="windows" />
 		</condition>
-		
+
 		<if>
 			<not>
 				<isset property="pentaho-eula-assembly-pom.version"/>
@@ -203,7 +203,7 @@
 				<echo>pentaho-eula-assembly-pom.version not set, assuming default of ${pentaho-eula-assembly-pom.version}</echo>
 			</then>
 		</if>
-		
+
 		<if>
 			<not>
 				<isset property="artifactName"/>
@@ -213,14 +213,14 @@
 				<echo>artifactName not set, assuming default of ${artifactName}</echo>
 			</then>
 		</if>
-		
+
 		<if>
 			<not>
 				<available file="dist/pentaho-eula-assembly-pom-${pentaho-eula-assembly-pom.version}-pom.xml" type="file" />
 			</not>
 			<then>
-				<get src="${pentaho.resolve.repo}/com/pentaho/pentaho-eula-assembly-pom/${pentaho-eula-assembly-pom.version}/pentaho-eula-assembly-pom-${pentaho-eula-assembly-pom.version}-pom.xml" 
-		              dest="dist/pentaho-eula-assembly-pom-${pentaho-eula-assembly-pom.version}-pom.xml" 
+				<get src="${pentaho.resolve.repo}/com/pentaho/pentaho-eula-assembly-pom/${pentaho-eula-assembly-pom.version}/pentaho-eula-assembly-pom-${pentaho-eula-assembly-pom.version}-pom.xml"
+		              dest="dist/pentaho-eula-assembly-pom-${pentaho-eula-assembly-pom.version}-pom.xml"
 		              verbose="true" />
 			</then>
 		</if>
@@ -255,10 +255,10 @@
 				</exec>
 			</else>
 		</if>
-		
+
 		<delete file="dist/ant-contrib-1.0b3.jar" />
 
 	</target>
-	
-	
+
+
 </project>

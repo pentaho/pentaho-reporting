@@ -48,7 +48,7 @@
   <import file="${common.build-pkg.file}"/>
 
   <!-- - - - - - - - - - - - - - - - - -
-    Macro for making resolving ivy a 1 liner.  Tasks using this must depend on install-ivy.                      
+    Macro for making resolving ivy a 1 liner.  Tasks using this must depend on install-ivy.
   - - - - - - - - - - - - - - - - - -->
   <macrodef name="ivy-resolve">
     <attribute name="ivyfile" default="${ivyfile}"/>
@@ -65,6 +65,10 @@
     <delete dir="resource/docs"/>
     <ivy-resolve conf="pdf-docs" directory="resource/docs"/>
   </target>
+
+  <target name="init" depends="subfloor.init" />
+  <target name="clean-all" depends="subfloor.clean-all" />
+
 
   <!-- The dist target is where everything is assembled -->
   <target name="dist" depends="clean-all, init, resolve, resolve-pdf-docs, dist-winlinux, dist-mac"
