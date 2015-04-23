@@ -105,6 +105,8 @@
     <mkdir dir="${stage.dir.winlinux}"/>
     <!-- Create standard extension points for users to drop in own stuff. -->
     <mkdir dir="${lib.dir}/ext"/>
+    <mkdir dir="${testlib.dir}"/>
+    <mkdir dir="${devlib.dir}"/>
   </target>
 
   <!-- Helper task, dont use directly -->

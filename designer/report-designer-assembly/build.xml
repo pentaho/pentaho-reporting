@@ -66,8 +66,6 @@
     <ivy-resolve conf="pdf-docs" directory="resource/docs"/>
   </target>
 
-  <target name="init" depends="subfloor.init" />
-
   <!-- The dist target is where everything is assembled -->
   <target name="dist" depends="clean-all, init, resolve, resolve-pdf-docs, dist-winlinux, dist-mac"
           description="Creates the distributables for the Report Designer"/>
