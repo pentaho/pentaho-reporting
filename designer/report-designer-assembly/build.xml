@@ -67,8 +67,6 @@
   </target>
 
   <target name="init" depends="subfloor.init" />
-  <target name="clean-all" depends="subfloor.clean-all" />
-
 
   <!-- The dist target is where everything is assembled -->
   <target name="dist" depends="clean-all, init, resolve, resolve-pdf-docs, dist-winlinux, dist-mac"
