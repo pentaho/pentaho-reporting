@@ -170,6 +170,14 @@ This is the build file for the collection of Shims modules to provide support
     </for>
   </target>
 
+  <target name="dist-javadoc">
+    <for list="${modules}" param="module" trim="true">
+      <sequential>
+        <ant antfile="build.xml" dir="@{module}" useNativeBasedir="true" inheritall="false" target="dist-javadoc" />
+      </sequential>
+    </for>
+  </target>
+
   <target name="continuous" depends="init">
     <for list="${modules}" param="module" trim="true">
       <sequential>
