@@ -40,7 +40,7 @@ public class PublishRestUtil {
 
 	private static final Log logger = LogFactory.getLog(PublishRestUtil.class);
 	
-	public static final String REPO_FILES_IMPORT = "api/repo/files/import";
+	public static final String REPO_FILES_IMPORT = "api/repo/publish/publishfile";
 
 	private String baseUrl;
 	private String username;
@@ -115,11 +115,9 @@ public class PublishRestUtil {
 		int responseCode = 504;
 		try {
 			FormDataMultiPart part = new FormDataMultiPart();
-			part.field("importDir", repositoryPath, MediaType.MULTIPART_FORM_DATA_TYPE);
+			part.field("importPath", repositoryPath + "/" + fileName, MediaType.MULTIPART_FORM_DATA_TYPE);
 			part.field("fileUpload", fileInputStream, MediaType.MULTIPART_FORM_DATA_TYPE);
-			part.field("overwriteFile", String.valueOf(overwriteIfExists), MediaType.MULTIPART_FORM_DATA_TYPE);
-			part.field( "fileNameOverride", fileName, MediaType.MULTIPART_FORM_DATA_TYPE );
-			
+			part.field("overwriteFile", Boolean.toString(overwriteIfExists), MediaType.MULTIPART_FORM_DATA_TYPE);
 			part.getField("fileUpload").setContentDisposition(FormDataContentDisposition.name("fileUpload").fileName( fileName ).build());
 
       WebResource.Builder builder = resource.type(MediaType.MULTIPART_FORM_DATA);
