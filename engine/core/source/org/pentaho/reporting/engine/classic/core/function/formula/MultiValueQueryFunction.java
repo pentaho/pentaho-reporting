@@ -155,7 +155,10 @@ public class MultiValueQueryFunction implements Function
         if (columnName == null || columnName.equals(tableModel.getColumnName(column)))
         {
           final ArrayList<Object> values = new ArrayList<Object>();
-          final int rowCount = Math.min (queryLimit, tableModel.getRowCount());
+          int rowCount = tableModel.getRowCount();
+          if (queryLimit > 0) {
+            rowCount = Math.min (queryLimit, tableModel.getRowCount());
+          }
           for (int row = 0; row < rowCount; row++)
           {
             values.add(tableModel.getValueAt(row, column));
