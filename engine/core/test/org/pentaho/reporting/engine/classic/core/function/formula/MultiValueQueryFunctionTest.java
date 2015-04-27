@@ -122,4 +122,50 @@ public class MultiValueQueryFunctionTest extends TestCase
     Assert.assertTrue(v.getClass().isArray());
     Assert.assertEquals(5, Array.getLength(v));
   }
+
+  public void testLargerLimit() throws Exception
+  {
+    final TableModel table = new DefaultTableModel(new Object[]{"Column"}, 100);
+
+    final TableDataFactory tdf = new TableDataFactory();
+    tdf.addTable("query", table);
+
+    DebugExpressionRuntime rt = new DebugExpressionRuntime()
+    {
+      public DataFactory getDataFactory()
+      {
+        return tdf;
+      }
+    };
+    ReportFormulaContext fc = new ReportFormulaContext(new DefaultFormulaContext(), rt);
+    final Formula f = new Formula("MULTIVALUEQUERY(\"query\"; \"Column\"; 0; 500)");
+    f.initialize(fc);
+    final Object v = f.evaluate();
+    Assert.assertNotNull(v);
+    Assert.assertTrue(v.getClass().isArray());
+    Assert.assertEquals(100, Array.getLength(v));
+  }
+
+  public void testUnlimitedQuery() throws Exception
+  {
+    final TableModel table = new DefaultTableModel(new Object[]{"Column"}, 100);
+
+    final TableDataFactory tdf = new TableDataFactory();
+    tdf.addTable("query", table);
+
+    DebugExpressionRuntime rt = new DebugExpressionRuntime()
+    {
+      public DataFactory getDataFactory()
+      {
+        return tdf;
+      }
+    };
+    ReportFormulaContext fc = new ReportFormulaContext(new DefaultFormulaContext(), rt);
+    final Formula f = new Formula("MULTIVALUEQUERY(\"query\"; \"Column\")");
+    f.initialize(fc);
+    final Object v = f.evaluate();
+    Assert.assertNotNull(v);
+    Assert.assertTrue(v.getClass().isArray());
+    Assert.assertEquals(100, Array.getLength(v));
+  }
 }
