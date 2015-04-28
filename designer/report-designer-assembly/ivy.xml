@@ -121,13 +121,17 @@
                 conf="plugin->default" changing="true" transitive="false">
       <artifact name="pentaho-big-data-plugin" type="zip"/>
     </dependency>
+    <dependency org="pentaho" name="pentaho-cassandra-plugin" rev="${dependency.pentaho-cassandra-plugin.revision}"
+                conf="plugin->default" changing="true" transitive="false">
+      <artifact name="pentaho-cassandra-plugin" type="zip"/>
+    </dependency>
     <dependency org="pentaho" name="pentaho-mongodb-plugin" rev="${dependency.pentaho-mongodb-plugin.revision}"
                 conf="plugin->default" changing="true" transitive="false">
       <artifact name="pentaho-mongodb-plugin" type="zip"/>
     </dependency>
-    <dependency org="pentaho" name="pentaho-cassandra-plugin" rev="${dependency.pentaho-cassandra-plugin.revision}"
+    <dependency org="pentaho" name="pentaho-spark-plugin" rev="${dependency.pentaho-spark-plugin.revision}"
                 conf="plugin->default" changing="true" transitive="false">
-      <artifact name="pentaho-cassandra-plugin" type="zip"/>
+      <artifact name="pentaho-spark-plugin" type="zip"/>
     </dependency>
 
     <!-- JSON dependencies -->
