@@ -129,9 +129,9 @@
                 conf="plugin->default" changing="true" transitive="false">
       <artifact name="pentaho-mongodb-plugin" type="zip"/>
     </dependency>
-    <dependency org="pentaho" name="pentaho-spark-plugin" rev="${dependency.pentaho-spark-plugin.revision}"
+    <dependency org="pentaho" name="pdi-spark-plugin" rev="${dependency.pdi-spark-plugin.revision}"
                 conf="plugin->default" changing="true" transitive="false">
-      <artifact name="pentaho-spark-plugin" type="zip"/>
+      <artifact name="pdi-spark-plugin" type="zip"/>
     </dependency>
 
     <!-- JSON dependencies -->
