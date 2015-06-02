@@ -195,6 +195,7 @@ public class AttributeNames
 
     public static final String RESOURCE_IDENTIFIER = "resource-identifier";
     public static final String NULL_VALUE = "null-value";
+    public static final String FORMATTING_SET_MANUALLY = "formatting-set-manually";
     public static final String MESSAGE_NULL_VALUE = "message-null-value";
     public static final String VALUE = "value";
     public static final String FIELD = "field";
