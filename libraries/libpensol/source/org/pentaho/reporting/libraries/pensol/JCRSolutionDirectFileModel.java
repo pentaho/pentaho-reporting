@@ -313,7 +313,7 @@ public class JCRSolutionDirectFileModel implements SolutionFileModel {
       final String fileId = pathToId( fullName.getPath() );
       Response response = null;
       if ( this.doGetFileOrDirAsDownloadMethod == null ) {
-        response = this.fileRes.doGetFileOrDirAsDownload( null, fileId, "false" );
+        response = this.fileRes.doGetFileOrDirAsDownload( "", fileId, "false" );
       } else {
         // apply [5.0-SNAPSHOT] backport
         try {
