@@ -125,9 +125,12 @@
                 conf="plugin->default" changing="true" transitive="false">
       <artifact name="pentaho-cassandra-plugin" type="zip"/>
     </dependency>
-    <dependency org="pentaho" name="pentaho-mongodb-plugin" rev="${dependency.pentaho-mongodb-plugin.revision}"
+    <dependency org="pentaho" name="pdi-spark-plugin" rev="${dependency.pdi-spark-plugin.revision}"
                 conf="plugin->default" changing="true" transitive="false">
-      <artifact name="pentaho-mongodb-plugin" type="zip"/>
+      <artifact name="pdi-spark-plugin" type="zip"/>
+    </dependency>
+<dependency org="pentaho" name="pdi-osgi-bridge" rev="${dependency.pdi-osgi-bridge.revision}" changing="true" conf="plugin->default">
+      <artifact name="pdi-osgi-bridge" type="zip"/>
     </dependency>
     <dependency org="pentaho" name="pdi-spark-plugin" rev="${dependency.pdi-spark-plugin.revision}"
                 conf="plugin->default" changing="true" transitive="false">
