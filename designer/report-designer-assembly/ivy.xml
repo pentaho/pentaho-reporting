@@ -129,8 +129,8 @@
                 conf="plugin->default" changing="true" transitive="false">
       <artifact name="pdi-spark-plugin" type="zip"/>
     </dependency>
-<dependency org="pentaho" name="pdi-osgi-bridge" rev="${dependency.pdi-osgi-bridge.revision}" changing="true" conf="plugin->default">
-      <artifact name="pdi-osgi-bridge" type="zip"/>
+<dependency org="pentaho" name="pdi-osgi-bridge-assembly" rev="${dependency.pdi-osgi-bridge.revision}" changing="true" conf="plugin->default">
+      <artifact name="pdi-osgi-bridge-assembly" type="zip"/>
     </dependency>
     <dependency org="pentaho" name="pdi-spark-plugin" rev="${dependency.pdi-spark-plugin.revision}"
                 conf="plugin->default" changing="true" transitive="false">
@@ -142,13 +142,13 @@
                 transitive="false" conf="default->default" changing="false"/>
     <dependency org="jsonpath" name="jsonpath" rev="${dependency.jsonpath.revision}" transitive="false"
                 conf="default->default" changing="false"/>
-                
-                
+
+
     <!-- PDF Documentation for bundling -->
     <dependency org="pentaho-doc" name="report_designer_user_guide" rev="${dependency.documentation.revision}" conf="pdf-docs->default">
 		<artifact name="report_designer_user_guide" type="pdf" />
 	</dependency>
-	
+
     <!--  OSS Licenses file -->
     <dependency org="pentaho" name="oss-licenses" rev="${dependency.oss-licenses.revision}" conf="oss-licenses->default">
 	   <artifact name="oss-licenses" type="zip" />
