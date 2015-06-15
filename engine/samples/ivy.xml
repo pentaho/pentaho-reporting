@@ -25,6 +25,6 @@
         <dependency org="log4j" name="log4j" rev="1.2.15"/>
 
         <!--  runtime dependencies -->
-        <dependency org="hsqldb" name="hsqldb" rev="${dependency.hsqldb.revision}" transitive="false"/>
+        <dependency org="org.hsqldb" name="hsqldb" rev="${dependency.hsqldb.revision}" transitive="false"/>
     </dependencies>
 </ivy-module>
