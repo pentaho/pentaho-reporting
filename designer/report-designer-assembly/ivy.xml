@@ -62,7 +62,7 @@
                 transitive="true" changing="true" conf="runtime->default"/>
 
     <!-- slf4j impl requires at least log4j 1.2.12-->
-    <dependency org="org.slf4j" name="slf4j-log4j12" rev="1.7.3"/>
+    <dependency org="org.slf4j" name="slf4j-log4j12" rev="1.7.7"/>
     <dependency org="log4j" name="log4j" rev="1.2.15"/>
 
     <!-- driver dependencies -->
@@ -70,7 +70,7 @@
     <dependency org="org.apache.derby" name="derby" rev="10.2.1.6" transitive="false" conf="drivers->default"/>
     <dependency org="org.apache.derby" name="derbyclient" rev="10.2.1.6" transitive="false" conf="drivers->default"/>
     <dependency org="com.h2database" name="h2" rev="1.2.131" transitive="false" conf="drivers->default"/>
-    <dependency org="hsqldb" name="hsqldb" rev="1.8.0.7" transitive="false" conf="drivers->default"/>
+    <dependency org="org.hsqldb" name="hsqldb" rev="2.3.2" transitive="false" conf="drivers->default"/>
     <dependency org="infobright" name="infobright-core" rev="3.4" transitive="false" conf="drivers->default"/>
     <dependency org="org.firebirdsql.jdbc" name="jaybird" rev="2.1.6" transitive="false" conf="drivers->default"/>
     <dependency org="net.sf.jt400" name="jt400" rev="6.1" transitive="false" conf="drivers->default"/>
@@ -92,7 +92,7 @@
       <exclude org="org.apache.derby" name="derby"/>
       <exclude org="org.apache.derby" name="derbyclient"/>
       <exclude org="com.h2database" name="h2"/>
-      <exclude org="hsqldb" name="hsqldb"/>
+      <exclude org="org.hsqldb" name="hsqldb"/>
       <exclude org="infobright" name="infobright-core"/>
       <exclude org="org.firebirdsql.jdbc" name="jaybird"/>
       <exclude org="net.sf.jt400" name="jt400"/>
@@ -125,9 +125,12 @@
                 conf="plugin->default" changing="true" transitive="false">
       <artifact name="pentaho-cassandra-plugin" type="zip"/>
     </dependency>
-    <dependency org="pentaho" name="pentaho-mongodb-plugin" rev="${dependency.pentaho-mongodb-plugin.revision}"
+    <dependency org="pentaho" name="pdi-spark-plugin" rev="${dependency.pdi-spark-plugin.revision}"
                 conf="plugin->default" changing="true" transitive="false">
-      <artifact name="pentaho-mongodb-plugin" type="zip"/>
+      <artifact name="pdi-spark-plugin" type="zip"/>
+    </dependency>
+<dependency org="pentaho" name="pdi-osgi-bridge-assembly" rev="${dependency.pdi-osgi-bridge.revision}" changing="true" conf="plugin->default">
+      <artifact name="pdi-osgi-bridge-assembly" type="zip"/>
     </dependency>
     <dependency org="pentaho" name="pdi-spark-plugin" rev="${dependency.pdi-spark-plugin.revision}"
                 conf="plugin->default" changing="true" transitive="false">
@@ -139,13 +142,13 @@
                 transitive="false" conf="default->default" changing="false"/>
     <dependency org="jsonpath" name="jsonpath" rev="${dependency.jsonpath.revision}" transitive="false"
                 conf="default->default" changing="false"/>
-                
-                
+
+
     <!-- PDF Documentation for bundling -->
     <dependency org="pentaho-doc" name="report_designer_user_guide" rev="${dependency.documentation.revision}" conf="pdf-docs->default">
 		<artifact name="report_designer_user_guide" type="pdf" />
 	</dependency>
-	
+
     <!--  OSS Licenses file -->
     <dependency org="pentaho" name="oss-licenses" rev="${dependency.oss-licenses.revision}" conf="oss-licenses->default">
 	   <artifact name="oss-licenses" type="zip" />

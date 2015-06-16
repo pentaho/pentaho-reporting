@@ -27,8 +27,8 @@
     </Dimension>
     <Dimension name="Time" foreignKey="TIME_ID">
       <Hierarchy hasAll="true" allMemberName="All Years" primaryKey="TIME_ID">
-        <Table name="TIME"/>
-        <Level name="Years" column="YEAR_ID" uniqueMembers="true" levelType="TimeYears"/>
+        <Table name="DIM_TIME"/>
+        <Level name="Years" column="YEAR_ID" uniqueMembers="true" levelType="TimeYears" type="Integer"/>
         <Level name="Quarters" column="QTR_NAME" uniqueMembers="false" ordinalColumn="QTR_ID" levelType="TimeQuarters"/>
         <Level name="Months" column="MONTH_NAME" uniqueMembers="false" ordinalColumn="MONTH_ID" levelType="TimeMonths"/>
       </Hierarchy>
