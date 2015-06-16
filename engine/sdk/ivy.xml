@@ -25,6 +25,6 @@
 
       <!--  external dependencies -->
       <dependency org="javax.servlet" name="servlet-api" rev="2.5"   transitive="false"/>
-      <dependency org="hsqldb"        name="hsqldb"      rev="1.8.0" transitive="false"/>
+      <dependency org="org.hsqldb"        name="hsqldb"      rev="2.3.2" transitive="false"/>
     </dependencies>
 </ivy-module>

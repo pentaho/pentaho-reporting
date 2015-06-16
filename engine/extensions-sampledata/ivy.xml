@@ -20,7 +20,7 @@
 		<dependency org="${ivy.artifact.group}" name="pentaho-reporting-engine-classic-core" rev="${project.revision}" transitive="true" changing="true" />
 
 		<!--  external dependencies -->
-		<dependency org="hsqldb" name="hsqldb" rev="1.8.0" transitive="false" conf="default_external->default" />
+		<dependency org="org.hsqldb" name="hsqldb" rev="2.3.2" transitive="false" conf="default_external->default" />
     <dependency org="org.apache.commons" name="commons-lang3" rev="3.0" transitive="false" conf="default_external->default" />
 
     <!-- Testing Dependencies -->
