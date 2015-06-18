@@ -62,7 +62,7 @@ public class QueryDataRowWrapper implements DataRow
   @Deprecated
   public QueryDataRowWrapper(final DataRow backend, final int queryLimit, final int queryTimeout)
   {
-    this(backend, queryLimit, queryTimeout, workAroundBrokenJavaGenerics());
+    this(backend, queryTimeout, queryLimit, workAroundBrokenJavaGenerics());
   }
 
   private static List<SortConstraint> workAroundBrokenJavaGenerics()
