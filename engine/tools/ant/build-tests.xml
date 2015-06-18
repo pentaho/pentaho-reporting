@@ -120,7 +120,7 @@
 
 	    Compiles project test source
 	    ====================================================================-->
-  <target name="init-tests" depends="clean-tests">
+  <target name="init-tests" depends="clean-tests,junit.exists-check">
     <mkdir dir="${testclasses.dir}" />
     <mkdir dir="${testsrc.dir}" />
   </target>
