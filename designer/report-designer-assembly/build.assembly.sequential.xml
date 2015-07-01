@@ -24,6 +24,8 @@
 
   <property name="pdi-plugins.stage.dir" value="${stage.dir}/plugins"/>
 
+  <property name="system.dir" value="${report-designer.dir.winlinux}/system" />
+
   <!--
     AS STATED ABOVE, THE ONLY TASKS THAT SHOULD EXIST IN THIS BUILD FILE ARE
     THE TASKS THAT NEED TO DIFFER FROM THE DEFAULT IMPLEMENTATION OF THE TASKS
@@ -51,6 +53,7 @@
     <antcall target="resolve-runtime" inheritrefs="true"/>
     <antcall target="resolve-drivers" inheritrefs="true"/>
     <antcall target="resolve-plugins" inheritrefs="true"/>
+    <antcall target="resolve-pentaho-system" inheritrefs="true"/>
     <antcall target="extract-plugins" inheritrefs="true"/>
     <antcall target="extract-oss-licenses" inheritrefs="true"/>
   </target>
@@ -94,6 +97,25 @@
   <target name="resolve-plugins">
     <ivy:resolve file="${ivyfile}" conf="plugin"/>
     <ivy:retrieve conf="plugin" pattern="${pdi-plugins.stage.dir}/[module]-[revision](-[classifier]).[ext]"/>
+  </target>
+
+
+  <target name="resolve-pentaho-system" depends="install-ivy">
+    <ivy:resolve file="${ivyfile}" conf="pentaho-system" />
+    <ivy:retrieve conf="pentaho-system" pattern="${system.dir}/[module].[ext]" />
+    <for param="system">
+      <path id="system-list">
+        <fileset dir="${system.dir}">
+          <include name="*.zip"/>
+        </fileset>
+      </path>
+      <sequential>
+        <unzip src="@{system}" dest="${system.dir}" overwrite="true"/>
+        <delete file="@{system}"/>
+      </sequential>
+    </for>
+    <!-- unfortunately knowledgable code -->
+    <move file="${system.dir}/pentaho-karaf-assembly" tofile="${system.dir}/karaf" />
   </target>
 
   <!-- Makes sure the directories exist which will be used -->

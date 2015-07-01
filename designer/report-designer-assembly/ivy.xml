@@ -11,6 +11,7 @@
     <conf name="drivers"/>
     <conf name="plugin"/>
     <conf name="oss-licenses" />
+    <conf name="pentaho-system" />
   </configurations>
 
   <publications>
@@ -56,6 +57,13 @@
                 rev="${dependency.report-designer.revision}" transitive="true" changing="true"/>
     <dependency org="${ivy.artifact.group}" name="report-designer-ext-toc" rev="${dependency.report-designer.revision}"
                 transitive="true" changing="true"/>
+
+
+    <dependency org="pentaho" name="pdi-osgi-bridge-core" rev="${dependency.pdi-osgi-bridge.revision}" changing="true" />
+
+    <dependency org="pentaho" name="pentaho-karaf-assembly" rev="${project.revision}" changing="true" transitive="false" conf="pentaho-system->default">
+      <artifact name="pentaho-karaf-assembly" type="zip" m:classifier="client"/>
+    </dependency>
 
     <!-- launcher -->
     <dependency org="pentaho" name="pentaho-application-launcher" rev="${dependency.launcher.revision}"
@@ -128,9 +136,6 @@
     <dependency org="pentaho" name="pdi-spark-plugin" rev="${dependency.pdi-spark-plugin.revision}"
                 conf="plugin->default" changing="true" transitive="false">
       <artifact name="pdi-spark-plugin" type="zip"/>
-    </dependency>
-<dependency org="pentaho" name="pdi-osgi-bridge-assembly" rev="${dependency.pdi-osgi-bridge.revision}" changing="true" conf="plugin->default">
-      <artifact name="pdi-osgi-bridge-assembly" type="zip"/>
     </dependency>
     <dependency org="pentaho" name="pdi-spark-plugin" rev="${dependency.pdi-spark-plugin.revision}"
                 conf="plugin->default" changing="true" transitive="false">
