@@ -59,8 +59,14 @@
                 transitive="true" changing="true"/>
 
 
-    <dependency org="pentaho" name="pdi-osgi-bridge-core" rev="${dependency.pdi-osgi-bridge.revision}" changing="true" />
-
+    <!-- OSGI Support -->
+    <dependency org="pentaho" name="pdi-osgi-bridge-core" rev="${dependency.pdi-osgi-bridge.revision}" changing="true" transitive="false" />
+    <dependency org="pentaho" name="pentaho-capability-manager" rev="${project.revision}" changing="true" />
+    <dependency org="javax.servlet" name="javax.servlet-api" rev="3.0.1"/>
+    <dependency org="org.apache.karaf" name="org.apache.karaf.main" rev="3.0.3"/>
+    <dependency org="org.apache.karaf.jaas" name="org.apache.karaf.jaas.modules" rev="3.0.3"/>
+    <dependency org="org.apache.karaf.jaas" name="org.apache.karaf.jaas.boot" rev="3.0.3"/>
+    <dependency org="org.apache.karaf.jaas" name="org.apache.karaf.jaas.config" rev="3.0.3"/>
     <dependency org="pentaho" name="pentaho-karaf-assembly" rev="${project.revision}" changing="true" transitive="false" conf="pentaho-system->default">
       <artifact name="pentaho-karaf-assembly" type="zip" m:classifier="client"/>
     </dependency>
