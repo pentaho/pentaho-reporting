@@ -17,31 +17,40 @@
 
 package org.pentaho.reporting.libraries.formatting;
 
+import org.junit.Assert;
+import org.junit.Test;
+
 import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
 
-import org.junit.Assert;
-import org.junit.Test;
-
-public class MessageFormatTest
-{
-  public MessageFormatTest()
-  {
+public class MessageFormatTest {
+  public MessageFormatTest() {
   }
 
   @Test
-  public void testNonCrash()
-  {
-    FastMessageFormat messageFormat = new FastMessageFormat("{0,date,dd MMM yyyy}");
-    Assert.assertEquals("26 Nov 1973", messageFormat.format(new Object[]{new Date(123123123123l)}));
+  public void testNonCrash() {
+    FastMessageFormat messageFormat = new FastMessageFormat( "{0,date,dd MMM yyyy}" );
+    final Date tempDate = new Date( 123123123123l );
+    final Object[] tempDateArray = { tempDate };
+    final String tempDateString = messageFormat.format( tempDateArray );
+
+    // Added check for 25 or 26 Nov to handle the different timezones
+    boolean result = "26 Nov 1973".equals( tempDateString );
+    if ( !result ) {
+      result = "25 Nov 1973".equals( tempDateString );
+    }
+    Assert
+      .assertTrue( "Resuls should equal '25 Nov 1973' or '26 Nov 1973' depending on timezone: actual=" + tempDateString,
+        result );
   }
 
   @Test
   public void testLocaleAndTimezoneApplied() {
-    FastMessageFormat messageFormat = new FastMessageFormat("{0,date,full} {1,number,#,###.##}", Locale.GERMAN, TimeZone.getTimeZone("PST"));
-    Assert.assertEquals("Sonntag, 25. November 1973 16:52 Uhr PST 1.234,57",
-        messageFormat.format(new Object[]{new Date(123123123123l), new Double(1234.567)}));
+    FastMessageFormat messageFormat =
+      new FastMessageFormat( "{0,date,full} {1,number,#,###.##}", Locale.GERMAN, TimeZone.getTimeZone( "PST" ) );
+    Assert.assertEquals( "Sonntag, 25. November 1973 16:52 Uhr PST 1.234,57",
+      messageFormat.format( new Object[] { new Date( 123123123123l ), new Double( 1234.567 ) } ) );
 
   }
 
