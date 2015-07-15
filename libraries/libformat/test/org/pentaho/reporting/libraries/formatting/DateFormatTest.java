@@ -17,25 +17,26 @@
 
 package org.pentaho.reporting.libraries.formatting;
 
+import org.junit.Assert;
+import org.junit.Test;
+
 import java.text.DateFormat;
 import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
 
-import org.junit.Assert;
-import org.junit.Test;
-
-public class DateFormatTest
-{
+public class DateFormatTest {
   @Test
   public void testTimeZoneIsApplied() {
-    FastDateFormat fd = new FastDateFormat("yyyy-MM-dd HH:mm:ss,SSS ZZZ", Locale.ENGLISH, TimeZone.getTimeZone("PST"));
-    Assert.assertEquals("2009-01-06 00:40:31,000 -0800", fd.format(new Date(1231231231000l)));
+    FastDateFormat fd =
+      new FastDateFormat( "yyyy-MM-dd HH:mm:ss,SSS ZZZ", Locale.ENGLISH, TimeZone.getTimeZone( "PST" ) );
+    Assert.assertEquals( "2009-01-06 00:40:31,000 -0800", fd.format( new Date( 1231231231000l ) ) );
   }
 
   @Test
   public void testTimeZoneIsAppliedOnPreset() {
-    FastDateFormat fd = new FastDateFormat(DateFormat.FULL, DateFormat.FULL, Locale.ENGLISH, TimeZone.getTimeZone("PST"));
-    Assert.assertEquals("Tuesday, January 6, 2009 12:40:31 AM PST", fd.format(new Date(1231231231000l)));
+    FastDateFormat fd =
+      new FastDateFormat( DateFormat.FULL, DateFormat.FULL, Locale.ENGLISH, TimeZone.getTimeZone( "PST" ) );
+    Assert.assertEquals( "Tuesday, January 6, 2009 12:40:31 AM PST", fd.format( new Date( 1231231231000l ) ) );
   }
 }
