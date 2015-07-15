@@ -19,19 +19,16 @@ package org.pentaho.reporting.libraries.formula.function.userdefined;
 
 import org.pentaho.reporting.libraries.formula.FormulaTestBase;
 
-public class CsvTextFunctionTest extends FormulaTestBase
-{
-  public void testDefault() throws Exception
-  {
+public class CsvTextFunctionTest extends FormulaTestBase {
+  public void testDefault() throws Exception {
     runDefaultTest();
   }
 
-  public Object[][] createDataTest()
-  {
+  public Object[][] createDataTest() {
     return new Object[][]
-        {
-            {"CSVTEXT([.B18]; TRUE(); \",\"; \"'\")", "'1','2','3'"}
-        };
+      {
+        { "CSVTEXT([.B18]; TRUE(); \",\"; \"'\")", "'1','2','3'" }
+      };
   }
 
 }

@@ -17,9 +17,6 @@
 
 package org.pentaho.reporting.libraries.css.parser.stylehandler.text;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import org.pentaho.reporting.libraries.css.keys.text.TextStyleKeys;
 import org.pentaho.reporting.libraries.css.model.StyleKey;
 import org.pentaho.reporting.libraries.css.parser.CSSCompoundValueReadHandler;
@@ -27,18 +24,19 @@ import org.pentaho.reporting.libraries.css.values.CSSInheritValue;
 import org.pentaho.reporting.libraries.css.values.CSSValue;
 import org.w3c.css.sac.LexicalUnit;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Creation-Date: 02.12.2005, 19:36:00
  *
  * @author Thomas Morgner
  */
-public class TextOverflowReadHandler implements CSSCompoundValueReadHandler
-{
+public class TextOverflowReadHandler implements CSSCompoundValueReadHandler {
   private TextOverflowModeReadHandler modeReadHandler;
   private TextOverflowEllipsisReadHandler ellipsisReadHandler;
 
-  public TextOverflowReadHandler()
-  {
+  public TextOverflowReadHandler() {
     modeReadHandler = new TextOverflowModeReadHandler();
     ellipsisReadHandler = new TextOverflowEllipsisReadHandler();
   }
@@ -49,48 +47,39 @@ public class TextOverflowReadHandler implements CSSCompoundValueReadHandler
    * @param unit
    * @return
    */
-  public Map createValues(LexicalUnit unit)
-  {
-    if (unit.getLexicalUnitType() == LexicalUnit.SAC_INHERIT)
-    {
+  public Map createValues( LexicalUnit unit ) {
+    if ( unit.getLexicalUnitType() == LexicalUnit.SAC_INHERIT ) {
       Map map = new HashMap();
-      map.put(TextStyleKeys.TEXT_OVERFLOW_MODE, CSSInheritValue.getInstance());
-      map.put(TextStyleKeys.TEXT_OVERFLOW_ELLIPSIS, CSSInheritValue.getInstance());
+      map.put( TextStyleKeys.TEXT_OVERFLOW_MODE, CSSInheritValue.getInstance() );
+      map.put( TextStyleKeys.TEXT_OVERFLOW_ELLIPSIS, CSSInheritValue.getInstance() );
       return map;
     }
 
 
-    CSSValue mode = modeReadHandler.createValue(null, unit);
-    if (mode != null)
-    {
+    CSSValue mode = modeReadHandler.createValue( null, unit );
+    if ( mode != null ) {
       unit = unit.getNextLexicalUnit();
     }
     CSSValue ellipsis;
-    if (unit != null)
-    {
-      ellipsis = ellipsisReadHandler.createValue(null, unit);
-    }
-    else
-    {
+    if ( unit != null ) {
+      ellipsis = ellipsisReadHandler.createValue( null, unit );
+    } else {
       ellipsis = null;
     }
     Map map = new HashMap();
-    if (mode != null)
-    {
-      map.put(TextStyleKeys.TEXT_OVERFLOW_MODE, mode);
+    if ( mode != null ) {
+      map.put( TextStyleKeys.TEXT_OVERFLOW_MODE, mode );
     }
-    if (ellipsis != null)
-    {
-      map.put(TextStyleKeys.TEXT_OVERFLOW_ELLIPSIS, ellipsis);
+    if ( ellipsis != null ) {
+      map.put( TextStyleKeys.TEXT_OVERFLOW_ELLIPSIS, ellipsis );
     }
     return map;
   }
 
-  public StyleKey[] getAffectedKeys()
-  {
-    return new StyleKey[]{
-        TextStyleKeys.TEXT_OVERFLOW_MODE,
-        TextStyleKeys.TEXT_OVERFLOW_ELLIPSIS
+  public StyleKey[] getAffectedKeys() {
+    return new StyleKey[] {
+      TextStyleKeys.TEXT_OVERFLOW_MODE,
+      TextStyleKeys.TEXT_OVERFLOW_ELLIPSIS
     };
   }
 }

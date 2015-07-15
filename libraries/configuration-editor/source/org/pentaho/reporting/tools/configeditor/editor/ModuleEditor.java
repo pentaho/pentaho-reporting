@@ -17,11 +17,11 @@
 
 package org.pentaho.reporting.tools.configeditor.editor;
 
-import javax.swing.JComponent;
-
 import org.pentaho.reporting.libraries.base.boot.Module;
 import org.pentaho.reporting.libraries.base.config.HierarchicalConfiguration;
 import org.pentaho.reporting.tools.configeditor.model.ConfigDescriptionEntry;
+
+import javax.swing.*;
 
 /**
  * The module editor is used to provide a customizable editor component for a JfreeReport module.
@@ -31,8 +31,7 @@ import org.pentaho.reporting.tools.configeditor.model.ConfigDescriptionEntry;
  *
  * @author Thomas Morgner
  */
-public interface ModuleEditor
-{
+public interface ModuleEditor {
   /**
    * Creates a new instance of the module editor. This instance will be used to edit the specific module.
    * <p/>
@@ -44,7 +43,7 @@ public interface ModuleEditor
    * @return the created new editor instance.
    */
   public ModuleEditor createInstance
-      (Module module, HierarchicalConfiguration config, ConfigDescriptionEntry[] keyNames);
+  ( Module module, HierarchicalConfiguration config, ConfigDescriptionEntry[] keyNames );
 
   /**
    * Checks whether this module editor can handle the given module.
@@ -52,7 +51,7 @@ public interface ModuleEditor
    * @param module the module to be edited.
    * @return true, if this editor may be used to edit the module, false otherwise.
    */
-  public boolean canHandle(Module module);
+  public boolean canHandle( Module module );
 
   /**
    * Returns the editor component of the module. Calling this method is only valid on instances created with

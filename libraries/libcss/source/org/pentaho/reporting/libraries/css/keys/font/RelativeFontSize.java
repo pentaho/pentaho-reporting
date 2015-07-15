@@ -24,13 +24,11 @@ import org.pentaho.reporting.libraries.css.values.CSSConstant;
  *
  * @author Thomas Morgner
  */
-public class RelativeFontSize
-{
-  public static final CSSConstant SMALLER = new CSSConstant("smaller");
-  public static final CSSConstant LARGER = new CSSConstant("larger");
+public class RelativeFontSize {
+  public static final CSSConstant SMALLER = new CSSConstant( "smaller" );
+  public static final CSSConstant LARGER = new CSSConstant( "larger" );
 
-  private RelativeFontSize()
-  {
+  private RelativeFontSize() {
   }
 
 }

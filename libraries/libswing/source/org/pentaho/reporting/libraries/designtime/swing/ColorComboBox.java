@@ -17,31 +17,27 @@
 
 package org.pentaho.reporting.libraries.designtime.swing;
 
-import java.awt.Color;
-import java.awt.Dimension;
-import javax.swing.Action;
-import javax.swing.DefaultComboBoxModel;
+import javax.swing.*;
+import java.awt.*;
 
 /**
  * A predefined combobox that contains the predefined excel color pallette.
  */
-public class ColorComboBox extends SmartComboBox
-{
+public class ColorComboBox extends SmartComboBox {
   /**
    * Creates a new color combobox and populates it with the excel colors.
    */
-  public ColorComboBox()
-  {
-    final DefaultComboBoxModel model = new DefaultComboBoxModel(ColorUtility.getPredefinedExcelColors());
-    model.insertElementAt(null, 0);
-    model.setSelectedItem(null);
+  public ColorComboBox() {
+    final DefaultComboBoxModel model = new DefaultComboBoxModel( ColorUtility.getPredefinedExcelColors() );
+    model.insertElementAt( null, 0 );
+    model.setSelectedItem( null );
 
-    setModel(model);
-    setRenderer(new ColorCellRenderer());
+    setModel( model );
+    setRenderer( new ColorCellRenderer() );
     final int height1 = getPreferredSize().height;
-    setMaximumSize(new Dimension(height1 * 4, height1));
-    setFocusable(false);
-    setEditable(false);
+    setMaximumSize( new Dimension( height1 * 4, height1 ) );
+    setFocusable( false );
+    setEditable( false );
   }
 
   /**
@@ -49,12 +45,11 @@ public class ColorComboBox extends SmartComboBox
    *
    * @param o the new selected value.
    */
-  public void setValueFromModel(final Color o)
-  {
+  public void setValueFromModel( final Color o ) {
     final Action old = getAction();
-    setAction(null);
-    setSelectedItem(o);
-    setAction(old);
+    setAction( null );
+    setSelectedItem( o );
+    setAction( old );
   }
 
   /**
@@ -62,8 +57,7 @@ public class ColorComboBox extends SmartComboBox
    *
    * @return the selected color.
    */
-  public Color getValueFromModel()
-  {
+  public Color getValueFromModel() {
     return (Color) getSelectedItem();
   }
 }

@@ -17,9 +17,6 @@
 
 package org.pentaho.reporting.libraries.css.parser.stylehandler.border;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import org.pentaho.reporting.libraries.css.keys.border.BorderStyleKeys;
 import org.pentaho.reporting.libraries.css.model.StyleKey;
 import org.pentaho.reporting.libraries.css.parser.CSSCompoundValueReadHandler;
@@ -30,41 +27,35 @@ import org.pentaho.reporting.libraries.css.values.CSSValue;
 import org.pentaho.reporting.libraries.css.values.CSSValuePair;
 import org.w3c.css.sac.LexicalUnit;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
- * This looks a bit funny, as if the standard has not been completed.
- * THe compound property may change ...
+ * This looks a bit funny, as if the standard has not been completed. THe compound property may change ...
  *
  * @author Thomas Morgner
  */
-public class BorderRadiusReadHandler implements CSSValueReadHandler, CSSCompoundValueReadHandler
-{
-  public BorderRadiusReadHandler()
-  {
+public class BorderRadiusReadHandler implements CSSValueReadHandler, CSSCompoundValueReadHandler {
+  public BorderRadiusReadHandler() {
   }
 
-  public CSSValue createValue(StyleKey name, LexicalUnit value)
-  {
-    CSSNumericValue firstValue = CSSValueFactory.createLengthValue(value);
-    if (firstValue == null)
-    {
+  public CSSValue createValue( StyleKey name, LexicalUnit value ) {
+    CSSNumericValue firstValue = CSSValueFactory.createLengthValue( value );
+    if ( firstValue == null ) {
       return null;
     }
     value = value.getNextLexicalUnit();
     CSSNumericValue secondValue;
-    if (value == null)
-    {
+    if ( value == null ) {
       secondValue = firstValue;
-    }
-    else
-    {
-      secondValue = CSSValueFactory.createLengthValue(value);
-      if (secondValue == null)
-      {
+    } else {
+      secondValue = CSSValueFactory.createLengthValue( value );
+      if ( secondValue == null ) {
         return null;
       }
     }
 
-    return new CSSValuePair(firstValue, secondValue);
+    return new CSSValuePair( firstValue, secondValue );
   }
 
   /**
@@ -73,29 +64,26 @@ public class BorderRadiusReadHandler implements CSSValueReadHandler, CSSCompound
    * @param unit
    * @return
    */
-  public Map createValues(LexicalUnit unit)
-  {
-    final CSSValue value = createValue(null, unit);
-    if (value == null)
-    {
+  public Map createValues( LexicalUnit unit ) {
+    final CSSValue value = createValue( null, unit );
+    if ( value == null ) {
       return null;
     }
 
     final Map map = new HashMap();
-    map.put(BorderStyleKeys.BORDER_TOP_RIGHT_RADIUS, value);
-    map.put(BorderStyleKeys.BORDER_BOTTOM_RIGHT_RADIUS, value);
-    map.put(BorderStyleKeys.BORDER_BOTTOM_LEFT_RADIUS, value);
-    map.put(BorderStyleKeys.BORDER_TOP_LEFT_RADIUS, value);
+    map.put( BorderStyleKeys.BORDER_TOP_RIGHT_RADIUS, value );
+    map.put( BorderStyleKeys.BORDER_BOTTOM_RIGHT_RADIUS, value );
+    map.put( BorderStyleKeys.BORDER_BOTTOM_LEFT_RADIUS, value );
+    map.put( BorderStyleKeys.BORDER_TOP_LEFT_RADIUS, value );
     return map;
   }
 
-  public StyleKey[] getAffectedKeys()
-  {
-    return new StyleKey[]{
-        BorderStyleKeys.BORDER_TOP_RIGHT_RADIUS,
-        BorderStyleKeys.BORDER_BOTTOM_RIGHT_RADIUS,
-        BorderStyleKeys.BORDER_BOTTOM_LEFT_RADIUS,
-        BorderStyleKeys.BORDER_TOP_LEFT_RADIUS
+  public StyleKey[] getAffectedKeys() {
+    return new StyleKey[] {
+      BorderStyleKeys.BORDER_TOP_RIGHT_RADIUS,
+      BorderStyleKeys.BORDER_BOTTOM_RIGHT_RADIUS,
+      BorderStyleKeys.BORDER_BOTTOM_LEFT_RADIUS,
+      BorderStyleKeys.BORDER_TOP_LEFT_RADIUS
     };
   }
 }

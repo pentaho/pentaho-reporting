@@ -23,8 +23,7 @@ package org.pentaho.reporting.tools.configeditor.model;
  *
  * @author Thomas Morgner
  */
-public class ClassConfigDescriptionEntry extends ConfigDescriptionEntry
-{
+public class ClassConfigDescriptionEntry extends ConfigDescriptionEntry {
   /**
    * The base class for the configuration value.
    */
@@ -35,9 +34,8 @@ public class ClassConfigDescriptionEntry extends ConfigDescriptionEntry
    *
    * @param keyName the full name of the key.
    */
-  public ClassConfigDescriptionEntry(final String keyName)
-  {
-    super(keyName);
+  public ClassConfigDescriptionEntry( final String keyName ) {
+    super( keyName );
     baseClass = Object.class;
   }
 
@@ -46,8 +44,7 @@ public class ClassConfigDescriptionEntry extends ConfigDescriptionEntry
    *
    * @return the base class or Object.class if not specified otherwise.
    */
-  public Class getBaseClass()
-  {
+  public Class getBaseClass() {
     return baseClass;
   }
 
@@ -56,43 +53,35 @@ public class ClassConfigDescriptionEntry extends ConfigDescriptionEntry
    *
    * @param baseClass the base class, never null.
    */
-  public void setBaseClass(final Class baseClass)
-  {
-    if (baseClass == null)
-    {
+  public void setBaseClass( final Class baseClass ) {
+    if ( baseClass == null ) {
       throw new NullPointerException();
     }
     this.baseClass = baseClass;
   }
 
-  public boolean equals(final Object o)
-  {
-    if (this == o)
-    {
+  public boolean equals( final Object o ) {
+    if ( this == o ) {
       return true;
     }
-    if (o == null || getClass() != o.getClass())
-    {
+    if ( o == null || getClass() != o.getClass() ) {
       return false;
     }
-    if (!super.equals(o))
-    {
+    if ( !super.equals( o ) ) {
       return false;
     }
 
     final ClassConfigDescriptionEntry that = (ClassConfigDescriptionEntry) o;
-    if (baseClass != null ? !baseClass.equals(that.baseClass) : that.baseClass != null)
-    {
+    if ( baseClass != null ? !baseClass.equals( that.baseClass ) : that.baseClass != null ) {
       return false;
     }
 
     return true;
   }
 
-  public int hashCode()
-  {
+  public int hashCode() {
     int result = super.hashCode();
-    result = 29 * result + (baseClass != null ? baseClass.hashCode() : 0);
+    result = 29 * result + ( baseClass != null ? baseClass.hashCode() : 0 );
     return result;
   }
 }

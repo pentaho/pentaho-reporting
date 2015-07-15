@@ -25,42 +25,34 @@ import org.pentaho.reporting.libraries.formula.typing.coretypes.TextType;
 
 /**
  * Describes ValueFunction function.
- * @see org.pentaho.reporting.libraries.formula.function.information.ValueFunction
  *
  * @author Kurits
- *
+ * @see org.pentaho.reporting.libraries.formula.function.information.ValueFunction
  */
-public class ValueFunctionDescription extends AbstractFunctionDescription
-{
+public class ValueFunctionDescription extends AbstractFunctionDescription {
   private static final long serialVersionUID = 743117553650008440L;
 
-  public ValueFunctionDescription()
-  {
-    super("VALUE", "org.pentaho.reporting.libraries.formula.function.information.Value-Function");
+  public ValueFunctionDescription() {
+    super( "VALUE", "org.pentaho.reporting.libraries.formula.function.information.Value-Function" );
   }
 
-  public FunctionCategory getCategory()
-  {
+  public FunctionCategory getCategory() {
     return InformationFunctionCategory.CATEGORY;
   }
 
-  public int getParameterCount()
-  {
+  public int getParameterCount() {
     return 1;
   }
 
-  public Type getParameterType(final int position)
-  {
+  public Type getParameterType( final int position ) {
     return TextType.TYPE;
   }
 
-  public Type getValueType()
-  {
+  public Type getValueType() {
     return NumberType.GENERIC_NUMBER;
   }
 
-  public boolean isParameterMandatory(final int position)
-  {
+  public boolean isParameterMandatory( final int position ) {
     return true;
   }
 

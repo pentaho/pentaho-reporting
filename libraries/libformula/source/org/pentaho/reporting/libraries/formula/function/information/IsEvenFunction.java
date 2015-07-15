@@ -29,59 +29,50 @@ import org.pentaho.reporting.libraries.formula.typing.coretypes.LogicalType;
 
 /**
  * This function retruns true if the given value is an even number.
- * 
+ *
  * @author Cedric Pronzato
- * 
  */
-public class IsEvenFunction implements Function
-{
+public class IsEvenFunction implements Function {
   private static final TypeValuePair RETURN_TRUE = new TypeValuePair(
-      LogicalType.TYPE, Boolean.TRUE);
+    LogicalType.TYPE, Boolean.TRUE );
 
   private static final TypeValuePair RETURN_FALSE = new TypeValuePair(
-      LogicalType.TYPE, Boolean.FALSE);
+    LogicalType.TYPE, Boolean.FALSE );
   private static final long serialVersionUID = 3298591139016352997L;
 
-  public IsEvenFunction()
-  {
+  public IsEvenFunction() {
   }
 
-  public TypeValuePair evaluate(final FormulaContext context,
-      final ParameterCallback parameters) throws EvaluationException
-  {
+  public TypeValuePair evaluate( final FormulaContext context,
+                                 final ParameterCallback parameters ) throws EvaluationException {
     final int parameterCount = parameters.getParameterCount();
-    if (parameterCount < 1)
-    {
-      throw EvaluationException.getInstance(LibFormulaErrorValue.ERROR_ARGUMENTS_VALUE);
+    if ( parameterCount < 1 ) {
+      throw EvaluationException.getInstance( LibFormulaErrorValue.ERROR_ARGUMENTS_VALUE );
     }
 
-    final Type type1 = parameters.getType(0);
-    final Object value = parameters.getValue(0);
+    final Type type1 = parameters.getType( 0 );
+    final Object value = parameters.getValue( 0 );
 
     final TypeRegistry typeRegistry = context.getTypeRegistry();
-    final Number number = typeRegistry.convertToNumber(type1, value);
+    final Number number = typeRegistry.convertToNumber( type1, value );
 
-    if (number == null)
-    {
-      throw EvaluationException.getInstance(LibFormulaErrorValue.ERROR_INVALID_ARGUMENT_VALUE);
+    if ( number == null ) {
+      throw EvaluationException.getInstance( LibFormulaErrorValue.ERROR_INVALID_ARGUMENT_VALUE );
     }
 
     int intValue = number.intValue();
-    if (intValue < 0)
-    {
+    if ( intValue < 0 ) {
       intValue *= -1;
     }
 
-    if (intValue % 2 == 0)
-    {
+    if ( intValue % 2 == 0 ) {
       return RETURN_TRUE;
     }
 
     return RETURN_FALSE;
   }
 
-  public String getCanonicalName()
-  {
+  public String getCanonicalName() {
     return "ISEVEN";
   }
 

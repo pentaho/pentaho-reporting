@@ -24,42 +24,34 @@ import org.pentaho.reporting.libraries.formula.typing.coretypes.NumberType;
 
 /**
  * Describes ModFunction function.
- * @see org.pentaho.reporting.libraries.formula.function.math.ModFunction
  *
  * @author Cedric Pronzato
- *
+ * @see org.pentaho.reporting.libraries.formula.function.math.ModFunction
  */
-public class ModFunctionDescription extends AbstractFunctionDescription
-{
+public class ModFunctionDescription extends AbstractFunctionDescription {
   private static final long serialVersionUID = -7372799362385391577L;
 
-  public ModFunctionDescription()
-  {
-    super("MOD", "org.pentaho.reporting.libraries.formula.function.math.Mod-Function");
+  public ModFunctionDescription() {
+    super( "MOD", "org.pentaho.reporting.libraries.formula.function.math.Mod-Function" );
   }
 
-  public FunctionCategory getCategory()
-  {
+  public FunctionCategory getCategory() {
     return MathFunctionCategory.CATEGORY;
   }
 
-  public int getParameterCount()
-  {
+  public int getParameterCount() {
     return 2;
   }
 
-  public Type getParameterType(final int position)
-  {
+  public Type getParameterType( final int position ) {
     return NumberType.GENERIC_NUMBER;
   }
 
-  public Type getValueType()
-  {
+  public Type getValueType() {
     return NumberType.GENERIC_NUMBER;
   }
 
-  public boolean isParameterMandatory(final int position)
-  {
+  public boolean isParameterMandatory( final int position ) {
     return true;
   }
 

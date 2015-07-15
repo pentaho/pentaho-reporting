@@ -26,8 +26,7 @@ import org.w3c.css.sac.LexicalUnit;
  *
  * @author Thomas Morgner
  */
-public interface CSSValueReadHandler
-{
-  public CSSValue createValue(StyleKey name,
-                              LexicalUnit value);
+public interface CSSValueReadHandler {
+  public CSSValue createValue( StyleKey name,
+                               LexicalUnit value );
 }

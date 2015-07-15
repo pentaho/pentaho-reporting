@@ -24,8 +24,7 @@ import org.pentaho.reporting.libraries.base.versioning.ProjectInformation;
  *
  * @author Thomas Morgner
  */
-public class LibSerializerInfo extends ProjectInformation
-{
+public class LibSerializerInfo extends ProjectInformation {
   /**
    * The info singleton.
    */
@@ -36,10 +35,8 @@ public class LibSerializerInfo extends ProjectInformation
    *
    * @return The single instance of information about the JCommon library.
    */
-  public static synchronized LibSerializerInfo getInstance()
-  {
-    if (singleton == null)
-    {
+  public static synchronized LibSerializerInfo getInstance() {
+    if ( singleton == null ) {
       singleton = new LibSerializerInfo();
       singleton.initialize();
     }
@@ -50,22 +47,20 @@ public class LibSerializerInfo extends ProjectInformation
   /**
    * Constructs an empty project info object.
    */
-  private LibSerializerInfo()
-  {
-    super("libserializer", "LibSerializer");
+  private LibSerializerInfo() {
+    super( "libserializer", "LibSerializer" );
   }
 
   /**
    * Second step of the initialization.
    */
-  private void initialize() 
-  {
-    setInfo("http://reporting.pentaho.org/libserializer/");
-    setCopyright("(C)opyright 2006-2011, by Pentaho Corporation, Object Refinery Limited and Contributors");
+  private void initialize() {
+    setInfo( "http://reporting.pentaho.org/libserializer/" );
+    setCopyright( "(C)opyright 2006-2011, by Pentaho Corporation, Object Refinery Limited and Contributors" );
 
-    setLicenseName("LGPL");
+    setLicenseName( "LGPL" );
 
-    setBootClass(LibSerializerBoot.class.getName());
+    setBootClass( LibSerializerBoot.class.getName() );
   }
 
 }

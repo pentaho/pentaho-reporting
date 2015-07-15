@@ -17,8 +17,8 @@
 
 package org.pentaho.reporting.libraries.css.resolver.values.computed.text;
 
-import org.pentaho.reporting.libraries.css.resolver.values.computed.ConstantsResolveHandler;
 import org.pentaho.reporting.libraries.css.keys.text.TextOverflowMode;
+import org.pentaho.reporting.libraries.css.resolver.values.computed.ConstantsResolveHandler;
 
 
 /**
@@ -26,14 +26,12 @@ import org.pentaho.reporting.libraries.css.keys.text.TextOverflowMode;
  *
  * @author Thomas Morgner
  */
-public class TextOverflowModeResolveHandler extends ConstantsResolveHandler
-{
-  public TextOverflowModeResolveHandler()
-  {
-    addNormalizeValue(TextOverflowMode.CLIP);
-    addNormalizeValue(TextOverflowMode.ELLIPSIS);
-    addNormalizeValue(TextOverflowMode.ELLIPSIS_WORD);
-    setFallback(TextOverflowMode.CLIP);
+public class TextOverflowModeResolveHandler extends ConstantsResolveHandler {
+  public TextOverflowModeResolveHandler() {
+    addNormalizeValue( TextOverflowMode.CLIP );
+    addNormalizeValue( TextOverflowMode.ELLIPSIS );
+    addNormalizeValue( TextOverflowMode.ELLIPSIS_WORD );
+    setFallback( TextOverflowMode.CLIP );
   }
 
 }

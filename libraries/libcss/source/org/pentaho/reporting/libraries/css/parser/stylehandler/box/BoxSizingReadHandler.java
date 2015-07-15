@@ -20,13 +20,11 @@ package org.pentaho.reporting.libraries.css.parser.stylehandler.box;
 import org.pentaho.reporting.libraries.css.keys.box.BoxSizing;
 import org.pentaho.reporting.libraries.css.parser.stylehandler.OneOfConstantsReadHandler;
 
-public class BoxSizingReadHandler extends OneOfConstantsReadHandler
-{
-  public BoxSizingReadHandler()
-  {
-    super(false);
-    addValue(BoxSizing.BORDER_BOX);
-    addValue(BoxSizing.CONTENT_BOX);
+public class BoxSizingReadHandler extends OneOfConstantsReadHandler {
+  public BoxSizingReadHandler() {
+    super( false );
+    addValue( BoxSizing.BORDER_BOX );
+    addValue( BoxSizing.CONTENT_BOX );
   }
 
 

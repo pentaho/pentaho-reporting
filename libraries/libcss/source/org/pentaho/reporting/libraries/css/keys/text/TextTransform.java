@@ -24,14 +24,12 @@ import org.pentaho.reporting.libraries.css.values.CSSConstant;
  *
  * @author Thomas Morgner
  */
-public class TextTransform
-{
-  public static final CSSConstant CAPITALIZE = new CSSConstant("capitalize");
-  public static final CSSConstant UPPERCASE = new CSSConstant("uppercase");
-  public static final CSSConstant LOWERCASE = new CSSConstant("lowercase");
-  public static final CSSConstant NONE = new CSSConstant("none");
+public class TextTransform {
+  public static final CSSConstant CAPITALIZE = new CSSConstant( "capitalize" );
+  public static final CSSConstant UPPERCASE = new CSSConstant( "uppercase" );
+  public static final CSSConstant LOWERCASE = new CSSConstant( "lowercase" );
+  public static final CSSConstant NONE = new CSSConstant( "none" );
 
-  private TextTransform()
-  {
+  private TextTransform() {
   }
 }

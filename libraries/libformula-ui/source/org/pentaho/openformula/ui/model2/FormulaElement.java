@@ -23,28 +23,24 @@ import javax.swing.text.Document;
 import javax.swing.text.Element;
 import javax.swing.text.SimpleAttributeSet;
 
-public abstract class FormulaElement implements Element
-{
+public abstract class FormulaElement implements Element {
   private Document document;
   private int endOffset;
   private int startOffset;
   private AttributeSet attributes;
   private FormulaRootElement parentElement;
 
-  protected FormulaElement(final FormulaDocument document, final FormulaRootElement parentElement)
-  {
+  protected FormulaElement( final FormulaDocument document, final FormulaRootElement parentElement ) {
     this.document = document;
     this.parentElement = parentElement;
     this.attributes = new SimpleAttributeSet();
   }
 
-  public void setEndOffset(final int endOffset)
-  {
+  public void setEndOffset( final int endOffset ) {
     this.endOffset = endOffset;
   }
 
-  public void setStartOffset(final int startOffset)
-  {
+  public void setStartOffset( final int startOffset ) {
     this.startOffset = startOffset;
   }
 
@@ -55,8 +51,7 @@ public abstract class FormulaElement implements Element
    *
    * @return the document
    */
-  public Document getDocument()
-  {
+  public Document getDocument() {
     return document;
   }
 
@@ -65,8 +60,7 @@ public abstract class FormulaElement implements Element
    *
    * @return the parent element
    */
-  public Element getParentElement()
-  {
+  public Element getParentElement() {
     return parentElement;
   }
 
@@ -75,8 +69,7 @@ public abstract class FormulaElement implements Element
    *
    * @return the attributes for the element
    */
-  public AttributeSet getAttributes()
-  {
+  public AttributeSet getAttributes() {
     return attributes;
   }
 
@@ -88,8 +81,7 @@ public abstract class FormulaElement implements Element
    * @see Document
    * @see AbstractDocument
    */
-  public int getStartOffset()
-  {
+  public int getStartOffset() {
     return startOffset;
   }
 
@@ -105,8 +97,7 @@ public abstract class FormulaElement implements Element
    * @see Document
    * @see AbstractDocument
    */
-  public int getEndOffset()
-  {
+  public int getEndOffset() {
     return endOffset;
   }
 
@@ -120,8 +111,7 @@ public abstract class FormulaElement implements Element
    * @param offset the specified offset >= 0
    * @return the element index >= 0
    */
-  public int getElementIndex(final int offset)
-  {
+  public int getElementIndex( final int offset ) {
     return -1;
   }
 
@@ -131,8 +121,7 @@ public abstract class FormulaElement implements Element
    *
    * @return the number of child elements >= 0
    */
-  public int getElementCount()
-  {
+  public int getElementCount() {
     return 0;
   }
 
@@ -142,8 +131,7 @@ public abstract class FormulaElement implements Element
    * @param index the specified index >= 0
    * @return the child element
    */
-  public Element getElement(final int index)
-  {
+  public Element getElement( final int index ) {
     throw new IndexOutOfBoundsException();
   }
 
@@ -153,8 +141,7 @@ public abstract class FormulaElement implements Element
    *
    * @return true if a leaf element else false
    */
-  public boolean isLeaf()
-  {
+  public boolean isLeaf() {
     return true;
   }
 }

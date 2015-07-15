@@ -17,81 +17,57 @@
 
 package org.pentaho.reporting.libraries.designtime.swing.propertyeditors;
 
-import java.awt.BorderLayout;
-import java.awt.Component;
-import java.awt.Dialog;
-import java.awt.Frame;
-import java.awt.Window;
-import java.awt.event.ActionEvent;
-import java.beans.PropertyEditor;
-import java.util.EventObject;
-import javax.swing.AbstractAction;
-import javax.swing.BorderFactory;
-import javax.swing.JButton;
-import javax.swing.JPanel;
-import javax.swing.JTable;
-import javax.swing.JTextField;
-import javax.swing.event.CellEditorListener;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.EventListenerList;
-import javax.swing.table.TableCellEditor;
-
 import org.pentaho.reporting.libraries.designtime.swing.EllipsisButton;
 import org.pentaho.reporting.libraries.designtime.swing.LibSwingUtil;
 import org.pentaho.reporting.libraries.designtime.swing.Messages;
 
-public class PropertyCellEditorWithEllipsis extends JPanel implements TableCellEditor
-{
+import javax.swing.*;
+import javax.swing.event.CellEditorListener;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.EventListenerList;
+import javax.swing.table.TableCellEditor;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.beans.PropertyEditor;
+import java.util.EventObject;
+
+public class PropertyCellEditorWithEllipsis extends JPanel implements TableCellEditor {
   private static final String POPUP_EDITOR = "popupEditor";
 
-  private class ExtendedEditorAction extends AbstractAction
-  {
+  private class ExtendedEditorAction extends AbstractAction {
     /**
      * Defines an <code>Action</code> object with a default description string and default icon.
      */
-    private ExtendedEditorAction()
-    {
+    private ExtendedEditorAction() {
     }
 
     /**
      * Invoked when an action occurs.
      */
-    public void actionPerformed(final ActionEvent e)
-    {
-      if (propertyEditor == null)
-      {
+    public void actionPerformed( final ActionEvent e ) {
+      if ( propertyEditor == null ) {
         return;
       }
 
-      if (propertyEditor.supportsCustomEditor())
-      {
-        final Window window = LibSwingUtil.getWindowAncestor(PropertyCellEditorWithEllipsis.this);
+      if ( propertyEditor.supportsCustomEditor() ) {
+        final Window window = LibSwingUtil.getWindowAncestor( PropertyCellEditorWithEllipsis.this );
 
         final CustomPropertyEditorDialog editorDialog;
-        if (window instanceof Frame)
-        {
-          editorDialog = new CustomPropertyEditorDialog((Frame) window);
-        }
-        else if (window instanceof Dialog)
-        {
-          editorDialog = new CustomPropertyEditorDialog((Dialog) window);
-        }
-        else
-        {
+        if ( window instanceof Frame ) {
+          editorDialog = new CustomPropertyEditorDialog( (Frame) window );
+        } else if ( window instanceof Dialog ) {
+          editorDialog = new CustomPropertyEditorDialog( (Dialog) window );
+        } else {
           editorDialog = new CustomPropertyEditorDialog();
         }
-        if (editorDialog.performEdit(propertyEditor))
-        {
-          textField.setText(propertyEditor.getAsText());
+        if ( editorDialog.performEdit( propertyEditor ) ) {
+          textField.setText( propertyEditor.getAsText() );
           stopCellEditing();
         }
-      }
-      else
-      {
+      } else {
         final BasicTextPropertyEditorDialog editorDialog = createTextEditorDialog();
-        if (editorDialog.performEdit(propertyEditor))
-        {
-          textField.setText(propertyEditor.getAsText());
+        if ( editorDialog.performEdit( propertyEditor ) ) {
+          textField.setText( propertyEditor.getAsText() );
           stopCellEditing();
         }
       }
@@ -104,88 +80,71 @@ public class PropertyCellEditorWithEllipsis extends JPanel implements TableCellE
   private boolean nullable;
   private PropertyEditor propertyEditor;
 
-  public PropertyCellEditorWithEllipsis()
-  {
-    setLayout(new BorderLayout());
+  public PropertyCellEditorWithEllipsis() {
+    setLayout( new BorderLayout() );
 
     this.eventListenerList = new EventListenerList();
 
-    ellipsisButton = new EllipsisButton("...");
-    ellipsisButton.addActionListener(new ExtendedEditorAction());
+    ellipsisButton = new EllipsisButton( "..." );
+    ellipsisButton.addActionListener( new ExtendedEditorAction() );
 
     textField = new JTextField();
     textField.getInputMap().put
-        (Messages.getInstance().getKeyStroke("PropertyCellEditorWithEllipsis.PopupEditor.Accelerator"), POPUP_EDITOR);
-    textField.getActionMap().put(POPUP_EDITOR, new ExtendedEditorAction());
-    textField.setBorder(BorderFactory.createEmptyBorder());
+      ( Messages.getInstance().getKeyStroke( "PropertyCellEditorWithEllipsis.PopupEditor.Accelerator" ), POPUP_EDITOR );
+    textField.getActionMap().put( POPUP_EDITOR, new ExtendedEditorAction() );
+    textField.setBorder( BorderFactory.createEmptyBorder() );
 
-    add(textField, BorderLayout.CENTER);
-    add(ellipsisButton, BorderLayout.EAST);
+    add( textField, BorderLayout.CENTER );
+    add( ellipsisButton, BorderLayout.EAST );
 
     nullable = false;
   }
 
-  protected BasicTextPropertyEditorDialog createTextEditorDialog()
-  {
-    final Window window = LibSwingUtil.getWindowAncestor(PropertyCellEditorWithEllipsis.this);
+  protected BasicTextPropertyEditorDialog createTextEditorDialog() {
+    final Window window = LibSwingUtil.getWindowAncestor( PropertyCellEditorWithEllipsis.this );
 
     final BasicTextPropertyEditorDialog editorDialog;
-    if (window instanceof Frame)
-    {
-      editorDialog = new BasicTextPropertyEditorDialog((Frame) window);
-    }
-    else if (window instanceof Dialog)
-    {
-      editorDialog = new BasicTextPropertyEditorDialog((Dialog) window);
-    }
-    else
-    {
+    if ( window instanceof Frame ) {
+      editorDialog = new BasicTextPropertyEditorDialog( (Frame) window );
+    } else if ( window instanceof Dialog ) {
+      editorDialog = new BasicTextPropertyEditorDialog( (Dialog) window );
+    } else {
       editorDialog = new BasicTextPropertyEditorDialog();
     }
     return editorDialog;
   }
 
-  public PropertyEditor getPropertyEditor()
-  {
+  public PropertyEditor getPropertyEditor() {
     return propertyEditor;
   }
 
-  public void setPropertyEditor(final PropertyEditor propertyEditor)
-  {
+  public void setPropertyEditor( final PropertyEditor propertyEditor ) {
     this.propertyEditor = propertyEditor;
-    if (propertyEditor instanceof AdvancedPropertyEditor)
-    {
+    if ( propertyEditor instanceof AdvancedPropertyEditor ) {
       final AdvancedPropertyEditor advancedPropertyEditor = (AdvancedPropertyEditor) propertyEditor;
-      textField.setEditable(advancedPropertyEditor.supportsText());
-    }
-    else
-    {
-      textField.setEditable(true);
+      textField.setEditable( advancedPropertyEditor.supportsText() );
+    } else {
+      textField.setEditable( true );
     }
   }
 
-  public boolean isNullable()
-  {
+  public boolean isNullable() {
     return nullable;
   }
 
-  public void setNullable(final boolean nullable)
-  {
+  public void setNullable( final boolean nullable ) {
     this.nullable = nullable;
   }
 
-  public void requestFocus()
-  {
+  public void requestFocus() {
     textField.requestFocus();
   }
 
-  public JTextField getTextField()
-  {
+  public JTextField getTextField() {
     return textField;
   }
 
-  public JButton getEllipsisButton()
-  {
+  public JButton getEllipsisButton() {
     return ellipsisButton;
   }
 
@@ -194,8 +153,7 @@ public class PropertyCellEditorWithEllipsis extends JPanel implements TableCellE
    *
    * @return the value contained in the editor
    */
-  public Object getCellEditorValue()
-  {
+  public Object getCellEditorValue() {
     return propertyEditor.getValue();
   }
 
@@ -209,8 +167,7 @@ public class PropertyCellEditorWithEllipsis extends JPanel implements TableCellE
    * @param anEvent the event the editor should use to consider whether to begin editing or not
    * @return true if editing can be started
    */
-  public boolean isCellEditable(final EventObject anEvent)
-  {
+  public boolean isCellEditable( final EventObject anEvent ) {
     return true;
   }
 
@@ -225,8 +182,7 @@ public class PropertyCellEditorWithEllipsis extends JPanel implements TableCellE
    * @param anEvent the event the editor should use to start editing
    * @return true if the editor would like the editing cell to be selected; otherwise returns false
    */
-  public boolean shouldSelectCell(final EventObject anEvent)
-  {
+  public boolean shouldSelectCell( final EventObject anEvent ) {
     return true;
   }
 
@@ -237,19 +193,15 @@ public class PropertyCellEditorWithEllipsis extends JPanel implements TableCellE
    *
    * @return true if editing was stopped; false otherwise
    */
-  public boolean stopCellEditing()
-  {
-    try
-    {
-      propertyEditor.setAsText(textField.getText());
+  public boolean stopCellEditing() {
+    try {
+      propertyEditor.setAsText( textField.getText() );
       fireEditingStopped();
-      textField.setText(null);
+      textField.setText( null );
       return true;
-    }
-    catch (Exception e)
-    {
+    } catch ( Exception e ) {
       fireEditingCanceled();
-      textField.setText(null);
+      textField.setText( null );
       return true;
     }
 
@@ -258,32 +210,27 @@ public class PropertyCellEditorWithEllipsis extends JPanel implements TableCellE
   /**
    * Tells the editor to cancel editing and not accept any partially edited value.
    */
-  public void cancelCellEditing()
-  {
-    textField.setText(null);
+  public void cancelCellEditing() {
+    textField.setText( null );
     fireEditingCanceled();
   }
 
-  protected void fireEditingCanceled()
-  {
-    final CellEditorListener[] listeners = eventListenerList.getListeners(CellEditorListener.class);
-    final ChangeEvent event = new ChangeEvent(this);
-    for (int i = 0; i < listeners.length; i++)
-    {
-      final CellEditorListener listener = listeners[i];
-      listener.editingCanceled(event);
+  protected void fireEditingCanceled() {
+    final CellEditorListener[] listeners = eventListenerList.getListeners( CellEditorListener.class );
+    final ChangeEvent event = new ChangeEvent( this );
+    for ( int i = 0; i < listeners.length; i++ ) {
+      final CellEditorListener listener = listeners[ i ];
+      listener.editingCanceled( event );
     }
   }
 
 
-  protected void fireEditingStopped()
-  {
-    final CellEditorListener[] listeners = eventListenerList.getListeners(CellEditorListener.class);
-    final ChangeEvent event = new ChangeEvent(this);
-    for (int i = 0; i < listeners.length; i++)
-    {
-      final CellEditorListener listener = listeners[i];
-      listener.editingStopped(event);
+  protected void fireEditingStopped() {
+    final CellEditorListener[] listeners = eventListenerList.getListeners( CellEditorListener.class );
+    final ChangeEvent event = new ChangeEvent( this );
+    for ( int i = 0; i < listeners.length; i++ ) {
+      final CellEditorListener listener = listeners[ i ];
+      listener.editingStopped( event );
     }
   }
 
@@ -292,9 +239,8 @@ public class PropertyCellEditorWithEllipsis extends JPanel implements TableCellE
    *
    * @param l the CellEditorListener
    */
-  public void addCellEditorListener(final CellEditorListener l)
-  {
-    eventListenerList.add(CellEditorListener.class, l);
+  public void addCellEditorListener( final CellEditorListener l ) {
+    eventListenerList.add( CellEditorListener.class, l );
   }
 
   /**
@@ -302,9 +248,8 @@ public class PropertyCellEditorWithEllipsis extends JPanel implements TableCellE
    *
    * @param l the CellEditorListener
    */
-  public void removeCellEditorListener(final CellEditorListener l)
-  {
-    eventListenerList.remove(CellEditorListener.class, l);
+  public void removeCellEditorListener( final CellEditorListener l ) {
+    eventListenerList.remove( CellEditorListener.class, l );
   }
 
   /**
@@ -323,20 +268,16 @@ public class PropertyCellEditorWithEllipsis extends JPanel implements TableCellE
    * @param column     the column of the cell being edited
    * @return the component for editing
    */
-  public Component getTableCellEditorComponent(final JTable table,
-                                               final Object value,
-                                               final boolean isSelected,
-                                               final int row,
-                                               final int column)
-  {
-    propertyEditor.setValue(value);
-    if (value == null)
-    {
-      textField.setText(null);
-    }
-    else
-    {
-      textField.setText(propertyEditor.getAsText());
+  public Component getTableCellEditorComponent( final JTable table,
+                                                final Object value,
+                                                final boolean isSelected,
+                                                final int row,
+                                                final int column ) {
+    propertyEditor.setValue( value );
+    if ( value == null ) {
+      textField.setText( null );
+    } else {
+      textField.setText( propertyEditor.getAsText() );
     }
     return this;
   }

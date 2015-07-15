@@ -17,20 +17,17 @@
 
 package org.pentaho.openformula.ui.model2;
 
-public class FormulaOperatorElement extends FormulaElement
-{
+public class FormulaOperatorElement extends FormulaElement {
   private String operator;
 
-  public FormulaOperatorElement(final FormulaDocument document,
-                                final FormulaRootElement parentElement,
-                                final String operator)
-  {
-    super(document, parentElement);
+  public FormulaOperatorElement( final FormulaDocument document,
+                                 final FormulaRootElement parentElement,
+                                 final String operator ) {
+    super( document, parentElement );
     this.operator = operator;
   }
 
-  public String getText()
-  {
+  public String getText() {
     return operator;
   }
 
@@ -40,8 +37,7 @@ public class FormulaOperatorElement extends FormulaElement
    *
    * @return the element name
    */
-  public String getName()
-  {
+  public String getName() {
     return "operator"; // NON-NLS
   }
 }

@@ -23,42 +23,34 @@ import org.pentaho.reporting.libraries.formula.typing.Type;
 import org.pentaho.reporting.libraries.formula.typing.coretypes.AnyType;
 import org.pentaho.reporting.libraries.formula.typing.coretypes.TextType;
 
-public class MessageFunctionDescription extends AbstractFunctionDescription
-{
+public class MessageFunctionDescription extends AbstractFunctionDescription {
   private static final long serialVersionUID = 6842849033225519941L;
 
-  public MessageFunctionDescription()
-  {
-    super("MESSAGE", "org.pentaho.reporting.libraries.formula.function.text.Message-Function");
+  public MessageFunctionDescription() {
+    super( "MESSAGE", "org.pentaho.reporting.libraries.formula.function.text.Message-Function" );
   }
 
-  public FunctionCategory getCategory()
-  {
+  public FunctionCategory getCategory() {
     return TextFunctionCategory.CATEGORY;
   }
 
-  public int getParameterCount()
-  {
+  public int getParameterCount() {
     return 1;
   }
 
-  public boolean isInfiniteParameterCount()
-  {
+  public boolean isInfiniteParameterCount() {
     return true;
   }
 
-  public Type getParameterType(final int position)
-  {
+  public Type getParameterType( final int position ) {
     return AnyType.TYPE;
   }
 
-  public Type getValueType()
-  {
+  public Type getValueType() {
     return TextType.TYPE;
   }
 
-  public boolean isParameterMandatory(final int position)
-  {
+  public boolean isParameterMandatory( final int position ) {
     return position == 0;
   }
 

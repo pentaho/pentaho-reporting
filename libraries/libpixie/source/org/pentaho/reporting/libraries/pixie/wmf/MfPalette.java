@@ -20,14 +20,11 @@ package org.pentaho.reporting.libraries.pixie.wmf;
 /**
  * A WmfLogicalPalette, currently not implemented.
  */
-public class MfPalette implements WmfObject
-{
-  public MfPalette()
-  {
+public class MfPalette implements WmfObject {
+  public MfPalette() {
   }
 
-  public int getType()
-  {
+  public int getType() {
     return OBJ_PALETTE;
   }
 }

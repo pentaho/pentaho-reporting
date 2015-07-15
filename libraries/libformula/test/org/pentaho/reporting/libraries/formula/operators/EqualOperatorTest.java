@@ -24,30 +24,25 @@ import org.pentaho.reporting.libraries.formula.FormulaTestBase;
  *
  * @author Thomas Morgner
  */
-public class EqualOperatorTest extends FormulaTestBase
-{
+public class EqualOperatorTest extends FormulaTestBase {
 
-  public Object[][] createDataTest()
-  {
+  public Object[][] createDataTest() {
     return new Object[][]
-        {
-            {"1=\"1\"", Boolean.TRUE},
-            {"2=2.0", Boolean.TRUE},
-            {"\"2004-01-01\"=DATE(2004; 1; 1)", Boolean.TRUE}, // comparing values of different types should yield 'false'
-        };
+      {
+        { "1=\"1\"", Boolean.TRUE },
+        { "2=2.0", Boolean.TRUE },
+        { "\"2004-01-01\"=DATE(2004; 1; 1)", Boolean.TRUE }, // comparing values of different types should yield 'false'
+      };
   }
 
-  public EqualOperatorTest()
-  {
+  public EqualOperatorTest() {
   }
 
-  public EqualOperatorTest(final String s)
-  {
-    super(s);
+  public EqualOperatorTest( final String s ) {
+    super( s );
   }
 
-  public void testDefault() throws Exception
-  {
+  public void testDefault() throws Exception {
     runDefaultTest();
   }
 

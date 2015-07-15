@@ -26,14 +26,12 @@ import org.pentaho.reporting.libraries.css.parser.stylehandler.color.ColorReadHa
  *
  * @author Thomas Morgner
  */
-public class TextUnderlineReadHandler extends AbstractCompoundValueReadHandler
-{
-  public TextUnderlineReadHandler()
-  {
-    addHandler(TextStyleKeys.TEXT_UNDERLINE_STYLE, new TextDecorationStyleReadHandler());
-    addHandler(TextStyleKeys.TEXT_UNDERLINE_COLOR, new ColorReadHandler());
-    addHandler(TextStyleKeys.TEXT_UNDERLINE_WIDTH, new TextDecorationWidthReadHandler());
-    addHandler(TextStyleKeys.TEXT_UNDERLINE_MODE, new TextDecorationModeReadHandler());
-    addHandler(TextStyleKeys.TEXT_UNDERLINE_POSITION, new TextUnderlinePositionReadHandler());
+public class TextUnderlineReadHandler extends AbstractCompoundValueReadHandler {
+  public TextUnderlineReadHandler() {
+    addHandler( TextStyleKeys.TEXT_UNDERLINE_STYLE, new TextDecorationStyleReadHandler() );
+    addHandler( TextStyleKeys.TEXT_UNDERLINE_COLOR, new ColorReadHandler() );
+    addHandler( TextStyleKeys.TEXT_UNDERLINE_WIDTH, new TextDecorationWidthReadHandler() );
+    addHandler( TextStyleKeys.TEXT_UNDERLINE_MODE, new TextDecorationModeReadHandler() );
+    addHandler( TextStyleKeys.TEXT_UNDERLINE_POSITION, new TextUnderlinePositionReadHandler() );
   }
 }

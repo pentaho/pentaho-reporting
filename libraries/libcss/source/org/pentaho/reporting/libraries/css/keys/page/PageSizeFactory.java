@@ -22,19 +22,16 @@ import java.lang.reflect.Modifier;
 import java.util.HashMap;
 
 /**
- * This will be replaced by a 'media-names' implementation according to
- * ftp://ftp.pwg.org/pub/pwg/candidates/cs-pwgmsn10-20020226-5101.1.pdf
+ * This will be replaced by a 'media-names' implementation according to ftp://ftp.pwg
+ * .org/pub/pwg/candidates/cs-pwgmsn10-20020226-5101.1.pdf
  *
  * @author Thomas Morgner
  */
-public class PageSizeFactory
-{
+public class PageSizeFactory {
   private static PageSizeFactory factory;
 
-  public static synchronized PageSizeFactory getInstance()
-  {
-    if (factory == null)
-    {
+  public static synchronized PageSizeFactory getInstance() {
+    if ( factory == null ) {
       factory = new PageSizeFactory();
       factory.registerKnownMedias();
     }
@@ -43,45 +40,35 @@ public class PageSizeFactory
 
   private HashMap knownPageSizes;
 
-  private PageSizeFactory()
-  {
+  private PageSizeFactory() {
     knownPageSizes = new HashMap();
   }
 
-  public PageSize getPageSizeByName(String name)
-  {
-    return (PageSize) knownPageSizes.get(name.toLowerCase());
+  public PageSize getPageSizeByName( String name ) {
+    return (PageSize) knownPageSizes.get( name.toLowerCase() );
   }
 
-  public String[] getPageSizeNames()
-  {
-    return (String[]) knownPageSizes.keySet().toArray(new String[knownPageSizes.size()]);
+  public String[] getPageSizeNames() {
+    return (String[]) knownPageSizes.keySet().toArray( new String[ knownPageSizes.size() ] );
   }
 
-  private void registerKnownMedias()
-  {
+  private void registerKnownMedias() {
     Field[] fields = PageSize.class.getFields();
-    for (int i = 0; i < fields.length; i++)
-    {
-      try
-      {
-        Field f = fields[i];
-        if (Modifier.isPublic(f.getModifiers()) == false ||
-            Modifier.isStatic(f.getModifiers()) == false)
-        {
+    for ( int i = 0; i < fields.length; i++ ) {
+      try {
+        Field f = fields[ i ];
+        if ( Modifier.isPublic( f.getModifiers() ) == false ||
+          Modifier.isStatic( f.getModifiers() ) == false ) {
           continue;
         }
-        final Object o = f.get(this);
-        if (o instanceof PageSize == false)
-        {
+        final Object o = f.get( this );
+        if ( o instanceof PageSize == false ) {
           // Log.debug ("Is no valid pageformat definition");
           continue;
         }
         final PageSize pageSize = (PageSize) o;
-        knownPageSizes.put(f.getName().toLowerCase(), pageSize);
-      }
-      catch (IllegalAccessException aie)
-      {
+        knownPageSizes.put( f.getName().toLowerCase(), pageSize );
+      } catch ( IllegalAccessException aie ) {
         // Log.debug ("There is no pageformat " + name + " accessible.");
       }
     }

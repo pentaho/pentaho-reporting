@@ -17,78 +17,64 @@
 
 package org.pentaho.reporting.libraries.base.encoder;
 
-import java.util.HashMap;
-
 import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
 import org.pentaho.reporting.libraries.base.util.PngEncoder;
 
-public class ImageEncoderRegistry
-{
+import java.util.HashMap;
+
+public class ImageEncoderRegistry {
   public static final String IMAGE_PNG = "image/png";
   public static final String IMAGE_JPEG = "image/jpeg";
   private static ImageEncoderRegistry instance;
   private HashMap<String, String> encoders;
 
-  private ImageEncoderRegistry()
-  {
+  private ImageEncoderRegistry() {
     encoders = new HashMap<String, String>();
   }
 
-  public static synchronized ImageEncoderRegistry getInstance()
-  {
-    if (instance == null)
-    {
+  public static synchronized ImageEncoderRegistry getInstance() {
+    if ( instance == null ) {
       instance = new ImageEncoderRegistry();
       instance.registerDefaults();
     }
     return instance;
   }
 
-  private void registerDefaults()
-  {
-    encoders.put(IMAGE_PNG, PngEncoder.class.getName());
-    if (JpegImageEncoder.isJpegEncodingAvailable())
-    {
-      encoders.put(IMAGE_JPEG, JpegImageEncoder.class.getName());
-      encoders.put("image/jpg", JpegImageEncoder.class.getName());
+  private void registerDefaults() {
+    encoders.put( IMAGE_PNG, PngEncoder.class.getName() );
+    if ( JpegImageEncoder.isJpegEncodingAvailable() ) {
+      encoders.put( IMAGE_JPEG, JpegImageEncoder.class.getName() );
+      encoders.put( "image/jpg", JpegImageEncoder.class.getName() );
     }
   }
 
-  public void addEncoder(final String mimeType, final String encoderClass)
-  {
-    if (mimeType == null)
-    {
+  public void addEncoder( final String mimeType, final String encoderClass ) {
+    if ( mimeType == null ) {
       throw new NullPointerException();
     }
-    if (encoderClass == null)
-    {
+    if ( encoderClass == null ) {
       throw new NullPointerException();
     }
-    encoders.put(mimeType, encoderClass);
+    encoders.put( mimeType, encoderClass );
   }
 
-  public boolean isEncoderAvailable(final String mimeType)
-  {
-    return encoders.containsKey(mimeType);
+  public boolean isEncoderAvailable( final String mimeType ) {
+    return encoders.containsKey( mimeType );
   }
 
-  public String[] getRegisteredEncoders()
-  {
-    return encoders.keySet().toArray(new String[encoders.size()]);
+  public String[] getRegisteredEncoders() {
+    return encoders.keySet().toArray( new String[ encoders.size() ] );
   }
 
-  public ImageEncoder createEncoder(final String mimeType) throws UnsupportedEncoderException
-  {
-    final Object o = encoders.get(mimeType);
-    if (o == null)
-    {
-      throw new UnsupportedEncoderException("No encoder for mime-type " + mimeType);
+  public ImageEncoder createEncoder( final String mimeType ) throws UnsupportedEncoderException {
+    final Object o = encoders.get( mimeType );
+    if ( o == null ) {
+      throw new UnsupportedEncoderException( "No encoder for mime-type " + mimeType );
     }
     final ImageEncoder imageEncoder =
-        ObjectUtilities.loadAndInstantiate((String) o, ImageEncoderRegistry.class, ImageEncoder.class);
-    if (imageEncoder == null)
-    {
-      throw new UnsupportedEncoderException("No encoder for mime-type " + mimeType);
+      ObjectUtilities.loadAndInstantiate( (String) o, ImageEncoderRegistry.class, ImageEncoder.class );
+    if ( imageEncoder == null ) {
+      throw new UnsupportedEncoderException( "No encoder for mime-type " + mimeType );
     }
     return imageEncoder;
   }

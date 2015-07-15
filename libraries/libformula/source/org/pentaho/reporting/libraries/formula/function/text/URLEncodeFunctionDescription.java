@@ -24,44 +24,35 @@ import org.pentaho.reporting.libraries.formula.typing.coretypes.TextType;
 
 /**
  * Describes LowerFunction function.
- * @see org.pentaho.reporting.libraries.formula.function.text.LowerFunction
  *
  * @author Cedric Pronzato
- *
+ * @see org.pentaho.reporting.libraries.formula.function.text.LowerFunction
  */
-public class URLEncodeFunctionDescription extends AbstractFunctionDescription
-{
+public class URLEncodeFunctionDescription extends AbstractFunctionDescription {
   private static final long serialVersionUID = 7241603575392886827L;
 
-  public URLEncodeFunctionDescription()
-  {
-    super("URLENCODE", "org.pentaho.reporting.libraries.formula.function.text.URLEncode-Function");
+  public URLEncodeFunctionDescription() {
+    super( "URLENCODE", "org.pentaho.reporting.libraries.formula.function.text.URLEncode-Function" );
   }
 
-  public FunctionCategory getCategory()
-  {
+  public FunctionCategory getCategory() {
     return TextFunctionCategory.CATEGORY;
   }
 
-  public int getParameterCount()
-  {
+  public int getParameterCount() {
     return 2;
   }
 
-  public Type getParameterType(final int position)
-  {
+  public Type getParameterType( final int position ) {
     return TextType.TYPE;
   }
 
-  public Type getValueType()
-  {
+  public Type getValueType() {
     return TextType.TYPE;
   }
 
-  public boolean isParameterMandatory(final int position)
-  {
-    if (position == 1)
-    {
+  public boolean isParameterMandatory( final int position ) {
+    if ( position == 1 ) {
       return false;
     }
     return true;

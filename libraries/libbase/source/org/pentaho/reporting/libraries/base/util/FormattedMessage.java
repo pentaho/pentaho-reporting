@@ -19,22 +19,19 @@ package org.pentaho.reporting.libraries.base.util;
 
 import java.io.Serializable;
 
-public class FormattedMessage implements Serializable
-{
+public class FormattedMessage implements Serializable {
   private String pattern;
   private Object[] data;
 
-  public FormattedMessage(String pattern, Object... data)
-  {
-    ArgumentNullException.validate("pattern", pattern);
-    ArgumentNullException.validate("data", data);
+  public FormattedMessage( String pattern, Object... data ) {
+    ArgumentNullException.validate( "pattern", pattern );
+    ArgumentNullException.validate( "data", data );
 
     this.pattern = pattern;
     this.data = data;
   }
 
-  public String toString()
-  {
-    return String.format(pattern, data);
+  public String toString() {
+    return String.format( pattern, data );
   }
 }

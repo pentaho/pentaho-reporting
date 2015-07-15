@@ -31,44 +31,35 @@ import org.pentaho.reporting.libraries.formula.typing.coretypes.LogicalType;
  *
  * @author Cedric Pronzato
  */
-public class IsTextFunction implements Function
-{
-  private static final TypeValuePair RETURN_TRUE = new TypeValuePair(LogicalType.TYPE, Boolean.TRUE);
-  private static final TypeValuePair RETURN_FALSE = new TypeValuePair(LogicalType.TYPE, Boolean.FALSE);
+public class IsTextFunction implements Function {
+  private static final TypeValuePair RETURN_TRUE = new TypeValuePair( LogicalType.TYPE, Boolean.TRUE );
+  private static final TypeValuePair RETURN_FALSE = new TypeValuePair( LogicalType.TYPE, Boolean.FALSE );
   private static final long serialVersionUID = -5358713524671627304L;
 
-  public IsTextFunction()
-  {
+  public IsTextFunction() {
   }
 
-  public TypeValuePair evaluate(final FormulaContext context,
-                                final ParameterCallback parameters) throws EvaluationException
-  {
-    try
-    {
+  public TypeValuePair evaluate( final FormulaContext context,
+                                 final ParameterCallback parameters ) throws EvaluationException {
+    try {
       final int parameterCount = parameters.getParameterCount();
-      if (parameterCount != 1)
-      {
-        throw EvaluationException.getInstance(LibFormulaErrorValue.ERROR_ARGUMENTS_VALUE);
+      if ( parameterCount != 1 ) {
+        throw EvaluationException.getInstance( LibFormulaErrorValue.ERROR_ARGUMENTS_VALUE );
       }
 
-      final Type type1 = parameters.getType(0);
-      final Object value1 = parameters.getValue(0);
-      if (type1.isFlagSet(Type.TEXT_TYPE) || value1 instanceof String)
-      {
+      final Type type1 = parameters.getType( 0 );
+      final Object value1 = parameters.getValue( 0 );
+      if ( type1.isFlagSet( Type.TEXT_TYPE ) || value1 instanceof String ) {
         return RETURN_TRUE;
       }
 
       return RETURN_FALSE;
-    }
-    catch (EvaluationException e)
-    {
+    } catch ( EvaluationException e ) {
       return RETURN_FALSE;
     }
   }
 
-  public String getCanonicalName()
-  {
+  public String getCanonicalName() {
     return "ISTEXT";
   }
 

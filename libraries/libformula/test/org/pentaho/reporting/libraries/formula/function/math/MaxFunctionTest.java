@@ -17,32 +17,29 @@
 
 package org.pentaho.reporting.libraries.formula.function.math;
 
-import java.math.BigDecimal;
-
 import org.pentaho.reporting.libraries.formula.FormulaTestBase;
+
+import java.math.BigDecimal;
 
 /**
  * @author Cedric Pronzato
  */
-public class MaxFunctionTest extends FormulaTestBase
-{
-  public void testDefault() throws Exception
-  {
+public class MaxFunctionTest extends FormulaTestBase {
+  public void testDefault() throws Exception {
     runDefaultTest();
   }
 
-  public Object[][] createDataTest()
-  {
+  public Object[][] createDataTest() {
     return new Object[][]
-        {
-            {"MAX(2;4;1;-8)", new BigDecimal(4)},
-//            {"MAX([.B4:.B5])", new BigDecimal(3)},
-            {"ISNA(MAX(NA()))", Boolean.TRUE},
-//            {"MAX([.B3:.B5])", new BigDecimal(3)},
-//            {"MAX([.B3:.B7])", new BigDecimal(3)},
-//            //TODO { "MAX([.B3:.B9])", new BigDecimal(4)}, this one sounds fault, there is no '4'
-//            {"MAX([.B3:.B9])", new BigDecimal(3)},
-            {"MAX(\"5\";\"7\")", new BigDecimal(7)},
-        };
+      {
+        { "MAX(2;4;1;-8)", new BigDecimal( 4 ) },
+        //            {"MAX([.B4:.B5])", new BigDecimal(3)},
+        { "ISNA(MAX(NA()))", Boolean.TRUE },
+        //            {"MAX([.B3:.B5])", new BigDecimal(3)},
+        //            {"MAX([.B3:.B7])", new BigDecimal(3)},
+        //            //TODO { "MAX([.B3:.B9])", new BigDecimal(4)}, this one sounds fault, there is no '4'
+        //            {"MAX([.B3:.B9])", new BigDecimal(3)},
+        { "MAX(\"5\";\"7\")", new BigDecimal( 7 ) },
+      };
   }
 }

@@ -17,17 +17,18 @@
 
 package org.pentaho.reporting.libraries.formatting;
 
-import org.pentaho.reporting.libraries.base.versioning.ProjectInformation;
 import org.pentaho.reporting.libraries.base.LibBaseInfo;
+import org.pentaho.reporting.libraries.base.versioning.ProjectInformation;
 
 /**
  * Details about the LibFormat project.
  *
  * @author Thomas Morgner
  */
-public class LibFormatInfo  extends ProjectInformation
-{
-  /** A singleton instance of the Info class. */
+public class LibFormatInfo extends ProjectInformation {
+  /**
+   * A singleton instance of the Info class.
+   */
   private static LibFormatInfo instance;
 
   /**
@@ -35,10 +36,8 @@ public class LibFormatInfo  extends ProjectInformation
    *
    * @return te info object for this library.
    */
-  public static synchronized ProjectInformation getInstance()
-  {
-    if (instance == null)
-    {
+  public static synchronized ProjectInformation getInstance() {
+    if ( instance == null ) {
       instance = new LibFormatInfo();
       instance.initialize();
     }
@@ -48,21 +47,19 @@ public class LibFormatInfo  extends ProjectInformation
   /**
    * Creates a new info-object.
    */
-  private LibFormatInfo()
-  {
-    super("libformat", "LibFormat");
+  private LibFormatInfo() {
+    super( "libformat", "LibFormat" );
   }
 
   /**
    * Initializes the new info-object.
    */
-  private void initialize()
-  {
-    setBootClass(LibFormatBoot.class.getName());
-    setLicenseName("LGPL");
-    setInfo("http://reporting.pentaho.org/libformat/");
-    setCopyright("(C)opyright 2007-2011, by Pentaho Corporation and Contributors");
+  private void initialize() {
+    setBootClass( LibFormatBoot.class.getName() );
+    setLicenseName( "LGPL" );
+    setInfo( "http://reporting.pentaho.org/libformat/" );
+    setCopyright( "(C)opyright 2007-2011, by Pentaho Corporation and Contributors" );
 
-    addLibrary(LibBaseInfo.getInstance());
+    addLibrary( LibBaseInfo.getInstance() );
   }
 }

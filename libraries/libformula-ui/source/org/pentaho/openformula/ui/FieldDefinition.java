@@ -17,11 +17,10 @@
 
 package org.pentaho.openformula.ui;
 
+import javax.swing.*;
 import java.io.Serializable;
-import javax.swing.Icon;
 
-public interface FieldDefinition extends Serializable
-{
+public interface FieldDefinition extends Serializable {
   public String getName();
 
   public String getDisplayName();

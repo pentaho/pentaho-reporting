@@ -17,25 +17,22 @@
 
 package org.pentaho.reporting.libraries.pixie.wmf.records;
 
-import java.awt.Rectangle;
-import java.awt.image.BufferedImage;
-import java.io.IOException;
-
 import org.pentaho.reporting.libraries.pixie.wmf.MfRecord;
 import org.pentaho.reporting.libraries.pixie.wmf.MfType;
 import org.pentaho.reporting.libraries.pixie.wmf.WmfFile;
 import org.pentaho.reporting.libraries.pixie.wmf.bitmap.DIBReader;
 
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+
 /**
- * The StretchDIBits function copies the color data for a rectangle of pixels in a DIB to
- * the specified destination rectangle. If the destination rectangle is larger than the
- * source rectangle, this function stretches the rows and columns of color data to fit the
- * destination rectangle. If the destination rectangle is smaller than the source
- * rectangle, this function compresses the rows and columns by using the specified raster
- * operation.
+ * The StretchDIBits function copies the color data for a rectangle of pixels in a DIB to the specified destination
+ * rectangle. If the destination rectangle is larger than the source rectangle, this function stretches the rows and
+ * columns of color data to fit the destination rectangle. If the destination rectangle is smaller than the source
+ * rectangle, this function compresses the rows and columns by using the specified raster operation.
  */
-public class MfCmdStretchDibits extends MfCmd
-{
+public class MfCmdStretchDibits extends MfCmd {
   //  private static final int RECORD_BASE_SIZE = 11;
   private static final int POS_ROP = 0;
   private static final int POS_USAGE = 2;
@@ -71,8 +68,7 @@ public class MfCmdStretchDibits extends MfCmd
 
   private BufferedImage image;
 
-  public MfCmdStretchDibits()
-  {
+  public MfCmdStretchDibits() {
   }
 
   /**
@@ -80,8 +76,7 @@ public class MfCmdStretchDibits extends MfCmd
    *
    * @param file the meta file.
    */
-  public void replay(final WmfFile file)
-  {
+  public void replay( final WmfFile file ) {
     // not implemented ...
   }
 
@@ -90,89 +85,75 @@ public class MfCmdStretchDibits extends MfCmd
    *
    * @return a new instance of the command.
    */
-  public MfCmd getInstance()
-  {
+  public MfCmd getInstance() {
     return new MfCmdStretchDibits();
   }
 
   /**
-   * Reads the function identifier. Every record type is identified by a function number
-   * corresponding to one of the Windows GDI functions used.
+   * Reads the function identifier. Every record type is identified by a function number corresponding to one of the
+   * Windows GDI functions used.
    *
    * @return the function identifier.
    */
-  public int getFunction()
-  {
+  public int getFunction() {
     return MfType.STRETCH_DIBITS;
   }
 
-  public int getROP()
-  {
+  public int getROP() {
     return rop;
   }
 
-  public void setROP(final int rop)
-  {
+  public void setROP( final int rop ) {
     this.rop = rop;
   }
 
-  public BufferedImage getImage()
-  {
+  public BufferedImage getImage() {
     return image;
   }
 
-  public void setImage(final BufferedImage image)
-  {
+  public void setImage( final BufferedImage image ) {
     this.image = image;
   }
 
-  public int getUsage()
-  {
+  public int getUsage() {
     return usage;
   }
 
-  public void setUsage(final int usage)
-  {
+  public void setUsage( final int usage ) {
     this.usage = usage;
   }
 
   /**
-   * Reads the command data from the given record and adjusts the internal parameters
-   * according to the data parsed.
+   * Reads the command data from the given record and adjusts the internal parameters according to the data parsed.
    * <p/>
-   * After the raw record was read from the datasource, the record is parsed by the
-   * concrete implementation.
+   * After the raw record was read from the datasource, the record is parsed by the concrete implementation.
    *
    * @param record the raw data that makes up the record.
    */
-  public void setRecord(final MfRecord record)
-  {
-    final int rop = record.getLongParam(POS_ROP);
-    final int usage = record.getParam(POS_USAGE); // This is the only parameter left, so I assume this
-    final int srcH = record.getParam(POS_SRC_H);
-    final int srcW = record.getParam(POS_SRC_W);
-    final int ySrc = record.getParam(POS_SRC_Y);
-    final int xSrc = record.getParam(POS_SRC_X);
-    final int destH = record.getParam(POS_DST_H);
-    final int destW = record.getParam(POS_DST_W);
-    final int yDest = record.getParam(POS_DST_Y);
-    final int xDest = record.getParam(POS_DST_X);
+  public void setRecord( final MfRecord record ) {
+    final int rop = record.getLongParam( POS_ROP );
+    final int usage = record.getParam( POS_USAGE ); // This is the only parameter left, so I assume this
+    final int srcH = record.getParam( POS_SRC_H );
+    final int srcW = record.getParam( POS_SRC_W );
+    final int ySrc = record.getParam( POS_SRC_Y );
+    final int xSrc = record.getParam( POS_SRC_X );
+    final int destH = record.getParam( POS_DST_H );
+    final int destW = record.getParam( POS_DST_W );
+    final int yDest = record.getParam( POS_DST_Y );
+    final int xDest = record.getParam( POS_DST_X );
 
-    try
-    {
+    try {
       final DIBReader reader = new DIBReader();
-      setImage(reader.setRecord(record, POS_DIB));
-    }
-    catch (IOException ioe)
-    {
+      setImage( reader.setRecord( record, POS_DIB ) );
+    } catch ( IOException ioe ) {
       // failed to load the bitmap ..
     }
 
     // DIB ab pos 11
-    setROP(rop);
-    setUsage(usage);
-    setSrcRect(xSrc, ySrc, srcH, srcW);
-    setDestRect(xDest, yDest, destH, destW);
+    setROP( rop );
+    setUsage( usage );
+    setSrcRect( xSrc, ySrc, srcH, srcW );
+    setDestRect( xDest, yDest, destH, destW );
   }
 
   /**
@@ -181,27 +162,24 @@ public class MfCmdStretchDibits extends MfCmd
    * @return the created record.
    */
   public MfRecord getRecord()
-      throws RecordCreationException
-  {
-    throw new RecordCreationException("StretchDIBits is not implemented");
+    throws RecordCreationException {
+    throw new RecordCreationException( "StretchDIBits is not implemented" );
   }
 
-  public String toString()
-  {
+  public String toString() {
     final StringBuffer b = new StringBuffer();
-    b.append("[STRETCH_DIBITS] rop=");
-    b.append(getROP());
-    b.append(" srcRect=");
-    b.append(getSrcRect());
-    b.append(" destRect=");
-    b.append(getDestRect());
-    b.append(" usage=");
-    b.append(getUsage());
+    b.append( "[STRETCH_DIBITS] rop=" );
+    b.append( getROP() );
+    b.append( " srcRect=" );
+    b.append( getSrcRect() );
+    b.append( " destRect=" );
+    b.append( getDestRect() );
+    b.append( " usage=" );
+    b.append( getUsage() );
     return b.toString();
   }
 
-  public void setSrcRect(final int x, final int y, final int w, final int h)
-  {
+  public void setSrcRect( final int x, final int y, final int w, final int h ) {
     this.srcX = x;
     this.srcY = y;
     this.srcW = w;
@@ -210,8 +188,7 @@ public class MfCmdStretchDibits extends MfCmd
     scaleYChanged();
   }
 
-  public void setDestRect(final int x, final int y, final int w, final int h)
-  {
+  public void setDestRect( final int x, final int y, final int w, final int h ) {
     this.destX = x;
     this.destY = y;
     this.destW = w;
@@ -220,48 +197,42 @@ public class MfCmdStretchDibits extends MfCmd
     scaleYChanged();
   }
 
-  public Rectangle getSrcRect()
-  {
-    return new Rectangle(srcX, srcY, srcW, srcH);
+  public Rectangle getSrcRect() {
+    return new Rectangle( srcX, srcY, srcW, srcH );
   }
 
-  public Rectangle getDestRect()
-  {
-    return new Rectangle(destX, destY, destW, destH);
+  public Rectangle getDestRect() {
+    return new Rectangle( destX, destY, destW, destH );
   }
 
-  public Rectangle getScaledSrcRect()
-  {
-    return new Rectangle(scaled_srcX, scaled_srcY, scaled_srcW, scaled_srcH);
+  public Rectangle getScaledSrcRect() {
+    return new Rectangle( scaled_srcX, scaled_srcY, scaled_srcW, scaled_srcH );
   }
 
-  public Rectangle getScaledDestRect()
-  {
-    return new Rectangle(scaled_destX, scaled_destY, scaled_destW, scaled_destH);
+  public Rectangle getScaledDestRect() {
+    return new Rectangle( scaled_destX, scaled_destY, scaled_destW, scaled_destH );
   }
 
   /**
-   * A callback function to inform the object, that the x scale has changed and the
-   * internal coordinate values have to be adjusted.
+   * A callback function to inform the object, that the x scale has changed and the internal coordinate values have to
+   * be adjusted.
    */
-  protected void scaleXChanged()
-  {
-    scaled_srcX = getScaledX(srcX);
-    scaled_srcW = getScaledX(srcW);
-    scaled_destX = getScaledX(destX);
-    scaled_destW = getScaledX(destW);
+  protected void scaleXChanged() {
+    scaled_srcX = getScaledX( srcX );
+    scaled_srcW = getScaledX( srcW );
+    scaled_destX = getScaledX( destX );
+    scaled_destW = getScaledX( destW );
   }
 
   /**
-   * A callback function to inform the object, that the y scale has changed and the
-   * internal coordinate values have to be adjusted.
+   * A callback function to inform the object, that the y scale has changed and the internal coordinate values have to
+   * be adjusted.
    */
-  protected void scaleYChanged()
-  {
-    scaled_srcY = getScaledY(srcY);
-    scaled_srcH = getScaledY(srcH);
-    scaled_destY = getScaledY(destY);
-    scaled_destH = getScaledY(destH);
+  protected void scaleYChanged() {
+    scaled_srcY = getScaledY( srcY );
+    scaled_srcH = getScaledY( srcH );
+    scaled_destY = getScaledY( destY );
+    scaled_destH = getScaledY( destH );
   }
 
 }

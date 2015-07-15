@@ -17,9 +17,6 @@
 
 package org.pentaho.reporting.libraries.xmlns.parser;
 
-import java.io.InputStream;
-import java.net.URL;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.pentaho.reporting.libraries.resourceloader.ResourceData;
@@ -27,14 +24,16 @@ import org.pentaho.reporting.libraries.resourceloader.ResourceLoadingException;
 import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 import org.xml.sax.InputSource;
 
+import java.io.InputStream;
+import java.net.URL;
+
 /**
  * A SAX InputSource implementation that reads its data from a LibLoader ResourceData object.
  *
  * @author Thomas Morgner
  */
-public class ResourceDataInputSource extends InputSource
-{
-  private static final Log logger = LogFactory.getLog(ResourceDataInputSource.class);
+public class ResourceDataInputSource extends InputSource {
+  private static final Log logger = LogFactory.getLog( ResourceDataInputSource.class );
   private ResourceData data;
   private long version;
   private ResourceManager caller;
@@ -51,25 +50,21 @@ public class ResourceDataInputSource extends InputSource
    * @see #setCharacterStream
    * @see #setEncoding
    */
-  public ResourceDataInputSource(final ResourceData data,
-                                 final ResourceManager caller)
-      throws ResourceLoadingException
-  {
-    if (data == null)
-    {
-      throw new NullPointerException("Data must not be null");
+  public ResourceDataInputSource( final ResourceData data,
+                                  final ResourceManager caller )
+    throws ResourceLoadingException {
+    if ( data == null ) {
+      throw new NullPointerException( "Data must not be null" );
     }
-    if (caller == null)
-    {
-      throw new NullPointerException("ResourceManager must not be null");
+    if ( caller == null ) {
+      throw new NullPointerException( "ResourceManager must not be null" );
     }
     this.data = data;
-    this.version = data.getVersion(caller);
+    this.version = data.getVersion( caller );
     this.caller = caller;
-    final URL url = caller.toURL(data.getKey());
-    if (url != null)
-    {
-      setSystemId(url.toExternalForm());
+    final URL url = caller.toURL( data.getKey() );
+    if ( url != null ) {
+      setSystemId( url.toExternalForm() );
     }
   }
 
@@ -77,33 +72,26 @@ public class ResourceDataInputSource extends InputSource
   /**
    * Set the byte stream for this input source.
    *
-   * @param byteStream A byte stream containing an XML document or
-   *        other entity.
+   * @param byteStream A byte stream containing an XML document or other entity.
    */
-  public void setByteStream(final InputStream byteStream)
-  {
+  public void setByteStream( final InputStream byteStream ) {
     throw new UnsupportedOperationException();
   }
 
   /**
    * Get the byte stream for this input source.
-   *
-   * <p>The getEncoding method will return the character
-   * encoding for this byte stream, or null if unknown.</p>
+   * <p/>
+   * <p>The getEncoding method will return the character encoding for this byte stream, or null if unknown.</p>
    *
    * @return The byte stream, or null if none was supplied.
    * @see #getEncoding
    * @see #setByteStream
    */
-  public InputStream getByteStream()
-  {
-    try
-    {
-      return data.getResourceAsStream(caller);
-    }
-    catch (ResourceLoadingException e)
-    {
-      logger.error("Unable to create byte-stream: " + data.getKey());
+  public InputStream getByteStream() {
+    try {
+      return data.getResourceAsStream( caller );
+    } catch ( ResourceLoadingException e ) {
+      logger.error( "Unable to create byte-stream: " + data.getKey() );
       return null;
     }
   }
@@ -113,8 +101,7 @@ public class ResourceDataInputSource extends InputSource
    *
    * @return the resource-data object.
    */
-  public ResourceData getData()
-  {
+  public ResourceData getData() {
     return data;
   }
 
@@ -123,8 +110,7 @@ public class ResourceDataInputSource extends InputSource
    *
    * @return the version (changetracker) of the input source.
    */
-  public long getVersion()
-  {
+  public long getVersion() {
     return version;
   }
 }

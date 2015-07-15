@@ -22,19 +22,15 @@ package org.pentaho.reporting.libraries.css.parser;
  *
  * @author Thomas Morgner
  */
-public class CSSParserInstantiationException extends Exception
-{
-  public CSSParserInstantiationException()
-  {
+public class CSSParserInstantiationException extends Exception {
+  public CSSParserInstantiationException() {
   }
 
-  public CSSParserInstantiationException(final String message, final Exception ex)
-  {
-    super(message, ex);
+  public CSSParserInstantiationException( final String message, final Exception ex ) {
+    super( message, ex );
   }
 
-  public CSSParserInstantiationException(final String message)
-  {
-    super(message);
+  public CSSParserInstantiationException( final String message ) {
+    super( message );
   }
 }

@@ -22,18 +22,15 @@ import org.pentaho.reporting.libraries.formula.FormulaTestBase;
 /**
  * @author Cedric Pronzato
  */
-public class AscFunctionTest extends FormulaTestBase
-{
-  public void testDefault() throws Exception
-  {
+public class AscFunctionTest extends FormulaTestBase {
+  public void testDefault() throws Exception {
     runDefaultTest();
   }
 
-  public Object[][] createDataTest()
-  {
+  public Object[][] createDataTest() {
     return new Object[][]
-        {
-            {"ASC(\"ABC\")", "ABC"},
-        };
+      {
+        { "ASC(\"ABC\")", "ABC" },
+      };
   }
 }

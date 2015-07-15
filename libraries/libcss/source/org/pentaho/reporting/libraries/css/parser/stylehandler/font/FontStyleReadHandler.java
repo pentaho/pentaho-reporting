@@ -25,13 +25,11 @@ import org.pentaho.reporting.libraries.css.parser.stylehandler.OneOfConstantsRea
  *
  * @author Thomas Morgner
  */
-public class FontStyleReadHandler extends OneOfConstantsReadHandler
-{
-  public FontStyleReadHandler()
-  {
-    super(false);
-    addValue(FontStyle.ITALIC);
-    addValue(FontStyle.NORMAL);
-    addValue(FontStyle.OBLIQUE);
+public class FontStyleReadHandler extends OneOfConstantsReadHandler {
+  public FontStyleReadHandler() {
+    super( false );
+    addValue( FontStyle.ITALIC );
+    addValue( FontStyle.NORMAL );
+    addValue( FontStyle.OBLIQUE );
   }
 }

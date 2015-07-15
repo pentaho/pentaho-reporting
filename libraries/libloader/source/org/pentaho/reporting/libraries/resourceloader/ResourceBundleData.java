@@ -17,9 +17,10 @@
 
 package org.pentaho.reporting.libraries.resourceloader;
 
-public interface ResourceBundleData extends ResourceData
-{
+public interface ResourceBundleData extends ResourceData {
   public ResourceKey getBundleKey();
-  public ResourceBundleData deriveData(final ResourceKey key) throws ResourceLoadingException;
-  public ResourceManager deriveManager(final ResourceManager parent) throws ResourceLoadingException;
+
+  public ResourceBundleData deriveData( final ResourceKey key ) throws ResourceLoadingException;
+
+  public ResourceManager deriveManager( final ResourceManager parent ) throws ResourceLoadingException;
 }

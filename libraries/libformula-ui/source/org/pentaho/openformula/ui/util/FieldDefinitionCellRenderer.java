@@ -17,51 +17,43 @@
 
 package org.pentaho.openformula.ui.util;
 
-import java.awt.Component;
-import javax.swing.DefaultListCellRenderer;
-import javax.swing.JList;
-
 import org.pentaho.openformula.ui.FieldDefinition;
 
-public class FieldDefinitionCellRenderer extends DefaultListCellRenderer
-{
-  public FieldDefinitionCellRenderer()
-  {
+import javax.swing.*;
+import java.awt.*;
+
+public class FieldDefinitionCellRenderer extends DefaultListCellRenderer {
+  public FieldDefinitionCellRenderer() {
   }
 
-  public Component getListCellRendererComponent(final JList list,
-                                                final Object value,
-                                                final int index,
-                                                final boolean isSelected,
-                                                final boolean cellHasFocus)
-  {
-    super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
-    if (value instanceof FieldDefinition)
-    {
+  public Component getListCellRendererComponent( final JList list,
+                                                 final Object value,
+                                                 final int index,
+                                                 final boolean isSelected,
+                                                 final boolean cellHasFocus ) {
+    super.getListCellRendererComponent( list, value, index, isSelected, cellHasFocus );
+    if ( value instanceof FieldDefinition ) {
       final FieldDefinition fd = (FieldDefinition) value;
 
       // format a display string
-      final StringBuilder sb = new StringBuilder(50);
+      final StringBuilder sb = new StringBuilder( 50 );
       // Add name
-      sb.append(fd.getDisplayName());
-      sb.append(" ("); // NON-NLS
+      sb.append( fd.getDisplayName() );
+      sb.append( " (" ); // NON-NLS
       // Add Display name if it's not the same as Name
-      if (fd.getName().equals(fd.getDisplayName()) == false)
-      {
-        sb.append(fd.getName()).append(", "); // NON-NLS
+      if ( fd.getName().equals( fd.getDisplayName() ) == false ) {
+        sb.append( fd.getName() ).append( ", " ); // NON-NLS
       }
       // Add Type
-      sb.append(fd.getFieldType().getName());
+      sb.append( fd.getFieldType().getName() );
       //noinspection MagicCharacter
-      sb.append(')');
+      sb.append( ')' );
 
-      setText(sb.toString());
-      setIcon(fd.getIcon());
-    }
-    else
-    {
-      setIcon(null);
-      setText(" ");
+      setText( sb.toString() );
+      setIcon( fd.getIcon() );
+    } else {
+      setIcon( null );
+      setText( " " );
     }
     return this;
   }

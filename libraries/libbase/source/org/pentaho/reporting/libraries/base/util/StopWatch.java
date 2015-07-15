@@ -19,27 +19,22 @@ package org.pentaho.reporting.libraries.base.util;
 
 import java.io.Closeable;
 
-public class StopWatch implements Closeable
-{
+public class StopWatch implements Closeable {
   private long elapsedTime;
   private long startTime;
   private boolean started;
 
-  public StopWatch()
-  {
+  public StopWatch() {
   }
 
-  public static StopWatch startNew()
-  {
+  public static StopWatch startNew() {
     final StopWatch stopWatch = new StopWatch();
     stopWatch.start();
     return stopWatch;
   }
 
-  public void start()
-  {
-    if (started)
-    {
+  public void start() {
+    if ( started ) {
       return;
     }
 
@@ -47,64 +42,52 @@ public class StopWatch implements Closeable
     started = true;
   }
 
-  public void reset()
-  {
+  public void reset() {
     elapsedTime = 0;
     startTime = System.nanoTime();
   }
 
-  public void stop()
-  {
-    if (started == false)
-    {
+  public void stop() {
+    if ( started == false ) {
       return;
     }
 
     started = false;
-    elapsedTime += (System.nanoTime() - startTime);
+    elapsedTime += ( System.nanoTime() - startTime );
   }
 
-  public long getElapsedTime()
-  {
-    if (started)
-    {
-      return elapsedTime + (System.nanoTime() - startTime);
+  public long getElapsedTime() {
+    if ( started ) {
+      return elapsedTime + ( System.nanoTime() - startTime );
     }
     return elapsedTime;
   }
 
-  public double getElapsedMilliseconds()
-  {
+  public double getElapsedMilliseconds() {
     return getElapsedTime() / 1000000.0f;
   }
 
-  public double getElapsedSeconds()
-  {
+  public double getElapsedSeconds() {
     return getElapsedTime() / 1000000000.0f;
   }
 
-  public String toString()
-  {
+  public String toString() {
     return "StopWatch={elapsedTimeInSeconds=" + getElapsedSeconds() + "}";
   }
 
-  public long getStartTime()
-  {
+  public long getStartTime() {
     return startTime;
   }
 
-  public double getStartMilliseconds()
-  {
+  public double getStartMilliseconds() {
     return getStartTime() / 1000000.0f;
   }
 
-  public boolean isStarted()
-  {
+  public boolean isStarted() {
     return started;
   }
 
-  public void close()
-  {
+  public void close() {
     stop();
   }
 }

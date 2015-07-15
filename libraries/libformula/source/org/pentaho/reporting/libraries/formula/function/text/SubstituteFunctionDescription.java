@@ -25,48 +25,38 @@ import org.pentaho.reporting.libraries.formula.typing.coretypes.TextType;
 
 /**
  * Describes SubstituteFunction function.
- * @see SubstituteFunction
  *
  * @author Cedric Pronzato
- *
+ * @see SubstituteFunction
  */
-public class SubstituteFunctionDescription extends AbstractFunctionDescription
-{
+public class SubstituteFunctionDescription extends AbstractFunctionDescription {
   private static final long serialVersionUID = -6053755288623137282L;
 
-  public SubstituteFunctionDescription()
-  {
-    super("SUBSTITUTE", "org.pentaho.reporting.libraries.formula.function.text.Substitute-Function");
+  public SubstituteFunctionDescription() {
+    super( "SUBSTITUTE", "org.pentaho.reporting.libraries.formula.function.text.Substitute-Function" );
   }
 
-  public FunctionCategory getCategory()
-  {
+  public FunctionCategory getCategory() {
     return TextFunctionCategory.CATEGORY;
   }
 
-  public int getParameterCount()
-  {
+  public int getParameterCount() {
     return 4;
   }
 
-  public Type getParameterType(final int position)
-  {
-    if(position != 3)
-    {
+  public Type getParameterType( final int position ) {
+    if ( position != 3 ) {
       return TextType.TYPE;
     }
     return NumberType.GENERIC_NUMBER;
   }
 
-  public Type getValueType()
-  {
+  public Type getValueType() {
     return TextType.TYPE;
   }
 
-  public boolean isParameterMandatory(final int position)
-  {
-    if(position == 3)
-    {
+  public boolean isParameterMandatory( final int position ) {
+    if ( position == 3 ) {
       return false;
     }
     return true;

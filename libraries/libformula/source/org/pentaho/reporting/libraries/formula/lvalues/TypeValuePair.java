@@ -17,47 +17,41 @@
 
 package org.pentaho.reporting.libraries.formula.lvalues;
 
-import java.io.Serializable;
-
 import org.pentaho.reporting.libraries.formula.typing.Type;
+
+import java.io.Serializable;
 
 /**
  * Creation-Date: 02.11.2006, 10:02:54
  *
  * @author Thomas Morgner
  */
-public class TypeValuePair implements Serializable
-{
+public class TypeValuePair implements Serializable {
   private Type type;
   private Object value;
   private static final long serialVersionUID = 6531903280852042078L;
 
-  public TypeValuePair(final Type type, final Object value)
-  {
-    if (type == null)
-    {
-      throw new NullPointerException("Type must be given.");
+  public TypeValuePair( final Type type, final Object value ) {
+    if ( type == null ) {
+      throw new NullPointerException( "Type must be given." );
     }
     this.type = type;
     this.value = value;
   }
 
-  public Type getType()
-  {
+  public Type getType() {
     return type;
   }
 
-  public Object getValue()
-  {
+  public Object getValue() {
     return value;
   }
 
 
-  public String toString()
-  {
+  public String toString() {
     return "TypeValuePair{" +
-        "type=" + type +
-        ", value=" + value +
-        '}';
+      "type=" + type +
+      ", value=" + value +
+      '}';
   }
 }

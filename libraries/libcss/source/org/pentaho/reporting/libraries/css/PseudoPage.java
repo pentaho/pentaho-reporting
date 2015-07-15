@@ -22,21 +22,18 @@ package org.pentaho.reporting.libraries.css;
  *
  * @author Thomas Morgner
  */
-public final class PseudoPage
-{
-  public static final PseudoPage LEFT = new PseudoPage("Left");
-  public static final PseudoPage RIGHT = new PseudoPage("Right");
-  public static final PseudoPage FIRST = new PseudoPage("First");
+public final class PseudoPage {
+  public static final PseudoPage LEFT = new PseudoPage( "Left" );
+  public static final PseudoPage RIGHT = new PseudoPage( "Right" );
+  public static final PseudoPage FIRST = new PseudoPage( "First" );
 
   private final String myName; // for debug only
 
-  private PseudoPage(String name)
-  {
+  private PseudoPage( String name ) {
     myName = name;
   }
 
-  public String toString()
-  {
+  public String toString() {
     return myName;
   }
 }

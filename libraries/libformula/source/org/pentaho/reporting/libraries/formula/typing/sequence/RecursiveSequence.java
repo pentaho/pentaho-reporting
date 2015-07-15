@@ -1,8 +1,5 @@
 package org.pentaho.reporting.libraries.formula.typing.sequence;
 
-import java.util.Collection;
-import java.util.LinkedList;
-
 import org.pentaho.reporting.libraries.formula.EvaluationException;
 import org.pentaho.reporting.libraries.formula.FormulaContext;
 import org.pentaho.reporting.libraries.formula.LibFormulaErrorValue;
@@ -10,76 +7,64 @@ import org.pentaho.reporting.libraries.formula.lvalues.LValue;
 import org.pentaho.reporting.libraries.formula.typing.ArrayCallback;
 import org.pentaho.reporting.libraries.formula.typing.Sequence;
 
-public class RecursiveSequence implements Sequence
-{
+import java.util.Collection;
+import java.util.LinkedList;
+
+public class RecursiveSequence implements Sequence {
   private LinkedList<Object> stack;
   private FormulaContext context;
 
-  public RecursiveSequence(final Object object,
-                           final FormulaContext context)
-  {
+  public RecursiveSequence( final Object object,
+                            final FormulaContext context ) {
     this.context = context;
     this.stack = new LinkedList<Object>();
-    this.stack.push(object);
+    this.stack.push( object );
   }
 
-  public boolean hasNext() throws EvaluationException
-  {
-    if (stack.isEmpty())
-    {
+  public boolean hasNext() throws EvaluationException {
+    if ( stack.isEmpty() ) {
       return false;
     }
     final Object o = stack.pop();
-    if (o instanceof Object[])
-    {
+    if ( o instanceof Object[] ) {
       final Object[] array = (Object[]) o;
-      final RawArraySequence s = new RawArraySequence(array);
-      stack.push(s);
+      final RawArraySequence s = new RawArraySequence( array );
+      stack.push( s );
       return hasNext();
-    }
-    else if (o instanceof Collection)
-    {
+    } else if ( o instanceof Collection ) {
       final Collection array = (Collection) o;
-      final RawArraySequence s = new RawArraySequence(array);
-      stack.push(s);
+      final RawArraySequence s = new RawArraySequence( array );
+      stack.push( s );
       return hasNext();
-    }
-    else if (o instanceof ArrayCallback)
-    {
+    } else if ( o instanceof ArrayCallback ) {
       final ArrayCallback array = (ArrayCallback) o;
-      final AnySequence s = new AnySequence(array, context);
-      stack.push(s);
+      final AnySequence s = new AnySequence( array, context );
+      stack.push( s );
       return hasNext();
-    }
-    else if (o instanceof Sequence)
-    {
+    } else if ( o instanceof Sequence ) {
       final Sequence s = (Sequence) o;
-      if (s.hasNext())
-      {
+      if ( s.hasNext() ) {
         final Object object = s.next();
-        stack.push(s);
-        stack.push(object);
+        stack.push( s );
+        stack.push( object );
       }
       return hasNext();
     }
 
-    stack.push(o);
+    stack.push( o );
     return true;
   }
 
-  public Object next() throws EvaluationException
-  {
+  public Object next() throws EvaluationException {
     final Object o = stack.pop();
-    if (o instanceof Sequence)
-    {
+    if ( o instanceof Sequence ) {
       final Sequence sequence = (Sequence) o;
       return sequence.next();
     }
-    return (o);
+    return ( o );
   }
 
-  public LValue nextRawValue() throws EvaluationException
-  {
-    throw EvaluationException.getInstance(LibFormulaErrorValue.ERROR_UNEXPECTED_VALUE);
+  public LValue nextRawValue() throws EvaluationException {
+    throw EvaluationException.getInstance( LibFormulaErrorValue.ERROR_UNEXPECTED_VALUE );
   }
 }

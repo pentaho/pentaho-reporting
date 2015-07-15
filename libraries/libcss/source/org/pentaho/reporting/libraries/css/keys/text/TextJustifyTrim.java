@@ -24,15 +24,13 @@ import org.pentaho.reporting.libraries.css.values.CSSConstant;
  *
  * @author Thomas Morgner
  */
-public class TextJustifyTrim
-{
+public class TextJustifyTrim {
   // none | punctuation | punctuation-and-kana
-  public static final CSSConstant NONE = new CSSConstant("none");
-  public static final CSSConstant PUNCTUATION = new CSSConstant("punctuation");
-  public static final CSSConstant PUNCTUATION_AND_KANA = new CSSConstant("punctuation-and-kana");
+  public static final CSSConstant NONE = new CSSConstant( "none" );
+  public static final CSSConstant PUNCTUATION = new CSSConstant( "punctuation" );
+  public static final CSSConstant PUNCTUATION_AND_KANA = new CSSConstant( "punctuation-and-kana" );
 
-  private TextJustifyTrim()
-  {
+  private TextJustifyTrim() {
 
   }
 }

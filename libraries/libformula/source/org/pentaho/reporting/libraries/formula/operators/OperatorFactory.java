@@ -24,11 +24,12 @@ import org.pentaho.reporting.libraries.base.config.Configuration;
  *
  * @author Thomas Morgner
  */
-public interface OperatorFactory
-{
-  public InfixOperator createInfixOperator(String operator);
-  public PostfixOperator createPostfixOperator(String operator);
-  public PrefixOperator createPrefixOperator(String operator);
+public interface OperatorFactory {
+  public InfixOperator createInfixOperator( String operator );
 
-  public void initalize(Configuration configuration);
+  public PostfixOperator createPostfixOperator( String operator );
+
+  public PrefixOperator createPrefixOperator( String operator );
+
+  public void initalize( Configuration configuration );
 }

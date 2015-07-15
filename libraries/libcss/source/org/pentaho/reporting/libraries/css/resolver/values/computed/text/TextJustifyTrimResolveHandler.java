@@ -25,14 +25,12 @@ import org.pentaho.reporting.libraries.css.resolver.values.computed.ConstantsRes
  *
  * @author Thomas Morgner
  */
-public class TextJustifyTrimResolveHandler extends ConstantsResolveHandler
-{
-  public TextJustifyTrimResolveHandler()
-  {
-    addNormalizeValue(TextJustifyTrim.NONE);
-    addNormalizeValue(TextJustifyTrim.PUNCTUATION);
-    addNormalizeValue(TextJustifyTrim.PUNCTUATION_AND_KANA);
-    setFallback(TextJustifyTrim.NONE);
+public class TextJustifyTrimResolveHandler extends ConstantsResolveHandler {
+  public TextJustifyTrimResolveHandler() {
+    addNormalizeValue( TextJustifyTrim.NONE );
+    addNormalizeValue( TextJustifyTrim.PUNCTUATION );
+    addNormalizeValue( TextJustifyTrim.PUNCTUATION_AND_KANA );
+    setFallback( TextJustifyTrim.NONE );
   }
 
 }

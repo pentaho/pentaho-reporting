@@ -24,13 +24,10 @@ import java.io.IOException;
  *
  * @author Thomas Morgner
  */
-public class AfmCharMetricsSection
-{
-  public AfmCharMetricsSection() throws IOException
-  {
+public class AfmCharMetricsSection {
+  public AfmCharMetricsSection() throws IOException {
   }
 
-  public void add(final String line)
-  {
+  public void add( final String line ) {
   }
 }

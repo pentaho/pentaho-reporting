@@ -17,12 +17,12 @@
 
 package org.pentaho.reporting.libraries.xmlns.writer;
 
+import org.pentaho.reporting.libraries.base.util.IOUtils;
+import org.pentaho.reporting.libraries.xmlns.common.AttributeList;
+
 import java.io.IOException;
 import java.io.Reader;
 import java.io.Writer;
-
-import org.pentaho.reporting.libraries.xmlns.common.AttributeList;
-import org.pentaho.reporting.libraries.base.util.IOUtils;
 
 
 /**
@@ -30,8 +30,7 @@ import org.pentaho.reporting.libraries.base.util.IOUtils;
  *
  * @author Thomas Morgner
  */
-public class XmlWriter
-{
+public class XmlWriter {
   /**
    * A constant for close.
    */
@@ -49,38 +48,33 @@ public class XmlWriter
   private XmlWriterSupport support;
 
   /**
-   * Creates a new XML writer for the specified character stream.  By default,
-   * four spaces are used for indentation.
+   * Creates a new XML writer for the specified character stream.  By default, four spaces are used for indentation.
    *
    * @param writer the character stream.
    */
-  public XmlWriter(final Writer writer)
-  {
-    this(writer, "  ");
+  public XmlWriter( final Writer writer ) {
+    this( writer, "  " );
   }
 
   /**
-   * Default Constructor. The created XMLWriterSupport will not have no safe
-   * tags and starts with an indention level of 0.
+   * Default Constructor. The created XMLWriterSupport will not have no safe tags and starts with an indention level of
+   * 0.
    *
    * @param writer         the character stream.
    * @param tagDescription the tags that are safe for line breaks.
    */
-  public XmlWriter(final Writer writer, final TagDescription tagDescription)
-  {
-    this(writer, tagDescription, "  ");
+  public XmlWriter( final Writer writer, final TagDescription tagDescription ) {
+    this( writer, tagDescription, "  " );
   }
 
   /**
    * Creates a new XML writer for the specified character stream.
    *
    * @param writer       the character stream.
-   * @param indentString the string used for indentation (should contain white
-   *                     space, for example four spaces).
+   * @param indentString the string used for indentation (should contain white space, for example four spaces).
    */
-  public XmlWriter(final Writer writer, final String indentString)
-  {
-    this(writer, new DefaultTagDescription(), indentString);
+  public XmlWriter( final Writer writer, final String indentString ) {
+    this( writer, new DefaultTagDescription(), indentString );
   }
 
   /**
@@ -90,16 +84,14 @@ public class XmlWriter
    * @param tagDescription the tags that are safe for line breaks.
    * @param indentString   the indent string.
    */
-  public XmlWriter(final Writer writer,
-                   final TagDescription tagDescription,
-                   final String indentString)
-  {
-    if (writer == null)
-    {
-      throw new NullPointerException("Writer must not be null.");
+  public XmlWriter( final Writer writer,
+                    final TagDescription tagDescription,
+                    final String indentString ) {
+    if ( writer == null ) {
+      throw new NullPointerException( "Writer must not be null." );
     }
 
-    this.support = new XmlWriterSupport(tagDescription, indentString);
+    this.support = new XmlWriterSupport( tagDescription, indentString );
     this.writer = writer;
   }
 
@@ -111,34 +103,28 @@ public class XmlWriter
    * @param indentString   the indent string.
    * @param lineSeparator  the line separator to be used.
    */
-  public XmlWriter(final Writer writer,
-                   final TagDescription tagDescription,
-                   final String indentString,
-                   final String lineSeparator)
-  {
-    if (writer == null)
-    {
-      throw new NullPointerException("Writer must not be null.");
+  public XmlWriter( final Writer writer,
+                    final TagDescription tagDescription,
+                    final String indentString,
+                    final String lineSeparator ) {
+    if ( writer == null ) {
+      throw new NullPointerException( "Writer must not be null." );
     }
 
-    this.support = new XmlWriterSupport(tagDescription, indentString, lineSeparator);
+    this.support = new XmlWriterSupport( tagDescription, indentString, lineSeparator );
     this.writer = writer;
   }
 
   /**
-   * Writes the XML declaration that usually appears at the top of every XML
-   * file.
+   * Writes the XML declaration that usually appears at the top of every XML file.
    *
-   * @param encoding the encoding that should be declared (this has to match the
-   *                 encoding of the writer, or funny things may happen when
-   *                 parsing the xml file later).
-   * @throws java.io.IOException if there is a problem writing to the character
-   *                             stream.
+   * @param encoding the encoding that should be declared (this has to match the encoding of the writer, or funny things
+   *                 may happen when parsing the xml file later).
+   * @throws java.io.IOException if there is a problem writing to the character stream.
    */
-  public void writeXmlDeclaration(final String encoding)
-      throws IOException
-  {
-    support.writeXmlDeclaration(writer, encoding);
+  public void writeXmlDeclaration( final String encoding )
+    throws IOException {
+    support.writeXmlDeclaration( writer, encoding );
   }
 
   /**
@@ -146,22 +132,17 @@ public class XmlWriter
    *
    * @param namespace the namespace URI for the element
    * @param name      the tag name.
-   * @param close     a flag that controls whether or not the tag is closed
-   *                  immediately.
+   * @param close     a flag that controls whether or not the tag is closed immediately.
    * @throws java.io.IOException if there is an I/O problem.
    */
-  public void writeTag(final String namespace,
-                       final String name,
-                       final boolean close)
-      throws IOException
-  {
-    if (close)
-    {
-      support.writeTag(this.writer, namespace, name, null, XmlWriterSupport.CLOSE);
-    }
-    else
-    {
-      support.writeTag(this.writer, namespace, name, null, XmlWriterSupport.OPEN);
+  public void writeTag( final String namespace,
+                        final String name,
+                        final boolean close )
+    throws IOException {
+    if ( close ) {
+      support.writeTag( this.writer, namespace, name, null, XmlWriterSupport.CLOSE );
+    } else {
+      support.writeTag( this.writer, namespace, name, null, XmlWriterSupport.OPEN );
     }
   }
 
@@ -171,9 +152,8 @@ public class XmlWriter
    * @throws java.io.IOException if there is an I/O problem.
    */
   public void writeCloseTag()
-      throws IOException
-  {
-    support.writeCloseTag(this.writer);
+    throws IOException {
+    support.writeCloseTag( this.writer );
   }
 
   /**
@@ -186,14 +166,13 @@ public class XmlWriter
    * @param close          controls whether the tag is closed.
    * @throws java.io.IOException if there is an I/O problem.
    */
-  public void writeTag(final String namespace,
-                       final String name,
-                       final String attributeName,
-                       final String attributeValue,
-                       final boolean close)
-      throws IOException
-  {
-    support.writeTag(this.writer, namespace, name, attributeName, attributeValue, close);
+  public void writeTag( final String namespace,
+                        final String name,
+                        final String attributeName,
+                        final String attributeValue,
+                        final boolean close )
+    throws IOException {
+    support.writeTag( this.writer, namespace, name, attributeName, attributeValue, close );
   }
 
   /**
@@ -205,13 +184,12 @@ public class XmlWriter
    * @param close      controls whether the tag is closed.
    * @throws java.io.IOException if there is an I/O problem.
    */
-  public void writeTag(final String namespace,
-                       final String name,
-                       final AttributeList attributes,
-                       final boolean close)
-      throws IOException
-  {
-    support.writeTag(this.writer, namespace, name, attributes, close);
+  public void writeTag( final String namespace,
+                        final String name,
+                        final AttributeList attributes,
+                        final boolean close )
+    throws IOException {
+    support.writeTag( this.writer, namespace, name, attributes, close );
   }
 
   /**
@@ -220,11 +198,10 @@ public class XmlWriter
    * @param text the text.
    * @throws IOException if there is a problem writing to the character stream.
    */
-  public void writeText(final String text)
-      throws IOException
-  {
-    this.writer.write(text);
-    support.setLineEmpty(false);
+  public void writeText( final String text )
+    throws IOException {
+    this.writer.write( text );
+    support.setLineEmpty( false );
   }
 
   /**
@@ -234,23 +211,20 @@ public class XmlWriter
    * @param transformNewLine whether to encode newlines using character-entities.
    * @throws IOException if an IO error occured.
    */
-  public void writeTextNormalized(final String s,
-                                  final boolean transformNewLine) throws IOException
-  {
-    support.writeTextNormalized(writer, s, transformNewLine);
+  public void writeTextNormalized( final String s,
+                                   final boolean transformNewLine ) throws IOException {
+    support.writeTextNormalized( writer, s, transformNewLine );
   }
 
   /**
-   * Copies the given reader to the character stream. This method should be used
-   * for large chunks of data.
+   * Copies the given reader to the character stream. This method should be used for large chunks of data.
    *
    * @param reader the reader providing the text.
    * @throws IOException if there is a problem writing to the character stream.
    */
-  public void writeStream(final Reader reader) throws IOException
-  {
-    IOUtils.getInstance().copyWriter(reader, writer);
-    support.setLineEmpty(false);
+  public void writeStream( final Reader reader ) throws IOException {
+    IOUtils.getInstance().copyWriter( reader, writer );
+    support.setLineEmpty( false );
   }
 
   /**
@@ -259,8 +233,7 @@ public class XmlWriter
    * @throws IOException if there is a problem closing the character stream.
    */
   public void close()
-      throws IOException
-  {
+    throws IOException {
     this.writer.close();
   }
 
@@ -270,10 +243,9 @@ public class XmlWriter
    * @param comment the comment text
    * @throws IOException if there is a problem writing to the character stream.
    */
-  public void writeComment(final String comment)
-      throws IOException
-  {
-    support.writeComment(writer, comment);
+  public void writeComment( final String comment )
+    throws IOException {
+    support.writeComment( writer, comment );
   }
 
   /**
@@ -282,9 +254,8 @@ public class XmlWriter
    * @throws IOException if there is a problem writing to the character stream.
    */
   public void writeNewLine()
-      throws IOException
-  {
-    support.writeNewLine(writer);
+    throws IOException {
+    support.writeNewLine( writer );
   }
 
   /**
@@ -293,93 +264,75 @@ public class XmlWriter
    * @throws IOException if something goes wrong.
    */
   public void flush()
-      throws IOException
-  {
+    throws IOException {
     this.writer.flush();
   }
 
-  public boolean isNamespaceDefined(final String namespace)
-  {
-    return support.isNamespaceDefined(namespace);
+  public boolean isNamespaceDefined( final String namespace ) {
+    return support.isNamespaceDefined( namespace );
   }
 
-  public void setAlwaysAddNamespace(final boolean b)
-  {
-    support.setAlwaysAddNamespace(b);
+  public void setAlwaysAddNamespace( final boolean b ) {
+    support.setAlwaysAddNamespace( b );
   }
 
-  public void addImpliedNamespace(final String uri, final String prefix)
-  {
-    support.addImpliedNamespace(uri, prefix);
+  public void addImpliedNamespace( final String uri, final String prefix ) {
+    support.addImpliedNamespace( uri, prefix );
   }
 
-  public void setAssumeDefaultNamespace(final boolean assumeDefaultNamespace)
-  {
-    support.setAssumeDefaultNamespace(assumeDefaultNamespace);
+  public void setAssumeDefaultNamespace( final boolean assumeDefaultNamespace ) {
+    support.setAssumeDefaultNamespace( assumeDefaultNamespace );
   }
 
-  public boolean isAssumeDefaultNamespace()
-  {
+  public boolean isAssumeDefaultNamespace() {
     return support.isAssumeDefaultNamespace();
   }
 
-  public boolean isAlwaysAddNamespace()
-  {
+  public boolean isAlwaysAddNamespace() {
     return support.isAlwaysAddNamespace();
   }
 
-  public void setHtmlCompatiblityMode(final boolean htmlCompatiblityMode)
-  {
-    support.setHtmlCompatiblityMode(htmlCompatiblityMode);
+  public void setHtmlCompatiblityMode( final boolean htmlCompatiblityMode ) {
+    support.setHtmlCompatiblityMode( htmlCompatiblityMode );
   }
 
-  public boolean isHtmlCompatiblityMode()
-  {
+  public boolean isHtmlCompatiblityMode() {
     return support.isHtmlCompatiblityMode();
   }
 
-  public void setWriteFinalLinebreak(final boolean writeFinalLinebreak)
-  {
-    support.setWriteFinalLinebreak(writeFinalLinebreak);
+  public void setWriteFinalLinebreak( final boolean writeFinalLinebreak ) {
+    support.setWriteFinalLinebreak( writeFinalLinebreak );
   }
 
-  public boolean isWriteFinalLinebreak()
-  {
+  public boolean isWriteFinalLinebreak() {
     return support.isWriteFinalLinebreak();
   }
 
-  public void setEncoding(final String encoding)
-  {
-    support.setEncoding(encoding);
+  public void setEncoding( final String encoding ) {
+    support.setEncoding( encoding );
   }
 
-  public void setLineEmpty(final boolean lineEmpty)
-  {
-    support.setLineEmpty(lineEmpty);
+  public void setLineEmpty( final boolean lineEmpty ) {
+    support.setLineEmpty( lineEmpty );
   }
 
-  public boolean isLineEmpty()
-  {
+  public boolean isLineEmpty() {
     return support.isLineEmpty();
   }
 
-  public boolean isNamespacePrefixDefined(final String prefix)
-  {
-    return support.isNamespacePrefixDefined(prefix);
+  public boolean isNamespacePrefixDefined( final String prefix ) {
+    return support.isNamespacePrefixDefined( prefix );
   }
 
-  public int getAdditionalIndent()
-  {
+  public int getAdditionalIndent() {
     return support.getAdditionalIndent();
   }
 
-  public void setAdditionalIndent(final int additionalIndent)
-  {
-    support.setAdditionalIndent(additionalIndent);
+  public void setAdditionalIndent( final int additionalIndent ) {
+    support.setAdditionalIndent( additionalIndent );
   }
 
-  public TagDescription getTagDescription()
-  {
+  public TagDescription getTagDescription() {
     return support.getTagDescription();
   }
 }

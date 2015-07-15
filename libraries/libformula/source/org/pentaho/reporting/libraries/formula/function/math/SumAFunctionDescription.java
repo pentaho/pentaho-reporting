@@ -27,49 +27,40 @@ import org.pentaho.reporting.libraries.formula.typing.coretypes.NumberType;
  *
  * @author Thomas Morgner
  */
-public class SumAFunctionDescription extends AbstractFunctionDescription
-{
+public class SumAFunctionDescription extends AbstractFunctionDescription {
   private static final long serialVersionUID = 5844556222254305990L;
 
-  public SumAFunctionDescription()
-  {
-    super("SUMA", "org.pentaho.reporting.libraries.formula.function.math.SumA-Function");
+  public SumAFunctionDescription() {
+    super( "SUMA", "org.pentaho.reporting.libraries.formula.function.math.SumA-Function" );
   }
 
-  public Type getValueType()
-  {
+  public Type getValueType() {
     return NumberType.GENERIC_NUMBER;
   }
 
-  public int getParameterCount()
-  {
+  public int getParameterCount() {
     return 0;
   }
 
-  public boolean isInfiniteParameterCount()
-  {
+  public boolean isInfiniteParameterCount() {
     return true;
   }
 
-  public Type getParameterType(final int position)
-  {
+  public Type getParameterType( final int position ) {
     return NumberType.NUMBER_SEQUENCE;
   }
 
   /**
-   * Defines, whether the parameter at the given position is mandatory. A
-   * mandatory parameter must be filled in, while optional parameters need not
-   * to be filled in.
+   * Defines, whether the parameter at the given position is mandatory. A mandatory parameter must be filled in, while
+   * optional parameters need not to be filled in.
    *
    * @return
    */
-  public boolean isParameterMandatory(final int position)
-  {
+  public boolean isParameterMandatory( final int position ) {
     return false;
   }
 
-  public FunctionCategory getCategory()
-  {
+  public FunctionCategory getCategory() {
     return MathFunctionCategory.CATEGORY;
   }
 }

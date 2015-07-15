@@ -24,14 +24,12 @@ import org.pentaho.reporting.libraries.css.values.CSSConstant;
  *
  * @author Thomas Morgner
  */
-public class HangingPunctuation
-{
-  public static final CSSConstant NONE = new CSSConstant("none");
-  public static final CSSConstant START = new CSSConstant("start");
-  public static final CSSConstant END = new CSSConstant("end");
-  public static final CSSConstant BOTH = new CSSConstant("both");
+public class HangingPunctuation {
+  public static final CSSConstant NONE = new CSSConstant( "none" );
+  public static final CSSConstant START = new CSSConstant( "start" );
+  public static final CSSConstant END = new CSSConstant( "end" );
+  public static final CSSConstant BOTH = new CSSConstant( "both" );
 
-  private HangingPunctuation()
-  {
+  private HangingPunctuation() {
   }
 }

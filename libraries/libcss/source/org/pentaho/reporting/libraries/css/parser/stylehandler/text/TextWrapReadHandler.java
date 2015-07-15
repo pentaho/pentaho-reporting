@@ -25,14 +25,12 @@ import org.pentaho.reporting.libraries.css.parser.stylehandler.OneOfConstantsRea
  *
  * @author Thomas Morgner
  */
-public class TextWrapReadHandler extends OneOfConstantsReadHandler
-{
-  public TextWrapReadHandler()
-  {
-    super(false);
-    addValue(TextWrap.NONE);
-    addValue(TextWrap.NORMAL);
-    addValue(TextWrap.SUPPRESS);
-    addValue(TextWrap.UNRESTRICTED);
+public class TextWrapReadHandler extends OneOfConstantsReadHandler {
+  public TextWrapReadHandler() {
+    super( false );
+    addValue( TextWrap.NONE );
+    addValue( TextWrap.NORMAL );
+    addValue( TextWrap.SUPPRESS );
+    addValue( TextWrap.UNRESTRICTED );
   }
 }

@@ -17,15 +17,14 @@
 
 package org.pentaho.reporting.libraries.docbundle.metadata.writer;
 
-import java.io.IOException;
-
 import org.pentaho.reporting.libraries.xmlns.writer.XmlWriter;
 
-public interface BundleMetaDataEntryWriteHandler
-{
-  public void write(BundleMetaDataXmlWriter bundleWriter,
-                    XmlWriter writer,
-                    String entryNamespace,
-                    String entryName,
-                    Object entryValue) throws IOException;
+import java.io.IOException;
+
+public interface BundleMetaDataEntryWriteHandler {
+  public void write( BundleMetaDataXmlWriter bundleWriter,
+                     XmlWriter writer,
+                     String entryNamespace,
+                     String entryName,
+                     Object entryValue ) throws IOException;
 }

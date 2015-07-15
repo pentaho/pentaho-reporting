@@ -24,14 +24,12 @@ import org.pentaho.reporting.libraries.css.values.CSSConstant;
  *
  * @author Thomas Morgner
  */
-public class BackgroundSize
-{
+public class BackgroundSize {
   public static final CSSConstant ROUND =
-      new CSSConstant("round");
+    new CSSConstant( "round" );
   public static final CSSConstant NO_ROUND =
-      new CSSConstant("-x-no-round");
+    new CSSConstant( "-x-no-round" );
 
-  private BackgroundSize()
-  {
+  private BackgroundSize() {
   }
 }

@@ -17,28 +17,25 @@
 
 package org.pentaho.reporting.libraries.formula.function.text;
 
-import java.math.BigDecimal;
-
 import org.pentaho.reporting.libraries.formula.FormulaTestBase;
+
+import java.math.BigDecimal;
 
 /**
  * @author Cedric Pronzato
  */
-public class LenFunctionTest extends FormulaTestBase
-{
-  public void testDefault() throws Exception
-  {
+public class LenFunctionTest extends FormulaTestBase {
+  public void testDefault() throws Exception {
     runDefaultTest();
   }
 
-  public Object[][] createDataTest()
-  {
+  public Object[][] createDataTest() {
     return new Object[][]
-        {
-            {"LEN(\"Hi There\")", new BigDecimal(8)},
-            {"LEN(\"\")", new BigDecimal(0)},
-            {"LEN(55)", new BigDecimal(2)},
-        };
+      {
+        { "LEN(\"Hi There\")", new BigDecimal( 8 ) },
+        { "LEN(\"\")", new BigDecimal( 0 ) },
+        { "LEN(55)", new BigDecimal( 2 ) },
+      };
   }
 
 }

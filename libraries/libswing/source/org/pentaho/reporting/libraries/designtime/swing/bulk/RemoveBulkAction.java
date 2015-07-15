@@ -17,29 +17,22 @@
 
 package org.pentaho.reporting.libraries.designtime.swing.bulk;
 
-import java.awt.event.ActionEvent;
-import java.util.ArrayList;
-import javax.swing.AbstractAction;
-import javax.swing.Action;
-import javax.swing.ListSelectionModel;
-import javax.swing.JTable;
-import javax.swing.table.TableCellEditor;
-import javax.swing.event.ListSelectionListener;
-import javax.swing.event.ListSelectionEvent;
-
 import org.pentaho.reporting.libraries.designtime.swing.Messages;
 
-public class RemoveBulkAction extends AbstractAction
-{
-  private class SelectionUpdateHandler implements ListSelectionListener
-  {
-    private SelectionUpdateHandler()
-    {
+import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+import javax.swing.table.TableCellEditor;
+import java.awt.event.ActionEvent;
+import java.util.ArrayList;
+
+public class RemoveBulkAction extends AbstractAction {
+  private class SelectionUpdateHandler implements ListSelectionListener {
+    private SelectionUpdateHandler() {
     }
 
-    public void valueChanged(final ListSelectionEvent e)
-    {
-      setEnabled(listSelectionModel.isSelectionEmpty() == false);
+    public void valueChanged( final ListSelectionEvent e ) {
+      setEnabled( listSelectionModel.isSelectionEmpty() == false );
     }
   }
 
@@ -47,53 +40,45 @@ public class RemoveBulkAction extends AbstractAction
   private ListSelectionModel listSelectionModel;
   private JTable editorTable;
 
-  public RemoveBulkAction(final BulkDataProvider tableModel,
-                              final ListSelectionModel listSelectionModel)
-  {
+  public RemoveBulkAction( final BulkDataProvider tableModel,
+                           final ListSelectionModel listSelectionModel ) {
     this.tableModel = tableModel;
     this.listSelectionModel = listSelectionModel;
-    this.listSelectionModel.addListSelectionListener(new SelectionUpdateHandler());
-    putValue(Action.SMALL_ICON, Messages.getInstance().getIcon("Icons.REMOVE"));
-    putValue(Action.SHORT_DESCRIPTION, Messages.getInstance().getString("Action.REMOVE"));
+    this.listSelectionModel.addListSelectionListener( new SelectionUpdateHandler() );
+    putValue( Action.SMALL_ICON, Messages.getInstance().getIcon( "Icons.REMOVE" ) );
+    putValue( Action.SHORT_DESCRIPTION, Messages.getInstance().getString( "Action.REMOVE" ) );
   }
 
-  public RemoveBulkAction(final BulkDataProvider tableModel, final ListSelectionModel listSelectionModel,
-                          final JTable editorTable)
-  {
-    this(tableModel, listSelectionModel);
+  public RemoveBulkAction( final BulkDataProvider tableModel, final ListSelectionModel listSelectionModel,
+                           final JTable editorTable ) {
+    this( tableModel, listSelectionModel );
     this.editorTable = editorTable;
   }
 
   /**
    * Invoked when an action occurs.
    */
-  public void actionPerformed(final ActionEvent e)
-  {
-    if (listSelectionModel.isSelectionEmpty())
-    {
+  public void actionPerformed( final ActionEvent e ) {
+    if ( listSelectionModel.isSelectionEmpty() ) {
       return;
     }
 
-    if (editorTable != null)
-    {
+    if ( editorTable != null ) {
       final TableCellEditor cellEditor = editorTable.getCellEditor();
-      if(cellEditor != null)
-      {
+      if ( cellEditor != null ) {
         cellEditor.stopCellEditing();
       }
     }
 
 
     final Object[] data = tableModel.getBulkData();
-    final ArrayList<Object> result = new ArrayList<Object>(data.length);
-    for (int i = 0; i < data.length; i++)
-    {
-      if (listSelectionModel.isSelectedIndex(i) == false)
-      {
-        result.add(data[i]);
+    final ArrayList<Object> result = new ArrayList<Object>( data.length );
+    for ( int i = 0; i < data.length; i++ ) {
+      if ( listSelectionModel.isSelectedIndex( i ) == false ) {
+        result.add( data[ i ] );
       }
     }
 
-    tableModel.setBulkData(result.toArray());
+    tableModel.setBulkData( result.toArray() );
   }
 }

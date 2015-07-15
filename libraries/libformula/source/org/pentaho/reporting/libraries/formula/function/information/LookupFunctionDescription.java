@@ -23,35 +23,28 @@ import org.pentaho.reporting.libraries.formula.typing.Type;
 import org.pentaho.reporting.libraries.formula.typing.coretypes.AnyType;
 import org.pentaho.reporting.libraries.formula.typing.coretypes.TextType;
 
-public class LookupFunctionDescription extends AbstractFunctionDescription
-{
-  public LookupFunctionDescription()
-  {
-    super("LOOKUP", "org.pentaho.reporting.libraries.formula.function.information.Lookup-Function");
+public class LookupFunctionDescription extends AbstractFunctionDescription {
+  public LookupFunctionDescription() {
+    super( "LOOKUP", "org.pentaho.reporting.libraries.formula.function.information.Lookup-Function" );
   }
 
-  public Type getValueType()
-  {
+  public Type getValueType() {
     return AnyType.TYPE;
   }
 
-  public FunctionCategory getCategory()
-  {
+  public FunctionCategory getCategory() {
     return InformationFunctionCategory.CATEGORY;
   }
 
-  public int getParameterCount()
-  {
+  public int getParameterCount() {
     return 1;
   }
 
-  public Type getParameterType(final int position)
-  {
+  public Type getParameterType( final int position ) {
     return TextType.TYPE;
   }
 
-  public boolean isParameterMandatory(final int position)
-  {
+  public boolean isParameterMandatory( final int position ) {
     return true;
   }
 }

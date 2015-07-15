@@ -19,19 +19,15 @@ package org.pentaho.reporting.libraries.css.counter.other;
 
 import org.pentaho.reporting.libraries.css.counter.CounterStyle;
 
-public class NoneCounterStyle implements CounterStyle
-{
-  public NoneCounterStyle ()
-  {
+public class NoneCounterStyle implements CounterStyle {
+  public NoneCounterStyle() {
   }
 
-  public String getCounterValue (final int index)
-  {
+  public String getCounterValue( final int index ) {
     return "";
   }
 
-  public String getSuffix()
-  {
+  public String getSuffix() {
     return "";
   }
 }

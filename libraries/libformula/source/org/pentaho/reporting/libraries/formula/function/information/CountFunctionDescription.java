@@ -28,30 +28,24 @@ import org.pentaho.reporting.libraries.formula.typing.coretypes.NumberType;
  * @author Cedric Pronzato
  * @see org.pentaho.reporting.libraries.formula.function.information.CountFunction
  */
-public class CountFunctionDescription extends AbstractFunctionDescription
-{
-  public CountFunctionDescription()
-  {
-    super("COUNT", "org.pentaho.reporting.libraries.formula.function.information.Count-Function");
+public class CountFunctionDescription extends AbstractFunctionDescription {
+  public CountFunctionDescription() {
+    super( "COUNT", "org.pentaho.reporting.libraries.formula.function.information.Count-Function" );
   }
 
-  public Type getValueType()
-  {
+  public Type getValueType() {
     return NumberType.GENERIC_NUMBER;
   }
 
-  public FunctionCategory getCategory()
-  {
+  public FunctionCategory getCategory() {
     return InformationFunctionCategory.CATEGORY;
   }
 
-  public int getParameterCount()
-  {
+  public int getParameterCount() {
     return 0;
   }
 
-  public boolean isInfiniteParameterCount()
-  {
+  public boolean isInfiniteParameterCount() {
     return true;
   }
 
@@ -62,8 +56,7 @@ public class CountFunctionDescription extends AbstractFunctionDescription
    * @param position The parameter index.
    * @return The parameter type.
    */
-  public Type getParameterType(final int position)
-  {
+  public Type getParameterType( final int position ) {
     return NumberType.NUMBER_SEQUENCE;
   }
 
@@ -73,8 +66,7 @@ public class CountFunctionDescription extends AbstractFunctionDescription
    *
    * @return
    */
-  public boolean isParameterMandatory(final int position)
-  {
+  public boolean isParameterMandatory( final int position ) {
     return true;
   }
 }

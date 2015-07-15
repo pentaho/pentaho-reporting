@@ -17,43 +17,36 @@
 
 package org.pentaho.reporting.libraries.docbundle.metadata.parser;
 
-import org.pentaho.reporting.libraries.xmlns.parser.AbstractXmlResourceFactory;
 import org.pentaho.reporting.libraries.base.config.Configuration;
 import org.pentaho.reporting.libraries.docbundle.LibDocBundleBoot;
 import org.pentaho.reporting.libraries.docbundle.metadata.BundleManifest;
+import org.pentaho.reporting.libraries.xmlns.parser.AbstractXmlResourceFactory;
 import org.pentaho.reporting.libraries.xmlns.parser.XmlFactoryModule;
 import org.pentaho.reporting.libraries.xmlns.parser.XmlFactoryModuleRegistry;
 
-public class BundleManifestXmlResourceFactory extends AbstractXmlResourceFactory
-{
+public class BundleManifestXmlResourceFactory extends AbstractXmlResourceFactory {
   private static final XmlFactoryModuleRegistry registry = new XmlFactoryModuleRegistry();
 
-  public static void register(final Class<? extends XmlFactoryModule> readHandler)
-  {
-    registry.register(readHandler);
+  public static void register( final Class<? extends XmlFactoryModule> readHandler ) {
+    registry.register( readHandler );
   }
 
-  public BundleManifestXmlResourceFactory()
-  {
+  public BundleManifestXmlResourceFactory() {
   }
 
-  public void initializeDefaults()
-  {
+  public void initializeDefaults() {
     super.initializeDefaults();
     final XmlFactoryModule[] registeredHandlers = registry.getRegisteredHandlers();
-    for (int i = 0; i < registeredHandlers.length; i++)
-    {
-      registerModule(registeredHandlers[i]);
+    for ( int i = 0; i < registeredHandlers.length; i++ ) {
+      registerModule( registeredHandlers[ i ] );
     }
   }
 
-  protected Configuration getConfiguration()
-  {
+  protected Configuration getConfiguration() {
     return LibDocBundleBoot.getInstance().getGlobalConfig();
   }
 
-  public Class getFactoryType()
-  {
+  public Class getFactoryType() {
     return BundleManifest.class;
   }
 }

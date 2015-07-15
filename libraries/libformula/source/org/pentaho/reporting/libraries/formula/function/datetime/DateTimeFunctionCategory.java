@@ -25,12 +25,10 @@ import org.pentaho.reporting.libraries.formula.function.FunctionCategory;
  *
  * @author Thomas Morgner
  */
-public final class DateTimeFunctionCategory extends AbstractFunctionCategory
-{
+public final class DateTimeFunctionCategory extends AbstractFunctionCategory {
   public static final FunctionCategory CATEGORY = new DateTimeFunctionCategory();
 
-  private DateTimeFunctionCategory()
-  {
-    super("org.pentaho.reporting.libraries.formula.function.datetime.category");
+  private DateTimeFunctionCategory() {
+    super( "org.pentaho.reporting.libraries.formula.function.datetime.category" );
   }
 }

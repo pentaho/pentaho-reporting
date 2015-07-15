@@ -25,11 +25,9 @@ import org.pentaho.reporting.libraries.css.parser.stylehandler.OneOfConstantsRea
  *
  * @author Thomas Morgner
  */
-public class TableLayoutReadHandler extends OneOfConstantsReadHandler
-{
-  public TableLayoutReadHandler()
-  {
-    super(true);
-    addValue(TableLayout.FIXED);
+public class TableLayoutReadHandler extends OneOfConstantsReadHandler {
+  public TableLayoutReadHandler() {
+    super( true );
+    addValue( TableLayout.FIXED );
   }
 }

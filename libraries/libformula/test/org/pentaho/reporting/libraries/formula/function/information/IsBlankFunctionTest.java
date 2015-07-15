@@ -22,22 +22,19 @@ import org.pentaho.reporting.libraries.formula.FormulaTestBase;
 /**
  * @author Cedric Pronzato
  */
-public class IsBlankFunctionTest extends FormulaTestBase
-{
-  public void testDefault() throws Exception
-  {
+public class IsBlankFunctionTest extends FormulaTestBase {
+  public void testDefault() throws Exception {
     runDefaultTest();
   }
 
-  public Object[][] createDataTest()
-  {
+  public Object[][] createDataTest() {
     return new Object[][]
-        {
-            {"ISBLANK(1)", Boolean.FALSE},
-            {"ISBLANK(\"\")", Boolean.FALSE},
-            {"ISBLANK([.B8])", Boolean.TRUE},
-            {"ISBLANK([.B7])", Boolean.FALSE},
-        };
+      {
+        { "ISBLANK(1)", Boolean.FALSE },
+        { "ISBLANK(\"\")", Boolean.FALSE },
+        { "ISBLANK([.B8])", Boolean.TRUE },
+        { "ISBLANK([.B7])", Boolean.FALSE },
+      };
   }
 
 }

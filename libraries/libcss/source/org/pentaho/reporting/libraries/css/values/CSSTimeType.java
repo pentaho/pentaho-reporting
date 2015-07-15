@@ -22,23 +22,19 @@ package org.pentaho.reporting.libraries.css.values;
  *
  * @author Thomas Morgner
  */
-public class CSSTimeType extends CSSNumericType
-{
-  public static final CSSTimeType SECONDS = new CSSTimeType("s");
-  public static final CSSTimeType MILLISECONDS = new CSSTimeType("ms");
+public class CSSTimeType extends CSSNumericType {
+  public static final CSSTimeType SECONDS = new CSSTimeType( "s" );
+  public static final CSSTimeType MILLISECONDS = new CSSTimeType( "ms" );
 
-  private CSSTimeType(String name)
-  {
-    super(name, false, true);
+  private CSSTimeType( String name ) {
+    super( name, false, true );
   }
 
-  public boolean equals(Object obj)
-  {
-    return (obj instanceof CSSTimeType && super.equals(obj));
+  public boolean equals( Object obj ) {
+    return ( obj instanceof CSSTimeType && super.equals( obj ) );
   }
 
-  public int hashCode()
-  {
+  public int hashCode() {
     return super.hashCode();
   }
 }

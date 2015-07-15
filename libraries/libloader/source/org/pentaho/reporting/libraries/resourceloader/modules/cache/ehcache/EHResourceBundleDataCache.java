@@ -31,15 +31,12 @@ import org.pentaho.reporting.libraries.resourceloader.cache.DefaultResourceBundl
 import org.pentaho.reporting.libraries.resourceloader.cache.ResourceBundleDataCache;
 import org.pentaho.reporting.libraries.resourceloader.cache.ResourceBundleDataCacheEntry;
 
-public class EHResourceBundleDataCache implements ResourceBundleDataCache
-{
-  private static final Log logger = LogFactory.getLog(EHResourceDataCache.class);
+public class EHResourceBundleDataCache implements ResourceBundleDataCache {
+  private static final Log logger = LogFactory.getLog( EHResourceDataCache.class );
   private Cache dataCache;
 
-  public EHResourceBundleDataCache(final Cache dataCache)
-  {
-    if (dataCache == null)
-    {
+  public EHResourceBundleDataCache( final Cache dataCache ) {
+    if ( dataCache == null ) {
       throw new NullPointerException();
     }
     this.dataCache = dataCache;
@@ -50,100 +47,76 @@ public class EHResourceBundleDataCache implements ResourceBundleDataCache
    *
    * @param key the resource key for the data.
    */
-  public ResourceBundleDataCacheEntry get(final ResourceKey key)
-  {
-    if (key == null)
-    {
+  public ResourceBundleDataCacheEntry get( final ResourceKey key ) {
+    if ( key == null ) {
       throw new NullPointerException();
     }
 
-    try
-    {
-      final Element element = dataCache.get((Object) key);
-      if (element != null)
-      {
-        if (EHCacheModule.CACHE_MONITOR.isDebugEnabled())
-        {
-          EHCacheModule.CACHE_MONITOR.debug("Bund Cache Hit  " + key);
+    try {
+      final Element element = dataCache.get( (Object) key );
+      if ( element != null ) {
+        if ( EHCacheModule.CACHE_MONITOR.isDebugEnabled() ) {
+          EHCacheModule.CACHE_MONITOR.debug( "Bund Cache Hit  " + key );
         }
         return (ResourceBundleDataCacheEntry) element.getObjectValue();
-      }
-      else
-      {
-        if (EHCacheModule.CACHE_MONITOR.isDebugEnabled())
-        {
-          EHCacheModule.CACHE_MONITOR.debug("Bund Cache Miss " + key);
+      } else {
+        if ( EHCacheModule.CACHE_MONITOR.isDebugEnabled() ) {
+          EHCacheModule.CACHE_MONITOR.debug( "Bund Cache Miss " + key );
         }
         return null;
       }
-    }
-    catch (CacheException e)
-    {
-      logger.debug("Failed to query cache", e);
+    } catch ( CacheException e ) {
+      logger.debug( "Failed to query cache", e );
       return null;
     }
   }
 
-  public ResourceBundleData put(final ResourceManager caller, final ResourceBundleData data)
-      throws ResourceLoadingException
-  {
-    if (caller == null)
-    {
+  public ResourceBundleData put( final ResourceManager caller, final ResourceBundleData data )
+    throws ResourceLoadingException {
+    if ( caller == null ) {
       throw new NullPointerException();
     }
-    if (data == null)
-    {
+    if ( data == null ) {
       throw new NullPointerException();
     }
 
-    final ResourceBundleData cdata = CachingResourceBundleData.createCached(data);
+    final ResourceBundleData cdata = CachingResourceBundleData.createCached( data );
     final Object keyObject = data.getBundleKey();
-    final Object valueObject = new DefaultResourceBundleDataCacheEntry(cdata, caller);
-    final Element element = new Element(keyObject, valueObject);
-    if (EHCacheModule.CACHE_MONITOR.isDebugEnabled())
-    {
-      EHCacheModule.CACHE_MONITOR.debug("Storing Bundle " + keyObject);
+    final Object valueObject = new DefaultResourceBundleDataCacheEntry( cdata, caller );
+    final Element element = new Element( keyObject, valueObject );
+    if ( EHCacheModule.CACHE_MONITOR.isDebugEnabled() ) {
+      EHCacheModule.CACHE_MONITOR.debug( "Storing Bundle " + keyObject );
     }
-    dataCache.put(element);
+    dataCache.put( element );
     return cdata;
   }
 
-  public void remove(final ResourceBundleData data)
-  {
-    if (data == null)
-    {
+  public void remove( final ResourceBundleData data ) {
+    if ( data == null ) {
       throw new NullPointerException();
     }
 
-    dataCache.remove((Object) data.getBundleKey());
+    dataCache.remove( (Object) data.getBundleKey() );
   }
 
   /**
-   * Remove all cached entries. This should be called after the cache has become
-   * invalid or after it has been removed from a resource manager.
+   * Remove all cached entries. This should be called after the cache has become invalid or after it has been removed
+   * from a resource manager.
    */
-  public void clear()
-  {
-    try
-    {
+  public void clear() {
+    try {
       dataCache.removeAll();
-    }
-    catch (Exception e)
-    {
-      logger.debug("Clearing cache failed", e);
+    } catch ( Exception e ) {
+      logger.debug( "Clearing cache failed", e );
       // ignore it ..
     }
   }
 
-  public void shutdown()
-  {
-    try
-    {
+  public void shutdown() {
+    try {
       dataCache.getCacheManager().shutdown();
-    }
-    catch (Exception e)
-    {
-      logger.debug("Failed to shut-down cache", e);
+    } catch ( Exception e ) {
+      logger.debug( "Failed to shut-down cache", e );
       // ignore it ..
     }
   }

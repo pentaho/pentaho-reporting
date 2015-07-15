@@ -17,8 +17,6 @@
 
 package org.pentaho.reporting.libraries.repository.dummy;
 
-import java.io.Serializable;
-
 import org.pentaho.reporting.libraries.repository.ContentCreationException;
 import org.pentaho.reporting.libraries.repository.ContentEntity;
 import org.pentaho.reporting.libraries.repository.ContentIOException;
@@ -27,32 +25,31 @@ import org.pentaho.reporting.libraries.repository.ContentLocation;
 import org.pentaho.reporting.libraries.repository.Repository;
 import org.pentaho.reporting.libraries.repository.RepositoryUtilities;
 
+import java.io.Serializable;
+
 /**
- * A dummy content location holds references to all dummy items. It does allow to create any items, but always
- * reports itself as empty location. This implementation only serves as data-sink in case the generated content
- * is not needed anywhere.
+ * A dummy content location holds references to all dummy items. It does allow to create any items, but always reports
+ * itself as empty location. This implementation only serves as data-sink in case the generated content is not needed
+ * anywhere.
  *
  * @author Thomas Morgner
  */
-public class DummyContentLocation implements ContentLocation, Serializable
-{
+public class DummyContentLocation implements ContentLocation, Serializable {
   private String name;
   private ContentLocation parent;
   private Repository repository;
-  private static final ContentEntity[] EMPTY_CONTENT_ENTITY = new ContentEntity[0];
+  private static final ContentEntity[] EMPTY_CONTENT_ENTITY = new ContentEntity[ 0 ];
 
   /**
-   * Creates a new DummyContentLocation with the given parent and name. The location
-   * will inherit the repository from its parent.
+   * Creates a new DummyContentLocation with the given parent and name. The location will inherit the repository from
+   * its parent.
    *
    * @param parent the parent location.
-   * @param name the name of this location.
+   * @param name   the name of this location.
    */
-  public DummyContentLocation(final ContentLocation parent, final String name)
-  {
-    if (parent == null)
-    {
-      throw new NullPointerException("Parent must not be null");
+  public DummyContentLocation( final ContentLocation parent, final String name ) {
+    if ( parent == null ) {
+      throw new NullPointerException( "Parent must not be null" );
     }
     this.repository = parent.getRepository();
     this.parent = parent;
@@ -63,10 +60,9 @@ public class DummyContentLocation implements ContentLocation, Serializable
    * Creates a new root DummyContentLocation with the given repository and name.
    *
    * @param repository the repository.
-   * @param name the name of this location.
+   * @param name       the name of this location.
    */
-  public DummyContentLocation(final Repository repository, final String name)
-  {
+  public DummyContentLocation( final Repository repository, final String name ) {
     this.repository = repository;
     this.name = name;
   }
@@ -77,8 +73,7 @@ public class DummyContentLocation implements ContentLocation, Serializable
    * @return the content entities for this location, an empty array.
    * @throws ContentIOException if an repository error occured.
    */
-  public ContentEntity[] listContents() throws ContentIOException
-  {
+  public ContentEntity[] listContents() throws ContentIOException {
     return EMPTY_CONTENT_ENTITY;
   }
 
@@ -90,37 +85,34 @@ public class DummyContentLocation implements ContentLocation, Serializable
    * @return the content entity for this name, never null.
    * @throws ContentIOException if an repository error occured.
    */
-  public ContentEntity getEntry(final String name) throws ContentIOException
-  {
+  public ContentEntity getEntry( final String name ) throws ContentIOException {
     throw new ContentIOException();
   }
 
   /**
-   * Creates a new data item in the current location. This method must never
-   * return null. This method will fail if an entity with the same name exists in this location.
+   * Creates a new data item in the current location. This method must never return null. This method will fail if an
+   * entity with the same name exists in this location.
    *
    * @param name the name of the new entity.
    * @return the newly created entity, never null.
    * @throws ContentCreationException if the item could not be created.
    */
-  public ContentItem createItem(final String name) throws ContentCreationException
-  {
-    return new DummyContentItem(this, name);
+  public ContentItem createItem( final String name ) throws ContentCreationException {
+    return new DummyContentItem( this, name );
   }
 
 
   /**
-   * Creates a new content location in the current location. This method must never
-   * return null. This method will fail if an entity with the same name exists in this location.
+   * Creates a new content location in the current location. This method must never return null. This method will fail
+   * if an entity with the same name exists in this location.
    *
    * @param name the name of the new entity.
    * @return the newly created entity, never null.
    * @throws ContentCreationException if the item could not be created.
    */
-  public ContentLocation createLocation(final String name)
-      throws ContentCreationException
-  {
-    return new DummyContentLocation(this, name);
+  public ContentLocation createLocation( final String name )
+    throws ContentCreationException {
+    return new DummyContentLocation( this, name );
   }
 
   /**
@@ -129,8 +121,7 @@ public class DummyContentLocation implements ContentLocation, Serializable
    * @param name the name of the item.
    * @return false.
    */
-  public boolean exists(final String name)
-  {
+  public boolean exists( final String name ) {
     return false;
   }
 
@@ -139,8 +130,7 @@ public class DummyContentLocation implements ContentLocation, Serializable
    *
    * @return the name, never null.
    */
-  public String getName()
-  {
+  public String getName() {
     return name;
   }
 
@@ -149,9 +139,8 @@ public class DummyContentLocation implements ContentLocation, Serializable
    *
    * @return the full pathname.
    */
-  public Object getContentId()
-  {
-    return RepositoryUtilities.buildName(this, "/");
+  public Object getContentId() {
+    return RepositoryUtilities.buildName( this, "/" );
   }
 
   /**
@@ -161,8 +150,7 @@ public class DummyContentLocation implements ContentLocation, Serializable
    * @param key    the name of the attribute.
    * @return the value or null, if the content-entity does not have a value for this attribute.
    */
-  public Object getAttribute(final String domain, final String key)
-  {
+  public Object getAttribute( final String domain, final String key ) {
     return null;
   }
 
@@ -174,8 +162,7 @@ public class DummyContentLocation implements ContentLocation, Serializable
    * @param value  the new attribute value.
    * @return false.
    */
-  public boolean setAttribute(final String domain, final String key, final Object value)
-  {
+  public boolean setAttribute( final String domain, final String key, final Object value ) {
     return false;
   }
 
@@ -184,8 +171,7 @@ public class DummyContentLocation implements ContentLocation, Serializable
    *
    * @return the parent.
    */
-  public ContentLocation getParent()
-  {
+  public ContentLocation getParent() {
     return parent;
   }
 
@@ -194,8 +180,7 @@ public class DummyContentLocation implements ContentLocation, Serializable
    *
    * @return the repository.
    */
-  public Repository getRepository()
-  {
+  public Repository getRepository() {
     return repository;
   }
 
@@ -204,8 +189,7 @@ public class DummyContentLocation implements ContentLocation, Serializable
    *
    * @return always false.
    */
-  public boolean delete()
-  {
+  public boolean delete() {
     return false;
   }
 }

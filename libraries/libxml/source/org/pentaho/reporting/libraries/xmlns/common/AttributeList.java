@@ -17,20 +17,18 @@
 
 package org.pentaho.reporting.libraries.xmlns.common;
 
-import java.util.Iterator;
-import java.util.Arrays;
-
-import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
 import org.pentaho.reporting.libraries.base.util.LinkedMap;
+import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
+
+import java.util.Arrays;
+import java.util.Iterator;
 
 /**
- * The attribute list is used by a writer to specify the attributes of an XML
- * element in a certain order.
+ * The attribute list is used by a writer to specify the attributes of an XML element in a certain order.
  *
  * @author Thomas Morgner
  */
-public class AttributeList
-{
+public class AttributeList {
   /**
    * A constant containing the XML-Namespace namespace identifier.
    */
@@ -43,8 +41,7 @@ public class AttributeList
   /**
    * A name/value pair of the attribute list.
    */
-  public static class AttributeEntry
-  {
+  public static class AttributeEntry {
     /**
      * The namespace of the attribute entry.
      */
@@ -67,19 +64,16 @@ public class AttributeList
      * @param name      the attribute name (<code>null</code> not permitted).
      * @param value     the attribute value (<code>null</code> not permitted).
      */
-    public AttributeEntry(final String namespace,
-                          final String name,
-                          final String value)
-    {
-      if (name == null)
-      {
-        throw new NullPointerException("Name must not be null. ["
-            + name + ", " + value + ']');
+    public AttributeEntry( final String namespace,
+                           final String name,
+                           final String value ) {
+      if ( name == null ) {
+        throw new NullPointerException( "Name must not be null. ["
+          + name + ", " + value + ']' );
       }
-      if (value == null)
-      {
-        throw new NullPointerException("Value must not be null. ["
-            + name + ", " + value + ']');
+      if ( value == null ) {
+        throw new NullPointerException( "Value must not be null. ["
+          + name + ", " + value + ']' );
       }
       this.namespace = namespace;
       this.name = name;
@@ -91,8 +85,7 @@ public class AttributeList
      *
      * @return the name.
      */
-    public String getName()
-    {
+    public String getName() {
       return this.name;
     }
 
@@ -101,8 +94,7 @@ public class AttributeList
      *
      * @return the value of the entry.
      */
-    public String getValue()
-    {
+    public String getValue() {
       return this.value;
     }
 
@@ -111,8 +103,7 @@ public class AttributeList
      *
      * @return the namespace.
      */
-    public String getNamespace()
-    {
+    public String getNamespace() {
       return namespace;
     }
 
@@ -122,25 +113,20 @@ public class AttributeList
      * @param o the other object.
      * @return true, if this object is equal, false otherwise.
      */
-    public boolean equals(final Object o)
-    {
-      if (this == o)
-      {
+    public boolean equals( final Object o ) {
+      if ( this == o ) {
         return true;
       }
-      if (o == null || getClass() != o.getClass())
-      {
+      if ( o == null || getClass() != o.getClass() ) {
         return false;
       }
 
       final AttributeEntry that = (AttributeEntry) o;
 
-      if (!name.equals(that.name))
-      {
+      if ( !name.equals( that.name ) ) {
         return false;
       }
-      if (namespace != null ? !namespace.equals(that.namespace) : that.namespace != null)
-      {
+      if ( namespace != null ? !namespace.equals( that.namespace ) : that.namespace != null ) {
         return false;
       }
 
@@ -152,24 +138,20 @@ public class AttributeList
      *
      * @return the attribute entry's hashcode.
      */
-    public int hashCode()
-    {
-      int result = (namespace != null ? namespace.hashCode() : 0);
+    public int hashCode() {
+      int result = ( namespace != null ? namespace.hashCode() : 0 );
       result = 29 * result + name.hashCode();
       return result;
     }
 
-    protected void update(final String namespace, final String name, final String value)
-    {
-      if (name == null)
-      {
-        throw new NullPointerException("Name must not be null. ["
-            + name + ", " + value + ']');
+    protected void update( final String namespace, final String name, final String value ) {
+      if ( name == null ) {
+        throw new NullPointerException( "Name must not be null. ["
+          + name + ", " + value + ']' );
       }
-      if (value == null)
-      {
-        throw new NullPointerException("Value must not be null. ["
-            + name + ", " + value + ']');
+      if ( value == null ) {
+        throw new NullPointerException( "Value must not be null. ["
+          + name + ", " + value + ']' );
       }
       this.namespace = namespace;
       this.name = name;
@@ -187,29 +169,24 @@ public class AttributeList
   /**
    * Creates an empty attribute list with no default values.
    */
-  public AttributeList()
-  {
+  public AttributeList() {
     this.entryList = new LinkedMap();
-    this.lookupKey = new AttributeEntry(null, "lookup", "value");
+    this.lookupKey = new AttributeEntry( null, "lookup", "value" );
   }
 
   /**
-   * Returns an iterator over the entry list. The iterator returns
-   * AttributeList.AttributeEntry objects.
+   * Returns an iterator over the entry list. The iterator returns AttributeList.AttributeEntry objects.
    *
    * @return the iterator over the entries contained in this list.
    * @deprecated use toArray instead.
    */
-  public Iterator iterator()
-  {
-    return Arrays.asList(entryList.values()).iterator();
+  public Iterator iterator() {
+    return Arrays.asList( entryList.values() ).iterator();
   }
 
-  public AttributeEntry[] toArray()
-  {
-    if (arrayCache == null)
-    {
-      arrayCache = (AttributeEntry[]) entryList.values(new AttributeEntry[entryList.size()]);
+  public AttributeEntry[] toArray() {
+    if ( arrayCache == null ) {
+      arrayCache = (AttributeEntry[]) entryList.values( new AttributeEntry[ entryList.size() ] );
     }
     return (AttributeEntry[]) arrayCache.clone();
   }
@@ -221,52 +198,46 @@ public class AttributeList
    * @param name      the name of the attribute to be defined
    * @param value     the value of the attribute.
    */
-  public void setAttribute(final String namespace,
-                           final String name,
-                           final String value)
-  {
-    if (value == null)
-    {
-      removeAttribute(namespace, name);
+  public void setAttribute( final String namespace,
+                            final String name,
+                            final String value ) {
+    if ( value == null ) {
+      removeAttribute( namespace, name );
       return;
     }
 
-    final AttributeEntry entry = new AttributeEntry(namespace, name, value);
+    final AttributeEntry entry = new AttributeEntry( namespace, name, value );
     this.arrayCache = null;
-    this.entryList.put(entry, entry);
+    this.entryList.put( entry, entry );
   }
 
   /**
-   * Returns the attribute value for the given attribute name or null, if the
-   * attribute is not defined in this list.
+   * Returns the attribute value for the given attribute name or null, if the attribute is not defined in this list.
    *
    * @param namespace the namespace of the attribute.
    * @param name      the name of the attribute
    * @return the attribute value or null.
    */
-  public String getAttribute(final String namespace,
-                             final String name)
-  {
-    return getAttribute(namespace, name, null);
+  public String getAttribute( final String namespace,
+                              final String name ) {
+    return getAttribute( namespace, name, null );
   }
 
   /**
-   * Returns the attribute value for the given attribute name or the given
-   * defaultvalue, if the attribute is not defined in this list.
+   * Returns the attribute value for the given attribute name or the given defaultvalue, if the attribute is not defined
+   * in this list.
    *
    * @param namespace    the namespace of the attribute.
    * @param name         the name of the attribute.
    * @param defaultValue the default value.
    * @return the attribute value or the defaultValue.
    */
-  public String getAttribute(final String namespace,
-                             final String name,
-                             final String defaultValue)
-  {
-    lookupKey.update(namespace, name, "");
-    final AttributeEntry entry = (AttributeEntry) this.entryList.get(lookupKey);
-    if (entry != null)
-    {
+  public String getAttribute( final String namespace,
+                              final String name,
+                              final String defaultValue ) {
+    lookupKey.update( namespace, name, "" );
+    final AttributeEntry entry = (AttributeEntry) this.entryList.get( lookupKey );
+    if ( entry != null ) {
       return entry.getValue();
     }
     return defaultValue;
@@ -278,11 +249,10 @@ public class AttributeList
    * @param namespace the namespace of the attribute that should be removed.
    * @param name      the name of the attribute which should be removed..
    */
-  public void removeAttribute(final String namespace,
-                              final String name)
-  {
-    lookupKey.update(namespace, name, "");
-    entryList.remove(lookupKey);
+  public void removeAttribute( final String namespace,
+                               final String name ) {
+    lookupKey.update( namespace, name, "" );
+    entryList.remove( lookupKey );
     this.arrayCache = null;
   }
 
@@ -291,36 +261,27 @@ public class AttributeList
    *
    * @return true, if the list is empty, false otherwise.
    */
-  public boolean isEmpty()
-  {
+  public boolean isEmpty() {
     return this.entryList.isEmpty();
   }
 
   /**
-   * Adds a namespace declaration. In XML, Namespaces are declared by
-   * using a special attribute-syntax. As this syntax is confusing and
-   * complicated, this method encapsulates this and make defining
-   * namespaces less confusing.
+   * Adds a namespace declaration. In XML, Namespaces are declared by using a special attribute-syntax. As this syntax
+   * is confusing and complicated, this method encapsulates this and make defining namespaces less confusing.
    *
-   * @param prefix       the desired namespace prefix (can be null or empty to
-   *                     define the default namespace.
+   * @param prefix       the desired namespace prefix (can be null or empty to define the default namespace.
    * @param namespaceUri the URI of the namespace.
    */
-  public void addNamespaceDeclaration(final String prefix,
-                                      final String namespaceUri)
-  {
-    if (namespaceUri == null)
-    {
+  public void addNamespaceDeclaration( final String prefix,
+                                       final String namespaceUri ) {
+    if ( namespaceUri == null ) {
       throw new NullPointerException();
     }
 
-    if (prefix == null || "".equals(prefix))
-    {
-      setAttribute(AttributeList.XMLNS_NAMESPACE, "", namespaceUri);
-    }
-    else
-    {
-      setAttribute(AttributeList.XMLNS_NAMESPACE, prefix, namespaceUri);
+    if ( prefix == null || "".equals( prefix ) ) {
+      setAttribute( AttributeList.XMLNS_NAMESPACE, "", namespaceUri );
+    } else {
+      setAttribute( AttributeList.XMLNS_NAMESPACE, prefix, namespaceUri );
     }
   }
 
@@ -329,15 +290,11 @@ public class AttributeList
    *
    * @param prefix the declared namespace prefix.
    */
-  public void removeNamespaceDeclaration(final String prefix)
-  {
-    if (prefix == null || "".equals(prefix))
-    {
-      removeAttribute(AttributeList.XMLNS_NAMESPACE, "");
-    }
-    else
-    {
-      removeAttribute(AttributeList.XMLNS_NAMESPACE, prefix);
+  public void removeNamespaceDeclaration( final String prefix ) {
+    if ( prefix == null || "".equals( prefix ) ) {
+      removeAttribute( AttributeList.XMLNS_NAMESPACE, "" );
+    } else {
+      removeAttribute( AttributeList.XMLNS_NAMESPACE, prefix );
     }
   }
 
@@ -347,32 +304,26 @@ public class AttributeList
    * @param prefix the namespace prefix.
    * @return true, if the prefix is defined, false otherwise.
    */
-  public boolean isNamespacePrefixDefined(final String prefix)
-  {
-    return getAttribute(AttributeList.XMLNS_NAMESPACE, prefix) != null;
+  public boolean isNamespacePrefixDefined( final String prefix ) {
+    return getAttribute( AttributeList.XMLNS_NAMESPACE, prefix ) != null;
   }
 
   /**
    * Checks, whether the given namespace URI has a defined prefix.
    *
    * @param uri the uri.
-   * @return true, if there is at least one namespace declaration matching
-   *         the given URI, false otherwise.
+   * @return true, if there is at least one namespace declaration matching the given URI, false otherwise.
    */
-  public boolean isNamespaceUriDefined(final String uri)
-  {
-    if (this.entryList.isEmpty())
-    {
+  public boolean isNamespaceUriDefined( final String uri ) {
+    if ( this.entryList.isEmpty() ) {
       return false;
     }
 
     final AttributeEntry[] objects = toArray();
-    for (int i = 0; i < objects.length; i++)
-    {
-      final AttributeEntry ae = objects[i];
-      if (ObjectUtilities.equal(ae.getValue(), uri) &&
-          AttributeList.XMLNS_NAMESPACE.equals(ae.getNamespace()))
-      {
+    for ( int i = 0; i < objects.length; i++ ) {
+      final AttributeEntry ae = objects[ i ];
+      if ( ObjectUtilities.equal( ae.getValue(), uri ) &&
+        AttributeList.XMLNS_NAMESPACE.equals( ae.getNamespace() ) ) {
         return true;
       }
     }

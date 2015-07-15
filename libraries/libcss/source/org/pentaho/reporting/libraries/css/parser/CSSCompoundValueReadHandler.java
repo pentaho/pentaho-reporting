@@ -17,25 +17,24 @@
 
 package org.pentaho.reporting.libraries.css.parser;
 
-import java.util.Map;
-
 import org.pentaho.reporting.libraries.css.model.StyleKey;
 import org.w3c.css.sac.LexicalUnit;
+
+import java.util.Map;
 
 /**
  * Creation-Date: 26.11.2005, 19:45:45
  *
  * @author Thomas Morgner
  */
-public interface CSSCompoundValueReadHandler
-{
+public interface CSSCompoundValueReadHandler {
   /**
    * Parses the LexicalUnit and returns a map of (StyleKey, CSSValue) pairs.
    *
    * @param unit
    * @return
    */
-  public Map createValues(LexicalUnit unit);
+  public Map createValues( LexicalUnit unit );
 
   public StyleKey[] getAffectedKeys();
 }

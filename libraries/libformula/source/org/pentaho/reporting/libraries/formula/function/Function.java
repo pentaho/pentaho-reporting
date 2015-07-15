@@ -17,26 +17,24 @@
 
 package org.pentaho.reporting.libraries.formula.function;
 
+import org.pentaho.reporting.libraries.formula.EvaluationException;
+import org.pentaho.reporting.libraries.formula.FormulaContext;
+import org.pentaho.reporting.libraries.formula.lvalues.TypeValuePair;
+
 import java.io.Serializable;
 
-import org.pentaho.reporting.libraries.formula.lvalues.TypeValuePair;
-import org.pentaho.reporting.libraries.formula.FormulaContext;
-import org.pentaho.reporting.libraries.formula.EvaluationException;
-import org.pentaho.reporting.libraries.formula.typing.TypeConversionException;
-
 /**
- * A function is an arbitary computation. A return value type is not available
- * unless the function has been evaluated.
- *
- * Functions must be stateless, that means: Calling the same function with
- * exactly the same parameters must always result in the same computed value.
+ * A function is an arbitary computation. A return value type is not available unless the function has been evaluated.
+ * <p/>
+ * Functions must be stateless, that means: Calling the same function with exactly the same parameters must always
+ * result in the same computed value.
  *
  * @author Thomas Morgner
  */
-public interface Function extends Serializable
-{
+public interface Function extends Serializable {
   public String getCanonicalName();
-  public TypeValuePair evaluate (FormulaContext context,
-                                 ParameterCallback parameters)
-      throws EvaluationException;
+
+  public TypeValuePair evaluate( FormulaContext context,
+                                 ParameterCallback parameters )
+    throws EvaluationException;
 }

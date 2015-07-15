@@ -24,8 +24,7 @@ import org.pentaho.reporting.libraries.fonts.LEByteAccessUtilities;
  *
  * @author Thomas Morgner
  */
-public class PfmFontHeader
-{
+public class PfmFontHeader {
   public static final int LENGTH = 117;
 
   // header information
@@ -56,176 +55,151 @@ public class PfmFontHeader
   private int devicePtr;
   private int facePtr;
 
-  public PfmFontHeader (final byte[] data)
-  {
-    version = LEByteAccessUtilities.readShort(data, 0);
-    size = LEByteAccessUtilities.readULong(data, 2);
+  public PfmFontHeader( final byte[] data ) {
+    version = LEByteAccessUtilities.readShort( data, 0 );
+    size = LEByteAccessUtilities.readULong( data, 2 );
     // skip the copyright, we dont care about that ...
-    type = LEByteAccessUtilities.readShort(data, 66);
-    point = LEByteAccessUtilities.readShort(data, 68);
-    vertRes = LEByteAccessUtilities.readShort(data, 70);
-    horizRes = LEByteAccessUtilities.readShort(data, 72);
-    ascent = LEByteAccessUtilities.readShort(data, 74);
+    type = LEByteAccessUtilities.readShort( data, 66 );
+    point = LEByteAccessUtilities.readShort( data, 68 );
+    vertRes = LEByteAccessUtilities.readShort( data, 70 );
+    horizRes = LEByteAccessUtilities.readShort( data, 72 );
+    ascent = LEByteAccessUtilities.readShort( data, 74 );
 
-    internalLeading = LEByteAccessUtilities.readShort(data, 76);
-    externalLeading = LEByteAccessUtilities.readShort(data, 78);
-    italic = data[80] != 0;
-    underline = data[81] != 0;
-    strikeout = data[82] != 0;
-    weight = LEByteAccessUtilities.readShort(data, 83);
-    charset = data[85];
-    pixelWidth = LEByteAccessUtilities.readShort(data, 86);
-    pixelHeight = LEByteAccessUtilities.readShort(data, 88);
-    pitchAndFamily = data[90];
-    avgWidth = LEByteAccessUtilities.readShort(data, 91);
-    maxWidth = LEByteAccessUtilities.readShort(data, 93);
-    firstChar = (short) (0xff & data[95]);
-    lastChar = (short) (0xff & data[96]);
-    defaultChar = (short) (0xff & data[97]);
-    breakChar = (short) (0xff & data[98]);
-    widthBytes = LEByteAccessUtilities.readShort(data, 99);
-    devicePtr = LEByteAccessUtilities.readLong(data, 101);
-    facePtr = LEByteAccessUtilities.readLong(data, 105);
+    internalLeading = LEByteAccessUtilities.readShort( data, 76 );
+    externalLeading = LEByteAccessUtilities.readShort( data, 78 );
+    italic = data[ 80 ] != 0;
+    underline = data[ 81 ] != 0;
+    strikeout = data[ 82 ] != 0;
+    weight = LEByteAccessUtilities.readShort( data, 83 );
+    charset = data[ 85 ];
+    pixelWidth = LEByteAccessUtilities.readShort( data, 86 );
+    pixelHeight = LEByteAccessUtilities.readShort( data, 88 );
+    pitchAndFamily = data[ 90 ];
+    avgWidth = LEByteAccessUtilities.readShort( data, 91 );
+    maxWidth = LEByteAccessUtilities.readShort( data, 93 );
+    firstChar = (short) ( 0xff & data[ 95 ] );
+    lastChar = (short) ( 0xff & data[ 96 ] );
+    defaultChar = (short) ( 0xff & data[ 97 ] );
+    breakChar = (short) ( 0xff & data[ 98 ] );
+    widthBytes = LEByteAccessUtilities.readShort( data, 99 );
+    devicePtr = LEByteAccessUtilities.readLong( data, 101 );
+    facePtr = LEByteAccessUtilities.readLong( data, 105 );
   }
 
-  public int getDevicePtr()
-  {
+  public int getDevicePtr() {
     return devicePtr;
   }
 
-  public int getFacePtr()
-  {
+  public int getFacePtr() {
     return facePtr;
   }
 
-  public short getVersion()
-  {
+  public short getVersion() {
     return version;
   }
 
-  public long getSize()
-  {
+  public long getSize() {
     return size;
   }
 
-  public short getType()
-  {
+  public short getType() {
     return type;
   }
 
-  public short getPoint()
-  {
+  public short getPoint() {
     return point;
   }
 
-  public short getVertRes()
-  {
+  public short getVertRes() {
     return vertRes;
   }
 
-  public short getHorizRes()
-  {
+  public short getHorizRes() {
     return horizRes;
   }
 
-  public short getAscent()
-  {
+  public short getAscent() {
     return ascent;
   }
 
-  public short getInternalLeading()
-  {
+  public short getInternalLeading() {
     return internalLeading;
   }
 
-  public short getExternalLeading()
-  {
+  public short getExternalLeading() {
     return externalLeading;
   }
 
-  public boolean isItalic()
-  {
+  public boolean isItalic() {
     return italic;
   }
 
-  public boolean isUnderline()
-  {
+  public boolean isUnderline() {
     return underline;
   }
 
-  public boolean isStrikeout()
-  {
+  public boolean isStrikeout() {
     return strikeout;
   }
 
-  public short getWeight()
-  {
+  public short getWeight() {
     return weight;
   }
 
-  public byte getCharset()
-  {
+  public byte getCharset() {
     return charset;
   }
 
-  public short getPixelWidth()
-  {
+  public short getPixelWidth() {
     return pixelWidth;
   }
 
-  public short getPixelHeight()
-  {
+  public short getPixelHeight() {
     return pixelHeight;
   }
 
-  public byte getPitchAndFamily()
-  {
+  public byte getPitchAndFamily() {
     return pitchAndFamily;
   }
 
-  public short getAvgWidth()
-  {
+  public short getAvgWidth() {
     return avgWidth;
   }
 
-  public short getMaxWidth()
-  {
+  public short getMaxWidth() {
     return maxWidth;
   }
 
-  public short getFirstChar()
-  {
+  public short getFirstChar() {
     return firstChar;
   }
 
-  public short getLastChar()
-  {
+  public short getLastChar() {
     return lastChar;
   }
 
-  public short getDefaultChar()
-  {
+  public short getDefaultChar() {
     return defaultChar;
   }
 
-  public short getBreakChar()
-  {
+  public short getBreakChar() {
     return breakChar;
   }
 
-  public short getWidthBytes()
-  {
+  public short getWidthBytes() {
     return widthBytes;
   }
 
-  public String getEncoding ()
-  {
-    switch((int) charset)
-    {
-      case 128: return "SJIS";
-      case 129: return "EUC_KR";
-      case 134: return "GBK";
-      case 136: return "Big5";
+  public String getEncoding() {
+    switch( (int) charset ) {
+      case 128:
+        return "SJIS";
+      case 129:
+        return "EUC_KR";
+      case 134:
+        return "GBK";
+      case 136:
+        return "Big5";
       default:
         // Assume the western-european codepage if no other page has been specified.
         return "Cp1252";

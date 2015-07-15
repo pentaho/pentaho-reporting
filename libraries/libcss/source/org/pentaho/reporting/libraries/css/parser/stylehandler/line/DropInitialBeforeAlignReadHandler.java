@@ -24,10 +24,8 @@ import org.pentaho.reporting.libraries.css.values.CSSConstant;
  *
  * @author Thomas Morgner
  */
-public class DropInitialBeforeAlignReadHandler extends AlignmentBaselineReadHandler
-{
-  public DropInitialBeforeAlignReadHandler()
-  {
-    addValue(new CSSConstant("caps-height"));
+public class DropInitialBeforeAlignReadHandler extends AlignmentBaselineReadHandler {
+  public DropInitialBeforeAlignReadHandler() {
+    addValue( new CSSConstant( "caps-height" ) );
   }
 }

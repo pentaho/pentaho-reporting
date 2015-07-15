@@ -17,26 +17,23 @@
 
 package org.pentaho.reporting.libraries.formula.function.datetime;
 
-import java.math.BigDecimal;
-
 import org.pentaho.reporting.libraries.formula.FormulaTestBase;
+
+import java.math.BigDecimal;
 
 /**
  * @author Cedric Pronzato
  */
-public class MonthFunctionTest extends FormulaTestBase
-{
-  public void testDefault() throws Exception
-  {
+public class MonthFunctionTest extends FormulaTestBase {
+  public void testDefault() throws Exception {
     runDefaultTest();
   }
 
 
-  public Object[][] createDataTest()
-  {
+  public Object[][] createDataTest() {
     return new Object[][]
-        {
-            {"MONTH([.C7])", new BigDecimal(1)},
-            {"MONTH(DATE(2006;5;21))", new BigDecimal(5)},};
+      {
+        { "MONTH([.C7])", new BigDecimal( 1 ) },
+        { "MONTH(DATE(2006;5;21))", new BigDecimal( 5 ) }, };
   }
 }

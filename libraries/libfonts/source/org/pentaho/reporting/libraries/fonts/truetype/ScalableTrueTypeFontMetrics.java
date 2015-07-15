@@ -17,20 +17,19 @@
 
 package org.pentaho.reporting.libraries.fonts.truetype;
 
-import java.io.IOException;
-
 import org.pentaho.reporting.libraries.fonts.LibFontsDefaults;
 import org.pentaho.reporting.libraries.fonts.tools.FontStrictGeomUtility;
 
+import java.io.IOException;
+
 
 /**
- * This is the scalable backend for truetype fonts. To make any use of it,
- * you have to apply the font size to these metrics.
+ * This is the scalable backend for truetype fonts. To make any use of it, you have to apply the font size to these
+ * metrics.
  *
  * @author Thomas Morgner
  */
-public class ScalableTrueTypeFontMetrics
-{
+public class ScalableTrueTypeFontMetrics {
   private TrueTypeFont font;
   private long ascent;
   private long descent;
@@ -45,80 +44,72 @@ public class ScalableTrueTypeFontMetrics
   private long italicAngle;
   private long maxCharAdvance;
 
-  public ScalableTrueTypeFontMetrics(final TrueTypeFont font)
-          throws IOException
-  {
-    if (font == null)
-    {
-      throw new NullPointerException("The font must not be null");
+  public ScalableTrueTypeFontMetrics( final TrueTypeFont font )
+    throws IOException {
+    if ( font == null ) {
+      throw new NullPointerException( "The font must not be null" );
     }
     this.font = font;
-    final FontHeaderTable head = (FontHeaderTable) font.getTable(FontHeaderTable.TABLE_ID);
-    if (head == null)
-    {
-      throw new IllegalStateException("Font has no HEAD table and is not a usable font.");
+    final FontHeaderTable head = (FontHeaderTable) font.getTable( FontHeaderTable.TABLE_ID );
+    if ( head == null ) {
+      throw new IllegalStateException( "Font has no HEAD table and is not a usable font." );
     }
     final int unitsPerEm = head.getUnitsPerEm();
-    final long strictScaleFactor = FontStrictGeomUtility.toInternalValue(1);
-    maxAscent = (strictScaleFactor * head.getyMax()) / unitsPerEm;
-    maxDescent = (strictScaleFactor * -head.getyMin()) / unitsPerEm;
+    final long strictScaleFactor = FontStrictGeomUtility.toInternalValue( 1 );
+    maxAscent = ( strictScaleFactor * head.getyMax() ) / unitsPerEm;
+    maxDescent = ( strictScaleFactor * -head.getyMin() ) / unitsPerEm;
     // prefer the mac table, as at least for the old version of Arial
     // I use, the mac table is consistent with the Java-Font-Metrics
-    final HorizontalHeaderTable hhea = (HorizontalHeaderTable) font.getTable(HorizontalHeaderTable.TABLE_ID);
-    if (hhea == null)
-    {
-      throw new IllegalStateException("The font has no HHEA table and is not a valid font.");
+    final HorizontalHeaderTable hhea = (HorizontalHeaderTable) font.getTable( HorizontalHeaderTable.TABLE_ID );
+    if ( hhea == null ) {
+      throw new IllegalStateException( "The font has no HHEA table and is not a valid font." );
     }
     // Mac metrics must always be present..
-    createMacMetrics(hhea, unitsPerEm, strictScaleFactor);
+    createMacMetrics( hhea, unitsPerEm, strictScaleFactor );
 
-    final OS2Table table = (OS2Table) font.getTable(OS2Table.TABLE_ID);
-    if (table != null)
-    {
-      computeWindowsMetrics(table, unitsPerEm, strictScaleFactor);
+    final OS2Table table = (OS2Table) font.getTable( OS2Table.TABLE_ID );
+    if ( table != null ) {
+      computeWindowsMetrics( table, unitsPerEm, strictScaleFactor );
     }
 
     final PostscriptInformationTable postTable =
-        (PostscriptInformationTable) font.getTable(PostscriptInformationTable.TABLE_ID);
-    if (postTable != null)
-    {
-      this.italicAngle = FontStrictGeomUtility.toInternalValue(postTable.getItalicAngle());
+      (PostscriptInformationTable) font.getTable( PostscriptInformationTable.TABLE_ID );
+    if ( postTable != null ) {
+      this.italicAngle = FontStrictGeomUtility.toInternalValue( postTable.getItalicAngle() );
       this.underlinePosition = getAscent() +
-         (strictScaleFactor * (-postTable.getUnderlinePosition() + (postTable.getUnderlineThickness() / 2))) / unitsPerEm;
+        ( strictScaleFactor * ( -postTable.getUnderlinePosition() + ( postTable.getUnderlineThickness() / 2 ) ) )
+          / unitsPerEm;
     }
 
     font.dispose();
   }
 
 
-  private void createMacMetrics(final HorizontalHeaderTable hhea,
-                                final int unitsPerEm,
-                                final long scaleFactor)
-  {
-    this.maxCharAdvance = (scaleFactor * hhea.getMaxAdvanceWidth()) / unitsPerEm;
-    this.ascent = (scaleFactor * hhea.getAscender()) / unitsPerEm;
-    this.descent = (scaleFactor * -hhea.getDescender()) / unitsPerEm;
-    this.leading = (scaleFactor * hhea.getLineGap()) / unitsPerEm;
-    this.xHeight = (long) (ascent * LibFontsDefaults.DEFAULT_XHEIGHT_SIZE / LibFontsDefaults.DEFAULT_ASCENT_SIZE);
-    this.strikethroughPosition = getMaxAscent() - (long) (this.xHeight * LibFontsDefaults.DEFAULT_STRIKETHROUGH_POSITION);
+  private void createMacMetrics( final HorizontalHeaderTable hhea,
+                                 final int unitsPerEm,
+                                 final long scaleFactor ) {
+    this.maxCharAdvance = ( scaleFactor * hhea.getMaxAdvanceWidth() ) / unitsPerEm;
+    this.ascent = ( scaleFactor * hhea.getAscender() ) / unitsPerEm;
+    this.descent = ( scaleFactor * -hhea.getDescender() ) / unitsPerEm;
+    this.leading = ( scaleFactor * hhea.getLineGap() ) / unitsPerEm;
+    this.xHeight = (long) ( ascent * LibFontsDefaults.DEFAULT_XHEIGHT_SIZE / LibFontsDefaults.DEFAULT_ASCENT_SIZE );
+    this.strikethroughPosition =
+      getMaxAscent() - (long) ( this.xHeight * LibFontsDefaults.DEFAULT_STRIKETHROUGH_POSITION );
     this.italicAngle = FontStrictGeomUtility.toInternalValue
-        (-StrictMath.atan2(hhea.getCaretSlopeRun(), hhea.getCaretSlopeRise()) * 180 / Math.PI);
+      ( -StrictMath.atan2( hhea.getCaretSlopeRun(), hhea.getCaretSlopeRise() ) * 180 / Math.PI );
   }
 
-  private void computeWindowsMetrics(final OS2Table table,
-                                     final int unitsPerEm,
-                                     final long scaleFactor)
-  {
+  private void computeWindowsMetrics( final OS2Table table,
+                                      final int unitsPerEm,
+                                      final long scaleFactor ) {
     final short xHeightRaw = table.getxHeight();
-    if (xHeightRaw != 0)
-    {
-      this.xHeight = (scaleFactor * xHeightRaw) / unitsPerEm;
+    if ( xHeightRaw != 0 ) {
+      this.xHeight = ( scaleFactor * xHeightRaw ) / unitsPerEm;
     }
 
     final short strikethroughPosition = table.getyStrikeoutPosition();
-    if (strikethroughPosition != 0)
-    {
-      this.strikethroughPosition = getMaxAscent() - (scaleFactor * strikethroughPosition / unitsPerEm);
+    if ( strikethroughPosition != 0 ) {
+      this.strikethroughPosition = getMaxAscent() - ( scaleFactor * strikethroughPosition / unitsPerEm );
     }
   }
 
@@ -127,58 +118,47 @@ public class ScalableTrueTypeFontMetrics
    *
    * @return
    */
-  public long getAscent()
-  {
+  public long getAscent() {
     return ascent;
   }
 
-  public long getDescent()
-  {
+  public long getDescent() {
     return descent;
   }
 
-  public long getLeading()
-  {
+  public long getLeading() {
     return leading;
   }
 
-  public long getXHeight()
-  {
+  public long getXHeight() {
     return xHeight;
   }
 
-  public long getUnderlinePosition()
-  {
+  public long getUnderlinePosition() {
     return underlinePosition;
   }
 
-  public long getStrikeThroughPosition()
-  {
+  public long getStrikeThroughPosition() {
     return strikethroughPosition;
   }
 
-  public TrueTypeFont getFont()
-  {
+  public TrueTypeFont getFont() {
     return font;
   }
 
-  public long getItalicAngle()
-  {
+  public long getItalicAngle() {
     return italicAngle;
   }
 
-  public long getMaxAscent()
-  {
+  public long getMaxAscent() {
     return maxAscent;
   }
 
-  public long getMaxDescent()
-  {
+  public long getMaxDescent() {
     return maxDescent;
   }
 
-  public long getMaxCharAdvance()
-  {
+  public long getMaxCharAdvance() {
     return maxCharAdvance;
   }
 }

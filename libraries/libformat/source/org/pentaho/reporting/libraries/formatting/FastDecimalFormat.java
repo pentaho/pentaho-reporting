@@ -25,14 +25,12 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 
 /**
- * A wrapper around the java.text.DecimalFormat class. This wrapper limits the possible interactions with
- * the wrapped format class and therefore eliminates the need to clone the choice format whenever the
- * wrapper is cloned.
+ * A wrapper around the java.text.DecimalFormat class. This wrapper limits the possible interactions with the wrapped
+ * format class and therefore eliminates the need to clone the choice format whenever the wrapper is cloned.
  *
  * @author Thomas Morgner
  */
-public class FastDecimalFormat implements FastFormat
-{
+public class FastDecimalFormat implements FastFormat {
 
   /**
    * A format-type constant indicating the system's default number format.
@@ -62,9 +60,8 @@ public class FastDecimalFormat implements FastFormat
    *
    * @param pattern the pattern string.
    */
-  public FastDecimalFormat(final String pattern)
-  {
-    this(pattern, Locale.getDefault());
+  public FastDecimalFormat( final String pattern ) {
+    this( pattern, Locale.getDefault() );
   }
 
   /**
@@ -73,21 +70,18 @@ public class FastDecimalFormat implements FastFormat
    * @param pattern the pattern string.
    * @param locale  the locale.
    */
-  public FastDecimalFormat(final String pattern, final Locale locale)
-  {
-    if (pattern == null)
-    {
+  public FastDecimalFormat( final String pattern, final Locale locale ) {
+    if ( pattern == null ) {
       throw new NullPointerException();
     }
-    if (locale == null)
-    {
+    if ( locale == null ) {
       throw new NullPointerException();
     }
     this.pattern = pattern;
     this.locale = locale;
-    this.decimalFormat = new DecimalFormat(pattern, new DecimalFormatSymbols(locale));
-    this.decimalFormat.setParseBigDecimal(true);
-    this.decimalFormat.setRoundingMode(RoundingMode.HALF_UP);
+    this.decimalFormat = new DecimalFormat( pattern, new DecimalFormatSymbols( locale ) );
+    this.decimalFormat.setParseBigDecimal( true );
+    this.decimalFormat.setRoundingMode( RoundingMode.HALF_UP );
 
   }
 
@@ -98,25 +92,19 @@ public class FastDecimalFormat implements FastFormat
    * @param locale the locale for which the format shoudl be created.
    * @return the number format or null, if there was an error while creating the format.
    */
-  private NumberFormat createFormat(final int type, final Locale locale)
-  {
-    switch (type)
-    {
-      case TYPE_INTEGER:
-      {
-        return NumberFormat.getIntegerInstance(locale);
+  private NumberFormat createFormat( final int type, final Locale locale ) {
+    switch( type ) {
+      case TYPE_INTEGER: {
+        return NumberFormat.getIntegerInstance( locale );
       }
-      case TYPE_PERCENT:
-      {
-        return NumberFormat.getPercentInstance(locale);
+      case TYPE_PERCENT: {
+        return NumberFormat.getPercentInstance( locale );
       }
-      case TYPE_CURRENCY:
-      {
-        return NumberFormat.getCurrencyInstance(locale);
+      case TYPE_CURRENCY: {
+        return NumberFormat.getCurrencyInstance( locale );
       }
-      default:
-      {
-        return NumberFormat.getInstance(locale);
+      default: {
+        return NumberFormat.getInstance( locale );
       }
     }
   }
@@ -128,54 +116,44 @@ public class FastDecimalFormat implements FastFormat
    * @param locale the locale.
    * @throws IllegalArgumentException if both date and time-style are set to -1.
    */
-  public FastDecimalFormat(final int type, final Locale locale)
-  {
-    if (locale == null)
-    {
+  public FastDecimalFormat( final int type, final Locale locale ) {
+    if ( locale == null ) {
       throw new NullPointerException();
     }
 
-    final NumberFormat rawFormat = createFormat(type, locale);
-    if (rawFormat instanceof DecimalFormat)
-    {
+    final NumberFormat rawFormat = createFormat( type, locale );
+    if ( rawFormat instanceof DecimalFormat ) {
       this.decimalFormat = (DecimalFormat) rawFormat;
       this.pattern = decimalFormat.toPattern();
       this.locale = locale;
-    }
-    else
-    {
+    } else {
       final ResourceBundle patterns = ResourceBundle.getBundle
-          ("org.pentaho.reporting.libraries.formatting.format-patterns");
+        ( "org.pentaho.reporting.libraries.formatting.format-patterns" );
 
-      switch (type)
-      {
-        case TYPE_INTEGER:
-        {
-          pattern = patterns.getString("format.integer");
+      switch( type ) {
+        case TYPE_INTEGER: {
+          pattern = patterns.getString( "format.integer" );
           break;
         }
-        case TYPE_PERCENT:
-        {
-          pattern = patterns.getString("format.percentage");
+        case TYPE_PERCENT: {
+          pattern = patterns.getString( "format.percentage" );
           break;
         }
-        case TYPE_CURRENCY:
-        {
-          pattern = patterns.getString("format.currency");
+        case TYPE_CURRENCY: {
+          pattern = patterns.getString( "format.currency" );
           break;
         }
-        default:
-        {
-          pattern = patterns.getString("format.number");
+        default: {
+          pattern = patterns.getString( "format.number" );
         }
       }
 
       this.locale = locale;
-      this.decimalFormat = new DecimalFormat(pattern, new DecimalFormatSymbols(locale));
+      this.decimalFormat = new DecimalFormat( pattern, new DecimalFormatSymbols( locale ) );
     }
 
-    this.decimalFormat.setParseBigDecimal(true);
-    this.decimalFormat.setRoundingMode(RoundingMode.HALF_UP);
+    this.decimalFormat.setParseBigDecimal( true );
+    this.decimalFormat.setRoundingMode( RoundingMode.HALF_UP );
 
   }
 
@@ -184,8 +162,7 @@ public class FastDecimalFormat implements FastFormat
    *
    * @return the current locale, never null.
    */
-  public Locale getLocale()
-  {
+  public Locale getLocale() {
     return locale;
   }
 
@@ -194,8 +171,7 @@ public class FastDecimalFormat implements FastFormat
    *
    * @return the locale.
    */
-  public String getPattern()
-  {
+  public String getPattern() {
     return pattern;
   }
 
@@ -205,63 +181,48 @@ public class FastDecimalFormat implements FastFormat
    * @param parameters the parameters for the formatting.
    * @return the formatted string.
    */
-  public String format(final Object parameters)
-  {
-    if (parameters == null)
-    {
+  public String format( final Object parameters ) {
+    if ( parameters == null ) {
       throw new NullPointerException();
     }
-    if (parameters instanceof Number == false)
-    {
-      throw new IllegalArgumentException("Cannot format given Object as a Number");
+    if ( parameters instanceof Number == false ) {
+      throw new IllegalArgumentException( "Cannot format given Object as a Number" );
     }
-    if (buffer == null)
-    {
+    if ( buffer == null ) {
       buffer = new StringBuffer();
+    } else {
+      buffer.delete( 0, buffer.length() );
     }
-    else
-    {
-      buffer.delete(0, buffer.length());
-    }
-    if (fieldPosition == null)
-    {
+    if ( fieldPosition == null ) {
       fieldPosition = new DummyFieldPosition();
-    }
-    else
-    {
+    } else {
       fieldPosition.clear();
     }
-    final StringBuffer stringBuffer = decimalFormat.format(parameters, buffer, new DummyFieldPosition());
+    final StringBuffer stringBuffer = decimalFormat.format( parameters, buffer, new DummyFieldPosition() );
     return stringBuffer.toString();
   }
 
-  public boolean equals(final Object o)
-  {
-    if (this == o)
-    {
+  public boolean equals( final Object o ) {
+    if ( this == o ) {
       return true;
     }
-    if (o == null || getClass() != o.getClass())
-    {
+    if ( o == null || getClass() != o.getClass() ) {
       return false;
     }
 
     final FastDecimalFormat that = (FastDecimalFormat) o;
 
-    if (!locale.equals(that.locale))
-    {
+    if ( !locale.equals( that.locale ) ) {
       return false;
     }
-    if (!pattern.equals(that.pattern))
-    {
+    if ( !pattern.equals( that.pattern ) ) {
       return false;
     }
 
     return true;
   }
 
-  public int hashCode()
-  {
+  public int hashCode() {
     int result = locale.hashCode();
     result = 31 * result + pattern.hashCode();
     return result;
@@ -273,16 +234,12 @@ public class FastDecimalFormat implements FastFormat
    * @return the clone.
    * @throws CloneNotSupportedException if cloning failed.
    */
-  public Object clone()
-  {
-    try
-    {
+  public Object clone() {
+    try {
       final FastDecimalFormat format = (FastDecimalFormat) super.clone();
       format.decimalFormat = (DecimalFormat) decimalFormat.clone();
       return format;
-    }
-    catch (CloneNotSupportedException e)
-    {
+    } catch ( CloneNotSupportedException e ) {
       throw new IllegalStateException();
     }
   }

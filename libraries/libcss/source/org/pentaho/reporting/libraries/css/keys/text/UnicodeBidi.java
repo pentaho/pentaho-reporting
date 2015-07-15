@@ -24,13 +24,11 @@ import org.pentaho.reporting.libraries.css.values.CSSConstant;
  *
  * @author Thomas Morgner
  */
-public class UnicodeBidi
-{
-  public static final CSSConstant NORMAL = new CSSConstant("normal");
-  public static final CSSConstant EMBED = new CSSConstant("embed");
-  public static final CSSConstant BIDI_OVERRIDE = new CSSConstant("bidi-override");
+public class UnicodeBidi {
+  public static final CSSConstant NORMAL = new CSSConstant( "normal" );
+  public static final CSSConstant EMBED = new CSSConstant( "embed" );
+  public static final CSSConstant BIDI_OVERRIDE = new CSSConstant( "bidi-override" );
 
-  private UnicodeBidi()
-  {
+  private UnicodeBidi() {
   }
 }

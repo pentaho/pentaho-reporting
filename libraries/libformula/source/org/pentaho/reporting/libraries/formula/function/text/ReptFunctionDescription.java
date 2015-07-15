@@ -25,46 +25,37 @@ import org.pentaho.reporting.libraries.formula.typing.coretypes.TextType;
 
 /**
  * Describes ReptFunction function.
- * @see ReptFunction
  *
  * @author Cedric Pronzato
- *
+ * @see ReptFunction
  */
-public class ReptFunctionDescription extends AbstractFunctionDescription
-{
+public class ReptFunctionDescription extends AbstractFunctionDescription {
   private static final long serialVersionUID = -1973101420318862666L;
 
-  public ReptFunctionDescription()
-  {
-    super("REPT", "org.pentaho.reporting.libraries.formula.function.text.Rept-Function");
+  public ReptFunctionDescription() {
+    super( "REPT", "org.pentaho.reporting.libraries.formula.function.text.Rept-Function" );
   }
 
-  public FunctionCategory getCategory()
-  {
+  public FunctionCategory getCategory() {
     return TextFunctionCategory.CATEGORY;
   }
 
-  public int getParameterCount()
-  {
+  public int getParameterCount() {
     return 2;
   }
 
-  public Type getParameterType(final int position)
-  {
-    if(position == 0)
-    {
+  public Type getParameterType( final int position ) {
+    if ( position == 0 ) {
       return TextType.TYPE;
     }
     return NumberType.GENERIC_NUMBER;
   }
 
-  public Type getValueType()
-  {
+  public Type getValueType() {
     return TextType.TYPE;
   }
 
-  public boolean isParameterMandatory(final int position)
-  {
+  public boolean isParameterMandatory( final int position ) {
     return true;
   }
 

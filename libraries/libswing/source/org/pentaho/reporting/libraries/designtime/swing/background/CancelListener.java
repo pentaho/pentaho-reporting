@@ -22,10 +22,9 @@ import java.util.EventListener;
 /**
  * Interface which allows a controlling thread to cancel the processing of another thread in a controlled manner.
  */
-public interface CancelListener extends EventListener
-{
+public interface CancelListener extends EventListener {
   /**
    * Requests that the thread stop processing as soon as possible.
    */
-  public void cancelProcessing(final CancelEvent event);
+  public void cancelProcessing( final CancelEvent event );
 }

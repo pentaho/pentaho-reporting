@@ -30,38 +30,35 @@ import org.pentaho.reporting.libraries.css.values.CSSValue;
  *
  * @author Thomas Morgner
  */
-public interface StyleResolver
-{
+public interface StyleResolver {
   public StyleResolver deriveInstance();
 
   /**
-   * Resolves the style. This is guaranteed to be called in the order of the
-   * document elements traversing the document tree using the
-   * 'deepest-node-first' strategy.
+   * Resolves the style. This is guaranteed to be called in the order of the document elements traversing the document
+   * tree using the 'deepest-node-first' strategy.
    *
    * @param element
    */
-  public void resolveStyle(LayoutElement element);
+  public void resolveStyle( LayoutElement element );
 
   /**
-   * Performs tests, whether there is a pseudo-element definition for the
-   * given element. The element itself can be a pseudo-element as well.
+   * Performs tests, whether there is a pseudo-element definition for the given element. The element itself can be a
+   * pseudo-element as well.
    *
    * @param element
    * @param pseudo
    * @return
    */
-  public boolean isPseudoElementStyleResolvable(LayoutElement element,
-                                                String pseudo);
+  public boolean isPseudoElementStyleResolvable( LayoutElement element,
+                                                 String pseudo );
 
-  public void initialize(DocumentContext documentContext);
+  public void initialize( DocumentContext documentContext );
 
   public LayoutStyle resolvePageStyle
-      (CSSValue pageName, PseudoPage[] pseudoPages, PageAreaType pageArea);
+    ( CSSValue pageName, PseudoPage[] pseudoPages, PageAreaType pageArea );
 
   /**
-   * Returns the style for a generic element for which none of the defined selectors (except the global one)
-   * match.
+   * Returns the style for a generic element for which none of the defined selectors (except the global one) match.
    *
    * @return the initial style.
    */

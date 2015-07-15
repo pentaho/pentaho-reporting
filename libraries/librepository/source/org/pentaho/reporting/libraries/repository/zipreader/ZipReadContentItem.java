@@ -17,6 +17,14 @@
 
 package org.pentaho.reporting.libraries.repository.zipreader;
 
+import org.pentaho.reporting.libraries.base.util.IOUtils;
+import org.pentaho.reporting.libraries.repository.ContentCreationException;
+import org.pentaho.reporting.libraries.repository.ContentIOException;
+import org.pentaho.reporting.libraries.repository.ContentItem;
+import org.pentaho.reporting.libraries.repository.ContentLocation;
+import org.pentaho.reporting.libraries.repository.LibRepositoryBoot;
+import org.pentaho.reporting.libraries.repository.Repository;
+
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -25,21 +33,12 @@ import java.util.Date;
 import java.util.zip.InflaterInputStream;
 import java.util.zip.ZipEntry;
 
-import org.pentaho.reporting.libraries.repository.ContentCreationException;
-import org.pentaho.reporting.libraries.repository.ContentIOException;
-import org.pentaho.reporting.libraries.repository.ContentItem;
-import org.pentaho.reporting.libraries.repository.ContentLocation;
-import org.pentaho.reporting.libraries.repository.LibRepositoryBoot;
-import org.pentaho.reporting.libraries.repository.Repository;
-import org.pentaho.reporting.libraries.base.util.IOUtils;
-
 /**
  * Creation-Date: 17.12.2007, 12:19:20
  *
  * @author Thomas Morgner
  */
-public class ZipReadContentItem implements ContentItem
-{
+public class ZipReadContentItem implements ContentItem {
   private String comment;
   private String name;
   private long size;
@@ -49,21 +48,17 @@ public class ZipReadContentItem implements ContentItem
   private ZipReadContentLocation parent;
   private String entryName;
 
-  public ZipReadContentItem(final ZipReadRepository repository,
-                            final ZipReadContentLocation parent,
-                            final ZipEntry zipEntry,
-                            final byte[] bytes)
-  {
-    if (repository == null)
-    {
+  public ZipReadContentItem( final ZipReadRepository repository,
+                             final ZipReadContentLocation parent,
+                             final ZipEntry zipEntry,
+                             final byte[] bytes ) {
+    if ( repository == null ) {
       throw new NullPointerException();
     }
-    if (zipEntry == null)
-    {
+    if ( zipEntry == null ) {
       throw new NullPointerException();
     }
-    if (bytes == null)
-    {
+    if ( bytes == null ) {
       throw new NullPointerException();
     }
 
@@ -71,87 +66,68 @@ public class ZipReadContentItem implements ContentItem
     this.repository = repository;
     this.comment = zipEntry.getComment();
     this.name = zipEntry.getName();
-    this.entryName = IOUtils.getInstance().getFileName(name);
+    this.entryName = IOUtils.getInstance().getFileName( name );
     this.size = zipEntry.getSize();
     this.time = zipEntry.getTime();
     this.rawData = bytes;
   }
 
-  public String getMimeType() throws ContentIOException
-  {
-    return repository.getMimeRegistry().getMimeType(this);
+  public String getMimeType() throws ContentIOException {
+    return repository.getMimeRegistry().getMimeType( this );
   }
 
-  public OutputStream getOutputStream() throws ContentIOException, IOException
-  {
-    throw new ContentCreationException("This repository is read-only");
+  public OutputStream getOutputStream() throws ContentIOException, IOException {
+    throw new ContentCreationException( "This repository is read-only" );
   }
 
-  public InputStream getInputStream() throws ContentIOException, IOException
-  {
-    return new InflaterInputStream(new ByteArrayInputStream(rawData));
+  public InputStream getInputStream() throws ContentIOException, IOException {
+    return new InflaterInputStream( new ByteArrayInputStream( rawData ) );
   }
 
-  public boolean isReadable()
-  {
+  public boolean isReadable() {
     return true;
   }
 
-  public boolean isWriteable()
-  {
+  public boolean isWriteable() {
     return false;
   }
 
-  public String getName()
-  {
+  public String getName() {
     return entryName;
   }
 
-  public Object getContentId()
-  {
+  public Object getContentId() {
     return name;
   }
 
-  public Object getAttribute(String domain, String key)
-  {
-    if (LibRepositoryBoot.REPOSITORY_DOMAIN.equals(domain))
-    {
-      if (LibRepositoryBoot.SIZE_ATTRIBUTE.equals(key))
-      {
-        return new Long(size);
+  public Object getAttribute( String domain, String key ) {
+    if ( LibRepositoryBoot.REPOSITORY_DOMAIN.equals( domain ) ) {
+      if ( LibRepositoryBoot.SIZE_ATTRIBUTE.equals( key ) ) {
+        return new Long( size );
+      } else if ( LibRepositoryBoot.VERSION_ATTRIBUTE.equals( key ) ) {
+        return new Date( time );
       }
-      else if (LibRepositoryBoot.VERSION_ATTRIBUTE.equals(key))
-      {
-        return new Date(time);
-      }
-    }
-    else if (LibRepositoryBoot.ZIP_DOMAIN.equals(domain))
-    {
-      if (LibRepositoryBoot.ZIP_COMMENT_ATTRIBUTE.equals(key))
-      {
+    } else if ( LibRepositoryBoot.ZIP_DOMAIN.equals( domain ) ) {
+      if ( LibRepositoryBoot.ZIP_COMMENT_ATTRIBUTE.equals( key ) ) {
         return comment;
       }
     }
     return null;
   }
 
-  public boolean setAttribute(String domain, String key, Object value)
-  {
+  public boolean setAttribute( String domain, String key, Object value ) {
     return false;
   }
 
-  public ContentLocation getParent()
-  {
+  public ContentLocation getParent() {
     return parent;
   }
 
-  public Repository getRepository()
-  {
+  public Repository getRepository() {
     return repository;
   }
 
-  public boolean delete()
-  {
+  public boolean delete() {
     return false;
   }
 }

@@ -17,27 +17,24 @@
 
 package org.pentaho.reporting.libraries.formula.function.datetime;
 
-import java.math.BigDecimal;
-
 import org.pentaho.reporting.libraries.formula.FormulaTestBase;
+
+import java.math.BigDecimal;
 
 /**
  * @author Cedric Pronzato
  */
-public class MinuteFunctionTest extends FormulaTestBase
-{
-  public Object[][] createDataTest()
-  {
+public class MinuteFunctionTest extends FormulaTestBase {
+  public Object[][] createDataTest() {
     return new Object[][]
-        {
-            {"MINUTE(1/(24*60))", new BigDecimal(1)},
-            {"MINUTE(TODAY()+1/(24*60))", new BigDecimal(1)},
-            {"MINUTE(1/24)", new BigDecimal(0)},
-        };
+      {
+        { "MINUTE(1/(24*60))", new BigDecimal( 1 ) },
+        { "MINUTE(TODAY()+1/(24*60))", new BigDecimal( 1 ) },
+        { "MINUTE(1/24)", new BigDecimal( 0 ) },
+      };
   }
 
-  public void testDefault() throws Exception
-  {
+  public void testDefault() throws Exception {
     runDefaultTest();
   }
 

@@ -17,30 +17,27 @@
 
 package org.pentaho.reporting.libraries.formula.operators;
 
-import java.math.BigDecimal;
-
 import org.pentaho.reporting.libraries.formula.FormulaTestBase;
+
+import java.math.BigDecimal;
 
 /**
  * Creation-Date: 11.26.2007, 15:31:58
  *
  * @author David Kincade
  */
-public class MinusSignOperatorTest extends FormulaTestBase
-{
-  public void testDefault() throws Exception
-  {
+public class MinusSignOperatorTest extends FormulaTestBase {
+  public void testDefault() throws Exception {
     runDefaultTest();
   }
 
-  public Object[][] createDataTest()
-  {
+  public Object[][] createDataTest() {
     return new Object[][]
-        {
-            {"-0.5", new BigDecimal("-0.5")},
-            {"-5", new BigDecimal("-5.0")},
-            {"-5.0", new BigDecimal("-5.0")},
-        };
+      {
+        { "-0.5", new BigDecimal( "-0.5" ) },
+        { "-5", new BigDecimal( "-5.0" ) },
+        { "-5.0", new BigDecimal( "-5.0" ) },
+      };
   }
 
 }

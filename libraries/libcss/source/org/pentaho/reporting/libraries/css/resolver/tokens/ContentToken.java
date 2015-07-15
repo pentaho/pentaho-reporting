@@ -18,11 +18,9 @@
 package org.pentaho.reporting.libraries.css.resolver.tokens;
 
 /**
- * This is the base for all specified content in CSS files.
- * This both may lookup content from elsewhere or may hold
+ * This is the base for all specified content in CSS files. This both may lookup content from elsewhere or may hold
  * static content as string.
  */
-public interface ContentToken
-{
+public interface ContentToken {
 
 }

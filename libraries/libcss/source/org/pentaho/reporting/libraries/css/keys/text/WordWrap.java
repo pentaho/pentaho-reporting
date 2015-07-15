@@ -24,12 +24,10 @@ import org.pentaho.reporting.libraries.css.values.CSSConstant;
  *
  * @author Thomas Morgner
  */
-public class WordWrap
-{
-  public static final CSSConstant NORMAL = new CSSConstant("normal");
-  public static final CSSConstant BREAK_WORD = new CSSConstant("break-word");
+public class WordWrap {
+  public static final CSSConstant NORMAL = new CSSConstant( "normal" );
+  public static final CSSConstant BREAK_WORD = new CSSConstant( "break-word" );
 
-  private WordWrap()
-  {
+  private WordWrap() {
   }
 }

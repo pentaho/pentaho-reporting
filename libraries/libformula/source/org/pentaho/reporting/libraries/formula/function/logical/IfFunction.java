@@ -31,51 +31,43 @@ import org.pentaho.reporting.libraries.formula.typing.coretypes.LogicalType;
  *
  * @author Thomas Morgner
  */
-public class IfFunction implements Function
-{
-  private static final TypeValuePair RETURN_FALSE = new TypeValuePair(LogicalType.TYPE, Boolean.FALSE);
+public class IfFunction implements Function {
+  private static final TypeValuePair RETURN_FALSE = new TypeValuePair( LogicalType.TYPE, Boolean.FALSE );
   private static final long serialVersionUID = -7517668261071087411L;
 
-  public IfFunction()
-  {
+  public IfFunction() {
   }
 
-  public String getCanonicalName()
-  {
+  public String getCanonicalName() {
     return "IF";
   }
 
-  public TypeValuePair evaluate(final FormulaContext context,
-                                final ParameterCallback parameters)
-      throws EvaluationException
-  {
+  public TypeValuePair evaluate( final FormulaContext context,
+                                 final ParameterCallback parameters )
+    throws EvaluationException {
     final int parameterCount = parameters.getParameterCount();
-    if (parameterCount < 2)
-    {
-      throw EvaluationException.getInstance(LibFormulaErrorValue.ERROR_ARGUMENTS_VALUE);
+    if ( parameterCount < 2 ) {
+      throw EvaluationException.getInstance( LibFormulaErrorValue.ERROR_ARGUMENTS_VALUE );
     }
 
-    final Type conditionType = parameters.getType(0);
-    final Object conditionValue = parameters.getValue(0);
-    final Boolean condition = context.getTypeRegistry().convertToLogical(conditionType, conditionValue);
-    if(condition == null)
-    {
-      throw EvaluationException.getInstance(LibFormulaErrorValue.ERROR_INVALID_ARGUMENT_VALUE);
+    final Type conditionType = parameters.getType( 0 );
+    final Object conditionValue = parameters.getValue( 0 );
+    final Boolean condition = context.getTypeRegistry().convertToLogical( conditionType, conditionValue );
+    if ( condition == null ) {
+      throw EvaluationException.getInstance( LibFormulaErrorValue.ERROR_INVALID_ARGUMENT_VALUE );
     }
-    if (Boolean.TRUE.equals(condition))
-    {
-      final Object value = parameters.getValue(1);
-      final Type type = parameters.getType(1);
-      return new TypeValuePair(type, value);
+    if ( Boolean.TRUE.equals( condition ) ) {
+      final Object value = parameters.getValue( 1 );
+      final Type type = parameters.getType( 1 );
+      return new TypeValuePair( type, value );
     }
     // if condition is false and no third parameter, return false
-    if(parameterCount == 2 || parameters.getValue(2) == null)
-    {
+    if ( parameterCount == 2 || parameters.getValue( 2 ) == null ) {
       return RETURN_FALSE;
     }
     // else return third parameter
-    final Object value = parameters.getValue(2);
-    final Type type = parameters.getType(2);
-    return new TypeValuePair(type, value);
+    final Object value = parameters.getValue( 2 );
+    final Type type = parameters.getType( 2 );
+    return new TypeValuePair( type, value );
   }
 }

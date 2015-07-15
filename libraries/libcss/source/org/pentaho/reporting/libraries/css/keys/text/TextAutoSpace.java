@@ -24,16 +24,14 @@ import org.pentaho.reporting.libraries.css.values.CSSConstant;
  *
  * @author Thomas Morgner
  */
-public class TextAutoSpace
-{
-  public static final CSSConstant NONE = new CSSConstant("none");
-  public static final CSSConstant IDEOGRAPH_NUMERIC = new CSSConstant("ideograph-numeric");
-  public static final CSSConstant IDEOGRAPH_ALPHA = new CSSConstant("ideograph-alpha");
-  public static final CSSConstant IDEOGRAPH_SPACE = new CSSConstant("ideograph-space");
-  public static final CSSConstant IDEOGRAPH_PARENTHESIS = new CSSConstant("ideograph-parenthesis");
+public class TextAutoSpace {
+  public static final CSSConstant NONE = new CSSConstant( "none" );
+  public static final CSSConstant IDEOGRAPH_NUMERIC = new CSSConstant( "ideograph-numeric" );
+  public static final CSSConstant IDEOGRAPH_ALPHA = new CSSConstant( "ideograph-alpha" );
+  public static final CSSConstant IDEOGRAPH_SPACE = new CSSConstant( "ideograph-space" );
+  public static final CSSConstant IDEOGRAPH_PARENTHESIS = new CSSConstant( "ideograph-parenthesis" );
 
 
-  private TextAutoSpace()
-  {
+  private TextAutoSpace() {
   }
 }

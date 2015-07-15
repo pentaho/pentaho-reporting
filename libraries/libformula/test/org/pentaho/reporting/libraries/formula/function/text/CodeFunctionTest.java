@@ -17,27 +17,24 @@
 
 package org.pentaho.reporting.libraries.formula.function.text;
 
-import java.math.BigDecimal;
-
 import org.pentaho.reporting.libraries.formula.FormulaTestBase;
+
+import java.math.BigDecimal;
 
 /**
  * @author Cedric Pronzato
  */
-public class CodeFunctionTest extends FormulaTestBase
-{
-  public void testDefault() throws Exception
-  {
+public class CodeFunctionTest extends FormulaTestBase {
+  public void testDefault() throws Exception {
     runDefaultTest();
   }
 
-  public Object[][] createDataTest()
-  {
+  public Object[][] createDataTest() {
     return new Object[][]
-        {
-            {"CODE(\"A\")", new BigDecimal(65)},
-            {"CODE(\"0\") > 0", Boolean.TRUE},
-            {"CODE(\"TEXT\") = CODE(\"T\")", Boolean.TRUE},
-        };
+      {
+        { "CODE(\"A\")", new BigDecimal( 65 ) },
+        { "CODE(\"0\") > 0", Boolean.TRUE },
+        { "CODE(\"TEXT\") = CODE(\"T\")", Boolean.TRUE },
+      };
   }
 }

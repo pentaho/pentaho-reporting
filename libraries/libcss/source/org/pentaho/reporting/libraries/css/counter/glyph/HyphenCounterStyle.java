@@ -19,19 +19,15 @@ package org.pentaho.reporting.libraries.css.counter.glyph;
 
 import org.pentaho.reporting.libraries.css.counter.CounterStyle;
 
-public class HyphenCounterStyle implements CounterStyle
-{
-  public HyphenCounterStyle ()
-  {
+public class HyphenCounterStyle implements CounterStyle {
+  public HyphenCounterStyle() {
   }
 
-  public String getCounterValue (final int index)
-  {
+  public String getCounterValue( final int index ) {
     return "\u2013";
   }
 
-  public String getSuffix()
-  {
+  public String getSuffix() {
     return "";
   }
 }

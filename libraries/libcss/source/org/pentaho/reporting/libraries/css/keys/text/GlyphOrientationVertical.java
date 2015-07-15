@@ -20,17 +20,14 @@ package org.pentaho.reporting.libraries.css.keys.text;
 import org.pentaho.reporting.libraries.css.values.CSSConstant;
 
 /**
- * 'glyph-orientation-vertical' controls glyph orientation when the flow
- * orientation is vertical.
+ * 'glyph-orientation-vertical' controls glyph orientation when the flow orientation is vertical.
  *
  * @author Thomas Morgner
  */
-public class GlyphOrientationVertical
-{
-  public static final CSSConstant UPRIGHT = new CSSConstant("upright");
-  public static final CSSConstant INLINE = new CSSConstant("inline");
+public class GlyphOrientationVertical {
+  public static final CSSConstant UPRIGHT = new CSSConstant( "upright" );
+  public static final CSSConstant INLINE = new CSSConstant( "inline" );
 
-  private GlyphOrientationVertical()
-  {
+  private GlyphOrientationVertical() {
   }
 }

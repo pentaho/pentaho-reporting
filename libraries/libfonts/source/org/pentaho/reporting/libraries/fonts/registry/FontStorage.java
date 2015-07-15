@@ -22,16 +22,15 @@ package org.pentaho.reporting.libraries.fonts.registry;
  *
  * @author Thomas Morgner
  */
-public interface FontStorage
-{
+public interface FontStorage {
   public FontRegistry getFontRegistry();
 
-  public FontMetrics getFontMetrics(final FontIdentifier record,
-                                    final FontContext context);
+  public FontMetrics getFontMetrics( final FontIdentifier record,
+                                     final FontContext context );
 
   /**
-   * Mark the processing to be finished; commit any caches to the global storage,
-   * if applicable, clean up and return into a sane state.
+   * Mark the processing to be finished; commit any caches to the global storage, if applicable, clean up and return
+   * into a sane state.
    */
   public void commit();
 }

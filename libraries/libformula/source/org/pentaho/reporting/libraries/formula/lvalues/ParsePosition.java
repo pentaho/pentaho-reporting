@@ -19,50 +19,43 @@ package org.pentaho.reporting.libraries.formula.lvalues;
 
 import java.io.Serializable;
 
-public class ParsePosition implements Serializable
-{
+public class ParsePosition implements Serializable {
   private int startColumn;
   private int startLine;
   private int endColumn;
   private int endLine;
 
-  public ParsePosition(final int startLine,
-                       final int startColumn,
-                       final int endLine,
-                       final int endColumn)
-  {
+  public ParsePosition( final int startLine,
+                        final int startColumn,
+                        final int endLine,
+                        final int endColumn ) {
     this.startLine = startLine;
     this.startColumn = startColumn;
     this.endLine = endLine;
     this.endColumn = endColumn;
   }
 
-  public int getEndColumn()
-  {
+  public int getEndColumn() {
     return endColumn;
   }
 
-  public int getEndLine()
-  {
+  public int getEndLine() {
     return endLine;
   }
 
-  public int getStartColumn()
-  {
+  public int getStartColumn() {
     return startColumn;
   }
 
-  public int getStartLine()
-  {
+  public int getStartLine() {
     return startLine;
   }
 
-  public String toString ()
-  {
+  public String toString() {
     return "ParsePosition={startLine=" + startLine +
-        "; startColumn=" + startColumn +
-        "; endLine=" + endLine +
-        "; endColumn=" + endColumn + "}";
+      "; startColumn=" + startColumn +
+      "; endLine=" + endLine +
+      "; endColumn=" + endColumn + "}";
 
   }
 }

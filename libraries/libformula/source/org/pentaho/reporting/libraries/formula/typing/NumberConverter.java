@@ -22,7 +22,6 @@ package org.pentaho.reporting.libraries.formula.typing;
  *
  * @author Thomas Morgner
  */
-public interface NumberConverter
-{
-  public Number toNumber (Type t1, Object o1);
+public interface NumberConverter {
+  public Number toNumber( Type t1, Object o1 );
 }

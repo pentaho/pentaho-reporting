@@ -29,29 +29,22 @@ import org.w3c.css.sac.LexicalUnit;
  *
  * @author Thomas Morgner
  */
-public class ColorReadHandler implements CSSValueReadHandler
-{
+public class ColorReadHandler implements CSSValueReadHandler {
 
-  public ColorReadHandler()
-  {
+  public ColorReadHandler() {
   }
 
-  public CSSValue createValue(final StyleKey name, final LexicalUnit value)
-  {
-    return createColorValue(value);
+  public CSSValue createValue( final StyleKey name, final LexicalUnit value ) {
+    return createColorValue( value );
   }
 
-  public static CSSValue createColorValue(final LexicalUnit value)
-  {
-    if (value.getLexicalUnitType() == LexicalUnit.SAC_FUNCTION ||
-        value.getLexicalUnitType() == LexicalUnit.SAC_RGBCOLOR)
-    {
-      return CSSValueFactory.parseFunction(value);
-    }
-    else if (value.getLexicalUnitType() == LexicalUnit.SAC_IDENT)
-    {
+  public static CSSValue createColorValue( final LexicalUnit value ) {
+    if ( value.getLexicalUnitType() == LexicalUnit.SAC_FUNCTION ||
+      value.getLexicalUnitType() == LexicalUnit.SAC_RGBCOLOR ) {
+      return CSSValueFactory.parseFunction( value );
+    } else if ( value.getLexicalUnitType() == LexicalUnit.SAC_IDENT ) {
       // a constant color name
-      return ColorUtil.parseIdentColor(value.getStringValue());
+      return ColorUtil.parseIdentColor( value.getStringValue() );
     }
     return null;
   }

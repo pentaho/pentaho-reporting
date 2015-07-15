@@ -17,83 +17,70 @@
 
 package org.pentaho.reporting.libraries.docbundle.metadata.writer;
 
-import java.io.IOException;
-
+import org.pentaho.reporting.libraries.docbundle.ODFMetaAttributeNames;
+import org.pentaho.reporting.libraries.docbundle.metadata.OfficeDocumentStatistic;
 import org.pentaho.reporting.libraries.xmlns.common.AttributeList;
 import org.pentaho.reporting.libraries.xmlns.writer.XmlWriter;
 import org.pentaho.reporting.libraries.xmlns.writer.XmlWriterSupport;
-import org.pentaho.reporting.libraries.docbundle.metadata.OfficeDocumentStatistic;
-import org.pentaho.reporting.libraries.docbundle.ODFMetaAttributeNames;
 
-public class DocumentStatisticWriteHandler implements BundleMetaDataEntryWriteHandler
-{
-  public DocumentStatisticWriteHandler()
-  {
+import java.io.IOException;
+
+public class DocumentStatisticWriteHandler implements BundleMetaDataEntryWriteHandler {
+  public DocumentStatisticWriteHandler() {
   }
 
-  public void write(final BundleMetaDataXmlWriter bundleWriter,
-                    final XmlWriter writer,
-                    final String entryNamespace,
-                    final String entryName,
-                    final Object entryValue) throws IOException
-  {
-    if (bundleWriter == null)
-    {
+  public void write( final BundleMetaDataXmlWriter bundleWriter,
+                     final XmlWriter writer,
+                     final String entryNamespace,
+                     final String entryName,
+                     final Object entryValue ) throws IOException {
+    if ( bundleWriter == null ) {
       throw new NullPointerException();
     }
-    if (writer == null)
-    {
+    if ( writer == null ) {
       throw new NullPointerException();
     }
-    if (entryName == null)
-    {
+    if ( entryName == null ) {
       throw new NullPointerException();
     }
-    if (entryNamespace == null)
-    {
+    if ( entryNamespace == null ) {
       throw new NullPointerException();
     }
-    if (entryValue == null)
-    {
+    if ( entryValue == null ) {
       throw new NullPointerException();
     }
 
-    if (entryValue instanceof OfficeDocumentStatistic == false)
-    {
+    if ( entryValue instanceof OfficeDocumentStatistic == false ) {
       return;
     }
 
     final AttributeList attributeList = new AttributeList();
-    if (writer.isNamespaceDefined(entryNamespace) == false)
-    {
-      final String defaultNamespace = bundleWriter.getDefaultPrefix(entryNamespace);
-      if (defaultNamespace != null && writer.isNamespacePrefixDefined(defaultNamespace) == false)
-      {
-        attributeList.addNamespaceDeclaration(defaultNamespace, entryNamespace);
-      }
-      else
-      {
-        attributeList.addNamespaceDeclaration("autoGenNs", entryNamespace);
+    if ( writer.isNamespaceDefined( entryNamespace ) == false ) {
+      final String defaultNamespace = bundleWriter.getDefaultPrefix( entryNamespace );
+      if ( defaultNamespace != null && writer.isNamespacePrefixDefined( defaultNamespace ) == false ) {
+        attributeList.addNamespaceDeclaration( defaultNamespace, entryNamespace );
+      } else {
+        attributeList.addNamespaceDeclaration( "autoGenNs", entryNamespace );
       }
     }
 
     final OfficeDocumentStatistic statistic = (OfficeDocumentStatistic) entryValue;
     attributeList.setAttribute
-        (ODFMetaAttributeNames.Meta.NAMESPACE, "table-count", String.valueOf(statistic.getTableCount()));
+      ( ODFMetaAttributeNames.Meta.NAMESPACE, "table-count", String.valueOf( statistic.getTableCount() ) );
     attributeList.setAttribute
-        (ODFMetaAttributeNames.Meta.NAMESPACE, "image-count", String.valueOf(statistic.getImageCount()));
+      ( ODFMetaAttributeNames.Meta.NAMESPACE, "image-count", String.valueOf( statistic.getImageCount() ) );
     attributeList.setAttribute
-        (ODFMetaAttributeNames.Meta.NAMESPACE, "object-count", String.valueOf(statistic.getObjectCount()));
+      ( ODFMetaAttributeNames.Meta.NAMESPACE, "object-count", String.valueOf( statistic.getObjectCount() ) );
     attributeList.setAttribute
-        (ODFMetaAttributeNames.Meta.NAMESPACE, "page-count", String.valueOf(statistic.getPageCount()));
+      ( ODFMetaAttributeNames.Meta.NAMESPACE, "page-count", String.valueOf( statistic.getPageCount() ) );
     attributeList.setAttribute
-        (ODFMetaAttributeNames.Meta.NAMESPACE, "paragraph-count", String.valueOf(statistic.getParagraphCount()));
+      ( ODFMetaAttributeNames.Meta.NAMESPACE, "paragraph-count", String.valueOf( statistic.getParagraphCount() ) );
     attributeList.setAttribute
-        (ODFMetaAttributeNames.Meta.NAMESPACE, "word-count", String.valueOf(statistic.getWordCount()));
+      ( ODFMetaAttributeNames.Meta.NAMESPACE, "word-count", String.valueOf( statistic.getWordCount() ) );
     attributeList.setAttribute
-        (ODFMetaAttributeNames.Meta.NAMESPACE, "character-count", String.valueOf(statistic.getCharacterCount()));
+      ( ODFMetaAttributeNames.Meta.NAMESPACE, "character-count", String.valueOf( statistic.getCharacterCount() ) );
 
-    writer.writeTag(entryNamespace, entryName, attributeList, XmlWriterSupport.CLOSE);
+    writer.writeTag( entryNamespace, entryName, attributeList, XmlWriterSupport.CLOSE );
 
   }
 }

@@ -25,38 +25,36 @@ import org.pentaho.reporting.libraries.css.model.StyleKeyRegistry;
  *
  * @author Thomas Morgner
  */
-public class PositioningStyleKeys
-{
+public class PositioningStyleKeys {
   /**
    * Width and height are defined in the Box-module.
    */
 
   public static final StyleKey TOP =
-      StyleKeyRegistry.getRegistry().createKey
-          ("top", false, false, StyleKey.All_ELEMENTS);
+    StyleKeyRegistry.getRegistry().createKey
+      ( "top", false, false, StyleKey.All_ELEMENTS );
 
   public static final StyleKey LEFT =
-      StyleKeyRegistry.getRegistry().createKey
-          ("left", false, false, StyleKey.All_ELEMENTS);
+    StyleKeyRegistry.getRegistry().createKey
+      ( "left", false, false, StyleKey.All_ELEMENTS );
 
   public static final StyleKey BOTTOM =
-      StyleKeyRegistry.getRegistry().createKey
-          ("bottom", false, false, StyleKey.All_ELEMENTS);
+    StyleKeyRegistry.getRegistry().createKey
+      ( "bottom", false, false, StyleKey.All_ELEMENTS );
 
   public static final StyleKey RIGHT =
-      StyleKeyRegistry.getRegistry().createKey
-          ("right", false, false, StyleKey.All_ELEMENTS);
+    StyleKeyRegistry.getRegistry().createKey
+      ( "right", false, false, StyleKey.All_ELEMENTS );
 
   public static final StyleKey POSITION =
-      StyleKeyRegistry.getRegistry().createKey
-          ("position", false, false, StyleKey.All_ELEMENTS);
+    StyleKeyRegistry.getRegistry().createKey
+      ( "position", false, false, StyleKey.All_ELEMENTS );
 
   public static final StyleKey Z_INDEX =
-      StyleKeyRegistry.getRegistry().createKey
-          ("z-index", false, false, StyleKey.All_ELEMENTS);
+    StyleKeyRegistry.getRegistry().createKey
+      ( "z-index", false, false, StyleKey.All_ELEMENTS );
 
 
-  private PositioningStyleKeys()
-  {
+  private PositioningStyleKeys() {
   }
 }

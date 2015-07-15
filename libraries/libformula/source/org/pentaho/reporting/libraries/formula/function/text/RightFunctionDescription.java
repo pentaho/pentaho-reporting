@@ -25,49 +25,39 @@ import org.pentaho.reporting.libraries.formula.typing.coretypes.TextType;
 
 /**
  * Describes RightFunction function.
- * @see RightFunction
  *
  * @author Cedric Pronzato
- *
+ * @see RightFunction
  */
-public class RightFunctionDescription extends AbstractFunctionDescription
-{
+public class RightFunctionDescription extends AbstractFunctionDescription {
   private static final long serialVersionUID = -1227750116961019328L;
 
-  public RightFunctionDescription()
-  {
-    super("RIGHT", "org.pentaho.reporting.libraries.formula.function.text.Right-Function");
+  public RightFunctionDescription() {
+    super( "RIGHT", "org.pentaho.reporting.libraries.formula.function.text.Right-Function" );
   }
 
-  public FunctionCategory getCategory()
-  {
+  public FunctionCategory getCategory() {
     return TextFunctionCategory.CATEGORY;
   }
 
-  public int getParameterCount()
-  {
+  public int getParameterCount() {
     return 2;
   }
 
-  public Type getParameterType(final int position)
-  {
-    if(position == 0)
-    {
+  public Type getParameterType( final int position ) {
+    if ( position == 0 ) {
       return TextType.TYPE;
     }
 
     return NumberType.GENERIC_NUMBER;
   }
 
-  public Type getValueType()
-  {
+  public Type getValueType() {
     return TextType.TYPE;
   }
 
-  public boolean isParameterMandatory(final int position)
-  {
-    if(position == 2)
-    {
+  public boolean isParameterMandatory( final int position ) {
+    if ( position == 2 ) {
       return false;
     }
     return true;

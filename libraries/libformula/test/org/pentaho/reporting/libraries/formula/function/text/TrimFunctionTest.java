@@ -17,29 +17,26 @@
 
 package org.pentaho.reporting.libraries.formula.function.text;
 
-import java.math.BigDecimal;
-
 import org.pentaho.reporting.libraries.formula.FormulaTestBase;
+
+import java.math.BigDecimal;
 
 /**
  * @author Cedric Pronzato
  */
-public class TrimFunctionTest extends FormulaTestBase
-{
-  public void testDefault() throws Exception
-  {
+public class TrimFunctionTest extends FormulaTestBase {
+  public void testDefault() throws Exception {
     runDefaultTest();
   }
 
-  public Object[][] createDataTest()
-  {
+  public Object[][] createDataTest() {
     return new Object[][]
-        {
-            {"TRIM(\" HI \")", "HI"},
-            {"TRIM(\"\")", ""},
-            {"LEN(TRIM(\"H\" & \" \" & \" \" & \"I\"))", new BigDecimal(3)},
-            // custom tests
-            {"TRIM(\" Oh   no !\")", "Oh no !"},
-        };
+      {
+        { "TRIM(\" HI \")", "HI" },
+        { "TRIM(\"\")", "" },
+        { "LEN(TRIM(\"H\" & \" \" & \" \" & \"I\"))", new BigDecimal( 3 ) },
+        // custom tests
+        { "TRIM(\" Oh   no !\")", "Oh no !" },
+      };
   }
 }

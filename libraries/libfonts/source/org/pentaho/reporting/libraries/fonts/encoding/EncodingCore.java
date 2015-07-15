@@ -22,10 +22,9 @@ package org.pentaho.reporting.libraries.fonts.encoding;
  *
  * @author Thomas Morgner
  */
-public interface EncodingCore
-{
+public interface EncodingCore {
 
-  public boolean isUnicodeCharacterSupported(int c);
+  public boolean isUnicodeCharacterSupported( int c );
 
   /**
    * Encode, but ignore errors.
@@ -34,18 +33,18 @@ public interface EncodingCore
    * @param buffer
    * @return
    */
-  public ByteBuffer encode(CodePointBuffer text, ByteBuffer buffer)
-          throws EncodingException;
+  public ByteBuffer encode( CodePointBuffer text, ByteBuffer buffer )
+    throws EncodingException;
 
-  public CodePointBuffer decode(ByteBuffer text, CodePointBuffer buffer)
-          throws EncodingException;
+  public CodePointBuffer decode( ByteBuffer text, CodePointBuffer buffer )
+    throws EncodingException;
 
-  public ByteBuffer encode(CodePointBuffer text, ByteBuffer buffer,
-                           EncodingErrorType errorHandling)
-          throws EncodingException;
+  public ByteBuffer encode( CodePointBuffer text, ByteBuffer buffer,
+                            EncodingErrorType errorHandling )
+    throws EncodingException;
 
-  public CodePointBuffer decode(ByteBuffer text, CodePointBuffer buffer,
-                                EncodingErrorType errorHandling)
-          throws EncodingException;
+  public CodePointBuffer decode( ByteBuffer text, CodePointBuffer buffer,
+                                 EncodingErrorType errorHandling )
+    throws EncodingException;
 
 }

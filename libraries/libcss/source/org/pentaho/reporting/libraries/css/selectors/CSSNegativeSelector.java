@@ -25,20 +25,16 @@ import org.w3c.css.sac.SimpleSelector;
  *
  * @author Thomas Morgner
  */
-public class CSSNegativeSelector extends AbstractSelector implements NegativeSelector
-{
+public class CSSNegativeSelector extends AbstractSelector implements NegativeSelector {
   private SimpleSelector selector;
 
-  public CSSNegativeSelector(final SimpleSelector selector)
-  {
+  public CSSNegativeSelector( final SimpleSelector selector ) {
     this.selector = selector;
   }
 
-  protected SelectorWeight createWeight()
-  {
-    if (selector instanceof CSSSelector == false)
-    {
-      return new SelectorWeight(0, 0, 0, 0);
+  protected SelectorWeight createWeight() {
+    if ( selector instanceof CSSSelector == false ) {
+      return new SelectorWeight( 0, 0, 0, 0 );
     }
 
     final CSSSelector sel = (CSSSelector) selector;
@@ -48,16 +44,14 @@ public class CSSNegativeSelector extends AbstractSelector implements NegativeSel
   /**
    * Returns the simple selector.
    */
-  public SimpleSelector getSimpleSelector()
-  {
+  public SimpleSelector getSimpleSelector() {
     return selector;
   }
 
   /**
    * An integer indicating the type of <code>Selector</code>
    */
-  public short getSelectorType()
-  {
+  public short getSelectorType() {
     return SAC_NEGATIVE_SELECTOR;
   }
 }

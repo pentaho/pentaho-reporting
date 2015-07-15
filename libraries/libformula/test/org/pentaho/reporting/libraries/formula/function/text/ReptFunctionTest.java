@@ -22,22 +22,19 @@ import org.pentaho.reporting.libraries.formula.FormulaTestBase;
 /**
  * @author Cedric Pronzato
  */
-public class ReptFunctionTest extends FormulaTestBase
-{
-  public void testDefault() throws Exception
-  {
+public class ReptFunctionTest extends FormulaTestBase {
+  public void testDefault() throws Exception {
     runDefaultTest();
   }
 
-  public Object[][] createDataTest()
-  {
+  public Object[][] createDataTest() {
     return new Object[][]
-        {
-            {"REPT(\"X\";3)", "XXX"},
-            {"REPT(\"XY\";2)", "XYXY"},
-            {"REPT(\"X\";2.9)", "XX"},
-            {"REPT(\"X\";0)", ""},
-        };
+      {
+        { "REPT(\"X\";3)", "XXX" },
+        { "REPT(\"XY\";2)", "XYXY" },
+        { "REPT(\"X\";2.9)", "XX" },
+        { "REPT(\"X\";0)", "" },
+      };
   }
 
 }

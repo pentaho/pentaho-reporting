@@ -17,18 +17,17 @@
 
 package org.pentaho.reporting.libraries.pixie.wmf.records;
 
-import java.awt.Point;
-
 import org.pentaho.reporting.libraries.pixie.wmf.MfDcState;
 import org.pentaho.reporting.libraries.pixie.wmf.MfRecord;
 import org.pentaho.reporting.libraries.pixie.wmf.MfType;
 import org.pentaho.reporting.libraries.pixie.wmf.WmfFile;
 
+import java.awt.*;
+
 /**
  * Moves the current Viewport Origin to the specified position
  */
-public class MfCmdOffsetViewportOrg extends MfCmd
-{
+public class MfCmdOffsetViewportOrg extends MfCmd {
   private static final int RECORD_SIZE = 2;
   private static final int POS_X = 1;
   private static final int POS_Y = 0;
@@ -39,8 +38,7 @@ public class MfCmdOffsetViewportOrg extends MfCmd
   private int scaled_x;
   private int scaled_y;
 
-  public MfCmdOffsetViewportOrg()
-  {
+  public MfCmdOffsetViewportOrg() {
   }
 
   /**
@@ -48,13 +46,12 @@ public class MfCmdOffsetViewportOrg extends MfCmd
    *
    * @param file the meta file.
    */
-  public void replay(final WmfFile file)
-  {
+  public void replay( final WmfFile file ) {
     final MfDcState state = file.getCurrentState();
     final Point p = getScaledDestination();
     state.setViewportOrg
-        (state.getViewportOrgX() + p.x,
-            state.getViewportOrgY() + p.y);
+      ( state.getViewportOrgX() + p.x,
+        state.getViewportOrgY() + p.y );
   }
 
   /**
@@ -62,26 +59,22 @@ public class MfCmdOffsetViewportOrg extends MfCmd
    *
    * @return a new instance of the command.
    */
-  public MfCmd getInstance()
-  {
+  public MfCmd getInstance() {
     return new MfCmdOffsetViewportOrg();
   }
 
-  public Point getDestination()
-  {
-    return new Point(x, y);
+  public Point getDestination() {
+    return new Point( x, y );
   }
 
-  public String toString()
-  {
+  public String toString() {
     final StringBuffer b = new StringBuffer();
-    b.append("[OFFSET_VIEWPORT] destination=");
-    b.append(getDestination());
+    b.append( "[OFFSET_VIEWPORT] destination=" );
+    b.append( getDestination() );
     return b.toString();
   }
 
-  public void setDestination(final int x, final int y)
-  {
+  public void setDestination( final int x, final int y ) {
     this.x = x;
     this.y = y;
     scaleXChanged();
@@ -89,36 +82,31 @@ public class MfCmdOffsetViewportOrg extends MfCmd
 
   }
 
-  public void setDestination(final Point p)
-  {
-    setDestination(p.x, p.y);
+  public void setDestination( final Point p ) {
+    setDestination( p.x, p.y );
   }
 
   /**
-   * Reads the function identifier. Every record type is identified by a function number
-   * corresponding to one of the Windows GDI functions used.
+   * Reads the function identifier. Every record type is identified by a function number corresponding to one of the
+   * Windows GDI functions used.
    *
    * @return the function identifier.
    */
-  public int getFunction()
-  {
+  public int getFunction() {
     return MfType.OFFSET_VIEWPORT_ORG;
   }
 
   /**
-   * Reads the command data from the given record and adjusts the internal parameters
-   * according to the data parsed.
+   * Reads the command data from the given record and adjusts the internal parameters according to the data parsed.
    * <p/>
-   * After the raw record was read from the datasource, the record is parsed by the
-   * concrete implementation.
+   * After the raw record was read from the datasource, the record is parsed by the concrete implementation.
    *
    * @param record the raw data that makes up the record.
    */
-  public void setRecord(final MfRecord record)
-  {
-    final int y = record.getParam(POS_Y);
-    final int x = record.getParam(POS_X);
-    setDestination(x, y);
+  public void setRecord( final MfRecord record ) {
+    final int y = record.getParam( POS_Y );
+    final int x = record.getParam( POS_X );
+    setDestination( x, y );
   }
 
   /**
@@ -126,36 +114,32 @@ public class MfCmdOffsetViewportOrg extends MfCmd
    *
    * @return the created record.
    */
-  public MfRecord getRecord()
-  {
+  public MfRecord getRecord() {
     final Point dest = getDestination();
-    final MfRecord record = new MfRecord(RECORD_SIZE);
-    record.setParam(POS_Y, dest.y);
-    record.setParam(POS_X, dest.x);
+    final MfRecord record = new MfRecord( RECORD_SIZE );
+    record.setParam( POS_Y, dest.y );
+    record.setParam( POS_X, dest.x );
     return record;
   }
 
-  public Point getScaledDestination()
-  {
-    return new Point(scaled_x, scaled_y);
+  public Point getScaledDestination() {
+    return new Point( scaled_x, scaled_y );
   }
 
   /**
-   * A callback function to inform the object, that the x scale has changed and the
-   * internal coordinate values have to be adjusted.
+   * A callback function to inform the object, that the x scale has changed and the internal coordinate values have to
+   * be adjusted.
    */
-  protected void scaleXChanged()
-  {
-    scaled_x = getScaledX(x);
+  protected void scaleXChanged() {
+    scaled_x = getScaledX( x );
   }
 
   /**
-   * A callback function to inform the object, that the y scale has changed and the
-   * internal coordinate values have to be adjusted.
+   * A callback function to inform the object, that the y scale has changed and the internal coordinate values have to
+   * be adjusted.
    */
-  protected void scaleYChanged()
-  {
-    scaled_y = getScaledY(y);
+  protected void scaleYChanged() {
+    scaled_y = getScaledY( y );
   }
 
 }

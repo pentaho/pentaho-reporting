@@ -25,46 +25,37 @@ import org.pentaho.reporting.libraries.formula.typing.coretypes.TextType;
 
 /**
  * Describes ReplaceFunction function.
- * @see ReplaceFunction
  *
  * @author Cedric Pronzato
- *
+ * @see ReplaceFunction
  */
-public class ReplaceFunctionDescription extends AbstractFunctionDescription
-{
+public class ReplaceFunctionDescription extends AbstractFunctionDescription {
   private static final long serialVersionUID = -7429162918022452367L;
 
-  public ReplaceFunctionDescription()
-  {
-    super("REPLACE", "org.pentaho.reporting.libraries.formula.function.text.Replace-Function");
+  public ReplaceFunctionDescription() {
+    super( "REPLACE", "org.pentaho.reporting.libraries.formula.function.text.Replace-Function" );
   }
 
-  public FunctionCategory getCategory()
-  {
+  public FunctionCategory getCategory() {
     return TextFunctionCategory.CATEGORY;
   }
 
-  public int getParameterCount()
-  {
+  public int getParameterCount() {
     return 4;
   }
 
-  public Type getParameterType(final int position)
-  {
-    if(position == 0 || position == 3)
-    {
+  public Type getParameterType( final int position ) {
+    if ( position == 0 || position == 3 ) {
       return TextType.TYPE;
     }
     return NumberType.GENERIC_NUMBER;
   }
 
-  public Type getValueType()
-  {
+  public Type getValueType() {
     return TextType.TYPE;
   }
 
-  public boolean isParameterMandatory(final int position)
-  {
+  public boolean isParameterMandatory( final int position ) {
     return true;
   }
 

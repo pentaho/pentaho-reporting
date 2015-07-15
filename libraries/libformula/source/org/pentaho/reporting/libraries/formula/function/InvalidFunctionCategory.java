@@ -17,22 +17,16 @@
 
 package org.pentaho.reporting.libraries.formula.function;
 
-import org.pentaho.reporting.libraries.formula.function.AbstractFunctionCategory;
-import org.pentaho.reporting.libraries.formula.function.FunctionCategory;
-import org.pentaho.reporting.libraries.formula.function.userdefined.UserDefinedFunctionCategory;
-
 /**
- *  This category is used when a problem occured while loading a function metadata category. It usualy points a
- * problem in the configuration file or a missing function metadata class. 
+ * This category is used when a problem occured while loading a function metadata category. It usualy points a problem
+ * in the configuration file or a missing function metadata class.
  *
  * @author Cedric Pronzato
  */
-public class InvalidFunctionCategory extends AbstractFunctionCategory
-{
+public class InvalidFunctionCategory extends AbstractFunctionCategory {
   public static final FunctionCategory CATEGORY = new InvalidFunctionCategory();
 
-  private InvalidFunctionCategory()
-  {
-    super("org.pentaho.reporting.libraries.formula.function.invalid.category");
+  private InvalidFunctionCategory() {
+    super( "org.pentaho.reporting.libraries.formula.function.invalid.category" );
   }
 }

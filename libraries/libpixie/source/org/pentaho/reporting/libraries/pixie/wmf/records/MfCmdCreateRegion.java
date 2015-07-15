@@ -17,17 +17,14 @@
 
 package org.pentaho.reporting.libraries.pixie.wmf.records;
 
-import java.awt.Rectangle;
-
 import org.pentaho.reporting.libraries.pixie.wmf.MfRecord;
 import org.pentaho.reporting.libraries.pixie.wmf.MfType;
 import org.pentaho.reporting.libraries.pixie.wmf.WmfFile;
 
+import java.awt.*;
+
 /**
- * Currently i have no clue, how this is implemented.
- * <p/>
- * From The WINE-Sources:
- * <p/>
+ * Currently i have no clue, how this is implemented. <p/> From The WINE-Sources: <p/>
  * <pre>
  * 	The layout of the record looks something like this:
  * <p/>
@@ -100,20 +97,17 @@ import org.pentaho.reporting.libraries.pixie.wmf.WmfFile;
  * </pre>
  * </p>
  */
-public class MfCmdCreateRegion extends MfCmd
-{
+public class MfCmdCreateRegion extends MfCmd {
   private int regionX;
   private int regionY;
   private int regionWidth;
   private int regionHeight;
   private Rectangle[] rects;
 
-  public MfCmdCreateRegion()
-  {
+  public MfCmdCreateRegion() {
   }
 
-  public void setRecord(final MfRecord record)
-  {
+  public void setRecord( final MfRecord record ) {
     // System.out.println("Create Region is not implemented.");
 
   }
@@ -121,21 +115,20 @@ public class MfCmdCreateRegion extends MfCmd
   /**
    * Writer function
    */
-  public MfRecord getRecord()
-  {
+  public MfRecord getRecord() {
 
-    final MfRecord record = new MfRecord(0);
-    record.setParam(0, 0);
-    record.setParam(1, 6);
-    record.setParam(2, 0x1234);
-    record.setParam(3, 0);
-    record.setParam(4, 0); // Length
-    record.setParam(5, 0); // Bands
-    record.setParam(6, 0); // Max-Bands
-    record.setParam(7, regionX);
-    record.setParam(8, regionY);
-    record.setParam(9, regionX + regionWidth);
-    record.setParam(10, regionY + regionHeight);
+    final MfRecord record = new MfRecord( 0 );
+    record.setParam( 0, 0 );
+    record.setParam( 1, 6 );
+    record.setParam( 2, 0x1234 );
+    record.setParam( 3, 0 );
+    record.setParam( 4, 0 ); // Length
+    record.setParam( 5, 0 ); // Bands
+    record.setParam( 6, 0 ); // Max-Bands
+    record.setParam( 7, regionX );
+    record.setParam( 8, regionY );
+    record.setParam( 9, regionX + regionWidth );
+    record.setParam( 10, regionY + regionHeight );
 
     // some more data ... a array of rectangles (16bit x 4)
     // which makes up the defined region
@@ -144,84 +137,68 @@ public class MfCmdCreateRegion extends MfCmd
     return record;
   }
 
-  public String toString()
-  {
+  public String toString() {
     final StringBuffer b = new StringBuffer();
-    b.append("[CREATE_REGION] ");
-    b.append(" no internals known (see WINE for details)");
+    b.append( "[CREATE_REGION] " );
+    b.append( " no internals known (see WINE for details)" );
     return b.toString();
   }
 
 
-  public int getFunction()
-  {
+  public int getFunction() {
     return MfType.CREATE_REGION;
   }
 
-  public void replay(final WmfFile file)
-  {
+  public void replay( final WmfFile file ) {
   }
 
-  public MfCmd getInstance()
-  {
+  public MfCmd getInstance() {
     return new MfCmdCreateRegion();
   }
 
-  protected void scaleXChanged()
-  {
+  protected void scaleXChanged() {
   }
 
-  protected void scaleYChanged()
-  {
+  protected void scaleYChanged() {
   }
 
-  public int getRegionX()
-  {
+  public int getRegionX() {
     return regionX;
   }
 
-  public void setRegionX(final int regionX)
-  {
+  public void setRegionX( final int regionX ) {
     this.regionX = regionX;
   }
 
-  public int getRegionY()
-  {
+  public int getRegionY() {
     return regionY;
   }
 
-  public void setRegionY(final int regionY)
-  {
+  public void setRegionY( final int regionY ) {
     this.regionY = regionY;
   }
 
-  public int getRegionWidth()
-  {
+  public int getRegionWidth() {
     return regionWidth;
   }
 
-  public void setRegionWidth(final int regionWidth)
-  {
+  public void setRegionWidth( final int regionWidth ) {
     this.regionWidth = regionWidth;
   }
 
-  public int getRegionHeight()
-  {
+  public int getRegionHeight() {
     return regionHeight;
   }
 
-  public void setRegionHeight(final int regionHeight)
-  {
+  public void setRegionHeight( final int regionHeight ) {
     this.regionHeight = regionHeight;
   }
 
-  public Rectangle[] getRects()
-  {
+  public Rectangle[] getRects() {
     return rects;
   }
 
-  public void setRects(final Rectangle[] rects)
-  {
+  public void setRects( final Rectangle[] rects ) {
     this.rects = rects;
   }
 }

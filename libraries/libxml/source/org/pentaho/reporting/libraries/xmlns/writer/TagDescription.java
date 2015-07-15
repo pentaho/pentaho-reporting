@@ -18,21 +18,18 @@
 package org.pentaho.reporting.libraries.xmlns.writer;
 
 /**
- * A tag-description provides information about xml tags. At the moment, we
- * simply care whether an element can contain CDATA. In such cases, we do not
- * indent the inner elements.
+ * A tag-description provides information about xml tags. At the moment, we simply care whether an element can contain
+ * CDATA. In such cases, we do not indent the inner elements.
  *
  * @author Thomas Morgner
  */
-public interface TagDescription
-{
+public interface TagDescription {
   /**
-   * Checks, whether the element specified by the tagname and namespace can
-   * contain CDATA.
+   * Checks, whether the element specified by the tagname and namespace can contain CDATA.
    *
    * @param namespace the namespace (as URI)
    * @param tagname   the tagname
    * @return true, if the element can contain CDATA, false otherwise
    */
-  boolean hasCData(String namespace, String tagname);
+  boolean hasCData( String namespace, String tagname );
 }

@@ -26,13 +26,11 @@ import org.pentaho.reporting.libraries.css.parser.stylehandler.color.ColorReadHa
  *
  * @author Thomas Morgner
  */
-public class TextLineThroughReadHandler extends AbstractCompoundValueReadHandler
-{
-  public TextLineThroughReadHandler()
-  {
-    addHandler(TextStyleKeys.TEXT_LINE_THROUGH_STYLE, new TextDecorationStyleReadHandler());
-    addHandler(TextStyleKeys.TEXT_LINE_THROUGH_COLOR, new ColorReadHandler());
-    addHandler(TextStyleKeys.TEXT_LINE_THROUGH_WIDTH, new TextDecorationWidthReadHandler());
-    addHandler(TextStyleKeys.TEXT_LINE_THROUGH_MODE, new TextDecorationModeReadHandler());
+public class TextLineThroughReadHandler extends AbstractCompoundValueReadHandler {
+  public TextLineThroughReadHandler() {
+    addHandler( TextStyleKeys.TEXT_LINE_THROUGH_STYLE, new TextDecorationStyleReadHandler() );
+    addHandler( TextStyleKeys.TEXT_LINE_THROUGH_COLOR, new ColorReadHandler() );
+    addHandler( TextStyleKeys.TEXT_LINE_THROUGH_WIDTH, new TextDecorationWidthReadHandler() );
+    addHandler( TextStyleKeys.TEXT_LINE_THROUGH_MODE, new TextDecorationModeReadHandler() );
   }
 }

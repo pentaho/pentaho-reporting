@@ -17,21 +17,18 @@
 
 package org.pentaho.reporting.libraries.pixie.wmf.records;
 
-import java.awt.Graphics2D;
-import java.awt.Point;
-
 import org.pentaho.reporting.libraries.pixie.wmf.MfDcState;
 import org.pentaho.reporting.libraries.pixie.wmf.MfRecord;
 import org.pentaho.reporting.libraries.pixie.wmf.MfType;
 import org.pentaho.reporting.libraries.pixie.wmf.WmfFile;
 
+import java.awt.*;
+
 /**
- * Prints the given string. That record is as weird as everything in windows. First
- * parameter is the string length, then follows the string and finally the x and y
- * coordinates (in that order) where to print the string.
+ * Prints the given string. That record is as weird as everything in windows. First parameter is the string length, then
+ * follows the string and finally the x and y coordinates (in that order) where to print the string.
  */
-public class MfCmdTextOut extends MfCmd
-{
+public class MfCmdTextOut extends MfCmd {
   private int x;
   private int y;
   private String text;
@@ -39,8 +36,7 @@ public class MfCmdTextOut extends MfCmd
   private int scaled_x;
   private int scaled_y;
 
-  public MfCmdTextOut()
-  {
+  public MfCmdTextOut() {
   }
 
   /**
@@ -48,8 +44,7 @@ public class MfCmdTextOut extends MfCmd
    *
    * @param file the meta file.
    */
-  public void replay(final WmfFile file)
-  {
+  public void replay( final WmfFile file ) {
     final Point p = getScaledDestination();
     final int x = p.x;
     final int y = p.y;
@@ -58,7 +53,7 @@ public class MfCmdTextOut extends MfCmd
     final MfDcState state = file.getCurrentState();
 
     state.prepareDrawText();
-    graphics.drawString(text, x, y);
+    graphics.drawString( text, x, y );
     state.postDrawText();
   }
 
@@ -67,46 +62,40 @@ public class MfCmdTextOut extends MfCmd
    *
    * @return a new instance of the command.
    */
-  public MfCmd getInstance()
-  {
+  public MfCmd getInstance() {
     return new MfCmdTextOut();
   }
 
   /**
-   * Reads the function identifier. Every record type is identified by a function number
-   * corresponding to one of the Windows GDI functions used.
+   * Reads the function identifier. Every record type is identified by a function number corresponding to one of the
+   * Windows GDI functions used.
    *
    * @return the function identifier.
    */
-  public int getFunction()
-  {
+  public int getFunction() {
     return MfType.TEXT_OUT;
   }
 
   /**
-   * Reads the command data from the given record and adjusts the internal parameters
-   * according to the data parsed.
+   * Reads the command data from the given record and adjusts the internal parameters according to the data parsed.
    * <p/>
-   * After the raw record was read from the datasource, the record is parsed by the
-   * concrete implementation.
+   * After the raw record was read from the datasource, the record is parsed by the concrete implementation.
    *
    * @param record the raw data that makes up the record.
    */
-  public void setRecord(final MfRecord record)
-  {
-    final int count = record.getParam(0);
-    final byte[] text = new byte[count];
-    for (int i = 0; i < count; i++)
-    {
-      text[i] = (byte) record.getByte(MfRecord.RECORD_HEADER_SIZE + 2 + i);
+  public void setRecord( final MfRecord record ) {
+    final int count = record.getParam( 0 );
+    final byte[] text = new byte[ count ];
+    for ( int i = 0; i < count; i++ ) {
+      text[ i ] = (byte) record.getByte( MfRecord.RECORD_HEADER_SIZE + 2 + i );
     }
-    final String sText = new String(text);
-    final int y = record.getParam((int) (Math.ceil(count / 2) + 1));
-    final int x = record.getParam((int) (Math.ceil(count / 2) + 2));
+    final String sText = new String( text );
+    final int y = record.getParam( (int) ( Math.ceil( count / 2 ) + 1 ) );
+    final int x = record.getParam( (int) ( Math.ceil( count / 2 ) + 2 ) );
 
-    setCount(count);
-    setDestination(x, y);
-    setText(sText);
+    setCount( count );
+    setDestination( x, y );
+    setText( sText );
   }
 
   /**
@@ -115,39 +104,35 @@ public class MfCmdTextOut extends MfCmd
    * @return the created record.
    */
   public MfRecord getRecord()
-      throws RecordCreationException
-  {
+    throws RecordCreationException {
     final String text = getText();
-    final int parCntText = (int) Math.ceil(text.length() / 2);
-    final MfRecord record = new MfRecord(parCntText + 3);
-    record.setParam(0, text.length());
+    final int parCntText = (int) Math.ceil( text.length() / 2 );
+    final MfRecord record = new MfRecord( parCntText + 3 );
+    record.setParam( 0, text.length() );
 
     final byte[] textRaw = text.getBytes();
-    for (int i = 0; i < count; i++)
-    {
-      record.setByte(MfRecord.RECORD_HEADER_SIZE + 2 + i, textRaw[i]);
+    for ( int i = 0; i < count; i++ ) {
+      record.setByte( MfRecord.RECORD_HEADER_SIZE + 2 + i, textRaw[ i ] );
     }
 
     final Point dest = getDestination();
-    record.setParam((int) (Math.ceil(count / 2) + 1), dest.y);
-    record.setParam((int) (Math.ceil(count / 2) + 2), dest.x);
+    record.setParam( (int) ( Math.ceil( count / 2 ) + 1 ), dest.y );
+    record.setParam( (int) ( Math.ceil( count / 2 ) + 2 ), dest.x );
     return record;
   }
 
-  public String toString()
-  {
+  public String toString() {
     final StringBuffer b = new StringBuffer();
-    b.append("[TEXT_OUT] text=");
-    b.append(getText());
-    b.append(" destination=");
-    b.append(getDestination());
-    b.append(" count=");
-    b.append(getCount());
+    b.append( "[TEXT_OUT] text=" );
+    b.append( getText() );
+    b.append( " destination=" );
+    b.append( getDestination() );
+    b.append( " count=" );
+    b.append( getCount() );
     return b.toString();
   }
 
-  public void setDestination(final int x, final int y)
-  {
+  public void setDestination( final int x, final int y ) {
     this.x = x;
     this.y = y;
     scaleXChanged();
@@ -155,51 +140,43 @@ public class MfCmdTextOut extends MfCmd
 
   }
 
-  public Point getDestination()
-  {
-    return new Point(x, y);
+  public Point getDestination() {
+    return new Point( x, y );
   }
 
-  public void setText(final String text)
-  {
+  public void setText( final String text ) {
     this.text = text;
   }
 
-  public String getText()
-  {
+  public String getText() {
     return text;
   }
 
-  public int getCount()
-  {
+  public int getCount() {
     return count;
   }
 
-  public void setCount(final int count)
-  {
+  public void setCount( final int count ) {
     this.count = count;
   }
 
-  public Point getScaledDestination()
-  {
-    return new Point(scaled_x, scaled_y);
+  public Point getScaledDestination() {
+    return new Point( scaled_x, scaled_y );
   }
 
   /**
-   * A callback function to inform the object, that the x scale has changed and the
-   * internal coordinate values have to be adjusted.
+   * A callback function to inform the object, that the x scale has changed and the internal coordinate values have to
+   * be adjusted.
    */
-  protected void scaleXChanged()
-  {
-    scaled_x = getScaledX(x);
+  protected void scaleXChanged() {
+    scaled_x = getScaledX( x );
   }
 
   /**
-   * A callback function to inform the object, that the y scale has changed and the
-   * internal coordinate values have to be adjusted.
+   * A callback function to inform the object, that the y scale has changed and the internal coordinate values have to
+   * be adjusted.
    */
-  protected void scaleYChanged()
-  {
-    scaled_y = getScaledY(y);
+  protected void scaleYChanged() {
+    scaled_y = getScaledY( y );
   }
 }

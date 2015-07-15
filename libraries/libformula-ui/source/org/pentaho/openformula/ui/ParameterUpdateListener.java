@@ -19,7 +19,6 @@ package org.pentaho.openformula.ui;
 
 import java.util.EventListener;
 
-public interface ParameterUpdateListener extends EventListener
-{
-  public void parameterUpdated(final ParameterUpdateEvent event);
+public interface ParameterUpdateListener extends EventListener {
+  public void parameterUpdated( final ParameterUpdateEvent event );
 }

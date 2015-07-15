@@ -17,57 +17,49 @@
 
 package org.pentaho.reporting.libraries.repository.email;
 
+import javax.activation.DataHandler;
+import javax.mail.internet.MimeBodyPart;
+import javax.mail.util.ByteArrayDataSource;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-import javax.activation.DataHandler;
-import javax.mail.internet.MimeBodyPart;
-import javax.mail.util.ByteArrayDataSource;
 
 /**
  * Creation-Date: 17.09.2008, 15:00:00
  *
  * @author Pedro Alves - WebDetails
  */
-public class EmailEntryOutputStream extends OutputStream
-{
+public class EmailEntryOutputStream extends OutputStream {
   private ByteArrayOutputStream outputStream;
   private boolean closed;
   private EmailContentItem item;
 
-  public EmailEntryOutputStream(final EmailContentItem item)
-  {
+  public EmailEntryOutputStream( final EmailContentItem item ) {
     this.item = item;
     this.outputStream = new ByteArrayOutputStream();
   }
 
-  public void write(final int b)
-      throws IOException
-  {
-    if (closed)
-    {
-      throw new IOException("Already closed");
+  public void write( final int b )
+    throws IOException {
+    if ( closed ) {
+      throw new IOException( "Already closed" );
     }
-    outputStream.write(b);
+    outputStream.write( b );
   }
 
-  public void write(final byte[] b, final int off, final int len)
-      throws IOException
-  {
-    if (closed)
-    {
-      throw new IOException("Already closed");
+  public void write( final byte[] b, final int off, final int len )
+    throws IOException {
+    if ( closed ) {
+      throw new IOException( "Already closed" );
     }
-    outputStream.write(b, off, len);
+    outputStream.write( b, off, len );
   }
 
   public void close()
-      throws IOException
-  {
-    if (closed)
-    {
-      throw new IOException("Already closed");
+    throws IOException {
+    if ( closed ) {
+      throw new IOException( "Already closed" );
     }
 
     outputStream.close();
@@ -75,52 +67,42 @@ public class EmailEntryOutputStream extends OutputStream
 
     final EmailRepository repository = (EmailRepository) item.getRepository();
 
-    try
-    {
+    try {
       // if name == index.html, use this as the emailHTMLBody
-      if (repository.isTreatHtmlContentAsBody() && item.getMimeType().endsWith("text/html"))
-      {
+      if ( repository.isTreatHtmlContentAsBody() && item.getMimeType().endsWith( "text/html" ) ) {
         final MimeBodyPart messageBodyPart = repository.getBodypart();
-        final ByteArrayDataSource dataSource = new ByteArrayDataSource(data, item.getMimeType());
-        messageBodyPart.setDataHandler(new DataHandler(dataSource));
-      }
-      else
-      {
+        final ByteArrayDataSource dataSource = new ByteArrayDataSource( data, item.getMimeType() );
+        messageBodyPart.setDataHandler( new DataHandler( dataSource ) );
+      } else {
         // Normal Content
-        final ByteArrayInputStream bin = new ByteArrayInputStream(data);
+        final ByteArrayInputStream bin = new ByteArrayInputStream( data );
         final String contentId = (String) item.getContentId();
-        final ByteArrayDataSource dataSource = new ByteArrayDataSource(bin, item.getMimeType());
+        final ByteArrayDataSource dataSource = new ByteArrayDataSource( bin, item.getMimeType() );
         final MimeBodyPart messageBodyPart = new MimeBodyPart();
-        messageBodyPart.setDataHandler(new DataHandler(dataSource));
-        messageBodyPart.setHeader("Content-ID", contentId);
-        repository.getMultipart().addBodyPart(messageBodyPart);
+        messageBodyPart.setDataHandler( new DataHandler( dataSource ) );
+        messageBodyPart.setHeader( "Content-ID", contentId );
+        repository.getMultipart().addBodyPart( messageBodyPart );
         bin.close();
       }
-    }
-    catch (Exception e)
-    {
-      throw new IOException("Error closing stream: " + e.getMessage());
+    } catch ( Exception e ) {
+      throw new IOException( "Error closing stream: " + e.getMessage() );
     }
     closed = true;
 
   }
 
-  public void write(final byte[] b)
-      throws IOException
-  {
-    if (closed)
-    {
-      throw new IOException("Already closed");
+  public void write( final byte[] b )
+    throws IOException {
+    if ( closed ) {
+      throw new IOException( "Already closed" );
     }
-    outputStream.write(b);
+    outputStream.write( b );
   }
 
   public void flush()
-      throws IOException
-  {
-    if (closed)
-    {
-      throw new IOException("Already closed");
+    throws IOException {
+    if ( closed ) {
+      throw new IOException( "Already closed" );
     }
     outputStream.flush();
   }

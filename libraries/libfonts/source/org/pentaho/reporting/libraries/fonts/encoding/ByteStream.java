@@ -18,13 +18,12 @@
 package org.pentaho.reporting.libraries.fonts.encoding;
 
 /**
- * This is a wrapper around a byte buffer to allows streaming operations. This
- * preserves my sanity, as managing arrays with irregular encodings is hell.
+ * This is a wrapper around a byte buffer to allows streaming operations. This preserves my sanity, as managing arrays
+ * with irregular encodings is hell.
  *
  * @author Thomas Morgner
  */
-public class ByteStream
-{
+public class ByteStream {
   private ByteBuffer buffer;
   private byte[] data;
   private int writeCursor;
@@ -32,14 +31,11 @@ public class ByteStream
   private int increment;
   private int readCursor;
 
-  public ByteStream(final ByteBuffer buffer, final int increment)
-  {
-    if (buffer == null)
-    {
+  public ByteStream( final ByteBuffer buffer, final int increment ) {
+    if ( buffer == null ) {
       throw new NullPointerException();
     }
-    if (increment < 1)
-    {
+    if ( increment < 1 ) {
       throw new IllegalArgumentException();
     }
     this.buffer = buffer;
@@ -50,53 +46,43 @@ public class ByteStream
     this.readCursor = buffer.getOffset();
   }
 
-  public void put(final byte b)
-  {
-    if (writeCursor >= lastWritePos)
-    {
-      this.buffer.ensureSize(writeCursor + increment);
+  public void put( final byte b ) {
+    if ( writeCursor >= lastWritePos ) {
+      this.buffer.ensureSize( writeCursor + increment );
       this.data = buffer.getData();
       this.lastWritePos = data.length - 1;
     }
 
-    data[writeCursor] = b;
+    data[ writeCursor ] = b;
     writeCursor += 1;
   }
 
-  public void put(final byte[] b)
-  {
-    if (writeCursor >= lastWritePos)
-    {
-      this.buffer.ensureSize(writeCursor + Math.max (increment, b.length));
+  public void put( final byte[] b ) {
+    if ( writeCursor >= lastWritePos ) {
+      this.buffer.ensureSize( writeCursor + Math.max( increment, b.length ) );
       this.data = buffer.getData();
       this.lastWritePos = data.length - 1;
     }
 
-    System.arraycopy(b, 0, data, writeCursor, b.length);
+    System.arraycopy( b, 0, data, writeCursor, b.length );
     writeCursor += b.length;
   }
 
-  public byte get()
-  {
-    if (readCursor < writeCursor)
-    {
-      final byte retval = data[readCursor];
+  public byte get() {
+    if ( readCursor < writeCursor ) {
+      final byte retval = data[ readCursor ];
       readCursor += 1;
       return retval;
-    }
-    else
-    {
+    } else {
       return 0;
     }
   }
 
-  public void close()
-  {
-    buffer.setCursor(writeCursor);
+  public void close() {
+    buffer.setCursor( writeCursor );
   }
 
-  public int getReadSize()
-  {
-    return (writeCursor - readCursor);
+  public int getReadSize() {
+    return ( writeCursor - readCursor );
   }
 }

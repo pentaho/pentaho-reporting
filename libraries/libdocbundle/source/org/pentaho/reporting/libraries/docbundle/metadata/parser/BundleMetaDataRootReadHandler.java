@@ -22,12 +22,10 @@ import org.pentaho.reporting.libraries.xmlns.parser.XmlReadHandler;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 
-public class BundleMetaDataRootReadHandler extends AbstractXmlReadHandler
-{
+public class BundleMetaDataRootReadHandler extends AbstractXmlReadHandler {
   private BundleMetaDataReadHandler bundleMetaDataReadHandler;
 
-  public BundleMetaDataRootReadHandler()
-  {
+  public BundleMetaDataRootReadHandler() {
     bundleMetaDataReadHandler = new BundleMetaDataReadHandler();
   }
 
@@ -40,28 +38,24 @@ public class BundleMetaDataRootReadHandler extends AbstractXmlReadHandler
    * @return the handler or null, if the tagname is invalid.
    * @throws SAXException if there is a parsing error.
    */
-  protected XmlReadHandler getHandlerForChild(final String uri, final String tagName, final Attributes atts) throws SAXException
-  {
-    if (BundleMetaDataXmlFactoryModule.OFFICE_NAMESPACE.equals(uri) == false)
-    {
+  protected XmlReadHandler getHandlerForChild( final String uri, final String tagName, final Attributes atts )
+    throws SAXException {
+    if ( BundleMetaDataXmlFactoryModule.OFFICE_NAMESPACE.equals( uri ) == false ) {
       return null;
     }
-    if ("meta".equals(tagName) == false)
-    {
+    if ( "meta".equals( tagName ) == false ) {
       return null;
     }
     return bundleMetaDataReadHandler;
   }
 
   /**
-   * Returns the object for this element or null, if this element does
-   * not create an object.
+   * Returns the object for this element or null, if this element does not create an object.
    *
    * @return the object.
    * @throws SAXException if an parser error occured.
    */
-  public Object getObject() throws SAXException
-  {
+  public Object getObject() throws SAXException {
     return bundleMetaDataReadHandler.getObject();
   }
 }

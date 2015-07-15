@@ -17,134 +17,106 @@
 
 package org.pentaho.reporting.libraries.formula.util;
 
-import java.math.BigDecimal;
-
-import org.pentaho.reporting.libraries.formula.LibFormulaBoot;
 import org.pentaho.reporting.libraries.formula.EvaluationException;
+import org.pentaho.reporting.libraries.formula.LibFormulaBoot;
 import org.pentaho.reporting.libraries.formula.LibFormulaErrorValue;
 
-public class NumberUtil
-{
-  public static final BigDecimal DELTA =          new BigDecimal("0.000000000000000000000000000000000000005");
-  public static final BigDecimal INT_TEST_DELTA = new BigDecimal("0.00000000000000000000000000000000005");
+import java.math.BigDecimal;
+
+public class NumberUtil {
+  public static final BigDecimal DELTA = new BigDecimal( "0.000000000000000000000000000000000000005" );
+  public static final BigDecimal INT_TEST_DELTA = new BigDecimal( "0.00000000000000000000000000000000005" );
   private static final int ROUND_SCALE = LibFormulaBoot.GLOBAL_SCALE - 6;
 
-  private NumberUtil()
-  {
+  private NumberUtil() {
   }
 
-  public static BigDecimal getAsBigDecimal(final Number number)
-  {
-    if (number == null)
-    {
+  public static BigDecimal getAsBigDecimal( final Number number ) {
+    if ( number == null ) {
       throw new NullPointerException();
     }
-    
-    if(number instanceof BigDecimal)
-    {
-      return (BigDecimal)number;
-    }
-    else
-    {
-      return new BigDecimal(number.toString());
+
+    if ( number instanceof BigDecimal ) {
+      return (BigDecimal) number;
+    } else {
+      return new BigDecimal( number.toString() );
     }
   }
 
   /**
    * Performs a rounding to get a more reliable (int) cast. This makes sure that nearly exact values like
    * 0.9999999..9999 are correctly interpreted as 1 while exact values like 0.99 are interpreted as 0.
-   * 
+   *
    * @param n
    * @return
    */
-  public static BigDecimal performIntRounding(BigDecimal n)
-  {
-    try
-    {
+  public static BigDecimal performIntRounding( BigDecimal n ) {
+    try {
       // no need to go further if the value is already an integer
-      return n.setScale(0);
-    }
-    catch(ArithmeticException e)
-    {
-      //ignore and continue
-    }
-    
-    final BigDecimal round;
-    if(n.signum()<0)
-    {
-      n = n.subtract(DELTA);
-      return n.setScale(0, BigDecimal.ROUND_UP);
-    }
-    else
-    {
-      n = n.add(DELTA);
-      round = n.setScale(1, BigDecimal.ROUND_DOWN);
-      return round.setScale(0, BigDecimal.ROUND_DOWN);
-    }
-  }
-
-  public static BigDecimal performTuneRounding(BigDecimal n)
-  {
-    try
-    {
-      // no need to go further if the value is already an integer
-      n.setScale(ROUND_SCALE);
-      return n;
-    }
-    catch(ArithmeticException e)
-    {
+      return n.setScale( 0 );
+    } catch ( ArithmeticException e ) {
       //ignore and continue
     }
 
     final BigDecimal round;
-    if(n.signum()<0)
-    {
-      n = n.subtract(INT_TEST_DELTA);
-      round = n.setScale(ROUND_SCALE, BigDecimal.ROUND_UP);
+    if ( n.signum() < 0 ) {
+      n = n.subtract( DELTA );
+      return n.setScale( 0, BigDecimal.ROUND_UP );
+    } else {
+      n = n.add( DELTA );
+      round = n.setScale( 1, BigDecimal.ROUND_DOWN );
+      return round.setScale( 0, BigDecimal.ROUND_DOWN );
     }
-    else
-    {
-      n = n.add(INT_TEST_DELTA);
-      round = n.setScale(ROUND_SCALE, BigDecimal.ROUND_DOWN);
+  }
+
+  public static BigDecimal performTuneRounding( BigDecimal n ) {
+    try {
+      // no need to go further if the value is already an integer
+      n.setScale( ROUND_SCALE );
+      return n;
+    } catch ( ArithmeticException e ) {
+      //ignore and continue
     }
-    if (n.compareTo(round) == 0)
-    {
+
+    final BigDecimal round;
+    if ( n.signum() < 0 ) {
+      n = n.subtract( INT_TEST_DELTA );
+      round = n.setScale( ROUND_SCALE, BigDecimal.ROUND_UP );
+    } else {
+      n = n.add( INT_TEST_DELTA );
+      round = n.setScale( ROUND_SCALE, BigDecimal.ROUND_DOWN );
+    }
+    if ( n.compareTo( round ) == 0 ) {
       return n;
     }
-    return NumberUtil.removeTrailingZeros(round);
+    return NumberUtil.removeTrailingZeros( round );
   }
 
 
-  public static BigDecimal removeTrailingZeros(final BigDecimal bd)
-  {
-    if(bd.signum() == 0)
-    {
-      return bd.setScale(0);
+  public static BigDecimal removeTrailingZeros( final BigDecimal bd ) {
+    if ( bd.signum() == 0 ) {
+      return bd.setScale( 0 );
     }
 
     final String text = bd.toPlainString(); // get non-logarithm representation
     int scale = bd.scale();
-    for (int i = text.length() - 1; i >= 0; i--)
-    {
-      final char c = text.charAt(i);
-      if (c != '0')
-      {
+    for ( int i = text.length() - 1; i >= 0; i-- ) {
+      final char c = text.charAt( i );
+      if ( c != '0' ) {
         break;
       }
       scale -= 1;
     }
-    return bd.setScale(scale);
+    return bd.setScale( scale );
   }
 
-  public static BigDecimal divide(final BigDecimal bd1, final BigDecimal bd2)
-      throws EvaluationException
-  {
-    if (bd2.signum() == 0)
-    {
+  public static BigDecimal divide( final BigDecimal bd1, final BigDecimal bd2 )
+    throws EvaluationException {
+    if ( bd2.signum() == 0 ) {
       // prevent a division by zero ..
-      throw EvaluationException.getInstance(LibFormulaErrorValue.ERROR_ARITHMETIC_VALUE);
+      throw EvaluationException.getInstance( LibFormulaErrorValue.ERROR_ARITHMETIC_VALUE );
     }
-    final BigDecimal divide = bd1.divide(bd2, LibFormulaBoot.GLOBAL_SCALE, BigDecimal.ROUND_HALF_UP);
-    return NumberUtil.removeTrailingZeros(divide);
+    final BigDecimal divide = bd1.divide( bd2, LibFormulaBoot.GLOBAL_SCALE, BigDecimal.ROUND_HALF_UP );
+    return NumberUtil.removeTrailingZeros( divide );
   }
 }

@@ -20,21 +20,18 @@ package org.pentaho.reporting.libraries.formula.typing;
 import org.pentaho.reporting.libraries.formula.EvaluationException;
 
 /**
- * A comparator, that offers type support. Unlike the plain Java-Comparator,
- * this class is able to compare
+ * A comparator, that offers type support. Unlike the plain Java-Comparator, this class is able to compare
  *
  * @author Thomas Morgner
  */
-public interface ExtendedComparator
-{
-  public boolean isEqual(final Type type1,
-                         final Object value1,
-                         final Type type2,
-                         final Object value2);
+public interface ExtendedComparator {
+  public boolean isEqual( final Type type1,
+                          final Object value1,
+                          final Type type2,
+                          final Object value2 );
 
   /**
-   * Returns null, if the types are not comparable and are not convertible at
-   * all.
+   * Returns null, if the types are not comparable and are not convertible at all.
    *
    * @param type1
    * @param value1
@@ -42,8 +39,8 @@ public interface ExtendedComparator
    * @param value2
    * @return
    */
-  public int compare(final Type type1,
-                         final Object value1,
-                         final Type type2,
-                         final Object value2) throws EvaluationException;
+  public int compare( final Type type1,
+                      final Object value1,
+                      final Type type2,
+                      final Object value2 ) throws EvaluationException;
 }

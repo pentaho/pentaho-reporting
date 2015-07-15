@@ -25,15 +25,13 @@ import org.pentaho.reporting.libraries.css.parser.stylehandler.OneOfConstantsRea
  *
  * @author Thomas Morgner
  */
-public class DisplayModelReadHandler extends OneOfConstantsReadHandler
-{
-  public DisplayModelReadHandler()
-  {
-    super(false);
-    addValue(DisplayModel.BLOCK_INSIDE);
-    addValue(DisplayModel.INLINE_INSIDE);
-    addValue(DisplayModel.RUBY);
-    addValue(DisplayModel.TABLE);
-    addValue(DisplayModel.CANVAS);
+public class DisplayModelReadHandler extends OneOfConstantsReadHandler {
+  public DisplayModelReadHandler() {
+    super( false );
+    addValue( DisplayModel.BLOCK_INSIDE );
+    addValue( DisplayModel.INLINE_INSIDE );
+    addValue( DisplayModel.RUBY );
+    addValue( DisplayModel.TABLE );
+    addValue( DisplayModel.CANVAS );
   }
 }

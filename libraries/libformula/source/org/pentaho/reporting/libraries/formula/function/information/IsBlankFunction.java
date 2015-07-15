@@ -32,48 +32,37 @@ import org.pentaho.reporting.libraries.formula.typing.coretypes.LogicalType;
  *
  * @author : Thomas Morgner
  */
-public class IsBlankFunction implements Function
-{
+public class IsBlankFunction implements Function {
   private static final TypeValuePair RETURN_FALSE = new TypeValuePair(
-      LogicalType.TYPE, Boolean.FALSE);
+    LogicalType.TYPE, Boolean.FALSE );
 
   private static final TypeValuePair RETURN_TRUE = new TypeValuePair(
-      LogicalType.TYPE, Boolean.TRUE);
+    LogicalType.TYPE, Boolean.TRUE );
   private static final long serialVersionUID = 3352413434463488403L;
 
-  public IsBlankFunction()
-  {
+  public IsBlankFunction() {
   }
 
-  public String getCanonicalName()
-  {
+  public String getCanonicalName() {
     return "ISBLANK";
   }
 
-  public TypeValuePair evaluate(final FormulaContext context,
-                                final ParameterCallback parameters) throws EvaluationException
-  {
+  public TypeValuePair evaluate( final FormulaContext context,
+                                 final ParameterCallback parameters ) throws EvaluationException {
     final int parameterCount = parameters.getParameterCount();
-    if (parameterCount < 1)
-    {
-      throw EvaluationException.getInstance(LibFormulaErrorValue.ERROR_ARGUMENTS_VALUE);
+    if ( parameterCount < 1 ) {
+      throw EvaluationException.getInstance( LibFormulaErrorValue.ERROR_ARGUMENTS_VALUE );
     }
-    try
-    {
-      final Object value = parameters.getValue(0);
-      final LValue raw = parameters.getRaw(0);
-      if (raw instanceof ContextLookup)
-      {
-        if (value == null)
-        {
+    try {
+      final Object value = parameters.getValue( 0 );
+      final LValue raw = parameters.getRaw( 0 );
+      if ( raw instanceof ContextLookup ) {
+        if ( value == null ) {
           return RETURN_TRUE;
         }
       }
-    }
-    catch (EvaluationException e)
-    {
-      if (e.getErrorValue().getErrorCode() == LibFormulaErrorValue.ERROR_NA)
-      {
+    } catch ( EvaluationException e ) {
+      if ( e.getErrorValue().getErrorCode() == LibFormulaErrorValue.ERROR_NA ) {
         return RETURN_TRUE;
       }
       return RETURN_FALSE;

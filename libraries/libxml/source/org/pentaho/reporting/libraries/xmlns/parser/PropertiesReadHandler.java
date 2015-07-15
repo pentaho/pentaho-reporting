@@ -17,11 +17,11 @@
 
 package org.pentaho.reporting.libraries.xmlns.parser;
 
-import java.util.ArrayList;
-import java.util.Properties;
-
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
+
+import java.util.ArrayList;
+import java.util.Properties;
 
 /**
  * A read handler that creates property-structures (name-value-pairs) and returns the properties as java.util.Properties
@@ -29,8 +29,7 @@ import org.xml.sax.SAXException;
  *
  * @author Thomas Morgner
  */
-public class PropertiesReadHandler extends AbstractXmlReadHandler
-{
+public class PropertiesReadHandler extends AbstractXmlReadHandler {
   private ArrayList<PropertyReadHandler> propertyHandlers;
   private String propertyTagName;
   private Properties result;
@@ -38,9 +37,8 @@ public class PropertiesReadHandler extends AbstractXmlReadHandler
   /**
    * Creates a properties read-handler using "property" as child-tagname.
    */
-  public PropertiesReadHandler()
-  {
-    this("property");
+  public PropertiesReadHandler() {
+    this( "property" );
   }
 
   /**
@@ -48,23 +46,19 @@ public class PropertiesReadHandler extends AbstractXmlReadHandler
    *
    * @param propertyTagName the tag name for the child elements that define the properties.
    */
-  public PropertiesReadHandler(final String propertyTagName)
-  {
-    if (propertyTagName == null)
-    {
+  public PropertiesReadHandler( final String propertyTagName ) {
+    if ( propertyTagName == null ) {
       throw new NullPointerException();
     }
     this.propertyHandlers = new ArrayList<PropertyReadHandler>();
     this.propertyTagName = propertyTagName;
   }
 
-  protected ArrayList<PropertyReadHandler> getPropertyHandlers()
-  {
+  protected ArrayList<PropertyReadHandler> getPropertyHandlers() {
     return propertyHandlers;
   }
 
-  protected String getPropertyTagName()
-  {
+  protected String getPropertyTagName() {
     return propertyTagName;
   }
 
@@ -76,19 +70,16 @@ public class PropertiesReadHandler extends AbstractXmlReadHandler
    * @return the handler or null, if the tagname is invalid.
    * @throws SAXException if there is a parsing error.
    */
-  protected XmlReadHandler getHandlerForChild(final String uri,
-                                              final String tagName,
-                                              final Attributes atts)
-      throws SAXException
-  {
-    if (isSameNamespace(uri) == false)
-    {
+  protected XmlReadHandler getHandlerForChild( final String uri,
+                                               final String tagName,
+                                               final Attributes atts )
+    throws SAXException {
+    if ( isSameNamespace( uri ) == false ) {
       return null;
     }
-    if (tagName.equals(propertyTagName))
-    {
+    if ( tagName.equals( propertyTagName ) ) {
       final PropertyReadHandler prh = new PropertyReadHandler();
-      propertyHandlers.add(prh);
+      propertyHandlers.add( prh );
       return prh;
     }
     return null;
@@ -99,13 +90,11 @@ public class PropertiesReadHandler extends AbstractXmlReadHandler
    *
    * @throws SAXException if there is a parsing error.
    */
-  protected void doneParsing() throws SAXException
-  {
+  protected void doneParsing() throws SAXException {
     result = new Properties();
-    for (int i = 0; i < propertyHandlers.size(); i++)
-    {
-      final PropertyReadHandler handler = propertyHandlers.get(i);
-      result.setProperty(handler.getName(), handler.getResult());
+    for ( int i = 0; i < propertyHandlers.size(); i++ ) {
+      final PropertyReadHandler handler = propertyHandlers.get( i );
+      result.setProperty( handler.getName(), handler.getResult() );
     }
   }
 
@@ -114,8 +103,7 @@ public class PropertiesReadHandler extends AbstractXmlReadHandler
    *
    * @return the properties.
    */
-  public Properties getResult()
-  {
+  public Properties getResult() {
     return result;
   }
 
@@ -125,8 +113,7 @@ public class PropertiesReadHandler extends AbstractXmlReadHandler
    * @return the properties.
    * @throws SAXException if there is a parsing error.
    */
-  public Object getObject() throws SAXException
-  {
+  public Object getObject() throws SAXException {
     return result;
   }
 }

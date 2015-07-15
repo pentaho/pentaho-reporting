@@ -17,16 +17,15 @@
 
 package org.pentaho.reporting.libraries.formula.function.datetime;
 
-import java.util.Date;
-
 import org.pentaho.reporting.libraries.formula.EvaluationException;
 import org.pentaho.reporting.libraries.formula.FormulaContext;
-import org.pentaho.reporting.libraries.formula.LocalizationContext;
 import org.pentaho.reporting.libraries.formula.function.Function;
 import org.pentaho.reporting.libraries.formula.function.ParameterCallback;
 import org.pentaho.reporting.libraries.formula.lvalues.TypeValuePair;
 import org.pentaho.reporting.libraries.formula.typing.coretypes.DateTimeType;
 import org.pentaho.reporting.libraries.formula.util.DateUtil;
+
+import java.util.Date;
 
 /**
  * Return the serial number of the current date and time. This returns the current day and time serial number, using the
@@ -35,26 +34,22 @@ import org.pentaho.reporting.libraries.formula.util.DateUtil;
  * @author Thomas Morgner
  * @since 23.03.2007
  */
-public class NowFunction implements Function
-{
+public class NowFunction implements Function {
   private static final long serialVersionUID = 4108282053598696841L;
 
-  public NowFunction()
-  {
+  public NowFunction() {
   }
 
-  public String getCanonicalName()
-  {
+  public String getCanonicalName() {
     return "NOW";
   }
 
-  public TypeValuePair evaluate(final FormulaContext context,
-                                final ParameterCallback parameters)
-      throws EvaluationException
-  {
-    final Date now = DateUtil.now(context);
+  public TypeValuePair evaluate( final FormulaContext context,
+                                 final ParameterCallback parameters )
+    throws EvaluationException {
+    final Date now = DateUtil.now( context );
 
-    final Date date = DateUtil.normalizeDate(now, DateTimeType.DATETIME_TYPE);
-    return new TypeValuePair(DateTimeType.DATETIME_TYPE, date);
+    final Date date = DateUtil.normalizeDate( now, DateTimeType.DATETIME_TYPE );
+    return new TypeValuePair( DateTimeType.DATETIME_TYPE, date );
   }
 }

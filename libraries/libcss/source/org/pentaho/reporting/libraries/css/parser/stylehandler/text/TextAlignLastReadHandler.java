@@ -25,16 +25,14 @@ import org.pentaho.reporting.libraries.css.parser.stylehandler.OneOfConstantsRea
  *
  * @author Thomas Morgner
  */
-public class TextAlignLastReadHandler extends OneOfConstantsReadHandler
-{
-  public TextAlignLastReadHandler()
-  {
-    super(true);
-    addValue(TextAlign.CENTER);
-    addValue(TextAlign.END);
-    addValue(TextAlign.JUSTIFY);
-    addValue(TextAlign.LEFT);
-    addValue(TextAlign.RIGHT);
-    addValue(TextAlign.START);
+public class TextAlignLastReadHandler extends OneOfConstantsReadHandler {
+  public TextAlignLastReadHandler() {
+    super( true );
+    addValue( TextAlign.CENTER );
+    addValue( TextAlign.END );
+    addValue( TextAlign.JUSTIFY );
+    addValue( TextAlign.LEFT );
+    addValue( TextAlign.RIGHT );
+    addValue( TextAlign.START );
   }
 }

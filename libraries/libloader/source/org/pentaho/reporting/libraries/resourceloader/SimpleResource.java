@@ -22,29 +22,24 @@ package org.pentaho.reporting.libraries.resourceloader;
  *
  * @author Thomas Morgner
  */
-public class SimpleResource implements Resource
-{
+public class SimpleResource implements Resource {
   private Object value;
   private ResourceKey key;
   private long version;
   private static final long serialVersionUID = -6007941678785921339L;
   private Class targetType;
 
-  public SimpleResource(final ResourceKey key,
-                        final Object value,
-                        final Class targetType,
-                        final long version)
-  {
-    if (key == null)
-    {
+  public SimpleResource( final ResourceKey key,
+                         final Object value,
+                         final Class targetType,
+                         final long version ) {
+    if ( key == null ) {
       throw new NullPointerException();
     }
-    if (value == null)
-    {
+    if ( value == null ) {
       throw new NullPointerException();
     }
-    if (targetType == null)
-    {
+    if ( targetType == null ) {
       throw new NullPointerException();
     }
 
@@ -54,15 +49,12 @@ public class SimpleResource implements Resource
     this.version = version;
   }
 
-  public Object getResource()
-  {
+  public Object getResource() {
     return value;
   }
 
-  public long getVersion(final ResourceKey key)
-  {
-    if (key.equals(this.key))
-    {
+  public long getVersion( final ResourceKey key ) {
+    if ( key.equals( this.key ) ) {
       return version;
     }
     // -1 is the placeholder for: not known.
@@ -70,32 +62,27 @@ public class SimpleResource implements Resource
   }
 
   /**
-   * The primary source is also included in this set. The dependencies are given
-   * as ResourceKey objects. The keys itself do not hold any state information.
+   * The primary source is also included in this set. The dependencies are given as ResourceKey objects. The keys itself
+   * do not hold any state information.
    * <p/>
-   * The dependencies do not track deep dependencies. So if Resource A depends
-   * on Resource B which depends on Resource C, then A only knows about B, not
-   * C.
+   * The dependencies do not track deep dependencies. So if Resource A depends on Resource B which depends on Resource
+   * C, then A only knows about B, not C.
    *
    * @return
    */
-  public ResourceKey[] getDependencies()
-  {
-    return new ResourceKey[]{getSource()};
+  public ResourceKey[] getDependencies() {
+    return new ResourceKey[] { getSource() };
   }
 
-  public ResourceKey getSource()
-  {
+  public ResourceKey getSource() {
     return key;
   }
 
-  public Class getTargetType()
-  {
+  public Class getTargetType() {
     return targetType;
   }
 
-  public boolean isTemporaryResult()
-  {
+  public boolean isTemporaryResult() {
     return false;
   }
 }

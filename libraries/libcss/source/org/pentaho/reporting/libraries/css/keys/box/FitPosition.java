@@ -19,15 +19,13 @@ package org.pentaho.reporting.libraries.css.keys.box;
 
 import org.pentaho.reporting.libraries.css.values.CSSConstant;
 
-public class FitPosition
-{
-  public static final CSSConstant TOP = new CSSConstant("top");
-  public static final CSSConstant LEFT = new CSSConstant("left");
-  public static final CSSConstant BOTTOM = new CSSConstant("bottom");
-  public static final CSSConstant RIGHT = new CSSConstant("right");
-  public static final CSSConstant CENTER = new CSSConstant("center");
+public class FitPosition {
+  public static final CSSConstant TOP = new CSSConstant( "top" );
+  public static final CSSConstant LEFT = new CSSConstant( "left" );
+  public static final CSSConstant BOTTOM = new CSSConstant( "bottom" );
+  public static final CSSConstant RIGHT = new CSSConstant( "right" );
+  public static final CSSConstant CENTER = new CSSConstant( "center" );
 
-  private FitPosition()
-  {
+  private FitPosition() {
   }
 }

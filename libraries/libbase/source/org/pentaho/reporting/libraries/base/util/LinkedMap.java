@@ -22,20 +22,18 @@ import java.lang.reflect.Array;
 import java.util.Arrays;
 
 /**
- * A fast linked-hashmap that avoids any unneccessay work. It is slightly slower than an ordinary hashmap but
- * faster than a combined hashmap and list-index that would be needed to get this functionality on JDK 1.2.
- * The map is as fast as the LinkedHashMap of JDK 1.4+.
+ * A fast linked-hashmap that avoids any unneccessay work. It is slightly slower than an ordinary hashmap but faster
+ * than a combined hashmap and list-index that would be needed to get this functionality on JDK 1.2. The map is as fast
+ * as the LinkedHashMap of JDK 1.4+.
  *
  * @author Thomas Morgner
  * @noinspection ProtectedField
  */
-public class LinkedMap implements Cloneable, Serializable
-{
+public class LinkedMap implements Cloneable, Serializable {
   /**
    * A cache map entry class holding both the key and value and acting as member of a linked list.
    */
-  protected static final class MapEntry implements Serializable
-  {
+  protected static final class MapEntry implements Serializable {
     /**
      * The precomputed hashkey of the key.
      */
@@ -68,10 +66,8 @@ public class LinkedMap implements Cloneable, Serializable
      * @param hashKey the precomputed hashkey for the key.
      * @param value   the value, never null.
      */
-    protected MapEntry(final Object key, final int hashKey, final Object value)
-    {
-      if (key == null)
-      {
+    protected MapEntry( final Object key, final int hashKey, final Object value ) {
+      if ( key == null ) {
         throw new NullPointerException();
       }
       this.key = key;
@@ -84,8 +80,7 @@ public class LinkedMap implements Cloneable, Serializable
      *
      * @return the previous entry.
      */
-    public MapEntry getPrevious()
-    {
+    public MapEntry getPrevious() {
       return previous;
     }
 
@@ -94,8 +89,7 @@ public class LinkedMap implements Cloneable, Serializable
      *
      * @param previous the previous entry.
      */
-    public void setPrevious(final MapEntry previous)
-    {
+    public void setPrevious( final MapEntry previous ) {
       this.previous = previous;
     }
 
@@ -104,8 +98,7 @@ public class LinkedMap implements Cloneable, Serializable
      *
      * @return the next entry.
      */
-    public MapEntry getNext()
-    {
+    public MapEntry getNext() {
       return next;
     }
 
@@ -114,8 +107,7 @@ public class LinkedMap implements Cloneable, Serializable
      *
      * @param next the next entry.
      */
-    public void setNext(final MapEntry next)
-    {
+    public void setNext( final MapEntry next ) {
       this.next = next;
     }
 
@@ -124,8 +116,7 @@ public class LinkedMap implements Cloneable, Serializable
      *
      * @return the value, never null.
      */
-    public Object getValue()
-    {
+    public Object getValue() {
       return value;
     }
 
@@ -134,32 +125,28 @@ public class LinkedMap implements Cloneable, Serializable
      *
      * @param value the value, never null.
      */
-    public void setValue(final Object value)
-    {
+    public void setValue( final Object value ) {
       this.value = value;
     }
 
     /**
-     * Returns the next map-entry in the bucket. If more than one object maps into the same hash-bucket, this map
-     * stores the entries as linked list.
+     * Returns the next map-entry in the bucket. If more than one object maps into the same hash-bucket, this map stores
+     * the entries as linked list.
      *
      * @return the next entry.
      */
-    public MapEntry getCollisionNext()
-    {
+    public MapEntry getCollisionNext() {
       return collisionNext;
     }
 
     /**
-     * Defines the next map-entry in the bucket. If more than one object maps into the same hash-bucket, this map
-     * stores the entries as linked list.
+     * Defines the next map-entry in the bucket. If more than one object maps into the same hash-bucket, this map stores
+     * the entries as linked list.
      *
      * @param collisionNext the next entry.
      */
-    public void setCollisionNext(final MapEntry collisionNext)
-    {
-      if (collisionNext == this)
-      {
+    public void setCollisionNext( final MapEntry collisionNext ) {
+      if ( collisionNext == this ) {
         throw new IllegalStateException();
       }
       this.collisionNext = collisionNext;
@@ -179,40 +166,35 @@ public class LinkedMap implements Cloneable, Serializable
   /**
    * Default constructor. Creates a map for 16 entries with a default load-factor of 0.75.
    */
-  public LinkedMap()
-  {
-    this(16, 0.75f);
+  public LinkedMap() {
+    this( 16, 0.75f );
   }
 
   /**
-   * Creates a new map with the given initial number of buckets and the given loadfactor. A load factor
-   * greater 1 will always cause hash-collisions, while lower loadfactors reduce the likelyhood of collisions.
+   * Creates a new map with the given initial number of buckets and the given loadfactor. A load factor greater 1 will
+   * always cause hash-collisions, while lower loadfactors reduce the likelyhood of collisions.
    *
    * @param initialCapacity the initial capacity.
    * @param loadFactor      the load factor of the bucket-array.
    */
-  public LinkedMap(int initialCapacity, final float loadFactor)
-  {
-    if (initialCapacity > MAXIMUM_CAPACITY)
-    {
+  public LinkedMap( int initialCapacity, final float loadFactor ) {
+    if ( initialCapacity > MAXIMUM_CAPACITY ) {
       initialCapacity = MAXIMUM_CAPACITY;
     }
-    if (loadFactor <= 0 || Float.isNaN(loadFactor))
-    {
-      throw new IllegalArgumentException("Illegal load factor: " + loadFactor);
+    if ( loadFactor <= 0 || Float.isNaN( loadFactor ) ) {
+      throw new IllegalArgumentException( "Illegal load factor: " + loadFactor );
     }
 
     int capacity = 1;
     int mask = 0;
-    while (capacity < initialCapacity)
-    {
-      mask = (mask << 1) | 1;
+    while ( capacity < initialCapacity ) {
+      mask = ( mask << 1 ) | 1;
       capacity <<= 1;
     }
     this.mask = mask;
     this.loadFactor = loadFactor;
-    this.backend = new MapEntry[capacity];
-    this.capacity = (int) Math.ceil(capacity * loadFactor);
+    this.backend = new MapEntry[ capacity ];
+    this.capacity = (int) Math.ceil( capacity * loadFactor );
   }
 
   /**
@@ -221,72 +203,61 @@ public class LinkedMap implements Cloneable, Serializable
    * @param o the potential key.
    * @return the null-marker.
    */
-  private static Object ensureKey(final Object o)
-  {
-    if (o == null)
-    {
+  private static Object ensureKey( final Object o ) {
+    if ( o == null ) {
       return NULL_MARKER;
     }
     return o;
   }
 
   /**
-   * Ensures that the hashcode produced by the key is sane. This does some bit-juggeling to avoid incorrect
-   * hashkey implementations.
+   * Ensures that the hashcode produced by the key is sane. This does some bit-juggeling to avoid incorrect hashkey
+   * implementations.
    *
    * @param h the original hashcode.
    * @return the cleaned hashcode.
    */
-  private static int cleanHash(int h)
-  {
-    h ^= (h >>> 20) ^ (h >>> 12);
-    return h ^ (h >>> 7) ^ (h >>> 4);
+  private static int cleanHash( int h ) {
+    h ^= ( h >>> 20 ) ^ ( h >>> 12 );
+    return h ^ ( h >>> 7 ) ^ ( h >>> 4 );
   }
 
   /**
    * Ensures that the map contains enough space to store the next entry.
    */
-  private void ensureSize()
-  {
+  private void ensureSize() {
     final MapEntry[] backend = this.backend;
-    if (size <= (capacity))
-    {
+    if ( size <= ( capacity ) ) {
       return;
     }
 
     // expand ..
-    final MapEntry[] newBackend = new MapEntry[(backend.length << 1)];
-    final int newMask = (mask << 1) | 1;
-    transferEntry(newBackend, newMask);
+    final MapEntry[] newBackend = new MapEntry[ ( backend.length << 1 ) ];
+    final int newMask = ( mask << 1 ) | 1;
+    transferEntry( newBackend, newMask );
 
     this.mask = newMask;
     this.backend = newBackend;
-    this.capacity = (int) Math.ceil(loadFactor * backend.length);
+    this.capacity = (int) Math.ceil( loadFactor * backend.length );
   }
 
-  private void transferEntry(final MapEntry[] newBackend, final int newMask)
-  {
-    for (int i = 0; i < this.backend.length; i++)
-    {
-      MapEntry entry = this.backend[i];
-      while (entry != null)
-      {
+  private void transferEntry( final MapEntry[] newBackend, final int newMask ) {
+    for ( int i = 0; i < this.backend.length; i++ ) {
+      MapEntry entry = this.backend[ i ];
+      while ( entry != null ) {
         final MapEntry next = entry.collisionNext;
         final int insertIndex = entry.hashKey & newMask;
-        entry.setCollisionNext(newBackend[insertIndex]);
-        newBackend[insertIndex] = entry;
+        entry.setCollisionNext( newBackend[ insertIndex ] );
+        newBackend[ insertIndex ] = entry;
         entry = next;
       }
     }
 
-    for (int i = 0; i < newBackend.length; i++)
-    {
-      MapEntry mapEntry = newBackend[i];
-      while (mapEntry != null)
-      {
+    for ( int i = 0; i < newBackend.length; i++ ) {
+      MapEntry mapEntry = newBackend[ i ];
+      while ( mapEntry != null ) {
         final int insertIndex = mapEntry.hashKey & newMask;
-        if (i != insertIndex)
-        {
+        if ( i != insertIndex ) {
           throw new IllegalStateException();
         }
         mapEntry = mapEntry.collisionNext;
@@ -300,8 +271,7 @@ public class LinkedMap implements Cloneable, Serializable
    *
    * @return the number of entries.
    */
-  public int size()
-  {
+  public int size() {
     return size;
   }
 
@@ -312,40 +282,35 @@ public class LinkedMap implements Cloneable, Serializable
    * @param value the value to be stored under the key.
    * @return the previous value stored under this key or null of the entry is new.
    */
-  public Object put(final Object key, final Object value)
-  {
-    final Object realKey = ensureKey(key);
-    final int hashKey = cleanHash(realKey.hashCode());
+  public Object put( final Object key, final Object value ) {
+    final Object realKey = ensureKey( key );
+    final int hashKey = cleanHash( realKey.hashCode() );
 
     ensureSize();
 
     final int index = hashKey & mask;
-    final MapEntry existingEntry = backend[index];
-    if (existingEntry == null)
-    {
-      final MapEntry entry = new MapEntry(realKey, hashKey, value);
-      addNewRecord(index, entry);
+    final MapEntry existingEntry = backend[ index ];
+    if ( existingEntry == null ) {
+      final MapEntry entry = new MapEntry( realKey, hashKey, value );
+      addNewRecord( index, entry );
       return null;
     }
 
 
     MapEntry colEntry = existingEntry;
-    while (true)
-    {
+    while ( true ) {
       // The root entry exists and matches the current key.
-      if (colEntry.hashKey == hashKey &&
-          colEntry.key.equals(realKey))
-      {
+      if ( colEntry.hashKey == hashKey &&
+        colEntry.key.equals( realKey ) ) {
         // that means, we just have to update the value inside and move the entry to the last position
         // in the list (to make it look like a remove/add operation.
-        return updateRecord(value, colEntry);
+        return updateRecord( value, colEntry );
       }
 
-      if (colEntry.collisionNext == null)
-      {
+      if ( colEntry.collisionNext == null ) {
         // create a new entry in the backend-array ...
-        final MapEntry entry = new MapEntry(realKey, hashKey, value);
-        addCollisionRecord(index, entry);
+        final MapEntry entry = new MapEntry( realKey, hashKey, value );
+        addCollisionRecord( index, entry );
         return null;
       }
 
@@ -360,29 +325,25 @@ public class LinkedMap implements Cloneable, Serializable
    * @param colEntry the entry record that should be updated.
    * @return the old value in the entry or null, if there is no old entry.
    */
-  private Object updateRecord(final Object value, final MapEntry colEntry)
-  {
+  private Object updateRecord( final Object value, final MapEntry colEntry ) {
     final Object oldValue = colEntry.value;
     // replace the value ..
-    colEntry.value = (value);
+    colEntry.value = ( value );
     // and reconnect the entry at the end of the queue ..
     final MapEntry firstEntry = this.firstEntry;
     final MapEntry lastEntry = this.lastEntry;
-    if (lastEntry == colEntry)
-    {
+    if ( lastEntry == colEntry ) {
       // also covers the case where last = first = col
       return oldValue;
     }
-    if (firstEntry == colEntry)
-    {
+    if ( firstEntry == colEntry ) {
       this.firstEntry = colEntry.next;
-      if (this.firstEntry != null)
-      {
+      if ( this.firstEntry != null ) {
         this.firstEntry.previous = null;
       }
-      colEntry.previous = (lastEntry);
-      colEntry.next = (null);
-      lastEntry.next = (colEntry);
+      colEntry.previous = ( lastEntry );
+      colEntry.next = ( null );
+      lastEntry.next = ( colEntry );
       this.lastEntry = colEntry;
 
       asserta();
@@ -391,11 +352,11 @@ public class LinkedMap implements Cloneable, Serializable
 
     final MapEntry prevEntry = colEntry.previous;
     final MapEntry nextEntry = colEntry.next;
-    prevEntry.next = (nextEntry);
-    nextEntry.previous = (prevEntry);
-    colEntry.previous = (lastEntry);
-    colEntry.next = (null);
-    lastEntry.next = (colEntry);
+    prevEntry.next = ( nextEntry );
+    nextEntry.previous = ( prevEntry );
+    colEntry.previous = ( lastEntry );
+    colEntry.next = ( null );
+    lastEntry.next = ( colEntry );
     this.lastEntry = colEntry;
 
     asserta();
@@ -408,15 +369,14 @@ public class LinkedMap implements Cloneable, Serializable
    * @param index where to add the new record in the map.
    * @param entry the new entry to be added.
    */
-  private void addCollisionRecord(final int index, final MapEntry entry)
-  {
-    entry.setCollisionNext(backend[index]);
-    backend[index] = entry;
+  private void addCollisionRecord( final int index, final MapEntry entry ) {
+    entry.setCollisionNext( backend[ index ] );
+    backend[ index ] = entry;
 
     final MapEntry lastEntry = this.lastEntry;
-    entry.previous = (lastEntry);
-    entry.next = (null);
-    lastEntry.next = (entry);
+    entry.previous = ( lastEntry );
+    entry.next = ( null );
+    lastEntry.next = ( entry );
     this.lastEntry = entry;
     size += 1;
 
@@ -429,21 +389,17 @@ public class LinkedMap implements Cloneable, Serializable
    * @param index the index of the bucket to be updated.
    * @param entry the new map-entry.
    */
-  private void addNewRecord(final int index, final MapEntry entry)
-  {
+  private void addNewRecord( final int index, final MapEntry entry ) {
     // thats easy ...
     final MapEntry lastEntry = this.lastEntry;
-    if (lastEntry == null)
-    {
+    if ( lastEntry == null ) {
       firstEntry = entry;
-    }
-    else
-    {
-      entry.previous = (lastEntry);
-      lastEntry.next = (entry);
+    } else {
+      entry.previous = ( lastEntry );
+      lastEntry.next = ( entry );
     }
     this.lastEntry = entry;
-    backend[index] = entry;
+    backend[ index ] = entry;
     size += 1;
 
     asserta();
@@ -455,24 +411,20 @@ public class LinkedMap implements Cloneable, Serializable
    * @param key the key for which a value should be located.
    * @return the value or null, if the map did not contain a value for the key.
    */
-  public Object get(final Object key)
-  {
-    final Object realKey = ensureKey(key);
-    final int hashKey = cleanHash(realKey.hashCode());
+  public Object get( final Object key ) {
+    final Object realKey = ensureKey( key );
+    final int hashKey = cleanHash( realKey.hashCode() );
 
     final int index = hashKey & mask;
-    final MapEntry existingEntry = backend[index];
-    if (existingEntry == null)
-    {
+    final MapEntry existingEntry = backend[ index ];
+    if ( existingEntry == null ) {
       return null;
     }
 
     MapEntry colEntry = existingEntry;
-    while (colEntry != null)
-    {
+    while ( colEntry != null ) {
       // The root entry exists and matches the current key.
-      if (colEntry.hashKey == hashKey && colEntry.key.equals(realKey))
-      {
+      if ( colEntry.hashKey == hashKey && colEntry.key.equals( realKey ) ) {
         return colEntry.value;
       }
       colEntry = colEntry.collisionNext;
@@ -486,39 +438,31 @@ public class LinkedMap implements Cloneable, Serializable
    * @param key the key for which a value should be located.
    * @return the value or null, if the map did not contain a value for the key.
    */
-  public Object remove(final Object key)
-  {
-    final Object realKey = ensureKey(key);
-    final int hashKey = cleanHash(realKey.hashCode());
+  public Object remove( final Object key ) {
+    final Object realKey = ensureKey( key );
+    final int hashKey = cleanHash( realKey.hashCode() );
 
     final int index = hashKey & mask;
-    final MapEntry existingEntry = backend[index];
-    if (existingEntry == null)
-    {
+    final MapEntry existingEntry = backend[ index ];
+    if ( existingEntry == null ) {
       return null;
     }
 
     MapEntry prevEntry = null;
     MapEntry colEntry = existingEntry;
-    while (colEntry != null)
-    {
+    while ( colEntry != null ) {
       // The root entry exists and matches the current key.
-      if (colEntry.hashKey == hashKey && colEntry.key.equals(realKey))
-      {
+      if ( colEntry.hashKey == hashKey && colEntry.key.equals( realKey ) ) {
         final Object value = colEntry.value;
-        if (prevEntry == null)
-        {
+        if ( prevEntry == null ) {
           // this is a root level entry ..
-          backend[index] = colEntry.collisionNext;
-        }
-        else
-        {
-          prevEntry.setCollisionNext(colEntry.collisionNext);
+          backend[ index ] = colEntry.collisionNext;
+        } else {
+          prevEntry.setCollisionNext( colEntry.collisionNext );
         }
 
         // now check the first and last entry ...
-        if (firstEntry == lastEntry)
-        {
+        if ( firstEntry == lastEntry ) {
           // there is ony one entry.
           firstEntry = null;
           lastEntry = null;
@@ -528,33 +472,26 @@ public class LinkedMap implements Cloneable, Serializable
           return value;
         }
 
-        if (firstEntry == colEntry)
-        {
+        if ( firstEntry == colEntry ) {
           final MapEntry nextfirstEntry = colEntry.next;
-          if (nextfirstEntry != null)
-          {
-            nextfirstEntry.previous = (null);
+          if ( nextfirstEntry != null ) {
+            nextfirstEntry.previous = ( null );
             colEntry.next = null;
           }
           firstEntry = nextfirstEntry;
-        }
-        else if (lastEntry == colEntry)
-        {
+        } else if ( lastEntry == colEntry ) {
           final MapEntry nextLastEntry = colEntry.previous;
-          if (nextLastEntry != null)
-          {
-            nextLastEntry.next = (null);
+          if ( nextLastEntry != null ) {
+            nextLastEntry.next = ( null );
             colEntry.previous = null;
           }
           lastEntry = nextLastEntry;
         }
 
-        if (colEntry.previous != null)
-        {
+        if ( colEntry.previous != null ) {
           colEntry.previous.next = colEntry.next;
         }
-        if (colEntry.next != null)
-        {
+        if ( colEntry.next != null ) {
           colEntry.next.previous = colEntry.previous;
         }
         size -= 1;
@@ -571,14 +508,11 @@ public class LinkedMap implements Cloneable, Serializable
     return null;
   }
 
-  private void asserta()
-  {
-    if (firstEntry == null)
-    {
+  private void asserta() {
+    if ( firstEntry == null ) {
       return;
     }
-    if (firstEntry.previous != null)
-    {
+    if ( firstEntry.previous != null ) {
       throw new NullPointerException();
     }
   }
@@ -589,23 +523,19 @@ public class LinkedMap implements Cloneable, Serializable
    * @param key the key for which a value should be located.
    * @return true if the map contains a value for the key, false otherwise.
    */
-  public boolean containsKey(final Object key)
-  {
-    final Object realKey = ensureKey(key);
-    final int hashKey = cleanHash(realKey.hashCode());
+  public boolean containsKey( final Object key ) {
+    final Object realKey = ensureKey( key );
+    final int hashKey = cleanHash( realKey.hashCode() );
     final int index = hashKey & mask;
-    final MapEntry existingEntry = backend[index];
-    if (existingEntry == null)
-    {
+    final MapEntry existingEntry = backend[ index ];
+    if ( existingEntry == null ) {
       return false;
     }
 
     MapEntry colEntry = existingEntry;
-    while (colEntry != null)
-    {
+    while ( colEntry != null ) {
       // The root entry exists and matches the current key.
-      if (colEntry.hashKey == hashKey && colEntry.key.equals(realKey))
-      {
+      if ( colEntry.hashKey == hashKey && colEntry.key.equals( realKey ) ) {
         return true;
       }
       colEntry = colEntry.collisionNext;
@@ -619,30 +549,22 @@ public class LinkedMap implements Cloneable, Serializable
    * @param data the object array that should receive the keys.
    * @return the array filled with the keys.
    */
-  public Object[] keys(final Object[] data)
-  {
+  public Object[] keys( final Object[] data ) {
     final Object[] list;
-    if (data.length < size)
-    {
-      list = (Object[]) Array.newInstance(data.getClass().getComponentType(), size);
-    }
-    else
-    {
+    if ( data.length < size ) {
+      list = (Object[]) Array.newInstance( data.getClass().getComponentType(), size );
+    } else {
       list = data;
     }
 
     int index = 0;
     MapEntry entry = firstEntry;
-    while (entry != null)
-    {
+    while ( entry != null ) {
       final Object o = entry.key;
-      if (o == NULL_MARKER)
-      {
-        list[index] = (null);
-      }
-      else
-      {
-        list[index] = (o);
+      if ( o == NULL_MARKER ) {
+        list[ index ] = ( null );
+      } else {
+        list[ index ] = ( o );
       }
       entry = entry.getNext();
       index += 1;
@@ -655,9 +577,8 @@ public class LinkedMap implements Cloneable, Serializable
    *
    * @return the array filled with the keys.
    */
-  public Object[] keys()
-  {
-    return keys(new Object[size]);
+  public Object[] keys() {
+    return keys( new Object[ size ] );
   }
 
   /**
@@ -665,9 +586,8 @@ public class LinkedMap implements Cloneable, Serializable
    *
    * @return the array filled with the values.
    */
-  public Object[] values()
-  {
-    return values(new Object[size]);
+  public Object[] values() {
+    return values( new Object[ size ] );
   }
 
   /**
@@ -676,23 +596,18 @@ public class LinkedMap implements Cloneable, Serializable
    * @param data the object array that should receive the values.
    * @return the array filled with the values.
    */
-  public Object[] values(final Object[] data)
-  {
+  public Object[] values( final Object[] data ) {
     final Object[] list;
-    if (data.length < size)
-    {
-      list = (Object[]) Array.newInstance(data.getClass().getComponentType(), size);
-    }
-    else
-    {
+    if ( data.length < size ) {
+      list = (Object[]) Array.newInstance( data.getClass().getComponentType(), size );
+    } else {
       list = data;
     }
     int index = 0;
     MapEntry entry = firstEntry;
-    while (entry != null)
-    {
+    while ( entry != null ) {
       final Object o = entry.value;
-      list[index] = (o);
+      list[ index ] = ( o );
       entry = entry.getNext();
       index += 1;
     }
@@ -702,15 +617,13 @@ public class LinkedMap implements Cloneable, Serializable
   /**
    * Clears the map and removes all map records.
    */
-  public void clear()
-  {
-    if (firstEntry == null)
-    {
+  public void clear() {
+    if ( firstEntry == null ) {
       return;
     }
     firstEntry = null;
     lastEntry = null;
-    Arrays.fill(backend, null);
+    Arrays.fill( backend, null );
     size = 0;
   }
 
@@ -720,18 +633,16 @@ public class LinkedMap implements Cloneable, Serializable
    * @return the cloned map.
    * @throws CloneNotSupportedException
    */
-  public Object clone() throws CloneNotSupportedException
-  {
+  public Object clone() throws CloneNotSupportedException {
     final LinkedMap map = (LinkedMap) super.clone();
     map.backend = backend.clone();
-    Arrays.fill(map.backend, null);
+    Arrays.fill( map.backend, null );
     map.firstEntry = null;
     map.lastEntry = null;
     map.size = 0;
     MapEntry entry = firstEntry;
-    while (entry != null)
-    {
-      map.put(entry.key, entry.value);
+    while ( entry != null ) {
+      map.put( entry.key, entry.value );
       entry = entry.getNext();
     }
     return map;
@@ -742,8 +653,7 @@ public class LinkedMap implements Cloneable, Serializable
    *
    * @return true, if the collection is empty, false otherwise.
    */
-  public boolean isEmpty()
-  {
+  public boolean isEmpty() {
     return size == 0;
   }
 }

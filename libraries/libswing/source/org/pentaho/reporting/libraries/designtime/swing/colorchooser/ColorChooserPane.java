@@ -18,25 +18,19 @@
 
 package org.pentaho.reporting.libraries.designtime.swing.colorchooser;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import javax.swing.JComponent;
-import javax.swing.JTabbedPane;
+import javax.swing.*;
 import javax.swing.colorchooser.ColorChooserComponentFactory;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import java.awt.*;
 
-public class ColorChooserPane extends JComponent
-{
-  private class PreviewColorUpdater implements ChangeListener
-  {
-    private PreviewColorUpdater()
-    {
+public class ColorChooserPane extends JComponent {
+  private class PreviewColorUpdater implements ChangeListener {
+    private PreviewColorUpdater() {
     }
 
-    public void stateChanged(final ChangeEvent e)
-    {
-      previewPane.setForeground(colorModel.getSelectedColor());
+    public void stateChanged( final ChangeEvent e ) {
+      previewPane.setForeground( colorModel.getSelectedColor() );
     }
   }
 
@@ -45,89 +39,76 @@ public class ColorChooserPane extends JComponent
   private ExtendedColorModel colorModel;
   private SwatchColorChooser swatchColorChooser;
 
-  public ColorChooserPane()
-  {
+  public ColorChooserPane() {
     colorModel = new ExtendedColorModel();
-    colorModel.addChangeListener(new PreviewColorUpdater());
+    colorModel.addChangeListener( new PreviewColorUpdater() );
     previewPane = ColorChooserComponentFactory.getPreviewPanel();
     multiSelectorPane = new JTabbedPane();
     swatchColorChooser = new SwatchColorChooser();
 
-    addColorChooserPanel(new CombinedColorChooser());
-    addColorChooserPanel(swatchColorChooser);
+    addColorChooserPanel( new CombinedColorChooser() );
+    addColorChooserPanel( swatchColorChooser );
 
-    setLayout(new BorderLayout());
-    add(previewPane, BorderLayout.SOUTH);
-    add(multiSelectorPane, BorderLayout.CENTER);
+    setLayout( new BorderLayout() );
+    add( previewPane, BorderLayout.SOUTH );
+    add( multiSelectorPane, BorderLayout.CENTER );
   }
 
-  public JComponent getPreviewPane()
-  {
+  public JComponent getPreviewPane() {
     return previewPane;
   }
 
-  public void addSwatches(final ColorSchema colorSchema)
-  {
-    swatchColorChooser.addSwatches(colorSchema);
+  public void addSwatches( final ColorSchema colorSchema ) {
+    swatchColorChooser.addSwatches( colorSchema );
   }
 
-  public void clearSwatches()
-  {
+  public void clearSwatches() {
     swatchColorChooser.clearSwatches();
   }
 
-  public void removeSwatches(final ColorSchema colorSchema)
-  {
-    swatchColorChooser.removeSwatches(colorSchema);
+  public void removeSwatches( final ColorSchema colorSchema ) {
+    swatchColorChooser.removeSwatches( colorSchema );
   }
 
-  public SwatchColorChooser getSwatchColorChooser()
-  {
+  public SwatchColorChooser getSwatchColorChooser() {
     return swatchColorChooser;
   }
 
-  public ExtendedColorModel getModel()
-  {
+  public ExtendedColorModel getModel() {
     return colorModel;
   }
 
-  public void addColorChooserPanel(final AbstractColorChooserPanel panel)
-  {
-    multiSelectorPane.addTab(panel.getDisplayName(), panel.getSmallDisplayIcon(), panel);
-    multiSelectorPane.setMnemonicAt(multiSelectorPane.getTabCount() - 1, panel.getMnemonic());
-    multiSelectorPane.setDisplayedMnemonicIndexAt(multiSelectorPane.getTabCount() - 1, panel.getDisplayedMnemonicIndex());
+  public void addColorChooserPanel( final AbstractColorChooserPanel panel ) {
+    multiSelectorPane.addTab( panel.getDisplayName(), panel.getSmallDisplayIcon(), panel );
+    multiSelectorPane.setMnemonicAt( multiSelectorPane.getTabCount() - 1, panel.getMnemonic() );
+    multiSelectorPane
+      .setDisplayedMnemonicIndexAt( multiSelectorPane.getTabCount() - 1, panel.getDisplayedMnemonicIndex() );
 
-    panel.installChooserPanel(colorModel);
+    panel.installChooserPanel( colorModel );
   }
 
-  public void removeColorChooserPanel(final AbstractColorChooserPanel panel)
-  {
+  public void removeColorChooserPanel( final AbstractColorChooserPanel panel ) {
     panel.uninstallChooserPanel();
-    multiSelectorPane.remove(panel);
+    multiSelectorPane.remove( panel );
   }
 
-  public AbstractColorChooserPanel getColorChooserPanel(final int index)
-  {
-    return (AbstractColorChooserPanel) multiSelectorPane.getComponentAt(index);
+  public AbstractColorChooserPanel getColorChooserPanel( final int index ) {
+    return (AbstractColorChooserPanel) multiSelectorPane.getComponentAt( index );
   }
 
-  public void removeAllColorChooserPanels()
-  {
+  public void removeAllColorChooserPanels() {
     final int count = getColorChooserPanelCount();
-    for (int i = 0; i < count; i++)
-    {
-      getColorChooserPanel(i).uninstallChooserPanel();
+    for ( int i = 0; i < count; i++ ) {
+      getColorChooserPanel( i ).uninstallChooserPanel();
     }
     multiSelectorPane.removeAll();
   }
 
-  public int getColorChooserPanelCount()
-  {
+  public int getColorChooserPanelCount() {
     return multiSelectorPane.getTabCount();
   }
 
-  public void setColor(final Color value)
-  {
-    colorModel.setSelectedColor(value);
+  public void setColor( final Color value ) {
+    colorModel.setSelectedColor( value );
   }
 }

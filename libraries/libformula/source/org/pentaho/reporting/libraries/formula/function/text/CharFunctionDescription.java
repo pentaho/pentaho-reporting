@@ -23,37 +23,30 @@ import org.pentaho.reporting.libraries.formula.typing.Type;
 import org.pentaho.reporting.libraries.formula.typing.coretypes.NumberType;
 import org.pentaho.reporting.libraries.formula.typing.coretypes.TextType;
 
-public class CharFunctionDescription extends AbstractFunctionDescription
-{
+public class CharFunctionDescription extends AbstractFunctionDescription {
   private static final long serialVersionUID = 6842849033225519941L;
 
-  public CharFunctionDescription()
-  {
-    super("CHAR", "org.pentaho.reporting.libraries.formula.function.text.Char-Function");
+  public CharFunctionDescription() {
+    super( "CHAR", "org.pentaho.reporting.libraries.formula.function.text.Char-Function" );
   }
 
-  public FunctionCategory getCategory()
-  {
+  public FunctionCategory getCategory() {
     return TextFunctionCategory.CATEGORY;
   }
 
-  public int getParameterCount()
-  {
+  public int getParameterCount() {
     return 1;
   }
 
-  public Type getParameterType(final int position)
-  {
+  public Type getParameterType( final int position ) {
     return NumberType.GENERIC_NUMBER;
   }
 
-  public Type getValueType()
-  {
+  public Type getValueType() {
     return TextType.TYPE;
   }
 
-  public boolean isParameterMandatory(final int position)
-  {
+  public boolean isParameterMandatory( final int position ) {
     return true;
   }
 

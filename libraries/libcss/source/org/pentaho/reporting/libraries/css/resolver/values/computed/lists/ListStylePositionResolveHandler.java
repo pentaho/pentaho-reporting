@@ -20,12 +20,10 @@ package org.pentaho.reporting.libraries.css.resolver.values.computed.lists;
 import org.pentaho.reporting.libraries.css.keys.list.ListStylePosition;
 import org.pentaho.reporting.libraries.css.resolver.values.computed.ConstantsResolveHandler;
 
-public class ListStylePositionResolveHandler extends ConstantsResolveHandler
-{
-  public ListStylePositionResolveHandler()
-  {
-    addNormalizeValue(ListStylePosition.INSIDE);
-    addNormalizeValue(ListStylePosition.OUTSIDE);
-    setFallback(ListStylePosition.OUTSIDE);
+public class ListStylePositionResolveHandler extends ConstantsResolveHandler {
+  public ListStylePositionResolveHandler() {
+    addNormalizeValue( ListStylePosition.INSIDE );
+    addNormalizeValue( ListStylePosition.OUTSIDE );
+    setFallback( ListStylePosition.OUTSIDE );
   }
 }

@@ -17,10 +17,10 @@
 
 package org.pentaho.reporting.tools.configeditor.model;
 
+import javax.swing.tree.TreeNode;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Enumeration;
-import javax.swing.tree.TreeNode;
 
 /**
  * An abstract base implementation of the config tree node interface. The implementation provides all base services
@@ -28,8 +28,7 @@ import javax.swing.tree.TreeNode;
  *
  * @author Thomas Morgner
  */
-public abstract class AbstractConfigTreeNode implements ConfigTreeNode
-{
+public abstract class AbstractConfigTreeNode implements ConfigTreeNode {
   /**
    * The list of tree nodes that act as childs.
    */
@@ -48,8 +47,7 @@ public abstract class AbstractConfigTreeNode implements ConfigTreeNode
    *
    * @param name the name of the node.
    */
-  protected AbstractConfigTreeNode(final String name)
-  {
+  protected AbstractConfigTreeNode( final String name ) {
     childs = new ArrayList<ConfigTreeNode>();
     this.name = name;
   }
@@ -59,28 +57,23 @@ public abstract class AbstractConfigTreeNode implements ConfigTreeNode
    *
    * @param node the new node that should be added.
    */
-  public void add(final ConfigTreeNode node)
-  {
-    if (node == null)
-    {
+  public void add( final ConfigTreeNode node ) {
+    if ( node == null ) {
       throw new NullPointerException();
     }
-    if (childs.contains(node) == false)
-    {
-      childs.add(node);
-      node.setParent(this);
+    if ( childs.contains( node ) == false ) {
+      childs.add( node );
+      node.setParent( this );
     }
   }
 
   /**
    * Removes all child nodes.
    */
-  protected void reset()
-  {
-    for (int i = 0; i < childs.size(); i++)
-    {
-      final ConfigTreeNode node = childs.get(i);
-      node.setParent(null);
+  protected void reset() {
+    for ( int i = 0; i < childs.size(); i++ ) {
+      final ConfigTreeNode node = childs.get( i );
+      node.setParent( null );
     }
     childs.clear();
   }
@@ -91,9 +84,8 @@ public abstract class AbstractConfigTreeNode implements ConfigTreeNode
    * @param childIndex the index of the child node within this parent node.
    * @return the child node.
    */
-  public TreeNode getChildAt(final int childIndex)
-  {
-    return childs.get(childIndex);
+  public TreeNode getChildAt( final int childIndex ) {
+    return childs.get( childIndex );
   }
 
   /**
@@ -101,8 +93,7 @@ public abstract class AbstractConfigTreeNode implements ConfigTreeNode
    *
    * @return the number of child nodes.
    */
-  public int getChildCount()
-  {
+  public int getChildCount() {
     return childs.size();
   }
 
@@ -111,8 +102,7 @@ public abstract class AbstractConfigTreeNode implements ConfigTreeNode
    *
    * @return true, if this node allows child nodes.
    */
-  public boolean getAllowsChildren()
-  {
+  public boolean getAllowsChildren() {
     return true;
   }
 
@@ -123,9 +113,8 @@ public abstract class AbstractConfigTreeNode implements ConfigTreeNode
    * @param node the suspected child node.
    * @return the index of the given node or -1 if the node is not contained in this node.
    */
-  public int getIndex(final TreeNode node)
-  {
-    return childs.indexOf(node);
+  public int getIndex( final TreeNode node ) {
+    return childs.indexOf( node );
   }
 
   /**
@@ -133,8 +122,7 @@ public abstract class AbstractConfigTreeNode implements ConfigTreeNode
    *
    * @return true, if this node is a leaf node, false otherwise.
    */
-  public boolean isLeaf()
-  {
+  public boolean isLeaf() {
     return false;
   }
 
@@ -143,9 +131,8 @@ public abstract class AbstractConfigTreeNode implements ConfigTreeNode
    *
    * @return all childs as enumeration.
    */
-  public Enumeration children()
-  {
-    return Collections.enumeration(childs);
+  public Enumeration children() {
+    return Collections.enumeration( childs );
   }
 
   /**
@@ -153,8 +140,7 @@ public abstract class AbstractConfigTreeNode implements ConfigTreeNode
    *
    * @return the name of the node.
    */
-  public String getName()
-  {
+  public String getName() {
     return name;
   }
 
@@ -164,8 +150,7 @@ public abstract class AbstractConfigTreeNode implements ConfigTreeNode
    * @return the parent
    * @see TreeNode#getParent()
    */
-  public TreeNode getParent()
-  {
+  public TreeNode getParent() {
     return parent;
   }
 
@@ -174,8 +159,7 @@ public abstract class AbstractConfigTreeNode implements ConfigTreeNode
    *
    * @param parent the new parent or null.
    */
-  public void setParent(final TreeNode parent)
-  {
+  public void setParent( final TreeNode parent ) {
     this.parent = parent;
   }
 }

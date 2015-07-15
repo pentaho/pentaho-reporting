@@ -24,14 +24,12 @@ import org.pentaho.reporting.libraries.css.values.CSSConstant;
  *
  * @author Thomas Morgner
  */
-public class Position
-{
-  public static final CSSConstant ABSOLUTE = new CSSConstant("absolute");
-  public static final CSSConstant RELATIVE = new CSSConstant("relative");
-  public static final CSSConstant STATIC = new CSSConstant("static");
-  public static final CSSConstant FIXED = new CSSConstant("fixed");
+public class Position {
+  public static final CSSConstant ABSOLUTE = new CSSConstant( "absolute" );
+  public static final CSSConstant RELATIVE = new CSSConstant( "relative" );
+  public static final CSSConstant STATIC = new CSSConstant( "static" );
+  public static final CSSConstant FIXED = new CSSConstant( "fixed" );
 
-  private Position()
-  {
+  private Position() {
   }
 }

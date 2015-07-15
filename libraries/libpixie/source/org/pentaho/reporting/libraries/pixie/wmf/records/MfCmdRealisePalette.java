@@ -22,15 +22,13 @@ import org.pentaho.reporting.libraries.pixie.wmf.MfType;
 import org.pentaho.reporting.libraries.pixie.wmf.WmfFile;
 
 /**
- * Synchronizes the Metafile-Palette with the device-dependent palette This is not used
- * here, as java uses 24-Bit TrueColors to display colors.
+ * Synchronizes the Metafile-Palette with the device-dependent palette This is not used here, as java uses 24-Bit
+ * TrueColors to display colors.
  * <p/>
  * The record itself is empty.
  */
-public class MfCmdRealisePalette extends MfCmd
-{
-  public MfCmdRealisePalette()
-  {
+public class MfCmdRealisePalette extends MfCmd {
+  public MfCmdRealisePalette() {
   }
 
   /**
@@ -38,8 +36,7 @@ public class MfCmdRealisePalette extends MfCmd
    *
    * @param file the meta file.
    */
-  public void replay(final WmfFile file)
-  {
+  public void replay( final WmfFile file ) {
   }
 
   /**
@@ -47,22 +44,18 @@ public class MfCmdRealisePalette extends MfCmd
    *
    * @return a new instance of the command.
    */
-  public MfCmd getInstance()
-  {
+  public MfCmd getInstance() {
     return new MfCmdRealisePalette();
   }
 
   /**
-   * Reads the command data from the given record and adjusts the internal parameters
-   * according to the data parsed.
+   * Reads the command data from the given record and adjusts the internal parameters according to the data parsed.
    * <p/>
-   * After the raw record was read from the datasource, the record is parsed by the
-   * concrete implementation.
+   * After the raw record was read from the datasource, the record is parsed by the concrete implementation.
    *
    * @param record the raw data that makes up the record.
    */
-  public void setRecord(final MfRecord record)
-  {
+  public void setRecord( final MfRecord record ) {
   }
 
   /**
@@ -71,42 +64,37 @@ public class MfCmdRealisePalette extends MfCmd
    * @return the created record.
    */
   public MfRecord getRecord()
-      throws RecordCreationException
-  {
-    return new MfRecord(0);
+    throws RecordCreationException {
+    return new MfRecord( 0 );
   }
 
-  public String toString()
-  {
+  public String toString() {
     final StringBuffer b = new StringBuffer();
-    b.append("[REALISE_PALETTE] is not implemented");
+    b.append( "[REALISE_PALETTE] is not implemented" );
     return b.toString();
   }
 
   /**
-   * Reads the function identifier. Every record type is identified by a function number
-   * corresponding to one of the Windows GDI functions used.
+   * Reads the function identifier. Every record type is identified by a function number corresponding to one of the
+   * Windows GDI functions used.
    *
    * @return the function identifier.
    */
-  public int getFunction()
-  {
+  public int getFunction() {
     return MfType.REALISE_PALETTE;
   }
 
   /**
-   * A callback function to inform the object, that the x scale has changed and the
-   * internal coordinate values have to be adjusted.
+   * A callback function to inform the object, that the x scale has changed and the internal coordinate values have to
+   * be adjusted.
    */
-  protected void scaleXChanged()
-  {
+  protected void scaleXChanged() {
   }
 
   /**
-   * A callback function to inform the object, that the y scale has changed and the
-   * internal coordinate values have to be adjusted.
+   * A callback function to inform the object, that the y scale has changed and the internal coordinate values have to
+   * be adjusted.
    */
-  protected void scaleYChanged()
-  {
+  protected void scaleYChanged() {
   }
 }

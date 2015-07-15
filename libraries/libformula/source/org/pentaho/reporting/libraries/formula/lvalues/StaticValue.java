@@ -17,8 +17,6 @@
 
 package org.pentaho.reporting.libraries.formula.lvalues;
 
-import java.util.Date;
-
 import org.pentaho.reporting.libraries.formula.EvaluationException;
 import org.pentaho.reporting.libraries.formula.FormulaContext;
 import org.pentaho.reporting.libraries.formula.typing.Type;
@@ -30,80 +28,65 @@ import org.pentaho.reporting.libraries.formula.util.FormulaUtil;
  *
  * @author Thomas Morgner
  */
-public class StaticValue extends AbstractLValue
-{
+public class StaticValue extends AbstractLValue {
   private Object value;
   private Type type;
   private static final long serialVersionUID = 7255803922294601237L;
 
-  public StaticValue(final Object value)
-  {
-    this(value, AnyType.TYPE);
+  public StaticValue( final Object value ) {
+    this( value, AnyType.TYPE );
   }
-  
-  public StaticValue(final Object value, final Type type)
-  {
+
+  public StaticValue( final Object value, final Type type ) {
     this.value = value;
     this.type = type;
   }
 
-  public StaticValue(final Object value, final ParsePosition parsePosition)
-  {
-    this(value, AnyType.TYPE, parsePosition);
+  public StaticValue( final Object value, final ParsePosition parsePosition ) {
+    this( value, AnyType.TYPE, parsePosition );
   }
 
-  public StaticValue(final Object value, final Type type, final ParsePosition parsePosition)
-  {
+  public StaticValue( final Object value, final Type type, final ParsePosition parsePosition ) {
     this.value = value;
     this.type = type;
-    setParsePosition(parsePosition);
+    setParsePosition( parsePosition );
   }
 
-  public void initialize(final FormulaContext context) throws EvaluationException
-  {
+  public void initialize( final FormulaContext context ) throws EvaluationException {
   }
 
-  public TypeValuePair evaluate()
-  {
-    return new TypeValuePair(type, value);
+  public TypeValuePair evaluate() {
+    return new TypeValuePair( type, value );
   }
 
 
-  public String toString()
-  {
-    if (value instanceof Number)
-    {
-      return String.valueOf(value);
+  public String toString() {
+    if ( value instanceof Number ) {
+      return String.valueOf( value );
     }
 
-    return FormulaUtil.quoteString(String.valueOf(value));
+    return FormulaUtil.quoteString( String.valueOf( value ) );
   }
 
   /**
-   * Checks whether the LValue is constant. Constant lvalues always return the
-   * same value.
+   * Checks whether the LValue is constant. Constant lvalues always return the same value.
    *
    * @return
    */
-  public boolean isConstant()
-  {
+  public boolean isConstant() {
     return true;
   }
 
-  public Object getValue()
-  {
+  public Object getValue() {
     return value;
   }
 
   /**
-   * This function allows a program traversing the LibFormula object model
-   * to know what type this static value is.
+   * This function allows a program traversing the LibFormula object model to know what type this static value is.
    *
    * @return the type of the static value
-   *
-   */ 
-  public Type getValueType()
-  {
+   */
+  public Type getValueType() {
     return type;
   }
 }

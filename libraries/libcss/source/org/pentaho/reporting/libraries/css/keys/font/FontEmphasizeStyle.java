@@ -19,20 +19,18 @@ package org.pentaho.reporting.libraries.css.keys.font;
 
 import org.pentaho.reporting.libraries.css.values.CSSConstant;
 
-public class FontEmphasizeStyle
-{
+public class FontEmphasizeStyle {
   public static final CSSConstant NONE =
-      new CSSConstant("none");
+    new CSSConstant( "none" );
   public static final CSSConstant ACCENT =
-      new CSSConstant("accent");
+    new CSSConstant( "accent" );
   public static final CSSConstant DOT =
-      new CSSConstant("dot");
+    new CSSConstant( "dot" );
   public static final CSSConstant CIRCLE =
-      new CSSConstant("circle");
+    new CSSConstant( "circle" );
   public static final CSSConstant DISC =
-      new CSSConstant("disc");
+    new CSSConstant( "disc" );
 
-  private FontEmphasizeStyle()
-  {
+  private FontEmphasizeStyle() {
   }
 }

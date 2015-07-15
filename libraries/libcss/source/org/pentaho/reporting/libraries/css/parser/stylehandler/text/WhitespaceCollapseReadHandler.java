@@ -25,14 +25,12 @@ import org.pentaho.reporting.libraries.css.parser.stylehandler.OneOfConstantsRea
  *
  * @author Thomas Morgner
  */
-public class WhitespaceCollapseReadHandler extends OneOfConstantsReadHandler
-{
-  public WhitespaceCollapseReadHandler()
-  {
-    super(false);
-    addValue(WhitespaceCollapse.COLLAPSE);
-    addValue(WhitespaceCollapse.DISCARD);
-    addValue(WhitespaceCollapse.PRESERVE);
-    addValue(WhitespaceCollapse.PRESERVE_BREAKS);
+public class WhitespaceCollapseReadHandler extends OneOfConstantsReadHandler {
+  public WhitespaceCollapseReadHandler() {
+    super( false );
+    addValue( WhitespaceCollapse.COLLAPSE );
+    addValue( WhitespaceCollapse.DISCARD );
+    addValue( WhitespaceCollapse.PRESERVE );
+    addValue( WhitespaceCollapse.PRESERVE_BREAKS );
   }
 }

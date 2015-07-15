@@ -17,13 +17,12 @@
 
 package org.pentaho.reporting.libraries.base.util;
 
-import java.awt.Graphics;
-import java.awt.Image;
-import java.awt.image.BufferedImage;
-import java.awt.image.ImageObserver;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.awt.image.ImageObserver;
 
 /**
  * This image observer blocks until the image is completely loaded. AWT defers the loading of images until they are
@@ -34,12 +33,11 @@ import org.apache.commons.logging.LogFactory;
  *
  * @author Thomas Morgner
  */
-public class WaitingImageObserver implements ImageObserver
-{
+public class WaitingImageObserver implements ImageObserver {
   /**
    * A logger.
    */
-  private static final Log LOGGER = LogFactory.getLog(WaitingImageObserver.class);
+  private static final Log LOGGER = LogFactory.getLog( WaitingImageObserver.class );
 
   /**
    * For serialization.
@@ -74,9 +72,8 @@ public class WaitingImageObserver implements ImageObserver
    *
    * @param image the image to observe (<code>null</code> not permitted).
    */
-  public WaitingImageObserver(final Image image)
-  {
-    this(image, MAX_LOADTIME_DEFAULT);
+  public WaitingImageObserver( final Image image ) {
+    this( image, MAX_LOADTIME_DEFAULT );
   }
 
   /**
@@ -85,10 +82,8 @@ public class WaitingImageObserver implements ImageObserver
    *
    * @param image the image to observe (<code>null</code> not permitted).
    */
-  public WaitingImageObserver(final Image image, final long maxLoadTime)
-  {
-    if (image == null)
-    {
+  public WaitingImageObserver( final Image image, final long maxLoadTime ) {
+    if ( image == null ) {
       throw new NullPointerException();
     }
     this.image = image;
@@ -109,38 +104,31 @@ public class WaitingImageObserver implements ImageObserver
    * @param width     the width.
    * @param height    the height.
    * @return <code>false</code> if the infoflags indicate that the image is completely loaded; <code>true</code>
-   *         otherwise.
+   * otherwise.
    */
-  public synchronized boolean imageUpdate(final Image img,
-                                          final int infoflags,
-                                          final int x,
-                                          final int y,
-                                          final int width,
-                                          final int height)
-  {
-    if (img == null)
-    {
+  public synchronized boolean imageUpdate( final Image img,
+                                           final int infoflags,
+                                           final int x,
+                                           final int y,
+                                           final int width,
+                                           final int height ) {
+    if ( img == null ) {
       throw new NullPointerException();
     }
 
     lastUpdate = System.currentTimeMillis();
-    if ((infoflags & ImageObserver.ALLBITS) == ImageObserver.ALLBITS)
-    {
+    if ( ( infoflags & ImageObserver.ALLBITS ) == ImageObserver.ALLBITS ) {
       this.lock = false;
       this.error = false;
       notifyAll();
       return false;
-    }
-    else if ((infoflags & ImageObserver.FRAMEBITS) == ImageObserver.FRAMEBITS)
-    {
+    } else if ( ( infoflags & ImageObserver.FRAMEBITS ) == ImageObserver.FRAMEBITS ) {
       this.lock = false;
       this.error = false;
       notifyAll();
       return false;
-    }
-    else if ((infoflags & ImageObserver.ABORT) == ImageObserver.ABORT
-        || (infoflags & ImageObserver.ERROR) == ImageObserver.ERROR)
-    {
+    } else if ( ( infoflags & ImageObserver.ABORT ) == ImageObserver.ABORT
+      || ( infoflags & ImageObserver.ERROR ) == ImageObserver.ERROR ) {
       this.lock = false;
       this.error = true;
       notifyAll();
@@ -156,52 +144,40 @@ public class WaitingImageObserver implements ImageObserver
    * The workerthread. Simply draws the image to a BufferedImage's Graphics-Object and waits for the AWT to load the
    * image.
    */
-  public synchronized void waitImageLoaded()
-  {
+  public synchronized void waitImageLoaded() {
 
-    if (this.lock == false)
-    {
+    if ( this.lock == false ) {
       return;
     }
 
-    final BufferedImage img = new BufferedImage(100, 100, BufferedImage.TYPE_INT_RGB);
+    final BufferedImage img = new BufferedImage( 100, 100, BufferedImage.TYPE_INT_RGB );
     final Graphics g = img.getGraphics();
 
-    try
-    {
-      while (this.lock && error == false)
-      {
+    try {
+      while ( this.lock && error == false ) {
         lastUpdate = System.currentTimeMillis();
-        if (g.drawImage(this.image, 0, 0, img.getWidth(this), img.getHeight(this), this))
-        {
+        if ( g.drawImage( this.image, 0, 0, img.getWidth( this ), img.getHeight( this ), this ) ) {
           return;
         }
 
-        try
-        {
-          wait(500);
-        }
-        catch (InterruptedException e)
-        {
-          LOGGER.info("WaitingImageObserver.waitImageLoaded(): InterruptedException thrown", e);
+        try {
+          wait( 500 );
+        } catch ( InterruptedException e ) {
+          LOGGER.info( "WaitingImageObserver.waitImageLoaded(): InterruptedException thrown", e );
         }
 
-        if (lock == false)
-        {
+        if ( lock == false ) {
           return;
         }
-        
-        if (maxLoadTime > 0 && lastUpdate < (System.currentTimeMillis() - maxLoadTime))
-        {
+
+        if ( maxLoadTime > 0 && lastUpdate < ( System.currentTimeMillis() - maxLoadTime ) ) {
           error = true;
           lock = false;
-          LOGGER.info("WaitingImageObserver.waitImageLoaded(): Image loading reached timeout.");
+          LOGGER.info( "WaitingImageObserver.waitImageLoaded(): Image loading reached timeout." );
           return;
         }
       }
-    }
-    finally
-    {
+    } finally {
       g.dispose();
     }
   }
@@ -211,8 +187,7 @@ public class WaitingImageObserver implements ImageObserver
    *
    * @return true, if the loading is complete, false otherwise.
    */
-  public boolean isLoadingComplete()
-  {
+  public boolean isLoadingComplete() {
     return this.lock == false;
   }
 
@@ -221,8 +196,7 @@ public class WaitingImageObserver implements ImageObserver
    *
    * @return A boolean.
    */
-  public boolean isError()
-  {
+  public boolean isError() {
     return this.error;
   }
 }

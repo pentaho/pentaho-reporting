@@ -25,24 +25,19 @@ import org.pentaho.reporting.libraries.css.model.StyleKey;
  *
  * @author Thomas Morgner
  */
-public class WordSpacingLimitReadHandler extends SpacingLimitReadHandler
-{
-  public WordSpacingLimitReadHandler()
-  {
+public class WordSpacingLimitReadHandler extends SpacingLimitReadHandler {
+  public WordSpacingLimitReadHandler() {
   }
 
-  protected StyleKey getMinimumKey()
-  {
+  protected StyleKey getMinimumKey() {
     return TextStyleKeys.X_MIN_WORD_SPACING;
   }
 
-  protected StyleKey getMaximumKey()
-  {
+  protected StyleKey getMaximumKey() {
     return TextStyleKeys.X_MAX_WORD_SPACING;
   }
 
-  protected StyleKey getOptimumKey()
-  {
+  protected StyleKey getOptimumKey() {
     return TextStyleKeys.X_OPTIMUM_WORD_SPACING;
   }
 

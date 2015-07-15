@@ -26,44 +26,38 @@ import org.pentaho.reporting.libraries.formula.lvalues.TypeValuePair;
 import org.pentaho.reporting.libraries.formula.typing.Type;
 
 /**
- * This function uses an index to return a value from a list of values.
- * The first value index is 1, 2 for the second and so on.
+ * This function uses an index to return a value from a list of values. The first value index is 1, 2 for the second and
+ * so on.
  *
  * @author Cedric Pronzato
  */
-public class ChooseFunction implements Function
-{
+public class ChooseFunction implements Function {
   private static final long serialVersionUID = 5328221291584681439L;
 
-  public ChooseFunction()
-  {
+  public ChooseFunction() {
   }
 
-  public String getCanonicalName()
-  {
+  public String getCanonicalName() {
     return "CHOOSE";
   }
 
-  public TypeValuePair evaluate(final FormulaContext context,
-                                final ParameterCallback parameters)
-      throws EvaluationException
-  {
+  public TypeValuePair evaluate( final FormulaContext context,
+                                 final ParameterCallback parameters )
+    throws EvaluationException {
 
-    if(parameters.getParameterCount() <= 2)
-    {
-      throw EvaluationException.getInstance(LibFormulaErrorValue.ERROR_ARGUMENTS_VALUE);
+    if ( parameters.getParameterCount() <= 2 ) {
+      throw EvaluationException.getInstance( LibFormulaErrorValue.ERROR_ARGUMENTS_VALUE );
     }
 
-    final Type indexType = parameters.getType(0);
-    final Object indexValue = parameters.getValue(0);
+    final Type indexType = parameters.getType( 0 );
+    final Object indexValue = parameters.getValue( 0 );
 
-    final int index= context.getTypeRegistry().convertToNumber(indexType, indexValue).intValue();
-    if (index < 1 || index >= parameters.getParameterCount())
-    {
+    final int index = context.getTypeRegistry().convertToNumber( indexType, indexValue ).intValue();
+    if ( index < 1 || index >= parameters.getParameterCount() ) {
       // else
-      throw EvaluationException.getInstance(LibFormulaErrorValue.ERROR_INVALID_ARGUMENT_VALUE);
+      throw EvaluationException.getInstance( LibFormulaErrorValue.ERROR_INVALID_ARGUMENT_VALUE );
     }
 
-    return new TypeValuePair(parameters.getType(index), parameters.getValue(index));
+    return new TypeValuePair( parameters.getType( index ), parameters.getValue( index ) );
   }
 }

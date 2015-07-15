@@ -17,23 +17,20 @@
 
 package org.pentaho.reporting.libraries.pixie.wmf.records;
 
-import java.awt.Color;
-import java.awt.Graphics2D;
-
 import org.pentaho.reporting.libraries.pixie.wmf.MfLogRegion;
 import org.pentaho.reporting.libraries.pixie.wmf.MfRecord;
 import org.pentaho.reporting.libraries.pixie.wmf.MfType;
 import org.pentaho.reporting.libraries.pixie.wmf.WmfFile;
 
+import java.awt.*;
+
 /**
  * Inverts the colors in the specified region
  */
-public class MfCmdInvertRegion extends MfCmd
-{
+public class MfCmdInvertRegion extends MfCmd {
   private int region;
 
-  public MfCmdInvertRegion()
-  {
+  public MfCmdInvertRegion() {
   }
 
   /**
@@ -41,13 +38,12 @@ public class MfCmdInvertRegion extends MfCmd
    *
    * @param file the meta file.
    */
-  public void replay(final WmfFile file)
-  {
+  public void replay( final WmfFile file ) {
     // by filling with XOR?
     final Graphics2D g2 = (Graphics2D) file.getGraphics2D().create();
-    g2.setXORMode(Color.white);
-    final MfLogRegion reg = file.getRegionObject(getRegion());
-    g2.fill(reg.getBounds());
+    g2.setXORMode( Color.white );
+    final MfLogRegion reg = file.getRegionObject( getRegion() );
+    g2.fill( reg.getBounds() );
   }
 
   /**
@@ -55,8 +51,7 @@ public class MfCmdInvertRegion extends MfCmd
    *
    * @return a new instance of the command.
    */
-  public MfCmd getInstance()
-  {
+  public MfCmd getInstance() {
     return new MfCmdInvertRegion();
   }
 
@@ -64,17 +59,14 @@ public class MfCmdInvertRegion extends MfCmd
   private static final int POS_REGION = 0;
 
   /**
-   * Reads the command data from the given record and adjusts the internal parameters
-   * according to the data parsed.
+   * Reads the command data from the given record and adjusts the internal parameters according to the data parsed.
    * <p/>
-   * After the raw record was read from the datasource, the record is parsed by the
-   * concrete implementation.
+   * After the raw record was read from the datasource, the record is parsed by the concrete implementation.
    *
    * @param record the raw data that makes up the record.
    */
-  public void setRecord(final MfRecord record)
-  {
-    region = record.getParam(POS_REGION);
+  public void setRecord( final MfRecord record ) {
+    region = record.getParam( POS_REGION );
   }
 
   /**
@@ -82,55 +74,48 @@ public class MfCmdInvertRegion extends MfCmd
    *
    * @return the created record.
    */
-  public MfRecord getRecord()
-  {
-    final MfRecord record = new MfRecord(RECORD_SIZE);
-    record.setParam(POS_REGION, getRegion());
+  public MfRecord getRecord() {
+    final MfRecord record = new MfRecord( RECORD_SIZE );
+    record.setParam( POS_REGION, getRegion() );
     return record;
   }
 
-  public void setRegion(final int region)
-  {
+  public void setRegion( final int region ) {
     this.region = region;
   }
 
-  public int getRegion()
-  {
+  public int getRegion() {
     return region;
   }
 
-  public String toString()
-  {
+  public String toString() {
     final StringBuffer b = new StringBuffer();
-    b.append("[INVERT_REGION] region=");
-    b.append(getRegion());
+    b.append( "[INVERT_REGION] region=" );
+    b.append( getRegion() );
     return b.toString();
   }
 
   /**
-   * Reads the function identifier. Every record type is identified by a function number
-   * corresponding to one of the Windows GDI functions used.
+   * Reads the function identifier. Every record type is identified by a function number corresponding to one of the
+   * Windows GDI functions used.
    *
    * @return the function identifier.
    */
-  public int getFunction()
-  {
+  public int getFunction() {
     return MfType.INVERT_REGION;
   }
 
   /**
-   * A callback function to inform the object, that the x scale has changed and the
-   * internal coordinate values have to be adjusted. Not used.
+   * A callback function to inform the object, that the x scale has changed and the internal coordinate values have to
+   * be adjusted. Not used.
    */
-  protected void scaleXChanged()
-  {
+  protected void scaleXChanged() {
   }
 
   /**
-   * A callback function to inform the object, that the y scale has changed and the
-   * internal coordinate values have to be adjusted. Not used.
+   * A callback function to inform the object, that the y scale has changed and the internal coordinate values have to
+   * be adjusted. Not used.
    */
-  protected void scaleYChanged()
-  {
+  protected void scaleYChanged() {
   }
 }

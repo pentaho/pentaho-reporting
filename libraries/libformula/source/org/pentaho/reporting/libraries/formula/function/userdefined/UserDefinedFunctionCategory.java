@@ -25,12 +25,10 @@ import org.pentaho.reporting.libraries.formula.function.FunctionCategory;
  *
  * @author Thomas Morgner
  */
-public class UserDefinedFunctionCategory extends AbstractFunctionCategory
-{
+public class UserDefinedFunctionCategory extends AbstractFunctionCategory {
   public static final FunctionCategory CATEGORY = new UserDefinedFunctionCategory();
 
-  private UserDefinedFunctionCategory()
-  {
-    super("org.pentaho.reporting.libraries.formula.function.userdefined.category");
+  private UserDefinedFunctionCategory() {
+    super( "org.pentaho.reporting.libraries.formula.function.userdefined.category" );
   }
 }

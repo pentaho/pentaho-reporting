@@ -24,16 +24,14 @@ import org.pentaho.reporting.libraries.css.values.CSSConstant;
  *
  * @author Thomas Morgner
  */
-public class TextUnderlinePosition
-{
+public class TextUnderlinePosition {
   public static final CSSConstant BEFORE_EDGE =
-      new CSSConstant("before-edge");
+    new CSSConstant( "before-edge" );
   public static final CSSConstant AFTER_EDGE =
-      new CSSConstant("after-edge");
+    new CSSConstant( "after-edge" );
   public static final CSSConstant ALPHABETIC =
-      new CSSConstant("alphabetic");
+    new CSSConstant( "alphabetic" );
 
-  private TextUnderlinePosition()
-  {
+  private TextUnderlinePosition() {
   }
 }

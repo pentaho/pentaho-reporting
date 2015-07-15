@@ -56,8 +56,7 @@ import java.util.NoSuchElementException;
  *
  * @author abupon
  */
-public class CSVTokenizer implements Enumeration
-{
+public class CSVTokenizer implements Enumeration {
   /**
    * The complete record that should be separated into elements.
    */
@@ -115,11 +114,10 @@ public class CSVTokenizer implements Enumeration
    * @param theSeparator the separator (CSVTokenizer.SEPARATOR_COMMA, CSVTokenizer.TAB, CSVTokenizer.SPACE, etc.).
    * @param theQuate     the quate (CSVTokenizer.SINGLE_QUATE, CSVTokenizer.DOUBLE_QUATE, etc.).
    */
-  public CSVTokenizer(final String aString,
-                      final String theSeparator,
-                      final String theQuate)
-  {
-    this(aString, theSeparator, theQuate, true);
+  public CSVTokenizer( final String aString,
+                       final String theSeparator,
+                       final String theQuate ) {
+    this( aString, theSeparator, theQuate, true );
   }
 
   /**
@@ -134,25 +132,19 @@ public class CSVTokenizer implements Enumeration
    * @param theSeparator the separator (CSVTokenizer.SEPARATOR_COMMA, CSVTokenizer.TAB, CSVTokenizer.SPACE, etc.).
    * @param theQuate     the quate (CSVTokenizer.SINGLE_QUATE, CSVTokenizer.DOUBLE_QUATE, etc.).
    */
-  public CSVTokenizer(final String aString,
-                      final String theSeparator,
-                      final String theQuate,
-                      final boolean trim)
-  {
-    if (aString == null)
-    {
-      throw new NullPointerException("The given string is null");
+  public CSVTokenizer( final String aString,
+                       final String theSeparator,
+                       final String theQuate,
+                       final boolean trim ) {
+    if ( aString == null ) {
+      throw new NullPointerException( "The given string is null" );
     }
-    if (theSeparator == null)
-    {
-      throw new NullPointerException("The given separator is null");
+    if ( theSeparator == null ) {
+      throw new NullPointerException( "The given separator is null" );
     }
-    if (trim)
-    {
+    if ( trim ) {
       this.record = aString.trim();
-    }
-    else
-    {
+    } else {
       this.record = aString;
     }
     this.separator = theSeparator;
@@ -168,9 +160,8 @@ public class CSVTokenizer implements Enumeration
    * @param aString      a string to be parsed.
    * @param theSeparator the separator (CSVTokenizer.SEPARATOR_COMMA, CSVTokenizer.TAB, CSVTokenizer.SPACE, etc.).
    */
-  public CSVTokenizer(final String aString, final String theSeparator)
-  {
-    this(aString, theSeparator, CSVTokenizer.DOUBLE_QUATE);
+  public CSVTokenizer( final String aString, final String theSeparator ) {
+    this( aString, theSeparator, CSVTokenizer.DOUBLE_QUATE );
   }
 
   /**
@@ -179,9 +170,8 @@ public class CSVTokenizer implements Enumeration
    *
    * @param aString a string to be parsed.
    */
-  public CSVTokenizer(final String aString)
-  {
-    this(aString, CSVTokenizer.SEPARATOR_COMMA, CSVTokenizer.DOUBLE_QUATE, true);
+  public CSVTokenizer( final String aString ) {
+    this( aString, CSVTokenizer.SEPARATOR_COMMA, CSVTokenizer.DOUBLE_QUATE, true );
   }
 
   /**
@@ -190,9 +180,8 @@ public class CSVTokenizer implements Enumeration
    *
    * @param aString a string to be parsed.
    */
-  public CSVTokenizer(final String aString, final boolean trim)
-  {
-    this(aString, CSVTokenizer.SEPARATOR_COMMA, CSVTokenizer.DOUBLE_QUATE, trim);
+  public CSVTokenizer( final String aString, final boolean trim ) {
+    this( aString, CSVTokenizer.SEPARATOR_COMMA, CSVTokenizer.DOUBLE_QUATE, trim );
   }
 
   /**
@@ -200,11 +189,10 @@ public class CSVTokenizer implements Enumeration
    * subsequent call to <tt>nextToken</tt> with no argument will successfully return a token.
    *
    * @return <code>true</code> if and only if there is at least one token in the string after the current position;
-   *         <code>false</code> otherwise.
+   * <code>false</code> otherwise.
    */
-  public boolean hasMoreTokens()
-  {
-    return (this.currentIndex < this.record.length());
+  public boolean hasMoreTokens() {
+    return ( this.currentIndex < this.record.length() );
   }
 
   /**
@@ -215,64 +203,50 @@ public class CSVTokenizer implements Enumeration
    * @throws IllegalArgumentException if given parameter string format was wrong
    */
   public String nextToken()
-      throws NoSuchElementException, IllegalArgumentException
-  {
+    throws NoSuchElementException, IllegalArgumentException {
 
-    if (!this.hasMoreTokens())
-    {
+    if ( !this.hasMoreTokens() ) {
       throw new NoSuchElementException();
     }
 
-    if (beforeStart == false)
-    {
+    if ( beforeStart == false ) {
       currentIndex += this.separator.length();
-    }
-    else
-    {
+    } else {
       beforeStart = false;
     }
 
-    if (this.quate != null &&
-        this.record.startsWith(this.quate, this.currentIndex))
-    {
+    if ( this.quate != null &&
+      this.record.startsWith( this.quate, this.currentIndex ) ) {
       final int quateLength = this.quate.length();
       int startOffset = this.currentIndex + quateLength;
       final StringBuilder b = new StringBuilder();
-      while (true)
-      {
-        final int end = record.indexOf(this.quate, startOffset);
-        if (end < 0)
-        {
-          throw new IllegalArgumentException("Illegal format");
+      while ( true ) {
+        final int end = record.indexOf( this.quate, startOffset );
+        if ( end < 0 ) {
+          throw new IllegalArgumentException( "Illegal format" );
         }
 
-        if (record.startsWith(this.quate, end + 1) == false)
-        {
-          b.append(record.substring(startOffset, end));
+        if ( record.startsWith( this.quate, end + 1 ) == false ) {
+          b.append( record.substring( startOffset, end ) );
           currentIndex = end + 1;
           return b.toString();
-        }
-        else
-        {
-          b.append(record.substring(startOffset, end + 1));
+        } else {
+          b.append( record.substring( startOffset, end + 1 ) );
         }
 
         startOffset = end + quateLength * 2;
       }
     }
 
-    final int end = this.record.indexOf(this.separator, this.currentIndex);
-    if (end >= 0)
-    {
+    final int end = this.record.indexOf( this.separator, this.currentIndex );
+    if ( end >= 0 ) {
       final int start = this.currentIndex;
-      final String token = this.record.substring(start, end);
+      final String token = this.record.substring( start, end );
       this.currentIndex = end;
       return token;
-    }
-    else
-    {
+    } else {
       final int start = this.currentIndex;
-      final String token = this.record.substring(start);
+      final String token = this.record.substring( start );
       this.currentIndex = this.record.length();
       return token;
     }
@@ -288,8 +262,7 @@ public class CSVTokenizer implements Enumeration
    * @return the next token, after switching to the new delimiter set.
    * @throws NoSuchElementException if there are no more tokens in this tokenizer's string.
    */
-  public String nextToken(final String theSeparator)
-  {
+  public String nextToken( final String theSeparator ) {
     separator = theSeparator;
     return nextToken();
   }
@@ -302,8 +275,7 @@ public class CSVTokenizer implements Enumeration
    * @see Enumeration
    * @see CSVTokenizer#hasMoreTokens()
    */
-  public boolean hasMoreElements()
-  {
+  public boolean hasMoreElements() {
     return hasMoreTokens();
   }
 
@@ -317,8 +289,7 @@ public class CSVTokenizer implements Enumeration
    * @see Enumeration
    * @see CSVTokenizer#nextToken()
    */
-  public Object nextElement()
-  {
+  public Object nextElement() {
     return nextToken();
   }
 
@@ -329,14 +300,12 @@ public class CSVTokenizer implements Enumeration
    * @return the number of tokens remaining in the string using the current delimiter set.
    * @see CSVTokenizer#nextToken()
    */
-  public int countTokens()
-  {
+  public int countTokens() {
     int count = 0;
 
     final int preserve = this.currentIndex;
     final boolean preserveStart = this.beforeStart;
-    while (this.hasMoreTokens())
-    {
+    while ( this.hasMoreTokens() ) {
       this.nextToken();
       count++;
     }
@@ -351,8 +320,7 @@ public class CSVTokenizer implements Enumeration
    *
    * @return char
    */
-  public String getQuate()
-  {
+  public String getQuate() {
     return this.quate;
   }
 
@@ -361,17 +329,14 @@ public class CSVTokenizer implements Enumeration
    *
    * @param quate The quate to set
    */
-  public void setQuate(final String quate)
-  {
+  public void setQuate( final String quate ) {
     this.quate = quate;
   }
 
-  public String[] toArray()
-  {
-    final ArrayList<String> retval = new ArrayList<String>(20);
-    while (hasMoreElements())
-    {
-      retval.add(nextToken());
+  public String[] toArray() {
+    final ArrayList<String> retval = new ArrayList<String>( 20 );
+    while ( hasMoreElements() ) {
+      retval.add( nextToken() );
     }
     return (String[]) retval.toArray();
   }

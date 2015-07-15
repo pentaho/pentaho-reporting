@@ -17,39 +17,34 @@
 
 package org.pentaho.reporting.libraries.docbundle.metadata.parser;
 
+import org.pentaho.reporting.libraries.docbundle.metadata.DefaultBundleManifest;
 import org.pentaho.reporting.libraries.xmlns.parser.AbstractXmlReadHandler;
 import org.pentaho.reporting.libraries.xmlns.parser.XmlReadHandler;
-import org.pentaho.reporting.libraries.docbundle.metadata.DefaultBundleManifest;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 
 /**
  * @author Thomas Morgner
  */
-public class BundleManifestReadHandler extends AbstractXmlReadHandler
-{
+public class BundleManifestReadHandler extends AbstractXmlReadHandler {
   private DefaultBundleManifest manifest;
 
-  public BundleManifestReadHandler()
-  {
+  public BundleManifestReadHandler() {
     manifest = new DefaultBundleManifest();
   }
 
-  protected XmlReadHandler getHandlerForChild(final String uri, final String tagName, final Attributes atts) throws SAXException
-  {
-    if (BundleManifestXmlFactoryModule.NAMESPACE.equals(uri) == false)
-    {
+  protected XmlReadHandler getHandlerForChild( final String uri, final String tagName, final Attributes atts )
+    throws SAXException {
+    if ( BundleManifestXmlFactoryModule.NAMESPACE.equals( uri ) == false ) {
       return null;
     }
-    if ("file-entry".equals(tagName) == false)
-    {
+    if ( "file-entry".equals( tagName ) == false ) {
       return null;
     }
-    return new BundleManifestEntryReadHandler(manifest);
+    return new BundleManifestEntryReadHandler( manifest );
   }
 
-  public Object getObject() throws SAXException
-  {
+  public Object getObject() throws SAXException {
     return manifest;
   }
 }

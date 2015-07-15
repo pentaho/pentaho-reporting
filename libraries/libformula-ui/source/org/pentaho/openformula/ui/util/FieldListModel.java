@@ -17,39 +17,32 @@
 
 package org.pentaho.openformula.ui.util;
 
-import javax.swing.AbstractListModel;
-
 import org.pentaho.openformula.ui.FieldDefinition;
 
-public class FieldListModel extends AbstractListModel
-{
-  private FieldDefinition[] fields;
-  private static final FieldDefinition[] EMPTY = new FieldDefinition[0];
+import javax.swing.*;
 
-  public FieldListModel()
-  {
+public class FieldListModel extends AbstractListModel {
+  private FieldDefinition[] fields;
+  private static final FieldDefinition[] EMPTY = new FieldDefinition[ 0 ];
+
+  public FieldListModel() {
     this.fields = EMPTY;
   }
 
-  public FieldListModel(final FieldDefinition[] fields)
-  {
+  public FieldListModel( final FieldDefinition[] fields ) {
     this.fields = fields.clone();
   }
 
-  public FieldDefinition getField(final int index)
-  {
-    return fields[index];
+  public FieldDefinition getField( final int index ) {
+    return fields[ index ];
   }
 
-  public FieldDefinition getElementAt(final int index)
-  {
-    return fields[index];
+  public FieldDefinition getElementAt( final int index ) {
+    return fields[ index ];
   }
 
-  public int getSize()
-  {
-    if (fields == null)
-    {
+  public int getSize() {
+    if ( fields == null ) {
       return 0;
     }
     return fields.length;

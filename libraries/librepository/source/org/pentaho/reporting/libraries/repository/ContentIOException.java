@@ -22,15 +22,13 @@ package org.pentaho.reporting.libraries.repository;
  *
  * @author Thomas Morgner
  */
-public class ContentIOException extends Exception
-{
+public class ContentIOException extends Exception {
   private static final long serialVersionUID = 2947843470210463760L;
 
   /**
    * Creates a ContentIOException with no message and no parent.
    */
-  public ContentIOException()
-  {
+  public ContentIOException() {
   }
 
   /**
@@ -39,9 +37,8 @@ public class ContentIOException extends Exception
    * @param message the exception message.
    * @param ex      the parent exception.
    */
-  public ContentIOException(final String message, final Exception ex)
-  {
-    super(message, ex);
+  public ContentIOException( final String message, final Exception ex ) {
+    super( message, ex );
   }
 
   /**
@@ -49,8 +46,7 @@ public class ContentIOException extends Exception
    *
    * @param message the exception message.
    */
-  public ContentIOException(final String message)
-  {
-    super(message);
+  public ContentIOException( final String message ) {
+    super( message );
   }
 }

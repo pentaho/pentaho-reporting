@@ -19,10 +19,8 @@ package org.pentaho.reporting.libraries.docbundle.metadata.parser;
 
 import org.pentaho.reporting.libraries.docbundle.BundleUtilities;
 
-public class DateMetaDataEntryReadHandler extends TextMetaDataEntryReadHandler
-{
-  public DateMetaDataEntryReadHandler()
-  {
+public class DateMetaDataEntryReadHandler extends TextMetaDataEntryReadHandler {
+  public DateMetaDataEntryReadHandler() {
   }
 
   /**
@@ -30,8 +28,7 @@ public class DateMetaDataEntryReadHandler extends TextMetaDataEntryReadHandler
    *
    * @return the object.
    */
-  public Object getObject()
-  {
-    return BundleUtilities.parseDate(getResult());
+  public Object getObject() {
+    return BundleUtilities.parseDate( getResult() );
   }
 }

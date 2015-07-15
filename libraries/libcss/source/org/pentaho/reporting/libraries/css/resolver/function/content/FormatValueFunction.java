@@ -17,22 +17,6 @@
 
 package org.pentaho.reporting.libraries.css.resolver.function.content;
 
-import java.text.Format;
-import java.util.Date;
-
-import org.pentaho.reporting.libraries.css.resolver.FunctionEvaluationException;
-import org.pentaho.reporting.libraries.css.resolver.function.ContentFunction;
-import org.pentaho.reporting.libraries.css.resolver.function.FunctionUtilities;
-import org.pentaho.reporting.libraries.css.resolver.tokens.ContentToken;
-import org.pentaho.reporting.libraries.css.resolver.tokens.statics.FormattedContentToken;
-import org.pentaho.reporting.libraries.css.resolver.tokens.statics.StaticTextToken;
-import org.pentaho.reporting.libraries.css.values.CSSValue;
-import org.pentaho.reporting.libraries.css.values.CSSFunctionValue;
-import org.pentaho.reporting.libraries.css.values.CSSStringValue;
-import org.pentaho.reporting.libraries.css.values.CSSNumericValue;
-import org.pentaho.reporting.libraries.css.values.CSSRawValue;
-import org.pentaho.reporting.libraries.css.dom.LayoutElement;
-import org.pentaho.reporting.libraries.css.dom.DocumentContext;
 //
 ///**
 // * Creation-Date: 16.04.2006, 14:14:42

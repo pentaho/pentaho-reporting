@@ -25,14 +25,12 @@ import org.pentaho.reporting.libraries.css.parser.stylehandler.OneOfConstantsRea
  *
  * @author Thomas Morgner
  */
-public class HangingPunctuationReadHandler extends OneOfConstantsReadHandler
-{
-  public HangingPunctuationReadHandler()
-  {
-    super(false);
-    addValue(HangingPunctuation.BOTH);
-    addValue(HangingPunctuation.END);
-    addValue(HangingPunctuation.NONE);
-    addValue(HangingPunctuation.START);
+public class HangingPunctuationReadHandler extends OneOfConstantsReadHandler {
+  public HangingPunctuationReadHandler() {
+    super( false );
+    addValue( HangingPunctuation.BOTH );
+    addValue( HangingPunctuation.END );
+    addValue( HangingPunctuation.NONE );
+    addValue( HangingPunctuation.START );
   }
 }

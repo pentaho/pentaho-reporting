@@ -17,17 +17,17 @@
 
 package org.pentaho.reporting.libraries.pixie.wmf.records;
 
-import java.awt.Color;
-
 import org.pentaho.reporting.libraries.pixie.wmf.GDIColor;
 import org.pentaho.reporting.libraries.pixie.wmf.MfLogPen;
 import org.pentaho.reporting.libraries.pixie.wmf.MfRecord;
 import org.pentaho.reporting.libraries.pixie.wmf.MfType;
 import org.pentaho.reporting.libraries.pixie.wmf.WmfFile;
 
+import java.awt.*;
+
 /**
- * The CreatePenIndirect function creates a logical cosmetic pen that has the style,
- * width, and color specified in a structure.
+ * The CreatePenIndirect function creates a logical cosmetic pen that has the style, width, and color specified in a
+ * structure.
  * <p/>
  * <pre>
  * typedef struct tagLOGPEN {
@@ -37,8 +37,7 @@ import org.pentaho.reporting.libraries.pixie.wmf.WmfFile;
  * } LOGPEN, *PLOGPEN;
  * </pre>
  */
-public class MfCmdCreatePen extends MfCmd
-{
+public class MfCmdCreatePen extends MfCmd {
   private static final int RECORD_SIZE = 4;
   private static final int POS_STYLE = 0;
   private static final int POS_WIDTH = 1;
@@ -49,8 +48,7 @@ public class MfCmdCreatePen extends MfCmd
   private int width;
   private int scaled_width;
 
-  public MfCmdCreatePen()
-  {
+  public MfCmdCreatePen() {
   }
 
   /**
@@ -58,15 +56,14 @@ public class MfCmdCreatePen extends MfCmd
    *
    * @param file the meta file.
    */
-  public void replay(final WmfFile file)
-  {
+  public void replay( final WmfFile file ) {
     final MfLogPen lpen = new MfLogPen();
-    lpen.setStyle(getStyle());
-    lpen.setColor(getColor());
-    lpen.setWidth(getScaledWidth());
+    lpen.setStyle( getStyle() );
+    lpen.setColor( getColor() );
+    lpen.setWidth( getScaledWidth() );
 
-    file.getCurrentState().setLogPen(lpen);
-    file.storeObject(lpen);
+    file.getCurrentState().setLogPen( lpen );
+    file.storeObject( lpen );
   }
 
   /**
@@ -74,19 +71,17 @@ public class MfCmdCreatePen extends MfCmd
    *
    * @return a new instance of the command.
    */
-  public MfCmd getInstance()
-  {
+  public MfCmd getInstance() {
     return new MfCmdCreatePen();
   }
 
   /**
-   * Reads the function identifier. Every record type is identified by a function number
-   * corresponding to one of the Windows GDI functions used.
+   * Reads the function identifier. Every record type is identified by a function number corresponding to one of the
+   * Windows GDI functions used.
    *
    * @return the function identifier.
    */
-  public int getFunction()
-  {
+  public int getFunction() {
     return MfType.CREATE_PEN_INDIRECT;
   }
 
@@ -95,99 +90,85 @@ public class MfCmdCreatePen extends MfCmd
    *
    * @return the created record.
    */
-  public MfRecord getRecord()
-  {
-    final MfRecord record = new MfRecord(RECORD_SIZE);
-    record.setParam(POS_STYLE, getStyle());
-    record.setParam(POS_WIDTH, getWidth());
-    record.setLongParam(POS_COLOR, GDIColor.translateColor(getColor()));
+  public MfRecord getRecord() {
+    final MfRecord record = new MfRecord( RECORD_SIZE );
+    record.setParam( POS_STYLE, getStyle() );
+    record.setParam( POS_WIDTH, getWidth() );
+    record.setLongParam( POS_COLOR, GDIColor.translateColor( getColor() ) );
     return record;
   }
 
   /**
-   * Reads the command data from the given record and adjusts the internal parameters
-   * according to the data parsed.
+   * Reads the command data from the given record and adjusts the internal parameters according to the data parsed.
    * <p/>
-   * After the raw record was read from the datasource, the record is parsed by the
-   * concrete implementation.
+   * After the raw record was read from the datasource, the record is parsed by the concrete implementation.
    *
    * @param record the raw data that makes up the record.
    */
-  public void setRecord(final MfRecord record)
-  {
-    final int style = record.getParam(POS_STYLE);
-    final int width = record.getParam(POS_WIDTH);
-    final int color = record.getLongParam(POS_COLOR);
+  public void setRecord( final MfRecord record ) {
+    final int style = record.getParam( POS_STYLE );
+    final int width = record.getParam( POS_WIDTH );
+    final int color = record.getLongParam( POS_COLOR );
 
-    setStyle(style);
-    setWidth(width);
-    setColor(new GDIColor(color));
+    setStyle( style );
+    setWidth( width );
+    setColor( new GDIColor( color ) );
   }
 
-  public String toString()
-  {
+  public String toString() {
     final StringBuffer b = new StringBuffer();
-    b.append("[CREATE_PEN] style=");
-    b.append(getStyle());
-    b.append(" width=");
-    b.append(getWidth());
-    b.append(" color=");
-    b.append(getColor());
+    b.append( "[CREATE_PEN] style=" );
+    b.append( getStyle() );
+    b.append( " width=" );
+    b.append( getWidth() );
+    b.append( " color=" );
+    b.append( getColor() );
     return b.toString();
   }
 
 
-  public int getStyle()
-  {
+  public int getStyle() {
     return style;
   }
 
-  public void setStyle(final int style)
-  {
+  public void setStyle( final int style ) {
     this.style = style;
   }
 
-  public int getScaledWidth()
-  {
+  public int getScaledWidth() {
     return scaled_width;
   }
 
-  public int getWidth()
-  {
+  public int getWidth() {
     return width;
   }
 
-  public void setWidth(final int width)
-  {
+  public void setWidth( final int width ) {
     this.width = width;
     scaleXChanged();
   }
 
-  public Color getColor()
-  {
+  public Color getColor() {
     return color;
   }
 
-  public void setColor(final Color c)
-  {
+  public void setColor( final Color c ) {
     this.color = c;
   }
 
   /**
-   * A callback function to inform the object, that the y scale has changed and the
-   * internal coordinate values have to be adjusted.
+   * A callback function to inform the object, that the y scale has changed and the internal coordinate values have to
+   * be adjusted.
    */
-  protected void scaleYChanged()
-  {
+  protected void scaleYChanged() {
   }
 
   /**
-   * A callback function to inform the object, that the x scale has changed and the
-   * internal coordinate values have to be adjusted.
+   * A callback function to inform the object, that the x scale has changed and the internal coordinate values have to
+   * be adjusted.
    */
-  protected void scaleXChanged()
-  {
-    scaled_width = getScaledX(width);
+  protected void scaleXChanged() {
+    scaled_width = getScaledX( width );
   }
 
 }

@@ -34,40 +34,40 @@ import org.w3c.css.sac.CombinatorCondition;
 import org.w3c.css.sac.Condition;
 
 /**
+ * @author Philippe Le Hegaret
  * @version $Revision$
- * @author  Philippe Le Hegaret
  */
 public class AndConditionImpl implements CombinatorCondition {
 
-    Condition firstCondition;
-    Condition secondCondition;
+  Condition firstCondition;
+  Condition secondCondition;
 
-    /**
-     * Creates a new AndConditionImpl
-     */
-    public AndConditionImpl(Condition firstCondition, Condition secondCondition) {
-        this.firstCondition = firstCondition;
-	this.secondCondition = secondCondition;
-    }
-    
-    /**
-     * An integer indicating the type of <code>Condition</code>.
-     */    
-    public short getConditionType() {
-	return Condition.SAC_AND_CONDITION;
-    }
+  /**
+   * Creates a new AndConditionImpl
+   */
+  public AndConditionImpl( Condition firstCondition, Condition secondCondition ) {
+    this.firstCondition = firstCondition;
+    this.secondCondition = secondCondition;
+  }
 
-    /**
-     * Returns the first condition.
-     */    
-    public Condition getFirstCondition() {
-	return firstCondition;
-    }
+  /**
+   * An integer indicating the type of <code>Condition</code>.
+   */
+  public short getConditionType() {
+    return Condition.SAC_AND_CONDITION;
+  }
 
-    /**
-     * Returns the second condition.
-     */    
-    public Condition getSecondCondition() {
-	return secondCondition;
-    }
+  /**
+   * Returns the first condition.
+   */
+  public Condition getFirstCondition() {
+    return firstCondition;
+  }
+
+  /**
+   * Returns the second condition.
+   */
+  public Condition getSecondCondition() {
+    return secondCondition;
+  }
 }

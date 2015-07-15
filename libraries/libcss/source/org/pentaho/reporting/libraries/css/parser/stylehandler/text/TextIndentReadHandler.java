@@ -32,42 +32,31 @@ import org.w3c.css.sac.LexicalUnit;
  *
  * @author Thomas Morgner
  */
-public class TextIndentReadHandler implements CSSValueReadHandler
-{
-  public TextIndentReadHandler()
-  {
+public class TextIndentReadHandler implements CSSValueReadHandler {
+  public TextIndentReadHandler() {
   }
 
-  public CSSValue createValue(StyleKey name, LexicalUnit value)
-  {
+  public CSSValue createValue( StyleKey name, LexicalUnit value ) {
 
     CSSValue cssvalue = null;
-    if (value.getLexicalUnitType() == LexicalUnit.SAC_PERCENTAGE)
-    {
-      cssvalue = CSSNumericValue.createValue(CSSNumericType.PERCENTAGE, value.getFloatValue());
-    }
-    else
-    {
-      cssvalue = CSSValueFactory.createLengthValue(value);
+    if ( value.getLexicalUnitType() == LexicalUnit.SAC_PERCENTAGE ) {
+      cssvalue = CSSNumericValue.createValue( CSSNumericType.PERCENTAGE, value.getFloatValue() );
+    } else {
+      cssvalue = CSSValueFactory.createLengthValue( value );
     }
 
     value = value.getNextLexicalUnit();
-    if (value != null)
-    {
-      if (value.getLexicalUnitType() != LexicalUnit.SAC_IDENT)
-      {
+    if ( value != null ) {
+      if ( value.getLexicalUnitType() != LexicalUnit.SAC_IDENT ) {
         return null;
       }
-      if (value.getStringValue().equalsIgnoreCase("hanging"))
-      {
-        return new CSSValueList(new CSSValue[]{cssvalue, new CSSConstant("hanging")});
-      }
-      else
-      {
+      if ( value.getStringValue().equalsIgnoreCase( "hanging" ) ) {
+        return new CSSValueList( new CSSValue[] { cssvalue, new CSSConstant( "hanging" ) } );
+      } else {
         return null;
       }
     }
 
-    return new CSSValueList(new CSSValue[]{cssvalue});
+    return new CSSValueList( new CSSValue[] { cssvalue } );
   }
 }

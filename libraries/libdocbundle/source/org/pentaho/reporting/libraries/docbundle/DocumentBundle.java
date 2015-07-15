@@ -17,28 +17,27 @@
 
 package org.pentaho.reporting.libraries.docbundle;
 
-import java.io.IOException;
-import java.io.InputStream;
-
 import org.pentaho.reporting.libraries.resourceloader.ResourceKey;
 import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
+
+import java.io.IOException;
+import java.io.InputStream;
 
 /**
  * Creation-Date: 16.12.2007, 15:10:34
  *
  * @author Thomas Morgner
  */
-public interface DocumentBundle
-{
+public interface DocumentBundle {
   public DocumentMetaData getMetaData();
 
-  public boolean isEntryExists(final String name);
+  public boolean isEntryExists( final String name );
 
-  public boolean isEntryReadable(final String name);
+  public boolean isEntryReadable( final String name );
 
-  public InputStream getEntryAsStream(final String name) throws IOException;
+  public InputStream getEntryAsStream( final String name ) throws IOException;
 
-  public String getEntryMimeType(final String name);
+  public String getEntryMimeType( final String name );
 
   public ResourceKey getBundleKey();
 

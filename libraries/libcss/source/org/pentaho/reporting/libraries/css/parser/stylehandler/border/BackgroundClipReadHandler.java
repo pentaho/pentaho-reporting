@@ -25,12 +25,10 @@ import org.pentaho.reporting.libraries.css.parser.stylehandler.ListOfConstantsRe
  *
  * @author Thomas Morgner
  */
-public class BackgroundClipReadHandler extends ListOfConstantsReadHandler
-{
-  public BackgroundClipReadHandler()
-  {
-    super(false);
-    addValue(BackgroundClip.BORDER);
-    addValue(BackgroundClip.PADDING);
+public class BackgroundClipReadHandler extends ListOfConstantsReadHandler {
+  public BackgroundClipReadHandler() {
+    super( false );
+    addValue( BackgroundClip.BORDER );
+    addValue( BackgroundClip.PADDING );
   }
 }

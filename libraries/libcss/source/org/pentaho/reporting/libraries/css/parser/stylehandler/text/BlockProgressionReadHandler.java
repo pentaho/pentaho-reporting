@@ -25,13 +25,11 @@ import org.pentaho.reporting.libraries.css.parser.stylehandler.OneOfConstantsRea
  *
  * @author Thomas Morgner
  */
-public class BlockProgressionReadHandler extends OneOfConstantsReadHandler
-{
-  public BlockProgressionReadHandler()
-  {
-    super(false);
-    addValue(BlockProgression.LR);
-    addValue(BlockProgression.RL);
-    addValue(BlockProgression.TB);
+public class BlockProgressionReadHandler extends OneOfConstantsReadHandler {
+  public BlockProgressionReadHandler() {
+    super( false );
+    addValue( BlockProgression.LR );
+    addValue( BlockProgression.RL );
+    addValue( BlockProgression.TB );
   }
 }

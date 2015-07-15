@@ -22,20 +22,16 @@ package org.pentaho.reporting.libraries.formula.function.math;
  *
  * @author Cedric Pronzato
  */
-public class MaxAFunction extends MaxFunction
-{
+public class MaxAFunction extends MaxFunction {
 
-  public MaxAFunction()
-  {
+  public MaxAFunction() {
   }
 
-  protected boolean isStrictSequenceNeeded()
-  {
+  protected boolean isStrictSequenceNeeded() {
     return false;
   }
 
-  public String getCanonicalName()
-  {
+  public String getCanonicalName() {
     return "MAXA";
   }
 

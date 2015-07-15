@@ -18,23 +18,19 @@
 
 package org.pentaho.reporting.libraries.designtime.swing.colorchooser;
 
-import java.awt.Color;
-
 import org.pentaho.reporting.libraries.designtime.swing.ColorUtility;
 
-public class ExcelColorSchema implements ColorSchema
-{
-  public ExcelColorSchema()
-  {
+import java.awt.*;
+
+public class ExcelColorSchema implements ColorSchema {
+  public ExcelColorSchema() {
   }
 
-  public Color[] getColors()
-  {
+  public Color[] getColors() {
     return ColorUtility.getPredefinedExcelColors();
   }
 
-  public String getName()
-  {
-    return ColorChooserMessages.getInstance().getString("ColorSchema.Excel");
+  public String getName() {
+    return ColorChooserMessages.getInstance().getString( "ColorSchema.Excel" );
   }
 }

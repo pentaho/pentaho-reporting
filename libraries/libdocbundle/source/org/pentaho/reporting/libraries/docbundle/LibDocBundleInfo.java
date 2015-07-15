@@ -17,19 +17,20 @@
 
 package org.pentaho.reporting.libraries.docbundle;
 
+import org.pentaho.reporting.libraries.base.versioning.ProjectInformation;
 import org.pentaho.reporting.libraries.repository.LibRepositoryInfo;
 import org.pentaho.reporting.libraries.resourceloader.LibLoaderInfo;
 import org.pentaho.reporting.libraries.xmlns.LibXmlInfo;
-import org.pentaho.reporting.libraries.base.versioning.ProjectInformation;
 
 /**
  * Details about the LibDocBundle project.
  *
  * @author Thomas Morgner
  */
-public final class LibDocBundleInfo extends ProjectInformation
-{
-  /** A singleton instance of the Info class. */
+public final class LibDocBundleInfo extends ProjectInformation {
+  /**
+   * A singleton instance of the Info class.
+   */
   private static LibDocBundleInfo instance;
 
   /**
@@ -37,30 +38,26 @@ public final class LibDocBundleInfo extends ProjectInformation
    *
    * @return te info object for this library.
    */
-  public static ProjectInformation getInstance()
-  {
-    if (instance == null)
-    {
+  public static ProjectInformation getInstance() {
+    if ( instance == null ) {
       instance = new LibDocBundleInfo();
       instance.initialize();
     }
     return instance;
   }
 
-  private LibDocBundleInfo()
-  {
-    super("libdocbundle", "LibDocBundle");
+  private LibDocBundleInfo() {
+    super( "libdocbundle", "LibDocBundle" );
   }
 
-  private void initialize()
-  {
-    setBootClass(LibDocBundleBoot.class.getName());
-    setLicenseName("LGPL");
-    setInfo("http://reporting.pentaho.org/libdocbundle/");
-    setCopyright("(C)opyright 2007-2011, by Pentaho Corporation and Contributors");
+  private void initialize() {
+    setBootClass( LibDocBundleBoot.class.getName() );
+    setLicenseName( "LGPL" );
+    setInfo( "http://reporting.pentaho.org/libdocbundle/" );
+    setCopyright( "(C)opyright 2007-2011, by Pentaho Corporation and Contributors" );
 
-    addLibrary(LibLoaderInfo.getInstance());
-    addLibrary(LibXmlInfo.getInstance());
-    addLibrary(LibRepositoryInfo.getInstance());
+    addLibrary( LibLoaderInfo.getInstance() );
+    addLibrary( LibXmlInfo.getInstance() );
+    addLibrary( LibRepositoryInfo.getInstance() );
   }
 }

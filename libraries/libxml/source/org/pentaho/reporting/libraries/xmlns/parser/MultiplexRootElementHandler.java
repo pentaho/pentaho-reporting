@@ -17,8 +17,6 @@
 
 package org.pentaho.reporting.libraries.xmlns.parser;
 
-import java.io.IOException;
-
 import org.pentaho.reporting.libraries.resourceloader.ResourceKey;
 import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 import org.xml.sax.Attributes;
@@ -26,20 +24,20 @@ import org.xml.sax.EntityResolver;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
+import java.io.IOException;
+
 /**
- * A root-handler that intercepts the first call to startElement to select a XmlReadHandler based on the
- * XmlDocumentInfo provided by the parser.
+ * A root-handler that intercepts the first call to startElement to select a XmlReadHandler based on the XmlDocumentInfo
+ * provided by the parser.
  *
  * @author Thomas Morgner
  */
-public class MultiplexRootElementHandler extends RootXmlReadHandler
-{
+public class MultiplexRootElementHandler extends RootXmlReadHandler {
   /**
-   * A entity resolver that collects information about the DTD used in the document while the underlying parser
-   * tries to resolve the DTD into a local InputSource.
+   * A entity resolver that collects information about the DTD used in the document while the underlying parser tries to
+   * resolve the DTD into a local InputSource.
    */
-  private static class RootEntityResolver implements EntityResolver
-  {
+  private static class RootEntityResolver implements EntityResolver {
     private ParserEntityResolver entityResolver;
     private String publicId;
     private String systemId;
@@ -47,35 +45,28 @@ public class MultiplexRootElementHandler extends RootXmlReadHandler
     /**
      * DefaultConstructor.
      */
-    private RootEntityResolver()
-    {
+    private RootEntityResolver() {
       entityResolver = ParserEntityResolver.getDefaultResolver();
     }
 
     /**
-     * Collects the public and System-ID from the call for later use in the XmlDocumentInfo and then forwards
-     * the resolver to the default resolver.
+     * Collects the public and System-ID from the call for later use in the XmlDocumentInfo and then forwards the
+     * resolver to the default resolver.
      *
-     * @param publicId The public identifier of the external entity
-     *        being referenced, or null if none was supplied.
-     * @param systemId The system identifier of the external entity
-     *        being referenced.
-     * @return An InputSource object describing the new input source,
-     *         or null to request that the parser open a regular
-     *         URI connection to the system identifier.
-     * @exception org.xml.sax.SAXException Any SAX exception, possibly
-     *            wrapping another exception.
-     * @exception java.io.IOException A Java-specific IO exception,
-     *            possibly the result of creating a new InputStream
-     *            or Reader for the InputSource.
+     * @param publicId The public identifier of the external entity being referenced, or null if none was supplied.
+     * @param systemId The system identifier of the external entity being referenced.
+     * @return An InputSource object describing the new input source, or null to request that the parser open a regular
+     * URI connection to the system identifier.
+     * @throws org.xml.sax.SAXException Any SAX exception, possibly wrapping another exception.
+     * @throws java.io.IOException      A Java-specific IO exception, possibly the result of creating a new InputStream
+     *                                  or Reader for the InputSource.
      * @see org.xml.sax.InputSource
      */
-    public InputSource resolveEntity(final String publicId, final String systemId)
-        throws SAXException, IOException
-    {
+    public InputSource resolveEntity( final String publicId, final String systemId )
+      throws SAXException, IOException {
       this.publicId = publicId;
       this.systemId = systemId;
-      return entityResolver.resolveEntity(publicId, systemId);
+      return entityResolver.resolveEntity( publicId, systemId );
     }
 
     /**
@@ -83,8 +74,7 @@ public class MultiplexRootElementHandler extends RootXmlReadHandler
      *
      * @return the public ID of the documents DTD.
      */
-    public String getPublicId()
-    {
+    public String getPublicId() {
       return publicId;
     }
 
@@ -93,8 +83,7 @@ public class MultiplexRootElementHandler extends RootXmlReadHandler
      *
      * @return the system ID of the documents DTD.
      */
-    public String getSystemId()
-    {
+    public String getSystemId() {
       return systemId;
     }
 
@@ -103,8 +92,7 @@ public class MultiplexRootElementHandler extends RootXmlReadHandler
      *
      * @return the entity resolver.
      */
-    public ParserEntityResolver getEntityResolver()
-    {
+    public ParserEntityResolver getEntityResolver() {
       return entityResolver;
     }
   }
@@ -112,24 +100,23 @@ public class MultiplexRootElementHandler extends RootXmlReadHandler
   private XmlFactoryModule[] rootHandlers;
   private RootEntityResolver entityResolver;
   private XmlFactoryModule selectedRootHandler;
-  
+
   /**
    * Creates a new MultiplexRootElementHandler for the given root handler selection.
    *
-   * @param manager the resource manager that loaded this xml-file.
-   * @param source  the source-key that idenfies from where the file was loaded.
-   * @param context the key that should be used to resolve relative paths.
-   * @param version the versioning information for the root-file.
+   * @param manager      the resource manager that loaded this xml-file.
+   * @param source       the source-key that idenfies from where the file was loaded.
+   * @param context      the key that should be used to resolve relative paths.
+   * @param version      the versioning information for the root-file.
    * @param rootHandlers the roothandlers, never null.
    */
   public MultiplexRootElementHandler
-      (final ResourceManager manager,
-       final ResourceKey source,
-       final ResourceKey context,
-       final long version,
-       final XmlFactoryModule[] rootHandlers)
-  {
-    super(manager, source, context, version);
+  ( final ResourceManager manager,
+    final ResourceKey source,
+    final ResourceKey context,
+    final long version,
+    final XmlFactoryModule[] rootHandlers ) {
+    super( manager, source, context, version );
     this.entityResolver = new RootEntityResolver();
     this.rootHandlers = rootHandlers.clone();
   }
@@ -139,8 +126,7 @@ public class MultiplexRootElementHandler extends RootXmlReadHandler
    *
    * @return the entity resolver.
    */
-  public EntityResolver getEntityResolver()
-  {
+  public EntityResolver getEntityResolver() {
     return entityResolver;
   }
 
@@ -150,8 +136,7 @@ public class MultiplexRootElementHandler extends RootXmlReadHandler
    *
    * @return the entity resolver.
    */
-  public ParserEntityResolver getParserEntityResolver()
-  {
+  public ParserEntityResolver getParserEntityResolver() {
     return entityResolver.getEntityResolver();
   }
 
@@ -160,8 +145,7 @@ public class MultiplexRootElementHandler extends RootXmlReadHandler
    *
    * @return the known root handlers.
    */
-  protected XmlFactoryModule[] getRootHandlers()
-  {
+  protected XmlFactoryModule[] getRootHandlers() {
     return rootHandlers.clone();
   }
 
@@ -174,86 +158,72 @@ public class MultiplexRootElementHandler extends RootXmlReadHandler
    * @param attributes  the attributes.
    * @throws SAXException if there is a parsing problem.
    */
-  protected void interceptFirstStartElement(final String originalUri,
-                                            final String localName,
-                                            final String qName,
-                                            Attributes attributes)
-      throws SAXException
-  {
+  protected void interceptFirstStartElement( final String originalUri,
+                                             final String localName,
+                                             final String qName,
+                                             Attributes attributes )
+    throws SAXException {
     // build the document info and select the root handler that will
     // deal with the document content.
     final DefaultXmlDocumentInfo documentInfo = new DefaultXmlDocumentInfo();
-    documentInfo.setPublicDTDId(entityResolver.getPublicId());
-    documentInfo.setSystemDTDId(entityResolver.getSystemId());
-    documentInfo.setRootElement(localName);
-    documentInfo.setRootElementNameSpace(originalUri);
-    documentInfo.setRootElementAttributes(attributes);
-    
-    final String nsuri = attributes.getValue("xmlns");
-    if (nsuri != null)
-    {
-      documentInfo.setDefaultNameSpace(nsuri);
-    }
-    else
-    {
-      documentInfo.setDefaultNameSpace("");
+    documentInfo.setPublicDTDId( entityResolver.getPublicId() );
+    documentInfo.setSystemDTDId( entityResolver.getSystemId() );
+    documentInfo.setRootElement( localName );
+    documentInfo.setRootElementNameSpace( originalUri );
+    documentInfo.setRootElementAttributes( attributes );
+
+    final String nsuri = attributes.getValue( "xmlns" );
+    if ( nsuri != null ) {
+      documentInfo.setDefaultNameSpace( nsuri );
+    } else {
+      documentInfo.setDefaultNameSpace( "" );
     }
 
     // ok, now find the best root handler and start parsing ...
     XmlFactoryModule bestRootHandler = null;
     int bestRootHandlerWeight = -1;
-    for (int i = 0; i < rootHandlers.length; i++)
-    {
-      final XmlFactoryModule rootHandler = rootHandlers[i];
-      final int weight = rootHandler.getDocumentSupport(documentInfo);
-      if (weight > bestRootHandlerWeight)
-      {
+    for ( int i = 0; i < rootHandlers.length; i++ ) {
+      final XmlFactoryModule rootHandler = rootHandlers[ i ];
+      final int weight = rootHandler.getDocumentSupport( documentInfo );
+      if ( weight > bestRootHandlerWeight ) {
         bestRootHandler = rootHandler;
         bestRootHandlerWeight = weight;
       }
     }
-    if (bestRootHandlerWeight < 0 || bestRootHandler == null)
-    {
-      throw new NoRootHandlerException("No suitable root handler known for this document: " + documentInfo);
+    if ( bestRootHandlerWeight < 0 || bestRootHandler == null ) {
+      throw new NoRootHandlerException( "No suitable root handler known for this document: " + documentInfo );
     }
     final XmlReadHandler readHandler =
-        bestRootHandler.createReadHandler(documentInfo);
-    if (readHandler == null)
-    {
-      throw new NoRootHandlerException("Unable to create the root handler. " + bestRootHandler);
+      bestRootHandler.createReadHandler( documentInfo );
+    if ( readHandler == null ) {
+      throw new NoRootHandlerException( "Unable to create the root handler. " + bestRootHandler );
     }
     this.selectedRootHandler = bestRootHandler;
-    
+
     String defaultNamespace = documentInfo.getDefaultNameSpace();
-    if (defaultNamespace == null || "".equals(defaultNamespace))
-    {
+    if ( defaultNamespace == null || "".equals( defaultNamespace ) ) {
       // Now correct the namespace ..
-      defaultNamespace = bestRootHandler.getDefaultNamespace(documentInfo);
-      if (defaultNamespace != null && "".equals(defaultNamespace) == false)
-      {
-        documentInfo.setRootElementNameSpace(defaultNamespace);
+      defaultNamespace = bestRootHandler.getDefaultNamespace( documentInfo );
+      if ( defaultNamespace != null && "".equals( defaultNamespace ) == false ) {
+        documentInfo.setRootElementNameSpace( defaultNamespace );
       }
     }
 
-    pushDefaultNamespace(defaultNamespace);
+    pushDefaultNamespace( defaultNamespace );
 
     final String uri;
-    if ((originalUri == null || "".equals(originalUri)) &&
-        defaultNamespace != null)
-    {
+    if ( ( originalUri == null || "".equals( originalUri ) ) &&
+      defaultNamespace != null ) {
       uri = defaultNamespace;
-    }
-    else
-    {
+    } else {
       uri = originalUri;
     }
 
-    attributes = new FixNamespaceUriAttributes(uri, attributes);
-    installRootHandler(readHandler, uri, localName, wrapAttributes(attributes));
+    attributes = new FixNamespaceUriAttributes( uri, attributes );
+    installRootHandler( readHandler, uri, localName, wrapAttributes( attributes ) );
   }
 
-  public XmlFactoryModule getSelectedRootHandler()
-  {
+  public XmlFactoryModule getSelectedRootHandler() {
     return selectedRootHandler;
   }
 }

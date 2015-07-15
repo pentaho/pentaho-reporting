@@ -24,16 +24,13 @@ import java.io.Serializable;
  *
  * @author Thomas Morgner
  */
-public class CodePointBuffer implements Serializable
-{
+public class CodePointBuffer implements Serializable {
   private int[] data;
   private int offset;
   private int cursor;
 
-  public CodePointBuffer(final int[] data)
-  {
-    if (data == null)
-    {
+  public CodePointBuffer( final int[] data ) {
+    if ( data == null ) {
       throw new NullPointerException();
     }
     this.data = data;
@@ -41,58 +38,48 @@ public class CodePointBuffer implements Serializable
     this.cursor = 0;
   }
 
-  public CodePointBuffer(final int length)
-  {
-    this.data = new int[length];
+  public CodePointBuffer( final int length ) {
+    this.data = new int[ length ];
     this.offset = 0;
     this.cursor = 0;
   }
 
-  public int[] getBuffer(final int[] buffer)
-  {
+  public int[] getBuffer( final int[] buffer ) {
     final int length = getLength();
-    if (length < buffer.length)
-    {
-      System.arraycopy(data, offset, buffer, 0, length);
+    if ( length < buffer.length ) {
+      System.arraycopy( data, offset, buffer, 0, length );
       return buffer;
     }
 
-    final int[] retval = new int[length];
-    System.arraycopy(data, offset, retval, 0, length);
+    final int[] retval = new int[ length ];
+    System.arraycopy( data, offset, retval, 0, length );
     return retval;
   }
 
 
-  public int[] getBuffer()
-  {
+  public int[] getBuffer() {
     final int length = getLength();
-    final int[] retval = new int[length];
-    System.arraycopy(data, offset, retval, 0, length);
+    final int[] retval = new int[ length ];
+    System.arraycopy( data, offset, retval, 0, length );
     return retval;
   }
 
-  public int[] getData()
-  {
+  public int[] getData() {
     return data;
   }
 
-  public void setData(final int[] data, final int length, final int offset)
-  {
-    if (data == null)
-    {
+  public void setData( final int[] data, final int length, final int offset ) {
+    if ( data == null ) {
       throw new NullPointerException();
     }
-    if (length < 0)
-    {
-      throw new IndexOutOfBoundsException("Length < 0");
+    if ( length < 0 ) {
+      throw new IndexOutOfBoundsException( "Length < 0" );
     }
-    if (offset < 0)
-    {
-      throw new IllegalArgumentException("Offset < 0");
+    if ( offset < 0 ) {
+      throw new IllegalArgumentException( "Offset < 0" );
     }
-    if (length + offset > data.length)
-    {
-      throw new IllegalArgumentException("Length + Offset");
+    if ( length + offset > data.length ) {
+      throw new IllegalArgumentException( "Length + Offset" );
     }
     this.data = data;
     this.cursor = length + offset;
@@ -100,39 +87,31 @@ public class CodePointBuffer implements Serializable
   }
 
 
-  public int getLength()
-  {
+  public int getLength() {
     return cursor - offset;
   }
 
-  public int getOffset()
-  {
+  public int getOffset() {
     return offset;
   }
 
-  public int getCursor()
-  {
+  public int getCursor() {
     return cursor;
   }
 
-  public void ensureSize(final int length)
-  {
-    if (data.length < (offset + length))
-    {
-      final int[] newdata = new int[offset + length];
-      System.arraycopy(data, 0, newdata, 0, data.length);
+  public void ensureSize( final int length ) {
+    if ( data.length < ( offset + length ) ) {
+      final int[] newdata = new int[ offset + length ];
+      System.arraycopy( data, 0, newdata, 0, data.length );
       data = newdata;
     }
   }
 
-  public void setCursor(final int cursor)
-  {
-    if (cursor < offset)
-    {
+  public void setCursor( final int cursor ) {
+    if ( cursor < offset ) {
       throw new IndexOutOfBoundsException();
     }
-    if (cursor > data.length)
-    {
+    if ( cursor > data.length ) {
       throw new IndexOutOfBoundsException();
     }
     this.cursor = cursor;

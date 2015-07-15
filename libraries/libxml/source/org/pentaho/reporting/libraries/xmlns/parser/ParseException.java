@@ -17,20 +17,18 @@
 
 package org.pentaho.reporting.libraries.xmlns.parser;
 
-import java.io.PrintStream;
-import java.io.PrintWriter;
-
 import org.xml.sax.Locator;
 import org.xml.sax.SAXException;
 
+import java.io.PrintStream;
+import java.io.PrintWriter;
+
 /**
- * A parse exception. This does the same as the SAXParseException, but it
- * also prints the parent exception.
+ * A parse exception. This does the same as the SAXParseException, but it also prints the parent exception.
  *
  * @author Thomas Morgner
  */
-public class ParseException extends SAXException
-{
+public class ParseException extends SAXException {
 
   /**
    * The line, where the error occured.
@@ -50,11 +48,10 @@ public class ParseException extends SAXException
    *
    * @param message the message
    */
-  public ParseException(final String message)
-  {
-    super(message);
-    fillLocation(null);
-    noOwnMessage = (message == null);
+  public ParseException( final String message ) {
+    super( message );
+    fillLocation( null );
+    noOwnMessage = ( message == null );
   }
 
   /**
@@ -62,10 +59,9 @@ public class ParseException extends SAXException
    *
    * @param e the exception
    */
-  public ParseException(final Exception e)
-  {
-    super(e);
-    fillLocation(null);
+  public ParseException( final Exception e ) {
+    super( e );
+    fillLocation( null );
     noOwnMessage = true;
   }
 
@@ -75,11 +71,10 @@ public class ParseException extends SAXException
    * @param message the message
    * @param e       the exception
    */
-  public ParseException(final String message, final Exception e)
-  {
-    super(message, e);
-    fillLocation(null);
-    noOwnMessage = (message == null);
+  public ParseException( final String message, final Exception e ) {
+    super( message, e );
+    fillLocation( null );
+    noOwnMessage = ( message == null );
   }
 
   /**
@@ -88,42 +83,37 @@ public class ParseException extends SAXException
    * @param message the message
    * @param locator the locator of the parser
    */
-  public ParseException(final String message, final Locator locator)
-  {
-    super(message);
-    fillLocation(locator);
-    noOwnMessage = (message == null);
+  public ParseException( final String message, final Locator locator ) {
+    super( message );
+    fillLocation( locator );
+    noOwnMessage = ( message == null );
   }
 
   /**
-   * Creates a new ParseException with the given root exception and the
-   * locator.
+   * Creates a new ParseException with the given root exception and the locator.
    *
    * @param e       the exception
    * @param locator the locator of the parser
    */
-  public ParseException(final Exception e, final Locator locator)
-  {
-    super(e);
-    fillLocation(locator);
+  public ParseException( final Exception e, final Locator locator ) {
+    super( e );
+    fillLocation( locator );
     noOwnMessage = true;
   }
 
   /**
-   * Creates a new ParseException with the given message, root exception and
-   * the locator.
+   * Creates a new ParseException with the given message, root exception and the locator.
    *
    * @param message the message
    * @param e       the exception
    * @param locator the locator of the parser
    */
-  public ParseException(final String message,
-                        final Exception e,
-                        final Locator locator)
-  {
-    super(message, e);
-    fillLocation(locator);
-    noOwnMessage = (message == null);
+  public ParseException( final String message,
+                         final Exception e,
+                         final Locator locator ) {
+    super( message, e );
+    fillLocation( locator );
+    noOwnMessage = ( message == null );
   }
 
   /**
@@ -131,36 +121,29 @@ public class ParseException extends SAXException
    *
    * @return the modified exception message.
    */
-  public String getMessage()
-  {
-    if (noOwnMessage)
-    {
+  public String getMessage() {
+    if ( noOwnMessage ) {
       final Exception parentEx = getException();
-      if (parentEx instanceof ParseException)
-      {
+      if ( parentEx instanceof ParseException ) {
         return parentEx.getMessage();
-      }
-      else
-      {
+      } else {
         final StringBuffer message = new StringBuffer
-            (String.valueOf(parentEx.getMessage()));
-        message.append(" [Location: Line=");
-        message.append(this.line);
-        message.append(" Column=");
-        message.append(this.column);
-        message.append("] ");
+          ( String.valueOf( parentEx.getMessage() ) );
+        message.append( " [Location: Line=" );
+        message.append( this.line );
+        message.append( " Column=" );
+        message.append( this.column );
+        message.append( "] " );
         return message.toString();
       }
-    }
-    else
-    {
+    } else {
       final StringBuffer message = new StringBuffer
-          (String.valueOf(super.getMessage()));
-      message.append(" [Location: Line=");
-      message.append(this.line);
-      message.append(" Column=");
-      message.append(this.column);
-      message.append("] ");
+        ( String.valueOf( super.getMessage() ) );
+      message.append( " [Location: Line=" );
+      message.append( this.line );
+      message.append( " Column=" );
+      message.append( this.column );
+      message.append( "] " );
       return message.toString();
     }
   }
@@ -170,15 +153,11 @@ public class ParseException extends SAXException
    *
    * @param locator the locator or null.
    */
-  protected void fillLocation(final Locator locator)
-  {
-    if (locator == null)
-    {
+  protected void fillLocation( final Locator locator ) {
+    if ( locator == null ) {
       this.line = -1;
       this.column = -1;
-    }
-    else
-    {
+    } else {
       this.line = locator.getLineNumber();
       this.column = locator.getColumnNumber();
     }
@@ -189,8 +168,7 @@ public class ParseException extends SAXException
    *
    * @return the line number or -1 if not known.
    */
-  public int getLine()
-  {
+  public int getLine() {
     return this.line;
   }
 
@@ -199,8 +177,7 @@ public class ParseException extends SAXException
    *
    * @return the column number or -1 if not known.
    */
-  public int getColumn()
-  {
+  public int getColumn() {
     return this.column;
   }
 
@@ -210,13 +187,11 @@ public class ParseException extends SAXException
    *
    * @param stream the output stream.
    */
-  public void printStackTrace(final PrintStream stream)
-  {
-    super.printStackTrace(stream);
-    if (getException() != null)
-    {
-      stream.println("ParentException: ");
-      getException().printStackTrace(stream);
+  public void printStackTrace( final PrintStream stream ) {
+    super.printStackTrace( stream );
+    if ( getException() != null ) {
+      stream.println( "ParentException: " );
+      getException().printStackTrace( stream );
     }
   }
 
@@ -225,8 +200,7 @@ public class ParseException extends SAXException
    *
    * @return A string representation of this exception.
    */
-  public String toString()
-  {
+  public String toString() {
     return getClass().getName() + ": " + getMessage();
   }
 
@@ -235,13 +209,11 @@ public class ParseException extends SAXException
    *
    * @param writer the writer.
    */
-  public void printStackTrace(final PrintWriter writer)
-  {
-    super.printStackTrace(writer);
-    if (getException() != null)
-    {
-      writer.println("ParentException: ");
-      getException().printStackTrace(writer);
+  public void printStackTrace( final PrintWriter writer ) {
+    super.printStackTrace( writer );
+    if ( getException() != null ) {
+      writer.println( "ParentException: " );
+      getException().printStackTrace( writer );
     }
   }
 

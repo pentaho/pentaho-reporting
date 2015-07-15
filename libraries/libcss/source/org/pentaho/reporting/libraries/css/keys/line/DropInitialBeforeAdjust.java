@@ -24,22 +24,20 @@ import org.pentaho.reporting.libraries.css.values.CSSConstant;
  *
  * @author Thomas Morgner
  */
-public class DropInitialBeforeAdjust
-{
+public class DropInitialBeforeAdjust {
   public static final CSSConstant CENTRAL =
-      new CSSConstant("central");
+    new CSSConstant( "central" );
   public static final CSSConstant MIDDLE =
-      new CSSConstant("middle");
+    new CSSConstant( "middle" );
   public static final CSSConstant MATHEMATICAL =
-      new CSSConstant("mathematical");
+    new CSSConstant( "mathematical" );
   public static final CSSConstant BEFORE_EDGE =
-      new CSSConstant("before-edge");
+    new CSSConstant( "before-edge" );
   public static final CSSConstant TEXT_BEFORE_EDGE =
-      new CSSConstant("text-before-edge");
+    new CSSConstant( "text-before-edge" );
   public static final CSSConstant HANGING =
-      new CSSConstant("hanging");
+    new CSSConstant( "hanging" );
 
-  private DropInitialBeforeAdjust()
-  {
+  private DropInitialBeforeAdjust() {
   }
 }

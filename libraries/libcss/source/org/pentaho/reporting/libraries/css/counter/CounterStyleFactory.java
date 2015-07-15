@@ -17,26 +17,23 @@
 
 package org.pentaho.reporting.libraries.css.counter;
 
+import org.pentaho.reporting.libraries.base.config.Configuration;
+import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
+import org.pentaho.reporting.libraries.css.LibCssBoot;
+import org.pentaho.reporting.libraries.css.counter.numeric.DecimalCounterStyle;
+
 import java.util.HashMap;
 import java.util.Iterator;
 
-import org.pentaho.reporting.libraries.css.counter.numeric.DecimalCounterStyle;
-import org.pentaho.reporting.libraries.css.LibCssBoot;
-import org.pentaho.reporting.libraries.base.config.Configuration;
-import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
 
-
-public class CounterStyleFactory
-{
+public class CounterStyleFactory {
   private static final CounterStyle DEFAULTCOUNTER = new DecimalCounterStyle();
 
   private static CounterStyleFactory factory;
   public static final String PREFIX = "org.pentaho.reporting.libraries.css.counter.numbering.";
 
-  public static synchronized CounterStyleFactory getInstance ()
-  {
-    if (factory == null)
-    {
+  public static synchronized CounterStyleFactory getInstance() {
+    if ( factory == null ) {
       factory = new CounterStyleFactory();
       factory.registerDefaults();
     }
@@ -45,38 +42,31 @@ public class CounterStyleFactory
 
   private HashMap knownCounters;
 
-  private CounterStyleFactory ()
-  {
+  private CounterStyleFactory() {
     knownCounters = new HashMap();
   }
 
-  public void registerDefaults ()
-  {
+  public void registerDefaults() {
     final Configuration config = LibCssBoot.getInstance().getGlobalConfig();
-    final Iterator it = config.findPropertyKeys(PREFIX);
-    while (it.hasNext())
-    {
+    final Iterator it = config.findPropertyKeys( PREFIX );
+    while ( it.hasNext() ) {
       final String key = (String) it.next();
-      final String counterClass = config.getConfigProperty(key);
-      if (counterClass == null)
-      {
+      final String counterClass = config.getConfigProperty( key );
+      if ( counterClass == null ) {
         continue;
       }
       final Object o = ObjectUtilities.loadAndInstantiate
-          (counterClass, CounterStyleFactory.class, CounterStyle.class);
-      if (o instanceof CounterStyle)
-      {
-        final String name = key.substring(PREFIX.length());
-        knownCounters.put (name, o);
+        ( counterClass, CounterStyleFactory.class, CounterStyle.class );
+      if ( o instanceof CounterStyle ) {
+        final String name = key.substring( PREFIX.length() );
+        knownCounters.put( name, o );
       }
     }
   }
 
-  public CounterStyle getCounterStyle (final String name)
-  {
-    final CounterStyle cs = (CounterStyle) knownCounters.get(name);
-    if (cs != null)
-    {
+  public CounterStyle getCounterStyle( final String name ) {
+    final CounterStyle cs = (CounterStyle) knownCounters.get( name );
+    if ( cs != null ) {
       return cs;
     }
     return DEFAULTCOUNTER;

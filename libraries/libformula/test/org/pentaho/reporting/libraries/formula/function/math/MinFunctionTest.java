@@ -17,33 +17,31 @@
 
 package org.pentaho.reporting.libraries.formula.function.math;
 
-import java.math.BigDecimal;
-
 import org.pentaho.reporting.libraries.formula.FormulaTestBase;
+
+import java.math.BigDecimal;
 
 /**
  * @author Cedric Pronzato
  */
-public class MinFunctionTest extends FormulaTestBase
-{
-  public void testDefault() throws Exception
-  {
+public class MinFunctionTest extends FormulaTestBase {
+  public void testDefault() throws Exception {
     runDefaultTest();
   }
 
-  public Object[][] createDataTest()
-  {
+  public Object[][] createDataTest() {
     return new Object[][]
-        {
-            {"MIN(2;4;1;-8)", new BigDecimal(-8)},
-//            {"MIN([.B4:.B5])", new BigDecimal(2)},
-            // TODO {"MIN([.B3])", new BigDecimal(0)}, I do not understand what is wanted:
-            // What happens when MIN is provided 0 parameters is implementation-defined, but MIN() with no parameters should return 0.
-            // TODO same for MAX()
-            // TODO {"MIN(\"a\")", error}, this case should not yet be handled (inline != reference)
-//            {"MIN([.B3:.B5])", new BigDecimal(2)},
-            {"MIN(\"5\";\"7\")", new BigDecimal(5)},
-        };
+      {
+        { "MIN(2;4;1;-8)", new BigDecimal( -8 ) },
+        //            {"MIN([.B4:.B5])", new BigDecimal(2)},
+        // TODO {"MIN([.B3])", new BigDecimal(0)}, I do not understand what is wanted:
+        // What happens when MIN is provided 0 parameters is implementation-defined, but MIN() with no parameters
+        // should return 0.
+        // TODO same for MAX()
+        // TODO {"MIN(\"a\")", error}, this case should not yet be handled (inline != reference)
+        //            {"MIN([.B3:.B5])", new BigDecimal(2)},
+        { "MIN(\"5\";\"7\")", new BigDecimal( 5 ) },
+      };
   }
 
 }

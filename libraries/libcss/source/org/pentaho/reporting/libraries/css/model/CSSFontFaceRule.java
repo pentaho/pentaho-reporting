@@ -17,23 +17,17 @@
 
 package org.pentaho.reporting.libraries.css.model;
 
-import org.pentaho.reporting.libraries.css.dom.DocumentContext;
-
 /**
- * Defines a new font by either giving a set of properties which describe the
- * font (so that the system can find a matching local font) or by providing
- * an URL from where to download the font file.
+ * Defines a new font by either giving a set of properties which describe the font (so that the system can find a
+ * matching local font) or by providing an URL from where to download the font file.
  * <p/>
- * For now, this is not implemented. Maybe later - this would add an interesting
- * note to this library.
+ * For now, this is not implemented. Maybe later - this would add an interesting note to this library.
  *
  * @author Thomas Morgner
  */
-public class CSSFontFaceRule extends CSSDeclarationRule
-{
-  public CSSFontFaceRule(final StyleSheet parentStyle,
-                         final StyleRule parentRule)
-  {
-    super(parentStyle, parentRule);
+public class CSSFontFaceRule extends CSSDeclarationRule {
+  public CSSFontFaceRule( final StyleSheet parentStyle,
+                          final StyleRule parentRule ) {
+    super( parentStyle, parentRule );
   }
 }

@@ -25,14 +25,12 @@ import org.pentaho.reporting.libraries.css.parser.stylehandler.OneOfConstantsRea
  *
  * @author Thomas Morgner
  */
-public class BackgroundBreakReadHandler extends OneOfConstantsReadHandler
-{
-  public BackgroundBreakReadHandler()
-  {
-    super(false);
-    addValue(BackgroundBreak.BOUNDING_BOX);
-    addValue(BackgroundBreak.CONTINUOUS);
-    addValue(BackgroundBreak.EACH_BOX);
+public class BackgroundBreakReadHandler extends OneOfConstantsReadHandler {
+  public BackgroundBreakReadHandler() {
+    super( false );
+    addValue( BackgroundBreak.BOUNDING_BOX );
+    addValue( BackgroundBreak.CONTINUOUS );
+    addValue( BackgroundBreak.EACH_BOX );
   }
 
 }

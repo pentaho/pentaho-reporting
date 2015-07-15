@@ -24,42 +24,34 @@ import org.pentaho.reporting.libraries.formula.typing.coretypes.NumberType;
 
 /**
  * Describes OddFunction function.
- * @see OddFunction
  *
  * @author Cedric Pronzato
- *
+ * @see OddFunction
  */
-public class OddFunctionDescription extends AbstractFunctionDescription
-{
+public class OddFunctionDescription extends AbstractFunctionDescription {
   private static final long serialVersionUID = 3193808485135180085L;
 
-  public OddFunctionDescription()
-  {
-    super("ODD", "org.pentaho.reporting.libraries.formula.function.math.Odd-Function");
+  public OddFunctionDescription() {
+    super( "ODD", "org.pentaho.reporting.libraries.formula.function.math.Odd-Function" );
   }
 
-  public FunctionCategory getCategory()
-  {
+  public FunctionCategory getCategory() {
     return MathFunctionCategory.CATEGORY;
   }
 
-  public int getParameterCount()
-  {
+  public int getParameterCount() {
     return 1;
   }
 
-  public Type getParameterType(final int position)
-  {
+  public Type getParameterType( final int position ) {
     return NumberType.GENERIC_NUMBER;
   }
 
-  public Type getValueType()
-  {
+  public Type getValueType() {
     return NumberType.GENERIC_NUMBER;
   }
 
-  public boolean isParameterMandatory(final int position)
-  {
+  public boolean isParameterMandatory( final int position ) {
     return true;
   }
 

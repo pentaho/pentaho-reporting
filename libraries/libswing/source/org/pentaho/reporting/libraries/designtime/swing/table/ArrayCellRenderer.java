@@ -17,35 +17,28 @@
 
 package org.pentaho.reporting.libraries.designtime.swing.table;
 
-import java.awt.Component;
-import javax.swing.JLabel;
-import javax.swing.JTable;
+import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
+import java.awt.*;
 
-public class ArrayCellRenderer extends DefaultTableCellRenderer
-{
-  public ArrayCellRenderer()
-  {
-    putClientProperty("html.disable", Boolean.TRUE); // NON-NLS
+public class ArrayCellRenderer extends DefaultTableCellRenderer {
+  public ArrayCellRenderer() {
+    putClientProperty( "html.disable", Boolean.TRUE ); // NON-NLS
   }
 
-  public Component getTableCellRendererComponent(final JTable table,
-                                                 final Object value,
-                                                 final boolean isSelected,
-                                                 final boolean hasFocus,
-                                                 final int row,
-                                                 final int column)
-  {
+  public Component getTableCellRendererComponent( final JTable table,
+                                                  final Object value,
+                                                  final boolean isSelected,
+                                                  final boolean hasFocus,
+                                                  final int row,
+                                                  final int column ) {
 
     final JLabel rendererComponent =
-        (JLabel) super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-    if (ArrayAccessUtility.isArray(value) == false)
-    {
-      rendererComponent.setText("");
-    }
-    else
-    {
-      rendererComponent.setText(ArrayAccessUtility.getArrayAsString(value));
+      (JLabel) super.getTableCellRendererComponent( table, value, isSelected, hasFocus, row, column );
+    if ( ArrayAccessUtility.isArray( value ) == false ) {
+      rendererComponent.setText( "" );
+    } else {
+      rendererComponent.setText( ArrayAccessUtility.getArrayAsString( value ) );
     }
     return rendererComponent;
   }

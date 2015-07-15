@@ -20,25 +20,23 @@ package org.pentaho.reporting.libraries.xmlns.parser;
 import org.xml.sax.Attributes;
 
 /**
- * A data class that holds all relevant information about a XML document to make a decision on what parser
- * to use to interpret the XML content.
+ * A data class that holds all relevant information about a XML document to make a decision on what parser to use to
+ * interpret the XML content.
  *
  * @author Thomas Morgner
  */
-public class DefaultXmlDocumentInfo implements XmlDocumentInfo
-{
+public class DefaultXmlDocumentInfo implements XmlDocumentInfo {
   private String rootElement;
   private String rootElementNameSpace;
   private String publicDTDId;
   private String systemDTDId;
   private String defaultNameSpace;
   private Attributes rootElementAttributes;
-  
+
   /**
    * Default-Constructor.
    */
-  public DefaultXmlDocumentInfo()
-  {
+  public DefaultXmlDocumentInfo() {
   }
 
   /**
@@ -46,8 +44,7 @@ public class DefaultXmlDocumentInfo implements XmlDocumentInfo
    *
    * @return the root-tag-name.
    */
-  public String getRootElement()
-  {
+  public String getRootElement() {
     return rootElement;
   }
 
@@ -56,8 +53,7 @@ public class DefaultXmlDocumentInfo implements XmlDocumentInfo
    *
    * @param rootElement the root-tag-name.
    */
-  public void setRootElement(final String rootElement)
-  {
+  public void setRootElement( final String rootElement ) {
     this.rootElement = rootElement;
   }
 
@@ -66,8 +62,7 @@ public class DefaultXmlDocumentInfo implements XmlDocumentInfo
    *
    * @return the namespace of the root-element.
    */
-  public String getRootElementNameSpace()
-  {
+  public String getRootElementNameSpace() {
     return rootElementNameSpace;
   }
 
@@ -76,18 +71,15 @@ public class DefaultXmlDocumentInfo implements XmlDocumentInfo
    *
    * @param rootElementNameSpace the namespace of the root-element.
    */
-  public void setRootElementNameSpace(final String rootElementNameSpace)
-  {
+  public void setRootElementNameSpace( final String rootElementNameSpace ) {
     this.rootElementNameSpace = rootElementNameSpace;
   }
 
-  public Attributes getRootElementAttributes()
-  {
+  public Attributes getRootElementAttributes() {
     return rootElementAttributes;
   }
 
-  public void setRootElementAttributes(final Attributes rootElementAttributes)
-  {
+  public void setRootElementAttributes( final Attributes rootElementAttributes ) {
     this.rootElementAttributes = rootElementAttributes;
   }
 
@@ -96,8 +88,7 @@ public class DefaultXmlDocumentInfo implements XmlDocumentInfo
    *
    * @return the public id.
    */
-  public String getPublicDTDId()
-  {
+  public String getPublicDTDId() {
     return publicDTDId;
   }
 
@@ -106,8 +97,7 @@ public class DefaultXmlDocumentInfo implements XmlDocumentInfo
    *
    * @param publicDTDId the public id.
    */
-  public void setPublicDTDId(final String publicDTDId)
-  {
+  public void setPublicDTDId( final String publicDTDId ) {
     this.publicDTDId = publicDTDId;
   }
 
@@ -116,8 +106,7 @@ public class DefaultXmlDocumentInfo implements XmlDocumentInfo
    *
    * @return the system-id.
    */
-  public String getSystemDTDId()
-  {
+  public String getSystemDTDId() {
     return systemDTDId;
   }
 
@@ -126,8 +115,7 @@ public class DefaultXmlDocumentInfo implements XmlDocumentInfo
    *
    * @param systemDTDId the system-id.
    */
-  public void setSystemDTDId(final String systemDTDId)
-  {
+  public void setSystemDTDId( final String systemDTDId ) {
     this.systemDTDId = systemDTDId;
   }
 
@@ -136,44 +124,39 @@ public class DefaultXmlDocumentInfo implements XmlDocumentInfo
    *
    * @return the string version of the document info.
    */
-  public String toString()
-  {
-    final StringBuffer buffer = new StringBuffer(120);
-    buffer.append("XmlDocumentInfo={rootElementTag=");
-    buffer.append(rootElement);
-    buffer.append(", rootElementNS=");
-    buffer.append(rootElementNameSpace);
-    buffer.append(", SystemDTD-ID=");
-    buffer.append(systemDTDId);
-    buffer.append(", PublicDTD-ID=");
-    buffer.append(publicDTDId);
-    buffer.append(", defaultnamespace=");
-    buffer.append(defaultNameSpace);
-    buffer.append('}');
+  public String toString() {
+    final StringBuffer buffer = new StringBuffer( 120 );
+    buffer.append( "XmlDocumentInfo={rootElementTag=" );
+    buffer.append( rootElement );
+    buffer.append( ", rootElementNS=" );
+    buffer.append( rootElementNameSpace );
+    buffer.append( ", SystemDTD-ID=" );
+    buffer.append( systemDTDId );
+    buffer.append( ", PublicDTD-ID=" );
+    buffer.append( publicDTDId );
+    buffer.append( ", defaultnamespace=" );
+    buffer.append( defaultNameSpace );
+    buffer.append( '}' );
     return buffer.toString();
   }
 
   /**
-   * Returns the default-namespace declared on the root-element. It is
-   * not guaranteed that this information is filled until a XmlFactoryModule
-   * has been selected.
+   * Returns the default-namespace declared on the root-element. It is not guaranteed that this information is filled
+   * until a XmlFactoryModule has been selected.
    *
    * @return the default-namespace.
    */
-  public String getDefaultNameSpace()
-  {
+  public String getDefaultNameSpace() {
     return defaultNameSpace;
   }
 
   /**
-   * Defines the default-namespace declared on the root-element. It is
-   * not guaranteed that this information is filled until a XmlFactoryModule
-   * has been selected.
+   * Defines the default-namespace declared on the root-element. It is not guaranteed that this information is filled
+   * until a XmlFactoryModule has been selected.
    *
    * @param defaultNameSpace the default-namespace.
    */
-  public void setDefaultNameSpace(final String defaultNameSpace)
-  {
+  public void setDefaultNameSpace( final String defaultNameSpace ) {
     this.defaultNameSpace = defaultNameSpace;
   }
 }

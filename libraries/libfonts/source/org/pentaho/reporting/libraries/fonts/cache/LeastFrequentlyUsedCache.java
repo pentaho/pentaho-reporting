@@ -17,32 +17,27 @@
 
 package org.pentaho.reporting.libraries.fonts.cache;
 
+import org.pentaho.reporting.libraries.base.util.LFUMap;
 import org.pentaho.reporting.libraries.fonts.registry.FontKey;
 import org.pentaho.reporting.libraries.fonts.registry.FontMetrics;
-import org.pentaho.reporting.libraries.base.util.LFUMap;
 
-public class LeastFrequentlyUsedCache implements FontCache
-{
-  private LFUMap<FontKey,FontMetrics> map;
+public class LeastFrequentlyUsedCache implements FontCache {
+  private LFUMap<FontKey, FontMetrics> map;
 
-  public LeastFrequentlyUsedCache(final int cacheSize)
-  {
+  public LeastFrequentlyUsedCache( final int cacheSize ) {
     // having at least 3 entries saves me a lot of coding and thus gives more performance ..
-    this.map = new LFUMap<FontKey,FontMetrics>(cacheSize);
+    this.map = new LFUMap<FontKey, FontMetrics>( cacheSize );
   }
 
-  public synchronized FontMetrics getFontMetrics(final FontKey fontKey)
-  {
-    return map.get(fontKey);
+  public synchronized FontMetrics getFontMetrics( final FontKey fontKey ) {
+    return map.get( fontKey );
   }
 
-  public synchronized void putFontMetrics(final FontKey key, final FontMetrics metrics)
-  {
-    map.put(key, metrics);
+  public synchronized void putFontMetrics( final FontKey key, final FontMetrics metrics ) {
+    map.put( key, metrics );
   }
 
-  public void commit()
-  {
+  public void commit() {
     // no op, as we have no deeper level.
   }
 }

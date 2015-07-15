@@ -24,12 +24,10 @@ import org.pentaho.reporting.libraries.css.values.CSSConstant;
  *
  * @author Thomas Morgner
  */
-public class EmptyCells
-{
-  public static final CSSConstant SHOW = new CSSConstant("show");
-  public static final CSSConstant HIDE = new CSSConstant("hide");
+public class EmptyCells {
+  public static final CSSConstant SHOW = new CSSConstant( "show" );
+  public static final CSSConstant HIDE = new CSSConstant( "hide" );
 
-  private EmptyCells()
-  {
+  private EmptyCells() {
   }
 }

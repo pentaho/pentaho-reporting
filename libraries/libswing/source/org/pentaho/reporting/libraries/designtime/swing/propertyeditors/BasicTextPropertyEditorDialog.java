@@ -17,27 +17,18 @@
 
 package org.pentaho.reporting.libraries.designtime.swing.propertyeditors;
 
-import java.awt.BorderLayout;
-import java.awt.Component;
-import java.awt.Dialog;
-import java.awt.Frame;
-import java.awt.HeadlessException;
-import java.beans.PropertyEditor;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
-
 import org.pentaho.reporting.libraries.designtime.swing.CommonDialog;
 import org.pentaho.reporting.libraries.designtime.swing.Messages;
 
-public class BasicTextPropertyEditorDialog extends CommonDialog
-{
-  protected class DocumentUpdateHandler implements DocumentListener
-  {
-    public DocumentUpdateHandler()
-    {
+import javax.swing.*;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+import java.awt.*;
+import java.beans.PropertyEditor;
+
+public class BasicTextPropertyEditorDialog extends CommonDialog {
+  protected class DocumentUpdateHandler implements DocumentListener {
+    public DocumentUpdateHandler() {
     }
 
     /**
@@ -46,19 +37,14 @@ public class BasicTextPropertyEditorDialog extends CommonDialog
      *
      * @param e the document event
      */
-    public void insertUpdate(final DocumentEvent e)
-    {
-      if (propertyEditor != null)
-      {
-        try
-        {
-          propertyEditor.setAsText(textArea.getText());
-          getConfirmAction().setEnabled(true);
-        }
-        catch (Exception ex)
-        {
+    public void insertUpdate( final DocumentEvent e ) {
+      if ( propertyEditor != null ) {
+        try {
+          propertyEditor.setAsText( textArea.getText() );
+          getConfirmAction().setEnabled( true );
+        } catch ( Exception ex ) {
           // ignore ..
-          getConfirmAction().setEnabled(false);
+          getConfirmAction().setEnabled( false );
         }
       }
 
@@ -70,9 +56,8 @@ public class BasicTextPropertyEditorDialog extends CommonDialog
      *
      * @param e the document event
      */
-    public void removeUpdate(final DocumentEvent e)
-    {
-      insertUpdate(e);
+    public void removeUpdate( final DocumentEvent e ) {
+      insertUpdate( e );
     }
 
     /**
@@ -80,9 +65,8 @@ public class BasicTextPropertyEditorDialog extends CommonDialog
      *
      * @param e the document event
      */
-    public void changedUpdate(final DocumentEvent e)
-    {
-      insertUpdate(e);
+    public void changedUpdate( final DocumentEvent e ) {
+      insertUpdate( e );
     }
   }
 
@@ -91,122 +75,93 @@ public class BasicTextPropertyEditorDialog extends CommonDialog
   private Object originalValue;
 
   public BasicTextPropertyEditorDialog()
-      throws HeadlessException
-  {
+    throws HeadlessException {
     init();
   }
 
-  public BasicTextPropertyEditorDialog(final Frame owner)
-      throws HeadlessException
-  {
-    super(owner);
+  public BasicTextPropertyEditorDialog( final Frame owner )
+    throws HeadlessException {
+    super( owner );
     init();
   }
 
-  public BasicTextPropertyEditorDialog(final Dialog owner)
-      throws HeadlessException
-  {
-    super(owner);
+  public BasicTextPropertyEditorDialog( final Dialog owner )
+    throws HeadlessException {
+    super( owner );
     init();
   }
 
-  protected void init()
-  {
-    setModal(true);
-    setTitle(Messages.getInstance().getString("TextAreaPropertyEditorDialog.Title"));
+  protected void init() {
+    setModal( true );
+    setTitle( Messages.getInstance().getString( "TextAreaPropertyEditorDialog.Title" ) );
 
     textArea = createTextArea();
 
     super.init();
   }
 
-  protected String getDialogId()
-  {
+  protected String getDialogId() {
     return "LibSwing.TextAreaPropertyEditor";
   }
 
-  protected JTextArea createTextArea()
-  {
+  protected JTextArea createTextArea() {
     final JTextArea textArea = new JTextArea();
-    textArea.setColumns(60);
-    textArea.setRows(20);
-    textArea.getDocument().addDocumentListener(new DocumentUpdateHandler());
+    textArea.setColumns( 60 );
+    textArea.setRows( 20 );
+    textArea.getDocument().addDocumentListener( new DocumentUpdateHandler() );
     return textArea;
   }
 
-  protected JTextArea getTextArea()
-  {
+  protected JTextArea getTextArea() {
     return textArea;
   }
 
-  protected Component createContentPane()
-  {
+  protected Component createContentPane() {
     final JPanel contentPane = new JPanel();
-    contentPane.setLayout(new BorderLayout());
-    contentPane.add(new JScrollPane(textArea), BorderLayout.CENTER);
+    contentPane.setLayout( new BorderLayout() );
+    contentPane.add( new JScrollPane( textArea ), BorderLayout.CENTER );
     return contentPane;
   }
 
-  public boolean performEdit(final PropertyEditor editor)
-  {
-    if (editor == null)
-    {
+  public boolean performEdit( final PropertyEditor editor ) {
+    if ( editor == null ) {
       throw new NullPointerException();
     }
     this.propertyEditor = editor;
     this.originalValue = propertyEditor.getValue();
-    if (originalValue == null)
-    {
-      this.textArea.setText("");
-    }
-    else
-    {
-      this.textArea.setText(propertyEditor.getAsText());
+    if ( originalValue == null ) {
+      this.textArea.setText( "" );
+    } else {
+      this.textArea.setText( propertyEditor.getAsText() );
     }
 
-    if (performEdit())
-    {
-      try
-      {
-        propertyEditor.setAsText(textArea.getText());
-      }
-      catch (Exception ex)
-      {
+    if ( performEdit() ) {
+      try {
+        propertyEditor.setAsText( textArea.getText() );
+      } catch ( Exception ex ) {
         // ignore ..
       }
       return true;
-    }
-    else
-    {
-      try
-      {
-        propertyEditor.setValue(originalValue);
-      }
-      catch (Exception ex)
-      {
+    } else {
+      try {
+        propertyEditor.setValue( originalValue );
+      } catch ( Exception ex ) {
         // ignore ..
       }
       return false;
     }
   }
 
-  public String performEdit(final String originalValue)
-  {
+  public String performEdit( final String originalValue ) {
     this.originalValue = originalValue;
-    if (originalValue == null)
-    {
-      this.textArea.setText("");
+    if ( originalValue == null ) {
+      this.textArea.setText( "" );
+    } else {
+      this.textArea.setText( originalValue );
     }
-    else
-    {
-      this.textArea.setText(originalValue);
-    }
-    if (performEdit())
-    {
+    if ( performEdit() ) {
       return textArea.getText();
-    }
-    else
-    {
+    } else {
       return originalValue;
     }
   }

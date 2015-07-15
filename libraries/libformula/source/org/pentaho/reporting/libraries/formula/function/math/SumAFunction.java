@@ -22,19 +22,15 @@ package org.pentaho.reporting.libraries.formula.function.math;
  *
  * @author Thomas Morgner
  */
-public class SumAFunction extends SumFunction
-{
-  public SumAFunction()
-  {
+public class SumAFunction extends SumFunction {
+  public SumAFunction() {
   }
 
-  public String getCanonicalName()
-  {
+  public String getCanonicalName() {
     return "SUMA";
   }
 
-  protected boolean isStrictSequenceNeeded()
-  {
+  protected boolean isStrictSequenceNeeded() {
     return false;
   }
 }

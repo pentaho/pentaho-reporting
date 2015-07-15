@@ -19,19 +19,15 @@ package org.pentaho.reporting.libraries.css.counter.glyph;
 
 import org.pentaho.reporting.libraries.css.counter.CounterStyle;
 
-public class DiamondCounterStyle implements CounterStyle
-{
-  public DiamondCounterStyle ()
-  {
+public class DiamondCounterStyle implements CounterStyle {
+  public DiamondCounterStyle() {
   }
 
-  public String getCounterValue (final int index)
-  {
+  public String getCounterValue( final int index ) {
     return "\u25c6";
   }
 
-  public String getSuffix()
-  {
+  public String getSuffix() {
     return "";
   }
 }

@@ -27,27 +27,22 @@ import org.pentaho.reporting.libraries.formula.lvalues.TypeValuePair;
  *
  * @author Thomas Morgner
  */
-public class PlusSignOperator implements PrefixOperator
-{
+public class PlusSignOperator implements PrefixOperator {
   private static final long serialVersionUID = 8127033177252320339L;
 
-  public PlusSignOperator()
-  {
+  public PlusSignOperator() {
   }
 
-  public TypeValuePair evaluate(final FormulaContext context,
-                                final TypeValuePair value1) throws EvaluationException
-  {
-    if (value1 == null)
-    {
+  public TypeValuePair evaluate( final FormulaContext context,
+                                 final TypeValuePair value1 ) throws EvaluationException {
+    if ( value1 == null ) {
       // This is fatal, but should never happen.
-      throw EvaluationException.getInstance(LibFormulaErrorValue.ERROR_UNEXPECTED_VALUE);
+      throw EvaluationException.getInstance( LibFormulaErrorValue.ERROR_UNEXPECTED_VALUE );
     }
     return value1;
   }
 
-  public String toString()
-  {
+  public String toString() {
     return "+";
   }
 

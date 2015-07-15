@@ -17,27 +17,24 @@
 
 package org.pentaho.reporting.libraries.formula.function.datetime;
 
-import java.math.BigDecimal;
-
 import org.pentaho.reporting.libraries.formula.FormulaTestBase;
+
+import java.math.BigDecimal;
 
 /**
  * @author Cedric Pronzato
  */
-public class DayFunctionTest extends FormulaTestBase
-{
-  public Object[][] createDataTest()
-  {
+public class DayFunctionTest extends FormulaTestBase {
+  public Object[][] createDataTest() {
     return new Object[][]
-        {
-            {"DAY(DATE(2006;5;21))", new BigDecimal(21)},
-            // TODO signal this usecase as wrong { "DAY(\"2006-12-15\")", new Integer(12) }
-            {"DAY(\"2006-12-15\")", new BigDecimal(15)},
-        };
+      {
+        { "DAY(DATE(2006;5;21))", new BigDecimal( 21 ) },
+        // TODO signal this usecase as wrong { "DAY(\"2006-12-15\")", new Integer(12) }
+        { "DAY(\"2006-12-15\")", new BigDecimal( 15 ) },
+      };
   }
 
-  public void testDefault() throws Exception
-  {
+  public void testDefault() throws Exception {
     runDefaultTest();
   }
 

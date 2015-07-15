@@ -28,37 +28,30 @@ import org.pentaho.reporting.libraries.formula.typing.coretypes.TextType;
  * @author Cedric Pronzato
  * @see org.pentaho.reporting.libraries.formula.function.text.ExactFunction
  */
-public class AscFunctionDescription extends AbstractFunctionDescription
-{
+public class AscFunctionDescription extends AbstractFunctionDescription {
   private static final long serialVersionUID = 6387173839128572562L;
 
-  public AscFunctionDescription()
-  {
-    super("ASC", "org.pentaho.reporting.libraries.formula.function.text.Asc-Function");
+  public AscFunctionDescription() {
+    super( "ASC", "org.pentaho.reporting.libraries.formula.function.text.Asc-Function" );
   }
 
-  public FunctionCategory getCategory()
-  {
+  public FunctionCategory getCategory() {
     return TextFunctionCategory.CATEGORY;
   }
 
-  public int getParameterCount()
-  {
+  public int getParameterCount() {
     return 1;
   }
 
-  public Type getParameterType(final int position)
-  {
+  public Type getParameterType( final int position ) {
     return TextType.TYPE;
   }
 
-  public Type getValueType()
-  {
+  public Type getValueType() {
     return TextType.TYPE;
   }
 
-  public boolean isParameterMandatory(final int position)
-  {
+  public boolean isParameterMandatory( final int position ) {
     return true;
   }
 

@@ -25,12 +25,10 @@ import org.pentaho.reporting.libraries.formula.function.FunctionCategory;
  *
  * @author Thomas Morgner
  */
-public final class FinancialFunctionCategory extends AbstractFunctionCategory
-{
+public final class FinancialFunctionCategory extends AbstractFunctionCategory {
   public static final FunctionCategory CATEGORY = new FinancialFunctionCategory();
 
-  private FinancialFunctionCategory()
-  {
-    super("org.pentaho.reporting.libraries.formula.function.financial.category");
+  private FinancialFunctionCategory() {
+    super( "org.pentaho.reporting.libraries.formula.function.financial.category" );
   }
 }

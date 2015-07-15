@@ -20,13 +20,11 @@ package org.pentaho.reporting.libraries.xmlns.parser;
 import org.xml.sax.Attributes;
 
 /**
- * The XmlDocumentInfo class collects basic information about the document
- * that should be parsed.
+ * The XmlDocumentInfo class collects basic information about the document that should be parsed.
  *
  * @author Thomas Morgner
  */
-public interface XmlDocumentInfo
-{
+public interface XmlDocumentInfo {
   /**
    * Returns the tag name of the root-level element.
    *
@@ -58,9 +56,8 @@ public interface XmlDocumentInfo
   public String getSystemDTDId();
 
   /**
-   * Returns the default-namespace declared on the root-element. It is
-   * not guaranteed that this information is filled until a XmlFactoryModule
-   * has been selected.
+   * Returns the default-namespace declared on the root-element. It is not guaranteed that this information is filled
+   * until a XmlFactoryModule has been selected.
    *
    * @return the default-namespace.
    */

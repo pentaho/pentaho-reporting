@@ -25,34 +25,27 @@ import org.pentaho.reporting.libraries.resourceloader.ResourceKey;
  *
  * @author Thomas Morgner
  */
-public class NullResourceFactoryCache implements ResourceFactoryCache
-{
-  public NullResourceFactoryCache()
-  {
+public class NullResourceFactoryCache implements ResourceFactoryCache {
+  public NullResourceFactoryCache() {
   }
 
-  public Resource get(final ResourceKey key, final Class[] target)
-  {
+  public Resource get( final ResourceKey key, final Class[] target ) {
     return null;
   }
 
-  public void put(final Resource resource)
-  {
+  public void put( final Resource resource ) {
 
   }
 
-  public void remove(final Resource resource)
-  {
+  public void remove( final Resource resource ) {
 
   }
 
-  public void clear()
-  {
+  public void clear() {
 
   }
 
-  public void shutdown()
-  {
+  public void shutdown() {
 
   }
 }

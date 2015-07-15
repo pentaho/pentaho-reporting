@@ -29,24 +29,20 @@ import org.w3c.css.sac.LexicalUnit;
  *
  * @author Thomas Morgner
  */
-public class TargetNameReadHandler extends OneOfConstantsReadHandler
-{
-  public TargetNameReadHandler()
-  {
-    super(false);
-    addValue(TargetName.CURRENT);
-    addValue(TargetName.MODAL);
-    addValue(TargetName.NEW);
-    addValue(TargetName.PARENT);
-    addValue(TargetName.ROOT);
+public class TargetNameReadHandler extends OneOfConstantsReadHandler {
+  public TargetNameReadHandler() {
+    super( false );
+    addValue( TargetName.CURRENT );
+    addValue( TargetName.MODAL );
+    addValue( TargetName.NEW );
+    addValue( TargetName.PARENT );
+    addValue( TargetName.ROOT );
   }
 
-  protected CSSValue lookupValue(final LexicalUnit value)
-  {
-    if (value.getLexicalUnitType() == LexicalUnit.SAC_STRING_VALUE)
-    {
-      return new CSSStringValue(CSSStringType.STRING, value.getStringValue());
+  protected CSSValue lookupValue( final LexicalUnit value ) {
+    if ( value.getLexicalUnitType() == LexicalUnit.SAC_STRING_VALUE ) {
+      return new CSSStringValue( CSSStringType.STRING, value.getStringValue() );
     }
-    return super.lookupValue(value);
+    return super.lookupValue( value );
   }
 }

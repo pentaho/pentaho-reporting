@@ -26,13 +26,12 @@ import java.util.ResourceBundle;
 import java.util.TimeZone;
 
 /**
- * A wrapper around the java.text.SimpleDateFormat class. This wrapper limits the possible interactions with
- * the wrapped format class and therefore we can treat the implementation as immutable.
+ * A wrapper around the java.text.SimpleDateFormat class. This wrapper limits the possible interactions with the wrapped
+ * format class and therefore we can treat the implementation as immutable.
  *
  * @author Thomas Morgner
  */
-public class FastDateFormat implements FastFormat
-{
+public class FastDateFormat implements FastFormat {
   private TimeZone timeZone;
   private Locale locale;
   private SimpleDateFormat dateFormat;
@@ -45,9 +44,8 @@ public class FastDateFormat implements FastFormat
    *
    * @param pattern the pattern string.
    */
-  public FastDateFormat(final String pattern)
-  {
-    this(pattern, Locale.getDefault(), TimeZone.getDefault());
+  public FastDateFormat( final String pattern ) {
+    this( pattern, Locale.getDefault(), TimeZone.getDefault() );
   }
 
   /**
@@ -56,156 +54,129 @@ public class FastDateFormat implements FastFormat
    * @param pattern the pattern string.
    * @param locale  the locale.
    */
-  public FastDateFormat(final String pattern, final Locale locale)
-  {
-    this(pattern, locale, TimeZone.getDefault());
+  public FastDateFormat( final String pattern, final Locale locale ) {
+    this( pattern, locale, TimeZone.getDefault() );
   }
 
-  public FastDateFormat(final String pattern, final Locale locale, final TimeZone timeZone)
-  {
-    if (pattern == null)
-    {
+  public FastDateFormat( final String pattern, final Locale locale, final TimeZone timeZone ) {
+    if ( pattern == null ) {
       throw new NullPointerException();
     }
-    if (locale == null)
-    {
+    if ( locale == null ) {
       throw new NullPointerException();
     }
-    if (timeZone == null)
-    {
+    if ( timeZone == null ) {
       throw new NullPointerException();
     }
 
     this.timeZone = timeZone;
     this.pattern = pattern;
     this.locale = locale;
-    this.dateFormat = new SimpleDateFormat(pattern, new DateFormatSymbols(locale));
-    this.dateFormat.setTimeZone(timeZone);
+    this.dateFormat = new SimpleDateFormat( pattern, new DateFormatSymbols( locale ) );
+    this.dateFormat.setTimeZone( timeZone );
   }
 
   /**
    * Creates a new date-format for the given default date and time style.
    *
-   * @param dateStyle the date-style, one of DateFormat#SHORT, DateFormat#MEDIUM, DateFormat#LONG, DateFormat#FULL
-   *                  or -1 for none.
-   * @param timeStyle the date-style, one of DateFormat#SHORT, DateFormat#MEDIUM, DateFormat#LONG, DateFormat#FULL
-   *                  or -1 for none.
+   * @param dateStyle the date-style, one of DateFormat#SHORT, DateFormat#MEDIUM, DateFormat#LONG, DateFormat#FULL or -1
+   *                  for none.
+   * @param timeStyle the date-style, one of DateFormat#SHORT, DateFormat#MEDIUM, DateFormat#LONG, DateFormat#FULL or -1
+   *                  for none.
    * @param locale    the locale.
    * @throws IllegalArgumentException if both date and time-style are set to -1.
    * @see DateFormat#getDateTimeInstance(int, int, Locale)
    */
-  public FastDateFormat(final int dateStyle, final int timeStyle, final Locale locale)
-  {
-    this(dateStyle, timeStyle, locale, TimeZone.getDefault());
+  public FastDateFormat( final int dateStyle, final int timeStyle, final Locale locale ) {
+    this( dateStyle, timeStyle, locale, TimeZone.getDefault() );
   }
 
   /**
    * Creates a new date-format for the given default date and time style along with a TimeZone.
    *
-   * @param dateStyle the date-style, one of DateFormat#SHORT, DateFormat#MEDIUM, DateFormat#LONG, DateFormat#FULL
-   *                  or -1 for none.
-   * @param timeStyle the date-style, one of DateFormat#SHORT, DateFormat#MEDIUM, DateFormat#LONG, DateFormat#FULL
-   *                  or -1 for none.
+   * @param dateStyle the date-style, one of DateFormat#SHORT, DateFormat#MEDIUM, DateFormat#LONG, DateFormat#FULL or -1
+   *                  for none.
+   * @param timeStyle the date-style, one of DateFormat#SHORT, DateFormat#MEDIUM, DateFormat#LONG, DateFormat#FULL or -1
+   *                  for none.
    * @param locale    the locale.
    * @param timeZone  the timeZone to which dates are interpreted.
    * @throws IllegalArgumentException if both date and time-style are set to -1.
    * @see DateFormat#getDateTimeInstance(int, int, Locale)
    */
-  public FastDateFormat(final int dateStyle, final int timeStyle, final Locale locale, final TimeZone timeZone)
-  {
-    if (locale == null)
-    {
+  public FastDateFormat( final int dateStyle, final int timeStyle, final Locale locale, final TimeZone timeZone ) {
+    if ( locale == null ) {
       throw new NullPointerException();
     }
 
     this.locale = locale;
     this.timeZone = timeZone;
 
-    final DateFormat dateFormat = DateFormat.getDateTimeInstance(dateStyle, timeStyle, locale);
-    if (dateFormat instanceof SimpleDateFormat)
-    {
+    final DateFormat dateFormat = DateFormat.getDateTimeInstance( dateStyle, timeStyle, locale );
+    if ( dateFormat instanceof SimpleDateFormat ) {
       this.dateFormat = (SimpleDateFormat) dateFormat;
       this.pattern = this.dateFormat.toPattern();
-    }
-    else
-    {
+    } else {
       // this should not happen in Sun JDKs, but you never know how the implementation looks like ..
       final ResourceBundle datePatterns = ResourceBundle.getBundle
-          ("org.pentaho.reporting.libraries.formatting.format-patterns");
+        ( "org.pentaho.reporting.libraries.formatting.format-patterns" );
 
       final String dateText;
-      switch (dateStyle)
-      {
-        case DateFormat.SHORT:
-        {
-          dateText = datePatterns.getString("format.date.short");
+      switch( dateStyle ) {
+        case DateFormat.SHORT: {
+          dateText = datePatterns.getString( "format.date.short" );
           break;
         }
-        case DateFormat.MEDIUM:
-        {
-          dateText = datePatterns.getString("format.date.medium");
+        case DateFormat.MEDIUM: {
+          dateText = datePatterns.getString( "format.date.medium" );
           break;
         }
-        case DateFormat.LONG:
-        {
-          dateText = datePatterns.getString("format.date.long");
+        case DateFormat.LONG: {
+          dateText = datePatterns.getString( "format.date.long" );
           break;
         }
-        case DateFormat.FULL:
-        {
-          dateText = datePatterns.getString("format.date.full");
+        case DateFormat.FULL: {
+          dateText = datePatterns.getString( "format.date.full" );
           break;
         }
         default:
           dateText = null;
       }
       final String timeText;
-      switch (timeStyle)
-      {
-        case DateFormat.SHORT:
-        {
-          timeText = datePatterns.getString("format.time.short");
+      switch( timeStyle ) {
+        case DateFormat.SHORT: {
+          timeText = datePatterns.getString( "format.time.short" );
           break;
         }
-        case DateFormat.MEDIUM:
-        {
-          timeText = datePatterns.getString("format.time.medium");
+        case DateFormat.MEDIUM: {
+          timeText = datePatterns.getString( "format.time.medium" );
           break;
         }
-        case DateFormat.LONG:
-        {
-          timeText = datePatterns.getString("format.time.long");
+        case DateFormat.LONG: {
+          timeText = datePatterns.getString( "format.time.long" );
           break;
         }
-        case DateFormat.FULL:
-        {
-          timeText = datePatterns.getString("format.time.full");
+        case DateFormat.FULL: {
+          timeText = datePatterns.getString( "format.time.full" );
           break;
         }
         default:
           timeText = null;
       }
-      if (dateText == null && timeText == null)
-      {
+      if ( dateText == null && timeText == null ) {
         throw new IllegalArgumentException();
       }
-      if (dateText == null)
-      {
+      if ( dateText == null ) {
         this.pattern = timeText;
-      }
-      else if (timeText == null)
-      {
+      } else if ( timeText == null ) {
         this.pattern = dateText;
+      } else {
+        final String messagePattern = datePatterns.getString( "format.datetime" );
+        this.pattern = MessageFormat.format( messagePattern, new Object[] { dateText, timeText } );
       }
-      else
-      {
-        final String messagePattern = datePatterns.getString("format.datetime");
-        this.pattern = MessageFormat.format(messagePattern, new Object[]{dateText, timeText});
-      }
-      this.dateFormat = new SimpleDateFormat(pattern, new DateFormatSymbols(locale));
+      this.dateFormat = new SimpleDateFormat( pattern, new DateFormatSymbols( locale ) );
     }
 
-    this.dateFormat.setTimeZone(timeZone);
+    this.dateFormat.setTimeZone( timeZone );
   }
 
   /**
@@ -213,19 +184,16 @@ public class FastDateFormat implements FastFormat
    *
    * @param locale the locale, never null.
    */
-  public void setLocale(final Locale locale)
-  {
-    if (locale == null)
-    {
+  public void setLocale( final Locale locale ) {
+    if ( locale == null ) {
       throw new NullPointerException();
     }
-    if (this.locale.equals(locale))
-    {
+    if ( this.locale.equals( locale ) ) {
       return;
     }
     this.locale = locale;
     this.dateFormat = (SimpleDateFormat) dateFormat.clone();
-    this.dateFormat.setDateFormatSymbols(new DateFormatSymbols(locale));
+    this.dateFormat.setDateFormatSymbols( new DateFormatSymbols( locale ) );
   }
 
   /**
@@ -233,8 +201,7 @@ public class FastDateFormat implements FastFormat
    *
    * @return the current locale, never null.
    */
-  public Locale getLocale()
-  {
+  public Locale getLocale() {
     return locale;
   }
 
@@ -243,8 +210,7 @@ public class FastDateFormat implements FastFormat
    *
    * @return the pattern.
    */
-  public String getPattern()
-  {
+  public String getPattern() {
     return pattern;
   }
 
@@ -254,29 +220,21 @@ public class FastDateFormat implements FastFormat
    * @param parameters the parameters for the formatting.
    * @return the formatted string.
    */
-  public String format(final Object parameters)
-  {
-    if (parameters == null)
-    {
+  public String format( final Object parameters ) {
+    if ( parameters == null ) {
       throw new NullPointerException();
     }
-    if (buffer == null)
-    {
+    if ( buffer == null ) {
       buffer = new StringBuffer();
+    } else {
+      buffer.delete( 0, buffer.length() );
     }
-    else
-    {
-      buffer.delete(0, buffer.length());
-    }
-    if (fieldPosition == null)
-    {
+    if ( fieldPosition == null ) {
       fieldPosition = new DummyFieldPosition();
-    }
-    else
-    {
+    } else {
       fieldPosition.clear();
     }
-    final StringBuffer stringBuffer = dateFormat.format(parameters, buffer, new DummyFieldPosition());
+    final StringBuffer stringBuffer = dateFormat.format( parameters, buffer, new DummyFieldPosition() );
     return stringBuffer.toString();
   }
 
@@ -285,29 +243,23 @@ public class FastDateFormat implements FastFormat
    *
    * @return the clone.
    */
-  public FastDateFormat clone()
-  {
-    try
-    {
+  public FastDateFormat clone() {
+    try {
       final FastDateFormat clone = (FastDateFormat) super.clone();
       clone.dateFormat = (SimpleDateFormat) dateFormat.clone();
       return clone;
-    }
-    catch (CloneNotSupportedException e)
-    {
+    } catch ( CloneNotSupportedException e ) {
       throw new IllegalStateException();
     }
   }
 
-  public TimeZone getTimeZone()
-  {
+  public TimeZone getTimeZone() {
     return timeZone;
   }
 
-  public void setTimeZone(final TimeZone timeZone)
-  {
+  public void setTimeZone( final TimeZone timeZone ) {
     this.timeZone = timeZone;
     this.dateFormat = (SimpleDateFormat) dateFormat.clone();
-    this.dateFormat.setTimeZone(timeZone);
+    this.dateFormat.setTimeZone( timeZone );
   }
 }

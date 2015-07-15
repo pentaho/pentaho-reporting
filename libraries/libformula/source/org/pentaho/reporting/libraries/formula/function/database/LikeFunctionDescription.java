@@ -19,7 +19,6 @@ package org.pentaho.reporting.libraries.formula.function.database;
 
 import org.pentaho.reporting.libraries.formula.function.AbstractFunctionDescription;
 import org.pentaho.reporting.libraries.formula.function.FunctionCategory;
-import org.pentaho.reporting.libraries.formula.function.text.TextFunctionCategory;
 import org.pentaho.reporting.libraries.formula.typing.Type;
 import org.pentaho.reporting.libraries.formula.typing.coretypes.LogicalType;
 import org.pentaho.reporting.libraries.formula.typing.coretypes.TextType;
@@ -29,38 +28,31 @@ import org.pentaho.reporting.libraries.formula.typing.coretypes.TextType;
  *
  * @author Will Gorman (wgorman@pentaho.com)
  */
-public class LikeFunctionDescription extends AbstractFunctionDescription
-{
+public class LikeFunctionDescription extends AbstractFunctionDescription {
 
   private static final long serialVersionUID = 8787262061507547672L;
 
-  public LikeFunctionDescription()
-  {
-    super("LIKE", "org.pentaho.reporting.libraries.formula.function.database.Like-Function");
+  public LikeFunctionDescription() {
+    super( "LIKE", "org.pentaho.reporting.libraries.formula.function.database.Like-Function" );
   }
 
-  public FunctionCategory getCategory()
-  {
+  public FunctionCategory getCategory() {
     return DatabaseFunctionCategory.CATEGORY;
   }
 
-  public int getParameterCount()
-  {
+  public int getParameterCount() {
     return 2;
   }
 
-  public Type getParameterType(final int position)
-  {
+  public Type getParameterType( final int position ) {
     return TextType.TYPE;
   }
 
-  public Type getValueType()
-  {
+  public Type getValueType() {
     return LogicalType.TYPE;
   }
 
-  public boolean isParameterMandatory(final int position)
-  {
+  public boolean isParameterMandatory( final int position ) {
     return true;
   }
 

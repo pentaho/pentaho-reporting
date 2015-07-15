@@ -25,22 +25,19 @@ import org.pentaho.reporting.libraries.css.model.CSSStyleRule;
 import org.pentaho.reporting.libraries.css.values.CSSValue;
 
 /**
- * A (possibly statefull) style matcher. This class is responsible for
- * checking which style rule applies to the given document.
+ * A (possibly statefull) style matcher. This class is responsible for checking which style rule applies to the given
+ * document.
  * <p/>
- * It is guaranteed, that the matcher receives the elements in the order
- * in which they appear in the document.
+ * It is guaranteed, that the matcher receives the elements in the order in which they appear in the document.
  * <p/>
- * Although the style rule matcher does not receive explicit element-opened
- * and element-closed events, these events can be derived from the layout element
- * and its relation to the parent (and possibly previously received element and
- * its parent).
+ * Although the style rule matcher does not receive explicit element-opened and element-closed events, these events can
+ * be derived from the layout element and its relation to the parent (and possibly previously received element and its
+ * parent).
  *
  * @author Thomas Morgner
  */
-public interface StyleRuleMatcher
-{
-  public void initialize(final DocumentContext layoutProcess);
+public interface StyleRuleMatcher {
+  public void initialize( final DocumentContext layoutProcess );
 
   /**
    * Creates an independent copy of this style rule matcher.
@@ -49,9 +46,9 @@ public interface StyleRuleMatcher
    */
   public StyleRuleMatcher deriveInstance();
 
-  public CSSStyleRule[] getMatchingRules(LayoutElement element);
+  public CSSStyleRule[] getMatchingRules( LayoutElement element );
 
-  public boolean isMatchingPseudoElement(LayoutElement element, String pseudo);
+  public boolean isMatchingPseudoElement( LayoutElement element, String pseudo );
 
-  public CSSPageRule[] getPageRule(CSSValue pageName, PseudoPage[] pseudoPages);
+  public CSSPageRule[] getPageRule( CSSValue pageName, PseudoPage[] pseudoPages );
 }

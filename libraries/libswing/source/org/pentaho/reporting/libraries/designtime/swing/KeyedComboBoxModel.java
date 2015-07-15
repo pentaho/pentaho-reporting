@@ -17,10 +17,10 @@
 
 package org.pentaho.reporting.libraries.designtime.swing;
 
-import java.util.ArrayList;
-import javax.swing.ComboBoxModel;
+import javax.swing.*;
 import javax.swing.event.ListDataEvent;
 import javax.swing.event.ListDataListener;
+import java.util.ArrayList;
 
 /**
  * The KeyedComboBox model allows to define an internal key (the data element) for every entry in the model.
@@ -31,14 +31,12 @@ import javax.swing.event.ListDataListener;
  *
  * @author Thomas Morgner
  */
-public class KeyedComboBoxModel<K,V> implements ComboBoxModel
-{
+public class KeyedComboBoxModel<K, V> implements ComboBoxModel {
 
   /**
    * The internal data carrier to map keys to values and vice versa.
    */
-  private static class ComboBoxItemPair<K,V>
-  {
+  private static class ComboBoxItemPair<K, V> {
     /**
      * The key.
      */
@@ -54,8 +52,7 @@ public class KeyedComboBoxModel<K,V> implements ComboBoxModel
      * @param key   the key
      * @param value the value
      */
-    private ComboBoxItemPair(final K key, final V value)
-    {
+    private ComboBoxItemPair( final K key, final V value ) {
       this.key = key;
       this.value = value;
     }
@@ -65,8 +62,7 @@ public class KeyedComboBoxModel<K,V> implements ComboBoxModel
      *
      * @return the key.
      */
-    public K getKey()
-    {
+    public K getKey() {
       return key;
     }
 
@@ -75,8 +71,7 @@ public class KeyedComboBoxModel<K,V> implements ComboBoxModel
      *
      * @return the value for this key.
      */
-    public V getValue()
-    {
+    public V getValue() {
       return value;
     }
 
@@ -85,15 +80,14 @@ public class KeyedComboBoxModel<K,V> implements ComboBoxModel
      *
      * @param value the new value.
      */
-    public void setValue(final V value)
-    {
+    public void setValue( final V value ) {
       this.value = value;
     }
   }
 
   private int selectedItemIndex;
   private V selectedItemValue;
-  private ArrayList<ComboBoxItemPair<K,V>> data;
+  private ArrayList<ComboBoxItemPair<K, V>> data;
   private ArrayList<ListDataListener> listdatalistener;
   private transient ListDataListener[] tempListeners;
   private boolean allowOtherValue;
@@ -101,8 +95,7 @@ public class KeyedComboBoxModel<K,V> implements ComboBoxModel
   /**
    * Creates a new keyed combobox model.
    */
-  public KeyedComboBoxModel()
-  {
+  public KeyedComboBoxModel() {
     data = new ArrayList<ComboBoxItemPair<K, V>>();
     listdatalistener = new ArrayList<ListDataListener>();
     selectedItemIndex = -1;
@@ -115,10 +108,9 @@ public class KeyedComboBoxModel<K,V> implements ComboBoxModel
    * @param keys   the keys
    * @param values the values
    */
-  public KeyedComboBoxModel(final K[] keys, final V[] values)
-  {
+  public KeyedComboBoxModel( final K[] keys, final V[] values ) {
     this();
-    setData(keys, values);
+    setData( keys, values );
   }
 
   /**
@@ -127,25 +119,22 @@ public class KeyedComboBoxModel<K,V> implements ComboBoxModel
    * @param keys   the keys
    * @param values the values
    */
-  public void setData(final K[] keys, final V[] values)
-  {
-    if (values.length != keys.length)
-    {
-      throw new IllegalArgumentException("Values and text must have the same length.");
+  public void setData( final K[] keys, final V[] values ) {
+    if ( values.length != keys.length ) {
+      throw new IllegalArgumentException( "Values and text must have the same length." );
     }
 
     data.clear();
-    data.ensureCapacity(keys.length);
+    data.ensureCapacity( keys.length );
 
-    for (int i = 0; i < values.length; i++)
-    {
-      add(keys[i], values[i]);
+    for ( int i = 0; i < values.length; i++ ) {
+      add( keys[ i ], values[ i ] );
     }
 
     selectedItemIndex = -1;
     final ListDataEvent evt = new ListDataEvent
-        (this, ListDataEvent.CONTENTS_CHANGED, 0, data.size() - 1);
-    fireListDataEvent(evt);
+      ( this, ListDataEvent.CONTENTS_CHANGED, 0, data.size() - 1 );
+    fireListDataEvent( evt );
   }
 
   /**
@@ -153,19 +142,16 @@ public class KeyedComboBoxModel<K,V> implements ComboBoxModel
    *
    * @param evt the event.
    */
-  protected synchronized void fireListDataEvent(final ListDataEvent evt)
-  {
-    if (tempListeners == null)
-    {
+  protected synchronized void fireListDataEvent( final ListDataEvent evt ) {
+    if ( tempListeners == null ) {
       tempListeners = listdatalistener.toArray
-          (new ListDataListener[listdatalistener.size()]);
+        ( new ListDataListener[ listdatalistener.size() ] );
     }
 
     final ListDataListener[] listeners = tempListeners;
-    for (int i = 0; i < listeners.length; i++)
-    {
-      final ListDataListener l = listeners[i];
-      l.contentsChanged(evt);
+    for ( int i = 0; i < listeners.length; i++ ) {
+      final ListDataListener l = listeners[ i ];
+      l.contentsChanged( evt );
     }
   }
 
@@ -174,8 +160,7 @@ public class KeyedComboBoxModel<K,V> implements ComboBoxModel
    *
    * @return The selected item or <code>null</code> if there is no selection
    */
-  public V getSelectedItem()
-  {
+  public V getSelectedItem() {
     return selectedItemValue;
   }
 
@@ -184,23 +169,18 @@ public class KeyedComboBoxModel<K,V> implements ComboBoxModel
    *
    * @param anItem the new selected item.
    */
-  public void setSelectedKey(final K anItem)
-  {
+  public void setSelectedKey( final K anItem ) {
     final int oldSelectedItem = this.selectedItemIndex;
-    final int newSelectedItem = findDataElementIndex(anItem);
-    if (newSelectedItem == -1)
-    {
+    final int newSelectedItem = findDataElementIndex( anItem );
+    if ( newSelectedItem == -1 ) {
       selectedItemIndex = -1;
       selectedItemValue = null;
-    }
-    else
-    {
+    } else {
       selectedItemIndex = newSelectedItem;
-      selectedItemValue = getElementAt(selectedItemIndex);
+      selectedItemValue = getElementAt( selectedItemIndex );
     }
-    if (oldSelectedItem != this.selectedItemIndex)
-    {
-      fireListDataEvent(new ListDataEvent(this, ListDataEvent.CONTENTS_CHANGED, -1, -1));
+    if ( oldSelectedItem != this.selectedItemIndex ) {
+      fireListDataEvent( new ListDataEvent( this, ListDataEvent.CONTENTS_CHANGED, -1, -1 ) );
     }
   }
 
@@ -210,47 +190,36 @@ public class KeyedComboBoxModel<K,V> implements ComboBoxModel
    *
    * @param anItem the list object to select or <code>null</code> to clear the selection
    */
-  public final void setSelectedItem(final Object anItem)
-  {
+  public final void setSelectedItem( final Object anItem ) {
     //noinspection unchecked
-    setSelectedValue((V) anItem);
+    setSelectedValue( (V) anItem );
   }
 
-  public void setSelectedValue(final V anItem)
-  {
+  public void setSelectedValue( final V anItem ) {
     final int oldSelectedItem = this.selectedItemIndex;
-    final int newSelectedItem = findElementIndex(anItem);
-    if (newSelectedItem == -1)
-    {
-      if (isAllowOtherValue())
-      {
+    final int newSelectedItem = findElementIndex( anItem );
+    if ( newSelectedItem == -1 ) {
+      if ( isAllowOtherValue() ) {
         selectedItemIndex = -1;
         selectedItemValue = anItem;
-      }
-      else
-      {
+      } else {
         selectedItemIndex = -1;
         selectedItemValue = null;
       }
-    }
-    else
-    {
+    } else {
       selectedItemIndex = newSelectedItem;
-      selectedItemValue = getElementAt(selectedItemIndex);
+      selectedItemValue = getElementAt( selectedItemIndex );
     }
-    if (oldSelectedItem != this.selectedItemIndex)
-    {
-      fireListDataEvent(new ListDataEvent(this, ListDataEvent.CONTENTS_CHANGED, -1, -1));
+    if ( oldSelectedItem != this.selectedItemIndex ) {
+      fireListDataEvent( new ListDataEvent( this, ListDataEvent.CONTENTS_CHANGED, -1, -1 ) );
     }
   }
 
-  private boolean isAllowOtherValue()
-  {
+  private boolean isAllowOtherValue() {
     return allowOtherValue;
   }
 
-  public void setAllowOtherValue(final boolean allowOtherValue)
-  {
+  public void setAllowOtherValue( final boolean allowOtherValue ) {
     this.allowOtherValue = allowOtherValue;
   }
 
@@ -259,13 +228,11 @@ public class KeyedComboBoxModel<K,V> implements ComboBoxModel
    *
    * @param l the <code>ListDataListener</code> to be added
    */
-  public synchronized void addListDataListener(final ListDataListener l)
-  {
-    if (l == null)
-    {
+  public synchronized void addListDataListener( final ListDataListener l ) {
+    if ( l == null ) {
       throw new NullPointerException();
     }
-    listdatalistener.add(l);
+    listdatalistener.add( l );
     tempListeners = null;
   }
 
@@ -275,16 +242,13 @@ public class KeyedComboBoxModel<K,V> implements ComboBoxModel
    * @param index the requested index
    * @return the value at <code>index</code>
    */
-  public V getElementAt(final int index)
-  {
-    if (index == -1 || index >= data.size())
-    {
+  public V getElementAt( final int index ) {
+    if ( index == -1 || index >= data.size() ) {
       return null;
     }
 
-    final ComboBoxItemPair<K,V> datacon = data.get(index);
-    if (datacon == null)
-    {
+    final ComboBoxItemPair<K, V> datacon = data.get( index );
+    if ( datacon == null ) {
       return null;
     }
     return datacon.getValue();
@@ -296,21 +260,17 @@ public class KeyedComboBoxModel<K,V> implements ComboBoxModel
    * @param index the index of the key.
    * @return the the key at the specified index.
    */
-  public K getKeyAt(final int index)
-  {
-    if (index >= data.size())
-    {
+  public K getKeyAt( final int index ) {
+    if ( index >= data.size() ) {
       return null;
     }
 
-    if (index < 0)
-    {
+    if ( index < 0 ) {
       return null;
     }
 
-    final ComboBoxItemPair<K,V> datacon = data.get(index);
-    if (datacon == null)
-    {
+    final ComboBoxItemPair<K, V> datacon = data.get( index );
+    if ( datacon == null ) {
       return null;
     }
     return datacon.getKey();
@@ -321,9 +281,8 @@ public class KeyedComboBoxModel<K,V> implements ComboBoxModel
    *
    * @return the selected data element.
    */
-  public K getSelectedKey()
-  {
-    return getKeyAt(selectedItemIndex);
+  public K getSelectedKey() {
+    return getKeyAt( selectedItemIndex );
   }
 
   /**
@@ -331,8 +290,7 @@ public class KeyedComboBoxModel<K,V> implements ComboBoxModel
    *
    * @return the length of the list
    */
-  public int getSize()
-  {
+  public int getSize() {
     return data.size();
   }
 
@@ -341,9 +299,8 @@ public class KeyedComboBoxModel<K,V> implements ComboBoxModel
    *
    * @param l the <code>ListDataListener</code> to be removed
    */
-  public void removeListDataListener(final ListDataListener l)
-  {
-    listdatalistener.remove(l);
+  public void removeListDataListener( final ListDataListener l ) {
+    listdatalistener.remove( l );
     tempListeners = null;
   }
 
@@ -353,18 +310,14 @@ public class KeyedComboBoxModel<K,V> implements ComboBoxModel
    * @param anItem the item
    * @return the index of the item or -1 if not found.
    */
-  private int findDataElementIndex(final K anItem)
-  {
-    for (int i = 0; i < data.size(); i++)
-    {
-      final ComboBoxItemPair<K,V> datacon = data.get(i);
+  private int findDataElementIndex( final K anItem ) {
+    for ( int i = 0; i < data.size(); i++ ) {
+      final ComboBoxItemPair<K, V> datacon = data.get( i );
       final K key = datacon.getKey();
-      if (anItem == key)
-      {
+      if ( anItem == key ) {
         return i;
       }
-      if (anItem != null && anItem.equals(key))
-      {
+      if ( anItem != null && anItem.equals( key ) ) {
         return i;
       }
     }
@@ -378,18 +331,14 @@ public class KeyedComboBoxModel<K,V> implements ComboBoxModel
    * @param anItem the key for the element to be searched.
    * @return the index of the key, or -1 if not found.
    */
-  public int findElementIndex(final V anItem)
-  {
-    for (int i = 0; i < data.size(); i++)
-    {
-      final ComboBoxItemPair<K,V> datacon = data.get(i);
+  public int findElementIndex( final V anItem ) {
+    for ( int i = 0; i < data.size(); i++ ) {
+      final ComboBoxItemPair<K, V> datacon = data.get( i );
       final Object value = datacon.getValue();
-      if (anItem == value)
-      {
+      if ( anItem == value ) {
         return i;
       }
-      if (anItem != null && anItem.equals(value))
-      {
+      if ( anItem != null && anItem.equals( value ) ) {
         return i;
       }
     }
@@ -401,18 +350,16 @@ public class KeyedComboBoxModel<K,V> implements ComboBoxModel
    *
    * @param key the key
    */
-  public void removeDataElement(final K key)
-  {
-    final int idx = findDataElementIndex(key);
-    if (idx == -1)
-    {
+  public void removeDataElement( final K key ) {
+    final int idx = findDataElementIndex( key );
+    if ( idx == -1 ) {
       return;
     }
 
-    data.remove(idx);
+    data.remove( idx );
     final ListDataEvent evt = new ListDataEvent
-        (this, ListDataEvent.INTERVAL_REMOVED, idx, idx);
-    fireListDataEvent(evt);
+      ( this, ListDataEvent.INTERVAL_REMOVED, idx, idx );
+    fireListDataEvent( evt );
   }
 
   /**
@@ -421,46 +368,41 @@ public class KeyedComboBoxModel<K,V> implements ComboBoxModel
    * @param key    the key
    * @param cbitem the display value.
    */
-  public void add(final K key, final V cbitem)
-  {
-    final ComboBoxItemPair<K,V> con = new ComboBoxItemPair<K,V>(key, cbitem);
-    data.add(con);
+  public void add( final K key, final V cbitem ) {
+    final ComboBoxItemPair<K, V> con = new ComboBoxItemPair<K, V>( key, cbitem );
+    data.add( con );
     final ListDataEvent evt = new ListDataEvent
-        (this, ListDataEvent.INTERVAL_ADDED, data.size() - 2, data.size() - 2);
-    fireListDataEvent(evt);
+      ( this, ListDataEvent.INTERVAL_ADDED, data.size() - 2, data.size() - 2 );
+    fireListDataEvent( evt );
   }
 
-  public void update(final int index, final K key, final V cbitem)
-  {
-    final ComboBoxItemPair<K,V> con = new ComboBoxItemPair<K,V>(key, cbitem);
-    data.set(index, con);
+  public void update( final int index, final K key, final V cbitem ) {
+    final ComboBoxItemPair<K, V> con = new ComboBoxItemPair<K, V>( key, cbitem );
+    data.set( index, con );
     final ListDataEvent evt = new ListDataEvent
-        (this, ListDataEvent.CONTENTS_CHANGED, index, index);
-    fireListDataEvent(evt);
+      ( this, ListDataEvent.CONTENTS_CHANGED, index, index );
+    fireListDataEvent( evt );
   }
 
   /**
    * Removes all entries from the model.
    */
-  public void clear()
-  {
+  public void clear() {
     final int size = getSize();
     data.clear();
-    fireListDataEvent(new ListDataEvent(this, ListDataEvent.INTERVAL_REMOVED, 0, size - 1));
+    fireListDataEvent( new ListDataEvent( this, ListDataEvent.INTERVAL_REMOVED, 0, size - 1 ) );
     selectedItemIndex = -1;
     selectedItemValue = null;
-    fireListDataEvent(new ListDataEvent(this, ListDataEvent.CONTENTS_CHANGED, -1, -1));
+    fireListDataEvent( new ListDataEvent( this, ListDataEvent.CONTENTS_CHANGED, -1, -1 ) );
   }
 
-  public int getSelectedItemIndex()
-  {
+  public int getSelectedItemIndex() {
     return selectedItemIndex;
   }
 
-  public void remove(final int index)
-  {
-    data.remove(index);
-    final ListDataEvent evt = new ListDataEvent(this, ListDataEvent.INTERVAL_REMOVED, index, index);
-    fireListDataEvent(evt);
+  public void remove( final int index ) {
+    data.remove( index );
+    final ListDataEvent evt = new ListDataEvent( this, ListDataEvent.INTERVAL_REMOVED, index, index );
+    fireListDataEvent( evt );
   }
 }

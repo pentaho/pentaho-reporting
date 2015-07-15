@@ -22,22 +22,18 @@ package org.pentaho.reporting.libraries.fonts.text;
  *
  * @author Thomas Morgner
  */
-public class DefaultLanguageClassifier implements LanguageClassifier
-{
+public class DefaultLanguageClassifier implements LanguageClassifier {
 
   private int lastScript;
 
-  public DefaultLanguageClassifier()
-  {
+  public DefaultLanguageClassifier() {
   }
 
-  public int getScript(final int codepoint)
-  {
+  public int getScript( final int codepoint ) {
     return 0;
   }
 
-  public Object clone() throws CloneNotSupportedException
-  {
+  public Object clone() throws CloneNotSupportedException {
     return super.clone();
   }
 

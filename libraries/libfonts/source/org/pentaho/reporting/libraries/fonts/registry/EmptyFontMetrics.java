@@ -25,21 +25,18 @@ import org.pentaho.reporting.libraries.fonts.tools.FontStrictGeomUtility;
  *
  * @author Thomas Morgner
  */
-public class EmptyFontMetrics implements FontMetrics
-{
+public class EmptyFontMetrics implements FontMetrics {
   private long baseSize;
   private long baseWidth;
   private FontNativeContext record;
 
-  public EmptyFontMetrics(final FontNativeContext record, final double baseWidth, final double baseHeight)
-  {
+  public EmptyFontMetrics( final FontNativeContext record, final double baseWidth, final double baseHeight ) {
     this.record = record;
-    this.baseSize = FontStrictGeomUtility.toInternalValue(baseHeight);
-    this.baseWidth = FontStrictGeomUtility.toInternalValue(baseWidth);
+    this.baseSize = FontStrictGeomUtility.toInternalValue( baseHeight );
+    this.baseWidth = FontStrictGeomUtility.toInternalValue( baseWidth );
   }
 
-  public EmptyFontMetrics(final FontNativeContext record, final long baseWidth, final long baseHeight)
-  {
+  public EmptyFontMetrics( final FontNativeContext record, final long baseWidth, final long baseHeight ) {
     this.record = record;
     this.baseWidth = baseWidth;
     this.baseSize = baseHeight;
@@ -50,8 +47,7 @@ public class EmptyFontMetrics implements FontMetrics
    *
    * @return true, if the baseline info in question is always the same, false otherwise.
    */
-  public boolean isUniformFontMetrics()
-  {
+  public boolean isUniformFontMetrics() {
     return true;
   }
 
@@ -60,89 +56,72 @@ public class EmptyFontMetrics implements FontMetrics
    *
    * @return
    */
-  public long getAscent()
-  {
-    return FontStrictGeomUtility.toInternalValue(baseSize * LibFontsDefaults.DEFAULT_ASCENT_SIZE);
+  public long getAscent() {
+    return FontStrictGeomUtility.toInternalValue( baseSize * LibFontsDefaults.DEFAULT_ASCENT_SIZE );
   }
 
-  public long getDescent()
-  {
-    return FontStrictGeomUtility.toInternalValue(baseSize * LibFontsDefaults.DEFAULT_DESCENT_SIZE);
+  public long getDescent() {
+    return FontStrictGeomUtility.toInternalValue( baseSize * LibFontsDefaults.DEFAULT_DESCENT_SIZE );
   }
 
-  public long getLeading()
-  {
+  public long getLeading() {
     return 0;
   }
 
   /**
-   * The height of the lowercase 'x'. This is used as hint, which size the
-   * lowercase characters will have.
+   * The height of the lowercase 'x'. This is used as hint, which size the lowercase characters will have.
    *
    * @return
    */
-  public long getXHeight()
-  {
-    return FontStrictGeomUtility.toInternalValue(baseSize * LibFontsDefaults.DEFAULT_XHEIGHT_SIZE);
+  public long getXHeight() {
+    return FontStrictGeomUtility.toInternalValue( baseSize * LibFontsDefaults.DEFAULT_XHEIGHT_SIZE );
   }
 
-  public long getOverlinePosition()
-  {
-    return getLeading() - Math.max (1000, baseSize / 20);
+  public long getOverlinePosition() {
+    return getLeading() - Math.max( 1000, baseSize / 20 );
   }
 
-  public long getUnderlinePosition()
-  {
-    return getAscent() + Math.max (1000, baseSize / 20);
+  public long getUnderlinePosition() {
+    return getAscent() + Math.max( 1000, baseSize / 20 );
   }
 
-  public long getStrikeThroughPosition()
-  {
-    return FontStrictGeomUtility.toInternalValue(getXHeight() * LibFontsDefaults.DEFAULT_STRIKETHROUGH_POSITION);
+  public long getStrikeThroughPosition() {
+    return FontStrictGeomUtility.toInternalValue( getXHeight() * LibFontsDefaults.DEFAULT_STRIKETHROUGH_POSITION );
   }
 
-  public long getMaxAscent()
-  {
+  public long getMaxAscent() {
     return getAscent();
   }
 
-  public long getMaxDescent()
-  {
+  public long getMaxDescent() {
     return getDescent();
   }
 
-  public long getMaxHeight()
-  {
+  public long getMaxHeight() {
     return baseSize;
   }
 
-  public long getMaxCharAdvance()
-  {
+  public long getMaxCharAdvance() {
     return baseWidth;
   }
 
-  public long getCharWidth(final int codePoint)
-  {
+  public long getCharWidth( final int codePoint ) {
     return baseWidth;
   }
 
-  public long getKerning(final int previous, final int codePoint)
-  {
+  public long getKerning( final int previous, final int codePoint ) {
     return 0;
   }
 
   /**
-   * Baselines are defined for scripts, not glyphs. A glyph carries script
-   * information most of the time (unless it is a neutral characters or just
-   * weird).
+   * Baselines are defined for scripts, not glyphs. A glyph carries script information most of the time (unless it is a
+   * neutral characters or just weird).
    *
    * @param c
    * @return
    */
-  public BaselineInfo getBaselines(final int c, BaselineInfo info)
-  {
-    if (info == null)
-    {
+  public BaselineInfo getBaselines( final int c, BaselineInfo info ) {
+    if ( info == null ) {
       info = new BaselineInfo();
     }
 
@@ -152,23 +131,21 @@ public class EmptyFontMetrics implements FontMetrics
     // The ascent is local - but we need the global baseline, relative to the
     // MaxAscent.
     final long maxAscent = getMaxAscent();
-    info.setBaseline(BaselineInfo.MATHEMATICAL, maxAscent - getXHeight());
-    info.setBaseline(BaselineInfo.IDEOGRAPHIC, getMaxHeight());
-    info.setBaseline(BaselineInfo.MIDDLE, maxAscent / 2);
-    info.setBaseline(BaselineInfo.ALPHABETIC, maxAscent);
-    info.setBaseline(BaselineInfo.CENTRAL, maxAscent / 2);
-    info.setBaseline(BaselineInfo.HANGING, maxAscent - getXHeight());
-    info.setDominantBaseline(BaselineInfo.ALPHABETIC);
+    info.setBaseline( BaselineInfo.MATHEMATICAL, maxAscent - getXHeight() );
+    info.setBaseline( BaselineInfo.IDEOGRAPHIC, getMaxHeight() );
+    info.setBaseline( BaselineInfo.MIDDLE, maxAscent / 2 );
+    info.setBaseline( BaselineInfo.ALPHABETIC, maxAscent );
+    info.setBaseline( BaselineInfo.CENTRAL, maxAscent / 2 );
+    info.setBaseline( BaselineInfo.HANGING, maxAscent - getXHeight() );
+    info.setDominantBaseline( BaselineInfo.ALPHABETIC );
     return info;
   }
 
-  public long getItalicAngle()
-  {
+  public long getItalicAngle() {
     return 0;
   }
 
-  public FontNativeContext getNativeContext()
-  {
+  public FontNativeContext getNativeContext() {
     return record;
   }
 }

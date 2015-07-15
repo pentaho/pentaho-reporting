@@ -17,21 +17,18 @@
 
 package org.pentaho.reporting.libraries.formula;
 
-public class Prd5174Test extends FormulaTestBase
-{
-  public void testDefault() throws Exception
-  {
+public class Prd5174Test extends FormulaTestBase {
+  public void testDefault() throws Exception {
     runDefaultTest();
   }
 
-  protected Object[][] createDataTest()
-  {
+  protected Object[][] createDataTest() {
     return new Object[][]
-    {
-        {"\"PreFix:\" & ({1 | 2 | 3}) & \":PostFix\"", "PreFix:1, 2, 3:PostFix"},
-        {"\"PreFix:\" & [.B18] & \":PostFix\"", "PreFix:1, 2, 3:PostFix"},
-        {"\"PreFix:\" & [.C18] & \":PostFix\"", "PreFix:1, 2, 3:PostFix"},
-    };
+      {
+        { "\"PreFix:\" & ({1 | 2 | 3}) & \":PostFix\"", "PreFix:1, 2, 3:PostFix" },
+        { "\"PreFix:\" & [.B18] & \":PostFix\"", "PreFix:1, 2, 3:PostFix" },
+        { "\"PreFix:\" & [.C18] & \":PostFix\"", "PreFix:1, 2, 3:PostFix" },
+      };
 
   }
 }

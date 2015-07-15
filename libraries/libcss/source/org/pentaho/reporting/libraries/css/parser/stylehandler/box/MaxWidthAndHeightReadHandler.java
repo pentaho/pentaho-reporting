@@ -24,10 +24,8 @@ import org.pentaho.reporting.libraries.css.parser.stylehandler.AbstractWidthRead
  *
  * @author Thomas Morgner
  */
-public class MaxWidthAndHeightReadHandler extends AbstractWidthReadHandler
-{
-  public MaxWidthAndHeightReadHandler()
-  {
-    super(true, true);
+public class MaxWidthAndHeightReadHandler extends AbstractWidthReadHandler {
+  public MaxWidthAndHeightReadHandler() {
+    super( true, true );
   }
 }

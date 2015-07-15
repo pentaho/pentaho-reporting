@@ -25,13 +25,11 @@ import org.pentaho.reporting.libraries.css.parser.stylehandler.OneOfConstantsRea
  *
  * @author Thomas Morgner
  */
-public class TextCombineReadHandler extends OneOfConstantsReadHandler
-{
-  public TextCombineReadHandler()
-  {
-    super(false);
-    addValue(TextCombine.LETTER);
-    addValue(TextCombine.LINE);
-    addValue(TextCombine.NONE);
+public class TextCombineReadHandler extends OneOfConstantsReadHandler {
+  public TextCombineReadHandler() {
+    super( false );
+    addValue( TextCombine.LETTER );
+    addValue( TextCombine.LINE );
+    addValue( TextCombine.NONE );
   }
 }

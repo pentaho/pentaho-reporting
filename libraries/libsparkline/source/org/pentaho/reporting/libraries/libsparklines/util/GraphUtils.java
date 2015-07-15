@@ -24,13 +24,11 @@ package org.pentaho.reporting.libraries.libsparklines.util;
  * @author Larry Ogrodnek <larry@cheesesteak.net>
  * @version $Revision: 1.3 $ $Date: 2007-01-15 04:49:21 $
  */
-public final class GraphUtils
-{
+public final class GraphUtils {
   /**
    * Utility class constructor prevents object creation.
    */
-  private GraphUtils()
-  {
+  private GraphUtils() {
   }
 
   /**
@@ -40,93 +38,73 @@ public final class GraphUtils
    * @param height the target height of the graph.
    * @return the scale factor.
    */
-  public static float getDivisor(final Number[] data, final int height)
-  {
-    if (data == null)
-    {
-      throw new NullPointerException("Data array must not be null.");
+  public static float getDivisor( final Number[] data, final int height ) {
+    if ( data == null ) {
+      throw new NullPointerException( "Data array must not be null." );
     }
 
-    if (height < 1)
-    {
-      throw new IndexOutOfBoundsException("Height must be greater or equal to 1");
+    if ( height < 1 ) {
+      throw new IndexOutOfBoundsException( "Height must be greater or equal to 1" );
     }
 
     float max = Float.MIN_VALUE;
     float min = Float.MAX_VALUE;
 
-    for (int index = 0; index < data.length; index++)
-    {
-      final Number i = data[index];
-      if (i == null)
-      {
+    for ( int index = 0; index < data.length; index++ ) {
+      final Number i = data[ index ];
+      if ( i == null ) {
         continue;
       }
 
       final float numValue = i.floatValue();
-      if (numValue < min)
-      {
+      if ( numValue < min ) {
         min = numValue;
       }
-      if (numValue > max)
-      {
+      if ( numValue > max ) {
         max = numValue;
       }
     }
 
-    if (max <= min)
-    {
+    if ( max <= min ) {
       return 1.0f;
     }
-    if (height == 1)
-    {
+    if ( height == 1 ) {
       return 0;
     }
-    return (max - min) / (height - 1);
+    return ( max - min ) / ( height - 1 );
   }
 
-  public static float getAxe(final Number[] data)
-  {
-    if (data == null)
-    {
-      throw new NullPointerException("Data array must not be null.");
+  public static float getAxe( final Number[] data ) {
+    if ( data == null ) {
+      throw new NullPointerException( "Data array must not be null." );
     }
 
     float max = Float.MIN_VALUE;
     float min = Float.MAX_VALUE;
 
-    for (int index = 0; index < data.length; index++)
-    {
-      final Number i = data[index];
-      if (i == null)
-      {
+    for ( int index = 0; index < data.length; index++ ) {
+      final Number i = data[ index ];
+      if ( i == null ) {
         continue;
       }
 
       final float numValue = i.floatValue();
-      if(index == 0)
-      {
+      if ( index == 0 ) {
         max = min = numValue;
-      }
-      else
-      {
-        if(numValue> max)
-        {
+      } else {
+        if ( numValue > max ) {
           max = numValue;
         }
-        if(numValue < min)
-        {
+        if ( numValue < min ) {
           min = numValue;
         }
       }
     }
 
-    if(min >= 0)
-    {
+    if ( min >= 0 ) {
       return 0;
     }
-    if(max <= 0)
-    {
+    if ( max <= 0 ) {
       return -1;
     }
 

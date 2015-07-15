@@ -27,18 +27,16 @@ import org.pentaho.reporting.libraries.fonts.registry.FontNativeContext;
  *
  * @author Thomas Morgner
  */
-public class MonospaceFontMetrics implements FontMetrics
-{
+public class MonospaceFontMetrics implements FontMetrics {
   private static final long MICRO_DOTS_PER_INCH = 72000;
   private long charHeight;
   private long charWidth;
   private FontNativeContext record;
 
-  public MonospaceFontMetrics(final FontNativeContext record, final float cpi, final float lpi)
-  {
+  public MonospaceFontMetrics( final FontNativeContext record, final float cpi, final float lpi ) {
     this.record = record;
-    charHeight = (long)(MICRO_DOTS_PER_INCH / lpi);
-    charWidth = (long)(MICRO_DOTS_PER_INCH / cpi);
+    charHeight = (long) ( MICRO_DOTS_PER_INCH / lpi );
+    charWidth = (long) ( MICRO_DOTS_PER_INCH / cpi );
   }
 
   /**
@@ -46,8 +44,7 @@ public class MonospaceFontMetrics implements FontMetrics
    *
    * @return true, if the baseline info in question is always the same, false otherwise.
    */
-  public boolean isUniformFontMetrics()
-  {
+  public boolean isUniformFontMetrics() {
     return true;
   }
 
@@ -56,18 +53,15 @@ public class MonospaceFontMetrics implements FontMetrics
    *
    * @return
    */
-  public long getAscent()
-  {
-    return (long) (LibFontsDefaults.DEFAULT_ASCENT_SIZE * charHeight);
+  public long getAscent() {
+    return (long) ( LibFontsDefaults.DEFAULT_ASCENT_SIZE * charHeight );
   }
 
-  public long getDescent()
-  {
-    return (long) (LibFontsDefaults.DEFAULT_DESCENT_SIZE * charHeight);
+  public long getDescent() {
+    return (long) ( LibFontsDefaults.DEFAULT_DESCENT_SIZE * charHeight );
   }
 
-  public long getLeading()
-  {
+  public long getLeading() {
     return 0;
   }
 
@@ -76,58 +70,47 @@ public class MonospaceFontMetrics implements FontMetrics
    *
    * @return
    */
-  public long getXHeight()
-  {
-    return (long) (LibFontsDefaults.DEFAULT_XHEIGHT_SIZE * charHeight);
+  public long getXHeight() {
+    return (long) ( LibFontsDefaults.DEFAULT_XHEIGHT_SIZE * charHeight );
   }
 
-  public long getOverlinePosition()
-  {
-    return getLeading() - Math.max (1000, charHeight / 20);
+  public long getOverlinePosition() {
+    return getLeading() - Math.max( 1000, charHeight / 20 );
   }
 
-  public long getUnderlinePosition()
-  {
-    return getAscent() + Math.max (1000, charHeight / 20);
+  public long getUnderlinePosition() {
+    return getAscent() + Math.max( 1000, charHeight / 20 );
   }
 
-  public long getStrikeThroughPosition()
-  {
-    return (long) (LibFontsDefaults.DEFAULT_STRIKETHROUGH_POSITION * getXHeight());
+  public long getStrikeThroughPosition() {
+    return (long) ( LibFontsDefaults.DEFAULT_STRIKETHROUGH_POSITION * getXHeight() );
   }
 
-  public long getMaxAscent()
-  {
+  public long getMaxAscent() {
     return getAscent();
   }
 
-  public long getMaxDescent()
-  {
+  public long getMaxDescent() {
     return getDescent();
   }
 
-  public long getMaxHeight()
-  {
+  public long getMaxHeight() {
     return charHeight;
   }
 
-  public long getMaxCharAdvance()
-  {
+  public long getMaxCharAdvance() {
     return charWidth;
   }
 
-  public long getCharWidth(final int codePoint)
-  {
+  public long getCharWidth( final int codePoint ) {
     return charWidth;
   }
 
-  public long getKerning(final int previous, final int codePoint)
-  {
+  public long getKerning( final int previous, final int codePoint ) {
     return 0;
   }
 
-  public long getItalicAngle()
-  {
+  public long getItalicAngle() {
     return 0;
   }
 
@@ -138,25 +121,22 @@ public class MonospaceFontMetrics implements FontMetrics
    * @param codePoint
    * @return
    */
-  public BaselineInfo getBaselines(final int codePoint, BaselineInfo info)
-  {
-    if (info == null)
-    {
+  public BaselineInfo getBaselines( final int codePoint, BaselineInfo info ) {
+    if ( info == null ) {
       info = new BaselineInfo();
     }
 
 
-    info.setBaseline(BaselineInfo.HANGING, 0);
-    info.setBaseline(BaselineInfo.MATHEMATICAL, charHeight / 2);
-    info.setBaseline(BaselineInfo.CENTRAL, charHeight / 2);
-    info.setBaseline(BaselineInfo.MIDDLE, charHeight / 2);
-    info.setBaseline(BaselineInfo.ALPHABETIC, getMaxAscent());
-    info.setBaseline(BaselineInfo.IDEOGRAPHIC, getMaxHeight());
+    info.setBaseline( BaselineInfo.HANGING, 0 );
+    info.setBaseline( BaselineInfo.MATHEMATICAL, charHeight / 2 );
+    info.setBaseline( BaselineInfo.CENTRAL, charHeight / 2 );
+    info.setBaseline( BaselineInfo.MIDDLE, charHeight / 2 );
+    info.setBaseline( BaselineInfo.ALPHABETIC, getMaxAscent() );
+    info.setBaseline( BaselineInfo.IDEOGRAPHIC, getMaxHeight() );
     return info;
   }
 
-  public FontNativeContext getNativeContext()
-  {
+  public FontNativeContext getNativeContext() {
     return record;
   }
 }

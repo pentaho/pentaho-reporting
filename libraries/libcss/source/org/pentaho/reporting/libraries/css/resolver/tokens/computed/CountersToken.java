@@ -20,39 +20,33 @@ package org.pentaho.reporting.libraries.css.resolver.tokens.computed;
 import org.pentaho.reporting.libraries.css.counter.CounterStyle;
 
 /**
- * This is a meta-token. It must be completly resolved during the
- * ContentNormalization, and must be replaced by a sequence of 'Counter'
- * tokens.
+ * This is a meta-token. It must be completly resolved during the ContentNormalization, and must be replaced by a
+ * sequence of 'Counter' tokens.
  *
  * @author Thomas Morgner
  */
-public class CountersToken extends ComputedToken
-{
+public class CountersToken extends ComputedToken {
   private String name;
   private String separator;
   private CounterStyle style;
 
-  public CountersToken(final String name,
-                       final String separator,
-                       final CounterStyle style)
-  {
+  public CountersToken( final String name,
+                        final String separator,
+                        final CounterStyle style ) {
     this.name = name;
     this.separator = separator;
     this.style = style;
   }
 
-  public String getSeparator()
-  {
+  public String getSeparator() {
     return separator;
   }
 
-  public String getName()
-  {
+  public String getName() {
     return name;
   }
 
-  public CounterStyle getStyle()
-  {
+  public CounterStyle getStyle() {
     return style;
   }
 }

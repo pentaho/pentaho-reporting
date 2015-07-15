@@ -19,13 +19,11 @@ package org.pentaho.reporting.libraries.css.keys.font;
 
 import org.pentaho.reporting.libraries.css.values.CSSConstant;
 
-public class FontStyle
-{
-  public static final CSSConstant NORMAL = new CSSConstant("normal");
-  public static final CSSConstant OBLIQUE = new CSSConstant("oblique");
-  public static final CSSConstant ITALIC = new CSSConstant("italic");
+public class FontStyle {
+  public static final CSSConstant NORMAL = new CSSConstant( "normal" );
+  public static final CSSConstant OBLIQUE = new CSSConstant( "oblique" );
+  public static final CSSConstant ITALIC = new CSSConstant( "italic" );
 
-  private FontStyle()
-  {
+  private FontStyle() {
   }
 }

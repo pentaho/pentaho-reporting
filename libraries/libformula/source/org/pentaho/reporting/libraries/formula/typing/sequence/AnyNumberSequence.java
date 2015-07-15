@@ -17,31 +17,29 @@
 
 package org.pentaho.reporting.libraries.formula.typing.sequence;
 
-import java.math.BigDecimal;
-
 import org.pentaho.reporting.libraries.formula.EvaluationException;
 import org.pentaho.reporting.libraries.formula.FormulaContext;
 import org.pentaho.reporting.libraries.formula.lvalues.LValue;
 import org.pentaho.reporting.libraries.formula.typing.ArrayCallback;
-import org.pentaho.reporting.libraries.formula.typing.Type;
 import org.pentaho.reporting.libraries.formula.typing.NumberSequence;
+import org.pentaho.reporting.libraries.formula.typing.Type;
+
+import java.math.BigDecimal;
 
 /**
- * A sequence that treats text-values as valid numbers that always evaluate to zero. Logical values
- * are treated as numbers as well and always evaluate to 0 for false and 1 for true.
+ * A sequence that treats text-values as valid numbers that always evaluate to zero. Logical values are treated as
+ * numbers as well and always evaluate to 0 for false and 1 for true.
  *
  * @author Cedric Pronzato
  */
-public class AnyNumberSequence extends AnySequence implements NumberSequence
-{
-  private static final Number ZERO = new BigDecimal("0");
+public class AnyNumberSequence extends AnySequence implements NumberSequence {
+  private static final Number ZERO = new BigDecimal( "0" );
 
   /**
    * Empty number sequence.
    */
-  public AnyNumberSequence(final FormulaContext context)
-  {
-    super(context);
+  public AnyNumberSequence( final FormulaContext context ) {
+    super( context );
   }
 
   /**
@@ -49,9 +47,8 @@ public class AnyNumberSequence extends AnySequence implements NumberSequence
    *
    * @param n A number
    */
-  public AnyNumberSequence(final LValue n, final FormulaContext context)
-  {
-    super(n, context);
+  public AnyNumberSequence( final LValue n, final FormulaContext context ) {
+    super( n, context );
   }
 
   /**
@@ -59,47 +56,37 @@ public class AnyNumberSequence extends AnySequence implements NumberSequence
    *
    * @param array
    */
-  public AnyNumberSequence(final ArrayCallback array, final FormulaContext context)
-  {
-    super(array, context);
+  public AnyNumberSequence( final ArrayCallback array, final FormulaContext context ) {
+    super( array, context );
   }
 
-  public AnyNumberSequence(final AnySequence anySequence)
-  {
-    super(anySequence);
+  public AnyNumberSequence( final AnySequence anySequence ) {
+    super( anySequence );
   }
 
-  protected boolean isValidNext(final LValue o) throws EvaluationException
-  {
-    if (o == null)
-    {
+  protected boolean isValidNext( final LValue o ) throws EvaluationException {
+    if ( o == null ) {
       return false;
     }
     final Type type = o.getValueType();
-    if (type.isFlagSet(Type.NUMERIC_TYPE))
-    {
+    if ( type.isFlagSet( Type.NUMERIC_TYPE ) ) {
       return true;
     }
-    if (type.isFlagSet(Type.LOGICAL_TYPE))
-    {
+    if ( type.isFlagSet( Type.LOGICAL_TYPE ) ) {
       return true;
     }
-    if (type.isFlagSet(Type.TEXT_TYPE))
-    {
+    if ( type.isFlagSet( Type.TEXT_TYPE ) ) {
       return true;
     }
-    if (type.isFlagSet(Type.ANY_TYPE))
-    {
+    if ( type.isFlagSet( Type.ANY_TYPE ) ) {
       return true;
     }
     return false;
   }
 
-  public Number nextNumber() throws EvaluationException
-  {
+  public Number nextNumber() throws EvaluationException {
     final Object value = super.next();
-    if (value instanceof Number)
-    {
+    if ( value instanceof Number ) {
       return (Number) value;
     }
 

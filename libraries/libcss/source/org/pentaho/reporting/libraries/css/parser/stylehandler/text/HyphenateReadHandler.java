@@ -25,11 +25,9 @@ import org.pentaho.reporting.libraries.css.values.CSSConstant;
  *
  * @author Thomas Morgner
  */
-public class HyphenateReadHandler extends OneOfConstantsReadHandler
-{
-  public HyphenateReadHandler()
-  {
-    super(true);
-    addValue(new CSSConstant("none"));
+public class HyphenateReadHandler extends OneOfConstantsReadHandler {
+  public HyphenateReadHandler() {
+    super( true );
+    addValue( new CSSConstant( "none" ) );
   }
 }

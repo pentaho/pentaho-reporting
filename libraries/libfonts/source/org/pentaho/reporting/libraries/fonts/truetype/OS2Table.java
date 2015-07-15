@@ -24,13 +24,14 @@ import org.pentaho.reporting.libraries.fonts.ByteAccessUtilities;
  *
  * @author Thomas Morgner
  */
-public class OS2Table implements FontTable
-{
+public class OS2Table implements FontTable {
   public static final long TABLE_ID =
-          ('O' << 24 | 'S' << 16 | '/' << 8 | '2');
+    ( 'O' << 24 | 'S' << 16 | '/' << 8 | '2' );
 
   private int version;
-  /** This value is deprecated in version 3 */
+  /**
+   * This value is deprecated in version 3
+   */
   private short xAvgCharWidth;
   private int weightClass;
   private int widthClass;
@@ -66,263 +67,219 @@ public class OS2Table implements FontTable
   private int maxContext;
   private static final int TYPE_RESTRICTED_LICENSE = 0x002;
 
-  public OS2Table(final byte[] data, final int unitsPerEm)
-  {
+  public OS2Table( final byte[] data, final int unitsPerEm ) {
     // create a sensible default ...
 
     // the height of the uppercase characters
-    capHeight = (short) (0.7 * unitsPerEm);
+    capHeight = (short) ( 0.7 * unitsPerEm );
     // the height of the lowercase-x
-    xHeight = (short) (0.5 * unitsPerEm);
+    xHeight = (short) ( 0.5 * unitsPerEm );
     // used for justification and to separate words
     breakChar = ' ';
 
-    version = ByteAccessUtilities.readUShort(data, 0);
-    if (version == 3 || version == 2)
-    {
+    version = ByteAccessUtilities.readUShort( data, 0 );
+    if ( version == 3 || version == 2 ) {
       // in version 3 the *meaning* of some fields has been clarified. We use
       // the updated semantics.
-      loadVersion2Table(data);
-    }
-    else if (version == 1)
-    {
-      loadVersion1Table(data);
-    }
-    else if (version == 0)
-    {
-      loadVersion0Table(data);
+      loadVersion2Table( data );
+    } else if ( version == 1 ) {
+      loadVersion1Table( data );
+    } else if ( version == 0 ) {
+      loadVersion0Table( data );
     }
   }
 
-  private void loadVersion0Table (final byte[] data)
-  {
-    xAvgCharWidth = ByteAccessUtilities.readShort(data, 2);
-    weightClass = ByteAccessUtilities.readUShort(data, 4);
-    widthClass = ByteAccessUtilities.readUShort(data, 6);
-    fsType = ByteAccessUtilities.readUShort(data, 8);
-    ySubscriptXSize = ByteAccessUtilities.readShort(data, 10);
-    ySubscriptYSize = ByteAccessUtilities.readShort(data, 12);
-    ySubscriptXOffset = ByteAccessUtilities.readShort(data, 14);
-    ySubscriptYOffset = ByteAccessUtilities.readShort(data, 16);
-    ySuperscriptXSize = ByteAccessUtilities.readShort(data, 18);
-    ySuperscriptYSize = ByteAccessUtilities.readShort(data, 20);
-    ySuperscriptXOffset = ByteAccessUtilities.readShort(data, 22);
-    ySuperscriptYOffset = ByteAccessUtilities.readShort(data, 24);
-    yStrikeoutSize  = ByteAccessUtilities.readShort(data, 26);
-    yStrikeoutPosition  = ByteAccessUtilities.readShort(data, 28);
-    familyClass = ByteAccessUtilities.readShort(data, 30);
-    panose = ByteAccessUtilities.readBytes(data, 32, 10);
-    unicodeRange = ByteAccessUtilities.readBytes(data, 42, 16);
-    vendorId = ByteAccessUtilities.readBytes(data, 58, 4);
-    fsSelection = ByteAccessUtilities.readUShort(data, 62);
-    firstCharIndex = ByteAccessUtilities.readUShort(data, 64);
-    lastCharIndex = ByteAccessUtilities.readUShort(data, 66);
-    typoAscender = ByteAccessUtilities.readShort(data, 68);
-    typoDescender = ByteAccessUtilities.readShort(data, 70);
-    typoLineGap = ByteAccessUtilities.readShort(data, 72);
-    winAscent = ByteAccessUtilities.readUShort(data, 74);
-    winDescent = ByteAccessUtilities.readUShort(data, 76);
+  private void loadVersion0Table( final byte[] data ) {
+    xAvgCharWidth = ByteAccessUtilities.readShort( data, 2 );
+    weightClass = ByteAccessUtilities.readUShort( data, 4 );
+    widthClass = ByteAccessUtilities.readUShort( data, 6 );
+    fsType = ByteAccessUtilities.readUShort( data, 8 );
+    ySubscriptXSize = ByteAccessUtilities.readShort( data, 10 );
+    ySubscriptYSize = ByteAccessUtilities.readShort( data, 12 );
+    ySubscriptXOffset = ByteAccessUtilities.readShort( data, 14 );
+    ySubscriptYOffset = ByteAccessUtilities.readShort( data, 16 );
+    ySuperscriptXSize = ByteAccessUtilities.readShort( data, 18 );
+    ySuperscriptYSize = ByteAccessUtilities.readShort( data, 20 );
+    ySuperscriptXOffset = ByteAccessUtilities.readShort( data, 22 );
+    ySuperscriptYOffset = ByteAccessUtilities.readShort( data, 24 );
+    yStrikeoutSize = ByteAccessUtilities.readShort( data, 26 );
+    yStrikeoutPosition = ByteAccessUtilities.readShort( data, 28 );
+    familyClass = ByteAccessUtilities.readShort( data, 30 );
+    panose = ByteAccessUtilities.readBytes( data, 32, 10 );
+    unicodeRange = ByteAccessUtilities.readBytes( data, 42, 16 );
+    vendorId = ByteAccessUtilities.readBytes( data, 58, 4 );
+    fsSelection = ByteAccessUtilities.readUShort( data, 62 );
+    firstCharIndex = ByteAccessUtilities.readUShort( data, 64 );
+    lastCharIndex = ByteAccessUtilities.readUShort( data, 66 );
+    typoAscender = ByteAccessUtilities.readShort( data, 68 );
+    typoDescender = ByteAccessUtilities.readShort( data, 70 );
+    typoLineGap = ByteAccessUtilities.readShort( data, 72 );
+    winAscent = ByteAccessUtilities.readUShort( data, 74 );
+    winDescent = ByteAccessUtilities.readUShort( data, 76 );
   }
 
-  private void loadVersion1Table(final byte[] data) {
-    loadVersion0Table(data);
-    codepageRange = ByteAccessUtilities.readBytes(data, 78, 8);
+  private void loadVersion1Table( final byte[] data ) {
+    loadVersion0Table( data );
+    codepageRange = ByteAccessUtilities.readBytes( data, 78, 8 );
   }
 
-  private void loadVersion2Table(final byte[] data) {
-    loadVersion1Table(data);
+  private void loadVersion2Table( final byte[] data ) {
+    loadVersion1Table( data );
 
-    xHeight = ByteAccessUtilities.readShort(data, 86);
-    capHeight = ByteAccessUtilities.readShort(data, 88);
+    xHeight = ByteAccessUtilities.readShort( data, 86 );
+    capHeight = ByteAccessUtilities.readShort( data, 88 );
 
-    defaultChar = ByteAccessUtilities.readUShort(data, 90);
-    breakChar = ByteAccessUtilities.readUShort(data, 92);
-    maxContext = ByteAccessUtilities.readUShort(data, 94);
+    defaultChar = ByteAccessUtilities.readUShort( data, 90 );
+    breakChar = ByteAccessUtilities.readUShort( data, 92 );
+    maxContext = ByteAccessUtilities.readUShort( data, 94 );
   }
 
-  public int getVersion()
-  {
+  public int getVersion() {
     return version;
   }
 
-  public short getxAvgCharWidth()
-  {
+  public short getxAvgCharWidth() {
     return xAvgCharWidth;
   }
 
-  public int getWeightClass()
-  {
+  public int getWeightClass() {
     return weightClass;
   }
 
-  public int getWidthClass()
-  {
+  public int getWidthClass() {
     return widthClass;
   }
 
-  public int getFsType()
-  {
+  public int getFsType() {
     return fsType;
   }
 
-  public short getySubscriptXSize()
-  {
+  public short getySubscriptXSize() {
     return ySubscriptXSize;
   }
 
-  public short getySubscriptYSize()
-  {
+  public short getySubscriptYSize() {
     return ySubscriptYSize;
   }
 
-  public short getySubscriptXOffset()
-  {
+  public short getySubscriptXOffset() {
     return ySubscriptXOffset;
   }
 
-  public short getySubscriptYOffset()
-  {
+  public short getySubscriptYOffset() {
     return ySubscriptYOffset;
   }
 
-  public short getySuperscriptXSize()
-  {
+  public short getySuperscriptXSize() {
     return ySuperscriptXSize;
   }
 
-  public short getySuperscriptYSize()
-  {
+  public short getySuperscriptYSize() {
     return ySuperscriptYSize;
   }
 
-  public short getySuperscriptXOffset()
-  {
+  public short getySuperscriptXOffset() {
     return ySuperscriptXOffset;
   }
 
-  public short getySuperscriptYOffset()
-  {
+  public short getySuperscriptYOffset() {
     return ySuperscriptYOffset;
   }
 
-  public short getyStrikeoutSize()
-  {
+  public short getyStrikeoutSize() {
     return yStrikeoutSize;
   }
 
-  public short getyStrikeoutPosition()
-  {
+  public short getyStrikeoutPosition() {
     return yStrikeoutPosition;
   }
 
-  public short getsFamilyClass()
-  {
+  public short getsFamilyClass() {
     return familyClass;
   }
 
-  public byte[] getPanose()
-  {
+  public byte[] getPanose() {
     return panose.clone();
   }
 
-  public boolean isUnicodeRangeSupported(final int pos)
-  {
+  public boolean isUnicodeRangeSupported( final int pos ) {
     // todo
     return false;
   }
 
-  public byte[] getVendorId()
-  {
+  public byte[] getVendorId() {
     return vendorId.clone();
   }
 
-  public int getFsSelection()
-  {
+  public int getFsSelection() {
     return fsSelection;
   }
 
-  public boolean isBold ()
-  {
-    return (fsSelection & 0x20) == 0x20;
+  public boolean isBold() {
+    return ( fsSelection & 0x20 ) == 0x20;
   }
 
-  public boolean isItalic ()
-  {
-    return (fsSelection & 0x1) == 0x01;
+  public boolean isItalic() {
+    return ( fsSelection & 0x1 ) == 0x01;
   }
 
-  public int getFirstCharIndex()
-  {
+  public int getFirstCharIndex() {
     return firstCharIndex;
   }
 
-  public int getLastCharIndex()
-  {
+  public int getLastCharIndex() {
     return lastCharIndex;
   }
 
-  public int getTypoAscender()
-  {
+  public int getTypoAscender() {
     return typoAscender;
   }
 
-  public int getTypoDescender()
-  {
+  public int getTypoDescender() {
     return typoDescender;
   }
 
-  public int getTypoLineGap()
-  {
+  public int getTypoLineGap() {
     return typoLineGap;
   }
 
-  public int getWinAscent()
-  {
+  public int getWinAscent() {
     return winAscent;
   }
 
-  public int getWinDescent()
-  {
+  public int getWinDescent() {
     return winDescent;
   }
 
-  public boolean isCodepageSupported(final int codepage)
-  {
+  public boolean isCodepageSupported( final int codepage ) {
     return false; // todo;
   }
 
-  public short getxHeight()
-  {
+  public short getxHeight() {
     return xHeight;
   }
 
-  public short getCapHeight()
-  {
+  public short getCapHeight() {
     return capHeight;
   }
 
-  public int getDefaultChar()
-  {
+  public int getDefaultChar() {
     return defaultChar;
   }
 
-  public int getBreakChar()
-  {
+  public int getBreakChar() {
     return breakChar;
   }
 
-  public int getMaxContext()
-  {
+  public int getMaxContext() {
     return maxContext;
   }
 
-  public boolean isRestricted ()
-  {
+  public boolean isRestricted() {
     return fsType == TYPE_RESTRICTED_LICENSE;
   }
 
-  public long getName()
-  {
+  public long getName() {
     return TABLE_ID;
   }
 }

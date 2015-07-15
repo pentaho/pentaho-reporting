@@ -17,28 +17,24 @@
 
 package org.pentaho.reporting.libraries.resourceloader.factory.image;
 
-import java.awt.Image;
-
 import org.pentaho.reporting.libraries.resourceloader.factory.AbstractResourceFactory;
+
+import java.awt.*;
 
 /**
  * Creation-Date: 05.04.2006, 17:59:50
  *
  * @author Thomas Morgner
  */
-public class ImageResourceFactory extends AbstractResourceFactory
-{
+public class ImageResourceFactory extends AbstractResourceFactory {
   private static ImageResourceFactory instance;
 
-  public ImageResourceFactory()
-  {
-    super(Image.class);
+  public ImageResourceFactory() {
+    super( Image.class );
   }
 
-  public static synchronized ImageResourceFactory getInstance()
-  {
-    if (instance == null)
-    {
+  public static synchronized ImageResourceFactory getInstance() {
+    if ( instance == null ) {
       instance = new ImageResourceFactory();
     }
     return instance;

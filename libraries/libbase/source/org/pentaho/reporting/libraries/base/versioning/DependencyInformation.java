@@ -18,20 +18,27 @@
 package org.pentaho.reporting.libraries.base.versioning;
 
 /**
- * An data-structure documenting external dependencies. Use this in your ProjectInformation implementation to
- * tell users what other libraries you use to give them proper credit.
+ * An data-structure documenting external dependencies. Use this in your ProjectInformation implementation to tell users
+ * what other libraries you use to give them proper credit.
  *
  * @author : Thomas Morgner
  */
-public class DependencyInformation
-{
-  /** The name of the library. */
+public class DependencyInformation {
+  /**
+   * The name of the library.
+   */
   private String name;
-  /** The version of the library, if known. */
+  /**
+   * The version of the library, if known.
+   */
   private String version;
-  /** The license the library is distributed under. */
+  /**
+   * The license the library is distributed under.
+   */
   private String licenseName;
-  /** Some more information, liek a web-site or comment. */
+  /**
+   * Some more information, liek a web-site or comment.
+   */
   private String info;
 
   /**
@@ -39,11 +46,9 @@ public class DependencyInformation
    *
    * @param name the name of the library, never null.
    */
-  public DependencyInformation(final String name)
-  {
-    if (name == null)
-    {
-      throw new NullPointerException("Name must be given");
+  public DependencyInformation( final String name ) {
+    if ( name == null ) {
+      throw new NullPointerException( "Name must be given" );
     }
     this.name = name;
   }
@@ -52,17 +57,16 @@ public class DependencyInformation
    * Creates a minimal dependency information object for the library with the given name. All properties but the name
    * are optional.
    *
-   * @param name the name of the library, never null.
-   * @param version The version of the library, if known.
+   * @param name        the name of the library, never null.
+   * @param version     The version of the library, if known.
    * @param licenseName The license the library is distributed under.
-   * @param info Some more information, liek a web-site or comment.
+   * @param info        Some more information, liek a web-site or comment.
    */
-  public DependencyInformation(final String name,
-                               final String version,
-                               final String licenseName,
-                               final String info)
-  {
-    this(name);
+  public DependencyInformation( final String name,
+                                final String version,
+                                final String licenseName,
+                                final String info ) {
+    this( name );
     this.version = version;
     this.licenseName = licenseName;
     this.info = info;
@@ -73,8 +77,7 @@ public class DependencyInformation
    *
    * @param version the version.
    */
-  protected void setVersion(final String version)
-  {
+  protected void setVersion( final String version ) {
     this.version = version;
   }
 
@@ -83,8 +86,7 @@ public class DependencyInformation
    *
    * @param licenseName the name of the license.
    */
-  protected void setLicenseName(final String licenseName)
-  {
+  protected void setLicenseName( final String licenseName ) {
     this.licenseName = licenseName;
   }
 
@@ -93,8 +95,7 @@ public class DependencyInformation
    *
    * @param info the version.
    */
-  protected void setInfo(final String info)
-  {
+  protected void setInfo( final String info ) {
     this.info = info;
   }
 
@@ -103,8 +104,7 @@ public class DependencyInformation
    *
    * @return the name.
    */
-  public String getName()
-  {
+  public String getName() {
     return name;
   }
 
@@ -113,8 +113,7 @@ public class DependencyInformation
    *
    * @return the version information, or null if no version information is known.
    */
-  public String getVersion()
-  {
+  public String getVersion() {
     return version;
   }
 
@@ -123,8 +122,7 @@ public class DependencyInformation
    *
    * @return the license name.
    */
-  public String getLicenseName()
-  {
+  public String getLicenseName() {
     return licenseName;
   }
 
@@ -133,8 +131,7 @@ public class DependencyInformation
    *
    * @return the text information, or null if no extra information is known.
    */
-  public String getInfo()
-  {
+  public String getInfo() {
     return info;
   }
 
@@ -144,21 +141,17 @@ public class DependencyInformation
    * @param o the other object.
    * @return true, if the dependency information given denotes the same library as this dependency information.
    */
-  public boolean equals(final Object o)
-  {
-    if (this == o)
-    {
+  public boolean equals( final Object o ) {
+    if ( this == o ) {
       return true;
     }
-    if (!(o instanceof DependencyInformation))
-    {
+    if ( !( o instanceof DependencyInformation ) ) {
       return false;
     }
 
     final DependencyInformation that = (DependencyInformation) o;
 
-    if (!name.equals(that.name))
-    {
+    if ( !name.equals( that.name ) ) {
       return false;
     }
 
@@ -170,8 +163,7 @@ public class DependencyInformation
    *
    * @return the hashcode.
    */
-  public int hashCode()
-  {
+  public int hashCode() {
     return name.hashCode();
   }
 }

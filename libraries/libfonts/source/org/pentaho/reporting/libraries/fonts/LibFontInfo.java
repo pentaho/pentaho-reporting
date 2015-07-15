@@ -17,43 +17,38 @@
 
 package org.pentaho.reporting.libraries.fonts;
 
-import org.pentaho.reporting.libraries.resourceloader.LibLoaderInfo;
 import org.pentaho.reporting.libraries.base.LibBaseInfo;
 import org.pentaho.reporting.libraries.base.versioning.ProjectInformation;
+import org.pentaho.reporting.libraries.resourceloader.LibLoaderInfo;
 
 /**
  * Creation-Date: 06.11.2005, 18:24:57
  *
  * @author Thomas Morgner
  */
-public class LibFontInfo extends ProjectInformation
-{
+public class LibFontInfo extends ProjectInformation {
   private static LibFontInfo instance;
 
-  public static synchronized LibFontInfo getInstance()
-  {
-    if (instance == null)
-    {
+  public static synchronized LibFontInfo getInstance() {
+    if ( instance == null ) {
       instance = new LibFontInfo();
       instance.initialize();
     }
     return instance;
   }
 
-  public LibFontInfo()
-  {
-    super("libfonts", "LibFonts");
+  public LibFontInfo() {
+    super( "libfonts", "LibFonts" );
   }
 
-  private void initialize()
-  {
-    setLicenseName("LGPL");
-    setInfo("http://reporting.pentaho.org/libfonts/");
-    setCopyright ("(C)opyright 2006-2011, by Pentaho Corporation and Contributors");
+  private void initialize() {
+    setLicenseName( "LGPL" );
+    setInfo( "http://reporting.pentaho.org/libfonts/" );
+    setCopyright( "(C)opyright 2006-2011, by Pentaho Corporation and Contributors" );
 
-    setBootClass("org.pentaho.reporting.libraries.fonts.LibFontBoot");
+    setBootClass( "org.pentaho.reporting.libraries.fonts.LibFontBoot" );
 
-    addLibrary(LibBaseInfo.getInstance());
-    addLibrary(LibLoaderInfo.getInstance());
+    addLibrary( LibBaseInfo.getInstance() );
+    addLibrary( LibLoaderInfo.getInstance() );
   }
 }

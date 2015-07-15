@@ -17,20 +17,15 @@
 
 package org.pentaho.reporting.libraries.designtime.swing;
 
-import java.awt.Insets;
-import java.awt.Dimension;
-import javax.swing.JButton;
-import javax.swing.Icon;
-import javax.swing.Action;
+import javax.swing.*;
+import java.awt.*;
 
 
-public class EllipsisButton extends JButton
-{
+public class EllipsisButton extends JButton {
   /**
    * Creates a button with no set text or icon.
    */
-  public EllipsisButton()
-  {
+  public EllipsisButton() {
   }
 
   /**
@@ -38,9 +33,8 @@ public class EllipsisButton extends JButton
    *
    * @param icon the Icon image to display on the button
    */
-  public EllipsisButton(final Icon icon)
-  {
-    super(icon);
+  public EllipsisButton( final Icon icon ) {
+    super( icon );
   }
 
   /**
@@ -48,21 +42,18 @@ public class EllipsisButton extends JButton
    *
    * @param text the text of the button
    */
-  public EllipsisButton(final String text)
-  {
-    super(text);
+  public EllipsisButton( final String text ) {
+    super( text );
   }
 
   /**
-   * Creates a button where properties are taken from the
-   * <code>Action</code> supplied.
+   * Creates a button where properties are taken from the <code>Action</code> supplied.
    *
    * @param a the <code>Action</code> used to specify the new button
    * @since 1.3
    */
-  public EllipsisButton(final Action a)
-  {
-    super(a);
+  public EllipsisButton( final Action a ) {
+    super( a );
   }
 
   /**
@@ -71,36 +62,29 @@ public class EllipsisButton extends JButton
    * @param text the text of the button
    * @param icon the Icon image to display on the button
    */
-  public EllipsisButton(final String text, final Icon icon)
-  {
-    super(text, icon);
+  public EllipsisButton( final String text, final Icon icon ) {
+    super( text, icon );
   }
 
   /**
-   * Resets the UI property to a value from the current look and
-   * feel.
+   * Resets the UI property to a value from the current look and feel.
    *
    * @see javax.swing.JComponent#updateUI
    */
-  public void updateUI()
-  {
+  public void updateUI() {
     super.updateUI();
 
-    setDefaultCapable(false);
-    setMargin(new Insets(0, 0, 0, 0));
+    setDefaultCapable( false );
+    setMargin( new Insets( 0, 0, 0, 0 ) );
 
-    try
-    {
+    try {
       //noinspection AccessOfSystemProperties
-      final String lcOSName = System.getProperty("os.name").toLowerCase();
-      final boolean MAC_OS_X = lcOSName.startsWith("mac os x");
-      if (MAC_OS_X)
-      {
-        setPreferredSize(new Dimension(30, 16));
+      final String lcOSName = System.getProperty( "os.name" ).toLowerCase();
+      final boolean MAC_OS_X = lcOSName.startsWith( "mac os x" );
+      if ( MAC_OS_X ) {
+        setPreferredSize( new Dimension( 30, 16 ) );
       }
-    }
-    catch (Exception e)
-    {
+    } catch ( Exception e ) {
       // contain the madness. Apple is just strange sometimes ..
     }
   }

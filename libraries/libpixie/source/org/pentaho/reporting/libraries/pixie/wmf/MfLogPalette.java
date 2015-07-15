@@ -17,14 +17,11 @@
 
 package org.pentaho.reporting.libraries.pixie.wmf;
 
-public class MfLogPalette implements WmfObject
-{
-  public MfLogPalette()
-  {
+public class MfLogPalette implements WmfObject {
+  public MfLogPalette() {
   }
 
-  public int getType()
-  {
+  public int getType() {
     return OBJ_PALETTE;
   }
 }

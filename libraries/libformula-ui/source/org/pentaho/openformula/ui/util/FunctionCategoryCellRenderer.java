@@ -17,37 +17,30 @@
 
 package org.pentaho.openformula.ui.util;
 
-import java.awt.Component;
-import java.util.Locale;
-import javax.swing.DefaultListCellRenderer;
-import javax.swing.JList;
-
 import org.pentaho.openformula.ui.Messages;
 import org.pentaho.reporting.libraries.formula.function.FunctionCategory;
 
-public class FunctionCategoryCellRenderer extends DefaultListCellRenderer
-{
-  public FunctionCategoryCellRenderer()
-  {
+import javax.swing.*;
+import java.awt.*;
+import java.util.Locale;
+
+public class FunctionCategoryCellRenderer extends DefaultListCellRenderer {
+  public FunctionCategoryCellRenderer() {
   }
 
-  public Component getListCellRendererComponent(final JList list,
-                                                final Object value,
-                                                final int index,
-                                                final boolean isSelected,
-                                                final boolean cellHasFocus)
-  {
-    super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
-    if (value instanceof FunctionCategory)
-    {
+  public Component getListCellRendererComponent( final JList list,
+                                                 final Object value,
+                                                 final int index,
+                                                 final boolean isSelected,
+                                                 final boolean cellHasFocus ) {
+    super.getListCellRendererComponent( list, value, index, isSelected, cellHasFocus );
+    if ( value instanceof FunctionCategory ) {
       final FunctionCategory cat = (FunctionCategory) value;
-      setText(cat.getDisplayName(Locale.getDefault()));
-      setToolTipText(cat.getDescription(Locale.getDefault()));
-    }
-    else
-    {
-      setText(Messages.getInstance().getString("FunctionCategoryCellRenderer.All")); 
-      setToolTipText(null);
+      setText( cat.getDisplayName( Locale.getDefault() ) );
+      setToolTipText( cat.getDescription( Locale.getDefault() ) );
+    } else {
+      setText( Messages.getInstance().getString( "FunctionCategoryCellRenderer.All" ) );
+      setToolTipText( null );
     }
     return this;
   }

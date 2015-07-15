@@ -26,16 +26,13 @@ import org.pentaho.reporting.libraries.base.boot.SubSystem;
  *
  * @author Thomas Morgner
  */
-public class ImageIOModule extends AbstractModule
-{
+public class ImageIOModule extends AbstractModule {
 
-  public ImageIOModule() throws ModuleInitializeException
-  {
+  public ImageIOModule() throws ModuleInitializeException {
     loadModuleInfo();
   }
 
 
-  public void initialize(final SubSystem subSystem) throws ModuleInitializeException
-  {
+  public void initialize( final SubSystem subSystem ) throws ModuleInitializeException {
   }
 }

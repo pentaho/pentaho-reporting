@@ -35,41 +35,41 @@ import org.w3c.css.sac.Selector;
 import org.w3c.css.sac.SimpleSelector;
 
 /**
+ * @author Philippe Le Hegaret
  * @version $Revision$
- * @author  Philippe Le Hegaret
  */
 public class ChildSelectorImpl implements DescendantSelector {
 
-    Selector       parent;
-    SimpleSelector child;
+  Selector parent;
+  SimpleSelector child;
 
-    /**
-     * An integer indicating the type of <code>Selector</code>
-     */
-    public short getSelectorType() {
-	return Selector.SAC_CHILD_SELECTOR;
-    }
+  /**
+   * An integer indicating the type of <code>Selector</code>
+   */
+  public short getSelectorType() {
+    return Selector.SAC_CHILD_SELECTOR;
+  }
 
-    /**
-     * Creates a new ChildSelectorImpl
-     */
-    public ChildSelectorImpl(Selector parent, SimpleSelector child) {
-        this.parent = parent;
-	this.child = child;
-    }
-    
-        
-    /**
-     * Returns the parent selector.
-     */    
-    public Selector getAncestorSelector() {
-	return parent;
-    }
+  /**
+   * Creates a new ChildSelectorImpl
+   */
+  public ChildSelectorImpl( Selector parent, SimpleSelector child ) {
+    this.parent = parent;
+    this.child = child;
+  }
 
-    /*
-     * Returns the simple selector.
-     */    
-    public SimpleSelector getSimpleSelector() {
-	return child;
-    }
+
+  /**
+   * Returns the parent selector.
+   */
+  public Selector getAncestorSelector() {
+    return parent;
+  }
+
+  /*
+   * Returns the simple selector.
+   */
+  public SimpleSelector getSimpleSelector() {
+    return child;
+  }
 }

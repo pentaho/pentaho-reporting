@@ -24,30 +24,25 @@ import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
  *
  * @author Thomas Morgner
  */
-public abstract class CSSType
-{
+public abstract class CSSType {
   private String type;
 
-  protected CSSType(final String type)
-  {
-    if (type == null)
-    {
+  protected CSSType( final String type ) {
+    if ( type == null ) {
       throw new NullPointerException();
     }
     this.type = type;
   }
 
-  public String getType()
-  {
+  public String getType() {
     return type;
   }
 
 
-  public String toString()
-  {
+  public String toString() {
     return "CSSType{" +
-        "type='" + type + "'" +
-        "}";
+      "type='" + type + "'" +
+      "}";
   }
 
   /**
@@ -55,21 +50,16 @@ public abstract class CSSType
    *
    * @return <code>true</code> if the supplied object is equivalent to this object, <code>false</code> otherwise
    */
-  public boolean equals(Object obj)
-  {
-    if (obj instanceof CSSType)
-    {
+  public boolean equals( Object obj ) {
+    if ( obj instanceof CSSType ) {
       CSSType that = (CSSType) obj;
-      return ObjectUtilities.equal(this.type, that.type);
-    }
-    else
-    {
+      return ObjectUtilities.equal( this.type, that.type );
+    } else {
       return false;
     }
   }
 
-  public int hashCode()
-  {
+  public int hashCode() {
     return type.hashCode();
   }
 }

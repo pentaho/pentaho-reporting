@@ -23,33 +23,28 @@ import org.pentaho.reporting.libraries.resourceloader.ResourceLoadingException;
 import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 
 /**
- * Disables caching. It simply returns null on every request and ignores
- * the put requests. You certainly want to use one of the other cache
- * providers in real world applications.
+ * Disables caching. It simply returns null on every request and ignores the put requests. You certainly want to use one
+ * of the other cache providers in real world applications.
+ *
  * @author Thomas Morgner
  */
-public class NullResourceBundleDataCache implements ResourceBundleDataCache
-{
+public class NullResourceBundleDataCache implements ResourceBundleDataCache {
   private Object lastEntry;
 
-  public NullResourceBundleDataCache()
-  {
+  public NullResourceBundleDataCache() {
   }
 
-  public ResourceBundleData put(final ResourceManager caller, final ResourceBundleData data)  throws ResourceLoadingException
-  {
-    final ResourceBundleData retval = CachingResourceBundleData.createCached(data);
-    lastEntry = new DefaultResourceBundleDataCacheEntry(retval, caller);
+  public ResourceBundleData put( final ResourceManager caller, final ResourceBundleData data )
+    throws ResourceLoadingException {
+    final ResourceBundleData retval = CachingResourceBundleData.createCached( data );
+    lastEntry = new DefaultResourceBundleDataCacheEntry( retval, caller );
     return retval;
   }
 
-  public ResourceBundleDataCacheEntry get(final ResourceKey key)
-  {
-    if (lastEntry != null)
-    {
+  public ResourceBundleDataCacheEntry get( final ResourceKey key ) {
+    if ( lastEntry != null ) {
       final ResourceBundleDataCacheEntry entry = (ResourceBundleDataCacheEntry) lastEntry;
-      if (key.equals(entry.getData().getBundleKey()))
-      {
+      if ( key.equals( entry.getData().getBundleKey() ) ) {
         return entry;
       }
       lastEntry = null;
@@ -57,17 +52,14 @@ public class NullResourceBundleDataCache implements ResourceBundleDataCache
     return null;
   }
 
-  public void remove(final ResourceBundleData data)
-  {
+  public void remove( final ResourceBundleData data ) {
   }
 
-  public void clear()
-  {
+  public void clear() {
     lastEntry = null;
   }
 
-  public void shutdown()
-  {
+  public void shutdown() {
     lastEntry = null;
   }
 }

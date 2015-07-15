@@ -24,18 +24,16 @@ import org.pentaho.reporting.libraries.css.values.CSSConstant;
  *
  * @author Thomas Morgner
  */
-public class RenderingIntent
-{
+public class RenderingIntent {
   public static final CSSConstant PERCEPTUAL = new CSSConstant(
-      "perceptual");
+    "perceptual" );
   public static final CSSConstant RELATIVE_COLORIMETRIC = new CSSConstant(
-      "relative-colorimetric");
+    "relative-colorimetric" );
   public static final CSSConstant SATURATION = new CSSConstant(
-      "saturation");
+    "saturation" );
   public static final CSSConstant ABSOLUTE_COLORIMETRIC = new CSSConstant(
-      "absolute-colorimetric");
+    "absolute-colorimetric" );
 
-  private RenderingIntent()
-  {
+  private RenderingIntent() {
   }
 }

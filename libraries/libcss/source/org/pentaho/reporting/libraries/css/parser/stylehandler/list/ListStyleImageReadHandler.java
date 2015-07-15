@@ -29,27 +29,21 @@ import org.w3c.css.sac.LexicalUnit;
  *
  * @author Thomas Morgner
  */
-public class ListStyleImageReadHandler implements CSSValueReadHandler
-{
-  private static final CSSConstant NONE = new CSSConstant("none");
+public class ListStyleImageReadHandler implements CSSValueReadHandler {
+  private static final CSSConstant NONE = new CSSConstant( "none" );
 
-  public ListStyleImageReadHandler()
-  {
+  public ListStyleImageReadHandler() {
   }
 
-  public CSSValue createValue(StyleKey name, LexicalUnit value)
-  {
-    if (value.getLexicalUnitType() == LexicalUnit.SAC_IDENT)
-    {
-      if (value.getStringValue().equalsIgnoreCase("none"))
-      {
+  public CSSValue createValue( StyleKey name, LexicalUnit value ) {
+    if ( value.getLexicalUnitType() == LexicalUnit.SAC_IDENT ) {
+      if ( value.getStringValue().equalsIgnoreCase( "none" ) ) {
         return NONE;
       }
       return null;
     }
-    if (value.getLexicalUnitType() == LexicalUnit.SAC_URI)
-    {
-      return CSSValueFactory.createUriValue(value);
+    if ( value.getLexicalUnitType() == LexicalUnit.SAC_URI ) {
+      return CSSValueFactory.createUriValue( value );
     }
     return null;
   }

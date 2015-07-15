@@ -22,8 +22,7 @@ package org.pentaho.reporting.libraries.base.config;
  *
  * @author Thomas Morgner
  */
-public interface ModifiableConfiguration extends Configuration
-{
+public interface ModifiableConfiguration extends Configuration {
 
   /**
    * Sets the value of a configuration property.
@@ -31,5 +30,5 @@ public interface ModifiableConfiguration extends Configuration
    * @param key   the property key.
    * @param value the property value.
    */
-  public void setConfigProperty(final String key, final String value);
+  public void setConfigProperty( final String key, final String value );
 }

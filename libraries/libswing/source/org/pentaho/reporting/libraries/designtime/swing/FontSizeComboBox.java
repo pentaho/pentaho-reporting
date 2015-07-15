@@ -17,42 +17,38 @@
 
 package org.pentaho.reporting.libraries.designtime.swing;
 
-import java.awt.Dimension;
-import javax.swing.Action;
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.JComboBox;
+import javax.swing.*;
+import java.awt.*;
 
 /**
  * A preconfigured combobox for font-sizes.
  *
  * @author Thomas Morgner
  */
-public final class FontSizeComboBox extends JComboBox
-{
-  public FontSizeComboBox()
-  {
-    final Integer[] fontSizes = new Integer[]{
-        new Integer(6),
-        new Integer(7),
-        new Integer(8),
-        new Integer(9),
-        new Integer(10),
-        new Integer(11), 
-        new Integer(12),
-        new Integer(14),
-        new Integer(16),
-        new Integer(18),
-        new Integer(20),
-        new Integer(24),
-        new Integer(28),
-        new Integer(32),
-        new Integer(36),
-        new Integer(48),
-        new Integer(72)};
-    setModel(new DefaultComboBoxModel(fontSizes));
-    setFocusable(false);
+public final class FontSizeComboBox extends JComboBox {
+  public FontSizeComboBox() {
+    final Integer[] fontSizes = new Integer[] {
+      new Integer( 6 ),
+      new Integer( 7 ),
+      new Integer( 8 ),
+      new Integer( 9 ),
+      new Integer( 10 ),
+      new Integer( 11 ),
+      new Integer( 12 ),
+      new Integer( 14 ),
+      new Integer( 16 ),
+      new Integer( 18 ),
+      new Integer( 20 ),
+      new Integer( 24 ),
+      new Integer( 28 ),
+      new Integer( 32 ),
+      new Integer( 36 ),
+      new Integer( 48 ),
+      new Integer( 72 ) };
+    setModel( new DefaultComboBoxModel( fontSizes ) );
+    setFocusable( false );
     final int height1 = getPreferredSize().height;
-    setMaximumSize(new Dimension(height1 * 2, height1));
+    setMaximumSize( new Dimension( height1 * 2, height1 ) );
   }
 
   /**
@@ -60,12 +56,11 @@ public final class FontSizeComboBox extends JComboBox
    *
    * @param o the new selected value.
    */
-  protected void setValueFromModel(final Object o)
-  {
+  protected void setValueFromModel( final Object o ) {
     final Action action = getAction();
-    setAction(null);
-    setSelectedItem(o);
-    setAction(action);
+    setAction( null );
+    setSelectedItem( o );
+    setAction( action );
   }
 
 }

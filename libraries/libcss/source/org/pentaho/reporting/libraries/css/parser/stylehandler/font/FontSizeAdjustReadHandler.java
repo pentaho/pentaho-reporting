@@ -29,21 +29,16 @@ import org.w3c.css.sac.LexicalUnit;
  *
  * @author Thomas Morgner
  */
-public class FontSizeAdjustReadHandler implements CSSValueReadHandler
-{
-  public FontSizeAdjustReadHandler()
-  {
+public class FontSizeAdjustReadHandler implements CSSValueReadHandler {
+  public FontSizeAdjustReadHandler() {
   }
 
-  public CSSValue createValue(StyleKey name, LexicalUnit value)
-  {
-    if (value.getLexicalUnitType() == LexicalUnit.SAC_IDENT)
-    {
-      if (value.getStringValue().equalsIgnoreCase("none"))
-      {
-        return new CSSConstant("none");
+  public CSSValue createValue( StyleKey name, LexicalUnit value ) {
+    if ( value.getLexicalUnitType() == LexicalUnit.SAC_IDENT ) {
+      if ( value.getStringValue().equalsIgnoreCase( "none" ) ) {
+        return new CSSConstant( "none" );
       }
     }
-    return CSSValueFactory.createNumericValue(value);
+    return CSSValueFactory.createNumericValue( value );
   }
 }

@@ -17,13 +17,13 @@
 
 package org.pentaho.reporting.tools.configeditor.editor;
 
-import java.util.HashMap;
-import java.util.Iterator;
-
 import org.pentaho.reporting.libraries.base.boot.Module;
 import org.pentaho.reporting.libraries.base.config.HierarchicalConfiguration;
 import org.pentaho.reporting.tools.configeditor.Messages;
 import org.pentaho.reporting.tools.configeditor.model.ConfigDescriptionEntry;
+
+import java.util.HashMap;
+import java.util.Iterator;
 
 /**
  * The editor factory is used to create a module editor for an given module. Implementors may add their own, more
@@ -31,8 +31,7 @@ import org.pentaho.reporting.tools.configeditor.model.ConfigDescriptionEntry;
  *
  * @author Thomas Morgner
  */
-public final class EditorFactory
-{
+public final class EditorFactory {
   /**
    * The singleton instance of the factory.
    */
@@ -50,11 +49,10 @@ public final class EditorFactory
   /**
    * Creates a new editor factory, which has the default module editor registered at lowest priority.
    */
-  private EditorFactory()
-  {
+  private EditorFactory() {
     messages = Messages.getInstance();
     priorities = new HashMap<ModuleEditor, Integer>();
-    registerModuleEditor(new DefaultModuleEditor(), -1);
+    registerModuleEditor( new DefaultModuleEditor(), -1 );
   }
 
   /**
@@ -62,10 +60,8 @@ public final class EditorFactory
    *
    * @return the editor factory instance.
    */
-  public static synchronized EditorFactory getInstance()
-  {
-    if (factory == null)
-    {
+  public static synchronized EditorFactory getInstance() {
+    if ( factory == null ) {
       factory = new EditorFactory();
     }
     return factory;
@@ -77,14 +73,12 @@ public final class EditorFactory
    * @param editor   the editor that should be registered.
    * @param priority the priority.
    */
-  public void registerModuleEditor(final ModuleEditor editor, final int priority)
-  {
-    if (editor == null)
-    {
-      throw new NullPointerException(messages.getString(
-          "EditorFactory.ERROR_0001_EDITOR_IS_NULL")); //$NON-NLS-1$
+  public void registerModuleEditor( final ModuleEditor editor, final int priority ) {
+    if ( editor == null ) {
+      throw new NullPointerException( messages.getString(
+        "EditorFactory.ERROR_0001_EDITOR_IS_NULL" ) ); //$NON-NLS-1$
     }
-    priorities.put(editor, new Integer(priority));
+    priorities.put( editor, new Integer( priority ) );
   }
 
   /**
@@ -96,44 +90,36 @@ public final class EditorFactory
    * @return the module editor for the given module or null, if no editor is suitable for the given module.
    */
   public ModuleEditor getModule
-      (final Module module, final HierarchicalConfiguration config,
-       final ConfigDescriptionEntry[] keyNames)
-  {
-    if (module == null)
-    {
-      throw new NullPointerException(messages.getString(
-          "EditorFactory.ERROR_0002_MODULE_IS_NULL")); //$NON-NLS-1$
+  ( final Module module, final HierarchicalConfiguration config,
+    final ConfigDescriptionEntry[] keyNames ) {
+    if ( module == null ) {
+      throw new NullPointerException( messages.getString(
+        "EditorFactory.ERROR_0002_MODULE_IS_NULL" ) ); //$NON-NLS-1$
     }
-    if (config == null)
-    {
-      throw new NullPointerException(messages.getString(
-          "EditorFactory.ERROR_0003_CONFIG_IS_NULL")); //$NON-NLS-1$
+    if ( config == null ) {
+      throw new NullPointerException( messages.getString(
+        "EditorFactory.ERROR_0003_CONFIG_IS_NULL" ) ); //$NON-NLS-1$
     }
-    if (keyNames == null)
-    {
-      throw new NullPointerException(messages.getString(
-          "EditorFactory.ERROR_0004_KEYNAMES_IS_NULL")); //$NON-NLS-1$
+    if ( keyNames == null ) {
+      throw new NullPointerException( messages.getString(
+        "EditorFactory.ERROR_0004_KEYNAMES_IS_NULL" ) ); //$NON-NLS-1$
     }
     final Iterator keys = priorities.keySet().iterator();
     ModuleEditor currentEditor = null;
     int currentEditorPriority = Integer.MIN_VALUE;
 
-    while (keys.hasNext())
-    {
+    while ( keys.hasNext() ) {
       final ModuleEditor ed = (ModuleEditor) keys.next();
-      if (ed.canHandle(module))
-      {
-        final Integer prio = priorities.get(ed);
-        if (prio.intValue() > currentEditorPriority)
-        {
+      if ( ed.canHandle( module ) ) {
+        final Integer prio = priorities.get( ed );
+        if ( prio.intValue() > currentEditorPriority ) {
           currentEditorPriority = prio.intValue();
           currentEditor = ed;
         }
       }
     }
-    if (currentEditor != null)
-    {
-      return currentEditor.createInstance(module, config, keyNames);
+    if ( currentEditor != null ) {
+      return currentEditor.createInstance( module, config, keyNames );
     }
     return null;
   }

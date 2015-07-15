@@ -32,58 +32,51 @@ import org.pentaho.reporting.libraries.formula.typing.coretypes.TextType;
  *
  * @author Cedric Pronzato
  */
-public class ReplaceFunction implements Function
-{
+public class ReplaceFunction implements Function {
   private static final long serialVersionUID = -7678830657739807780L;
 
-  public ReplaceFunction()
-  {
+  public ReplaceFunction() {
   }
 
-  public TypeValuePair evaluate(final FormulaContext context,
-                                final ParameterCallback parameters) throws EvaluationException
-  {
+  public TypeValuePair evaluate( final FormulaContext context,
+                                 final ParameterCallback parameters ) throws EvaluationException {
     final int parameterCount = parameters.getParameterCount();
-    if (parameterCount != 4)
-    {
-      throw EvaluationException.getInstance(LibFormulaErrorValue.ERROR_ARGUMENTS_VALUE);
+    if ( parameterCount != 4 ) {
+      throw EvaluationException.getInstance( LibFormulaErrorValue.ERROR_ARGUMENTS_VALUE );
     }
     final TypeRegistry typeRegistry = context.getTypeRegistry();
 
-    final Type newTextType = parameters.getType(3);
-    final Object newTextValue = parameters.getValue(3);
-    final Type textType = parameters.getType(0);
-    final Object textValue = parameters.getValue(0);
-    final Type startType = parameters.getType(1);
-    final Object startValue = parameters.getValue(1);
-    final Type lengthType = parameters.getType(2);
-    final Object lengthValue = parameters.getValue(2);
+    final Type newTextType = parameters.getType( 3 );
+    final Object newTextValue = parameters.getValue( 3 );
+    final Type textType = parameters.getType( 0 );
+    final Object textValue = parameters.getValue( 0 );
+    final Type startType = parameters.getType( 1 );
+    final Object startValue = parameters.getValue( 1 );
+    final Type lengthType = parameters.getType( 2 );
+    final Object lengthValue = parameters.getValue( 2 );
 
-    final String newText = typeRegistry.convertToText(newTextType, newTextValue);
-    final String text = typeRegistry.convertToText(textType, textValue);
-    final Number start = typeRegistry.convertToNumber(startType, startValue);
-    if (start.intValue() <= 0)
-    {
-      throw EvaluationException.getInstance(LibFormulaErrorValue.ERROR_INVALID_ARGUMENT_VALUE);
+    final String newText = typeRegistry.convertToText( newTextType, newTextValue );
+    final String text = typeRegistry.convertToText( textType, textValue );
+    final Number start = typeRegistry.convertToNumber( startType, startValue );
+    if ( start.intValue() <= 0 ) {
+      throw EvaluationException.getInstance( LibFormulaErrorValue.ERROR_INVALID_ARGUMENT_VALUE );
     }
-    final Number length = typeRegistry.convertToNumber(lengthType, lengthValue);
-    if (length.intValue() < 0)
-    {
-      throw EvaluationException.getInstance(LibFormulaErrorValue.ERROR_INVALID_ARGUMENT_VALUE);
+    final Number length = typeRegistry.convertToNumber( lengthType, lengthValue );
+    if ( length.intValue() < 0 ) {
+      throw EvaluationException.getInstance( LibFormulaErrorValue.ERROR_INVALID_ARGUMENT_VALUE );
     }
 
-    final String result1 = MidFunction.process(text, 1, (start.intValue() - 1));
-    final String result2 = MidFunction.process(text, (start.intValue() + length.intValue()), (text.length()));
-    
-    final StringBuffer buffer = new StringBuffer(result1.length() + newText.length() + result2.length());
-    buffer.append(result1);
-    buffer.append(newText);
-    buffer.append(result2);
-    return new TypeValuePair(TextType.TYPE, buffer.toString());
+    final String result1 = MidFunction.process( text, 1, ( start.intValue() - 1 ) );
+    final String result2 = MidFunction.process( text, ( start.intValue() + length.intValue() ), ( text.length() ) );
+
+    final StringBuffer buffer = new StringBuffer( result1.length() + newText.length() + result2.length() );
+    buffer.append( result1 );
+    buffer.append( newText );
+    buffer.append( result2 );
+    return new TypeValuePair( TextType.TYPE, buffer.toString() );
   }
 
-  public String getCanonicalName()
-  {
+  public String getCanonicalName() {
     return "REPLACE";
   }
 

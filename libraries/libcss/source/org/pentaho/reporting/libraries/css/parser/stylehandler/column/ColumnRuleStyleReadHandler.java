@@ -24,9 +24,7 @@ import org.pentaho.reporting.libraries.css.parser.stylehandler.border.BorderStyl
  *
  * @author Thomas Morgner
  */
-public class ColumnRuleStyleReadHandler extends BorderStyleReadHandler
-{
-  public ColumnRuleStyleReadHandler()
-  {
+public class ColumnRuleStyleReadHandler extends BorderStyleReadHandler {
+  public ColumnRuleStyleReadHandler() {
   }
 }

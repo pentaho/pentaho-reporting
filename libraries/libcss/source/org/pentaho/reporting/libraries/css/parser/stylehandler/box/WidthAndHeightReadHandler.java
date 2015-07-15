@@ -27,22 +27,16 @@ import org.w3c.css.sac.LexicalUnit;
  *
  * @author Thomas Morgner
  */
-public class WidthAndHeightReadHandler extends AbstractWidthReadHandler
-{
-  public WidthAndHeightReadHandler()
-  {
-    super(true, true);
+public class WidthAndHeightReadHandler extends AbstractWidthReadHandler {
+  public WidthAndHeightReadHandler() {
+    super( true, true );
   }
 
-  protected CSSValue parseWidth(final LexicalUnit value)
-  {
-    if (CSSValueFactory.isNumericValue(value))
-    {
-      return CSSValueFactory.createNumericValue(value);
-    }
-    else
-    {
-      return super.parseWidth(value);
+  protected CSSValue parseWidth( final LexicalUnit value ) {
+    if ( CSSValueFactory.isNumericValue( value ) ) {
+      return CSSValueFactory.createNumericValue( value );
+    } else {
+      return super.parseWidth( value );
     }
   }
 }

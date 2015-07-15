@@ -17,26 +17,20 @@
 
 package org.pentaho.reporting.libraries.docbundle;
 
-public class ODFMetaAttributeNames
-{
-  private ODFMetaAttributeNames()
-  {
+public class ODFMetaAttributeNames {
+  private ODFMetaAttributeNames() {
   }
 
-  public static class Office
-  {
-    private Office()
-    {
+  public static class Office {
+    private Office() {
     }
 
     public static final String NAMESPACE = "urn:oasis:names:tc:opendocument:xmlns:office:1.0";
-    
+
   }
 
-  public static class Meta
-  {
-    private Meta()
-    {
+  public static class Meta {
+    private Meta() {
     }
 
     public static final String NAMESPACE = "urn:oasis:names:tc:opendocument:xmlns:meta:1.0";
@@ -51,10 +45,8 @@ public class ODFMetaAttributeNames
 
   }
 
-  public static class DublinCore
-  {
-    private DublinCore()
-    {
+  public static class DublinCore {
+    private DublinCore() {
     }
 
     public static final String NAMESPACE = "http://purl.org/dc/elements/1.1/";

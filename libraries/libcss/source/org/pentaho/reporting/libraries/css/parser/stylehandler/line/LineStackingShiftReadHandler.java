@@ -25,12 +25,10 @@ import org.pentaho.reporting.libraries.css.parser.stylehandler.OneOfConstantsRea
  *
  * @author Thomas Morgner
  */
-public class LineStackingShiftReadHandler extends OneOfConstantsReadHandler
-{
-  public LineStackingShiftReadHandler()
-  {
-    super(true);
-    addValue(LineStackingShift.DISREGARD_SHIFTS);
-    addValue(LineStackingShift.CONSIDER_SHIFTS);
+public class LineStackingShiftReadHandler extends OneOfConstantsReadHandler {
+  public LineStackingShiftReadHandler() {
+    super( true );
+    addValue( LineStackingShift.DISREGARD_SHIFTS );
+    addValue( LineStackingShift.CONSIDER_SHIFTS );
   }
 }

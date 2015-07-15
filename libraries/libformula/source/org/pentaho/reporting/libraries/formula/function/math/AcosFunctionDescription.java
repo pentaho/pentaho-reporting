@@ -24,42 +24,34 @@ import org.pentaho.reporting.libraries.formula.typing.coretypes.NumberType;
 
 /**
  * Describes AcosFunction function.
- * @see AcosFunction
- *a
- * @author Cedric Pronzato
  *
+ * @author Cedric Pronzato
+ * @see AcosFunction a
  */
-public class AcosFunctionDescription extends AbstractFunctionDescription
-{
+public class AcosFunctionDescription extends AbstractFunctionDescription {
   private static final long serialVersionUID = 743117553650008440L;
 
-  public AcosFunctionDescription()
-  {
-    super("ACOS", "org.pentaho.reporting.libraries.formula.function.math.Acos-Function");
+  public AcosFunctionDescription() {
+    super( "ACOS", "org.pentaho.reporting.libraries.formula.function.math.Acos-Function" );
   }
 
-  public FunctionCategory getCategory()
-  {
+  public FunctionCategory getCategory() {
     return MathFunctionCategory.CATEGORY;
   }
 
-  public int getParameterCount()
-  {
+  public int getParameterCount() {
     return 1;
   }
 
-  public Type getParameterType(final int position)
-  {
+  public Type getParameterType( final int position ) {
     return NumberType.GENERIC_NUMBER;
   }
 
-  public Type getValueType()
-  {
+  public Type getValueType() {
     return NumberType.GENERIC_NUMBER;
   }
 
-  public boolean isParameterMandatory(final int position)
-  {
+  public boolean isParameterMandatory( final int position ) {
     return true;
   }
 

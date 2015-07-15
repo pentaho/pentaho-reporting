@@ -17,11 +17,9 @@
 
 package org.pentaho.reporting.libraries.xmlns.parser;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
 import org.pentaho.reporting.libraries.resourceloader.DependencyCollector;
 import org.pentaho.reporting.libraries.resourceloader.FactoryParameterKey;
 import org.pentaho.reporting.libraries.resourceloader.Resource;
@@ -29,18 +27,19 @@ import org.pentaho.reporting.libraries.resourceloader.ResourceException;
 import org.pentaho.reporting.libraries.resourceloader.ResourceKey;
 import org.pentaho.reporting.libraries.resourceloader.ResourceLoadingException;
 import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
-import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
 import org.xml.sax.Attributes;
 import org.xml.sax.Locator;
 import org.xml.sax.SAXException;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
- * A base class for implementing an {@link org.pentaho.reporting.libraries.xmlns.parser.XmlReadHandler}.
- * This class takes care of all the delegation management.
+ * A base class for implementing an {@link org.pentaho.reporting.libraries.xmlns.parser.XmlReadHandler}. This class
+ * takes care of all the delegation management.
  */
-public abstract class AbstractXmlReadHandler implements XmlReadHandler
-{
-  private static final Log logger = LogFactory.getLog(AbstractXmlReadHandler.class);
+public abstract class AbstractXmlReadHandler implements XmlReadHandler {
+  private static final Log logger = LogFactory.getLog( AbstractXmlReadHandler.class );
 
   /**
    * The root handler.
@@ -65,8 +64,7 @@ public abstract class AbstractXmlReadHandler implements XmlReadHandler
   /**
    * Creates a new handler.
    */
-  protected AbstractXmlReadHandler()
-  {
+  protected AbstractXmlReadHandler() {
   }
 
   /**
@@ -75,17 +73,14 @@ public abstract class AbstractXmlReadHandler implements XmlReadHandler
    * @param rootHandler the root handler.
    * @param tagName     the tag name.
    */
-  public void init(final RootXmlReadHandler rootHandler,
-                   final String uri,
-                   final String tagName) throws SAXException
-  {
-    if (rootHandler == null)
-    {
-      throw new NullPointerException("Root handler must not be null");
+  public void init( final RootXmlReadHandler rootHandler,
+                    final String uri,
+                    final String tagName ) throws SAXException {
+    if ( rootHandler == null ) {
+      throw new NullPointerException( "Root handler must not be null" );
     }
-    if (tagName == null)
-    {
-      throw new NullPointerException("Tag name must not be null");
+    if ( tagName == null ) {
+      throw new NullPointerException( "Tag name must not be null" );
     }
     this.uri = uri;
     this.rootHandler = rootHandler;
@@ -100,37 +95,30 @@ public abstract class AbstractXmlReadHandler implements XmlReadHandler
    * @param attrs   the attributes.
    * @throws SAXException if there is a parsing error.
    */
-  public final void startElement(final String uri,
-                                 final String tagName,
-                                 final Attributes attrs)
-      throws SAXException
-  {
-    if (this.firstCall)
-    {
-      if (!this.tagName.equals(tagName) || !this.uri.equals(uri))
-      {
+  public final void startElement( final String uri,
+                                  final String tagName,
+                                  final Attributes attrs )
+    throws SAXException {
+    if ( this.firstCall ) {
+      if ( !this.tagName.equals( tagName ) || !this.uri.equals( uri ) ) {
         throw new ParseException(
-            "Expected <" + this.tagName + ">, found <" + tagName + '>', getLocator());
+          "Expected <" + this.tagName + ">, found <" + tagName + '>', getLocator() );
       }
       this.firstCall = false;
-      startParsing(attrs);
-    }
-    else
-    {
-      final XmlReadHandler childHandler = getHandlerForChild(uri, tagName, attrs);
-      if (childHandler == null)
-      {
-        logger.warn("Unknown tag <" + uri + ':' + tagName + ">: Start to ignore this element and all of its childs. " + getLocatorString());
-        logger.debug(this.getClass());
+      startParsing( attrs );
+    } else {
+      final XmlReadHandler childHandler = getHandlerForChild( uri, tagName, attrs );
+      if ( childHandler == null ) {
+        logger.warn( "Unknown tag <" + uri + ':' + tagName + ">: Start to ignore this element and all of its childs. "
+          + getLocatorString() );
+        logger.debug( this.getClass() );
         final IgnoreAnyChildReadHandler ignoreAnyChildReadHandler =
-            new IgnoreAnyChildReadHandler();
-        ignoreAnyChildReadHandler.init(getRootHandler(), uri, tagName);
-        this.rootHandler.recurse(ignoreAnyChildReadHandler, uri, tagName, attrs);
-      }
-      else
-      {
-        childHandler.init(getRootHandler(), uri, tagName);
-        this.rootHandler.recurse(childHandler, uri, tagName, attrs);
+          new IgnoreAnyChildReadHandler();
+        ignoreAnyChildReadHandler.init( getRootHandler(), uri, tagName );
+        this.rootHandler.recurse( ignoreAnyChildReadHandler, uri, tagName, attrs );
+      } else {
+        childHandler.init( getRootHandler(), uri, tagName );
+        this.rootHandler.recurse( childHandler, uri, tagName, attrs );
       }
     }
   }
@@ -143,9 +131,8 @@ public abstract class AbstractXmlReadHandler implements XmlReadHandler
    * @param length the length.
    * @throws SAXException if there is a parsing error.
    */
-  public void characters(final char[] ch, final int start, final int length)
-      throws SAXException
-  {
+  public void characters( final char[] ch, final int start, final int length )
+    throws SAXException {
     // nothing required
   }
 
@@ -155,17 +142,13 @@ public abstract class AbstractXmlReadHandler implements XmlReadHandler
    * @param tagName the tag name.
    * @throws SAXException if there is a parsing error.
    */
-  public final void endElement(final String uri,
-                               final String tagName) throws SAXException
-  {
-    if (this.tagName.equals(tagName) && this.uri.equals(uri))
-    {
+  public final void endElement( final String uri,
+                                final String tagName ) throws SAXException {
+    if ( this.tagName.equals( tagName ) && this.uri.equals( uri ) ) {
       doneParsing();
-      this.rootHandler.unwind(uri, tagName);
-    }
-    else
-    {
-      throw new ParseException("Illegal Parser State." + toString(), getLocator());
+      this.rootHandler.unwind( uri, tagName );
+    } else {
+      throw new ParseException( "Illegal Parser State." + toString(), getLocator() );
     }
   }
 
@@ -174,19 +157,17 @@ public abstract class AbstractXmlReadHandler implements XmlReadHandler
    *
    * @return the location as debug-text.
    */
-  private String getLocatorString()
-  {
+  private String getLocatorString() {
     final Locator locator = getLocator();
-    if (locator == null)
-    {
+    if ( locator == null ) {
       return "";
     }
-    final StringBuffer message = new StringBuffer(100);
-    message.append(" [Location: Line=");
-    message.append(locator.getLineNumber());
-    message.append(" Column=");
-    message.append(locator.getColumnNumber());
-    message.append("] ");
+    final StringBuffer message = new StringBuffer( 100 );
+    message.append( " [Location: Line=" );
+    message.append( locator.getLineNumber() );
+    message.append( " Column=" );
+    message.append( locator.getColumnNumber() );
+    message.append( "] " );
     return message.toString();
 
   }
@@ -197,8 +178,7 @@ public abstract class AbstractXmlReadHandler implements XmlReadHandler
    * @param attrs the attributes.
    * @throws SAXException if there is a parsing error.
    */
-  protected void startParsing(final Attributes attrs) throws SAXException
-  {
+  protected void startParsing( final Attributes attrs ) throws SAXException {
     // nothing required
   }
 
@@ -207,8 +187,7 @@ public abstract class AbstractXmlReadHandler implements XmlReadHandler
    *
    * @throws SAXException if there is a parsing error.
    */
-  protected void doneParsing() throws SAXException
-  {
+  protected void doneParsing() throws SAXException {
     // nothing required
   }
 
@@ -218,9 +197,8 @@ public abstract class AbstractXmlReadHandler implements XmlReadHandler
    * @param namespaceURI the namespace that should be tested.
    * @return true, if the namespace matches the element's namespace,false otherwise.
    */
-  protected boolean isSameNamespace(final String namespaceURI)
-  {
-    return ObjectUtilities.equal(namespaceURI, getUri());
+  protected boolean isSameNamespace( final String namespaceURI ) {
+    return ObjectUtilities.equal( namespaceURI, getUri() );
   }
 
   /**
@@ -232,11 +210,10 @@ public abstract class AbstractXmlReadHandler implements XmlReadHandler
    * @return the handler or null, if the tagname is invalid.
    * @throws SAXException if there is a parsing error.
    */
-  protected XmlReadHandler getHandlerForChild(final String uri,
-                                              final String tagName,
-                                              final Attributes atts)
-      throws SAXException
-  {
+  protected XmlReadHandler getHandlerForChild( final String uri,
+                                               final String tagName,
+                                               final Attributes atts )
+    throws SAXException {
     return null;
   }
 
@@ -245,8 +222,7 @@ public abstract class AbstractXmlReadHandler implements XmlReadHandler
    *
    * @return the tag name.
    */
-  public String getTagName()
-  {
+  public String getTagName() {
     return this.tagName;
   }
 
@@ -255,8 +231,7 @@ public abstract class AbstractXmlReadHandler implements XmlReadHandler
    *
    * @return the element's URI.
    */
-  public String getUri()
-  {
+  public String getUri() {
     return uri;
   }
 
@@ -265,76 +240,67 @@ public abstract class AbstractXmlReadHandler implements XmlReadHandler
    *
    * @return the root handler.
    */
-  public RootXmlReadHandler getRootHandler()
-  {
+  public RootXmlReadHandler getRootHandler() {
     return this.rootHandler;
   }
 
   /**
-   * Returns the locator as provided by the XML parser. This method may return null if the XML parser has no
-   * locator support.
+   * Returns the locator as provided by the XML parser. This method may return null if the XML parser has no locator
+   * support.
    *
    * @return the locator or null.
    */
-  public Locator getLocator()
-  {
+  public Locator getLocator() {
     return rootHandler.getDocumentLocator();
   }
 
   /**
    * Parses an external file using LibLoader and returns the parsed result as an object of type
-   * <code>targetClass</code>. The file is given as relative pathname (relative to the current source file).
-   * The current helper-methods are used as parse-parameters for the external parsing.
+   * <code>targetClass</code>. The file is given as relative pathname (relative to the current source file). The current
+   * helper-methods are used as parse-parameters for the external parsing.
    *
-   * @param file the file to be parsed.
+   * @param file        the file to be parsed.
    * @param targetClass the target type of the parse operation.
    * @return the result, never null.
-   * @throws ParseException if parsing the result failed for some reason.
+   * @throws ParseException           if parsing the result failed for some reason.
    * @throws ResourceLoadingException if there was an IO error loading the resource.
    * @see #deriveParseParameters()
-   * @see #performExternalParsing(String, Class, Map)  
+   * @see #performExternalParsing(String, Class, Map)
    */
-  protected Object performExternalParsing(final String file, final Class targetClass)
-      throws ParseException, ResourceLoadingException
-  {
-    return performExternalParsing(file, targetClass, deriveParseParameters());
+  protected Object performExternalParsing( final String file, final Class targetClass )
+    throws ParseException, ResourceLoadingException {
+    return performExternalParsing( file, targetClass, deriveParseParameters() );
   }
 
   /**
    * Parses an external file using LibLoader and returns the parsed result as an object of type
-   * <code>targetClass</code>. The file is given as relative pathname (relative to the current source file).
-   * The current helper-methods are used as parse-parameters for the external parsing.
+   * <code>targetClass</code>. The file is given as relative pathname (relative to the current source file). The current
+   * helper-methods are used as parse-parameters for the external parsing.
    *
-   * @param file the file to be parsed.
+   * @param file        the file to be parsed.
    * @param targetClass the target type of the parse operation.
-   * @param map the map of parse parameters.
+   * @param map         the map of parse parameters.
    * @return the result, never null.
-   * @throws ParseException if parsing the result failed for some reason.
+   * @throws ParseException           if parsing the result failed for some reason.
    * @throws ResourceLoadingException if there was an IO error loading the resource.
    * @see #deriveParseParameters()
    */
-  protected Object performExternalParsing(final String file, final Class targetClass, final Map map)
-      throws ParseException, ResourceLoadingException
-  {
-    try
-    {
+  protected Object performExternalParsing( final String file, final Class targetClass, final Map map )
+    throws ParseException, ResourceLoadingException {
+    try {
       final ResourceManager resourceManager = rootHandler.getResourceManager();
       final ResourceKey source = rootHandler.getSource();
 
-      final ResourceKey target = resourceManager.deriveKey(source, file, map);
+      final ResourceKey target = resourceManager.deriveKey( source, file, map );
       final DependencyCollector dc = rootHandler.getDependencyCollector();
 
-      final Resource resource = resourceManager.create(target, rootHandler.getContext(), targetClass);
-      dc.add(resource);
+      final Resource resource = resourceManager.create( target, rootHandler.getContext(), targetClass );
+      dc.add( resource );
       return resource.getResource();
-    }
-    catch (ResourceLoadingException rle)
-    {
+    } catch ( ResourceLoadingException rle ) {
       throw rle;
-    }
-    catch (ResourceException e)
-    {
-      throw new ParseException("Failure while loading data: " + file, e, getLocator());
+    } catch ( ResourceException e ) {
+      throw new ParseException( "Failure while loading data: " + file, e, getLocator() );
     }
 
   }
@@ -342,20 +308,18 @@ public abstract class AbstractXmlReadHandler implements XmlReadHandler
   /**
    * Creates a working copy of the current parse state.
    *
-   * @noinspection ObjectAllocationInLoop as this is a cloning operation.
    * @return the derived parse-parameters.
+   * @noinspection ObjectAllocationInLoop as this is a cloning operation.
    */
-  protected Map deriveParseParameters()
-  {
+  protected Map deriveParseParameters() {
     final RootXmlReadHandler rootHandler = getRootHandler();
     final HashMap map = new HashMap();
     final String[] names = rootHandler.getHelperObjectNames();
     final int length = names.length;
-    for (int i = 0; i < length; i++)
-    {
-      final String name = names[i];
-      final FactoryParameterKey key = new FactoryParameterKey(name);
-      map.put(key, rootHandler.getHelperObject(name));
+    for ( int i = 0; i < length; i++ ) {
+      final String name = names[ i ];
+      final FactoryParameterKey key = new FactoryParameterKey( name );
+      map.put( key, rootHandler.getHelperObject( name ) );
     }
     return map;
   }

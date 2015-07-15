@@ -30,33 +30,27 @@ import org.w3c.css.sac.LexicalUnit;
  *
  * @author Thomas Morgner
  */
-public class DropInitialBeforeAdjustReadHandler extends OneOfConstantsReadHandler
-{
-  public DropInitialBeforeAdjustReadHandler()
-  {
-    super(true);
-    addValue(DropInitialBeforeAdjust.BEFORE_EDGE);
-    addValue(DropInitialBeforeAdjust.TEXT_BEFORE_EDGE);
-    addValue(DropInitialBeforeAdjust.CENTRAL);
-    addValue(DropInitialBeforeAdjust.HANGING);
-    addValue(DropInitialBeforeAdjust.MATHEMATICAL);
-    addValue(DropInitialBeforeAdjust.MIDDLE);
+public class DropInitialBeforeAdjustReadHandler extends OneOfConstantsReadHandler {
+  public DropInitialBeforeAdjustReadHandler() {
+    super( true );
+    addValue( DropInitialBeforeAdjust.BEFORE_EDGE );
+    addValue( DropInitialBeforeAdjust.TEXT_BEFORE_EDGE );
+    addValue( DropInitialBeforeAdjust.CENTRAL );
+    addValue( DropInitialBeforeAdjust.HANGING );
+    addValue( DropInitialBeforeAdjust.MATHEMATICAL );
+    addValue( DropInitialBeforeAdjust.MIDDLE );
   }
 
-  protected CSSValue lookupValue(final LexicalUnit value)
-  {
-    CSSValue constant = super.lookupValue(value);
-    if (constant != null)
-    {
+  protected CSSValue lookupValue( final LexicalUnit value ) {
+    CSSValue constant = super.lookupValue( value );
+    if ( constant != null ) {
       return constant;
-    }
-    else if (value.getLexicalUnitType() == LexicalUnit.SAC_PERCENTAGE)
-    {
-      return CSSNumericValue.createValue(CSSNumericType.PERCENTAGE,
-          value.getFloatValue());
+    } else if ( value.getLexicalUnitType() == LexicalUnit.SAC_PERCENTAGE ) {
+      return CSSNumericValue.createValue( CSSNumericType.PERCENTAGE,
+        value.getFloatValue() );
     }
 
-    return CSSValueFactory.createLengthValue(value);
+    return CSSValueFactory.createLengthValue( value );
 
   }
 }

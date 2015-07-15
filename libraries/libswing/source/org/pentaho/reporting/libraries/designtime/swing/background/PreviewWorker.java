@@ -19,8 +19,7 @@ package org.pentaho.reporting.libraries.designtime.swing.background;
 
 import javax.swing.table.TableModel;
 
-public interface PreviewWorker extends CancelListener, Runnable
-{
+public interface PreviewWorker extends CancelListener, Runnable {
   public TableModel getResultTableModel();
 
   public void close();

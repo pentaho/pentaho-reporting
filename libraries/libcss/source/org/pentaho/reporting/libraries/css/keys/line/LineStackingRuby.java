@@ -24,15 +24,13 @@ import org.pentaho.reporting.libraries.css.values.CSSConstant;
  *
  * @author Thomas Morgner
  */
-public class LineStackingRuby
-{
+public class LineStackingRuby {
   public static final CSSConstant EXCLUDE_RUBY = new CSSConstant(
-      "exclude-ruby");
+    "exclude-ruby" );
   public static final CSSConstant INCLUDE_RUBY = new CSSConstant(
-      "include-ruby");
+    "include-ruby" );
 
-  private LineStackingRuby()
-  {
+  private LineStackingRuby() {
   }
 
 }

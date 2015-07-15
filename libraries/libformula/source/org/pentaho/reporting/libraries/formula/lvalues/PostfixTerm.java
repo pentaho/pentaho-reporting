@@ -25,55 +25,45 @@ import org.pentaho.reporting.libraries.formula.operators.PostfixOperator;
  *
  * @author Thomas Morgner
  */
-public class PostfixTerm extends AbstractLValue
-{
+public class PostfixTerm extends AbstractLValue {
   private PostfixOperator operator;
   private LValue value;
   private static final long serialVersionUID = -3652663226326546952L;
 
-  public PostfixTerm(final LValue value, final PostfixOperator operator)
-  {
-    if (operator == null)
-    {
+  public PostfixTerm( final LValue value, final PostfixOperator operator ) {
+    if ( operator == null ) {
       throw new NullPointerException();
     }
-    if (value == null)
-    {
+    if ( value == null ) {
       throw new NullPointerException();
     }
     this.operator = operator;
     this.value = value;
   }
 
-  public PostfixOperator getOperator()
-  {
+  public PostfixOperator getOperator() {
     return operator;
   }
 
-  public LValue getValue()
-  {
+  public LValue getValue() {
     return value;
   }
 
-  public TypeValuePair evaluate() throws EvaluationException
-  {
-    return operator.evaluate(getContext(), value.evaluate());
+  public TypeValuePair evaluate() throws EvaluationException {
+    return operator.evaluate( getContext(), value.evaluate() );
   }
 
 
-  public String toString()
-  {
-    return String.valueOf(value) + operator;
+  public String toString() {
+    return String.valueOf( value ) + operator;
   }
 
   /**
-   * Checks whether the LValue is constant. Constant lvalues always return the
-   * same value.
+   * Checks whether the LValue is constant. Constant lvalues always return the same value.
    *
    * @return
    */
-  public boolean isConstant()
-  {
+  public boolean isConstant() {
     return value.isConstant();
   }
 
@@ -82,13 +72,11 @@ public class PostfixTerm extends AbstractLValue
    *
    * @return
    */
-  public LValue[] getChildValues()
-  {
-    return new LValue[]{ value };
+  public LValue[] getChildValues() {
+    return new LValue[] { value };
   }
 
-  public Object clone() throws CloneNotSupportedException
-  {
+  public Object clone() throws CloneNotSupportedException {
     final PostfixTerm o = (PostfixTerm) super.clone();
     o.value = (LValue) value.clone();
     return o;

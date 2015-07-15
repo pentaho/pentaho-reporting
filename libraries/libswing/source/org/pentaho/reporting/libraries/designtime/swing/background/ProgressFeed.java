@@ -17,7 +17,6 @@
 
 package org.pentaho.reporting.libraries.designtime.swing.background;
 
-public interface ProgressFeed
-{
+public interface ProgressFeed {
   public double queryProgress();
 }

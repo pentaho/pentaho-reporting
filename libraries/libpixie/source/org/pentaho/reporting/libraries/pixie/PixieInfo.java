@@ -20,8 +20,7 @@ package org.pentaho.reporting.libraries.pixie;
 import org.pentaho.reporting.libraries.base.LibBaseInfo;
 import org.pentaho.reporting.libraries.base.versioning.ProjectInformation;
 
-public class PixieInfo extends ProjectInformation
-{
+public class PixieInfo extends ProjectInformation {
   private static PixieInfo singleton;
 
   /**
@@ -29,26 +28,22 @@ public class PixieInfo extends ProjectInformation
    *
    * @return The single instance of information about the JCommon library.
    */
-  public static synchronized PixieInfo getInstance()
-  {
-    if (singleton == null)
-    {
+  public static synchronized PixieInfo getInstance() {
+    if ( singleton == null ) {
       singleton = new PixieInfo();
     }
     return singleton;
   }
 
   /**
-   * Creates a new instance. (Must be public so that we can instantiate
-   * the library-info using Class.newInstance(..)).
+   * Creates a new instance. (Must be public so that we can instantiate the library-info using Class.newInstance(..)).
    */
-  public PixieInfo()
-  {
-    super("libpixie", "Pixie");
-    setInfo("http://reporting.pentaho.org/pixie/");
-    setCopyright("(C)opyright 2000-2011, by Pentaho Corporation, Object Refinery Limited and Contributors");
-    setLicenseName("LGPL");
+  public PixieInfo() {
+    super( "libpixie", "Pixie" );
+    setInfo( "http://reporting.pentaho.org/pixie/" );
+    setCopyright( "(C)opyright 2000-2011, by Pentaho Corporation, Object Refinery Limited and Contributors" );
+    setLicenseName( "LGPL" );
 
-    addLibrary(LibBaseInfo.getInstance());
+    addLibrary( LibBaseInfo.getInstance() );
   }
 }

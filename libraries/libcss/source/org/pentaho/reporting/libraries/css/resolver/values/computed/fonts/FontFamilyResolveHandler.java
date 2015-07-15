@@ -37,80 +37,66 @@ import org.pentaho.reporting.libraries.css.values.CSSValueList;
  *
  * @author Thomas Morgner
  */
-public class FontFamilyResolveHandler extends ConstantsResolveHandler
-{
-  public FontFamilyResolveHandler()
-  {
-    addNormalizeValue(FontFamilyValues.CURSIVE);
-    addNormalizeValue(FontFamilyValues.FANTASY);
-    addNormalizeValue(FontFamilyValues.MONOSPACE);
-    addNormalizeValue(FontFamilyValues.SANS_SERIF);
-    addNormalizeValue(FontFamilyValues.SERIF);
+public class FontFamilyResolveHandler extends ConstantsResolveHandler {
+  public FontFamilyResolveHandler() {
+    addNormalizeValue( FontFamilyValues.CURSIVE );
+    addNormalizeValue( FontFamilyValues.FANTASY );
+    addNormalizeValue( FontFamilyValues.MONOSPACE );
+    addNormalizeValue( FontFamilyValues.SANS_SERIF );
+    addNormalizeValue( FontFamilyValues.SERIF );
   }
 
   /**
-   * This indirectly defines the resolve order. The higher the order, the more
-   * dependent is the resolver on other resolvers to be complete.
+   * This indirectly defines the resolve order. The higher the order, the more dependent is the resolver on other
+   * resolvers to be complete.
    *
    * @return
    */
-  public StyleKey[] getRequiredStyles()
-  {
-    return new StyleKey[]{
-        FontStyleKeys.FONT_WEIGHT, FontStyleKeys.FONT_VARIANT,
-        FontStyleKeys.FONT_SMOOTH, FontStyleKeys.FONT_STRETCH
+  public StyleKey[] getRequiredStyles() {
+    return new StyleKey[] {
+      FontStyleKeys.FONT_WEIGHT, FontStyleKeys.FONT_VARIANT,
+      FontStyleKeys.FONT_SMOOTH, FontStyleKeys.FONT_STRETCH
     };
   }
 
-  public void resolve(final DocumentContext process,
-                      final LayoutElement currentNode,
-                      final StyleKey key)
-  {
+  public void resolve( final DocumentContext process,
+                       final LayoutElement currentNode,
+                       final StyleKey key ) {
     //Log.debug ("Processing: " + currentNode);
     final LayoutStyle layoutContext = currentNode.getLayoutStyle();
     final LayoutOutputMetaData outputMetaData = process.getOutputMetaData();
-    final CSSValue cssValue = layoutContext.getValue(key);
-    if (cssValue instanceof CSSValueList)
-    {
+    final CSSValue cssValue = layoutContext.getValue( key );
+    if ( cssValue instanceof CSSValueList ) {
 
       final CSSValueList list = (CSSValueList) cssValue;
-      for (int i = 0; i < list.getLength(); i++)
-      {
-        final CSSValue item = list.getItem(i);
-        if (item instanceof CSSConstant)
-        {
-          final CSSConstant c = (CSSConstant) lookupValue((CSSConstant) item);
-          final CSSValue family = outputMetaData.getNormalizedFontFamilyName(c);
-          if (family != null)
-          {
-            layoutContext.setValue(key, family);
+      for ( int i = 0; i < list.getLength(); i++ ) {
+        final CSSValue item = list.getItem( i );
+        if ( item instanceof CSSConstant ) {
+          final CSSConstant c = (CSSConstant) lookupValue( (CSSConstant) item );
+          final CSSValue family = outputMetaData.getNormalizedFontFamilyName( c );
+          if ( family != null ) {
+            layoutContext.setValue( key, family );
             return;
           }
           // Ignore, although this is not ok.
-          DebugLog.log("Invalid state after setting predefined font family.");
-        }
-        else if (item instanceof CSSStringValue)
-        {
+          DebugLog.log( "Invalid state after setting predefined font family." );
+        } else if ( item instanceof CSSStringValue ) {
           final CSSStringValue sval = (CSSStringValue) item;
-          final CSSValue value = process.getOutputMetaData().getNormalizedFontFamilyName(sval);
-          if (value != null)
-          {
-            layoutContext.setValue(key, value);
+          final CSSValue value = process.getOutputMetaData().getNormalizedFontFamilyName( sval );
+          if ( value != null ) {
+            layoutContext.setValue( key, value );
             return;
           }
         }
       }
-    }
-    else if (cssValue instanceof CSSConstant)
-    {
-      if (FontFamilyValues.NONE.equals(cssValue))
-      {
+    } else if ( cssValue instanceof CSSConstant ) {
+      if ( FontFamilyValues.NONE.equals( cssValue ) ) {
         // that means: No text at all.
         return;
       }
     }
 
 
-    layoutContext.setValue(key, outputMetaData.getDefaultFontFamily());
+    layoutContext.setValue( key, outputMetaData.getDefaultFontFamily() );
   }
 }

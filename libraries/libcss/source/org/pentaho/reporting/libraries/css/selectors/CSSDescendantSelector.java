@@ -17,27 +17,25 @@
 
 package org.pentaho.reporting.libraries.css.selectors;
 
-import java.io.Serializable;
-
 import org.w3c.css.sac.DescendantSelector;
 import org.w3c.css.sac.Selector;
 import org.w3c.css.sac.SimpleSelector;
+
+import java.io.Serializable;
 
 /**
  * Creation-Date: 30.11.2005, 15:38:58
  *
  * @author Thomas Morgner
  */
-public class CSSDescendantSelector extends AbstractSelector implements DescendantSelector, Serializable
-{
+public class CSSDescendantSelector extends AbstractSelector implements DescendantSelector, Serializable {
   private Selector anchestorSelector;
   private SimpleSelector simpleSelector;
   private boolean childRelation;
 
-  public CSSDescendantSelector(final SimpleSelector simpleSelector,
-                               final Selector anchestorSelector,
-                               final boolean childRelation)
-  {
+  public CSSDescendantSelector( final SimpleSelector simpleSelector,
+                                final Selector anchestorSelector,
+                                final boolean childRelation ) {
     this.simpleSelector = simpleSelector;
     this.anchestorSelector = anchestorSelector;
     this.childRelation = childRelation;
@@ -46,42 +44,34 @@ public class CSSDescendantSelector extends AbstractSelector implements Descendan
   /**
    * Returns the parent selector.
    */
-  public Selector getAncestorSelector()
-  {
+  public Selector getAncestorSelector() {
     return anchestorSelector;
   }
 
-  protected SelectorWeight createWeight()
-  {
-    if (anchestorSelector instanceof CSSSelector == false ||
-        simpleSelector instanceof CSSSelector == false)
-    {
-      throw new ClassCastException("Invalid selector implementation!");
+  protected SelectorWeight createWeight() {
+    if ( anchestorSelector instanceof CSSSelector == false ||
+      simpleSelector instanceof CSSSelector == false ) {
+      throw new ClassCastException( "Invalid selector implementation!" );
     }
     CSSSelector anchestor = (CSSSelector) anchestorSelector;
     CSSSelector simple = (CSSSelector) simpleSelector;
-    return new SelectorWeight(anchestor.getWeight(), simple.getWeight());
+    return new SelectorWeight( anchestor.getWeight(), simple.getWeight() );
   }
 
   /*
   * Returns the simple selector.
   */
-  public SimpleSelector getSimpleSelector()
-  {
+  public SimpleSelector getSimpleSelector() {
     return simpleSelector;
   }
 
   /**
    * An integer indicating the type of <code>Selector</code>
    */
-  public short getSelectorType()
-  {
-    if (childRelation)
-    {
+  public short getSelectorType() {
+    if ( childRelation ) {
       return Selector.SAC_CHILD_SELECTOR;
-    }
-    else
-    {
+    } else {
       return Selector.SAC_DESCENDANT_SELECTOR;
     }
   }

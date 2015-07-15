@@ -25,22 +25,20 @@ import org.pentaho.reporting.libraries.css.parser.stylehandler.OneOfConstantsRea
  *
  * @author Thomas Morgner
  */
-public class FontStretchReadHandler extends OneOfConstantsReadHandler
-{
-  public FontStretchReadHandler()
-  {
-    super(false);
-    addValue(FontStretch.CONDENSED);
-    addValue(FontStretch.EXPANDED);
-    addValue(FontStretch.EXTRA_CONDENSED);
-    addValue(FontStretch.EXTRA_EXPANDED);
-    addValue(FontStretch.NORMAL);
-    addValue(FontStretch.SEMI_CONDENSED);
-    addValue(FontStretch.SEMI_EXPANDED);
-    addValue(FontStretch.ULTRA_CONDENSED);
-    addValue(FontStretch.ULTRA_EXPANDED);
+public class FontStretchReadHandler extends OneOfConstantsReadHandler {
+  public FontStretchReadHandler() {
+    super( false );
+    addValue( FontStretch.CONDENSED );
+    addValue( FontStretch.EXPANDED );
+    addValue( FontStretch.EXTRA_CONDENSED );
+    addValue( FontStretch.EXTRA_EXPANDED );
+    addValue( FontStretch.NORMAL );
+    addValue( FontStretch.SEMI_CONDENSED );
+    addValue( FontStretch.SEMI_EXPANDED );
+    addValue( FontStretch.ULTRA_CONDENSED );
+    addValue( FontStretch.ULTRA_EXPANDED );
 
-    addValue(FontStretch.WIDER);
-    addValue(FontStretch.NARROWER);
+    addValue( FontStretch.WIDER );
+    addValue( FontStretch.NARROWER );
   }
 }

@@ -32,44 +32,36 @@ import org.pentaho.reporting.libraries.formula.typing.coretypes.LogicalType;
  * This function returns true if the parameter is of error.
  *
  * @author Cedric Pronzato
- *
  */
-public class IsErrorFunction implements Function
-{
-  private static final TypeValuePair RETURN_TRUE = new TypeValuePair(LogicalType.TYPE, Boolean.TRUE);
-  private static final TypeValuePair RETURN_FALSE = new TypeValuePair(LogicalType.TYPE, Boolean.FALSE);
+public class IsErrorFunction implements Function {
+  private static final TypeValuePair RETURN_TRUE = new TypeValuePair( LogicalType.TYPE, Boolean.TRUE );
+  private static final TypeValuePair RETURN_FALSE = new TypeValuePair( LogicalType.TYPE, Boolean.FALSE );
   private static final long serialVersionUID = 5692502042198617868L;
 
-  public IsErrorFunction()
-  {
+  public IsErrorFunction() {
   }
 
-  public TypeValuePair evaluate(final FormulaContext context, final ParameterCallback parameters) throws EvaluationException
-  {
-    if(parameters.getParameterCount() != 1)
-    {
-      throw EvaluationException.getInstance(LibFormulaErrorValue.ERROR_ARGUMENTS_VALUE);
+  public TypeValuePair evaluate( final FormulaContext context, final ParameterCallback parameters )
+    throws EvaluationException {
+    if ( parameters.getParameterCount() != 1 ) {
+      throw EvaluationException.getInstance( LibFormulaErrorValue.ERROR_ARGUMENTS_VALUE );
     }
 
-    try
-    {
-      final Type type = parameters.getType(0);
-      final Object value = parameters.getValue(0);
+    try {
+      final Type type = parameters.getType( 0 );
+      final Object value = parameters.getValue( 0 );
 
-      if(ErrorType.TYPE.equals(type) && value instanceof ErrorValue)
-      {
+      if ( ErrorType.TYPE.equals( type ) && value instanceof ErrorValue ) {
         return RETURN_TRUE;
       }
-    } catch (EvaluationException e)
-    {
+    } catch ( EvaluationException e ) {
       return RETURN_TRUE;
     }
 
     return RETURN_FALSE;
   }
 
-  public String getCanonicalName()
-  {
+  public String getCanonicalName() {
     return "ISERROR";
   }
 

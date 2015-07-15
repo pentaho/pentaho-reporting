@@ -27,51 +27,40 @@ import org.pentaho.reporting.libraries.formula.typing.coretypes.AnyType;
  *
  * @author Thomas Morgner
  */
-public class IfNaFunctionDescription extends AbstractFunctionDescription
-{
+public class IfNaFunctionDescription extends AbstractFunctionDescription {
   private static final long serialVersionUID = 5553370162761578407L;
 
-  public IfNaFunctionDescription()
-  {
-    super("IFNA", "org.pentaho.reporting.libraries.formula.function.logical.IfNa-Function");
+  public IfNaFunctionDescription() {
+    super( "IFNA", "org.pentaho.reporting.libraries.formula.function.logical.IfNa-Function" );
   }
 
-  public int getParameterCount()
-  {
+  public int getParameterCount() {
     return 2;
   }
 
-  public Type getParameterType(final int position)
-  {
+  public Type getParameterType( final int position ) {
     return AnyType.TYPE;
   }
 
-  public Type getValueType()
-  {
+  public Type getValueType() {
     return AnyType.TYPE;
   }
 
   /**
-   * Defines, whether the parameter at the given position is mandatory. A
-   * mandatory parameter must be filled in, while optional parameters need not
-   * to be filled in.
+   * Defines, whether the parameter at the given position is mandatory. A mandatory parameter must be filled in, while
+   * optional parameters need not to be filled in.
    *
    * @return
    */
-  public boolean isParameterMandatory(final int position)
-  {
-    if (position == 1 || position == 2)
-    {
+  public boolean isParameterMandatory( final int position ) {
+    if ( position == 1 || position == 2 ) {
       return true;
-    }
-    else
-    {
+    } else {
       return false;
     }
   }
 
-  public FunctionCategory getCategory()
-  {
+  public FunctionCategory getCategory() {
     return LogicalFunctionCategory.CATEGORY;
   }
 

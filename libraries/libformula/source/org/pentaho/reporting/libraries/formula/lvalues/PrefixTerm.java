@@ -17,28 +17,24 @@
 
 package org.pentaho.reporting.libraries.formula.lvalues;
 
-import org.pentaho.reporting.libraries.formula.operators.PrefixOperator;
 import org.pentaho.reporting.libraries.formula.EvaluationException;
+import org.pentaho.reporting.libraries.formula.operators.PrefixOperator;
 
 /**
  * Creation-Date: 02.11.2006, 10:20:27
  *
  * @author Thomas Morgner
  */
-public class PrefixTerm extends AbstractLValue
-{
+public class PrefixTerm extends AbstractLValue {
   private PrefixOperator operator;
   private LValue value;
   private static final long serialVersionUID = 6986873199027878219L;
 
-  public PrefixTerm(final PrefixOperator operator, final LValue value)
-  {
-    if (operator == null)
-    {
+  public PrefixTerm( final PrefixOperator operator, final LValue value ) {
+    if ( operator == null ) {
       throw new NullPointerException();
     }
-    if (value == null)
-    {
+    if ( value == null ) {
       throw new NullPointerException();
     }
 
@@ -46,26 +42,22 @@ public class PrefixTerm extends AbstractLValue
     this.value = value;
   }
 
-  public PrefixOperator getOperator()
-  {
+  public PrefixOperator getOperator() {
     return operator;
   }
 
-  public LValue getValue()
-  {
+  public LValue getValue() {
     return value;
   }
 
 
-  public TypeValuePair evaluate() throws EvaluationException
-  {
-    return operator.evaluate(getContext(), value.evaluate());
+  public TypeValuePair evaluate() throws EvaluationException {
+    return operator.evaluate( getContext(), value.evaluate() );
   }
 
 
-  public String toString()
-  {
-    return String.valueOf(operator) + value;
+  public String toString() {
+    return String.valueOf( operator ) + value;
   }
 
   /**
@@ -73,24 +65,20 @@ public class PrefixTerm extends AbstractLValue
    *
    * @return
    */
-  public LValue[] getChildValues()
-  {
-    return new LValue[]{ value };
+  public LValue[] getChildValues() {
+    return new LValue[] { value };
   }
 
   /**
-   * Checks whether the LValue is constant. Constant lvalues always return the
-   * same value.
+   * Checks whether the LValue is constant. Constant lvalues always return the same value.
    *
    * @return
    */
-  public boolean isConstant()
-  {
+  public boolean isConstant() {
     return value.isConstant();
   }
 
-  public Object clone() throws CloneNotSupportedException
-  {
+  public Object clone() throws CloneNotSupportedException {
     final PrefixTerm o = (PrefixTerm) super.clone();
     o.value = (LValue) value.clone();
     return o;

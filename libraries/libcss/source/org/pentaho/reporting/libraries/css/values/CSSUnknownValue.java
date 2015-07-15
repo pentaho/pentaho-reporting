@@ -24,22 +24,18 @@ import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
  *
  * @author Thomas Morgner
  */
-public class CSSUnknownValue implements CSSValue
-{
+public class CSSUnknownValue implements CSSValue {
   private String cssText;
 
-  public CSSUnknownValue(final String cssText)
-  {
+  public CSSUnknownValue( final String cssText ) {
     this.cssText = cssText;
   }
 
-  public String getCSSText()
-  {
+  public String getCSSText() {
     return cssText;
   }
 
-  public String toString()
-  {
+  public String toString() {
     return getCSSText();
   }
 
@@ -48,21 +44,16 @@ public class CSSUnknownValue implements CSSValue
    *
    * @return <code>true</code> if the supplied object is equivalent to this object, <code>false</code> otherwise
    */
-  public boolean equals(Object obj)
-  {
-    if (obj instanceof CSSUnknownValue)
-    {
+  public boolean equals( Object obj ) {
+    if ( obj instanceof CSSUnknownValue ) {
       CSSUnknownValue that = (CSSUnknownValue) obj;
-      return ObjectUtilities.equal(this.cssText, that.cssText);
-    }
-    else
-    {
+      return ObjectUtilities.equal( this.cssText, that.cssText );
+    } else {
       return false;
     }
   }
 
-  public CSSType getType()
-  {
+  public CSSType getType() {
     return CSSGenericType.GENERIC_TYPE;
   }
 

@@ -25,13 +25,11 @@ import org.pentaho.reporting.libraries.css.parser.stylehandler.OneOfConstantsRea
  *
  * @author Thomas Morgner
  */
-public class PagePolicyReadHandler extends OneOfConstantsReadHandler
-{
-  public PagePolicyReadHandler()
-  {
-    super(false);
-    addValue(PagePolicy.FIRST);
-    addValue(PagePolicy.START);
-    addValue(PagePolicy.LAST);
+public class PagePolicyReadHandler extends OneOfConstantsReadHandler {
+  public PagePolicyReadHandler() {
+    super( false );
+    addValue( PagePolicy.FIRST );
+    addValue( PagePolicy.START );
+    addValue( PagePolicy.LAST );
   }
 }

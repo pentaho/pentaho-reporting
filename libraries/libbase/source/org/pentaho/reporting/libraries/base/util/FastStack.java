@@ -22,13 +22,12 @@ import java.util.Arrays;
 import java.util.EmptyStackException;
 
 /**
- * A very simple unsynchronized stack. This one is faster than the java.util-Version, which is based on the
- * synchronized java.util.Vector class. 
+ * A very simple unsynchronized stack. This one is faster than the java.util-Version, which is based on the synchronized
+ * java.util.Vector class.
  *
  * @author Thomas Morgner
  */
-public final class FastStack<T> implements Serializable, Cloneable
-{
+public final class FastStack<T> implements Serializable, Cloneable {
   /**
    * The contents of the stack. The array is likely to be larger than the actual size of the stack, so use
    * <code>size</code> to get the last accessible item.
@@ -50,8 +49,7 @@ public final class FastStack<T> implements Serializable, Cloneable
   /**
    * Creates a new stack with an initial size and growth of 10 items.
    */
-  public FastStack()
-  {
+  public FastStack() {
     initialSize = 10;
   }
 
@@ -60,17 +58,16 @@ public final class FastStack<T> implements Serializable, Cloneable
    *
    * @param size the initial size and growth.
    */
-  public FastStack(final int size)
-  {
-    initialSize = Math.max(1, size);
+  public FastStack( final int size ) {
+    initialSize = Math.max( 1, size );
   }
 
   /**
    * Checks whether the stack is empty.
+   *
    * @return true, if the stack is empty, false otherwise.
    */
-  public boolean isEmpty()
-  {
+  public boolean isEmpty() {
     return size == 0;
   }
 
@@ -79,8 +76,7 @@ public final class FastStack<T> implements Serializable, Cloneable
    *
    * @return the stack size.
    */
-  public int size()
-  {
+  public int size() {
     return size;
   }
 
@@ -89,26 +85,23 @@ public final class FastStack<T> implements Serializable, Cloneable
    *
    * @param o the object, maybe null.
    */
-  public void push(final T o)
-  {
-    if (contents == null)
-    {
-      contents = new Object[initialSize];
-      contents[0] = o;
+  public void push( final T o ) {
+    if ( contents == null ) {
+      contents = new Object[ initialSize ];
+      contents[ 0 ] = o;
       size = 1;
       return;
     }
 
     final int oldSize = size;
     size += 1;
-    if (contents.length == size)
-    {
+    if ( contents.length == size ) {
       // grow ..
-      final Object[] newContents = new Object[size + initialSize];
-      System.arraycopy(contents, 0, newContents, 0, size);
+      final Object[] newContents = new Object[ size + initialSize ];
+      System.arraycopy( contents, 0, newContents, 0, size );
       this.contents = newContents;
     }
-    this.contents[oldSize] = o;
+    this.contents[ oldSize ] = o;
   }
 
   /**
@@ -117,13 +110,11 @@ public final class FastStack<T> implements Serializable, Cloneable
    * @return the top-most object.
    * @throws EmptyStackException if the stack is empty.
    */
-  public T peek()
-  {
-    if (size == 0)
-    {
+  public T peek() {
+    if ( size == 0 ) {
       throw new EmptyStackException();
     }
-    return (T) contents[size - 1];
+    return (T) contents[ size - 1 ];
   }
 
   /**
@@ -132,15 +123,13 @@ public final class FastStack<T> implements Serializable, Cloneable
    * @return the top-most object.
    * @throws EmptyStackException if the stack is empty.
    */
-  public T pop()
-  {
-    if (size == 0)
-    {
+  public T pop() {
+    if ( size == 0 ) {
       throw new EmptyStackException();
     }
     size -= 1;
-    final T retval = (T) contents[size];
-    contents[size] = null;
+    final T retval = (T) contents[ size ];
+    contents[ size ] = null;
     return retval;
   }
 
@@ -149,31 +138,24 @@ public final class FastStack<T> implements Serializable, Cloneable
    *
    * @return the cloned stack.
    */
-  public FastStack<T> clone()
-  {
-    try
-    {
+  public FastStack<T> clone() {
+    try {
       final FastStack<T> stack = (FastStack<T>) super.clone();
-      if (contents != null)
-      {
+      if ( contents != null ) {
         stack.contents = contents.clone();
       }
       return stack;
-    }
-    catch (final CloneNotSupportedException cne)
-    {
-      throw new IllegalStateException("Clone not supported? Why?");
+    } catch ( final CloneNotSupportedException cne ) {
+      throw new IllegalStateException( "Clone not supported? Why?" );
     }
   }
 
   /**
    * Removes all contents from the stack.
    */
-  public void clear()
-  {
-    if (contents != null)
-    {
-      Arrays.fill(contents, 0, size, null);
+  public void clear() {
+    if ( contents != null ) {
+      Arrays.fill( contents, 0, size, null );
     }
     this.size = 0;
   }
@@ -185,21 +167,18 @@ public final class FastStack<T> implements Serializable, Cloneable
    * @return the object.
    * @throws IndexOutOfBoundsException if the index given is greater than the number of objects in the stack.
    */
-  public T get(final int index)
-  {
-    if (index >= size)
-    {
+  public T get( final int index ) {
+    if ( index >= size ) {
       throw new IndexOutOfBoundsException();
     }
-    return (T) contents[index];
+    return (T) contents[ index ];
   }
 
-  public String toString()
-  {
+  public String toString() {
     return "FastStack{" +
-        "contents=" + (contents == null ? null : Arrays.asList(contents)) +
-        ", size=" + size +
-        ", initialSize=" + initialSize +
-        '}';
+      "contents=" + ( contents == null ? null : Arrays.asList( contents ) ) +
+      ", size=" + size +
+      ", initialSize=" + initialSize +
+      '}';
   }
 }

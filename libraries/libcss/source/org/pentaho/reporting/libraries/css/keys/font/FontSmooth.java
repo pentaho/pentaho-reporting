@@ -24,12 +24,10 @@ import org.pentaho.reporting.libraries.css.values.CSSConstant;
  *
  * @author Thomas Morgner
  */
-public class FontSmooth
-{
-  public static final CSSConstant NEVER = new CSSConstant("never");
-  public static final CSSConstant ALWAYS = new CSSConstant("always");
+public class FontSmooth {
+  public static final CSSConstant NEVER = new CSSConstant( "never" );
+  public static final CSSConstant ALWAYS = new CSSConstant( "always" );
 
-  private FontSmooth()
-  {
+  private FontSmooth() {
   }
 }

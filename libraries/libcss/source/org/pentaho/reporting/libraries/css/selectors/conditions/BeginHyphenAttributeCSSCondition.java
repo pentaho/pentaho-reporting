@@ -22,21 +22,18 @@ package org.pentaho.reporting.libraries.css.selectors.conditions;
  *
  * @author Thomas Morgner
  */
-public class BeginHyphenAttributeCSSCondition extends AttributeCSSCondition
-{
-  public BeginHyphenAttributeCSSCondition(final String name,
-                                          final String namespace,
-                                          final boolean specified,
-                                          final String value)
-  {
-    super(name, namespace, specified, value);
+public class BeginHyphenAttributeCSSCondition extends AttributeCSSCondition {
+  public BeginHyphenAttributeCSSCondition( final String name,
+                                           final String namespace,
+                                           final boolean specified,
+                                           final String value ) {
+    super( name, namespace, specified, value );
   }
 
   /**
    * An integer indicating the type of <code>Condition</code>.
    */
-  public short getConditionType()
-  {
+  public short getConditionType() {
     return SAC_BEGIN_HYPHEN_ATTRIBUTE_CONDITION;
   }
 }

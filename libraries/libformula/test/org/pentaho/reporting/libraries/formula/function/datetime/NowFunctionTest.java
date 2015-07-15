@@ -22,21 +22,18 @@ import org.pentaho.reporting.libraries.formula.FormulaTestBase;
 /**
  * @author Cedric Pronzato
  */
-public class NowFunctionTest extends FormulaTestBase
-{
-  public void testDefault() throws Exception
-  {
+public class NowFunctionTest extends FormulaTestBase {
+  public void testDefault() throws Exception {
     runDefaultTest();
   }
 
 
-  public Object[][] createDataTest()
-  {
+  public Object[][] createDataTest() {
     return new Object[][]
-        {
-            {"NOW()>DATE(2006;1;3)", Boolean.TRUE},
-            {"INT(NOW())=TODAY()", Boolean.TRUE},
-        };
+      {
+        { "NOW()>DATE(2006;1;3)", Boolean.TRUE },
+        { "INT(NOW())=TODAY()", Boolean.TRUE },
+      };
   }
 
 }

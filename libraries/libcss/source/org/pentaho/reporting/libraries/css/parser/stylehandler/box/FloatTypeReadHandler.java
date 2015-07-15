@@ -25,12 +25,10 @@ import org.pentaho.reporting.libraries.css.parser.stylehandler.OneOfConstantsRea
  *
  * @author Thomas Morgner
  */
-public class FloatTypeReadHandler extends OneOfConstantsReadHandler
-{
-  public FloatTypeReadHandler()
-  {
-    super(false);
-    addValue(FloatingType.BOX);
-    addValue(FloatingType.SHAPE);
+public class FloatTypeReadHandler extends OneOfConstantsReadHandler {
+  public FloatTypeReadHandler() {
+    super( false );
+    addValue( FloatingType.BOX );
+    addValue( FloatingType.SHAPE );
   }
 }

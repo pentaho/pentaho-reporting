@@ -17,21 +17,18 @@
 
 package org.pentaho.reporting.libraries.css.model;
 
-public class CSSCounterRule extends CSSDeclarationRule
-{
+public class CSSCounterRule extends CSSDeclarationRule {
   private String name;
 
-  public CSSCounterRule(final StyleSheet parentStyle,
-                        final StyleRule parentRule,
-                        final String name)
-  {
-    super(parentStyle, parentRule);
+  public CSSCounterRule( final StyleSheet parentStyle,
+                         final StyleRule parentRule,
+                         final String name ) {
+    super( parentStyle, parentRule );
     // name can be null, to define a global counter
     this.name = name;
   }
 
-  public String getName()
-  {
+  public String getName() {
     return name;
   }
 }

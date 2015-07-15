@@ -17,28 +17,25 @@
 
 package org.pentaho.reporting.libraries.formula.function.math;
 
-import java.math.BigDecimal;
-
 import org.pentaho.reporting.libraries.formula.FormulaTestBase;
+
+import java.math.BigDecimal;
 
 /**
  * @author Cedric Pronzato
  */
-public class NFunctionTest extends FormulaTestBase
-{
-  public void testDefault() throws Exception
-  {
+public class NFunctionTest extends FormulaTestBase {
+  public void testDefault() throws Exception {
     runDefaultTest();
   }
 
-  public Object[][] createDataTest()
-  {
+  public Object[][] createDataTest() {
     return new Object[][]
-        {
-            {"N(6)", new BigDecimal(6)},
-            {"N(TRUE())", new BigDecimal(1)},
-            {"N(FALSE())", new BigDecimal(0)},
-            {"N(\"Hello\")", new BigDecimal(0)},
-        };
+      {
+        { "N(6)", new BigDecimal( 6 ) },
+        { "N(TRUE())", new BigDecimal( 1 ) },
+        { "N(FALSE())", new BigDecimal( 0 ) },
+        { "N(\"Hello\")", new BigDecimal( 0 ) },
+      };
   }
 }

@@ -25,55 +25,46 @@ import org.pentaho.reporting.libraries.repository.ContentLocation;
 import org.pentaho.reporting.libraries.repository.Repository;
 
 /**
- * A content location that wraps around a single stream. The location will reject any attempts to create new
- * entities or to access entities other than the single entity.
+ * A content location that wraps around a single stream. The location will reject any attempts to create new entities or
+ * to access entities other than the single entity.
  *
  * @author Thomas Morgner
  */
-public class StreamContentLocation implements ContentLocation
-{
+public class StreamContentLocation implements ContentLocation {
   private ContentItem contentItem;
   private StreamRepository repository;
-  private static final ContentEntity[] EMPTY_CONTENT_ENTITY = new ContentEntity[0];
+  private static final ContentEntity[] EMPTY_CONTENT_ENTITY = new ContentEntity[ 0 ];
 
   /**
    * Creates a new stream-location. There can be only one location per stream-repository.
    *
    * @param repository the repository for which a location is created.
    */
-  public StreamContentLocation(final StreamRepository repository)
-  {
-    if (repository == null)
-    {
+  public StreamContentLocation( final StreamRepository repository ) {
+    if ( repository == null ) {
       throw new NullPointerException();
     }
     this.repository = repository;
   }
 
   /**
-   * Returns all content entities stored in this content-location. This returns a array that has at most
-   * one entry. If the repository is a write-only repository and no item has been created yet, the method
-   * returns an empty array.
+   * Returns all content entities stored in this content-location. This returns a array that has at most one entry. If
+   * the repository is a write-only repository and no item has been created yet, the method returns an empty array.
    *
    * @return the content entities for this location.
    * @throws ContentIOException if an repository error occured.
    */
-  public ContentEntity[] listContents() throws ContentIOException
-  {
+  public ContentEntity[] listContents() throws ContentIOException {
     final WrappedInputStream in = repository.getInputStream();
-    if (in != null && contentItem == null)
-    {
+    if ( in != null && contentItem == null ) {
       this.contentItem = new StreamContentItem
-          (repository.getContentName(), this, in, repository.getOutputStream());
+        ( repository.getContentName(), this, in, repository.getOutputStream() );
     }
 
-    if (contentItem == null)
-    {
+    if ( contentItem == null ) {
       return EMPTY_CONTENT_ENTITY;
-    }
-    else
-    {
-      return new ContentEntity[]{contentItem};
+    } else {
+      return new ContentEntity[] { contentItem };
     }
   }
 
@@ -84,50 +75,43 @@ public class StreamContentLocation implements ContentLocation
    * @return the content entity for this name, never null.
    * @throws ContentIOException if an repository error occured.
    */
-  public ContentEntity getEntry(final String name) throws ContentIOException
-  {
+  public ContentEntity getEntry( final String name ) throws ContentIOException {
     final WrappedInputStream in = repository.getInputStream();
-    if (in != null && contentItem == null)
-    {
+    if ( in != null && contentItem == null ) {
       this.contentItem = new StreamContentItem
-          (repository.getContentName(), this, in, repository.getOutputStream());
+        ( repository.getContentName(), this, in, repository.getOutputStream() );
     }
 
-    if (contentItem == null)
-    {
-      throw new ContentIOException("No such item");
+    if ( contentItem == null ) {
+      throw new ContentIOException( "No such item" );
     }
-    if (contentItem.getName().equals(name))
-    {
+    if ( contentItem.getName().equals( name ) ) {
       return contentItem;
     }
-    throw new ContentIOException("No such item");
+    throw new ContentIOException( "No such item" );
   }
 
   /**
-   * Creates a new data item in the current location. This method must never
-   * return null. This method will fail if an entity with the same name exists in this location.
+   * Creates a new data item in the current location. This method must never return null. This method will fail if an
+   * entity with the same name exists in this location.
    *
    * @param name the name of the new entity.
    * @return the newly created entity, never null.
    * @throws ContentCreationException if the item could not be created.
    */
-  public ContentItem createItem(final String name) throws ContentCreationException
-  {
+  public ContentItem createItem( final String name ) throws ContentCreationException {
     final WrappedInputStream in = repository.getInputStream();
     final WrappedOutputStream outputStream = repository.getOutputStream();
-    if (in != null && contentItem == null)
-    {
-      this.contentItem = new StreamContentItem(repository.getContentName(), this, in, outputStream);
+    if ( in != null && contentItem == null ) {
+      this.contentItem = new StreamContentItem( repository.getContentName(), this, in, outputStream );
     }
 
-    if (contentItem == null && outputStream != null)
-    {
-      contentItem = new StreamContentItem(name, this, in, outputStream);
+    if ( contentItem == null && outputStream != null ) {
+      contentItem = new StreamContentItem( name, this, in, outputStream );
       return contentItem;
     }
     throw new ContentCreationException
-        ("Failed to create the item. Item already exists or the repository is read-only");
+      ( "Failed to create the item. Item already exists or the repository is read-only" );
   }
 
   /**
@@ -137,10 +121,9 @@ public class StreamContentLocation implements ContentLocation
    * @return nothing.
    * @throws ContentCreationException always, as stream-repositories cannot create sub-locations.
    */
-  public ContentLocation createLocation(final String name)
-      throws ContentCreationException
-  {
-    throw new ContentCreationException("A stream repository never creates sub-locations");
+  public ContentLocation createLocation( final String name )
+    throws ContentCreationException {
+    throw new ContentCreationException( "A stream repository never creates sub-locations" );
   }
 
   /**
@@ -149,18 +132,15 @@ public class StreamContentLocation implements ContentLocation
    * @param name the name of the new entity.
    * @return true, if an entity exists with this name, false otherwise.
    */
-  public boolean exists(final String name)
-  {
-    if (contentItem != null)
-    {
-      return contentItem.getName().equals(name);
+  public boolean exists( final String name ) {
+    if ( contentItem != null ) {
+      return contentItem.getName().equals( name );
     }
 
     final WrappedInputStream in = repository.getInputStream();
-    if (in != null)
-    {
+    if ( in != null ) {
       // if we are in input mode, the content name must not be null.
-      return repository.getContentName().equals(name);
+      return repository.getContentName().equals( name );
     }
 
     return false;
@@ -171,19 +151,17 @@ public class StreamContentLocation implements ContentLocation
    *
    * @return the name.
    */
-  public String getName()
-  {
+  public String getName() {
     return "root";
   }
 
   /**
-   * Returns a unique identifier. This can be canonical filename or a database key. It must be guaranteed that
-   * within the same repository the key will be unique.
+   * Returns a unique identifier. This can be canonical filename or a database key. It must be guaranteed that within
+   * the same repository the key will be unique.
    *
    * @return the unique content ID.
    */
-  public Object getContentId()
-  {
+  public Object getContentId() {
     return getName();
   }
 
@@ -191,11 +169,10 @@ public class StreamContentLocation implements ContentLocation
    * Stream-Repositories do not support attributes.
    *
    * @param domain the attribute domain.
-   * @param key the name of the attribute.
+   * @param key    the name of the attribute.
    * @return always null.
    */
-  public Object getAttribute(final String domain, final String key)
-  {
+  public Object getAttribute( final String domain, final String key ) {
     return null;
   }
 
@@ -203,23 +180,21 @@ public class StreamContentLocation implements ContentLocation
    * Stream-Repositories do not support attributes.
    *
    * @param domain the attribute domain.
-   * @param key the attribute name
-   * @param value the new attribute value.
+   * @param key    the attribute name
+   * @param value  the new attribute value.
    * @return always false.
    */
-  public boolean setAttribute(final String domain, final String key, final Object value)
-  {
+  public boolean setAttribute( final String domain, final String key, final Object value ) {
     return false;
   }
 
   /**
-   * Returns a reference to the parent location. If this entity represents the root directory, this method will
-   * return null.
+   * Returns a reference to the parent location. If this entity represents the root directory, this method will return
+   * null.
    *
    * @return the parent or null, if this is the root-directory.
    */
-  public ContentLocation getParent()
-  {
+  public ContentLocation getParent() {
     return null;
   }
 
@@ -228,8 +203,7 @@ public class StreamContentLocation implements ContentLocation
    *
    * @return the repository.
    */
-  public Repository getRepository()
-  {
+  public Repository getRepository() {
     return repository;
   }
 
@@ -238,8 +212,7 @@ public class StreamContentLocation implements ContentLocation
    *
    * @return always false.
    */
-  public boolean delete()
-  {
+  public boolean delete() {
     return false;
   }
 }

@@ -22,16 +22,13 @@ package org.pentaho.reporting.libraries.formula.function.text;
  *
  * @author Cedric Pronzato
  */
-public class CodeFunction extends UnicodeFunction
-{
+public class CodeFunction extends UnicodeFunction {
   private static final long serialVersionUID = 3505313019941429911L;
 
-  public CodeFunction()
-  {
+  public CodeFunction() {
   }
 
-  public String getCanonicalName()
-  {
+  public String getCanonicalName() {
     return "CODE";
   }
 

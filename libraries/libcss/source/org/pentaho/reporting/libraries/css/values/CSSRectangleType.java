@@ -22,18 +22,15 @@ package org.pentaho.reporting.libraries.css.values;
  *
  * @author Thomas Morgner
  */
-public class CSSRectangleType extends CSSType
-{
-  public static final CSSRectangleType RECT = new CSSRectangleType("rect");
-  public static final CSSRectangleType INSET_RECT = new CSSRectangleType("inset-rect");
+public class CSSRectangleType extends CSSType {
+  public static final CSSRectangleType RECT = new CSSRectangleType( "rect" );
+  public static final CSSRectangleType INSET_RECT = new CSSRectangleType( "inset-rect" );
 
-  private CSSRectangleType(String name)
-  {
-    super(name);
+  private CSSRectangleType( String name ) {
+    super( name );
   }
 
-  public boolean equals(Object obj)
-  {
-    return (obj instanceof CSSRectangleType && super.equals(obj));
+  public boolean equals( Object obj ) {
+    return ( obj instanceof CSSRectangleType && super.equals( obj ) );
   }
 }

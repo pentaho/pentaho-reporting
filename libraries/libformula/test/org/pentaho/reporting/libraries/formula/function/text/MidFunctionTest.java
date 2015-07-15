@@ -23,30 +23,27 @@ import org.pentaho.reporting.libraries.formula.LibFormulaErrorValue;
 /**
  * @author Cedric Pronzato
  */
-public class MidFunctionTest extends FormulaTestBase
-{
-  public void testDefault() throws Exception
-  {
+public class MidFunctionTest extends FormulaTestBase {
+  public void testDefault() throws Exception {
     runDefaultTest();
   }
 
-  public Object[][] createDataTest()
-  {
+  public Object[][] createDataTest() {
     return new Object[][]
-        {
-            {"MID(\"123456789\";5;3)", "567"},
-            {"MID(\"123456789\";20;3)", ""},
-            {"MID(\"123456789\";-1;0)", LibFormulaErrorValue.ERROR_INVALID_ARGUMENT_VALUE},
-            {"MID(\"123456789\";1;0)", ""},
-            {"MID(\"123456789\";2.9;1)", "2"},
-            {"MID(\"123456789\";2;2.9)", "23"},
+      {
+        { "MID(\"123456789\";5;3)", "567" },
+        { "MID(\"123456789\";20;3)", "" },
+        { "MID(\"123456789\";-1;0)", LibFormulaErrorValue.ERROR_INVALID_ARGUMENT_VALUE },
+        { "MID(\"123456789\";1;0)", "" },
+        { "MID(\"123456789\";2.9;1)", "2" },
+        { "MID(\"123456789\";2;2.9)", "23" },
 
-            // custom tests
-            {"MID(\"123456789\";5;10)", "56789"},
-            {"MID(\"123456789\";1;9)", "123456789"},
-            {"MID(\"text\";2;2)", "ex"},
-            {"MID(123456789;\"3\";4)", "3456"},
-        };
+        // custom tests
+        { "MID(\"123456789\";5;10)", "56789" },
+        { "MID(\"123456789\";1;9)", "123456789" },
+        { "MID(\"text\";2;2)", "ex" },
+        { "MID(123456789;\"3\";4)", "3456" },
+      };
   }
 
 }

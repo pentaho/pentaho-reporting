@@ -30,53 +30,39 @@ import org.w3c.css.sac.LexicalUnit;
  *
  * @author Thomas Morgner
  */
-public class FontFamilyReadHandler extends ListOfValuesReadHandler
-{
-  public FontFamilyReadHandler()
-  {
+public class FontFamilyReadHandler extends ListOfValuesReadHandler {
+  public FontFamilyReadHandler() {
   }
 
-  public CSSValue createValue(StyleKey name, LexicalUnit value)
-  {
-    if (value.getLexicalUnitType() == LexicalUnit.SAC_IDENT)
-    {
-      if (value.getStringValue().equalsIgnoreCase("none"))
-      {
+  public CSSValue createValue( StyleKey name, LexicalUnit value ) {
+    if ( value.getLexicalUnitType() == LexicalUnit.SAC_IDENT ) {
+      if ( value.getStringValue().equalsIgnoreCase( "none" ) ) {
         return FontFamilyValues.NONE;
       }
     }
-    return super.createValue(name, value);
+    return super.createValue( name, value );
   }
 
-  protected CSSValue parseValue(final LexicalUnit value)
-  {
-    if (value.getLexicalUnitType() == LexicalUnit.SAC_IDENT)
-    {
-      if (value.getStringValue().equalsIgnoreCase("serif"))
-      {
+  protected CSSValue parseValue( final LexicalUnit value ) {
+    if ( value.getLexicalUnitType() == LexicalUnit.SAC_IDENT ) {
+      if ( value.getStringValue().equalsIgnoreCase( "serif" ) ) {
         return FontFamilyValues.SERIF;
       }
-      if (value.getStringValue().equalsIgnoreCase("sans-serif"))
-      {
+      if ( value.getStringValue().equalsIgnoreCase( "sans-serif" ) ) {
         return FontFamilyValues.SANS_SERIF;
       }
-      if (value.getStringValue().equalsIgnoreCase("fantasy"))
-      {
+      if ( value.getStringValue().equalsIgnoreCase( "fantasy" ) ) {
         return FontFamilyValues.FANTASY;
       }
-      if (value.getStringValue().equalsIgnoreCase("cursive"))
-      {
+      if ( value.getStringValue().equalsIgnoreCase( "cursive" ) ) {
         return FontFamilyValues.CURSIVE;
       }
-      if (value.getStringValue().equalsIgnoreCase("monospace"))
-      {
+      if ( value.getStringValue().equalsIgnoreCase( "monospace" ) ) {
         return FontFamilyValues.MONOSPACE;
       }
       return null;
-    }
-    else if (value.getLexicalUnitType() == LexicalUnit.SAC_STRING_VALUE)
-    {
-      return new CSSStringValue(CSSStringType.STRING, value.getStringValue());
+    } else if ( value.getLexicalUnitType() == LexicalUnit.SAC_STRING_VALUE ) {
+      return new CSSStringValue( CSSStringType.STRING, value.getStringValue() );
     }
     return null;
   }

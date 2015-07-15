@@ -25,14 +25,12 @@ import org.pentaho.reporting.libraries.css.parser.stylehandler.OneOfConstantsRea
  *
  * @author Thomas Morgner
  */
-public class TargetPositionReadHandler extends OneOfConstantsReadHandler
-{
-  public TargetPositionReadHandler()
-  {
-    super(false);
-    addValue(TargetPosition.ABOVE);
-    addValue(TargetPosition.BACK);
-    addValue(TargetPosition.BEHIND);
-    addValue(TargetPosition.FRONT);
+public class TargetPositionReadHandler extends OneOfConstantsReadHandler {
+  public TargetPositionReadHandler() {
+    super( false );
+    addValue( TargetPosition.ABOVE );
+    addValue( TargetPosition.BACK );
+    addValue( TargetPosition.BEHIND );
+    addValue( TargetPosition.FRONT );
   }
 }

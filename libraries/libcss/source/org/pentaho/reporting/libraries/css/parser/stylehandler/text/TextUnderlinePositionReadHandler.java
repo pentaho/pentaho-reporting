@@ -25,14 +25,12 @@ import org.pentaho.reporting.libraries.css.parser.stylehandler.OneOfConstantsRea
  *
  * @author Thomas Morgner
  */
-public class TextUnderlinePositionReadHandler extends OneOfConstantsReadHandler
-{
-  public TextUnderlinePositionReadHandler()
-  {
-    super(true);
-    addValue(TextUnderlinePosition.AFTER_EDGE);
-    addValue(TextUnderlinePosition.ALPHABETIC);
-    addValue(TextUnderlinePosition.BEFORE_EDGE);
+public class TextUnderlinePositionReadHandler extends OneOfConstantsReadHandler {
+  public TextUnderlinePositionReadHandler() {
+    super( true );
+    addValue( TextUnderlinePosition.AFTER_EDGE );
+    addValue( TextUnderlinePosition.ALPHABETIC );
+    addValue( TextUnderlinePosition.BEFORE_EDGE );
   }
 
 

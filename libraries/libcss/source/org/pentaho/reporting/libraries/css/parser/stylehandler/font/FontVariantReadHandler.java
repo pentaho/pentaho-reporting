@@ -25,12 +25,10 @@ import org.pentaho.reporting.libraries.css.parser.stylehandler.OneOfConstantsRea
  *
  * @author Thomas Morgner
  */
-public class FontVariantReadHandler extends OneOfConstantsReadHandler
-{
-  public FontVariantReadHandler()
-  {
-    super(false);
-    addValue(FontVariant.NORMAL);
-    addValue(FontVariant.SMALL_CAPS);
+public class FontVariantReadHandler extends OneOfConstantsReadHandler {
+  public FontVariantReadHandler() {
+    super( false );
+    addValue( FontVariant.NORMAL );
+    addValue( FontVariant.SMALL_CAPS );
   }
 }

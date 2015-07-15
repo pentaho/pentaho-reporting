@@ -17,34 +17,28 @@
 
 package org.pentaho.openformula.ui;
 
-import javax.swing.Icon;
+import javax.swing.*;
 
-public class TestFieldDefinition implements FieldDefinition
-{
+public class TestFieldDefinition implements FieldDefinition {
   private String name;
 
-  public TestFieldDefinition(final String name)
-  {
+  public TestFieldDefinition( final String name ) {
     this.name = name;
   }
 
-  public String getName()
-  {
+  public String getName() {
     return name;
   }
 
-  public String getDisplayName()
-  {
+  public String getDisplayName() {
     return name;
   }
 
-  public Icon getIcon()
-  {
+  public Icon getIcon() {
     return null;
   }
 
-  public Class getFieldType()
-  {
+  public Class getFieldType() {
     return String.class;
   }
 }

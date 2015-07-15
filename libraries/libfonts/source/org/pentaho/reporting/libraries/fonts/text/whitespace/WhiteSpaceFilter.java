@@ -22,24 +22,21 @@ package org.pentaho.reporting.libraries.fonts.text.whitespace;
  *
  * @author Thomas Morgner
  */
-public interface WhiteSpaceFilter extends Cloneable
-{
+public interface WhiteSpaceFilter extends Cloneable {
   public static final int STRIP_WHITESPACE = -1;
 
   /**
-   * Filters the whitespaces. This method returns '-1', if the whitespace
-   * should be removed from the stream; otherwise it presents a replacement
-   * character. If the codepoint is no whitespace at all, the codepoint is
-   * returned unchanged.
+   * Filters the whitespaces. This method returns '-1', if the whitespace should be removed from the stream; otherwise
+   * it presents a replacement character. If the codepoint is no whitespace at all, the codepoint is returned
+   * unchanged.
    *
    * @param codepoint
    * @return
    */
-  public int filter (int codepoint);
+  public int filter( int codepoint );
 
   /**
-   * Reset the filter to the same state as if the filter had been constructed
-   * but not used yet.
+   * Reset the filter to the same state as if the filter had been constructed but not used yet.
    */
   public void reset();
 

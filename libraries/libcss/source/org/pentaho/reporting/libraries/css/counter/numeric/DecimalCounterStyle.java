@@ -19,19 +19,15 @@ package org.pentaho.reporting.libraries.css.counter.numeric;
 
 import org.pentaho.reporting.libraries.css.counter.CounterStyle;
 
-public class DecimalCounterStyle implements CounterStyle
-{
-  public DecimalCounterStyle ()
-  {
+public class DecimalCounterStyle implements CounterStyle {
+  public DecimalCounterStyle() {
   }
 
-  public String getCounterValue (final int index)
-  {
-    return Integer.toString(index);
+  public String getCounterValue( final int index ) {
+    return Integer.toString( index );
   }
 
-  public String getSuffix()
-  {
+  public String getSuffix() {
     return ".";
   }
 }

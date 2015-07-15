@@ -24,12 +24,10 @@ import org.pentaho.reporting.libraries.css.values.CSSConstant;
  *
  * @author Thomas Morgner
  */
-public class BorderCollapse
-{
-  public static final CSSConstant COLLAPSE = new CSSConstant("collapse");
-  public static final CSSConstant SEPARATE = new CSSConstant("separate");
+public class BorderCollapse {
+  public static final CSSConstant COLLAPSE = new CSSConstant( "collapse" );
+  public static final CSSConstant SEPARATE = new CSSConstant( "separate" );
 
-  private BorderCollapse()
-  {
+  private BorderCollapse() {
   }
 }

@@ -24,15 +24,13 @@ import org.pentaho.reporting.libraries.css.values.CSSConstant;
  *
  * @author Thomas Morgner
  */
-public class WordBreak
-{
-  public static final CSSConstant NORMAL = new CSSConstant("normal");
-  public static final CSSConstant KEEP_ALL = new CSSConstant("keep-all");
-  public static final CSSConstant LOOSE = new CSSConstant("loose");
-  public static final CSSConstant BREAK_STRICT = new CSSConstant("break-strict");
-  public static final CSSConstant BREAK_ALL = new CSSConstant("break-all");
+public class WordBreak {
+  public static final CSSConstant NORMAL = new CSSConstant( "normal" );
+  public static final CSSConstant KEEP_ALL = new CSSConstant( "keep-all" );
+  public static final CSSConstant LOOSE = new CSSConstant( "loose" );
+  public static final CSSConstant BREAK_STRICT = new CSSConstant( "break-strict" );
+  public static final CSSConstant BREAK_ALL = new CSSConstant( "break-all" );
 
-  private WordBreak()
-  {
+  private WordBreak() {
   }
 }

@@ -25,21 +25,19 @@ import org.pentaho.reporting.libraries.css.parser.stylehandler.OneOfConstantsRea
  *
  * @author Thomas Morgner
  */
-public class DominantBaselineReadHandler extends OneOfConstantsReadHandler
-{
-  public DominantBaselineReadHandler()
-  {
-    super(true);
-    addValue(DominantBaseline.ALPHABETIC);
-    addValue(DominantBaseline.CENTRAL);
-    addValue(DominantBaseline.HANGING);
-    addValue(DominantBaseline.IDEOGRAPHIC);
-    addValue(DominantBaseline.MATHEMATICAL);
-    addValue(DominantBaseline.MIDDLE);
-    addValue(DominantBaseline.NO_CHANGE);
-    addValue(DominantBaseline.RESET_SIZE);
-    addValue(DominantBaseline.TEXT_AFTER_EDGE);
-    addValue(DominantBaseline.TEXT_BEFORE_EDGE);
-    addValue(DominantBaseline.USE_SCRIPT);
+public class DominantBaselineReadHandler extends OneOfConstantsReadHandler {
+  public DominantBaselineReadHandler() {
+    super( true );
+    addValue( DominantBaseline.ALPHABETIC );
+    addValue( DominantBaseline.CENTRAL );
+    addValue( DominantBaseline.HANGING );
+    addValue( DominantBaseline.IDEOGRAPHIC );
+    addValue( DominantBaseline.MATHEMATICAL );
+    addValue( DominantBaseline.MIDDLE );
+    addValue( DominantBaseline.NO_CHANGE );
+    addValue( DominantBaseline.RESET_SIZE );
+    addValue( DominantBaseline.TEXT_AFTER_EDGE );
+    addValue( DominantBaseline.TEXT_BEFORE_EDGE );
+    addValue( DominantBaseline.USE_SCRIPT );
   }
 }

@@ -25,13 +25,11 @@ import java.io.OutputStream;
  *
  * @author Thomas Morgner
  */
-public class NullOutputStream extends OutputStream
-{
+public class NullOutputStream extends OutputStream {
   /**
    * Default constructor.
    */
-  public NullOutputStream()
-  {
+  public NullOutputStream() {
   }
 
   /**
@@ -40,9 +38,8 @@ public class NullOutputStream extends OutputStream
    * @param i the value.
    * @throws IOException if there is an I/O problem.
    */
-  public void write(final int i)
-      throws IOException
-  {
+  public void write( final int i )
+    throws IOException {
     // no i wont do anything here ...
   }
 
@@ -52,9 +49,8 @@ public class NullOutputStream extends OutputStream
    * @param bytes the bytes.
    * @throws IOException if there is an I/O problem.
    */
-  public void write(final byte[] bytes)
-      throws IOException
-  {
+  public void write( final byte[] bytes )
+    throws IOException {
     // no i wont do anything here ...
   }
 
@@ -66,9 +62,8 @@ public class NullOutputStream extends OutputStream
    * @param len   the number of bytes to write.
    * @throws IOException if there is an I/O problem.
    */
-  public void write(final byte[] bytes, final int off, final int len)
-      throws IOException
-  {
+  public void write( final byte[] bytes, final int off, final int len )
+    throws IOException {
     // no i wont do anything here ...
   }
 

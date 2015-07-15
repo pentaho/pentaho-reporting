@@ -25,15 +25,13 @@ import org.pentaho.reporting.libraries.css.resolver.values.computed.ConstantsRes
  *
  * @author Thomas Morgner
  */
-public class WhitespaceCollapseResolveHandler extends ConstantsResolveHandler
-{
-  public WhitespaceCollapseResolveHandler()
-  {
-    addNormalizeValue(WhitespaceCollapse.COLLAPSE);
-    addNormalizeValue(WhitespaceCollapse.DISCARD);
-    addNormalizeValue(WhitespaceCollapse.PRESERVE);
-    addNormalizeValue(WhitespaceCollapse.PRESERVE_BREAKS);
-    setFallback(WhitespaceCollapse.COLLAPSE);
+public class WhitespaceCollapseResolveHandler extends ConstantsResolveHandler {
+  public WhitespaceCollapseResolveHandler() {
+    addNormalizeValue( WhitespaceCollapse.COLLAPSE );
+    addNormalizeValue( WhitespaceCollapse.DISCARD );
+    addNormalizeValue( WhitespaceCollapse.PRESERVE );
+    addNormalizeValue( WhitespaceCollapse.PRESERVE_BREAKS );
+    setFallback( WhitespaceCollapse.COLLAPSE );
   }
 
 }

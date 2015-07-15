@@ -25,42 +25,34 @@ import org.pentaho.reporting.libraries.formula.typing.coretypes.TextType;
 
 /**
  * Describes TrimFunction function.
- * @see TrimFunction
  *
  * @author Cedric Pronzato
- *
+ * @see TrimFunction
  */
-public class TrimFunctionDescription extends AbstractFunctionDescription
-{
+public class TrimFunctionDescription extends AbstractFunctionDescription {
   private static final long serialVersionUID = -7658361544754433688L;
 
-  public TrimFunctionDescription()
-  {
-    super("TRIM", "org.pentaho.reporting.libraries.formula.function.text.Trim-Function");
+  public TrimFunctionDescription() {
+    super( "TRIM", "org.pentaho.reporting.libraries.formula.function.text.Trim-Function" );
   }
 
-  public FunctionCategory getCategory()
-  {
+  public FunctionCategory getCategory() {
     return TextFunctionCategory.CATEGORY;
   }
 
-  public int getParameterCount()
-  {
+  public int getParameterCount() {
     return 1;
   }
 
-  public Type getParameterType(final int position)
-  {
+  public Type getParameterType( final int position ) {
     return AnyType.TYPE;
   }
 
-  public Type getValueType()
-  {
+  public Type getValueType() {
     return TextType.TYPE;
   }
 
-  public boolean isParameterMandatory(final int position)
-  {
+  public boolean isParameterMandatory( final int position ) {
     return true;
   }
 

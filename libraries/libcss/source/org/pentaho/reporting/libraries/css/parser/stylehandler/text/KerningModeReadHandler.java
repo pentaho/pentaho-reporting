@@ -29,24 +29,19 @@ import org.w3c.css.sac.LexicalUnit;
  *
  * @author Thomas Morgner
  */
-public class KerningModeReadHandler extends ListOfConstantsReadHandler
-{
-  public KerningModeReadHandler()
-  {
-    super(2, false, true);
-    addValue(KerningMode.CONTEXTUAL);
-    addValue(KerningMode.PAIR);
+public class KerningModeReadHandler extends ListOfConstantsReadHandler {
+  public KerningModeReadHandler() {
+    super( 2, false, true );
+    addValue( KerningMode.CONTEXTUAL );
+    addValue( KerningMode.PAIR );
   }
 
-  public CSSValue createValue(StyleKey name, LexicalUnit value)
-  {
-    if (value.getLexicalUnitType() == LexicalUnit.SAC_IDENT)
-    {
-      if (value.getStringValue().equalsIgnoreCase("none"))
-      {
-        return new CSSValueList(new CSSValue[]{KerningMode.NONE});
+  public CSSValue createValue( StyleKey name, LexicalUnit value ) {
+    if ( value.getLexicalUnitType() == LexicalUnit.SAC_IDENT ) {
+      if ( value.getStringValue().equalsIgnoreCase( "none" ) ) {
+        return new CSSValueList( new CSSValue[] { KerningMode.NONE } );
       }
     }
-    return super.createValue(name, value);
+    return super.createValue( name, value );
   }
 }

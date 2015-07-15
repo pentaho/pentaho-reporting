@@ -18,14 +18,11 @@
 
 package org.pentaho.reporting.libraries.base.boot;
 
-public class DefaultObjectFactoryBuilder implements ObjectFactoryBuilder
-{
-  public DefaultObjectFactoryBuilder()
-  {
+public class DefaultObjectFactoryBuilder implements ObjectFactoryBuilder {
+  public DefaultObjectFactoryBuilder() {
   }
 
-  public ObjectFactory createObjectFactory(final SubSystem subSystem)
-  {
-    return new DefaultObjectFactory(subSystem.getGlobalConfig());
+  public ObjectFactory createObjectFactory( final SubSystem subSystem ) {
+    return new DefaultObjectFactory( subSystem.getGlobalConfig() );
   }
 }

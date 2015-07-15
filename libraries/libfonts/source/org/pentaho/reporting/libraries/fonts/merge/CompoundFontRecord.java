@@ -17,17 +17,16 @@
 
 package org.pentaho.reporting.libraries.fonts.merge;
 
-import org.pentaho.reporting.libraries.fonts.registry.FontRecord;
 import org.pentaho.reporting.libraries.fonts.registry.FontFamily;
 import org.pentaho.reporting.libraries.fonts.registry.FontIdentifier;
+import org.pentaho.reporting.libraries.fonts.registry.FontRecord;
 
 /**
  * Creation-Date: 20.07.2007, 18:55:08
  *
  * @author Thomas Morgner
  */
-public class CompoundFontRecord implements FontRecord
-{
+public class CompoundFontRecord implements FontRecord {
   /*
    * Specifiying the boldSpecified and italicsSpecified is a dirty hack and should be removed pretty soon.  
    */
@@ -39,48 +38,40 @@ public class CompoundFontRecord implements FontRecord
   private FontIdentifier identifier;
 
 
-  public CompoundFontRecord(final FontRecord base,
-                            final CompoundFontFamily family,
-                            final boolean boldSpecified,
-                            final boolean italicsSpecified)
-  {
+  public CompoundFontRecord( final FontRecord base,
+                             final CompoundFontFamily family,
+                             final boolean boldSpecified,
+                             final boolean italicsSpecified ) {
     this.base = base;
     this.family = family;
     this.boldSpecified = boldSpecified;
     this.italicsSpecified = italicsSpecified;
   }
 
-  public FontRecord getBase()
-  {
+  public FontRecord getBase() {
     return base;
   }
 
-  public FontFamily getFamily()
-  {
+  public FontFamily getFamily() {
     return family;
   }
 
-  public boolean isBold()
-  {
+  public boolean isBold() {
     return base.isBold();
   }
 
-  public boolean isItalic()
-  {
+  public boolean isItalic() {
     return base.isItalic();
   }
 
-  public boolean isOblique()
-  {
+  public boolean isOblique() {
     return base.isOblique();
   }
 
-  public FontIdentifier getIdentifier()
-  {
-    if (identifier == null)
-    {
+  public FontIdentifier getIdentifier() {
+    if ( identifier == null ) {
       identifier = new CompoundFontIdentifier
-          (base.getIdentifier(), family.getRegistry(), boldSpecified, italicsSpecified);
+        ( base.getIdentifier(), family.getRegistry(), boldSpecified, italicsSpecified );
     }
     return identifier;
   }

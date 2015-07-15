@@ -23,23 +23,20 @@ import org.pentaho.reporting.libraries.formula.FormulaTestBase;
 /**
  * @author Cedric Pronzato
  */
-public class IsNaFunctionTest extends FormulaTestBase
-{
-  public void testDefault() throws Exception
-  {
+public class IsNaFunctionTest extends FormulaTestBase {
+  public void testDefault() throws Exception {
     runDefaultTest();
   }
 
-  public Object[][] createDataTest()
-  {
+  public Object[][] createDataTest() {
     return new Object[][]
-        {
-            {"ISNA(1/0)", Boolean.FALSE},
-            {"ISNA(NA())", Boolean.TRUE},
-            //{"ISNA(#N/A)", Boolean.TRUE},
-            {"ISNA(\"#N/A\")", Boolean.FALSE},
-            {"ISNA(1)", Boolean.FALSE},
-        };
+      {
+        { "ISNA(1/0)", Boolean.FALSE },
+        { "ISNA(NA())", Boolean.TRUE },
+        //{"ISNA(#N/A)", Boolean.TRUE},
+        { "ISNA(\"#N/A\")", Boolean.FALSE },
+        { "ISNA(1)", Boolean.FALSE },
+      };
   }
 
 }

@@ -17,17 +17,18 @@
 
 package org.pentaho.reporting.libraries.designtime.swing;
 
-import org.pentaho.reporting.libraries.base.versioning.ProjectInformation;
 import org.pentaho.reporting.libraries.base.LibBaseInfo;
+import org.pentaho.reporting.libraries.base.versioning.ProjectInformation;
 
 /**
  * Details about the LibFormat project.
  *
  * @author Thomas Morgner
  */
-public class LibSwingInfo extends ProjectInformation
-{
-  /** A singleton instance of the Info class. */
+public class LibSwingInfo extends ProjectInformation {
+  /**
+   * A singleton instance of the Info class.
+   */
   private static LibSwingInfo instance;
 
   /**
@@ -35,10 +36,8 @@ public class LibSwingInfo extends ProjectInformation
    *
    * @return te info object for this library.
    */
-  public static synchronized ProjectInformation getInstance()
-  {
-    if (instance == null)
-    {
+  public static synchronized ProjectInformation getInstance() {
+    if ( instance == null ) {
       instance = new LibSwingInfo();
       instance.initialize();
     }
@@ -48,21 +47,19 @@ public class LibSwingInfo extends ProjectInformation
   /**
    * Creates a new info-object.
    */
-  private LibSwingInfo()
-  {
-    super("libswing", "LibSwing");
+  private LibSwingInfo() {
+    super( "libswing", "LibSwing" );
   }
 
   /**
    * Initializes the new info-object.
    */
-  private void initialize()
-  {
-    setBootClass(LibSwingBoot.class.getName());
-    setLicenseName("LGPL");
-    setInfo("http://reporting.pentaho.org/libswing/");
-    setCopyright("(C)opyright 2008-2011, by Pentaho Corporation and Contributors");
+  private void initialize() {
+    setBootClass( LibSwingBoot.class.getName() );
+    setLicenseName( "LGPL" );
+    setInfo( "http://reporting.pentaho.org/libswing/" );
+    setCopyright( "(C)opyright 2008-2011, by Pentaho Corporation and Contributors" );
 
-    addLibrary(LibBaseInfo.getInstance());
+    addLibrary( LibBaseInfo.getInstance() );
   }
 }

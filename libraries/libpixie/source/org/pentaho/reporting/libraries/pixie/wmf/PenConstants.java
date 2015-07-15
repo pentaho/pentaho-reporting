@@ -18,11 +18,9 @@
 package org.pentaho.reporting.libraries.pixie.wmf;
 
 /**
- * The PenConstants were defined in the Windows-API and are used do define the appearance
- * of Wmf-Pens.
+ * The PenConstants were defined in the Windows-API and are used do define the appearance of Wmf-Pens.
  */
-public interface PenConstants
-{
+public interface PenConstants {
   /* Pen Styles */
   public static final int PS_SOLID = 0;
   public static final int PS_DASH = 1;       /* -------  */

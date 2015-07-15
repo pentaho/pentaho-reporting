@@ -23,24 +23,20 @@ import org.junit.Test;
 import org.pentaho.reporting.libraries.formula.function.FunctionDescription;
 import org.pentaho.reporting.libraries.formula.function.FunctionRegistry;
 
-public class Prd5297Test
-{
+public class Prd5297Test {
   @Before
-  public void setUp() throws Exception
-  {
+  public void setUp() throws Exception {
     LibFormulaBoot.getInstance().start();
   }
 
   @Test
-  public void testFunctionMetaData()
-  {
+  public void testFunctionMetaData() {
     DefaultFormulaContext ctx = new DefaultFormulaContext();
     FunctionRegistry functionRegistry = ctx.getFunctionRegistry();
-    for (final String name : functionRegistry.getFunctionNames())
-    {
-      FunctionDescription metaData = functionRegistry.getMetaData(name);
-      Assert.assertEquals(name, metaData.getCanonicalName());
-      Assert.assertEquals(name, functionRegistry.createFunction(name).getCanonicalName());
+    for ( final String name : functionRegistry.getFunctionNames() ) {
+      FunctionDescription metaData = functionRegistry.getMetaData( name );
+      Assert.assertEquals( name, metaData.getCanonicalName() );
+      Assert.assertEquals( name, functionRegistry.createFunction( name ).getCanonicalName() );
     }
   }
 }

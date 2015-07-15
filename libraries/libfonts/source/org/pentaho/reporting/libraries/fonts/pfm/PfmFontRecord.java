@@ -28,16 +28,14 @@ import org.pentaho.reporting.libraries.fonts.registry.FontType;
  *
  * @author Thomas Morgner
  */
-public class PfmFontRecord implements FontSource, FontIdentifier
-{
+public class PfmFontRecord implements FontSource, FontIdentifier {
   private DefaultFontFamily fontFamily;
   private boolean bold;
   private boolean italic;
   private String fontFile;
   private boolean embeddable;
 
-  public PfmFontRecord(final PfmFont font, final DefaultFontFamily fontFamily)
-  {
+  public PfmFontRecord( final PfmFont font, final DefaultFontFamily fontFamily ) {
     this.embeddable = font.isEmbeddable();
     this.fontFile = font.getFilename();
     this.fontFamily = fontFamily;
@@ -46,48 +44,39 @@ public class PfmFontRecord implements FontSource, FontIdentifier
     this.italic = header.isItalic();
   }
 
-  public FontFamily getFamily()
-  {
+  public FontFamily getFamily() {
     return fontFamily;
   }
 
-  public boolean isBold()
-  {
+  public boolean isBold() {
     return bold;
   }
 
-  public boolean isItalic()
-  {
+  public boolean isItalic() {
     return italic;
   }
 
-  public boolean isOblique()
-  {
+  public boolean isOblique() {
     return false;
   }
 
-  public FontIdentifier getIdentifier()
-  {
+  public FontIdentifier getIdentifier() {
     return this;
   }
 
-  public String getFontSource()
-  {
+  public String getFontSource() {
     return fontFile;
   }
 
-  public boolean isEmbeddable()
-  {
+  public boolean isEmbeddable() {
     return embeddable;
   }
 
-  public boolean isScalable()
-  {
+  public boolean isScalable() {
     return true;
   }
 
-  public FontType getFontType()
-  {
+  public FontType getFontType() {
     return FontType.PFM;
   }
 }

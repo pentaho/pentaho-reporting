@@ -25,12 +25,10 @@ import org.pentaho.reporting.libraries.css.parser.stylehandler.OneOfConstantsRea
  *
  * @author Thomas Morgner
  */
-public class CaptionSideReadHandler extends OneOfConstantsReadHandler
-{
-  public CaptionSideReadHandler()
-  {
-    super(false);
-    addValue(CaptionSide.BOTTOM);
-    addValue(CaptionSide.TOP);
+public class CaptionSideReadHandler extends OneOfConstantsReadHandler {
+  public CaptionSideReadHandler() {
+    super( false );
+    addValue( CaptionSide.BOTTOM );
+    addValue( CaptionSide.TOP );
   }
 }

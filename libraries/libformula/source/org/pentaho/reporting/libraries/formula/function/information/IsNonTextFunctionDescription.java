@@ -25,42 +25,34 @@ import org.pentaho.reporting.libraries.formula.typing.coretypes.LogicalType;
 
 /**
  * Describes IsNonTextFunction function.
- * @see IsNonTextFunction
  *
  * @author Cedric Pronzato
- *
+ * @see IsNonTextFunction
  */
-public class IsNonTextFunctionDescription extends AbstractFunctionDescription
-{
+public class IsNonTextFunctionDescription extends AbstractFunctionDescription {
   private static final long serialVersionUID = 3006040859953929468L;
 
-  public IsNonTextFunctionDescription()
-  {
-    super("ISNONTEXT", "org.pentaho.reporting.libraries.formula.function.information.IsNonText-Function");
+  public IsNonTextFunctionDescription() {
+    super( "ISNONTEXT", "org.pentaho.reporting.libraries.formula.function.information.IsNonText-Function" );
   }
 
-  public FunctionCategory getCategory()
-  {
+  public FunctionCategory getCategory() {
     return InformationFunctionCategory.CATEGORY;
   }
 
-  public int getParameterCount()
-  {
+  public int getParameterCount() {
     return 1;
   }
 
-  public Type getParameterType(final int position)
-  {
+  public Type getParameterType( final int position ) {
     return AnyType.TYPE;
   }
 
-  public Type getValueType()
-  {
+  public Type getValueType() {
     return LogicalType.TYPE;
   }
 
-  public boolean isParameterMandatory(final int position)
-  {
+  public boolean isParameterMandatory( final int position ) {
     return true;
   }
 

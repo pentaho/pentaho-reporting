@@ -17,11 +17,11 @@
 
 package org.pentaho.reporting.libraries.designtime.swing.table;
 
-import java.beans.PropertyEditor;
 import javax.swing.table.TableModel;
+import java.beans.PropertyEditor;
 
-public interface PropertyTableModel extends TableModel
-{
-  Class getClassForCell (int row, int col);
-  PropertyEditor getEditorForCell(int row, int column);
+public interface PropertyTableModel extends TableModel {
+  Class getClassForCell( int row, int col );
+
+  PropertyEditor getEditorForCell( int row, int column );
 }

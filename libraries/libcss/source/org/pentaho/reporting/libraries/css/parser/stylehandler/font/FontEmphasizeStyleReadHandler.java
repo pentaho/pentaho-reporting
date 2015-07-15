@@ -25,16 +25,14 @@ import org.pentaho.reporting.libraries.css.parser.stylehandler.OneOfConstantsRea
  *
  * @author Thomas Morgner
  */
-public class FontEmphasizeStyleReadHandler extends OneOfConstantsReadHandler
-{
-  public FontEmphasizeStyleReadHandler()
-  {
-    super(false);
-    addValue(FontEmphasizeStyle.ACCENT);
-    addValue(FontEmphasizeStyle.CIRCLE);
-    addValue(FontEmphasizeStyle.DISC);
-    addValue(FontEmphasizeStyle.DOT);
-    addValue(FontEmphasizeStyle.NONE);
+public class FontEmphasizeStyleReadHandler extends OneOfConstantsReadHandler {
+  public FontEmphasizeStyleReadHandler() {
+    super( false );
+    addValue( FontEmphasizeStyle.ACCENT );
+    addValue( FontEmphasizeStyle.CIRCLE );
+    addValue( FontEmphasizeStyle.DISC );
+    addValue( FontEmphasizeStyle.DOT );
+    addValue( FontEmphasizeStyle.NONE );
   }
 
 }

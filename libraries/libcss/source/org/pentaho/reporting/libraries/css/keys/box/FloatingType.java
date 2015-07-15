@@ -24,13 +24,11 @@ import org.pentaho.reporting.libraries.css.values.CSSConstant;
  *
  * @author Thomas Morgner
  */
-public class FloatingType
-{
-  public static final CSSConstant BOX = new CSSConstant("box");
-  public static final CSSConstant SHAPE = new CSSConstant("shape");
+public class FloatingType {
+  public static final CSSConstant BOX = new CSSConstant( "box" );
+  public static final CSSConstant SHAPE = new CSSConstant( "shape" );
 
-  private FloatingType()
-  {
+  private FloatingType() {
   }
 
 }

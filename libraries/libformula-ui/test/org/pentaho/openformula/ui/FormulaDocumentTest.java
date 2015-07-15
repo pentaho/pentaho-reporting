@@ -17,50 +17,44 @@
 
 package org.pentaho.openformula.ui;
 
-import javax.swing.text.BadLocationException;
-
 import junit.framework.TestCase;
 import org.pentaho.openformula.ui.model2.FormulaDocument;
 import org.pentaho.openformula.ui.model2.FormulaRootElement;
 
-public class FormulaDocumentTest extends TestCase
-{
-  public FormulaDocumentTest()
-  {
+import javax.swing.text.BadLocationException;
+
+public class FormulaDocumentTest extends TestCase {
+  public FormulaDocumentTest() {
   }
 
-  public FormulaDocumentTest(final String s)
-  {
-    super(s);
+  public FormulaDocumentTest( final String s ) {
+    super( s );
   }
 
-  public void testParseFunction() throws BadLocationException
-  {
+  public void testParseFunction() throws BadLocationException {
     FormulaDocument doc = new FormulaDocument();
     final String str = "=IF(IF([a];[b];\"C\");[c]; [d]) ";
-    doc.insertString(0, str, null);
+    doc.insertString( 0, str, null );
     final FormulaRootElement element = doc.getRootElement();
-    assertEquals("Length", str.length(), doc.getLength());
-    assertEquals("Number of elements: ", 17, element.getElementCount());
+    assertEquals( "Length", str.length(), doc.getLength() );
+    assertEquals( "Number of elements: ", 17, element.getElementCount() );
   }
 
-  public void testParseFunctionBad() throws BadLocationException
-  {
+  public void testParseFunctionBad() throws BadLocationException {
     FormulaDocument doc = new FormulaDocument();
     final String str = "=IF(IF([a];[b];\"C\"));[c]; [d]) ";
-    doc.insertString(0, str, null);
+    doc.insertString( 0, str, null );
     final FormulaRootElement element = doc.getRootElement();
-    assertEquals("Length", str.length(), doc.getLength());
-    assertEquals("Number of elements: ", 18, element.getElementCount());
+    assertEquals( "Length", str.length(), doc.getLength() );
+    assertEquals( "Number of elements: ", 18, element.getElementCount() );
   }
-  
-  public void testParseFunctionBad2() throws BadLocationException
-  {
+
+  public void testParseFunctionBad2() throws BadLocationException {
     FormulaDocument doc = new FormulaDocument();
     final String str = "=IF(([a];[b];\"C\"));[c]; [d]) ";
-    doc.insertString(0, str, null);
+    doc.insertString( 0, str, null );
     final FormulaRootElement element = doc.getRootElement();
-    assertEquals("Length", str.length(), doc.getLength());
-    assertEquals("Number of elements: ", 17, element.getElementCount());
+    assertEquals( "Length", str.length(), doc.getLength() );
+    assertEquals( "Number of elements: ", 17, element.getElementCount() );
   }
 }

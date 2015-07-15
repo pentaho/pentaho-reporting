@@ -17,11 +17,6 @@
 
 package org.pentaho.reporting.libraries.docbundle;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.util.Map;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.pentaho.reporting.libraries.repository.ContentEntity;
@@ -35,251 +30,197 @@ import org.pentaho.reporting.libraries.resourceloader.ResourceKey;
 import org.pentaho.reporting.libraries.resourceloader.ResourceKeyCreationException;
 import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.util.Map;
+
 /**
  * A document bundle implementation that holds all entries in memory.
  *
  * @author Thomas Morgner
  */
-public class MemoryDocumentBundle implements WriteableDocumentBundle
-{
-  private static final Log logger = LogFactory.getLog(MemoryDocumentBundle.class);
+public class MemoryDocumentBundle implements WriteableDocumentBundle {
+  private static final Log logger = LogFactory.getLog( MemoryDocumentBundle.class );
   private ZipRepository zipRepository;
   private MemoryDocumentMetaData metaData;
   private ResourceKey bundleKey;
   private ResourceManager resourceManager;
 
-  public MemoryDocumentBundle()
-  {
-    this(null);
+  public MemoryDocumentBundle() {
+    this( null );
   }
 
-  public MemoryDocumentBundle(final ResourceKey parent)
-  {
+  public MemoryDocumentBundle( final ResourceKey parent ) {
     this.zipRepository = new ZipRepository();
     this.metaData = new MemoryDocumentMetaData();
 
     final ResourceManager defaultResourceManager = new ResourceManager();
     final BundleResourceManagerBackend backend =
-        new BundleResourceManagerBackend(zipRepository, defaultResourceManager.getBackend(), parent);
+      new BundleResourceManagerBackend( zipRepository, defaultResourceManager.getBackend(), parent );
     this.bundleKey = backend.getBundleMainKey();
-    this.resourceManager = new ResourceManager(defaultResourceManager, backend);
+    this.resourceManager = new ResourceManager( defaultResourceManager, backend );
   }
 
-  public ResourceKey getBundleMainKey()
-  {
+  public ResourceKey getBundleMainKey() {
     return bundleKey;
   }
 
-  public ResourceManager getResourceManager()
-  {
+  public ResourceManager getResourceManager() {
     return resourceManager;
   }
 
-  public OutputStream createEntry(final String path, final String mimetype) throws IOException
-  {
-    if (path == null)
-    {
+  public OutputStream createEntry( final String path, final String mimetype ) throws IOException {
+    if ( path == null ) {
       throw new NullPointerException();
     }
-    if (mimetype == null)
-    {
-      throw new NullPointerException("Invalid Bundle: There is no mime-type for entry " + path);
+    if ( mimetype == null ) {
+      throw new NullPointerException( "Invalid Bundle: There is no mime-type for entry " + path );
     }
 
-    final String[] name = RepositoryUtilities.splitPath(path, "/");
-    try
-    {
-      final ContentItem contentItem = RepositoryUtilities.createItem(zipRepository, name);
-      metaData.setEntryMimeType(path, mimetype);
+    final String[] name = RepositoryUtilities.splitPath( path, "/" );
+    try {
+      final ContentItem contentItem = RepositoryUtilities.createItem( zipRepository, name );
+      metaData.setEntryMimeType( path, mimetype );
       return contentItem.getOutputStream();
-    }
-    catch (ContentIOException cioe)
-    {
-      logger.warn("Failed to create content item " + path, cioe);
-      throw new IOException("Failed to create content item " + path);
+    } catch ( ContentIOException cioe ) {
+      logger.warn( "Failed to create content item " + path, cioe );
+      throw new IOException( "Failed to create content item " + path );
     }
   }
 
-  public WriteableDocumentMetaData getWriteableDocumentMetaData()
-  {
+  public WriteableDocumentMetaData getWriteableDocumentMetaData() {
     return metaData;
   }
 
-  public DocumentMetaData getMetaData()
-  {
+  public DocumentMetaData getMetaData() {
     return metaData;
   }
 
-  public void createDirectoryEntry(final String name, final String mimeType) throws IOException
-  {
-    if (name == null)
-    {
+  public void createDirectoryEntry( final String name, final String mimeType ) throws IOException {
+    if ( name == null ) {
       throw new NullPointerException();
     }
-    if (mimeType == null)
-    {
+    if ( mimeType == null ) {
       throw new NullPointerException();
     }
-    try
-    {
-      RepositoryUtilities.createLocation(zipRepository, RepositoryUtilities.splitPath(name, "/"));
-      if ((name.length() > 0 && name.charAt(name.length() - 1) == '/') == false)
-      {
-        metaData.setEntryMimeType(name + '/', mimeType);
+    try {
+      RepositoryUtilities.createLocation( zipRepository, RepositoryUtilities.splitPath( name, "/" ) );
+      if ( ( name.length() > 0 && name.charAt( name.length() - 1 ) == '/' ) == false ) {
+        metaData.setEntryMimeType( name + '/', mimeType );
+      } else {
+        metaData.setEntryMimeType( name, mimeType );
       }
-      else
-      {
-        metaData.setEntryMimeType(name, mimeType);
-      }
-    }
-    catch (ContentIOException e)
-    {
-      throw new IOException("Failed to create content-location " + name);
+    } catch ( ContentIOException e ) {
+      throw new IOException( "Failed to create content-location " + name );
     }
   }
 
-  public boolean isEntryExists(final String name)
-  {
-    if (name == null)
-    {
+  public boolean isEntryExists( final String name ) {
+    if ( name == null ) {
       throw new NullPointerException();
     }
 
-    final String[] splitName = RepositoryUtilities.split(name, "/");
-    try
-    {
-      return RepositoryUtilities.isExistsEntity(zipRepository, splitName);
-    }
-    catch (ContentIOException e)
-    {
+    final String[] splitName = RepositoryUtilities.split( name, "/" );
+    try {
+      return RepositoryUtilities.isExistsEntity( zipRepository, splitName );
+    } catch ( ContentIOException e ) {
       return false;
     }
   }
 
-  public boolean isEntryReadable(final String name)
-  {
-    if (name == null)
-    {
+  public boolean isEntryReadable( final String name ) {
+    if ( name == null ) {
       throw new NullPointerException();
     }
 
-    try
-    {
-      final String[] splitName = RepositoryUtilities.split(name, "/");
-      final ContentEntity contentEntity = RepositoryUtilities.getEntity(zipRepository, splitName);
-      return (contentEntity instanceof ContentItem);
-    }
-    catch (ContentIOException cioe)
-    {
+    try {
+      final String[] splitName = RepositoryUtilities.split( name, "/" );
+      final ContentEntity contentEntity = RepositoryUtilities.getEntity( zipRepository, splitName );
+      return ( contentEntity instanceof ContentItem );
+    } catch ( ContentIOException cioe ) {
       return false;
     }
   }
 
-  public InputStream getEntryAsStream(final String name) throws IOException
-  {
-    if (name == null)
-    {
+  public InputStream getEntryAsStream( final String name ) throws IOException {
+    if ( name == null ) {
       throw new NullPointerException();
     }
 
-    try
-    {
-      final String[] splitName = RepositoryUtilities.split(name, "/");
-      final ContentEntity contentEntity = RepositoryUtilities.getEntity(zipRepository, splitName);
-      if (contentEntity instanceof ContentItem)
-      {
+    try {
+      final String[] splitName = RepositoryUtilities.split( name, "/" );
+      final ContentEntity contentEntity = RepositoryUtilities.getEntity( zipRepository, splitName );
+      if ( contentEntity instanceof ContentItem ) {
         final ContentItem contentItem = (ContentItem) contentEntity;
         return contentItem.getInputStream();
       }
-    }
-    catch (ContentIOException cioe)
-    {
-      if (logger.isDebugEnabled())
-      {
-        logger.debug("Failed to lookup entry for entry " + name, cioe);
+    } catch ( ContentIOException cioe ) {
+      if ( logger.isDebugEnabled() ) {
+        logger.debug( "Failed to lookup entry for entry " + name, cioe );
       }
 
-      throw new IOException("Failure while looking up the stream: " + cioe);
+      throw new IOException( "Failure while looking up the stream: " + cioe );
     }
-    throw new IOException("No such stream: " + name);
+    throw new IOException( "No such stream: " + name );
   }
 
-  public String getEntryMimeType(final String name)
-  {
-    if (name == null)
-    {
+  public String getEntryMimeType( final String name ) {
+    if ( name == null ) {
       throw new NullPointerException();
     }
 
-    final String definedMimeType = metaData.getEntryMimeType(name);
-    if (definedMimeType != null)
-    {
+    final String definedMimeType = metaData.getEntryMimeType( name );
+    if ( definedMimeType != null ) {
       return definedMimeType;
     }
 
-    try
-    {
-      final String[] splitName = RepositoryUtilities.split(name, "/");
-      final ContentEntity contentEntity = RepositoryUtilities.getEntity(zipRepository, splitName);
-      if (contentEntity instanceof ContentItem)
-      {
+    try {
+      final String[] splitName = RepositoryUtilities.split( name, "/" );
+      final ContentEntity contentEntity = RepositoryUtilities.getEntity( zipRepository, splitName );
+      if ( contentEntity instanceof ContentItem ) {
         final ContentItem contentItem = (ContentItem) contentEntity;
         return contentItem.getMimeType();
       }
       return ""; // for directories ..
-    }
-    catch (ContentIOException cioe)
-    {
+    } catch ( ContentIOException cioe ) {
       // ignored.
-      if (logger.isDebugEnabled())
-      {
-        logger.debug("Failed to lookup entry mime-type for entry " + name, cioe);
+      if ( logger.isDebugEnabled() ) {
+        logger.debug( "Failed to lookup entry mime-type for entry " + name, cioe );
       }
       return null;
     }
 
   }
 
-  public boolean removeEntry(final String name)
-  {
-    if (name == null)
-    {
+  public boolean removeEntry( final String name ) {
+    if ( name == null ) {
       throw new NullPointerException();
     }
 
-    try
-    {
-      final String[] splitName = RepositoryUtilities.split(name, "/");
-      final ContentEntity contentEntity = RepositoryUtilities.getEntity(zipRepository, splitName);
-      if (contentEntity == null)
-      {
+    try {
+      final String[] splitName = RepositoryUtilities.split( name, "/" );
+      final ContentEntity contentEntity = RepositoryUtilities.getEntity( zipRepository, splitName );
+      if ( contentEntity == null ) {
         return false;
       }
-      if (contentEntity instanceof ContentItem)
-      {
-        if (contentEntity.delete())
-        {
-          metaData.removeEntry(name);
+      if ( contentEntity instanceof ContentItem ) {
+        if ( contentEntity.delete() ) {
+          metaData.removeEntry( name );
           return true;
         }
-      }
-      else if (contentEntity.delete())
-      {
+      } else if ( contentEntity.delete() ) {
         // its a directory, so removing is a bit more complicated.
         final String[] entryNames = metaData.getManifestEntryNames();
-        for (int i = 0; i < entryNames.length; i++)
-        {
-          final String entryName = entryNames[i];
-          if (entryName.startsWith(name))
-          {
-            metaData.removeEntry(entryName);
+        for ( int i = 0; i < entryNames.length; i++ ) {
+          final String entryName = entryNames[ i ];
+          if ( entryName.startsWith( name ) ) {
+            metaData.removeEntry( entryName );
           }
         }
         return true;
       }
-    }
-    catch (ContentIOException cioe)
-    {
+    } catch ( ContentIOException cioe ) {
       // ignored.
       return false;
     }
@@ -287,31 +228,26 @@ public class MemoryDocumentBundle implements WriteableDocumentBundle
 
   }
 
-  public ResourceKey createResourceKey(final String entryName,
-                                       final Map factoryParameters) throws ResourceKeyCreationException
-  {
-    if (entryName == null)
-    {
+  public ResourceKey createResourceKey( final String entryName,
+                                        final Map factoryParameters ) throws ResourceKeyCreationException {
+    if ( entryName == null ) {
       throw new NullPointerException();
     }
 
     final ResourceKey bundleKey = getBundleMainKey().getParent();
     final ResourceBundleLoader o = (ResourceBundleLoader)
-        bundleKey.getFactoryParameters().get(new FactoryParameterKey("repository-loader"));
-    if (o == null)
-    {
-      throw new ResourceKeyCreationException("Unable to create a inner-bundle key, no loader available.");
+      bundleKey.getFactoryParameters().get( new FactoryParameterKey( "repository-loader" ) );
+    if ( o == null ) {
+      throw new ResourceKeyCreationException( "Unable to create a inner-bundle key, no loader available." );
     }
-    return o.deriveKey(getBundleMainKey(), entryName, factoryParameters);
+    return o.deriveKey( getBundleMainKey(), entryName, factoryParameters );
   }
 
-  public ResourceKey getBundleKey()
-  {
+  public ResourceKey getBundleKey() {
     return getBundleMainKey();
   }
 
-  public boolean isEmbeddedKey(final ResourceKey resourceKey)
-  {
-    return (resourceKey != null && getBundleMainKey().getParent().equals(resourceKey.getParent()));
+  public boolean isEmbeddedKey( final ResourceKey resourceKey ) {
+    return ( resourceKey != null && getBundleMainKey().getParent().equals( resourceKey.getParent() ) );
   }
 }

@@ -25,14 +25,12 @@ import org.pentaho.reporting.libraries.css.resolver.values.computed.ConstantsRes
  *
  * @author Thomas Morgner
  */
-public class FontEmphasizePositionResolveHandler extends ConstantsResolveHandler
-{
-  public FontEmphasizePositionResolveHandler()
-  {
-    addNormalizeValue(FontEmphasizePosition.AFTER);
-    addNormalizeValue(FontEmphasizePosition.BEFORE);
-    addValue(FontEmphasizePosition.ABOVE, FontEmphasizePosition.BEFORE);
-    addValue(FontEmphasizePosition.BELOW, FontEmphasizePosition.AFTER);
-    setFallback(FontEmphasizePosition.BEFORE);
+public class FontEmphasizePositionResolveHandler extends ConstantsResolveHandler {
+  public FontEmphasizePositionResolveHandler() {
+    addNormalizeValue( FontEmphasizePosition.AFTER );
+    addNormalizeValue( FontEmphasizePosition.BEFORE );
+    addValue( FontEmphasizePosition.ABOVE, FontEmphasizePosition.BEFORE );
+    addValue( FontEmphasizePosition.BELOW, FontEmphasizePosition.AFTER );
+    setFallback( FontEmphasizePosition.BEFORE );
   }
 }

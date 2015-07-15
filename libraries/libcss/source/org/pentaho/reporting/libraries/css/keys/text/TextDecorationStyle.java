@@ -24,21 +24,19 @@ import org.pentaho.reporting.libraries.css.values.CSSConstant;
  *
  * @author Thomas Morgner
  */
-public class TextDecorationStyle
-{
+public class TextDecorationStyle {
   // none | solid | double | dotted | dashed | dot-dash | dot-dot-dash | wave
-  public static final CSSConstant NONE = new CSSConstant("none");
-  public static final CSSConstant SOLID = new CSSConstant("solid");
-  public static final CSSConstant DOUBLE = new CSSConstant("double");
-  public static final CSSConstant DOTTED = new CSSConstant("dotted");
-  public static final CSSConstant DASHED = new CSSConstant("dashed");
-  public static final CSSConstant DOT_DASH = new CSSConstant("dot-dash");
-  public static final CSSConstant DOT_DOT_DASH = new CSSConstant("dot-dot-dash");
-  public static final CSSConstant WAVE = new CSSConstant("wave");
+  public static final CSSConstant NONE = new CSSConstant( "none" );
+  public static final CSSConstant SOLID = new CSSConstant( "solid" );
+  public static final CSSConstant DOUBLE = new CSSConstant( "double" );
+  public static final CSSConstant DOTTED = new CSSConstant( "dotted" );
+  public static final CSSConstant DASHED = new CSSConstant( "dashed" );
+  public static final CSSConstant DOT_DASH = new CSSConstant( "dot-dash" );
+  public static final CSSConstant DOT_DOT_DASH = new CSSConstant( "dot-dot-dash" );
+  public static final CSSConstant WAVE = new CSSConstant( "wave" );
   // This is an open-office addition ...
-  public static final CSSConstant LONG_DASH = new CSSConstant("-x-pentaho-css-long-dash");
+  public static final CSSConstant LONG_DASH = new CSSConstant( "-x-pentaho-css-long-dash" );
 
-  private TextDecorationStyle()
-  {
+  private TextDecorationStyle() {
   }
 }

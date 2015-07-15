@@ -17,19 +17,18 @@
 
 package org.pentaho.reporting.libraries.pixie.wmf.records;
 
-import java.awt.Color;
-
 import org.pentaho.reporting.libraries.pixie.wmf.GDIColor;
 import org.pentaho.reporting.libraries.pixie.wmf.MfLogPalette;
 import org.pentaho.reporting.libraries.pixie.wmf.MfRecord;
 import org.pentaho.reporting.libraries.pixie.wmf.MfType;
 import org.pentaho.reporting.libraries.pixie.wmf.WmfFile;
 
+import java.awt.*;
+
 /**
  * Palette function not supported
  */
-public class MfCmdCreatePalette extends MfCmd
-{
+public class MfCmdCreatePalette extends MfCmd {
   private static final int POS_HPALETTE = 0;
   private static final int POS_CENTRIES = 1;
   private static final int POS_START_ENTRIES = 2;
@@ -37,18 +36,16 @@ public class MfCmdCreatePalette extends MfCmd
   private int hPalette;
   private Color[] colors;
 
-  public MfCmdCreatePalette()
-  {
+  public MfCmdCreatePalette() {
   }
 
   /**
-   * Reads the function identifier. Every record type is identified by a function number
-   * corresponding to one of the Windows GDI functions used.
+   * Reads the function identifier. Every record type is identified by a function number corresponding to one of the
+   * Windows GDI functions used.
    *
    * @return the function identifier.
    */
-  public int getFunction()
-  {
+  public int getFunction() {
     return MfType.CREATE_PALETTE;
   }
 
@@ -57,10 +54,8 @@ public class MfCmdCreatePalette extends MfCmd
    *
    * @return the number of colors or 0 if no colors are defined.
    */
-  public int getEntriesCount()
-  {
-    if (colors == null)
-    {
+  public int getEntriesCount() {
+    if ( colors == null ) {
       return 0;
     }
 
@@ -68,72 +63,63 @@ public class MfCmdCreatePalette extends MfCmd
   }
 
   /**
-   * Creates a new record based on the data stored in the MfCommand. <i>This function may
-   * or may not work, there is not much HQ documentation about metafiles available in the
-   * net. </i>
+   * Creates a new record based on the data stored in the MfCommand. <i>This function may or may not work, there is not
+   * much HQ documentation about metafiles available in the net. </i>
    *
    * @return the created record.
    */
   public MfRecord getRecord()
-      throws RecordCreationException
-  {
+    throws RecordCreationException {
     final int cEntries = getEntriesCount();
-    if (cEntries == 0)
-    {
-      throw new RecordCreationException("Empty CreatePaletteRecord is not valid");
+    if ( cEntries == 0 ) {
+      throw new RecordCreationException( "Empty CreatePaletteRecord is not valid" );
     }
 
-    final MfRecord record = new MfRecord(2 + cEntries * 2);
-    record.setParam(POS_HPALETTE, getHPalette());
-    record.setParam(POS_CENTRIES, cEntries);
-    for (int i = 0; i < cEntries; i++)
-    {
-      final Color c = colors[i];
+    final MfRecord record = new MfRecord( 2 + cEntries * 2 );
+    record.setParam( POS_HPALETTE, getHPalette() );
+    record.setParam( POS_CENTRIES, cEntries );
+    for ( int i = 0; i < cEntries; i++ ) {
+      final Color c = colors[ i ];
       // a long parameter is 2 words long
-      record.setLongParam(i * 2 + POS_START_ENTRIES, GDIColor.translateColor(c));
+      record.setLongParam( i * 2 + POS_START_ENTRIES, GDIColor.translateColor( c ) );
     }
     return record;
   }
 
   /**
-   * Reads the command data from the given record and adjusts the internal parameters
-   * according to the data parsed.
+   * Reads the command data from the given record and adjusts the internal parameters according to the data parsed.
    * <p/>
    * This method is not implemented, as a Palette implementation is still missing.
    *
    * @param record the record.
    */
-  public void setRecord(final MfRecord record)
-  {
+  public void setRecord( final MfRecord record ) {
     // the handle to the palette object ignored
-    final int hPalette = record.getParam(POS_HPALETTE);
-    setHPalette(hPalette);
+    final int hPalette = record.getParam( POS_HPALETTE );
+    setHPalette( hPalette );
     // the number of defined entries ...
-    final int cEntries = record.getParam(POS_CENTRIES);
-    final Color[] colors = new Color[cEntries];
+    final int cEntries = record.getParam( POS_CENTRIES );
+    final Color[] colors = new Color[ cEntries ];
 
-    for (int i = 0; i < cEntries; i++)
-    {
-      final int cr = record.getLongParam(i * 2 + POS_START_ENTRIES);
-      final GDIColor color = new GDIColor(cr);
-      colors[i] = color;
+    for ( int i = 0; i < cEntries; i++ ) {
+      final int cr = record.getLongParam( i * 2 + POS_START_ENTRIES );
+      final GDIColor color = new GDIColor( cr );
+      colors[ i ] = color;
     }
-    setEntries(colors);
+    setEntries( colors );
   }
 
-  public void replay(final WmfFile file)
-  {
+  public void replay( final WmfFile file ) {
     // no real implementation, as palettes are not yet fully supported ...
     final MfLogPalette pal = new MfLogPalette();
-    file.getCurrentState().setLogPalette(pal);
-    file.storeObject(pal);
+    file.getCurrentState().setLogPalette( pal );
+    file.storeObject( pal );
   }
 
-  public String toString()
-  {
+  public String toString() {
     final StringBuffer b = new StringBuffer();
-    b.append("[CREATE_PALETTE] ");
-    b.append(" no internals known ");
+    b.append( "[CREATE_PALETTE] " );
+    b.append( " no internals known " );
     return b.toString();
   }
 
@@ -142,42 +128,35 @@ public class MfCmdCreatePalette extends MfCmd
    *
    * @return a new instance of the command.
    */
-  public MfCmd getInstance()
-  {
+  public MfCmd getInstance() {
     return new MfCmdCreatePalette();
   }
 
   /**
    * Not implemented as no scaling needed for this operation.
    */
-  protected void scaleXChanged()
-  {
+  protected void scaleXChanged() {
   }
 
   /**
    * Not implemented as no scaling needed for this operation.
    */
-  protected void scaleYChanged()
-  {
+  protected void scaleYChanged() {
   }
 
-  public int getHPalette()
-  {
+  public int getHPalette() {
     return hPalette;
   }
 
-  public void setHPalette(final int hPalette)
-  {
+  public void setHPalette( final int hPalette ) {
     this.hPalette = hPalette;
   }
 
-  public Color[] getEntries()
-  {
+  public Color[] getEntries() {
     return colors;
   }
 
-  public void setEntries(final Color[] colors)
-  {
+  public void setEntries( final Color[] colors ) {
     this.colors = colors;
   }
 

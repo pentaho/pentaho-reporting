@@ -25,8 +25,7 @@ import org.xml.sax.SAXException;
  *
  * @author Thomas Morgner
  */
-public interface XmlReadHandler
-{
+public interface XmlReadHandler {
 
   /**
    * This method is called at the start of an element.
@@ -36,8 +35,8 @@ public interface XmlReadHandler
    * @param attrs   the attributes.
    * @throws SAXException if there is a parsing error.
    */
-  public void startElement(String uri, String tagName, Attributes attrs)
-      throws SAXException;
+  public void startElement( String uri, String tagName, Attributes attrs )
+    throws SAXException;
 
   /**
    * This method is called to process the character data between element tags.
@@ -47,8 +46,8 @@ public interface XmlReadHandler
    * @param length the length.
    * @throws SAXException if there is a parsing error.
    */
-  public void characters(char[] ch, int start, int length)
-      throws SAXException;
+  public void characters( char[] ch, int start, int length )
+    throws SAXException;
 
   /**
    * This method is called at the end of an element.
@@ -57,12 +56,11 @@ public interface XmlReadHandler
    * @param tagName the tag name.
    * @throws SAXException if there is a parsing error.
    */
-  public void endElement(String uri, String tagName)
-      throws SAXException;
+  public void endElement( String uri, String tagName )
+    throws SAXException;
 
   /**
-   * Returns the object for this element or null, if this element does
-   * not create an object.
+   * Returns the object for this element or null, if this element does not create an object.
    *
    * @return the object.
    * @throws SAXException if an parser error occured.
@@ -77,7 +75,7 @@ public interface XmlReadHandler
    * @param tagName     the tag name.
    * @throws SAXException if an parser-error occured.
    */
-  public void init(RootXmlReadHandler rootHandler, String uri, String tagName)
-      throws SAXException;
+  public void init( RootXmlReadHandler rootHandler, String uri, String tagName )
+    throws SAXException;
 
 }

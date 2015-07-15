@@ -25,13 +25,14 @@ import org.pentaho.reporting.libraries.resourceloader.ResourceKey;
  *
  * @author Thomas Morgner
  */
-public interface ResourceFactoryCache
-{
-  public Resource get (ResourceKey key, Class[] target);
+public interface ResourceFactoryCache {
+  public Resource get( ResourceKey key, Class[] target );
 
-  public void put(final Resource resource);
-  public void remove (final Resource resource);
+  public void put( final Resource resource );
 
-  public void clear ();
+  public void remove( final Resource resource );
+
+  public void clear();
+
   public void shutdown();
 }

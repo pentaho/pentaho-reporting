@@ -20,35 +20,31 @@ package org.pentaho.reporting.libraries.formula.function.userdefined;
 import org.pentaho.reporting.libraries.formula.EvaluationException;
 import org.pentaho.reporting.libraries.formula.FormulaContext;
 import org.pentaho.reporting.libraries.formula.LibFormulaErrorValue;
-import org.pentaho.reporting.libraries.formula.function.ParameterCallback;
 import org.pentaho.reporting.libraries.formula.function.Function;
+import org.pentaho.reporting.libraries.formula.function.ParameterCallback;
 import org.pentaho.reporting.libraries.formula.lvalues.TypeValuePair;
 import org.pentaho.reporting.libraries.formula.typing.coretypes.AnyType;
 
 /**
  * Creation-Date: Dec 18, 2006, 12:54:55 PM
- * @deprecated
  *
  * @author Thomas Morgner
+ * @deprecated
  */
-public class NullFunction implements Function
-{
-  private static final TypeValuePair NULL = new TypeValuePair(AnyType.TYPE, null);
+public class NullFunction implements Function {
+  private static final TypeValuePair NULL = new TypeValuePair( AnyType.TYPE, null );
   private static final long serialVersionUID = -2213352007005452516L;
 
-  public NullFunction()
-  {
+  public NullFunction() {
   }
 
-  public String getCanonicalName()
-  {
+  public String getCanonicalName() {
     return "NULL";
   }
 
-  public TypeValuePair evaluate(final FormulaContext context,
-                                final ParameterCallback parameters) throws EvaluationException
-  {
-    throw new EvaluationException(LibFormulaErrorValue.ERROR_NA_VALUE);
+  public TypeValuePair evaluate( final FormulaContext context,
+                                 final ParameterCallback parameters ) throws EvaluationException {
+    throw new EvaluationException( LibFormulaErrorValue.ERROR_NA_VALUE );
   }
 
 }

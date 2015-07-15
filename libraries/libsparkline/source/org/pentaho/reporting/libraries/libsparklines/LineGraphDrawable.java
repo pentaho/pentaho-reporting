@@ -17,13 +17,12 @@
 
 package org.pentaho.reporting.libraries.libsparklines;
 
-import java.awt.Color;
-import java.awt.Graphics2D;
+import org.pentaho.reporting.libraries.libsparklines.util.GraphUtils;
+
+import java.awt.*;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Line2D;
 import java.awt.geom.Rectangle2D;
-
-import org.pentaho.reporting.libraries.libsparklines.util.GraphUtils;
 
 /**
  * A very fast and very simple line-graph drawable. This code is based on the LineGraph class writen by Larry Ogrodnek
@@ -31,10 +30,9 @@ import org.pentaho.reporting.libraries.libsparklines.util.GraphUtils;
  *
  * @author Thomas Morgner
  */
-public class LineGraphDrawable
-{
+public class LineGraphDrawable {
   private static final int DEFAULT_SPACING = 2;
-  private static final Number[] EMPTY = new Number[0];
+  private static final Number[] EMPTY = new Number[ 0 ];
   private static final float LAST_POINT_RADIUS = 2.5f;
   private static final float LAST_POINT_DIAMETER = LAST_POINT_RADIUS * 2;
 
@@ -47,8 +45,7 @@ public class LineGraphDrawable
   /**
    * Creates a default bargraph drawable with some sensible default colors and spacings.
    */
-  public LineGraphDrawable()
-  {
+  public LineGraphDrawable() {
     this.color = Color.black;
     this.spacing = DEFAULT_SPACING;
     this.data = EMPTY;
@@ -59,8 +56,7 @@ public class LineGraphDrawable
    *
    * @return the data.
    */
-  public Number[] getData()
-  {
+  public Number[] getData() {
     return data.clone();
   }
 
@@ -69,8 +65,7 @@ public class LineGraphDrawable
    *
    * @param data the data (can be null).
    */
-  public void setData(final Number[] data)
-  {
+  public void setData( final Number[] data ) {
     this.data = data.clone();
   }
 
@@ -79,8 +74,7 @@ public class LineGraphDrawable
    *
    * @return the main color for the bars, never null.
    */
-  public Color getColor()
-  {
+  public Color getColor() {
     return color;
   }
 
@@ -89,10 +83,8 @@ public class LineGraphDrawable
    *
    * @param color the main color for the bars, never null.
    */
-  public void setColor(final Color color)
-  {
-    if (color == null)
-    {
+  public void setColor( final Color color ) {
+    if ( color == null ) {
       throw new NullPointerException();
     }
     this.color = color;
@@ -105,8 +97,7 @@ public class LineGraphDrawable
    *
    * @return color for the background or null, if the graph has a transparent background color.
    */
-  public Color getBackground()
-  {
+  public Color getBackground() {
     return background;
   }
 
@@ -116,8 +107,7 @@ public class LineGraphDrawable
    *
    * @param background the background or null, if the graph has a transparent background color.
    */
-  public void setBackground(final Color background)
-  {
+  public void setBackground( final Color background ) {
     this.background = background;
   }
 
@@ -126,8 +116,7 @@ public class LineGraphDrawable
    *
    * @return the spacing between the bars.
    */
-  public int getSpacing()
-  {
+  public int getSpacing() {
     return spacing;
   }
 
@@ -136,18 +125,15 @@ public class LineGraphDrawable
    *
    * @param spacing the spacing between the bars.
    */
-  public void setSpacing(final int spacing)
-  {
+  public void setSpacing( final int spacing ) {
     this.spacing = spacing;
   }
 
-  public Color getLastColor()
-  {
+  public Color getLastColor() {
     return lastColor;
   }
 
-  public void setLastColor(final Color lastColor)
-  {
+  public void setLastColor( final Color lastColor ) {
     this.lastColor = lastColor;
   }
 
@@ -158,63 +144,53 @@ public class LineGraphDrawable
    * @param graphics the graphics context on which the bargraph should be rendered.
    * @param drawArea the area on which the bargraph should be drawn.
    */
-  public void draw(final Graphics2D graphics, final Rectangle2D drawArea)
-  {
-    if (graphics == null)
-    {
+  public void draw( final Graphics2D graphics, final Rectangle2D drawArea ) {
+    if ( graphics == null ) {
       throw new NullPointerException();
     }
-    if (drawArea == null)
-    {
+    if ( drawArea == null ) {
       throw new NullPointerException();
     }
 
     final float lastPointDiameter;
     final float lastPointRadius;
-    if (lastColor == null)
-    {
+    if ( lastColor == null ) {
       lastPointDiameter = 0;
       lastPointRadius = 0;
-    }
-    else
-    {
+    } else {
       lastPointDiameter = LAST_POINT_DIAMETER;
       lastPointRadius = LAST_POINT_RADIUS;
     }
 
-    final int height = (int) (drawArea.getHeight() - lastPointDiameter);
-    if (height <= 0)
-    {
+    final int height = (int) ( drawArea.getHeight() - lastPointDiameter );
+    if ( height <= 0 ) {
       return;
     }
 
     final Graphics2D g2 = (Graphics2D) graphics.create();
-    if (background != null)
-    {
-      g2.setPaint(background);
-      g2.draw(drawArea);
+    if ( background != null ) {
+      g2.setPaint( background );
+      g2.draw( drawArea );
     }
 
-    if (data.length == 0)
-    {
+    if ( data.length == 0 ) {
       g2.dispose();
       return;
     }
 
-    g2.translate(drawArea.getX(), drawArea.getY() + lastPointRadius);
+    g2.translate( drawArea.getX(), drawArea.getY() + lastPointRadius );
 
-    float scale = GraphUtils.getDivisor(data, height);
+    float scale = GraphUtils.getDivisor( data, height );
     final int spacing = getSpacing();
-    final float usableWidth = (float) (drawArea.getWidth() - lastPointRadius);
-    final float width = (usableWidth - spacing * (data.length - 1)) / (data.length - 1);
+    final float usableWidth = (float) ( drawArea.getWidth() - lastPointRadius );
+    final float width = ( usableWidth - spacing * ( data.length - 1 ) ) / ( data.length - 1 );
 
     float min = computeMin();
 
     int x = 0;
     int y = -1;
 
-    if (scale == 0.0)
-    {
+    if ( scale == 0.0 ) {
       //special case -- a horizontal straight line
       scale = 1.0f;
       y = -height / 2;
@@ -223,64 +199,51 @@ public class LineGraphDrawable
     double lastX = 0;
     double lastY = 0;
     final Line2D.Double line = new Line2D.Double();
-    g2.setPaint(color);
-    for (int i = 0; i < data.length - 1; i++)
-    {
+    g2.setPaint( color );
+    for ( int i = 0; i < data.length - 1; i++ ) {
       final int px1 = x;
-      x += (width + spacing);
+      x += ( width + spacing );
       final int px2 = x;
 
-      final Number number = data[i];
-      final Number nextNumber = data[i + 1];
-      if (number == null && nextNumber == null)
-      {
-        final float delta = height - ((0 - min) / scale);
-        line.setLine(px1, y + delta, px2, y + delta);
-      }
-      else if (number == null)
-      {
-        line.setLine(px1, y + (height - ((0 - min) / scale)),
-            px2, y + (height - ((nextNumber.floatValue() - min) / scale)));
-      }
-      else if (nextNumber == null)
-      {
-        line.setLine(px1, y + (height - ((number.floatValue() - min) / scale)),
-            px2, y + (height - ((0 - min) / scale)));
-      }
-      else
-      {
-        line.setLine(px1, y + (height - ((number.floatValue() - min) / scale)),
-            px2, y + (height - ((nextNumber.floatValue() - min) / scale)));
+      final Number number = data[ i ];
+      final Number nextNumber = data[ i + 1 ];
+      if ( number == null && nextNumber == null ) {
+        final float delta = height - ( ( 0 - min ) / scale );
+        line.setLine( px1, y + delta, px2, y + delta );
+      } else if ( number == null ) {
+        line.setLine( px1, y + ( height - ( ( 0 - min ) / scale ) ),
+          px2, y + ( height - ( ( nextNumber.floatValue() - min ) / scale ) ) );
+      } else if ( nextNumber == null ) {
+        line.setLine( px1, y + ( height - ( ( number.floatValue() - min ) / scale ) ),
+          px2, y + ( height - ( ( 0 - min ) / scale ) ) );
+      } else {
+        line.setLine( px1, y + ( height - ( ( number.floatValue() - min ) / scale ) ),
+          px2, y + ( height - ( ( nextNumber.floatValue() - min ) / scale ) ) );
       }
       lastX = line.getX2();
       lastY = line.getY2();
-      g2.draw(line);
+      g2.draw( line );
 
     }
 
-    if (lastColor != null)
-    {
-      g2.setColor(lastColor);
-      g2.fill(new Ellipse2D.Double
-          (lastX - LAST_POINT_RADIUS, lastY - LAST_POINT_RADIUS, LAST_POINT_DIAMETER, LAST_POINT_DIAMETER));
+    if ( lastColor != null ) {
+      g2.setColor( lastColor );
+      g2.fill( new Ellipse2D.Double
+        ( lastX - LAST_POINT_RADIUS, lastY - LAST_POINT_RADIUS, LAST_POINT_DIAMETER, LAST_POINT_DIAMETER ) );
     }
     g2.dispose();
 
   }
 
-  private float computeMin()
-  {
+  private float computeMin() {
     float min = Float.MAX_VALUE;
-    for (int index = 0; index < data.length; index++)
-    {
-      final Number i = data[index];
-      if (i == null)
-      {
+    for ( int index = 0; index < data.length; index++ ) {
+      final Number i = data[ index ];
+      if ( i == null ) {
         continue;
       }
       final float value = i.floatValue();
-      if (value < min)
-      {
+      if ( value < min ) {
         min = value;
       }
     }

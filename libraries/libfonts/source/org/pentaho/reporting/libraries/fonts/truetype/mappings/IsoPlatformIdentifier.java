@@ -22,21 +22,15 @@ package org.pentaho.reporting.libraries.fonts.truetype.mappings;
  *
  * @author Thomas Morgner
  */
-public class IsoPlatformIdentifier extends PlatformIdentifier
-{
-  public IsoPlatformIdentifier()
-  {
-    super(2);
+public class IsoPlatformIdentifier extends PlatformIdentifier {
+  public IsoPlatformIdentifier() {
+    super( 2 );
   }
 
-  public String getEncoding(final int encodingId, final int language)
-  {
-    if (encodingId == 0)
-    {
+  public String getEncoding( final int encodingId, final int language ) {
+    if ( encodingId == 0 ) {
       return "US_ASCII";
-    }
-    else if (encodingId == 1)
-    {
+    } else if ( encodingId == 1 ) {
       return "UTF-16";
     }
     return "ISO-8859-1";

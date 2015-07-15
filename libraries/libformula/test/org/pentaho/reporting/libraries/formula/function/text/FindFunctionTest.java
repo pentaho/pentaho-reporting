@@ -17,33 +17,30 @@
 
 package org.pentaho.reporting.libraries.formula.function.text;
 
-import java.math.BigDecimal;
-
 import org.pentaho.reporting.libraries.formula.FormulaTestBase;
 import org.pentaho.reporting.libraries.formula.LibFormulaErrorValue;
+
+import java.math.BigDecimal;
 
 /**
  * @author Cedric Pronzato
  */
-public class FindFunctionTest extends FormulaTestBase
-{
-  public void testDefault() throws Exception
-  {
+public class FindFunctionTest extends FormulaTestBase {
+  public void testDefault() throws Exception {
     runDefaultTest();
   }
 
-  public Object[][] createDataTest()
-  {
+  public Object[][] createDataTest() {
     return new Object[][]
-        {
-            {"FIND(\"b\";\"abcabc\")", new BigDecimal(2)},
-            {"FIND(\"b\";\"abcabcabc\"; 3)", new BigDecimal(5)},
-            {"FIND(\"b\";\"ABC\";1)", LibFormulaErrorValue.ERROR_NOT_FOUND_VALUE},
-            {"FIND(\"b\";\"bbbb\")", new BigDecimal(1)},
-            {"FIND(\"b\";\"bbbb\";2)", new BigDecimal(2)},
-            {"FIND(\"b\";\"bbbb\";2.9)", new BigDecimal(2)},
-            {"FIND(\"b\";\"bbbb\";0)", LibFormulaErrorValue.ERROR_INVALID_ARGUMENT_VALUE},
-            {"FIND(\"b\";\"bbbb\";0.9)", LibFormulaErrorValue.ERROR_INVALID_ARGUMENT_VALUE},
-        };
+      {
+        { "FIND(\"b\";\"abcabc\")", new BigDecimal( 2 ) },
+        { "FIND(\"b\";\"abcabcabc\"; 3)", new BigDecimal( 5 ) },
+        { "FIND(\"b\";\"ABC\";1)", LibFormulaErrorValue.ERROR_NOT_FOUND_VALUE },
+        { "FIND(\"b\";\"bbbb\")", new BigDecimal( 1 ) },
+        { "FIND(\"b\";\"bbbb\";2)", new BigDecimal( 2 ) },
+        { "FIND(\"b\";\"bbbb\";2.9)", new BigDecimal( 2 ) },
+        { "FIND(\"b\";\"bbbb\";0)", LibFormulaErrorValue.ERROR_INVALID_ARGUMENT_VALUE },
+        { "FIND(\"b\";\"bbbb\";0.9)", LibFormulaErrorValue.ERROR_INVALID_ARGUMENT_VALUE },
+      };
   }
 }

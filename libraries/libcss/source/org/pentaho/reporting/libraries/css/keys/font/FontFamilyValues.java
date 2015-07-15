@@ -24,16 +24,14 @@ import org.pentaho.reporting.libraries.css.values.CSSConstant;
  *
  * @author Thomas Morgner
  */
-public class FontFamilyValues
-{
-  public static final CSSConstant SERIF = new CSSConstant("serif");
-  public static final CSSConstant SANS_SERIF = new CSSConstant("sans-serif");
-  public static final CSSConstant FANTASY = new CSSConstant("fantasy");
-  public static final CSSConstant CURSIVE = new CSSConstant("cursive");
-  public static final CSSConstant MONOSPACE = new CSSConstant("monospace");
-  public static final CSSConstant NONE = new CSSConstant("none");
+public class FontFamilyValues {
+  public static final CSSConstant SERIF = new CSSConstant( "serif" );
+  public static final CSSConstant SANS_SERIF = new CSSConstant( "sans-serif" );
+  public static final CSSConstant FANTASY = new CSSConstant( "fantasy" );
+  public static final CSSConstant CURSIVE = new CSSConstant( "cursive" );
+  public static final CSSConstant MONOSPACE = new CSSConstant( "monospace" );
+  public static final CSSConstant NONE = new CSSConstant( "none" );
 
-  private FontFamilyValues()
-  {
+  private FontFamilyValues() {
   }
 }

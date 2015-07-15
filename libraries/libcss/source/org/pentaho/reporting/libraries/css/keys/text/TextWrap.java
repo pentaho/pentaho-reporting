@@ -24,14 +24,12 @@ import org.pentaho.reporting.libraries.css.values.CSSConstant;
  *
  * @author Thomas Morgner
  */
-public class TextWrap
-{
-  public static final CSSConstant NORMAL = new CSSConstant("normal");
-  public static final CSSConstant UNRESTRICTED = new CSSConstant("unrestricted");
-  public static final CSSConstant NONE = new CSSConstant("none");
-  public static final CSSConstant SUPPRESS = new CSSConstant("suppress");
+public class TextWrap {
+  public static final CSSConstant NORMAL = new CSSConstant( "normal" );
+  public static final CSSConstant UNRESTRICTED = new CSSConstant( "unrestricted" );
+  public static final CSSConstant NONE = new CSSConstant( "none" );
+  public static final CSSConstant SUPPRESS = new CSSConstant( "suppress" );
 
-  private TextWrap()
-  {
+  private TextWrap() {
   }
 }

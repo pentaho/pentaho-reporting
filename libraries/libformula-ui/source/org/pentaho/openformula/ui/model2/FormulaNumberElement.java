@@ -17,13 +17,11 @@
 
 package org.pentaho.openformula.ui.model2;
 
-public class FormulaNumberElement extends FormulaTextElement
-{
-  public FormulaNumberElement(final FormulaDocument document,
-                              final FormulaRootElement parentElement,
-                              final String text)
-  {
-    super(document, parentElement, text);
+public class FormulaNumberElement extends FormulaTextElement {
+  public FormulaNumberElement( final FormulaDocument document,
+                               final FormulaRootElement parentElement,
+                               final String text ) {
+    super( document, parentElement, text );
   }
 
   /**
@@ -32,8 +30,7 @@ public class FormulaNumberElement extends FormulaTextElement
    *
    * @return the element name
    */
-  public String getName()
-  {
+  public String getName() {
     return "number"; // NON-NLS
   }
 }

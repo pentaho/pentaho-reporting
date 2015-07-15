@@ -24,12 +24,10 @@ import org.pentaho.reporting.libraries.css.values.CSSConstant;
  *
  * @author Thomas Morgner
  */
-public class TextDecorationMode
-{
-  public static final CSSConstant CONTINUOUS = new CSSConstant("continuous");
-  public static final CSSConstant SKIP_WHITE_SPACE = new CSSConstant("skip-white-space");
+public class TextDecorationMode {
+  public static final CSSConstant CONTINUOUS = new CSSConstant( "continuous" );
+  public static final CSSConstant SKIP_WHITE_SPACE = new CSSConstant( "skip-white-space" );
 
-  private TextDecorationMode()
-  {
+  private TextDecorationMode() {
   }
 }

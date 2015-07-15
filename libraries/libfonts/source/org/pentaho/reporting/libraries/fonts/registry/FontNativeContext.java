@@ -17,8 +17,8 @@
 
 package org.pentaho.reporting.libraries.fonts.registry;
 
-public interface FontNativeContext
-{
+public interface FontNativeContext {
   public boolean isNativeBold();
+
   public boolean isNativeItalics();
 }

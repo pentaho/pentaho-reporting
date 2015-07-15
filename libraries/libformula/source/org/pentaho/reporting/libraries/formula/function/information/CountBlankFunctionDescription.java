@@ -20,8 +20,8 @@ package org.pentaho.reporting.libraries.formula.function.information;
 import org.pentaho.reporting.libraries.formula.function.AbstractFunctionDescription;
 import org.pentaho.reporting.libraries.formula.function.FunctionCategory;
 import org.pentaho.reporting.libraries.formula.typing.Type;
-import org.pentaho.reporting.libraries.formula.typing.coretypes.NumberType;
 import org.pentaho.reporting.libraries.formula.typing.coretypes.AnyType;
+import org.pentaho.reporting.libraries.formula.typing.coretypes.NumberType;
 
 /**
  * Describes the CountBlankFunction function.
@@ -29,25 +29,20 @@ import org.pentaho.reporting.libraries.formula.typing.coretypes.AnyType;
  * @author Cedric Pronzato
  * @see org.pentaho.reporting.libraries.formula.function.information.CountBlankFunction
  */
-public class CountBlankFunctionDescription extends AbstractFunctionDescription
-{
-  public CountBlankFunctionDescription()
-  {
-    super("COUNTBLANK", "org.pentaho.reporting.libraries.formula.function.information.CountBlank-Function");
+public class CountBlankFunctionDescription extends AbstractFunctionDescription {
+  public CountBlankFunctionDescription() {
+    super( "COUNTBLANK", "org.pentaho.reporting.libraries.formula.function.information.CountBlank-Function" );
   }
 
-  public Type getValueType()
-  {
+  public Type getValueType() {
     return NumberType.GENERIC_NUMBER;
   }
 
-  public FunctionCategory getCategory()
-  {
+  public FunctionCategory getCategory() {
     return InformationFunctionCategory.CATEGORY;
   }
 
-  public int getParameterCount()
-  {
+  public int getParameterCount() {
     return 1;
   }
 
@@ -58,8 +53,7 @@ public class CountBlankFunctionDescription extends AbstractFunctionDescription
    * @param position The parameter index.
    * @return The parameter type.
    */
-  public Type getParameterType(final int position)
-  {
+  public Type getParameterType( final int position ) {
     return AnyType.ANY_SEQUENCE;
   }
 
@@ -69,8 +63,7 @@ public class CountBlankFunctionDescription extends AbstractFunctionDescription
    *
    * @return
    */
-  public boolean isParameterMandatory(final int position)
-  {
+  public boolean isParameterMandatory( final int position ) {
     return true;
   }
 }

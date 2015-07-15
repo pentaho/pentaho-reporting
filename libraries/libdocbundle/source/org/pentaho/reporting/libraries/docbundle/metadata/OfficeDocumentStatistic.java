@@ -19,8 +19,7 @@ package org.pentaho.reporting.libraries.docbundle.metadata;
 
 import java.io.Serializable;
 
-public class OfficeDocumentStatistic implements Serializable
-{
+public class OfficeDocumentStatistic implements Serializable {
   private int tableCount;
   private int imageCount;
   private int objectCount;
@@ -29,77 +28,62 @@ public class OfficeDocumentStatistic implements Serializable
   private int wordCount;
   private int characterCount;
 
-  public OfficeDocumentStatistic()
-  {
+  public OfficeDocumentStatistic() {
   }
 
-  public int getTableCount()
-  {
+  public int getTableCount() {
     return tableCount;
   }
 
-  public void setTableCount(final int tableCount)
-  {
+  public void setTableCount( final int tableCount ) {
     this.tableCount = tableCount;
   }
 
-  public int getImageCount()
-  {
+  public int getImageCount() {
     return imageCount;
   }
 
-  public void setImageCount(final int imageCount)
-  {
+  public void setImageCount( final int imageCount ) {
     this.imageCount = imageCount;
   }
 
-  public int getObjectCount()
-  {
+  public int getObjectCount() {
     return objectCount;
   }
 
-  public void setObjectCount(final int objectCount)
-  {
+  public void setObjectCount( final int objectCount ) {
     this.objectCount = objectCount;
   }
 
-  public int getPageCount()
-  {
+  public int getPageCount() {
     return pageCount;
   }
 
-  public void setPageCount(final int pageCount)
-  {
+  public void setPageCount( final int pageCount ) {
     this.pageCount = pageCount;
   }
 
-  public int getParagraphCount()
-  {
+  public int getParagraphCount() {
     return paragraphCount;
   }
 
-  public void setParagraphCount(final int paragraphCount)
-  {
+  public void setParagraphCount( final int paragraphCount ) {
     this.paragraphCount = paragraphCount;
   }
 
-  public int getWordCount()
-  {
+  public int getWordCount() {
     return wordCount;
   }
 
-  public void setWordCount(final int wordCount)
-  {
+  public void setWordCount( final int wordCount ) {
     this.wordCount = wordCount;
   }
 
-  public int getCharacterCount()
-  {
+  public int getCharacterCount() {
     return characterCount;
   }
 
-  public void setCharacterCount(final int characterCount)
-  {
+  public void setCharacterCount( final int characterCount ) {
     this.characterCount = characterCount;
   }
 }

@@ -17,67 +17,55 @@
 
 package org.pentaho.reporting.libraries.resourceloader;
 
-import java.awt.Dimension;
-import java.awt.Graphics2D;
-import java.awt.geom.Dimension2D;
-import java.awt.geom.Rectangle2D;
-
 import junit.framework.TestCase;
 import org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper;
 
-public class DrawableWrapperTest extends TestCase
-{
-  public static class D1
-  {
-    public void draw(final Graphics2D g2, final Rectangle2D bounds)
-    {
+import java.awt.*;
+import java.awt.geom.Dimension2D;
+import java.awt.geom.Rectangle2D;
+
+public class DrawableWrapperTest extends TestCase {
+  public static class D1 {
+    public void draw( final Graphics2D g2, final Rectangle2D bounds ) {
 
     }
 
-    public Dimension getPreferredSize()
-    {
-      return new Dimension(10, 10);
+    public Dimension getPreferredSize() {
+      return new Dimension( 10, 10 );
     }
 
-    public boolean isPreserveAspectRatio()
-    {
-      return true;
-    }
-  }
-  
-  public static class D2
-  {
-    public void draw(final Graphics2D g2, final Rectangle2D bounds)
-    {
-
-    }
-
-    public Dimension2D getPreferredSize()
-    {
-      return new Dimension(10, 10);
-    }
-
-    public boolean isPreserveAspectRatio()
-    {
+    public boolean isPreserveAspectRatio() {
       return true;
     }
   }
 
-  public void testValidObject()
-  {
+  public static class D2 {
+    public void draw( final Graphics2D g2, final Rectangle2D bounds ) {
+
+    }
+
+    public Dimension2D getPreferredSize() {
+      return new Dimension( 10, 10 );
+    }
+
+    public boolean isPreserveAspectRatio() {
+      return true;
+    }
+  }
+
+  public void testValidObject() {
     final D1 drawable = new D1();
-    assertTrue(DrawableWrapper.isDrawable(drawable));
-    final DrawableWrapper w = new DrawableWrapper(drawable);
-    assertEquals(new Dimension(10, 10), w.getPreferredSize());
-    assertEquals(true, w.isPreserveAspectRatio());
+    assertTrue( DrawableWrapper.isDrawable( drawable ) );
+    final DrawableWrapper w = new DrawableWrapper( drawable );
+    assertEquals( new Dimension( 10, 10 ), w.getPreferredSize() );
+    assertEquals( true, w.isPreserveAspectRatio() );
   }
 
-  public void testInvalidObject()
-  {
+  public void testInvalidObject() {
     final D2 drawable = new D2();
-    assertTrue(DrawableWrapper.isDrawable(drawable));
-    final DrawableWrapper w = new DrawableWrapper(drawable);
-    assertNull(w.getPreferredSize());
-    assertEquals(true, w.isPreserveAspectRatio());
+    assertTrue( DrawableWrapper.isDrawable( drawable ) );
+    final DrawableWrapper w = new DrawableWrapper( drawable );
+    assertNull( w.getPreferredSize() );
+    assertEquals( true, w.isPreserveAspectRatio() );
   }
 }

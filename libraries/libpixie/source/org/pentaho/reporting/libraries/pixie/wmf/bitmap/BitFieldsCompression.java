@@ -19,14 +19,11 @@ package org.pentaho.reporting.libraries.pixie.wmf.bitmap;
 
 import java.io.InputStream;
 
-public class BitFieldsCompression extends BitmapCompression
-{
-  public BitFieldsCompression()
-  {
+public class BitFieldsCompression extends BitmapCompression {
+  public BitFieldsCompression() {
   }
 
-  public int[] decompress(final InputStream in, final GDIPalette palette)
-  {
+  public int[] decompress( final InputStream in, final GDIPalette palette ) {
     return null;
   }
 

@@ -17,8 +17,6 @@
 
 package org.pentaho.reporting.libraries.css.parser.stylehandler;
 
-import java.util.HashMap;
-
 import org.pentaho.reporting.libraries.css.model.StyleKey;
 import org.pentaho.reporting.libraries.css.parser.CSSValueReadHandler;
 import org.pentaho.reporting.libraries.css.values.CSSAutoValue;
@@ -26,47 +24,41 @@ import org.pentaho.reporting.libraries.css.values.CSSConstant;
 import org.pentaho.reporting.libraries.css.values.CSSValue;
 import org.w3c.css.sac.LexicalUnit;
 
+import java.util.HashMap;
+
 /**
  * Creation-Date: 26.11.2005, 19:16:43
  *
  * @author Thomas Morgner
  */
-public abstract class OneOfConstantsReadHandler implements CSSValueReadHandler
-{
+public abstract class OneOfConstantsReadHandler implements CSSValueReadHandler {
   private HashMap constants;
   private boolean autoAllowed;
 
-  protected OneOfConstantsReadHandler(final boolean auto)
-  {
+  protected OneOfConstantsReadHandler( final boolean auto ) {
     constants = new HashMap();
     this.autoAllowed = auto;
-    if (autoAllowed)
-    {
-      constants.put("auto", CSSAutoValue.getInstance());
+    if ( autoAllowed ) {
+      constants.put( "auto", CSSAutoValue.getInstance() );
     }
   }
 
-  public CSSValue createValue(StyleKey name, LexicalUnit value)
-  {
-    return lookupValue(value);
+  public CSSValue createValue( StyleKey name, LexicalUnit value ) {
+    return lookupValue( value );
   }
 
-  protected CSSValue lookupValue(final LexicalUnit value)
-  {
-    if (value.getLexicalUnitType() != LexicalUnit.SAC_IDENT)
-    {
+  protected CSSValue lookupValue( final LexicalUnit value ) {
+    if ( value.getLexicalUnitType() != LexicalUnit.SAC_IDENT ) {
       return null;
     }
-    return (CSSValue) constants.get(value.getStringValue().toLowerCase());
+    return (CSSValue) constants.get( value.getStringValue().toLowerCase() );
   }
 
-  protected void addValue(CSSConstant constant)
-  {
-    constants.put(constant.getCSSText().toLowerCase(), constant);
+  protected void addValue( CSSConstant constant ) {
+    constants.put( constant.getCSSText().toLowerCase(), constant );
   }
 
-  public boolean isAutoAllowed()
-  {
+  public boolean isAutoAllowed() {
     return autoAllowed;
   }
 }

@@ -25,23 +25,21 @@ import org.pentaho.reporting.libraries.css.model.StyleKeyRegistry;
  *
  * @author Thomas Morgner
  */
-public class ListStyleKeys
-{
+public class ListStyleKeys {
   public static final StyleKey LIST_STYLE_IMAGE =
-      StyleKeyRegistry.getRegistry().createKey
-          ("list-style-image", false, false,
-              StyleKey.DOM_ELEMENTS | StyleKey.PSEUDO_MARKER);
+    StyleKeyRegistry.getRegistry().createKey
+      ( "list-style-image", false, false,
+        StyleKey.DOM_ELEMENTS | StyleKey.PSEUDO_MARKER );
   public static final StyleKey LIST_STYLE_TYPE =
-      StyleKeyRegistry.getRegistry().createKey
-          ("list-style-type", false, false,
-              StyleKey.DOM_ELEMENTS | StyleKey.PSEUDO_MARKER);
+    StyleKeyRegistry.getRegistry().createKey
+      ( "list-style-type", false, false,
+        StyleKey.DOM_ELEMENTS | StyleKey.PSEUDO_MARKER );
   public static final StyleKey LIST_STYLE_POSITION =
-      StyleKeyRegistry.getRegistry().createKey
-          ("list-style-position", false, false,
-              StyleKey.DOM_ELEMENTS | StyleKey.PSEUDO_MARKER);
+    StyleKeyRegistry.getRegistry().createKey
+      ( "list-style-position", false, false,
+        StyleKey.DOM_ELEMENTS | StyleKey.PSEUDO_MARKER );
 
 
-  private ListStyleKeys()
-  {
+  private ListStyleKeys() {
   }
 }

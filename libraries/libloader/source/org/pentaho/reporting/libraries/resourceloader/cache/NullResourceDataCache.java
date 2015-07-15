@@ -17,43 +17,36 @@
 
 package org.pentaho.reporting.libraries.resourceloader.cache;
 
-import java.lang.ref.Reference;
-import java.lang.ref.WeakReference;
-
 import org.pentaho.reporting.libraries.resourceloader.ResourceData;
 import org.pentaho.reporting.libraries.resourceloader.ResourceKey;
 import org.pentaho.reporting.libraries.resourceloader.ResourceLoadingException;
 import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 
+import java.lang.ref.Reference;
+import java.lang.ref.WeakReference;
+
 /**
- * Disables caching. It simply returns null on every request and ignores
- * the put requests. You certainly want to use one of the other cache
- * providers in real world applications.
+ * Disables caching. It simply returns null on every request and ignores the put requests. You certainly want to use one
+ * of the other cache providers in real world applications.
  *
  * @author Thomas Morgner
  */
-public class NullResourceDataCache implements ResourceDataCache
-{
+public class NullResourceDataCache implements ResourceDataCache {
   private Reference lastEntry;
 
-  public NullResourceDataCache()
-  {
+  public NullResourceDataCache() {
   }
 
-  public ResourceData put(final ResourceManager caller, final ResourceData data) throws ResourceLoadingException
-  {
-    final ResourceData retval = CachingResourceData.createCached(data);
-    lastEntry = new WeakReference(new DefaultResourceDataCacheEntry(retval, caller));
+  public ResourceData put( final ResourceManager caller, final ResourceData data ) throws ResourceLoadingException {
+    final ResourceData retval = CachingResourceData.createCached( data );
+    lastEntry = new WeakReference( new DefaultResourceDataCacheEntry( retval, caller ) );
     return retval;
   }
 
-  public ResourceDataCacheEntry get(final ResourceKey key)
-  {
-    if (lastEntry != null)
-    {
+  public ResourceDataCacheEntry get( final ResourceKey key ) {
+    if ( lastEntry != null ) {
       final ResourceDataCacheEntry entry = (ResourceDataCacheEntry) lastEntry.get();
-      if (entry != null && key.equals(entry.getData().getKey()))
-      {
+      if ( entry != null && key.equals( entry.getData().getKey() ) ) {
         return entry;
       }
 
@@ -62,17 +55,14 @@ public class NullResourceDataCache implements ResourceDataCache
     return null;
   }
 
-  public void remove(final ResourceData data)
-  {
+  public void remove( final ResourceData data ) {
   }
 
-  public void clear()
-  {
+  public void clear() {
     lastEntry = null;
   }
 
-  public void shutdown()
-  {
+  public void shutdown() {
     lastEntry = null;
   }
 }

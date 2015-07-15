@@ -17,22 +17,20 @@
 
 package org.pentaho.reporting.libraries.css.resolver.values.computed.hyperlinks;
 
-import org.pentaho.reporting.libraries.css.resolver.values.computed.ConstantsResolveHandler;
 import org.pentaho.reporting.libraries.css.keys.hyperlinks.TargetNew;
+import org.pentaho.reporting.libraries.css.resolver.values.computed.ConstantsResolveHandler;
 
 /**
  * Creation-Date: 21.12.2005, 11:36:34
  *
  * @author Thomas Morgner
  */
-public class TargetNewResolveHandler extends ConstantsResolveHandler
-{
-  public TargetNewResolveHandler()
-  {
-    addNormalizeValue(TargetNew.NONE);
-    addNormalizeValue(TargetNew.TAB);
-    addNormalizeValue(TargetNew.WINDOW);
-    setFallback(TargetNew.WINDOW);
+public class TargetNewResolveHandler extends ConstantsResolveHandler {
+  public TargetNewResolveHandler() {
+    addNormalizeValue( TargetNew.NONE );
+    addNormalizeValue( TargetNew.TAB );
+    addNormalizeValue( TargetNew.WINDOW );
+    setFallback( TargetNew.WINDOW );
   }
 
 

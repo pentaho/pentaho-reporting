@@ -17,31 +17,27 @@
 
 package org.pentaho.reporting.libraries.formula.function.datetime;
 
+import org.pentaho.reporting.libraries.formula.FormulaTestBase;
+
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
-import org.pentaho.reporting.libraries.formula.FormulaTestBase;
-
-public class YesterdayFunctionTest extends FormulaTestBase
-{
-  public Object[][] createDataTest()
-  {
+public class YesterdayFunctionTest extends FormulaTestBase {
+  public Object[][] createDataTest() {
     return new Object[][]
-        {
-            {"YESTERDAY()", createYesterdaysDate()},
-        };
+      {
+        { "YESTERDAY()", createYesterdaysDate() },
+      };
   }
 
-  private Date createYesterdaysDate()
-  {
-    final GregorianCalendar gcal = new GregorianCalendar(2011, Calendar.APRIL, 6, 0, 0, 0);
-    gcal.setTimeZone(getContext().getLocalizationContext().getTimeZone());
+  private Date createYesterdaysDate() {
+    final GregorianCalendar gcal = new GregorianCalendar( 2011, Calendar.APRIL, 6, 0, 0, 0 );
+    gcal.setTimeZone( getContext().getLocalizationContext().getTimeZone() );
     return gcal.getTime();
   }
 
-  public void testDefault() throws Exception
-  {
+  public void testDefault() throws Exception {
     runDefaultTest();
   }
 

@@ -17,9 +17,9 @@
 
 package org.pentaho.reporting.tools.configeditor.model;
 
-import java.util.ArrayList;
-
 import org.pentaho.reporting.libraries.base.boot.Module;
+
+import java.util.ArrayList;
 
 /**
  * The config tree module node is used to represent a module in the report configuration. Modules collect all
@@ -29,8 +29,7 @@ import org.pentaho.reporting.libraries.base.boot.Module;
  *
  * @author Thomas Morgner
  */
-public class ConfigTreeModuleNode extends AbstractConfigTreeNode
-{
+public class ConfigTreeModuleNode extends AbstractConfigTreeNode {
   /**
    * The configuration prefix shared for all keys of the module.
    */
@@ -53,12 +52,11 @@ public class ConfigTreeModuleNode extends AbstractConfigTreeNode
    *
    * @param module the module for which to build a tree node.
    */
-  public ConfigTreeModuleNode(final Module module)
-  {
-    super(module.getName());
+  public ConfigTreeModuleNode( final Module module ) {
+    super( module.getName() );
     this.assignedKeys = new ArrayList<ConfigDescriptionEntry>();
     this.module = module;
-    configurationPrefix = ModuleNodeFactory.getPackage(this.module.getClass());
+    configurationPrefix = ModuleNodeFactory.getPackage( this.module.getClass() );
   }
 
   /**
@@ -66,8 +64,7 @@ public class ConfigTreeModuleNode extends AbstractConfigTreeNode
    *
    * @return the module used in this node.
    */
-  public Module getModule()
-  {
+  public Module getModule() {
     return module;
   }
 
@@ -76,8 +73,7 @@ public class ConfigTreeModuleNode extends AbstractConfigTreeNode
    *
    * @return the configuration prefix.
    */
-  public String getConfigurationPrefix()
-  {
+  public String getConfigurationPrefix() {
     return configurationPrefix;
   }
 
@@ -87,12 +83,11 @@ public class ConfigTreeModuleNode extends AbstractConfigTreeNode
    * @return the string representing this object.
    * @see Object#toString()
    */
-  public String toString()
-  {
+  public String toString() {
     final StringBuilder buffer = new StringBuilder();
-    buffer.append("ConfigTreeModule={"); //$NON-NLS-1$
-    buffer.append(getConfigurationPrefix());
-    buffer.append('}');
+    buffer.append( "ConfigTreeModule={" ); //$NON-NLS-1$
+    buffer.append( getConfigurationPrefix() );
+    buffer.append( '}' );
     return buffer.toString();
   }
 
@@ -101,8 +96,7 @@ public class ConfigTreeModuleNode extends AbstractConfigTreeNode
    *
    * @return true if the receiver is a leaf.
    */
-  public boolean isLeaf()
-  {
+  public boolean isLeaf() {
     return true;
   }
 
@@ -111,8 +105,7 @@ public class ConfigTreeModuleNode extends AbstractConfigTreeNode
    *
    * @return true if the receiver allows children.
    */
-  public boolean getAllowsChildren()
-  {
+  public boolean getAllowsChildren() {
     return false;
   }
 
@@ -122,15 +115,12 @@ public class ConfigTreeModuleNode extends AbstractConfigTreeNode
    * @param key the new key to be added
    * @throws NullPointerException if the given key is null.
    */
-  public void addAssignedKey(final ConfigDescriptionEntry key)
-  {
-    if (key == null)
-    {
+  public void addAssignedKey( final ConfigDescriptionEntry key ) {
+    if ( key == null ) {
       throw new NullPointerException();
     }
-    if (assignedKeys.contains(key) == false)
-    {
-      assignedKeys.add(key);
+    if ( assignedKeys.contains( key ) == false ) {
+      assignedKeys.add( key );
     }
   }
 
@@ -140,13 +130,11 @@ public class ConfigTreeModuleNode extends AbstractConfigTreeNode
    * @param key the key that should be removed.
    * @throws NullPointerException if the given key is null.
    */
-  public void removeAssignedKey(final ConfigDescriptionEntry key)
-  {
-    if (key == null)
-    {
+  public void removeAssignedKey( final ConfigDescriptionEntry key ) {
+    if ( key == null ) {
       throw new NullPointerException();
     }
-    assignedKeys.remove(key);
+    assignedKeys.remove( key );
   }
 
   /**
@@ -154,9 +142,8 @@ public class ConfigTreeModuleNode extends AbstractConfigTreeNode
    *
    * @return the assigned keys as array.
    */
-  public ConfigDescriptionEntry[] getAssignedKeys()
-  {
+  public ConfigDescriptionEntry[] getAssignedKeys() {
     return assignedKeys.toArray
-        (new ConfigDescriptionEntry[assignedKeys.size()]);
+      ( new ConfigDescriptionEntry[ assignedKeys.size() ] );
   }
 }

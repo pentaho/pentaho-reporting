@@ -23,22 +23,19 @@ import org.pentaho.reporting.libraries.formula.FormulaTestBase;
 /**
  * @author Cedric Pronzato
  */
-public class IsErrFunctionTest extends FormulaTestBase
-{
-  public void testDefault() throws Exception
-  {
+public class IsErrFunctionTest extends FormulaTestBase {
+  public void testDefault() throws Exception {
     runDefaultTest();
   }
 
-  public Object[][] createDataTest()
-  {
+  public Object[][] createDataTest() {
     return new Object[][]
-        {
-            {"ISERR(1/0)", Boolean.TRUE},
-            {"ISERR(NA())", Boolean.FALSE},
-            {"ISERR(\"#N/A\")", Boolean.FALSE},
-            {"ISERR(1)", Boolean.FALSE},
-        };
+      {
+        { "ISERR(1/0)", Boolean.TRUE },
+        { "ISERR(NA())", Boolean.FALSE },
+        { "ISERR(\"#N/A\")", Boolean.FALSE },
+        { "ISERR(1)", Boolean.FALSE },
+      };
   }
 
 }

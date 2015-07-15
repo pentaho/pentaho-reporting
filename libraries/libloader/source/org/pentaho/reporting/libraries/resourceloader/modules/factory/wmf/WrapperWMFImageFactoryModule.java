@@ -17,6 +17,7 @@
 
 package org.pentaho.reporting.libraries.resourceloader.modules.factory.wmf;
 
+import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
 import org.pentaho.reporting.libraries.resourceloader.Resource;
 import org.pentaho.reporting.libraries.resourceloader.ResourceCreationException;
 import org.pentaho.reporting.libraries.resourceloader.ResourceData;
@@ -24,43 +25,36 @@ import org.pentaho.reporting.libraries.resourceloader.ResourceKey;
 import org.pentaho.reporting.libraries.resourceloader.ResourceLoadingException;
 import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 import org.pentaho.reporting.libraries.resourceloader.factory.FactoryModule;
-import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
 
-public class WrapperWMFImageFactoryModule implements FactoryModule
-{
+public class WrapperWMFImageFactoryModule implements FactoryModule {
   private FactoryModule parent;
 
-  public WrapperWMFImageFactoryModule()
-  {
+  public WrapperWMFImageFactoryModule() {
     parent = ObjectUtilities.loadAndInstantiate
-        ("org.pentaho.reporting.libraries.resourceloader.modules.factory.wmf.WMFImageFactoryModule",
-            WrapperWMFImageFactoryModule.class, FactoryModule.class);
+      ( "org.pentaho.reporting.libraries.resourceloader.modules.factory.wmf.WMFImageFactoryModule",
+        WrapperWMFImageFactoryModule.class, FactoryModule.class );
   }
 
-  public int canHandleResource(final ResourceManager caller, final ResourceData data) throws ResourceCreationException, ResourceLoadingException
-  {
-    if (parent == null)
-    {
+  public int canHandleResource( final ResourceManager caller, final ResourceData data )
+    throws ResourceCreationException, ResourceLoadingException {
+    if ( parent == null ) {
       return FactoryModule.REJECTED;
     }
-    return parent.canHandleResource(caller, data);
+    return parent.canHandleResource( caller, data );
   }
 
-  public int getHeaderFingerprintSize()
-  {
-    if (parent == null)
-    {
+  public int getHeaderFingerprintSize() {
+    if ( parent == null ) {
       return 0;
     }
     return parent.getHeaderFingerprintSize();
   }
 
-  public Resource create(final ResourceManager caller, final ResourceData data, final ResourceKey context) throws ResourceCreationException, ResourceLoadingException
-  {
-    if (parent == null)
-    {
-      throw new ResourceCreationException("Cannot create resource: Pixie library is not available.");
+  public Resource create( final ResourceManager caller, final ResourceData data, final ResourceKey context )
+    throws ResourceCreationException, ResourceLoadingException {
+    if ( parent == null ) {
+      throw new ResourceCreationException( "Cannot create resource: Pixie library is not available." );
     }
-    return parent.create(caller, data, context);
+    return parent.create( caller, data, context );
   }
 }

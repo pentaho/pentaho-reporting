@@ -25,12 +25,10 @@ import org.pentaho.reporting.libraries.css.parser.stylehandler.OneOfConstantsRea
  *
  * @author Thomas Morgner
  */
-public class LineStackingRubyReadHandler extends OneOfConstantsReadHandler
-{
-  public LineStackingRubyReadHandler()
-  {
-    super(true);
-    addValue(LineStackingRuby.EXCLUDE_RUBY);
-    addValue(LineStackingRuby.INCLUDE_RUBY);
+public class LineStackingRubyReadHandler extends OneOfConstantsReadHandler {
+  public LineStackingRubyReadHandler() {
+    super( true );
+    addValue( LineStackingRuby.EXCLUDE_RUBY );
+    addValue( LineStackingRuby.INCLUDE_RUBY );
   }
 }

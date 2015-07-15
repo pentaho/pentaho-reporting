@@ -22,29 +22,24 @@ import java.awt.datatransfer.Transferable;
 import java.awt.datatransfer.UnsupportedFlavorException;
 import java.io.IOException;
 
-public class GenericTransferable implements Transferable
-{
-  public static final DataFlavor ELEMENT_FLAVOR = new DataFlavor(DataFlavor.javaSerializedObjectMimeType +
-      "; class=" + SerializedObjectContainer.class.getName(), // NON-NLS
-      "Generic Local Transfer"); // NON-NLS
+public class GenericTransferable implements Transferable {
+  public static final DataFlavor ELEMENT_FLAVOR = new DataFlavor( DataFlavor.javaSerializedObjectMimeType +
+    "; class=" + SerializedObjectContainer.class.getName(), // NON-NLS
+    "Generic Local Transfer" ); // NON-NLS
   private SerializedObjectContainer value;
 
-  public GenericTransferable(final Object value)
-  {
-    if (value == null)
-    {
+  public GenericTransferable( final Object value ) {
+    if ( value == null ) {
       throw new NullPointerException();
     }
-    this.value = new SerializedObjectContainer(new Object[]{value});
+    this.value = new SerializedObjectContainer( new Object[] { value } );
   }
 
-  public GenericTransferable(final Object[] data)
-  {
-    if (data == null)
-    {
+  public GenericTransferable( final Object[] data ) {
+    if ( data == null ) {
       throw new NullPointerException();
     }
-    this.value = new SerializedObjectContainer(data);
+    this.value = new SerializedObjectContainer( data );
   }
 
   /**
@@ -53,9 +48,8 @@ public class GenericTransferable implements Transferable
    *
    * @return an array of data flavors in which this data can be transferred
    */
-  public DataFlavor[] getTransferDataFlavors()
-  {
-    return new DataFlavor[]{ELEMENT_FLAVOR};
+  public DataFlavor[] getTransferDataFlavors() {
+    return new DataFlavor[] { ELEMENT_FLAVOR };
   }
 
   /**
@@ -64,9 +58,8 @@ public class GenericTransferable implements Transferable
    * @param flavor the requested flavor for the data
    * @return boolean indicating whether or not the data flavor is supported
    */
-  public boolean isDataFlavorSupported(final DataFlavor flavor)
-  {
-    return ELEMENT_FLAVOR.equals(flavor);
+  public boolean isDataFlavorSupported( final DataFlavor flavor ) {
+    return ELEMENT_FLAVOR.equals( flavor );
   }
 
   /**
@@ -78,11 +71,9 @@ public class GenericTransferable implements Transferable
    * @throws UnsupportedFlavorException if the requested data flavor is not supported.
    * @see DataFlavor#getRepresentationClass
    */
-  public Object getTransferData(final DataFlavor flavor) throws UnsupportedFlavorException, IOException
-  {
-    if (isDataFlavorSupported(flavor) == false)
-    {
-      throw new UnsupportedFlavorException(flavor);
+  public Object getTransferData( final DataFlavor flavor ) throws UnsupportedFlavorException, IOException {
+    if ( isDataFlavorSupported( flavor ) == false ) {
+      throw new UnsupportedFlavorException( flavor );
     }
     return value.getData();
   }

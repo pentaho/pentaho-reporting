@@ -26,13 +26,11 @@ import org.pentaho.reporting.libraries.css.parser.stylehandler.color.ColorReadHa
  *
  * @author Thomas Morgner
  */
-public class TextOverlineReadHandler extends AbstractCompoundValueReadHandler
-{
-  public TextOverlineReadHandler()
-  {
-    addHandler(TextStyleKeys.TEXT_OVERLINE_STYLE, new TextDecorationStyleReadHandler());
-    addHandler(TextStyleKeys.TEXT_OVERLINE_COLOR, new ColorReadHandler());
-    addHandler(TextStyleKeys.TEXT_OVERLINE_WIDTH, new TextDecorationWidthReadHandler());
-    addHandler(TextStyleKeys.TEXT_OVERLINE_MODE, new TextDecorationModeReadHandler());
+public class TextOverlineReadHandler extends AbstractCompoundValueReadHandler {
+  public TextOverlineReadHandler() {
+    addHandler( TextStyleKeys.TEXT_OVERLINE_STYLE, new TextDecorationStyleReadHandler() );
+    addHandler( TextStyleKeys.TEXT_OVERLINE_COLOR, new ColorReadHandler() );
+    addHandler( TextStyleKeys.TEXT_OVERLINE_WIDTH, new TextDecorationWidthReadHandler() );
+    addHandler( TextStyleKeys.TEXT_OVERLINE_MODE, new TextDecorationModeReadHandler() );
   }
 }

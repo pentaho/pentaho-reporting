@@ -25,21 +25,19 @@ import org.pentaho.reporting.libraries.css.parser.stylehandler.OneOfConstantsRea
  *
  * @author Thomas Morgner
  */
-public class FloatReadHandler extends OneOfConstantsReadHandler
-{
-  public FloatReadHandler()
-  {
-    super(false);
-    addValue(Floating.BOTTOM);
-    addValue(Floating.END);
-    addValue(Floating.INSIDE);
-    addValue(Floating.LEFT);
-    addValue(Floating.NONE);
-    addValue(Floating.OUTSIDE);
-    addValue(Floating.RIGHT);
-    addValue(Floating.START);
-    addValue(Floating.TOP);
-    addValue(Floating.IN_COLUMN);
-    addValue(Floating.MID_COLUMN);
+public class FloatReadHandler extends OneOfConstantsReadHandler {
+  public FloatReadHandler() {
+    super( false );
+    addValue( Floating.BOTTOM );
+    addValue( Floating.END );
+    addValue( Floating.INSIDE );
+    addValue( Floating.LEFT );
+    addValue( Floating.NONE );
+    addValue( Floating.OUTSIDE );
+    addValue( Floating.RIGHT );
+    addValue( Floating.START );
+    addValue( Floating.TOP );
+    addValue( Floating.IN_COLUMN );
+    addValue( Floating.MID_COLUMN );
   }
 }

@@ -31,38 +31,31 @@ import org.pentaho.reporting.libraries.formula.typing.coretypes.LogicalType;
  *
  * @author Thomas Morgner
  */
-public class NotFunction implements Function
-{
-  private static final TypeValuePair RETURN_FALSE = new TypeValuePair(LogicalType.TYPE, Boolean.FALSE);
-  private static final TypeValuePair RETURN_TRUE = new TypeValuePair(LogicalType.TYPE, Boolean.TRUE);
+public class NotFunction implements Function {
+  private static final TypeValuePair RETURN_FALSE = new TypeValuePair( LogicalType.TYPE, Boolean.FALSE );
+  private static final TypeValuePair RETURN_TRUE = new TypeValuePair( LogicalType.TYPE, Boolean.TRUE );
   private static final long serialVersionUID = -5011404461198906096L;
 
-  public NotFunction()
-  {
+  public NotFunction() {
   }
 
-  public String getCanonicalName()
-  {
+  public String getCanonicalName() {
     return "NOT";
   }
 
-  public TypeValuePair evaluate(final FormulaContext context,
-                                final ParameterCallback parameters)
-      throws EvaluationException
-  {
-    if(parameters.getParameterCount()!= 1)
-    {
-      throw EvaluationException.getInstance(LibFormulaErrorValue.ERROR_ARGUMENTS_VALUE);
+  public TypeValuePair evaluate( final FormulaContext context,
+                                 final ParameterCallback parameters )
+    throws EvaluationException {
+    if ( parameters.getParameterCount() != 1 ) {
+      throw EvaluationException.getInstance( LibFormulaErrorValue.ERROR_ARGUMENTS_VALUE );
     }
-    final Type conditionType = parameters.getType(0);
-    final Object conditionValue = parameters.getValue(0);
-    final Boolean condition = context.getTypeRegistry().convertToLogical(conditionType, conditionValue);
-    if(condition == null)
-    {
-      throw EvaluationException.getInstance(LibFormulaErrorValue.ERROR_INVALID_ARGUMENT_VALUE);
+    final Type conditionType = parameters.getType( 0 );
+    final Object conditionValue = parameters.getValue( 0 );
+    final Boolean condition = context.getTypeRegistry().convertToLogical( conditionType, conditionValue );
+    if ( condition == null ) {
+      throw EvaluationException.getInstance( LibFormulaErrorValue.ERROR_INVALID_ARGUMENT_VALUE );
     }
-    if (!Boolean.TRUE.equals(condition))
-    {
+    if ( !Boolean.TRUE.equals( condition ) ) {
       return RETURN_TRUE;
     }
     return RETURN_FALSE;

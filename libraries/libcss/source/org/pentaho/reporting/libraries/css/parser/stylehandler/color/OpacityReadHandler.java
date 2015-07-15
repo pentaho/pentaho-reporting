@@ -28,15 +28,12 @@ import org.w3c.css.sac.LexicalUnit;
  *
  * @author Thomas Morgner
  */
-public class OpacityReadHandler implements CSSValueReadHandler
-{
-  public OpacityReadHandler()
-  {
+public class OpacityReadHandler implements CSSValueReadHandler {
+  public OpacityReadHandler() {
   }
 
-  public CSSValue createValue(StyleKey name, LexicalUnit value)
-  {
+  public CSSValue createValue( StyleKey name, LexicalUnit value ) {
     // normalization is deferred until we compute the value.
-    return CSSValueFactory.createNumericValue(value);
+    return CSSValueFactory.createNumericValue( value );
   }
 }

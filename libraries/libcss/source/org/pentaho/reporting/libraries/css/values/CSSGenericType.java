@@ -17,12 +17,10 @@
 
 package org.pentaho.reporting.libraries.css.values;
 
-public class CSSGenericType extends CSSType
-{
+public class CSSGenericType extends CSSType {
   public static final CSSGenericType GENERIC_TYPE = new CSSGenericType();
-  
-  private CSSGenericType()
-  {
-    super("*generic*");
+
+  private CSSGenericType() {
+    super( "*generic*" );
   }
 }

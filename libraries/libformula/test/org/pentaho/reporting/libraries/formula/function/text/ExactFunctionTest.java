@@ -22,27 +22,24 @@ import org.pentaho.reporting.libraries.formula.FormulaTestBase;
 /**
  * @author Cedric Pronzato
  */
-public class ExactFunctionTest extends FormulaTestBase
-{
-  public void testDefault() throws Exception
-  {
+public class ExactFunctionTest extends FormulaTestBase {
+  public void testDefault() throws Exception {
     runDefaultTest();
   }
 
-  public Object[][] createDataTest()
-  {
+  public Object[][] createDataTest() {
     return new Object[][]
-        {
-            {"EXACT(\"A\";\"A\")", Boolean.TRUE},
-            {"EXACT(\"A\";\"a\")", Boolean.FALSE},
-            {"EXACT(1;1)", Boolean.TRUE},
-            {"EXACT((1/3)*3;1)", Boolean.TRUE},
-            {"EXACT(TRUE();TRUE())", Boolean.TRUE},
-            {"EXACT(\"1\";2)", Boolean.FALSE},
-            {"EXACT(\"h\";1)", Boolean.FALSE},
-            {"EXACT(\"1\";1)", Boolean.TRUE},
-            {"EXACT(\" 1\";1)", Boolean.FALSE},
-            {"EXACT(\"12a 456 788\";\"12a 456 789\")", Boolean.FALSE},
-        };
+      {
+        { "EXACT(\"A\";\"A\")", Boolean.TRUE },
+        { "EXACT(\"A\";\"a\")", Boolean.FALSE },
+        { "EXACT(1;1)", Boolean.TRUE },
+        { "EXACT((1/3)*3;1)", Boolean.TRUE },
+        { "EXACT(TRUE();TRUE())", Boolean.TRUE },
+        { "EXACT(\"1\";2)", Boolean.FALSE },
+        { "EXACT(\"h\";1)", Boolean.FALSE },
+        { "EXACT(\"1\";1)", Boolean.TRUE },
+        { "EXACT(\" 1\";1)", Boolean.FALSE },
+        { "EXACT(\"12a 456 788\";\"12a 456 789\")", Boolean.FALSE },
+      };
   }
 }

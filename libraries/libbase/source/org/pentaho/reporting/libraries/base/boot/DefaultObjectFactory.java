@@ -18,68 +18,56 @@
 
 package org.pentaho.reporting.libraries.base.boot;
 
-import java.lang.annotation.Annotation;
-import java.util.HashMap;
-
 import org.pentaho.reporting.libraries.base.config.Configuration;
 import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
 
-public class DefaultObjectFactory implements ObjectFactory
-{
+import java.lang.annotation.Annotation;
+import java.util.HashMap;
+
+public class DefaultObjectFactory implements ObjectFactory {
   private Configuration configuration;
   private HashMap<String, Object> singletons;
 
-  public DefaultObjectFactory(final Configuration configuration)
-  {
+  public DefaultObjectFactory( final Configuration configuration ) {
     this.configuration = configuration;
     this.singletons = new HashMap<String, Object>();
   }
 
-  public <T> T get(final Class<T> interfaceClass)
-  {
-    return get(interfaceClass, interfaceClass.getName());
+  public <T> T get( final Class<T> interfaceClass ) {
+    return get( interfaceClass, interfaceClass.getName() );
   }
 
-  public synchronized <T> T get(final Class<T> interfaceClass, final String key)
-  {
-    final String value = configuration.getConfigProperty(key);
-    if (value == null)
-    {
-      throw new ObjectFactoryException(interfaceClass.getName(), value);
+  public synchronized <T> T get( final Class<T> interfaceClass, final String key ) {
+    final String value = configuration.getConfigProperty( key );
+    if ( value == null ) {
+      throw new ObjectFactoryException( interfaceClass.getName(), value );
     }
 
-    try
-    {
-      final ClassLoader classLoader = ObjectUtilities.getClassLoader(interfaceClass);
-      final Class clazz = (Class) Class.forName(value, false, classLoader);
-      final Annotation annotation = clazz.getAnnotation(SingletonHint.class);
-      if (annotation == null)
-      {
-        final T retval = ObjectUtilities.loadAndInstantiate(value, interfaceClass, interfaceClass);
-        if (retval == null)
-        {
-          throw new ObjectFactoryException(interfaceClass.getName(), value);
+    try {
+      final ClassLoader classLoader = ObjectUtilities.getClassLoader( interfaceClass );
+      final Class clazz = (Class) Class.forName( value, false, classLoader );
+      final Annotation annotation = clazz.getAnnotation( SingletonHint.class );
+      if ( annotation == null ) {
+        final T retval = ObjectUtilities.loadAndInstantiate( value, interfaceClass, interfaceClass );
+        if ( retval == null ) {
+          throw new ObjectFactoryException( interfaceClass.getName(), value );
         }
         return retval;
       }
 
-      final Object o = singletons.get(value);
-      if (o != null)
-      {
+      final Object o = singletons.get( value );
+      if ( o != null ) {
         return (T) o;
       }
 
-      final T retval = ObjectUtilities.loadAndInstantiate(value, interfaceClass, interfaceClass);
-      if (retval == null)
-      {
-        throw new ObjectFactoryException(interfaceClass.getName(), value);
+      final T retval = ObjectUtilities.loadAndInstantiate( value, interfaceClass, interfaceClass );
+      if ( retval == null ) {
+        throw new ObjectFactoryException( interfaceClass.getName(), value );
       }
-      singletons.put(value, retval);
+      singletons.put( value, retval );
       return retval;
-    }
-    catch (ClassNotFoundException e)
-    {
-      throw new IllegalStateException(e);
+    } catch ( ClassNotFoundException e ) {
+      throw new IllegalStateException( e );
     }
 
   }

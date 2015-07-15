@@ -17,7 +17,6 @@
 
 package org.pentaho.reporting.libraries.formula.function.math;
 
-import java.math.BigDecimal;
 import org.pentaho.reporting.libraries.formula.EvaluationException;
 import org.pentaho.reporting.libraries.formula.FormulaContext;
 import org.pentaho.reporting.libraries.formula.LibFormulaErrorValue;
@@ -26,35 +25,35 @@ import org.pentaho.reporting.libraries.formula.function.ParameterCallback;
 import org.pentaho.reporting.libraries.formula.lvalues.TypeValuePair;
 import org.pentaho.reporting.libraries.formula.typing.Type;
 import org.pentaho.reporting.libraries.formula.typing.coretypes.NumberType;
-import org.pentaho.reporting.libraries.formula.util.NumberUtil;
+
+import java.math.BigDecimal;
 
 /**
  * This function returns the acos of the value.
  *
  * @author ocke
- *
  */
 public class AsinFunction implements Function {
 
-    public String getCanonicalName() {
-        return "ASIN";
-    }
+  public String getCanonicalName() {
+    return "ASIN";
+  }
 
-    public TypeValuePair evaluate(FormulaContext context, ParameterCallback parameters) throws EvaluationException {
-        final int parameterCount = parameters.getParameterCount();
-        if (parameterCount != 1) {
-            throw EvaluationException.getInstance(LibFormulaErrorValue.ERROR_ARGUMENTS_VALUE);
-        }
-        final Type type1 = parameters.getType(0);
-        final Object value1 = parameters.getValue(0);
-        final Number result = context.getTypeRegistry().convertToNumber(type1, value1);
-        if (result == null ) {
-            throw EvaluationException.getInstance(LibFormulaErrorValue.ERROR_INVALID_ARGUMENT_VALUE);
-        }
-        final double d = result.doubleValue();
-        if ( d < -1.0 || d > 1.0 ) {
-            throw EvaluationException.getInstance(LibFormulaErrorValue.ERROR_INVALID_ARGUMENT_VALUE);
-        }
-        return new TypeValuePair(NumberType.GENERIC_NUMBER, new BigDecimal(Math.asin(d)));
+  public TypeValuePair evaluate( FormulaContext context, ParameterCallback parameters ) throws EvaluationException {
+    final int parameterCount = parameters.getParameterCount();
+    if ( parameterCount != 1 ) {
+      throw EvaluationException.getInstance( LibFormulaErrorValue.ERROR_ARGUMENTS_VALUE );
     }
+    final Type type1 = parameters.getType( 0 );
+    final Object value1 = parameters.getValue( 0 );
+    final Number result = context.getTypeRegistry().convertToNumber( type1, value1 );
+    if ( result == null ) {
+      throw EvaluationException.getInstance( LibFormulaErrorValue.ERROR_INVALID_ARGUMENT_VALUE );
+    }
+    final double d = result.doubleValue();
+    if ( d < -1.0 || d > 1.0 ) {
+      throw EvaluationException.getInstance( LibFormulaErrorValue.ERROR_INVALID_ARGUMENT_VALUE );
+    }
+    return new TypeValuePair( NumberType.GENERIC_NUMBER, new BigDecimal( Math.asin( d ) ) );
+  }
 }

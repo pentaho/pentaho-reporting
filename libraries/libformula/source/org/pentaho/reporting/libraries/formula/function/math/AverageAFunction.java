@@ -22,15 +22,12 @@ package org.pentaho.reporting.libraries.formula.function.math;
  *
  * @author Cedric Pronzato
  */
-public class AverageAFunction extends AverageFunction
-{
-  public AverageAFunction()
-  {
-    super(new SumAFunction());
+public class AverageAFunction extends AverageFunction {
+  public AverageAFunction() {
+    super( new SumAFunction() );
   }
 
-  public String getCanonicalName()
-  {
+  public String getCanonicalName() {
     return "AVERAGEA";
   }
 }

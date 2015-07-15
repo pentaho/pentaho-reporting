@@ -17,40 +17,33 @@
 
 package org.pentaho.reporting.libraries.designtime.swing;
 
-import java.awt.Component;
-import javax.swing.JLabel;
-import javax.swing.JTable;
-import javax.swing.UIManager;
+import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.JTableHeader;
+import java.awt.*;
 
-public class DefaultTableHeaderRenderer extends DefaultTableCellRenderer
-{
-  public DefaultTableHeaderRenderer()
-  {
-    setHorizontalAlignment(JLabel.CENTER);
+public class DefaultTableHeaderRenderer extends DefaultTableCellRenderer {
+  public DefaultTableHeaderRenderer() {
+    setHorizontalAlignment( JLabel.CENTER );
   }
 
-  public Component getTableCellRendererComponent(final JTable table,
-                                                 final Object value,
-                                                 final boolean isSelected,
-                                                 final boolean hasFocus,
-                                                 final int row,
-                                                 final int column)
-  {
-    if (table != null)
-    {
+  public Component getTableCellRendererComponent( final JTable table,
+                                                  final Object value,
+                                                  final boolean isSelected,
+                                                  final boolean hasFocus,
+                                                  final int row,
+                                                  final int column ) {
+    if ( table != null ) {
       final JTableHeader header = table.getTableHeader();
-      if (header != null)
-      {
-        setForeground(header.getForeground());
-        setBackground(header.getBackground());
-        setFont(header.getFont());
+      if ( header != null ) {
+        setForeground( header.getForeground() );
+        setBackground( header.getBackground() );
+        setFont( header.getFont() );
       }
     }
 
-    setText((value == null) ? "" : value.toString());
-    setBorder(UIManager.getBorder("TableHeader.cellBorder"));
+    setText( ( value == null ) ? "" : value.toString() );
+    setBorder( UIManager.getBorder( "TableHeader.cellBorder" ) );
     return this;
   }
 }

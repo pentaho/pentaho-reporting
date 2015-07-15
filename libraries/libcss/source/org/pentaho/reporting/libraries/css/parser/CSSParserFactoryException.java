@@ -22,13 +22,11 @@ package org.pentaho.reporting.libraries.css.parser;
  *
  * @author Thomas Morgner
  */
-public class CSSParserFactoryException extends Exception
-{
+public class CSSParserFactoryException extends Exception {
   /**
    * Creates a StackableRuntimeException with no message and no parent.
    */
-  public CSSParserFactoryException()
-  {
+  public CSSParserFactoryException() {
   }
 
   /**
@@ -37,9 +35,8 @@ public class CSSParserFactoryException extends Exception
    * @param message the exception message.
    * @param ex      the parent exception.
    */
-  public CSSParserFactoryException(final String message, final Exception ex)
-  {
-    super(message, ex);
+  public CSSParserFactoryException( final String message, final Exception ex ) {
+    super( message, ex );
   }
 
   /**
@@ -47,8 +44,7 @@ public class CSSParserFactoryException extends Exception
    *
    * @param message the exception message.
    */
-  public CSSParserFactoryException(final String message)
-  {
-    super(message);
+  public CSSParserFactoryException( final String message ) {
+    super( message );
   }
 }

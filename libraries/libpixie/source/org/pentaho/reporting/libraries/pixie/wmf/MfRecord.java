@@ -23,13 +23,11 @@ import java.io.InputStream;
 /**
  * A Windows metafile record.
  * <p/>
- * Every record has a standard header. <table border="1"> <tr> <th>bytes</th>
- * <th>meaning</th> </tr> <tr> <td>4</td> <td>Size of header in words</td> </tr> <tr>
- * <td>2</td> <td>type of the record</td> </tr> <tr> <td>n*2</td> <td>array with n words
- * parameters</td> </tr> </table>
+ * Every record has a standard header. <table border="1"> <tr> <th>bytes</th> <th>meaning</th> </tr> <tr> <td>4</td>
+ * <td>Size of header in words</td> </tr> <tr> <td>2</td> <td>type of the record</td> </tr> <tr> <td>n*2</td> <td>array
+ * with n words parameters</td> </tr> </table>
  */
-public class MfRecord extends Buffer
-{
+public class MfRecord extends Buffer {
   /**
    * The size of the record header in bytes.
    */
@@ -43,14 +41,13 @@ public class MfRecord extends Buffer
   private MfType type;
 
   /**
-   * Creates a new MetaFileRecord with the specified capacitiy. The capacity is given in
-   * 16-Bit words. The resulting buffer has the size of 2*parcount&nbsp;+&nbsp;RECORD_HEADER.
+   * Creates a new MetaFileRecord with the specified capacitiy. The capacity is given in 16-Bit words. The resulting
+   * buffer has the size of 2*parcount&nbsp;+&nbsp;RECORD_HEADER.
    *
    * @param parcount the number of 16-Bit words stored as bulk in the record.
    */
-  public MfRecord(final int parcount)
-  {
-    super(parcount * 2 + RECORD_HEADER_SIZE);
+  public MfRecord( final int parcount ) {
+    super( parcount * 2 + RECORD_HEADER_SIZE );
   }
 
   /**
@@ -59,25 +56,22 @@ public class MfRecord extends Buffer
    * @param in the source inputstream
    * @throws IOException if an IOError occurs.
    */
-  public MfRecord(final InputStream in)
-      throws IOException
-  {
-    read(in);
+  public MfRecord( final InputStream in )
+    throws IOException {
+    read( in );
   }
 
   /**
    * Read a record from an input stream.
    */
-  protected void read(final InputStream in)
-      throws IOException
-  {
-    super.read(in, 0, RECORD_HEADER_SIZE);
-    final int remaining = getInt(0) * 2 - RECORD_HEADER_SIZE;
-    if (remaining > 0)
-    {
-      super.read(in, RECORD_HEADER_SIZE, remaining);
+  protected void read( final InputStream in )
+    throws IOException {
+    super.read( in, 0, RECORD_HEADER_SIZE );
+    final int remaining = getInt( 0 ) * 2 - RECORD_HEADER_SIZE;
+    if ( remaining > 0 ) {
+      super.read( in, RECORD_HEADER_SIZE, remaining );
     }
-    type = MfType.get(getType());
+    type = MfType.get( getType() );
   }
 
   /**
@@ -85,9 +79,8 @@ public class MfRecord extends Buffer
    *
    * @return the RecordType
    */
-  public int getType()
-  {
-    return getShort(RECORD_TYPE_POS);
+  public int getType() {
+    return getShort( RECORD_TYPE_POS );
   }
 
   /**
@@ -95,9 +88,8 @@ public class MfRecord extends Buffer
    *
    * @param type the RecordType
    */
-  public void setType(final int type)
-  {
-    setShort(RECORD_TYPE_POS, type);
+  public void setType( final int type ) {
+    setShort( RECORD_TYPE_POS, type );
   }
 
   /**
@@ -106,9 +98,8 @@ public class MfRecord extends Buffer
    * @param p the parameter position in words.
    * @return the parameter value.
    */
-  public int getParam(final int p)
-  {
-    return getShort(p * 2 + RECORD_HEADER_SIZE);
+  public int getParam( final int p ) {
+    return getShort( p * 2 + RECORD_HEADER_SIZE );
   }
 
   /**
@@ -117,9 +108,8 @@ public class MfRecord extends Buffer
    * @param p     the parameter position in words.
    * @param value the parameter value.
    */
-  public void setParam(final int p, final int value)
-  {
-    setShort(p * 2 + RECORD_HEADER_SIZE, value);
+  public void setParam( final int p, final int value ) {
+    setShort( p * 2 + RECORD_HEADER_SIZE, value );
   }
 
   /**
@@ -128,9 +118,8 @@ public class MfRecord extends Buffer
    * @param p the parameter position in words.
    * @return the parameter value.
    */
-  public int getLongParam(final int p)
-  {  // Offset is in 16-bit words.
-    return getInt(p * 2 + RECORD_HEADER_SIZE);
+  public int getLongParam( final int p ) {  // Offset is in 16-bit words.
+    return getInt( p * 2 + RECORD_HEADER_SIZE );
   }
 
   /**
@@ -139,9 +128,8 @@ public class MfRecord extends Buffer
    * @param p     the parameter position in words.
    * @param value the parameter value.
    */
-  public void setLongParam(final int p, final int value)
-  {
-    setInt(p * 2 + RECORD_HEADER_SIZE, value);
+  public void setLongParam( final int p, final int value ) {
+    setInt( p * 2 + RECORD_HEADER_SIZE, value );
   }
 
   /**
@@ -150,9 +138,8 @@ public class MfRecord extends Buffer
    * @param p the parameter position in words.
    * @return the parameter value.
    */
-  public String getStringParam(final int p, final int len)
-  {
-    return getString(p * 2 + RECORD_HEADER_SIZE, len);
+  public String getStringParam( final int p, final int len ) {
+    return getString( p * 2 + RECORD_HEADER_SIZE, len );
   }
 
   /**
@@ -161,54 +148,46 @@ public class MfRecord extends Buffer
    * @param p the parameter position in words.
    * @param s the parameter value.
    */
-  public void setStringParam(final int p, final String s)
-  {
-    setString(p * 2 + RECORD_HEADER_SIZE, s);
+  public void setStringParam( final int p, final String s ) {
+    setString( p * 2 + RECORD_HEADER_SIZE, s );
   }
 
   /**
    * Return the name of this type of record.
    */
-  public String getName()
-  {
+  public String getName() {
     return type.getName();
   }
 
   /**
    * Return debug info.
    */
-  public String toString()
-  {
+  public String toString() {
     final StringBuffer result = new StringBuffer();
-    result.append(type);
-    result.append(' ');
-    result.append(getName());
-    result.append(": ");
+    result.append( type );
+    result.append( ' ' );
+    result.append( getName() );
+    result.append( ": " );
 
     final StringBuffer str = new StringBuffer();
 
-    final int len = (getInt(0) - 3) * 2;
-    for (int i = 0; i < len; i++)
-    {
-      if ((i % 16) == 0)
-      {
-        result.append('\n');
-        str.append('\n');
-      }
-      else if ((i % 8) == 0)
-      {
-        result.append(' ');
+    final int len = ( getInt( 0 ) - 3 ) * 2;
+    for ( int i = 0; i < len; i++ ) {
+      if ( ( i % 16 ) == 0 ) {
+        result.append( '\n' );
+        str.append( '\n' );
+      } else if ( ( i % 8 ) == 0 ) {
+        result.append( ' ' );
       }
 
-      final int by = getByte(i + RECORD_HEADER_SIZE);
+      final int by = getByte( i + RECORD_HEADER_SIZE );
 
-      if (by < 16)
-      {
-        result.append('0');
+      if ( by < 16 ) {
+        result.append( '0' );
       }
-      result.append(Integer.toHexString(by));
+      result.append( Integer.toHexString( by ) );
       //str.append ((char) by);
-      result.append(' ');
+      result.append( ' ' );
     }
     return result.toString();
   }
@@ -216,16 +195,14 @@ public class MfRecord extends Buffer
   /**
    * True if this record marks the screen. Currently such records are ignored.
    */
-  public boolean doesMark()
-  {
-    return (type.doesMark());
+  public boolean doesMark() {
+    return ( type.doesMark() );
   }
 
   /**
    * True if this record affects mapping modes.
    */
-  public boolean isMappingMode()
-  {
-    return (type.isMappingMode());
+  public boolean isMappingMode() {
+    return ( type.isMappingMode() );
   }
 }

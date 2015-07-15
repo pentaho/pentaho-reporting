@@ -41,28 +41,20 @@
 
 package org.pentaho.reporting.libraries.designtime.swing;
 
-import java.awt.Component;
-import java.awt.Container;
-import java.awt.Dimension;
-import java.awt.Insets;
-import java.awt.LayoutManager;
-import java.awt.Rectangle;
+import java.awt.*;
 
 /**
  * A simple layoutmanager to overlay all components of a parent.
  * <p/>
- * This layout manager acts similiar to the card layout, but all
- * childs of the parent band have the same size and all childs can
- * be visible at the same time.
+ * This layout manager acts similiar to the card layout, but all childs of the parent band have the same size and all
+ * childs can be visible at the same time.
  *
  * @author Thomas Morgner
  */
-public final class OverlayLayout implements LayoutManager
-{
+public final class OverlayLayout implements LayoutManager {
 
   /**
-   * A flag that defines, whether invisible components should be ignored when
-   * computing the layout.
+   * A flag that defines, whether invisible components should be ignored when computing the layout.
    */
   private boolean ignoreInvisible;
 
@@ -71,30 +63,25 @@ public final class OverlayLayout implements LayoutManager
    *
    * @param ignoreInvisible whether to ignore invisible components when computing the layout.
    */
-  public OverlayLayout(final boolean ignoreInvisible)
-  {
+  public OverlayLayout( final boolean ignoreInvisible ) {
     this.ignoreInvisible = ignoreInvisible;
   }
 
   /**
    * DefaultConstructor.
    */
-  public OverlayLayout()
-  {
+  public OverlayLayout() {
 
   }
 
   /**
-   * If the layout manager uses a per-component string,
-   * adds the component <code>comp</code> to the layout,
-   * associating it
-   * with the string specified by <code>name</code>.
+   * If the layout manager uses a per-component string, adds the component <code>comp</code> to the layout, associating
+   * it with the string specified by <code>name</code>.
    *
    * @param name the string to be associated with the component
    * @param comp the component to be added
    */
-  public void addLayoutComponent(final String name, final Component comp)
-  {
+  public void addLayoutComponent( final String name, final Component comp ) {
   }
 
   /**
@@ -102,8 +89,7 @@ public final class OverlayLayout implements LayoutManager
    *
    * @param comp the component to be removed
    */
-  public void removeLayoutComponent(final Component comp)
-  {
+  public void removeLayoutComponent( final Component comp ) {
   }
 
   /**
@@ -111,10 +97,8 @@ public final class OverlayLayout implements LayoutManager
    *
    * @param parent the container to be laid out
    */
-  public void layoutContainer(final Container parent)
-  {
-    synchronized (parent.getTreeLock())
-    {
+  public void layoutContainer( final Container parent ) {
+    synchronized( parent.getTreeLock() ) {
       final Insets ins = parent.getInsets();
 
       final Rectangle bounds = parent.getBounds();
@@ -123,91 +107,75 @@ public final class OverlayLayout implements LayoutManager
 
       final Component[] comps = parent.getComponents();
 
-      for (int i = 0; i < comps.length; i++)
-      {
-        final Component c = comps[i];
-        if ((comps[i].isVisible() == false) && this.ignoreInvisible)
-        {
+      for ( int i = 0; i < comps.length; i++ ) {
+        final Component c = comps[ i ];
+        if ( ( comps[ i ].isVisible() == false ) && this.ignoreInvisible ) {
           continue;
         }
-        c.setBounds(ins.left, ins.top, width, height);
+        c.setBounds( ins.left, ins.top, width, height );
       }
     }
   }
 
   /**
-   * Calculates the minimum size dimensions for the specified
-   * container, given the components it contains.
+   * Calculates the minimum size dimensions for the specified container, given the components it contains.
    *
    * @param parent the component to be laid out
    * @return the minimum size computed for the parent.
    * @see #preferredLayoutSize
    */
-  public Dimension minimumLayoutSize(final Container parent)
-  {
-    synchronized (parent.getTreeLock())
-    {
+  public Dimension minimumLayoutSize( final Container parent ) {
+    synchronized( parent.getTreeLock() ) {
       final Insets ins = parent.getInsets();
       final Component[] comps = parent.getComponents();
       int height = 0;
       int width = 0;
-      for (int i = 0; i < comps.length; i++)
-      {
-        if ((comps[i].isVisible() == false) && this.ignoreInvisible)
-        {
+      for ( int i = 0; i < comps.length; i++ ) {
+        if ( ( comps[ i ].isVisible() == false ) && this.ignoreInvisible ) {
           continue;
         }
 
-        final Dimension pref = comps[i].getMinimumSize();
-        if (pref.height > height)
-        {
+        final Dimension pref = comps[ i ].getMinimumSize();
+        if ( pref.height > height ) {
           height = pref.height;
         }
-        if (pref.width > width)
-        {
+        if ( pref.width > width ) {
           width = pref.width;
         }
       }
-      return new Dimension(width + ins.left + ins.right,
-          height + ins.top + ins.bottom);
+      return new Dimension( width + ins.left + ins.right,
+        height + ins.top + ins.bottom );
     }
   }
 
   /**
-   * Calculates the preferred size dimensions for the specified
-   * container, given the components it contains.
+   * Calculates the preferred size dimensions for the specified container, given the components it contains.
    *
    * @param parent the container to be laid out
    * @return the preferred size computed for the parent.
    * @see #minimumLayoutSize
    */
-  public Dimension preferredLayoutSize(final Container parent)
-  {
-    synchronized (parent.getTreeLock())
-    {
+  public Dimension preferredLayoutSize( final Container parent ) {
+    synchronized( parent.getTreeLock() ) {
       final Insets ins = parent.getInsets();
       final Component[] comps = parent.getComponents();
       int height = 0;
       int width = 0;
-      for (int i = 0; i < comps.length; i++)
-      {
-        if ((comps[i].isVisible() == false) && this.ignoreInvisible)
-        {
+      for ( int i = 0; i < comps.length; i++ ) {
+        if ( ( comps[ i ].isVisible() == false ) && this.ignoreInvisible ) {
           continue;
         }
 
-        final Dimension pref = comps[i].getPreferredSize();
-        if (pref.height > height)
-        {
+        final Dimension pref = comps[ i ].getPreferredSize();
+        if ( pref.height > height ) {
           height = pref.height;
         }
-        if (pref.width > width)
-        {
+        if ( pref.width > width ) {
           width = pref.width;
         }
       }
-      return new Dimension(width + ins.left + ins.right,
-          height + ins.top + ins.bottom);
+      return new Dimension( width + ins.left + ins.right,
+        height + ins.top + ins.bottom );
     }
   }
 

@@ -24,16 +24,14 @@ import org.pentaho.reporting.libraries.css.values.CSSConstant;
  *
  * @author Thomas Morgner
  */
-public class BorderImageStretchType
-{
+public class BorderImageStretchType {
   public static final CSSConstant STRETCH =
-      new CSSConstant("stretch");
+    new CSSConstant( "stretch" );
   public static final CSSConstant REPEAT =
-      new CSSConstant("repeat");
+    new CSSConstant( "repeat" );
   public static final CSSConstant ROUND =
-      new CSSConstant("round");
+    new CSSConstant( "round" );
 
-  private BorderImageStretchType()
-  {
+  private BorderImageStretchType() {
   }
 }

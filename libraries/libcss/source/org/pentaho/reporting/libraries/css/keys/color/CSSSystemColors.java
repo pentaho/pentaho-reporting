@@ -21,18 +21,15 @@ import org.pentaho.reporting.libraries.css.values.CSSColorValue;
 import org.pentaho.reporting.libraries.css.values.CSSConstant;
 
 /**
- * A set of color mappings which map the constants to system default values.
- * This *could* also include colors which map to standard UI colors, like
- * 'caption background' etc.
+ * A set of color mappings which map the constants to system default values. This *could* also include colors which map
+ * to standard UI colors, like 'caption background' etc.
  *
  * @author Thomas Morgner
  */
-public final class CSSSystemColors
-{
-  private CSSSystemColors()
-  {
+public final class CSSSystemColors {
+  private CSSSystemColors() {
   }
 
-  public static final CSSColorValue TRANSPARENT = new CSSColorValue(0, 0, 0, 0);
-  public static final CSSConstant CURRENT_COLOR = new CSSConstant("currentColor");
+  public static final CSSColorValue TRANSPARENT = new CSSColorValue( 0, 0, 0, 0 );
+  public static final CSSConstant CURRENT_COLOR = new CSSConstant( "currentColor" );
 }

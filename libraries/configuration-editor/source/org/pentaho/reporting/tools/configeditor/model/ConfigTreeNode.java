@@ -24,8 +24,7 @@ import javax.swing.tree.TreeNode;
  *
  * @author Thomas Morgner
  */
-public interface ConfigTreeNode extends TreeNode
-{
+public interface ConfigTreeNode extends TreeNode {
   /**
    * Returns the name of the node.
    *
@@ -38,5 +37,5 @@ public interface ConfigTreeNode extends TreeNode
    *
    * @param parent the new parent node.
    */
-  public void setParent(TreeNode parent);
+  public void setParent( TreeNode parent );
 }

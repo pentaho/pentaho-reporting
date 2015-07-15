@@ -17,7 +17,6 @@
 
 package org.pentaho.openformula.ui;
 
-public interface FieldDefinitionSource
-{
+public interface FieldDefinitionSource {
   public FieldDefinition[] getFields();
 }

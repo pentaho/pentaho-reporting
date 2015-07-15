@@ -25,12 +25,10 @@ import org.pentaho.reporting.libraries.css.resolver.values.computed.ConstantsRes
  *
  * @author Thomas Morgner
  */
-public class FontVariantResolveHandler extends ConstantsResolveHandler
-{
-  public FontVariantResolveHandler()
-  {
-    addNormalizeValue(FontVariant.SMALL_CAPS);
-    addNormalizeValue(FontVariant.NORMAL);
-    setFallback(FontVariant.NORMAL);
+public class FontVariantResolveHandler extends ConstantsResolveHandler {
+  public FontVariantResolveHandler() {
+    addNormalizeValue( FontVariant.SMALL_CAPS );
+    addNormalizeValue( FontVariant.NORMAL );
+    setFallback( FontVariant.NORMAL );
   }
 }

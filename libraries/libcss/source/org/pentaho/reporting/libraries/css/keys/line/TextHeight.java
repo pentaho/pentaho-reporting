@@ -24,14 +24,12 @@ import org.pentaho.reporting.libraries.css.values.CSSConstant;
  *
  * @author Thomas Morgner
  */
-public class TextHeight
-{
-  public static final CSSConstant FONT_SIZE = new CSSConstant("font-size");
-  public static final CSSConstant TEXT_SIZE = new CSSConstant("text-size");
-  public static final CSSConstant MAX_SIZE = new CSSConstant("max-size");
+public class TextHeight {
+  public static final CSSConstant FONT_SIZE = new CSSConstant( "font-size" );
+  public static final CSSConstant TEXT_SIZE = new CSSConstant( "text-size" );
+  public static final CSSConstant MAX_SIZE = new CSSConstant( "max-size" );
 
-  private TextHeight()
-  {
+  private TextHeight() {
   }
 
 }

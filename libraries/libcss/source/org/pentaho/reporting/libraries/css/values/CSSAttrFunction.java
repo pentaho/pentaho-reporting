@@ -24,92 +24,68 @@ import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
  *
  * @author Thomas Morgner
  */
-public class CSSAttrFunction extends CSSFunctionValue
-{
+public class CSSAttrFunction extends CSSFunctionValue {
   private String namespace;
   private String name;
   private String type;
 
-  public CSSAttrFunction(final String namespace,
-                         final String name,
-                         final String type)
-  {
-    super("attr", produceParameters(namespace, name, type));
+  public CSSAttrFunction( final String namespace,
+                          final String name,
+                          final String type ) {
+    super( "attr", produceParameters( namespace, name, type ) );
     this.namespace = namespace;
     this.name = name;
     this.type = type;
   }
 
-  public CSSAttrFunction(final String namespace,
-                         final String name)
-  {
-    this(namespace, name, null);
+  public CSSAttrFunction( final String namespace,
+                          final String name ) {
+    this( namespace, name, null );
   }
 
-  private static CSSValue[] produceParameters(final String namespace,
-                                              final String name,
-                                              final String type)
-  {
-    if (name == null)
-    {
+  private static CSSValue[] produceParameters( final String namespace,
+                                               final String name,
+                                               final String type ) {
+    if ( name == null ) {
       throw new NullPointerException();
     }
     CSSConstant nameConst;
-    if (namespace == null)
-    {
-      nameConst = new CSSConstant("");
+    if ( namespace == null ) {
+      nameConst = new CSSConstant( "" );
+    } else {
+      nameConst = new CSSConstant( namespace );
     }
-    else
-    {
-      nameConst = new CSSConstant(namespace);
-    }
-    if (type == null)
-    {
-      return new CSSValue[]{nameConst, new CSSConstant(name)};
-    }
-    else
-    {
-      return new CSSValue[]{nameConst, new CSSConstant(name), new CSSConstant(
-          type)};
+    if ( type == null ) {
+      return new CSSValue[] { nameConst, new CSSConstant( name ) };
+    } else {
+      return new CSSValue[] { nameConst, new CSSConstant( name ), new CSSConstant(
+        type ) };
     }
   }
 
-  public String getName()
-  {
+  public String getName() {
     return name;
   }
 
-  public String getValueType()
-  {
+  public String getValueType() {
     return type;
   }
 
-  public String getNamespace()
-  {
+  public String getNamespace() {
     return namespace;
   }
 
-  public String getCSSText()
-  {
-    if (type != null)
-    {
-      if (namespace == null)
-      {
+  public String getCSSText() {
+    if ( type != null ) {
+      if ( namespace == null ) {
         return "attr(|" + name + ", " + type + ")";
-      }
-      else
-      {
+      } else {
         return "attr(" + namespace + "|" + name + ", " + type + ")";
       }
-    }
-    else
-    {
-      if (namespace == null)
-      {
+    } else {
+      if ( namespace == null ) {
         return "attr(|" + name + ")";
-      }
-      else
-      {
+      } else {
         return "attr(" + namespace + "|" + name + ")";
       }
     }
@@ -120,15 +96,12 @@ public class CSSAttrFunction extends CSSFunctionValue
    *
    * @return <code>true</code> if the supplied object is equivalent to this object, <code>false</code> otherwise
    */
-  public boolean equals(Object obj)
-  {
-    if (obj instanceof CSSAttrFunction && super.equals(obj))
-    {
+  public boolean equals( Object obj ) {
+    if ( obj instanceof CSSAttrFunction && super.equals( obj ) ) {
       CSSAttrFunction that = (CSSAttrFunction) obj;
-      return (ObjectUtilities.equal(this.name, that.name) && ObjectUtilities.equal(this.namespace, that.namespace) && ObjectUtilities.equal(this.type, that.type));
-    }
-    else
-    {
+      return ( ObjectUtilities.equal( this.name, that.name ) && ObjectUtilities.equal( this.namespace, that.namespace )
+        && ObjectUtilities.equal( this.type, that.type ) );
+    } else {
       return false;
     }
   }

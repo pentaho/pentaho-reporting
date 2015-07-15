@@ -24,21 +24,19 @@ import org.pentaho.reporting.libraries.css.values.CSSConstant;
  *
  * @author Thomas Morgner
  */
-public class IndentEdgeReset
-{
+public class IndentEdgeReset {
   public static final CSSConstant NONE =
-      new CSSConstant("none");
+    new CSSConstant( "none" );
   public static final CSSConstant MARGIN_EDGE =
-      new CSSConstant("margin-edge");
+    new CSSConstant( "margin-edge" );
   public static final CSSConstant BORDER_EDGE =
-      new CSSConstant("border-edge");
+    new CSSConstant( "border-edge" );
   public static final CSSConstant PADDING_EDGE =
-      new CSSConstant("padding-edge");
+    new CSSConstant( "padding-edge" );
   public static final CSSConstant CONTENT_EDGE =
-      new CSSConstant("content-edge");
+    new CSSConstant( "content-edge" );
 
-  private IndentEdgeReset()
-  {
+  private IndentEdgeReset() {
   }
 
 }

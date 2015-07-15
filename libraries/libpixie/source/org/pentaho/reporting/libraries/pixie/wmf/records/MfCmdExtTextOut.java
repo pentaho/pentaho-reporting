@@ -17,12 +17,6 @@
 
 package org.pentaho.reporting.libraries.pixie.wmf.records;
 
-import java.awt.BasicStroke;
-import java.awt.FontMetrics;
-import java.awt.Graphics2D;
-import java.awt.Point;
-import java.awt.Rectangle;
-
 import org.pentaho.reporting.libraries.pixie.wmf.BrushConstants;
 import org.pentaho.reporting.libraries.pixie.wmf.MfDcState;
 import org.pentaho.reporting.libraries.pixie.wmf.MfLogFont;
@@ -31,10 +25,11 @@ import org.pentaho.reporting.libraries.pixie.wmf.MfType;
 import org.pentaho.reporting.libraries.pixie.wmf.TextConstants;
 import org.pentaho.reporting.libraries.pixie.wmf.WmfFile;
 
+import java.awt.*;
+
 /**
- * The ExtTextOut function draws text using the currently selected font, background color,
- * and text color. You can optionally provide dimensions to be used for clipping,
- * opaquing, or both.
+ * The ExtTextOut function draws text using the currently selected font, background color, and text color. You can
+ * optionally provide dimensions to be used for clipping, opaquing, or both.
  * <p/>
  * META_EXTTEXTOUT <h1>NEAREST API CALL</h1>
  * <pre>#include &lt;windows.h&gt;
@@ -52,8 +47,7 @@ import org.pentaho.reporting.libraries.pixie.wmf.WmfFile;
  * </pre>
  */
 
-public class MfCmdExtTextOut extends MfCmd
-{
+public class MfCmdExtTextOut extends MfCmd {
   private static final int POS_Y = 0;
   private static final int POS_X = 1;
   private static final int POS_CHAR_COUNT = 2;
@@ -86,8 +80,7 @@ public class MfCmdExtTextOut extends MfCmd
   private int scaled_ch;
   private String text;
 
-  public MfCmdExtTextOut()
-  {
+  public MfCmdExtTextOut() {
   }
 
   /**
@@ -95,79 +88,63 @@ public class MfCmdExtTextOut extends MfCmd
    *
    * @param file the meta file.
    */
-  public void replay(final WmfFile file)
-  {
+  public void replay( final WmfFile file ) {
     final Graphics2D graphics = file.getGraphics2D();
     final MfDcState state = file.getCurrentState();
     final MfLogFont lFont = state.getLogFont();
 
     state.prepareDrawText();
     final FontMetrics metrics = graphics.getFontMetrics();
-    final int textWidth = metrics.stringWidth(text);
+    final int textWidth = metrics.stringWidth( text );
     final Point p = getScaledOrigin();
-    final int x = p.x + calcDeltaX(state.getVerticalTextAlignment(), textWidth);
-    int y = p.y + calcDeltaY(state.getHorizontalTextAlignment(), metrics);
+    final int x = p.x + calcDeltaX( state.getVerticalTextAlignment(), textWidth );
+    int y = p.y + calcDeltaY( state.getHorizontalTextAlignment(), metrics );
 
-    if (isOpaque() || state.getBkMode() != BrushConstants.TRANSPARENT)
-    {
-      final Rectangle background = new Rectangle(x, y - metrics.getAscent(), textWidth, metrics.getHeight());
-      graphics.setColor(state.getBkColor());
-      graphics.fill(background);
-      graphics.setColor(state.getTextColor());
+    if ( isOpaque() || state.getBkMode() != BrushConstants.TRANSPARENT ) {
+      final Rectangle background = new Rectangle( x, y - metrics.getAscent(), textWidth, metrics.getHeight() );
+      graphics.setColor( state.getBkColor() );
+      graphics.fill( background );
+      graphics.setColor( state.getTextColor() );
     }
     // System.out.println("X: " + x + " Y: " + p.y + " " + calcDeltaY(state.getHorizontalTextAlignment(), metrics));
 
     final Graphics2D g2 = (Graphics2D) graphics.create();
-    g2.drawString(text, x, y);
+    g2.drawString( text, x, y );
 
-    if (lFont.isUnderline())
-    {  // Underline.
+    if ( lFont.isUnderline() ) {  // Underline.
       y += metrics.getDescent() / 8 + 1;
       //state.prepareDraw();
-      g2.setStroke(new BasicStroke(metrics.getHeight() / 14));
-      g2.drawLine(x, y, x + textWidth, y);
+      g2.setStroke( new BasicStroke( metrics.getHeight() / 14 ) );
+      g2.drawLine( x, y, x + textWidth, y );
       //state.postDraw();
     }
-    if (lFont.isStrikeOut())
-    {  // Underline.
+    if ( lFont.isStrikeOut() ) {  // Underline.
       //state.prepareDraw();
       y -= metrics.getAscent() / 2.5 + 1;
-      g2.setStroke(new BasicStroke(metrics.getHeight() / 14));
-      g2.drawLine(x, y, x + textWidth, y);
+      g2.setStroke( new BasicStroke( metrics.getHeight() / 14 ) );
+      g2.drawLine( x, y, x + textWidth, y );
       //state.postDraw();
     }
 
     state.postDrawText();
   }
 
-  protected int calcDeltaX(final int valign, final int textWidth)
-  {
-    if (valign == TextConstants.TA_LEFT)
-    {
+  protected int calcDeltaX( final int valign, final int textWidth ) {
+    if ( valign == TextConstants.TA_LEFT ) {
       return 0;
-    }
-    else if (valign == TextConstants.TA_CENTER)
-    {
+    } else if ( valign == TextConstants.TA_CENTER ) {
       return textWidth / -2;
-    }
-    else
-    {
+    } else {
       return textWidth * -1;
     }
   }
 
-  protected int calcDeltaY(final int halign, final FontMetrics fm)
-  {
-    if (halign == TextConstants.TA_TOP)
-    {
-      return (fm.getAscent());
-    }
-    else if (halign == TextConstants.TA_BOTTOM)
-    {
-      return (fm.getDescent());
-    }
-    else
-    {
+  protected int calcDeltaY( final int halign, final FontMetrics fm ) {
+    if ( halign == TextConstants.TA_TOP ) {
+      return ( fm.getAscent() );
+    } else if ( halign == TextConstants.TA_BOTTOM ) {
+      return ( fm.getDescent() );
+    } else {
       return 0;
     }
   }
@@ -177,157 +154,134 @@ public class MfCmdExtTextOut extends MfCmd
    *
    * @return a new instance of the command.
    */
-  public MfCmd getInstance()
-  {
+  public MfCmd getInstance() {
     return new MfCmdExtTextOut();
   }
 
   /**
-   * Reads the function identifier. Every record type is identified by a function number
-   * corresponding to one of the Windows GDI functions used.
+   * Reads the function identifier. Every record type is identified by a function number corresponding to one of the
+   * Windows GDI functions used.
    *
    * @return the function identifier.
    */
-  public int getFunction()
-  {
+  public int getFunction() {
     return MfType.EXT_TEXT_OUT;
   }
 
   /**
-   * Reads the command data from the given record and adjusts the internal parameters
-   * according to the data parsed.
+   * Reads the command data from the given record and adjusts the internal parameters according to the data parsed.
    * <p/>
-   * After the raw record was read from the datasource, the record is parsed by the
-   * concrete implementation.
+   * After the raw record was read from the datasource, the record is parsed by the concrete implementation.
    *
    * @param record the raw data that makes up the record.
    */
-  public void setRecord(final MfRecord record)
-  {
-    final int y = record.getParam(POS_Y);
-    final int x = record.getParam(POS_X);
-    final int count = record.getParam(POS_CHAR_COUNT);
-    final int flag = record.getParam(POS_FLAGS);
+  public void setRecord( final MfRecord record ) {
+    final int y = record.getParam( POS_Y );
+    final int x = record.getParam( POS_X );
+    final int count = record.getParam( POS_CHAR_COUNT );
+    final int flag = record.getParam( POS_FLAGS );
     final int stringOffset;
 
     int cx = 0;
     int cy = 0;
     int cw = 0;
     int ch = 0;
-    if ((flag & ETO_CLIPPED) == ETO_CLIPPED)
-    {
-      cx = record.getParam(POS_CLIP_X);
-      cy = record.getParam(POS_CLIP_Y);
-      cw = record.getParam(POS_CLIP_W);
-      ch = record.getParam(POS_CLIP_H);
+    if ( ( flag & ETO_CLIPPED ) == ETO_CLIPPED ) {
+      cx = record.getParam( POS_CLIP_X );
+      cy = record.getParam( POS_CLIP_Y );
+      cw = record.getParam( POS_CLIP_W );
+      ch = record.getParam( POS_CLIP_H );
       stringOffset = RECORD_BASE_SIZE_CLIPPED;
-    }
-    else
-    {
+    } else {
       stringOffset = RECORD_BASE_SIZE_STANDARD;
     }
-    final String text = record.getStringParam(stringOffset, count);
+    final String text = record.getStringParam( stringOffset, count );
 
-    setOrigin(x, y);
-    setText(text);
-    setClippingRect(cx, cy, cw, ch);
-    setFlags(flag);
+    setOrigin( x, y );
+    setText( text );
+    setClippingRect( cx, cy, cw, ch );
+    setFlags( flag );
   }
 
   /**
-   * Creates a new record based on the data stored in the MfCommand. This writer does not
-   * write a char-spacing record.
+   * Creates a new record based on the data stored in the MfCommand. This writer does not write a char-spacing record.
    *
    * @return the created record.
    */
-  public MfRecord getRecord()
-  {
+  public MfRecord getRecord() {
     final String text = getText();
     final int flag = getFlags();
     final int parcnt;
-    if ((flag & ETO_CLIPPED) == ETO_CLIPPED)
-    {
+    if ( ( flag & ETO_CLIPPED ) == ETO_CLIPPED ) {
       parcnt = RECORD_BASE_SIZE_CLIPPED;
-    }
-    else
-    {
+    } else {
       parcnt = RECORD_BASE_SIZE_STANDARD;
     }
 
-    final int recordLength = (int) (Math.ceil(text.length() / 2) * 2) + parcnt;
-    final MfRecord record = new MfRecord(recordLength);
+    final int recordLength = (int) ( Math.ceil( text.length() / 2 ) * 2 ) + parcnt;
+    final MfRecord record = new MfRecord( recordLength );
 
     final Point origin = getOrigin();
-    record.setParam(POS_Y, (int) origin.getY());
-    record.setParam(POS_X, (int) origin.getX());
-    record.setParam(POS_CHAR_COUNT, text.length());
-    record.setParam(POS_FLAGS, flag);
-    if ((flag & ETO_CLIPPED) == ETO_CLIPPED)
-    {
+    record.setParam( POS_Y, (int) origin.getY() );
+    record.setParam( POS_X, (int) origin.getX() );
+    record.setParam( POS_CHAR_COUNT, text.length() );
+    record.setParam( POS_FLAGS, flag );
+    if ( ( flag & ETO_CLIPPED ) == ETO_CLIPPED ) {
       final Rectangle rect = getClippingRect();
-      record.setParam(POS_CLIP_X, rect.x);
-      record.setParam(POS_CLIP_Y, rect.y);
-      record.setParam(POS_CLIP_W, rect.width);
-      record.setParam(POS_CLIP_H, rect.height);
+      record.setParam( POS_CLIP_X, rect.x );
+      record.setParam( POS_CLIP_Y, rect.y );
+      record.setParam( POS_CLIP_W, rect.width );
+      record.setParam( POS_CLIP_H, rect.height );
     }
-    record.setStringParam(parcnt, text);
+    record.setStringParam( parcnt, text );
     return record;
   }
 
-  public String toString()
-  {
+  public String toString() {
     final StringBuffer b = new StringBuffer();
-    b.append("[EXT_TEXT_OUT] text=");
-    b.append(getText());
-    b.append(" origin=");
-    b.append(getOrigin());
-    b.append(" clippingRect=");
-    b.append(getClippingRect());
-    b.append(" flags=");
-    b.append(getFlags());
+    b.append( "[EXT_TEXT_OUT] text=" );
+    b.append( getText() );
+    b.append( " origin=" );
+    b.append( getOrigin() );
+    b.append( " clippingRect=" );
+    b.append( getClippingRect() );
+    b.append( " flags=" );
+    b.append( getFlags() );
     return b.toString();
   }
 
-  public void setOrigin(final int x, final int y)
-  {
+  public void setOrigin( final int x, final int y ) {
     this.x = x;
     this.y = y;
     scaleXChanged();
     scaleYChanged();
   }
 
-  public Point getOrigin()
-  {
-    return new Point(x, y);
+  public Point getOrigin() {
+    return new Point( x, y );
   }
 
-  public Point getScaledOrigin()
-  {
-    return new Point(scaled_x, scaled_y);
+  public Point getScaledOrigin() {
+    return new Point( scaled_x, scaled_y );
   }
 
-  public boolean isClipped()
-  {
-    return (flags & ETO_CLIPPED) == ETO_CLIPPED;
+  public boolean isClipped() {
+    return ( flags & ETO_CLIPPED ) == ETO_CLIPPED;
   }
 
-  public boolean isOpaque()
-  {
-    return (flags & ETO_OPAQUE) == ETO_OPAQUE;
+  public boolean isOpaque() {
+    return ( flags & ETO_OPAQUE ) == ETO_OPAQUE;
   }
 
-  public int getFlags()
-  {
+  public int getFlags() {
     return flags;
   }
 
-  public void setFlags(final int flags)
-  {
+  public void setFlags( final int flags ) {
     this.flags = flags;
   }
 
-  public void setClippingRect(final int cx, final int cy, final int cw, final int ch)
-  {
+  public void setClippingRect( final int cx, final int cy, final int cw, final int ch ) {
     this.cx = cx;
     this.cy = cy;
     this.cw = cw;
@@ -336,37 +290,31 @@ public class MfCmdExtTextOut extends MfCmd
     scaleYChanged();
   }
 
-  public Rectangle getClippingRect()
-  {
-    return new Rectangle(cx, cy, cw, ch);
+  public Rectangle getClippingRect() {
+    return new Rectangle( cx, cy, cw, ch );
   }
 
-  public Rectangle getScaledClippingRect()
-  {
-    return new Rectangle(scaled_cx, scaled_cy, scaled_cw, scaled_ch);
+  public Rectangle getScaledClippingRect() {
+    return new Rectangle( scaled_cx, scaled_cy, scaled_cw, scaled_ch );
   }
 
-  public void setText(final String text)
-  {
+  public void setText( final String text ) {
     this.text = text;
   }
 
-  public String getText()
-  {
+  public String getText() {
     return text;
   }
 
-  protected void scaleXChanged()
-  {
-    scaled_x = getScaledX(x);
-    scaled_cx = getScaledX(cx);
-    scaled_cw = getScaledX(cw);
+  protected void scaleXChanged() {
+    scaled_x = getScaledX( x );
+    scaled_cx = getScaledX( cx );
+    scaled_cw = getScaledX( cw );
   }
 
-  protected void scaleYChanged()
-  {
-    scaled_y = getScaledY(y);
-    scaled_cy = getScaledY(cy);
-    scaled_ch = getScaledY(ch);
+  protected void scaleYChanged() {
+    scaled_y = getScaledY( y );
+    scaled_cy = getScaledY( cy );
+    scaled_ch = getScaledY( ch );
   }
 }

@@ -27,17 +27,14 @@ import org.pentaho.reporting.libraries.fonts.registry.FontType;
  *
  * @author Thomas Morgner
  */
-public class AWTFontRecord implements FontRecord, FontIdentifier
-{
+public class AWTFontRecord implements FontRecord, FontIdentifier {
   private FontFamily fontFamily;
   private boolean bold;
   private boolean italics;
 
-  public AWTFontRecord(final FontFamily fontFamily,
-                       final boolean bold, final boolean italics)
-  {
-    if (fontFamily == null)
-    {
+  public AWTFontRecord( final FontFamily fontFamily,
+                        final boolean bold, final boolean italics ) {
+    if ( fontFamily == null ) {
       throw new NullPointerException();
     }
     this.fontFamily = fontFamily;
@@ -50,103 +47,85 @@ public class AWTFontRecord implements FontRecord, FontIdentifier
    *
    * @return the font family.
    */
-  public FontFamily getFamily()
-  {
+  public FontFamily getFamily() {
     return fontFamily;
   }
 
   /**
-   * Returns true, if this font corresponds to a bold version of the font. A
-   * font that does not provide a bold face must emulate the boldness using
-   * other means.
+   * Returns true, if this font corresponds to a bold version of the font. A font that does not provide a bold face must
+   * emulate the boldness using other means.
    *
    * @return true, if the font provides bold glyphs, false otherwise.
    */
-  public boolean isBold()
-  {
+  public boolean isBold() {
     return bold;
   }
 
   /**
-   * Returns true, if this font includes italic glyphs. Italics is different
-   * from oblique, as certain glyphs (most notably the lowercase 'f') will have
-   * a different appearance, making the font look more like a script font.
+   * Returns true, if this font includes italic glyphs. Italics is different from oblique, as certain glyphs (most
+   * notably the lowercase 'f') will have a different appearance, making the font look more like a script font.
    *
    * @return true, if the font is italic.
    */
-  public boolean isItalic()
-  {
+  public boolean isItalic() {
     return italics;
   }
 
   /**
-   * Returns tue, if this font's italic mode is in fact some sort of being
-   * oblique. An oblique font's glyphs are sheared, but they are not made to
-   * look more script like.
+   * Returns tue, if this font's italic mode is in fact some sort of being oblique. An oblique font's glyphs are
+   * sheared, but they are not made to look more script like.
    *
    * @return true, if the font is oblique.
    */
-  public boolean isOblique()
-  {
+  public boolean isOblique() {
     return italics;
   }
 
-  public FontIdentifier getIdentifier()
-  {
+  public FontIdentifier getIdentifier() {
     return this;
   }
 
   /**
-   * Defines, whether the font identifier represents a scalable font type. Such
-   * fonts usually create one font metric object for each physical font, and
-   * apply the font size afterwards.
+   * Defines, whether the font identifier represents a scalable font type. Such fonts usually create one font metric
+   * object for each physical font, and apply the font size afterwards.
    *
    * @return true, if the font is scalable, false otherwise
    */
-  public boolean isScalable()
-  {
+  public boolean isScalable() {
     return true;
   }
 
-  public FontType getFontType()
-  {
+  public FontType getFontType() {
     return FontType.AWT;
   }
 
-  public boolean equals(final Object o)
-  {
-    if (this == o)
-    {
+  public boolean equals( final Object o ) {
+    if ( this == o ) {
       return true;
     }
-    if (o == null || getClass() != o.getClass())
-    {
+    if ( o == null || getClass() != o.getClass() ) {
       return false;
     }
 
     final AWTFontRecord that = (AWTFontRecord) o;
 
-    if (bold != that.bold)
-    {
+    if ( bold != that.bold ) {
       return false;
     }
-    if (italics != that.italics)
-    {
+    if ( italics != that.italics ) {
       return false;
     }
-    if (!fontFamily.equals(that.fontFamily))
-    {
+    if ( !fontFamily.equals( that.fontFamily ) ) {
       return false;
     }
 
     return true;
   }
 
-  public int hashCode()
-  {
+  public int hashCode() {
     int result = fontFamily.hashCode();
-    result = 29 * result + (bold ? 1 : 0);
-    result = 29 * result + (italics ? 1 : 0);
+    result = 29 * result + ( bold ? 1 : 0 );
+    result = 29 * result + ( italics ? 1 : 0 );
     return result;
   }
 }

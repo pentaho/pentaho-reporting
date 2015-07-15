@@ -29,40 +29,34 @@ import org.pentaho.reporting.libraries.formula.util.NumberUtil;
 
 /**
  * This function returns a number down to the nearest integer.
- * 
+ *
  * @author Cedric Pronzato
  */
-public class IntFunction implements Function
-{
+public class IntFunction implements Function {
   private static final long serialVersionUID = 5835830031037500816L;
 
-  public IntFunction()
-  {
+  public IntFunction() {
   }
 
-  public String getCanonicalName()
-  {
+  public String getCanonicalName() {
     return "INT";
   }
 
-  public TypeValuePair evaluate(final FormulaContext context,
-      final ParameterCallback parameters) throws EvaluationException
-  {
-    if (parameters.getParameterCount() != 1)
-    {
-      throw EvaluationException.getInstance(LibFormulaErrorValue.ERROR_ARGUMENTS_VALUE);
+  public TypeValuePair evaluate( final FormulaContext context,
+                                 final ParameterCallback parameters ) throws EvaluationException {
+    if ( parameters.getParameterCount() != 1 ) {
+      throw EvaluationException.getInstance( LibFormulaErrorValue.ERROR_ARGUMENTS_VALUE );
     }
 
-    final Type type1 = parameters.getType(0);
-    final Object value1 = parameters.getValue(0);
-    final Number result = context.getTypeRegistry().convertToNumber(type1, value1);
-    if (result == null)
-    {
-      throw EvaluationException.getInstance(LibFormulaErrorValue.ERROR_INVALID_ARGUMENT_VALUE);
+    final Type type1 = parameters.getType( 0 );
+    final Object value1 = parameters.getValue( 0 );
+    final Number result = context.getTypeRegistry().convertToNumber( type1, value1 );
+    if ( result == null ) {
+      throw EvaluationException.getInstance( LibFormulaErrorValue.ERROR_INVALID_ARGUMENT_VALUE );
     }
 
-    final Number ret = NumberUtil.performIntRounding(NumberUtil.getAsBigDecimal(result));
-    return new TypeValuePair(NumberType.GENERIC_NUMBER, ret);
+    final Number ret = NumberUtil.performIntRounding( NumberUtil.getAsBigDecimal( result ) );
+    return new TypeValuePair( NumberType.GENERIC_NUMBER, ret );
   }
 
 }

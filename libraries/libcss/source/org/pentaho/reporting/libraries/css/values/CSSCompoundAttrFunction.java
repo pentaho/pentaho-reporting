@@ -22,108 +22,82 @@ package org.pentaho.reporting.libraries.css.values;
  *
  * @author Thomas Morgner
  */
-public class CSSCompoundAttrFunction extends CSSFunctionValue
-{
+public class CSSCompoundAttrFunction extends CSSFunctionValue {
   private String namespace;
   private String name;
   private String type;
   private String key;
 
-  public CSSCompoundAttrFunction(final String key,
-                                 final String namespace,
-                                 final String name,
-                                 final String type)
-  {
-    super("-x-pentaho-css-attr", CSSCompoundAttrFunction.produceParameters
-        (key, namespace, name, type));
+  public CSSCompoundAttrFunction( final String key,
+                                  final String namespace,
+                                  final String name,
+                                  final String type ) {
+    super( "-x-pentaho-css-attr", CSSCompoundAttrFunction.produceParameters
+      ( key, namespace, name, type ) );
     this.namespace = namespace;
     this.name = name;
     this.type = type;
     this.key = key;
   }
 
-  public CSSCompoundAttrFunction(final String key,
-                                 final String namespace,
-                                 final String name)
-  {
-    this(key, namespace, name, null);
+  public CSSCompoundAttrFunction( final String key,
+                                  final String namespace,
+                                  final String name ) {
+    this( key, namespace, name, null );
   }
 
-  private static CSSValue[] produceParameters(final String key,
-                                              final String namespace,
-                                              final String name,
-                                              final String type)
-  {
-    if (key == null)
-    {
+  private static CSSValue[] produceParameters( final String key,
+                                               final String namespace,
+                                               final String name,
+                                               final String type ) {
+    if ( key == null ) {
       throw new NullPointerException();
     }
-    if (name == null)
-    {
+    if ( name == null ) {
       throw new NullPointerException();
     }
     CSSConstant nameConst;
-    if (namespace == null)
-    {
-      nameConst = new CSSConstant("");
+    if ( namespace == null ) {
+      nameConst = new CSSConstant( "" );
+    } else {
+      nameConst = new CSSConstant( namespace );
     }
-    else
-    {
-      nameConst = new CSSConstant(namespace);
-    }
-    if (type == null)
-    {
-      return new CSSValue[]{new CSSRawValue(key), nameConst,
-          new CSSConstant(name)};
-    }
-    else
-    {
-      return new CSSValue[]{new CSSRawValue(key), nameConst,
-          new CSSConstant(name), new CSSConstant(type)};
+    if ( type == null ) {
+      return new CSSValue[] { new CSSRawValue( key ), nameConst,
+        new CSSConstant( name ) };
+    } else {
+      return new CSSValue[] { new CSSRawValue( key ), nameConst,
+        new CSSConstant( name ), new CSSConstant( type ) };
     }
   }
 
-  public String getName()
-  {
+  public String getName() {
     return name;
   }
-  
-  public String getValueType()
-  {
+
+  public String getValueType() {
     return type;
   }
 
-  public String getNamespace()
-  {
+  public String getNamespace() {
     return namespace;
   }
 
-  public String getKey()
-  {
+  public String getKey() {
     return key;
   }
 
-  public String getCSSText()
-  {
-    if (type != null)
-    {
-      if (namespace == null)
-      {
+  public String getCSSText() {
+    if ( type != null ) {
+      if ( namespace == null ) {
         return "-x-pentaho-css-attr(|" + name + ", " + type + ')';
-      }
-      else
-      {
+      } else {
         return "-x-pentaho-css-attr(" + namespace + '|' + name + ", " + type + ')';
       }
-    }
-    else
-    {
-      if (namespace == null)
-      {
+    } else {
+      if ( namespace == null ) {
         return "attr(|" + name + ')';
-      }
-      else
-      {
+      } else {
         return "attr(" + namespace + '|' + name + ')';
       }
     }

@@ -17,16 +17,15 @@
 
 package org.pentaho.reporting.libraries.css.selectors;
 
-import java.io.Serializable;
-
 import org.w3c.css.sac.Selector;
+
+import java.io.Serializable;
 
 /**
  * Creation-Date: 05.12.2005, 19:50:03
  *
  * @author Thomas Morgner
  */
-public interface CSSSelector extends Selector, Serializable
-{
+public interface CSSSelector extends Selector, Serializable {
   public SelectorWeight getWeight();
 }

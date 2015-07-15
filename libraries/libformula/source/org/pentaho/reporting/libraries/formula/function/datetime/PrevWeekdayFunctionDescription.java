@@ -28,50 +28,41 @@ import org.pentaho.reporting.libraries.formula.typing.coretypes.NumberType;
  *
  * @author Gunter Rombauts
  */
-public class PrevWeekdayFunctionDescription extends AbstractFunctionDescription
-{
+public class PrevWeekdayFunctionDescription extends AbstractFunctionDescription {
   private static final long serialVersionUID = 767559573702445275L;
 
-  public PrevWeekdayFunctionDescription()
-  {
-    super("PREVWEEKDAY", "org.pentaho.reporting.libraries.formula.function.datetime.PrevWeekday-Function");
+  public PrevWeekdayFunctionDescription() {
+    super( "PREVWEEKDAY", "org.pentaho.reporting.libraries.formula.function.datetime.PrevWeekday-Function" );
   }
 
-  public Type getValueType()
-  {
+  public Type getValueType() {
     return DateTimeType.DATE_TYPE;
   }
 
 
-  public boolean isVolatile()
-  {
+  public boolean isVolatile() {
     return true;
   }
 
-  public int getParameterCount()
-  {
+  public int getParameterCount() {
     return 1;
   }
 
-  public Type getParameterType(final int position)
-  {
-	    return NumberType.GENERIC_NUMBER;
+  public Type getParameterType( final int position ) {
+    return NumberType.GENERIC_NUMBER;
   }
 
   /**
-   * Defines, whether the parameter at the given position is mandatory. A
-   * mandatory parameter must be filled in, while optional parameters need not
-   * to be filled in.
+   * Defines, whether the parameter at the given position is mandatory. A mandatory parameter must be filled in, while
+   * optional parameters need not to be filled in.
    *
    * @return
    */
-  public boolean isParameterMandatory(final int position)
-  {
+  public boolean isParameterMandatory( final int position ) {
     return true;
   }
 
-  public FunctionCategory getCategory()
-  {
+  public FunctionCategory getCategory() {
     return DateTimeFunctionCategory.CATEGORY;
   }
 }

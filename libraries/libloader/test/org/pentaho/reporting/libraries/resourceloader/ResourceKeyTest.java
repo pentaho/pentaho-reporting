@@ -17,99 +17,91 @@
 
 package org.pentaho.reporting.libraries.resourceloader;
 
-import java.net.URL;
-import java.io.File;
-import java.io.IOException;
-
 import junit.framework.TestCase;
 
-public class ResourceKeyTest extends TestCase
-{
-  public ResourceKeyTest()
-  {
+import java.io.File;
+import java.io.IOException;
+import java.net.URL;
+
+public class ResourceKeyTest extends TestCase {
+  public ResourceKeyTest() {
   }
 
-  public ResourceKeyTest(final String string)
-  {
-    super(string);
+  public ResourceKeyTest( final String string ) {
+    super( string );
   }
 
 
   protected void setUp()
-      throws Exception
-  {
+    throws Exception {
     LibLoaderBoot.getInstance().start();
   }
 
-  public void testResourceKeyCreation ()
-      throws ResourceKeyCreationException
-  {
+  public void testResourceKeyCreation()
+    throws ResourceKeyCreationException {
     final ResourceManager manager = new ResourceManager();
     manager.registerDefaults();
 
     final ResourceKey key = manager.createKey
-        ("res://org/pentaho/reporting/libraries/resourceloader/test1.properties");
-    assertNotNull(key);
-    final ResourceKey key1 = manager.deriveKey(key, "test2.properties");
-    assertNotNull(key1);
+      ( "res://org/pentaho/reporting/libraries/resourceloader/test1.properties" );
+    assertNotNull( key );
+    final ResourceKey key1 = manager.deriveKey( key, "test2.properties" );
+    assertNotNull( key1 );
   }
 
-  public void testURLKeyCreation ()
-      throws ResourceKeyCreationException
-  {
+  public void testURLKeyCreation()
+    throws ResourceKeyCreationException {
     final ResourceManager manager = new ResourceManager();
     manager.registerDefaults();
 
     final URL url = ResourceKeyTest.class.getResource
-        ("/org/pentaho/reporting/libraries/resourceloader/test1.properties");
-    assertNotNull(url);
-    final ResourceKey key = manager.createKey(url);
-    assertNotNull(key);
-    final ResourceKey key1 = manager.deriveKey(key, "test2.properties");
-    assertNotNull(key1);
+      ( "/org/pentaho/reporting/libraries/resourceloader/test1.properties" );
+    assertNotNull( url );
+    final ResourceKey key = manager.createKey( url );
+    assertNotNull( key );
+    final ResourceKey key1 = manager.deriveKey( key, "test2.properties" );
+    assertNotNull( key1 );
   }
 
-  public void testFileKeyCreation ()
-      throws ResourceKeyCreationException, IOException
-  {
+  public void testFileKeyCreation()
+    throws ResourceKeyCreationException, IOException {
     final ResourceManager manager = new ResourceManager();
     manager.registerDefaults();
 
-    final File f1 = File.createTempFile("junit-test", ".tmp");
+    final File f1 = File.createTempFile( "junit-test", ".tmp" );
     f1.deleteOnExit();
-    final File f2 = File.createTempFile("junit-test", ".tmp");
+    final File f2 = File.createTempFile( "junit-test", ".tmp" );
     f2.deleteOnExit();
 
-    assertNotNull(f1);
-    final ResourceKey key = manager.createKey(f1);
-    assertNotNull(key);
-    final ResourceKey key1 = manager.deriveKey(key, f2.getName());
-    assertNotNull(key1);
+    assertNotNull( f1 );
+    final ResourceKey key = manager.createKey( f1 );
+    assertNotNull( key );
+    final ResourceKey key1 = manager.deriveKey( key, f2.getName() );
+    assertNotNull( key1 );
   }
 
-  public void testMixedKeyDerivation ()
-      throws ResourceKeyCreationException, IOException
-  {
-    final File f1 = File.createTempFile("junit-test", ".tmp");
+  public void testMixedKeyDerivation()
+    throws ResourceKeyCreationException, IOException {
+    final File f1 = File.createTempFile( "junit-test", ".tmp" );
     f1.deleteOnExit();
-    assertNotNull(f1);
+    assertNotNull( f1 );
 
     final URL url = ResourceKeyTest.class.getResource
-        ("/org/pentaho/reporting/libraries/resourceloader/test1.properties");
-    assertNotNull(url);
+      ( "/org/pentaho/reporting/libraries/resourceloader/test1.properties" );
+    assertNotNull( url );
 
     final ResourceManager manager = new ResourceManager();
     manager.registerDefaults();
-    final ResourceKey key = manager.createKey(f1);
-    assertNotNull(key);
+    final ResourceKey key = manager.createKey( f1 );
+    assertNotNull( key );
 
-    final ResourceKey key2 = manager.deriveKey(key, url.toString());
-    assertNotNull(key2);
+    final ResourceKey key2 = manager.deriveKey( key, url.toString() );
+    assertNotNull( key2 );
 
-    final ResourceKey key3 = manager.createKey(url);
-    assertNotNull(key3);
+    final ResourceKey key3 = manager.createKey( url );
+    assertNotNull( key3 );
 
-    final ResourceKey key4 = manager.deriveKey(key3, f1.getAbsolutePath());
-    assertNotNull(key4);
+    final ResourceKey key4 = manager.deriveKey( key3, f1.getAbsolutePath() );
+    assertNotNull( key4 );
   }
 }

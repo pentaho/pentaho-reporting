@@ -24,13 +24,11 @@ import org.pentaho.reporting.libraries.css.values.CSSConstant;
  *
  * @author Thomas Morgner
  */
-public class Overflow
-{
-  public static final CSSConstant VISIBLE = new CSSConstant("visible");
-  public static final CSSConstant HIDDEN = new CSSConstant("hidden");
-  public static final CSSConstant SCROLL = new CSSConstant("scroll");
+public class Overflow {
+  public static final CSSConstant VISIBLE = new CSSConstant( "visible" );
+  public static final CSSConstant HIDDEN = new CSSConstant( "hidden" );
+  public static final CSSConstant SCROLL = new CSSConstant( "scroll" );
 
-  private Overflow()
-  {
+  private Overflow() {
   }
 }

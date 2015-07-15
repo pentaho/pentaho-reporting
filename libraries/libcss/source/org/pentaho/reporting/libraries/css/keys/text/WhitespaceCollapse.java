@@ -24,18 +24,16 @@ import org.pentaho.reporting.libraries.css.values.CSSConstant;
  *
  * @author Thomas Morgner
  */
-public class WhitespaceCollapse
-{
+public class WhitespaceCollapse {
   public static final CSSConstant PRESERVE = new CSSConstant(
-      "preserve");
+    "preserve" );
   public static final CSSConstant COLLAPSE = new CSSConstant(
-      "collapse");
+    "collapse" );
   public static final CSSConstant PRESERVE_BREAKS = new CSSConstant(
-      "preserve-breaks");
+    "preserve-breaks" );
   public static final CSSConstant DISCARD = new CSSConstant(
-      "discard");
+    "discard" );
 
-  private WhitespaceCollapse()
-  {
+  private WhitespaceCollapse() {
   }
 }

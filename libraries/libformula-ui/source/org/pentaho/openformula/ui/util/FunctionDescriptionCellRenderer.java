@@ -17,36 +17,29 @@
 
 package org.pentaho.openformula.ui.util;
 
-import java.awt.Component;
-import java.util.Locale;
-import javax.swing.DefaultListCellRenderer;
-import javax.swing.JList;
-
 import org.pentaho.reporting.libraries.formula.function.FunctionDescription;
 
-public class FunctionDescriptionCellRenderer extends DefaultListCellRenderer
-{
-  public FunctionDescriptionCellRenderer()
-  {
+import javax.swing.*;
+import java.awt.*;
+import java.util.Locale;
+
+public class FunctionDescriptionCellRenderer extends DefaultListCellRenderer {
+  public FunctionDescriptionCellRenderer() {
   }
 
-  public Component getListCellRendererComponent(final JList list,
-                                                final Object value,
-                                                final int index,
-                                                final boolean isSelected,
-                                                final boolean cellHasFocus)
-  {
-    super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
-    if (value instanceof FunctionDescription)
-    {
+  public Component getListCellRendererComponent( final JList list,
+                                                 final Object value,
+                                                 final int index,
+                                                 final boolean isSelected,
+                                                 final boolean cellHasFocus ) {
+    super.getListCellRendererComponent( list, value, index, isSelected, cellHasFocus );
+    if ( value instanceof FunctionDescription ) {
       final FunctionDescription cat = (FunctionDescription) value;
-      setText(cat.getDisplayName(Locale.getDefault()));
-      setToolTipText(cat.getDescription(Locale.getDefault()));
-    }
-    else
-    {
-      setText(" "); // NON-NLS
-      setToolTipText(null);
+      setText( cat.getDisplayName( Locale.getDefault() ) );
+      setToolTipText( cat.getDescription( Locale.getDefault() ) );
+    } else {
+      setText( " " ); // NON-NLS
+      setToolTipText( null );
     }
     return this;
   }

@@ -28,44 +28,36 @@ import org.pentaho.reporting.libraries.formula.typing.coretypes.NumberType;
  *
  * @author Thomas Morgner
  */
-public class DateFunctionDescription extends AbstractFunctionDescription
-{
+public class DateFunctionDescription extends AbstractFunctionDescription {
   private static final long serialVersionUID = -7355472670804158123L;
 
-  public DateFunctionDescription()
-  {
-    super("DATE", "org.pentaho.reporting.libraries.formula.function.datetime.Date-Function");
+  public DateFunctionDescription() {
+    super( "DATE", "org.pentaho.reporting.libraries.formula.function.datetime.Date-Function" );
   }
 
-  public Type getValueType()
-  {
+  public Type getValueType() {
     return DateTimeType.DATE_TYPE;
   }
 
-  public int getParameterCount()
-  {
+  public int getParameterCount() {
     return 3;
   }
 
-  public Type getParameterType(final int position)
-  {
+  public Type getParameterType( final int position ) {
     return NumberType.GENERIC_NUMBER;
   }
 
   /**
-   * Defines, whether the parameter at the given position is mandatory. A
-   * mandatory parameter must be filled in, while optional parameters need not
-   * to be filled in.
+   * Defines, whether the parameter at the given position is mandatory. A mandatory parameter must be filled in, while
+   * optional parameters need not to be filled in.
    *
    * @return true, as all parameters are mandatory.
    */
-  public boolean isParameterMandatory(final int position)
-  {
+  public boolean isParameterMandatory( final int position ) {
     return true;
   }
 
-  public FunctionCategory getCategory()
-  {
+  public FunctionCategory getCategory() {
     return DateTimeFunctionCategory.CATEGORY;
   }
 }

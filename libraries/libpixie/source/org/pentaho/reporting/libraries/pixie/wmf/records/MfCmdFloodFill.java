@@ -17,20 +17,18 @@
 
 package org.pentaho.reporting.libraries.pixie.wmf.records;
 
-import java.awt.Color;
-import java.awt.Point;
-
 import org.pentaho.reporting.libraries.pixie.wmf.GDIColor;
 import org.pentaho.reporting.libraries.pixie.wmf.MfRecord;
 import org.pentaho.reporting.libraries.pixie.wmf.MfType;
 import org.pentaho.reporting.libraries.pixie.wmf.WmfFile;
 
+import java.awt.*;
+
 /**
- * The FloodFill function fills an area of the display surface with the current brush. The
- * area is assumed to be bounded as specified by the crFill parameter.
+ * The FloodFill function fills an area of the display surface with the current brush. The area is assumed to be bounded
+ * as specified by the crFill parameter.
  */
-public class MfCmdFloodFill extends MfCmd
-{
+public class MfCmdFloodFill extends MfCmd {
   private static final int RECORD_SIZE = 4;
   private static final int POS_COLOR = 0;
   private static final int POS_Y = 2;
@@ -42,8 +40,7 @@ public class MfCmdFloodFill extends MfCmd
   private int scaled_y;
   private Color color;
 
-  public MfCmdFloodFill()
-  {
+  public MfCmdFloodFill() {
   }
 
   /**
@@ -51,8 +48,7 @@ public class MfCmdFloodFill extends MfCmd
    *
    * @param file the meta file.
    */
-  public void replay(final WmfFile file)
-  {
+  public void replay( final WmfFile file ) {
     // there is no way of implementing a flood fill operation for Graphics2D.
   }
 
@@ -61,28 +57,24 @@ public class MfCmdFloodFill extends MfCmd
    *
    * @return a new instance of the command.
    */
-  public MfCmd getInstance()
-  {
+  public MfCmd getInstance() {
     return new MfCmdFloodFill();
   }
 
   /**
-   * Reads the command data from the given record and adjusts the internal parameters
-   * according to the data parsed.
+   * Reads the command data from the given record and adjusts the internal parameters according to the data parsed.
    * <p/>
-   * After the raw record was read from the datasource, the record is parsed by the
-   * concrete implementation.
+   * After the raw record was read from the datasource, the record is parsed by the concrete implementation.
    *
    * @param record the raw data that makes up the record.
    */
-  public void setRecord(final MfRecord record)
-  {
-    final int c = record.getLongParam(POS_COLOR);
-    final Color color = new GDIColor(c);
-    final int y = record.getParam(POS_Y);
-    final int x = record.getParam(POS_X);
-    setTarget(x, y);
-    setColor(color);
+  public void setRecord( final MfRecord record ) {
+    final int c = record.getLongParam( POS_COLOR );
+    final Color color = new GDIColor( c );
+    final int y = record.getParam( POS_Y );
+    final int x = record.getParam( POS_X );
+    setTarget( x, y );
+    setColor( color );
   }
 
   /**
@@ -90,85 +82,74 @@ public class MfCmdFloodFill extends MfCmd
    *
    * @return the created record.
    */
-  public MfRecord getRecord()
-  {
-    final MfRecord record = new MfRecord(RECORD_SIZE);
-    record.setLongParam(POS_COLOR, GDIColor.translateColor(getColor()));
+  public MfRecord getRecord() {
+    final MfRecord record = new MfRecord( RECORD_SIZE );
+    record.setLongParam( POS_COLOR, GDIColor.translateColor( getColor() ) );
     final Point target = getTarget();
-    record.setParam(POS_Y, (int) target.getY());
-    record.setParam(POS_X, (int) target.getX());
+    record.setParam( POS_Y, (int) target.getY() );
+    record.setParam( POS_X, (int) target.getX() );
     return record;
   }
 
-  public String toString()
-  {
+  public String toString() {
     final StringBuffer b = new StringBuffer();
-    b.append("[FLOOD_FILL] color=");
-    b.append(getColor());
-    b.append(" target=");
-    b.append(getTarget());
+    b.append( "[FLOOD_FILL] color=" );
+    b.append( getColor() );
+    b.append( " target=" );
+    b.append( getTarget() );
     return b.toString();
   }
 
-  public Point getTarget()
-  {
-    return new Point(x, y);
+  public Point getTarget() {
+    return new Point( x, y );
   }
 
-  public Point getScaledTarget()
-  {
-    return new Point(scaled_x, scaled_y);
+  public Point getScaledTarget() {
+    return new Point( scaled_x, scaled_y );
   }
 
-  public void setTarget(final Point point)
-  {
-    setTarget(point.x, point.y);
+  public void setTarget( final Point point ) {
+    setTarget( point.x, point.y );
   }
 
-  public void setTarget(final int x, final int y)
-  {
+  public void setTarget( final int x, final int y ) {
     this.x = x;
     this.y = y;
     scaleXChanged();
     scaleYChanged();
   }
 
-  public void setColor(final Color c)
-  {
+  public void setColor( final Color c ) {
     this.color = c;
   }
 
-  public Color getColor()
-  {
+  public Color getColor() {
     return color;
   }
 
   /**
-   * Reads the function identifier. Every record type is identified by a function number
-   * corresponding to one of the Windows GDI functions used.
+   * Reads the function identifier. Every record type is identified by a function number corresponding to one of the
+   * Windows GDI functions used.
    *
    * @return the function identifier.
    */
-  public int getFunction()
-  {
+  public int getFunction() {
     return MfType.FLOOD_FILL;
   }
 
   /**
-   * A callback function to inform the object, that the x scale has changed and the
-   * internal coordinate values have to be adjusted.
+   * A callback function to inform the object, that the x scale has changed and the internal coordinate values have to
+   * be adjusted.
    */
-  protected void scaleXChanged()
-  {
-    scaled_x = getScaledX(x);
+  protected void scaleXChanged() {
+    scaled_x = getScaledX( x );
   }
 
   /**
-   * A callback function to inform the object, that the y scale has changed and the
-   * internal coordinate values have to be adjusted.
+   * A callback function to inform the object, that the y scale has changed and the internal coordinate values have to
+   * be adjusted.
    */
-  protected void scaleYChanged()
-  {
-    scaled_y = getScaledY(y);
+  protected void scaleYChanged() {
+    scaled_y = getScaledY( y );
   }
 }

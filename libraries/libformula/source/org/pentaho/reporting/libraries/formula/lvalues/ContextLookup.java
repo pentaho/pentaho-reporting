@@ -17,11 +17,11 @@
 
 package org.pentaho.reporting.libraries.formula.lvalues;
 
+import org.pentaho.reporting.libraries.formula.EvaluationException;
+import org.pentaho.reporting.libraries.formula.FormulaContext;
 import org.pentaho.reporting.libraries.formula.LibFormulaErrorValue;
 import org.pentaho.reporting.libraries.formula.typing.Type;
 import org.pentaho.reporting.libraries.formula.typing.coretypes.ErrorType;
-import org.pentaho.reporting.libraries.formula.FormulaContext;
-import org.pentaho.reporting.libraries.formula.EvaluationException;
 import org.pentaho.reporting.libraries.formula.util.FormulaUtil;
 
 /**
@@ -29,65 +29,53 @@ import org.pentaho.reporting.libraries.formula.util.FormulaUtil;
  *
  * @author Thomas Morgner
  */
-public class ContextLookup extends AbstractLValue
-{
+public class ContextLookup extends AbstractLValue {
   private String name;
   private static final long serialVersionUID = 2882834743999159722L;
 
-  public ContextLookup(final String name)
-  {
-    this(name, null);
+  public ContextLookup( final String name ) {
+    this( name, null );
   }
-  public ContextLookup(final String name, final ParsePosition parsePosition)
-  {
+
+  public ContextLookup( final String name, final ParsePosition parsePosition ) {
     this.name = name;
-    setParsePosition(parsePosition);
+    setParsePosition( parsePosition );
   }
 
-  public TypeValuePair evaluate() throws EvaluationException
-  {
+  public TypeValuePair evaluate() throws EvaluationException {
     final FormulaContext context = getContext();
-    final Type type = context.resolveReferenceType(name);
-    final Object value = context.resolveReference(name);
-    if (value == null)
-    {
-      throw EvaluationException.getInstance(LibFormulaErrorValue.ERROR_NA_VALUE);
+    final Type type = context.resolveReferenceType( name );
+    final Object value = context.resolveReference( name );
+    if ( value == null ) {
+      throw EvaluationException.getInstance( LibFormulaErrorValue.ERROR_NA_VALUE );
     }
-    return new TypeValuePair(type, value);
+    return new TypeValuePair( type, value );
   }
 
-  public Type getValueType()
-  {
-    try
-    {
+  public Type getValueType() {
+    try {
       final FormulaContext context = getContext();
-      return context.resolveReferenceType(name);
-    }
-    catch (final EvaluationException evalex)
-    {
+      return context.resolveReferenceType( name );
+    } catch ( final EvaluationException evalex ) {
       // exception ignored.
       return ErrorType.TYPE;
     }
   }
 
-  public String toString()
-  {
-    return FormulaUtil.quoteReference(name);
+  public String toString() {
+    return FormulaUtil.quoteReference( name );
   }
 
   /**
-   * Checks whether the LValue is constant. Constant lvalues always return the
-   * same value.
+   * Checks whether the LValue is constant. Constant lvalues always return the same value.
    *
    * @return
    */
-  public boolean isConstant()
-  {
+  public boolean isConstant() {
     return false;
   }
 
-  public String getName()
-  {
+  public String getName() {
     return name;
   }
 }

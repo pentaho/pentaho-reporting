@@ -27,50 +27,41 @@ import org.pentaho.reporting.libraries.formula.typing.coretypes.DateTimeType;
  *
  * @author Thomas Morgner
  */
-public class NowFunctionDescription extends AbstractFunctionDescription
-{
+public class NowFunctionDescription extends AbstractFunctionDescription {
   private static final long serialVersionUID = -4785660363309520356L;
 
-  public NowFunctionDescription()
-  {
-    super("NOW", "org.pentaho.reporting.libraries.formula.function.datetime.Now-Function");
+  public NowFunctionDescription() {
+    super( "NOW", "org.pentaho.reporting.libraries.formula.function.datetime.Now-Function" );
   }
 
-  public Type getValueType()
-  {
+  public Type getValueType() {
     return DateTimeType.DATETIME_TYPE;
   }
 
 
-  public boolean isVolatile()
-  {
+  public boolean isVolatile() {
     return true;
   }
 
-  public int getParameterCount()
-  {
+  public int getParameterCount() {
     return 0;
   }
 
-  public Type getParameterType(final int position)
-  {
+  public Type getParameterType( final int position ) {
     return null;
   }
 
   /**
-   * Defines, whether the parameter at the given position is mandatory. A
-   * mandatory parameter must be filled in, while optional parameters need not
-   * to be filled in.
+   * Defines, whether the parameter at the given position is mandatory. A mandatory parameter must be filled in, while
+   * optional parameters need not to be filled in.
    *
    * @return
    */
-  public boolean isParameterMandatory(final int position)
-  {
+  public boolean isParameterMandatory( final int position ) {
     return true;
   }
 
-  public FunctionCategory getCategory()
-  {
+  public FunctionCategory getCategory() {
     return DateTimeFunctionCategory.CATEGORY;
   }
 }

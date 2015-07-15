@@ -19,33 +19,27 @@ package org.pentaho.reporting.libraries.designtime.swing.table;
 
 import java.io.Serializable;
 
-public class GroupingHeader implements Serializable
-{
+public class GroupingHeader implements Serializable {
   private String headerText;
   private boolean collapsed;
 
-  public GroupingHeader(final String headerText)
-  {
+  public GroupingHeader( final String headerText ) {
     this.headerText = headerText;
   }
 
-  public String getHeaderText()
-  {
+  public String getHeaderText() {
     return headerText;
   }
 
-  public String toString()
-  {
+  public String toString() {
     return headerText;
   }
 
-  public boolean isCollapsed()
-  {
+  public boolean isCollapsed() {
     return collapsed;
   }
 
-  public void setCollapsed(final boolean collapsed)
-  {
+  public void setCollapsed( final boolean collapsed ) {
     this.collapsed = collapsed;
   }
 }

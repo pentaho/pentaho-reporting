@@ -17,6 +17,11 @@
 
 package org.pentaho.reporting.libraries.xmlns.writer;
 
+import org.pentaho.reporting.libraries.base.util.FastStack;
+import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
+import org.pentaho.reporting.libraries.base.util.StringUtils;
+import org.pentaho.reporting.libraries.xmlns.common.AttributeList;
+
 import java.io.IOException;
 import java.io.Writer;
 import java.nio.charset.Charset;
@@ -24,24 +29,16 @@ import java.nio.charset.CharsetEncoder;
 import java.util.HashMap;
 import java.util.Properties;
 
-import org.pentaho.reporting.libraries.base.util.FastStack;
-import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
-import org.pentaho.reporting.libraries.base.util.StringUtils;
-import org.pentaho.reporting.libraries.xmlns.common.AttributeList;
-
 /**
  * A support class for writing XML files.
  *
  * @author Thomas Morgner
  */
-public class XmlWriterSupport
-{
+public class XmlWriterSupport {
   /**
-   * An internal state-management class containing the state for nested
-   * tags.
+   * An internal state-management class containing the state for nested tags.
    */
-  private static class ElementLevel
-  {
+  private static class ElementLevel {
     private String namespace;
     private String prefix;
     private String tagName;
@@ -55,17 +52,14 @@ public class XmlWriterSupport
      * @param tagName    the tagname (never null).
      * @param namespaces the collection of all currently known namespaces (never null).
      */
-    protected ElementLevel(final String namespace,
-                           final String prefix,
-                           final String tagName,
-                           final DeclaredNamespaces namespaces)
-    {
-      if (tagName == null)
-      {
+    protected ElementLevel( final String namespace,
+                            final String prefix,
+                            final String tagName,
+                            final DeclaredNamespaces namespaces ) {
+      if ( tagName == null ) {
         throw new NullPointerException();
       }
-      if (namespaces == null)
-      {
+      if ( namespaces == null ) {
         throw new NullPointerException();
       }
       this.prefix = prefix;
@@ -80,15 +74,12 @@ public class XmlWriterSupport
      * @param tagName    the xml-tagname.
      * @param namespaces the currently known namespaces.
      */
-    protected ElementLevel(final String tagName,
-                           final DeclaredNamespaces namespaces)
-    {
-      if (tagName == null)
-      {
+    protected ElementLevel( final String tagName,
+                            final DeclaredNamespaces namespaces ) {
+      if ( tagName == null ) {
         throw new NullPointerException();
       }
-      if (namespaces == null)
-      {
+      if ( namespaces == null ) {
         throw new NullPointerException();
       }
       this.namespaces = namespaces;
@@ -100,8 +91,7 @@ public class XmlWriterSupport
      *
      * @return the namespace prefix.
      */
-    public String getPrefix()
-    {
+    public String getPrefix() {
       return prefix;
     }
 
@@ -110,8 +100,7 @@ public class XmlWriterSupport
      *
      * @return the namespace uri.
      */
-    public String getNamespace()
-    {
+    public String getNamespace() {
       return namespace;
     }
 
@@ -120,8 +109,7 @@ public class XmlWriterSupport
      *
      * @return the tagname.
      */
-    public String getTagName()
-    {
+    public String getTagName() {
       return tagName;
     }
 
@@ -130,8 +118,7 @@ public class XmlWriterSupport
      *
      * @return the namespaces.
      */
-    public DeclaredNamespaces getNamespaces()
-    {
+    public DeclaredNamespaces getNamespaces() {
       return namespaces;
     }
   }
@@ -195,9 +182,8 @@ public class XmlWriterSupport
    * Default Constructor. The created XMLWriterSupport will not have no safe tags and starts with an indention level of
    * 0.
    */
-  public XmlWriterSupport()
-  {
-    this(new DefaultTagDescription(), "  ");
+  public XmlWriterSupport() {
+    this( new DefaultTagDescription(), "  " );
   }
 
 
@@ -207,10 +193,9 @@ public class XmlWriterSupport
    * @param safeTags     the tags that are safe for line breaks.
    * @param indentString the indent string.
    */
-  public XmlWriterSupport(final TagDescription safeTags,
-                          final String indentString)
-  {
-    this(safeTags, indentString, StringUtils.getLineSeparator());
+  public XmlWriterSupport( final TagDescription safeTags,
+                           final String indentString ) {
+    this( safeTags, indentString, StringUtils.getLineSeparator() );
   }
 
   /**
@@ -220,24 +205,20 @@ public class XmlWriterSupport
    * @param indentString  the indent string.
    * @param lineseparator the lineseparator that should be used for writing XML files.
    */
-  public XmlWriterSupport(final TagDescription safeTags,
-                          final String indentString,
-                          final String lineseparator)
-  {
-    if (indentString == null)
-    {
-      throw new NullPointerException("IndentString must not be null");
+  public XmlWriterSupport( final TagDescription safeTags,
+                           final String indentString,
+                           final String lineseparator ) {
+    if ( indentString == null ) {
+      throw new NullPointerException( "IndentString must not be null" );
     }
-    if (safeTags == null)
-    {
-      throw new NullPointerException("SafeTags must not be null");
+    if ( safeTags == null ) {
+      throw new NullPointerException( "SafeTags must not be null" );
     }
-    if (lineseparator == null)
-    {
-      throw new NullPointerException("LineSeparator must not be null");
+    if ( lineseparator == null ) {
+      throw new NullPointerException( "LineSeparator must not be null" );
     }
 
-    this.normalizeBuffer = new StringBuffer(128);
+    this.normalizeBuffer = new StringBuffer( 128 );
     this.safeTags = safeTags;
     this.openTags = new FastStack();
     this.indentString = indentString;
@@ -245,82 +226,69 @@ public class XmlWriterSupport
     this.writeFinalLinebreak = true;
     this.lineSeparator = lineseparator;
 
-    addImpliedNamespace("http://www.w3.org/XML/1998/namespace", "xml");
+    addImpliedNamespace( "http://www.w3.org/XML/1998/namespace", "xml" );
   }
 
 
   /**
-   * Checks, whether the HTML compatibility mode is enabled. In HTML compatibility
-   * mode, closed empty tags will have a space between the tagname and the
-   * close-indicator.
+   * Checks, whether the HTML compatibility mode is enabled. In HTML compatibility mode, closed empty tags will have a
+   * space between the tagname and the close-indicator.
    *
    * @return true, if the HTML compatiblity mode is enabled, false otherwise.
    */
-  public boolean isHtmlCompatiblityMode()
-  {
+  public boolean isHtmlCompatiblityMode() {
     return htmlCompatiblityMode;
   }
 
   /**
-   * Enables or disables the HTML Compatibility mode. In HTML compatibility
-   * mode, closed empty tags will have a space between the tagname and the
-   * close-indicator.
+   * Enables or disables the HTML Compatibility mode. In HTML compatibility mode, closed empty tags will have a space
+   * between the tagname and the close-indicator.
    *
    * @param htmlCompatiblityMode true, if the HTML compatiblity mode is enabled, false otherwise.
    */
-  public void setHtmlCompatiblityMode(final boolean htmlCompatiblityMode)
-  {
+  public void setHtmlCompatiblityMode( final boolean htmlCompatiblityMode ) {
     this.htmlCompatiblityMode = htmlCompatiblityMode;
   }
 
   /**
-   * Checks, whether the XML writer should always add a namespace prefix to
-   * the attributes. The XML specification leaves it up to the application on
-   * how to handle unqualified attributes. If this mode is enabled, all
-   * attributes will always be fully qualified - which removed the ambugity
-   * but may not be compatible with simple, non namespace aware parsers.
+   * Checks, whether the XML writer should always add a namespace prefix to the attributes. The XML specification leaves
+   * it up to the application on how to handle unqualified attributes. If this mode is enabled, all attributes will
+   * always be fully qualified - which removed the ambugity but may not be compatible with simple, non namespace aware
+   * parsers.
    *
    * @return true, if all attributes should be qualified, false otherwise.
    */
-  public boolean isAlwaysAddNamespace()
-  {
+  public boolean isAlwaysAddNamespace() {
     return alwaysAddNamespace;
   }
 
   /**
-   * Defines, whether the XML writer should always add a namespace prefix to
-   * the attributes. The XML specification leaves it up to the application on
-   * how to handle unqualified attributes. If this mode is enabled, all
-   * attributes will always be fully qualified - which removed the ambuigity
-   * but may not be compatible with simple, non namespace aware parsers.
+   * Defines, whether the XML writer should always add a namespace prefix to the attributes. The XML specification
+   * leaves it up to the application on how to handle unqualified attributes. If this mode is enabled, all attributes
+   * will always be fully qualified - which removed the ambuigity but may not be compatible with simple, non namespace
+   * aware parsers.
    *
-   * @param alwaysAddNamespace set to true, if all attributes should be qualified,
-   * false otherwise.
+   * @param alwaysAddNamespace set to true, if all attributes should be qualified, false otherwise.
    */
-  public void setAlwaysAddNamespace(final boolean alwaysAddNamespace)
-  {
+  public void setAlwaysAddNamespace( final boolean alwaysAddNamespace ) {
     this.alwaysAddNamespace = alwaysAddNamespace;
   }
 
   /**
-   * Returns the indent level that should be added to the automaticly
-   * computed indentation.
+   * Returns the indent level that should be added to the automaticly computed indentation.
    *
    * @return the indent level.
    */
-  public int getAdditionalIndent()
-  {
+  public int getAdditionalIndent() {
     return additionalIndent;
   }
 
   /**
-   * Defines the indent level that should be added to the automaticly
-   * computed indentation.
+   * Defines the indent level that should be added to the automaticly computed indentation.
    *
    * @param additionalIndent the indent level.
    */
-  public void setAdditionalIndent(final int additionalIndent)
-  {
+  public void setAdditionalIndent( final int additionalIndent ) {
     this.additionalIndent = additionalIndent;
   }
 
@@ -329,45 +297,38 @@ public class XmlWriterSupport
    *
    * @return the line separator.
    */
-  public String getLineSeparator()
-  {
+  public String getLineSeparator() {
     return lineSeparator;
   }
 
 
   /**
-   * Writes the XML declaration that usually appears at the top of every XML
-   * file.
+   * Writes the XML declaration that usually appears at the top of every XML file.
    *
-   * @param encoding the encoding that should be declared (this has to match the
-   *                 encoding of the writer, or funny things may happen when
-   *                 parsing the xml file later).
-   * @throws java.io.IOException if there is a problem writing to the character
-   *                             stream.
+   * @param encoding the encoding that should be declared (this has to match the encoding of the writer, or funny things
+   *                 may happen when parsing the xml file later).
+   * @throws java.io.IOException if there is a problem writing to the character stream.
    */
-  public void writeXmlDeclaration(final Writer writer, final String encoding)
-      throws IOException
-  {
-    if (encoding == null)
-    {
-      writer.write("<?xml version=\"1.0\"?>");
-      writer.write(getLineSeparator());
+  public void writeXmlDeclaration( final Writer writer, final String encoding )
+    throws IOException {
+    if ( encoding == null ) {
+      writer.write( "<?xml version=\"1.0\"?>" );
+      writer.write( getLineSeparator() );
       return;
     }
 
-    writer.write("<?xml version=\"1.0\" encoding=\"");
-    writer.write(encoding);
-    writer.write("\"?>");
-    writer.write(getLineSeparator());
-    setEncoding(encoding);
+    writer.write( "<?xml version=\"1.0\" encoding=\"" );
+    writer.write( encoding );
+    writer.write( "\"?>" );
+    writer.write( getLineSeparator() );
+    setEncoding( encoding );
   }
 
-  public void setEncoding(final String encoding)
-  {
+  public void setEncoding( final String encoding ) {
     this.encoding = encoding;
     this.encodingvalid = true;
-    
-    final Charset charset = Charset.forName(encoding);
+
+    final Charset charset = Charset.forName( encoding );
     this.charsetEncoder = charset.newEncoder();
   }
 
@@ -379,12 +340,11 @@ public class XmlWriterSupport
    * @param name         the tag name.
    * @throws java.io.IOException if there is an I/O problem.
    */
-  public void writeTag(final Writer w,
-                       final String namespaceUri,
-                       final String name)
-      throws IOException
-  {
-    writeTag(w, namespaceUri, name, null, XmlWriterSupport.OPEN);
+  public void writeTag( final Writer w,
+                        final String namespaceUri,
+                        final String name )
+    throws IOException {
+    writeTag( w, namespaceUri, name, null, XmlWriterSupport.OPEN );
   }
 
   /**
@@ -393,28 +353,24 @@ public class XmlWriterSupport
    * @param w the writer.
    * @throws java.io.IOException if there is an I/O problem.
    */
-  public void writeCloseTag(final Writer w)
-      throws IOException
-  {
-    indentForClose(w);
+  public void writeCloseTag( final Writer w )
+    throws IOException {
+    indentForClose( w );
     final ElementLevel level = (ElementLevel) openTags.pop();
 
-    setLineEmpty(false);
+    setLineEmpty( false );
 
-    w.write("</");
+    w.write( "</" );
     final String prefix = level.getPrefix();
-    if (prefix != null)
-    {
-      w.write(prefix);
-      w.write(":");
-      w.write(level.getTagName());
+    if ( prefix != null ) {
+      w.write( prefix );
+      w.write( ":" );
+      w.write( level.getTagName() );
+    } else {
+      w.write( level.getTagName() );
     }
-    else
-    {
-      w.write(level.getTagName());
-    }
-    w.write(">");
-    doEndOfLine(w);
+    w.write( ">" );
+    doEndOfLine( w );
   }
 
   /**
@@ -423,13 +379,11 @@ public class XmlWriterSupport
    * @param writer the writer.
    * @throws IOException if there is a problem writing to the character stream.
    */
-  public void writeNewLine(final Writer writer)
-      throws IOException
-  {
-    if (isLineEmpty() == false)
-    {
-      writer.write(lineSeparator);
-      setLineEmpty(true);
+  public void writeNewLine( final Writer writer )
+    throws IOException {
+    if ( isLineEmpty() == false ) {
+      writer.write( lineSeparator );
+      setLineEmpty( true );
     }
   }
 
@@ -438,8 +392,7 @@ public class XmlWriterSupport
    *
    * @return true, if the line is empty, false otherwise.
    */
-  public boolean isLineEmpty()
-  {
+  public boolean isLineEmpty() {
     return lineEmpty;
   }
 
@@ -448,8 +401,7 @@ public class XmlWriterSupport
    *
    * @param lineEmpty defines, whether the current line should be treated as empty line.
    */
-  public void setLineEmpty(final boolean lineEmpty)
-  {
+  public void setLineEmpty( final boolean lineEmpty ) {
     this.lineEmpty = lineEmpty;
   }
 
@@ -464,23 +416,19 @@ public class XmlWriterSupport
    * @param close          controls whether the tag is closed.
    * @throws java.io.IOException if there is an I/O problem.
    */
-  public void writeTag(final Writer w,
-                       final String namespace,
-                       final String name,
-                       final String attributeName,
-                       final String attributeValue,
-                       final boolean close)
-      throws IOException
-  {
-    if (attributeName != null)
-    {
+  public void writeTag( final Writer w,
+                        final String namespace,
+                        final String name,
+                        final String attributeName,
+                        final String attributeValue,
+                        final boolean close )
+    throws IOException {
+    if ( attributeName != null ) {
       final AttributeList attr = new AttributeList();
-      attr.setAttribute(namespace, attributeName, attributeValue);
-      writeTag(w, namespace, name, attr, close);
-    }
-    else
-    {
-      writeTag(w, namespace, name, null, close);
+      attr.setAttribute( namespace, attributeName, attributeValue );
+      writeTag( w, namespace, name, attr, close );
+    } else {
+      writeTag( w, namespace, name, null, close );
     }
   }
 
@@ -492,28 +440,21 @@ public class XmlWriterSupport
    * @param uri    the uri of the namespace.
    * @param prefix the defined prefix.
    */
-  public void addImpliedNamespace(final String uri, final String prefix)
-  {
-    if (openTags.isEmpty() == false)
-    {
-      throw new IllegalStateException("Cannot modify the implied namespaces in the middle of the processing");
+  public void addImpliedNamespace( final String uri, final String prefix ) {
+    if ( openTags.isEmpty() == false ) {
+      throw new IllegalStateException( "Cannot modify the implied namespaces in the middle of the processing" );
     }
 
-    if (prefix == null)
-    {
-      if (impliedNamespaces == null)
-      {
+    if ( prefix == null ) {
+      if ( impliedNamespaces == null ) {
         return;
       }
-      impliedNamespaces.remove(uri);
-    }
-    else
-    {
-      if (impliedNamespaces == null)
-      {
+      impliedNamespaces.remove( uri );
+    } else {
+      if ( impliedNamespaces == null ) {
         impliedNamespaces = new HashMap();
       }
-      impliedNamespaces.put(uri, prefix);
+      impliedNamespaces.put( uri, prefix );
     }
   }
 
@@ -523,27 +464,22 @@ public class XmlWriterSupport
    *
    * @param writerSupport the Xml-writer from where to copy the declared namespaces.
    */
-  public void copyNamespaces(final XmlWriterSupport writerSupport)
-  {
-    if (openTags.isEmpty() == false)
-    {
-      throw new IllegalStateException("Cannot modify the implied namespaces in the middle of the processing");
+  public void copyNamespaces( final XmlWriterSupport writerSupport ) {
+    if ( openTags.isEmpty() == false ) {
+      throw new IllegalStateException( "Cannot modify the implied namespaces in the middle of the processing" );
     }
 
-    if (impliedNamespaces == null)
-    {
+    if ( impliedNamespaces == null ) {
       impliedNamespaces = new HashMap();
     }
 
-    if (writerSupport.openTags.isEmpty() == false)
-    {
+    if ( writerSupport.openTags.isEmpty() == false ) {
       final ElementLevel parent = (ElementLevel) writerSupport.openTags.peek();
-      impliedNamespaces.putAll(parent.getNamespaces().getNamespaces());
+      impliedNamespaces.putAll( parent.getNamespaces().getNamespaces() );
     }
 
-    if (writerSupport.impliedNamespaces != null)
-    {
-      impliedNamespaces.putAll(writerSupport.impliedNamespaces);
+    if ( writerSupport.impliedNamespaces != null ) {
+      impliedNamespaces.putAll( writerSupport.impliedNamespaces );
     }
   }
 
@@ -553,21 +489,17 @@ public class XmlWriterSupport
    * @param uri the uri of the namespace.
    * @return true, if there's a namespace defined, false otherwise.
    */
-  public boolean isNamespaceDefined(final String uri)
-  {
-    if (impliedNamespaces != null)
-    {
-      if (impliedNamespaces.containsKey(uri))
-      {
+  public boolean isNamespaceDefined( final String uri ) {
+    if ( impliedNamespaces != null ) {
+      if ( impliedNamespaces.containsKey( uri ) ) {
         return true;
       }
     }
-    if (openTags.isEmpty())
-    {
+    if ( openTags.isEmpty() ) {
       return false;
     }
     final ElementLevel parent = (ElementLevel) openTags.peek();
-    return parent.getNamespaces().isNamespaceDefined(uri);
+    return parent.getNamespaces().isNamespaceDefined( uri );
   }
 
   /**
@@ -576,45 +508,38 @@ public class XmlWriterSupport
    * @param prefix the namespace prefix.
    * @return true, if the prefix is defined, false otherwise.
    */
-  public boolean isNamespacePrefixDefined(final String prefix)
-  {
-    if (impliedNamespaces != null)
-    {
-      if (impliedNamespaces.containsValue(prefix))
-      {
+  public boolean isNamespacePrefixDefined( final String prefix ) {
+    if ( impliedNamespaces != null ) {
+      if ( impliedNamespaces.containsValue( prefix ) ) {
         return true;
       }
     }
-    if (openTags.isEmpty())
-    {
+    if ( openTags.isEmpty() ) {
       return false;
     }
     final ElementLevel parent = (ElementLevel) openTags.peek();
-    return parent.getNamespaces().isPrefixDefined(prefix);
+    return parent.getNamespaces().isPrefixDefined( prefix );
   }
 
   /**
-   * Returns all namespaces as properties-collection. This reflects the currently defined namespaces, therefore
-   * calls to writeOpenTag(..) might cause this method to return different collections.
+   * Returns all namespaces as properties-collection. This reflects the currently defined namespaces, therefore calls to
+   * writeOpenTag(..) might cause this method to return different collections.
    *
    * @return the defined namespaces.
    */
-  public Properties getNamespaces()
-  {
+  public Properties getNamespaces() {
     final Properties namespaces = new Properties();
-    if (openTags.isEmpty())
-    {
-      if (impliedNamespaces != null)
-      {
+    if ( openTags.isEmpty() ) {
+      if ( impliedNamespaces != null ) {
         //noinspection UseOfPropertiesAsHashtable
-        namespaces.putAll(impliedNamespaces);
+        namespaces.putAll( impliedNamespaces );
       }
       return namespaces;
     }
 
     final ElementLevel parent = (ElementLevel) openTags.peek();
     //noinspection UseOfPropertiesAsHashtable
-    namespaces.putAll(parent.getNamespaces().getNamespaces());
+    namespaces.putAll( parent.getNamespaces().getNamespaces() );
     return namespaces;
   }
 
@@ -623,14 +548,11 @@ public class XmlWriterSupport
    *
    * @return the namespaces declared at this writing position.
    */
-  protected DeclaredNamespaces computeNamespaces()
-  {
-    if (openTags.isEmpty())
-    {
+  protected DeclaredNamespaces computeNamespaces() {
+    if ( openTags.isEmpty() ) {
       final DeclaredNamespaces namespaces = new DeclaredNamespaces();
-      if (impliedNamespaces != null)
-      {
-        return namespaces.add(impliedNamespaces);
+      if ( impliedNamespaces != null ) {
+        return namespaces.add( impliedNamespaces );
       }
       return namespaces;
     }
@@ -649,89 +571,71 @@ public class XmlWriterSupport
    * @param close        controls whether the tag is closed.
    * @throws java.io.IOException if there is an I/O problem.
    */
-  public void writeTag(final Writer w,
-                       final String namespaceUri,
-                       final String name,
-                       final AttributeList attributes,
-                       final boolean close)
-      throws IOException
-  {
-    if (name == null)
-    {
+  public void writeTag( final Writer w,
+                        final String namespaceUri,
+                        final String name,
+                        final AttributeList attributes,
+                        final boolean close )
+    throws IOException {
+    if ( name == null ) {
       throw new NullPointerException();
     }
 
-    indent(w);
-    setLineEmpty(false);
+    indent( w );
+    setLineEmpty( false );
 
     DeclaredNamespaces namespaces = computeNamespaces();
 
-    if (attributes != null)
-    {
-      namespaces = namespaces.add(attributes);
+    if ( attributes != null ) {
+      namespaces = namespaces.add( attributes );
     }
 
-    w.write("<");
+    w.write( "<" );
 
-    if (namespaceUri == null)
-    {
-      w.write(name);
-      openTags.push(new ElementLevel(name, namespaces));
-    }
-    else
-    {
-      final String nsPrefix = namespaces.getPrefix(namespaceUri);
-      if (nsPrefix == null)
-      {
-        throw new IllegalArgumentException("Namespace " + namespaceUri + " is not defined.");
+    if ( namespaceUri == null ) {
+      w.write( name );
+      openTags.push( new ElementLevel( name, namespaces ) );
+    } else {
+      final String nsPrefix = namespaces.getPrefix( namespaceUri );
+      if ( nsPrefix == null ) {
+        throw new IllegalArgumentException( "Namespace " + namespaceUri + " is not defined." );
       }
-      if ("".equals(nsPrefix))
-      {
-        w.write(name);
-        openTags.push(new ElementLevel(namespaceUri, null, name, namespaces));
-      }
-      else
-      {
-        w.write(nsPrefix);
-        w.write(":");
-        w.write(name);
-        openTags.push(new ElementLevel(namespaceUri, nsPrefix, name, namespaces));
+      if ( "".equals( nsPrefix ) ) {
+        w.write( name );
+        openTags.push( new ElementLevel( namespaceUri, null, name, namespaces ) );
+      } else {
+        w.write( nsPrefix );
+        w.write( ":" );
+        w.write( name );
+        openTags.push( new ElementLevel( namespaceUri, nsPrefix, name, namespaces ) );
       }
     }
 
-    if (attributes != null)
-    {
+    if ( attributes != null ) {
       final AttributeList.AttributeEntry[] entries = attributes.toArray();
-      for (int i = 0; i < entries.length; i++)
-      {
-        final AttributeList.AttributeEntry entry = entries[i];
-        w.write(" ");
+      for ( int i = 0; i < entries.length; i++ ) {
+        final AttributeList.AttributeEntry entry = entries[ i ];
+        w.write( " " );
 
-        buildAttributeName(entry, namespaces, w);
-        w.write("=\"");
-        writeTextNormalized(w, entry.getValue(), true);
-        w.write("\"");
+        buildAttributeName( entry, namespaces, w );
+        w.write( "=\"" );
+        writeTextNormalized( w, entry.getValue(), true );
+        w.write( "\"" );
       }
     }
 
-    if (close)
-    {
-      if (isHtmlCompatiblityMode())
-      {
-        w.write(" />");
-      }
-      else
-      {
-        w.write("/>");
+    if ( close ) {
+      if ( isHtmlCompatiblityMode() ) {
+        w.write( " />" );
+      } else {
+        w.write( "/>" );
       }
 
       openTags.pop();
-      doEndOfLine(w);
-    }
-    else
-    {
-      w.write(">");
-      doEndOfLine(w);
+      doEndOfLine( w );
+    } else {
+      w.write( ">" );
+      doEndOfLine( w );
     }
   }
 
@@ -743,23 +647,17 @@ public class XmlWriterSupport
    * @param w the writer.
    * @throws java.io.IOException if there is an I/O problem.
    */
-  private void doEndOfLine(final Writer w)
-      throws IOException
-  {
-    if (openTags.isEmpty())
-    {
-      if (isWriteFinalLinebreak())
-      {
-        writeNewLine(w);
+  private void doEndOfLine( final Writer w )
+    throws IOException {
+    if ( openTags.isEmpty() ) {
+      if ( isWriteFinalLinebreak() ) {
+        writeNewLine( w );
       }
-    }
-    else
-    {
+    } else {
       final ElementLevel level = (ElementLevel) openTags.peek();
-      if (getTagDescription().hasCData
-          (level.getNamespace(), level.getTagName()) == false)
-      {
-        writeNewLine(w);
+      if ( getTagDescription().hasCData
+        ( level.getNamespace(), level.getTagName() ) == false ) {
+        writeNewLine( w );
       }
     }
   }
@@ -774,51 +672,43 @@ public class XmlWriterSupport
    * @param writer     the writer that should receive the formatted attribute name.
    * @throws IOException if an IO error occured.
    */
-  private void buildAttributeName(final AttributeList.AttributeEntry entry,
-                                  final DeclaredNamespaces namespaces,
-                                  final Writer writer) throws IOException
-  {
+  private void buildAttributeName( final AttributeList.AttributeEntry entry,
+                                   final DeclaredNamespaces namespaces,
+                                   final Writer writer ) throws IOException {
     final ElementLevel currentElement = (ElementLevel) openTags.peek();
     final String name = entry.getName();
     final String namespaceUri = entry.getNamespace();
 
-    if (isAlwaysAddNamespace() == false &&
-        ObjectUtilities.equal(currentElement.getNamespace(), namespaceUri))
-    {
-      writer.write(name);
+    if ( isAlwaysAddNamespace() == false &&
+      ObjectUtilities.equal( currentElement.getNamespace(), namespaceUri ) ) {
+      writer.write( name );
       return;
     }
 
-    if (namespaceUri == null)
-    {
-      writer.write(name);
+    if ( namespaceUri == null ) {
+      writer.write( name );
       return;
     }
 
-    if (AttributeList.XMLNS_NAMESPACE.equals(namespaceUri))
-    {
+    if ( AttributeList.XMLNS_NAMESPACE.equals( namespaceUri ) ) {
       // its a namespace declaration.
-      if ("".equals(name))
-      {
-        writer.write("xmlns");
+      if ( "".equals( name ) ) {
+        writer.write( "xmlns" );
         return;
       }
 
-      writer.write("xmlns:");
-      writer.write(name);
+      writer.write( "xmlns:" );
+      writer.write( name );
       return;
     }
 
-    final String namespacePrefix = namespaces.getPrefix(namespaceUri);
-    if (namespacePrefix != null && "".equals(namespacePrefix) == false)
-    {
-      writer.write(namespacePrefix);
-      writer.write(':');
-      writer.write(name);
-    }
-    else
-    {
-      writer.write(name);
+    final String namespacePrefix = namespaces.getPrefix( namespaceUri );
+    if ( namespacePrefix != null && "".equals( namespacePrefix ) == false ) {
+      writer.write( namespacePrefix );
+      writer.write( ':' );
+      writer.write( name );
+    } else {
+      writer.write( name );
     }
   }
 
@@ -829,83 +719,64 @@ public class XmlWriterSupport
    * @param transformNewLine a flag controling whether to transform newlines into character-entities.
    * @return the transformed string.
    */
-  public String normalizeLocal(final String s,
-                               final boolean transformNewLine)
-  {
-    if (s == null)
-    {
+  public String normalizeLocal( final String s,
+                                final boolean transformNewLine ) {
+    if ( s == null ) {
       return "";
     }
-    normalizeBuffer.delete(0, normalizeBuffer.length());
+    normalizeBuffer.delete( 0, normalizeBuffer.length() );
 
     final int len = s.length();
-    for (int i = 0; i < len; i++)
-    {
-      final char ch = s.charAt(i);
+    for ( int i = 0; i < len; i++ ) {
+      final char ch = s.charAt( i );
 
-      switch (ch)
-      {
-        case '<':
-        {
-          normalizeBuffer.append("&lt;");
+      switch( ch ) {
+        case '<': {
+          normalizeBuffer.append( "&lt;" );
           break;
         }
-        case '>':
-        {
-          normalizeBuffer.append("&gt;");
+        case '>': {
+          normalizeBuffer.append( "&gt;" );
           break;
         }
-        case '&':
-        {
-          normalizeBuffer.append("&amp;");
+        case '&': {
+          normalizeBuffer.append( "&amp;" );
           break;
         }
-        case '"':
-        {
-          normalizeBuffer.append("&quot;");
+        case '"': {
+          normalizeBuffer.append( "&quot;" );
           break;
         }
-        case '\n':
-        {
-          if (transformNewLine)
-          {
-            normalizeBuffer.append("&#x000a;");
-          }
-          else
-          {
-            normalizeBuffer.append('\n');
+        case '\n': {
+          if ( transformNewLine ) {
+            normalizeBuffer.append( "&#x000a;" );
+          } else {
+            normalizeBuffer.append( '\n' );
           }
           break;
         }
-        case '\r':
-        {
-          if (transformNewLine)
-          {
-            normalizeBuffer.append("&#x000d;");
-          }
-          else
-          {
-            normalizeBuffer.append('\r');
+        case '\r': {
+          if ( transformNewLine ) {
+            normalizeBuffer.append( "&#x000d;" );
+          } else {
+            normalizeBuffer.append( '\r' );
           }
           break;
         }
-        case 0x09:
-        {
-          normalizeBuffer.append(ch);
+        case 0x09: {
+          normalizeBuffer.append( ch );
           break;
         }
-        default:
-        {
-          if (ch >= 0x20)
-          {
-            normalizeBuffer.append(ch);
+        default: {
+          if ( ch >= 0x20 ) {
+            normalizeBuffer.append( ch );
           }
         }
       }
     }
 
     final String retval = normalizeBuffer.toString();
-    normalizeBuffer.delete(0, normalizeBuffer.length());
+    normalizeBuffer.delete( 0, normalizeBuffer.length() );
     return retval;
   }
 
@@ -918,12 +789,10 @@ public class XmlWriterSupport
    * @param transformNewLine a flag controling whether to transform newlines into character-entities.
    * @throws IOException if writing to the stream failed.
    */
-  public void writeTextNormalized(final Writer writer,
-                                  final String s,
-                                  final boolean transformNewLine) throws IOException
-  {
-    if (s == null)
-    {
+  public void writeTextNormalized( final Writer writer,
+                                   final String s,
+                                   final boolean transformNewLine ) throws IOException {
+    if ( s == null ) {
       return;
     }
 
@@ -931,81 +800,65 @@ public class XmlWriterSupport
     final int len = data.length;
     int startIdx = 0;
     int length = 0;
-    for (int i = 0; i < len; i++)
-    {
-      final char ch = data[i];
+    for ( int i = 0; i < len; i++ ) {
+      final char ch = data[ i ];
 
-      switch (ch)
-      {
-        case '<':
-        {
-          if (length != 0)
-          {
-            writer.write(data, startIdx, length);
+      switch( ch ) {
+        case '<': {
+          if ( length != 0 ) {
+            writer.write( data, startIdx, length );
             length = 0;
           }
-          writer.write("&lt;");
+          writer.write( "&lt;" );
           startIdx = i + 1;
           continue;
         }
-        case '>':
-        {
-          if (length != 0)
-          {
-            writer.write(data, startIdx, length);
+        case '>': {
+          if ( length != 0 ) {
+            writer.write( data, startIdx, length );
             length = 0;
           }
-          writer.write("&gt;");
+          writer.write( "&gt;" );
           startIdx = i + 1;
           continue;
         }
-        case '&':
-        {
-          if (length != 0)
-          {
-            writer.write(data, startIdx, length);
+        case '&': {
+          if ( length != 0 ) {
+            writer.write( data, startIdx, length );
             length = 0;
           }
-          writer.write("&amp;");
+          writer.write( "&amp;" );
           startIdx = i + 1;
           continue;
         }
-        case '"':
-        {
-          if (length != 0)
-          {
-            writer.write(data, startIdx, length);
+        case '"': {
+          if ( length != 0 ) {
+            writer.write( data, startIdx, length );
             length = 0;
           }
-          writer.write("&quot;");
+          writer.write( "&quot;" );
           startIdx = i + 1;
           continue;
         }
-        case '\n':
-        {
-          if (transformNewLine)
-          {
-            if (length != 0)
-            {
-              writer.write(data, startIdx, length);
+        case '\n': {
+          if ( transformNewLine ) {
+            if ( length != 0 ) {
+              writer.write( data, startIdx, length );
               length = 0;
             }
-            writer.write("&#x000a;");
+            writer.write( "&#x000a;" );
             startIdx = i + 1;
             continue;
           }
           break;
         }
-        case '\r':
-        {
-          if (transformNewLine)
-          {
-            if (length != 0)
-            {
-              writer.write(data, startIdx, length);
+        case '\r': {
+          if ( transformNewLine ) {
+            if ( length != 0 ) {
+              writer.write( data, startIdx, length );
               length = 0;
             }
-            writer.write("&#x000d;");
+            writer.write( "&#x000d;" );
             startIdx = i + 1;
             continue;
           }
@@ -1015,51 +868,39 @@ public class XmlWriterSupport
         {
           break;
         }
-        default:
-        {
-          if (this.encodingvalid && this.encoding != null)
-          {
-            try
-            {
-              if (charsetEncoder.canEncode(ch) == false)
-              {
-                if (length != 0)
-                {
-                  writer.write(data, startIdx, length);
+        default: {
+          if ( this.encodingvalid && this.encoding != null ) {
+            try {
+              if ( charsetEncoder.canEncode( ch ) == false ) {
+                if ( length != 0 ) {
+                  writer.write( data, startIdx, length );
                   length = 0;
                 }
 
-                writer.write("&#x");
-                final String charEncoded = Integer.toHexString(ch & 0x00ffffff);
+                writer.write( "&#x" );
+                final String charEncoded = Integer.toHexString( ch & 0x00ffffff );
                 final int fillUp = 4 - charEncoded.length();
-                for (int x = 0; x < fillUp; x++)
-                {
-                  writer.write('0');
+                for ( int x = 0; x < fillUp; x++ ) {
+                  writer.write( '0' );
                 }
-                writer.write(charEncoded.toUpperCase());
-                writer.write(";");
+                writer.write( charEncoded.toUpperCase() );
+                writer.write( ";" );
                 startIdx = i + 1;
                 continue;
               }
-            }
-            catch (IOException t)
-            {
+            } catch ( IOException t ) {
               throw t;
-            }
-            catch (Throwable t)
-            {
+            } catch ( Throwable t ) {
               // ignore all other errors ..
             }
           }
-          if (ch >= 0x20)
-          {
+          if ( ch >= 0x20 ) {
             // anything above the control-character range is ok.
             break;
           }
           // skip ..
-          if (length != 0)
-          {
-            writer.write(data, startIdx, length);
+          if ( length != 0 ) {
+            writer.write( data, startIdx, length );
             length = 0;
           }
           startIdx = i + 1;
@@ -1069,9 +910,8 @@ public class XmlWriterSupport
       length += 1;
     }
 
-    if (length != 0)
-    {
-      writer.write(data, startIdx, length);
+    if ( length != 0 ) {
+      writer.write( data, startIdx, length );
     }
   }
 
@@ -1083,81 +923,63 @@ public class XmlWriterSupport
    * @param transformNewLine true, if a newline in the string should be converted into a character entity.
    * @return the normalised string.
    */
-  public static String normalize(final String s,
-                                 final boolean transformNewLine)
-  {
-    if (s == null)
-    {
+  public static String normalize( final String s,
+                                  final boolean transformNewLine ) {
+    if ( s == null ) {
       return "";
     }
     final int len = s.length();
-    final StringBuffer str = new StringBuffer(len);
+    final StringBuffer str = new StringBuffer( len );
 
-    for (int i = 0; i < len; i++)
-    {
-      final char ch = s.charAt(i);
+    for ( int i = 0; i < len; i++ ) {
+      final char ch = s.charAt( i );
 
-      switch (ch)
-      {
-        case '<':
-        {
-          str.append("&lt;");
+      switch( ch ) {
+        case '<': {
+          str.append( "&lt;" );
           break;
         }
-        case '>':
-        {
-          str.append("&gt;");
+        case '>': {
+          str.append( "&gt;" );
           break;
         }
-        case '&':
-        {
-          str.append("&amp;");
+        case '&': {
+          str.append( "&amp;" );
           break;
         }
-        case '"':
-        {
-          str.append("&quot;");
+        case '"': {
+          str.append( "&quot;" );
           break;
         }
-        case '\n':
-        {
-          if (transformNewLine)
-          {
-            str.append("&#x000a;");
-          }
-          else
-          {
-            str.append('\n');
+        case '\n': {
+          if ( transformNewLine ) {
+            str.append( "&#x000a;" );
+          } else {
+            str.append( '\n' );
           }
           break;
         }
-        case '\r':
-        {
-          if (transformNewLine)
-          {
-            str.append("&#x000d;");
-          }
-          else
-          {
-            str.append('\r');
+        case '\r': {
+          if ( transformNewLine ) {
+            str.append( "&#x000d;" );
+          } else {
+            str.append( '\r' );
           }
           break;
         }
         case 0x09: // tab
         {
-          str.append((char) 0x09);
+          str.append( (char) 0x09 );
         }
-        default:
-        {
-          if (ch >= 0x20)
-          {
-            str.append(ch);
+        default: {
+          if ( ch >= 0x20 ) {
+            str.append( ch );
           }
         }
       }
     }
 
-    return (str.toString());
+    return ( str.toString() );
   }
 
   /**
@@ -1166,32 +988,26 @@ public class XmlWriterSupport
    * @param writer the writer which should receive the indentention.
    * @throws java.io.IOException if writing the stream failed.
    */
-  public void indent(final Writer writer)
-      throws IOException
-  {
-    if (openTags.isEmpty())
-    {
-      for (int i = 0; i < additionalIndent; i++)
-      {
-        writer.write(this.indentString);
+  public void indent( final Writer writer )
+    throws IOException {
+    if ( openTags.isEmpty() ) {
+      for ( int i = 0; i < additionalIndent; i++ ) {
+        writer.write( this.indentString );
       }
       return;
     }
 
     final ElementLevel level = (ElementLevel) openTags.peek();
-    if (getTagDescription().hasCData(level.getNamespace(),
-        level.getTagName()) == false)
-    {
-      doEndOfLine(writer);
+    if ( getTagDescription().hasCData( level.getNamespace(),
+      level.getTagName() ) == false ) {
+      doEndOfLine( writer );
 
-      for (int i = 0; i < this.openTags.size(); i++)
-      {
-        writer.write(this.indentString);
+      for ( int i = 0; i < this.openTags.size(); i++ ) {
+        writer.write( this.indentString );
       }
 
-      for (int i = 0; i < additionalIndent; i++)
-      {
-        writer.write(this.indentString);
+      for ( int i = 0; i < additionalIndent; i++ ) {
+        writer.write( this.indentString );
       }
     }
   }
@@ -1202,31 +1018,25 @@ public class XmlWriterSupport
    * @param writer the writer which should receive the indentention.
    * @throws java.io.IOException if writing the stream failed.
    */
-  public void indentForClose(final Writer writer)
-      throws IOException
-  {
-    if (openTags.isEmpty())
-    {
-      for (int i = 0; i < additionalIndent; i++)
-      {
-        writer.write(this.indentString);
+  public void indentForClose( final Writer writer )
+    throws IOException {
+    if ( openTags.isEmpty() ) {
+      for ( int i = 0; i < additionalIndent; i++ ) {
+        writer.write( this.indentString );
       }
       return;
     }
 
     final ElementLevel level = (ElementLevel) openTags.peek();
-    if (getTagDescription().hasCData(level.getNamespace(),
-        level.getTagName()) == false)
-    {
-      doEndOfLine(writer);
+    if ( getTagDescription().hasCData( level.getNamespace(),
+      level.getTagName() ) == false ) {
+      doEndOfLine( writer );
 
-      for (int i = 1; i < this.openTags.size(); i++)
-      {
-        writer.write(this.indentString);
+      for ( int i = 1; i < this.openTags.size(); i++ ) {
+        writer.write( this.indentString );
       }
-      for (int i = 0; i < additionalIndent; i++)
-      {
-        writer.write(this.indentString);
+      for ( int i = 0; i < additionalIndent; i++ ) {
+        writer.write( this.indentString );
       }
     }
   }
@@ -1236,8 +1046,7 @@ public class XmlWriterSupport
    *
    * @return The list.
    */
-  public TagDescription getTagDescription()
-  {
+  public TagDescription getTagDescription() {
     return this.safeTags;
   }
 
@@ -1248,25 +1057,22 @@ public class XmlWriterSupport
    * @param comment the comment text
    * @throws IOException if there is a problem writing to the character stream.
    */
-  public void writeComment(final Writer writer, final String comment)
-      throws IOException
-  {
-    if (openTags.isEmpty() == false)
-    {
+  public void writeComment( final Writer writer, final String comment )
+    throws IOException {
+    if ( openTags.isEmpty() == false ) {
       final ElementLevel level = (ElementLevel) openTags.peek();
-      if (getTagDescription().hasCData
-          (level.getNamespace(), level.getTagName()) == false)
-      {
-        indent(writer);
+      if ( getTagDescription().hasCData
+        ( level.getNamespace(), level.getTagName() ) == false ) {
+        indent( writer );
       }
     }
 
-    setLineEmpty(false);
+    setLineEmpty( false );
 
-    writer.write("<!-- ");
-    writeTextNormalized(writer, comment, false);
-    writer.write(" -->");
-    doEndOfLine(writer);
+    writer.write( "<!-- " );
+    writeTextNormalized( writer, comment, false );
+    writer.write( " -->" );
+    doEndOfLine( writer );
   }
 
   /**
@@ -1275,10 +1081,9 @@ public class XmlWriterSupport
    * implementation dependent. (Appendix A; Section 6.2 of the XmlNamespaces recommendation)
    *
    * @return true, if attributes in the element's namespace should be written without a prefix, false to write all
-   *         attributes with a prefix.
+   * attributes with a prefix.
    */
-  public boolean isAssumeDefaultNamespace()
-  {
+  public boolean isAssumeDefaultNamespace() {
     return assumeDefaultNamespace;
   }
 
@@ -1290,8 +1095,7 @@ public class XmlWriterSupport
    * @param assumeDefaultNamespace true, if attributes in the element's namespace should be written without a prefix,
    *                               false to write all attributes with a prefix.
    */
-  public void setAssumeDefaultNamespace(final boolean assumeDefaultNamespace)
-  {
+  public void setAssumeDefaultNamespace( final boolean assumeDefaultNamespace ) {
     this.assumeDefaultNamespace = assumeDefaultNamespace;
   }
 
@@ -1300,30 +1104,25 @@ public class XmlWriterSupport
    *
    * @return the indention level.
    */
-  public int getCurrentIndentLevel()
-  {
+  public int getCurrentIndentLevel() {
     return additionalIndent + openTags.size();
   }
 
   /**
    * Defines, whether the written XML file should end with an empty line.
    *
-   * @param writeFinalLinebreak true, if an linebreak should be added at the
-   *                            end of the file, false otherwise.
+   * @param writeFinalLinebreak true, if an linebreak should be added at the end of the file, false otherwise.
    */
-  public void setWriteFinalLinebreak(final boolean writeFinalLinebreak)
-  {
+  public void setWriteFinalLinebreak( final boolean writeFinalLinebreak ) {
     this.writeFinalLinebreak = writeFinalLinebreak;
   }
 
   /**
    * Checks, whether the written XML file should end with an empty line.
    *
-   * @return true, if an linebreak should be added at the
-   *         end of the file, false otherwise.
+   * @return true, if an linebreak should be added at the end of the file, false otherwise.
    */
-  public boolean isWriteFinalLinebreak()
-  {
+  public boolean isWriteFinalLinebreak() {
     return writeFinalLinebreak;
   }
 }

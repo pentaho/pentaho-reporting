@@ -17,6 +17,8 @@
 
 package org.pentaho.reporting.libraries.resourceloader;
 
+import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
+
 import java.io.File;
 import java.io.Serializable;
 import java.net.URL;
@@ -24,8 +26,6 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
-
-import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
 
 /**
  * The key is an unique identifier for the resource. Most of the time, this may be an URL, but other (especially
@@ -36,8 +36,7 @@ import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
  *
  * @author Thomas Morgner
  */
-public final class ResourceKey implements Serializable
-{
+public final class ResourceKey implements Serializable {
   /**
    * @noinspection StaticCollection
    */
@@ -49,123 +48,93 @@ public final class ResourceKey implements Serializable
   private Object identifier;
   private ResourceKey parent;
 
-  public ResourceKey(final Object schema,
-                     final Object identifier,
-                     final Map<? extends ParameterKey, Object> factoryParameters)
-  {
-    if (schema == null)
-    {
+  public ResourceKey( final Object schema,
+                      final Object identifier,
+                      final Map<? extends ParameterKey, Object> factoryParameters ) {
+    if ( schema == null ) {
       throw new NullPointerException();
     }
-    if (identifier == null)
-    {
+    if ( identifier == null ) {
       throw new NullPointerException();
     }
 
     this.schema = schema;
     this.identifier = identifier;
-    if (factoryParameters != null)
-    {
+    if ( factoryParameters != null ) {
       this.factoryParameters =
-          Collections.unmodifiableMap(new HashMap<ParameterKey, Object>(factoryParameters));
-    }
-    else
-    {
+        Collections.unmodifiableMap( new HashMap<ParameterKey, Object>( factoryParameters ) );
+    } else {
       this.factoryParameters = EMPTY_MAP;
     }
   }
 
-  public ResourceKey(final ResourceKey parent,
-                     final Object schema,
-                     final Object identifier,
-                     final Map<? extends ParameterKey, Object> factoryParameters)
-  {
-    this(schema, identifier, factoryParameters);
+  public ResourceKey( final ResourceKey parent,
+                      final Object schema,
+                      final Object identifier,
+                      final Map<? extends ParameterKey, Object> factoryParameters ) {
+    this( schema, identifier, factoryParameters );
     this.parent = parent;
   }
 
-  public static ResourceKey createAsDerived(final ResourceKey parent,
-                                            final ResourceKey child)
-  {
-    if (child.parent != null)
-    {
+  public static ResourceKey createAsDerived( final ResourceKey parent,
+                                             final ResourceKey child ) {
+    if ( child.parent != null ) {
       throw new IllegalArgumentException();
     }
-    return new ResourceKey(parent, child.schema, child.identifier, child.factoryParameters);
+    return new ResourceKey( parent, child.schema, child.identifier, child.factoryParameters );
   }
 
-  public ResourceKey getParent()
-  {
+  public ResourceKey getParent() {
     return parent;
   }
 
-  public Map<ParameterKey, Object> getFactoryParameters()
-  {
-    return Collections.unmodifiableMap(factoryParameters);
+  public Map<ParameterKey, Object> getFactoryParameters() {
+    return Collections.unmodifiableMap( factoryParameters );
   }
 
-  public boolean equals(final Object o)
-  {
-    if (this == o)
-    {
+  public boolean equals( final Object o ) {
+    if ( this == o ) {
       return true;
     }
-    if (o == null || getClass() != o.getClass())
-    {
+    if ( o == null || getClass() != o.getClass() ) {
       return false;
     }
 
     final ResourceKey that = (ResourceKey) o;
-    if (that.hashCode != null && this.hashCode != null)
-    {
+    if ( that.hashCode != null && this.hashCode != null ) {
       // shortcut: If the hashcode is not equal, the whole object cannot be equal
       // see contract of equals/hashcode for details.
-      if (that.hashCode.equals(this.hashCode) == false)
-      {
+      if ( that.hashCode.equals( this.hashCode ) == false ) {
         return false;
       }
     }
-    if (parent != that.parent && ObjectUtilities.equal(parent, that.parent) == false)
-    {
+    if ( parent != that.parent && ObjectUtilities.equal( parent, that.parent ) == false ) {
       return false;
     }
-    if (!schema.equals(that.schema))
-    {
+    if ( !schema.equals( that.schema ) ) {
       return false;
     }
-    if (!factoryParameters.equals(that.factoryParameters))
-    {
+    if ( !factoryParameters.equals( that.factoryParameters ) ) {
       return false;
     }
-    if (identifier instanceof URL)
-    {
-      if (String.valueOf(identifier).equals(String.valueOf(that.identifier)) == false)
-      {
+    if ( identifier instanceof URL ) {
+      if ( String.valueOf( identifier ).equals( String.valueOf( that.identifier ) ) == false ) {
         return false;
       }
-    }
-    else if (identifier instanceof File && that.identifier instanceof File)
-    {
+    } else if ( identifier instanceof File && that.identifier instanceof File ) {
       // File.equals() does not check to see if two File objects refer to the same file ...
       // it checks to make sure they refer to the same file IN THE SAME way (which is deeper than we need)
-      if (ObjectUtilities.equals((File) identifier, (File) that.identifier) == false)
-      {
+      if ( ObjectUtilities.equals( (File) identifier, (File) that.identifier ) == false ) {
         return false;
       }
-    }
-    else if (!identifier.equals(that.identifier))
-    {
-      if (identifier instanceof byte[] && that.identifier instanceof byte[])
-      {
+    } else if ( !identifier.equals( that.identifier ) ) {
+      if ( identifier instanceof byte[] && that.identifier instanceof byte[] ) {
         final byte[] me = (byte[]) identifier;
         final byte[] he = (byte[]) that.identifier;
-        if (Arrays.equals(me, he) == false)
-        {
+        if ( Arrays.equals( me, he ) == false ) {
           return false;
         }
-      }
-      else
-      {
+      } else {
         return false;
       }
     }
@@ -173,36 +142,27 @@ public final class ResourceKey implements Serializable
     return true;
   }
 
-  public int hashCode()
-  {
-    if (hashCode == null)
-    {
+  public int hashCode() {
+    if ( hashCode == null ) {
       int result = factoryParameters.hashCode();
       result = 29 * result + schema.hashCode();
-      if (identifier instanceof URL)
-      {
+      if ( identifier instanceof URL ) {
         final URL url = (URL) identifier;
         result = 29 * result + url.toString().hashCode();
-      }
-      else if (identifier instanceof byte[])
-      {
-        result = 29 * result + Arrays.hashCode((byte[]) identifier);
-      }
-      else
-      {
+      } else if ( identifier instanceof byte[] ) {
+        result = 29 * result + Arrays.hashCode( (byte[]) identifier );
+      } else {
         result = 29 * result + identifier.hashCode();
       }
-      if (parent != null)
-      {
+      if ( parent != null ) {
         result = 29 * result + parent.hashCode();
       }
-      hashCode = (result);
+      hashCode = ( result );
     }
     return hashCode.intValue();
   }
 
-  public Object getIdentifier()
-  {
+  public Object getIdentifier() {
     return identifier;
   }
 
@@ -211,20 +171,16 @@ public final class ResourceKey implements Serializable
    *
    * @return the identifier as string or null, if the identifier could not be converted easily.
    */
-  public String getIdentifierAsString()
-  {
-    if (identifier instanceof File)
-    {
+  public String getIdentifierAsString() {
+    if ( identifier instanceof File ) {
       final File file = (File) identifier;
       return file.getPath();
     }
-    if (identifier instanceof URL)
-    {
+    if ( identifier instanceof URL ) {
       final URL url = (URL) identifier;
       return url.toExternalForm();
     }
-    if (identifier instanceof String)
-    {
+    if ( identifier instanceof String ) {
       return identifier.toString();
     }
     return null;
@@ -238,19 +194,17 @@ public final class ResourceKey implements Serializable
    *
    * @return
    */
-  public Object getSchema()
-  {
+  public Object getSchema() {
     return schema;
   }
 
-  public String toString()
-  {
+  public String toString() {
     return "ResourceKey{" +
-        "schema=" + schema +
-        ", identifier=" + identifier +
-        ", factoryParameters=" + factoryParameters +
-        ", parent=" + parent +
-        '}';
+      "schema=" + schema +
+      ", identifier=" + identifier +
+      ", factoryParameters=" + factoryParameters +
+      ", parent=" + parent +
+      '}';
   }
 }
 

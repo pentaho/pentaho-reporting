@@ -24,14 +24,12 @@ import org.pentaho.reporting.libraries.css.values.CSSConstant;
  *
  * @author Thomas Morgner
  */
-public class LineGridProgression
-{
+public class LineGridProgression {
   public static final CSSConstant TEXT_HEIGHT =
-      new CSSConstant("text-height");
+    new CSSConstant( "text-height" );
   public static final CSSConstant LINE_HEIGHT =
-      new CSSConstant("line-height");
+    new CSSConstant( "line-height" );
 
-  private LineGridProgression()
-  {
+  private LineGridProgression() {
   }
 }

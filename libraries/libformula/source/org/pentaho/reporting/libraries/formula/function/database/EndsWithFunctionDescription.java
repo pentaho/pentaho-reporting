@@ -28,37 +28,30 @@ import org.pentaho.reporting.libraries.formula.typing.coretypes.TextType;
  *
  * @author Will Gorman (wgorman@pentaho.com)
  */
-public class EndsWithFunctionDescription extends AbstractFunctionDescription
-{
+public class EndsWithFunctionDescription extends AbstractFunctionDescription {
   private static final long serialVersionUID = 8787262061507547672L;
 
-  public EndsWithFunctionDescription()
-  {
-    super("ENDSWITH", "org.pentaho.reporting.libraries.formula.function.database.EndsWith-Function");
+  public EndsWithFunctionDescription() {
+    super( "ENDSWITH", "org.pentaho.reporting.libraries.formula.function.database.EndsWith-Function" );
   }
 
-  public FunctionCategory getCategory()
-  {
+  public FunctionCategory getCategory() {
     return DatabaseFunctionCategory.CATEGORY;
   }
 
-  public int getParameterCount()
-  {
+  public int getParameterCount() {
     return 2;
   }
 
-  public Type getParameterType(final int position)
-  {
+  public Type getParameterType( final int position ) {
     return TextType.TYPE;
   }
 
-  public Type getValueType()
-  {
+  public Type getValueType() {
     return LogicalType.TYPE;
   }
 
-  public boolean isParameterMandatory(final int position)
-  {
+  public boolean isParameterMandatory( final int position ) {
     return true;
   }
 

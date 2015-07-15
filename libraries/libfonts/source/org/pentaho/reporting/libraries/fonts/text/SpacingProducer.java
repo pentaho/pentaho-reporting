@@ -18,12 +18,11 @@
 package org.pentaho.reporting.libraries.fonts.text;
 
 /**
- * Reads spacing information. Spacing information defines the possible stretch
- * points when performing text justification.
+ * Reads spacing information. Spacing information defines the possible stretch points when performing text
+ * justification.
  *
  * @author Thomas Morgner
  */
-public interface SpacingProducer extends ClassificationProducer
-{
-  public Spacing createSpacing (int codePoint);
+public interface SpacingProducer extends ClassificationProducer {
+  public Spacing createSpacing( int codePoint );
 }

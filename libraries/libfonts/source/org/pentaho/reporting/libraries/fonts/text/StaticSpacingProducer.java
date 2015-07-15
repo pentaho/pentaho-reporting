@@ -22,30 +22,23 @@ package org.pentaho.reporting.libraries.fonts.text;
  *
  * @author Thomas Morgner
  */
-public class StaticSpacingProducer implements SpacingProducer
-{
+public class StaticSpacingProducer implements SpacingProducer {
   private Spacing spacing;
 
-  public StaticSpacingProducer(final Spacing spacing)
-  {
-    if (spacing == null)
-    {
+  public StaticSpacingProducer( final Spacing spacing ) {
+    if ( spacing == null ) {
       this.spacing = Spacing.EMPTY_SPACING;
-    }
-    else
-    {
+    } else {
       this.spacing = spacing;
     }
   }
 
-  public Spacing createSpacing(final int codePoint)
-  {
+  public Spacing createSpacing( final int codePoint ) {
     return spacing;
   }
 
 
-  public Object clone() throws CloneNotSupportedException
-  {
+  public Object clone() throws CloneNotSupportedException {
     return super.clone();
   }
 }

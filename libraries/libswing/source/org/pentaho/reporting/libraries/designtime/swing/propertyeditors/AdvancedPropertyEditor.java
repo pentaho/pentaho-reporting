@@ -22,7 +22,6 @@ import java.beans.PropertyEditor;
 /**
  * Adds the ability for a PropertyEditor to specify if it supports being able to be set via a text field.
  */
-public interface AdvancedPropertyEditor extends PropertyEditor
-{
-    public boolean supportsText();
+public interface AdvancedPropertyEditor extends PropertyEditor {
+  public boolean supportsText();
 }

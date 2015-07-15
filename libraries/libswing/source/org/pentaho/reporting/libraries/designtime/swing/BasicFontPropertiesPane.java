@@ -17,27 +17,16 @@
 
 package org.pentaho.reporting.libraries.designtime.swing;
 
-import java.awt.Component;
-import java.awt.GraphicsEnvironment;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
-import java.util.Arrays;
-import javax.swing.DefaultListModel;
-import javax.swing.JCheckBox;
-import javax.swing.JComponent;
-import javax.swing.JLabel;
-import javax.swing.JList;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTextField;
+import javax.swing.*;
+import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.event.EventListenerList;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
-import javax.swing.event.ChangeEvent;
+import java.awt.*;
+import java.util.Arrays;
 
 
 /**
@@ -48,157 +37,117 @@ import javax.swing.event.ChangeEvent;
  *
  * @author Thomas Morgner
  */
-public class BasicFontPropertiesPane extends JPanel
-{
-  private class FontSizeUpdateHandler implements ListSelectionListener, DocumentListener
-  {
+public class BasicFontPropertiesPane extends JPanel {
+  private class FontSizeUpdateHandler implements ListSelectionListener, DocumentListener {
     private boolean inUpdate;
 
-    private FontSizeUpdateHandler()
-    {
+    private FontSizeUpdateHandler() {
     }
 
-    public void valueChanged(final ListSelectionEvent e)
-    {
-      if (inUpdate)
-      {
+    public void valueChanged( final ListSelectionEvent e ) {
+      if ( inUpdate ) {
         return;
       }
-      try
-      {
+      try {
         inUpdate = true;
         final Object value = fontSizeList.getSelectedValue();
-        if (value != null)
-        {
-          fontSizeTextBox.setText(String.valueOf(value));
+        if ( value != null ) {
+          fontSizeTextBox.setText( String.valueOf( value ) );
         }
         fireChangeEvent();
-      }
-      finally
-      {
+      } finally {
         inUpdate = false;
       }
     }
 
-    private void updateFromTextField()
-    {
-      if (inUpdate)
-      {
+    private void updateFromTextField() {
+      if ( inUpdate ) {
         return;
       }
-      try
-      {
+      try {
         inUpdate = true;
         final String value = fontSizeTextBox.getText();
-        if (value != null && value.length() != 0)
-        {
-          try
-          {
-            fontSizeList.setSelectedValue(new Integer(value), true);
-          }
-          catch (final NumberFormatException nfe)
-          {
+        if ( value != null && value.length() != 0 ) {
+          try {
+            fontSizeList.setSelectedValue( new Integer( value ), true );
+          } catch ( final NumberFormatException nfe ) {
             // ignore
           }
           fireChangeEvent();
         }
-      }
-      finally
-      {
+      } finally {
         inUpdate = false;
       }
 
     }
 
-    public void insertUpdate(final DocumentEvent e)
-    {
+    public void insertUpdate( final DocumentEvent e ) {
       updateFromTextField();
     }
 
-    public void removeUpdate(final DocumentEvent e)
-    {
+    public void removeUpdate( final DocumentEvent e ) {
       updateFromTextField();
     }
 
-    public void changedUpdate(final DocumentEvent e)
-    {
+    public void changedUpdate( final DocumentEvent e ) {
       updateFromTextField();
     }
   }
 
-  private class FontNameUpdateHandler implements ListSelectionListener, DocumentListener
-  {
+  private class FontNameUpdateHandler implements ListSelectionListener, DocumentListener {
     private boolean inUpdate;
 
-    private FontNameUpdateHandler()
-    {
+    private FontNameUpdateHandler() {
     }
 
-    public void valueChanged(final ListSelectionEvent e)
-    {
-      if (inUpdate)
-      {
+    public void valueChanged( final ListSelectionEvent e ) {
+      if ( inUpdate ) {
         return;
       }
-      try
-      {
+      try {
         inUpdate = true;
         final Object value = fontFamilyList.getSelectedValue();
-        if (value != null)
-        {
-          fontFamilyTextBox.setText((String) value);
+        if ( value != null ) {
+          fontFamilyTextBox.setText( (String) value );
           fireChangeEvent();
         }
-      }
-      finally
-      {
+      } finally {
         inUpdate = false;
       }
     }
 
-    private void updateFromTextField()
-    {
-      if (inUpdate)
-      {
+    private void updateFromTextField() {
+      if ( inUpdate ) {
         return;
       }
-      try
-      {
+      try {
         inUpdate = true;
         final String value = fontFamilyTextBox.getText();
-        if (value != null && value.length() != 0)
-        {
-          fontFamilyList.setSelectedValue(value, true);
+        if ( value != null && value.length() != 0 ) {
+          fontFamilyList.setSelectedValue( value, true );
         }
         fireChangeEvent();
-      }
-      finally
-      {
+      } finally {
         inUpdate = false;
       }
 
     }
 
-    public void insertUpdate(final DocumentEvent e)
-    {
+    public void insertUpdate( final DocumentEvent e ) {
       updateFromTextField();
     }
 
-    public void removeUpdate(final DocumentEvent e)
-    {
+    public void removeUpdate( final DocumentEvent e ) {
       updateFromTextField();
     }
 
-    public void changedUpdate(final DocumentEvent e)
-    {
+    public void changedUpdate( final DocumentEvent e ) {
       updateFromTextField();
     }
   }
 
-  private class FontStyleUpdateHandler implements ListSelectionListener, ChangeListener
-  {
-    private FontStyleUpdateHandler()
-    {
+  private class FontStyleUpdateHandler implements ListSelectionListener, ChangeListener {
+    private FontStyleUpdateHandler() {
     }
 
     /**
@@ -206,8 +155,7 @@ public class BasicFontPropertiesPane extends JPanel
      *
      * @param e the event that characterizes the change.
      */
-    public void valueChanged(final ListSelectionEvent e)
-    {
+    public void valueChanged( final ListSelectionEvent e ) {
       fireChangeEvent();
     }
 
@@ -216,8 +164,7 @@ public class BasicFontPropertiesPane extends JPanel
      *
      * @param e a ChangeEvent object
      */
-    public void stateChanged(final ChangeEvent e)
-    {
+    public void stateChanged( final ChangeEvent e ) {
       fireChangeEvent();
     }
   }
@@ -232,69 +179,68 @@ public class BasicFontPropertiesPane extends JPanel
   private JCheckBox strikethroughCheckbox;
   private boolean extendedFontPropertiesShowing;
 
-  public BasicFontPropertiesPane()
-  {
+  public BasicFontPropertiesPane() {
     eventListenerList = new EventListenerList();
 
     final FontNameUpdateHandler nameUpdateHandler = new FontNameUpdateHandler();
     fontFamilyTextBox = new JTextField();
-    fontFamilyTextBox.getDocument().addDocumentListener(nameUpdateHandler);
-    fontFamilyList = new JList(createFontNameModel());
-    fontFamilyList.addListSelectionListener(nameUpdateHandler);
+    fontFamilyTextBox.getDocument().addDocumentListener( nameUpdateHandler );
+    fontFamilyList = new JList( createFontNameModel() );
+    fontFamilyList.addListSelectionListener( nameUpdateHandler );
 
     final FontSizeUpdateHandler sizeUpdateHandler = new FontSizeUpdateHandler();
     fontSizeTextBox = new JTextField();
-    fontSizeTextBox.getDocument().addDocumentListener(sizeUpdateHandler);
-    fontSizeList = new JList(createFontSizeModel());
-    fontSizeList.addListSelectionListener(sizeUpdateHandler);
+    fontSizeTextBox.getDocument().addDocumentListener( sizeUpdateHandler );
+    fontSizeList = new JList( createFontSizeModel() );
+    fontSizeList.addListSelectionListener( sizeUpdateHandler );
 
-    fontStyleList = new JList(createFontStyleModel());
-    fontStyleList.getSelectionModel().addListSelectionListener(new FontStyleUpdateHandler());
-    
+    fontStyleList = new JList( createFontStyleModel() );
+    fontStyleList.getSelectionModel().addListSelectionListener( new FontStyleUpdateHandler() );
+
     extendedFontPropertiesShowing = true;
-    underlineCheckbox = new JCheckBox(Messages.getInstance().getString("BasicFontPropertiesPane.Underline"));
-    underlineCheckbox.addChangeListener(new FontStyleUpdateHandler());
-    strikethroughCheckbox = new JCheckBox(Messages.getInstance().getString("BasicFontPropertiesPane.Strikethrough"));
-    strikethroughCheckbox.addChangeListener(new FontStyleUpdateHandler());
+    underlineCheckbox = new JCheckBox( Messages.getInstance().getString( "BasicFontPropertiesPane.Underline" ) );
+    underlineCheckbox.addChangeListener( new FontStyleUpdateHandler() );
+    strikethroughCheckbox =
+      new JCheckBox( Messages.getInstance().getString( "BasicFontPropertiesPane.Strikethrough" ) );
+    strikethroughCheckbox.addChangeListener( new FontStyleUpdateHandler() );
   }
 
-  protected boolean isExtendedFontPropertiesShowing()
-  {
+  protected boolean isExtendedFontPropertiesShowing() {
     return extendedFontPropertiesShowing;
   }
 
-  public void setExtendedFontPropertiesShowing(final boolean extendedFontPropertiesShowing)
-  {
+  public void setExtendedFontPropertiesShowing( final boolean extendedFontPropertiesShowing ) {
     this.extendedFontPropertiesShowing = extendedFontPropertiesShowing;
-    underlineCheckbox.setVisible(extendedFontPropertiesShowing);
-    strikethroughCheckbox.setVisible(extendedFontPropertiesShowing);
+    underlineCheckbox.setVisible( extendedFontPropertiesShowing );
+    strikethroughCheckbox.setVisible( extendedFontPropertiesShowing );
   }
 
-  /** @noinspection ReuseOfLocalVariable*/
-  public void init()
-  {
-    setLayout(new GridBagLayout());
+  /**
+   * @noinspection ReuseOfLocalVariable
+   */
+  public void init() {
+    setLayout( new GridBagLayout() );
 
     GridBagConstraints gbc = new GridBagConstraints();
     gbc.gridx = 0;
     gbc.gridy = 0;
     gbc.anchor = GridBagConstraints.WEST;
-    gbc.insets = new Insets(5, 5, 0, 5);
-    add(new JLabel(Messages.getInstance().getString("BasicFontPropertiesPane.FontFamily")), gbc);
+    gbc.insets = new Insets( 5, 5, 0, 5 );
+    add( new JLabel( Messages.getInstance().getString( "BasicFontPropertiesPane.FontFamily" ) ), gbc );
 
     gbc = new GridBagConstraints();
     gbc.gridx = 1;
     gbc.gridy = 0;
     gbc.anchor = GridBagConstraints.WEST;
-    gbc.insets = new Insets(5, 5, 0, 5);
-    add(new JLabel(Messages.getInstance().getString("BasicFontPropertiesPane.FontStyle")), gbc);
+    gbc.insets = new Insets( 5, 5, 0, 5 );
+    add( new JLabel( Messages.getInstance().getString( "BasicFontPropertiesPane.FontStyle" ) ), gbc );
 
     gbc = new GridBagConstraints();
     gbc.gridx = 2;
     gbc.gridy = 0;
     gbc.anchor = GridBagConstraints.WEST;
-    gbc.insets = new Insets(5, 5, 0, 5);
-    add(new JLabel(Messages.getInstance().getString("BasicFontPropertiesPane.FontSize")), gbc);
+    gbc.insets = new Insets( 5, 5, 0, 5 );
+    add( new JLabel( Messages.getInstance().getString( "BasicFontPropertiesPane.FontSize" ) ), gbc );
 
     gbc = new GridBagConstraints();
     gbc.gridx = 0;
@@ -302,8 +248,8 @@ public class BasicFontPropertiesPane extends JPanel
     gbc.anchor = GridBagConstraints.WEST;
     gbc.fill = GridBagConstraints.HORIZONTAL;
     gbc.weightx = 1;
-    gbc.insets = new Insets(5, 5, 0, 5);
-    add(fontFamilyTextBox, gbc);
+    gbc.insets = new Insets( 5, 5, 0, 5 );
+    add( fontFamilyTextBox, gbc );
 
     gbc = new GridBagConstraints();
     gbc.gridx = 0;
@@ -312,8 +258,8 @@ public class BasicFontPropertiesPane extends JPanel
     gbc.fill = GridBagConstraints.BOTH;
     gbc.weightx = 1;
     gbc.weighty = 1;
-    gbc.insets = new Insets(0, 5, 5, 5);
-    add(new JScrollPane(fontFamilyList), gbc);
+    gbc.insets = new Insets( 0, 5, 5, 5 );
+    add( new JScrollPane( fontFamilyList ), gbc );
 
     gbc = new GridBagConstraints();
     gbc.gridx = 1;
@@ -323,8 +269,8 @@ public class BasicFontPropertiesPane extends JPanel
     gbc.anchor = GridBagConstraints.WEST;
     gbc.weightx = 1;
     gbc.weighty = 1;
-    gbc.insets = new Insets(5, 5, 5, 5);
-    add(new JScrollPane(fontStyleList), gbc);
+    gbc.insets = new Insets( 5, 5, 5, 5 );
+    add( new JScrollPane( fontStyleList ), gbc );
 
     gbc = new GridBagConstraints();
     gbc.gridx = 2;
@@ -332,8 +278,8 @@ public class BasicFontPropertiesPane extends JPanel
     gbc.anchor = GridBagConstraints.WEST;
     gbc.fill = GridBagConstraints.HORIZONTAL;
     gbc.weightx = 1;
-    gbc.insets = new Insets(5, 5, 0, 5);
-    add(fontSizeTextBox, gbc);
+    gbc.insets = new Insets( 5, 5, 0, 5 );
+    add( fontSizeTextBox, gbc );
 
     gbc = new GridBagConstraints();
     gbc.gridx = 2;
@@ -342,37 +288,35 @@ public class BasicFontPropertiesPane extends JPanel
     gbc.fill = GridBagConstraints.BOTH;
     gbc.weightx = 1;
     gbc.weighty = 1;
-    gbc.insets = new Insets(0, 5, 5, 5);
-    add(new JScrollPane(fontSizeList), gbc);
+    gbc.insets = new Insets( 0, 5, 5, 5 );
+    add( new JScrollPane( fontSizeList ), gbc );
 
     gbc = new GridBagConstraints();
     gbc.gridx = 0;
     gbc.gridy = 3;
     gbc.anchor = GridBagConstraints.WEST;
-    gbc.insets = new Insets(0, 5, 0, 5);
-    add(underlineCheckbox, gbc);
+    gbc.insets = new Insets( 0, 5, 0, 5 );
+    add( underlineCheckbox, gbc );
 
     gbc = new GridBagConstraints();
     gbc.gridx = 0;
     gbc.gridy = 4;
     gbc.anchor = GridBagConstraints.WEST;
-    gbc.insets = new Insets(0, 5, 0, 5);
-    add(strikethroughCheckbox, gbc);
+    gbc.insets = new Insets( 0, 5, 0, 5 );
+    add( strikethroughCheckbox, gbc );
 
     final Component aliasPane = createAliasPanel();
-    if (aliasPane != null)
-    {
+    if ( aliasPane != null ) {
       gbc = new GridBagConstraints();
       gbc.gridx = 1;
       gbc.gridy = 4;
       gbc.gridwidth = 2;
       gbc.anchor = GridBagConstraints.WEST;
-      gbc.insets = new Insets(0, 5, 0, 5);
-      add(aliasPane, gbc);
+      gbc.insets = new Insets( 0, 5, 0, 5 );
+      add( aliasPane, gbc );
     }
     final JComponent previewPane = createPreviewPane();
-    if (previewPane != null)
-    {
+    if ( previewPane != null ) {
       gbc = new GridBagConstraints();
       gbc.gridx = 0;
       gbc.gridy = 5;
@@ -381,118 +325,93 @@ public class BasicFontPropertiesPane extends JPanel
       gbc.weightx = 1;
       gbc.weighty = 1;
       gbc.fill = GridBagConstraints.BOTH;
-      gbc.insets = new Insets(5, 5, 5, 5);
-      add(previewPane, gbc);
+      gbc.insets = new Insets( 5, 5, 5, 5 );
+      add( previewPane, gbc );
     }
   }
 
-  public String getFontFamily()
-  {
+  public String getFontFamily() {
     return fontFamilyTextBox.getText();
   }
 
-  public void setFontFamily(final String fontFamily)
-  {
-    this.fontFamilyTextBox.setText(fontFamily);
+  public void setFontFamily( final String fontFamily ) {
+    this.fontFamilyTextBox.setText( fontFamily );
   }
 
-  public int getFontSize()
-  {
-    try
-    {
-      return Integer.parseInt(fontSizeTextBox.getText());
+  public int getFontSize() {
+    try {
+      return Integer.parseInt( fontSizeTextBox.getText() );
 
-    }
-    catch (final NumberFormatException nfe)
-    {
+    } catch ( final NumberFormatException nfe ) {
       // ignore exception
       return 10;
     }
   }
 
-  public void setFontSize(final int fontSize)
-  {
-    this.fontSizeTextBox.setText(String.valueOf(fontSize));
+  public void setFontSize( final int fontSize ) {
+    this.fontSizeTextBox.setText( String.valueOf( fontSize ) );
   }
 
-  public int getFontStyle()
-  {
+  public int getFontStyle() {
     final int index = fontStyleList.getSelectedIndex();
-    if (index < 0 || index > 3)
-    {
+    if ( index < 0 || index > 3 ) {
       return 0;
     }
     return index;
   }
 
-  public void setFontStyle(final int fontStyle)
-  {
-    if (fontStyle < 0 || fontStyle > 3)
-    {
-      this.fontStyleList.setSelectedIndex(0);
-    }
-    else
-    {
-      this.fontStyleList.setSelectedIndex(fontStyle);
+  public void setFontStyle( final int fontStyle ) {
+    if ( fontStyle < 0 || fontStyle > 3 ) {
+      this.fontStyleList.setSelectedIndex( 0 );
+    } else {
+      this.fontStyleList.setSelectedIndex( fontStyle );
     }
   }
 
-  public boolean isUnderlined()
-  {
+  public boolean isUnderlined() {
     return underlineCheckbox.isSelected();
   }
 
-  public void setUnderlined(final boolean underlined)
-  {
-    this.underlineCheckbox.setSelected(underlined);
+  public void setUnderlined( final boolean underlined ) {
+    this.underlineCheckbox.setSelected( underlined );
   }
 
-  public boolean isStrikeThrough()
-  {
+  public boolean isStrikeThrough() {
     return strikethroughCheckbox.isSelected();
   }
 
-  public void setStrikeThrough(final boolean strikeThrough)
-  {
-    this.strikethroughCheckbox.setSelected(strikeThrough);
+  public void setStrikeThrough( final boolean strikeThrough ) {
+    this.strikethroughCheckbox.setSelected( strikeThrough );
   }
 
-  protected JComponent createPreviewPane()
-  {
+  protected JComponent createPreviewPane() {
     return null;
   }
 
-  protected Component createAliasPanel()
-  {
+  protected Component createAliasPanel() {
     return null;
   }
 
-  public void addChangeListener(final ChangeListener changeListener)
-  {
-    if (changeListener == null)
-    {
+  public void addChangeListener( final ChangeListener changeListener ) {
+    if ( changeListener == null ) {
       throw new NullPointerException();
     }
-    eventListenerList.add(ChangeListener.class, changeListener);
+    eventListenerList.add( ChangeListener.class, changeListener );
   }
 
-  public void removeChangeListener (final ChangeListener changeListener)
-  {
-    if (changeListener == null)
-    {
+  public void removeChangeListener( final ChangeListener changeListener ) {
+    if ( changeListener == null ) {
       throw new NullPointerException();
     }
-    eventListenerList.remove(ChangeListener.class, changeListener);
+    eventListenerList.remove( ChangeListener.class, changeListener );
   }
 
-  protected void fireChangeEvent()
-  {
-    final ChangeEvent event = new ChangeEvent(this);
-    final ChangeListener[] changeListeners = eventListenerList.getListeners(ChangeListener.class);
-    for (int i = 0; i < changeListeners.length; i++)
-    {
-      final ChangeListener changeListener = changeListeners[i];
-      changeListener.stateChanged(event);
+  protected void fireChangeEvent() {
+    final ChangeEvent event = new ChangeEvent( this );
+    final ChangeListener[] changeListeners = eventListenerList.getListeners( ChangeListener.class );
+    for ( int i = 0; i < changeListeners.length; i++ ) {
+      final ChangeListener changeListener = changeListeners[ i ];
+      changeListener.stateChanged( event );
     }
   }
 
@@ -501,38 +420,33 @@ public class BasicFontPropertiesPane extends JPanel
    *
    * @return
    */
-  private DefaultListModel createFontStyleModel()
-  {
+  private DefaultListModel createFontStyleModel() {
     final DefaultListModel model = new DefaultListModel();
-    model.addElement(Messages.getInstance().getString("BasicFontPropertiesPane.FontStylePlain"));
-    model.addElement(Messages.getInstance().getString("BasicFontPropertiesPane.FontStyleBold"));
-    model.addElement(Messages.getInstance().getString("BasicFontPropertiesPane.FontStyleItalics"));
-    model.addElement(Messages.getInstance().getString("BasicFontPropertiesPane.FontStyleBoldItalics"));
+    model.addElement( Messages.getInstance().getString( "BasicFontPropertiesPane.FontStylePlain" ) );
+    model.addElement( Messages.getInstance().getString( "BasicFontPropertiesPane.FontStyleBold" ) );
+    model.addElement( Messages.getInstance().getString( "BasicFontPropertiesPane.FontStyleItalics" ) );
+    model.addElement( Messages.getInstance().getString( "BasicFontPropertiesPane.FontStyleBoldItalics" ) );
     return model;
   }
 
-  private DefaultListModel createFontNameModel()
-  {
+  private DefaultListModel createFontNameModel() {
     final String[] availableFontFamilyNames =
-        GraphicsEnvironment.getLocalGraphicsEnvironment().getAvailableFontFamilyNames();
-    Arrays.sort(availableFontFamilyNames);
+      GraphicsEnvironment.getLocalGraphicsEnvironment().getAvailableFontFamilyNames();
+    Arrays.sort( availableFontFamilyNames );
     final DefaultListModel retval = new DefaultListModel();
-    for (int i = 0; i < availableFontFamilyNames.length; i++)
-    {
-      final String familyName = availableFontFamilyNames[i];
-      retval.addElement(familyName);
+    for ( int i = 0; i < availableFontFamilyNames.length; i++ ) {
+      final String familyName = availableFontFamilyNames[ i ];
+      retval.addElement( familyName );
     }
     return retval;
   }
 
-  private DefaultListModel createFontSizeModel()
-  {
-    final Integer[] fontSizes = new Integer[]{6, 8, 10, 12, 14, 16, 18, 20, 24, 28, 32, 36, 48, 72};
+  private DefaultListModel createFontSizeModel() {
+    final Integer[] fontSizes = new Integer[] { 6, 8, 10, 12, 14, 16, 18, 20, 24, 28, 32, 36, 48, 72 };
     final DefaultListModel retval = new DefaultListModel();
-    for (int i = 0; i < fontSizes.length; i++)
-    {
-      final Integer fontSize = fontSizes[i];
-      retval.addElement(fontSize);
+    for ( int i = 0; i < fontSizes.length; i++ ) {
+      final Integer fontSize = fontSizes[ i ];
+      retval.addElement( fontSize );
     }
     return retval;
   }

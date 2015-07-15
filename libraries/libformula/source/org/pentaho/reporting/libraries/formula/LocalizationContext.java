@@ -17,6 +17,8 @@
 
 package org.pentaho.reporting.libraries.formula;
 
+import org.pentaho.reporting.libraries.formula.typing.Type;
+
 import java.text.DateFormat;
 import java.text.NumberFormat;
 import java.util.List;
@@ -24,13 +26,14 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.TimeZone;
 
-import org.pentaho.reporting.libraries.formula.typing.Type;
-
-public interface LocalizationContext
-{
+public interface LocalizationContext {
   public Locale getLocale();
-  public ResourceBundle getBundle (String id);
+
+  public ResourceBundle getBundle( String id );
+
   public TimeZone getTimeZone();
-  public List<DateFormat> getDateFormats(Type type);
+
+  public List<DateFormat> getDateFormats( Type type );
+
   public List<NumberFormat> getNumberFormats();
 }

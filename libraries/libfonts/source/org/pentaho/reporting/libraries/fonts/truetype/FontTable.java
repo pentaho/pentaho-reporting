@@ -22,7 +22,6 @@ package org.pentaho.reporting.libraries.fonts.truetype;
  *
  * @author Thomas Morgner
  */
-public interface FontTable
-{
+public interface FontTable {
   public long getName();
 }

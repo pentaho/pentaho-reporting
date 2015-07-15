@@ -27,37 +27,30 @@ import org.pentaho.reporting.libraries.base.versioning.ProjectInformation;
  *
  * @author Thomas Morgner
  */
-public class LibFormulaBoot extends AbstractBoot
-{
+public class LibFormulaBoot extends AbstractBoot {
   public static final int GLOBAL_SCALE = 40;
   private static LibFormulaBoot instance;
 
-  public static synchronized LibFormulaBoot getInstance()
-  {
-    if (instance == null)
-    {
+  public static synchronized LibFormulaBoot getInstance() {
+    if ( instance == null ) {
       instance = new LibFormulaBoot();
     }
     return instance;
   }
 
-  private LibFormulaBoot()
-  {
+  private LibFormulaBoot() {
   }
 
-  protected Configuration loadConfiguration()
-  {
+  protected Configuration loadConfiguration() {
     return createDefaultHierarchicalConfiguration
-            ("/org/pentaho/reporting/libraries/formula/libformula.properties",
-             "/libformula.properties", true, LibFormulaBoot.class);
+      ( "/org/pentaho/reporting/libraries/formula/libformula.properties",
+        "/libformula.properties", true, LibFormulaBoot.class );
   }
 
-  protected void performBoot()
-  {
+  protected void performBoot() {
   }
 
-  protected ProjectInformation getProjectInfo()
-  {
+  protected ProjectInformation getProjectInfo() {
     return LibFormulaInfo.getInstance();
   }
 }

@@ -24,8 +24,7 @@ import org.pentaho.reporting.libraries.css.values.CSSConstant;
  *
  * @author Thomas Morgner
  */
-public class ListStyleTypeAlgorithmic
-{
+public class ListStyleTypeAlgorithmic {
   // armenian | cjk-ideographic | ethiopic-numeric | georgian |
   // hebrew | japanese-formal | japanese-informal |   lower-armenian |
   // lower-roman | simp-chinese-formal | simp-chinese-informal |
@@ -33,41 +32,40 @@ public class ListStyleTypeAlgorithmic
   // upper-armenian | upper-roman
 
   public static final CSSConstant ARMENIAN =
-      new CSSConstant("armenian");
+    new CSSConstant( "armenian" );
   public static final CSSConstant CJK_IDEOGRAPHIC =
-      new CSSConstant("cjk-ideographic");
+    new CSSConstant( "cjk-ideographic" );
   public static final CSSConstant ETHIOPIC_NUMERIC =
-      new CSSConstant("ethiopic-numeric");
+    new CSSConstant( "ethiopic-numeric" );
   public static final CSSConstant GEORGIAN =
-      new CSSConstant("georgian");
+    new CSSConstant( "georgian" );
   public static final CSSConstant HEBREW =
-      new CSSConstant("hebrew");
+    new CSSConstant( "hebrew" );
   public static final CSSConstant JAPANESE_FORMAL =
-      new CSSConstant("japanese-formal");
+    new CSSConstant( "japanese-formal" );
   public static final CSSConstant JAPANESE_INFORMAL =
-      new CSSConstant("japanese-informal");
+    new CSSConstant( "japanese-informal" );
   public static final CSSConstant LOWER_ARMENIAN =
-      new CSSConstant("lower-armenian");
+    new CSSConstant( "lower-armenian" );
   public static final CSSConstant LOWER_ROMAN =
-      new CSSConstant("lower-roman");
+    new CSSConstant( "lower-roman" );
   public static final CSSConstant SIMP_CHINESE_FORMAL =
-      new CSSConstant("simp-chinese-formal");
+    new CSSConstant( "simp-chinese-formal" );
   public static final CSSConstant SIMP_CHINESE_INFORMAL =
-      new CSSConstant("simp-chinese-informal");
+    new CSSConstant( "simp-chinese-informal" );
   public static final CSSConstant TRAD_CHINESE_FORMAL =
-      new CSSConstant("trad-chinese-formal");
+    new CSSConstant( "trad-chinese-formal" );
   public static final CSSConstant TRAD_CHINESE_INFORMAL =
-      new CSSConstant("trad-chinese-informal");
+    new CSSConstant( "trad-chinese-informal" );
   public static final CSSConstant UPPER_ARMENIAN =
-      new CSSConstant("upper-armenian");
+    new CSSConstant( "upper-armenian" );
   public static final CSSConstant UPPER_ROMAN =
-      new CSSConstant("upper-roman");
+    new CSSConstant( "upper-roman" );
   public static final CSSConstant SYRIAC =
-      new CSSConstant("syriac");
+    new CSSConstant( "syriac" );
   public static final CSSConstant TAMIL =
-      new CSSConstant("tamil");
+    new CSSConstant( "tamil" );
 
-  private ListStyleTypeAlgorithmic()
-  {
+  private ListStyleTypeAlgorithmic() {
   }
 }

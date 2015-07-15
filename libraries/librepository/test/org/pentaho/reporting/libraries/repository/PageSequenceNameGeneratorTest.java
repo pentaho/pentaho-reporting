@@ -17,17 +17,15 @@
 
 package org.pentaho.reporting.libraries.repository;
 
-import java.util.HashSet;
-
 import junit.framework.TestCase;
 import org.pentaho.reporting.libraries.repository.dummy.DummyContentLocation;
 import org.pentaho.reporting.libraries.repository.dummy.DummyRepository;
 
-@SuppressWarnings("HardCodedStringLiteral")
-public class PageSequenceNameGeneratorTest extends TestCase
-{
-  private class TestLocation extends DummyContentLocation
-  {
+import java.util.HashSet;
+
+@SuppressWarnings( "HardCodedStringLiteral" )
+public class PageSequenceNameGeneratorTest extends TestCase {
+  private class TestLocation extends DummyContentLocation {
     private HashSet<String> names;
 
     /**
@@ -35,15 +33,13 @@ public class PageSequenceNameGeneratorTest extends TestCase
      *
      * @param name the name of this location.
      */
-    private TestLocation(final String name)
-    {
-      super(new DummyRepository(), name);
+    private TestLocation( final String name ) {
+      super( new DummyRepository(), name );
       names = new HashSet<String>();
     }
 
-    public void addExistingLocation(final String name)
-    {
-      names.add(name);
+    public void addExistingLocation( final String name ) {
+      names.add( name );
     }
 
     /**
@@ -52,52 +48,42 @@ public class PageSequenceNameGeneratorTest extends TestCase
      * @param name the name of the item.
      * @return false.
      */
-    public boolean exists(final String name)
-    {
-      return names.contains(name);
+    public boolean exists( final String name ) {
+      return names.contains( name );
     }
   }
 
-  public PageSequenceNameGeneratorTest()
-  {
+  public PageSequenceNameGeneratorTest() {
   }
 
-  public void testSequenceCounting() throws ContentIOException
-  {
-    final TestLocation testLocation = new TestLocation("name");
-    final PageSequenceNameGenerator gen = new PageSequenceNameGenerator(testLocation, "test-file", "data");
+  public void testSequenceCounting() throws ContentIOException {
+    final TestLocation testLocation = new TestLocation( "name" );
+    final PageSequenceNameGenerator gen = new PageSequenceNameGenerator( testLocation, "test-file", "data" );
 
-    assertEquals("test-file-0.data", gen.generateName(null, "application/x-binary (not used)"));
-    assertEquals("test-file-1.data", gen.generateName(null, "application/x-binary (not used)"));
-    assertEquals("test-file-2.data", gen.generateName(null, "application/x-binary (not used)"));
+    assertEquals( "test-file-0.data", gen.generateName( null, "application/x-binary (not used)" ) );
+    assertEquals( "test-file-1.data", gen.generateName( null, "application/x-binary (not used)" ) );
+    assertEquals( "test-file-2.data", gen.generateName( null, "application/x-binary (not used)" ) );
   }
 
-  public void testSequenceCountingError() throws ContentIOException
-  {
-    final TestLocation testLocation = new TestLocation("name");
-    testLocation.addExistingLocation("test-file-2.data");
-    final PageSequenceNameGenerator gen = new PageSequenceNameGenerator(testLocation, "test-file", "data");
+  public void testSequenceCountingError() throws ContentIOException {
+    final TestLocation testLocation = new TestLocation( "name" );
+    testLocation.addExistingLocation( "test-file-2.data" );
+    final PageSequenceNameGenerator gen = new PageSequenceNameGenerator( testLocation, "test-file", "data" );
 
-    assertEquals("test-file-0.data", gen.generateName(null, "application/x-binary (not used)"));
-    assertEquals("test-file-1.data", gen.generateName(null, "application/x-binary (not used)"));
-    try
-    {
-      assertEquals("test-file-2.data", gen.generateName(null, "application/x-binary (not used)"));
+    assertEquals( "test-file-0.data", gen.generateName( null, "application/x-binary (not used)" ) );
+    assertEquals( "test-file-1.data", gen.generateName( null, "application/x-binary (not used)" ) );
+    try {
+      assertEquals( "test-file-2.data", gen.generateName( null, "application/x-binary (not used)" ) );
       fail();
-    }
-    catch (ContentIOException e)
-    {
+    } catch ( ContentIOException e ) {
       // expected
     }
 
-    try
-    {
-      assertEquals("test-file-2.data", gen.generateName(null, "application/x-binary (not used)"));
+    try {
+      assertEquals( "test-file-2.data", gen.generateName( null, "application/x-binary (not used)" ) );
       fail();
       // continue to fail
-    }
-    catch (ContentIOException e)
-    {
+    } catch ( ContentIOException e ) {
       // expected
     }
   }

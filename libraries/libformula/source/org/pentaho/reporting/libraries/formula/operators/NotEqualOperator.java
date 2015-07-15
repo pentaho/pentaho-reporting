@@ -17,11 +17,11 @@
 
 package org.pentaho.reporting.libraries.formula.operators;
 
-import org.pentaho.reporting.libraries.formula.lvalues.TypeValuePair;
 import org.pentaho.reporting.libraries.formula.EvaluationException;
 import org.pentaho.reporting.libraries.formula.FormulaContext;
-import org.pentaho.reporting.libraries.formula.typing.TypeRegistry;
+import org.pentaho.reporting.libraries.formula.lvalues.TypeValuePair;
 import org.pentaho.reporting.libraries.formula.typing.ExtendedComparator;
+import org.pentaho.reporting.libraries.formula.typing.TypeRegistry;
 import org.pentaho.reporting.libraries.formula.typing.coretypes.LogicalType;
 
 /**
@@ -29,70 +29,58 @@ import org.pentaho.reporting.libraries.formula.typing.coretypes.LogicalType;
  *
  * @author Thomas Morgner
  */
-public class NotEqualOperator implements InfixOperator
-{
-  private static final TypeValuePair RETURN_TRUE = new TypeValuePair(LogicalType.TYPE, Boolean.TRUE);
-  private static final TypeValuePair RETURN_FALSE = new TypeValuePair(LogicalType.TYPE, Boolean.FALSE);
+public class NotEqualOperator implements InfixOperator {
+  private static final TypeValuePair RETURN_TRUE = new TypeValuePair( LogicalType.TYPE, Boolean.TRUE );
+  private static final TypeValuePair RETURN_FALSE = new TypeValuePair( LogicalType.TYPE, Boolean.FALSE );
   private static final long serialVersionUID = -3928772250539654675L;
 
-  public NotEqualOperator()
-  {
+  public NotEqualOperator() {
   }
 
-  public TypeValuePair evaluate(final FormulaContext context,
-                                final TypeValuePair value1, final TypeValuePair value2)
-      throws EvaluationException
-  {
+  public TypeValuePair evaluate( final FormulaContext context,
+                                 final TypeValuePair value1, final TypeValuePair value2 )
+    throws EvaluationException {
     final TypeRegistry typeRegistry = context.getTypeRegistry();
 
     final ExtendedComparator comparator =
-        typeRegistry.getComparator(value1.getType(), value2.getType());
+      typeRegistry.getComparator( value1.getType(), value2.getType() );
     final boolean result = comparator.isEqual
-        (value1.getType(), value1.getValue(),
-            value2.getType(), value2.getValue());
+      ( value1.getType(), value1.getValue(),
+        value2.getType(), value2.getValue() );
 
-    if (result == false)
-    {
+    if ( result == false ) {
       return RETURN_TRUE;
-    }
-    else
-    {
+    } else {
       return RETURN_FALSE;
     }
   }
 
-  public int getLevel()
-  {
+  public int getLevel() {
     return 400;
   }
 
-  public String toString()
-  {
+  public String toString() {
     return "<>";
   }
 
   /**
-   * Defines the bind-direction of the operator. That direction defines, in
-   * which direction a sequence of equal operators is resolved.
+   * Defines the bind-direction of the operator. That direction defines, in which direction a sequence of equal
+   * operators is resolved.
    *
    * @return true, if the operation is left-binding, false if right-binding
    */
-  public boolean isLeftOperation()
-  {
+  public boolean isLeftOperation() {
     return true;
   }
 
   /**
-   * Defines, whether the operation is associative. For associative operations,
-   * the evaluation order does not matter, if the operation appears more than
-   * once in an expression, and therefore we can optimize them a lot better than
-   * non-associative operations (ie. merge constant parts and precompute them
-   * once).
+   * Defines, whether the operation is associative. For associative operations, the evaluation order does not matter, if
+   * the operation appears more than once in an expression, and therefore we can optimize them a lot better than
+   * non-associative operations (ie. merge constant parts and precompute them once).
    *
    * @return true, if the operation is associative, false otherwise
    */
-  public boolean isAssociative()
-  {
+  public boolean isAssociative() {
     return false;
   }
 

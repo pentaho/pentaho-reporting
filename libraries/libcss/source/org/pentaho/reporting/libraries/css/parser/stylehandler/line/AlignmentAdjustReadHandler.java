@@ -30,38 +30,32 @@ import org.w3c.css.sac.LexicalUnit;
  *
  * @author Thomas Morgner
  */
-public class AlignmentAdjustReadHandler extends OneOfConstantsReadHandler
-{
-  public AlignmentAdjustReadHandler()
-  {
-    super(true);
-    addValue(AlignmentAdjust.AFTER_EDGE);
-    addValue(AlignmentAdjust.ALPHABETIC);
-    addValue(AlignmentAdjust.CENTRAL);
-    addValue(AlignmentAdjust.HANGING);
-    addValue(AlignmentAdjust.IDEOGRAPHIC);
-    addValue(AlignmentAdjust.MATHEMATICAL);
-    addValue(AlignmentAdjust.MIDDLE);
-    addValue(AlignmentAdjust.BEFORE_EDGE);
-    addValue(AlignmentAdjust.TEXT_AFTER_EDGE);
-    addValue(AlignmentAdjust.TEXT_BEFORE_EDGE);
-    addValue(AlignmentAdjust.BASELINE);
+public class AlignmentAdjustReadHandler extends OneOfConstantsReadHandler {
+  public AlignmentAdjustReadHandler() {
+    super( true );
+    addValue( AlignmentAdjust.AFTER_EDGE );
+    addValue( AlignmentAdjust.ALPHABETIC );
+    addValue( AlignmentAdjust.CENTRAL );
+    addValue( AlignmentAdjust.HANGING );
+    addValue( AlignmentAdjust.IDEOGRAPHIC );
+    addValue( AlignmentAdjust.MATHEMATICAL );
+    addValue( AlignmentAdjust.MIDDLE );
+    addValue( AlignmentAdjust.BEFORE_EDGE );
+    addValue( AlignmentAdjust.TEXT_AFTER_EDGE );
+    addValue( AlignmentAdjust.TEXT_BEFORE_EDGE );
+    addValue( AlignmentAdjust.BASELINE );
   }
 
-  protected CSSValue lookupValue(final LexicalUnit value)
-  {
-    CSSValue constant = super.lookupValue(value);
-    if (constant != null)
-    {
+  protected CSSValue lookupValue( final LexicalUnit value ) {
+    CSSValue constant = super.lookupValue( value );
+    if ( constant != null ) {
       return constant;
-    }
-    else if (value.getLexicalUnitType() == LexicalUnit.SAC_PERCENTAGE)
-    {
-      return CSSNumericValue.createValue(CSSNumericType.PERCENTAGE,
-          value.getFloatValue());
+    } else if ( value.getLexicalUnitType() == LexicalUnit.SAC_PERCENTAGE ) {
+      return CSSNumericValue.createValue( CSSNumericType.PERCENTAGE,
+        value.getFloatValue() );
     }
 
-    return CSSValueFactory.createLengthValue(value);
+    return CSSValueFactory.createLengthValue( value );
 
   }
 }

@@ -24,96 +24,79 @@ import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
  *
  * @author Thomas Morgner
  */
-public class CSSNumericValue implements CSSValue
-{
+public class CSSNumericValue implements CSSValue {
   /**
    *
    */
   private static final long serialVersionUID = 3906005900395358108L;
 
-  public static final CSSNumericValue ZERO_LENGTH = CSSNumericValue.createValue(CSSNumericType.PT, 0);
+  public static final CSSNumericValue ZERO_LENGTH = CSSNumericValue.createValue( CSSNumericType.PT, 0 );
 
   private double value;
   private CSSNumericType type;
 
-  protected CSSNumericValue(final CSSNumericType type, final double value)
-  {
-    if (type == null)
-    {
+  protected CSSNumericValue( final CSSNumericType type, final double value ) {
+    if ( type == null ) {
       throw new NullPointerException();
     }
     this.type = type;
     this.value = value;
   }
 
-  public double getValue()
-  {
+  public double getValue() {
     return value;
   }
 
-  public CSSType getType()
-  {
+  public CSSType getType() {
     return type;
   }
 
-  public CSSNumericType getNumericType()
-  {
+  public CSSNumericType getNumericType() {
     return type;
   }
 
-  public String getCSSText()
-  {
+  public String getCSSText() {
     final String typeText = type.getType();
     final double value = getValue();
-    if (typeText.length() == 0)
-    {
-      if (Math.floor(value) == value)
-      {
-        return String.valueOf((long) value);
+    if ( typeText.length() == 0 ) {
+      if ( Math.floor( value ) == value ) {
+        return String.valueOf( (long) value );
       }
-      return String.valueOf(value);
+      return String.valueOf( value );
     }
 
-    if (Math.floor(value) == value)
-    {
-      return String.valueOf((long) value) + typeText; //$NON-NLS-1$
+    if ( Math.floor( value ) == value ) {
+      return String.valueOf( (long) value ) + typeText; //$NON-NLS-1$
     }
     return value + typeText; //$NON-NLS-1$
   }
 
-  public String toString()
-  {
+  public String toString() {
     return getCSSText();
   }
 
-  public static CSSNumericValue createPtValue(final double value)
-  {
-    return new CSSNumericValue(CSSNumericType.PT, value);
+  public static CSSNumericValue createPtValue( final double value ) {
+    return new CSSNumericValue( CSSNumericType.PT, value );
   }
 
-  public static CSSNumericValue createValue(final CSSNumericType type,
-                                            final double value)
-  {
-    return new CSSNumericValue(type, value);
+  public static CSSNumericValue createValue( final CSSNumericType type,
+                                             final double value ) {
+    return new CSSNumericValue( type, value );
   }
 
   /**
    * Compares the input obj parameter to the current object and returns true if equal.
    */
-  public boolean equals(Object obj)
-  {
-    if (obj instanceof CSSNumericValue == false)
-    {
+  public boolean equals( Object obj ) {
+    if ( obj instanceof CSSNumericValue == false ) {
       return false;
     }
 
     final CSSNumericValue that = (CSSNumericValue) obj;
-    if (this.value != that.value)
-    {
+    if ( this.value != that.value ) {
       return false;
     }
-    if (!ObjectUtilities.equal(this.type, that.type))
-    {
+    if ( !ObjectUtilities.equal( this.type, that.type ) ) {
       return false;
     }
     return true;

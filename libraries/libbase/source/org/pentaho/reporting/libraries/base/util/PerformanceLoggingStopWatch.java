@@ -19,21 +19,20 @@ package org.pentaho.reporting.libraries.base.util;
 
 import java.io.Closeable;
 
-public interface PerformanceLoggingStopWatch extends Closeable
-{
+public interface PerformanceLoggingStopWatch extends Closeable {
   long getLoggingThreshold();
 
-  void setLoggingThreshold(long loggingThreshold);
+  void setLoggingThreshold( long loggingThreshold );
 
   String getTag();
 
   Object getMessage();
 
-  void setMessage(Object message);
+  void setMessage( Object message );
 
   void start();
 
-  void stop(boolean pause);
+  void stop( boolean pause );
 
   long getRestartCount();
 

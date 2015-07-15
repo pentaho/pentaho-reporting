@@ -24,12 +24,10 @@ import org.pentaho.reporting.libraries.css.values.CSSConstant;
  *
  * @author Thomas Morgner
  */
-public class BackgroundClip
-{
-  public static final CSSConstant BORDER = new CSSConstant("border");
-  public static final CSSConstant PADDING = new CSSConstant("padding");
+public class BackgroundClip {
+  public static final CSSConstant BORDER = new CSSConstant( "border" );
+  public static final CSSConstant PADDING = new CSSConstant( "padding" );
 
-  private BackgroundClip()
-  {
+  private BackgroundClip() {
   }
 }

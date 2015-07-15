@@ -24,12 +24,10 @@ import org.pentaho.reporting.libraries.css.values.CSSConstant;
  *
  * @author Thomas Morgner
  */
-public class MoveToValues
-{
-  public static final CSSConstant HERE = new CSSConstant("here");
-  public static final CSSConstant NORMAL = new CSSConstant("normal");
+public class MoveToValues {
+  public static final CSSConstant HERE = new CSSConstant( "here" );
+  public static final CSSConstant NORMAL = new CSSConstant( "normal" );
 
-  private MoveToValues()
-  {
+  private MoveToValues() {
   }
 }

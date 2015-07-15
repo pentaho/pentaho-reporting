@@ -17,28 +17,25 @@
 
 package org.pentaho.reporting.libraries.formula.function.math;
 
-import java.math.BigDecimal;
-
 import org.pentaho.reporting.libraries.formula.FormulaTestBase;
+
+import java.math.BigDecimal;
 
 /**
  * @author Cedric Pronzato
  */
-public class SumFunctionTest extends FormulaTestBase
-{
-  public void testDefault() throws Exception
-  {
+public class SumFunctionTest extends FormulaTestBase {
+  public void testDefault() throws Exception {
     runDefaultTest();
   }
 
-  public Object[][] createDataTest()
-  {
+  public Object[][] createDataTest() {
     return new Object[][]
-        {
-            {"SUM(1;2;3)", new BigDecimal(6)},
-            {"SUM(TRUE();2;3)", new BigDecimal(6)},
-            {"SUM({3|2|1})", new BigDecimal(6)},
-            //TODO operator not yet supported { "SUM([.B4:.B5])", new BigDecimal(5)},
-        };
+      {
+        { "SUM(1;2;3)", new BigDecimal( 6 ) },
+        { "SUM(TRUE();2;3)", new BigDecimal( 6 ) },
+        { "SUM({3|2|1})", new BigDecimal( 6 ) },
+        //TODO operator not yet supported { "SUM([.B4:.B5])", new BigDecimal(5)},
+      };
   }
 }

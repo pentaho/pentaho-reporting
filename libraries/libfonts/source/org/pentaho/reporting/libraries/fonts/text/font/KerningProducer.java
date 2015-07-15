@@ -24,13 +24,12 @@ import org.pentaho.reporting.libraries.fonts.text.ClassificationProducer;
  *
  * @author Thomas Morgner
  */
-public interface KerningProducer extends ClassificationProducer
-{
+public interface KerningProducer extends ClassificationProducer {
   /**
    * Returns the kerning to the previous character (unit is micro-point).
-   * 
+   *
    * @param codePoint
    * @return
    */
-  public long getKerning (final int codePoint);
+  public long getKerning( final int codePoint );
 }

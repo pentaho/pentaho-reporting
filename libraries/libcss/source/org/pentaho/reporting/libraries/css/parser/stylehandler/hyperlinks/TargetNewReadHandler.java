@@ -25,13 +25,11 @@ import org.pentaho.reporting.libraries.css.parser.stylehandler.OneOfConstantsRea
  *
  * @author Thomas Morgner
  */
-public class TargetNewReadHandler extends OneOfConstantsReadHandler
-{
-  public TargetNewReadHandler()
-  {
-    super(false);
-    addValue(TargetNew.NONE);
-    addValue(TargetNew.TAB);
-    addValue(TargetNew.WINDOW);
+public class TargetNewReadHandler extends OneOfConstantsReadHandler {
+  public TargetNewReadHandler() {
+    super( false );
+    addValue( TargetNew.NONE );
+    addValue( TargetNew.TAB );
+    addValue( TargetNew.WINDOW );
   }
 }

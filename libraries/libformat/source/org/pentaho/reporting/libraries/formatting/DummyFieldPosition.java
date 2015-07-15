@@ -19,16 +19,13 @@ package org.pentaho.reporting.libraries.formatting;
 
 import java.text.FieldPosition;
 
-public class DummyFieldPosition extends FieldPosition
-{
-  public DummyFieldPosition()
-  {
-    super(0);
+public class DummyFieldPosition extends FieldPosition {
+  public DummyFieldPosition() {
+    super( 0 );
   }
 
-  public void clear()
-  {
-    setBeginIndex(0);
-    setEndIndex(0);
+  public void clear() {
+    setBeginIndex( 0 );
+    setEndIndex( 0 );
   }
 }

@@ -27,44 +27,36 @@ import org.pentaho.reporting.libraries.formula.typing.coretypes.LogicalType;
  *
  * @author Thomas Morgner
  */
-public class FalseFunctionDescription extends AbstractFunctionDescription
-{
+public class FalseFunctionDescription extends AbstractFunctionDescription {
   private static final long serialVersionUID = -1846971196399484893L;
 
-  public FalseFunctionDescription()
-  {
-    super("FALSE", "org.pentaho.reporting.libraries.formula.function.logical.False-Function");
+  public FalseFunctionDescription() {
+    super( "FALSE", "org.pentaho.reporting.libraries.formula.function.logical.False-Function" );
   }
 
-  public int getParameterCount()
-  {
+  public int getParameterCount() {
     return 0;
   }
 
-  public Type getParameterType(final int position)
-  {
+  public Type getParameterType( final int position ) {
     return LogicalType.TYPE;
   }
 
-  public Type getValueType()
-  {
+  public Type getValueType() {
     return LogicalType.TYPE;
   }
 
   /**
-   * Defines, whether the parameter at the given position is mandatory. A
-   * mandatory parameter must be filled in, while optional parameters need not
-   * to be filled in.
+   * Defines, whether the parameter at the given position is mandatory. A mandatory parameter must be filled in, while
+   * optional parameters need not to be filled in.
    *
    * @return
    */
-  public boolean isParameterMandatory(final int position)
-  {
+  public boolean isParameterMandatory( final int position ) {
     return false;
   }
 
-  public FunctionCategory getCategory()
-  {
+  public FunctionCategory getCategory() {
     return LogicalFunctionCategory.CATEGORY;
   }
 

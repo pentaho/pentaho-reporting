@@ -24,25 +24,23 @@ import org.pentaho.reporting.libraries.resourceloader.ResourceKey;
 import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 
 /**
- * The document context allows LibCSS to interact with the calling implementation. LibCSS tries to minimize
- * the assumptions made on the internal of external systems by providing a minimized set of interfaces which
- * allow LibCSS to retrieve all required information without imposing a specific implementation on the caller.
+ * The document context allows LibCSS to interact with the calling implementation. LibCSS tries to minimize the
+ * assumptions made on the internal of external systems by providing a minimized set of interfaces which allow LibCSS to
+ * retrieve all required information without imposing a specific implementation on the caller.
  *
  * @author : Thomas Morgner
  */
-public interface DocumentContext
-{
+public interface DocumentContext {
   public LayoutOutputMetaData getOutputMetaData();
-  
+
   public StyleReference[] getStyleReferences();
 
   /**
-   * Returns the resource manager that is used to load externally referenced resources.
-   * Such resources can be either images, drawable or other stylesheets. In some cases, this might even
-   * reference whole documents.
+   * Returns the resource manager that is used to load externally referenced resources. Such resources can be either
+   * images, drawable or other stylesheets. In some cases, this might even reference whole documents.
    * <p/>
-   * The implementation should indicate which document types can be loaded using the
-   * {@link DocumentContext#getSupportedResourceTypes()} method.
+   * The implementation should indicate which document types can be loaded using the {@link
+   * DocumentContext#getSupportedResourceTypes()} method.
    *
    * @return the resource manager.
    * @see DocumentContext#getSupportedResourceTypes()
@@ -50,9 +48,9 @@ public interface DocumentContext
   public ResourceManager getResourceManager();
 
   /**
-   * Returns the context key provides the base-key for resolving relative
-   * URLs. Usually it is the key that was used to parse the document. Without this key, it would be
-   * impossible to resolve non-absolute URLs/paths into a usable URL or path.
+   * Returns the context key provides the base-key for resolving relative URLs. Usually it is the key that was used to
+   * parse the document. Without this key, it would be impossible to resolve non-absolute URLs/paths into a usable URL
+   * or path.
    *
    * @return the context key
    * @see ResourceManager#deriveKey(ResourceKey, String)
@@ -60,10 +58,10 @@ public interface DocumentContext
   public ResourceKey getContextKey();
 
   /**
-   * Returns the style-key registry that holds all known stylekeys that might be encountered during the
-   * parsing. As this library might be used in several CSS-enabled systems at the same time (ie. Charting,
-   * Classic-Report-Engine, anything else) the library uses this mechanism to separate the stylesheet sets
-   * of each application from each other.
+   * Returns the style-key registry that holds all known stylekeys that might be encountered during the parsing. As this
+   * library might be used in several CSS-enabled systems at the same time (ie. Charting, Classic-Report-Engine,
+   * anything else) the library uses this mechanism to separate the stylesheet sets of each application from each
+   * other.
    *
    * @return the stylekey registry to use.
    */

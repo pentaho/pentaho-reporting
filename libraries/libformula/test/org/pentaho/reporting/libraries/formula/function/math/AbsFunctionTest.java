@@ -17,27 +17,23 @@
 
 package org.pentaho.reporting.libraries.formula.function.math;
 
-import java.math.BigDecimal;
-
 import org.pentaho.reporting.libraries.formula.FormulaTestBase;
-import org.pentaho.reporting.libraries.formula.FormulaContext;
+
+import java.math.BigDecimal;
 
 /**
  * @author Cedric Pronzato
  */
-public class AbsFunctionTest extends FormulaTestBase
-{
-  public void testDefault() throws Exception
-  {
+public class AbsFunctionTest extends FormulaTestBase {
+  public void testDefault() throws Exception {
     runDefaultTest();
   }
 
-  public Object[][] createDataTest()
-  {
+  public Object[][] createDataTest() {
     return new Object[][]
-        {
-            {"ABS(4)", new BigDecimal(4)},
-            {"ABS(-4)", new BigDecimal(4)},
-        };
+      {
+        { "ABS(4)", new BigDecimal( 4 ) },
+        { "ABS(-4)", new BigDecimal( 4 ) },
+      };
   }
 }

@@ -17,8 +17,6 @@
 
 package org.pentaho.reporting.libraries.formula.function.math;
 
-import java.math.BigDecimal;
-
 import org.pentaho.reporting.libraries.formula.EvaluationException;
 import org.pentaho.reporting.libraries.formula.FormulaContext;
 import org.pentaho.reporting.libraries.formula.LibFormulaErrorValue;
@@ -32,77 +30,65 @@ import org.pentaho.reporting.libraries.formula.typing.TypeRegistry;
 import org.pentaho.reporting.libraries.formula.typing.coretypes.NumberType;
 import org.pentaho.reporting.libraries.formula.util.NumberUtil;
 
+import java.math.BigDecimal;
+
 /**
  * This function returns the maximum from a set of numbers.
  *
  * @author Cedric Pronzato
  */
-public class MaxFunction implements Function
-{
-  private static final BigDecimal ZERO = new BigDecimal(0.0);
+public class MaxFunction implements Function {
+  private static final BigDecimal ZERO = new BigDecimal( 0.0 );
   private static final long serialVersionUID = -836670420852371100L;
 
-  public MaxFunction()
-  {
+  public MaxFunction() {
   }
 
 
-  public TypeValuePair evaluate(final FormulaContext context,
-                                final ParameterCallback parameters) throws EvaluationException
-  {
+  public TypeValuePair evaluate( final FormulaContext context,
+                                 final ParameterCallback parameters ) throws EvaluationException {
     final int parameterCount = parameters.getParameterCount();
 
-    if (parameterCount == 0)
-    {
-      return new TypeValuePair(NumberType.GENERIC_NUMBER, ZERO);
+    if ( parameterCount == 0 ) {
+      return new TypeValuePair( NumberType.GENERIC_NUMBER, ZERO );
     }
 
     final TypeRegistry typeRegistry = context.getTypeRegistry();
     BigDecimal last = null;
-    for (int paramIdx = 0; paramIdx < parameterCount; paramIdx++)
-    {
-      final Type type = parameters.getType(paramIdx);
-      final Object value = parameters.getValue(paramIdx);
-      final Sequence sequence = typeRegistry.convertToNumberSequence(type, value, isStrictSequenceNeeded());
+    for ( int paramIdx = 0; paramIdx < parameterCount; paramIdx++ ) {
+      final Type type = parameters.getType( paramIdx );
+      final Object value = parameters.getValue( paramIdx );
+      final Sequence sequence = typeRegistry.convertToNumberSequence( type, value, isStrictSequenceNeeded() );
 
-      while (sequence.hasNext())
-      {
+      while ( sequence.hasNext() ) {
         final LValue rawValue = sequence.nextRawValue();
-        if (rawValue == null)
-        {
-          throw EvaluationException.getInstance(LibFormulaErrorValue.ERROR_INVALID_ARGUMENT_VALUE);
+        if ( rawValue == null ) {
+          throw EvaluationException.getInstance( LibFormulaErrorValue.ERROR_INVALID_ARGUMENT_VALUE );
         }
         final TypeValuePair nextValue = rawValue.evaluate();
-        final Number number = typeRegistry.convertToNumber(nextValue.getType(), nextValue.getValue());
-        final BigDecimal next = NumberUtil.getAsBigDecimal(number);
-        if (last == null)
-        {
+        final Number number = typeRegistry.convertToNumber( nextValue.getType(), nextValue.getValue() );
+        final BigDecimal next = NumberUtil.getAsBigDecimal( number );
+        if ( last == null ) {
           last = next;
-        }
-        else
-        {
-          if (last.compareTo(next) == -1)
-          {
+        } else {
+          if ( last.compareTo( next ) == -1 ) {
             last = next;
           }
         }
       }
     }
-    if (last == null)
-    {
-      throw EvaluationException.getInstance(LibFormulaErrorValue.ERROR_INVALID_ARGUMENT_VALUE);
+    if ( last == null ) {
+      throw EvaluationException.getInstance( LibFormulaErrorValue.ERROR_INVALID_ARGUMENT_VALUE );
     }
 
-    return new TypeValuePair(NumberType.GENERIC_NUMBER, last);
+    return new TypeValuePair( NumberType.GENERIC_NUMBER, last );
   }
 
-  protected boolean isStrictSequenceNeeded()
-  {
+  protected boolean isStrictSequenceNeeded() {
     return true;
   }
 
-  public String getCanonicalName()
-  {
+  public String getCanonicalName() {
     return "MAX";
   }
 }

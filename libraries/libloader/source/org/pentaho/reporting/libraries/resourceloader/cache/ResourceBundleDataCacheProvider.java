@@ -22,7 +22,6 @@ package org.pentaho.reporting.libraries.resourceloader.cache;
  *
  * @author Thomas Morgner
  */
-public interface ResourceBundleDataCacheProvider
-{
+public interface ResourceBundleDataCacheProvider {
   public ResourceBundleDataCache createBundleDataCache();
 }

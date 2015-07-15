@@ -17,15 +17,13 @@
 
 package org.pentaho.reporting.libraries.pixie.wmf;
 
-import java.awt.Color;
+import java.awt.*;
 
 /**
- * A color implementation, that supports some additional flags defined by the Windows API,
- * but has no Alpha-Channel. This is a BGR color implementation, the flags are stored in
- * the highest byte.
+ * A color implementation, that supports some additional flags defined by the Windows API, but has no Alpha-Channel.
+ * This is a BGR color implementation, the flags are stored in the highest byte.
  */
-public class GDIColor extends Color
-{
+public class GDIColor extends Color {
   private static final long serialVersionUID = 1161533883291249918L;
 
   public static final int PC_RESERVED = 0x01;
@@ -42,9 +40,8 @@ public class GDIColor extends Color
    *
    * @param colorref the integer color reference.
    */
-  public GDIColor(final int colorref)
-  {
-    this(getR(colorref), getG(colorref), getB(colorref), getFlags(colorref));
+  public GDIColor( final int colorref ) {
+    this( getR( colorref ), getG( colorref ), getB( colorref ), getFlags( colorref ) );
   }
 
   /**
@@ -55,9 +52,8 @@ public class GDIColor extends Color
    * @param b     the blue channel.
    * @param flags the Windows Color flags.
    */
-  public GDIColor(final int r, final int g, final int b, final int flags)
-  {
-    super(r, g, b);
+  public GDIColor( final int r, final int g, final int b, final int flags ) {
+    super( r, g, b );
     this.flags = flags;
   }
 
@@ -67,12 +63,10 @@ public class GDIColor extends Color
    * @param ref the color reference.
    * @return the red channel.
    */
-  private static int getR(final int ref)
-  {
-    int retval = (ref & 0x000000ff);
-    if (retval < 0)
-    {
-      retval = (retval + 256);
+  private static int getR( final int ref ) {
+    int retval = ( ref & 0x000000ff );
+    if ( retval < 0 ) {
+      retval = ( retval + 256 );
     }
     return retval;
   }
@@ -83,9 +77,8 @@ public class GDIColor extends Color
    * @param ref the color reference.
    * @return the green channel.
    */
-  private static int getG(final int ref)
-  {
-    return (ref & 0x0000ff00) >> 8;
+  private static int getG( final int ref ) {
+    return ( ref & 0x0000ff00 ) >> 8;
   }
 
   /**
@@ -94,9 +87,8 @@ public class GDIColor extends Color
    * @param ref the color reference.
    * @return the blue channel.
    */
-  private static int getB(final int ref)
-  {
-    return (ref & 0x00ff0000) >> 16;
+  private static int getB( final int ref ) {
+    return ( ref & 0x00ff0000 ) >> 16;
   }
 
   /**
@@ -105,9 +97,8 @@ public class GDIColor extends Color
    * @param ref the color reference.
    * @return the color flags.
    */
-  private static int getFlags(final int ref)
-  {
-    return (ref & 0xff000000) >> 24;
+  private static int getFlags( final int ref ) {
+    return ( ref & 0xff000000 ) >> 24;
   }
 
   /**
@@ -115,9 +106,8 @@ public class GDIColor extends Color
    *
    * @return true, if PC_RESERVED is set, false otherwise.
    */
-  public boolean isReserved()
-  {
-    return (this.flags & PC_RESERVED) == PC_RESERVED;
+  public boolean isReserved() {
+    return ( this.flags & PC_RESERVED ) == PC_RESERVED;
   }
 
   /**
@@ -125,9 +115,8 @@ public class GDIColor extends Color
    *
    * @return true, if PC_EXPLICIT is set, false otherwise.
    */
-  public boolean isExplicit()
-  {
-    return (this.flags & PC_EXPLICIT) == PC_EXPLICIT;
+  public boolean isExplicit() {
+    return ( this.flags & PC_EXPLICIT ) == PC_EXPLICIT;
   }
 
   /**
@@ -135,9 +124,8 @@ public class GDIColor extends Color
    *
    * @return true, if PC_NOCOLLAPSE is set, false otherwise.
    */
-  public boolean isNoCollapse()
-  {
-    return (this.flags & PC_NOCOLLAPSE) == PC_NOCOLLAPSE;
+  public boolean isNoCollapse() {
+    return ( this.flags & PC_NOCOLLAPSE ) == PC_NOCOLLAPSE;
   }
 
   /**
@@ -145,8 +133,7 @@ public class GDIColor extends Color
    *
    * @return the flags.
    */
-  public int getFlags()
-  {
+  public int getFlags() {
     return flags;
   }
 
@@ -156,23 +143,21 @@ public class GDIColor extends Color
    * @param c the color that should be translated.
    * @return the created color reference.
    */
-  public static int translateColor(final Color c)
-  {
+  public static int translateColor( final Color c ) {
     final int red = c.getRed();
     final int green = c.getGreen();
     final int blue = c.getBlue();
     int flags = 0;
 
-    if (c instanceof GDIColor)
-    {
+    if ( c instanceof GDIColor ) {
       final GDIColor gc = (GDIColor) c;
       flags = gc.getFlags();
     }
 
     int retval = flags;
-    retval = (retval << 8) + blue;
-    retval = (retval << 8) + green;
-    retval = (retval << 8) + red;
+    retval = ( retval << 8 ) + blue;
+    retval = ( retval << 8 ) + green;
+    retval = ( retval << 8 ) + red;
     return retval;
   }
 }

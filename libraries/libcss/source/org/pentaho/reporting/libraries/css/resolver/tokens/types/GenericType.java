@@ -20,13 +20,11 @@ package org.pentaho.reporting.libraries.css.resolver.tokens.types;
 import org.pentaho.reporting.libraries.css.resolver.tokens.ContentToken;
 
 /**
- * This is raw data. Whether or not the raw-data is interpreted is up to the
- * output target. However, it is suggested, that at least Images, Drawables
- * and Strings should be implemented (if the output format supports that).
+ * This is raw data. Whether or not the raw-data is interpreted is up to the output target. However, it is suggested,
+ * that at least Images, Drawables and Strings should be implemented (if the output format supports that).
  *
  * @author Thomas Morgner
  */
-public interface GenericType extends ContentToken
-{
+public interface GenericType extends ContentToken {
   public Object getRaw();
 }

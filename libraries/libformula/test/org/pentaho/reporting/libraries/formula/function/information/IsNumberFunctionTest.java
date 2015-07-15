@@ -22,20 +22,17 @@ import org.pentaho.reporting.libraries.formula.FormulaTestBase;
 /**
  * @author Cedric Pronzato
  */
-public class IsNumberFunctionTest extends FormulaTestBase
-{
-  public void testDefault() throws Exception
-  {
+public class IsNumberFunctionTest extends FormulaTestBase {
+  public void testDefault() throws Exception {
     runDefaultTest();
   }
 
-  public Object[][] createDataTest()
-  {
+  public Object[][] createDataTest() {
     return new Object[][]
-        {
-            {"ISNUMBER(1)", Boolean.TRUE},
-            {"ISNUMBER(\"1\")", Boolean.FALSE},
-        };
+      {
+        { "ISNUMBER(1)", Boolean.TRUE },
+        { "ISNUMBER(\"1\")", Boolean.FALSE },
+      };
   }
 
 }

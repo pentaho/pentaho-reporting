@@ -17,16 +17,6 @@
 
 package org.pentaho.reporting.tools.configeditor.model;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.Iterator;
-import javax.xml.parsers.ParserConfigurationException;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.pentaho.reporting.libraries.base.boot.AbstractBoot;
@@ -39,18 +29,25 @@ import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
 import org.pentaho.reporting.tools.configeditor.Messages;
 import org.xml.sax.SAXException;
 
+import javax.xml.parsers.ParserConfigurationException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.Iterator;
+
 /**
  * The module node factory is used to build the lists of modules and their assigned keys for the ConfigTreeModel.
  *
  * @author Thomas Morgner
  */
-public class ModuleNodeFactory
-{
-  private static class ConfigTreeModuleNodeComparator implements Comparator<ConfigTreeModuleNode>
-  {
-    public int compare(final ConfigTreeModuleNode n1, final ConfigTreeModuleNode n2)
-    {
-      return (n1.getName().compareTo(n2.getName()));
+public class ModuleNodeFactory {
+  private static class ConfigTreeModuleNodeComparator implements Comparator<ConfigTreeModuleNode> {
+    public int compare( final ConfigTreeModuleNode n1, final ConfigTreeModuleNode n2 ) {
+      return ( n1.getName().compareTo( n2.getName() ) );
     }
   }
 
@@ -59,13 +56,11 @@ public class ModuleNodeFactory
    *
    * @author Thomas Morgner
    */
-  private static class ModuleSorter implements Comparator<Module>, Serializable
-  {
+  private static class ModuleSorter implements Comparator<Module>, Serializable {
     /**
      * DefaultConstructor.
      */
-    protected ModuleSorter()
-    {
+    protected ModuleSorter() {
     }
 
     /**
@@ -75,29 +70,25 @@ public class ModuleNodeFactory
      * @param o1 the first object to be compared.
      * @param o2 the second object to be compared.
      * @return a negative integer, zero, or a positive integer as the first argument is less than, equal to, or greater
-     *         than the second.
+     * than the second.
      * @throws ClassCastException if the arguments' types prevent them from being compared by this Comparator.
      */
-    public int compare(final Module o1, final Module o2)
-    {
+    public int compare( final Module o1, final Module o2 ) {
       final String name1;
       final String name2;
 
-      if (o1.getClass().getPackage() == null || o2.getClass().getPackage() == null)
-      {
-        name1 = ModuleNodeFactory.getPackage(o1.getClass());
-        name2 = ModuleNodeFactory.getPackage(o2.getClass());
-      }
-      else
-      {
+      if ( o1.getClass().getPackage() == null || o2.getClass().getPackage() == null ) {
+        name1 = ModuleNodeFactory.getPackage( o1.getClass() );
+        name2 = ModuleNodeFactory.getPackage( o2.getClass() );
+      } else {
         name1 = o1.getClass().getPackage().getName();
         name2 = o2.getClass().getPackage().getName();
       }
-      return name1.compareTo(name2);
+      return name1.compareTo( name2 );
     }
   }
 
-  private static final Log logger = LogFactory.getLog(ModuleNodeFactory.class);
+  private static final Log logger = LogFactory.getLog( ModuleNodeFactory.class );
 
   /**
    * Provides access to externalized strings
@@ -125,103 +116,89 @@ public class ModuleNodeFactory
   /**
    * Create a new and uninitialized module node factory.
    */
-  public ModuleNodeFactory(final AbstractBoot packageManager)
-  {
+  public ModuleNodeFactory( final AbstractBoot packageManager ) {
     this.packageManager = packageManager;
     messages = Messages.getInstance();
     activeModules = packageManager.getPackageManager().getAllModules();
-    Arrays.sort(activeModules, new ModuleSorter());
+    Arrays.sort( activeModules, new ModuleSorter() );
     globalNodes = new ArrayList<ConfigTreeModuleNode>();
     localNodes = new ArrayList<ConfigTreeModuleNode>();
     configEntryLookup = new HashMap<String, ConfigDescriptionEntry>();
 
   }
 
-  public void load(final boolean append) throws IOException
-  {
+  public void load( final boolean append ) throws IOException {
     final String configurationDomain = packageManager.getConfigurationDomain();
-    final ConfigurationDomain domain = ConfigurationMetaData.getInstance().createDomain(configurationDomain);
+    final ConfigurationDomain domain = ConfigurationMetaData.getInstance().createDomain( configurationDomain );
 
     final ConfigurationMetaDataParser parser = new ConfigurationMetaDataParser();
-    parser.parseConfiguration(this.packageManager);
-    if (append == false)
-    {
+    parser.parseConfiguration( this.packageManager );
+    if ( append == false ) {
       configEntryLookup.clear();
     }
 
     final ConfigurationMetaDataEntry[] entries = domain.getAll();
-    for (int i = 0; i < entries.length; i++)
-    {
-      final ConfigurationMetaDataEntry entry = entries[i];
-      if (entry.getClassName() != null)
-      {
-        final ClassConfigDescriptionEntry value = new ClassConfigDescriptionEntry(entry.getKey());
-        try
-        {
-          value.setBaseClass(Class.forName(entry.getClassName(), false, ObjectUtilities.getClassLoader(packageManager.getClass())));
-          value.setHidden(entry.isHidden());
-          value.setGlobal(entry.isGlobal());
-          value.setDescription(entry.getDescription());
-          configEntryLookup.put(entry.getKey(), value);
+    for ( int i = 0; i < entries.length; i++ ) {
+      final ConfigurationMetaDataEntry entry = entries[ i ];
+      if ( entry.getClassName() != null ) {
+        final ClassConfigDescriptionEntry value = new ClassConfigDescriptionEntry( entry.getKey() );
+        try {
+          value.setBaseClass(
+            Class.forName( entry.getClassName(), false, ObjectUtilities.getClassLoader( packageManager.getClass() ) ) );
+          value.setHidden( entry.isHidden() );
+          value.setGlobal( entry.isGlobal() );
+          value.setDescription( entry.getDescription() );
+          configEntryLookup.put( entry.getKey(), value );
           continue;
-        }
-        catch (Exception e)
-        {
-          logger.info("Failed to load defined class '" + entry.getClassName() + "' , fall back to plain-text entry for key " + entry.getKey());
+        } catch ( Exception e ) {
+          logger.info(
+            "Failed to load defined class '" + entry.getClassName() + "' , fall back to plain-text entry for key "
+              + entry.getKey() );
         }
       }
       final String[] tags = entry.getTags();
-      if (tags.length > 0)
-      {
-        final EnumConfigDescriptionEntry value = new EnumConfigDescriptionEntry(entry.getKey());
-        value.setOptions(tags);
-        value.setHidden(entry.isHidden());
-        value.setGlobal(entry.isGlobal());
-        value.setDescription(entry.getDescription());
-        configEntryLookup.put(entry.getKey(), value);
+      if ( tags.length > 0 ) {
+        final EnumConfigDescriptionEntry value = new EnumConfigDescriptionEntry( entry.getKey() );
+        value.setOptions( tags );
+        value.setHidden( entry.isHidden() );
+        value.setGlobal( entry.isGlobal() );
+        value.setDescription( entry.getDescription() );
+        configEntryLookup.put( entry.getKey(), value );
         continue;
       }
 
-      final TextConfigDescriptionEntry value = new TextConfigDescriptionEntry(entry.getKey());
-      value.setHidden(entry.isHidden());
-      value.setGlobal(entry.isGlobal());
-      value.setDescription(entry.getDescription());
-      configEntryLookup.put(entry.getKey(), value);
+      final TextConfigDescriptionEntry value = new TextConfigDescriptionEntry( entry.getKey() );
+      value.setHidden( entry.isHidden() );
+      value.setGlobal( entry.isGlobal() );
+      value.setDescription( entry.getDescription() );
+      configEntryLookup.put( entry.getKey(), value );
     }
   }
 
-  public void load(final InputStream in, final boolean append)
-      throws IOException
-  {
-    if (append == false)
-    {
+  public void load( final InputStream in, final boolean append )
+    throws IOException {
+    if ( append == false ) {
       configEntryLookup.clear();
     }
     final ConfigDescriptionModel model = new ConfigDescriptionModel();
-    try
-    {
-      model.load(in);
-    }
-    catch (SAXException saxException)
-    {
-      final String error = messages.getString("ModuleNodeFactory.ERROR_0001_PARSE_FAILURE",
-          saxException.getMessage()); //$NON-NLS-1$
-      ModuleNodeFactory.logger.error(error, saxException);
-      throw new IOException(error);
-    }
-    catch (ParserConfigurationException pE)
-    {
-      final String error = messages.getString("ModuleNodeFactory.ERROR_0002_PARSER_CONFIG_ERROR",
-          pE.getMessage()); //$NON-NLS-1$
-      ModuleNodeFactory.logger.error(error, pE);
-      throw new IOException(error);
+    try {
+      model.load( in );
+    } catch ( SAXException saxException ) {
+      final String error = messages.getString( "ModuleNodeFactory.ERROR_0001_PARSE_FAILURE",
+        saxException.getMessage() ); //$NON-NLS-1$
+      ModuleNodeFactory.logger.error( error, saxException );
+      throw new IOException( error );
+    } catch ( ParserConfigurationException pE ) {
+      final String error = messages.getString( "ModuleNodeFactory.ERROR_0002_PARSER_CONFIG_ERROR",
+        pE.getMessage() ); //$NON-NLS-1$
+      ModuleNodeFactory.logger.error( error, pE );
+      throw new IOException( error );
     }
 
     final ConfigDescriptionEntry[] entries = model.toArray();
-    for (int i = 0; i < entries.length; i++)
-    {
+    for ( int i = 0; i < entries.length; i++ ) {
       //Log.debug ("Entry: " + entries[i].getKeyName() + " registered");
-      configEntryLookup.put(entries[i].getKeyName(), entries[i]);
+      configEntryLookup.put( entries[ i ].getKeyName(), entries[ i ] );
     }
   }
 
@@ -230,17 +207,15 @@ public class ModuleNodeFactory
    * (Re)Initializes the factory from the given report configuration. This will assign all keys frmo the report
    * configuration to the model and assignes the definition from the configuration description if possible.
    */
-  public void init()
-  {
+  public void init() {
     globalNodes.clear();
     localNodes.clear();
 
     //Iterator enum = config.findPropertyKeys("");
     final Iterator keys = configEntryLookup.keySet().iterator();
-    while (keys.hasNext())
-    {
+    while ( keys.hasNext() ) {
       final String key = (String) keys.next();
-      processKey(key);
+      processKey( key );
     }
   }
 
@@ -249,13 +224,11 @@ public class ModuleNodeFactory
    *
    * @param key the name of the report configuration key
    */
-  private void processKey(final String key)
-  {
-    ConfigDescriptionEntry cde = configEntryLookup.get(key);
+  private void processKey( final String key ) {
+    ConfigDescriptionEntry cde = configEntryLookup.get( key );
 
     //Log.debug ("ActiveModule: " + mod.getClass() + " for key " + key);
-    if (cde == null)
-    {
+    if ( cde == null ) {
       // check whether the system properties define such an key.
       // if they do, then we can assume, that it is just a sys-prop
       // and we ignore the key.
@@ -266,57 +239,47 @@ public class ModuleNodeFactory
       // Security restrictions are handled as if the key is not defined
       // in the system properties. It is safer to add too much than to add
       // less properties ...
-      try
-      {
-        if (System.getProperties().containsKey(key))
-        {
-          ModuleNodeFactory.logger.debug("Ignored key from the system properties: " + key); //$NON-NLS-1$
+      try {
+        if ( System.getProperties().containsKey( key ) ) {
+          ModuleNodeFactory.logger.debug( "Ignored key from the system properties: " + key ); //$NON-NLS-1$
           return;
+        } else {
+          ModuleNodeFactory.logger.debug( "Undefined key added on the fly: " + key ); //$NON-NLS-1$
+          cde = new TextConfigDescriptionEntry( key );
         }
-        else
-        {
-          ModuleNodeFactory.logger.debug("Undefined key added on the fly: " + key); //$NON-NLS-1$
-          cde = new TextConfigDescriptionEntry(key);
-        }
-      }
-      catch (final SecurityException se)
-      {
-        ModuleNodeFactory.logger.debug("Unsafe key-definition due to security restrictions: " + key, se); //$NON-NLS-1$
-        cde = new TextConfigDescriptionEntry(key);
+      } catch ( final SecurityException se ) {
+        ModuleNodeFactory.logger
+          .debug( "Unsafe key-definition due to security restrictions: " + key, se ); //$NON-NLS-1$
+        cde = new TextConfigDescriptionEntry( key );
       }
     }
 
     // We ignore hidden keys.
-    if (cde.isHidden())
-    {
+    if ( cde.isHidden() ) {
       return;
     }
 
-    final Module mod = lookupModule(key);
-    if (mod == null)
-    {
+    final Module mod = lookupModule( key );
+    if ( mod == null ) {
       return;
     }
-    if (cde.isGlobal() == false)
-    {
-      ConfigTreeModuleNode node = lookupNode(mod, localNodes);
-      if (node == null)
-      {
-        node = new ConfigTreeModuleNode(mod);
-        localNodes.add(node);
+    if ( cde.isGlobal() == false ) {
+      ConfigTreeModuleNode node = lookupNode( mod, localNodes );
+      if ( node == null ) {
+        node = new ConfigTreeModuleNode( mod );
+        localNodes.add( node );
       }
-      node.addAssignedKey(cde);
+      node.addAssignedKey( cde );
     }
 
     // The global configuration provides defaults for the local
     // settings...
-    ConfigTreeModuleNode node = lookupNode(mod, globalNodes);
-    if (node == null)
-    {
-      node = new ConfigTreeModuleNode(mod);
-      globalNodes.add(node);
+    ConfigTreeModuleNode node = lookupNode( mod, globalNodes );
+    if ( node == null ) {
+      node = new ConfigTreeModuleNode( mod );
+      globalNodes.add( node );
     }
-    node.addAssignedKey(cde);
+    node.addAssignedKey( cde );
   }
 
   /**
@@ -326,17 +289,13 @@ public class ModuleNodeFactory
    * @param nodeList the list with all known modules.
    * @return the node containing the given module, or null if not found.
    */
-  private ConfigTreeModuleNode lookupNode(final Module key, final ArrayList nodeList)
-  {
-    if (key == null)
-    {
+  private ConfigTreeModuleNode lookupNode( final Module key, final ArrayList nodeList ) {
+    if ( key == null ) {
       return null;
     }
-    for (int i = 0; i < nodeList.size(); i++)
-    {
-      final ConfigTreeModuleNode node = (ConfigTreeModuleNode) nodeList.get(i);
-      if (key == node.getModule())
-      {
+    for ( int i = 0; i < nodeList.size(); i++ ) {
+      final ConfigTreeModuleNode node = (ConfigTreeModuleNode) nodeList.get( i );
+      if ( key == node.getModule() ) {
         return node;
       }
     }
@@ -350,18 +309,14 @@ public class ModuleNodeFactory
    * @param c the class for which we search the package.
    * @return the name of the package, never null.
    */
-  public static String getPackage(final Class c)
-  {
+  public static String getPackage( final Class c ) {
     final String className = c.getName();
-    final int idx = className.lastIndexOf('.');
-    if (idx <= 0)
-    {
+    final int idx = className.lastIndexOf( '.' );
+    if ( idx <= 0 ) {
       // the default package
       return ""; //$NON-NLS-1$
-    }
-    else
-    {
-      return className.substring(0, idx);
+    } else {
+      return className.substring( 0, idx );
     }
   }
 
@@ -375,20 +330,16 @@ public class ModuleNodeFactory
    * @param key the name of the configuration key
    * @return the module that most likely defines that key
    */
-  private Module lookupModule(final String key)
-  {
+  private Module lookupModule( final String key ) {
     Module retval = null;
     int confidence = -1;
-    for (int i = 0; i < activeModules.length; i++)
-    {
-      final String modPackage = ModuleNodeFactory.getPackage(activeModules[i].getClass());
+    for ( int i = 0; i < activeModules.length; i++ ) {
+      final String modPackage = ModuleNodeFactory.getPackage( activeModules[ i ].getClass() );
       // Log.debug ("Module package: " + modPackage + " for " + activeModules[i].getClass());
-      if (key.startsWith(modPackage))
-      {
-        if (confidence < modPackage.length())
-        {
+      if ( key.startsWith( modPackage ) ) {
+        if ( confidence < modPackage.length() ) {
           confidence = modPackage.length();
-          retval = activeModules[i];
+          retval = activeModules[ i ];
         }
       }
     }
@@ -400,10 +351,9 @@ public class ModuleNodeFactory
    *
    * @return the list of all global nodes.
    */
-  public ConfigTreeModuleNode[] getGlobalNodes()
-  {
-    final ConfigTreeModuleNode[] retval = globalNodes.toArray(new ConfigTreeModuleNode[globalNodes.size()]);
-    Arrays.sort(retval, new ConfigTreeModuleNodeComparator());
+  public ConfigTreeModuleNode[] getGlobalNodes() {
+    final ConfigTreeModuleNode[] retval = globalNodes.toArray( new ConfigTreeModuleNode[ globalNodes.size() ] );
+    Arrays.sort( retval, new ConfigTreeModuleNodeComparator() );
     return retval;
   }
 
@@ -412,10 +362,9 @@ public class ModuleNodeFactory
    *
    * @return the list of all global nodes.
    */
-  public ConfigTreeModuleNode[] getLocalNodes()
-  {
-    final ConfigTreeModuleNode[] retval = localNodes.toArray(new ConfigTreeModuleNode[localNodes.size()]);
-    Arrays.sort(retval, new ConfigTreeModuleNodeComparator());
+  public ConfigTreeModuleNode[] getLocalNodes() {
+    final ConfigTreeModuleNode[] retval = localNodes.toArray( new ConfigTreeModuleNode[ localNodes.size() ] );
+    Arrays.sort( retval, new ConfigTreeModuleNodeComparator() );
     return retval;
   }
 
@@ -425,8 +374,7 @@ public class ModuleNodeFactory
    * @param key the name of the key
    * @return the entry or null if not found.
    */
-  public ConfigDescriptionEntry getEntryForKey(final String key)
-  {
-    return configEntryLookup.get(key);
+  public ConfigDescriptionEntry getEntryForKey( final String key ) {
+    return configEntryLookup.get( key );
   }
 }

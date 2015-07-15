@@ -24,51 +24,42 @@ import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
  *
  * @author Thomas Morgner
  */
-public class CSSFunctionValue implements CSSValue
-{
+public class CSSFunctionValue implements CSSValue {
   private String functionName;
   private CSSValue[] parameters;
 
-  public CSSFunctionValue(final String functionName,
-                          final CSSValue[] parameters)
-  {
-    if (functionName == null)
-    {
+  public CSSFunctionValue( final String functionName,
+                           final CSSValue[] parameters ) {
+    if ( functionName == null ) {
       throw new NullPointerException();
     }
-    if (parameters == null)
-    {
+    if ( parameters == null ) {
       throw new NullPointerException();
     }
     this.functionName = functionName;
     this.parameters = (CSSValue[]) parameters.clone();
   }
 
-  public String getFunctionName()
-  {
+  public String getFunctionName() {
     return functionName;
   }
 
-  public CSSValue[] getParameters()
-  {
+  public CSSValue[] getParameters() {
     return (CSSValue[]) parameters.clone();
   }
 
-  public String getCSSText()
-  {
+  public String getCSSText() {
     StringBuffer b = new StringBuffer();
-    b.append(functionName);
-    b.append('(');
-    for (int i = 0; i < parameters.length; i++)
-    {
-      if (i != 0)
-      {
-        b.append(',');
+    b.append( functionName );
+    b.append( '(' );
+    for ( int i = 0; i < parameters.length; i++ ) {
+      if ( i != 0 ) {
+        b.append( ',' );
       }
-      CSSValue parameter = parameters[i];
-      b.append(parameter.getCSSText());
+      CSSValue parameter = parameters[ i ];
+      b.append( parameter.getCSSText() );
     }
-    b.append(')');
+    b.append( ')' );
     return b.toString();
   }
 
@@ -77,8 +68,7 @@ public class CSSFunctionValue implements CSSValue
    *
    * @return a string representation of the object.
    */
-  public String toString()
-  {
+  public String toString() {
     return getCSSText();
   }
 
@@ -87,22 +77,17 @@ public class CSSFunctionValue implements CSSValue
    *
    * @return <code>true</code> if the supplied object is equivalent to this object, <code>false</code> otherwise
    */
-  public boolean equals(Object obj)
-  {
-    if (obj instanceof CSSFunctionValue)
-    {
+  public boolean equals( Object obj ) {
+    if ( obj instanceof CSSFunctionValue ) {
       CSSFunctionValue that = (CSSFunctionValue) obj;
-      return (ObjectUtilities.equal(this.functionName, that.functionName)
-          && ObjectUtilities.equalArray(this.parameters, that.parameters));
-    }
-    else
-    {
+      return ( ObjectUtilities.equal( this.functionName, that.functionName )
+        && ObjectUtilities.equalArray( this.parameters, that.parameters ) );
+    } else {
       return false;
     }
   }
 
-  public CSSType getType()
-  {
+  public CSSType getType() {
     return CSSGenericType.GENERIC_TYPE;
   }
 }

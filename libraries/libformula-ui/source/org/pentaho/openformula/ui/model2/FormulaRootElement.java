@@ -17,29 +17,24 @@
 
 package org.pentaho.openformula.ui.model2;
 
-import java.util.ArrayList;
 import javax.swing.text.Element;
+import java.util.ArrayList;
 
-public class FormulaRootElement extends FormulaElement
-{
+public class FormulaRootElement extends FormulaElement {
   private ArrayList<FormulaElement> elements;
 
-  public FormulaRootElement(final FormulaDocument document)
-  {
-    super(document, null);
+  public FormulaRootElement( final FormulaDocument document ) {
+    super( document, null );
     this.elements = new ArrayList<FormulaElement>();
-    this.elements.add(new FormulaTextElement(document, this, ""));
+    this.elements.add( new FormulaTextElement( document, this, "" ) );
   }
 
-  public String getText()
-  {
-    final StringBuilder b = new StringBuilder(getEndOffset());
-    for (int i = 0; i < elements.size(); i++)
-    {
-      final FormulaElement element = elements.get(i);
-      if (element != null)
-      {
-        b.append(element.getText());
+  public String getText() {
+    final StringBuilder b = new StringBuilder( getEndOffset() );
+    for ( int i = 0; i < elements.size(); i++ ) {
+      final FormulaElement element = elements.get( i );
+      if ( element != null ) {
+        b.append( element.getText() );
       }
     }
     return b.toString();
@@ -55,17 +50,14 @@ public class FormulaRootElement extends FormulaElement
    * @param offset the specified offset >= 0
    * @return the element index >= 0
    */
-  public int getElementIndex(final int offset)
-  {
-    for (int i = 0; i < elements.size(); i++)
-    {
-      final FormulaElement node = elements.get(i);
+  public int getElementIndex( final int offset ) {
+    for ( int i = 0; i < elements.size(); i++ ) {
+      final FormulaElement node = elements.get( i );
       final int nodeStartOffset = node.getStartOffset();
       final int nodeEndOffset = node.getEndOffset();
 
-      if ((nodeStartOffset > offset) &&
-          ((nodeEndOffset > offset) || (nodeStartOffset == nodeEndOffset)))
-      {
+      if ( ( nodeStartOffset > offset ) &&
+        ( ( nodeEndOffset > offset ) || ( nodeStartOffset == nodeEndOffset ) ) ) {
         return i;
       }
 
@@ -79,8 +71,7 @@ public class FormulaRootElement extends FormulaElement
    *
    * @return the number of child elements >= 0
    */
-  public int getElementCount()
-  {
+  public int getElementCount() {
     return elements.size();
   }
 
@@ -90,14 +81,10 @@ public class FormulaRootElement extends FormulaElement
    * @param index the specified index >= 0
    * @return the child element.  If index is invalid, return null
    */
-  public Element getElement(final int index)
-  {
-    if (index < elements.size())
-    {
-      return elements.get(index);
-    }
-    else
-    {
+  public Element getElement( final int index ) {
+    if ( index < elements.size() ) {
+      return elements.get( index );
+    } else {
       return null;
     }
   }
@@ -108,8 +95,7 @@ public class FormulaRootElement extends FormulaElement
    *
    * @return true if a leaf element else false
    */
-  public boolean isLeaf()
-  {
+  public boolean isLeaf() {
     return false;
   }
 
@@ -119,129 +105,107 @@ public class FormulaRootElement extends FormulaElement
    *
    * @return the element name
    */
-  public String getName()
-  {
+  public String getName() {
     return "<root>"; // NON-NLS
   }
 
-  public void setElements(final FormulaElement[] elements)
-  {
+  public void setElements( final FormulaElement[] elements ) {
     this.elements.clear();
-    for (int i = 0; i < elements.length; i++)
-    {
-      final FormulaElement element = elements[i];
-      if ((element != null) && (element.getParentElement() != this))
-      {
+    for ( int i = 0; i < elements.length; i++ ) {
+      final FormulaElement element = elements[ i ];
+      if ( ( element != null ) && ( element.getParentElement() != this ) ) {
         throw new IllegalArgumentException();
       }
-      this.elements.add(element);
+      this.elements.add( element );
     }
-    if (this.elements.isEmpty())
-    {
-      this.elements.add(new FormulaTextElement((FormulaDocument) getDocument(), this, ""));
+    if ( this.elements.isEmpty() ) {
+      this.elements.add( new FormulaTextElement( (FormulaDocument) getDocument(), this, "" ) );
     }
     revalidateNodePositions();
   }
 
-  public void setElement(final int index, final FormulaElement element)
-  {
-    if (element.getParentElement() != this)
-    {
+  public void setElement( final int index, final FormulaElement element ) {
+    if ( element.getParentElement() != this ) {
       throw new IllegalArgumentException();
     }
-    this.elements.set(index, element);
+    this.elements.set( index, element );
   }
 
-  public void insertElement(final int index, final FormulaElement element)
-  {
-    if (element.getParentElement() != this)
-    {
+  public void insertElement( final int index, final FormulaElement element ) {
+    if ( element.getParentElement() != this ) {
       throw new IllegalArgumentException();
     }
-    this.elements.add(index, element);
+    this.elements.add( index, element );
   }
 
-  public void removeElement(final int index)
-  {
-    this.elements.remove(index);
-    if (this.elements.isEmpty())
-    {
-      this.elements.add(new FormulaTextElement((FormulaDocument) getDocument(), this, ""));
+  public void removeElement( final int index ) {
+    this.elements.remove( index );
+    if ( this.elements.isEmpty() ) {
+      this.elements.add( new FormulaTextElement( (FormulaDocument) getDocument(), this, "" ) );
     }
   }
 
-  public void revalidateStructure()
-  {
-    final FormulaElement[] formulaElements = this.elements.toArray(new FormulaElement[this.elements.size()]);
+  public void revalidateStructure() {
+    final FormulaElement[] formulaElements = this.elements.toArray( new FormulaElement[ this.elements.size() ] );
     final FormulaElement[] normalized = FormulaParser.normalizeDocument
-        ((FormulaDocument) getDocument(), formulaElements);
-    setElements(normalized);
+      ( (FormulaDocument) getDocument(), formulaElements );
+    setElements( normalized );
   }
 
-  public void revalidateNodePositions()
-  {
-    setStartOffset(0);
+  public void revalidateNodePositions() {
+    setStartOffset( 0 );
     int cursor = 0;
     final int count = getElementCount();
-    for (int i = 0; i < count; i++)
-    {
-      final FormulaElement node = (FormulaElement)getElement(i);
-      if (node != null)
-      {
-        node.setStartOffset(cursor);
+    for ( int i = 0; i < count; i++ ) {
+      final FormulaElement node = (FormulaElement) getElement( i );
+      if ( node != null ) {
+        node.setStartOffset( cursor );
         cursor += node.getText().length();
-        node.setEndOffset(cursor);
+        node.setEndOffset( cursor );
       }
     }
-    setEndOffset(cursor);
+    setEndOffset( cursor );
   }
 
-  public void print()
-  {
-    final FormulaElement[] formulaElements = this.elements.toArray(new FormulaElement[this.elements.size()]);
-    for (int i = 0; i < formulaElements.length; i++)
-    {
-      final FormulaElement element = formulaElements[i];
-      System.out.println(i + " Name=" + element.getName() + "; Text='" + element.getText() + '\'');
+  public void print() {
+    final FormulaElement[] formulaElements = this.elements.toArray( new FormulaElement[ this.elements.size() ] );
+    for ( int i = 0; i < formulaElements.length; i++ ) {
+      final FormulaElement element = formulaElements[ i ];
+      System.out.println( i + " Name=" + element.getName() + "; Text='" + element.getText() + '\'' );
     }
   }
 
-  public void clear()
-  {
+  public void clear() {
     elements.clear();
   }
 
-  public void replace(final FormulaElement oldElement, final FormulaTextElement formulaTextElement, final boolean hasDummyParams)
-  {
-    final int idx = elements.indexOf(oldElement);
-    if (idx == -1)
-    {
+  public void replace( final FormulaElement oldElement, final FormulaTextElement formulaTextElement,
+                       final boolean hasDummyParams ) {
+    final int idx = elements.indexOf( oldElement );
+    if ( idx == -1 ) {
       throw new IllegalStateException();
     }
 
     final FormulaElement replacementElement;
-    final Element origElement = getElement(idx);
-    if ((hasDummyParams) && (origElement instanceof FormulaTextElement))
-    {
+    final Element origElement = getElement( idx );
+    if ( ( hasDummyParams ) && ( origElement instanceof FormulaTextElement ) ) {
       // Replace the dummy parameter with the user specified parameter
-      replacementElement = new FormulaTextElement((FormulaDocument)formulaTextElement.getDocument(),
-                                                  (FormulaRootElement)origElement.getParentElement(),
-                                                  formulaTextElement.getText());
+      replacementElement = new FormulaTextElement( (FormulaDocument) formulaTextElement.getDocument(),
+        (FormulaRootElement) origElement.getParentElement(),
+        formulaTextElement.getText() );
     } else {
       replacementElement = formulaTextElement;
     }
 
-    setElement(idx, replacementElement);
+    setElement( idx, replacementElement );
   }
 
-  public void insert(final FormulaElement oldElement, final FormulaTextElement formulaTextElement)
-  {
-    final int idx = elements.indexOf(oldElement);
-    if (idx == -1)
-    {
+  public void insert( final FormulaElement oldElement, final FormulaTextElement formulaTextElement ) {
+    final int idx = elements.indexOf( oldElement );
+    if ( idx == -1 ) {
       throw new IllegalStateException();
     }
 
-    insertElement(idx, formulaTextElement);
+    insertElement( idx, formulaTextElement );
   }
 }

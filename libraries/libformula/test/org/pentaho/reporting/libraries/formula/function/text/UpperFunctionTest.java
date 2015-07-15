@@ -22,19 +22,16 @@ import org.pentaho.reporting.libraries.formula.FormulaTestBase;
 /**
  * @author Cedric Pronzato
  */
-public class UpperFunctionTest extends FormulaTestBase
-{
-  public void testDefault() throws Exception
-  {
+public class UpperFunctionTest extends FormulaTestBase {
+  public void testDefault() throws Exception {
     runDefaultTest();
   }
 
-  public Object[][] createDataTest()
-  {
+  public Object[][] createDataTest() {
     return new Object[][]
-        {
-            {"UPPER(\"Habc7\")", "HABC7"},
-        };
+      {
+        { "UPPER(\"Habc7\")", "HABC7" },
+      };
   }
 
 }

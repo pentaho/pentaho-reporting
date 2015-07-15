@@ -17,29 +17,26 @@
 
 package org.pentaho.reporting.libraries.formula.function.logical;
 
-import java.math.BigDecimal;
-
 import org.pentaho.reporting.libraries.formula.FormulaTestBase;
+
+import java.math.BigDecimal;
 
 /**
  * @author Cedric Pronzato
  */
-public class FalseFunctionTest extends FormulaTestBase
-{
-  public void testDefault() throws Exception
-  {
+public class FalseFunctionTest extends FormulaTestBase {
+  public void testDefault() throws Exception {
     runDefaultTest();
   }
 
 
-  public Object[][] createDataTest()
-  {
+  public Object[][] createDataTest() {
     return new Object[][]
-        {
-            {"FALSE()", Boolean.FALSE},
-            //{"IF(ISNUMBER(FALSE());FALSE()=0;FALSE())", Boolean.FALSE},
-            {"2+FALSE()", new BigDecimal(2)},
+      {
+        { "FALSE()", Boolean.FALSE },
+        //{"IF(ISNUMBER(FALSE());FALSE()=0;FALSE())", Boolean.FALSE},
+        { "2+FALSE()", new BigDecimal( 2 ) },
 
-        };
+      };
   }
 }

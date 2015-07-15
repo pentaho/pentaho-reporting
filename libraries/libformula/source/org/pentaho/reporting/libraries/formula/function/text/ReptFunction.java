@@ -31,53 +31,44 @@ import org.pentaho.reporting.libraries.formula.typing.coretypes.TextType;
  * This function returns text repeated Count times.
  *
  * @author Cedric Pronzato
- *
  */
-public class ReptFunction implements Function
-{
+public class ReptFunction implements Function {
   private static final long serialVersionUID = -6832781189129832501L;
 
-  public ReptFunction()
-  {
+  public ReptFunction() {
   }
 
-  public TypeValuePair evaluate(final FormulaContext context,
-                                final ParameterCallback parameters) throws EvaluationException
-  {
+  public TypeValuePair evaluate( final FormulaContext context,
+                                 final ParameterCallback parameters ) throws EvaluationException {
     final int parameterCount = parameters.getParameterCount();
-    if (parameterCount != 2)
-    {
-      throw EvaluationException.getInstance(LibFormulaErrorValue.ERROR_ARGUMENTS_VALUE);
+    if ( parameterCount != 2 ) {
+      throw EvaluationException.getInstance( LibFormulaErrorValue.ERROR_ARGUMENTS_VALUE );
     }
     final TypeRegistry typeRegistry = context.getTypeRegistry();
 
-    final Type countType = parameters.getType(1);
-    final Object countValue = parameters.getValue(1);
+    final Type countType = parameters.getType( 1 );
+    final Object countValue = parameters.getValue( 1 );
 
-    final int count = typeRegistry.convertToNumber(countType, countValue).intValue();
-    if (count < 0)
-    {
-      throw EvaluationException.getInstance(LibFormulaErrorValue.ERROR_INVALID_ARGUMENT_VALUE);
+    final int count = typeRegistry.convertToNumber( countType, countValue ).intValue();
+    if ( count < 0 ) {
+      throw EvaluationException.getInstance( LibFormulaErrorValue.ERROR_INVALID_ARGUMENT_VALUE );
     }
 
-    final Type textType1 = parameters.getType(0);
-    final Object textValue1 = parameters.getValue(0);
-    final String rawText = typeRegistry.convertToText(textType1, textValue1);
-    if(rawText == null)
-    {
-      return new TypeValuePair(TextType.TYPE, "");
+    final Type textType1 = parameters.getType( 0 );
+    final Object textValue1 = parameters.getValue( 0 );
+    final String rawText = typeRegistry.convertToText( textType1, textValue1 );
+    if ( rawText == null ) {
+      return new TypeValuePair( TextType.TYPE, "" );
     }
 
-    final StringBuffer buffer = new StringBuffer(rawText.length() * count);
-    for(int i=0; i<count; i++)
-    {
-      buffer.append(rawText);
+    final StringBuffer buffer = new StringBuffer( rawText.length() * count );
+    for ( int i = 0; i < count; i++ ) {
+      buffer.append( rawText );
     }
-    return new TypeValuePair(TextType.TYPE, buffer.toString());
+    return new TypeValuePair( TextType.TYPE, buffer.toString() );
   }
 
-  public String getCanonicalName()
-  {
+  public String getCanonicalName() {
     return "REPT";
   }
 

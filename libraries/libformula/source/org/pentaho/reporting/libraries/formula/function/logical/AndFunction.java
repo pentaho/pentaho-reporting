@@ -31,41 +31,33 @@ import org.pentaho.reporting.libraries.formula.typing.coretypes.LogicalType;
  *
  * @author Thomas Morgner
  */
-public class AndFunction implements Function
-{
-  private static final TypeValuePair RETURN_TRUE = new TypeValuePair(LogicalType.TYPE, Boolean.TRUE);
-  private static final TypeValuePair RETURN_FALSE = new TypeValuePair(LogicalType.TYPE, Boolean.FALSE);
+public class AndFunction implements Function {
+  private static final TypeValuePair RETURN_TRUE = new TypeValuePair( LogicalType.TYPE, Boolean.TRUE );
+  private static final TypeValuePair RETURN_FALSE = new TypeValuePair( LogicalType.TYPE, Boolean.FALSE );
   private static final long serialVersionUID = -3737884974501253814L;
 
-  public AndFunction()
-  {
+  public AndFunction() {
   }
 
-  public String getCanonicalName()
-  {
+  public String getCanonicalName() {
     return "AND";
   }
 
-  public TypeValuePair evaluate(final FormulaContext context,
-                                final ParameterCallback parameters)
-      throws EvaluationException
-  {
+  public TypeValuePair evaluate( final FormulaContext context,
+                                 final ParameterCallback parameters )
+    throws EvaluationException {
     final int length = parameters.getParameterCount();
-    if(length < 1)
-    {
-      throw EvaluationException.getInstance(LibFormulaErrorValue.ERROR_ARGUMENTS_VALUE);
+    if ( length < 1 ) {
+      throw EvaluationException.getInstance( LibFormulaErrorValue.ERROR_ARGUMENTS_VALUE );
     }
-    for (int i = 0; i < length; i++)
-    {
-      final Object value = parameters.getValue(i);
-      final Type type1 = parameters.getType(i);
-      final Boolean condition = context.getTypeRegistry().convertToLogical(type1, value);
-      if(condition == null)
-      {
-        throw EvaluationException.getInstance(LibFormulaErrorValue.ERROR_INVALID_ARGUMENT_VALUE);
+    for ( int i = 0; i < length; i++ ) {
+      final Object value = parameters.getValue( i );
+      final Type type1 = parameters.getType( i );
+      final Boolean condition = context.getTypeRegistry().convertToLogical( type1, value );
+      if ( condition == null ) {
+        throw EvaluationException.getInstance( LibFormulaErrorValue.ERROR_INVALID_ARGUMENT_VALUE );
       }
-      if (Boolean.FALSE.equals(condition))
-      {
+      if ( Boolean.FALSE.equals( condition ) ) {
         return RETURN_FALSE;
       }
     }

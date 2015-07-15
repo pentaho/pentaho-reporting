@@ -28,22 +28,16 @@ import org.w3c.css.sac.LexicalUnit;
  *
  * @author Thomas Morgner
  */
-public class TextOverflowEllipsisReadHandler extends ListOfValuesReadHandler
-{
-  public TextOverflowEllipsisReadHandler()
-  {
-    super(2, false);
+public class TextOverflowEllipsisReadHandler extends ListOfValuesReadHandler {
+  public TextOverflowEllipsisReadHandler() {
+    super( 2, false );
   }
 
-  protected CSSValue parseValue(final LexicalUnit value)
-  {
-    if (value.getLexicalUnitType() == LexicalUnit.SAC_URI)
-    {
-      return new CSSStringValue(CSSStringType.URI, value.getStringValue());
-    }
-    else if (value.getLexicalUnitType() == LexicalUnit.SAC_STRING_VALUE)
-    {
-      return new CSSStringValue(CSSStringType.STRING, value.getStringValue());
+  protected CSSValue parseValue( final LexicalUnit value ) {
+    if ( value.getLexicalUnitType() == LexicalUnit.SAC_URI ) {
+      return new CSSStringValue( CSSStringType.URI, value.getStringValue() );
+    } else if ( value.getLexicalUnitType() == LexicalUnit.SAC_STRING_VALUE ) {
+      return new CSSStringValue( CSSStringType.STRING, value.getStringValue() );
     }
     return null;
   }

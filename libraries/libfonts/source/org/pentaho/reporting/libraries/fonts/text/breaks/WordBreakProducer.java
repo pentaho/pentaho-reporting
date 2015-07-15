@@ -22,23 +22,19 @@ package org.pentaho.reporting.libraries.fonts.text.breaks;
  *
  * @author Thomas Morgner
  */
-public class WordBreakProducer extends LineBreakProducer
-{
-  public WordBreakProducer()
-  {
+public class WordBreakProducer extends LineBreakProducer {
+  public WordBreakProducer() {
   }
 
-  public int createBreakOpportunity(final int codepoint)
-  {
-    final int breakOpportunity = super.createBreakOpportunity(codepoint);
-    if (breakOpportunity != BreakOpportunityProducer.BREAK_NEVER)
-    {
+  public int createBreakOpportunity( final int codepoint ) {
+    final int breakOpportunity = super.createBreakOpportunity( codepoint );
+    if ( breakOpportunity != BreakOpportunityProducer.BREAK_NEVER ) {
       return breakOpportunity;
     }
 
     // cheating here for now. Needs an implementation.
-    if (Character.isWhitespace((char) codepoint) ||
-        codepoint == 8203) // zero-width-no-joiner.
+    if ( Character.isWhitespace( (char) codepoint ) ||
+      codepoint == 8203 ) // zero-width-no-joiner.
     {
       return BreakOpportunityProducer.BREAK_WORD;
     }

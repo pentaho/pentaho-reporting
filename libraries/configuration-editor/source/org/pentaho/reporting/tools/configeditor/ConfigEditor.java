@@ -17,9 +17,20 @@
 
 package org.pentaho.reporting.tools.configeditor;
 
-import java.awt.BorderLayout;
-import java.awt.FlowLayout;
-import java.awt.GridLayout;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.pentaho.reporting.libraries.base.boot.AbstractBoot;
+import org.pentaho.reporting.libraries.base.config.HierarchicalConfiguration;
+import org.pentaho.reporting.libraries.base.util.FilesystemFilter;
+import org.pentaho.reporting.libraries.base.util.Messages;
+import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
+import org.pentaho.reporting.libraries.base.util.ResourceBundleSupport;
+import org.pentaho.reporting.libraries.base.util.StringUtils;
+import org.pentaho.reporting.tools.configeditor.model.ConfigTreeModelException;
+
+import javax.swing.*;
+import javax.swing.border.EmptyBorder;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
@@ -39,28 +50,6 @@ import java.util.Collections;
 import java.util.Enumeration;
 import java.util.Locale;
 import java.util.Properties;
-import javax.swing.AbstractAction;
-import javax.swing.Action;
-import javax.swing.BorderFactory;
-import javax.swing.JButton;
-import javax.swing.JFileChooser;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.UIManager;
-import javax.swing.border.EmptyBorder;
-
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.pentaho.reporting.libraries.base.boot.AbstractBoot;
-import org.pentaho.reporting.libraries.base.config.HierarchicalConfiguration;
-import org.pentaho.reporting.libraries.base.util.FilesystemFilter;
-import org.pentaho.reporting.libraries.base.util.Messages;
-import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
-import org.pentaho.reporting.libraries.base.util.ResourceBundleSupport;
-import org.pentaho.reporting.libraries.base.util.StringUtils;
-import org.pentaho.reporting.tools.configeditor.model.ConfigTreeModelException;
 
 /**
  * The ConfigEditor can be used to edit the global jfreereport.properties files. These files provide global settings for
@@ -68,21 +57,18 @@ import org.pentaho.reporting.tools.configeditor.model.ConfigTreeModelException;
  *
  * @author Thomas Morgner
  */
-public class ConfigEditor extends JFrame
-{
-  private static final Log logger = LogFactory.getLog(ConfigEditor.class);
+public class ConfigEditor extends JFrame {
+  private static final Log logger = LogFactory.getLog( ConfigEditor.class );
 
   /**
    * An Action to handle close requests.
    */
-  private class CloseAction extends AbstractAction
-  {
+  private class CloseAction extends AbstractAction {
     /**
      * DefaultConstructor.
      */
-    protected CloseAction()
-    {
-      putValue(Action.NAME, getResources().getString("action.exit.name")); //$NON-NLS-1$
+    protected CloseAction() {
+      putValue( Action.NAME, getResources().getString( "action.exit.name" ) ); //$NON-NLS-1$
     }
 
     /**
@@ -90,8 +76,7 @@ public class ConfigEditor extends JFrame
      *
      * @param e the action event.
      */
-    public void actionPerformed(final ActionEvent e)
-    {
+    public void actionPerformed( final ActionEvent e ) {
       attempClose();
     }
   }
@@ -99,15 +84,13 @@ public class ConfigEditor extends JFrame
   /**
    * An action to handle save requests.
    */
-  private class SaveAction extends AbstractAction
-  {
+  private class SaveAction extends AbstractAction {
     /**
      * DefaultConstructor.
      */
-    protected SaveAction()
-    {
-      putValue(Action.NAME, getResources().getString("action.save.name")); //$NON-NLS-1$
-      putValue(Action.SMALL_ICON, getResources().getIcon("action.save.small-icon")); //$NON-NLS-1$
+    protected SaveAction() {
+      putValue( Action.NAME, getResources().getString( "action.save.name" ) ); //$NON-NLS-1$
+      putValue( Action.SMALL_ICON, getResources().getIcon( "action.save.small-icon" ) ); //$NON-NLS-1$
     }
 
     /**
@@ -115,8 +98,7 @@ public class ConfigEditor extends JFrame
      *
      * @param e the action event.
      */
-    public void actionPerformed(final ActionEvent e)
-    {
+    public void actionPerformed( final ActionEvent e ) {
       save();
     }
   }
@@ -124,15 +106,13 @@ public class ConfigEditor extends JFrame
   /**
    * An action to handle load requests.
    */
-  private class LoadAction extends AbstractAction
-  {
+  private class LoadAction extends AbstractAction {
     /**
      * DefaultConstructor.
      */
-    protected LoadAction()
-    {
-      putValue(Action.NAME, getResources().getString("action.load.name")); //$NON-NLS-1$
-      putValue(Action.SMALL_ICON, getResources().getIcon("action.load.small-icon")); //$NON-NLS-1$
+    protected LoadAction() {
+      putValue( Action.NAME, getResources().getString( "action.load.name" ) ); //$NON-NLS-1$
+      putValue( Action.SMALL_ICON, getResources().getIcon( "action.load.small-icon" ) ); //$NON-NLS-1$
     }
 
     /**
@@ -140,8 +120,7 @@ public class ConfigEditor extends JFrame
      *
      * @param e the action event.
      */
-    public void actionPerformed(final ActionEvent e)
-    {
+    public void actionPerformed( final ActionEvent e ) {
       load();
     }
   }
@@ -149,15 +128,13 @@ public class ConfigEditor extends JFrame
   /**
    * An action to handle new requests, which reset the report configuration.
    */
-  private class NewAction extends AbstractAction
-  {
+  private class NewAction extends AbstractAction {
     /**
      * DefaultConstructor.
      */
-    protected NewAction()
-    {
-      putValue(Action.NAME, getResources().getString("action.new.name")); //$NON-NLS-1$
-      putValue(Action.SMALL_ICON, getResources().getIcon("action.new.small-icon")); //$NON-NLS-1$
+    protected NewAction() {
+      putValue( Action.NAME, getResources().getString( "action.new.name" ) ); //$NON-NLS-1$
+      putValue( Action.SMALL_ICON, getResources().getIcon( "action.new.small-icon" ) ); //$NON-NLS-1$
     }
 
     /**
@@ -165,24 +142,20 @@ public class ConfigEditor extends JFrame
      *
      * @param e the action event.
      */
-    public void actionPerformed(final ActionEvent e)
-    {
+    public void actionPerformed( final ActionEvent e ) {
       reset();
     }
   }
 
-  private class CloseHandler extends WindowAdapter
-  {
+  private class CloseHandler extends WindowAdapter {
 
-    private CloseHandler()
-    {
+    private CloseHandler() {
     }
 
     /**
      * Invoked when a window is in the process of being closed. The close operation can be overridden at this point.
      */
-    public void windowClosing(final WindowEvent e)
-    {
+    public void windowClosing( final WindowEvent e ) {
       attempClose();
     }
   }
@@ -218,37 +191,35 @@ public class ConfigEditor extends JFrame
   private HierarchicalConfiguration configuration;
   private ConfigEditorPane editorPane;
 
-  public ConfigEditor() throws ConfigTreeModelException
-  {
-    this(new HierarchicalConfiguration(ConfigEditorBoot.getInstance().getGlobalConfig()),
-        ConfigEditorBoot.getInstance());
+  public ConfigEditor() throws ConfigTreeModelException {
+    this( new HierarchicalConfiguration( ConfigEditorBoot.getInstance().getGlobalConfig() ),
+      ConfigEditorBoot.getInstance() );
   }
 
-  public ConfigEditor(final HierarchicalConfiguration configuration,
-                      final AbstractBoot packageManager) throws ConfigTreeModelException
-  {
+  public ConfigEditor( final HierarchicalConfiguration configuration,
+                       final AbstractBoot packageManager ) throws ConfigTreeModelException {
     this.configuration = configuration;
-    resources = new ResourceBundleSupport(getLocale(), ConfigEditorBoot.BUNDLE_NAME, 
-        ObjectUtilities.getClassLoader(ConfigEditor.class));
-    editorPane = new ConfigEditorPane(packageManager, true);
-    editorPane.updateConfiguration(configuration);
+    resources = new ResourceBundleSupport( getLocale(), ConfigEditorBoot.BUNDLE_NAME,
+      ObjectUtilities.getClassLoader( ConfigEditor.class ) );
+    editorPane = new ConfigEditorPane( packageManager, true );
+    editorPane.updateConfiguration( configuration );
 
-    setTitle(resources.getString("config-editor.title")); //$NON-NLS-1$
+    setTitle( resources.getString( "config-editor.title" ) ); //$NON-NLS-1$
 
 
     final JPanel contentPane = new JPanel();
-    contentPane.setLayout(new BorderLayout());
-    contentPane.add(editorPane, BorderLayout.CENTER);
-    contentPane.add(createButtonPane(), BorderLayout.SOUTH);
+    contentPane.setLayout( new BorderLayout() );
+    contentPane.add( editorPane, BorderLayout.CENTER );
+    contentPane.add( createButtonPane(), BorderLayout.SOUTH );
 
     final JPanel cPaneStatus = new JPanel();
-    cPaneStatus.setLayout(new BorderLayout());
-    cPaneStatus.add(contentPane, BorderLayout.CENTER);
-    cPaneStatus.add(createStatusBar(), BorderLayout.SOUTH);
+    cPaneStatus.setLayout( new BorderLayout() );
+    cPaneStatus.add( contentPane, BorderLayout.CENTER );
+    cPaneStatus.add( createStatusBar(), BorderLayout.SOUTH );
 
-    setContentPane(cPaneStatus);
+    setContentPane( cPaneStatus );
 
-    addWindowListener(new CloseHandler());
+    addWindowListener( new CloseHandler() );
 
   }
 
@@ -257,8 +228,7 @@ public class ConfigEditor extends JFrame
    *
    * @return the resource bundle.
    */
-  protected ResourceBundleSupport getResources()
-  {
+  protected ResourceBundleSupport getResources() {
     return resources;
   }
 
@@ -267,24 +237,23 @@ public class ConfigEditor extends JFrame
    *
    * @return the created panel with all control buttons.
    */
-  private JPanel createButtonPane()
-  {
+  private JPanel createButtonPane() {
     final Action closeAction = new CloseAction();
     final Action saveAction = new SaveAction();
     final Action loadAction = new LoadAction();
     final Action newAction = new NewAction();
 
     final JPanel buttonHolder = new JPanel();
-    buttonHolder.setLayout(new GridLayout(1, 4, 5, 5));
-    buttonHolder.add(new JButton(newAction));
-    buttonHolder.add(new JButton(loadAction));
-    buttonHolder.add(new JButton(saveAction));
-    buttonHolder.add(new JButton(closeAction));
+    buttonHolder.setLayout( new GridLayout( 1, 4, 5, 5 ) );
+    buttonHolder.add( new JButton( newAction ) );
+    buttonHolder.add( new JButton( loadAction ) );
+    buttonHolder.add( new JButton( saveAction ) );
+    buttonHolder.add( new JButton( closeAction ) );
 
     final JPanel panel = new JPanel();
-    panel.setLayout(new FlowLayout(FlowLayout.RIGHT));
-    panel.setBorder(new EmptyBorder(5, 5, 5, 5));
-    panel.add(buttonHolder);
+    panel.setLayout( new FlowLayout( FlowLayout.RIGHT ) );
+    panel.setBorder( new EmptyBorder( 5, 5, 5, 5 ) );
+    panel.add( buttonHolder );
     return panel;
   }
 
@@ -293,15 +262,14 @@ public class ConfigEditor extends JFrame
    *
    * @return the status bar.
    */
-  protected JPanel createStatusBar()
-  {
+  protected JPanel createStatusBar() {
     final JPanel statusPane = new JPanel();
-    statusPane.setLayout(new BorderLayout());
-    statusPane.setBorder(BorderFactory.createLineBorder(UIManager.getDefaults().getColor(
-        "controlShadow"))); //$NON-NLS-1$
-    statusHolder = new JLabel(" "); //$NON-NLS-1$
-    statusPane.setMinimumSize(statusHolder.getPreferredSize());
-    statusPane.add(statusHolder, BorderLayout.WEST);
+    statusPane.setLayout( new BorderLayout() );
+    statusPane.setBorder( BorderFactory.createLineBorder( UIManager.getDefaults().getColor(
+      "controlShadow" ) ) ); //$NON-NLS-1$
+    statusHolder = new JLabel( " " ); //$NON-NLS-1$
+    statusPane.setMinimumSize( statusHolder.getPreferredSize() );
+    statusPane.add( statusHolder, BorderLayout.WEST );
 
     return statusPane;
   }
@@ -311,115 +279,98 @@ public class ConfigEditor extends JFrame
    *
    * @param text the new statul bar text.
    */
-  private void setStatusText(final String text)
-  {
-    statusHolder.setText(text);
+  private void setStatusText( final String text ) {
+    statusHolder.setText( text );
   }
 
-//  private String getStatusText ()
-//  {
-//    return statusHolder.getText();
-//  }
+  //  private String getStatusText ()
+  //  {
+  //    return statusHolder.getText();
+  //  }
 
   /**
    * Loads the report configuration from a user selectable report properties file.
    */
-  protected void load()
-  {
-    setStatusText(resources.getString("ConfigEditor.USER_LOADING_FILE")); //$NON-NLS-1$
-    if (fileChooser == null)
-    {
+  protected void load() {
+    setStatusText( resources.getString( "ConfigEditor.USER_LOADING_FILE" ) ); //$NON-NLS-1$
+    if ( fileChooser == null ) {
       fileChooser = new JFileChooser();
       final FilesystemFilter filter = new FilesystemFilter
-          (ConfigEditor.PROPERTIES_FILE_EXTENSION, resources.getString(
-              "config-editor.file-description.properties")); //$NON-NLS-1$
-      fileChooser.addChoosableFileFilter(filter);
-      fileChooser.setMultiSelectionEnabled(false);
+        ( ConfigEditor.PROPERTIES_FILE_EXTENSION, resources.getString(
+          "config-editor.file-description.properties" ) ); //$NON-NLS-1$
+      fileChooser.addChoosableFileFilter( filter );
+      fileChooser.setMultiSelectionEnabled( false );
     }
 
-    final int option = fileChooser.showOpenDialog(this);
-    if (option == JFileChooser.APPROVE_OPTION)
-    {
+    final int option = fileChooser.showOpenDialog( this );
+    if ( option == JFileChooser.APPROVE_OPTION ) {
       final File selFile = fileChooser.getSelectedFile();
       String selFileName = selFile.getAbsolutePath();
 
       // Test if ends on .properties
-      if (StringUtils.endsWithIgnoreCase(selFileName, ConfigEditor.PROPERTIES_FILE_EXTENSION) == false)
-      {
+      if ( StringUtils.endsWithIgnoreCase( selFileName, ConfigEditor.PROPERTIES_FILE_EXTENSION ) == false ) {
         selFileName = selFileName + ConfigEditor.PROPERTIES_FILE_EXTENSION;
       }
       final Properties prop = new Properties();
-      try
-      {
-        final InputStream in = new BufferedInputStream(new FileInputStream(selFileName));
-        try
-        {
-          prop.load(in);
-        }
-        finally
-        {
+      try {
+        final InputStream in = new BufferedInputStream( new FileInputStream( selFileName ) );
+        try {
+          prop.load( in );
+        } finally {
           in.close();
         }
-      }
-      catch (IOException ioe)
-      {
-        ConfigEditor.logger.debug(resources.getString("ConfigEditor.ERROR_0003_FAILED_TO_LOAD_PROPERTIES",
-            ioe.toString()), ioe); //$NON-NLS-1$
-        setStatusText(resources.getString("ConfigEditor.ERROR_0003_FAILED_TO_LOAD_PROPERTIES",
-            ioe.getMessage())); //$NON-NLS-1$
+      } catch ( IOException ioe ) {
+        ConfigEditor.logger.debug( resources.getString( "ConfigEditor.ERROR_0003_FAILED_TO_LOAD_PROPERTIES",
+          ioe.toString() ), ioe ); //$NON-NLS-1$
+        setStatusText( resources.getString( "ConfigEditor.ERROR_0003_FAILED_TO_LOAD_PROPERTIES",
+          ioe.getMessage() ) ); //$NON-NLS-1$
         return;
       }
 
       reset();
 
       final Enumeration keys = prop.keys();
-      while (keys.hasMoreElements())
-      {
+      while ( keys.hasMoreElements() ) {
         final String key = (String) keys.nextElement();
-        final String value = prop.getProperty(key);
-        configuration.setConfigProperty(key, value);
+        final String value = prop.getProperty( key );
+        configuration.setConfigProperty( key, value );
       }
 
-      editorPane.updateConfiguration(configuration);
-      setStatusText(resources.getString("ConfigEditor.USER_LOAD_PROPS_COMPLETE")); //$NON-NLS-1$
+      editorPane.updateConfiguration( configuration );
+      setStatusText( resources.getString( "ConfigEditor.USER_LOAD_PROPS_COMPLETE" ) ); //$NON-NLS-1$
     }
   }
 
-  protected void reset()
-  {
+  protected void reset() {
     editorPane.reset();
   }
 
   /**
    * Saves the report configuration to a user selectable report properties file.
    */
-  protected void save()
-  {
-    setStatusText(resources.getString("ConfigEditor.USER_SAVING")); //$NON-NLS-1$
+  protected void save() {
+    setStatusText( resources.getString( "ConfigEditor.USER_SAVING" ) ); //$NON-NLS-1$
     editorPane.commit();
 
-    if (fileChooser == null)
-    {
+    if ( fileChooser == null ) {
       fileChooser = new JFileChooser();
       final FilesystemFilter filter = new FilesystemFilter
-          (ConfigEditor.PROPERTIES_FILE_EXTENSION, resources.getString(
-              "config-editor.file-description.properties")); //$NON-NLS-1$
-      fileChooser.addChoosableFileFilter(filter);
-      fileChooser.setMultiSelectionEnabled(false);
+        ( ConfigEditor.PROPERTIES_FILE_EXTENSION, resources.getString(
+          "config-editor.file-description.properties" ) ); //$NON-NLS-1$
+      fileChooser.addChoosableFileFilter( filter );
+      fileChooser.setMultiSelectionEnabled( false );
     }
 
-    final int option = fileChooser.showSaveDialog(this);
-    if (option == JFileChooser.APPROVE_OPTION)
-    {
+    final int option = fileChooser.showSaveDialog( this );
+    if ( option == JFileChooser.APPROVE_OPTION ) {
       final File selFile = fileChooser.getSelectedFile();
       String selFileName = selFile.getAbsolutePath();
 
       // Test if ends on xls
-      if (StringUtils.endsWithIgnoreCase(selFileName, ConfigEditor.PROPERTIES_FILE_EXTENSION) == false)
-      {
+      if ( StringUtils.endsWithIgnoreCase( selFileName, ConfigEditor.PROPERTIES_FILE_EXTENSION ) == false ) {
         selFileName = selFileName + ConfigEditor.PROPERTIES_FILE_EXTENSION;
       }
-      write(selFileName);
+      write( selFileName );
     }
   }
 
@@ -428,55 +379,45 @@ public class ConfigEditor extends JFrame
    *
    * @param filename the target file name
    */
-  private void write(final String filename)
-  {
+  private void write( final String filename ) {
     final Properties prop = new Properties();
     final ArrayList<String> names = new ArrayList<String>();
     // clear all previously set configuration settings ...
     final Enumeration defaults = configuration.getConfigProperties();
-    while (defaults.hasMoreElements())
-    {
+    while ( defaults.hasMoreElements() ) {
       final String key = (String) defaults.nextElement();
-      names.add(key);
-      prop.setProperty(key, configuration.getConfigProperty(key));
+      names.add( key );
+      prop.setProperty( key, configuration.getConfigProperty( key ) );
     }
 
-    Collections.sort(names);
+    Collections.sort( names );
 
     PrintWriter out = null;
-    try
-    {
-      out = new PrintWriter(new OutputStreamWriter(new BufferedOutputStream(new FileOutputStream(filename))));
+    try {
+      out = new PrintWriter( new OutputStreamWriter( new BufferedOutputStream( new FileOutputStream( filename ) ) ) );
 
-      for (int i = 0; i < names.size(); i++)
-      {
-        final String key = names.get(i);
-        final String value = prop.getProperty(key);
+      for ( int i = 0; i < names.size(); i++ ) {
+        final String key = names.get( i );
+        final String value = prop.getProperty( key );
 
-        final String description = editorPane.getDescriptionForKey(key);
-        if (description != null)
-        {
-          writeDescription(description, out);
+        final String description = editorPane.getDescriptionForKey( key );
+        if ( description != null ) {
+          writeDescription( description, out );
         }
-        saveConvert(key, ConfigEditor.ESCAPE_KEY, out);
-        out.print("="); //$NON-NLS-1$
-        saveConvert(value, ConfigEditor.ESCAPE_VALUE, out);
+        saveConvert( key, ConfigEditor.ESCAPE_KEY, out );
+        out.print( "=" ); //$NON-NLS-1$
+        saveConvert( value, ConfigEditor.ESCAPE_VALUE, out );
         out.println();
       }
       out.close();
-      setStatusText(resources.getString("ConfigEditor.USER_SAVING_COMPLETE")); //$NON-NLS-1$
-    }
-    catch (IOException ioe)
-    {
-      ConfigEditor.logger.debug(resources.getString("ConfigEditor.ERROR_0004_FAILED_PROPERTIES_SAVE",
-          ioe.toString()), ioe); //$NON-NLS-1$
-      setStatusText(resources.getString("ConfigEditor.ERROR_0004_FAILED_PROPERTIES_SAVE",
-          ioe.getMessage())); //$NON-NLS-1$
-    }
-    finally
-    {
-      if (out != null)
-      {
+      setStatusText( resources.getString( "ConfigEditor.USER_SAVING_COMPLETE" ) ); //$NON-NLS-1$
+    } catch ( IOException ioe ) {
+      ConfigEditor.logger.debug( resources.getString( "ConfigEditor.ERROR_0004_FAILED_PROPERTIES_SAVE",
+        ioe.toString() ), ioe ); //$NON-NLS-1$
+      setStatusText( resources.getString( "ConfigEditor.ERROR_0004_FAILED_PROPERTIES_SAVE",
+        ioe.getMessage() ) ); //$NON-NLS-1$
+    } finally {
+      if ( out != null ) {
         out.close();
       }
     }
@@ -490,30 +431,24 @@ public class ConfigEditor extends JFrame
    * @param writer the writer that should receive the content.
    * @noinspection NestedAssignment
    */
-  private void writeDescription(final String text, final PrintWriter writer)
-  {
+  private void writeDescription( final String text, final PrintWriter writer ) {
     // check if empty content ... this case is easy ...
-    if (text.length() == 0)
-    {
+    if ( text.length() == 0 ) {
       return;
     }
 
-    writer.println("# "); //$NON-NLS-1$
+    writer.println( "# " ); //$NON-NLS-1$
 
-    try
-    {
-      final BufferedReader br = new BufferedReader(new StringReader(text));
+    try {
+      final BufferedReader br = new BufferedReader( new StringReader( text ) );
       String s;
-      while ((s = br.readLine()) != null)
-      {
-        writer.print("# "); //$NON-NLS-1$
-        saveConvert(s, ConfigEditor.ESCAPE_COMMENT, writer);
+      while ( ( s = br.readLine() ) != null ) {
+        writer.print( "# " ); //$NON-NLS-1$
+        saveConvert( s, ConfigEditor.ESCAPE_COMMENT, writer );
         writer.println();
       }
       br.close();
-    }
-    catch (IOException e)
-    {
+    } catch ( IOException e ) {
       // does not happen, this is a string-reader
     }
   }
@@ -525,69 +460,53 @@ public class ConfigEditor extends JFrame
    * @param escapeMode the mode that should be applied.
    * @param writer     the writer that should receive the content.
    */
-  private void saveConvert(final String text, final int escapeMode,
-                           final PrintWriter writer)
-  {
+  private void saveConvert( final String text, final int escapeMode,
+                            final PrintWriter writer ) {
     final char[] string = text.toCharArray();
-    final char[] hexChars = {'0', '1', '2', '3', '4', '5', '6', '7',
-        '8', '9', 'a', 'b', 'c', 'd', 'e', 'f'};
+    final char[] hexChars = { '0', '1', '2', '3', '4', '5', '6', '7',
+      '8', '9', 'a', 'b', 'c', 'd', 'e', 'f' };
 
-    for (int x = 0; x < string.length; x++)
-    {
-      final char aChar = string[x];
-      switch (aChar)
-      {
-        case ' ':
-        {
-          if ((escapeMode != ConfigEditor.ESCAPE_COMMENT) &&
-              (x == 0 || escapeMode == ConfigEditor.ESCAPE_KEY))
-          {
-            writer.print('\\');
+    for ( int x = 0; x < string.length; x++ ) {
+      final char aChar = string[ x ];
+      switch( aChar ) {
+        case ' ': {
+          if ( ( escapeMode != ConfigEditor.ESCAPE_COMMENT ) &&
+            ( x == 0 || escapeMode == ConfigEditor.ESCAPE_KEY ) ) {
+            writer.print( '\\' );
           }
-          writer.print(' ');
+          writer.print( ' ' );
           break;
         }
-        case '\\':
-        {
-          writer.print('\\');
-          writer.print('\\');
+        case '\\': {
+          writer.print( '\\' );
+          writer.print( '\\' );
           break;
         }
-        case '\t':
-        {
-          if (escapeMode == ConfigEditor.ESCAPE_COMMENT)
-          {
-            writer.print(aChar);
-          }
-          else
-          {
-            writer.print('\\');
-            writer.print('t');
+        case '\t': {
+          if ( escapeMode == ConfigEditor.ESCAPE_COMMENT ) {
+            writer.print( aChar );
+          } else {
+            writer.print( '\\' );
+            writer.print( 't' );
           }
           break;
         }
-        case '\n':
-        {
-          writer.print('\\');
-          writer.print('n');
+        case '\n': {
+          writer.print( '\\' );
+          writer.print( 'n' );
           break;
         }
-        case '\r':
-        {
-          writer.print('\\');
-          writer.print('r');
+        case '\r': {
+          writer.print( '\\' );
+          writer.print( 'r' );
           break;
         }
-        case '\f':
-        {
-          if (escapeMode == ConfigEditor.ESCAPE_COMMENT)
-          {
-            writer.print(aChar);
-          }
-          else
-          {
-            writer.print('\\');
-            writer.print('f');
+        case '\f': {
+          if ( escapeMode == ConfigEditor.ESCAPE_COMMENT ) {
+            writer.print( aChar );
+          } else {
+            writer.print( '\\' );
+            writer.print( 'f' );
           }
           break;
         }
@@ -595,32 +514,25 @@ public class ConfigEditor extends JFrame
         case '"':
         case '!':
         case '=':
-        case ':':
-        {
-          if (escapeMode == ConfigEditor.ESCAPE_COMMENT)
-          {
-            writer.print(aChar);
-          }
-          else
-          {
-            writer.print('\\');
-            writer.print(aChar);
+        case ':': {
+          if ( escapeMode == ConfigEditor.ESCAPE_COMMENT ) {
+            writer.print( aChar );
+          } else {
+            writer.print( '\\' );
+            writer.print( aChar );
           }
           break;
         }
         default:
-          if ((aChar < 0x0020) || (aChar > 0x007e))
-          {
-            writer.print('\\');
-            writer.print('u');
-            writer.print(hexChars[(aChar >> 12) & 0xF]);
-            writer.print(hexChars[(aChar >> 8) & 0xF]);
-            writer.print(hexChars[(aChar >> 4) & 0xF]);
-            writer.print(hexChars[aChar & 0xF]);
-          }
-          else
-          {
-            writer.print(aChar);
+          if ( ( aChar < 0x0020 ) || ( aChar > 0x007e ) ) {
+            writer.print( '\\' );
+            writer.print( 'u' );
+            writer.print( hexChars[ ( aChar >> 12 ) & 0xF ] );
+            writer.print( hexChars[ ( aChar >> 8 ) & 0xF ] );
+            writer.print( hexChars[ ( aChar >> 4 ) & 0xF ] );
+            writer.print( hexChars[ aChar & 0xF ] );
+          } else {
+            writer.print( aChar );
           }
       }
     }
@@ -629,9 +541,8 @@ public class ConfigEditor extends JFrame
   /**
    * Closes this frame and exits the JavaVM.
    */
-  protected void attempClose()
-  {
-    System.exit(0);
+  protected void attempClose() {
+    System.exit( 0 );
   }
 
   /**
@@ -639,23 +550,19 @@ public class ConfigEditor extends JFrame
    *
    * @param args not used.
    */
-  public static void main(final String[] args)
-  {
-    try
-    {
+  public static void main( final String[] args ) {
+    try {
       ConfigEditorBoot.getInstance().start();
       final ConfigEditor ed = new ConfigEditor();
       ed.pack();
-      ed.setVisible(true);
-    }
-    catch (Exception e)
-    {
+      ed.setVisible( true );
+    } catch ( Exception e ) {
       final Messages messages = new Messages
-          (Locale.getDefault(), ConfigEditorBoot.BUNDLE_NAME, ObjectUtilities.getClassLoader(ConfigEditorBoot.class));
+        ( Locale.getDefault(), ConfigEditorBoot.BUNDLE_NAME, ObjectUtilities.getClassLoader( ConfigEditorBoot.class ) );
       final String message = messages.getString(
-          "ConfigEditor.ERROR_0001_FAILED_TO_INITIALIZE"); //$NON-NLS-1$
-      logger.debug(message, e);
-      JOptionPane.showMessageDialog(null, message);
+        "ConfigEditor.ERROR_0001_FAILED_TO_INITIALIZE" ); //$NON-NLS-1$
+      logger.debug( message, e );
+      JOptionPane.showMessageDialog( null, message );
     }
   }
 }

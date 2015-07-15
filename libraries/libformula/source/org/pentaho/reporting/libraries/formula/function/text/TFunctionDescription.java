@@ -25,42 +25,34 @@ import org.pentaho.reporting.libraries.formula.typing.coretypes.TextType;
 
 /**
  * Describes TFunction function.
- * @see TFunction
  *
  * @author Cedric Pronzato
- *
+ * @see TFunction
  */
-public class TFunctionDescription extends AbstractFunctionDescription
-{
+public class TFunctionDescription extends AbstractFunctionDescription {
   private static final long serialVersionUID = 7982024479324130664L;
 
-  public TFunctionDescription()
-  {
-    super("T", "org.pentaho.reporting.libraries.formula.function.text.T-Function");
+  public TFunctionDescription() {
+    super( "T", "org.pentaho.reporting.libraries.formula.function.text.T-Function" );
   }
 
-  public FunctionCategory getCategory()
-  {
+  public FunctionCategory getCategory() {
     return TextFunctionCategory.CATEGORY;
   }
 
-  public int getParameterCount()
-  {
+  public int getParameterCount() {
     return 1;
   }
 
-  public Type getParameterType(final int position)
-  {
+  public Type getParameterType( final int position ) {
     return AnyType.TYPE;
   }
 
-  public Type getValueType()
-  {
+  public Type getValueType() {
     return TextType.TYPE;
   }
 
-  public boolean isParameterMandatory(final int position)
-  {
+  public boolean isParameterMandatory( final int position ) {
     return true;
   }
 

@@ -34,64 +34,56 @@ import org.pentaho.reporting.libraries.fonts.tools.FontStrictGeomUtility;
  *
  * @author Thomas Morgner
  */
-public class FontSizeAdjustResolveHandler implements ResolveHandler
-{
-  public FontSizeAdjustResolveHandler()
-  {
+public class FontSizeAdjustResolveHandler implements ResolveHandler {
+  public FontSizeAdjustResolveHandler() {
   }
 
   /**
-   * This indirectly defines the resolve order. The higher the order, the more
-   * dependent is the resolver on other resolvers to be complete.
+   * This indirectly defines the resolve order. The higher the order, the more dependent is the resolver on other
+   * resolvers to be complete.
    *
    * @return
    */
-  public StyleKey[] getRequiredStyles()
-  {
-    return new StyleKey[]{
-        FontStyleKeys.FONT_SIZE,
-        FontStyleKeys.FONT_FAMILY,
-        FontStyleKeys.FONT_EFFECT,
-        FontStyleKeys.FONT_SMOOTH,
-        FontStyleKeys.FONT_STRETCH,
-        FontStyleKeys.FONT_VARIANT,
-        FontStyleKeys.FONT_WEIGHT,
+  public StyleKey[] getRequiredStyles() {
+    return new StyleKey[] {
+      FontStyleKeys.FONT_SIZE,
+      FontStyleKeys.FONT_FAMILY,
+      FontStyleKeys.FONT_EFFECT,
+      FontStyleKeys.FONT_SMOOTH,
+      FontStyleKeys.FONT_STRETCH,
+      FontStyleKeys.FONT_VARIANT,
+      FontStyleKeys.FONT_WEIGHT,
     };
   }
 
-  public void resolve(final DocumentContext process,
-                      final LayoutElement currentNode,
-                      final StyleKey key)
-  {
+  public void resolve( final DocumentContext process,
+                       final LayoutElement currentNode,
+                       final StyleKey key ) {
     final LayoutStyle layoutContext = currentNode.getLayoutStyle();
-    final CSSValue value = layoutContext.getValue(key);
-    if (value instanceof CSSNumericValue == false)
-    {
+    final CSSValue value = layoutContext.getValue( key );
+    if ( value instanceof CSSNumericValue == false ) {
       return; // do nothing
     }
     final CSSNumericValue nval = (CSSNumericValue) value;
-    if (CSSNumericType.NUMBER.equals(nval.getType()) == false)
-    {
+    if ( CSSNumericType.NUMBER.equals( nval.getType() ) == false ) {
       return; // syntax error, do nothing
     }
     final LayoutElement parent = currentNode.getParentLayoutElement();
-    if (parent == null)
-    {
+    if ( parent == null ) {
       return; // no parent to resolve against ...
     }
 
     final double adjustFactor = nval.getValue();
-    final FontMetrics fontMetrics = process.getOutputMetaData().getFontMetrics(layoutContext);
-    if (fontMetrics == null)
-    {
+    final FontMetrics fontMetrics = process.getOutputMetaData().getFontMetrics( layoutContext );
+    if ( fontMetrics == null ) {
       return; // no font metrics means no valid font...
     }
 
-    final double actualFontXHeight = FontStrictGeomUtility.toExternalValue(fontMetrics.getXHeight());
+    final double actualFontXHeight = FontStrictGeomUtility.toExternalValue( fontMetrics.getXHeight() );
     final double fontSize = fontMetrics.getAscent();
     final double aspectRatio = actualFontXHeight / fontSize;
-    final double result = (fontSize * (adjustFactor / aspectRatio));
+    final double result = ( fontSize * ( adjustFactor / aspectRatio ) );
 
-    layoutContext.setValue(FontStyleKeys.FONT_SIZE, CSSNumericValue.createPtValue(result));
+    layoutContext.setValue( FontStyleKeys.FONT_SIZE, CSSNumericValue.createPtValue( result ) );
   }
 }

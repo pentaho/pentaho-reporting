@@ -17,32 +17,29 @@
 
 package org.pentaho.reporting.libraries.formula.function.text;
 
-import java.util.Locale;
+import org.pentaho.reporting.libraries.formula.FormulaTestBase;
+
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
-
-import org.pentaho.reporting.libraries.formula.FormulaTestBase;
+import java.util.Locale;
 
 /**
  * @author Cedric Pronzato
  */
-public class TextFunctionTest extends FormulaTestBase
-{
-  public void testDefault() throws Exception
-  {
+public class TextFunctionTest extends FormulaTestBase {
+  public void testDefault() throws Exception {
     runDefaultTest();
   }
 
-  public Object[][] createDataTest()
-  {
+  public Object[][] createDataTest() {
     final Locale locale = getContext().getLocalizationContext().getLocale();
-    final DecimalFormat format = new DecimalFormat("#0.#######", new DecimalFormatSymbols(locale));
+    final DecimalFormat format = new DecimalFormat( "#0.#######", new DecimalFormatSymbols( locale ) );
     return new Object[][]
-        {
-            {"TEXT(\"HI\")", "HI"},
-            {"TEXT(5)", "5"},
-            {"TEXT(100.01)", format.format(100.01)}
-        };
+      {
+        { "TEXT(\"HI\")", "HI" },
+        { "TEXT(5)", "5" },
+        { "TEXT(100.01)", format.format( 100.01 ) }
+      };
   }
 
 }

@@ -21,54 +21,44 @@ import org.pentaho.openformula.ui.model2.FormulaDocument;
 import org.pentaho.openformula.ui.model2.FormulaElement;
 import org.pentaho.openformula.ui.model2.FunctionInformation;
 
-public class FormulaEditorModel
-{
+public class FormulaEditorModel {
   private FormulaDocument document;
   private int caretPosition;
 
-  public FormulaEditorModel()
-  {
+  public FormulaEditorModel() {
     document = new FormulaDocument();
     caretPosition = 0;
   }
 
-  public int getLength()
-  {
+  public int getLength() {
     return document.getLength();
   }
 
-  public FunctionInformation getCurrentFunction()
-  {
-    return document.getFunctionForPosition(caretPosition);
+  public FunctionInformation getCurrentFunction() {
+    return document.getFunctionForPosition( caretPosition );
   }
 
-  public String getFormulaText()
-  {
+  public String getFormulaText() {
     return document.getText();
   }
 
-  public void setFormulaText(final String text)
-  {
-    document.setText(text);
+  public void setFormulaText( final String text ) {
+    document.setText( text );
   }
 
-  public int getCaretPosition()
-  {
+  public int getCaretPosition() {
     return caretPosition;
   }
 
-  public void setCaretPosition(final int carretPosition)
-  {
+  public void setCaretPosition( final int carretPosition ) {
     this.caretPosition = carretPosition;
   }
 
-  public FormulaElement getFormulaElementAt(final int index)
-  {
-    return document.getElementAtPosition(index);
+  public FormulaElement getFormulaElementAt( final int index ) {
+    return document.getElementAtPosition( index );
   }
 
-  public void revalidateStructure()
-  {
+  public void revalidateStructure() {
     document.revalidateStructure();
   }
 }

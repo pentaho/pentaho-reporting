@@ -26,23 +26,21 @@ import org.apache.batik.util.ParsedURL;
  *
  * @author Thomas Morgner
  */
-public class HeadlessSVGUserAgent extends UserAgentAdapter
-{
+public class HeadlessSVGUserAgent extends UserAgentAdapter {
 
-  public HeadlessSVGUserAgent()
-  {
+  public HeadlessSVGUserAgent() {
   }
 
   /**
    * Should we prevent users from running scripts? If yes, then add it here.
-   * 
+   *
    * @param string
    * @param parsedURL
    * @param parsedURL1
    * @return
    */
-  public ScriptSecurity getScriptSecurity(final String string, final ParsedURL parsedURL, final ParsedURL parsedURL1)
-  {
-    return super.getScriptSecurity(string, parsedURL, parsedURL1);
+  public ScriptSecurity getScriptSecurity( final String string, final ParsedURL parsedURL,
+                                           final ParsedURL parsedURL1 ) {
+    return super.getScriptSecurity( string, parsedURL, parsedURL1 );
   }
 }

@@ -17,23 +17,21 @@
 
 package org.pentaho.reporting.libraries.css.resolver.values.computed.text;
 
-import org.pentaho.reporting.libraries.css.resolver.values.computed.ConstantsResolveHandler;
 import org.pentaho.reporting.libraries.css.keys.text.TextWrap;
+import org.pentaho.reporting.libraries.css.resolver.values.computed.ConstantsResolveHandler;
 
 /**
  * Creation-Date: 21.12.2005, 15:12:04
  *
  * @author Thomas Morgner
  */
-public class TextWrapResolveHandler extends ConstantsResolveHandler
-{
-  public TextWrapResolveHandler()
-  {
-    addNormalizeValue(TextWrap.NONE);
-    addNormalizeValue(TextWrap.NORMAL);
-    addNormalizeValue(TextWrap.SUPPRESS);
-    addNormalizeValue(TextWrap.UNRESTRICTED);
-    setFallback(TextWrap.NORMAL);
+public class TextWrapResolveHandler extends ConstantsResolveHandler {
+  public TextWrapResolveHandler() {
+    addNormalizeValue( TextWrap.NONE );
+    addNormalizeValue( TextWrap.NORMAL );
+    addNormalizeValue( TextWrap.SUPPRESS );
+    addNormalizeValue( TextWrap.UNRESTRICTED );
+    setFallback( TextWrap.NORMAL );
   }
 
 }

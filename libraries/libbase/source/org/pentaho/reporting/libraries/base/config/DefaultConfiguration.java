@@ -29,8 +29,7 @@ import java.util.TreeSet;
  * @author Thomas Morgner.
  */
 public class DefaultConfiguration extends Properties
-    implements ModifiableConfiguration
-{
+  implements ModifiableConfiguration {
 
   /**
    * A constant for serialization support.
@@ -40,8 +39,7 @@ public class DefaultConfiguration extends Properties
   /**
    * Creates an empty property list with no default values.
    */
-  public DefaultConfiguration()
-  {
+  public DefaultConfiguration() {
   }
 
   /**
@@ -50,25 +48,23 @@ public class DefaultConfiguration extends Properties
    * @param key the property key.
    * @return the property value.
    */
-  public String getConfigProperty(final String key)
-  {
-    return getProperty(key);
+  public String getConfigProperty( final String key ) {
+    return getProperty( key );
   }
 
   /**
-   * Returns the configuration property with the specified key (or the
-   * specified default value if there is no such property).
+   * Returns the configuration property with the specified key (or the specified default value if there is no such
+   * property).
    * <p/>
-   * If the property is not defined in this configuration, the code will
-   * lookup the property in the parent configuration.
+   * If the property is not defined in this configuration, the code will lookup the property in the parent
+   * configuration.
    *
    * @param key          the property key.
    * @param defaultValue the default value.
    * @return the property value.
    */
-  public String getConfigProperty(final String key, final String defaultValue)
-  {
-    return getProperty(key, defaultValue);
+  public String getConfigProperty( final String key, final String defaultValue ) {
+    return getProperty( key, defaultValue );
   }
 
   /**
@@ -77,27 +73,22 @@ public class DefaultConfiguration extends Properties
    * @param prefix the prefix that all selected property keys should share
    * @return the properties as iterator.
    */
-  public Iterator<String> findPropertyKeys(final String prefix)
-  {
+  public Iterator<String> findPropertyKeys( final String prefix ) {
     final TreeSet<String> collector = new TreeSet<String>();
     final Enumeration enum1 = keys();
-    while (enum1.hasMoreElements())
-    {
+    while ( enum1.hasMoreElements() ) {
       final String key = (String) enum1.nextElement();
-      if (key.startsWith(prefix))
-      {
-        if (collector.contains(key) == false)
-        {
-          collector.add(key);
+      if ( key.startsWith( prefix ) ) {
+        if ( collector.contains( key ) == false ) {
+          collector.add( key );
         }
       }
     }
-    return Collections.unmodifiableSet(collector).iterator();
+    return Collections.unmodifiableSet( collector ).iterator();
   }
 
-  public Enumeration<String> getConfigProperties()
-  {
-    return new StringEnumeration(keys());
+  public Enumeration<String> getConfigProperties() {
+    return new StringEnumeration( keys() );
   }
 
   /**
@@ -106,15 +97,11 @@ public class DefaultConfiguration extends Properties
    * @param key   the property key.
    * @param value the property value.
    */
-  public void setConfigProperty(final String key, final String value)
-  {
-    if (value == null)
-    {
-      remove(key);
-    }
-    else
-    {
-      setProperty(key, value);
+  public void setConfigProperty( final String key, final String value ) {
+    if ( value == null ) {
+      remove( key );
+    } else {
+      setProperty( key, value );
     }
   }
 }

@@ -26,58 +26,47 @@ import org.w3c.css.sac.Parser;
 import org.w3c.css.sac.helpers.ParserFactory;
 
 /**
- * Creates a new CSS parser by first looking for a specified parser in the
- * libLayout configuration and if that fails, by using the W3C parser factory.
+ * Creates a new CSS parser by first looking for a specified parser in the libLayout configuration and if that fails, by
+ * using the W3C parser factory.
  *
  * @author Thomas Morgner
  */
-public class CSSParserFactory
-{
+public class CSSParserFactory {
   private static CSSParserFactory parserFactory;
 
-  public static synchronized CSSParserFactory getInstance()
-  {
-    if (parserFactory == null)
-    {
+  public static synchronized CSSParserFactory getInstance() {
+    if ( parserFactory == null ) {
       parserFactory = new CSSParserFactory();
     }
     return parserFactory;
   }
 
-  private CSSParserFactory()
-  {
+  private CSSParserFactory() {
   }
 
   public Parser createCSSParser()
-      throws CSSParserInstantiationException
-  {
+    throws CSSParserInstantiationException {
     final Configuration config = LibCssBoot.getInstance().getGlobalConfig();
-    final String parserClass = config.getConfigProperty("org.pentaho.reporting.libraries.css.Parser");
-    if (parserClass != null)
-    {
+    final String parserClass = config.getConfigProperty( "org.pentaho.reporting.libraries.css.Parser" );
+    if ( parserClass != null ) {
       Parser p = (Parser) ObjectUtilities.loadAndInstantiate
-          (parserClass, CSSParserFactory.class, Parser.class);
-      if (p != null)
-      {
-        p.setConditionFactory(new FixNamespaceConditionFactory(new CSSConditionFactory()));
-        p.setSelectorFactory(new FixNamespaceSelectorFactory(new CSSSelectorFactory()));
+        ( parserClass, CSSParserFactory.class, Parser.class );
+      if ( p != null ) {
+        p.setConditionFactory( new FixNamespaceConditionFactory( new CSSConditionFactory() ) );
+        p.setSelectorFactory( new FixNamespaceSelectorFactory( new CSSSelectorFactory() ) );
         return p;
       }
     }
-    try
-    {
+    try {
       Parser p = new ParserFactory().makeParser();
-      if (p == null)
-      {
+      if ( p == null ) {
         return null;
       }
-      p.setConditionFactory(new FixNamespaceConditionFactory(new CSSConditionFactory()));
-      p.setSelectorFactory(new FixNamespaceSelectorFactory(new CSSSelectorFactory()));
+      p.setConditionFactory( new FixNamespaceConditionFactory( new CSSConditionFactory() ) );
+      p.setSelectorFactory( new FixNamespaceSelectorFactory( new CSSSelectorFactory() ) );
       return p;
-    }
-    catch (Exception e)
-    {
-      throw new CSSParserInstantiationException(e.getMessage(), e);
+    } catch ( Exception e ) {
+      throw new CSSParserInstantiationException( e.getMessage(), e );
     }
   }
 }

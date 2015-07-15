@@ -24,41 +24,35 @@ import org.pentaho.reporting.libraries.resourceloader.factory.AbstractFactoryMod
  *
  * @author Thomas Morgner
  */
-public abstract class AbstractSVGFactoryModule extends AbstractFactoryModule
-{
-  private static final int[] FINGERPRINT = new int[0];
+public abstract class AbstractSVGFactoryModule extends AbstractFactoryModule {
+  private static final int[] FINGERPRINT = new int[ 0 ];
 
   private static final String[] MIMETYPES =
-          {
-              "image/svg-xml", "image/svg+xml"
-          };
+    {
+      "image/svg-xml", "image/svg+xml"
+    };
 
   private static final String[] FILEEXTENSIONS =
-          {
-            ".svg"
-          };
+    {
+      ".svg"
+    };
 
-  protected AbstractSVGFactoryModule()
-  {
+  protected AbstractSVGFactoryModule() {
   }
 
-  protected int[] getFingerPrint()
-  {
+  protected int[] getFingerPrint() {
     return FINGERPRINT;
   }
 
-  protected String[] getMimeTypes()
-  {
+  protected String[] getMimeTypes() {
     return MIMETYPES;
   }
 
-  protected String[] getFileExtensions()
-  {
+  protected String[] getFileExtensions() {
     return FILEEXTENSIONS;
   }
 
-  public int getHeaderFingerprintSize()
-  {
+  public int getHeaderFingerprintSize() {
     return FINGERPRINT.length;
   }
 }

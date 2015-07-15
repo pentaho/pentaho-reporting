@@ -26,15 +26,13 @@ import org.pentaho.reporting.libraries.fonts.registry.FontRecord;
  *
  * @author Thomas Morgner
  */
-public class AWTFontFamily implements FontFamily
-{
+public class AWTFontFamily implements FontFamily {
   private String fontName;
   private AWTFontRecord[] fonts;
 
-  public AWTFontFamily(final String fontName)
-  {
+  public AWTFontFamily( final String fontName ) {
     this.fontName = fontName;
-    this.fonts = new AWTFontRecord[4];
+    this.fonts = new AWTFontRecord[ 4 ];
   }
 
   /**
@@ -42,67 +40,55 @@ public class AWTFontFamily implements FontFamily
    *
    * @return
    */
-  public String getFamilyName()
-  {
+  public String getFamilyName() {
     return fontName;
   }
 
-  public String[] getAllNames()
-  {
+  public String[] getAllNames() {
     return new String[] { fontName };
   }
 
   /**
-   * This selects the most suitable font in that family. Italics fonts are
-   * preferred over oblique fonts.
+   * This selects the most suitable font in that family. Italics fonts are preferred over oblique fonts.
    *
    * @param bold
    * @param italics
    * @return
    */
-  public FontRecord getFontRecord(final boolean bold, final boolean italics)
-  {
+  public FontRecord getFontRecord( final boolean bold, final boolean italics ) {
 
     int index = 0;
-    if (bold)
-    {
+    if ( bold ) {
       index += 1;
     }
-    if (italics)
-    {
+    if ( italics ) {
       index += 2;
     }
-    if (fonts[index] != null)
-    {
-      return fonts[index];
+    if ( fonts[ index ] != null ) {
+      return fonts[ index ];
     }
-    fonts[index] = new AWTFontRecord(this, bold, italics);
-    return fonts[index];
+    fonts[ index ] = new AWTFontRecord( this, bold, italics );
+    return fonts[ index ];
   }
 
-  public boolean equals(final Object o)
-  {
-    if (this == o)
-    {
+  public boolean equals( final Object o ) {
+    if ( this == o ) {
       return true;
     }
-    if (o == null || getClass() != o.getClass())
-    {
+    if ( o == null || getClass() != o.getClass() ) {
       return false;
     }
 
     final AWTFontFamily that = (AWTFontFamily) o;
 
-    if (!fontName.equals(that.fontName))
-    {
+    if ( !fontName.equals( that.fontName ) ) {
       return false;
     }
 
     return true;
   }
 
-  public int hashCode()
-  {
+  public int hashCode() {
     return fontName.hashCode();
   }
 }

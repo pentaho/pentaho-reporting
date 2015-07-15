@@ -24,16 +24,14 @@ import org.pentaho.reporting.libraries.css.values.CSSConstant;
  *
  * @author Thomas Morgner
  */
-public class BorderWidth
-{
+public class BorderWidth {
   public static final CSSConstant THIN =
-      new CSSConstant("thin");
+    new CSSConstant( "thin" );
   public static final CSSConstant MEDIUM =
-      new CSSConstant("medium");
+    new CSSConstant( "medium" );
   public static final CSSConstant THICK =
-      new CSSConstant("thick");
+    new CSSConstant( "thick" );
 
-  private BorderWidth()
-  {
+  private BorderWidth() {
   }
 }

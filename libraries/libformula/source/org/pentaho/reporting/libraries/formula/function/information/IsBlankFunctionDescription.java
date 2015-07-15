@@ -25,47 +25,39 @@ import org.pentaho.reporting.libraries.formula.typing.coretypes.LogicalType;
 
 /**
  * Creation-Date: 31.10.2006, 17:41:12
- * 
+ *
  * @author Thomas Morgner
  */
-public class IsBlankFunctionDescription extends AbstractFunctionDescription
-{
+public class IsBlankFunctionDescription extends AbstractFunctionDescription {
   private static final long serialVersionUID = 3439147216891768842L;
 
-  public IsBlankFunctionDescription()
-  {
-    super("ISBLANK", "org.pentaho.reporting.libraries.formula.function.information.IsBlank-Function");
+  public IsBlankFunctionDescription() {
+    super( "ISBLANK", "org.pentaho.reporting.libraries.formula.function.information.IsBlank-Function" );
   }
 
-  public Type getValueType()
-  {
+  public Type getValueType() {
     return LogicalType.TYPE;
   }
 
-  public int getParameterCount()
-  {
+  public int getParameterCount() {
     return 1;
   }
 
-  public Type getParameterType(final int position)
-  {
+  public Type getParameterType( final int position ) {
     return AnyType.TYPE;
   }
 
   /**
-   * Defines, whether the parameter at the given position is mandatory. A
-   * mandatory parameter must be filled in, while optional parameters need not
-   * to be filled in.
-   * 
+   * Defines, whether the parameter at the given position is mandatory. A mandatory parameter must be filled in, while
+   * optional parameters need not to be filled in.
+   *
    * @return false
    */
-  public boolean isParameterMandatory(final int position)
-  {
+  public boolean isParameterMandatory( final int position ) {
     return true;
   }
 
-  public FunctionCategory getCategory()
-  {
+  public FunctionCategory getCategory() {
     return InformationFunctionCategory.CATEGORY;
   }
 }

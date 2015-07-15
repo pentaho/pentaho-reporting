@@ -19,61 +19,52 @@ package org.pentaho.reporting.libraries.formula.parser;
 
 import org.pentaho.reporting.libraries.formula.lvalues.ParsePosition;
 
-public class FormulaParseException extends ParseException
-{
+public class FormulaParseException extends ParseException {
   private ParsePosition parsePosition;
   private TokenMgrError error;
   private Token currentTokenVal;
   private Throwable parent;
 
-  public FormulaParseException(final String message)
-  {
-    super(message);
+  public FormulaParseException( final String message ) {
+    super( message );
   }
 
-  public FormulaParseException(final ParseException pe)
-  {
-    this(pe.currentToken, pe.expectedTokenSequences, pe.tokenImage);
+  public FormulaParseException( final ParseException pe ) {
+    this( pe.currentToken, pe.expectedTokenSequences, pe.tokenImage );
     this.parent = pe;
   }
 
-  public FormulaParseException(final Token currentTokenVal,
-                               final int[][] expectedTokenSequencesVal,
-                               final String[] tokenImageVal)
-  {
-    super(currentTokenVal, expectedTokenSequencesVal, tokenImageVal);
+  public FormulaParseException( final Token currentTokenVal,
+                                final int[][] expectedTokenSequencesVal,
+                                final String[] tokenImageVal ) {
+    super( currentTokenVal, expectedTokenSequencesVal, tokenImageVal );
     this.currentTokenVal = currentTokenVal;
     parsePosition = new ParsePosition
-       (currentTokenVal.beginLine, currentTokenVal.beginColumn,
-           currentTokenVal.endLine, currentTokenVal.endColumn);
+      ( currentTokenVal.beginLine, currentTokenVal.beginColumn,
+        currentTokenVal.endLine, currentTokenVal.endColumn );
   }
 
-  public Token getCurrentTokenVal()
-  {
+  public Token getCurrentTokenVal() {
     return currentTokenVal;
   }
 
-  public Throwable getParent()
-  {
+  public Throwable getParent() {
     return parent;
   }
 
-  public FormulaParseException(final TokenMgrError error)
-  {
-    super(error.getMessage());
+  public FormulaParseException( final TokenMgrError error ) {
+    super( error.getMessage() );
     this.error = error;
     this.parent = error;
     this.parsePosition = new ParsePosition
-        (error.getErrorLine(), error.getErrorColumn(), error.getErrorLine(), error.getErrorColumn());
+      ( error.getErrorLine(), error.getErrorColumn(), error.getErrorLine(), error.getErrorColumn() );
   }
 
-  public TokenMgrError getError()
-  {
+  public TokenMgrError getError() {
     return error;
   }
 
-  public ParsePosition getParsePosition()
-  {
+  public ParsePosition getParsePosition() {
     return parsePosition;
   }
 }

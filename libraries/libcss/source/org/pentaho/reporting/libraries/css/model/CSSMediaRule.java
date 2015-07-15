@@ -19,46 +19,37 @@ package org.pentaho.reporting.libraries.css.model;
 
 import java.util.ArrayList;
 
-import org.pentaho.reporting.libraries.css.dom.DocumentContext;
-
 /**
  * Creation-Date: 23.11.2005, 11:00:04
  *
  * @author Thomas Morgner
  */
-public class CSSMediaRule extends CSSDeclarationRule
-{
+public class CSSMediaRule extends CSSDeclarationRule {
   private ArrayList rules;
 
-  public CSSMediaRule(final StyleSheet parentStyle,
-                      final StyleRule parentRule)
-  {
-    super(parentStyle, parentRule);
+  public CSSMediaRule( final StyleSheet parentStyle,
+                       final StyleRule parentRule ) {
+    super( parentStyle, parentRule );
     this.rules = new ArrayList();
   }
 
-  public void addRule(final StyleRule rule)
-  {
-    rules.add(rule);
+  public void addRule( final StyleRule rule ) {
+    rules.add( rule );
   }
 
-  public void insertRule(final int index, final StyleRule rule)
-  {
-    rules.add(index, rule);
+  public void insertRule( final int index, final StyleRule rule ) {
+    rules.add( index, rule );
   }
 
-  public void deleteRule(final int index)
-  {
-    rules.remove(index);
+  public void deleteRule( final int index ) {
+    rules.remove( index );
   }
 
-  public int getRuleCount()
-  {
+  public int getRuleCount() {
     return rules.size();
   }
 
-  public StyleRule getRule(int index)
-  {
-    return (StyleRule) rules.get(index);
+  public StyleRule getRule( int index ) {
+    return (StyleRule) rules.get( index );
   }
 }

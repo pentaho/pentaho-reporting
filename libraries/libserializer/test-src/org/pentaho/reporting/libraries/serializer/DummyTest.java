@@ -19,11 +19,9 @@ package org.pentaho.reporting.libraries.serializer;
 
 import org.junit.Test;
 
-public class DummyTest
-{
+public class DummyTest {
   @Test
-  public void testNothing()
-  {
+  public void testNothing() {
 
   }
 }

@@ -24,12 +24,10 @@ import org.pentaho.reporting.libraries.css.values.CSSConstant;
  *
  * @author Thomas Morgner
  */
-public class InlineBoxAlign
-{
-  public static final CSSConstant INITIAL = new CSSConstant("initial");
-  public static final CSSConstant LAST = new CSSConstant("last");
+public class InlineBoxAlign {
+  public static final CSSConstant INITIAL = new CSSConstant( "initial" );
+  public static final CSSConstant LAST = new CSSConstant( "last" );
 
-  private InlineBoxAlign()
-  {
+  private InlineBoxAlign() {
   }
 }

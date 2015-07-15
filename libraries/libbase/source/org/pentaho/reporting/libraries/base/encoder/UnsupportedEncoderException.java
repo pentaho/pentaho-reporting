@@ -17,19 +17,15 @@
 
 package org.pentaho.reporting.libraries.base.encoder;
 
-public class UnsupportedEncoderException extends Exception
-{
-  public UnsupportedEncoderException()
-  {
+public class UnsupportedEncoderException extends Exception {
+  public UnsupportedEncoderException() {
   }
 
-  public UnsupportedEncoderException(final String message, final Throwable ex)
-  {
-    super(message, ex);
+  public UnsupportedEncoderException( final String message, final Throwable ex ) {
+    super( message, ex );
   }
 
-  public UnsupportedEncoderException(final String message)
-  {
-    super(message);
+  public UnsupportedEncoderException( final String message ) {
+    super( message );
   }
 }

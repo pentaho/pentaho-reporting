@@ -22,8 +22,7 @@ package org.pentaho.reporting.libraries.fonts.text;
  *
  * @author Thomas Morgner
  */
-public interface FontSpecification
-{
+public interface FontSpecification {
   public String getFontFamily();
 
   public boolean isAntiAliasing();

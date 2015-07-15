@@ -21,27 +21,25 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 /**
- * Class which will close the wait dialog once the worker thread has completed processing (or exited early
- * due to a cancel being issued).
+ * Class which will close the wait dialog once the worker thread has completed processing (or exited early due to a
+ * cancel being issued).
  */
-public class WaitDialogMonitorThread extends Thread
-{
-  private static final Log log = LogFactory.getLog(WaitDialogMonitorThread.class);
+public class WaitDialogMonitorThread extends Thread {
+  private static final Log log = LogFactory.getLog( WaitDialogMonitorThread.class );
   private final WaitDialog waitDialog;
   private ProgressFeed progressFeed;
   private final Thread workerThread;
   private double progress;
-  
+
   /**
    * Initializes this monitor threead
    *
    * @param workerThread the worker thread being executed
    * @param waitDialog   the dialog that should be closed when the thread exits
    */
-  public WaitDialogMonitorThread(final Thread workerThread,
-                                 final WaitDialog waitDialog,
-                                 final ProgressFeed progressFeed)
-  {
+  public WaitDialogMonitorThread( final Thread workerThread,
+                                  final WaitDialog waitDialog,
+                                  final ProgressFeed progressFeed ) {
     this.workerThread = workerThread;
     this.waitDialog = waitDialog;
     this.progressFeed = progressFeed;
@@ -51,32 +49,23 @@ public class WaitDialogMonitorThread extends Thread
   /**
    * Starts the worker thread and waits for it to complete. Then it closes the Wait dialog
    */
-  public void run()
-  {
-    try
-    {
-      log.debug("Waiting for worker thread to complete");
-      while (workerThread.isAlive())
-      {
-        if (progressFeed != null)
-        {
+  public void run() {
+    try {
+      log.debug( "Waiting for worker thread to complete" );
+      while ( workerThread.isAlive() ) {
+        if ( progressFeed != null ) {
           final double p = progressFeed.queryProgress();
-          if (p != progress)
-          {
-            waitDialog.updateProgress(p);
+          if ( p != progress ) {
+            waitDialog.updateProgress( p );
             progress = p;
           }
         }
-        workerThread.join(500);
+        workerThread.join( 500 );
       }
-    }
-    catch (Throwable t)
-    {
-      log.warn("The worker thread threw an exception: [" + t.getMessage() + "]");
-    }
-    finally
-    {
-      log.debug("The worker thread has finished - telling the dialog to close");
+    } catch ( Throwable t ) {
+      log.warn( "The worker thread threw an exception: [" + t.getMessage() + "]" );
+    } finally {
+      log.debug( "The worker thread has finished - telling the dialog to close" );
       waitDialog.exit();
     }
   }

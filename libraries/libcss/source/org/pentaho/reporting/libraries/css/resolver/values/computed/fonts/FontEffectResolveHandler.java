@@ -17,22 +17,20 @@
 
 package org.pentaho.reporting.libraries.css.resolver.values.computed.fonts;
 
-import org.pentaho.reporting.libraries.css.resolver.values.computed.ConstantsResolveHandler;
 import org.pentaho.reporting.libraries.css.keys.font.FontEffects;
+import org.pentaho.reporting.libraries.css.resolver.values.computed.ConstantsResolveHandler;
 
 /**
  * Creation-Date: 18.12.2005, 15:30:36
  *
  * @author Thomas Morgner
  */
-public class FontEffectResolveHandler extends ConstantsResolveHandler
-{
-  public FontEffectResolveHandler()
-  {
-    addNormalizeValue(FontEffects.EMBOSS);
-    addNormalizeValue(FontEffects.ENGRAVE);
-    addNormalizeValue(FontEffects.NONE);
-    addNormalizeValue(FontEffects.OUTLINE);
-    setFallback(FontEffects.NONE);
+public class FontEffectResolveHandler extends ConstantsResolveHandler {
+  public FontEffectResolveHandler() {
+    addNormalizeValue( FontEffects.EMBOSS );
+    addNormalizeValue( FontEffects.ENGRAVE );
+    addNormalizeValue( FontEffects.NONE );
+    addNormalizeValue( FontEffects.OUTLINE );
+    setFallback( FontEffects.NONE );
   }
 }

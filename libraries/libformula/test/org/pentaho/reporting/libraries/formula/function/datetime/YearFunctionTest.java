@@ -17,25 +17,22 @@
 
 package org.pentaho.reporting.libraries.formula.function.datetime;
 
-import java.math.BigDecimal;
-
 import org.pentaho.reporting.libraries.formula.FormulaTestBase;
+
+import java.math.BigDecimal;
 
 /**
  * @author Cedric Pronzato
  */
-public class YearFunctionTest extends FormulaTestBase
-{
-  public Object[][] createDataTest()
-  {
+public class YearFunctionTest extends FormulaTestBase {
+  public Object[][] createDataTest() {
     return new Object[][]
-        {
-            {"YEAR(DATE(1904;1;1))", new BigDecimal(1904)},
-        };
+      {
+        { "YEAR(DATE(1904;1;1))", new BigDecimal( 1904 ) },
+      };
   }
 
-  public void testDefault() throws Exception
-  {
+  public void testDefault() throws Exception {
     runDefaultTest();
   }
 

@@ -25,11 +25,10 @@ import org.pentaho.reporting.libraries.css.values.CSSValue;
  *
  * @author Thomas Morgner
  */
-public interface LayoutStyle
-{
-  public CSSValue getValue(StyleKey key);
+public interface LayoutStyle {
+  public CSSValue getValue( StyleKey key );
 
-  public void setValue(StyleKey key, CSSValue value);
+  public void setValue( StyleKey key, CSSValue value );
 
-  public boolean copyFrom(LayoutStyle style);
+  public boolean copyFrom( LayoutStyle style );
 }

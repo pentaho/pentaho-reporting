@@ -24,14 +24,12 @@ import org.pentaho.reporting.libraries.css.values.CSSConstant;
  *
  * @author Thomas Morgner
  */
-public class TextOverflowMode
-{
+public class TextOverflowMode {
   // clip | ellipsis | ellipsis-word
-  public static final CSSConstant CLIP = new CSSConstant("clip");
-  public static final CSSConstant ELLIPSIS = new CSSConstant("ellipsis");
-  public static final CSSConstant ELLIPSIS_WORD = new CSSConstant("ellipsis-word");
+  public static final CSSConstant CLIP = new CSSConstant( "clip" );
+  public static final CSSConstant ELLIPSIS = new CSSConstant( "ellipsis" );
+  public static final CSSConstant ELLIPSIS_WORD = new CSSConstant( "ellipsis-word" );
 
-  private TextOverflowMode()
-  {
+  private TextOverflowMode() {
   }
 }

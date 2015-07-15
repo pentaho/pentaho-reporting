@@ -22,8 +22,7 @@ package org.pentaho.reporting.libraries.base.util;
  *
  * @author Thomas Morgner
  */
-public class MemoryUsageMessage
-{
+public class MemoryUsageMessage {
 
   /**
    * The message.
@@ -35,8 +34,7 @@ public class MemoryUsageMessage
    *
    * @param message the message.
    */
-  public MemoryUsageMessage(final String message)
-  {
+  public MemoryUsageMessage( final String message ) {
     this.message = message;
   }
 
@@ -45,10 +43,9 @@ public class MemoryUsageMessage
    *
    * @return the string.
    */
-  public String toString()
-  {
+  public String toString() {
     return this.message + "Free: " + Runtime.getRuntime().freeMemory() + "; "
-        + "Total: " + Runtime.getRuntime().totalMemory();
+      + "Total: " + Runtime.getRuntime().totalMemory();
   }
 
 }

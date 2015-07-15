@@ -17,60 +17,52 @@
 
 package org.pentaho.reporting.libraries.xmlns.writer;
 
+import org.pentaho.reporting.libraries.base.config.Configuration;
+
 import java.util.HashMap;
 import java.util.Iterator;
-
-import org.pentaho.reporting.libraries.base.config.Configuration;
 
 /**
  * Holds a set of namespace definitions that have been declared in a libbase-configuration.
  *
  * @author Thomas Morgner
  */
-public class NamespaceCollection
-{
+public class NamespaceCollection {
   private HashMap entries;
 
   /**
    * Default constructor.
    */
-  public NamespaceCollection()
-  {
+  public NamespaceCollection() {
     entries = new HashMap();
   }
 
   /**
-   * Configures the namespace collection and adds all namespace definitions found in the configuration under
-   * the given prefix to the collection.
+   * Configures the namespace collection and adds all namespace definitions found in the configuration under the given
+   * prefix to the collection.
    *
    * @param config the configuration from where to read the namespaces.
    * @param prefix the configuration prefix for filtering the configuration entries.
    */
-  public void configure(final Configuration config, final String prefix)
-  {
-    final Iterator keys = config.findPropertyKeys(prefix);
-    while (keys.hasNext())
-    {
+  public void configure( final Configuration config, final String prefix ) {
+    final Iterator keys = config.findPropertyKeys( prefix );
+    while ( keys.hasNext() ) {
       final String key = (String) keys.next();
-      if (key.endsWith(".Uri") == false)
-      {
+      if ( key.endsWith( ".Uri" ) == false ) {
         continue;
       }
-      final String nsPrefix = key.substring(0, key.length() - 3);
-      final String uri = config.getConfigProperty(key);
-      if (uri == null)
-      {
+      final String nsPrefix = key.substring( 0, key.length() - 3 );
+      final String uri = config.getConfigProperty( key );
+      if ( uri == null ) {
         continue;
       }
       final String trimmedUri = uri.trim();
-      if (trimmedUri.length() == 0)
-      {
+      if ( trimmedUri.length() == 0 ) {
         continue;
       }
-      final String prefixAttr = config.getConfigProperty(nsPrefix + "Prefix");
-      if (prefixAttr != null)
-      {
-        entries.put(trimmedUri, prefixAttr);
+      final String prefixAttr = config.getConfigProperty( nsPrefix + "Prefix" );
+      if ( prefixAttr != null ) {
+        entries.put( trimmedUri, prefixAttr );
       }
     }
   }
@@ -81,9 +73,8 @@ public class NamespaceCollection
    * @param uri the namespace for which a prefix should be looked up.
    * @return the defined prefix.
    */
-  public String getPrefix(final String uri)
-  {
-    return (String) entries.get(uri);
+  public String getPrefix( final String uri ) {
+    return (String) entries.get( uri );
   }
 
   /**
@@ -91,8 +82,7 @@ public class NamespaceCollection
    *
    * @return the defined uris as array.
    */
-  public String[] getDefinedUris()
-  {
-    return (String[]) entries.keySet().toArray(new String[entries.size()]);
+  public String[] getDefinedUris() {
+    return (String[]) entries.keySet().toArray( new String[ entries.size() ] );
   }
 }

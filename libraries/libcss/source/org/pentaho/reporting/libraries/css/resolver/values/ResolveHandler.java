@@ -17,33 +17,32 @@
 
 package org.pentaho.reporting.libraries.css.resolver.values;
 
-import org.pentaho.reporting.libraries.css.model.StyleKey;
-import org.pentaho.reporting.libraries.css.dom.LayoutElement;
 import org.pentaho.reporting.libraries.css.dom.DocumentContext;
+import org.pentaho.reporting.libraries.css.dom.LayoutElement;
+import org.pentaho.reporting.libraries.css.model.StyleKey;
 
 /**
  * Creation-Date: 11.12.2005, 14:43:15
  *
  * @author Thomas Morgner
  */
-public interface ResolveHandler
-{
+public interface ResolveHandler {
   /**
-   * This indirectly defines the resolve order. The higher the order, the more
-   * dependent is the resolver on other resolvers to be complete.
+   * This indirectly defines the resolve order. The higher the order, the more dependent is the resolver on other
+   * resolvers to be complete.
    *
-   * @return  the array of required style keys.
+   * @return the array of required style keys.
    */
   public StyleKey[] getRequiredStyles();
 
   /**
    * Resolves a single property.
    *
-   * @param process the current layout process controlling everyting
+   * @param process     the current layout process controlling everyting
    * @param currentNode the current layout element that is processed
-   * @param key the style key that is computed.
+   * @param key         the style key that is computed.
    */
-  public void resolve(DocumentContext process,
-                      LayoutElement currentNode,
-                      StyleKey key);
+  public void resolve( DocumentContext process,
+                       LayoutElement currentNode,
+                       StyleKey key );
 }

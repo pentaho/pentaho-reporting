@@ -20,15 +20,13 @@ package org.pentaho.reporting.libraries.css.resolver.values.computed.box;
 import org.pentaho.reporting.libraries.css.keys.box.Fit;
 import org.pentaho.reporting.libraries.css.resolver.values.computed.ConstantsResolveHandler;
 
-public class FitResolveHandler extends ConstantsResolveHandler
-{
-  public FitResolveHandler ()
-  {
-    addNormalizeValue(Fit.FILL);
-    addNormalizeValue(Fit.MEET);
-    addNormalizeValue(Fit.NONE);
-    addNormalizeValue(Fit.SLICE);
-    setFallback(Fit.FILL);
+public class FitResolveHandler extends ConstantsResolveHandler {
+  public FitResolveHandler() {
+    addNormalizeValue( Fit.FILL );
+    addNormalizeValue( Fit.MEET );
+    addNormalizeValue( Fit.NONE );
+    addNormalizeValue( Fit.SLICE );
+    setFallback( Fit.FILL );
   }
 
 

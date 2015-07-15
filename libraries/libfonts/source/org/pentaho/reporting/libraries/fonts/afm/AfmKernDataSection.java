@@ -24,14 +24,11 @@ import java.io.IOException;
  *
  * @author Thomas Morgner
  */
-public class AfmKernDataSection
-{
+public class AfmKernDataSection {
 
-  public AfmKernDataSection() throws IOException
-  {
+  public AfmKernDataSection() throws IOException {
   }
 
-  public void add(final String line)
-  {
+  public void add( final String line ) {
   }
 }

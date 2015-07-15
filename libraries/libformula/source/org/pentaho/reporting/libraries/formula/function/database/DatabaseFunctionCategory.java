@@ -20,13 +20,11 @@ package org.pentaho.reporting.libraries.formula.function.database;
 import org.pentaho.reporting.libraries.formula.function.AbstractFunctionCategory;
 import org.pentaho.reporting.libraries.formula.function.FunctionCategory;
 
-public class DatabaseFunctionCategory  extends AbstractFunctionCategory
-{
+public class DatabaseFunctionCategory extends AbstractFunctionCategory {
   public static final FunctionCategory CATEGORY = new DatabaseFunctionCategory();
 
-  private DatabaseFunctionCategory()
-  {
-    super("org.pentaho.reporting.libraries.formula.function.database.category");
+  private DatabaseFunctionCategory() {
+    super( "org.pentaho.reporting.libraries.formula.function.database.category" );
   }
 }
 

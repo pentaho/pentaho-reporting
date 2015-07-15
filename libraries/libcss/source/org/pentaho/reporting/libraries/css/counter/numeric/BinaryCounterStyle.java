@@ -19,19 +19,15 @@ package org.pentaho.reporting.libraries.css.counter.numeric;
 
 import org.pentaho.reporting.libraries.css.counter.CounterStyle;
 
-public class BinaryCounterStyle implements CounterStyle
-{
-  public BinaryCounterStyle ()
-  {
+public class BinaryCounterStyle implements CounterStyle {
+  public BinaryCounterStyle() {
   }
 
-  public String getCounterValue (final int index)
-  {
-    return Integer.toBinaryString(index);
+  public String getCounterValue( final int index ) {
+    return Integer.toBinaryString( index );
   }
 
-  public String getSuffix()
-  {
+  public String getSuffix() {
     return ".";
   }
 }

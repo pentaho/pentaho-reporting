@@ -17,20 +17,7 @@
 
 package org.pentaho.reporting.libraries.css.resolver.function.content;
 
-import java.text.DateFormat;
-import java.util.Date;
-import java.util.Locale;
-
-import org.pentaho.reporting.libraries.css.resolver.FunctionEvaluationException;
-import org.pentaho.reporting.libraries.css.resolver.function.ContentFunction;
-import org.pentaho.reporting.libraries.css.resolver.tokens.statics.FormattedContentToken;
-import org.pentaho.reporting.libraries.css.resolver.tokens.ContentToken;
-import org.pentaho.reporting.libraries.css.dom.LayoutElement;
-import org.pentaho.reporting.libraries.css.values.CSSStringValue;
-import org.pentaho.reporting.libraries.css.values.CSSFunctionValue;
-import org.pentaho.reporting.libraries.css.values.CSSValue;
-
-//// todo: This definitely needs a global context. Therefore: Not yet! 
+//// todo: This definitely needs a global context. Therefore: Not yet!
 ///**
 // * Creation-Date: 15.04.2006, 18:33:56
 // *

@@ -29,27 +29,21 @@ import org.w3c.css.sac.LexicalUnit;
  *
  * @author Thomas Morgner
  */
-public class BackgroundImageReadHandler extends ListOfValuesReadHandler
-{
-  public BackgroundImageReadHandler()
-  {
+public class BackgroundImageReadHandler extends ListOfValuesReadHandler {
+  public BackgroundImageReadHandler() {
   }
 
-  public CSSValue createValue(StyleKey name, LexicalUnit value)
-  {
-    if (value.getLexicalUnitType() == LexicalUnit.SAC_IDENT)
-    {
-      if (value.getStringValue().equalsIgnoreCase("none"))
-      {
-        return new CSSConstant("none");
+  public CSSValue createValue( StyleKey name, LexicalUnit value ) {
+    if ( value.getLexicalUnitType() == LexicalUnit.SAC_IDENT ) {
+      if ( value.getStringValue().equalsIgnoreCase( "none" ) ) {
+        return new CSSConstant( "none" );
       }
       return null;
     }
-    return super.createValue(name, value);
+    return super.createValue( name, value );
   }
 
-  protected CSSValue parseValue(final LexicalUnit value)
-  {
-    return CSSValueFactory.createUriValue(value);
+  protected CSSValue parseValue( final LexicalUnit value ) {
+    return CSSValueFactory.createUriValue( value );
   }
 }

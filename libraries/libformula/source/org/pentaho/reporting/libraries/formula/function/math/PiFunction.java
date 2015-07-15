@@ -17,7 +17,6 @@
 
 package org.pentaho.reporting.libraries.formula.function.math;
 
-import java.math.BigDecimal;
 import org.pentaho.reporting.libraries.formula.EvaluationException;
 import org.pentaho.reporting.libraries.formula.FormulaContext;
 import org.pentaho.reporting.libraries.formula.LibFormulaErrorValue;
@@ -26,24 +25,25 @@ import org.pentaho.reporting.libraries.formula.function.ParameterCallback;
 import org.pentaho.reporting.libraries.formula.lvalues.TypeValuePair;
 import org.pentaho.reporting.libraries.formula.typing.coretypes.NumberType;
 
+import java.math.BigDecimal;
+
 /**
  * This function returns the acos of the value.
  *
  * @author ocke
- *
  */
 public class PiFunction implements Function {
-  private static final BigDecimal PI_VALUE = new BigDecimal(Math.PI);
+  private static final BigDecimal PI_VALUE = new BigDecimal( Math.PI );
 
   public String getCanonicalName() {
-        return "PI";
-    }
+    return "PI";
+  }
 
-    public TypeValuePair evaluate(FormulaContext context, ParameterCallback parameters) throws EvaluationException {
-        final int parameterCount = parameters.getParameterCount();
-        if (parameterCount > 0) {
-            throw EvaluationException.getInstance(LibFormulaErrorValue.ERROR_ARGUMENTS_VALUE);
-        }
-        return new TypeValuePair(NumberType.GENERIC_NUMBER, PI_VALUE);
+  public TypeValuePair evaluate( FormulaContext context, ParameterCallback parameters ) throws EvaluationException {
+    final int parameterCount = parameters.getParameterCount();
+    if ( parameterCount > 0 ) {
+      throw EvaluationException.getInstance( LibFormulaErrorValue.ERROR_ARGUMENTS_VALUE );
     }
+    return new TypeValuePair( NumberType.GENERIC_NUMBER, PI_VALUE );
+  }
 }

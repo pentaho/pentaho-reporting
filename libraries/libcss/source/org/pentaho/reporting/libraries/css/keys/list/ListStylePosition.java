@@ -24,12 +24,10 @@ import org.pentaho.reporting.libraries.css.values.CSSConstant;
  *
  * @author Thomas Morgner
  */
-public class ListStylePosition
-{
-  public static final CSSConstant INSIDE = new CSSConstant("inside");
-  public static final CSSConstant OUTSIDE = new CSSConstant("outside");
+public class ListStylePosition {
+  public static final CSSConstant INSIDE = new CSSConstant( "inside" );
+  public static final CSSConstant OUTSIDE = new CSSConstant( "outside" );
 
-  private ListStylePosition()
-  {
+  private ListStylePosition() {
   }
 }

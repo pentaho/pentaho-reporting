@@ -22,8 +22,7 @@ package org.pentaho.reporting.libraries.fonts.registry;
  *
  * @author Thomas Morgner
  */
-public final class BaselineInfo
-{
+public final class BaselineInfo {
   public static final int HANGING = 0;
   public static final int MATHEMATICAL = 1;
   public static final int CENTRAL = 2;
@@ -34,48 +33,39 @@ public final class BaselineInfo
   private long[] baselines;
   private int dominantBaseline;
 
-  public BaselineInfo()
-  {
-    this.baselines = new long[6];
+  public BaselineInfo() {
+    this.baselines = new long[ 6 ];
   }
 
-  public long[] getBaselines()
-  {
+  public long[] getBaselines() {
     return (long[]) baselines.clone();
   }
 
-  public void update(final BaselineInfo parent)
-  {
-    System.arraycopy(parent.baselines, 0, this.baselines, 0, 6);
+  public void update( final BaselineInfo parent ) {
+    System.arraycopy( parent.baselines, 0, this.baselines, 0, 6 );
     dominantBaseline = parent.dominantBaseline;
   }
 
-  public void setBaselines(final long[] baselines)
-  {
-    if (baselines.length != 6)
-    {
+  public void setBaselines( final long[] baselines ) {
+    if ( baselines.length != 6 ) {
       throw new IllegalArgumentException();
     }
-    System.arraycopy(baselines, 0, this.baselines, 0, 6);
+    System.arraycopy( baselines, 0, this.baselines, 0, 6 );
   }
 
-  public long getBaseline (final int indx)
-  {
-    return baselines[indx];
+  public long getBaseline( final int indx ) {
+    return baselines[ indx ];
   }
 
-  public void setBaseline (final int idx, final long baseline)
-  {
-    baselines[idx] = baseline;
+  public void setBaseline( final int idx, final long baseline ) {
+    baselines[ idx ] = baseline;
   }
 
-  public int getDominantBaseline()
-  {
+  public int getDominantBaseline() {
     return dominantBaseline;
   }
 
-  public void setDominantBaseline(final int dominantBaseline)
-  {
+  public void setDominantBaseline( final int dominantBaseline ) {
     this.dominantBaseline = dominantBaseline;
   }
 }

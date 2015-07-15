@@ -22,8 +22,7 @@ package org.pentaho.reporting.libraries.fonts.text;
  *
  * @author Thomas Morgner
  */
-public interface ClassificationProducer extends Cloneable
-{
+public interface ClassificationProducer extends Cloneable {
   public static final int START_OF_TEXT = Integer.MIN_VALUE;
   public static final int END_OF_TEXT = Integer.MAX_VALUE;
 

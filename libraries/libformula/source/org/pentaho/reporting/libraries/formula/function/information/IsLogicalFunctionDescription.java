@@ -25,42 +25,34 @@ import org.pentaho.reporting.libraries.formula.typing.coretypes.LogicalType;
 
 /**
  * Describes IsLogicalFunction function.
- * @see IsLogicalFunction
  *
  * @author Cedric Pronzato
- *
+ * @see IsLogicalFunction
  */
-public class IsLogicalFunctionDescription extends AbstractFunctionDescription
-{
+public class IsLogicalFunctionDescription extends AbstractFunctionDescription {
   private static final long serialVersionUID = -4814148966968602320L;
 
-  public IsLogicalFunctionDescription()
-  {
-    super("ISLOGICAL", "org.pentaho.reporting.libraries.formula.function.information.IsLogical-Function");
+  public IsLogicalFunctionDescription() {
+    super( "ISLOGICAL", "org.pentaho.reporting.libraries.formula.function.information.IsLogical-Function" );
   }
 
-  public FunctionCategory getCategory()
-  {
+  public FunctionCategory getCategory() {
     return InformationFunctionCategory.CATEGORY;
   }
 
-  public int getParameterCount()
-  {
+  public int getParameterCount() {
     return 1;
   }
 
-  public Type getParameterType(final int position)
-  {
+  public Type getParameterType( final int position ) {
     return AnyType.TYPE;
   }
 
-  public Type getValueType()
-  {
+  public Type getValueType() {
     return LogicalType.TYPE;
   }
 
-  public boolean isParameterMandatory(final int position)
-  {
+  public boolean isParameterMandatory( final int position ) {
     return true;
   }
 

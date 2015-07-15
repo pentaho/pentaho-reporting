@@ -27,23 +27,19 @@ import org.pentaho.reporting.libraries.fonts.registry.FontType;
  *
  * @author Thomas Morgner
  */
-public class ITextBuiltInFontRecord implements FontRecord, FontIdentifier
-{
+public class ITextBuiltInFontRecord implements FontRecord, FontIdentifier {
   private FontFamily family;
   private String fullName;
   private boolean bold;
   private boolean italics;
   private boolean oblique;
 
-  public ITextBuiltInFontRecord (final FontFamily family, final String fullName,
-                                 final boolean bold, final boolean italics, final boolean oblique)
-  {
-    if (family == null)
-    {
+  public ITextBuiltInFontRecord( final FontFamily family, final String fullName,
+                                 final boolean bold, final boolean italics, final boolean oblique ) {
+    if ( family == null ) {
       throw new NullPointerException();
     }
-    if (fullName == null)
-    {
+    if ( fullName == null ) {
       throw new NullPointerException();
     }
     this.family = family;
@@ -53,90 +49,73 @@ public class ITextBuiltInFontRecord implements FontRecord, FontIdentifier
     this.oblique = oblique;
   }
 
-  public FontFamily getFamily()
-  {
+  public FontFamily getFamily() {
     return family;
   }
 
-  public String getFullName()
-  {
+  public String getFullName() {
     return fullName;
   }
 
-  public boolean isBold()
-  {
+  public boolean isBold() {
     return bold;
   }
 
-  public boolean isItalic()
-  {
+  public boolean isItalic() {
     return italics;
   }
 
-  public boolean isOblique()
-  {
+  public boolean isOblique() {
     return oblique;
   }
 
-  public FontIdentifier getIdentifier()
-  {
+  public FontIdentifier getIdentifier() {
     return this;
   }
 
-  public boolean isScalable()
-  {
+  public boolean isScalable() {
     return true;
   }
 
-  public FontType getFontType()
-  {
+  public FontType getFontType() {
     return FontType.OTHER;
   }
 
-  public boolean equals(final Object o)
-  {
-    if (this == o)
-    {
+  public boolean equals( final Object o ) {
+    if ( this == o ) {
       return true;
     }
-    if (o == null || getClass() != o.getClass())
-    {
+    if ( o == null || getClass() != o.getClass() ) {
       return false;
     }
 
     final ITextBuiltInFontRecord that = (ITextBuiltInFontRecord) o;
 
-    if (bold != that.bold)
-    {
+    if ( bold != that.bold ) {
       return false;
     }
-    if (italics != that.italics)
-    {
+    if ( italics != that.italics ) {
       return false;
     }
-    if (oblique != that.oblique)
-    {
+    if ( oblique != that.oblique ) {
       return false;
     }
-    if (!family.equals(that.family))
-    {
+    if ( !family.equals( that.family ) ) {
       return false;
     }
-    if (!fullName.equals(that.fullName))
-    {
+    if ( !fullName.equals( that.fullName ) ) {
       return false;
     }
 
     return true;
   }
 
-  public int hashCode()
-  {
+  public int hashCode() {
     int result = family.hashCode();
     result = 29 * result + fullName.hashCode();
-    result = 29 * result + (bold ? 1 : 0);
-    result = 29 * result + (italics ? 1 : 0);
-    result = 29 * result + (oblique ? 1 : 0);
+    result = 29 * result + ( bold ? 1 : 0 );
+    result = 29 * result + ( italics ? 1 : 0 );
+    result = 29 * result + ( oblique ? 1 : 0 );
     return result;
   }
 }

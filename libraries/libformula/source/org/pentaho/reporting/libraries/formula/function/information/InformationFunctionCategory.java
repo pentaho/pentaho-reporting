@@ -25,12 +25,10 @@ import org.pentaho.reporting.libraries.formula.function.FunctionCategory;
  *
  * @author Thomas Morgner
  */
-public final class InformationFunctionCategory extends AbstractFunctionCategory
-{
+public final class InformationFunctionCategory extends AbstractFunctionCategory {
   public static final FunctionCategory CATEGORY = new InformationFunctionCategory();
 
-  private InformationFunctionCategory()
-  {
-    super("org.pentaho.reporting.libraries.formula.function.information.category");
+  private InformationFunctionCategory() {
+    super( "org.pentaho.reporting.libraries.formula.function.information.category" );
   }
 }

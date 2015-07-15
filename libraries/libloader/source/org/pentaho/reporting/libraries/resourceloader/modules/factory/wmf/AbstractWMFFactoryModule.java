@@ -24,47 +24,41 @@ import org.pentaho.reporting.libraries.resourceloader.factory.AbstractFactoryMod
  *
  * @author Thomas Morgner
  */
-public abstract class AbstractWMFFactoryModule extends AbstractFactoryModule
-{
-  private static final int[] FINGERPRINT = {0xD7, 0xCD};
+public abstract class AbstractWMFFactoryModule extends AbstractFactoryModule {
+  private static final int[] FINGERPRINT = { 0xD7, 0xCD };
 
   private static final String[] MIMETYPES =
-          {
-            "application/x-msmetafile",
-            "application/wmf",
-            "application/x-wmf",
-            "image/wmf",
-            "image/x-wmf",
-            "image/x-win-metafile",
-            "zz-application/zz-winassoc-wmf"
-          };
+    {
+      "application/x-msmetafile",
+      "application/wmf",
+      "application/x-wmf",
+      "image/wmf",
+      "image/x-wmf",
+      "image/x-win-metafile",
+      "zz-application/zz-winassoc-wmf"
+    };
 
   private static final String[] FILEEXTENSIONS =
-          {
-            ".wmf"
-          };
+    {
+      ".wmf"
+    };
 
-  protected AbstractWMFFactoryModule()
-  {
+  protected AbstractWMFFactoryModule() {
   }
 
-  protected int[] getFingerPrint()
-  {
+  protected int[] getFingerPrint() {
     return FINGERPRINT;
   }
 
-  protected String[] getMimeTypes()
-  {
+  protected String[] getMimeTypes() {
     return MIMETYPES;
   }
 
-  protected String[] getFileExtensions()
-  {
+  protected String[] getFileExtensions() {
     return FILEEXTENSIONS;
   }
 
-  public int getHeaderFingerprintSize()
-  {
+  public int getHeaderFingerprintSize() {
     return 2;
   }
 }

@@ -25,15 +25,13 @@ import org.pentaho.reporting.libraries.css.parser.stylehandler.OneOfConstantsRea
  *
  * @author Thomas Morgner
  */
-public class ColumnSpaceDistributionReadHandler extends OneOfConstantsReadHandler
-{
-  public ColumnSpaceDistributionReadHandler()
-  {
-    super(false);
-    addValue(ColumnSpaceDistribution.BETWEEN);
-    addValue(ColumnSpaceDistribution.END);
-    addValue(ColumnSpaceDistribution.INNER);
-    addValue(ColumnSpaceDistribution.OUTER);
-    addValue(ColumnSpaceDistribution.START);
+public class ColumnSpaceDistributionReadHandler extends OneOfConstantsReadHandler {
+  public ColumnSpaceDistributionReadHandler() {
+    super( false );
+    addValue( ColumnSpaceDistribution.BETWEEN );
+    addValue( ColumnSpaceDistribution.END );
+    addValue( ColumnSpaceDistribution.INNER );
+    addValue( ColumnSpaceDistribution.OUTER );
+    addValue( ColumnSpaceDistribution.START );
   }
 }
