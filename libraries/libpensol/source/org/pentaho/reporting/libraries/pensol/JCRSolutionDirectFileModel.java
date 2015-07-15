@@ -361,7 +361,8 @@ public class JCRSolutionDirectFileModel implements SolutionFileModel {
       .name( name )
       .fileName( name )
       .build();
-    Response response = this.importRes.doPostImport( parent, stream, "true", null, "true", "true", null, "WARN", fd, null );
+    Response response =
+      this.importRes.doPostImport( parent, stream, "true", null, "true", "true", null, "WARN", fd, null );
     throwExceptionOnBadResponse( response );
   }
 

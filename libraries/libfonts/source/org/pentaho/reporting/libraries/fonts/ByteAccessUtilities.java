@@ -29,94 +29,81 @@ import org.pentaho.reporting.libraries.fonts.encoding.manual.Utf16LE;
  *
  * @author Thomas Morgner
  */
-public class ByteAccessUtilities
-{
-  private ByteAccessUtilities()
-  {
+public class ByteAccessUtilities {
+  private ByteAccessUtilities() {
   }
 
-  public static int readUShort (final byte[] data, final int pos)
-  {
-    return ((data[pos] & 0xff) << 8) | (data[pos + 1] & 0xff);
+  public static int readUShort( final byte[] data, final int pos ) {
+    return ( ( data[ pos ] & 0xff ) << 8 ) | ( data[ pos + 1 ] & 0xff );
   }
 
-  public static long readULong (final byte[] data, final int pos)
-  {
-    final int c1 = (data[pos] & 0xff);
-    final int c2 = (data[pos + 1] & 0xff);
-    final int c3 = (data[pos + 2] & 0xff);
-    final int c4 = (data[pos + 3] & 0xff);
+  public static long readULong( final byte[] data, final int pos ) {
+    final int c1 = ( data[ pos ] & 0xff );
+    final int c2 = ( data[ pos + 1 ] & 0xff );
+    final int c3 = ( data[ pos + 2 ] & 0xff );
+    final int c4 = ( data[ pos + 3 ] & 0xff );
 
-    long retval = ((long) c1 << 24);
-    retval |= (long)c2 << 16;
-    retval |= (long)c3 << 8;
-    retval |= (long)c4;
+    long retval = ( (long) c1 << 24 );
+    retval |= (long) c2 << 16;
+    retval |= (long) c3 << 8;
+    retval |= (long) c4;
     return retval;
   }
 
-  public static float readFixed (final byte[] data, final int pos)
-  {
-    final short mantissa = readShort(data, pos);
-    final int fraction = readUShort(data, pos + 2);
-    if (fraction == 0 || mantissa == 0)
-    {
+  public static float readFixed( final byte[] data, final int pos ) {
+    final short mantissa = readShort( data, pos );
+    final int fraction = readUShort( data, pos + 2 );
+    if ( fraction == 0 || mantissa == 0 ) {
       return 0;
     }
-    return (float) mantissa / (fraction / 16384.0f);
+    return (float) mantissa / ( fraction / 16384.0f );
   }
 
-  public static long readLongDateTime (final byte[] data, final int pos)
-  {
-    final int c1 = (data[pos] & 0xff);
-    final int c2 = (data[pos + 1] & 0xff);
-    final int c3 = (data[pos + 2] & 0xff);
-    final int c4 = (data[pos + 3] & 0xff);
-    final int c5 = (data[pos + 4] & 0xff);
-    final int c6 = (data[pos + 5] & 0xff);
-    final int c7 = (data[pos + 6] & 0xff);
-    final int c8 = (data[pos + 7] & 0xff);
+  public static long readLongDateTime( final byte[] data, final int pos ) {
+    final int c1 = ( data[ pos ] & 0xff );
+    final int c2 = ( data[ pos + 1 ] & 0xff );
+    final int c3 = ( data[ pos + 2 ] & 0xff );
+    final int c4 = ( data[ pos + 3 ] & 0xff );
+    final int c5 = ( data[ pos + 4 ] & 0xff );
+    final int c6 = ( data[ pos + 5 ] & 0xff );
+    final int c7 = ( data[ pos + 6 ] & 0xff );
+    final int c8 = ( data[ pos + 7 ] & 0xff );
 
-    long retval = ((long) c1 << 56);
-    retval |= (long)c2 << 48;
-    retval |= (long)c3 << 40;
-    retval |= (long)c4 << 32;
-    retval |= (long)c5 << 24;
-    retval |= (long)c6 << 16;
-    retval |= (long)c7 << 8;
-    retval |= (long)c8;
+    long retval = ( (long) c1 << 56 );
+    retval |= (long) c2 << 48;
+    retval |= (long) c3 << 40;
+    retval |= (long) c4 << 32;
+    retval |= (long) c5 << 24;
+    retval |= (long) c6 << 16;
+    retval |= (long) c7 << 8;
+    retval |= (long) c8;
     return retval;
   }
 
-  public static byte[] readBytes (final byte[] data,
-                                  final int pos, final int length)
-  {
-    final byte[] retval = new byte[length];
-    System.arraycopy(data, pos, retval, 0, length);
+  public static byte[] readBytes( final byte[] data,
+                                  final int pos, final int length ) {
+    final byte[] retval = new byte[ length ];
+    System.arraycopy( data, pos, retval, 0, length );
     return retval;
   }
 
-  public static short readShort (final byte[] data, final int pos)
-  {
-    return (short) ((data[pos] & 0xff) << 8 | (data[pos + 1] & 0xff));
+  public static short readShort( final byte[] data, final int pos ) {
+    return (short) ( ( data[ pos ] & 0xff ) << 8 | ( data[ pos + 1 ] & 0xff ) );
   }
 
-  public static int readLong (final byte[] data, final int pos)
-  {
+  public static int readLong( final byte[] data, final int pos ) {
     int retval = 0;
-    retval |= (long)(data[pos] & 0xff) << 24;
-    retval |= (long)(data[pos + 1] & 0xff) << 16;
-    retval |= (long)(data[pos + 2] & 0xff) << 8;
-    retval |= (long)(data[pos + 3] & 0xff);
+    retval |= (long) ( data[ pos ] & 0xff ) << 24;
+    retval |= (long) ( data[ pos + 1 ] & 0xff ) << 16;
+    retval |= (long) ( data[ pos + 2 ] & 0xff ) << 8;
+    retval |= (long) ( data[ pos + 3 ] & 0xff );
     return retval;
   }
 
-  public static int readZStringOffset (final byte[] data, final int pos, final int maxLength)
-  {
-    final int lastPos = Math.min (pos + maxLength, pos + data.length);
-    for (int i = pos; i < lastPos; i++)
-    {
-      if (data[i] == 0)
-      {
+  public static int readZStringOffset( final byte[] data, final int pos, final int maxLength ) {
+    final int lastPos = Math.min( pos + maxLength, pos + data.length );
+    for ( int i = pos; i < lastPos; i++ ) {
+      if ( data[ i ] == 0 ) {
         return i;
       }
     }
@@ -124,36 +111,29 @@ public class ByteAccessUtilities
     return lastPos;
   }
 
-  public static String readZString (final byte[] data, final int pos, final int maxLength, final String encoding)
-      throws EncodingException
-  {
-    final int lastPos = Math.min (pos + maxLength, pos + data.length);
-    for (int i = pos; i < lastPos; i++)
-    {
-      if (data[i] == 0)
-      {
-        return readString(data, pos, i - pos, encoding);
+  public static String readZString( final byte[] data, final int pos, final int maxLength, final String encoding )
+    throws EncodingException {
+    final int lastPos = Math.min( pos + maxLength, pos + data.length );
+    for ( int i = pos; i < lastPos; i++ ) {
+      if ( data[ i ] == 0 ) {
+        return readString( data, pos, i - pos, encoding );
       }
     }
 
-    return readString(data, pos, lastPos, encoding);
+    return readString( data, pos, lastPos, encoding );
   }
 
-  public static String readString (final byte[] data, final int pos,
-                                   final int length, final String encoding)
-          throws EncodingException
-  {
+  public static String readString( final byte[] data, final int pos,
+                                   final int length, final String encoding )
+    throws EncodingException {
     final Encoding enc;
-    if ("UTF-16".equals(encoding))
-    {
-      enc = EncodingRegistry.getInstance().getEncoding("UTF-16LE");
+    if ( "UTF-16".equals( encoding ) ) {
+      enc = EncodingRegistry.getInstance().getEncoding( "UTF-16LE" );
+    } else {
+      enc = EncodingRegistry.getInstance().getEncoding( encoding );
     }
-    else
-    {
-      enc = EncodingRegistry.getInstance().getEncoding(encoding);
-    }
-    final ByteBuffer byteBuffer = new ByteBuffer(data, pos, length);
-    final CodePointBuffer cp = enc.decode(byteBuffer, null);
-    return Utf16LE.getInstance().encodeString(cp);
+    final ByteBuffer byteBuffer = new ByteBuffer( data, pos, length );
+    final CodePointBuffer cp = enc.decode( byteBuffer, null );
+    return Utf16LE.getInstance().encodeString( cp );
   }
 }

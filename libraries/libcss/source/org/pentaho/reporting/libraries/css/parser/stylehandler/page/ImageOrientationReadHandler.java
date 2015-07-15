@@ -30,27 +30,21 @@ import org.w3c.css.sac.LexicalUnit;
  *
  * @author Thomas Morgner
  */
-public class ImageOrientationReadHandler implements CSSValueReadHandler
-{
-  public ImageOrientationReadHandler()
-  {
+public class ImageOrientationReadHandler implements CSSValueReadHandler {
+  public ImageOrientationReadHandler() {
   }
 
-  public CSSValue createValue(StyleKey name, LexicalUnit value)
-  {
-    if (value.getLexicalUnitType() == LexicalUnit.SAC_IDENT)
-    {
+  public CSSValue createValue( StyleKey name, LexicalUnit value ) {
+    if ( value.getLexicalUnitType() == LexicalUnit.SAC_IDENT ) {
       String ident = value.getStringValue();
-      if (ident.equalsIgnoreCase("auto"))
-      {
+      if ( ident.equalsIgnoreCase( "auto" ) ) {
         return CSSAutoValue.getInstance();
       }
       return null;
     }
-    if (value.getLexicalUnitType() != LexicalUnit.SAC_DEGREE)
-    {
+    if ( value.getLexicalUnitType() != LexicalUnit.SAC_DEGREE ) {
       return null;
     }
-    return CSSNumericValue.createValue(CSSNumericType.DEG, value.getFloatValue());
+    return CSSNumericValue.createValue( CSSNumericType.DEG, value.getFloatValue() );
   }
 }

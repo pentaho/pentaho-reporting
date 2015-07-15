@@ -25,13 +25,11 @@ import org.pentaho.reporting.libraries.css.parser.stylehandler.OneOfConstantsRea
  *
  * @author Thomas Morgner
  */
-public class TextOverflowModeReadHandler extends OneOfConstantsReadHandler
-{
-  public TextOverflowModeReadHandler()
-  {
-    super(false);
-    addValue(TextOverflowMode.CLIP);
-    addValue(TextOverflowMode.ELLIPSIS);
-    addValue(TextOverflowMode.ELLIPSIS_WORD);
+public class TextOverflowModeReadHandler extends OneOfConstantsReadHandler {
+  public TextOverflowModeReadHandler() {
+    super( false );
+    addValue( TextOverflowMode.CLIP );
+    addValue( TextOverflowMode.ELLIPSIS );
+    addValue( TextOverflowMode.ELLIPSIS_WORD );
   }
 }

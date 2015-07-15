@@ -17,11 +17,11 @@
 
 package org.pentaho.reporting.libraries.formula.lvalues;
 
-import java.util.ArrayList;
-
 import org.pentaho.reporting.libraries.formula.EvaluationException;
 import org.pentaho.reporting.libraries.formula.FormulaContext;
 import org.pentaho.reporting.libraries.formula.operators.InfixOperator;
+
+import java.util.ArrayList;
 
 /**
  * An term is a list of LValues connected by operators. For the sake of efficiency, this is not stored as tree. We store
@@ -29,10 +29,9 @@ import org.pentaho.reporting.libraries.formula.operators.InfixOperator;
  *
  * @author Thomas Morgner
  */
-public class Term extends AbstractLValue
-{
-  private static final LValue[] EMPTY_L_VALUE = new LValue[0];
-  private static final InfixOperator[] EMPTY_OPERATOR = new InfixOperator[0];
+public class Term extends AbstractLValue {
+  private static final LValue[] EMPTY_L_VALUE = new LValue[ 0 ];
+  private static final InfixOperator[] EMPTY_OPERATOR = new InfixOperator[ 0 ];
   private static final long serialVersionUID = -1854082494425470979L;
 
   private LValue optimizedHeadValue;
@@ -43,87 +42,72 @@ public class Term extends AbstractLValue
   private LValue[] operandsArray;
   private boolean initialized;
 
-  public Term(final LValue headValue)
-  {
-    if (headValue == null)
-    {
+  public Term( final LValue headValue ) {
+    if ( headValue == null ) {
       throw new NullPointerException();
     }
 
     this.headValue = headValue;
   }
 
-  public TypeValuePair evaluate() throws EvaluationException
-  {
+  public TypeValuePair evaluate() throws EvaluationException {
     TypeValuePair result = optimizedHeadValue.evaluate();
-    for (int i = 0; i < operandsArray.length; i++)
-    {
-      final LValue value = operandsArray[i];
-      final InfixOperator op = operatorArray[i];
-      result = op.evaluate(getContext(), result, value.evaluate());
+    for ( int i = 0; i < operandsArray.length; i++ ) {
+      final LValue value = operandsArray[ i ];
+      final InfixOperator op = operatorArray[ i ];
+      result = op.evaluate( getContext(), result, value.evaluate() );
     }
     return result;
   }
 
-  public void add(final InfixOperator operator, final LValue operand)
-  {
-    if (operator == null)
-    {
+  public void add( final InfixOperator operator, final LValue operand ) {
+    if ( operator == null ) {
       throw new NullPointerException();
     }
-    if (operand == null)
-    {
+    if ( operand == null ) {
       throw new NullPointerException();
     }
 
-    if (operands == null || operators == null)
-    {
+    if ( operands == null || operators == null ) {
       this.operands = new ArrayList();
       this.operators = new ArrayList();
     }
 
-    operands.add(operand);
-    operators.add(operator);
+    operands.add( operand );
+    operators.add( operator );
     initialized = false;
   }
 
-  public void initialize(final FormulaContext context) throws EvaluationException
-  {
-    super.initialize(context);
-    if (operands == null || operators == null)
-    {
+  public void initialize( final FormulaContext context ) throws EvaluationException {
+    super.initialize( context );
+    if ( operands == null || operators == null ) {
       this.optimizedHeadValue = headValue;
-      this.optimizedHeadValue.initialize(context);
+      this.optimizedHeadValue.initialize( context );
       this.operandsArray = EMPTY_L_VALUE;
       this.operatorArray = EMPTY_OPERATOR;
       return;
     }
 
-    if (initialized)
-    {
-      optimizedHeadValue.initialize(context);
-      for (int i = 0; i < operandsArray.length; i++)
-      {
-        final LValue lValue = operandsArray[i];
-        lValue.initialize(context);
+    if ( initialized ) {
+      optimizedHeadValue.initialize( context );
+      for ( int i = 0; i < operandsArray.length; i++ ) {
+        final LValue lValue = operandsArray[ i ];
+        lValue.initialize( context );
       }
       return;
     }
 
     optimize();
-    this.optimizedHeadValue.initialize(context);
-    for (int i = 0; i < operandsArray.length; i++)
-    {
-      final LValue value = operandsArray[i];
-      value.initialize(context);
+    this.optimizedHeadValue.initialize( context );
+    for ( int i = 0; i < operandsArray.length; i++ ) {
+      final LValue value = operandsArray[ i ];
+      value.initialize( context );
     }
     initialized = true;
   }
 
-  private void optimize()
-  {
-    if (operands == null || operators == null)
-    {
+  private void optimize() {
+    if ( operands == null || operators == null ) {
       this.optimizedHeadValue = headValue;
       this.operandsArray = EMPTY_L_VALUE;
       this.operatorArray = EMPTY_OPERATOR;
@@ -133,61 +117,51 @@ public class Term extends AbstractLValue
     final ArrayList operands = (ArrayList) this.operands.clone();
     this.optimizedHeadValue = headValue;
 
-    while (true)
-    {
+    while ( true ) {
       // now start to optimize everything.
       // first, search the operator with the highest priority..
-      final InfixOperator op = (InfixOperator) operators.get(0);
+      final InfixOperator op = (InfixOperator) operators.get( 0 );
       int level = op.getLevel();
       boolean moreThanOne = false;
-      for (int i = 1; i < operators.size(); i++)
-      {
-        final InfixOperator operator = (InfixOperator) operators.get(i);
+      for ( int i = 1; i < operators.size(); i++ ) {
+        final InfixOperator operator = (InfixOperator) operators.get( i );
         final int opLevel = operator.getLevel();
-        if (opLevel != level)
-        {
+        if ( opLevel != level ) {
           moreThanOne = true;
-          level = Math.min(opLevel, level);
+          level = Math.min( opLevel, level );
         }
       }
 
-      if (moreThanOne == false)
-      {
+      if ( moreThanOne == false ) {
         // No need to optimize the operators ..
         break;
       }
 
       // There are at least two op-levels in this term.
       Term subTerm = null;
-      for (int i = 0; i < operators.size(); i++)
-      {
-        final InfixOperator operator = (InfixOperator) operators.get(i);
-        if (operator.getLevel() != level)
-        {
+      for ( int i = 0; i < operators.size(); i++ ) {
+        final InfixOperator operator = (InfixOperator) operators.get( i );
+        if ( operator.getLevel() != level ) {
           subTerm = null;
           continue;
         }
 
-        if (subTerm == null)
-        {
-          if (i == 0)
-          {
-            subTerm = new Term(optimizedHeadValue);
+        if ( subTerm == null ) {
+          if ( i == 0 ) {
+            subTerm = new Term( optimizedHeadValue );
             optimizedHeadValue = subTerm;
-          }
-          else
-          {
-            final LValue lval = (LValue) operands.get(i - 1);
-            subTerm = new Term(lval);
-            operands.set(i - 1, subTerm);
+          } else {
+            final LValue lval = (LValue) operands.get( i - 1 );
+            subTerm = new Term( lval );
+            operands.set( i - 1, subTerm );
           }
         }
 
         // OK, now a term exists, and we should join it.
-        final LValue operand = (LValue) operands.get(i);
-        subTerm.add(operator, operand);
-        operands.remove(i);
-        operators.remove(i);
+        final LValue operand = (LValue) operands.get( i );
+        subTerm.add( operator, operand );
+        operands.remove( i );
+        operators.remove( i );
         // Rollback the current index ..
         //noinspection AssignmentToForLoopParameter
         i -= 1;
@@ -195,9 +169,9 @@ public class Term extends AbstractLValue
     }
 
     this.operatorArray = (InfixOperator[])
-        operators.toArray(new InfixOperator[operators.size()]);
+      operators.toArray( new InfixOperator[ operators.size() ] );
     this.operandsArray = (LValue[])
-        operands.toArray(new LValue[operands.size()]);
+      operands.toArray( new LValue[ operands.size() ] );
   }
 
   /**
@@ -205,46 +179,38 @@ public class Term extends AbstractLValue
    *
    * @return
    */
-  public LValue[] getChildValues()
-  {
-    if (operandsArray == null)
-    {
+  public LValue[] getChildValues() {
+    if ( operandsArray == null ) {
       optimize();
     }
-    final LValue[] values = new LValue[operandsArray.length + 1];
-    values[0] = headValue;
-    System.arraycopy(operandsArray, 0, values, 1, operandsArray.length);
+    final LValue[] values = new LValue[ operandsArray.length + 1 ];
+    values[ 0 ] = headValue;
+    System.arraycopy( operandsArray, 0, values, 1, operandsArray.length );
     return values;
   }
 
 
-  public String toString()
-  {
-    return toString(false);
+  public String toString() {
+    return toString( false );
   }
 
-  public String toString(final boolean root)
-  {
-    final StringBuilder b = new StringBuilder(100);
+  public String toString( final boolean root ) {
+    final StringBuilder b = new StringBuilder( 100 );
 
-    if (!root)
-    {
-      b.append('(');
+    if ( !root ) {
+      b.append( '(' );
     }
-    b.append(headValue);
-    if (operands != null && operators != null)
-    {
-      for (int i = 0; i < operands.size(); i++)
-      {
-        final InfixOperator op = (InfixOperator) operators.get(i);
-        final LValue value = (LValue) operands.get(i);
-        b.append(op);
-        b.append(value);
+    b.append( headValue );
+    if ( operands != null && operators != null ) {
+      for ( int i = 0; i < operands.size(); i++ ) {
+        final InfixOperator op = (InfixOperator) operators.get( i );
+        final LValue value = (LValue) operands.get( i );
+        b.append( op );
+        b.append( value );
       }
     }
-    if (!root)
-    {
-      b.append(')');
+    if ( !root ) {
+      b.append( ')' );
     }
     return b.toString();
   }
@@ -254,33 +220,26 @@ public class Term extends AbstractLValue
    *
    * @return
    */
-  public boolean isConstant()
-  {
-    if (headValue.isConstant() == false)
-    {
+  public boolean isConstant() {
+    if ( headValue.isConstant() == false ) {
       return false;
     }
 
-    for (int i = 0; i < operands.size(); i++)
-    {
-      final LValue value = (LValue) operands.get(i);
-      if (value.isConstant() == false)
-      {
+    for ( int i = 0; i < operands.size(); i++ ) {
+      final LValue value = (LValue) operands.get( i );
+      if ( value.isConstant() == false ) {
         return false;
       }
     }
     return true;
   }
 
-  public Object clone() throws CloneNotSupportedException
-  {
+  public Object clone() throws CloneNotSupportedException {
     final Term o = (Term) super.clone();
-    if (operands != null)
-    {
+    if ( operands != null ) {
       o.operands = (ArrayList) operands.clone();
     }
-    if (operators != null)
-    {
+    if ( operators != null ) {
       o.operators = (ArrayList) operators.clone();
     }
     o.headValue = (LValue) headValue.clone();
@@ -291,18 +250,15 @@ public class Term extends AbstractLValue
     return o;
   }
 
-  public LValue[] getOperands()
-  {
-    return (LValue[]) operands.toArray(new LValue[operands.size()]);
+  public LValue[] getOperands() {
+    return (LValue[]) operands.toArray( new LValue[ operands.size() ] );
   }
 
-  public InfixOperator[] getOperators()
-  {
-    return (InfixOperator[]) operators.toArray(new InfixOperator[operators.size()]);
+  public InfixOperator[] getOperators() {
+    return (InfixOperator[]) operators.toArray( new InfixOperator[ operators.size() ] );
   }
 
-  public LValue getHeadValue()
-  {
+  public LValue getHeadValue() {
     return headValue;
   }
 
@@ -312,43 +268,40 @@ public class Term extends AbstractLValue
    *
    * @return optimized head value
    */
-  public LValue getOptimizedHeadValue()
-  {
+  public LValue getOptimizedHeadValue() {
     return optimizedHeadValue;
   }
-//
-//  /**
-//   * Allows access to the post optimized operator array
-//   *
-//   * @return optimized operator array
-//   */
-//  public InfixOperator[] getOptimizedOperators()
-//  {
-//    return operatorArray;
-//  }
-//
-//  /**
-//   * Allows access to the post optimized operand array
-//   *
-//   * @return optimized operand array
-//   */
-//  public LValue[] getOptimizedOperands()
-//  {
-//    return operandsArray;
-//  }
+  //
+  //  /**
+  //   * Allows access to the post optimized operator array
+  //   *
+  //   * @return optimized operator array
+  //   */
+  //  public InfixOperator[] getOptimizedOperators()
+  //  {
+  //    return operatorArray;
+  //  }
+  //
+  //  /**
+  //   * Allows access to the post optimized operand array
+  //   *
+  //   * @return optimized operand array
+  //   */
+  //  public LValue[] getOptimizedOperands()
+  //  {
+  //    return operandsArray;
+  //  }
 
-  public ParsePosition getParsePosition()
-  {
+  public ParsePosition getParsePosition() {
     final ParsePosition parsePosition = super.getParsePosition();
-    if (parsePosition == null)
-    {
+    if ( parsePosition == null ) {
       final int startColumn = headValue.getParsePosition().getStartColumn();
       final int startLine = headValue.getParsePosition().getStartLine();
       final ParsePosition lastParsePos =
-          operandsArray[operandsArray.length - 1].getParsePosition();
+        operandsArray[ operandsArray.length - 1 ].getParsePosition();
       final int endColumn = lastParsePos.getEndColumn();
       final int endLine = lastParsePos.getEndLine();
-      setParsePosition(new ParsePosition(startLine, startColumn, endLine, endColumn));
+      setParsePosition( new ParsePosition( startLine, startColumn, endLine, endColumn ) );
     }
     return super.getParsePosition();
   }

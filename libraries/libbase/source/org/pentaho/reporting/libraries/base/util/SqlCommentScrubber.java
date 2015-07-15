@@ -28,8 +28,7 @@ import java.io.StringReader;
  *
  * @author Matt Burgess
  */
-public class SqlCommentScrubber
-{
+public class SqlCommentScrubber {
 
   /**
    * End-of-File (EOF) indicator *
@@ -44,13 +43,12 @@ public class SqlCommentScrubber
   /**
    * List of characters that can signify a string literal *
    */
-  private static final int[] QUOTE_CHARS = {'\'', '"'};
+  private static final int[] QUOTE_CHARS = { '\'', '"' };
 
   /**
    * Private constructor to enforce static access
    */
-  private SqlCommentScrubber()
-  {
+  private SqlCommentScrubber() {
   }
 
   /**
@@ -59,12 +57,9 @@ public class SqlCommentScrubber
    * @param ch the input character to check
    * @return true if the input character is a quote character, false if not
    */
-  private static boolean isQuoteChar(final int ch)
-  {
-    for (final int c : QUOTE_CHARS)
-    {
-      if (ch == c)
-      {
+  private static boolean isQuoteChar( final int ch ) {
+    for ( final int c : QUOTE_CHARS ) {
+      if ( ch == c ) {
         return true;
       }
     }
@@ -77,16 +72,15 @@ public class SqlCommentScrubber
    * of the string instead of a comment. A simple state machine is implemented, keeping track of whether the current
    * character is starting, ending, or inside a comment construct. The state machine also checks to see if the current
    * character is starting, ending, or inside a single-quoted string literal, as this takes precedence over comment
-   * constructs. In other words, comments inside strings are not actually comments, they are part of the string literal.
+   * constructs. In other words, comments inside strings are not actually comments, they are part of the string
+   * literal.
    *
    * @param text a string representing the SQL query to parse and from which to remove comments
    * @return the input string with SQL comments removed, or null if the input string is null
    */
-  public static String removeComments(String text)
-  {
+  public static String removeComments( String text ) {
 
-    if (text == null)
-    {
+    if ( text == null ) {
       return null;
     }
 
@@ -94,123 +88,91 @@ public class SqlCommentScrubber
     boolean blkComment = false;
     boolean lineComment = false;
     boolean inString = false;
-    StringReader buffer = new StringReader(text);
+    StringReader buffer = new StringReader( text );
     int ch;
-    char currentStringChar = (char) QUOTE_CHARS[0];
+    char currentStringChar = (char) QUOTE_CHARS[ 0 ];
     boolean done = false;
 
-    try
-    {
-      while (!done)
-      {
-        switch (ch = buffer.read())
-        {
-          case EOF:
-          { // End Of File
+    try {
+      while ( !done ) {
+        switch( ch = buffer.read() ) {
+          case EOF: { // End Of File
             done = true;
             break;
           }
           case '\'': // NOTE: Add cases for any other quote characters in QUOTE_CHARS
-          case '"':
-          { // String literals
+          case '"': { // String literals
 
             // If we're not in a comment, we're either entering or leaving a string
-            if (!lineComment && !blkComment)
-            {
+            if ( !lineComment && !blkComment ) {
               char cch = (char) ch;
-              if (inString)
-              {
-                if (currentStringChar == cch)
-                {
+              if ( inString ) {
+                if ( currentStringChar == cch ) {
                   inString = false;
                 }
-              }
-              else
-              {
+              } else {
                 inString = true;
                 currentStringChar = cch;
               }
-              queryWithoutComments.append(cch);
+              queryWithoutComments.append( cch );
             }
             break;
           }
-          case '/':
-          { // multi-line comments
+          case '/': { // multi-line comments
 
             // If we're not in a line comment, we might be entering a line or multi-line comment
-            if (!lineComment)
-            {
+            if ( !lineComment ) {
               ch = buffer.read();
 
               // If we see a multi-line comment starter (/*) and we're not in a string or
               // multi-line comment, then we have started a multi-line comment.
-              if ((ch == '*') && (!blkComment) && (!inString))
-              {
+              if ( ( ch == '*' ) && ( !blkComment ) && ( !inString ) ) {
                 blkComment = true;
-              }
-              else
-              {
+              } else {
                 // Otherwise if we aren't already in a block comment, pass the chars through
-                if (!blkComment)
-                {
-                  queryWithoutComments.append('/');
-                  queryWithoutComments.append((char) ch);
+                if ( !blkComment ) {
+                  queryWithoutComments.append( '/' );
+                  queryWithoutComments.append( (char) ch );
                 }
               }
             }
             break;
           }
-          case '*':
-          { // multi-line comments
+          case '*': { // multi-line comments
 
             // If we're in a multi-line comment, look ahead to see if we're about to exit
-            if (blkComment)
-            {
+            if ( blkComment ) {
               ch = buffer.read();
-              if (ch == '/')
-              {
+              if ( ch == '/' ) {
                 blkComment = false;
               }
-            }
-            else
-            {
+            } else {
               // if we're not in a multi-line or line comment, pass the char through
-              if (!lineComment)
-              {
-                queryWithoutComments.append('*');
+              if ( !lineComment ) {
+                queryWithoutComments.append( '*' );
               }
             }
             break;
           }
-          case '-':
-          { // single-line comment
+          case '-': { // single-line comment
 
             // if we're not in a multi-line or line comment, we might be entering a line comment
-            if (!blkComment && !lineComment)
-            {
+            if ( !blkComment && !lineComment ) {
               ch = buffer.read();
               // If we look ahead to see another dash and we're not in a string, we're entering a line comment
-              if (ch == '-' && !inString)
-              {
+              if ( ch == '-' && !inString ) {
                 lineComment = true;
-              }
-              else
-              {
-                queryWithoutComments.append('-');
-                queryWithoutComments.append((char) ch);
+              } else {
+                queryWithoutComments.append( '-' );
+                queryWithoutComments.append( (char) ch );
                 // If it's a quote character, we're entering or leaving a string
-                if (isQuoteChar(ch))
-                {
+                if ( isQuoteChar( ch ) ) {
                   char cch = (char) ch;
-                  if (inString)
-                  {
-                    if (currentStringChar == cch)
-                    {
+                  if ( inString ) {
+                    if ( currentStringChar == cch ) {
                       inString = false;
                     }
-                  }
-                  else
-                  {
+                  } else {
                     inString = true;
                     currentStringChar = cch;
                   }
@@ -219,30 +181,24 @@ public class SqlCommentScrubber
             }
             break;
           }
-          case EOL:
-          { // End Of Line
+          case EOL: { // End Of Line
             // If we're not in a comment, pass the EOL through
-            if (!blkComment && !lineComment)
-            {
-              queryWithoutComments.append((char) ch);
+            if ( !blkComment && !lineComment ) {
+              queryWithoutComments.append( (char) ch );
             }
             lineComment = false;
             break;
           }
-          default:
-          {
+          default: {
             // if we're not in a comment, pass the character through
-            if (!blkComment && !lineComment)
-            {
-              queryWithoutComments.append((char) ch);
+            if ( !blkComment && !lineComment ) {
+              queryWithoutComments.append( (char) ch );
             }
             break;
           }
         }
       }
-    }
-    catch (IOException e)
-    {
+    } catch ( IOException e ) {
       // break on error, exit gracefully with altered query thus far
     }
 

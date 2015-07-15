@@ -22,19 +22,16 @@ import org.pentaho.reporting.libraries.formula.FormulaTestBase;
 /**
  * @author Cedric Pronzato
  */
-public class ReplaceFunctionTest extends FormulaTestBase
-{
-  public void testDefault() throws Exception
-  {
+public class ReplaceFunctionTest extends FormulaTestBase {
+  public void testDefault() throws Exception {
     runDefaultTest();
   }
 
-  public Object[][] createDataTest()
-  {
+  public Object[][] createDataTest() {
     return new Object[][]
-        {
-            {"REPLACE(\"123456789\";5;3;\"Q\")", "1234Q89"},
-            {"REPLACE(\"123456789\";5;0;\"Q\")", "1234Q56789"},
-        };
+      {
+        { "REPLACE(\"123456789\";5;3;\"Q\")", "1234Q89" },
+        { "REPLACE(\"123456789\";5;0;\"Q\")", "1234Q56789" },
+      };
   }
 }

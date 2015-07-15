@@ -26,8 +26,7 @@ package org.pentaho.reporting.libraries.fonts.registry;
  *
  * @author Thomas Morgner
  */
-public interface FontMetrics
-{
+public interface FontMetrics {
   /**
    * The font ascent is the distance from the font's baseline to the top of most alphanumeric characters. The ascent is
    * always a positive number.
@@ -74,9 +73,9 @@ public interface FontMetrics
 
   public long getMaxCharAdvance();
 
-  public long getCharWidth(int codePoint);
+  public long getCharWidth( int codePoint );
 
-  public long getKerning(int previous, int codePoint);
+  public long getKerning( int previous, int codePoint );
 
   public long getItalicAngle();
 
@@ -88,7 +87,7 @@ public interface FontMetrics
    * @param info
    * @return
    */
-  public BaselineInfo getBaselines(int codePoint, BaselineInfo info);
+  public BaselineInfo getBaselines( int codePoint, BaselineInfo info );
 
   /**
    * Is it guaranteed that the font always returns the same baseline info objct?

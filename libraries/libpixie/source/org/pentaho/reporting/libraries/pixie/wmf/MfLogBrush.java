@@ -17,91 +17,87 @@
 
 package org.pentaho.reporting.libraries.pixie.wmf;
 
-import java.awt.Color;
-import java.awt.Paint;
-import java.awt.Rectangle;
-import java.awt.TexturePaint;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 
 /**
  * A Windows metafile logical brush object.
  */
-public class MfLogBrush implements WmfObject
-{
+public class MfLogBrush implements WmfObject {
   private static final boolean WHITE = false;
   private static final boolean BLACK = true;
 
   private static final boolean[] IMG_HS_HORIZONTAL =
-      {
-          WHITE, WHITE, WHITE, WHITE, WHITE, WHITE, WHITE, WHITE,
-          WHITE, WHITE, WHITE, WHITE, WHITE, WHITE, WHITE, WHITE,
-          WHITE, WHITE, WHITE, WHITE, WHITE, WHITE, WHITE, WHITE,
-          BLACK, BLACK, BLACK, BLACK, BLACK, BLACK, BLACK, BLACK,
-          BLACK, BLACK, BLACK, BLACK, BLACK, BLACK, BLACK, BLACK,
-          WHITE, WHITE, WHITE, WHITE, WHITE, WHITE, WHITE, WHITE,
-          WHITE, WHITE, WHITE, WHITE, WHITE, WHITE, WHITE, WHITE,
-          WHITE, WHITE, WHITE, WHITE, WHITE, WHITE, WHITE, WHITE,
-      };
+    {
+      WHITE, WHITE, WHITE, WHITE, WHITE, WHITE, WHITE, WHITE,
+      WHITE, WHITE, WHITE, WHITE, WHITE, WHITE, WHITE, WHITE,
+      WHITE, WHITE, WHITE, WHITE, WHITE, WHITE, WHITE, WHITE,
+      BLACK, BLACK, BLACK, BLACK, BLACK, BLACK, BLACK, BLACK,
+      BLACK, BLACK, BLACK, BLACK, BLACK, BLACK, BLACK, BLACK,
+      WHITE, WHITE, WHITE, WHITE, WHITE, WHITE, WHITE, WHITE,
+      WHITE, WHITE, WHITE, WHITE, WHITE, WHITE, WHITE, WHITE,
+      WHITE, WHITE, WHITE, WHITE, WHITE, WHITE, WHITE, WHITE,
+    };
 
   private static final boolean[] IMG_HS_VERTICAL =
-      {
-          WHITE, WHITE, WHITE, BLACK, BLACK, WHITE, WHITE, WHITE,
-          WHITE, WHITE, WHITE, BLACK, BLACK, WHITE, WHITE, WHITE,
-          WHITE, WHITE, WHITE, BLACK, BLACK, WHITE, WHITE, WHITE,
-          WHITE, WHITE, WHITE, BLACK, BLACK, WHITE, WHITE, WHITE,
-          WHITE, WHITE, WHITE, BLACK, BLACK, WHITE, WHITE, WHITE,
-          WHITE, WHITE, WHITE, BLACK, BLACK, WHITE, WHITE, WHITE,
-          WHITE, WHITE, WHITE, BLACK, BLACK, WHITE, WHITE, WHITE,
-          WHITE, WHITE, WHITE, BLACK, BLACK, WHITE, WHITE, WHITE,
-      };
+    {
+      WHITE, WHITE, WHITE, BLACK, BLACK, WHITE, WHITE, WHITE,
+      WHITE, WHITE, WHITE, BLACK, BLACK, WHITE, WHITE, WHITE,
+      WHITE, WHITE, WHITE, BLACK, BLACK, WHITE, WHITE, WHITE,
+      WHITE, WHITE, WHITE, BLACK, BLACK, WHITE, WHITE, WHITE,
+      WHITE, WHITE, WHITE, BLACK, BLACK, WHITE, WHITE, WHITE,
+      WHITE, WHITE, WHITE, BLACK, BLACK, WHITE, WHITE, WHITE,
+      WHITE, WHITE, WHITE, BLACK, BLACK, WHITE, WHITE, WHITE,
+      WHITE, WHITE, WHITE, BLACK, BLACK, WHITE, WHITE, WHITE,
+    };
 
   private static final boolean[] IMG_HS_FDIAGONAL =
-      {
-          BLACK, BLACK, WHITE, WHITE, WHITE, WHITE, WHITE, WHITE,
-          WHITE, BLACK, BLACK, WHITE, WHITE, WHITE, WHITE, WHITE,
-          WHITE, WHITE, BLACK, BLACK, WHITE, WHITE, WHITE, WHITE,
-          WHITE, WHITE, WHITE, BLACK, BLACK, WHITE, WHITE, WHITE,
-          WHITE, WHITE, WHITE, WHITE, BLACK, BLACK, WHITE, WHITE,
-          WHITE, WHITE, WHITE, WHITE, WHITE, BLACK, BLACK, WHITE,
-          WHITE, WHITE, WHITE, WHITE, WHITE, WHITE, BLACK, BLACK,
-          BLACK, WHITE, WHITE, WHITE, WHITE, WHITE, WHITE, BLACK,
-      };
+    {
+      BLACK, BLACK, WHITE, WHITE, WHITE, WHITE, WHITE, WHITE,
+      WHITE, BLACK, BLACK, WHITE, WHITE, WHITE, WHITE, WHITE,
+      WHITE, WHITE, BLACK, BLACK, WHITE, WHITE, WHITE, WHITE,
+      WHITE, WHITE, WHITE, BLACK, BLACK, WHITE, WHITE, WHITE,
+      WHITE, WHITE, WHITE, WHITE, BLACK, BLACK, WHITE, WHITE,
+      WHITE, WHITE, WHITE, WHITE, WHITE, BLACK, BLACK, WHITE,
+      WHITE, WHITE, WHITE, WHITE, WHITE, WHITE, BLACK, BLACK,
+      BLACK, WHITE, WHITE, WHITE, WHITE, WHITE, WHITE, BLACK,
+    };
 
   private static final boolean[] IMG_HS_BDIAGONAL =
-      {
-          BLACK, WHITE, WHITE, WHITE, WHITE, WHITE, WHITE, BLACK,
-          WHITE, WHITE, WHITE, WHITE, WHITE, WHITE, BLACK, BLACK,
-          WHITE, WHITE, WHITE, WHITE, WHITE, BLACK, BLACK, WHITE,
-          WHITE, WHITE, WHITE, WHITE, BLACK, BLACK, WHITE, WHITE,
-          WHITE, WHITE, WHITE, BLACK, BLACK, WHITE, WHITE, WHITE,
-          WHITE, WHITE, BLACK, BLACK, WHITE, WHITE, WHITE, WHITE,
-          WHITE, BLACK, BLACK, WHITE, WHITE, WHITE, WHITE, WHITE,
-          BLACK, BLACK, WHITE, WHITE, WHITE, WHITE, WHITE, WHITE,
-      };
+    {
+      BLACK, WHITE, WHITE, WHITE, WHITE, WHITE, WHITE, BLACK,
+      WHITE, WHITE, WHITE, WHITE, WHITE, WHITE, BLACK, BLACK,
+      WHITE, WHITE, WHITE, WHITE, WHITE, BLACK, BLACK, WHITE,
+      WHITE, WHITE, WHITE, WHITE, BLACK, BLACK, WHITE, WHITE,
+      WHITE, WHITE, WHITE, BLACK, BLACK, WHITE, WHITE, WHITE,
+      WHITE, WHITE, BLACK, BLACK, WHITE, WHITE, WHITE, WHITE,
+      WHITE, BLACK, BLACK, WHITE, WHITE, WHITE, WHITE, WHITE,
+      BLACK, BLACK, WHITE, WHITE, WHITE, WHITE, WHITE, WHITE,
+    };
 
   private static final boolean[] IMG_HS_CROSS =
-      {
-          WHITE, WHITE, WHITE, BLACK, BLACK, WHITE, WHITE, WHITE,
-          WHITE, WHITE, WHITE, BLACK, BLACK, WHITE, WHITE, WHITE,
-          WHITE, WHITE, WHITE, BLACK, BLACK, WHITE, WHITE, WHITE,
-          BLACK, BLACK, BLACK, BLACK, BLACK, BLACK, BLACK, BLACK,
-          BLACK, BLACK, BLACK, BLACK, BLACK, BLACK, BLACK, BLACK,
-          WHITE, WHITE, WHITE, BLACK, BLACK, WHITE, WHITE, WHITE,
-          WHITE, WHITE, WHITE, BLACK, BLACK, WHITE, WHITE, WHITE,
-          WHITE, WHITE, WHITE, BLACK, BLACK, WHITE, WHITE, WHITE,
-      };
+    {
+      WHITE, WHITE, WHITE, BLACK, BLACK, WHITE, WHITE, WHITE,
+      WHITE, WHITE, WHITE, BLACK, BLACK, WHITE, WHITE, WHITE,
+      WHITE, WHITE, WHITE, BLACK, BLACK, WHITE, WHITE, WHITE,
+      BLACK, BLACK, BLACK, BLACK, BLACK, BLACK, BLACK, BLACK,
+      BLACK, BLACK, BLACK, BLACK, BLACK, BLACK, BLACK, BLACK,
+      WHITE, WHITE, WHITE, BLACK, BLACK, WHITE, WHITE, WHITE,
+      WHITE, WHITE, WHITE, BLACK, BLACK, WHITE, WHITE, WHITE,
+      WHITE, WHITE, WHITE, BLACK, BLACK, WHITE, WHITE, WHITE,
+    };
 
   private static final boolean[] IMG_HS_DIAGCROSS =
-      {
-          BLACK, BLACK, WHITE, WHITE, WHITE, WHITE, BLACK, BLACK,
-          WHITE, BLACK, BLACK, WHITE, WHITE, BLACK, BLACK, WHITE,
-          WHITE, WHITE, BLACK, BLACK, BLACK, BLACK, WHITE, WHITE,
-          WHITE, WHITE, WHITE, BLACK, BLACK, WHITE, WHITE, WHITE,
-          WHITE, WHITE, BLACK, BLACK, BLACK, BLACK, WHITE, WHITE,
-          WHITE, BLACK, BLACK, WHITE, WHITE, BLACK, BLACK, WHITE,
-          BLACK, BLACK, WHITE, WHITE, WHITE, WHITE, BLACK, BLACK,
-          BLACK, WHITE, WHITE, WHITE, WHITE, WHITE, WHITE, BLACK,
-      };
+    {
+      BLACK, BLACK, WHITE, WHITE, WHITE, WHITE, BLACK, BLACK,
+      WHITE, BLACK, BLACK, WHITE, WHITE, BLACK, BLACK, WHITE,
+      WHITE, WHITE, BLACK, BLACK, BLACK, BLACK, WHITE, WHITE,
+      WHITE, WHITE, WHITE, BLACK, BLACK, WHITE, WHITE, WHITE,
+      WHITE, WHITE, BLACK, BLACK, BLACK, BLACK, WHITE, WHITE,
+      WHITE, BLACK, BLACK, WHITE, WHITE, BLACK, BLACK, WHITE,
+      BLACK, BLACK, WHITE, WHITE, WHITE, WHITE, BLACK, BLACK,
+      BLACK, WHITE, WHITE, WHITE, WHITE, WHITE, WHITE, BLACK,
+    };
 
   public static final int COLOR_FULL_ALPHA = 0x00FFFFFF;
 
@@ -131,48 +127,41 @@ public class MfLogBrush implements WmfObject
   /**
    * The default brush for a new DC.
    */
-  public MfLogBrush()
-  {
+  public MfLogBrush() {
     style = BS_SOLID;
     color = Color.white;
-    bgColor = new Color(COLOR_FULL_ALPHA);
+    bgColor = new Color( COLOR_FULL_ALPHA );
     hatch = HS_HORIZONTAL;
 
   }
 
-  public boolean isVisible()
-  {
+  public boolean isVisible() {
     return getStyle() != BS_NULL;
   }
 
-  public int getType()
-  {
+  public int getType() {
     return OBJ_BRUSH;
   }
 
   /**
    * The style of this brush.
    */
-  public int getStyle()
-  {
+  public int getStyle() {
     return style;
   }
 
-  public void setStyle(final int style)
-  {
+  public void setStyle( final int style ) {
     this.style = style;
   }
 
   /**
    * Return the color of the current brush, or null.
    */
-  public Color getColor()
-  {
+  public Color getColor() {
     return color;
   }
 
-  public void setColor(final Color color)
-  {
+  public void setColor( final Color color ) {
     this.color = color;
     lastPaint = null;
   }
@@ -180,83 +169,70 @@ public class MfLogBrush implements WmfObject
   /**
    * The hatch style of this brush.
    */
-  public int getHatchedStyle()
-  {
+  public int getHatchedStyle() {
     return hatch;
   }
 
-  public void setHatchedStyle(final int hstyle)
-  {
+  public void setHatchedStyle( final int hstyle ) {
     this.hatch = hstyle;
     lastPaint = null;
   }
 
-  public Paint getPaint()
-  {
-    if (lastPaint != null)
-    {
+  public Paint getPaint() {
+    if ( lastPaint != null ) {
       return lastPaint;
     }
 
-    switch (getStyle())
-    {
+    switch( getStyle() ) {
       case BS_SOLID:
         lastPaint = getColor();
         break;
       case BS_NULL:
-        lastPaint = new GDIColor(COLOR_FULL_ALPHA);
+        lastPaint = new GDIColor( COLOR_FULL_ALPHA );
         break;
-      case BS_HATCHED:
-      {
+      case BS_HATCHED: {
         final BufferedImage image = createHatchStyle();
-        lastPaint = new TexturePaint(image, new Rectangle(0, 0, image.getWidth(), image.getHeight()));
+        lastPaint = new TexturePaint( image, new Rectangle( 0, 0, image.getWidth(), image.getHeight() ) );
         break;
       }
-      case BS_DIBPATTERN:
-      {
-        if (bitmap == null)
-        {
-          lastPaint = new GDIColor(COLOR_FULL_ALPHA);
-        }
-        else
-        {
-          lastPaint = new TexturePaint(bitmap, new Rectangle(0, 0, bitmap.getWidth(), bitmap.getHeight()));
+      case BS_DIBPATTERN: {
+        if ( bitmap == null ) {
+          lastPaint = new GDIColor( COLOR_FULL_ALPHA );
+        } else {
+          lastPaint = new TexturePaint( bitmap, new Rectangle( 0, 0, bitmap.getWidth(), bitmap.getHeight() ) );
         }
         break;
       }
-      default:
-      {
+      default: {
         // Unknown Paint Mode
-        lastPaint = new GDIColor(COLOR_FULL_ALPHA);
+        lastPaint = new GDIColor( COLOR_FULL_ALPHA );
       }
     }
     return lastPaint;
   }
 
-  private BufferedImage createHatchStyle()
-  {
+  private BufferedImage createHatchStyle() {
     final int style = getHatchedStyle();
 
-    final BufferedImage image = new BufferedImage(8, 8, BufferedImage.TYPE_INT_ARGB);
-    switch (style)
-    {
+    final BufferedImage image = new BufferedImage( 8, 8, BufferedImage.TYPE_INT_ARGB );
+    switch( style ) {
       case HS_HORIZONTAL:
-        image.setRGB(0, 0, 8, 8, transform(IMG_HS_HORIZONTAL), 0, 8);
+        image.setRGB( 0, 0, 8, 8, transform( IMG_HS_HORIZONTAL ), 0, 8 );
         break;
       case HS_VERTICAL:
-        image.setRGB(0, 0, 8, 8, transform(IMG_HS_VERTICAL), 0, 8);
+        image.setRGB( 0, 0, 8, 8, transform( IMG_HS_VERTICAL ), 0, 8 );
         break;
       case HS_FDIAGONAL:
-        image.setRGB(0, 0, 8, 8, transform(IMG_HS_FDIAGONAL), 0, 8);
+        image.setRGB( 0, 0, 8, 8, transform( IMG_HS_FDIAGONAL ), 0, 8 );
         break;
       case HS_BDIAGONAL:
-        image.setRGB(0, 0, 8, 8, transform(IMG_HS_BDIAGONAL), 0, 8);
+        image.setRGB( 0, 0, 8, 8, transform( IMG_HS_BDIAGONAL ), 0, 8 );
         break;
       case HS_CROSS:
-        image.setRGB(0, 0, 8, 8, transform(IMG_HS_CROSS), 0, 8);
+        image.setRGB( 0, 0, 8, 8, transform( IMG_HS_CROSS ), 0, 8 );
         break;
       case HS_DIAGCROSS:
-        image.setRGB(0, 0, 8, 8, transform(IMG_HS_DIAGCROSS), 0, 8);
+        image.setRGB( 0, 0, 8, 8, transform( IMG_HS_DIAGCROSS ), 0, 8 );
         break;
       default:
         throw new IllegalArgumentException();
@@ -264,45 +240,36 @@ public class MfLogBrush implements WmfObject
     return image;
   }
 
-  public int[] transform(final boolean[] data)
-  {
+  public int[] transform( final boolean[] data ) {
     final int color = getColor().getRGB();
     final int bgColor = getBackgroundColor().getRGB();
 
-    final int[] retval = new int[data.length];
-    for (int i = 0; i < retval.length; i++)
-    {
-      if (data[i] == true)
-      {
-        retval[i] = color;
-      }
-      else
-      {
-        retval[i] = bgColor;
+    final int[] retval = new int[ data.length ];
+    for ( int i = 0; i < retval.length; i++ ) {
+      if ( data[ i ] == true ) {
+        retval[ i ] = color;
+      } else {
+        retval[ i ] = bgColor;
       }
     }
     return retval;
   }
 
-  public void setBackgroundColor(final Color bg)
-  {
+  public void setBackgroundColor( final Color bg ) {
     this.bgColor = bg;
     lastPaint = null;
   }
 
-  public Color getBackgroundColor()
-  {
+  public Color getBackgroundColor() {
     return bgColor;
   }
 
-  public void setBitmap(final BufferedImage bitmap)
-  {
+  public void setBitmap( final BufferedImage bitmap ) {
     this.bitmap = bitmap;
   }
 
 
-  public BufferedImage getBitmap()
-  {
+  public BufferedImage getBitmap() {
     return bitmap;
   }
 }

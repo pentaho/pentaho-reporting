@@ -25,42 +25,34 @@ import org.pentaho.reporting.libraries.formula.typing.coretypes.NumberType;
 
 /**
  * Describes YearFunction function.
- * 
- * @see YearFunction
- * 
+ *
  * @author Cedric Pronzato
+ * @see YearFunction
  */
-public class YearFunctionDescription extends AbstractFunctionDescription
-{
+public class YearFunctionDescription extends AbstractFunctionDescription {
   private static final long serialVersionUID = 1152202788652836026L;
 
-  public YearFunctionDescription()
-  {
-    super("YEAR", "org.pentaho.reporting.libraries.formula.function.datetime.Year-Function");
+  public YearFunctionDescription() {
+    super( "YEAR", "org.pentaho.reporting.libraries.formula.function.datetime.Year-Function" );
   }
 
-  public Type getValueType()
-  {
+  public Type getValueType() {
     return NumberType.GENERIC_NUMBER;
   }
 
-  public int getParameterCount()
-  {
+  public int getParameterCount() {
     return 1;
   }
 
-  public Type getParameterType(final int position)
-  {
+  public Type getParameterType( final int position ) {
     return DateTimeType.DATE_TYPE;
   }
 
-  public boolean isParameterMandatory(final int position)
-  {
+  public boolean isParameterMandatory( final int position ) {
     return true;
   }
 
-  public FunctionCategory getCategory()
-  {
+  public FunctionCategory getCategory() {
     return DateTimeFunctionCategory.CATEGORY;
   }
 }

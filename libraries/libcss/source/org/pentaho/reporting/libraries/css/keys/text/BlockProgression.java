@@ -24,15 +24,13 @@ import org.pentaho.reporting.libraries.css.values.CSSConstant;
  *
  * @author Thomas Morgner
  */
-public class BlockProgression
-{
+public class BlockProgression {
   // flow orientation horizontal
-  public static CSSConstant TB = new CSSConstant("tb");
+  public static CSSConstant TB = new CSSConstant( "tb" );
   // flow orientation vertical
-  public static CSSConstant RL = new CSSConstant("rl");
-  public static CSSConstant LR = new CSSConstant("lr");
+  public static CSSConstant RL = new CSSConstant( "rl" );
+  public static CSSConstant LR = new CSSConstant( "lr" );
 
-  private BlockProgression()
-  {
+  private BlockProgression() {
   }
 }

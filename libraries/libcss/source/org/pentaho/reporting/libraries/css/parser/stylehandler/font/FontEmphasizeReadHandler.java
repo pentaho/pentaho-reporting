@@ -17,14 +17,14 @@
 
 package org.pentaho.reporting.libraries.css.parser.stylehandler.font;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import org.pentaho.reporting.libraries.css.keys.font.FontStyleKeys;
 import org.pentaho.reporting.libraries.css.model.StyleKey;
 import org.pentaho.reporting.libraries.css.parser.CSSCompoundValueReadHandler;
 import org.pentaho.reporting.libraries.css.values.CSSValue;
 import org.w3c.css.sac.LexicalUnit;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Creation-Date: 28.11.2005, 17:52:55
@@ -32,13 +32,11 @@ import org.w3c.css.sac.LexicalUnit;
  * @author Thomas Morgner
  */
 public class FontEmphasizeReadHandler
-    implements CSSCompoundValueReadHandler
-{
+  implements CSSCompoundValueReadHandler {
   private FontEmphasizePositionReadHandler positionReadHandler;
   private FontEmphasizeStyleReadHandler styleReadHandler;
 
-  public FontEmphasizeReadHandler()
-  {
+  public FontEmphasizeReadHandler() {
     positionReadHandler = new FontEmphasizePositionReadHandler();
     styleReadHandler = new FontEmphasizeStyleReadHandler();
   }
@@ -49,39 +47,31 @@ public class FontEmphasizeReadHandler
    * @param unit
    * @return
    */
-  public Map createValues(LexicalUnit unit)
-  {
-    CSSValue style = styleReadHandler.createValue(null, unit);
-    if (style != null)
-    {
+  public Map createValues( LexicalUnit unit ) {
+    CSSValue style = styleReadHandler.createValue( null, unit );
+    if ( style != null ) {
       unit = unit.getNextLexicalUnit();
     }
     CSSValue position;
-    if (unit != null)
-    {
-      position = positionReadHandler.createValue(null, unit);
-    }
-    else
-    {
+    if ( unit != null ) {
+      position = positionReadHandler.createValue( null, unit );
+    } else {
       position = null;
     }
     final Map map = new HashMap();
-    if (position != null)
-    {
-      map.put(FontStyleKeys.FONT_EMPHASIZE_POSITION, position);
+    if ( position != null ) {
+      map.put( FontStyleKeys.FONT_EMPHASIZE_POSITION, position );
     }
-    if (style != null)
-    {
-      map.put(FontStyleKeys.FONT_EMPHASIZE_STYLE, style);
+    if ( style != null ) {
+      map.put( FontStyleKeys.FONT_EMPHASIZE_STYLE, style );
     }
     return map;
   }
 
-  public StyleKey[] getAffectedKeys()
-  {
-    return new StyleKey[]{
-        FontStyleKeys.FONT_EMPHASIZE_POSITION,
-        FontStyleKeys.FONT_EMPHASIZE_STYLE
+  public StyleKey[] getAffectedKeys() {
+    return new StyleKey[] {
+      FontStyleKeys.FONT_EMPHASIZE_POSITION,
+      FontStyleKeys.FONT_EMPHASIZE_STYLE
     };
   }
 }

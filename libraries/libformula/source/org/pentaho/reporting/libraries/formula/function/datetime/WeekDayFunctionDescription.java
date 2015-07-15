@@ -25,53 +25,41 @@ import org.pentaho.reporting.libraries.formula.typing.coretypes.NumberType;
 
 /**
  * Describes WeekDayFunction function.
- * 
- * @see WeekDayFunction
- * 
+ *
  * @author Cedric Pronzato
+ * @see WeekDayFunction
  */
-public class WeekDayFunctionDescription extends AbstractFunctionDescription
-{
+public class WeekDayFunctionDescription extends AbstractFunctionDescription {
   private static final long serialVersionUID = -2974907368693600555L;
 
-  public WeekDayFunctionDescription()
-  {
-    super("WEEKDAY", "org.pentaho.reporting.libraries.formula.function.datetime.WeekDay-Function");
+  public WeekDayFunctionDescription() {
+    super( "WEEKDAY", "org.pentaho.reporting.libraries.formula.function.datetime.WeekDay-Function" );
   }
 
-  public Type getValueType()
-  {
+  public Type getValueType() {
     return NumberType.GENERIC_NUMBER;
   }
 
-  public int getParameterCount()
-  {
+  public int getParameterCount() {
     return 2;
   }
 
-  public Type getParameterType(final int position)
-  {
-    if (position == 0)
-    {
+  public Type getParameterType( final int position ) {
+    if ( position == 0 ) {
       return DateTimeType.DATE_TYPE;
     }
     return NumberType.GENERIC_NUMBER;
   }
 
-  public boolean isParameterMandatory(final int position)
-  {
-    if (position == 0)
-    {
+  public boolean isParameterMandatory( final int position ) {
+    if ( position == 0 ) {
       return true;
-    }
-    else
-    {
+    } else {
       return false;
     }
   }
 
-  public FunctionCategory getCategory()
-  {
+  public FunctionCategory getCategory() {
     return DateTimeFunctionCategory.CATEGORY;
   }
 }

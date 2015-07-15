@@ -33,42 +33,37 @@ import org.pentaho.reporting.libraries.css.values.CSSValue;
  *
  * @author Thomas Morgner
  */
-public class MaxMinFontSizeResolveHandler implements ResolveHandler
-{
-  public MaxMinFontSizeResolveHandler()
-  {
+public class MaxMinFontSizeResolveHandler implements ResolveHandler {
+  public MaxMinFontSizeResolveHandler() {
   }
 
   /**
-   * This indirectly defines the resolve order. The higher the order, the more
-   * dependent is the resolver on other resolvers to be complete.
+   * This indirectly defines the resolve order. The higher the order, the more dependent is the resolver on other
+   * resolvers to be complete.
    *
    * @return
    */
-  public StyleKey[] getRequiredStyles()
-  {
-    return new StyleKey[]{
-        FontStyleKeys.FONT_SIZE
+  public StyleKey[] getRequiredStyles() {
+    return new StyleKey[] {
+      FontStyleKeys.FONT_SIZE
     };
   }
 
   /**
    * Resolves a single property.
    */
-  public void resolve(final DocumentContext process,
-                      final LayoutElement currentNode,
-                      final StyleKey key)
-  {
+  public void resolve( final DocumentContext process,
+                       final LayoutElement currentNode,
+                       final StyleKey key ) {
     final LayoutStyle layoutContext = currentNode.getLayoutStyle();
-    final CSSValue value = layoutContext.getValue(key);
-    if (value instanceof CSSNumericValue == false)
-    {
+    final CSSValue value = layoutContext.getValue( key );
+    if ( value instanceof CSSNumericValue == false ) {
       // no limit ..
       return;
     }
 
     final int resolution = (int)
-        process.getOutputMetaData().getNumericFeatureValue(OutputProcessorFeature.DEVICE_RESOLUTION);
-    layoutContext.setValue(key, StyleSheetUtility.convertFontSize(value, resolution, currentNode));
+      process.getOutputMetaData().getNumericFeatureValue( OutputProcessorFeature.DEVICE_RESOLUTION );
+    layoutContext.setValue( key, StyleSheetUtility.convertFontSize( value, resolution, currentNode ) );
   }
 }

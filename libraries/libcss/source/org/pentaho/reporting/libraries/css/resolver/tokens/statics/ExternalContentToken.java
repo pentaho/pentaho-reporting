@@ -20,17 +20,14 @@ package org.pentaho.reporting.libraries.css.resolver.tokens.statics;
 import org.pentaho.reporting.libraries.css.resolver.tokens.types.GenericType;
 
 public class ExternalContentToken
-    extends StaticToken implements GenericType
-{
+  extends StaticToken implements GenericType {
   private Object data;
 
-  public ExternalContentToken(final Object data)
-  {
+  public ExternalContentToken( final Object data ) {
     this.data = data;
   }
 
-  public Object getRaw()
-  {
+  public Object getRaw() {
     return data;
   }
 }

@@ -24,14 +24,12 @@ import org.pentaho.reporting.libraries.css.values.CSSConstant;
  *
  * @author Thomas Morgner
  */
-public class KerningMode
-{
+public class KerningMode {
   // none | [pair || contextual]
-  public static final CSSConstant NONE = new CSSConstant("none");
-  public static final CSSConstant PAIR = new CSSConstant("pair");
-  public static final CSSConstant CONTEXTUAL = new CSSConstant("contextual");
+  public static final CSSConstant NONE = new CSSConstant( "none" );
+  public static final CSSConstant PAIR = new CSSConstant( "pair" );
+  public static final CSSConstant CONTEXTUAL = new CSSConstant( "contextual" );
 
-  private KerningMode()
-  {
+  private KerningMode() {
   }
 }

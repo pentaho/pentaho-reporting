@@ -25,14 +25,12 @@ import org.pentaho.reporting.libraries.css.parser.stylehandler.ListOfConstantsRe
  *
  * @author Thomas Morgner
  */
-public class BackgroundOriginReadHandler extends ListOfConstantsReadHandler
-{
-  public BackgroundOriginReadHandler()
-  {
-    super(false);
-    addValue(BackgroundOrigin.BORDER);
-    addValue(BackgroundOrigin.CONTENT);
-    addValue(BackgroundOrigin.PADDING);
+public class BackgroundOriginReadHandler extends ListOfConstantsReadHandler {
+  public BackgroundOriginReadHandler() {
+    super( false );
+    addValue( BackgroundOrigin.BORDER );
+    addValue( BackgroundOrigin.CONTENT );
+    addValue( BackgroundOrigin.PADDING );
   }
 
 }

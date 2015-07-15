@@ -17,6 +17,9 @@
 
 package org.pentaho.reporting.libraries.base.util;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -29,17 +32,13 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.StringTokenizer;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
 /**
  * A collection of useful static utility methods for handling classes and object instantiation.
  *
  * @author Thomas Morgner
  */
-public final class ObjectUtilities
-{
-  private static final Log LOGGER = LogFactory.getLog(ObjectUtilities.class);
+public final class ObjectUtilities {
+  private static final Log LOGGER = LogFactory.getLog( ObjectUtilities.class );
 
   /**
    * A constant for using the TheadContext as source for the classloader.
@@ -58,13 +57,12 @@ public final class ObjectUtilities
    * The custom classloader to be used (if not null).
    */
   private static ClassLoader classLoader;
-  private static final Integer[] EMPTY_VERSIONS = new Integer[0];
+  private static final Integer[] EMPTY_VERSIONS = new Integer[ 0 ];
 
   /**
    * Default constructor - private.
    */
-  private ObjectUtilities()
-  {
+  private ObjectUtilities() {
   }
 
   /**
@@ -73,8 +71,7 @@ public final class ObjectUtilities
    *
    * @return the classloader source, either THREAD_CONTEXT or CLASS_CONTEXT.
    */
-  public static String getClassLoaderSource()
-  {
+  public static String getClassLoaderSource() {
     return classLoaderSource;
   }
 
@@ -87,8 +84,7 @@ public final class ObjectUtilities
    *
    * @param classLoaderSource the classloader source, either THREAD_CONTEXT or CLASS_CONTEXT.
    */
-  public static void setClassLoaderSource(final String classLoaderSource)
-  {
+  public static void setClassLoaderSource( final String classLoaderSource ) {
     ObjectUtilities.classLoaderSource = classLoaderSource;
   }
 
@@ -99,47 +95,36 @@ public final class ObjectUtilities
    * @param o2 object 2 (<code>null</code> permitted).
    * @return <code>true</code> or <code>false</code>.
    */
-  public static boolean equal(final Object o1, final Object o2)
-  {
-    if (o1 == o2)
-    {
+  public static boolean equal( final Object o1, final Object o2 ) {
+    if ( o1 == o2 ) {
       return true;
     }
-    if (o1 != null)
-    {
-      return o1.equals(o2);
-    }
-    else
-    {
+    if ( o1 != null ) {
+      return o1.equals( o2 );
+    } else {
       return false;
     }
   }
 
   /**
-   * Performs a comparison on two file objects to determine if they refer to the
-   * same file. The <code>File.equals()</code> method requires that the files refer
-   * to the same file in the same way (relative vs. absolute).
+   * Performs a comparison on two file objects to determine if they refer to the same file. The
+   * <code>File.equals()</code> method requires that the files refer to the same file in the same way (relative vs.
+   * absolute).
    *
    * @param file1 the first file (<code>null</code> permitted).
    * @param file2 the second file (<code>null</code> permitted).
    * @return <code>true</code> if the files refer to the same file, <code>false</code> otherwise
    */
-  public static boolean equals(final File file1, final File file2)
-  {
-    if (file1 == file2)
-    {
+  public static boolean equals( final File file1, final File file2 ) {
+    if ( file1 == file2 ) {
       return true;
     }
-    if (file1 != null && file2 != null)
-    {
-      try
-      {
-        return file1.getCanonicalFile().equals(file2.getCanonicalFile());
-      }
-      catch (IOException ioe)
-      {
+    if ( file1 != null && file2 != null ) {
+      try {
+        return file1.getCanonicalFile().equals( file2.getCanonicalFile() );
+      } catch ( IOException ioe ) {
         // There was an error accessing the filesystem
-        return file1.equals(file2);
+        return file1.equals( file2 );
       }
     }
     return false;
@@ -152,46 +137,35 @@ public final class ObjectUtilities
    * @return A clone of the specified object.
    * @throws CloneNotSupportedException if the object cannot be cloned.
    */
-  public static Object clone(final Object object)
-      throws CloneNotSupportedException
-  {
-    if (object == null)
-    {
-      throw new IllegalArgumentException("Null 'object' argument.");
+  public static Object clone( final Object object )
+    throws CloneNotSupportedException {
+    if ( object == null ) {
+      throw new IllegalArgumentException( "Null 'object' argument." );
     }
     final Class aClass = object.getClass();
-    if (aClass.isArray())
-    {
-      final int length = Array.getLength(object);
-      final Object clone = Array.newInstance(aClass.getComponentType(), length);
+    if ( aClass.isArray() ) {
+      final int length = Array.getLength( object );
+      final Object clone = Array.newInstance( aClass.getComponentType(), length );
       //noinspection SuspiciousSystemArraycopy
-      System.arraycopy(object, 0, clone, 0, length);
+      System.arraycopy( object, 0, clone, 0, length );
       return object;
     }
 
-    try
-    {
-      final Method method = aClass.getMethod("clone", (Class[]) null);
-      if (Modifier.isPublic(method.getModifiers()))
-      {
-        return method.invoke(object, (Object[]) null);
+    try {
+      final Method method = aClass.getMethod( "clone", (Class[]) null );
+      if ( Modifier.isPublic( method.getModifiers() ) ) {
+        return method.invoke( object, (Object[]) null );
       }
-      throw new CloneNotSupportedException("Failed to clone: Method 'clone()' is not public on class " + aClass);
-    }
-    catch (NoSuchMethodException e)
-    {
-      LOGGER.warn("Object without clone() method is impossible on class " + aClass, e);
-    }
-    catch (IllegalAccessException e)
-    {
-      LOGGER.warn("Object.clone(): unable to call method 'clone()'  on class " + aClass, e);
-    }
-    catch (InvocationTargetException e)
-    {
-      LOGGER.warn("Object without clone() method is impossible on class " + aClass, e);
+      throw new CloneNotSupportedException( "Failed to clone: Method 'clone()' is not public on class " + aClass );
+    } catch ( NoSuchMethodException e ) {
+      LOGGER.warn( "Object without clone() method is impossible on class " + aClass, e );
+    } catch ( IllegalAccessException e ) {
+      LOGGER.warn( "Object.clone(): unable to call method 'clone()'  on class " + aClass, e );
+    } catch ( InvocationTargetException e ) {
+      LOGGER.warn( "Object without clone() method is impossible on class " + aClass, e );
     }
     throw new CloneNotSupportedException
-        ("Failed to clone: Clone caused an Exception while cloning type " + aClass);
+      ( "Failed to clone: Clone caused an Exception while cloning type " + aClass );
 
   }
 
@@ -200,8 +174,7 @@ public final class ObjectUtilities
    *
    * @param classLoader the new classloader or null to use the default.
    */
-  public static synchronized void setClassLoader(final ClassLoader classLoader)
-  {
+  public static synchronized void setClassLoader( final ClassLoader classLoader ) {
     ObjectUtilities.classLoader = classLoader;
   }
 
@@ -210,8 +183,7 @@ public final class ObjectUtilities
    *
    * @return the custom classloader or null to use the default.
    */
-  public static ClassLoader getClassLoader()
-  {
+  public static ClassLoader getClassLoader() {
     return classLoader;
   }
 
@@ -222,35 +194,27 @@ public final class ObjectUtilities
    * @return the classloader, never null.
    * @throws SecurityException if the SecurityManager does not allow to grab the context classloader.
    */
-  public static ClassLoader getClassLoader(final Class c)
-  {
+  public static ClassLoader getClassLoader( final Class c ) {
     final String localClassLoaderSource;
-    synchronized (ObjectUtilities.class)
-    {
-      if (classLoader != null)
-      {
+    synchronized( ObjectUtilities.class ) {
+      if ( classLoader != null ) {
         return classLoader;
       }
       localClassLoaderSource = classLoaderSource;
     }
 
-    if ("ThreadContext".equals(localClassLoaderSource))
-    {
+    if ( "ThreadContext".equals( localClassLoaderSource ) ) {
       final ClassLoader threadLoader = Thread.currentThread().getContextClassLoader();
-      if (threadLoader != null)
-      {
+      if ( threadLoader != null ) {
         return threadLoader;
       }
     }
 
     // Context classloader - do not cache ..
     final ClassLoader applicationCL = c.getClassLoader();
-    if (applicationCL == null)
-    {
+    if ( applicationCL == null ) {
       return ClassLoader.getSystemClassLoader();
-    }
-    else
-    {
+    } else {
       return applicationCL;
     }
   }
@@ -263,19 +227,16 @@ public final class ObjectUtilities
    * @param c    the source class
    * @return the url of the resource or null, if not found.
    */
-  public static URL getResource(final String name, final Class c)
-  {
-    if (name == null)
-    {
+  public static URL getResource( final String name, final Class c ) {
+    if ( name == null ) {
       throw new NullPointerException();
     }
 
-    final ClassLoader cl = getClassLoader(c);
-    if (cl == null)
-    {
+    final ClassLoader cl = getClassLoader( c );
+    if ( cl == null ) {
       return null;
     }
-    return cl.getResource(name);
+    return cl.getResource( name );
   }
 
   /**
@@ -285,20 +246,17 @@ public final class ObjectUtilities
    * @param c    the source class
    * @return the url of the resource or null, if not found.
    */
-  public static URL getResourceRelative(final String name, final Class c)
-  {
-    if (name == null)
-    {
+  public static URL getResourceRelative( final String name, final Class c ) {
+    if ( name == null ) {
       throw new NullPointerException();
     }
 
-    final ClassLoader cl = getClassLoader(c);
-    final String cname = convertName(name, c);
-    if (cl == null)
-    {
+    final ClassLoader cl = getClassLoader( c );
+    final String cname = convertName( name, c );
+    if ( cl == null ) {
       return null;
     }
-    return cl.getResource(cname);
+    return cl.getResource( cname );
   }
 
   /**
@@ -309,29 +267,25 @@ public final class ObjectUtilities
    * @param c    the class which the resource is relative to
    * @return the tranformed name.
    */
-  private static String convertName(final String name, Class c)
-  {
-    if (name.length() > 0 && name.charAt(0) == '/')
-    {
+  private static String convertName( final String name, Class c ) {
+    if ( name.length() > 0 && name.charAt( 0 ) == '/' ) {
       // strip leading slash..
-      return name.substring(1);
+      return name.substring( 1 );
     }
 
     // we cant work on arrays, so remove them ...
-    while (c.isArray())
-    {
+    while ( c.isArray() ) {
       c = c.getComponentType();
     }
     // extract the package ...
     final String baseName = c.getName();
-    final int index = baseName.lastIndexOf('.');
-    if (index == -1)
-    {
+    final int index = baseName.lastIndexOf( '.' );
+    if ( index == -1 ) {
       return name;
     }
 
-    final String pkgName = baseName.substring(0, index);
-    return pkgName.replace('.', '/') + '/' + name;
+    final String pkgName = baseName.substring( 0, index );
+    return pkgName.replace( '.', '/' ) + '/' + name;
   }
 
   /**
@@ -341,21 +295,16 @@ public final class ObjectUtilities
    * @param context the source class
    * @return the url of the resource or null, if not found.
    */
-  public static InputStream getResourceAsStream(final String name,
-                                                final Class context)
-  {
-    final URL url = getResource(name, context);
-    if (url == null)
-    {
+  public static InputStream getResourceAsStream( final String name,
+                                                 final Class context ) {
+    final URL url = getResource( name, context );
+    if ( url == null ) {
       return null;
     }
 
-    try
-    {
+    try {
       return url.openStream();
-    }
-    catch (IOException e)
-    {
+    } catch ( IOException e ) {
       return null;
     }
   }
@@ -368,20 +317,15 @@ public final class ObjectUtilities
    * @return the url of the resource or null, if not found.
    */
   public static InputStream getResourceRelativeAsStream
-  (final String name, final Class context)
-  {
-    final URL url = getResourceRelative(name, context);
-    if (url == null)
-    {
+  ( final String name, final Class context ) {
+    final URL url = getResourceRelative( name, context );
+    if ( url == null ) {
       return null;
     }
 
-    try
-    {
+    try {
       return url.openStream();
-    }
-    catch (IOException e)
-    {
+    } catch ( IOException e ) {
       return null;
     }
   }
@@ -394,10 +338,9 @@ public final class ObjectUtilities
    * @return the instantiated object or null, if an error occured.
    * @deprecated This class is not typesafe and instantiates the specified object without any additional checks.
    */
-  public static Object loadAndInstantiate(final String className,
-                                          final Class source)
-  {
-    return loadAndInstantiate(className, source, null);
+  public static Object loadAndInstantiate( final String className,
+                                           final Class source ) {
+    return loadAndInstantiate( className, source, null );
   }
 
   /**
@@ -409,103 +352,73 @@ public final class ObjectUtilities
    * @param type      the expected type of the object that is being instantiated.
    * @return the instantiated object, which is guaranteed to be of the given type, or null, if an error occured.
    */
-  public static <T> T loadAndInstantiate(final String className,
-                                         final Class source,
-                                         final Class<T> type)
-  {
-    if (className == null || className.length() == 0)
-    {
+  public static <T> T loadAndInstantiate( final String className,
+                                          final Class source,
+                                          final Class<T> type ) {
+    if ( className == null || className.length() == 0 ) {
       return null;
     }
-    try
-    {
-      final ClassLoader loader = getClassLoader(source);
-      final Class c = Class.forName(className, false, loader);
-      if (type != null && type.isAssignableFrom(c) == false)
-      {
+    try {
+      final ClassLoader loader = getClassLoader( source );
+      final Class c = Class.forName( className, false, loader );
+      if ( type != null && type.isAssignableFrom( c ) == false ) {
         // this is unacceptable and means someone messed up the configuration
-        LOGGER.warn("Specified class " + className + " is not of expected type " + type);
+        LOGGER.warn( "Specified class " + className + " is not of expected type " + type );
         return null;
       }
       //noinspection unchecked
       return (T) c.newInstance();
-    }
-    catch (ClassNotFoundException e)
-    {
-      if (LOGGER.isDebugEnabled())
-      {
-        LOGGER.debug("Specified class " + className + " does not exist.", e);
+    } catch ( ClassNotFoundException e ) {
+      if ( LOGGER.isDebugEnabled() ) {
+        LOGGER.debug( "Specified class " + className + " does not exist.", e );
       }
       // sometimes, this one is expected.
-    }
-    catch (NoClassDefFoundError e)
-    {
-      if (LOGGER.isDebugEnabled())
-      {
-        LOGGER.debug("Specified class " + className + " cannot be loaded [NOCLASSDEFERROR].", e);
+    } catch ( NoClassDefFoundError e ) {
+      if ( LOGGER.isDebugEnabled() ) {
+        LOGGER.debug( "Specified class " + className + " cannot be loaded [NOCLASSDEFERROR].", e );
       }
-    }
-    catch (Throwable e)
-    {
+    } catch ( Throwable e ) {
       // this is more severe than a class not being found at all
-      if (LOGGER.isDebugEnabled())
-      {
-        LOGGER.info("Specified class " + className + " failed to instantiate correctly.", e);
-      }
-      else
-      {
-        LOGGER.info("Specified class " + className + " failed to instantiate correctly.");
+      if ( LOGGER.isDebugEnabled() ) {
+        LOGGER.info( "Specified class " + className + " failed to instantiate correctly.", e );
+      } else {
+        LOGGER.info( "Specified class " + className + " failed to instantiate correctly." );
       }
     }
     return null;
   }
 
-  public static <T> Class<? extends T> loadAndValidate(final String className,
-                                                       final Class source,
-                                                       final Class<T> type)
-  {
-    if (className == null || className.length() == 0)
-    {
+  public static <T> Class<? extends T> loadAndValidate( final String className,
+                                                        final Class source,
+                                                        final Class<T> type ) {
+    if ( className == null || className.length() == 0 ) {
       return null;
     }
-    try
-    {
-      final ClassLoader loader = getClassLoader(source);
-      final Class c = Class.forName(className, false, loader);
-      if (type != null && type.isAssignableFrom(c) == false)
-      {
+    try {
+      final ClassLoader loader = getClassLoader( source );
+      final Class c = Class.forName( className, false, loader );
+      if ( type != null && type.isAssignableFrom( c ) == false ) {
         // this is unacceptable and means someone messed up the configuration
-        LOGGER.warn("Specified class " + className + " is not of expected type " + type);
+        LOGGER.warn( "Specified class " + className + " is not of expected type " + type );
         return null;
       }
       //noinspection unchecked
       return (Class<? extends T>) c;
-    }
-    catch (ClassNotFoundException e)
-    {
-      if (LOGGER.isDebugEnabled())
-      {
-        LOGGER.debug("Specified class " + className + " does not exist.", e);
+    } catch ( ClassNotFoundException e ) {
+      if ( LOGGER.isDebugEnabled() ) {
+        LOGGER.debug( "Specified class " + className + " does not exist.", e );
       }
       // sometimes, this one is expected.
-    }
-    catch (NoClassDefFoundError e)
-    {
-      if (LOGGER.isDebugEnabled())
-      {
-        LOGGER.debug("Specified class " + className + " cannot be loaded [NOCLASSDEFERROR].", e);
+    } catch ( NoClassDefFoundError e ) {
+      if ( LOGGER.isDebugEnabled() ) {
+        LOGGER.debug( "Specified class " + className + " cannot be loaded [NOCLASSDEFERROR].", e );
       }
-    }
-    catch (Throwable e)
-    {
+    } catch ( Throwable e ) {
       // this is more severe than a class not being found at all
-      if (LOGGER.isDebugEnabled())
-      {
-        LOGGER.info("Specified class " + className + " failed to instantiate correctly.", e);
-      }
-      else
-      {
-        LOGGER.info("Specified class " + className + " failed to instantiate correctly.");
+      if ( LOGGER.isDebugEnabled() ) {
+        LOGGER.info( "Specified class " + className + " failed to instantiate correctly.", e );
+      } else {
+        LOGGER.info( "Specified class " + className + " failed to instantiate correctly." );
       }
     }
     return null;
@@ -517,46 +430,34 @@ public final class ObjectUtilities
    * @return true, if the JDK has been recognized as JDK 1.4, false otherwise.
    * @noinspection AccessOfSystemProperties
    */
-  public static boolean isJDK14()
-  {
-    try
-    {
-      final ClassLoader loader = getClassLoader(ObjectUtilities.class);
-      if (loader != null)
-      {
-        try
-        {
-          Class.forName("java.util.RandomAccess", false, loader);
+  public static boolean isJDK14() {
+    try {
+      final ClassLoader loader = getClassLoader( ObjectUtilities.class );
+      if ( loader != null ) {
+        try {
+          Class.forName( "java.util.RandomAccess", false, loader );
           return true;
-        }
-        catch (ClassNotFoundException e)
-        {
+        } catch ( ClassNotFoundException e ) {
           return false;
         }
       }
-    }
-    catch (Exception e)
-    {
+    } catch ( Exception e ) {
       // the safe test failed, now lets check the system properties ...
     }
     // OK, the quick and dirty, but secure way failed. Lets try it
     // using the standard way.
-    try
-    {
+    try {
       final String version = System.getProperty
-          ("java.vm.specification.version");
+        ( "java.vm.specification.version" );
       // parse the beast...
-      if (version == null)
-      {
+      if ( version == null ) {
         return false;
       }
 
-      final Integer[] versions = parseVersions(version);
-      final Integer[] target = new Integer[]{new Integer(1), new Integer(4)};
-      return (ObjectUtilities.compareVersionArrays(versions, target) >= 0);
-    }
-    catch (Exception e)
-    {
+      final Integer[] versions = parseVersions( version );
+      final Integer[] target = new Integer[] { new Integer( 1 ), new Integer( 4 ) };
+      return ( ObjectUtilities.compareVersionArrays( versions, target ) >= 0 );
+    } catch ( Exception e ) {
       // if that fails too, we assume the safe "no-JDK 1.4" mode.
       return false;
     }
@@ -569,29 +470,23 @@ public final class ObjectUtilities
    * @param a2 the second array.
    * @return -1 if a1 is less than a2, 0 if a1 and a2 are equal, and +1 otherwise.
    */
-  public static int compareVersionArrays(final Integer[] a1, final Integer[] a2)
-  {
-    final int length = Math.min(a1.length, a2.length);
-    for (int i = 0; i < length; i++)
-    {
-      final Integer o1 = a1[i];
-      final Integer o2 = a2[i];
-      if (o1 == null && o2 == null)
-      {
+  public static int compareVersionArrays( final Integer[] a1, final Integer[] a2 ) {
+    final int length = Math.min( a1.length, a2.length );
+    for ( int i = 0; i < length; i++ ) {
+      final Integer o1 = a1[ i ];
+      final Integer o2 = a2[ i ];
+      if ( o1 == null && o2 == null ) {
         // cannot decide ..
         continue;
       }
-      if (o1 == null)
-      {
+      if ( o1 == null ) {
         return 1;
       }
-      if (o2 == null)
-      {
+      if ( o2 == null ) {
         return -1;
       }
-      final int retval = o1.compareTo(o2);
-      if (retval != 0)
-      {
+      final int retval = o1.compareTo( o2 );
+      if ( retval != 0 ) {
         return retval;
       }
     }
@@ -604,61 +499,47 @@ public final class ObjectUtilities
    * @param version the version.
    * @return the parsed version array.
    */
-  public static Integer[] parseVersions(final String version)
-  {
-    if (version == null)
-    {
+  public static Integer[] parseVersions( final String version ) {
+    if ( version == null ) {
       return EMPTY_VERSIONS;
     }
 
     final ArrayList<Integer> versions = new ArrayList<Integer>();
-    final StringTokenizer strtok = new StringTokenizer(version, ".");
-    while (strtok.hasMoreTokens())
-    {
-      try
-      {
-        versions.add(new Integer(strtok.nextToken()));
-      }
-      catch (NumberFormatException nfe)
-      {
+    final StringTokenizer strtok = new StringTokenizer( version, "." );
+    while ( strtok.hasMoreTokens() ) {
+      try {
+        versions.add( new Integer( strtok.nextToken() ) );
+      } catch ( NumberFormatException nfe ) {
         break;
       }
     }
-    return versions.toArray(new Integer[versions.size()]);
+    return versions.toArray( new Integer[ versions.size() ] );
   }
 
   /**
-   * Compares two arrays and determines if they are equal. This method allows to pass <code>null</code> null
-   * references for any of the arrays.
+   * Compares two arrays and determines if they are equal. This method allows to pass <code>null</code> null references
+   * for any of the arrays.
    *
    * @param array1 the first array to compare.
    * @param array2 the second array to compare.
    * @return true, if both arrays are equal or both arrays are null, false otherwise.
    */
-  public static boolean equalArray(final Object[] array1, final Object[] array2)
-  {
+  public static boolean equalArray( final Object[] array1, final Object[] array2 ) {
     //noinspection ArrayEquality
-    if (array1 == array2)
-    {
+    if ( array1 == array2 ) {
       return true;
-    }
-    else if (array1 == null || array2 == null)
-    {
+    } else if ( array1 == null || array2 == null ) {
       return false;
-    }
-    else
-    {
-      return Arrays.equals(array1, array2);
+    } else {
+      return Arrays.equals( array1, array2 );
     }
   }
 
-  public static int hashCode(final Object[] array1)
-  {
-    if (array1 == null)
-    {
+  public static int hashCode( final Object[] array1 ) {
+    if ( array1 == null ) {
       return 0;
     }
 
-    return Arrays.hashCode(array1);
+    return Arrays.hashCode( array1 );
   }
 }

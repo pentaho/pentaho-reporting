@@ -20,8 +20,7 @@ package org.pentaho.reporting.libraries.pixie.wmf;
 /**
  * Defines a generic WmfObject.
  */
-public interface WmfObject
-{
+public interface WmfObject {
   public static final int OBJ_PEN = 1;
   public static final int OBJ_BRUSH = 2;
   public static final int OBJ_PALETTE = 3;

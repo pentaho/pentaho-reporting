@@ -23,24 +23,21 @@ import org.pentaho.reporting.libraries.formula.LibFormulaErrorValue;
 /**
  * @author Cedric Pronzato
  */
-public class NaFunctionTest extends FormulaTestBase
-{
-  public void testDefault() throws Exception
-  {
+public class NaFunctionTest extends FormulaTestBase {
+  public void testDefault() throws Exception {
     runDefaultTest();
   }
 
-  public Object[][] createDataTest()
-  {
+  public Object[][] createDataTest() {
     return new Object[][]
-        {
-            {"ISERROR(NA())", Boolean.TRUE},
-            {"ISNA(NA())", Boolean.TRUE},
-            {"ISNA(5+NA())", Boolean.TRUE},
+      {
+        { "ISERROR(NA())", Boolean.TRUE },
+        { "ISNA(NA())", Boolean.TRUE },
+        { "ISNA(5+NA())", Boolean.TRUE },
 
-            // custom tests
-            {"NA()", LibFormulaErrorValue.ERROR_NA_VALUE},
-        };
+        // custom tests
+        { "NA()", LibFormulaErrorValue.ERROR_NA_VALUE },
+      };
   }
 
 }

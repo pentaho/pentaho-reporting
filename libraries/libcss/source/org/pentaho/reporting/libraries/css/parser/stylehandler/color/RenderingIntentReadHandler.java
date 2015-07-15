@@ -25,14 +25,12 @@ import org.pentaho.reporting.libraries.css.parser.stylehandler.OneOfConstantsRea
  *
  * @author Thomas Morgner
  */
-public class RenderingIntentReadHandler extends OneOfConstantsReadHandler
-{
-  public RenderingIntentReadHandler()
-  {
-    super(true);
-    addValue(RenderingIntent.ABSOLUTE_COLORIMETRIC);
-    addValue(RenderingIntent.PERCEPTUAL);
-    addValue(RenderingIntent.RELATIVE_COLORIMETRIC);
-    addValue(RenderingIntent.SATURATION);
+public class RenderingIntentReadHandler extends OneOfConstantsReadHandler {
+  public RenderingIntentReadHandler() {
+    super( true );
+    addValue( RenderingIntent.ABSOLUTE_COLORIMETRIC );
+    addValue( RenderingIntent.PERCEPTUAL );
+    addValue( RenderingIntent.RELATIVE_COLORIMETRIC );
+    addValue( RenderingIntent.SATURATION );
   }
 }

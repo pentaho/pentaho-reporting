@@ -19,12 +19,12 @@ package org.pentaho.reporting.libraries.docbundle.metadata;
 
 import java.io.Serializable;
 
-public interface BundleManifest extends Serializable
-{
-  public String getMimeType(String entry);
+public interface BundleManifest extends Serializable {
+  public String getMimeType( String entry );
 
   public String[] getEntries();
 
-  public String getAttribute(String entryName, String attributeName);
-  public String[] getAttributeNames(String entryName);
+  public String getAttribute( String entryName, String attributeName );
+
+  public String[] getAttributeNames( String entryName );
 }

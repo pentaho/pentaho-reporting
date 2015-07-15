@@ -25,14 +25,12 @@ import org.pentaho.reporting.libraries.css.parser.stylehandler.OneOfConstantsRea
  *
  * @author Thomas Morgner
  */
-public class FontEffectReadHandler extends OneOfConstantsReadHandler
-{
-  public FontEffectReadHandler()
-  {
-    super(false);
-    addValue(FontEffects.EMBOSS);
-    addValue(FontEffects.ENGRAVE);
-    addValue(FontEffects.NONE);
-    addValue(FontEffects.OUTLINE);
+public class FontEffectReadHandler extends OneOfConstantsReadHandler {
+  public FontEffectReadHandler() {
+    super( false );
+    addValue( FontEffects.EMBOSS );
+    addValue( FontEffects.ENGRAVE );
+    addValue( FontEffects.NONE );
+    addValue( FontEffects.OUTLINE );
   }
 }

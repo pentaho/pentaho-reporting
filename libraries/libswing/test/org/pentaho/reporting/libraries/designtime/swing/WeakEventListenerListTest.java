@@ -17,98 +17,89 @@
 
 package org.pentaho.reporting.libraries.designtime.swing;
 
+import junit.framework.TestCase;
+
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
-import junit.framework.TestCase;
-
-public class WeakEventListenerListTest extends TestCase
-{
-  private static class TestEventListener implements PropertyChangeListener
-  {
-    private TestEventListener()
-    {
+public class WeakEventListenerListTest extends TestCase {
+  private static class TestEventListener implements PropertyChangeListener {
+    private TestEventListener() {
     }
 
-    public void propertyChange(final PropertyChangeEvent evt)
-    {
+    public void propertyChange( final PropertyChangeEvent evt ) {
 
     }
   }
 
-  public WeakEventListenerListTest()
-  {
+  public WeakEventListenerListTest() {
   }
 
-  public WeakEventListenerListTest(final String s)
-  {
-    super(s);
+  public WeakEventListenerListTest( final String s ) {
+    super( s );
   }
 
-  public void testAddStaticRefs()
-  {
+  public void testAddStaticRefs() {
     WeakEventListenerList list = new WeakEventListenerList();
     final TestEventListener listener = new TestEventListener();
-    list.add(TestEventListener.class, listener);
-    list.add(TestEventListener.class, listener);
-    list.add(TestEventListener.class, listener);
-    list.add(TestEventListener.class, listener);
-    list.add(TestEventListener.class, listener);
-    assertEquals("Size", list.getListenerCount(TestEventListener.class), 5);
+    list.add( TestEventListener.class, listener );
+    list.add( TestEventListener.class, listener );
+    list.add( TestEventListener.class, listener );
+    list.add( TestEventListener.class, listener );
+    list.add( TestEventListener.class, listener );
+    assertEquals( "Size", list.getListenerCount( TestEventListener.class ), 5 );
   }
 
-  public void testAddRemoveStaticRefs()
-  {
+  public void testAddRemoveStaticRefs() {
     WeakEventListenerList list = new WeakEventListenerList();
     final TestEventListener listener = new TestEventListener();
-    list.add(TestEventListener.class, listener);
-    list.add(TestEventListener.class, listener);
-    list.add(TestEventListener.class, listener);
-    list.add(TestEventListener.class, listener);
-    list.add(TestEventListener.class, listener);
-    assertEquals("Size", list.getListenerCount(TestEventListener.class), 5);
+    list.add( TestEventListener.class, listener );
+    list.add( TestEventListener.class, listener );
+    list.add( TestEventListener.class, listener );
+    list.add( TestEventListener.class, listener );
+    list.add( TestEventListener.class, listener );
+    assertEquals( "Size", list.getListenerCount( TestEventListener.class ), 5 );
 
-    list.remove(TestEventListener.class, listener);
-    assertEquals("Size", list.getListenerCount(TestEventListener.class), 4);
+    list.remove( TestEventListener.class, listener );
+    assertEquals( "Size", list.getListenerCount( TestEventListener.class ), 4 );
 
-    list.add(PropertyChangeListener.class, listener);
-    list.remove(TestEventListener.class, listener);
-    list.remove(TestEventListener.class, listener);
-    list.remove(TestEventListener.class, listener);
-    list.remove(TestEventListener.class, listener);
-    list.remove(TestEventListener.class, listener);
-    list.remove(TestEventListener.class, listener);
-    assertEquals("Size", list.getListenerCount(TestEventListener.class), 0);
-    assertEquals("Size", list.getListenerCount(PropertyChangeListener.class), 1);
+    list.add( PropertyChangeListener.class, listener );
+    list.remove( TestEventListener.class, listener );
+    list.remove( TestEventListener.class, listener );
+    list.remove( TestEventListener.class, listener );
+    list.remove( TestEventListener.class, listener );
+    list.remove( TestEventListener.class, listener );
+    list.remove( TestEventListener.class, listener );
+    assertEquals( "Size", list.getListenerCount( TestEventListener.class ), 0 );
+    assertEquals( "Size", list.getListenerCount( PropertyChangeListener.class ), 1 );
   }
 
-  public void testAddRemoveWeakRefs()
-  {
+  public void testAddRemoveWeakRefs() {
     final WeakEventListenerList list = new WeakEventListenerList();
     final TestEventListener listener = new TestEventListener();
-    list.add(TestEventListener.class, new TestEventListener());
-    list.add(TestEventListener.class, listener);
-    list.add(TestEventListener.class, new TestEventListener());
-    list.add(TestEventListener.class, listener);
-    list.add(TestEventListener.class, new TestEventListener());
-    assertEquals("Size", list.getListenerCount(TestEventListener.class), 5);
+    list.add( TestEventListener.class, new TestEventListener() );
+    list.add( TestEventListener.class, listener );
+    list.add( TestEventListener.class, new TestEventListener() );
+    list.add( TestEventListener.class, listener );
+    list.add( TestEventListener.class, new TestEventListener() );
+    assertEquals( "Size", list.getListenerCount( TestEventListener.class ), 5 );
 
-    list.remove(TestEventListener.class, listener);
-    assertEquals("Size", list.getListenerCount(TestEventListener.class), 4);
+    list.remove( TestEventListener.class, listener );
+    assertEquals( "Size", list.getListenerCount( TestEventListener.class ), 4 );
 
-    list.add(PropertyChangeListener.class, listener);
-    list.remove(TestEventListener.class, listener);
-    list.remove(TestEventListener.class, listener);
-    list.remove(TestEventListener.class, listener);
-    list.remove(TestEventListener.class, listener);
-    list.remove(TestEventListener.class, listener);
-    list.remove(TestEventListener.class, listener);
-    assertTrue("Size is 3 or less", list.getListenerCount(TestEventListener.class) <= 3);
-    assertEquals("Size", list.getListenerCount(PropertyChangeListener.class), 1);
+    list.add( PropertyChangeListener.class, listener );
+    list.remove( TestEventListener.class, listener );
+    list.remove( TestEventListener.class, listener );
+    list.remove( TestEventListener.class, listener );
+    list.remove( TestEventListener.class, listener );
+    list.remove( TestEventListener.class, listener );
+    list.remove( TestEventListener.class, listener );
+    assertTrue( "Size is 3 or less", list.getListenerCount( TestEventListener.class ) <= 3 );
+    assertEquals( "Size", list.getListenerCount( PropertyChangeListener.class ), 1 );
     System.gc();
     System.gc();
     System.gc();
-    assertEquals("Size", list.getListenerCount(PropertyChangeListener.class), 1);
+    assertEquals( "Size", list.getListenerCount( PropertyChangeListener.class ), 1 );
   }
 
 

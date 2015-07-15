@@ -25,42 +25,34 @@ import org.pentaho.reporting.libraries.formula.typing.coretypes.LogicalType;
 
 /**
  * Describes IsErrFunction function.
- * @see IsErrFunction
  *
  * @author Cedric Pronzato
- *
+ * @see IsErrFunction
  */
-public class IsErrorFunctionDescription extends AbstractFunctionDescription
-{
+public class IsErrorFunctionDescription extends AbstractFunctionDescription {
   private static final long serialVersionUID = 7082570664684812028L;
 
-  public IsErrorFunctionDescription()
-  {
-    super("ISERROR", "org.pentaho.reporting.libraries.formula.function.information.IsError-Function");
+  public IsErrorFunctionDescription() {
+    super( "ISERROR", "org.pentaho.reporting.libraries.formula.function.information.IsError-Function" );
   }
 
-  public FunctionCategory getCategory()
-  {
+  public FunctionCategory getCategory() {
     return InformationFunctionCategory.CATEGORY;
   }
 
-  public int getParameterCount()
-  {
+  public int getParameterCount() {
     return 1;
   }
 
-  public Type getParameterType(final int position)
-  {
+  public Type getParameterType( final int position ) {
     return AnyType.TYPE;
   }
 
-  public Type getValueType()
-  {
+  public Type getValueType() {
     return LogicalType.TYPE;
   }
 
-  public boolean isParameterMandatory(final int position)
-  {
+  public boolean isParameterMandatory( final int position ) {
     return true;
   }
 

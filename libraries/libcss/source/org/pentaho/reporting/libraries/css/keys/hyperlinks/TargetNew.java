@@ -24,13 +24,11 @@ import org.pentaho.reporting.libraries.css.values.CSSConstant;
  *
  * @author Thomas Morgner
  */
-public class TargetNew
-{
-  public static final CSSConstant TAB = new CSSConstant("tab");
-  public static final CSSConstant NONE = new CSSConstant("none");
-  public static final CSSConstant WINDOW = new CSSConstant("window");
+public class TargetNew {
+  public static final CSSConstant TAB = new CSSConstant( "tab" );
+  public static final CSSConstant NONE = new CSSConstant( "none" );
+  public static final CSSConstant WINDOW = new CSSConstant( "window" );
 
-  private TargetNew()
-  {
+  private TargetNew() {
   }
 }

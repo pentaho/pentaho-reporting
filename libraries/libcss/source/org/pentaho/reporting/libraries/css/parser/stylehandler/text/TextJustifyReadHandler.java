@@ -25,16 +25,14 @@ import org.pentaho.reporting.libraries.css.parser.stylehandler.OneOfConstantsRea
  *
  * @author Thomas Morgner
  */
-public class TextJustifyReadHandler extends OneOfConstantsReadHandler
-{
-  public TextJustifyReadHandler()
-  {
-    super(true);
-    addValue(TextJustify.INTER_CHARACTER);
-    addValue(TextJustify.INTER_CLUSTER);
-    addValue(TextJustify.INTER_IDEOGRAPH);
-    addValue(TextJustify.INTER_WORD);
-    addValue(TextJustify.KASHIDA);
-    addValue(TextJustify.SIZE);
+public class TextJustifyReadHandler extends OneOfConstantsReadHandler {
+  public TextJustifyReadHandler() {
+    super( true );
+    addValue( TextJustify.INTER_CHARACTER );
+    addValue( TextJustify.INTER_CLUSTER );
+    addValue( TextJustify.INTER_IDEOGRAPH );
+    addValue( TextJustify.INTER_WORD );
+    addValue( TextJustify.KASHIDA );
+    addValue( TextJustify.SIZE );
   }
 }

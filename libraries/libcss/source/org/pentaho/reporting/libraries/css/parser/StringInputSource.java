@@ -17,18 +17,17 @@
 
 package org.pentaho.reporting.libraries.css.parser;
 
+import org.w3c.css.sac.InputSource;
+
 import java.io.StringReader;
 import java.net.URL;
-
-import org.w3c.css.sac.InputSource;
 
 /**
  * Creation-Date: 08.12.2005, 21:16:26
  *
  * @author Thomas Morgner
  */
-public class StringInputSource extends InputSource
-{
+public class StringInputSource extends InputSource {
   private StringReader reader;
   private URL baseUrl;
 
@@ -40,29 +39,24 @@ public class StringInputSource extends InputSource
    * @see #setCharacterStream
    * @see #setEncoding
    */
-  public StringInputSource(final String data, final URL baseUrl)
-  {
-    if (data == null)
-    {
+  public StringInputSource( final String data, final URL baseUrl ) {
+    if ( data == null ) {
       throw new NullPointerException();
     }
-    if (baseUrl == null)
-    {
+    if ( baseUrl == null ) {
       throw new NullPointerException();
     }
-    this.reader = new StringReader(data);
+    this.reader = new StringReader( data );
     this.baseUrl = baseUrl;
-    setCharacterStream(reader);
-    setURI(baseUrl.toExternalForm());
+    setCharacterStream( reader );
+    setURI( baseUrl.toExternalForm() );
   }
 
-  public StringReader getReader()
-  {
+  public StringReader getReader() {
     return reader;
   }
 
-  public URL getBaseUrl()
-  {
+  public URL getBaseUrl() {
     return baseUrl;
   }
 }

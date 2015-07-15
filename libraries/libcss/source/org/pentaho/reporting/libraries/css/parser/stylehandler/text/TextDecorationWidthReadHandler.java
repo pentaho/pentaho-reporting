@@ -27,27 +27,21 @@ import org.w3c.css.sac.LexicalUnit;
  *
  * @author Thomas Morgner
  */
-public class TextDecorationWidthReadHandler extends BorderWidthReadHandler
-{
-  public TextDecorationWidthReadHandler()
-  {
-    super(true, true);
+public class TextDecorationWidthReadHandler extends BorderWidthReadHandler {
+  public TextDecorationWidthReadHandler() {
+    super( true, true );
   }
 
-  protected CSSValue parseWidth(final LexicalUnit value)
-  {
-    if (value.getLexicalUnitType() == LexicalUnit.SAC_IDENT)
-    {
-      if (value.getStringValue().equalsIgnoreCase("dash"))
-      {
+  protected CSSValue parseWidth( final LexicalUnit value ) {
+    if ( value.getLexicalUnitType() == LexicalUnit.SAC_IDENT ) {
+      if ( value.getStringValue().equalsIgnoreCase( "dash" ) ) {
         return TextDecorationWidth.DASH;
       }
-      if (value.getStringValue().equalsIgnoreCase("bold"))
-      {
+      if ( value.getStringValue().equalsIgnoreCase( "bold" ) ) {
         return TextDecorationWidth.BOLD;
       }
     }
-    return super.parseWidth(value);
+    return super.parseWidth( value );
   }
 
 }

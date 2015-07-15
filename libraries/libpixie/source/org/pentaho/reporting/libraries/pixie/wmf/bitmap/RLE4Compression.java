@@ -19,14 +19,11 @@ package org.pentaho.reporting.libraries.pixie.wmf.bitmap;
 
 import java.io.InputStream;
 
-public class RLE4Compression extends BitmapCompression
-{
-  public RLE4Compression()
-  {
+public class RLE4Compression extends BitmapCompression {
+  public RLE4Compression() {
   }
 
-  public int[] decompress(final InputStream in, final GDIPalette palette)
-  {
+  public int[] decompress( final InputStream in, final GDIPalette palette ) {
     return null;
   }
 

@@ -25,8 +25,7 @@ import java.io.Serializable;
  *
  * @author Thomas Morgner
  */
-public class FloatDimension extends Dimension2D implements Serializable
-{
+public class FloatDimension extends Dimension2D implements Serializable {
 
   /**
    * For serialization.
@@ -46,8 +45,7 @@ public class FloatDimension extends Dimension2D implements Serializable
   /**
    * Creates a new dimension object with width and height set to zero.
    */
-  public FloatDimension()
-  {
+  public FloatDimension() {
     this.width = 0.0f;
     this.height = 0.0f;
   }
@@ -57,8 +55,7 @@ public class FloatDimension extends Dimension2D implements Serializable
    *
    * @param fd the dimension to copy.
    */
-  public FloatDimension(final FloatDimension fd)
-  {
+  public FloatDimension( final FloatDimension fd ) {
     this.width = fd.width;
     this.height = fd.height;
   }
@@ -69,8 +66,7 @@ public class FloatDimension extends Dimension2D implements Serializable
    * @param width  the width.
    * @param height the height.
    */
-  public FloatDimension(final float width, final float height)
-  {
+  public FloatDimension( final float width, final float height ) {
     this.width = width;
     this.height = height;
   }
@@ -80,8 +76,7 @@ public class FloatDimension extends Dimension2D implements Serializable
    *
    * @return the width.
    */
-  public double getWidth()
-  {
+  public double getWidth() {
     return this.width;
   }
 
@@ -90,8 +85,7 @@ public class FloatDimension extends Dimension2D implements Serializable
    *
    * @return the height.
    */
-  public double getHeight()
-  {
+  public double getHeight() {
     return this.height;
   }
 
@@ -100,8 +94,7 @@ public class FloatDimension extends Dimension2D implements Serializable
    *
    * @param width the width.
    */
-  public void setWidth(final double width)
-  {
+  public void setWidth( final double width ) {
     this.width = (float) width;
   }
 
@@ -110,23 +103,20 @@ public class FloatDimension extends Dimension2D implements Serializable
    *
    * @param height the height.
    */
-  public void setHeight(final double height)
-  {
+  public void setHeight( final double height ) {
     this.height = (float) height;
   }
 
   /**
-   * Sets the size of this <code>Dimension</code> object to the specified width and height.  This method is included
-   * for completeness, to parallel the {@link java.awt.Component#getSize() getSize} method of {@link
-   * java.awt.Component}.
+   * Sets the size of this <code>Dimension</code> object to the specified width and height.  This method is included for
+   * completeness, to parallel the {@link java.awt.Component#getSize() getSize} method of {@link java.awt.Component}.
    *
    * @param width  the new width for the <code>Dimension</code> object
    * @param height the new height for the <code>Dimension</code> object
    */
-  public void setSize(final double width, final double height)
-  {
-    setHeight((float) height);
-    setWidth((float) width);
+  public void setSize( final double width, final double height ) {
+    setHeight( (float) height );
+    setWidth( (float) width );
   }
 
   /**
@@ -135,23 +125,21 @@ public class FloatDimension extends Dimension2D implements Serializable
    * @return a clone of this instance.
    * @see Cloneable
    */
-  public Object clone()
-  {
+  public Object clone() {
     return super.clone();
   }
 
   /**
    * Returns a string representation of the object. In general, the <code>toString</code> method returns a string that
-   * "textually represents" this object. The result should be a concise but informative representation that is easy
-   * for a person to read.
+   * "textually represents" this object. The result should be a concise but informative representation that is easy for
+   * a person to read.
    * <p/>
    *
    * @return a string representation of the object.
    */
-  public String toString()
-  {
+  public String toString() {
     return getClass().getName() + ":={width=" + getWidth() + ", height="
-        + getHeight() + '}';
+      + getHeight() + '}';
   }
 
   /**
@@ -160,27 +148,22 @@ public class FloatDimension extends Dimension2D implements Serializable
    * @param o the other object.
    * @return <code>true</code> or <code>false</code>.
    */
-  public boolean equals(final Object o)
-  {
-    if (this == o)
-    {
+  public boolean equals( final Object o ) {
+    if ( this == o ) {
       return true;
     }
-    if (!(o instanceof FloatDimension))
-    {
+    if ( !( o instanceof FloatDimension ) ) {
       return false;
     }
 
     final FloatDimension floatDimension = (FloatDimension) o;
 
     //noinspection FloatingPointEquality
-    if (this.height != floatDimension.height)
-    {
+    if ( this.height != floatDimension.height ) {
       return false;
     }
     //noinspection FloatingPointEquality
-    if (this.width != floatDimension.width)
-    {
+    if ( this.width != floatDimension.width ) {
       return false;
     }
 
@@ -192,11 +175,10 @@ public class FloatDimension extends Dimension2D implements Serializable
    *
    * @return A hash code.
    */
-  public int hashCode()
-  {
+  public int hashCode() {
     int result;
-    result = Float.floatToIntBits(this.width);
-    result = 29 * result + Float.floatToIntBits(this.height);
+    result = Float.floatToIntBits( this.width );
+    result = 29 * result + Float.floatToIntBits( this.height );
     return result;
   }
 }

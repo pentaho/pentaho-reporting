@@ -17,47 +17,39 @@
 
 package org.pentaho.reporting.libraries.designtime.swing;
 
-import java.awt.Component;
-import javax.swing.GroupLayout;
-import javax.swing.JPanel;
+import javax.swing.*;
+import java.awt.*;
 
-public class GroupLayoutUtil
-{
-  private GroupLayoutUtil()
-  {
+public class GroupLayoutUtil {
+  private GroupLayoutUtil() {
   }
 
-  public static JPanel makeSimpleForm (final int rows, final int cols, final Component... components)
-  {
+  public static JPanel makeSimpleForm( final int rows, final int cols, final Component... components ) {
     final JPanel panel = new JPanel();
-    final GroupLayout layout = new GroupLayout(panel);
-    panel.setLayout(layout);
+    final GroupLayout layout = new GroupLayout( panel );
+    panel.setLayout( layout );
 
     final GroupLayout.SequentialGroup horizontalGroup = layout.createSequentialGroup();
-    for (int c = 0; c < cols; c += 1)
-    {
-      final GroupLayout.ParallelGroup parallelGroup = layout.createParallelGroup(GroupLayout.Alignment.LEADING);
-      for (int r = 0; r < rows; r += 1)
-      {
+    for ( int c = 0; c < cols; c += 1 ) {
+      final GroupLayout.ParallelGroup parallelGroup = layout.createParallelGroup( GroupLayout.Alignment.LEADING );
+      for ( int r = 0; r < rows; r += 1 ) {
         final int index = r * cols + c;
-        parallelGroup.addComponent(components[index]);
+        parallelGroup.addComponent( components[ index ] );
       }
-      horizontalGroup.addGroup(parallelGroup);
+      horizontalGroup.addGroup( parallelGroup );
     }
-    layout.setHorizontalGroup(horizontalGroup);
+    layout.setHorizontalGroup( horizontalGroup );
 
     final GroupLayout.SequentialGroup verticalGroup = layout.createSequentialGroup();
-    for (int r = 0; r < rows; r += 1)
-    {
-      final GroupLayout.ParallelGroup parallelGroup = layout.createParallelGroup(GroupLayout.Alignment.LEADING);
-      for (int c = 0; c < cols; c += 1)
-      {
+    for ( int r = 0; r < rows; r += 1 ) {
+      final GroupLayout.ParallelGroup parallelGroup = layout.createParallelGroup( GroupLayout.Alignment.LEADING );
+      for ( int c = 0; c < cols; c += 1 ) {
         final int index = r * cols + c;
-        parallelGroup.addComponent(components[index]);
+        parallelGroup.addComponent( components[ index ] );
       }
-      verticalGroup.addGroup(parallelGroup);
+      verticalGroup.addGroup( parallelGroup );
     }
-    layout.setVerticalGroup(verticalGroup);
+    layout.setVerticalGroup( verticalGroup );
     return panel;
   }
 }

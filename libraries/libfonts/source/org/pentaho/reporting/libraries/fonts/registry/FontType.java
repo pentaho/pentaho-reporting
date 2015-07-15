@@ -22,28 +22,26 @@ package org.pentaho.reporting.libraries.fonts.registry;
  *
  * @author Thomas Morgner
  */
-public class FontType
-{
-  public static final FontType PFM = new FontType("PFM");
-  public static final FontType AFM = new FontType("AFM");
-  public static final FontType OTHER = new FontType("OTHER");
-  public static final FontType OPENTYPE = new FontType("OPENTYPE");
-  public static final FontType AWT = new FontType("AWT");
-  public static final FontType MONOSPACE = new FontType("MONOSPACE");
+public class FontType {
+  public static final FontType PFM = new FontType( "PFM" );
+  public static final FontType AFM = new FontType( "AFM" );
+  public static final FontType OTHER = new FontType( "OTHER" );
+  public static final FontType OPENTYPE = new FontType( "OPENTYPE" );
+  public static final FontType AWT = new FontType( "AWT" );
+  public static final FontType MONOSPACE = new FontType( "MONOSPACE" );
 
   private final String myName; // for debug only
 
   /**
    * We intentionally allow others to derive other font types.
+   *
    * @param name the name.
    */
-  protected FontType(final String name)
-  {
+  protected FontType( final String name ) {
     myName = name;
   }
 
-  public String toString()
-  {
+  public String toString() {
     return myName;
   }
 }

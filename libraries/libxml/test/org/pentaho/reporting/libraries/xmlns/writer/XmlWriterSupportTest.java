@@ -17,24 +17,20 @@
 
 package org.pentaho.reporting.libraries.xmlns.writer;
 
-import java.io.StringWriter;
-import java.io.IOException;
-
 import junit.framework.TestCase;
 
-public class XmlWriterSupportTest extends TestCase
-{
-  public XmlWriterSupportTest()
-  {
+import java.io.IOException;
+import java.io.StringWriter;
+
+public class XmlWriterSupportTest extends TestCase {
+  public XmlWriterSupportTest() {
   }
 
-  public XmlWriterSupportTest(final String s)
-  {
-    super(s);
+  public XmlWriterSupportTest( final String s ) {
+    super( s );
   }
 
-  public void testEncoding() throws IOException
-  {
+  public void testEncoding() throws IOException {
     final StringWriter writer1 = new StringWriter();
     final StringWriter writer2 = new StringWriter();
     final StringWriter writer3 = new StringWriter();
@@ -42,21 +38,21 @@ public class XmlWriterSupportTest extends TestCase
     final StringWriter writer5 = new StringWriter();
     final StringWriter writer6 = new StringWriter();
 
-    final XmlWriterSupport support = new XmlWriterSupport(new DefaultTagDescription(), "");
-    support.writeTextNormalized(writer1, "Some text to make me happy", false);
-    support.writeTextNormalized(writer2, "Some <text> &to; make me happy", false);
-    support.writeTextNormalized(writer3, "Some <<text to >>make me happy", false);
-    support.writeTextNormalized(writer4, "Some \n>text to <\rmake me happy", false);
-    support.writeTextNormalized(writer5, "Some \n>text to <\rmake me happy", true);
-    support.writeTextNormalized(writer6, "Some \\d>text to \\windows\\path <\rmake me happy", true);
+    final XmlWriterSupport support = new XmlWriterSupport( new DefaultTagDescription(), "" );
+    support.writeTextNormalized( writer1, "Some text to make me happy", false );
+    support.writeTextNormalized( writer2, "Some <text> &to; make me happy", false );
+    support.writeTextNormalized( writer3, "Some <<text to >>make me happy", false );
+    support.writeTextNormalized( writer4, "Some \n>text to <\rmake me happy", false );
+    support.writeTextNormalized( writer5, "Some \n>text to <\rmake me happy", true );
+    support.writeTextNormalized( writer6, "Some \\d>text to \\windows\\path <\rmake me happy", true );
 
-    assertEquals(writer1.toString(), "Some text to make me happy");
-    assertEquals(writer2.toString(), "Some &lt;text&gt; &amp;to; make me happy");
-    assertEquals(writer3.toString(), "Some &lt;&lt;text to &gt;&gt;make me happy");
-    assertEquals(writer4.toString(), "Some \n" +
-        "&gt;text to &lt;\r" +
-        "make me happy");
-    assertEquals(writer5.toString(), "Some &#x000a;&gt;text to &lt;&#x000d;make me happy");
-    assertEquals(writer6.toString(), "Some \\d&gt;text to \\windows\\path &lt;&#x000d;make me happy");
+    assertEquals( writer1.toString(), "Some text to make me happy" );
+    assertEquals( writer2.toString(), "Some &lt;text&gt; &amp;to; make me happy" );
+    assertEquals( writer3.toString(), "Some &lt;&lt;text to &gt;&gt;make me happy" );
+    assertEquals( writer4.toString(), "Some \n" +
+      "&gt;text to &lt;\r" +
+      "make me happy" );
+    assertEquals( writer5.toString(), "Some &#x000a;&gt;text to &lt;&#x000d;make me happy" );
+    assertEquals( writer6.toString(), "Some \\d&gt;text to \\windows\\path &lt;&#x000d;make me happy" );
   }
 }

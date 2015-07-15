@@ -20,33 +20,27 @@ package org.pentaho.reporting.libraries.formula.util;
 import org.junit.Assert;
 import org.junit.Test;
 
-public class FormulaUtilTest
-{
+public class FormulaUtilTest {
   @Test
-  public void testFormulaContextExtraction()
-  {
+  public void testFormulaContextExtraction() {
     Object[][] test = {
-        new Object[]{ "test:IF()", true, "test", "IF()"},
-        new Object[]{ "=IF()", true, "report", "IF()"},
-        new Object[]{ "report-IF()", false, null, null},
-        new Object[]{ "=IF(:)", true, "report", "IF(:)"},
-        new Object[]{ "test=:IF()", false, null, null},
-        new Object[]{ "test asd:IF()", false, null, null},
+      new Object[] { "test:IF()", true, "test", "IF()" },
+      new Object[] { "=IF()", true, "report", "IF()" },
+      new Object[] { "report-IF()", false, null, null },
+      new Object[] { "=IF(:)", true, "report", "IF(:)" },
+      new Object[] { "test=:IF()", false, null, null },
+      new Object[] { "test asd:IF()", false, null, null },
     };
 
-    for (Object[] objects : test)
-    {
-      String v = (String) objects[0];
-      String[] strings = FormulaUtil.extractFormulaContext(v);
-      if (strings[0] == null)
-      {
-        Assert.assertFalse("Failure in " + v, (Boolean) objects[1]);
-      }
-      else
-      {
-        Assert.assertTrue("Failure in " + v, (Boolean) objects[1]);
-        Assert.assertEquals("Failure in " + v, strings[0], objects[2]);
-        Assert.assertEquals("Failure in "+ v, strings[1], objects[3]);
+    for ( Object[] objects : test ) {
+      String v = (String) objects[ 0 ];
+      String[] strings = FormulaUtil.extractFormulaContext( v );
+      if ( strings[ 0 ] == null ) {
+        Assert.assertFalse( "Failure in " + v, (Boolean) objects[ 1 ] );
+      } else {
+        Assert.assertTrue( "Failure in " + v, (Boolean) objects[ 1 ] );
+        Assert.assertEquals( "Failure in " + v, strings[ 0 ], objects[ 2 ] );
+        Assert.assertEquals( "Failure in " + v, strings[ 1 ], objects[ 3 ] );
       }
     }
   }

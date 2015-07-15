@@ -19,54 +19,44 @@ package org.pentaho.reporting.libraries.formula.function.database;
 
 import org.pentaho.reporting.libraries.formula.function.AbstractFunctionDescription;
 import org.pentaho.reporting.libraries.formula.function.FunctionCategory;
-import org.pentaho.reporting.libraries.formula.function.logical.LogicalFunctionCategory;
 import org.pentaho.reporting.libraries.formula.typing.Type;
 import org.pentaho.reporting.libraries.formula.typing.coretypes.AnyType;
 import org.pentaho.reporting.libraries.formula.typing.coretypes.LogicalType;
 
-public class EqualsFunctionDescription extends AbstractFunctionDescription
-{
+public class EqualsFunctionDescription extends AbstractFunctionDescription {
   private static final long serialVersionUID = -796481383341381910L;
 
-  public EqualsFunctionDescription()
-  {
-    super("EQUALS", "org.pentaho.reporting.libraries.formula.function.database.Equals-Function");
+  public EqualsFunctionDescription() {
+    super( "EQUALS", "org.pentaho.reporting.libraries.formula.function.database.Equals-Function" );
   }
 
-  public int getParameterCount()
-  {
+  public int getParameterCount() {
     return 1;
   }
 
-  public boolean isInfiniteParameterCount()
-  {
+  public boolean isInfiniteParameterCount() {
     return true;
   }
 
-  public Type getParameterType(final int position)
-  {
+  public Type getParameterType( final int position ) {
     return AnyType.TYPE;
   }
 
-  public Type getValueType()
-  {
+  public Type getValueType() {
     return LogicalType.TYPE;
   }
 
   /**
-   * Defines, whether the parameter at the given position is mandatory. A
-   * mandatory parameter must be filled in, while optional parameters need not
-   * to be filled in.
+   * Defines, whether the parameter at the given position is mandatory. A mandatory parameter must be filled in, while
+   * optional parameters need not to be filled in.
    *
    * @return
    */
-  public boolean isParameterMandatory(final int position)
-  {
+  public boolean isParameterMandatory( final int position ) {
     return true;
   }
 
-  public FunctionCategory getCategory()
-  {
+  public FunctionCategory getCategory() {
     return DatabaseFunctionCategory.CATEGORY;
   }
 }

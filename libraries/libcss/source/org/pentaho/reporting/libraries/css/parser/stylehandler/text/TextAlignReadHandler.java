@@ -29,26 +29,22 @@ import org.w3c.css.sac.LexicalUnit;
  *
  * @author Thomas Morgner
  */
-public class TextAlignReadHandler extends OneOfConstantsReadHandler
-{
-  public TextAlignReadHandler()
-  {
-    super(true);
-    addValue(TextAlign.CENTER);
-    addValue(TextAlign.END);
-    addValue(TextAlign.JUSTIFY);
-    addValue(TextAlign.LEFT);
-    addValue(TextAlign.RIGHT);
-    addValue(TextAlign.START);
+public class TextAlignReadHandler extends OneOfConstantsReadHandler {
+  public TextAlignReadHandler() {
+    super( true );
+    addValue( TextAlign.CENTER );
+    addValue( TextAlign.END );
+    addValue( TextAlign.JUSTIFY );
+    addValue( TextAlign.LEFT );
+    addValue( TextAlign.RIGHT );
+    addValue( TextAlign.START );
   }
 
-  protected CSSValue lookupValue(final LexicalUnit value)
-  {
-    if (value.getLexicalUnitType() == LexicalUnit.SAC_STRING_VALUE)
-    {
-      return new CSSStringValue(CSSStringType.STRING, value.getStringValue());
+  protected CSSValue lookupValue( final LexicalUnit value ) {
+    if ( value.getLexicalUnitType() == LexicalUnit.SAC_STRING_VALUE ) {
+      return new CSSStringValue( CSSStringType.STRING, value.getStringValue() );
     }
 
-    return super.lookupValue(value);
+    return super.lookupValue( value );
   }
 }

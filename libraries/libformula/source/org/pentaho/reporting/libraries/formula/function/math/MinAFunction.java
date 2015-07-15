@@ -22,19 +22,15 @@ package org.pentaho.reporting.libraries.formula.function.math;
  *
  * @author Cedric Pronzato
  */
-public class MinAFunction extends MinFunction
-{
-  public MinAFunction()
-  {
+public class MinAFunction extends MinFunction {
+  public MinAFunction() {
   }
 
-  protected boolean isStrictSequenceNeeded()
-  {
+  protected boolean isStrictSequenceNeeded() {
     return false;
   }
 
-  public String getCanonicalName()
-  {
+  public String getCanonicalName() {
     return "MINA";
   }
 

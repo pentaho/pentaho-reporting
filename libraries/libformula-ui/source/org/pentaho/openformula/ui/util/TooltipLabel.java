@@ -17,26 +17,21 @@
 
 package org.pentaho.openformula.ui.util;
 
-import javax.swing.ImageIcon;
-import javax.swing.JLabel;
+import javax.swing.*;
 
-public class TooltipLabel extends JLabel
-{
+public class TooltipLabel extends JLabel {
   /**
-   * Creates a <code>JLabel</code> instance with
-   * no image and with an empty string for the title.
-   * The label is centered vertically
-   * in its display area.
-   * The label's contents, once set, will be displayed on the leading edge
-   * of the label's display area.
+   * Creates a <code>JLabel</code> instance with no image and with an empty string for the title. The label is centered
+   * vertically in its display area. The label's contents, once set, will be displayed on the leading edge of the
+   * label's display area.
    *
    * @param description
    */
-  public TooltipLabel(final String description)
-  {
-    final ImageIcon imageIcon = new ImageIcon(getClass().getResource("/org/pentaho/openformula/ui/images/InfoIcon.png"));
-    setIcon(imageIcon);
-    setToolTipText(description);
+  public TooltipLabel( final String description ) {
+    final ImageIcon imageIcon =
+      new ImageIcon( getClass().getResource( "/org/pentaho/openformula/ui/images/InfoIcon.png" ) );
+    setIcon( imageIcon );
+    setToolTipText( description );
     // ensure that the actions are registered ...
   }
 }

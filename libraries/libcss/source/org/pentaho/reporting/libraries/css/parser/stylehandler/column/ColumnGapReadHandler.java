@@ -31,26 +31,20 @@ import org.w3c.css.sac.LexicalUnit;
  *
  * @author Thomas Morgner
  */
-public class ColumnGapReadHandler implements CSSValueReadHandler
-{
-  public ColumnGapReadHandler()
-  {
+public class ColumnGapReadHandler implements CSSValueReadHandler {
+  public ColumnGapReadHandler() {
   }
 
-  public CSSValue createValue(StyleKey name, LexicalUnit value)
-  {
-    if (value.getLexicalUnitType() == LexicalUnit.SAC_IDENT)
-    {
-      if (value.getStringValue().equalsIgnoreCase("auto"))
-      {
+  public CSSValue createValue( StyleKey name, LexicalUnit value ) {
+    if ( value.getLexicalUnitType() == LexicalUnit.SAC_IDENT ) {
+      if ( value.getStringValue().equalsIgnoreCase( "auto" ) ) {
         return CSSAutoValue.getInstance();
       }
       return null;
     }
-    if (value.getLexicalUnitType() == LexicalUnit.SAC_PERCENTAGE)
-    {
-      return CSSNumericValue.createValue(CSSNumericType.PERCENTAGE, value.getFloatValue());
+    if ( value.getLexicalUnitType() == LexicalUnit.SAC_PERCENTAGE ) {
+      return CSSNumericValue.createValue( CSSNumericType.PERCENTAGE, value.getFloatValue() );
     }
-    return CSSValueFactory.createLengthValue(value);
+    return CSSValueFactory.createLengthValue( value );
   }
 }

@@ -18,22 +18,19 @@
 package org.pentaho.reporting.libraries.base.boot;
 
 /**
- * The module initializer is used to separate the initialization process from
- * the module definition. An invalid classpath setup or an missing base module
- * may throw an ClassCastException if the module class references this missing
- * resource. Separating them is the best way to make sure that the classloader
- * does not interrupt the module loading process.
+ * The module initializer is used to separate the initialization process from the module definition. An invalid
+ * classpath setup or an missing base module may throw an ClassCastException if the module class references this missing
+ * resource. Separating them is the best way to make sure that the classloader does not interrupt the module loading
+ * process.
  *
  * @author Thomas Morgner
  */
-public interface ModuleInitializer
-{
+public interface ModuleInitializer {
 
   /**
    * Performs the initalization of the module.
    *
-   * @throws ModuleInitializeException if an error occurs which prevents the module
-   *                                   from being usable.
+   * @throws ModuleInitializeException if an error occurs which prevents the module from being usable.
    */
   public void performInit() throws ModuleInitializeException;
 }

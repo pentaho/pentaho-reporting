@@ -25,42 +25,34 @@ import org.pentaho.reporting.libraries.formula.typing.coretypes.NumberType;
 
 /**
  * Describes HourFunction function.
- * 
- * @see HourFunction
- * 
+ *
  * @author Cedric Pronzato
+ * @see HourFunction
  */
-public class HourFunctionDescription extends AbstractFunctionDescription
-{
+public class HourFunctionDescription extends AbstractFunctionDescription {
   private static final long serialVersionUID = 7083009440959512989L;
 
-  public HourFunctionDescription()
-  {
-    super("HOUR", "org.pentaho.reporting.libraries.formula.function.datetime.Hour-Function");
+  public HourFunctionDescription() {
+    super( "HOUR", "org.pentaho.reporting.libraries.formula.function.datetime.Hour-Function" );
   }
 
-  public Type getValueType()
-  {
+  public Type getValueType() {
     return NumberType.GENERIC_NUMBER;
   }
 
-  public int getParameterCount()
-  {
+  public int getParameterCount() {
     return 1;
   }
 
-  public Type getParameterType(final int position)
-  {
+  public Type getParameterType( final int position ) {
     return DateTimeType.TIME_TYPE;
   }
 
-  public boolean isParameterMandatory(final int position)
-  {
+  public boolean isParameterMandatory( final int position ) {
     return true;
   }
 
-  public FunctionCategory getCategory()
-  {
+  public FunctionCategory getCategory() {
     return DateTimeFunctionCategory.CATEGORY;
   }
 }

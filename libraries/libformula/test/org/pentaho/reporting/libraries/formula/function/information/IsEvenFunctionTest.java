@@ -22,29 +22,26 @@ import org.pentaho.reporting.libraries.formula.FormulaTestBase;
 /**
  * @author Cedric Pronzato
  */
-public class IsEvenFunctionTest extends FormulaTestBase
-{
-  public void testDefault() throws Exception
-  {
+public class IsEvenFunctionTest extends FormulaTestBase {
+  public void testDefault() throws Exception {
     runDefaultTest();
   }
 
-  public Object[][] createDataTest()
-  {
+  public Object[][] createDataTest() {
     return new Object[][]
-        {
-            {"ISEVEN(2)", Boolean.TRUE},
-            {"ISEVEN(6)", Boolean.TRUE},
-            {"ISEVEN(2.1)", Boolean.TRUE},
-            {"ISEVEN(2.5)", Boolean.TRUE},
-            {"ISEVEN(2.9)", Boolean.TRUE},
-            {"ISEVEN(3)", Boolean.FALSE},
-            {"ISEVEN(3.9)", Boolean.FALSE},
-            {"ISEVEN(-2)", Boolean.TRUE},
-            {"ISEVEN(-2.1)", Boolean.TRUE},
-            {"ISEVEN(-2.5)", Boolean.TRUE},
-            {"ISEVEN(-2.9)", Boolean.TRUE},
-        };
+      {
+        { "ISEVEN(2)", Boolean.TRUE },
+        { "ISEVEN(6)", Boolean.TRUE },
+        { "ISEVEN(2.1)", Boolean.TRUE },
+        { "ISEVEN(2.5)", Boolean.TRUE },
+        { "ISEVEN(2.9)", Boolean.TRUE },
+        { "ISEVEN(3)", Boolean.FALSE },
+        { "ISEVEN(3.9)", Boolean.FALSE },
+        { "ISEVEN(-2)", Boolean.TRUE },
+        { "ISEVEN(-2.1)", Boolean.TRUE },
+        { "ISEVEN(-2.5)", Boolean.TRUE },
+        { "ISEVEN(-2.9)", Boolean.TRUE },
+      };
   }
 
 }

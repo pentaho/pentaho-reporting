@@ -25,75 +25,62 @@ import java.io.InputStream;
  *
  * @author Thomas Morgner
  */
-public class WrappedInputStream extends InputStream
-{
+public class WrappedInputStream extends InputStream {
   private boolean closed;
   private InputStream parent;
 
-  public WrappedInputStream(final InputStream parent)
-  {
-    if (parent == null)
-    {
+  public WrappedInputStream( final InputStream parent ) {
+    if ( parent == null ) {
       throw new NullPointerException();
     }
     this.parent = parent;
   }
 
   public int read()
-      throws IOException
-  {
+    throws IOException {
     return parent.read();
   }
 
-  public int read(final byte[] b)
-      throws IOException
-  {
-    return parent.read(b);
+  public int read( final byte[] b )
+    throws IOException {
+    return parent.read( b );
   }
 
-  public int read(final byte[] b, final int off, final int len)
-      throws IOException
-  {
-    return parent.read(b, off, len);
+  public int read( final byte[] b, final int off, final int len )
+    throws IOException {
+    return parent.read( b, off, len );
   }
 
-  public long skip(final long n)
-      throws IOException
-  {
-    return parent.skip(n);
+  public long skip( final long n )
+    throws IOException {
+    return parent.skip( n );
   }
 
   public int available()
-      throws IOException
-  {
+    throws IOException {
     return parent.available();
   }
 
   public void close()
-      throws IOException
-  {
+    throws IOException {
     closed = true;
     parent.close();
   }
 
-  public boolean isClosed()
-  {
+  public boolean isClosed() {
     return closed;
   }
 
-  public void mark(final int readlimit)
-  {
-    parent.mark(readlimit);
+  public void mark( final int readlimit ) {
+    parent.mark( readlimit );
   }
 
   public void reset()
-      throws IOException
-  {
+    throws IOException {
     parent.reset();
   }
 
-  public boolean markSupported()
-  {
+  public boolean markSupported() {
     return parent.markSupported();
   }
 }

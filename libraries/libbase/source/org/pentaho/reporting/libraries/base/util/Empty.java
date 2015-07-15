@@ -23,8 +23,8 @@ import java.util.Map;
 
 
 /**
- * Class which holds a static reference to a set of empty objects. This is created for performance
- * reasons. Using this class will prevent creating duplicated "empty" object.
+ * Class which holds a static reference to a set of empty objects. This is created for performance reasons. Using this
+ * class will prevent creating duplicated "empty" object.
  *
  * @author David Kincade
  */
@@ -44,20 +44,21 @@ public final class Empty {
   /**
    * An empty array of Strings.
    */
-  public static final String[] STRING_ARRAY = new String[0];
+  public static final String[] STRING_ARRAY = new String[ 0 ];
 
   /**
    * An empty Map. (Collections.EMPTY_MAP is not available until JDK 1.4)
+   *
    * @deprecated this is a redeclaration of the Collections.EMPTY_MAP field and should be killed.
    */
-  @SuppressWarnings("PublicStaticCollectionField")
+  @SuppressWarnings( "PublicStaticCollectionField" )
   public static final Map MAP = Collections.EMPTY_MAP;
 
   /**
    * An empty List.
    *
-   * @deprecated this is a redeclaration of the Collections.EMPTY_LIST field and should be killed.
    * @noinspection PublicStaticCollectionField
+   * @deprecated this is a redeclaration of the Collections.EMPTY_LIST field and should be killed.
    */
   public static final List LIST = Collections.EMPTY_LIST;
 }

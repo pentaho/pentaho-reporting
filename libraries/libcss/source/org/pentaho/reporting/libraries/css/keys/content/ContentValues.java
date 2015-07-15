@@ -24,25 +24,23 @@ import org.pentaho.reporting.libraries.css.values.CSSConstant;
  *
  * @author Thomas Morgner
  */
-public class ContentValues
-{
-  public static final CSSConstant OPEN_QUOTE = new CSSConstant("open-quote");
-  public static final CSSConstant CLOSE_QUOTE = new CSSConstant("close-quote");
-  public static final CSSConstant NO_OPEN_QUOTE = new CSSConstant("no-open-quote");
-  public static final CSSConstant NO_CLOSE_QUOTE = new CSSConstant("no-close-quote");
+public class ContentValues {
+  public static final CSSConstant OPEN_QUOTE = new CSSConstant( "open-quote" );
+  public static final CSSConstant CLOSE_QUOTE = new CSSConstant( "close-quote" );
+  public static final CSSConstant NO_OPEN_QUOTE = new CSSConstant( "no-open-quote" );
+  public static final CSSConstant NO_CLOSE_QUOTE = new CSSConstant( "no-close-quote" );
 
-  public static final CSSConstant CONTENTS = new CSSConstant("contents");
-  public static final CSSConstant NORMAL = new CSSConstant("normal");
-  public static final CSSConstant NONE = new CSSConstant("none");
-  public static final CSSConstant INHIBIT = new CSSConstant("inhibit");
+  public static final CSSConstant CONTENTS = new CSSConstant( "contents" );
+  public static final CSSConstant NORMAL = new CSSConstant( "normal" );
+  public static final CSSConstant NONE = new CSSConstant( "none" );
+  public static final CSSConstant INHIBIT = new CSSConstant( "inhibit" );
 
-  public static final CSSConstant FOOTNOTE = new CSSConstant("footnote");
-  public static final CSSConstant ENDNOTE = new CSSConstant("endnote");
-  public static final CSSConstant SECTIONNOTE = new CSSConstant("sectionote");
-  public static final CSSConstant LISTITEM = new CSSConstant("list-item");
-  public static final CSSConstant DOCUMENT_URL = new CSSConstant("document-url");
+  public static final CSSConstant FOOTNOTE = new CSSConstant( "footnote" );
+  public static final CSSConstant ENDNOTE = new CSSConstant( "endnote" );
+  public static final CSSConstant SECTIONNOTE = new CSSConstant( "sectionote" );
+  public static final CSSConstant LISTITEM = new CSSConstant( "list-item" );
+  public static final CSSConstant DOCUMENT_URL = new CSSConstant( "document-url" );
 
-  private ContentValues()
-  {
+  private ContentValues() {
   }
 }

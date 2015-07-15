@@ -20,8 +20,7 @@ package org.pentaho.reporting.libraries.base.util;
 import java.io.IOException;
 import java.io.OutputStream;
 
-public class MemoryByteArrayOutputStream extends OutputStream
-{
+public class MemoryByteArrayOutputStream extends OutputStream {
   private int maximumBufferIncrement;
   private int cursor;
   private byte[] buffer;
@@ -30,19 +29,17 @@ public class MemoryByteArrayOutputStream extends OutputStream
   /**
    * Create a new character-stream writer whose critical sections will synchronize on the writer itself.
    */
-  public MemoryByteArrayOutputStream()
-  {
-    this(4096, 65536);
+  public MemoryByteArrayOutputStream() {
+    this( 4096, 65536 );
   }
 
   /**
    * Create a new character-stream writer whose critical sections will synchronize on the writer itself.
    */
-  public MemoryByteArrayOutputStream(final int bufferSize, final int maximumBufferIncrement)
-  {
+  public MemoryByteArrayOutputStream( final int bufferSize, final int maximumBufferIncrement ) {
     this.maximumBufferIncrement = maximumBufferIncrement;
-    this.buffer = new byte[bufferSize];
-    this.singleIntArray = new byte[1];
+    this.buffer = new byte[ bufferSize ];
+    this.singleIntArray = new byte[ 1 ];
   }
 
 
@@ -54,28 +51,23 @@ public class MemoryByteArrayOutputStream extends OutputStream
    * @param len  Number of characters to write
    * @throws java.io.IOException If an I/O error occurs
    */
-  public void write(final byte[] cbuf, final int off, final int len) throws IOException
-  {
-    if (len < 0)
-    {
+  public void write( final byte[] cbuf, final int off, final int len ) throws IOException {
+    if ( len < 0 ) {
       throw new IllegalArgumentException();
     }
-    if (off < 0)
-    {
+    if ( off < 0 ) {
       throw new IndexOutOfBoundsException();
     }
-    if (cbuf == null)
-    {
+    if ( cbuf == null ) {
       throw new NullPointerException();
     }
-    if ((len + off) > cbuf.length)
-    {
+    if ( ( len + off ) > cbuf.length ) {
       throw new IndexOutOfBoundsException();
     }
 
-    ensureSize(cursor + len);
+    ensureSize( cursor + len );
 
-    System.arraycopy(cbuf, off, this.buffer, cursor, len);
+    System.arraycopy( cbuf, off, this.buffer, cursor, len );
     cursor += len;
   }
 
@@ -88,9 +80,8 @@ public class MemoryByteArrayOutputStream extends OutputStream
    * @throws java.io.IOException if an I/O error occurs.
    * @see java.io.OutputStream#write(byte[], int, int)
    */
-  public void write(final byte[] b) throws IOException
-  {
-    write(b, 0, b.length);
+  public void write( final byte[] b ) throws IOException {
+    write( b, 0, b.length );
   }
 
   /**
@@ -104,24 +95,21 @@ public class MemoryByteArrayOutputStream extends OutputStream
    * @throws java.io.IOException if an I/O error occurs. In particular, an <code>IOException</code> may be thrown if the
    *                             output stream has been closed.
    */
-  public void write(final int b) throws IOException
-  {
-    this.singleIntArray[0] = (byte) (0xFF & b);
-    write(singleIntArray, 0, 1);
+  public void write( final int b ) throws IOException {
+    this.singleIntArray[ 0 ] = (byte) ( 0xFF & b );
+    write( singleIntArray, 0, 1 );
   }
 
-  private void ensureSize(final int size)
-  {
-    if (this.buffer.length >= size)
-    {
+  private void ensureSize( final int size ) {
+    if ( this.buffer.length >= size ) {
       return;
     }
 
-    final int computedSize = (int) Math.min((this.buffer.length + 1) * 1.5,
-        this.buffer.length + maximumBufferIncrement);
-    final int newSize = Math.max(size, computedSize);
-    final byte[] newBuffer = new byte[newSize];
-    System.arraycopy(this.buffer, 0, newBuffer, 0, cursor);
+    final int computedSize = (int) Math.min( ( this.buffer.length + 1 ) * 1.5,
+      this.buffer.length + maximumBufferIncrement );
+    final int newSize = Math.max( size, computedSize );
+    final byte[] newBuffer = new byte[ newSize ];
+    System.arraycopy( this.buffer, 0, newBuffer, 0, cursor );
     this.buffer = newBuffer;
   }
 
@@ -137,8 +125,7 @@ public class MemoryByteArrayOutputStream extends OutputStream
    *
    * @throws java.io.IOException If an I/O error occurs
    */
-  public void flush() throws IOException
-  {
+  public void flush() throws IOException {
   }
 
   /**
@@ -147,24 +134,20 @@ public class MemoryByteArrayOutputStream extends OutputStream
    *
    * @throws java.io.IOException If an I/O error occurs
    */
-  public void close() throws IOException
-  {
+  public void close() throws IOException {
   }
 
-  public byte[] toByteArray()
-  {
-    final byte[] retval = new byte[cursor];
-    System.arraycopy(buffer, 0, retval, 0, cursor);
+  public byte[] toByteArray() {
+    final byte[] retval = new byte[ cursor ];
+    System.arraycopy( buffer, 0, retval, 0, cursor );
     return retval;
   }
 
-  public int getLength()
-  {
+  public int getLength() {
     return cursor;
   }
 
-  public byte[] getRaw()
-  {
+  public byte[] getRaw() {
     return buffer;
   }
 }

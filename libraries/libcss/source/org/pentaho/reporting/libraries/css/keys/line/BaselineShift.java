@@ -24,16 +24,14 @@ import org.pentaho.reporting.libraries.css.values.CSSConstant;
  *
  * @author Thomas Morgner
  */
-public class BaselineShift
-{
+public class BaselineShift {
   public static final CSSConstant BASELINE =
-      new CSSConstant("baseline");
+    new CSSConstant( "baseline" );
   public static final CSSConstant SUB =
-      new CSSConstant("sub");
+    new CSSConstant( "sub" );
   public static final CSSConstant SUPER =
-      new CSSConstant("super");
+    new CSSConstant( "super" );
 
-  private BaselineShift()
-  {
+  private BaselineShift() {
   }
 }

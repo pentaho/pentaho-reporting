@@ -25,12 +25,10 @@ import org.pentaho.reporting.libraries.css.parser.stylehandler.OneOfConstantsRea
  *
  * @author Thomas Morgner
  */
-public class GlyphOrientationVerticalReadHandler extends OneOfConstantsReadHandler
-{
-  public GlyphOrientationVerticalReadHandler()
-  {
-    super(true);
-    addValue(GlyphOrientationVertical.INLINE);
-    addValue(GlyphOrientationVertical.UPRIGHT);
+public class GlyphOrientationVerticalReadHandler extends OneOfConstantsReadHandler {
+  public GlyphOrientationVerticalReadHandler() {
+    super( true );
+    addValue( GlyphOrientationVertical.INLINE );
+    addValue( GlyphOrientationVertical.UPRIGHT );
   }
 }

@@ -23,46 +23,37 @@ import org.pentaho.reporting.libraries.formula.typing.Type;
 import org.pentaho.reporting.libraries.formula.typing.coretypes.AnyType;
 import org.pentaho.reporting.libraries.formula.typing.coretypes.LogicalType;
 
-public class ArrayContainsFunctionDescription extends AbstractFunctionDescription
-{
+public class ArrayContainsFunctionDescription extends AbstractFunctionDescription {
   private static final long serialVersionUID = 6842849993225519941L;
 
-  public ArrayContainsFunctionDescription()
-  {
-    super("ARRAYCONTAINS", "org.pentaho.reporting.libraries.formula.function.userdefined.ArrayContains-Function");
+  public ArrayContainsFunctionDescription() {
+    super( "ARRAYCONTAINS", "org.pentaho.reporting.libraries.formula.function.userdefined.ArrayContains-Function" );
   }
 
-  public FunctionCategory getCategory()
-  {
+  public FunctionCategory getCategory() {
     return UserDefinedFunctionCategory.CATEGORY;
   }
 
-  public int getParameterCount()
-  {
+  public int getParameterCount() {
     return 2;
   }
 
-  public Type getParameterType(final int position)
-  {
-    if (position == 0)
-    {
+  public Type getParameterType( final int position ) {
+    if ( position == 0 ) {
       return AnyType.ANY_SEQUENCE;
     }
     return AnyType.TYPE;
   }
 
-  public boolean isInfiniteParameterCount()
-  {
+  public boolean isInfiniteParameterCount() {
     return true;
   }
 
-  public Type getValueType()
-  {
+  public Type getValueType() {
     return LogicalType.TYPE;
   }
 
-  public boolean isParameterMandatory(final int position)
-  {
+  public boolean isParameterMandatory( final int position ) {
     return position == 0;
   }
 }

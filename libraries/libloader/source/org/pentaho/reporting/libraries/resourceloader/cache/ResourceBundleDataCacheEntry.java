@@ -17,17 +17,17 @@
 
 package org.pentaho.reporting.libraries.resourceloader.cache;
 
-import java.io.Serializable;
-
 import org.pentaho.reporting.libraries.resourceloader.ResourceBundleData;
+
+import java.io.Serializable;
 
 /**
  * Creation-Date: 06.04.2006, 09:44:05
  *
  * @author Thomas Morgner
  */
-public interface ResourceBundleDataCacheEntry extends Serializable
-{
+public interface ResourceBundleDataCacheEntry extends Serializable {
   public ResourceBundleData getData();
+
   public long getStoredVersion();
 }

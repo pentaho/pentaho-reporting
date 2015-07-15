@@ -24,27 +24,22 @@ import java.io.Serializable;
  *
  * @author Thomas Morgner
  */
-public class ByteBuffer implements Serializable
-{
+public class ByteBuffer implements Serializable {
   private byte[] data;
   private int offset;
   private int cursor;
 
-  public ByteBuffer(final int length)
-  {
-    if (length < 0)
-    {
+  public ByteBuffer( final int length ) {
+    if ( length < 0 ) {
       throw new IllegalArgumentException();
     }
-    this.data = new byte[length];
+    this.data = new byte[ length ];
     this.offset = 0;
     this.cursor = 0;
   }
 
-  public ByteBuffer(final byte[] data)
-  {
-    if (data == null)
-    {
+  public ByteBuffer( final byte[] data ) {
+    if ( data == null ) {
       throw new NullPointerException();
     }
     this.data = data;
@@ -52,22 +47,17 @@ public class ByteBuffer implements Serializable
     this.cursor = data.length;
   }
 
-  public ByteBuffer(final byte[] data, final int offset, final int length)
-  {
-    if (length < 0)
-    {
+  public ByteBuffer( final byte[] data, final int offset, final int length ) {
+    if ( length < 0 ) {
       throw new IndexOutOfBoundsException();
     }
-    if (offset < 0)
-    {
+    if ( offset < 0 ) {
       throw new IndexOutOfBoundsException();
     }
-    if (data == null)
-    {
+    if ( data == null ) {
       throw new NullPointerException();
     }
-    if ((length + offset) > data.length)
-    {
+    if ( ( length + offset ) > data.length ) {
       throw new IndexOutOfBoundsException();
     }
     this.data = data;
@@ -75,67 +65,53 @@ public class ByteBuffer implements Serializable
     this.cursor = offset + length;
   }
 
-  public byte[] getData()
-  {
+  public byte[] getData() {
     return data;
   }
 
-  public void setData(final byte[] data, final int length, final int offset)
-  {
-    if (data == null)
-    {
+  public void setData( final byte[] data, final int length, final int offset ) {
+    if ( data == null ) {
       throw new IllegalArgumentException();
     }
-    if (length < 0)
-    {
-      throw new IndexOutOfBoundsException("Length < 0");
+    if ( length < 0 ) {
+      throw new IndexOutOfBoundsException( "Length < 0" );
     }
-    if (offset < 0)
-    {
-      throw new IllegalArgumentException("Offset < 0");
+    if ( offset < 0 ) {
+      throw new IllegalArgumentException( "Offset < 0" );
     }
-    if (length + offset >= data.length)
-    {
-      throw new IllegalArgumentException("Length + Offset");
+    if ( length + offset >= data.length ) {
+      throw new IllegalArgumentException( "Length + Offset" );
     }
     this.data = data;
     this.cursor = length + offset;
     this.offset = offset;
   }
 
-  public int getLength()
-  {
+  public int getLength() {
     return cursor - offset;
   }
 
-  public int getOffset()
-  {
+  public int getOffset() {
     return offset;
   }
 
-  public int getCursor()
-  {
+  public int getCursor() {
     return cursor;
   }
 
-  public void ensureSize(final int length)
-  {
-    if (data.length < (offset + length))
-    {
-      final byte[] newdata = new byte[offset + length];
-      System.arraycopy(data, 0, newdata, 0, data.length);
+  public void ensureSize( final int length ) {
+    if ( data.length < ( offset + length ) ) {
+      final byte[] newdata = new byte[ offset + length ];
+      System.arraycopy( data, 0, newdata, 0, data.length );
       data = newdata;
     }
   }
 
-  public void setCursor(final int cursor)
-  {
-    if (cursor < offset)
-    {
+  public void setCursor( final int cursor ) {
+    if ( cursor < offset ) {
       throw new IndexOutOfBoundsException();
     }
-    if (cursor > data.length)
-    {
+    if ( cursor > data.length ) {
       throw new IndexOutOfBoundsException();
     }
     this.cursor = cursor;

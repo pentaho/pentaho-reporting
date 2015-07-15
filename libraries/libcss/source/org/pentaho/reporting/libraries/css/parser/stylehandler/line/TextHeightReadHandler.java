@@ -25,13 +25,11 @@ import org.pentaho.reporting.libraries.css.parser.stylehandler.OneOfConstantsRea
  *
  * @author Thomas Morgner
  */
-public class TextHeightReadHandler extends OneOfConstantsReadHandler
-{
-  public TextHeightReadHandler()
-  {
-    super(true);
-    addValue(TextHeight.FONT_SIZE);
-    addValue(TextHeight.MAX_SIZE);
-    addValue(TextHeight.TEXT_SIZE);
+public class TextHeightReadHandler extends OneOfConstantsReadHandler {
+  public TextHeightReadHandler() {
+    super( true );
+    addValue( TextHeight.FONT_SIZE );
+    addValue( TextHeight.MAX_SIZE );
+    addValue( TextHeight.TEXT_SIZE );
   }
 }

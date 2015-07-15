@@ -17,8 +17,8 @@
 
 package org.pentaho.reporting.libraries.css.counter;
 
-public interface CounterStyle
-{
-  public String getCounterValue(int index);
+public interface CounterStyle {
+  public String getCounterValue( int index );
+
   public String getSuffix();
 }

@@ -24,42 +24,34 @@ import org.pentaho.reporting.libraries.formula.typing.coretypes.NumberType;
 
 /**
  * Describes Atan2Function function.
- * @see Atan2Function
  *
  * @author ocke
- *
+ * @see Atan2Function
  */
-public class Atan2FunctionDescription extends AbstractFunctionDescription
-{
+public class Atan2FunctionDescription extends AbstractFunctionDescription {
   private static final long serialVersionUID = 743117553650008440L;
 
-  public Atan2FunctionDescription()
-  {
-    super("ATAN2", "org.pentaho.reporting.libraries.formula.function.math.Atan2-Function");
+  public Atan2FunctionDescription() {
+    super( "ATAN2", "org.pentaho.reporting.libraries.formula.function.math.Atan2-Function" );
   }
 
-  public FunctionCategory getCategory()
-  {
+  public FunctionCategory getCategory() {
     return MathFunctionCategory.CATEGORY;
   }
 
-  public int getParameterCount()
-  {
+  public int getParameterCount() {
     return 2;
   }
 
-  public Type getParameterType(final int position)
-  {
+  public Type getParameterType( final int position ) {
     return NumberType.GENERIC_NUMBER;
   }
 
-  public Type getValueType()
-  {
+  public Type getValueType() {
     return NumberType.GENERIC_NUMBER;
   }
 
-  public boolean isParameterMandatory(final int position)
-  {
+  public boolean isParameterMandatory( final int position ) {
     return true;
   }
 

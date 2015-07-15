@@ -17,81 +17,70 @@
 
 package org.pentaho.reporting.libraries.fonts.encoding;
 
-import java.util.Locale;
-
 import org.pentaho.reporting.libraries.resourceloader.Resource;
+
+import java.util.Locale;
 
 /**
  * Creation-Date: 29.04.2006, 14:49:06
  *
  * @author Thomas Morgner
  */
-public final class ExternalEncoding implements Encoding
-{
+public final class ExternalEncoding implements Encoding {
 
   private String name;
   private EncodingCore core;
 
   /**
-   * We keep a stong reference to our source, so that this thing won't be
-   * recycled as long as one instance is in use.
+   * We keep a stong reference to our source, so that this thing won't be recycled as long as one instance is in use.
    */
   private Resource resource;
 
-  public ExternalEncoding(final String name,
-                          final EncodingCore core,
-                          final Resource resource)
-  {
+  public ExternalEncoding( final String name,
+                           final EncodingCore core,
+                           final Resource resource ) {
     this.name = name;
     this.core = core;
     this.resource = resource;
   }
 
-  public String getName()
-  {
+  public String getName() {
     return name;
   }
 
-  public String getName(final Locale locale)
-  {
+  public String getName( final Locale locale ) {
     return name;
   }
 
-  public boolean isUnicodeCharacterSupported(final int c)
-  {
-    return core.isUnicodeCharacterSupported(c);
+  public boolean isUnicodeCharacterSupported( final int c ) {
+    return core.isUnicodeCharacterSupported( c );
   }
 
-  public Resource getResource()
-  {
+  public Resource getResource() {
     return resource;
   }
 
-  public ByteBuffer encode(final CodePointBuffer text, final ByteBuffer buffer)
-          throws EncodingException
-  {
-    return core.encode(text, buffer);
+  public ByteBuffer encode( final CodePointBuffer text, final ByteBuffer buffer )
+    throws EncodingException {
+    return core.encode( text, buffer );
   }
 
-  public ByteBuffer encode(final CodePointBuffer text, final ByteBuffer buffer,
-                           final EncodingErrorType errorHandling)
-          throws EncodingException
-  {
-    return core.encode(text, buffer, errorHandling);
+  public ByteBuffer encode( final CodePointBuffer text, final ByteBuffer buffer,
+                            final EncodingErrorType errorHandling )
+    throws EncodingException {
+    return core.encode( text, buffer, errorHandling );
   }
 
-  public CodePointBuffer decode(final ByteBuffer text,
-                                final CodePointBuffer buffer) throws
-          EncodingException
-  {
-    return core.decode(text, buffer);
+  public CodePointBuffer decode( final ByteBuffer text,
+                                 final CodePointBuffer buffer ) throws
+    EncodingException {
+    return core.decode( text, buffer );
   }
 
-  public CodePointBuffer decode(final ByteBuffer text,
-                                final CodePointBuffer buffer,
-                                final EncodingErrorType errorHandling)
-          throws EncodingException
-  {
-    return core.decode(text, buffer, errorHandling);
+  public CodePointBuffer decode( final ByteBuffer text,
+                                 final CodePointBuffer buffer,
+                                 final EncodingErrorType errorHandling )
+    throws EncodingException {
+    return core.decode( text, buffer, errorHandling );
   }
 }

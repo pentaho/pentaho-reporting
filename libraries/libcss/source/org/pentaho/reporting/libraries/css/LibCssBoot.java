@@ -28,9 +28,8 @@ import org.pentaho.reporting.libraries.css.model.StyleKeyRegistry;
  *
  * @author Thomas Morgner
  */
-public class LibCssBoot extends AbstractBoot
-{
-  
+public class LibCssBoot extends AbstractBoot {
+
   private static LibCssBoot singleton;
 
   /**
@@ -38,10 +37,8 @@ public class LibCssBoot extends AbstractBoot
    *
    * @return the singleton booter.
    */
-  public static synchronized LibCssBoot getInstance()
-  {
-    if (singleton == null)
-    {
+  public static synchronized LibCssBoot getInstance() {
+    if ( singleton == null ) {
       singleton = new LibCssBoot();
     }
     return singleton;
@@ -50,8 +47,7 @@ public class LibCssBoot extends AbstractBoot
   /**
    * Private constructor prevents object creation.
    */
-  private LibCssBoot()
-  {
+  private LibCssBoot() {
   }
 
   /**
@@ -59,8 +55,7 @@ public class LibCssBoot extends AbstractBoot
    *
    * @return The project info.
    */
-  protected ProjectInformation getProjectInfo()
-  {
+  protected ProjectInformation getProjectInfo() {
     return LibCssInfo.getInstance();
   }
 
@@ -69,18 +64,16 @@ public class LibCssBoot extends AbstractBoot
    *
    * @return The configuration.
    */
-  protected Configuration loadConfiguration()
-  {
+  protected Configuration loadConfiguration() {
     return createDefaultHierarchicalConfiguration
-        ("/org/pentaho/reporting/libraries/css/libcss.properties",
-            "/libcss.properties", true, LibCssBoot.class);
+      ( "/org/pentaho/reporting/libraries/css/libcss.properties",
+        "/libcss.properties", true, LibCssBoot.class );
   }
 
   /**
    * Performs the boot.
    */
-  protected void performBoot()
-  {
+  protected void performBoot() {
     StyleKeyRegistry.performBoot();
   }
 }

@@ -29,50 +29,40 @@ import org.pentaho.reporting.libraries.formula.typing.coretypes.NumberType;
  * @author Cedric Pronzato
  * @see ChooseFunction
  */
-public class ChooseFunctionDescription extends AbstractFunctionDescription
-{
+public class ChooseFunctionDescription extends AbstractFunctionDescription {
   private static final long serialVersionUID = -9029773973577207676L;
 
-  public ChooseFunctionDescription()
-  {
-    super("CHOOSE", "org.pentaho.reporting.libraries.formula.function.information.Choose-Function");
+  public ChooseFunctionDescription() {
+    super( "CHOOSE", "org.pentaho.reporting.libraries.formula.function.information.Choose-Function" );
   }
 
-  public Type getValueType()
-  {
+  public Type getValueType() {
     return AnyType.TYPE;
   }
 
-  public int getParameterCount()
-  {
+  public int getParameterCount() {
     return 2;
   }
 
-  public boolean isInfiniteParameterCount()
-  {
+  public boolean isInfiniteParameterCount() {
     return true;
   }
 
-  public Type getParameterType(final int position)
-  {
-    if (position == 0)
-    {
+  public Type getParameterType( final int position ) {
+    if ( position == 0 ) {
       return NumberType.GENERIC_NUMBER;
     }
     return AnyType.TYPE;
   }
 
-  public boolean isParameterMandatory(final int position)
-  {
-    if (position == 0)
-    {
+  public boolean isParameterMandatory( final int position ) {
+    if ( position == 0 ) {
       return true;
     }
     return false;
   }
 
-  public FunctionCategory getCategory()
-  {
+  public FunctionCategory getCategory() {
     return InformationFunctionCategory.CATEGORY;
   }
 }

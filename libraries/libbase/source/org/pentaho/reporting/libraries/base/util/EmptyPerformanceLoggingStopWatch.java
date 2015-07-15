@@ -17,69 +17,57 @@
 
 package org.pentaho.reporting.libraries.base.util;
 
-public class EmptyPerformanceLoggingStopWatch implements PerformanceLoggingStopWatch
-{
+public class EmptyPerformanceLoggingStopWatch implements PerformanceLoggingStopWatch {
   public static final PerformanceLoggingStopWatch INSTANCE = new EmptyPerformanceLoggingStopWatch();
 
-  private EmptyPerformanceLoggingStopWatch() {}
+  private EmptyPerformanceLoggingStopWatch() {
+  }
 
-  public long getLoggingThreshold()
-  {
+  public long getLoggingThreshold() {
     return 0;
   }
 
-  public void setLoggingThreshold(final long loggingThreshold)
-  {
+  public void setLoggingThreshold( final long loggingThreshold ) {
 
   }
 
-  public String getTag()
-  {
+  public String getTag() {
     return null;
   }
 
-  public Object getMessage()
-  {
+  public Object getMessage() {
     return null;
   }
 
-  public void setMessage(final Object message)
-  {
+  public void setMessage( final Object message ) {
 
   }
 
-  public void start()
-  {
+  public void start() {
 
   }
 
-  public void stop(final boolean pause)
-  {
+  public void stop( final boolean pause ) {
 
   }
 
-  public long getRestartCount()
-  {
+  public long getRestartCount() {
     return 0;
   }
 
-  public void reset()
-  {
+  public void reset() {
 
   }
 
-  public long getStartTime()
-  {
+  public long getStartTime() {
     return 0;
   }
 
-  public void stop()
-  {
+  public void stop() {
 
   }
 
-  public void close()
-  {
+  public void close() {
 
   }
 }

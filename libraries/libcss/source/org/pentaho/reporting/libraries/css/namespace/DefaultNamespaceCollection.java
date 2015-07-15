@@ -24,37 +24,30 @@ import java.util.HashMap;
  *
  * @author Thomas Morgner
  */
-public class DefaultNamespaceCollection implements NamespaceCollection
-{
+public class DefaultNamespaceCollection implements NamespaceCollection {
   private HashMap namespaces;
 
-  public DefaultNamespaceCollection()
-  {
+  public DefaultNamespaceCollection() {
     namespaces = new HashMap();
   }
 
-  public void addDefinitions(final NamespaceDefinition[] definitions)
-  {
-    for (int i = 0; i < definitions.length; i++)
-    {
-      final NamespaceDefinition definition = definitions[i];
-      namespaces.put(definition.getURI(), definition);
+  public void addDefinitions( final NamespaceDefinition[] definitions ) {
+    for ( int i = 0; i < definitions.length; i++ ) {
+      final NamespaceDefinition definition = definitions[ i ];
+      namespaces.put( definition.getURI(), definition );
     }
   }
 
-  public void addDefinition(final NamespaceDefinition definition)
-  {
-    namespaces.put(definition.getURI(), definition);
+  public void addDefinition( final NamespaceDefinition definition ) {
+    namespaces.put( definition.getURI(), definition );
   }
 
-  public synchronized String[] getNamespaces()
-  {
+  public synchronized String[] getNamespaces() {
     return (String[]) namespaces.keySet().toArray
-        (new String[namespaces.size()]);
+      ( new String[ namespaces.size() ] );
   }
 
-  public NamespaceDefinition getDefinition(final String namespace)
-  {
-    return (NamespaceDefinition) namespaces.get(namespace);
+  public NamespaceDefinition getDefinition( final String namespace ) {
+    return (NamespaceDefinition) namespaces.get( namespace );
   }
 }

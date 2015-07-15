@@ -17,32 +17,29 @@
 
 package org.pentaho.reporting.libraries.formula.function.text;
 
-import java.math.BigDecimal;
-
 import org.pentaho.reporting.libraries.formula.FormulaTestBase;
 import org.pentaho.reporting.libraries.formula.LibFormulaErrorValue;
+
+import java.math.BigDecimal;
 
 /**
  * @author Cedric Pronzato
  */
-public class SearchFunctionTest extends FormulaTestBase
-{
-  public void testDefault() throws Exception
-  {
+public class SearchFunctionTest extends FormulaTestBase {
+  public void testDefault() throws Exception {
     runDefaultTest();
   }
 
-  public Object[][] createDataTest()
-  {
+  public Object[][] createDataTest() {
     return new Object[][]
-        {
-            {"SEARCH(\"b\";\"abcabc\")", new BigDecimal(2)},
-            {"SEARCH(\"b\";\"abcabcabc\"; 3)", new BigDecimal(5)},
-            {"SEARCH(\"d\";\"ABC\";1)", LibFormulaErrorValue.ERROR_NOT_FOUND_VALUE},
-            {"SEARCH(\"b\";\"ABC\";1)", new BigDecimal(2)},
-            {"SEARCH(\"c?a\";\"abcabcda\")", new BigDecimal(6)},
-            {"SEARCH(\"e*o\";\"yes and no\")", new BigDecimal(2)},
-            {"SEARCH(\"b*c\";\"abcabcabc\")", new BigDecimal(2)},
-        };
+      {
+        { "SEARCH(\"b\";\"abcabc\")", new BigDecimal( 2 ) },
+        { "SEARCH(\"b\";\"abcabcabc\"; 3)", new BigDecimal( 5 ) },
+        { "SEARCH(\"d\";\"ABC\";1)", LibFormulaErrorValue.ERROR_NOT_FOUND_VALUE },
+        { "SEARCH(\"b\";\"ABC\";1)", new BigDecimal( 2 ) },
+        { "SEARCH(\"c?a\";\"abcabcda\")", new BigDecimal( 6 ) },
+        { "SEARCH(\"e*o\";\"yes and no\")", new BigDecimal( 2 ) },
+        { "SEARCH(\"b*c\";\"abcabcabc\")", new BigDecimal( 2 ) },
+      };
   }
 }

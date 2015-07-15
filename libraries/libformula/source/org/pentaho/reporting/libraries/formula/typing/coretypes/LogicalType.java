@@ -26,16 +26,14 @@ import org.pentaho.reporting.libraries.formula.typing.Type;
  * @author Thomas Morgner
  */
 //TODO: add scalar type?
-public final class LogicalType extends DefaultType
-{
+public final class LogicalType extends DefaultType {
   public static final LogicalType TYPE = new LogicalType();
   private static final long serialVersionUID = -5308030940856879227L;
 
-  private LogicalType()
-  {
-    addFlag(Type.LOGICAL_TYPE);
-    addFlag(Type.NUMERIC_TYPE);
-    addFlag(Type.SCALAR_TYPE);
+  private LogicalType() {
+    addFlag( Type.LOGICAL_TYPE );
+    addFlag( Type.NUMERIC_TYPE );
+    addFlag( Type.SCALAR_TYPE );
     lock();
   }
 }

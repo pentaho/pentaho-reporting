@@ -24,13 +24,11 @@ import org.pentaho.reporting.libraries.css.values.CSSConstant;
  *
  * @author Thomas Morgner
  */
-public class BackgroundOrigin
-{
-  public static final CSSConstant BORDER = new CSSConstant("border");
-  public static final CSSConstant PADDING = new CSSConstant("padding");
-  public static final CSSConstant CONTENT = new CSSConstant("content");
+public class BackgroundOrigin {
+  public static final CSSConstant BORDER = new CSSConstant( "border" );
+  public static final CSSConstant PADDING = new CSSConstant( "padding" );
+  public static final CSSConstant CONTENT = new CSSConstant( "content" );
 
-  private BackgroundOrigin()
-  {
+  private BackgroundOrigin() {
   }
 }

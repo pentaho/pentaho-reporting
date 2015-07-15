@@ -33,58 +33,46 @@ import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 import org.pentaho.reporting.libraries.resourceloader.SimpleResource;
 import org.pentaho.reporting.libraries.resourceloader.cache.CachingResourceBundleData;
 
-public class BundleResourceFactory implements ResourceFactory
-{
-  public BundleResourceFactory()
-  {
+public class BundleResourceFactory implements ResourceFactory {
+  public BundleResourceFactory() {
   }
 
-  public Class getFactoryType()
-  {
+  public Class getFactoryType() {
     return DocumentBundle.class;
   }
 
-  public Resource create(final ResourceManager manager,
-                         ResourceData data,
-                         final ResourceKey context)
-      throws ResourceCreationException, ResourceLoadingException
-  {
-    if (data instanceof CachingResourceBundleData)
-    {
+  public Resource create( final ResourceManager manager,
+                          ResourceData data,
+                          final ResourceKey context )
+    throws ResourceCreationException, ResourceLoadingException {
+    if ( data instanceof CachingResourceBundleData ) {
       // todo: Friggin' cheap hack
       final CachingResourceBundleData cachingResourceBundleData = (CachingResourceBundleData) data;
       data = cachingResourceBundleData.getBackend();
     }
-    if (data instanceof RepositoryResourceBundleData == false)
-    {
-      data = manager.loadResourceBundle(data.getKey());
-      if (data instanceof CachingResourceBundleData)
-      {
+    if ( data instanceof RepositoryResourceBundleData == false ) {
+      data = manager.loadResourceBundle( data.getKey() );
+      if ( data instanceof CachingResourceBundleData ) {
         // todo: Friggin' cheap hack 2
         final CachingResourceBundleData cachingResourceBundleData = (CachingResourceBundleData) data;
         data = cachingResourceBundleData.getBackend();
       }
     }
-    if (data instanceof RepositoryResourceBundleData == false)
-    {
-      throw new ContentNotRecognizedException("No valid handler for the given content.");
+    if ( data instanceof RepositoryResourceBundleData == false ) {
+      throw new ContentNotRecognizedException( "No valid handler for the given content." );
     }
 
     final RepositoryResourceBundleData bdata = (RepositoryResourceBundleData) data;
     final Repository repository = bdata.getRepository();
-    try
-    {
-      final StaticDocumentBundle bundle = new StaticDocumentBundle(repository, manager, bdata.getBundleKey());
-      return new SimpleResource(data.getKey(), bundle, getFactoryType(), data.getVersion(manager));
-    }
-    catch (ResourceException e)
-    {
-      throw new ResourceCreationException("Unable to interpret document-bundle", e);
+    try {
+      final StaticDocumentBundle bundle = new StaticDocumentBundle( repository, manager, bdata.getBundleKey() );
+      return new SimpleResource( data.getKey(), bundle, getFactoryType(), data.getVersion( manager ) );
+    } catch ( ResourceException e ) {
+      throw new ResourceCreationException( "Unable to interpret document-bundle", e );
     }
   }
 
-  public void initializeDefaults()
-  {
+  public void initializeDefaults() {
 
   }
 }

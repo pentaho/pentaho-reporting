@@ -25,11 +25,9 @@ import org.pentaho.reporting.libraries.css.parser.stylehandler.OneOfConstantsRea
  *
  * @author Thomas Morgner
  */
-public class GlyphOrientationHorizontalReadHandler extends OneOfConstantsReadHandler
-{
-  public GlyphOrientationHorizontalReadHandler()
-  {
-    super(true);
-    addValue(GlyphOrientationHorizontal.INLINE);
+public class GlyphOrientationHorizontalReadHandler extends OneOfConstantsReadHandler {
+  public GlyphOrientationHorizontalReadHandler() {
+    super( true );
+    addValue( GlyphOrientationHorizontal.INLINE );
   }
 }

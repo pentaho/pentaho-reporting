@@ -24,15 +24,14 @@ import org.pentaho.reporting.libraries.resourceloader.ResourceKey;
  *
  * @author Thomas Morgner
  */
-public interface NamespaceDefinition
-{
+public interface NamespaceDefinition {
   public String getPreferredPrefix();
 
   public String getURI();
 
-  public String[] getClassAttribute(String element);
+  public String[] getClassAttribute( String element );
 
-  public String[] getStyleAttribute(String element);
+  public String[] getStyleAttribute( String element );
 
   public ResourceKey getDefaultStyleSheetLocation();
 }

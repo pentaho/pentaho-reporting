@@ -24,22 +24,18 @@ import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
  *
  * @author Thomas Morgner
  */
-public class CSSRawValue implements CSSValue
-{
+public class CSSRawValue implements CSSValue {
   private Object value;
 
-  public CSSRawValue(Object value)
-  {
+  public CSSRawValue( Object value ) {
     this.value = value;
   }
 
-  public Object getValue()
-  {
+  public Object getValue() {
     return value;
   }
 
-  public String getCSSText()
-  {
+  public String getCSSText() {
     // this type has no representation in the outside world.
     return null;
   }
@@ -49,21 +45,16 @@ public class CSSRawValue implements CSSValue
    *
    * @return <code>true</code> if the supplied object is equivalent to this object, <code>false</code> otherwise
    */
-  public boolean equals(Object obj)
-  {
-    if (obj instanceof CSSRawValue)
-    {
+  public boolean equals( Object obj ) {
+    if ( obj instanceof CSSRawValue ) {
       CSSRawValue that = (CSSRawValue) obj;
-      return (ObjectUtilities.equal(this.value, that.value));
-    }
-    else
-    {
+      return ( ObjectUtilities.equal( this.value, that.value ) );
+    } else {
       return false;
     }
   }
 
-  public CSSType getType()
-  {
+  public CSSType getType() {
     return CSSGenericType.GENERIC_TYPE;
   }
 }

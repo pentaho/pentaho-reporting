@@ -25,20 +25,18 @@ import org.pentaho.reporting.libraries.css.parser.stylehandler.OneOfConstantsRea
  *
  * @author Thomas Morgner
  */
-public class ClearAfterReadHandler extends OneOfConstantsReadHandler
-{
-  public ClearAfterReadHandler()
-  {
-    super(false);
-    addValue(Clear.BOTH);
-    addValue(Clear.BOTTOM);
-    addValue(Clear.END);
-    addValue(Clear.INSIDE);
-    addValue(Clear.LEFT);
-    addValue(Clear.NONE);
-    addValue(Clear.OUTSIDE);
-    addValue(Clear.RIGHT);
-    addValue(Clear.START);
-    addValue(Clear.TOP);
+public class ClearAfterReadHandler extends OneOfConstantsReadHandler {
+  public ClearAfterReadHandler() {
+    super( false );
+    addValue( Clear.BOTH );
+    addValue( Clear.BOTTOM );
+    addValue( Clear.END );
+    addValue( Clear.INSIDE );
+    addValue( Clear.LEFT );
+    addValue( Clear.NONE );
+    addValue( Clear.OUTSIDE );
+    addValue( Clear.RIGHT );
+    addValue( Clear.START );
+    addValue( Clear.TOP );
   }
 }

@@ -17,39 +17,28 @@
 
 package org.pentaho.reporting.libraries.designtime.swing;
 
-import java.awt.Component;
-import java.awt.Font;
-import java.awt.GraphicsEnvironment;
-import javax.swing.Action;
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.JLabel;
-import javax.swing.JList;
-import javax.swing.ListCellRenderer;
+import javax.swing.*;
+import java.awt.*;
 
 /**
  * A preconfigured combobox for font-family names.
  */
-public class FontFamilyComboBox extends SmartComboBox
-{
+public class FontFamilyComboBox extends SmartComboBox {
   /**
    * A cell-renderer that renders the font.
    */
-  private static class FontListCellRenderer extends JLabel implements ListCellRenderer
-  {
+  private static class FontListCellRenderer extends JLabel implements ListCellRenderer {
     /**
      * Creates a new renderer.
      */
-    private FontListCellRenderer()
-    {
+    private FontListCellRenderer() {
     }
 
     /**
-     * Return a component that has been configured to display the specified
-     * value. That component's <code>paint</code> method is then called to
-     * "render" the cell.  If it is necessary to compute the dimensions
-     * of a list because the list cells do not have a fixed size, this method
-     * is called to generate a component on which <code>getPreferredSize</code>
-     * can be invoked.
+     * Return a component that has been configured to display the specified value. That component's <code>paint</code>
+     * method is then called to "render" the cell.  If it is necessary to compute the dimensions of a list because the
+     * list cells do not have a fixed size, this method is called to generate a component on which
+     * <code>getPreferredSize</code> can be invoked.
      *
      * @param list         The JList we're painting.
      * @param value        The value returned by list.getModel().getElementAt(index).
@@ -61,23 +50,21 @@ public class FontFamilyComboBox extends SmartComboBox
      * @see javax.swing.ListSelectionModel
      * @see javax.swing.ListModel
      */
-    public Component getListCellRendererComponent(final JList list,
-                                                  final Object value,
-                                                  final int index,
-                                                  final boolean isSelected,
-                                                  final boolean cellHasFocus)
-    {
+    public Component getListCellRendererComponent( final JList list,
+                                                   final Object value,
+                                                   final int index,
+                                                   final boolean isSelected,
+                                                   final boolean cellHasFocus ) {
       final Font listFont = list.getFont();
-      if (value == null)
-      {
-        setText("");
-        setFont(listFont);
+      if ( value == null ) {
+        setText( "" );
+        setFont( listFont );
         return this;
       }
 
-      final String fontName = String.valueOf(value);
-      setFont(listFont);
-      setText(fontName);
+      final String fontName = String.valueOf( value );
+      setFont( listFont );
+      setText( fontName );
       return this;
     }
   }
@@ -87,15 +74,14 @@ public class FontFamilyComboBox extends SmartComboBox
   /**
    * Creates a new combobox and populates it with the font families found in the AWT-Toolkit.
    */
-  public FontFamilyComboBox()
-  {
+  public FontFamilyComboBox() {
     final String[] availableFontFamilyNames =
-        GraphicsEnvironment.getLocalGraphicsEnvironment().getAvailableFontFamilyNames();
+      GraphicsEnvironment.getLocalGraphicsEnvironment().getAvailableFontFamilyNames();
 
-    model = new DefaultComboBoxModel(availableFontFamilyNames);
+    model = new DefaultComboBoxModel( availableFontFamilyNames );
 
-    setModel(model);
-    setRenderer(new FontListCellRenderer());
+    setModel( model );
+    setRenderer( new FontListCellRenderer() );
   }
 
   /**
@@ -103,12 +89,11 @@ public class FontFamilyComboBox extends SmartComboBox
    *
    * @param o the newly selected value.
    */
-  public void setValueFromModel(final Object o)
-  {
+  public void setValueFromModel( final Object o ) {
     final Action oldAction = getAction();
-    setAction(null);
-    model.setSelectedItem(o);
-    setAction(oldAction);
+    setAction( null );
+    model.setSelectedItem( o );
+    setAction( oldAction );
   }
 
 }

@@ -25,42 +25,34 @@ import org.pentaho.reporting.libraries.formula.typing.coretypes.TextType;
 
 /**
  * Describes ExactFunction function.
- * @see ExactFunction
  *
  * @author Cedric Pronzato
- *
+ * @see ExactFunction
  */
-public class ExactFunctionDescription extends AbstractFunctionDescription
-{
+public class ExactFunctionDescription extends AbstractFunctionDescription {
   private static final long serialVersionUID = 6387173839128572562L;
 
-  public ExactFunctionDescription()
-  {
-    super("EXACT", "org.pentaho.reporting.libraries.formula.function.text.Exact-Function");
+  public ExactFunctionDescription() {
+    super( "EXACT", "org.pentaho.reporting.libraries.formula.function.text.Exact-Function" );
   }
 
-  public FunctionCategory getCategory()
-  {
+  public FunctionCategory getCategory() {
     return TextFunctionCategory.CATEGORY;
   }
 
-  public int getParameterCount()
-  {
+  public int getParameterCount() {
     return 2;
   }
 
-  public Type getParameterType(final int position)
-  {
+  public Type getParameterType( final int position ) {
     return TextType.TYPE;
   }
 
-  public Type getValueType()
-  {
+  public Type getValueType() {
     return LogicalType.TYPE;
   }
 
-  public boolean isParameterMandatory(final int position)
-  {
+  public boolean isParameterMandatory( final int position ) {
     return true;
   }
 

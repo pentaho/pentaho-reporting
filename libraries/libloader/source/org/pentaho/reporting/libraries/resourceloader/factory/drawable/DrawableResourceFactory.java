@@ -24,19 +24,15 @@ import org.pentaho.reporting.libraries.resourceloader.factory.AbstractResourceFa
  *
  * @author Thomas Morgner
  */
-public class DrawableResourceFactory extends AbstractResourceFactory
-{
+public class DrawableResourceFactory extends AbstractResourceFactory {
   private static DrawableResourceFactory instance;
 
-  public DrawableResourceFactory()
-  {
-    super(DrawableWrapper.class);
+  public DrawableResourceFactory() {
+    super( DrawableWrapper.class );
   }
 
-  public static synchronized DrawableResourceFactory getInstance()
-  {
-    if (instance == null)
-    {
+  public static synchronized DrawableResourceFactory getInstance() {
+    if ( instance == null ) {
       instance = new DrawableResourceFactory();
     }
     return instance;

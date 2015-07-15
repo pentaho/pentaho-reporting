@@ -20,22 +20,18 @@ package org.pentaho.reporting.libraries.base.config;
 
 import java.util.Enumeration;
 
-public class StringEnumeration implements Enumeration<String>
-{
+public class StringEnumeration implements Enumeration<String> {
   private Enumeration parent;
 
-  public StringEnumeration(final Enumeration parent)
-  {
+  public StringEnumeration( final Enumeration parent ) {
     this.parent = parent;
   }
 
-  public boolean hasMoreElements()
-  {
+  public boolean hasMoreElements() {
     return parent.hasMoreElements();
   }
 
-  public String nextElement()
-  {
+  public String nextElement() {
     return (String) parent.nextElement();
   }
 }

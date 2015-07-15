@@ -22,21 +22,18 @@ import org.pentaho.reporting.libraries.formula.FormulaTestBase;
 /**
  * @author Cedric Pronzato
  */
-public class TFunctionTest extends FormulaTestBase
-{
-  public void testDefault() throws Exception
-  {
+public class TFunctionTest extends FormulaTestBase {
+  public void testDefault() throws Exception {
     runDefaultTest();
   }
 
-  public Object[][] createDataTest()
-  {
+  public Object[][] createDataTest() {
     return new Object[][]
-        {
-            {"T(\"HI\")", "HI"},
-            {"T([.B3])", "7"},
-            {"T(5)", ""},
-        };
+      {
+        { "T(\"HI\")", "HI" },
+        { "T([.B3])", "7" },
+        { "T(5)", "" },
+      };
   }
 
 }

@@ -24,12 +24,10 @@ import org.pentaho.reporting.libraries.css.values.CSSConstant;
  *
  * @author Thomas Morgner
  */
-public class TextBlink
-{
-  public static final CSSConstant NONE = new CSSConstant("none");
-  public static final CSSConstant BLINK = new CSSConstant("blink");
+public class TextBlink {
+  public static final CSSConstant NONE = new CSSConstant( "none" );
+  public static final CSSConstant BLINK = new CSSConstant( "blink" );
 
-  private TextBlink()
-  {
+  private TextBlink() {
   }
 }

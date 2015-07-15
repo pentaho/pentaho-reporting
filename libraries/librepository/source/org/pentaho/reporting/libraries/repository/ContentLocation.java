@@ -18,13 +18,11 @@
 package org.pentaho.reporting.libraries.repository;
 
 /**
- * This represents a container in the repository. If the repository is a
- * filesystem, this will be a directory.
+ * This represents a container in the repository. If the repository is a filesystem, this will be a directory.
  *
  * @author Thomas Morgner
  */
-public interface ContentLocation extends ContentEntity
-{
+public interface ContentLocation extends ContentEntity {
   /**
    * Returns all content entities stored in this content-location.
    *
@@ -40,27 +38,27 @@ public interface ContentLocation extends ContentEntity
    * @return the content entity for this name, never null.
    * @throws ContentIOException if an repository error occured.
    */
-  public ContentEntity getEntry(String name) throws ContentIOException;
+  public ContentEntity getEntry( String name ) throws ContentIOException;
 
   /**
-   * Creates a new data item in the current location. This method must never
-   * return null. This method will fail if an entity with the same name exists in this location.
+   * Creates a new data item in the current location. This method must never return null. This method will fail if an
+   * entity with the same name exists in this location.
    *
    * @param name the name of the new entity.
    * @return the newly created entity, never null.
    * @throws ContentCreationException if the item could not be created.
    */
-  public ContentItem createItem(String name) throws ContentCreationException;
+  public ContentItem createItem( String name ) throws ContentCreationException;
 
   /**
-   * Creates a new content location in the current location. This method must never
-   * return null. This method will fail if an entity with the same name exists in this location.
+   * Creates a new content location in the current location. This method must never return null. This method will fail
+   * if an entity with the same name exists in this location.
    *
    * @param name the name of the new entity.
    * @return the newly created entity, never null.
    * @throws ContentCreationException if the item could not be created.
    */
-  public ContentLocation createLocation(String name) throws ContentCreationException;
+  public ContentLocation createLocation( String name ) throws ContentCreationException;
 
   /**
    * Checks, whether an content entity with the given name exists in this content location.
@@ -68,5 +66,5 @@ public interface ContentLocation extends ContentEntity
    * @param name the name of the new entity.
    * @return true, if an entity exists with this name, false otherwise.
    */
-  public boolean exists(final String name);
+  public boolean exists( final String name );
 }

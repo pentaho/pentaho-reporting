@@ -25,12 +25,10 @@ import org.pentaho.reporting.libraries.css.parser.stylehandler.OneOfConstantsRea
  *
  * @author Thomas Morgner
  */
-public class DirectionReadHandler extends OneOfConstantsReadHandler
-{
-  public DirectionReadHandler()
-  {
-    super(false);
-    addValue(Direction.LTR);
-    addValue(Direction.RTL);
+public class DirectionReadHandler extends OneOfConstantsReadHandler {
+  public DirectionReadHandler() {
+    super( false );
+    addValue( Direction.LTR );
+    addValue( Direction.RTL );
   }
 }

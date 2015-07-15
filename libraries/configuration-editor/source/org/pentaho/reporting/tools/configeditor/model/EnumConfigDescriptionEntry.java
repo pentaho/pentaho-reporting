@@ -25,22 +25,20 @@ import java.util.Arrays;
  *
  * @author Thomas Morgner
  */
-public class EnumConfigDescriptionEntry extends ConfigDescriptionEntry
-{
+public class EnumConfigDescriptionEntry extends ConfigDescriptionEntry {
   /**
    * The list of available options in this entry.
    */
   private String[] options;
-  private static final String[] EMPTY_STRINGS = new String[0];
+  private static final String[] EMPTY_STRINGS = new String[ 0 ];
 
   /**
    * Creates a new enumeration description entry for the given configuration key.
    *
    * @param keyName the keyname of this entry.
    */
-  public EnumConfigDescriptionEntry(final String keyName)
-  {
-    super(keyName);
+  public EnumConfigDescriptionEntry( final String keyName ) {
+    super( keyName );
     this.options = EnumConfigDescriptionEntry.EMPTY_STRINGS;
   }
 
@@ -49,8 +47,7 @@ public class EnumConfigDescriptionEntry extends ConfigDescriptionEntry
    *
    * @return the options as array.
    */
-  public String[] getOptions()
-  {
+  public String[] getOptions() {
     return options.clone();
   }
 
@@ -59,30 +56,24 @@ public class EnumConfigDescriptionEntry extends ConfigDescriptionEntry
    *
    * @param options the selectable values for this entry.
    */
-  public void setOptions(final String[] options)
-  {
+  public void setOptions( final String[] options ) {
     this.options = options.clone();
   }
 
-  public boolean equals(final Object o)
-  {
-    if (this == o)
-    {
+  public boolean equals( final Object o ) {
+    if ( this == o ) {
       return true;
     }
-    if (o == null || getClass() != o.getClass())
-    {
+    if ( o == null || getClass() != o.getClass() ) {
       return false;
     }
-    if (!super.equals(o))
-    {
+    if ( !super.equals( o ) ) {
       return false;
     }
 
     final EnumConfigDescriptionEntry that = (EnumConfigDescriptionEntry) o;
 
-    if (!Arrays.equals(options, that.options))
-    {
+    if ( !Arrays.equals( options, that.options ) ) {
       return false;
     }
 
@@ -90,10 +81,9 @@ public class EnumConfigDescriptionEntry extends ConfigDescriptionEntry
   }
 
 
-  public int hashCode()
-  {
+  public int hashCode() {
     int result = super.hashCode();
-    result = 31 * result + Arrays.hashCode(options);
+    result = 31 * result + Arrays.hashCode( options );
     return result;
   }
 }

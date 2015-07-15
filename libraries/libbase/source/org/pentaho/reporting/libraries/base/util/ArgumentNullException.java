@@ -17,25 +17,21 @@
 
 package org.pentaho.reporting.libraries.base.util;
 
-public class ArgumentNullException extends IllegalArgumentException
-{
+public class ArgumentNullException extends IllegalArgumentException {
   private String field;
 
-  public ArgumentNullException(final String field)
-  {
-    super(String.format("Argument '%s' is <null>", field));  // NON-NLS
+  public ArgumentNullException( final String field ) {
+    super( String.format( "Argument '%s' is <null>", field ) );  // NON-NLS
     this.field = field;
   }
 
-  public String getField()
-  {
+  public String getField() {
     return field;
   }
 
-  public static void validate(final String field, final Object o)
-  {
-    if (o == null) {
-      throw new ArgumentNullException(field);
+  public static void validate( final String field, final Object o ) {
+    if ( o == null ) {
+      throw new ArgumentNullException( field );
     }
   }
 }

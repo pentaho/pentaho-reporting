@@ -17,17 +17,14 @@
 
 package org.pentaho.reporting.libraries.css.resolver.tokens.computed;
 
-public class CloseQuoteToken extends ComputedToken
-{
+public class CloseQuoteToken extends ComputedToken {
   private boolean surpress;
 
-  public CloseQuoteToken(final boolean surpress)
-  {
+  public CloseQuoteToken( final boolean surpress ) {
     this.surpress = surpress;
   }
 
-  public boolean isSurpressQuoteText ()
-  {
+  public boolean isSurpressQuoteText() {
     return surpress;
   }
 }

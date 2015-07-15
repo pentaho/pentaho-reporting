@@ -19,24 +19,19 @@ package org.pentaho.reporting.libraries.css.counter.other;
 
 import org.pentaho.reporting.libraries.css.counter.CounterStyle;
 
-public class AsterisksCounterStyle implements CounterStyle
-{
-  public AsterisksCounterStyle ()
-  {
+public class AsterisksCounterStyle implements CounterStyle {
+  public AsterisksCounterStyle() {
   }
 
-  public String getCounterValue (final int index)
-  {
-    final StringBuffer b = new StringBuffer(index);
-    for (int i = 0; i < index; i++)
-    {
-      b.append('*');
+  public String getCounterValue( final int index ) {
+    final StringBuffer b = new StringBuffer( index );
+    for ( int i = 0; i < index; i++ ) {
+      b.append( '*' );
     }
     return b.toString();
   }
 
-  public String getSuffix()
-  {
+  public String getSuffix() {
     return "";
   }
 }

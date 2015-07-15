@@ -22,38 +22,31 @@ package org.pentaho.reporting.libraries.fonts.text.whitespace;
  *
  * @author Thomas Morgner
  */
-public class PreserveWhiteSpaceFilter implements WhiteSpaceFilter
-{
-  public PreserveWhiteSpaceFilter()
-  {
+public class PreserveWhiteSpaceFilter implements WhiteSpaceFilter {
+  public PreserveWhiteSpaceFilter() {
   }
 
   /**
-   * Filters the whitespaces. This method returns '-1', if the whitespace should
-   * be removed from the stream; otherwise it presents a replacement character.
-   * If the codepoint is no whitespace at all, the codepoint is returned
+   * Filters the whitespaces. This method returns '-1', if the whitespace should be removed from the stream; otherwise
+   * it presents a replacement character. If the codepoint is no whitespace at all, the codepoint is returned
    * unchanged.
    *
    * @param codepoint
    * @return
    */
-  public int filter(final int codepoint)
-  {
+  public int filter( final int codepoint ) {
     return codepoint;
   }
 
   /**
-   * Reset the filter to the same state as if the filter had been constructed
-   * but not used yet.
+   * Reset the filter to the same state as if the filter had been constructed but not used yet.
    */
-  public void reset()
-  {
+  public void reset() {
 
   }
 
 
-  public Object clone() throws CloneNotSupportedException
-  {
+  public Object clone() throws CloneNotSupportedException {
     return super.clone();
   }
 

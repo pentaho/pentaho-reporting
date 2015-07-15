@@ -22,42 +22,35 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Data class which holds the pieces of the String version of the Resource Key. 
- * 
+ * Data class which holds the pieces of the String version of the Resource Key.
+ *
  * @author David M. Kincade
  */
-public class ResourceKeyData
-{
+public class ResourceKeyData {
   private String schema;
   private String identifier;
   private Map<ParameterKey, Object> factoryParameters;
 
-  public ResourceKeyData(final String schema, final String identifier, final Map<ParameterKey, Object> factoryParameters)
-  {
+  public ResourceKeyData( final String schema, final String identifier,
+                          final Map<ParameterKey, Object> factoryParameters ) {
     this.schema = schema;
     this.identifier = identifier;
-    if (factoryParameters == null)
-    {
+    if ( factoryParameters == null ) {
       this.factoryParameters = null;
-    }
-    else
-    {
-      this.factoryParameters = Collections.unmodifiableMap(new HashMap<ParameterKey, Object>(factoryParameters));
+    } else {
+      this.factoryParameters = Collections.unmodifiableMap( new HashMap<ParameterKey, Object>( factoryParameters ) );
     }
   }
 
-  public String getSchema()
-  {
+  public String getSchema() {
     return schema;
   }
 
-  public String getIdentifier()
-  {
+  public String getIdentifier() {
     return identifier;
   }
 
-  public Map<ParameterKey, Object> getFactoryParameters()
-  {
+  public Map<ParameterKey, Object> getFactoryParameters() {
     return factoryParameters;
   }
 }

@@ -21,13 +21,11 @@ import org.pentaho.reporting.libraries.css.resolver.tokens.ContentToken;
 import org.pentaho.reporting.libraries.resourceloader.Resource;
 
 /**
- * Content, that has been loaded from a resource-key. This is always something
- * binary.
+ * Content, that has been loaded from a resource-key. This is always something binary.
  *
  * @author Thomas Morgner
  */
-public interface ResourceType extends ContentToken
-{
-  public Resource getContent ();
+public interface ResourceType extends ContentToken {
+  public Resource getContent();
 
 }

@@ -22,45 +22,36 @@ package org.pentaho.reporting.libraries.formula.operators;
  *
  * @author Thomas Morgner
  */
-public class GreaterEqualOperator extends AbstractCompareOperator
-{
+public class GreaterEqualOperator extends AbstractCompareOperator {
   private static final long serialVersionUID = 6478407408504176639L;
 
-  public GreaterEqualOperator()
-  {
+  public GreaterEqualOperator() {
   }
 
-  protected boolean evaluate(final int compareResult)
-  {
+  protected boolean evaluate( final int compareResult ) {
     return compareResult >= 0;
   }
 
-  public int getLevel()
-  {
+  public int getLevel() {
     return 400;
   }
 
-  public String toString()
-  {
+  public String toString() {
     return ">=";
   }
 
-  public boolean isLeftOperation()
-  {
+  public boolean isLeftOperation() {
     return true;
   }
 
   /**
-   * Defines, whether the operation is associative. For associative operations,
-   * the evaluation order does not matter, if the operation appears more than
-   * once in an expression, and therefore we can optimize them a lot better than
-   * non-associative operations (ie. merge constant parts and precompute them
-   * once).
+   * Defines, whether the operation is associative. For associative operations, the evaluation order does not matter, if
+   * the operation appears more than once in an expression, and therefore we can optimize them a lot better than
+   * non-associative operations (ie. merge constant parts and precompute them once).
    *
    * @return true, if the operation is associative, false otherwise
    */
-  public boolean isAssociative()
-  {
+  public boolean isAssociative() {
     return false;
   }
 

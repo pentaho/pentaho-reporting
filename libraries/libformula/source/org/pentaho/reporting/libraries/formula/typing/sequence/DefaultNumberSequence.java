@@ -21,20 +21,18 @@ import org.pentaho.reporting.libraries.formula.EvaluationException;
 import org.pentaho.reporting.libraries.formula.FormulaContext;
 import org.pentaho.reporting.libraries.formula.lvalues.LValue;
 import org.pentaho.reporting.libraries.formula.typing.ArrayCallback;
-import org.pentaho.reporting.libraries.formula.typing.Type;
 import org.pentaho.reporting.libraries.formula.typing.NumberSequence;
+import org.pentaho.reporting.libraries.formula.typing.Type;
 
 /**
  * @author Cedric Pronzato
  */
-public class DefaultNumberSequence extends AnySequence implements NumberSequence
-{
+public class DefaultNumberSequence extends AnySequence implements NumberSequence {
   /**
    * Empty number sequence.
    */
-  public DefaultNumberSequence(final FormulaContext context)
-  {
-    super(context);
+  public DefaultNumberSequence( final FormulaContext context ) {
+    super( context );
   }
 
   /**
@@ -42,9 +40,8 @@ public class DefaultNumberSequence extends AnySequence implements NumberSequence
    *
    * @param n A number
    */
-  public DefaultNumberSequence(final LValue n, final FormulaContext context)
-  {
-    super(n, context);
+  public DefaultNumberSequence( final LValue n, final FormulaContext context ) {
+    super( n, context );
   }
 
   /**
@@ -52,39 +49,31 @@ public class DefaultNumberSequence extends AnySequence implements NumberSequence
    *
    * @param array
    */
-  public DefaultNumberSequence(final ArrayCallback array, final FormulaContext context)
-  {
-    super(array, context);
+  public DefaultNumberSequence( final ArrayCallback array, final FormulaContext context ) {
+    super( array, context );
   }
 
-  public DefaultNumberSequence(final AnySequence anySequence)
-  {
-    super(anySequence);
+  public DefaultNumberSequence( final AnySequence anySequence ) {
+    super( anySequence );
   }
 
-  protected boolean isValidNext(final LValue o) throws EvaluationException
-  {
-    if (o == null)
-    {
+  protected boolean isValidNext( final LValue o ) throws EvaluationException {
+    if ( o == null ) {
       return false;
     }
     final Type type = o.getValueType();
-    if (type == null)
-    {
+    if ( type == null ) {
       throw new IllegalStateException();
     }
-    if (type.isFlagSet(Type.NUMERIC_TYPE))
-    {
+    if ( type.isFlagSet( Type.NUMERIC_TYPE ) ) {
       return true;
     }
     return false;
   }
 
-  public Number nextNumber() throws EvaluationException
-  {
+  public Number nextNumber() throws EvaluationException {
     final Object value = super.next();
-    if (value instanceof Number)
-    {
+    if ( value instanceof Number ) {
       return (Number) value;
     }
 

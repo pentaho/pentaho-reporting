@@ -17,10 +17,8 @@
 
 package org.pentaho.reporting.libraries.resourceloader;
 
-public final class FactoryParameterKey extends ParameterKey
-{
-  public FactoryParameterKey(final String name)
-  {
-    super(name);
+public final class FactoryParameterKey extends ParameterKey {
+  public FactoryParameterKey( final String name ) {
+    super( name );
   }
 }

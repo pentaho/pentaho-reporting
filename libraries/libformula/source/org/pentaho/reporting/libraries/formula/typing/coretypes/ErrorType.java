@@ -26,15 +26,13 @@ import org.pentaho.reporting.libraries.formula.typing.Type;
  * @author Thomas Morgner
  */
 //add scalar flag?
-public final class ErrorType extends DefaultType
-{
+public final class ErrorType extends DefaultType {
   public static final Type TYPE = new ErrorType();
   private static final long serialVersionUID = -5893173280337804811L;
 
-  private ErrorType()
-  {
-    addFlag(Type.ERROR_TYPE);
-    addFlag(Type.SCALAR_TYPE);
+  private ErrorType() {
+    addFlag( Type.ERROR_TYPE );
+    addFlag( Type.SCALAR_TYPE );
     lock();
   }
 }

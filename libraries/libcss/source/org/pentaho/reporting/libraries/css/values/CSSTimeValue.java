@@ -22,19 +22,15 @@ package org.pentaho.reporting.libraries.css.values;
  *
  * @author Thomas Morgner
  */
-public class CSSTimeValue extends CSSNumericValue
-{
-  public CSSTimeValue(final CSSTimeType type, final double value)
-  {
-    super(type, value);
+public class CSSTimeValue extends CSSNumericValue {
+  public CSSTimeValue( final CSSTimeType type, final double value ) {
+    super( type, value );
   }
 
-  public boolean equals(Object obj)
-  {
-    if (obj instanceof CSSTimeValue == false)
-    {
+  public boolean equals( Object obj ) {
+    if ( obj instanceof CSSTimeValue == false ) {
       return false;
     }
-    return super.equals(obj);
+    return super.equals( obj );
   }
 }

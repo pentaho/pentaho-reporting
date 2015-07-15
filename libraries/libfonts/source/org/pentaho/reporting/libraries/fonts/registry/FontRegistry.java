@@ -24,29 +24,29 @@ import org.pentaho.reporting.libraries.fonts.cache.FontCache;
  *
  * @author Thomas Morgner
  */
-public interface FontRegistry
-{
+public interface FontRegistry {
   public void initialize();
+
   public FontCache getSecondLevelCache();
+
   /**
-   * Tries to find a font family with the given name, looking through all
-   * alternative font names if neccessary.
+   * Tries to find a font family with the given name, looking through all alternative font names if neccessary.
    *
    * @param name
    * @return the font family or null, if there is no such family.
    */
-  public FontFamily getFontFamily (String name);
+  public FontFamily getFontFamily( String name );
 
-  public String[] getRegisteredFamilies ();
-  public String[] getAllRegisteredFamilies ();
+  public String[] getRegisteredFamilies();
+
+  public String[] getAllRegisteredFamilies();
 
   /**
-   * Creates a new font metrics factory. That factory is specific to a certain
-   * font registry and is not required to handle font records from foreign
-   * font registries.
-   *
-   * A font metrics factory should never be used on its own. It should be
-   * embedded into and used by a FontStorage implementation.
+   * Creates a new font metrics factory. That factory is specific to a certain font registry and is not required to
+   * handle font records from foreign font registries.
+   * <p/>
+   * A font metrics factory should never be used on its own. It should be embedded into and used by a FontStorage
+   * implementation.
    *
    * @return
    */

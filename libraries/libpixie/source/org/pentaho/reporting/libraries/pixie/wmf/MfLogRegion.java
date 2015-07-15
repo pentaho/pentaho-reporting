@@ -17,37 +17,32 @@
 
 package org.pentaho.reporting.libraries.pixie.wmf;
 
-import java.awt.Rectangle;
+import java.awt.*;
 
 /**
  * A Wmf logical region definition.
  */
-public class MfLogRegion implements WmfObject
-{
+public class MfLogRegion implements WmfObject {
   private int x;
   private int y;
   private int w;
   private int h;
 
-  public int getType()
-  {
+  public int getType() {
     return OBJ_REGION;
   }
 
-  public MfLogRegion()
-  {
+  public MfLogRegion() {
   }
 
-  public void setBounds(final int x, final int y, final int w, final int h)
-  {
+  public void setBounds( final int x, final int y, final int w, final int h ) {
     this.x = x;
     this.y = y;
     this.w = w;
     this.h = h;
   }
 
-  public Rectangle getBounds()
-  {
-    return new Rectangle(x, y, w, h);
+  public Rectangle getBounds() {
+    return new Rectangle( x, y, w, h );
   }
 }

@@ -24,33 +24,31 @@ import org.pentaho.reporting.libraries.css.values.CSSConstant;
  *
  * @author Thomas Morgner
  */
-public class AlignmentAdjust
-{
+public class AlignmentAdjust {
   public static final CSSConstant BASELINE =
-      new CSSConstant("baseline");
+    new CSSConstant( "baseline" );
   public static final CSSConstant AFTER_EDGE =
-      new CSSConstant("after-edge");
+    new CSSConstant( "after-edge" );
   public static final CSSConstant BEFORE_EDGE =
-      new CSSConstant("before-edge");
+    new CSSConstant( "before-edge" );
   public static final CSSConstant TEXT_AFTER_EDGE =
-      new CSSConstant("text-after-edge");
+    new CSSConstant( "text-after-edge" );
   public static final CSSConstant TEXT_BEFORE_EDGE =
-      new CSSConstant("text-before-edge");
+    new CSSConstant( "text-before-edge" );
 
   public static final CSSConstant ALPHABETIC =
-      new CSSConstant("alphabetic");
+    new CSSConstant( "alphabetic" );
   public static final CSSConstant HANGING =
-      new CSSConstant("hanging");
+    new CSSConstant( "hanging" );
   public static final CSSConstant IDEOGRAPHIC =
-      new CSSConstant("ideographic");
+    new CSSConstant( "ideographic" );
   public static final CSSConstant MATHEMATICAL =
-      new CSSConstant("mathematical");
+    new CSSConstant( "mathematical" );
   public static final CSSConstant CENTRAL =
-      new CSSConstant("central");
+    new CSSConstant( "central" );
   public static final CSSConstant MIDDLE =
-      new CSSConstant("middle");
+    new CSSConstant( "middle" );
 
-  private AlignmentAdjust()
-  {
+  private AlignmentAdjust() {
   }
 }

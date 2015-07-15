@@ -25,41 +25,34 @@ import org.pentaho.reporting.libraries.formula.typing.coretypes.TextType;
 
 /**
  * Describes DateValueFunction function.
- * @see DateValueFunction
  *
  * @author Cedric Pronzato
+ * @see DateValueFunction
  */
-public class DateValueFunctionDescription extends AbstractFunctionDescription
-{
+public class DateValueFunctionDescription extends AbstractFunctionDescription {
   private static final long serialVersionUID = 3110217290825835653L;
 
-  public DateValueFunctionDescription()
-  {
-    super("DATEVALUE", "org.pentaho.reporting.libraries.formula.function.datetime.DateValue-Function");
+  public DateValueFunctionDescription() {
+    super( "DATEVALUE", "org.pentaho.reporting.libraries.formula.function.datetime.DateValue-Function" );
   }
 
-  public Type getValueType()
-  {
+  public Type getValueType() {
     return DateTimeType.DATE_TYPE;
   }
 
-  public int getParameterCount()
-  {
+  public int getParameterCount() {
     return 1;
   }
 
-  public Type getParameterType(final int position)
-  {
-   return TextType.TYPE;
+  public Type getParameterType( final int position ) {
+    return TextType.TYPE;
   }
 
-  public boolean isParameterMandatory(final int position)
-  {
+  public boolean isParameterMandatory( final int position ) {
     return true;
   }
 
-  public FunctionCategory getCategory()
-  {
+  public FunctionCategory getCategory() {
     return DateTimeFunctionCategory.CATEGORY;
   }
 }

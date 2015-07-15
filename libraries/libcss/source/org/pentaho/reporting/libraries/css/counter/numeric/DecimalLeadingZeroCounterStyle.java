@@ -19,30 +19,22 @@ package org.pentaho.reporting.libraries.css.counter.numeric;
 
 import org.pentaho.reporting.libraries.css.counter.CounterStyle;
 
-public class DecimalLeadingZeroCounterStyle implements CounterStyle
-{
-  public DecimalLeadingZeroCounterStyle ()
-  {
+public class DecimalLeadingZeroCounterStyle implements CounterStyle {
+  public DecimalLeadingZeroCounterStyle() {
   }
 
-  public String getCounterValue (final int index)
-  {
-    if (Math.abs(index) < 10)
-    {
-      if (index < 0)
-      {
-        return "-0" + Integer.toString(-index);
-      }
-      else
-      {
-        return '0' + Integer.toString(index);
+  public String getCounterValue( final int index ) {
+    if ( Math.abs( index ) < 10 ) {
+      if ( index < 0 ) {
+        return "-0" + Integer.toString( -index );
+      } else {
+        return '0' + Integer.toString( index );
       }
     }
-    return Integer.toString(index);
+    return Integer.toString( index );
   }
 
-  public String getSuffix()
-  {
+  public String getSuffix() {
     return ".";
   }
 }

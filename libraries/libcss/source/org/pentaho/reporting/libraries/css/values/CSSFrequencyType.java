@@ -22,18 +22,15 @@ package org.pentaho.reporting.libraries.css.values;
  *
  * @author Thomas Morgner
  */
-public class CSSFrequencyType extends CSSType
-{
-  public static final CSSFrequencyType HERTZ = new CSSFrequencyType("hz");
-  public static final CSSFrequencyType KILOHERTZ = new CSSFrequencyType("khz");
+public class CSSFrequencyType extends CSSType {
+  public static final CSSFrequencyType HERTZ = new CSSFrequencyType( "hz" );
+  public static final CSSFrequencyType KILOHERTZ = new CSSFrequencyType( "khz" );
 
-  private CSSFrequencyType(String name)
-  {
-    super(name);
+  private CSSFrequencyType( String name ) {
+    super( name );
   }
 
-  public boolean equals(Object obj)
-  {
-    return (obj instanceof CSSFrequencyType && super.equals(obj));
+  public boolean equals( Object obj ) {
+    return ( obj instanceof CSSFrequencyType && super.equals( obj ) );
   }
 }

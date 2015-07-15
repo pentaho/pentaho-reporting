@@ -29,22 +29,17 @@ import org.w3c.css.sac.LexicalUnit;
  *
  * @author Thomas Morgner
  */
-public class TextScriptReadHandler implements CSSValueReadHandler
-{
-  public TextScriptReadHandler()
-  {
+public class TextScriptReadHandler implements CSSValueReadHandler {
+  public TextScriptReadHandler() {
   }
 
-  public CSSValue createValue(StyleKey name, LexicalUnit value)
-  {
-    if (value.getLexicalUnitType() != LexicalUnit.SAC_IDENT)
-    {
+  public CSSValue createValue( StyleKey name, LexicalUnit value ) {
+    if ( value.getLexicalUnitType() != LexicalUnit.SAC_IDENT ) {
       return null;
     }
-    if (value.getStringValue().equalsIgnoreCase("auto"))
-    {
+    if ( value.getStringValue().equalsIgnoreCase( "auto" ) ) {
       return CSSAutoValue.getInstance();
     }
-    return new CSSConstant(value.getStringValue());
+    return new CSSConstant( value.getStringValue() );
   }
 }

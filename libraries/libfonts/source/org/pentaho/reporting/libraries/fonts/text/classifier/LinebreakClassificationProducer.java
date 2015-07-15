@@ -22,41 +22,31 @@ package org.pentaho.reporting.libraries.fonts.text.classifier;
  *
  * @author Thomas Morgner
  */
-public class LinebreakClassificationProducer implements GlyphClassificationProducer
-{
+public class LinebreakClassificationProducer implements GlyphClassificationProducer {
 
-  public LinebreakClassificationProducer()
-  {
+  public LinebreakClassificationProducer() {
   }
 
-  public int getClassification(final int codepoint)
-  {
-    if (isLinebreak(codepoint))
-    {
+  public int getClassification( final int codepoint ) {
+    if ( isLinebreak( codepoint ) ) {
       return GlyphClassificationProducer.SPACE_CHAR;
     }
     return GlyphClassificationProducer.LETTER;
   }
 
-  protected boolean isLinebreak (final int codepoint)
-  {
-    if (codepoint == 0xa || codepoint == 0xd)
-    {
+  protected boolean isLinebreak( final int codepoint ) {
+    if ( codepoint == 0xa || codepoint == 0xd ) {
       return true;
-    }
-    else
-    {
+    } else {
       return false;
     }
   }
 
-  public Object clone() throws CloneNotSupportedException
-  {
+  public Object clone() throws CloneNotSupportedException {
     return super.clone();
   }
 
-  public void reset()
-  {
+  public void reset() {
 
   }
 }

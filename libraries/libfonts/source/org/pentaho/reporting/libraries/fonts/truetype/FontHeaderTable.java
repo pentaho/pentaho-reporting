@@ -17,19 +17,18 @@
 
 package org.pentaho.reporting.libraries.fonts.truetype;
 
-import java.io.IOException;
-
 import org.pentaho.reporting.libraries.fonts.ByteAccessUtilities;
+
+import java.io.IOException;
 
 /**
  * Creation-Date: 06.11.2005, 20:24:42
  *
  * @author Thomas Morgner
  */
-public class FontHeaderTable implements FontTable
-{
+public class FontHeaderTable implements FontTable {
   public static final long TABLE_ID =
-          ('h' << 24 | 'e' << 16 | 'a' << 8 | 'd');
+    ( 'h' << 24 | 'e' << 16 | 'a' << 8 | 'd' );
 
   private static final long MAGIC = 0x5F0F3CF5;
 
@@ -72,122 +71,101 @@ public class FontHeaderTable implements FontTable
   private short indexToLocFormat;
   private short glyphDataFormat;
 
-  public FontHeaderTable(final byte[] data) throws IOException
-  {
-    version = ByteAccessUtilities.readULong(data, 0);
-    revision = ByteAccessUtilities.readULong(data, 4);
-    checkSumAdjustment = ByteAccessUtilities.readULong(data, 8);
-    if (ByteAccessUtilities.readULong(data, 12) != MAGIC)
-    {
-      throw new IOException("MagicNumber missing");
+  public FontHeaderTable( final byte[] data ) throws IOException {
+    version = ByteAccessUtilities.readULong( data, 0 );
+    revision = ByteAccessUtilities.readULong( data, 4 );
+    checkSumAdjustment = ByteAccessUtilities.readULong( data, 8 );
+    if ( ByteAccessUtilities.readULong( data, 12 ) != MAGIC ) {
+      throw new IOException( "MagicNumber missing" );
     }
-    flags = ByteAccessUtilities.readUShort(data, 16);
-    unitsPerEm = ByteAccessUtilities.readUShort(data, 18);
-    createdDate = ByteAccessUtilities.readLongDateTime(data, 20);
-    modifiedDate = ByteAccessUtilities.readLongDateTime(data, 28);
-    xMin = ByteAccessUtilities.readShort(data, 36);
-    yMin = ByteAccessUtilities.readShort(data, 38);
-    xMax = ByteAccessUtilities.readShort(data, 40);
-    yMax = ByteAccessUtilities.readShort(data, 42);
-    macStyle = ByteAccessUtilities.readUShort(data, 44);
-    lowestRecPPEM = ByteAccessUtilities.readUShort(data, 46);
-    fontDirectionHint = ByteAccessUtilities.readShort(data, 48);
-    indexToLocFormat = ByteAccessUtilities.readShort(data, 50);
-    glyphDataFormat = ByteAccessUtilities.readShort(data, 52);
+    flags = ByteAccessUtilities.readUShort( data, 16 );
+    unitsPerEm = ByteAccessUtilities.readUShort( data, 18 );
+    createdDate = ByteAccessUtilities.readLongDateTime( data, 20 );
+    modifiedDate = ByteAccessUtilities.readLongDateTime( data, 28 );
+    xMin = ByteAccessUtilities.readShort( data, 36 );
+    yMin = ByteAccessUtilities.readShort( data, 38 );
+    xMax = ByteAccessUtilities.readShort( data, 40 );
+    yMax = ByteAccessUtilities.readShort( data, 42 );
+    macStyle = ByteAccessUtilities.readUShort( data, 44 );
+    lowestRecPPEM = ByteAccessUtilities.readUShort( data, 46 );
+    fontDirectionHint = ByteAccessUtilities.readShort( data, 48 );
+    indexToLocFormat = ByteAccessUtilities.readShort( data, 50 );
+    glyphDataFormat = ByteAccessUtilities.readShort( data, 52 );
   }
 
-  public long getVersion()
-  {
+  public long getVersion() {
     return version;
   }
 
-  public long getRevision()
-  {
+  public long getRevision() {
     return revision;
   }
 
-  public long getCheckSumAdjustment()
-  {
+  public long getCheckSumAdjustment() {
     return checkSumAdjustment;
   }
 
-  public int getFlags()
-  {
+  public int getFlags() {
     return flags;
   }
 
-  public int getUnitsPerEm()
-  {
+  public int getUnitsPerEm() {
     return unitsPerEm;
   }
 
-  public long getCreatedDate()
-  {
+  public long getCreatedDate() {
     return createdDate;
   }
 
-  public long getModifiedDate()
-  {
+  public long getModifiedDate() {
     return modifiedDate;
   }
 
-  public int getxMin()
-  {
+  public int getxMin() {
     return xMin;
   }
 
-  public int getyMin()
-  {
+  public int getyMin() {
     return yMin;
   }
 
-  public int getxMax()
-  {
+  public int getxMax() {
     return xMax;
   }
 
-  public int getyMax()
-  {
+  public int getyMax() {
     return yMax;
   }
 
-  public int getMacStyle()
-  {
+  public int getMacStyle() {
     return macStyle;
   }
 
-  public int getLowestRecPPEM()
-  {
+  public int getLowestRecPPEM() {
     return lowestRecPPEM;
   }
 
-  public short getFontDirectionHint()
-  {
+  public short getFontDirectionHint() {
     return fontDirectionHint;
   }
 
-  public short getIndexToLocFormat()
-  {
+  public short getIndexToLocFormat() {
     return indexToLocFormat;
   }
 
-  public short getGlyphDataFormat()
-  {
+  public short getGlyphDataFormat() {
     return glyphDataFormat;
   }
 
-  public boolean isBold ()
-  {
-    return (macStyle & STYLE_BOLD) == STYLE_BOLD;
+  public boolean isBold() {
+    return ( macStyle & STYLE_BOLD ) == STYLE_BOLD;
   }
 
-  public boolean isItalic ()
-  {
-    return (macStyle & STYLE_ITALIC) == STYLE_ITALIC;
+  public boolean isItalic() {
+    return ( macStyle & STYLE_ITALIC ) == STYLE_ITALIC;
   }
 
-  public long getName()
-  {
+  public long getName() {
     return TABLE_ID;
   }
 }

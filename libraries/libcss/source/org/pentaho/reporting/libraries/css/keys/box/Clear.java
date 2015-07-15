@@ -24,20 +24,18 @@ import org.pentaho.reporting.libraries.css.values.CSSConstant;
  *
  * @author Thomas Morgner
  */
-public class Clear
-{
-  public static final CSSConstant NONE = new CSSConstant("none");
-  public static final CSSConstant LEFT = new CSSConstant("left");
-  public static final CSSConstant RIGHT = new CSSConstant("right");
-  public static final CSSConstant TOP = new CSSConstant("top");
-  public static final CSSConstant BOTTOM = new CSSConstant("bottom");
-  public static final CSSConstant INSIDE = new CSSConstant("inside");
-  public static final CSSConstant OUTSIDE = new CSSConstant("outside");
-  public static final CSSConstant START = new CSSConstant("start");
-  public static final CSSConstant END = new CSSConstant("end");
-  public static final CSSConstant BOTH = new CSSConstant("both");
+public class Clear {
+  public static final CSSConstant NONE = new CSSConstant( "none" );
+  public static final CSSConstant LEFT = new CSSConstant( "left" );
+  public static final CSSConstant RIGHT = new CSSConstant( "right" );
+  public static final CSSConstant TOP = new CSSConstant( "top" );
+  public static final CSSConstant BOTTOM = new CSSConstant( "bottom" );
+  public static final CSSConstant INSIDE = new CSSConstant( "inside" );
+  public static final CSSConstant OUTSIDE = new CSSConstant( "outside" );
+  public static final CSSConstant START = new CSSConstant( "start" );
+  public static final CSSConstant END = new CSSConstant( "end" );
+  public static final CSSConstant BOTH = new CSSConstant( "both" );
 
-  private Clear()
-  {
+  private Clear() {
   }
 }

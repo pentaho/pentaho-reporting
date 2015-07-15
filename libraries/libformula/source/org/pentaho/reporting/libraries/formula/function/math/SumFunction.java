@@ -23,10 +23,10 @@ import org.pentaho.reporting.libraries.formula.LibFormulaErrorValue;
 import org.pentaho.reporting.libraries.formula.function.Function;
 import org.pentaho.reporting.libraries.formula.function.ParameterCallback;
 import org.pentaho.reporting.libraries.formula.lvalues.TypeValuePair;
+import org.pentaho.reporting.libraries.formula.typing.NumberSequence;
 import org.pentaho.reporting.libraries.formula.typing.Type;
 import org.pentaho.reporting.libraries.formula.typing.TypeRegistry;
 import org.pentaho.reporting.libraries.formula.typing.coretypes.NumberType;
-import org.pentaho.reporting.libraries.formula.typing.NumberSequence;
 import org.pentaho.reporting.libraries.formula.util.NumberUtil;
 
 import java.math.BigDecimal;
@@ -36,62 +36,52 @@ import java.math.BigDecimal;
  *
  * @author Thomas Morgner
  */
-public class SumFunction implements Function
-{
-  public static final BigDecimal ZERO = new BigDecimal(0.0);
+public class SumFunction implements Function {
+  public static final BigDecimal ZERO = new BigDecimal( 0.0 );
   private static final long serialVersionUID = -8604838130517819412L;
 
-  public SumFunction()
-  {
+  public SumFunction() {
   }
 
-  public String getCanonicalName()
-  {
+  public String getCanonicalName() {
     return "SUM";
   }
 
-  protected boolean isStrictSequenceNeeded()
-  {
+  protected boolean isStrictSequenceNeeded() {
     return true;
   }
 
-  public TypeValuePair evaluate(final FormulaContext context,
-                                final ParameterCallback parameters)
-      throws EvaluationException
-  {
+  public TypeValuePair evaluate( final FormulaContext context,
+                                 final ParameterCallback parameters )
+    throws EvaluationException {
     BigDecimal computedResult = ZERO;
     final int parameterCount = parameters.getParameterCount();
 
-    if (parameterCount == 0)
-    {
-      throw EvaluationException.getInstance(LibFormulaErrorValue.ERROR_ARGUMENTS_VALUE);
+    if ( parameterCount == 0 ) {
+      throw EvaluationException.getInstance( LibFormulaErrorValue.ERROR_ARGUMENTS_VALUE );
     }
 
     final TypeRegistry typeRegistry = context.getTypeRegistry();
-    for (int paramIdx = 0; paramIdx < parameterCount; paramIdx++)
-    {
-      final Type type = parameters.getType(paramIdx);
-      final Object value = parameters.getValue(paramIdx);
-      final NumberSequence sequence = typeRegistry.convertToNumberSequence(type, value, isStrictSequenceNeeded());
+    for ( int paramIdx = 0; paramIdx < parameterCount; paramIdx++ ) {
+      final Type type = parameters.getType( paramIdx );
+      final Object value = parameters.getValue( paramIdx );
+      final NumberSequence sequence = typeRegistry.convertToNumberSequence( type, value, isStrictSequenceNeeded() );
 
-      while (sequence.hasNext())
-      {
-        computedResult = compute(sequence.nextNumber(), computedResult);
+      while ( sequence.hasNext() ) {
+        computedResult = compute( sequence.nextNumber(), computedResult );
       }
     }
 
-    return new TypeValuePair(NumberType.GENERIC_NUMBER, computedResult);
+    return new TypeValuePair( NumberType.GENERIC_NUMBER, computedResult );
   }
 
-  private BigDecimal compute(final Number value,
-                             final BigDecimal computedResult)
-  {
-    if (value == null)
-    {
+  private BigDecimal compute( final Number value,
+                              final BigDecimal computedResult ) {
+    if ( value == null ) {
       // no-op ..
       return computedResult;
     }
 
-    return computedResult.add(NumberUtil.getAsBigDecimal(value));
+    return computedResult.add( NumberUtil.getAsBigDecimal( value ) );
   }
 }

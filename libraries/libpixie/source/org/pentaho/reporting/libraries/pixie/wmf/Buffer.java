@@ -23,11 +23,9 @@ import java.io.IOException;
 import java.io.InputStream;
 
 /**
- * A block of raw mmeory. This is used to store various metafile objects as they are read
- * in from file.
+ * A block of raw mmeory. This is used to store various metafile objects as they are read in from file.
  */
-public class Buffer
-{
+public class Buffer {
   /**
    * The memory itself.
    */
@@ -41,8 +39,7 @@ public class Buffer
   /**
    * Default Constructor. Defines a buffer without an initial size.
    */
-  protected Buffer()
-  {
+  protected Buffer() {
   }
 
   /**
@@ -50,16 +47,14 @@ public class Buffer
    *
    * @param length the length of the buffer in bytes.
    */
-  protected Buffer(final int length)
-  {
-    setCapacity(length);
+  protected Buffer( final int length ) {
+    setCapacity( length );
   }
 
   /**
    * The size of the stored data in the memory.
    */
-  public final int getLength()
-  {
+  public final int getLength() {
     return length;
   }
 
@@ -67,13 +62,10 @@ public class Buffer
    * Extends the length to the given new size.
    *
    * @param len the new length.
-   * @throws IllegalArgumentException if the length is shorter than the used storage in
-   *                                  memory.
+   * @throws IllegalArgumentException if the length is shorter than the used storage in memory.
    */
-  protected void setLength(final int len)
-  {
-    if (len > bytes.length)
-    {
+  protected void setLength( final int len ) {
+    if ( len > bytes.length ) {
       throw new IllegalArgumentException();
     }
 
@@ -86,67 +78,55 @@ public class Buffer
    * @param capacity the new capacity that should be ensured.
    * @throws IllegalArgumentException if the capacity is smaller than the buffers length.
    */
-  protected void setCapacity(final int capacity)
-  {
-    if (capacity < getLength())
-    {
+  protected void setCapacity( final int capacity ) {
+    if ( capacity < getLength() ) {
       throw new IllegalArgumentException();
     }
 
-    if (bytes == null || bytes.length == 0)
-    {
-      bytes = new byte[capacity];
-    }
-    else if (capacity != bytes.length)
-    {
+    if ( bytes == null || bytes.length == 0 ) {
+      bytes = new byte[ capacity ];
+    } else if ( capacity != bytes.length ) {
       final byte[] old = bytes;
-      bytes = new byte[capacity];
-      System.arraycopy(old, 0, bytes, 0, Math.min(old.length, capacity));
+      bytes = new byte[ capacity ];
+      System.arraycopy( old, 0, bytes, 0, Math.min( old.length, capacity ) );
     }
   }
 
   /**
-   * Read <code>len</code> bytes into the memory from a stream and stores the read bytes
-   * at the given offset.
+   * Read <code>len</code> bytes into the memory from a stream and stores the read bytes at the given offset.
    *
    * @param in     the input stream that should be used
    * @param offset the offset
    * @param len    the number bytes that should be read.
    */
-  public void read(final InputStream in, int offset, int len)
-      throws IOException
-  {
+  public void read( final InputStream in, int offset, int len )
+    throws IOException {
     // make sure, that all bytes can be read and create the buffer if needed.
-    if (bytes == null || offset + len > bytes.length)
-    {
-      setCapacity(offset + len);
+    if ( bytes == null || offset + len > bytes.length ) {
+      setCapacity( offset + len );
     }
 
     //in.readFully( bytes, offset, len );
-    while (len > 0)
-    {
-      final int blockSize = in.read(bytes, offset, len);
-      if (blockSize <= 0)
-      {
+    while ( len > 0 ) {
+      final int blockSize = in.read( bytes, offset, len );
+      if ( blockSize <= 0 ) {
         throw new EOFException();
       }
       offset += blockSize;
       len -= blockSize;
-      setLength(offset);
+      setLength( offset );
     }
   }
 
   /**
-   * Moves the buffer contents from the source offset to the target offset, the areas
-   * should not overlap.
+   * Moves the buffer contents from the source offset to the target offset, the areas should not overlap.
    *
    * @param sourceoffset
    * @param length
    * @param targetoffset
    */
-  protected void move(final int sourceoffset, final int length, final int targetoffset)
-  {
-    System.arraycopy(bytes, sourceoffset, bytes, targetoffset, length);
+  protected void move( final int sourceoffset, final int length, final int targetoffset ) {
+    System.arraycopy( bytes, sourceoffset, bytes, targetoffset, length );
   }
 
   /**
@@ -155,15 +135,13 @@ public class Buffer
    * @param offset the offset where to set the int value.
    * @param value  the integer value that should be set.
    */
-  public void setInt(final int offset, final int value)
-  {
-    if (offset > (getLength() - 4))
-    {
+  public void setInt( final int offset, final int value ) {
+    if ( offset > ( getLength() - 4 ) ) {
       throw new IndexOutOfBoundsException();
     }
 
-    setShort(offset, value & 0x0ffff);
-    setShort(offset + 2, value >> 16);
+    setShort( offset, value & 0x0ffff );
+    setShort( offset + 2, value >> 16 );
   }
 
   /**
@@ -172,14 +150,12 @@ public class Buffer
    * @param offset the offset where the integer value is stored in the memory
    * @return the integer.
    */
-  public int getInt(final int offset)
-  {
-    if (offset > (getLength() - 4))
-    {
+  public int getInt( final int offset ) {
+    if ( offset > ( getLength() - 4 ) ) {
       throw new IndexOutOfBoundsException();
     }
 
-    return (getShort(offset) & 0x0ffff) | (getShort(offset + 2) << 16);
+    return ( getShort( offset ) & 0x0ffff ) | ( getShort( offset + 2 ) << 16 );
   }
 
   /**
@@ -188,15 +164,13 @@ public class Buffer
    * @param offset   the offset.
    * @param shortval the shortvalue.
    */
-  public void setShort(final int offset, final int shortval)
-  {
-    if (offset > (getLength() - 2))
-    {
+  public void setShort( final int offset, final int shortval ) {
+    if ( offset > ( getLength() - 2 ) ) {
       throw new IndexOutOfBoundsException();
     }
 
-    bytes[offset] = (byte) (shortval & 0x0ff);
-    bytes[offset + 1] = (byte) (shortval >> 8);
+    bytes[ offset ] = (byte) ( shortval & 0x0ff );
+    bytes[ offset + 1 ] = (byte) ( shortval >> 8 );
   }
 
   /**
@@ -205,16 +179,14 @@ public class Buffer
    * @param offset the offset from where to read the short.
    * @return the short.
    */
-  public int getShort(final int offset)
-  {
-    if (offset > (getLength() - 2))
-    {
+  public int getShort( final int offset ) {
+    if ( offset > ( getLength() - 2 ) ) {
       throw new IndexOutOfBoundsException
-          ("Offset " + offset + " is out of limit. " +
-              "Max length is " + (getLength() - 2));
+        ( "Offset " + offset + " is out of limit. " +
+          "Max length is " + ( getLength() - 2 ) );
     }
 
-    return (bytes[offset] & 0x0ff) | (bytes[offset + 1] << 8);
+    return ( bytes[ offset ] & 0x0ff ) | ( bytes[ offset + 1 ] << 8 );
   }
 
   /**
@@ -223,14 +195,12 @@ public class Buffer
    * @param offset the offset.
    * @param value  the byte that should be set.
    */
-  public void setByte(final int offset, final int value)
-  {
-    if (offset > (getLength() - 1))
-    {
+  public void setByte( final int offset, final int value ) {
+    if ( offset > ( getLength() - 1 ) ) {
       throw new IndexOutOfBoundsException();
     }
 
-    bytes[offset] = (byte) (value & 0x0ff);
+    bytes[ offset ] = (byte) ( value & 0x0ff );
   }
 
   /**
@@ -239,14 +209,12 @@ public class Buffer
    * @param offset the offset from where to read the byte
    * @return the byte read.
    */
-  public int getByte(final int offset)
-  {
-    if (offset > (getLength() - 1))
-    {
+  public int getByte( final int offset ) {
+    if ( offset > ( getLength() - 1 ) ) {
       throw new IndexOutOfBoundsException();
     }
 
-    return bytes[offset] & 0x0ff;
+    return bytes[ offset ] & 0x0ff;
   }
 
   /**
@@ -255,10 +223,8 @@ public class Buffer
    * @param offset the offset, where to store the string.
    * @param str    the string that should be stored in the Wmf.
    */
-  public void setString(final int offset, final String str)
-  {
-    if ((offset + str.length()) > (getLength() - 1))
-    {
+  public void setString( final int offset, final String str ) {
+    if ( ( offset + str.length() ) > ( getLength() - 1 ) ) {
       throw new IndexOutOfBoundsException();
     }
 
@@ -266,35 +232,29 @@ public class Buffer
 
     final int len = getLength() - offset;
 
-    for (int i = 0; i < len; i++)
-    {
-      bytes[offset + i] = b[offset];
+    for ( int i = 0; i < len; i++ ) {
+      bytes[ offset + i ] = b[ offset ];
     }
-    if ((offset + len) < getLength())
-    {
-      bytes[offset + len] = 0;
+    if ( ( offset + len ) < getLength() ) {
+      bytes[ offset + len ] = 0;
     }
   }
 
   /**
-   * Return the null-terminated string at the given byte offset with the given maximum
-   * length.
+   * Return the null-terminated string at the given byte offset with the given maximum length.
    *
    * @param offset the offset where the string starts
    * @param len    the maximum length of the string
    * @return the null-terminated string read.
    */
-  public String getString(final int offset, final int len)
-  {
+  public String getString( final int offset, final int len ) {
     int i;
-    for (i = 0; i < len; i++)
-    {
-      if (bytes[offset + i] == 0)
-      {
+    for ( i = 0; i < len; i++ ) {
+      if ( bytes[ offset + i ] == 0 ) {
         break;
       }
     }
-    return new String(bytes, offset, i);
+    return new String( bytes, offset, i );
   }
 
   /**
@@ -303,8 +263,7 @@ public class Buffer
    * @param offset the offse, from where to read.
    * @return the InputStream.
    */
-  public InputStream getInputStream(final int offset)
-  {
-    return new ByteArrayInputStream(bytes, offset, bytes.length - offset);
+  public InputStream getInputStream( final int offset ) {
+    return new ByteArrayInputStream( bytes, offset, bytes.length - offset );
   }
 }

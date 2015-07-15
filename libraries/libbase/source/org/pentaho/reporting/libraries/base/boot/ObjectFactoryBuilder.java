@@ -18,7 +18,6 @@
 
 package org.pentaho.reporting.libraries.base.boot;
 
-public interface ObjectFactoryBuilder
-{
-  public ObjectFactory createObjectFactory(final SubSystem subSystem);
+public interface ObjectFactoryBuilder {
+  public ObjectFactory createObjectFactory( final SubSystem subSystem );
 }

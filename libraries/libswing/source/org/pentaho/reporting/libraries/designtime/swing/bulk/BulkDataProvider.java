@@ -17,9 +17,10 @@
 
 package org.pentaho.reporting.libraries.designtime.swing.bulk;
 
-public interface BulkDataProvider
-{
+public interface BulkDataProvider {
   public int getBulkDataSize();
+
   public Object[] getBulkData();
-  public void setBulkData(Object[] data);
+
+  public void setBulkData( Object[] data );
 }

@@ -21,14 +21,12 @@ import java.text.ChoiceFormat;
 import java.util.Locale;
 
 /**
- * A wrapper around the java.text.ChoiceFormat class. This wrapper limits the possible interactions with
- * the wrapped format class and therefore eliminates the need to clone the choice format whenever the
- * wrapper is cloned.
+ * A wrapper around the java.text.ChoiceFormat class. This wrapper limits the possible interactions with the wrapped
+ * format class and therefore eliminates the need to clone the choice format whenever the wrapper is cloned.
  *
  * @author Thomas Morgner
  */
-public class FastChoiceFormat implements FastFormat
-{
+public class FastChoiceFormat implements FastFormat {
   private Locale locale;
   private String pattern;
   private ChoiceFormat choiceFormat;
@@ -38,31 +36,27 @@ public class FastChoiceFormat implements FastFormat
    *
    * @param pattern the pattern.
    */
-  public FastChoiceFormat(final String pattern)
-  {
-    this(pattern, Locale.getDefault());
+  public FastChoiceFormat( final String pattern ) {
+    this( pattern, Locale.getDefault() );
   }
 
   /**
-   * Creates a new ChoiceFormat with the given pattern and locale. As the local is not used anywhere, this
-   * has no impact on the format itself.
+   * Creates a new ChoiceFormat with the given pattern and locale. As the local is not used anywhere, this has no impact
+   * on the format itself.
    *
    * @param pattern the pattern.
-   * @param locale the locale.
+   * @param locale  the locale.
    */
-  public FastChoiceFormat(final String pattern, final Locale locale)
-  {
-    if (pattern == null)
-    {
+  public FastChoiceFormat( final String pattern, final Locale locale ) {
+    if ( pattern == null ) {
       throw new NullPointerException();
     }
-    if (locale == null)
-    {
+    if ( locale == null ) {
       throw new NullPointerException();
     }
     this.pattern = pattern;
     this.locale = locale;
-    this.choiceFormat = new ChoiceFormat(pattern);
+    this.choiceFormat = new ChoiceFormat( pattern );
   }
 
   /**
@@ -70,8 +64,7 @@ public class FastChoiceFormat implements FastFormat
    *
    * @return the current locale, never null.
    */
-  public Locale getLocale()
-  {
+  public Locale getLocale() {
     return locale;
   }
 
@@ -80,8 +73,7 @@ public class FastChoiceFormat implements FastFormat
    *
    * @return the locale.
    */
-  public String getPattern()
-  {
+  public String getPattern() {
     return pattern;
   }
 
@@ -91,9 +83,8 @@ public class FastChoiceFormat implements FastFormat
    * @param parameters the parameters, usually a Number- or Date object.
    * @return the formatted text.
    */
-  public String format(final Object parameters)
-  {
-    return choiceFormat.format(parameters);
+  public String format( final Object parameters ) {
+    return choiceFormat.format( parameters );
   }
 
   /**
@@ -102,16 +93,12 @@ public class FastChoiceFormat implements FastFormat
    * @return the clone.
    * @throws CloneNotSupportedException if cloning failed for some reason.
    */
-  public FastChoiceFormat clone()
-  {
-    try
-    {
+  public FastChoiceFormat clone() {
+    try {
       final FastChoiceFormat format = (FastChoiceFormat) super.clone();
       format.choiceFormat = (ChoiceFormat) choiceFormat.clone();
       return format;
-    }
-    catch (CloneNotSupportedException e)
-    {
+    } catch ( CloneNotSupportedException e ) {
       throw new IllegalStateException();
     }
   }

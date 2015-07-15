@@ -17,15 +17,13 @@
 
 package org.pentaho.reporting.tools.configeditor.util;
 
-import java.awt.Component;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import javax.swing.JTree;
-import javax.swing.tree.DefaultTreeCellRenderer;
-
 import org.pentaho.reporting.tools.configeditor.model.ConfigTreeModuleNode;
 import org.pentaho.reporting.tools.configeditor.model.ConfigTreeRootNode;
 import org.pentaho.reporting.tools.configeditor.model.ConfigTreeSectionNode;
+
+import javax.swing.*;
+import javax.swing.tree.DefaultTreeCellRenderer;
+import java.awt.*;
 
 
 /**
@@ -36,14 +34,12 @@ import org.pentaho.reporting.tools.configeditor.model.ConfigTreeSectionNode;
  * @author Thomas Morgner
  * @see BugFixProxyGraphics2D
  */
-public class ConfigTreeRenderer extends DefaultTreeCellRenderer
-{
+public class ConfigTreeRenderer extends DefaultTreeCellRenderer {
   /**
    * DefaultConstructor.
    */
-  public ConfigTreeRenderer()
-  {
-    setDoubleBuffered(false);
+  public ConfigTreeRenderer() {
+    setDoubleBuffered( false );
   }
 
   /**
@@ -60,39 +56,33 @@ public class ConfigTreeRenderer extends DefaultTreeCellRenderer
    * @param hasFocus whether the node has the input focus
    * @return the renderer component.
    */
-  public Component getTreeCellRendererComponent(final JTree tree, final Object value,
-                                                final boolean sel,
-                                                final boolean expanded,
-                                                final boolean leaf, final int row,
-                                                final boolean hasFocus)
-  {
-    if (value instanceof ConfigTreeRootNode)
-    {
-      return super.getTreeCellRendererComponent(tree, "<Root>", //$NON-NLS-1$
-          sel, expanded, leaf, row, hasFocus);
-    }
-    else if (value instanceof ConfigTreeSectionNode)
-    {
+  public Component getTreeCellRendererComponent( final JTree tree, final Object value,
+                                                 final boolean sel,
+                                                 final boolean expanded,
+                                                 final boolean leaf, final int row,
+                                                 final boolean hasFocus ) {
+    if ( value instanceof ConfigTreeRootNode ) {
+      return super.getTreeCellRendererComponent( tree, "<Root>", //$NON-NLS-1$
+        sel, expanded, leaf, row, hasFocus );
+    } else if ( value instanceof ConfigTreeSectionNode ) {
       final ConfigTreeSectionNode node = (ConfigTreeSectionNode) value;
-      return super.getTreeCellRendererComponent(tree, node.getName(),
-          sel, expanded, leaf, row, hasFocus);
-    }
-    else if (value instanceof ConfigTreeModuleNode)
-    {
+      return super.getTreeCellRendererComponent( tree, node.getName(),
+        sel, expanded, leaf, row, hasFocus );
+    } else if ( value instanceof ConfigTreeModuleNode ) {
       final ConfigTreeModuleNode node = (ConfigTreeModuleNode) value;
-      final StringBuilder text = new StringBuilder(100);
-      text.append(node.getModule().getName());
-//      text.append(" - "); //$NON-NLS-1$
-//      text.append(node.getModule().getMajorVersion());
-//      text.append('.');
-//      text.append(node.getModule().getMinorVersion());
-//      text.append('-');
-//      text.append(node.getModule().getPatchLevel());
-      return super.getTreeCellRendererComponent(tree, text.toString(),
-          sel, expanded, leaf, row, hasFocus);
+      final StringBuilder text = new StringBuilder( 100 );
+      text.append( node.getModule().getName() );
+      //      text.append(" - "); //$NON-NLS-1$
+      //      text.append(node.getModule().getMajorVersion());
+      //      text.append('.');
+      //      text.append(node.getModule().getMinorVersion());
+      //      text.append('-');
+      //      text.append(node.getModule().getPatchLevel());
+      return super.getTreeCellRendererComponent( tree, text.toString(),
+        sel, expanded, leaf, row, hasFocus );
     }
-    return super.getTreeCellRendererComponent(tree, value,
-        sel, expanded, leaf, row, hasFocus);
+    return super.getTreeCellRendererComponent( tree, value,
+      sel, expanded, leaf, row, hasFocus );
   }
 
   /**
@@ -102,8 +92,7 @@ public class ConfigTreeRenderer extends DefaultTreeCellRenderer
    *
    * @param g the graphics.
    */
-  public void paint(final Graphics g)
-  {
-    super.paint(new BugFixProxyGraphics2D((Graphics2D) g));
+  public void paint( final Graphics g ) {
+    super.paint( new BugFixProxyGraphics2D( (Graphics2D) g ) );
   }
 }

@@ -17,111 +17,87 @@
 
 package org.pentaho.reporting.libraries.designtime.swing.colorchooser;
 
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.Dialog;
-import java.awt.Frame;
-import java.awt.HeadlessException;
-
 import org.pentaho.reporting.libraries.designtime.swing.CommonDialog;
 
-public class ColorChooserDialog extends CommonDialog
-{
+import java.awt.*;
+
+public class ColorChooserDialog extends CommonDialog {
   private ColorChooserPane colorChooserPane;
 
-  public ColorChooserDialog()
-  {
+  public ColorChooserDialog() {
     init();
   }
 
-  public ColorChooserDialog(final Frame owner) throws HeadlessException
-  {
-    super(owner);
+  public ColorChooserDialog( final Frame owner ) throws HeadlessException {
+    super( owner );
     init();
   }
 
-  public ColorChooserDialog(final Dialog owner) throws HeadlessException
-  {
-    super(owner);
+  public ColorChooserDialog( final Dialog owner ) throws HeadlessException {
+    super( owner );
     init();
   }
 
-  public void addColorChooserPanel(final AbstractColorChooserPanel panel)
-  {
-    colorChooserPane.addColorChooserPanel(panel);
+  public void addColorChooserPanel( final AbstractColorChooserPanel panel ) {
+    colorChooserPane.addColorChooserPanel( panel );
   }
 
-  public AbstractColorChooserPanel getColorChooserPanel(final int index)
-  {
-    return colorChooserPane.getColorChooserPanel(index);
+  public AbstractColorChooserPanel getColorChooserPanel( final int index ) {
+    return colorChooserPane.getColorChooserPanel( index );
   }
 
-  public void clearSwatches()
-  {
+  public void clearSwatches() {
     colorChooserPane.clearSwatches();
   }
 
-  public SwatchColorChooser getSwatchColorChooser()
-  {
+  public SwatchColorChooser getSwatchColorChooser() {
     return colorChooserPane.getSwatchColorChooser();
   }
 
-  public int getColorChooserPanelCount()
-  {
+  public int getColorChooserPanelCount() {
     return colorChooserPane.getColorChooserPanelCount();
   }
 
-  public void removeAllColorChooserPanels()
-  {
+  public void removeAllColorChooserPanels() {
     colorChooserPane.removeAllColorChooserPanels();
   }
 
-  public void removeColorChooserPanel(final AbstractColorChooserPanel panel)
-  {
-    colorChooserPane.removeColorChooserPanel(panel);
+  public void removeColorChooserPanel( final AbstractColorChooserPanel panel ) {
+    colorChooserPane.removeColorChooserPanel( panel );
   }
 
-  public ExtendedColorModel getModel()
-  {
+  public ExtendedColorModel getModel() {
     return colorChooserPane.getModel();
   }
 
-  protected ColorChooserPane getColorChooserPane()
-  {
+  protected ColorChooserPane getColorChooserPane() {
     return colorChooserPane;
   }
 
-  protected void init()
-  {
-    setTitle(ColorChooserMessages.getInstance().getString("ColorChooserDialog.Title"));
+  protected void init() {
+    setTitle( ColorChooserMessages.getInstance().getString( "ColorChooserDialog.Title" ) );
     colorChooserPane = new ColorChooserPane();
     super.init();
   }
 
 
-  protected String getDialogId()
-  {
+  protected String getDialogId() {
     return "LibSwing.ColorChooser";
   }
 
-  protected Component createContentPane()
-  {
+  protected Component createContentPane() {
     return colorChooserPane;
   }
 
-  public Color performEdit(final Color color, final ColorSchema[] colorSchemas)
-  {
-    if (colorSchemas != null)
-    {
+  public Color performEdit( final Color color, final ColorSchema[] colorSchemas ) {
+    if ( colorSchemas != null ) {
       colorChooserPane.clearSwatches();
-      for (final ColorSchema colorSchema : colorSchemas)
-      {
-        colorChooserPane.addSwatches(colorSchema);
+      for ( final ColorSchema colorSchema : colorSchemas ) {
+        colorChooserPane.addSwatches( colorSchema );
       }
     }
-    getModel().setSelectedColor(color);
-    if (performEdit())
-    {
+    getModel().setSelectedColor( color );
+    if ( performEdit() ) {
       return getModel().getSelectedColor();
     }
     return null;

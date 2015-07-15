@@ -17,41 +17,37 @@
 
 package org.pentaho.openformula.ui;
 
-import java.util.Arrays;
-
 import org.pentaho.openformula.ui.model2.FunctionInformation;
 import org.pentaho.reporting.libraries.formula.function.FunctionDescription;
 
-public class FunctionParameterContext
-{
+import java.util.Arrays;
+
+public class FunctionParameterContext {
   private FunctionDescription function;
   private String[] parameterValues;
   private FunctionInformation functionInformation;
   private boolean switchParameterEditor;
   private FormulaEditorModel editorModel;
 
-  public FunctionParameterContext()
-  {
+  public FunctionParameterContext() {
     switchParameterEditor = true;
   }
 
   @Deprecated
-  public FunctionParameterContext(final FunctionDescription function,
-                                  final String[] parameterValues,
-                                  final FunctionInformation fn,
-                                  final boolean switchParameterEditor,
-                                  final FormulaEditorModel editorModel)
-  {
+  public FunctionParameterContext( final FunctionDescription function,
+                                   final String[] parameterValues,
+                                   final FunctionInformation fn,
+                                   final boolean switchParameterEditor,
+                                   final FormulaEditorModel editorModel ) {
     // todo: remove me in next major release
-    this(function, fn, switchParameterEditor, editorModel);
+    this( function, fn, switchParameterEditor, editorModel );
     this.parameterValues = parameterValues;
   }
 
-  public FunctionParameterContext(final FunctionDescription function,
-                                  final FunctionInformation fn,
-                                  final boolean switchParameterEditor,
-                                  final FormulaEditorModel editorModel)
-  {
+  public FunctionParameterContext( final FunctionDescription function,
+                                   final FunctionInformation fn,
+                                   final boolean switchParameterEditor,
+                                   final FormulaEditorModel editorModel ) {
     this.function = function;
     this.functionInformation = fn;
     this.switchParameterEditor = switchParameterEditor;
@@ -59,44 +55,38 @@ public class FunctionParameterContext
     this.parameterValues = fn.getParameters();
   }
 
-  public FormulaEditorModel getEditorModel()
-  {
+  public FormulaEditorModel getEditorModel() {
     return editorModel;
   }
 
-  public FunctionInformation getFunctionInformation()
-  {
+  public FunctionInformation getFunctionInformation() {
     return functionInformation;
   }
 
-  public FunctionDescription getFunction()
-  {
+  public FunctionDescription getFunction() {
     return function;
   }
 
-  public String[] getParameterValues()
-  {
+  public String[] getParameterValues() {
     return parameterValues;
   }
 
-  public boolean isSwitchParameterEditor()
-  {
+  public boolean isSwitchParameterEditor() {
     return switchParameterEditor;
   }
 
-  public void setSwitchParameterEditor(final boolean switchParameterEditor)
-  {
+  public void setSwitchParameterEditor( final boolean switchParameterEditor ) {
     this.switchParameterEditor = switchParameterEditor;
   }
 
-  public String toString()
-  {
+  public String toString() {
     final StringBuilder sb = new StringBuilder();
-    sb.append("FunctionParameterContext");
-    sb.append("{function=").append(function);
-    sb.append(", parameterValues=").append(parameterValues == null ? "null" : Arrays.asList(parameterValues).toString());
-    sb.append(", functionInformation=").append(functionInformation);
-    sb.append('}');
+    sb.append( "FunctionParameterContext" );
+    sb.append( "{function=" ).append( function );
+    sb.append( ", parameterValues=" )
+      .append( parameterValues == null ? "null" : Arrays.asList( parameterValues ).toString() );
+    sb.append( ", functionInformation=" ).append( functionInformation );
+    sb.append( '}' );
     return sb.toString();
   }
 }

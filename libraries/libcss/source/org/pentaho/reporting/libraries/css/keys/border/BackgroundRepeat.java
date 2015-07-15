@@ -24,17 +24,15 @@ import org.pentaho.reporting.libraries.css.values.CSSConstant;
  *
  * @author Thomas Morgner
  */
-public class BackgroundRepeat
-{
-  public static final CSSConstant REPEAT = new CSSConstant("repeat");
-  public static final CSSConstant NOREPEAT = new CSSConstant("no-repeat");
-  public static final CSSConstant SPACE = new CSSConstant("space");
+public class BackgroundRepeat {
+  public static final CSSConstant REPEAT = new CSSConstant( "repeat" );
+  public static final CSSConstant NOREPEAT = new CSSConstant( "no-repeat" );
+  public static final CSSConstant SPACE = new CSSConstant( "space" );
 
-  public static final CSSConstant REPEAT_X = new CSSConstant("repeat-y");
-  public static final CSSConstant REPEAT_Y = new CSSConstant("repeat-x");
+  public static final CSSConstant REPEAT_X = new CSSConstant( "repeat-y" );
+  public static final CSSConstant REPEAT_Y = new CSSConstant( "repeat-x" );
 
-  private BackgroundRepeat()
-  {
+  private BackgroundRepeat() {
   }
 
 }

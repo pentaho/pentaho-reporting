@@ -22,8 +22,7 @@ package org.pentaho.reporting.libraries.fonts.text;
  *
  * @author Thomas Morgner
  */
-public class DefaultFontSpecification implements FontSpecification
-{
+public class DefaultFontSpecification implements FontSpecification {
   private String fontFamily;
   private String encoding;
   private boolean embedFontData;
@@ -34,20 +33,18 @@ public class DefaultFontSpecification implements FontSpecification
   private int fontWeight;
   private double fontSize;
 
-  public DefaultFontSpecification()
-  {
+  public DefaultFontSpecification() {
   }
 
-  public DefaultFontSpecification(final String fontFamily,
-                                  final double fontSize,
-                                  final int fontWeight,
-                                  final boolean italic,
-                                  final boolean oblique,
-                                  final boolean smallCaps,
-                                  final boolean antiAliasing,
-                                  final String encoding,
-                                  final boolean embedFontData)
-  {
+  public DefaultFontSpecification( final String fontFamily,
+                                   final double fontSize,
+                                   final int fontWeight,
+                                   final boolean italic,
+                                   final boolean oblique,
+                                   final boolean smallCaps,
+                                   final boolean antiAliasing,
+                                   final String encoding,
+                                   final boolean embedFontData ) {
     this.fontFamily = fontFamily;
     this.fontSize = fontSize;
     this.fontWeight = fontWeight;
@@ -59,93 +56,75 @@ public class DefaultFontSpecification implements FontSpecification
     this.embedFontData = embedFontData;
   }
 
-  public String getFontFamily()
-  {
+  public String getFontFamily() {
     return fontFamily;
   }
 
-  public void setFontFamily(final String fontFamily)
-  {
+  public void setFontFamily( final String fontFamily ) {
     this.fontFamily = fontFamily;
   }
 
-  public boolean isAntiAliasing()
-  {
+  public boolean isAntiAliasing() {
     return antiAliasing;
   }
 
-  public void setAntiAliasing(final boolean antiAliasing)
-  {
+  public void setAntiAliasing( final boolean antiAliasing ) {
     this.antiAliasing = antiAliasing;
   }
 
-  public boolean isSmallCaps()
-  {
+  public boolean isSmallCaps() {
     return smallCaps;
   }
 
-  public void setSmallCaps(final boolean smallCaps)
-  {
+  public void setSmallCaps( final boolean smallCaps ) {
     this.smallCaps = smallCaps;
   }
 
-  public boolean isItalic()
-  {
+  public boolean isItalic() {
     return italic;
   }
 
-  public void setItalic(final boolean italic)
-  {
+  public void setItalic( final boolean italic ) {
     this.italic = italic;
   }
 
-  public boolean isOblique()
-  {
+  public boolean isOblique() {
     return oblique;
   }
 
-  public void setOblique(final boolean oblique)
-  {
+  public void setOblique( final boolean oblique ) {
     this.oblique = oblique;
   }
 
-  public int getFontWeight()
-  {
+  public int getFontWeight() {
     return fontWeight;
   }
 
-  public void setFontWeight(final int fontWeight)
-  {
+  public void setFontWeight( final int fontWeight ) {
     this.fontWeight = fontWeight;
   }
 
-  public double getFontSize()
-  {
+  public double getFontSize() {
     return fontSize;
   }
 
-  public void setFontSize(final double fontSize)
-  {
+  public void setFontSize( final double fontSize ) {
     this.fontSize = fontSize;
   }
 
-  public String getEncoding()
-  {
+  public String getEncoding() {
     return encoding;
   }
 
-  public void setEncoding(final String encoding)
-  {
+  public void setEncoding( final String encoding ) {
     this.encoding = encoding;
   }
 
-  public boolean isEmbedFontData()
-  {
+  public boolean isEmbedFontData() {
     return embedFontData;
   }
 
-  public void setEmbedFontData(final boolean embedFontData)
-  {
+  public void setEmbedFontData( final boolean embedFontData ) {
     this.embedFontData = embedFontData;
   }
 }

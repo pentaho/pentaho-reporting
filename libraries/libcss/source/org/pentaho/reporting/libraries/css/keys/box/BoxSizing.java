@@ -19,12 +19,10 @@ package org.pentaho.reporting.libraries.css.keys.box;
 
 import org.pentaho.reporting.libraries.css.values.CSSConstant;
 
-public class BoxSizing
-{
-  public static final CSSConstant CONTENT_BOX = new CSSConstant("content-box");
-  public static final CSSConstant BORDER_BOX = new CSSConstant("border-box");
+public class BoxSizing {
+  public static final CSSConstant CONTENT_BOX = new CSSConstant( "content-box" );
+  public static final CSSConstant BORDER_BOX = new CSSConstant( "border-box" );
 
-  private BoxSizing()
-  {
+  private BoxSizing() {
   }
 }

@@ -17,41 +17,37 @@
 
 package org.pentaho.reporting.libraries.formula.common;
 
-import java.math.BigDecimal;
-
 import junit.framework.Assert;
 import org.pentaho.reporting.libraries.formula.EvaluationException;
 import org.pentaho.reporting.libraries.formula.FormulaTestBase;
 
-public class OperatorTest extends FormulaTestBase
-{
-  protected Object[][] createDataTest()
-  {
+import java.math.BigDecimal;
+
+public class OperatorTest extends FormulaTestBase {
+  protected Object[][] createDataTest() {
     return new Object[][]
-        {
-            {"1 + 1", new BigDecimal(2)},
-            {"1 - 1", new BigDecimal(0)},
-            {"1 = 1", Boolean.TRUE},
-            {"1 <> 1", Boolean.FALSE},
-            {"1 < 1", Boolean.FALSE},
-            {"1 > 1", Boolean.FALSE},
-            {"1 >= 1", Boolean.TRUE},
-            {"1 <= 1", Boolean.TRUE},
-            {"1 * 1", new BigDecimal(1)},
-            {"1 ^ 1", new BigDecimal(1.0)},
-            {"1 / 1", new BigDecimal(1)},
-            {"1%", new BigDecimal("0.01")},
-            {"0.1%", new BigDecimal("0.001")}};
+      {
+        { "1 + 1", new BigDecimal( 2 ) },
+        { "1 - 1", new BigDecimal( 0 ) },
+        { "1 = 1", Boolean.TRUE },
+        { "1 <> 1", Boolean.FALSE },
+        { "1 < 1", Boolean.FALSE },
+        { "1 > 1", Boolean.FALSE },
+        { "1 >= 1", Boolean.TRUE },
+        { "1 <= 1", Boolean.TRUE },
+        { "1 * 1", new BigDecimal( 1 ) },
+        { "1 ^ 1", new BigDecimal( 1.0 ) },
+        { "1 / 1", new BigDecimal( 1 ) },
+        { "1%", new BigDecimal( "0.01" ) },
+        { "0.1%", new BigDecimal( "0.001" ) } };
   }
 
-  public void testDefault() throws Exception
-  {
+  public void testDefault() throws Exception {
     runDefaultTest();
   }
 
-  public void testRangeOperator() throws EvaluationException
-  {
-    final Object resolveReference = getContext().resolveReference(".B4:.B5");
-    Assert.assertNotNull("Reference should not be null", resolveReference);
+  public void testRangeOperator() throws EvaluationException {
+    final Object resolveReference = getContext().resolveReference( ".B4:.B5" );
+    Assert.assertNotNull( "Reference should not be null", resolveReference );
   }
 }

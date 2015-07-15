@@ -22,20 +22,17 @@ import org.pentaho.reporting.libraries.formula.FormulaTestBase;
 /**
  * @author Cedric Pronzato
  */
-public class CleanFunctionTest extends FormulaTestBase
-{
-  public void testDefault() throws Exception
-  {
+public class CleanFunctionTest extends FormulaTestBase {
+  public void testDefault() throws Exception {
     runDefaultTest();
   }
 
-  public Object[][] createDataTest()
-  {
+  public Object[][] createDataTest() {
     return new Object[][]
-        {
-            {"CLEAN(\"TEXT\")", "TEXT"},
-            {"CLEAN(CHAR(7)& \"Tex\" & \"t\" & CHAR(8) & CHAR(9))", "Text"},
-            {"CLEAN(\"Hi there\")", "Hi there"},
-        };
+      {
+        { "CLEAN(\"TEXT\")", "TEXT" },
+        { "CLEAN(CHAR(7)& \"Tex\" & \"t\" & CHAR(8) & CHAR(9))", "Text" },
+        { "CLEAN(\"Hi there\")", "Hi there" },
+      };
   }
 }

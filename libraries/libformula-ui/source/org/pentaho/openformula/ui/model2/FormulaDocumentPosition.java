@@ -20,27 +20,22 @@ package org.pentaho.openformula.ui.model2;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.Position;
 
-public class FormulaDocumentPosition implements Position
-{
+public class FormulaDocumentPosition implements Position {
   private FormulaElement node;
   private boolean fromStart;
   private int offset;
 
-  public FormulaDocumentPosition(final FormulaElement node,
-                                 final int offset,
-                                 final boolean fromStart) throws BadLocationException
-  {
-    if (node == null)
-    {
+  public FormulaDocumentPosition( final FormulaElement node,
+                                  final int offset,
+                                  final boolean fromStart ) throws BadLocationException {
+    if ( node == null ) {
       throw new NullPointerException();
     }
-    if (offset < 0)
-    {
+    if ( offset < 0 ) {
       throw new IllegalArgumentException();
     }
-    if (offset < 0 || offset > node.getEndOffset())
-    {
-      throw new BadLocationException("Offset not valid", offset);
+    if ( offset < 0 || offset > node.getEndOffset() ) {
+      throw new BadLocationException( "Offset not valid", offset );
     }
 
     this.node = node;
@@ -53,14 +48,10 @@ public class FormulaDocumentPosition implements Position
    *
    * @return the offset >= 0
    */
-  public int getOffset()
-  {
-    if (fromStart)
-    {
+  public int getOffset() {
+    if ( fromStart ) {
       return node.getStartOffset() + offset;
-    }
-    else
-    {
+    } else {
       return node.getEndOffset() - offset;
     }
 

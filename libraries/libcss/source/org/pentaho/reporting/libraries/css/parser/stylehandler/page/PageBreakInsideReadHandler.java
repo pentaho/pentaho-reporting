@@ -25,11 +25,9 @@ import org.pentaho.reporting.libraries.css.parser.stylehandler.OneOfConstantsRea
  *
  * @author Thomas Morgner
  */
-public class PageBreakInsideReadHandler extends OneOfConstantsReadHandler
-{
-  public PageBreakInsideReadHandler()
-  {
-    super(true);
-    addValue(PageBreak.AVOID);
+public class PageBreakInsideReadHandler extends OneOfConstantsReadHandler {
+  public PageBreakInsideReadHandler() {
+    super( true );
+    addValue( PageBreak.AVOID );
   }
 }

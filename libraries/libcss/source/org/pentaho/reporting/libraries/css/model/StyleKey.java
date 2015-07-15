@@ -24,8 +24,7 @@ import java.io.Serializable;
  *
  * @author Thomas Morgner
  */
-public final class StyleKey implements Serializable, Cloneable
-{
+public final class StyleKey implements Serializable, Cloneable {
   public static final int ALWAYS = 0x13FFF;
 
   public static final int INLINE_ELEMENTS = 0x0001;
@@ -50,8 +49,7 @@ public final class StyleKey implements Serializable, Cloneable
   public static final int COUNTERS = 0x20000;
 
   /**
-   * The index is implicitly defined when the key is registered. Do not rely
-   * on that index for long term persitence.
+   * The index is implicitly defined when the key is registered. Do not rely on that index for long term persitence.
    */
   public final transient int index;
 
@@ -61,9 +59,8 @@ public final class StyleKey implements Serializable, Cloneable
   public final String name;
 
   /**
-   * Whether this stylekey is transient. Transient keys denote temporary values
-   * stored in the stylesheet. Such keys should never be written into long
-   * term persistent states.
+   * Whether this stylekey is transient. Transient keys denote temporary values stored in the stylesheet. Such keys
+   * should never be written into long term persistent states.
    */
   private boolean trans;
 
@@ -72,11 +69,11 @@ public final class StyleKey implements Serializable, Cloneable
    */
   private boolean inherited;
 
-//  /**
-//   * Defines, whether this key should hold a list of values. The value object
-//   * stored by that key must be an instance of CSSValueList.
-//   */
-//  private boolean listOfValues;
+  //  /**
+  //   * Defines, whether this key should hold a list of values. The value object
+  //   * stored by that key must be an instance of CSSValueList.
+  //   */
+  //  private boolean listOfValues;
 
   private int validity;
 
@@ -88,15 +85,13 @@ public final class StyleKey implements Serializable, Cloneable
    *
    * @param name the name (never null).
    */
-  protected StyleKey(final String name,
-                     final boolean trans,
-                     final boolean inherited,
-                     final int index,
-                     final int validity)
-  {
-    if (name == null)
-    {
-      throw new NullPointerException("StyleKey.setName(...): null not permitted.");
+  protected StyleKey( final String name,
+                      final boolean trans,
+                      final boolean inherited,
+                      final int index,
+                      final int validity ) {
+    if ( name == null ) {
+      throw new NullPointerException( "StyleKey.setName(...): null not permitted." );
     }
 
     this.validity = validity;
@@ -111,62 +106,52 @@ public final class StyleKey implements Serializable, Cloneable
    *
    * @return the name.
    */
-  public String getName()
-  {
+  public String getName() {
     return name;
   }
 
-  public int getIndex()
-  {
+  public int getIndex() {
     return index;
   }
 
-  public boolean isValidOn(int mask)
-  {
-    return (validity & mask) != 0;
+  public boolean isValidOn( int mask ) {
+    return ( validity & mask ) != 0;
   }
 
   /**
    * Indicates whether some other object is "equal to" this one.
    *
    * @param o the reference object with which to compare.
-   * @return <code>true</code> if this object is the same as the obj argument;
-   *         <code>false</code> otherwise.
+   * @return <code>true</code> if this object is the same as the obj argument; <code>false</code> otherwise.
    */
-  public boolean equals(final Object o)
-  {
-    if (this == o)
-    {
+  public boolean equals( final Object o ) {
+    if ( this == o ) {
       return true;
     }
-    if (!(o instanceof StyleKey))
-    {
+    if ( !( o instanceof StyleKey ) ) {
       return false;
     }
 
     final StyleKey key = (StyleKey) o;
 
-    if (name.equals(key.name) == false)
-    {
+    if ( name.equals( key.name ) == false ) {
       return false;
     }
     return true;
   }
 
-  public boolean isInherited()
-  {
+  public boolean isInherited() {
     return inherited;
   }
 
   /**
-   * Returns a hash code value for the object. This method is supported for the benefit of
-   * hashtables such as those provided by <code>java.util.Hashtable</code>.
+   * Returns a hash code value for the object. This method is supported for the benefit of hashtables such as those
+   * provided by <code>java.util.Hashtable</code>.
    * <p/>
    *
    * @return a hash code value for this object.
    */
-  public int hashCode()
-  {
+  public int hashCode() {
     return index;
   }
 
@@ -175,8 +160,7 @@ public final class StyleKey implements Serializable, Cloneable
    *
    * @return true, if the key is transient, false otherwise.
    */
-  public boolean isTransient()
-  {
+  public boolean isTransient() {
     return trans;
   }
 
@@ -185,19 +169,17 @@ public final class StyleKey implements Serializable, Cloneable
    *
    * @return a string representation of the object.
    */
-  public String toString()
-  {
+  public String toString() {
     return "StyleKey{" +
-        "name='" + name + "'" +
-        ", trans=" + trans +
-        ", inherited=" + inherited +
-        ", validity=" + Integer.toHexString(validity) +
-        "}";
+      "name='" + name + "'" +
+      ", trans=" + trans +
+      ", inherited=" + inherited +
+      ", validity=" + Integer.toHexString( validity ) +
+      "}";
   }
 
   public Object clone()
-      throws CloneNotSupportedException
-  {
+    throws CloneNotSupportedException {
     return super.clone();
   }
 }

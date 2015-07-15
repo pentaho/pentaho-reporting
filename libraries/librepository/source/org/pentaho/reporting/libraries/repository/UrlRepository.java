@@ -25,11 +25,10 @@ import java.net.URL;
  *
  * @author Thomas Morgner
  */
-public interface UrlRepository extends Repository
-{
+public interface UrlRepository extends Repository {
   /**
-   * Returns the URL that represents this repository. The meaning of the URL returned here is implementation
-   * specific and is probably not suitable to resolve names to global objects.
+   * Returns the URL that represents this repository. The meaning of the URL returned here is implementation specific
+   * and is probably not suitable to resolve names to global objects.
    *
    * @return the repository's URL.
    * @throws MalformedURLException if the URL could not be computed.

@@ -25,13 +25,11 @@ import org.pentaho.reporting.libraries.css.parser.stylehandler.OneOfConstantsRea
  *
  * @author Thomas Morgner
  */
-public class VisibilityReadHandler extends OneOfConstantsReadHandler
-{
-  public VisibilityReadHandler()
-  {
-    super(false);
-    addValue(Visibility.COLLAPSE);
-    addValue(Visibility.HIDDEN);
-    addValue(Visibility.VISIBLE);
+public class VisibilityReadHandler extends OneOfConstantsReadHandler {
+  public VisibilityReadHandler() {
+    super( false );
+    addValue( Visibility.COLLAPSE );
+    addValue( Visibility.HIDDEN );
+    addValue( Visibility.VISIBLE );
   }
 }

@@ -28,13 +28,11 @@ import org.pentaho.reporting.libraries.fonts.registry.FontMetricsFactory;
  *
  * @author Thomas Morgner
  */
-public class MonospaceFontMetricsFactory implements FontMetricsFactory
-{
+public class MonospaceFontMetricsFactory implements FontMetricsFactory {
   private MonospaceFontMetrics metrics;
 
-  public MonospaceFontMetricsFactory(final float lpi, final float cpi)
-  {
-    this.metrics = new MonospaceFontMetrics(new DefaultFontNativeContext(false, false), cpi, lpi);
+  public MonospaceFontMetricsFactory( final float lpi, final float cpi ) {
+    this.metrics = new MonospaceFontMetrics( new DefaultFontNativeContext( false, false ), cpi, lpi );
   }
 
   /**
@@ -44,8 +42,7 @@ public class MonospaceFontMetricsFactory implements FontMetricsFactory
    * @param context
    * @return
    */
-  public FontMetrics createMetrics(final FontIdentifier identifier, final FontContext context)
-  {
+  public FontMetrics createMetrics( final FontIdentifier identifier, final FontContext context ) {
     return metrics;
   }
 }

@@ -26,8 +26,7 @@ import org.pentaho.reporting.libraries.base.versioning.ProjectInformation;
  *
  * @author Thomas Morgner
  */
-public class LibSerializerBoot extends AbstractBoot
-{
+public class LibSerializerBoot extends AbstractBoot {
   private static LibSerializerBoot instance;
 
   /**
@@ -35,10 +34,8 @@ public class LibSerializerBoot extends AbstractBoot
    *
    * @return the singleton booter.
    */
-  public static synchronized LibSerializerBoot getInstance()
-  {
-    if (instance == null)
-    {
+  public static synchronized LibSerializerBoot getInstance() {
+    if ( instance == null ) {
       instance = new LibSerializerBoot();
     }
     return instance;
@@ -47,8 +44,7 @@ public class LibSerializerBoot extends AbstractBoot
   /**
    * Private constructor to prevent object creation.
    */
-  private LibSerializerBoot()
-  {
+  private LibSerializerBoot() {
   }
 
   /**
@@ -56,18 +52,16 @@ public class LibSerializerBoot extends AbstractBoot
    *
    * @return The configuration.
    */
-  protected Configuration loadConfiguration()
-  {
+  protected Configuration loadConfiguration() {
     return createDefaultHierarchicalConfiguration
-            ("/org/pentaho/reporting/libraries/serializer/libserializer.properties",
-             "/libserializer.properties", true, LibSerializerBoot.class);
+      ( "/org/pentaho/reporting/libraries/serializer/libserializer.properties",
+        "/libserializer.properties", true, LibSerializerBoot.class );
   }
 
   /**
-   * Performs the boot. This method is empty, as this library does not require any manual initializations. 
+   * Performs the boot. This method is empty, as this library does not require any manual initializations.
    */
-  protected void performBoot()
-  {
+  protected void performBoot() {
 
   }
 
@@ -76,8 +70,7 @@ public class LibSerializerBoot extends AbstractBoot
    *
    * @return The project info.
    */
-  protected ProjectInformation getProjectInfo()
-  {
+  protected ProjectInformation getProjectInfo() {
     return LibSerializerInfo.getInstance();
   }
 }

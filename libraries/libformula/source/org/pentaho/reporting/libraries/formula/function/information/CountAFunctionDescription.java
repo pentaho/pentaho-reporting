@@ -20,8 +20,8 @@ package org.pentaho.reporting.libraries.formula.function.information;
 import org.pentaho.reporting.libraries.formula.function.AbstractFunctionDescription;
 import org.pentaho.reporting.libraries.formula.function.FunctionCategory;
 import org.pentaho.reporting.libraries.formula.typing.Type;
-import org.pentaho.reporting.libraries.formula.typing.coretypes.NumberType;
 import org.pentaho.reporting.libraries.formula.typing.coretypes.AnyType;
+import org.pentaho.reporting.libraries.formula.typing.coretypes.NumberType;
 
 /**
  * Describes the CountFunction function.
@@ -29,30 +29,24 @@ import org.pentaho.reporting.libraries.formula.typing.coretypes.AnyType;
  * @author Cedric Pronzato
  * @see CountFunction
  */
-public class CountAFunctionDescription extends AbstractFunctionDescription
-{
-  public CountAFunctionDescription()
-  {
-    super("COUNTA", "org.pentaho.reporting.libraries.formula.function.information.CountA-Function");
+public class CountAFunctionDescription extends AbstractFunctionDescription {
+  public CountAFunctionDescription() {
+    super( "COUNTA", "org.pentaho.reporting.libraries.formula.function.information.CountA-Function" );
   }
 
-  public Type getValueType()
-  {
+  public Type getValueType() {
     return NumberType.GENERIC_NUMBER;
   }
 
-  public FunctionCategory getCategory()
-  {
+  public FunctionCategory getCategory() {
     return InformationFunctionCategory.CATEGORY;
   }
 
-  public int getParameterCount()
-  {
+  public int getParameterCount() {
     return 0;
   }
 
-  public boolean isInfiniteParameterCount()
-  {
+  public boolean isInfiniteParameterCount() {
     return true;
   }
 
@@ -63,8 +57,7 @@ public class CountAFunctionDescription extends AbstractFunctionDescription
    * @param position The parameter index.
    * @return The parameter type.
    */
-  public Type getParameterType(final int position)
-  {
+  public Type getParameterType( final int position ) {
     return AnyType.ANY_SEQUENCE;
   }
 
@@ -74,8 +67,7 @@ public class CountAFunctionDescription extends AbstractFunctionDescription
    *
    * @return
    */
-  public boolean isParameterMandatory(final int position)
-  {
+  public boolean isParameterMandatory( final int position ) {
     return true;
   }
 }

@@ -25,12 +25,10 @@ import org.pentaho.reporting.libraries.css.values.CSSConstant;
  *
  * @author Thomas Morgner
  */
-public class TableLayout
-{
-  public static final CSSConstant FIXED = new CSSConstant("fixed");
+public class TableLayout {
+  public static final CSSConstant FIXED = new CSSConstant( "fixed" );
   public static final CSSAutoValue AUTO = CSSAutoValue.getInstance();
 
-  private TableLayout()
-  {
+  private TableLayout() {
   }
 }

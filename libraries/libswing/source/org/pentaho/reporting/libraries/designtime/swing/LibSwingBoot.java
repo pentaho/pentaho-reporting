@@ -17,10 +17,6 @@
 
 package org.pentaho.reporting.libraries.designtime.swing;
 
-import java.awt.Color;
-import java.awt.Font;
-import java.beans.PropertyEditorManager;
-
 import org.pentaho.reporting.libraries.base.boot.AbstractBoot;
 import org.pentaho.reporting.libraries.base.config.Configuration;
 import org.pentaho.reporting.libraries.base.versioning.ProjectInformation;
@@ -28,8 +24,10 @@ import org.pentaho.reporting.libraries.designtime.swing.propertyeditors.BooleanP
 import org.pentaho.reporting.libraries.designtime.swing.propertyeditors.ColorPropertyEditor;
 import org.pentaho.reporting.libraries.designtime.swing.propertyeditors.FontPropertyEditor;
 
-public class LibSwingBoot extends AbstractBoot
-{
+import java.awt.*;
+import java.beans.PropertyEditorManager;
+
+public class LibSwingBoot extends AbstractBoot {
   private static LibSwingBoot instance;
 
   /**
@@ -37,10 +35,8 @@ public class LibSwingBoot extends AbstractBoot
    *
    * @return the singleton booter.
    */
-  public static synchronized LibSwingBoot getInstance()
-  {
-    if (LibSwingBoot.instance == null)
-    {
+  public static synchronized LibSwingBoot getInstance() {
+    if ( LibSwingBoot.instance == null ) {
       LibSwingBoot.instance = new LibSwingBoot();
     }
     return LibSwingBoot.instance;
@@ -49,8 +45,7 @@ public class LibSwingBoot extends AbstractBoot
   /**
    * Private constructor prevents object creation.
    */
-  private LibSwingBoot()
-  {
+  private LibSwingBoot() {
   }
 
   /**
@@ -58,22 +53,20 @@ public class LibSwingBoot extends AbstractBoot
    *
    * @return The configuration.
    */
-  protected Configuration loadConfiguration()
-  {
+  protected Configuration loadConfiguration() {
     return createDefaultHierarchicalConfiguration
-        ("/org/pentaho/reporting/libraries/designtime/swing/libswing.properties",
-            "/libswing.properties", true, LibSwingBoot.class);
+      ( "/org/pentaho/reporting/libraries/designtime/swing/libswing.properties",
+        "/libswing.properties", true, LibSwingBoot.class );
   }
 
   /**
    * Performs the boot.
    */
-  protected void performBoot()
-  {
+  protected void performBoot() {
     // nothing required. Just gather the configuration.
-    PropertyEditorManager.registerEditor(Boolean.class, BooleanPropertyEditor.class);
-    PropertyEditorManager.registerEditor(Font.class, FontPropertyEditor.class);
-    PropertyEditorManager.registerEditor(Color.class, ColorPropertyEditor.class);
+    PropertyEditorManager.registerEditor( Boolean.class, BooleanPropertyEditor.class );
+    PropertyEditorManager.registerEditor( Font.class, FontPropertyEditor.class );
+    PropertyEditorManager.registerEditor( Color.class, ColorPropertyEditor.class );
   }
 
   /**
@@ -81,8 +74,7 @@ public class LibSwingBoot extends AbstractBoot
    *
    * @return The project info.
    */
-  protected ProjectInformation getProjectInfo()
-  {
+  protected ProjectInformation getProjectInfo() {
     return LibSwingInfo.getInstance();
   }
 }

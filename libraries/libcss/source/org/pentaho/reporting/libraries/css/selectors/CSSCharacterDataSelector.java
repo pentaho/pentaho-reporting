@@ -25,33 +25,28 @@ import org.w3c.css.sac.CharacterDataSelector;
  * @author Thomas Morgner
  */
 public class CSSCharacterDataSelector extends AbstractSelector
-    implements CharacterDataSelector
-{
+  implements CharacterDataSelector {
   private String data;
 
-  public CSSCharacterDataSelector(final String data)
-  {
+  public CSSCharacterDataSelector( final String data ) {
     this.data = data;
   }
 
-  protected SelectorWeight createWeight()
-  {
-    return new SelectorWeight(0, 0, 0, 1);
+  protected SelectorWeight createWeight() {
+    return new SelectorWeight( 0, 0, 0, 1 );
   }
 
   /**
    * Returns the character data.
    */
-  public String getData()
-  {
+  public String getData() {
     return data;
   }
 
   /**
    * An integer indicating the type of <code>Selector</code>
    */
-  public short getSelectorType()
-  {
+  public short getSelectorType() {
     return SAC_CDATA_SECTION_NODE_SELECTOR;
   }
 }

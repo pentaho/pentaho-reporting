@@ -24,42 +24,34 @@ import org.pentaho.reporting.libraries.formula.typing.coretypes.NumberType;
 
 /**
  * Describes Log10Function function.
- * @see Log10Function
  *
  * @author Cedric Pronzato
- *
+ * @see Log10Function
  */
-public class Log10FunctionDescription extends AbstractFunctionDescription
-{
+public class Log10FunctionDescription extends AbstractFunctionDescription {
   private static final long serialVersionUID = 743117553650008440L;
 
-  public Log10FunctionDescription()
-  {
-    super("LOG10", "org.pentaho.reporting.libraries.formula.function.math.Log10-Function");
+  public Log10FunctionDescription() {
+    super( "LOG10", "org.pentaho.reporting.libraries.formula.function.math.Log10-Function" );
   }
 
-  public FunctionCategory getCategory()
-  {
+  public FunctionCategory getCategory() {
     return MathFunctionCategory.CATEGORY;
   }
 
-  public int getParameterCount()
-  {
+  public int getParameterCount() {
     return 1;
   }
 
-  public Type getParameterType(final int position)
-  {
+  public Type getParameterType( final int position ) {
     return NumberType.GENERIC_NUMBER;
   }
 
-  public Type getValueType()
-  {
+  public Type getValueType() {
     return NumberType.GENERIC_NUMBER;
   }
 
-  public boolean isParameterMandatory(final int position)
-  {
+  public boolean isParameterMandatory( final int position ) {
     return true;
   }
 

@@ -22,15 +22,13 @@ package org.pentaho.reporting.libraries.resourceloader;
  *
  * @author Thomas Morgner
  */
-public class UnrecognizedLoaderException extends ResourceLoadingException
-{
+public class UnrecognizedLoaderException extends ResourceLoadingException {
   private static final long serialVersionUID = 6319955849184970434L;
 
   /**
    * Creates a StackableRuntimeException with no message and no parent.
    */
-  public UnrecognizedLoaderException()
-  {
+  public UnrecognizedLoaderException() {
   }
 
   /**
@@ -39,9 +37,8 @@ public class UnrecognizedLoaderException extends ResourceLoadingException
    * @param message the exception message.
    * @param ex      the parent exception.
    */
-  public UnrecognizedLoaderException(final String message, final Exception ex)
-  {
-    super(message, ex);
+  public UnrecognizedLoaderException( final String message, final Exception ex ) {
+    super( message, ex );
   }
 
   /**
@@ -49,8 +46,7 @@ public class UnrecognizedLoaderException extends ResourceLoadingException
    *
    * @param message the exception message.
    */
-  public UnrecognizedLoaderException(final String message)
-  {
-    super(message);
+  public UnrecognizedLoaderException( final String message ) {
+    super( message );
   }
 }

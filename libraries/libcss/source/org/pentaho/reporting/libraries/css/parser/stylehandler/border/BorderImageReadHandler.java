@@ -27,14 +27,11 @@ import org.w3c.css.sac.LexicalUnit;
  *
  * @author Thomas Morgner
  */
-public class BorderImageReadHandler implements CSSValueReadHandler
-{
-  public BorderImageReadHandler()
-  {
+public class BorderImageReadHandler implements CSSValueReadHandler {
+  public BorderImageReadHandler() {
   }
 
-  public CSSValue createValue(StyleKey name, LexicalUnit value)
-  {
+  public CSSValue createValue( StyleKey name, LexicalUnit value ) {
     // todo Border image is complex and thus not yet implemented
     return null;
   }

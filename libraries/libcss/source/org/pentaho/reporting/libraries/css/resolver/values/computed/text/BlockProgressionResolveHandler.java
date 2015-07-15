@@ -25,14 +25,12 @@ import org.pentaho.reporting.libraries.css.resolver.values.computed.ConstantsRes
  *
  * @author Thomas Morgner
  */
-public class BlockProgressionResolveHandler extends ConstantsResolveHandler
-{
-  public BlockProgressionResolveHandler()
-  {
-    addNormalizeValue(BlockProgression.LR);
-    addNormalizeValue(BlockProgression.RL);
-    addNormalizeValue(BlockProgression.TB);
-    setFallback(BlockProgression.TB);
+public class BlockProgressionResolveHandler extends ConstantsResolveHandler {
+  public BlockProgressionResolveHandler() {
+    addNormalizeValue( BlockProgression.LR );
+    addNormalizeValue( BlockProgression.RL );
+    addNormalizeValue( BlockProgression.TB );
+    setFallback( BlockProgression.TB );
   }
 
 }

@@ -21,8 +21,7 @@ import org.pentaho.reporting.libraries.base.boot.AbstractBoot;
 import org.pentaho.reporting.libraries.base.config.Configuration;
 import org.pentaho.reporting.libraries.base.versioning.ProjectInformation;
 
-public class LibPensolBoot extends AbstractBoot
-{
+public class LibPensolBoot extends AbstractBoot {
   private static LibPensolBoot instance;
 
   /**
@@ -30,10 +29,8 @@ public class LibPensolBoot extends AbstractBoot
    *
    * @return the singleton booter.
    */
-  public static synchronized LibPensolBoot getInstance()
-  {
-    if (instance == null)
-    {
+  public static synchronized LibPensolBoot getInstance() {
+    if ( instance == null ) {
       instance = new LibPensolBoot();
     }
     return instance;
@@ -42,8 +39,7 @@ public class LibPensolBoot extends AbstractBoot
   /**
    * Private constructor prevents object creation.
    */
-  private LibPensolBoot()
-  {
+  private LibPensolBoot() {
   }
 
   /**
@@ -51,19 +47,17 @@ public class LibPensolBoot extends AbstractBoot
    *
    * @return The configuration.
    */
-  protected Configuration loadConfiguration()
-  {
+  protected Configuration loadConfiguration() {
     return createDefaultHierarchicalConfiguration
-        ("/org/pentaho/reporting/libraries/pensol/libpensol.properties",
-            "/libpensol.properties", true, LibPensolBoot.class);
+      ( "/org/pentaho/reporting/libraries/pensol/libpensol.properties",
+        "/libpensol.properties", true, LibPensolBoot.class );
 
   }
 
   /**
    * Performs the boot.
    */
-  protected void performBoot()
-  {
+  protected void performBoot() {
   }
 
   /**
@@ -71,8 +65,7 @@ public class LibPensolBoot extends AbstractBoot
    *
    * @return The project info.
    */
-  protected ProjectInformation getProjectInfo()
-  {
+  protected ProjectInformation getProjectInfo() {
     return LibPensolInfo.getInstance();
   }
 }

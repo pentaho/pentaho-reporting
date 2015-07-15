@@ -21,23 +21,21 @@ import org.pentaho.reporting.libraries.css.model.StyleKey;
 import org.pentaho.reporting.libraries.css.model.StyleKeyRegistry;
 
 /**
- * All kind of StyleKeys needed for compatiblity with the old display model.
- * This should be moved into the reporting engine itself.
+ * All kind of StyleKeys needed for compatiblity with the old display model. This should be moved into the reporting
+ * engine itself.
  *
  * @author Thomas Morgner
  */
-public class CanvasStyleKeys
-{
+public class CanvasStyleKeys {
   public static final StyleKey POSITION_X =
-      StyleKeyRegistry.getRegistry().createKey
-          ("-x-pentaho-reporting-x-position", true, false, StyleKey.DOM_ELEMENTS);
+    StyleKeyRegistry.getRegistry().createKey
+      ( "-x-pentaho-reporting-x-position", true, false, StyleKey.DOM_ELEMENTS );
 
   public static final StyleKey POSITION_Y =
-      StyleKeyRegistry.getRegistry().createKey
-          ("-x-pentaho-reporting-y-position", true, true, StyleKey.DOM_ELEMENTS);
+    StyleKeyRegistry.getRegistry().createKey
+      ( "-x-pentaho-reporting-y-position", true, true, StyleKey.DOM_ELEMENTS );
 
-  private CanvasStyleKeys()
-  {
+  private CanvasStyleKeys() {
   }
 
 }

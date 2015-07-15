@@ -17,10 +17,8 @@
 
 package org.pentaho.reporting.libraries.resourceloader;
 
-public final class LoaderParameterKey extends ParameterKey
-{
-  public LoaderParameterKey(final String name)
-  {
-    super(name);
+public final class LoaderParameterKey extends ParameterKey {
+  public LoaderParameterKey( final String name ) {
+    super( name );
   }
 }

@@ -17,12 +17,12 @@
 
 package org.pentaho.reporting.libraries.serializer.methods;
 
+import org.pentaho.reporting.libraries.serializer.SerializeMethod;
+
 import java.awt.geom.Line2D;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-
-import org.pentaho.reporting.libraries.serializer.SerializeMethod;
 
 /**
  * A SerializeMethod implementation that handles Line2D objects.
@@ -30,13 +30,11 @@ import org.pentaho.reporting.libraries.serializer.SerializeMethod;
  * @author Thomas Morgner
  * @see java.awt.geom.Line2D
  */
-public class Line2DSerializer implements SerializeMethod
-{
+public class Line2DSerializer implements SerializeMethod {
   /**
    * Default Constructor.
    */
-  public Line2DSerializer ()
-  {
+  public Line2DSerializer() {
   }
 
   /**
@@ -46,14 +44,13 @@ public class Line2DSerializer implements SerializeMethod
    * @param out the outputstream that should receive the object.
    * @throws IOException if an I/O error occured.
    */
-  public void writeObject (final Object o, final ObjectOutputStream out)
-          throws IOException
-  {
+  public void writeObject( final Object o, final ObjectOutputStream out )
+    throws IOException {
     final Line2D line = (Line2D) o;
-    out.writeDouble(line.getX1());
-    out.writeDouble(line.getY1());
-    out.writeDouble(line.getX2());
-    out.writeDouble(line.getY2());
+    out.writeDouble( line.getX1() );
+    out.writeDouble( line.getY1() );
+    out.writeDouble( line.getX2() );
+    out.writeDouble( line.getY2() );
   }
 
   /**
@@ -61,18 +58,16 @@ public class Line2DSerializer implements SerializeMethod
    *
    * @param in the object input stream from where to read the serialized data.
    * @return the generated object.
-   *
    * @throws IOException            if reading the stream failed.
    * @throws ClassNotFoundException if serialized object class cannot be found.
    */
-  public Object readObject (final ObjectInputStream in)
-          throws IOException, ClassNotFoundException
-  {
+  public Object readObject( final ObjectInputStream in )
+    throws IOException, ClassNotFoundException {
     final double x1 = in.readDouble();
     final double y1 = in.readDouble();
     final double x2 = in.readDouble();
     final double y2 = in.readDouble();
-    return new Line2D.Double(x1, y1, x2, y2);
+    return new Line2D.Double( x1, y1, x2, y2 );
   }
 
   /**
@@ -80,8 +75,7 @@ public class Line2DSerializer implements SerializeMethod
    *
    * @return the class of java.awt.geom.Line2D.
    */
-  public Class getObjectClass ()
-  {
+  public Class getObjectClass() {
     return Line2D.class;
   }
 }

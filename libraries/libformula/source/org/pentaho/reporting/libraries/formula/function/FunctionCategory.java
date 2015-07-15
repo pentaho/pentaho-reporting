@@ -24,8 +24,8 @@ import java.util.Locale;
  *
  * @author Thomas Morgner
  */
-public interface FunctionCategory
-{
-  public String getDisplayName (Locale locale);
-  public String getDescription (Locale locale);
+public interface FunctionCategory {
+  public String getDisplayName( Locale locale );
+
+  public String getDescription( Locale locale );
 }

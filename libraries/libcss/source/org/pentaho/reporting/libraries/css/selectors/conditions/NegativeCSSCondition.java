@@ -25,25 +25,21 @@ import org.w3c.css.sac.NegativeCondition;
  *
  * @author Thomas Morgner
  */
-public class NegativeCSSCondition implements NegativeCondition, CSSCondition
-{
+public class NegativeCSSCondition implements NegativeCondition, CSSCondition {
   private CSSCondition condition;
 
-  public NegativeCSSCondition(final CSSCondition condition)
-  {
+  public NegativeCSSCondition( final CSSCondition condition ) {
     this.condition = condition;
   }
 
-  public Condition getCondition()
-  {
+  public Condition getCondition() {
     return condition;
   }
 
   /**
    * An integer indicating the type of <code>Condition</code>.
    */
-  public short getConditionType()
-  {
+  public short getConditionType() {
     return SAC_NEGATIVE_CONDITION;
   }
 }

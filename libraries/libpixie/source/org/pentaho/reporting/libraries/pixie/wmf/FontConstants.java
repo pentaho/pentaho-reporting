@@ -20,8 +20,7 @@ package org.pentaho.reporting.libraries.pixie.wmf;
 /**
  * Various FontConstants defined in the Windows API.
  */
-public interface FontConstants
-{
+public interface FontConstants {
   public static final int DEFAULT_QUALITY = 0;
   public static final int DRAFT_QUALITY = 1;
   public static final int PROOF_QUALITY = 2;
@@ -35,30 +34,30 @@ public interface FontConstants
 
   /* Font Families */
   /* Don't care or don't know. */
-  public static final int FF_DONTCARE = (0 << 4);
+  public static final int FF_DONTCARE = ( 0 << 4 );
 
   /**
    * Variable stroke width, serifed. Times Roman, Century Schoolbook, etc.
    */
-  public static final int FF_ROMAN = (1 << 4);
+  public static final int FF_ROMAN = ( 1 << 4 );
 
   /*
    * Variable stroke width, sans-serifed.
    * Helvetica, Swiss, etc.
    */
-  public static final int FF_SWISS = (2 << 4);
+  public static final int FF_SWISS = ( 2 << 4 );
 
   /*
    * Constant stroke width, serifed or sans-serifed.
    * Pica, Elite, Courier, etc.
    */
-  public static final int FF_MODERN = (3 << 4);
+  public static final int FF_MODERN = ( 3 << 4 );
 
   /* Cursive, etc. */
-  public static final int FF_SCRIPT = (4 << 4);
+  public static final int FF_SCRIPT = ( 4 << 4 );
 
   /* Old English, etc. */
-  public static final int FF_DECORATIVE = (5 << 4);
+  public static final int FF_DECORATIVE = ( 5 << 4 );
 
   /* Font Weights */
   public static final int FW_DONTCARE = 0;

@@ -25,12 +25,10 @@ import org.pentaho.reporting.libraries.css.parser.stylehandler.OneOfConstantsRea
  *
  * @author Thomas Morgner
  */
-public class EmptyCellsReadHandler extends OneOfConstantsReadHandler
-{
-  public EmptyCellsReadHandler()
-  {
-    super(false);
-    addValue(EmptyCells.HIDE);
-    addValue(EmptyCells.SHOW);
+public class EmptyCellsReadHandler extends OneOfConstantsReadHandler {
+  public EmptyCellsReadHandler() {
+    super( false );
+    addValue( EmptyCells.HIDE );
+    addValue( EmptyCells.SHOW );
   }
 }

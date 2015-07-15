@@ -17,114 +17,96 @@
 
 package org.pentaho.reporting.libraries.formula.function;
 
-import java.util.Locale;
 import org.pentaho.reporting.libraries.formula.typing.Type;
 import org.pentaho.reporting.libraries.formula.typing.coretypes.AnyType;
+
+import java.util.Locale;
 
 /**
  * Creation-Date: 05.11.2006, 15:13:03
  *
  * @author Thomas Morgner
  */
-public class DefaultFunctionDescription implements FunctionDescription
-{
+public class DefaultFunctionDescription implements FunctionDescription {
   private String name;
   private static final long serialVersionUID = 8718537288789701618L;
 
-  public DefaultFunctionDescription(final String name)
-  {
+  public DefaultFunctionDescription( final String name ) {
     this.name = name;
   }
 
-  public String getCanonicalName()
-  {
+  public String getCanonicalName() {
     return name;
   }
 
-  public Type getValueType()
-  {
+  public Type getValueType() {
     return AnyType.TYPE;
   }
 
-  public FunctionCategory getCategory()
-  {
+  public FunctionCategory getCategory() {
     return InvalidFunctionCategory.CATEGORY;
   }
 
-  public int getParameterCount()
-  {
+  public int getParameterCount() {
     return 1;
   }
 
-  public Type getParameterType(final int position)
-  {
+  public Type getParameterType( final int position ) {
     return AnyType.TYPE;
   }
 
   /**
-   * Defines, whether the parameter at the given position is mandatory. A
-   * mandatory parameter must be filled in, while optional parameters need not
-   * to be filled in.
+   * Defines, whether the parameter at the given position is mandatory. A mandatory parameter must be filled in, while
+   * optional parameters need not to be filled in.
    *
    * @return
    */
-  public boolean isParameterMandatory(final int position)
-  {
+  public boolean isParameterMandatory( final int position ) {
     return false;
   }
 
-  public String getDisplayName(final Locale locale)
-  {
+  public String getDisplayName( final Locale locale ) {
     return name;
   }
 
-  public String getDescription(final Locale locale)
-  {
+  public String getDescription( final Locale locale ) {
     return "";
   }
 
-  public boolean isVolatile()
-  {
+  public boolean isVolatile() {
     // assume the worst ..
     return true;
   }
 
-  public boolean isInfiniteParameterCount()
-  {
+  public boolean isInfiniteParameterCount() {
     return true;
   }
 
-  public String getParameterDisplayName(final int position, final Locale locale)
-  {
+  public String getParameterDisplayName( final int position, final Locale locale ) {
     // todo this is surely ugly ..
-    return "Parameter " + String.valueOf(position);
+    return "Parameter " + String.valueOf( position );
   }
 
-  public String getParameterDescription(final int position, final Locale locale)
-  {
+  public String getParameterDescription( final int position, final Locale locale ) {
     return "";
   }
 
   /**
-   * Returns the default value for an optional parameter. If the value returned
-   * here is null, then this either means, that the parameter is mandatory or
-   * that the default value is computed by the expression itself.
+   * Returns the default value for an optional parameter. If the value returned here is null, then this either means,
+   * that the parameter is mandatory or that the default value is computed by the expression itself.
    *
    * @param position
    * @return
    */
-  public Object getDefaultValue(final int position)
-  {
+  public Object getDefaultValue( final int position ) {
     return null;
   }
 
-  public boolean isDeprecated()
-  {
+  public boolean isDeprecated() {
     return false;
   }
 
-  public boolean isExperimental()
-  {
+  public boolean isExperimental() {
     return false;
   }
 }

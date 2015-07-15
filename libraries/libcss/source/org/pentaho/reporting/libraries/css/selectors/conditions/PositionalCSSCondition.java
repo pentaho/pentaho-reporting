@@ -24,16 +24,14 @@ import org.w3c.css.sac.PositionalCondition;
  *
  * @author Thomas Morgner
  */
-public class PositionalCSSCondition implements CSSCondition, PositionalCondition
-{
+public class PositionalCSSCondition implements CSSCondition, PositionalCondition {
   private int position;
   private boolean matchByType;
   private boolean matchByName;
 
-  public PositionalCSSCondition(final int position,
-                                final boolean matchByType,
-                                final boolean matchByName)
-  {
+  public PositionalCSSCondition( final int position,
+                                 final boolean matchByType,
+                                 final boolean matchByName ) {
     this.position = position;
     this.matchByType = matchByType;
     this.matchByName = matchByName;
@@ -42,35 +40,30 @@ public class PositionalCSSCondition implements CSSCondition, PositionalCondition
   /**
    * An integer indicating the type of <code>Condition</code>.
    */
-  public short getConditionType()
-  {
+  public short getConditionType() {
     return SAC_POSITIONAL_CONDITION;
   }
 
   /**
-   * Returns the position in the tree. <p>A negative value means from the end of
-   * the child node list. <p>The child node list begins at 0.
+   * Returns the position in the tree. <p>A negative value means from the end of the child node list. <p>The child node
+   * list begins at 0.
    */
-  public int getPosition()
-  {
+  public int getPosition() {
     return position;
   }
 
   /**
-   * <code>true</code> if the child node list only shows nodes of the same type
-   * of the selector (only elements, only PIS, ...)
+   * <code>true</code> if the child node list only shows nodes of the same type of the selector (only elements, only
+   * PIS, ...)
    */
-  public boolean getTypeNode()
-  {
+  public boolean getTypeNode() {
     return matchByType;
   }
 
   /**
-   * <code>true</code> if the node should have the same node type (for element,
-   * same namespaceURI and same localName).
+   * <code>true</code> if the node should have the same node type (for element, same namespaceURI and same localName).
    */
-  public boolean getType()
-  {
+  public boolean getType() {
     return matchByName;
   }
 }

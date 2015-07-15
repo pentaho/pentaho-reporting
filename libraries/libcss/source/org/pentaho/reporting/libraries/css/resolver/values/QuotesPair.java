@@ -17,32 +17,26 @@
 
 package org.pentaho.reporting.libraries.css.resolver.values;
 
-public class QuotesPair
-{
+public class QuotesPair {
   private String openQuote;
   private String closeQuote;
 
-  public QuotesPair (final String openQuote, final String closeQuote)
-  {
-    if (openQuote == null)
-    {
+  public QuotesPair( final String openQuote, final String closeQuote ) {
+    if ( openQuote == null ) {
       throw new NullPointerException();
     }
-    if (closeQuote == null)
-    {
+    if ( closeQuote == null ) {
       throw new NullPointerException();
     }
     this.openQuote = openQuote;
     this.closeQuote = closeQuote;
   }
 
-  public String getCloseQuote ()
-  {
+  public String getCloseQuote() {
     return closeQuote;
   }
 
-  public String getOpenQuote ()
-  {
+  public String getOpenQuote() {
     return openQuote;
   }
 }

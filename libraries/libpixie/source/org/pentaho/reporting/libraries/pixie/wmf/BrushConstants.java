@@ -18,11 +18,9 @@
 package org.pentaho.reporting.libraries.pixie.wmf;
 
 /**
- * The BrushConstants were defined in the Windows-API and are used do define the
- * appearance of Wmf-Brushes.
+ * The BrushConstants were defined in the Windows-API and are used do define the appearance of Wmf-Brushes.
  */
-public interface BrushConstants
-{
+public interface BrushConstants {
   /* Brush Styles */
   public static final int BS_SOLID = 0;
   public static final int BS_NULL = 1;

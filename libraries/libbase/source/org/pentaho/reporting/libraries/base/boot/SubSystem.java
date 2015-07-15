@@ -23,16 +23,13 @@ import org.pentaho.reporting.libraries.base.config.ExtendedConfiguration;
 /**
  * A sub-system holds a separate collection of modules.
  * <p/>
- * On a simple level, subsystems can be just libraries.
- * Libraries offering services need a controlled way to
- * initialize these services before dependent code starts
- * using the library. This can be achived by embedding the
- * library services into an own subsystem.
+ * On a simple level, subsystems can be just libraries. Libraries offering services need a controlled way to initialize
+ * these services before dependent code starts using the library. This can be achived by embedding the library services
+ * into an own subsystem.
  *
  * @author Thomas Morgner
  */
-public interface SubSystem
-{
+public interface SubSystem {
 
   /**
    * Returns the global configuration.

@@ -17,13 +17,6 @@
 
 package org.pentaho.reporting.libraries.base.boot;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.lang.reflect.Method;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.Enumeration;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.pentaho.reporting.libraries.base.config.Configuration;
@@ -36,6 +29,13 @@ import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
 import org.pentaho.reporting.libraries.base.versioning.DependencyInformation;
 import org.pentaho.reporting.libraries.base.versioning.ProjectInformation;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.lang.reflect.Method;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.Enumeration;
+
 /**
  * The common base for all Boot classes.
  * <p/>
@@ -47,12 +47,11 @@ import org.pentaho.reporting.libraries.base.versioning.ProjectInformation;
  *
  * @author Thomas Morgner
  */
-public abstract class AbstractBoot implements SubSystem
-{
+public abstract class AbstractBoot implements SubSystem {
   /**
    * The logger for this class.
    */
-  private static final Log LOGGER = LogFactory.getLog(AbstractBoot.class);
+  private static final Log LOGGER = LogFactory.getLog( AbstractBoot.class );
 
   /**
    * The configuration wrapper around the plain configuration.
@@ -88,8 +87,7 @@ public abstract class AbstractBoot implements SubSystem
   /**
    * Default constructor.
    */
-  protected AbstractBoot()
-  {
+  protected AbstractBoot() {
   }
 
   /**
@@ -97,11 +95,9 @@ public abstract class AbstractBoot implements SubSystem
    *
    * @return The package manager.
    */
-  public synchronized PackageManager getPackageManager()
-  {
-    if (this.packageManager == null)
-    {
-      this.packageManager = new PackageManager(this);
+  public synchronized PackageManager getPackageManager() {
+    if ( this.packageManager == null ) {
+      this.packageManager = new PackageManager( this );
     }
     return this.packageManager;
   }
@@ -111,10 +107,8 @@ public abstract class AbstractBoot implements SubSystem
    *
    * @return The global configuration.
    */
-  public synchronized Configuration getGlobalConfig()
-  {
-    if (this.globalConfig == null)
-    {
+  public synchronized Configuration getGlobalConfig() {
+    if ( this.globalConfig == null ) {
       this.globalConfig = loadConfiguration();
     }
     return this.globalConfig;
@@ -125,8 +119,7 @@ public abstract class AbstractBoot implements SubSystem
    *
    * @return true, if the booting is in progress, false otherwise.
    */
-  public final synchronized boolean isBootInProgress()
-  {
+  public final synchronized boolean isBootInProgress() {
     return this.bootInProgress;
   }
 
@@ -135,13 +128,11 @@ public abstract class AbstractBoot implements SubSystem
    *
    * @return true, if the booting is complete, false otherwise.
    */
-  public synchronized boolean isBootDone()
-  {
+  public synchronized boolean isBootDone() {
     return this.bootDone;
   }
 
-  public String getConfigurationDomain()
-  {
+  public String getConfigurationDomain() {
     return getProjectInfo().getProductId();
   }
 
@@ -157,70 +148,50 @@ public abstract class AbstractBoot implements SubSystem
    * Any failure in booting will set the <code>bootFailed</code> property to true. If booting is finished, the
    * <code>bootDone</code> property is set to true.
    */
-  public final void start()
-  {
+  public final void start() {
 
-    synchronized (this)
-    {
-      if (isBootDone())
-      {
+    synchronized( this ) {
+      if ( isBootDone() ) {
         return;
       }
-      if (isBootFailed())
-      {
-        LOGGER.error(getClass() + " failed to boot: " + bootFailed.getMessage());
+      if ( isBootFailed() ) {
+        LOGGER.error( getClass() + " failed to boot: " + bootFailed.getMessage() );
       }
-      while (isBootInProgress())
-      {
-        try
-        {
+      while ( isBootInProgress() ) {
+        try {
           wait();
-        }
-        catch (InterruptedException e)
-        {
+        } catch ( InterruptedException e ) {
           // ignore ..
         }
       }
-      if (isBootDone())
-      {
+      if ( isBootDone() ) {
         notifyAll();
         return;
       }
       this.bootInProgress = true;
     }
 
-    try
-    {
+    try {
       // boot dependent libraries ...
       final ProjectInformation info = getProjectInfo();
-      if (info != null)
-      {
-        performBootDependencies(info.getLibraries());
-        performBootDependencies(info.getOptionalLibraries());
+      if ( info != null ) {
+        performBootDependencies( info.getLibraries() );
+        performBootDependencies( info.getOptionalLibraries() );
       }
 
       performBoot();
-      if (LOGGER.isInfoEnabled())
-      {
-        if (info != null)
-        {
-          LOGGER.info(info.getName() + ' ' + info.getVersion() + " started.");
-        }
-        else
-        {
-          LOGGER.info(getClass() + " started.");
+      if ( LOGGER.isInfoEnabled() ) {
+        if ( info != null ) {
+          LOGGER.info( info.getName() + ' ' + info.getVersion() + " started." );
+        } else {
+          LOGGER.info( getClass() + " started." );
         }
       }
-    }
-    catch (Exception e)
-    {
-      LOGGER.error(getClass() + " failed to boot: ", e);
+    } catch ( Exception e ) {
+      LOGGER.error( getClass() + " failed to boot: ", e );
       this.bootFailed = e;
-    }
-    finally
-    {
-      synchronized (this)
-      {
+    } finally {
+      synchronized( this ) {
         this.bootInProgress = false;
         this.bootDone = true;
         notifyAll();
@@ -229,52 +200,41 @@ public abstract class AbstractBoot implements SubSystem
   }
 
   /**
-   * Boots all dependent libraries. The dependencies must be initialized properly before the booting of this
-   * library or application can start. If any of the dependencies fails to initialize properly, the whole
-   * boot-process will be aborted.
+   * Boots all dependent libraries. The dependencies must be initialized properly before the booting of this library or
+   * application can start. If any of the dependencies fails to initialize properly, the whole boot-process will be
+   * aborted.
    *
    * @param childs the array of dependencies, never null.
    */
-  private void performBootDependencies(final DependencyInformation[] childs)
-  {
-    if (childs == null)
-    {
+  private void performBootDependencies( final DependencyInformation[] childs ) {
+    if ( childs == null ) {
       return;
     }
 
-    for (int i = 0; i < childs.length; i++)
-    {
-      final DependencyInformation child = childs[i];
-      if (child instanceof ProjectInformation == false)
-      {
+    for ( int i = 0; i < childs.length; i++ ) {
+      final DependencyInformation child = childs[ i ];
+      if ( child instanceof ProjectInformation == false ) {
         continue;
       }
       final ProjectInformation projectInformation = (ProjectInformation) child;
-      final AbstractBoot boot = loadBooter(projectInformation.getBootClass());
-      if (boot != null)
-      {
+      final AbstractBoot boot = loadBooter( projectInformation.getBootClass() );
+      if ( boot != null ) {
         // but we're waiting until the booting is complete ...
-        synchronized (boot)
-        {
+        synchronized( boot ) {
           boot.start();
-          while (boot.isBootDone() == false &&
-              boot.isBootFailed() == false)
-          {
-            try
-            {
+          while ( boot.isBootDone() == false &&
+            boot.isBootFailed() == false ) {
+            try {
               boot.wait();
-            }
-            catch (InterruptedException e)
-            {
+            } catch ( InterruptedException e ) {
               // ignore it ..
             }
           }
 
-          if (boot.isBootFailed())
-          {
+          if ( boot.isBootFailed() ) {
             this.bootFailed = boot.getBootFailureReason();
-            LOGGER.error("Dependent project failed to boot up: " +
-                projectInformation.getBootClass() + " failed to boot: ", this.bootFailed);
+            LOGGER.error( "Dependent project failed to boot up: " +
+              projectInformation.getBootClass() + " failed to boot: ", this.bootFailed );
             return;
           }
         }
@@ -283,13 +243,12 @@ public abstract class AbstractBoot implements SubSystem
   }
 
   /**
-   * Checks whether the booting failed. If booting failed, the reason for the failure (the Exception that caused
-   * the error) is stored as property <code>bootFailureReason</code>.
+   * Checks whether the booting failed. If booting failed, the reason for the failure (the Exception that caused the
+   * error) is stored as property <code>bootFailureReason</code>.
    *
    * @return true, if booting failed, false otherwise.
    */
-  public boolean isBootFailed()
-  {
+  public boolean isBootFailed() {
     return this.bootFailed != null;
   }
 
@@ -298,8 +257,7 @@ public abstract class AbstractBoot implements SubSystem
    *
    * @return the failure reason.
    */
-  public Exception getBootFailureReason()
-  {
+  public Exception getBootFailureReason() {
     return bootFailed;
   }
 
@@ -321,9 +279,8 @@ public abstract class AbstractBoot implements SubSystem
    * @param classname the class name.
    * @return The boot class.
    */
-  protected AbstractBoot loadBooter(final String classname)
-  {
-    return loadBooter(classname, getClass());
+  protected AbstractBoot loadBooter( final String classname ) {
+    return loadBooter( classname, getClass() );
   }
 
   /**
@@ -333,26 +290,20 @@ public abstract class AbstractBoot implements SubSystem
    * @param source    the source-class from where to get the classloader.
    * @return the instantiated booter or null, if no booter could be loaded.
    */
-  public static AbstractBoot loadBooter(final String classname, final Class source)
-  {
-    if (classname == null)
-    {
+  public static AbstractBoot loadBooter( final String classname, final Class source ) {
+    if ( classname == null ) {
       return null;
     }
-    if (source == null)
-    {
+    if ( source == null ) {
       throw new NullPointerException();
     }
-    try
-    {
-      final ClassLoader loader = ObjectUtilities.getClassLoader(source);
-      final Class c = Class.forName(classname, false, loader);
-      final Method m = c.getMethod("getInstance", (Class[]) null);
-      return (AbstractBoot) m.invoke(null, (Object[]) null);
-    }
-    catch (Exception e)
-    {
-      LOGGER.info("Unable to boot dependent class: " + classname);
+    try {
+      final ClassLoader loader = ObjectUtilities.getClassLoader( source );
+      final Class c = Class.forName( classname, false, loader );
+      final Method m = c.getMethod( "getInstance", (Class[]) null );
+      return (AbstractBoot) m.invoke( null, (Object[]) null );
+    } catch ( Exception e ) {
+      LOGGER.info( "Unable to boot dependent class: " + classname );
       return null;
     }
   }
@@ -372,82 +323,63 @@ public abstract class AbstractBoot implements SubSystem
    * @return the configured Configuration instance.
    */
   protected HierarchicalConfiguration createDefaultHierarchicalConfiguration
-  (final String staticConfig,
-   final String userConfig,
-   final boolean addSysProps,
-   final Class source)
-  {
-    if (source == null)
-    {
-      throw new NullPointerException("SourceClass must not be null.");
+  ( final String staticConfig,
+    final String userConfig,
+    final boolean addSysProps,
+    final Class source ) {
+    if ( source == null ) {
+      throw new NullPointerException( "SourceClass must not be null." );
     }
 
-    final HierarchicalConfiguration globalConfig = new HierarchicalConfiguration(getClass());
+    final HierarchicalConfiguration globalConfig = new HierarchicalConfiguration( getClass() );
 
-    if (staticConfig != null)
-    {
+    if ( staticConfig != null ) {
       final PropertyFileConfiguration rootProperty = new PropertyFileConfiguration();
-      rootProperty.load(staticConfig, source);
-      globalConfig.insertConfiguration(rootProperty);
-      globalConfig.insertConfiguration(getPackageManager().getPackageConfiguration());
+      rootProperty.load( staticConfig, source );
+      globalConfig.insertConfiguration( rootProperty );
+      globalConfig.insertConfiguration( getPackageManager().getPackageConfiguration() );
     }
 
-    if (userConfig != null)
-    {
+    if ( userConfig != null ) {
       final String userConfigStripped;
-      if (userConfig.charAt(0) == '/')
-      {
-        userConfigStripped = userConfig.substring(1);
-      }
-      else
-      {
+      if ( userConfig.charAt( 0 ) == '/' ) {
+        userConfigStripped = userConfig.substring( 1 );
+      } else {
         userConfigStripped = userConfig;
       }
 
-      try
-      {
-        final Enumeration userConfigs = ObjectUtilities.getClassLoader(source).getResources(userConfigStripped);
+      try {
+        final Enumeration userConfigs = ObjectUtilities.getClassLoader( source ).getResources( userConfigStripped );
         final ArrayList<PropertyFileConfiguration> configs = new ArrayList<PropertyFileConfiguration>();
-        while (userConfigs.hasMoreElements())
-        {
+        while ( userConfigs.hasMoreElements() ) {
           final URL url = (URL) userConfigs.nextElement();
-          try
-          {
+          try {
             final PropertyFileConfiguration baseProperty = new PropertyFileConfiguration();
             final InputStream in = url.openStream();
-            try
-            {
-              baseProperty.load(in);
-            }
-            finally
-            {
+            try {
+              baseProperty.load( in );
+            } finally {
               in.close();
             }
-            configs.add(baseProperty);
-          }
-          catch (IOException ioe)
-          {
-            LOGGER.warn("Failed to load the user configuration at " + url, ioe);
+            configs.add( baseProperty );
+          } catch ( IOException ioe ) {
+            LOGGER.warn( "Failed to load the user configuration at " + url, ioe );
           }
         }
 
         final PropertyFileConfiguration compressedUserConfig = new PropertyFileConfiguration();
-        for (int i = configs.size() - 1; i >= 0; i--)
-        {
-          final PropertyFileConfiguration baseProperty = configs.get(i);
-          compressedUserConfig.addAll(baseProperty);
+        for ( int i = configs.size() - 1; i >= 0; i-- ) {
+          final PropertyFileConfiguration baseProperty = configs.get( i );
+          compressedUserConfig.addAll( baseProperty );
         }
-        globalConfig.insertConfiguration(compressedUserConfig);
-      }
-      catch (IOException e)
-      {
-        LOGGER.warn("Failed to lookup the user configurations.", e);
+        globalConfig.insertConfiguration( compressedUserConfig );
+      } catch ( IOException e ) {
+        LOGGER.warn( "Failed to lookup the user configurations.", e );
       }
     }
-    if (addSysProps)
-    {
+    if ( addSysProps ) {
       final SystemPropertyConfiguration systemConfig = new SystemPropertyConfiguration();
-      globalConfig.insertConfiguration(systemConfig);
+      globalConfig.insertConfiguration( systemConfig );
     }
     return globalConfig;
   }
@@ -457,32 +389,25 @@ public abstract class AbstractBoot implements SubSystem
    *
    * @return the extended configuration.
    */
-  public synchronized ExtendedConfiguration getExtendedConfig()
-  {
-    if (extWrapper == null)
-    {
-      extWrapper = new ExtendedConfigurationWrapper(getGlobalConfig());
+  public synchronized ExtendedConfiguration getExtendedConfig() {
+    if ( extWrapper == null ) {
+      extWrapper = new ExtendedConfigurationWrapper( getGlobalConfig() );
     }
     return extWrapper;
   }
 
-  public synchronized ObjectFactory getObjectFactory()
-  {
-    try
-    {
-      if (objectFactory == null)
-      {
-        final String configProperty = getGlobalConfig().getConfigProperty(ObjectFactoryBuilder.class.getName(),
-            DefaultObjectFactoryBuilder.class.getName());
+  public synchronized ObjectFactory getObjectFactory() {
+    try {
+      if ( objectFactory == null ) {
+        final String configProperty = getGlobalConfig().getConfigProperty( ObjectFactoryBuilder.class.getName(),
+          DefaultObjectFactoryBuilder.class.getName() );
         final ObjectFactoryBuilder objectFactoryBuilder =
-            ObjectUtilities.loadAndInstantiate(configProperty, getClass(), ObjectFactoryBuilder.class);
-        objectFactory = objectFactoryBuilder.createObjectFactory(this);
+          ObjectUtilities.loadAndInstantiate( configProperty, getClass(), ObjectFactoryBuilder.class );
+        objectFactory = objectFactoryBuilder.createObjectFactory( this );
       }
       return objectFactory;
-    }
-    catch (Throwable t)
-    {
-      throw new IllegalStateException("ObjectFactory is not configured properly", t);
+    } catch ( Throwable t ) {
+      throw new IllegalStateException( "ObjectFactory is not configured properly", t );
     }
   }
 }

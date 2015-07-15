@@ -19,17 +19,15 @@ package org.pentaho.reporting.libraries.fonts.text;
 
 /**
  * unicode standard).
- *
- * The language code returned by this class is an integer, which maps to one
- * of the ISO 15924 numerical language codes. If there is an Unicode script
- * tag, for which there exists no corresponding ISO code, then negative numbers
- * are assigned in descending order.
+ * <p/>
+ * The language code returned by this class is an integer, which maps to one of the ISO 15924 numerical language codes.
+ * If there is an Unicode script tag, for which there exists no corresponding ISO code, then negative numbers are
+ * assigned in descending order.
  *
  * @author Thomas Morgner
  */
-public interface LanguageClassifier extends ClassificationProducer
-{
-  public int getScript (int codepoint);
+public interface LanguageClassifier extends ClassificationProducer {
+  public int getScript( int codepoint );
 
   // Todo: Derive the language from the characters. (See "scripts.txt" in the
 

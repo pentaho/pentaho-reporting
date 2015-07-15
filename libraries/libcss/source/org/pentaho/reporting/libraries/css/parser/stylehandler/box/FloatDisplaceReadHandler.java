@@ -25,14 +25,12 @@ import org.pentaho.reporting.libraries.css.parser.stylehandler.OneOfConstantsRea
  *
  * @author Thomas Morgner
  */
-public class FloatDisplaceReadHandler extends OneOfConstantsReadHandler
-{
-  public FloatDisplaceReadHandler()
-  {
-    super(false);
-    addValue(FloatDisplace.BLOCK);
-    addValue(FloatDisplace.BLOCK_WITHIN_PAGE);
-    addValue(FloatDisplace.INDENT);
-    addValue(FloatDisplace.LINE);
+public class FloatDisplaceReadHandler extends OneOfConstantsReadHandler {
+  public FloatDisplaceReadHandler() {
+    super( false );
+    addValue( FloatDisplace.BLOCK );
+    addValue( FloatDisplace.BLOCK_WITHIN_PAGE );
+    addValue( FloatDisplace.INDENT );
+    addValue( FloatDisplace.LINE );
   }
 }

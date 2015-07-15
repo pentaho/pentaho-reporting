@@ -28,9 +28,8 @@ import org.pentaho.reporting.tools.configeditor.model.ClassConfigDescriptionEntr
  *
  * @author Thomas Morgner
  */
-public class ClassKeyEditor extends TextKeyEditor
-{
-  private static final Log logger = LogFactory.getLog(ClassKeyEditor.class);
+public class ClassKeyEditor extends TextKeyEditor {
+  private static final Log logger = LogFactory.getLog( ClassKeyEditor.class );
   /**
    * The base class, to which all value classes must be assignable.
    */
@@ -44,15 +43,13 @@ public class ClassKeyEditor extends TextKeyEditor
    * @param entry       the configuration description entry that describes the key
    * @param displayName the text for the label
    */
-  public ClassKeyEditor(final HierarchicalConfiguration config,
-                        final ClassConfigDescriptionEntry entry,
-                        final String displayName)
-  {
-    super(config, entry, displayName);
+  public ClassKeyEditor( final HierarchicalConfiguration config,
+                         final ClassConfigDescriptionEntry entry,
+                         final String displayName ) {
+    super( config, entry, displayName );
     baseClass = entry.getBaseClass();
-    if (baseClass == null)
-    {
-      ClassKeyEditor.logger.warn("Base class undefined, defaulting to java.lang.Object"); //$NON-NLS-1$
+    if ( baseClass == null ) {
+      ClassKeyEditor.logger.warn( "Base class undefined, defaulting to java.lang.Object" ); //$NON-NLS-1$
       baseClass = Object.class;
     }
     validateContent();
@@ -61,31 +58,23 @@ public class ClassKeyEditor extends TextKeyEditor
   /**
    * Checks whether the given value is a valid classname and is assignable from the base class.
    */
-  public void validateContent()
-  {
-    if (baseClass == null)
-    {
+  public void validateContent() {
+    if ( baseClass == null ) {
       // validate is called before the baseclass is set ... ugly!
       return;
     }
-    try
-    {
+    try {
       final String className = getContent();
-      if (className == null)
-      {
-        setValidInput(false);
+      if ( className == null ) {
+        setValidInput( false );
+      } else {
+        final ClassLoader classLoader = ObjectUtilities.getClassLoader( getClass() );
+        final Class c = Class.forName( className, false, classLoader );
+        setValidInput( baseClass.isAssignableFrom( c ) );
       }
-      else
-      {
-        final ClassLoader classLoader = ObjectUtilities.getClassLoader(getClass());
-        final Class c = Class.forName(className, false, classLoader);
-        setValidInput(baseClass.isAssignableFrom(c));
-      }
-    }
-    catch (Exception e)
-    {
+    } catch ( Exception e ) {
       // ignored ..
-      setValidInput(false);
+      setValidInput( false );
     }
     // Log.debug ("Validate ClassContent:" + getContent() + " is Valid: " + isValidInput());
   }

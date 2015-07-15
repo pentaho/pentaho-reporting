@@ -30,30 +30,22 @@ import org.w3c.css.sac.LexicalUnit;
  *
  * @author Thomas Morgner
  */
-public class ColumnSpanReadHandler implements CSSValueReadHandler
-{
-  public ColumnSpanReadHandler()
-  {
+public class ColumnSpanReadHandler implements CSSValueReadHandler {
+  public ColumnSpanReadHandler() {
   }
 
-  public CSSValue createValue(StyleKey name, LexicalUnit value)
-  {
-    if (value.getLexicalUnitType() == LexicalUnit.SAC_IDENT)
-    {
-      if (value.getStringValue().equalsIgnoreCase("none"))
-      {
-        return new CSSConstant("none");
+  public CSSValue createValue( StyleKey name, LexicalUnit value ) {
+    if ( value.getLexicalUnitType() == LexicalUnit.SAC_IDENT ) {
+      if ( value.getStringValue().equalsIgnoreCase( "none" ) ) {
+        return new CSSConstant( "none" );
       }
-      if (value.getStringValue().equalsIgnoreCase("all"))
-      {
-        return new CSSConstant("all");
+      if ( value.getStringValue().equalsIgnoreCase( "all" ) ) {
+        return new CSSConstant( "all" );
       }
       return null;
-    }
-    else if (value.getLexicalUnitType() == LexicalUnit.SAC_INTEGER)
-    {
-      return CSSNumericValue.createValue(CSSNumericType.NUMBER,
-          value.getIntegerValue());
+    } else if ( value.getLexicalUnitType() == LexicalUnit.SAC_INTEGER ) {
+      return CSSNumericValue.createValue( CSSNumericType.NUMBER,
+        value.getIntegerValue() );
     }
     return null;
   }

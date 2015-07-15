@@ -24,13 +24,11 @@ import org.pentaho.reporting.libraries.css.values.CSSConstant;
  *
  * @author Thomas Morgner
  */
-public class LineGridMode
-{
-  public static final CSSConstant NONE = new CSSConstant("none");
-  public static final CSSConstant IDEOGRAPH = new CSSConstant("ideograph");
-  public static final CSSConstant ALL = new CSSConstant("all");
+public class LineGridMode {
+  public static final CSSConstant NONE = new CSSConstant( "none" );
+  public static final CSSConstant IDEOGRAPH = new CSSConstant( "ideograph" );
+  public static final CSSConstant ALL = new CSSConstant( "all" );
 
-  private LineGridMode()
-  {
+  private LineGridMode() {
   }
 }

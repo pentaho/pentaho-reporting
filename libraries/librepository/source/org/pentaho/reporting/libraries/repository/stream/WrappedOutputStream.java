@@ -25,53 +25,44 @@ import java.io.OutputStream;
  *
  * @author Thomas Morgner
  */
-public class WrappedOutputStream extends OutputStream
-{
+public class WrappedOutputStream extends OutputStream {
   private OutputStream stream;
   private boolean closed;
 
-  public WrappedOutputStream(final OutputStream stream)
-  {
-    if (stream == null)
-    {
+  public WrappedOutputStream( final OutputStream stream ) {
+    if ( stream == null ) {
       throw new NullPointerException();
     }
     this.stream = stream;
   }
 
-  public void write(final int b)
-      throws IOException
-  {
-    stream.write(b);
+  public void write( final int b )
+    throws IOException {
+    stream.write( b );
   }
 
-  public void write(final byte[] b)
-      throws IOException
-  {
-    stream.write(b);
+  public void write( final byte[] b )
+    throws IOException {
+    stream.write( b );
   }
 
-  public void write(final byte[] b, final int off, final int len)
-      throws IOException
-  {
-    stream.write(b, off, len);
+  public void write( final byte[] b, final int off, final int len )
+    throws IOException {
+    stream.write( b, off, len );
   }
 
   public void flush()
-      throws IOException
-  {
+    throws IOException {
     stream.flush();
   }
 
   public void close()
-      throws IOException
-  {
+    throws IOException {
     closed = true;
     stream.close();
   }
 
-  public boolean isClosed()
-  {
+  public boolean isClosed() {
     return closed;
   }
 }

@@ -24,8 +24,8 @@ import java.text.Format;
  *
  * @author Thomas Morgner
  */
-public interface FormattedTextType extends TextType
-{
+public interface FormattedTextType extends TextType {
   public Object getOriginal();
+
   public Format getFormat();
 }

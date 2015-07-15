@@ -22,16 +22,14 @@ import org.pentaho.reporting.libraries.base.config.Configuration;
 import org.pentaho.reporting.libraries.base.versioning.ProjectInformation;
 
 /**
- * The LibXmlBoot class is used to initialize the library before it is
- * first used. This loads all configurations and initializes all factories.
+ * The LibXmlBoot class is used to initialize the library before it is first used. This loads all configurations and
+ * initializes all factories.
  * <p/>
- * Without booting, basic services like logging and the global configuration
- * will not be availble.
+ * Without booting, basic services like logging and the global configuration will not be availble.
  *
  * @author Thomas Morgner
  */
-public class LibXmlBoot extends AbstractBoot
-{
+public class LibXmlBoot extends AbstractBoot {
   private static LibXmlBoot singleton;
 
   /**
@@ -39,10 +37,8 @@ public class LibXmlBoot extends AbstractBoot
    *
    * @return the singleton booter.
    */
-  public static synchronized LibXmlBoot getInstance()
-  {
-    if (singleton == null)
-    {
+  public static synchronized LibXmlBoot getInstance() {
+    if ( singleton == null ) {
       singleton = new LibXmlBoot();
     }
     return singleton;
@@ -51,8 +47,7 @@ public class LibXmlBoot extends AbstractBoot
   /**
    * Private constructor prevents object creation.
    */
-  private LibXmlBoot()
-  {
+  private LibXmlBoot() {
   }
 
   /**
@@ -60,8 +55,7 @@ public class LibXmlBoot extends AbstractBoot
    *
    * @return The project info.
    */
-  protected ProjectInformation getProjectInfo()
-  {
+  protected ProjectInformation getProjectInfo() {
     return LibXmlInfo.getInstance();
   }
 
@@ -70,17 +64,15 @@ public class LibXmlBoot extends AbstractBoot
    *
    * @return The configuration.
    */
-  protected Configuration loadConfiguration()
-  {
+  protected Configuration loadConfiguration() {
     return createDefaultHierarchicalConfiguration
-        ("/org/pentaho/reporting/libraries/xmlns/libxml.properties",
-            "/libxml.properties", true, LibXmlBoot.class);
+      ( "/org/pentaho/reporting/libraries/xmlns/libxml.properties",
+        "/libxml.properties", true, LibXmlBoot.class );
   }
 
   /**
    * Performs the boot.
    */
-  protected void performBoot()
-  {
+  protected void performBoot() {
   }
 }

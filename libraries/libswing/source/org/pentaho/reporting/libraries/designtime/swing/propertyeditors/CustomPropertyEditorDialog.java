@@ -17,42 +17,30 @@
 
 package org.pentaho.reporting.libraries.designtime.swing.propertyeditors;
 
-import java.awt.BorderLayout;
-import java.awt.Component;
-import java.awt.Dialog;
-import java.awt.Dimension;
-import java.awt.Frame;
-import java.awt.HeadlessException;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-import java.beans.PropertyEditor;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-
 import org.pentaho.reporting.libraries.designtime.swing.CommonDialog;
 import org.pentaho.reporting.libraries.designtime.swing.Messages;
 
-public class CustomPropertyEditorDialog extends CommonDialog
-{
-  private class ValidationHandler implements PropertyChangeListener
-  {
-    private ValidationHandler()
-    {
+import javax.swing.*;
+import java.awt.*;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyEditor;
+
+public class CustomPropertyEditorDialog extends CommonDialog {
+  private class ValidationHandler implements PropertyChangeListener {
+    private ValidationHandler() {
     }
 
     /**
      * This method gets called when a bound property is changed.
      *
-     * @param evt A PropertyChangeEvent object describing the event source
-     *            and the property that has changed.
+     * @param evt A PropertyChangeEvent object describing the event source and the property that has changed.
      */
-    public void propertyChange(final PropertyChangeEvent evt)
-    {
-      if (validatingView == null)
-      {
+    public void propertyChange( final PropertyChangeEvent evt ) {
+      if ( validatingView == null ) {
         return;
       }
-      getConfirmAction().setEnabled(validatingView.isValidEditorValue());
+      getConfirmAction().setEnabled( validatingView.isValidEditorValue() );
     }
   }
 
@@ -61,83 +49,67 @@ public class CustomPropertyEditorDialog extends CommonDialog
   private JPanel contentPane;
 
   public CustomPropertyEditorDialog()
-      throws HeadlessException
-  {
-    setModal(true);
+    throws HeadlessException {
+    setModal( true );
     init();
   }
 
-  public CustomPropertyEditorDialog(final Frame owner)
-      throws HeadlessException
-  {
-    super(owner);
+  public CustomPropertyEditorDialog( final Frame owner )
+    throws HeadlessException {
+    super( owner );
     init();
   }
 
-  public CustomPropertyEditorDialog(final Dialog owner)
-      throws HeadlessException
-  {
-    super(owner);
+  public CustomPropertyEditorDialog( final Dialog owner )
+    throws HeadlessException {
+    super( owner );
     init();
   }
 
-  protected void init()
-  {
+  protected void init() {
     validationHandler = new ValidationHandler();
-    contentPane = new JPanel(new BorderLayout());
+    contentPane = new JPanel( new BorderLayout() );
 
-    setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-    setTitle(Messages.getInstance().getString("CustomPropertyEditorDialog.Title"));
-    setPreferredSize(new Dimension(500,550));
+    setDefaultCloseOperation( DISPOSE_ON_CLOSE );
+    setTitle( Messages.getInstance().getString( "CustomPropertyEditorDialog.Title" ) );
+    setPreferredSize( new Dimension( 500, 550 ) );
     super.init();
   }
 
-  protected String getDialogId()
-  {
+  protected String getDialogId() {
     return "LibSwing.CustomPropertyEditor";
   }
 
-  protected Component createContentPane()
-  {
+  protected Component createContentPane() {
     return contentPane;
   }
 
-  public boolean performEdit(final PropertyEditor editor)
-  {
-    if (editor == null)
-    {
+  public boolean performEdit( final PropertyEditor editor ) {
+    if ( editor == null ) {
       throw new NullPointerException();
     }
 
     final Object originalValue = editor.getValue();
     final Component view = editor.getCustomEditor();
-    if (view instanceof ValidatingPropertyEditorComponent)
-    {
+    if ( view instanceof ValidatingPropertyEditorComponent ) {
       validatingView = (ValidatingPropertyEditorComponent) view;
-      validatingView.addPropertyChangeListener(validationHandler);
-    }
-    else
-    {
+      validatingView.addPropertyChangeListener( validationHandler );
+    } else {
       validatingView = null;
     }
 
     contentPane.removeAll();
-    contentPane.add(new JScrollPane(view), BorderLayout.CENTER);
+    contentPane.add( new JScrollPane( view ), BorderLayout.CENTER );
 
-    if (super.performEdit() == false)
-    {
-      try
-      {
-        editor.setValue(originalValue);
-      }
-      catch (Exception ex)
-      {
+    if ( super.performEdit() == false ) {
+      try {
+        editor.setValue( originalValue );
+      } catch ( Exception ex ) {
         // ignore ..
       }
     }
-    if (validatingView != null)
-    {
-      validatingView.removePropertyChangeListener(validationHandler);
+    if ( validatingView != null ) {
+      validatingView.removePropertyChangeListener( validationHandler );
     }
     return isConfirmed();
   }

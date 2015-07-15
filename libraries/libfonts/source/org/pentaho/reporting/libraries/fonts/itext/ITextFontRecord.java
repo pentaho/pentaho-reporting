@@ -18,8 +18,8 @@
 package org.pentaho.reporting.libraries.fonts.itext;
 
 import org.pentaho.reporting.libraries.fonts.registry.FontFamily;
-import org.pentaho.reporting.libraries.fonts.registry.FontRecord;
 import org.pentaho.reporting.libraries.fonts.registry.FontIdentifier;
+import org.pentaho.reporting.libraries.fonts.registry.FontRecord;
 import org.pentaho.reporting.libraries.fonts.registry.FontType;
 
 /**
@@ -27,20 +27,17 @@ import org.pentaho.reporting.libraries.fonts.registry.FontType;
  *
  * @author Thomas Morgner
  */
-public class ITextFontRecord implements FontRecord, FontIdentifier
-{
+public class ITextFontRecord implements FontRecord, FontIdentifier {
   private FontFamily fontFamily;
   private boolean bold;
   private boolean italic;
   private boolean oblique;
 
-  public ITextFontRecord(final FontFamily fontFamily,
-                         final boolean bold,
-                         final boolean italic,
-                         final boolean oblique)
-  {
-    if (fontFamily == null)
-    {
+  public ITextFontRecord( final FontFamily fontFamily,
+                          final boolean bold,
+                          final boolean italic,
+                          final boolean oblique ) {
+    if ( fontFamily == null ) {
       throw new NullPointerException();
     }
     this.fontFamily = fontFamily;
@@ -49,80 +46,65 @@ public class ITextFontRecord implements FontRecord, FontIdentifier
     this.oblique = oblique;
   }
 
-  public FontFamily getFamily()
-  {
+  public FontFamily getFamily() {
     return fontFamily;
   }
 
-  public boolean isBold()
-  {
+  public boolean isBold() {
     return bold;
   }
 
-  public boolean isItalic()
-  {
+  public boolean isItalic() {
     return italic;
   }
 
-  public boolean isOblique()
-  {
+  public boolean isOblique() {
     return oblique;
   }
 
-  public FontIdentifier getIdentifier()
-  {
+  public FontIdentifier getIdentifier() {
     return this;
   }
 
-  public boolean isScalable()
-  {
+  public boolean isScalable() {
     return true;
   }
 
-  public FontType getFontType()
-  {
+  public FontType getFontType() {
     return FontType.OTHER;
   }
 
-  public boolean equals(final Object o)
-  {
-    if (this == o)
-    {
+  public boolean equals( final Object o ) {
+    if ( this == o ) {
       return true;
     }
-    if (o == null || getClass() != o.getClass())
-    {
+    if ( o == null || getClass() != o.getClass() ) {
       return false;
     }
 
     final ITextFontRecord that = (ITextFontRecord) o;
 
-    if (bold != that.bold)
-    {
+    if ( bold != that.bold ) {
       return false;
     }
-    if (italic != that.italic)
-    {
+    if ( italic != that.italic ) {
       return false;
     }
-    if (oblique != that.oblique)
-    {
+    if ( oblique != that.oblique ) {
       return false;
     }
-    if (!fontFamily.equals(that.fontFamily))
-    {
+    if ( !fontFamily.equals( that.fontFamily ) ) {
       return false;
     }
 
     return true;
   }
 
-  public int hashCode()
-  {
+  public int hashCode() {
     int result = fontFamily.hashCode();
-    result = 29 * result + (bold ? 1 : 0);
-    result = 29 * result + (italic ? 1 : 0);
-    result = 29 * result + (oblique ? 1 : 0);
+    result = 29 * result + ( bold ? 1 : 0 );
+    result = 29 * result + ( italic ? 1 : 0 );
+    result = 29 * result + ( oblique ? 1 : 0 );
     return result;
   }
 }

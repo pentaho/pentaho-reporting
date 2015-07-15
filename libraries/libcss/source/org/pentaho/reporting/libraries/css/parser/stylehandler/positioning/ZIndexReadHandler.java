@@ -29,25 +29,18 @@ import org.w3c.css.sac.LexicalUnit;
  *
  * @author Thomas Morgner
  */
-public class ZIndexReadHandler implements CSSValueReadHandler
-{
-  public ZIndexReadHandler()
-  {
+public class ZIndexReadHandler implements CSSValueReadHandler {
+  public ZIndexReadHandler() {
   }
 
-  public CSSValue createValue(StyleKey name, LexicalUnit value)
-  {
-    if (value.getLexicalUnitType() == LexicalUnit.SAC_IDENT)
-    {
-      if (value.getStringValue().equalsIgnoreCase("auto"))
-      {
+  public CSSValue createValue( StyleKey name, LexicalUnit value ) {
+    if ( value.getLexicalUnitType() == LexicalUnit.SAC_IDENT ) {
+      if ( value.getStringValue().equalsIgnoreCase( "auto" ) ) {
         return CSSAutoValue.getInstance();
       }
       return null;
-    }
-    else
-    {
-      return CSSValueFactory.createNumericValue(value);
+    } else {
+      return CSSValueFactory.createNumericValue( value );
     }
   }
 }

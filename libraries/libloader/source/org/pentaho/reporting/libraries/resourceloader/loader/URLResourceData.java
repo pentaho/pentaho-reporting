@@ -17,12 +17,6 @@
 
 package org.pentaho.reporting.libraries.resourceloader.loader;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.net.URLConnection;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.pentaho.reporting.libraries.base.util.IOUtils;
@@ -32,15 +26,20 @@ import org.pentaho.reporting.libraries.resourceloader.ResourceKey;
 import org.pentaho.reporting.libraries.resourceloader.ResourceLoadingException;
 import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLConnection;
+
 /**
  * A generic read handler for URL resources.
  *
  * @author Thomas Morgner
  */
-@SuppressWarnings("UnnecessaryBoxing")
-public class URLResourceData extends AbstractResourceData
-{
-  private static final Log logger = LogFactory.getLog(URLResourceData.class);
+@SuppressWarnings( "UnnecessaryBoxing" )
+public class URLResourceData extends AbstractResourceData {
+  private static final Log logger = LogFactory.getLog( URLResourceData.class );
   private static final long serialVersionUID = -7183025686032509509L;
   private static Long fixedCacheDelay;
   private long lastDateMetaDataRead;
@@ -53,30 +52,24 @@ public class URLResourceData extends AbstractResourceData
   private ResourceKey key;
   private static Boolean fixBrokenWebServiceDateHeader;
 
-  protected static long getFixedCacheDelay()
-  {
-    if (fixedCacheDelay == null)
-    {
-      fixedCacheDelay = new Long(LibLoaderBoot.getInstance().getExtendedConfig().getIntProperty
-          ("org.pentaho.reporting.libraries.resourceloader.config.url.FixedCacheDelay", 5000));
+  protected static long getFixedCacheDelay() {
+    if ( fixedCacheDelay == null ) {
+      fixedCacheDelay = new Long( LibLoaderBoot.getInstance().getExtendedConfig().getIntProperty
+        ( "org.pentaho.reporting.libraries.resourceloader.config.url.FixedCacheDelay", 5000 ) );
     }
     return fixedCacheDelay.longValue();
   }
 
-  protected static boolean isFixBrokenWebServiceDateHeader()
-  {
-    if (fixBrokenWebServiceDateHeader == null)
-    {
-      fixBrokenWebServiceDateHeader = Boolean.valueOf(LibLoaderBoot.getInstance().getExtendedConfig().getBoolProperty
-          ("org.pentaho.reporting.libraries.resourceloader.config.url.FixBrokenWebServiceDateHeader", false));
+  protected static boolean isFixBrokenWebServiceDateHeader() {
+    if ( fixBrokenWebServiceDateHeader == null ) {
+      fixBrokenWebServiceDateHeader = Boolean.valueOf( LibLoaderBoot.getInstance().getExtendedConfig().getBoolProperty
+        ( "org.pentaho.reporting.libraries.resourceloader.config.url.FixBrokenWebServiceDateHeader", false ) );
     }
     return fixBrokenWebServiceDateHeader.booleanValue();
   }
 
-  public URLResourceData(final ResourceKey key)
-  {
-    if (key == null)
-    {
+  public URLResourceData( final ResourceKey key ) {
+    if ( key == null ) {
       throw new NullPointerException();
     }
 
@@ -85,142 +78,108 @@ public class URLResourceData extends AbstractResourceData
     this.url = (URL) key.getIdentifier();
     // for the ease of implementation, we take the file name from the URL.
     // Feel free to add a 'Content-Disposition' parser with all details :)
-    this.filename = IOUtils.getInstance().getFileName(url);
+    this.filename = IOUtils.getInstance().getFileName( url );
   }
 
-  protected void setUrl(final URL url)
-  {
+  protected void setUrl( final URL url ) {
     this.url = url;
   }
 
-  protected void setKey(final ResourceKey key)
-  {
+  protected void setKey( final ResourceKey key ) {
     this.key = key;
   }
 
-  protected void setFilename(final String filename)
-  {
+  protected void setFilename( final String filename ) {
     this.filename = filename;
   }
 
-  protected URL getUrl()
-  {
+  protected URL getUrl() {
     return url;
   }
 
-  protected String getFilename()
-  {
+  protected String getFilename() {
     return filename;
   }
 
-  private void readMetaData() throws IOException
-  {
-    if (metaDataOK)
-    {
-      if ((System.currentTimeMillis() - lastDateMetaDataRead) < URLResourceData.getFixedCacheDelay())
-      {
+  private void readMetaData() throws IOException {
+    if ( metaDataOK ) {
+      if ( ( System.currentTimeMillis() - lastDateMetaDataRead ) < URLResourceData.getFixedCacheDelay() ) {
         return;
       }
-      if (isFixBrokenWebServiceDateHeader())
-      {
+      if ( isFixBrokenWebServiceDateHeader() ) {
         return;
       }
 
     }
 
     final URLConnection c = url.openConnection();
-    c.setDoOutput(false);
-    c.setAllowUserInteraction(false);
-    if (c instanceof HttpURLConnection)
-    {
+    c.setDoOutput( false );
+    c.setAllowUserInteraction( false );
+    if ( c instanceof HttpURLConnection ) {
       final HttpURLConnection httpURLConnection = (HttpURLConnection) c;
-      httpURLConnection.setRequestMethod("HEAD");
+      httpURLConnection.setRequestMethod( "HEAD" );
     }
     c.connect();
-    readMetaData(c);
+    readMetaData( c );
     c.getInputStream().close();
   }
 
-  private void readMetaData(final URLConnection c)
-  {
-    modificationDate = c.getHeaderFieldDate("last-modified", -1);
-    if (modificationDate <= 0)
-    {
-      if (isFixBrokenWebServiceDateHeader())
-      {
+  private void readMetaData( final URLConnection c ) {
+    modificationDate = c.getHeaderFieldDate( "last-modified", -1 );
+    if ( modificationDate <= 0 ) {
+      if ( isFixBrokenWebServiceDateHeader() ) {
         modificationDate = System.currentTimeMillis();
-      }
-      else
-      {
+      } else {
         modificationDate = -1;
       }
     }
-    contentLength = new Long(c.getContentLength());
-    contentType = c.getHeaderField("content-type");
+    contentLength = new Long( c.getContentLength() );
+    contentType = c.getHeaderField( "content-type" );
     metaDataOK = true;
     lastDateMetaDataRead = System.currentTimeMillis();
   }
 
-  public InputStream getResourceAsStream(final ResourceManager caller) throws ResourceLoadingException
-  {
-    try
-    {
+  public InputStream getResourceAsStream( final ResourceManager caller ) throws ResourceLoadingException {
+    try {
       final URLConnection c = url.openConnection();
-      c.setDoOutput(false);
-      c.setAllowUserInteraction(false);
+      c.setDoOutput( false );
+      c.setAllowUserInteraction( false );
       c.connect();
-      if (isFixBrokenWebServiceDateHeader() == false)
-      {
-        readMetaData(c);
+      if ( isFixBrokenWebServiceDateHeader() == false ) {
+        readMetaData( c );
       }
       return c.getInputStream();
-    }
-    catch (IOException e)
-    {
-      throw new ResourceLoadingException("Failed to open URL connection", e);
+    } catch ( IOException e ) {
+      throw new ResourceLoadingException( "Failed to open URL connection", e );
     }
   }
 
-  public Object getAttribute(final String key)
-  {
-    if (key.equals(ResourceData.FILENAME))
-    {
+  public Object getAttribute( final String key ) {
+    if ( key.equals( ResourceData.FILENAME ) ) {
       return filename;
     }
-    if (key.equals(ResourceData.CONTENT_LENGTH))
-    {
-      try
-      {
-        if (metaDataOK == false)
-        {
+    if ( key.equals( ResourceData.CONTENT_LENGTH ) ) {
+      try {
+        if ( metaDataOK == false ) {
           readMetaData();
         }
         return contentLength;
-      }
-      catch (IOException e)
-      {
-        if (logger.isDebugEnabled())
-        {
-          logger.debug("No response metadata could be read from the input stream", e);
+      } catch ( IOException e ) {
+        if ( logger.isDebugEnabled() ) {
+          logger.debug( "No response metadata could be read from the input stream", e );
         }
         return null;
       }
     }
-    if (key.equals(ResourceData.CONTENT_TYPE))
-    {
-      try
-      {
-        if (metaDataOK == false)
-        {
+    if ( key.equals( ResourceData.CONTENT_TYPE ) ) {
+      try {
+        if ( metaDataOK == false ) {
           readMetaData();
         }
         return contentType;
-      }
-      catch (IOException e)
-      {
-        if (logger.isDebugEnabled())
-        {
-          logger.debug("No response metadata could be read from the input stream", e);
+      } catch ( IOException e ) {
+        if ( logger.isDebugEnabled() ) {
+          logger.debug( "No response metadata could be read from the input stream", e );
         }
         return null;
       }
@@ -228,28 +187,22 @@ public class URLResourceData extends AbstractResourceData
     return null;
   }
 
-  public long getVersion(final ResourceManager caller)
-      throws ResourceLoadingException
-  {
-    try
-    {
+  public long getVersion( final ResourceManager caller )
+    throws ResourceLoadingException {
+    try {
       // always read the new date .. sorry, this is expensive, but needed here
       // else the cache would not be in sync ...
       readMetaData();
       return modificationDate;
-    }
-    catch (IOException e)
-    {
-      if (logger.isDebugEnabled())
-      {
-        logger.debug("No response metadata could be read from the input stream", e);
+    } catch ( IOException e ) {
+      if ( logger.isDebugEnabled() ) {
+        logger.debug( "No response metadata could be read from the input stream", e );
       }
       return -1;
     }
   }
 
-  public ResourceKey getKey()
-  {
+  public ResourceKey getKey() {
     return key;
   }
 }

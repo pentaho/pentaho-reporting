@@ -25,48 +25,40 @@ import org.pentaho.reporting.libraries.formula.typing.coretypes.NumberType;
 
 /**
  * Describes the TimeFunction function
- * 
- * @see TimeFunction
+ *
  * @author Cedric Pronzato
+ * @see TimeFunction
  */
-public class TimeFunctionDescription extends AbstractFunctionDescription
-{
+public class TimeFunctionDescription extends AbstractFunctionDescription {
   private static final long serialVersionUID = 5414013076902907910L;
 
-  public TimeFunctionDescription()
-  {
-    super("TIME","org.pentaho.reporting.libraries.formula.function.datetime.Time-Function");
+  public TimeFunctionDescription() {
+    super( "TIME", "org.pentaho.reporting.libraries.formula.function.datetime.Time-Function" );
   }
 
-  public Type getValueType()
-  {
+  public Type getValueType() {
     return DateTimeType.TIME_TYPE;
   }
 
-  public int getParameterCount()
-  {
+  public int getParameterCount() {
     return 3;
   }
 
-  public Type getParameterType(final int position)
-  {
+  public Type getParameterType( final int position ) {
     return NumberType.GENERIC_NUMBER;
   }
 
   /**
-   * Defines, whether the parameter at the given position is mandatory. A
-   * mandatory parameter must be filled in, while optional parameters need not
-   * to be filled in.
+   * Defines, whether the parameter at the given position is mandatory. A mandatory parameter must be filled in, while
+   * optional parameters need not to be filled in.
    *
    * @return
    */
-  public boolean isParameterMandatory(final int position)
-  {
+  public boolean isParameterMandatory( final int position ) {
     return true;
   }
 
-  public FunctionCategory getCategory()
-  {
+  public FunctionCategory getCategory() {
     return DateTimeFunctionCategory.CATEGORY;
   }
 }

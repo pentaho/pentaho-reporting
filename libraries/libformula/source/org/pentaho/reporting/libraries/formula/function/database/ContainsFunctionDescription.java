@@ -28,38 +28,31 @@ import org.pentaho.reporting.libraries.formula.typing.coretypes.TextType;
  *
  * @author Will Gorman (wgorman@pentaho.com)
  */
-public class ContainsFunctionDescription extends AbstractFunctionDescription
-{
+public class ContainsFunctionDescription extends AbstractFunctionDescription {
 
   private static final long serialVersionUID = 8787262061507547672L;
 
-  public ContainsFunctionDescription()
-  {
-    super("CONTAINS", "org.pentaho.reporting.libraries.formula.function.database.Contains-Function");
+  public ContainsFunctionDescription() {
+    super( "CONTAINS", "org.pentaho.reporting.libraries.formula.function.database.Contains-Function" );
   }
 
-  public FunctionCategory getCategory()
-  {
+  public FunctionCategory getCategory() {
     return DatabaseFunctionCategory.CATEGORY;
   }
 
-  public int getParameterCount()
-  {
+  public int getParameterCount() {
     return 2;
   }
 
-  public Type getParameterType(final int position)
-  {
+  public Type getParameterType( final int position ) {
     return TextType.TYPE;
   }
 
-  public Type getValueType()
-  {
+  public Type getValueType() {
     return LogicalType.TYPE;
   }
 
-  public boolean isParameterMandatory(final int position)
-  {
+  public boolean isParameterMandatory( final int position ) {
     return true;
   }
 

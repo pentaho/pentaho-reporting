@@ -22,22 +22,19 @@ import org.pentaho.reporting.libraries.formula.FormulaTestBase;
 /**
  * @author Cedric Pronzato
  */
-public class SubstituteFunctionTest extends FormulaTestBase
-{
-  public void testDefault() throws Exception
-  {
+public class SubstituteFunctionTest extends FormulaTestBase {
+  public void testDefault() throws Exception {
     runDefaultTest();
   }
 
-  public Object[][] createDataTest()
-  {
+  public Object[][] createDataTest() {
     return new Object[][]
-        {
-            {"SUBSTITUTE(\"121212\";\"2\";\"ab\")", "1ab1ab1ab"},
-            {"SUBSTITUTE(\"121212\";\"2\";\"ab\";2)", "121ab12"},
-            {"SUBSTITUTE(\"Hello\";\"x\";\"ab\")", "Hello"},
-            {"SUBSTITUTE(\"Annna\";\"nn\";\"N\";2)", "AnNa"},
-            {"SUBSTITUTE(\"1212121\";\"2\";\"ab\")", "1ab1ab1ab1"},
-        };
+      {
+        { "SUBSTITUTE(\"121212\";\"2\";\"ab\")", "1ab1ab1ab" },
+        { "SUBSTITUTE(\"121212\";\"2\";\"ab\";2)", "121ab12" },
+        { "SUBSTITUTE(\"Hello\";\"x\";\"ab\")", "Hello" },
+        { "SUBSTITUTE(\"Annna\";\"nn\";\"N\";2)", "AnNa" },
+        { "SUBSTITUTE(\"1212121\";\"2\";\"ab\")", "1ab1ab1ab1" },
+      };
   }
 }

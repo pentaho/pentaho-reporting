@@ -22,19 +22,16 @@ import org.pentaho.reporting.libraries.formula.FormulaTestBase;
 /**
  * @author Cedric Pronzato
  */
-public class LowerFunctionTest extends FormulaTestBase
-{
-  public void testDefault() throws Exception
-  {
+public class LowerFunctionTest extends FormulaTestBase {
+  public void testDefault() throws Exception {
     runDefaultTest();
   }
 
-  public Object[][] createDataTest()
-  {
+  public Object[][] createDataTest() {
     return new Object[][]
-        {
-            {"LOWER(\"HELLObc7\")", "hellobc7"},
-        };
+      {
+        { "LOWER(\"HELLObc7\")", "hellobc7" },
+      };
   }
 
 }

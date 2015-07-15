@@ -29,18 +29,14 @@ import org.w3c.css.sac.LexicalUnit;
  *
  * @author Thomas Morgner
  */
-public class LangReadHandler implements CSSValueReadHandler
-{
-  public LangReadHandler()
-  {
+public class LangReadHandler implements CSSValueReadHandler {
+  public LangReadHandler() {
   }
 
-  public CSSValue createValue(StyleKey name, LexicalUnit value)
-  {
-    if (value.getLexicalUnitType() == LexicalUnit.SAC_STRING_VALUE ||
-        value.getLexicalUnitType() == LexicalUnit.SAC_IDENT)
-    {
-      return new CSSStringValue(CSSStringType.STRING, value.getStringValue());
+  public CSSValue createValue( StyleKey name, LexicalUnit value ) {
+    if ( value.getLexicalUnitType() == LexicalUnit.SAC_STRING_VALUE ||
+      value.getLexicalUnitType() == LexicalUnit.SAC_IDENT ) {
+      return new CSSStringValue( CSSStringType.STRING, value.getStringValue() );
     }
     return null;
   }

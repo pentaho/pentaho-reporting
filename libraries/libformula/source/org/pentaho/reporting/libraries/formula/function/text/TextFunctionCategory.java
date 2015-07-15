@@ -25,12 +25,10 @@ import org.pentaho.reporting.libraries.formula.function.FunctionCategory;
  *
  * @author Thomas Morgner
  */
-public final class TextFunctionCategory extends AbstractFunctionCategory
-{
+public final class TextFunctionCategory extends AbstractFunctionCategory {
   public static final FunctionCategory CATEGORY = new TextFunctionCategory();
 
-  private TextFunctionCategory()
-  {
-    super("org.pentaho.reporting.libraries.formula.function.text.category");
+  private TextFunctionCategory() {
+    super( "org.pentaho.reporting.libraries.formula.function.text.category" );
   }
 }

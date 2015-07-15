@@ -1,33 +1,5 @@
 package org.pentaho.openformula.ui.table;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.Dialog;
-import java.awt.Font;
-import java.awt.Frame;
-import java.awt.Window;
-import java.awt.event.ActionEvent;
-import java.awt.event.KeyEvent;
-import java.util.EventObject;
-import javax.swing.AbstractAction;
-import javax.swing.Action;
-import javax.swing.BorderFactory;
-import javax.swing.ComboBoxEditor;
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JPanel;
-import javax.swing.JTable;
-import javax.swing.JTextField;
-import javax.swing.KeyStroke;
-import javax.swing.SwingUtilities;
-import javax.swing.event.CellEditorListener;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.EventListenerList;
-import javax.swing.plaf.basic.BasicComboBoxEditor;
-import javax.swing.table.TableCellEditor;
-
 import org.pentaho.openformula.ui.FieldDefinition;
 import org.pentaho.openformula.ui.FormulaEditorDialog;
 import org.pentaho.reporting.libraries.base.util.DebugLog;
@@ -38,92 +10,84 @@ import org.pentaho.reporting.libraries.formula.DefaultFormulaContext;
 import org.pentaho.reporting.libraries.formula.FormulaContext;
 import org.pentaho.reporting.libraries.formula.util.FormulaUtil;
 
-public class FormulaFragmentCellEditor extends JPanel implements TableCellEditor
-{
-  protected class ExtendedEditorAction extends AbstractAction
-  {
+import javax.swing.*;
+import javax.swing.event.CellEditorListener;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.EventListenerList;
+import javax.swing.plaf.basic.BasicComboBoxEditor;
+import javax.swing.table.TableCellEditor;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
+import java.util.EventObject;
+
+public class FormulaFragmentCellEditor extends JPanel implements TableCellEditor {
+  protected class ExtendedEditorAction extends AbstractAction {
     /**
      * Defines an <code>Action</code> object with a default description string and default icon.
      */
-    protected ExtendedEditorAction()
-    {
+    protected ExtendedEditorAction() {
     }
 
     /**
      * Invoked when an action occurs.
      */
-    public void actionPerformed(final ActionEvent e)
-    {
+    public void actionPerformed( final ActionEvent e ) {
       final JComboBox comboBox = getComboBox();
       final FormulaEditorDialog editorDialog = FormulaFragmentCellEditor.this.createEditorDialog();
       final String originalFormula = (String) comboBox.getSelectedItem();
-      final String formula = editorDialog.editFormula(originalFormula, getFields());
-      if (formula != null)
-      {
-        comboBox.setSelectedItem(formula);
+      final String formula = editorDialog.editFormula( originalFormula, getFields() );
+      if ( formula != null ) {
+        comboBox.setSelectedItem( formula );
       }
       stopCellEditing();
     }
   }
 
-  protected FormulaEditorDialog createEditorDialog()
-  {
-    Window windowAncestor = SwingUtilities.getWindowAncestor(this);
-    if (windowAncestor instanceof Dialog)
-    {
-      return new FormulaEditorDialog((Dialog) windowAncestor);
-    }
-    else if (windowAncestor instanceof Frame)
-    {
-      return new FormulaEditorDialog((Frame) windowAncestor);
-    }
-    else
-    {
+  protected FormulaEditorDialog createEditorDialog() {
+    Window windowAncestor = SwingUtilities.getWindowAncestor( this );
+    if ( windowAncestor instanceof Dialog ) {
+      return new FormulaEditorDialog( (Dialog) windowAncestor );
+    } else if ( windowAncestor instanceof Frame ) {
+      return new FormulaEditorDialog( (Frame) windowAncestor );
+    } else {
       return new FormulaEditorDialog();
     }
   }
 
-  protected class SelectionAction extends AbstractAction
-  {
+  protected class SelectionAction extends AbstractAction {
     /**
-     * Defines an <code>Action</code> object with a default
-     * description string and default icon.
+     * Defines an <code>Action</code> object with a default description string and default icon.
      */
-    public SelectionAction()
-    {
-      putValue(Action.NAME, EditorMessages.getInstance().getString("AbstractStringValueCellEditor.SelectValue"));
+    public SelectionAction() {
+      putValue( Action.NAME, EditorMessages.getInstance().getString( "AbstractStringValueCellEditor.SelectValue" ) );
     }
 
     /**
      * Invoked when an action occurs.
      */
-    public void actionPerformed(final ActionEvent e)
-    {
-      if (filterEvents)
-      {
+    public void actionPerformed( final ActionEvent e ) {
+      if ( filterEvents ) {
         return;
       }
       stopCellEditing();
     }
   }
 
-  protected class CancelAction extends AbstractAction
-  {
-    public CancelAction()
-    {
+  protected class CancelAction extends AbstractAction {
+    public CancelAction() {
     }
 
     /**
      * Invoked when an action occurs.
      */
-    public void actionPerformed(final ActionEvent e)
-    {
+    public void actionPerformed( final ActionEvent e ) {
       cancelCellEditing();
     }
   }
 
   protected static final String POPUP_EDITOR = "popupEditor";
-  protected static final FieldDefinition[] EMPTY_FIELDS = new FieldDefinition[0];
+  protected static final FieldDefinition[] EMPTY_FIELDS = new FieldDefinition[ 0 ];
 
   private EventListenerList eventListenerList;
   private boolean nullable;
@@ -136,157 +100,131 @@ public class FormulaFragmentCellEditor extends JPanel implements TableCellEditor
   private FieldDefinition[] fields;
   private FormulaContext formulaContext;
 
-  public FormulaFragmentCellEditor()
-  {
-    setLayout(new BorderLayout());
+  public FormulaFragmentCellEditor() {
+    setLayout( new BorderLayout() );
 
     final Action action = createExtendedEditorAction();
 
     this.eventListenerList = new EventListenerList();
 
-    ellipsisButton = new EllipsisButton("...");
-    ellipsisButton.addActionListener(action);
+    ellipsisButton = new EllipsisButton( "..." );
+    ellipsisButton.addActionListener( action );
 
     comboBox = new JComboBox();
     final ComboBoxEditor boxEditor = comboBox.getEditor();
-    if (boxEditor instanceof BasicComboBoxEditor)
-    {
+    if ( boxEditor instanceof BasicComboBoxEditor ) {
       final BasicComboBoxEditor basicComboBoxEditor = (BasicComboBoxEditor) boxEditor;
       final Object editorComponent = basicComboBoxEditor.getEditorComponent();
-      if (editorComponent instanceof JTextField)
-      {
+      if ( editorComponent instanceof JTextField ) {
         final JTextField editorTextField = (JTextField) editorComponent;
-        editorTextField.setDocument(new NonFilteringPlainDocument());
+        editorTextField.setDocument( new NonFilteringPlainDocument() );
       }
     }
-    comboBox.setRenderer(new EmptyValueListCellRenderer());
-    comboBox.addActionListener(new SelectionAction());
-    comboBox.getInputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), new CancelAction());
-    comboBox.getInputMap().put(EditorMessages.getInstance().getKeyStroke
-        ("AbstractStringValueCellEditor.Popup.Accelerator"), POPUP_EDITOR);
-    comboBox.setBorder(BorderFactory.createEmptyBorder());
-    comboBox.setEditable(true);
+    comboBox.setRenderer( new EmptyValueListCellRenderer() );
+    comboBox.addActionListener( new SelectionAction() );
+    comboBox.getInputMap().put( KeyStroke.getKeyStroke( KeyEvent.VK_ESCAPE, 0 ), new CancelAction() );
+    comboBox.getInputMap().put( EditorMessages.getInstance().getKeyStroke
+      ( "AbstractStringValueCellEditor.Popup.Accelerator" ), POPUP_EDITOR );
+    comboBox.setBorder( BorderFactory.createEmptyBorder() );
+    comboBox.setEditable( true );
 
-    add(comboBox, BorderLayout.CENTER);
-    add(ellipsisButton, BorderLayout.EAST);
+    add( comboBox, BorderLayout.CENTER );
+    add( ellipsisButton, BorderLayout.EAST );
 
     formulaContext = new DefaultFormulaContext();
 
     nullable = false;
   }
 
-  public boolean isFormulaFragment()
-  {
+  public boolean isFormulaFragment() {
     return formulaFragment;
   }
 
-  public void setFormulaFragment(final boolean formulaFragment)
-  {
+  public void setFormulaFragment( final boolean formulaFragment ) {
     this.formulaFragment = formulaFragment;
   }
 
-  public FormulaContext getFormulaContext()
-  {
+  public FormulaContext getFormulaContext() {
     return formulaContext;
   }
 
-  public void setFormulaContext(final FormulaContext formulaContext)
-  {
+  public void setFormulaContext( final FormulaContext formulaContext ) {
     this.formulaContext = formulaContext;
   }
 
-  protected Action createExtendedEditorAction()
-  {
+  protected Action createExtendedEditorAction() {
     return new ExtendedEditorAction();
   }
 
-  public Component getTableCellEditorComponent(final JTable table,
-                                               final Object value,
-                                               final boolean isSelected,
-                                               final int row,
-                                               final int column)
-  {
-    return create(value);
+  public Component getTableCellEditorComponent( final JTable table,
+                                                final Object value,
+                                                final boolean isSelected,
+                                                final int row,
+                                                final int column ) {
+    return create( value );
   }
 
-  protected Component create(final Object value)
-  {
-    try
-    {
+  protected Component create( final Object value ) {
+    try {
       filterEvents = true;
 
       final DefaultComboBoxModel comboBoxModel = new DefaultComboBoxModel();
       final FieldDefinition[] definitions = getFields();
-      for (int i = 0; i < definitions.length; i++)
-      {
-        final FieldDefinition fieldDefinition = definitions[i];
-        comboBoxModel.addElement("=" + FormulaUtil.quoteReference(fieldDefinition.getName()));
+      for ( int i = 0; i < definitions.length; i++ ) {
+        final FieldDefinition fieldDefinition = definitions[ i ];
+        comboBoxModel.addElement( "=" + FormulaUtil.quoteReference( fieldDefinition.getName() ) );
       }
-      comboBox.setModel(comboBoxModel);
-      comboBox.setRenderer(new EmptyValueListCellRenderer());
-      comboBox.setEditable(true);
-      add(comboBox, BorderLayout.CENTER);
-      add(ellipsisButton, BorderLayout.EAST);
+      comboBox.setModel( comboBoxModel );
+      comboBox.setRenderer( new EmptyValueListCellRenderer() );
+      comboBox.setEditable( true );
+      add( comboBox, BorderLayout.CENTER );
+      add( ellipsisButton, BorderLayout.EAST );
       comboBox.requestFocus();
 
-      if (value == null)
-      {
-        comboBox.setSelectedItem(null);
-      }
-      else
-      {
+      if ( value == null ) {
+        comboBox.setSelectedItem( null );
+      } else {
         String rawFormulaText;
-        if (isFormulaFragment() == false)
-        {
-          rawFormulaText = FormulaUtil.extractFormula(String.valueOf(value));
-        }
-        else
-        {
-          rawFormulaText = String.valueOf(value);
+        if ( isFormulaFragment() == false ) {
+          rawFormulaText = FormulaUtil.extractFormula( String.valueOf( value ) );
+        } else {
+          rawFormulaText = String.valueOf( value );
         }
 
-        String formulaText = FormulaUtil.createEditorTextFromFormula(rawFormulaText, formulaContext);
-        comboBox.setSelectedItem(formulaText);
+        String formulaText = FormulaUtil.createEditorTextFromFormula( rawFormulaText, formulaContext );
+        comboBox.setSelectedItem( formulaText );
       }
 
       originalValue = value;
       return this;
-    }
-    finally
-    {
+    } finally {
       filterEvents = false;
     }
   }
 
-  protected void configureEditorStyle(final Font font, final Color foreground, final Color background)
-  {
-    comboBox.setFont(font);
-    comboBox.setForeground(foreground);
-    comboBox.setBackground(background);
+  protected void configureEditorStyle( final Font font, final Color foreground, final Color background ) {
+    comboBox.setFont( font );
+    comboBox.setForeground( foreground );
+    comboBox.setBackground( background );
   }
 
-  protected JComboBox getComboBox()
-  {
+  protected JComboBox getComboBox() {
     return comboBox;
   }
 
-  protected boolean isNullable()
-  {
+  protected boolean isNullable() {
     return nullable;
   }
 
-  protected void setNullable(final boolean nullable)
-  {
+  protected void setNullable( final boolean nullable ) {
     this.nullable = nullable;
   }
 
-  public void requestFocus()
-  {
+  public void requestFocus() {
     comboBox.requestFocus();
   }
 
-  protected JButton getEllipsisButton()
-  {
+  protected JButton getEllipsisButton() {
     return ellipsisButton;
   }
 
@@ -295,22 +233,19 @@ public class FormulaFragmentCellEditor extends JPanel implements TableCellEditor
    *
    * @return the value contained in the editor
    */
-  public Object getCellEditorValue()
-  {
+  public Object getCellEditorValue() {
     final Object selectedItem = comboBox.getSelectedItem();
-    if ("".equals(selectedItem) || selectedItem == null)
-    {
+    if ( "".equals( selectedItem ) || selectedItem == null ) {
       return null;
     }
 
-    String text = String.valueOf(selectedItem);
-    if (text.startsWith("'")) {
-      text = "=" + FormulaUtil.quoteString(text.substring(1));
+    String text = String.valueOf( selectedItem );
+    if ( text.startsWith( "'" ) ) {
+      text = "=" + FormulaUtil.quoteString( text.substring( 1 ) );
     }
 
-    if (isFormulaFragment())
-    {
-      return FormulaUtil.createFormulaFromUIText(text);
+    if ( isFormulaFragment() ) {
+      return FormulaUtil.createFormulaFromUIText( text );
     }
     return text;
   }
@@ -325,8 +260,7 @@ public class FormulaFragmentCellEditor extends JPanel implements TableCellEditor
    * @param anEvent the event the editor should use to consider whether to begin editing or not
    * @return true if editing can be started
    */
-  public boolean isCellEditable(final EventObject anEvent)
-  {
+  public boolean isCellEditable( final EventObject anEvent ) {
     return true;
   }
 
@@ -341,8 +275,7 @@ public class FormulaFragmentCellEditor extends JPanel implements TableCellEditor
    * @param anEvent the event the editor should use to start editing
    * @return true if the editor would like the editing cell to be selected; otherwise returns false
    */
-  public boolean shouldSelectCell(final EventObject anEvent)
-  {
+  public boolean shouldSelectCell( final EventObject anEvent ) {
     return true;
   }
 
@@ -353,18 +286,14 @@ public class FormulaFragmentCellEditor extends JPanel implements TableCellEditor
    *
    * @return true if editing was stopped; false otherwise
    */
-  public boolean stopCellEditing()
-  {
-    try
-    {
+  public boolean stopCellEditing() {
+    try {
       // ugly hack to make the combobox editor commit any changes before we go out of focus.
-      comboBox.actionPerformed(new ActionEvent(this, ActionEvent.ACTION_PERFORMED, comboBox.getActionCommand()));
+      comboBox.actionPerformed( new ActionEvent( this, ActionEvent.ACTION_PERFORMED, comboBox.getActionCommand() ) );
       fireEditingStopped();
       return true;
-    }
-    catch (final Exception e)
-    {
-      DebugLog.log("Exception caught while editing cell-value", e); // NON-NLS
+    } catch ( final Exception e ) {
+      DebugLog.log( "Exception caught while editing cell-value", e ); // NON-NLS
       // exception ignored
       fireEditingCanceled();
       return true;
@@ -374,39 +303,31 @@ public class FormulaFragmentCellEditor extends JPanel implements TableCellEditor
   /**
    * Tells the editor to cancel editing and not accept any partially edited value.
    */
-  public void cancelCellEditing()
-  {
-    try
-    {
+  public void cancelCellEditing() {
+    try {
       filterEvents = true;
-      comboBox.setSelectedItem(originalValue);
-    }
-    finally
-    {
+      comboBox.setSelectedItem( originalValue );
+    } finally {
       filterEvents = false;
     }
     fireEditingCanceled();
   }
 
-  protected void fireEditingCanceled()
-  {
-    final CellEditorListener[] listeners = eventListenerList.getListeners(CellEditorListener.class);
-    final ChangeEvent event = new ChangeEvent(this);
-    for (int i = 0; i < listeners.length; i++)
-    {
-      final CellEditorListener listener = listeners[i];
-      listener.editingCanceled(event);
+  protected void fireEditingCanceled() {
+    final CellEditorListener[] listeners = eventListenerList.getListeners( CellEditorListener.class );
+    final ChangeEvent event = new ChangeEvent( this );
+    for ( int i = 0; i < listeners.length; i++ ) {
+      final CellEditorListener listener = listeners[ i ];
+      listener.editingCanceled( event );
     }
   }
 
-  protected void fireEditingStopped()
-  {
-    final CellEditorListener[] listeners = eventListenerList.getListeners(CellEditorListener.class);
-    final ChangeEvent event = new ChangeEvent(this);
-    for (int i = 0; i < listeners.length; i++)
-    {
-      final CellEditorListener listener = listeners[i];
-      listener.editingStopped(event);
+  protected void fireEditingStopped() {
+    final CellEditorListener[] listeners = eventListenerList.getListeners( CellEditorListener.class );
+    final ChangeEvent event = new ChangeEvent( this );
+    for ( int i = 0; i < listeners.length; i++ ) {
+      final CellEditorListener listener = listeners[ i ];
+      listener.editingStopped( event );
     }
   }
 
@@ -415,9 +336,8 @@ public class FormulaFragmentCellEditor extends JPanel implements TableCellEditor
    *
    * @param l the CellEditorListener
    */
-  public void addCellEditorListener(final CellEditorListener l)
-  {
-    eventListenerList.add(CellEditorListener.class, l);
+  public void addCellEditorListener( final CellEditorListener l ) {
+    eventListenerList.add( CellEditorListener.class, l );
   }
 
   /**
@@ -425,18 +345,15 @@ public class FormulaFragmentCellEditor extends JPanel implements TableCellEditor
    *
    * @param l the CellEditorListener
    */
-  public void removeCellEditorListener(final CellEditorListener l)
-  {
-    eventListenerList.remove(CellEditorListener.class, l);
+  public void removeCellEditorListener( final CellEditorListener l ) {
+    eventListenerList.remove( CellEditorListener.class, l );
   }
 
-  public FieldDefinition[] getFields()
-  {
+  public FieldDefinition[] getFields() {
     return fields;
   }
 
-  public void setFields(final FieldDefinition[] fields)
-  {
+  public void setFields( final FieldDefinition[] fields ) {
     this.fields = fields;
   }
 }

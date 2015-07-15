@@ -26,39 +26,32 @@ import org.pentaho.reporting.libraries.fonts.registry.FontRegistry;
  *
  * @author Thomas Morgner
  */
-public class CompoundFontFamily implements FontFamily
-{
+public class CompoundFontFamily implements FontFamily {
   private FontFamily base;
   private FontRegistry registry;
 
-  public CompoundFontFamily(final FontFamily base,
-                            final FontRegistry registry)
-  {
-    if (registry instanceof CompoundFontRegistry)
-    {
+  public CompoundFontFamily( final FontFamily base,
+                             final FontRegistry registry ) {
+    if ( registry instanceof CompoundFontRegistry ) {
       throw new IllegalStateException();
     }
     this.base = base;
     this.registry = registry;
   }
 
-  public FontRegistry getRegistry()
-  {
+  public FontRegistry getRegistry() {
     return registry;
   }
 
-  public String getFamilyName()
-  {
+  public String getFamilyName() {
     return base.getFamilyName();
   }
 
-  public String[] getAllNames()
-  {
+  public String[] getAllNames() {
     return base.getAllNames();
   }
 
-  public FontRecord getFontRecord(final boolean bold, final boolean italics)
-  {
-    return new CompoundFontRecord(base.getFontRecord(bold, italics), this, bold, italics);
+  public FontRecord getFontRecord( final boolean bold, final boolean italics ) {
+    return new CompoundFontRecord( base.getFontRecord( bold, italics ), this, bold, italics );
   }
 }

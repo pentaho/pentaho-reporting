@@ -17,24 +17,22 @@
 
 package org.pentaho.reporting.libraries.css.resolver.values.computed.text;
 
-import org.pentaho.reporting.libraries.css.resolver.values.computed.ConstantsResolveHandler;
 import org.pentaho.reporting.libraries.css.keys.text.WordBreak;
+import org.pentaho.reporting.libraries.css.resolver.values.computed.ConstantsResolveHandler;
 
 /**
  * Creation-Date: 21.12.2005, 15:12:04
  *
  * @author Thomas Morgner
  */
-public class WordBreakResolveHandler extends ConstantsResolveHandler
-{
-  public WordBreakResolveHandler()
-  {
-    addNormalizeValue(WordBreak.BREAK_ALL);
-    addNormalizeValue(WordBreak.BREAK_STRICT);
-    addNormalizeValue(WordBreak.KEEP_ALL);
-    addNormalizeValue(WordBreak.LOOSE);
-    addNormalizeValue(WordBreak.NORMAL);
-    setFallback(WordBreak.NORMAL);
+public class WordBreakResolveHandler extends ConstantsResolveHandler {
+  public WordBreakResolveHandler() {
+    addNormalizeValue( WordBreak.BREAK_ALL );
+    addNormalizeValue( WordBreak.BREAK_STRICT );
+    addNormalizeValue( WordBreak.KEEP_ALL );
+    addNormalizeValue( WordBreak.LOOSE );
+    addNormalizeValue( WordBreak.NORMAL );
+    setFallback( WordBreak.NORMAL );
   }
 
 }

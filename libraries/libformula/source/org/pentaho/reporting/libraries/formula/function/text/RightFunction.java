@@ -28,66 +28,53 @@ import org.pentaho.reporting.libraries.formula.typing.TypeRegistry;
 import org.pentaho.reporting.libraries.formula.typing.coretypes.TextType;
 
 /**
- * This function returns a selected number of text characters from the right.<br/>
- * This function depends on <code>MidFunction</code>.
- *
- * @see MidFunction
+ * This function returns a selected number of text characters from the right.<br/> This function depends on
+ * <code>MidFunction</code>.
  *
  * @author Cedric Pronzato
- *
+ * @see MidFunction
  */
-public class RightFunction implements Function
-{
+public class RightFunction implements Function {
   private static final long serialVersionUID = 1637903638146059530L;
 
-  public RightFunction()
-  {
+  public RightFunction() {
   }
 
-  public TypeValuePair evaluate(final FormulaContext context,
-                                final ParameterCallback parameters) throws EvaluationException
-  {
+  public TypeValuePair evaluate( final FormulaContext context,
+                                 final ParameterCallback parameters ) throws EvaluationException {
     final int parameterCount = parameters.getParameterCount();
-    if (parameterCount < 1 || parameterCount > 2)
-    {
-      throw EvaluationException.getInstance(LibFormulaErrorValue.ERROR_ARGUMENTS_VALUE);
+    if ( parameterCount < 1 || parameterCount > 2 ) {
+      throw EvaluationException.getInstance( LibFormulaErrorValue.ERROR_ARGUMENTS_VALUE );
     }
     final TypeRegistry typeRegistry = context.getTypeRegistry();
 
-    final Type textType = parameters.getType(0);
-    final Object textValue = parameters.getValue(0);
+    final Type textType = parameters.getType( 0 );
+    final Object textValue = parameters.getValue( 0 );
 
-    final String text = typeRegistry.convertToText(textType, textValue);
+    final String text = typeRegistry.convertToText( textType, textValue );
     final int length;
-    if(parameterCount == 2)
-    {
-      final Number lengthVal = typeRegistry.convertToNumber(parameters.getType(1), parameters.getValue(1));
-      if (lengthVal.doubleValue() < 0)
-      {
-        throw EvaluationException.getInstance(LibFormulaErrorValue.ERROR_INVALID_ARGUMENT_VALUE);
+    if ( parameterCount == 2 ) {
+      final Number lengthVal = typeRegistry.convertToNumber( parameters.getType( 1 ), parameters.getValue( 1 ) );
+      if ( lengthVal.doubleValue() < 0 ) {
+        throw EvaluationException.getInstance( LibFormulaErrorValue.ERROR_INVALID_ARGUMENT_VALUE );
       }
       length = lengthVal.intValue();
-    }
-    else
-    {
+    } else {
       length = 1;
     }
 
-    if(text == null || length < 0)
-    {
-      throw EvaluationException.getInstance(LibFormulaErrorValue.ERROR_INVALID_ARGUMENT_VALUE);
+    if ( text == null || length < 0 ) {
+      throw EvaluationException.getInstance( LibFormulaErrorValue.ERROR_INVALID_ARGUMENT_VALUE );
     }
 
-    int s = text.length()-length +1;
-    if(s < 1)
-    {
+    int s = text.length() - length + 1;
+    if ( s < 1 ) {
       s = 1;
     }
-    return new TypeValuePair(TextType.TYPE, MidFunction.process(text, s, length));
+    return new TypeValuePair( TextType.TYPE, MidFunction.process( text, s, length ) );
   }
 
-  public String getCanonicalName()
-  {
+  public String getCanonicalName() {
     return "RIGHT";
   }
 

@@ -17,56 +17,46 @@
 
 package org.pentaho.reporting.libraries.css.counter.numeric;
 
-import java.util.HashSet;
-
 import org.pentaho.reporting.libraries.css.counter.CounterStyle;
 
-public abstract class NumericCounterStyle implements CounterStyle
-{
-  private static final class ReplacementDefinition
-  {
+import java.util.HashSet;
+
+public abstract class NumericCounterStyle implements CounterStyle {
+  private static final class ReplacementDefinition {
     private char original;
     private char replacement;
 
-    private ReplacementDefinition (final char original, final char replacement)
-    {
+    private ReplacementDefinition( final char original, final char replacement ) {
       this.original = original;
       this.replacement = replacement;
     }
 
-    public char getOriginal ()
-    {
+    public char getOriginal() {
       return original;
     }
 
-    public char getReplacement ()
-    {
+    public char getReplacement() {
       return replacement;
     }
 
-    public boolean equals (final Object o)
-    {
-      if (this == o)
-      {
+    public boolean equals( final Object o ) {
+      if ( this == o ) {
         return true;
       }
-      if (o == null || getClass() != o.getClass())
-      {
+      if ( o == null || getClass() != o.getClass() ) {
         return false;
       }
 
       final ReplacementDefinition that = (ReplacementDefinition) o;
 
-      if (original != that.original)
-      {
+      if ( original != that.original ) {
         return false;
       }
 
       return true;
     }
 
-    public int hashCode ()
-    {
+    public int hashCode() {
       return (int) original;
     }
   }
@@ -76,39 +66,33 @@ public abstract class NumericCounterStyle implements CounterStyle
   private transient ReplacementDefinition[] cachedDefinitions;
   private String suffix;
 
-  protected NumericCounterStyle (final int base, final String suffix)
-  {
+  protected NumericCounterStyle( final int base, final String suffix ) {
     this.base = base;
     this.suffix = suffix;
     this.replacements = new HashSet();
   }
 
-  public final void setReplacementChar (final char org, final char other)
-  {
-    this.replacements.add (new ReplacementDefinition(org, other));
+  public final void setReplacementChar( final char org, final char other ) {
+    this.replacements.add( new ReplacementDefinition( org, other ) );
     this.cachedDefinitions = null;
   }
 
-  public final String getCounterValue (final int index)
-  {
-    if (cachedDefinitions == null)
-    {
+  public final String getCounterValue( final int index ) {
+    if ( cachedDefinitions == null ) {
       cachedDefinitions = (ReplacementDefinition[])
-            replacements.toArray(new ReplacementDefinition[replacements.size()]);
+        replacements.toArray( new ReplacementDefinition[ replacements.size() ] );
     }
 
-    String numeric = Integer.toString(index, base);
+    String numeric = Integer.toString( index, base );
 
-    for (int i = 0; i < cachedDefinitions.length; i++)
-    {
-      final ReplacementDefinition def = cachedDefinitions[i];
-      numeric = numeric.replace(def.getOriginal(), def.getReplacement());
+    for ( int i = 0; i < cachedDefinitions.length; i++ ) {
+      final ReplacementDefinition def = cachedDefinitions[ i ];
+      numeric = numeric.replace( def.getOriginal(), def.getReplacement() );
     }
     return numeric;
   }
 
-  public String getSuffix()
-  {
+  public String getSuffix() {
     return suffix;
   }
 }

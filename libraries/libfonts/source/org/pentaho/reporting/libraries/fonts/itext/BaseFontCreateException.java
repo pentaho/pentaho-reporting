@@ -18,18 +18,15 @@
 package org.pentaho.reporting.libraries.fonts.itext;
 
 /**
- * The BaseFontCreateException is thrown if there are problemns while creating iText
- * fonts.
+ * The BaseFontCreateException is thrown if there are problemns while creating iText fonts.
  *
  * @author Thomas Morgner
  */
-public class BaseFontCreateException extends RuntimeException
-{
+public class BaseFontCreateException extends RuntimeException {
   /**
    * Creates a new BaseFontCreateException with no message.
    */
-  public BaseFontCreateException()
-  {
+  public BaseFontCreateException() {
   }
 
   /**
@@ -38,9 +35,8 @@ public class BaseFontCreateException extends RuntimeException
    * @param s the message for this exception
    * @param e the exception that caused this exception.
    */
-  public BaseFontCreateException(final String s, final Exception e)
-  {
-    super(s, e);
+  public BaseFontCreateException( final String s, final Exception e ) {
+    super( s, e );
   }
 
   /**
@@ -48,8 +44,7 @@ public class BaseFontCreateException extends RuntimeException
    *
    * @param s the message for this exception
    */
-  public BaseFontCreateException(final String s)
-  {
-    super(s);
+  public BaseFontCreateException( final String s ) {
+    super( s );
   }
 }

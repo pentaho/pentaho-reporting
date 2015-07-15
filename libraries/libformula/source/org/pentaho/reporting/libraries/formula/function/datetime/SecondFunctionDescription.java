@@ -26,40 +26,32 @@ import org.pentaho.reporting.libraries.formula.typing.coretypes.NumberType;
 /**
  * Describes SecondFunction function.
  *
- * @see MinuteFunction
- *
  * @author Cedric Pronzato
+ * @see MinuteFunction
  */
-public class SecondFunctionDescription extends AbstractFunctionDescription
-{
+public class SecondFunctionDescription extends AbstractFunctionDescription {
 
-  public SecondFunctionDescription()
-  {
-    super("SECOND", "org.pentaho.reporting.libraries.formula.function.datetime.Second-Function");
+  public SecondFunctionDescription() {
+    super( "SECOND", "org.pentaho.reporting.libraries.formula.function.datetime.Second-Function" );
   }
 
-  public Type getValueType()
-  {
+  public Type getValueType() {
     return NumberType.GENERIC_NUMBER;
   }
 
-  public int getParameterCount()
-  {
+  public int getParameterCount() {
     return 1;
   }
 
-  public Type getParameterType(final int position)
-  {
+  public Type getParameterType( final int position ) {
     return DateTimeType.TIME_TYPE;
   }
 
-  public boolean isParameterMandatory(final int position)
-  {
+  public boolean isParameterMandatory( final int position ) {
     return true;
   }
 
-  public FunctionCategory getCategory()
-  {
+  public FunctionCategory getCategory() {
     return DateTimeFunctionCategory.CATEGORY;
   }
 }

@@ -17,18 +17,15 @@
 
 package org.pentaho.reporting.tools.configeditor.editor;
 
-import java.awt.BorderLayout;
-import java.awt.Dimension;
+import org.pentaho.reporting.libraries.base.config.HierarchicalConfiguration;
+import org.pentaho.reporting.tools.configeditor.model.EnumConfigDescriptionEntry;
+
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.util.Arrays;
 import java.util.List;
-import javax.swing.JComboBox;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-
-import org.pentaho.reporting.libraries.base.config.HierarchicalConfiguration;
-import org.pentaho.reporting.tools.configeditor.model.EnumConfigDescriptionEntry;
 
 /**
  * The enumeration key editor is used to edit configuration keys, which accept a closed set of values. The possible
@@ -36,18 +33,15 @@ import org.pentaho.reporting.tools.configeditor.model.EnumConfigDescriptionEntry
  *
  * @author Thomas Morgner
  */
-public class EnumKeyEditor extends AbstractKeyEditor
-{
+public class EnumKeyEditor extends AbstractKeyEditor {
   /**
    * Handles the selection event from the combobox and validates the input.
    */
-  private class ComboBoxSelectionHandler implements ItemListener
-  {
+  private class ComboBoxSelectionHandler implements ItemListener {
     /**
      * Default-Constructor.
      */
-    private ComboBoxSelectionHandler()
-    {
+    private ComboBoxSelectionHandler() {
     }
 
     /**
@@ -56,8 +50,7 @@ public class EnumKeyEditor extends AbstractKeyEditor
      *
      * @param e not used
      */
-    public void itemStateChanged(final ItemEvent e)
-    {
+    public void itemStateChanged( final ItemEvent e ) {
       validateInput();
     }
   }
@@ -87,60 +80,52 @@ public class EnumKeyEditor extends AbstractKeyEditor
    * @param entry       the metadata for the edited key.
    * @param displayName the text for the label.
    */
-  public EnumKeyEditor(final HierarchicalConfiguration config,
-                       final EnumConfigDescriptionEntry entry, final String displayName)
-  {
-    super(config, entry);
+  public EnumKeyEditor( final HierarchicalConfiguration config,
+                        final EnumConfigDescriptionEntry entry, final String displayName ) {
+    super( config, entry );
 
     final JPanel contentPane = new JPanel();
-    contentPane.setLayout(new BorderLayout(5, 0));
-    entryLabel = new JLabel(displayName);
-    entryLabel.setToolTipText(entry.getDescription());
+    contentPane.setLayout( new BorderLayout( 5, 0 ) );
+    entryLabel = new JLabel( displayName );
+    entryLabel.setToolTipText( entry.getDescription() );
 
     entryLabelCarrier = new JPanel();
-    entryLabelCarrier.setLayout(new BorderLayout());
-    entryLabelCarrier.add(entryLabel);
-    contentPane.add(entryLabelCarrier, BorderLayout.WEST);
+    entryLabelCarrier.setLayout( new BorderLayout() );
+    entryLabelCarrier.add( entryLabel );
+    contentPane.add( entryLabelCarrier, BorderLayout.WEST );
 
 
-    this.options = Arrays.asList(entry.getOptions());
+    this.options = Arrays.asList( entry.getOptions() );
 
-    content = new JComboBox(entry.getOptions());
-    content.addItemListener(new ComboBoxSelectionHandler());
-    contentPane.add(content, BorderLayout.CENTER);
-    setContentPane(contentPane);
+    content = new JComboBox( entry.getOptions() );
+    content.addItemListener( new ComboBoxSelectionHandler() );
+    contentPane.add( content, BorderLayout.CENTER );
+    setContentPane( contentPane );
     reset();
   }
 
   /**
    * Restores the original value as read from the report configuration.
    */
-  public void reset()
-  {
-    content.setSelectedItem(loadValue());
+  public void reset() {
+    content.setSelectedItem( loadValue() );
   }
 
   /**
    * Checks whether the input from the combobox is a valid option.
    */
-  protected void validateInput()
-  {
-    setValidInput(options.contains(content.getSelectedItem()));
+  protected void validateInput() {
+    setValidInput( options.contains( content.getSelectedItem() ) );
   }
 
   /**
    * Saves the currently selected option as new value in the report configuration.
    */
-  public void store()
-  {
-    if (isValidInput())
-    {
-      if (isEnabled())
-      {
-        storeValue((String) content.getSelectedItem());
-      }
-      else
-      {
+  public void store() {
+    if ( isValidInput() ) {
+      if ( isEnabled() ) {
+        storeValue( (String) content.getSelectedItem() );
+      } else {
         deleteValue();
       }
     }
@@ -154,10 +139,9 @@ public class EnumKeyEditor extends AbstractKeyEditor
    * @param enabled defines, whether this editor is enabled.
    * @see java.awt.Component#isEnabled
    */
-  public void setEnabled(final boolean enabled)
-  {
-    super.setEnabled(enabled);
-    content.setEnabled(enabled);
+  public void setEnabled( final boolean enabled ) {
+    super.setEnabled( enabled );
+    content.setEnabled( enabled );
   }
 
   /**
@@ -165,10 +149,9 @@ public class EnumKeyEditor extends AbstractKeyEditor
    *
    * @param width the new preferred width.
    */
-  public void setLabelWidth(final int width)
-  {
+  public void setLabelWidth( final int width ) {
     final Dimension prefSize = entryLabel.getPreferredSize();
-    entryLabelCarrier.setPreferredSize(new Dimension(width, prefSize.height));
+    entryLabelCarrier.setPreferredSize( new Dimension( width, prefSize.height ) );
   }
 
   /**
@@ -176,11 +159,9 @@ public class EnumKeyEditor extends AbstractKeyEditor
    *
    * @return the preferred width.
    */
-  public int getLabelWidth()
-  {
+  public int getLabelWidth() {
     final Dimension prefSize = entryLabel.getPreferredSize();
-    if (prefSize != null)
-    {
+    if ( prefSize != null ) {
       return prefSize.width;
     }
     return 0;

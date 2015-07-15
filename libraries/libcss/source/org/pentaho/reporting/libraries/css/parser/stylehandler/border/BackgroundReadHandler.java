@@ -17,21 +17,19 @@
 
 package org.pentaho.reporting.libraries.css.parser.stylehandler.border;
 
-import java.util.Map;
-
 import org.pentaho.reporting.libraries.css.model.StyleKey;
 import org.pentaho.reporting.libraries.css.parser.CSSCompoundValueReadHandler;
 import org.w3c.css.sac.LexicalUnit;
+
+import java.util.Map;
 
 /**
  * Creation-Date: 26.11.2005, 19:39:19
  *
  * @author Thomas Morgner
  */
-public class BackgroundReadHandler implements CSSCompoundValueReadHandler
-{
-  public BackgroundReadHandler()
-  {
+public class BackgroundReadHandler implements CSSCompoundValueReadHandler {
+  public BackgroundReadHandler() {
   }
 
   /**
@@ -40,14 +38,12 @@ public class BackgroundReadHandler implements CSSCompoundValueReadHandler
    * @param unit
    * @return
    */
-  public Map createValues(LexicalUnit unit)
-  {
+  public Map createValues( LexicalUnit unit ) {
     // todo this is a complex parsing task
     return null;
   }
 
-  public StyleKey[] getAffectedKeys()
-  {
-    return new StyleKey[0];
+  public StyleKey[] getAffectedKeys() {
+    return new StyleKey[ 0 ];
   }
 }

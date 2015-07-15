@@ -30,42 +30,42 @@
 
 package org.w3c.flute.parser;
 
-import org.w3c.css.sac.SelectorList;
 import org.w3c.css.sac.Selector;
+import org.w3c.css.sac.SelectorList;
 
 /**
+ * @author Philippe Le Hegaret
  * @version $Revision$
- * @author  Philippe Le Hegaret
  */
 class Selectors implements SelectorList {
 
-    Selector[] selectors = new Selector[5];
-    int      current;
+  Selector[] selectors = new Selector[ 5 ];
+  int current;
 
-    public Selector item(int index) {
-	if ((index < 0) || (index >= current)) {
-	    return null;
-	}
-	return selectors[index];
+  public Selector item( int index ) {
+    if ( ( index < 0 ) || ( index >= current ) ) {
+      return null;
     }
+    return selectors[ index ];
+  }
 
-    public Selector itemSelector(int index) {
-	if ((index < 0) || (index >= current)) {
-	    return null;
-	}
-	return selectors[index];
+  public Selector itemSelector( int index ) {
+    if ( ( index < 0 ) || ( index >= current ) ) {
+      return null;
     }
+    return selectors[ index ];
+  }
 
-    public int getLength() {
-	return current;
-    }
+  public int getLength() {
+    return current;
+  }
 
-    void addSelector(Selector selector) {
-	if (current == selectors.length) {
-	    Selector[] old = selectors;
-	    selectors = new Selector[old.length + old.length];
-	    System.arraycopy(old, 0, selectors, 0, old.length);
-	}
-	selectors[current++] = selector;
+  void addSelector( Selector selector ) {
+    if ( current == selectors.length ) {
+      Selector[] old = selectors;
+      selectors = new Selector[ old.length + old.length ];
+      System.arraycopy( old, 0, selectors, 0, old.length );
     }
+    selectors[ current++ ] = selector;
+  }
 }

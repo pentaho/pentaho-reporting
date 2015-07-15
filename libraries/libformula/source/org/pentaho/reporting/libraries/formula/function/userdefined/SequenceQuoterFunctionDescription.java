@@ -23,49 +23,40 @@ import org.pentaho.reporting.libraries.formula.typing.Type;
 import org.pentaho.reporting.libraries.formula.typing.coretypes.AnyType;
 import org.pentaho.reporting.libraries.formula.typing.coretypes.TextType;
 
-public class SequenceQuoterFunctionDescription extends AbstractFunctionDescription
-{
+public class SequenceQuoterFunctionDescription extends AbstractFunctionDescription {
 
   private static final long serialVersionUID = -5731648885718950878L;
 
-  public SequenceQuoterFunctionDescription()
-  {
-    super("SEQUENCEQUOTER", "org.pentaho.reporting.libraries.formula.function.userdefined.SequenceQuoter-Function");
+  public SequenceQuoterFunctionDescription() {
+    super( "SEQUENCEQUOTER", "org.pentaho.reporting.libraries.formula.function.userdefined.SequenceQuoter-Function" );
   }
 
   @Override
-  public Type getValueType()
-  {
+  public Type getValueType() {
     return TextType.TYPE;
   }
 
   @Override
-  public FunctionCategory getCategory()
-  {
+  public FunctionCategory getCategory() {
     return UserDefinedFunctionCategory.CATEGORY;
   }
 
   @Override
-  public int getParameterCount()
-  {
+  public int getParameterCount() {
     return 3;
   }
 
   @Override
-  public Type getParameterType(int position)
-  {
-    if (position == 0)
-    {
+  public Type getParameterType( int position ) {
+    if ( position == 0 ) {
       return AnyType.ANY_ARRAY;
     }
     return TextType.TYPE;
   }
 
   @Override
-  public boolean isParameterMandatory(int position)
-  {
-    if (position == 0)
-    {
+  public boolean isParameterMandatory( int position ) {
+    if ( position == 0 ) {
       return true;
     }
     return false;

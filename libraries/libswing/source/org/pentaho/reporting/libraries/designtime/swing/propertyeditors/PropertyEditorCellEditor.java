@@ -17,202 +17,154 @@
 
 package org.pentaho.reporting.libraries.designtime.swing.propertyeditors;
 
-import java.awt.Component;
+import javax.swing.*;
+import javax.swing.table.TableCellEditor;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.beans.PropertyEditor;
-import javax.swing.AbstractAction;
-import javax.swing.AbstractCellEditor;
-import javax.swing.BorderFactory;
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.DefaultListCellRenderer;
-import javax.swing.JComboBox;
-import javax.swing.JList;
-import javax.swing.JTable;
-import javax.swing.JTextField;
-import javax.swing.KeyStroke;
-import javax.swing.table.TableCellEditor;
 
-public class PropertyEditorCellEditor extends AbstractCellEditor implements TableCellEditor
-{
-  private class SelectionAction implements ActionListener
-  {
-    private SelectionAction()
-    {
+public class PropertyEditorCellEditor extends AbstractCellEditor implements TableCellEditor {
+  private class SelectionAction implements ActionListener {
+    private SelectionAction() {
     }
 
     /**
      * Invoked when an action occurs.
      */
-    public void actionPerformed(final ActionEvent e)
-    {
-      if (!usingCustomEditor)
-      {
+    public void actionPerformed( final ActionEvent e ) {
+      if ( !usingCustomEditor ) {
         stopCellEditing();
       }
     }
   }
 
 
-  protected class CancelAction extends AbstractAction
-  {
-    protected CancelAction()
-    {
+  protected class CancelAction extends AbstractAction {
+    protected CancelAction() {
     }
 
     /**
      * Invoked when an action occurs.
      */
-    public void actionPerformed(final ActionEvent e)
-    {
+    public void actionPerformed( final ActionEvent e ) {
       cancelCellEditing();
     }
   }
 
 
-  private static class TagListComboBoxRenderer extends DefaultListCellRenderer
-  {
-    private TagListComboBoxRenderer()
-    {
+  private static class TagListComboBoxRenderer extends DefaultListCellRenderer {
+    private TagListComboBoxRenderer() {
     }
 
-    public Component getListCellRendererComponent(final JList list,
-                                                  final Object value,
-                                                  final int index,
-                                                  final boolean isSelected,
-                                                  final boolean cellHasFocus)
-    {
-      if (value == null)
-      {
-        return super.getListCellRendererComponent(list, "<undefined>", index, isSelected, cellHasFocus);
+    public Component getListCellRendererComponent( final JList list,
+                                                   final Object value,
+                                                   final int index,
+                                                   final boolean isSelected,
+                                                   final boolean cellHasFocus ) {
+      if ( value == null ) {
+        return super.getListCellRendererComponent( list, "<undefined>", index, isSelected, cellHasFocus );
       }
-      return super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+      return super.getListCellRendererComponent( list, value, index, isSelected, cellHasFocus );
     }
 
   }
-  
+
   private PropertyEditor propertyEditor;
   private JTextField defaultCellEditor;
   private boolean usingCustomEditor;
   private boolean usingTags;
   private JComboBox tagsCellEditor;
 
-  public PropertyEditorCellEditor()
-  {
+  public PropertyEditorCellEditor() {
     this.tagsCellEditor = new JComboBox();
-    this.tagsCellEditor.addActionListener(new SelectionAction());
-    this.tagsCellEditor.putClientProperty("JComboBox.isTableCellEditor", Boolean.TRUE);
-    this.tagsCellEditor.getInputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), new CancelAction());
-    this.tagsCellEditor.setRenderer(new TagListComboBoxRenderer());
+    this.tagsCellEditor.addActionListener( new SelectionAction() );
+    this.tagsCellEditor.putClientProperty( "JComboBox.isTableCellEditor", Boolean.TRUE );
+    this.tagsCellEditor.getInputMap().put( KeyStroke.getKeyStroke( KeyEvent.VK_ESCAPE, 0 ), new CancelAction() );
+    this.tagsCellEditor.setRenderer( new TagListComboBoxRenderer() );
 
     this.defaultCellEditor = new JTextField();
-    this.defaultCellEditor.addActionListener(new SelectionAction());
-    this.defaultCellEditor.setBorder(BorderFactory.createEmptyBorder());
+    this.defaultCellEditor.addActionListener( new SelectionAction() );
+    this.defaultCellEditor.setBorder( BorderFactory.createEmptyBorder() );
   }
 
-  public PropertyEditor getPropertyEditor()
-  {
+  public PropertyEditor getPropertyEditor() {
     return propertyEditor;
   }
 
-  public void setPropertyEditor(final PropertyEditor propertyEditor)
-  {
+  public void setPropertyEditor( final PropertyEditor propertyEditor ) {
     this.propertyEditor = propertyEditor;
   }
 
-  public Component getTableCellEditorComponent(final JTable table,
-                                               final Object value,
-                                               final boolean isSelected,
-                                               final int row,
-                                               final int column)
-  {
-    propertyEditor.setValue(value);
-    if (propertyEditor.supportsCustomEditor())
-    {
+  public Component getTableCellEditorComponent( final JTable table,
+                                                final Object value,
+                                                final boolean isSelected,
+                                                final int row,
+                                                final int column ) {
+    propertyEditor.setValue( value );
+    if ( propertyEditor.supportsCustomEditor() ) {
       usingCustomEditor = true;
       return propertyEditor.getCustomEditor();
-    }
-    else
-    {
+    } else {
       final String[] tags = propertyEditor.getTags();
-      if (tags != null)
-      {
+      if ( tags != null ) {
         usingCustomEditor = false;
         usingTags = true;
-        tagsCellEditor.setModel(new DefaultComboBoxModel(tags));
-        tagsCellEditor.setSelectedItem(propertyEditor.getAsText());
+        tagsCellEditor.setModel( new DefaultComboBoxModel( tags ) );
+        tagsCellEditor.setSelectedItem( propertyEditor.getAsText() );
         return tagsCellEditor;
-      }
-      else
-      {
+      } else {
         usingCustomEditor = false;
         usingTags = false;
-        defaultCellEditor.setText(propertyEditor.getAsText());
+        defaultCellEditor.setText( propertyEditor.getAsText() );
         return defaultCellEditor;
       }
     }
   }
 
-  public Object getCellEditorValue()
-  {
-    if (propertyEditor == null)
-    {
+  public Object getCellEditorValue() {
+    if ( propertyEditor == null ) {
       return null;
     }
-    if (usingCustomEditor)
-    {
+    if ( usingCustomEditor ) {
       return propertyEditor.getValue();
-    }
-    else
-    {
-      try
-      {
-        if (usingTags)
-        {
+    } else {
+      try {
+        if ( usingTags ) {
           final String text = (String) tagsCellEditor.getSelectedItem();
-          propertyEditor.setAsText(text);
+          propertyEditor.setAsText( text );
           return propertyEditor.getValue();
-        }
-        else
-        {
+        } else {
           final String text = defaultCellEditor.getText();
-          propertyEditor.setAsText(text);
+          propertyEditor.setAsText( text );
           return propertyEditor.getValue();
         }
-      }
-      catch (final Exception e)
-      {
+      } catch ( final Exception e ) {
         // exception ignored
         return null;
       }
     }
   }
 
-  public boolean stopCellEditing()
-  {
-    if (usingCustomEditor)
-    {
+  public boolean stopCellEditing() {
+    if ( usingCustomEditor ) {
       fireEditingStopped();
       return true;
     }
-    if (usingTags)
-    {
+    if ( usingTags ) {
       final String s = (String) tagsCellEditor.getSelectedItem();
-      propertyEditor.setAsText(s);
-      final boolean retval = (propertyEditor.getValue() != null);
+      propertyEditor.setAsText( s );
+      final boolean retval = ( propertyEditor.getValue() != null );
       fireEditingStopped();
       return retval;
     }
-    try
-    {
-      propertyEditor.setAsText(defaultCellEditor.getText());
-      final boolean retval = (propertyEditor.getValue() != null);
+    try {
+      propertyEditor.setAsText( defaultCellEditor.getText() );
+      final boolean retval = ( propertyEditor.getValue() != null );
       fireEditingStopped();
       return retval;
-    }
-    catch (final Exception e)
-    {
+    } catch ( final Exception e ) {
       // exception ignored
       fireEditingCanceled();
       return true;

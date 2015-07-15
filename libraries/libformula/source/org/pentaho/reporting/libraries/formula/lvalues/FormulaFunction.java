@@ -42,85 +42,69 @@ import org.pentaho.reporting.libraries.formula.typing.TypeRegistry;
  *
  * @author Thomas Morgner
  */
-public class FormulaFunction extends AbstractLValue
-{
-  private static final Log logger = LogFactory.getLog(FormulaFunction.class);
+public class FormulaFunction extends AbstractLValue {
+  private static final Log logger = LogFactory.getLog( FormulaFunction.class );
 
-  private static class FormulaParameterCallback implements ParameterCallback
-  {
+  private static class FormulaParameterCallback implements ParameterCallback {
     private TypeValuePair[] backend;
     private FormulaFunction function;
 
-    private FormulaParameterCallback(final FormulaFunction function)
-    {
+    private FormulaParameterCallback( final FormulaFunction function ) {
       this.function = function;
-      this.backend = new TypeValuePair[function.parameters.length];
+      this.backend = new TypeValuePair[ function.parameters.length ];
     }
 
-    private TypeValuePair get(final int pos) throws EvaluationException
-    {
-      final LValue parameter = function.parameters[pos];
-      final Type paramType = function.metaData.getParameterType(pos);
-      if (parameter != null)
-      {
+    private TypeValuePair get( final int pos ) throws EvaluationException {
+      final LValue parameter = function.parameters[ pos ];
+      final Type paramType = function.metaData.getParameterType( pos );
+      if ( parameter != null ) {
         final TypeValuePair result = parameter.evaluate();
-        if (result.getValue() == null)
-        {
+        if ( result.getValue() == null ) {
           return result;
         }
 
         // lets do some type checking, right?
         final TypeRegistry typeRegistry = function.getContext().getTypeRegistry();
-        final TypeValuePair converted = typeRegistry.convertTo(paramType, result);
-        if (converted == null)
-        {
-          if (logger.isDebugEnabled())
-          {
-            logger.debug("Failed to evaluate parameter " + pos + " on function " + function);
+        final TypeValuePair converted = typeRegistry.convertTo( paramType, result );
+        if ( converted == null ) {
+          if ( logger.isDebugEnabled() ) {
+            logger.debug( "Failed to evaluate parameter " + pos + " on function " + function );
           }
-          throw EvaluationException.getInstance(LibFormulaErrorValue.ERROR_INVALID_AUTO_ARGUMENT_VALUE);
+          throw EvaluationException.getInstance( LibFormulaErrorValue.ERROR_INVALID_AUTO_ARGUMENT_VALUE );
         }
         return converted;
-      }
-      else
-      {
-        return new TypeValuePair(paramType, function.metaData.getDefaultValue(pos));
+      } else {
+        return new TypeValuePair( paramType, function.metaData.getDefaultValue( pos ) );
       }
     }
 
-    public LValue getRaw(final int position)
-    {
-      return function.parameters[position];
+    public LValue getRaw( final int position ) {
+      return function.parameters[ position ];
     }
 
-    public Object getValue(final int position) throws EvaluationException
-    {
-      final TypeValuePair retval = backend[position];
-      if (retval != null)
-      {
+    public Object getValue( final int position ) throws EvaluationException {
+      final TypeValuePair retval = backend[ position ];
+      if ( retval != null ) {
         return retval.getValue();
       }
 
-      final TypeValuePair pair = get(position);
-      backend[position] = pair;
+      final TypeValuePair pair = get( position );
+      backend[ position ] = pair;
       return pair.getValue();
     }
 
-    public Type getType(final int position) throws EvaluationException
-    {
-      final TypeValuePair retval = backend[position];
-      if (retval != null)
-      {
+    public Type getType( final int position ) throws EvaluationException {
+      final TypeValuePair retval = backend[ position ];
+      if ( retval != null ) {
         return retval.getType();
       }
 
-      final TypeValuePair pair = get(position);
-      backend[position] = pair;
+      final TypeValuePair pair = get( position );
+      backend[ position ] = pair;
       return pair.getType();
     }
 
-    public int getParameterCount()
-    {
+    public int getParameterCount() {
       return backend.length;
     }
   }
@@ -131,36 +115,30 @@ public class FormulaFunction extends AbstractLValue
   private FunctionDescription metaData;
   private static final long serialVersionUID = 8023588016882997962L;
 
-  public FormulaFunction(final String functionName,
-                         final LValue[] parameters,
-                         final ParsePosition parsePosition)
-  {
+  public FormulaFunction( final String functionName,
+                          final LValue[] parameters,
+                          final ParsePosition parsePosition ) {
     this.functionName = functionName;
-    setParsePosition(parsePosition);
+    setParsePosition( parsePosition );
     this.parameters = (LValue[]) parameters.clone();
   }
 
-  public FormulaFunction(final String functionName, final LValue[] parameters)
-  {
-    this(functionName, parameters, null);
+  public FormulaFunction( final String functionName, final LValue[] parameters ) {
+    this( functionName, parameters, null );
   }
 
-  public void initialize(final FormulaContext context) throws EvaluationException
-  {
-    super.initialize(context);
+  public void initialize( final FormulaContext context ) throws EvaluationException {
+    super.initialize( context );
     final FunctionRegistry registry = context.getFunctionRegistry();
-    if (function == null)
-    {
-      function = registry.createFunction(functionName);
+    if ( function == null ) {
+      function = registry.createFunction( functionName );
     }
-    if (metaData == null)
-    {
-      metaData = registry.getMetaData(functionName);
+    if ( metaData == null ) {
+      metaData = registry.getMetaData( functionName );
     }
 
-    for (int i = 0; i < parameters.length; i++)
-    {
-      parameters[i].initialize(context);
+    for ( int i = 0; i < parameters.length; i++ ) {
+      parameters[ i ].initialize( context );
     }
   }
 
@@ -170,8 +148,7 @@ public class FormulaFunction extends AbstractLValue
    *
    * @return the function's name.
    */
-  public String getFunctionName()
-  {
+  public String getFunctionName() {
     return functionName;
   }
 
@@ -181,8 +158,7 @@ public class FormulaFunction extends AbstractLValue
    *
    * @return the function instance or null, if the FormulaFunction instance has not yet been initialized.
    */
-  public Function getFunction()
-  {
+  public Function getFunction() {
     return function;
   }
 
@@ -192,44 +168,34 @@ public class FormulaFunction extends AbstractLValue
    *
    * @return the function description instance or null, if the FormulaFunction instance has not yet been initialized.
    */
-  public FunctionDescription getMetaData()
-  {
+  public FunctionDescription getMetaData() {
     return metaData;
   }
 
-  public Object clone() throws CloneNotSupportedException
-  {
+  public Object clone() throws CloneNotSupportedException {
     final FormulaFunction fn = (FormulaFunction) super.clone();
     fn.parameters = (LValue[]) parameters.clone();
-    for (int i = 0; i < parameters.length; i++)
-    {
-      final LValue parameter = parameters[i];
-      fn.parameters[i] = (LValue) parameter.clone();
+    for ( int i = 0; i < parameters.length; i++ ) {
+      final LValue parameter = parameters[ i ];
+      fn.parameters[ i ] = (LValue) parameter.clone();
     }
     return fn;
   }
 
-  public TypeValuePair evaluate() throws EvaluationException
-  {
+  public TypeValuePair evaluate() throws EvaluationException {
     // First, grab the parameters and their types.
     final FormulaContext context = getContext();
     // And if everything is ok, compute the stuff ..
-    if (function == null)
-    {
-      throw EvaluationException.getInstance(LibFormulaErrorValue.ERROR_INVALID_FUNCTION_VALUE);
+    if ( function == null ) {
+      throw EvaluationException.getInstance( LibFormulaErrorValue.ERROR_INVALID_FUNCTION_VALUE );
     }
-    try
-    {
-      return function.evaluate(context, new FormulaParameterCallback(this));
-    }
-    catch (EvaluationException e)
-    {
+    try {
+      return function.evaluate( context, new FormulaParameterCallback( this ) );
+    } catch ( EvaluationException e ) {
       throw e;
-    }
-    catch (Exception e)
-    {
-      logger.error("Unexpected exception while evaluating", e);
-      throw EvaluationException.getInstance(LibFormulaErrorValue.ERROR_UNEXPECTED_VALUE);
+    } catch ( Exception e ) {
+      logger.error( "Unexpected exception while evaluating", e );
+      throw EvaluationException.getInstance( LibFormulaErrorValue.ERROR_UNEXPECTED_VALUE );
     }
   }
 
@@ -238,27 +204,23 @@ public class FormulaFunction extends AbstractLValue
    *
    * @return
    */
-  public LValue[] getChildValues()
-  {
+  public LValue[] getChildValues() {
     return (LValue[]) parameters.clone();
   }
 
 
-  public String toString()
-  {
-    final StringBuffer b = new StringBuffer(100);
-    b.append(functionName);
-    b.append('(');
-    for (int i = 0; i < parameters.length; i++)
-    {
-      if (i > 0)
-      {
-        b.append(';');
+  public String toString() {
+    final StringBuffer b = new StringBuffer( 100 );
+    b.append( functionName );
+    b.append( '(' );
+    for ( int i = 0; i < parameters.length; i++ ) {
+      if ( i > 0 ) {
+        b.append( ';' );
       }
-      final LValue parameter = parameters[i];
-      b.append(parameter);
+      final LValue parameter = parameters[ i ];
+      b.append( parameter );
     }
-    b.append(')');
+    b.append( ')' );
     return b.toString();
   }
 
@@ -267,17 +229,13 @@ public class FormulaFunction extends AbstractLValue
    *
    * @return true, if the function will always return the same value.
    */
-  public boolean isConstant()
-  {
-    if (metaData == null || metaData.isVolatile())
-    {
+  public boolean isConstant() {
+    if ( metaData == null || metaData.isVolatile() ) {
       return false;
     }
-    for (int i = 0; i < parameters.length; i++)
-    {
-      final LValue value = parameters[i];
-      if (value.isConstant() == false)
-      {
+    for ( int i = 0; i < parameters.length; i++ ) {
+      final LValue value = parameters[ i ];
+      if ( value.isConstant() == false ) {
         return false;
       }
     }

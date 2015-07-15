@@ -24,34 +24,32 @@ import org.pentaho.reporting.libraries.css.values.CSSConstant;
  *
  * @author Thomas Morgner
  */
-public class DominantBaseline
-{
+public class DominantBaseline {
   public static final CSSConstant USE_SCRIPT = new CSSConstant(
-      "use-script");
+    "use-script" );
   public static final CSSConstant NO_CHANGE = new CSSConstant(
-      "no-change");
+    "no-change" );
   public static final CSSConstant RESET_SIZE = new CSSConstant(
-      "reset-size");
+    "reset-size" );
   public static final CSSConstant ALPHABETIC = new CSSConstant(
-      "alphabetic");
+    "alphabetic" );
 
   public static final CSSConstant HANGING = new CSSConstant(
-      "hanging");
+    "hanging" );
   public static final CSSConstant IDEOGRAPHIC = new CSSConstant(
-      "ideographic");
+    "ideographic" );
   public static final CSSConstant MATHEMATICAL = new CSSConstant(
-      "mathematical");
+    "mathematical" );
   public static final CSSConstant CENTRAL = new CSSConstant(
-      "central");
+    "central" );
   public static final CSSConstant MIDDLE = new CSSConstant(
-      "middle");
+    "middle" );
   public static final CSSConstant TEXT_AFTER_EDGE = new CSSConstant(
-      "text-after-edge");
+    "text-after-edge" );
   public static final CSSConstant TEXT_BEFORE_EDGE = new CSSConstant(
-      "text-before-edge");
+    "text-before-edge" );
 
-  private DominantBaseline()
-  {
+  private DominantBaseline() {
   }
 
 }

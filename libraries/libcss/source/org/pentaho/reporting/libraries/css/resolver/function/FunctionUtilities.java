@@ -37,177 +37,140 @@ import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
  *
  * @author Thomas Morgner
  */
-public class FunctionUtilities
-{
+public class FunctionUtilities {
   private static CSSNumericType[] KNOWN_TYPES = {
-      CSSNumericType.PERCENTAGE,
-      CSSNumericType.EM,
-      CSSNumericType.EX,
-      CSSNumericType.CM,
-      CSSNumericType.MM,
-      CSSNumericType.INCH,
-      CSSNumericType.PT,
-      CSSNumericType.PC,
-      CSSNumericType.DEG,
-      CSSNumericType.PX
+    CSSNumericType.PERCENTAGE,
+    CSSNumericType.EM,
+    CSSNumericType.EX,
+    CSSNumericType.CM,
+    CSSNumericType.MM,
+    CSSNumericType.INCH,
+    CSSNumericType.PT,
+    CSSNumericType.PC,
+    CSSNumericType.DEG,
+    CSSNumericType.PX
   };
 
-  private FunctionUtilities()
-  {
+  private FunctionUtilities() {
   }
 
 
-  public static CSSResourceValue loadResource(final DocumentContext process,
-                                              final Object value)
-      throws FunctionEvaluationException
-  {
+  public static CSSResourceValue loadResource( final DocumentContext process,
+                                               final Object value )
+    throws FunctionEvaluationException {
     final Class[] supportedResourceTypes = process.getSupportedResourceTypes();
-    if (supportedResourceTypes.length == 0)
-    {
+    if ( supportedResourceTypes.length == 0 ) {
       throw new FunctionEvaluationException
-          ("Failed to create URI: Resource loading failed as the output " +
-              "target does not support any resource types.");
+        ( "Failed to create URI: Resource loading failed as the output " +
+          "target does not support any resource types." );
     }
-    return loadResource(process, value, supportedResourceTypes);
+    return loadResource( process, value, supportedResourceTypes );
   }
 
-  public static CSSResourceValue loadResource(final DocumentContext process,
-                                              final Object value,
-                                              final Class[] type)
-      throws FunctionEvaluationException
-  {
+  public static CSSResourceValue loadResource( final DocumentContext process,
+                                               final Object value,
+                                               final Class[] type )
+    throws FunctionEvaluationException {
     // ok, this is going to be expensive. Kids, you dont wanna try this at home ...
     final ResourceManager manager = process.getResourceManager();
     final ResourceKey baseKey = process.getContextKey();
-    try
-    {
+    try {
       final ResourceKey key;
-      if (value instanceof ResourceKey)
-      {
+      if ( value instanceof ResourceKey ) {
         key = (ResourceKey) value;
-      }
-      else if (baseKey == null)
-      {
-        key = manager.createKey(value);
-      }
-      else if (value instanceof String)
-      {
-        key = manager.deriveKey(baseKey, (String) value);
-      }
-      else
-      {
+      } else if ( baseKey == null ) {
+        key = manager.createKey( value );
+      } else if ( value instanceof String ) {
+        key = manager.deriveKey( baseKey, (String) value );
+      } else {
         throw new FunctionEvaluationException
-            ("Failed to create URI: Resource loading failed: Key not derivable");
+          ( "Failed to create URI: Resource loading failed: Key not derivable" );
       }
 
-      final Resource res = manager.create(key, baseKey, type);
-      return new CSSResourceValue(res);
-    }
-    catch (Exception e)
-    {
+      final Resource res = manager.create( key, baseKey, type );
+      return new CSSResourceValue( res );
+    } catch ( Exception e ) {
       throw new FunctionEvaluationException
-          ("Failed to create URI: Resource loading failed: " + e.getMessage(), e);
+        ( "Failed to create URI: Resource loading failed: " + e.getMessage(), e );
     }
   }
 
 
-  public static CSSValue parseValue(final DocumentContext process,
-                                    final String text)
-  {
-    final CSSNumericValue val = convertToNumber(text);
-    if (val != null)
-    {
+  public static CSSValue parseValue( final DocumentContext process,
+                                     final String text ) {
+    final CSSNumericValue val = convertToNumber( text );
+    if ( val != null ) {
       return val;
     }
 
     // next step: That may be expensive, but we search for URLs ..
-    try
-    {
-      return loadResource(process, text);
-    }
-    catch (FunctionEvaluationException e)
-    {
+    try {
+      return loadResource( process, text );
+    } catch ( FunctionEvaluationException e ) {
       // ignore, it was just an attempt ...
     }
 
-    return new CSSStringValue(CSSStringType.STRING, text);
+    return new CSSStringValue( CSSStringType.STRING, text );
   }
 
-  public static CSSNumericValue parseNumberValue(final String text, final String type)
-      throws FunctionEvaluationException
-  {
-    final CSSNumericValue val = convertToNumber(text, getUnitType(type));
-    if (val != null)
-    {
+  public static CSSNumericValue parseNumberValue( final String text, final String type )
+    throws FunctionEvaluationException {
+    final CSSNumericValue val = convertToNumber( text, getUnitType( type ) );
+    if ( val != null ) {
       return val;
     }
-    throw new FunctionEvaluationException("Unable to convert to number.");
+    throw new FunctionEvaluationException( "Unable to convert to number." );
   }
 
-  public static CSSNumericValue parseNumberValue(final String text)
-      throws FunctionEvaluationException
-  {
-    final CSSNumericValue val = convertToNumber(text);
-    if (val != null)
-    {
+  public static CSSNumericValue parseNumberValue( final String text )
+    throws FunctionEvaluationException {
+    final CSSNumericValue val = convertToNumber( text );
+    if ( val != null ) {
       return val;
     }
-    throw new FunctionEvaluationException("Unable to convert to number.");
+    throw new FunctionEvaluationException( "Unable to convert to number." );
   }
 
-  private static CSSNumericValue convertToNumber(final String stringValue)
-  {
+  private static CSSNumericValue convertToNumber( final String stringValue ) {
     final String txt = stringValue.trim();
     CSSNumericType type = null;
 
-    for (int i = 0; i < KNOWN_TYPES.length; i++)
-    {
-      final CSSNumericType numericType = KNOWN_TYPES[i];
-      if (txt.endsWith(numericType.getType()))
-      {
+    for ( int i = 0; i < KNOWN_TYPES.length; i++ ) {
+      final CSSNumericType numericType = KNOWN_TYPES[ i ];
+      if ( txt.endsWith( numericType.getType() ) ) {
         type = numericType;
       }
     }
-    if (type == null)
-    {
+    if ( type == null ) {
       type = CSSNumericType.NUMBER;
     }
     final String number = txt.substring
-        (0, txt.length() - type.getType().length()).trim();
-    return convertToNumber(number, type);
+      ( 0, txt.length() - type.getType().length() ).trim();
+    return convertToNumber( number, type );
   }
 
-  private static CSSNumericValue convertToNumber(final String stringValue,
-                                                 CSSNumericType type)
-  {
-    if (type == null)
-    {
+  private static CSSNumericValue convertToNumber( final String stringValue,
+                                                  CSSNumericType type ) {
+    if ( type == null ) {
       type = CSSNumericType.NUMBER;
     }
-    try
-    {
+    try {
       final String number = stringValue.trim();
-      final double nVal = Double.parseDouble(number);
-      return CSSNumericValue.createValue(type, nVal);
-    }
-    catch (Exception e)
-    {
+      final double nVal = Double.parseDouble( number );
+      return CSSNumericValue.createValue( type, nVal );
+    } catch ( Exception e ) {
       return null;
     }
   }
 
-  public static CSSNumericType getUnitType(final String typeText)
-  {
-    if (typeText == null)
-    {
+  public static CSSNumericType getUnitType( final String typeText ) {
+    if ( typeText == null ) {
       return CSSNumericType.NUMBER;
     }
     final String txt = typeText.trim();
-    for (int i = 0; i < KNOWN_TYPES.length; i++)
-    {
-      final CSSNumericType numericType = KNOWN_TYPES[i];
-      if (txt.equalsIgnoreCase(numericType.getType()))
-      {
+    for ( int i = 0; i < KNOWN_TYPES.length; i++ ) {
+      final CSSNumericType numericType = KNOWN_TYPES[ i ];
+      if ( txt.equalsIgnoreCase( numericType.getType() ) ) {
         return numericType;
       }
     }
@@ -215,14 +178,12 @@ public class FunctionUtilities
   }
 
 
-  public static String resolveString(final DocumentContext layoutProcess,
-                                     final LayoutElement layoutElement,
-                                     final CSSValue value)
-      throws FunctionEvaluationException
-  {
-    final CSSValue notAFunctionAnymore = resolveParameter(layoutProcess, layoutElement, value);
-    if (notAFunctionAnymore instanceof CSSStringValue)
-    {
+  public static String resolveString( final DocumentContext layoutProcess,
+                                      final LayoutElement layoutElement,
+                                      final CSSValue value )
+    throws FunctionEvaluationException {
+    final CSSValue notAFunctionAnymore = resolveParameter( layoutProcess, layoutElement, value );
+    if ( notAFunctionAnymore instanceof CSSStringValue ) {
       final CSSStringValue strVal = (CSSStringValue) notAFunctionAnymore;
       return strVal.getValue();
     }
@@ -230,61 +191,49 @@ public class FunctionUtilities
     // Falling back to the Value itself ..
 
     final String retval = notAFunctionAnymore.getCSSText();
-    if (retval == null)
-    {
+    if ( retval == null ) {
       throw new FunctionEvaluationException
-          ("Value " + notAFunctionAnymore + " is invalid");
+        ( "Value " + notAFunctionAnymore + " is invalid" );
     }
     return retval;
   }
 
-  public static CSSValue resolveParameter(final DocumentContext layoutProcess,
-                                          final LayoutElement layoutElement,
-                                          final CSSValue value)
-      throws FunctionEvaluationException
-  {
-    if (value instanceof CSSFunctionValue == false)
-    {
+  public static CSSValue resolveParameter( final DocumentContext layoutProcess,
+                                           final LayoutElement layoutElement,
+                                           final CSSValue value )
+    throws FunctionEvaluationException {
+    if ( value instanceof CSSFunctionValue == false ) {
       return value;
     }
 
     final CSSFunctionValue functionValue = (CSSFunctionValue) value;
 
     final StyleValueFunction function =
-        FunctionFactory.getInstance().getStyleFunction
-            (functionValue.getFunctionName());
-    if (function == null)
-    {
+      FunctionFactory.getInstance().getStyleFunction
+        ( functionValue.getFunctionName() );
+    if ( function == null ) {
       throw new FunctionEvaluationException
-          ("Unsupported Function: " + functionValue);
+        ( "Unsupported Function: " + functionValue );
     }
     return function.evaluate
-        (layoutProcess, layoutElement, functionValue);
+      ( layoutProcess, layoutElement, functionValue );
   }
 
-  public static ResourceKey createURI(final String uri, final DocumentContext layoutProcess)
-  {
-    try
-    {
+  public static ResourceKey createURI( final String uri, final DocumentContext layoutProcess ) {
+    try {
       final ResourceKey base = layoutProcess.getContextKey();
       final ResourceManager resourceManager =
-          layoutProcess.getResourceManager();
+        layoutProcess.getResourceManager();
 
-      if (base != null)
-      {
-        try
-        {
-          return resourceManager.deriveKey(base, uri);
-        }
-        catch (ResourceKeyCreationException ex)
-        {
+      if ( base != null ) {
+        try {
+          return resourceManager.deriveKey( base, uri );
+        } catch ( ResourceKeyCreationException ex ) {
           // ignore ..
         }
       }
-      return resourceManager.createKey(uri);
-    }
-    catch (Exception e)
-    {
+      return resourceManager.createKey( uri );
+    } catch ( Exception e ) {
       return null;
     }
   }

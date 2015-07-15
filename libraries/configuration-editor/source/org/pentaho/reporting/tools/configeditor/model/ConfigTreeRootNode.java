@@ -24,16 +24,14 @@ import javax.swing.tree.TreeNode;
  *
  * @author Thomas Morgner
  */
-public class ConfigTreeRootNode extends AbstractConfigTreeNode
-{
+public class ConfigTreeRootNode extends AbstractConfigTreeNode {
   /**
    * Creates a new root node with the given name.
    *
    * @param name the name of the node.
    */
-  public ConfigTreeRootNode(final String name)
-  {
-    super(name);
+  public ConfigTreeRootNode( final String name ) {
+    super( name );
   }
 
   /**
@@ -41,8 +39,7 @@ public class ConfigTreeRootNode extends AbstractConfigTreeNode
    *
    * @return always null, as the root node never has a parent.
    */
-  public TreeNode getParent()
-  {
+  public TreeNode getParent() {
     return null;
   }
 

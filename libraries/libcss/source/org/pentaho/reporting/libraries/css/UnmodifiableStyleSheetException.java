@@ -22,27 +22,22 @@ package org.pentaho.reporting.libraries.css;
  *
  * @author Thomas Morgner
  */
-public class UnmodifiableStyleSheetException extends RuntimeException
-{
+public class UnmodifiableStyleSheetException extends RuntimeException {
   /**
-   * Constructs a new runtime exception with <code>null</code> as its detail
-   * message.  The cause is not initialized, and may subsequently be initialized
-   * by a call to {@link #initCause}.
+   * Constructs a new runtime exception with <code>null</code> as its detail message.  The cause is not initialized, and
+   * may subsequently be initialized by a call to {@link #initCause}.
    */
-  public UnmodifiableStyleSheetException()
-  {
+  public UnmodifiableStyleSheetException() {
   }
 
   /**
-   * Constructs a new runtime exception with the specified detail message. The
-   * cause is not initialized, and may subsequently be initialized by a call to
-   * {@link #initCause}.
+   * Constructs a new runtime exception with the specified detail message. The cause is not initialized, and may
+   * subsequently be initialized by a call to {@link #initCause}.
    *
-   * @param message the detail message. The detail message is saved for later
-   *                retrieval by the {@link #getMessage()} method.
+   * @param message the detail message. The detail message is saved for later retrieval by the {@link #getMessage()}
+   *                method.
    */
-  public UnmodifiableStyleSheetException(String message)
-  {
-    super(message);
+  public UnmodifiableStyleSheetException( String message ) {
+    super( message );
   }
 }

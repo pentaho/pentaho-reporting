@@ -22,10 +22,8 @@ package org.pentaho.reporting.libraries.css.parser.stylehandler.font;
  *
  * @author Thomas Morgner
  */
-public class MinMaxFontSizeReadHandler extends FontSizeReadHandler
-{
-  public MinMaxFontSizeReadHandler()
-  {
-    super(true);
+public class MinMaxFontSizeReadHandler extends FontSizeReadHandler {
+  public MinMaxFontSizeReadHandler() {
+    super( true );
   }
 }

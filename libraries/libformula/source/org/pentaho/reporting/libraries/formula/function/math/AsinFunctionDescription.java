@@ -24,42 +24,34 @@ import org.pentaho.reporting.libraries.formula.typing.coretypes.NumberType;
 
 /**
  * Describes AsinFunction function.
- * @see AsinFunction
  *
  * @author ocke
- *
+ * @see AsinFunction
  */
-public class AsinFunctionDescription extends AbstractFunctionDescription
-{
+public class AsinFunctionDescription extends AbstractFunctionDescription {
   private static final long serialVersionUID = 743117553650008440L;
 
-  public AsinFunctionDescription()
-  {
-    super("ASIN", "org.pentaho.reporting.libraries.formula.function.math.Asin-Function");
+  public AsinFunctionDescription() {
+    super( "ASIN", "org.pentaho.reporting.libraries.formula.function.math.Asin-Function" );
   }
 
-  public FunctionCategory getCategory()
-  {
+  public FunctionCategory getCategory() {
     return MathFunctionCategory.CATEGORY;
   }
 
-  public int getParameterCount()
-  {
+  public int getParameterCount() {
     return 1;
   }
 
-  public Type getParameterType(final int position)
-  {
+  public Type getParameterType( final int position ) {
     return NumberType.GENERIC_NUMBER;
   }
 
-  public Type getValueType()
-  {
+  public Type getValueType() {
     return NumberType.GENERIC_NUMBER;
   }
 
-  public boolean isParameterMandatory(final int position)
-  {
+  public boolean isParameterMandatory( final int position ) {
     return true;
   }
 

@@ -25,13 +25,11 @@ import org.pentaho.reporting.libraries.css.parser.stylehandler.OneOfConstantsRea
  *
  * @author Thomas Morgner
  */
-public class UnicodeBidiReadHandler extends OneOfConstantsReadHandler
-{
-  public UnicodeBidiReadHandler()
-  {
-    super(false);
-    addValue(UnicodeBidi.BIDI_OVERRIDE);
-    addValue(UnicodeBidi.EMBED);
-    addValue(UnicodeBidi.NORMAL);
+public class UnicodeBidiReadHandler extends OneOfConstantsReadHandler {
+  public UnicodeBidiReadHandler() {
+    super( false );
+    addValue( UnicodeBidi.BIDI_OVERRIDE );
+    addValue( UnicodeBidi.EMBED );
+    addValue( UnicodeBidi.NORMAL );
   }
 }

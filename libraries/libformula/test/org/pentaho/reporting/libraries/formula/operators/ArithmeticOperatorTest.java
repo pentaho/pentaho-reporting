@@ -17,38 +17,33 @@
 
 package org.pentaho.reporting.libraries.formula.operators;
 
-import java.math.BigDecimal;
-
 import org.pentaho.reporting.libraries.formula.FormulaTestBase;
+
+import java.math.BigDecimal;
 
 /**
  * Creation-Date: 10.04.2007, 15:31:58
  *
  * @author Thomas Morgner
  */
-public class ArithmeticOperatorTest extends FormulaTestBase
-{
+public class ArithmeticOperatorTest extends FormulaTestBase {
 
-  public Object[][] createDataTest()
-  {
+  public Object[][] createDataTest() {
     return new Object[][]
-        {
-            {"(1/3)*3", new BigDecimal(1)},
-            {"(5/24)*24", new BigDecimal(5)},
-        };
+      {
+        { "(1/3)*3", new BigDecimal( 1 ) },
+        { "(5/24)*24", new BigDecimal( 5 ) },
+      };
   }
 
-  public ArithmeticOperatorTest()
-  {
+  public ArithmeticOperatorTest() {
   }
 
-  public ArithmeticOperatorTest(final String s)
-  {
-    super(s);
+  public ArithmeticOperatorTest( final String s ) {
+    super( s );
   }
 
-  public void testDefault() throws Exception
-  {
+  public void testDefault() throws Exception {
     runDefaultTest();
   }
 

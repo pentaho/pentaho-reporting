@@ -25,14 +25,12 @@ import org.pentaho.reporting.libraries.css.resolver.values.computed.ConstantsRes
  *
  * @author Thomas Morgner
  */
-public class TextTransformResolveHandler extends ConstantsResolveHandler
-{
-  public TextTransformResolveHandler()
-  {
-    addNormalizeValue(TextTransform.CAPITALIZE);
-    addNormalizeValue(TextTransform.LOWERCASE);
-    addNormalizeValue(TextTransform.NONE);
-    addNormalizeValue(TextTransform.UPPERCASE);
-    setFallback(TextTransform.NONE);
+public class TextTransformResolveHandler extends ConstantsResolveHandler {
+  public TextTransformResolveHandler() {
+    addNormalizeValue( TextTransform.CAPITALIZE );
+    addNormalizeValue( TextTransform.LOWERCASE );
+    addNormalizeValue( TextTransform.NONE );
+    addNormalizeValue( TextTransform.UPPERCASE );
+    setFallback( TextTransform.NONE );
   }
 }

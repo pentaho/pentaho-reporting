@@ -17,34 +17,31 @@
 
 package org.pentaho.reporting.libraries.formula.function.information;
 
-import java.math.BigDecimal;
-
 import org.pentaho.reporting.libraries.formula.FormulaTestBase;
+
+import java.math.BigDecimal;
 
 /**
  * @author Cedric Pronzato
  */
-public class CountAFunctionTest extends FormulaTestBase
-{
-  public void testDefault() throws Exception
-  {
+public class CountAFunctionTest extends FormulaTestBase {
+  public void testDefault() throws Exception {
     runDefaultTest();
   }
 
-  public Object[][] createDataTest()
-  {
+  public Object[][] createDataTest() {
     return new Object[][]
-        {
-            {"COUNTA(\"1\";2;TRUE())", new BigDecimal(3)},
-            {"COUNTA([.B3:.B5])", new BigDecimal(3)},
-            {"COUNTA([.B3:.B5];[.B3:.B5])", new BigDecimal(6)},
-            {"COUNTA([.B3:.B9])", new BigDecimal(6)},
-            {"COUNTA(\"1\";2;1/0)", new BigDecimal(3)},
-            {"COUNTA(\"1\";2;SUM([.B3:.B9]))", new BigDecimal(3)},
-            {"COUNTA(\"1\";2;[.B3:.B9])", new BigDecimal(8)},
-            {"COUNTA({\"1\";2;[.B3:.B9]})", new BigDecimal(8)},
-            {"COUNTA({[.B3:.B9]})", new BigDecimal(6)},
-        };
+      {
+        { "COUNTA(\"1\";2;TRUE())", new BigDecimal( 3 ) },
+        { "COUNTA([.B3:.B5])", new BigDecimal( 3 ) },
+        { "COUNTA([.B3:.B5];[.B3:.B5])", new BigDecimal( 6 ) },
+        { "COUNTA([.B3:.B9])", new BigDecimal( 6 ) },
+        { "COUNTA(\"1\";2;1/0)", new BigDecimal( 3 ) },
+        { "COUNTA(\"1\";2;SUM([.B3:.B9]))", new BigDecimal( 3 ) },
+        { "COUNTA(\"1\";2;[.B3:.B9])", new BigDecimal( 8 ) },
+        { "COUNTA({\"1\";2;[.B3:.B9]})", new BigDecimal( 8 ) },
+        { "COUNTA({[.B3:.B9]})", new BigDecimal( 6 ) },
+      };
   }
 
 }

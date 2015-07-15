@@ -22,66 +22,60 @@ import org.pentaho.reporting.libraries.fonts.afm.AfmFontRegistry;
 import org.pentaho.reporting.libraries.fonts.pfm.PfmFontRegistry;
 import org.pentaho.reporting.libraries.fonts.registry.FontFamily;
 import org.pentaho.reporting.libraries.fonts.registry.FontRecord;
-import org.pentaho.reporting.libraries.fonts.registry.FontSource;
 import org.pentaho.reporting.libraries.fonts.registry.FontRegistry;
+import org.pentaho.reporting.libraries.fonts.registry.FontSource;
 
-public class ListFonts
-{
-  private ListFonts()
-  {
+public class ListFonts {
+  private ListFonts() {
   }
 
-  private static void printRecord(final FontRecord record)
-  {
-    if (record == null)
-    {
-      System.out.println("  - (there is no font defined for that style and family.)");
+  private static void printRecord( final FontRecord record ) {
+    if ( record == null ) {
+      System.out.println( "  - (there is no font defined for that style and family.)" );
       return;
     }
-    if (record instanceof FontSource)
-    {
+    if ( record instanceof FontSource ) {
       final FontSource fs = (FontSource) record;
-      System.out.println("  " + record.getFamily().getFamilyName() + " italics:" + record.isItalic() + " oblique:" + record.isOblique() + " bold: " + record.isBold() + ' ' + fs.getFontSource());
-    }
-    else
-    {
-      System.out.println("  " + record.getFamily().getFamilyName() + " italics:" + record.isItalic() + " oblique:" + record.isOblique() + " bold: " + record.isBold());
+      System.out.println(
+        "  " + record.getFamily().getFamilyName() + " italics:" + record.isItalic() + " oblique:" + record.isOblique()
+          + " bold: " + record.isBold() + ' ' + fs.getFontSource() );
+    } else {
+      System.out.println(
+        "  " + record.getFamily().getFamilyName() + " italics:" + record.isItalic() + " oblique:" + record.isOblique()
+          + " bold: " + record.isBold() );
     }
   }
 
-  public static void main (final String[] args)
-  {
+  public static void main( final String[] args ) {
     LibFontBoot.getInstance().start();
 
-//    final TrueTypeFontRegistry registry = new TrueTypeFontRegistry();
-//    registry.initialize();
-//    final String[] fontFamilies = registry.getRegisteredFamilies();
-//    for (int i = 0; i < fontFamilies.length; i++)
-//    {
-//      String fontFamily = fontFamilies[i];
-//      final FontFamily family = registry.getFontFamily(fontFamily);
-//      String[] names = family.getAllNames();
-//      printRecord(family.getFontRecord(true, false));
-//    }
-//
+    //    final TrueTypeFontRegistry registry = new TrueTypeFontRegistry();
+    //    registry.initialize();
+    //    final String[] fontFamilies = registry.getRegisteredFamilies();
+    //    for (int i = 0; i < fontFamilies.length; i++)
+    //    {
+    //      String fontFamily = fontFamilies[i];
+    //      final FontFamily family = registry.getFontFamily(fontFamily);
+    //      String[] names = family.getAllNames();
+    //      printRecord(family.getFontRecord(true, false));
+    //    }
+    //
 
-    listFontS(new AfmFontRegistry());
-    listFontS(new PfmFontRegistry());
+    listFontS( new AfmFontRegistry() );
+    listFontS( new PfmFontRegistry() );
   }
 
-  private static void listFontS(final FontRegistry registry)
-  {
+  private static void listFontS( final FontRegistry registry ) {
     registry.initialize();
     final String[] fontFamilies = registry.getRegisteredFamilies();
-    for (int i = 0; i < fontFamilies.length; i++)
-    {
-      final String fontFamily = fontFamilies[i];
-      final FontFamily family = registry.getFontFamily(fontFamily);
+    for ( int i = 0; i < fontFamilies.length; i++ ) {
+      final String fontFamily = fontFamilies[ i ];
+      final FontFamily family = registry.getFontFamily( fontFamily );
       //final String[] names = family.getAllNames();
-      printRecord(family.getFontRecord(false, false));
-      printRecord(family.getFontRecord(true, false));
-      printRecord(family.getFontRecord(false, true));
-      printRecord(family.getFontRecord(true, true));
+      printRecord( family.getFontRecord( false, false ) );
+      printRecord( family.getFontRecord( true, false ) );
+      printRecord( family.getFontRecord( false, true ) );
+      printRecord( family.getFontRecord( true, true ) );
     }
   }
 }

@@ -22,7 +22,6 @@ package org.pentaho.reporting.libraries.resourceloader.cache;
  *
  * @author Thomas Morgner
  */
-public interface ResourceFactoryCacheProvider
-{
+public interface ResourceFactoryCacheProvider {
   public ResourceFactoryCache createFactoryCache();
 }

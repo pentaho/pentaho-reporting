@@ -17,29 +17,24 @@
 
 package org.pentaho.reporting.libraries.designtime.swing.event;
 
-import javax.swing.event.DocumentListener;
 import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 
-public abstract class DocumentChangeHandler implements DocumentListener
-{
-  protected DocumentChangeHandler()
-  {
+public abstract class DocumentChangeHandler implements DocumentListener {
+  protected DocumentChangeHandler() {
   }
 
-  protected abstract void handleChange(final DocumentEvent e);
+  protected abstract void handleChange( final DocumentEvent e );
 
-  public void insertUpdate(final DocumentEvent e)
-  {
-    handleChange(e);
+  public void insertUpdate( final DocumentEvent e ) {
+    handleChange( e );
   }
 
-  public void removeUpdate(final DocumentEvent e)
-  {
-    handleChange(e);
+  public void removeUpdate( final DocumentEvent e ) {
+    handleChange( e );
   }
 
-  public void changedUpdate(final DocumentEvent e)
-  {
-    handleChange(e);
+  public void changedUpdate( final DocumentEvent e ) {
+    handleChange( e );
   }
 }

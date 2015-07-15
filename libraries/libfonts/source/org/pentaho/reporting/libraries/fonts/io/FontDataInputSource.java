@@ -24,28 +24,28 @@ import java.io.IOException;
  *
  * @author Thomas Morgner
  */
-public interface FontDataInputSource
-{
+public interface FontDataInputSource {
   public long getLength();
 
-  public void readFullyAt (long position, byte[] buffer, int length)
-          throws IOException;
+  public void readFullyAt( long position, byte[] buffer, int length )
+    throws IOException;
 
   /**
    * Reads a single byte, returns -1 if the end of the stream as been reached.
+   *
    * @param position
    * @return
    * @throws IOException
    */
-  public int readAt (long position) throws IOException;
+  public int readAt( long position ) throws IOException;
 
-//  public int readAt (long position, byte[] buffer, int length) throws IOException;
+  //  public int readAt (long position, byte[] buffer, int length) throws IOException;
 
   public void dispose();
 
   public String getFileName();
 
-  public boolean equals (Object o);
+  public boolean equals( Object o );
 
   public int hashCode();
 }

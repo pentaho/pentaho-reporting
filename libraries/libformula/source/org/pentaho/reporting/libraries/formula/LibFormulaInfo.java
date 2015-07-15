@@ -25,30 +25,26 @@ import org.pentaho.reporting.libraries.base.versioning.ProjectInformation;
  *
  * @author Thomas Morgner
  */
-public class LibFormulaInfo extends ProjectInformation
-{
+public class LibFormulaInfo extends ProjectInformation {
   private static LibFormulaInfo instance;
 
-  public static synchronized LibFormulaInfo getInstance()
-  {
-    if (instance == null)
-    {
+  public static synchronized LibFormulaInfo getInstance() {
+    if ( instance == null ) {
       instance = new LibFormulaInfo();
     }
     return instance;
   }
 
-  public LibFormulaInfo()
-  {
-    super("libformula", "LibFormula");
+  public LibFormulaInfo() {
+    super( "libformula", "LibFormula" );
 
-    setLicenseName("LGPL");
+    setLicenseName( "LGPL" );
 
-    setInfo("http://reporting.pentaho.org/libformula/");
-    setCopyright ("(C)opyright 2007-2011, by Pentaho Corporation and Contributors");
+    setInfo( "http://reporting.pentaho.org/libformula/" );
+    setCopyright( "(C)opyright 2007-2011, by Pentaho Corporation and Contributors" );
 
-    setBootClass("org.pentaho.reporting.libraries.formula.LibFormulaBoot");
+    setBootClass( "org.pentaho.reporting.libraries.formula.LibFormulaBoot" );
 
-    addLibrary(LibBaseInfo.getInstance());
+    addLibrary( LibBaseInfo.getInstance() );
   }
 }

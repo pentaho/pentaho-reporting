@@ -24,8 +24,7 @@ import java.io.Serializable;
  *
  * @author Thomas Morgner
  */
-public interface FontRecord extends Serializable
-{
+public interface FontRecord extends Serializable {
   /**
    * Returns the family for this record.
    *

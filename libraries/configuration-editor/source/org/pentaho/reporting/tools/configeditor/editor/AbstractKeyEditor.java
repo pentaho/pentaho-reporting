@@ -17,19 +17,15 @@
 
 package org.pentaho.reporting.tools.configeditor.editor;
 
-import java.awt.BorderLayout;
-import java.awt.image.BufferedImage;
-import javax.swing.Icon;
-import javax.swing.ImageIcon;
-import javax.swing.JComponent;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-
 import org.pentaho.reporting.libraries.base.config.Configuration;
 import org.pentaho.reporting.libraries.base.config.HierarchicalConfiguration;
 import org.pentaho.reporting.libraries.base.util.ResourceBundleSupport;
 import org.pentaho.reporting.tools.configeditor.Messages;
 import org.pentaho.reporting.tools.configeditor.model.ConfigDescriptionEntry;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.image.BufferedImage;
 
 /**
  * This key editor class is the base class for all key editor components. It provides common services usable for most
@@ -37,8 +33,7 @@ import org.pentaho.reporting.tools.configeditor.model.ConfigDescriptionEntry;
  *
  * @author Thomas Morgner
  */
-public abstract class AbstractKeyEditor extends JComponent implements KeyEditor
-{
+public abstract class AbstractKeyEditor extends JComponent implements KeyEditor {
   /**
    * A constant for the "validInput" property name.
    */
@@ -78,14 +73,13 @@ public abstract class AbstractKeyEditor extends JComponent implements KeyEditor
    * @param config the report configuration that supplies the value for the editor
    * @param entry  the entry description provides the meta data for the edited key.
    */
-  protected AbstractKeyEditor(final HierarchicalConfiguration config,
-                              final ConfigDescriptionEntry entry)
-  {
+  protected AbstractKeyEditor( final HierarchicalConfiguration config,
+                               final ConfigDescriptionEntry entry ) {
     this.resources = Messages.getInstance();
-    this.setLayout(new BorderLayout());
+    this.setLayout( new BorderLayout() );
     this.config = config;
     this.entry = entry;
-    stateLabel = new JLabel(getEmptyIcon());
+    stateLabel = new JLabel( getEmptyIcon() );
   }
 
   /**
@@ -93,16 +87,14 @@ public abstract class AbstractKeyEditor extends JComponent implements KeyEditor
    *
    * @return the empty icon.
    */
-  protected Icon getEmptyIcon()
-  {
-    if (emptyIcon == null)
-    {
+  protected Icon getEmptyIcon() {
+    if ( emptyIcon == null ) {
       final Icon errorIcon = getErrorIcon();
       final int width = errorIcon.getIconWidth();
       final int height = errorIcon.getIconHeight();
 
-      final BufferedImage bi = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
-      emptyIcon = new ImageIcon(bi);
+      final BufferedImage bi = new BufferedImage( width, height, BufferedImage.TYPE_INT_ARGB );
+      emptyIcon = new ImageIcon( bi );
     }
     return emptyIcon;
   }
@@ -112,11 +104,9 @@ public abstract class AbstractKeyEditor extends JComponent implements KeyEditor
    *
    * @return the error icon.
    */
-  protected Icon getErrorIcon()
-  {
-    if (errorIcon == null)
-    {
-      errorIcon = resources.getIcon("default-editor.error-icon"); //$NON-NLS-1$
+  protected Icon getErrorIcon() {
+    if ( errorIcon == null ) {
+      errorIcon = resources.getIcon( "default-editor.error-icon" ); //$NON-NLS-1$
     }
     return errorIcon;
   }
@@ -126,11 +116,10 @@ public abstract class AbstractKeyEditor extends JComponent implements KeyEditor
    *
    * @param contentPane the new content pane
    */
-  protected void setContentPane(final JPanel contentPane)
-  {
+  protected void setContentPane( final JPanel contentPane ) {
     removeAll();
-    add(contentPane, BorderLayout.CENTER);
-    add(stateLabel, BorderLayout.EAST);
+    add( contentPane, BorderLayout.CENTER );
+    add( stateLabel, BorderLayout.EAST );
   }
 
   /**
@@ -138,8 +127,7 @@ public abstract class AbstractKeyEditor extends JComponent implements KeyEditor
    *
    * @return the report configuration instance of this editor.
    */
-  public Configuration getConfig()
-  {
+  public Configuration getConfig() {
     return config;
   }
 
@@ -148,8 +136,7 @@ public abstract class AbstractKeyEditor extends JComponent implements KeyEditor
    *
    * @return the config description entry.
    */
-  public ConfigDescriptionEntry getEntry()
-  {
+  public ConfigDescriptionEntry getEntry() {
     return entry;
   }
 
@@ -158,9 +145,8 @@ public abstract class AbstractKeyEditor extends JComponent implements KeyEditor
    *
    * @return the value of the edited key from the configuration.
    */
-  protected String loadValue()
-  {
-    return config.getConfigProperty(entry.getKeyName());
+  protected String loadValue() {
+    return config.getConfigProperty( entry.getKeyName() );
   }
 
   /**
@@ -168,9 +154,8 @@ public abstract class AbstractKeyEditor extends JComponent implements KeyEditor
    *
    * @param o the new value for the key of the editor.
    */
-  protected void storeValue(final String o)
-  {
-    config.setConfigProperty(entry.getKeyName(), o);
+  protected void storeValue( final String o ) {
+    config.setConfigProperty( entry.getKeyName(), o );
   }
 
   /**
@@ -179,9 +164,8 @@ public abstract class AbstractKeyEditor extends JComponent implements KeyEditor
    * <p/>
    * Deleting the value triggers the <code>isDefined</code> property.
    */
-  protected void deleteValue()
-  {
-    config.setConfigProperty(entry.getKeyName(), null);
+  protected void deleteValue() {
+    config.setConfigProperty( entry.getKeyName(), null );
   }
 
   /**
@@ -189,8 +173,7 @@ public abstract class AbstractKeyEditor extends JComponent implements KeyEditor
    *
    * @return true, if the input is valid, false otherwise.
    */
-  public boolean isValidInput()
-  {
+  public boolean isValidInput() {
     return validInput;
   }
 
@@ -199,20 +182,15 @@ public abstract class AbstractKeyEditor extends JComponent implements KeyEditor
    *
    * @param validInput true, if the input should be considered valid, false otherwise.
    */
-  protected void setValidInput(final boolean validInput)
-  {
-    if (this.validInput != validInput)
-    {
+  protected void setValidInput( final boolean validInput ) {
+    if ( this.validInput != validInput ) {
       final boolean oldValue = this.validInput;
       this.validInput = validInput;
-      firePropertyChange(AbstractKeyEditor.VALID_INPUT_PROPERTY, oldValue, validInput);
-      if (this.validInput == false)
-      {
-        stateLabel.setIcon(getErrorIcon());
-      }
-      else
-      {
-        stateLabel.setIcon(getEmptyIcon());
+      firePropertyChange( AbstractKeyEditor.VALID_INPUT_PROPERTY, oldValue, validInput );
+      if ( this.validInput == false ) {
+        stateLabel.setIcon( getErrorIcon() );
+      } else {
+        stateLabel.setIcon( getEmptyIcon() );
       }
     }
   }
@@ -222,9 +200,8 @@ public abstract class AbstractKeyEditor extends JComponent implements KeyEditor
    *
    * @return true, if the key is defined, false otherwise.
    */
-  public boolean isDefined()
-  {
-    return config.isLocallyDefined(entry.getKeyName());
+  public boolean isDefined() {
+    return config.isLocallyDefined( entry.getKeyName() );
   }
 
   /**
@@ -232,8 +209,7 @@ public abstract class AbstractKeyEditor extends JComponent implements KeyEditor
    *
    * @return a reference to this object.
    */
-  public JComponent getComponent()
-  {
+  public JComponent getComponent() {
     return this;
   }
 }

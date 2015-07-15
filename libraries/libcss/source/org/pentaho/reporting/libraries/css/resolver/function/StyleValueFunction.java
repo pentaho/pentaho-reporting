@@ -28,12 +28,11 @@ import org.pentaho.reporting.libraries.css.values.CSSValue;
  *
  * @author Thomas Morgner
  */
-public interface StyleValueFunction
-{
-  public CSSValue evaluate(final DocumentContext layoutProcess,
-                           final LayoutElement element,
-                           final CSSFunctionValue function)
-      throws FunctionEvaluationException;
+public interface StyleValueFunction {
+  public CSSValue evaluate( final DocumentContext layoutProcess,
+                            final LayoutElement element,
+                            final CSSFunctionValue function )
+    throws FunctionEvaluationException;
 
   public boolean isAutoResolveable();
 }

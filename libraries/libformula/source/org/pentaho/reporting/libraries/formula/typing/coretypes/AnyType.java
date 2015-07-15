@@ -25,30 +25,27 @@ import org.pentaho.reporting.libraries.formula.typing.Type;
  *
  * @author Thomas Morgner
  */
-public final class AnyType extends DefaultType
-{
+public final class AnyType extends DefaultType {
   public static final AnyType TYPE;
   public static final AnyType ANY_ARRAY;
   public static final AnyType ANY_SEQUENCE;
   private static final long serialVersionUID = 5871721530497016577L;
 
-  static
-  {
+  static {
     TYPE = new AnyType();
-    TYPE.addFlag(Type.SCALAR_TYPE);
+    TYPE.addFlag( Type.SCALAR_TYPE );
     TYPE.lock();
 
     ANY_ARRAY = new AnyType();
-    ANY_ARRAY.addFlag(Type.ARRAY_TYPE);
+    ANY_ARRAY.addFlag( Type.ARRAY_TYPE );
     ANY_ARRAY.lock();
 
     ANY_SEQUENCE = new AnyType();
-    ANY_SEQUENCE.addFlag(Type.SEQUENCE_TYPE);
+    ANY_SEQUENCE.addFlag( Type.SEQUENCE_TYPE );
     ANY_SEQUENCE.lock();
   }
 
-  private AnyType()
-  {
-    addFlag(Type.ANY_TYPE);
+  private AnyType() {
+    addFlag( Type.ANY_TYPE );
   }
 }

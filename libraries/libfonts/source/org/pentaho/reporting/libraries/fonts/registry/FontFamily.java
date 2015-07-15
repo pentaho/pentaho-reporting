@@ -24,24 +24,22 @@ import java.io.Serializable;
  *
  * @author Thomas Morgner
  */
-public interface FontFamily extends Serializable
-{
+public interface FontFamily extends Serializable {
   /**
    * Returns the name of the font family (in english).
    *
    * @return
    */
-  public String getFamilyName ();
+  public String getFamilyName();
 
-  public String[] getAllNames ();
+  public String[] getAllNames();
 
   /**
-   * This selects the most suitable font in that family. Italics fonts are
-   * preferred over oblique fonts.
+   * This selects the most suitable font in that family. Italics fonts are preferred over oblique fonts.
    *
    * @param bold
    * @param italics
    * @return
    */
-  public FontRecord getFontRecord (final boolean bold, final boolean italics);
+  public FontRecord getFontRecord( final boolean bold, final boolean italics );
 }

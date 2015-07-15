@@ -26,197 +26,151 @@ import org.pentaho.reporting.libraries.resourceloader.Resource;
 import org.pentaho.reporting.libraries.resourceloader.ResourceKey;
 import org.pentaho.reporting.libraries.resourceloader.cache.ResourceFactoryCache;
 
-public class EHResourceFactoryCache implements ResourceFactoryCache
-{
-  private static class CompoundCacheKey
-  {
+public class EHResourceFactoryCache implements ResourceFactoryCache {
+  private static class CompoundCacheKey {
     private ResourceKey key;
     private Class target;
 
-    public CompoundCacheKey(final ResourceKey key, final Class target)
-    {
-      if (key == null)
-      {
+    public CompoundCacheKey( final ResourceKey key, final Class target ) {
+      if ( key == null ) {
         throw new NullPointerException();
       }
-      if (target == null)
-      {
+      if ( target == null ) {
         throw new NullPointerException();
       }
       this.key = key;
       this.target = target;
     }
 
-    public ResourceKey getKey()
-    {
+    public ResourceKey getKey() {
       return key;
     }
 
-    public Class getTarget()
-    {
+    public Class getTarget() {
       return target;
     }
 
-    public void setTarget(final Class target)
-    {
+    public void setTarget( final Class target ) {
       this.target = target;
     }
 
-    public boolean equals(final Object o)
-    {
-      if (this == o)
-      {
+    public boolean equals( final Object o ) {
+      if ( this == o ) {
         return true;
       }
-      if (o == null || getClass() != o.getClass())
-      {
+      if ( o == null || getClass() != o.getClass() ) {
         return false;
       }
 
       final CompoundCacheKey that = (CompoundCacheKey) o;
 
-      if (!target.equals(that.target))
-      {
+      if ( !target.equals( that.target ) ) {
         return false;
       }
-      if (!key.equals(that.key))
-      {
+      if ( !key.equals( that.key ) ) {
         return false;
       }
 
       return true;
     }
 
-    public int hashCode()
-    {
+    public int hashCode() {
       int result = key.hashCode();
       result = 31 * result + target.hashCode();
       return result;
     }
 
-    public String toString()
-    {
+    public String toString() {
       final StringBuilder sb = new StringBuilder();
-      sb.append("CompoundCacheKey");
-      sb.append("{key=").append(key);
-      sb.append(", target=").append(target);
-      sb.append('}');
+      sb.append( "CompoundCacheKey" );
+      sb.append( "{key=" ).append( key );
+      sb.append( ", target=" ).append( target );
+      sb.append( '}' );
       return sb.toString();
     }
   }
 
-  private static final Log logger = LogFactory.getLog(EHResourceFactoryCache.class);
+  private static final Log logger = LogFactory.getLog( EHResourceFactoryCache.class );
   private Cache factoryCache;
 
-  public EHResourceFactoryCache(final Cache factoryCache)
-  {
-    if (factoryCache == null)
-    {
+  public EHResourceFactoryCache( final Cache factoryCache ) {
+    if ( factoryCache == null ) {
       throw new NullPointerException();
     }
     this.factoryCache = factoryCache;
   }
 
-  public Resource get(final ResourceKey key, final Class[] target)
-  {
-    for (int i = 0; i < target.length; i++)
-    {
-      final Resource res = getInternal(key, target[i]);
-      if (res != null)
-      {
-        if (EHCacheModule.CACHE_MONITOR.isDebugEnabled())
-        {
-          EHCacheModule.CACHE_MONITOR.debug("Res  Cache Hit  " + key);
+  public Resource get( final ResourceKey key, final Class[] target ) {
+    for ( int i = 0; i < target.length; i++ ) {
+      final Resource res = getInternal( key, target[ i ] );
+      if ( res != null ) {
+        if ( EHCacheModule.CACHE_MONITOR.isDebugEnabled() ) {
+          EHCacheModule.CACHE_MONITOR.debug( "Res  Cache Hit  " + key );
         }
         return res;
       }
     }
-    if (EHCacheModule.CACHE_MONITOR.isDebugEnabled())
-    {
-      EHCacheModule.CACHE_MONITOR.debug("Res  Cache Miss  " + key);
+    if ( EHCacheModule.CACHE_MONITOR.isDebugEnabled() ) {
+      EHCacheModule.CACHE_MONITOR.debug( "Res  Cache Miss  " + key );
     }
     return null;
   }
 
-  private Resource getInternal(final ResourceKey key, final Class target)
-  {
-    try
-    {
-      final Element element = factoryCache.get(new CompoundCacheKey(key, target));
-      if (element != null)
-      {
+  private Resource getInternal( final ResourceKey key, final Class target ) {
+    try {
+      final Element element = factoryCache.get( new CompoundCacheKey( key, target ) );
+      if ( element != null ) {
         final Resource resource = (Resource) element.getObjectValue();
-        if (resource != null)
-        {
+        if ( resource != null ) {
           return resource;
         }
         final Resource resource1 = (Resource) element.getValue();
-        if (resource1 != null)
-        {
+        if ( resource1 != null ) {
           return resource1;
         }
         return null;
-      }
-      else
-      {
+      } else {
         return null;
       }
-    }
-    catch (CacheException e)
-    {
-      if (logger.isDebugEnabled())
-      {
-        logger.debug("Failed to retrieve resource for key " + key, e);
+    } catch ( CacheException e ) {
+      if ( logger.isDebugEnabled() ) {
+        logger.debug( "Failed to retrieve resource for key " + key, e );
       }
       return null;
     }
   }
 
-  public void put(final Resource resource)
-  {
-    final Object source = new CompoundCacheKey(resource.getSource(), resource.getTargetType());
-    try
-    {
-      factoryCache.put(new Element(source, (Object) resource));
-    }
-    catch (Exception e)
-    {
-      if (logger.isDebugEnabled())
-      {
-        logger.debug("Failed to store resource for key " + source, e);
+  public void put( final Resource resource ) {
+    final Object source = new CompoundCacheKey( resource.getSource(), resource.getTargetType() );
+    try {
+      factoryCache.put( new Element( source, (Object) resource ) );
+    } catch ( Exception e ) {
+      if ( logger.isDebugEnabled() ) {
+        logger.debug( "Failed to store resource for key " + source, e );
       }
       // ignore ... the object is not serializable ..
     }
   }
 
-  public void remove(final Resource resource)
-  {
-    final Object source = new CompoundCacheKey(resource.getSource(), resource.getTargetType());
-    factoryCache.remove(source);
+  public void remove( final Resource resource ) {
+    final Object source = new CompoundCacheKey( resource.getSource(), resource.getTargetType() );
+    factoryCache.remove( source );
   }
 
-  public void clear()
-  {
-    try
-    {
+  public void clear() {
+    try {
       factoryCache.removeAll();
-    }
-    catch (Exception e)
-    {
-      logger.debug("Clearing cache failed", e);
+    } catch ( Exception e ) {
+      logger.debug( "Clearing cache failed", e );
       // ignore ..
     }
   }
 
-  public void shutdown()
-  {
-    try
-    {
+  public void shutdown() {
+    try {
       factoryCache.getCacheManager().shutdown();
-    }
-    catch (Exception e)
-    {
-      logger.debug("Failed to shut-down cache", e);
+    } catch ( Exception e ) {
+      logger.debug( "Failed to shut-down cache", e );
       // ignore it ..
     }
   }

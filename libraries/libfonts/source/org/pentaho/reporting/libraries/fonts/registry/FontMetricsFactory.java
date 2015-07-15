@@ -19,14 +19,13 @@ package org.pentaho.reporting.libraries.fonts.registry;
 
 /**
  * An abstract method to load font metrics.
- *
- * Implementations of this class fully manage the creation of resources
- * and should make sure that no unneccessary metrics are loaded.
+ * <p/>
+ * Implementations of this class fully manage the creation of resources and should make sure that no unneccessary
+ * metrics are loaded.
  *
  * @author Thomas Morgner
  */
-public interface FontMetricsFactory
-{
+public interface FontMetricsFactory {
   /**
    * Loads the font metrics for the font identified by the given identifier.
    *
@@ -34,6 +33,6 @@ public interface FontMetricsFactory
    * @param context
    * @return
    */
-  public FontMetrics createMetrics (final FontIdentifier identifier,
-                                    final FontContext context);
+  public FontMetrics createMetrics( final FontIdentifier identifier,
+                                    final FontContext context );
 }

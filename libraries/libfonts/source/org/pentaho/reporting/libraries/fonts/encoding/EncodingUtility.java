@@ -24,26 +24,20 @@ import org.pentaho.reporting.libraries.fonts.encoding.manual.Utf16LE;
  *
  * @author Thomas Morgner
  */
-public class EncodingUtility
-{
-  private EncodingUtility()
-  {
+public class EncodingUtility {
+  private EncodingUtility() {
   }
 
-  public static String encode (final byte[] data, final String encoding) throws EncodingException
-  {
+  public static String encode( final byte[] data, final String encoding ) throws EncodingException {
     final Encoding enc;
-    if ("UTF-16".equals(encoding))
-    {
-      enc = EncodingRegistry.getInstance().getEncoding("UTF-16LE");
-    }
-    else
-    {
-      enc = EncodingRegistry.getInstance().getEncoding(encoding);
+    if ( "UTF-16".equals( encoding ) ) {
+      enc = EncodingRegistry.getInstance().getEncoding( "UTF-16LE" );
+    } else {
+      enc = EncodingRegistry.getInstance().getEncoding( encoding );
     }
 
-    final ByteBuffer byteBuffer = new ByteBuffer(data);
-    final CodePointBuffer cp = enc.decode(byteBuffer, null);
-    return Utf16LE.getInstance().encodeString(cp);
+    final ByteBuffer byteBuffer = new ByteBuffer( data );
+    final CodePointBuffer cp = enc.decode( byteBuffer, null );
+    return Utf16LE.getInstance().encodeString( cp );
   }
 }

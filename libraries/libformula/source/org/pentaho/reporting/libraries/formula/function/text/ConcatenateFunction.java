@@ -34,48 +34,41 @@ import org.pentaho.reporting.libraries.formula.typing.coretypes.TextType;
  *
  * @author Cedric Pronzato
  */
-public class ConcatenateFunction implements Function
-{
+public class ConcatenateFunction implements Function {
   private static final long serialVersionUID = 3505313019941429911L;
 
-  public ConcatenateFunction()
-  {
+  public ConcatenateFunction() {
   }
 
-  public TypeValuePair evaluate(final FormulaContext context,
-                                final ParameterCallback parameters) throws EvaluationException
-  {
-    final StringBuffer computedResult = new StringBuffer(512);
+  public TypeValuePair evaluate( final FormulaContext context,
+                                 final ParameterCallback parameters ) throws EvaluationException {
+    final StringBuffer computedResult = new StringBuffer( 512 );
     final int parameterCount = parameters.getParameterCount();
 
-    if (parameterCount == 0)
-    {
-      throw EvaluationException.getInstance(LibFormulaErrorValue.ERROR_ARGUMENTS_VALUE);
+    if ( parameterCount == 0 ) {
+      throw EvaluationException.getInstance( LibFormulaErrorValue.ERROR_ARGUMENTS_VALUE );
     }
 
     final TypeRegistry typeRegistry = context.getTypeRegistry();
-    for (int paramIdx = 0; paramIdx < parameterCount; paramIdx++)
-    {
-      final Type type = parameters.getType(paramIdx);
-      final Object value = parameters.getValue(paramIdx);
-      final Sequence sequence = typeRegistry.convertToSequence(type, value);
+    for ( int paramIdx = 0; paramIdx < parameterCount; paramIdx++ ) {
+      final Type type = parameters.getType( paramIdx );
+      final Object value = parameters.getValue( paramIdx );
+      final Sequence sequence = typeRegistry.convertToSequence( type, value );
 
-      while (sequence.hasNext())
-      {
+      while ( sequence.hasNext() ) {
         final LValue lValue = sequence.nextRawValue();
         final TypeValuePair pair = lValue.evaluate();
         final Type type1 = pair.getType();
         final Object o = pair.getValue();
-        final String str = typeRegistry.convertToText(type1, o);
-        computedResult.append(str);
+        final String str = typeRegistry.convertToText( type1, o );
+        computedResult.append( str );
       }
     }
 
-    return new TypeValuePair(TextType.TYPE, computedResult.toString());
+    return new TypeValuePair( TextType.TYPE, computedResult.toString() );
   }
 
-  public String getCanonicalName()
-  {
+  public String getCanonicalName() {
     return "CONCATENATE";
   }
 

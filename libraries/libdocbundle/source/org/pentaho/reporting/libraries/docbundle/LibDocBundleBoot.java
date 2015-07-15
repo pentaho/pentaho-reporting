@@ -25,38 +25,31 @@ import org.pentaho.reporting.libraries.docbundle.metadata.parser.BundleManifestX
 import org.pentaho.reporting.libraries.docbundle.metadata.parser.BundleMetaDataXmlFactoryModule;
 import org.pentaho.reporting.libraries.docbundle.metadata.parser.BundleMetaDataXmlResourceFactory;
 
-public class LibDocBundleBoot extends AbstractBoot
-{
+public class LibDocBundleBoot extends AbstractBoot {
   private static LibDocBundleBoot instance;
 
-  public static synchronized LibDocBundleBoot getInstance()
-  {
-    if (LibDocBundleBoot.instance == null)
-    {
+  public static synchronized LibDocBundleBoot getInstance() {
+    if ( LibDocBundleBoot.instance == null ) {
       LibDocBundleBoot.instance = new LibDocBundleBoot();
     }
     return LibDocBundleBoot.instance;
   }
 
-  private LibDocBundleBoot()
-  {
+  private LibDocBundleBoot() {
   }
 
-  protected Configuration loadConfiguration()
-  {
+  protected Configuration loadConfiguration() {
     return createDefaultHierarchicalConfiguration
-        ("/org/pentaho/reporting/libraries/docbundle/libdocbundle.properties",
-            "/libdocbundle.properties", true, LibDocBundleBoot.class);
+      ( "/org/pentaho/reporting/libraries/docbundle/libdocbundle.properties",
+        "/libdocbundle.properties", true, LibDocBundleBoot.class );
   }
 
-  protected void performBoot()
-  {
-    BundleMetaDataXmlResourceFactory.register(BundleMetaDataXmlFactoryModule.class);
-    BundleManifestXmlResourceFactory.register(BundleManifestXmlFactoryModule.class);
+  protected void performBoot() {
+    BundleMetaDataXmlResourceFactory.register( BundleMetaDataXmlFactoryModule.class );
+    BundleManifestXmlResourceFactory.register( BundleManifestXmlFactoryModule.class );
   }
 
-  protected ProjectInformation getProjectInfo()
-  {
+  protected ProjectInformation getProjectInfo() {
     return LibDocBundleInfo.getInstance();
   }
 }

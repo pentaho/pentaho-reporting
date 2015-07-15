@@ -25,8 +25,7 @@ import com.lowagie.text.pdf.BaseFont;
  *
  * @author Thomas Morgner
  */
-public final class BaseFontRecord
-{
+public final class BaseFontRecord {
   /**
    * The iText base font.
    */
@@ -55,20 +54,17 @@ public final class BaseFontRecord
    * @param embedded a flag that defines whether this font should be embedded in the target document.
    * @param baseFont the generated base font for the given font definition.
    */
-  public BaseFontRecord(final String fileName,
-                        final boolean trueTypeFont,
-                        final boolean embedded,
-                        final BaseFont baseFont,
-                        final boolean bold,
-                        final boolean italics)
-  {
-    if (baseFont == null)
-    {
-      throw new NullPointerException("iText-FontDefinition is null.");
+  public BaseFontRecord( final String fileName,
+                         final boolean trueTypeFont,
+                         final boolean embedded,
+                         final BaseFont baseFont,
+                         final boolean bold,
+                         final boolean italics ) {
+    if ( baseFont == null ) {
+      throw new NullPointerException( "iText-FontDefinition is null." );
     }
-    if (fileName == null)
-    {
-      throw new NullPointerException("Logical font name is null.");
+    if ( fileName == null ) {
+      throw new NullPointerException( "Logical font name is null." );
     }
     this.trueTypeFont = trueTypeFont;
     this.baseFont = baseFont;
@@ -78,18 +74,15 @@ public final class BaseFontRecord
     this.bold = bold;
   }
 
-  public boolean isTrueTypeFont()
-  {
+  public boolean isTrueTypeFont() {
     return trueTypeFont;
   }
 
-  public boolean isBold()
-  {
+  public boolean isBold() {
     return bold;
   }
 
-  public boolean isItalics()
-  {
+  public boolean isItalics() {
     return italics;
   }
 
@@ -98,11 +91,9 @@ public final class BaseFontRecord
    *
    * @return the font record key.
    */
-  public BaseFontRecordKey createKey()
-  {
-    if (key == null)
-    {
-      key = new BaseFontRecordKey(getFileName(), getEncoding(), isEmbedded());
+  public BaseFontRecordKey createKey() {
+    if ( key == null ) {
+      key = new BaseFontRecordKey( getFileName(), getEncoding(), isEmbedded() );
     }
     return key;
   }
@@ -112,8 +103,7 @@ public final class BaseFontRecord
    *
    * @return the encoding.
    */
-  public String getEncoding()
-  {
+  public String getEncoding() {
     return baseFont.getEncoding();
   }
 
@@ -122,8 +112,7 @@ public final class BaseFontRecord
    *
    * @return true or false.
    */
-  public boolean isEmbedded()
-  {
+  public boolean isEmbedded() {
     return embedded;
   }
 
@@ -132,8 +121,7 @@ public final class BaseFontRecord
    *
    * @return the logical name.
    */
-  public String getFileName()
-  {
+  public String getFileName() {
     return fileName;
   }
 
@@ -142,8 +130,7 @@ public final class BaseFontRecord
    *
    * @return the itext BaseFont.
    */
-  public BaseFont getBaseFont()
-  {
+  public BaseFont getBaseFont() {
     return baseFont;
   }
 

@@ -25,42 +25,34 @@ import org.pentaho.reporting.libraries.formula.typing.coretypes.NumberType;
 
 /**
  * Describes LenFunction function.
- * @see LenFunction
  *
  * @author Cedric Pronzato
- *
+ * @see LenFunction
  */
-public class LenFunctionDescription extends AbstractFunctionDescription
-{
+public class LenFunctionDescription extends AbstractFunctionDescription {
   private static final long serialVersionUID = 2266930971663214932L;
 
-  public LenFunctionDescription()
-  {
-    super("LEN", "org.pentaho.reporting.libraries.formula.function.text.Len-Function");
+  public LenFunctionDescription() {
+    super( "LEN", "org.pentaho.reporting.libraries.formula.function.text.Len-Function" );
   }
 
-  public FunctionCategory getCategory()
-  {
+  public FunctionCategory getCategory() {
     return TextFunctionCategory.CATEGORY;
   }
 
-  public int getParameterCount()
-  {
+  public int getParameterCount() {
     return 1;
   }
 
-  public Type getParameterType(final int position)
-  {
+  public Type getParameterType( final int position ) {
     return AnyType.TYPE;
   }
 
-  public Type getValueType()
-  {
+  public Type getValueType() {
     return NumberType.GENERIC_NUMBER;
   }
 
-  public boolean isParameterMandatory(final int position)
-  {
+  public boolean isParameterMandatory( final int position ) {
     return true;
   }
 

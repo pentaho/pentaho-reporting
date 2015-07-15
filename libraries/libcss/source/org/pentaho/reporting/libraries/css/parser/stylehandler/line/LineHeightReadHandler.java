@@ -31,39 +31,30 @@ import org.w3c.css.sac.LexicalUnit;
  *
  * @author Thomas Morgner
  */
-public class LineHeightReadHandler implements CSSValueReadHandler
-{
-  public LineHeightReadHandler()
-  {
+public class LineHeightReadHandler implements CSSValueReadHandler {
+  public LineHeightReadHandler() {
   }
 
-  public CSSValue createValue(StyleKey name, LexicalUnit value)
-  {
-    if (value.getLexicalUnitType() == LexicalUnit.SAC_IDENT)
-    {
-      if (value.getStringValue().equalsIgnoreCase("none"))
-      {
+  public CSSValue createValue( StyleKey name, LexicalUnit value ) {
+    if ( value.getLexicalUnitType() == LexicalUnit.SAC_IDENT ) {
+      if ( value.getStringValue().equalsIgnoreCase( "none" ) ) {
         return LineHeight.NONE;
       }
-      if (value.getStringValue().equalsIgnoreCase("normal"))
-      {
+      if ( value.getStringValue().equalsIgnoreCase( "normal" ) ) {
         return LineHeight.NORMAL;
       }
 
       return null;
-    }
-    else if (value.getLexicalUnitType() == LexicalUnit.SAC_PERCENTAGE)
-    {
-      return CSSNumericValue.createValue(CSSNumericType.PERCENTAGE,
-          value.getFloatValue());
+    } else if ( value.getLexicalUnitType() == LexicalUnit.SAC_PERCENTAGE ) {
+      return CSSNumericValue.createValue( CSSNumericType.PERCENTAGE,
+        value.getFloatValue() );
     }
 
-    CSSValue number = CSSValueFactory.createNumericValue(value);
-    if (number != null)
-    {
+    CSSValue number = CSSValueFactory.createNumericValue( value );
+    if ( number != null ) {
       return number;
     }
 
-    return CSSValueFactory.createLengthValue(value);
+    return CSSValueFactory.createLengthValue( value );
   }
 }

@@ -18,11 +18,10 @@
 package org.pentaho.reporting.libraries.pixie.wmf;
 
 /**
- * The ROPConstants were defined in the Windows-API and are used do define the various
- * RasterOperations (ROP). We don't support RasterOperations...
+ * The ROPConstants were defined in the Windows-API and are used do define the various RasterOperations (ROP). We don't
+ * support RasterOperations...
  */
-public interface ROPConstants
-{
+public interface ROPConstants {
   public static final int SRCCOPY = 0x00CC0020; /* dest = source                   */
   public static final int SRCPAINT = 0x00EE0086; /* dest = source OR dest           */
   public static final int SRCAND = 0x008800C6; /* dest = source AND dest          */

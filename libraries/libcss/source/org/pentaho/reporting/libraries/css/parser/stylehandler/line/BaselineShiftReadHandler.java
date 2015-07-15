@@ -30,30 +30,24 @@ import org.w3c.css.sac.LexicalUnit;
  *
  * @author Thomas Morgner
  */
-public class BaselineShiftReadHandler extends OneOfConstantsReadHandler
-{
-  public BaselineShiftReadHandler()
-  {
-    super(false);
-    addValue(BaselineShift.BASELINE);
-    addValue(BaselineShift.SUB);
-    addValue(BaselineShift.SUPER);
+public class BaselineShiftReadHandler extends OneOfConstantsReadHandler {
+  public BaselineShiftReadHandler() {
+    super( false );
+    addValue( BaselineShift.BASELINE );
+    addValue( BaselineShift.SUB );
+    addValue( BaselineShift.SUPER );
   }
 
-  protected CSSValue lookupValue(final LexicalUnit value)
-  {
-    CSSValue constant = super.lookupValue(value);
-    if (constant != null)
-    {
+  protected CSSValue lookupValue( final LexicalUnit value ) {
+    CSSValue constant = super.lookupValue( value );
+    if ( constant != null ) {
       return constant;
-    }
-    else if (value.getLexicalUnitType() == LexicalUnit.SAC_PERCENTAGE)
-    {
-      return CSSNumericValue.createValue(CSSNumericType.PERCENTAGE,
-          value.getFloatValue());
+    } else if ( value.getLexicalUnitType() == LexicalUnit.SAC_PERCENTAGE ) {
+      return CSSNumericValue.createValue( CSSNumericType.PERCENTAGE,
+        value.getFloatValue() );
     }
 
-    return CSSValueFactory.createLengthValue(value);
+    return CSSValueFactory.createLengthValue( value );
 
   }
 }

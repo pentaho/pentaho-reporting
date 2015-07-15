@@ -22,12 +22,9 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 /**
- * User: Dzmitry Stsiapanau
- * Date: 8/21/14
- * Time: 3:38 PM
+ * User: Dzmitry Stsiapanau Date: 8/21/14 Time: 3:38 PM
  */
-public class SqlScriptUtils
-{
+public class SqlScriptUtils {
   /**
    * Execute a series of SQL statements, separated by ;
    * <p/>
@@ -41,52 +38,39 @@ public class SqlScriptUtils
    * @param connection connection to db
    * @return A result with counts of the number or records updates, inserted, deleted or read.
    */
-  public static boolean execStatements(final String script,
-                                       final Connection connection,
-                                       final boolean stopOnError)
-  {
+  public static boolean execStatements( final String script,
+                                        final Connection connection,
+                                        final boolean stopOnError ) {
     Boolean result = true;
 
     // Deleting all the single-line and multi-line comments from the string
-    String all = SqlCommentScrubber.removeComments(script); // scrubDoubleHyphenComments(script);
+    String all = SqlCommentScrubber.removeComments( script ); // scrubDoubleHyphenComments(script);
 
-    String[] statements = all.split(";");
+    String[] statements = all.split( ";" );
     String stat;
     Boolean singleResult = true;
-    for (int i = 0; i < statements.length; i++)
-    {
-      stat = statements[i];
-      if (!StringUtils.onlySpaces(stat))
-      {
-        String sql = StringUtils.trim(stat);
+    for ( int i = 0; i < statements.length; i++ ) {
+      stat = statements[ i ];
+      if ( !StringUtils.onlySpaces( stat ) ) {
+        String sql = StringUtils.trim( stat );
         // any kind of statement
         Statement stmt = null;
-        try
-        {
+        try {
           stmt = connection.createStatement();
-          singleResult = stmt.execute(sql);
-        }
-        catch (SQLException e)
-        {
+          singleResult = stmt.execute( sql );
+        } catch ( SQLException e ) {
           singleResult = false;
-        }
-        finally
-        {
-          try
-          {
+        } finally {
+          try {
             stmt.close();
-          }
-          catch (SQLException e)
-          {
+          } catch ( SQLException e ) {
             singleResult = false;
           }
         }
 
-        if (!singleResult)
-        {
+        if ( !singleResult ) {
           result = singleResult;
-          if (stopOnError)
-          {
+          if ( stopOnError ) {
             return result;
           }
         }

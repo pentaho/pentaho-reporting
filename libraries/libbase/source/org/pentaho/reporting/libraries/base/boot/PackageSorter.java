@@ -17,39 +17,34 @@
 
 package org.pentaho.reporting.libraries.base.boot;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
-
 /**
- * Compares two modules for order. A module is considered less than an other
- * module if the module is a required module of the compared module. Modules
- * are considered equal if they have no relation.
+ * Compares two modules for order. A module is considered less than an other module if the module is a required module
+ * of the compared module. Modules are considered equal if they have no relation.
  * <p/>
- * When sorting, we match this modules position against all dependent
- * modules until all positions are stable. Circular references are evil
- * and are filtered during the module loading process in the package manager.
+ * When sorting, we match this modules position against all dependent modules until all positions are stable. Circular
+ * references are evil and are filtered during the module loading process in the package manager.
  *
  * @author Thomas Morgner
  * @noinspection ComparableImplementedButEqualsNotOverridden
  */
-public final class PackageSorter
-{
+public final class PackageSorter {
   /**
-   * An Internal wrapper class which collects additional information
-   * on the given module. Every module has a position, which is heigher
-   * than the position of all dependent modules.
+   * An Internal wrapper class which collects additional information on the given module. Every module has a position,
+   * which is heigher than the position of all dependent modules.
    *
    * @author Thomas Morgner
    */
-  private static class SortModule implements Comparable
-  {
+  private static class SortModule implements Comparable {
     /**
      * stores the relative position of the module in the global list.
      */
@@ -68,59 +63,50 @@ public final class PackageSorter
     /**
      * Creates a new SortModule for the given package state.
      *
-     * @param state the package state object, that should be wrapped up
-     *              by this class.
+     * @param state the package state object, that should be wrapped up by this class.
      */
-    private SortModule(final PackageState state)
-    {
+    private SortModule( final PackageState state ) {
       this.position = -1;
       this.state = state;
     }
 
     /**
-     * Returns the list of all dependent subsystems. The list gets defined
-     * when the sorting is started.
+     * Returns the list of all dependent subsystems. The list gets defined when the sorting is started.
      *
      * @return the list of all dependent subsystems.
      */
-    public ArrayList getDependSubsystems()
-    {
+    public ArrayList getDependSubsystems() {
       return this.dependSubsystems;
     }
 
     /**
-     * Defines a list of dependent subsystems for this module. The list contains
-     * the names of the dependent subsystems as strings.
+     * Defines a list of dependent subsystems for this module. The list contains the names of the dependent subsystems
+     * as strings.
      *
      * @param dependSubsystems a list of all dependent subsystems, never null.
      * @noinspection AssignmentToCollectionOrArrayFieldFromParameter as this is a 100% private class and it is
      * guaranteed that no one is going to change the array list in question.
      */
-    public void setDependSubsystems(final ArrayList<String> dependSubsystems)
-    {
+    public void setDependSubsystems( final ArrayList<String> dependSubsystems ) {
       this.dependSubsystems = dependSubsystems;
     }
 
     /**
-     * Returns the current position of this module in the global list.
-     * The position is computed by comparing all positions of all dependent
-     * subsystem modules.
+     * Returns the current position of this module in the global list. The position is computed by comparing all
+     * positions of all dependent subsystem modules.
      *
      * @return the current module position.
      */
-    public int getPosition()
-    {
+    public int getPosition() {
       return this.position;
     }
 
     /**
-     * Defines the position of this module in the global list of all
-     * known modules.
+     * Defines the position of this module in the global list of all known modules.
      *
      * @param position the position.
      */
-    public void setPosition(final int position)
-    {
+    public void setPosition( final int position ) {
       this.position = position;
     }
 
@@ -129,27 +115,24 @@ public final class PackageSorter
      *
      * @return the package state of this module.
      */
-    public PackageState getState()
-    {
+    public PackageState getState() {
       return this.state;
     }
 
     /**
-     * Returns a basic string representation of this SortModule. This
-     * should be used for debugging purposes only.
+     * Returns a basic string representation of this SortModule. This should be used for debugging purposes only.
      *
      * @return a string representation of this module.
      * @see Object#toString()
      */
-    public String toString()
-    {
-      final StringBuilder buffer = new StringBuilder(100);
-      buffer.append("SortModule: ");
-      buffer.append(this.position);
-      buffer.append(' ');
-      buffer.append(this.state.getModule().getName());
-      buffer.append(' ');
-      buffer.append(this.state.getModule().getModuleClass());
+    public String toString() {
+      final StringBuilder buffer = new StringBuilder( 100 );
+      buffer.append( "SortModule: " );
+      buffer.append( this.position );
+      buffer.append( ' ' );
+      buffer.append( this.state.getModule().getName() );
+      buffer.append( ' ' );
+      buffer.append( this.state.getModule().getModuleClass() );
       return buffer.toString();
     }
 
@@ -157,81 +140,68 @@ public final class PackageSorter
      * Compares this module against an other sort module.
      *
      * @param o the other sort module instance.
-     * @return -1 if the other's module position is less than
-     *         this modules position, +1 if this module is less than the
-     *         other module or 0 if both modules have an equal position in
-     *         the list.
+     * @return -1 if the other's module position is less than this modules position, +1 if this module is less than the
+     * other module or 0 if both modules have an equal position in the list.
      * @see Comparable#compareTo(Object)
      */
-    public int compareTo(final Object o)
-    {
+    public int compareTo( final Object o ) {
       final SortModule otherModule = (SortModule) o;
-      if (this.position > otherModule.position)
-      {
+      if ( this.position > otherModule.position ) {
         return +1;
       }
-      if (this.position < otherModule.position)
-      {
+      if ( this.position < otherModule.position ) {
         return -1;
       }
       return 0;
     }
   }
 
-  /** A logger for debug-messages. */
-  private static final Log LOGGER = LogFactory.getLog(PackageSorter.class);
+  /**
+   * A logger for debug-messages.
+   */
+  private static final Log LOGGER = LogFactory.getLog( PackageSorter.class );
 
   /**
    * DefaultConstructor.
    */
-  private PackageSorter()
-  {
+  private PackageSorter() {
     // nothing required.
   }
 
   /**
-   * Sorts the given list of package states. The packages
-   * are sorted by their dependencies in a way so that all
-   * dependent packages are placed on lower positions than
-   * the packages which declared the dependency.
+   * Sorts the given list of package states. The packages are sorted by their dependencies in a way so that all
+   * dependent packages are placed on lower positions than the packages which declared the dependency.
    *
    * @param modules the list of modules.
    */
-  public static void sort(final List<PackageState> modules)
-  {
-    if (modules == null)
-    {
+  public static void sort( final List<PackageState> modules ) {
+    if ( modules == null ) {
       throw new NullPointerException();
     }
 
-    final HashMap<String,SortModule> moduleMap = new HashMap<String,SortModule>();
+    final HashMap<String, SortModule> moduleMap = new HashMap<String, SortModule>();
     final ArrayList<PackageState> errorModules = new ArrayList<PackageState>();
     final ArrayList<SortModule> weightModules = new ArrayList<SortModule>();
 
     final int modulesCount = modules.size();
-    for (int i = 0; i < modulesCount; i++)
-    {
-      final PackageState state = modules.get(i);
-      if (state.getState() == PackageState.STATE_ERROR)
-      {
-        errorModules.add(state);
-      }
-      else
-      {
-        final SortModule mod = new SortModule(state);
-        weightModules.add(mod);
-        moduleMap.put(state.getModule().getModuleClass(), mod);
+    for ( int i = 0; i < modulesCount; i++ ) {
+      final PackageState state = modules.get( i );
+      if ( state.getState() == PackageState.STATE_ERROR ) {
+        errorModules.add( state );
+      } else {
+        final SortModule mod = new SortModule( state );
+        weightModules.add( mod );
+        moduleMap.put( state.getModule().getModuleClass(), mod );
       }
     }
 
-    final SortModule[] weigths = weightModules.toArray(new SortModule[weightModules.size()]);
+    final SortModule[] weigths = weightModules.toArray( new SortModule[ weightModules.size() ] );
 
-    for (int i = 0; i < weigths.length; i++)
-    {
-      final SortModule sortMod = weigths[i];
+    for ( int i = 0; i < weigths.length; i++ ) {
+      final SortModule sortMod = weigths[ i ];
       sortMod.setDependSubsystems
-          (collectSubsystemModules(sortMod.getState().getModule(),
-              moduleMap));
+        ( collectSubsystemModules( sortMod.getState().getModule(),
+          moduleMap ) );
     }
 
     // repeat the computation until all modules have a matching
@@ -240,45 +210,38 @@ public final class PackageSorter
     // in the future, but as this is only executed once, we don't
     // have to care much about it.
     boolean doneWork = true;
-    while (doneWork)
-    {
+    while ( doneWork ) {
       doneWork = false;
-      for (int i = 0; i < weigths.length; i++)
-      {
-        final SortModule mod = weigths[i];
-        final int position = searchModulePosition(mod, moduleMap);
-        if (position != mod.getPosition())
-        {
-          mod.setPosition(position);
+      for ( int i = 0; i < weigths.length; i++ ) {
+        final SortModule mod = weigths[ i ];
+        final int position = searchModulePosition( mod, moduleMap );
+        if ( position != mod.getPosition() ) {
+          mod.setPosition( position );
           doneWork = true;
         }
       }
     }
 
-    Arrays.sort(weigths);
+    Arrays.sort( weigths );
     modules.clear();
-    for (int i = 0; i < weigths.length; i++)
-    {
-      modules.add(weigths[i].getState());
+    for ( int i = 0; i < weigths.length; i++ ) {
+      modules.add( weigths[ i ].getState() );
     }
-    for (int i = 0; i < errorModules.size(); i++)
-    {
-      modules.add(errorModules.get(i));
+    for ( int i = 0; i < errorModules.size(); i++ ) {
+      modules.add( errorModules.get( i ) );
     }
   }
 
   /**
-   * Computes the new module position. This position is computed
-   * according to the dependent modules and subsystems. The returned
-   * position will be higher than the highest dependent module position.
+   * Computes the new module position. This position is computed according to the dependent modules and subsystems. The
+   * returned position will be higher than the highest dependent module position.
    *
    * @param smodule   the sort module for that we compute the new positon.
    * @param moduleMap the map with all modules.
    * @return the new positon.
    */
   private static int searchModulePosition
-      (final SortModule smodule, final HashMap moduleMap)
-  {
+  ( final SortModule smodule, final HashMap moduleMap ) {
     final Module module = smodule.getState().getModule();
     int position = 0;
 
@@ -286,16 +249,13 @@ public final class PackageSorter
     // one point over the highest dependent module
     // ignore missing modules.
     final ModuleInfo[] optionalModules = module.getOptionalModules();
-    for (int modPos = 0; modPos < optionalModules.length; modPos++)
-    {
-      final String moduleName = optionalModules[modPos].getModuleClass();
-      final SortModule reqMod = (SortModule) moduleMap.get(moduleName);
-      if (reqMod == null)
-      {
+    for ( int modPos = 0; modPos < optionalModules.length; modPos++ ) {
+      final String moduleName = optionalModules[ modPos ].getModuleClass();
+      final SortModule reqMod = (SortModule) moduleMap.get( moduleName );
+      if ( reqMod == null ) {
         continue;
       }
-      if (reqMod.getPosition() >= position)
-      {
+      if ( reqMod.getPosition() >= position ) {
         position = reqMod.getPosition() + 1;
       }
     }
@@ -305,17 +265,14 @@ public final class PackageSorter
     // there are no missing modules here (or the package manager
     // is invalid)
     final ModuleInfo[] requiredModules = module.getRequiredModules();
-    for (int modPos = 0; modPos < requiredModules.length; modPos++)
-    {
-      final String moduleName = requiredModules[modPos].getModuleClass();
-      final SortModule reqMod = (SortModule) moduleMap.get(moduleName);
-      if (reqMod == null)
-      {
-        LOGGER.warn("Invalid state: Required dependency of '" + moduleName + "' had an error.");
+    for ( int modPos = 0; modPos < requiredModules.length; modPos++ ) {
+      final String moduleName = requiredModules[ modPos ].getModuleClass();
+      final SortModule reqMod = (SortModule) moduleMap.get( moduleName );
+      if ( reqMod == null ) {
+        LOGGER.warn( "Invalid state: Required dependency of '" + moduleName + "' had an error." );
         continue;
       }
-      if (reqMod.getPosition() >= position)
-      {
+      if ( reqMod.getPosition() >= position ) {
         position = reqMod.getPosition() + 1;
       }
     }
@@ -325,12 +282,10 @@ public final class PackageSorter
     // them.
     final String subSystem = module.getSubSystem();
     final Iterator it = moduleMap.values().iterator();
-    while (it.hasNext())
-    {
+    while ( it.hasNext() ) {
       final SortModule mod = (SortModule) it.next();
       // it is evil to compute values on ourself...
-      if (mod.getState().getModule() == module)
-      {
+      if ( mod.getState().getModule() == module ) {
         // same module ...
         continue;
       }
@@ -338,8 +293,7 @@ public final class PackageSorter
       // if the module we check is part of the same subsystem as
       // we are, then we dont do anything. Within the same subsystem
       // the dependencies are computed solely by the direct references.
-      if (ObjectUtilities.equal(subSystem, subSysMod.getSubSystem()))
-      {
+      if ( ObjectUtilities.equal( subSystem, subSysMod.getSubSystem() ) ) {
         // same subsystem ... ignore
         continue;
       }
@@ -348,15 +302,12 @@ public final class PackageSorter
       // subsystem we are part of?
       //
       // if yes, we have a relation and may need to adjust the level...
-      if (smodule.getDependSubsystems().contains(subSysMod.getSubSystem()))
-      {
+      if ( smodule.getDependSubsystems().contains( subSysMod.getSubSystem() ) ) {
         // check whether the module is a base module of the given
         // subsystem. We will not adjust our position in that case,
         // as this would lead to an infinite loop
-        if (isBaseModule(subSysMod, module) == false)
-        {
-          if (mod.getPosition() >= position)
-          {
+        if ( isBaseModule( subSysMod, module ) == false ) {
+          if ( mod.getPosition() >= position ) {
             position = mod.getPosition() + 1;
           }
         }
@@ -370,24 +321,18 @@ public final class PackageSorter
    *
    * @param mod the module which to check
    * @param mi  the module info of the suspected base module.
-   * @return true, if the given module info describes a base module of the
-   *         given module, false otherwise.
+   * @return true, if the given module info describes a base module of the given module, false otherwise.
    */
-  private static boolean isBaseModule(final Module mod, final ModuleInfo mi)
-  {
+  private static boolean isBaseModule( final Module mod, final ModuleInfo mi ) {
     final ModuleInfo[] requiredModules = mod.getRequiredModules();
-    for (int i = 0; i < requiredModules.length; i++)
-    {
-      if (requiredModules[i].getModuleClass().equals(mi.getModuleClass()))
-      {
+    for ( int i = 0; i < requiredModules.length; i++ ) {
+      if ( requiredModules[ i ].getModuleClass().equals( mi.getModuleClass() ) ) {
         return true;
       }
     }
     final ModuleInfo[] optionalModules = mod.getOptionalModules();
-    for (int i = 0; i < optionalModules.length; i++)
-    {
-      if (optionalModules[i].getModuleClass().equals(mi.getModuleClass()))
-      {
+    for ( int i = 0; i < optionalModules.length; i++ ) {
+      if ( optionalModules[ i ].getModuleClass().equals( mi.getModuleClass() ) ) {
         return true;
       }
     }
@@ -403,35 +348,30 @@ public final class PackageSorter
    * @return the list of all dependent subsystems.
    */
   private static ArrayList<String> collectSubsystemModules
-      (final Module childMod, final HashMap<String,SortModule> moduleMap)
-  {
+  ( final Module childMod, final HashMap<String, SortModule> moduleMap ) {
     final ArrayList<String> collector = new ArrayList<String>();
     final ModuleInfo[] requiredModules = childMod.getRequiredModules();
-    for (int i = 0; i < requiredModules.length; i++)
-    {
-      final SortModule dependentModule = moduleMap.get(requiredModules[i].getModuleClass());
-      if (dependentModule == null)
-      {
+    for ( int i = 0; i < requiredModules.length; i++ ) {
+      final SortModule dependentModule = moduleMap.get( requiredModules[ i ].getModuleClass() );
+      if ( dependentModule == null ) {
         LOGGER.warn
-            ("A dependent module was not found in the list of known modules." +
-                requiredModules[i].getModuleClass());
+          ( "A dependent module was not found in the list of known modules." +
+            requiredModules[ i ].getModuleClass() );
         continue;
       }
 
-      collector.add(dependentModule.getState().getModule().getSubSystem());
+      collector.add( dependentModule.getState().getModule().getSubSystem() );
     }
 
     final ModuleInfo[] optionalModules = childMod.getOptionalModules();
-    for (int i = 0; i < optionalModules.length; i++)
-    {
-      final Object o = moduleMap.get(optionalModules[i].getModuleClass());
+    for ( int i = 0; i < optionalModules.length; i++ ) {
+      final Object o = moduleMap.get( optionalModules[ i ].getModuleClass() );
       final SortModule dependentModule = (SortModule) o;
-      if (dependentModule == null)
-      {
-        LOGGER.warn("A dependent module was not found in the list of known modules.");
+      if ( dependentModule == null ) {
+        LOGGER.warn( "A dependent module was not found in the list of known modules." );
         continue;
       }
-      collector.add(dependentModule.getState().getModule().getSubSystem());
+      collector.add( dependentModule.getState().getModule().getSubSystem() );
     }
     return collector;
   }

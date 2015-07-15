@@ -19,8 +19,7 @@ package org.pentaho.reporting.libraries.docbundle.metadata.parser;
 
 import org.pentaho.reporting.libraries.xmlns.parser.XmlReadHandler;
 
-public interface BundleMetaDataEntryReadHandler extends XmlReadHandler
-{
+public interface BundleMetaDataEntryReadHandler extends XmlReadHandler {
   public String getMetaDataNameSpace();
 
   public String getMetaDataName();

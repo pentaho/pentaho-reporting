@@ -25,12 +25,10 @@ import org.pentaho.reporting.libraries.css.parser.stylehandler.OneOfConstantsRea
  *
  * @author Thomas Morgner
  */
-public class ListStylePositionReadHandler extends OneOfConstantsReadHandler
-{
-  public ListStylePositionReadHandler()
-  {
-    super(false);
-    addValue(ListStylePosition.INSIDE);
-    addValue(ListStylePosition.OUTSIDE);
+public class ListStylePositionReadHandler extends OneOfConstantsReadHandler {
+  public ListStylePositionReadHandler() {
+    super( false );
+    addValue( ListStylePosition.INSIDE );
+    addValue( ListStylePosition.OUTSIDE );
   }
 }

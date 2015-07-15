@@ -17,27 +17,24 @@
 
 package org.pentaho.reporting.libraries.formula.function.information;
 
-import java.math.BigDecimal;
-
 import org.pentaho.reporting.libraries.formula.FormulaTestBase;
+
+import java.math.BigDecimal;
 
 /**
  * @author Cedric Pronzato
  */
-public class CountBlankFunctionTest extends FormulaTestBase
-{
-  public void testDefault() throws Exception
-  {
+public class CountBlankFunctionTest extends FormulaTestBase {
+  public void testDefault() throws Exception {
     runDefaultTest();
   }
 
 
-  public Object[][] createDataTest()
-  {
+  public Object[][] createDataTest() {
     return new Object[][]
-        {
-            {"COUNTBLANK([.B3:.B10])", new BigDecimal(1)},
-        };
+      {
+        { "COUNTBLANK([.B3:.B10])", new BigDecimal( 1 ) },
+      };
   }
 
 }

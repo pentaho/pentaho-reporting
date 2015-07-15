@@ -29,22 +29,17 @@ import org.w3c.css.sac.LexicalUnit;
  *
  * @author Thomas Morgner
  */
-public class ColumnWidthReadHandler implements CSSValueReadHandler
-{
-  public ColumnWidthReadHandler()
-  {
+public class ColumnWidthReadHandler implements CSSValueReadHandler {
+  public ColumnWidthReadHandler() {
   }
 
-  public CSSValue createValue(StyleKey name, LexicalUnit value)
-  {
-    if (value.getLexicalUnitType() == LexicalUnit.SAC_IDENT)
-    {
-      if (value.getStringValue().equalsIgnoreCase("auto"))
-      {
+  public CSSValue createValue( StyleKey name, LexicalUnit value ) {
+    if ( value.getLexicalUnitType() == LexicalUnit.SAC_IDENT ) {
+      if ( value.getStringValue().equalsIgnoreCase( "auto" ) ) {
         return CSSAutoValue.getInstance();
       }
       return null;
     }
-    return CSSValueFactory.createLengthValue(value);
+    return CSSValueFactory.createLengthValue( value );
   }
 }

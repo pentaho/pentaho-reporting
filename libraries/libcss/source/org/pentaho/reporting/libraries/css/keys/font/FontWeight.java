@@ -24,15 +24,13 @@ import org.pentaho.reporting.libraries.css.values.CSSConstant;
  *
  * @author Thomas Morgner
  */
-public class FontWeight
-{
-  public static final CSSConstant NORMAL = new CSSConstant("normal");
-  public static final CSSConstant BOLD = new CSSConstant("bold");
+public class FontWeight {
+  public static final CSSConstant NORMAL = new CSSConstant( "normal" );
+  public static final CSSConstant BOLD = new CSSConstant( "bold" );
 
-  public static final CSSConstant BOLDER = new CSSConstant("bolder");
-  public static final CSSConstant LIGHTER = new CSSConstant("lighter");
+  public static final CSSConstant BOLDER = new CSSConstant( "bolder" );
+  public static final CSSConstant LIGHTER = new CSSConstant( "lighter" );
 
-  private FontWeight()
-  {
+  private FontWeight() {
   }
 }

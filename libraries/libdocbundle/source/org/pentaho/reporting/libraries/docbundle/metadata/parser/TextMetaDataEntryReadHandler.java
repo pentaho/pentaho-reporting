@@ -24,19 +24,15 @@ import org.pentaho.reporting.libraries.xmlns.parser.StringReadHandler;
  *
  * @author Thomas Morgner
  */
-public class TextMetaDataEntryReadHandler extends StringReadHandler implements BundleMetaDataEntryReadHandler
-{
-  public TextMetaDataEntryReadHandler()
-  {
+public class TextMetaDataEntryReadHandler extends StringReadHandler implements BundleMetaDataEntryReadHandler {
+  public TextMetaDataEntryReadHandler() {
   }
 
-  public String getMetaDataNameSpace()
-  {
+  public String getMetaDataNameSpace() {
     return getUri();
   }
 
-  public String getMetaDataName()
-  {
+  public String getMetaDataName() {
     return getTagName();
   }
 }

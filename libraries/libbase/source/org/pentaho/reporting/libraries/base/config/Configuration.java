@@ -26,8 +26,7 @@ import java.util.Iterator;
  *
  * @author Thomas Morgner
  */
-public interface Configuration extends Serializable, Cloneable
-{
+public interface Configuration extends Serializable, Cloneable {
 
   /**
    * Returns the configuration property with the specified key.
@@ -35,20 +34,20 @@ public interface Configuration extends Serializable, Cloneable
    * @param key the property key.
    * @return the property value.
    */
-  public String getConfigProperty(String key);
+  public String getConfigProperty( String key );
 
   /**
-   * Returns the configuration property with the specified key (or the
-   * specified default value if there is no such property).
+   * Returns the configuration property with the specified key (or the specified default value if there is no such
+   * property).
    * <p/>
-   * If the property is not defined in this configuration, the code will
-   * lookup the property in the parent configuration.
+   * If the property is not defined in this configuration, the code will lookup the property in the parent
+   * configuration.
    *
    * @param key          the property key.
    * @param defaultValue the default value.
    * @return the property value.
    */
-  public String getConfigProperty(String key, String defaultValue);
+  public String getConfigProperty( String key, String defaultValue );
 
   /**
    * Returns all keys with the given prefix.
@@ -56,7 +55,7 @@ public interface Configuration extends Serializable, Cloneable
    * @param prefix the prefix
    * @return the iterator containing all keys with that prefix
    */
-  public Iterator<String> findPropertyKeys(String prefix);
+  public Iterator<String> findPropertyKeys( String prefix );
 
   /**
    * Returns the configuration properties.

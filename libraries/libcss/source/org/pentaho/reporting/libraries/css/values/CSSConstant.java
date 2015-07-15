@@ -22,59 +22,48 @@ package org.pentaho.reporting.libraries.css.values;
  *
  * @author Thomas Morgner
  */
-public final class CSSConstant implements CSSValue
-{
+public final class CSSConstant implements CSSValue {
   private String constant;
 
-  public CSSConstant(final String constant)
-  {
-    if (constant == null)
-    {
-      throw new NullPointerException("Constant must not be null");
+  public CSSConstant( final String constant ) {
+    if ( constant == null ) {
+      throw new NullPointerException( "Constant must not be null" );
     }
     this.constant = constant.toLowerCase();
   }
 
-  public String getCSSText()
-  {
+  public String getCSSText() {
     return constant;
   }
 
-  public final boolean equals(final Object o)
-  {
-    if (this == o)
-    {
+  public final boolean equals( final Object o ) {
+    if ( this == o ) {
       return true;
     }
     // we excplicitly check all subclasses as well. A constant is always defined
     // by its string value.
-    if (o instanceof CSSConstant == false)
-    {
+    if ( o instanceof CSSConstant == false ) {
       return false;
     }
 
     final CSSConstant that = (CSSConstant) o;
 
-    if (!constant.equals(that.constant))
-    {
+    if ( !constant.equals( that.constant ) ) {
       return false;
     }
 
     return true;
   }
 
-  public final int hashCode()
-  {
+  public final int hashCode() {
     return constant.hashCode();
   }
 
-  public String toString()
-  {
+  public String toString() {
     return getCSSText();
   }
 
-  public CSSType getType()
-  {
+  public CSSType getType() {
     return CSSGenericType.GENERIC_TYPE;
   }
 }

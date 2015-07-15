@@ -25,13 +25,11 @@ import org.pentaho.reporting.libraries.css.parser.stylehandler.OneOfConstantsRea
  *
  * @author Thomas Morgner
  */
-public class TextJustifyTrimReadHandler extends OneOfConstantsReadHandler
-{
-  public TextJustifyTrimReadHandler()
-  {
-    super(false);
-    addValue(TextJustifyTrim.NONE);
-    addValue(TextJustifyTrim.PUNCTUATION);
-    addValue(TextJustifyTrim.PUNCTUATION_AND_KANA);
+public class TextJustifyTrimReadHandler extends OneOfConstantsReadHandler {
+  public TextJustifyTrimReadHandler() {
+    super( false );
+    addValue( TextJustifyTrim.NONE );
+    addValue( TextJustifyTrim.PUNCTUATION );
+    addValue( TextJustifyTrim.PUNCTUATION_AND_KANA );
   }
 }

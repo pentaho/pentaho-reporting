@@ -25,9 +25,10 @@ import org.pentaho.reporting.libraries.base.versioning.ProjectInformation;
  * @author Thomas Morgner
  * @noinspection UseOfSystemOutOrSystemErr
  */
-public final class LibBaseInfo extends ProjectInformation
-{
-  /** A singleton variable for the info-class. */
+public final class LibBaseInfo extends ProjectInformation {
+  /**
+   * A singleton variable for the info-class.
+   */
   private static LibBaseInfo info;
 
   /**
@@ -35,10 +36,8 @@ public final class LibBaseInfo extends ProjectInformation
    *
    * @return the LibBase project information.
    */
-  public static synchronized ProjectInformation getInstance()
-  {
-    if (info == null)
-    {
+  public static synchronized ProjectInformation getInstance() {
+    if ( info == null ) {
       info = new LibBaseInfo();
       info.initialize();
     }
@@ -48,20 +47,18 @@ public final class LibBaseInfo extends ProjectInformation
   /**
    * Private constructor to prevent object creation.
    */
-  private LibBaseInfo()
-  {
-    super("libbase", "LibBase");
+  private LibBaseInfo() {
+    super( "libbase", "LibBase" );
   }
 
   /**
    * Initializes the project info.
    */
-  private void initialize()
-  {
-    setBootClass(LibBaseBoot.class.getName());
-    setLicenseName("LGPL");
-    setInfo("http://reporting.pentaho.org/libbase/");
-    setCopyright("(C)opyright 2007-2011, by Pentaho Corporation and Contributors");
+  private void initialize() {
+    setBootClass( LibBaseBoot.class.getName() );
+    setLicenseName( "LGPL" );
+    setInfo( "http://reporting.pentaho.org/libbase/" );
+    setCopyright( "(C)opyright 2007-2011, by Pentaho Corporation and Contributors" );
   }
 
   /**
@@ -69,8 +66,7 @@ public final class LibBaseInfo extends ProjectInformation
    *
    * @param args not used.
    */
-  public static void main(final String[] args)
-  {
-    System.out.println(getInstance().getVersion());
+  public static void main( final String[] args ) {
+    System.out.println( getInstance().getVersion() );
   }
 }

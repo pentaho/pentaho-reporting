@@ -17,9 +17,9 @@
 
 package org.pentaho.reporting.libraries.docbundle.metadata.parser;
 
-import org.pentaho.reporting.libraries.xmlns.parser.AbstractReadHandlerFactory;
 import org.pentaho.reporting.libraries.base.config.Configuration;
 import org.pentaho.reporting.libraries.docbundle.LibDocBundleBoot;
+import org.pentaho.reporting.libraries.xmlns.parser.AbstractReadHandlerFactory;
 
 /**
  * Creation-Date: Dec 18, 2006, 1:05:00 PM
@@ -27,32 +27,27 @@ import org.pentaho.reporting.libraries.docbundle.LibDocBundleBoot;
  * @author Thomas Morgner
  */
 public class BundleMetaDataEntryReadHandlerFactory
-    extends AbstractReadHandlerFactory<BundleMetaDataEntryReadHandler>
-{
+  extends AbstractReadHandlerFactory<BundleMetaDataEntryReadHandler> {
   private static final String PREFIX_SELECTOR =
-      "org.pentaho.reporting.libraries.docbundle.metadata.metadata-factory.";
+    "org.pentaho.reporting.libraries.docbundle.metadata.metadata-factory.";
 
   private static BundleMetaDataEntryReadHandlerFactory readHandlerFactory;
 
-  public static synchronized BundleMetaDataEntryReadHandlerFactory getInstance()
-  {
-    if (readHandlerFactory == null)
-    {
+  public static synchronized BundleMetaDataEntryReadHandlerFactory getInstance() {
+    if ( readHandlerFactory == null ) {
       final Configuration config = LibDocBundleBoot.getInstance().getGlobalConfig();
 
       readHandlerFactory = new BundleMetaDataEntryReadHandlerFactory();
-      readHandlerFactory.configure(config, BundleMetaDataEntryReadHandlerFactory.PREFIX_SELECTOR);
+      readHandlerFactory.configure( config, BundleMetaDataEntryReadHandlerFactory.PREFIX_SELECTOR );
     }
     return readHandlerFactory;
   }
 
 
-  private BundleMetaDataEntryReadHandlerFactory()
-  {
+  private BundleMetaDataEntryReadHandlerFactory() {
   }
 
-  protected Class<BundleMetaDataEntryReadHandler> getTargetClass()
-  {
+  protected Class<BundleMetaDataEntryReadHandler> getTargetClass() {
     return BundleMetaDataEntryReadHandler.class;
   }
 }

@@ -18,20 +18,18 @@
 package org.pentaho.reporting.libraries.resourceloader;
 
 /**
- * The ContentNotRecognizedException signals that none of the selected resource
- * factories was able to handle the request.
+ * The ContentNotRecognizedException signals that none of the selected resource factories was able to handle the
+ * request.
  *
  * @author Thomas Morgner
  */
-public class ContentNotRecognizedException extends ResourceCreationException
-{
+public class ContentNotRecognizedException extends ResourceCreationException {
   private static final long serialVersionUID = 816828118909665976L;
 
   /**
    * Creates a ContentNotRecognizedException  with no message and no parent.
    */
-  public ContentNotRecognizedException()
-  {
+  public ContentNotRecognizedException() {
   }
 
   /**
@@ -40,9 +38,8 @@ public class ContentNotRecognizedException extends ResourceCreationException
    * @param message the exception message.
    * @param ex      the parent exception.
    */
-  public ContentNotRecognizedException(final String message, final Exception ex)
-  {
-    super(message, ex);
+  public ContentNotRecognizedException( final String message, final Exception ex ) {
+    super( message, ex );
   }
 
   /**
@@ -50,8 +47,7 @@ public class ContentNotRecognizedException extends ResourceCreationException
    *
    * @param message the exception message.
    */
-  public ContentNotRecognizedException(final String message)
-  {
-    super(message);
+  public ContentNotRecognizedException( final String message ) {
+    super( message );
   }
 }

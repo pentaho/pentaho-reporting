@@ -20,13 +20,11 @@ package org.pentaho.reporting.libraries.css.resolver.values.computed.line;
 import org.pentaho.reporting.libraries.css.keys.line.TextHeight;
 import org.pentaho.reporting.libraries.css.resolver.values.computed.ConstantsResolveHandler;
 
-public class TextHeightResolveHandler extends ConstantsResolveHandler
-{
-  public TextHeightResolveHandler ()
-  {
-    addNormalizeValue(TextHeight.FONT_SIZE);
-    addNormalizeValue(TextHeight.MAX_SIZE);
-    addNormalizeValue(TextHeight.TEXT_SIZE);
-    setFallback(TextHeight.FONT_SIZE);
+public class TextHeightResolveHandler extends ConstantsResolveHandler {
+  public TextHeightResolveHandler() {
+    addNormalizeValue( TextHeight.FONT_SIZE );
+    addNormalizeValue( TextHeight.MAX_SIZE );
+    addNormalizeValue( TextHeight.TEXT_SIZE );
+    setFallback( TextHeight.FONT_SIZE );
   }
 }

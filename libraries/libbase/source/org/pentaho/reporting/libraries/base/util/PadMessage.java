@@ -20,14 +20,12 @@ package org.pentaho.reporting.libraries.base.util;
 import java.util.Arrays;
 
 /**
- * A message object that pads the output if the text is shorter than
- * the given length. This is usefull when concating multiple messages,
- * which should appear in a table like style.
+ * A message object that pads the output if the text is shorter than the given length. This is usefull when concating
+ * multiple messages, which should appear in a table like style.
  *
  * @author Thomas Morgner
  */
-public class PadMessage
-{
+public class PadMessage {
 
   /**
    * The message.
@@ -45,8 +43,7 @@ public class PadMessage
    * @param message the message.
    * @param length  the padding size.
    */
-  public PadMessage(final Object message, final int length)
-  {
+  public PadMessage( final Object message, final int length ) {
     this.text = message;
     this.length = length;
   }
@@ -56,15 +53,13 @@ public class PadMessage
    *
    * @return the string.
    */
-  public String toString()
-  {
-    final StringBuilder b = new StringBuilder(length);
-    b.append(this.text);
-    if (b.length() < this.length)
-    {
-      final char[] pad = new char[this.length - b.length()];
-      Arrays.fill(pad, ' ');
-      b.append(pad);
+  public String toString() {
+    final StringBuilder b = new StringBuilder( length );
+    b.append( this.text );
+    if ( b.length() < this.length ) {
+      final char[] pad = new char[ this.length - b.length() ];
+      Arrays.fill( pad, ' ' );
+      b.append( pad );
     }
     return b.toString();
   }

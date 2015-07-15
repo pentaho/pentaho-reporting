@@ -21,32 +21,26 @@ import org.pentaho.reporting.libraries.css.resolver.tokens.types.TextType;
 
 
 /**
- * Static text. All CDATA and all constant strings from the 'content'
- * style-definition result in StaticTextTokens.
+ * Static text. All CDATA and all constant strings from the 'content' style-definition result in StaticTextTokens.
  *
  * @author Thomas Morgner
  */
-public class StaticTextToken extends StaticToken implements TextType
-{
+public class StaticTextToken extends StaticToken implements TextType {
   private String text;
 
-  public StaticTextToken(final String text)
-  {
-    if (text == null)
-    {
+  public StaticTextToken( final String text ) {
+    if ( text == null ) {
       throw new NullPointerException();
     }
     this.text = text;
   }
 
-  public String getText()
-  {
+  public String getText() {
     return text;
   }
 
-  public String toString ()
-  {
+  public String toString() {
     return "org.jfree.layouting.layouter.content.statics.StaticTextToken=" +
-            "{text='" + text + "'}";
+      "{text='" + text + "'}";
   }
 }

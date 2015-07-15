@@ -28,37 +28,30 @@ import org.pentaho.reporting.libraries.formula.typing.coretypes.DateTimeType;
  * @author Gunter Rombauts
  * @see MonthEndFunction
  */
-public class MonthEndFunctionDescription extends AbstractFunctionDescription
-{
+public class MonthEndFunctionDescription extends AbstractFunctionDescription {
   private static final long serialVersionUID = -2974907364693600555L;
 
-  public MonthEndFunctionDescription()
-  {
-    super("MONTHEND", "org.pentaho.reporting.libraries.formula.function.datetime.MonthEnd-Function");
+  public MonthEndFunctionDescription() {
+    super( "MONTHEND", "org.pentaho.reporting.libraries.formula.function.datetime.MonthEnd-Function" );
   }
 
-  public Type getValueType()
-  {
+  public Type getValueType() {
     return DateTimeType.DATE_TYPE;
   }
 
-  public int getParameterCount()
-  {
+  public int getParameterCount() {
     return 1;
   }
 
-  public Type getParameterType(final int position)
-  {
+  public Type getParameterType( final int position ) {
     return DateTimeType.DATE_TYPE;
   }
 
-  public boolean isParameterMandatory(final int position)
-  {
+  public boolean isParameterMandatory( final int position ) {
     return true;
   }
 
-  public FunctionCategory getCategory()
-  {
+  public FunctionCategory getCategory() {
     return DateTimeFunctionCategory.CATEGORY;
   }
 }

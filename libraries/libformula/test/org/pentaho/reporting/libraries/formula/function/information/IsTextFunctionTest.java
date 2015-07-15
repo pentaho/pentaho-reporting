@@ -22,19 +22,16 @@ import org.pentaho.reporting.libraries.formula.FormulaTestBase;
 /**
  * @author Cedric Pronzato
  */
-public class IsTextFunctionTest extends FormulaTestBase
-{
-  public void testDefault() throws Exception
-  {
+public class IsTextFunctionTest extends FormulaTestBase {
+  public void testDefault() throws Exception {
     runDefaultTest();
   }
 
-  public Object[][] createDataTest()
-  {
+  public Object[][] createDataTest() {
     return new Object[][]
-        {
-            {"ISTEXT(1)", Boolean.FALSE},
-            {"ISTEXT(\"1\")", Boolean.TRUE},
-        };
+      {
+        { "ISTEXT(1)", Boolean.FALSE },
+        { "ISTEXT(\"1\")", Boolean.TRUE },
+      };
   }
 }

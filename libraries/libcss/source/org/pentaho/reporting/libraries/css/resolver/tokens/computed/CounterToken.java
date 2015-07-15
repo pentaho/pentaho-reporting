@@ -24,24 +24,20 @@ import org.pentaho.reporting.libraries.css.counter.CounterStyle;
  *
  * @author Thomas Morgner
  */
-public class CounterToken extends ComputedToken
-{
+public class CounterToken extends ComputedToken {
   private String name;
   private CounterStyle style;
 
-  public CounterToken(final String name, final CounterStyle style)
-  {
+  public CounterToken( final String name, final CounterStyle style ) {
     this.name = name;
     this.style = style;
   }
 
-  public String getName()
-  {
+  public String getName() {
     return name;
   }
 
-  public CounterStyle getStyle()
-  {
+  public CounterStyle getStyle() {
     return style;
   }
 }

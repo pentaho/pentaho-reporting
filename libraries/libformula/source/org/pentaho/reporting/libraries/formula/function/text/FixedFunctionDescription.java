@@ -20,45 +20,37 @@ package org.pentaho.reporting.libraries.formula.function.text;
 import org.pentaho.reporting.libraries.formula.function.AbstractFunctionDescription;
 import org.pentaho.reporting.libraries.formula.function.FunctionCategory;
 import org.pentaho.reporting.libraries.formula.typing.Type;
+import org.pentaho.reporting.libraries.formula.typing.coretypes.LogicalType;
 import org.pentaho.reporting.libraries.formula.typing.coretypes.NumberType;
 import org.pentaho.reporting.libraries.formula.typing.coretypes.TextType;
-import org.pentaho.reporting.libraries.formula.typing.coretypes.LogicalType;
 
-public class FixedFunctionDescription extends AbstractFunctionDescription
-{
+public class FixedFunctionDescription extends AbstractFunctionDescription {
   private static final long serialVersionUID = 6842849033225519941L;
 
-  public FixedFunctionDescription()
-  {
-    super("FIXED", "org.pentaho.reporting.libraries.formula.function.text.Fixed-Function");
+  public FixedFunctionDescription() {
+    super( "FIXED", "org.pentaho.reporting.libraries.formula.function.text.Fixed-Function" );
   }
 
-  public FunctionCategory getCategory()
-  {
+  public FunctionCategory getCategory() {
     return TextFunctionCategory.CATEGORY;
   }
 
-  public int getParameterCount()
-  {
+  public int getParameterCount() {
     return 3;
   }
 
-  public Type getParameterType(final int position)
-  {
-    if (position == 2)
-    {
+  public Type getParameterType( final int position ) {
+    if ( position == 2 ) {
       return LogicalType.TYPE;
     }
     return NumberType.GENERIC_NUMBER;
   }
 
-  public Type getValueType()
-  {
+  public Type getValueType() {
     return TextType.TYPE;
   }
 
-  public boolean isParameterMandatory(final int position)
-  {
+  public boolean isParameterMandatory( final int position ) {
     return position == 0;
   }
 

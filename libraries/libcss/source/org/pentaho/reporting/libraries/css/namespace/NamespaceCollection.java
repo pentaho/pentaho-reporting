@@ -22,9 +22,8 @@ package org.pentaho.reporting.libraries.css.namespace;
  *
  * @author Thomas Morgner
  */
-public interface NamespaceCollection
-{
+public interface NamespaceCollection {
   public String[] getNamespaces();
 
-  public NamespaceDefinition getDefinition(String namespace);
+  public NamespaceDefinition getDefinition( String namespace );
 }

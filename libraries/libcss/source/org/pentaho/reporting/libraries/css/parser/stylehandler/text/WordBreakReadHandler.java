@@ -25,15 +25,13 @@ import org.pentaho.reporting.libraries.css.parser.stylehandler.OneOfConstantsRea
  *
  * @author Thomas Morgner
  */
-public class WordBreakReadHandler extends OneOfConstantsReadHandler
-{
-  public WordBreakReadHandler()
-  {
-    super(false);
-    addValue(WordBreak.BREAK_ALL);
-    addValue(WordBreak.BREAK_STRICT);
-    addValue(WordBreak.KEEP_ALL);
-    addValue(WordBreak.LOOSE);
-    addValue(WordBreak.NORMAL);
+public class WordBreakReadHandler extends OneOfConstantsReadHandler {
+  public WordBreakReadHandler() {
+    super( false );
+    addValue( WordBreak.BREAK_ALL );
+    addValue( WordBreak.BREAK_STRICT );
+    addValue( WordBreak.KEEP_ALL );
+    addValue( WordBreak.LOOSE );
+    addValue( WordBreak.NORMAL );
   }
 }

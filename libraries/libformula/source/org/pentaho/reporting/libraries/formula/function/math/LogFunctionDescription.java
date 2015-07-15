@@ -24,42 +24,34 @@ import org.pentaho.reporting.libraries.formula.typing.coretypes.NumberType;
 
 /**
  * Describes AtanFunction function.
- * @see AtanFunction
  *
  * @author ocke
- *
+ * @see AtanFunction
  */
-public class LogFunctionDescription extends AbstractFunctionDescription
-{
+public class LogFunctionDescription extends AbstractFunctionDescription {
   private static final long serialVersionUID = 743117553650008440L;
 
-  public LogFunctionDescription()
-  {
-    super("LOG", "org.pentaho.reporting.libraries.formula.function.math.Log-Function");
+  public LogFunctionDescription() {
+    super( "LOG", "org.pentaho.reporting.libraries.formula.function.math.Log-Function" );
   }
 
-  public FunctionCategory getCategory()
-  {
+  public FunctionCategory getCategory() {
     return MathFunctionCategory.CATEGORY;
   }
 
-  public int getParameterCount()
-  {
+  public int getParameterCount() {
     return 1;
   }
 
-  public Type getParameterType(final int position)
-  {
+  public Type getParameterType( final int position ) {
     return NumberType.GENERIC_NUMBER;
   }
 
-  public Type getValueType()
-  {
+  public Type getValueType() {
     return NumberType.GENERIC_NUMBER;
   }
 
-  public boolean isParameterMandatory(final int position)
-  {
+  public boolean isParameterMandatory( final int position ) {
     return true;
   }
 

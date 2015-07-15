@@ -32,56 +32,48 @@ import org.pentaho.reporting.libraries.formula.typing.coretypes.NumberType;
  *
  * @author Gunter Rombauts
  */
-public class StringCountFunction implements Function
-{
+public class StringCountFunction implements Function {
   private static final long serialVersionUID = -1557813953499941337L;
 
-  public StringCountFunction()
-  {
+  public StringCountFunction() {
   }
 
-  public TypeValuePair evaluate(final FormulaContext context,
-                                final ParameterCallback parameters)
-      throws EvaluationException
-  {
+  public TypeValuePair evaluate( final FormulaContext context,
+                                 final ParameterCallback parameters )
+    throws EvaluationException {
     final int parameterCount = parameters.getParameterCount();
-    if (parameterCount < 1 || parameterCount > 2)
-    {
-      throw EvaluationException.getInstance(LibFormulaErrorValue.ERROR_ARGUMENTS_VALUE);
+    if ( parameterCount < 1 || parameterCount > 2 ) {
+      throw EvaluationException.getInstance( LibFormulaErrorValue.ERROR_ARGUMENTS_VALUE );
     }
     final TypeRegistry typeRegistry = context.getTypeRegistry();
 
-    final Type textType = parameters.getType(0);
-    final Object textValue = parameters.getValue(0);
-    final Type searchTextType = parameters.getType(1);
-    final Object searchTextValue = parameters.getValue(1);
+    final Type textType = parameters.getType( 0 );
+    final Object textValue = parameters.getValue( 0 );
+    final Type searchTextType = parameters.getType( 1 );
+    final Object searchTextValue = parameters.getValue( 1 );
 
-    final String text = typeRegistry.convertToText(textType, textValue);
-    final String searchText = typeRegistry.convertToText(searchTextType, searchTextValue);
-    if (searchText.length() == 0)
-    {
-      return new TypeValuePair(NumberType.GENERIC_NUMBER, 0);
+    final String text = typeRegistry.convertToText( textType, textValue );
+    final String searchText = typeRegistry.convertToText( searchTextType, searchTextValue );
+    if ( searchText.length() == 0 ) {
+      return new TypeValuePair( NumberType.GENERIC_NUMBER, 0 );
     }
 
-    int index = text.indexOf(searchText);
-    if (index == -1)
-    {
-      return new TypeValuePair(NumberType.GENERIC_NUMBER, 0);
+    int index = text.indexOf( searchText );
+    if ( index == -1 ) {
+      return new TypeValuePair( NumberType.GENERIC_NUMBER, 0 );
     }
 
     int occcounter = 0;
-    while (index >= 0)
-    {
+    while ( index >= 0 ) {
       final int oldIndex = index + searchText.length();
 
-      index = text.indexOf(searchText, oldIndex);
+      index = text.indexOf( searchText, oldIndex );
       occcounter += 1;
     }
-    return new TypeValuePair(NumberType.GENERIC_NUMBER, occcounter);
+    return new TypeValuePair( NumberType.GENERIC_NUMBER, occcounter );
   }
 
-  public String getCanonicalName()
-  {
+  public String getCanonicalName() {
     return "STRINGCOUNT";
   }
 

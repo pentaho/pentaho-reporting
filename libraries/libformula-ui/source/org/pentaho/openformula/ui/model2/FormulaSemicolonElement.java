@@ -17,18 +17,15 @@
 
 package org.pentaho.openformula.ui.model2;
 
-public class FormulaSemicolonElement extends FormulaElement
-{
+public class FormulaSemicolonElement extends FormulaElement {
   public static final String ELEMENT = ";";
 
-  public FormulaSemicolonElement(final FormulaDocument document,
-                                 final FormulaRootElement parentElement)
-  {
-    super(document, parentElement);
+  public FormulaSemicolonElement( final FormulaDocument document,
+                                  final FormulaRootElement parentElement ) {
+    super( document, parentElement );
   }
 
-  public String getText()
-  {
+  public String getText() {
     return ELEMENT; // NON-NLS
   }
 
@@ -38,8 +35,7 @@ public class FormulaSemicolonElement extends FormulaElement
    *
    * @return the element name
    */
-  public String getName()
-  {
+  public String getName() {
     return "semicolon"; // NON-NLS
   }
 }

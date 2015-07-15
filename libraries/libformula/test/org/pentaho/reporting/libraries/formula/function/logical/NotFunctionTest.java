@@ -22,20 +22,17 @@ import org.pentaho.reporting.libraries.formula.FormulaTestBase;
 /**
  * @author Cedric Pronzato
  */
-public class NotFunctionTest extends FormulaTestBase
-{
-  public void testDefault() throws Exception
-  {
+public class NotFunctionTest extends FormulaTestBase {
+  public void testDefault() throws Exception {
     runDefaultTest();
   }
 
-  public Object[][] createDataTest()
-  {
+  public Object[][] createDataTest() {
     return new Object[][]
-        {
-            {"NOT(FALSE())", Boolean.TRUE},
-            {"NOT(TRUE())", Boolean.FALSE},
-        };
+      {
+        { "NOT(FALSE())", Boolean.TRUE },
+        { "NOT(TRUE())", Boolean.FALSE },
+      };
   }
 
 }

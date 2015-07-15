@@ -20,21 +20,19 @@ package org.pentaho.reporting.libraries.css.resolver.values.computed.line;
 import org.pentaho.reporting.libraries.css.keys.line.VerticalAlign;
 import org.pentaho.reporting.libraries.css.resolver.values.computed.ConstantsResolveHandler;
 
-public class VerticalAlignResolveHandler extends ConstantsResolveHandler
-{
-  public VerticalAlignResolveHandler ()
-  {
-    addNormalizeValue(VerticalAlign.BASELINE);
-    addNormalizeValue(VerticalAlign.BOTTOM);
-    addNormalizeValue(VerticalAlign.CENTRAL);
-    addNormalizeValue(VerticalAlign.MIDDLE);
-    addNormalizeValue(VerticalAlign.SUB);
-    addNormalizeValue(VerticalAlign.SUPER);
-    addNormalizeValue(VerticalAlign.TEXT_BOTTOM);
-    addNormalizeValue(VerticalAlign.TEXT_TOP);
-    addNormalizeValue(VerticalAlign.TOP);
+public class VerticalAlignResolveHandler extends ConstantsResolveHandler {
+  public VerticalAlignResolveHandler() {
+    addNormalizeValue( VerticalAlign.BASELINE );
+    addNormalizeValue( VerticalAlign.BOTTOM );
+    addNormalizeValue( VerticalAlign.CENTRAL );
+    addNormalizeValue( VerticalAlign.MIDDLE );
+    addNormalizeValue( VerticalAlign.SUB );
+    addNormalizeValue( VerticalAlign.SUPER );
+    addNormalizeValue( VerticalAlign.TEXT_BOTTOM );
+    addNormalizeValue( VerticalAlign.TEXT_TOP );
+    addNormalizeValue( VerticalAlign.TOP );
     // we do not detect scripts right now ...
-    setFallback(VerticalAlign.BASELINE);
+    setFallback( VerticalAlign.BASELINE );
   }
 
 }

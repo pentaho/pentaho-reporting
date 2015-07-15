@@ -17,9 +17,9 @@
 
 package org.pentaho.reporting.libraries.css.resolver.tokens.statics;
 
-import java.text.Format;
-
 import org.pentaho.reporting.libraries.css.resolver.tokens.types.FormattedTextType;
+
+import java.text.Format;
 
 /**
  * Creation-Date: 04.07.2006, 20:16:16
@@ -27,33 +27,28 @@ import org.pentaho.reporting.libraries.css.resolver.tokens.types.FormattedTextTy
  * @author Thomas Morgner
  */
 public class FormattedContentToken extends StaticToken
-        implements FormattedTextType
-{
+  implements FormattedTextType {
   private Object original;
   private Format format;
   private String text;
 
-  public FormattedContentToken(final Object original,
-                               final Format format,
-                               final String text)
-  {
+  public FormattedContentToken( final Object original,
+                                final Format format,
+                                final String text ) {
     this.format = format;
     this.original = original;
     this.text = text;
   }
 
-  public Object getOriginal()
-  {
+  public Object getOriginal() {
     return original;
   }
 
-  public Format getFormat()
-  {
+  public Format getFormat() {
     return format;
   }
 
-  public String getText()
-  {
+  public String getText() {
     return text;
   }
 }

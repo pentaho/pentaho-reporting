@@ -21,15 +21,12 @@ import org.pentaho.reporting.libraries.formula.function.AbstractFunctionCategory
 import org.pentaho.reporting.libraries.formula.function.FunctionCategory;
 
 /**
- * 
  * @author Cedric Pronzato
  */
-public final class RoundingFunctionCategory extends AbstractFunctionCategory
-{
+public final class RoundingFunctionCategory extends AbstractFunctionCategory {
   public static final FunctionCategory CATEGORY = new RoundingFunctionCategory();
 
-  private RoundingFunctionCategory()
-  {
-    super("org.pentaho.reporting.libraries.formula.function.rounding.category");
+  private RoundingFunctionCategory() {
+    super( "org.pentaho.reporting.libraries.formula.function.rounding.category" );
   }
 }

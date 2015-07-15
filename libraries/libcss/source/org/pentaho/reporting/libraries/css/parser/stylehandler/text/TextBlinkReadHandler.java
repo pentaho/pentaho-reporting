@@ -25,12 +25,10 @@ import org.pentaho.reporting.libraries.css.parser.stylehandler.OneOfConstantsRea
  *
  * @author Thomas Morgner
  */
-public class TextBlinkReadHandler extends OneOfConstantsReadHandler
-{
-  public TextBlinkReadHandler()
-  {
-    super(false);
-    addValue(TextBlink.BLINK);
-    addValue(TextBlink.NONE);
+public class TextBlinkReadHandler extends OneOfConstantsReadHandler {
+  public TextBlinkReadHandler() {
+    super( false );
+    addValue( TextBlink.BLINK );
+    addValue( TextBlink.NONE );
   }
 }

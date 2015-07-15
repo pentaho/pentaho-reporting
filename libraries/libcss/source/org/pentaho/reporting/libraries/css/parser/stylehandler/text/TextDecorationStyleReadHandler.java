@@ -25,18 +25,16 @@ import org.pentaho.reporting.libraries.css.parser.stylehandler.OneOfConstantsRea
  *
  * @author Thomas Morgner
  */
-public class TextDecorationStyleReadHandler extends OneOfConstantsReadHandler
-{
-  public TextDecorationStyleReadHandler()
-  {
-    super(false);
-    addValue(TextDecorationStyle.DASHED);
-    addValue(TextDecorationStyle.DOT_DASH);
-    addValue(TextDecorationStyle.DOT_DOT_DASH);
-    addValue(TextDecorationStyle.DOTTED);
-    addValue(TextDecorationStyle.DOUBLE);
-    addValue(TextDecorationStyle.NONE);
-    addValue(TextDecorationStyle.SOLID);
-    addValue(TextDecorationStyle.WAVE);
+public class TextDecorationStyleReadHandler extends OneOfConstantsReadHandler {
+  public TextDecorationStyleReadHandler() {
+    super( false );
+    addValue( TextDecorationStyle.DASHED );
+    addValue( TextDecorationStyle.DOT_DASH );
+    addValue( TextDecorationStyle.DOT_DOT_DASH );
+    addValue( TextDecorationStyle.DOTTED );
+    addValue( TextDecorationStyle.DOUBLE );
+    addValue( TextDecorationStyle.NONE );
+    addValue( TextDecorationStyle.SOLID );
+    addValue( TextDecorationStyle.WAVE );
   }
 }

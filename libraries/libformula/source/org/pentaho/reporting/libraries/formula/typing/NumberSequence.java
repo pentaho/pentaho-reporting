@@ -19,7 +19,6 @@ package org.pentaho.reporting.libraries.formula.typing;
 
 import org.pentaho.reporting.libraries.formula.EvaluationException;
 
-public interface NumberSequence extends Sequence
-{
+public interface NumberSequence extends Sequence {
   Number nextNumber() throws EvaluationException;
 }

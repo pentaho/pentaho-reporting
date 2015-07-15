@@ -20,15 +20,13 @@ package org.pentaho.reporting.libraries.css.resolver.values.computed.box;
 import org.pentaho.reporting.libraries.css.keys.box.DisplayModel;
 import org.pentaho.reporting.libraries.css.resolver.values.computed.ConstantsResolveHandler;
 
-public class DisplayModelResolveHandler extends ConstantsResolveHandler
-{
-  public DisplayModelResolveHandler ()
-  {
-    addNormalizeValue(DisplayModel.BLOCK_INSIDE);
-    addNormalizeValue(DisplayModel.INLINE_INSIDE);
-    addNormalizeValue(DisplayModel.RUBY);
-    addNormalizeValue(DisplayModel.TABLE);
-    setFallback(DisplayModel.INLINE_INSIDE);
+public class DisplayModelResolveHandler extends ConstantsResolveHandler {
+  public DisplayModelResolveHandler() {
+    addNormalizeValue( DisplayModel.BLOCK_INSIDE );
+    addNormalizeValue( DisplayModel.INLINE_INSIDE );
+    addNormalizeValue( DisplayModel.RUBY );
+    addNormalizeValue( DisplayModel.TABLE );
+    setFallback( DisplayModel.INLINE_INSIDE );
   }
 
 }

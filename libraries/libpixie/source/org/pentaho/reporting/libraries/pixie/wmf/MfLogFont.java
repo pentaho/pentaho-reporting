@@ -17,14 +17,13 @@
 
 package org.pentaho.reporting.libraries.pixie.wmf;
 
-import java.awt.Font;
+import java.awt.*;
 import java.awt.geom.AffineTransform;
 
 /**
  * A Windows metafile logical font object.
  */
-public class MfLogFont implements WmfObject
-{
+public class MfLogFont implements WmfObject {
   private String face;
   private int size;
   private int style;
@@ -35,25 +34,21 @@ public class MfLogFont implements WmfObject
   /**
    * Construct from a metafile record.
    */
-  public MfLogFont()
-  {
+  public MfLogFont() {
   }
 
-  public void setFace(final String face)
-  {
+  public void setFace( final String face ) {
     this.face = face;
   }
 
   /**
    * The name of the font face.
    */
-  public String getFace()
-  {
+  public String getFace() {
     return face;
   }
 
-  public void setSize(final int size)
-  {
+  public void setSize( final int size ) {
     this.size = size;
   }
 
@@ -61,66 +56,55 @@ public class MfLogFont implements WmfObject
   /**
    * The size, in logical units.
    */
-  public int getSize()
-  {
+  public int getSize() {
     return size;
   }
 
   /**
    * The font style.
    */
-  public int getStyle()
-  {
+  public int getStyle() {
     return style;
   }
 
-  public void setStyle(final int style)
-  {
+  public void setStyle( final int style ) {
     this.style = style;
   }
 
   /**
    * True if this is an underlined font.
    */
-  public boolean isUnderline()
-  {
+  public boolean isUnderline() {
     return underline;
   }
 
-  public void setUnderline(final boolean underline)
-  {
+  public void setUnderline( final boolean underline ) {
     this.underline = underline;
   }
 
-  public boolean isStrikeOut()
-  {
+  public boolean isStrikeOut() {
     return strikeout;
   }
 
-  public void setStrikeOut(final boolean b)
-  {
+  public void setStrikeOut( final boolean b ) {
     this.strikeout = b;
   }
 
-  public Font createFont()
-  {
-    final Font retfont = new Font(getFace(), getStyle(), getSize());
-    final double rot = StrictMath.sin(Math.toRadians(-rotation));
-    return retfont.deriveFont(AffineTransform.getRotateInstance(rot));
+  public Font createFont() {
+    final Font retfont = new Font( getFace(), getStyle(), getSize() );
+    final double rot = StrictMath.sin( Math.toRadians( -rotation ) );
+    return retfont.deriveFont( AffineTransform.getRotateInstance( rot ) );
   }
 
-  public int getType()
-  {
+  public int getType() {
     return OBJ_FONT;
   }
 
-  public double getRotation()
-  {
+  public double getRotation() {
     return rotation;
   }
 
-  public void setRotation(final double d)
-  {
+  public void setRotation( final double d ) {
     this.rotation = d;
   }
 }

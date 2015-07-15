@@ -19,24 +19,20 @@ package org.pentaho.reporting.libraries.fonts.registry;
 
 import java.io.Serializable;
 
-public class DefaultFontNativeContext implements Serializable, FontNativeContext
-{
+public class DefaultFontNativeContext implements Serializable, FontNativeContext {
   private boolean nativeBold;
   private boolean nativeItalics;
 
-  public DefaultFontNativeContext(final boolean nativeBold, final boolean nativeItalics)
-  {
+  public DefaultFontNativeContext( final boolean nativeBold, final boolean nativeItalics ) {
     this.nativeBold = nativeBold;
     this.nativeItalics = nativeItalics;
   }
 
-  public boolean isNativeBold()
-  {
+  public boolean isNativeBold() {
     return nativeBold;
   }
 
-  public boolean isNativeItalics()
-  {
+  public boolean isNativeItalics() {
     return nativeItalics;
   }
 }

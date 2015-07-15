@@ -33,66 +33,48 @@ import org.w3c.css.sac.LexicalUnit;
  *
  * @author Thomas Morgner
  */
-public class CropReadHandler implements CSSValueReadHandler
-{
-  public CropReadHandler()
-  {
+public class CropReadHandler implements CSSValueReadHandler {
+  public CropReadHandler() {
   }
 
-  public CSSValue createValue(StyleKey name, LexicalUnit value)
-  {
-    if (value.getLexicalUnitType() == LexicalUnit.SAC_IDENT)
-    {
+  public CSSValue createValue( StyleKey name, LexicalUnit value ) {
+    if ( value.getLexicalUnitType() == LexicalUnit.SAC_IDENT ) {
       final String stringValue = value.getStringValue();
-      if (stringValue.equalsIgnoreCase("auto") ||
-          stringValue.equalsIgnoreCase("none"))
-      {
+      if ( stringValue.equalsIgnoreCase( "auto" ) ||
+        stringValue.equalsIgnoreCase( "none" ) ) {
         return CSSAutoValue.getInstance();
       }
-    }
-    else if (value.getLexicalUnitType() == LexicalUnit.SAC_FUNCTION)
-    {
-      if (value.getFunctionName().equalsIgnoreCase("inset-rect"))
-      {
-        return getRectangle(CSSRectangleType.INSET_RECT, value.getParameters());
+    } else if ( value.getLexicalUnitType() == LexicalUnit.SAC_FUNCTION ) {
+      if ( value.getFunctionName().equalsIgnoreCase( "inset-rect" ) ) {
+        return getRectangle( CSSRectangleType.INSET_RECT, value.getParameters() );
       }
       return null;
-    }
-    else if (value.getLexicalUnitType() == LexicalUnit.SAC_RECT_FUNCTION)
-    {
-      return getRectangle(CSSRectangleType.RECT, value.getParameters());
+    } else if ( value.getLexicalUnitType() == LexicalUnit.SAC_RECT_FUNCTION ) {
+      return getRectangle( CSSRectangleType.RECT, value.getParameters() );
     }
     return null;
   }
 
 
   private static CSSRectangleValue getRectangle
-      (CSSRectangleType type, LexicalUnit value)
-  {
-    final CSSNumericValue[] list = new CSSNumericValue[4];
-    for (int index = 0; index < 4; index++)
-    {
-      if (value == null)
-      {
+    ( CSSRectangleType type, LexicalUnit value ) {
+    final CSSNumericValue[] list = new CSSNumericValue[ 4 ];
+    for ( int index = 0; index < 4; index++ ) {
+      if ( value == null ) {
         return null;
       }
-      CSSNumericValue nval = CSSValueFactory.createLengthValue(value);
-      if (nval != null)
-      {
-        list[index] = nval;
-      }
-      else if (value.getLexicalUnitType() == LexicalUnit.SAC_PERCENTAGE)
-      {
-        list[index] = CSSNumericValue.createValue(CSSNumericType.PERCENTAGE, value.getFloatValue());
-      }
-      else
-      {
+      CSSNumericValue nval = CSSValueFactory.createLengthValue( value );
+      if ( nval != null ) {
+        list[ index ] = nval;
+      } else if ( value.getLexicalUnitType() == LexicalUnit.SAC_PERCENTAGE ) {
+        list[ index ] = CSSNumericValue.createValue( CSSNumericType.PERCENTAGE, value.getFloatValue() );
+      } else {
         return null;
       }
-      value = CSSValueFactory.parseComma(value);
+      value = CSSValueFactory.parseComma( value );
     }
 
-    return new CSSRectangleValue(type, list[0], list[1], list[2], list[3]);
+    return new CSSRectangleValue( type, list[ 0 ], list[ 1 ], list[ 2 ], list[ 3 ] );
   }
 
 }

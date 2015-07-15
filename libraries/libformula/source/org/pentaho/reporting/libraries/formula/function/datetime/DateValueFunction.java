@@ -17,8 +17,6 @@
 
 package org.pentaho.reporting.libraries.formula.function.datetime;
 
-import java.util.Date;
-
 import org.pentaho.reporting.libraries.formula.EvaluationException;
 import org.pentaho.reporting.libraries.formula.FormulaContext;
 import org.pentaho.reporting.libraries.formula.LibFormulaErrorValue;
@@ -29,39 +27,35 @@ import org.pentaho.reporting.libraries.formula.typing.Type;
 import org.pentaho.reporting.libraries.formula.typing.TypeRegistry;
 import org.pentaho.reporting.libraries.formula.typing.coretypes.DateTimeType;
 
+import java.util.Date;
+
 /**
  * This function returns
- * 
- * 
+ *
  * @author Cedric Pronzato
  */
-public class DateValueFunction implements Function
-{
+public class DateValueFunction implements Function {
   private static final long serialVersionUID = -906531902889630172L;
 
-  public DateValueFunction()
-  {
+  public DateValueFunction() {
   }
 
-  public String getCanonicalName()
-  {
+  public String getCanonicalName() {
     return "DATEVALUE";
   }
 
-  public TypeValuePair evaluate(final FormulaContext context,
-      final ParameterCallback parameters) throws EvaluationException
-  {
-    if (parameters.getParameterCount() != 1)
-    {
-      throw EvaluationException.getInstance(LibFormulaErrorValue.ERROR_ARGUMENTS_VALUE);
+  public TypeValuePair evaluate( final FormulaContext context,
+                                 final ParameterCallback parameters ) throws EvaluationException {
+    if ( parameters.getParameterCount() != 1 ) {
+      throw EvaluationException.getInstance( LibFormulaErrorValue.ERROR_ARGUMENTS_VALUE );
     }
 
     final TypeRegistry typeRegistry = context.getTypeRegistry();
-    final Type type = parameters.getType(0);
-    final Object value = parameters.getValue(0);
+    final Type type = parameters.getType( 0 );
+    final Object value = parameters.getValue( 0 );
 
-    final Date date1 = typeRegistry.convertToDate(type, value);
-    return new TypeValuePair(DateTimeType.DATE_TYPE, date1);
+    final Date date1 = typeRegistry.convertToDate( type, value );
+    return new TypeValuePair( DateTimeType.DATE_TYPE, date1 );
 
   }
 }

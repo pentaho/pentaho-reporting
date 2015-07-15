@@ -24,18 +24,16 @@ import org.pentaho.reporting.libraries.css.values.CSSConstant;
  *
  * @author Thomas Morgner
  */
-public class ListStyleTypeGlyphs
-{
+public class ListStyleTypeGlyphs {
   // box | check | circle | diamond | disc | hyphen | square
-  public static final CSSConstant BOX = new CSSConstant("box");
-  public static final CSSConstant CHECK = new CSSConstant("check");
-  public static final CSSConstant CIRCLE = new CSSConstant("circle");
-  public static final CSSConstant DIAMOND = new CSSConstant("diamon");
-  public static final CSSConstant DISC = new CSSConstant("disc");
-  public static final CSSConstant HYPHEN = new CSSConstant("hyphen");
-  public static final CSSConstant SQUARE = new CSSConstant("square");
+  public static final CSSConstant BOX = new CSSConstant( "box" );
+  public static final CSSConstant CHECK = new CSSConstant( "check" );
+  public static final CSSConstant CIRCLE = new CSSConstant( "circle" );
+  public static final CSSConstant DIAMOND = new CSSConstant( "diamon" );
+  public static final CSSConstant DISC = new CSSConstant( "disc" );
+  public static final CSSConstant HYPHEN = new CSSConstant( "hyphen" );
+  public static final CSSConstant SQUARE = new CSSConstant( "square" );
 
-  private ListStyleTypeGlyphs()
-  {
+  private ListStyleTypeGlyphs() {
   }
 }

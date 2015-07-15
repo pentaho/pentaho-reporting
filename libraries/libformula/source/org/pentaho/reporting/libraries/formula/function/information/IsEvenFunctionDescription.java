@@ -25,42 +25,34 @@ import org.pentaho.reporting.libraries.formula.typing.coretypes.NumberType;
 
 /**
  * Describes IsEvenFunction function.
- * @see IsEvenFunction
  *
  * @author Cedric Pronzato
- *
+ * @see IsEvenFunction
  */
-public class IsEvenFunctionDescription extends AbstractFunctionDescription
-{
+public class IsEvenFunctionDescription extends AbstractFunctionDescription {
   private static final long serialVersionUID = 7863054657516063105L;
 
-  public IsEvenFunctionDescription()
-  {
-    super("ISEVEN", "org.pentaho.reporting.libraries.formula.function.information.IsEven-Function");
+  public IsEvenFunctionDescription() {
+    super( "ISEVEN", "org.pentaho.reporting.libraries.formula.function.information.IsEven-Function" );
   }
 
-  public FunctionCategory getCategory()
-  {
+  public FunctionCategory getCategory() {
     return InformationFunctionCategory.CATEGORY;
   }
 
-  public int getParameterCount()
-  {
+  public int getParameterCount() {
     return 1;
   }
 
-  public Type getParameterType(final int position)
-  {
+  public Type getParameterType( final int position ) {
     return NumberType.GENERIC_NUMBER;
   }
 
-  public Type getValueType()
-  {
+  public Type getValueType() {
     return LogicalType.TYPE;
   }
 
-  public boolean isParameterMandatory(final int position)
-  {
+  public boolean isParameterMandatory( final int position ) {
     return true;
   }
 

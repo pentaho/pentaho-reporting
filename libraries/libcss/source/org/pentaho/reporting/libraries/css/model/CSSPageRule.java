@@ -19,62 +19,51 @@ package org.pentaho.reporting.libraries.css.model;
 
 import java.util.ArrayList;
 
-import org.pentaho.reporting.libraries.css.dom.DocumentContext;
-
 /**
  * A page rule contains (among others) page area rules as childs.
  *
  * @author Thomas Morgner
  */
-public class CSSPageRule extends CSSDeclarationRule
-{
+public class CSSPageRule extends CSSDeclarationRule {
   private ArrayList rules; // the margin rules ...
   private String name;
   private String pseudoPage;
 
-  public CSSPageRule(final StyleSheet parentStyle,
-                     final StyleRule parentRule,
-                     final String name,
-                     final String pseudoPage)
-  {
-    super(parentStyle, parentRule);
+  public CSSPageRule( final StyleSheet parentStyle,
+                      final StyleRule parentRule,
+                      final String name,
+                      final String pseudoPage ) {
+    super( parentStyle, parentRule );
     this.pseudoPage = pseudoPage;
     this.name = name;
     this.rules = new ArrayList();
   }
 
-  public void addRule(final CSSPageAreaRule rule)
-  {
-    rules.add(rule);
+  public void addRule( final CSSPageAreaRule rule ) {
+    rules.add( rule );
   }
 
-  public void insertRule(final int index, final CSSPageAreaRule rule)
-  {
-    rules.add(index, rule);
+  public void insertRule( final int index, final CSSPageAreaRule rule ) {
+    rules.add( index, rule );
   }
 
-  public void deleteRule(final int index)
-  {
-    rules.remove(index);
+  public void deleteRule( final int index ) {
+    rules.remove( index );
   }
 
-  public int getRuleCount()
-  {
+  public int getRuleCount() {
     return rules.size();
   }
 
-  public CSSPageAreaRule getRule(int index)
-  {
-    return (CSSPageAreaRule) rules.get(index);
+  public CSSPageAreaRule getRule( int index ) {
+    return (CSSPageAreaRule) rules.get( index );
   }
 
-  public String getName()
-  {
+  public String getName() {
     return name;
   }
 
-  public String getPseudoPage()
-  {
+  public String getPseudoPage() {
     return pseudoPage;
   }
 }

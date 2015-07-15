@@ -25,44 +25,35 @@ import org.pentaho.reporting.libraries.formula.typing.coretypes.AnyType;
 import org.pentaho.reporting.libraries.formula.typing.coretypes.NumberType;
 import org.pentaho.reporting.libraries.formula.typing.coretypes.TextType;
 
-public class ArrayRightFunctionDescription extends AbstractFunctionDescription
-{
+public class ArrayRightFunctionDescription extends AbstractFunctionDescription {
   private static final long serialVersionUID = -1227750116961019328L;
 
-  public ArrayRightFunctionDescription()
-  {
-    super("ARRAYRIGHT", "org.pentaho.reporting.libraries.formula.function.userdefined.ArrayRight-Function");
+  public ArrayRightFunctionDescription() {
+    super( "ARRAYRIGHT", "org.pentaho.reporting.libraries.formula.function.userdefined.ArrayRight-Function" );
   }
 
-  public FunctionCategory getCategory()
-  {
+  public FunctionCategory getCategory() {
     return TextFunctionCategory.CATEGORY;
   }
 
-  public int getParameterCount()
-  {
+  public int getParameterCount() {
     return 2;
   }
 
-  public Type getParameterType(final int position)
-  {
-    if(position == 0)
-    {
+  public Type getParameterType( final int position ) {
+    if ( position == 0 ) {
       return AnyType.ANY_ARRAY;
     }
 
     return NumberType.GENERIC_NUMBER;
   }
 
-  public Type getValueType()
-  {
+  public Type getValueType() {
     return TextType.TYPE;
   }
 
-  public boolean isParameterMandatory(final int position)
-  {
-    if(position == 2)
-    {
+  public boolean isParameterMandatory( final int position ) {
+    if ( position == 2 ) {
       return false;
     }
     return true;

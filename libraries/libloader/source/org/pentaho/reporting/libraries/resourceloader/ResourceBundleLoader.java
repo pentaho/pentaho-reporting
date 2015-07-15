@@ -24,69 +24,68 @@ import java.util.Map;
  *
  * @author Thomas Morgner
  */
-public interface ResourceBundleLoader
-{
+public interface ResourceBundleLoader {
   /**
-   * Tries to load the bundle. If the key does not point to a usable resource-bundle, this method returns
-   * null. The Exception is only thrown if the bundle is not readable because of IO-Errors.
+   * Tries to load the bundle. If the key does not point to a usable resource-bundle, this method returns null. The
+   * Exception is only thrown if the bundle is not readable because of IO-Errors.
    * <p/>
-   * A resource-bundle loader should only load the bundle for the key itself, never for any of the derived subkeys.
-   * It is the ResourceManager's responsibility to search the key's hierachy for the correct key.
-   * 
+   * A resource-bundle loader should only load the bundle for the key itself, never for any of the derived subkeys. It
+   * is the ResourceManager's responsibility to search the key's hierachy for the correct key.
+   *
    * @param key the resource key pointing to the bundle.
    * @return the loaded bundle or null, if the resource was not understood.
    * @throws ResourceLoadingException if something goes wrong.
    */
   public ResourceBundleData loadBundle
-      (final ResourceManager resourceManager, final ResourceKey key) throws ResourceLoadingException;
+  ( final ResourceManager resourceManager, final ResourceKey key ) throws ResourceLoadingException;
 
   /**
-   * Checks, whether this resource loader implementation was responsible for
-   * creating this key.
+   * Checks, whether this resource loader implementation was responsible for creating this key.
    *
    * @param key the key that should be tested.
    * @return true, if the key is supported.
    */
-  public boolean isSupportedKey (ResourceKey key);
+  public boolean isSupportedKey( ResourceKey key );
 
   /**
-   * Derives a new resource key from the given key. If neither a path nor new
-   * factory-keys are given, the parent key is returned.
+   * Derives a new resource key from the given key. If neither a path nor new factory-keys are given, the parent key is
+   * returned.
    *
-   * @param parent the parent
-   * @param path the derived path (can be null).
+   * @param parent      the parent
+   * @param path        the derived path (can be null).
    * @param factoryKeys the optional factory keys (can be null).
    * @return the derived key.
-   * @throws ResourceKeyCreationException if the key cannot be derived for any
-   * reason.
+   * @throws ResourceKeyCreationException if the key cannot be derived for any reason.
    */
-  public ResourceKey deriveKey (ResourceKey parent,
+  public ResourceKey deriveKey( ResourceKey parent,
                                 String path,
-                                Map<? extends ParameterKey, ? extends Object> factoryKeys)
-      throws ResourceKeyCreationException;
+                                Map<? extends ParameterKey, ? extends Object> factoryKeys )
+    throws ResourceKeyCreationException;
 
   /**
-   * Serializes the resource key to a String representation which can be recreated
-   * using the <code>deserialize(ResourceKey)<code> method.
-   * @return a <code>String<code> which is a serialized version of the <code>ResourceKey</code>
-   * @throws ResourceException indicates an error serializing the resource key
-   * @param bundleKey
-   * @param key
-   */
-  public String serialize(final ResourceKey bundleKey, final ResourceKey key) throws ResourceException;
-
-  /**
-   * Creates a <code>ResourceKey</code> based off the <code>String</code> representation
-   * of the key. The <code>String</code> should have been created using the <code>serialize</code>
-   * method.
+   * Serializes the resource key to a String representation which can be recreated using the
+   * <code>deserialize(ResourceKey)<code> method.
    *
    * @param bundleKey
-   *@param stringKey the <code>String</code> representation of the <code>ResourceKey</code>  @return a <code>ResourceKey</code> which matches the <code>String</code> representation
-   * @throws ResourceKeyCreationException indicates an error occurred in the creation or
-   *   deserialization of the <code>ResourceKey</code>
+   * @param key
+   * @return a <code>String<code> which is a serialized version of the <code>ResourceKey</code>
+   * @throws ResourceException indicates an error serializing the resource key
    */
-  public ResourceKey deserialize(final ResourceKey bundleKey, final String stringKey) throws ResourceKeyCreationException;
+  public String serialize( final ResourceKey bundleKey, final ResourceKey key ) throws ResourceException;
 
-  public boolean isSupportedDeserializer(final String data) throws ResourceKeyCreationException;
+  /**
+   * Creates a <code>ResourceKey</code> based off the <code>String</code> representation of the key. The
+   * <code>String</code> should have been created using the <code>serialize</code> method.
+   *
+   * @param bundleKey
+   * @param stringKey the <code>String</code> representation of the <code>ResourceKey</code>  @return a
+   *                  <code>ResourceKey</code> which matches the <code>String</code> representation
+   * @throws ResourceKeyCreationException indicates an error occurred in the creation or deserialization of the
+   *                                      <code>ResourceKey</code>
+   */
+  public ResourceKey deserialize( final ResourceKey bundleKey, final String stringKey )
+    throws ResourceKeyCreationException;
+
+  public boolean isSupportedDeserializer( final String data ) throws ResourceKeyCreationException;
 
 }

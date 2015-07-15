@@ -19,13 +19,12 @@ package org.pentaho.reporting.libraries.docbundle.metadata;
 
 import java.io.Serializable;
 
-public interface BundleMetaData extends Serializable, Cloneable
-{
-  public Object getBundleAttribute(String namespace, String attributeName);
+public interface BundleMetaData extends Serializable, Cloneable {
+  public Object getBundleAttribute( String namespace, String attributeName );
 
   public String[] getNamespaces();
 
-  public String[] getNames(String namespace);
+  public String[] getNames( String namespace );
 
   public Object clone() throws CloneNotSupportedException;
 }

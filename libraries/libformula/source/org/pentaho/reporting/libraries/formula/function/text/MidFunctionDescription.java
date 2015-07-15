@@ -25,47 +25,38 @@ import org.pentaho.reporting.libraries.formula.typing.coretypes.TextType;
 
 /**
  * Describes MidFunction function.
- * @see MidFunction
  *
  * @author Cedric Pronzato
- *
+ * @see MidFunction
  */
-public class MidFunctionDescription extends AbstractFunctionDescription
-{
+public class MidFunctionDescription extends AbstractFunctionDescription {
   private static final long serialVersionUID = 2207257367525146799L;
 
-  public MidFunctionDescription()
-  {
-    super("MID", "org.pentaho.reporting.libraries.formula.function.text.Mid-Function");
+  public MidFunctionDescription() {
+    super( "MID", "org.pentaho.reporting.libraries.formula.function.text.Mid-Function" );
   }
 
-  public FunctionCategory getCategory()
-  {
+  public FunctionCategory getCategory() {
     return TextFunctionCategory.CATEGORY;
   }
 
-  public int getParameterCount()
-  {
+  public int getParameterCount() {
     return 3;
   }
 
-  public Type getParameterType(final int position)
-  {
-    if(position == 0)
-    {
+  public Type getParameterType( final int position ) {
+    if ( position == 0 ) {
       return TextType.TYPE;
     }
 
     return NumberType.GENERIC_NUMBER;
   }
 
-  public Type getValueType()
-  {
+  public Type getValueType() {
     return TextType.TYPE;
   }
 
-  public boolean isParameterMandatory(final int position)
-  {
+  public boolean isParameterMandatory( final int position ) {
     return true;
   }
 

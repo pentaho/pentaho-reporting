@@ -18,41 +18,33 @@
 package org.pentaho.reporting.libraries.css.values;
 
 /**
- * A numeric constant indicating an value that must be resolved during the
- * layouting process.
+ * A numeric constant indicating an value that must be resolved during the layouting process.
  *
  * @author Thomas Morgner
  */
-public final class CSSAutoValue implements CSSValue
-{
+public final class CSSAutoValue implements CSSValue {
   private static CSSAutoValue instance;
 
-  public static synchronized CSSAutoValue getInstance()
-  {
-    if (instance == null)
-    {
+  public static synchronized CSSAutoValue getInstance() {
+    if ( instance == null ) {
       instance = new CSSAutoValue();
     }
     return instance;
   }
 
-  private CSSAutoValue()
-  {
+  private CSSAutoValue() {
   }
 
-  public String getCSSText()
-  {
+  public String getCSSText() {
     return "auto";
   }
 
 
-  public String toString()
-  {
+  public String toString() {
     return getCSSText();
   }
 
-  public CSSType getType()
-  {
+  public CSSType getType() {
     return CSSGenericType.GENERIC_TYPE;
   }
 }

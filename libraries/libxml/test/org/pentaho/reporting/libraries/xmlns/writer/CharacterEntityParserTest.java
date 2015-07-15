@@ -19,19 +19,16 @@ package org.pentaho.reporting.libraries.xmlns.writer;
 
 import junit.framework.TestCase;
 
-public class CharacterEntityParserTest extends TestCase
-{
-  public CharacterEntityParserTest (String s)
-  {
-    super(s);
+public class CharacterEntityParserTest extends TestCase {
+  public CharacterEntityParserTest( String s ) {
+    super( s );
   }
 
-  public void testEncode () throws Exception
-  {
+  public void testEncode() throws Exception {
     final String testNative = "Test is a \u00e4\u00f6\u00fc<&> && test";
     final String testEncoded = "Test is a &auml;&ouml;&uuml;&lt;&amp;&gt; &amp;&amp; test";
-    final CharacterEntityParser ep = new CharacterEntityParser (new HtmlCharacterEntities());
-    assertEquals(testNative, ep.decodeEntities(testEncoded));
-    assertEquals(testEncoded, ep.encodeEntities(testNative));
+    final CharacterEntityParser ep = new CharacterEntityParser( new HtmlCharacterEntities() );
+    assertEquals( testNative, ep.decodeEntities( testEncoded ) );
+    assertEquals( testEncoded, ep.encodeEntities( testNative ) );
   }
 }

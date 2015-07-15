@@ -29,19 +29,15 @@ import org.w3c.css.sac.LexicalUnit;
  *
  * @author Thomas Morgner
  */
-public class TextKashidaSpaceReadHandler implements CSSValueReadHandler
-{
-  public TextKashidaSpaceReadHandler()
-  {
+public class TextKashidaSpaceReadHandler implements CSSValueReadHandler {
+  public TextKashidaSpaceReadHandler() {
   }
 
-  public CSSValue createValue(StyleKey name, LexicalUnit value)
-  {
-    if (value.getLexicalUnitType() != LexicalUnit.SAC_PERCENTAGE)
-    {
+  public CSSValue createValue( StyleKey name, LexicalUnit value ) {
+    if ( value.getLexicalUnitType() != LexicalUnit.SAC_PERCENTAGE ) {
       return null;
     }
     return CSSNumericValue.createValue
-        (CSSNumericType.PERCENTAGE, value.getFloatValue());
+      ( CSSNumericType.PERCENTAGE, value.getFloatValue() );
   }
 }

@@ -20,16 +20,14 @@ package org.pentaho.reporting.libraries.css.resolver.values.computed.box;
 import org.pentaho.reporting.libraries.css.keys.box.IndentEdgeReset;
 import org.pentaho.reporting.libraries.css.resolver.values.computed.ConstantsResolveHandler;
 
-public class IndentEdgeResetResolveHandler extends ConstantsResolveHandler
-{
-  public IndentEdgeResetResolveHandler ()
-  {
-    addNormalizeValue(IndentEdgeReset.BORDER_EDGE);
-    addNormalizeValue(IndentEdgeReset.CONTENT_EDGE);
-    addNormalizeValue(IndentEdgeReset.MARGIN_EDGE);
-    addNormalizeValue(IndentEdgeReset.NONE);
-    addNormalizeValue(IndentEdgeReset.PADDING_EDGE);
-    setFallback(IndentEdgeReset.NONE);
+public class IndentEdgeResetResolveHandler extends ConstantsResolveHandler {
+  public IndentEdgeResetResolveHandler() {
+    addNormalizeValue( IndentEdgeReset.BORDER_EDGE );
+    addNormalizeValue( IndentEdgeReset.CONTENT_EDGE );
+    addNormalizeValue( IndentEdgeReset.MARGIN_EDGE );
+    addNormalizeValue( IndentEdgeReset.NONE );
+    addNormalizeValue( IndentEdgeReset.PADDING_EDGE );
+    setFallback( IndentEdgeReset.NONE );
   }
 
 }

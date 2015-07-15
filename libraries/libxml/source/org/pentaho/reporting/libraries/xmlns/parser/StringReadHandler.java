@@ -25,8 +25,7 @@ import org.xml.sax.SAXException;
  *
  * @author Thomas Morgner
  */
-public class StringReadHandler extends AbstractXmlReadHandler
-{
+public class StringReadHandler extends AbstractXmlReadHandler {
 
   /**
    * A buffer containing the characters read so far.
@@ -41,8 +40,7 @@ public class StringReadHandler extends AbstractXmlReadHandler
   /**
    * Creates a new handler.
    */
-  public StringReadHandler()
-  {
+  public StringReadHandler() {
     super();
   }
 
@@ -52,9 +50,8 @@ public class StringReadHandler extends AbstractXmlReadHandler
    * @param attrs the attributes.
    * @throws SAXException if there is a parsing error.
    */
-  protected void startParsing(final Attributes attrs)
-      throws SAXException
-  {
+  protected void startParsing( final Attributes attrs )
+    throws SAXException {
     this.buffer = new StringBuffer();
   }
 
@@ -66,10 +63,9 @@ public class StringReadHandler extends AbstractXmlReadHandler
    * @param length the length.
    * @throws SAXException if there is a parsing error.
    */
-  public void characters(final char[] ch, final int start, final int length)
-      throws SAXException
-  {
-    this.buffer.append(ch, start, length);
+  public void characters( final char[] ch, final int start, final int length )
+    throws SAXException {
+    this.buffer.append( ch, start, length );
   }
 
   /**
@@ -78,8 +74,7 @@ public class StringReadHandler extends AbstractXmlReadHandler
    * @throws SAXException if there is a parsing error.
    */
   protected void doneParsing()
-      throws SAXException
-  {
+    throws SAXException {
     this.result = this.buffer.toString();
     this.buffer = null;
   }
@@ -89,8 +84,7 @@ public class StringReadHandler extends AbstractXmlReadHandler
    *
    * @return the parse-result as string.
    */
-  public String getResult()
-  {
+  public String getResult() {
     return result;
   }
 
@@ -99,8 +93,7 @@ public class StringReadHandler extends AbstractXmlReadHandler
    *
    * @return the object.
    */
-  public Object getObject()
-  {
+  public Object getObject() {
     return getResult();
   }
 }

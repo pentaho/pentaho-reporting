@@ -24,31 +24,29 @@ import org.pentaho.reporting.libraries.css.values.CSSConstant;
  *
  * @author Thomas Morgner
  */
-public class VerticalAlign
-{
+public class VerticalAlign {
   public static final CSSConstant USE_SCRIPT =
-      new CSSConstant("use-script");
+    new CSSConstant( "use-script" );
   public static final CSSConstant BASELINE =
-      new CSSConstant("baseline");
+    new CSSConstant( "baseline" );
   public static final CSSConstant SUB =
-      new CSSConstant("sub");
+    new CSSConstant( "sub" );
   public static final CSSConstant SUPER =
-      new CSSConstant("super");
+    new CSSConstant( "super" );
 
   public static final CSSConstant TOP =
-      new CSSConstant("top");
+    new CSSConstant( "top" );
   public static final CSSConstant TEXT_TOP =
-      new CSSConstant("text-top");
+    new CSSConstant( "text-top" );
   public static final CSSConstant CENTRAL =
-      new CSSConstant("central");
+    new CSSConstant( "central" );
   public static final CSSConstant MIDDLE =
-      new CSSConstant("middle");
+    new CSSConstant( "middle" );
   public static final CSSConstant BOTTOM =
-      new CSSConstant("bottom");
+    new CSSConstant( "bottom" );
   public static final CSSConstant TEXT_BOTTOM =
-      new CSSConstant("text-bottom");
+    new CSSConstant( "text-bottom" );
 
-  private VerticalAlign()
-  {
+  private VerticalAlign() {
   }
 }

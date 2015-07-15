@@ -17,19 +17,17 @@
 
 package org.pentaho.reporting.libraries.formula.typing;
 
-import java.util.Date;
-
-import org.pentaho.reporting.libraries.formula.lvalues.TypeValuePair;
-import org.pentaho.reporting.libraries.formula.typing.NumberSequence;
 import org.pentaho.reporting.libraries.formula.EvaluationException;
+import org.pentaho.reporting.libraries.formula.lvalues.TypeValuePair;
+
+import java.util.Date;
 
 /**
  * The type registry manages the known value types.
  *
  * @author Thomas Morgner
  */
-public interface TypeRegistry
-{
+public interface TypeRegistry {
   /**
    * Returns an comparator for the given types.
    *
@@ -37,7 +35,7 @@ public interface TypeRegistry
    * @param type2
    * @return
    */
-  public ExtendedComparator getComparator(Type type1, Type type2);
+  public ExtendedComparator getComparator( Type type1, Type type2 );
 
   /**
    * Converts the object of the given type into a number. If the object is not convertible, a NumberFormatException is
@@ -48,8 +46,8 @@ public interface TypeRegistry
    * @return the value as number or ZERO if the value is unconvertible.
    * @throws TypeConversionException if the type cannot be represented as number.
    */
-  public Number convertToNumber(Type type1, Object value)
-      throws EvaluationException;
+  public Number convertToNumber( Type type1, Object value )
+    throws EvaluationException;
 
   /**
    * (This conversion is used by the operator implementations.)
@@ -59,7 +57,7 @@ public interface TypeRegistry
    * @return the value as string or an empty string, if the value given is null.
    * @throws TypeConversionException
    */
-  public String convertToText(Type type1, Object value) throws EvaluationException;
+  public String convertToText( Type type1, Object value ) throws EvaluationException;
 
   /**
    * Converts the object of the given type into a boolean.
@@ -68,7 +66,7 @@ public interface TypeRegistry
    * @param value
    * @return The value as Boolean or null.
    */
-  public Boolean convertToLogical(Type type1, Object value) throws EvaluationException;
+  public Boolean convertToLogical( Type type1, Object value ) throws EvaluationException;
 
   /**
    * Converts the object of the given type into a date.
@@ -77,7 +75,7 @@ public interface TypeRegistry
    * @param value
    * @return The value as Date or null.
    */
-  public Date convertToDate(Type type1, Object value) throws EvaluationException;
+  public Date convertToDate( Type type1, Object value ) throws EvaluationException;
 
   /**
    * Converts the given (type,value) pair into a numeric sequence. If the flag "strictTypeChecks" is set to true, the
@@ -90,14 +88,15 @@ public interface TypeRegistry
    * @return
    * @throws TypeConversionException
    */
-  public NumberSequence convertToNumberSequence(final Type type, final Object value, final boolean strictTypeChecks)
-      throws EvaluationException;
+  public NumberSequence convertToNumberSequence( final Type type, final Object value, final boolean strictTypeChecks )
+    throws EvaluationException;
 
-  public Sequence convertToSequence(final Type type, final Object value)
-      throws EvaluationException;
+  public Sequence convertToSequence( final Type type, final Object value )
+    throws EvaluationException;
 
-  public ArrayCallback convertToArray(final Type type, final Object value)
-      throws EvaluationException;
+  public ArrayCallback convertToArray( final Type type, final Object value )
+    throws EvaluationException;
+
   /**
    * Checks whether the target type would accept the specified value object and value type. (This conversion is used by
    * the functions.)
@@ -105,8 +104,8 @@ public interface TypeRegistry
    * @param targetType
    * @param valuePair
    */
-  public TypeValuePair convertTo(final Type targetType,
-                                 final TypeValuePair valuePair) throws EvaluationException;
+  public TypeValuePair convertTo( final Type targetType,
+                                  final TypeValuePair valuePair ) throws EvaluationException;
 
-  public Type guessTypeOfObject(Object o);
+  public Type guessTypeOfObject( Object o );
 }

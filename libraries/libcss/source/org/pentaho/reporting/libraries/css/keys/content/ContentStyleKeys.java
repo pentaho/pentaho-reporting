@@ -25,66 +25,60 @@ import org.pentaho.reporting.libraries.css.model.StyleKeyRegistry;
  *
  * @author Thomas Morgner
  */
-public class ContentStyleKeys
-{
+public class ContentStyleKeys {
   public static final StyleKey MOVE_TO =
-      StyleKeyRegistry.getRegistry().createKey
-          ("move-to", false, false,
-              StyleKey.DOM_ELEMENTS |
-                  StyleKey.PSEUDO_BEFORE |
-                  StyleKey.PSEUDO_ALTERNATE |
-                  StyleKey.PSEUDO_AFTER);
+    StyleKeyRegistry.getRegistry().createKey
+      ( "move-to", false, false,
+        StyleKey.DOM_ELEMENTS |
+          StyleKey.PSEUDO_BEFORE |
+          StyleKey.PSEUDO_ALTERNATE |
+          StyleKey.PSEUDO_AFTER );
 
   public static final StyleKey QUOTES =
-      StyleKeyRegistry.getRegistry().createKey
-          ("quotes", false, false,
-              StyleKey.All_ELEMENTS |
-                  StyleKey.MARGINS |
-                  StyleKey.FOOTNOTE_AREA);
+    StyleKeyRegistry.getRegistry().createKey
+      ( "quotes", false, false,
+        StyleKey.All_ELEMENTS |
+          StyleKey.MARGINS |
+          StyleKey.FOOTNOTE_AREA );
 
   public static final StyleKey COUNTER_INCREMENT =
-      StyleKeyRegistry.getRegistry().createKey
-          ("counter-increment", false, false, StyleKey.ALWAYS);
+    StyleKeyRegistry.getRegistry().createKey
+      ( "counter-increment", false, false, StyleKey.ALWAYS );
 
   public static final StyleKey COUNTER_RESET =
-      StyleKeyRegistry.getRegistry().createKey
-          ("counter-reset", false, false, StyleKey.ALWAYS);
+    StyleKeyRegistry.getRegistry().createKey
+      ( "counter-reset", false, false, StyleKey.ALWAYS );
 
   /**
    * string-set: <name> <value>
    */
   public static final StyleKey STRING_SET =
-      StyleKeyRegistry.getRegistry().createKey
-          ("string-set", false, false, StyleKey.ALWAYS);
+    StyleKeyRegistry.getRegistry().createKey
+      ( "string-set", false, false, StyleKey.ALWAYS );
   /**
-   * Defines a new string context. This is equal to the counter-reset property,
-   * and allows to apply the counter nesting rules to strings. This does *not*
-   * define the string content; so you have to add a string-set property as well.
+   * Defines a new string context. This is equal to the counter-reset property, and allows to apply the counter nesting
+   * rules to strings. This does *not* define the string content; so you have to add a string-set property as well.
    * <p/>
-   * The string-def property is always evaulated before the string-set property
-   * gets processed.
+   * The string-def property is always evaulated before the string-set property gets processed.
    * <p/>
-   * The format for this property is simple:
-   * -x-pentaho-css-string-def: <name>
+   * The format for this property is simple: -x-pentaho-css-string-def: <name>
    */
   public static final StyleKey STRING_DEFINE =
-      StyleKeyRegistry.getRegistry().createKey
-          ("-x-pentaho-css-string-def", false, false, StyleKey.ALWAYS);
+    StyleKeyRegistry.getRegistry().createKey
+      ( "-x-pentaho-css-string-def", false, false, StyleKey.ALWAYS );
 
   /**
-   * Alternate text for images or other non-displayable content. This is not
-   * the same as the ::alternate pseudo-element that gets inserted if content
-   * had been moved away.
+   * Alternate text for images or other non-displayable content. This is not the same as the ::alternate pseudo-element
+   * that gets inserted if content had been moved away.
    */
   public static final StyleKey ALTERNATE_TEXT =
-      StyleKeyRegistry.getRegistry().createKey
-          ("-x-pentaho-css-alternate-text", false, false, StyleKey.ALWAYS);
+    StyleKeyRegistry.getRegistry().createKey
+      ( "-x-pentaho-css-alternate-text", false, false, StyleKey.ALWAYS );
 
   public static final StyleKey CONTENT =
-      StyleKeyRegistry.getRegistry().createKey
-          ("content", false, false, StyleKey.ALWAYS);
+    StyleKeyRegistry.getRegistry().createKey
+      ( "content", false, false, StyleKey.ALWAYS );
 
-  private ContentStyleKeys()
-  {
+  private ContentStyleKeys() {
   }
 }

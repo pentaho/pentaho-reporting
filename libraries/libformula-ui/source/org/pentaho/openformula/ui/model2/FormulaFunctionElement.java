@@ -17,20 +17,17 @@
 
 package org.pentaho.openformula.ui.model2;
 
-public class FormulaFunctionElement extends FormulaTextElement
-{
+public class FormulaFunctionElement extends FormulaTextElement {
   private String normalizedFunctionName;
 
-  public FormulaFunctionElement(final FormulaDocument document,
-                                final FormulaRootElement parentElement,
-                                final String functionName)
-  {
-    super(document, parentElement, functionName);
+  public FormulaFunctionElement( final FormulaDocument document,
+                                 final FormulaRootElement parentElement,
+                                 final String functionName ) {
+    super( document, parentElement, functionName );
     this.normalizedFunctionName = functionName.trim();
   }
 
-  public String getNormalizedFunctionName()
-  {
+  public String getNormalizedFunctionName() {
     return normalizedFunctionName;
   }
 
@@ -40,8 +37,7 @@ public class FormulaFunctionElement extends FormulaTextElement
    *
    * @return the element name
    */
-  public String getName()
-  {
+  public String getName() {
     return "functionName"; // NON-NLS
   }
 }

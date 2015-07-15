@@ -17,23 +17,21 @@
 
 package org.pentaho.reporting.libraries.css.resolver.values.computed.hyperlinks;
 
-import org.pentaho.reporting.libraries.css.resolver.values.computed.ConstantsResolveHandler;
 import org.pentaho.reporting.libraries.css.keys.hyperlinks.TargetPosition;
+import org.pentaho.reporting.libraries.css.resolver.values.computed.ConstantsResolveHandler;
 
 /**
  * Creation-Date: 21.12.2005, 11:36:34
  *
  * @author Thomas Morgner
  */
-public class TargetPositionResolveHandler extends ConstantsResolveHandler
-{
-  public TargetPositionResolveHandler()
-  {
-    addNormalizeValue(TargetPosition.ABOVE);
-    addNormalizeValue(TargetPosition.BACK);
-    addNormalizeValue(TargetPosition.BEHIND);
-    addNormalizeValue(TargetPosition.FRONT);
-    setFallback(TargetPosition.ABOVE);
+public class TargetPositionResolveHandler extends ConstantsResolveHandler {
+  public TargetPositionResolveHandler() {
+    addNormalizeValue( TargetPosition.ABOVE );
+    addNormalizeValue( TargetPosition.BACK );
+    addNormalizeValue( TargetPosition.BEHIND );
+    addNormalizeValue( TargetPosition.FRONT );
+    setFallback( TargetPosition.ABOVE );
   }
 
 

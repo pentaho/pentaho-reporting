@@ -17,36 +17,30 @@
 
 package org.pentaho.reporting.tools.configeditor.editor;
 
-import java.awt.BorderLayout;
-import java.awt.Dimension;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
-
 import org.pentaho.reporting.libraries.base.config.HierarchicalConfiguration;
 import org.pentaho.reporting.tools.configeditor.model.ConfigDescriptionEntry;
+
+import javax.swing.*;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+import java.awt.*;
 
 /**
  * The text key editor is used to edit a free form text.
  *
  * @author Thomas Morgner
  */
-public class TextKeyEditor extends AbstractKeyEditor
-{
+public class TextKeyEditor extends AbstractKeyEditor {
   /**
    * An handler class that validates the content whenever a change in the text document occurs.
    *
    * @author Thomas Morgner
    */
-  private class DocumentChangeHandler implements DocumentListener
-  {
+  private class DocumentChangeHandler implements DocumentListener {
     /**
      * Default Constructor.
      */
-    private DocumentChangeHandler()
-    {
+    private DocumentChangeHandler() {
     }
 
     /**
@@ -54,8 +48,7 @@ public class TextKeyEditor extends AbstractKeyEditor
      *
      * @param e the document event
      */
-    public void changedUpdate(final DocumentEvent e)
-    {
+    public void changedUpdate( final DocumentEvent e ) {
       validateContent();
     }
 
@@ -65,8 +58,7 @@ public class TextKeyEditor extends AbstractKeyEditor
      *
      * @param e the document event
      */
-    public void removeUpdate(final DocumentEvent e)
-    {
+    public void removeUpdate( final DocumentEvent e ) {
       validateContent();
     }
 
@@ -76,8 +68,7 @@ public class TextKeyEditor extends AbstractKeyEditor
      *
      * @param e the document event
      */
-    public void insertUpdate(final DocumentEvent e)
-    {
+    public void insertUpdate( final DocumentEvent e ) {
       validateContent();
     }
   }
@@ -103,27 +94,26 @@ public class TextKeyEditor extends AbstractKeyEditor
    * @param entry       the entry description supplies the meta data.
    * @param displayName the label content.
    */
-  public TextKeyEditor(final HierarchicalConfiguration config,
-                       final ConfigDescriptionEntry entry,
-                       final String displayName)
-  {
-    super(config, entry);
+  public TextKeyEditor( final HierarchicalConfiguration config,
+                        final ConfigDescriptionEntry entry,
+                        final String displayName ) {
+    super( config, entry );
 
     final JPanel contentPane = new JPanel();
-    contentPane.setLayout(new BorderLayout(5, 0));
-    entryLabel = new JLabel(displayName);
-    entryLabel.setToolTipText(entry.getDescription());
+    contentPane.setLayout( new BorderLayout( 5, 0 ) );
+    entryLabel = new JLabel( displayName );
+    entryLabel.setToolTipText( entry.getDescription() );
 
     entryLabelCarrier = new JPanel();
-    entryLabelCarrier.setLayout(new BorderLayout());
-    entryLabelCarrier.add(entryLabel);
-    contentPane.add(entryLabelCarrier, BorderLayout.WEST);
+    entryLabelCarrier.setLayout( new BorderLayout() );
+    entryLabelCarrier.add( entryLabel );
+    contentPane.add( entryLabelCarrier, BorderLayout.WEST );
 
     content = new JTextField();
-    content.getDocument().addDocumentListener(new DocumentChangeHandler());
+    content.getDocument().addDocumentListener( new DocumentChangeHandler() );
 
-    contentPane.add(content, BorderLayout.CENTER);
-    setContentPane(contentPane);
+    contentPane.add( content, BorderLayout.CENTER );
+    setContentPane( contentPane );
     reset();
   }
 
@@ -131,32 +121,25 @@ public class TextKeyEditor extends AbstractKeyEditor
    * This method validates the content of the text field. In this implementation no validation is done and all text is
    * accepted.
    */
-  public void validateContent()
-  {
-    setValidInput(true);
+  public void validateContent() {
+    setValidInput( true );
   }
 
   /**
    * Resets the value to the defaults from the report configuration.
    */
-  public void reset()
-  {
-    content.setText(loadValue());
+  public void reset() {
+    content.setText( loadValue() );
   }
 
   /**
    * Stores the input as new value for the report configuration. This method does nothing, if the content is not valid.
    */
-  public void store()
-  {
-    if (isValidInput())
-    {
-      if (isEnabled())
-      {
-        storeValue(content.getText());
-      }
-      else
-      {
+  public void store() {
+    if ( isValidInput() ) {
+      if ( isEnabled() ) {
+        storeValue( content.getText() );
+      } else {
         deleteValue();
       }
     }
@@ -167,8 +150,7 @@ public class TextKeyEditor extends AbstractKeyEditor
    *
    * @return the input field text.
    */
-  public String getContent()
-  {
+  public String getContent() {
     return content.getText();
   }
 
@@ -180,10 +162,9 @@ public class TextKeyEditor extends AbstractKeyEditor
    * @param enabled defines, whether this editor will be enabled.
    * @see java.awt.Component#isEnabled
    */
-  public void setEnabled(final boolean enabled)
-  {
-    super.setEnabled(enabled);
-    content.setEnabled(enabled);
+  public void setEnabled( final boolean enabled ) {
+    super.setEnabled( enabled );
+    content.setEnabled( enabled );
   }
 
   /**
@@ -191,10 +172,9 @@ public class TextKeyEditor extends AbstractKeyEditor
    *
    * @param width the new preferred width.
    */
-  public void setLabelWidth(final int width)
-  {
+  public void setLabelWidth( final int width ) {
     final Dimension prefSize = entryLabel.getPreferredSize();
-    entryLabelCarrier.setPreferredSize(new Dimension(width, prefSize.height));
+    entryLabelCarrier.setPreferredSize( new Dimension( width, prefSize.height ) );
   }
 
   /**
@@ -202,11 +182,9 @@ public class TextKeyEditor extends AbstractKeyEditor
    *
    * @return the preferred width.
    */
-  public int getLabelWidth()
-  {
+  public int getLabelWidth() {
     final Dimension prefSize = entryLabel.getPreferredSize();
-    if (prefSize != null)
-    {
+    if ( prefSize != null ) {
       return prefSize.width;
     }
     return 0;

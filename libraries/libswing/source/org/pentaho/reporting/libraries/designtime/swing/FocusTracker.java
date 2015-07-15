@@ -17,38 +17,30 @@
 
 package org.pentaho.reporting.libraries.designtime.swing;
 
-import java.awt.Component;
-import java.awt.KeyboardFocusManager;
+import java.awt.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
 /**
- * A base class for implementations that have to track the current keyboard focus. This class takes care of all
- * change events regarding the focus-manager and channels all focus-change events through a single update method.
+ * A base class for implementations that have to track the current keyboard focus. This class takes care of all change
+ * events regarding the focus-manager and channels all focus-change events through a single update method.
  *
  * @author Thomas Morgner
  */
-public abstract class FocusTracker
-{
+public abstract class FocusTracker {
   /**
    * An internal change handler that checks whether the current focus-component has been replaced.
    */
-  private class FocusManagerChangeHandler implements PropertyChangeListener
-  {
-    private FocusManagerChangeHandler()
-    {
+  private class FocusManagerChangeHandler implements PropertyChangeListener {
+    private FocusManagerChangeHandler() {
     }
 
-    public void propertyChange(final PropertyChangeEvent evt)
-    {
-      if (evt.getNewValue() instanceof Component)
-      {
+    public void propertyChange( final PropertyChangeEvent evt ) {
+      if ( evt.getNewValue() instanceof Component ) {
         final Component component = (Component) evt.getNewValue();
-        focusChanged(component);
-      }
-      else
-      {
-        focusChanged(null);
+        focusChanged( component );
+      } else {
+        focusChanged( null );
       }
     }
   }
@@ -58,10 +50,9 @@ public abstract class FocusTracker
   /**
    * Creates a new focus-tracker and registers it on the permanent-focus-owner property.
    */
-  protected FocusTracker()
-  {
+  protected FocusTracker() {
     final KeyboardFocusManager currentManager = KeyboardFocusManager.getCurrentKeyboardFocusManager();
-    currentManager.addPropertyChangeListener(PERMANENT_FOCUS_OWNER, new FocusManagerChangeHandler());
+    currentManager.addPropertyChangeListener( PERMANENT_FOCUS_OWNER, new FocusManagerChangeHandler() );
   }
 
   /**
@@ -69,5 +60,5 @@ public abstract class FocusTracker
    *
    * @param c the component that has the focus, or null if no component in this application has the focus.
    */
-  protected abstract void focusChanged(final Component c);
+  protected abstract void focusChanged( final Component c );
 }

@@ -20,8 +20,7 @@ package org.pentaho.reporting.libraries.pixie.wmf;
 /**
  * Various MappingConstants defined in the Windows API.
  */
-public interface MappingConstants
-{
+public interface MappingConstants {
   public static final int MM_TEXT = 1;
   public static final int MM_LOMETRIC = 2;
   public static final int MM_HIMETRIC = 3;

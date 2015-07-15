@@ -21,39 +21,36 @@ import org.pentaho.reporting.libraries.css.values.CSSStringType;
 import org.pentaho.reporting.libraries.css.values.CSSStringValue;
 
 /**
- * This class holds a sample of well-known quoting characters.
- * These values are non-normative and there are no CSS-constants
- * defined for them.
+ * This class holds a sample of well-known quoting characters. These values are non-normative and there are no
+ * CSS-constants defined for them.
  *
  * @author Thomas Morgner
  */
-public class QuotingValues
-{
+public class QuotingValues {
 
   public static final CSSStringValue QUOTATION_MARK =
-      new CSSStringValue(CSSStringType.STRING, "\"");
+    new CSSStringValue( CSSStringType.STRING, "\"" );
   public static final CSSStringValue APOSTROPHE =
-      new CSSStringValue(CSSStringType.STRING, "\u0027");
+    new CSSStringValue( CSSStringType.STRING, "\u0027" );
   public static final CSSStringValue SINGLE_LEFT_POINTING_ANGLE_QUOTATION_MARK =
-      new CSSStringValue(CSSStringType.STRING, "\u2039");
+    new CSSStringValue( CSSStringType.STRING, "\u2039" );
   public static final CSSStringValue SINGLE_RIGHT_POINTING_ANGLE_QUOTATION_MARK =
-      new CSSStringValue(CSSStringType.STRING, "\u203A");
+    new CSSStringValue( CSSStringType.STRING, "\u203A" );
   public static final CSSStringValue DOUBLE_LEFT_POINTING_ANGLE_QUOTATION_MARK =
-      new CSSStringValue(CSSStringType.STRING, "\u00AB");
+    new CSSStringValue( CSSStringType.STRING, "\u00AB" );
   public static final CSSStringValue DOUBLE_RIGHT_POINTING_ANGLE_QUOTATION_MARK =
-      new CSSStringValue(CSSStringType.STRING, "\u00BB");
+    new CSSStringValue( CSSStringType.STRING, "\u00BB" );
   public static final CSSStringValue SINGLE_LEFT_QUOTATION_MARK =
-      new CSSStringValue(CSSStringType.STRING, "\u2018");
+    new CSSStringValue( CSSStringType.STRING, "\u2018" );
   public static final CSSStringValue SINGLE_RIGHT_QUOTATION_MARK =
-      new CSSStringValue(CSSStringType.STRING, "\u2019");
+    new CSSStringValue( CSSStringType.STRING, "\u2019" );
   public static final CSSStringValue DOUBLE_LEFT_QUOTATION_MARK =
-      new CSSStringValue(CSSStringType.STRING, "\u201C");
+    new CSSStringValue( CSSStringType.STRING, "\u201C" );
   public static final CSSStringValue DOUBLE_RIGHT_QUOTATION_MARK =
-      new CSSStringValue(CSSStringType.STRING, "\u201D");
+    new CSSStringValue( CSSStringType.STRING, "\u201D" );
   public static final CSSStringValue DOUBLE_LOW9_QUOTATION_MARK =
-      new CSSStringValue(CSSStringType.STRING, "\u201E");
+    new CSSStringValue( CSSStringType.STRING, "\u201E" );
 
-  private QuotingValues()
-  {
+  private QuotingValues() {
   }
 }

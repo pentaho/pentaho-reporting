@@ -24,41 +24,33 @@ import org.pentaho.reporting.libraries.formula.typing.coretypes.NumberType;
 
 /**
  * Describes PowerFunction function.
- * @see org.pentaho.reporting.libraries.formula.function.math.PowerFunction
  *
  * @author Cedric Pronzato
- *
+ * @see org.pentaho.reporting.libraries.formula.function.math.PowerFunction
  */
-public class PowerFunctionDescription extends AbstractFunctionDescription
-{
+public class PowerFunctionDescription extends AbstractFunctionDescription {
 
-  public PowerFunctionDescription()
-  {
-    super("POWER", "org.pentaho.reporting.libraries.formula.function.math.Power-Function");
+  public PowerFunctionDescription() {
+    super( "POWER", "org.pentaho.reporting.libraries.formula.function.math.Power-Function" );
   }
 
-  public FunctionCategory getCategory()
-  {
+  public FunctionCategory getCategory() {
     return MathFunctionCategory.CATEGORY;
   }
 
-  public int getParameterCount()
-  {
+  public int getParameterCount() {
     return 2;
   }
 
-  public Type getParameterType(final int position)
-  {
+  public Type getParameterType( final int position ) {
     return NumberType.GENERIC_NUMBER;
   }
 
-  public Type getValueType()
-  {
+  public Type getValueType() {
     return NumberType.GENERIC_NUMBER;
   }
 
-  public boolean isParameterMandatory(final int position)
-  {
+  public boolean isParameterMandatory( final int position ) {
     return true;
   }
 

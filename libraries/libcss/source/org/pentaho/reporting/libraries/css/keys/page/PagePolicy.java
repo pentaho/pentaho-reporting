@@ -24,13 +24,11 @@ import org.pentaho.reporting.libraries.css.values.CSSConstant;
  *
  * @author Thomas Morgner
  */
-public class PagePolicy
-{
-  public static CSSConstant START = new CSSConstant("start");
-  public static CSSConstant FIRST = new CSSConstant("first");
-  public static CSSConstant LAST = new CSSConstant("last");
+public class PagePolicy {
+  public static CSSConstant START = new CSSConstant( "start" );
+  public static CSSConstant FIRST = new CSSConstant( "first" );
+  public static CSSConstant LAST = new CSSConstant( "last" );
 
-  private PagePolicy()
-  {
+  private PagePolicy() {
   }
 }

@@ -17,29 +17,24 @@
 
 package org.pentaho.reporting.libraries.pixie.wmf.records;
 
-import java.awt.Graphics2D;
-import java.awt.Point;
-import java.awt.Rectangle;
-import java.awt.geom.Arc2D;
-
 import org.pentaho.reporting.libraries.pixie.wmf.MfDcState;
 import org.pentaho.reporting.libraries.pixie.wmf.MfRecord;
 import org.pentaho.reporting.libraries.pixie.wmf.MfType;
 import org.pentaho.reporting.libraries.pixie.wmf.WmfFile;
 
+import java.awt.*;
+import java.awt.geom.Arc2D;
+
 /**
  * The exact same as an arc, only the arc is closed, and may be filled with a brush.
  * <p/>
- * The points (nLeftRect, nTopRect) and (nRightRect, nBottomRect) specify the bounding
- * rectangle. An ellipse formed by the specified bounding rectangle defines the curve of
- * the arc. The arc extends in the current drawing direction from the point where it
- * intersects the radial from the center of the bounding rectangle to the (nXStartArc,
- * nYStartArc) point. The arc ends where it intersects the radial from the center of the
- * bounding rectangle to the (nXEndArc, nYEndArc) point. If the starting point and ending
- * point are the same, a complete ellipse is drawn.
+ * The points (nLeftRect, nTopRect) and (nRightRect, nBottomRect) specify the bounding rectangle. An ellipse formed by
+ * the specified bounding rectangle defines the curve of the arc. The arc extends in the current drawing direction from
+ * the point where it intersects the radial from the center of the bounding rectangle to the (nXStartArc, nYStartArc)
+ * point. The arc ends where it intersects the radial from the center of the bounding rectangle to the (nXEndArc,
+ * nYEndArc) point. If the starting point and ending point are the same, a complete ellipse is drawn.
  */
-public class MfCmdChord extends MfCmd
-{
+public class MfCmdChord extends MfCmd {
   private static final int PARAM_X_END_POS = 0;
   private static final int PARAM_Y_END_POS = 1;
   private static final int PARAM_X_START_POS = 2;
@@ -71,42 +66,38 @@ public class MfCmdChord extends MfCmd
   private int scaled_xend;
   private int scaled_yend;
 
-  public MfCmdChord()
-  {
+  public MfCmdChord() {
   }
 
   /**
-   * A callback function to inform the object, that the x scale has changed and the
-   * internal coordinate values have to be adjusted.
+   * A callback function to inform the object, that the x scale has changed and the internal coordinate values have to
+   * be adjusted.
    */
-  protected void scaleXChanged()
-  {
-    scaled_x = getScaledX(x);
-    scaled_width = getScaledX(width);
-    scaled_xstart = getScaledX(xstart);
-    scaled_xend = getScaledX(xend);
+  protected void scaleXChanged() {
+    scaled_x = getScaledX( x );
+    scaled_width = getScaledX( width );
+    scaled_xstart = getScaledX( xstart );
+    scaled_xend = getScaledX( xend );
   }
 
   /**
-   * A callback function to inform the object, that the y scale has changed and the
-   * internal coordinate values have to be adjusted.
+   * A callback function to inform the object, that the y scale has changed and the internal coordinate values have to
+   * be adjusted.
    */
-  protected void scaleYChanged()
-  {
-    scaled_y = getScaledY(y);
-    scaled_height = getScaledY(height);
-    scaled_ystart = getScaledY(xstart);
-    scaled_yend = getScaledY(xend);
+  protected void scaleYChanged() {
+    scaled_y = getScaledY( y );
+    scaled_height = getScaledY( height );
+    scaled_ystart = getScaledY( xstart );
+    scaled_yend = getScaledY( xend );
   }
 
   /**
-   * Reads the function identifier. Every record type is identified by a function number
-   * corresponding to one of the Windows GDI functions used.
+   * Reads the function identifier. Every record type is identified by a function number corresponding to one of the
+   * Windows GDI functions used.
    *
    * @return the function identifier.
    */
-  public int getFunction()
-  {
+  public int getFunction() {
     return MfType.CHORD;
   }
 
@@ -115,30 +106,27 @@ public class MfCmdChord extends MfCmd
    *
    * @param file the meta file.
    */
-  public void replay(final WmfFile file)
-  {
+  public void replay( final WmfFile file ) {
     final Graphics2D graph = file.getGraphics2D();
     final Rectangle rec = getBounds();
     final Point start = getStartingIntersection();
     final Point end = getEndingIntersection();
 
     final Arc2D arc = new Arc2D.Double();
-    arc.setArcType(Arc2D.CHORD);
-    arc.setFrame(rec.x, rec.y, rec.width, rec.height);
-    arc.setAngles(start.x, start.y, end.x, end.y);
+    arc.setArcType( Arc2D.CHORD );
+    arc.setFrame( rec.x, rec.y, rec.width, rec.height );
+    arc.setAngles( start.x, start.y, end.x, end.y );
 
     final MfDcState state = file.getCurrentState();
 
-    if (state.getLogBrush().isVisible())
-    {
+    if ( state.getLogBrush().isVisible() ) {
       state.preparePaint();
-      graph.fill(arc);
+      graph.fill( arc );
       state.postPaint();
     }
-    if (state.getLogPen().isVisible())
-    {
+    if ( state.getLogPen().isVisible() ) {
       state.prepareDraw();
-      graph.draw(arc);
+      graph.draw( arc );
       state.postDraw();
     }
 
@@ -149,23 +137,19 @@ public class MfCmdChord extends MfCmd
    *
    * @return a new instance of the command.
    */
-  public MfCmd getInstance()
-  {
+  public MfCmd getInstance() {
     return new MfCmdChord();
   }
 
-  public Rectangle getBounds()
-  {
-    return new Rectangle(x, y, width, height);
+  public Rectangle getBounds() {
+    return new Rectangle( x, y, width, height );
   }
 
-  public Rectangle getScaledBounds()
-  {
-    return new Rectangle(scaled_x, scaled_y, scaled_width, scaled_height);
+  public Rectangle getScaledBounds() {
+    return new Rectangle( scaled_x, scaled_y, scaled_width, scaled_height );
   }
 
-  public void setBounds(final int x, final int y, final int width, final int height)
-  {
+  public void setBounds( final int x, final int y, final int width, final int height ) {
     this.x = x;
     this.y = y;
     this.width = width;
@@ -175,64 +159,55 @@ public class MfCmdChord extends MfCmd
 
   }
 
-  public void setStartingIntersection(final int x, final int y)
-  {
+  public void setStartingIntersection( final int x, final int y ) {
     xstart = x;
     ystart = y;
     scaleXChanged();
     scaleYChanged();
   }
 
-  public Point getStartingIntersection()
-  {
-    return new Point(xstart, ystart);
+  public Point getStartingIntersection() {
+    return new Point( xstart, ystart );
   }
 
-  public Point getScaledStartingIntersection()
-  {
-    return new Point(scaled_xstart, scaled_ystart);
+  public Point getScaledStartingIntersection() {
+    return new Point( scaled_xstart, scaled_ystart );
   }
 
-  public void setEndingIntersection(final int x, final int y)
-  {
+  public void setEndingIntersection( final int x, final int y ) {
     xend = x;
     yend = y;
     scaleXChanged();
     scaleYChanged();
   }
 
-  public Point getEndingIntersection()
-  {
-    return new Point(xend, yend);
+  public Point getEndingIntersection() {
+    return new Point( xend, yend );
   }
 
-  public Point getScaledEndingIntersection()
-  {
-    return new Point(scaled_xend, scaled_yend);
+  public Point getScaledEndingIntersection() {
+    return new Point( scaled_xend, scaled_yend );
   }
 
   /**
-   * Reads the command data from the given record and adjusts the internal parameters
-   * according to the data parsed.
+   * Reads the command data from the given record and adjusts the internal parameters according to the data parsed.
    * <p/>
-   * After the raw record was read from the datasource, the record is parsed by the
-   * concrete implementation.
+   * After the raw record was read from the datasource, the record is parsed by the concrete implementation.
    *
    * @param record the raw data that makes up the record.
    */
-  public void setRecord(final MfRecord record)
-  {
-    final int xend = record.getParam(PARAM_X_END_POS);
-    final int yend = record.getParam(PARAM_Y_END_POS);
-    final int xstart = record.getParam(PARAM_X_START_POS);
-    final int ystart = record.getParam(PARAM_Y_START_POS);
-    final int bottom = record.getParam(PARAM_BOTTOM_POS);
-    final int right = record.getParam(PARAM_RIGHT_POS);
-    final int top = record.getParam(PARAM_TOP_POS);
-    final int left = record.getParam(PARAM_LEFT_POS);
-    setBounds(left, top, right - left, bottom - top);
-    setStartingIntersection(xstart, ystart);
-    setEndingIntersection(xend, yend);
+  public void setRecord( final MfRecord record ) {
+    final int xend = record.getParam( PARAM_X_END_POS );
+    final int yend = record.getParam( PARAM_Y_END_POS );
+    final int xstart = record.getParam( PARAM_X_START_POS );
+    final int ystart = record.getParam( PARAM_Y_START_POS );
+    final int bottom = record.getParam( PARAM_BOTTOM_POS );
+    final int right = record.getParam( PARAM_RIGHT_POS );
+    final int top = record.getParam( PARAM_TOP_POS );
+    final int left = record.getParam( PARAM_LEFT_POS );
+    setBounds( left, top, right - left, bottom - top );
+    setStartingIntersection( xstart, ystart );
+    setEndingIntersection( xend, yend );
   }
 
   /**
@@ -240,33 +215,31 @@ public class MfCmdChord extends MfCmd
    *
    * @return the created record.
    */
-  public MfRecord getRecord()
-  {
-    final MfRecord record = new MfRecord(RECORD_SIZE);
+  public MfRecord getRecord() {
+    final MfRecord record = new MfRecord( RECORD_SIZE );
     final Rectangle bounds = getBounds();
     final Point start = getStartingIntersection();
     final Point end = getEndingIntersection();
 
-    record.setParam(PARAM_LEFT_POS, (int) bounds.getX());
-    record.setParam(PARAM_TOP_POS, (int) bounds.getY());
-    record.setParam(PARAM_RIGHT_POS, (int) (bounds.getX() + bounds.getWidth()));
-    record.setParam(PARAM_BOTTOM_POS, (int) (bounds.getY() + bounds.getHeight()));
-    record.setParam(PARAM_Y_START_POS, (int) (start.getY()));
-    record.setParam(PARAM_X_START_POS, (int) (start.getX()));
-    record.setParam(PARAM_Y_END_POS, (int) (end.getY()));
-    record.setParam(PARAM_X_END_POS, (int) (end.getX()));
+    record.setParam( PARAM_LEFT_POS, (int) bounds.getX() );
+    record.setParam( PARAM_TOP_POS, (int) bounds.getY() );
+    record.setParam( PARAM_RIGHT_POS, (int) ( bounds.getX() + bounds.getWidth() ) );
+    record.setParam( PARAM_BOTTOM_POS, (int) ( bounds.getY() + bounds.getHeight() ) );
+    record.setParam( PARAM_Y_START_POS, (int) ( start.getY() ) );
+    record.setParam( PARAM_X_START_POS, (int) ( start.getX() ) );
+    record.setParam( PARAM_Y_END_POS, (int) ( end.getY() ) );
+    record.setParam( PARAM_X_END_POS, (int) ( end.getX() ) );
     return record;
   }
 
-  public String toString()
-  {
-    final StringBuffer b = new StringBuffer(100);
-    b.append("[CHORD] bounds=");
-    b.append(getBounds());
-    b.append(" startIntersection=");
-    b.append(getStartingIntersection());
-    b.append(" endingIntersection=");
-    b.append(getEndingIntersection());
+  public String toString() {
+    final StringBuffer b = new StringBuffer( 100 );
+    b.append( "[CHORD] bounds=" );
+    b.append( getBounds() );
+    b.append( " startIntersection=" );
+    b.append( getStartingIntersection() );
+    b.append( " endingIntersection=" );
+    b.append( getEndingIntersection() );
     return b.toString();
   }
 

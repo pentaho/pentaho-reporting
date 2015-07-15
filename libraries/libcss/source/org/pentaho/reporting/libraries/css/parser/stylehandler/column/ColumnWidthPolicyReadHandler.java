@@ -25,12 +25,10 @@ import org.pentaho.reporting.libraries.css.parser.stylehandler.OneOfConstantsRea
  *
  * @author Thomas Morgner
  */
-public class ColumnWidthPolicyReadHandler extends OneOfConstantsReadHandler
-{
-  public ColumnWidthPolicyReadHandler()
-  {
-    super(false);
-    addValue(ColumnWidthPolicy.FLEXIBLE);
-    addValue(ColumnWidthPolicy.STRICT);
+public class ColumnWidthPolicyReadHandler extends OneOfConstantsReadHandler {
+  public ColumnWidthPolicyReadHandler() {
+    super( false );
+    addValue( ColumnWidthPolicy.FLEXIBLE );
+    addValue( ColumnWidthPolicy.STRICT );
   }
 }

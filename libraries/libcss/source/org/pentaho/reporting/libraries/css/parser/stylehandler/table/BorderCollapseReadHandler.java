@@ -25,12 +25,10 @@ import org.pentaho.reporting.libraries.css.parser.stylehandler.OneOfConstantsRea
  *
  * @author Thomas Morgner
  */
-public class BorderCollapseReadHandler extends OneOfConstantsReadHandler
-{
-  public BorderCollapseReadHandler()
-  {
-    super(false);
-    addValue(BorderCollapse.COLLAPSE);
-    addValue(BorderCollapse.SEPARATE);
+public class BorderCollapseReadHandler extends OneOfConstantsReadHandler {
+  public BorderCollapseReadHandler() {
+    super( false );
+    addValue( BorderCollapse.COLLAPSE );
+    addValue( BorderCollapse.SEPARATE );
   }
 }

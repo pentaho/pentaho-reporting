@@ -25,12 +25,10 @@ import org.pentaho.reporting.libraries.formula.function.FunctionCategory;
  *
  * @author Thomas Morgner
  */
-public final class MathFunctionCategory extends AbstractFunctionCategory
-{
+public final class MathFunctionCategory extends AbstractFunctionCategory {
   public static final FunctionCategory CATEGORY = new MathFunctionCategory();
 
-  private MathFunctionCategory()
-  {
-    super("org.pentaho.reporting.libraries.formula.function.math.category");
+  private MathFunctionCategory() {
+    super( "org.pentaho.reporting.libraries.formula.function.math.category" );
   }
 }

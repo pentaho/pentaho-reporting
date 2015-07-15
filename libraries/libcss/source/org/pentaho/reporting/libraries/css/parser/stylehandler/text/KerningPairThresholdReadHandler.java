@@ -24,10 +24,8 @@ import org.pentaho.reporting.libraries.css.parser.stylehandler.font.FontSizeRead
  *
  * @author Thomas Morgner
  */
-public class KerningPairThresholdReadHandler extends FontSizeReadHandler
-{
-  public KerningPairThresholdReadHandler()
-  {
-    super(true);
+public class KerningPairThresholdReadHandler extends FontSizeReadHandler {
+  public KerningPairThresholdReadHandler() {
+    super( true );
   }
 }

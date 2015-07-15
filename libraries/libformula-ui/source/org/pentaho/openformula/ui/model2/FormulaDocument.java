@@ -17,8 +17,8 @@
 
 package org.pentaho.openformula.ui.model2;
 
-import java.util.ArrayList;
-import java.util.HashMap;
+import org.pentaho.reporting.libraries.base.util.FastStack;
+
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.event.EventListenerList;
@@ -30,36 +30,31 @@ import javax.swing.text.Document;
 import javax.swing.text.Element;
 import javax.swing.text.Position;
 import javax.swing.text.Segment;
+import java.util.ArrayList;
+import java.util.HashMap;
 
-import org.pentaho.reporting.libraries.base.util.FastStack;
-
-public class FormulaDocument implements Document
-{
-  private static class FormulaDocumentEvent implements DocumentEvent
-  {
+public class FormulaDocument implements Document {
+  private static class FormulaDocumentEvent implements DocumentEvent {
     private Document document;
     private EventType type;
     private int offset;
     private int length;
     private HashMap<Element, ElementChange> changes;
 
-    private FormulaDocumentEvent(final Document document,
-                                 final EventType type,
-                                 final int offset, final int length)
-    {
+    private FormulaDocumentEvent( final Document document,
+                                  final EventType type,
+                                  final int offset, final int length ) {
       this.document = document;
       this.type = type;
       this.offset = offset;
       this.length = length;
     }
 
-    public void addChange(final Element element, final ElementChange change)
-    {
-      if (changes == null)
-      {
+    public void addChange( final Element element, final ElementChange change ) {
+      if ( changes == null ) {
         changes = new HashMap<Element, ElementChange>();
       }
-      changes.put(element, change);
+      changes.put( element, change );
     }
 
     /**
@@ -67,8 +62,7 @@ public class FormulaDocument implements Document
      *
      * @return the offset >= 0
      */
-    public int getOffset()
-    {
+    public int getOffset() {
       return offset;
     }
 
@@ -77,8 +71,7 @@ public class FormulaDocument implements Document
      *
      * @return the length >= 0
      */
-    public int getLength()
-    {
+    public int getLength() {
       return length;
     }
 
@@ -87,8 +80,7 @@ public class FormulaDocument implements Document
      *
      * @return the document
      */
-    public Document getDocument()
-    {
+    public Document getDocument() {
       return document;
     }
 
@@ -97,8 +89,7 @@ public class FormulaDocument implements Document
      *
      * @return the type
      */
-    public EventType getType()
-    {
+    public EventType getType() {
       return type;
     }
 
@@ -120,13 +111,11 @@ public class FormulaDocument implements Document
      * @param elem the element
      * @return the change information, or null if the element was not modified
      */
-    public ElementChange getChange(final Element elem)
-    {
-      if (changes == null)
-      {
+    public ElementChange getChange( final Element elem ) {
+      if ( changes == null ) {
         return null;
       }
-      return changes.get(elem);
+      return changes.get( elem );
     }
   }
 
@@ -135,9 +124,8 @@ public class FormulaDocument implements Document
   private HashMap properties;
   private boolean needRevalidateStructure;
 
-  public FormulaDocument()
-  {
-    this.rootElement = new FormulaRootElement(this);
+  public FormulaDocument() {
+    this.rootElement = new FormulaRootElement( this );
     this.properties = new HashMap();
     this.listenerList = new EventListenerList();
   }
@@ -147,8 +135,7 @@ public class FormulaDocument implements Document
    *
    * @return number of characters >= 0
    */
-  public int getLength()
-  {
+  public int getLength() {
     return rootElement.getEndOffset();
   }
 
@@ -158,9 +145,8 @@ public class FormulaDocument implements Document
    * @param listener the observer to register
    * @see Document#removeDocumentListener
    */
-  public void addDocumentListener(final DocumentListener listener)
-  {
-    listenerList.add(DocumentListener.class, listener);
+  public void addDocumentListener( final DocumentListener listener ) {
+    listenerList.add( DocumentListener.class, listener );
   }
 
   /**
@@ -169,38 +155,31 @@ public class FormulaDocument implements Document
    * @param listener the observer to register
    * @see Document#addDocumentListener
    */
-  public void removeDocumentListener(final DocumentListener listener)
-  {
-    listenerList.remove(DocumentListener.class, listener);
+  public void removeDocumentListener( final DocumentListener listener ) {
+    listenerList.remove( DocumentListener.class, listener );
   }
 
-  protected void fireInsertEvent(final DocumentEvent event)
-  {
-    final DocumentListener[] listeners = listenerList.getListeners(DocumentListener.class);
-    for (int i = 0; i < listeners.length; i++)
-    {
-      final DocumentListener documentListener = listeners[i];
-      documentListener.insertUpdate(event);
+  protected void fireInsertEvent( final DocumentEvent event ) {
+    final DocumentListener[] listeners = listenerList.getListeners( DocumentListener.class );
+    for ( int i = 0; i < listeners.length; i++ ) {
+      final DocumentListener documentListener = listeners[ i ];
+      documentListener.insertUpdate( event );
     }
   }
 
-  protected void fireRemoveEvent(final DocumentEvent event)
-  {
-    final DocumentListener[] listeners = listenerList.getListeners(DocumentListener.class);
-    for (int i = 0; i < listeners.length; i++)
-    {
-      final DocumentListener documentListener = listeners[i];
-      documentListener.removeUpdate(event);
+  protected void fireRemoveEvent( final DocumentEvent event ) {
+    final DocumentListener[] listeners = listenerList.getListeners( DocumentListener.class );
+    for ( int i = 0; i < listeners.length; i++ ) {
+      final DocumentListener documentListener = listeners[ i ];
+      documentListener.removeUpdate( event );
     }
   }
 
-  protected void fireChangeEvent(final DocumentEvent event)
-  {
-    final DocumentListener[] listeners = listenerList.getListeners(DocumentListener.class);
-    for (int i = 0; i < listeners.length; i++)
-    {
-      final DocumentListener documentListener = listeners[i];
-      documentListener.changedUpdate(event);
+  protected void fireChangeEvent( final DocumentEvent event ) {
+    final DocumentListener[] listeners = listenerList.getListeners( DocumentListener.class );
+    for ( int i = 0; i < listeners.length; i++ ) {
+      final DocumentListener documentListener = listeners[ i ];
+      documentListener.changedUpdate( event );
     }
   }
 
@@ -210,9 +189,8 @@ public class FormulaDocument implements Document
    * @param listener the observer to register
    * @see UndoableEditEvent
    */
-  public void addUndoableEditListener(final UndoableEditListener listener)
-  {
-    listenerList.add(UndoableEditListener.class, listener);
+  public void addUndoableEditListener( final UndoableEditListener listener ) {
+    listenerList.add( UndoableEditListener.class, listener );
   }
 
   /**
@@ -221,9 +199,8 @@ public class FormulaDocument implements Document
    * @param listener the observer to register
    * @see UndoableEditEvent
    */
-  public void removeUndoableEditListener(final UndoableEditListener listener)
-  {
-    listenerList.remove(UndoableEditListener.class, listener);
+  public void removeUndoableEditListener( final UndoableEditListener listener ) {
+    listenerList.remove( UndoableEditListener.class, listener );
   }
 
   /**
@@ -233,9 +210,8 @@ public class FormulaDocument implements Document
    * @return the properties
    * @see #putProperty(Object, Object)
    */
-  public Object getProperty(final Object key)
-  {
-    return properties.get(key);
+  public Object getProperty( final Object key ) {
+    return properties.get( key );
   }
 
   /**
@@ -247,15 +223,11 @@ public class FormulaDocument implements Document
    * @param value the property value
    * @see #getProperty(Object)
    */
-  public void putProperty(final Object key, final Object value)
-  {
-    if (value == null)
-    {
-      properties.remove(key);
-    }
-    else
-    {
-      properties.put(key, value);
+  public void putProperty( final Object key, final Object value ) {
+    if ( value == null ) {
+      properties.remove( key );
+    } else {
+      properties.put( key, value );
     }
   }
 
@@ -265,15 +237,11 @@ public class FormulaDocument implements Document
    *
    * @return the position
    */
-  public Position getStartPosition()
-  {
-    try
-    {
-      return new FormulaDocumentPosition(rootElement, 0, true);
-    }
-    catch (BadLocationException e)
-    {
-      throw new IllegalStateException("Should never happen");
+  public Position getStartPosition() {
+    try {
+      return new FormulaDocumentPosition( rootElement, 0, true );
+    } catch ( BadLocationException e ) {
+      throw new IllegalStateException( "Should never happen" );
     }
   }
 
@@ -283,15 +251,11 @@ public class FormulaDocument implements Document
    *
    * @return the position
    */
-  public Position getEndPosition()
-  {
-    try
-    {
-      return new FormulaDocumentPosition(rootElement, 0, false);
-    }
-    catch (BadLocationException e)
-    {
-      throw new IllegalStateException("Should never happen");
+  public Position getEndPosition() {
+    try {
+      return new FormulaDocumentPosition( rootElement, 0, false );
+    } catch ( BadLocationException e ) {
+      throw new IllegalStateException( "Should never happen" );
     }
   }
 
@@ -305,11 +269,10 @@ public class FormulaDocument implements Document
    * @return the position
    * @throws BadLocationException if the given position does not represent a valid location in the associated document
    */
-  public Position createPosition(final int offs) throws BadLocationException
-  {
-    final int elementIndex = rootElement.getElementIndex(offs);
-    final FormulaElement element = (FormulaElement) rootElement.getElement(elementIndex);
-    return new FormulaDocumentPosition(element, offs - element.getStartOffset(), true);
+  public Position createPosition( final int offs ) throws BadLocationException {
+    final int elementIndex = rootElement.getElementIndex( offs );
+    final FormulaElement element = (FormulaElement) rootElement.getElement( elementIndex );
+    return new FormulaDocumentPosition( element, offs - element.getStartOffset(), true );
   }
 
   /**
@@ -321,9 +284,8 @@ public class FormulaDocument implements Document
    *
    * @return the root element
    */
-  public Element[] getRootElements()
-  {
-    return new Element[]{rootElement};
+  public Element[] getRootElements() {
+    return new Element[] { rootElement };
   }
 
   /**
@@ -332,13 +294,11 @@ public class FormulaDocument implements Document
    *
    * @return the root element
    */
-  public Element getDefaultRootElement()
-  {
+  public Element getDefaultRootElement() {
     return rootElement;
   }
 
-  public FormulaRootElement getRootElement()
-  {
+  public FormulaRootElement getRootElement() {
     return rootElement;
   }
 
@@ -349,8 +309,7 @@ public class FormulaDocument implements Document
    *
    * @param r a <code>Runnable</code> used to render the model
    */
-  public synchronized void render(final Runnable r)
-  {
+  public synchronized void render( final Runnable r ) {
     r.run();
   }
 
@@ -382,32 +341,28 @@ public class FormulaDocument implements Document
    * @see UndoableEditEvent
    * @see UndoableEditListener
    */
-  public void remove(final int offs, final int len) throws BadLocationException
-  {
-    if (len == 0)
-    {
+  public void remove( final int offs, final int len ) throws BadLocationException {
+    if ( len == 0 ) {
       return;
     }
 
     final int endPos = offs + len;
-    if (endPos > getLength())
-    {
-      throw new BadLocationException("Document Size invalid", endPos);
+    if ( endPos > getLength() ) {
+      throw new BadLocationException( "Document Size invalid", endPos );
     }
 
-    final String orgText = getText(0, getLength());
-    final StringBuffer str = new StringBuffer(orgText);
-    str.delete(offs, offs + len);
+    final String orgText = getText( 0, getLength() );
+    final StringBuffer str = new StringBuffer( orgText );
+    str.delete( offs, offs + len );
     rootElement.clear();
 
-    final FormulaElement[] formulaElements = FormulaParser.parseText(this, str.toString());
-    for (int i = 0; i < formulaElements.length; i++)
-    {
-      final FormulaElement element = formulaElements[i];
-      rootElement.insertElement(i, element);
+    final FormulaElement[] formulaElements = FormulaParser.parseText( this, str.toString() );
+    for ( int i = 0; i < formulaElements.length; i++ ) {
+      final FormulaElement element = formulaElements[ i ];
+      rootElement.insertElement( i, element );
     }
     rootElement.revalidateStructure();
-    fireRemoveEvent(new FormulaDocumentEvent(this, DocumentEvent.EventType.REMOVE, offs, len));
+    fireRemoveEvent( new FormulaDocumentEvent( this, DocumentEvent.EventType.REMOVE, offs, len ) );
   }
 
   /**
@@ -433,22 +388,20 @@ public class FormulaDocument implements Document
    * @see UndoableEditEvent
    * @see UndoableEditListener
    */
-  public void insertString(final int offset, final String str, final AttributeSet a) throws BadLocationException
-  {
+  public void insertString( final int offset, final String str, final AttributeSet a ) throws BadLocationException {
 
-    final String orgText = getText(0, getLength());
-    final StringBuffer str2 = new StringBuffer(orgText);
-    str2.insert(offset, str);
+    final String orgText = getText( 0, getLength() );
+    final StringBuffer str2 = new StringBuffer( orgText );
+    str2.insert( offset, str );
     rootElement.clear();
 
-    final FormulaElement[] formulaElements = FormulaParser.parseText(this, str2.toString());
-    for (int i = 0; i < formulaElements.length; i++)
-    {
-      final FormulaElement element = formulaElements[i];
-      rootElement.insertElement(i, element);
+    final FormulaElement[] formulaElements = FormulaParser.parseText( this, str2.toString() );
+    for ( int i = 0; i < formulaElements.length; i++ ) {
+      final FormulaElement element = formulaElements[ i ];
+      rootElement.insertElement( i, element );
     }
     rootElement.revalidateStructure();
-    fireInsertEvent(new FormulaDocumentEvent(this, DocumentEvent.EventType.INSERT, offset, str.length()));
+    fireInsertEvent( new FormulaDocumentEvent( this, DocumentEvent.EventType.INSERT, offset, str.length() ) );
 
   }
 
@@ -461,24 +414,20 @@ public class FormulaDocument implements Document
    * @throws BadLocationException some portion of the given range was not a valid part of the document.  The location in
    *                              the exception is the first bad position encountered.
    */
-  public String getText(final int offset, final int length) throws BadLocationException
-  {
-    if (offset + length > getLength())
-    {
-      throw new BadLocationException("Document Size invalid", offset + length);
+  public String getText( final int offset, final int length ) throws BadLocationException {
+    if ( offset + length > getLength() ) {
+      throw new BadLocationException( "Document Size invalid", offset + length );
     }
 
-    if (rootElement.getElementCount() == 0)
-    {
+    if ( rootElement.getElementCount() == 0 ) {
       return "";
     }
 
     final String s = rootElement.getText();
-    return s.substring(offset, offset + length);
+    return s.substring( offset, offset + length );
   }
 
-  public String getText()
-  {
+  public String getText() {
     return rootElement.getText();
   }
 
@@ -513,19 +462,16 @@ public class FormulaDocument implements Document
    * @throws BadLocationException Some portion of the given range was not a valid part of the document.  The location in
    *                              the exception is the first bad position encountered.
    */
-  public void getText(final int offset, final int length, final Segment txt) throws BadLocationException
-  {
-    final String text = getText(offset, length);
+  public void getText( final int offset, final int length, final Segment txt ) throws BadLocationException {
+    final String text = getText( offset, length );
     txt.array = text.toCharArray();
     txt.offset = 0;
     txt.count = text.length();
   }
 
-  public FunctionInformation getFunctionForPosition(final int offset)
-  {
-    final FormulaFunctionElement fn = getFunction(offset);
-    if (fn == null)
-    {
+  public FunctionInformation getFunctionForPosition( final int offset ) {
+    final FormulaFunctionElement fn = getFunction( offset );
+    if ( fn == null ) {
       return null;
     }
 
@@ -539,211 +485,165 @@ public class FormulaDocument implements Document
     int globalEnd = -1;
     final int count = rootElement.getElementCount();
     boolean found = false;
-    final StringBuffer b = new StringBuffer(rootElement.getEndOffset() - fn.getStartOffset());
-    for (int i = 0; i < count; i++)
-    {
-      final FormulaElement node = (FormulaElement) rootElement.getElement(i);
-      if (found == false)
-      {
-        if (node == fn)
-        {
+    final StringBuffer b = new StringBuffer( rootElement.getEndOffset() - fn.getStartOffset() );
+    for ( int i = 0; i < count; i++ ) {
+      final FormulaElement node = (FormulaElement) rootElement.getElement( i );
+      if ( found == false ) {
+        if ( node == fn ) {
           found = true;
         }
         continue;
       }
 
-      if (node instanceof FormulaOpenParenthesisElement)
-      {
-        if (parenCount > 0)
-        {
-          b.append('('); // NON-NLS
-        }
-        else
-        {
+      if ( node instanceof FormulaOpenParenthesisElement ) {
+        if ( parenCount > 0 ) {
+          b.append( '(' ); // NON-NLS
+        } else {
           globalStart = node.getEndOffset();
           paramStart = node.getEndOffset();
         }
         parenCount += 1;
-      }
-      else if (node instanceof FormulaClosingParenthesisElement)
-      {
+      } else if ( node instanceof FormulaClosingParenthesisElement ) {
         parenCount -= 1;
-        if (parenCount > 0)
-        {
-          b.append(')'); // NON-NLS
-        }
-        else
-        {
+        if ( parenCount > 0 ) {
+          b.append( ')' ); // NON-NLS
+        } else {
           paramEnd = node.getStartOffset();
           globalEnd = node.getEndOffset();
           break;
         }
-      }
-      else if (node instanceof FormulaSemicolonElement)
-      {
-        if (parenCount == 1)
-        {
+      } else if ( node instanceof FormulaSemicolonElement ) {
+        if ( parenCount == 1 ) {
           paramEnd = node.getStartOffset();
-          params.add(b.toString());
+          params.add( b.toString() );
 
-          if (paramEnd < paramStart)
-          {
+          if ( paramEnd < paramStart ) {
             throw new IllegalStateException();
           }
-          paramsStart.add(paramStart);
-          paramsEnd.add(paramEnd);
-          b.delete(0, b.length());
+          paramsStart.add( paramStart );
+          paramsEnd.add( paramEnd );
+          b.delete( 0, b.length() );
           paramStart = node.getEndOffset();
+        } else {
+          b.append( ';' );
         }
-        else
-        {
-          b.append(';');
-        }
-      }
-      else if (node != null)
-      {
-        b.append(node.getText());
+      } else if ( node != null ) {
+        b.append( node.getText() );
       }
     }
 
-    if (paramEnd < paramStart)
-    {
+    if ( paramEnd < paramStart ) {
       paramEnd = rootElement.getEndOffset();
       globalEnd = rootElement.getEndOffset();
     }
 
-    if (globalEnd < offset)
-    {
+    if ( globalEnd < offset ) {
       return null;
     }
 
-    paramsStart.add(paramStart);
-    paramsEnd.add(paramEnd);
+    paramsStart.add( paramStart );
+    paramsEnd.add( paramEnd );
 
-    final int[] starts = new int[paramsStart.size()];
-    final int[] ends = new int[paramsEnd.size()];
-    for (int i = 0; i < ends.length; i++)
-    {
-      final Integer endVal = paramsEnd.get(i);
-      ends[i] = endVal.intValue();
-      final Integer startVal = paramsStart.get(i);
-      starts[i] = startVal.intValue();
+    final int[] starts = new int[ paramsStart.size() ];
+    final int[] ends = new int[ paramsEnd.size() ];
+    for ( int i = 0; i < ends.length; i++ ) {
+      final Integer endVal = paramsEnd.get( i );
+      ends[ i ] = endVal.intValue();
+      final Integer startVal = paramsStart.get( i );
+      starts[ i ] = startVal.intValue();
     }
 
-    params.add(b.toString());
+    params.add( b.toString() );
     String functionImage = null;
-    try
-    {
-      functionImage = getText(fn.getStartOffset(), globalEnd - fn.getStartOffset());
-    }
-    catch (BadLocationException e)
-    {
+    try {
+      functionImage = getText( fn.getStartOffset(), globalEnd - fn.getStartOffset() );
+    } catch ( BadLocationException e ) {
       e.printStackTrace();
     }
     return new FunctionInformation
-        (fn.getNormalizedFunctionName(), fn.getStartOffset(),
-            globalStart, globalEnd, functionImage, params.toArray(new String[params.size()]),
-            starts, ends);
+      ( fn.getNormalizedFunctionName(), fn.getStartOffset(),
+        globalStart, globalEnd, functionImage, params.toArray( new String[ params.size() ] ),
+        starts, ends );
   }
 
-  private FormulaFunctionElement getFunction(final int offset)
-  {
+  private FormulaFunctionElement getFunction( final int offset ) {
     FormulaFunctionElement function = null;
     final FastStack functionsStack = new FastStack();
     final int count = rootElement.getElementCount();
     boolean haveCloseParentheses = false;
-    for (int i = 0; i < count; i++)
-    {
+    for ( int i = 0; i < count; i++ ) {
 
-      final FormulaElement node = (FormulaElement) rootElement.getElement(i);
-      if ((node != null) && (node.getStartOffset() > offset))
-      {
-        if (function == null)
-        {
+      final FormulaElement node = (FormulaElement) rootElement.getElement( i );
+      if ( ( node != null ) && ( node.getStartOffset() > offset ) ) {
+        if ( function == null ) {
           return null;
         }
         return function;
       }
 
-      if (haveCloseParentheses)
-      {
-        if (functionsStack.isEmpty() == false)
-        {
+      if ( haveCloseParentheses ) {
+        if ( functionsStack.isEmpty() == false ) {
           functionsStack.pop();
         }
-        if (functionsStack.isEmpty())
-        {
+        if ( functionsStack.isEmpty() ) {
           function = null;
-        }
-        else
-        {
+        } else {
           function = (FormulaFunctionElement) functionsStack.peek();
         }
         haveCloseParentheses = false;
       }
 
-      if (node instanceof FormulaFunctionElement)
-      {
+      if ( node instanceof FormulaFunctionElement ) {
         function = (FormulaFunctionElement) node;
       }
-      if (node instanceof FormulaOpenParenthesisElement)
-      {
-        functionsStack.push(function);
+      if ( node instanceof FormulaOpenParenthesisElement ) {
+        functionsStack.push( function );
       }
-      if (node instanceof FormulaClosingParenthesisElement)
-      {
+      if ( node instanceof FormulaClosingParenthesisElement ) {
         haveCloseParentheses = true;
       }
     }
 
-    if (functionsStack.isEmpty() == false)
-    {
-      final FormulaElement lastElement = (count >= 1) ? (FormulaElement)rootElement.getElement(count - 1) : null;
-      if ((lastElement != null) && (lastElement.getEndOffset() >= offset))
-      {
-        return (FormulaFunctionElement)functionsStack.get(0);
-      }
-      else
-      {
-        return (FormulaFunctionElement)functionsStack.peek();
+    if ( functionsStack.isEmpty() == false ) {
+      final FormulaElement lastElement = ( count >= 1 ) ? (FormulaElement) rootElement.getElement( count - 1 ) : null;
+      if ( ( lastElement != null ) && ( lastElement.getEndOffset() >= offset ) ) {
+        return (FormulaFunctionElement) functionsStack.get( 0 );
+      } else {
+        return (FormulaFunctionElement) functionsStack.peek();
       }
     }
     return function;
   }
 
-  public void setText(final String text)
-  {
+  public void setText( final String text ) {
     rootElement.clear();
 
-    final FormulaElement[] formulaElements = FormulaParser.parseText(this, text);
-    for (int i = 0; i < formulaElements.length; i++)
-    {
-      final FormulaElement element = formulaElements[i];
-      rootElement.insertElement(i, element);
+    final FormulaElement[] formulaElements = FormulaParser.parseText( this, text );
+    for ( int i = 0; i < formulaElements.length; i++ ) {
+      final FormulaElement element = formulaElements[ i ];
+      rootElement.insertElement( i, element );
     }
     rootElement.revalidateStructure();
     rootElement.revalidateNodePositions();
     needRevalidateStructure = false;
-    fireInsertEvent(new FormulaDocumentEvent(this, DocumentEvent.EventType.INSERT, 0, text.length()));
+    fireInsertEvent( new FormulaDocumentEvent( this, DocumentEvent.EventType.INSERT, 0, text.length() ) );
   }
 
   /**
-   * Retrieve the element at specified position.  Note, the index is not the cursor index
-   * but rather the tokenized element position.  So '=COUNT(1;2;3)' would contain 9 elements
-   * starting with element '=' at 0 index upto ')' at index 8.
+   * Retrieve the element at specified position.  Note, the index is not the cursor index but rather the tokenized
+   * element position.  So '=COUNT(1;2;3)' would contain 9 elements starting with element '=' at 0 index upto ')' at
+   * index 8.
+   *
    * @param index
    * @return FormulaElement specified at index.  If index is invalid then return null.
    */
-  public FormulaElement getElementAtPosition(final int index)
-  {
-    return (FormulaElement)rootElement.getElement(index);
+  public FormulaElement getElementAtPosition( final int index ) {
+    return (FormulaElement) rootElement.getElement( index );
   }
 
-  public void revalidateStructure()
-  {
-    if (needRevalidateStructure)
-    {
-      setText(getText());
+  public void revalidateStructure() {
+    if ( needRevalidateStructure ) {
+      setText( getText() );
     }
   }
 }

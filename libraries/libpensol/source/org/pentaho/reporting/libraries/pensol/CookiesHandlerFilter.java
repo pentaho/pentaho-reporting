@@ -17,70 +17,69 @@
 
 package org.pentaho.reporting.libraries.pensol;
 
-import java.util.List;
-import java.util.ArrayList;
-import java.util.WeakHashMap;
-
-import org.apache.commons.httpclient.HttpStatus;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
 import com.sun.jersey.api.client.ClientHandlerException;
 import com.sun.jersey.api.client.ClientRequest;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.filter.ClientFilter;
+import org.apache.commons.httpclient.HttpStatus;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.WeakHashMap;
 
 public class CookiesHandlerFilter extends ClientFilter {
-	private static final Log logger = LogFactory.getLog(CookiesHandlerFilter.class);
+  private static final Log logger = LogFactory.getLog( CookiesHandlerFilter.class );
 
-	// Use WeakHashMap as cache. It's not synchronized, so use "class"
-	// synchronized get/setters.
-	private static WeakHashMap<String, List<Object>> cookiesByAuth = new WeakHashMap<String, List<Object>>();
+  // Use WeakHashMap as cache. It's not synchronized, so use "class"
+  // synchronized get/setters.
+  private static WeakHashMap<String, List<Object>> cookiesByAuth = new WeakHashMap<String, List<Object>>();
 
-	// "class" synchronized get/setters:
-	private static synchronized List<Object> getCachedCookiesByAuthToken(String authToken) {
-		return cookiesByAuth.get(authToken);
-	}
+  // "class" synchronized get/setters:
+  private static synchronized List<Object> getCachedCookiesByAuthToken( String authToken ) {
+    return cookiesByAuth.get( authToken );
+  }
 
-	private static synchronized void setCookiesByAuthToken(String authToken, List<Object> cookiesList) {
-		cookiesByAuth.put(authToken, cookiesList);
-	}
+  private static synchronized void setCookiesByAuthToken( String authToken, List<Object> cookiesList ) {
+    cookiesByAuth.put( authToken, cookiesList );
+  }
 
-	@Override
-	public ClientResponse handle(ClientRequest request) throws ClientHandlerException {
-		List<Object> authorizationHeader = request.getHeaders().get("Authorization");
-		String authToken = (String) authorizationHeader.get(0);
-		// If we have cookies, inject them. When session is expired, basic auth
-		// header is not used instead of the expired cookies, so we just use
-		// them as a token.
-		List<Object> cookiesList = getCachedCookiesByAuthToken(authToken);
-		if (cookiesList != null) {
-			request.getHeaders().put("Cookie", cookiesList);
-			request.getHeaders().remove("Authorization");
-		}
-		ClientResponse response = getNext().handle(request);
-		// If session has expired, remove cookies, put back basic auth header,
-		// try one more time and save new cookies.
-		if (response.getStatus() == HttpStatus.SC_UNAUTHORIZED) {
-			logger.warn("Request to" + request.getURI() + "returned Unauthorized.");
-			if (logger.isDebugEnabled()) {
-				logger.debug("http status=" + response.getStatus() + " response=" + response.getEntity(String.class));
-			}
-			request.getHeaders().remove("Cookie");
-			request.getHeaders().put("Authorization", authorizationHeader);
-			logger.warn("Trying one more time");
-			response = getNext().handle(request);
-			if (response.getStatus() == HttpStatus.SC_UNAUTHORIZED) {
-				logger.error("Request to" + request.getURI() + "returned Unauthorized 2nd time.");
-				logger.error("http status=" + response.getStatus() + " response=" + response.getEntity(String.class));
-			}
-		}
-		// always use the new cookies.
-		if (response.getCookies() != null && response.getCookies().isEmpty() == false) {
-			cookiesList = new ArrayList<Object>();
-			cookiesList.addAll(response.getCookies());
-			setCookiesByAuthToken(authToken, cookiesList);
-		}
-		return response;
-	}
+  @Override
+  public ClientResponse handle( ClientRequest request ) throws ClientHandlerException {
+    List<Object> authorizationHeader = request.getHeaders().get( "Authorization" );
+    String authToken = (String) authorizationHeader.get( 0 );
+    // If we have cookies, inject them. When session is expired, basic auth
+    // header is not used instead of the expired cookies, so we just use
+    // them as a token.
+    List<Object> cookiesList = getCachedCookiesByAuthToken( authToken );
+    if ( cookiesList != null ) {
+      request.getHeaders().put( "Cookie", cookiesList );
+      request.getHeaders().remove( "Authorization" );
+    }
+    ClientResponse response = getNext().handle( request );
+    // If session has expired, remove cookies, put back basic auth header,
+    // try one more time and save new cookies.
+    if ( response.getStatus() == HttpStatus.SC_UNAUTHORIZED ) {
+      logger.warn( "Request to" + request.getURI() + "returned Unauthorized." );
+      if ( logger.isDebugEnabled() ) {
+        logger.debug( "http status=" + response.getStatus() + " response=" + response.getEntity( String.class ) );
+      }
+      request.getHeaders().remove( "Cookie" );
+      request.getHeaders().put( "Authorization", authorizationHeader );
+      logger.warn( "Trying one more time" );
+      response = getNext().handle( request );
+      if ( response.getStatus() == HttpStatus.SC_UNAUTHORIZED ) {
+        logger.error( "Request to" + request.getURI() + "returned Unauthorized 2nd time." );
+        logger.error( "http status=" + response.getStatus() + " response=" + response.getEntity( String.class ) );
+      }
+    }
+    // always use the new cookies.
+    if ( response.getCookies() != null && response.getCookies().isEmpty() == false ) {
+      cookiesList = new ArrayList<Object>();
+      cookiesList.addAll( response.getCookies() );
+      setCookiesByAuthToken( authToken, cookiesList );
+    }
+    return response;
+  }
 }

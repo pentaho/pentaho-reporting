@@ -17,19 +17,18 @@
 
 package org.pentaho.reporting.libraries.formula.operators;
 
-import java.io.Serializable;
-
 import org.pentaho.reporting.libraries.formula.EvaluationException;
 import org.pentaho.reporting.libraries.formula.FormulaContext;
 import org.pentaho.reporting.libraries.formula.lvalues.TypeValuePair;
+
+import java.io.Serializable;
 
 /**
  * Creation-Date: 02.11.2006, 10:17:03
  *
  * @author Thomas Morgner
  */
-public interface PostfixOperator extends Serializable
-{
-  public TypeValuePair evaluate (FormulaContext context, TypeValuePair value1)
-      throws EvaluationException;
+public interface PostfixOperator extends Serializable {
+  public TypeValuePair evaluate( FormulaContext context, TypeValuePair value1 )
+    throws EvaluationException;
 }

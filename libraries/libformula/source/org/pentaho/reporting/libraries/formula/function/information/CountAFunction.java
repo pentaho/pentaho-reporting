@@ -17,8 +17,6 @@
 
 package org.pentaho.reporting.libraries.formula.function.information;
 
-import java.math.BigDecimal;
-
 import org.pentaho.reporting.libraries.formula.EvaluationException;
 import org.pentaho.reporting.libraries.formula.FormulaContext;
 import org.pentaho.reporting.libraries.formula.LibFormulaErrorValue;
@@ -27,9 +25,10 @@ import org.pentaho.reporting.libraries.formula.function.ParameterCallback;
 import org.pentaho.reporting.libraries.formula.lvalues.TypeValuePair;
 import org.pentaho.reporting.libraries.formula.typing.ArrayCallback;
 import org.pentaho.reporting.libraries.formula.typing.Sequence;
-import org.pentaho.reporting.libraries.formula.typing.Type;
 import org.pentaho.reporting.libraries.formula.typing.coretypes.NumberType;
 import org.pentaho.reporting.libraries.formula.typing.sequence.RecursiveSequence;
+
+import java.math.BigDecimal;
 
 /**
  * This function counts the number of non-empty values in the list of AnySequences provided. A value is non-blank if it
@@ -37,82 +36,62 @@ import org.pentaho.reporting.libraries.formula.typing.sequence.RecursiveSequence
  *
  * @author Cedric Pronzato
  */
-public class CountAFunction implements Function
-{
+public class CountAFunction implements Function {
 
-  public CountAFunction()
-  {
+  public CountAFunction() {
   }
 
-  public String getCanonicalName()
-  {
+  public String getCanonicalName() {
     return "COUNTA";
   }
 
-  public TypeValuePair evaluate(final FormulaContext context,
-                                final ParameterCallback parameters) throws EvaluationException
-  {
+  public TypeValuePair evaluate( final FormulaContext context,
+                                 final ParameterCallback parameters ) throws EvaluationException {
     final int parameterCount = parameters.getParameterCount();
 
-    if (parameterCount == 0)
-    {
-      throw EvaluationException.getInstance(LibFormulaErrorValue.ERROR_ARGUMENTS_VALUE);
+    if ( parameterCount == 0 ) {
+      throw EvaluationException.getInstance( LibFormulaErrorValue.ERROR_ARGUMENTS_VALUE );
     }
 
     int count = 0;
 
-    for (int paramIdx = 0; paramIdx < parameterCount; paramIdx++)
-    {
-      try
-      {
-        final Object value = parameters.getValue(paramIdx);
-        final Sequence sequence = new RecursiveSequence(value, context);
-        while (sequence.hasNext())
-        {
+    for ( int paramIdx = 0; paramIdx < parameterCount; paramIdx++ ) {
+      try {
+        final Object value = parameters.getValue( paramIdx );
+        final Sequence sequence = new RecursiveSequence( value, context );
+        while ( sequence.hasNext() ) {
           final Object o = sequence.next();
-          count += countElement(o);
+          count += countElement( o );
         }
-      }
-      catch (EvaluationException e)
-      {
+      } catch ( EvaluationException e ) {
         count++;
       }
     }
 
-    return new TypeValuePair(NumberType.GENERIC_NUMBER, new BigDecimal(count));
+    return new TypeValuePair( NumberType.GENERIC_NUMBER, new BigDecimal( count ) );
   }
 
-  private int countElement(final Object o)
-      throws EvaluationException
-  {
+  private int countElement( final Object o )
+    throws EvaluationException {
     int count = 0;
-    if (o instanceof ArrayCallback)
-    {
+    if ( o instanceof ArrayCallback ) {
       final ArrayCallback callback = (ArrayCallback) o;
       final int rowCount = callback.getRowCount();
       final int colCount = callback.getColumnCount();
-      for (int r = 0; r < rowCount; r++)
-      {
-        for (int c = 0; c < colCount; c++)
-        {
-          final Object val = callback.getValue(r, c);
-          if (val != null)
-          {
-            count += countElement(val);
+      for ( int r = 0; r < rowCount; r++ ) {
+        for ( int c = 0; c < colCount; c++ ) {
+          final Object val = callback.getValue( r, c );
+          if ( val != null ) {
+            count += countElement( val );
           }
         }
       }
-    }
-    else if (o instanceof Sequence)
-    {
+    } else if ( o instanceof Sequence ) {
       final Sequence s = (Sequence) o;
-      while (s.hasNext())
-      {
-        count += countElement(s.next());
+      while ( s.hasNext() ) {
+        count += countElement( s.next() );
       }
-    }
-    else if (o != null)
-    {
+    } else if ( o != null ) {
       count++;
     }
     return count;

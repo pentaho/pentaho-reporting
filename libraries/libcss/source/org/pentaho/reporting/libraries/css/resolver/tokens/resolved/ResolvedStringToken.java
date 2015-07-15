@@ -25,28 +25,23 @@ import org.pentaho.reporting.libraries.css.resolver.tokens.types.TextType;
  *
  * @author Thomas Morgner
  */
-public class ResolvedStringToken implements TextType
-{
+public class ResolvedStringToken implements TextType {
   private ComputedToken parent;
   private String text;
 
-  public ResolvedStringToken(final ComputedToken parent, final String text)
-  {
-    if (parent == null)
-    {
+  public ResolvedStringToken( final ComputedToken parent, final String text ) {
+    if ( parent == null ) {
       throw new NullPointerException();
     }
     this.parent = parent;
     this.text = text;
   }
 
-  public ComputedToken getParent()
-  {
+  public ComputedToken getParent() {
     return parent;
   }
 
-  public String getText()
-  {
+  public String getText() {
     return text;
   }
 }

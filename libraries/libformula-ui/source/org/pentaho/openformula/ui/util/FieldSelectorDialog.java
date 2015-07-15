@@ -17,39 +17,25 @@
 
 package org.pentaho.openformula.ui.util;
 
-import java.awt.Component;
-import java.awt.Dialog;
-import java.awt.Frame;
-import java.awt.GraphicsEnvironment;
-import java.awt.HeadlessException;
-import java.awt.event.ActionEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-
-import javax.swing.JComponent;
-import javax.swing.JDialog;
-import javax.swing.JList;
-import javax.swing.JScrollPane;
-import javax.swing.ListSelectionModel;
-
 import org.pentaho.openformula.ui.FieldDefinition;
 import org.pentaho.openformula.ui.Messages;
 import org.pentaho.reporting.libraries.designtime.swing.CommonDialog;
 
-public class FieldSelectorDialog extends CommonDialog
-{
-  private class MouseHandler extends MouseAdapter
-  {
-    private MouseHandler()
-    {
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+
+public class FieldSelectorDialog extends CommonDialog {
+  private class MouseHandler extends MouseAdapter {
+    private MouseHandler() {
     }
 
-    public void mouseClicked(final MouseEvent e)
-    {
-      if (e.getClickCount() > 1)
-      {
-        setSelectedDefinition((FieldDefinition) fieldList.getSelectedValue());
-        getConfirmAction().actionPerformed(new ActionEvent(this, ActionEvent.ACTION_PERFORMED, null));
+    public void mouseClicked( final MouseEvent e ) {
+      if ( e.getClickCount() > 1 ) {
+        setSelectedDefinition( (FieldDefinition) fieldList.getSelectedValue() );
+        getConfirmAction().actionPerformed( new ActionEvent( this, ActionEvent.ACTION_PERFORMED, null ) );
         FieldSelectorDialog.this.dispose();
       }
     }
@@ -71,97 +57,84 @@ public class FieldSelectorDialog extends CommonDialog
    * @see GraphicsEnvironment#isHeadless
    * @see JComponent#getDefaultLocale
    */
-  public FieldSelectorDialog(final Dialog owner)
-      throws HeadlessException
-  {
-    super(owner);
+  public FieldSelectorDialog( final Dialog owner )
+    throws HeadlessException {
+    super( owner );
     init();
   }
 
-  public FieldSelectorDialog(final Frame owner)
-      throws HeadlessException
-  {
-    super(owner);
+  public FieldSelectorDialog( final Frame owner )
+    throws HeadlessException {
+    super( owner );
     init();
   }
 
   public FieldSelectorDialog()
-      throws HeadlessException
-  {
+    throws HeadlessException {
     init();
   }
 
-  protected void init()
-  {
+  protected void init() {
     // focus logic currently depends on this
-    setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+    setDefaultCloseOperation( JDialog.DISPOSE_ON_CLOSE );
 
-    fieldList = new JList(new FieldListModel());
-    fieldList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-    fieldList.setCellRenderer(new FieldDefinitionCellRenderer());
-    fieldList.addMouseListener(new MouseHandler());
+    fieldList = new JList( new FieldListModel() );
+    fieldList.setSelectionMode( ListSelectionModel.SINGLE_SELECTION );
+    fieldList.setCellRenderer( new FieldDefinitionCellRenderer() );
+    fieldList.addMouseListener( new MouseHandler() );
 
-    setTitle(Messages.getInstance().getString("FieldSelectorDialog.Title"));
+    setTitle( Messages.getInstance().getString( "FieldSelectorDialog.Title" ) );
 
     super.init();
   }
 
-  protected String getDialogId()
-  {
+  protected String getDialogId() {
     return "LibFormula.FieldSelector"; // NON-NLS
   }
 
-  protected Component createContentPane()
-  {
-    return new JScrollPane(fieldList);
+  protected Component createContentPane() {
+    return new JScrollPane( fieldList );
   }
 
-  public void setFields(final FieldDefinition[] fields)
-  {
-    fieldList.setModel(new FieldListModel(fields));
+  public void setFields( final FieldDefinition[] fields ) {
+    fieldList.setModel( new FieldListModel( fields ) );
   }
 
-  public FieldDefinition getSelectedDefinition()
-  {
+  public FieldDefinition getSelectedDefinition() {
     return selectedDefinition;
   }
 
-  public void setSelectedDefinition(final FieldDefinition definition)
-  {
+  public void setSelectedDefinition( final FieldDefinition definition ) {
     final FieldDefinition old = this.selectedDefinition;
     this.selectedDefinition = definition;
-    firePropertyChange(SELECTED_DEFINITION_PROPERTY, old, definition);
+    firePropertyChange( SELECTED_DEFINITION_PROPERTY, old, definition );
   }
 
-  public FieldDefinition performEdit(final FieldDefinition[] fields, final FieldDefinition selectedDefinition)
-  {
-    setFields(fields);
-    this.fieldList.setSelectedValue(selectedDefinition, true);
+  public FieldDefinition performEdit( final FieldDefinition[] fields, final FieldDefinition selectedDefinition ) {
+    setFields( fields );
+    this.fieldList.setSelectedValue( selectedDefinition, true );
     this.selectedDefinition = selectedDefinition;
 
-    if (performEdit())
-    {
+    if ( performEdit() ) {
       return getSelectedDefinition();
     }
     return null;
   }
 
 
-  protected boolean validateInputs(final boolean onConfirm)
-  {
-    if (onConfirm)
-    {
-      setSelectedDefinition((FieldDefinition) fieldList.getSelectedValue());
+  protected boolean validateInputs( final boolean onConfirm ) {
+    if ( onConfirm ) {
+      setSelectedDefinition( (FieldDefinition) fieldList.getSelectedValue() );
     }
     return selectedDefinition != null;
   }
 
-  public void setFocusReturn(Component component) {
+  public void setFocusReturn( Component component ) {
     focusReturn = component;
   }
 
   private void close() {
-    if (focusReturn != null) {
+    if ( focusReturn != null ) {
       focusReturn.requestFocusInWindow();
     }
   }

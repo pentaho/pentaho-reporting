@@ -24,12 +24,10 @@ import org.pentaho.reporting.libraries.css.values.CSSConstant;
  *
  * @author Thomas Morgner
  */
-public class Direction
-{
-  public static final CSSConstant LTR = new CSSConstant("ltr");
-  public static final CSSConstant RTL = new CSSConstant("rtl");
+public class Direction {
+  public static final CSSConstant LTR = new CSSConstant( "ltr" );
+  public static final CSSConstant RTL = new CSSConstant( "rtl" );
 
-  private Direction()
-  {
+  private Direction() {
   }
 }

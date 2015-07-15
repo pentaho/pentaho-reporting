@@ -23,23 +23,20 @@ package org.pentaho.reporting.tools.configeditor.model;
  *
  * @author Thomas Morgner
  */
-public class ConfigTreeSectionNode extends AbstractConfigTreeNode
-{
+public class ConfigTreeSectionNode extends AbstractConfigTreeNode {
   /**
    * Creates a new section node with the specified name.
    *
    * @param name the name of the node.
    */
-  public ConfigTreeSectionNode(final String name)
-  {
-    super(name);
+  public ConfigTreeSectionNode( final String name ) {
+    super( name );
   }
 
   /**
    * Removes all childs from this node.
    */
-  public void reset()
-  {
+  public void reset() {
     super.reset();
   }
 }

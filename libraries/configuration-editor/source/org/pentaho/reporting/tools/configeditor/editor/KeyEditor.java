@@ -17,21 +17,20 @@
 
 package org.pentaho.reporting.tools.configeditor.editor;
 
-import javax.swing.JComponent;
+import javax.swing.*;
 
 /**
  * The key editor is used to define an editor for a single report configuration key.
  *
  * @author Thomas Morgner
  */
-public interface KeyEditor
-{
+public interface KeyEditor {
   /**
    * Defines, whether the key editor should be enabled.
    *
    * @param b true, if the editor should be enabled, false otherwise.
    */
-  public void setEnabled(boolean b);
+  public void setEnabled( boolean b );
 
   /**
    * Returns true, if the editor component is enabled, false otherwise.
@@ -46,7 +45,7 @@ public interface KeyEditor
    *
    * @param width the preferred width for the label.
    */
-  public void setLabelWidth(int width);
+  public void setLabelWidth( int width );
 
   /**
    * Returns the width of the label component. Return 0 if no label component is used.
@@ -59,7 +58,7 @@ public interface KeyEditor
    * Checks whether the key is defined locally in the report configuration of the editor.
    *
    * @return true, if the local configuration provides the value for the editor, false if the value is read from the
-   *         default configuration.
+   * default configuration.
    */
   public boolean isDefined();
 

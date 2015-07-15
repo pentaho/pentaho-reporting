@@ -22,22 +22,18 @@ package org.pentaho.reporting.libraries.fonts.encoding;
  *
  * @author Thomas Morgner
  */
-public class External8BitEncodingData extends EncodingData
-{
+public class External8BitEncodingData extends EncodingData {
   private static final long serialVersionUID = 9017639110342367007L;
 
   private int[] indexDelta;
   private int[] valueDelta;
 
-  public External8BitEncodingData(final int[] indexDelta,
-                                  final int[] valueDelta)
-  {
-    if (indexDelta == null)
-    {
+  public External8BitEncodingData( final int[] indexDelta,
+                                   final int[] valueDelta ) {
+    if ( indexDelta == null ) {
       throw new NullPointerException();
     }
-    if (valueDelta == null)
-    {
+    if ( valueDelta == null ) {
       throw new NullPointerException();
     }
 
@@ -45,13 +41,11 @@ public class External8BitEncodingData extends EncodingData
     this.valueDelta = valueDelta;
   }
 
-  public int[] getIndexDelta()
-  {
+  public int[] getIndexDelta() {
     return indexDelta;
   }
 
-  public int[] getValueDelta()
-  {
+  public int[] getValueDelta() {
     return valueDelta;
   }
 

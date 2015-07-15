@@ -17,19 +17,11 @@
 
 package org.pentaho.reporting.libraries.designtime.swing.table;
 
-import java.awt.BorderLayout;
-import java.awt.Component;
-import java.awt.Dialog;
-import java.awt.Frame;
-import java.awt.Window;
-import java.awt.event.ActionEvent;
-import java.util.EventObject;
-import javax.swing.AbstractAction;
-import javax.swing.BorderFactory;
-import javax.swing.JButton;
-import javax.swing.JComponent;
-import javax.swing.JTable;
-import javax.swing.JTextField;
+import org.pentaho.reporting.libraries.designtime.swing.EllipsisButton;
+import org.pentaho.reporting.libraries.designtime.swing.LibSwingUtil;
+import org.pentaho.reporting.libraries.designtime.swing.Messages;
+
+import javax.swing.*;
 import javax.swing.event.CellEditorListener;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.DocumentListener;
@@ -44,159 +36,126 @@ import javax.swing.text.Element;
 import javax.swing.text.PlainDocument;
 import javax.swing.text.Position;
 import javax.swing.text.Segment;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.util.EventObject;
 
-import org.pentaho.reporting.libraries.designtime.swing.EllipsisButton;
-import org.pentaho.reporting.libraries.designtime.swing.LibSwingUtil;
-import org.pentaho.reporting.libraries.designtime.swing.Messages;
-
-public class ArrayCellEditor extends JComponent implements TableCellEditor
-{
+public class ArrayCellEditor extends JComponent implements TableCellEditor {
   private static final String POPUP_EDITOR = "popupEditor";
 
-  private static class NonFilteringPlainDocument implements Document
-  {
+  private static class NonFilteringPlainDocument implements Document {
     private PlainDocument backend;
 
-    private NonFilteringPlainDocument()
-    {
+    private NonFilteringPlainDocument() {
       backend = new PlainDocument();
     }
 
-    public int getLength()
-    {
+    public int getLength() {
       return backend.getLength();
     }
 
-    public void addDocumentListener(final DocumentListener listener)
-    {
-      backend.addDocumentListener(listener);
+    public void addDocumentListener( final DocumentListener listener ) {
+      backend.addDocumentListener( listener );
     }
 
-    public void removeDocumentListener(final DocumentListener listener)
-    {
-      backend.removeDocumentListener(listener);
+    public void removeDocumentListener( final DocumentListener listener ) {
+      backend.removeDocumentListener( listener );
     }
 
-    public void addUndoableEditListener(final UndoableEditListener listener)
-    {
-      backend.addUndoableEditListener(listener);
+    public void addUndoableEditListener( final UndoableEditListener listener ) {
+      backend.addUndoableEditListener( listener );
     }
 
-    public void removeUndoableEditListener(final UndoableEditListener listener)
-    {
-      backend.removeUndoableEditListener(listener);
+    public void removeUndoableEditListener( final UndoableEditListener listener ) {
+      backend.removeUndoableEditListener( listener );
     }
 
-    public Object getProperty(final Object key)
-    {
-      return backend.getProperty(key);
+    public Object getProperty( final Object key ) {
+      return backend.getProperty( key );
     }
 
-    public void putProperty(final Object key, final Object value)
-    {
-      if ("filterNewlines".equals(key)) // NON-NLS
+    public void putProperty( final Object key, final Object value ) {
+      if ( "filterNewlines".equals( key ) ) // NON-NLS
       {
         return;
       }
-      backend.putProperty(key, value);
+      backend.putProperty( key, value );
     }
 
-    public void remove(final int offs, final int len) throws BadLocationException
-    {
-      backend.remove(offs, len);
+    public void remove( final int offs, final int len ) throws BadLocationException {
+      backend.remove( offs, len );
     }
 
-    public void insertString(final int offset, final String str, final AttributeSet a) throws BadLocationException
-    {
-      backend.insertString(offset, str, a);
+    public void insertString( final int offset, final String str, final AttributeSet a ) throws BadLocationException {
+      backend.insertString( offset, str, a );
     }
 
-    public String getText(final int offset, final int length) throws BadLocationException
-    {
-      return backend.getText(offset, length);
+    public String getText( final int offset, final int length ) throws BadLocationException {
+      return backend.getText( offset, length );
     }
 
-    public void getText(final int offset, final int length, final Segment txt) throws BadLocationException
-    {
-      backend.getText(offset, length, txt);
+    public void getText( final int offset, final int length, final Segment txt ) throws BadLocationException {
+      backend.getText( offset, length, txt );
     }
 
-    public Position getStartPosition()
-    {
+    public Position getStartPosition() {
       return backend.getStartPosition();
     }
 
-    public Position getEndPosition()
-    {
+    public Position getEndPosition() {
       return backend.getEndPosition();
     }
 
-    public Position createPosition(final int offs) throws BadLocationException
-    {
-      return backend.createPosition(offs);
+    public Position createPosition( final int offs ) throws BadLocationException {
+      return backend.createPosition( offs );
     }
 
-    public Element[] getRootElements()
-    {
+    public Element[] getRootElements() {
       return backend.getRootElements();
     }
 
-    public Element getDefaultRootElement()
-    {
+    public Element getDefaultRootElement() {
       return backend.getDefaultRootElement();
     }
 
-    public void render(final Runnable r)
-    {
-      backend.render(r);
+    public void render( final Runnable r ) {
+      backend.render( r );
     }
   }
 
-  private class ExtendedEditorAction extends AbstractAction
-  {
+  private class ExtendedEditorAction extends AbstractAction {
     /**
      * Defines an <code>Action</code> object with a default description string and default icon.
      */
-    private ExtendedEditorAction()
-    {
+    private ExtendedEditorAction() {
     }
 
     /**
      * Invoked when an action occurs.
      */
-    public void actionPerformed(final ActionEvent e)
-    {
-      if (getArrayType() == null)
-      {
+    public void actionPerformed( final ActionEvent e ) {
+      if ( getArrayType() == null ) {
         return;
       }
       final Object value = getArray();
 
-      final Window window = LibSwingUtil.getWindowAncestor(ArrayCellEditor.this);
+      final Window window = LibSwingUtil.getWindowAncestor( ArrayCellEditor.this );
       final ArrayCellEditorDialog editorDialog;
-      if (window instanceof Frame)
-      {
-        editorDialog = new ArrayCellEditorDialog((Frame) window);
-      }
-      else if (window instanceof Dialog)
-      {
-        editorDialog = new ArrayCellEditorDialog((Dialog) window);
-      }
-      else
-      {
+      if ( window instanceof Frame ) {
+        editorDialog = new ArrayCellEditorDialog( (Frame) window );
+      } else if ( window instanceof Dialog ) {
+        editorDialog = new ArrayCellEditorDialog( (Dialog) window );
+      } else {
         editorDialog = new ArrayCellEditorDialog();
       }
 
       final Object o = editorDialog.editArray
-          (value, getArrayType(), propertyEditorType);
-      if (o != null)
-      {
+        ( value, getArrayType(), propertyEditorType );
+      if ( o != null ) {
         // update
         array = o;
         stopCellEditing();
-      }
-      else
-      {
+      } else {
         cancelCellEditing();
       }
     }
@@ -210,102 +169,83 @@ public class ArrayCellEditor extends JComponent implements TableCellEditor
   private Class arrayType;
   private Class propertyEditorType;
 
-  public ArrayCellEditor()
-  {
-    setLayout(new BorderLayout());
+  public ArrayCellEditor() {
+    setLayout( new BorderLayout() );
 
     this.eventListenerList = new EventListenerList();
 
-    ellipsisButton = new EllipsisButton("...");
-    ellipsisButton.setDefaultCapable(false);
-    ellipsisButton.addActionListener(new ExtendedEditorAction());
+    ellipsisButton = new EllipsisButton( "..." );
+    ellipsisButton.setDefaultCapable( false );
+    ellipsisButton.addActionListener( new ExtendedEditorAction() );
 
     textField = new JTextField();
-    textField.setDocument(new NonFilteringPlainDocument());
-    textField.getInputMap().put(Messages.getInstance().getKeyStroke
-        ("PropertyCellEditorWithEllipsis.PopupEditor.Accelerator"), POPUP_EDITOR);
-    textField.getActionMap().put(POPUP_EDITOR, new ExtendedEditorAction());
-    textField.setBorder(BorderFactory.createEmptyBorder());
-    textField.setEditable(false);
+    textField.setDocument( new NonFilteringPlainDocument() );
+    textField.getInputMap().put( Messages.getInstance().getKeyStroke
+      ( "PropertyCellEditorWithEllipsis.PopupEditor.Accelerator" ), POPUP_EDITOR );
+    textField.getActionMap().put( POPUP_EDITOR, new ExtendedEditorAction() );
+    textField.setBorder( BorderFactory.createEmptyBorder() );
+    textField.setEditable( false );
 
-    add(textField, BorderLayout.CENTER);
-    add(ellipsisButton, BorderLayout.EAST);
+    add( textField, BorderLayout.CENTER );
+    add( ellipsisButton, BorderLayout.EAST );
 
 
     nullable = false;
   }
 
-  protected Object getArray()
-  {
+  protected Object getArray() {
     return array;
   }
 
-  protected void setArray(final Object array, final Class arrayType)
-  {
+  protected void setArray( final Object array, final Class arrayType ) {
     this.array = array;
-    if (ArrayAccessUtility.isArray(array) == false)
-    {
-      if (arrayType.isArray())
-      {
+    if ( ArrayAccessUtility.isArray( array ) == false ) {
+      if ( arrayType.isArray() ) {
         this.arrayType = arrayType;
-        textField.setText("");
-        ellipsisButton.setEnabled(true);
-      }
-      else
-      {
+        textField.setText( "" );
+        ellipsisButton.setEnabled( true );
+      } else {
         this.arrayType = null;
-        textField.setText("");
-        ellipsisButton.setEnabled(false);
+        textField.setText( "" );
+        ellipsisButton.setEnabled( false );
       }
-    }
-    else
-    {
+    } else {
       // shield ourselves from generic object types
-      if (arrayType.isArray())
-      {
+      if ( arrayType.isArray() ) {
         this.arrayType = arrayType;
-      }
-      else
-      {
+      } else {
         this.arrayType = array.getClass();
       }
-      textField.setText(ArrayAccessUtility.getArrayAsString(array));
-      ellipsisButton.setEnabled(true);
+      textField.setText( ArrayAccessUtility.getArrayAsString( array ) );
+      ellipsisButton.setEnabled( true );
     }
   }
 
-  public Class getArrayType()
-  {
+  public Class getArrayType() {
     return arrayType;
   }
 
-  public boolean isNullable()
-  {
+  public boolean isNullable() {
     return nullable;
   }
 
-  public void setNullable(final boolean nullable)
-  {
+  public void setNullable( final boolean nullable ) {
     this.nullable = nullable;
   }
 
-  public void requestFocus()
-  {
+  public void requestFocus() {
     textField.requestFocus();
   }
 
-  public void setPropertyEditorType(final Class aPropertyEditor)
-  {
+  public void setPropertyEditorType( final Class aPropertyEditor ) {
     propertyEditorType = aPropertyEditor;
   }
 
-  protected JTextField getTextField()
-  {
+  protected JTextField getTextField() {
     return textField;
   }
 
-  protected JButton getEllipsisButton()
-  {
+  protected JButton getEllipsisButton() {
     return ellipsisButton;
   }
 
@@ -314,8 +254,7 @@ public class ArrayCellEditor extends JComponent implements TableCellEditor
    *
    * @return the value contained in the editor
    */
-  public Object getCellEditorValue()
-  {
+  public Object getCellEditorValue() {
     return array;
   }
 
@@ -329,8 +268,7 @@ public class ArrayCellEditor extends JComponent implements TableCellEditor
    * @param anEvent the event the editor should use to consider whether to begin editing or not
    * @return true if editing can be started
    */
-  public boolean isCellEditable(final EventObject anEvent)
-  {
+  public boolean isCellEditable( final EventObject anEvent ) {
     return true;
   }
 
@@ -345,8 +283,7 @@ public class ArrayCellEditor extends JComponent implements TableCellEditor
    * @param anEvent the event the editor should use to start editing
    * @return true if the editor would like the editing cell to be selected; otherwise returns false
    */
-  public boolean shouldSelectCell(final EventObject anEvent)
-  {
+  public boolean shouldSelectCell( final EventObject anEvent ) {
     return true;
   }
 
@@ -357,19 +294,15 @@ public class ArrayCellEditor extends JComponent implements TableCellEditor
    *
    * @return true if editing was stopped; false otherwise
    */
-  public boolean stopCellEditing()
-  {
-    try
-    {
+  public boolean stopCellEditing() {
+    try {
       fireEditingStopped();
-      textField.setText(null);
+      textField.setText( null );
       return true;
-    }
-    catch (final Exception e)
-    {
+    } catch ( final Exception e ) {
       // exception ignored.
       fireEditingCanceled();
-      textField.setText(null);
+      textField.setText( null );
       return true;
     }
 
@@ -378,32 +311,27 @@ public class ArrayCellEditor extends JComponent implements TableCellEditor
   /**
    * Tells the editor to cancel editing and not accept any partially edited value.
    */
-  public void cancelCellEditing()
-  {
-    textField.setText(null);
+  public void cancelCellEditing() {
+    textField.setText( null );
     fireEditingCanceled();
   }
 
-  protected void fireEditingCanceled()
-  {
-    final CellEditorListener[] listeners = eventListenerList.getListeners(CellEditorListener.class);
-    final ChangeEvent event = new ChangeEvent(this);
-    for (int i = 0; i < listeners.length; i++)
-    {
-      final CellEditorListener listener = listeners[i];
-      listener.editingCanceled(event);
+  protected void fireEditingCanceled() {
+    final CellEditorListener[] listeners = eventListenerList.getListeners( CellEditorListener.class );
+    final ChangeEvent event = new ChangeEvent( this );
+    for ( int i = 0; i < listeners.length; i++ ) {
+      final CellEditorListener listener = listeners[ i ];
+      listener.editingCanceled( event );
     }
   }
 
 
-  protected void fireEditingStopped()
-  {
-    final CellEditorListener[] listeners = eventListenerList.getListeners(CellEditorListener.class);
-    final ChangeEvent event = new ChangeEvent(this);
-    for (int i = 0; i < listeners.length; i++)
-    {
-      final CellEditorListener listener = listeners[i];
-      listener.editingStopped(event);
+  protected void fireEditingStopped() {
+    final CellEditorListener[] listeners = eventListenerList.getListeners( CellEditorListener.class );
+    final ChangeEvent event = new ChangeEvent( this );
+    for ( int i = 0; i < listeners.length; i++ ) {
+      final CellEditorListener listener = listeners[ i ];
+      listener.editingStopped( event );
     }
   }
 
@@ -412,9 +340,8 @@ public class ArrayCellEditor extends JComponent implements TableCellEditor
    *
    * @param l the CellEditorListener
    */
-  public void addCellEditorListener(final CellEditorListener l)
-  {
-    eventListenerList.add(CellEditorListener.class, l);
+  public void addCellEditorListener( final CellEditorListener l ) {
+    eventListenerList.add( CellEditorListener.class, l );
   }
 
   /**
@@ -422,9 +349,8 @@ public class ArrayCellEditor extends JComponent implements TableCellEditor
    *
    * @param l the CellEditorListener
    */
-  public void removeCellEditorListener(final CellEditorListener l)
-  {
-    eventListenerList.remove(CellEditorListener.class, l);
+  public void removeCellEditorListener( final CellEditorListener l ) {
+    eventListenerList.remove( CellEditorListener.class, l );
   }
 
   /**
@@ -443,24 +369,20 @@ public class ArrayCellEditor extends JComponent implements TableCellEditor
    * @param column     the column of the cell being edited
    * @return the component for editing
    */
-  public Component getTableCellEditorComponent(final JTable table,
-                                               final Object value,
-                                               final boolean isSelected,
-                                               final int row,
-                                               final int column)
-  {
+  public Component getTableCellEditorComponent( final JTable table,
+                                                final Object value,
+                                                final boolean isSelected,
+                                                final int row,
+                                                final int column ) {
     final TableModel tableModel = table.getModel();
-    if (tableModel instanceof PropertyTableModel)
-    {
+    if ( tableModel instanceof PropertyTableModel ) {
       final PropertyTableModel metaDataTableModel = (PropertyTableModel) tableModel;
-      final int realColumn = table.convertColumnIndexToModel(column);
-      final Class classForCell = metaDataTableModel.getClassForCell(row, realColumn);
-      setArray(value, classForCell);
-    }
-    else
-    {
-      final Class columnClass = table.getColumnClass(column);
-      setArray(value, columnClass);
+      final int realColumn = table.convertColumnIndexToModel( column );
+      final Class classForCell = metaDataTableModel.getClassForCell( row, realColumn );
+      setArray( value, classForCell );
+    } else {
+      final Class columnClass = table.getColumnClass( column );
+      setArray( value, columnClass );
     }
     return this;
   }

@@ -19,12 +19,10 @@ package org.pentaho.reporting.libraries.css.keys.line;
 
 import org.pentaho.reporting.libraries.css.values.CSSConstant;
 
-public class LineHeight
-{
-  public static final CSSConstant NORMAL = new CSSConstant("normal");
-  public static final CSSConstant NONE = new CSSConstant("none");
+public class LineHeight {
+  public static final CSSConstant NORMAL = new CSSConstant( "normal" );
+  public static final CSSConstant NONE = new CSSConstant( "none" );
 
-  private LineHeight()
-  {
+  private LineHeight() {
   }
 }

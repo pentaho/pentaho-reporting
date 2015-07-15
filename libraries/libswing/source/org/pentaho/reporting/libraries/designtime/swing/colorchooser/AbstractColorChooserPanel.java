@@ -17,22 +17,17 @@
 
 package org.pentaho.reporting.libraries.designtime.swing.colorchooser;
 
-import java.awt.Color;
-import javax.swing.Icon;
-import javax.swing.JComponent;
+import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import java.awt.*;
 
-public abstract class AbstractColorChooserPanel extends JComponent
-{
-  private class ColorSelectionListener implements ChangeListener
-  {
-    private ColorSelectionListener()
-    {
+public abstract class AbstractColorChooserPanel extends JComponent {
+  private class ColorSelectionListener implements ChangeListener {
+    private ColorSelectionListener() {
     }
 
-    public void stateChanged(final ChangeEvent e)
-    {
+    public void stateChanged( final ChangeEvent e ) {
       colorUpdated();
     }
   }
@@ -40,13 +35,11 @@ public abstract class AbstractColorChooserPanel extends JComponent
   private ExtendedColorModel colorSelectionModel;
   private ColorSelectionListener colorSelectionListener;
 
-  protected AbstractColorChooserPanel()
-  {
+  protected AbstractColorChooserPanel() {
     colorSelectionListener = new ColorSelectionListener();
   }
 
-  public ExtendedColorModel getColorSelectionModel()
-  {
+  public ExtendedColorModel getColorSelectionModel() {
     return colorSelectionModel;
   }
 
@@ -54,50 +47,40 @@ public abstract class AbstractColorChooserPanel extends JComponent
 
   public abstract Icon getSmallDisplayIcon();
 
-  public int getMnemonic()
-  {
+  public int getMnemonic() {
     return 0;
   }
 
-  public int getDisplayedMnemonicIndex()
-  {
+  public int getDisplayedMnemonicIndex() {
     return -1;
   }
 
-  public void installChooserPanel(final ExtendedColorModel colorSelectionModel)
-  {
-    if (colorSelectionModel == null)
-    {
+  public void installChooserPanel( final ExtendedColorModel colorSelectionModel ) {
+    if ( colorSelectionModel == null ) {
       throw new NullPointerException();
     }
-    if (this.colorSelectionModel != null)
-    {
-      this.colorSelectionModel.removeChangeListener(colorSelectionListener);
+    if ( this.colorSelectionModel != null ) {
+      this.colorSelectionModel.removeChangeListener( colorSelectionListener );
     }
     this.colorSelectionModel = colorSelectionModel;
-    this.colorSelectionModel.addChangeListener(colorSelectionListener);
+    this.colorSelectionModel.addChangeListener( colorSelectionListener );
   }
 
-  public void uninstallChooserPanel()
-  {
-    if (this.colorSelectionModel != null)
-    {
-      this.colorSelectionModel.removeChangeListener(colorSelectionListener);
+  public void uninstallChooserPanel() {
+    if ( this.colorSelectionModel != null ) {
+      this.colorSelectionModel.removeChangeListener( colorSelectionListener );
     }
     this.colorSelectionModel = null;
   }
 
-  protected Color getColorFromModel()
-  {
-    if (colorSelectionModel == null)
-    {
+  protected Color getColorFromModel() {
+    if ( colorSelectionModel == null ) {
       return null;
     }
     return colorSelectionModel.getSelectedColor();
   }
 
-  protected void colorUpdated()
-  {
+  protected void colorUpdated() {
 
   }
 }

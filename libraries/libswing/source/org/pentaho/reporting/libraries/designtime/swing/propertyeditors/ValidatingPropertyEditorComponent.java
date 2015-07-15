@@ -19,10 +19,11 @@ package org.pentaho.reporting.libraries.designtime.swing.propertyeditors;
 
 import java.beans.PropertyChangeListener;
 
-public interface ValidatingPropertyEditorComponent
-{
+public interface ValidatingPropertyEditorComponent {
   public boolean isValidEditorValue();
-  public void addPropertyChangeListener(PropertyChangeListener l);
-  public void removePropertyChangeListener(PropertyChangeListener l);
+
+  public void addPropertyChangeListener( PropertyChangeListener l );
+
+  public void removePropertyChangeListener( PropertyChangeListener l );
 
 }

@@ -25,13 +25,11 @@ import org.pentaho.reporting.libraries.css.resolver.values.computed.ConstantsRes
  *
  * @author Thomas Morgner
  */
-public class FontStyleResolveHandler extends ConstantsResolveHandler
-{
-  public FontStyleResolveHandler()
-  {
-    addNormalizeValue(FontStyle.ITALIC);
-    addNormalizeValue(FontStyle.NORMAL);
-    addNormalizeValue(FontStyle.OBLIQUE);
-    setFallback(FontStyle.NORMAL);
+public class FontStyleResolveHandler extends ConstantsResolveHandler {
+  public FontStyleResolveHandler() {
+    addNormalizeValue( FontStyle.ITALIC );
+    addNormalizeValue( FontStyle.NORMAL );
+    addNormalizeValue( FontStyle.OBLIQUE );
+    setFallback( FontStyle.NORMAL );
   }
 }

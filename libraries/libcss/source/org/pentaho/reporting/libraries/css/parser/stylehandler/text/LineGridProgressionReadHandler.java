@@ -28,22 +28,18 @@ import org.w3c.css.sac.LexicalUnit;
  *
  * @author Thomas Morgner
  */
-public class LineGridProgressionReadHandler extends OneOfConstantsReadHandler
-{
-  public LineGridProgressionReadHandler()
-  {
-    super(false);
-    addValue(LineGridProgression.LINE_HEIGHT);
-    addValue(LineGridProgression.TEXT_HEIGHT);
+public class LineGridProgressionReadHandler extends OneOfConstantsReadHandler {
+  public LineGridProgressionReadHandler() {
+    super( false );
+    addValue( LineGridProgression.LINE_HEIGHT );
+    addValue( LineGridProgression.TEXT_HEIGHT );
   }
 
-  protected CSSValue lookupValue(final LexicalUnit value)
-  {
-    CSSValue length = CSSValueFactory.createLengthValue(value);
-    if (length != null)
-    {
+  protected CSSValue lookupValue( final LexicalUnit value ) {
+    CSSValue length = CSSValueFactory.createLengthValue( value );
+    if ( length != null ) {
       return length;
     }
-    return super.lookupValue(value);
+    return super.lookupValue( value );
   }
 }

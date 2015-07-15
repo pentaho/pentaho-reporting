@@ -17,29 +17,25 @@
 
 package org.pentaho.reporting.libraries.formula.function.information;
 
-import java.math.BigDecimal;
-
 import org.pentaho.reporting.libraries.formula.FormulaTestBase;
-import org.pentaho.reporting.libraries.formula.LibFormulaErrorValue;
+
+import java.math.BigDecimal;
 
 
 /**
  * @author Cedric Pronzato
  */
-public class IndexFunctionTest extends FormulaTestBase
-{
-  public void testDefault() throws Exception
-  {
+public class IndexFunctionTest extends FormulaTestBase {
+  public void testDefault() throws Exception {
     runDefaultTest();
   }
 
-  public Object[][] createDataTest()
-  {
+  public Object[][] createDataTest() {
     return new Object[][]
-        {
-            {"INDEX({1;2;3 | 4;5;6 | 7;8;9}; 2; 2)", new BigDecimal("5")},
-            {"INDEX({1; 2; 3};;3)", new BigDecimal("3")},
-        };
+      {
+        { "INDEX({1;2;3 | 4;5;6 | 7;8;9}; 2; 2)", new BigDecimal( "5" ) },
+        { "INDEX({1; 2; 3};;3)", new BigDecimal( "3" ) },
+      };
   }
 
 }

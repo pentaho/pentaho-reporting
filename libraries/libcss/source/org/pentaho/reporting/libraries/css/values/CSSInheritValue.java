@@ -22,36 +22,29 @@ package org.pentaho.reporting.libraries.css.values;
  *
  * @author Thomas Morgner
  */
-public class CSSInheritValue implements CSSValue
-{
+public class CSSInheritValue implements CSSValue {
   private static CSSInheritValue instance;
 
-  public static synchronized CSSInheritValue getInstance()
-  {
-    if (instance == null)
-    {
+  public static synchronized CSSInheritValue getInstance() {
+    if ( instance == null ) {
       instance = new CSSInheritValue();
     }
     return instance;
   }
 
-  private CSSInheritValue()
-  {
+  private CSSInheritValue() {
 
   }
 
-  public String getCSSText()
-  {
+  public String getCSSText() {
     return "inherit";
   }
 
-  public String toString()
-  {
+  public String toString() {
     return getCSSText();
   }
 
-  public CSSType getType()
-  {
+  public CSSType getType() {
     return CSSGenericType.GENERIC_TYPE;
   }
 }

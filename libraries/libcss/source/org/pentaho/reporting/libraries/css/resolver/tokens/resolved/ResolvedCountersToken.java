@@ -17,9 +17,9 @@
 
 package org.pentaho.reporting.libraries.css.resolver.tokens.resolved;
 
+import org.pentaho.reporting.libraries.css.counter.CounterStyle;
 import org.pentaho.reporting.libraries.css.resolver.tokens.computed.CountersToken;
 import org.pentaho.reporting.libraries.css.resolver.tokens.types.TextType;
-import org.pentaho.reporting.libraries.css.counter.CounterStyle;
 
 
 /**
@@ -27,45 +27,38 @@ import org.pentaho.reporting.libraries.css.counter.CounterStyle;
  *
  * @author Thomas Morgner
  */
-public class ResolvedCountersToken implements TextType
-{
+public class ResolvedCountersToken implements TextType {
   private CountersToken parent;
   private int[] counterValues;
 
-  public ResolvedCountersToken(final CountersToken parent,
-                               final int[] counterValues)
-  {
+  public ResolvedCountersToken( final CountersToken parent,
+                                final int[] counterValues ) {
     this.parent = parent;
     this.counterValues = counterValues;
   }
 
-  public CountersToken getParent()
-  {
+  public CountersToken getParent() {
     return parent;
   }
 
-  public String getText()
-  {
+  public String getText() {
     final CountersToken counterToken = getParent();
     final CounterStyle style = counterToken.getStyle();
     final String separator = counterToken.getSeparator();
     final StringBuffer buffer = new StringBuffer();
 
-    for (int i = 0; i < counterValues.length; i++)
-    {
-      if (i != 0)
-      {
-        buffer.append(separator);
+    for ( int i = 0; i < counterValues.length; i++ ) {
+      if ( i != 0 ) {
+        buffer.append( separator );
       }
-      final int value = counterValues[i];
-      buffer.append(style.getCounterValue(value));
+      final int value = counterValues[ i ];
+      buffer.append( style.getCounterValue( value ) );
     }
 
     return buffer.toString();
   }
 
-  public int[] getCounterValue()
-  {
+  public int[] getCounterValue() {
     return (int[]) counterValues.clone();
   }
 }

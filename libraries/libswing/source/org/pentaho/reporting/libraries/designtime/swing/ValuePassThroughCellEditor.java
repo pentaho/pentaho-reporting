@@ -17,46 +17,36 @@
 
 package org.pentaho.reporting.libraries.designtime.swing;
 
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.event.ActionListener;
-import javax.swing.ComboBoxEditor;
-import javax.swing.JComboBox;
-import javax.swing.JComponent;
-import javax.swing.JList;
-import javax.swing.ListCellRenderer;
+import javax.swing.*;
 import javax.swing.border.LineBorder;
+import java.awt.*;
+import java.awt.event.ActionListener;
 
 /**
- * A non editing cell-editor for comboboxes. This works around the obvious bug that the combobox always
- * adds an empty string to non-editable models.
+ * A non editing cell-editor for comboboxes. This works around the obvious bug that the combobox always adds an empty
+ * string to non-editable models.
  *
  * @author Thomas Morgner.
  */
-public class ValuePassThroughCellEditor implements ComboBoxEditor
-{
+public class ValuePassThroughCellEditor implements ComboBoxEditor {
   private JComboBox comboBox;
   private ListCellRenderer renderer;
   private Object item;
 
-  public ValuePassThroughCellEditor(final JComboBox comboBox, final ListCellRenderer renderer)
-  {
+  public ValuePassThroughCellEditor( final JComboBox comboBox, final ListCellRenderer renderer ) {
     this.comboBox = comboBox;
     this.renderer = renderer;
   }
 
   /**
-   * Return the component that should be added to the tree hierarchy for
-   * this editor
+   * Return the component that should be added to the tree hierarchy for this editor
    */
-  public Component getEditorComponent()
-  {
+  public Component getEditorComponent() {
     final Component listCellRendererComponent = renderer.getListCellRendererComponent
-        (new JList(), comboBox.getSelectedItem(), comboBox.getSelectedIndex(), false, comboBox.hasFocus());
-    if (listCellRendererComponent instanceof JComponent)
-    {
+      ( new JList(), comboBox.getSelectedItem(), comboBox.getSelectedIndex(), false, comboBox.hasFocus() );
+    if ( listCellRendererComponent instanceof JComponent ) {
       final JComponent jc = (JComponent) listCellRendererComponent;
-      jc.setBorder(new LineBorder(Color.BLACK));
+      jc.setBorder( new LineBorder( Color.BLACK ) );
     }
     return listCellRendererComponent;
   }
@@ -64,38 +54,33 @@ public class ValuePassThroughCellEditor implements ComboBoxEditor
   /**
    * Set the item that should be edited. Cancel any editing if necessary *
    */
-  public void setItem(final Object item)
-  {
+  public void setItem( final Object item ) {
     this.item = item;
   }
 
   /**
    * Return the edited item *
    */
-  public Object getItem()
-  {
+  public Object getItem() {
     return item;
   }
 
   /**
    * Ask the editor to start editing and to select everything *
    */
-  public void selectAll()
-  {
+  public void selectAll() {
 
   }
 
   /**
    * Add an ActionListener. An action event is generated when the edited item changes *
    */
-  public void addActionListener(final ActionListener l)
-  {
+  public void addActionListener( final ActionListener l ) {
   }
 
   /**
    * Remove an ActionListener *
    */
-  public void removeActionListener(final ActionListener l)
-  {
+  public void removeActionListener( final ActionListener l ) {
   }
 }

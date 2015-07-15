@@ -21,14 +21,11 @@ import org.pentaho.reporting.libraries.base.LibBaseInfo;
 import org.pentaho.reporting.libraries.base.versioning.DependencyInformation;
 import org.pentaho.reporting.libraries.base.versioning.ProjectInformation;
 
-public class LibLoaderInfo extends ProjectInformation
-{
+public class LibLoaderInfo extends ProjectInformation {
   private static LibLoaderInfo instance;
 
-  public static LibLoaderInfo getInstance()
-  {
-    if (instance == null)
-    {
+  public static LibLoaderInfo getInstance() {
+    if ( instance == null ) {
       instance = new LibLoaderInfo();
       instance.initialize();
     }
@@ -38,25 +35,23 @@ public class LibLoaderInfo extends ProjectInformation
   /**
    * Constructs an empty project info object.
    */
-  public LibLoaderInfo()
-  {
-    super("libloader", "LibLoader");
+  public LibLoaderInfo() {
+    super( "libloader", "LibLoader" );
   }
 
-  private void initialize()
-  {
-    setLicenseName("LGPL");
+  private void initialize() {
+    setLicenseName( "LGPL" );
 
-    setInfo("http://reporting.pentaho.org/libloader/");
-    setCopyright("(C)opyright 2006-2011, by Pentaho Corporation and Contributors");
+    setInfo( "http://reporting.pentaho.org/libloader/" );
+    setCopyright( "(C)opyright 2006-2011, by Pentaho Corporation and Contributors" );
 
-    setBootClass(LibLoaderBoot.class.getName());
+    setBootClass( LibLoaderBoot.class.getName() );
 
-    addLibrary(LibBaseInfo.getInstance());
-    addOptionalLibrary("org.pentaho.reporting.libraries.pixie.PixieInfo");
-    addOptionalLibrary(new DependencyInformation("EHCache", "1.2rc1", "Apache Licence 2.0",
-        "http://ehcache.sourceforge.net/"));
-    addOptionalLibrary(new DependencyInformation("Batik", "1.6", "Apache Software License",
-        "http://xml.apache.org/batik"));
+    addLibrary( LibBaseInfo.getInstance() );
+    addOptionalLibrary( "org.pentaho.reporting.libraries.pixie.PixieInfo" );
+    addOptionalLibrary( new DependencyInformation( "EHCache", "1.2rc1", "Apache Licence 2.0",
+      "http://ehcache.sourceforge.net/" ) );
+    addOptionalLibrary( new DependencyInformation( "Batik", "1.6", "Apache Software License",
+      "http://xml.apache.org/batik" ) );
   }
 }

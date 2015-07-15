@@ -20,14 +20,12 @@ package org.pentaho.reporting.libraries.css.resolver.values.computed.box;
 import org.pentaho.reporting.libraries.css.keys.box.FloatDisplace;
 import org.pentaho.reporting.libraries.css.resolver.values.computed.ConstantsResolveHandler;
 
-public class FloatDisplaceResolveHandler extends ConstantsResolveHandler
-{
-  public FloatDisplaceResolveHandler ()
-  {
-    addNormalizeValue(FloatDisplace.BLOCK);
-    addNormalizeValue(FloatDisplace.BLOCK_WITHIN_PAGE);
-    addNormalizeValue(FloatDisplace.INDENT);
-    addNormalizeValue(FloatDisplace.LINE);
-    setFallback(FloatDisplace.LINE);
+public class FloatDisplaceResolveHandler extends ConstantsResolveHandler {
+  public FloatDisplaceResolveHandler() {
+    addNormalizeValue( FloatDisplace.BLOCK );
+    addNormalizeValue( FloatDisplace.BLOCK_WITHIN_PAGE );
+    addNormalizeValue( FloatDisplace.INDENT );
+    addNormalizeValue( FloatDisplace.LINE );
+    setFallback( FloatDisplace.LINE );
   }
 }

@@ -17,18 +17,14 @@
 
 package org.pentaho.reporting.tools.configeditor.editor;
 
-import java.awt.BorderLayout;
-import java.awt.Dimension;
-import java.awt.Font;
-import java.text.MessageFormat;
-import javax.swing.JPanel;
-import javax.swing.JTextArea;
-import javax.swing.UIManager;
-
 import org.pentaho.reporting.libraries.base.boot.Module;
 import org.pentaho.reporting.libraries.base.config.HierarchicalConfiguration;
 import org.pentaho.reporting.tools.configeditor.model.ConfigDescriptionEntry;
 import org.pentaho.reporting.tools.configeditor.util.VerticalLayout;
+
+import javax.swing.*;
+import java.awt.*;
+import java.text.MessageFormat;
 
 /**
  * The container component that is responsible for creating and managing the module editor for the currently selected
@@ -36,8 +32,7 @@ import org.pentaho.reporting.tools.configeditor.util.VerticalLayout;
  *
  * @author Thomas Morgner
  */
-public class ConfigEditorPanel extends JPanel
-{
+public class ConfigEditorPanel extends JPanel {
   /**
    * A component holding the module description.
    */
@@ -68,47 +63,46 @@ public class ConfigEditorPanel extends JPanel
   /**
    * Creates a new ConfigEditorPanel.
    */
-  public ConfigEditorPanel()
-  {
-    moduleNameFormat = new MessageFormat("{0} - Version {1}.{2}-{3}"); //$NON-NLS-1$
+  public ConfigEditorPanel() {
+    moduleNameFormat = new MessageFormat( "{0} - Version {1}.{2}-{3}" ); //$NON-NLS-1$
 
     moduleNameField = new JTextArea();
-    moduleNameField.setName("ModuleNameField"); //$NON-NLS-1$
-    moduleNameField.setMinimumSize(new Dimension(100, 10));
-    moduleNameField.setEditable(false);
-    moduleNameField.setLineWrap(false);
-    moduleNameField.setFont(new Font("SansSerif", //$NON-NLS-1$
-        Font.BOLD, moduleNameField.getFont().getSize() + 4));
+    moduleNameField.setName( "ModuleNameField" ); //$NON-NLS-1$
+    moduleNameField.setMinimumSize( new Dimension( 100, 10 ) );
+    moduleNameField.setEditable( false );
+    moduleNameField.setLineWrap( false );
+    moduleNameField.setFont( new Font( "SansSerif", //$NON-NLS-1$
+      Font.BOLD, moduleNameField.getFont().getSize() + 4 ) );
 
     producerField = new JTextArea();
-    producerField.setName("ProducerField"); //$NON-NLS-1$
-    producerField.setMinimumSize(new Dimension(100, 10));
-    producerField.setEditable(false);
-    producerField.setLineWrap(false);
-    producerField.setWrapStyleWord(true);
-    producerField.setFont(producerField.getFont().deriveFont(Font.ITALIC));
-    producerField.setBackground(UIManager.getColor("controlLtHighlight")); //$NON-NLS-1$
+    producerField.setName( "ProducerField" ); //$NON-NLS-1$
+    producerField.setMinimumSize( new Dimension( 100, 10 ) );
+    producerField.setEditable( false );
+    producerField.setLineWrap( false );
+    producerField.setWrapStyleWord( true );
+    producerField.setFont( producerField.getFont().deriveFont( Font.ITALIC ) );
+    producerField.setBackground( UIManager.getColor( "controlLtHighlight" ) ); //$NON-NLS-1$
 
     descriptionArea = new JTextArea();
-    descriptionArea.setName("DescriptionArea"); //$NON-NLS-1$
-    descriptionArea.setMinimumSize(new Dimension(100, 10));
-    descriptionArea.setEditable(false);
-    descriptionArea.setLineWrap(true);
-    descriptionArea.setWrapStyleWord(true);
-    descriptionArea.setBackground(UIManager.getColor("controlShadow")); //$NON-NLS-1$
+    descriptionArea.setName( "DescriptionArea" ); //$NON-NLS-1$
+    descriptionArea.setMinimumSize( new Dimension( 100, 10 ) );
+    descriptionArea.setEditable( false );
+    descriptionArea.setLineWrap( true );
+    descriptionArea.setWrapStyleWord( true );
+    descriptionArea.setBackground( UIManager.getColor( "controlShadow" ) ); //$NON-NLS-1$
 
     editorArea = new JPanel();
-    editorArea.setLayout(new BorderLayout());
+    editorArea.setLayout( new BorderLayout() );
 
     final JPanel contentArea = new JPanel();
-    contentArea.setLayout(new VerticalLayout());//this, BoxLayout.Y_AXIS));
-    contentArea.add(moduleNameField);
-    contentArea.add(producerField);
-    contentArea.add(descriptionArea);
+    contentArea.setLayout( new VerticalLayout() );//this, BoxLayout.Y_AXIS));
+    contentArea.add( moduleNameField );
+    contentArea.add( producerField );
+    contentArea.add( descriptionArea );
 
-    setLayout(new BorderLayout());
-    add(contentArea, BorderLayout.NORTH);
-    add(editorArea, BorderLayout.CENTER);
+    setLayout( new BorderLayout() );
+    add( contentArea, BorderLayout.NORTH );
+    add( editorArea, BorderLayout.CENTER );
   }
 
   /**
@@ -118,25 +112,23 @@ public class ConfigEditorPanel extends JPanel
    * @param config  the report configuration that supplies the values for the module.
    * @param entries a list of entries which should be edited.
    */
-  public void editModule(final Module module,
-                         final HierarchicalConfiguration config,
-                         final ConfigDescriptionEntry[] entries)
-  {
-    final Object[] params = new Object[4];
-    params[0] = module.getName();
-    params[1] = module.getMajorVersion();
-    params[2] = module.getMinorVersion();
-    params[3] = module.getPatchLevel();
-    moduleNameField.setText(moduleNameFormat.format(params));
-    producerField.setText(module.getProducer());
-    descriptionArea.setText(module.getDescription());
+  public void editModule( final Module module,
+                          final HierarchicalConfiguration config,
+                          final ConfigDescriptionEntry[] entries ) {
+    final Object[] params = new Object[ 4 ];
+    params[ 0 ] = module.getName();
+    params[ 1 ] = module.getMajorVersion();
+    params[ 2 ] = module.getMinorVersion();
+    params[ 3 ] = module.getPatchLevel();
+    moduleNameField.setText( moduleNameFormat.format( params ) );
+    producerField.setText( module.getProducer() );
+    descriptionArea.setText( module.getDescription() );
 
     editorArea.removeAll();
 
-    moduleEditor = EditorFactory.getInstance().getModule(module, config, entries);
-    if (moduleEditor != null)
-    {
-      editorArea.add(moduleEditor.getComponent());
+    moduleEditor = EditorFactory.getInstance().getModule( module, config, entries );
+    if ( moduleEditor != null ) {
+      editorArea.add( moduleEditor.getComponent() );
       moduleEditor.reset();
     }
     invalidate();
@@ -145,10 +137,8 @@ public class ConfigEditorPanel extends JPanel
   /**
    * Resets the currently edited module to the default values from the report configuration.
    */
-  public void reset()
-  {
-    if (moduleEditor != null)
-    {
+  public void reset() {
+    if ( moduleEditor != null ) {
       moduleEditor.reset();
     }
   }
@@ -156,10 +146,8 @@ public class ConfigEditorPanel extends JPanel
   /**
    * Stores all values from the module editor into the report configuration.
    */
-  public void store()
-  {
-    if (moduleEditor != null)
-    {
+  public void store() {
+    if ( moduleEditor != null ) {
       moduleEditor.store();
     }
   }

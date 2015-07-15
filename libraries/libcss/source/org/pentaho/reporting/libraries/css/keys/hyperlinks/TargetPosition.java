@@ -24,18 +24,16 @@ import org.pentaho.reporting.libraries.css.values.CSSConstant;
  *
  * @author Thomas Morgner
  */
-public class TargetPosition
-{
+public class TargetPosition {
   public static final CSSConstant ABOVE = new CSSConstant(
-      "above");
+    "above" );
   public static final CSSConstant BEHIND = new CSSConstant(
-      "behind");
+    "behind" );
   public static final CSSConstant FRONT = new CSSConstant(
-      "front");
+    "front" );
   public static final CSSConstant BACK = new CSSConstant(
-      "back");
+    "back" );
 
-  private TargetPosition()
-  {
+  private TargetPosition() {
   }
 }

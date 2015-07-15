@@ -17,13 +17,13 @@
 
 package org.pentaho.reporting.libraries.serializer.methods;
 
+import org.pentaho.reporting.libraries.base.util.FloatDimension;
+import org.pentaho.reporting.libraries.serializer.SerializeMethod;
+
 import java.awt.geom.Dimension2D;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-
-import org.pentaho.reporting.libraries.serializer.SerializeMethod;
-import org.pentaho.reporting.libraries.base.util.FloatDimension;
 
 /**
  * A SerializeMethod implementation that handles Dimension2D objects.
@@ -31,13 +31,11 @@ import org.pentaho.reporting.libraries.base.util.FloatDimension;
  * @author Thomas Morgner
  * @see java.awt.geom.Dimension2D
  */
-public class Dimension2DSerializer implements SerializeMethod
-{
+public class Dimension2DSerializer implements SerializeMethod {
   /**
    * Default Constructor.
    */
-  public Dimension2DSerializer()
-  {
+  public Dimension2DSerializer() {
   }
 
   /**
@@ -48,12 +46,11 @@ public class Dimension2DSerializer implements SerializeMethod
    * @param out the outputstream that should receive the object.
    * @throws IOException if an I/O error occured.
    */
-  public void writeObject(final Object o, final ObjectOutputStream out)
-      throws IOException
-  {
+  public void writeObject( final Object o, final ObjectOutputStream out )
+    throws IOException {
     final Dimension2D dim = (Dimension2D) o;
-    out.writeDouble(dim.getWidth());
-    out.writeDouble(dim.getHeight());
+    out.writeDouble( dim.getWidth() );
+    out.writeDouble( dim.getHeight() );
   }
 
   /**
@@ -65,12 +62,11 @@ public class Dimension2DSerializer implements SerializeMethod
    * @throws IOException            if reading the stream failed.
    * @throws ClassNotFoundException if serialized object class cannot be found.
    */
-  public Object readObject(final ObjectInputStream in)
-      throws IOException, ClassNotFoundException
-  {
+  public Object readObject( final ObjectInputStream in )
+    throws IOException, ClassNotFoundException {
     final double w = in.readDouble();
     final double h = in.readDouble();
-    return new FloatDimension((float) w, (float) h);
+    return new FloatDimension( (float) w, (float) h );
   }
 
   /**
@@ -78,8 +74,7 @@ public class Dimension2DSerializer implements SerializeMethod
    *
    * @return the class of java.awt.geom.Dimension2D.
    */
-  public Class getObjectClass()
-  {
+  public Class getObjectClass() {
     return Dimension2D.class;
   }
 }

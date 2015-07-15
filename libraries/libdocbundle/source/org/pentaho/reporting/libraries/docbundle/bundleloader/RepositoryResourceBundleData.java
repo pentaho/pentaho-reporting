@@ -17,10 +17,6 @@
 
 package org.pentaho.reporting.libraries.docbundle.bundleloader;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.Date;
-
 import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
 import org.pentaho.reporting.libraries.docbundle.BundleResourceManagerBackend;
 import org.pentaho.reporting.libraries.repository.ContentEntity;
@@ -38,13 +34,16 @@ import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 import org.pentaho.reporting.libraries.resourceloader.UnrecognizedLoaderException;
 import org.pentaho.reporting.libraries.resourceloader.loader.AbstractResourceData;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Date;
+
 /**
  * A resource-bundle data implementation that uses a LibRepository repository as backend.
  *
  * @author Thomas Morgner
  */
-public class RepositoryResourceBundleData extends AbstractResourceData implements ResourceBundleData
-{
+public class RepositoryResourceBundleData extends AbstractResourceData implements ResourceBundleData {
   private ResourceKey bundleKey;
   private Repository repository;
   private ResourceKey mainKey;
@@ -55,188 +54,138 @@ public class RepositoryResourceBundleData extends AbstractResourceData implement
   /**
    * Creates a new RepositoryResourceBundleData object.
    *
-   * @param bundleKey points to the physical location of the document bundle.
-   * @param repository the repository object loaded from the bundle-key.
-   * @param mainKey the bundles main entry.
+   * @param bundleKey         points to the physical location of the document bundle.
+   * @param repository        the repository object loaded from the bundle-key.
+   * @param mainKey           the bundles main entry.
    * @param failOnMissingData a flag indicating whether to fail on missing entries.
    * @throws ResourceLoadingException
    */
-  public RepositoryResourceBundleData(final ResourceKey bundleKey,
-                                      final Repository repository,
-                                      final ResourceKey mainKey,
-                                      final boolean failOnMissingData) throws ResourceLoadingException
-  {
-    if (bundleKey == null)
-    {
+  public RepositoryResourceBundleData( final ResourceKey bundleKey,
+                                       final Repository repository,
+                                       final ResourceKey mainKey,
+                                       final boolean failOnMissingData ) throws ResourceLoadingException {
+    if ( bundleKey == null ) {
       throw new NullPointerException();
     }
-    if (repository == null)
-    {
+    if ( repository == null ) {
       throw new NullPointerException();
     }
-    if (mainKey == null)
-    {
+    if ( mainKey == null ) {
       throw new NullPointerException();
     }
-    try
-    {
+    try {
       this.bundleKey = bundleKey;
       this.repository = repository;
       this.mainKey = mainKey;
       this.root = repository.getRoot();
       final String identifier = (String) mainKey.getIdentifier();
-      final String[] name = RepositoryUtilities.split(identifier, "/");
-      if (RepositoryUtilities.isExistsEntity(repository, name) == false)
-      {
-        if (failOnMissingData)
-        {
-          throw new UnrecognizedLoaderException("This bundle data does not point to readable content: " + identifier);
-        }
-        else
-        {
+      final String[] name = RepositoryUtilities.split( identifier, "/" );
+      if ( RepositoryUtilities.isExistsEntity( repository, name ) == false ) {
+        if ( failOnMissingData ) {
+          throw new UnrecognizedLoaderException( "This bundle data does not point to readable content: " + identifier );
+        } else {
           this.contentItem = null;
         }
-      }
-      else
-      {
-        final ContentEntity contentEntity = RepositoryUtilities.getEntity(repository, name);
-        if (contentEntity instanceof ContentItem == false)
-        {
-          if (failOnMissingData)
-          {
-            throw new UnrecognizedLoaderException("This bundle data does not point to readable content. Content entity is not a ContentItem");
-          }
-          else
-          {
+      } else {
+        final ContentEntity contentEntity = RepositoryUtilities.getEntity( repository, name );
+        if ( contentEntity instanceof ContentItem == false ) {
+          if ( failOnMissingData ) {
+            throw new UnrecognizedLoaderException(
+              "This bundle data does not point to readable content. Content entity is not a ContentItem" );
+          } else {
             this.contentItem = null;
           }
-        }
-        else
-        {
+        } else {
           this.contentItem = (ContentItem) contentEntity;
         }
       }
-    }
-    catch (ContentIOException e)
-    {
-      throw new ResourceLoadingException("Failed to create Bundle-Data", e);
+    } catch ( ContentIOException e ) {
+      throw new ResourceLoadingException( "Failed to create Bundle-Data", e );
     }
   }
 
-  public Repository getRepository()
-  {
+  public Repository getRepository() {
     return repository;
   }
 
-  public ResourceBundleData deriveData(final ResourceKey key) throws ResourceLoadingException
-  {
-    if (key == null)
-    {
+  public ResourceBundleData deriveData( final ResourceKey key ) throws ResourceLoadingException {
+    if ( key == null ) {
       throw new NullPointerException();
     }
 
-    if (ObjectUtilities.equal(key.getParent(), bundleKey) == false)
-    {
-      throw new IllegalArgumentException("This key is no derivate of the current bundle.");
+    if ( ObjectUtilities.equal( key.getParent(), bundleKey ) == false ) {
+      throw new IllegalArgumentException( "This key is no derivate of the current bundle." );
     }
-    return new RepositoryResourceBundleData(bundleKey, repository, key, true);
+    return new RepositoryResourceBundleData( bundleKey, repository, key, true );
   }
 
-  public InputStream getResourceAsStream(final ResourceManager caller) throws ResourceLoadingException
-  {
-    if (caller == null)
-    {
+  public InputStream getResourceAsStream( final ResourceManager caller ) throws ResourceLoadingException {
+    if ( caller == null ) {
       throw new NullPointerException();
     }
 
-    if (contentItem == null)
-    {
-      throw new ResourceLoadingException("Failure: Missing data");
+    if ( contentItem == null ) {
+      throw new ResourceLoadingException( "Failure: Missing data" );
     }
 
-    try
-    {
+    try {
       return contentItem.getInputStream();
-    }
-    catch (ContentIOException cioe)
-    {
-      throw new ResourceLoadingException("Failure", cioe);
-    }
-    catch (IOException e)
-    {
-      throw new ResourceLoadingException("Failure", e);
+    } catch ( ContentIOException cioe ) {
+      throw new ResourceLoadingException( "Failure", cioe );
+    } catch ( IOException e ) {
+      throw new ResourceLoadingException( "Failure", e );
     }
   }
 
-  public ResourceKey getBundleKey()
-  {
+  public ResourceKey getBundleKey() {
     return bundleKey;
   }
 
-  public Object getAttribute(final String key)
-  {
-    if (key == null)
-    {
+  public Object getAttribute( final String key ) {
+    if ( key == null ) {
       throw new NullPointerException();
     }
 
-    if (contentItem == null)
-    {
+    if ( contentItem == null ) {
       return null;
     }
 
-    if (ResourceData.CONTENT_TYPE.equals(key))
-    {
-      try
-      {
+    if ( ResourceData.CONTENT_TYPE.equals( key ) ) {
+      try {
         return contentItem.getMimeType();
-      }
-      catch (ContentIOException e)
-      {
+      } catch ( ContentIOException e ) {
         return null;
       }
-    }
-    else if (ResourceData.CONTENT_LENGTH.equals(key))
-    {
-      return contentItem.getAttribute(LibRepositoryBoot.REPOSITORY_DOMAIN, LibRepositoryBoot.SIZE_ATTRIBUTE);
-    }
-    else if (ResourceData.FILENAME.equals(key))
-    {
+    } else if ( ResourceData.CONTENT_LENGTH.equals( key ) ) {
+      return contentItem.getAttribute( LibRepositoryBoot.REPOSITORY_DOMAIN, LibRepositoryBoot.SIZE_ATTRIBUTE );
+    } else if ( ResourceData.FILENAME.equals( key ) ) {
       return contentItem.getName();
     }
     return null;
   }
 
-  public ResourceKey getKey()
-  {
+  public ResourceKey getKey() {
     return mainKey;
   }
 
-  public long getVersion(final ResourceManager caller) throws ResourceLoadingException
-  {
-    if (caller == null)
-    {
+  public long getVersion( final ResourceManager caller ) throws ResourceLoadingException {
+    if ( caller == null ) {
       throw new NullPointerException();
     }
 
     final ContentEntity entity;
-    if (contentItem != null)
-    {
+    if ( contentItem != null ) {
       entity = contentItem;
-    }
-    else
-    {
+    } else {
       entity = root;
     }
 
-    final Object attribute = entity.getAttribute(LibRepositoryBoot.REPOSITORY_DOMAIN, LibRepositoryBoot.VERSION_ATTRIBUTE);
-    if (attribute instanceof Number)
-    {
+    final Object attribute =
+      entity.getAttribute( LibRepositoryBoot.REPOSITORY_DOMAIN, LibRepositoryBoot.VERSION_ATTRIBUTE );
+    if ( attribute instanceof Number ) {
       final Number n = (Number) attribute;
       return n.longValue();
-    }
-    else if (attribute instanceof Date)
-    {
+    } else if ( attribute instanceof Date ) {
       final Date d = (Date) attribute;
       return d.getTime();
     }
@@ -244,8 +193,8 @@ public class RepositoryResourceBundleData extends AbstractResourceData implement
     return -1;
   }
 
-  public ResourceManager deriveManager(final ResourceManager parent) throws ResourceLoadingException
-  {
-    return new ResourceManager(parent, new BundleResourceManagerBackend(repository, parent.getBackend(), bundleKey));
+  public ResourceManager deriveManager( final ResourceManager parent ) throws ResourceLoadingException {
+    return new ResourceManager( parent,
+      new BundleResourceManagerBackend( repository, parent.getBackend(), bundleKey ) );
   }
 }

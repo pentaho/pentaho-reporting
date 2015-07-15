@@ -22,21 +22,18 @@ package org.pentaho.reporting.libraries.fonts.encoding;
  *
  * @author Thomas Morgner
  */
-public class EncodingErrorType
-{
-  public static final EncodingErrorType IGNORE = new EncodingErrorType("IGNORE");
-  public static final EncodingErrorType FAIL = new EncodingErrorType("FAIL");
-  public static final EncodingErrorType REPLACE = new EncodingErrorType("REPLACE");
+public class EncodingErrorType {
+  public static final EncodingErrorType IGNORE = new EncodingErrorType( "IGNORE" );
+  public static final EncodingErrorType FAIL = new EncodingErrorType( "FAIL" );
+  public static final EncodingErrorType REPLACE = new EncodingErrorType( "REPLACE" );
 
   private final String myName; // for debug only
 
-  private EncodingErrorType(final String name)
-  {
+  private EncodingErrorType( final String name ) {
     myName = name;
   }
 
-  public String toString()
-  {
+  public String toString() {
     return myName;
   }
 }

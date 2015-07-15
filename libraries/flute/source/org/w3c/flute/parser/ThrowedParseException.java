@@ -26,16 +26,16 @@
 package org.w3c.flute.parser;
 
 /**
+ * @author Philippe Le Hegaret
  * @version $Revision$
- * @author  Philippe Le Hegaret
  */
 class ThrowedParseException extends RuntimeException {
-    ParseException e;
+  ParseException e;
 
-    /**
-     * Creates a new ThrowedParseException
-     */
-    ThrowedParseException(ParseException e) {
-        this.e     = e;
-    }
+  /**
+   * Creates a new ThrowedParseException
+   */
+  ThrowedParseException( ParseException e ) {
+    this.e = e;
+  }
 }

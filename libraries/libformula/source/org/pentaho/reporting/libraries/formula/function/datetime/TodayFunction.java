@@ -17,37 +17,32 @@
 
 package org.pentaho.reporting.libraries.formula.function.datetime;
 
-import java.util.Date;
-
 import org.pentaho.reporting.libraries.formula.EvaluationException;
 import org.pentaho.reporting.libraries.formula.FormulaContext;
-import org.pentaho.reporting.libraries.formula.LocalizationContext;
 import org.pentaho.reporting.libraries.formula.function.Function;
 import org.pentaho.reporting.libraries.formula.function.ParameterCallback;
 import org.pentaho.reporting.libraries.formula.lvalues.TypeValuePair;
 import org.pentaho.reporting.libraries.formula.typing.coretypes.DateTimeType;
 import org.pentaho.reporting.libraries.formula.util.DateUtil;
 
-public class TodayFunction implements Function
-{
+import java.util.Date;
+
+public class TodayFunction implements Function {
   private static final long serialVersionUID = -456922288664083206L;
 
-  public TodayFunction()
-  {
+  public TodayFunction() {
   }
 
-  public String getCanonicalName()
-  {
+  public String getCanonicalName() {
     return "TODAY";
   }
 
-  public TypeValuePair evaluate(final FormulaContext context,
-                                final ParameterCallback parameters)
-      throws EvaluationException
-  {
-    final Date now = DateUtil.now(context);
+  public TypeValuePair evaluate( final FormulaContext context,
+                                 final ParameterCallback parameters )
+    throws EvaluationException {
+    final Date now = DateUtil.now( context );
 
-    final Date date = DateUtil.normalizeDate(now, DateTimeType.DATE_TYPE);
-    return new TypeValuePair(DateTimeType.DATE_TYPE, date);
+    final Date date = DateUtil.normalizeDate( now, DateTimeType.DATE_TYPE );
+    return new TypeValuePair( DateTimeType.DATE_TYPE, date );
   }
 }

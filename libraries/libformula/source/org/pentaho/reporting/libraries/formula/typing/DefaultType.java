@@ -17,37 +17,30 @@
 
 package org.pentaho.reporting.libraries.formula.typing;
 
-public abstract class DefaultType implements Type
-{
+public abstract class DefaultType implements Type {
   private int flags;
   private boolean locked;
   private static final long serialVersionUID = -8206983276033867416L;
 
-  protected DefaultType()
-  {
+  protected DefaultType() {
   }
 
-  public boolean isLocked()
-  {
+  public boolean isLocked() {
     return locked;
   }
 
-  public void lock()
-  {
+  public void lock() {
     this.locked = true;
   }
 
-  public void addFlag(final int name)
-  {
-    if (locked)
-    {
+  public void addFlag( final int name ) {
+    if ( locked ) {
       throw new IllegalStateException();
     }
     flags |= name;
   }
 
-  public boolean isFlagSet(final int name)
-  {
-    return (flags & name) == name;
+  public boolean isFlagSet( final int name ) {
+    return ( flags & name ) == name;
   }
 }

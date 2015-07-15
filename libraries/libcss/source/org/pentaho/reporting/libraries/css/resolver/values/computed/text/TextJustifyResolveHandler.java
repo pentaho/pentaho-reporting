@@ -25,17 +25,15 @@ import org.pentaho.reporting.libraries.css.resolver.values.computed.ConstantsRes
  *
  * @author Thomas Morgner
  */
-public class TextJustifyResolveHandler extends ConstantsResolveHandler
-{
-  public TextJustifyResolveHandler()
-  {
-    addNormalizeValue(TextJustify.INTER_CHARACTER);
-    addNormalizeValue(TextJustify.INTER_CLUSTER);
-    addNormalizeValue(TextJustify.INTER_IDEOGRAPH);
-    addNormalizeValue(TextJustify.INTER_WORD);
-    addNormalizeValue(TextJustify.KASHIDA);
-    addNormalizeValue(TextJustify.SIZE);
-    setFallback(TextJustify.INTER_WORD);
+public class TextJustifyResolveHandler extends ConstantsResolveHandler {
+  public TextJustifyResolveHandler() {
+    addNormalizeValue( TextJustify.INTER_CHARACTER );
+    addNormalizeValue( TextJustify.INTER_CLUSTER );
+    addNormalizeValue( TextJustify.INTER_IDEOGRAPH );
+    addNormalizeValue( TextJustify.INTER_WORD );
+    addNormalizeValue( TextJustify.KASHIDA );
+    addNormalizeValue( TextJustify.SIZE );
+    setFallback( TextJustify.INTER_WORD );
   }
 
 }

@@ -24,8 +24,8 @@ import java.io.Serializable;
  *
  * @author Thomas Morgner
  */
-public interface CSSValue extends Serializable
-{
+public interface CSSValue extends Serializable {
   public String getCSSText();
+
   public CSSType getType();
 }

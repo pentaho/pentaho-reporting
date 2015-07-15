@@ -24,47 +24,38 @@ import org.pentaho.reporting.libraries.formula.typing.coretypes.NumberType;
 
 /**
  * Describes MaxFunction function.
- * @see org.pentaho.reporting.libraries.formula.function.math.MaxFunction
  *
  * @author Cedric Pronzato
- *
+ * @see org.pentaho.reporting.libraries.formula.function.math.MaxFunction
  */
-public class MaxFunctionDescription extends AbstractFunctionDescription
-{
+public class MaxFunctionDescription extends AbstractFunctionDescription {
   private static final long serialVersionUID = 495894247676188783L;
 
-  public MaxFunctionDescription()
-  {
-    super("MAX", "org.pentaho.reporting.libraries.formula.function.math.Max-Function");
+  public MaxFunctionDescription() {
+    super( "MAX", "org.pentaho.reporting.libraries.formula.function.math.Max-Function" );
   }
 
-  public FunctionCategory getCategory()
-  {
+  public FunctionCategory getCategory() {
     return MathFunctionCategory.CATEGORY;
   }
 
-  public int getParameterCount()
-  {
+  public int getParameterCount() {
     return 0;
   }
 
-  public boolean isInfiniteParameterCount()
-  {
+  public boolean isInfiniteParameterCount() {
     return true;
   }
 
-  public Type getParameterType(final int position)
-  {
+  public Type getParameterType( final int position ) {
     return NumberType.NUMBER_SEQUENCE;
   }
 
-  public Type getValueType()
-  {
+  public Type getValueType() {
     return NumberType.GENERIC_NUMBER;
   }
 
-  public boolean isParameterMandatory(final int position)
-  {
+  public boolean isParameterMandatory( final int position ) {
     return true;
   }
 

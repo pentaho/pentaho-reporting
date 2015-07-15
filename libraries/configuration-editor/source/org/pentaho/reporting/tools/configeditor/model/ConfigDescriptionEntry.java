@@ -23,8 +23,7 @@ package org.pentaho.reporting.tools.configeditor.model;
  *
  * @author Thomas Morgner
  */
-public abstract class ConfigDescriptionEntry
-{
+public abstract class ConfigDescriptionEntry {
   /**
    * A description of the given key.
    */
@@ -47,10 +46,8 @@ public abstract class ConfigDescriptionEntry
    *
    * @param keyName the name of the entry.
    */
-  protected ConfigDescriptionEntry(final String keyName)
-  {
-    if (keyName == null)
-    {
+  protected ConfigDescriptionEntry( final String keyName ) {
+    if ( keyName == null ) {
       throw new NullPointerException();
     }
     this.keyName = keyName;
@@ -61,8 +58,7 @@ public abstract class ConfigDescriptionEntry
    *
    * @return the key name.
    */
-  public String getKeyName()
-  {
+  public String getKeyName() {
     return keyName;
   }
 
@@ -71,8 +67,7 @@ public abstract class ConfigDescriptionEntry
    *
    * @return the key description.
    */
-  public String getDescription()
-  {
+  public String getDescription() {
     return description;
   }
 
@@ -81,8 +76,7 @@ public abstract class ConfigDescriptionEntry
    *
    * @param description the key description.
    */
-  public void setDescription(final String description)
-  {
+  public void setDescription( final String description ) {
     this.description = description;
   }
 
@@ -92,8 +86,7 @@ public abstract class ConfigDescriptionEntry
    *
    * @return true, if the key is global, false otherwise.
    */
-  public boolean isGlobal()
-  {
+  public boolean isGlobal() {
     return global;
   }
 
@@ -103,8 +96,7 @@ public abstract class ConfigDescriptionEntry
    *
    * @param global set to true, if the key is global, false otherwise.
    */
-  public void setGlobal(final boolean global)
-  {
+  public void setGlobal( final boolean global ) {
     this.global = global;
   }
 
@@ -113,8 +105,7 @@ public abstract class ConfigDescriptionEntry
    *
    * @return true, if the key is hidden, false otherwise
    */
-  public boolean isHidden()
-  {
+  public boolean isHidden() {
     return hidden;
   }
 
@@ -123,8 +114,7 @@ public abstract class ConfigDescriptionEntry
    *
    * @param hidden set to true, if the key is hidden, false otherwise
    */
-  public void setHidden(final boolean hidden)
-  {
+  public void setHidden( final boolean hidden ) {
     this.hidden = hidden;
   }
 
@@ -136,21 +126,17 @@ public abstract class ConfigDescriptionEntry
    * @return true, if the config entry is equal to the given object, false otherwise.
    * @see Object#equals(Object)
    */
-  public boolean equals(final Object o)
-  {
-    if (this == o)
-    {
+  public boolean equals( final Object o ) {
+    if ( this == o ) {
       return true;
     }
-    if (!(o instanceof ConfigDescriptionEntry))
-    {
+    if ( !( o instanceof ConfigDescriptionEntry ) ) {
       return false;
     }
 
     final ConfigDescriptionEntry configDescriptionEntry = (ConfigDescriptionEntry) o;
 
-    if (!keyName.equals(configDescriptionEntry.keyName))
-    {
+    if ( !keyName.equals( configDescriptionEntry.keyName ) ) {
       return false;
     }
 
@@ -163,8 +149,7 @@ public abstract class ConfigDescriptionEntry
    * @return the hashcode.
    * @see Object#hashCode()
    */
-  public int hashCode()
-  {
+  public int hashCode() {
     return keyName.hashCode();
   }
 }

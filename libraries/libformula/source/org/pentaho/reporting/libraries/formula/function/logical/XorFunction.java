@@ -31,53 +31,42 @@ import org.pentaho.reporting.libraries.formula.typing.coretypes.LogicalType;
  *
  * @author Thomas Morgner
  */
-public class XorFunction implements Function
-{
-  private static final TypeValuePair RETURN_FALSE = new TypeValuePair(LogicalType.TYPE, Boolean.FALSE);
-  private static final TypeValuePair RETURN_TRUE = new TypeValuePair(LogicalType.TYPE, Boolean.TRUE);
+public class XorFunction implements Function {
+  private static final TypeValuePair RETURN_FALSE = new TypeValuePair( LogicalType.TYPE, Boolean.FALSE );
+  private static final TypeValuePair RETURN_TRUE = new TypeValuePair( LogicalType.TYPE, Boolean.TRUE );
   private static final long serialVersionUID = 1593151240024848931L;
 
 
-  public XorFunction()
-  {
+  public XorFunction() {
   }
 
-  public String getCanonicalName()
-  {
+  public String getCanonicalName() {
     return "XOR";
   }
 
 
-  public TypeValuePair evaluate(final FormulaContext context,
-                                final ParameterCallback parameters)
-      throws EvaluationException
-  {
-    if(parameters.getParameterCount() < 1)
-    {
-      throw EvaluationException.getInstance(LibFormulaErrorValue.ERROR_ARGUMENTS_VALUE);
+  public TypeValuePair evaluate( final FormulaContext context,
+                                 final ParameterCallback parameters )
+    throws EvaluationException {
+    if ( parameters.getParameterCount() < 1 ) {
+      throw EvaluationException.getInstance( LibFormulaErrorValue.ERROR_ARGUMENTS_VALUE );
     }
     int count = 0;
     final int parameterCount = parameters.getParameterCount();
-    for (int i = 0; i < parameterCount; i++)
-    {
-      final Type conditionType = parameters.getType(i);
-      final Object conditionValue = parameters.getValue(i);
-      final Boolean condition = context.getTypeRegistry().convertToLogical(conditionType, conditionValue);
-      if(condition == null)
-      {
-        throw EvaluationException.getInstance(LibFormulaErrorValue.ERROR_INVALID_ARGUMENT_VALUE);
+    for ( int i = 0; i < parameterCount; i++ ) {
+      final Type conditionType = parameters.getType( i );
+      final Object conditionValue = parameters.getValue( i );
+      final Boolean condition = context.getTypeRegistry().convertToLogical( conditionType, conditionValue );
+      if ( condition == null ) {
+        throw EvaluationException.getInstance( LibFormulaErrorValue.ERROR_INVALID_ARGUMENT_VALUE );
       }
-      if (Boolean.TRUE.equals(condition))
-      {
+      if ( Boolean.TRUE.equals( condition ) ) {
         count += 1;
       }
     }
-    if (count % 2 == 1)
-    {
+    if ( count % 2 == 1 ) {
       return RETURN_TRUE;
-    }
-    else
-    {
+    } else {
       return RETURN_FALSE;
     }
 

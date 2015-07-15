@@ -17,15 +17,14 @@
 
 package org.pentaho.reporting.libraries.css.selectors.conditions;
 
-import java.io.Serializable;
-
 import org.w3c.css.sac.Condition;
+
+import java.io.Serializable;
 
 /**
  * A marker interface.
  *
  * @author Thomas Morgner
  */
-public interface CSSCondition extends Condition, Serializable
-{
+public interface CSSCondition extends Condition, Serializable {
 }

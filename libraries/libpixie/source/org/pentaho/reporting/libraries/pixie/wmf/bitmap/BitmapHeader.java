@@ -19,8 +19,7 @@ package org.pentaho.reporting.libraries.pixie.wmf.bitmap;
 
 import org.pentaho.reporting.libraries.pixie.wmf.MfRecord;
 
-public final class BitmapHeader
-{
+public final class BitmapHeader {
   public static final int BI_RGB = 0;
   public static final int BI_RLE8 = 1;
   public static final int BI_RLE4 = 2;
@@ -53,27 +52,24 @@ public final class BitmapHeader
   private int noImportantColors; // is <= noColors
   private boolean isTopDown;
 
-  public BitmapHeader()
-  {
+  public BitmapHeader() {
   }
 
-  public void setRecord(final MfRecord record, final int offset)
-  {
-    dataOffset = record.getInt(offset + BMPH_DATA_OFFSET);
-    headerSize = record.getInt(offset + BMPH_HEADERSIZE);
-    width = record.getInt(offset + BMPH_WIDTH);
-    height = record.getInt(offset + BMPH_HEIGHT);
-    noPlanes = record.getShort(offset + BMPH_NO_PLANES);
-    bitPerPixel = record.getShort(offset + BMPH_BPP);
-    compression = record.getInt(offset + BMPH_COMPRESSION);
-    dataSize = record.getInt(offset + BMPH_DATASIZE);
-    hres = record.getInt(offset + BMPH_HRES);
-    vres = record.getInt(offset + BMPH_VRES);
-    noColors = record.getInt(offset + BMPH_NO_COLORS);
-    noImportantColors = record.getInt(offset + BMPH_NO_IMPORTANT_COLORS);
+  public void setRecord( final MfRecord record, final int offset ) {
+    dataOffset = record.getInt( offset + BMPH_DATA_OFFSET );
+    headerSize = record.getInt( offset + BMPH_HEADERSIZE );
+    width = record.getInt( offset + BMPH_WIDTH );
+    height = record.getInt( offset + BMPH_HEIGHT );
+    noPlanes = record.getShort( offset + BMPH_NO_PLANES );
+    bitPerPixel = record.getShort( offset + BMPH_BPP );
+    compression = record.getInt( offset + BMPH_COMPRESSION );
+    dataSize = record.getInt( offset + BMPH_DATASIZE );
+    hres = record.getInt( offset + BMPH_HRES );
+    vres = record.getInt( offset + BMPH_VRES );
+    noColors = record.getInt( offset + BMPH_NO_COLORS );
+    noImportantColors = record.getInt( offset + BMPH_NO_IMPORTANT_COLORS );
 
-    if (height < 0)
-    {
+    if ( height < 0 ) {
       isTopDown = true;
       height = -height;
     }
@@ -81,84 +77,67 @@ public final class BitmapHeader
     fixPalette();
   }
 
-  private void fixPalette()
-  {
-    if (bitPerPixel < 16)
-    {
-      if (noColors == 0)
-      {
-        noColors = (int) StrictMath.pow(2, bitPerPixel);
+  private void fixPalette() {
+    if ( bitPerPixel < 16 ) {
+      if ( noColors == 0 ) {
+        noColors = (int) StrictMath.pow( 2, bitPerPixel );
       }
 
-      if (noImportantColors == 0)
-      {
-        noImportantColors = (int) StrictMath.pow(2, bitPerPixel);
+      if ( noImportantColors == 0 ) {
+        noImportantColors = (int) StrictMath.pow( 2, bitPerPixel );
       }
     }
   }
 
-  public int getHeaderSize()
-  {
+  public int getHeaderSize() {
     return headerSize;
   }
 
-  public int getCompression()
-  {
+  public int getCompression() {
     return compression;
   }
 
-  public int getBitsPerPixel()
-  {
+  public int getBitsPerPixel() {
     return bitPerPixel;
   }
 
-  public int getHRes()
-  {
+  public int getHRes() {
     return hres;
   }
 
-  public int getVRes()
-  {
+  public int getVRes() {
     return vres;
   }
 
-  public int getWidth()
-  {
+  public int getWidth() {
     return width;
   }
 
-  public int getHeight()
-  {
+  public int getHeight() {
     return height;
   }
 
-  public int getNoOfColors()
-  {
+  public int getNoOfColors() {
     return noColors;
   }
 
-  public int getNoOfImportantColors()
-  {
+  public int getNoOfImportantColors() {
     return noImportantColors;
   }
 
-  public boolean isTopDown()
-  {
+  public boolean isTopDown() {
     return isTopDown;
   }
 
-  public int getDataOffset()
-  {
+  public int getDataOffset() {
     return dataOffset;
   }
 
-  public int getDataSize()
-  {
+  public int getDataSize() {
     return dataSize;
   }
 
-  public int getNoPlanes()
-  {
+  public int getNoPlanes() {
     return noPlanes;
   }
 }

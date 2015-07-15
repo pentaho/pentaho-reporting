@@ -22,8 +22,7 @@ package org.pentaho.reporting.libraries.fonts.registry;
  *
  * @author Thomas Morgner
  */
-public interface FontSource extends FontRecord
-{
+public interface FontSource extends FontRecord {
 
   /**
    * Returns the file name used to load the font. This method exists only for iText.

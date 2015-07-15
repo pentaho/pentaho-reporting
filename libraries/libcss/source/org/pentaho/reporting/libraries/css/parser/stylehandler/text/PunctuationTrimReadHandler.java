@@ -25,12 +25,10 @@ import org.pentaho.reporting.libraries.css.parser.stylehandler.OneOfConstantsRea
  *
  * @author Thomas Morgner
  */
-public class PunctuationTrimReadHandler extends OneOfConstantsReadHandler
-{
-  public PunctuationTrimReadHandler()
-  {
-    super(false);
-    addValue(PunctuationTrim.NONE);
-    addValue(PunctuationTrim.START);
+public class PunctuationTrimReadHandler extends OneOfConstantsReadHandler {
+  public PunctuationTrimReadHandler() {
+    super( false );
+    addValue( PunctuationTrim.NONE );
+    addValue( PunctuationTrim.START );
   }
 }

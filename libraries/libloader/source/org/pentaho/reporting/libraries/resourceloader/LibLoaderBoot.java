@@ -22,21 +22,17 @@ import org.pentaho.reporting.libraries.base.boot.PackageManager;
 import org.pentaho.reporting.libraries.base.config.Configuration;
 import org.pentaho.reporting.libraries.base.versioning.ProjectInformation;
 
-public class LibLoaderBoot extends AbstractBoot
-{
+public class LibLoaderBoot extends AbstractBoot {
   private static LibLoaderBoot singleton;
 
-  public static LibLoaderBoot getInstance()
-  {
-    if (singleton == null)
-    {
+  public static LibLoaderBoot getInstance() {
+    if ( singleton == null ) {
       singleton = new LibLoaderBoot();
     }
     return singleton;
   }
 
-  private LibLoaderBoot ()
-  {
+  private LibLoaderBoot() {
   }
 
   /**
@@ -44,8 +40,7 @@ public class LibLoaderBoot extends AbstractBoot
    *
    * @return The project info.
    */
-  protected ProjectInformation getProjectInfo ()
-  {
+  protected ProjectInformation getProjectInfo() {
     return LibLoaderInfo.getInstance();
   }
 
@@ -54,20 +49,18 @@ public class LibLoaderBoot extends AbstractBoot
    *
    * @return The configuration.
    */
-  protected Configuration loadConfiguration ()
-  {
+  protected Configuration loadConfiguration() {
     return createDefaultHierarchicalConfiguration
-            ("/org/pentaho/reporting/libraries/resourceloader/loader.properties",
-             "/loader.properties", true, LibLoaderBoot.class);
+      ( "/org/pentaho/reporting/libraries/resourceloader/loader.properties",
+        "/loader.properties", true, LibLoaderBoot.class );
   }
 
   /**
    * Performs the boot.
    */
-  protected void performBoot ()
-  {
+  protected void performBoot() {
     final PackageManager packageManager = getPackageManager();
-    packageManager.load("org.pentaho.reporting.libraries.resourceloader.modules.");
+    packageManager.load( "org.pentaho.reporting.libraries.resourceloader.modules." );
     packageManager.initializeModules();
   }
 }

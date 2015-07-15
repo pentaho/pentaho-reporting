@@ -24,52 +24,42 @@ import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
  *
  * @author Thomas Morgner
  */
-public class CSSValuePair implements CSSValue
-{
+public class CSSValuePair implements CSSValue {
   private CSSValue firstValue;
   private CSSValue secondValue;
 
-  public CSSValuePair(final CSSValue firstValue)
-  {
-    if (firstValue == null)
-    {
+  public CSSValuePair( final CSSValue firstValue ) {
+    if ( firstValue == null ) {
       throw new NullPointerException();
     }
     this.firstValue = firstValue;
     this.secondValue = firstValue;
   }
 
-  public CSSValuePair(final CSSValue firstValue, final CSSValue secondValue)
-  {
-    if (firstValue == null)
-    {
+  public CSSValuePair( final CSSValue firstValue, final CSSValue secondValue ) {
+    if ( firstValue == null ) {
       throw new NullPointerException();
     }
-    if (secondValue == null)
-    {
+    if ( secondValue == null ) {
       throw new NullPointerException();
     }
     this.firstValue = firstValue;
     this.secondValue = secondValue;
   }
 
-  public CSSValue getFirstValue()
-  {
+  public CSSValue getFirstValue() {
     return firstValue;
   }
 
-  public CSSValue getSecondValue()
-  {
+  public CSSValue getSecondValue() {
     return secondValue;
   }
 
-  public String getCSSText()
-  {
+  public String getCSSText() {
     return firstValue.getCSSText() + " " + secondValue.getCSSText();
   }
 
-  public String toString()
-  {
+  public String toString() {
     return getCSSText();
   }
 
@@ -78,22 +68,18 @@ public class CSSValuePair implements CSSValue
    *
    * @return <code>true</code> if the supplied object is equivalent to this object, <code>false</code> otherwise
    */
-  public boolean equals(Object obj)
-  {
-    if (obj instanceof CSSValuePair)
-    {
+  public boolean equals( Object obj ) {
+    if ( obj instanceof CSSValuePair ) {
       CSSValuePair that = (CSSValuePair) obj;
-      return (ObjectUtilities.equal(this.firstValue, that.firstValue) && ObjectUtilities.equal(this.secondValue, that.secondValue));
-    }
-    else
-    {
+      return ( ObjectUtilities.equal( this.firstValue, that.firstValue ) && ObjectUtilities
+        .equal( this.secondValue, that.secondValue ) );
+    } else {
       return false;
     }
   }
 
 
-  public CSSType getType()
-  {
+  public CSSType getType() {
     return CSSGenericType.GENERIC_TYPE;
   }
 }

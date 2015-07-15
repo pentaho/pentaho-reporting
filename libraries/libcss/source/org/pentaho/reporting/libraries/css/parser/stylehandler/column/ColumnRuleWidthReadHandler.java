@@ -24,10 +24,8 @@ import org.pentaho.reporting.libraries.css.parser.stylehandler.border.BorderWidt
  *
  * @author Thomas Morgner
  */
-public class ColumnRuleWidthReadHandler extends BorderWidthReadHandler
-{
-  public ColumnRuleWidthReadHandler()
-  {
-    super(true, false);
+public class ColumnRuleWidthReadHandler extends BorderWidthReadHandler {
+  public ColumnRuleWidthReadHandler() {
+    super( true, false );
   }
 }

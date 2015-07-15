@@ -17,26 +17,23 @@
 
 package org.pentaho.reporting.libraries.formula.function.text;
 
-import java.math.BigDecimal;
-
 import org.pentaho.reporting.libraries.formula.FormulaTestBase;
+
+import java.math.BigDecimal;
 
 /**
  * @author Cedric Pronzato
  */
-public class CharFunctionTest extends FormulaTestBase
-{
-  public void testDefault() throws Exception
-  {
+public class CharFunctionTest extends FormulaTestBase {
+  public void testDefault() throws Exception {
     runDefaultTest();
   }
 
-  public Object[][] createDataTest()
-  {
+  public Object[][] createDataTest() {
     return new Object[][]
-        {
-            {"CHAR(65)", "A"},
-            {"LEN(CHAR(10))", new BigDecimal(1)},
-        };
+      {
+        { "CHAR(65)", "A" },
+        { "LEN(CHAR(10))", new BigDecimal( 1 ) },
+      };
   }
 }

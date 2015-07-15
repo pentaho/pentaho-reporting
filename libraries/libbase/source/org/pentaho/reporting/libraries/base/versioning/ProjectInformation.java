@@ -17,21 +17,20 @@
 
 package org.pentaho.reporting.libraries.base.versioning;
 
+import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
+
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 
-import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
-
 /**
- * The project information structure contains information about the current project. This is an extended version
- * of the dependency information enriched with information about the boot-process and a list of dependencies.
+ * The project information structure contains information about the current project. This is an extended version of the
+ * dependency information enriched with information about the boot-process and a list of dependencies.
  * <p/>
  * This class needs to be subclassed by each project that wants to participate in the global boot process.
  *
  * @author Thomas Morgner
  */
-public abstract class ProjectInformation extends DependencyInformation
-{
+public abstract class ProjectInformation extends DependencyInformation {
   private String copyright;
   private String bootClass;
   private ArrayList<DependencyInformation> libraries;
@@ -44,27 +43,22 @@ public abstract class ProjectInformation extends DependencyInformation
    *
    * @param name the name of the project, when internal and public names are equal.
    */
-  protected ProjectInformation(final String name)
-  {
-    this(name, name);
+  protected ProjectInformation( final String name ) {
+    this( name, name );
   }
 
   /**
-   * Creates a new project information object with the given name. The internal name is used to lookup the
-   * version information in the manifest file, while the public name is presented to the humans.
+   * Creates a new project information object with the given name. The internal name is used to lookup the version
+   * information in the manifest file, while the public name is presented to the humans.
    *
    * @param internalName the internal name of the project.
    * @param publicName   the public name of the project.
    */
-  protected ProjectInformation(final String internalName, final String publicName)
-  {
-    super(publicName);
-    if (internalName == null)
-    {
+  protected ProjectInformation( final String internalName, final String publicName ) {
+    super( publicName );
+    if ( internalName == null ) {
       this.internalName = publicName;
-    }
-    else
-    {
+    } else {
       this.internalName = internalName;
     }
     this.libraries = new ArrayList<DependencyInformation>();
@@ -72,16 +66,14 @@ public abstract class ProjectInformation extends DependencyInformation
   }
 
   /**
-   * Returs a version helper for this project. The version helper is used to extract the versioning information
-   * from the manifest file of the project's JAR.
+   * Returs a version helper for this project. The version helper is used to extract the versioning information from the
+   * manifest file of the project's JAR.
    *
    * @return the version helper, never null.
    */
-  private synchronized VersionHelper getVersionHelper()
-  {
-    if (versionHelper == null)
-    {
-      versionHelper = new VersionHelper(this);
+  private synchronized VersionHelper getVersionHelper() {
+    if ( versionHelper == null ) {
+      versionHelper = new VersionHelper( this );
     }
     return versionHelper;
   }
@@ -91,8 +83,7 @@ public abstract class ProjectInformation extends DependencyInformation
    *
    * @return the copyright string (might be null).
    */
-  public String getCopyright()
-  {
+  public String getCopyright() {
     return copyright;
   }
 
@@ -101,8 +92,7 @@ public abstract class ProjectInformation extends DependencyInformation
    *
    * @param copyright the copyright string.
    */
-  protected void setCopyright(final String copyright)
-  {
+  protected void setCopyright( final String copyright ) {
     this.copyright = copyright;
   }
 
@@ -111,8 +101,7 @@ public abstract class ProjectInformation extends DependencyInformation
    *
    * @return the internal name, never null.
    */
-  public String getInternalName()
-  {
+  public String getInternalName() {
     return internalName;
   }
 
@@ -121,8 +110,7 @@ public abstract class ProjectInformation extends DependencyInformation
    *
    * @return the bootclass (might be null).
    */
-  public String getBootClass()
-  {
+  public String getBootClass() {
     return bootClass;
   }
 
@@ -131,8 +119,7 @@ public abstract class ProjectInformation extends DependencyInformation
    *
    * @param bootClass the bootclass (might be null).
    */
-  protected void setBootClass(final String bootClass)
-  {
+  protected void setBootClass( final String bootClass ) {
     this.bootClass = bootClass;
   }
 
@@ -141,10 +128,9 @@ public abstract class ProjectInformation extends DependencyInformation
    *
    * @return the list of libraries.
    */
-  public DependencyInformation[] getLibraries()
-  {
+  public DependencyInformation[] getLibraries() {
     return this.libraries.toArray
-        (new DependencyInformation[this.libraries.size()]);
+      ( new DependencyInformation[ this.libraries.size() ] );
   }
 
   /**
@@ -152,18 +138,15 @@ public abstract class ProjectInformation extends DependencyInformation
    *
    * @param library the library.
    */
-  public void addLibrary(final DependencyInformation library)
-  {
-    if (library == null)
-    {
+  public void addLibrary( final DependencyInformation library ) {
+    if ( library == null ) {
       throw new NullPointerException();
     }
-    if (this.libraries.contains(library))
-    {
+    if ( this.libraries.contains( library ) ) {
       throw new NullPointerException();
     }
 
-    this.libraries.add(library);
+    this.libraries.add( library );
   }
 
   /**
@@ -171,9 +154,8 @@ public abstract class ProjectInformation extends DependencyInformation
    *
    * @return the list of libraries.
    */
-  public DependencyInformation[] getOptionalLibraries()
-  {
-    return optionalLibraries.toArray(new DependencyInformation[optionalLibraries.size()]);
+  public DependencyInformation[] getOptionalLibraries() {
+    return optionalLibraries.toArray( new DependencyInformation[ optionalLibraries.size() ] );
   }
 
   /**
@@ -182,50 +164,40 @@ public abstract class ProjectInformation extends DependencyInformation
    *
    * @param libraryClass the library.
    */
-  protected void addOptionalLibrary(final String libraryClass)
-  {
-    if (libraryClass == null)
-    {
-      throw new NullPointerException("Library classname must be given.");
+  protected void addOptionalLibrary( final String libraryClass ) {
+    if ( libraryClass == null ) {
+      throw new NullPointerException( "Library classname must be given." );
     }
-    final DependencyInformation depInfo = loadLibrary(libraryClass);
-    if (depInfo != null)
-    {
-      this.optionalLibraries.add(depInfo);
+    final DependencyInformation depInfo = loadLibrary( libraryClass );
+    if ( depInfo != null ) {
+      this.optionalLibraries.add( depInfo );
     }
   }
 
   /**
    * Tries to load the dependency information for the given class.
    *
-   * @param classname the classname of the class that contains the <code>public static
-   * DependencyInformation getInstance()</code> method.
-   * @return the dependency information for the library or null, if the library's project-info class could not be loaded.
+   * @param classname the classname of the class that contains the <code>public static DependencyInformation
+   *                  getInstance()</code> method.
+   * @return the dependency information for the library or null, if the library's project-info class could not be
+   * loaded.
    */
-  private DependencyInformation loadLibrary(final String classname)
-  {
-    if (classname == null)
-    {
+  private DependencyInformation loadLibrary( final String classname ) {
+    if ( classname == null ) {
       return null;
     }
-    try
-    {
-      final ClassLoader loader = ObjectUtilities.getClassLoader(getClass());
-      final Class c = Class.forName(classname, false, loader);
-      try
-      {
+    try {
+      final ClassLoader loader = ObjectUtilities.getClassLoader( getClass() );
+      final Class c = Class.forName( classname, false, loader );
+      try {
         // This cast is necessary for JDK 1.5 or later
-        final Method m = c.getMethod("getInstance", (Class[]) null);
-        return (DependencyInformation) m.invoke(null, (Object[]) null);
-      }
-      catch (Exception e)
-      {
+        final Method m = c.getMethod( "getInstance", (Class[]) null );
+        return (DependencyInformation) m.invoke( null, (Object[]) null );
+      } catch ( Exception e ) {
         // ok, fall back ...
       }
       return (DependencyInformation) c.newInstance();
-    }
-    catch (Exception e)
-    {
+    } catch ( Exception e ) {
       // ok, this library has no 'getInstance()' method. Check the
       // default constructor ...
       return null;
@@ -238,13 +210,11 @@ public abstract class ProjectInformation extends DependencyInformation
    *
    * @param library the library.
    */
-  protected void addOptionalLibrary(final DependencyInformation library)
-  {
-    if (library == null)
-    {
-      throw new NullPointerException("Library must be given.");
+  protected void addOptionalLibrary( final DependencyInformation library ) {
+    if ( library == null ) {
+      throw new NullPointerException( "Library must be given." );
     }
-    this.optionalLibraries.add(library);
+    this.optionalLibraries.add( library );
   }
 
   /**
@@ -252,8 +222,7 @@ public abstract class ProjectInformation extends DependencyInformation
    *
    * @return the version, or null if no version information is known.
    */
-  public String getVersion()
-  {
+  public String getVersion() {
     return getVersionHelper().getVersion();
   }
 
@@ -262,8 +231,7 @@ public abstract class ProjectInformation extends DependencyInformation
    *
    * @return the product ID, or null if none is specified in the manifest.
    */
-  public String getProductId()
-  {
+  public String getProductId() {
     return getVersionHelper().getProductId();
   }
 
@@ -272,8 +240,7 @@ public abstract class ProjectInformation extends DependencyInformation
    *
    * @return the release milestone number, or null if none is specified in the manifest.
    */
-  public String getReleaseMilestone()
-  {
+  public String getReleaseMilestone() {
     return getVersionHelper().getReleaseMilestone();
   }
 
@@ -282,8 +249,7 @@ public abstract class ProjectInformation extends DependencyInformation
    *
    * @return the release minor version number, or null if none is specified in the manifest.
    */
-  public String getReleaseMinor()
-  {
+  public String getReleaseMinor() {
     return getVersionHelper().getReleaseMinor();
   }
 
@@ -292,8 +258,7 @@ public abstract class ProjectInformation extends DependencyInformation
    *
    * @return the release major version number, or null if none is specified in the manifest.
    */
-  public String getReleaseMajor()
-  {
+  public String getReleaseMajor() {
     return getVersionHelper().getReleaseMajor();
   }
 
@@ -302,8 +267,7 @@ public abstract class ProjectInformation extends DependencyInformation
    *
    * @return the release candidate token, or null if none is specified in the manifest.
    */
-  public String getReleaseCandidateToken()
-  {
+  public String getReleaseCandidateToken() {
     return getVersionHelper().getReleaseCandidateToken();
   }
 
@@ -312,8 +276,7 @@ public abstract class ProjectInformation extends DependencyInformation
    *
    * @return the release number, or null if none is specified in the manifest.
    */
-  public String getReleaseNumber()
-  {
+  public String getReleaseNumber() {
     return getVersionHelper().getReleaseNumber();
   }
 
@@ -322,8 +285,7 @@ public abstract class ProjectInformation extends DependencyInformation
    *
    * @return the release build number, or null if none is specified in the manifest.
    */
-  public String getReleaseBuildNumber()
-  {
+  public String getReleaseBuildNumber() {
     return versionHelper.getReleaseBuildNumber();
   }
 }

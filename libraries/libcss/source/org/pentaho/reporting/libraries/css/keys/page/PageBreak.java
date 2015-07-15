@@ -24,14 +24,12 @@ import org.pentaho.reporting.libraries.css.values.CSSConstant;
  *
  * @author Thomas Morgner
  */
-public class PageBreak
-{
-  public static CSSConstant ALWAYS = new CSSConstant("always");
-  public static CSSConstant AVOID = new CSSConstant("avoid");
-  public static CSSConstant LEFT = new CSSConstant("left");
-  public static CSSConstant RIGHT = new CSSConstant("right");
+public class PageBreak {
+  public static CSSConstant ALWAYS = new CSSConstant( "always" );
+  public static CSSConstant AVOID = new CSSConstant( "avoid" );
+  public static CSSConstant LEFT = new CSSConstant( "left" );
+  public static CSSConstant RIGHT = new CSSConstant( "right" );
 
-  private PageBreak()
-  {
+  private PageBreak() {
   }
 }

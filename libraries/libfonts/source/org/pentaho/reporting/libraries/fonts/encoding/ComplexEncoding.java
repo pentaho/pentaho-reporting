@@ -18,14 +18,12 @@
 package org.pentaho.reporting.libraries.fonts.encoding;
 
 /**
- * A complex encoding has a non-uniform relationship between the number of
- * characters and the number of bytes generated. UTF-8 is an example for such
- * a non-uniform encoding.
+ * A complex encoding has a non-uniform relationship between the number of characters and the number of bytes generated.
+ * UTF-8 is an example for such a non-uniform encoding.
  *
  * @author Thomas Morgner
  */
-public interface ComplexEncoding extends Encoding
-{
+public interface ComplexEncoding extends Encoding {
   /**
    * Checks, whether this implementation supports encoding of character data.
    *

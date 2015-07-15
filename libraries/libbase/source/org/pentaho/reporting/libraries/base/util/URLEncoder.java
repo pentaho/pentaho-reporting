@@ -24,10 +24,8 @@ import java.io.UnsupportedEncodingException;
  *
  * @author Thomas Morgner moved by Tyler Band
  */
-public class URLEncoder
-{
-  private URLEncoder()
-  {
+public class URLEncoder {
+  private URLEncoder() {
   }
 
   private static final String[] hex = {
@@ -68,119 +66,88 @@ public class URLEncoder
   /**
    * Encode a string according to RFC 1738.
    * <p/>
-   * <quote> "...Only alphanumerics [0-9a-zA-Z], the special characters "$-_.+!*'()," [not
-   * including the quotes - ed], and reserved characters used for their reserved purposes
-   * may be used unencoded within a URL."</quote>
+   * <quote> "...Only alphanumerics [0-9a-zA-Z], the special characters "$-_.+!*'()," [not including the quotes - ed],
+   * and reserved characters used for their reserved purposes may be used unencoded within a URL."</quote>
    * <p/>
-   * <ul> <li><p>The ASCII characters 'a' through 'z', 'A' through 'Z', and '0' through
-   * '9' remain the same.
+   * <ul> <li><p>The ASCII characters 'a' through 'z', 'A' through 'Z', and '0' through '9' remain the same.
    * <p/>
    * <li><p>The unreserved characters - _ . ! ~ * ' ( ) remain the same.
    * <p/>
-   * <li><p>All other ASCII characters are converted into the 3-character string "%xy",
-   * where xy is the two-digit hexadecimal representation of the character code
+   * <li><p>All other ASCII characters are converted into the 3-character string "%xy", where xy is the two-digit
+   * hexadecimal representation of the character code
    * <p/>
-   * <li><p>All non-ASCII characters are encoded in two steps: first to a sequence of 2 or
-   * 3 bytes, using the UTF-8 algorithm; secondly each of these bytes is encoded as "%xx".
-   * </ul>
-   *
-   * This method was adapted from http://www.w3.org/International/URLUTF8Encoder.java
-   * Licensed under http://www.w3.org/Consortium/Legal/2002/copyright-software-20021231
+   * <li><p>All non-ASCII characters are encoded in two steps: first to a sequence of 2 or 3 bytes, using the UTF-8
+   * algorithm; secondly each of these bytes is encoded as "%xx". </ul>
+   * <p/>
+   * This method was adapted from http://www.w3.org/International/URLUTF8Encoder.java Licensed under
+   * http://www.w3.org/Consortium/Legal/2002/copyright-software-20021231
    *
    * @param s The string to be encoded
    * @return The encoded string
    */
-  public static String encodeUTF8 (final String s)
-  {
-    final StringBuffer sbuf = new StringBuffer(s.length());
+  public static String encodeUTF8( final String s ) {
+    final StringBuffer sbuf = new StringBuffer( s.length() );
     final char[] sChars = s.toCharArray();
     final int len = sChars.length;
-    for (int i = 0; i < len; i++)
-    {
-      final int ch = sChars[i];
-      if ('A' <= ch && ch <= 'Z')
-      {		// 'A'..'Z'
-        sbuf.append((char) ch);
-      }
-      else if ('a' <= ch && ch <= 'z')
-      {	// 'a'..'z'
-        sbuf.append((char) ch);
-      }
-      else if ('0' <= ch && ch <= '9')
-      {	// '0'..'9'
-        sbuf.append((char) ch);
-      }
-      else if (ch == '-' || ch == '_'		// unreserved
-              || ch == '.' || ch == '!'
-              || ch == '~' || ch == '*'
-              || ch == '\'' || ch == '('
-              || ch == ')')
-      {
-        sbuf.append((char) ch);
-      }
-      else if (ch <= 0x007f)
-      {		// other ASCII
-        sbuf.append(hex[ch]);
-      }
-      else if (ch <= 0x07FF)
-      {		// non-ASCII <= 0x7FF
-        sbuf.append(hex[0xc0 | (ch >> 6)]);
-        sbuf.append(hex[0x80 | (ch & 0x3F)]);
-      }
-      else
-      {					// 0x7FF < ch <= 0xFFFF
-        sbuf.append(hex[0xe0 | (ch >> 12)]);
-        sbuf.append(hex[0x80 | ((ch >> 6) & 0x3F)]);
-        sbuf.append(hex[0x80 | (ch & 0x3F)]);
+    for ( int i = 0; i < len; i++ ) {
+      final int ch = sChars[ i ];
+      if ( 'A' <= ch && ch <= 'Z' ) {    // 'A'..'Z'
+        sbuf.append( (char) ch );
+      } else if ( 'a' <= ch && ch <= 'z' ) {  // 'a'..'z'
+        sbuf.append( (char) ch );
+      } else if ( '0' <= ch && ch <= '9' ) {  // '0'..'9'
+        sbuf.append( (char) ch );
+      } else if ( ch == '-' || ch == '_'    // unreserved
+        || ch == '.' || ch == '!'
+        || ch == '~' || ch == '*'
+        || ch == '\'' || ch == '('
+        || ch == ')' ) {
+        sbuf.append( (char) ch );
+      } else if ( ch <= 0x007f ) {    // other ASCII
+        sbuf.append( hex[ ch ] );
+      } else if ( ch <= 0x07FF ) {    // non-ASCII <= 0x7FF
+        sbuf.append( hex[ 0xc0 | ( ch >> 6 ) ] );
+        sbuf.append( hex[ 0x80 | ( ch & 0x3F ) ] );
+      } else {          // 0x7FF < ch <= 0xFFFF
+        sbuf.append( hex[ 0xe0 | ( ch >> 12 ) ] );
+        sbuf.append( hex[ 0x80 | ( ( ch >> 6 ) & 0x3F ) ] );
+        sbuf.append( hex[ 0x80 | ( ch & 0x3F ) ] );
       }
     }
     return sbuf.toString();
   }
 
-  private static String encodeBytes (final byte[] s)
-  {
-    final StringBuffer sbuf = new StringBuffer(s.length);
+  private static String encodeBytes( final byte[] s ) {
+    final StringBuffer sbuf = new StringBuffer( s.length );
     final int len = s.length;
-    for (int i = 0; i < len; i++)
-    {
-      final int ch = (s[i] & 0xff);
-      if ('A' <= ch && ch <= 'Z')
-      {		// 'A'..'Z'
-        sbuf.append((char) ch);
-      }
-      else if ('a' <= ch && ch <= 'z')
-      {	// 'a'..'z'
-        sbuf.append((char) ch);
-      }
-      else if ('0' <= ch && ch <= '9')
-      {	// '0'..'9'
-        sbuf.append((char) ch);
-      }
-      else if (ch == '-' || ch == '_'		// unreserved
-              || ch == '.' || ch == '!'
-              || ch == '~' || ch == '*'
-              || ch == '\'' || ch == '('
-              || ch == ')')
-      {
-        sbuf.append((char) ch);
-      }
-      else
-      {		// other ASCII
-        sbuf.append(hex[ch]);
+    for ( int i = 0; i < len; i++ ) {
+      final int ch = ( s[ i ] & 0xff );
+      if ( 'A' <= ch && ch <= 'Z' ) {    // 'A'..'Z'
+        sbuf.append( (char) ch );
+      } else if ( 'a' <= ch && ch <= 'z' ) {  // 'a'..'z'
+        sbuf.append( (char) ch );
+      } else if ( '0' <= ch && ch <= '9' ) {  // '0'..'9'
+        sbuf.append( (char) ch );
+      } else if ( ch == '-' || ch == '_'    // unreserved
+        || ch == '.' || ch == '!'
+        || ch == '~' || ch == '*'
+        || ch == '\'' || ch == '('
+        || ch == ')' ) {
+        sbuf.append( (char) ch );
+      } else {    // other ASCII
+        sbuf.append( hex[ ch ] );
       }
     }
     return sbuf.toString();
   }
 
-  public static String encode (final String s, final String encoding)
-          throws UnsupportedEncodingException
-  {
-    if ("utf-8".equalsIgnoreCase(encoding))
-    {
-      return encodeUTF8(s);
+  public static String encode( final String s, final String encoding )
+    throws UnsupportedEncodingException {
+    if ( "utf-8".equalsIgnoreCase( encoding ) ) {
+      return encodeUTF8( s );
     }
 
-    return encodeBytes(s.getBytes(encoding));
+    return encodeBytes( s.getBytes( encoding ) );
   }
 
 }

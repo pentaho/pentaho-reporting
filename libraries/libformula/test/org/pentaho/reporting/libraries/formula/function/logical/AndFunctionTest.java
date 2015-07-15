@@ -22,27 +22,24 @@ import org.pentaho.reporting.libraries.formula.FormulaTestBase;
 /**
  * @author Cedric Pronzato
  */
-public class AndFunctionTest extends FormulaTestBase
-{
-  public void testDefault() throws Exception
-  {
+public class AndFunctionTest extends FormulaTestBase {
+  public void testDefault() throws Exception {
     runDefaultTest();
   }
 
-  public Object[][] createDataTest()
-  {
+  public Object[][] createDataTest() {
     return new Object[][]
-        {
-            {"AND(FALSE();FALSE())", Boolean.FALSE},
-            {"AND(FALSE();TRUE())", Boolean.FALSE},
-            {"AND(TRUE();FALSE())", Boolean.FALSE},
-            {"AND(TRUE();TRUE())", Boolean.TRUE},
-            //define NA first {new Formula("AND(TRUE();NA())"), },
-            {"AND(1;TRUE())", Boolean.TRUE},
-            {"AND(0;TRUE())", Boolean.FALSE},
-            {"AND(TRUE();TRUE();TRUE())", Boolean.TRUE},
-            {"AND(TRUE())", Boolean.TRUE},
-        };
+      {
+        { "AND(FALSE();FALSE())", Boolean.FALSE },
+        { "AND(FALSE();TRUE())", Boolean.FALSE },
+        { "AND(TRUE();FALSE())", Boolean.FALSE },
+        { "AND(TRUE();TRUE())", Boolean.TRUE },
+        //define NA first {new Formula("AND(TRUE();NA())"), },
+        { "AND(1;TRUE())", Boolean.TRUE },
+        { "AND(0;TRUE())", Boolean.FALSE },
+        { "AND(TRUE();TRUE();TRUE())", Boolean.TRUE },
+        { "AND(TRUE())", Boolean.TRUE },
+      };
   }
 
 }

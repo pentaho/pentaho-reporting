@@ -25,30 +25,24 @@ import org.pentaho.reporting.libraries.css.values.CSSValue;
 import org.w3c.css.sac.LexicalUnit;
 
 /**
- * Warning: This *is* a compound property, but one if its values depend on
- * the element structure and it changes its meaning if used in Tables.
+ * Warning: This *is* a compound property, but one if its values depend on the element structure and it changes its
+ * meaning if used in Tables.
  *
  * @author Thomas Morgner
  */
-public class DropInitialValueReadHandler extends OneOfConstantsReadHandler
-{
-  public DropInitialValueReadHandler()
-  {
-    super(false);
-    addValue(new CSSConstant("initial"));
+public class DropInitialValueReadHandler extends OneOfConstantsReadHandler {
+  public DropInitialValueReadHandler() {
+    super( false );
+    addValue( new CSSConstant( "initial" ) );
   }
 
-  protected CSSValue lookupValue(final LexicalUnit value)
-  {
-    CSSValue constant = super.lookupValue(value);
-    if (constant != null)
-    {
+  protected CSSValue lookupValue( final LexicalUnit value ) {
+    CSSValue constant = super.lookupValue( value );
+    if ( constant != null ) {
       return constant;
-    }
-    else if (value.getLexicalUnitType() == LexicalUnit.SAC_INTEGER)
-    {
-      return CSSNumericValue.createValue(CSSNumericType.NUMBER,
-          value.getIntegerValue());
+    } else if ( value.getLexicalUnitType() == LexicalUnit.SAC_INTEGER ) {
+      return CSSNumericValue.createValue( CSSNumericType.NUMBER,
+        value.getIntegerValue() );
     }
 
     return null;

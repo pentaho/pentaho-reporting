@@ -24,12 +24,11 @@ import org.pentaho.reporting.libraries.fonts.text.ClassificationProducer;
  *
  * @author Thomas Morgner
  */
-public interface GlyphClassificationProducer extends ClassificationProducer
-{
+public interface GlyphClassificationProducer extends ClassificationProducer {
   public static final int SPACE_CHAR = 0;
   public static final int LETTER = 1;
 
-  public int getClassification (int codepoint);
+  public int getClassification( int codepoint );
 
   public void reset();
 }

@@ -27,9 +27,10 @@ import org.pentaho.reporting.libraries.base.versioning.ProjectInformation;
  *
  * @author : Thomas Morgner
  */
-public class LibBaseBoot extends AbstractBoot
-{
-  /** A singleton variable for the booter. */
+public class LibBaseBoot extends AbstractBoot {
+  /**
+   * A singleton variable for the booter.
+   */
   private static LibBaseBoot instance;
 
   /**
@@ -37,10 +38,8 @@ public class LibBaseBoot extends AbstractBoot
    *
    * @return the boot class for Libbase.
    */
-  public static synchronized LibBaseBoot getInstance()
-  {
-    if (instance == null)
-    {
+  public static synchronized LibBaseBoot getInstance() {
+    if ( instance == null ) {
       instance = new LibBaseBoot();
     }
     return instance;
@@ -49,29 +48,26 @@ public class LibBaseBoot extends AbstractBoot
   /**
    * Private constructor prevents object creation.
    */
-  private LibBaseBoot()
-  {
+  private LibBaseBoot() {
   }
 
   /**
-   * Loads the configuration for LibBase. This will be called exactly once. The configuration is loaded from
-   * a file called "libbase.properties" located next to this class. A user overridable properties file is searched
-   * on the classpath within all libraries using the name "/libbase.properties".
+   * Loads the configuration for LibBase. This will be called exactly once. The configuration is loaded from a file
+   * called "libbase.properties" located next to this class. A user overridable properties file is searched on the
+   * classpath within all libraries using the name "/libbase.properties".
    *
    * @return The configuration.
    */
-  protected Configuration loadConfiguration()
-  {
+  protected Configuration loadConfiguration() {
     return createDefaultHierarchicalConfiguration
-        ("/org/pentaho/reporting/libraries/base/libbase.properties",
-            "/libbase.properties", true, LibBaseBoot.class);
+      ( "/org/pentaho/reporting/libraries/base/libbase.properties",
+        "/libbase.properties", true, LibBaseBoot.class );
   }
 
   /**
    * Performs the boot. This method does nothing.
    */
-  protected void performBoot()
-  {
+  protected void performBoot() {
     // nothing required. Just gather the configuration.
     new SystemInformation().logSystemInformation();
   }
@@ -81,8 +77,7 @@ public class LibBaseBoot extends AbstractBoot
    *
    * @return The project info.
    */
-  protected ProjectInformation getProjectInfo()
-  {
+  protected ProjectInformation getProjectInfo() {
     return LibBaseInfo.getInstance();
   }
 

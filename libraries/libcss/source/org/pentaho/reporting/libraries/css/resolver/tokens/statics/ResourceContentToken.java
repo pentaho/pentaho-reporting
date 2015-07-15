@@ -24,33 +24,25 @@ import org.pentaho.reporting.libraries.resourceloader.ResourceException;
 
 
 public class ResourceContentToken extends StaticToken
-    implements ResourceType, GenericType
-{
+  implements ResourceType, GenericType {
   private Resource content;
 
-  public ResourceContentToken(final Resource content)
-  {
-    if (content == null)
-    {
+  public ResourceContentToken( final Resource content ) {
+    if ( content == null ) {
       throw new NullPointerException();
     }
     this.content = content;
   }
 
-  public Object getRaw()
-  {
-    try
-    {
+  public Object getRaw() {
+    try {
       return content.getResource();
-    }
-    catch (ResourceException e)
-    {
+    } catch ( ResourceException e ) {
       return null;
     }
   }
 
-  public Resource getContent()
-  {
+  public Resource getContent() {
     return content;
   }
 }

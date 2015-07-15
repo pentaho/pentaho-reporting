@@ -24,42 +24,34 @@ import org.pentaho.reporting.libraries.formula.typing.coretypes.NumberType;
 
 /**
  * Describes SqrtFunction function.
- * @see SqrtFunction
  *
  * @author ocke
- *
+ * @see SqrtFunction
  */
-public class SqrtFunctionDescription extends AbstractFunctionDescription
-{
+public class SqrtFunctionDescription extends AbstractFunctionDescription {
   private static final long serialVersionUID = 743117553650008440L;
 
-  public SqrtFunctionDescription()
-  {
-    super("SQRT", "org.pentaho.reporting.libraries.formula.function.math.Sqrt-Function");
+  public SqrtFunctionDescription() {
+    super( "SQRT", "org.pentaho.reporting.libraries.formula.function.math.Sqrt-Function" );
   }
 
-  public FunctionCategory getCategory()
-  {
+  public FunctionCategory getCategory() {
     return MathFunctionCategory.CATEGORY;
   }
 
-  public int getParameterCount()
-  {
+  public int getParameterCount() {
     return 1;
   }
 
-  public Type getParameterType(final int position)
-  {
+  public Type getParameterType( final int position ) {
     return NumberType.GENERIC_NUMBER;
   }
 
-  public Type getValueType()
-  {
+  public Type getValueType() {
     return NumberType.GENERIC_NUMBER;
   }
 
-  public boolean isParameterMandatory(final int position)
-  {
+  public boolean isParameterMandatory( final int position ) {
     return true;
   }
 

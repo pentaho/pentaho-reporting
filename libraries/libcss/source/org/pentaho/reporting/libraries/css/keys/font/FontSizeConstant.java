@@ -24,17 +24,15 @@ import org.pentaho.reporting.libraries.css.values.CSSConstant;
  *
  * @author Thomas Morgner
  */
-public class FontSizeConstant
-{
-  public static final CSSConstant XX_SMALL = new CSSConstant("xx-small");
-  public static final CSSConstant X_SMALL = new CSSConstant("x-small");
-  public static final CSSConstant SMALL = new CSSConstant("small");
-  public static final CSSConstant MEDIUM = new CSSConstant("medium");
-  public static final CSSConstant LARGE = new CSSConstant("large");
-  public static final CSSConstant X_LARGE = new CSSConstant("x-large");
-  public static final CSSConstant XX_LARGE = new CSSConstant("xx-large");
+public class FontSizeConstant {
+  public static final CSSConstant XX_SMALL = new CSSConstant( "xx-small" );
+  public static final CSSConstant X_SMALL = new CSSConstant( "x-small" );
+  public static final CSSConstant SMALL = new CSSConstant( "small" );
+  public static final CSSConstant MEDIUM = new CSSConstant( "medium" );
+  public static final CSSConstant LARGE = new CSSConstant( "large" );
+  public static final CSSConstant X_LARGE = new CSSConstant( "x-large" );
+  public static final CSSConstant XX_LARGE = new CSSConstant( "xx-large" );
 
-  private FontSizeConstant()
-  {
+  private FontSizeConstant() {
   }
 }

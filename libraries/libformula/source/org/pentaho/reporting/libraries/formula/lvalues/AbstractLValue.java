@@ -17,8 +17,8 @@
 
 package org.pentaho.reporting.libraries.formula.lvalues;
 
-import org.pentaho.reporting.libraries.formula.FormulaContext;
 import org.pentaho.reporting.libraries.formula.EvaluationException;
+import org.pentaho.reporting.libraries.formula.FormulaContext;
 import org.pentaho.reporting.libraries.formula.typing.Type;
 
 /**
@@ -26,44 +26,36 @@ import org.pentaho.reporting.libraries.formula.typing.Type;
  *
  * @author Thomas Morgner
  */
-public abstract class AbstractLValue implements LValue
-{
-  private static final LValue[] EMPTY_CHILDS = new LValue[0];
+public abstract class AbstractLValue implements LValue {
+  private static final LValue[] EMPTY_CHILDS = new LValue[ 0 ];
 
   private transient FormulaContext context;
   private static final long serialVersionUID = -8929559303303911502L;
   private ParsePosition parsePosition;
 
-  protected AbstractLValue()
-  {
+  protected AbstractLValue() {
   }
 
-  public ParsePosition getParsePosition()
-  {
+  public ParsePosition getParsePosition() {
     return parsePosition;
   }
 
-  public void setParsePosition(final ParsePosition parsePosition)
-  {
+  public void setParsePosition( final ParsePosition parsePosition ) {
     this.parsePosition = parsePosition;
   }
 
-  public void initialize(final FormulaContext context) throws EvaluationException
-  {
+  public void initialize( final FormulaContext context ) throws EvaluationException {
     this.context = context;
   }
 
-  public FormulaContext getContext()
-  {
-    if (context == null)
-    {
+  public FormulaContext getContext() {
+    if ( context == null ) {
       throw new NullPointerException();
     }
     return context;
   }
 
-  public Object clone() throws CloneNotSupportedException
-  {
+  public Object clone() throws CloneNotSupportedException {
     return super.clone();
   }
 
@@ -72,19 +64,16 @@ public abstract class AbstractLValue implements LValue
    *
    * @return
    */
-  public LValue[] getChildValues()
-  {
+  public LValue[] getChildValues() {
     return EMPTY_CHILDS;
   }
 
   /**
-   * Querying the value type is only valid *after* the value has been
-   * evaluated.
+   * Querying the value type is only valid *after* the value has been evaluated.
    *
    * @return
    */
-  public Type getValueType()
-  {
+  public Type getValueType() {
     return null;
   }
 }

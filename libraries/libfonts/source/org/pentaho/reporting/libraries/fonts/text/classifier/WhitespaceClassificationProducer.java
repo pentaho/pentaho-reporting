@@ -22,28 +22,22 @@ package org.pentaho.reporting.libraries.fonts.text.classifier;
  *
  * @author Thomas Morgner
  */
-public class WhitespaceClassificationProducer implements GlyphClassificationProducer
-{
-  public WhitespaceClassificationProducer()
-  {
+public class WhitespaceClassificationProducer implements GlyphClassificationProducer {
+  public WhitespaceClassificationProducer() {
   }
 
-  public int getClassification(final int codepoint)
-  {
-    if (Character.isWhitespace((char) codepoint))
-    {
+  public int getClassification( final int codepoint ) {
+    if ( Character.isWhitespace( (char) codepoint ) ) {
       return GlyphClassificationProducer.SPACE_CHAR;
     }
     return GlyphClassificationProducer.LETTER;
   }
 
-  public Object clone() throws CloneNotSupportedException
-  {
+  public Object clone() throws CloneNotSupportedException {
     return super.clone();
   }
 
-  public void reset()
-  {
+  public void reset() {
 
   }
 }

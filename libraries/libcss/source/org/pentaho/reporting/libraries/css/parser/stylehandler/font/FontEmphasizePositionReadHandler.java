@@ -25,15 +25,13 @@ import org.pentaho.reporting.libraries.css.parser.stylehandler.OneOfConstantsRea
  *
  * @author Thomas Morgner
  */
-public class FontEmphasizePositionReadHandler extends OneOfConstantsReadHandler
-{
-  public FontEmphasizePositionReadHandler()
-  {
-    super(false);
-    addValue(FontEmphasizePosition.AFTER);
-    addValue(FontEmphasizePosition.ABOVE);
-    addValue(FontEmphasizePosition.BELOW);
-    addValue(FontEmphasizePosition.BEFORE);
+public class FontEmphasizePositionReadHandler extends OneOfConstantsReadHandler {
+  public FontEmphasizePositionReadHandler() {
+    super( false );
+    addValue( FontEmphasizePosition.AFTER );
+    addValue( FontEmphasizePosition.ABOVE );
+    addValue( FontEmphasizePosition.BELOW );
+    addValue( FontEmphasizePosition.BEFORE );
   }
 
 }

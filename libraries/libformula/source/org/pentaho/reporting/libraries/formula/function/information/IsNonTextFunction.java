@@ -27,33 +27,26 @@ import org.pentaho.reporting.libraries.formula.typing.coretypes.LogicalType;
  * This function retruns false if the given value is of type Text.
  *
  * @author Cedric Pronzato
- *
  */
-public class IsNonTextFunction extends IsTextFunction
-{
-  private static final TypeValuePair RETURN_TRUE = new TypeValuePair(LogicalType.TYPE, Boolean.TRUE);
-  private static final TypeValuePair RETURN_FALSE = new TypeValuePair(LogicalType.TYPE, Boolean.FALSE);
+public class IsNonTextFunction extends IsTextFunction {
+  private static final TypeValuePair RETURN_TRUE = new TypeValuePair( LogicalType.TYPE, Boolean.TRUE );
+  private static final TypeValuePair RETURN_FALSE = new TypeValuePair( LogicalType.TYPE, Boolean.FALSE );
   private static final long serialVersionUID = -372702612173903875L;
 
-  public IsNonTextFunction()
-  {
+  public IsNonTextFunction() {
   }
 
-  public TypeValuePair evaluate(final FormulaContext context, final ParameterCallback parameters) throws EvaluationException
-  {
-    final TypeValuePair typeValuePair = super.evaluate(context, parameters);
-    if(typeValuePair.getValue().equals(Boolean.TRUE))
-    {
+  public TypeValuePair evaluate( final FormulaContext context, final ParameterCallback parameters )
+    throws EvaluationException {
+    final TypeValuePair typeValuePair = super.evaluate( context, parameters );
+    if ( typeValuePair.getValue().equals( Boolean.TRUE ) ) {
       return RETURN_FALSE;
-    }
-    else
-    {
+    } else {
       return RETURN_TRUE;
     }
   }
 
-  public String getCanonicalName()
-  {
+  public String getCanonicalName() {
     return "ISNONTEXT";
   }
 

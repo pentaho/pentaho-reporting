@@ -22,37 +22,30 @@ package org.pentaho.reporting.tools.configeditor.model;
  *
  * @author Thomas Morgner
  */
-public class TextConfigDescriptionEntry extends ConfigDescriptionEntry
-{
+public class TextConfigDescriptionEntry extends ConfigDescriptionEntry {
   /**
    * Creates a new text description entry for the given configuration key.
    *
    * @param keyName the keyname of this entry.
    */
-  public TextConfigDescriptionEntry(final String keyName)
-  {
-    super(keyName);
+  public TextConfigDescriptionEntry( final String keyName ) {
+    super( keyName );
   }
 
-  public boolean equals(final Object o)
-  {
-    if (this == o)
-    {
+  public boolean equals( final Object o ) {
+    if ( this == o ) {
       return true;
     }
-    if (o == null || getClass() != o.getClass())
-    {
+    if ( o == null || getClass() != o.getClass() ) {
       return false;
     }
-    if (!super.equals(o))
-    {
+    if ( !super.equals( o ) ) {
       return false;
     }
     return true;
   }
 
-  public int hashCode()
-  {
+  public int hashCode() {
     return super.hashCode();
   }
 }

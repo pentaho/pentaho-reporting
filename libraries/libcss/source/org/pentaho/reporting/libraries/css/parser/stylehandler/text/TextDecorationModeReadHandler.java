@@ -25,12 +25,10 @@ import org.pentaho.reporting.libraries.css.parser.stylehandler.OneOfConstantsRea
  *
  * @author Thomas Morgner
  */
-public class TextDecorationModeReadHandler extends OneOfConstantsReadHandler
-{
-  public TextDecorationModeReadHandler()
-  {
-    super(false);
-    addValue(TextDecorationMode.CONTINUOUS);
-    addValue(TextDecorationMode.SKIP_WHITE_SPACE);
+public class TextDecorationModeReadHandler extends OneOfConstantsReadHandler {
+  public TextDecorationModeReadHandler() {
+    super( false );
+    addValue( TextDecorationMode.CONTINUOUS );
+    addValue( TextDecorationMode.SKIP_WHITE_SPACE );
   }
 }

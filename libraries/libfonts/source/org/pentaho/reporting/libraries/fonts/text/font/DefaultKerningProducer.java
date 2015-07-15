@@ -25,35 +25,29 @@ import org.pentaho.reporting.libraries.fonts.text.ClassificationProducer;
  *
  * @author Thomas Morgner
  */
-public class DefaultKerningProducer implements KerningProducer
-{
+public class DefaultKerningProducer implements KerningProducer {
   private int lastCodePoint;
   private FontMetrics fontMetrics;
 
-  public DefaultKerningProducer(final FontMetrics fontMetrics)
-  {
-    if (fontMetrics == null)
-    {
+  public DefaultKerningProducer( final FontMetrics fontMetrics ) {
+    if ( fontMetrics == null ) {
       throw new NullPointerException();
     }
     this.fontMetrics = fontMetrics;
   }
 
-  public long getKerning(final int codePoint)
-  {
-    if (codePoint == ClassificationProducer.START_OF_TEXT || codePoint == ClassificationProducer.END_OF_TEXT)
-    {
+  public long getKerning( final int codePoint ) {
+    if ( codePoint == ClassificationProducer.START_OF_TEXT || codePoint == ClassificationProducer.END_OF_TEXT ) {
       lastCodePoint = 0;
       return 0;
     }
 
-    final long d = fontMetrics.getKerning(lastCodePoint, codePoint);
+    final long d = fontMetrics.getKerning( lastCodePoint, codePoint );
     lastCodePoint = codePoint;
     return d;
   }
 
-  public Object clone() throws CloneNotSupportedException
-  {
+  public Object clone() throws CloneNotSupportedException {
     return super.clone();
   }
 

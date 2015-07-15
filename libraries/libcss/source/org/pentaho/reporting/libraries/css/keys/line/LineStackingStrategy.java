@@ -24,19 +24,17 @@ import org.pentaho.reporting.libraries.css.values.CSSConstant;
  *
  * @author Thomas Morgner
  */
-public class LineStackingStrategy
-{
+public class LineStackingStrategy {
   public static final CSSConstant INLINE_LINE_HEIGHT =
-      new CSSConstant("inline-line-height");
+    new CSSConstant( "inline-line-height" );
   public static final CSSConstant BLOCK_LINE_HEIGHT =
-      new CSSConstant("block-line-height");
+    new CSSConstant( "block-line-height" );
   public static final CSSConstant MAX_LINE_HEIGHT =
-      new CSSConstant("max-line-height");
+    new CSSConstant( "max-line-height" );
   public static final CSSConstant GRID_HEIGHT =
-      new CSSConstant("grid-height");
+    new CSSConstant( "grid-height" );
 
 
-  private LineStackingStrategy()
-  {
+  private LineStackingStrategy() {
   }
 }

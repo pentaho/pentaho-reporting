@@ -30,51 +30,50 @@
 
 package org.w3c.flute.parser.selectors;
 
+import org.w3c.css.sac.Condition;
 import org.w3c.css.sac.ConditionalSelector;
 import org.w3c.css.sac.Selector;
 import org.w3c.css.sac.SimpleSelector;
-import org.w3c.css.sac.Condition;
 
 /**
+ * @author Philippe Le Hegaret
  * @version $Revision$
- * @author  Philippe Le Hegaret
  */
 public class ConditionalSelectorImpl implements ConditionalSelector {
 
-    SimpleSelector simpleSelector;
-    Condition      condition;
+  SimpleSelector simpleSelector;
+  Condition condition;
 
-    /**
-     * An integer indicating the type of <code>Selector</code>
-     */
-    public short getSelectorType() {
-	return Selector.SAC_CONDITIONAL_SELECTOR;
-    }
-    
+  /**
+   * An integer indicating the type of <code>Selector</code>
+   */
+  public short getSelectorType() {
+    return Selector.SAC_CONDITIONAL_SELECTOR;
+  }
 
-    /**
-     * Creates a new ConditionalSelectorImpl
-     */
-    public ConditionalSelectorImpl(SimpleSelector simpleSelector,
-				   Condition condition) {
-        this.simpleSelector = simpleSelector;
-	this.condition      = condition;
-    }
-    
 
-    /**
-     * Returns the simple selector.
-     * <p>The simple selector can't be a <code>ConditionalSelector</code>.</p>
-     */    
-    public SimpleSelector getSimpleSelector() {
-	return simpleSelector;
-    }
+  /**
+   * Creates a new ConditionalSelectorImpl
+   */
+  public ConditionalSelectorImpl( SimpleSelector simpleSelector,
+                                  Condition condition ) {
+    this.simpleSelector = simpleSelector;
+    this.condition = condition;
+  }
 
-    /**
-     * Returns the condition to be applied on the simple selector.
-     */    
-    public Condition getCondition() {
-	return condition;
-    }
+
+  /**
+   * Returns the simple selector. <p>The simple selector can't be a <code>ConditionalSelector</code>.</p>
+   */
+  public SimpleSelector getSimpleSelector() {
+    return simpleSelector;
+  }
+
+  /**
+   * Returns the condition to be applied on the simple selector.
+   */
+  public Condition getCondition() {
+    return condition;
+  }
 }
 

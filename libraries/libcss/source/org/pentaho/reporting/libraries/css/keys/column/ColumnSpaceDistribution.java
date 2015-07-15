@@ -24,21 +24,19 @@ import org.pentaho.reporting.libraries.css.values.CSSConstant;
  *
  * @author Thomas Morgner
  */
-public class ColumnSpaceDistribution
-{
+public class ColumnSpaceDistribution {
   // [start || end || inner || outer || between] | inherit
   public static final CSSConstant START =
-      new CSSConstant("start");
+    new CSSConstant( "start" );
   public static final CSSConstant END =
-      new CSSConstant("end");
+    new CSSConstant( "end" );
   public static final CSSConstant INNER =
-      new CSSConstant("inner");
+    new CSSConstant( "inner" );
   public static final CSSConstant OUTER =
-      new CSSConstant("outer");
+    new CSSConstant( "outer" );
   public static final CSSConstant BETWEEN =
-      new CSSConstant("between");
+    new CSSConstant( "between" );
 
-  private ColumnSpaceDistribution()
-  {
+  private ColumnSpaceDistribution() {
   }
 }

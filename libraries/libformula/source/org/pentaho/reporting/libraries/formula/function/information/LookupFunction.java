@@ -25,34 +25,28 @@ import org.pentaho.reporting.libraries.formula.function.ParameterCallback;
 import org.pentaho.reporting.libraries.formula.lvalues.TypeValuePair;
 import org.pentaho.reporting.libraries.formula.typing.Type;
 
-public class LookupFunction implements Function
-{
-  public LookupFunction()
-  {
+public class LookupFunction implements Function {
+  public LookupFunction() {
   }
 
-  public String getCanonicalName()
-  {
+  public String getCanonicalName() {
     return "LOOKUP";
   }
 
-  public TypeValuePair evaluate(final FormulaContext context,
-                                final ParameterCallback parameters) throws EvaluationException
-  {
-    if (parameters.getParameterCount() != 1)
-    {
-      throw EvaluationException.getInstance(LibFormulaErrorValue.ERROR_ARGUMENTS_VALUE);
+  public TypeValuePair evaluate( final FormulaContext context,
+                                 final ParameterCallback parameters ) throws EvaluationException {
+    if ( parameters.getParameterCount() != 1 ) {
+      throw EvaluationException.getInstance( LibFormulaErrorValue.ERROR_ARGUMENTS_VALUE );
     }
 
-    final Type type1 = parameters.getType(0);
-    final Object value1 = parameters.getValue(0);
-    final String text = context.getTypeRegistry().convertToText(type1, value1);
-    final Type t = context.resolveReferenceType(text);
-    final Object o = context.resolveReference(text);
-    if (o == null)
-    {
-      throw EvaluationException.getInstance(LibFormulaErrorValue.ERROR_NA_VALUE);
+    final Type type1 = parameters.getType( 0 );
+    final Object value1 = parameters.getValue( 0 );
+    final String text = context.getTypeRegistry().convertToText( type1, value1 );
+    final Type t = context.resolveReferenceType( text );
+    final Object o = context.resolveReference( text );
+    if ( o == null ) {
+      throw EvaluationException.getInstance( LibFormulaErrorValue.ERROR_NA_VALUE );
     }
-    return new TypeValuePair(t, o);
+    return new TypeValuePair( t, o );
   }
 }

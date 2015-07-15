@@ -23,24 +23,19 @@ package org.pentaho.reporting.libraries.resourceloader.cache;
  * @author Thomas Morgner
  */
 public class NullCacheProvider implements
-        ResourceDataCacheProvider, ResourceFactoryCacheProvider, ResourceBundleDataCacheProvider
-{
-  public NullCacheProvider()
-  {
+  ResourceDataCacheProvider, ResourceFactoryCacheProvider, ResourceBundleDataCacheProvider {
+  public NullCacheProvider() {
   }
 
-  public ResourceDataCache createDataCache()
-  {
+  public ResourceDataCache createDataCache() {
     return new NullResourceDataCache();
   }
 
-  public ResourceFactoryCache createFactoryCache()
-  {
+  public ResourceFactoryCache createFactoryCache() {
     return new NullResourceFactoryCache();
   }
 
-  public ResourceBundleDataCache createBundleDataCache()
-  {
-    return new NullResourceBundleDataCache();  
+  public ResourceBundleDataCache createBundleDataCache() {
+    return new NullResourceBundleDataCache();
   }
 }

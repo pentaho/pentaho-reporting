@@ -22,20 +22,17 @@ import org.pentaho.reporting.libraries.formula.FormulaTestBase;
 /**
  * @author Cedric Pronzato
  */
-public class IsLogicalFunctionTest extends FormulaTestBase
-{
-  public void testDefault() throws Exception
-  {
+public class IsLogicalFunctionTest extends FormulaTestBase {
+  public void testDefault() throws Exception {
     runDefaultTest();
   }
 
-  public Object[][] createDataTest()
-  {
+  public Object[][] createDataTest() {
     return new Object[][]
-        {
-            {"ISLOGICAL(TRUE())", Boolean.TRUE},
-            {"ISLOGICAL(FALSE())", Boolean.TRUE},
-            {"ISLOGICAL(\"TRUE\")", Boolean.FALSE},
-        };
+      {
+        { "ISLOGICAL(TRUE())", Boolean.TRUE },
+        { "ISLOGICAL(FALSE())", Boolean.TRUE },
+        { "ISLOGICAL(\"TRUE\")", Boolean.FALSE },
+      };
   }
 }

@@ -22,11 +22,9 @@ package org.pentaho.reporting.libraries.fonts.truetype.mappings;
  *
  * @author Thomas Morgner
  */
-public class UnicodePlatformIdentifier extends PlatformIdentifier
-{
-  public UnicodePlatformIdentifier()
-  {
-    super(0);
+public class UnicodePlatformIdentifier extends PlatformIdentifier {
+  public UnicodePlatformIdentifier() {
+    super( 0 );
   }
 
   /**
@@ -40,8 +38,7 @@ public class UnicodePlatformIdentifier extends PlatformIdentifier
    * @param language
    * @return the encoding, always "UTF-16"
    */
-  public String getEncoding(final int encodingId, final int language)
-  {
+  public String getEncoding( final int encodingId, final int language ) {
     return "UTF-16";
   }
 }

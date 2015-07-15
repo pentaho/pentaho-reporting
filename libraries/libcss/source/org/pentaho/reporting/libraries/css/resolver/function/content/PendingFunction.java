@@ -17,13 +17,13 @@
 
 package org.pentaho.reporting.libraries.css.resolver.function.content;
 
+import org.pentaho.reporting.libraries.css.dom.DocumentContext;
+import org.pentaho.reporting.libraries.css.dom.LayoutElement;
+import org.pentaho.reporting.libraries.css.resolver.FunctionEvaluationException;
 import org.pentaho.reporting.libraries.css.resolver.function.ContentFunction;
 import org.pentaho.reporting.libraries.css.resolver.function.FunctionUtilities;
-import org.pentaho.reporting.libraries.css.resolver.tokens.computed.PendingToken;
 import org.pentaho.reporting.libraries.css.resolver.tokens.ContentToken;
-import org.pentaho.reporting.libraries.css.resolver.FunctionEvaluationException;
-import org.pentaho.reporting.libraries.css.dom.LayoutElement;
-import org.pentaho.reporting.libraries.css.dom.DocumentContext;
+import org.pentaho.reporting.libraries.css.resolver.tokens.computed.PendingToken;
 import org.pentaho.reporting.libraries.css.values.CSSFunctionValue;
 import org.pentaho.reporting.libraries.css.values.CSSValue;
 
@@ -32,26 +32,22 @@ import org.pentaho.reporting.libraries.css.values.CSSValue;
  *
  * @author Thomas Morgner
  */
-public class PendingFunction implements ContentFunction
-{
-  public PendingFunction()
-  {
+public class PendingFunction implements ContentFunction {
+  public PendingFunction() {
   }
 
-  public ContentToken evaluate(final DocumentContext layoutProcess,
-                               final LayoutElement element,
-                               final CSSFunctionValue function)
-      throws FunctionEvaluationException
-  {
+  public ContentToken evaluate( final DocumentContext layoutProcess,
+                                final LayoutElement element,
+                                final CSSFunctionValue function )
+    throws FunctionEvaluationException {
     final CSSValue[] parameters = function.getParameters();
-    if (parameters.length == 0)
-    {
+    if ( parameters.length == 0 ) {
       throw new FunctionEvaluationException
-          ("One parameter must be given to the 'pending' function.");
+        ( "One parameter must be given to the 'pending' function." );
     }
 
     final String name = FunctionUtilities.resolveString
-        (layoutProcess, element, parameters[0]);
-    return new PendingToken(name);
+      ( layoutProcess, element, parameters[ 0 ] );
+    return new PendingToken( name );
   }
 }

@@ -28,27 +28,22 @@ import org.w3c.css.sac.LexicalUnit;
  *
  * @author Thomas Morgner
  */
-public class MoveToReadHandler extends OneOfConstantsReadHandler
-{
-  public MoveToReadHandler()
-  {
-    super(false);
-    addValue(MoveToValues.HERE);
-    addValue(MoveToValues.NORMAL);
+public class MoveToReadHandler extends OneOfConstantsReadHandler {
+  public MoveToReadHandler() {
+    super( false );
+    addValue( MoveToValues.HERE );
+    addValue( MoveToValues.NORMAL );
   }
 
-  protected CSSValue lookupValue(final LexicalUnit value)
-  {
-    CSSValue content = super.lookupValue(value);
-    if (content != null)
-    {
+  protected CSSValue lookupValue( final LexicalUnit value ) {
+    CSSValue content = super.lookupValue( value );
+    if ( content != null ) {
       return content;
     }
 
-    if (value.getLexicalUnitType() != LexicalUnit.SAC_IDENT)
-    {
+    if ( value.getLexicalUnitType() != LexicalUnit.SAC_IDENT ) {
       return null;
     }
-    return new CSSConstant(value.getStringValue());
+    return new CSSConstant( value.getStringValue() );
   }
 }

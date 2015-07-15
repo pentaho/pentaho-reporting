@@ -24,13 +24,11 @@ import org.pentaho.reporting.libraries.css.values.CSSConstant;
  *
  * @author Thomas Morgner
  */
-public class TextCombine
-{
-  public static final CSSConstant NONE = new CSSConstant("none");
-  public static final CSSConstant LETTER = new CSSConstant("letter");
-  public static final CSSConstant LINE = new CSSConstant("line");
+public class TextCombine {
+  public static final CSSConstant NONE = new CSSConstant( "none" );
+  public static final CSSConstant LETTER = new CSSConstant( "letter" );
+  public static final CSSConstant LINE = new CSSConstant( "line" );
 
-  private TextCombine()
-  {
+  private TextCombine() {
   }
 }

@@ -17,14 +17,13 @@
 
 package org.pentaho.reporting.libraries.formula;
 
-import java.util.Locale;
 import java.io.Serializable;
+import java.util.Locale;
 
-public interface ErrorValue extends Serializable
-{
+public interface ErrorValue extends Serializable {
   public String getNamespace();
 
   public int getErrorCode();
 
-  public String getErrorMessage(Locale locale);
+  public String getErrorMessage( Locale locale );
 }

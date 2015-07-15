@@ -22,24 +22,21 @@ import org.pentaho.reporting.libraries.formula.FormulaTestBase;
 /**
  * @author Cedric Pronzato
  */
-public class IsNonTextFunctionTest extends FormulaTestBase
-{
-  public void testDefault() throws Exception
-  {
+public class IsNonTextFunctionTest extends FormulaTestBase {
+  public void testDefault() throws Exception {
     runDefaultTest();
   }
 
-  public Object[][] createDataTest()
-  {
+  public Object[][] createDataTest() {
     return new Object[][]
-        {
-            {"ISNONTEXT(1)", Boolean.TRUE},
-            {"ISNONTEXT(TRUE())", Boolean.TRUE},
-            {"ISNONTEXT(\"1\")", Boolean.FALSE},
-            {"ISNONTEXT([.B7])", Boolean.FALSE},
-            {"ISNONTEXT([.B9])", Boolean.TRUE},
-            {"ISNONTEXT([.B8])", Boolean.TRUE},
-        };
+      {
+        { "ISNONTEXT(1)", Boolean.TRUE },
+        { "ISNONTEXT(TRUE())", Boolean.TRUE },
+        { "ISNONTEXT(\"1\")", Boolean.FALSE },
+        { "ISNONTEXT([.B7])", Boolean.FALSE },
+        { "ISNONTEXT([.B9])", Boolean.TRUE },
+        { "ISNONTEXT([.B8])", Boolean.TRUE },
+      };
   }
 
 }

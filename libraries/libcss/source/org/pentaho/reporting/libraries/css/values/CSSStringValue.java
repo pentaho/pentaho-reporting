@@ -24,50 +24,39 @@ import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
  *
  * @author Thomas Morgner
  */
-public class CSSStringValue implements CSSValue
-{
+public class CSSStringValue implements CSSValue {
   private CSSStringType type;
   private String value;
 
-  public CSSStringValue(final CSSStringType type, final String value)
-  {
+  public CSSStringValue( final CSSStringType type, final String value ) {
     this.type = type;
     this.value = value;
   }
 
-  public CSSType getType()
-  {
+  public CSSType getType() {
     return type;
   }
 
-  public String getValue()
-  {
+  public String getValue() {
     return value;
   }
 
-  public String toString()
-  {
+  public String toString() {
     return getCSSText();
   }
 
-  public boolean equals(final Object obj)
-  {
-    if (obj instanceof CSSStringValue)
-    {
+  public boolean equals( final Object obj ) {
+    if ( obj instanceof CSSStringValue ) {
       CSSStringValue that = (CSSStringValue) obj;
-      return (ObjectUtilities.equal(this.type, that.type) && ObjectUtilities.equal(this.value, that.value));
+      return ( ObjectUtilities.equal( this.type, that.type ) && ObjectUtilities.equal( this.value, that.value ) );
     }
     return false;
   }
 
-  public String getCSSText()
-  {
-    if (type == CSSStringType.URI)
-    {
+  public String getCSSText() {
+    if ( type == CSSStringType.URI ) {
       return "uri(" + value + ")";
-    }
-    else
-    {
+    } else {
       return "\"" + value + "\"";
     }
   }

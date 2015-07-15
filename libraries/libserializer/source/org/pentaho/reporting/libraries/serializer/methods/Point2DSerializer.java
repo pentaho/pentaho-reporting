@@ -17,12 +17,12 @@
 
 package org.pentaho.reporting.libraries.serializer.methods;
 
+import org.pentaho.reporting.libraries.serializer.SerializeMethod;
+
 import java.awt.geom.Point2D;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-
-import org.pentaho.reporting.libraries.serializer.SerializeMethod;
 
 
 /**
@@ -31,13 +31,11 @@ import org.pentaho.reporting.libraries.serializer.SerializeMethod;
  * @author Thomas Morgner
  * @see java.awt.geom.Point2D
  */
-public class Point2DSerializer implements SerializeMethod
-{
+public class Point2DSerializer implements SerializeMethod {
   /**
    * Default Constructor.
    */
-  public Point2DSerializer ()
-  {
+  public Point2DSerializer() {
   }
 
   /**
@@ -47,12 +45,11 @@ public class Point2DSerializer implements SerializeMethod
    * @param out the outputstream that should receive the object.
    * @throws IOException if an I/O error occured.
    */
-  public void writeObject (final Object o, final ObjectOutputStream out)
-          throws IOException
-  {
+  public void writeObject( final Object o, final ObjectOutputStream out )
+    throws IOException {
     final Point2D point = (Point2D) o;
-    out.writeDouble(point.getX());
-    out.writeDouble(point.getY());
+    out.writeDouble( point.getX() );
+    out.writeDouble( point.getY() );
   }
 
   /**
@@ -60,16 +57,14 @@ public class Point2DSerializer implements SerializeMethod
    *
    * @param in the object input stream from where to read the serialized data.
    * @return the generated object.
-   *
    * @throws IOException            if reading the stream failed.
    * @throws ClassNotFoundException if serialized object class cannot be found.
    */
-  public Object readObject (final ObjectInputStream in)
-          throws IOException, ClassNotFoundException
-  {
+  public Object readObject( final ObjectInputStream in )
+    throws IOException, ClassNotFoundException {
     final double x = in.readDouble();
     final double y = in.readDouble();
-    return new Point2D.Double(x, y);
+    return new Point2D.Double( x, y );
   }
 
   /**
@@ -77,8 +72,7 @@ public class Point2DSerializer implements SerializeMethod
    *
    * @return the class of java.awt.geom.Point2D.
    */
-  public Class getObjectClass ()
-  {
+  public Class getObjectClass() {
     return Point2D.class;
   }
 }

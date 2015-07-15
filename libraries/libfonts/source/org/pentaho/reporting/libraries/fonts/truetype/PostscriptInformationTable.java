@@ -24,52 +24,44 @@ import org.pentaho.reporting.libraries.fonts.ByteAccessUtilities;
  *
  * @author Thomas Morgner
  */
-public class PostscriptInformationTable implements FontTable
-{
+public class PostscriptInformationTable implements FontTable {
   public static final long TABLE_ID =
-          ('p' << 24 | 'o' << 16 | 's' << 8 | 't');
+    ( 'p' << 24 | 'o' << 16 | 's' << 8 | 't' );
   private float version;
   private float italicAngle;
   private short underlinePosition;
   private short underlineThickness;
   private boolean fixedPitch;
 
-  public PostscriptInformationTable(final byte[] data)
-  {
-    version = ByteAccessUtilities.readFixed(data, 0);
-    italicAngle = ByteAccessUtilities.readFixed(data, 4);
-    underlinePosition = ByteAccessUtilities.readShort(data, 8);
-    underlineThickness = ByteAccessUtilities.readShort(data, 10);
-    fixedPitch = ByteAccessUtilities.readULong(data, 12) != 0;
+  public PostscriptInformationTable( final byte[] data ) {
+    version = ByteAccessUtilities.readFixed( data, 0 );
+    italicAngle = ByteAccessUtilities.readFixed( data, 4 );
+    underlinePosition = ByteAccessUtilities.readShort( data, 8 );
+    underlineThickness = ByteAccessUtilities.readShort( data, 10 );
+    fixedPitch = ByteAccessUtilities.readULong( data, 12 ) != 0;
   }
 
-  public float getVersion()
-  {
+  public float getVersion() {
     return version;
   }
 
-  public float getItalicAngle()
-  {
+  public float getItalicAngle() {
     return italicAngle;
   }
 
-  public short getUnderlinePosition()
-  {
+  public short getUnderlinePosition() {
     return underlinePosition;
   }
 
-  public short getUnderlineThickness()
-  {
+  public short getUnderlineThickness() {
     return underlineThickness;
   }
 
-  public boolean isFixedPitch()
-  {
+  public boolean isFixedPitch() {
     return fixedPitch;
   }
 
-  public long getName()
-  {
+  public long getName() {
     return TABLE_ID;
   }
 }

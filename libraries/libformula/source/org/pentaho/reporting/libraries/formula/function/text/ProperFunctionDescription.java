@@ -25,42 +25,34 @@ import org.pentaho.reporting.libraries.formula.typing.coretypes.TextType;
 
 /**
  * Describes UpperFunction function.
- * @see org.pentaho.reporting.libraries.formula.function.text.UpperFunction
  *
  * @author Cedric Pronzato
- *
+ * @see org.pentaho.reporting.libraries.formula.function.text.UpperFunction
  */
-public class ProperFunctionDescription extends AbstractFunctionDescription
-{
+public class ProperFunctionDescription extends AbstractFunctionDescription {
   private static final long serialVersionUID = 2096398786776380395L;
 
-  public ProperFunctionDescription()
-  {
-    super("PROPER", "org.pentaho.reporting.libraries.formula.function.text.Proper-Function");
+  public ProperFunctionDescription() {
+    super( "PROPER", "org.pentaho.reporting.libraries.formula.function.text.Proper-Function" );
   }
 
-  public FunctionCategory getCategory()
-  {
+  public FunctionCategory getCategory() {
     return TextFunctionCategory.CATEGORY;
   }
 
-  public int getParameterCount()
-  {
+  public int getParameterCount() {
     return 1;
   }
 
-  public Type getParameterType(final int position)
-  {
+  public Type getParameterType( final int position ) {
     return AnyType.TYPE;
   }
 
-  public Type getValueType()
-  {
+  public Type getValueType() {
     return TextType.TYPE;
   }
 
-  public boolean isParameterMandatory(final int position)
-  {
+  public boolean isParameterMandatory( final int position ) {
     return true;
   }
 

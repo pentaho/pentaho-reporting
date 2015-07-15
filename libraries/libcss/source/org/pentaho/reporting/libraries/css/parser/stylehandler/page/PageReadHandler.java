@@ -29,24 +29,19 @@ import org.w3c.css.sac.LexicalUnit;
  *
  * @author Thomas Morgner
  */
-public class PageReadHandler implements CSSValueReadHandler
-{
-  public PageReadHandler()
-  {
+public class PageReadHandler implements CSSValueReadHandler {
+  public PageReadHandler() {
   }
 
-  public CSSValue createValue(StyleKey name, LexicalUnit value)
-  {
-    if (value.getLexicalUnitType() != LexicalUnit.SAC_IDENT)
-    {
+  public CSSValue createValue( StyleKey name, LexicalUnit value ) {
+    if ( value.getLexicalUnitType() != LexicalUnit.SAC_IDENT ) {
       return null;
     }
     String ident = value.getStringValue();
-    if (ident.equalsIgnoreCase("auto"))
-    {
+    if ( ident.equalsIgnoreCase( "auto" ) ) {
       return CSSAutoValue.getInstance();
     }
 
-    return new CSSConstant(ident);
+    return new CSSConstant( ident );
   }
 }

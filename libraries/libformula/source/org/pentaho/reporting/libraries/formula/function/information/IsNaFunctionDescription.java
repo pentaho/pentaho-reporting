@@ -25,46 +25,37 @@ import org.pentaho.reporting.libraries.formula.typing.coretypes.LogicalType;
 
 /**
  * Describes IsNaFunction function.
- * @see IsNaFunction
  *
  * @author Cedric Pronzato
- *
+ * @see IsNaFunction
  */
-public class IsNaFunctionDescription extends AbstractFunctionDescription
-{
+public class IsNaFunctionDescription extends AbstractFunctionDescription {
   private static final long serialVersionUID = -2401043278926889339L;
 
-  public IsNaFunctionDescription()
-  {
-    super("ISNA", "org.pentaho.reporting.libraries.formula.function.information.IsNa-Function");
+  public IsNaFunctionDescription() {
+    super( "ISNA", "org.pentaho.reporting.libraries.formula.function.information.IsNa-Function" );
   }
 
-  public FunctionCategory getCategory()
-  {
+  public FunctionCategory getCategory() {
     return InformationFunctionCategory.CATEGORY;
   }
 
-  public int getParameterCount()
-  {
+  public int getParameterCount() {
     return 1;
   }
 
-  public Type getParameterType(final int position)
-  {
-    if(position == 0)
-    {
+  public Type getParameterType( final int position ) {
+    if ( position == 0 ) {
       return AnyType.TYPE;
     }
     return null;
   }
 
-  public Type getValueType()
-  {
+  public Type getValueType() {
     return LogicalType.TYPE;
   }
 
-  public boolean isParameterMandatory(final int position)
-  {
+  public boolean isParameterMandatory( final int position ) {
     return true;
   }
 

@@ -26,28 +26,25 @@ import org.pentaho.reporting.libraries.resourceloader.LibLoaderInfo;
  *
  * @author Thomas Morgner
  */
-public class LibCssInfo extends ProjectInformation
-{
+public class LibCssInfo extends ProjectInformation {
   private static LibCssInfo info;
 
   /**
    * Constructs an empty project info object.
    */
-  private LibCssInfo()
-  {
-    super("libcss", "LibCSS");
+  private LibCssInfo() {
+    super( "libcss", "LibCSS" );
   }
 
-  private void initialize()
-  {
-    setInfo("http://reporting.pentaho.org/libcss/");
-    setCopyright("(C)opyright 2007-2011, by Pentaho Corporation and Contributors");
+  private void initialize() {
+    setInfo( "http://reporting.pentaho.org/libcss/" );
+    setCopyright( "(C)opyright 2007-2011, by Pentaho Corporation and Contributors" );
 
 
-    addLibrary(LibBaseInfo.getInstance());
-    addLibrary(LibLoaderInfo.getInstance());
+    addLibrary( LibBaseInfo.getInstance() );
+    addLibrary( LibLoaderInfo.getInstance() );
 
-    setBootClass(LibCssBoot.class.getName());
+    setBootClass( LibCssBoot.class.getName() );
   }
 
   /**
@@ -55,10 +52,8 @@ public class LibCssInfo extends ProjectInformation
    *
    * @return the singleton booter.
    */
-  public static synchronized ProjectInformation getInstance()
-  {
-    if (info == null)
-    {
+  public static synchronized ProjectInformation getInstance() {
+    if ( info == null ) {
       info = new LibCssInfo();
       info.initialize();
     }

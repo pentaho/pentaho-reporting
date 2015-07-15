@@ -25,13 +25,11 @@ import org.xml.sax.SAXException;
  *
  * @author Thomas Morgner
  */
-public class IgnoreAnyChildReadHandler extends AbstractXmlReadHandler
-{
+public class IgnoreAnyChildReadHandler extends AbstractXmlReadHandler {
   /**
    * Default Constructor.
    */
-  public IgnoreAnyChildReadHandler()
-  {
+  public IgnoreAnyChildReadHandler() {
   }
 
   /**
@@ -42,22 +40,19 @@ public class IgnoreAnyChildReadHandler extends AbstractXmlReadHandler
    * @return the handler or null, if the tagname is invalid.
    * @throws org.xml.sax.SAXException if there is a parsing error.
    */
-  protected XmlReadHandler getHandlerForChild(final String uri,
-                                              final String tagName,
-                                              final Attributes atts)
-      throws SAXException
-  {
+  protected XmlReadHandler getHandlerForChild( final String uri,
+                                               final String tagName,
+                                               final Attributes atts )
+    throws SAXException {
     return new IgnoreAnyChildReadHandler();
   }
 
   /**
-   * Returns the object for this element or null, if this element does not
-   * create an object.
+   * Returns the object for this element or null, if this element does not create an object.
    *
    * @return the object.
    */
-  public Object getObject() throws SAXException
-  {
+  public Object getObject() throws SAXException {
     return null;
   }
 }

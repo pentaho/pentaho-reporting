@@ -17,19 +17,17 @@
 
 package org.pentaho.reporting.libraries.xmlns;
 
-import org.pentaho.reporting.libraries.resourceloader.LibLoaderInfo;
 import org.pentaho.reporting.libraries.base.LibBaseInfo;
 import org.pentaho.reporting.libraries.base.versioning.ProjectInformation;
+import org.pentaho.reporting.libraries.resourceloader.LibLoaderInfo;
 
 /**
- * The LibXmlInfo class contains all dependency information and some
- * common information like version, license and contributors about the
- * library itself.
+ * The LibXmlInfo class contains all dependency information and some common information like version, license and
+ * contributors about the library itself.
  *
  * @author Thomas Morgner
  */
-public class LibXmlInfo extends ProjectInformation
-{
+public class LibXmlInfo extends ProjectInformation {
   /**
    * The XML-Namespace is used for the 'id' attribute.
    */
@@ -45,24 +43,22 @@ public class LibXmlInfo extends ProjectInformation
   /**
    * Constructs an empty project info object.
    */
-  private LibXmlInfo()
-  {
-    super("libxml", "LibXML");
+  private LibXmlInfo() {
+    super( "libxml", "LibXML" );
   }
 
   /**
    * Initialized the project info object.
    */
-  private void initialize()
-  {
-    setInfo("http://reporting.pentaho.org/libxml/");
-    setCopyright("(C)opyright 2007-2011, by Object Refinery Limited, Pentaho Corporation and Contributors");
-    setLicenseName("LGPL");
-    
-    addLibrary(LibBaseInfo.getInstance());
-    addLibrary(LibLoaderInfo.getInstance());
+  private void initialize() {
+    setInfo( "http://reporting.pentaho.org/libxml/" );
+    setCopyright( "(C)opyright 2007-2011, by Object Refinery Limited, Pentaho Corporation and Contributors" );
+    setLicenseName( "LGPL" );
 
-    setBootClass(LibXmlBoot.class.getName());
+    addLibrary( LibBaseInfo.getInstance() );
+    addLibrary( LibLoaderInfo.getInstance() );
+
+    setBootClass( LibXmlBoot.class.getName() );
   }
 
   /**
@@ -70,10 +66,8 @@ public class LibXmlInfo extends ProjectInformation
    *
    * @return the singleton info.
    */
-  public static synchronized ProjectInformation getInstance()
-  {
-    if (info == null)
-    {
+  public static synchronized ProjectInformation getInstance() {
+    if ( info == null ) {
       info = new LibXmlInfo();
       info.initialize();
     }

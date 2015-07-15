@@ -25,14 +25,12 @@ import org.pentaho.reporting.libraries.css.parser.stylehandler.OneOfConstantsRea
  *
  * @author Thomas Morgner
  */
-public class FitReadHandler extends OneOfConstantsReadHandler
-{
-  public FitReadHandler()
-  {
-    super(false);
-    addValue(Fit.FILL);
-    addValue(Fit.MEET);
-    addValue(Fit.NONE);
-    addValue(Fit.SLICE);
+public class FitReadHandler extends OneOfConstantsReadHandler {
+  public FitReadHandler() {
+    super( false );
+    addValue( Fit.FILL );
+    addValue( Fit.MEET );
+    addValue( Fit.NONE );
+    addValue( Fit.SLICE );
   }
 }

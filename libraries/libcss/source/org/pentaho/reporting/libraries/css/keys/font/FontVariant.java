@@ -19,12 +19,10 @@ package org.pentaho.reporting.libraries.css.keys.font;
 
 import org.pentaho.reporting.libraries.css.values.CSSConstant;
 
-public class FontVariant
-{
-  public static final CSSConstant NORMAL = new CSSConstant("normal");
-  public static final CSSConstant SMALL_CAPS = new CSSConstant("small-caps");
+public class FontVariant {
+  public static final CSSConstant NORMAL = new CSSConstant( "normal" );
+  public static final CSSConstant SMALL_CAPS = new CSSConstant( "small-caps" );
 
-  private FontVariant()
-  {
+  private FontVariant() {
   }
 }

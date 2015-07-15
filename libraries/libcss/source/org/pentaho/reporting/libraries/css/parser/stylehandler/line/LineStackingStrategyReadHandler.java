@@ -25,14 +25,12 @@ import org.pentaho.reporting.libraries.css.parser.stylehandler.OneOfConstantsRea
  *
  * @author Thomas Morgner
  */
-public class LineStackingStrategyReadHandler extends OneOfConstantsReadHandler
-{
-  public LineStackingStrategyReadHandler()
-  {
-    super(true);
-    addValue(LineStackingStrategy.BLOCK_LINE_HEIGHT);
-    addValue(LineStackingStrategy.GRID_HEIGHT);
-    addValue(LineStackingStrategy.INLINE_LINE_HEIGHT);
-    addValue(LineStackingStrategy.MAX_LINE_HEIGHT);
+public class LineStackingStrategyReadHandler extends OneOfConstantsReadHandler {
+  public LineStackingStrategyReadHandler() {
+    super( true );
+    addValue( LineStackingStrategy.BLOCK_LINE_HEIGHT );
+    addValue( LineStackingStrategy.GRID_HEIGHT );
+    addValue( LineStackingStrategy.INLINE_LINE_HEIGHT );
+    addValue( LineStackingStrategy.MAX_LINE_HEIGHT );
   }
 }

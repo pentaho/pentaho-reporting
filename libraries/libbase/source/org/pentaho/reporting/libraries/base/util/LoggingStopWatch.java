@@ -20,8 +20,7 @@ package org.pentaho.reporting.libraries.base.util;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-public class LoggingStopWatch extends StopWatch implements PerformanceLoggingStopWatch
-{
+public class LoggingStopWatch extends StopWatch implements PerformanceLoggingStopWatch {
   private transient Log logger;
   private Object message;
   private String tag;
@@ -29,139 +28,116 @@ public class LoggingStopWatch extends StopWatch implements PerformanceLoggingSto
   private long firstStartTime;
   private long restartCount;
 
-  public LoggingStopWatch(final String tag)
-  {
-    ArgumentNullException.validate("tag", tag);
+  public LoggingStopWatch( final String tag ) {
+    ArgumentNullException.validate( "tag", tag );
 
     this.tag = tag;
   }
 
-  public LoggingStopWatch(final String tag, final Object message)
-  {
-    this(tag);
+  public LoggingStopWatch( final String tag, final Object message ) {
+    this( tag );
     this.message = message;
   }
 
-  public static PerformanceLoggingStopWatch startNew(final String tag, final Object message)
-  {
-    PerformanceLoggingStopWatch loggingStopWatch = new LoggingStopWatch(tag, message);
+  public static PerformanceLoggingStopWatch startNew( final String tag, final Object message ) {
+    PerformanceLoggingStopWatch loggingStopWatch = new LoggingStopWatch( tag, message );
     loggingStopWatch.start();
     return loggingStopWatch;
   }
 
-  public static PerformanceLoggingStopWatch startNew(final String tag, final String pattern, final Object... message)
-  {
-    return startNew(tag, new FormattedMessage(pattern, message));
+  public static PerformanceLoggingStopWatch startNew( final String tag, final String pattern,
+                                                      final Object... message ) {
+    return startNew( tag, new FormattedMessage( pattern, message ) );
   }
 
-  public static PerformanceLoggingStopWatch startNew(final String tag)
-  {
-    return startNew(tag, null);
+  public static PerformanceLoggingStopWatch startNew( final String tag ) {
+    return startNew( tag, null );
   }
 
-  public long getLoggingThreshold()
-  {
+  public long getLoggingThreshold() {
     return loggingThreshold;
   }
 
-  public void setLoggingThreshold(final long loggingThreshold)
-  {
+  public void setLoggingThreshold( final long loggingThreshold ) {
     this.loggingThreshold = loggingThreshold;
   }
 
-  public String getTag()
-  {
+  public String getTag() {
     return tag;
   }
 
-  public Object getMessage()
-  {
+  public Object getMessage() {
     return message;
   }
 
-  public void setMessage(final Object message)
-  {
+  public void setMessage( final Object message ) {
     this.message = message;
   }
 
-  public void start()
-  {
-    if (isStarted())
-    {
+  public void start() {
+    if ( isStarted() ) {
       return;
     }
 
     super.start();
-    if (firstStartTime == 0)
-    {
+    if ( firstStartTime == 0 ) {
       firstStartTime = super.getStartTime();
     }
     restartCount += 1;
   }
 
-  public void stop(boolean pause)
-  {
+  public void stop( boolean pause ) {
     super.stop();
-    if (pause)
-    {
+    if ( pause ) {
       return;
     }
 
-    if (getElapsedMilliseconds() < loggingThreshold)
-    {
+    if ( getElapsedMilliseconds() < loggingThreshold ) {
       return;
     }
 
-    if (firstStartTime == 0)
-    {
+    if ( firstStartTime == 0 ) {
       // this stopwatch was never started ..
       return;
     }
 
     String logMessage;
-    if (message == null)
-    {
-      logMessage = String.format("start[%d] time[%d] tag[%s] count[%d]", getStartTime(), getElapsedTime(), getTag(), getRestartCount());
+    if ( message == null ) {
+      logMessage = String.format( "start[%d] time[%d] tag[%s] count[%d]", getStartTime(), getElapsedTime(), getTag(),
+        getRestartCount() );
+    } else {
+      logMessage = String
+        .format( "start[%d] time[%d] tag[%s] count[%d] message[%s]", getStartTime(), getElapsedTime(), getTag(),
+          getRestartCount(), getMessage() );
     }
-    else
-    {
-      logMessage = String.format("start[%d] time[%d] tag[%s] count[%d] message[%s]", getStartTime(), getElapsedTime(), getTag(), getRestartCount(), getMessage());
-    }
-    doLog(logMessage);
+    doLog( logMessage );
     reset();
   }
 
-  public long getRestartCount()
-  {
+  public long getRestartCount() {
     return restartCount;
   }
 
-  public void reset()
-  {
+  public void reset() {
     super.reset();
     firstStartTime = 0;
   }
 
-  public long getStartTime()
-  {
+  public long getStartTime() {
     return firstStartTime;
   }
 
-  public void stop()
-  {
-    stop(false);
+  public void stop() {
+    stop( false );
   }
 
-  protected void doLog(String message)
-  {
-    if (logger == null)
-    {
+  protected void doLog( String message ) {
+    if ( logger == null ) {
       // no need to syncronize, if logger is null in a race-condition, the logging system will sort it out.
-      logger = LogFactory.getLog(LoggingStopWatch.class.getName() + "." + tag);
+      logger = LogFactory.getLog( LoggingStopWatch.class.getName() + "." + tag );
     }
-    if (logger.isInfoEnabled())
-    {
-      logger.debug(message);
+    if ( logger.isInfoEnabled() ) {
+      logger.debug( message );
     }
   }
 }

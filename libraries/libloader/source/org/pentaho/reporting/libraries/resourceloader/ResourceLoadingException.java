@@ -22,13 +22,13 @@ package org.pentaho.reporting.libraries.resourceloader;
  *
  * @author Thomas Morgner
  */
-public class ResourceLoadingException extends ResourceException
-{
+public class ResourceLoadingException extends ResourceException {
   private static final long serialVersionUID = -940152083042961377L;
 
-  /** Creates a StackableRuntimeException with no message and no parent. */
-  public ResourceLoadingException()
-  {
+  /**
+   * Creates a StackableRuntimeException with no message and no parent.
+   */
+  public ResourceLoadingException() {
   }
 
   /**
@@ -37,9 +37,8 @@ public class ResourceLoadingException extends ResourceException
    * @param message the exception message.
    * @param ex      the parent exception.
    */
-  public ResourceLoadingException(final String message, final Exception ex)
-  {
-    super(message, ex);
+  public ResourceLoadingException( final String message, final Exception ex ) {
+    super( message, ex );
   }
 
   /**
@@ -47,8 +46,7 @@ public class ResourceLoadingException extends ResourceException
    *
    * @param message the exception message.
    */
-  public ResourceLoadingException(final String message)
-  {
-    super(message);
+  public ResourceLoadingException( final String message ) {
+    super( message );
   }
 }

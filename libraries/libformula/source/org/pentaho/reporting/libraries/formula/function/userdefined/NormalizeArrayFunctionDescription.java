@@ -23,39 +23,32 @@ import org.pentaho.reporting.libraries.formula.typing.Type;
 import org.pentaho.reporting.libraries.formula.typing.coretypes.AnyType;
 import org.pentaho.reporting.libraries.formula.typing.coretypes.NumberType;
 
-public class NormalizeArrayFunctionDescription extends AbstractFunctionDescription
-{
-  public NormalizeArrayFunctionDescription()
-  {
-    super("NORMALIZEARRAY", "org.pentaho.reporting.libraries.formula.function.userdefined.NormalizeArray-Function");
+public class NormalizeArrayFunctionDescription extends AbstractFunctionDescription {
+  public NormalizeArrayFunctionDescription() {
+    super( "NORMALIZEARRAY", "org.pentaho.reporting.libraries.formula.function.userdefined.NormalizeArray-Function" );
   }
 
-  public Type getValueType()
-  {
+  public Type getValueType() {
     return AnyType.ANY_ARRAY;
   }
 
-  public FunctionCategory getCategory()
-  {
+  public FunctionCategory getCategory() {
     return UserDefinedFunctionCategory.CATEGORY;
   }
 
-  public int getParameterCount()
-  {
+  public int getParameterCount() {
     return 2;
   }
 
   /**
-   * Returns the parameter type at the given position using the function
-   * metadata. The first parameter is at the position 0;
+   * Returns the parameter type at the given position using the function metadata. The first parameter is at the
+   * position 0;
    *
    * @param position The parameter index.
    * @return The parameter type.
    */
-  public Type getParameterType(final int position)
-  {
-    if (position == 0)
-    {
+  public Type getParameterType( final int position ) {
+    if ( position == 0 ) {
       return AnyType.ANY_SEQUENCE;
     }
 
@@ -63,16 +56,13 @@ public class NormalizeArrayFunctionDescription extends AbstractFunctionDescripti
   }
 
   /**
-   * Defines, whether the parameter at the given position is mandatory. A
-   * mandatory parameter must be filled in, while optional parameters need
-   * not to be filled in.
+   * Defines, whether the parameter at the given position is mandatory. A mandatory parameter must be filled in, while
+   * optional parameters need not to be filled in.
    *
    * @return
    */
-  public boolean isParameterMandatory(final int position)
-  {
-    if (position == 0)
-    {
+  public boolean isParameterMandatory( final int position ) {
+    if ( position == 0 ) {
       return true;
     }
     return false;

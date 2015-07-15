@@ -25,33 +25,30 @@ import org.pentaho.reporting.libraries.css.model.StyleKeyRegistry;
  *
  * @author Thomas Morgner
  */
-public final class ColorStyleKeys
-{
+public final class ColorStyleKeys {
   public static final StyleKey COLOR =
-      StyleKeyRegistry.getRegistry().createKey
-          ("color", false, true, StyleKey.ALWAYS);
+    StyleKeyRegistry.getRegistry().createKey
+      ( "color", false, true, StyleKey.ALWAYS );
 
   /**
-   * Not sure whether we can implement this one. It is a post-processing
-   * operation, and may or may not be supported by the output target.
+   * Not sure whether we can implement this one. It is a post-processing operation, and may or may not be supported by
+   * the output target.
    */
   public static final StyleKey OPACITY =
-      StyleKeyRegistry.getRegistry().createKey
-          ("opacity", false, false, StyleKey.ALWAYS);
+    StyleKeyRegistry.getRegistry().createKey
+      ( "opacity", false, false, StyleKey.ALWAYS );
 
   /**
-   * For now, we do not care about color profiles. This might have to do with
-   * me being clueless about the topic, but also with the cost vs. usefullness
-   * calculation involved.
+   * For now, we do not care about color profiles. This might have to do with me being clueless about the topic, but
+   * also with the cost vs. usefullness calculation involved.
    */
   public static final StyleKey COLOR_PROFILE =
-      StyleKeyRegistry.getRegistry().createKey
-          ("color-profile", false, true, StyleKey.ALWAYS);
+    StyleKeyRegistry.getRegistry().createKey
+      ( "color-profile", false, true, StyleKey.ALWAYS );
   public static final StyleKey RENDERING_INTENT =
-      StyleKeyRegistry.getRegistry().createKey
-          ("rendering-intent", false, true, StyleKey.ALWAYS);
+    StyleKeyRegistry.getRegistry().createKey
+      ( "rendering-intent", false, true, StyleKey.ALWAYS );
 
-  private ColorStyleKeys()
-  {
+  private ColorStyleKeys() {
   }
 }

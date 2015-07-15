@@ -20,43 +20,37 @@ package org.pentaho.reporting.libraries.fonts.text.breaks;
 import org.pentaho.reporting.libraries.fonts.text.ClassificationProducer;
 
 /**
- * This produces linebreaks when a CR/LF is encountered. This corresponds to
- * the expected behaviour of HTML-pre elements.
+ * This produces linebreaks when a CR/LF is encountered. This corresponds to the expected behaviour of HTML-pre
+ * elements.
  *
  * @author Thomas Morgner
  */
-public class LineBreakProducer implements BreakOpportunityProducer
-{
-  public LineBreakProducer()
-  {
+public class LineBreakProducer implements BreakOpportunityProducer {
+  public LineBreakProducer() {
   }
 
-  /** Signals the start of text. Resets the state to the initial values. */
-  public void startText()
-  {
+  /**
+   * Signals the start of text. Resets the state to the initial values.
+   */
+  public void startText() {
   }
 
-  public int createBreakOpportunity(final int codepoint)
-  {
-    if (codepoint == ClassificationProducer.START_OF_TEXT)
-    {
+  public int createBreakOpportunity( final int codepoint ) {
+    if ( codepoint == ClassificationProducer.START_OF_TEXT ) {
       return BreakOpportunityProducer.BREAK_NEVER;
     }
 
-    if (codepoint == '\n' || codepoint == '\r')
-    {
+    if ( codepoint == '\n' || codepoint == '\r' ) {
       return BreakOpportunityProducer.BREAK_LINE;
     }
 
     return BreakOpportunityProducer.BREAK_NEVER;
   }
 
-  public Object clone() throws CloneNotSupportedException
-  {
+  public Object clone() throws CloneNotSupportedException {
     return super.clone();
   }
 
-  public void reset()
-  {
+  public void reset() {
   }
 }

@@ -17,8 +17,10 @@
 
 package org.pentaho.reporting.libraries.resourceloader.factory.drawable;
 
-import java.awt.Dimension;
-import java.awt.Graphics2D;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
+import java.awt.*;
 import java.awt.geom.Rectangle2D;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
@@ -26,118 +28,89 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
-public class DrawableWrapper
-{
-  private static final Log logger = LogFactory.getLog(DrawableWrapper.class);
-  private static final Map<String,Boolean> drawables = Collections.synchronizedMap(new HashMap<String,Boolean>());
+public class DrawableWrapper {
+  private static final Log logger = LogFactory.getLog( DrawableWrapper.class );
+  private static final Map<String, Boolean> drawables = Collections.synchronizedMap( new HashMap<String, Boolean>() );
 
   private Object backend;
   private Method drawMethod;
   private Method getPreferredSizeMethod;
   private Method isKeepAspectRatioMethod;
-  private static final Object[] EMPTY_ARGS = new Object[0];
-  private static final Class[] EMPTY_PARAMS = new Class[0];
-  private static final Class[] PARAMETER_TYPES = new Class[]{Graphics2D.class, Rectangle2D.class};
+  private static final Object[] EMPTY_ARGS = new Object[ 0 ];
+  private static final Class[] EMPTY_PARAMS = new Class[ 0 ];
+  private static final Class[] PARAMETER_TYPES = new Class[] { Graphics2D.class, Rectangle2D.class };
 
-  public DrawableWrapper(final Object maybeDrawable)
-  {
-    if (maybeDrawable == null)
-    {
-      throw new NullPointerException("Drawable must not be null");
+  public DrawableWrapper( final Object maybeDrawable ) {
+    if ( maybeDrawable == null ) {
+      throw new NullPointerException( "Drawable must not be null" );
     }
-    if (maybeDrawable instanceof DrawableWrapper)
-    {
-      throw new IllegalArgumentException("Cannot wrap around a drawable-wrapper");
+    if ( maybeDrawable instanceof DrawableWrapper ) {
+      throw new IllegalArgumentException( "Cannot wrap around a drawable-wrapper" );
     }
     final Class<?> aClass = maybeDrawable.getClass();
-    try
-    {
-      drawMethod = aClass.getMethod("draw", PARAMETER_TYPES);
+    try {
+      drawMethod = aClass.getMethod( "draw", PARAMETER_TYPES );
       final int modifiers = drawMethod.getModifiers();
-      if (Modifier.isPublic(modifiers) == false ||
-          Modifier.isAbstract(modifiers) ||
-          Modifier.isStatic(modifiers))
-      {
-        if (logger.isWarnEnabled())
-        {
-          logger.warn(String.format("DrawMethod is not valid: %s#%s", aClass, drawMethod)); // NON-NLS
+      if ( Modifier.isPublic( modifiers ) == false ||
+        Modifier.isAbstract( modifiers ) ||
+        Modifier.isStatic( modifiers ) ) {
+        if ( logger.isWarnEnabled() ) {
+          logger.warn( String.format( "DrawMethod is not valid: %s#%s", aClass, drawMethod ) ); // NON-NLS
         }
         drawMethod = null;
       }
-    }
-    catch (NoSuchMethodException e)
-    {
+    } catch ( NoSuchMethodException e ) {
       // ignore exception
-      if (logger.isWarnEnabled())
-      {
-        logger.warn(String.format("The object is not a drawable: %s", aClass)); // NON-NLS
+      if ( logger.isWarnEnabled() ) {
+        logger.warn( String.format( "The object is not a drawable: %s", aClass ) ); // NON-NLS
       }
       drawMethod = null;
     }
 
-    if (drawMethod != null)
-    {
-      try
-      {
-        isKeepAspectRatioMethod = aClass.getMethod("isPreserveAspectRatio", EMPTY_PARAMS);
+    if ( drawMethod != null ) {
+      try {
+        isKeepAspectRatioMethod = aClass.getMethod( "isPreserveAspectRatio", EMPTY_PARAMS );
         final int modifiers = isKeepAspectRatioMethod.getModifiers();
-        if (Modifier.isPublic(modifiers) == false ||
-            Modifier.isAbstract(modifiers) ||
-            Modifier.isStatic(modifiers) ||
-            Boolean.TYPE.equals(isKeepAspectRatioMethod.getReturnType()) == false)
-        {
+        if ( Modifier.isPublic( modifiers ) == false ||
+          Modifier.isAbstract( modifiers ) ||
+          Modifier.isStatic( modifiers ) ||
+          Boolean.TYPE.equals( isKeepAspectRatioMethod.getReturnType() ) == false ) {
           isKeepAspectRatioMethod = null;
         }
-      }
-      catch (NoSuchMethodException e)
-      {
+      } catch ( NoSuchMethodException e ) {
         // ignored ..
       }
 
-      try
-      {
-        getPreferredSizeMethod = aClass.getMethod("getPreferredSize", EMPTY_PARAMS);
+      try {
+        getPreferredSizeMethod = aClass.getMethod( "getPreferredSize", EMPTY_PARAMS );
         final int modifiers = getPreferredSizeMethod.getModifiers();
-        if (Modifier.isPublic(modifiers) == false ||
-            Modifier.isAbstract(modifiers) ||
-            Modifier.isStatic(modifiers) ||
-            Dimension.class.isAssignableFrom(getPreferredSizeMethod.getReturnType()) == false)
-        {
+        if ( Modifier.isPublic( modifiers ) == false ||
+          Modifier.isAbstract( modifiers ) ||
+          Modifier.isStatic( modifiers ) ||
+          Dimension.class.isAssignableFrom( getPreferredSizeMethod.getReturnType() ) == false ) {
           getPreferredSizeMethod = null;
         }
-      }
-      catch (NoSuchMethodException e)
-      {
+      } catch ( NoSuchMethodException e ) {
         // ignored ..
       }
     }
     backend = maybeDrawable;
   }
 
-  public Object getBackend()
-  {
+  public Object getBackend() {
     return backend;
   }
 
-  public void draw(final Graphics2D g2, final Rectangle2D bounds)
-  {
-    if (drawMethod == null)
-    {
+  public void draw( final Graphics2D g2, final Rectangle2D bounds ) {
+    if ( drawMethod == null ) {
       return;
     }
 
-    try
-    {
-      drawMethod.invoke(backend, g2, bounds);
-    }
-    catch (Throwable e)
-    {
-      if (logger.isDebugEnabled())
-      {
-        logger.warn("Invoking draw failed:", e); // NON-NLS
+    try {
+      drawMethod.invoke( backend, g2, bounds );
+    } catch ( Throwable e ) {
+      if ( logger.isDebugEnabled() ) {
+        logger.warn( "Invoking draw failed:", e ); // NON-NLS
       }
     }
   }
@@ -148,22 +121,16 @@ public class DrawableWrapper
    *
    * @return the preferred size.
    */
-  public Dimension getPreferredSize()
-  {
-    if (getPreferredSizeMethod == null)
-    {
+  public Dimension getPreferredSize() {
+    if ( getPreferredSizeMethod == null ) {
       return null;
     }
 
-    try
-    {
-      return (Dimension) getPreferredSizeMethod.invoke(backend, EMPTY_ARGS);
-    }
-    catch (Throwable e)
-    {
-      if (logger.isWarnEnabled())
-      {
-        logger.warn("Invoking getPreferredSize failed:", e); // NON-NLS
+    try {
+      return (Dimension) getPreferredSizeMethod.invoke( backend, EMPTY_ARGS );
+    } catch ( Throwable e ) {
+      if ( logger.isWarnEnabled() ) {
+        logger.warn( "Invoking getPreferredSize failed:", e ); // NON-NLS
       }
       return null;
     }
@@ -174,64 +141,48 @@ public class DrawableWrapper
    *
    * @return true, if an aspect ratio is preserved, false otherwise.
    */
-  public boolean isPreserveAspectRatio()
-  {
-    if (isKeepAspectRatioMethod == null)
-    {
+  public boolean isPreserveAspectRatio() {
+    if ( isKeepAspectRatioMethod == null ) {
       return false;
     }
 
-    try
-    {
-      return Boolean.TRUE.equals(isKeepAspectRatioMethod.invoke(backend, EMPTY_ARGS));
-    }
-    catch (Throwable e)
-    {
-      if (logger.isWarnEnabled())
-      {
-        logger.warn("Invoking isKeepAspectRatio failed:", e); // NON-NLS
+    try {
+      return Boolean.TRUE.equals( isKeepAspectRatioMethod.invoke( backend, EMPTY_ARGS ) );
+    } catch ( Throwable e ) {
+      if ( logger.isWarnEnabled() ) {
+        logger.warn( "Invoking isKeepAspectRatio failed:", e ); // NON-NLS
       }
       return false;
     }
   }
 
-  public static boolean isDrawable(final Object maybeDrawable)
-  {
-    if (maybeDrawable == null)
-    {
-      throw new NullPointerException("A <null> value can never be a drawable.");
+  public static boolean isDrawable( final Object maybeDrawable ) {
+    if ( maybeDrawable == null ) {
+      throw new NullPointerException( "A <null> value can never be a drawable." );
     }
     final String key = maybeDrawable.getClass().getName();
-    final Boolean result = drawables.get(key);
-    if (result != null)
-    {
+    final Boolean result = drawables.get( key );
+    if ( result != null ) {
       return result.booleanValue();
     }
-    final boolean b = computeIsDrawable(maybeDrawable);
-    if (b == true)
-    {
-      drawables.put(key, Boolean.TRUE);
-    }
-    else
-    {
-      drawables.put(key, Boolean.FALSE);
+    final boolean b = computeIsDrawable( maybeDrawable );
+    if ( b == true ) {
+      drawables.put( key, Boolean.TRUE );
+    } else {
+      drawables.put( key, Boolean.FALSE );
     }
     return b;
   }
 
-  private static boolean computeIsDrawable(final Object maybeDrawable)
-  {
+  private static boolean computeIsDrawable( final Object maybeDrawable ) {
     final Class<?> aClass = maybeDrawable.getClass();
-    try
-    {
-      final Method drawMethod = aClass.getMethod("draw", PARAMETER_TYPES);
+    try {
+      final Method drawMethod = aClass.getMethod( "draw", PARAMETER_TYPES );
       final int modifiers = drawMethod.getModifiers();
-      return (Modifier.isPublic(modifiers) &&
-          Modifier.isAbstract(modifiers) == false &&
-          Modifier.isStatic(modifiers) == false);
-    }
-    catch (NoSuchMethodException e)
-    {
+      return ( Modifier.isPublic( modifiers ) &&
+        Modifier.isAbstract( modifiers ) == false &&
+        Modifier.isStatic( modifiers ) == false );
+    } catch ( NoSuchMethodException e ) {
       // ignore exception
       return false;
     }

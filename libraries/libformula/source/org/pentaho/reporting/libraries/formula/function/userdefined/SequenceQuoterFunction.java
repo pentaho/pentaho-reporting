@@ -27,63 +27,53 @@ import org.pentaho.reporting.libraries.formula.typing.Sequence;
 import org.pentaho.reporting.libraries.formula.typing.Type;
 import org.pentaho.reporting.libraries.formula.typing.coretypes.TextType;
 
-public class SequenceQuoterFunction implements Function
-{
+public class SequenceQuoterFunction implements Function {
   private static final long serialVersionUID = -8692592342324471253L;
 
   @Override
-  public String getCanonicalName()
-  {
+  public String getCanonicalName() {
     return "SEQUENCEQUOTER";
   }
 
   // Based on CSVTextFunction...
   @Override
-  public TypeValuePair evaluate(FormulaContext context, ParameterCallback parameters) throws EvaluationException
-  {
+  public TypeValuePair evaluate( FormulaContext context, ParameterCallback parameters ) throws EvaluationException {
     final int parameterCount = parameters.getParameterCount();
-    if (parameterCount < 1 || parameterCount > 3)
-    {
-      throw EvaluationException.getInstance(LibFormulaErrorValue.ERROR_ARGUMENTS_VALUE);
+    if ( parameterCount < 1 || parameterCount > 3 ) {
+      throw EvaluationException.getInstance( LibFormulaErrorValue.ERROR_ARGUMENTS_VALUE );
     }
 
     final Sequence sequence =
-        context.getTypeRegistry().convertToSequence(parameters.getType(0), parameters.getValue(0));
-    if (sequence == null)
-    {
-      throw EvaluationException.getInstance(LibFormulaErrorValue.ERROR_NA_VALUE);
+      context.getTypeRegistry().convertToSequence( parameters.getType( 0 ), parameters.getValue( 0 ) );
+    if ( sequence == null ) {
+      throw EvaluationException.getInstance( LibFormulaErrorValue.ERROR_NA_VALUE );
     }
 
     String quote = "\"";
     String separator = ",";
-    if (parameterCount > 1)
-    {
-      final Type indexType = parameters.getType(1);
-      final Object indexValue = parameters.getValue(1);
-      separator = context.getTypeRegistry().convertToText(indexType, indexValue);
+    if ( parameterCount > 1 ) {
+      final Type indexType = parameters.getType( 1 );
+      final Object indexValue = parameters.getValue( 1 );
+      separator = context.getTypeRegistry().convertToText( indexType, indexValue );
     }
 
-    if (parameterCount > 2)
-    {
-      final Type indexType = parameters.getType(2);
-      final Object indexValue = parameters.getValue(2);
-      quote = context.getTypeRegistry().convertToText(indexType, indexValue);
+    if ( parameterCount > 2 ) {
+      final Type indexType = parameters.getType( 2 );
+      final Object indexValue = parameters.getValue( 2 );
+      quote = context.getTypeRegistry().convertToText( indexType, indexValue );
     }
 
     StringBuilder b = new StringBuilder();
-    while (sequence.hasNext())
-    {
+    while ( sequence.hasNext() ) {
       final Object o = sequence.next();
-      if (o != null)
-      {
-        b.append(quote).append(String.valueOf(o)).append(quote);
+      if ( o != null ) {
+        b.append( quote ).append( String.valueOf( o ) ).append( quote );
       }
-      if (sequence.hasNext())
-      {
-        b.append(separator);
+      if ( sequence.hasNext() ) {
+        b.append( separator );
       }
     }
-    return new TypeValuePair(TextType.TYPE, b.toString());
+    return new TypeValuePair( TextType.TYPE, b.toString() );
 
   }
 

@@ -20,14 +20,13 @@ package org.pentaho.reporting.libraries.fonts.encoding;
 import java.util.Locale;
 
 /**
- * A simple encoding. This encoding transforms characters into bytes in a
- * uniform way. Each character results in exactly the same number of bytes.
+ * A simple encoding. This encoding transforms characters into bytes in a uniform way. Each character results in exactly
+ * the same number of bytes.
  *
  * @author Thomas Morgner
  */
-public interface Encoding extends EncodingCore
-{
+public interface Encoding extends EncodingCore {
   public String getName();
 
-  public String getName(Locale locale);
+  public String getName( Locale locale );
 }

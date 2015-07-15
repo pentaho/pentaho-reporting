@@ -22,17 +22,14 @@ package org.pentaho.reporting.libraries.fonts.truetype;
  *
  * @author Thomas Morgner
  */
-public class MaximumProfileTable implements FontTable
-{
+public class MaximumProfileTable implements FontTable {
   private static final long TABLE_ID =
-          ('m' << 24 | 'a' << 16 | 'x' << 8 | 'p');
+    ( 'm' << 24 | 'a' << 16 | 'x' << 8 | 'p' );
 
-  public MaximumProfileTable()
-  {
+  public MaximumProfileTable() {
   }
 
-  public long getName()
-  {
+  public long getName() {
     return TABLE_ID;
   }
 }

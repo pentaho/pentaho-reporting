@@ -29,27 +29,22 @@ import org.pentaho.reporting.libraries.formula.typing.coretypes.TextType;
  * @author Cedric Pronzato
  * @see TimeFunction
  */
-public class TimeValueFunctionDescription extends AbstractFunctionDescription
-{
+public class TimeValueFunctionDescription extends AbstractFunctionDescription {
   private static final long serialVersionUID = 5414013076902907910L;
 
-  public TimeValueFunctionDescription()
-  {
-    super("TIMEVALUE", "org.pentaho.reporting.libraries.formula.function.datetime.TimeValue-Function");
+  public TimeValueFunctionDescription() {
+    super( "TIMEVALUE", "org.pentaho.reporting.libraries.formula.function.datetime.TimeValue-Function" );
   }
 
-  public Type getValueType()
-  {
+  public Type getValueType() {
     return DateTimeType.TIME_TYPE;
   }
 
-  public int getParameterCount()
-  {
+  public int getParameterCount() {
     return 1;
   }
 
-  public Type getParameterType(final int position)
-  {
+  public Type getParameterType( final int position ) {
     return TextType.TYPE;
   }
 
@@ -59,13 +54,11 @@ public class TimeValueFunctionDescription extends AbstractFunctionDescription
    *
    * @return
    */
-  public boolean isParameterMandatory(final int position)
-  {
+  public boolean isParameterMandatory( final int position ) {
     return true;
   }
 
-  public FunctionCategory getCategory()
-  {
+  public FunctionCategory getCategory() {
     return DateTimeFunctionCategory.CATEGORY;
   }
 }

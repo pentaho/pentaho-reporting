@@ -28,28 +28,23 @@ import org.pentaho.reporting.libraries.formula.lvalues.TypeValuePair;
  * This function class represents the constant error NA.
  *
  * @author Cedric Pronzato
- *
  */
-public class NaFunction implements Function
-{
+public class NaFunction implements Function {
   private static final long serialVersionUID = 3433794709691209411L;
 
-  public NaFunction()
-  {
+  public NaFunction() {
   }
 
-  public TypeValuePair evaluate(final FormulaContext context, final ParameterCallback parameters) throws EvaluationException
-  {
-    if(parameters.getParameterCount() != 0)
-    {
-      throw EvaluationException.getInstance(LibFormulaErrorValue.ERROR_ARGUMENTS_VALUE);
+  public TypeValuePair evaluate( final FormulaContext context, final ParameterCallback parameters )
+    throws EvaluationException {
+    if ( parameters.getParameterCount() != 0 ) {
+      throw EvaluationException.getInstance( LibFormulaErrorValue.ERROR_ARGUMENTS_VALUE );
     }
 
-    throw EvaluationException.getInstance(LibFormulaErrorValue.ERROR_NA_VALUE);
+    throw EvaluationException.getInstance( LibFormulaErrorValue.ERROR_NA_VALUE );
   }
 
-  public String getCanonicalName()
-  {
+  public String getCanonicalName() {
     return "NA";
   }
 

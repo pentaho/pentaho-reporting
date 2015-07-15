@@ -17,68 +17,54 @@
 
 package org.pentaho.reporting.libraries.docbundle.metadata.writer;
 
+import org.pentaho.reporting.libraries.xmlns.common.AttributeList;
+import org.pentaho.reporting.libraries.xmlns.writer.XmlWriter;
+import org.pentaho.reporting.libraries.xmlns.writer.XmlWriterSupport;
+
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import org.pentaho.reporting.libraries.xmlns.writer.XmlWriter;
-import org.pentaho.reporting.libraries.xmlns.writer.XmlWriterSupport;
-import org.pentaho.reporting.libraries.xmlns.common.AttributeList;
-
-public class DateMetaDataEntryWriteHandler implements BundleMetaDataEntryWriteHandler
-{
-  public DateMetaDataEntryWriteHandler()
-  {
+public class DateMetaDataEntryWriteHandler implements BundleMetaDataEntryWriteHandler {
+  public DateMetaDataEntryWriteHandler() {
   }
 
-  public void write(final BundleMetaDataXmlWriter bundleWriter,
-                    final XmlWriter writer,
-                    final String entryNamespace,
-                    final String entryName,
-                    final Object entryValue) throws IOException
-  {
-    if (bundleWriter == null)
-    {
+  public void write( final BundleMetaDataXmlWriter bundleWriter,
+                     final XmlWriter writer,
+                     final String entryNamespace,
+                     final String entryName,
+                     final Object entryValue ) throws IOException {
+    if ( bundleWriter == null ) {
       throw new NullPointerException();
     }
-    if (writer == null)
-    {
+    if ( writer == null ) {
       throw new NullPointerException();
     }
-    if (entryName == null)
-    {
+    if ( entryName == null ) {
       throw new NullPointerException();
     }
-    if (entryNamespace == null)
-    {
+    if ( entryNamespace == null ) {
       throw new NullPointerException();
     }
-    if (entryValue instanceof Date == false)
-    {
+    if ( entryValue instanceof Date == false ) {
       return;
     }
 
-    if (writer.isNamespaceDefined(entryNamespace))
-    {
-      writer.writeTag(entryNamespace, entryName, XmlWriterSupport.OPEN);
-    }
-    else
-    {
+    if ( writer.isNamespaceDefined( entryNamespace ) ) {
+      writer.writeTag( entryNamespace, entryName, XmlWriterSupport.OPEN );
+    } else {
       final AttributeList attributeList = new AttributeList();
-      final String defaultNamespace = bundleWriter.getDefaultPrefix(entryNamespace);
-      if (defaultNamespace != null && writer.isNamespacePrefixDefined(defaultNamespace) == false)
-      {
-        attributeList.addNamespaceDeclaration(defaultNamespace, entryNamespace);
+      final String defaultNamespace = bundleWriter.getDefaultPrefix( entryNamespace );
+      if ( defaultNamespace != null && writer.isNamespacePrefixDefined( defaultNamespace ) == false ) {
+        attributeList.addNamespaceDeclaration( defaultNamespace, entryNamespace );
+      } else {
+        attributeList.addNamespaceDeclaration( "autoGenNs", entryNamespace );
       }
-      else
-      {
-        attributeList.addNamespaceDeclaration("autoGenNs", entryNamespace);
-      }
-      writer.writeTag(entryNamespace, entryName, attributeList, XmlWriterSupport.OPEN);
+      writer.writeTag( entryNamespace, entryName, attributeList, XmlWriterSupport.OPEN );
     }
-    
-    final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss' 'z");
-    writer.writeTextNormalized(String.valueOf(sdf.format(entryValue)), false);
+
+    final SimpleDateFormat sdf = new SimpleDateFormat( "yyyy-MM-dd'T'hh:mm:ss' 'z" );
+    writer.writeTextNormalized( String.valueOf( sdf.format( entryValue ) ), false );
     writer.writeCloseTag();
   }
 }

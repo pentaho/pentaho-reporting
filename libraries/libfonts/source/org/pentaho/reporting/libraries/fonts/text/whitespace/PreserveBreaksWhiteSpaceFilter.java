@@ -24,60 +24,46 @@ import org.pentaho.reporting.libraries.fonts.text.ClassificationProducer;
  *
  * @author Thomas Morgner
  */
-public class PreserveBreaksWhiteSpaceFilter implements WhiteSpaceFilter
-{
+public class PreserveBreaksWhiteSpaceFilter implements WhiteSpaceFilter {
   private boolean collapse;
 
-  public PreserveBreaksWhiteSpaceFilter()
-  {
+  public PreserveBreaksWhiteSpaceFilter() {
   }
 
   /**
-   * Reset the filter to the same state as if the filter had been constructed
-   * but not used yet.
+   * Reset the filter to the same state as if the filter had been constructed but not used yet.
    */
-  public void reset()
-  {
+  public void reset() {
     collapse = false;
   }
 
   /**
-   * Filters the whitespaces. This method returns '-1', if the whitespace should
-   * be removed from the stream; otherwise it presents a replacement character.
-   * If the codepoint is no whitespace at all, the codepoint is returned
+   * Filters the whitespaces. This method returns '-1', if the whitespace should be removed from the stream; otherwise
+   * it presents a replacement character. If the codepoint is no whitespace at all, the codepoint is returned
    * unchanged.
    *
    * @param codepoint
    * @return
    */
-  public int filter(final int codepoint)
-  {
-    if (isLinebreak(codepoint))
-    {
+  public int filter( final int codepoint ) {
+    if ( isLinebreak( codepoint ) ) {
       collapse = true;
       return codepoint;
     }
 
-    if (isWhitespace(codepoint))
-    {
-      if (collapse == true)
-      {
+    if ( isWhitespace( codepoint ) ) {
+      if ( collapse == true ) {
         return WhiteSpaceFilter.STRIP_WHITESPACE;
-      }
-      else
-      {
+      } else {
         collapse = true;
         return ' ';
       }
     }
 
-    if (codepoint == ClassificationProducer.START_OF_TEXT)
-    {
+    if ( codepoint == ClassificationProducer.START_OF_TEXT ) {
       collapse = true;
       return WhiteSpaceFilter.STRIP_WHITESPACE;
-    }
-    else if (codepoint == ClassificationProducer.END_OF_TEXT)
-    {
+    } else if ( codepoint == ClassificationProducer.END_OF_TEXT ) {
       return WhiteSpaceFilter.STRIP_WHITESPACE;
     }
 
@@ -85,28 +71,22 @@ public class PreserveBreaksWhiteSpaceFilter implements WhiteSpaceFilter
     return codepoint;
   }
 
-  private boolean isWhitespace(final int codepoint)
-  {
-    final char ch = (char) (codepoint & 0xFFFF);
-    return Character.isWhitespace(ch);
+  private boolean isWhitespace( final int codepoint ) {
+    final char ch = (char) ( codepoint & 0xFFFF );
+    return Character.isWhitespace( ch );
   }
 
-  protected boolean isLinebreak (final int codepoint)
-  {
-    if (codepoint == 0xa || codepoint == 0xd)
-    {
+  protected boolean isLinebreak( final int codepoint ) {
+    if ( codepoint == 0xa || codepoint == 0xd ) {
       return true;
-    }
-    else
-    {
+    } else {
       return false;
     }
   }
 
 
-  public Object clone() throws CloneNotSupportedException
-  {
+  public Object clone() throws CloneNotSupportedException {
     return super.clone();
   }
-  
+
 }

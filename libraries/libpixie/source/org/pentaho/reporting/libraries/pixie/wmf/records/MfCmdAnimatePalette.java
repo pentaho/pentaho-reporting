@@ -17,12 +17,12 @@
 
 package org.pentaho.reporting.libraries.pixie.wmf.records;
 
-import java.awt.Color;
-
 import org.pentaho.reporting.libraries.pixie.wmf.GDIColor;
 import org.pentaho.reporting.libraries.pixie.wmf.MfRecord;
 import org.pentaho.reporting.libraries.pixie.wmf.MfType;
 import org.pentaho.reporting.libraries.pixie.wmf.WmfFile;
+
+import java.awt.*;
 
 /**
  * The AnimatePalette function replaces entries in the specified logical palette.
@@ -36,17 +36,14 @@ import org.pentaho.reporting.libraries.pixie.wmf.WmfFile;
  * );
  * </pre>
  * <p/>
- * This function is not implemented. However, you can use this implementation to create a
- * valid record. <table border="1"> <tr> <th>offset</th> <th>length in bytes</th>
- * <th>meaning</th> </tr> <tr> <td>0x0</td> <td>4</td> <td>RecordSize (variable)</td>
- * </tr> <tr> <td>0x4</td> <td>2</td> <td>record type (0x0436)</td> </tr> <tr>
- * <td>0x6</td> <td>2</td> <td>first palette entry to be animated</td> </tr> <tr>
- * <td>0x8</td> <td>2</td> <td>number of animated entries</td> </tr> <tr> <td>0xa</td>
- * <td>n*4</td> <td>palette entry array with (1 byte red, 1 byte green, 1 byte blue, 1
- * byte flags)</td> </tr> </table>
+ * This function is not implemented. However, you can use this implementation to create a valid record. <table
+ * border="1"> <tr> <th>offset</th> <th>length in bytes</th> <th>meaning</th> </tr> <tr> <td>0x0</td> <td>4</td>
+ * <td>RecordSize (variable)</td> </tr> <tr> <td>0x4</td> <td>2</td> <td>record type (0x0436)</td> </tr> <tr>
+ * <td>0x6</td> <td>2</td> <td>first palette entry to be animated</td> </tr> <tr> <td>0x8</td> <td>2</td> <td>number of
+ * animated entries</td> </tr> <tr> <td>0xa</td> <td>n*4</td> <td>palette entry array with (1 byte red, 1 byte green, 1
+ * byte blue, 1 byte flags)</td> </tr> </table>
  */
-public final class MfCmdAnimatePalette extends MfCmd
-{
+public final class MfCmdAnimatePalette extends MfCmd {
   /**
    * the position of the first entry within the palette that should be animated.
    */
@@ -60,8 +57,7 @@ public final class MfCmdAnimatePalette extends MfCmd
   /**
    * DefaultConstructor.
    */
-  public MfCmdAnimatePalette()
-  {
+  public MfCmdAnimatePalette() {
   }
 
   /**
@@ -69,10 +65,8 @@ public final class MfCmdAnimatePalette extends MfCmd
    *
    * @return the number of colors or 0 if no colors are defined.
    */
-  public int getEntriesCount()
-  {
-    if (colors == null)
-    {
+  public int getEntriesCount() {
+    if ( colors == null ) {
       return 0;
     }
 
@@ -85,61 +79,54 @@ public final class MfCmdAnimatePalette extends MfCmd
    * @return the created record.
    */
   public MfRecord getRecord()
-      throws RecordCreationException
-  {
+    throws RecordCreationException {
     final int cEntries = getEntriesCount();
-    if (cEntries == 0)
-    {
-      throw new RecordCreationException("Empty AnimatePaletteRecord is not valid");
+    if ( cEntries == 0 ) {
+      throw new RecordCreationException( "Empty AnimatePaletteRecord is not valid" );
     }
 
-    final MfRecord record = new MfRecord(2 + cEntries * 2);
-    record.setParam(POS_START_ANIMATE_COLOR, getPosStartAnimate());
-    record.setParam(POS_CENTRIES, cEntries);
+    final MfRecord record = new MfRecord( 2 + cEntries * 2 );
+    record.setParam( POS_START_ANIMATE_COLOR, getPosStartAnimate() );
+    record.setParam( POS_CENTRIES, cEntries );
 
-    for (int i = 0; i < cEntries; i++)
-    {
-      final Color c = colors[i];
+    for ( int i = 0; i < cEntries; i++ ) {
+      final Color c = colors[ i ];
       // a long parameter is 2 words long
-      record.setLongParam(i * 2 + POS_START_ENTRIES, GDIColor.translateColor(c));
+      record.setLongParam( i * 2 + POS_START_ENTRIES, GDIColor.translateColor( c ) );
     }
     return record;
   }
 
   /**
-   * Reads the command data from the given record and adjusts the internal parameters
-   * according to the data parsed.
+   * Reads the command data from the given record and adjusts the internal parameters according to the data parsed.
    * <p/>
    * This method is not implemented, as a Palette implementation is still missing.
    *
    * @param record the record.
    */
-  public void setRecord(final MfRecord record)
-  {
+  public void setRecord( final MfRecord record ) {
     // the handle to the palette object
-    final int hPalette = record.getParam(POS_START_ANIMATE_COLOR);
-    setPosStartAnimate(hPalette);
+    final int hPalette = record.getParam( POS_START_ANIMATE_COLOR );
+    setPosStartAnimate( hPalette );
     // the number of defined entries ...
-    final int cEntries = record.getParam(POS_CENTRIES);
-    final Color[] colors = new Color[cEntries];
+    final int cEntries = record.getParam( POS_CENTRIES );
+    final Color[] colors = new Color[ cEntries ];
 
-    for (int i = 0; i < cEntries; i++)
-    {
-      final int cr = record.getLongParam(i * 2 + POS_START_ENTRIES);
-      final GDIColor color = new GDIColor(cr);
-      colors[i] = color;
+    for ( int i = 0; i < cEntries; i++ ) {
+      final int cr = record.getLongParam( i * 2 + POS_START_ENTRIES );
+      final GDIColor color = new GDIColor( cr );
+      colors[ i ] = color;
     }
     this.colors = colors;
   }
 
   /**
-   * Reads the function identifiert .Every record type is identified by a function number
-   * corresponding to one of the Windows GDI functions used.
+   * Reads the function identifiert .Every record type is identified by a function number corresponding to one of the
+   * Windows GDI functions used.
    *
    * @return MfType.ANIMATE_PALETTE.
    */
-  public int getFunction()
-  {
+  public int getFunction() {
     return MfType.ANIMATE_PALETTE;
   }
 
@@ -148,8 +135,7 @@ public final class MfCmdAnimatePalette extends MfCmd
    *
    * @param file the meta file.
    */
-  public void replay(final WmfFile file)
-  {
+  public void replay( final WmfFile file ) {
     // do nothing
     // System.out.println ("Animate Palette is not implemented");
   }
@@ -159,13 +145,12 @@ public final class MfCmdAnimatePalette extends MfCmd
    *
    * @return the command as string.
    */
-  public String toString()
-  {
-    final StringBuffer b = new StringBuffer(100);
-    b.append("[ANIMATE_PALETTE] posStartAnimate=");
-    b.append(getPosStartAnimate());
-    b.append(" entriesCount=");
-    b.append(getEntriesCount());
+  public String toString() {
+    final StringBuffer b = new StringBuffer( 100 );
+    b.append( "[ANIMATE_PALETTE] posStartAnimate=" );
+    b.append( getPosStartAnimate() );
+    b.append( " entriesCount=" );
+    b.append( getEntriesCount() );
     return b.toString();
   }
 
@@ -174,33 +159,27 @@ public final class MfCmdAnimatePalette extends MfCmd
    *
    * @return a new instance of the command.
    */
-  public MfCmd getInstance()
-  {
+  public MfCmd getInstance() {
     return new MfCmdAnimatePalette();
   }
 
   /**
-   * Returns the position of the first color that should be animated in the current
-   * palette.
+   * Returns the position of the first color that should be animated in the current palette.
    *
    * @return the position of the color.
    */
-  public int getPosStartAnimate()
-  {
+  public int getPosStartAnimate() {
     return posStartAnimate;
   }
 
   /**
-   * Defines the position of the first color that should be animated in the current
-   * palette.
+   * Defines the position of the first color that should be animated in the current palette.
    *
    * @param hPalette the index of the color, not negative.
    */
-  public void setPosStartAnimate(final int hPalette)
-  {
-    if (posStartAnimate < 0)
-    {
-      throw new IndexOutOfBoundsException("Palette indices must be positive.");
+  public void setPosStartAnimate( final int hPalette ) {
+    if ( posStartAnimate < 0 ) {
+      throw new IndexOutOfBoundsException( "Palette indices must be positive." );
     }
     this.posStartAnimate = hPalette;
   }
@@ -210,8 +189,7 @@ public final class MfCmdAnimatePalette extends MfCmd
    *
    * @return the colors
    */
-  public Color[] getEntries()
-  {
+  public Color[] getEntries() {
     return colors;
   }
 
@@ -220,22 +198,19 @@ public final class MfCmdAnimatePalette extends MfCmd
    *
    * @param colors the colors.
    */
-  public void setEntries(final Color[] colors)
-  {
+  public void setEntries( final Color[] colors ) {
     this.colors = colors;
   }
 
   /**
    * Not implemented as no scaling needed for this operation.
    */
-  protected void scaleXChanged()
-  {
+  protected void scaleXChanged() {
   }
 
   /**
    * Not implemented as no scaling needed for this operation.
    */
-  protected void scaleYChanged()
-  {
+  protected void scaleYChanged() {
   }
 }

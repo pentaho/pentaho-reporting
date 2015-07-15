@@ -25,14 +25,12 @@ import org.pentaho.reporting.libraries.css.parser.stylehandler.OneOfConstantsRea
  *
  * @author Thomas Morgner
  */
-public class TextTransformReadHandler extends OneOfConstantsReadHandler
-{
-  public TextTransformReadHandler()
-  {
-    super(false);
-    addValue(TextTransform.CAPITALIZE);
-    addValue(TextTransform.LOWERCASE);
-    addValue(TextTransform.NONE);
-    addValue(TextTransform.UPPERCASE);
+public class TextTransformReadHandler extends OneOfConstantsReadHandler {
+  public TextTransformReadHandler() {
+    super( false );
+    addValue( TextTransform.CAPITALIZE );
+    addValue( TextTransform.LOWERCASE );
+    addValue( TextTransform.NONE );
+    addValue( TextTransform.UPPERCASE );
   }
 }

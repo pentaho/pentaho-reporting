@@ -25,29 +25,27 @@ import org.pentaho.reporting.libraries.css.parser.stylehandler.OneOfConstantsRea
  *
  * @author Thomas Morgner
  */
-public class DisplayRoleReadHandler extends OneOfConstantsReadHandler
-{
-  public DisplayRoleReadHandler()
-  {
-    super(false);
-    addValue(DisplayRole.BLOCK);
-    addValue(DisplayRole.COMPACT);
-    addValue(DisplayRole.INLINE);
-    addValue(DisplayRole.LIST_ITEM);
-    addValue(DisplayRole.NONE);
-    addValue(DisplayRole.RUBY_BASE);
-    addValue(DisplayRole.RUBY_BASE_GROUP);
-    addValue(DisplayRole.RUBY_TEXT);
-    addValue(DisplayRole.RUBY_TEXT_GROUP);
-    addValue(DisplayRole.RUN_IN);
-    addValue(DisplayRole.TABLE_CAPTION);
-    addValue(DisplayRole.TABLE_CELL);
-    addValue(DisplayRole.TABLE_COLUMN);
-    addValue(DisplayRole.TABLE_COLUMN_GROUP);
-    addValue(DisplayRole.TABLE_FOOTER_GROUP);
-    addValue(DisplayRole.TABLE_HEADER_GROUP);
-    addValue(DisplayRole.TABLE_ROW);
-    addValue(DisplayRole.TABLE_ROW_GROUP);
-    addValue(DisplayRole.CANVAS);
+public class DisplayRoleReadHandler extends OneOfConstantsReadHandler {
+  public DisplayRoleReadHandler() {
+    super( false );
+    addValue( DisplayRole.BLOCK );
+    addValue( DisplayRole.COMPACT );
+    addValue( DisplayRole.INLINE );
+    addValue( DisplayRole.LIST_ITEM );
+    addValue( DisplayRole.NONE );
+    addValue( DisplayRole.RUBY_BASE );
+    addValue( DisplayRole.RUBY_BASE_GROUP );
+    addValue( DisplayRole.RUBY_TEXT );
+    addValue( DisplayRole.RUBY_TEXT_GROUP );
+    addValue( DisplayRole.RUN_IN );
+    addValue( DisplayRole.TABLE_CAPTION );
+    addValue( DisplayRole.TABLE_CELL );
+    addValue( DisplayRole.TABLE_COLUMN );
+    addValue( DisplayRole.TABLE_COLUMN_GROUP );
+    addValue( DisplayRole.TABLE_FOOTER_GROUP );
+    addValue( DisplayRole.TABLE_HEADER_GROUP );
+    addValue( DisplayRole.TABLE_ROW );
+    addValue( DisplayRole.TABLE_ROW_GROUP );
+    addValue( DisplayRole.CANVAS );
   }
 }

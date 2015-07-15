@@ -17,29 +17,25 @@
 
 package org.pentaho.reporting.libraries.fonts.truetype;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.pentaho.reporting.libraries.fonts.ByteAccessUtilities;
+import org.pentaho.reporting.libraries.fonts.io.FileFontDataInputSource;
+import org.pentaho.reporting.libraries.fonts.io.FontDataInputSource;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
-
-import com.lowagie.text.DocumentException;
-import org.pentaho.reporting.libraries.fonts.ByteAccessUtilities;
-import org.pentaho.reporting.libraries.fonts.FontException;
-import org.pentaho.reporting.libraries.fonts.io.FileFontDataInputSource;
-import org.pentaho.reporting.libraries.fonts.io.FontDataInputSource;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 
 /**
  * Creation-Date: 06.11.2005, 18:27:21
  *
  * @author Thomas Morgner
  */
-public class TrueTypeFont
-{
-  private static final Log logger = LogFactory.getLog(TrueTypeFont.class);
+public class TrueTypeFont {
+  private static final Log logger = LogFactory.getLog( TrueTypeFont.class );
 
-  private static class TrueTypeFontHeader
-  {
+  private static class TrueTypeFontHeader {
     public static final int ENTRY_LENGTH = 12;
 
     private long version;
@@ -48,46 +44,40 @@ public class TrueTypeFont
     private int entrySelector;
     private int rangeShift;
 
-    protected TrueTypeFontHeader(final byte[] data) throws IllegalStateException
-    {
-      this.version = ByteAccessUtilities.readULong(data, 0);
-      if (version != 0x00010000 && version != 0x4F54544F)
-          throw new IllegalStateException("Not a valid TTF or OTF file: Signature not recognized.");
+    protected TrueTypeFontHeader( final byte[] data ) throws IllegalStateException {
+      this.version = ByteAccessUtilities.readULong( data, 0 );
+      if ( version != 0x00010000 && version != 0x4F54544F ) {
+        throw new IllegalStateException( "Not a valid TTF or OTF file: Signature not recognized." );
+      }
 
-      this.numTables = ByteAccessUtilities.readUShort(data, 4);
-      this.searchRange = ByteAccessUtilities.readUShort(data, 6);
-      this.entrySelector = ByteAccessUtilities.readUShort(data, 8);
-      this.rangeShift = ByteAccessUtilities.readUShort(data, 10);
+      this.numTables = ByteAccessUtilities.readUShort( data, 4 );
+      this.searchRange = ByteAccessUtilities.readUShort( data, 6 );
+      this.entrySelector = ByteAccessUtilities.readUShort( data, 8 );
+      this.rangeShift = ByteAccessUtilities.readUShort( data, 10 );
     }
 
-    public long getVersion()
-    {
+    public long getVersion() {
       return version;
     }
 
-    public int getNumTables()
-    {
+    public int getNumTables() {
       return numTables;
     }
 
-    public int getSearchRange()
-    {
+    public int getSearchRange() {
       return searchRange;
     }
 
-    public int getEntrySelector()
-    {
+    public int getEntrySelector() {
       return entrySelector;
     }
 
-    public int getRangeShift()
-    {
+    public int getRangeShift() {
       return rangeShift;
     }
   }
 
-  private static class TableDirectoryEntry
-  {
+  private static class TableDirectoryEntry {
     public static final int ENTRY_LENGTH = 16;
 
     private long tag;
@@ -96,68 +86,57 @@ public class TrueTypeFont
     private int length;
     private FontTable table;
 
-    protected TableDirectoryEntry(final byte[] data, final int offset)
-    {
-      this.tag = ByteAccessUtilities.readULong(data, offset);
-      this.checkSum = ByteAccessUtilities.readULong(data, offset + 4);
-      this.offset = (int) ByteAccessUtilities.readULong(data, offset + 8);
-      this.length = (int) ByteAccessUtilities.readULong(data, offset + 12);
+    protected TableDirectoryEntry( final byte[] data, final int offset ) {
+      this.tag = ByteAccessUtilities.readULong( data, offset );
+      this.checkSum = ByteAccessUtilities.readULong( data, offset + 4 );
+      this.offset = (int) ByteAccessUtilities.readULong( data, offset + 8 );
+      this.length = (int) ByteAccessUtilities.readULong( data, offset + 12 );
     }
 
-    public long getTag()
-    {
+    public long getTag() {
       return tag;
     }
 
-    public long getCheckSum()
-    {
+    public long getCheckSum() {
       return checkSum;
     }
 
-    public int getOffset()
-    {
+    public int getOffset() {
       return offset;
     }
 
-    public int getLength()
-    {
+    public int getLength() {
       return length;
     }
 
-    public FontTable getTable()
-    {
+    public FontTable getTable() {
       return table;
     }
 
-    public void setTable(final FontTable table)
-    {
+    public void setTable( final FontTable table ) {
       this.table = table;
     }
 
     /**
-     * Returns a string representation of the object. In general, the
-     * <code>toString</code> method returns a string that "textually represents"
-     * this object. The result should be a concise but informative
-     * representation that is easy for a person to read. It is recommended that
-     * all subclasses override this method.
+     * Returns a string representation of the object. In general, the <code>toString</code> method returns a string that
+     * "textually represents" this object. The result should be a concise but informative representation that is easy
+     * for a person to read. It is recommended that all subclasses override this method.
      * <p/>
-     * The <code>toString</code> method for class <code>Object</code> returns a
-     * string consisting of the name of the class of which the object is an
-     * instance, the at-sign character `<code>@</code>', and the unsigned
-     * hexadecimal representation of the hash code of the object. In other
-     * words, this method returns a string equal to the value of: <blockquote>
+     * The <code>toString</code> method for class <code>Object</code> returns a string consisting of the name of the
+     * class of which the object is an instance, the at-sign character `<code>@</code>', and the unsigned hexadecimal
+     * representation of the hash code of the object. In other words, this method returns a string equal to the value
+     * of: <blockquote>
      * <pre>
      * getClass().getName() + '@' + Integer.toHexString(hashCode())
      * </pre></blockquote>
      *
      * @return a string representation of the object.
      */
-    public String toString()
-    {
-      final char c1 = (char) ((tag >> 24) & 255);
-      final char c2 = (char) ((tag >> 16) & 255);
-      final char c3 = (char) ((tag >> 8) & 255);
-      final char c4 = (char) (tag & 255);
+    public String toString() {
+      final char c1 = (char) ( ( tag >> 24 ) & 255 );
+      final char c2 = (char) ( ( tag >> 16 ) & 255 );
+      final char c3 = (char) ( ( tag >> 8 ) & 255 );
+      final char c4 = (char) ( tag & 255 );
       return "TableDirectoryEntry={" + c1 + c2 + c3 + c4 + ',' + table + '}';
     }
   }
@@ -171,25 +150,21 @@ public class TrueTypeFont
   private int collectionIndex;
 
 
-  public TrueTypeFont(final FontDataInputSource filename)
-          throws IOException
-  {
-    this(filename, 0, -1);
+  public TrueTypeFont( final FontDataInputSource filename )
+    throws IOException {
+    this( filename, 0, -1 );
   }
 
-  public TrueTypeFont(final FontDataInputSource filename, final long offset)
-          throws IOException
-  {
-    this(filename, offset, -1);
+  public TrueTypeFont( final FontDataInputSource filename, final long offset )
+    throws IOException {
+    this( filename, offset, -1 );
   }
 
-  public TrueTypeFont(final FontDataInputSource filename,
-                      final long offset,
-                      final int collectionIndex)
-          throws IOException
-  {
-    if (offset < 0)
-    {
+  public TrueTypeFont( final FontDataInputSource filename,
+                       final long offset,
+                       final int collectionIndex )
+    throws IOException {
+    if ( offset < 0 ) {
       throw new IndexOutOfBoundsException();
     }
     this.collectionIndex = collectionIndex;
@@ -198,106 +173,88 @@ public class TrueTypeFont
 
     this.filename = filename.getFileName();
     this.header = new TrueTypeFontHeader
-            (readFully(offset, TrueTypeFontHeader.ENTRY_LENGTH));
+      ( readFully( offset, TrueTypeFontHeader.ENTRY_LENGTH ) );
     this.directory = readTableDirectory();
   }
 
-  public TrueTypeFont(final File filename)
-          throws IOException
-  {
-    this(filename, 0, -1);
+  public TrueTypeFont( final File filename )
+    throws IOException {
+    this( filename, 0, -1 );
   }
 
-  public TrueTypeFont(final File filename, final long offset)
-          throws IOException
-  {
-    this(filename, offset, -1);
+  public TrueTypeFont( final File filename, final long offset )
+    throws IOException {
+    this( filename, offset, -1 );
   }
 
-  public TrueTypeFont(final File filename,
-                      final long offset,
-                      final int collectionIndex)
-          throws IOException
-  {
-    this(new FileFontDataInputSource(filename), offset, collectionIndex);
+  public TrueTypeFont( final File filename,
+                       final long offset,
+                       final int collectionIndex )
+    throws IOException {
+    this( new FileFontDataInputSource( filename ), offset, collectionIndex );
   }
 
-  public int getCollectionIndex()
-  {
+  public int getCollectionIndex() {
     return collectionIndex;
   }
 
-  private TableDirectoryEntry[] readTableDirectory() throws IOException
-  {
+  private TableDirectoryEntry[] readTableDirectory() throws IOException {
     final int numTables = header.getNumTables();
     final int directorySize =
-            numTables * TableDirectoryEntry.ENTRY_LENGTH;
+      numTables * TableDirectoryEntry.ENTRY_LENGTH;
     final byte[] directoryData =
-            readFully(offset + TrueTypeFontHeader.ENTRY_LENGTH, directorySize);
-    final TableDirectoryEntry[] directory = new TableDirectoryEntry[numTables];
-    for (int i = 0; i < header.getNumTables(); i += 1)
-    {
+      readFully( offset + TrueTypeFontHeader.ENTRY_LENGTH, directorySize );
+    final TableDirectoryEntry[] directory = new TableDirectoryEntry[ numTables ];
+    for ( int i = 0; i < header.getNumTables(); i += 1 ) {
       final int dirOffset = TableDirectoryEntry.ENTRY_LENGTH * i;
-      directory[i] = new TableDirectoryEntry(directoryData, dirOffset);
+      directory[ i ] = new TableDirectoryEntry( directoryData, dirOffset );
     }
     return directory;
   }
 
-  protected byte[] readFully(final long offset, final int length)
-          throws IOException
-  {
-    if (readBuffer == null)
-    {
-      readBuffer = new byte[Math.max(8192, length)];
-    }
-    else if (readBuffer.length < length)
-    {
-      readBuffer = new byte[length];
+  protected byte[] readFully( final long offset, final int length )
+    throws IOException {
+    if ( readBuffer == null ) {
+      readBuffer = new byte[ Math.max( 8192, length ) ];
+    } else if ( readBuffer.length < length ) {
+      readBuffer = new byte[ length ];
     }
 
-    input.readFullyAt(offset, readBuffer, length);
-    if ((readBuffer.length - length) > 0)
-    {
-      Arrays.fill(readBuffer, length, readBuffer.length, (byte) 0);
+    input.readFullyAt( offset, readBuffer, length );
+    if ( ( readBuffer.length - length ) > 0 ) {
+      Arrays.fill( readBuffer, length, readBuffer.length, (byte) 0 );
     }
     return readBuffer;
   }
 
-  public long getOffset()
-  {
+  public long getOffset() {
     return offset;
   }
 
   /**
-   * The file that was used to load the font. This is deprecated, as only the
-   * transition version of JFreeReport is using this hack.
+   * The file that was used to load the font. This is deprecated, as only the transition version of JFreeReport is using
+   * this hack.
    *
    * @return
    */
-  public String getFilename()
-  {
+  public String getFilename() {
     return filename;
   }
 
-  public FontTable getTable(final long key) throws IOException
-  {
+  public FontTable getTable( final long key ) throws IOException {
     final int dirLength = directory.length;
-    for (int i = 0; i < dirLength; i++)
-    {
-      final TableDirectoryEntry entry = directory[i];
-      if (entry.getTag() == key)
-      {
+    for ( int i = 0; i < dirLength; i++ ) {
+      final TableDirectoryEntry entry = directory[ i ];
+      if ( entry.getTag() == key ) {
         final FontTable table = entry.getTable();
-        if (table != null)
-        {
+        if ( table != null ) {
           return table;
         }
-        final FontTable readTable = readTable(entry);
-        if (readTable == null)
-        {
+        final FontTable readTable = readTable( entry );
+        if ( readTable == null ) {
           return null;
         }
-        entry.setTable(readTable);
+        entry.setTable( readTable );
         return readTable;
       }
     }
@@ -305,62 +262,52 @@ public class TrueTypeFont
     return null;
   }
 
-  protected FontTable readTable(final TableDirectoryEntry table)
-          throws IOException
-  {
-    if (table.getTag() == NameTable.TABLE_ID)
-    {
+  protected FontTable readTable( final TableDirectoryEntry table )
+    throws IOException {
+    if ( table.getTag() == NameTable.TABLE_ID ) {
       final byte[] buffer =
-              readFully(table.getOffset(), table.getLength());
-      return new NameTable(buffer);
+        readFully( table.getOffset(), table.getLength() );
+      return new NameTable( buffer );
     }
-    if (table.getTag() == FontHeaderTable.TABLE_ID)
-    {
+    if ( table.getTag() == FontHeaderTable.TABLE_ID ) {
       final byte[] buffer =
-              readFully(table.getOffset(), table.getLength());
-      return new FontHeaderTable(buffer);
+        readFully( table.getOffset(), table.getLength() );
+      return new FontHeaderTable( buffer );
     }
-    if (table.getTag() == HorizontalHeaderTable.TABLE_ID)
-    {
+    if ( table.getTag() == HorizontalHeaderTable.TABLE_ID ) {
       final byte[] buffer =
-              readFully(table.getOffset(), table.getLength());
-      return new HorizontalHeaderTable(buffer);
+        readFully( table.getOffset(), table.getLength() );
+      return new HorizontalHeaderTable( buffer );
     }
-    if (table.getTag() == OS2Table.TABLE_ID)
-    {
+    if ( table.getTag() == OS2Table.TABLE_ID ) {
       final FontHeaderTable header =
-              (FontHeaderTable) getTable(FontHeaderTable.TABLE_ID);
-      if (header == null)
-      {
-        logger.warn("The font '" + filename + "' does not have a 'head' table. The font file is not valid.");
+        (FontHeaderTable) getTable( FontHeaderTable.TABLE_ID );
+      if ( header == null ) {
+        logger.warn( "The font '" + filename + "' does not have a 'head' table. The font file is not valid." );
         return null;
       }
       final byte[] buffer =
-              readFully(table.getOffset(), table.getLength());
-      return new OS2Table(buffer, header.getUnitsPerEm());
+        readFully( table.getOffset(), table.getLength() );
+      return new OS2Table( buffer, header.getUnitsPerEm() );
     }
-    if (table.getTag() == PostscriptInformationTable.TABLE_ID)
-    {
+    if ( table.getTag() == PostscriptInformationTable.TABLE_ID ) {
       final byte[] buffer =
-              readFully(table.getOffset(), table.getLength());
-      return new PostscriptInformationTable(buffer);
+        readFully( table.getOffset(), table.getLength() );
+      return new PostscriptInformationTable( buffer );
     }
     return null;
   }
 
-  public void dispose()
-  {
+  public void dispose() {
     input.dispose();
   }
 
-  protected void finalize() throws Throwable
-  {
+  protected void finalize() throws Throwable {
     super.finalize();
     dispose();
   }
 
-  public FontDataInputSource getInputSource()
-  {
+  public FontDataInputSource getInputSource() {
     return input;
   }
 }

@@ -17,28 +17,25 @@
 
 package org.pentaho.reporting.libraries.formula.function.datetime;
 
-import java.math.BigDecimal;
-
 import org.pentaho.reporting.libraries.formula.FormulaTestBase;
+
+import java.math.BigDecimal;
 
 /**
  * @author Cedric Pronzato
  */
-public class SecondFunctionTest extends FormulaTestBase
-{
-  public Object[][] createDataTest()
-  {
+public class SecondFunctionTest extends FormulaTestBase {
+  public Object[][] createDataTest() {
     return new Object[][]
-        {
-            {"SECOND(1/(24*60*60))", new BigDecimal(1)},
-            //TODO this testcase seems to be wrong as the definition is: round to the nearest integer which should be 0
-            // {"SECOND(1/(24*60*60*2))", new BigDecimal(1)},
-            {"SECOND(1/(24*60*60*4))", new BigDecimal(0)},
-        };
+      {
+        { "SECOND(1/(24*60*60))", new BigDecimal( 1 ) },
+        //TODO this testcase seems to be wrong as the definition is: round to the nearest integer which should be 0
+        // {"SECOND(1/(24*60*60*2))", new BigDecimal(1)},
+        { "SECOND(1/(24*60*60*4))", new BigDecimal( 0 ) },
+      };
   }
 
-  public void testDefault() throws Exception
-  {
+  public void testDefault() throws Exception {
     runDefaultTest();
   }
 

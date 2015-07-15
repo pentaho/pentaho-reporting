@@ -22,21 +22,17 @@ package org.pentaho.reporting.libraries.css.resolver.tokens.computed;
  *
  * @author Thomas Morgner
  */
-public class VariableToken extends ComputedToken
-{
+public class VariableToken extends ComputedToken {
   private String variable;
 
-  public VariableToken(final String variable)
-  {
-    if (variable == null)
-    {
+  public VariableToken( final String variable ) {
+    if ( variable == null ) {
       throw new NullPointerException();
     }
     this.variable = variable;
   }
 
-  public String getVariable()
-  {
+  public String getVariable() {
     return variable;
   }
 }

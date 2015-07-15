@@ -17,25 +17,24 @@
 
 package org.pentaho.reporting.libraries.docbundle;
 
+import org.pentaho.reporting.libraries.resourceloader.ResourceKey;
+import org.pentaho.reporting.libraries.resourceloader.ResourceKeyCreationException;
+
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Map;
 
-import org.pentaho.reporting.libraries.resourceloader.ResourceKey;
-import org.pentaho.reporting.libraries.resourceloader.ResourceKeyCreationException;
+public interface WriteableDocumentBundle extends DocumentBundle {
+  public void createDirectoryEntry( final String name, final String mimeType ) throws IOException;
 
-public interface WriteableDocumentBundle extends DocumentBundle
-{
-  public void createDirectoryEntry(final String name, final String mimeType) throws IOException;
+  public OutputStream createEntry( final String name, final String mimetype ) throws IOException;
 
-  public OutputStream createEntry(final String name, final String mimetype) throws IOException;
-
-  public boolean removeEntry(final String name) throws IOException;
+  public boolean removeEntry( final String name ) throws IOException;
 
   public WriteableDocumentMetaData getWriteableDocumentMetaData();
 
-  public ResourceKey createResourceKey(final String entryName,
-                                       final Map factoryParameters) throws ResourceKeyCreationException;
+  public ResourceKey createResourceKey( final String entryName,
+                                        final Map factoryParameters ) throws ResourceKeyCreationException;
 
-  public boolean isEmbeddedKey(final ResourceKey resourceKey);
+  public boolean isEmbeddedKey( final ResourceKey resourceKey );
 }

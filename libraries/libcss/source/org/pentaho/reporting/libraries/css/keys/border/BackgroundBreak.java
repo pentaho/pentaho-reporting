@@ -24,16 +24,14 @@ import org.pentaho.reporting.libraries.css.values.CSSConstant;
  *
  * @author Thomas Morgner
  */
-public class BackgroundBreak
-{
+public class BackgroundBreak {
   public static final CSSConstant BOUNDING_BOX = new CSSConstant(
-      "bounding-box");
+    "bounding-box" );
   public static final CSSConstant EACH_BOX = new CSSConstant(
-      "each-box");
+    "each-box" );
   public static final CSSConstant CONTINUOUS = new CSSConstant(
-      "continuous");
+    "continuous" );
 
-  private BackgroundBreak()
-  {
+  private BackgroundBreak() {
   }
 }

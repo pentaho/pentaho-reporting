@@ -17,18 +17,15 @@
 
 package org.pentaho.openformula.ui.model2;
 
-public class FormulaClosingParenthesisElement extends FormulaElement
-{
+public class FormulaClosingParenthesisElement extends FormulaElement {
   public static final String ELEMENT = ")";
 
-  public FormulaClosingParenthesisElement(final FormulaDocument document,
-                                          final FormulaRootElement parentElement)
-  {
-    super(document, parentElement);
+  public FormulaClosingParenthesisElement( final FormulaDocument document,
+                                           final FormulaRootElement parentElement ) {
+    super( document, parentElement );
   }
 
-  public String getText()
-  {
+  public String getText() {
     return ELEMENT;
   }
 
@@ -38,8 +35,7 @@ public class FormulaClosingParenthesisElement extends FormulaElement
    *
    * @return the element name
    */
-  public String getName()
-  {
+  public String getName() {
     return "close-paren"; // NON-NLS
   }
 }

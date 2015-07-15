@@ -28,45 +28,40 @@ import org.pentaho.reporting.libraries.formula.typing.TypeRegistry;
 import org.pentaho.reporting.libraries.formula.typing.coretypes.LogicalType;
 
 /**
- * This function checks to see if a substring is within a larger string and is needed
- * for the inline ETL implementation of Pentaho Metadata.
+ * This function checks to see if a substring is within a larger string and is needed for the inline ETL implementation
+ * of Pentaho Metadata.
  *
  * @author Will Gorman (wgorman@pentaho.com)
  */
-public class EndsWithFunction implements Function
-{
+public class EndsWithFunction implements Function {
   private static final long serialVersionUID = 5834421661720115093L;
 
-  private static final TypeValuePair RETURN_FALSE = new TypeValuePair(LogicalType.TYPE, Boolean.FALSE);
-  private static final TypeValuePair RETURN_TRUE = new TypeValuePair(LogicalType.TYPE, Boolean.TRUE);
+  private static final TypeValuePair RETURN_FALSE = new TypeValuePair( LogicalType.TYPE, Boolean.FALSE );
+  private static final TypeValuePair RETURN_TRUE = new TypeValuePair( LogicalType.TYPE, Boolean.TRUE );
 
-  public EndsWithFunction()
-  {
+  public EndsWithFunction() {
   }
 
-  public TypeValuePair evaluate(final FormulaContext context,
-                                final ParameterCallback parameters) throws EvaluationException
-  {
+  public TypeValuePair evaluate( final FormulaContext context,
+                                 final ParameterCallback parameters ) throws EvaluationException {
     final int parameterCount = parameters.getParameterCount();
-    if (parameterCount != 2)
-    {
-      throw EvaluationException.getInstance(LibFormulaErrorValue.ERROR_ARGUMENTS_VALUE);
+    if ( parameterCount != 2 ) {
+      throw EvaluationException.getInstance( LibFormulaErrorValue.ERROR_ARGUMENTS_VALUE );
     }
     final TypeRegistry typeRegistry = context.getTypeRegistry();
 
-    final Type textType1 = parameters.getType(0);
-    final Object textValue1 = parameters.getValue(0);
-    final Type textType2 = parameters.getType(1);
-    final Object textValue2 = parameters.getValue(1);
+    final Type textType1 = parameters.getType( 0 );
+    final Object textValue1 = parameters.getValue( 0 );
+    final Type textType2 = parameters.getType( 1 );
+    final Object textValue2 = parameters.getValue( 1 );
 
-    final String text = typeRegistry.convertToText(textType1, textValue1);
-    final String substring = typeRegistry.convertToText(textType2, textValue2);
+    final String text = typeRegistry.convertToText( textType1, textValue1 );
+    final String substring = typeRegistry.convertToText( textType2, textValue2 );
 
-    return text.endsWith(substring) ? RETURN_TRUE : RETURN_FALSE;
+    return text.endsWith( substring ) ? RETURN_TRUE : RETURN_FALSE;
   }
 
-  public String getCanonicalName()
-  {
+  public String getCanonicalName() {
     return "ENDSWITH";
   }
 

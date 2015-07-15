@@ -17,41 +17,36 @@
 
 package org.pentaho.reporting.libraries.css.resolver.tokens.resolved;
 
+import org.pentaho.reporting.libraries.css.counter.CounterStyle;
 import org.pentaho.reporting.libraries.css.resolver.tokens.computed.CounterToken;
 import org.pentaho.reporting.libraries.css.resolver.tokens.types.TextType;
-import org.pentaho.reporting.libraries.css.counter.CounterStyle;
 
 /**
  * Creation-Date: 12.06.2006, 14:38:29
  *
  * @author Thomas Morgner
  */
-public class ResolvedCounterToken implements TextType
-{
+public class ResolvedCounterToken implements TextType {
   private CounterToken parent;
   private int counterValue;
 
-  public ResolvedCounterToken(final CounterToken parent,
-                              final int counterValue)
-  {
+  public ResolvedCounterToken( final CounterToken parent,
+                               final int counterValue ) {
     this.parent = parent;
     this.counterValue = counterValue;
   }
 
-  public CounterToken getParent()
-  {
+  public CounterToken getParent() {
     return parent;
   }
 
-  public String getText()
-  {
+  public String getText() {
     final CounterToken counterToken = getParent();
     final CounterStyle style = counterToken.getStyle();
-    return style.getCounterValue(counterValue);
+    return style.getCounterValue( counterValue );
   }
 
-  public int getCounterValue()
-  {
+  public int getCounterValue() {
     return counterValue;
   }
 }

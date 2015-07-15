@@ -24,28 +24,24 @@ import org.w3c.css.sac.ContentCondition;
  *
  * @author Thomas Morgner
  */
-public class ContentCSSCondition implements CSSCondition, ContentCondition
-{
+public class ContentCSSCondition implements CSSCondition, ContentCondition {
   private String data;
 
-  public ContentCSSCondition(final String data)
-  {
+  public ContentCSSCondition( final String data ) {
     this.data = data;
   }
 
   /**
    * An integer indicating the type of <code>Condition</code>.
    */
-  public short getConditionType()
-  {
+  public short getConditionType() {
     return SAC_CONTENT_CONDITION;
   }
 
   /**
    * Returns the content.
    */
-  public String getData()
-  {
+  public String getData() {
     return data;
   }
 }

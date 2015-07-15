@@ -19,38 +19,31 @@ package org.pentaho.reporting.libraries.base.config.metadata;
 
 import java.util.LinkedHashMap;
 
-public class ConfigurationDomain
-{
+public class ConfigurationDomain {
   private LinkedHashMap<String, ConfigurationMetaDataEntry> entries;
   private boolean loaded;
 
-  public ConfigurationDomain()
-  {
+  public ConfigurationDomain() {
     entries = new LinkedHashMap<String, ConfigurationMetaDataEntry>();
   }
 
-  public boolean isLoaded()
-  {
+  public boolean isLoaded() {
     return loaded;
   }
 
-  public void setLoaded(final boolean loaded)
-  {
+  public void setLoaded( final boolean loaded ) {
     this.loaded = loaded;
   }
 
-  public ConfigurationMetaDataEntry get(final String key)
-  {
-    return entries.get(key);
+  public ConfigurationMetaDataEntry get( final String key ) {
+    return entries.get( key );
   }
 
-  public ConfigurationMetaDataEntry[] getAll()
-  {
-    return entries.values().toArray(new ConfigurationMetaDataEntry[entries.size()]);
+  public ConfigurationMetaDataEntry[] getAll() {
+    return entries.values().toArray( new ConfigurationMetaDataEntry[ entries.size() ] );
   }
 
-  public void add (final ConfigurationMetaDataEntry entry)
-  {
-    entries.put(entry.getKey(), entry);
+  public void add( final ConfigurationMetaDataEntry entry ) {
+    entries.put( entry.getKey(), entry );
   }
 }

@@ -23,35 +23,28 @@ import org.pentaho.reporting.libraries.formula.typing.Type;
 import org.pentaho.reporting.libraries.formula.typing.coretypes.AnyType;
 import org.pentaho.reporting.libraries.formula.typing.coretypes.TextType;
 
-public class ErrorFunctionDescription extends AbstractFunctionDescription
-{
-  public ErrorFunctionDescription()
-  {
-    super("ERROR", "org.pentaho.reporting.libraries.formula.function.information.Error-Function");
+public class ErrorFunctionDescription extends AbstractFunctionDescription {
+  public ErrorFunctionDescription() {
+    super( "ERROR", "org.pentaho.reporting.libraries.formula.function.information.Error-Function" );
   }
 
-  public Type getValueType()
-  {
+  public Type getValueType() {
     return AnyType.TYPE;
   }
 
-  public FunctionCategory getCategory()
-  {
+  public FunctionCategory getCategory() {
     return InformationFunctionCategory.CATEGORY;
   }
 
-  public int getParameterCount()
-  {
+  public int getParameterCount() {
     return 2;
   }
 
-  public Type getParameterType(final int position)
-  {
+  public Type getParameterType( final int position ) {
     return TextType.TYPE;
   }
 
-  public boolean isParameterMandatory(final int position)
-  {
+  public boolean isParameterMandatory( final int position ) {
     return position == 0;
   }
 }

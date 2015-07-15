@@ -25,23 +25,19 @@ import org.pentaho.reporting.libraries.formula.LibFormulaErrorValue;
  *
  * @author Thomas Morgner
  */
-public class TypeConversionException extends EvaluationException
-{
+public class TypeConversionException extends EvaluationException {
   private static final long serialVersionUID = -12507914833915502L;
   private static ThreadLocal localInstance = new ThreadLocal();
 
-  protected TypeConversionException()
-  {
-    super(LibFormulaErrorValue.ERROR_INVALID_ARGUMENT_VALUE);
+  protected TypeConversionException() {
+    super( LibFormulaErrorValue.ERROR_INVALID_ARGUMENT_VALUE );
   }
 
-  public static TypeConversionException getInstance()
-  {
+  public static TypeConversionException getInstance() {
     final TypeConversionException o = (TypeConversionException) localInstance.get();
-    if (o == null)
-    {
+    if ( o == null ) {
       final TypeConversionException retval = new TypeConversionException();
-      localInstance.set(retval);
+      localInstance.set( retval );
       return retval;
     }
 

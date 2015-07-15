@@ -18,31 +18,26 @@
 package org.pentaho.reporting.libraries.css.model;
 
 import org.pentaho.reporting.libraries.css.PageAreaType;
-import org.pentaho.reporting.libraries.css.dom.DocumentContext;
 
 /**
  * Creation-Date: 29.05.2006, 18:04:01
  *
  * @author Thomas Morgner
  */
-public class CSSPageAreaRule extends CSSDeclarationRule
-{
+public class CSSPageAreaRule extends CSSDeclarationRule {
   private PageAreaType pageArea;
 
-  public CSSPageAreaRule(final StyleSheet parentStyle,
-                         final StyleRule parentRule,
-                         final PageAreaType pageArea)
-  {
-    super(parentStyle, parentRule);
-    if (pageArea == null)
-    {
+  public CSSPageAreaRule( final StyleSheet parentStyle,
+                          final StyleRule parentRule,
+                          final PageAreaType pageArea ) {
+    super( parentStyle, parentRule );
+    if ( pageArea == null ) {
       throw new NullPointerException();
     }
     this.pageArea = pageArea;
   }
 
-  public PageAreaType getPageArea()
-  {
+  public PageAreaType getPageArea() {
     return pageArea;
   }
 }

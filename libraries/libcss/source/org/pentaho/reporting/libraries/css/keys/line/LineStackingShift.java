@@ -24,14 +24,12 @@ import org.pentaho.reporting.libraries.css.values.CSSConstant;
  *
  * @author Thomas Morgner
  */
-public class LineStackingShift
-{
+public class LineStackingShift {
   public static final CSSConstant CONSIDER_SHIFTS =
-      new CSSConstant("consider-shifts");
+    new CSSConstant( "consider-shifts" );
   public static final CSSConstant DISREGARD_SHIFTS =
-      new CSSConstant("disregard-shifts");
+    new CSSConstant( "disregard-shifts" );
 
-  private LineStackingShift()
-  {
+  private LineStackingShift() {
   }
 }

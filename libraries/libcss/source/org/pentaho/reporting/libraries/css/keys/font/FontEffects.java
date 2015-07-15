@@ -19,14 +19,12 @@ package org.pentaho.reporting.libraries.css.keys.font;
 
 import org.pentaho.reporting.libraries.css.values.CSSConstant;
 
-public class FontEffects
-{
-  public static final CSSConstant NONE = new CSSConstant("none");
-  public static final CSSConstant EMBOSS = new CSSConstant("emboss");
-  public static final CSSConstant ENGRAVE = new CSSConstant("engrave");
-  public static final CSSConstant OUTLINE = new CSSConstant("outline");
+public class FontEffects {
+  public static final CSSConstant NONE = new CSSConstant( "none" );
+  public static final CSSConstant EMBOSS = new CSSConstant( "emboss" );
+  public static final CSSConstant ENGRAVE = new CSSConstant( "engrave" );
+  public static final CSSConstant OUTLINE = new CSSConstant( "outline" );
 
-  private FontEffects()
-  {
+  private FontEffects() {
   }
 }

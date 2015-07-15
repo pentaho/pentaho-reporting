@@ -22,25 +22,22 @@ import org.pentaho.reporting.libraries.formula.FormulaTestBase;
 /**
  * @author Cedric Pronzato
  */
-public class XorFunctionTest extends FormulaTestBase
-{
-  public void testDefault() throws Exception
-  {
+public class XorFunctionTest extends FormulaTestBase {
+  public void testDefault() throws Exception {
     runDefaultTest();
   }
 
-  public Object[][] createDataTest()
-  {
+  public Object[][] createDataTest() {
     return new Object[][]
-        {
-            {"XOR(FALSE();FALSE())", Boolean.FALSE},
-            {"XOR(FALSE();TRUE())", Boolean.TRUE},
-            {"XOR(TRUE();FALSE())", Boolean.TRUE},
-            {"XOR(TRUE();TRUE())", Boolean.FALSE},
-            //TODO { "XOR(FALSE();NA())", Boolean. },
-            {"XOR(FALSE();FALSE();TRUE())", Boolean.TRUE},
-            {"XOR(FALSE();TRUE();TRUE())", Boolean.FALSE},
-            {"XOR(TRUE())", Boolean.TRUE},
-        };
+      {
+        { "XOR(FALSE();FALSE())", Boolean.FALSE },
+        { "XOR(FALSE();TRUE())", Boolean.TRUE },
+        { "XOR(TRUE();FALSE())", Boolean.TRUE },
+        { "XOR(TRUE();TRUE())", Boolean.FALSE },
+        //TODO { "XOR(FALSE();NA())", Boolean. },
+        { "XOR(FALSE();FALSE();TRUE())", Boolean.TRUE },
+        { "XOR(FALSE();TRUE();TRUE())", Boolean.FALSE },
+        { "XOR(TRUE())", Boolean.TRUE },
+      };
   }
 }

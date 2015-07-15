@@ -22,40 +22,36 @@ package org.pentaho.reporting.libraries.css.values;
  *
  * @author Thomas Morgner
  */
-public class CSSNumericType extends CSSType
-{
-  public static final CSSNumericType NUMBER = new CSSNumericType("", false, false);
-  public static final CSSNumericType PERCENTAGE = new CSSNumericType("%", false, false);
-  public static final CSSNumericType EM = new CSSNumericType("em", true, false);
-  public static final CSSNumericType EX = new CSSNumericType("ex", true, false);
-  public static final CSSNumericType PX = new CSSNumericType("px", true, false);
+public class CSSNumericType extends CSSType {
+  public static final CSSNumericType NUMBER = new CSSNumericType( "", false, false );
+  public static final CSSNumericType PERCENTAGE = new CSSNumericType( "%", false, false );
+  public static final CSSNumericType EM = new CSSNumericType( "em", true, false );
+  public static final CSSNumericType EX = new CSSNumericType( "ex", true, false );
+  public static final CSSNumericType PX = new CSSNumericType( "px", true, false );
 
-  public static final CSSNumericType CM = new CSSNumericType("cm", true, true);
-  public static final CSSNumericType MM = new CSSNumericType("mm", true, true);
-  public static final CSSNumericType INCH = new CSSNumericType("inch", true, true);
+  public static final CSSNumericType CM = new CSSNumericType( "cm", true, true );
+  public static final CSSNumericType MM = new CSSNumericType( "mm", true, true );
+  public static final CSSNumericType INCH = new CSSNumericType( "inch", true, true );
 
-  public static final CSSNumericType PT = new CSSNumericType("pt", true, true);
-  public static final CSSNumericType PC = new CSSNumericType("pc", true, true);
+  public static final CSSNumericType PT = new CSSNumericType( "pt", true, true );
+  public static final CSSNumericType PC = new CSSNumericType( "pc", true, true );
 
-  public static final CSSNumericType DEG = new CSSNumericType("deg", false, false);
+  public static final CSSNumericType DEG = new CSSNumericType( "deg", false, false );
 
   private boolean absolute;
   private boolean length;
-  
-  protected CSSNumericType(String name, final boolean length, final boolean absolute)
-  {
-    super(name);
+
+  protected CSSNumericType( String name, final boolean length, final boolean absolute ) {
+    super( name );
     this.length = length;
     this.absolute = absolute;
   }
 
-  public boolean isLength()
-  {
+  public boolean isLength() {
     return length;
   }
 
-  public boolean isAbsolute()
-  {
+  public boolean isAbsolute() {
     return absolute;
   }
 
@@ -64,13 +60,11 @@ public class CSSNumericType extends CSSType
    *
    * @return <code>true</code> if the supplied object is equivalent to this object, <code>false</code> otherwise
    */
-  public boolean equals(Object obj)
-  {
-    return (obj instanceof CSSNumericType && super.equals(obj));
+  public boolean equals( Object obj ) {
+    return ( obj instanceof CSSNumericType && super.equals( obj ) );
   }
 
-  public int hashCode()
-  {
+  public int hashCode() {
     return super.hashCode();
   }
 }

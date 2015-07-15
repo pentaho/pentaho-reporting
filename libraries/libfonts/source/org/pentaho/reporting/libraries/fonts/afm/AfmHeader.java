@@ -24,9 +24,8 @@ import java.io.IOException;
  *
  * @author Thomas Morgner
  */
-public class AfmHeader
-{
-  private static final double[] EMPTY_DOUBLES = new double[0];
+public class AfmHeader {
+  private static final double[] EMPTY_DOUBLES = new double[ 0 ];
 
   private static final String METRICS_SETS = "MetricsSets ";
   private static final String FONT_NAME = "FontName ";
@@ -70,212 +69,145 @@ public class AfmHeader
   private double ascender;
   private double descender;
 
-  public AfmHeader()
-  {
-    bbox = new double[4];
+  public AfmHeader() {
+    bbox = new double[ 4 ];
   }
 
-  public void addData(final String line) throws IOException
-  {
-    if (line.startsWith(METRICS_SETS))
-    {
-      metricsSets = AfmParseUtilities.parseInt(METRICS_SETS, line);
-    }
-    else if (line.startsWith(FONT_NAME))
-    {
-      fontName = line.substring(FONT_NAME.length());
-    }
-    else if (line.startsWith(FULL_NAME))
-    {
-      fullName = line.substring(FULL_NAME.length());
-    }
-    else if (line.startsWith(FAMILY_NAME))
-    {
-      familyName = line.substring(FAMILY_NAME.length());
-    }
-    else if (line.startsWith(WEIGHT))
-    {
-      final String weightText = line.substring(WEIGHT.length());
-      if ("bold".equalsIgnoreCase(weightText))
-      {
+  public void addData( final String line ) throws IOException {
+    if ( line.startsWith( METRICS_SETS ) ) {
+      metricsSets = AfmParseUtilities.parseInt( METRICS_SETS, line );
+    } else if ( line.startsWith( FONT_NAME ) ) {
+      fontName = line.substring( FONT_NAME.length() );
+    } else if ( line.startsWith( FULL_NAME ) ) {
+      fullName = line.substring( FULL_NAME.length() );
+    } else if ( line.startsWith( FAMILY_NAME ) ) {
+      familyName = line.substring( FAMILY_NAME.length() );
+    } else if ( line.startsWith( WEIGHT ) ) {
+      final String weightText = line.substring( WEIGHT.length() );
+      if ( "bold".equalsIgnoreCase( weightText ) ) {
         weight = 700;
-      }
-      else if ("light".equalsIgnoreCase(weightText))
-      {
+      } else if ( "light".equalsIgnoreCase( weightText ) ) {
         weight = 200;
-      }
-      else
-      {
+      } else {
         weight = 400;
       }
 
-    }
-    else if (line.startsWith(FONT_BBOX))
-    {
-      bbox = AfmParseUtilities.parseDoubleArray(line, 4);
-    }
-    else if (line.startsWith(VERSION))
-    {
-      version = line.substring(VERSION.length());
-    }
-    else if (line.startsWith(NOTICE))
-    {
-      notice = line.substring(NOTICE.length());
-    }
-    else if (line.startsWith(ENCODING_SCHEME))
-    {
-      encodingScheme = line.substring(ENCODING_SCHEME.length());
-    }
-    else if (line.startsWith(MAPPING_SCHEME))
-    {
-      mappingScheme = AfmParseUtilities.parseInt(MAPPING_SCHEME, line);
-    }
-    else if (line.startsWith(ESC_CHAR))
-    {
-      escChar = AfmParseUtilities.parseInt(ESC_CHAR, line);
-    }
-    else if (line.startsWith(CHARACTERSET))
-    {
-      characterSet = line.substring(CHARACTERSET.length());
-    }
-    else if (line.startsWith(CHARACTERS))
-    {
-      characters = AfmParseUtilities.parseInt(CHARACTERS, line);
-    }
-    else if (line.startsWith(ISBASEFONT))
-    {
-      final String baseFontText = line.substring(ISBASEFONT.length());
-      baseFont = "true".equalsIgnoreCase(baseFontText);
-    }
-    else if (line.startsWith(VVECTOR))
-    {
-      vvector = AfmParseUtilities.parseDoubleArray(line, 2);
-    }
-    else if (line.startsWith(ISFIXEDV))
-    {
-      final String boolText = line.substring(ISFIXEDV.length());
-      fixedV = "true".equalsIgnoreCase(boolText);
-    }
-    else if (line.startsWith(CAPHEIGHT))
-    {
-      capHeight = AfmParseUtilities.parseDouble(CAPHEIGHT, line);
-    }
-    else if (line.startsWith(XHEIGHT))
-    {
-      xHeight = AfmParseUtilities.parseDouble(XHEIGHT, line);
-    }
-    else if (line.startsWith(ASCENDER))
-    {
-      ascender = AfmParseUtilities.parseDouble(ASCENDER, line);
-    }
-    else if (line.startsWith(DESCENDER))
-    {
-      descender = AfmParseUtilities.parseDouble(DESCENDER, line);
+    } else if ( line.startsWith( FONT_BBOX ) ) {
+      bbox = AfmParseUtilities.parseDoubleArray( line, 4 );
+    } else if ( line.startsWith( VERSION ) ) {
+      version = line.substring( VERSION.length() );
+    } else if ( line.startsWith( NOTICE ) ) {
+      notice = line.substring( NOTICE.length() );
+    } else if ( line.startsWith( ENCODING_SCHEME ) ) {
+      encodingScheme = line.substring( ENCODING_SCHEME.length() );
+    } else if ( line.startsWith( MAPPING_SCHEME ) ) {
+      mappingScheme = AfmParseUtilities.parseInt( MAPPING_SCHEME, line );
+    } else if ( line.startsWith( ESC_CHAR ) ) {
+      escChar = AfmParseUtilities.parseInt( ESC_CHAR, line );
+    } else if ( line.startsWith( CHARACTERSET ) ) {
+      characterSet = line.substring( CHARACTERSET.length() );
+    } else if ( line.startsWith( CHARACTERS ) ) {
+      characters = AfmParseUtilities.parseInt( CHARACTERS, line );
+    } else if ( line.startsWith( ISBASEFONT ) ) {
+      final String baseFontText = line.substring( ISBASEFONT.length() );
+      baseFont = "true".equalsIgnoreCase( baseFontText );
+    } else if ( line.startsWith( VVECTOR ) ) {
+      vvector = AfmParseUtilities.parseDoubleArray( line, 2 );
+    } else if ( line.startsWith( ISFIXEDV ) ) {
+      final String boolText = line.substring( ISFIXEDV.length() );
+      fixedV = "true".equalsIgnoreCase( boolText );
+    } else if ( line.startsWith( CAPHEIGHT ) ) {
+      capHeight = AfmParseUtilities.parseDouble( CAPHEIGHT, line );
+    } else if ( line.startsWith( XHEIGHT ) ) {
+      xHeight = AfmParseUtilities.parseDouble( XHEIGHT, line );
+    } else if ( line.startsWith( ASCENDER ) ) {
+      ascender = AfmParseUtilities.parseDouble( ASCENDER, line );
+    } else if ( line.startsWith( DESCENDER ) ) {
+      descender = AfmParseUtilities.parseDouble( DESCENDER, line );
     }
 
   }
 
-  public double getDescender()
-  {
+  public double getDescender() {
     return descender;
   }
 
-  public double getAscender()
-  {
+  public double getAscender() {
     return ascender;
   }
 
-  public double getxHeight()
-  {
+  public double getxHeight() {
     return xHeight;
   }
 
-  public double getCapHeight()
-  {
+  public double getCapHeight() {
     return capHeight;
   }
 
-  public boolean isFixedV()
-  {
+  public boolean isFixedV() {
     return fixedV;
   }
 
-  public double[] getVvector()
-  {
-    if (vvector == null)
-    {
+  public double[] getVvector() {
+    if ( vvector == null ) {
       return EMPTY_DOUBLES;
     }
     return (double[]) vvector.clone();
   }
 
-  public boolean isBaseFont()
-  {
+  public boolean isBaseFont() {
     return baseFont;
   }
 
-  public int getCharacters()
-  {
+  public int getCharacters() {
     return characters;
   }
 
-  public String getCharacterSet()
-  {
+  public String getCharacterSet() {
     return characterSet;
   }
 
-  public int getEscChar()
-  {
+  public int getEscChar() {
     return escChar;
   }
 
-  public int getMappingScheme()
-  {
+  public int getMappingScheme() {
     return mappingScheme;
   }
 
-  public String getEncodingScheme()
-  {
+  public String getEncodingScheme() {
     return encodingScheme;
   }
 
-  public String getNotice()
-  {
+  public String getNotice() {
     return notice;
   }
 
-  public String getVersion()
-  {
+  public String getVersion() {
     return version;
   }
 
-  public double[] getBbox()
-  {
+  public double[] getBbox() {
     return (double[]) bbox.clone();
   }
 
-  public int getWeight()
-  {
+  public int getWeight() {
     return weight;
   }
 
-  public String getFullName()
-  {
+  public String getFullName() {
     return fullName;
   }
 
-  public String getFamilyName()
-  {
+  public String getFamilyName() {
     return familyName;
   }
 
-  public int getMetricsSets()
-  {
+  public int getMetricsSets() {
     return metricsSets;
   }
 
-  public String getFontName()
-  {
+  public String getFontName() {
     return fontName;
   }
 

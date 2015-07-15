@@ -31,51 +31,44 @@ import org.pentaho.reporting.libraries.resourceloader.factory.AbstractFactoryMod
  *
  * @author Thomas Morgner
  */
-public class RejectPNGImageFactoryModule extends AbstractFactoryModule
-{
-  private static final int[] FINGERPRINT = {137, 80, 78, 71, 13, 10, 26, 10};
+public class RejectPNGImageFactoryModule extends AbstractFactoryModule {
+  private static final int[] FINGERPRINT = { 137, 80, 78, 71, 13, 10, 26, 10 };
 
   private static final String[] MIMETYPES =
-      {
-          "image/png",
-          "application/png",
-          "application/x-png"
-      };
+    {
+      "image/png",
+      "application/png",
+      "application/x-png"
+    };
 
   private static final String[] FILEEXTENSIONS =
-      {
-          ".png",
-      };
+    {
+      ".png",
+    };
 
-  public RejectPNGImageFactoryModule()
-  {
+  public RejectPNGImageFactoryModule() {
   }
 
-  public int getHeaderFingerprintSize()
-  {
+  public int getHeaderFingerprintSize() {
     return FINGERPRINT.length;
   }
 
-  protected int[] getFingerPrint()
-  {
+  protected int[] getFingerPrint() {
     return FINGERPRINT;
   }
 
-  protected String[] getMimeTypes()
-  {
+  protected String[] getMimeTypes() {
     return MIMETYPES;
   }
 
-  protected String[] getFileExtensions()
-  {
+  protected String[] getFileExtensions() {
     return FILEEXTENSIONS;
   }
 
-  public Resource create(final ResourceManager caller,
-                         final ResourceData data,
-                         final ResourceKey context)
-      throws ResourceLoadingException, ResourceCreationException
-  {
+  public Resource create( final ResourceManager caller,
+                          final ResourceData data,
+                          final ResourceKey context )
+    throws ResourceLoadingException, ResourceCreationException {
     throw new ContentNotRecognizedException();
   }
 }

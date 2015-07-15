@@ -17,52 +17,49 @@
 
 package org.pentaho.reporting.libraries.formula.operators;
 
+import org.pentaho.reporting.libraries.formula.FormulaTestBase;
+
 import java.math.BigDecimal;
 import java.util.TimeZone;
-
-import org.pentaho.reporting.libraries.formula.FormulaTestBase;
 
 /**
  * Creation-Date: 10.04.2007, 15:31:58
  *
  * @author Thomas Morgner
  */
-public class DateOperatorTest extends FormulaTestBase
-{
+public class DateOperatorTest extends FormulaTestBase {
 
-  public Object[][] createDataTest()
-  {
+  public Object[][] createDataTest() {
     return new Object[][]
-        {
-            {"DATETIMEVALUE(\"2009-10-10T17:15:00.00+0000\") + 0", new BigDecimal("40094.7604166666666666666666666666666667")},
-            {"DATETIMEVALUE(\"2009-10-10T17:30:00.00+0000\") - 0", new BigDecimal("40094.7708333333333333333333333333333333")},
-            {"DATETIMEVALUE(\"2009-10-10T17:30:00.00+0000\") - DATETIMEVALUE(\"2009-10-10T17:30:00.00+0000\")", new BigDecimal(0)},
-            {"DATETIMEVALUE(\"2009-10-10T17:30:00.00+0000\") - DATETIMEVALUE(\"2009-10-10T17:15:00.00+0000\")", new BigDecimal("0.0104166666666666666666666666666667")},
-        };
+      {
+        { "DATETIMEVALUE(\"2009-10-10T17:15:00.00+0000\") + 0",
+          new BigDecimal( "40094.7604166666666666666666666666666667" ) },
+        { "DATETIMEVALUE(\"2009-10-10T17:30:00.00+0000\") - 0",
+          new BigDecimal( "40094.7708333333333333333333333333333333" ) },
+        { "DATETIMEVALUE(\"2009-10-10T17:30:00.00+0000\") - DATETIMEVALUE(\"2009-10-10T17:30:00.00+0000\")",
+          new BigDecimal( 0 ) },
+        { "DATETIMEVALUE(\"2009-10-10T17:30:00.00+0000\") - DATETIMEVALUE(\"2009-10-10T17:15:00.00+0000\")",
+          new BigDecimal( "0.0104166666666666666666666666666667" ) },
+      };
   }
 
-  public DateOperatorTest()
-  {
+  public DateOperatorTest() {
   }
 
-  public DateOperatorTest(final String s)
-  {
-    super(s);
+  public DateOperatorTest( final String s ) {
+    super( s );
   }
 
-  protected void setUp() throws Exception
-  {
-    TimeZone.setDefault(TimeZone.getTimeZone("GMT+0100"));
+  protected void setUp() throws Exception {
+    TimeZone.setDefault( TimeZone.getTimeZone( "GMT+0100" ) );
     super.setUp();
   }
 
-  public void testDefault() throws Exception
-  {
+  public void testDefault() throws Exception {
     runDefaultTest();
   }
 
-  public void testDefaultTZ() throws Exception
-  {
+  public void testDefaultTZ() throws Exception {
     runDefaultTest();
   }
 

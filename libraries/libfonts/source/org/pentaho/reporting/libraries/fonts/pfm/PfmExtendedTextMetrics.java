@@ -24,8 +24,7 @@ import org.pentaho.reporting.libraries.fonts.LEByteAccessUtilities;
  *
  * @author Thomas Morgner
  */
-public class PfmExtendedTextMetrics
-{
+public class PfmExtendedTextMetrics {
   private short pointSize;
   private short orientation;
   private short masterHeight;
@@ -52,157 +51,131 @@ public class PfmExtendedTextMetrics
   private short kernPairs;
   private short kernTracks;
 
-  public PfmExtendedTextMetrics(final byte[] data)
-  {
-    pointSize = LEByteAccessUtilities.readShort(data, 2);
-    orientation = LEByteAccessUtilities.readShort(data, 4);
-    masterHeight = LEByteAccessUtilities.readShort(data, 6);
-    minScale = LEByteAccessUtilities.readShort(data, 8);
-    maxScale = LEByteAccessUtilities.readShort(data, 10);
-    masterUnits = LEByteAccessUtilities.readShort(data, 12);
-    capHeight = LEByteAccessUtilities.readShort(data, 14);
-    xHeight = LEByteAccessUtilities.readShort(data, 16);
-    lowerCaseAscent = LEByteAccessUtilities.readShort(data, 18);
-    lowerCaseDescent = LEByteAccessUtilities.readShort(data, 20);
-    slant = LEByteAccessUtilities.readShort(data, 22);
-    superScript = LEByteAccessUtilities.readShort(data, 24);
-    subScript = LEByteAccessUtilities.readShort(data, 26);
-    superScriptSize = LEByteAccessUtilities.readShort(data, 28);
-    subScriptSize = LEByteAccessUtilities.readShort(data, 30);
-    underlineOffset = LEByteAccessUtilities.readShort(data, 32);
-    underlineWidth = LEByteAccessUtilities.readShort(data, 34);
-    doubleLowerUnderlineOffset = LEByteAccessUtilities.readShort(data, 36);
-    doubleLowerUnderlineWidth = LEByteAccessUtilities.readShort(data, 38);
-    doubleUpperUnderlineOffset = LEByteAccessUtilities.readShort(data, 40);
-    doubleUpperUnderlineWidth = LEByteAccessUtilities.readShort(data, 42);
-    strikeOutOffset = LEByteAccessUtilities.readShort(data, 44);
-    strikeOutWidth = LEByteAccessUtilities.readShort(data, 46);
-    kernPairs = LEByteAccessUtilities.readShort(data, 48);
-    kernTracks = LEByteAccessUtilities.readShort(data, 50);
+  public PfmExtendedTextMetrics( final byte[] data ) {
+    pointSize = LEByteAccessUtilities.readShort( data, 2 );
+    orientation = LEByteAccessUtilities.readShort( data, 4 );
+    masterHeight = LEByteAccessUtilities.readShort( data, 6 );
+    minScale = LEByteAccessUtilities.readShort( data, 8 );
+    maxScale = LEByteAccessUtilities.readShort( data, 10 );
+    masterUnits = LEByteAccessUtilities.readShort( data, 12 );
+    capHeight = LEByteAccessUtilities.readShort( data, 14 );
+    xHeight = LEByteAccessUtilities.readShort( data, 16 );
+    lowerCaseAscent = LEByteAccessUtilities.readShort( data, 18 );
+    lowerCaseDescent = LEByteAccessUtilities.readShort( data, 20 );
+    slant = LEByteAccessUtilities.readShort( data, 22 );
+    superScript = LEByteAccessUtilities.readShort( data, 24 );
+    subScript = LEByteAccessUtilities.readShort( data, 26 );
+    superScriptSize = LEByteAccessUtilities.readShort( data, 28 );
+    subScriptSize = LEByteAccessUtilities.readShort( data, 30 );
+    underlineOffset = LEByteAccessUtilities.readShort( data, 32 );
+    underlineWidth = LEByteAccessUtilities.readShort( data, 34 );
+    doubleLowerUnderlineOffset = LEByteAccessUtilities.readShort( data, 36 );
+    doubleLowerUnderlineWidth = LEByteAccessUtilities.readShort( data, 38 );
+    doubleUpperUnderlineOffset = LEByteAccessUtilities.readShort( data, 40 );
+    doubleUpperUnderlineWidth = LEByteAccessUtilities.readShort( data, 42 );
+    strikeOutOffset = LEByteAccessUtilities.readShort( data, 44 );
+    strikeOutWidth = LEByteAccessUtilities.readShort( data, 46 );
+    kernPairs = LEByteAccessUtilities.readShort( data, 48 );
+    kernTracks = LEByteAccessUtilities.readShort( data, 50 );
   }
 
-  public short getPointSize()
-  {
+  public short getPointSize() {
     return pointSize;
   }
 
-  public short getOrientation()
-  {
+  public short getOrientation() {
     return orientation;
   }
 
-  public short getMasterHeight()
-  {
+  public short getMasterHeight() {
     return masterHeight;
   }
 
-  public short getMinScale()
-  {
+  public short getMinScale() {
     return minScale;
   }
 
-  public short getMaxScale()
-  {
+  public short getMaxScale() {
     return maxScale;
   }
 
-  public short getMasterUnits()
-  {
+  public short getMasterUnits() {
     return masterUnits;
   }
 
-  public short getCapHeight()
-  {
+  public short getCapHeight() {
     return capHeight;
   }
 
-  public short getxHeight()
-  {
+  public short getxHeight() {
     return xHeight;
   }
 
-  public short getLowerCaseAscent()
-  {
+  public short getLowerCaseAscent() {
     return lowerCaseAscent;
   }
 
-  public short getLowerCaseDescent()
-  {
+  public short getLowerCaseDescent() {
     return lowerCaseDescent;
   }
 
-  public short getSlant()
-  {
+  public short getSlant() {
     return slant;
   }
 
-  public short getSuperScript()
-  {
+  public short getSuperScript() {
     return superScript;
   }
 
-  public short getSubScript()
-  {
+  public short getSubScript() {
     return subScript;
   }
 
-  public short getSuperScriptSize()
-  {
+  public short getSuperScriptSize() {
     return superScriptSize;
   }
 
-  public short getSubScriptSize()
-  {
+  public short getSubScriptSize() {
     return subScriptSize;
   }
 
-  public short getUnderlineOffset()
-  {
+  public short getUnderlineOffset() {
     return underlineOffset;
   }
 
-  public short getUnderlineWidth()
-  {
+  public short getUnderlineWidth() {
     return underlineWidth;
   }
 
-  public short getDoubleLowerUnderlineOffset()
-  {
+  public short getDoubleLowerUnderlineOffset() {
     return doubleLowerUnderlineOffset;
   }
 
-  public short getDoubleLowerUnderlineWidth()
-  {
+  public short getDoubleLowerUnderlineWidth() {
     return doubleLowerUnderlineWidth;
   }
 
-  public short getDoubleUpperUnderlineOffset()
-  {
+  public short getDoubleUpperUnderlineOffset() {
     return doubleUpperUnderlineOffset;
   }
 
-  public short getDoubleUpperUnderlineWidth()
-  {
+  public short getDoubleUpperUnderlineWidth() {
     return doubleUpperUnderlineWidth;
   }
 
-  public short getStrikeOutOffset()
-  {
+  public short getStrikeOutOffset() {
     return strikeOutOffset;
   }
 
-  public short getStrikeOutWidth()
-  {
+  public short getStrikeOutWidth() {
     return strikeOutWidth;
   }
 
-  public short getKernPairs()
-  {
+  public short getKernPairs() {
     return kernPairs;
   }
 
-  public short getKernTracks()
-  {
+  public short getKernTracks() {
     return kernTracks;
   }
 }

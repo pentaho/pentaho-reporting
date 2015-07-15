@@ -25,15 +25,13 @@ import org.pentaho.reporting.libraries.css.parser.stylehandler.OneOfConstantsRea
  *
  * @author Thomas Morgner
  */
-public class IndentEdgeResetReadHandler extends OneOfConstantsReadHandler
-{
-  public IndentEdgeResetReadHandler()
-  {
-    super(false);
-    addValue(IndentEdgeReset.BORDER_EDGE);
-    addValue(IndentEdgeReset.CONTENT_EDGE);
-    addValue(IndentEdgeReset.MARGIN_EDGE);
-    addValue(IndentEdgeReset.NONE);
-    addValue(IndentEdgeReset.PADDING_EDGE);
+public class IndentEdgeResetReadHandler extends OneOfConstantsReadHandler {
+  public IndentEdgeResetReadHandler() {
+    super( false );
+    addValue( IndentEdgeReset.BORDER_EDGE );
+    addValue( IndentEdgeReset.CONTENT_EDGE );
+    addValue( IndentEdgeReset.MARGIN_EDGE );
+    addValue( IndentEdgeReset.NONE );
+    addValue( IndentEdgeReset.PADDING_EDGE );
   }
 }

@@ -22,19 +22,15 @@ package org.pentaho.reporting.libraries.fonts.text.font;
  *
  * @author Thomas Morgner
  */
-public class NoKerningProducer implements KerningProducer
-{
-  public NoKerningProducer()
-  {
+public class NoKerningProducer implements KerningProducer {
+  public NoKerningProducer() {
   }
 
-  public long getKerning(final int codePoint)
-  {
+  public long getKerning( final int codePoint ) {
     return 0;
   }
 
-  public Object clone() throws CloneNotSupportedException
-  {
+  public Object clone() throws CloneNotSupportedException {
     return super.clone();
   }
 

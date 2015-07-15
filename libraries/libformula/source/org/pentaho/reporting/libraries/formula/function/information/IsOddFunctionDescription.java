@@ -25,42 +25,34 @@ import org.pentaho.reporting.libraries.formula.typing.coretypes.NumberType;
 
 /**
  * Describes IsOddFunction function.
- * @see IsOddFunction
  *
  * @author Cedric Pronzato
- *
+ * @see IsOddFunction
  */
-public class IsOddFunctionDescription extends AbstractFunctionDescription
-{
+public class IsOddFunctionDescription extends AbstractFunctionDescription {
   private static final long serialVersionUID = -5127816920222970031L;
 
-  public IsOddFunctionDescription()
-  {
-    super("ISODD", "org.pentaho.reporting.libraries.formula.function.information.IsOdd-Function");
+  public IsOddFunctionDescription() {
+    super( "ISODD", "org.pentaho.reporting.libraries.formula.function.information.IsOdd-Function" );
   }
 
-  public FunctionCategory getCategory()
-  {
+  public FunctionCategory getCategory() {
     return InformationFunctionCategory.CATEGORY;
   }
 
-  public int getParameterCount()
-  {
+  public int getParameterCount() {
     return 1;
   }
 
-  public Type getParameterType(final int position)
-  {
+  public Type getParameterType( final int position ) {
     return NumberType.GENERIC_NUMBER;
   }
 
-  public Type getValueType()
-  {
+  public Type getValueType() {
     return LogicalType.TYPE;
   }
 
-  public boolean isParameterMandatory(final int position)
-  {
+  public boolean isParameterMandatory( final int position ) {
     return true;
   }
 

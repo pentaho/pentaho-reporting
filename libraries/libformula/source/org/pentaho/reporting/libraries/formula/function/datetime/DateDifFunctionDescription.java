@@ -26,45 +26,37 @@ import org.pentaho.reporting.libraries.formula.typing.coretypes.TextType;
 
 /**
  * Describes DateDifFunction function.
- * @see DateDifFunction
  *
  * @author Cedric Pronzato
+ * @see DateDifFunction
  */
-public class DateDifFunctionDescription extends AbstractFunctionDescription
-{
+public class DateDifFunctionDescription extends AbstractFunctionDescription {
   private static final long serialVersionUID = 2428452931728654158L;
 
-  public DateDifFunctionDescription()
-  {
-    super("DATEDIF", "org.pentaho.reporting.libraries.formula.function.datetime.DateDif-Function");
+  public DateDifFunctionDescription() {
+    super( "DATEDIF", "org.pentaho.reporting.libraries.formula.function.datetime.DateDif-Function" );
   }
 
-  public Type getValueType()
-  {
+  public Type getValueType() {
     return NumberType.GENERIC_NUMBER;
   }
 
-  public int getParameterCount()
-  {
+  public int getParameterCount() {
     return 3;
   }
 
-  public Type getParameterType(final int position)
-  {
-    if(position == 2)
-    {
+  public Type getParameterType( final int position ) {
+    if ( position == 2 ) {
       return TextType.TYPE;
     }
     return DateTimeType.DATE_TYPE;
   }
 
-  public boolean isParameterMandatory(final int position)
-  {
+  public boolean isParameterMandatory( final int position ) {
     return true;
   }
 
-  public FunctionCategory getCategory()
-  {
+  public FunctionCategory getCategory() {
     return DateTimeFunctionCategory.CATEGORY;
   }
 }

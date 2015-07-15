@@ -21,14 +21,12 @@ import org.pentaho.reporting.libraries.base.LibBaseInfo;
 import org.pentaho.reporting.libraries.base.versioning.ProjectInformation;
 
 /**
- * The LibRepositoryInfo class contains all dependency information and some
- * common information like version, license and contributors about the
- * library itself.
+ * The LibRepositoryInfo class contains all dependency information and some common information like version, license and
+ * contributors about the library itself.
  *
  * @author Thomas Morgner
  */
-public class LibRepositoryInfo extends ProjectInformation
-{
+public class LibRepositoryInfo extends ProjectInformation {
   private static LibRepositoryInfo instance;
 
   /**
@@ -36,10 +34,8 @@ public class LibRepositoryInfo extends ProjectInformation
    *
    * @return the singleton ProjectInformation.
    */
-  public static synchronized ProjectInformation getInstance()
-  {
-    if (instance == null)
-    {
+  public static synchronized ProjectInformation getInstance() {
+    if ( instance == null ) {
       instance = new LibRepositoryInfo();
       instance.initialize();
     }
@@ -49,22 +45,20 @@ public class LibRepositoryInfo extends ProjectInformation
   /**
    * Constructs an empty project info object.
    */
-  private LibRepositoryInfo()
-  {
-    super("librepository", "LibRepository");
+  private LibRepositoryInfo() {
+    super( "librepository", "LibRepository" );
   }
 
   /**
    * Initialized the project info object.
    */
-  private void initialize()
-  {
-    setLicenseName("LGPL");
+  private void initialize() {
+    setLicenseName( "LGPL" );
 
-    setInfo("http://reporting.pentaho.org/librepository/");
-    setCopyright("(C)opyright 2006-2011, by Pentaho Corporation and Contributors");
+    setInfo( "http://reporting.pentaho.org/librepository/" );
+    setCopyright( "(C)opyright 2006-2011, by Pentaho Corporation and Contributors" );
 
-    setBootClass(LibRepositoryBoot.class.getName());
-    addLibrary(LibBaseInfo.getInstance());
+    setBootClass( LibRepositoryBoot.class.getName() );
+    addLibrary( LibBaseInfo.getInstance() );
   }
 }

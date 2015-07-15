@@ -33,8 +33,7 @@ import java.io.PrintWriter;
  * @noinspection UseOfSystemOutOrSystemErr
  * @deprecated Use ordinary exception as your base class.
  */
-public class StackableException extends Exception
-{
+public class StackableException extends Exception {
   private static final long serialVersionUID = -8649054607849486694L;
 
   /**
@@ -46,8 +45,7 @@ public class StackableException extends Exception
   /**
    * Creates a StackableRuntimeException with no message and no parent.
    */
-  protected StackableException()
-  {
+  protected StackableException() {
     super();
   }
 
@@ -57,8 +55,7 @@ public class StackableException extends Exception
    * @param message the exception message.
    * @param ex      the parent exception.
    */
-  protected StackableException(final String message, final Throwable ex)
-  {
+  protected StackableException( final String message, final Throwable ex ) {
     super();
     this.message = message;
     this.parent = ex;
@@ -71,9 +68,8 @@ public class StackableException extends Exception
    * @param ex      the parent exception.
    * @deprecated use the throwable-version instead.
    */
-  protected StackableException(final String message, final Exception ex)
-  {
-    super(message);
+  protected StackableException( final String message, final Exception ex ) {
+    super( message );
     this.parent = ex;
     this.message = message;
   }
@@ -83,8 +79,7 @@ public class StackableException extends Exception
    *
    * @param message the exception message.
    */
-  protected StackableException(final String message)
-  {
+  protected StackableException( final String message ) {
     super();
     this.message = message;
   }
@@ -95,57 +90,44 @@ public class StackableException extends Exception
    * @return the parent exception.
    * @deprecated use the throwable instead.
    */
-  public Exception getParent()
-  {
-    if (this.parent instanceof Exception)
-    {
+  public Exception getParent() {
+    if ( this.parent instanceof Exception ) {
       return (Exception) this.parent;
     }
     return null;
   }
 
-  protected void update(final String message, final Throwable parent)
-  {
+  protected void update( final String message, final Throwable parent ) {
     this.message = message;
     this.parent = parent;
   }
-  
-  public Throwable getParentThrowable()
-  {
+
+  public Throwable getParentThrowable() {
     return parent;
   }
 
   /**
    * Returns the detail message string of this throwable.
    *
-   * @return the detail message string of this <tt>Throwable</tt> instance
-   *         (which may be <tt>null</tt>).
+   * @return the detail message string of this <tt>Throwable</tt> instance (which may be <tt>null</tt>).
    */
-  public String getMessage()
-  {
+  public String getMessage() {
     return message;
   }
 
   /**
-   * Returns a short description of this throwable.
-   * If this <code>Throwable</code> object was created with a non-null detail
-   * message string, then the result is the concatenation of three strings:
-   * <ul>
-   * <li>The name of the actual class of this object
-   * <li>": " (a colon and a space)
-   * <li>The result of the {@link #getMessage} method for this object
-   * </ul>
-   * If this <code>Throwable</code> object was created with a <tt>null</tt>
-   * detail message string, then the name of the actual class of this object
-   * is returned.
+   * Returns a short description of this throwable. If this <code>Throwable</code> object was created with a non-null
+   * detail message string, then the result is the concatenation of three strings: <ul> <li>The name of the actual class
+   * of this object <li>": " (a colon and a space) <li>The result of the {@link #getMessage} method for this object
+   * </ul> If this <code>Throwable</code> object was created with a <tt>null</tt> detail message string, then the name
+   * of the actual class of this object is returned.
    *
    * @return a string representation of this throwable.
    */
-  public String toString()
-  {
+  public String toString() {
     final String s = getClass().getName();
     final String message = getLocalizedMessage();
-    return (message != null) ? (s + ": " + message) : s;
+    return ( message != null ) ? ( s + ": " + message ) : s;
   }
 
   /**
@@ -153,13 +135,11 @@ public class StackableException extends Exception
    *
    * @param stream the output stream.
    */
-  public void printStackTrace(final PrintStream stream)
-  {
-    super.printStackTrace(stream);
-    if (getParentThrowable() != null)
-    {
-      stream.println("ParentException: ");
-      getParentThrowable().printStackTrace(stream);
+  public void printStackTrace( final PrintStream stream ) {
+    super.printStackTrace( stream );
+    if ( getParentThrowable() != null ) {
+      stream.println( "ParentException: " );
+      getParentThrowable().printStackTrace( stream );
     }
   }
 
@@ -168,13 +148,11 @@ public class StackableException extends Exception
    *
    * @param writer the writer.
    */
-  public void printStackTrace(final PrintWriter writer)
-  {
-    super.printStackTrace(writer);
-    if (getParentThrowable() != null)
-    {
-      writer.println("ParentException: ");
-      getParentThrowable().printStackTrace(writer);
+  public void printStackTrace( final PrintWriter writer ) {
+    super.printStackTrace( writer );
+    if ( getParentThrowable() != null ) {
+      writer.println( "ParentException: " );
+      getParentThrowable().printStackTrace( writer );
     }
   }
 
@@ -210,11 +188,9 @@ public class StackableException extends Exception
    *
    * @see System#err
    */
-  public void printStackTrace()
-  {
-    synchronized (System.err)
-    {
-      printStackTrace(System.err);
+  public void printStackTrace() {
+    synchronized( System.err ) {
+      printStackTrace( System.err );
     }
   }
 }

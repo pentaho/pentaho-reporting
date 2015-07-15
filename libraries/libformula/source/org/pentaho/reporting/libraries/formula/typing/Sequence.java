@@ -20,8 +20,7 @@ package org.pentaho.reporting.libraries.formula.typing;
 import org.pentaho.reporting.libraries.formula.EvaluationException;
 import org.pentaho.reporting.libraries.formula.lvalues.LValue;
 
-public interface Sequence
-{
+public interface Sequence {
   public boolean hasNext() throws EvaluationException;
 
   public Object next() throws EvaluationException;

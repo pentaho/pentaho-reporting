@@ -16,37 +16,38 @@ import java.net.URL;
 import java.util.Properties;
 
 /**
+ * @author Philippe Le Hegaret
  * @version $Revision$
- * @author  Philippe Le Hegaret
  */
 public class Encoding {
-    private Encoding() {}
+  private Encoding() {
+  }
 
-    /**
-     * Converts the format encoding information into Java encoding information.
-     */
-    public static String getJavaEncoding(String encoding) {
-	String _result = encodings.getProperty(encoding);
-	if (_result == null) {
-	    return encoding;
-	}
-	return _result;
+  /**
+   * Converts the format encoding information into Java encoding information.
+   */
+  public static String getJavaEncoding( String encoding ) {
+    String _result = encodings.getProperty( encoding );
+    if ( _result == null ) {
+      return encoding;
     }
+    return _result;
+  }
 
-    static Properties encodings;
+  static Properties encodings;
 
-    static {
-	encodings = new Properties();
-	
-	try {
-            URL url = Encoding.class.getResource("encoding.properties");
-            InputStream f = url.openStream();
-            encodings.load(f);
-            f.close();
-        } catch (Exception e) {
-            System.err.println(Encoding.class
-                               + ": couldn't load encoding properties ");
-            e.printStackTrace();
-	}
+  static {
+    encodings = new Properties();
+
+    try {
+      URL url = Encoding.class.getResource( "encoding.properties" );
+      InputStream f = url.openStream();
+      encodings.load( f );
+      f.close();
+    } catch ( Exception e ) {
+      System.err.println( Encoding.class
+        + ": couldn't load encoding properties " );
+      e.printStackTrace();
     }
+  }
 }

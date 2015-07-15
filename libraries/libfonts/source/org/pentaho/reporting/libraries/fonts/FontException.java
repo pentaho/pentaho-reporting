@@ -22,13 +22,11 @@ package org.pentaho.reporting.libraries.fonts;
  *
  * @author Thomas Morgner
  */
-public class FontException extends Exception
-{
+public class FontException extends Exception {
   /**
    * Creates a StackableRuntimeException with no message and no parent.
    */
-  public FontException()
-  {
+  public FontException() {
   }
 
   /**
@@ -37,9 +35,8 @@ public class FontException extends Exception
    * @param message the exception message.
    * @param ex      the parent exception.
    */
-  public FontException(final String message, final Exception ex)
-  {
-    super(message, ex);
+  public FontException( final String message, final Exception ex ) {
+    super( message, ex );
   }
 
   /**
@@ -47,8 +44,7 @@ public class FontException extends Exception
    *
    * @param message the exception message.
    */
-  public FontException(final String message)
-  {
-    super(message);
+  public FontException( final String message ) {
+    super( message );
   }
 }

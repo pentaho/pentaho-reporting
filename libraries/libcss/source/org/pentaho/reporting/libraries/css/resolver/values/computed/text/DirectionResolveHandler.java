@@ -17,21 +17,19 @@
 
 package org.pentaho.reporting.libraries.css.resolver.values.computed.text;
 
-import org.pentaho.reporting.libraries.css.resolver.values.computed.ConstantsResolveHandler;
 import org.pentaho.reporting.libraries.css.keys.text.Direction;
+import org.pentaho.reporting.libraries.css.resolver.values.computed.ConstantsResolveHandler;
 
 /**
  * Creation-Date: 21.12.2005, 15:07:34
  *
  * @author Thomas Morgner
  */
-public class DirectionResolveHandler extends ConstantsResolveHandler
-{
-  public DirectionResolveHandler()
-  {
-    addNormalizeValue(Direction.LTR);
-    addNormalizeValue(Direction.RTL);
-    setFallback(Direction.LTR);
+public class DirectionResolveHandler extends ConstantsResolveHandler {
+  public DirectionResolveHandler() {
+    addNormalizeValue( Direction.LTR );
+    addNormalizeValue( Direction.RTL );
+    setFallback( Direction.LTR );
   }
 
 }

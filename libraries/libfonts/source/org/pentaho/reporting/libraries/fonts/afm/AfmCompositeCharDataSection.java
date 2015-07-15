@@ -24,13 +24,10 @@ import java.io.IOException;
  *
  * @author Thomas Morgner
  */
-public class AfmCompositeCharDataSection
-{
-  public AfmCompositeCharDataSection() throws IOException
-  {
+public class AfmCompositeCharDataSection {
+  public AfmCompositeCharDataSection() throws IOException {
   }
 
-  public void add(final String line)
-  {
+  public void add( final String line ) {
   }
 }

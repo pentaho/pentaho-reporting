@@ -20,15 +20,12 @@ package org.pentaho.reporting.libraries.css.resolver.tokens.computed;
 import org.pentaho.reporting.libraries.css.resolver.tokens.ContentToken;
 
 /**
- * A computed token is a placeholder for content that *must* be resolved during
- * the layouting phase. Usually, this deals with compound counters (which need
- * to be split into resolved single counters).
+ * A computed token is a placeholder for content that *must* be resolved during the layouting phase. Usually, this deals
+ * with compound counters (which need to be split into resolved single counters).
  *
  * @author Thomas Morgner
  */
-public abstract class ComputedToken implements ContentToken
-{
-  protected ComputedToken()
-  {
+public abstract class ComputedToken implements ContentToken {
+  protected ComputedToken() {
   }
 }

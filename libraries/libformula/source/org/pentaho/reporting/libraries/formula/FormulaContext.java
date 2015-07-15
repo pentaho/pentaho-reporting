@@ -17,13 +17,13 @@
 
 package org.pentaho.reporting.libraries.formula;
 
-import java.util.Date;
-
+import org.pentaho.reporting.libraries.base.config.Configuration;
 import org.pentaho.reporting.libraries.formula.function.FunctionRegistry;
 import org.pentaho.reporting.libraries.formula.operators.OperatorFactory;
 import org.pentaho.reporting.libraries.formula.typing.Type;
 import org.pentaho.reporting.libraries.formula.typing.TypeRegistry;
-import org.pentaho.reporting.libraries.base.config.Configuration;
+
+import java.util.Date;
 
 /**
  * The formula-context connects the formula functions with the outside world. The context can be used to resolve
@@ -31,8 +31,7 @@ import org.pentaho.reporting.libraries.base.config.Configuration;
  *
  * @author Thomas Morgner
  */
-public interface FormulaContext
-{
+public interface FormulaContext {
   /**
    * Checks whether the external object referenced by <code>name</code> has changed.
    *
@@ -40,7 +39,7 @@ public interface FormulaContext
    * @return true, if the reference has changed, false otherwise.
    * @throws EvaluationException if an error occurs.
    */
-  public boolean isReferenceDirty(Object name) throws EvaluationException;
+  public boolean isReferenceDirty( Object name ) throws EvaluationException;
 
   /**
    * Resolves the given reference. How the name is interpreted by the outside system is an implementation detail.
@@ -49,7 +48,7 @@ public interface FormulaContext
    * @return the resolved object.
    * @throws EvaluationException if an error occurs.
    */
-  public Object resolveReference(Object name) throws EvaluationException;
+  public Object resolveReference( Object name ) throws EvaluationException;
 
   /**
    * Queries the type of the given reference. How the name is interpreted by the outside system is an implementation
@@ -60,7 +59,7 @@ public interface FormulaContext
    * @return the type of the resolved object.
    * @throws EvaluationException if an error occurs.
    */
-  public Type resolveReferenceType(Object name) throws EvaluationException;
+  public Type resolveReferenceType( Object name ) throws EvaluationException;
 
   /**
    * Returns the localization context of this formula. The localization context can be used to query locale specific

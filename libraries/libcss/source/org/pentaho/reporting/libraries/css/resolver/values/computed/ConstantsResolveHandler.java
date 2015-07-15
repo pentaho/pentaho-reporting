@@ -17,15 +17,15 @@
 
 package org.pentaho.reporting.libraries.css.resolver.values.computed;
 
-import java.util.HashMap;
-
-import org.pentaho.reporting.libraries.css.values.CSSValue;
-import org.pentaho.reporting.libraries.css.values.CSSConstant;
+import org.pentaho.reporting.libraries.css.dom.DocumentContext;
+import org.pentaho.reporting.libraries.css.dom.LayoutElement;
+import org.pentaho.reporting.libraries.css.dom.LayoutStyle;
 import org.pentaho.reporting.libraries.css.model.StyleKey;
 import org.pentaho.reporting.libraries.css.resolver.values.ResolveHandler;
-import org.pentaho.reporting.libraries.css.dom.LayoutElement;
-import org.pentaho.reporting.libraries.css.dom.DocumentContext;
-import org.pentaho.reporting.libraries.css.dom.LayoutStyle;
+import org.pentaho.reporting.libraries.css.values.CSSConstant;
+import org.pentaho.reporting.libraries.css.values.CSSValue;
+
+import java.util.HashMap;
 
 
 /**
@@ -33,94 +33,79 @@ import org.pentaho.reporting.libraries.css.dom.LayoutStyle;
  *
  * @author Thomas Morgner
  */
-public abstract class ConstantsResolveHandler implements ResolveHandler
-{
-  private static final StyleKey[] EMPTY_STYLE_KEYS = new StyleKey[0];
+public abstract class ConstantsResolveHandler implements ResolveHandler {
+  private static final StyleKey[] EMPTY_STYLE_KEYS = new StyleKey[ 0 ];
 
   private HashMap constants;
   private CSSValue fallback;
 
-  protected ConstantsResolveHandler()
-  {
+  protected ConstantsResolveHandler() {
     constants = new HashMap();
   }
 
-  public CSSValue getFallback()
-  {
+  public CSSValue getFallback() {
     return fallback;
   }
 
-  protected void setFallback(final CSSValue fallback)
-  {
+  protected void setFallback( final CSSValue fallback ) {
     this.fallback = fallback;
   }
 
-  protected CSSValue lookupValue(final CSSConstant value)
-  {
-    return (CSSValue) constants.get(value);
+  protected CSSValue lookupValue( final CSSConstant value ) {
+    return (CSSValue) constants.get( value );
   }
 
-  protected void addValue(final CSSConstant constant, final CSSValue value)
-  {
-    constants.put(constant, value);
+  protected void addValue( final CSSConstant constant, final CSSValue value ) {
+    constants.put( constant, value );
   }
 
-  protected void addNormalizeValue(final CSSConstant constant)
-  {
-    constants.put(constant, constant);
+  protected void addNormalizeValue( final CSSConstant constant ) {
+    constants.put( constant, constant );
   }
 
   /**
-   * This indirectly defines the resolve order. The higher the order, the more
-   * dependent is the resolver on other resolvers to be complete.
+   * This indirectly defines the resolve order. The higher the order, the more dependent is the resolver on other
+   * resolvers to be complete.
    *
-   * @return  the array of required style keys.
+   * @return the array of required style keys.
    */
-  public StyleKey[] getRequiredStyles()
-  {
+  public StyleKey[] getRequiredStyles() {
     return EMPTY_STYLE_KEYS;
   }
 
-  public void resolve(final DocumentContext process,
-                      final LayoutElement currentNode,
-                      final StyleKey key)
-  {
+  public void resolve( final DocumentContext process,
+                       final LayoutElement currentNode,
+                       final StyleKey key ) {
 
-    final CSSValue value = resolveValue(process, currentNode, key);
-    if (value != null)
-    {
-      currentNode.getLayoutStyle().setValue(key, value);
+    final CSSValue value = resolveValue( process, currentNode, key );
+    if ( value != null ) {
+      currentNode.getLayoutStyle().setValue( key, value );
     }
   }
 
-  protected CSSValue resolveValue (final DocumentContext process,
+  protected CSSValue resolveValue( final DocumentContext process,
                                    final LayoutElement currentNode,
-                                   final StyleKey key)
-  {
+                                   final StyleKey key ) {
     final LayoutStyle layoutContext = currentNode.getLayoutStyle();
-    final CSSValue value = layoutContext.getValue(key);
-    if (value instanceof CSSConstant == false)
-    {
+    final CSSValue value = layoutContext.getValue( key );
+    if ( value instanceof CSSConstant == false ) {
       final CSSValue fallback = getFallback();
-      if (fallback != null)
-      {
+      if ( fallback != null ) {
         return fallback;
       }
       return null;
     }
 
     final CSSConstant constant = (CSSConstant) value;
-    final CSSValue resolvedValue = lookupValue(constant);
-    if (resolvedValue != null)
-    {
-//      layoutContext.setValue(key, resolvedValue);
+    final CSSValue resolvedValue = lookupValue( constant );
+    if ( resolvedValue != null ) {
+      //      layoutContext.setValue(key, resolvedValue);
       return resolvedValue;
     }
 
     final CSSValue fallback = getFallback();
-    if (fallback != null)
-    {
-//      layoutContext.setValue(key, fallback);
+    if ( fallback != null ) {
+      //      layoutContext.setValue(key, fallback);
       return fallback;
     }
 

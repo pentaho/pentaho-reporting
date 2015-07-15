@@ -24,42 +24,34 @@ import org.pentaho.reporting.libraries.formula.typing.coretypes.NumberType;
 
 /**
  * Describes AcoshFunction function.
- * @see AcoshFunction
  *
  * @author ocke
- *
+ * @see AcoshFunction
  */
-public class AcoshFunctionDescription extends AbstractFunctionDescription
-{
+public class AcoshFunctionDescription extends AbstractFunctionDescription {
   private static final long serialVersionUID = 743117553650008440L;
 
-  public AcoshFunctionDescription()
-  {
-    super("ACOSH", "org.pentaho.reporting.libraries.formula.function.math.Acosh-Function");
+  public AcoshFunctionDescription() {
+    super( "ACOSH", "org.pentaho.reporting.libraries.formula.function.math.Acosh-Function" );
   }
 
-  public FunctionCategory getCategory()
-  {
+  public FunctionCategory getCategory() {
     return MathFunctionCategory.CATEGORY;
   }
 
-  public int getParameterCount()
-  {
+  public int getParameterCount() {
     return 1;
   }
 
-  public Type getParameterType(final int position)
-  {
+  public Type getParameterType( final int position ) {
     return NumberType.GENERIC_NUMBER;
   }
 
-  public Type getValueType()
-  {
+  public Type getValueType() {
     return NumberType.GENERIC_NUMBER;
   }
 
-  public boolean isParameterMandatory(final int position)
-  {
+  public boolean isParameterMandatory( final int position ) {
     return true;
   }
 

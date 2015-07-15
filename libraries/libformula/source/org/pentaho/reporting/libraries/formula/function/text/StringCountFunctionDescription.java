@@ -25,42 +25,34 @@ import org.pentaho.reporting.libraries.formula.typing.coretypes.TextType;
 
 /**
  * Describes String Count function.
- * @see StringCountFunction
  *
  * @author Gunter Rombauts
- *
+ * @see StringCountFunction
  */
-public class StringCountFunctionDescription extends AbstractFunctionDescription
-{
+public class StringCountFunctionDescription extends AbstractFunctionDescription {
   private static final long serialVersionUID = -6053755288623134282L;
 
-  public StringCountFunctionDescription()
-  {
-    super("STRINGCOUNT", "org.pentaho.reporting.libraries.formula.function.text.StringCount-Function");
+  public StringCountFunctionDescription() {
+    super( "STRINGCOUNT", "org.pentaho.reporting.libraries.formula.function.text.StringCount-Function" );
   }
 
-  public FunctionCategory getCategory()
-  {
+  public FunctionCategory getCategory() {
     return TextFunctionCategory.CATEGORY;
   }
 
-  public int getParameterCount()
-  {
+  public int getParameterCount() {
     return 2;
   }
 
-  public Type getParameterType(final int position)
-  {
+  public Type getParameterType( final int position ) {
     return TextType.TYPE;
   }
 
-  public Type getValueType()
-  {
+  public Type getValueType() {
     return NumberType.GENERIC_NUMBER;
   }
 
-  public boolean isParameterMandatory(final int position)
-  {
+  public boolean isParameterMandatory( final int position ) {
     return true;
   }
 

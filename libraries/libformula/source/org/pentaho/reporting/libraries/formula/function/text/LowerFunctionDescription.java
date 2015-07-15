@@ -25,42 +25,34 @@ import org.pentaho.reporting.libraries.formula.typing.coretypes.TextType;
 
 /**
  * Describes LowerFunction function.
- * @see LowerFunction
  *
  * @author Cedric Pronzato
- *
+ * @see LowerFunction
  */
-public class LowerFunctionDescription extends AbstractFunctionDescription
-{
+public class LowerFunctionDescription extends AbstractFunctionDescription {
   private static final long serialVersionUID = -1445500850790274405L;
 
-  public LowerFunctionDescription()
-  {
-    super("LOWER", "org.pentaho.reporting.libraries.formula.function.text.Lower-Function");
+  public LowerFunctionDescription() {
+    super( "LOWER", "org.pentaho.reporting.libraries.formula.function.text.Lower-Function" );
   }
 
-  public FunctionCategory getCategory()
-  {
+  public FunctionCategory getCategory() {
     return TextFunctionCategory.CATEGORY;
   }
 
-  public int getParameterCount()
-  {
+  public int getParameterCount() {
     return 1;
   }
 
-  public Type getParameterType(final int position)
-  {
+  public Type getParameterType( final int position ) {
     return AnyType.TYPE;
   }
 
-  public Type getValueType()
-  {
+  public Type getValueType() {
     return TextType.TYPE;
   }
 
-  public boolean isParameterMandatory(final int position)
-  {
+  public boolean isParameterMandatory( final int position ) {
     return true;
   }
 

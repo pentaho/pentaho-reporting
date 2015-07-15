@@ -30,50 +30,50 @@
 
 package org.w3c.flute.parser.selectors;
 
-import org.w3c.css.sac.SiblingSelector;
 import org.w3c.css.sac.Selector;
+import org.w3c.css.sac.SiblingSelector;
 import org.w3c.css.sac.SimpleSelector;
 
 /**
+ * @author Philippe Le Hegaret
  * @version $Revision$
- * @author  Philippe Le Hegaret
  */
 public class DirectAdjacentSelectorImpl implements SiblingSelector {
 
-    Selector       child;
-    SimpleSelector directAdjacent;
+  Selector child;
+  SimpleSelector directAdjacent;
 
-    /**
-     * An integer indicating the type of <code>Selector</code>
-     */
-    public short getSelectorType() {
-	return Selector.SAC_DIRECT_ADJACENT_SELECTOR;
-    }
+  /**
+   * An integer indicating the type of <code>Selector</code>
+   */
+  public short getSelectorType() {
+    return Selector.SAC_DIRECT_ADJACENT_SELECTOR;
+  }
 
-    /**
-     * Creates a new DescendantSelectorImpl
-     */
-    public DirectAdjacentSelectorImpl(Selector child, 
-				      SimpleSelector directAdjacent) {
-        this.child = child;
-	this.directAdjacent = directAdjacent;
-    }
-    
-    public short getNodeType() {
-	return 1;
-    }
-        
-    /**
-     * Returns the parent selector.
-     */    
-    public Selector getSelector() {
-	return child;
-    }
+  /**
+   * Creates a new DescendantSelectorImpl
+   */
+  public DirectAdjacentSelectorImpl( Selector child,
+                                     SimpleSelector directAdjacent ) {
+    this.child = child;
+    this.directAdjacent = directAdjacent;
+  }
 
-    /*
-     * Returns the simple selector.
-     */    
-    public SimpleSelector getSiblingSelector() {
-	return directAdjacent;
-    }
+  public short getNodeType() {
+    return 1;
+  }
+
+  /**
+   * Returns the parent selector.
+   */
+  public Selector getSelector() {
+    return child;
+  }
+
+  /*
+   * Returns the simple selector.
+   */
+  public SimpleSelector getSiblingSelector() {
+    return directAdjacent;
+  }
 }

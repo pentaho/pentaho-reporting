@@ -31,53 +31,41 @@ import org.w3c.css.sac.LexicalUnit;
  *
  * @author Thomas Morgner
  */
-public abstract class AbstractWidthReadHandler implements CSSValueReadHandler
-{
+public abstract class AbstractWidthReadHandler implements CSSValueReadHandler {
   private boolean allowPercentages;
   private boolean allowAuto;
 
-  protected AbstractWidthReadHandler(boolean allowPercentages,
-                                     boolean allowAuto)
-  {
+  protected AbstractWidthReadHandler( boolean allowPercentages,
+                                      boolean allowAuto ) {
     this.allowPercentages = allowPercentages;
     this.allowAuto = allowAuto;
   }
 
-  public boolean isAllowPercentages()
-  {
+  public boolean isAllowPercentages() {
     return allowPercentages;
   }
 
-  public boolean isAllowAuto()
-  {
+  public boolean isAllowAuto() {
     return allowAuto;
   }
 
-  public CSSValue createValue(StyleKey name, LexicalUnit value)
-  {
-    return parseWidth(value);
+  public CSSValue createValue( StyleKey name, LexicalUnit value ) {
+    return parseWidth( value );
   }
 
-  protected CSSValue parseWidth(final LexicalUnit value)
-  {
-    if (allowPercentages &&
-        value.getLexicalUnitType() == LexicalUnit.SAC_PERCENTAGE)
-    {
-      return CSSNumericValue.createValue(CSSNumericType.PERCENTAGE,
-          value.getFloatValue());
-    }
-    else if (allowAuto &&
-        value.getLexicalUnitType() == LexicalUnit.SAC_IDENT)
-    {
-      if (value.getStringValue().equalsIgnoreCase("auto"))
-      {
+  protected CSSValue parseWidth( final LexicalUnit value ) {
+    if ( allowPercentages &&
+      value.getLexicalUnitType() == LexicalUnit.SAC_PERCENTAGE ) {
+      return CSSNumericValue.createValue( CSSNumericType.PERCENTAGE,
+        value.getFloatValue() );
+    } else if ( allowAuto &&
+      value.getLexicalUnitType() == LexicalUnit.SAC_IDENT ) {
+      if ( value.getStringValue().equalsIgnoreCase( "auto" ) ) {
         return CSSAutoValue.getInstance();
       }
       return null;
-    }
-    else
-    {
-      return CSSValueFactory.createLengthValue(value);
+    } else {
+      return CSSValueFactory.createLengthValue( value );
     }
   }
 }

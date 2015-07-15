@@ -24,18 +24,16 @@ import org.pentaho.reporting.libraries.css.values.CSSConstant;
  *
  * @author Thomas Morgner
  */
-public class TextAlign
-{
+public class TextAlign {
   // start | end | left | right | center | justify | <string>
 
-  public static final CSSConstant START = new CSSConstant("start");
-  public static final CSSConstant END = new CSSConstant("end");
-  public static final CSSConstant LEFT = new CSSConstant("left");
-  public static final CSSConstant RIGHT = new CSSConstant("right");
-  public static final CSSConstant CENTER = new CSSConstant("center");
-  public static final CSSConstant JUSTIFY = new CSSConstant("justify");
+  public static final CSSConstant START = new CSSConstant( "start" );
+  public static final CSSConstant END = new CSSConstant( "end" );
+  public static final CSSConstant LEFT = new CSSConstant( "left" );
+  public static final CSSConstant RIGHT = new CSSConstant( "right" );
+  public static final CSSConstant CENTER = new CSSConstant( "center" );
+  public static final CSSConstant JUSTIFY = new CSSConstant( "justify" );
 
-  private TextAlign()
-  {
+  private TextAlign() {
   }
 }

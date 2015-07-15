@@ -22,13 +22,11 @@ package org.pentaho.reporting.libraries.css.resolver;
  *
  * @author Thomas Morgner
  */
-public class FunctionEvaluationException extends Exception
-{
+public class FunctionEvaluationException extends Exception {
   /**
    * Creates a StackableRuntimeException with no message and no parent.
    */
-  public FunctionEvaluationException()
-  {
+  public FunctionEvaluationException() {
   }
 
   /**
@@ -37,9 +35,8 @@ public class FunctionEvaluationException extends Exception
    * @param message the exception message.
    * @param ex      the parent exception.
    */
-  public FunctionEvaluationException(final String message, final Exception ex)
-  {
-    super(message, ex);
+  public FunctionEvaluationException( final String message, final Exception ex ) {
+    super( message, ex );
   }
 
   /**
@@ -47,8 +44,7 @@ public class FunctionEvaluationException extends Exception
    *
    * @param message the exception message.
    */
-  public FunctionEvaluationException(final String message)
-  {
-    super(message);
+  public FunctionEvaluationException( final String message ) {
+    super( message );
   }
 }

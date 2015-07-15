@@ -17,28 +17,27 @@
 
 package org.pentaho.reporting.libraries.repository.dummy;
 
-import java.io.ByteArrayInputStream;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.io.Serializable;
-
+import org.pentaho.reporting.libraries.base.util.NullOutputStream;
 import org.pentaho.reporting.libraries.repository.ContentIOException;
 import org.pentaho.reporting.libraries.repository.ContentItem;
 import org.pentaho.reporting.libraries.repository.ContentLocation;
 import org.pentaho.reporting.libraries.repository.Repository;
 import org.pentaho.reporting.libraries.repository.RepositoryUtilities;
-import org.pentaho.reporting.libraries.base.util.NullOutputStream;
+
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.io.Serializable;
 
 /**
  * A dummy content item, that does not provide any input and that does swallow all content fed into it.
  *
  * @author Thomas Morgner
  */
-public class DummyContentItem implements ContentItem, Serializable
-{
+public class DummyContentItem implements ContentItem, Serializable {
   private ContentLocation parent;
   private String name;
-  private static final byte[] EMPTY_BUFFER = new byte[0];
+  private static final byte[] EMPTY_BUFFER = new byte[ 0 ];
 
   /**
    * Creates a new dummy item for the given parent and having the given name.
@@ -46,26 +45,23 @@ public class DummyContentItem implements ContentItem, Serializable
    * @param parent the parent.
    * @param name   the name of the new item.
    */
-  public DummyContentItem(final ContentLocation parent, final String name)
-  {
-    if (parent == null)
-    {
-      throw new NullPointerException("Parent must not be null");
+  public DummyContentItem( final ContentLocation parent, final String name ) {
+    if ( parent == null ) {
+      throw new NullPointerException( "Parent must not be null" );
     }
     this.parent = parent;
     this.name = name;
   }
 
   /**
-   * Returns the mime type for the content entity. If the repository does not store mimetypes, this call usually
-   * uses the repositories MimeRegistry to resolve the mimetype.
+   * Returns the mime type for the content entity. If the repository does not store mimetypes, this call usually uses
+   * the repositories MimeRegistry to resolve the mimetype.
    *
    * @return the mime type.
    * @throws ContentIOException if an error occured.
    */
-  public String getMimeType() throws ContentIOException
-  {
-    return getRepository().getMimeRegistry().getMimeType(this);
+  public String getMimeType() throws ContentIOException {
+    return getRepository().getMimeRegistry().getMimeType( this );
   }
 
   /**
@@ -73,8 +69,7 @@ public class DummyContentItem implements ContentItem, Serializable
    *
    * @return the output stream.
    */
-  public OutputStream getOutputStream()
-  {
+  public OutputStream getOutputStream() {
     return new NullOutputStream();
   }
 
@@ -83,9 +78,8 @@ public class DummyContentItem implements ContentItem, Serializable
    *
    * @return the input stream.
    */
-  public InputStream getInputStream()
-  {
-    return new ByteArrayInputStream(EMPTY_BUFFER);
+  public InputStream getInputStream() {
+    return new ByteArrayInputStream( EMPTY_BUFFER );
   }
 
   /**
@@ -93,8 +87,7 @@ public class DummyContentItem implements ContentItem, Serializable
    *
    * @return true.
    */
-  public boolean isReadable()
-  {
+  public boolean isReadable() {
     return true;
   }
 
@@ -103,8 +96,7 @@ public class DummyContentItem implements ContentItem, Serializable
    *
    * @return true.
    */
-  public boolean isWriteable()
-  {
+  public boolean isWriteable() {
     return true;
   }
 
@@ -113,8 +105,7 @@ public class DummyContentItem implements ContentItem, Serializable
    *
    * @return the name, never null.
    */
-  public String getName()
-  {
+  public String getName() {
     return name;
   }
 
@@ -123,9 +114,8 @@ public class DummyContentItem implements ContentItem, Serializable
    *
    * @return the full pathname.
    */
-  public Object getContentId()
-  {
-    return RepositoryUtilities.buildName(this, "/");
+  public Object getContentId() {
+    return RepositoryUtilities.buildName( this, "/" );
   }
 
   /**
@@ -135,8 +125,7 @@ public class DummyContentItem implements ContentItem, Serializable
    * @param key    the name of the attribute.
    * @return the value or null, if the content-entity does not have a value for this attribute.
    */
-  public Object getAttribute(final String domain, final String key)
-  {
+  public Object getAttribute( final String domain, final String key ) {
     return null;
   }
 
@@ -148,8 +137,7 @@ public class DummyContentItem implements ContentItem, Serializable
    * @param value  the new attribute value.
    * @return false.
    */
-  public boolean setAttribute(final String domain, final String key, final Object value)
-  {
+  public boolean setAttribute( final String domain, final String key, final Object value ) {
     return false;
   }
 
@@ -158,8 +146,7 @@ public class DummyContentItem implements ContentItem, Serializable
    *
    * @return the parent.
    */
-  public ContentLocation getParent()
-  {
+  public ContentLocation getParent() {
     return parent;
   }
 
@@ -168,8 +155,7 @@ public class DummyContentItem implements ContentItem, Serializable
    *
    * @return the repository.
    */
-  public Repository getRepository()
-  {
+  public Repository getRepository() {
     return parent.getRepository();
   }
 
@@ -178,8 +164,7 @@ public class DummyContentItem implements ContentItem, Serializable
    *
    * @return always false.
    */
-  public boolean delete()
-  {
+  public boolean delete() {
     return false;
   }
 }

@@ -24,58 +24,48 @@ import org.w3c.css.sac.AttributeCondition;
  *
  * @author Thomas Morgner
  */
-public class IdCSSCondition implements AttributeCondition, CSSCondition
-{
+public class IdCSSCondition implements AttributeCondition, CSSCondition {
   private String value;
 
-  public IdCSSCondition(final String value)
-  {
+  public IdCSSCondition( final String value ) {
     this.value = value;
   }
 
   /**
    * An integer indicating the type of <code>Condition</code>.
    */
-  public short getConditionType()
-  {
+  public short getConditionType() {
     return SAC_ID_CONDITION;
   }
 
   /**
-   * Returns the <a href="http://www.w3.org/TR/REC-xml-names/#dt-NSName">namespace
-   * URI</a> of this attribute condition. <p><code>NULL</code> if : <ul>
-   * <li>this attribute condition can match any namespace. <li>this attribute is
-   * an id attribute. </ul>
+   * Returns the <a href="http://www.w3.org/TR/REC-xml-names/#dt-NSName">namespace URI</a> of this attribute condition.
+   * <p><code>NULL</code> if : <ul> <li>this attribute condition can match any namespace. <li>this attribute is an id
+   * attribute. </ul>
    */
-  public String getNamespaceURI()
-  {
+  public String getNamespaceURI() {
     return null;
   }
 
   /**
-   * Returns <code>true</code> if the attribute must have an explicit value in
-   * the original document, <code>false</code> otherwise.
+   * Returns <code>true</code> if the attribute must have an explicit value in the original document, <code>false</code>
+   * otherwise.
    */
-  public final boolean getSpecified()
-  {
+  public final boolean getSpecified() {
     return false;
   }
 
-  public String getValue()
-  {
+  public String getValue() {
     return value;
   }
 
   /**
-   * Returns the <a href="http://www.w3.org/TR/REC-xml-names/#NT-LocalPart">local
-   * part</a> of the <a href="http://www.w3.org/TR/REC-xml-names/#ns-qualnames">qualified
-   * name</a> of this attribute. <p><code>NULL</code> if : <ul> <li><p>this
-   * attribute condition can match any attribute. <li><p>this attribute is a
-   * class attribute. <li><p>this attribute is an id attribute. <li><p>this
-   * attribute is a pseudo-class attribute. </ul>
+   * Returns the <a href="http://www.w3.org/TR/REC-xml-names/#NT-LocalPart">local part</a> of the <a
+   * href="http://www.w3.org/TR/REC-xml-names/#ns-qualnames">qualified name</a> of this attribute. <p><code>NULL</code>
+   * if : <ul> <li><p>this attribute condition can match any attribute. <li><p>this attribute is a class attribute.
+   * <li><p>this attribute is an id attribute. <li><p>this attribute is a pseudo-class attribute. </ul>
    */
-  public String getLocalName()
-  {
+  public String getLocalName() {
     return null;
   }
 }

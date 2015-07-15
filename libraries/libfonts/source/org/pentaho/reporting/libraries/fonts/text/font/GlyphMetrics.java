@@ -18,48 +18,39 @@
 package org.pentaho.reporting.libraries.fonts.text.font;
 
 /**
- * A return value for glyph metrics. It is used as return value by the font
- * size producer.
+ * A return value for glyph metrics. It is used as return value by the font size producer.
  *
  * @author Thomas Morgner
  */
-public class GlyphMetrics
-{
+public class GlyphMetrics {
   private int width;
   private int height;
   private int baselinePosition;
 
-  public GlyphMetrics()
-  {
+  public GlyphMetrics() {
   }
 
-  public int getWidth()
-  {
+  public int getWidth() {
     return width;
   }
 
-  public void setWidth(final int width)
-  {
+  public void setWidth( final int width ) {
     this.width = width;
   }
 
-  public int getHeight()
-  {
+  public int getHeight() {
     return height;
   }
 
-  public void setHeight(final int height)
-  {
+  public void setHeight( final int height ) {
     this.height = height;
   }
 
-  public int getBaselinePosition()
-  {
+  public int getBaselinePosition() {
     return baselinePosition;
   }
 
-  public void setBaselinePosition(final int baselinePosition)
-  {
+  public void setBaselinePosition( final int baselinePosition ) {
     this.baselinePosition = baselinePosition;
   }
 }

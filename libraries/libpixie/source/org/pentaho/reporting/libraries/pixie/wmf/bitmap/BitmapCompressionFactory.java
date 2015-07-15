@@ -17,16 +17,12 @@
 
 package org.pentaho.reporting.libraries.pixie.wmf.bitmap;
 
-public class BitmapCompressionFactory
-{
-  private BitmapCompressionFactory()
-  {
+public class BitmapCompressionFactory {
+  private BitmapCompressionFactory() {
   }
 
-  public static BitmapCompression getHandler(final int comp)
-  {
-    switch (comp)
-    {
+  public static BitmapCompression getHandler( final int comp ) {
+    switch( comp ) {
       case BitmapHeader.BI_RGB:
         return new RGBCompression();
       case BitmapHeader.BI_RLE4:
@@ -36,7 +32,7 @@ public class BitmapCompressionFactory
       case BitmapHeader.BI_BITFIELDS:
         return new BitFieldsCompression();
       default:
-        throw new IllegalArgumentException("Unknown compression: " + comp);
+        throw new IllegalArgumentException( "Unknown compression: " + comp );
     }
   }
 }

@@ -30,35 +30,27 @@ import org.w3c.css.sac.LexicalUnit;
  *
  * @author Thomas Morgner
  */
-public class BorderSpacingReadHandler implements CSSValueReadHandler
-{
-  public BorderSpacingReadHandler()
-  {
+public class BorderSpacingReadHandler implements CSSValueReadHandler {
+  public BorderSpacingReadHandler() {
   }
 
-  public CSSValue createValue(StyleKey name, LexicalUnit value)
-  {
-    CSSNumericValue firstValue = CSSValueFactory.createLengthValue(value);
-    if (firstValue == null)
-    {
+  public CSSValue createValue( StyleKey name, LexicalUnit value ) {
+    CSSNumericValue firstValue = CSSValueFactory.createLengthValue( value );
+    if ( firstValue == null ) {
       return null;
     }
     value = value.getNextLexicalUnit();
     CSSNumericValue secondValue;
-    if (value == null)
-    {
+    if ( value == null ) {
       secondValue = firstValue;
-    }
-    else
-    {
-      secondValue = CSSValueFactory.createLengthValue(value);
-      if (secondValue == null)
-      {
+    } else {
+      secondValue = CSSValueFactory.createLengthValue( value );
+      if ( secondValue == null ) {
         return null;
       }
     }
 
-    return new CSSValuePair(firstValue, secondValue);
+    return new CSSValuePair( firstValue, secondValue );
   }
 
 }

@@ -22,20 +22,18 @@ package org.pentaho.reporting.libraries.fonts.registry;
  *
  * @author Thomas Morgner
  */
-public class DefaultFontContext implements FontContext
-{
+public class DefaultFontContext implements FontContext {
   private double fontSize;
   private boolean antiAliased;
   private boolean fractionalMetrics;
   private boolean embedded;
   private String encoding;
 
-  public DefaultFontContext(final double fontSize,
-                            final boolean antiAliased,
-                            final boolean fractionalMetrics,
-                            final boolean embedded,
-                            final String encoding)
-  {
+  public DefaultFontContext( final double fontSize,
+                             final boolean antiAliased,
+                             final boolean fractionalMetrics,
+                             final boolean embedded,
+                             final String encoding ) {
     this.embedded = embedded;
     this.encoding = encoding;
     this.fontSize = fontSize;
@@ -44,46 +42,39 @@ public class DefaultFontContext implements FontContext
   }
 
   /**
-   * This is controlled by the output target and the stylesheet. If the output
-   * target does not support aliasing, it makes no sense to enable it and all
-   * such requests are ignored.
+   * This is controlled by the output target and the stylesheet. If the output target does not support aliasing, it
+   * makes no sense to enable it and all such requests are ignored.
    *
    * @return
    */
-  public boolean isAntiAliased()
-  {
+  public boolean isAntiAliased() {
     return antiAliased;
   }
 
   /**
-   * This is defined by the output target. This is not controlled by the
-   * stylesheet.
+   * This is defined by the output target. This is not controlled by the stylesheet.
    *
    * @return
    */
-  public boolean isFractionalMetrics()
-  {
+  public boolean isFractionalMetrics() {
     return fractionalMetrics;
   }
 
   /**
-   * The requested font size. A font may have a fractional font size (ie. 8.5
-   * point). The font size may be influenced by the output target.
+   * The requested font size. A font may have a fractional font size (ie. 8.5 point). The font size may be influenced by
+   * the output target.
    *
    * @return the font size.
    */
-  public double getFontSize()
-  {
+  public double getFontSize() {
     return fontSize;
   }
 
-  public boolean isEmbedded()
-  {
+  public boolean isEmbedded() {
     return embedded;
   }
 
-  public String getEncoding()
-  {
+  public String getEncoding() {
     return encoding;
   }
 }

@@ -17,31 +17,25 @@
 
 package org.pentaho.reporting.libraries.designtime.swing.bulk;
 
-import javax.swing.DefaultListModel;
+import javax.swing.*;
 
-public class DefaultBulkListModel extends DefaultListModel implements BulkDataProvider
-{
-  public DefaultBulkListModel()
-  {
+public class DefaultBulkListModel extends DefaultListModel implements BulkDataProvider {
+  public DefaultBulkListModel() {
   }
 
-  public int getBulkDataSize()
-  {
+  public int getBulkDataSize() {
     return getSize();
   }
 
-  public Object[] getBulkData()
-  {
+  public Object[] getBulkData() {
     return toArray();
   }
 
-  public void setBulkData(final Object[] data)
-  {
+  public void setBulkData( final Object[] data ) {
     clear();
-    for (int i = 0; i < data.length; i++)
-    {
-      final Object o = data[i];
-      addElement(o);
+    for ( int i = 0; i < data.length; i++ ) {
+      final Object o = data[ i ];
+      addElement( o );
     }
   }
 }

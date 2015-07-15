@@ -25,11 +25,9 @@ import org.pentaho.reporting.libraries.css.parser.stylehandler.AbstractCompoundV
  *
  * @author Thomas Morgner
  */
-public class LineGridReadHandler extends AbstractCompoundValueReadHandler
-{
-  public LineGridReadHandler()
-  {
-    addHandler(TextStyleKeys.LINE_GRID_MODE, new LineGridModeReadHandler());
-    addHandler(TextStyleKeys.LINE_GRID_PROGRESSION, new LineGridProgressionReadHandler());
+public class LineGridReadHandler extends AbstractCompoundValueReadHandler {
+  public LineGridReadHandler() {
+    addHandler( TextStyleKeys.LINE_GRID_MODE, new LineGridModeReadHandler() );
+    addHandler( TextStyleKeys.LINE_GRID_PROGRESSION, new LineGridProgressionReadHandler() );
   }
 }

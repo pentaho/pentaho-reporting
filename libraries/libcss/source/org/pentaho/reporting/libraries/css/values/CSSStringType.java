@@ -22,18 +22,15 @@ package org.pentaho.reporting.libraries.css.values;
  *
  * @author Thomas Morgner
  */
-public class CSSStringType extends CSSType
-{
-  public static final CSSStringType STRING = new CSSStringType("STRING");
-  public static final CSSStringType URI = new CSSStringType("URI");
+public class CSSStringType extends CSSType {
+  public static final CSSStringType STRING = new CSSStringType( "STRING" );
+  public static final CSSStringType URI = new CSSStringType( "URI" );
 
-  private CSSStringType(String name)
-  {
-    super(name);
+  private CSSStringType( String name ) {
+    super( name );
   }
 
-  public boolean equals(Object obj)
-  {
-    return (obj instanceof CSSStringType && super.equals(obj));
+  public boolean equals( Object obj ) {
+    return ( obj instanceof CSSStringType && super.equals( obj ) );
   }
 }

@@ -17,36 +17,31 @@
 
 package org.pentaho.reporting.libraries.fonts.registry;
 
+import org.pentaho.reporting.libraries.fonts.cache.FontCache;
+
 import java.io.File;
 import java.io.FileFilter;
 import java.io.IOException;
-
-import org.pentaho.reporting.libraries.fonts.cache.FontCache;
 
 /**
  * A dummy implementation for test purposes
  *
  * @author Andrey Khayrutdinov
  */
-public class DummyFontFileRegistry extends AbstractFontFileRegistry
-{
-  protected FileFilter getFileFilter()
-  {
+public class DummyFontFileRegistry extends AbstractFontFileRegistry {
+  protected FileFilter getFileFilter() {
     return null;
   }
 
-  protected boolean addFont(final File font, final String encoding) throws IOException
-  {
+  protected boolean addFont( final File font, final String encoding ) throws IOException {
     return false;
   }
 
-  public FontCache getSecondLevelCache()
-  {
+  public FontCache getSecondLevelCache() {
     return null;
   }
 
-  public FontMetricsFactory createMetricsFactory()
-  {
+  public FontMetricsFactory createMetricsFactory() {
     return null;
   }
 }

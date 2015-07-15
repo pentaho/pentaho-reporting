@@ -24,43 +24,36 @@ import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
  *
  * @author Thomas Morgner
  */
-public class CSSCounterFunction implements CSSValue
-{
+public class CSSCounterFunction implements CSSValue {
   private String identifier;
   private String listStyle;
   private String separator;
 
-  public CSSCounterFunction(final String identifier,
-                            final String listStyle,
-                            final String separator)
-  {
+  public CSSCounterFunction( final String identifier,
+                             final String listStyle,
+                             final String separator ) {
     this.identifier = identifier;
     this.listStyle = listStyle;
     this.separator = separator;
   }
 
-  public String getIdentifier()
-  {
+  public String getIdentifier() {
     return identifier;
   }
 
-  public String getListStyle()
-  {
+  public String getListStyle() {
     return listStyle;
   }
 
-  public String getSeparator()
-  {
+  public String getSeparator() {
     return separator;
   }
 
-  public String getCSSText()
-  {
+  public String getCSSText() {
     return "counter(" + identifier + ", \"" + separator + "\", " + listStyle + ")";
   }
 
-  public String toString()
-  {
+  public String toString() {
     return getCSSText();
   }
 
@@ -69,23 +62,18 @@ public class CSSCounterFunction implements CSSValue
    *
    * @return <code>true</code> if the supplied object is equivalent to this object, <code>false</code> otherwise
    */
-  public boolean equals(Object obj)
-  {
-    if (obj instanceof CSSCounterFunction)
-    {
+  public boolean equals( Object obj ) {
+    if ( obj instanceof CSSCounterFunction ) {
       CSSCounterFunction that = (CSSCounterFunction) obj;
-      return (ObjectUtilities.equal(this.identifier, that.identifier)
-          && ObjectUtilities.equal(this.listStyle, that.listStyle)
-          && ObjectUtilities.equal(this.separator, that.separator));
-    }
-    else
-    {
+      return ( ObjectUtilities.equal( this.identifier, that.identifier )
+        && ObjectUtilities.equal( this.listStyle, that.listStyle )
+        && ObjectUtilities.equal( this.separator, that.separator ) );
+    } else {
       return false;
     }
   }
 
-  public CSSType getType()
-  {
+  public CSSType getType() {
     return CSSGenericType.GENERIC_TYPE;
   }
 }

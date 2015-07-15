@@ -26,47 +26,38 @@ import org.pentaho.reporting.libraries.css.values.CSSValue;
  *
  * @author Thomas Morgner
  */
-public class CSSStyleRule extends CSSDeclarationRule
-{
+public class CSSStyleRule extends CSSDeclarationRule {
   private CSSSelector selector;
 
-  public CSSStyleRule(final StyleSheet parentStyle,
-                      final StyleRule parentRule)
-  {
-    super(parentStyle, parentRule);
+  public CSSStyleRule( final StyleSheet parentStyle,
+                       final StyleRule parentRule ) {
+    super( parentStyle, parentRule );
   }
 
-  public CSSSelector getSelector()
-  {
+  public CSSSelector getSelector() {
     return selector;
   }
 
-  public void setSelector(final CSSSelector selector)
-  {
-    if (isReadOnly())
-    {
+  public void setSelector( final CSSSelector selector ) {
+    if ( isReadOnly() ) {
       throw new UnmodifiableStyleSheetException();
     }
     this.selector = selector;
   }
 
-  public void merge(final CSSStyleRule elementRule)
-  {
-    if (elementRule.isEmpty())
-    {
+  public void merge( final CSSStyleRule elementRule ) {
+    if ( elementRule.isEmpty() ) {
       return;
     }
 
     final boolean[] importantFlags = elementRule.getImportantValues();
     final CSSValue[] values = elementRule.getStyleValues();
     final StyleKey[] keys = elementRule.getPropertyKeysAsArray();
-    for (int i = 0; i < values.length; i++)
-    {
-      final CSSValue cssValue = values[i];
-      if (cssValue != null)
-      {
-        final StyleKey propertyName = keys[i];
-        setPropertyValue(propertyName, cssValue, importantFlags[i] && isImportant(propertyName));
+    for ( int i = 0; i < values.length; i++ ) {
+      final CSSValue cssValue = values[ i ];
+      if ( cssValue != null ) {
+        final StyleKey propertyName = keys[ i ];
+        setPropertyValue( propertyName, cssValue, importantFlags[ i ] && isImportant( propertyName ) );
       }
     }
   }

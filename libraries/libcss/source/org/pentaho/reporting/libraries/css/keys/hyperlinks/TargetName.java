@@ -24,20 +24,18 @@ import org.pentaho.reporting.libraries.css.values.CSSConstant;
  *
  * @author Thomas Morgner
  */
-public class TargetName
-{
+public class TargetName {
   public static final CSSConstant CURRENT =
-      new CSSConstant("current");
+    new CSSConstant( "current" );
   public static final CSSConstant ROOT =
-      new CSSConstant("root");
+    new CSSConstant( "root" );
   public static final CSSConstant PARENT =
-      new CSSConstant("parent");
+    new CSSConstant( "parent" );
   public static final CSSConstant NEW =
-      new CSSConstant("new");
+    new CSSConstant( "new" );
   public static final CSSConstant MODAL =
-      new CSSConstant("modal");
+    new CSSConstant( "modal" );
 
-  private TargetName()
-  {
+  private TargetName() {
   }
 }

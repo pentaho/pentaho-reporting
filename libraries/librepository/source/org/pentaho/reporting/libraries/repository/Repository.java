@@ -18,13 +18,12 @@
 package org.pentaho.reporting.libraries.repository;
 
 /**
- * A repository represents a abstract view on a filesystem. It always has a single root-entry and grants access
- * to a repository-specific mime-registry.
+ * A repository represents a abstract view on a filesystem. It always has a single root-entry and grants access to a
+ * repository-specific mime-registry.
  *
  * @author Thomas Morgner
  */
-public interface Repository
-{
+public interface Repository {
   /**
    * Returns the repositories root directory entry.
    *

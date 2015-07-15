@@ -23,37 +23,30 @@ import org.pentaho.reporting.libraries.formula.typing.Type;
 import org.pentaho.reporting.libraries.formula.typing.coretypes.ErrorType;
 
 
-public class NaFunctionDescription extends AbstractFunctionDescription
-{
+public class NaFunctionDescription extends AbstractFunctionDescription {
   private static final long serialVersionUID = -7921200887236616400L;
 
-  public NaFunctionDescription()
-  {
-    super("NA", "org.pentaho.reporting.libraries.formula.function.information.Na-Function");
+  public NaFunctionDescription() {
+    super( "NA", "org.pentaho.reporting.libraries.formula.function.information.Na-Function" );
   }
 
-  public FunctionCategory getCategory()
-  {
+  public FunctionCategory getCategory() {
     return InformationFunctionCategory.CATEGORY;
   }
 
-  public int getParameterCount()
-  {
+  public int getParameterCount() {
     return 0;
   }
 
-  public Type getParameterType(final int position)
-  {
+  public Type getParameterType( final int position ) {
     return null;
   }
 
-  public Type getValueType()
-  {
+  public Type getValueType() {
     return ErrorType.TYPE;
   }
 
-  public boolean isParameterMandatory(final int position)
-  {
+  public boolean isParameterMandatory( final int position ) {
     return false;
   }
 

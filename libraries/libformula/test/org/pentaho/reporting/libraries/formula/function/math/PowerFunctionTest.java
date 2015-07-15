@@ -17,29 +17,26 @@
 
 package org.pentaho.reporting.libraries.formula.function.math;
 
-import java.math.BigDecimal;
-
-import org.pentaho.reporting.libraries.formula.FormulaTestBase;
 import org.pentaho.reporting.libraries.formula.FormulaContext;
+import org.pentaho.reporting.libraries.formula.FormulaTestBase;
+
+import java.math.BigDecimal;
 
 /**
  * @author Cedric Pronzato
  */
-public class PowerFunctionTest extends FormulaTestBase
-{
+public class PowerFunctionTest extends FormulaTestBase {
   private FormulaContext context;
 
-  public void testDefault() throws Exception
-  {
+  public void testDefault() throws Exception {
     runDefaultTest();
   }
 
-  public Object[][] createDataTest()
-  {
+  public Object[][] createDataTest() {
     return new Object[][]
-        {
-            {"POWER(10;0)", new BigDecimal(1)},
-            {"POWER(2;8)", new BigDecimal(256)},
-        };
+      {
+        { "POWER(10;0)", new BigDecimal( 1 ) },
+        { "POWER(2;8)", new BigDecimal( 256 ) },
+      };
   }
 }

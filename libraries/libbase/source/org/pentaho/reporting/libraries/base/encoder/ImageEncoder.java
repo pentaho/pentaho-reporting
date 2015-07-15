@@ -17,21 +17,20 @@
 
 package org.pentaho.reporting.libraries.base.encoder;
 
-import java.awt.Image;
+import java.awt.*;
 import java.io.IOException;
 import java.io.OutputStream;
 
 /**
- * A image encoder. The encoder's encodeImage method must be synchronized in some way, so that
- * multiple calls from multiple threads do not interact with each other.
+ * A image encoder. The encoder's encodeImage method must be synchronized in some way, so that multiple calls from
+ * multiple threads do not interact with each other.
  *
  * @author Thomas Morgner
  */
-public interface ImageEncoder
-{
+public interface ImageEncoder {
   /**
-   * Encodes the given image using the given encoder-specific quality and alpha-channel settings and writes
-   * the encoded image-data to the given stream.
+   * Encodes the given image using the given encoder-specific quality and alpha-channel settings and writes the encoded
+   * image-data to the given stream.
    *
    * @param image        the image to be encoded.
    * @param outputStream the output stream, where to write the image data to.
@@ -40,10 +39,10 @@ public interface ImageEncoder
    * @throws IOException                 if there was an IO error while generating or writing the image data.
    * @throws UnsupportedEncoderException if the encoder is not supported.
    */
-  public void encodeImage(final Image image,
-                          final OutputStream outputStream,
-                          final float quality,
-                          final boolean encodeAlpha) throws IOException, UnsupportedEncoderException;
+  public void encodeImage( final Image image,
+                           final OutputStream outputStream,
+                           final float quality,
+                           final boolean encodeAlpha ) throws IOException, UnsupportedEncoderException;
 
   /**
    * Returns the mime-type of the encoded data.

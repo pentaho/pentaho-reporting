@@ -24,16 +24,14 @@ import org.pentaho.reporting.libraries.css.values.CSSConstant;
  *
  * @author Thomas Morgner
  */
-public class BackgroundAttachment
-{
+public class BackgroundAttachment {
   public static final CSSConstant SCROLL = new CSSConstant(
-      "scroll");
+    "scroll" );
   public static final CSSConstant FIXED = new CSSConstant(
-      "fixed");
+    "fixed" );
   public static final CSSConstant LOCAL = new CSSConstant(
-      "local");
+    "local" );
 
-  private BackgroundAttachment()
-  {
+  private BackgroundAttachment() {
   }
 }

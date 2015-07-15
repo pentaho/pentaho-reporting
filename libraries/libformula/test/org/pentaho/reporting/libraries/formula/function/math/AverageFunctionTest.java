@@ -17,25 +17,22 @@
 
 package org.pentaho.reporting.libraries.formula.function.math;
 
-import java.math.BigDecimal;
-
 import org.pentaho.reporting.libraries.formula.FormulaTestBase;
+
+import java.math.BigDecimal;
 
 /**
  * @author Cedric Pronzato
  */
-public class AverageFunctionTest extends FormulaTestBase
-{
-  public void testDefault() throws Exception
-  {
+public class AverageFunctionTest extends FormulaTestBase {
+  public void testDefault() throws Exception {
     runDefaultTest();
   }
 
-  public Object[][] createDataTest()
-  {
+  public Object[][] createDataTest() {
     return new Object[][]
-        {
-            {"AVERAGE(2;4)", new BigDecimal(3)},
-        };
+      {
+        { "AVERAGE(2;4)", new BigDecimal( 3 ) },
+      };
   }
 }

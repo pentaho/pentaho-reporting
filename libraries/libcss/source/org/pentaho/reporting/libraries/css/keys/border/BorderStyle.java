@@ -24,23 +24,21 @@ import org.pentaho.reporting.libraries.css.values.CSSConstant;
  *
  * @author Thomas Morgner
  */
-public class BorderStyle
-{
-  public static final CSSConstant NONE = new CSSConstant("none");
-  public static final CSSConstant HIDDEN = new CSSConstant("hidden");
-  public static final CSSConstant DOTTED = new CSSConstant("dotted");
-  public static final CSSConstant DASHED = new CSSConstant("dashed");
-  public static final CSSConstant SOLID = new CSSConstant("solid");
-  public static final CSSConstant DOUBLE = new CSSConstant("double");
-  public static final CSSConstant DOT_DASH = new CSSConstant("dot-dash");
-  public static final CSSConstant DOT_DOT_DASH = new CSSConstant("dot-dot-dash");
-  public static final CSSConstant WAVE = new CSSConstant("wave");
-  public static final CSSConstant GROOVE = new CSSConstant("groove");
-  public static final CSSConstant RIDGE = new CSSConstant("ridge");
-  public static final CSSConstant INSET = new CSSConstant("inset");
-  public static final CSSConstant OUTSET = new CSSConstant("outset");
+public class BorderStyle {
+  public static final CSSConstant NONE = new CSSConstant( "none" );
+  public static final CSSConstant HIDDEN = new CSSConstant( "hidden" );
+  public static final CSSConstant DOTTED = new CSSConstant( "dotted" );
+  public static final CSSConstant DASHED = new CSSConstant( "dashed" );
+  public static final CSSConstant SOLID = new CSSConstant( "solid" );
+  public static final CSSConstant DOUBLE = new CSSConstant( "double" );
+  public static final CSSConstant DOT_DASH = new CSSConstant( "dot-dash" );
+  public static final CSSConstant DOT_DOT_DASH = new CSSConstant( "dot-dot-dash" );
+  public static final CSSConstant WAVE = new CSSConstant( "wave" );
+  public static final CSSConstant GROOVE = new CSSConstant( "groove" );
+  public static final CSSConstant RIDGE = new CSSConstant( "ridge" );
+  public static final CSSConstant INSET = new CSSConstant( "inset" );
+  public static final CSSConstant OUTSET = new CSSConstant( "outset" );
 
-  private BorderStyle()
-  {
+  private BorderStyle() {
   }
 }

@@ -22,13 +22,11 @@ package org.pentaho.reporting.tools.configeditor.model;
  *
  * @author Thomas Morgner
  */
-public class ConfigTreeModelException extends Exception
-{
+public class ConfigTreeModelException extends Exception {
   /**
    * Creates a ConfigTreeModelException with no message and no parent.
    */
-  public ConfigTreeModelException()
-  {
+  public ConfigTreeModelException() {
   }
 
   /**
@@ -37,9 +35,8 @@ public class ConfigTreeModelException extends Exception
    * @param message the exception message.
    * @param ex      the parent exception.
    */
-  public ConfigTreeModelException(final String message, final Exception ex)
-  {
-    super(message, ex);
+  public ConfigTreeModelException( final String message, final Exception ex ) {
+    super( message, ex );
   }
 
   /**
@@ -47,8 +44,7 @@ public class ConfigTreeModelException extends Exception
    *
    * @param message the exception message.
    */
-  public ConfigTreeModelException(final String message)
-  {
-    super(message);
+  public ConfigTreeModelException( final String message ) {
+    super( message );
   }
 }

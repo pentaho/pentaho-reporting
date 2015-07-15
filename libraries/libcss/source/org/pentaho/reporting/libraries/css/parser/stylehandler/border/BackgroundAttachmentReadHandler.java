@@ -25,14 +25,12 @@ import org.pentaho.reporting.libraries.css.parser.stylehandler.ListOfConstantsRe
  *
  * @author Thomas Morgner
  */
-public class BackgroundAttachmentReadHandler extends ListOfConstantsReadHandler
-{
-  public BackgroundAttachmentReadHandler()
-  {
-    super(false);
-    addValue(BackgroundAttachment.FIXED);
-    addValue(BackgroundAttachment.LOCAL);
-    addValue(BackgroundAttachment.SCROLL);
+public class BackgroundAttachmentReadHandler extends ListOfConstantsReadHandler {
+  public BackgroundAttachmentReadHandler() {
+    super( false );
+    addValue( BackgroundAttachment.FIXED );
+    addValue( BackgroundAttachment.LOCAL );
+    addValue( BackgroundAttachment.SCROLL );
   }
 
 }

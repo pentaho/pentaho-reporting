@@ -25,15 +25,13 @@ import org.pentaho.reporting.libraries.formula.typing.Type;
  *
  * @author Thomas Morgner
  */
-public final class TextType extends DefaultType
-{
+public final class TextType extends DefaultType {
   public static final TextType TYPE = new TextType();
   private static final long serialVersionUID = 6512540465045391761L;
 
-  private TextType()
-  {
-    addFlag(Type.TEXT_TYPE);
-    addFlag(Type.SCALAR_TYPE);
+  private TextType() {
+    addFlag( Type.TEXT_TYPE );
+    addFlag( Type.SCALAR_TYPE );
     lock();
   }
 }

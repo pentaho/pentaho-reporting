@@ -25,42 +25,34 @@ import org.pentaho.reporting.libraries.formula.typing.coretypes.LogicalType;
 
 /**
  * Describes IsRefFunction function.
- * @see IsRefFunction
  *
  * @author Cedric Pronzato
- *
+ * @see IsRefFunction
  */
-public class IsRefFunctionDescription extends AbstractFunctionDescription
-{
+public class IsRefFunctionDescription extends AbstractFunctionDescription {
   private static final long serialVersionUID = -2610558047437179067L;
 
-  public IsRefFunctionDescription()
-  {
-    super("ISREF", "org.pentaho.reporting.libraries.formula.function.information.IsRef-Function");
+  public IsRefFunctionDescription() {
+    super( "ISREF", "org.pentaho.reporting.libraries.formula.function.information.IsRef-Function" );
   }
 
-  public FunctionCategory getCategory()
-  {
+  public FunctionCategory getCategory() {
     return InformationFunctionCategory.CATEGORY;
   }
 
-  public int getParameterCount()
-  {
+  public int getParameterCount() {
     return 1;
   }
 
-  public Type getParameterType(final int position)
-  {
+  public Type getParameterType( final int position ) {
     return AnyType.TYPE;
   }
 
-  public Type getValueType()
-  {
+  public Type getValueType() {
     return LogicalType.TYPE;
   }
 
-  public boolean isParameterMandatory(final int position)
-  {
+  public boolean isParameterMandatory( final int position ) {
     return true;
   }
 

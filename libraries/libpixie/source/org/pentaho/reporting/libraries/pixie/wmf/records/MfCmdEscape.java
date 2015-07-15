@@ -22,19 +22,16 @@ import org.pentaho.reporting.libraries.pixie.wmf.MfType;
 import org.pentaho.reporting.libraries.pixie.wmf.WmfFile;
 
 /**
- * The layout of META_ESC is unknown, but it doesnt matter, as it has no effect on on
- * screen metafile display.
+ * The layout of META_ESC is unknown, but it doesnt matter, as it has no effect on on screen metafile display.
  * <p/>
- * This sends MCI-Informations to the device-driver. Java and all non-windows systems have
- * no use of Windows-Driver-Details at all.
+ * This sends MCI-Informations to the device-driver. Java and all non-windows systems have no use of
+ * Windows-Driver-Details at all.
  * <p/>
- * Wine just dumps the given data into the file. As we operate in a non native
- * environment, this record could never be implemented.
+ * Wine just dumps the given data into the file. As we operate in a non native environment, this record could never be
+ * implemented.
  */
-public class MfCmdEscape extends MfCmd
-{
-  public MfCmdEscape()
-  {
+public class MfCmdEscape extends MfCmd {
+  public MfCmdEscape() {
   }
 
   /**
@@ -42,14 +39,12 @@ public class MfCmdEscape extends MfCmd
    *
    * @param file the meta file.
    */
-  public void replay(final WmfFile file)
-  {
+  public void replay( final WmfFile file ) {
   }
 
-  public String toString()
-  {
+  public String toString() {
     final StringBuffer b = new StringBuffer();
-    b.append("[ESCAPE] is not used and will not be implemented");
+    b.append( "[ESCAPE] is not used and will not be implemented" );
     return b.toString();
   }
 
@@ -58,50 +53,43 @@ public class MfCmdEscape extends MfCmd
    *
    * @return a new instance of the command.
    */
-  public MfCmd getInstance()
-  {
+  public MfCmd getInstance() {
     return new MfCmdEscape();
   }
 
   /**
-   * Reads the command data from the given record and adjusts the internal parameters
-   * according to the data parsed.
+   * Reads the command data from the given record and adjusts the internal parameters according to the data parsed.
    * <p/>
-   * After the raw record was read from the datasource, the record is parsed by the
-   * concrete implementation.
+   * After the raw record was read from the datasource, the record is parsed by the concrete implementation.
    *
    * @param record the raw data that makes up the record.
    */
-  public void setRecord(final MfRecord record)
-  {
+  public void setRecord( final MfRecord record ) {
     // System.out.println("Escape is not implemented.");
   }
 
   /**
-   * Reads the function identifier. Every record type is identified by a function number
-   * corresponding to one of the Windows GDI functions used.
+   * Reads the function identifier. Every record type is identified by a function number corresponding to one of the
+   * Windows GDI functions used.
    *
    * @return the function identifier.
    */
-  public int getFunction()
-  {
+  public int getFunction() {
     return MfType.ESCAPE;
   }
 
   /**
-   * A callback function to inform the object, that the x scale has changed and the
-   * internal coordinate values have to be adjusted.
+   * A callback function to inform the object, that the x scale has changed and the internal coordinate values have to
+   * be adjusted.
    */
-  protected void scaleXChanged()
-  {
+  protected void scaleXChanged() {
   }
 
   /**
-   * A callback function to inform the object, that the y scale has changed and the
-   * internal coordinate values have to be adjusted.
+   * A callback function to inform the object, that the y scale has changed and the internal coordinate values have to
+   * be adjusted.
    */
-  protected void scaleYChanged()
-  {
+  protected void scaleYChanged() {
   }
 
   /**
@@ -109,8 +97,7 @@ public class MfCmdEscape extends MfCmd
    *
    * @return the created record.
    */
-  public MfRecord getRecord()
-  {
-    throw new UnsupportedOperationException("Native functions are not supported");
+  public MfRecord getRecord() {
+    throw new UnsupportedOperationException( "Native functions are not supported" );
   }
 }

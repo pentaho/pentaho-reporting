@@ -31,38 +31,32 @@ import org.w3c.css.sac.LexicalUnit;
  *
  * @author Thomas Morgner
  */
-public class FontSizeReadHandler extends OneOfConstantsReadHandler
-{
-  public FontSizeReadHandler()
-  {
-    this(false);
+public class FontSizeReadHandler extends OneOfConstantsReadHandler {
+  public FontSizeReadHandler() {
+    this( false );
   }
 
-  protected FontSizeReadHandler(final boolean autoAllowed)
-  {
-    super(autoAllowed);
-    addValue(FontSizeConstant.LARGE);
-    addValue(FontSizeConstant.MEDIUM);
-    addValue(FontSizeConstant.SMALL);
-    addValue(FontSizeConstant.X_LARGE);
-    addValue(FontSizeConstant.XX_LARGE);
-    addValue(FontSizeConstant.X_SMALL);
-    addValue(FontSizeConstant.XX_SMALL);
-    addValue(RelativeFontSize.LARGER);
-    addValue(RelativeFontSize.SMALLER);
+  protected FontSizeReadHandler( final boolean autoAllowed ) {
+    super( autoAllowed );
+    addValue( FontSizeConstant.LARGE );
+    addValue( FontSizeConstant.MEDIUM );
+    addValue( FontSizeConstant.SMALL );
+    addValue( FontSizeConstant.X_LARGE );
+    addValue( FontSizeConstant.XX_LARGE );
+    addValue( FontSizeConstant.X_SMALL );
+    addValue( FontSizeConstant.XX_SMALL );
+    addValue( RelativeFontSize.LARGER );
+    addValue( RelativeFontSize.SMALLER );
   }
 
-  protected CSSValue lookupValue(final LexicalUnit value)
-  {
-    if (value.getLexicalUnitType() == LexicalUnit.SAC_PERCENTAGE)
-    {
-      return CSSNumericValue.createValue(CSSNumericType.PERCENTAGE, value.getFloatValue());
+  protected CSSValue lookupValue( final LexicalUnit value ) {
+    if ( value.getLexicalUnitType() == LexicalUnit.SAC_PERCENTAGE ) {
+      return CSSNumericValue.createValue( CSSNumericType.PERCENTAGE, value.getFloatValue() );
     }
-    CSSValue constant = super.lookupValue(value);
-    if (constant != null)
-    {
+    CSSValue constant = super.lookupValue( value );
+    if ( constant != null ) {
       return constant;
     }
-    return CSSValueFactory.createLengthValue(value);
+    return CSSValueFactory.createLengthValue( value );
   }
 }

@@ -25,42 +25,34 @@ import org.pentaho.reporting.libraries.formula.typing.coretypes.LogicalType;
 
 /**
  * Describes IsTextFunction function.
- * @see IsTextFunction
  *
  * @author Cedric Pronzato
- *
+ * @see IsTextFunction
  */
-public class IsTextFunctionDescription extends AbstractFunctionDescription
-{
+public class IsTextFunctionDescription extends AbstractFunctionDescription {
   private static final long serialVersionUID = 7656355697192122385L;
 
-  public IsTextFunctionDescription()
-  {
-    super("ISTEXT", "org.pentaho.reporting.libraries.formula.function.information.IsText-Function");
+  public IsTextFunctionDescription() {
+    super( "ISTEXT", "org.pentaho.reporting.libraries.formula.function.information.IsText-Function" );
   }
 
-  public FunctionCategory getCategory()
-  {
+  public FunctionCategory getCategory() {
     return InformationFunctionCategory.CATEGORY;
   }
 
-  public int getParameterCount()
-  {
+  public int getParameterCount() {
     return 1;
   }
 
-  public Type getParameterType(final int position)
-  {
+  public Type getParameterType( final int position ) {
     return AnyType.TYPE;
   }
 
-  public Type getValueType()
-  {
+  public Type getValueType() {
     return LogicalType.TYPE;
   }
 
-  public boolean isParameterMandatory(final int position)
-  {
+  public boolean isParameterMandatory( final int position ) {
     return true;
   }
 

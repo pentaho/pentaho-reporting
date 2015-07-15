@@ -24,34 +24,28 @@ import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
  *
  * @author Thomas Morgner
  */
-public class CSSStringSetDefinition implements CSSValue
-{
+public class CSSStringSetDefinition implements CSSValue {
   private String identifier;
   private CSSValue value;
 
-  public CSSStringSetDefinition(final String identifier, final CSSValue value)
-  {
+  public CSSStringSetDefinition( final String identifier, final CSSValue value ) {
     this.identifier = identifier;
     this.value = value;
   }
 
-  public String getIdentifier()
-  {
+  public String getIdentifier() {
     return identifier;
   }
 
-  public CSSValue getValue()
-  {
+  public CSSValue getValue() {
     return value;
   }
 
-  public String getCSSText()
-  {
+  public String getCSSText() {
     return identifier + " " + value;
   }
 
-  public String toString()
-  {
+  public String toString() {
     return getCSSText();
   }
 
@@ -60,21 +54,17 @@ public class CSSStringSetDefinition implements CSSValue
    *
    * @return <code>true</code> if the supplied object is equivalent to this object, <code>false</code> otherwise
    */
-  public boolean equals(Object obj)
-  {
-    if (obj instanceof CSSStringSetDefinition)
-    {
+  public boolean equals( Object obj ) {
+    if ( obj instanceof CSSStringSetDefinition ) {
       CSSStringSetDefinition that = (CSSStringSetDefinition) obj;
-      return (ObjectUtilities.equal(this.identifier, that.identifier) && ObjectUtilities.equal(this.value, that.value));
-    }
-    else
-    {
+      return ( ObjectUtilities.equal( this.identifier, that.identifier ) && ObjectUtilities
+        .equal( this.value, that.value ) );
+    } else {
       return false;
     }
   }
 
-  public CSSType getType()
-  {
+  public CSSType getType() {
     return CSSGenericType.GENERIC_TYPE;
   }
 }

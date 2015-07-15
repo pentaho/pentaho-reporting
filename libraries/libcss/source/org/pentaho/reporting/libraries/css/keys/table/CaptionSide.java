@@ -24,12 +24,10 @@ import org.pentaho.reporting.libraries.css.values.CSSConstant;
  *
  * @author Thomas Morgner
  */
-public class CaptionSide
-{
-  public static final CSSConstant TOP = new CSSConstant("top");
-  public static final CSSConstant BOTTOM = new CSSConstant("bottom");
+public class CaptionSide {
+  public static final CSSConstant TOP = new CSSConstant( "top" );
+  public static final CSSConstant BOTTOM = new CSSConstant( "bottom" );
 
-  private CaptionSide()
-  {
+  private CaptionSide() {
   }
 }

@@ -24,14 +24,12 @@ import org.pentaho.reporting.libraries.css.values.CSSConstant;
  *
  * @author Thomas Morgner
  */
-public class ColumnWidthPolicy
-{
+public class ColumnWidthPolicy {
   public static final CSSConstant FLEXIBLE =
-      new CSSConstant("flexible");
+    new CSSConstant( "flexible" );
   public static final CSSConstant STRICT =
-      new CSSConstant("strict");
+    new CSSConstant( "strict" );
 
-  private ColumnWidthPolicy()
-  {
+  private ColumnWidthPolicy() {
   }
 }

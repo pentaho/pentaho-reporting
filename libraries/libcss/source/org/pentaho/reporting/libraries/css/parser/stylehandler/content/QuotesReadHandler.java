@@ -30,41 +30,32 @@ import org.w3c.css.sac.LexicalUnit;
  *
  * @author Thomas Morgner
  */
-public class QuotesReadHandler extends ListOfPairReadHandler
-{
-  public QuotesReadHandler()
-  {
+public class QuotesReadHandler extends ListOfPairReadHandler {
+  public QuotesReadHandler() {
   }
 
-  protected CSSValue parseFirstPosition(final LexicalUnit value)
-  {
-    if (value.getLexicalUnitType() == LexicalUnit.SAC_STRING_VALUE)
-    {
-      return new CSSStringValue(CSSStringType.STRING, value.getStringValue());
+  protected CSSValue parseFirstPosition( final LexicalUnit value ) {
+    if ( value.getLexicalUnitType() == LexicalUnit.SAC_STRING_VALUE ) {
+      return new CSSStringValue( CSSStringType.STRING, value.getStringValue() );
     }
     return null;
   }
 
-  protected CSSValue parseSecondPosition(final LexicalUnit value,
-                                         final CSSValue first)
-  {
-    if (value.getLexicalUnitType() == LexicalUnit.SAC_STRING_VALUE)
-    {
-      return new CSSStringValue(CSSStringType.STRING, value.getStringValue());
+  protected CSSValue parseSecondPosition( final LexicalUnit value,
+                                          final CSSValue first ) {
+    if ( value.getLexicalUnitType() == LexicalUnit.SAC_STRING_VALUE ) {
+      return new CSSStringValue( CSSStringType.STRING, value.getStringValue() );
     }
     return null;
   }
 
-  public CSSValue createValue(StyleKey name, LexicalUnit value)
-  {
-    if (value.getLexicalUnitType() == LexicalUnit.SAC_IDENT)
-    {
-      if (value.getStringValue().equalsIgnoreCase("none"))
-      {
-        return new CSSConstant("none");
+  public CSSValue createValue( StyleKey name, LexicalUnit value ) {
+    if ( value.getLexicalUnitType() == LexicalUnit.SAC_IDENT ) {
+      if ( value.getStringValue().equalsIgnoreCase( "none" ) ) {
+        return new CSSConstant( "none" );
       }
       return null;
     }
-    return super.createValue(name, value);
+    return super.createValue( name, value );
   }
 }

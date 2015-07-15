@@ -17,23 +17,19 @@
 
 package org.pentaho.reporting.libraries.xmlns.writer;
 
-import org.pentaho.reporting.libraries.base.config.DefaultConfiguration;
 import junit.framework.TestCase;
+import org.pentaho.reporting.libraries.base.config.DefaultConfiguration;
 
-public class DefaultTagDescriptionTest extends TestCase
-{
-  public DefaultTagDescriptionTest()
-  {
+public class DefaultTagDescriptionTest extends TestCase {
+  public DefaultTagDescriptionTest() {
   }
 
-  public DefaultTagDescriptionTest(final String s)
-  {
-    super(s);
+  public DefaultTagDescriptionTest( final String s ) {
+    super( s );
   }
 
-  public void testSillyTag()
-  {
-    final DefaultTagDescription dt = new DefaultTagDescription(new DefaultConfiguration(), "silly-prefix");
-    assertTrue(dt.hasCData("basas", "adsda"));
+  public void testSillyTag() {
+    final DefaultTagDescription dt = new DefaultTagDescription( new DefaultConfiguration(), "silly-prefix" );
+    assertTrue( dt.hasCData( "basas", "adsda" ) );
   }
 }

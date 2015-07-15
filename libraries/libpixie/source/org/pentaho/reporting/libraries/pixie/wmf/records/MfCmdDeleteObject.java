@@ -22,15 +22,12 @@ import org.pentaho.reporting.libraries.pixie.wmf.MfType;
 import org.pentaho.reporting.libraries.pixie.wmf.WmfFile;
 
 /**
- * Removes an object from the object list. An wmf-object is either a Pen, a palette, a
- * brush, a font or a region.
+ * Removes an object from the object list. An wmf-object is either a Pen, a palette, a brush, a font or a region.
  */
-public class MfCmdDeleteObject extends MfCmd
-{
+public class MfCmdDeleteObject extends MfCmd {
   private int objectId;
 
-  public MfCmdDeleteObject()
-  {
+  public MfCmdDeleteObject() {
   }
 
   /**
@@ -38,9 +35,8 @@ public class MfCmdDeleteObject extends MfCmd
    *
    * @param file the meta file.
    */
-  public void replay(final WmfFile file)
-  {
-    file.deleteObject(objectId);
+  public void replay( final WmfFile file ) {
+    file.deleteObject( objectId );
   }
 
   /**
@@ -48,32 +44,27 @@ public class MfCmdDeleteObject extends MfCmd
    *
    * @return a new instance of the command.
    */
-  public MfCmd getInstance()
-  {
+  public MfCmd getInstance() {
     return new MfCmdDeleteObject();
   }
 
-  public String toString()
-  {
+  public String toString() {
     final StringBuffer b = new StringBuffer();
-    b.append("[DELETE_OBJECT] object=");
-    b.append(getObjectId());
+    b.append( "[DELETE_OBJECT] object=" );
+    b.append( getObjectId() );
     return b.toString();
   }
 
   /**
-   * Reads the command data from the given record and adjusts the internal parameters
-   * according to the data parsed.
+   * Reads the command data from the given record and adjusts the internal parameters according to the data parsed.
    * <p/>
-   * After the raw record was read from the datasource, the record is parsed by the
-   * concrete implementation.
+   * After the raw record was read from the datasource, the record is parsed by the concrete implementation.
    *
    * @param record the raw data that makes up the record.
    */
-  public void setRecord(final MfRecord record)
-  {
-    final int id = record.getParam(0);
-    setObjectId(id);
+  public void setRecord( final MfRecord record ) {
+    final int id = record.getParam( 0 );
+    setObjectId( id );
   }
 
   /**
@@ -81,47 +72,41 @@ public class MfCmdDeleteObject extends MfCmd
    *
    * @return the created record.
    */
-  public MfRecord getRecord()
-  {
-    final MfRecord record = new MfRecord(1);
-    record.setParam(0, getObjectId());
+  public MfRecord getRecord() {
+    final MfRecord record = new MfRecord( 1 );
+    record.setParam( 0, getObjectId() );
     return record;
   }
 
   /**
-   * Reads the function identifier. Every record type is identified by a function number
-   * corresponding to one of the Windows GDI functions used.
+   * Reads the function identifier. Every record type is identified by a function number corresponding to one of the
+   * Windows GDI functions used.
    *
    * @return the function identifier.
    */
-  public int getFunction()
-  {
+  public int getFunction() {
     return MfType.DELETE_OBJECT;
   }
 
-  public int getObjectId()
-  {
+  public int getObjectId() {
     return objectId;
   }
 
-  public void setObjectId(final int id)
-  {
+  public void setObjectId( final int id ) {
     this.objectId = id;
   }
 
   /**
-   * A callback function to inform the object, that the x scale has changed and the
-   * internal coordinate values have to be adjusted.
+   * A callback function to inform the object, that the x scale has changed and the internal coordinate values have to
+   * be adjusted.
    */
-  protected void scaleXChanged()
-  {
+  protected void scaleXChanged() {
   }
 
   /**
-   * A callback function to inform the object, that the y scale has changed and the
-   * internal coordinate values have to be adjusted.
+   * A callback function to inform the object, that the y scale has changed and the internal coordinate values have to
+   * be adjusted.
    */
-  protected void scaleYChanged()
-  {
+  protected void scaleYChanged() {
   }
 }

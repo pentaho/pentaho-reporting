@@ -25,13 +25,11 @@ import org.pentaho.reporting.libraries.css.parser.stylehandler.OneOfConstantsRea
  *
  * @author Thomas Morgner
  */
-public class LineGridModeReadHandler extends OneOfConstantsReadHandler
-{
-  public LineGridModeReadHandler()
-  {
-    super(false);
-    addValue(LineGridMode.ALL);
-    addValue(LineGridMode.IDEOGRAPH);
-    addValue(LineGridMode.NONE);
+public class LineGridModeReadHandler extends OneOfConstantsReadHandler {
+  public LineGridModeReadHandler() {
+    super( false );
+    addValue( LineGridMode.ALL );
+    addValue( LineGridMode.IDEOGRAPH );
+    addValue( LineGridMode.NONE );
   }
 }

@@ -24,12 +24,10 @@ import org.pentaho.reporting.libraries.css.values.CSSConstant;
  *
  * @author Thomas Morgner
  */
-public class PunctuationTrim
-{
-  public static final CSSConstant NONE = new CSSConstant("none");
-  public static final CSSConstant START = new CSSConstant("start");
+public class PunctuationTrim {
+  public static final CSSConstant NONE = new CSSConstant( "none" );
+  public static final CSSConstant START = new CSSConstant( "start" );
 
-  private PunctuationTrim()
-  {
+  private PunctuationTrim() {
   }
 }

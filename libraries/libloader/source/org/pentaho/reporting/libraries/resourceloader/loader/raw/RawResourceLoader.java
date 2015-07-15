@@ -17,12 +17,6 @@
 
 package org.pentaho.reporting.libraries.resourceloader.loader.raw;
 
-import java.net.URL;
-import java.util.HashMap;
-import java.util.Map;
-
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.pentaho.reporting.libraries.resourceloader.ResourceData;
 import org.pentaho.reporting.libraries.resourceloader.ResourceException;
 import org.pentaho.reporting.libraries.resourceloader.ResourceKey;
@@ -32,30 +26,29 @@ import org.pentaho.reporting.libraries.resourceloader.ResourceKeyUtils;
 import org.pentaho.reporting.libraries.resourceloader.ResourceLoader;
 import org.pentaho.reporting.libraries.resourceloader.ResourceLoadingException;
 
+import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Creation-Date: 12.04.2006, 15:19:03
  *
  * @author Thomas Morgner
  */
-public class RawResourceLoader implements ResourceLoader
-{
+public class RawResourceLoader implements ResourceLoader {
   public static final String SCHEMA_NAME = RawResourceLoader.class.getName();
 
-  public RawResourceLoader()
-  {
+  public RawResourceLoader() {
   }
 
   /**
-   * Checks, whether this resource loader implementation was responsible for
-   * creating this key.
+   * Checks, whether this resource loader implementation was responsible for creating this key.
    *
    * @param key
    * @return
    */
-  public boolean isSupportedKey(final ResourceKey key)
-  {
-    if (SCHEMA_NAME.equals(key.getSchema()))
-    {
+  public boolean isSupportedKey( final ResourceKey key ) {
+    if ( SCHEMA_NAME.equals( key.getSchema() ) ) {
       return true;
     }
     return false;
@@ -67,126 +60,108 @@ public class RawResourceLoader implements ResourceLoader
    * @param value
    * @param factoryKeys
    * @return the created key.
-   * @throws org.pentaho.reporting.libraries.resourceloader.ResourceKeyCreationException
-   *          if creating the key failed.
+   * @throws org.pentaho.reporting.libraries.resourceloader.ResourceKeyCreationException if creating the key failed.
    */
-  public ResourceKey createKey(final Object value, final Map factoryKeys) throws ResourceKeyCreationException
-  {
-    if (value instanceof byte[] == false)
-    {
+  public ResourceKey createKey( final Object value, final Map factoryKeys ) throws ResourceKeyCreationException {
+    if ( value instanceof byte[] == false ) {
       return null;
     }
 
-    return new ResourceKey(SCHEMA_NAME, value, factoryKeys);
+    return new ResourceKey( SCHEMA_NAME, value, factoryKeys );
   }
 
   /**
-   * Derives a new resource key from the given key. If neither a path nor new
-   * factory-keys are given, the parent key is returned.
+   * Derives a new resource key from the given key. If neither a path nor new factory-keys are given, the parent key is
+   * returned.
    *
    * @param parent      the parent
    * @param path        the derived path (can be null).
    * @param factoryKeys the optional factory keys (can be null).
    * @return the derived key.
-   * @throws org.pentaho.reporting.libraries.resourceloader.ResourceKeyCreationException
-   *          if the key cannot be derived for any reason.
+   * @throws org.pentaho.reporting.libraries.resourceloader.ResourceKeyCreationException if the key cannot be derived
+   *                                                                                     for any reason.
    */
-  public ResourceKey deriveKey(final ResourceKey parent, final String path, final Map factoryKeys)
-      throws ResourceKeyCreationException
-  {
-    if (path != null)
-    {
-      throw new ResourceKeyCreationException("Unable to derive key for new path.");
+  public ResourceKey deriveKey( final ResourceKey parent, final String path, final Map factoryKeys )
+    throws ResourceKeyCreationException {
+    if ( path != null ) {
+      throw new ResourceKeyCreationException( "Unable to derive key for new path." );
     }
-    if (isSupportedKey(parent) == false)
-    {
-      throw new ResourceKeyCreationException("Assertation: Unsupported parent key type");
+    if ( isSupportedKey( parent ) == false ) {
+      throw new ResourceKeyCreationException( "Assertation: Unsupported parent key type" );
     }
 
-    if (factoryKeys == null)
-    {
+    if ( factoryKeys == null ) {
       return parent;
     }
 
     final HashMap map = new HashMap();
-    map.putAll(parent.getFactoryParameters());
-    map.putAll(factoryKeys);
-    return new ResourceKey(parent.getSchema(), parent.getIdentifier(), map);
+    map.putAll( parent.getFactoryParameters() );
+    map.putAll( factoryKeys );
+    return new ResourceKey( parent.getSchema(), parent.getIdentifier(), map );
   }
 
-  public URL toURL(final ResourceKey key)
-  {
+  public URL toURL( final ResourceKey key ) {
     // not supported ..
     return null;
   }
 
-  public ResourceData load(final ResourceKey key) throws ResourceLoadingException
-  {
-    if (isSupportedKey(key) == false)
-    {
-      throw new ResourceLoadingException("The key type is not supported.");
+  public ResourceData load( final ResourceKey key ) throws ResourceLoadingException {
+    if ( isSupportedKey( key ) == false ) {
+      throw new ResourceLoadingException( "The key type is not supported." );
     }
-    return new RawResourceData(key);
+    return new RawResourceData( key );
   }
 
   /**
-   * Creates a String version of the resource key that can be used to generate a new ResourceKey
-   * object via deserialization
+   * Creates a String version of the resource key that can be used to generate a new ResourceKey object via
+   * deserialization
+   *
    * @param bundleKey
    * @param key
    */
-  public String serialize(final ResourceKey bundleKey, final ResourceKey key) throws ResourceException
-  {
+  public String serialize( final ResourceKey bundleKey, final ResourceKey key ) throws ResourceException {
     // Validate the parameter
-    if (key == null)
-    {
-      throw new NullPointerException("The ResourceKey can not be null");
+    if ( key == null ) {
+      throw new NullPointerException( "The ResourceKey can not be null" );
     }
-    if (isSupportedKey(key) == false)
-    {
-      throw new IllegalArgumentException("Key format is not recognized.");
+    if ( isSupportedKey( key ) == false ) {
+      throw new IllegalArgumentException( "Key format is not recognized." );
     }
-    if (!(key.getIdentifier() instanceof byte[]))
-    {
-      throw new IllegalArgumentException("ResourceKey is invalid - identifier is not a byte[] object");
+    if ( !( key.getIdentifier() instanceof byte[] ) ) {
+      throw new IllegalArgumentException( "ResourceKey is invalid - identifier is not a byte[] object" );
     }
 
     final byte[] data = (byte[]) key.getIdentifier();
-    final char[] cdata = new char[data.length];
-    for (int i = 0; i < data.length; i++)
-    {
-      cdata[i] = (char) (data[i] & 0xFF);
+    final char[] cdata = new char[ data.length ];
+    for ( int i = 0; i < data.length; i++ ) {
+      cdata[ i ] = (char) ( data[ i ] & 0xFF );
     }
     return ResourceKeyUtils.createStringResourceKey
-        (String.valueOf(key.getSchema()), new String(cdata), key.getFactoryParameters());
+      ( String.valueOf( key.getSchema() ), new String( cdata ), key.getFactoryParameters() );
   }
 
   /**
    * Parses the input string and returns a newly created ResourceKey based on the string data
    */
-  public ResourceKey deserialize(final ResourceKey bundleKey, String stringKey) throws ResourceKeyCreationException
-  {
+  public ResourceKey deserialize( final ResourceKey bundleKey, String stringKey ) throws ResourceKeyCreationException {
     // Parse the data
-    final ResourceKeyData keyData = ResourceKeyUtils.parse(stringKey);
+    final ResourceKeyData keyData = ResourceKeyUtils.parse( stringKey );
 
     // Validate the data
-    if (SCHEMA_NAME.equals(keyData.getSchema()) == false)
-    {
-      throw new ResourceKeyCreationException("Serialized version of key does not contain correct schema");
+    if ( SCHEMA_NAME.equals( keyData.getSchema() ) == false ) {
+      throw new ResourceKeyCreationException( "Serialized version of key does not contain correct schema" );
     }
 
     final String identifier = keyData.getIdentifier();
     final char[] chars = identifier.toCharArray();
-    final byte[] data = new byte[chars.length];
-    for (int i = 0; i < chars.length; i++)
-    {
-      data[i] = (byte) chars[i];
+    final byte[] data = new byte[ chars.length ];
+    for ( int i = 0; i < chars.length; i++ ) {
+      data[ i ] = (byte) chars[ i ];
     }
-    return createKey(data, keyData.getFactoryParameters());
+    return createKey( data, keyData.getFactoryParameters() );
   }
 
-  public boolean isSupportedDeserializer(String data)
-  {
-    return SCHEMA_NAME.equals(ResourceKeyUtils.readSchemaFromString(data));
+  public boolean isSupportedDeserializer( String data ) {
+    return SCHEMA_NAME.equals( ResourceKeyUtils.readSchemaFromString( data ) );
   }
 }

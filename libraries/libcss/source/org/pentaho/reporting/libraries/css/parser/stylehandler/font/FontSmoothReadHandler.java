@@ -28,28 +28,23 @@ import org.w3c.css.sac.LexicalUnit;
  *
  * @author Thomas Morgner
  */
-public class FontSmoothReadHandler extends OneOfConstantsReadHandler
-{
-  public FontSmoothReadHandler()
-  {
-    super(true);
-    addValue(FontSmooth.ALWAYS);
-    addValue(FontSmooth.NEVER);
+public class FontSmoothReadHandler extends OneOfConstantsReadHandler {
+  public FontSmoothReadHandler() {
+    super( true );
+    addValue( FontSmooth.ALWAYS );
+    addValue( FontSmooth.NEVER );
   }
 
-  protected CSSValue lookupValue(final LexicalUnit value)
-  {
-    final CSSValue cssValue = super.lookupValue(value);
-    if (cssValue != null)
-    {
+  protected CSSValue lookupValue( final LexicalUnit value ) {
+    final CSSValue cssValue = super.lookupValue( value );
+    if ( cssValue != null ) {
       return cssValue;
     }
 
-    final CSSValue number = CSSValueFactory.createNumericValue(value);
-    if (number != null)
-    {
+    final CSSValue number = CSSValueFactory.createNumericValue( value );
+    if ( number != null ) {
       return number;
     }
-    return CSSValueFactory.createLengthValue(value);
+    return CSSValueFactory.createLengthValue( value );
   }
 }

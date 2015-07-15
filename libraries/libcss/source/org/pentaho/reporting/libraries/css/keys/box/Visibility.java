@@ -24,13 +24,11 @@ import org.pentaho.reporting.libraries.css.values.CSSConstant;
  *
  * @author Thomas Morgner
  */
-public class Visibility
-{
-  public static final CSSConstant VISIBLE = new CSSConstant("visible");
-  public static final CSSConstant HIDDEN = new CSSConstant("hidden");
-  public static final CSSConstant COLLAPSE = new CSSConstant("collapse");
+public class Visibility {
+  public static final CSSConstant VISIBLE = new CSSConstant( "visible" );
+  public static final CSSConstant HIDDEN = new CSSConstant( "hidden" );
+  public static final CSSConstant COLLAPSE = new CSSConstant( "collapse" );
 
-  private Visibility()
-  {
+  private Visibility() {
   }
 }

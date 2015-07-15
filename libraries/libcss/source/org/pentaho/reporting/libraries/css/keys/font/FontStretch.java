@@ -20,79 +20,65 @@ package org.pentaho.reporting.libraries.css.keys.font;
 import org.pentaho.reporting.libraries.css.values.CSSConstant;
 import org.pentaho.reporting.libraries.css.values.CSSValue;
 
-public class FontStretch
-{
+public class FontStretch {
   public static final CSSConstant NORMAL =
-      new CSSConstant("normal");
+    new CSSConstant( "normal" );
   public static final CSSConstant ULTRA_CONDENSED =
-      new CSSConstant("ultra-condensed");
+    new CSSConstant( "ultra-condensed" );
   public static final CSSConstant EXTRA_CONDENSED =
-      new CSSConstant("extra-condensed");
+    new CSSConstant( "extra-condensed" );
   public static final CSSConstant CONDENSED =
-      new CSSConstant("condensed");
+    new CSSConstant( "condensed" );
   public static final CSSConstant SEMI_CONDENSED =
-      new CSSConstant("semi-condensed");
+    new CSSConstant( "semi-condensed" );
   public static final CSSConstant SEMI_EXPANDED =
-      new CSSConstant("semi-expanded");
+    new CSSConstant( "semi-expanded" );
   public static final CSSConstant EXPANDED =
-      new CSSConstant("expanded");
+    new CSSConstant( "expanded" );
   public static final CSSConstant EXTRA_EXPANDED =
-      new CSSConstant("extra-expanded");
+    new CSSConstant( "extra-expanded" );
   public static final CSSConstant ULTRA_EXPANDED =
-      new CSSConstant("ultra-expanded");
+    new CSSConstant( "ultra-expanded" );
 
-  public static final CSSConstant WIDER = new CSSConstant("wider");
-  public static final CSSConstant NARROWER = new CSSConstant("narrower");
+  public static final CSSConstant WIDER = new CSSConstant( "wider" );
+  public static final CSSConstant NARROWER = new CSSConstant( "narrower" );
 
-  private FontStretch()
-  {
+  private FontStretch() {
   }
 
-  public static int getOrder(CSSValue fs)
-  {
-    if (ULTRA_CONDENSED.equals(fs))
-    {
+  public static int getOrder( CSSValue fs ) {
+    if ( ULTRA_CONDENSED.equals( fs ) ) {
       return -4;
     }
-    if (EXTRA_CONDENSED.equals(fs))
-    {
+    if ( EXTRA_CONDENSED.equals( fs ) ) {
       return -3;
     }
-    if (CONDENSED.equals(fs))
-    {
+    if ( CONDENSED.equals( fs ) ) {
       return -2;
     }
-    if (SEMI_CONDENSED.equals(fs))
-    {
+    if ( SEMI_CONDENSED.equals( fs ) ) {
       return -1;
     }
-    if (NORMAL.equals(fs))
-    {
+    if ( NORMAL.equals( fs ) ) {
       return 0;
     }
-    if (SEMI_EXPANDED.equals(fs))
-    {
+    if ( SEMI_EXPANDED.equals( fs ) ) {
       return 1;
     }
-    if (EXPANDED.equals(fs))
-    {
+    if ( EXPANDED.equals( fs ) ) {
       return 2;
     }
-    if (EXTRA_EXPANDED.equals(fs))
-    {
+    if ( EXTRA_EXPANDED.equals( fs ) ) {
       return 3;
     }
-    if (ULTRA_EXPANDED.equals(fs))
-    {
+    if ( ULTRA_EXPANDED.equals( fs ) ) {
       return 4;
     }
     return 0;
   }
 
-  public static CSSConstant getByOrder(int order)
-  {
-    switch (order)
-    {
+  public static CSSConstant getByOrder( int order ) {
+    switch( order ) {
       case -4:
         return ULTRA_CONDENSED;
       case -3:
@@ -113,8 +99,7 @@ public class FontStretch
         return NORMAL;
     }
 
-    if (order < -4)
-    {
+    if ( order < -4 ) {
       return ULTRA_CONDENSED;
     }
     return ULTRA_EXPANDED;

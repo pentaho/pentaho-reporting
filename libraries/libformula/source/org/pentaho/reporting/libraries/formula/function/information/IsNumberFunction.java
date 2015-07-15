@@ -30,37 +30,31 @@ import org.pentaho.reporting.libraries.formula.typing.coretypes.LogicalType;
  * This function retruns true if the given value is of type Number.
  *
  * @author Cedric Pronzato
- *
  */
-public class IsNumberFunction implements Function
-{
-  private static final TypeValuePair RETURN_TRUE = new TypeValuePair(LogicalType.TYPE, Boolean.TRUE);
-  private static final TypeValuePair RETURN_FALSE = new TypeValuePair(LogicalType.TYPE, Boolean.FALSE);
+public class IsNumberFunction implements Function {
+  private static final TypeValuePair RETURN_TRUE = new TypeValuePair( LogicalType.TYPE, Boolean.TRUE );
+  private static final TypeValuePair RETURN_FALSE = new TypeValuePair( LogicalType.TYPE, Boolean.FALSE );
   private static final long serialVersionUID = 3298090211745552284L;
 
-  public IsNumberFunction()
-  {
+  public IsNumberFunction() {
   }
 
-  public TypeValuePair evaluate(final FormulaContext context, final ParameterCallback parameters) throws EvaluationException
-  {
+  public TypeValuePair evaluate( final FormulaContext context, final ParameterCallback parameters )
+    throws EvaluationException {
     final int parameterCount = parameters.getParameterCount();
-    if (parameterCount < 1)
-    {
-      throw EvaluationException.getInstance(LibFormulaErrorValue.ERROR_ARGUMENTS_VALUE);
+    if ( parameterCount < 1 ) {
+      throw EvaluationException.getInstance( LibFormulaErrorValue.ERROR_ARGUMENTS_VALUE );
     }
 
-    final Type type1 = parameters.getType(0);
-    if(type1.isFlagSet(Type.NUMERIC_TYPE))
-    {
+    final Type type1 = parameters.getType( 0 );
+    if ( type1.isFlagSet( Type.NUMERIC_TYPE ) ) {
       return RETURN_TRUE;
     }
 
     return RETURN_FALSE;
   }
 
-  public String getCanonicalName()
-  {
+  public String getCanonicalName() {
     return "ISNUMBER";
   }
 

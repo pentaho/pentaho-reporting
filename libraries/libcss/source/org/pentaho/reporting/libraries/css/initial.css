@@ -32,12 +32,12 @@
   margin-left: 0;
   margin-bottom: 0;
   margin-right: 0;
-/*
-  marquee-direction: auto;
-  marquee-repetition: infinite;
-  marquee-speed: normal;
-  marquee-style: alternate;
-*/
+  /*
+    marquee-direction: auto;
+    marquee-repetition: infinite;
+    marquee-speed: normal;
+    marquee-style: alternate;
+  */
   max-width: auto;
   max-height: auto;
   min-width: 0;
@@ -56,15 +56,13 @@
   width: auto;
   height: auto;
 
-
-/** Color Module */
+  /** Color Module */
 
   color: black;
   opacity: 1;
   rendering-intent: auto;
 
-
-/** Background Module */
+  /** Background Module */
 
   background-attachment: scroll;
   background-break: continuous;
@@ -100,10 +98,9 @@
 
   box-shadow: none;
 
+  /** Line-Box Module */
 
-/** Line-Box Module */
-
-/* this has some meaning in the table-module, so it must be defined. */
+  /* this has some meaning in the table-module, so it must be defined. */
   vertical-align: baseline;
 
   alignment-adjust: auto;
@@ -123,9 +120,8 @@
   line-stacking-strategy: inline-line-height;
   text-height: auto;
 
-
-/** text Module */
-/** The following properties are defined in the 2003-CR */
+  /** text Module */
+  /** The following properties are defined in the 2003-CR */
   block-progression: tb;
   direction: ltr;
   glyph-orientation-horizontal: auto;
@@ -174,7 +170,7 @@
   word-spacing: normal;
   letter-spacing: normal;
 
-/** Fonts-Module */
+  /** Fonts-Module */
   font-effect: none;
   font-emphasize-position: before;
   font-emphasize-style: none;
@@ -190,22 +186,19 @@
   max-font-size: auto;
   min-font-size: auto;
 
-
-/** Content-Module */
+  /** Content-Module */
   content: normal;
   counter-increment: none;
   counter-reset: none;
   move-to: normal;
   quotes: none;
 
-
-/** List-Module */
+  /** List-Module */
   list-style-type: disc;
   list-style-image: none;
   list-style-position: outside;
 
-
-/** Page Module */
+  /** Page Module */
 
   size: auto;
   page-break-before: auto;
@@ -217,11 +210,10 @@
   widows: 2;
   image-orientation: auto;
 
+  /** UI Module is not included */
+  /** Table Module is not included */
 
-/** UI Module is not included */
-/** Table Module is not included */
-
-/** Column Module */
+  /** Column Module */
   column-width-policy: flexible;
   column-space-distribution: end;
   column-count: auto;
@@ -232,8 +224,7 @@
   column-rule-width: medium;
   column-span: none;
 
-
-/** HyperLink Module */
+  /** HyperLink Module */
 
   target-name: current;
   target-new: window;

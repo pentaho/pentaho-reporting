@@ -34,47 +34,42 @@ import org.w3c.css.sac.ElementSelector;
 import org.w3c.css.sac.Selector;
 
 /**
+ * @author Philippe Le Hegaret
  * @version $Revision$
- * @author  Philippe Le Hegaret
  */
 public class PseudoElementSelectorImpl implements ElementSelector {
 
-    String localName;
+  String localName;
 
-    /**
-     * Creates a new ElementSelectorImpl
-     */
-    public PseudoElementSelectorImpl(String localName) {
-        this.localName = localName;
-    }
-    
-    /**
-     * An integer indicating the type of <code>Selector</code>
-     */
-    public short getSelectorType() {
-	return Selector.SAC_PSEUDO_ELEMENT_SELECTOR;
-    }
-    
-    /**
-     * Returns the
-     * <a href="http://www.w3.org/TR/REC-xml-names/#dt-NSName">namespace
-     * URI</a> of this element selector.
-     * <p><code>NULL</code> if this element selector can match any namespace.</p>
-     */
-    public String getNamespaceURI() {
-	return null;
-    }
+  /**
+   * Creates a new ElementSelectorImpl
+   */
+  public PseudoElementSelectorImpl( String localName ) {
+    this.localName = localName;
+  }
 
-    /**
-     * Returns the
-     * <a href="http://www.w3.org/TR/REC-xml-names/#NT-LocalPart">local part</a>
-     * of the
-     * <a href="http://www.w3.org/TR/REC-xml-names/#ns-qualnames">qualified
-     * name</a> of this element.
-     * <p><code>NULL</code> if this element selector can match any element.</p>
-     * </ul>
-     */
-    public String getLocalName() {
-	return localName;
-    }
+  /**
+   * An integer indicating the type of <code>Selector</code>
+   */
+  public short getSelectorType() {
+    return Selector.SAC_PSEUDO_ELEMENT_SELECTOR;
+  }
+
+  /**
+   * Returns the <a href="http://www.w3.org/TR/REC-xml-names/#dt-NSName">namespace URI</a> of this element selector.
+   * <p><code>NULL</code> if this element selector can match any namespace.</p>
+   */
+  public String getNamespaceURI() {
+    return null;
+  }
+
+  /**
+   * Returns the <a href="http://www.w3.org/TR/REC-xml-names/#NT-LocalPart">local part</a> of the <a
+   * href="http://www.w3.org/TR/REC-xml-names/#ns-qualnames">qualified name</a> of this element.
+   * <p><code>NULL</code> if
+   * this element selector can match any element.</p> </ul>
+   */
+  public String getLocalName() {
+    return localName;
+  }
 }

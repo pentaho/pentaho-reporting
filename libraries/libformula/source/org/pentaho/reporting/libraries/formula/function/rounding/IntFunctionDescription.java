@@ -24,49 +24,40 @@ import org.pentaho.reporting.libraries.formula.typing.coretypes.NumberType;
 
 /**
  * Describes IntFunction function.
- * @see IntFunction
  *
  * @author Cedric Pronzato
- *
+ * @see IntFunction
  */
-public class IntFunctionDescription extends AbstractFunctionDescription
-{
+public class IntFunctionDescription extends AbstractFunctionDescription {
   private static final long serialVersionUID = -8009587992546048556L;
 
-  public IntFunctionDescription()
-  {
-    super("INT", "org.pentaho.reporting.libraries.formula.function.rounding.Int-Function");
+  public IntFunctionDescription() {
+    super( "INT", "org.pentaho.reporting.libraries.formula.function.rounding.Int-Function" );
   }
 
-  public Type getValueType()
-  {
+  public Type getValueType() {
     return NumberType.GENERIC_NUMBER;
   }
 
-  public int getParameterCount()
-  {
+  public int getParameterCount() {
     return 1;
   }
 
-  public Type getParameterType(final int position)
-  {
+  public Type getParameterType( final int position ) {
     return NumberType.GENERIC_NUMBER;
   }
 
   /**
-   * Defines, whether the parameter at the given position is mandatory. A
-   * mandatory parameter must be filled in, while optional parameters need not
-   * to be filled in.
+   * Defines, whether the parameter at the given position is mandatory. A mandatory parameter must be filled in, while
+   * optional parameters need not to be filled in.
    *
    * @return
    */
-  public boolean isParameterMandatory(final int position)
-  {
+  public boolean isParameterMandatory( final int position ) {
     return true;
   }
 
-  public FunctionCategory getCategory()
-  {
+  public FunctionCategory getCategory() {
     return RoundingFunctionCategory.CATEGORY;
   }
 }

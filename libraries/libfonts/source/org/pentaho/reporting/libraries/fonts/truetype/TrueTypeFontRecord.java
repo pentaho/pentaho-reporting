@@ -17,12 +17,12 @@
 
 package org.pentaho.reporting.libraries.fonts.truetype;
 
-import java.io.IOException;
-
 import org.pentaho.reporting.libraries.fonts.FontException;
 import org.pentaho.reporting.libraries.fonts.registry.FontFamily;
 import org.pentaho.reporting.libraries.fonts.registry.FontIdentifier;
 import org.pentaho.reporting.libraries.fonts.registry.FontSource;
+
+import java.io.IOException;
 
 /**
  * A true-type font record. The record contains meta-information about the font, which allows the system to lookup the
@@ -35,8 +35,7 @@ import org.pentaho.reporting.libraries.fonts.registry.FontSource;
  *
  * @author Thomas Morgner
  */
-public class TrueTypeFontRecord implements FontSource
-{
+public class TrueTypeFontRecord implements FontSource {
   private int collectionIndex;
   private long offset;
   private boolean bold;
@@ -51,159 +50,127 @@ public class TrueTypeFontRecord implements FontSource
   private String name;
   private String variant;
 
-  public TrueTypeFontRecord(final TrueTypeFont trueTypeFont,
-                            final FontFamily family) throws IOException,
-      FontException
-  {
-    if (trueTypeFont == null)
-    {
-      throw new NullPointerException("The font must not be null");
+  public TrueTypeFontRecord( final TrueTypeFont trueTypeFont,
+                             final FontFamily family ) throws IOException,
+    FontException {
+    if ( trueTypeFont == null ) {
+      throw new NullPointerException( "The font must not be null" );
     }
-    if (family == null)
-    {
-      throw new NullPointerException("The font-family must not be null");
+    if ( family == null ) {
+      throw new NullPointerException( "The font-family must not be null" );
     }
     this.family = family;
     this.collectionIndex = trueTypeFont.getCollectionIndex();
     this.offset = trueTypeFont.getOffset();
 
-    final OS2Table table = (OS2Table) trueTypeFont.getTable(OS2Table.TABLE_ID);
-    if (table != null)
-    {
-      this.embeddable = (table.isRestricted() == false);
+    final OS2Table table = (OS2Table) trueTypeFont.getTable( OS2Table.TABLE_ID );
+    if ( table != null ) {
+      this.embeddable = ( table.isRestricted() == false );
       this.nonWindows = false;
-    }
-    else
-    {
+    } else {
       this.nonWindows = true;
     }
 
-    final NameTable nameTable = (NameTable) trueTypeFont.getTable(NameTable.TABLE_ID);
-    if (nameTable == null)
-    {
+    final NameTable nameTable = (NameTable) trueTypeFont.getTable( NameTable.TABLE_ID );
+    if ( nameTable == null ) {
       throw new FontException
-          ("This font does not have a 'name' table. It is not valid.");
+        ( "This font does not have a 'name' table. It is not valid." );
     }
 
-    name = nameTable.getPrimaryName(NameTable.NAME_FULLNAME);
-//    this.allNames = nameTable.getAllNames(NameTable.NAME_FULLNAME);
-    variant = nameTable.getPrimaryName(NameTable.NAME_SUBFAMILY);
-//    this.allVariants = nameTable.getAllNames(NameTable.NAME_SUBFAMILY);
+    name = nameTable.getPrimaryName( NameTable.NAME_FULLNAME );
+    //    this.allNames = nameTable.getAllNames(NameTable.NAME_FULLNAME);
+    variant = nameTable.getPrimaryName( NameTable.NAME_SUBFAMILY );
+    //    this.allVariants = nameTable.getAllNames(NameTable.NAME_SUBFAMILY);
 
     final FontHeaderTable headTable = (FontHeaderTable)
-        trueTypeFont.getTable(FontHeaderTable.TABLE_ID);
-    if (headTable != null)
-    {
+      trueTypeFont.getTable( FontHeaderTable.TABLE_ID );
+    if ( headTable != null ) {
       this.bold = headTable.isBold();
       this.italics = headTable.isItalic();
-    }
-    else
-    {
+    } else {
       final OS2Table os2Table = (OS2Table)
-          trueTypeFont.getTable(OS2Table.TABLE_ID);
-      if (os2Table != null)
-      {
+        trueTypeFont.getTable( OS2Table.TABLE_ID );
+      if ( os2Table != null ) {
         this.bold = os2Table.isBold();
         this.italics = os2Table.isItalic();
-      }
-      else
-      {
+      } else {
         // try to use the english name instead. If there is no english name,
         // then do whatever you like. Buggy non standard fonts are not funny ..
-        this.bold = (variant.toLowerCase().indexOf("bold") >= 0);
-        this.italics = (variant.toLowerCase().indexOf("italic") >= 0);
+        this.bold = ( variant.toLowerCase().indexOf( "bold" ) >= 0 );
+        this.italics = ( variant.toLowerCase().indexOf( "italic" ) >= 0 );
       }
     }
 
     // A font may declare that it is oblique (which is the poor man's italics
     // mode), but a font that supports italics is automaticly oblique as well.
-    if (this.oblique || variant.toLowerCase().indexOf("oblique") >= 0)
-    {
+    if ( this.oblique || variant.toLowerCase().indexOf( "oblique" ) >= 0 ) {
       this.oblique = true;
-    }
-    else
-    {
+    } else {
       this.oblique = false;
     }
 
     this.identifier = new TrueTypeFontIdentifier
-        (trueTypeFont.getFilename(), name, variant, collectionIndex, offset, italics, bold);
+      ( trueTypeFont.getFilename(), name, variant, collectionIndex, offset, italics, bold );
   }
 
-  public long getOffset()
-  {
+  public long getOffset() {
     return offset;
   }
 
-  public FontFamily getFamily()
-  {
+  public FontFamily getFamily() {
     return family;
   }
 
-  public boolean isEmbeddable()
-  {
+  public boolean isEmbeddable() {
     return embeddable;
   }
 
-  public boolean isBold()
-  {
+  public boolean isBold() {
     return bold;
   }
 
-  public boolean isItalic()
-  {
+  public boolean isItalic() {
     return italics;
   }
 
-  public boolean isOblique()
-  {
+  public boolean isOblique() {
     return oblique;
   }
 
-  public String getFontSource()
-  {
+  public String getFontSource() {
     return identifier.getFontSource();
   }
 
-  public int getCollectionIndex()
-  {
+  public int getCollectionIndex() {
     return collectionIndex;
   }
 
-  public boolean equals(final Object o)
-  {
-    if (this == o)
-    {
+  public boolean equals( final Object o ) {
+    if ( this == o ) {
       return true;
     }
-    if (o == null || getClass() != o.getClass())
-    {
+    if ( o == null || getClass() != o.getClass() ) {
       return false;
     }
 
     final TrueTypeFontRecord that = (TrueTypeFontRecord) o;
 
-    if (bold != that.bold)
-    {
+    if ( bold != that.bold ) {
       return false;
     }
-    if (embeddable != that.embeddable)
-    {
+    if ( embeddable != that.embeddable ) {
       return false;
     }
-    if (italics != that.italics)
-    {
+    if ( italics != that.italics ) {
       return false;
     }
-    if (oblique != that.oblique)
-    {
+    if ( oblique != that.oblique ) {
       return false;
     }
-    if (!name.equals(that.name))
-    {
+    if ( !name.equals( that.name ) ) {
       return false;
     }
-    return variant.equals(that.variant);
+    return variant.equals( that.variant );
 
   }
 
@@ -212,22 +179,19 @@ public class TrueTypeFontRecord implements FontSource
    *
    * @return
    */
-  public FontIdentifier getIdentifier()
-  {
+  public FontIdentifier getIdentifier() {
     return identifier;
   }
 
-  public boolean isNonWindows()
-  {
+  public boolean isNonWindows() {
     return nonWindows;
   }
 
-  public int hashCode()
-  {
-    int result = (bold ? 1 : 0);
-    result = 29 * result + (italics ? 1 : 0);
-    result = 29 * result + (oblique ? 1 : 0);
-    result = 29 * result + (embeddable ? 1 : 0);
+  public int hashCode() {
+    int result = ( bold ? 1 : 0 );
+    result = 29 * result + ( italics ? 1 : 0 );
+    result = 29 * result + ( oblique ? 1 : 0 );
+    result = 29 * result + ( embeddable ? 1 : 0 );
     result = 29 * result + name.hashCode();
     result = 29 * result + variant.hashCode();
     return result;

@@ -28,17 +28,17 @@ import org.xml.sax.SAXParseException;
  *
  * @author Thomas Morgner
  */
-public class LoggingErrorHandler implements ErrorHandler
-{
-  private static final Log defaultLogContext = LogFactory.getLog(LoggingErrorHandler.class);
-  /** @noinspection NonConstantLogger*/
+public class LoggingErrorHandler implements ErrorHandler {
+  private static final Log defaultLogContext = LogFactory.getLog( LoggingErrorHandler.class );
+  /**
+   * @noinspection NonConstantLogger
+   */
   private Log logContext;
 
   /**
    * Default-Constructor. Logs to a logger configured with this class name as category.
    */
-  public LoggingErrorHandler()
-  {
+  public LoggingErrorHandler() {
     logContext = defaultLogContext;
   }
 
@@ -47,124 +47,79 @@ public class LoggingErrorHandler implements ErrorHandler
    *
    * @param logContext the logger that should receive the messages.
    */
-  public LoggingErrorHandler(final Log logContext)
-  {
-    if (logContext == null)
-    {
+  public LoggingErrorHandler( final Log logContext ) {
+    if ( logContext == null ) {
       throw new NullPointerException();
     }
     this.logContext = logContext;
   }
 
   /**
-   * Receive notification of a warning.
-   * <p/>
-   * <p>SAX parsers will use this method to report conditions that are not
-   * errors or fatal errors as defined by the XML recommendation.  The default
-   * behaviour is to take no action.</p>
-   * <p/>
-   * <p>The SAX parser must continue to provide normal parsing events after
-   * invoking this method: it should still be possible for the application to
-   * process the document through to the end.</p>
-   * <p/>
-   * <p>Filters may use this method to report other, non-XML warnings as
-   * well.</p>
+   * Receive notification of a warning. <p/> <p>SAX parsers will use this method to report conditions that are not
+   * errors or fatal errors as defined by the XML recommendation.  The default behaviour is to take no action.</p> <p/>
+   * <p>The SAX parser must continue to provide normal parsing events after invoking this method: it should still be
+   * possible for the application to process the document through to the end.</p> <p/> <p>Filters may use this method to
+   * report other, non-XML warnings as well.</p>
    *
-   * @param exception The warning information encapsulated in a SAX parse
-   *                  exception.
-   * @throws org.xml.sax.SAXException Any SAX exception, possibly wrapping
-   *                                  another exception.
+   * @param exception The warning information encapsulated in a SAX parse exception.
+   * @throws org.xml.sax.SAXException Any SAX exception, possibly wrapping another exception.
    * @see org.xml.sax.SAXParseException
    */
-  public void warning(final SAXParseException exception) throws SAXException
-  {
-    if (logContext.isDebugEnabled())
-    {
-      if (exception.getMessage().startsWith("URI was not reported to parser for entity"))
-      {
+  public void warning( final SAXParseException exception ) throws SAXException {
+    if ( logContext.isDebugEnabled() ) {
+      if ( exception.getMessage().startsWith( "URI was not reported to parser for entity" ) ) {
         // ignore that one. It is stupid! We do not use DTDs but old parsers like
         // the GNU thing complain about it ..
         return;
       }
-      logContext.debug("Parser-Warning", exception);
+      logContext.debug( "Parser-Warning", exception );
     }
   }
 
   /**
-   * Receive notification of a recoverable error.
-   * <p/>
-   * <p>This corresponds to the definition of "error" in section 1.2 of the W3C
-   * XML 1.0 Recommendation.  For example, a validating parser would use this
-   * callback to report the violation of a validity constraint.  The default
-   * behaviour is to take no action.</p>
-   * <p/>
-   * <p>The SAX parser must continue to provide normal parsing events after
-   * invoking this method: it should still be possible for the application to
-   * process the document through to the end. If the application cannot do so,
-   * then the parser should report a fatal error even if the XML recommendation
-   * does not require it to do so.</p>
-   * <p/>
-   * <p>Filters may use this method to report other, non-XML errors as
-   * well.</p>
+   * Receive notification of a recoverable error. <p/> <p>This corresponds to the definition of "error" in section 1.2
+   * of the W3C XML 1.0 Recommendation.  For example, a validating parser would use this callback to report the
+   * violation of a validity constraint.  The default behaviour is to take no action.</p> <p/> <p>The SAX parser must
+   * continue to provide normal parsing events after invoking this method: it should still be possible for the
+   * application to process the document through to the end. If the application cannot do so, then the parser should
+   * report a fatal error even if the XML recommendation does not require it to do so.</p> <p/> <p>Filters may use this
+   * method to report other, non-XML errors as well.</p>
    *
-   * @param exception The error information encapsulated in a SAX parse
-   *                  exception.
-   * @throws org.xml.sax.SAXException Any SAX exception, possibly wrapping
-   *                                  another exception.
+   * @param exception The error information encapsulated in a SAX parse exception.
+   * @throws org.xml.sax.SAXException Any SAX exception, possibly wrapping another exception.
    * @see org.xml.sax.SAXParseException
    */
-  public void error(final SAXParseException exception) throws SAXException
-  {
-    if (logContext.isWarnEnabled())
-    {
-      if (logContext.isDebugEnabled())
-      {
-        logContext.warn("Recoverable Parser-Error", exception);
-      }
-      else
-      {
-        logContext.warn("Recoverable Parser-Error:" + exception.getMessage());
+  public void error( final SAXParseException exception ) throws SAXException {
+    if ( logContext.isWarnEnabled() ) {
+      if ( logContext.isDebugEnabled() ) {
+        logContext.warn( "Recoverable Parser-Error", exception );
+      } else {
+        logContext.warn( "Recoverable Parser-Error:" + exception.getMessage() );
       }
     }
   }
 
   /**
-   * Receive notification of a non-recoverable error.
-   * <p/>
-   * <p><strong>There is an apparent contradiction between the documentation for
-   * this method and the documentation for {@link org.xml.sax.ContentHandler#endDocument}.
-   * Until this ambiguity is resolved in a future major release, clients should
-   * make no assumptions about whether endDocument() will or will not be invoked
-   * when the parser has reported a fatalError() or thrown an
-   * exception.</strong></p>
-   * <p/>
-   * <p>This corresponds to the definition of "fatal error" in section 1.2 of
-   * the W3C XML 1.0 Recommendation.  For example, a parser would use this
-   * callback to report the violation of a well-formedness constraint.</p>
-   * <p/>
-   * <p>The application must assume that the document is unusable after the
-   * parser has invoked this method, and should continue (if at all) only for
-   * the sake of collecting additional error messages: in fact, SAX parsers are
-   * free to stop reporting any other events once this method has been
-   * invoked.</p>
+   * Receive notification of a non-recoverable error. <p/> <p><strong>There is an apparent contradiction between the
+   * documentation for this method and the documentation for {@link org.xml.sax.ContentHandler#endDocument}. Until this
+   * ambiguity is resolved in a future major release, clients should make no assumptions about whether endDocument()
+   * will or will not be invoked when the parser has reported a fatalError() or thrown an exception.</strong></p> <p/>
+   * <p>This corresponds to the definition of "fatal error" in section 1.2 of the W3C XML 1.0 Recommendation.  For
+   * example, a parser would use this callback to report the violation of a well-formedness constraint.</p> <p/> <p>The
+   * application must assume that the document is unusable after the parser has invoked this method, and should continue
+   * (if at all) only for the sake of collecting additional error messages: in fact, SAX parsers are free to stop
+   * reporting any other events once this method has been invoked.</p>
    *
-   * @param exception The error information encapsulated in a SAX parse
-   *                  exception.
-   * @throws org.xml.sax.SAXException Any SAX exception, possibly wrapping
-   *                                  another exception.
+   * @param exception The error information encapsulated in a SAX parse exception.
+   * @throws org.xml.sax.SAXException Any SAX exception, possibly wrapping another exception.
    * @see org.xml.sax.SAXParseException
    */
-  public void fatalError(final SAXParseException exception) throws SAXException
-  {
-    if (logContext.isErrorEnabled())
-    {
-      if (logContext.isDebugEnabled())
-      {
-        logContext.error("Fatal Parser-Error", exception);
-      }
-      else
-      {
-        logContext.error("Fatal Parser-Error:" + exception.getMessage());
+  public void fatalError( final SAXParseException exception ) throws SAXException {
+    if ( logContext.isErrorEnabled() ) {
+      if ( logContext.isDebugEnabled() ) {
+        logContext.error( "Fatal Parser-Error", exception );
+      } else {
+        logContext.error( "Fatal Parser-Error:" + exception.getMessage() );
       }
     }
   }

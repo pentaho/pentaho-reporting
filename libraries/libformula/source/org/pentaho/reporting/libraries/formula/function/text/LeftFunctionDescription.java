@@ -25,49 +25,39 @@ import org.pentaho.reporting.libraries.formula.typing.coretypes.TextType;
 
 /**
  * Describes LeftFunction function.
- * @see LeftFunction
  *
  * @author Cedric Pronzato
- *
+ * @see LeftFunction
  */
-public class LeftFunctionDescription extends AbstractFunctionDescription
-{
+public class LeftFunctionDescription extends AbstractFunctionDescription {
   private static final long serialVersionUID = 6885086567123440746L;
 
-  public LeftFunctionDescription()
-  {
-    super("LEFT", "org.pentaho.reporting.libraries.formula.function.text.Left-Function");
+  public LeftFunctionDescription() {
+    super( "LEFT", "org.pentaho.reporting.libraries.formula.function.text.Left-Function" );
   }
 
-  public FunctionCategory getCategory()
-  {
+  public FunctionCategory getCategory() {
     return TextFunctionCategory.CATEGORY;
   }
 
-  public int getParameterCount()
-  {
+  public int getParameterCount() {
     return 2;
   }
 
-  public Type getParameterType(final int position)
-  {
-    if(position == 0)
-    {
+  public Type getParameterType( final int position ) {
+    if ( position == 0 ) {
       return TextType.TYPE;
     }
 
     return NumberType.GENERIC_NUMBER;
   }
 
-  public Type getValueType()
-  {
+  public Type getValueType() {
     return TextType.TYPE;
   }
 
-  public boolean isParameterMandatory(final int position)
-  {
-    if(position == 2)
-    {
+  public boolean isParameterMandatory( final int position ) {
+    if ( position == 2 ) {
       return false;
     }
     return true;

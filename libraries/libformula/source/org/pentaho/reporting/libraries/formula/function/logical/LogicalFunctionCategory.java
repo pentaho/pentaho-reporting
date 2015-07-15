@@ -25,12 +25,10 @@ import org.pentaho.reporting.libraries.formula.function.FunctionCategory;
  *
  * @author Thomas Morgner
  */
-public final class LogicalFunctionCategory extends AbstractFunctionCategory
-{
+public final class LogicalFunctionCategory extends AbstractFunctionCategory {
   public static final FunctionCategory CATEGORY = new LogicalFunctionCategory();
 
-  private LogicalFunctionCategory()
-  {
-    super("org.pentaho.reporting.libraries.formula.function.logical.category");
+  private LogicalFunctionCategory() {
+    super( "org.pentaho.reporting.libraries.formula.function.logical.category" );
   }
 }

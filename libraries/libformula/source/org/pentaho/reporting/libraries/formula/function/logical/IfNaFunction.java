@@ -28,78 +28,60 @@ import org.pentaho.reporting.libraries.formula.function.ParameterCallback;
 import org.pentaho.reporting.libraries.formula.lvalues.TypeValuePair;
 import org.pentaho.reporting.libraries.formula.typing.Type;
 import org.pentaho.reporting.libraries.formula.typing.coretypes.ErrorType;
-import org.pentaho.reporting.libraries.formula.typing.coretypes.LogicalType;
 
 /**
  * Creation-Date: 04.11.2006, 18:28:15
  *
  * @author Thomas Morgner
  */
-public class IfNaFunction implements Function
-{
-  private static final Log logger = LogFactory.getLog(IfNaFunction.class);
+public class IfNaFunction implements Function {
+  private static final Log logger = LogFactory.getLog( IfNaFunction.class );
   private static final long serialVersionUID = -7517668261071087411L;
 
-  public IfNaFunction()
-  {
+  public IfNaFunction() {
   }
 
-  public String getCanonicalName()
-  {
+  public String getCanonicalName() {
     return "IFNA";
   }
 
-  public TypeValuePair evaluate(final FormulaContext context,
-                                final ParameterCallback parameters)
-      throws EvaluationException
-  {
+  public TypeValuePair evaluate( final FormulaContext context,
+                                 final ParameterCallback parameters )
+    throws EvaluationException {
     final int parameterCount = parameters.getParameterCount();
-    if (parameterCount < 2)
-    {
-      throw EvaluationException.getInstance(LibFormulaErrorValue.ERROR_ARGUMENTS_VALUE);
+    if ( parameterCount < 2 ) {
+      throw EvaluationException.getInstance( LibFormulaErrorValue.ERROR_ARGUMENTS_VALUE );
     }
     Object value = null;
     Type type = null;
     boolean nafound = false;
-    try
-    {
-      type = parameters.getType(0);
-      value = parameters.getValue(0);
-      if (ErrorType.TYPE.equals(type) && value instanceof ErrorValue)
-      {
-        logger.warn("Passing errors around is deprecated. Throw exceptions instead.");
+    try {
+      type = parameters.getType( 0 );
+      value = parameters.getValue( 0 );
+      if ( ErrorType.TYPE.equals( type ) && value instanceof ErrorValue ) {
+        logger.warn( "Passing errors around is deprecated. Throw exceptions instead." );
         final ErrorValue na = (ErrorValue) value;
-        if (na.getErrorCode() == LibFormulaErrorValue.ERROR_NA)
-        {
+        if ( na.getErrorCode() == LibFormulaErrorValue.ERROR_NA ) {
+          nafound = true;
+        }
+      } else {
+        if ( value == null ) {
           nafound = true;
         }
       }
-      else
-      {
-        if (value == null)
-        {
-          nafound = true;
-        }
-      }
-    }
-    catch (EvaluationException e)
-    {
-      if (e.getErrorValue().getErrorCode() == LibFormulaErrorValue.ERROR_NA)
-      {
+    } catch ( EvaluationException e ) {
+      if ( e.getErrorValue().getErrorCode() == LibFormulaErrorValue.ERROR_NA ) {
         nafound = true;
-      }
-      else
-      {
+      } else {
         // here the error propagates, as IFNA([x],"v") is defined to behave like IF(ISNA([x]); "v"; [x])
         // and the second evaluation of [X] may yield the error that was swallowed by ISNA.
         throw e;
       }
     }
 
-    if (nafound == false)
-    {
-      return new TypeValuePair(type, value);
+    if ( nafound == false ) {
+      return new TypeValuePair( type, value );
     }
-    return new TypeValuePair(parameters.getType(1), parameters.getValue(1));
+    return new TypeValuePair( parameters.getType( 1 ), parameters.getValue( 1 ) );
   }
 }

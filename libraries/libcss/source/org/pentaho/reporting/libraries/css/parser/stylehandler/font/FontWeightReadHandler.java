@@ -29,33 +29,25 @@ import org.w3c.css.sac.LexicalUnit;
  *
  * @author Thomas Morgner
  */
-public class FontWeightReadHandler implements CSSValueReadHandler
-{
-  public FontWeightReadHandler()
-  {
+public class FontWeightReadHandler implements CSSValueReadHandler {
+  public FontWeightReadHandler() {
   }
 
-  public CSSValue createValue(StyleKey name, LexicalUnit value)
-  {
-    if (value.getLexicalUnitType() == LexicalUnit.SAC_IDENT)
-    {
-      if (value.getStringValue().equalsIgnoreCase("bolder"))
-      {
+  public CSSValue createValue( StyleKey name, LexicalUnit value ) {
+    if ( value.getLexicalUnitType() == LexicalUnit.SAC_IDENT ) {
+      if ( value.getStringValue().equalsIgnoreCase( "bolder" ) ) {
         return FontWeight.BOLDER;
       }
-      if (value.getStringValue().equalsIgnoreCase("bold"))
-      {
+      if ( value.getStringValue().equalsIgnoreCase( "bold" ) ) {
         return FontWeight.BOLD;
       }
-      if (value.getStringValue().equalsIgnoreCase("lighter"))
-      {
+      if ( value.getStringValue().equalsIgnoreCase( "lighter" ) ) {
         return FontWeight.LIGHTER;
       }
-      if (value.getStringValue().equalsIgnoreCase("normal"))
-      {
+      if ( value.getStringValue().equalsIgnoreCase( "normal" ) ) {
         return FontWeight.NORMAL;
       }
     }
-    return CSSValueFactory.createNumericValue(value);
+    return CSSValueFactory.createNumericValue( value );
   }
 }

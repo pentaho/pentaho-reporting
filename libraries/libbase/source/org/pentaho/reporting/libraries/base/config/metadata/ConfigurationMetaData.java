@@ -19,40 +19,33 @@ package org.pentaho.reporting.libraries.base.config.metadata;
 
 import java.util.HashMap;
 
-public class ConfigurationMetaData
-{
+public class ConfigurationMetaData {
   private HashMap<String, ConfigurationDomain> domains;
   private static ConfigurationMetaData instance;
 
-  public static synchronized ConfigurationMetaData getInstance()
-  {
-    if (instance == null)
-    {
+  public static synchronized ConfigurationMetaData getInstance() {
+    if ( instance == null ) {
       instance = new ConfigurationMetaData();
     }
     return instance;
   }
 
-  private ConfigurationMetaData()
-  {
+  private ConfigurationMetaData() {
     domains = new HashMap<String, ConfigurationDomain>();
   }
 
-  public ConfigurationDomain getDomain(final String key)
-  {
-    return domains.get(key);
+  public ConfigurationDomain getDomain( final String key ) {
+    return domains.get( key );
   }
 
-  public ConfigurationDomain createDomain(final String key)
-  {
-    final ConfigurationDomain configurationDomain = domains.get(key);
-    if (configurationDomain != null)
-    {
+  public ConfigurationDomain createDomain( final String key ) {
+    final ConfigurationDomain configurationDomain = domains.get( key );
+    if ( configurationDomain != null ) {
       return configurationDomain;
     }
 
     final ConfigurationDomain newDomain = new ConfigurationDomain();
-    domains.put(key, newDomain);
+    domains.put( key, newDomain );
     return newDomain;
   }
 }

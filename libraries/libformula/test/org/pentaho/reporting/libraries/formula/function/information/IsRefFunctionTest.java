@@ -23,21 +23,18 @@ import org.pentaho.reporting.libraries.formula.LibFormulaErrorValue;
 /**
  * @author Cedric Pronzato
  */
-public class IsRefFunctionTest extends FormulaTestBase
-{
-  public void testDefault() throws Exception
-  {
+public class IsRefFunctionTest extends FormulaTestBase {
+  public void testDefault() throws Exception {
     runDefaultTest();
   }
 
-  public Object[][] createDataTest()
-  {
+  public Object[][] createDataTest() {
     return new Object[][]
-        {
-            {"ISREF([.B3])", Boolean.TRUE},
-            // {"ISREF([.B3]:[.C4])", Boolean.TRUE},
-            {"ISREF(1)", Boolean.FALSE},
-            {"ISREF(\"A1\")", Boolean.FALSE},
-            {"ISREF(NA())", LibFormulaErrorValue.ERROR_NA_VALUE},};
+      {
+        { "ISREF([.B3])", Boolean.TRUE },
+        // {"ISREF([.B3]:[.C4])", Boolean.TRUE},
+        { "ISREF(1)", Boolean.FALSE },
+        { "ISREF(\"A1\")", Boolean.FALSE },
+        { "ISREF(NA())", LibFormulaErrorValue.ERROR_NA_VALUE }, };
   }
 }

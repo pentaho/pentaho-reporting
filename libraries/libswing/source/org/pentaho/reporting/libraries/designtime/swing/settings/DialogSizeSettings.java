@@ -17,46 +17,38 @@
 
 package org.pentaho.reporting.libraries.designtime.swing.settings;
 
-import java.awt.Rectangle;
-import java.util.prefs.Preferences;
-
 import org.pentaho.reporting.libraries.designtime.swing.LibSwingUtil;
 
-public class DialogSizeSettings
-{
+import java.awt.*;
+import java.util.prefs.Preferences;
+
+public class DialogSizeSettings {
   private Preferences properties;
 
-  public DialogSizeSettings()
-  {
-    properties = Preferences.userRoot().node("org/pentaho/reporting/libraries/designtime/swing/dialog-settings"); // NON-NLS
+  public DialogSizeSettings() {
+    properties =
+      Preferences.userRoot().node( "org/pentaho/reporting/libraries/designtime/swing/dialog-settings" ); // NON-NLS
   }
 
 
-  public void put(final String key, final Rectangle value)
-  {
-    if (key == null)
-    {
-      throw new IllegalArgumentException("key must not be null");
+  public void put( final String key, final Rectangle value ) {
+    if ( key == null ) {
+      throw new IllegalArgumentException( "key must not be null" );
     }
 
-    if (value == null)
-    {
-      properties.remove(key);
-    }
-    else
-    {
-      properties.put(key, LibSwingUtil.rectangleToString(value));
+    if ( value == null ) {
+      properties.remove( key );
+    } else {
+      properties.put( key, LibSwingUtil.rectangleToString( value ) );
     }
   }
 
-  public Rectangle get(final String key)
-  {
-    final String value = properties.get(key, null);
-    if (value == null)
-    {
+  public Rectangle get( final String key ) {
+    final String value = properties.get( key, null );
+    if ( value == null ) {
       return null;
     }
-    return LibSwingUtil.parseRectangle(value);
+    return LibSwingUtil.parseRectangle( value );
   }
 
 }

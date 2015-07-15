@@ -26,9 +26,8 @@ import org.pentaho.reporting.libraries.fonts.cache.FirstLevelFontCache;
  *
  * @author Thomas Morgner
  */
-public class DefaultFontStorage implements FontStorage
-{
-  private static final Log logger = LogFactory.getLog(DefaultFontStorage.class);
+public class DefaultFontStorage implements FontStorage {
+  private static final Log logger = LogFactory.getLog( DefaultFontStorage.class );
   private FirstLevelFontCache knownMetrics;
   private FontRegistry registry;
   private FontMetricsFactory metricsFactory;
@@ -36,54 +35,47 @@ public class DefaultFontStorage implements FontStorage
   private int hits;
   private int misses;
 
-  public DefaultFontStorage(final FontRegistry registry)
-  {
-    this.knownMetrics = new FirstLevelFontCache(registry.getSecondLevelCache());
+  public DefaultFontStorage( final FontRegistry registry ) {
+    this.knownMetrics = new FirstLevelFontCache( registry.getSecondLevelCache() );
     this.registry = registry;
     this.metricsFactory = registry.createMetricsFactory();
     this.lookupKey = new FontKey();
   }
 
-  public FontRegistry getFontRegistry()
-  {
+  public FontRegistry getFontRegistry() {
     return registry;
   }
 
-  public FontMetrics getFontMetrics(final FontIdentifier record,
-                                    final FontContext context)
-  {
-    if (record == null)
-    {
+  public FontMetrics getFontMetrics( final FontIdentifier record,
+                                     final FontContext context ) {
+    if ( record == null ) {
       throw new NullPointerException();
     }
-    if (context == null)
-    {
+    if ( context == null ) {
       throw new NullPointerException();
     }
 
-    lookupKey.setAliased(context.isAntiAliased());
-    lookupKey.setFontSize(context.getFontSize());
-    lookupKey.setIdentifier(record);
-    lookupKey.setFractional(context.isFractionalMetrics());
+    lookupKey.setAliased( context.isAntiAliased() );
+    lookupKey.setFontSize( context.getFontSize() );
+    lookupKey.setIdentifier( record );
+    lookupKey.setFractional( context.isFractionalMetrics() );
 
-    final FontMetrics cachedMetrics = knownMetrics.getFontMetrics(lookupKey);
-    if (cachedMetrics != null)
-    {
+    final FontMetrics cachedMetrics = knownMetrics.getFontMetrics( lookupKey );
+    if ( cachedMetrics != null ) {
       hits += 1;
       return cachedMetrics;
     }
 
     misses += 1;
-    final FontKey key = new FontKey(record, context.isAntiAliased(),
-        context.isFractionalMetrics(), context.getFontSize());
-    final FontMetrics metrics = metricsFactory.createMetrics(record, context);
-    knownMetrics.putFontMetrics(key, metrics);
+    final FontKey key = new FontKey( record, context.isAntiAliased(),
+      context.isFractionalMetrics(), context.getFontSize() );
+    final FontMetrics metrics = metricsFactory.createMetrics( record, context );
+    knownMetrics.putFontMetrics( key, metrics );
     return metrics;
   }
 
-  public void commit()
-  {
-    logger.debug("Font-Storage: hits=" + hits + ", misses=" + misses);
+  public void commit() {
+    logger.debug( "Font-Storage: hits=" + hits + ", misses=" + misses );
     knownMetrics.commit();
   }
 }

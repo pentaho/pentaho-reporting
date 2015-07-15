@@ -24,47 +24,38 @@ import org.pentaho.reporting.libraries.formula.typing.coretypes.NumberType;
 
 /**
  * Describes MinFunction function.
- * @see MinFunction
  *
  * @author Cedric Pronzato
- *
+ * @see MinFunction
  */
-public class MinAFunctionDescription extends AbstractFunctionDescription
-{
+public class MinAFunctionDescription extends AbstractFunctionDescription {
   private static final long serialVersionUID = -2974454751189094698L;
 
-  public MinAFunctionDescription()
-  {
-    super("MINA", "org.pentaho.reporting.libraries.formula.function.math.MinA-Function");
+  public MinAFunctionDescription() {
+    super( "MINA", "org.pentaho.reporting.libraries.formula.function.math.MinA-Function" );
   }
 
-  public FunctionCategory getCategory()
-  {
+  public FunctionCategory getCategory() {
     return MathFunctionCategory.CATEGORY;
   }
 
-  public int getParameterCount()
-  {
+  public int getParameterCount() {
     return 0;
   }
 
-  public boolean isInfiniteParameterCount()
-  {
+  public boolean isInfiniteParameterCount() {
     return true;
   }
 
-  public Type getParameterType(final int position)
-  {
+  public Type getParameterType( final int position ) {
     return NumberType.NUMBER_SEQUENCE;
   }
 
-  public Type getValueType()
-  {
+  public Type getValueType() {
     return NumberType.GENERIC_NUMBER;
   }
 
-  public boolean isParameterMandatory(final int position)
-  {
+  public boolean isParameterMandatory( final int position ) {
     return true;
   }
 

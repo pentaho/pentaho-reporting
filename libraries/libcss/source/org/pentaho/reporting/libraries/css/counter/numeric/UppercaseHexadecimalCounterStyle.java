@@ -19,19 +19,15 @@ package org.pentaho.reporting.libraries.css.counter.numeric;
 
 import org.pentaho.reporting.libraries.css.counter.CounterStyle;
 
-public class UppercaseHexadecimalCounterStyle implements CounterStyle
-{
-  public UppercaseHexadecimalCounterStyle ()
-  {
+public class UppercaseHexadecimalCounterStyle implements CounterStyle {
+  public UppercaseHexadecimalCounterStyle() {
   }
 
-  public String getCounterValue (final int index)
-  {
-    return Integer.toHexString(index).toUpperCase();
+  public String getCounterValue( final int index ) {
+    return Integer.toHexString( index ).toUpperCase();
   }
 
-  public String getSuffix()
-  {
+  public String getSuffix() {
     return ".";
   }
 }

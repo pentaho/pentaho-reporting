@@ -25,12 +25,10 @@ import org.pentaho.reporting.libraries.css.resolver.values.computed.ConstantsRes
  *
  * @author Thomas Morgner
  */
-public class FontSmoothResolveHandler extends ConstantsResolveHandler
-{
-  public FontSmoothResolveHandler()
-  {
-    addNormalizeValue(FontSmooth.ALWAYS);
-    addNormalizeValue(FontSmooth.NEVER);
-    setFallback(FontSmooth.NEVER);
+public class FontSmoothResolveHandler extends ConstantsResolveHandler {
+  public FontSmoothResolveHandler() {
+    addNormalizeValue( FontSmooth.ALWAYS );
+    addNormalizeValue( FontSmooth.NEVER );
+    setFallback( FontSmooth.NEVER );
   }
 }

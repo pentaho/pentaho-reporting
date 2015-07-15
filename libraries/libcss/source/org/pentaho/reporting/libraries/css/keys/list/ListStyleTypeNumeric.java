@@ -24,58 +24,56 @@ import org.pentaho.reporting.libraries.css.values.CSSConstant;
  *
  * @author Thomas Morgner
  */
-public class ListStyleTypeNumeric
-{
+public class ListStyleTypeNumeric {
   public static final CSSConstant ARABIC_INDIC =
-      new CSSConstant("arabic-indic");
+    new CSSConstant( "arabic-indic" );
   public static final CSSConstant BINARY =
-      new CSSConstant("binary");
+    new CSSConstant( "binary" );
   public static final CSSConstant BENGALI =
-      new CSSConstant("bengali");
+    new CSSConstant( "bengali" );
   public static final CSSConstant CAMBODIAN =
-      new CSSConstant("cambodian");
+    new CSSConstant( "cambodian" );
   public static final CSSConstant DECIMAL =
-      new CSSConstant("decimal");
+    new CSSConstant( "decimal" );
   public static final CSSConstant DECIMAL_LEADING_ZERO =
-      new CSSConstant("decimal-leading-zero");
+    new CSSConstant( "decimal-leading-zero" );
   public static final CSSConstant DEVANAGARI =
-      new CSSConstant("devanagari");
+    new CSSConstant( "devanagari" );
   public static final CSSConstant GUJARATI =
-      new CSSConstant("gujarati");
+    new CSSConstant( "gujarati" );
   public static final CSSConstant GURMUKHI =
-      new CSSConstant("gurmukhi");
+    new CSSConstant( "gurmukhi" );
   public static final CSSConstant KANNADA =
-      new CSSConstant("kannada");
+    new CSSConstant( "kannada" );
   public static final CSSConstant KHMER =
-      new CSSConstant("khmer");
+    new CSSConstant( "khmer" );
   public static final CSSConstant LAO =
-      new CSSConstant("lao");
+    new CSSConstant( "lao" );
   public static final CSSConstant LOWER_HEXADECIMAL =
-      new CSSConstant("lower-hexadecimal");
+    new CSSConstant( "lower-hexadecimal" );
   public static final CSSConstant MALAYALAM =
-      new CSSConstant("malayalam");
+    new CSSConstant( "malayalam" );
   public static final CSSConstant MONGOLIAN =
-      new CSSConstant("mongolian");
+    new CSSConstant( "mongolian" );
   public static final CSSConstant MYANMAR =
-      new CSSConstant("myanmar");
+    new CSSConstant( "myanmar" );
   public static final CSSConstant OCTAL =
-      new CSSConstant("octal");
+    new CSSConstant( "octal" );
   public static final CSSConstant ORIYA =
-      new CSSConstant("oriya");
+    new CSSConstant( "oriya" );
   public static final CSSConstant PERSIAN =
-      new CSSConstant("persian");
+    new CSSConstant( "persian" );
   public static final CSSConstant TELUGU =
-      new CSSConstant("telugu");
+    new CSSConstant( "telugu" );
   public static final CSSConstant TIBETIAN =
-      new CSSConstant("tibetian");
+    new CSSConstant( "tibetian" );
   public static final CSSConstant THAI =
-      new CSSConstant("thai");
+    new CSSConstant( "thai" );
   public static final CSSConstant UPPER_HEXADECIMAL =
-      new CSSConstant("upper-hexadecimal");
+    new CSSConstant( "upper-hexadecimal" );
   public static final CSSConstant URDU =
-      new CSSConstant("urdu");
+    new CSSConstant( "urdu" );
 
-  private ListStyleTypeNumeric()
-  {
+  private ListStyleTypeNumeric() {
   }
 }
