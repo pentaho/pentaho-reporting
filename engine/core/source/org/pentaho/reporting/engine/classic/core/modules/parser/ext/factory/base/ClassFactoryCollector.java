@@ -17,18 +17,17 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.parser.ext.factory.base;
 
+import org.pentaho.reporting.libraries.base.config.Configuration;
+
 import java.util.ArrayList;
 import java.util.Iterator;
-
-import org.pentaho.reporting.libraries.base.config.Configuration;
 
 /**
  * A class factory collector.
  *
  * @author Thomas Morgner
  */
-public class ClassFactoryCollector extends ClassFactoryImpl
-{
+public class ClassFactoryCollector extends ClassFactoryImpl {
 
   /**
    * Storage for the class factories.
@@ -38,8 +37,7 @@ public class ClassFactoryCollector extends ClassFactoryImpl
   /**
    * Creates a new class factory collector.
    */
-  public ClassFactoryCollector()
-  {
+  public ClassFactoryCollector() {
     this.factories = new ArrayList<ClassFactory>();
   }
 
@@ -48,16 +46,13 @@ public class ClassFactoryCollector extends ClassFactoryImpl
    *
    * @param factory the factory.
    */
-  public void addFactory(final ClassFactory factory)
-  {
-    if (factory == null)
-    {
+  public void addFactory( final ClassFactory factory ) {
+    if ( factory == null ) {
       throw new NullPointerException();
     }
-    this.factories.add(factory);
-    if (getConfig() != null)
-    {
-      factory.configure(getConfig());
+    this.factories.add( factory );
+    if ( getConfig() != null ) {
+      factory.configure( getConfig() );
     }
   }
 
@@ -66,8 +61,7 @@ public class ClassFactoryCollector extends ClassFactoryImpl
    *
    * @return The iterator.
    */
-  public Iterator getFactories()
-  {
+  public Iterator getFactories() {
     return this.factories.iterator();
   }
 
@@ -77,18 +71,15 @@ public class ClassFactoryCollector extends ClassFactoryImpl
    * @param c the class.
    * @return The object description.
    */
-  public ObjectDescription getDescriptionForClass(final Class c)
-  {
-    for (int i = 0; i < this.factories.size(); i++)
-    {
-      final ClassFactory f = this.factories.get(i);
-      final ObjectDescription od = f.getDescriptionForClass(c);
-      if (od != null)
-      {
+  public ObjectDescription getDescriptionForClass( final Class c ) {
+    for ( int i = 0; i < this.factories.size(); i++ ) {
+      final ClassFactory f = this.factories.get( i );
+      final ObjectDescription od = f.getDescriptionForClass( c );
+      if ( od != null ) {
         return od;
       }
     }
-    return super.getDescriptionForClass(c);
+    return super.getDescriptionForClass( c );
   }
 
   /**
@@ -99,28 +90,21 @@ public class ClassFactoryCollector extends ClassFactoryImpl
    * @return The object description.
    */
   public ObjectDescription getSuperClassObjectDescription
-      (final Class d, ObjectDescription knownSuperClass)
-  {
-    for (int i = 0; i < this.factories.size(); i++)
-    {
-      final ClassFactory f = this.factories.get(i);
-      final ObjectDescription od = f.getSuperClassObjectDescription(d, knownSuperClass);
-      if (od != null)
-      {
-        if (knownSuperClass == null)
-        {
+  ( final Class d, ObjectDescription knownSuperClass ) {
+    for ( int i = 0; i < this.factories.size(); i++ ) {
+      final ClassFactory f = this.factories.get( i );
+      final ObjectDescription od = f.getSuperClassObjectDescription( d, knownSuperClass );
+      if ( od != null ) {
+        if ( knownSuperClass == null ) {
           knownSuperClass = od;
-        }
-        else
-        {
-          if (knownSuperClass.getObjectClass().isAssignableFrom(od.getObjectClass()))
-          {
+        } else {
+          if ( knownSuperClass.getObjectClass().isAssignableFrom( od.getObjectClass() ) ) {
             knownSuperClass = od;
           }
         }
       }
     }
-    return super.getSuperClassObjectDescription(d, knownSuperClass);
+    return super.getSuperClassObjectDescription( d, knownSuperClass );
   }
 
   /**
@@ -128,16 +112,13 @@ public class ClassFactoryCollector extends ClassFactoryImpl
    *
    * @return The iterator.
    */
-  public Iterator getRegisteredClasses()
-  {
+  public Iterator getRegisteredClasses() {
     final ArrayList list = new ArrayList();
-    for (int i = 0; i < this.factories.size(); i++)
-    {
-      final ClassFactory f = this.factories.get(i);
+    for ( int i = 0; i < this.factories.size(); i++ ) {
+      final ClassFactory f = this.factories.get( i );
       final Iterator iterator = f.getRegisteredClasses();
-      while (iterator.hasNext())
-      {
-        list.add(iterator.next());
+      while ( iterator.hasNext() ) {
+        list.add( iterator.next() );
       }
     }
     return list.iterator();
@@ -151,20 +132,17 @@ public class ClassFactoryCollector extends ClassFactoryImpl
    *
    * @param config the configuration, never null
    */
-  public void configure(final Configuration config)
-  {
-    if (getConfig() != null)
-    {
+  public void configure( final Configuration config ) {
+    if ( getConfig() != null ) {
       // already configured ...
       return;
     }
-    super.configure(config);
+    super.configure( config );
 
     final Iterator it = this.factories.iterator();
-    while (it.hasNext())
-    {
+    while ( it.hasNext() ) {
       final ClassFactory od = (ClassFactory) it.next();
-      od.configure(config);
+      od.configure( config );
     }
   }
 
@@ -174,25 +152,20 @@ public class ClassFactoryCollector extends ClassFactoryImpl
    * @param o the object to test.
    * @return A boolean.
    */
-  public boolean equals(final Object o)
-  {
-    if (this == o)
-    {
+  public boolean equals( final Object o ) {
+    if ( this == o ) {
       return true;
     }
-    if (!(o instanceof ClassFactoryCollector))
-    {
+    if ( !( o instanceof ClassFactoryCollector ) ) {
       return false;
     }
-    if (!super.equals(o))
-    {
+    if ( !super.equals( o ) ) {
       return false;
     }
 
     final ClassFactoryCollector classFactoryCollector = (ClassFactoryCollector) o;
 
-    if (!this.factories.equals(classFactoryCollector.factories))
-    {
+    if ( !this.factories.equals( classFactoryCollector.factories ) ) {
       return false;
     }
 
@@ -204,8 +177,7 @@ public class ClassFactoryCollector extends ClassFactoryImpl
    *
    * @return The hash code.
    */
-  public int hashCode()
-  {
+  public int hashCode() {
     int result = super.hashCode();
     result = 29 * result + this.factories.hashCode();
     return result;

@@ -26,9 +26,8 @@ import org.apache.commons.logging.LogFactory;
  *
  * @author Thomas Morgner
  */
-public final class Worker extends Thread
-{
-  private static final Log logger = LogFactory.getLog(Worker.class);
+public final class Worker extends Thread {
+  private static final Log logger = LogFactory.getLog( Worker.class );
   private static final int STATE_IDLE = 0;
   private static final int STATE_WORKING = 1;
   private static final int STATE_DEAD = 2;
@@ -55,20 +54,18 @@ public final class Worker extends Thread
    *
    * @param sleeptime the time this worker sleeps until he checks for new work.
    */
-  public Worker(final int sleeptime)
-  {
+  public Worker( final int sleeptime ) {
     this.lock = new Object();
     this.sleeptime = sleeptime;
-    this.setDaemon(true);
+    this.setDaemon( true );
     start();
   }
 
   /**
    * Creates a new worker with an default infinite idle timeout.
    */
-  public Worker()
-  {
-    this(0);
+  public Worker() {
+    this( 0 );
   }
 
   /**
@@ -77,18 +74,14 @@ public final class Worker extends Thread
    * @param r the next workload for the worker.
    * @throws IllegalStateException if the worker is not idle.
    */
-  public void setWorkload(final Runnable r)
-  {
-    synchronized (lock)
-    {
-      if (state == Worker.STATE_DEAD)
-      {
-        throw new IllegalStateException("Thread is dead already.");
+  public void setWorkload( final Runnable r ) {
+    synchronized( lock ) {
+      if ( state == Worker.STATE_DEAD ) {
+        throw new IllegalStateException( "Thread is dead already." );
       }
 
-      if (workload != null)
-      {
-        throw new IllegalStateException("This worker is not idle.");
+      if ( workload != null ) {
+        throw new IllegalStateException( "This worker is not idle." );
       }
 
       workload = r;
@@ -101,31 +94,24 @@ public final class Worker extends Thread
    *
    * @return the runnable executed by this worker thread.
    */
-  public synchronized Runnable getWorkload()
-  {
+  public synchronized Runnable getWorkload() {
     return workload;
   }
 
   /**
    * Kills the worker immediately. Awakens the worker if he's sleeping, so that the worker dies without delay.
    */
-  public void finish()
-  {
-    synchronized (lock)
-    {
-      if (state == Worker.STATE_DEAD)
-      {
+  public void finish() {
+    synchronized( lock ) {
+      if ( state == Worker.STATE_DEAD ) {
         return;
       }
 
       state = Worker.STATE_DEAD;
 
-      try
-      {
+      try {
         this.interrupt();
-      }
-      catch (SecurityException se)
-      {
+      } catch ( SecurityException se ) {
         // ignored
       }
     }
@@ -136,11 +122,9 @@ public final class Worker extends Thread
    *
    * @return true, if this worker has no more work and is currently sleeping.
    */
-  public boolean isAvailable()
-  {
-    synchronized (lock)
-    {
-      return (state == Worker.STATE_IDLE);
+  public boolean isAvailable() {
+    synchronized( lock ) {
+      return ( state == Worker.STATE_IDLE );
     }
   }
 
@@ -148,43 +132,30 @@ public final class Worker extends Thread
    * If a workload is set, process it. After the workload is processed, this worker starts to sleep until a new workload
    * is set for the worker or the worker got the finish() request.
    */
-  public void run()
-  {
-    while (true)
-    {
+  public void run() {
+    while ( true ) {
       final Runnable nextWorkLoad;
-      synchronized (lock)
-      {
-        if (workload != null)
-        {
+      synchronized( lock ) {
+        if ( workload != null ) {
           state = Worker.STATE_WORKING;
           nextWorkLoad = workload;
           workload = null;
-        }
-        else
-        {
+        } else {
           nextWorkLoad = null;
         }
       }
 
-      try
-      {
-        if (nextWorkLoad != null)
-        {
+      try {
+        if ( nextWorkLoad != null ) {
           nextWorkLoad.run();
         }
-      }
-      catch (Exception e)
-      {
-        Worker.logger.error("Worker caught exception on run: ", e);
+      } catch ( Exception e ) {
+        Worker.logger.error( "Worker caught exception on run: ", e );
       }
 
-      synchronized (lock)
-      {
-        if (state == Worker.STATE_DEAD)
-        {
-          synchronized (this)
-          {
+      synchronized( lock ) {
+        if ( state == Worker.STATE_DEAD ) {
+          synchronized( this ) {
             this.notifyAll();
           }
           return;
@@ -192,13 +163,10 @@ public final class Worker extends Thread
 
         state = Worker.STATE_IDLE;
 
-        try
-        {
+        try {
           // remove lock
-          lock.wait(sleeptime);
-        }
-        catch (InterruptedException ie)
-        {
+          lock.wait( sleeptime );
+        } catch ( InterruptedException ie ) {
           // ignored
         }
       }
@@ -212,10 +180,8 @@ public final class Worker extends Thread
    *
    * @return true, if the worker should finish the work and end the thread.
    */
-  public boolean isFinish()
-  {
-    synchronized (lock)
-    {
+  public boolean isFinish() {
+    synchronized( lock ) {
       return state == Worker.STATE_DEAD;
     }
   }

@@ -26,8 +26,7 @@ import org.pentaho.reporting.engine.classic.core.modules.parser.ext.factory.base
  * @author Thomas Morgner
  */
 public abstract class AbstractTemplateDescription
-    extends BeanObjectDescription implements TemplateDescription
-{
+  extends BeanObjectDescription implements TemplateDescription {
   /**
    * The name.
    */
@@ -40,10 +39,9 @@ public abstract class AbstractTemplateDescription
    * @param template the template class.
    * @param init     initialise?
    */
-  protected AbstractTemplateDescription(final String name, final Class template,
-                                        final boolean init)
-  {
-    super(template, init);
+  protected AbstractTemplateDescription( final String name, final Class template,
+                                         final boolean init ) {
+    super( template, init );
     this.name = name;
   }
 
@@ -52,8 +50,7 @@ public abstract class AbstractTemplateDescription
    *
    * @return The name.
    */
-  public String getName()
-  {
+  public String getName() {
     return name;
   }
 
@@ -62,10 +59,8 @@ public abstract class AbstractTemplateDescription
    *
    * @param name the name (<code>null</code> not allowed).
    */
-  public void setName(final String name)
-  {
-    if (name == null)
-    {
+  public void setName( final String name ) {
+    if ( name == null ) {
       throw new NullPointerException();
     }
     this.name = name;
@@ -76,8 +71,7 @@ public abstract class AbstractTemplateDescription
    *
    * @return The template.
    */
-  public Template createTemplate()
-  {
+  public Template createTemplate() {
     return (Template) createObject();
   }
 
@@ -88,34 +82,25 @@ public abstract class AbstractTemplateDescription
    * @return true, if the object is equal, false otherwise.
    * @see java.lang.Object#equals(java.lang.Object)
    */
-  public boolean equals(final Object o)
-  {
-    if (this == o)
-    {
+  public boolean equals( final Object o ) {
+    if ( this == o ) {
       return true;
     }
-    if (!(o instanceof AbstractTemplateDescription))
-    {
+    if ( !( o instanceof AbstractTemplateDescription ) ) {
       return false;
     }
-    if (!super.equals(o))
-    {
+    if ( !super.equals( o ) ) {
       return false;
     }
 
     final AbstractTemplateDescription abstractTemplateDescription = (AbstractTemplateDescription) o;
 
-    if (name != null)
-    {
-      if (!name.equals(abstractTemplateDescription.name))
-      {
+    if ( name != null ) {
+      if ( !name.equals( abstractTemplateDescription.name ) ) {
         return false;
       }
-    }
-    else
-    {
-      if (abstractTemplateDescription.name != null)
-      {
+    } else {
+      if ( abstractTemplateDescription.name != null ) {
         return false;
       }
     }
@@ -129,10 +114,9 @@ public abstract class AbstractTemplateDescription
    * @return the hashcode.
    * @see java.lang.Object#hashCode()
    */
-  public int hashCode()
-  {
+  public int hashCode() {
     int result = super.hashCode();
-    result = 29 * result + (name != null ? name.hashCode() : 0);
+    result = 29 * result + ( name != null ? name.hashCode() : 0 );
     return result;
   }
 }

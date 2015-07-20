@@ -26,62 +26,52 @@ import org.pentaho.reporting.engine.classic.core.layout.InlineSubreportMarker;
  *
  * @author Thomas Morgner
  */
-public class EndSubReportHandler implements AdvanceHandler
-{
+public class EndSubReportHandler implements AdvanceHandler {
   public static final AdvanceHandler HANDLER = new EndSubReportHandler();
 
-  private EndSubReportHandler()
-  {
+  private EndSubReportHandler() {
   }
 
 
-  public ProcessState advance(final ProcessState state) throws ReportProcessingException
-  {
+  public ProcessState advance( final ProcessState state ) throws ReportProcessingException {
     return state.deriveForAdvance();
   }
 
-  public ProcessState commit(final ProcessState state) throws ReportProcessingException
-  {
+  public ProcessState commit( final ProcessState state ) throws ReportProcessingException {
     final InlineSubreportMarker[] subReports = state.getSubReports();
     final int currentSubReport = state.getCurrentSubReport();
 
 
     final int nextIndex = InlineSubreportProcessor.findNextIndex
-        (subReports, state.getSubreportProcessingType(), currentSubReport + 1);
-    if (nextIndex != -1)
-    {
+      ( subReports, state.getSubreportProcessingType(), currentSubReport + 1 );
+    if ( nextIndex != -1 ) {
       final ProcessState parentState = (ProcessState) state.getParentSubReportState();
-      final ProcessState parentNext = parentState.returnFromSubReport(state.getLayoutProcess().getParent());
-      parentNext.setFlowController(state.getFlowController());
-      parentNext.setSequenceCounter(state.getSequenceCounter() + 1);
+      final ProcessState parentNext = parentState.returnFromSubReport( state.getLayoutProcess().getParent() );
+      parentNext.setFlowController( state.getFlowController() );
+      parentNext.setSequenceCounter( state.getSequenceCounter() + 1 );
 
       final ProcessState processState = new ProcessState();
-      processState.initializeForSubreport(subReports, nextIndex, parentNext);
+      processState.initializeForSubreport( subReports, nextIndex, parentNext );
       return processState;
-    }
-    else
-    {
+    } else {
       // No more sub-reports, so join back with the parent ..
       final ProcessState parentState = (ProcessState) state.getParentSubReportState();
-      final ProcessState parentNext = parentState.returnFromSubReport(state.getLayoutProcess().getParent());
-      parentNext.setFlowController(state.getFlowController());
-      parentNext.setSequenceCounter(state.getSequenceCounter() + 1);
+      final ProcessState parentNext = parentState.returnFromSubReport( state.getLayoutProcess().getParent() );
+      parentNext.setFlowController( state.getFlowController() );
+      parentNext.setSequenceCounter( state.getSequenceCounter() + 1 );
       return parentNext;
     }
   }
 
-  public boolean isFinish()
-  {
+  public boolean isFinish() {
     return false;
   }
 
-  public int getEventCode()
-  {
+  public int getEventCode() {
     return ReportEvent.REPORT_DONE | ProcessState.ARTIFICIAL_EVENT_CODE;
   }
 
-  public boolean isRestoreHandler()
-  {
+  public boolean isRestoreHandler() {
     return false;
   }
 }

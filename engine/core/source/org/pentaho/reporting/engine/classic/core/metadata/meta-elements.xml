@@ -38,7 +38,7 @@
     <style-group-ref ref="bands"/>
     <style-group-ref ref="pagination-control"/>
   </element>
-  
+
 
   <element name="group-footer" expert="false" hidden="true" preferred="false" container="true"
            bundle-name="org.pentaho.reporting.engine.classic.core.metadata.messages"
@@ -579,7 +579,6 @@
     <style-group-ref ref="layout"/>
     <style-group-ref ref="common"/>
   </element>
-
 
 
 </meta-data>

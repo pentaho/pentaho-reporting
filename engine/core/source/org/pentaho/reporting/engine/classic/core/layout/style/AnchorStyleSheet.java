@@ -28,49 +28,40 @@ import org.pentaho.reporting.engine.classic.core.util.InstanceID;
  *
  * @author Thomas Morgner
  */
-public class AnchorStyleSheet extends AbstractStyleSheet
-{
+public class AnchorStyleSheet extends AbstractStyleSheet {
   private StyleSheet parent;
   private String anchor;
 
-  public AnchorStyleSheet(final String anchor, final StyleSheet parent)
-  {
-    if (parent == null)
-    {
-      throw new NullPointerException("Parent must not be null");
+  public AnchorStyleSheet( final String anchor, final StyleSheet parent ) {
+    if ( parent == null ) {
+      throw new NullPointerException( "Parent must not be null" );
     }
     this.parent = parent;
     this.anchor = anchor;
   }
 
-  public StyleSheet getParent()
-  {
+  public StyleSheet getParent() {
     return parent;
   }
 
-  public InstanceID getId()
-  {
+  public InstanceID getId() {
     return parent.getId();
   }
 
-  public long getChangeTracker()
-  {
+  public long getChangeTracker() {
     return parent.getChangeTracker();
   }
 
-  public Object getStyleProperty(final StyleKey key, final Object defaultValue)
-  {
-    if (ElementStyleKeys.ANCHOR_NAME.equals(key))
-    {
+  public Object getStyleProperty( final StyleKey key, final Object defaultValue ) {
+    if ( ElementStyleKeys.ANCHOR_NAME.equals( key ) ) {
       return anchor;
     }
-    return parent.getStyleProperty(key, defaultValue);
+    return parent.getStyleProperty( key, defaultValue );
   }
 
-  public Object[] toArray()
-  {
+  public Object[] toArray() {
     final Object[] objects = parent.toArray();
-    objects[ElementStyleKeys.ANCHOR_NAME.getIdentifier()] = anchor;
+    objects[ ElementStyleKeys.ANCHOR_NAME.getIdentifier() ] = anchor;
     return objects;
   }
 

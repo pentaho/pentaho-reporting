@@ -31,12 +31,11 @@ import java.util.Arrays;
  *
  * @author Thomas Morgner
  */
-public class LongList implements Serializable, Cloneable
-{
+public class LongList implements Serializable, Cloneable {
   /**
    * An empty array used to avoid object creation.
    */
-  private static final long[] EMPTY_ARRAY = new long[0];
+  private static final long[] EMPTY_ARRAY = new long[ 0 ];
   /**
    * The array holding the list data.
    */
@@ -56,14 +55,12 @@ public class LongList implements Serializable, Cloneable
    *
    * @param capacity the initial capacity.
    */
-  public LongList(final int capacity)
-  {
-    data = new long[capacity];
+  public LongList( final int capacity ) {
+    data = new long[ capacity ];
     increment = capacity;
   }
 
-  public LongList(final long[] data, final int increment)
-  {
+  public LongList( final long[] data, final int increment ) {
     this.increment = increment;
     this.data = data.clone();
   }
@@ -74,12 +71,10 @@ public class LongList implements Serializable, Cloneable
    *
    * @param c the new capacity of the list.
    */
-  private void ensureCapacity(final int c)
-  {
-    if (data.length <= c)
-    {
-      final long[] newData = new long[Math.max(data.length + increment, c + 1)];
-      System.arraycopy(data, 0, newData, 0, size);
+  private void ensureCapacity( final int c ) {
+    if ( data.length <= c ) {
+      final long[] newData = new long[ Math.max( data.length + increment, c + 1 ) ];
+      System.arraycopy( data, 0, newData, 0, size );
       data = newData;
     }
   }
@@ -89,27 +84,23 @@ public class LongList implements Serializable, Cloneable
    *
    * @param value the new value to be added.
    */
-  public void add(final long value)
-  {
-    ensureCapacity(size);
-    data[size] = value;
+  public void add( final long value ) {
+    ensureCapacity( size );
+    data[ size ] = value;
     size += 1;
   }
 
-  public void remove(final int index)
-  {
-    if (index < 0 || index >= size)
-    {
+  public void remove( final int index ) {
+    if ( index < 0 || index >= size ) {
       throw new IllegalArgumentException();
     }
 
     final int tailSize = size - index - 1;
-    if (tailSize > 0)
-    {
-      System.arraycopy(data, index + 1, data, index, tailSize);
+    if ( tailSize > 0 ) {
+      System.arraycopy( data, index + 1, data, index, tailSize );
     }
     size -= 1;
-    data[size] = 0;
+    data[ size ] = 0;
   }
 
   /**
@@ -118,12 +109,10 @@ public class LongList implements Serializable, Cloneable
    * @param value the new value to be defined.
    * @param index the position of the valur that should be redefined.
    */
-  public void set(final int index, final long value)
-  {
-    ensureCapacity(index);
-    data[index] = value;
-    if (index >= size)
-    {
+  public void set( final int index, final long value ) {
+    ensureCapacity( index );
+    data[ index ] = value;
+    if ( index >= size ) {
       size = index + 1;
     }
   }
@@ -136,20 +125,17 @@ public class LongList implements Serializable, Cloneable
    * @return the value at the given index
    * @throws IndexOutOfBoundsException if the index is greater or equal to the list size or if the index is negative.
    */
-  public long get(final int index)
-  {
-    if (index >= size || index < 0)
-    {
-      throw new IndexOutOfBoundsException("Illegal Index: " + index + " Max:" + size);
+  public long get( final int index ) {
+    if ( index >= size || index < 0 ) {
+      throw new IndexOutOfBoundsException( "Illegal Index: " + index + " Max:" + size );
     }
-    return data[index];
+    return data[ index ];
   }
 
   /**
    * Clears the list.
    */
-  public void clear()
-  {
+  public void clear() {
     size = 0;
   }
 
@@ -158,8 +144,7 @@ public class LongList implements Serializable, Cloneable
    *
    * @return the number of elements in the list
    */
-  public int size()
-  {
+  public int size() {
     return size;
   }
 
@@ -168,20 +153,17 @@ public class LongList implements Serializable, Cloneable
    *
    * @return the list contents as array.
    */
-  public long[] toArray()
-  {
-    if (size == 0)
-    {
+  public long[] toArray() {
+    if ( size == 0 ) {
       return LongList.EMPTY_ARRAY;
     }
 
-    if (size == data.length)
-    {
+    if ( size == data.length ) {
       return data.clone();
     }
 
-    final long[] retval = new long[size];
-    System.arraycopy(data, 0, retval, 0, size);
+    final long[] retval = new long[ size ];
+    System.arraycopy( data, 0, retval, 0, size );
     return retval;
   }
 
@@ -191,13 +173,11 @@ public class LongList implements Serializable, Cloneable
    * @param retval the array that should receive the contents.
    * @return the list contents as array.
    */
-  public long[] toArray(long[] retval)
-  {
-    if (retval == null || retval.length < size)
-    {
-      retval = new long[size];
+  public long[] toArray( long[] retval ) {
+    if ( retval == null || retval.length < size ) {
+      retval = new long[ size ];
     }
-    System.arraycopy(data, 0, retval, 0, size);
+    System.arraycopy( data, 0, retval, 0, size );
     return retval;
   }
 
@@ -207,33 +187,28 @@ public class LongList implements Serializable, Cloneable
    * @return a copy of this list.
    * @throws CloneNotSupportedException if something went wrong during the cloning.
    */
-  public Object clone() throws CloneNotSupportedException
-  {
+  public Object clone() throws CloneNotSupportedException {
     final LongList intList = (LongList) super.clone();
     intList.data = data.clone();
     return intList;
   }
 
-  public String toString()
-  {
+  public String toString() {
     final StringBuilder b = new StringBuilder();
-    b.append("LongList={size=");
-    b.append(size);
-    b.append(", data={");
-    for (int i = 0; i < size; i+= 1)
-    {
-      if (i > 0)
-      {
-        b.append(",");
+    b.append( "LongList={size=" );
+    b.append( size );
+    b.append( ", data={" );
+    for ( int i = 0; i < size; i += 1 ) {
+      if ( i > 0 ) {
+        b.append( "," );
       }
-      b.append(data[i]);
+      b.append( data[ i ] );
     }
-    b.append("}}");
+    b.append( "}}" );
     return b.toString();
   }
 
-  public void fill(final long value)
-  {
-    Arrays.fill(data, value);
+  public void fill( final long value ) {
+    Arrays.fill( data, value );
   }
 }

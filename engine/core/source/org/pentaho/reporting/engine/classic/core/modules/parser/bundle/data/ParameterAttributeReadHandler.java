@@ -21,38 +21,31 @@ import org.pentaho.reporting.libraries.xmlns.parser.StringReadHandler;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 
-public class ParameterAttributeReadHandler extends StringReadHandler
-{
+public class ParameterAttributeReadHandler extends StringReadHandler {
   private String namespace;
   private String name;
 
-  public ParameterAttributeReadHandler()
-  {
+  public ParameterAttributeReadHandler() {
   }
 
-  protected void startParsing(final Attributes attrs) throws SAXException
-  {
-    super.startParsing(attrs);
-    name = attrs.getValue(getUri(), "name");
-    if (name == null)
-    {
-      throw new SAXException("Required attribute 'name' is missing.");
+  protected void startParsing( final Attributes attrs ) throws SAXException {
+    super.startParsing( attrs );
+    name = attrs.getValue( getUri(), "name" );
+    if ( name == null ) {
+      throw new SAXException( "Required attribute 'name' is missing." );
     }
 
-    namespace = attrs.getValue(getUri(), "namespace");
-    if (namespace == null)
-    {
-      throw new SAXException("Required attribute 'namespace' is missing.");
+    namespace = attrs.getValue( getUri(), "namespace" );
+    if ( namespace == null ) {
+      throw new SAXException( "Required attribute 'namespace' is missing." );
     }
   }
 
-  public String getNamespace()
-  {
+  public String getNamespace() {
     return namespace;
   }
 
-  public String getName()
-  {
+  public String getName() {
     return name;
   }
 }

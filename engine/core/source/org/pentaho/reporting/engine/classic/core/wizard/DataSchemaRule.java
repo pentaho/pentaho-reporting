@@ -19,11 +19,10 @@ package org.pentaho.reporting.engine.classic.core.wizard;
 
 import java.io.Serializable;
 
-public interface DataSchemaRule extends Serializable
-{
+public interface DataSchemaRule extends Serializable {
   public DataAttributes getStaticAttributes();
 
   public DataAttributeReferences getMappedAttributes();
 
-  public boolean isMatch(DataAttributes dataAttributes, final DataAttributeContext context);
+  public boolean isMatch( DataAttributes dataAttributes, final DataAttributeContext context );
 }

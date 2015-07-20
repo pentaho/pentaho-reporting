@@ -21,10 +21,8 @@ import org.pentaho.reporting.engine.classic.core.filter.types.NumberFieldType;
 import org.pentaho.reporting.libraries.xmlns.parser.ParseException;
 
 @Deprecated
-public class NumberFieldReadHandler extends AbstractElementReadHandler
-{
-  public NumberFieldReadHandler() throws ParseException
-  {
-    super(NumberFieldType.INSTANCE);
+public class NumberFieldReadHandler extends AbstractElementReadHandler {
+  public NumberFieldReadHandler() throws ParseException {
+    super( NumberFieldType.INSTANCE );
   }
 }

@@ -26,94 +26,79 @@ import org.pentaho.reporting.engine.classic.core.util.DoubleKeyedCounter;
 import org.pentaho.reporting.engine.classic.core.util.SingleKeyedCounter;
 import org.pentaho.reporting.libraries.base.util.FastStack;
 
-public class SimpleStyleResolver implements StyleResolver
-{
+public class SimpleStyleResolver implements StyleResolver {
   private SingleKeyedCounter<String> usageCounter;
   private DoubleKeyedCounter<String, Long> extendedCounter;
   private boolean designTime;
 
-  public SimpleStyleResolver()
-  {
-    this(false);
+  public SimpleStyleResolver() {
+    this( false );
   }
 
-  public SimpleStyleResolver(final boolean designTime)
-  {
+  public SimpleStyleResolver( final boolean designTime ) {
     this.designTime = designTime;
     usageCounter = new SingleKeyedCounter<String>();
     extendedCounter = new DoubleKeyedCounter<String, Long>();
   }
 
-  public static SimpleStyleSheet resolveOneTime (final ReportElement element)
-  {
-    final SimpleStyleResolver styleResolver = new SimpleStyleResolver(true);
+  public static SimpleStyleSheet resolveOneTime( final ReportElement element ) {
+    final SimpleStyleResolver styleResolver = new SimpleStyleResolver( true );
     final ResolverStyleSheet resolverTarget = new ResolverStyleSheet();
-    styleResolver.resolve(element, resolverTarget);
-    return new SimpleStyleSheet(resolverTarget);
+    styleResolver.resolve( element, resolverTarget );
+    return new SimpleStyleSheet( resolverTarget );
   }
 
-  public void resolve(final ReportElement element,
-                      final ResolverStyleSheet resolverTarget)
-  {
-//    add(element);
+  public void resolve( final ReportElement element,
+                       final ResolverStyleSheet resolverTarget ) {
+    //    add(element);
     resolverTarget.clear();
-    resolverTarget.setId(element.getStyle().getId());
+    resolverTarget.setId( element.getStyle().getId() );
 
-    resolveParent(element, resolverTarget);
+    resolveParent( element, resolverTarget );
 
-    resolverTarget.addAll(element.getStyle());
-    resolverTarget.addDefault(element.getDefaultStyleSheet());
+    resolverTarget.addAll( element.getStyle() );
+    resolverTarget.addDefault( element.getDefaultStyleSheet() );
   }
 
-  public void resolveParent(final ReportElement element,
-                            final ElementStyleSheet resolverTarget)
-  {
-    if (designTime == false)
-    {
+  public void resolveParent( final ReportElement element,
+                             final ElementStyleSheet resolverTarget ) {
+    if ( designTime == false ) {
       final Section parentSection = element.getParentSection();
-      if (parentSection == null)
-      {
+      if ( parentSection == null ) {
         return;
       }
 
       final SimpleStyleSheet computedStyle = parentSection.getComputedStyle();
-      resolverTarget.addInherited(computedStyle);
+      resolverTarget.addInherited( computedStyle );
     }
 
     final FastStack<Section> parentSections = new FastStack<Section>();
 
     ReportElement e = element;
-    while (e.getParentSection() != null)
-    {
+    while ( e.getParentSection() != null ) {
       final Section section = e.getParentSection();
-      parentSections.push(section);
+      parentSections.push( section );
 
       e = section;
     }
 
-    while (parentSections.isEmpty() == false)
-    {
+    while ( parentSections.isEmpty() == false ) {
       final Section section = parentSections.pop();
-      resolverTarget.addInherited(section.getStyle());
+      resolverTarget.addInherited( section.getStyle() );
     }
   }
 
-  public String toString()
-  {
+  public String toString() {
     final StringBuilder b = new StringBuilder();
-    b.append (usageCounter.printStatistic());
-    b.append (extendedCounter.printStatistic());
+    b.append( usageCounter.printStatistic() );
+    b.append( extendedCounter.printStatistic() );
     return b.toString();
   }
 
-  public SimpleStyleResolver clone()
-  {
-    try
-    {
+  public SimpleStyleResolver clone() {
+    try {
       return (SimpleStyleResolver) super.clone();
-    }
-    catch (CloneNotSupportedException e)
-    {
+    } catch ( CloneNotSupportedException e ) {
       throw new IllegalStateException();
     }
   }

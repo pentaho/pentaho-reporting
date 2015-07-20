@@ -27,8 +27,7 @@ import org.pentaho.reporting.libraries.base.boot.SubSystem;
  *
  * @author Thomas Morgner
  */
-public class RTFTableModule extends AbstractModule
-{
+public class RTFTableModule extends AbstractModule {
   public static final String TABLE_RTF_STREAM_EXPORT_TYPE = "table/rtf;page-mode=stream";
   public static final String TABLE_RTF_FLOW_EXPORT_TYPE = "table/rtf;page-mode=flow";
 
@@ -38,8 +37,7 @@ public class RTFTableModule extends AbstractModule
    * @throws ModuleInitializeException if an error occured.
    */
   public RTFTableModule()
-      throws ModuleInitializeException
-  {
+    throws ModuleInitializeException {
     loadModuleInfo();
   }
 
@@ -51,10 +49,9 @@ public class RTFTableModule extends AbstractModule
    * @param subSystem the subSystem.
    * @throws ModuleInitializeException if an error ocurred while initializing the module.
    */
-  public void initialize(final SubSystem subSystem)
-      throws ModuleInitializeException
-  {
+  public void initialize( final SubSystem subSystem )
+    throws ModuleInitializeException {
     ElementMetaDataParser.initializeOptionalReportProcessTaskMetaData
-        ("org/pentaho/reporting/engine/classic/core/modules/output/table/rtf/meta-report-process-tasks.xml");
+      ( "org/pentaho/reporting/engine/classic/core/modules/output/table/rtf/meta-report-process-tasks.xml" );
   }
 }

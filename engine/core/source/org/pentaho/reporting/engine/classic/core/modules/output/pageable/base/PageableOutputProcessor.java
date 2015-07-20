@@ -25,10 +25,9 @@ import org.pentaho.reporting.engine.classic.core.layout.output.PhysicalPageKey;
  *
  * @author Thomas Morgner
  */
-public interface PageableOutputProcessor extends OutputProcessor
-{
+public interface PageableOutputProcessor extends OutputProcessor {
   public int getPhysicalPageCount();
 
-  public PhysicalPageKey getPhysicalPage(int page);
+  public PhysicalPageKey getPhysicalPage( int page );
 
 }

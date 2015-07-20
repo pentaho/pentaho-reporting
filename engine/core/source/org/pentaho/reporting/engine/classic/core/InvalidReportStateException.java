@@ -18,22 +18,20 @@
 package org.pentaho.reporting.engine.classic.core;
 
 /**
- * An exception that can be thrown during report processing, if an error occurs. This unconditionally
- * aborts the report processing.
+ * An exception that can be thrown during report processing, if an error occurs. This unconditionally aborts the report
+ * processing.
  *
  * @author Thomas Morgner
  */
-public class InvalidReportStateException extends RuntimeException
-{
+public class InvalidReportStateException extends RuntimeException {
   /**
    * Creates an exception.
    *
    * @param message the exception message.
    * @param ex      the parent exception.
    */
-  public InvalidReportStateException(final String message, final Throwable ex)
-  {
-    super(message, ex);
+  public InvalidReportStateException( final String message, final Throwable ex ) {
+    super( message, ex );
   }
 
   /**
@@ -41,17 +39,14 @@ public class InvalidReportStateException extends RuntimeException
    *
    * @param message the exception message.
    */
-  public InvalidReportStateException(final String message)
-  {
-    super(message);
+  public InvalidReportStateException( final String message ) {
+    super( message );
   }
 
-  public InvalidReportStateException(final Throwable cause)
-  {
-    super(cause);
+  public InvalidReportStateException( final Throwable cause ) {
+    super( cause );
   }
 
-  public InvalidReportStateException()
-  {
+  public InvalidReportStateException() {
   }
 }

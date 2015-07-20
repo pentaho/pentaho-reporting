@@ -17,9 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.output.xml;
 
-import java.io.IOException;
-import java.io.Writer;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.pentaho.reporting.engine.classic.core.Band;
@@ -39,6 +36,9 @@ import org.pentaho.reporting.engine.classic.core.states.ReportState;
 import org.pentaho.reporting.engine.classic.core.states.process.SubReportProcessType;
 import org.pentaho.reporting.libraries.xmlns.writer.CharacterEntityParser;
 
+import java.io.IOException;
+import java.io.Writer;
+
 /**
  * The XMLWriter is the content creation function used to create the XML content. This implementation does no layouting,
  * the bands and elements are written in the defined order.
@@ -50,9 +50,8 @@ import org.pentaho.reporting.libraries.xmlns.writer.CharacterEntityParser;
  * @author Thomas Morgner
  * @deprecated The whole basic XML output is deprecated as it cannot handle inline subreports.
  */
-public class XMLWriter extends AbstractFunction implements OutputFunction
-{
-  private static final Log logger = LogFactory.getLog(XMLWriter.class);
+public class XMLWriter extends AbstractFunction implements OutputFunction {
+  private static final Log logger = LogFactory.getLog( XMLWriter.class );
 
   /**
    * the writer used to write the generated document.
@@ -68,14 +67,13 @@ public class XMLWriter extends AbstractFunction implements OutputFunction
    * the XMLEntity parser used to encode the xml characters.
    */
   private final CharacterEntityParser entityParser;
-  private static final InlineSubreportMarker[] EMPTY_SUBREPORTS = new InlineSubreportMarker[0];
+  private static final InlineSubreportMarker[] EMPTY_SUBREPORTS = new InlineSubreportMarker[ 0 ];
 
   /**
    * Creates a new XMLWriter function. The Writer gets a dependency level of -1.
    */
-  public XMLWriter()
-  {
-    setDependencyLevel(LayoutProcess.LEVEL_PAGINATE);
+  public XMLWriter() {
+    setDependencyLevel( LayoutProcess.LEVEL_PAGINATE );
     entityParser = CharacterEntityParser.createXMLEntityParser();
   }
 
@@ -84,8 +82,7 @@ public class XMLWriter extends AbstractFunction implements OutputFunction
    *
    * @return the writer.
    */
-  public Writer getWriter()
-  {
+  public Writer getWriter() {
     return w;
   }
 
@@ -94,8 +91,7 @@ public class XMLWriter extends AbstractFunction implements OutputFunction
    *
    * @param w the writer.
    */
-  public void setWriter(final Writer w)
-  {
+  public void setWriter( final Writer w ) {
     this.w = w;
   }
 
@@ -105,28 +101,23 @@ public class XMLWriter extends AbstractFunction implements OutputFunction
    * @param b the band that should be written.
    * @throws IOException if an IO-Error occurs.
    */
-  private void writeBand(final Band b)
-      throws IOException
-  {
+  private void writeBand( final Band b )
+    throws IOException {
     final Element[] elementBuffer = b.unsafeGetElementArray();
     final int elementCount = elementBuffer.length;
-    for (int i = 0; i < elementCount; i++)
-    {
-      final Element e = elementBuffer[i];
-      if (e instanceof Band)
-      {
-        w.write("<band>");
-        writeBand((Band) e);
-        w.write("</band>");
-      }
-      else
-      {
-        w.write("<element name=\"");
-        w.write(entityParser.encodeEntities(e.getName()));
-        w.write("\">");
-        final String value = String.valueOf(e.getElementType().getValue(getRuntime(), e));
-        w.write(entityParser.encodeEntities(value));
-        w.write("</element>");
+    for ( int i = 0; i < elementCount; i++ ) {
+      final Element e = elementBuffer[ i ];
+      if ( e instanceof Band ) {
+        w.write( "<band>" );
+        writeBand( (Band) e );
+        w.write( "</band>" );
+      } else {
+        w.write( "<element name=\"" );
+        w.write( entityParser.encodeEntities( e.getName() ) );
+        w.write( "\">" );
+        final String value = String.valueOf( e.getElementType().getValue( getRuntime(), e ) );
+        w.write( entityParser.encodeEntities( value ) );
+        w.write( "</element>" );
       }
 
     }
@@ -137,22 +128,17 @@ public class XMLWriter extends AbstractFunction implements OutputFunction
    *
    * @param event the event.
    */
-  public void reportStarted(final ReportEvent event)
-  {
-    if (event.getState().isPrepareRun())
-    {
+  public void reportStarted( final ReportEvent event ) {
+    if ( event.getState().isPrepareRun() ) {
       return;
     }
-    try
-    {
-      w.write("<report>");
-      w.write("<reportheader>");
-      writeBand(event.getReport().getReportHeader());
-      w.write("</reportheader>");
-    }
-    catch (IOException ioe)
-    {
-      XMLWriter.logger.error("Error writing the band", ioe);
+    try {
+      w.write( "<report>" );
+      w.write( "<reportheader>" );
+      writeBand( event.getReport().getReportHeader() );
+      w.write( "</reportheader>" );
+    } catch ( IOException ioe ) {
+      XMLWriter.logger.error( "Error writing the band", ioe );
     }
   }
 
@@ -161,23 +147,18 @@ public class XMLWriter extends AbstractFunction implements OutputFunction
    *
    * @param event the event.
    */
-  public void reportFinished(final ReportEvent event)
-  {
-    if (event.getState().isPrepareRun())
-    {
+  public void reportFinished( final ReportEvent event ) {
+    if ( event.getState().isPrepareRun() ) {
       return;
     }
 
-    try
-    {
-      w.write("<reportfooter>");
-      writeBand(event.getReport().getReportFooter());
-      w.write("</reportfooter>");
-      w.write("</report>");
-    }
-    catch (IOException ioe)
-    {
-      XMLWriter.logger.error("Error writing the band", ioe);
+    try {
+      w.write( "<reportfooter>" );
+      writeBand( event.getReport().getReportFooter() );
+      w.write( "</reportfooter>" );
+      w.write( "</report>" );
+    } catch ( IOException ioe ) {
+      XMLWriter.logger.error( "Error writing the band", ioe );
     }
   }
 
@@ -186,28 +167,22 @@ public class XMLWriter extends AbstractFunction implements OutputFunction
    *
    * @param event the event.
    */
-  public void groupStarted(final ReportEvent event)
-  {
-    if (event.getState().isPrepareRun())
-    {
+  public void groupStarted( final ReportEvent event ) {
+    if ( event.getState().isPrepareRun() ) {
       return;
     }
-    try
-    {
-      final Group g = event.getReport().getGroup(event.getState().getCurrentGroupIndex());
-      if (g instanceof RelationalGroup)
-      {
+    try {
+      final Group g = event.getReport().getGroup( event.getState().getCurrentGroupIndex() );
+      if ( g instanceof RelationalGroup ) {
         RelationalGroup rg = (RelationalGroup) g;
-        w.write("<groupheader name=\"");
-        w.write(entityParser.encodeEntities(g.getName()));
-        w.write("\">");
-        writeBand(rg.getHeader());
-        w.write("</groupheader>");
+        w.write( "<groupheader name=\"" );
+        w.write( entityParser.encodeEntities( g.getName() ) );
+        w.write( "\">" );
+        writeBand( rg.getHeader() );
+        w.write( "</groupheader>" );
       }
-    }
-    catch (IOException ioe)
-    {
-      XMLWriter.logger.error("Error writing the band", ioe);
+    } catch ( IOException ioe ) {
+      XMLWriter.logger.error( "Error writing the band", ioe );
     }
   }
 
@@ -216,28 +191,22 @@ public class XMLWriter extends AbstractFunction implements OutputFunction
    *
    * @param event the event.
    */
-  public void groupFinished(final ReportEvent event)
-  {
-    if (event.getState().isPrepareRun())
-    {
+  public void groupFinished( final ReportEvent event ) {
+    if ( event.getState().isPrepareRun() ) {
       return;
     }
-    try
-    {
-      final Group g = event.getReport().getGroup(event.getState().getCurrentGroupIndex());
-      if (g instanceof RelationalGroup)
-      {
+    try {
+      final Group g = event.getReport().getGroup( event.getState().getCurrentGroupIndex() );
+      if ( g instanceof RelationalGroup ) {
         RelationalGroup rg = (RelationalGroup) g;
-        w.write("<groupfooter name=\"");
-        w.write(entityParser.encodeEntities(g.getName()));
-        w.write("\">");
-        writeBand(rg.getFooter());
-        w.write("</groupfooter>");
+        w.write( "<groupfooter name=\"" );
+        w.write( entityParser.encodeEntities( g.getName() ) );
+        w.write( "\">" );
+        writeBand( rg.getFooter() );
+        w.write( "</groupfooter>" );
       }
-    }
-    catch (IOException ioe)
-    {
-      XMLWriter.logger.error("Error writing the band", ioe);
+    } catch ( IOException ioe ) {
+      XMLWriter.logger.error( "Error writing the band", ioe );
     }
   }
 
@@ -246,25 +215,19 @@ public class XMLWriter extends AbstractFunction implements OutputFunction
    *
    * @param event the event.
    */
-  public void itemsAdvanced(final ReportEvent event)
-  {
-    if (event.getState().isPrepareRun())
-    {
+  public void itemsAdvanced( final ReportEvent event ) {
+    if ( event.getState().isPrepareRun() ) {
       return;
     }
-    try
-    {
+    try {
       final ItemBand itemBand = event.getReport().getItemBand();
-      if (itemBand != null)
-      {
-        w.write("<itemband>");
-        writeBand(itemBand);
-        w.write("</itemband>");
+      if ( itemBand != null ) {
+        w.write( "<itemband>" );
+        writeBand( itemBand );
+        w.write( "</itemband>" );
       }
-    }
-    catch (IOException ioe)
-    {
-      XMLWriter.logger.error("Error writing the band", ioe);
+    } catch ( IOException ioe ) {
+      XMLWriter.logger.error( "Error writing the band", ioe );
     }
   }
 
@@ -274,37 +237,29 @@ public class XMLWriter extends AbstractFunction implements OutputFunction
    *
    * @param event The event.
    */
-  public void itemsStarted(final ReportEvent event)
-  {
-    if (event.getState().isPrepareRun())
-    {
+  public void itemsStarted( final ReportEvent event ) {
+    if ( event.getState().isPrepareRun() ) {
       return;
     }
-    try
-    {
-      if (event.getState().getNumberOfRows() == 0)
-      {
+    try {
+      if ( event.getState().getNumberOfRows() == 0 ) {
         final NoDataBand noDataBand = event.getReport().getNoDataBand();
-        if (noDataBand != null)
-        {
-          w.write("<nodata>");
-          writeBand(noDataBand);
-          w.write("</nodata>");
+        if ( noDataBand != null ) {
+          w.write( "<nodata>" );
+          writeBand( noDataBand );
+          w.write( "</nodata>" );
         }
       }
 
       final DetailsHeader header = event.getReport().getDetailsHeader();
-      if (header != null)
-      {
-        w.write("<details-header>");
-        writeBand(header);
-        w.write("</details-header>");
-        w.write("<items>");
+      if ( header != null ) {
+        w.write( "<details-header>" );
+        writeBand( header );
+        w.write( "</details-header>" );
+        w.write( "<items>" );
       }
-    }
-    catch (IOException ioe)
-    {
-      XMLWriter.logger.error("Error writing the items tag", ioe);
+    } catch ( IOException ioe ) {
+      XMLWriter.logger.error( "Error writing the items tag", ioe );
     }
   }
 
@@ -313,26 +268,20 @@ public class XMLWriter extends AbstractFunction implements OutputFunction
    *
    * @param event The event.
    */
-  public void itemsFinished(final ReportEvent event)
-  {
-    if (event.getState().isPrepareRun())
-    {
+  public void itemsFinished( final ReportEvent event ) {
+    if ( event.getState().isPrepareRun() ) {
       return;
     }
-    try
-    {
+    try {
       final DetailsFooter header = event.getReport().getDetailsFooter();
-      if (header != null)
-      {
-      w.write("<details-footer>");
-      writeBand(header);
-      w.write("</details-footer>");
-      w.write("</items>");
-    }
-    }
-    catch (IOException ioe)
-    {
-      XMLWriter.logger.error("Error writing the items tag", ioe);
+      if ( header != null ) {
+        w.write( "<details-footer>" );
+        writeBand( header );
+        w.write( "</details-footer>" );
+        w.write( "</items>" );
+      }
+    } catch ( IOException ioe ) {
+      XMLWriter.logger.error( "Error writing the items tag", ioe );
     }
   }
 
@@ -341,8 +290,7 @@ public class XMLWriter extends AbstractFunction implements OutputFunction
    *
    * @return the value of the function.
    */
-  public Object getValue()
-  {
+  public Object getValue() {
     return this;
   }
 
@@ -351,13 +299,12 @@ public class XMLWriter extends AbstractFunction implements OutputFunction
    * before lower dependency functions. For ordinary functions and expressions, the range for dependencies is defined to
    * start from 0 (lowest dependency possible) to 2^31 (upper limit of int).
    * <p/>
-   * PageLayouter functions override the default behaviour an place them self at depency level -1, an so before any
-   * user defined function.
+   * PageLayouter functions override the default behaviour an place them self at depency level -1, an so before any user
+   * defined function.
    *
    * @return the level.
    */
-  public int getDependencyLevel()
-  {
+  public int getDependencyLevel() {
     return depLevel;
   }
 
@@ -366,8 +313,7 @@ public class XMLWriter extends AbstractFunction implements OutputFunction
    *
    * @param deplevel the new depency level.
    */
-  public void setDependencyLevel(final int deplevel)
-  {
+  public void setDependencyLevel( final int deplevel ) {
     this.depLevel = deplevel;
   }
 
@@ -378,14 +324,10 @@ public class XMLWriter extends AbstractFunction implements OutputFunction
    *
    * @return the derived function.
    */
-  public OutputFunction deriveForStorage()
-  {
-    try
-    {
+  public OutputFunction deriveForStorage() {
+    try {
       return (OutputFunction) clone();
-    }
-    catch (CloneNotSupportedException e)
-    {
+    } catch ( CloneNotSupportedException e ) {
       throw new IllegalStateException();
     }
   }
@@ -396,14 +338,10 @@ public class XMLWriter extends AbstractFunction implements OutputFunction
    *
    * @return the derived function.
    */
-  public OutputFunction deriveForPagebreak()
-  {
-    try
-    {
+  public OutputFunction deriveForPagebreak() {
+    try {
       return (OutputFunction) clone();
-    }
-    catch (CloneNotSupportedException e)
-    {
+    } catch ( CloneNotSupportedException e ) {
       throw new IllegalStateException();
     }
   }
@@ -416,35 +354,29 @@ public class XMLWriter extends AbstractFunction implements OutputFunction
    * @return a clone of this expression.
    * @throws CloneNotSupportedException this should never happen.
    */
-  public Object clone() throws CloneNotSupportedException
-  {
+  public Object clone() throws CloneNotSupportedException {
     final XMLWriter o = (XMLWriter) super.clone();
     return o;
   }
 
 
-  public InlineSubreportMarker[] getInlineSubreports()
-  {
+  public InlineSubreportMarker[] getInlineSubreports() {
     return EMPTY_SUBREPORTS;
   }
 
-  public void clearInlineSubreports(final SubReportProcessType inlineExecution)
-  {
+  public void clearInlineSubreports( final SubReportProcessType inlineExecution ) {
 
   }
 
-  public void restart(final ReportState state)
-  {
+  public void restart( final ReportState state ) {
 
   }
 
-  public void groupBodyFinished(final ReportEvent event)
-  {
+  public void groupBodyFinished( final ReportEvent event ) {
 
   }
 
-  public boolean createRollbackInformation()
-  {
+  public boolean createRollbackInformation() {
     return false;
   }
 }

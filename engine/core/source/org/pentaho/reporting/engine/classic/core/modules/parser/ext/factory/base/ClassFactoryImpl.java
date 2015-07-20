@@ -17,18 +17,17 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.parser.ext.factory.base;
 
+import org.pentaho.reporting.libraries.base.config.Configuration;
+
 import java.util.HashMap;
 import java.util.Iterator;
-
-import org.pentaho.reporting.libraries.base.config.Configuration;
 
 /**
  * An abstract class that implements the {@link ClassFactory} interface.
  *
  * @author Thomas Morgner.
  */
-public abstract class ClassFactoryImpl implements ClassFactory
-{
+public abstract class ClassFactoryImpl implements ClassFactory {
 
   /**
    * Storage for the classes.
@@ -42,8 +41,7 @@ public abstract class ClassFactoryImpl implements ClassFactory
   /**
    * Creates a new class factory.
    */
-  protected ClassFactoryImpl()
-  {
+  protected ClassFactoryImpl() {
     this.classes = new HashMap();
   }
 
@@ -53,11 +51,9 @@ public abstract class ClassFactoryImpl implements ClassFactory
    * @param c the class.
    * @return An object description.
    */
-  public ObjectDescription getDescriptionForClass(final Class c)
-  {
-    final ObjectDescription od = (ObjectDescription) this.classes.get(c);
-    if (od == null)
-    {
+  public ObjectDescription getDescriptionForClass( final Class c ) {
+    final ObjectDescription od = (ObjectDescription) this.classes.get( c );
+    if ( od == null ) {
       return null;
     }
     return od.getInstance();
@@ -71,35 +67,26 @@ public abstract class ClassFactoryImpl implements ClassFactory
    * @return The object description.
    */
   public ObjectDescription getSuperClassObjectDescription
-      (final Class d, ObjectDescription knownSuperClass)
-  {
+  ( final Class d, ObjectDescription knownSuperClass ) {
 
-    if (d == null)
-    {
-      throw new NullPointerException("Description class must not be null.");
+    if ( d == null ) {
+      throw new NullPointerException( "Description class must not be null." );
     }
     final Iterator iterator = this.classes.keySet().iterator();
-    while (iterator.hasNext())
-    {
+    while ( iterator.hasNext() ) {
       final Class keyClass = (Class) iterator.next();
-      if (keyClass.isAssignableFrom(d))
-      {
-        final ObjectDescription od = (ObjectDescription) this.classes.get(keyClass);
-        if (knownSuperClass == null)
-        {
+      if ( keyClass.isAssignableFrom( d ) ) {
+        final ObjectDescription od = (ObjectDescription) this.classes.get( keyClass );
+        if ( knownSuperClass == null ) {
           knownSuperClass = od;
-        }
-        else
-        {
-          if (knownSuperClass.getObjectClass().isAssignableFrom(od.getObjectClass()))
-          {
+        } else {
+          if ( knownSuperClass.getObjectClass().isAssignableFrom( od.getObjectClass() ) ) {
             knownSuperClass = od;
           }
         }
       }
     }
-    if (knownSuperClass == null)
-    {
+    if ( knownSuperClass == null ) {
       return null;
     }
     return knownSuperClass.getInstance();
@@ -111,12 +98,10 @@ public abstract class ClassFactoryImpl implements ClassFactory
    * @param key the key.
    * @param od  the object description.
    */
-  protected void registerClass(final Class key, final ObjectDescription od)
-  {
-    this.classes.put(key, od);
-    if (this.config != null)
-    {
-      od.configure(this.config);
+  protected void registerClass( final Class key, final ObjectDescription od ) {
+    this.classes.put( key, od );
+    if ( this.config != null ) {
+      od.configure( this.config );
     }
   }
 
@@ -125,8 +110,7 @@ public abstract class ClassFactoryImpl implements ClassFactory
    *
    * @return The iterator.
    */
-  public Iterator getRegisteredClasses()
-  {
+  public Iterator getRegisteredClasses() {
     return this.classes.keySet().iterator();
   }
 
@@ -139,24 +123,20 @@ public abstract class ClassFactoryImpl implements ClassFactory
    *
    * @param config the configuration, never null
    */
-  public void configure(final Configuration config)
-  {
-    if (config == null)
-    {
-      throw new NullPointerException("The given configuration is null");
+  public void configure( final Configuration config ) {
+    if ( config == null ) {
+      throw new NullPointerException( "The given configuration is null" );
     }
-    if (this.config != null)
-    {
+    if ( this.config != null ) {
       // already configured ... ignored
       return;
     }
 
     this.config = config;
     final Iterator it = this.classes.values().iterator();
-    while (it.hasNext())
-    {
+    while ( it.hasNext() ) {
       final ObjectDescription od = (ObjectDescription) it.next();
-      od.configure(config);
+      od.configure( config );
     }
   }
 
@@ -165,8 +145,7 @@ public abstract class ClassFactoryImpl implements ClassFactory
    *
    * @return the configuration.
    */
-  public Configuration getConfig()
-  {
+  public Configuration getConfig() {
     return this.config;
   }
 
@@ -176,21 +155,17 @@ public abstract class ClassFactoryImpl implements ClassFactory
    * @param o the object to test.
    * @return A boolean.
    */
-  public boolean equals(final Object o)
-  {
-    if (this == o)
-    {
+  public boolean equals( final Object o ) {
+    if ( this == o ) {
       return true;
     }
-    if (!(o instanceof ClassFactoryImpl))
-    {
+    if ( !( o instanceof ClassFactoryImpl ) ) {
       return false;
     }
 
     final ClassFactoryImpl classFactory = (ClassFactoryImpl) o;
 
-    if (!this.classes.equals(classFactory.classes))
-    {
+    if ( !this.classes.equals( classFactory.classes ) ) {
       return false;
     }
 
@@ -202,8 +177,7 @@ public abstract class ClassFactoryImpl implements ClassFactory
    *
    * @return A hash code.
    */
-  public int hashCode()
-  {
+  public int hashCode() {
     return this.classes.hashCode();
   }
 }

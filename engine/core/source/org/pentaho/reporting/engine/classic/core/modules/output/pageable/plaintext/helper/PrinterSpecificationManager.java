@@ -17,33 +17,30 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.output.pageable.plaintext.helper;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.HashMap;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.pentaho.reporting.engine.classic.core.modules.output.pageable.plaintext.driver.PrinterDriver;
 import org.pentaho.reporting.libraries.base.config.DefaultConfiguration;
 import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.HashMap;
+
 public class PrinterSpecificationManager
 
 {
-  private static final Log logger = LogFactory.getLog(PrinterSpecificationManager.class);
+  private static final Log logger = LogFactory.getLog( PrinterSpecificationManager.class );
 
   private static class GenericPrinterSpecification
-      implements PrinterSpecification
-  {
+    implements PrinterSpecification {
     private PrinterEncoding genericEncoding;
 
-    protected GenericPrinterSpecification()
-    {
-      genericEncoding = new PrinterEncoding("ASCII", "ASCII", "ASCII", new byte[]{0, 0});
+    protected GenericPrinterSpecification() {
+      genericEncoding = new PrinterEncoding( "ASCII", "ASCII", "ASCII", new byte[] { 0, 0 } );
     }
 
-    public String getDisplayName()
-    {
+    public String getDisplayName() {
       return "Generic";
     }
 
@@ -53,8 +50,7 @@ public class PrinterSpecificationManager
      * @param encoding the java encoding that should be mapped into a printer specific encoding.
      * @return the printer specific encoding.
      */
-    public PrinterEncoding getEncoding(final String encoding)
-    {
+    public PrinterEncoding getEncoding( final String encoding ) {
       return genericEncoding;
     }
 
@@ -63,8 +59,7 @@ public class PrinterSpecificationManager
      *
      * @return the printer model.
      */
-    public String getName()
-    {
+    public String getName() {
       return "Generic";
     }
 
@@ -74,8 +69,7 @@ public class PrinterSpecificationManager
      * @param encoding the java encoding that should be mapped into a printer specific encoding.
      * @return true, if there is a mapping, false otherwise.
      */
-    public boolean isEncodingSupported(final String encoding)
-    {
+    public boolean isEncodingSupported( final String encoding ) {
       return true;
     }
 
@@ -85,8 +79,7 @@ public class PrinterSpecificationManager
      * @param operationName the operation, that should be performed
      * @return true, if the printer will be able to perform that operation, false otherwise.
      */
-    public boolean isFeatureAvailable(final String operationName)
-    {
+    public boolean isFeatureAvailable( final String operationName ) {
       return true;
     }
   }
@@ -94,98 +87,77 @@ public class PrinterSpecificationManager
   private HashMap printerModels;
   private static PrinterSpecification generic;
 
-  public PrinterSpecificationManager()
-  {
+  public PrinterSpecificationManager() {
     final PrinterSpecification generic = PrinterSpecificationManager.getGenericPrinter();
     printerModels = new HashMap();
-    printerModels.put(generic.getName(), generic);
+    printerModels.put( generic.getName(), generic );
   }
 
-  public void load(final String resourceName)
-  {
-    if (resourceName == null)
-    {
+  public void load( final String resourceName ) {
+    if ( resourceName == null ) {
       throw new NullPointerException();
     }
-    final InputStream in = ObjectUtilities.getResourceRelativeAsStream(resourceName, PrinterDriver.class);
-    if (in == null)
-    {
-      PrinterSpecificationManager.logger.error("Printer definition is missing: " + resourceName);
+    final InputStream in = ObjectUtilities.getResourceRelativeAsStream( resourceName, PrinterDriver.class );
+    if ( in == null ) {
+      PrinterSpecificationManager.logger.error( "Printer definition is missing: " + resourceName );
       return;
     }
-    try
-    {
-      try
-      {
-        load(in);
-      }
-      finally
-      {
+    try {
+      try {
+        load( in );
+      } finally {
         in.close();
       }
-    }
-    catch (IOException e)
-    {
-      PrinterSpecificationManager.logger.error("Unable to load printer definition file " + resourceName, e);
+    } catch ( IOException e ) {
+      PrinterSpecificationManager.logger.error( "Unable to load printer definition file " + resourceName, e );
     }
   }
 
-  public void load(final InputStream in)
-      throws IOException
-  {
-    if (in == null)
-    {
+  public void load( final InputStream in )
+    throws IOException {
+    if ( in == null ) {
       throw new NullPointerException();
     }
 
     final DefaultConfiguration encodingConfig = new DefaultConfiguration();
-    encodingConfig.load(in);
+    encodingConfig.load( in );
     final PropertyPrinterSpecificationLoader loader = new PropertyPrinterSpecificationLoader();
-    final PrinterEncoding[] encodings = loader.loadEncodings(encodingConfig);
-    final PrinterSpecification[] printers = loader.loadPrinters(encodingConfig, encodings);
+    final PrinterEncoding[] encodings = loader.loadEncodings( encodingConfig );
+    final PrinterSpecification[] printers = loader.loadPrinters( encodingConfig, encodings );
 
     // if there is a valid printer definition available, we do not
     // need a generic "Generic" printer. If one is required, it will
     // be defined by the specification file.
-    if (printers.length > 0)
-    {
-      printerModels.remove(PrinterSpecificationManager.getGenericPrinter().getName());
+    if ( printers.length > 0 ) {
+      printerModels.remove( PrinterSpecificationManager.getGenericPrinter().getName() );
     }
-    for (int i = 0; i < printers.length; i++)
-    {
-      addPrinter(printers[i]);
+    for ( int i = 0; i < printers.length; i++ ) {
+      addPrinter( printers[ i ] );
     }
   }
 
-  private void addPrinter(final PrinterSpecification printer)
-  {
-    if (printer == null)
-    {
+  private void addPrinter( final PrinterSpecification printer ) {
+    if ( printer == null ) {
       throw new NullPointerException();
     }
 
-    printerModels.put(printer.getName(), printer);
+    printerModels.put( printer.getName(), printer );
   }
 
-  public String[] getPrinterNames()
-  {
-    return (String[]) printerModels.keySet().toArray(new String[printerModels.size()]);
+  public String[] getPrinterNames() {
+    return (String[]) printerModels.keySet().toArray( new String[ printerModels.size() ] );
   }
 
-  public PrinterSpecification getPrinter(final String name)
-  {
-    if (name == null)
-    {
+  public PrinterSpecification getPrinter( final String name ) {
+    if ( name == null ) {
       throw new NullPointerException();
     }
 
-    return (PrinterSpecification) printerModels.get(name);
+    return (PrinterSpecification) printerModels.get( name );
   }
 
-  public static synchronized PrinterSpecification getGenericPrinter()
-  {
-    if (PrinterSpecificationManager.generic == null)
-    {
+  public static synchronized PrinterSpecification getGenericPrinter() {
+    if ( PrinterSpecificationManager.generic == null ) {
       PrinterSpecificationManager.generic = new PrinterSpecificationManager.GenericPrinterSpecification();
     }
     return PrinterSpecificationManager.generic;

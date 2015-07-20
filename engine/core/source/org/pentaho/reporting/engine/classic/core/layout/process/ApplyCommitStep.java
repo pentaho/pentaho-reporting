@@ -27,21 +27,16 @@ import org.pentaho.reporting.engine.classic.core.layout.model.RenderBox;
  *
  * @author Thomas Morgner
  */
-public final class ApplyCommitStep extends IterateSimpleStructureProcessStep
-{
-  public ApplyCommitStep()
-  {
+public final class ApplyCommitStep extends IterateSimpleStructureProcessStep {
+  public ApplyCommitStep() {
   }
 
-  public void compute(final LogicalPageBox pageBox)
-  {
-    startProcessing(pageBox);
+  public void compute( final LogicalPageBox pageBox ) {
+    startProcessing( pageBox );
   }
 
-  protected boolean startBox(final RenderBox box)
-  {
-    if (box.isCommited())
-    {
+  protected boolean startBox( final RenderBox box ) {
+    if ( box.isCommited() ) {
       return false;
     }
 

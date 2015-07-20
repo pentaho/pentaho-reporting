@@ -17,16 +17,21 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.output.table.xls.helper;
 
-public interface SheetPropertySource
-{
+public interface SheetPropertySource {
   int getFreezeTop();
+
   int getFreezeLeft();
 
   String getPageHeaderCenter();
+
   String getPageFooterCenter();
+
   String getPageHeaderLeft();
+
   String getPageFooterLeft();
+
   String getPageHeaderRight();
+
   String getPageFooterRight();
 
 }

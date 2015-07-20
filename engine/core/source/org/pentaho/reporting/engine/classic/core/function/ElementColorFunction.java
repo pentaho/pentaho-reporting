@@ -17,11 +17,11 @@
 
 package org.pentaho.reporting.engine.classic.core.function;
 
-import java.awt.Color;
-
 import org.pentaho.reporting.engine.classic.core.ReportElement;
 import org.pentaho.reporting.engine.classic.core.style.ElementStyleKeys;
 import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
+
+import java.awt.*;
 
 /**
  * A function that alternates between true and false for each item within a group. The functions value affects a defined
@@ -34,8 +34,7 @@ import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
  * @author Thomas Morgner
  * @deprecated add a style expression for the 'paint' style instead
  */
-public class ElementColorFunction extends AbstractElementFormatFunction
-{
+public class ElementColorFunction extends AbstractElementFormatFunction {
   /**
    * the color if the field is TRUE.
    */
@@ -53,8 +52,7 @@ public class ElementColorFunction extends AbstractElementFormatFunction
   /**
    * Default constructor.
    */
-  public ElementColorFunction()
-  {
+  public ElementColorFunction() {
   }
 
   /**
@@ -62,8 +60,7 @@ public class ElementColorFunction extends AbstractElementFormatFunction
    *
    * @return The field name.
    */
-  public String getField()
-  {
+  public String getField() {
     return field;
   }
 
@@ -72,8 +69,7 @@ public class ElementColorFunction extends AbstractElementFormatFunction
    *
    * @param field the field name.
    */
-  public void setField(final String field)
-  {
+  public void setField( final String field ) {
     this.field = field;
   }
 
@@ -82,8 +78,7 @@ public class ElementColorFunction extends AbstractElementFormatFunction
    *
    * @param colorTrue the color.
    */
-  public void setColorTrue(final Color colorTrue)
-  {
+  public void setColorTrue( final Color colorTrue ) {
     this.colorTrue = colorTrue;
   }
 
@@ -92,8 +87,7 @@ public class ElementColorFunction extends AbstractElementFormatFunction
    *
    * @param colorFalse the color.
    */
-  public void setColorFalse(final Color colorFalse)
-  {
+  public void setColorFalse( final Color colorFalse ) {
     this.colorFalse = colorFalse;
   }
 
@@ -102,8 +96,7 @@ public class ElementColorFunction extends AbstractElementFormatFunction
    *
    * @return A color.
    */
-  public Color getColorTrue()
-  {
+  public Color getColorTrue() {
     return colorTrue;
   }
 
@@ -112,26 +105,20 @@ public class ElementColorFunction extends AbstractElementFormatFunction
    *
    * @return A color.
    */
-  public Color getColorFalse()
-  {
+  public Color getColorFalse() {
     return colorFalse;
   }
 
-  protected boolean evaluateElement(final ReportElement e)
-  {
-    if (ObjectUtilities.equal(e.getName(), getElement()))
-    {
+  protected boolean evaluateElement( final ReportElement e ) {
+    if ( ObjectUtilities.equal( e.getName(), getElement() ) ) {
       final boolean value = isValueTrue();
       final Color color;
-      if (value)
-      {
+      if ( value ) {
         color = getColorTrue();
-      }
-      else
-      {
+      } else {
         color = getColorFalse();
       }
-      e.getStyle().setStyleProperty(ElementStyleKeys.PAINT, color);
+      e.getStyle().setStyleProperty( ElementStyleKeys.PAINT, color );
       return true;
     }
     return false;
@@ -142,9 +129,8 @@ public class ElementColorFunction extends AbstractElementFormatFunction
    *
    * @return true if the datarow column contains Boolean.TRUE.
    */
-  protected boolean isValueTrue()
-  {
-    final Object o = getDataRow().get(getField());
-    return Boolean.TRUE.equals(o);
+  protected boolean isValueTrue() {
+    final Object o = getDataRow().get( getField() );
+    return Boolean.TRUE.equals( o );
   }
 }

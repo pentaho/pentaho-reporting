@@ -17,14 +17,16 @@
     <band id="band1" x="0" y="0" width="500" height="63">
       <band id="textband" x="0" y="9">
         <element id="some-element" width="500" x="0" y="0" height="14"/>
-      </band>
-      <band id="line-band">
+           
+      </band>
+         
+      <band id="line-band">
         <horizontal-line id="line-blue" x="0" y="56" width="500" height="0" color="blue"/>
         <horizontal-line id="line-red" x="0" y="63" width="500" height="0" color="red"/>
       </band>
     </band>
   </source>
-  
+
   <result>
     <row>
       <cell content-idref="line-band"/>

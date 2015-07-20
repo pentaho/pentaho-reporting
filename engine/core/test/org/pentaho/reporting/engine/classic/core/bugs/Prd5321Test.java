@@ -17,10 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.core.bugs;
 
-import java.awt.Graphics2D;
-import java.awt.geom.Rectangle2D;
-import java.net.URL;
-
 import com.lowagie.text.Document;
 import com.lowagie.text.DocumentException;
 import com.lowagie.text.Image;
@@ -56,211 +52,210 @@ import org.pentaho.reporting.libraries.fonts.itext.ITextFontStorage;
 import org.pentaho.reporting.libraries.resourceloader.ResourceKey;
 import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 
-public class Prd5321Test
-{
+import java.awt.*;
+import java.awt.geom.Rectangle2D;
+import java.net.URL;
 
-  private static class TestPdfLogicalPageDrawable extends PdfLogicalPageDrawable
-  {
+public class Prd5321Test {
+
+  private static class TestPdfLogicalPageDrawable extends PdfLogicalPageDrawable {
     private final Graphics2D g;
     private int textRendering;
 
-    private TestPdfLogicalPageDrawable(final PdfWriter writer,
-                                       final LFUMap<ResourceKey, Image> imageCache, final char version,
-                                       final Graphics2D g)
-    {
-      super(writer, imageCache, version);
+    private TestPdfLogicalPageDrawable( final PdfWriter writer,
+                                        final LFUMap<ResourceKey, Image> imageCache, final char version,
+                                        final Graphics2D g ) {
+      super( writer, imageCache, version );
       this.g = g;
     }
 
-    public int getTextRendering()
-    {
+    public int getTextRendering() {
       return textRendering;
     }
 
-    public void draw()
-    {
-      draw(g, new Rectangle2D.Double(0, 0, 700, 500));
+    public void draw() {
+      draw( g, new Rectangle2D.Double( 0, 0, 700, 500 ) );
     }
 
 
-    protected void drawText(final RenderableText renderableText, final long contentX2)
-    {
+    protected void drawText( final RenderableText renderableText, final long contentX2 ) {
       textRendering += 1;
-      super.drawText(renderableText, contentX2);
+      super.drawText( renderableText, contentX2 );
     }
 
-    protected void drawComplexText(final RenderableComplexText node, final Graphics2D g2)
-    {
+    protected void drawComplexText( final RenderableComplexText node, final Graphics2D g2 ) {
       textRendering += 1;
-      super.drawComplexText(node, g2);
+      super.drawComplexText( node, g2 );
     }
   }
 
-  public Prd5321Test()
-  {
+  public Prd5321Test() {
   }
 
   @Before
-  public void setUp() throws Exception
-  {
+  public void setUp() throws Exception {
     ClassicEngineBoot.getInstance().start();
   }
 
   /**
-   * In 5.0 and later, elements are dynamic by default - if they only define a minimum height, and no max-height
-   * then that element can grow as if dynamic=true has been set. To limit the element growth, use the max-height
-   * property.
-   *
-   * This test validates that growth happens unless explicitly restricted, and if restricted, that the first line
-   * is printed.
+   * In 5.0 and later, elements are dynamic by default - if they only define a minimum height, and no max-height then
+   * that element can grow as if dynamic=true has been set. To limit the element growth, use the max-height property.
+   * <p/>
+   * This test validates that growth happens unless explicitly restricted, and if restricted, that the first line is
+   * printed.
    *
    * @throws Exception
    */
   @Test
-  public void testTextLimitedInHeight() throws Exception
-  {
+  public void testTextLimitedInHeight() throws Exception {
     Element l = new Element();
-    l.setElementType(LabelType.INSTANCE);
-    l.getStyle().setStyleProperty(ElementStyleKeys.MIN_HEIGHT, 10f);
-    l.getStyle().setStyleProperty(ElementStyleKeys.MIN_WIDTH, 100f);
-    l.getStyle().setStyleProperty(TextStyleKeys.FONTSIZE, 50);
-    l.setAttribute(AttributeNames.Core.NAMESPACE, AttributeNames.Core.VALUE, "Label");
-    l.setName("Label");
+    l.setElementType( LabelType.INSTANCE );
+    l.getStyle().setStyleProperty( ElementStyleKeys.MIN_HEIGHT, 10f );
+    l.getStyle().setStyleProperty( ElementStyleKeys.MIN_WIDTH, 100f );
+    l.getStyle().setStyleProperty( TextStyleKeys.FONTSIZE, 50 );
+    l.setAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.VALUE, "Label" );
+    l.setName( "Label" );
 
     Element l2 = new Element();
-    l2.setElementType(LabelType.INSTANCE);
-    l2.getStyle().setStyleProperty(ElementStyleKeys.POS_X, 100f);
-    l.getStyle().setStyleProperty(ElementStyleKeys.MIN_WIDTH, 100f);
-    l2.getStyle().setStyleProperty(ElementStyleKeys.MIN_HEIGHT, 10f);
-    l2.getStyle().setStyleProperty(ElementStyleKeys.MAX_HEIGHT, 10f);
-    l2.getStyle().setStyleProperty(TextStyleKeys.FONTSIZE, 50);
-    l2.setAttribute(AttributeNames.Core.NAMESPACE, AttributeNames.Core.VALUE, "Label");
-    l2.setName("Label2");
+    l2.setElementType( LabelType.INSTANCE );
+    l2.getStyle().setStyleProperty( ElementStyleKeys.POS_X, 100f );
+    l.getStyle().setStyleProperty( ElementStyleKeys.MIN_WIDTH, 100f );
+    l2.getStyle().setStyleProperty( ElementStyleKeys.MIN_HEIGHT, 10f );
+    l2.getStyle().setStyleProperty( ElementStyleKeys.MAX_HEIGHT, 10f );
+    l2.getStyle().setStyleProperty( TextStyleKeys.FONTSIZE, 50 );
+    l2.setAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.VALUE, "Label" );
+    l2.setName( "Label2" );
 
     MasterReport r = new MasterReport();
-    r.getReportHeader().addElement(l);
-    r.getReportFooter().addElement(l2);
+    r.getReportHeader().addElement( l );
+    r.getReportFooter().addElement( l2 );
 
-    LogicalPageBox logicalPageBox = DebugReportRunner.layoutPage(r, 0);
-    ModelPrinter.INSTANCE.print(logicalPageBox);
-    RenderNode label = MatchFactory.findElementByName(logicalPageBox, "Label");
-    Assert.assertEquals(StrictGeomUtility.toInternalValue(50), label.getCachedHeight());
-    RenderNode label2 = MatchFactory.findElementByName(logicalPageBox, "Label2");
-    Assert.assertEquals(StrictGeomUtility.toInternalValue(10), label2.getCachedHeight());
+    LogicalPageBox logicalPageBox = DebugReportRunner.layoutPage( r, 0 );
+    ModelPrinter.INSTANCE.print( logicalPageBox );
+    RenderNode label = MatchFactory.findElementByName( logicalPageBox, "Label" );
+    Assert.assertEquals( StrictGeomUtility.toInternalValue( 50 ), label.getCachedHeight() );
+    RenderNode label2 = MatchFactory.findElementByName( logicalPageBox, "Label2" );
+    Assert.assertEquals( StrictGeomUtility.toInternalValue( 10 ), label2.getCachedHeight() );
   }
 
   /**
-   * Tests the sample report in modern mode by setting the compatibility flag to "5.0".
-   * As none of the elements defines a max-height, the elements will expect into multi-line elements.
+   * Tests the sample report in modern mode by setting the compatibility flag to "5.0". As none of the elements defines
+   * a max-height, the elements will expect into multi-line elements.
    *
    * @throws Exception
    */
   @Test
   public void testModernMode() throws Exception {
-    URL resource = getClass().getResource("Prd-5321-2.prpt");
+    URL resource = getClass().getResource( "Prd-5321-2.prpt" );
     ResourceManager mgr = new ResourceManager();
-    MasterReport report = (MasterReport) mgr.createDirectly(resource, MasterReport.class).getResource();
-    report.getReportConfiguration().setConfigProperty(ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY, "false");
-    report.setCompatibilityLevel(ClassicEngineBoot.computeVersionId(5, 0, 0));
+    MasterReport report = (MasterReport) mgr.createDirectly( resource, MasterReport.class ).getResource();
+    report.getReportConfiguration()
+      .setConfigProperty( ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY, "false" );
+    report.setCompatibilityLevel( ClassicEngineBoot.computeVersionId( 5, 0, 0 ) );
 
-    LogicalPageBox logicalPageBox = DebugReportRunner.layoutPage(report, 0);
-    ModelPrinter.INSTANCE.print(logicalPageBox);
+    LogicalPageBox logicalPageBox = DebugReportRunner.layoutPage( report, 0 );
+    ModelPrinter.INSTANCE.print( logicalPageBox );
 
-    RenderNode[] paragraphs = MatchFactory.findElementsByNodeType(logicalPageBox, LayoutNodeTypes.TYPE_BOX_PARAGRAPH);
-    Assert.assertEquals(4, paragraphs.length);
-    for (RenderNode paragraph : paragraphs)
-    {
+    RenderNode[] paragraphs = MatchFactory.findElementsByNodeType( logicalPageBox, LayoutNodeTypes.TYPE_BOX_PARAGRAPH );
+    Assert.assertEquals( 4, paragraphs.length );
+    for ( RenderNode paragraph : paragraphs ) {
       ParagraphRenderBox pb = (ParagraphRenderBox) paragraph;
-      Assert.assertNotNull(pb.getFirstChild());
+      Assert.assertNotNull( pb.getFirstChild() );
     }
   }
 
   /**
-   * Tests the rendering of text in compatibility mode. In this mode elements that do not define an explicit
-   * height can be limited in growth to their defined minimum height. This auto-limit only takes place outside
-   * of crosstabs (which were not available in pre-5.0 releases) and if the element is contained in a parent
-   * band that uses an canvas-layout for its child elements.
+   * Tests the rendering of text in compatibility mode. In this mode elements that do not define an explicit height can
+   * be limited in growth to their defined minimum height. This auto-limit only takes place outside of crosstabs (which
+   * were not available in pre-5.0 releases) and if the element is contained in a parent band that uses an canvas-layout
+   * for its child elements.
    *
    * @throws Exception
    */
   @Test
   public void testCompatibilityMode() throws Exception {
-    URL resource = getClass().getResource("Prd-5321-2.prpt");
+    URL resource = getClass().getResource( "Prd-5321-2.prpt" );
     ResourceManager mgr = new ResourceManager();
-    MasterReport report = (MasterReport) mgr.createDirectly(resource, MasterReport.class).getResource();
-    report.getReportConfiguration().setConfigProperty(ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY, "false");
-    report.setCompatibilityLevel(ClassicEngineBoot.VERSION_3_8);
+    MasterReport report = (MasterReport) mgr.createDirectly( resource, MasterReport.class ).getResource();
+    report.getReportConfiguration()
+      .setConfigProperty( ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY, "false" );
+    report.setCompatibilityLevel( ClassicEngineBoot.VERSION_3_8 );
 
-    LogicalPageBox logicalPageBox = DebugReportRunner.layoutPage(report, 0);
+    LogicalPageBox logicalPageBox = DebugReportRunner.layoutPage( report, 0 );
 
-    RenderNode[] paragraphs = MatchFactory.findElementsByNodeType(logicalPageBox, LayoutNodeTypes.TYPE_BOX_PARAGRAPH);
-    Assert.assertEquals(4, paragraphs.length);
-    for (RenderNode paragraph : paragraphs)
-    {
+    RenderNode[] paragraphs = MatchFactory.findElementsByNodeType( logicalPageBox, LayoutNodeTypes.TYPE_BOX_PARAGRAPH );
+    Assert.assertEquals( 4, paragraphs.length );
+    for ( RenderNode paragraph : paragraphs ) {
       ParagraphRenderBox pb = (ParagraphRenderBox) paragraph;
-      Assert.assertNotNull(pb.getFirstChild());
-      Assert.assertSame(pb.getFirstChild(), pb.getLastChild());
+      Assert.assertNotNull( pb.getFirstChild() );
+      Assert.assertSame( pb.getFirstChild(), pb.getLastChild() );
     }
   }
 
   @Test
-  public void testTextRendering() throws Exception
-  {
-    URL resource = getClass().getResource("Prd-5321.prpt");
+  public void testTextRendering() throws Exception {
+    URL resource = getClass().getResource( "Prd-5321.prpt" );
     ResourceManager mgr = new ResourceManager();
-    MasterReport report = (MasterReport) mgr.createDirectly(resource, MasterReport.class).getResource();
-    report.getReportConfiguration().setConfigProperty(ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY, "false");
+    MasterReport report = (MasterReport) mgr.createDirectly( resource, MasterReport.class ).getResource();
+    report.getReportConfiguration()
+      .setConfigProperty( ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY, "false" );
 
-    LogicalPageBox logicalPageBox = DebugReportRunner.layoutPage(report, 0);
-    ModelPrinter.INSTANCE.print(logicalPageBox);
+    LogicalPageBox logicalPageBox = DebugReportRunner.layoutPage( report, 0 );
+    ModelPrinter.INSTANCE.print( logicalPageBox );
 
-    Assert.assertEquals(6, MatchFactory.findElementsByNodeType(logicalPageBox, LayoutNodeTypes.TYPE_BOX_PARAGRAPH).length);
-    Assert.assertEquals(13, MatchFactory.findElementsByNodeType(logicalPageBox, LayoutNodeTypes.TYPE_NODE_TEXT).length);
+    Assert.assertEquals( 6,
+      MatchFactory.findElementsByNodeType( logicalPageBox, LayoutNodeTypes.TYPE_BOX_PARAGRAPH ).length );
+    Assert
+      .assertEquals( 13, MatchFactory.findElementsByNodeType( logicalPageBox, LayoutNodeTypes.TYPE_NODE_TEXT ).length );
 
-    TestPdfLogicalPageDrawable pdf = createDrawableForTest(report, logicalPageBox);
+    TestPdfLogicalPageDrawable pdf = createDrawableForTest( report, logicalPageBox );
     pdf.draw();
-    Assert.assertEquals(13, pdf.textRendering);
+    Assert.assertEquals( 13, pdf.textRendering );
   }
 
   @Test
-  public void testTextRenderingComplex() throws Exception
-  {
-    URL resource = getClass().getResource("Prd-5321.prpt");
+  public void testTextRenderingComplex() throws Exception {
+    URL resource = getClass().getResource( "Prd-5321.prpt" );
     ResourceManager mgr = new ResourceManager();
-    MasterReport report = (MasterReport) mgr.createDirectly(resource, MasterReport.class).getResource();
-    report.getReportConfiguration().setConfigProperty(ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY, "true");
+    MasterReport report = (MasterReport) mgr.createDirectly( resource, MasterReport.class ).getResource();
+    report.getReportConfiguration()
+      .setConfigProperty( ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY, "true" );
 
-    LogicalPageBox logicalPageBox = DebugReportRunner.layoutPage(report, 0);
+    LogicalPageBox logicalPageBox = DebugReportRunner.layoutPage( report, 0 );
 
-    Assert.assertEquals(6, MatchFactory.findElementsByNodeType(logicalPageBox, LayoutNodeTypes.TYPE_BOX_PARAGRAPH).length);
-    Assert.assertEquals(8, MatchFactory.findElementsByNodeType(logicalPageBox, LayoutNodeTypes.TYPE_NODE_COMPLEX_TEXT).length);
+    Assert.assertEquals( 6,
+      MatchFactory.findElementsByNodeType( logicalPageBox, LayoutNodeTypes.TYPE_BOX_PARAGRAPH ).length );
+    Assert.assertEquals( 8,
+      MatchFactory.findElementsByNodeType( logicalPageBox, LayoutNodeTypes.TYPE_NODE_COMPLEX_TEXT ).length );
 
 
-    TestPdfLogicalPageDrawable pdf = createDrawableForTest(report, logicalPageBox);
+    TestPdfLogicalPageDrawable pdf = createDrawableForTest( report, logicalPageBox );
     pdf.draw();
-    Assert.assertEquals(8, pdf.textRendering);
+    Assert.assertEquals( 8, pdf.textRendering );
   }
 
-  protected TestPdfLogicalPageDrawable createDrawableForTest(final MasterReport report,
-                                                             final LogicalPageBox logicalPageBox) throws DocumentException
-  {
+  protected TestPdfLogicalPageDrawable createDrawableForTest( final MasterReport report,
+                                                              final LogicalPageBox logicalPageBox )
+    throws DocumentException {
     Document document = new Document();
-    PdfWriter writer = PdfWriter.getInstance(document, new NullOutputStream());
+    PdfWriter writer = PdfWriter.getInstance( document, new NullOutputStream() );
     writer.setLinearPageMode();
     writer.open();
 
-    document.setPageSize(new com.lowagie.text.Rectangle(700, 500));
-    document.setMargins(10, 10, 10, 10);
+    document.setPageSize( new com.lowagie.text.Rectangle( 700, 500 ) );
+    document.setMargins( 10, 10, 10, 10 );
     document.open();
 
 
-    PdfOutputProcessorMetaData metaData = new PdfOutputProcessorMetaData(new ITextFontStorage(BaseFontModule.getFontRegistry()));
-    metaData.initialize(report.getConfiguration());
-    final Graphics2D graphics = new PdfGraphics2D(writer.getDirectContent(), 700, 500, metaData);
+    PdfOutputProcessorMetaData metaData =
+      new PdfOutputProcessorMetaData( new ITextFontStorage( BaseFontModule.getFontRegistry() ) );
+    metaData.initialize( report.getConfiguration() );
+    final Graphics2D graphics = new PdfGraphics2D( writer.getDirectContent(), 700, 500, metaData );
 
 
-    TestPdfLogicalPageDrawable pdf = new TestPdfLogicalPageDrawable(writer, new LFUMap<ResourceKey, Image>(10), '5', graphics);
-    pdf.init(logicalPageBox, metaData, report.getResourceManager(), logicalPageBox.getPageGrid().getPage(0, 0));
+    TestPdfLogicalPageDrawable pdf =
+      new TestPdfLogicalPageDrawable( writer, new LFUMap<ResourceKey, Image>( 10 ), '5', graphics );
+    pdf.init( logicalPageBox, metaData, report.getResourceManager(), logicalPageBox.getPageGrid().getPage( 0, 0 ) );
     return pdf;
   }
 }

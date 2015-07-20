@@ -17,9 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.core.layout;
 
-import java.awt.print.PageFormat;
-import java.net.URL;
-
 import junit.framework.TestCase;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineCoreModule;
@@ -37,183 +34,158 @@ import org.pentaho.reporting.engine.classic.core.util.geom.StrictGeomUtility;
 import org.pentaho.reporting.libraries.resourceloader.Resource;
 import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 
-public class MinChunkWidthTest extends TestCase
-{
-  public MinChunkWidthTest()
-  {
+import java.awt.print.PageFormat;
+import java.net.URL;
+
+public class MinChunkWidthTest extends TestCase {
+  public MinChunkWidthTest() {
   }
 
-  public MinChunkWidthTest(final String s)
-  {
-    super(s);
+  public MinChunkWidthTest( final String s ) {
+    super( s );
   }
 
-  protected void setUp() throws Exception
-  {
+  protected void setUp() throws Exception {
     ClassicEngineBoot.getInstance().start();
   }
 
-  public void testMinChunkWidthLegacyMode() throws Exception
-  {
+  public void testMinChunkWidthLegacyMode() throws Exception {
     final MasterReport basereport = new MasterReport();
-    basereport.setPageDefinition(new SimplePageDefinition(new PageFormat()));
-    basereport.setCompatibilityLevel(ClassicEngineBoot.computeVersionId(3, 8, 0));
-    basereport.getReportConfiguration().setConfigProperty(ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY, "false");
+    basereport.setPageDefinition( new SimplePageDefinition( new PageFormat() ) );
+    basereport.setCompatibilityLevel( ClassicEngineBoot.computeVersionId( 3, 8, 0 ) );
+    basereport.getReportConfiguration()
+      .setConfigProperty( ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY, "false" );
 
-    final URL target = LayoutTest.class.getResource("min-chunkwidth.xml");
+    final URL target = LayoutTest.class.getResource( "min-chunkwidth.xml" );
     final ResourceManager rm = new ResourceManager();
     rm.registerDefaults();
-    final Resource directly = rm.createDirectly(target, MasterReport.class);
+    final Resource directly = rm.createDirectly( target, MasterReport.class );
     final MasterReport report = (MasterReport) directly.getResource();
 
     final LogicalPageBox logicalPageBox = DebugReportRunner.layoutSingleBand
-        (basereport, report.getReportHeader(), true, false);
+      ( basereport, report.getReportHeader(), true, false );
     // simple test, we assert that all paragraph-poolboxes are on either 485000 or 400000
     // and that only two lines exist for each
     //ModelPrinter.INSTANCE.print(logicalPageBox);
-    new ValidateRunner(true, false).startValidation(logicalPageBox);
+    new ValidateRunner( true, false ).startValidation( logicalPageBox );
   }
 
-  public void testMinChunkWidthSimpleText() throws Exception
-  {
+  public void testMinChunkWidthSimpleText() throws Exception {
     final MasterReport basereport = new MasterReport();
-    basereport.setPageDefinition(new SimplePageDefinition(new PageFormat()));
-    basereport.setCompatibilityLevel(null);
-    basereport.getReportConfiguration().setConfigProperty(ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY, "false");
+    basereport.setPageDefinition( new SimplePageDefinition( new PageFormat() ) );
+    basereport.setCompatibilityLevel( null );
+    basereport.getReportConfiguration()
+      .setConfigProperty( ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY, "false" );
 
-    final URL target = LayoutTest.class.getResource("min-chunkwidth.xml");
+    final URL target = LayoutTest.class.getResource( "min-chunkwidth.xml" );
     final ResourceManager rm = new ResourceManager();
     rm.registerDefaults();
-    final Resource directly = rm.createDirectly(target, MasterReport.class);
+    final Resource directly = rm.createDirectly( target, MasterReport.class );
     final MasterReport report = (MasterReport) directly.getResource();
 
     final LogicalPageBox logicalPageBox = DebugReportRunner.layoutSingleBand
-        (basereport, report.getReportHeader(), true, false);
+      ( basereport, report.getReportHeader(), true, false );
     // simple test, we assert that all paragraph-poolboxes are on either 485000 or 400000
     // and that only two lines exist for each
     //ModelPrinter.INSTANCE.print(logicalPageBox);
-    new ValidateRunner(false, false).startValidation(logicalPageBox);
+    new ValidateRunner( false, false ).startValidation( logicalPageBox );
   }
 
-  public void testMinChunkWidth() throws Exception
-  {
-    if (DebugReportRunner.isSafeToTestComplexText() == false)
-    {
+  public void testMinChunkWidth() throws Exception {
+    if ( DebugReportRunner.isSafeToTestComplexText() == false ) {
       return;
     }
 
     final MasterReport basereport = new MasterReport();
-    basereport.setPageDefinition(new SimplePageDefinition(new PageFormat()));
-    basereport.setCompatibilityLevel(null);
-    basereport.getReportConfiguration().setConfigProperty(ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY, "true");
+    basereport.setPageDefinition( new SimplePageDefinition( new PageFormat() ) );
+    basereport.setCompatibilityLevel( null );
+    basereport.getReportConfiguration()
+      .setConfigProperty( ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY, "true" );
 
-    final URL target = LayoutTest.class.getResource("min-chunkwidth.xml");
+    final URL target = LayoutTest.class.getResource( "min-chunkwidth.xml" );
     final ResourceManager rm = new ResourceManager();
     rm.registerDefaults();
-    final Resource directly = rm.createDirectly(target, MasterReport.class);
+    final Resource directly = rm.createDirectly( target, MasterReport.class );
     final MasterReport report = (MasterReport) directly.getResource();
-    report.getStyle().setStyleProperty(TextStyleKeys.WORDBREAK, true);
+    report.getStyle().setStyleProperty( TextStyleKeys.WORDBREAK, true );
 
     final LogicalPageBox logicalPageBox = DebugReportRunner.layoutSingleBand
-        (basereport, report.getReportHeader(), true, false);
+      ( basereport, report.getReportHeader(), true, false );
     // simple test, we assert that all paragraph-poolboxes are on either 485 or 400
     // and that only two lines exist for each
-    ModelPrinter.INSTANCE.print(logicalPageBox);
-    new ValidateRunner(false, true).startValidation(logicalPageBox);
+    ModelPrinter.INSTANCE.print( logicalPageBox );
+    new ValidateRunner( false, true ).startValidation( logicalPageBox );
   }
 
-  @SuppressWarnings("HardCodedStringLiteral")
-  private static class ValidateRunner extends IterateStructuralProcessStep
-  {
+  @SuppressWarnings( "HardCodedStringLiteral" )
+  private static class ValidateRunner extends IterateStructuralProcessStep {
     private final boolean complexText;
     private boolean legacyMode;
 
-    private ValidateRunner(final boolean legacyMode,
-                           final boolean complexText)
-    {
+    private ValidateRunner( final boolean legacyMode,
+                            final boolean complexText ) {
       this.legacyMode = legacyMode;
       this.complexText = complexText;
     }
 
-    protected boolean startCanvasBox(final CanvasRenderBox box)
-    {
-      return testBox(box);
+    protected boolean startCanvasBox( final CanvasRenderBox box ) {
+      return testBox( box );
     }
 
-    protected boolean startBlockBox(final BlockRenderBox box)
-    {
-      return testBox(box);
+    protected boolean startBlockBox( final BlockRenderBox box ) {
+      return testBox( box );
     }
 
-    protected boolean startOtherBox(final RenderBox box)
-    {
-      return testBox(box);
+    protected boolean startOtherBox( final RenderBox box ) {
+      return testBox( box );
     }
 
-    protected boolean startRowBox(final RenderBox box)
-    {
-      return testBox(box);
+    protected boolean startRowBox( final RenderBox box ) {
+      return testBox( box );
     }
 
-    private boolean testBox(final RenderNode box)
-    {
+    private boolean testBox( final RenderNode box ) {
       final String s = box.getName();
-      if (s == null)
-      {
+      if ( s == null ) {
         return true;
       }
-      final float expectedHeight = (s.endsWith("i") || s.contains("-i")) ? 8 : 10;
+      final float expectedHeight = ( s.endsWith( "i" ) || s.contains( "-i" ) ) ? 8 : 10;
 
-      if (s.startsWith("test-"))
-      {
-        assertEquals("Width = 468: " + s, StrictGeomUtility.toInternalValue(468), box.getWidth());
-        if (!complexText)
-        {
-          assertEquals("Height = '" + expectedHeight + "' (PRD-4255): " + s, StrictGeomUtility.toInternalValue(expectedHeight), box.getHeight());
+      if ( s.startsWith( "test-" ) ) {
+        assertEquals( "Width = 468: " + s, StrictGeomUtility.toInternalValue( 468 ), box.getWidth() );
+        if ( !complexText ) {
+          assertEquals( "Height = '" + expectedHeight + "' (PRD-4255): " + s,
+            StrictGeomUtility.toInternalValue( expectedHeight ), box.getHeight() );
         }
-      }
-      else if (s.startsWith("canvas-"))
-      {
-        assertTrue("Width is not zero!: " + s, box.getWidth() != 0);
-        if (!complexText)
-        {
-          assertEquals("Height = 8 (PRD-4255): " + s, StrictGeomUtility.toInternalValue(expectedHeight), box.getHeight());
+      } else if ( s.startsWith( "canvas-" ) ) {
+        assertTrue( "Width is not zero!: " + s, box.getWidth() != 0 );
+        if ( !complexText ) {
+          assertEquals( "Height = 8 (PRD-4255): " + s, StrictGeomUtility.toInternalValue( expectedHeight ),
+            box.getHeight() );
         }
-      }
-      else if (s.startsWith("label-b"))
-      {
+      } else if ( s.startsWith( "label-b" ) ) {
         // thats (nearly) random ..
-      }
-      else if (s.startsWith("label-cb"))
-      {
-        if (legacyMode)
-        {
+      } else if ( s.startsWith( "label-cb" ) ) {
+        if ( legacyMode ) {
           // assert that the element is 468
-          assertEquals("Width = 468 in legacy mode; " + s, StrictGeomUtility.toInternalValue(468), box.getWidth());
+          assertEquals( "Width = 468 in legacy mode; " + s, StrictGeomUtility.toInternalValue( 468 ), box.getWidth() );
+        } else {
+          assertEquals( "Width = 100; " + s, StrictGeomUtility.toInternalValue( 100 ), box.getWidth() );
         }
-        else
-        {
-          assertEquals("Width = 100; " + s, StrictGeomUtility.toInternalValue(100), box.getWidth());
+        if ( !complexText ) {
+          assertEquals( "Height = 10; " + s, StrictGeomUtility.toInternalValue( 10 ), box.getHeight() );
         }
-        if (!complexText)
-        {
-          assertEquals("Height = 10; " + s, StrictGeomUtility.toInternalValue(10), box.getHeight());
-        }
-      }
-      else if (s.startsWith("label-"))
-      {
-        assertEquals("Width = 100; " + s, StrictGeomUtility.toInternalValue(100), box.getWidth());
-        if (!complexText)
-        {
-          assertEquals("Height = 10; " + s, StrictGeomUtility.toInternalValue(10), box.getHeight());
+      } else if ( s.startsWith( "label-" ) ) {
+        assertEquals( "Width = 100; " + s, StrictGeomUtility.toInternalValue( 100 ), box.getWidth() );
+        if ( !complexText ) {
+          assertEquals( "Height = 10; " + s, StrictGeomUtility.toInternalValue( 10 ), box.getHeight() );
         }
       }
       return true;
     }
 
-    public void startValidation(final LogicalPageBox logicalPageBox)
-    {
-      startProcessing(logicalPageBox);
+    public void startValidation( final LogicalPageBox logicalPageBox ) {
+      startProcessing( logicalPageBox );
     }
   }
 }

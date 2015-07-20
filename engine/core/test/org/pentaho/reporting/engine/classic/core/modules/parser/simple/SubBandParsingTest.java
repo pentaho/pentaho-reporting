@@ -17,8 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.parser.simple;
 
-import java.net.URL;
-
 import junit.framework.TestCase;
 import org.pentaho.reporting.engine.classic.core.Band;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
@@ -27,55 +25,49 @@ import org.pentaho.reporting.engine.classic.core.testsupport.DebugReportRunner;
 import org.pentaho.reporting.libraries.resourceloader.Resource;
 import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 
-public class SubBandParsingTest extends TestCase
-{
-  public SubBandParsingTest()
-  {
+import java.net.URL;
+
+public class SubBandParsingTest extends TestCase {
+  public SubBandParsingTest() {
   }
 
-  public SubBandParsingTest(final String s)
-  {
-    super(s);
+  public SubBandParsingTest( final String s ) {
+    super( s );
   }
 
-  protected void setUp() throws Exception
-  {
+  protected void setUp() throws Exception {
     ClassicEngineBoot.getInstance().start();
   }
 
-  public void testParsing() throws Exception
-  {
-    final URL url = getClass().getResource("subband.xml");
-    assertNotNull(url);
+  public void testParsing() throws Exception {
+    final URL url = getClass().getResource( "subband.xml" );
+    assertNotNull( url );
     final ResourceManager resourceManager = new ResourceManager();
     resourceManager.registerDefaults();
-    final Resource directly = resourceManager.createDirectly(url, MasterReport.class);
+    final Resource directly = resourceManager.createDirectly( url, MasterReport.class );
     final MasterReport report = (MasterReport) directly.getResource();
 
 
     final Band band = report.getReportHeader();
-    assertEquals(2, band.getElementCount());
-    for (int i = 0; i < 2; i++)
-    {
-      final Band subband = (Band) band.getElement(i);
-      assertEquals(2, subband.getElementCount());
-      for (int x = 0; x < 2; x++)
-      {
-        final Band bandLowest = (Band) subband.getElement(x);
-        assertTrue(bandLowest.getElementCount() > 0);
+    assertEquals( 2, band.getElementCount() );
+    for ( int i = 0; i < 2; i++ ) {
+      final Band subband = (Band) band.getElement( i );
+      assertEquals( 2, subband.getElementCount() );
+      for ( int x = 0; x < 2; x++ ) {
+        final Band bandLowest = (Band) subband.getElement( x );
+        assertTrue( bandLowest.getElementCount() > 0 );
       }
     }
   }
 
-  public void testPreview() throws Exception
-  {
-    final URL url = getClass().getResource("subband.xml");
-    assertNotNull(url);
+  public void testPreview() throws Exception {
+    final URL url = getClass().getResource( "subband.xml" );
+    assertNotNull( url );
     final ResourceManager resourceManager = new ResourceManager();
     resourceManager.registerDefaults();
-    final Resource directly = resourceManager.createDirectly(url, MasterReport.class);
+    final Resource directly = resourceManager.createDirectly( url, MasterReport.class );
     final MasterReport report = (MasterReport) directly.getResource();
 
-    DebugReportRunner.execGraphics2D(report);
+    DebugReportRunner.execGraphics2D( report );
   }
 }

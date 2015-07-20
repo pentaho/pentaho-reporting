@@ -20,17 +20,14 @@ package org.pentaho.reporting.engine.classic.core.filter.types.bands;
 import org.pentaho.reporting.engine.classic.core.GroupHeader;
 import org.pentaho.reporting.engine.classic.core.ReportElement;
 
-public class GroupHeaderType extends AbstractSectionType
-{
+public class GroupHeaderType extends AbstractSectionType {
   public static final GroupHeaderType INSTANCE = new GroupHeaderType();
-  
-  public GroupHeaderType()
-  {
-    super("group-header", false);
+
+  public GroupHeaderType() {
+    super( "group-header", false );
   }
 
-  public ReportElement create()
-  {
+  public ReportElement create() {
     return new GroupHeader();
   }
 }

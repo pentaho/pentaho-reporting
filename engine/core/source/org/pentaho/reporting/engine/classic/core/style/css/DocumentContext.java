@@ -21,8 +21,7 @@ import org.pentaho.reporting.engine.classic.core.style.css.namespaces.NamespaceC
 import org.pentaho.reporting.libraries.resourceloader.ResourceKey;
 import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 
-public interface DocumentContext
-{
+public interface DocumentContext {
   ResourceManager getResourceManager();
 
   ResourceKey getContextKey();

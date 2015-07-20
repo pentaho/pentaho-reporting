@@ -24,14 +24,12 @@ import java.net.URL;
  *
  * @author Thomas Morgner
  */
-public class URLClassFactory extends ClassFactoryImpl
-{
+public class URLClassFactory extends ClassFactoryImpl {
 
   /**
    * Creates a new URL class factory.
    */
-  public URLClassFactory()
-  {
-    registerClass(URL.class, new URLObjectDescription());
+  public URLClassFactory() {
+    registerClass( URL.class, new URLObjectDescription() );
   }
 }

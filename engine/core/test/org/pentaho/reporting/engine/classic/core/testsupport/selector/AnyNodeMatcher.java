@@ -19,15 +19,12 @@ package org.pentaho.reporting.engine.classic.core.testsupport.selector;
 
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderNode;
 
-public class AnyNodeMatcher extends ElementMatcher
-{
-  public AnyNodeMatcher()
-  {
-    super("*");
+public class AnyNodeMatcher extends ElementMatcher {
+  public AnyNodeMatcher() {
+    super( "*" );
   }
 
-  public boolean matches(final RenderNode node)
-  {
-    return matchAttributes(node);
+  public boolean matches( final RenderNode node ) {
+    return matchAttributes( node );
   }
 }

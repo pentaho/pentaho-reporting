@@ -17,12 +17,11 @@
 
 package org.pentaho.reporting.engine.classic.core.metadata.builder;
 
-import java.beans.PropertyEditor;
-
 import org.pentaho.reporting.engine.classic.core.metadata.AttributeCore;
 
-public class AttributeMetaDataBuilder extends MetaDataBuilder<AttributeMetaDataBuilder>
-{
+import java.beans.PropertyEditor;
+
+public class AttributeMetaDataBuilder extends MetaDataBuilder<AttributeMetaDataBuilder> {
 
   private String valueRole;
   private boolean bulk;
@@ -37,133 +36,109 @@ public class AttributeMetaDataBuilder extends MetaDataBuilder<AttributeMetaDataB
 
   private Class<? extends PropertyEditor> propertyEditor;
 
-  public AttributeMetaDataBuilder()
-  {
+  public AttributeMetaDataBuilder() {
   }
 
-  public AttributeMetaDataBuilder propertyEditor(Class<? extends PropertyEditor> propertyEditor)
-  {
+  public AttributeMetaDataBuilder propertyEditor( Class<? extends PropertyEditor> propertyEditor ) {
     this.propertyEditor = propertyEditor;
     return self();
   }
 
-  public AttributeMetaDataBuilder valueRole(String valueRole)
-  {
+  public AttributeMetaDataBuilder valueRole( String valueRole ) {
     this.valueRole = valueRole;
     return self();
   }
 
-  public AttributeMetaDataBuilder core(AttributeCore core)
-  {
+  public AttributeMetaDataBuilder core( AttributeCore core ) {
     this.core = core;
     return self();
   }
 
-  public AttributeMetaDataBuilder bulk(boolean v)
-  {
+  public AttributeMetaDataBuilder bulk( boolean v ) {
     this.bulk = v;
     return self();
   }
 
-  public AttributeMetaDataBuilder designTime(boolean v)
-  {
+  public AttributeMetaDataBuilder designTime( boolean v ) {
     this.designTime = v;
     return self();
   }
 
-  public AttributeMetaDataBuilder computed(boolean v)
-  {
+  public AttributeMetaDataBuilder computed( boolean v ) {
     this.computed = v;
     return self();
   }
 
-  public AttributeMetaDataBuilder mandatory(boolean v)
-  {
+  public AttributeMetaDataBuilder mandatory( boolean v ) {
     this.mandatory = v;
     return self();
   }
 
-  public AttributeMetaDataBuilder transientFlag(boolean v)
-  {
+  public AttributeMetaDataBuilder transientFlag( boolean v ) {
     this.transientFlag = v;
     return self();
   }
 
-  public AttributeMetaDataBuilder namespace(final String namespace)
-  {
+  public AttributeMetaDataBuilder namespace( final String namespace ) {
     this.namespace = namespace;
     return self();
   }
 
-  public AttributeMetaDataBuilder namespacePrefix(final String namespace)
-  {
+  public AttributeMetaDataBuilder namespacePrefix( final String namespace ) {
     this.namespacePrefix = namespace;
     return self();
   }
 
-  public AttributeMetaDataBuilder targetClass(final Class<?> targetClass)
-  {
+  public AttributeMetaDataBuilder targetClass( final Class<?> targetClass ) {
     this.targetClass = targetClass;
     return self();
   }
 
-  public String getValueRole()
-  {
+  public String getValueRole() {
     return valueRole;
   }
 
-  public boolean isBulk()
-  {
+  public boolean isBulk() {
     return bulk;
   }
 
-  public String getNamespace()
-  {
+  public String getNamespace() {
     return namespace;
   }
 
-  public Class<?> getTargetClass()
-  {
+  public Class<?> getTargetClass() {
     return targetClass;
   }
 
-  public boolean isMandatory()
-  {
+  public boolean isMandatory() {
     return mandatory;
   }
 
-  public boolean isComputed()
-  {
+  public boolean isComputed() {
     return computed;
   }
 
-  public boolean isTransientFlag()
-  {
+  public boolean isTransientFlag() {
     return transientFlag;
   }
 
-  public boolean isDesignTime()
-  {
+  public boolean isDesignTime() {
     return designTime;
   }
 
-  public AttributeCore getCore()
-  {
+  public AttributeCore getCore() {
     return core;
   }
 
-  public String getNamespacePrefix()
-  {
+  public String getNamespacePrefix() {
     return namespacePrefix;
   }
 
-  public Class<? extends PropertyEditor> getPropertyEditor()
-  {
+  public Class<? extends PropertyEditor> getPropertyEditor() {
     return propertyEditor;
   }
 
-  protected AttributeMetaDataBuilder self()
-  {
+  protected AttributeMetaDataBuilder self() {
     return this;
   }
 }

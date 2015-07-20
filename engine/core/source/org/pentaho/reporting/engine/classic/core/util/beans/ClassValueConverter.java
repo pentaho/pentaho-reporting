@@ -25,40 +25,30 @@ import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
  *
  * @author Thomas Morgner
  */
-public class ClassValueConverter implements ValueConverter
-{
-  public ClassValueConverter()
-  {
+public class ClassValueConverter implements ValueConverter {
+  public ClassValueConverter() {
   }
 
-  public String toAttributeValue(final Object o) throws BeanException
-  {
-    if (o == null)
-    {
+  public String toAttributeValue( final Object o ) throws BeanException {
+    if ( o == null ) {
       throw new NullPointerException();
     }
-    if (o instanceof Class)
-    {
+    if ( o instanceof Class ) {
       final Class c = (Class) o;
       return c.getName();
     }
-    throw new BeanException("Failed to convert object of type " + o.getClass() + ": Not a Class.");
+    throw new BeanException( "Failed to convert object of type " + o.getClass() + ": Not a Class." );
   }
 
-  public Object toPropertyValue(final String s) throws BeanException
-  {
-    if (s == null)
-    {
+  public Object toPropertyValue( final String s ) throws BeanException {
+    if ( s == null ) {
       throw new NullPointerException();
     }
-    try
-    {
-      final ClassLoader loader = ObjectUtilities.getClassLoader(ClassValueConverter.class);
-      return Class.forName(CompatibilityMapperUtil.mapClassName(s), false, loader);
-    }
-    catch (Throwable e)
-    {
-      throw new BeanException("Specified class does not exist or cannot be loaded.", e);
+    try {
+      final ClassLoader loader = ObjectUtilities.getClassLoader( ClassValueConverter.class );
+      return Class.forName( CompatibilityMapperUtil.mapClassName( s ), false, loader );
+    } catch ( Throwable e ) {
+      throw new BeanException( "Specified class does not exist or cannot be loaded.", e );
     }
   }
 }

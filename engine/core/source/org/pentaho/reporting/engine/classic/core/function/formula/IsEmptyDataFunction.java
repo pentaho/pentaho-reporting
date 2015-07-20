@@ -26,28 +26,23 @@ import org.pentaho.reporting.libraries.formula.lvalues.TypeValuePair;
 import org.pentaho.reporting.libraries.formula.typing.coretypes.LogicalType;
 
 
-public class IsEmptyDataFunction implements Function
-{
-  public IsEmptyDataFunction()
-  {
+public class IsEmptyDataFunction implements Function {
+  public IsEmptyDataFunction() {
   }
 
-  public String getCanonicalName()
-  {
+  public String getCanonicalName() {
     return "ISEMPTYDATA";
   }
 
-  public TypeValuePair evaluate(final FormulaContext context,
-                                final ParameterCallback parameters) throws EvaluationException
-  {
+  public TypeValuePair evaluate( final FormulaContext context,
+                                 final ParameterCallback parameters ) throws EvaluationException {
     final ReportFormulaContext rfc = (ReportFormulaContext) context;
     final boolean value = rfc.isResultSetEmpty();
 
-    if (value)
-    {
-      return new TypeValuePair(LogicalType.TYPE, Boolean.TRUE);
+    if ( value ) {
+      return new TypeValuePair( LogicalType.TYPE, Boolean.TRUE );
     }
 
-    return new TypeValuePair(LogicalType.TYPE, Boolean.FALSE);
+    return new TypeValuePair( LogicalType.TYPE, Boolean.FALSE );
   }
 }

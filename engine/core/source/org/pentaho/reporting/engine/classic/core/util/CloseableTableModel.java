@@ -24,8 +24,7 @@ import javax.swing.table.TableModel;
  *
  * @author Thomas Morgner
  */
-public interface CloseableTableModel extends TableModel
-{
+public interface CloseableTableModel extends TableModel {
   /**
    * If this model has disposeable resources assigned, close them or dispose them.
    */

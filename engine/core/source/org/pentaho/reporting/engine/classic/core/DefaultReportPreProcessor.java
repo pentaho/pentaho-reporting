@@ -22,9 +22,7 @@ package org.pentaho.reporting.engine.classic.core;
  *
  * @author Thomas Morgner
  */
-public class DefaultReportPreProcessor extends AbstractReportPreProcessor
-{
-  public DefaultReportPreProcessor()
-  {
+public class DefaultReportPreProcessor extends AbstractReportPreProcessor {
+  public DefaultReportPreProcessor() {
   }
 }

@@ -27,36 +27,23 @@ import org.pentaho.reporting.libraries.xmlns.parser.XmlReadHandler;
  *
  * @author Thomas Morgner
  */
-public class SimpleSubReportXmlFactoryModule implements XmlFactoryModule
-{
-  public SimpleSubReportXmlFactoryModule()
-  {
+public class SimpleSubReportXmlFactoryModule implements XmlFactoryModule {
+  public SimpleSubReportXmlFactoryModule() {
   }
 
-  public int getDocumentSupport(final XmlDocumentInfo documentInfo)
-  {
+  public int getDocumentSupport( final XmlDocumentInfo documentInfo ) {
     final String rootNamespace = documentInfo.getRootElementNameSpace();
-    if (rootNamespace != null && rootNamespace.length() > 0)
-    {
-      if (SimpleParserModule.NAMESPACE.equals(rootNamespace) == false)
-      {
+    if ( rootNamespace != null && rootNamespace.length() > 0 ) {
+      if ( SimpleParserModule.NAMESPACE.equals( rootNamespace ) == false ) {
         return XmlFactoryModule.NOT_RECOGNIZED;
-      }
-      else if ("report".equals(documentInfo.getRootElement()))
-      {
+      } else if ( "report".equals( documentInfo.getRootElement() ) ) {
+        return XmlFactoryModule.RECOGNIZED_BY_NAMESPACE;
+      } else if ( "sub-report".equals( documentInfo.getRootElement() ) ) {
         return XmlFactoryModule.RECOGNIZED_BY_NAMESPACE;
       }
-      else if ("sub-report".equals(documentInfo.getRootElement()))
-      {
-        return XmlFactoryModule.RECOGNIZED_BY_NAMESPACE;
-      }
-    }
-    else if ("report".equals(documentInfo.getRootElement()))
-    {
+    } else if ( "report".equals( documentInfo.getRootElement() ) ) {
       return XmlFactoryModule.RECOGNIZED_BY_TAGNAME;
-    }
-    else if ("sub-report".equals(documentInfo.getRootElement()))
-    {
+    } else if ( "sub-report".equals( documentInfo.getRootElement() ) ) {
       return XmlFactoryModule.RECOGNIZED_BY_TAGNAME;
     }
 
@@ -64,13 +51,11 @@ public class SimpleSubReportXmlFactoryModule implements XmlFactoryModule
 
   }
 
-  public String getDefaultNamespace(final XmlDocumentInfo documentInfo)
-  {
+  public String getDefaultNamespace( final XmlDocumentInfo documentInfo ) {
     return SimpleParserModule.NAMESPACE;
   }
 
-  public XmlReadHandler createReadHandler(final XmlDocumentInfo documentInfo)
-  {
+  public XmlReadHandler createReadHandler( final XmlDocumentInfo documentInfo ) {
     return new SimpleSubReportReadHandler();
   }
 }

@@ -23,12 +23,10 @@ import org.pentaho.reporting.engine.classic.core.modules.parser.base.PropertyAtt
 import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 import org.xml.sax.SAXException;
 
-public class DrawableRefReadHandler extends AbstractElementReadHandler
-{
+public class DrawableRefReadHandler extends AbstractElementReadHandler {
   private ContentElementFactory elementFactory;
 
-  public DrawableRefReadHandler()
-  {
+  public DrawableRefReadHandler() {
     this.elementFactory = new ContentElementFactory();
   }
 
@@ -38,25 +36,22 @@ public class DrawableRefReadHandler extends AbstractElementReadHandler
    * @param atts the attributes.
    * @throws org.xml.sax.SAXException if there is a parsing error.
    */
-  protected void startParsing(final PropertyAttributes atts)
-      throws SAXException
-  {
-    super.startParsing(atts);
+  protected void startParsing( final PropertyAttributes atts )
+    throws SAXException {
+    super.startParsing( atts );
 
-    final String content = atts.getValue(getUri(), "src");
-    if (content == null)
-    {
-      throw new SAXException("Required attribute 'src' is missing.");
+    final String content = atts.getValue( getUri(), "src" );
+    if ( content == null ) {
+      throw new SAXException( "Required attribute 'src' is missing." );
     }
 
 
-    elementFactory.setContent(content);
+    elementFactory.setContent( content );
     final ResourceManager resourceManager = getRootHandler().getResourceManager();
-    elementFactory.setBaseURL(resourceManager.toURL(getRootHandler().getContext()));
+    elementFactory.setBaseURL( resourceManager.toURL( getRootHandler().getContext() ) );
   }
 
-  protected ElementFactory getElementFactory()
-  {
+  protected ElementFactory getElementFactory() {
     return elementFactory;
   }
 }

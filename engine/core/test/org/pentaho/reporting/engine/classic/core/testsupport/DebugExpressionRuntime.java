@@ -17,28 +17,25 @@
 
 package org.pentaho.reporting.engine.classic.core.testsupport;
 
-import javax.swing.table.TableModel;
-
 import org.pentaho.reporting.engine.classic.core.DataRow;
 import org.pentaho.reporting.engine.classic.core.function.GenericExpressionRuntime;
 import org.pentaho.reporting.engine.classic.core.function.ProcessingContext;
 
-public class DebugExpressionRuntime extends GenericExpressionRuntime
-{
-  public DebugExpressionRuntime()
-  {
+import javax.swing.table.TableModel;
+
+public class DebugExpressionRuntime extends GenericExpressionRuntime {
+  public DebugExpressionRuntime() {
   }
 
-  public DebugExpressionRuntime(final TableModel data, final int currentRow, final ProcessingContext processingContext)
-  {
-    super(data, currentRow, processingContext);
+  public DebugExpressionRuntime( final TableModel data, final int currentRow,
+                                 final ProcessingContext processingContext ) {
+    super( data, currentRow, processingContext );
   }
 
-  public DebugExpressionRuntime(final DataRow dataRow,
-                                final TableModel data,
-                                final int currentRow,
-                                final ProcessingContext processingContext)
-  {
-    super(dataRow, data, currentRow, processingContext);
+  public DebugExpressionRuntime( final DataRow dataRow,
+                                 final TableModel data,
+                                 final int currentRow,
+                                 final ProcessingContext processingContext ) {
+    super( dataRow, data, currentRow, processingContext );
   }
 }

@@ -17,22 +17,21 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.parser.ext.factory.elements;
 
-import java.io.Serializable;
-
 import org.pentaho.reporting.engine.classic.core.Element;
+
+import java.io.Serializable;
 
 /**
  * The interface that defines an element factory.
  *
  * @author Thomas Morgner
  */
-public interface ElementFactory extends Serializable
-{
+public interface ElementFactory extends Serializable {
   /**
    * Returns an element for the given type.
    *
    * @param type the type.
    * @return The element.
    */
-  public Element getElementForType(String type);
+  public Element getElementForType( String type );
 }

@@ -17,13 +17,13 @@
 
 package org.pentaho.reporting.engine.classic.core.filter;
 
+import org.pentaho.reporting.engine.classic.core.ReportElement;
+import org.pentaho.reporting.engine.classic.core.function.ExpressionRuntime;
+
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.text.Format;
 import java.util.Locale;
-
-import org.pentaho.reporting.engine.classic.core.ReportElement;
-import org.pentaho.reporting.engine.classic.core.function.ExpressionRuntime;
 
 /**
  * A filter that formats the numeric value from a data source to a string representation using the decimal number system
@@ -38,8 +38,7 @@ import org.pentaho.reporting.engine.classic.core.function.ExpressionRuntime;
  * @see java.text.NumberFormat
  * @see java.lang.Number
  */
-public class DecimalFormatFilter extends NumberFormatFilter
-{
+public class DecimalFormatFilter extends NumberFormatFilter {
   /**
    * The last locale used to convert numbers.
    */
@@ -52,9 +51,8 @@ public class DecimalFormatFilter extends NumberFormatFilter
   /**
    * DefaultConstructor, this object is initialized using a DecimalFormat with the default pattern for this locale.
    */
-  public DecimalFormatFilter()
-  {
-    setFormatter(new DecimalFormat());
+  public DecimalFormatFilter() {
+    setFormatter( new DecimalFormat() );
   }
 
   /**
@@ -63,8 +61,7 @@ public class DecimalFormatFilter extends NumberFormatFilter
    * @return the formatter.
    * @throws NullPointerException if the given format is null
    */
-  public DecimalFormat getDecimalFormat()
-  {
+  public DecimalFormat getDecimalFormat() {
     return (DecimalFormat) getFormatter();
   }
 
@@ -74,9 +71,8 @@ public class DecimalFormatFilter extends NumberFormatFilter
    * @param format the format.
    * @throws NullPointerException if the given format is null
    */
-  public void setDecimalFormat(final DecimalFormat format)
-  {
-    setFormatter(format);
+  public void setDecimalFormat( final DecimalFormat format ) {
+    setFormatter( format );
   }
 
   /**
@@ -86,10 +82,9 @@ public class DecimalFormatFilter extends NumberFormatFilter
    * @throws NullPointerException if the given format is null
    * @throws ClassCastException   if the format is no decimal format
    */
-  public void setFormatter(final Format format)
-  {
+  public void setFormatter( final Format format ) {
     final DecimalFormat dfmt = (DecimalFormat) format;
-    super.setFormatter(dfmt);
+    super.setFormatter( dfmt );
   }
 
   /**
@@ -97,8 +92,7 @@ public class DecimalFormatFilter extends NumberFormatFilter
    *
    * @return the pattern string of the format object contained in this filter.
    */
-  public String getFormatString()
-  {
+  public String getFormatString() {
     return getDecimalFormat().toPattern();
   }
 
@@ -107,9 +101,8 @@ public class DecimalFormatFilter extends NumberFormatFilter
    *
    * @param format the format string.
    */
-  public void setFormatString(final String format)
-  {
-    getDecimalFormat().applyPattern(format);
+  public void setFormatString( final String format ) {
+    getDecimalFormat().applyPattern( format );
     invalidateCache();
   }
 
@@ -118,8 +111,7 @@ public class DecimalFormatFilter extends NumberFormatFilter
    *
    * @return the localized pattern string of the format-object.
    */
-  public String getLocalizedFormatString()
-  {
+  public String getLocalizedFormatString() {
     return getDecimalFormat().toLocalizedPattern();
   }
 
@@ -128,9 +120,8 @@ public class DecimalFormatFilter extends NumberFormatFilter
    *
    * @param format the format string.
    */
-  public void setLocalizedFormatString(final String format)
-  {
-    getDecimalFormat().applyLocalizedPattern(format);
+  public void setLocalizedFormatString( final String format ) {
+    getDecimalFormat().applyLocalizedPattern( format );
     invalidateCache();
   }
 
@@ -141,8 +132,7 @@ public class DecimalFormatFilter extends NumberFormatFilter
    *
    * @return true, if the locale should not update the DateSymbols, false otherwise.
    */
-  public boolean isKeepState()
-  {
+  public boolean isKeepState() {
     return keepState;
   }
 
@@ -152,8 +142,7 @@ public class DecimalFormatFilter extends NumberFormatFilter
    *
    * @param keepState set to true, if the locale should not update the DateSymbols, false otherwise.
    */
-  public void setKeepState(final boolean keepState)
-  {
+  public void setKeepState( final boolean keepState ) {
     this.keepState = keepState;
   }
 
@@ -169,31 +158,26 @@ public class DecimalFormatFilter extends NumberFormatFilter
    * @param element
    * @return The formatted value.
    */
-  public Object getValue(final ExpressionRuntime runtime, final ReportElement element)
-  {
-    if (keepState == false && runtime != null)
-    {
+  public Object getValue( final ExpressionRuntime runtime, final ReportElement element ) {
+    if ( keepState == false && runtime != null ) {
       final Locale locale = runtime.getResourceBundleFactory().getLocale();
-      if (locale != null && locale.equals(lastLocale) == false)
-      {
+      if ( locale != null && locale.equals( lastLocale ) == false ) {
         lastLocale = locale;
-        getDecimalFormat().setDecimalFormatSymbols(new DecimalFormatSymbols(locale));
+        getDecimalFormat().setDecimalFormatSymbols( new DecimalFormatSymbols( locale ) );
         invalidateCache();
       }
     }
-    return super.getValue(runtime, element);
+    return super.getValue( runtime, element );
   }
 
 
-  public FormatSpecification getFormatString(final ExpressionRuntime runtime,
-                                             final ReportElement element,
-                                             FormatSpecification formatSpecification)
-  {
-    if (formatSpecification == null)
-    {
+  public FormatSpecification getFormatString( final ExpressionRuntime runtime,
+                                              final ReportElement element,
+                                              FormatSpecification formatSpecification ) {
+    if ( formatSpecification == null ) {
       formatSpecification = new FormatSpecification();
     }
-    formatSpecification.redefine(FormatSpecification.TYPE_DECIMAL_FORMAT, getFormatString());
+    formatSpecification.redefine( FormatSpecification.TYPE_DECIMAL_FORMAT, getFormatString() );
     return formatSpecification;
   }
 

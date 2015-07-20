@@ -24,15 +24,13 @@ import org.pentaho.reporting.engine.classic.core.filter.templates.DateFieldTempl
  *
  * @author Thomas Morgner
  */
-public class DateFieldTemplateDescription extends AbstractTemplateDescription
-{
+public class DateFieldTemplateDescription extends AbstractTemplateDescription {
   /**
    * Creates a new template description.
    *
    * @param name the name.
    */
-  public DateFieldTemplateDescription(final String name)
-  {
-    super(name, DateFieldTemplate.class, true);
+  public DateFieldTemplateDescription( final String name ) {
+    super( name, DateFieldTemplate.class, true );
   }
 }

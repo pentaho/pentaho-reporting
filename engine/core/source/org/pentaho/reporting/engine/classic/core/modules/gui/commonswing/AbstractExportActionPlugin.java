@@ -17,14 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.gui.commonswing;
 
-import java.awt.Dialog;
-import java.awt.Frame;
-import java.awt.Window;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-import java.lang.reflect.Constructor;
-import java.util.Locale;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
@@ -33,25 +25,27 @@ import org.pentaho.reporting.libraries.base.config.Configuration;
 import org.pentaho.reporting.libraries.base.util.Messages;
 import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
 
+import java.awt.*;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.lang.reflect.Constructor;
+import java.util.Locale;
+
 /**
  * Creation-Date: 02.12.2006, 14:21:07
  *
  * @author Thomas Morgner
  */
 public abstract class AbstractExportActionPlugin extends AbstractActionPlugin
-    implements ExportActionPlugin
-{
-  private static final Log logger = LogFactory.getLog(AbstractExportActionPlugin.class);
+  implements ExportActionPlugin {
+  private static final Log logger = LogFactory.getLog( AbstractExportActionPlugin.class );
 
-  private class ReportJobListener implements PropertyChangeListener
-  {
-    protected ReportJobListener()
-    {
+  private class ReportJobListener implements PropertyChangeListener {
+    protected ReportJobListener() {
     }
 
-    public void propertyChange(final PropertyChangeEvent evt)
-    {
-      setEnabled(eventSource.getReportJob() != null);
+    public void propertyChange( final PropertyChangeEvent evt ) {
+      setEnabled( eventSource.getReportJob() != null );
     }
   }
 
@@ -60,43 +54,39 @@ public abstract class AbstractExportActionPlugin extends AbstractActionPlugin
   private Messages messages;
   private ReportJobListener reportJobUpdateHandler;
 
-  protected AbstractExportActionPlugin()
-  {
+  protected AbstractExportActionPlugin() {
     reportJobUpdateHandler = new ReportJobListener();
-    messages = new Messages(Locale.getDefault(), SwingCommonModule.BUNDLE_NAME,
-        ObjectUtilities.getClassLoader(SwingCommonModule.class));
+    messages = new Messages( Locale.getDefault(), SwingCommonModule.BUNDLE_NAME,
+      ObjectUtilities.getClassLoader( SwingCommonModule.class ) );
   }
 
-  public boolean initialize(final SwingGuiContext context)
-  {
+  public boolean initialize( final SwingGuiContext context ) {
     final SwingGuiContext oldContext = getContext();
 
-    if (super.initialize(context) == false)
-    {
+    if ( super.initialize( context ) == false ) {
       return false;
     }
-    if (oldContext != null && eventSource != null)
-    {
-      eventSource.removePropertyChangeListener(ReportEventSource.REPORT_JOB_PROPERTY, reportJobUpdateHandler); // NON-NLS
+    if ( oldContext != null && eventSource != null ) {
+      eventSource
+        .removePropertyChangeListener( ReportEventSource.REPORT_JOB_PROPERTY, reportJobUpdateHandler ); // NON-NLS
     }
 
-    if (oldContext != context)
-    {
-      messages = new Messages(context.getLocale(), SwingCommonModule.BUNDLE_NAME,
-          ObjectUtilities.getClassLoader(SwingCommonModule.class));
+    if ( oldContext != context ) {
+      messages = new Messages( context.getLocale(), SwingCommonModule.BUNDLE_NAME,
+        ObjectUtilities.getClassLoader( SwingCommonModule.class ) );
       eventSource = context.getEventSource();
-      eventSource.addPropertyChangeListener(ReportEventSource.REPORT_JOB_PROPERTY, reportJobUpdateHandler); //$NON-NLS-1$
-      setEnabled(eventSource.getReportJob() != null);
+      eventSource
+        .addPropertyChangeListener( ReportEventSource.REPORT_JOB_PROPERTY, reportJobUpdateHandler ); //$NON-NLS-1$
+      setEnabled( eventSource.getReportJob() != null );
     }
     return true;
   }
 
-  public void deinitialize(final SwingGuiContext swingGuiContext)
-  {
-    super.deinitialize(swingGuiContext);
-    if (swingGuiContext != null && eventSource != null)
-    {
-      eventSource.removePropertyChangeListener(ReportEventSource.REPORT_JOB_PROPERTY, reportJobUpdateHandler); // NON-NLS
+  public void deinitialize( final SwingGuiContext swingGuiContext ) {
+    super.deinitialize( swingGuiContext );
+    if ( swingGuiContext != null && eventSource != null ) {
+      eventSource
+        .removePropertyChangeListener( ReportEventSource.REPORT_JOB_PROPERTY, reportJobUpdateHandler ); // NON-NLS
     }
   }
 
@@ -105,57 +95,45 @@ public abstract class AbstractExportActionPlugin extends AbstractActionPlugin
    *
    * @return the progress dialog.
    */
-  protected ExportDialog createExportDialog(final String className)
-      throws InstantiationException
-  {
-    if (className == null)
-    {
-      throw new NullPointerException("No classname given"); //$NON-NLS-1$
+  protected ExportDialog createExportDialog( final String className )
+    throws InstantiationException {
+    if ( className == null ) {
+      throw new NullPointerException( "No classname given" ); //$NON-NLS-1$
     }
 
     final Window proxy = getContext().getWindow();
-    if (proxy instanceof Frame)
-    {
-      final ClassLoader classLoader = ObjectUtilities.getClassLoader(AbstractActionPlugin.class);
-      try
-      {
-        final Class aClass = Class.forName(className, true, classLoader);
-        final Constructor constructor = aClass.getConstructor(new Class[]{Frame.class});
-        return (ExportDialog) constructor.newInstance(new Object[]{proxy});
+    if ( proxy instanceof Frame ) {
+      final ClassLoader classLoader = ObjectUtilities.getClassLoader( AbstractActionPlugin.class );
+      try {
+        final Class aClass = Class.forName( className, true, classLoader );
+        final Constructor constructor = aClass.getConstructor( new Class[] { Frame.class } );
+        return (ExportDialog) constructor.newInstance( new Object[] { proxy } );
+      } catch ( Exception e ) {
+        AbstractExportActionPlugin.logger.error( messages.getErrorString(
+          "AbstractExportActionPlugin.ERROR_0001_FAILED_EXPORT_DIALOG_CREATION", className ) ); //$NON-NLS-1$
       }
-      catch (Exception e)
-      {
-        AbstractExportActionPlugin.logger.error(messages.getErrorString(
-            "AbstractExportActionPlugin.ERROR_0001_FAILED_EXPORT_DIALOG_CREATION", className)); //$NON-NLS-1$
-      }
-    }
-    else if (proxy instanceof Dialog)
-    {
-      final ClassLoader classLoader = ObjectUtilities.getClassLoader(AbstractActionPlugin.class);
-      try
-      {
-        final Class aClass = Class.forName(className, true, classLoader);
-        final Constructor constructor = aClass.getConstructor(new Class[]{Dialog.class});
-        return (ExportDialog) constructor.newInstance(new Object[]{proxy});
-      }
-      catch (Exception e)
-      {
-        AbstractExportActionPlugin.logger.error(messages.getErrorString(
-            "AbstractExportActionPlugin.ERROR_0002_FAILED_EXPORT_DIALOG_CREATION", className), e); //$NON-NLS-1$
+    } else if ( proxy instanceof Dialog ) {
+      final ClassLoader classLoader = ObjectUtilities.getClassLoader( AbstractActionPlugin.class );
+      try {
+        final Class aClass = Class.forName( className, true, classLoader );
+        final Constructor constructor = aClass.getConstructor( new Class[] { Dialog.class } );
+        return (ExportDialog) constructor.newInstance( new Object[] { proxy } );
+      } catch ( Exception e ) {
+        AbstractExportActionPlugin.logger.error( messages.getErrorString(
+          "AbstractExportActionPlugin.ERROR_0002_FAILED_EXPORT_DIALOG_CREATION", className ), e ); //$NON-NLS-1$
       }
     }
 
     final Object fallBack = ObjectUtilities.loadAndInstantiate
-        (className, AbstractActionPlugin.class, ExportDialog.class);
-    if (fallBack != null)
-    {
+      ( className, AbstractActionPlugin.class, ExportDialog.class );
+    if ( fallBack != null ) {
       return (ExportDialog) fallBack;
     }
 
-    AbstractExportActionPlugin.logger.error(messages.getErrorString(
-        "AbstractExportActionPlugin.ERROR_0003_FAILED_EXPORT_DIALOG_CREATION", className)); //$NON-NLS-1$
-    throw new InstantiationException(messages.getErrorString(
-        "AbstractExportActionPlugin.ERROR_0004_FAILED_EXPORT_DIALOG_CREATION")); //$NON-NLS-1$
+    AbstractExportActionPlugin.logger.error( messages.getErrorString(
+      "AbstractExportActionPlugin.ERROR_0003_FAILED_EXPORT_DIALOG_CREATION", className ) ); //$NON-NLS-1$
+    throw new InstantiationException( messages.getErrorString(
+      "AbstractExportActionPlugin.ERROR_0004_FAILED_EXPORT_DIALOG_CREATION" ) ); //$NON-NLS-1$
   }
 
 
@@ -165,30 +143,25 @@ public abstract class AbstractExportActionPlugin extends AbstractActionPlugin
    * @param job the report.
    * @return A boolean.
    */
-  public boolean performShowExportDialog(final MasterReport job, final String configKey)
-  {
-    try
-    {
+  public boolean performShowExportDialog( final MasterReport job, final String configKey ) {
+    try {
       final Configuration configuration = job.getConfiguration();
-      final String dialogClassName = configuration.getConfigProperty(configKey);
-      final ExportDialog dialog = createExportDialog(dialogClassName);
+      final String dialogClassName = configuration.getConfigProperty( configKey );
+      final ExportDialog dialog = createExportDialog( dialogClassName );
 
-      return dialog.performQueryForExport(job, getContext());
-    }
-    catch (InstantiationException e)
-    {
-      AbstractExportActionPlugin.logger.error(messages.getErrorString(
-          "AbstractExportActionPlugin.ERROR_0005_UNABLE_TO_CONFIGURE")); //$NON-NLS-1$
-      getContext().getStatusListener().setStatus(StatusType.ERROR, messages.getString(
-          "AbstractExportActionPlugin.ERROR_0005_UNABLE_TO_CONFIGURE"), e); //$NON-NLS-1$
+      return dialog.performQueryForExport( job, getContext() );
+    } catch ( InstantiationException e ) {
+      AbstractExportActionPlugin.logger.error( messages.getErrorString(
+        "AbstractExportActionPlugin.ERROR_0005_UNABLE_TO_CONFIGURE" ) ); //$NON-NLS-1$
+      getContext().getStatusListener().setStatus( StatusType.ERROR, messages.getString(
+        "AbstractExportActionPlugin.ERROR_0005_UNABLE_TO_CONFIGURE" ), e ); //$NON-NLS-1$
       return false;
     }
   }
 
-  protected boolean isProgressDialogEnabled(final MasterReport report,
-                                            final String configKey)
-  {
-    return getConfig().getBoolProperty(configKey);
+  protected boolean isProgressDialogEnabled( final MasterReport report,
+                                             final String configKey ) {
+    return getConfig().getBoolProperty( configKey );
   }
 
 }

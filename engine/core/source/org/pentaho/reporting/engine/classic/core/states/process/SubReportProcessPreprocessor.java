@@ -26,60 +26,51 @@ import org.pentaho.reporting.engine.classic.core.states.StateUtilities;
 import org.pentaho.reporting.engine.classic.core.states.datarow.DefaultFlowController;
 import org.pentaho.reporting.engine.classic.core.wizard.DataSchemaDefinition;
 
-class SubReportProcessPreprocessor
-{
+class SubReportProcessPreprocessor {
   private final DefaultFlowController startFlowController;
   private DefaultFlowController flowController;
   private ReportPreProcessor[] processors;
   private boolean designtime;
 
-  public SubReportProcessPreprocessor(final DefaultFlowController startFlowController)
-  {
+  public SubReportProcessPreprocessor( final DefaultFlowController startFlowController ) {
     this.startFlowController = startFlowController;
     final OutputProcessorMetaData md = startFlowController.getReportContext().getOutputProcessorMetaData();
-    this.designtime = md.isFeatureSupported(OutputProcessorFeature.DESIGNTIME);
+    this.designtime = md.isFeatureSupported( OutputProcessorFeature.DESIGNTIME );
   }
 
-  public DefaultFlowController getFlowController()
-  {
+  public DefaultFlowController getFlowController() {
     return flowController;
   }
 
-  public SubReport invokePreDataProcessing(final SubReport report) throws ReportProcessingException
-  {
+  public SubReport invokePreDataProcessing( final SubReport report ) throws ReportProcessingException {
     flowController = startFlowController;
 
-    processors = StateUtilities.getAllPreProcessors(report, designtime);
+    processors = StateUtilities.getAllPreProcessors( report, designtime );
     DataSchemaDefinition fullDefinition = report.getDataSchemaDefinition();
     SubReport fullReport = report;
-    for (int i = 0; i < processors.length; i++)
-    {
-      final ReportPreProcessor processor = processors[i];
-      fullReport = processor.performPreDataProcessing(fullReport, flowController);
-      if (fullReport.getDataSchemaDefinition() != fullDefinition)
-      {
+    for ( int i = 0; i < processors.length; i++ ) {
+      final ReportPreProcessor processor = processors[ i ];
+      fullReport = processor.performPreDataProcessing( fullReport, flowController );
+      if ( fullReport.getDataSchemaDefinition() != fullDefinition ) {
         fullDefinition = fullReport.getDataSchemaDefinition();
-        flowController = flowController.updateDataSchema(fullDefinition);
+        flowController = flowController.updateDataSchema( fullDefinition );
       }
     }
     return fullReport;
   }
 
-  public SubReport invokePreProcessing(final SubReport report) throws ReportProcessingException
-  {
+  public SubReport invokePreProcessing( final SubReport report ) throws ReportProcessingException {
     flowController = startFlowController;
 
-    processors = StateUtilities.getAllPreProcessors(report, designtime);
+    processors = StateUtilities.getAllPreProcessors( report, designtime );
     DataSchemaDefinition fullDefinition = report.getDataSchemaDefinition();
     SubReport fullReport = report;
-    for (int i = 0; i < processors.length; i++)
-    {
-      final ReportPreProcessor processor = processors[i];
-      fullReport = processor.performPreProcessing(fullReport, flowController);
-      if (fullReport.getDataSchemaDefinition() != fullDefinition)
-      {
+    for ( int i = 0; i < processors.length; i++ ) {
+      final ReportPreProcessor processor = processors[ i ];
+      fullReport = processor.performPreProcessing( fullReport, flowController );
+      if ( fullReport.getDataSchemaDefinition() != fullDefinition ) {
         fullDefinition = fullReport.getDataSchemaDefinition();
-        flowController = flowController.updateDataSchema(fullDefinition);
+        flowController = flowController.updateDataSchema( fullDefinition );
       }
     }
     return fullReport;

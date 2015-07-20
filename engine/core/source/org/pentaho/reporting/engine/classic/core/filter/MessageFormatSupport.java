@@ -17,13 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.core.filter;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.Locale;
-import java.util.TimeZone;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.pentaho.reporting.engine.classic.core.DataRow;
@@ -32,6 +25,13 @@ import org.pentaho.reporting.engine.classic.core.util.PropertyLookupParser;
 import org.pentaho.reporting.libraries.base.util.CSVTokenizer;
 import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
 import org.pentaho.reporting.libraries.formatting.FastMessageFormat;
+
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.Locale;
+import java.util.TimeZone;
 
 /**
  * The message format support class helps to translate named references to fields in a message format string into
@@ -44,16 +44,14 @@ import org.pentaho.reporting.libraries.formatting.FastMessageFormat;
  *
  * @author Thomas Morgner
  */
-public class MessageFormatSupport implements Serializable, Cloneable
-{
-  private static final Log logger = LogFactory.getLog(MessageFormatSupport.class);
-  private static final String[] EMPTY_FIELDS = new String[0];
+public class MessageFormatSupport implements Serializable, Cloneable {
+  private static final Log logger = LogFactory.getLog( MessageFormatSupport.class );
+  private static final String[] EMPTY_FIELDS = new String[ 0 ];
 
   /**
    * The message compiler maps all named references into numeric references.
    */
-  protected static class MessageCompiler extends PropertyLookupParser
-  {
+  protected static class MessageCompiler extends PropertyLookupParser {
     /**
      * The list of fields that have been encountered during the compile process.
      */
@@ -62,12 +60,11 @@ public class MessageFormatSupport implements Serializable, Cloneable
     /**
      * Default Constructor.
      */
-    protected MessageCompiler()
-    {
+    protected MessageCompiler() {
       this.fields = new ArrayList<String>();
-      setMarkerChar('$');
-      setOpeningBraceChar('(');
-      setClosingBraceChar(')');
+      setMarkerChar( '$' );
+      setOpeningBraceChar( '(' );
+      setClosingBraceChar( ')' );
     }
 
     /**
@@ -76,26 +73,23 @@ public class MessageFormatSupport implements Serializable, Cloneable
      * @param name the name of the property to look up.
      * @return the translated value.
      */
-    protected String lookupVariable(final String name)
-    {
-      final CSVTokenizer tokenizer = new CSVTokenizer(name, false);
-      if (tokenizer.hasMoreTokens() == false)
-      {
+    protected String lookupVariable( final String name ) {
+      final CSVTokenizer tokenizer = new CSVTokenizer( name, false );
+      if ( tokenizer.hasMoreTokens() == false ) {
         return null;
       }
       final String varName = tokenizer.nextToken();
 
-      final StringBuilder b = new StringBuilder(name.length());
-      b.append('{');
-      b.append(String.valueOf(fields.size()));
-      while (tokenizer.hasMoreTokens())
-      {
-        b.append(',');
-        b.append(tokenizer.nextToken());
+      final StringBuilder b = new StringBuilder( name.length() );
+      b.append( '{' );
+      b.append( String.valueOf( fields.size() ) );
+      while ( tokenizer.hasMoreTokens() ) {
+        b.append( ',' );
+        b.append( tokenizer.nextToken() );
       }
-      b.append('}');
+      b.append( '}' );
       final String formatString = b.toString();
-      fields.add(varName);
+      fields.add( varName );
       return formatString;
     }
 
@@ -105,9 +99,8 @@ public class MessageFormatSupport implements Serializable, Cloneable
      *
      * @return the fields as array.
      */
-    public String[] getFields()
-    {
-      return fields.toArray(new String[fields.size()]);
+    public String[] getFields() {
+      return fields.toArray( new String[ fields.size() ] );
     }
   }
 
@@ -156,8 +149,7 @@ public class MessageFormatSupport implements Serializable, Cloneable
   /**
    * Default Constructor.
    */
-  public MessageFormatSupport()
-  {
+  public MessageFormatSupport() {
   }
 
   /**
@@ -166,8 +158,7 @@ public class MessageFormatSupport implements Serializable, Cloneable
    *
    * @return the format string.
    */
-  public String getFormatString()
-  {
+  public String getFormatString() {
     return formatString;
   }
 
@@ -176,15 +167,12 @@ public class MessageFormatSupport implements Serializable, Cloneable
    *
    * @param formatString the format string.
    */
-  public void setFormatString(final String formatString)
-  {
-    if (formatString == null)
-    {
-      throw new NullPointerException("Format must not be null");
+  public void setFormatString( final String formatString ) {
+    if ( formatString == null ) {
+      throw new NullPointerException( "Format must not be null" );
     }
 
-    if (ObjectUtilities.equal(formatString, this.formatString))
-    {
+    if ( ObjectUtilities.equal( formatString, this.formatString ) ) {
       return;
     }
 
@@ -202,74 +190,56 @@ public class MessageFormatSupport implements Serializable, Cloneable
    * @param dataRow the data row.
    * @return the formated message.
    */
-  public String performFormat(final DataRow dataRow)
-  {
-    if (fields == null)
-    {
+  public String performFormat( final DataRow dataRow ) {
+    if ( fields == null ) {
       final MessageCompiler compiler = new MessageCompiler();
-      this.compiledFormat = compiler.translateAndLookup(formatString);
+      this.compiledFormat = compiler.translateAndLookup( formatString );
       this.fields = compiler.getFields();
 
-      if (fields.length > 0)
-      {
+      if ( fields.length > 0 ) {
         final Locale locale = this.locale == null ? Locale.getDefault() : this.locale;
         final TimeZone timeZone = this.timeZone == null ? TimeZone.getDefault() : this.timeZone;
 
-        this.format = new FastMessageFormat(this.compiledFormat, locale, timeZone);
-        if (nullString != null)
-        {
-          this.format.setNullString(nullString);
+        this.format = new FastMessageFormat( this.compiledFormat, locale, timeZone );
+        if ( nullString != null ) {
+          this.format.setNullString( nullString );
         }
-      }
-      else
-      {
+      } else {
         this.format = null;
       }
     }
 
-    if (fields.length == 0 || format == null)
-    {
+    if ( fields.length == 0 || format == null ) {
       return formatString;
     }
 
-    if (parameters == null)
-    {
-      parameters = new Object[fields.length];
+    if ( parameters == null ) {
+      parameters = new Object[ fields.length ];
     }
     final int parameterCount = parameters.length;
-    if (oldParameters == null)
-    {
-      oldParameters = new Object[fields.length];
-    }
-    else
-    {
-      System.arraycopy(parameters, 0, oldParameters, 0, parameterCount);
+    if ( oldParameters == null ) {
+      oldParameters = new Object[ fields.length ];
+    } else {
+      System.arraycopy( parameters, 0, oldParameters, 0, parameterCount );
     }
 
-    for (int i = 0; i < fields.length; i++)
-    {
-      final String field = fields[i];
-      final Object o = dataRow.get(field);
-      if (o instanceof Number)
-      {
-        parameters[i] = o;
-      }
-      else if (o instanceof Date)
-      {
-        parameters[i] = o;
-      }
-      else
-      {
-        parameters[i] = ElementTypeUtils.toString(o);
+    for ( int i = 0; i < fields.length; i++ ) {
+      final String field = fields[ i ];
+      final Object o = dataRow.get( field );
+      if ( o instanceof Number ) {
+        parameters[ i ] = o;
+      } else if ( o instanceof Date ) {
+        parameters[ i ] = o;
+      } else {
+        parameters[ i ] = ElementTypeUtils.toString( o );
       }
     }
 
-    if (cachedValue != null && Arrays.equals(parameters, oldParameters))
-    {
+    if ( cachedValue != null && Arrays.equals( parameters, oldParameters ) ) {
       return cachedValue;
     }
 
-    cachedValue = format.format(parameters);
+    cachedValue = format.format( parameters );
     return cachedValue;
   }
 
@@ -278,8 +248,7 @@ public class MessageFormatSupport implements Serializable, Cloneable
    *
    * @return the compiled message format string.
    */
-  public String getCompiledFormat()
-  {
+  public String getCompiledFormat() {
     return compiledFormat;
   }
 
@@ -288,8 +257,7 @@ public class MessageFormatSupport implements Serializable, Cloneable
    *
    * @return the locale in the message format.
    */
-  public Locale getLocale()
-  {
+  public Locale getLocale() {
     return locale;
   }
 
@@ -298,10 +266,8 @@ public class MessageFormatSupport implements Serializable, Cloneable
    *
    * @param locale the locale in the message format.
    */
-  public void setLocale(final Locale locale)
-  {
-    if (ObjectUtilities.equal(locale, this.locale))
-    {
+  public void setLocale( final Locale locale ) {
+    if ( ObjectUtilities.equal( locale, this.locale ) ) {
       return;
     }
     this.locale = locale;
@@ -312,15 +278,12 @@ public class MessageFormatSupport implements Serializable, Cloneable
     this.format = null;
   }
 
-  public TimeZone getTimeZone()
-  {
+  public TimeZone getTimeZone() {
     return timeZone;
   }
 
-  public void setTimeZone(final TimeZone timeZone)
-  {
-    if (ObjectUtilities.equal(timeZone, this.timeZone))
-    {
+  public void setTimeZone( final TimeZone timeZone ) {
+    if ( ObjectUtilities.equal( timeZone, this.timeZone ) ) {
       return;
     }
     this.timeZone = timeZone;
@@ -336,8 +299,7 @@ public class MessageFormatSupport implements Serializable, Cloneable
    *
    * @return the replacement text for null-values.
    */
-  public String getNullString()
-  {
+  public String getNullString() {
     return nullString;
   }
 
@@ -346,14 +308,11 @@ public class MessageFormatSupport implements Serializable, Cloneable
    *
    * @param nullString the replacement text for null-values.
    */
-  public void setNullString(final String nullString)
-  {
-    if (ObjectUtilities.equal(nullString, this.nullString) == false)
-    {
+  public void setNullString( final String nullString ) {
+    if ( ObjectUtilities.equal( nullString, this.nullString ) == false ) {
       this.nullString = nullString;
-      if (format != null)
-      {
-        this.format.setNullString(nullString);
+      if ( format != null ) {
+        this.format.setNullString( nullString );
       }
 
       this.oldParameters = null;
@@ -361,10 +320,8 @@ public class MessageFormatSupport implements Serializable, Cloneable
     }
   }
 
-  public String[] getFields()
-  {
-    if (fields == null)
-    {
+  public String[] getFields() {
+    if ( fields == null ) {
       return EMPTY_FIELDS;
     }
     return fields.clone();
@@ -377,15 +334,12 @@ public class MessageFormatSupport implements Serializable, Cloneable
    * @throws CloneNotSupportedException if an error occured.
    */
   public Object clone()
-      throws CloneNotSupportedException
-  {
+    throws CloneNotSupportedException {
     final MessageFormatSupport support = (MessageFormatSupport) super.clone();
-    if (format != null)
-    {
+    if ( format != null ) {
       support.format = (FastMessageFormat) format.clone();
     }
-    if (parameters != null)
-    {
+    if ( parameters != null ) {
       support.parameters = parameters.clone();
     }
 

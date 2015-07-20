@@ -17,49 +17,41 @@
 
 package org.pentaho.reporting.engine.classic.core.wizard;
 
-public class EmptyDataAttributes implements DataAttributes
-{
+public class EmptyDataAttributes implements DataAttributes {
   public static final EmptyDataAttributes INSTANCE = new EmptyDataAttributes();
-  private static final String[] EMPTY_STRING = new String[0];
+  private static final String[] EMPTY_STRING = new String[ 0 ];
 
-  public EmptyDataAttributes()
-  {
+  public EmptyDataAttributes() {
   }
 
-  public Object clone() throws CloneNotSupportedException
-  {
+  public Object clone() throws CloneNotSupportedException {
     return super.clone();
   }
 
-  public String[] getMetaAttributeDomains()
-  {
+  public String[] getMetaAttributeDomains() {
     return EmptyDataAttributes.EMPTY_STRING;
   }
 
-  public String[] getMetaAttributeNames(final String domainName)
-  {
+  public String[] getMetaAttributeNames( final String domainName ) {
     return EmptyDataAttributes.EMPTY_STRING;
   }
 
-  public Object getMetaAttribute(final String domain,
-                                 final String name,
-                                 final Class type,
-                                 final DataAttributeContext context)
-  {
+  public Object getMetaAttribute( final String domain,
+                                  final String name,
+                                  final Class type,
+                                  final DataAttributeContext context ) {
     return null;
   }
 
-  public Object getMetaAttribute(final String domain,
-                                 final String name,
-                                 final Class type,
-                                 final DataAttributeContext context,
-                                 final Object defaultValue)
-  {
+  public Object getMetaAttribute( final String domain,
+                                  final String name,
+                                  final Class type,
+                                  final DataAttributeContext context,
+                                  final Object defaultValue ) {
     return defaultValue;
   }
 
-  public ConceptQueryMapper getMetaAttributeMapper(String domain, String name)
-  {
+  public ConceptQueryMapper getMetaAttributeMapper( String domain, String name ) {
     return DefaultConceptQueryMapper.INSTANCE;
   }
 }

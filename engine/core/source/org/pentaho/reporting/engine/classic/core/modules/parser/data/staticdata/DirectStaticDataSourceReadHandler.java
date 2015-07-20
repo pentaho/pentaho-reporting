@@ -29,12 +29,10 @@ import org.xml.sax.SAXException;
  * @author Thomas Morgner
  */
 public class DirectStaticDataSourceReadHandler extends AbstractXmlReadHandler
-    implements DataFactoryReadHandler
-{
+  implements DataFactoryReadHandler {
   private DataFactory dataFactory;
 
-  public DirectStaticDataSourceReadHandler()
-  {
+  public DirectStaticDataSourceReadHandler() {
     dataFactory = new StaticDataFactory();
   }
 
@@ -44,13 +42,11 @@ public class DirectStaticDataSourceReadHandler extends AbstractXmlReadHandler
    * @return the object.
    * @throws SAXException if there is a parsing error.
    */
-  public Object getObject() throws SAXException
-  {
+  public Object getObject() throws SAXException {
     return dataFactory;
   }
 
-  public DataFactory getDataFactory()
-  {
+  public DataFactory getDataFactory() {
     return dataFactory;
   }
 }

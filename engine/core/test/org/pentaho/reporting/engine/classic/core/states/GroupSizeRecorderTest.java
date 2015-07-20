@@ -17,29 +17,24 @@
 
 package org.pentaho.reporting.engine.classic.core.states;
 
-import java.util.ArrayList;
-
 import junit.framework.TestCase;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 
-public class GroupSizeRecorderTest extends TestCase
-{
-  public GroupSizeRecorderTest()
-  {
+import java.util.ArrayList;
+
+public class GroupSizeRecorderTest extends TestCase {
+  public GroupSizeRecorderTest() {
   }
 
-  public GroupSizeRecorderTest(final String name)
-  {
-    super(name);
+  public GroupSizeRecorderTest( final String name ) {
+    super( name );
   }
 
-  protected void setUp() throws Exception
-  {
+  protected void setUp() throws Exception {
     ClassicEngineBoot.getInstance().start();
   }
 
-  public void testNotCrashing()
-  {
+  public void testNotCrashing() {
     final DefaultGroupSizeRecorder g = new DefaultGroupSizeRecorder();
     g.enterGroup();
     {
@@ -116,17 +111,15 @@ public class GroupSizeRecorderTest extends TestCase
     g.leaveGroup();
     final int[] groupCounts = g.getGroupCounts();
     final ArrayList l = new ArrayList();
-    for (int i = 0; i < groupCounts.length; i++)
-    {
-      l.add(groupCounts[i]);
+    for ( int i = 0; i < groupCounts.length; i++ ) {
+      l.add( groupCounts[ i ] );
     }
 
-    System.out.println(l);
-    System.out.println(g.getCurrentGroupIndex());
+    System.out.println( l );
+    System.out.println( g.getCurrentGroupIndex() );
   }
 
-  public void testFail()
-  {
+  public void testFail() {
     final GroupSizeRecorder g = new DefaultGroupSizeRecorder();
     g.clone();
     g.clone();

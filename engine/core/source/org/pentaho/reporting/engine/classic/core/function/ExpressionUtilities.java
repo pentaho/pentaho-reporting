@@ -25,41 +25,32 @@ import java.util.ResourceBundle;
  *
  * @author Thomas Morgner
  */
-public class ExpressionUtilities
-{
+public class ExpressionUtilities {
   /**
    * Hidden default constructor.
    */
-  private ExpressionUtilities()
-  {
+  private ExpressionUtilities() {
   }
 
-  public static BigDecimal convertToBigDecimal(final Object o)
-  {
-    if (o instanceof Number)
-    {
-      return convertToBigDecimal((Number) o);
+  public static BigDecimal convertToBigDecimal( final Object o ) {
+    if ( o instanceof Number ) {
+      return convertToBigDecimal( (Number) o );
     }
     return null;
   }
 
-  public static BigDecimal convertToBigDecimal(final Number number)
-  {
-    if (number == null)
-    {
+  public static BigDecimal convertToBigDecimal( final Number number ) {
+    if ( number == null ) {
       throw new NullPointerException();
     }
 
-    if (number instanceof BigDecimal)
-    {
+    if ( number instanceof BigDecimal ) {
       return (BigDecimal) number;
+    } else if ( number instanceof Integer ||
+      number instanceof Long ) {
+      return new BigDecimal( number.longValue() );
     }
-    else if (number instanceof Integer ||
-        number instanceof Long)
-    {
-      return new BigDecimal(number.longValue());
-    }
-    return new BigDecimal(number.toString());
+    return new BigDecimal( number.toString() );
   }
 
   /**
@@ -69,15 +60,13 @@ public class ExpressionUtilities
    * @param expression the expression that asked for the resource-bundle.
    * @return the resource-bundle.
    */
-  public static ResourceBundle getDefaultResourceBundle(final Expression expression)
-  {
-    if (expression == null)
-    {
-      throw new NullPointerException("Expression is null");
+  public static ResourceBundle getDefaultResourceBundle( final Expression expression ) {
+    if ( expression == null ) {
+      throw new NullPointerException( "Expression is null" );
     }
     final String resourceBundleName =
-        expression.getReportConfiguration().getConfigProperty
-            ("org.pentaho.reporting.engine.classic.core.ResourceBundle");
-    return expression.getResourceBundleFactory().getResourceBundle(resourceBundleName);
+      expression.getReportConfiguration().getConfigProperty
+        ( "org.pentaho.reporting.engine.classic.core.ResourceBundle" );
+    return expression.getResourceBundleFactory().getResourceBundle( resourceBundleName );
   }
 }

@@ -17,10 +17,10 @@
 
 package org.pentaho.reporting.engine.classic.core.filter;
 
-import java.io.Serializable;
-
 import org.pentaho.reporting.engine.classic.core.ReportElement;
 import org.pentaho.reporting.engine.classic.core.function.ExpressionRuntime;
+
+import java.io.Serializable;
 
 /**
  * A DataSource is a producer in the data chain. Common Sources are StaticSources (predefined data), ReportDataSources
@@ -32,8 +32,7 @@ import org.pentaho.reporting.engine.classic.core.function.ExpressionRuntime;
  *
  * @author Thomas Morgner
  */
-public interface DataSource extends Serializable, Cloneable
-{
+public interface DataSource extends Serializable, Cloneable {
   /**
    * Returns the current value for the data source.
    *
@@ -42,7 +41,7 @@ public interface DataSource extends Serializable, Cloneable
    * @param element the element for which the data is computed.
    * @return the value.
    */
-  public Object getValue(ExpressionRuntime runtime, final ReportElement element);
+  public Object getValue( ExpressionRuntime runtime, final ReportElement element );
 
   /**
    * Clones this <code>DataSource</code>.
@@ -51,6 +50,6 @@ public interface DataSource extends Serializable, Cloneable
    * @throws CloneNotSupportedException this should never happen.
    */
   public DataSource clone()
-      throws CloneNotSupportedException;
+    throws CloneNotSupportedException;
 
 }

@@ -17,11 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.parser.data.inlinedata.writer;
 
-import java.io.IOException;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import javax.swing.table.TableModel;
-
 import org.pentaho.reporting.engine.classic.core.DataFactory;
 import org.pentaho.reporting.engine.classic.core.ReportDataFactoryException;
 import org.pentaho.reporting.engine.classic.core.TableDataFactory;
@@ -40,10 +35,13 @@ import org.pentaho.reporting.libraries.xmlns.writer.DefaultTagDescription;
 import org.pentaho.reporting.libraries.xmlns.writer.XmlWriter;
 import org.pentaho.reporting.libraries.xmlns.writer.XmlWriterSupport;
 
-public class TableDataFactoryWriteHandler implements BundleDataFactoryWriterHandler
-{
-  public TableDataFactoryWriteHandler()
-  {
+import javax.swing.table.TableModel;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+
+public class TableDataFactoryWriteHandler implements BundleDataFactoryWriterHandler {
+  public TableDataFactoryWriteHandler() {
   }
 
   /**
@@ -57,111 +55,92 @@ public class TableDataFactoryWriteHandler implements BundleDataFactoryWriterHand
    * @throws IOException           if any error occured
    * @throws BundleWriterException if a bundle-management error occured.
    */
-  public String writeDataFactory(final WriteableDocumentBundle bundle,
-                                 final DataFactory dataFactory,
-                                 final BundleWriterState state)
-      throws IOException, BundleWriterException
-  {
-    if (bundle == null)
-    {
+  public String writeDataFactory( final WriteableDocumentBundle bundle,
+                                  final DataFactory dataFactory,
+                                  final BundleWriterState state )
+    throws IOException, BundleWriterException {
+    if ( bundle == null ) {
       throw new NullPointerException();
     }
-    if (dataFactory == null)
-    {
+    if ( dataFactory == null ) {
       throw new NullPointerException();
     }
-    if (state == null)
-    {
+    if ( state == null ) {
       throw new NullPointerException();
     }
 
 
-    try
-    {
+    try {
       final TableDataFactory tableDataFactory = (TableDataFactory) dataFactory;
 
-      final String fileName = BundleUtilities.getUniqueName(bundle, state.getFileName(),
-          "datasources/inline-ds{0}.xml");
-      if (fileName == null)
-      {
-        throw new IOException("Unable to generate unique name for Inline-Data-Source");
+      final String fileName = BundleUtilities.getUniqueName( bundle, state.getFileName(),
+        "datasources/inline-ds{0}.xml" );
+      if ( fileName == null ) {
+        throw new IOException( "Unable to generate unique name for Inline-Data-Source" );
       }
 
-      final OutputStream outputStream = bundle.createEntry(fileName, "text/xml");
+      final OutputStream outputStream = bundle.createEntry( fileName, "text/xml" );
       final DefaultTagDescription tagDescription = new DefaultTagDescription();
-      tagDescription.setNamespaceHasCData(InlineDataFactoryModule.NAMESPACE, false);
-      tagDescription.setElementHasCData(InlineDataFactoryModule.NAMESPACE, "data", true);
-      final XmlWriter xmlWriter = new XmlWriter(new OutputStreamWriter(outputStream, "UTF-8"), tagDescription, "  ",
-          "\n");
+      tagDescription.setNamespaceHasCData( InlineDataFactoryModule.NAMESPACE, false );
+      tagDescription.setElementHasCData( InlineDataFactoryModule.NAMESPACE, "data", true );
+      final XmlWriter xmlWriter = new XmlWriter( new OutputStreamWriter( outputStream, "UTF-8" ), tagDescription, "  ",
+        "\n" );
       final AttributeList rootAttrs = new AttributeList();
-      rootAttrs.addNamespaceDeclaration("data", InlineDataFactoryModule.NAMESPACE);
-      xmlWriter.writeTag(InlineDataFactoryModule.NAMESPACE, "inline-datasource", rootAttrs, XmlWriterSupport.OPEN);
+      rootAttrs.addNamespaceDeclaration( "data", InlineDataFactoryModule.NAMESPACE );
+      xmlWriter.writeTag( InlineDataFactoryModule.NAMESPACE, "inline-datasource", rootAttrs, XmlWriterSupport.OPEN );
 
       final String[] tables = tableDataFactory.getQueryNames();
-      for (int i = 0; i < tables.length; i++)
-      {
-        final String tableName = tables[i];
-        final TableModel tableModel = tableDataFactory.queryData(tableName, null);
+      for ( int i = 0; i < tables.length; i++ ) {
+        final String tableName = tables[ i ];
+        final TableModel tableModel = tableDataFactory.queryData( tableName, null );
 
-        xmlWriter.writeTag(InlineDataFactoryModule.NAMESPACE, "inline-table", "name", tableName, XmlWriterSupport.OPEN);
-        xmlWriter.writeTag(InlineDataFactoryModule.NAMESPACE, "definition", XmlWriterSupport.OPEN);
+        xmlWriter
+          .writeTag( InlineDataFactoryModule.NAMESPACE, "inline-table", "name", tableName, XmlWriterSupport.OPEN );
+        xmlWriter.writeTag( InlineDataFactoryModule.NAMESPACE, "definition", XmlWriterSupport.OPEN );
 
-        final Class[] colTypes = new Class[tableModel.getColumnCount()];
-        for (int col = 0; col < tableModel.getColumnCount(); col += 1)
-        {
+        final Class[] colTypes = new Class[ tableModel.getColumnCount() ];
+        for ( int col = 0; col < tableModel.getColumnCount(); col += 1 ) {
           final AttributeList colAttrs = new AttributeList();
-          final String columnName = tableModel.getColumnName(col);
-          colAttrs.setAttribute(InlineDataFactoryModule.NAMESPACE, "name",
-              StringUtils.isEmpty(columnName) ? "<empty-" + col + ">" : columnName);
+          final String columnName = tableModel.getColumnName( col );
+          colAttrs.setAttribute( InlineDataFactoryModule.NAMESPACE, "name",
+            StringUtils.isEmpty( columnName ) ? "<empty-" + col + ">" : columnName );
 
-          final Class columnClass = tableModel.getColumnClass(col);
-          if (columnClass == null)
-          {
-            colAttrs.setAttribute(InlineDataFactoryModule.NAMESPACE, "type", Object.class.getName());
-            colTypes[col] = Object.class;
-          }
-          else
-          {
-            colAttrs.setAttribute(InlineDataFactoryModule.NAMESPACE, "type", columnClass.getName());
-            colTypes[col] = columnClass;
+          final Class columnClass = tableModel.getColumnClass( col );
+          if ( columnClass == null ) {
+            colAttrs.setAttribute( InlineDataFactoryModule.NAMESPACE, "type", Object.class.getName() );
+            colTypes[ col ] = Object.class;
+          } else {
+            colAttrs.setAttribute( InlineDataFactoryModule.NAMESPACE, "type", columnClass.getName() );
+            colTypes[ col ] = columnClass;
           }
 
-          xmlWriter.writeTag(InlineDataFactoryModule.NAMESPACE, "column", colAttrs, XmlWriterSupport.CLOSE);
+          xmlWriter.writeTag( InlineDataFactoryModule.NAMESPACE, "column", colAttrs, XmlWriterSupport.CLOSE );
         }
         xmlWriter.writeCloseTag(); // definition
 
-        for (int row = 0; row < tableModel.getRowCount(); row += 1)
-        {
-          xmlWriter.writeTag(InlineDataFactoryModule.NAMESPACE, "row", XmlWriterSupport.OPEN);
-          for (int col = 0; col < tableModel.getColumnCount(); col += 1)
-          {
+        for ( int row = 0; row < tableModel.getRowCount(); row += 1 ) {
+          xmlWriter.writeTag( InlineDataFactoryModule.NAMESPACE, "row", XmlWriterSupport.OPEN );
+          for ( int col = 0; col < tableModel.getColumnCount(); col += 1 ) {
             final AttributeList colAttrs = new AttributeList();
-            final Object value = tableModel.getValueAt(row, col);
-            if (value == null)
-            {
-              colAttrs.setAttribute(InlineDataFactoryModule.NAMESPACE, "null", "true");
-              xmlWriter.writeTag(InlineDataFactoryModule.NAMESPACE, "data", colAttrs, XmlWriterSupport.CLOSE);
-            }
-            else
-            {
+            final Object value = tableModel.getValueAt( row, col );
+            if ( value == null ) {
+              colAttrs.setAttribute( InlineDataFactoryModule.NAMESPACE, "null", "true" );
+              xmlWriter.writeTag( InlineDataFactoryModule.NAMESPACE, "data", colAttrs, XmlWriterSupport.CLOSE );
+            } else {
               final Class valueClass = value.getClass();
-              if (ObjectUtilities.equal(colTypes[col], valueClass) == false)
-              {
-                colAttrs.setAttribute(InlineDataFactoryModule.NAMESPACE, "type", valueClass.getName());
+              if ( ObjectUtilities.equal( colTypes[ col ], valueClass ) == false ) {
+                colAttrs.setAttribute( InlineDataFactoryModule.NAMESPACE, "type", valueClass.getName() );
               }
 
-              try
-              {
-                final String s = ConverterRegistry.toAttributeValue(value);
-                xmlWriter.writeTag(InlineDataFactoryModule.NAMESPACE, "data", colAttrs, XmlWriterSupport.OPEN);
-                xmlWriter.writeTextNormalized(s, true);
+              try {
+                final String s = ConverterRegistry.toAttributeValue( value );
+                xmlWriter.writeTag( InlineDataFactoryModule.NAMESPACE, "data", colAttrs, XmlWriterSupport.OPEN );
+                xmlWriter.writeTextNormalized( s, true );
                 xmlWriter.writeCloseTag();
 
-              }
-              catch (BeanException e)
-              {
-                throw new BundleWriterException("Unable to convert value at (row:" + row + ";column:" +
-                    col + ") into a string." + value.getClass());
+              } catch ( BeanException e ) {
+                throw new BundleWriterException( "Unable to convert value at (row:" + row + ";column:" +
+                  col + ") into a string." + value.getClass() );
               }
             }
 
@@ -176,11 +155,9 @@ public class TableDataFactoryWriteHandler implements BundleDataFactoryWriterHand
       xmlWriter.writeCloseTag();
       xmlWriter.close();
       return fileName;
-    }
-    catch (ReportDataFactoryException e)
-    {
+    } catch ( ReportDataFactoryException e ) {
       throw new BundleWriterException
-          ("This should not happen in the way we use the table-factory, but hey, better safe than sorry.");
+        ( "This should not happen in the way we use the table-factory, but hey, better safe than sorry." );
     }
   }
 }

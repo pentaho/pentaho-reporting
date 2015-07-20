@@ -1,11 +1,15 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <config-description xmlns="http://jfreereport.sourceforge.net/namespaces/config-description">
   <key name="org.pentaho.reporting.engine.classic.core.modules.output.table.xml.Encoding" global="false" hidden="false">
-    <description>Defines the document encoding. If undefined, it defaults to the platforms default encoding.</description>
+    <description>Defines the document encoding. If undefined, it defaults to the platforms default encoding.
+    </description>
     <text/>
   </key>
-  <key name="org.pentaho.reporting.engine.classic.core.modules.output.table.xml.ShapeAsContent" global="false" hidden="false">
-    <description>Defines, whether Shape-content that is not one of the recognized background shapes will be printed as image. If set to false, the content will be removed, if set to true, the content ends up as image.</description>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.output.table.xml.ShapeAsContent" global="false"
+       hidden="false">
+    <description>Defines, whether Shape-content that is not one of the recognized background shapes will be printed as
+      image. If set to false, the content will be removed, if set to true, the content ends up as image.
+    </description>
     <enum>
       <text>true</text>
       <text>false</text>

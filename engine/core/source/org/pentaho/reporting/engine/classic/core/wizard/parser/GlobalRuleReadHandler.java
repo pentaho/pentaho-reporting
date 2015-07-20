@@ -17,8 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.core.wizard.parser;
 
-import java.util.ArrayList;
-
 import org.pentaho.reporting.engine.classic.core.wizard.DataAttributeReference;
 import org.pentaho.reporting.engine.classic.core.wizard.DataAttributes;
 import org.pentaho.reporting.engine.classic.core.wizard.DefaultDataAttributeReferences;
@@ -28,14 +26,14 @@ import org.pentaho.reporting.libraries.xmlns.parser.XmlReadHandler;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 
-public class GlobalRuleReadHandler extends AbstractXmlReadHandler
-{
+import java.util.ArrayList;
+
+public class GlobalRuleReadHandler extends AbstractXmlReadHandler {
   private RuleMetaAttributesReadHandler attributesReadHandler;
   private GlobalRule rule;
   private ArrayList mappings;
 
-  public GlobalRuleReadHandler()
-  {
+  public GlobalRuleReadHandler() {
     this.mappings = new ArrayList();
   }
 
@@ -48,21 +46,17 @@ public class GlobalRuleReadHandler extends AbstractXmlReadHandler
    * @return the handler or null, if the tagname is invalid.
    * @throws SAXException if there is a parsing error.
    */
-  protected XmlReadHandler getHandlerForChild(final String uri,
-                                              final String tagName,
-                                              final Attributes atts) throws SAXException
-  {
-    if (isSameNamespace(uri))
-    {
-      if ("data-attributes".equals(tagName))
-      {
+  protected XmlReadHandler getHandlerForChild( final String uri,
+                                               final String tagName,
+                                               final Attributes atts ) throws SAXException {
+    if ( isSameNamespace( uri ) ) {
+      if ( "data-attributes".equals( tagName ) ) {
         attributesReadHandler = new RuleMetaAttributesReadHandler();
         return attributesReadHandler;
       }
-      if ("data-attribute-mapping".equals(tagName))
-      {
+      if ( "data-attribute-mapping".equals( tagName ) ) {
         final DataAttributeMappingReadHandler readHandler = new DataAttributeMappingReadHandler();
-        mappings.add(readHandler);
+        mappings.add( readHandler );
         return readHandler;
       }
     }
@@ -74,20 +68,17 @@ public class GlobalRuleReadHandler extends AbstractXmlReadHandler
    *
    * @throws SAXException if there is a parsing error.
    */
-  protected void doneParsing() throws SAXException
-  {
-    if (attributesReadHandler == null)
-    {
-      throw new SAXException("Mandatory element 'column-attributes' is missing.");
+  protected void doneParsing() throws SAXException {
+    if ( attributesReadHandler == null ) {
+      throw new SAXException( "Mandatory element 'column-attributes' is missing." );
     }
     final DefaultDataAttributeReferences references = new DefaultDataAttributeReferences();
-    for (int i = 0; i < mappings.size(); i++)
-    {
-      final DataAttributeMappingReadHandler handler = (DataAttributeMappingReadHandler) mappings.get(i);
-      references.setReference(handler.getTargetDomain(), handler.getTargetName(),
-          (DataAttributeReference) handler.getObject());
+    for ( int i = 0; i < mappings.size(); i++ ) {
+      final DataAttributeMappingReadHandler handler = (DataAttributeMappingReadHandler) mappings.get( i );
+      references.setReference( handler.getTargetDomain(), handler.getTargetName(),
+        (DataAttributeReference) handler.getObject() );
     }
-    rule = new GlobalRule((DataAttributes) attributesReadHandler.getObject(), references);
+    rule = new GlobalRule( (DataAttributes) attributesReadHandler.getObject(), references );
   }
 
   /**
@@ -96,8 +87,7 @@ public class GlobalRuleReadHandler extends AbstractXmlReadHandler
    * @return the object.
    * @throws SAXException if an parser error occured.
    */
-  public Object getObject() throws SAXException
-  {
+  public Object getObject() throws SAXException {
     return rule;
   }
 }

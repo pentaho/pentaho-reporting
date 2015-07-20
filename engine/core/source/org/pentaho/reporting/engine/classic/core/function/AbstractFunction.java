@@ -26,14 +26,12 @@ import org.pentaho.reporting.engine.classic.core.event.ReportEvent;
  * @author Thomas Morgner
  */
 public abstract class AbstractFunction extends AbstractExpression
-    implements Function
-{
+  implements Function {
   /**
    * Creates an unnamed function. Make sure the name of the function is set using {@link #setName} before the function
    * is added to the report's function collection.
    */
-  protected AbstractFunction()
-  {
+  protected AbstractFunction() {
   }
 
   /**
@@ -41,9 +39,8 @@ public abstract class AbstractFunction extends AbstractExpression
    *
    * @param name the name of the function.
    */
-  protected AbstractFunction(final String name)
-  {
-    setName(name);
+  protected AbstractFunction( final String name ) {
+    setName( name );
   }
 
   /**
@@ -52,8 +49,7 @@ public abstract class AbstractFunction extends AbstractExpression
    *
    * @param event The event.
    */
-  public void reportInitialized(final ReportEvent event)
-  {
+  public void reportInitialized( final ReportEvent event ) {
   }
 
   /**
@@ -61,8 +57,7 @@ public abstract class AbstractFunction extends AbstractExpression
    *
    * @param event the event.
    */
-  public void reportStarted(final ReportEvent event)
-  {
+  public void reportStarted( final ReportEvent event ) {
   }
 
   /**
@@ -70,8 +65,7 @@ public abstract class AbstractFunction extends AbstractExpression
    *
    * @param event the event.
    */
-  public void reportFinished(final ReportEvent event)
-  {
+  public void reportFinished( final ReportEvent event ) {
   }
 
   /**
@@ -79,8 +73,7 @@ public abstract class AbstractFunction extends AbstractExpression
    *
    * @param event the event.
    */
-  public void groupStarted(final ReportEvent event)
-  {
+  public void groupStarted( final ReportEvent event ) {
   }
 
   /**
@@ -88,8 +81,7 @@ public abstract class AbstractFunction extends AbstractExpression
    *
    * @param event the event.
    */
-  public void groupFinished(final ReportEvent event)
-  {
+  public void groupFinished( final ReportEvent event ) {
   }
 
   /**
@@ -97,8 +89,7 @@ public abstract class AbstractFunction extends AbstractExpression
    *
    * @param event the event.
    */
-  public void itemsAdvanced(final ReportEvent event)
-  {
+  public void itemsAdvanced( final ReportEvent event ) {
   }
 
   /**
@@ -107,8 +98,7 @@ public abstract class AbstractFunction extends AbstractExpression
    *
    * @param event The event.
    */
-  public void itemsStarted(final ReportEvent event)
-  {
+  public void itemsStarted( final ReportEvent event ) {
   }
 
   /**
@@ -117,8 +107,7 @@ public abstract class AbstractFunction extends AbstractExpression
    *
    * @param event The event.
    */
-  public void itemsFinished(final ReportEvent event)
-  {
+  public void itemsFinished( final ReportEvent event ) {
   }
 
   /**
@@ -127,19 +116,17 @@ public abstract class AbstractFunction extends AbstractExpression
    *
    * @param event The event.
    */
-  public void reportDone(final ReportEvent event)
-  {
+  public void reportDone( final ReportEvent event ) {
     // does nothing...
   }
 
   /**
-   * A crosstab specific event notifying crosstab-aware functions to select the result for the summary row
-   * cell that will be printed next.
+   * A crosstab specific event notifying crosstab-aware functions to select the result for the summary row cell that
+   * will be printed next.
    *
    * @param event The report event.
    */
-  public void summaryRowSelection(final ReportEvent event)
-  {
+  public void summaryRowSelection( final ReportEvent event ) {
 
   }
 }

@@ -17,11 +17,7 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.gui.commonswing;
 
-import java.awt.Component;
-import java.awt.Container;
-import java.awt.Dimension;
-import java.awt.Insets;
-import java.awt.LayoutManager;
+import java.awt.*;
 import java.io.Serializable;
 
 /**
@@ -29,8 +25,7 @@ import java.io.Serializable;
  *
  * @author David Gilbert
  */
-public class CenterLayout implements LayoutManager, Serializable
-{
+public class CenterLayout implements LayoutManager, Serializable {
 
   /**
    * For serialization.
@@ -40,8 +35,7 @@ public class CenterLayout implements LayoutManager, Serializable
   /**
    * Creates a new layout manager.
    */
-  public CenterLayout()
-  {
+  public CenterLayout() {
   }
 
   /**
@@ -50,25 +44,20 @@ public class CenterLayout implements LayoutManager, Serializable
    * @param parent the parent.
    * @return the preferred size.
    */
-  public Dimension preferredLayoutSize(final Container parent)
-  {
+  public Dimension preferredLayoutSize( final Container parent ) {
 
-    synchronized (parent.getTreeLock())
-    {
+    synchronized( parent.getTreeLock() ) {
       final Insets insets = parent.getInsets();
-      if (parent.getComponentCount() > 0)
-      {
-        final Component component = parent.getComponent(0);
+      if ( parent.getComponentCount() > 0 ) {
+        final Component component = parent.getComponent( 0 );
         final Dimension d = component.getPreferredSize();
         return new Dimension(
-            (int) d.getWidth() + insets.left + insets.right,
-            (int) d.getHeight() + insets.top + insets.bottom
+          (int) d.getWidth() + insets.left + insets.right,
+          (int) d.getHeight() + insets.top + insets.bottom
         );
-      }
-      else
-      {
+      } else {
         return new Dimension(
-            insets.left + insets.right, insets.top + insets.bottom
+          insets.left + insets.right, insets.top + insets.bottom
         );
       }
     }
@@ -81,23 +70,18 @@ public class CenterLayout implements LayoutManager, Serializable
    * @param parent the parent.
    * @return the minimum size.
    */
-  public Dimension minimumLayoutSize(final Container parent)
-  {
+  public Dimension minimumLayoutSize( final Container parent ) {
 
-    synchronized (parent.getTreeLock())
-    {
+    synchronized( parent.getTreeLock() ) {
       final Insets insets = parent.getInsets();
-      if (parent.getComponentCount() > 0)
-      {
-        final Component component = parent.getComponent(0);
+      if ( parent.getComponentCount() > 0 ) {
+        final Component component = parent.getComponent( 0 );
         final Dimension d = component.getMinimumSize();
-        return new Dimension(d.width + insets.left + insets.right,
-            d.height + insets.top + insets.bottom);
-      }
-      else
-      {
-        return new Dimension(insets.left + insets.right,
-            insets.top + insets.bottom);
+        return new Dimension( d.width + insets.left + insets.right,
+          d.height + insets.top + insets.bottom );
+      } else {
+        return new Dimension( insets.left + insets.right,
+          insets.top + insets.bottom );
       }
     }
 
@@ -108,26 +92,23 @@ public class CenterLayout implements LayoutManager, Serializable
    *
    * @param parent the parent.
    */
-  public void layoutContainer(final Container parent)
-  {
+  public void layoutContainer( final Container parent ) {
 
-    synchronized (parent.getTreeLock())
-    {
-      if (parent.getComponentCount() > 0)
-      {
+    synchronized( parent.getTreeLock() ) {
+      if ( parent.getComponentCount() > 0 ) {
         final Insets insets = parent.getInsets();
         final Dimension parentSize = parent.getSize();
-        final Component component = parent.getComponent(0);
+        final Component component = parent.getComponent( 0 );
         final Dimension componentSize = component.getPreferredSize();
         final int xx = insets.left + (
-            Math.max((parentSize.width - insets.left - insets.right
-                - componentSize.width) / 2, 0)
+          Math.max( ( parentSize.width - insets.left - insets.right
+            - componentSize.width ) / 2, 0 )
         );
         final int yy = insets.top + (
-            Math.max((parentSize.height - insets.top - insets.bottom
-                - componentSize.height) / 2, 0));
-        component.setBounds(xx, yy, componentSize.width,
-            componentSize.height);
+          Math.max( ( parentSize.height - insets.top - insets.bottom
+            - componentSize.height ) / 2, 0 ) );
+        component.setBounds( xx, yy, componentSize.width,
+          componentSize.height );
       }
     }
 
@@ -138,8 +119,7 @@ public class CenterLayout implements LayoutManager, Serializable
    *
    * @param comp the component.
    */
-  public void addLayoutComponent(final Component comp)
-  {
+  public void addLayoutComponent( final Component comp ) {
     // not used.
   }
 
@@ -148,8 +128,7 @@ public class CenterLayout implements LayoutManager, Serializable
    *
    * @param comp the component.
    */
-  public void removeLayoutComponent(final Component comp)
-  {
+  public void removeLayoutComponent( final Component comp ) {
     // not used
   }
 
@@ -159,8 +138,7 @@ public class CenterLayout implements LayoutManager, Serializable
    * @param name the component name.
    * @param comp the component.
    */
-  public void addLayoutComponent(final String name, final Component comp)
-  {
+  public void addLayoutComponent( final String name, final Component comp ) {
     // not used
   }
 
@@ -170,8 +148,7 @@ public class CenterLayout implements LayoutManager, Serializable
    * @param name the component name.
    * @param comp the component.
    */
-  public void removeLayoutComponent(final String name, final Component comp)
-  {
+  public void removeLayoutComponent( final String name, final Component comp ) {
     // not used
   }
 

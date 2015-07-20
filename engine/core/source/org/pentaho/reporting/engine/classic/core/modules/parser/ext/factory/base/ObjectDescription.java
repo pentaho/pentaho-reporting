@@ -17,10 +17,10 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.parser.ext.factory.base;
 
+import org.pentaho.reporting.libraries.base.config.Configuration;
+
 import java.io.Serializable;
 import java.util.Iterator;
-
-import org.pentaho.reporting.libraries.base.config.Configuration;
 
 
 /**
@@ -28,8 +28,7 @@ import org.pentaho.reporting.libraries.base.config.Configuration;
  *
  * @author Thomas Morgner
  */
-public interface ObjectDescription extends Serializable
-{
+public interface ObjectDescription extends Serializable {
 
   /**
    * Returns a parameter definition. If the parameter is invalid, this function returns null.
@@ -37,7 +36,7 @@ public interface ObjectDescription extends Serializable
    * @param name the definition name.
    * @return The parameter class or null, if the parameter is not defined.
    */
-  public Class getParameterDefinition(String name);
+  public Class getParameterDefinition( String name );
 
   /**
    * Sets the value of a parameter.
@@ -45,7 +44,7 @@ public interface ObjectDescription extends Serializable
    * @param name  the parameter name.
    * @param value the parameter value.
    */
-  public void setParameter(String name, Object value);
+  public void setParameter( String name, Object value );
 
   /**
    * Returns the value of a parameter.
@@ -53,7 +52,7 @@ public interface ObjectDescription extends Serializable
    * @param name the parameter name.
    * @return The value.
    */
-  public Object getParameter(String name);
+  public Object getParameter( String name );
 
   /**
    * Returns an iterator the provides access to the parameter names. This returns all _known_ parameter names, the
@@ -106,7 +105,7 @@ public interface ObjectDescription extends Serializable
    * @param o the object.
    * @throws ObjectFactoryException if there is a problem while reading the properties of the given object.
    */
-  public void setParameterFromObject(Object o) throws ObjectFactoryException;
+  public void setParameterFromObject( Object o ) throws ObjectFactoryException;
 
 
   /**
@@ -117,7 +116,7 @@ public interface ObjectDescription extends Serializable
    *
    * @param config the configuration, never null
    */
-  public void configure(Configuration config);
+  public void configure( Configuration config );
 
   /**
    * Compares whether two object descriptions are equal.
@@ -125,12 +124,12 @@ public interface ObjectDescription extends Serializable
    * @param o the other object.
    * @return true, if both object desciptions describe the same object, false otherwise.
    */
-  public boolean equals(Object o);
+  public boolean equals( Object o );
 
 
   /**
-   * Computes the hashCode for this ClassFactory. As equals() must be implemented, a corresponding hashCode() should
-   * be implemented as well.
+   * Computes the hashCode for this ClassFactory. As equals() must be implemented, a corresponding hashCode() should be
+   * implemented as well.
    *
    * @return the hashcode.
    */

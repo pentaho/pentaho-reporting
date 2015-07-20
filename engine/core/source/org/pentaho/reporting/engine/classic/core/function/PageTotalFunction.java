@@ -17,10 +17,10 @@
 
 package org.pentaho.reporting.engine.classic.core.function;
 
-import java.util.HashMap;
-
 import org.pentaho.reporting.engine.classic.core.event.ReportEvent;
 import org.pentaho.reporting.engine.classic.core.states.ReportStateKey;
+
+import java.util.HashMap;
 
 /**
  * Prints the total number of pages of an report. If a group is specified, this function expects the group to have the
@@ -31,8 +31,7 @@ import org.pentaho.reporting.engine.classic.core.states.ReportStateKey;
  *
  * @author Thomas Morgner
  */
-public class PageTotalFunction extends PageFunction
-{
+public class PageTotalFunction extends PageFunction {
   /**
    * A map of results, keyed by the process-key.
    */
@@ -50,10 +49,9 @@ public class PageTotalFunction extends PageFunction
   /**
    * Creates a new page total function.
    */
-  public PageTotalFunction()
-  {
+  public PageTotalFunction() {
     this.groupPages = new HashMap();
-    setDependencyLevel(0);
+    setDependencyLevel( 0 );
   }
 
   /**
@@ -61,11 +59,9 @@ public class PageTotalFunction extends PageFunction
    *
    * @param event the event.
    */
-  public void reportInitialized(final ReportEvent event)
-  {
-    super.reportInitialized(event);
-    if (event.isDeepTraversing())
-    {
+  public void reportInitialized( final ReportEvent event ) {
+    super.reportInitialized( event );
+    if ( event.isDeepTraversing() ) {
       return;
     }
 
@@ -73,23 +69,18 @@ public class PageTotalFunction extends PageFunction
     currentStateKey = event.getState().getProcessKey();
   }
 
-  public void groupStarted(final ReportEvent event)
-  {
-    super.groupStarted(event);
-    if (event.isDeepTraversing())
-    {
+  public void groupStarted( final ReportEvent event ) {
+    super.groupStarted( event );
+    if ( event.isDeepTraversing() ) {
       return;
     }
 
-    if (getGroup() == null)
-    {
+    if ( getGroup() == null ) {
       return;
     }
 
-    if (FunctionUtilities.isDefinedGroup(getGroup(), event))
-    {
-      if (firstGroupSeen == false)
-      {
+    if ( FunctionUtilities.isDefinedGroup( getGroup(), event ) ) {
+      if ( firstGroupSeen == false ) {
         firstGroupSeen = true;
         return;
       }
@@ -99,47 +90,37 @@ public class PageTotalFunction extends PageFunction
   }
 
 
-  public void groupFinished(final ReportEvent event)
-  {
-    super.groupFinished(event);
-    if (event.isDeepTraversing())
-    {
+  public void groupFinished( final ReportEvent event ) {
+    super.groupFinished( event );
+    if ( event.isDeepTraversing() ) {
       return;
     }
 
-    if (getGroup() == null)
-    {
+    if ( getGroup() == null ) {
       return;
     }
 
-    if (FunctionUtilities.isDefinedGroup(getGroup(), event))
-    {
-      if (event.getState().isPrepareRun())
-      {
-        groupPages.put(currentStateKey, super.getValue());
+    if ( FunctionUtilities.isDefinedGroup( getGroup(), event ) ) {
+      if ( event.getState().isPrepareRun() ) {
+        groupPages.put( currentStateKey, super.getValue() );
       }
     }
   }
 
 
-  public void pageFinished(final ReportEvent event)
-  {
-    if (event.getState().isPrepareRun())
-    {
-      groupPages.put(currentStateKey, super.getValue());
+  public void pageFinished( final ReportEvent event ) {
+    if ( event.getState().isPrepareRun() ) {
+      groupPages.put( currentStateKey, super.getValue() );
     }
   }
 
-  public void reportDone(final ReportEvent event)
-  {
-    if (event.isDeepTraversing())
-    {
+  public void reportDone( final ReportEvent event ) {
+    if ( event.isDeepTraversing() ) {
       return;
     }
 
-    if (event.getState().isPrepareRun())
-    {
-      groupPages.put(currentStateKey, super.getValue());
+    if ( event.getState().isPrepareRun() ) {
+      groupPages.put( currentStateKey, super.getValue() );
     }
   }
 
@@ -149,16 +130,14 @@ public class PageTotalFunction extends PageFunction
    *
    * @return a copy of this function.
    */
-  public Expression getInstance()
-  {
+  public Expression getInstance() {
     final PageTotalFunction function = (PageTotalFunction) super.getInstance();
     function.groupPages = new HashMap();
     return function;
   }
 
-  public Object getValue()
-  {
-    return groupPages.get(currentStateKey);
+  public Object getValue() {
+    return groupPages.get( currentStateKey );
   }
 
 }

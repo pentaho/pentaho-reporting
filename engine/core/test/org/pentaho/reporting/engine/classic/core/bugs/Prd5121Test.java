@@ -21,11 +21,9 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.pentaho.reporting.engine.classic.core.designtime.datafactory.editor.ui.Messages;
 
-public class Prd5121Test
-{
+public class Prd5121Test {
   @Test
-  public void testMessages()
-  {
-    Assert.assertEquals("Add", Messages.getString("QueryAddAction.Name"));
+  public void testMessages() {
+    Assert.assertEquals( "Add", Messages.getString( "QueryAddAction.Name" ) );
   }
 }

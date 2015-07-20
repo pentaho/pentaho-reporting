@@ -23,27 +23,23 @@ package org.pentaho.reporting.engine.classic.core.util;
  *
  * @author Thomas Morgner
  */
-public class IntegerCache
-{
+public class IntegerCache {
   /**
    * A cache holding the first 1000 integers.
    */
   private static Integer[] cachedNumbers;
 
-  static
-  {
-    cachedNumbers = new Integer[1000];
-    for (int i = 0; i < cachedNumbers.length; i++)
-    {
-      cachedNumbers[i] = new Integer(i);
+  static {
+    cachedNumbers = new Integer[ 1000 ];
+    for ( int i = 0; i < cachedNumbers.length; i++ ) {
+      cachedNumbers[ i ] = new Integer( i );
     }
   }
 
   /**
    * Default constructor.
    */
-  private IntegerCache()
-  {
+  private IntegerCache() {
   }
 
   /**
@@ -52,16 +48,13 @@ public class IntegerCache
    * @param i the primitive integer value.
    * @return the constructed integer object.
    */
-  public static Integer getInteger(final int i)
-  {
-    if (i < 0)
-    {
-      return new Integer(i);
+  public static Integer getInteger( final int i ) {
+    if ( i < 0 ) {
+      return new Integer( i );
     }
-    if (i > 999)
-    {
-      return new Integer(i);
+    if ( i > 999 ) {
+      return new Integer( i );
     }
-    return cachedNumbers[i];
+    return cachedNumbers[ i ];
   }
 }

@@ -15,14 +15,16 @@
   <configuration>
     <property name="org.pentaho.reporting.engine.classic.core.modules.output.pageable.pdf.Encoding">utf-8</property>
     <property
-        name="org.pentaho.reporting.engine.classic.core.modules.output.pageable.pdf.Author">Darkwing Duck</property>
+        name="org.pentaho.reporting.engine.classic.core.modules.output.pageable.pdf.Author">Darkwing Duck
+    </property>
 
     <!-- These properties make sure that the pdf file is encoded by default. -->
     <!-- We dont allow anything else. For a complete description of the available PDF -->
     <!-- Properties have a look at hte PDF-Output Module -->
     <property name="org.pentaho.reporting.engine.classic.core.modules.output.pageable.pdf.Encryption">128bit</property>
     <property
-        name="org.pentaho.reporting.engine.classic.core.modules.output.pageable.pdf.UserPassword">Darkwing</property>
+        name="org.pentaho.reporting.engine.classic.core.modules.output.pageable.pdf.UserPassword">Darkwing
+    </property>
     <property name="org.pentaho.reporting.engine.classic.core.modules.output.pageable.pdf.OwnerPassword">Duck</property>
     <!--
       Enabling the following lines would limit the size of the PreviewDialog.
@@ -38,8 +40,11 @@
 
   <reportheader height="90" fontname="Arial Unicode MS" fontstyle="bold" fontsize="18">
 
-    <label x="0" y="0" width="100%" height="18" fsunderline="true" vertical-alignment="top" alignment="center">LIST OF COUNTRIES BY CONTINENT</label>
-    <label x="0" y="18" width="100%" height="30" vertical-alignment="bottom" alignment="center">Sample Thai chars: &#3648;&#3614;&#3636;&#3656;&#3617;, &#3621;&#3641;&#3585;&#3588;&#3657;&#3634;</label>
+    <label x="0" y="0" width="100%" height="18" fsunderline="true" vertical-alignment="top" alignment="center">LIST OF
+      COUNTRIES BY CONTINENT
+    </label>
+    <label x="0" y="18" width="100%" height="30" vertical-alignment="bottom" alignment="center">Sample Thai chars:
+      &#3648;&#3614;&#3636;&#3656;&#3617;, &#3621;&#3641;&#3585;&#3588;&#3657;&#3634;</label>
   </reportheader>
 
   <reportfooter height="48" fontname="Serif" fontstyle="bold" fontsize="16">
@@ -99,13 +104,13 @@
           {
           if (dataRow == null)
           {
-            return null;
+          return null;
           }
 
           Number population = (Number) dataRow.get ("Population");
           if (population == null)
           {
-            return null;
+          return null;
           }
           long popK = (long)(population.longValue() / 1000);
 

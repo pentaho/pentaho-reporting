@@ -17,8 +17,8 @@
 
 package org.pentaho.reporting.engine.classic.core.states.datarow;
 
-public interface MasterDataRowChangeHandler
-{
-  public void dataRowChanged(final MasterDataRowChangeEvent chEvent);
+public interface MasterDataRowChangeHandler {
+  public void dataRowChanged( final MasterDataRowChangeEvent chEvent );
+
   public MasterDataRowChangeEvent getReusableEvent();
 }

@@ -19,7 +19,6 @@ package org.pentaho.reporting.engine.classic.core.modules.gui.base.event;
 
 import java.util.EventListener;
 
-public interface ReportActionListener extends EventListener
-{
-  public void reportActionPerformed(final ReportActionEvent event);
+public interface ReportActionListener extends EventListener {
+  public void reportActionPerformed( final ReportActionEvent event );
 }

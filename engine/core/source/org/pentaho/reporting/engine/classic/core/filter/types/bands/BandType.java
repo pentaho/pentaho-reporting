@@ -21,17 +21,14 @@ import org.pentaho.reporting.engine.classic.core.Band;
 import org.pentaho.reporting.engine.classic.core.ReportElement;
 import org.pentaho.reporting.engine.classic.core.metadata.ElementType;
 
-public class BandType extends AbstractSectionType
-{
+public class BandType extends AbstractSectionType {
   public static final ElementType INSTANCE = new BandType();
 
-  public BandType()
-  {
-    super("band", false);
+  public BandType() {
+    super( "band", false );
   }
 
-  public ReportElement create()
-  {
+  public ReportElement create() {
     return new Band();
   }
 }

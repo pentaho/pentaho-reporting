@@ -25,9 +25,8 @@ import org.pentaho.reporting.engine.classic.core.function.AbstractCompareExpress
  * @author Thomas Morgner
  * @deprecated This can be done a lot easier using a simple formula.
  */
-@SuppressWarnings("deprecation")
-public class CompareStringExpression extends AbstractCompareExpression
-{
+@SuppressWarnings( "deprecation" )
+public class CompareStringExpression extends AbstractCompareExpression {
   /**
    * The static text.
    */
@@ -36,8 +35,7 @@ public class CompareStringExpression extends AbstractCompareExpression
   /**
    * Default Constructor.
    */
-  public CompareStringExpression()
-  {
+  public CompareStringExpression() {
   }
 
   /**
@@ -45,8 +43,7 @@ public class CompareStringExpression extends AbstractCompareExpression
    *
    * @return the text.
    */
-  public String getText()
-  {
+  public String getText() {
     return text;
   }
 
@@ -55,8 +52,7 @@ public class CompareStringExpression extends AbstractCompareExpression
    *
    * @param text the text.
    */
-  public void setText(final String text)
-  {
+  public void setText( final String text ) {
     this.text = text;
   }
 
@@ -65,8 +61,7 @@ public class CompareStringExpression extends AbstractCompareExpression
    *
    * @return the text.
    */
-  protected Comparable getComparable()
-  {
+  protected Comparable getComparable() {
     return text;
   }
 }

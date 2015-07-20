@@ -22,10 +22,9 @@ import org.pentaho.reporting.libraries.resourceloader.LoaderParameterKey;
 /**
  * Container class for the resource key factory parameters that the reporting engine has knowledge of.
  */
-public class ClassicEngineFactoryParameters
-{
-  public static final LoaderParameterKey EMBED = new LoaderParameterKey("designtime::embedded");
-  public static final LoaderParameterKey ORIGINAL_VALUE = new LoaderParameterKey("designtime::original_value");
-  public static final LoaderParameterKey PATTERN = new LoaderParameterKey("designtime::pattern");
-  public static final LoaderParameterKey MIME_TYPE = new LoaderParameterKey("designtime::mime_type");
+public class ClassicEngineFactoryParameters {
+  public static final LoaderParameterKey EMBED = new LoaderParameterKey( "designtime::embedded" );
+  public static final LoaderParameterKey ORIGINAL_VALUE = new LoaderParameterKey( "designtime::original_value" );
+  public static final LoaderParameterKey PATTERN = new LoaderParameterKey( "designtime::pattern" );
+  public static final LoaderParameterKey MIME_TYPE = new LoaderParameterKey( "designtime::mime_type" );
 }

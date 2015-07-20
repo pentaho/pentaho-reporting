@@ -33,8 +33,7 @@ import org.pentaho.reporting.libraries.xmlns.LibXmlInfo;
  *
  * @author David Gilbert
  */
-public final class ClassicEngineInfo extends ProjectInformation
-{
+public final class ClassicEngineInfo extends ProjectInformation {
   /**
    * A singleton instance of the JFreeReportInfo class.
    */
@@ -45,10 +44,8 @@ public final class ClassicEngineInfo extends ProjectInformation
    *
    * @return te info object for this library.
    */
-  public static synchronized ClassicEngineInfo getInstance()
-  {
-    if (info == null)
-    {
+  public static synchronized ClassicEngineInfo getInstance() {
+    if ( info == null ) {
       info = new ClassicEngineInfo();
       info.initialize();
     }
@@ -58,29 +55,27 @@ public final class ClassicEngineInfo extends ProjectInformation
   /**
    * Constructs an object containing information about the JFreeReport project.
    */
-  private ClassicEngineInfo()
-  {
-    super("pentaho-reporting-engine-classic", "Pentaho Reporting Engine Classic"); // NON-NLS
+  private ClassicEngineInfo() {
+    super( "pentaho-reporting-engine-classic", "Pentaho Reporting Engine Classic" ); // NON-NLS
   }
 
-  private void initialize()
-  {
-    setInfo("http://reporting.pentaho.org/"); // NON-NLS
-    setCopyright("(C)opyright 2000-2011, by Pentaho Corp. and Contributors"); // NON-NLS
-    setLicenseName("LGPL"); // NON-NLS
+  private void initialize() {
+    setInfo( "http://reporting.pentaho.org/" ); // NON-NLS
+    setCopyright( "(C)opyright 2000-2011, by Pentaho Corp. and Contributors" ); // NON-NLS
+    setLicenseName( "LGPL" ); // NON-NLS
 
-    addLibrary(LibBaseInfo.getInstance());
-    addLibrary(LibSerializerInfo.getInstance());
-    addLibrary(LibLoaderInfo.getInstance());
-    addLibrary(LibFormulaInfo.getInstance());
-    addLibrary(LibFontInfo.getInstance());
-    addLibrary(LibFormatInfo.getInstance());
-    addLibrary(LibDocBundleInfo.getInstance());
-    addLibrary(LibXmlInfo.getInstance());
-    addLibrary(LibRepositoryInfo.getInstance());
-    addOptionalLibrary("org.pentaho.reporting.engine.classic.extensions.ClassicEngineExtensionsInfo");
+    addLibrary( LibBaseInfo.getInstance() );
+    addLibrary( LibSerializerInfo.getInstance() );
+    addLibrary( LibLoaderInfo.getInstance() );
+    addLibrary( LibFormulaInfo.getInstance() );
+    addLibrary( LibFontInfo.getInstance() );
+    addLibrary( LibFormatInfo.getInstance() );
+    addLibrary( LibDocBundleInfo.getInstance() );
+    addLibrary( LibXmlInfo.getInstance() );
+    addLibrary( LibRepositoryInfo.getInstance() );
+    addOptionalLibrary( "org.pentaho.reporting.engine.classic.extensions.ClassicEngineExtensionsInfo" );
 
-    setBootClass(ClassicEngineBoot.class.getName());
+    setBootClass( ClassicEngineBoot.class.getName() );
   }
 
   /**
@@ -92,18 +87,17 @@ public final class ClassicEngineInfo extends ProjectInformation
    * @param args ignored
    * @noinspection UseOfSystemOutOrSystemErr
    */
-  public static void main(final String[] args)
-  {
+  public static void main( final String[] args ) {
     final ClassicEngineInfo info = new ClassicEngineInfo();
     info.initialize();
-    System.out.println(info.getName() + ' ' + info.getVersion()); // NON-NLS
-    System.out.println("----------------------------------------------------------------");
-    System.out.println(info.getCopyright());
-    System.out.println(info.getInfo());
-    System.out.println("----------------------------------------------------------------");
-    System.out.println("This project is licenced under the terms of the " // NON-NLS
-        + info.getLicenseName() + '.'); // NON-NLS
-    System.exit(0);
+    System.out.println( info.getName() + ' ' + info.getVersion() ); // NON-NLS
+    System.out.println( "----------------------------------------------------------------" );
+    System.out.println( info.getCopyright() );
+    System.out.println( info.getInfo() );
+    System.out.println( "----------------------------------------------------------------" );
+    System.out.println( "This project is licenced under the terms of the " // NON-NLS
+      + info.getLicenseName() + '.' ); // NON-NLS
+    System.exit( 0 );
   }
 }
 

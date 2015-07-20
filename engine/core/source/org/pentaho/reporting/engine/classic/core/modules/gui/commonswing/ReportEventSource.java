@@ -17,17 +17,16 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.gui.commonswing;
 
-import java.beans.PropertyChangeListener;
-
 import org.pentaho.reporting.engine.classic.core.MasterReport;
+
+import java.beans.PropertyChangeListener;
 
 /**
  * Creation-Date: 15.08.2007, 16:20:24
  *
  * @author Thomas Morgner
  */
-public interface ReportEventSource
-{
+public interface ReportEventSource {
   public static final String REPORT_JOB_PROPERTY = "reportJob";
   public static final String PAGE_NUMBER_PROPERTY = "pageNumber";
   public static final String NUMBER_OF_PAGES_PROPERTY = "numberOfPages";
@@ -44,11 +43,12 @@ public interface ReportEventSource
 
   public MasterReport getReportJob();
 
-  public void addPropertyChangeListener(final PropertyChangeListener propertyChangeListener);
+  public void addPropertyChangeListener( final PropertyChangeListener propertyChangeListener );
 
-  public void addPropertyChangeListener(final String property, final PropertyChangeListener propertyChangeListener);
+  public void addPropertyChangeListener( final String property, final PropertyChangeListener propertyChangeListener );
 
-  public void removePropertyChangeListener(final PropertyChangeListener propertyChangeListener);
+  public void removePropertyChangeListener( final PropertyChangeListener propertyChangeListener );
 
-  public void removePropertyChangeListener(final String property, final PropertyChangeListener propertyChangeListener);
+  public void removePropertyChangeListener( final String property,
+                                            final PropertyChangeListener propertyChangeListener );
 }

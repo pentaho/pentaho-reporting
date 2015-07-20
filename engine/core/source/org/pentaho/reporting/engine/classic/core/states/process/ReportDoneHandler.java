@@ -34,33 +34,27 @@ import org.pentaho.reporting.engine.classic.core.states.datarow.MasterDataRow;
  *
  * @author Thomas Morgner
  */
-public class ReportDoneHandler implements AdvanceHandler
-{
+public class ReportDoneHandler implements AdvanceHandler {
   public static final AdvanceHandler HANDLER = new ReportDoneHandler();
 
-  private ReportDoneHandler()
-  {
+  private ReportDoneHandler() {
   }
 
-  public int getEventCode()
-  {
+  public int getEventCode() {
     return ReportEvent.REPORT_DONE;
   }
 
-  public ProcessState advance(final ProcessState state) throws ReportProcessingException
-  {
+  public ProcessState advance( final ProcessState state ) throws ReportProcessingException {
     final ProcessState next = state.deriveForAdvance();
     next.fireReportEvent();
-    if (next.isSubReportEvent() && next.getLevel() == LayoutProcess.LEVEL_PAGINATE)
-    {
-      next.firePageFinishedEvent(true);
+    if ( next.isSubReportEvent() && next.getLevel() == LayoutProcess.LEVEL_PAGINATE ) {
+      next.firePageFinishedEvent( true );
     }
     return next;
   }
 
 
-  public ProcessState commit(final ProcessState state) throws ReportProcessingException
-  {
+  public ProcessState commit( final ProcessState state ) throws ReportProcessingException {
     // better clone twice than to face the subtle errors that crawl out here..
     final ProcessState next = state.deriveForAdvance();
     final DefaultFlowController flowController = next.getFlowController();
@@ -68,52 +62,41 @@ public class ReportDoneHandler implements AdvanceHandler
     final ExpressionDataRow expressionDataRow = masterRow.getExpressionDataRow();
     final Expression[] expressions = expressionDataRow.getExpressions();
 
-    if (next.isSubReportEvent())
-    {
-      next.setAdvanceHandler(EndSubReportHandler.HANDLER);
-    }
-    else
-    {
-      next.setAdvanceHandler(EndReportHandler.HANDLER);
+    if ( next.isSubReportEvent() ) {
+      next.setAdvanceHandler( EndSubReportHandler.HANDLER );
+    } else {
+      next.setAdvanceHandler( EndReportHandler.HANDLER );
     }
     final ReportStateKey parentStateKey;
     final ReportState parentState = next.getParentSubReportState();
-    if (parentState == null)
-    {
+    if ( parentState == null ) {
       parentStateKey = null;
-    }
-    else
-    {
+    } else {
       parentStateKey = parentState.getProcessKey();
     }
     final FunctionStorageKey functionStorageKey =
-        FunctionStorageKey.createKey(parentStateKey, next.getReport());
-    next.getFunctionStorage().store (functionStorageKey, expressions, expressionDataRow.getColumnCount());
+      FunctionStorageKey.createKey( parentStateKey, next.getReport() );
+    next.getFunctionStorage().store( functionStorageKey, expressions, expressionDataRow.getColumnCount() );
     final StructureFunction[] structureFunctions = next.getLayoutProcess().getCollectionFunctions();
-    next.getStructureFunctionStorage().store(functionStorageKey, structureFunctions, structureFunctions.length);
+    next.getStructureFunctionStorage().store( functionStorageKey, structureFunctions, structureFunctions.length );
 
     final DefaultFlowController pfc = flowController.performClearExportedParameters();
     final DefaultFlowController efc = pfc.deactivateExpressions();
-    if (next.isSubReportEvent())
-    {
+    if ( next.isSubReportEvent() ) {
       final DefaultFlowController qfcSr = efc.performReturnFromSubreport();
-      next.setFlowController(qfcSr);
-    }
-    else
-    {
+      next.setFlowController( qfcSr );
+    } else {
       final DefaultFlowController qfc = efc.performReturnFromQuery();
-      next.setFlowController(qfc);
+      next.setFlowController( qfc );
     }
     return next;
   }
 
-  public boolean isFinish()
-  {
+  public boolean isFinish() {
     return false;
   }
 
-  public boolean isRestoreHandler()
-  {
+  public boolean isRestoreHandler() {
     return false;
   }
 }

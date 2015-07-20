@@ -24,15 +24,13 @@ import org.pentaho.reporting.engine.classic.core.filter.templates.ResourceMessag
  *
  * @author Thomas Morgner
  */
-public class ResourceMessageTemplateDescription extends AbstractTemplateDescription
-{
+public class ResourceMessageTemplateDescription extends AbstractTemplateDescription {
   /**
    * Creates a new template description.
    *
    * @param name the name.
    */
-  public ResourceMessageTemplateDescription(final String name)
-  {
-    super(name, ResourceMessageTemplate.class, true);
+  public ResourceMessageTemplateDescription( final String name ) {
+    super( name, ResourceMessageTemplate.class, true );
   }
 }

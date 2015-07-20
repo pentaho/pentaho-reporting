@@ -17,10 +17,10 @@
 
 package org.pentaho.reporting.engine.classic.core.function;
 
-import java.math.BigDecimal;
-
 import org.pentaho.reporting.engine.classic.core.event.ReportEvent;
 import org.pentaho.reporting.engine.classic.core.util.Sequence;
+
+import java.math.BigDecimal;
 
 /**
  * A report function that counts items in a report.  If the "group" property is set, the item count is reset to zero
@@ -28,10 +28,9 @@ import org.pentaho.reporting.engine.classic.core.util.Sequence;
  *
  * @author Thomas Morgner
  */
-public class ItemCountFunction extends AbstractFunction implements AggregationFunction
-{
-  public static final BigDecimal ONE = new BigDecimal(1);
-  public static final BigDecimal ZERO = new BigDecimal(0);
+public class ItemCountFunction extends AbstractFunction implements AggregationFunction {
+  public static final BigDecimal ONE = new BigDecimal( 1 );
+  public static final BigDecimal ZERO = new BigDecimal( 0 );
   /**
    * The item count.
    */
@@ -48,8 +47,7 @@ public class ItemCountFunction extends AbstractFunction implements AggregationFu
   /**
    * Constructs an unnamed function. <P> This constructor is intended for use by the SAX handler class only.
    */
-  public ItemCountFunction()
-  {
+  public ItemCountFunction() {
     count = new Sequence<BigDecimal>();
   }
 
@@ -59,13 +57,11 @@ public class ItemCountFunction extends AbstractFunction implements AggregationFu
    * @param name The name of the function.
    * @throws NullPointerException if the name is null
    */
-  public ItemCountFunction(final String name)
-  {
-    setName(name);
+  public ItemCountFunction( final String name ) {
+    setName( name );
   }
 
-  protected void clear()
-  {
+  protected void clear() {
     this.lastGroupSequenceNumber = 0;
     this.count.clear();
   }
@@ -75,8 +71,7 @@ public class ItemCountFunction extends AbstractFunction implements AggregationFu
    *
    * @param event the event.
    */
-  public void reportInitialized(final ReportEvent event)
-  {
+  public void reportInitialized( final ReportEvent event ) {
     clear();
   }
 
@@ -86,8 +81,7 @@ public class ItemCountFunction extends AbstractFunction implements AggregationFu
    *
    * @return the group name.
    */
-  public String getGroup()
-  {
+  public String getGroup() {
     return group;
   }
 
@@ -97,8 +91,7 @@ public class ItemCountFunction extends AbstractFunction implements AggregationFu
    *
    * @param group The group name.
    */
-  public void setGroup(final String group)
-  {
+  public void setGroup( final String group ) {
     this.group = group;
   }
 
@@ -108,17 +101,14 @@ public class ItemCountFunction extends AbstractFunction implements AggregationFu
    *
    * @param event Information about the event.
    */
-  public void groupStarted(final ReportEvent event)
-  {
-    if (FunctionUtilities.isDefinedGroup(getGroup(), event))
-    {
+  public void groupStarted( final ReportEvent event ) {
+    if ( FunctionUtilities.isDefinedGroup( getGroup(), event ) ) {
       clear();
     }
 
-    if (FunctionUtilities.isDefinedGroup(getCrosstabFilterGroup(), event))
-    {
+    if ( FunctionUtilities.isDefinedGroup( getCrosstabFilterGroup(), event ) ) {
       final int groupIndex = event.getState().getCurrentGroupIndex();
-      this.lastGroupSequenceNumber = (int) event.getState().getCrosstabColumnSequenceCounter(groupIndex);
+      this.lastGroupSequenceNumber = (int) event.getState().getCrosstabColumnSequenceCounter( groupIndex );
     }
   }
 
@@ -127,72 +117,57 @@ public class ItemCountFunction extends AbstractFunction implements AggregationFu
    *
    * @param event Information about the event.
    */
-  public void itemsAdvanced(final ReportEvent event)
-  {
-    final BigDecimal oldValue = count.get(lastGroupSequenceNumber);
-    if (oldValue == null)
-    {
-      count.set(lastGroupSequenceNumber, ONE);
-    }
-    else
-    {
-      count.set(lastGroupSequenceNumber, oldValue.add(ONE));
+  public void itemsAdvanced( final ReportEvent event ) {
+    final BigDecimal oldValue = count.get( lastGroupSequenceNumber );
+    if ( oldValue == null ) {
+      count.set( lastGroupSequenceNumber, ONE );
+    } else {
+      count.set( lastGroupSequenceNumber, oldValue.add( ONE ) );
     }
   }
 
-  public void summaryRowSelection(final ReportEvent event)
-  {
-    if (FunctionUtilities.isDefinedGroup(getCrosstabFilterGroup(), event))
-    {
+  public void summaryRowSelection( final ReportEvent event ) {
+    if ( FunctionUtilities.isDefinedGroup( getCrosstabFilterGroup(), event ) ) {
       final int groupIndex = event.getState().getCurrentGroupIndex();
-      this.lastGroupSequenceNumber = (int) event.getState().getCrosstabColumnSequenceCounter(groupIndex);
+      this.lastGroupSequenceNumber = (int) event.getState().getCrosstabColumnSequenceCounter( groupIndex );
     }
   }
-  
+
   /**
    * Returns the number of items counted (so far) by the function.  This is either the number of items in the report, or
    * the group (if a group has been defined for the function).
    *
    * @return The item count.
    */
-  public Object getValue()
-  {
-    final BigDecimal value = count.get(lastGroupSequenceNumber);
-    if (value == null)
-    {
+  public Object getValue() {
+    final BigDecimal value = count.get( lastGroupSequenceNumber );
+    if ( value == null ) {
       return ZERO;
     }
     return value;
   }
-  
-  public String getCrosstabFilterGroup()
-  {
+
+  public String getCrosstabFilterGroup() {
     return crosstabFilterGroup;
   }
 
-  public void setCrosstabFilterGroup(final String crosstabFilterGroup)
-  {
+  public void setCrosstabFilterGroup( final String crosstabFilterGroup ) {
     this.crosstabFilterGroup = crosstabFilterGroup;
   }
 
-  public ItemCountFunction getInstance()
-  {
+  public ItemCountFunction getInstance() {
     final ItemCountFunction function = (ItemCountFunction) super.getInstance();
     function.count = count.clone();
     function.lastGroupSequenceNumber = 0;
     return function;
   }
 
-  public Object clone()
-  {
-    try
-    {
+  public Object clone() {
+    try {
       final ItemCountFunction clone = (ItemCountFunction) super.clone();
       clone.count = count.clone();
       return clone;
-    }
-    catch (CloneNotSupportedException e)
-    {
+    } catch ( CloneNotSupportedException e ) {
       throw new IllegalStateException();
     }
   }

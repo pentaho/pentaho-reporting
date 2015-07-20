@@ -17,54 +17,41 @@
 
 package org.pentaho.reporting.engine.classic.core.designtime.datafactory.editor.ui;
 
-import java.awt.Component;
 import javax.script.ScriptEngineFactory;
-import javax.swing.DefaultListCellRenderer;
-import javax.swing.JLabel;
-import javax.swing.JList;
+import javax.swing.*;
+import java.awt.*;
 
-public class QueryLanguageListCellRenderer extends DefaultListCellRenderer
-{
+public class QueryLanguageListCellRenderer extends DefaultListCellRenderer {
   private ScriptEngineFactory defaultValue;
 
-  public QueryLanguageListCellRenderer()
-  {
+  public QueryLanguageListCellRenderer() {
   }
 
-  public ScriptEngineFactory getDefaultValue()
-  {
+  public ScriptEngineFactory getDefaultValue() {
     return defaultValue;
   }
 
-  public void setDefaultValue(final ScriptEngineFactory defaultValue)
-  {
+  public void setDefaultValue( final ScriptEngineFactory defaultValue ) {
     this.defaultValue = defaultValue;
   }
 
-  public Component getListCellRendererComponent(final JList list,
-                                                final Object value,
-                                                final int index,
-                                                final boolean isSelected,
-                                                final boolean cellHasFocus)
-  {
+  public Component getListCellRendererComponent( final JList list,
+                                                 final Object value,
+                                                 final int index,
+                                                 final boolean isSelected,
+                                                 final boolean cellHasFocus ) {
     final JLabel component = (JLabel)
-        super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
-    if (value == null)
-    {
-      if (defaultValue != null)
-      {
+      super.getListCellRendererComponent( list, value, index, isSelected, cellHasFocus );
+    if ( value == null ) {
+      if ( defaultValue != null ) {
         component.setText
-            (Messages.getString("QueryLanguageListCellRenderer.UseDefault", defaultValue.getLanguageName()));
+          ( Messages.getString( "QueryLanguageListCellRenderer.UseDefault", defaultValue.getLanguageName() ) );
+      } else {
+        component.setText( " " );
       }
-      else
-      {
-        component.setText(" ");
-      }
-    }
-    else
-    {
+    } else {
       final ScriptEngineFactory factory = (ScriptEngineFactory) value;
-      component.setText(factory.getLanguageName());
+      component.setText( factory.getLanguageName() );
     }
     return component;
   }

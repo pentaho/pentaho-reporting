@@ -19,21 +19,17 @@ package org.pentaho.reporting.engine.classic.core.function.sys;
 
 import org.pentaho.reporting.engine.classic.core.function.AbstractExpression;
 
-public class GetDataRowValueExpression extends AbstractExpression
-{
+public class GetDataRowValueExpression extends AbstractExpression {
   private String field;
 
-  public GetDataRowValueExpression()
-  {
+  public GetDataRowValueExpression() {
   }
 
-  public String getField()
-  {
+  public String getField() {
     return field;
   }
 
-  public void setField(final String field)
-  {
+  public void setField( final String field ) {
     this.field = field;
   }
 
@@ -44,11 +40,9 @@ public class GetDataRowValueExpression extends AbstractExpression
    *
    * @return the value of the function.
    */
-  public Object getValue()
-  {
-    if (getField() != null)
-    {
-      return getDataRow().get(getField());
+  public Object getValue() {
+    if ( getField() != null ) {
+      return getDataRow().get( getField() );
     }
     return null;
   }

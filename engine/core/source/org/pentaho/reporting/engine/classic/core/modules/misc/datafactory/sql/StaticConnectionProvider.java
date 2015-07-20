@@ -26,14 +26,11 @@ import java.util.ArrayList;
  *
  * @author Thomas Morgner
  */
-public class StaticConnectionProvider implements ConnectionProvider
-{
+public class StaticConnectionProvider implements ConnectionProvider {
   private Connection connection;
 
-  public StaticConnectionProvider(final Connection connection)
-  {
-    if (connection == null)
-    {
+  public StaticConnectionProvider( final Connection connection ) {
+    if ( connection == null ) {
       throw new NullPointerException();
     }
     this.connection = connection;
@@ -47,17 +44,15 @@ public class StaticConnectionProvider implements ConnectionProvider
    * @return
    * @throws java.sql.SQLException
    */
-  public Connection createConnection(final String user, final String password) throws SQLException
-  {
+  public Connection createConnection( final String user, final String password ) throws SQLException {
     return connection;
   }
 
-  public Object getConnectionHash()
-  {
+  public Object getConnectionHash() {
     final ArrayList<Object> list = new ArrayList<Object>();
-    list.add(getClass().getName());
-    list.add(System.identityHashCode(connection));
-    list.add(String.valueOf(connection));
+    list.add( getClass().getName() );
+    list.add( System.identityHashCode( connection ) );
+    list.add( String.valueOf( connection ) );
     return list;
   }
 }

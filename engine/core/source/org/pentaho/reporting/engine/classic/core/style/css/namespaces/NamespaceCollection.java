@@ -22,14 +22,13 @@ package org.pentaho.reporting.engine.classic.core.style.css.namespaces;
  *
  * @author Thomas Morgner
  */
-public interface NamespaceCollection
-{
+public interface NamespaceCollection {
   public String getDefaultNamespaceURI();
-  
+
   public String[] getNamespaces();
 
-  public NamespaceDefinition getDefinition(String namespaceURI);
+  public NamespaceDefinition getDefinition( String namespaceURI );
 
-  public String lookupNamespaceURI (String prefix);
+  public String lookupNamespaceURI( String prefix );
 
 }

@@ -26,10 +26,8 @@ import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
 import org.pentaho.reporting.libraries.xmlns.parser.ParseException;
 import org.xml.sax.SAXException;
 
-public class StyleKeyFactoryReadHandler extends AbstractPropertyXmlReadHandler
-{
-  public StyleKeyFactoryReadHandler()
-  {
+public class StyleKeyFactoryReadHandler extends AbstractPropertyXmlReadHandler {
+  public StyleKeyFactoryReadHandler() {
   }
 
   /**
@@ -38,22 +36,20 @@ public class StyleKeyFactoryReadHandler extends AbstractPropertyXmlReadHandler
    * @param attrs the attributes.
    * @throws org.xml.sax.SAXException if there is a parsing error.
    */
-  protected void startParsing(final PropertyAttributes attrs)
-      throws SAXException
-  {
-    final String className = CompatibilityMapperUtil.mapClassName(attrs.getValue(getUri(), "class"));
-    if (className == null)
-    {
-      throw new ParseException("Attribute 'class' is missing.",
-          getRootHandler().getDocumentLocator());
+  protected void startParsing( final PropertyAttributes attrs )
+    throws SAXException {
+    final String className = CompatibilityMapperUtil.mapClassName( attrs.getValue( getUri(), "class" ) );
+    if ( className == null ) {
+      throw new ParseException( "Attribute 'class' is missing.",
+        getRootHandler().getDocumentLocator() );
     }
     final StyleKeyFactoryCollector fc =
-        (StyleKeyFactoryCollector) getRootHandler().getHelperObject
-            (ReportDefinitionReadHandler.STYLE_FACTORY_KEY);
+      (StyleKeyFactoryCollector) getRootHandler().getHelperObject
+        ( ReportDefinitionReadHandler.STYLE_FACTORY_KEY );
 
     final StyleKeyFactory factory = (StyleKeyFactory)
-        ObjectUtilities.loadAndInstantiate(className, getClass(), StyleKeyFactory.class);
-    fc.addFactory(factory);
+      ObjectUtilities.loadAndInstantiate( className, getClass(), StyleKeyFactory.class );
+    fc.addFactory( factory );
   }
 
   /**
@@ -61,8 +57,7 @@ public class StyleKeyFactoryReadHandler extends AbstractPropertyXmlReadHandler
    *
    * @return the object.
    */
-  public Object getObject()
-  {
+  public Object getObject() {
     return null;
   }
 }

@@ -21,31 +21,26 @@ import org.junit.Before;
 import org.junit.Test;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
-import org.pentaho.reporting.engine.classic.core.layout.model.LogicalPageBox;
 import org.pentaho.reporting.engine.classic.core.style.BandStyleKeys;
 import org.pentaho.reporting.engine.classic.core.testsupport.DebugReportRunner;
 
-public class Prd5140Test
-{
+public class Prd5140Test {
   @Before
-  public void setUp() throws Exception
-  {
+  public void setUp() throws Exception {
     ClassicEngineBoot.getInstance().start();
   }
 
   @Test
-  public void testInlineGroup() throws Exception
-  {
+  public void testInlineGroup() throws Exception {
     MasterReport report = new MasterReport();
-    report.getRootGroup().getStyle().setStyleProperty(BandStyleKeys.LAYOUT, BandStyleKeys.LAYOUT_INLINE);
-    DebugReportRunner.layoutPage(report, 0);
+    report.getRootGroup().getStyle().setStyleProperty( BandStyleKeys.LAYOUT, BandStyleKeys.LAYOUT_INLINE );
+    DebugReportRunner.layoutPage( report, 0 );
   }
 
   @Test
-  public void testInlineGroupBody() throws Exception
-  {
+  public void testInlineGroupBody() throws Exception {
     MasterReport report = new MasterReport();
-    report.getRootGroup().getBody().getStyle().setStyleProperty(BandStyleKeys.LAYOUT, BandStyleKeys.LAYOUT_INLINE);
-    DebugReportRunner.layoutPage(report, 0);
+    report.getRootGroup().getBody().getStyle().setStyleProperty( BandStyleKeys.LAYOUT, BandStyleKeys.LAYOUT_INLINE );
+    DebugReportRunner.layoutPage( report, 0 );
   }
 }

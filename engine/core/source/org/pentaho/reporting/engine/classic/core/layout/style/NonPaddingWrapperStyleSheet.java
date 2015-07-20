@@ -30,63 +30,51 @@ import org.pentaho.reporting.engine.classic.core.util.InstanceID;
  *
  * @author Thomas Morgner
  */
-public class NonPaddingWrapperStyleSheet extends AbstractStyleSheet
-{
+public class NonPaddingWrapperStyleSheet extends AbstractStyleSheet {
   private StyleSheet parent;
-  private static final Float ZERO = new Float(0);
+  private static final Float ZERO = new Float( 0 );
 
-  public NonPaddingWrapperStyleSheet()
-  {
+  public NonPaddingWrapperStyleSheet() {
   }
 
-  public void setParent(final StyleSheet parent)
-  {
+  public void setParent( final StyleSheet parent ) {
     this.parent = parent;
   }
 
-  public StyleSheet getParent()
-  {
+  public StyleSheet getParent() {
     return parent;
   }
 
-  public Object getStyleProperty(final StyleKey key, final Object defaultValue)
-  {
-    if (ElementStyleKeys.PADDING_TOP.equals(key))
-    {
+  public Object getStyleProperty( final StyleKey key, final Object defaultValue ) {
+    if ( ElementStyleKeys.PADDING_TOP.equals( key ) ) {
       return NonPaddingWrapperStyleSheet.ZERO;
     }
-    if (ElementStyleKeys.PADDING_LEFT.equals(key))
-    {
+    if ( ElementStyleKeys.PADDING_LEFT.equals( key ) ) {
       return NonPaddingWrapperStyleSheet.ZERO;
     }
-    if (ElementStyleKeys.PADDING_BOTTOM.equals(key))
-    {
+    if ( ElementStyleKeys.PADDING_BOTTOM.equals( key ) ) {
       return NonPaddingWrapperStyleSheet.ZERO;
     }
-    if (ElementStyleKeys.PADDING_RIGHT.equals(key))
-    {
+    if ( ElementStyleKeys.PADDING_RIGHT.equals( key ) ) {
       return NonPaddingWrapperStyleSheet.ZERO;
     }
-    return parent.getStyleProperty(key, defaultValue);
+    return parent.getStyleProperty( key, defaultValue );
   }
 
-  public Object[] toArray()
-  {
+  public Object[] toArray() {
     final Object[] objects = parent.toArray();
-    objects[ElementStyleKeys.PADDING_TOP.getIdentifier()] = NonPaddingWrapperStyleSheet.ZERO;
-    objects[ElementStyleKeys.PADDING_LEFT.getIdentifier()] = NonPaddingWrapperStyleSheet.ZERO;
-    objects[ElementStyleKeys.PADDING_BOTTOM.getIdentifier()] = NonPaddingWrapperStyleSheet.ZERO;
-    objects[ElementStyleKeys.PADDING_RIGHT.getIdentifier()] = NonPaddingWrapperStyleSheet.ZERO;
+    objects[ ElementStyleKeys.PADDING_TOP.getIdentifier() ] = NonPaddingWrapperStyleSheet.ZERO;
+    objects[ ElementStyleKeys.PADDING_LEFT.getIdentifier() ] = NonPaddingWrapperStyleSheet.ZERO;
+    objects[ ElementStyleKeys.PADDING_BOTTOM.getIdentifier() ] = NonPaddingWrapperStyleSheet.ZERO;
+    objects[ ElementStyleKeys.PADDING_RIGHT.getIdentifier() ] = NonPaddingWrapperStyleSheet.ZERO;
     return objects;
   }
 
-  public InstanceID getId()
-  {
+  public InstanceID getId() {
     return parent.getId();
   }
 
-  public long getChangeTracker()
-  {
+  public long getChangeTracker() {
     return parent.getChangeTracker();
   }
 }

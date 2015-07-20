@@ -17,140 +17,94 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.gui.base.internal;
 
-import java.awt.Component;
-import java.awt.Dialog;
-import java.awt.FlowLayout;
-import java.awt.Frame;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.GridLayout;
-import java.awt.Window;
+import org.pentaho.reporting.engine.classic.core.modules.gui.commonswing.FormValidator;
+import org.pentaho.reporting.engine.classic.core.modules.gui.commonswing.NumericDocument;
+import org.pentaho.reporting.engine.classic.core.modules.gui.commonswing.SwingCommonModule;
+import org.pentaho.reporting.libraries.designtime.swing.LibSwingUtil;
+
+import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.ResourceBundle;
-import javax.swing.AbstractAction;
-import javax.swing.Action;
-import javax.swing.BorderFactory;
-import javax.swing.Icon;
-import javax.swing.JButton;
-import javax.swing.JComponent;
-import javax.swing.JDialog;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JSlider;
-import javax.swing.JTextField;
-import javax.swing.KeyStroke;
-import javax.swing.SwingConstants;
-import javax.swing.UIManager;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
-
-import org.pentaho.reporting.engine.classic.core.modules.gui.commonswing.FormValidator;
-import org.pentaho.reporting.engine.classic.core.modules.gui.commonswing.NumericDocument;
-import org.pentaho.reporting.engine.classic.core.modules.gui.commonswing.SwingCommonModule;
-import org.pentaho.reporting.libraries.designtime.swing.LibSwingUtil;
 
 /**
  * Creation-Date: 29.10.2007, 18:36:13
  *
  * @author Thomas Morgner
  */
-public class NumericInputDialog extends JDialog
-{
-  private class SyncValuesHandler implements DocumentListener, ChangeListener
-  {
+public class NumericInputDialog extends JDialog {
+  private class SyncValuesHandler implements DocumentListener, ChangeListener {
     private boolean inStateChange;
 
-    private SyncValuesHandler()
-    {
+    private SyncValuesHandler() {
     }
 
 
-    public void insertUpdate(final DocumentEvent e)
-    {
-      if (inStateChange)
-      {
+    public void insertUpdate( final DocumentEvent e ) {
+      if ( inStateChange ) {
         return;
       }
       inStateChange = true;
-      try
-      {
+      try {
         final Integer i = getInputValue();
-        if (i != null)
-        {
-          valueSlider.setValue(i.intValue());
-          valueMessage.setText(String.valueOf(i));
+        if ( i != null ) {
+          valueSlider.setValue( i.intValue() );
+          valueMessage.setText( String.valueOf( i ) );
         }
-      }
-      finally
-      {
+      } finally {
         inStateChange = false;
       }
     }
 
-    public void removeUpdate(final DocumentEvent e)
-    {
-      if (inStateChange)
-      {
+    public void removeUpdate( final DocumentEvent e ) {
+      if ( inStateChange ) {
         return;
       }
       inStateChange = true;
-      try
-      {
+      try {
         final Integer i = getInputValue();
-        if (i != null)
-        {
-          valueSlider.setValue(i.intValue());
-          valueMessage.setText(String.valueOf(i));
+        if ( i != null ) {
+          valueSlider.setValue( i.intValue() );
+          valueMessage.setText( String.valueOf( i ) );
         }
-      }
-      finally
-      {
+      } finally {
         inStateChange = false;
       }
     }
 
-    public void changedUpdate(final DocumentEvent e)
-    {
-      if (inStateChange)
-      {
+    public void changedUpdate( final DocumentEvent e ) {
+      if ( inStateChange ) {
         return;
       }
       inStateChange = true;
-      try
-      {
+      try {
         final Integer i = getInputValue();
-        if (i != null)
-        {
-          valueSlider.setValue(i.intValue());
-          valueMessage.setText(String.valueOf(i));
+        if ( i != null ) {
+          valueSlider.setValue( i.intValue() );
+          valueMessage.setText( String.valueOf( i ) );
         }
-      }
-      finally
-      {
+      } finally {
         inStateChange = false;
       }
     }
 
-    public void stateChanged(final ChangeEvent e)
-    {
-      if (inStateChange)
-      {
+    public void stateChanged( final ChangeEvent e ) {
+      if ( inStateChange ) {
         return;
       }
       inStateChange = true;
-      try
-      {
-        final String text = String.valueOf(valueSlider.getValue());
-        textField.setText(text);
-        valueMessage.setText(text);
-      }
-      finally
-      {
+      try {
+        final String text = String.valueOf( valueSlider.getValue() );
+        textField.setText( text );
+        valueMessage.setText( text );
+      } finally {
         inStateChange = false;
       }
     }
@@ -159,14 +113,12 @@ public class NumericInputDialog extends JDialog
   /**
    * Internal action class to confirm the dialog and to validate the input.
    */
-  private class ConfirmAction extends AbstractAction
-  {
+  private class ConfirmAction extends AbstractAction {
     /**
      * Default constructor.
      */
-    protected ConfirmAction(final ResourceBundle resources)
-    {
-      putValue(Action.NAME, resources.getString("OptionPane.okButtonText")); //$NON-NLS-1$
+    protected ConfirmAction( final ResourceBundle resources ) {
+      putValue( Action.NAME, resources.getString( "OptionPane.okButtonText" ) ); //$NON-NLS-1$
     }
 
     /**
@@ -174,12 +126,10 @@ public class NumericInputDialog extends JDialog
      *
      * @param e the action event.
      */
-    public void actionPerformed(final ActionEvent e)
-    {
-      if (performValidate())
-      {
-        setConfirmed(true);
-        setVisible(false);
+    public void actionPerformed( final ActionEvent e ) {
+      if ( performValidate() ) {
+        setConfirmed( true );
+        setVisible( false );
       }
     }
   }
@@ -187,15 +137,13 @@ public class NumericInputDialog extends JDialog
   /**
    * Internal action class to cancel the report processing.
    */
-  private class CancelAction extends AbstractAction
-  {
+  private class CancelAction extends AbstractAction {
     /**
      * Default constructor.
      */
-    protected CancelAction(final ResourceBundle resources)
-    {
-      putValue(Action.NAME, resources.getString("OptionPane.cancelButtonText")); //$NON-NLS-1$
-      putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0));
+    protected CancelAction( final ResourceBundle resources ) {
+      putValue( Action.NAME, resources.getString( "OptionPane.cancelButtonText" ) ); //$NON-NLS-1$
+      putValue( Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke( KeyEvent.VK_ESCAPE, 0 ) );
     }
 
     /**
@@ -203,50 +151,39 @@ public class NumericInputDialog extends JDialog
      *
      * @param e the action event.
      */
-    public void actionPerformed(final ActionEvent e)
-    {
-      setConfirmed(false);
-      setVisible(false);
+    public void actionPerformed( final ActionEvent e ) {
+      setConfirmed( false );
+      setVisible( false );
     }
   }
 
-  private class DialogValidator extends FormValidator
-  {
-    protected DialogValidator()
-    {
+  private class DialogValidator extends FormValidator {
+    protected DialogValidator() {
     }
 
-    public boolean performValidate()
-    {
+    public boolean performValidate() {
       return NumericInputDialog.this.performValidate();
     }
 
-    public Action getConfirmAction()
-    {
+    public Action getConfirmAction() {
       return NumericInputDialog.this.getConfirmAction();
     }
   }
 
-  private class WindowCloseHandler extends WindowAdapter
-  {
-    protected WindowCloseHandler()
-    {
+  private class WindowCloseHandler extends WindowAdapter {
+    protected WindowCloseHandler() {
     }
 
     /**
      * Invoked when a window is in the process of being closed. The close operation can be overridden at this point.
      */
-    public void windowClosing(final WindowEvent e)
-    {
+    public void windowClosing( final WindowEvent e ) {
       final Action cancelAction = getCancelAction();
-      if (cancelAction != null)
-      {
-        cancelAction.actionPerformed(null);
-      }
-      else
-      {
-        setConfirmed(false);
-        setVisible(false);
+      if ( cancelAction != null ) {
+        cancelAction.actionPerformed( null );
+      } else {
+        setConfirmed( false );
+        setVisible( false );
       }
     }
   }
@@ -263,90 +200,80 @@ public class NumericInputDialog extends JDialog
   private boolean confirmed;
   private FormValidator formValidator;
 
-  public NumericInputDialog()
-  {
+  public NumericInputDialog() {
     initialize();
   }
 
-  public NumericInputDialog(final Frame owner)
-  {
-    super(owner);
+  public NumericInputDialog( final Frame owner ) {
+    super( owner );
     initialize();
   }
 
-  public NumericInputDialog(final Frame owner, final boolean modal)
-  {
-    super(owner, modal);
+  public NumericInputDialog( final Frame owner, final boolean modal ) {
+    super( owner, modal );
     initialize();
   }
 
-  public NumericInputDialog(final Frame owner, final String title)
-  {
-    super(owner, title);
+  public NumericInputDialog( final Frame owner, final String title ) {
+    super( owner, title );
     initialize();
   }
 
-  public NumericInputDialog(final Dialog owner)
-  {
-    super(owner);
+  public NumericInputDialog( final Dialog owner ) {
+    super( owner );
     initialize();
   }
 
-  public NumericInputDialog(final Dialog owner, final boolean modal)
-  {
-    super(owner, modal);
+  public NumericInputDialog( final Dialog owner, final boolean modal ) {
+    super( owner, modal );
     initialize();
   }
 
-  public NumericInputDialog(final Dialog owner, final String title)
-  {
-    super(owner, title);
+  public NumericInputDialog( final Dialog owner, final String title ) {
+    super( owner, title );
     initialize();
   }
 
-  public NumericInputDialog(final Frame owner, final String title, final boolean modal)
-  {
-    super(owner, title, modal);
+  public NumericInputDialog( final Frame owner, final String title, final boolean modal ) {
+    super( owner, title, modal );
     initialize();
   }
 
-  public NumericInputDialog(final Dialog owner, final String title, final boolean modal)
-  {
-    super(owner, title, modal);
+  public NumericInputDialog( final Dialog owner, final String title, final boolean modal ) {
+    super( owner, title, modal );
     initialize();
   }
 
-  private void initialize()
-  {
-    final ResourceBundle resources = ResourceBundle.getBundle(SwingCommonModule.BUNDLE_NAME);
-    setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+  private void initialize() {
+    final ResourceBundle resources = ResourceBundle.getBundle( SwingCommonModule.BUNDLE_NAME );
+    setDefaultCloseOperation( JDialog.DISPOSE_ON_CLOSE );
 
-    addWindowListener(new WindowCloseHandler());
+    addWindowListener( new WindowCloseHandler() );
 
-    cancelAction = new CancelAction(resources);
-    confirmAction = new ConfirmAction(resources);
+    cancelAction = new CancelAction( resources );
+    confirmAction = new ConfirmAction( resources );
 
     final SyncValuesHandler syncValuesHandler = new SyncValuesHandler();
     message = new JLabel();
     icon = new JLabel();
-    icon.setVisible(false);
-    icon.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 5));
+    icon.setVisible( false );
+    icon.setBorder( BorderFactory.createEmptyBorder( 0, 0, 0, 5 ) );
 
     valueMessage = new JLabel();
-    valueMessage.setVisible(false);
+    valueMessage.setVisible( false );
 
     valueSlider = new JSlider();
     textField = new JTextField();
-    textField.setDocument(new NumericDocument());
-    textField.setColumns(10);
-    textField.setHorizontalAlignment(SwingConstants.TRAILING);
+    textField.setDocument( new NumericDocument() );
+    textField.setColumns( 10 );
+    textField.setHorizontalAlignment( SwingConstants.TRAILING );
 
-    textField.getDocument().addDocumentListener(syncValuesHandler);
-    valueSlider.addChangeListener(syncValuesHandler);
+    textField.getDocument().addDocumentListener( syncValuesHandler );
+    valueSlider.addChangeListener( syncValuesHandler );
 
     final JPanel contentPane = new JPanel();
-    contentPane.setLayout(new GridBagLayout());
-    contentPane.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+    contentPane.setLayout( new GridBagLayout() );
+    contentPane.setBorder( BorderFactory.createEmptyBorder( 5, 5, 5, 5 ) );
 
     GridBagConstraints gbc = new GridBagConstraints();
     gbc.gridx = 0;
@@ -354,7 +281,7 @@ public class NumericInputDialog extends JDialog
     gbc.gridheight = 5;
     gbc.gridwidth = 1;
     gbc.anchor = GridBagConstraints.CENTER;
-    contentPane.add(icon, gbc);
+    contentPane.add( icon, gbc );
 
     gbc = new GridBagConstraints();
     gbc.gridx = 1;
@@ -362,7 +289,7 @@ public class NumericInputDialog extends JDialog
     gbc.gridheight = 1;
     gbc.gridwidth = 1;
     gbc.fill = GridBagConstraints.HORIZONTAL;
-    contentPane.add(message, gbc);
+    contentPane.add( message, gbc );
 
     gbc = new GridBagConstraints();
     gbc.gridx = 1;
@@ -370,7 +297,7 @@ public class NumericInputDialog extends JDialog
     gbc.gridheight = 1;
     gbc.gridwidth = 1;
     gbc.fill = GridBagConstraints.HORIZONTAL;
-    contentPane.add(valueSlider, gbc);
+    contentPane.add( valueSlider, gbc );
 
     gbc = new GridBagConstraints();
     gbc.gridx = 1;
@@ -378,7 +305,7 @@ public class NumericInputDialog extends JDialog
     gbc.gridheight = 1;
     gbc.gridwidth = 1;
     gbc.fill = GridBagConstraints.HORIZONTAL;
-    contentPane.add(textField, gbc);
+    contentPane.add( textField, gbc );
 
     gbc = new GridBagConstraints();
     gbc.gridx = 1;
@@ -386,320 +313,267 @@ public class NumericInputDialog extends JDialog
     gbc.gridheight = 1;
     gbc.gridwidth = 1;
     gbc.anchor = GridBagConstraints.EAST;
-    contentPane.add(valueMessage, gbc);
+    contentPane.add( valueMessage, gbc );
 
     gbc = new GridBagConstraints();
     gbc.gridx = 1;
     gbc.gridy = 4;
     gbc.gridheight = 1;
     gbc.gridwidth = 1;
-    contentPane.add(createButtonPanel(), gbc);
+    contentPane.add( createButtonPanel(), gbc );
 
     formValidator = new DialogValidator();
-    formValidator.setEnabled(true);
-    formValidator.registerTextField(textField);
+    formValidator.setEnabled( true );
+    formValidator.registerTextField( textField );
 
-    setContentPane(contentPane);
+    setContentPane( contentPane );
   }
 
-  private JPanel createButtonPanel()
-  {
-    final JButton btnCancel = new JButton(getCancelAction());
-    final JButton btnConfirm = new JButton(getConfirmAction());
+  private JPanel createButtonPanel() {
+    final JButton btnCancel = new JButton( getCancelAction() );
+    final JButton btnConfirm = new JButton( getConfirmAction() );
     final JPanel buttonPanel = new JPanel();
-    buttonPanel.setLayout(new GridLayout(1, 2, 5, 5));
-    buttonPanel.add(btnConfirm);
-    buttonPanel.add(btnCancel);
-    btnConfirm.setDefaultCapable(true);
-    getRootPane().setDefaultButton(btnConfirm);
-    buttonPanel.registerKeyboardAction(getConfirmAction(),
-        KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0),
-        JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
+    buttonPanel.setLayout( new GridLayout( 1, 2, 5, 5 ) );
+    buttonPanel.add( btnConfirm );
+    buttonPanel.add( btnCancel );
+    btnConfirm.setDefaultCapable( true );
+    getRootPane().setDefaultButton( btnConfirm );
+    buttonPanel.registerKeyboardAction( getConfirmAction(),
+      KeyStroke.getKeyStroke( KeyEvent.VK_ENTER, 0 ),
+      JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT );
 
     final JPanel buttonCarrier = new JPanel();
-    buttonCarrier.setLayout(new FlowLayout(FlowLayout.RIGHT));
-    buttonCarrier.add(buttonPanel);
+    buttonCarrier.setLayout( new FlowLayout( FlowLayout.RIGHT ) );
+    buttonCarrier.add( buttonPanel );
     return buttonCarrier;
   }
 
-  public boolean getPaintTicks()
-  {
+  public boolean getPaintTicks() {
     return valueSlider.getPaintTicks();
   }
 
-  public void setPaintTicks(final boolean b)
-  {
-    valueSlider.setPaintTicks(b);
+  public void setPaintTicks( final boolean b ) {
+    valueSlider.setPaintTicks( b );
   }
 
-  public void setSnapToTicks(final boolean b)
-  {
-    valueSlider.setSnapToTicks(b);
+  public void setSnapToTicks( final boolean b ) {
+    valueSlider.setSnapToTicks( b );
   }
 
-  public boolean getSnapToTicks()
-  {
+  public boolean getSnapToTicks() {
     return valueSlider.getSnapToTicks();
   }
 
-  public Action getCancelAction()
-  {
+  public Action getCancelAction() {
     return cancelAction;
   }
 
-  public Action getConfirmAction()
-  {
+  public Action getConfirmAction() {
     return confirmAction;
   }
 
-  public void setIcon(final Icon icon)
-  {
-    this.icon.setIcon(icon);
-    this.icon.setVisible(icon != null);
+  public void setIcon( final Icon icon ) {
+    this.icon.setIcon( icon );
+    this.icon.setVisible( icon != null );
   }
 
-  public Icon getIcon()
-  {
+  public Icon getIcon() {
     return icon.getIcon();
   }
 
-  public String getMessage()
-  {
+  public String getMessage() {
     return message.getText();
   }
 
-  public void setMessage(final String message)
-  {
-    this.message.setText(message);
+  public void setMessage( final String message ) {
+    this.message.setText( message );
   }
 
-  public int getSliderValue()
-  {
+  public int getSliderValue() {
     return valueSlider.getValue();
   }
 
-  public void setSliderValue(final int n)
-  {
-    valueSlider.setValue(n);
+  public void setSliderValue( final int n ) {
+    valueSlider.setValue( n );
   }
 
-  public int getMinimum()
-  {
+  public int getMinimum() {
     return valueSlider.getMinimum();
   }
 
-  public void setMinimum(final int minimum)
-  {
-    valueSlider.setMinimum(minimum);
+  public void setMinimum( final int minimum ) {
+    valueSlider.setMinimum( minimum );
   }
 
-  public int getMaximum()
-  {
+  public int getMaximum() {
     return valueSlider.getMaximum();
   }
 
-  public void setMaximum(final int maximum)
-  {
-    valueSlider.setMaximum(maximum);
+  public void setMaximum( final int maximum ) {
+    valueSlider.setMaximum( maximum );
   }
 
 
-  public boolean isConfirmed()
-  {
+  public boolean isConfirmed() {
     return confirmed;
   }
 
-  public void setConfirmed(final boolean confirmed)
-  {
+  public void setConfirmed( final boolean confirmed ) {
     this.confirmed = confirmed;
   }
 
-  protected boolean performValidate()
-  {
+  protected boolean performValidate() {
     final Integer value = getInputValue();
-    if (value == null)
-    {
+    if ( value == null ) {
       return false;
     }
-    if (isBoundedRange() == false)
-    {
+    if ( isBoundedRange() == false ) {
       return true;
     }
     final int iVal = value.intValue();
-    if (iVal < valueSlider.getMinimum() || iVal > valueSlider.getMaximum())
-    {
+    if ( iVal < valueSlider.getMinimum() || iVal > valueSlider.getMaximum() ) {
       return false;
     }
     return true;
   }
 
-  public void setInputValue(final Integer value)
-  {
-    if (value == null)
-    {
-      textField.setText("");
-    }
-    else
-    {
-      textField.setText(String.valueOf(value));
+  public void setInputValue( final Integer value ) {
+    if ( value == null ) {
+      textField.setText( "" );
+    } else {
+      textField.setText( String.valueOf( value ) );
     }
   }
 
-  public Integer getInputValue()
-  {
-    try
-    {
-      return new Integer(textField.getText());
-    }
-    catch (NumberFormatException nfe)
-    {
+  public Integer getInputValue() {
+    try {
+      return new Integer( textField.getText() );
+    } catch ( NumberFormatException nfe ) {
       return null;
     }
   }
 
-  public boolean isBoundedRange()
-  {
+  public boolean isBoundedRange() {
     return boundedRange;
   }
 
-  public void setBoundedRange(final boolean boundedRange)
-  {
+  public void setBoundedRange( final boolean boundedRange ) {
     this.boundedRange = boundedRange;
   }
 
-  public boolean isSliderVisible()
-  {
+  public boolean isSliderVisible() {
     return valueSlider.isVisible();
   }
 
-  public void setSliderVisible(final boolean b)
-  {
-    valueSlider.setVisible(b);
+  public void setSliderVisible( final boolean b ) {
+    valueSlider.setVisible( b );
   }
 
-  public boolean isTextInputVisible()
-  {
+  public boolean isTextInputVisible() {
     return textField.isVisible();
   }
 
-  public void setTextInputVisible(final boolean b)
-  {
-    textField.setVisible(b);
-    valueMessage.setVisible(!b);
+  public void setTextInputVisible( final boolean b ) {
+    textField.setVisible( b );
+    valueMessage.setVisible( !b );
   }
 
-  private static NumericInputDialog createDialog(final Component parent)
-  {
-    if (parent != null)
-    {
-      final Window window = LibSwingUtil.getWindowAncestor(parent);
-      if (window instanceof Dialog)
-      {
-        return new NumericInputDialog((Dialog) window, true);
+  private static NumericInputDialog createDialog( final Component parent ) {
+    if ( parent != null ) {
+      final Window window = LibSwingUtil.getWindowAncestor( parent );
+      if ( window instanceof Dialog ) {
+        return new NumericInputDialog( (Dialog) window, true );
       }
-      if (window instanceof Frame)
-      {
-        return new NumericInputDialog((Frame) window, true);
+      if ( window instanceof Frame ) {
+        return new NumericInputDialog( (Frame) window, true );
       }
     }
 
     final NumericInputDialog dialog = new NumericInputDialog();
-    dialog.setModal(true);
+    dialog.setModal( true );
     return dialog;
   }
 
-  public static Integer showInputDialog(final Component parent,
-                                        final int icon,
-                                        final String title,
-                                        final String message,
-                                        final int minimum,
-                                        final int maximum,
-                                        final int initialValue,
-                                        final boolean bounded)
-  {
-    final NumericInputDialog dialog = createDialog(parent);
-    if (title != null)
-    {
-      dialog.setTitle(title);
-    }
-    if (message != null)
-    {
-      dialog.setMessage(message);
-    }
-    dialog.setIcon(createDefaultIcon(icon));
-    dialog.setMinimum(minimum);
-    dialog.setMaximum(maximum);
-    dialog.setInputValue(new Integer(initialValue));
-    dialog.setBoundedRange(bounded);
-    dialog.setPaintTicks(true);
-    dialog.pack();
-    LibSwingUtil.centerDialogInParent(dialog);
-    dialog.setVisible(true);
-    if (dialog.isConfirmed())
-    {
-      return dialog.getInputValue();
-    }
-    return null;
-  }
-
-  public static Integer showInputDialog(final Component parent,
-                                        final int icon,
-                                        final String title,
-                                        final String message,
-                                        final int initialValue,
-                                        final boolean bounded)
-  {
-    final NumericInputDialog dialog = createDialog(parent);
-    if (title != null)
-    {
-      dialog.setTitle(title);
-    }
-    if (message != null)
-    {
-      dialog.setMessage(message);
-    }
-    dialog.setIcon(createDefaultIcon(icon));
-    dialog.setInputValue(new Integer(initialValue));
-    dialog.setSliderVisible(false);
-    dialog.setBoundedRange(bounded);
-    dialog.pack();
-    LibSwingUtil.centerDialogInParent(dialog);
-    dialog.setVisible(true);
-    if (dialog.isConfirmed())
-    {
-      return dialog.getInputValue();
-    }
-    return null;
-  }
-
-  public static Integer showSliderDialog(final Component parent,
+  public static Integer showInputDialog( final Component parent,
                                          final int icon,
                                          final String title,
                                          final String message,
                                          final int minimum,
                                          final int maximum,
-                                         final int initialValue)
-  {
-    final NumericInputDialog dialog = createDialog(parent);
-    if (title != null)
-    {
-      dialog.setTitle(title);
+                                         final int initialValue,
+                                         final boolean bounded ) {
+    final NumericInputDialog dialog = createDialog( parent );
+    if ( title != null ) {
+      dialog.setTitle( title );
     }
-    if (message != null)
-    {
-      dialog.setMessage(message);
+    if ( message != null ) {
+      dialog.setMessage( message );
     }
-    dialog.setIcon(createDefaultIcon(icon));
-    dialog.setMinimum(minimum);
-    dialog.setMaximum(maximum);
-    dialog.setInputValue(new Integer(initialValue));
-    dialog.setBoundedRange(true);
-    dialog.setTextInputVisible(false);
+    dialog.setIcon( createDefaultIcon( icon ) );
+    dialog.setMinimum( minimum );
+    dialog.setMaximum( maximum );
+    dialog.setInputValue( new Integer( initialValue ) );
+    dialog.setBoundedRange( bounded );
+    dialog.setPaintTicks( true );
     dialog.pack();
-    LibSwingUtil.centerDialogInParent(dialog);
-    dialog.setVisible(true);
-    if (dialog.isConfirmed())
-    {
+    LibSwingUtil.centerDialogInParent( dialog );
+    dialog.setVisible( true );
+    if ( dialog.isConfirmed() ) {
+      return dialog.getInputValue();
+    }
+    return null;
+  }
+
+  public static Integer showInputDialog( final Component parent,
+                                         final int icon,
+                                         final String title,
+                                         final String message,
+                                         final int initialValue,
+                                         final boolean bounded ) {
+    final NumericInputDialog dialog = createDialog( parent );
+    if ( title != null ) {
+      dialog.setTitle( title );
+    }
+    if ( message != null ) {
+      dialog.setMessage( message );
+    }
+    dialog.setIcon( createDefaultIcon( icon ) );
+    dialog.setInputValue( new Integer( initialValue ) );
+    dialog.setSliderVisible( false );
+    dialog.setBoundedRange( bounded );
+    dialog.pack();
+    LibSwingUtil.centerDialogInParent( dialog );
+    dialog.setVisible( true );
+    if ( dialog.isConfirmed() ) {
+      return dialog.getInputValue();
+    }
+    return null;
+  }
+
+  public static Integer showSliderDialog( final Component parent,
+                                          final int icon,
+                                          final String title,
+                                          final String message,
+                                          final int minimum,
+                                          final int maximum,
+                                          final int initialValue ) {
+    final NumericInputDialog dialog = createDialog( parent );
+    if ( title != null ) {
+      dialog.setTitle( title );
+    }
+    if ( message != null ) {
+      dialog.setMessage( message );
+    }
+    dialog.setIcon( createDefaultIcon( icon ) );
+    dialog.setMinimum( minimum );
+    dialog.setMaximum( maximum );
+    dialog.setInputValue( new Integer( initialValue ) );
+    dialog.setBoundedRange( true );
+    dialog.setTextInputVisible( false );
+    dialog.pack();
+    LibSwingUtil.centerDialogInParent( dialog );
+    dialog.setVisible( true );
+    if ( dialog.isConfirmed() ) {
       return dialog.getInputValue();
     }
     return null;
@@ -708,11 +582,9 @@ public class NumericInputDialog extends JDialog
   /**
    * Returns the icon to use for the passed in type.
    */
-  private static Icon createDefaultIcon(final int messageType)
-  {
+  private static Icon createDefaultIcon( final int messageType ) {
     final String propertyName;
-    switch (messageType)
-    {
+    switch( messageType ) {
       case 0:
         propertyName = "OptionPane.errorIcon";//$NON-NLS-1$
         break;
@@ -728,7 +600,7 @@ public class NumericInputDialog extends JDialog
       default:
         return null;
     }
-    return UIManager.getIcon(propertyName);
+    return UIManager.getIcon( propertyName );
   }
 
 }

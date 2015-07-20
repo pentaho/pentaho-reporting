@@ -17,9 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.core.util;
 
-import java.awt.Graphics2D;
-import java.awt.geom.Rectangle2D;
-
 import org.pentaho.reporting.engine.classic.core.ResourceBundleFactory;
 import org.pentaho.reporting.engine.classic.core.imagemap.ImageMap;
 import org.pentaho.reporting.engine.classic.core.layout.style.SimpleStyleSheet;
@@ -27,13 +24,15 @@ import org.pentaho.reporting.engine.classic.core.style.StyleSheet;
 import org.pentaho.reporting.libraries.base.config.Configuration;
 import org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper;
 
+import java.awt.*;
+import java.awt.geom.Rectangle2D;
+
 /**
  * A drawable implementation that applies scaling to the wrapped up drawable object.
  *
  * @author Thomas Morgner
  */
-public class ScalingDrawable extends DrawableWrapper implements ReportDrawable
-{
+public class ScalingDrawable extends DrawableWrapper implements ReportDrawable {
   /**
    * The horizontal scale factor.
    */
@@ -61,9 +60,8 @@ public class ScalingDrawable extends DrawableWrapper implements ReportDrawable
    *
    * @param drawable the drawable object
    */
-  public ScalingDrawable(final Object drawable)
-  {
-    super(drawable);
+  public ScalingDrawable( final Object drawable ) {
+    super( drawable );
     scaleX = 1;
     scaleY = 1;
   }
@@ -73,8 +71,7 @@ public class ScalingDrawable extends DrawableWrapper implements ReportDrawable
    *
    * @return the scale factor.
    */
-  public float getScaleY()
-  {
+  public float getScaleY() {
     return scaleY;
   }
 
@@ -83,8 +80,7 @@ public class ScalingDrawable extends DrawableWrapper implements ReportDrawable
    *
    * @param scaleY the scale factor.
    */
-  public void setScaleY(final float scaleY)
-  {
+  public void setScaleY( final float scaleY ) {
     this.scaleY = scaleY;
   }
 
@@ -93,8 +89,7 @@ public class ScalingDrawable extends DrawableWrapper implements ReportDrawable
    *
    * @return the scale factor.
    */
-  public float getScaleX()
-  {
+  public float getScaleX() {
     return scaleX;
   }
 
@@ -103,8 +98,7 @@ public class ScalingDrawable extends DrawableWrapper implements ReportDrawable
    *
    * @param scaleX the scale factor.
    */
-  public void setScaleX(final float scaleX)
-  {
+  public void setScaleX( final float scaleX ) {
     this.scaleX = scaleX;
   }
 
@@ -114,46 +108,40 @@ public class ScalingDrawable extends DrawableWrapper implements ReportDrawable
    * @param g2   the graphics device.
    * @param area the area inside which the object should be drawn.
    */
-  public void draw(final Graphics2D g2, final Rectangle2D area)
-  {
+  public void draw( final Graphics2D g2, final Rectangle2D area ) {
     final Object drawable = getBackend();
-    if (drawable == null)
-    {
+    if ( drawable == null ) {
       return;
     }
 
-    if (drawable instanceof ReportDrawable)
-    {
+    if ( drawable instanceof ReportDrawable ) {
       final ReportDrawable reportDrawable = (ReportDrawable) drawable;
-      reportDrawable.setConfiguration(getConfiguration());
-      reportDrawable.setResourceBundleFactory(getResourceBundleFactory());
-      reportDrawable.setStyleSheet(getStyleSheet());
+      reportDrawable.setConfiguration( getConfiguration() );
+      reportDrawable.setResourceBundleFactory( getResourceBundleFactory() );
+      reportDrawable.setStyleSheet( getStyleSheet() );
     }
 
     final Graphics2D derived = (Graphics2D) g2.create();
-    derived.scale(scaleX, scaleY);
+    derived.scale( scaleX, scaleY );
     final Rectangle2D scaledArea = (Rectangle2D) area.clone();
-    scaledArea.setRect(scaledArea.getX() * scaleX, scaledArea.getY() * scaleY,
-        scaledArea.getWidth() * scaleX, scaledArea.getHeight() * scaleY);
-    super.draw(derived, scaledArea);
+    scaledArea.setRect( scaledArea.getX() * scaleX, scaledArea.getY() * scaleY,
+      scaledArea.getWidth() * scaleX, scaledArea.getHeight() * scaleY );
+    super.draw( derived, scaledArea );
     derived.dispose();
   }
 
-  public ImageMap getImageMap(final Rectangle2D bounds)
-  {
+  public ImageMap getImageMap( final Rectangle2D bounds ) {
     final Object drawable = getBackend();
-    if (drawable == null)
-    {
+    if ( drawable == null ) {
       return null;
     }
 
-    if (drawable instanceof ReportDrawable)
-    {
+    if ( drawable instanceof ReportDrawable ) {
       final ReportDrawable reportDrawable = (ReportDrawable) drawable;
       final Rectangle2D scaledArea = (Rectangle2D) bounds.clone();
-      scaledArea.setRect(scaledArea.getX() * scaleX, scaledArea.getY() * scaleY,
-          scaledArea.getWidth() * scaleX, scaledArea.getHeight() * scaleY);
-      reportDrawable.getImageMap(scaledArea);
+      scaledArea.setRect( scaledArea.getX() * scaleX, scaledArea.getY() * scaleY,
+        scaledArea.getWidth() * scaleX, scaledArea.getHeight() * scaleY );
+      reportDrawable.getImageMap( scaledArea );
     }
     return null;
   }
@@ -163,8 +151,7 @@ public class ScalingDrawable extends DrawableWrapper implements ReportDrawable
    *
    * @return the element's stylesheet.
    */
-  public StyleSheet getStyleSheet()
-  {
+  public StyleSheet getStyleSheet() {
     return styleSheet;
   }
 
@@ -173,15 +160,11 @@ public class ScalingDrawable extends DrawableWrapper implements ReportDrawable
    *
    * @param styleSheet the element's stylesheet.
    */
-  public void setStyleSheet(final StyleSheet styleSheet)
-  {
-    if (styleSheet == null)
-    {
+  public void setStyleSheet( final StyleSheet styleSheet ) {
+    if ( styleSheet == null ) {
       this.styleSheet = null;
-    }
-    else
-    {
-      this.styleSheet = new SimpleStyleSheet(styleSheet);
+    } else {
+      this.styleSheet = new SimpleStyleSheet( styleSheet );
     }
   }
 
@@ -190,8 +173,7 @@ public class ScalingDrawable extends DrawableWrapper implements ReportDrawable
    *
    * @return the resource-bundle factory.
    */
-  public ResourceBundleFactory getResourceBundleFactory()
-  {
+  public ResourceBundleFactory getResourceBundleFactory() {
     return resourceBundleFactory;
   }
 
@@ -200,8 +182,7 @@ public class ScalingDrawable extends DrawableWrapper implements ReportDrawable
    *
    * @param resourceBundleFactory the resource-bundle factory.
    */
-  public void setResourceBundleFactory(final ResourceBundleFactory resourceBundleFactory)
-  {
+  public void setResourceBundleFactory( final ResourceBundleFactory resourceBundleFactory ) {
     this.resourceBundleFactory = resourceBundleFactory;
   }
 
@@ -210,8 +191,7 @@ public class ScalingDrawable extends DrawableWrapper implements ReportDrawable
    *
    * @return the report's configuration.
    */
-  public Configuration getConfiguration()
-  {
+  public Configuration getConfiguration() {
     return configuration;
   }
 
@@ -220,8 +200,7 @@ public class ScalingDrawable extends DrawableWrapper implements ReportDrawable
    *
    * @param configuration the report's configuration.
    */
-  public void setConfiguration(final Configuration configuration)
-  {
+  public void setConfiguration( final Configuration configuration ) {
     this.configuration = configuration;
   }
 }

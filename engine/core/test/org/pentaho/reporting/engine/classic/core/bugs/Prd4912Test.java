@@ -28,35 +28,31 @@ import org.pentaho.reporting.engine.classic.core.RootLevelBand;
 import org.pentaho.reporting.engine.classic.core.modules.parser.bundle.writer.BundleWriterException;
 import org.pentaho.reporting.engine.classic.core.testsupport.ReportWritingUtil;
 
-public class Prd4912Test
-{
+public class Prd4912Test {
   @Before
-  public void setUp()
-  {
+  public void setUp() {
     ClassicEngineBoot.getInstance().start();
   }
 
-  @Test(expected = BundleWriterException.class)
-  public void testReportAPI() throws Exception
-  {
+  @Test( expected = BundleWriterException.class )
+  public void testReportAPI() throws Exception {
     MasterReport report = new MasterReport();
     // by all means, this is illegal, root-level band should not appear directly inside other root-level bands
-    report.getReportHeader().addElement(new PageHeader());
+    report.getReportHeader().addElement( new PageHeader() );
 
-    MasterReport elements = ReportWritingUtil.saveAndLoad(report);
-    Assert.assertTrue(elements.getReportHeader().getElement(0) instanceof Band);
-    Assert.assertFalse(elements.getReportHeader().getElement(0) instanceof RootLevelBand);
+    MasterReport elements = ReportWritingUtil.saveAndLoad( report );
+    Assert.assertTrue( elements.getReportHeader().getElement( 0 ) instanceof Band );
+    Assert.assertFalse( elements.getReportHeader().getElement( 0 ) instanceof RootLevelBand );
   }
 
-  @Test(expected = BundleWriterException.class)
-  public void testReportAPI2() throws Exception
-  {
+  @Test( expected = BundleWriterException.class )
+  public void testReportAPI2() throws Exception {
     MasterReport report = new MasterReport();
     // by all means, this is illegal, root-level band should not appear directly inside other root-level bands
-    report.getReportHeader().addElement(new MasterReport());
+    report.getReportHeader().addElement( new MasterReport() );
 
-    MasterReport elements = ReportWritingUtil.saveAndLoad(report);
-    Assert.assertTrue(elements.getReportHeader().getElement(0) instanceof Band);
-    Assert.assertFalse(elements.getReportHeader().getElement(0) instanceof RootLevelBand);
+    MasterReport elements = ReportWritingUtil.saveAndLoad( report );
+    Assert.assertTrue( elements.getReportHeader().getElement( 0 ) instanceof Band );
+    Assert.assertFalse( elements.getReportHeader().getElement( 0 ) instanceof RootLevelBand );
   }
 }

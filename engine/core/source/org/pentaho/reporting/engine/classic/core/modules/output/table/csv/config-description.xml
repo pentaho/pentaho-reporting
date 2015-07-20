@@ -5,7 +5,8 @@
     <description>A module definition. Please do not edit this entry.</description>
     <class instanceof="org.pentaho.reporting.libraries.base.boot.Module"/>
   </key>
-  <key name="org.pentaho.reporting.engine.classic.core.modules.output.table.csv.Separator" global="false" hidden="false">
+  <key name="org.pentaho.reporting.engine.classic.core.modules.output.table.csv.Separator" global="false"
+       hidden="false">
     <description>Defines the default separator, that should be used for the output.</description>
     <text/>
   </key>

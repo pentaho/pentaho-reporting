@@ -19,10 +19,8 @@ package org.pentaho.reporting.engine.classic.core.modules.misc.survey;
 
 import org.pentaho.reporting.engine.classic.core.metadata.propertyeditors.EnumPropertyEditor;
 
-public class SurveyScaleShapeTypePropertyEditor extends EnumPropertyEditor
-{
-  public SurveyScaleShapeTypePropertyEditor()
-  {
-    super(SurveyScaleShapeType.class, true);
+public class SurveyScaleShapeTypePropertyEditor extends EnumPropertyEditor {
+  public SurveyScaleShapeTypePropertyEditor() {
+    super( SurveyScaleShapeType.class, true );
   }
 }

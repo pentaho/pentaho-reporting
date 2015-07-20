@@ -17,8 +17,7 @@
 
 package org.pentaho.reporting.engine.classic.core.designtime;
 
-public interface DesignTimeDataSchemaModelChangeTracker
-{
+public interface DesignTimeDataSchemaModelChangeTracker {
   public void updateChangeTrackers();
 
   boolean isReportChanged();

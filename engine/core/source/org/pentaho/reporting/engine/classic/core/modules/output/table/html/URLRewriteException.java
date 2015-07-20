@@ -22,13 +22,11 @@ package org.pentaho.reporting.engine.classic.core.modules.output.table.html;
  *
  * @author Thomas Morgner
  */
-public class URLRewriteException extends Exception
-{
+public class URLRewriteException extends Exception {
   /**
    * Creates a StackableRuntimeException with no message and no parent.
    */
-  public URLRewriteException()
-  {
+  public URLRewriteException() {
   }
 
   /**
@@ -37,9 +35,8 @@ public class URLRewriteException extends Exception
    * @param message the exception message.
    * @param ex      the parent exception.
    */
-  public URLRewriteException(final String message, final Exception ex)
-  {
-    super(message, ex);
+  public URLRewriteException( final String message, final Exception ex ) {
+    super( message, ex );
   }
 
   /**
@@ -47,8 +44,7 @@ public class URLRewriteException extends Exception
    *
    * @param message the exception message.
    */
-  public URLRewriteException(final String message)
-  {
-    super(message);
+  public URLRewriteException( final String message ) {
+    super( message );
   }
 }

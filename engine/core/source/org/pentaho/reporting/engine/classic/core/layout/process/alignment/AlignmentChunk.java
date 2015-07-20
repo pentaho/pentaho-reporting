@@ -21,59 +21,49 @@ import org.pentaho.reporting.engine.classic.core.layout.model.RenderNode;
 import org.pentaho.reporting.engine.classic.core.layout.process.layoutrules.InlineSequenceElement;
 import org.pentaho.reporting.engine.classic.core.layout.process.layoutrules.SequenceList;
 
-public class AlignmentChunk
-{
+public class AlignmentChunk {
   private int start;
   private int length;
   private long width;
   private SequenceList sequenceList;
 
-  public AlignmentChunk(final SequenceList sequenceList,
-                        final int start,
-                        final int length,
-                        final long width)
-  {
+  public AlignmentChunk( final SequenceList sequenceList,
+                         final int start,
+                         final int length,
+                         final long width ) {
     this.sequenceList = sequenceList;
     this.start = start;
     this.length = length;
     this.width = width;
   }
 
-  public int getStart()
-  {
+  public int getStart() {
     return start;
   }
 
-  public int getEnd()
-  {
+  public int getEnd() {
     return start + length;
   }
 
-  public int getLength()
-  {
+  public int getLength() {
     return length;
   }
 
-  public long getWidth()
-  {
+  public long getWidth() {
     return width;
   }
 
-  public RenderNode getNode(final int i)
-  {
-    if (i < start || i >= getEnd())
-    {
+  public RenderNode getNode( final int i ) {
+    if ( i < start || i >= getEnd() ) {
       throw new IllegalStateException();
     }
-    return sequenceList.getNode(i);
+    return sequenceList.getNode( i );
   }
 
-  public InlineSequenceElement getSequenceElement(final int i)
-  {
-    if (i < start || i >= getEnd())
-    {
+  public InlineSequenceElement getSequenceElement( final int i ) {
+    if ( i < start || i >= getEnd() ) {
       throw new IllegalStateException();
     }
-    return sequenceList.getSequenceElement(i);
+    return sequenceList.getSequenceElement( i );
   }
 }

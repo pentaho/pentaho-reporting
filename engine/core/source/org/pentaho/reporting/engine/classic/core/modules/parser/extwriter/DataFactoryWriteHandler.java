@@ -17,18 +17,17 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.parser.extwriter;
 
-import java.io.IOException;
-
 import org.pentaho.reporting.engine.classic.core.DataFactory;
 import org.pentaho.reporting.libraries.xmlns.writer.XmlWriter;
+
+import java.io.IOException;
 
 /**
  * Serializes a single data factory into inline-XML for the Ext-XML format.
  *
  * @author Thomas Morgner
  */
-public interface DataFactoryWriteHandler
-{
+public interface DataFactoryWriteHandler {
   /**
    * Writes a data-source into a XML-stream.
    *
@@ -38,8 +37,8 @@ public interface DataFactoryWriteHandler
    * @throws IOException           if any error occured
    * @throws ReportWriterException if the data factory cannot be written.
    */
-  public void write(final ReportWriterContext reportWriter,
-                    final XmlWriter xmlWriter,
-                    final DataFactory dataFactory)
-      throws IOException, ReportWriterException;
+  public void write( final ReportWriterContext reportWriter,
+                     final XmlWriter xmlWriter,
+                     final DataFactory dataFactory )
+    throws IOException, ReportWriterException;
 }

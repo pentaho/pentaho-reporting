@@ -19,11 +19,10 @@ package org.pentaho.reporting.engine.classic.core.wizard;
 
 import java.io.Serializable;
 
-public interface DataAttributeReferences extends Serializable
-{
+public interface DataAttributeReferences extends Serializable {
   public String[] getMetaAttributeDomains();
 
-  public String[] getMetaAttributeNames(String domainName);
+  public String[] getMetaAttributeNames( String domainName );
 
-  public DataAttributeReference getReference(String domain, String name);
+  public DataAttributeReference getReference( String domain, String name );
 }

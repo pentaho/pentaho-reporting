@@ -17,10 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.core.crosstab;
 
-import java.awt.Insets;
-import java.awt.print.PageFormat;
-import java.net.URL;
-
 import junit.framework.TestCase;
 import org.junit.Assert;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
@@ -35,61 +31,59 @@ import org.pentaho.reporting.libraries.resourceloader.Resource;
 import org.pentaho.reporting.libraries.resourceloader.ResourceException;
 import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 
-public class CrosstabRenderTest extends TestCase
-{
-  public CrosstabRenderTest()
-  {
+import java.awt.*;
+import java.awt.print.PageFormat;
+import java.net.URL;
+
+public class CrosstabRenderTest extends TestCase {
+  public CrosstabRenderTest() {
   }
 
-  public CrosstabRenderTest(final String name)
-  {
-    super(name);
+  public CrosstabRenderTest( final String name ) {
+    super( name );
   }
 
-  protected void setUp() throws Exception
-  {
+  protected void setUp() throws Exception {
     ClassicEngineBoot.getInstance().start();
   }
 
-  public void testLegacyRendering() throws Exception
-  {
-    final URL url = getClass().getResource("CrosstabTest.prpt");
+  public void testLegacyRendering() throws Exception {
+    final URL url = getClass().getResource( "CrosstabTest.prpt" );
     final ResourceManager manager = new ResourceManager();
     manager.registerDefaults();
-    final Resource res = manager.createDirectly(url, MasterReport.class);
+    final Resource res = manager.createDirectly( url, MasterReport.class );
     final MasterReport report = (MasterReport) res.getResource();
-    report.setCompatibilityLevel(ClassicEngineBoot.computeVersionId(4, 0, 0));
+    report.setCompatibilityLevel( ClassicEngineBoot.computeVersionId( 4, 0, 0 ) );
 
-    final LogicalPageBox box = DebugReportRunner.layoutPage(report, 0);
+    final LogicalPageBox box = DebugReportRunner.layoutPage( report, 0 );
     //ModelPrinter.print(box);
   }
 
-  public void testLegacyRenderingLarge() throws Exception
-  {
-    final URL url = getClass().getResource("LargeCrosstabTest.prpt");
+  public void testLegacyRenderingLarge() throws Exception {
+    final URL url = getClass().getResource( "LargeCrosstabTest.prpt" );
     final ResourceManager manager = new ResourceManager();
     manager.registerDefaults();
-    final Resource res = manager.createDirectly(url, MasterReport.class);
+    final Resource res = manager.createDirectly( url, MasterReport.class );
     final MasterReport report = (MasterReport) res.getResource();
-    report.setCompatibilityLevel(ClassicEngineBoot.computeVersionId(4, 0, 0));
+    report.setCompatibilityLevel( ClassicEngineBoot.computeVersionId( 4, 0, 0 ) );
 
-    report.setPageDefinition(new SimplePageDefinition(PageSize.A0, PageFormat.PORTRAIT, new Insets(10, 10, 10, 10)));
-    final LogicalPageBox box = DebugReportRunner.layoutPage(report, 0);
+    report
+      .setPageDefinition( new SimplePageDefinition( PageSize.A0, PageFormat.PORTRAIT, new Insets( 10, 10, 10, 10 ) ) );
+    final LogicalPageBox box = DebugReportRunner.layoutPage( report, 0 );
     //ModelPrinter.print(box);
   }
 
-  public void testClone() throws ResourceException
-  {
+  public void testClone() throws ResourceException {
     CrosstabElement element = new CrosstabElement();
 
     final MasterReport report = new MasterReport();
-    report.getReportHeader().addElement(element);
+    report.getReportHeader().addElement( element );
 
-    CrosstabElement ct0 = (CrosstabElement) report.getReportHeader().getElement(0);
+    CrosstabElement ct0 = (CrosstabElement) report.getReportHeader().getElement( 0 );
     NoDataBand noDataBand0 = ct0.getNoDataBand();
     MasterReport derive = (MasterReport) report.derive();
-    CrosstabElement ct1 = (CrosstabElement) derive.getReportHeader().getElement(0);
+    CrosstabElement ct1 = (CrosstabElement) derive.getReportHeader().getElement( 0 );
     NoDataBand noDataBand1 = ct1.getNoDataBand();
-    Assert.assertNotSame(noDataBand0, noDataBand1);
+    Assert.assertNotSame( noDataBand0, noDataBand1 );
   }
 }

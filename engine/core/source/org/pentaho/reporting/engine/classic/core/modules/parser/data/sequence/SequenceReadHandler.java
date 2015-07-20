@@ -17,8 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.parser.data.sequence;
 
-import java.util.ArrayList;
-
 import org.pentaho.reporting.engine.classic.core.modules.misc.datafactory.sequence.Sequence;
 import org.pentaho.reporting.engine.classic.core.modules.misc.datafactory.sequence.SequenceDescription;
 import org.pentaho.reporting.engine.classic.core.util.beans.BeanException;
@@ -31,14 +29,14 @@ import org.pentaho.reporting.libraries.xmlns.parser.XmlReadHandler;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 
-public class SequenceReadHandler extends AbstractXmlReadHandler
-{
+import java.util.ArrayList;
+
+public class SequenceReadHandler extends AbstractXmlReadHandler {
   private String name;
   private Sequence data;
   private ArrayList<PropertyReadHandler> properties;
 
-  public SequenceReadHandler()
-  {
+  public SequenceReadHandler() {
     properties = new ArrayList<PropertyReadHandler>();
   }
 
@@ -48,19 +46,17 @@ public class SequenceReadHandler extends AbstractXmlReadHandler
    * @param attrs the attributes.
    * @throws org.xml.sax.SAXException if there is a parsing error.
    */
-  protected void startParsing(final Attributes attrs) throws SAXException
-  {
-    name = attrs.getValue(getUri(), "name");
-    if (name == null)
-    {
-      throw new ParseException("Required attribute 'name' is not defined.", getLocator());
+  protected void startParsing( final Attributes attrs ) throws SAXException {
+    name = attrs.getValue( getUri(), "name" );
+    if ( name == null ) {
+      throw new ParseException( "Required attribute 'name' is not defined.", getLocator() );
     }
 
-    final String sequenceClass = attrs.getValue(getUri(), "class");
-    final Sequence sequence = ObjectUtilities.loadAndInstantiate(sequenceClass, SequenceReadHandler.class, Sequence.class);
-    if (sequence == null)
-    {
-      throw new ParseException("Required attribute 'class' is invalid.", getLocator());
+    final String sequenceClass = attrs.getValue( getUri(), "class" );
+    final Sequence sequence =
+      ObjectUtilities.loadAndInstantiate( sequenceClass, SequenceReadHandler.class, Sequence.class );
+    if ( sequence == null ) {
+      throw new ParseException( "Required attribute 'class' is invalid.", getLocator() );
     }
     this.data = sequence;
   }
@@ -74,32 +70,27 @@ public class SequenceReadHandler extends AbstractXmlReadHandler
    * @return the handler or null, if the tagname is invalid.
    * @throws SAXException if there is a parsing error.
    */
-  protected XmlReadHandler getHandlerForChild(final String uri,
-                                              final String tagName,
-                                              final Attributes atts) throws SAXException
-  {
-    if (isSameNamespace(uri) == false)
-    {
+  protected XmlReadHandler getHandlerForChild( final String uri,
+                                               final String tagName,
+                                               final Attributes atts ) throws SAXException {
+    if ( isSameNamespace( uri ) == false ) {
       return null;
     }
 
-    if ("property".equals(tagName))
-    {
+    if ( "property".equals( tagName ) ) {
       final PropertyReadHandler definitionReadHandler = new PropertyReadHandler();
-      properties.add(definitionReadHandler);
+      properties.add( definitionReadHandler );
       return definitionReadHandler;
     }
 
     return null;
   }
 
-  public Sequence getData()
-  {
+  public Sequence getData() {
     return data;
   }
 
-  public String getName()
-  {
+  public String getName() {
     return name;
   }
 
@@ -108,41 +99,32 @@ public class SequenceReadHandler extends AbstractXmlReadHandler
    *
    * @throws SAXException if there is a parsing error.
    */
-  protected void doneParsing() throws SAXException
-  {
+  protected void doneParsing() throws SAXException {
     final SequenceDescription sequenceDescription = data.getSequenceDescription();
-    for (final PropertyReadHandler propertyReadHandler : properties)
-    {
+    for ( final PropertyReadHandler propertyReadHandler : properties ) {
       final String propertyName = propertyReadHandler.getName();
       final String propertyValue = propertyReadHandler.getResult();
-      final int pos = getPropertyLocation(sequenceDescription, propertyName);
-      if (pos == -1)
-      {
+      final int pos = getPropertyLocation( sequenceDescription, propertyName );
+      if ( pos == -1 ) {
         throw new ParseException
-            ("Unable to set property " + propertyName + ". There is no such property.", getLocator());
+          ( "Unable to set property " + propertyName + ". There is no such property.", getLocator() );
       }
-      final Class ptype = sequenceDescription.getParameterType(pos);
-      try
-      {
-        final Object o = ConverterRegistry.toPropertyValue(propertyValue, ptype);
-        data.setParameter(propertyName, o);
-      }
-      catch (BeanException e)
-      {
+      final Class ptype = sequenceDescription.getParameterType( pos );
+      try {
+        final Object o = ConverterRegistry.toPropertyValue( propertyValue, ptype );
+        data.setParameter( propertyName, o );
+      } catch ( BeanException e ) {
         throw new ParseException
-            ("Unable to set property " + propertyName + ". Conversion error.", e, getLocator());
+          ( "Unable to set property " + propertyName + ". Conversion error.", e, getLocator() );
       }
     }
   }
 
-  private int getPropertyLocation(final SequenceDescription sequenceDescription,
-                                  final String name)
-  {
+  private int getPropertyLocation( final SequenceDescription sequenceDescription,
+                                   final String name ) {
     final int parameterCount = sequenceDescription.getParameterCount();
-    for (int i = 0; i < parameterCount; i++)
-    {
-      if (name.equals(sequenceDescription.getParameterName(i)))
-      {
+    for ( int i = 0; i < parameterCount; i++ ) {
+      if ( name.equals( sequenceDescription.getParameterName( i ) ) ) {
         return i;
       }
     }
@@ -155,8 +137,7 @@ public class SequenceReadHandler extends AbstractXmlReadHandler
    * @return the object.
    * @throws SAXException if an parser error occured.
    */
-  public Object getObject() throws SAXException
-  {
+  public Object getObject() throws SAXException {
     return data;
   }
 }

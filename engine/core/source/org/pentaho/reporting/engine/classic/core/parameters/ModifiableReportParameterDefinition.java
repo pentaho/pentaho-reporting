@@ -17,17 +17,16 @@
 
 package org.pentaho.reporting.engine.classic.core.parameters;
 
-public interface ModifiableReportParameterDefinition extends ReportParameterDefinition
-{
-  public void addParameterDefinition(final ParameterDefinitionEntry entry);
+public interface ModifiableReportParameterDefinition extends ReportParameterDefinition {
+  public void addParameterDefinition( final ParameterDefinitionEntry entry );
 
-  public void addParameterDefinition(final int index, final ParameterDefinitionEntry entry);
+  public void addParameterDefinition( final int index, final ParameterDefinitionEntry entry );
 
-  public void setAttribute(final String domain,
+  public void setAttribute( final String domain,
                             final String name,
-                            final String value);
+                            final String value );
 
-  public void setValidator(final ReportParameterValidator validator);
+  public void setValidator( final ReportParameterValidator validator );
 
-  public void removeParameterDefinition(final int index);
+  public void removeParameterDefinition( final int index );
 }

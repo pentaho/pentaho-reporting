@@ -17,35 +17,30 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.output.table.xls.helper;
 
-import java.awt.Color;
-
 import org.pentaho.reporting.libraries.base.util.LFUMap;
 
-public class CachingExcelColorSupport implements ExcelColorProducer
-{
+import java.awt.*;
+
+public class CachingExcelColorSupport implements ExcelColorProducer {
   private ExcelColorProducer base;
   private LFUMap<Integer, Short> colorCache;
 
-  public CachingExcelColorSupport(final ExcelColorProducer base)
-  {
-    if (base == null)
-    {
+  public CachingExcelColorSupport( final ExcelColorProducer base ) {
+    if ( base == null ) {
       throw new NullPointerException();
     }
     this.base = base;
-    this.colorCache = new LFUMap<Integer, Short>(5000);
+    this.colorCache = new LFUMap<Integer, Short>( 5000 );
   }
 
-  public short getNearestColor(final Color awtColor)
-  {
-    Short value = colorCache.get(awtColor.getRGB());
-    if (value != null)
-    {
+  public short getNearestColor( final Color awtColor ) {
+    Short value = colorCache.get( awtColor.getRGB() );
+    if ( value != null ) {
       return value;
     }
 
-    short nearestColor = base.getNearestColor(awtColor);
-    colorCache.put(awtColor.getRGB(), nearestColor);
+    short nearestColor = base.getNearestColor( awtColor );
+    colorCache.put( awtColor.getRGB(), nearestColor );
     return nearestColor;
   }
 }

@@ -42,13 +42,12 @@ import java.math.BigDecimal;
  * @author Thomas Morgner
  * @deprecated The same can be achieved using a simple ValueExpression.
  */
-@SuppressWarnings("deprecation")
-public class PercentageExpression extends AbstractExpression
-{
+@SuppressWarnings( "deprecation" )
+public class PercentageExpression extends AbstractExpression {
   /**
    * A constant for the value ZERO.
    */
-  private static final BigDecimal ZERO = new BigDecimal(0);
+  private static final BigDecimal ZERO = new BigDecimal( 0 );
   /**
    * the field used as dividend by the function.
    */
@@ -74,8 +73,7 @@ public class PercentageExpression extends AbstractExpression
    * Constructs a new function. <P> Initially the function has no name...be sure to assign one before using the
    * function.
    */
-  public PercentageExpression()
-  {
+  public PercentageExpression() {
     scale = 14;
     roundingMode = BigDecimal.ROUND_HALF_UP;
   }
@@ -85,8 +83,7 @@ public class PercentageExpression extends AbstractExpression
    *
    * @return true, if the difference is used, false if the divident is used directly.
    */
-  public boolean isUseDifference()
-  {
+  public boolean isUseDifference() {
     return useDifference;
   }
 
@@ -95,8 +92,7 @@ public class PercentageExpression extends AbstractExpression
    *
    * @param useDifference true, if the difference is used, false if the divident is used directly.
    */
-  public void setUseDifference(final boolean useDifference)
-  {
+  public void setUseDifference( final boolean useDifference ) {
     this.useDifference = useDifference;
   }
 
@@ -105,10 +101,9 @@ public class PercentageExpression extends AbstractExpression
    * Returns the defined rounding mode. This influences the precision of the divide-operation.
    *
    * @return the rounding mode.
-   * @see java.math.BigDecimal#divide(java.math.BigDecimal,int)
+   * @see java.math.BigDecimal#divide(java.math.BigDecimal, int)
    */
-  public int getRoundingMode()
-  {
+  public int getRoundingMode() {
     return roundingMode;
   }
 
@@ -116,10 +111,9 @@ public class PercentageExpression extends AbstractExpression
    * Defines the rounding mode. This influences the precision of the divide-operation.
    *
    * @param roundingMode the rounding mode.
-   * @see java.math.BigDecimal#divide(java.math.BigDecimal,int)
+   * @see java.math.BigDecimal#divide(java.math.BigDecimal, int)
    */
-  public void setRoundingMode(final int roundingMode)
-  {
+  public void setRoundingMode( final int roundingMode ) {
     this.roundingMode = roundingMode;
   }
 
@@ -128,8 +122,7 @@ public class PercentageExpression extends AbstractExpression
    *
    * @return the scale.
    */
-  public int getScale()
-  {
+  public int getScale() {
     return scale;
   }
 
@@ -138,8 +131,7 @@ public class PercentageExpression extends AbstractExpression
    *
    * @param scale the scale.
    */
-  public void setScale(final int scale)
-  {
+  public void setScale( final int scale ) {
     this.scale = scale;
   }
 
@@ -150,8 +142,7 @@ public class PercentageExpression extends AbstractExpression
    *
    * @return The field name.
    */
-  public String getDividend()
-  {
+  public String getDividend() {
     return dividend;
   }
 
@@ -161,8 +152,7 @@ public class PercentageExpression extends AbstractExpression
    *
    * @return The field name.
    */
-  public String getDivisor()
-  {
+  public String getDivisor() {
     return divisor;
   }
 
@@ -172,8 +162,7 @@ public class PercentageExpression extends AbstractExpression
    *
    * @param dividend the field name.
    */
-  public void setDividend(final String dividend)
-  {
+  public void setDividend( final String dividend ) {
     this.dividend = dividend;
   }
 
@@ -183,8 +172,7 @@ public class PercentageExpression extends AbstractExpression
    *
    * @param divisor the field name.
    */
-  public void setDivisor(final String divisor)
-  {
+  public void setDivisor( final String divisor ) {
     this.divisor = divisor;
   }
 
@@ -194,58 +182,42 @@ public class PercentageExpression extends AbstractExpression
    *
    * @return The quotient
    */
-  public Object getValue()
-  {
-    if (dividend == null || divisor == null)
-    {
+  public Object getValue() {
+    if ( dividend == null || divisor == null ) {
       return null;
     }
 
-    final Object dividentFieldValue = getDataRow().get(getDividend());
+    final Object dividentFieldValue = getDataRow().get( getDividend() );
     // do not add when field is null or no number
     final BigDecimal dividend;
-    if (dividentFieldValue instanceof BigDecimal)
-    {
+    if ( dividentFieldValue instanceof BigDecimal ) {
       dividend = (BigDecimal) dividentFieldValue;
-    }
-    else if (dividentFieldValue instanceof Number == false)
-    {
+    } else if ( dividentFieldValue instanceof Number == false ) {
       return null;
-    }
-    else
-    {
-      dividend = new BigDecimal(dividentFieldValue.toString());
+    } else {
+      dividend = new BigDecimal( dividentFieldValue.toString() );
     }
 
-    final Object divisorFieldValue = getDataRow().get(getDivisor());
+    final Object divisorFieldValue = getDataRow().get( getDivisor() );
     // do not add when field is null or no number
     final BigDecimal divisor;
-    if (divisorFieldValue instanceof BigDecimal)
-    {
+    if ( divisorFieldValue instanceof BigDecimal ) {
       divisor = (BigDecimal) divisorFieldValue;
-    }
-    else if (divisorFieldValue instanceof Number == false)
-    {
+    } else if ( divisorFieldValue instanceof Number == false ) {
       return null;
-    }
-    else
-    {
-      divisor = new BigDecimal(divisorFieldValue.toString());
+    } else {
+      divisor = new BigDecimal( divisorFieldValue.toString() );
     }
 
-    if (PercentageExpression.ZERO.compareTo(divisor) == 0)
-    {
+    if ( PercentageExpression.ZERO.compareTo( divisor ) == 0 ) {
       return null;
     }
 
-    if (useDifference)
-    {
-      final BigDecimal delta = dividend.subtract(divisor);
-      return delta.divide(divisor, scale, roundingMode);
-    }
-    else
-    {
-      return dividend.divide(divisor, scale, roundingMode);
+    if ( useDifference ) {
+      final BigDecimal delta = dividend.subtract( divisor );
+      return delta.divide( divisor, scale, roundingMode );
+    } else {
+      return dividend.divide( divisor, scale, roundingMode );
     }
   }
 }

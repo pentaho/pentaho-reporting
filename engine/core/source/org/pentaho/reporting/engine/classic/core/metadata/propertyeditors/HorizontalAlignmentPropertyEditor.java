@@ -17,23 +17,19 @@
 
 package org.pentaho.reporting.engine.classic.core.metadata.propertyeditors;
 
-import java.awt.Component;
-import java.awt.Graphics;
-import java.awt.Rectangle;
+import org.pentaho.reporting.engine.classic.core.ElementAlignment;
+
+import java.awt.*;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.beans.PropertyEditor;
 
-import org.pentaho.reporting.engine.classic.core.ElementAlignment;
-
-public class HorizontalAlignmentPropertyEditor implements PropertyEditor
-{
+public class HorizontalAlignmentPropertyEditor implements PropertyEditor {
   private ElementAlignment value;
   private PropertyChangeSupport propertyChangeSupport;
 
-  public HorizontalAlignmentPropertyEditor()
-  {
-    propertyChangeSupport = new PropertyChangeSupport(this);
+  public HorizontalAlignmentPropertyEditor() {
+    propertyChangeSupport = new PropertyChangeSupport( this );
   }
 
   /**
@@ -43,41 +39,30 @@ public class HorizontalAlignmentPropertyEditor implements PropertyEditor
    * @param value The new target object to be edited.  Note that this object should not be modified by the
    *              PropertyEditor, rather the PropertyEditor should create a new object to hold any modified value.
    */
-  public void setValue(final Object value)
-  {
+  public void setValue( final Object value ) {
     final Object oldValue = this.value;
-    if (ElementAlignment.LEFT.equals(value))
-    {
+    if ( ElementAlignment.LEFT.equals( value ) ) {
       this.value = ElementAlignment.LEFT;
-    }
-    else if (ElementAlignment.CENTER.equals(value))
-    {
+    } else if ( ElementAlignment.CENTER.equals( value ) ) {
       this.value = ElementAlignment.CENTER;
-    }
-    else if (ElementAlignment.RIGHT.equals(value))
-    {
+    } else if ( ElementAlignment.RIGHT.equals( value ) ) {
       this.value = ElementAlignment.RIGHT;
-    }
-    else if (ElementAlignment.JUSTIFY.equals(value))
-    {
+    } else if ( ElementAlignment.JUSTIFY.equals( value ) ) {
       this.value = ElementAlignment.JUSTIFY;
-    }
-    else
-    {
+    } else {
       this.value = null;
     }
-    propertyChangeSupport.firePropertyChange(null, oldValue, this.value);
+    propertyChangeSupport.firePropertyChange( null, oldValue, this.value );
   }
 
   /**
    * Gets the property value.
    *
    * @return The value of the property.  Primitive types such as "int" will be wrapped as the corresponding object type
-   *         such as "java.lang.Integer".
+   * such as "java.lang.Integer".
    */
 
-  public Object getValue()
-  {
+  public Object getValue() {
     return value;
   }
 
@@ -87,8 +72,7 @@ public class HorizontalAlignmentPropertyEditor implements PropertyEditor
    * @return True if the class will honor the paintValue method.
    */
 
-  public boolean isPaintable()
-  {
+  public boolean isPaintable() {
     return false;
   }
 
@@ -104,8 +88,7 @@ public class HorizontalAlignmentPropertyEditor implements PropertyEditor
    * @param gfx Graphics object to paint into.
    * @param box Rectangle within graphics object into which we should paint.
    */
-  public void paintValue(final Graphics gfx, final Rectangle box)
-  {
+  public void paintValue( final Graphics gfx, final Rectangle box ) {
 
   }
 
@@ -126,28 +109,18 @@ public class HorizontalAlignmentPropertyEditor implements PropertyEditor
    * <code>javax.swing.Box.createRigidArea(new java.awt.Dimension(0, 5))</code> </ul>
    *
    * @return a fragment of Java code representing an initializer for the current value. It should not contain a
-   *         semi-colon ('<code>;</code>') to end the expression.
+   * semi-colon ('<code>;</code>') to end the expression.
    */
-  public String getJavaInitializationString()
-  {
-    if (ElementAlignment.LEFT.equals(value))
-    {
+  public String getJavaInitializationString() {
+    if ( ElementAlignment.LEFT.equals( value ) ) {
       return ElementAlignment.class.getName() + ".LEFT";
-    }
-    else if (ElementAlignment.CENTER.equals(value))
-    {
+    } else if ( ElementAlignment.CENTER.equals( value ) ) {
       return ElementAlignment.class.getName() + ".CENTER";
-    }
-    else if (ElementAlignment.RIGHT.equals(value))
-    {
+    } else if ( ElementAlignment.RIGHT.equals( value ) ) {
       return ElementAlignment.class.getName() + ".RIGHT";
-    }
-    else if (ElementAlignment.JUSTIFY.equals(value))
-    {
+    } else if ( ElementAlignment.JUSTIFY.equals( value ) ) {
       return ElementAlignment.class.getName() + ".JUSTIFY";
-    }
-    else
-    {
+    } else {
       return "null";
     }
   }
@@ -156,29 +129,19 @@ public class HorizontalAlignmentPropertyEditor implements PropertyEditor
    * Gets the property value as text.
    *
    * @return The property value as a human editable string. <p>   Returns null if the value can't be expressed as an
-   *         editable string. <p>   If a non-null value is returned, then the PropertyEditor should be prepared to parse
-   *         that string back in setAsText().
+   * editable string. <p>   If a non-null value is returned, then the PropertyEditor should be prepared to parse that
+   * string back in setAsText().
    */
-  public String getAsText()
-  {
-    if (ElementAlignment.LEFT.equals(value))
-    {
+  public String getAsText() {
+    if ( ElementAlignment.LEFT.equals( value ) ) {
       return "LEFT";
-    }
-    else if (ElementAlignment.CENTER.equals(value))
-    {
+    } else if ( ElementAlignment.CENTER.equals( value ) ) {
       return "CENTER";
-    }
-    else if (ElementAlignment.RIGHT.equals(value))
-    {
+    } else if ( ElementAlignment.RIGHT.equals( value ) ) {
       return "RIGHT";
-    }
-    else if (ElementAlignment.JUSTIFY.equals(value))
-    {
+    } else if ( ElementAlignment.JUSTIFY.equals( value ) ) {
       return "JUSTIFY";
-    }
-    else
-    {
+    } else {
       return null;
     }
   }
@@ -189,26 +152,16 @@ public class HorizontalAlignmentPropertyEditor implements PropertyEditor
    *
    * @param text The string to be parsed.
    */
-  public void setAsText(final String text) throws IllegalArgumentException
-  {
-    if (ElementAlignment.LEFT.toString().equals(text))
-    {
-      setValue(ElementAlignment.LEFT);
-    }
-    else if (ElementAlignment.CENTER.toString().equals(text))
-    {
-      setValue(ElementAlignment.CENTER);
-    }
-    else if (ElementAlignment.RIGHT.toString().equals(text))
-    {
-      setValue(ElementAlignment.RIGHT);
-    }
-    else if (ElementAlignment.JUSTIFY.toString().equals(text))
-    {
-      setValue(ElementAlignment.JUSTIFY);
-    }
-    else
-    {
+  public void setAsText( final String text ) throws IllegalArgumentException {
+    if ( ElementAlignment.LEFT.toString().equals( text ) ) {
+      setValue( ElementAlignment.LEFT );
+    } else if ( ElementAlignment.CENTER.toString().equals( text ) ) {
+      setValue( ElementAlignment.CENTER );
+    } else if ( ElementAlignment.RIGHT.toString().equals( text ) ) {
+      setValue( ElementAlignment.RIGHT );
+    } else if ( ElementAlignment.JUSTIFY.toString().equals( text ) ) {
+      setValue( ElementAlignment.JUSTIFY );
+    } else {
       throw new IllegalArgumentException();
     }
   }
@@ -221,9 +174,8 @@ public class HorizontalAlignmentPropertyEditor implements PropertyEditor
    *
    * @return The tag values for this property.  May be null if this property cannot be represented as a tagged value.
    */
-  public String[] getTags()
-  {
-    return new String[]{"LEFT", "CENTER", "RIGHT", "JUSTIFY"};
+  public String[] getTags() {
+    return new String[] { "LEFT", "CENTER", "RIGHT", "JUSTIFY" };
   }
 
   /**
@@ -235,11 +187,10 @@ public class HorizontalAlignmentPropertyEditor implements PropertyEditor
    * it may put it in its own individual dialog, or ...
    *
    * @return A java.awt.Component that will allow a human to directly edit the current property value.  May be null if
-   *         this is not supported.
+   * this is not supported.
    */
 
-  public Component getCustomEditor()
-  {
+  public Component getCustomEditor() {
     return null;
   }
 
@@ -248,8 +199,7 @@ public class HorizontalAlignmentPropertyEditor implements PropertyEditor
    *
    * @return True if the propertyEditor can provide a custom editor.
    */
-  public boolean supportsCustomEditor()
-  {
+  public boolean supportsCustomEditor() {
     return false;
   }
 
@@ -260,9 +210,8 @@ public class HorizontalAlignmentPropertyEditor implements PropertyEditor
    *
    * @param listener An object to be invoked when a PropertyChange event is fired.
    */
-  public void addPropertyChangeListener(final PropertyChangeListener listener)
-  {
-    propertyChangeSupport.addPropertyChangeListener(listener);
+  public void addPropertyChangeListener( final PropertyChangeListener listener ) {
+    propertyChangeSupport.addPropertyChangeListener( listener );
   }
 
   /**
@@ -270,8 +219,7 @@ public class HorizontalAlignmentPropertyEditor implements PropertyEditor
    *
    * @param listener The PropertyChange listener to be removed.
    */
-  public void removePropertyChangeListener(final PropertyChangeListener listener)
-  {
-    propertyChangeSupport.removePropertyChangeListener(listener);
+  public void removePropertyChangeListener( final PropertyChangeListener listener ) {
+    propertyChangeSupport.removePropertyChangeListener( listener );
   }
 }

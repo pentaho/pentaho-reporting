@@ -17,18 +17,17 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.parser.ext.factory.base;
 
+import org.pentaho.reporting.libraries.base.config.Configuration;
+
 import java.io.Serializable;
 import java.util.Iterator;
-
-import org.pentaho.reporting.libraries.base.config.Configuration;
 
 /**
  * A class factory.
  *
  * @author Thomas Morgner
  */
-public interface ClassFactory extends Serializable
-{
+public interface ClassFactory extends Serializable {
 
   /**
    * Returns an object description for a class.
@@ -36,7 +35,7 @@ public interface ClassFactory extends Serializable
    * @param c the class.
    * @return The object description.
    */
-  public ObjectDescription getDescriptionForClass(Class c);
+  public ObjectDescription getDescriptionForClass( Class c );
 
   /**
    * Returns an object description for the super class of a class.
@@ -46,7 +45,7 @@ public interface ClassFactory extends Serializable
    * @return The object description.
    */
   public ObjectDescription getSuperClassObjectDescription
-      (Class d, ObjectDescription knownSuperClass);
+  ( Class d, ObjectDescription knownSuperClass );
 
   /**
    * Returns an iterator for the registered classes. This returns a list of pre-registered classes known to this
@@ -66,7 +65,7 @@ public interface ClassFactory extends Serializable
    *
    * @param config the configuration, never null
    */
-  public void configure(Configuration config);
+  public void configure( Configuration config );
 
 
   /**
@@ -75,11 +74,11 @@ public interface ClassFactory extends Serializable
    * @param o the other object.
    * @return true, if both object factories describe the same objects, false otherwise.
    */
-  public boolean equals(Object o);
+  public boolean equals( Object o );
 
   /**
-   * Computes the hashCode for this ClassFactory. As equals() must be implemented, a corresponding hashCode() should
-   * be implemented as well.
+   * Computes the hashCode for this ClassFactory. As equals() must be implemented, a corresponding hashCode() should be
+   * implemented as well.
    *
    * @return the hashcode.
    */

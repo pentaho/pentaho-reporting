@@ -23,14 +23,12 @@ import org.pentaho.reporting.engine.classic.core.modules.parser.base.PropertyAtt
 import org.pentaho.reporting.engine.classic.core.modules.parser.base.ReportParserUtil;
 import org.xml.sax.SAXException;
 
-public class RoundRectangleReadHandler extends AbstractShapeElementReadHandler
-{
+public class RoundRectangleReadHandler extends AbstractShapeElementReadHandler {
   private static final String ARC_WIDTH_ATT = "arc-height";
   private static final String ARC_HEIGHT_ATT = "arc-width";
   private RectangleElementFactory elementFactory;
 
-  public RoundRectangleReadHandler()
-  {
+  public RoundRectangleReadHandler() {
     elementFactory = new RectangleElementFactory();
   }
 
@@ -40,28 +38,26 @@ public class RoundRectangleReadHandler extends AbstractShapeElementReadHandler
    * @param atts the attributes.
    * @throws SAXException if there is a parsing error.
    */
-  protected void startParsing(final PropertyAttributes atts)
-      throws SAXException
-  {
+  protected void startParsing( final PropertyAttributes atts )
+    throws SAXException {
     // these are local defaults ...
-    elementFactory.setShouldDraw(Boolean.TRUE);
-    elementFactory.setShouldFill(Boolean.TRUE);
+    elementFactory.setShouldDraw( Boolean.TRUE );
+    elementFactory.setShouldFill( Boolean.TRUE );
 
-    super.startParsing(atts);
-    elementFactory.setScale(Boolean.TRUE);
-    elementFactory.setDynamicHeight(Boolean.FALSE);
-    elementFactory.setKeepAspectRatio(Boolean.FALSE);
+    super.startParsing( atts );
+    elementFactory.setScale( Boolean.TRUE );
+    elementFactory.setDynamicHeight( Boolean.FALSE );
+    elementFactory.setKeepAspectRatio( Boolean.FALSE );
 
     final Float arcWidth = ReportParserUtil.parseFloat
-        (atts.getValue(getUri(), RoundRectangleReadHandler.ARC_WIDTH_ATT), getLocator());
+      ( atts.getValue( getUri(), RoundRectangleReadHandler.ARC_WIDTH_ATT ), getLocator() );
     final Float arcHeight = ReportParserUtil.parseFloat
-        (atts.getValue(getUri(), RoundRectangleReadHandler.ARC_HEIGHT_ATT), getLocator());
-    elementFactory.setArcHeight(arcHeight);
-    elementFactory.setArcWidth(arcWidth);
+      ( atts.getValue( getUri(), RoundRectangleReadHandler.ARC_HEIGHT_ATT ), getLocator() );
+    elementFactory.setArcHeight( arcHeight );
+    elementFactory.setArcWidth( arcWidth );
   }
 
-  protected ElementFactory getElementFactory()
-  {
+  protected ElementFactory getElementFactory() {
     return elementFactory;
   }
 }

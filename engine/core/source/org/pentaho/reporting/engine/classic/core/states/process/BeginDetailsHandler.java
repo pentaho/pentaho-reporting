@@ -31,66 +31,56 @@ import org.pentaho.reporting.engine.classic.core.layout.output.OutputProcessorMe
  *
  * @author Thomas Morgner
  */
-public class BeginDetailsHandler implements AdvanceHandler
-{
+public class BeginDetailsHandler implements AdvanceHandler {
   public static final BeginDetailsHandler HANDLER = new BeginDetailsHandler();
 
-  private BeginDetailsHandler()
-  {
+  private BeginDetailsHandler() {
   }
 
-  public int getEventCode()
-  {
+  public int getEventCode() {
     return ReportEvent.ITEMS_STARTED;
   }
 
-  public ProcessState advance(final ProcessState state) throws ReportProcessingException
-  {
+  public ProcessState advance( final ProcessState state ) throws ReportProcessingException {
     final ProcessState next = state.deriveForAdvance();
     // if there is no data in the report's data source, this now prints the No-Data-Band.
     next.fireReportEvent();
 
     final OutputProcessorMetaData outputProcessorMetaData =
-        next.getFlowController().getReportContext().getOutputProcessorMetaData();
-    if (outputProcessorMetaData.isFeatureSupported(OutputProcessorFeature.DESIGNTIME) || next.getNumberOfRows() == 0)
-    {
+      next.getFlowController().getReportContext().getOutputProcessorMetaData();
+    if ( outputProcessorMetaData.isFeatureSupported( OutputProcessorFeature.DESIGNTIME )
+      || next.getNumberOfRows() == 0 ) {
       final NoDataBand childs = next.getReport().getNoDataBand();
-      if (childs != null)
-      {
-        return InlineSubreportProcessor.processInline(next, childs);
+      if ( childs != null ) {
+        return InlineSubreportProcessor.processInline( next, childs );
       }
     }
     return next;
   }
 
 
-  public ProcessState commit(final ProcessState next) throws ReportProcessingException
-  {
-    next.setInItemGroup(true);
+  public ProcessState commit( final ProcessState next ) throws ReportProcessingException {
+    next.setInItemGroup( true );
     final int numberOfRows = next.getNumberOfRows();
-    if (numberOfRows > 0)
-    {
-      next.setAdvanceHandler(ProcessDetailsHandler.HANDLER);
+    if ( numberOfRows > 0 ) {
+      next.setAdvanceHandler( ProcessDetailsHandler.HANDLER );
       return next;
     }
 
-    next.setAdvanceHandler(EndDetailsHandler.HANDLER);
+    next.setAdvanceHandler( EndDetailsHandler.HANDLER );
 
-    final ReportElement[] childs = next.getReport().getChildElementsByType(NoDataBandType.INSTANCE);
-    if (childs.length > 0)
-    {
-      return InlineSubreportProcessor.processBandedSubReports(next, (RootLevelBand) childs[0]);
+    final ReportElement[] childs = next.getReport().getChildElementsByType( NoDataBandType.INSTANCE );
+    if ( childs.length > 0 ) {
+      return InlineSubreportProcessor.processBandedSubReports( next, (RootLevelBand) childs[ 0 ] );
     }
     return next;
   }
 
-  public boolean isFinish()
-  {
+  public boolean isFinish() {
     return false;
   }
 
-  public boolean isRestoreHandler()
-  {
+  public boolean isRestoreHandler() {
     return false;
   }
 }

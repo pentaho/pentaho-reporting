@@ -21,16 +21,13 @@ import org.pentaho.reporting.engine.classic.core.ItemBand;
 import org.pentaho.reporting.engine.classic.core.filter.types.bands.ItemBandType;
 import org.pentaho.reporting.libraries.xmlns.parser.ParseException;
 
-public class ItemBandReadHandler extends AbstractRootLevelBandReadHandler
-{
+public class ItemBandReadHandler extends AbstractRootLevelBandReadHandler {
   public ItemBandReadHandler()
-      throws ParseException
-  {
-    super(ItemBandType.INSTANCE);
+    throws ParseException {
+    super( ItemBandType.INSTANCE );
   }
 
-  public ItemBand getElement()
-  {
+  public ItemBand getElement() {
     return (ItemBand) super.getElement();
   }
 }

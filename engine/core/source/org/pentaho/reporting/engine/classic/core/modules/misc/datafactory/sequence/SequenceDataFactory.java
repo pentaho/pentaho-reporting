@@ -17,68 +17,57 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.misc.datafactory.sequence;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
-import javax.swing.table.TableModel;
-
 import org.pentaho.reporting.engine.classic.core.AbstractDataFactory;
 import org.pentaho.reporting.engine.classic.core.DataRow;
 import org.pentaho.reporting.engine.classic.core.ReportDataFactoryException;
 
-public class SequenceDataFactory extends AbstractDataFactory
-{
+import javax.swing.table.TableModel;
+import java.util.LinkedHashMap;
+import java.util.Map;
+
+public class SequenceDataFactory extends AbstractDataFactory {
   private LinkedHashMap<String, Sequence> sequences;
 
-  public SequenceDataFactory()
-  {
+  public SequenceDataFactory() {
     sequences = new LinkedHashMap<String, Sequence>();
   }
 
-  public void addSequence(final String query, final Sequence sequence)
-  {
-    sequences.put(query, sequence);
+  public void addSequence( final String query, final Sequence sequence ) {
+    sequences.put( query, sequence );
   }
 
-  public TableModel queryData(final String query,
-                              final DataRow parameters) throws ReportDataFactoryException
-  {
-    final Sequence sequence = sequences.get(query);
-    if (sequence == null)
-    {
-      throw new ReportDataFactoryException("No such query '" + query + "'");
+  public TableModel queryData( final String query,
+                               final DataRow parameters ) throws ReportDataFactoryException {
+    final Sequence sequence = sequences.get( query );
+    if ( sequence == null ) {
+      throw new ReportDataFactoryException( "No such query '" + query + "'" );
     }
-    return sequence.produce(parameters, getDataFactoryContext());
+    return sequence.produce( parameters, getDataFactoryContext() );
   }
 
-  public void close()
-  {
+  public void close() {
 
   }
 
-  public boolean isQueryExecutable(final String query, final DataRow parameters)
-  {
-    return sequences.containsKey(query);
+  public boolean isQueryExecutable( final String query, final DataRow parameters ) {
+    return sequences.containsKey( query );
   }
 
-  public String[] getQueryNames()
-  {
-    return sequences.keySet().toArray(new String[sequences.size()]);
+  public String[] getQueryNames() {
+    return sequences.keySet().toArray( new String[ sequences.size() ] );
   }
 
-  public SequenceDataFactory clone()
-  {
+  public SequenceDataFactory clone() {
     final SequenceDataFactory dataFactory = (SequenceDataFactory) super.clone();
     dataFactory.sequences = (LinkedHashMap<String, Sequence>) sequences.clone();
-    for (final Map.Entry<String, Sequence> entry : dataFactory.sequences.entrySet())
-    {
+    for ( final Map.Entry<String, Sequence> entry : dataFactory.sequences.entrySet() ) {
       final Sequence value = entry.getValue();
-      entry.setValue((Sequence) value.clone());
+      entry.setValue( (Sequence) value.clone() );
     }
     return dataFactory;
   }
 
-  public Sequence getSequence(final String name)
-  {
-    return sequences.get(name);
+  public Sequence getSequence( final String name ) {
+    return sequences.get( name );
   }
 }

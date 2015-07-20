@@ -23,10 +23,8 @@ package org.pentaho.reporting.engine.classic.core;
  *
  * @author Thomas Morgner
  */
-public abstract class GroupBody extends Section
-{
-  protected GroupBody()
-  {
+public abstract class GroupBody extends Section {
+  protected GroupBody() {
   }
 
   public abstract Group getGroup();

@@ -40,8 +40,7 @@ import java.io.Serializable;
  *
  * @author Thomas Morgner
  */
-public interface PageDefinition extends Cloneable, Serializable
-{
+public interface PageDefinition extends Cloneable, Serializable {
   /**
    * Returns the total width of the logical page.
    *
@@ -78,7 +77,7 @@ public interface PageDefinition extends Cloneable, Serializable
    * @param index the index of the physical pageformat
    * @return the bounds for the page.
    */
-  public Rectangle2D getPagePosition(int index);
+  public Rectangle2D getPagePosition( int index );
 
   /**
    * Returns the page format for the given page number. The page format contains local coordinates - that means that the
@@ -87,7 +86,7 @@ public interface PageDefinition extends Cloneable, Serializable
    * @param pos the position of the pageformat within the page
    * @return the given pageformat.
    */
-  public PageFormat getPageFormat(int pos);
+  public PageFormat getPageFormat( int pos );
 
   /**
    * Creates a copy of the page definition.
@@ -96,5 +95,5 @@ public interface PageDefinition extends Cloneable, Serializable
    * @throws CloneNotSupportedException if cloning failed for some reason.
    */
   public Object clone()
-      throws CloneNotSupportedException;
+    throws CloneNotSupportedException;
 }

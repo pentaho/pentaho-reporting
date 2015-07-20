@@ -30,8 +30,7 @@ import org.pentaho.reporting.engine.classic.core.event.ReportEvent;
  * @deprecated Use style expressions instead.
  */
 public class HidePageBandForTableExportFunction
-    extends AbstractFunction implements LayoutProcessorFunction
-{
+  extends AbstractFunction implements LayoutProcessorFunction {
   /**
    * A flag indicating whether page bands should be hidden.
    */
@@ -46,8 +45,7 @@ public class HidePageBandForTableExportFunction
   /**
    * Default Constructor.
    */
-  public HidePageBandForTableExportFunction()
-  {
+  public HidePageBandForTableExportFunction() {
     hidePageBands = true;
     exportDescriptor = "table/";
   }
@@ -57,42 +55,34 @@ public class HidePageBandForTableExportFunction
    *
    * @param event the report event.
    */
-  public void reportInitialized(final ReportEvent event)
-  {
+  public void reportInitialized( final ReportEvent event ) {
     final boolean isTable = exportDescriptor != null &&
-        getRuntime().getExportDescriptor().startsWith(exportDescriptor);
+      getRuntime().getExportDescriptor().startsWith( exportDescriptor );
 
     final ReportDefinition report = event.getReport();
-    if (isHidePageBands())
-    {
-      report.getPageHeader().setVisible(isTable == false);
-      report.getPageFooter().setVisible(isTable == false);
+    if ( isHidePageBands() ) {
+      report.getPageHeader().setVisible( isTable == false );
+      report.getPageFooter().setVisible( isTable == false );
     }
-    if (isDisableRepeatingHeader())
-    {
+    if ( isDisableRepeatingHeader() ) {
       final int gc = report.getGroupCount();
-      for (int i = 0; i < gc; i++)
-      {
-        final Group g = report.getGroup(i);
-        if (g instanceof RelationalGroup)
-        {
+      for ( int i = 0; i < gc; i++ ) {
+        final Group g = report.getGroup( i );
+        if ( g instanceof RelationalGroup ) {
           final RelationalGroup rg = (RelationalGroup) g;
-          if (rg.getHeader().isRepeat())
-          {
-            rg.getHeader().setRepeat(isTable == false);
+          if ( rg.getHeader().isRepeat() ) {
+            rg.getHeader().setRepeat( isTable == false );
           }
         }
       }
     }
   }
 
-  public String getExportDescriptor()
-  {
+  public String getExportDescriptor() {
     return exportDescriptor;
   }
 
-  public void setExportDescriptor(final String exportDescriptor)
-  {
+  public void setExportDescriptor( final String exportDescriptor ) {
     this.exportDescriptor = exportDescriptor;
   }
 
@@ -101,8 +91,7 @@ public class HidePageBandForTableExportFunction
    *
    * @return true, if page bands should be hidden, false otherwise.
    */
-  public boolean isHidePageBands()
-  {
+  public boolean isHidePageBands() {
     return hidePageBands;
   }
 
@@ -111,8 +100,7 @@ public class HidePageBandForTableExportFunction
    *
    * @param hidePageBands true, if page bands should be hidden, false otherwise.
    */
-  public void setHidePageBands(final boolean hidePageBands)
-  {
+  public void setHidePageBands( final boolean hidePageBands ) {
     this.hidePageBands = hidePageBands;
   }
 
@@ -121,8 +109,7 @@ public class HidePageBandForTableExportFunction
    *
    * @return true, if repeating header and footer will be disabled, false otherwise.
    */
-  public boolean isDisableRepeatingHeader()
-  {
+  public boolean isDisableRepeatingHeader() {
     return disableRepeatingHeader;
   }
 
@@ -131,8 +118,7 @@ public class HidePageBandForTableExportFunction
    *
    * @param disableRepeatingHeader true, if repeating header and footer will be disabled, false otherwise.
    */
-  public void setDisableRepeatingHeader(final boolean disableRepeatingHeader)
-  {
+  public void setDisableRepeatingHeader( final boolean disableRepeatingHeader ) {
     this.disableRepeatingHeader = disableRepeatingHeader;
   }
 
@@ -141,8 +127,7 @@ public class HidePageBandForTableExportFunction
    *
    * @return null.
    */
-  public Object getValue()
-  {
+  public Object getValue() {
     return null;
   }
 }

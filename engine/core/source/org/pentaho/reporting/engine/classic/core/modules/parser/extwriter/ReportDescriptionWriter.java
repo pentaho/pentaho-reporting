@@ -17,10 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.parser.extwriter;
 
-import java.io.IOException;
-import java.util.List;
-import java.util.Map;
-
 import org.pentaho.reporting.engine.classic.core.Band;
 import org.pentaho.reporting.engine.classic.core.Element;
 import org.pentaho.reporting.engine.classic.core.GroupDataBody;
@@ -45,14 +41,17 @@ import org.pentaho.reporting.libraries.xmlns.common.AttributeList;
 import org.pentaho.reporting.libraries.xmlns.writer.XmlWriter;
 import org.pentaho.reporting.libraries.xmlns.writer.XmlWriterSupport;
 
+import java.io.IOException;
+import java.util.List;
+import java.util.Map;
+
 /**
  * A report description writer.  The {@link ReportDefinitionWriter} class is responsible for writing the complete XML
  * report definition file, but it delegates one large section (the report description) to this class.
  *
  * @author Thomas Morgner.
  */
-public class ReportDescriptionWriter extends AbstractXMLDefinitionWriter
-{
+public class ReportDescriptionWriter extends AbstractXMLDefinitionWriter {
   /**
    * The 'band' tag.
    */
@@ -136,10 +135,9 @@ public class ReportDescriptionWriter extends AbstractXMLDefinitionWriter
    * @param reportWriter the report writer.
    * @param indent       the current indention level.
    */
-  public ReportDescriptionWriter(final ReportWriterContext reportWriter,
-                                 final XmlWriter indent)
-  {
-    super(reportWriter, indent);
+  public ReportDescriptionWriter( final ReportWriterContext reportWriter,
+                                  final XmlWriter indent ) {
+    super( reportWriter, indent );
   }
 
   /**
@@ -149,39 +147,35 @@ public class ReportDescriptionWriter extends AbstractXMLDefinitionWriter
    * @throws ReportWriterException if there is a problem writing the report.
    */
   public void write()
-      throws IOException, ReportWriterException
-  {
+    throws IOException, ReportWriterException {
     final XmlWriter writer = getXmlWriter();
-    writer.writeTag(ExtParserModule.NAMESPACE, ReportDescriptionWriter.REPORT_DESCRIPTION_TAG, XmlWriterSupport.OPEN);
+    writer.writeTag( ExtParserModule.NAMESPACE, ReportDescriptionWriter.REPORT_DESCRIPTION_TAG, XmlWriterSupport.OPEN );
 
-    writeRootBand(ReportDescriptionWriter.REPORT_HEADER_TAG, getReport().getReportHeader());
-    writeRootBand(ReportDescriptionWriter.REPORT_FOOTER_TAG, getReport().getReportFooter());
-    writeRootBand(ReportDescriptionWriter.PAGE_HEADER_TAG, getReport().getPageHeader());
-    writeRootBand(ReportDescriptionWriter.PAGE_FOOTER_TAG, getReport().getPageFooter());
-    writeRootBand(ReportDescriptionWriter.WATERMARK_TAG, getReport().getWatermark());
+    writeRootBand( ReportDescriptionWriter.REPORT_HEADER_TAG, getReport().getReportHeader() );
+    writeRootBand( ReportDescriptionWriter.REPORT_FOOTER_TAG, getReport().getReportFooter() );
+    writeRootBand( ReportDescriptionWriter.PAGE_HEADER_TAG, getReport().getPageHeader() );
+    writeRootBand( ReportDescriptionWriter.PAGE_FOOTER_TAG, getReport().getPageFooter() );
+    writeRootBand( ReportDescriptionWriter.WATERMARK_TAG, getReport().getWatermark() );
     writeGroups();
 
-    final GroupDataBody dataBody = (GroupDataBody) getReport().getChildElementByType(GroupDataBodyType.INSTANCE);
-    if (dataBody != null)
-    {
-      writeRootBand(ReportDescriptionWriter.ITEMBAND_TAG, dataBody.getItemBand());
-      writeRootBand(ReportDescriptionWriter.NO_DATA_BAND_TAG, dataBody.getNoDataBand());
+    final GroupDataBody dataBody = (GroupDataBody) getReport().getChildElementByType( GroupDataBodyType.INSTANCE );
+    if ( dataBody != null ) {
+      writeRootBand( ReportDescriptionWriter.ITEMBAND_TAG, dataBody.getItemBand() );
+      writeRootBand( ReportDescriptionWriter.NO_DATA_BAND_TAG, dataBody.getNoDataBand() );
     }
 
     writer.writeCloseTag();
   }
 
-  private void writeSubReports(final RootLevelBand band)
-      throws IOException, ReportWriterException
-  {
+  private void writeSubReports( final RootLevelBand band )
+    throws IOException, ReportWriterException {
     final int subReportCount = band.getSubReportCount();
-    for (int i = 0; i < subReportCount; i++)
-    {
-      final SubReport sreport = band.getSubReport(i);
+    for ( int i = 0; i < subReportCount; i++ ) {
+      final SubReport sreport = band.getSubReport( i );
       final ReportWriterContext context =
-          new ReportWriterContext(sreport, getReportWriter());
+        new ReportWriterContext( sreport, getReportWriter() );
       final SubReportDefinitionWriter writer =
-          new SubReportDefinitionWriter(context, getXmlWriter());
+        new SubReportDefinitionWriter( context, getXmlWriter() );
       writer.write();
     }
   }
@@ -194,71 +188,58 @@ public class ReportDescriptionWriter extends AbstractXMLDefinitionWriter
    * @throws IOException           if there is an I/O problem.
    * @throws ReportWriterException if there is a problem writing the report.
    */
-  private void writeBand(final String tagName,
-                         final Band band)
-      throws IOException, ReportWriterException
-  {
+  private void writeBand( final String tagName,
+                          final Band band )
+    throws IOException, ReportWriterException {
     final XmlWriter writer = getXmlWriter();
-    if (band.getName().startsWith(Band.ANONYMOUS_BAND_PREFIX) ||
-        band.getName().startsWith(Element.ANONYMOUS_ELEMENT_PREFIX))
-    {
-      writer.writeTag(ExtParserModule.NAMESPACE, tagName, XmlWriterSupport.OPEN);
-    }
-    else
-    {
-      writer.writeTag(ExtParserModule.NAMESPACE, tagName,
-          "name", band.getName(), XmlWriterSupport.OPEN);
+    if ( band.getName().startsWith( Band.ANONYMOUS_BAND_PREFIX ) ||
+      band.getName().startsWith( Element.ANONYMOUS_ELEMENT_PREFIX ) ) {
+      writer.writeTag( ExtParserModule.NAMESPACE, tagName, XmlWriterSupport.OPEN );
+    } else {
+      writer.writeTag( ExtParserModule.NAMESPACE, tagName,
+        "name", band.getName(), XmlWriterSupport.OPEN );
     }
 
-    writeStyleInfo(band);
+    writeStyleInfo( band );
 
     final Element[] list = band.getElementArray();
-    for (int i = 0; i < list.length; i++)
-    {
-      if (list[i] instanceof Band)
-      {
-        final Band b = (Band) list[i];
-        writeBand(ReportDescriptionWriter.BAND_TAG, b);
-      }
-      else
-      {
-        writeElement(list[i]);
+    for ( int i = 0; i < list.length; i++ ) {
+      if ( list[ i ] instanceof Band ) {
+        final Band b = (Band) list[ i ];
+        writeBand( ReportDescriptionWriter.BAND_TAG, b );
+      } else {
+        writeElement( list[ i ] );
       }
     }
 
-    if (band instanceof RootLevelBand)
-    {
-      writeSubReports((RootLevelBand) band);
+    if ( band instanceof RootLevelBand ) {
+      writeSubReports( (RootLevelBand) band );
     }
 
     writer.writeCloseTag();
   }
 
-  private void writeStyleInfo(final Element band)
-      throws IOException, ReportWriterException
-  {
+  private void writeStyleInfo( final Element band )
+    throws IOException, ReportWriterException {
     final XmlWriter writer = getXmlWriter();
     final ElementStyleSheet styleSheet = band.getStyle();
-    if (isStyleSheetEmpty(styleSheet) == false)
-    {
-      writer.writeTag(ExtParserModule.NAMESPACE, AbstractXMLDefinitionWriter.STYLE_TAG, XmlWriterSupport.OPEN);
+    if ( isStyleSheetEmpty( styleSheet ) == false ) {
+      writer.writeTag( ExtParserModule.NAMESPACE, AbstractXMLDefinitionWriter.STYLE_TAG, XmlWriterSupport.OPEN );
 
       final StyleWriter styleWriter =
-          new StyleWriter(getReportWriter(), band.getStyle(), writer);
+        new StyleWriter( getReportWriter(), band.getStyle(), writer );
       styleWriter.write();
       writer.writeCloseTag();
     }
 
 
-    final Map<StyleKey,Expression> styleExpressions = band.getStyleExpressions();
-    if (styleExpressions.isEmpty() == false)
-    {
-      final FunctionsWriter fnWriter = new FunctionsWriter(getReportWriter(), writer);
-      for (final Map.Entry<StyleKey, Expression> entry : styleExpressions.entrySet())
-      {
+    final Map<StyleKey, Expression> styleExpressions = band.getStyleExpressions();
+    if ( styleExpressions.isEmpty() == false ) {
+      final FunctionsWriter fnWriter = new FunctionsWriter( getReportWriter(), writer );
+      for ( final Map.Entry<StyleKey, Expression> entry : styleExpressions.entrySet() ) {
         final StyleKey key = entry.getKey();
         final Expression ex = entry.getValue();
-        fnWriter.writeStyleExpression(ex, key);
+        fnWriter.writeStyleExpression( ex, key );
       }
     }
   }
@@ -269,11 +250,9 @@ public class ReportDescriptionWriter extends AbstractXMLDefinitionWriter
    * @param es the element stylesheet to test
    * @return true, if the sheet is empty, false otherwise.
    */
-  private boolean isStyleSheetEmpty(final ElementStyleSheet es)
-  {
+  private boolean isStyleSheetEmpty( final ElementStyleSheet es ) {
     final StyleKey[] namesArray = es.getDefinedPropertyNamesArray();
-    if (namesArray.length == 0)
-    {
+    if ( namesArray.length == 0 ) {
       return true;
     }
     return false;
@@ -286,20 +265,18 @@ public class ReportDescriptionWriter extends AbstractXMLDefinitionWriter
    * @throws IOException           if there is an I/O problem.
    * @throws ReportWriterException if there is a problem writing the report.
    */
-  private void writeElement(final Element element)
-      throws IOException, ReportWriterException
-  {
+  private void writeElement( final Element element )
+    throws IOException, ReportWriterException {
     final AttributeList attList = new AttributeList();
-    if (element.getName().startsWith(Element.ANONYMOUS_ELEMENT_PREFIX) == false)
-    {
-      attList.setAttribute(ExtParserModule.NAMESPACE, "name", element.getName());
+    if ( element.getName().startsWith( Element.ANONYMOUS_ELEMENT_PREFIX ) == false ) {
+      attList.setAttribute( ExtParserModule.NAMESPACE, "name", element.getName() );
     }
 
     final XmlWriter writer = getXmlWriter();
-    writer.writeTag(ExtParserModule.NAMESPACE, ReportDescriptionWriter.ELEMENT_TAG, attList, XmlWriterSupport.OPEN);
+    writer.writeTag( ExtParserModule.NAMESPACE, ReportDescriptionWriter.ELEMENT_TAG, attList, XmlWriterSupport.OPEN );
 
-    writeStyleInfo(element);
-    writeDataSourceForElement(element);
+    writeStyleInfo( element );
+    writeDataSourceForElement( element );
 
     writer.writeCloseTag();
   }
@@ -311,17 +288,14 @@ public class ReportDescriptionWriter extends AbstractXMLDefinitionWriter
    * @throws ReportWriterException if there is a problem writing the report
    * @throws IOException           if there is an IO error.
    */
-  protected void writeDataSourceForElement(final Element element)
-      throws ReportWriterException, IOException
-  {
-    if ((element.getDataSource() instanceof EmptyDataSource))
-    {
+  protected void writeDataSourceForElement( final Element element )
+    throws ReportWriterException, IOException {
+    if ( ( element.getDataSource() instanceof EmptyDataSource ) ) {
       return;
     }
 
-    if (element.getDataSource() instanceof Template == false)
-    {
-      writeDataSource(element.getDataSource());
+    if ( element.getDataSource() instanceof Template == false ) {
+      writeDataSource( element.getDataSource() );
       return;
     }
 
@@ -331,27 +305,23 @@ public class ReportDescriptionWriter extends AbstractXMLDefinitionWriter
     // the template description of the element template will get the
     // template name as its name.
     final TemplateDescription templateDescription =
-        tc.getDescription(template);
+      tc.getDescription( template );
 
-    if (templateDescription == null)
-    {
-      throw new ReportWriterException("Unknown template type: " + template);
+    if ( templateDescription == null ) {
+      throw new ReportWriterException( "Unknown template type: " + template );
     }
 
     // create the parent description before the template description is filled.
     final TemplateDescription parentTemplate = (TemplateDescription) templateDescription.getInstance();
 
-    try
-    {
-      templateDescription.setParameterFromObject(template);
-    }
-    catch (ObjectFactoryException ofe)
-    {
-      throw new ReportWriterException("Error while preparing the template", ofe);
+    try {
+      templateDescription.setParameterFromObject( template );
+    } catch ( ObjectFactoryException ofe ) {
+      throw new ReportWriterException( "Error while preparing the template", ofe );
     }
 
     final TemplateWriter templateWriter = new TemplateWriter
-        (getReportWriter(), getXmlWriter(), templateDescription, parentTemplate);
+      ( getReportWriter(), getXmlWriter(), templateDescription, parentTemplate );
     templateWriter.write();
   }
 
@@ -362,39 +332,35 @@ public class ReportDescriptionWriter extends AbstractXMLDefinitionWriter
    * @throws IOException           if there is an I/O problem.
    * @throws ReportWriterException if there is a problem writing the report.
    */
-  private void writeDataSource(final DataSource datasource)
-      throws IOException, ReportWriterException
-  {
+  private void writeDataSource( final DataSource datasource )
+    throws IOException, ReportWriterException {
     final ReportWriterContext reportWriter = getReportWriter();
     final ClassFactoryCollector classFactoryCollector =
-        reportWriter.getClassFactoryCollector();
+      reportWriter.getClassFactoryCollector();
     ObjectDescription od =
-        classFactoryCollector.getDescriptionForClass(datasource.getClass());
-    if (od == null)
-    {
+      classFactoryCollector.getDescriptionForClass( datasource.getClass() );
+    if ( od == null ) {
       od = classFactoryCollector.
-          getSuperClassObjectDescription(datasource.getClass(), null);
+        getSuperClassObjectDescription( datasource.getClass(), null );
     }
 
-    if (od == null)
-    {
-      throw new ReportWriterException("Unable to resolve DataSource: " + datasource.getClass());
+    if ( od == null ) {
+      throw new ReportWriterException( "Unable to resolve DataSource: " + datasource.getClass() );
     }
 
     final DataSourceCollector dataSourceCollector =
-        reportWriter.getDataSourceCollector();
-    final String dsname = dataSourceCollector.getDataSourceName(od);
-    if (dsname == null)
-    {
-      throw new ReportWriterException("No name for DataSource " + datasource);
+      reportWriter.getDataSourceCollector();
+    final String dsname = dataSourceCollector.getDataSourceName( od );
+    if ( dsname == null ) {
+      throw new ReportWriterException( "No name for DataSource " + datasource );
     }
 
     final XmlWriter writer = getXmlWriter();
-    writer.writeTag(ExtParserModule.NAMESPACE,
-        AbstractXMLDefinitionWriter.DATASOURCE_TAG, "type", dsname, XmlWriterSupport.OPEN);
+    writer.writeTag( ExtParserModule.NAMESPACE,
+      AbstractXMLDefinitionWriter.DATASOURCE_TAG, "type", dsname, XmlWriterSupport.OPEN );
 
     final DataSourceWriter dsWriter =
-        new DataSourceWriter(reportWriter, datasource, od, writer);
+      new DataSourceWriter( reportWriter, datasource, od, writer );
     dsWriter.write();
 
     writer.writeCloseTag();
@@ -408,42 +374,36 @@ public class ReportDescriptionWriter extends AbstractXMLDefinitionWriter
    * @throws ReportWriterException if there is a problem writing the report.
    */
   private void writeGroups()
-      throws IOException, ReportWriterException
-  {
+    throws IOException, ReportWriterException {
     final XmlWriter writer = getXmlWriter();
-    writer.writeTag(ExtParserModule.NAMESPACE, ReportDescriptionWriter.GROUPS_TAG, XmlWriterSupport.OPEN);
+    writer.writeTag( ExtParserModule.NAMESPACE, ReportDescriptionWriter.GROUPS_TAG, XmlWriterSupport.OPEN );
 
     //logComment = true;
     final int groupSize = getReport().getGroupCount();
-    for (int i = 0; i < groupSize; i++)
-    {
+    for ( int i = 0; i < groupSize; i++ ) {
 
       // This will fail for crosstabs. But this code is legacy, so it is ok.
-      final RelationalGroup g = (RelationalGroup) getReport().getGroup(i);
-      writer.writeTag(ExtParserModule.NAMESPACE, ReportDescriptionWriter.GROUP_TAG,
-          "name", g.getName(), XmlWriterSupport.OPEN);
+      final RelationalGroup g = (RelationalGroup) getReport().getGroup( i );
+      writer.writeTag( ExtParserModule.NAMESPACE, ReportDescriptionWriter.GROUP_TAG,
+        "name", g.getName(), XmlWriterSupport.OPEN );
 
       final List fields = g.getFields();
-      if (fields.isEmpty() == false)
-      {
-        writer.writeTag(ExtParserModule.NAMESPACE, ReportDescriptionWriter.FIELDS_TAG, XmlWriterSupport.OPEN);
+      if ( fields.isEmpty() == false ) {
+        writer.writeTag( ExtParserModule.NAMESPACE, ReportDescriptionWriter.FIELDS_TAG, XmlWriterSupport.OPEN );
 
-        for (int f = 0; f < fields.size(); f++)
-        {
-          final String field = (String) fields.get(f);
-          writer.writeTag(ExtParserModule.NAMESPACE, ReportDescriptionWriter.FIELD_TAG, XmlWriterSupport.OPEN);
-          writer.writeTextNormalized(field, false);
+        for ( int f = 0; f < fields.size(); f++ ) {
+          final String field = (String) fields.get( f );
+          writer.writeTag( ExtParserModule.NAMESPACE, ReportDescriptionWriter.FIELD_TAG, XmlWriterSupport.OPEN );
+          writer.writeTextNormalized( field, false );
           writer.writeCloseTag();
         }
         writer.writeCloseTag();
-      }
-      else
-      {
-        writer.writeTag(ExtParserModule.NAMESPACE, ReportDescriptionWriter.FIELDS_TAG, XmlWriterSupport.CLOSE);
+      } else {
+        writer.writeTag( ExtParserModule.NAMESPACE, ReportDescriptionWriter.FIELDS_TAG, XmlWriterSupport.CLOSE );
       }
 
-      writeRootBand(ReportDescriptionWriter.GROUP_HEADER_TAG, g.getHeader());
-      writeRootBand(ReportDescriptionWriter.GROUP_FOOTER_TAG, g.getFooter());
+      writeRootBand( ReportDescriptionWriter.GROUP_HEADER_TAG, g.getHeader() );
+      writeRootBand( ReportDescriptionWriter.GROUP_FOOTER_TAG, g.getFooter() );
 
       writer.writeCloseTag();
     }
@@ -451,42 +411,33 @@ public class ReportDescriptionWriter extends AbstractXMLDefinitionWriter
     writer.writeCloseTag();
   }
 
-  private void writeRootBand(final String tag,
-                             final Band band)
-      throws IOException, ReportWriterException
-  {
-    if (isEmptyRootBand(band))
-    {
+  private void writeRootBand( final String tag,
+                              final Band band )
+    throws IOException, ReportWriterException {
+    if ( isEmptyRootBand( band ) ) {
       return;
     }
-    writeBand(tag, band);
+    writeBand( tag, band );
   }
 
-  private boolean isEmptyRootBand(final Band band)
-  {
-    if (band.getName().startsWith(Band.ANONYMOUS_BAND_PREFIX) == false)
-    {
+  private boolean isEmptyRootBand( final Band band ) {
+    if ( band.getName().startsWith( Band.ANONYMOUS_BAND_PREFIX ) == false ) {
       return false;
     }
-    if (band.getName().startsWith(Element.ANONYMOUS_ELEMENT_PREFIX) == false)
-    {
+    if ( band.getName().startsWith( Element.ANONYMOUS_ELEMENT_PREFIX ) == false ) {
       return false;
     }
-    if (band.getElementCount() != 0)
-    {
+    if ( band.getElementCount() != 0 ) {
       return false;
     }
-    if (band instanceof RootLevelBand)
-    {
+    if ( band instanceof RootLevelBand ) {
       final RootLevelBand rlb = (RootLevelBand) band;
-      if (rlb.getSubReportCount() > 0)
-      {
+      if ( rlb.getSubReportCount() > 0 ) {
         return false;
       }
     }
     final ElementStyleSheet styleSheet = band.getStyle();
-    if (isStyleSheetEmpty(styleSheet))
-    {
+    if ( isStyleSheetEmpty( styleSheet ) ) {
       return true;
     }
     return false;

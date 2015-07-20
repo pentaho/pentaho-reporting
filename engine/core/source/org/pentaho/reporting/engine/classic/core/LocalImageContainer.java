@@ -17,7 +17,7 @@
 
 package org.pentaho.reporting.engine.classic.core;
 
-import java.awt.Image;
+import java.awt.*;
 
 /**
  * The LocalImageContainer makes the image available as 'java.awt.Image' instance. This way, the image can be included
@@ -25,8 +25,7 @@ import java.awt.Image;
  *
  * @author Thomas Morgner
  */
-public interface LocalImageContainer extends ImageContainer
-{
+public interface LocalImageContainer extends ImageContainer {
   /**
    * Returns the image instance for this image container. This method might return <code>null</code>, if the image is
    * not available.

@@ -17,49 +17,39 @@
 
 package org.pentaho.reporting.engine.classic.core.states;
 
-public final class EmptyGroupSizeRecorder implements GroupSizeRecorder
-{
-  public EmptyGroupSizeRecorder()
-  {
+public final class EmptyGroupSizeRecorder implements GroupSizeRecorder {
+  public EmptyGroupSizeRecorder() {
   }
 
-  public void advanceItems()
-  {
+  public void advanceItems() {
 
   }
 
-  public void enterGroup()
-  {
+  public void enterGroup() {
 
   }
 
-  public void enterItems()
-  {
+  public void enterItems() {
 
   }
 
-  public void leaveItems()
-  {
+  public void leaveItems() {
 
   }
 
-  public void leaveGroup()
-  {
+  public void leaveGroup() {
 
   }
 
-  public void reset()
-  {
+  public void reset() {
 
   }
 
-  public Object clone()
-  {
+  public Object clone() {
     return this;
   }
 
-  public Integer getPredictedStateCount()
-  {
+  public Integer getPredictedStateCount() {
     return null;
   }
 }

@@ -17,8 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.core.layout.table;
 
-import java.net.URL;
-
 import junit.framework.TestCase;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
@@ -27,33 +25,30 @@ import org.pentaho.reporting.engine.classic.core.testsupport.DebugReportRunner;
 import org.pentaho.reporting.libraries.resourceloader.Resource;
 import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 
-public class CrosstabRowSpanTest extends TestCase
-{
-  public CrosstabRowSpanTest()
-  {
+import java.net.URL;
+
+public class CrosstabRowSpanTest extends TestCase {
+  public CrosstabRowSpanTest() {
   }
 
-  public CrosstabRowSpanTest(final String name)
-  {
-    super(name);
+  public CrosstabRowSpanTest( final String name ) {
+    super( name );
   }
 
-  protected void setUp() throws Exception
-  {
+  protected void setUp() throws Exception {
     ClassicEngineBoot.getInstance().start();
   }
 
-  public void testCrosstabCellSpan() throws Exception
-  {
-    final URL url = getClass().getResource("Crosstab-List.prpt");
-    assertNotNull(url);
+  public void testCrosstabCellSpan() throws Exception {
+    final URL url = getClass().getResource( "Crosstab-List.prpt" );
+    assertNotNull( url );
     final ResourceManager resourceManager = new ResourceManager();
     resourceManager.registerDefaults();
-    final Resource directly = resourceManager.createDirectly(url, MasterReport.class);
+    final Resource directly = resourceManager.createDirectly( url, MasterReport.class );
     final MasterReport report = (MasterReport) directly.getResource();
-    report.setCompatibilityLevel(ClassicEngineBoot.computeVersionId(4, 0, 0));
+    report.setCompatibilityLevel( ClassicEngineBoot.computeVersionId( 4, 0, 0 ) );
 
-    final LogicalPageBox logicalPageBox = DebugReportRunner.layoutPage(report, 0);
+    final LogicalPageBox logicalPageBox = DebugReportRunner.layoutPage( report, 0 );
     //ModelPrinter.print(logicalPageBox);
   }
 }

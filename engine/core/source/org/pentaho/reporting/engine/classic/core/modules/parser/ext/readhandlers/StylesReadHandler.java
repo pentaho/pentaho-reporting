@@ -22,10 +22,8 @@ import org.pentaho.reporting.engine.classic.core.modules.parser.base.common.Abst
 import org.pentaho.reporting.libraries.xmlns.parser.XmlReadHandler;
 import org.xml.sax.SAXException;
 
-public class StylesReadHandler extends AbstractPropertyXmlReadHandler
-{
-  public StylesReadHandler()
-  {
+public class StylesReadHandler extends AbstractPropertyXmlReadHandler {
+  public StylesReadHandler() {
   }
 
   /**
@@ -36,18 +34,15 @@ public class StylesReadHandler extends AbstractPropertyXmlReadHandler
    * @return the handler or null, if the tagname is invalid.
    * @throws org.xml.sax.SAXException if there is a parsing error.
    */
-  protected XmlReadHandler getHandlerForChild(final String uri,
-                                              final String tagName,
-                                              final PropertyAttributes atts)
-      throws SAXException
-  {
-    if (isSameNamespace(uri) == false)
-    {
+  protected XmlReadHandler getHandlerForChild( final String uri,
+                                               final String tagName,
+                                               final PropertyAttributes atts )
+    throws SAXException {
+    if ( isSameNamespace( uri ) == false ) {
       return null;
     }
 
-    if ("style".equals(tagName))
-    {
+    if ( "style".equals( tagName ) ) {
       return new StyleReadHandler();
     }
     return null;
@@ -58,8 +53,7 @@ public class StylesReadHandler extends AbstractPropertyXmlReadHandler
    *
    * @return the object.
    */
-  public Object getObject()
-  {
+  public Object getObject() {
     return null;
   }
 }

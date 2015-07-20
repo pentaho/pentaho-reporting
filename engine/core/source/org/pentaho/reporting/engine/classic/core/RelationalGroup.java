@@ -17,35 +17,33 @@
 
 package org.pentaho.reporting.engine.classic.core;
 
+import org.pentaho.reporting.engine.classic.core.filter.types.bands.RelationalGroupType;
+import org.pentaho.reporting.engine.classic.core.sorting.SortConstraint;
+import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-
-import org.pentaho.reporting.engine.classic.core.filter.types.bands.RelationalGroupType;
-import org.pentaho.reporting.engine.classic.core.sorting.SortConstraint;
-import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
 
 /**
  * A group that accepts fields.
  *
  * @author Thomas Morgner
  */
-public class RelationalGroup extends Group
-{
-  private static final String[] EMPTY_FIELDS = new String[0];
-  
+public class RelationalGroup extends Group {
+  private static final String[] EMPTY_FIELDS = new String[ 0 ];
+
   private GroupHeader header;
   private GroupFooter footer;
 
-  public RelationalGroup()
-  {
-    setElementType(new RelationalGroupType());
+  public RelationalGroup() {
+    setElementType( new RelationalGroupType() );
     this.footer = new GroupFooter();
     this.header = new GroupHeader();
-    
-    registerAsChild(footer);
-    registerAsChild(header);
+
+    registerAsChild( footer );
+    registerAsChild( header );
   }
 
   /**
@@ -54,8 +52,7 @@ public class RelationalGroup extends Group
    *
    * @return the group header.
    */
-  public GroupHeader getHeader()
-  {
+  public GroupHeader getHeader() {
     return header;
   }
 
@@ -65,34 +62,30 @@ public class RelationalGroup extends Group
    * @param header the header (null not permitted).
    * @throws NullPointerException if the given header is null
    */
-  public void setHeader(final GroupHeader header)
-  {
-    if (header == null)
-    {
-      throw new NullPointerException("Header must not be null");
+  public void setHeader( final GroupHeader header ) {
+    if ( header == null ) {
+      throw new NullPointerException( "Header must not be null" );
     }
-    validateLooping(header);
-    if (unregisterParent(header))
-    {
+    validateLooping( header );
+    if ( unregisterParent( header ) ) {
       return;
     }
 
     final Element element = this.header;
-    this.header.setParent(null);
+    this.header.setParent( null );
     this.header = header;
-    this.header.setParent(this);
+    this.header.setParent( this );
 
-    notifyNodeChildRemoved(element);
-    notifyNodeChildAdded(this.header);
+    notifyNodeChildRemoved( element );
+    notifyNodeChildAdded( this.header );
   }
-  
+
   /**
    * Returns the group footer.
    *
    * @return the footer.
    */
-  public GroupFooter getFooter()
-  {
+  public GroupFooter getFooter() {
     return footer;
   }
 
@@ -102,25 +95,22 @@ public class RelationalGroup extends Group
    * @param footer the footer (null not permitted).
    * @throws NullPointerException if the given footer is null.
    */
-  public void setFooter(final GroupFooter footer)
-  {
-    if (footer == null)
-    {
-      throw new NullPointerException("The footer must not be null");
+  public void setFooter( final GroupFooter footer ) {
+    if ( footer == null ) {
+      throw new NullPointerException( "The footer must not be null" );
     }
-    validateLooping(footer);
-    if (unregisterParent(footer))
-    {
+    validateLooping( footer );
+    if ( unregisterParent( footer ) ) {
       return;
     }
 
     final Element element = this.footer;
-    this.footer.setParent(null);
+    this.footer.setParent( null );
     this.footer = footer;
-    this.footer.setParent(this);
+    this.footer.setParent( this );
 
-    notifyNodeChildRemoved(element);
-    notifyNodeChildAdded(this.footer);
+    notifyNodeChildRemoved( element );
+    notifyNodeChildAdded( this.footer );
   }
 
   /**
@@ -130,28 +120,23 @@ public class RelationalGroup extends Group
    * @param c the list containing strings.
    * @throws NullPointerException if the given list is null or the list contains null-values.
    */
-  public void setFields(final List<String> c)
-  {
-    if (c == null)
-    {
+  public void setFields( final List<String> c ) {
+    if ( c == null ) {
       throw new NullPointerException();
     }
-    final String[] fields = c.toArray(new String[c.size()]);
-    setFieldsArray(fields);
+    final String[] fields = c.toArray( new String[ c.size() ] );
+    setFieldsArray( fields );
   }
 
-  public void clearFields()
-  {
-    setAttribute(AttributeNames.Core.NAMESPACE, AttributeNames.Core.GROUP_FIELDS, EMPTY_FIELDS);
+  public void clearFields() {
+    setAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.GROUP_FIELDS, EMPTY_FIELDS );
   }
 
-  protected GroupBody createDefaultBody()
-  {
+  protected GroupBody createDefaultBody() {
     return new GroupDataBody();
   }
 
-  public int getElementCount()
-  {
+  public int getElementCount() {
     return 3;
   }
 
@@ -161,16 +146,14 @@ public class RelationalGroup extends Group
    * @param name the field name (null not permitted).
    * @throws NullPointerException if the name is null
    */
-  public void addField(final String name)
-  {
-    if (name == null)
-    {
-      throw new NullPointerException("Group.addField(...): name is null.");
+  public void addField( final String name ) {
+    if ( name == null ) {
+      throw new NullPointerException( "Group.addField(...): name is null." );
     }
-    final ArrayList<String> fieldsList = new ArrayList<String>(getFields());
-    fieldsList.add(name);
-    Collections.sort(fieldsList);
-    setFieldsArray(fieldsList.toArray(new String[fieldsList.size()]));
+    final ArrayList<String> fieldsList = new ArrayList<String>( getFields() );
+    fieldsList.add( name );
+    Collections.sort( fieldsList );
+    setFieldsArray( fieldsList.toArray( new String[ fieldsList.size() ] ) );
   }
 
   /**
@@ -178,18 +161,15 @@ public class RelationalGroup extends Group
    *
    * @return a list (unmodifiable) of fields for the group.
    */
-  public List<String> getFields()
-  {
-    return Collections.unmodifiableList(Arrays.asList(getFieldsArray()));
+  public List<String> getFields() {
+    return Collections.unmodifiableList( Arrays.asList( getFieldsArray() ) );
   }
 
-  public void setFieldsArray(final String[] fields)
-  {
-    if (fields == null)
-    {
+  public void setFieldsArray( final String[] fields ) {
+    if ( fields == null ) {
       throw new NullPointerException();
     }
-    setAttribute(AttributeNames.Core.NAMESPACE, AttributeNames.Core.GROUP_FIELDS, fields.clone());
+    setAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.GROUP_FIELDS, fields.clone() );
   }
 
   /**
@@ -197,11 +177,9 @@ public class RelationalGroup extends Group
    *
    * @return the fields as string array.
    */
-  public String[] getFieldsArray()
-  {
-    final Object o = getAttribute(AttributeNames.Core.NAMESPACE, AttributeNames.Core.GROUP_FIELDS);
-    if (o instanceof String[])
-    {
+  public String[] getFieldsArray() {
+    final Object o = getAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.GROUP_FIELDS );
+    if ( o instanceof String[] ) {
       final String[] fields = (String[]) o;
       return fields.clone();
     }
@@ -213,28 +191,25 @@ public class RelationalGroup extends Group
    *
    * @return A string.
    */
-  public String toString()
-  {
-    final StringBuilder b = new StringBuilder(120);
-    b.append("org.pentaho.reporting.engine.classic.core.RelationalGroup={Name='");
-    b.append(getName());
-    b.append("', GeneratedName=");
-    b.append(getGeneratedName());
-    b.append("', fields=");
-    b.append(getFields());
-    b.append("} ");
+  public String toString() {
+    final StringBuilder b = new StringBuilder( 120 );
+    b.append( "org.pentaho.reporting.engine.classic.core.RelationalGroup={Name='" );
+    b.append( getName() );
+    b.append( "', GeneratedName=" );
+    b.append( getGeneratedName() );
+    b.append( "', fields=" );
+    b.append( getFields() );
+    b.append( "} " );
     return b.toString();
   }
 
-  public void setBody(final GroupBody body)
-  {
-    if (body instanceof GroupDataBody == false &&
-        body instanceof SubGroupBody == false)
-    {
+  public void setBody( final GroupBody body ) {
+    if ( body instanceof GroupDataBody == false &&
+      body instanceof SubGroupBody == false ) {
       throw new IllegalArgumentException();
     }
 
-    super.setBody(body);
+    super.setBody( body );
   }
 
   /**
@@ -244,22 +219,18 @@ public class RelationalGroup extends Group
    * @param obj the object to be checked
    * @return true, if the object is a group instance with the same fields, false otherwise.
    */
-  public boolean equals(final Object obj)
-  {
-    if (this == obj)
-    {
+  public boolean equals( final Object obj ) {
+    if ( this == obj ) {
       return true;
     }
-    if (!(obj instanceof RelationalGroup))
-    {
+    if ( !( obj instanceof RelationalGroup ) ) {
       return false;
     }
 
     final RelationalGroup group = (RelationalGroup) obj;
     final String[] otherFields = group.getFieldsArray();
     final String[] myFields = getFieldsArray();
-    if (ObjectUtilities.equalArray(otherFields, myFields) == false)
-    {
+    if ( ObjectUtilities.equalArray( otherFields, myFields ) == false ) {
       return false;
     }
     return true;
@@ -270,39 +241,30 @@ public class RelationalGroup extends Group
    *
    * @return the hashcode.
    */
-  public int hashCode()
-  {
+  public int hashCode() {
     final String[] fields = getFieldsArray();
 
     int hashCode = 0;
     final int length = fields.length;
-    for (int i = 0; i < length; i++)
-    {
-      final String field = fields[i];
-      if (field == null)
-      {
+    for ( int i = 0; i < length; i++ ) {
+      final String field = fields[ i ];
+      if ( field == null ) {
         hashCode = 29 * hashCode;
-      }
-      else
-      {
+      } else {
         hashCode = 29 * hashCode + field.hashCode();
       }
     }
     return hashCode;
   }
 
-  public boolean isGroupChange(final DataRow dataRow)
-  {
+  public boolean isGroupChange( final DataRow dataRow ) {
     // compare item and item+1, if any field differs, then item==last in group
-    final Object o = getAttribute(AttributeNames.Core.NAMESPACE, AttributeNames.Core.GROUP_FIELDS);
-    if (o instanceof String[])
-    {
+    final Object o = getAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.GROUP_FIELDS );
+    if ( o instanceof String[] ) {
       final String[] fields = (String[]) o;
-      for (int i = 0; i < fields.length; i++)
-      {
-        final String field = fields[i];
-        if (field != null && dataRow.isChanged(field))
-        {
+      for ( int i = 0; i < fields.length; i++ ) {
+        final String field = fields[ i ];
+        if ( field != null && dataRow.isChanged( field ) ) {
           return true;
         }
       }
@@ -312,24 +274,20 @@ public class RelationalGroup extends Group
   }
 
   @Deprecated
-  public GroupDataBody findGroupDataBody()
-  {
+  public GroupDataBody findGroupDataBody() {
     final GroupBody body = getBody();
-    if (body instanceof GroupDataBody)
-    {
+    if ( body instanceof GroupDataBody ) {
       return (GroupDataBody) body;
     }
-    if (body instanceof SubGroupBody)
-    {
+    if ( body instanceof SubGroupBody ) {
       final SubGroupBody groupBody = (SubGroupBody) body;
       final Group group = groupBody.getGroup();
-      if (group instanceof RelationalGroup)
-      {
+      if ( group instanceof RelationalGroup ) {
         final RelationalGroup rg = (RelationalGroup) group;
         return rg.findGroupDataBody();
       }
     }
-    
+
     return null;
   }
 
@@ -338,66 +296,55 @@ public class RelationalGroup extends Group
    *
    * @return a clone of this element.
    */
-  public RelationalGroup clone()
-  {
+  public RelationalGroup clone() {
     final RelationalGroup g = (RelationalGroup) super.clone();
     g.footer = (GroupFooter) footer.clone();
     g.header = (GroupHeader) header.clone();
 
-    g.registerAsChild(g.footer);
-    g.registerAsChild(g.header);
+    g.registerAsChild( g.footer );
+    g.registerAsChild( g.header );
     return g;
   }
 
-  public RelationalGroup derive(final boolean preserveElementInstanceIds)
-  {
-    final RelationalGroup g = (RelationalGroup) super.derive(preserveElementInstanceIds);
-    g.footer = (GroupFooter) footer.derive(preserveElementInstanceIds);
-    g.header = (GroupHeader) header.derive(preserveElementInstanceIds);
+  public RelationalGroup derive( final boolean preserveElementInstanceIds ) {
+    final RelationalGroup g = (RelationalGroup) super.derive( preserveElementInstanceIds );
+    g.footer = (GroupFooter) footer.derive( preserveElementInstanceIds );
+    g.header = (GroupHeader) header.derive( preserveElementInstanceIds );
 
-    g.registerAsChild(g.footer);
-    g.registerAsChild(g.header);
+    g.registerAsChild( g.footer );
+    g.registerAsChild( g.header );
     return g;
   }
 
 
-  protected void removeElement(final Element element)
-  {
-    if (element == null)
-    {
+  protected void removeElement( final Element element ) {
+    if ( element == null ) {
       throw new NullPointerException();
     }
 
-    if (footer == element)
-    {
-      this.footer.setParent(null);
+    if ( footer == element ) {
+      this.footer.setParent( null );
       this.footer = new GroupFooter();
-      this.footer.setParent(this);
+      this.footer.setParent( this );
 
-      notifyNodeChildRemoved(element);
-      notifyNodeChildAdded(this.footer);
+      notifyNodeChildRemoved( element );
+      notifyNodeChildAdded( this.footer );
 
-    }
-    else if (header == element)
-    {
-      this.header.setParent(null);
+    } else if ( header == element ) {
+      this.header.setParent( null );
       this.header = new GroupHeader();
-      this.header.setParent(this);
+      this.header.setParent( this );
 
-      notifyNodeChildRemoved(element);
-      notifyNodeChildAdded(this.header);
-    }
-    else
-    {
-      super.removeElement(element);
+      notifyNodeChildRemoved( element );
+      notifyNodeChildAdded( this.header );
+    } else {
+      super.removeElement( element );
     }
     // Else: Ignore the request, none of my childs.
   }
 
-    public Element getElement(final int index)
-  {
-    switch (index)
-    {
+  public Element getElement( final int index ) {
+    switch( index ) {
       case 0:
         return header;
       case 1:
@@ -409,26 +356,23 @@ public class RelationalGroup extends Group
     }
   }
 
-  public void setElementAt(final int index, final Element element)
-  {
-    switch (index)
-    {
+  public void setElementAt( final int index, final Element element ) {
+    switch( index ) {
       case 0:
-        setHeader((GroupHeader) element);
+        setHeader( (GroupHeader) element );
         break;
       case 1:
-        setBody((GroupBody) element);
+        setBody( (GroupBody) element );
         break;
       case 2:
-        setFooter((GroupFooter) element);
+        setFooter( (GroupFooter) element );
         break;
       default:
         throw new IndexOutOfBoundsException();
     }
   }
 
-  public List<SortConstraint> getSortingConstraint()
-  {
-    return mapFields(getFields());
+  public List<SortConstraint> getSortingConstraint() {
+    return mapFields( getFields() );
   }
 }

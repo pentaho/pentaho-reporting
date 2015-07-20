@@ -17,13 +17,12 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.output.table.xls.helper;
 
-import java.lang.reflect.Field;
-import java.lang.reflect.Modifier;
-
-import org.apache.poi.hssf.usermodel.HSSFPrintSetup;
 import org.apache.poi.ss.usermodel.PrintSetup;
 import org.pentaho.reporting.engine.classic.core.layout.model.PhysicalPageBox;
 import org.pentaho.reporting.engine.classic.core.util.PageSize;
+
+import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
 
 /**
  * Performs all steps to setup the printer page of an excel sheet.
@@ -33,241 +32,239 @@ import org.pentaho.reporting.engine.classic.core.util.PageSize;
  *
  * @author user
  */
-public final class ExcelPrintSetupFactory
-{
+public final class ExcelPrintSetupFactory {
   /**
    * A standard page format mapping for excel.
    */
   public static final ExcelPageDefinition LETTER = new ExcelPageDefinition
-      ((short) 1, PageSize.LETTER);
+    ( (short) 1, PageSize.LETTER );
 
   /**
    * A standard page format mapping for excel.
    */
   public static final ExcelPageDefinition LETTER_SMALL = new ExcelPageDefinition
-      ((short) 2, PageSize.LETTER_SMALL);
+    ( (short) 2, PageSize.LETTER_SMALL );
 
   /**
    * A standard page format mapping for excel.
    */
   public static final ExcelPageDefinition TABLOID = new ExcelPageDefinition
-      ((short) 3, PageSize.TABLOID);
+    ( (short) 3, PageSize.TABLOID );
 
   /**
    * A standard page format mapping for excel.
    */
   public static final ExcelPageDefinition LEDGER = new ExcelPageDefinition
-      ((short) 4, PageSize.LEDGER);
+    ( (short) 4, PageSize.LEDGER );
 
   /**
    * A standard page format mapping for excel.
    */
   public static final ExcelPageDefinition LEGAL = new ExcelPageDefinition
-      ((short) 5, PageSize.LEGAL);
+    ( (short) 5, PageSize.LEGAL );
 
   /**
    * A standard page format mapping for excel.
    */
   public static final ExcelPageDefinition STATEMENT = new ExcelPageDefinition
-      ((short) 6, PageSize.STATEMENT);
+    ( (short) 6, PageSize.STATEMENT );
 
   /**
    * A standard page format mapping for excel.
    */
   public static final ExcelPageDefinition EXECUTIVE = new ExcelPageDefinition
-      ((short) 7, PageSize.EXECUTIVE);
+    ( (short) 7, PageSize.EXECUTIVE );
 
   /**
    * A standard page format mapping for excel.
    */
   public static final ExcelPageDefinition A3 = new ExcelPageDefinition
-      ((short) 8, PageSize.A3);
+    ( (short) 8, PageSize.A3 );
 
   /**
    * A standard page format mapping for excel.
    */
   public static final ExcelPageDefinition A4 = new ExcelPageDefinition
-      ((short) 9, PageSize.A4);
+    ( (short) 9, PageSize.A4 );
 
   /**
    * A standard page format mapping for excel.
    */
   public static final ExcelPageDefinition A4_SMALL = new ExcelPageDefinition
-      ((short) 10, PageSize.A4_SMALL);
+    ( (short) 10, PageSize.A4_SMALL );
 
   /**
    * A standard page format mapping for excel.
    */
   public static final ExcelPageDefinition A5 = new ExcelPageDefinition
-      ((short) 11, PageSize.A5);
+    ( (short) 11, PageSize.A5 );
 
   /**
    * A standard page format mapping for excel.
    */
   public static final ExcelPageDefinition B4 = new ExcelPageDefinition
-      ((short) 12, PageSize.B4);
+    ( (short) 12, PageSize.B4 );
 
   /**
    * A standard page format mapping for excel.
    */
   public static final ExcelPageDefinition B5 = new ExcelPageDefinition
-      ((short) 13, PageSize.B5);
+    ( (short) 13, PageSize.B5 );
 
   /**
    * A standard page format mapping for excel.
    */
   public static final ExcelPageDefinition FOLIO = new ExcelPageDefinition
-      ((short) 14, PageSize.FOLIO);
+    ( (short) 14, PageSize.FOLIO );
 
   /**
    * A standard page format mapping for excel.
    */
   public static final ExcelPageDefinition QUARTO = new ExcelPageDefinition
-      ((short) 15, PageSize.QUARTO);
+    ( (short) 15, PageSize.QUARTO );
 
   /**
    * A standard page format mapping for excel.
    */
   public static final ExcelPageDefinition PAPER10X14 = new ExcelPageDefinition
-      ((short) 16, PageSize.PAPER10X14);
+    ( (short) 16, PageSize.PAPER10X14 );
 
   /**
    * A standard page format mapping for excel.
    */
   public static final ExcelPageDefinition PAPER11X17 = new ExcelPageDefinition
-      ((short) 17, PageSize.PAPER11X17);
+    ( (short) 17, PageSize.PAPER11X17 );
 
   /**
    * A standard page format mapping for excel.
    */
   public static final ExcelPageDefinition NOTE = new ExcelPageDefinition
-      ((short) 18, PageSize.NOTE);
+    ( (short) 18, PageSize.NOTE );
 
   /**
    * A standard page format mapping for excel.
    */
   public static final ExcelPageDefinition ENV9 = new ExcelPageDefinition
-      ((short) 19, PageSize.ENV9);
+    ( (short) 19, PageSize.ENV9 );
 
   /**
    * A standard page format mapping for excel.
    */
   public static final ExcelPageDefinition ENV10 = new ExcelPageDefinition
-      ((short) 20, PageSize.ENV10);
+    ( (short) 20, PageSize.ENV10 );
 
   /**
    * A standard page format mapping for excel.
    */
   public static final ExcelPageDefinition ENV11 = new ExcelPageDefinition
-      ((short) 21, PageSize.ENV11);
+    ( (short) 21, PageSize.ENV11 );
 
   /**
    * A standard page format mapping for excel.
    */
   public static final ExcelPageDefinition ENV12 = new ExcelPageDefinition
-      ((short) 22, PageSize.ENV12);
+    ( (short) 22, PageSize.ENV12 );
 
   /**
    * A standard page format mapping for excel.
    */
   public static final ExcelPageDefinition ENV14 = new ExcelPageDefinition
-      ((short) 23, PageSize.ENV14);
+    ( (short) 23, PageSize.ENV14 );
 
   /**
    * A standard page format mapping for excel.
    */
   public static final ExcelPageDefinition ENVDL = new ExcelPageDefinition
-      ((short) 27, PageSize.ENVDL);
+    ( (short) 27, PageSize.ENVDL );
 
   /**
    * A standard page format mapping for excel.
    */
   public static final ExcelPageDefinition ENVC5 = new ExcelPageDefinition
-      ((short) 28, PageSize.ENVC5);
+    ( (short) 28, PageSize.ENVC5 );
 
   /**
    * A standard page format mapping for excel.
    */
   public static final ExcelPageDefinition ENVC3 = new ExcelPageDefinition
-      ((short) 29, PageSize.ENVC3);
+    ( (short) 29, PageSize.ENVC3 );
 
   /**
    * A standard page format mapping for excel.
    */
   public static final ExcelPageDefinition ENVC4 = new ExcelPageDefinition
-      ((short) 30, PageSize.ENVC4);
+    ( (short) 30, PageSize.ENVC4 );
 
   /**
    * A standard page format mapping for excel.
    */
   public static final ExcelPageDefinition ENVC6 = new ExcelPageDefinition
-      ((short) 31, PageSize.ENVC6);
+    ( (short) 31, PageSize.ENVC6 );
 
   /**
    * A standard page format mapping for excel.
    */
   public static final ExcelPageDefinition ENVC65 = new ExcelPageDefinition
-      ((short) 32, PageSize.ENVC65);
+    ( (short) 32, PageSize.ENVC65 );
 
   /**
    * A standard page format mapping for excel.
    */
   public static final ExcelPageDefinition ENVISOB4 = new ExcelPageDefinition
-      ((short) 33, PageSize.ENVISOB4);
+    ( (short) 33, PageSize.ENVISOB4 );
 
   /**
    * A standard page format mapping for excel.
    */
   public static final ExcelPageDefinition ENVB5 = new ExcelPageDefinition
-      ((short) 34, PageSize.ENVISOB5);
+    ( (short) 34, PageSize.ENVISOB5 );
 
   /**
    * A standard page format mapping for excel.
    */
   public static final ExcelPageDefinition ENVB6 = new ExcelPageDefinition
-      ((short) 35, PageSize.ENVISOB6);
+    ( (short) 35, PageSize.ENVISOB6 );
 
   /**
    * A standard page format mapping for excel.
    */
   public static final ExcelPageDefinition ENVELOPE = new ExcelPageDefinition
-      ((short) 36, PageSize.ENVELOPE);
+    ( (short) 36, PageSize.ENVELOPE );
 
   /**
    * A standard page format mapping for excel.
    */
   public static final ExcelPageDefinition ENVMONARCH = new ExcelPageDefinition
-      ((short) 37, PageSize.ENVMONARCH);
+    ( (short) 37, PageSize.ENVMONARCH );
 
   /**
    * A standard page format mapping for excel.
    */
   public static final ExcelPageDefinition ENVPERSONAL = new ExcelPageDefinition// envelope 6 3/4
-      ((short) 38, PageSize.ENVPERSONAL);
+    ( (short) 38, PageSize.ENVPERSONAL );
 
   /**
    * A standard page format mapping for excel.
    */
   public static final ExcelPageDefinition FANFOLDUS = new ExcelPageDefinition
-      ((short) 39, PageSize.FANFOLDUS);
+    ( (short) 39, PageSize.FANFOLDUS );
 
   /**
    * A standard page format mapping for excel.
    */
   public static final ExcelPageDefinition FANFOLDGERMAN = new ExcelPageDefinition
-      ((short) 40, PageSize.FANFOLDGERMAN);
+    ( (short) 40, PageSize.FANFOLDGERMAN );
 
   /**
    * A standard page format mapping for excel.
    */
   public static final ExcelPageDefinition FANFOLDGERMANLEGAL = new ExcelPageDefinition
-      ((short) 41, PageSize.FANFOLDGERMANLEGAL);
+    ( (short) 41, PageSize.FANFOLDGERMANLEGAL );
 
   /**
    * Default Constructor.
    */
-  private ExcelPrintSetupFactory()
-  {
+  private ExcelPrintSetupFactory() {
   }
 
   /**
@@ -278,28 +275,22 @@ public final class ExcelPrintSetupFactory
    * @param paperdef         the excel paper size property (may be null).
    * @param paperOrientation the paper orientation, either "Landscape" or "Portrait"
    */
-  public static void performPageSetup(final PrintSetup printSetup,
-                                      final PhysicalPageBox pageformat,
-                                      final String paperdef,
-                                      final String paperOrientation)
-  {
-    short pageCode = ExcelPrintSetupFactory.parsePaperSizeProperty(paperdef);
-    if (pageCode == -1)
-    {
-      pageCode = ExcelPrintSetupFactory.computePaperSize(pageformat);
+  public static void performPageSetup( final PrintSetup printSetup,
+                                       final PhysicalPageBox pageformat,
+                                       final String paperdef,
+                                       final String paperOrientation ) {
+    short pageCode = ExcelPrintSetupFactory.parsePaperSizeProperty( paperdef );
+    if ( pageCode == -1 ) {
+      pageCode = ExcelPrintSetupFactory.computePaperSize( pageformat );
     }
-    if (pageCode != -1)
-    {
-      printSetup.setPaperSize(pageCode);
+    if ( pageCode != -1 ) {
+      printSetup.setPaperSize( pageCode );
     }
-    if (paperOrientation != null && paperOrientation.equals("auto") == false)
-    {
-      printSetup.setLandscape("Landscape".equalsIgnoreCase(paperOrientation));
-    }
-    else
-    {
+    if ( paperOrientation != null && paperOrientation.equals( "auto" ) == false ) {
+      printSetup.setLandscape( "Landscape".equalsIgnoreCase( paperOrientation ) );
+    } else {
       final boolean landscape = pageformat.getWidth() > pageformat.getHeight();
-      printSetup.setLandscape(landscape);
+      printSetup.setLandscape( landscape );
     }
   }
 
@@ -312,53 +303,41 @@ public final class ExcelPrintSetupFactory
    * @param format the page format
    * @return the computed paper size or -1 if no paper size matches the requirements
    */
-  private static short computePaperSize(final PhysicalPageBox format)
-  {
+  private static short computePaperSize( final PhysicalPageBox format ) {
     ExcelPageDefinition pageDef = null;
     final int width = (int) format.getWidth();
     final int height = (int) format.getHeight();
     int delta = -1;
 
     final Field[] fields = ExcelPrintSetupFactory.class.getDeclaredFields();
-    for (int i = 0; i < fields.length; i++)
-    {
-      final Field field = fields[i];
-      if (ExcelPageDefinition.class.isAssignableFrom(field.getType()) == false)
-      {
+    for ( int i = 0; i < fields.length; i++ ) {
+      final Field field = fields[ i ];
+      if ( ExcelPageDefinition.class.isAssignableFrom( field.getType() ) == false ) {
         // Log.debug ("Is no valid pageformat definition");
         continue;
       }
-      if (Modifier.isStatic(field.getModifiers()) == false)
-      {
+      if ( Modifier.isStatic( field.getModifiers() ) == false ) {
         // is no static field, who defined it here?
         continue;
       }
-      try
-      {
-        final ExcelPageDefinition pageformat = (ExcelPageDefinition) field.get(null);
-        if ((pageformat.getWidth() < width) || (pageformat.getHeight() < height))
-        {
+      try {
+        final ExcelPageDefinition pageformat = (ExcelPageDefinition) field.get( null );
+        if ( ( pageformat.getWidth() < width ) || ( pageformat.getHeight() < height ) ) {
           // paper is too small, ignore it
           continue;
         }
-        final int newDelta = (pageformat.getWidth() - width) + (pageformat.getHeight() - height);
-        if ((delta == -1) || (newDelta < delta))
-        {
+        final int newDelta = ( pageformat.getWidth() - width ) + ( pageformat.getHeight() - height );
+        if ( ( delta == -1 ) || ( newDelta < delta ) ) {
           pageDef = pageformat;
           delta = newDelta;
         }
-      }
-      catch (IllegalAccessException iae)
-      {
+      } catch ( IllegalAccessException iae ) {
         // ignore ..
       }
     }
-    if (pageDef == null)
-    {
+    if ( pageDef == null ) {
       return -1;
-    }
-    else
-    {
+    } else {
       return pageDef.getPageFormatCode();
     }
   }
@@ -370,31 +349,23 @@ public final class ExcelPrintSetupFactory
    * @param paper the paper constant for the excel page size.
    * @return the parsed HSSF paper size constant or -1 if undefined.
    */
-  private static short parsePaperSizeProperty(final String paper)
-  {
-    if (paper == null)
-    {
+  private static short parsePaperSizeProperty( final String paper ) {
+    if ( paper == null ) {
       return -1;
     }
-    try
-    {
-      final Field field = ExcelPrintSetupFactory.class.getDeclaredField(paper);
-      if (ExcelPageDefinition.class.isAssignableFrom(field.getType()) == false)
-      {
+    try {
+      final Field field = ExcelPrintSetupFactory.class.getDeclaredField( paper );
+      if ( ExcelPageDefinition.class.isAssignableFrom( field.getType() ) == false ) {
         // Log.debug ("Is no valid pageformat definition");
         return -1;
       }
-      final Object o = field.get(null);
+      final Object o = field.get( null );
       final ExcelPageDefinition pageformat = (ExcelPageDefinition) o;
       return pageformat.getPageFormatCode();
-    }
-    catch (NoSuchFieldException nfe)
-    {
+    } catch ( NoSuchFieldException nfe ) {
       // Log.debug ("There is no pageformat " + name + " defined.");
       return -1;
-    }
-    catch (IllegalAccessException aie)
-    {
+    } catch ( IllegalAccessException aie ) {
       // Log.debug ("There is no pageformat " + name + " accessible.");
       return -1;
     }

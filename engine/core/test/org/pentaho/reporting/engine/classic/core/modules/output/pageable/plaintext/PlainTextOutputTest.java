@@ -17,11 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.output.pageable.plaintext;
 
-import java.awt.Insets;
-import java.awt.geom.Point2D;
-import java.awt.print.PageFormat;
-import java.io.ByteArrayOutputStream;
-
 import junit.framework.TestCase;
 import org.pentaho.reporting.engine.classic.core.Band;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
@@ -49,124 +44,125 @@ import org.pentaho.reporting.libraries.fonts.monospace.MonospaceFontRegistry;
 import org.pentaho.reporting.libraries.fonts.registry.DefaultFontStorage;
 import org.pentaho.reporting.libraries.fonts.registry.FontMetrics;
 
-public class PlainTextOutputTest extends TestCase
-{
-  public static final String LONG_TEXT_LABEL = "Customer very concerned about the exact color of the models. There is high risk that he may dispute the order because there is a slight color mismatch";
+import java.awt.*;
+import java.awt.geom.Point2D;
+import java.awt.print.PageFormat;
+import java.io.ByteArrayOutputStream;
 
-  public PlainTextOutputTest()
-  {
+public class PlainTextOutputTest extends TestCase {
+  public static final String LONG_TEXT_LABEL =
+    "Customer very concerned about the exact color of the models. There is high risk that he may dispute the order "
+      + "because there is a slight color mismatch";
+
+  public PlainTextOutputTest() {
   }
 
-  public void setUp()
-  {
+  public void setUp() {
     ClassicEngineBoot.getInstance().start();
   }
 
-  public void testFontFactoryCaching()
-  {
-    assertEquals(72 * 1000 / 10, calculateFontMetrics(6, 10).getMaxHeight());
-    assertEquals(72 * 1000 / 6, calculateFontMetrics(6, 10).getCharWidth('m'));
-    assertEquals(72 * 1000 / 15, calculateFontMetrics(9, 15).getMaxHeight());
-    assertEquals(72 * 1000 / 9, calculateFontMetrics(9, 15).getCharWidth('m'));
+  public void testFontFactoryCaching() {
+    assertEquals( 72 * 1000 / 10, calculateFontMetrics( 6, 10 ).getMaxHeight() );
+    assertEquals( 72 * 1000 / 6, calculateFontMetrics( 6, 10 ).getCharWidth( 'm' ) );
+    assertEquals( 72 * 1000 / 15, calculateFontMetrics( 9, 15 ).getMaxHeight() );
+    assertEquals( 72 * 1000 / 9, calculateFontMetrics( 9, 15 ).getCharWidth( 'm' ) );
   }
 
-  private FontMetrics calculateFontMetrics(final int cpi, final int lpi)
-  {
-    final TextFilePrinterDriver pc = new TextFilePrinterDriver(new NullOutputStream(), cpi, lpi);
+  private FontMetrics calculateFontMetrics( final int cpi, final int lpi ) {
+    final TextFilePrinterDriver pc = new TextFilePrinterDriver( new NullOutputStream(), cpi, lpi );
     final PageableTextOutputProcessor outputProcessor =
-        new PageableTextOutputProcessor(pc, ClassicEngineBoot.getInstance().getGlobalConfig());
-    outputProcessor.setEncoding("UTF-8");
+      new PageableTextOutputProcessor( pc, ClassicEngineBoot.getInstance().getGlobalConfig() );
+    outputProcessor.setEncoding( "UTF-8" );
 
-    return outputProcessor.getMetaData().getFontMetrics(ElementDefaultStyleSheet.getDefaultStyle());
+    return outputProcessor.getMetaData().getFontMetrics( ElementDefaultStyleSheet.getDefaultStyle() );
   }
 
-  public void testElementSizes() throws Exception
-  {
-    final MasterReport report = createStandardReport(LONG_TEXT_LABEL);
-    final LogicalPageBox pageBox = DebugReportRunner.layoutSingleBand(report, report.getPageHeader(),
-        new DefaultFontStorage(new MonospaceFontRegistry(10, 6)), false);
+  public void testElementSizes() throws Exception {
+    final MasterReport report = createStandardReport( LONG_TEXT_LABEL );
+    final LogicalPageBox pageBox = DebugReportRunner.layoutSingleBand( report, report.getPageHeader(),
+      new DefaultFontStorage( new MonospaceFontRegistry( 10, 6 ) ), false );
 
-    final RenderBox labelElement = (RenderBox) MatchFactory.findElementByName(pageBox, "LabelElement");
-    assertEquals(StrictGeomUtility.toInternalValue(26), labelElement.getHeight());
-    assertEquals(StrictGeomUtility.toInternalValue(4), labelElement.getY());
+    final RenderBox labelElement = (RenderBox) MatchFactory.findElementByName( pageBox, "LabelElement" );
+    assertEquals( StrictGeomUtility.toInternalValue( 26 ), labelElement.getHeight() );
+    assertEquals( StrictGeomUtility.toInternalValue( 4 ), labelElement.getY() );
 
     // next block: Assert that all lines are properly aligned and not overlapping.
     long expectedY = labelElement.getY();
     RenderNode lineBox = labelElement.getFirstChild();
-    assertNotNull(lineBox);
-    while (lineBox != null)
-    {
+    assertNotNull( lineBox );
+    while ( lineBox != null ) {
       // 10 lines per inch (1 inch == 72 point) makes each line 7.2 point in height.
-      assertEquals(StrictGeomUtility.toInternalValue(72/10f), lineBox.getHeight());
-      assertEquals(expectedY, lineBox.getY());
+      assertEquals( StrictGeomUtility.toInternalValue( 72 / 10f ), lineBox.getHeight() );
+      assertEquals( expectedY, lineBox.getY() );
       expectedY += lineBox.getHeight();
       lineBox = lineBox.getNext();
     }
   }
 
-  public void testTextExport() throws Exception
-  {
+  public void testTextExport() throws Exception {
     final int lpi = 10;
     final int cpi = 6;
 
-    final MasterReport report = createStandardReport(LONG_TEXT_LABEL);
-    report.getReportConfiguration().setConfigProperty(ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY, "false");
-    final LogicalPageBox pageBox = DebugReportRunner.layoutSingleBand(report, report.getPageHeader(),
-        new DefaultFontStorage(new MonospaceFontRegistry(lpi, cpi)), false);
+    final MasterReport report = createStandardReport( LONG_TEXT_LABEL );
+    report.getReportConfiguration()
+      .setConfigProperty( ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY, "false" );
+    final LogicalPageBox pageBox = DebugReportRunner.layoutSingleBand( report, report.getPageHeader(),
+      new DefaultFontStorage( new MonospaceFontRegistry( lpi, cpi ) ), false );
 
 
     final ByteArrayOutputStream out = new ByteArrayOutputStream();
-    final TextFilePrinterDriver pc = new TextFilePrinterDriver(out, cpi, lpi);
-    final PageableTextOutputProcessor outputProcessor = new PageableTextOutputProcessor(pc, report.getConfiguration());
+    final TextFilePrinterDriver pc = new TextFilePrinterDriver( out, cpi, lpi );
+    final PageableTextOutputProcessor outputProcessor =
+      new PageableTextOutputProcessor( pc, report.getConfiguration() );
     OutputProcessorMetaData metaData = outputProcessor.getMetaData();
-    metaData.initialize(report.getConfiguration());
-    final TextDocumentWriter writer = new TextDocumentWriter(metaData, pc, "ISO-8859-1");
+    metaData.initialize( report.getConfiguration() );
+    final TextDocumentWriter writer = new TextDocumentWriter( metaData, pc, "ISO-8859-1" );
     writer.open();
-    writer.processPhysicalPage(pageBox.getPageGrid(), pageBox, 0, 0, null);
+    writer.processPhysicalPage( pageBox.getPageGrid(), pageBox, 0, 0, null );
     writer.close();
 
     final StyleSheet style = pageBox.getStyleSheet();
-    final String ellipse = (String)style.getStyleProperty(TextStyleKeys.RESERVED_LITERAL, null);
-    final String truncatedString = out.toString("ISO-8859-1").trim().replaceAll("[\\t\\n\\r|(  )+]+", " ");
-    assertTrue(truncatedString.startsWith("Customer"));
-    assertTrue(truncatedString.endsWith("slight " + ellipse));
+    final String ellipse = (String) style.getStyleProperty( TextStyleKeys.RESERVED_LITERAL, null );
+    final String truncatedString = out.toString( "ISO-8859-1" ).trim().replaceAll( "[\\t\\n\\r|(  )+]+", " " );
+    assertTrue( truncatedString.startsWith( "Customer" ) );
+    assertTrue( truncatedString.endsWith( "slight " + ellipse ) );
   }
 
 
-  public void testExportWithLabel() throws Exception
-  {
-    final MasterReport report = createStandardReport(LONG_TEXT_LABEL);
+  public void testExportWithLabel() throws Exception {
+    final MasterReport report = createStandardReport( LONG_TEXT_LABEL );
 
     final ByteArrayOutputStream bo = new ByteArrayOutputStream();
-    PlainTextReportUtil.createPlainText(report, bo, 10, 6);
+    PlainTextReportUtil.createPlainText( report, bo, 10, 6 );
     final byte[] data = bo.toByteArray();
 
-    assertEquals(LONG_TEXT_LABEL, new String(data).trim().replaceAll("[\\t\\n\\r|(  )+]+", " "));
+    assertEquals( LONG_TEXT_LABEL, new String( data ).trim().replaceAll( "[\\t\\n\\r|(  )+]+", " " ) );
   }
 
 
-  private MasterReport createStandardReport(final String longTextLabel)
-  {
+  private MasterReport createStandardReport( final String longTextLabel ) {
     final MasterReport report = new MasterReport();
-    report.setPageDefinition(new SimplePageDefinition(PageSize.A4,  PageFormat.LANDSCAPE, new Insets(72, 72, 72, 72)));
-    report.setCompatibilityLevel(null);
-    report.getReportConfiguration().setConfigProperty(ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY, "false");
+    report
+      .setPageDefinition( new SimplePageDefinition( PageSize.A4, PageFormat.LANDSCAPE, new Insets( 72, 72, 72, 72 ) ) );
+    report.setCompatibilityLevel( null );
+    report.getReportConfiguration()
+      .setConfigProperty( ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY, "false" );
 
     final Band pageHeader = report.getPageHeader();
     final LabelElementFactory labelFactory = new LabelElementFactory();
-    labelFactory.setName("LabelElement");
-    labelFactory.setText(longTextLabel);
-    labelFactory.setFontName("Serif");
-    labelFactory.setFontSize(new Integer(10));
-    labelFactory.setBold(Boolean.FALSE);
-    labelFactory.setHeight(26.0F);
-    labelFactory.setWidth(568.0F);
-    labelFactory.setWrap(TextWrap.WRAP);
-    labelFactory.setAbsolutePosition(new Point2D.Double(2.0, 4.0));
-    labelFactory.setHorizontalAlignment(ElementAlignment.LEFT);
-    labelFactory.setVerticalAlignment(ElementAlignment.TOP);
+    labelFactory.setName( "LabelElement" );
+    labelFactory.setText( longTextLabel );
+    labelFactory.setFontName( "Serif" );
+    labelFactory.setFontSize( new Integer( 10 ) );
+    labelFactory.setBold( Boolean.FALSE );
+    labelFactory.setHeight( 26.0F );
+    labelFactory.setWidth( 568.0F );
+    labelFactory.setWrap( TextWrap.WRAP );
+    labelFactory.setAbsolutePosition( new Point2D.Double( 2.0, 4.0 ) );
+    labelFactory.setHorizontalAlignment( ElementAlignment.LEFT );
+    labelFactory.setVerticalAlignment( ElementAlignment.TOP );
     final Element labelElement = labelFactory.createElement();
-    pageHeader.addElement(labelElement);
+    pageHeader.addElement( labelElement );
     return report;
   }
 }

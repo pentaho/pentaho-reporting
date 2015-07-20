@@ -24,8 +24,7 @@ package org.pentaho.reporting.engine.classic.core.layout.output;
  *
  * @author Thomas Morgner
  */
-public interface LayoutPagebreakHandler
-{
+public interface LayoutPagebreakHandler {
   public void pageFinished();
 
   public void pageStarted();

@@ -27,86 +27,68 @@ import org.pentaho.reporting.engine.classic.core.layout.model.RenderNode;
  *
  * @author Thomas Morgner
  */
-public final class CacheBoxShifter
-{
-  private CacheBoxShifter()
-  {
+public final class CacheBoxShifter {
+  private CacheBoxShifter() {
   }
 
 
-  public static void shiftBox(final RenderNode box, final long amount)
-  {
-    if (amount == 0)
-    {
+  public static void shiftBox( final RenderNode box, final long amount ) {
+    if ( amount == 0 ) {
       return;
     }
-    if (amount < 0)
-    {
-      throw new IllegalArgumentException("Cannot shift upwards: " + amount);
+    if ( amount < 0 ) {
+      throw new IllegalArgumentException( "Cannot shift upwards: " + amount );
     }
 
-    box.shiftCached(amount);
-    if ((box.getNodeType() & LayoutNodeTypes.MASK_BOX) == LayoutNodeTypes.MASK_BOX)
-    {
-      CacheBoxShifter.shiftBoxInternal((RenderBox) box, amount);
+    box.shiftCached( amount );
+    if ( ( box.getNodeType() & LayoutNodeTypes.MASK_BOX ) == LayoutNodeTypes.MASK_BOX ) {
+      CacheBoxShifter.shiftBoxInternal( (RenderBox) box, amount );
     }
   }
 
-  public static void shiftBoxUnchecked(final RenderNode box, final long amount)
-  {
-    if (amount == 0)
-    {
+  public static void shiftBoxUnchecked( final RenderNode box, final long amount ) {
+    if ( amount == 0 ) {
       return;
     }
 
-    box.shiftCached(amount);
-    if ((box.getNodeType() & LayoutNodeTypes.MASK_BOX) == LayoutNodeTypes.MASK_BOX)
-    {
-      CacheBoxShifter.shiftBoxInternal((RenderBox) box, amount);
+    box.shiftCached( amount );
+    if ( ( box.getNodeType() & LayoutNodeTypes.MASK_BOX ) == LayoutNodeTypes.MASK_BOX ) {
+      CacheBoxShifter.shiftBoxInternal( (RenderBox) box, amount );
     }
   }
 
-  public static void shiftBoxChilds(final RenderBox box, final long amount)
-  {
-    if (amount == 0)
-    {
+  public static void shiftBoxChilds( final RenderBox box, final long amount ) {
+    if ( amount == 0 ) {
       return;
     }
-    CacheBoxShifter.shiftBoxInternal(box, amount);
+    CacheBoxShifter.shiftBoxInternal( box, amount );
   }
 
-  private static void shiftBoxInternal(final RenderBox box, final long amount)
-  {
+  private static void shiftBoxInternal( final RenderBox box, final long amount ) {
     RenderNode node = box.getFirstChild();
-    while (node != null)
-    {
-      node.shiftCached(amount);
-      if ((node.getNodeType() & LayoutNodeTypes.MASK_BOX) == LayoutNodeTypes.MASK_BOX)
-      {
-        CacheBoxShifter.shiftBoxInternal((RenderBox) node, amount);
+    while ( node != null ) {
+      node.shiftCached( amount );
+      if ( ( node.getNodeType() & LayoutNodeTypes.MASK_BOX ) == LayoutNodeTypes.MASK_BOX ) {
+        CacheBoxShifter.shiftBoxInternal( (RenderBox) node, amount );
       }
       node = node.getNext();
     }
   }
 
 
-  public static void extendHeight(final RenderNode node, final long amount)
-  {
-    if (amount < 0)
-    {
-      throw new IllegalArgumentException("Cannot shrink elements.");
+  public static void extendHeight( final RenderNode node, final long amount ) {
+    if ( amount < 0 ) {
+      throw new IllegalArgumentException( "Cannot shrink elements." );
     }
-    if (node == null || amount == 0)
-    {
+    if ( node == null || amount == 0 ) {
       return;
     }
 
-    node.setCachedHeight(node.getCachedHeight() + amount);
+    node.setCachedHeight( node.getCachedHeight() + amount );
 
     RenderBox parent = node.getParent();
-    while (parent != null)
-    {
-      parent.setCachedHeight(parent.getCachedHeight() + amount);
+    while ( parent != null ) {
+      parent.setCachedHeight( parent.getCachedHeight() + amount );
       parent = parent.getParent();
     }
   }

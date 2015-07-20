@@ -17,24 +17,22 @@
 
 package org.pentaho.reporting.engine.classic.core.metadata.parser;
 
-import java.util.ArrayList;
-
 import org.pentaho.reporting.libraries.xmlns.parser.AbstractXmlReadHandler;
 import org.pentaho.reporting.libraries.xmlns.parser.ParseException;
 import org.pentaho.reporting.libraries.xmlns.parser.XmlReadHandler;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 
-public class AttributeGroupReadHandler extends AbstractXmlReadHandler
-{
+import java.util.ArrayList;
+
+public class AttributeGroupReadHandler extends AbstractXmlReadHandler {
   private ArrayList<AttributeReadHandler> attributeHandlers;
   private String name;
   private GlobalMetaDefinition attributeGroups;
   private AttributeGroup attributeGroup;
   private String bundle;
 
-  public AttributeGroupReadHandler(final GlobalMetaDefinition attributeGroups)
-  {
+  public AttributeGroupReadHandler( final GlobalMetaDefinition attributeGroups ) {
     this.attributeGroups = attributeGroups;
     this.attributeHandlers = new ArrayList<AttributeReadHandler>();
   }
@@ -45,15 +43,13 @@ public class AttributeGroupReadHandler extends AbstractXmlReadHandler
    * @param attrs the attributes.
    * @throws SAXException if there is a parsing error.
    */
-  protected void startParsing(final Attributes attrs) throws SAXException
-  {
-    name = attrs.getValue(getUri(), "name");
-    if (name == null)
-    {
-      throw new ParseException("Attribute 'name' is undefined", getLocator());
+  protected void startParsing( final Attributes attrs ) throws SAXException {
+    name = attrs.getValue( getUri(), "name" );
+    if ( name == null ) {
+      throw new ParseException( "Attribute 'name' is undefined", getLocator() );
     }
 
-    bundle = attrs.getValue(getUri(), "bundle-name");
+    bundle = attrs.getValue( getUri(), "bundle-name" );
   }
 
   /**
@@ -65,18 +61,15 @@ public class AttributeGroupReadHandler extends AbstractXmlReadHandler
    * @return the handler or null, if the tagname is invalid.
    * @throws SAXException if there is a parsing error.
    */
-  protected XmlReadHandler getHandlerForChild(final String uri,
-                                              final String tagName,
-                                              final Attributes atts) throws SAXException
-  {
-    if (getUri().equals(uri) == false)
-    {
+  protected XmlReadHandler getHandlerForChild( final String uri,
+                                               final String tagName,
+                                               final Attributes atts ) throws SAXException {
+    if ( getUri().equals( uri ) == false ) {
       return null;
     }
-    if ("attribute".equals(tagName))
-    {
-      final AttributeReadHandler handler = new AttributeReadHandler(bundle, "");
-      attributeHandlers.add(handler);
+    if ( "attribute".equals( tagName ) ) {
+      final AttributeReadHandler handler = new AttributeReadHandler( bundle, "" );
+      attributeHandlers.add( handler );
       return handler;
     }
     return null;
@@ -87,17 +80,15 @@ public class AttributeGroupReadHandler extends AbstractXmlReadHandler
    *
    * @throws SAXException if there is a parsing error.
    */
-  protected void doneParsing() throws SAXException
-  {
+  protected void doneParsing() throws SAXException {
     final AttributeReadHandler[] attributes =
-        attributeHandlers.toArray(new AttributeReadHandler[attributeHandlers.size()]);
-    final AttributeDefinition[] definitions = new AttributeDefinition[attributeHandlers.size()];
-    for (int i = 0; i < attributes.length; i++)
-    {
-      definitions[i] = attributes[i].getObject();
+      attributeHandlers.toArray( new AttributeReadHandler[ attributeHandlers.size() ] );
+    final AttributeDefinition[] definitions = new AttributeDefinition[ attributeHandlers.size() ];
+    for ( int i = 0; i < attributes.length; i++ ) {
+      definitions[ i ] = attributes[ i ].getObject();
     }
-    attributeGroup = new AttributeGroup(name, definitions);
-    attributeGroups.addAttributeGroup(attributeGroup);
+    attributeGroup = new AttributeGroup( name, definitions );
+    attributeGroups.addAttributeGroup( attributeGroup );
   }
 
   /**
@@ -106,8 +97,7 @@ public class AttributeGroupReadHandler extends AbstractXmlReadHandler
    * @return the object.
    * @throws SAXException if an parser error occured.
    */
-  public Object getObject() throws SAXException
-  {
+  public Object getObject() throws SAXException {
     return attributeGroup;
   }
 }

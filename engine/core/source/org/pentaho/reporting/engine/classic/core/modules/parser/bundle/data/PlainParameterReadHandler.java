@@ -20,21 +20,18 @@ package org.pentaho.reporting.engine.classic.core.modules.parser.bundle.data;
 import org.pentaho.reporting.engine.classic.core.parameters.PlainParameter;
 import org.xml.sax.SAXException;
 
-public class PlainParameterReadHandler extends AbstractParameterReadHandler
-{
+public class PlainParameterReadHandler extends AbstractParameterReadHandler {
   private PlainParameter result;
 
-  public PlainParameterReadHandler()
-  {
+  public PlainParameterReadHandler() {
   }
 
-  protected void doneParsing() throws SAXException
-  {
-    result = new PlainParameter(getName(), getType());
-    result.setMandatory(isMandatory());
-    result.setDefaultValue(getDefaultValue());
+  protected void doneParsing() throws SAXException {
+    result = new PlainParameter( getName(), getType() );
+    result.setMandatory( isMandatory() );
+    result.setDefaultValue( getDefaultValue() );
 
-    applyAttributes(result);
+    applyAttributes( result );
   }
 
   /**
@@ -43,8 +40,7 @@ public class PlainParameterReadHandler extends AbstractParameterReadHandler
    * @return the object.
    * @throws SAXException if an parser error occured.
    */
-  public Object getObject() throws SAXException
-  {
+  public Object getObject() throws SAXException {
     return result;
   }
 }

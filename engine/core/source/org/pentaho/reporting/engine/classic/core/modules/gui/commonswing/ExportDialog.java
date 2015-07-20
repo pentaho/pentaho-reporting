@@ -24,8 +24,7 @@ import org.pentaho.reporting.engine.classic.core.MasterReport;
  *
  * @author Thomas Morgner
  */
-public interface ExportDialog
-{
-  public boolean performQueryForExport(final MasterReport reportJob,
-                                       final SwingGuiContext guiContext);
+public interface ExportDialog {
+  public boolean performQueryForExport( final MasterReport reportJob,
+                                        final SwingGuiContext guiContext );
 }

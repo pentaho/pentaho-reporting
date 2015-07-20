@@ -17,10 +17,10 @@
 
 package org.pentaho.reporting.engine.classic.core.util.beans;
 
+import java.sql.Date;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.sql.Date;
 import java.util.Locale;
 
 /**
@@ -28,45 +28,35 @@ import java.util.Locale;
  *
  * @author Thomas Morgner
  */
-public class SQLDateValueConverter implements ValueConverter
-{
+public class SQLDateValueConverter implements ValueConverter {
   private SimpleDateFormat dateFormat;
 
-  public SQLDateValueConverter()
-  {
-    dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ", Locale.US);
-    dateFormat.setLenient(false);
+  public SQLDateValueConverter() {
+    dateFormat = new SimpleDateFormat( "yyyy-MM-dd'T'HH:mm:ss.SSSZ", Locale.US );
+    dateFormat.setLenient( false );
   }
 
-  public String toAttributeValue(final Object o) throws BeanException
-  {
-    if (o == null)
-    {
+  public String toAttributeValue( final Object o ) throws BeanException {
+    if ( o == null ) {
       throw new NullPointerException();
     }
-    if (o instanceof Date == false)
-    {
-      throw new BeanException("Failed to convert object of type " + o.getClass() + ": Not a SQL-Date.");
+    if ( o instanceof Date == false ) {
+      throw new BeanException( "Failed to convert object of type " + o.getClass() + ": Not a SQL-Date." );
     }
     final DateFormat format = (DateFormat) dateFormat.clone();
-    return format.format((Date) o);
+    return format.format( (Date) o );
   }
 
-  public Object toPropertyValue(final String s) throws BeanException
-  {
-    if (s == null)
-    {
+  public Object toPropertyValue( final String s ) throws BeanException {
+    if ( s == null ) {
       throw new NullPointerException();
     }
-    try
-    {
+    try {
       final DateFormat format = (DateFormat) dateFormat.clone();
-      final java.util.Date date = format.parse(s);
-      return new Date(date.getTime());
-    }
-    catch (ParseException e)
-    {
-      throw new BeanException("Not a parsable SQL-date");
+      final java.util.Date date = format.parse( s );
+      return new Date( date.getTime() );
+    } catch ( ParseException e ) {
+      throw new BeanException( "Not a parsable SQL-date" );
     }
   }
 }

@@ -17,30 +17,26 @@
 
 package org.pentaho.reporting.engine.classic.core.filter.types;
 
-import javax.swing.text.Document;
-
 import org.pentaho.reporting.engine.classic.core.AttributeNames;
 import org.pentaho.reporting.engine.classic.core.ReportElement;
 import org.pentaho.reporting.engine.classic.core.function.ExpressionRuntime;
 import org.pentaho.reporting.engine.classic.core.metadata.ElementType;
 
-public class TextFieldType extends AbstractElementType
-{
+import javax.swing.text.Document;
+
+public class TextFieldType extends AbstractElementType {
   public static final ElementType INSTANCE = new TextFieldType();
 
-  public TextFieldType()
-  {
-    super("text-field");
+  public TextFieldType() {
+    super( "text-field" );
   }
 
-  public Object getDesignValue(final ExpressionRuntime runtime, final ReportElement element)
-  {
-    final Object staticValue = ElementTypeUtils.queryStaticValue(element);
-    if (staticValue != null)
-    {
+  public Object getDesignValue( final ExpressionRuntime runtime, final ReportElement element ) {
+    final Object staticValue = ElementTypeUtils.queryStaticValue( element );
+    if ( staticValue != null ) {
       return staticValue;
     }
-    return ElementTypeUtils.queryFieldName(element);
+    return ElementTypeUtils.queryFieldName( element );
   }
 
   /**
@@ -51,27 +47,22 @@ public class TextFieldType extends AbstractElementType
    * @param element the element from which to read attribute.
    * @return the value.
    */
-  public Object getValue(final ExpressionRuntime runtime, final ReportElement element)
-  {
-    if (runtime == null)
-    {
-      throw new NullPointerException("Runtime must never be null.");
+  public Object getValue( final ExpressionRuntime runtime, final ReportElement element ) {
+    if ( runtime == null ) {
+      throw new NullPointerException( "Runtime must never be null." );
     }
-    if (element == null)
-    {
-      throw new NullPointerException("Element must never be null.");
+    if ( element == null ) {
+      throw new NullPointerException( "Element must never be null." );
     }
 
-    final Object o = ElementTypeUtils.queryFieldOrValue(runtime, element);
-    if (o instanceof Document)
-    {
+    final Object o = ElementTypeUtils.queryFieldOrValue( runtime, element );
+    if ( o instanceof Document ) {
       return o;
     }
 
-    final String retval = ElementTypeUtils.toString(o);
-    if (retval == null)
-    {
-      return element.getAttribute(AttributeNames.Core.NAMESPACE, AttributeNames.Core.NULL_VALUE);
+    final String retval = ElementTypeUtils.toString( o );
+    if ( retval == null ) {
+      return element.getAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.NULL_VALUE );
     }
     return retval;
   }

@@ -17,27 +17,25 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.misc.referencedoc;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Iterator;
-import javax.swing.table.AbstractTableModel;
-
 import org.pentaho.reporting.engine.classic.core.modules.parser.ext.factory.base.ObjectDescription;
 import org.pentaho.reporting.engine.classic.core.modules.parser.ext.factory.datasource.DataSourceCollector;
 import org.pentaho.reporting.engine.classic.core.modules.parser.ext.factory.datasource.DataSourceFactory;
+
+import javax.swing.table.AbstractTableModel;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Iterator;
 
 /**
  * A table model for the style key reference generator.
  *
  * @author Thomas Morgner
  */
-public class DataSourceReferenceTableModel extends AbstractTableModel
-{
+public class DataSourceReferenceTableModel extends AbstractTableModel {
   /**
    * Represents a row in the table model.
    */
-  private static class DataSourceDescriptionRow
-  {
+  private static class DataSourceDescriptionRow {
     /**
      * The factory.
      */
@@ -60,9 +58,8 @@ public class DataSourceReferenceTableModel extends AbstractTableModel
      * @param name              the name of the datasource within the factory.
      * @param implementingClass the class that implements the named datasource.
      */
-    private DataSourceDescriptionRow(final DataSourceFactory datasourceFactory,
-                                     final String name, final Class implementingClass)
-    {
+    private DataSourceDescriptionRow( final DataSourceFactory datasourceFactory,
+                                      final String name, final Class implementingClass ) {
       this.datasourceFactory = datasourceFactory;
       this.datasourceName = name;
       this.implementingClass = implementingClass;
@@ -73,8 +70,7 @@ public class DataSourceReferenceTableModel extends AbstractTableModel
      *
      * @return The factory.
      */
-    public DataSourceFactory getFactory()
-    {
+    public DataSourceFactory getFactory() {
       return datasourceFactory;
     }
 
@@ -83,8 +79,7 @@ public class DataSourceReferenceTableModel extends AbstractTableModel
      *
      * @return The datasource name.
      */
-    public String getName()
-    {
+    public String getName() {
       return datasourceName;
     }
 
@@ -93,8 +88,7 @@ public class DataSourceReferenceTableModel extends AbstractTableModel
      *
      * @return the datasource class.
      */
-    public Class getImplementingClass()
-    {
+    public Class getImplementingClass() {
       return implementingClass;
     }
   }
@@ -103,11 +97,11 @@ public class DataSourceReferenceTableModel extends AbstractTableModel
    * The column names.
    */
   private static final String[] COLUMN_NAMES =
-      {
-          "datasource-factory", //$NON-NLS-1$
-          "datasource-name", //$NON-NLS-1$
-          "datasource-class" //$NON-NLS-1$
-      };
+    {
+      "datasource-factory", //$NON-NLS-1$
+      "datasource-name", //$NON-NLS-1$
+      "datasource-class" //$NON-NLS-1$
+    };
 
   /**
    * Storage for the rows.
@@ -119,10 +113,9 @@ public class DataSourceReferenceTableModel extends AbstractTableModel
    *
    * @param cf the factory collection.
    */
-  public DataSourceReferenceTableModel(final DataSourceCollector cf)
-  {
+  public DataSourceReferenceTableModel( final DataSourceCollector cf ) {
     rows = new ArrayList();
-    addFactoryCollector(cf);
+    addFactoryCollector( cf );
   }
 
   /**
@@ -130,19 +123,14 @@ public class DataSourceReferenceTableModel extends AbstractTableModel
    *
    * @param cf the factory.
    */
-  private void addFactoryCollector(final DataSourceCollector cf)
-  {
+  private void addFactoryCollector( final DataSourceCollector cf ) {
     final Iterator it = cf.getFactories();
-    while (it.hasNext())
-    {
+    while ( it.hasNext() ) {
       final DataSourceFactory cfact = (DataSourceFactory) it.next();
-      if (cfact instanceof DataSourceCollector)
-      {
-        addFactoryCollector((DataSourceCollector) cfact);
-      }
-      else
-      {
-        addDataSourceFactory(cfact);
+      if ( cfact instanceof DataSourceCollector ) {
+        addFactoryCollector( (DataSourceCollector) cfact );
+      } else {
+        addDataSourceFactory( cfact );
       }
     }
   }
@@ -152,25 +140,22 @@ public class DataSourceReferenceTableModel extends AbstractTableModel
    *
    * @param cf the factory.
    */
-  private void addDataSourceFactory(final DataSourceFactory cf)
-  {
+  private void addDataSourceFactory( final DataSourceFactory cf ) {
     Iterator it = cf.getRegisteredNames();
     final ArrayList factories = new ArrayList();
 
-    while (it.hasNext())
-    {
+    while ( it.hasNext() ) {
       final String c = (String) it.next();
-      factories.add(c);
+      factories.add( c );
     }
 
-    Collections.sort(factories);
+    Collections.sort( factories );
     it = factories.iterator();
 
-    while (it.hasNext())
-    {
+    while ( it.hasNext() ) {
       final String keyName = (String) it.next();
-      final ObjectDescription od = cf.getDataSourceDescription(keyName);
-      rows.add(new DataSourceDescriptionRow(cf, keyName, od.getObjectClass()));
+      final ObjectDescription od = cf.getDataSourceDescription( keyName );
+      rows.add( new DataSourceDescriptionRow( cf, keyName, od.getObjectClass() ) );
     }
   }
 
@@ -181,8 +166,7 @@ public class DataSourceReferenceTableModel extends AbstractTableModel
    * @return the number of rows in the model
    * @see #getColumnCount
    */
-  public int getRowCount()
-  {
+  public int getRowCount() {
     return rows.size();
   }
 
@@ -193,8 +177,7 @@ public class DataSourceReferenceTableModel extends AbstractTableModel
    * @return the number of columns in the model
    * @see #getRowCount
    */
-  public int getColumnCount()
-  {
+  public int getColumnCount() {
     return DataSourceReferenceTableModel.COLUMN_NAMES.length;
   }
 
@@ -204,9 +187,8 @@ public class DataSourceReferenceTableModel extends AbstractTableModel
    * @param column the column being queried
    * @return a string containing the default name of <code>column</code>
    */
-  public String getColumnName(final int column)
-  {
-    return DataSourceReferenceTableModel.COLUMN_NAMES[column];
+  public String getColumnName( final int column ) {
+    return DataSourceReferenceTableModel.COLUMN_NAMES[ column ];
   }
 
   /**
@@ -215,8 +197,7 @@ public class DataSourceReferenceTableModel extends AbstractTableModel
    * @param columnIndex the column being queried
    * @return the Object.class
    */
-  public Class getColumnClass(final int columnIndex)
-  {
+  public Class getColumnClass( final int columnIndex ) {
     return String.class;
   }
 
@@ -227,17 +208,15 @@ public class DataSourceReferenceTableModel extends AbstractTableModel
    * @param columnIndex the column whose value is to be queried
    * @return the value Object at the specified cell
    */
-  public Object getValueAt(final int rowIndex, final int columnIndex)
-  {
-    final DataSourceDescriptionRow or = (DataSourceDescriptionRow) rows.get(rowIndex);
-    switch (columnIndex)
-    {
+  public Object getValueAt( final int rowIndex, final int columnIndex ) {
+    final DataSourceDescriptionRow or = (DataSourceDescriptionRow) rows.get( rowIndex );
+    switch( columnIndex ) {
       case 0:
-        return String.valueOf(or.getFactory().getClass().getName());
+        return String.valueOf( or.getFactory().getClass().getName() );
       case 1:
-        return String.valueOf(or.getName());
+        return String.valueOf( or.getName() );
       case 2:
-        return String.valueOf(or.getImplementingClass().getName());
+        return String.valueOf( or.getImplementingClass().getName() );
       default:
         return null;
     }

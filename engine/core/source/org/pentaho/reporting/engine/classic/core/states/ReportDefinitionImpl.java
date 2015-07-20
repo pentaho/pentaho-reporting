@@ -17,9 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.core.states;
 
-import java.util.Map;
-import java.util.Set;
-
 import org.pentaho.reporting.engine.classic.core.CrosstabCellBody;
 import org.pentaho.reporting.engine.classic.core.DetailsFooter;
 import org.pentaho.reporting.engine.classic.core.DetailsHeader;
@@ -45,6 +42,9 @@ import org.pentaho.reporting.engine.classic.core.filter.types.bands.MasterReport
 import org.pentaho.reporting.engine.classic.core.function.Expression;
 import org.pentaho.reporting.engine.classic.core.style.StyleKey;
 
+import java.util.Map;
+import java.util.Set;
+
 /**
  * A report definition. This the working copy of the JFreeReport object. This object is not serializable, as it is used
  * internally. This implementation is not intended to be known outside. Whatever you planned to do with it - dont do
@@ -54,8 +54,7 @@ import org.pentaho.reporting.engine.classic.core.style.StyleKey;
  *
  * @author Thomas Morgner.
  */
-public class ReportDefinitionImpl extends Section implements ReportDefinition
-{
+public class ReportDefinitionImpl extends Section implements ReportDefinition {
   /**
    * The report header band (if not null, printed once at the start of the report).
    */
@@ -98,88 +97,78 @@ public class ReportDefinitionImpl extends Section implements ReportDefinition
    * @param pageDefinition the current page definition.
    * @throws ReportProcessingException if there is a problem cloning.
    */
-  public ReportDefinitionImpl(final MasterReport report,
-                              final PageDefinition pageDefinition)
-      throws ReportProcessingException
-  {
-    super(report.getObjectID());
-    copyReport(report, pageDefinition);
+  public ReportDefinitionImpl( final MasterReport report,
+                               final PageDefinition pageDefinition )
+    throws ReportProcessingException {
+    super( report.getObjectID() );
+    copyReport( report, pageDefinition );
   }
 
-  public ReportDefinitionImpl(final SubReport report,
-                              final PageDefinition pageDefinition,
-                              final Section parentSection)
-      throws ReportProcessingException
-  {
-    super(report.getObjectID());
-    copyReport(report, pageDefinition);
-    setParent(parentSection);
+  public ReportDefinitionImpl( final SubReport report,
+                               final PageDefinition pageDefinition,
+                               final Section parentSection )
+    throws ReportProcessingException {
+    super( report.getObjectID() );
+    copyReport( report, pageDefinition );
+    setParent( parentSection );
   }
 
-  private void copyReport(final ReportDefinition report, final PageDefinition pageDefinition)
-  {
-    if (pageDefinition == null)
-    {
+  private void copyReport( final ReportDefinition report, final PageDefinition pageDefinition ) {
+    if ( pageDefinition == null ) {
       throw new NullPointerException();
     }
 
-    this.rootGroup = (Group) report.getRootGroup().derive(true);
-    this.reportFooter = (ReportFooter) report.getReportFooter().derive(true);
-    this.reportHeader = (ReportHeader) report.getReportHeader().derive(true);
-    this.pageFooter = (PageFooter) report.getPageFooter().derive(true);
-    this.pageHeader = (PageHeader) report.getPageHeader().derive(true);
-    this.watermark = (Watermark) report.getWatermark().derive(true);
+    this.rootGroup = (Group) report.getRootGroup().derive( true );
+    this.reportFooter = (ReportFooter) report.getReportFooter().derive( true );
+    this.reportHeader = (ReportHeader) report.getReportHeader().derive( true );
+    this.pageFooter = (PageFooter) report.getPageFooter().derive( true );
+    this.pageHeader = (PageHeader) report.getPageHeader().derive( true );
+    this.watermark = (Watermark) report.getWatermark().derive( true );
     this.pageDefinition = pageDefinition;
     this.query = report.getQuery();
 
-    copyAttributes(report.getAttributes());
+    copyAttributes( report.getAttributes() );
 
     final String[] attrExprNamespaces = report.getAttributeExpressionNamespaces();
-    for (int i = 0; i < attrExprNamespaces.length; i++)
-    {
-      final String namespace = attrExprNamespaces[i];
-      final String[] attributeNames = report.getAttributeExpressionNames(namespace);
-      for (int j = 0; j < attributeNames.length; j++)
-      {
-        final String name = attributeNames[j];
-        setAttributeExpression(namespace, name, report.getAttributeExpression(namespace, name));
+    for ( int i = 0; i < attrExprNamespaces.length; i++ ) {
+      final String namespace = attrExprNamespaces[ i ];
+      final String[] attributeNames = report.getAttributeExpressionNames( namespace );
+      for ( int j = 0; j < attributeNames.length; j++ ) {
+        final String name = attributeNames[ j ];
+        setAttributeExpression( namespace, name, report.getAttributeExpression( namespace, name ) );
       }
     }
 
-    getStyle().copyFrom(report.getStyle());
+    getStyle().copyFrom( report.getStyle() );
 
     final Set<Map.Entry<StyleKey, Expression>> styleExpressionEntries = report.getStyleExpressions().entrySet();
-    for (final Map.Entry<StyleKey, Expression> entry : styleExpressionEntries)
-    {
-      setStyleExpression(entry.getKey(), entry.getValue());
+    for ( final Map.Entry<StyleKey, Expression> entry : styleExpressionEntries ) {
+      setStyleExpression( entry.getKey(), entry.getValue() );
     }
 
-    registerAsChild(rootGroup);
-    registerAsChild(reportHeader);
-    registerAsChild(reportFooter);
-    registerAsChild(pageHeader);
-    registerAsChild(pageFooter);
-    registerAsChild(watermark);
+    registerAsChild( rootGroup );
+    registerAsChild( reportHeader );
+    registerAsChild( reportFooter );
+    registerAsChild( pageHeader );
+    registerAsChild( pageFooter );
+    registerAsChild( watermark );
 
     this.queryLimit = report.getQueryLimit();
     this.queryTimeout = report.getQueryTimeout();
 
-    setName(report.getName());
-    setChangeTracker(report.getChangeTracker());
+    setName( report.getName() );
+    setChangeTracker( report.getChangeTracker() );
   }
 
-  public int getQueryLimit()
-  {
+  public int getQueryLimit() {
     return queryLimit;
   }
 
-  public int getQueryTimeout()
-  {
+  public int getQueryTimeout() {
     return queryTimeout;
   }
 
-  public String getQuery()
-  {
+  public String getQuery() {
     return query;
   }
 
@@ -188,8 +177,7 @@ public class ReportDefinitionImpl extends Section implements ReportDefinition
    *
    * @return The report header.
    */
-  public ReportHeader getReportHeader()
-  {
+  public ReportHeader getReportHeader() {
     return reportHeader;
   }
 
@@ -198,8 +186,7 @@ public class ReportDefinitionImpl extends Section implements ReportDefinition
    *
    * @return The report footer.
    */
-  public ReportFooter getReportFooter()
-  {
+  public ReportFooter getReportFooter() {
     return reportFooter;
   }
 
@@ -208,8 +195,7 @@ public class ReportDefinitionImpl extends Section implements ReportDefinition
    *
    * @return The page header.
    */
-  public PageHeader getPageHeader()
-  {
+  public PageHeader getPageHeader() {
     return pageHeader;
   }
 
@@ -218,8 +204,7 @@ public class ReportDefinitionImpl extends Section implements ReportDefinition
    *
    * @return The page footer.
    */
-  public PageFooter getPageFooter()
-  {
+  public PageFooter getPageFooter() {
     return pageFooter;
   }
 
@@ -228,24 +213,20 @@ public class ReportDefinitionImpl extends Section implements ReportDefinition
    *
    * @return The item band.
    */
-  public ItemBand getItemBand()
-  {
+  public ItemBand getItemBand() {
     final Group group = getInnerMostGroup();
     final GroupBody body = group.getBody();
-    if (body instanceof GroupDataBody)
-    {
+    if ( body instanceof GroupDataBody ) {
       final GroupDataBody dataBody = (GroupDataBody) body;
       return dataBody.getItemBand();
     }
     return null;
   }
 
-  public CrosstabCellBody getCrosstabCellBody()
-  {
+  public CrosstabCellBody getCrosstabCellBody() {
     final Group group = getInnerMostGroup();
     final GroupBody body = group.getBody();
-    if (body instanceof CrosstabCellBody)
-    {
+    if ( body instanceof CrosstabCellBody ) {
       return (CrosstabCellBody) body;
     }
     return null;
@@ -256,12 +237,10 @@ public class ReportDefinitionImpl extends Section implements ReportDefinition
    *
    * @return The details header band.
    */
-  public DetailsHeader getDetailsHeader()
-  {
+  public DetailsHeader getDetailsHeader() {
     final Group group = getInnerMostGroup();
     final GroupBody body = group.getBody();
-    if (body instanceof GroupDataBody)
-    {
+    if ( body instanceof GroupDataBody ) {
       final GroupDataBody dataBody = (GroupDataBody) body;
       return dataBody.getDetailsHeader();
     }
@@ -273,47 +252,37 @@ public class ReportDefinitionImpl extends Section implements ReportDefinition
    *
    * @return The details header  band.
    */
-  public DetailsFooter getDetailsFooter()
-  {
+  public DetailsFooter getDetailsFooter() {
     final Group group = getInnerMostGroup();
     final GroupBody body = group.getBody();
-    if (body instanceof GroupDataBody)
-    {
+    if ( body instanceof GroupDataBody ) {
       final GroupDataBody dataBody = (GroupDataBody) body;
       return dataBody.getDetailsFooter();
     }
     return null;
   }
 
-  public Group getRootGroup()
-  {
+  public Group getRootGroup() {
     return rootGroup;
   }
 
-  private Group getInnerMostGroup()
-  {
+  private Group getInnerMostGroup() {
     Group existingGroup = rootGroup;
     GroupBody gb = existingGroup.getBody();
-    while (gb != null)
-    {
+    while ( gb != null ) {
       final int count = gb.getElementCount();
       GroupBody locatedBody = null;
-      for (int i = 0; i < count; i++)
-      {
-        final ReportElement element = gb.getElement(i);
-        if (element instanceof Group)
-        {
+      for ( int i = 0; i < count; i++ ) {
+        final ReportElement element = gb.getElement( i );
+        if ( element instanceof Group ) {
           existingGroup = (Group) element;
           locatedBody = existingGroup.getBody();
           break;
         }
       }
-      if (locatedBody == null)
-      {
+      if ( locatedBody == null ) {
         gb = null;
-      }
-      else
-      {
+      } else {
         gb = locatedBody;
       }
     }
@@ -325,12 +294,10 @@ public class ReportDefinitionImpl extends Section implements ReportDefinition
    *
    * @return The no-data band.
    */
-  public NoDataBand getNoDataBand()
-  {
+  public NoDataBand getNoDataBand() {
     final Group group = getInnerMostGroup();
     final GroupBody body = group.getBody();
-    if (body instanceof GroupDataBody)
-    {
+    if ( body instanceof GroupDataBody ) {
       final GroupDataBody dataBody = (GroupDataBody) body;
       return dataBody.getNoDataBand();
     }
@@ -342,21 +309,17 @@ public class ReportDefinitionImpl extends Section implements ReportDefinition
    *
    * @return the group count.
    */
-  public int getGroupCount()
-  {
+  public int getGroupCount() {
     int result = 1; // we always have at least a default-group.
 
     Group existingGroup = rootGroup;
     GroupBody gb = existingGroup.getBody();
-    while (gb != null)
-    {
+    while ( gb != null ) {
       final int count = gb.getElementCount();
       boolean found = false;
-      for (int i = 0; i < count; i++)
-      {
-        final ReportElement element = gb.getElement(i);
-        if (element instanceof Group)
-        {
+      for ( int i = 0; i < count; i++ ) {
+        final ReportElement element = gb.getElement( i );
+        if ( element instanceof Group ) {
           existingGroup = (Group) element;
           result += 1;
           gb = existingGroup.getBody();
@@ -364,8 +327,7 @@ public class ReportDefinitionImpl extends Section implements ReportDefinition
           break;
         }
       }
-      if (found == false)
-      {
+      if ( found == false ) {
         gb = null;
       }
     }
@@ -381,14 +343,11 @@ public class ReportDefinitionImpl extends Section implements ReportDefinition
    * @throws IllegalArgumentException  if the count is negative.
    * @throws IndexOutOfBoundsException if the count is greater than the number of defined groups.
    */
-  public Group getGroup(final int groupIndex)
-  {
-    if (groupIndex < 0)
-    {
-      throw new IllegalArgumentException("GroupCount must not be negative");
+  public Group getGroup( final int groupIndex ) {
+    if ( groupIndex < 0 ) {
+      throw new IllegalArgumentException( "GroupCount must not be negative" );
     }
-    if (groupIndex == 0)
-    {
+    if ( groupIndex == 0 ) {
       return rootGroup;
     }
 
@@ -396,19 +355,15 @@ public class ReportDefinitionImpl extends Section implements ReportDefinition
 
     Group existingGroup = rootGroup;
     GroupBody gb = existingGroup.getBody();
-    while (gb != null)
-    {
+    while ( gb != null ) {
       final int count = gb.getElementCount();
       boolean found = false;
-      for (int i = 0; i < count; i++)
-      {
-        final ReportElement element = gb.getElement(i);
-        if (element instanceof Group)
-        {
+      for ( int i = 0; i < count; i++ ) {
+        final ReportElement element = gb.getElement( i );
+        if ( element instanceof Group ) {
           existingGroup = (Group) element;
           result += 1;
-          if (result == groupIndex)
-          {
+          if ( result == groupIndex ) {
             return existingGroup;
           }
           gb = existingGroup.getBody();
@@ -416,12 +371,12 @@ public class ReportDefinitionImpl extends Section implements ReportDefinition
           break;
         }
       }
-      if (found == false)
-      {
+      if ( found == false ) {
         gb = null;
       }
     }
-    throw new IndexOutOfBoundsException("No group defined at the given index " + groupIndex + " . Max-index=" + result);
+    throw new IndexOutOfBoundsException(
+      "No group defined at the given index " + groupIndex + " . Max-index=" + result );
   }
 
   /**
@@ -433,8 +388,7 @@ public class ReportDefinitionImpl extends Section implements ReportDefinition
    *                                    exception to indicate that an instance cannot be cloned.
    * @see java.lang.Cloneable
    */
-  public ReportDefinitionImpl clone()
-  {
+  public ReportDefinitionImpl clone() {
     final ReportDefinitionImpl report = (ReportDefinitionImpl) super.clone();
     report.rootGroup = (Group) rootGroup.clone();
     report.pageFooter = (PageFooter) pageFooter.clone();
@@ -444,46 +398,43 @@ public class ReportDefinitionImpl extends Section implements ReportDefinition
     report.watermark = (Watermark) watermark.clone();
     // pagedefinition is not! cloned ...
     report.pageDefinition = pageDefinition;
-    report.setParent(getParentSection());
+    report.setParent( getParentSection() );
 
-    report.registerAsChild(report.rootGroup);
-    report.registerAsChild(report.reportHeader);
-    report.registerAsChild(report.reportFooter);
-    report.registerAsChild(report.pageHeader);
-    report.registerAsChild(report.pageFooter);
-    report.registerAsChild(report.watermark);
+    report.registerAsChild( report.rootGroup );
+    report.registerAsChild( report.reportHeader );
+    report.registerAsChild( report.reportFooter );
+    report.registerAsChild( report.pageHeader );
+    report.registerAsChild( report.pageFooter );
+    report.registerAsChild( report.watermark );
     return report;
   }
 
-  public ReportDefinitionImpl derive(final boolean preserveElementInstanceIds)
-  {
-    final ReportDefinitionImpl report = (ReportDefinitionImpl) super.derive(preserveElementInstanceIds);
-    report.rootGroup = (Group) rootGroup.derive(preserveElementInstanceIds);
-    report.pageFooter = (PageFooter) pageFooter.derive(preserveElementInstanceIds);
-    report.pageHeader = (PageHeader) pageHeader.derive(preserveElementInstanceIds);
-    report.reportFooter = (ReportFooter) reportFooter.derive(preserveElementInstanceIds);
-    report.reportHeader = (ReportHeader) reportHeader.derive(preserveElementInstanceIds);
-    report.watermark = (Watermark) watermark.derive(preserveElementInstanceIds);
+  public ReportDefinitionImpl derive( final boolean preserveElementInstanceIds ) {
+    final ReportDefinitionImpl report = (ReportDefinitionImpl) super.derive( preserveElementInstanceIds );
+    report.rootGroup = (Group) rootGroup.derive( preserveElementInstanceIds );
+    report.pageFooter = (PageFooter) pageFooter.derive( preserveElementInstanceIds );
+    report.pageHeader = (PageHeader) pageHeader.derive( preserveElementInstanceIds );
+    report.reportFooter = (ReportFooter) reportFooter.derive( preserveElementInstanceIds );
+    report.reportHeader = (ReportHeader) reportHeader.derive( preserveElementInstanceIds );
+    report.watermark = (Watermark) watermark.derive( preserveElementInstanceIds );
     // pagedefinition is not! cloned ...
     report.pageDefinition = pageDefinition;
-    report.setParent(getParentSection());
+    report.setParent( getParentSection() );
 
-    report.registerAsChild(report.rootGroup);
-    report.registerAsChild(report.reportHeader);
-    report.registerAsChild(report.reportFooter);
-    report.registerAsChild(report.pageHeader);
-    report.registerAsChild(report.pageFooter);
-    report.registerAsChild(report.watermark);
+    report.registerAsChild( report.rootGroup );
+    report.registerAsChild( report.reportHeader );
+    report.registerAsChild( report.reportFooter );
+    report.registerAsChild( report.pageHeader );
+    report.registerAsChild( report.pageFooter );
+    report.registerAsChild( report.watermark );
     return report;
   }
 
-  public Watermark getWatermark()
-  {
+  public Watermark getWatermark() {
     return watermark;
   }
 
-  public PageDefinition getPageDefinition()
-  {
+  public PageDefinition getPageDefinition() {
     return pageDefinition;
   }
 
@@ -492,42 +443,34 @@ public class ReportDefinitionImpl extends Section implements ReportDefinition
    *
    * @return the report definition or null, if no report has been assigned.
    */
-  public ReportDefinition getReportDefinition()
-  {
+  public ReportDefinition getReportDefinition() {
     return this;
   }
 
-  public ReportDefinition getMasterReport()
-  {
-    if (getElementType() instanceof MasterReportType)
-    {
+  public ReportDefinition getMasterReport() {
+    if ( getElementType() instanceof MasterReportType ) {
       return this;
     }
-    
+
     return super.getMasterReport();
   }
 
-  protected void removeElement(final Element element)
-  {
+  protected void removeElement( final Element element ) {
     throw new UnsupportedOperationException
-        ("Method 'removeElement' is not supported in the read-only report-definition.");
+      ( "Method 'removeElement' is not supported in the read-only report-definition." );
   }
 
-  public void setElementAt(final int position, final Element element)
-  {
+  public void setElementAt( final int position, final Element element ) {
     throw new UnsupportedOperationException
-        ("Method 'removeElement' is not supported in the read-only report-definition.");
+      ( "Method 'removeElement' is not supported in the read-only report-definition." );
   }
 
-  public int getElementCount()
-  {
+  public int getElementCount() {
     return 6;
   }
 
-  public Element getElement(final int index)
-  {
-    switch (index)
-    {
+  public Element getElement( final int index ) {
+    switch( index ) {
       case 0:
         return pageHeader;
       case 1:

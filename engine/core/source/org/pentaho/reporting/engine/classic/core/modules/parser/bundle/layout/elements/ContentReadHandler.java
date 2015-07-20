@@ -21,10 +21,8 @@ import org.pentaho.reporting.engine.classic.core.filter.types.ContentType;
 import org.pentaho.reporting.libraries.xmlns.parser.ParseException;
 
 @Deprecated
-public class ContentReadHandler extends AbstractElementReadHandler
-{
-  public ContentReadHandler() throws ParseException
-  {
-    super(new ContentType());
+public class ContentReadHandler extends AbstractElementReadHandler {
+  public ContentReadHandler() throws ParseException {
+    super( new ContentType() );
   }
 }

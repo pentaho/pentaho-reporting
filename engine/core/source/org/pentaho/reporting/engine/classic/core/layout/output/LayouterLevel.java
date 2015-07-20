@@ -24,41 +24,35 @@ import org.pentaho.reporting.engine.classic.core.ReportDefinition;
  *
  * @author Thomas Morgner
  */
-public class LayouterLevel
-{
+public class LayouterLevel {
   private ReportDefinition reportDefinition;
   private int groupIndex;
   private LayoutExpressionRuntime runtime;
   private boolean inItemGroup;
 
-  public LayouterLevel(final ReportDefinition reportDefinition,
-                       final int groupIndex,
-                       final LayoutExpressionRuntime runtime,
-                       final boolean inItemGroup)
-  {
+  public LayouterLevel( final ReportDefinition reportDefinition,
+                        final int groupIndex,
+                        final LayoutExpressionRuntime runtime,
+                        final boolean inItemGroup ) {
     this.reportDefinition = reportDefinition;
     this.groupIndex = groupIndex;
     this.runtime = runtime;
     this.inItemGroup = inItemGroup;
   }
 
-  public boolean isInItemGroup()
-  {
+  public boolean isInItemGroup() {
     return inItemGroup;
   }
 
-  public ReportDefinition getReportDefinition()
-  {
+  public ReportDefinition getReportDefinition() {
     return reportDefinition;
   }
 
-  public int getGroupIndex()
-  {
+  public int getGroupIndex() {
     return groupIndex;
   }
 
-  public LayoutExpressionRuntime getRuntime()
-  {
+  public LayoutExpressionRuntime getRuntime() {
     return runtime;
   }
 }

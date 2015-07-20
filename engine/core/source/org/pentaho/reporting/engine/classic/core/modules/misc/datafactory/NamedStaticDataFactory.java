@@ -17,12 +17,12 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.misc.datafactory;
 
-import java.util.LinkedHashMap;
-import javax.swing.table.TableModel;
-
 import org.pentaho.reporting.engine.classic.core.DataFactory;
 import org.pentaho.reporting.engine.classic.core.DataRow;
 import org.pentaho.reporting.engine.classic.core.ReportDataFactoryException;
+
+import javax.swing.table.TableModel;
+import java.util.LinkedHashMap;
 
 /**
  * A NamedStaticDataFactory provides an query-aliasing facility to decouple the report definitions from the underlying
@@ -31,16 +31,14 @@ import org.pentaho.reporting.engine.classic.core.ReportDataFactoryException;
  *
  * @author Thomas Morgner
  */
-public class NamedStaticDataFactory extends StaticDataFactory
-{
-  private LinkedHashMap<String,String> querymappings;
+public class NamedStaticDataFactory extends StaticDataFactory {
+  private LinkedHashMap<String, String> querymappings;
 
   /**
    * Defaultconstructor.
    */
-  public NamedStaticDataFactory()
-  {
-    querymappings = new LinkedHashMap<String,String>();
+  public NamedStaticDataFactory() {
+    querymappings = new LinkedHashMap<String, String>();
   }
 
   /**
@@ -50,9 +48,8 @@ public class NamedStaticDataFactory extends StaticDataFactory
    * @param parameters
    * @return
    */
-  public boolean isQueryExecutable(final String query, final DataRow parameters)
-  {
-    return querymappings.containsKey(query);
+  public boolean isQueryExecutable( final String query, final DataRow parameters ) {
+    return querymappings.containsKey( query );
   }
 
   /**
@@ -61,15 +58,11 @@ public class NamedStaticDataFactory extends StaticDataFactory
    * @param alias       the alias
    * @param queryString the real query string that should be used when the alias is specified as query.
    */
-  public void setQuery(final String alias, final String queryString)
-  {
-    if (queryString == null)
-    {
-      querymappings.remove(alias);
-    }
-    else
-    {
-      querymappings.put(alias, queryString);
+  public void setQuery( final String alias, final String queryString ) {
+    if ( queryString == null ) {
+      querymappings.remove( alias );
+    } else {
+      querymappings.put( alias, queryString );
     }
   }
 
@@ -79,8 +72,7 @@ public class NamedStaticDataFactory extends StaticDataFactory
    *
    * @return the derived factory.
    */
-  public DataFactory derive()
-  {
+  public DataFactory derive() {
     return clone();
   }
 
@@ -89,10 +81,9 @@ public class NamedStaticDataFactory extends StaticDataFactory
    *
    * @return the clone.
    */
-  public NamedStaticDataFactory clone()
-  {
+  public NamedStaticDataFactory clone() {
     final NamedStaticDataFactory nds = (NamedStaticDataFactory) super.clone();
-    nds.querymappings = (LinkedHashMap<String,String>) querymappings.clone();
+    nds.querymappings = (LinkedHashMap<String, String>) querymappings.clone();
     return nds;
   }
 
@@ -106,19 +97,16 @@ public class NamedStaticDataFactory extends StaticDataFactory
    * @param parameters the set of parameters.
    * @return the tablemodel.
    */
-  public TableModel queryData(final String query, final DataRow parameters)
-      throws ReportDataFactoryException
-  {
-    if (query == null)
-    {
-      throw new NullPointerException("Query is null."); //$NON-NLS-1$
+  public TableModel queryData( final String query, final DataRow parameters )
+    throws ReportDataFactoryException {
+    if ( query == null ) {
+      throw new NullPointerException( "Query is null." ); //$NON-NLS-1$
     }
-    final String realQuery = getQuery(query);
-    if (realQuery == null)
-    {
-      throw new ReportDataFactoryException("Query '" + query + "' is not recognized."); //$NON-NLS-1$ //$NON-NLS-2$
+    final String realQuery = getQuery( query );
+    if ( realQuery == null ) {
+      throw new ReportDataFactoryException( "Query '" + query + "' is not recognized." ); //$NON-NLS-1$ //$NON-NLS-2$
     }
-    return super.queryData(realQuery, parameters);
+    return super.queryData( realQuery, parameters );
   }
 
   /**
@@ -127,9 +115,8 @@ public class NamedStaticDataFactory extends StaticDataFactory
    * @param name the alias name.
    * @return the real query or null.
    */
-  public String getQuery(final String name)
-  {
-    return querymappings.get(name);
+  public String getQuery( final String name ) {
+    return querymappings.get( name );
   }
 
   /**
@@ -137,13 +124,11 @@ public class NamedStaticDataFactory extends StaticDataFactory
    *
    * @return all alias-names as string-array.
    */
-  public String[] getQueryNames()
-  {
-    return querymappings.keySet().toArray(new String[querymappings.size()]);
+  public String[] getQueryNames() {
+    return querymappings.keySet().toArray( new String[ querymappings.size() ] );
   }
 
-  public String translateQuery(final String queryName)
-  {
-    return querymappings.get(queryName);
+  public String translateQuery( final String queryName ) {
+    return querymappings.get( queryName );
   }
 }

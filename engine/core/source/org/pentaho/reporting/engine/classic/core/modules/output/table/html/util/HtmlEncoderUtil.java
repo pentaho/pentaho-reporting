@@ -22,8 +22,7 @@ package org.pentaho.reporting.engine.classic.core.modules.output.table.html.util
  *
  * @author Thomas Morgner
  */
-public final class HtmlEncoderUtil
-{
+public final class HtmlEncoderUtil {
   /**
    * CSS Escapes: CSS 2.1 / 4.1.3 Characters and case
    * <p/>
@@ -46,30 +45,24 @@ public final class HtmlEncoderUtil
   /**
    * DefaultConstructor.
    */
-  private HtmlEncoderUtil()
-  {
+  private HtmlEncoderUtil() {
   }
 
   /**
    * Provides a method to encode any string into a URL-safe form. Non-ASCII characters are first encoded as sequences of
    * two or three bytes, using the UTF-8 algorithm, before being encoded as %HH escapes.
    */
-  private static final String[] HEX_CSS_ENCODING = new String[256];
+  private static final String[] HEX_CSS_ENCODING = new String[ 256 ];
 
-  static
-  {
+  static {
     // static initializer block for creating the Hex-Encoding array. This is as fast as having a static array
     // but reduces the code size.
-    for (int i = 0; i < 256; i++)
-    {
-      final String s = Integer.toHexString(i);
-      if (s.length() == 1)
-      {
-        HEX_CSS_ENCODING[i] = '0' + s;
-      }
-      else
-      {
-        HEX_CSS_ENCODING[i] = s;
+    for ( int i = 0; i < 256; i++ ) {
+      final String s = Integer.toHexString( i );
+      if ( s.length() == 1 ) {
+        HEX_CSS_ENCODING[ i ] = '0' + s;
+      } else {
+        HEX_CSS_ENCODING[ i ] = s;
       }
     }
   }
@@ -80,33 +73,25 @@ public final class HtmlEncoderUtil
    * @param s The string to be encoded
    * @return The encoded string
    */
-  public static String encodeCSS(final String s)
-  {
-    final StringBuffer sbuf = new StringBuffer(s.length() * 15 / 10);
-    return encodeCSS(s, sbuf);
+  public static String encodeCSS( final String s ) {
+    final StringBuffer sbuf = new StringBuffer( s.length() * 15 / 10 );
+    return encodeCSS( s, sbuf );
   }
 
-  public static String encodeCSS(final String s, final StringBuffer sbuf)
-  {
+  public static String encodeCSS( final String s, final StringBuffer sbuf ) {
     final int len = s.length();
-    for (int i = 0; i < len; i++)
-    {
-      final char ch = s.charAt(i);
-      if (ch == '\"')
-      {
-        sbuf.append('\\');
-        sbuf.append(ch);
-      }
-      else if (ch >= 0x20 && ch <= 0x7f)
-      {  // 7-Bit ascii
-        sbuf.append(ch);
-      }
-      else
-      {
-        sbuf.append('\\');
-        sbuf.append(HEX_CSS_ENCODING[(ch >> 16) & 0xFF]);
-        sbuf.append(HEX_CSS_ENCODING[((ch >> 8) & 0xFF)]);
-        sbuf.append(HEX_CSS_ENCODING[(ch & 0xFF)]);
+    for ( int i = 0; i < len; i++ ) {
+      final char ch = s.charAt( i );
+      if ( ch == '\"' ) {
+        sbuf.append( '\\' );
+        sbuf.append( ch );
+      } else if ( ch >= 0x20 && ch <= 0x7f ) {  // 7-Bit ascii
+        sbuf.append( ch );
+      } else {
+        sbuf.append( '\\' );
+        sbuf.append( HEX_CSS_ENCODING[ ( ch >> 16 ) & 0xFF ] );
+        sbuf.append( HEX_CSS_ENCODING[ ( ( ch >> 8 ) & 0xFF ) ] );
+        sbuf.append( HEX_CSS_ENCODING[ ( ch & 0xFF ) ] );
       }
     }
     return sbuf.toString();

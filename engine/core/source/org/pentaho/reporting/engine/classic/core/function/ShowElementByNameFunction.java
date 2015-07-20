@@ -17,12 +17,12 @@
 
 package org.pentaho.reporting.engine.classic.core.function;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-
 import org.pentaho.reporting.engine.classic.core.ReportElement;
 import org.pentaho.reporting.engine.classic.core.style.ElementStyleKeys;
 import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
+
+import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * This function hiddes the elements with the name specified in the 'element' parameter, if the given field has one of
@@ -31,9 +31,8 @@ import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
  * @author Thomas Morgner
  * @deprecated This can be done easier using style-expressions
  */
-@SuppressWarnings("deprecation")
-public class ShowElementByNameFunction extends AbstractElementFormatFunction
-{
+@SuppressWarnings( "deprecation" )
+public class ShowElementByNameFunction extends AbstractElementFormatFunction {
   /**
    * The field from where to read the compare value.
    */
@@ -46,8 +45,7 @@ public class ShowElementByNameFunction extends AbstractElementFormatFunction
   /**
    * Default Constructor.
    */
-  public ShowElementByNameFunction()
-  {
+  public ShowElementByNameFunction() {
     values = new ArrayList();
   }
 
@@ -56,8 +54,7 @@ public class ShowElementByNameFunction extends AbstractElementFormatFunction
    *
    * @return the name of the field.
    */
-  public String getField()
-  {
+  public String getField() {
     return field;
   }
 
@@ -66,8 +63,7 @@ public class ShowElementByNameFunction extends AbstractElementFormatFunction
    *
    * @param field the name of the field.
    */
-  public void setField(final String field)
-  {
+  public void setField( final String field ) {
     this.field = field;
   }
 
@@ -77,15 +73,11 @@ public class ShowElementByNameFunction extends AbstractElementFormatFunction
    * @param value the compare value.
    * @param index the position in the list of all values.
    */
-  public void setValues(final int index, final Object value)
-  {
-    if (values.size() == index)
-    {
-      values.add(value);
-    }
-    else
-    {
-      values.set(index, value);
+  public void setValues( final int index, final Object value ) {
+    if ( values.size() == index ) {
+      values.add( value );
+    } else {
+      values.set( index, value );
     }
   }
 
@@ -95,9 +87,8 @@ public class ShowElementByNameFunction extends AbstractElementFormatFunction
    * @param index the position in the list of all values.
    * @return the value at the given position.
    */
-  public Object getValues(final int index)
-  {
-    return values.get(index);
+  public Object getValues( final int index ) {
+    return values.get( index );
   }
 
   /**
@@ -105,8 +96,7 @@ public class ShowElementByNameFunction extends AbstractElementFormatFunction
    *
    * @return the values as array.
    */
-  public Object[] getValues()
-  {
+  public Object[] getValues() {
     return values.toArray();
   }
 
@@ -115,10 +105,9 @@ public class ShowElementByNameFunction extends AbstractElementFormatFunction
    *
    * @param values the new list of compare values.
    */
-  public void setValues(final Object[] values)
-  {
+  public void setValues( final Object[] values ) {
     this.values.clear();
-    this.values.addAll(Arrays.asList(values));
+    this.values.addAll( Arrays.asList( values ) );
   }
 
   /**
@@ -126,17 +115,14 @@ public class ShowElementByNameFunction extends AbstractElementFormatFunction
    *
    * @return the number of values.
    */
-  public int getValuesCount()
-  {
+  public int getValuesCount() {
     return this.values.size();
   }
 
-  protected boolean evaluateElement(final ReportElement e)
-  {
-    if (ObjectUtilities.equal(e.getName(), getElement()))
-    {
+  protected boolean evaluateElement( final ReportElement e ) {
+    if ( ObjectUtilities.equal( e.getName(), getElement() ) ) {
       final boolean visible = isVisible();
-      e.getStyle().setStyleProperty(ElementStyleKeys.VISIBLE, visible);
+      e.getStyle().setStyleProperty( ElementStyleKeys.VISIBLE, visible );
       return true;
     }
     return false;
@@ -147,14 +133,11 @@ public class ShowElementByNameFunction extends AbstractElementFormatFunction
    *
    * @return true, if the field value matches, false otherwise.
    */
-  private boolean isVisible()
-  {
-    final Object fieldValue = getDataRow().get(getField());
-    for (int i = 0; i < values.size(); i++)
-    {
-      final Object o = values.get(i);
-      if (ObjectUtilities.equal(fieldValue, o))
-      {
+  private boolean isVisible() {
+    final Object fieldValue = getDataRow().get( getField() );
+    for ( int i = 0; i < values.size(); i++ ) {
+      final Object o = values.get( i );
+      if ( ObjectUtilities.equal( fieldValue, o ) ) {
         return false;
       }
     }
@@ -167,8 +150,7 @@ public class ShowElementByNameFunction extends AbstractElementFormatFunction
    *
    * @return a copy of this function.
    */
-  public ShowElementByNameFunction getInstance()
-  {
+  public ShowElementByNameFunction getInstance() {
     final ShowElementByNameFunction ex = (ShowElementByNameFunction) super.getInstance();
     ex.values = (ArrayList) values.clone();
     return ex;

@@ -19,37 +19,30 @@ package org.pentaho.reporting.engine.classic.core.testsupport.selector;
 
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderNode;
 
-public class RenderNodeTypeMatcher implements NodeMatcher
-{
+public class RenderNodeTypeMatcher implements NodeMatcher {
   private int nodeTypeMask;
 
-  public RenderNodeTypeMatcher(final int nodeTypeMask)
-  {
+  public RenderNodeTypeMatcher( final int nodeTypeMask ) {
     this.nodeTypeMask = nodeTypeMask;
   }
 
-  public boolean matches(final RenderNode node)
-  {
-    if (eval(node))
-    {
+  public boolean matches( final RenderNode node ) {
+    if ( eval( node ) ) {
       return true;
     }
     return false;
   }
 
-  private boolean eval(final RenderNode node)
-  {
-    if (node.getNodeType() == nodeTypeMask)
-    {
+  private boolean eval( final RenderNode node ) {
+    if ( node.getNodeType() == nodeTypeMask ) {
       return true;
     }
     return false;
   }
 
-  public String toString()
-  {
+  public String toString() {
     String prefix = "RenderNodeTypeMatcher(0x";
-    prefix += Integer.toHexString(nodeTypeMask);
+    prefix += Integer.toHexString( nodeTypeMask );
     return prefix + ")";
   }
 }

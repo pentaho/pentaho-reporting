@@ -20,8 +20,7 @@ package org.pentaho.reporting.engine.classic.core.layout.process.util;
 import org.pentaho.reporting.engine.classic.core.layout.model.FilteringPageBreakPositions;
 import org.pentaho.reporting.engine.classic.core.layout.model.PageBreakPositions;
 
-public class PaginationTableState implements BasePaginationTableState
-{
+public class PaginationTableState implements BasePaginationTableState {
   private PaginationTableState parent;
   private boolean suspended;
   private long pageOffset;
@@ -31,19 +30,17 @@ public class PaginationTableState implements BasePaginationTableState
   private boolean fixedPositionProcessingSuspended;
   private boolean tableProcessing;
 
-  public PaginationTableState(final long pageHeight,
-                              final long pageOffset,
-                              final long pageEnd,
-                              final PageBreakPositions breakPositions)
-  {
+  public PaginationTableState( final long pageHeight,
+                               final long pageOffset,
+                               final long pageEnd,
+                               final PageBreakPositions breakPositions ) {
     this.pageHeight = pageHeight;
     this.pageOffset = pageOffset;
     this.pageEnd = pageEnd;
     this.breakPositions = breakPositions;
   }
 
-  public PaginationTableState(final PaginationTableState parent)
-  {
+  public PaginationTableState( final PaginationTableState parent ) {
     this.parent = parent;
     this.pageOffset = parent.pageOffset;
     this.breakPositions = parent.breakPositions;
@@ -53,75 +50,61 @@ public class PaginationTableState implements BasePaginationTableState
     this.tableProcessing = parent.tableProcessing;
   }
 
-  public void suspendVisualStateCollection(final boolean temporary)
-  {
+  public void suspendVisualStateCollection( final boolean temporary ) {
     this.suspended = true;
 
-    if (temporary == false && this.parent != null)
-    {
-      this.parent.suspendVisualStateCollection(temporary);
+    if ( temporary == false && this.parent != null ) {
+      this.parent.suspendVisualStateCollection( temporary );
     }
   }
 
-  public boolean isTableProcessing()
-  {
+  public boolean isTableProcessing() {
     return tableProcessing;
   }
 
-  public long getPageOffset()
-  {
+  public long getPageOffset() {
     return pageOffset;
   }
 
-  public PageBreakPositions getBreakPositions()
-  {
+  public PageBreakPositions getBreakPositions() {
     return breakPositions;
   }
 
-  public long getPageHeight()
-  {
+  public long getPageHeight() {
     return pageHeight;
   }
 
-  public long getPageEnd()
-  {
+  public long getPageEnd() {
     return pageEnd;
   }
 
-  public boolean isVisualStateCollectionSuspended()
-  {
-    if (suspended)
-    {
+  public boolean isVisualStateCollectionSuspended() {
+    if ( suspended ) {
       return true;
     }
 
     return false;
   }
 
-  public PaginationTableState pop()
-  {
+  public PaginationTableState pop() {
     return parent;
   }
 
-  public boolean isFixedPositionProcessingSuspended()
-  {
+  public boolean isFixedPositionProcessingSuspended() {
     return fixedPositionProcessingSuspended;
   }
 
-  public void defineArtificialPageStart(final long offset)
-  {
-    breakPositions = new FilteringPageBreakPositions(breakPositions, offset);
+  public void defineArtificialPageStart( final long offset ) {
+    breakPositions = new FilteringPageBreakPositions( breakPositions, offset );
     pageOffset = offset;
     tableProcessing = true;
   }
 
-  public boolean isOnPageStart(final long offset)
-  {
-    return breakPositions.isPageStart(offset);
+  public boolean isOnPageStart( final long offset ) {
+    return breakPositions.isPageStart( offset );
   }
 
-  public long getPageOffset(final long position)
-  {
-    return breakPositions.findPreviousBreakPosition(position);
+  public long getPageOffset( final long position ) {
+    return breakPositions.findPreviousBreakPosition( position );
   }
 }

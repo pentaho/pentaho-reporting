@@ -32,8 +32,7 @@ import org.pentaho.reporting.libraries.repository.UrlRepository;
  * @author Thomas Morgner
  */
 public abstract class AbstractMultiStreamReportProcessTask
-    extends AbstractReportProcessTask implements MultiStreamReportProcessTask
-{
+  extends AbstractReportProcessTask implements MultiStreamReportProcessTask {
   private ContentLocation bulkLocation;
   private NameGenerator bulkNameGenerator;
   private URLRewriter urlRewriter;
@@ -41,8 +40,7 @@ public abstract class AbstractMultiStreamReportProcessTask
   /**
    * Default Constructor.
    */
-  protected AbstractMultiStreamReportProcessTask()
-  {
+  protected AbstractMultiStreamReportProcessTask() {
   }
 
   /**
@@ -50,8 +48,7 @@ public abstract class AbstractMultiStreamReportProcessTask
    *
    * @return the bulk location.
    */
-  public ContentLocation getBulkLocation()
-  {
+  public ContentLocation getBulkLocation() {
     return bulkLocation;
   }
 
@@ -60,8 +57,7 @@ public abstract class AbstractMultiStreamReportProcessTask
    *
    * @param bulkLocation the bulk location.
    */
-  public void setBulkLocation(final ContentLocation bulkLocation)
-  {
+  public void setBulkLocation( final ContentLocation bulkLocation ) {
     this.bulkLocation = bulkLocation;
   }
 
@@ -70,19 +66,17 @@ public abstract class AbstractMultiStreamReportProcessTask
    *
    * @return the bulk file name generator.
    */
-  public NameGenerator getBulkNameGenerator()
-  {
+  public NameGenerator getBulkNameGenerator() {
     return bulkNameGenerator;
   }
 
   /**
-   * Defines the bulk file name generator that is used to generate unique names for the exported files. If a
-   * bulk location is given, this property must not be null.
+   * Defines the bulk file name generator that is used to generate unique names for the exported files. If a bulk
+   * location is given, this property must not be null.
    *
    * @param bulkNameGenerator the name generator.
    */
-  public void setBulkNameGenerator(final NameGenerator bulkNameGenerator)
-  {
+  public void setBulkNameGenerator( final NameGenerator bulkNameGenerator ) {
     this.bulkNameGenerator = bulkNameGenerator;
   }
 
@@ -91,8 +85,7 @@ public abstract class AbstractMultiStreamReportProcessTask
    *
    * @return the URL rewriter that is used to generate or alter URLs pointing to bulk items.
    */
-  public URLRewriter getUrlRewriter()
-  {
+  public URLRewriter getUrlRewriter() {
     return urlRewriter;
   }
 
@@ -101,50 +94,37 @@ public abstract class AbstractMultiStreamReportProcessTask
    *
    * @param urlRewriter the URL rewriter used in the export.
    */
-  public void setUrlRewriter(final URLRewriter urlRewriter)
-  {
+  public void setUrlRewriter( final URLRewriter urlRewriter ) {
     this.urlRewriter = urlRewriter;
   }
 
   /**
-   * A helper method that tries to come up with a reasonalbe URLrewriter for common repository configurations.
-   * If there is a URLRewriter defined already, that one will be used. If both the bulk and body location point
-   * to the same repository backend, the SingleRepositoryURLRewriter is used. If both repositories are different
-   * but both are UrlRepositories, a FilesystemURLRewriter is used. If everything else fails, the method will
-   * fall back to a SingleRepositoryURLRewriter - hoping that it will work out.
+   * A helper method that tries to come up with a reasonalbe URLrewriter for common repository configurations. If there
+   * is a URLRewriter defined already, that one will be used. If both the bulk and body location point to the same
+   * repository backend, the SingleRepositoryURLRewriter is used. If both repositories are different but both are
+   * UrlRepositories, a FilesystemURLRewriter is used. If everything else fails, the method will fall back to a
+   * SingleRepositoryURLRewriter - hoping that it will work out.
    *
    * @return the computed URL rewriter.
    */
-  protected URLRewriter computeUrlRewriter()
-  {
+  protected URLRewriter computeUrlRewriter() {
     final URLRewriter userRewriter = getUrlRewriter();
-    if (userRewriter != null)
-    {
-      return (userRewriter);
-    }
-    else
-    {
+    if ( userRewriter != null ) {
+      return ( userRewriter );
+    } else {
       final ContentLocation bulkLocation = getBulkLocation();
-      if (bulkLocation == null)
-      {
-        return (new SingleRepositoryURLRewriter());
-      }
-      else
-      {
+      if ( bulkLocation == null ) {
+        return ( new SingleRepositoryURLRewriter() );
+      } else {
         final Repository bulkRepository = bulkLocation.getRepository();
         final Repository bodyRepository = getBodyContentLocation().getRepository();
-        if (bulkRepository == bodyRepository)
-        {
-          return (new SingleRepositoryURLRewriter());
-        }
-        else if (bulkRepository instanceof UrlRepository &&
-            bodyRepository instanceof UrlRepository)
-        {
-          return (new FileSystemURLRewriter());
-        }
-        else
-        {
-          return (new SingleRepositoryURLRewriter());
+        if ( bulkRepository == bodyRepository ) {
+          return ( new SingleRepositoryURLRewriter() );
+        } else if ( bulkRepository instanceof UrlRepository &&
+          bodyRepository instanceof UrlRepository ) {
+          return ( new FileSystemURLRewriter() );
+        } else {
+          return ( new SingleRepositoryURLRewriter() );
         }
       }
     }

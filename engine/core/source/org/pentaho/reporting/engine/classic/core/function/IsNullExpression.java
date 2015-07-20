@@ -23,8 +23,7 @@ package org.pentaho.reporting.engine.classic.core.function;
  * @author Thomas Morgner
  * @deprecated Use a Formula Instead
  */
-public class IsNullExpression extends AbstractExpression
-{
+public class IsNullExpression extends AbstractExpression {
   /**
    * The field name.
    */
@@ -33,8 +32,7 @@ public class IsNullExpression extends AbstractExpression
   /**
    * Default constructor.
    */
-  public IsNullExpression()
-  {
+  public IsNullExpression() {
   }
 
   /**
@@ -42,8 +40,7 @@ public class IsNullExpression extends AbstractExpression
    *
    * @return the field.
    */
-  public String getField()
-  {
+  public String getField() {
     return field;
   }
 
@@ -52,8 +49,7 @@ public class IsNullExpression extends AbstractExpression
    *
    * @param field the field.
    */
-  public void setField(final String field)
-  {
+  public void setField( final String field ) {
     this.field = field;
   }
 
@@ -62,11 +58,9 @@ public class IsNullExpression extends AbstractExpression
    *
    * @return the value of the function.
    */
-  public Object getValue()
-  {
-    final Object o = getDataRow().get(getField());
-    if (o == null)
-    {
+  public Object getValue() {
+    final Object o = getDataRow().get( getField() );
+    if ( o == null ) {
       return Boolean.TRUE;
     }
     return Boolean.FALSE;

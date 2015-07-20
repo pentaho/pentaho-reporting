@@ -22,19 +22,15 @@ package org.pentaho.reporting.engine.classic.core.modules.output.table.html.help
  *
  * @author Thomas Morgner
  */
-public class HtmlOutputProcessingException extends RuntimeException
-{
-  public HtmlOutputProcessingException()
-  {
+public class HtmlOutputProcessingException extends RuntimeException {
+  public HtmlOutputProcessingException() {
   }
 
-  public HtmlOutputProcessingException(final String message, final Exception ex)
-  {
-    super(message, ex);
+  public HtmlOutputProcessingException( final String message, final Exception ex ) {
+    super( message, ex );
   }
 
-  public HtmlOutputProcessingException(final String message)
-  {
-    super(message);
+  public HtmlOutputProcessingException( final String message ) {
+    super( message );
   }
 }

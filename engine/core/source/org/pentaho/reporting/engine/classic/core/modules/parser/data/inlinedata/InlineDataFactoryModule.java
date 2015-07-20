@@ -19,7 +19,6 @@ package org.pentaho.reporting.engine.classic.core.modules.parser.data.inlinedata
 
 import org.pentaho.reporting.engine.classic.core.modules.parser.base.DataFactoryReadHandlerFactory;
 import org.pentaho.reporting.engine.classic.core.modules.parser.base.DataFactoryXmlResourceFactory;
-import org.pentaho.reporting.engine.classic.core.modules.parser.data.compounddata.CompoundDataFactoryResourceXmlFactoryModule;
 import org.pentaho.reporting.libraries.base.boot.AbstractModule;
 import org.pentaho.reporting.libraries.base.boot.ModuleInitializeException;
 import org.pentaho.reporting.libraries.base.boot.SubSystem;
@@ -29,14 +28,13 @@ import org.pentaho.reporting.libraries.base.boot.SubSystem;
  *
  * @author Thomas Morgner
  */
-public class InlineDataFactoryModule extends AbstractModule
-{
+public class InlineDataFactoryModule extends AbstractModule {
   public static final String NAMESPACE =
-      "http://reporting.pentaho.org/namespaces/datasources/inline/1.0";
-  public static final String TAG_DEF_PREFIX = "org.pentaho.reporting.engine.classic.core.modules.parser.data.inlinedata.tag-def.";
+    "http://reporting.pentaho.org/namespaces/datasources/inline/1.0";
+  public static final String TAG_DEF_PREFIX =
+    "org.pentaho.reporting.engine.classic.core.modules.parser.data.inlinedata.tag-def.";
 
-  public InlineDataFactoryModule() throws ModuleInitializeException
-  {
+  public InlineDataFactoryModule() throws ModuleInitializeException {
     loadModuleInfo();
   }
 
@@ -48,10 +46,10 @@ public class InlineDataFactoryModule extends AbstractModule
    * @param subSystem the subSystem.
    * @throws ModuleInitializeException if an error ocurred while initializing the module.
    */
-  public void initialize(final SubSystem subSystem) throws ModuleInitializeException
-  {
-    DataFactoryXmlResourceFactory.register(InlineDataResourceXmlFactoryModule.class);
+  public void initialize( final SubSystem subSystem ) throws ModuleInitializeException {
+    DataFactoryXmlResourceFactory.register( InlineDataResourceXmlFactoryModule.class );
 
-    DataFactoryReadHandlerFactory.getInstance().setElementHandler(NAMESPACE, "inline-datasource", InlineDataSourceReadHandler.class);
+    DataFactoryReadHandlerFactory.getInstance()
+      .setElementHandler( NAMESPACE, "inline-datasource", InlineDataSourceReadHandler.class );
   }
 }

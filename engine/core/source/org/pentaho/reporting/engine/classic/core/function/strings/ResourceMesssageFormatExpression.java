@@ -17,12 +17,12 @@
 
 package org.pentaho.reporting.engine.classic.core.function.strings;
 
-import java.util.ResourceBundle;
-
 import org.pentaho.reporting.engine.classic.core.ResourceBundleFactory;
 import org.pentaho.reporting.engine.classic.core.filter.MessageFormatSupport;
 import org.pentaho.reporting.engine.classic.core.function.AbstractExpression;
 import org.pentaho.reporting.engine.classic.core.function.ExpressionUtilities;
+
+import java.util.ResourceBundle;
 
 /**
  * Formats a message read from a resource-bundle using named parameters. The parameters are resolved against the current
@@ -32,8 +32,7 @@ import org.pentaho.reporting.engine.classic.core.function.ExpressionUtilities;
  *
  * @author Thomas Morgner
  */
-public class ResourceMesssageFormatExpression extends AbstractExpression
-{
+public class ResourceMesssageFormatExpression extends AbstractExpression {
   /**
    * The key that gets used to lookup the message format string from the resource bundle.
    */
@@ -53,8 +52,7 @@ public class ResourceMesssageFormatExpression extends AbstractExpression
   /**
    * Default constructor.
    */
-  public ResourceMesssageFormatExpression()
-  {
+  public ResourceMesssageFormatExpression() {
     messageFormatSupport = new MessageFormatSupport();
   }
 
@@ -64,8 +62,7 @@ public class ResourceMesssageFormatExpression extends AbstractExpression
    * @return the name of the resourcebundle
    * @see org.pentaho.reporting.engine.classic.core.ResourceBundleFactory#getResourceBundle(String)
    */
-  public String getResourceIdentifier()
-  {
+  public String getResourceIdentifier() {
     return resourceIdentifier;
   }
 
@@ -75,8 +72,7 @@ public class ResourceMesssageFormatExpression extends AbstractExpression
    *
    * @param resourceIdentifier the resource bundle name
    */
-  public void setResourceIdentifier(final String resourceIdentifier)
-  {
+  public void setResourceIdentifier( final String resourceIdentifier ) {
     this.resourceIdentifier = resourceIdentifier;
   }
 
@@ -85,8 +81,7 @@ public class ResourceMesssageFormatExpression extends AbstractExpression
    *
    * @param format a resourcebundle key for the message format lookup.
    */
-  public void setFormatKey(final String format)
-  {
+  public void setFormatKey( final String format ) {
     this.formatKey = format;
   }
 
@@ -95,8 +90,7 @@ public class ResourceMesssageFormatExpression extends AbstractExpression
    *
    * @return the resource bundle key.
    */
-  public String getFormatKey()
-  {
+  public String getFormatKey() {
     return formatKey;
   }
 
@@ -105,8 +99,7 @@ public class ResourceMesssageFormatExpression extends AbstractExpression
    *
    * @return the replacement text for null-values.
    */
-  public String getNullString()
-  {
+  public String getNullString() {
     return messageFormatSupport.getNullString();
   }
 
@@ -115,9 +108,8 @@ public class ResourceMesssageFormatExpression extends AbstractExpression
    *
    * @param nullString the replacement text for null-values.
    */
-  public void setNullString(final String nullString)
-  {
-    this.messageFormatSupport.setNullString(nullString);
+  public void setNullString( final String nullString ) {
+    this.messageFormatSupport.setNullString( nullString );
   }
 
   /**
@@ -125,22 +117,18 @@ public class ResourceMesssageFormatExpression extends AbstractExpression
    *
    * @return the formatted message.
    */
-  public Object getValue()
-  {
+  public Object getValue() {
     final ResourceBundleFactory resourceBundleFactory = getResourceBundleFactory();
     final ResourceBundle bundle;
-    if (resourceIdentifier == null)
-    {
-      bundle = ExpressionUtilities.getDefaultResourceBundle(this);
-    }
-    else
-    {
-      bundle = resourceBundleFactory.getResourceBundle(resourceIdentifier);
+    if ( resourceIdentifier == null ) {
+      bundle = ExpressionUtilities.getDefaultResourceBundle( this );
+    } else {
+      bundle = resourceBundleFactory.getResourceBundle( resourceIdentifier );
     }
 
-    final String newFormatString = bundle.getString(formatKey);
-    messageFormatSupport.setFormatString(newFormatString);
-    messageFormatSupport.setLocale(resourceBundleFactory.getLocale());
-    return messageFormatSupport.performFormat(getDataRow());
+    final String newFormatString = bundle.getString( formatKey );
+    messageFormatSupport.setFormatString( newFormatString );
+    messageFormatSupport.setLocale( resourceBundleFactory.getLocale() );
+    return messageFormatSupport.performFormat( getDataRow() );
   }
 }

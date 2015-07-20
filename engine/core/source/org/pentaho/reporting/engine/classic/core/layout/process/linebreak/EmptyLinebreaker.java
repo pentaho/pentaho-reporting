@@ -27,73 +27,58 @@ import org.pentaho.reporting.engine.classic.core.layout.model.RenderNode;
  *
  * @author Thomas Morgner
  */
-public final class EmptyLinebreaker implements ParagraphLinebreaker
-{
-  public EmptyLinebreaker()
-  {
+public final class EmptyLinebreaker implements ParagraphLinebreaker {
+  public EmptyLinebreaker() {
   }
 
-  public boolean isWritable()
-  {
+  public boolean isWritable() {
     return false;
   }
 
-  public FullLinebreaker startComplexLayout()
-  {
+  public FullLinebreaker startComplexLayout() {
     throw new UnsupportedOperationException();
   }
 
-  public void startBlockBox(final RenderBox child)
-  {
+  public void startBlockBox( final RenderBox child ) {
     throw new UnsupportedOperationException();
   }
 
-  public void finishBlockBox(final RenderBox box)
-  {
+  public void finishBlockBox( final RenderBox box ) {
     throw new UnsupportedOperationException();
   }
 
-  public ParagraphLinebreaker startParagraphBox(final ParagraphRenderBox box)
-  {
+  public ParagraphLinebreaker startParagraphBox( final ParagraphRenderBox box ) {
     throw new UnsupportedOperationException();
   }
 
-  public void finishParagraphBox(final ParagraphRenderBox box)
-  {
+  public void finishParagraphBox( final ParagraphRenderBox box ) {
     throw new UnsupportedOperationException();
   }
 
-  public boolean isSuspended()
-  {
+  public boolean isSuspended() {
     return false;
   }
 
-  public void finish()
-  {
+  public void finish() {
   }
 
-  public void startInlineBox(final InlineRenderBox box)
-  {
+  public void startInlineBox( final InlineRenderBox box ) {
     throw new UnsupportedOperationException();
   }
 
-  public void finishInlineBox(final InlineRenderBox box)
-  {
+  public void finishInlineBox( final InlineRenderBox box ) {
     throw new UnsupportedOperationException();
   }
 
-  public boolean isBreakRequested()
-  {
+  public boolean isBreakRequested() {
     throw new UnsupportedOperationException();
   }
 
-  public void addNode(final RenderNode node)
-  {
+  public void addNode( final RenderNode node ) {
     throw new UnsupportedOperationException();
   }
 
-  public void setBreakRequested(final boolean breakRequested)
-  {
+  public void setBreakRequested( final boolean breakRequested ) {
     throw new UnsupportedOperationException();
   }
 }

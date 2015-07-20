@@ -17,15 +17,15 @@
 
 package org.pentaho.reporting.engine.classic.core.function;
 
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.util.HashMap;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.pentaho.reporting.engine.classic.core.event.ReportEvent;
 import org.pentaho.reporting.engine.classic.core.states.ReportStateKey;
 import org.pentaho.reporting.engine.classic.core.util.Sequence;
+
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.util.HashMap;
 
 /**
  * A report function that pre-computes the smallest item in a group. The Items must be mutually comparable among each
@@ -42,9 +42,8 @@ import org.pentaho.reporting.engine.classic.core.util.Sequence;
  *
  * @author Thomas Morgner
  */
-public class TotalItemMinFunction extends AbstractFunction implements FieldAggregationFunction
-{
-  private static final Log logger = LogFactory.getLog(TotalItemMinFunction.class);
+public class TotalItemMinFunction extends AbstractFunction implements FieldAggregationFunction {
+  private static final Log logger = LogFactory.getLog( TotalItemMinFunction.class );
   /**
    * A map of results, keyed by the process-key.
    */
@@ -72,9 +71,8 @@ public class TotalItemMinFunction extends AbstractFunction implements FieldAggre
   /**
    * Default constructor.
    */
-  public TotalItemMinFunction()
-  {
-    results = new HashMap<ReportStateKey,Sequence<Comparable>>();
+  public TotalItemMinFunction() {
+    results = new HashMap<ReportStateKey, Sequence<Comparable>>();
   }
 
   /**
@@ -82,8 +80,7 @@ public class TotalItemMinFunction extends AbstractFunction implements FieldAggre
    *
    * @return The field name.
    */
-  public String getField()
-  {
+  public String getField() {
     return field;
   }
 
@@ -92,8 +89,7 @@ public class TotalItemMinFunction extends AbstractFunction implements FieldAggre
    *
    * @param field the field name.
    */
-  public void setField(final String field)
-  {
+  public void setField( final String field ) {
     this.field = field;
   }
 
@@ -102,19 +98,15 @@ public class TotalItemMinFunction extends AbstractFunction implements FieldAggre
    *
    * @param event the event.
    */
-  public void reportInitialized(final ReportEvent event)
-  {
+  public void reportInitialized( final ReportEvent event ) {
     globalStateKey = event.getState().getProcessKey();
-    if (FunctionUtilities.isDefinedPrepareRunLevel(this, event))
-    {
+    if ( FunctionUtilities.isDefinedPrepareRunLevel( this, event ) ) {
       result = new Sequence<Comparable>();
       results.clear();
-      results.put(globalStateKey, result);
+      results.put( globalStateKey, result );
       lastGroupSequenceNumber = 0;
-    }
-    else
-    {
-      result = results.get(globalStateKey);
+    } else {
+      result = results.get( globalStateKey );
       lastGroupSequenceNumber = 0;
     }
   }
@@ -124,30 +116,24 @@ public class TotalItemMinFunction extends AbstractFunction implements FieldAggre
    *
    * @param event the event.
    */
-  public void groupStarted(final ReportEvent event)
-  {
-    if (FunctionUtilities.isDefinedGroup(getGroup(), event))
-    {
+  public void groupStarted( final ReportEvent event ) {
+    if ( FunctionUtilities.isDefinedGroup( getGroup(), event ) ) {
       final ReportStateKey groupStateKey = event.getState().getProcessKey();
-      if (FunctionUtilities.isDefinedPrepareRunLevel(this, event))
-      {
+      if ( FunctionUtilities.isDefinedPrepareRunLevel( this, event ) ) {
         result = new Sequence<Comparable>();
         lastGroupSequenceNumber = 0;
 
-        results.put(globalStateKey, result);
-        results.put(groupStateKey, result);
-      }
-      else
-      {
+        results.put( globalStateKey, result );
+        results.put( groupStateKey, result );
+      } else {
         // Activate the current group, which was filled in the prepare run.
-        result = results.get(groupStateKey);
+        result = results.get( groupStateKey );
       }
     }
 
-    if (FunctionUtilities.isDefinedGroup(getCrosstabFilterGroup(), event))
-    {
+    if ( FunctionUtilities.isDefinedGroup( getCrosstabFilterGroup(), event ) ) {
       final int groupIndex = event.getState().getCurrentGroupIndex();
-      this.lastGroupSequenceNumber = (int) event.getState().getCrosstabColumnSequenceCounter(groupIndex);
+      this.lastGroupSequenceNumber = (int) event.getState().getCrosstabColumnSequenceCounter( groupIndex );
     }
   }
 
@@ -157,46 +143,36 @@ public class TotalItemMinFunction extends AbstractFunction implements FieldAggre
    *
    * @param event the event.
    */
-  public void itemsAdvanced(final ReportEvent event)
-  {
-    if (field == null)
-    {
+  public void itemsAdvanced( final ReportEvent event ) {
+    if ( field == null ) {
       return;
     }
 
-    if (FunctionUtilities.isDefinedPrepareRunLevel(this, event) == false)
-    {
+    if ( FunctionUtilities.isDefinedPrepareRunLevel( this, event ) == false ) {
       return;
     }
 
-    final Object fieldValue = event.getDataRow().get(getField());
-    if (fieldValue instanceof Comparable == false)
-    {
+    final Object fieldValue = event.getDataRow().get( getField() );
+    if ( fieldValue instanceof Comparable == false ) {
       return;
     }
 
-    try
-    {
+    try {
       final Comparable compare = (Comparable) fieldValue;
 
-      final Comparable oldValue = result.get(lastGroupSequenceNumber);
-      if (oldValue == null || oldValue.compareTo(compare) > 0)
-      {
-        result.set(lastGroupSequenceNumber, compare);
+      final Comparable oldValue = result.get( lastGroupSequenceNumber );
+      if ( oldValue == null || oldValue.compareTo( compare ) > 0 ) {
+        result.set( lastGroupSequenceNumber, compare );
       }
-    }
-    catch (Exception e)
-    {
-      logger.error("TotalItemMinFunction.advanceItems(): problem comparing values.");
+    } catch ( Exception e ) {
+      logger.error( "TotalItemMinFunction.advanceItems(): problem comparing values." );
     }
   }
 
-  public void summaryRowSelection(final ReportEvent event)
-  {
-    if (FunctionUtilities.isDefinedGroup(getCrosstabFilterGroup(), event))
-    {
+  public void summaryRowSelection( final ReportEvent event ) {
+    if ( FunctionUtilities.isDefinedGroup( getCrosstabFilterGroup(), event ) ) {
       final int groupIndex = event.getState().getCurrentGroupIndex();
-      this.lastGroupSequenceNumber = (int) event.getState().getCrosstabColumnSequenceCounter(groupIndex);
+      this.lastGroupSequenceNumber = (int) event.getState().getCrosstabColumnSequenceCounter( groupIndex );
     }
   }
 
@@ -205,8 +181,7 @@ public class TotalItemMinFunction extends AbstractFunction implements FieldAggre
    *
    * @return the group name.
    */
-  public String getGroup()
-  {
+  public String getGroup() {
     return group;
   }
 
@@ -215,8 +190,7 @@ public class TotalItemMinFunction extends AbstractFunction implements FieldAggre
    *
    * @param group the group name.
    */
-  public void setGroup(final String group)
-  {
+  public void setGroup( final String group ) {
     this.group = group;
   }
 
@@ -225,14 +199,12 @@ public class TotalItemMinFunction extends AbstractFunction implements FieldAggre
    *
    * @return The computed minimum value.
    */
-  public Object getValue()
-  {
-    if (result == null)
-    {
+  public Object getValue() {
+    if ( result == null ) {
       return null;
     }
 
-    return result.get(lastGroupSequenceNumber);
+    return result.get( lastGroupSequenceNumber );
   }
 
   /**
@@ -241,8 +213,7 @@ public class TotalItemMinFunction extends AbstractFunction implements FieldAggre
    *
    * @return a copy of this function.
    */
-  public Expression getInstance()
-  {
+  public Expression getInstance() {
     final TotalItemMinFunction function = (TotalItemMinFunction) super.getInstance();
     function.results = new HashMap<ReportStateKey, Sequence<Comparable>>();
     return function;
@@ -255,20 +226,17 @@ public class TotalItemMinFunction extends AbstractFunction implements FieldAggre
    * @throws IOException            if an IO error occured.
    * @throws ClassNotFoundException if a required class could not be found.
    */
-  private void readObject(final ObjectInputStream in)
-      throws IOException, ClassNotFoundException
-  {
+  private void readObject( final ObjectInputStream in )
+    throws IOException, ClassNotFoundException {
     in.defaultReadObject();
     results = new HashMap<ReportStateKey, Sequence<Comparable>>();
   }
 
-  public String getCrosstabFilterGroup()
-  {
+  public String getCrosstabFilterGroup() {
     return crosstabFilterGroup;
   }
 
-  public void setCrosstabFilterGroup(final String crosstabFilterGroup)
-  {
+  public void setCrosstabFilterGroup( final String crosstabFilterGroup ) {
     this.crosstabFilterGroup = crosstabFilterGroup;
   }
 

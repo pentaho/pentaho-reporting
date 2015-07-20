@@ -22,7 +22,6 @@ package org.pentaho.reporting.engine.classic.core.layout.output;
  *
  * @author Thomas Morgner
  */
-public interface FlowSelector
-{
-  public boolean isLogicalPageAccepted(LogicalPageKey key);
+public interface FlowSelector {
+  public boolean isLogicalPageAccepted( LogicalPageKey key );
 }

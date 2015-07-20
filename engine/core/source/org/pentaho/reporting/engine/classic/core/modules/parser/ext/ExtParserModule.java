@@ -22,8 +22,6 @@ import org.pentaho.reporting.engine.classic.core.modules.parser.base.MasterRepor
 import org.pentaho.reporting.engine.classic.core.modules.parser.base.SubReportReadHandlerFactory;
 import org.pentaho.reporting.engine.classic.core.modules.parser.base.SubReportXmlResourceFactory;
 import org.pentaho.reporting.engine.classic.core.modules.parser.base.common.DataFactoryRefReadHandler;
-import org.pentaho.reporting.engine.classic.core.modules.parser.bundle.BundleSubReportXmlFactoryModule;
-import org.pentaho.reporting.engine.classic.core.modules.parser.bundle.layout.StyleDefinitionXmlFactoryModule;
 import org.pentaho.reporting.engine.classic.core.modules.parser.ext.readhandlers.ExtSubReportReadHandler;
 import org.pentaho.reporting.libraries.base.boot.AbstractModule;
 import org.pentaho.reporting.libraries.base.boot.ModuleInitializeException;
@@ -34,10 +32,9 @@ import org.pentaho.reporting.libraries.base.boot.SubSystem;
  *
  * @author Thomas Morgner
  */
-public class ExtParserModule extends AbstractModule
-{
+public class ExtParserModule extends AbstractModule {
   public static final String NAMESPACE =
-      "http://jfreereport.sourceforge.net/namespaces/reports/legacy/ext";
+    "http://jfreereport.sourceforge.net/namespaces/reports/legacy/ext";
 
   /**
    * DefaultConstructor. Loads the module specification.
@@ -45,8 +42,7 @@ public class ExtParserModule extends AbstractModule
    * @throws ModuleInitializeException if an error occured.
    */
   public ExtParserModule()
-      throws ModuleInitializeException
-  {
+    throws ModuleInitializeException {
     loadModuleInfo();
   }
 
@@ -56,22 +52,22 @@ public class ExtParserModule extends AbstractModule
    * @param subSystem the subsystem for this module.
    * @throws ModuleInitializeException if an error occured.
    */
-  public void initialize(final SubSystem subSystem)
-      throws ModuleInitializeException
-  {
-    if (AbstractModule.isClassLoadable("org.xml.sax.ext.LexicalHandler", ExtParserModule.class) == false)
-    {
-      throw new ModuleInitializeException("Unable to load JAXP-1.1 classes. " +
-          "Check your classpath and XML parser configuration.");
+  public void initialize( final SubSystem subSystem )
+    throws ModuleInitializeException {
+    if ( AbstractModule.isClassLoadable( "org.xml.sax.ext.LexicalHandler", ExtParserModule.class ) == false ) {
+      throw new ModuleInitializeException( "Unable to load JAXP-1.1 classes. " +
+        "Check your classpath and XML parser configuration." );
     }
 
-    SubReportReadHandlerFactory.getInstance().setElementHandler(NAMESPACE, "sub-report", ExtSubReportReadHandler.class);
-    DataFactoryReadHandlerFactory.getInstance().setElementHandler(NAMESPACE, "data-factory", DataFactoryRefReadHandler.class);
+    SubReportReadHandlerFactory.getInstance()
+      .setElementHandler( NAMESPACE, "sub-report", ExtSubReportReadHandler.class );
+    DataFactoryReadHandlerFactory.getInstance()
+      .setElementHandler( NAMESPACE, "data-factory", DataFactoryRefReadHandler.class );
 
-    SubReportXmlResourceFactory.register(ExtSubReportXmlFactoryModule.class);
-    MasterReportXmlResourceFactory.register(ExtReportXmlFactoryModule.class);
+    SubReportXmlResourceFactory.register( ExtSubReportXmlFactoryModule.class );
+    MasterReportXmlResourceFactory.register( ExtReportXmlFactoryModule.class );
 
-    performExternalInitialize(ExtParserModuleInit.class.getName(), ExtParserModule.class);
+    performExternalInitialize( ExtParserModuleInit.class.getName(), ExtParserModule.class );
   }
 
 

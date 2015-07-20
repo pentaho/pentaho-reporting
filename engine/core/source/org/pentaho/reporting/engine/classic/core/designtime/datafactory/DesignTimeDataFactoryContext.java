@@ -29,8 +29,7 @@ import org.pentaho.reporting.libraries.formula.FormulaContext;
 import org.pentaho.reporting.libraries.resourceloader.ResourceKey;
 import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 
-public class DesignTimeDataFactoryContext implements DataFactoryContext
-{
+public class DesignTimeDataFactoryContext implements DataFactoryContext {
   private Configuration configuration;
   private ResourceManager resourceManager;
   private ResourceKey contextKey;
@@ -38,45 +37,38 @@ public class DesignTimeDataFactoryContext implements DataFactoryContext
   private DataFactory contextFactory;
   private FormulaContext formulaContext;
 
-  public DesignTimeDataFactoryContext()
-  {
+  public DesignTimeDataFactoryContext() {
     configuration = ClassicEngineBoot.getInstance().getGlobalConfig();
     resourceManager = new ResourceManager();
     resourceBundleFactory = new DefaultResourceBundleFactory();
     formulaContext = new DefaultFormulaContext();
   }
 
-  public DesignTimeDataFactoryContext(final MasterReport report)
-  {
-    this(report.getConfiguration(), report.getResourceManager(),
-        report.getContentBase(), MasterReport.computeAndInitResourceBundleFactory
-        (report.getResourceBundleFactory(), report.getReportEnvironment()), report.getDataFactory());
+  public DesignTimeDataFactoryContext( final MasterReport report ) {
+    this( report.getConfiguration(), report.getResourceManager(),
+      report.getContentBase(), MasterReport.computeAndInitResourceBundleFactory
+        ( report.getResourceBundleFactory(), report.getReportEnvironment() ), report.getDataFactory() );
   }
 
-  public DesignTimeDataFactoryContext(final Configuration configuration,
-                                      final ResourceManager resourceManager,
-                                      final ResourceKey contextKey,
-                                      final ResourceBundleFactory resourceBundleFactory)
-  {
-    this (configuration, resourceManager, contextKey, resourceBundleFactory, null);
+  public DesignTimeDataFactoryContext( final Configuration configuration,
+                                       final ResourceManager resourceManager,
+                                       final ResourceKey contextKey,
+                                       final ResourceBundleFactory resourceBundleFactory ) {
+    this( configuration, resourceManager, contextKey, resourceBundleFactory, null );
   }
 
-  public DesignTimeDataFactoryContext(final Configuration configuration,
-                                      final ResourceManager resourceManager,
-                                      final ResourceKey contextKey,
-                                      final ResourceBundleFactory resourceBundleFactory,
-                                      final DataFactory contextFactory)
-  {
-    if (configuration == null)
-    {
+  public DesignTimeDataFactoryContext( final Configuration configuration,
+                                       final ResourceManager resourceManager,
+                                       final ResourceKey contextKey,
+                                       final ResourceBundleFactory resourceBundleFactory,
+                                       final DataFactory contextFactory ) {
+    if ( configuration == null ) {
       throw new NullPointerException();
     }
-    if (resourceManager == null)
-    {
+    if ( resourceManager == null ) {
       throw new NullPointerException();
     }
-    if (resourceBundleFactory == null)
-    {
+    if ( resourceBundleFactory == null ) {
       throw new NullPointerException();
     }
     this.contextFactory = contextFactory;
@@ -87,33 +79,27 @@ public class DesignTimeDataFactoryContext implements DataFactoryContext
     this.formulaContext = new DefaultFormulaContext();
   }
 
-  public Configuration getConfiguration()
-  {
+  public Configuration getConfiguration() {
     return configuration;
   }
 
-  public ResourceManager getResourceManager()
-  {
+  public ResourceManager getResourceManager() {
     return resourceManager;
   }
 
-  public ResourceKey getContextKey()
-  {
+  public ResourceKey getContextKey() {
     return contextKey;
   }
 
-  public ResourceBundleFactory getResourceBundleFactory()
-  {
+  public ResourceBundleFactory getResourceBundleFactory() {
     return resourceBundleFactory;
   }
 
-  public DataFactory getContextDataFactory()
-  {
+  public DataFactory getContextDataFactory() {
     return contextFactory;
   }
 
-  public FormulaContext getFormulaContext()
-  {
+  public FormulaContext getFormulaContext() {
     return formulaContext;
   }
 }

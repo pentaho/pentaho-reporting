@@ -24,42 +24,31 @@ import org.pentaho.reporting.engine.classic.core.style.BoxSizing;
  *
  * @author Thomas Morgner
  */
-public class BoxSizingValueConverter implements ValueConverter
-{
-  public BoxSizingValueConverter()
-  {
+public class BoxSizingValueConverter implements ValueConverter {
+  public BoxSizingValueConverter() {
   }
 
-  public String toAttributeValue(final Object o) throws BeanException
-  {
-    if (o == null)
-    {
+  public String toAttributeValue( final Object o ) throws BeanException {
+    if ( o == null ) {
       throw new NullPointerException();
     }
-    if (o instanceof BoxSizing)
-    {
-      return String.valueOf(o);
-    }
-    else
-    {
-      throw new BeanException("Failed to convert object of type " + o.getClass() + ": Not a BoxSizing.");
+    if ( o instanceof BoxSizing ) {
+      return String.valueOf( o );
+    } else {
+      throw new BeanException( "Failed to convert object of type " + o.getClass() + ": Not a BoxSizing." );
     }
   }
 
-  public Object toPropertyValue(final String s) throws BeanException
-  {
-    if (s == null)
-    {
+  public Object toPropertyValue( final String s ) throws BeanException {
+    if ( s == null ) {
       throw new NullPointerException();
     }
-    if (BoxSizing.BORDER_BOX.toString().equals(s))
-    {
+    if ( BoxSizing.BORDER_BOX.toString().equals( s ) ) {
       return BoxSizing.BORDER_BOX;
     }
-    if (BoxSizing.CONTENT_BOX.toString().equals(s))
-    {
+    if ( BoxSizing.CONTENT_BOX.toString().equals( s ) ) {
       return BoxSizing.CONTENT_BOX;
     }
-    throw new BeanException("Invalid value specified for BoxSizing");
+    throw new BeanException( "Invalid value specified for BoxSizing" );
   }
 }

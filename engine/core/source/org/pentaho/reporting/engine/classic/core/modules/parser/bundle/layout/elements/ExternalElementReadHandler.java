@@ -21,11 +21,9 @@ import org.pentaho.reporting.engine.classic.core.filter.types.ExternalElementTyp
 import org.pentaho.reporting.libraries.xmlns.parser.ParseException;
 
 @Deprecated
-public class ExternalElementReadHandler extends AbstractElementReadHandler
-{
+public class ExternalElementReadHandler extends AbstractElementReadHandler {
   public ExternalElementReadHandler()
-      throws ParseException
-  {
-    super(ExternalElementType.INSTANCE);
+    throws ParseException {
+    super( ExternalElementType.INSTANCE );
   }
 }

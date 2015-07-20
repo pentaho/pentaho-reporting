@@ -28,8 +28,7 @@ import org.pentaho.reporting.engine.classic.core.states.datarow.DefaultFlowContr
  *
  * @author Thomas Morgner
  */
-public interface ReportState extends Cloneable
-{
+public interface ReportState extends Cloneable {
   /**
    * A row number that is 'before' the first row.
    */
@@ -46,17 +45,17 @@ public interface ReportState extends Cloneable
   ReportDefinition getReport();
 
   /**
-   * Returns the currently processed row number. This row number contains padded rows and is equivalent to the
-   * number of advance() calls made on the master-datarow.
-   * 
+   * Returns the currently processed row number. This row number contains padded rows and is equivalent to the number of
+   * advance() calls made on the master-datarow.
+   *
    * @return the current row number.
    */
   int getCurrentRow();
 
   /**
-   * Returns the current data item. The data item is the row number used to access the raw data in the tablemodel.
-   * This number is not guaranteed to increase sequentially as sorting may affect the order of rows.
-   * 
+   * Returns the current data item. The data item is the row number used to access the raw data in the tablemodel. This
+   * number is not guaranteed to increase sequentially as sorting may affect the order of rows.
+   *
    * @return the current raw access row number.
    */
   int getCurrentDataItem();
@@ -88,7 +87,7 @@ public interface ReportState extends Cloneable
 
   public boolean isSubReportEvent();
 
-  public void setErrorHandler(ReportProcessingErrorHandler errorHandler);
+  public void setErrorHandler( ReportProcessingErrorHandler errorHandler );
 
   public InlineSubreportMarker getCurrentSubReportMarker();
 
@@ -96,9 +95,9 @@ public interface ReportState extends Cloneable
 
   public LayoutProcess getLayoutProcess();
 
-  public void firePageFinishedEvent(final boolean noParentPassing);
+  public void firePageFinishedEvent( final boolean noParentPassing );
 
-  public void firePageStartedEvent(final int eventCode);
+  public void firePageStartedEvent( final int eventCode );
 
   public ReportState getParentState();
 
@@ -120,8 +119,9 @@ public interface ReportState extends Cloneable
 
   public boolean isCrosstabActive();
 
-  public long getGroupSequenceCounter (final int groupIndex);
-  public long getCrosstabColumnSequenceCounter (final int groupIndex);
+  public long getGroupSequenceCounter( final int groupIndex );
+
+  public long getCrosstabColumnSequenceCounter( final int groupIndex );
 
   PerformanceMonitorContext getPerformanceMonitorContext();
 }

@@ -24,11 +24,10 @@ import org.pentaho.reporting.engine.classic.core.ReportProcessingException;
  *
  * @author Thomas Morgner
  */
-public interface AdvanceHandler
-{
-  public ProcessState advance(ProcessState state) throws ReportProcessingException;
+public interface AdvanceHandler {
+  public ProcessState advance( ProcessState state ) throws ReportProcessingException;
 
-  public ProcessState commit(ProcessState state) throws ReportProcessingException;
+  public ProcessState commit( ProcessState state ) throws ReportProcessingException;
 
   public boolean isFinish();
 

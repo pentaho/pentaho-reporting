@@ -25,8 +25,7 @@ import java.io.Serializable;
  *
  * @author Thomas Morgner
  */
-public class StrictBounds implements Serializable, Cloneable
-{
+public class StrictBounds implements Serializable, Cloneable {
   /**
    * The x-coordinate of the upper left corner.
    */
@@ -51,8 +50,7 @@ public class StrictBounds implements Serializable, Cloneable
   /**
    * DefaultConstructor.
    */
-  public StrictBounds()
-  {
+  public StrictBounds() {
   }
 
   /**
@@ -63,9 +61,8 @@ public class StrictBounds implements Serializable, Cloneable
    * @param width  the width of the rectangle
    * @param height the height of the rectangle
    */
-  public StrictBounds(final long x, final long y,
-                      final long width, final long height)
-  {
+  public StrictBounds( final long x, final long y,
+                       final long width, final long height ) {
     this.x = x;
     this.y = y;
     this.width = width;
@@ -77,8 +74,7 @@ public class StrictBounds implements Serializable, Cloneable
    *
    * @return true, if the bounds are locked and therefore immutable, false otherwise.
    */
-  public boolean isLocked()
-  {
+  public boolean isLocked() {
     return locked;
   }
 
@@ -88,10 +84,8 @@ public class StrictBounds implements Serializable, Cloneable
    *
    * @return a locked copy.
    */
-  public StrictBounds getLockedInstance()
-  {
-    if (locked)
-    {
+  public StrictBounds getLockedInstance() {
+    if ( locked ) {
       return this;
     }
 
@@ -105,8 +99,7 @@ public class StrictBounds implements Serializable, Cloneable
    *
    * @return an unlocked copy.
    */
-  public StrictBounds getUnlockedInstance()
-  {
+  public StrictBounds getUnlockedInstance() {
     final StrictBounds retval = (StrictBounds) clone();
     retval.locked = false;
     return retval;
@@ -118,17 +111,16 @@ public class StrictBounds implements Serializable, Cloneable
    *
    * @param bounds the bounds from where to copy all properties <code>StrictBounds</code>
    */
-  public void setRect(final StrictBounds bounds)
-  {
-    if (locked)
-    {
-      throw new IllegalStateException("This object is locked");
+  public void setRect( final StrictBounds bounds ) {
+    if ( locked ) {
+      throw new IllegalStateException( "This object is locked" );
     }
     this.x = bounds.x;
     this.y = bounds.y;
     this.width = bounds.width;
     this.height = bounds.height;
   }
+
   /**
    * Sets the location and size of this <code>StrictBounds</code> to the specified double values.
    *
@@ -137,12 +129,10 @@ public class StrictBounds implements Serializable, Cloneable
    * @param w the value to use to set the width of this <code>StrictBounds</code>
    * @param h the value to use to set the height of this <code>StrictBounds</code>
    */
-  public void setRect(final long x, final long y,
-                      final long w, final long h)
-  {
-    if (locked)
-    {
-      throw new IllegalStateException("This object is locked");
+  public void setRect( final long x, final long y,
+                       final long w, final long h ) {
+    if ( locked ) {
+      throw new IllegalStateException( "This object is locked" );
     }
     this.x = x;
     this.y = y;
@@ -155,8 +145,7 @@ public class StrictBounds implements Serializable, Cloneable
    *
    * @return the height of the framing rectangle.
    */
-  public long getHeight()
-  {
+  public long getHeight() {
     return height;
   }
 
@@ -165,8 +154,7 @@ public class StrictBounds implements Serializable, Cloneable
    *
    * @return the width of the framing rectangle.
    */
-  public long getWidth()
-  {
+  public long getWidth() {
     return width;
   }
 
@@ -175,8 +163,7 @@ public class StrictBounds implements Serializable, Cloneable
    *
    * @return the x coordinate of the upper left corner of the framing rectangle.
    */
-  public long getX()
-  {
+  public long getX() {
     return x;
   }
 
@@ -185,8 +172,7 @@ public class StrictBounds implements Serializable, Cloneable
    *
    * @return the y coordinate of the upper left corner of the framing rectangle.
    */
-  public long getY()
-  {
+  public long getY() {
     return y;
   }
 
@@ -196,8 +182,7 @@ public class StrictBounds implements Serializable, Cloneable
    *
    * @return <code>true</code> if the <code>RectangularShape</code> is empty; <code>false</code> otherwise.
    */
-  public boolean isEmpty()
-  {
+  public boolean isEmpty() {
     return width == 0 || height == 0;
   }
 
@@ -206,15 +191,11 @@ public class StrictBounds implements Serializable, Cloneable
    *
    * @return the cloned instance.
    */
-  public Object clone()
-  {
-    try
-    {
+  public Object clone() {
+    try {
       return super.clone();
-    }
-    catch (CloneNotSupportedException e)
-    {
-      throw new InternalError("Clone must always be supported.");
+    } catch ( CloneNotSupportedException e ) {
+      throw new InternalError( "Clone must always be supported." );
     }
   }
 
@@ -225,21 +206,17 @@ public class StrictBounds implements Serializable, Cloneable
    * @param y the y-coordinate of the point.
    * @return true, if the point is inside or directly on the border of this rectangle, false otherwise.
    */
-  public boolean contains(final long x, final long y)
-  {
-    if (x < this.x)
-    {
+  public boolean contains( final long x, final long y ) {
+    if ( x < this.x ) {
       return false;
     }
-    if (y < this.y)
-    {
+    if ( y < this.y ) {
       return false;
     }
-    if (x > (this.x + this.width))
-    {
+    if ( x > ( this.x + this.width ) ) {
       return false;
     }
-    return y <= (this.y + this.height);
+    return y <= ( this.y + this.height );
   }
 
 
@@ -251,9 +228,8 @@ public class StrictBounds implements Serializable, Cloneable
    * @param rect2 the second rectangle.
    * @return true, if the rectangles intersect each other, false otherwise.
    */
-  public static boolean intersects(final StrictBounds rect1,
-                                   final StrictBounds rect2)
-  {
+  public static boolean intersects( final StrictBounds rect1,
+                                    final StrictBounds rect2 ) {
 
     final double x0 = rect1.getX();
     final double y0 = rect1.getY();
@@ -262,10 +238,10 @@ public class StrictBounds implements Serializable, Cloneable
     final double width = rect2.getWidth();
     final double y = rect2.getY();
     final double height = rect2.getHeight();
-    return (x + width >= x0 &&
-        y + height >= y0 &&
-        x <= x0 + rect1.getWidth() &&
-        y <= y0 + rect1.getHeight());
+    return ( x + width >= x0 &&
+      y + height >= y0 &&
+      x <= x0 + rect1.getWidth() &&
+      y <= y0 + rect1.getHeight() );
   }
 
   /**
@@ -273,35 +249,31 @@ public class StrictBounds implements Serializable, Cloneable
    *
    * @param bounds the rectangle that should be added.
    */
-  public void add(final StrictBounds bounds)
-  {
-    if (locked)
-    {
-      throw new IllegalStateException("This object is locked");
+  public void add( final StrictBounds bounds ) {
+    if ( locked ) {
+      throw new IllegalStateException( "This object is locked" );
     }
 
-    final long x1 = Math.min(getX(), bounds.getX());
-    final long y1 = Math.min(getY(), bounds.getY());
-    final long x2 = Math.max(getX() + getWidth(), bounds.getX() + bounds.getWidth());
-    final long y2 = Math.max(getY() + getHeight(), bounds.getY() + bounds.getHeight());
-    setRect(x1, y1, Math.max(0, x2 - x1), Math.max(0, y2 - y1));
+    final long x1 = Math.min( getX(), bounds.getX() );
+    final long y1 = Math.min( getY(), bounds.getY() );
+    final long x2 = Math.max( getX() + getWidth(), bounds.getX() + bounds.getWidth() );
+    final long y2 = Math.max( getY() + getHeight(), bounds.getY() + bounds.getHeight() );
+    setRect( x1, y1, Math.max( 0, x2 - x1 ), Math.max( 0, y2 - y1 ) );
   }
 
   /**
    * Adds the given bounds to this bounds instance. The resulting rectangle will fully contain both rectangles.
    */
-  public void add(final long x, final long y, final long width, final long height)
-  {
-    if (locked)
-    {
-      throw new IllegalStateException("This object is locked");
+  public void add( final long x, final long y, final long width, final long height ) {
+    if ( locked ) {
+      throw new IllegalStateException( "This object is locked" );
     }
 
-    final long x1 = Math.min(getX(), x);
-    final long y1 = Math.min(getY(), y);
-    final long x2 = Math.max(getX() + getWidth(), x + width);
-    final long y2 = Math.max(getY() + getHeight(), y + height);
-    setRect(x1, y1, Math.max(0, x2 - x1), Math.max(0, y2 - y1));
+    final long x1 = Math.min( getX(), x );
+    final long y1 = Math.min( getY(), y );
+    final long x2 = Math.max( getX() + getWidth(), x + width );
+    final long y2 = Math.max( getY() + getHeight(), y + height );
+    setRect( x1, y1, Math.max( 0, x2 - x1 ), Math.max( 0, y2 - y1 ) );
   }
 
   /**
@@ -311,14 +283,13 @@ public class StrictBounds implements Serializable, Cloneable
    * @param bounds the other rectangle.
    * @return the resulting intersection.
    */
-  public StrictBounds createIntersection(final StrictBounds bounds)
-  {
-    final long x1 = Math.max(getX(), bounds.getX());
-    final long y1 = Math.max(getY(), bounds.getY());
-    final long x2 = Math.min(getX() + getWidth(), bounds.getX() + bounds.getWidth());
-    final long y2 = Math.min(getY() + getHeight(), bounds.getY() + bounds.getHeight());
+  public StrictBounds createIntersection( final StrictBounds bounds ) {
+    final long x1 = Math.max( getX(), bounds.getX() );
+    final long y1 = Math.max( getY(), bounds.getY() );
+    final long x2 = Math.min( getX() + getWidth(), bounds.getX() + bounds.getWidth() );
+    final long y2 = Math.min( getY() + getHeight(), bounds.getY() + bounds.getHeight() );
 
-    return new StrictBounds(x1, y1, Math.max(0, x2 - x1), Math.max(0, y2 - y1));
+    return new StrictBounds( x1, y1, Math.max( 0, x2 - x1 ), Math.max( 0, y2 - y1 ) );
   }
 
 
@@ -330,9 +301,8 @@ public class StrictBounds implements Serializable, Cloneable
    * @param rect2 the second rectangle.
    * @return A boolean.
    */
-  public static boolean contains(final StrictBounds rect1,
-                                 final StrictBounds rect2)
-  {
+  public static boolean contains( final StrictBounds rect1,
+                                  final StrictBounds rect2 ) {
 
     final long x0 = rect1.getX();
     final long y0 = rect1.getY();
@@ -341,9 +311,9 @@ public class StrictBounds implements Serializable, Cloneable
     final long w = rect2.getWidth();
     final long h = rect2.getHeight();
 
-    return ((x >= x0) && (y >= y0) &&
-        ((x + w) <= (x0 + rect1.getWidth())) &&
-        ((y + h) <= (y0 + rect1.getHeight())));
+    return ( ( x >= x0 ) && ( y >= y0 ) &&
+      ( ( x + w ) <= ( x0 + rect1.getWidth() ) ) &&
+      ( ( y + h ) <= ( y0 + rect1.getHeight() ) ) );
 
   }
 
@@ -353,29 +323,23 @@ public class StrictBounds implements Serializable, Cloneable
    * @param o the other object.
    * @return true, if the other object is equal to this object, false otherwise.
    */
-  public boolean equals(final Object o)
-  {
-    if (this == o)
-    {
+  public boolean equals( final Object o ) {
+    if ( this == o ) {
       return true;
     }
-    if (!(o instanceof StrictBounds))
-    {
+    if ( !( o instanceof StrictBounds ) ) {
       return false;
     }
 
     final StrictBounds strictBounds = (StrictBounds) o;
 
-    if (height != strictBounds.height)
-    {
+    if ( height != strictBounds.height ) {
       return false;
     }
-    if (width != strictBounds.width)
-    {
+    if ( width != strictBounds.width ) {
       return false;
     }
-    if (x != strictBounds.x)
-    {
+    if ( x != strictBounds.x ) {
       return false;
     }
     return y == strictBounds.y;
@@ -387,12 +351,11 @@ public class StrictBounds implements Serializable, Cloneable
    *
    * @return the computed hashcode.
    */
-  public int hashCode()
-  {
-    int result = (int) (x ^ (x >>> 32));
-    result = 29 * result + (int) (y ^ (y >>> 32));
-    result = 29 * result + (int) (width ^ (width >>> 32));
-    result = 29 * result + (int) (height ^ (height >>> 32));
+  public int hashCode() {
+    int result = (int) ( x ^ ( x >>> 32 ) );
+    result = 29 * result + (int) ( y ^ ( y >>> 32 ) );
+    result = 29 * result + (int) ( width ^ ( width >>> 32 ) );
+    result = 29 * result + (int) ( height ^ ( height >>> 32 ) );
     return result;
   }
 
@@ -402,19 +365,18 @@ public class StrictBounds implements Serializable, Cloneable
    *
    * @return the string representing this object.
    */
-  public String toString()
-  {
-    return new StringBuffer(100).append("org.pentaho.reporting.engine.classic.core.util.geom.StrictBounds{").append(
-        "x=")
-        .append(x)
-        .append(", y=")
-        .append(y)
-        .append(", width=")
-        .append(width)
-        .append(", height=")
-        .append(height)
-        .append('}')
-        .toString();
+  public String toString() {
+    return new StringBuffer( 100 ).append( "org.pentaho.reporting.engine.classic.core.util.geom.StrictBounds{" ).append(
+      "x=" )
+      .append( x )
+      .append( ", y=" )
+      .append( y )
+      .append( ", width=" )
+      .append( width )
+      .append( ", height=" )
+      .append( height )
+      .append( '}' )
+      .toString();
   }
 
   /**
@@ -424,12 +386,11 @@ public class StrictBounds implements Serializable, Cloneable
    * @param bg the other rectangle.
    * @return the resulting union rectangle.
    */
-  public StrictBounds createUnion(final StrictBounds bg)
-  {
-    final long x = Math.min(getX(), bg.getX());
-    final long y = Math.min(getY(), bg.getY());
-    final long w = Math.max(getX() + getWidth(), bg.getX() + bg.getWidth()) - x;
-    final long h = Math.max(getY() + getHeight(), bg.getY() + bg.getHeight()) - y;
-    return new StrictBounds(x, y, w, h);
+  public StrictBounds createUnion( final StrictBounds bg ) {
+    final long x = Math.min( getX(), bg.getX() );
+    final long y = Math.min( getY(), bg.getY() );
+    final long w = Math.max( getX() + getWidth(), bg.getX() + bg.getWidth() ) - x;
+    final long h = Math.max( getY() + getHeight(), bg.getY() + bg.getHeight() ) - y;
+    return new StrictBounds( x, y, w, h );
   }
 }

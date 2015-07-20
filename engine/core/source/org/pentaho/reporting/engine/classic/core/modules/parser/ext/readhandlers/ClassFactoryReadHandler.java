@@ -29,10 +29,8 @@ import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
 import org.pentaho.reporting.libraries.xmlns.parser.ParseException;
 import org.xml.sax.SAXException;
 
-public class ClassFactoryReadHandler extends AbstractPropertyXmlReadHandler
-{
-  public ClassFactoryReadHandler()
-  {
+public class ClassFactoryReadHandler extends AbstractPropertyXmlReadHandler {
+  public ClassFactoryReadHandler() {
   }
 
   /**
@@ -41,40 +39,34 @@ public class ClassFactoryReadHandler extends AbstractPropertyXmlReadHandler
    * @param attrs the attributes.
    * @throws org.xml.sax.SAXException if there is a parsing error.
    */
-  protected void startParsing(final PropertyAttributes attrs)
-      throws SAXException
-  {
-    String className = CompatibilityMapperUtil.mapClassName(attrs.getValue(getUri(), "class"));
-    if (className == null)
-    {
-      throw new ParseException("Attribute 'class' is missing.",
-          getRootHandler().getDocumentLocator());
+  protected void startParsing( final PropertyAttributes attrs )
+    throws SAXException {
+    String className = CompatibilityMapperUtil.mapClassName( attrs.getValue( getUri(), "class" ) );
+    if ( className == null ) {
+      throw new ParseException( "Attribute 'class' is missing.",
+        getRootHandler().getDocumentLocator() );
     }
 
     // some legacy mappings (0.8.7 and before)
-    if ("org.jfree.xml.factory.objects.ArrayClassFactory".equals(className))
-    {
+    if ( "org.jfree.xml.factory.objects.ArrayClassFactory".equals( className ) ) {
       className = ArrayClassFactory.class.getName();
     }
-    if ("org.jfree.xml.factory.objects.JavaBaseClassFactory".equals(className))
-    {
+    if ( "org.jfree.xml.factory.objects.JavaBaseClassFactory".equals( className ) ) {
       className = JavaBaseClassFactory.class.getName();
     }
-    if ("org.jfree.xml.factory.objects.URLClassFactory".equals(className))
-    {
+    if ( "org.jfree.xml.factory.objects.URLClassFactory".equals( className ) ) {
       className = URLClassFactory.class.getName();
     }
 
     final ClassFactoryCollector fc =
-        (ClassFactoryCollector) getRootHandler().getHelperObject
-            (ReportDefinitionReadHandler.CLASS_FACTORY_KEY);
+      (ClassFactoryCollector) getRootHandler().getHelperObject
+        ( ReportDefinitionReadHandler.CLASS_FACTORY_KEY );
 
     final ClassFactory factory = (ClassFactory)
-        ObjectUtilities.loadAndInstantiate(className, getClass(), ClassFactory.class);
-    if (factory != null)
-    {
-      factory.configure(getRootHandler().getParserConfiguration());
-      fc.addFactory(factory);
+      ObjectUtilities.loadAndInstantiate( className, getClass(), ClassFactory.class );
+    if ( factory != null ) {
+      factory.configure( getRootHandler().getParserConfiguration() );
+      fc.addFactory( factory );
     }
   }
 
@@ -83,8 +75,7 @@ public class ClassFactoryReadHandler extends AbstractPropertyXmlReadHandler
    *
    * @return the object.
    */
-  public Object getObject()
-  {
+  public Object getObject() {
     return null;
   }
 }

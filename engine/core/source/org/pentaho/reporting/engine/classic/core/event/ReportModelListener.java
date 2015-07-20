@@ -19,7 +19,6 @@ package org.pentaho.reporting.engine.classic.core.event;
 
 import java.util.EventListener;
 
-public interface ReportModelListener extends EventListener
-{
-  public void nodeChanged(ReportModelEvent event);
+public interface ReportModelListener extends EventListener {
+  public void nodeChanged( ReportModelEvent event );
 }

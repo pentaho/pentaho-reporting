@@ -17,13 +17,13 @@
 
 package org.pentaho.reporting.engine.classic.core.style.css.selector;
 
-import java.io.Serializable;
-
 import org.pentaho.reporting.engine.classic.core.style.css.namespaces.NamespaceCollection;
 import org.w3c.css.sac.Selector;
 
-public interface CSSSelector extends Selector, Serializable
-{
+import java.io.Serializable;
+
+public interface CSSSelector extends Selector, Serializable {
   public SelectorWeight getWeight();
-  public String print (NamespaceCollection namespaces);
+
+  public String print( NamespaceCollection namespaces );
 }

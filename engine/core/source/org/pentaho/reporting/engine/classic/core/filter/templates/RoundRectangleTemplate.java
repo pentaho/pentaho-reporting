@@ -17,11 +17,10 @@
 
 package org.pentaho.reporting.engine.classic.core.filter.templates;
 
-import java.awt.geom.RoundRectangle2D;
-
-import org.pentaho.reporting.engine.classic.core.Element;
 import org.pentaho.reporting.engine.classic.core.ReportElement;
 import org.pentaho.reporting.engine.classic.core.function.ExpressionRuntime;
+
+import java.awt.geom.RoundRectangle2D;
 
 /**
  * A template to create rectangle elements. The rectangle always has the width and the height of 100 points.
@@ -31,8 +30,7 @@ import org.pentaho.reporting.engine.classic.core.function.ExpressionRuntime;
  *
  * @author Thomas Morgner
  */
-public class RoundRectangleTemplate extends AbstractTemplate
-{
+public class RoundRectangleTemplate extends AbstractTemplate {
   /**
    * The width of the arc that is used to round off the corners of rectangle.
    */
@@ -45,8 +43,7 @@ public class RoundRectangleTemplate extends AbstractTemplate
   /**
    * Default Constructor.
    */
-  public RoundRectangleTemplate()
-  {
+  public RoundRectangleTemplate() {
   }
 
   /**
@@ -54,8 +51,7 @@ public class RoundRectangleTemplate extends AbstractTemplate
    *
    * @return the width of the corner arcs.
    */
-  public float getArcWidth()
-  {
+  public float getArcWidth() {
     return arcWidth;
   }
 
@@ -64,8 +60,7 @@ public class RoundRectangleTemplate extends AbstractTemplate
    *
    * @param arcWidth the width of the corner arcs.
    */
-  public void setArcWidth(final float arcWidth)
-  {
+  public void setArcWidth( final float arcWidth ) {
     this.arcWidth = arcWidth;
   }
 
@@ -74,8 +69,7 @@ public class RoundRectangleTemplate extends AbstractTemplate
    *
    * @return the height of the corner arcs.
    */
-  public float getArcHeight()
-  {
+  public float getArcHeight() {
     return arcHeight;
   }
 
@@ -84,8 +78,7 @@ public class RoundRectangleTemplate extends AbstractTemplate
    *
    * @param arcHeight the height of the corner arcs.
    */
-  public void setArcHeight(final float arcHeight)
-  {
+  public void setArcHeight( final float arcHeight ) {
     this.arcHeight = arcHeight;
   }
 
@@ -97,8 +90,7 @@ public class RoundRectangleTemplate extends AbstractTemplate
    * @param element
    * @return a rectangle with a width and height of 100.
    */
-  public Object getValue(final ExpressionRuntime runtime, final ReportElement element)
-  {
-    return new RoundRectangle2D.Float(0, 0, 100, 100, arcWidth, arcHeight);
+  public Object getValue( final ExpressionRuntime runtime, final ReportElement element ) {
+    return new RoundRectangle2D.Float( 0, 0, 100, 100, arcWidth, arcHeight );
   }
 }

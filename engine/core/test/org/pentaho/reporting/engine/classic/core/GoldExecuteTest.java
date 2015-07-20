@@ -22,17 +22,13 @@ import org.junit.Test;
 import org.pentaho.reporting.engine.classic.core.testsupport.DebugReportRunner;
 import org.pentaho.reporting.engine.classic.core.testsupport.gold.GoldTestBase;
 
-public class GoldExecuteTest extends GoldTestBase
-{
-  public GoldExecuteTest()
-  {
+public class GoldExecuteTest extends GoldTestBase {
+  public GoldExecuteTest() {
   }
 
   @Test
-  public void testExecuteReports() throws Exception
-  {
-    if (DebugReportRunner.isSkipLongRunTest())
-    {
+  public void testExecuteReports() throws Exception {
+    if ( DebugReportRunner.isSkipLongRunTest() ) {
       return;
     }
     runAllGoldReports();

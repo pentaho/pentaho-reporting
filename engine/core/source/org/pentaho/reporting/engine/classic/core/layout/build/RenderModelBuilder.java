@@ -30,58 +30,53 @@ import org.pentaho.reporting.engine.classic.core.layout.model.LogicalPageBox;
 import org.pentaho.reporting.engine.classic.core.states.ReportStateKey;
 import org.pentaho.reporting.engine.classic.core.util.InstanceID;
 
-public interface RenderModelBuilder
-{
-  public static class SectionResult
-  {
+public interface RenderModelBuilder {
+  public static class SectionResult {
     private InlineSubreportMarker[] subreportMarkers;
     private boolean empty;
 
-    public SectionResult(final InlineSubreportMarker[] subreportMarkers,
-                         final boolean empty)
-    {
+    public SectionResult( final InlineSubreportMarker[] subreportMarkers,
+                          final boolean empty ) {
       this.subreportMarkers = subreportMarkers;
       this.empty = empty;
     }
 
-    public InlineSubreportMarker[] getSubreportMarkers()
-    {
+    public InlineSubreportMarker[] getSubreportMarkers() {
       return subreportMarkers;
     }
 
-    public boolean isEmpty()
-    {
+    public boolean isEmpty() {
       return empty;
     }
   }
 
-  public void updateStateKey(ReportStateKey stateKey);
+  public void updateStateKey( ReportStateKey stateKey );
 
-  public void startReport(final ReportDefinition pageDefinition, final ProcessingContext processingContext);
+  public void startReport( final ReportDefinition pageDefinition, final ProcessingContext processingContext );
 
-  public void startSubReport(final ReportDefinition report, final InstanceID insertationPoint);
+  public void startSubReport( final ReportDefinition report, final InstanceID insertationPoint );
 
-  public void startGroup(final Group group, final Integer predictedStateCount);
+  public void startGroup( final Group group, final Integer predictedStateCount );
 
-  public void startGroupBody(final GroupBody groupBody, final Integer predictedStateCount);
+  public void startGroupBody( final GroupBody groupBody, final Integer predictedStateCount );
 
-  public void startSection(Renderer.SectionType type);
+  public void startSection( Renderer.SectionType type );
 
   public SectionResult endSection();
 
   public void addProgressBox()
-      throws ReportProcessingException;
-  
+    throws ReportProcessingException;
+
   public void addEmptyRootLevelBand()
-      throws ReportProcessingException;
+    throws ReportProcessingException;
 
   public void addPageBreak();
-  
-  public void add(ExpressionRuntime runtime, Band band)
-      throws ReportProcessingException;
 
-  public void addToNormalFlow(final ExpressionRuntime runtime,
-                              final Band band) throws ReportProcessingException;
+  public void add( ExpressionRuntime runtime, Band band )
+    throws ReportProcessingException;
+
+  public void addToNormalFlow( final ExpressionRuntime runtime,
+                               final Band band ) throws ReportProcessingException;
 
   public void endGroupBody();
 
@@ -92,6 +87,7 @@ public interface RenderModelBuilder
   public void endReport();
 
   public RenderModelBuilder deriveForStorage();
+
   public RenderModelBuilder deriveForPageBreak();
 
   public void performParanoidModelCheck();

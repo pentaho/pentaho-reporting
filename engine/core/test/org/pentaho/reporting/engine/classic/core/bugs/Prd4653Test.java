@@ -17,8 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.core.bugs;
 
-import java.net.URL;
-
 import junit.framework.TestCase;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
@@ -31,49 +29,45 @@ import org.pentaho.reporting.libraries.base.LibBaseBoot;
 import org.pentaho.reporting.libraries.resourceloader.Resource;
 import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 
-@SuppressWarnings("HardCodedStringLiteral")
-public class Prd4653Test extends TestCase
-{
-  public Prd4653Test()
-  {
+import java.net.URL;
+
+@SuppressWarnings( "HardCodedStringLiteral" )
+public class Prd4653Test extends TestCase {
+  public Prd4653Test() {
   }
 
-  public void setUp() throws Exception
-  {
+  public void setUp() throws Exception {
     ClassicEngineBoot.getInstance().start();
   }
 
 
-  public void testBugExists() throws Exception
-  {
-    final URL resource = getClass().getResource("Prd-4653.prpt");
-    assertNotNull(resource);
+  public void testBugExists() throws Exception {
+    final URL resource = getClass().getResource( "Prd-4653.prpt" );
+    assertNotNull( resource );
 
     final ResourceManager mgr = new ResourceManager();
     mgr.registerDefaults();
-    final Resource parsed = mgr.createDirectly(resource, MasterReport.class);
+    final Resource parsed = mgr.createDirectly( resource, MasterReport.class );
     final MasterReport report = (MasterReport) parsed.getResource();
-    report.getRootGroup().getElement(0).setName("master-group-header");
+    report.getRootGroup().getElement( 0 ).setName( "master-group-header" );
 
-    final LogicalPageBox page = DebugReportRunner.layoutPage(report, 1);
-    final RenderNode[] elementsByName = MatchFactory.findElementsByName(page, "master-group-header");
+    final LogicalPageBox page = DebugReportRunner.layoutPage( report, 1 );
+    final RenderNode[] elementsByName = MatchFactory.findElementsByName( page, "master-group-header" );
 
-    assertEquals(1, elementsByName.length);
+    assertEquals( 1, elementsByName.length );
   }
 
-  public void testLogging ()
-  {
+  public void testLogging() {
     LibBaseBoot.getInstance().start();
-    System.out.println(getClass().getResource("/simplelog.properties"));
+    System.out.println( getClass().getResource( "/simplelog.properties" ) );
   }
 
-  public void testSubReportFlow() throws Exception
-  {
+  public void testSubReportFlow() throws Exception {
     MasterReport report = new MasterReport();
-    report.getReportHeader().addSubReport(new SubReport());
-    report.getReportHeader().addElement(new SubReport());
+    report.getReportHeader().addSubReport( new SubReport() );
+    report.getReportHeader().addElement( new SubReport() );
 
-    final LogicalPageBox page = DebugReportRunner.layoutPage(report, 0);
+    final LogicalPageBox page = DebugReportRunner.layoutPage( report, 0 );
 
   }
 

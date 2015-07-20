@@ -27,14 +27,14 @@ import java.util.TimeZone;
  *
  * @author Thomas Morgner
  */
-public interface ResourceBundleFactory extends Serializable
-{
+public interface ResourceBundleFactory extends Serializable {
   /**
    * A constant containing the configuration key to specify a resource-bundle name for the report.
    * <p/>
    * This property has the value "org.pentaho.reporting.engine.classic.core.ResourceBundle".
    */
-  public static final String DEFAULT_RESOURCE_BUNDLE_CONFIG_KEY = "org.pentaho.reporting.engine.classic.core.ResourceBundle";
+  public static final String DEFAULT_RESOURCE_BUNDLE_CONFIG_KEY =
+    "org.pentaho.reporting.engine.classic.core.ResourceBundle";
 
   /**
    * Creates a resource bundle for the given key. How that key is interpreted depends on the used concrete
@@ -42,10 +42,9 @@ public interface ResourceBundleFactory extends Serializable
    *
    * @param key the key that identifies the resource bundle
    * @return the created resource bundle
-   * @throws java.util.MissingResourceException
-   *          if no resource bundle for the specified base name can be found
+   * @throws java.util.MissingResourceException if no resource bundle for the specified base name can be found
    */
-  public ResourceBundle getResourceBundle(String key);
+  public ResourceBundle getResourceBundle( String key );
 
   /**
    * Returns the locale that will be used to create the resource bundle. This locale is also used to initialize the

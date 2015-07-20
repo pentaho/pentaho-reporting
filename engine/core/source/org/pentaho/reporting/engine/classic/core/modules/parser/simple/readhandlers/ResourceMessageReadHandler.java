@@ -24,26 +24,22 @@ import org.pentaho.reporting.engine.classic.core.modules.parser.base.common.Prop
 import org.pentaho.reporting.libraries.xmlns.parser.RootXmlReadHandler;
 import org.xml.sax.SAXException;
 
-public class ResourceMessageReadHandler extends AbstractTextElementReadHandler
-{
+public class ResourceMessageReadHandler extends AbstractTextElementReadHandler {
   private PropertyStringReadHandler stringReadHandler;
   private ResourceMessageElementFactory elementFactory;
 
-  public ResourceMessageReadHandler()
-  {
+  public ResourceMessageReadHandler() {
     elementFactory = new ResourceMessageElementFactory();
     stringReadHandler = new PropertyStringReadHandler();
   }
 
-  protected TextElementFactory getTextElementFactory()
-  {
+  protected TextElementFactory getTextElementFactory() {
     return elementFactory;
   }
 
-  public void init(final RootXmlReadHandler rootHandler, final String uri, final String tagName) throws SAXException
-  {
-    super.init(rootHandler, uri, tagName);
-    stringReadHandler.init(rootHandler, uri, tagName);
+  public void init( final RootXmlReadHandler rootHandler, final String uri, final String tagName ) throws SAXException {
+    super.init( rootHandler, uri, tagName );
+    stringReadHandler.init( rootHandler, uri, tagName );
   }
 
   /**
@@ -52,19 +48,17 @@ public class ResourceMessageReadHandler extends AbstractTextElementReadHandler
    * @param atts the attributes.
    * @throws SAXException if there is a parsing error.
    */
-  protected void startParsing(final PropertyAttributes atts)
-      throws SAXException
-  {
-    super.startParsing(atts);
-    elementFactory.setFormatKey(atts.getValue(getUri(), "resource-key"));
-    elementFactory.setResourceBase(atts.getValue(getUri(), "resource-base"));
-    elementFactory.setNullString(atts.getValue(getUri(), "nullstring"));
-    stringReadHandler.startParsing(atts);
+  protected void startParsing( final PropertyAttributes atts )
+    throws SAXException {
+    super.startParsing( atts );
+    elementFactory.setFormatKey( atts.getValue( getUri(), "resource-key" ) );
+    elementFactory.setResourceBase( atts.getValue( getUri(), "resource-base" ) );
+    elementFactory.setNullString( atts.getValue( getUri(), "nullstring" ) );
+    stringReadHandler.startParsing( atts );
   }
 
-  public void characters(final char[] ch, final int start, final int length) throws SAXException
-  {
-    stringReadHandler.characters(ch, start, length);
+  public void characters( final char[] ch, final int start, final int length ) throws SAXException {
+    stringReadHandler.characters( ch, start, length );
   }
 
   /**
@@ -73,13 +67,11 @@ public class ResourceMessageReadHandler extends AbstractTextElementReadHandler
    * @throws SAXException if there is a parsing error.
    */
   protected void doneParsing()
-      throws SAXException
-  {
+    throws SAXException {
     stringReadHandler.doneParsing();
     final String key = stringReadHandler.getResult();
-    if (key.trim().length() > 0)
-    {
-      elementFactory.setFormatKey(key);
+    if ( key.trim().length() > 0 ) {
+      elementFactory.setFormatKey( key );
     }
     super.doneParsing();
   }

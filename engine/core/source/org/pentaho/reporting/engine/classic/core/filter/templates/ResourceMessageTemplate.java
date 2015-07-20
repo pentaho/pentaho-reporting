@@ -17,12 +17,12 @@
 
 package org.pentaho.reporting.engine.classic.core.filter.templates;
 
-import java.util.MissingResourceException;
-
 import org.pentaho.reporting.engine.classic.core.ReportElement;
 import org.pentaho.reporting.engine.classic.core.filter.ResourceMessageFormatFilter;
 import org.pentaho.reporting.engine.classic.core.filter.StringFilter;
 import org.pentaho.reporting.engine.classic.core.function.ExpressionRuntime;
+
+import java.util.MissingResourceException;
 
 /**
  * A field template that formats values from the datarow using a message format object. The message format string is
@@ -31,8 +31,7 @@ import org.pentaho.reporting.engine.classic.core.function.ExpressionRuntime;
  * @author Thomas Morgner
  * @since 2006-01-24
  */
-public class ResourceMessageTemplate extends AbstractTemplate
-{
+public class ResourceMessageTemplate extends AbstractTemplate {
   /**
    * A string filter.
    */
@@ -46,11 +45,10 @@ public class ResourceMessageTemplate extends AbstractTemplate
   /**
    * Creates a new template.
    */
-  public ResourceMessageTemplate()
-  {
+  public ResourceMessageTemplate() {
     resourceFilter = new ResourceMessageFormatFilter();
     stringFilter = new StringFilter();
-    stringFilter.setDataSource(resourceFilter);
+    stringFilter.setDataSource( resourceFilter );
   }
 
   /**
@@ -58,8 +56,7 @@ public class ResourceMessageTemplate extends AbstractTemplate
    *
    * @return the resource bundle key.
    */
-  public String getFormatKey()
-  {
+  public String getFormatKey() {
     return resourceFilter.getFormatKey();
   }
 
@@ -68,9 +65,8 @@ public class ResourceMessageTemplate extends AbstractTemplate
    *
    * @param formatKey a resourcebundle key for the message format lookup.
    */
-  public void setFormatKey(final String formatKey)
-  {
-    resourceFilter.setFormatKey(formatKey);
+  public void setFormatKey( final String formatKey ) {
+    resourceFilter.setFormatKey( formatKey );
   }
 
   /**
@@ -78,8 +74,7 @@ public class ResourceMessageTemplate extends AbstractTemplate
    *
    * @return The resource class name.
    */
-  public String getResourceIdentifier()
-  {
+  public String getResourceIdentifier() {
     return resourceFilter.getResourceIdentifier();
   }
 
@@ -89,10 +84,9 @@ public class ResourceMessageTemplate extends AbstractTemplate
    * @param resourceClassName the resource class name.
    * @throws MissingResourceException if the resource is missing.
    */
-  public void setResourceIdentifier(final String resourceClassName)
-      throws MissingResourceException
-  {
-    resourceFilter.setResourceIdentifier(resourceClassName);
+  public void setResourceIdentifier( final String resourceClassName )
+    throws MissingResourceException {
+    resourceFilter.setResourceIdentifier( resourceClassName );
   }
 
   /**
@@ -100,8 +94,7 @@ public class ResourceMessageTemplate extends AbstractTemplate
    *
    * @return The string that represents a <code>null</code> value.
    */
-  public String getNullValue()
-  {
+  public String getNullValue() {
     return stringFilter.getNullValue();
   }
 
@@ -110,10 +103,9 @@ public class ResourceMessageTemplate extends AbstractTemplate
    *
    * @param nullValue the string that represents a <code>null</code> value.
    */
-  public void setNullValue(final String nullValue)
-  {
-    stringFilter.setNullValue(nullValue);
-    resourceFilter.setNullString(nullValue);
+  public void setNullValue( final String nullValue ) {
+    stringFilter.setNullValue( nullValue );
+    resourceFilter.setNullString( nullValue );
   }
 
   /**
@@ -124,9 +116,8 @@ public class ResourceMessageTemplate extends AbstractTemplate
    * @param element
    * @return the value.
    */
-  public Object getValue(final ExpressionRuntime runtime, final ReportElement element)
-  {
-    return stringFilter.getValue(runtime, element);
+  public Object getValue( final ExpressionRuntime runtime, final ReportElement element ) {
+    return stringFilter.getValue( runtime, element );
   }
 
   /**
@@ -136,8 +127,7 @@ public class ResourceMessageTemplate extends AbstractTemplate
    * @throws CloneNotSupportedException this should never happen.
    */
   public ResourceMessageTemplate clone()
-      throws CloneNotSupportedException
-  {
+    throws CloneNotSupportedException {
     final ResourceMessageTemplate template = (ResourceMessageTemplate) super.clone();
     template.stringFilter = stringFilter.clone();
     template.resourceFilter = (ResourceMessageFormatFilter) template.stringFilter.getDataSource();

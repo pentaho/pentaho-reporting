@@ -19,9 +19,7 @@ package org.pentaho.reporting.engine.classic.core;
 
 import org.pentaho.reporting.engine.classic.core.filter.types.bands.CrosstabHeaderType;
 import org.pentaho.reporting.engine.classic.core.style.BandDefaultStyleSheet;
-import org.pentaho.reporting.engine.classic.core.style.BandStyleKeys;
 import org.pentaho.reporting.engine.classic.core.style.ElementStyleSheet;
-import org.pentaho.reporting.engine.classic.core.style.RootLevelBandDefaultStyleSheet;
 
 /**
  * A details header is printed between the last group-header and the first detail band. The header is printed on the
@@ -31,19 +29,17 @@ import org.pentaho.reporting.engine.classic.core.style.RootLevelBandDefaultStyle
  *
  * @author Thomas Morgner
  */
-public class CrosstabHeader extends Band implements RootLevelBand
-{
+public class CrosstabHeader extends Band implements RootLevelBand {
   /**
    * A helper array to prevent unnecessary object creation.
    */
-  private static final SubReport[] EMPTY_SUB_REPORTS = new SubReport[0];
+  private static final SubReport[] EMPTY_SUB_REPORTS = new SubReport[ 0 ];
 
   /**
    * Constructs a new band (initially empty).
    */
-  public CrosstabHeader()
-  {
-    setElementType(new CrosstabHeaderType());
+  public CrosstabHeader() {
+    setElementType( new CrosstabHeaderType() );
   }
 
   /**
@@ -51,8 +47,7 @@ public class CrosstabHeader extends Band implements RootLevelBand
    *
    * @return the subreport count.
    */
-  public final int getSubReportCount()
-  {
+  public final int getSubReportCount() {
     return 0;
   }
 
@@ -62,9 +57,8 @@ public class CrosstabHeader extends Band implements RootLevelBand
    * @param index the index.
    * @return nothing, as an exception is thrown instead.
    */
-  public final SubReport getSubReport(final int index)
-  {
-    throw new IndexOutOfBoundsException("DetailsHeader cannot have subreports");
+  public final SubReport getSubReport( final int index ) {
+    throw new IndexOutOfBoundsException( "DetailsHeader cannot have subreports" );
   }
 
   /**
@@ -72,13 +66,11 @@ public class CrosstabHeader extends Band implements RootLevelBand
    *
    * @return the sub-reports as array.
    */
-  public SubReport[] getSubReports()
-  {
+  public SubReport[] getSubReports() {
     return CrosstabHeader.EMPTY_SUB_REPORTS;
   }
 
-  public ElementStyleSheet getDefaultStyleSheet()
-  {
+  public ElementStyleSheet getDefaultStyleSheet() {
     return BandDefaultStyleSheet.getBandDefaultStyle();
   }
 }

@@ -17,12 +17,12 @@
 
 package org.pentaho.reporting.engine.classic.core;
 
-import java.util.Iterator;
-import java.util.NoSuchElementException;
-
 import org.pentaho.reporting.engine.classic.core.style.ElementStyleSheet;
 import org.pentaho.reporting.engine.classic.core.style.ReportSectionDefaultStyleSheet;
 import org.pentaho.reporting.engine.classic.core.util.InstanceID;
+
+import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 /**
  * A section is a small-scale band that allows to access the child elements but does not define how childs get added or
@@ -30,34 +30,27 @@ import org.pentaho.reporting.engine.classic.core.util.InstanceID;
  *
  * @author Thomas Morgner
  */
-public abstract class Section extends Element implements Iterable<Element>
-{
-  private class SectionIterator implements Iterator<Element>
-  {
+public abstract class Section extends Element implements Iterable<Element> {
+  private class SectionIterator implements Iterator<Element> {
     private int pos;
 
-    private SectionIterator()
-    {
+    private SectionIterator() {
     }
 
-    public boolean hasNext()
-    {
+    public boolean hasNext() {
       return pos < getElementCount();
     }
 
-    public Element next()
-    {
-      if (pos >= getElementCount())
-      {
+    public Element next() {
+      if ( pos >= getElementCount() ) {
         throw new NoSuchElementException();
       }
-      final Element e = getElement(pos);
+      final Element e = getElement( pos );
       pos += 1;
       return e;
     }
 
-    public void remove()
-    {
+    public void remove() {
       throw new UnsupportedOperationException();
     }
   }
@@ -65,13 +58,11 @@ public abstract class Section extends Element implements Iterable<Element>
   /**
    * Default Constructor.
    */
-  protected Section()
-  {
+  protected Section() {
   }
 
-  protected Section(final InstanceID id)
-  {
-    super(id);
+  protected Section( final InstanceID id ) {
+    super( id );
   }
 
   /**
@@ -82,8 +73,7 @@ public abstract class Section extends Element implements Iterable<Element>
    *
    * @return the global stylesheet.
    */
-  public ElementStyleSheet getDefaultStyleSheet()
-  {
+  public ElementStyleSheet getDefaultStyleSheet() {
     return ReportSectionDefaultStyleSheet.getSectionDefault();
   }
 
@@ -94,7 +84,7 @@ public abstract class Section extends Element implements Iterable<Element>
    * @return the element
    * @throws IndexOutOfBoundsException if the index is invalid.
    */
-  public abstract Element getElement(int index);
+  public abstract Element getElement( int index );
 
   /**
    * Returns the number of elements in this section.
@@ -112,20 +102,17 @@ public abstract class Section extends Element implements Iterable<Element>
    * @param element the element to be unregistered from its current parent.
    * @return true, if the element is a child of this section, false otherwise.
    */
-  protected boolean unregisterParent(final Element element)
-  {
+  protected boolean unregisterParent( final Element element ) {
     // remove the element from its old parent ..
     // this is the default AWT behaviour when adding Components to Container
     final Section parentSection = element.getParentSection();
-    if (parentSection != null)
-    {
-      if (parentSection == this)
-      {
+    if ( parentSection != null ) {
+      if ( parentSection == this ) {
         // already a child, wont add twice ...
         return true;
       }
 
-      parentSection.removeElement(element);
+      parentSection.removeElement( element );
     }
     return false;
   }
@@ -136,24 +123,20 @@ public abstract class Section extends Element implements Iterable<Element>
    *
    * @param element the element to be checked for loops.
    */
-  protected void validateLooping(final Element element)
-  {
+  protected void validateLooping( final Element element ) {
     // check for component loops ...
-    if (element instanceof Section)
-    {
+    if ( element instanceof Section ) {
       Section band = this;
-      while (band != null)
-      {
-        if (band == element)
-        {
-          throw new IllegalArgumentException("adding container's parent to itself");
+      while ( band != null ) {
+        if ( band == element ) {
+          throw new IllegalArgumentException( "adding container's parent to itself" );
         }
         band = band.getParentSection();
       }
     }
   }
 
-  public abstract void setElementAt(final int position, final Element element);
+  public abstract void setElementAt( final int position, final Element element );
 
   /**
    * Removes an element from the section.
@@ -161,30 +144,25 @@ public abstract class Section extends Element implements Iterable<Element>
    * @param element the element to be section.
    * @throws NullPointerException if the given element is null.
    */
-  protected abstract void removeElement(final Element element);
+  protected abstract void removeElement( final Element element );
 
-  protected void unregisterAsChild(final Element element)
-  {
-    element.setParent(null);
+  protected void unregisterAsChild( final Element element ) {
+    element.setParent( null );
   }
 
-  protected void registerAsChild(final Element element)
-  {
-    element.setParent(this);
+  protected void registerAsChild( final Element element ) {
+    element.setParent( this );
   }
 
-  public Iterator<Element> iterator()
-  {
+  public Iterator<Element> iterator() {
     return new SectionIterator();
   }
 
-  public Section derive(final boolean preserveElementInstanceIds)
-  {
-    return (Section) super.derive(preserveElementInstanceIds);
+  public Section derive( final boolean preserveElementInstanceIds ) {
+    return (Section) super.derive( preserveElementInstanceIds );
   }
 
-  public Section clone()
-  {
+  public Section clone() {
     return (Section) super.clone();
   }
 }

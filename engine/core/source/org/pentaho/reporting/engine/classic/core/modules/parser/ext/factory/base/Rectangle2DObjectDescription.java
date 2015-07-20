@@ -24,19 +24,17 @@ import java.awt.geom.Rectangle2D;
  *
  * @author Thomas Morgner
  */
-public class Rectangle2DObjectDescription extends AbstractObjectDescription
-{
+public class Rectangle2DObjectDescription extends AbstractObjectDescription {
 
   /**
    * Creates a new object description.
    */
-  public Rectangle2DObjectDescription()
-  {
-    super(Rectangle2D.class);
-    setParameterDefinition("width", Float.class);
-    setParameterDefinition("height", Float.class);
-    setParameterDefinition("x", Float.class);
-    setParameterDefinition("y", Float.class);
+  public Rectangle2DObjectDescription() {
+    super( Rectangle2D.class );
+    setParameterDefinition( "width", Float.class );
+    setParameterDefinition( "height", Float.class );
+    setParameterDefinition( "x", Float.class );
+    setParameterDefinition( "y", Float.class );
   }
 
   /**
@@ -44,15 +42,14 @@ public class Rectangle2DObjectDescription extends AbstractObjectDescription
    *
    * @return The object.
    */
-  public Object createObject()
-  {
+  public Object createObject() {
     final Rectangle2D rect = new Rectangle2D.Float();
 
-    final float w = getFloatParameter("width");
-    final float h = getFloatParameter("height");
-    final float x = getFloatParameter("x");
-    final float y = getFloatParameter("y");
-    rect.setRect(x, y, w, h);
+    final float w = getFloatParameter( "width" );
+    final float h = getFloatParameter( "height" );
+    final float x = getFloatParameter( "x" );
+    final float y = getFloatParameter( "y" );
+    rect.setRect( x, y, w, h );
     return rect;
   }
 
@@ -62,11 +59,9 @@ public class Rectangle2DObjectDescription extends AbstractObjectDescription
    * @param param the parameter name.
    * @return The float value.
    */
-  private float getFloatParameter(final String param)
-  {
-    final Float p = (Float) getParameter(param);
-    if (p == null)
-    {
+  private float getFloatParameter( final String param ) {
+    final Float p = (Float) getParameter( param );
+    if ( p == null ) {
       return 0;
     }
     return p.floatValue();
@@ -78,11 +73,9 @@ public class Rectangle2DObjectDescription extends AbstractObjectDescription
    * @param o the object (should be an instance of <code>Rectangle2D</code>).
    * @throws ObjectFactoryException if the object is not an instance of <code>Rectangle2D</code>.
    */
-  public void setParameterFromObject(final Object o) throws ObjectFactoryException
-  {
-    if (!(o instanceof Rectangle2D))
-    {
-      throw new ObjectFactoryException("The given object is no java.awt.geom.Rectangle2D.");
+  public void setParameterFromObject( final Object o ) throws ObjectFactoryException {
+    if ( !( o instanceof Rectangle2D ) ) {
+      throw new ObjectFactoryException( "The given object is no java.awt.geom.Rectangle2D." );
     }
 
     final Rectangle2D rect = (Rectangle2D) o;
@@ -91,10 +84,10 @@ public class Rectangle2DObjectDescription extends AbstractObjectDescription
     final float w = (float) rect.getWidth();
     final float h = (float) rect.getHeight();
 
-    setParameter("x", new Float(x));
-    setParameter("y", new Float(y));
-    setParameter("width", new Float(w));
-    setParameter("height", new Float(h));
+    setParameter( "x", new Float( x ) );
+    setParameter( "y", new Float( y ) );
+    setParameter( "width", new Float( w ) );
+    setParameter( "height", new Float( h ) );
   }
 
 }

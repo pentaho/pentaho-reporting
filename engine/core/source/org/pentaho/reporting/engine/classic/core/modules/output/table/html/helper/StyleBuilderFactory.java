@@ -20,13 +20,12 @@ package org.pentaho.reporting.engine.classic.core.modules.output.table.html.help
 import org.pentaho.reporting.engine.classic.core.layout.model.context.BoxDefinition;
 import org.pentaho.reporting.engine.classic.core.style.StyleSheet;
 
-public interface StyleBuilderFactory
-{
-  public StyleBuilder produceTextStyle(StyleBuilder styleBuilder,
-                                       final StyleSheet styleSheet,
-                                       final BoxDefinition boxDefinition,
-                                       final boolean includeBorder,
-                                       final StyleBuilder.StyleCarrier[] parentElementStyle);
+public interface StyleBuilderFactory {
+  public StyleBuilder produceTextStyle( StyleBuilder styleBuilder,
+                                        final StyleSheet styleSheet,
+                                        final BoxDefinition boxDefinition,
+                                        final boolean includeBorder,
+                                        final StyleBuilder.StyleCarrier[] parentElementStyle );
 
-  double fixLengthForSafari(double v);
+  double fixLengthForSafari( double v );
 }

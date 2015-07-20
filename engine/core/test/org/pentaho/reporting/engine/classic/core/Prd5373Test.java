@@ -30,44 +30,41 @@ import org.pentaho.reporting.engine.classic.core.states.process.ProcessState;
 import org.pentaho.reporting.libraries.base.config.HierarchicalConfiguration;
 import org.pentaho.reporting.libraries.fonts.itext.ITextFontStorage;
 
-public class Prd5373Test
-{
+public class Prd5373Test {
   @Before
-  public void setUp() throws Exception
-  {
+  public void setUp() throws Exception {
     ClassicEngineBoot.getInstance().start();
   }
 
   @Test
   public void testDataConfigurationDefault() {
     String conf = ClassicEngineBoot.getInstance().getGlobalConfig().getConfigProperty
-        ("org.pentaho.reporting.engine.classic.core.WatermarkPrintedOnTopOfContent", "not-defined");
-    Assert.assertEquals(conf, "false");
+      ( "org.pentaho.reporting.engine.classic.core.WatermarkPrintedOnTopOfContent", "not-defined" );
+    Assert.assertEquals( conf, "false" );
   }
 
   @Test
   public void testMetaDataHandling() {
-    HierarchicalConfiguration hc = new HierarchicalConfiguration(ClassicEngineBoot.getInstance().getGlobalConfig());
-    hc.setConfigProperty("org.pentaho.reporting.engine.classic.core.WatermarkPrintedOnTopOfContent", "true");
+    HierarchicalConfiguration hc = new HierarchicalConfiguration( ClassicEngineBoot.getInstance().getGlobalConfig() );
+    hc.setConfigProperty( "org.pentaho.reporting.engine.classic.core.WatermarkPrintedOnTopOfContent", "true" );
 
-    final ITextFontStorage fontStorage = new ITextFontStorage(BaseFontModule.getFontRegistry());
-    PdfOutputProcessorMetaData md = new PdfOutputProcessorMetaData(fontStorage);
-    md.initialize(hc);
+    final ITextFontStorage fontStorage = new ITextFontStorage( BaseFontModule.getFontRegistry() );
+    PdfOutputProcessorMetaData md = new PdfOutputProcessorMetaData( fontStorage );
+    md.initialize( hc );
 
-    Assert.assertTrue(md.isFeatureSupported(OutputProcessorFeature.WATERMARK_PRINTED_ON_TOP));
+    Assert.assertTrue( md.isFeatureSupported( OutputProcessorFeature.WATERMARK_PRINTED_ON_TOP ) );
   }
 
   @Test
-  public void testStateSetup() throws ReportProcessingException
-  {
+  public void testStateSetup() throws ReportProcessingException {
     MasterReport r = new MasterReport();
-    r.getWatermark().setAttribute(AttributeNames.Core.NAMESPACE, AttributeNames.Core.WATERMARK_PRINTED_ON_TOP, true);
+    r.getWatermark().setAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.WATERMARK_PRINTED_ON_TOP, true );
 
-    DefaultProcessingContext pc = new DefaultProcessingContext(r);
+    DefaultProcessingContext pc = new DefaultProcessingContext( r );
 
     ProcessState state = new ProcessState();
-    state.initializeForMasterReport(r, pc, new DefaultOutputFunction());
+    state.initializeForMasterReport( r, pc, new DefaultOutputFunction() );
     OutputProcessorMetaData md = state.getFlowController().getReportContext().getOutputProcessorMetaData();
-    Assert.assertTrue(md.isFeatureSupported(OutputProcessorFeature.WATERMARK_PRINTED_ON_TOP));
+    Assert.assertTrue( md.isFeatureSupported( OutputProcessorFeature.WATERMARK_PRINTED_ON_TOP ) );
   }
 }

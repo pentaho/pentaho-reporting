@@ -22,19 +22,15 @@ package org.pentaho.reporting.engine.classic.core.layout.model.table.cells;
  *
  * @author Thomas Morgner
  */
-public abstract class TableCell
-{
+public abstract class TableCell {
   private int rowSpan;
   private int colSpan;
 
-  public TableCell(final int rowSpan, final int colSpan)
-  {
-    if (rowSpan < 1)
-    {
+  public TableCell( final int rowSpan, final int colSpan ) {
+    if ( rowSpan < 1 ) {
       throw new IllegalArgumentException();
     }
-    if (colSpan < 1)
-    {
+    if ( colSpan < 1 ) {
       throw new IllegalArgumentException();
     }
 
@@ -42,21 +38,18 @@ public abstract class TableCell
     this.colSpan = colSpan;
   }
 
-  public int getRowSpan()
-  {
+  public int getRowSpan() {
     return rowSpan;
   }
 
-  public int getColSpan()
-  {
+  public int getColSpan() {
     return colSpan;
   }
 
-  public String toString()
-  {
+  public String toString() {
     return "TableCell{" +
-            "rowSpan=" + rowSpan +
-            ", colSpan=" + colSpan +
-            '}';
+      "rowSpan=" + rowSpan +
+      ", colSpan=" + colSpan +
+      '}';
   }
 }

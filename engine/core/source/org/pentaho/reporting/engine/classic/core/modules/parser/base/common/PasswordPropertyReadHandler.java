@@ -20,19 +20,15 @@ package org.pentaho.reporting.engine.classic.core.modules.parser.base.common;
 import org.pentaho.reporting.engine.classic.core.modules.parser.base.PasswordEncryptionService;
 import org.pentaho.reporting.libraries.xmlns.parser.PropertyReadHandler;
 
-public class PasswordPropertyReadHandler extends PropertyReadHandler
-{
-  public PasswordPropertyReadHandler()
-  {
+public class PasswordPropertyReadHandler extends PropertyReadHandler {
+  public PasswordPropertyReadHandler() {
   }
 
-  public String getResult()
-  {
-    return PasswordEncryptionService.getInstance().decrypt(getRootHandler(), super.getResult());
+  public String getResult() {
+    return PasswordEncryptionService.getInstance().decrypt( getRootHandler(), super.getResult() );
   }
 
-  public Object getObject()
-  {
+  public Object getObject() {
     return getResult();
   }
 }

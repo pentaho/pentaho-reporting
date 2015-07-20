@@ -29,8 +29,7 @@ import org.pentaho.reporting.libraries.xmlns.parser.RootXmlReadHandler;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 
-public class BasicObjectReadHandler extends AbstractPropertyXmlReadHandler
-{
+public class BasicObjectReadHandler extends AbstractPropertyXmlReadHandler {
   private ObjectDescription objectDescription;
   private PropertyStringReadHandler stringReadHandler;
   private ClassFactory classFactory;
@@ -38,8 +37,7 @@ public class BasicObjectReadHandler extends AbstractPropertyXmlReadHandler
   /**
    * @param objectDescription may be null.
    */
-  public BasicObjectReadHandler(final ObjectDescription objectDescription)
-  {
+  public BasicObjectReadHandler( final ObjectDescription objectDescription ) {
     this.stringReadHandler = new PropertyStringReadHandler();
     this.objectDescription = objectDescription;
   }
@@ -50,27 +48,23 @@ public class BasicObjectReadHandler extends AbstractPropertyXmlReadHandler
    * @param rootHandler the root handler.
    * @param tagName     the tag name.
    */
-  public void init(final RootXmlReadHandler rootHandler,
-                   final String uri,
-                   final String tagName) throws SAXException
-  {
-    super.init(rootHandler, uri, tagName);
+  public void init( final RootXmlReadHandler rootHandler,
+                    final String uri,
+                    final String tagName ) throws SAXException {
+    super.init( rootHandler, uri, tagName );
     this.classFactory = (ClassFactory)
-        getRootHandler().getHelperObject(ReportDefinitionReadHandler.CLASS_FACTORY_KEY);
+      getRootHandler().getHelperObject( ReportDefinitionReadHandler.CLASS_FACTORY_KEY );
   }
 
-  protected ObjectDescription getObjectDescription()
-  {
+  protected ObjectDescription getObjectDescription() {
     return objectDescription;
   }
 
-  protected void setObjectDescription(final ObjectDescription objectDescription)
-  {
+  protected void setObjectDescription( final ObjectDescription objectDescription ) {
     this.objectDescription = objectDescription;
   }
 
-  protected ClassFactory getClassFactory()
-  {
+  protected ClassFactory getClassFactory() {
     return classFactory;
   }
 
@@ -80,35 +74,28 @@ public class BasicObjectReadHandler extends AbstractPropertyXmlReadHandler
    * @param attrs the attributes.
    * @throws org.xml.sax.SAXException if there is a parsing error.
    */
-  protected void startParsing(final PropertyAttributes attrs)
-      throws SAXException
-  {
-    handleStartParsing(attrs);
-    getRootHandler().delegate(stringReadHandler, getUri(), getTagName(), attrs);
+  protected void startParsing( final PropertyAttributes attrs )
+    throws SAXException {
+    handleStartParsing( attrs );
+    getRootHandler().delegate( stringReadHandler, getUri(), getTagName(), attrs );
   }
 
-  protected void handleStartParsing(final Attributes attrs)
-      throws ParseException
-  {
-    final String name = attrs.getValue(getUri(), "name");
-    if (name == null)
-    {
-      throw new ParseException("Required attribute 'name' is missing.", getLocator());
+  protected void handleStartParsing( final Attributes attrs )
+    throws ParseException {
+    final String name = attrs.getValue( getUri(), "name" );
+    if ( name == null ) {
+      throw new ParseException( "Required attribute 'name' is missing.", getLocator() );
     }
 
 
-    final String attrClass = CompatibilityMapperUtil.mapClassName(attrs.getValue(getUri(), "class"));
-    if (attrClass != null)
-    {
-      try
-      {
-        final ClassLoader loader = ObjectUtilities.getClassLoader(BasicObjectReadHandler.class);
-        final Class clazz = Class.forName(attrClass, false, loader);
-        objectDescription = ObjectFactoryUtility.findDescription(classFactory, clazz, getLocator());
-      }
-      catch (ClassNotFoundException e)
-      {
-        throw new ParseException("Value for given 'class' attribute is invalid", getLocator());
+    final String attrClass = CompatibilityMapperUtil.mapClassName( attrs.getValue( getUri(), "class" ) );
+    if ( attrClass != null ) {
+      try {
+        final ClassLoader loader = ObjectUtilities.getClassLoader( BasicObjectReadHandler.class );
+        final Class clazz = Class.forName( attrClass, false, loader );
+        objectDescription = ObjectFactoryUtility.findDescription( classFactory, clazz, getLocator() );
+      } catch ( ClassNotFoundException e ) {
+        throw new ParseException( "Value for given 'class' attribute is invalid", getLocator() );
       }
     }
   }
@@ -119,10 +106,9 @@ public class BasicObjectReadHandler extends AbstractPropertyXmlReadHandler
    * @throws org.xml.sax.SAXException if there is a parsing error.
    */
   protected void doneParsing()
-      throws SAXException
-  {
+    throws SAXException {
     final String value = stringReadHandler.getResult();
-    objectDescription.setParameter("value", value);
+    objectDescription.setParameter( "value", value );
     super.doneParsing();
   }
 
@@ -131,9 +117,8 @@ public class BasicObjectReadHandler extends AbstractPropertyXmlReadHandler
    *
    * @return the object.
    */
-  public Object getObject()
-  {
-    objectDescription.configure(getRootHandler().getParserConfiguration());
+  public Object getObject() {
+    objectDescription.configure( getRootHandler().getParserConfiguration() );
     return objectDescription.createObject();
   }
 }

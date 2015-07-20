@@ -17,34 +17,26 @@
 
 package org.pentaho.reporting.engine.classic.core.util.beans;
 
-public class EnumValueConverter implements ValueConverter
-{
+public class EnumValueConverter implements ValueConverter {
   private Class enumClass;
 
-  public EnumValueConverter(final Class enumClass)
-  {
+  public EnumValueConverter( final Class enumClass ) {
     this.enumClass = enumClass;
   }
 
-  public String toAttributeValue(final Object o) throws BeanException
-  {
-    if (o instanceof Enum == false)
-    {
+  public String toAttributeValue( final Object o ) throws BeanException {
+    if ( o instanceof Enum == false ) {
       throw new BeanException();
     }
     final Enum e = (Enum) o;
     return e.name();
   }
 
-  public Object toPropertyValue(final String s) throws BeanException
-  {
-    try
-    {
-      return Enum.valueOf(enumClass, s);
-    }
-    catch (Exception e)
-    {
-      throw new BeanException("Failed to convert enum from string " + s, e);
+  public Object toPropertyValue( final String s ) throws BeanException {
+    try {
+      return Enum.valueOf( enumClass, s );
+    } catch ( Exception e ) {
+      throw new BeanException( "Failed to convert enum from string " + s, e );
     }
   }
 }

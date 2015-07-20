@@ -17,9 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.core.bugs;
 
-import java.awt.GraphicsEnvironment;
-import java.net.URL;
-
 import junit.framework.TestCase;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
@@ -28,49 +25,47 @@ import org.pentaho.reporting.engine.classic.core.testsupport.DebugReportRunner;
 import org.pentaho.reporting.libraries.resourceloader.Resource;
 import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 
-public class Prd3620Test extends TestCase
-{
-  public Prd3620Test()
-  {
+import java.awt.*;
+import java.net.URL;
+
+public class Prd3620Test extends TestCase {
+  public Prd3620Test() {
   }
 
-  public Prd3620Test(final String name)
-  {
-    super(name);
+  public Prd3620Test( final String name ) {
+    super( name );
   }
 
-  protected void setUp() throws Exception
-  {
+  protected void setUp() throws Exception {
     ClassicEngineBoot.getInstance().start();
   }
 
-  public void testHeadless() throws Exception
-  {
-    final URL url = getClass().getResource("Prd-3620-small.prpt");
-    assertNotNull(url);
+  public void testHeadless() throws Exception {
+    final URL url = getClass().getResource( "Prd-3620-small.prpt" );
+    assertNotNull( url );
     final ResourceManager resourceManager = new ResourceManager();
     resourceManager.registerDefaults();
-    final Resource directly = resourceManager.createDirectly(url, MasterReport.class);
+    final Resource directly = resourceManager.createDirectly( url, MasterReport.class );
     final MasterReport report = (MasterReport) directly.getResource();
 
-    DebugReportRunner.createXLS(report);
+    DebugReportRunner.createXLS( report );
   }
 
-  public void testDialog() throws Exception
-  {
-    if (GraphicsEnvironment.isHeadless())
+  public void testDialog() throws Exception {
+    if ( GraphicsEnvironment.isHeadless() ) {
       return;
-    
-    final URL url = getClass().getResource("Prd-3620-small.prpt");
-    assertNotNull(url);
+    }
+
+    final URL url = getClass().getResource( "Prd-3620-small.prpt" );
+    assertNotNull( url );
     final ResourceManager resourceManager = new ResourceManager();
     resourceManager.registerDefaults();
-    final Resource directly = resourceManager.createDirectly(url, MasterReport.class);
+    final Resource directly = resourceManager.createDirectly( url, MasterReport.class );
     final MasterReport report = (MasterReport) directly.getResource();
 
-    final PreviewDialog dialog = new PreviewDialog(report);
-    dialog.setModal(true);
+    final PreviewDialog dialog = new PreviewDialog( report );
+    dialog.setModal( true );
     dialog.pack();
-    dialog.setVisible(true);
+    dialog.setVisible( true );
   }
 }

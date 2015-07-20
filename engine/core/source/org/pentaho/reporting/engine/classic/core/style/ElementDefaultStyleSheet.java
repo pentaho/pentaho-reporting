@@ -17,11 +17,9 @@
 
 package org.pentaho.reporting.engine.classic.core.style;
 
-import java.awt.BasicStroke;
-import java.awt.Color;
-import java.awt.Stroke;
-
 import org.pentaho.reporting.engine.classic.core.ElementAlignment;
+
+import java.awt.*;
 
 /**
  * The default element style sheet. This style sheet defines default attribute values for all elements.
@@ -30,13 +28,12 @@ import org.pentaho.reporting.engine.classic.core.ElementAlignment;
  *
  * @author Thomas Morgner
  */
-public class ElementDefaultStyleSheet extends ElementStyleSheet
-{
+public class ElementDefaultStyleSheet extends ElementStyleSheet {
   /**
    * The default paint.
    */
   public static final Color DEFAULT_PAINT = Color.black;
-  public static final Stroke DEFAULT_STROKE = new BasicStroke(0.5f);
+  public static final Stroke DEFAULT_STROKE = new BasicStroke( 0.5f );
 
   /**
    * A shared default style-sheet.
@@ -50,72 +47,71 @@ public class ElementDefaultStyleSheet extends ElementStyleSheet
   /**
    * Creates a new style sheet.
    */
-  protected ElementDefaultStyleSheet()
-  {
-    setStyleProperty(ElementStyleKeys.BOX_SIZING, BoxSizing.BORDER_BOX);
-    setStyleProperty(ElementStyleKeys.MIN_WIDTH, new Float(0));
-    setStyleProperty(ElementStyleKeys.MIN_HEIGHT, new Float(0));
+  protected ElementDefaultStyleSheet() {
+    setStyleProperty( ElementStyleKeys.BOX_SIZING, BoxSizing.BORDER_BOX );
+    setStyleProperty( ElementStyleKeys.MIN_WIDTH, new Float( 0 ) );
+    setStyleProperty( ElementStyleKeys.MIN_HEIGHT, new Float( 0 ) );
 
-    setStyleProperty(TextStyleKeys.LINEHEIGHT, new Float(0));
-    setStyleProperty(TextStyleKeys.RESERVED_LITERAL, "..");
-    setStyleProperty(TextStyleKeys.BOLD, Boolean.FALSE);
-    setStyleProperty(TextStyleKeys.ITALIC, Boolean.FALSE);
-    setStyleProperty(TextStyleKeys.UNDERLINED, Boolean.FALSE);
-    setStyleProperty(TextStyleKeys.STRIKETHROUGH, Boolean.FALSE);
-    setStyleProperty(TextStyleKeys.EMBEDDED_FONT, Boolean.FALSE);
-    setStyleProperty(TextStyleKeys.FONT_SMOOTH, FontSmooth.AUTO);
-    setStyleProperty(TextStyleKeys.FONT, "Serif");
-    setStyleProperty(TextStyleKeys.FONTSIZE, new Integer(10));
-    setStyleProperty(TextStyleKeys.WHITE_SPACE_COLLAPSE, WhitespaceCollapse.PRESERVE);
-    setStyleProperty(TextStyleKeys.TRIM_TEXT_CONTENT, Boolean.FALSE);
-    setStyleProperty(TextStyleKeys.TEXT_WRAP, TextWrap.WRAP);
-    setStyleProperty(TextStyleKeys.DIRECTION, TextDirection.LTR);
-    setStyleProperty(TextStyleKeys.WORDBREAK, Boolean.TRUE);
+    setStyleProperty( TextStyleKeys.LINEHEIGHT, new Float( 0 ) );
+    setStyleProperty( TextStyleKeys.RESERVED_LITERAL, ".." );
+    setStyleProperty( TextStyleKeys.BOLD, Boolean.FALSE );
+    setStyleProperty( TextStyleKeys.ITALIC, Boolean.FALSE );
+    setStyleProperty( TextStyleKeys.UNDERLINED, Boolean.FALSE );
+    setStyleProperty( TextStyleKeys.STRIKETHROUGH, Boolean.FALSE );
+    setStyleProperty( TextStyleKeys.EMBEDDED_FONT, Boolean.FALSE );
+    setStyleProperty( TextStyleKeys.FONT_SMOOTH, FontSmooth.AUTO );
+    setStyleProperty( TextStyleKeys.FONT, "Serif" );
+    setStyleProperty( TextStyleKeys.FONTSIZE, new Integer( 10 ) );
+    setStyleProperty( TextStyleKeys.WHITE_SPACE_COLLAPSE, WhitespaceCollapse.PRESERVE );
+    setStyleProperty( TextStyleKeys.TRIM_TEXT_CONTENT, Boolean.FALSE );
+    setStyleProperty( TextStyleKeys.TEXT_WRAP, TextWrap.WRAP );
+    setStyleProperty( TextStyleKeys.DIRECTION, TextDirection.LTR );
+    setStyleProperty( TextStyleKeys.WORDBREAK, Boolean.TRUE );
 
-    setStyleProperty(ElementStyleKeys.PAINT, ElementDefaultStyleSheet.DEFAULT_PAINT);
-    setStyleProperty(ElementStyleKeys.STROKE, ElementDefaultStyleSheet.DEFAULT_STROKE);
-    setStyleProperty(ElementStyleKeys.VALIGNMENT, ElementAlignment.TOP);
-    setStyleProperty(ElementStyleKeys.ALIGNMENT, ElementAlignment.LEFT);
-    setStyleProperty(TextStyleKeys.VERTICAL_TEXT_ALIGNMENT, VerticalTextAlign.BASELINE);
-    setStyleProperty(ElementStyleKeys.VISIBLE, Boolean.TRUE);
+    setStyleProperty( ElementStyleKeys.PAINT, ElementDefaultStyleSheet.DEFAULT_PAINT );
+    setStyleProperty( ElementStyleKeys.STROKE, ElementDefaultStyleSheet.DEFAULT_STROKE );
+    setStyleProperty( ElementStyleKeys.VALIGNMENT, ElementAlignment.TOP );
+    setStyleProperty( ElementStyleKeys.ALIGNMENT, ElementAlignment.LEFT );
+    setStyleProperty( TextStyleKeys.VERTICAL_TEXT_ALIGNMENT, VerticalTextAlign.BASELINE );
+    setStyleProperty( ElementStyleKeys.VISIBLE, Boolean.TRUE );
 
-    setStyleProperty(ElementStyleKeys.BORDER_TOP_WIDTH, new Float(0));
-    setStyleProperty(ElementStyleKeys.BORDER_LEFT_WIDTH, new Float(0));
-    setStyleProperty(ElementStyleKeys.BORDER_BOTTOM_WIDTH, new Float(0));
-    setStyleProperty(ElementStyleKeys.BORDER_RIGHT_WIDTH, new Float(0));
-    setStyleProperty(ElementStyleKeys.BORDER_BREAK_WIDTH, new Float(0));
+    setStyleProperty( ElementStyleKeys.BORDER_TOP_WIDTH, new Float( 0 ) );
+    setStyleProperty( ElementStyleKeys.BORDER_LEFT_WIDTH, new Float( 0 ) );
+    setStyleProperty( ElementStyleKeys.BORDER_BOTTOM_WIDTH, new Float( 0 ) );
+    setStyleProperty( ElementStyleKeys.BORDER_RIGHT_WIDTH, new Float( 0 ) );
+    setStyleProperty( ElementStyleKeys.BORDER_BREAK_WIDTH, new Float( 0 ) );
 
-    setStyleProperty(ElementStyleKeys.BORDER_TOP_COLOR, Color.black);
-    setStyleProperty(ElementStyleKeys.BORDER_LEFT_COLOR, Color.black);
-    setStyleProperty(ElementStyleKeys.BORDER_BOTTOM_COLOR, Color.black);
-    setStyleProperty(ElementStyleKeys.BORDER_RIGHT_COLOR, Color.black);
-    setStyleProperty(ElementStyleKeys.BORDER_BREAK_COLOR, Color.black);
+    setStyleProperty( ElementStyleKeys.BORDER_TOP_COLOR, Color.black );
+    setStyleProperty( ElementStyleKeys.BORDER_LEFT_COLOR, Color.black );
+    setStyleProperty( ElementStyleKeys.BORDER_BOTTOM_COLOR, Color.black );
+    setStyleProperty( ElementStyleKeys.BORDER_RIGHT_COLOR, Color.black );
+    setStyleProperty( ElementStyleKeys.BORDER_BREAK_COLOR, Color.black );
 
-    setStyleProperty(ElementStyleKeys.BORDER_TOP_STYLE, BorderStyle.NONE);
-    setStyleProperty(ElementStyleKeys.BORDER_LEFT_STYLE, BorderStyle.NONE);
-    setStyleProperty(ElementStyleKeys.BORDER_BOTTOM_STYLE, BorderStyle.NONE);
-    setStyleProperty(ElementStyleKeys.BORDER_RIGHT_STYLE, BorderStyle.NONE);
-    setStyleProperty(ElementStyleKeys.BORDER_BREAK_STYLE, BorderStyle.NONE);
+    setStyleProperty( ElementStyleKeys.BORDER_TOP_STYLE, BorderStyle.NONE );
+    setStyleProperty( ElementStyleKeys.BORDER_LEFT_STYLE, BorderStyle.NONE );
+    setStyleProperty( ElementStyleKeys.BORDER_BOTTOM_STYLE, BorderStyle.NONE );
+    setStyleProperty( ElementStyleKeys.BORDER_RIGHT_STYLE, BorderStyle.NONE );
+    setStyleProperty( ElementStyleKeys.BORDER_BREAK_STYLE, BorderStyle.NONE );
 
-    setStyleProperty(ElementStyleKeys.BORDER_TOP_LEFT_RADIUS_WIDTH, new Float(0));
-    setStyleProperty(ElementStyleKeys.BORDER_TOP_LEFT_RADIUS_HEIGHT, new Float(0));
-    setStyleProperty(ElementStyleKeys.BORDER_TOP_RIGHT_RADIUS_WIDTH, new Float(0));
-    setStyleProperty(ElementStyleKeys.BORDER_TOP_RIGHT_RADIUS_HEIGHT, new Float(0));
-    setStyleProperty(ElementStyleKeys.BORDER_BOTTOM_LEFT_RADIUS_WIDTH, new Float(0));
-    setStyleProperty(ElementStyleKeys.BORDER_BOTTOM_LEFT_RADIUS_HEIGHT, new Float(0));
-    setStyleProperty(ElementStyleKeys.BORDER_BOTTOM_RIGHT_RADIUS_WIDTH, new Float(0));
-    setStyleProperty(ElementStyleKeys.BORDER_BOTTOM_RIGHT_RADIUS_HEIGHT, new Float(0));
+    setStyleProperty( ElementStyleKeys.BORDER_TOP_LEFT_RADIUS_WIDTH, new Float( 0 ) );
+    setStyleProperty( ElementStyleKeys.BORDER_TOP_LEFT_RADIUS_HEIGHT, new Float( 0 ) );
+    setStyleProperty( ElementStyleKeys.BORDER_TOP_RIGHT_RADIUS_WIDTH, new Float( 0 ) );
+    setStyleProperty( ElementStyleKeys.BORDER_TOP_RIGHT_RADIUS_HEIGHT, new Float( 0 ) );
+    setStyleProperty( ElementStyleKeys.BORDER_BOTTOM_LEFT_RADIUS_WIDTH, new Float( 0 ) );
+    setStyleProperty( ElementStyleKeys.BORDER_BOTTOM_LEFT_RADIUS_HEIGHT, new Float( 0 ) );
+    setStyleProperty( ElementStyleKeys.BORDER_BOTTOM_RIGHT_RADIUS_WIDTH, new Float( 0 ) );
+    setStyleProperty( ElementStyleKeys.BORDER_BOTTOM_RIGHT_RADIUS_HEIGHT, new Float( 0 ) );
 
-    setStyleProperty(ElementStyleKeys.PADDING_TOP, new Float(0));
-    setStyleProperty(ElementStyleKeys.PADDING_LEFT, new Float(0));
-    setStyleProperty(ElementStyleKeys.PADDING_RIGHT, new Float(0));
-    setStyleProperty(ElementStyleKeys.PADDING_BOTTOM, new Float(0));
+    setStyleProperty( ElementStyleKeys.PADDING_TOP, new Float( 0 ) );
+    setStyleProperty( ElementStyleKeys.PADDING_LEFT, new Float( 0 ) );
+    setStyleProperty( ElementStyleKeys.PADDING_RIGHT, new Float( 0 ) );
+    setStyleProperty( ElementStyleKeys.PADDING_BOTTOM, new Float( 0 ) );
 
-    setBooleanStyleProperty(ElementStyleKeys.FILL_SHAPE, false);
-    setBooleanStyleProperty(ElementStyleKeys.DRAW_SHAPE, false);
+    setBooleanStyleProperty( ElementStyleKeys.FILL_SHAPE, false );
+    setBooleanStyleProperty( ElementStyleKeys.DRAW_SHAPE, false );
 
-    setBooleanStyleProperty(ElementStyleKeys.WIDOW_ORPHAN_OPT_OUT, true);
-    setLocked(true);
+    setBooleanStyleProperty( ElementStyleKeys.WIDOW_ORPHAN_OPT_OUT, true );
+    setLocked( true );
   }
 
   /**
@@ -124,8 +120,7 @@ public class ElementDefaultStyleSheet extends ElementStyleSheet
    *
    * @return true, if this stylesheet is readonly.
    */
-  protected boolean isLocked()
-  {
+  protected boolean isLocked() {
     return locked;
   }
 
@@ -134,8 +129,7 @@ public class ElementDefaultStyleSheet extends ElementStyleSheet
    *
    * @param locked true, if the stylesheet is locked and read-only, false otherwise.
    */
-  protected void setLocked(final boolean locked)
-  {
+  protected void setLocked( final boolean locked ) {
     this.locked = locked;
   }
 
@@ -144,10 +138,8 @@ public class ElementDefaultStyleSheet extends ElementStyleSheet
    *
    * @return the style-sheet.
    */
-  public static synchronized ElementDefaultStyleSheet getDefaultStyle()
-  {
-    if (defaultStyle == null)
-    {
+  public static synchronized ElementDefaultStyleSheet getDefaultStyle() {
+    if ( defaultStyle == null ) {
       defaultStyle = new ElementDefaultStyleSheet();
     }
     return defaultStyle;
@@ -162,15 +154,11 @@ public class ElementDefaultStyleSheet extends ElementStyleSheet
    * @throws ClassCastException            if the value cannot be assigned with the given key.
    * @throws UnsupportedOperationException as this style sheet is read only.
    */
-  public void setStyleProperty(final StyleKey key, final Object value)
-  {
-    if (isLocked())
-    {
-      throw new UnsupportedOperationException("This stylesheet is readonly");
-    }
-    else
-    {
-      super.setStyleProperty(key, value);
+  public void setStyleProperty( final StyleKey key, final Object value ) {
+    if ( isLocked() ) {
+      throw new UnsupportedOperationException( "This stylesheet is readonly" );
+    } else {
+      super.setStyleProperty( key, value );
     }
   }
 
@@ -180,8 +168,7 @@ public class ElementDefaultStyleSheet extends ElementStyleSheet
    *
    * @return the clone.
    */
-  public ElementStyleSheet getCopy()
-  {
+  public ElementStyleSheet getCopy() {
     return this;
   }
 

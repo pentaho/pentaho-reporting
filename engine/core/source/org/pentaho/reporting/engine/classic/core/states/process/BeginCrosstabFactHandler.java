@@ -20,40 +20,33 @@ package org.pentaho.reporting.engine.classic.core.states.process;
 import org.pentaho.reporting.engine.classic.core.ReportProcessingException;
 import org.pentaho.reporting.engine.classic.core.event.ReportEvent;
 
-public class BeginCrosstabFactHandler implements AdvanceHandler
-{
+public class BeginCrosstabFactHandler implements AdvanceHandler {
   public static final AdvanceHandler HANDLER = new BeginCrosstabFactHandler();
 
-  private BeginCrosstabFactHandler()
-  {
+  private BeginCrosstabFactHandler() {
   }
 
-  public ProcessState advance(final ProcessState state) throws ReportProcessingException
-  {
+  public ProcessState advance( final ProcessState state ) throws ReportProcessingException {
     final ProcessState next = state.deriveForAdvance();
     next.fireReportEvent();
     return next;
   }
 
-  public ProcessState commit(final ProcessState next) throws ReportProcessingException
-  {
-    next.setInItemGroup(true);
-    next.setAdvanceHandler(ProcessCrosstabFactHandler.HANDLER);
+  public ProcessState commit( final ProcessState next ) throws ReportProcessingException {
+    next.setInItemGroup( true );
+    next.setAdvanceHandler( ProcessCrosstabFactHandler.HANDLER );
     return next;
   }
 
-  public boolean isFinish()
-  {
+  public boolean isFinish() {
     return false;
   }
 
-  public int getEventCode()
-  {
+  public int getEventCode() {
     return ReportEvent.ITEMS_STARTED | ReportEvent.CROSSTABBING;
   }
 
-  public boolean isRestoreHandler()
-  {
+  public boolean isRestoreHandler() {
     return false;
   }
 }

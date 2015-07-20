@@ -29,44 +29,35 @@ import org.pentaho.reporting.libraries.resourceloader.ResourceKey;
  *
  * @author Thomas Morgner
  */
-public class ReportResource extends CompoundResource
-{
+public class ReportResource extends CompoundResource {
   private boolean cloneable;
 
-  public ReportResource(final ResourceKey source,
-                        final DependencyCollector dependencies,
-                        final Object product,
-                        final Class targetType,
-                        final boolean clone)
-  {
-    super(source, dependencies, product, targetType);
-    if (product instanceof Cloneable)
-    {
+  public ReportResource( final ResourceKey source,
+                         final DependencyCollector dependencies,
+                         final Object product,
+                         final Class targetType,
+                         final boolean clone ) {
+    super( source, dependencies, product, targetType );
+    if ( product instanceof Cloneable ) {
       cloneable = clone;
     }
 
   }
 
-  public boolean isTemporaryResult()
-  {
+  public boolean isTemporaryResult() {
     return cloneable == false;
   }
 
-  public Object getResource() throws ResourceException
-  {
-    try
-    {
+  public Object getResource() throws ResourceException {
+    try {
       final Object resource = super.getResource();
-      if (cloneable)
-      {
-        return ObjectUtilities.clone(resource);
+      if ( cloneable ) {
+        return ObjectUtilities.clone( resource );
       }
       return resource;
-    }
-    catch (CloneNotSupportedException e)
-    {
+    } catch ( CloneNotSupportedException e ) {
 
-      throw new ResourceException("Unable to retrieve the resource.", e);
+      throw new ResourceException( "Unable to retrieve the resource.", e );
     }
   }
 }

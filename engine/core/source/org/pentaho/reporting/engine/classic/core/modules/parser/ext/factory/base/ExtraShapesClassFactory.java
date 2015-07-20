@@ -25,16 +25,14 @@ import java.awt.geom.RoundRectangle2D;
  *
  * @author Thomas Morgner
  */
-public class ExtraShapesClassFactory extends ClassFactoryImpl
-{
+public class ExtraShapesClassFactory extends ClassFactoryImpl {
 
   /**
    * DefaultConstructor. Creates the object factory for all java base classes.
    */
-  public ExtraShapesClassFactory()
-  {
-    registerClass(RoundRectangle2D.class, new RoundRectangle2DObjectDescription());
-    registerClass(Ellipse2D.class, new Ellipse2DObjectDescription());
+  public ExtraShapesClassFactory() {
+    registerClass( RoundRectangle2D.class, new RoundRectangle2DObjectDescription() );
+    registerClass( Ellipse2D.class, new Ellipse2DObjectDescription() );
   }
 
 }

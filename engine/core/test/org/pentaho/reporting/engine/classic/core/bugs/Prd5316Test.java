@@ -17,9 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.core.bugs;
 
-import java.util.HashMap;
-import javax.swing.table.TableModel;
-
 import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
@@ -41,52 +38,46 @@ import org.pentaho.reporting.engine.classic.core.testsupport.DebugReportRunner;
 import org.pentaho.reporting.libraries.resourceloader.ResourceException;
 import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 
-public class Prd5316Test
-{
-  public static class TestCacheBackend implements DataCache, DataCacheManager
-  {
+import javax.swing.table.TableModel;
+import java.util.HashMap;
+
+public class Prd5316Test {
+  public static class TestCacheBackend implements DataCache, DataCacheManager {
     private HashMap<DataCacheKey, TableModel> cache;
     private int putCount;
     private int getCount;
 
-    public TestCacheBackend()
-    {
+    public TestCacheBackend() {
       cache = new HashMap<DataCacheKey, TableModel>();
     }
 
-    public TableModel get(final DataCacheKey key)
-    {
+    public TableModel get( final DataCacheKey key ) {
       getCount += 1;
-      return cache.get(key);
+      return cache.get( key );
     }
 
-    public TableModel put(final DataCacheKey key, final TableModel model)
-    {
+    public TableModel put( final DataCacheKey key, final TableModel model ) {
       putCount += 1;
-      TableModel cachable = new CachableTableModel(model);
-      cache.put(key, cachable);
+      TableModel cachable = new CachableTableModel( model );
+      cache.put( key, cachable );
       return cachable;
     }
 
-    public DataCacheManager getCacheManager()
-    {
+    public DataCacheManager getCacheManager() {
       return this;
     }
 
-    public HashMap<DataCacheKey, TableModel> getCache()
-    {
+    public HashMap<DataCacheKey, TableModel> getCache() {
       return cache;
     }
 
-    public void clearAll()
-    {
+    public void clearAll() {
       cache.clear();
       getCount = 0;
       putCount = 0;
     }
 
-    public void shutdown()
-    {
+    public void shutdown() {
 
     }
   }
@@ -94,72 +85,69 @@ public class Prd5316Test
   private static String cache;
 
   @BeforeClass
-  public static void setUp() throws Exception
-  {
-    DataCacheFactory.notifyCacheShutdown(DataCacheFactory.getCache());
+  public static void setUp() throws Exception {
+    DataCacheFactory.notifyCacheShutdown( DataCacheFactory.getCache() );
 
     ClassicEngineBoot boot = ClassicEngineBoot.getInstance();
     boot.start();
-    cache = boot.getGlobalConfig().getConfigProperty(DataCache.class.getName());
-    boot.getEditableConfig().setConfigProperty(DataCache.class.getName(), TestCacheBackend.class.getName());
+    cache = boot.getGlobalConfig().getConfigProperty( DataCache.class.getName() );
+    boot.getEditableConfig().setConfigProperty( DataCache.class.getName(), TestCacheBackend.class.getName() );
   }
 
   @AfterClass
-  public static void tearDown() throws Exception
-  {
+  public static void tearDown() throws Exception {
     TestCacheBackend cacheInstance = (TestCacheBackend) DataCacheFactory.getCache();
     cacheInstance.clearAll();
 
     ClassicEngineBoot boot = ClassicEngineBoot.getInstance();
 
-    boot.getEditableConfig().setConfigProperty(DataCache.class.getName(), cache);
+    boot.getEditableConfig().setConfigProperty( DataCache.class.getName(), cache );
 
-    DataCacheFactory.notifyCacheShutdown(DataCacheFactory.getCache());
+    DataCacheFactory.notifyCacheShutdown( DataCacheFactory.getCache() );
   }
 
   @Before
-  public void clearCacheJustInCase() throws Exception
-  {
+  public void clearCacheJustInCase() throws Exception {
     DataCacheFactory.getCache().getCacheManager().clearAll();
   }
 
   @Test
-  public void testParameterCache() throws ResourceException, ReportProcessingException
-  {
-    Assert.assertEquals(EhCacheDataCache.class.getName(), cache);
-    Assert.assertEquals(TestCacheBackend.class.getName(),
-        ClassicEngineBoot.getInstance().getGlobalConfig().getConfigProperty(DataCache.class.getName()));
+  public void testParameterCache() throws ResourceException, ReportProcessingException {
+    Assert.assertEquals( EhCacheDataCache.class.getName(), cache );
+    Assert.assertEquals( TestCacheBackend.class.getName(),
+      ClassicEngineBoot.getInstance().getGlobalConfig().getConfigProperty( DataCache.class.getName() ) );
 
     MasterReport resource = (MasterReport)
-        new ResourceManager().createDirectly(getClass().getResource("Prd-5316.prpt"), MasterReport.class).getResource();
+      new ResourceManager().createDirectly( getClass().getResource( "Prd-5316.prpt" ), MasterReport.class )
+        .getResource();
 
     DefaultReportParameterValidator v = new DefaultReportParameterValidator();
-    v.validate(new ValidationResult(), resource.getParameterDefinition(), new DefaultParameterContext(resource));
-    v.validate(new ValidationResult(), resource.getParameterDefinition(), new DefaultParameterContext(resource));
-    v.validate(new ValidationResult(), resource.getParameterDefinition(), new DefaultParameterContext(resource));
+    v.validate( new ValidationResult(), resource.getParameterDefinition(), new DefaultParameterContext( resource ) );
+    v.validate( new ValidationResult(), resource.getParameterDefinition(), new DefaultParameterContext( resource ) );
+    v.validate( new ValidationResult(), resource.getParameterDefinition(), new DefaultParameterContext( resource ) );
 
     TestCacheBackend cacheInstance = (TestCacheBackend) DataCacheFactory.getCache();
-    Assert.assertEquals(1, cacheInstance.getCache().size());
-    Assert.assertEquals(1, cacheInstance.putCount);
-    Assert.assertEquals(3, cacheInstance.getCount);
+    Assert.assertEquals( 1, cacheInstance.getCache().size() );
+    Assert.assertEquals( 1, cacheInstance.putCount );
+    Assert.assertEquals( 3, cacheInstance.getCount );
   }
 
   @Test
-  public void testReportRunCache() throws Exception
-  {
-    Assert.assertEquals(EhCacheDataCache.class.getName(), cache);
-    Assert.assertEquals(TestCacheBackend.class.getName(),
-        ClassicEngineBoot.getInstance().getGlobalConfig().getConfigProperty(DataCache.class.getName()));
+  public void testReportRunCache() throws Exception {
+    Assert.assertEquals( EhCacheDataCache.class.getName(), cache );
+    Assert.assertEquals( TestCacheBackend.class.getName(),
+      ClassicEngineBoot.getInstance().getGlobalConfig().getConfigProperty( DataCache.class.getName() ) );
 
     MasterReport resource = (MasterReport)
-        new ResourceManager().createDirectly(getClass().getResource("Prd-5316.prpt"), MasterReport.class).getResource();
-    DebugReportRunner.execGraphics2D(resource);
-    DebugReportRunner.execGraphics2D(resource);
-    DebugReportRunner.execGraphics2D(resource);
+      new ResourceManager().createDirectly( getClass().getResource( "Prd-5316.prpt" ), MasterReport.class )
+        .getResource();
+    DebugReportRunner.execGraphics2D( resource );
+    DebugReportRunner.execGraphics2D( resource );
+    DebugReportRunner.execGraphics2D( resource );
 
     TestCacheBackend cacheInstance = (TestCacheBackend) DataCacheFactory.getCache();
-    Assert.assertEquals(1, cacheInstance.getCache().size());
-    Assert.assertEquals(1, cacheInstance.putCount);
-    Assert.assertEquals(3, cacheInstance.getCount);
+    Assert.assertEquals( 1, cacheInstance.getCache().size() );
+    Assert.assertEquals( 1, cacheInstance.putCount );
+    Assert.assertEquals( 3, cacheInstance.getCount );
   }
 }

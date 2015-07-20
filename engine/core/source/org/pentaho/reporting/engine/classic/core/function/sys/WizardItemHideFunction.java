@@ -27,17 +27,14 @@ import org.pentaho.reporting.engine.classic.core.function.StructureFunction;
 import org.pentaho.reporting.engine.classic.core.style.ElementStyleKeys;
 
 public class WizardItemHideFunction extends AbstractElementFormatFunction
-        implements StructureFunction
-{
-  private static final Log logger = LogFactory.getLog(WizardItemHideFunction.class);
+  implements StructureFunction {
+  private static final Log logger = LogFactory.getLog( WizardItemHideFunction.class );
   private boolean pageStarted;
 
-  public WizardItemHideFunction()
-  {
+  public WizardItemHideFunction() {
   }
 
-  public int getProcessingPriority()
-  {
+  public int getProcessingPriority() {
     // executed after the metadata has been applied, but before the style-expressions get applied.
     return 6000;
   }
@@ -49,34 +46,26 @@ public class WizardItemHideFunction extends AbstractElementFormatFunction
    * @param e the element that should be updated.
    * @return true, if attributes or style were changed, false if no change was made.
    */
-  protected boolean evaluateElement(final ReportElement e)
-  {
-    if (e == null)
-    {
+  protected boolean evaluateElement( final ReportElement e ) {
+    if ( e == null ) {
       throw new NullPointerException();
     }
 
     boolean retval = false;
 
     final Object maybeShowChanging =
-        e.getAttribute(AttributeNames.Wizard.NAMESPACE, AttributeNames.Wizard.ONLY_SHOW_CHANGING_VALUES);
-    if (Boolean.TRUE.equals(maybeShowChanging))
-    {
-      Object field = e.getAttribute(AttributeNames.Wizard.NAMESPACE, AttributeNames.Wizard.LABEL_FOR);
-      if (field == null)
-      {
-        field = e.getAttribute(AttributeNames.Core.NAMESPACE, AttributeNames.Core.FIELD);
+      e.getAttribute( AttributeNames.Wizard.NAMESPACE, AttributeNames.Wizard.ONLY_SHOW_CHANGING_VALUES );
+    if ( Boolean.TRUE.equals( maybeShowChanging ) ) {
+      Object field = e.getAttribute( AttributeNames.Wizard.NAMESPACE, AttributeNames.Wizard.LABEL_FOR );
+      if ( field == null ) {
+        field = e.getAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.FIELD );
       }
-      if (field != null)
-      {
-        final String fieldText = String.valueOf(field);
-        if (pageStarted || getDataRow().isChanged(fieldText))
-        {
-          e.getStyle().setStyleProperty(ElementStyleKeys.VISIBLE, true);
-        }
-        else
-        {
-          e.getStyle().setStyleProperty(ElementStyleKeys.VISIBLE, false);
+      if ( field != null ) {
+        final String fieldText = String.valueOf( field );
+        if ( pageStarted || getDataRow().isChanged( fieldText ) ) {
+          e.getStyle().setStyleProperty( ElementStyleKeys.VISIBLE, true );
+        } else {
+          e.getStyle().setStyleProperty( ElementStyleKeys.VISIBLE, false );
         }
         retval = true;
       }
@@ -85,21 +74,18 @@ public class WizardItemHideFunction extends AbstractElementFormatFunction
     return retval;
   }
 
-  public void pageStarted(final ReportEvent event)
-  {
+  public void pageStarted( final ReportEvent event ) {
     pageStarted = true;
-    super.pageStarted(event);
+    super.pageStarted( event );
   }
 
-  public void itemsStarted(final ReportEvent event)
-  {
+  public void itemsStarted( final ReportEvent event ) {
     pageStarted = true;
-    super.itemsStarted(event);
+    super.itemsStarted( event );
   }
 
-  public void itemsAdvanced(final ReportEvent event)
-  {
-    super.itemsAdvanced(event);
+  public void itemsAdvanced( final ReportEvent event ) {
+    super.itemsAdvanced( event );
     pageStarted = false;
   }
 }

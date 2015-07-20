@@ -17,21 +17,20 @@
 
 package org.pentaho.reporting.engine.classic.core.filter.templates;
 
-import java.net.URL;
-
 import org.pentaho.reporting.engine.classic.core.ReportElement;
 import org.pentaho.reporting.engine.classic.core.filter.DrawableLoadFilter;
 import org.pentaho.reporting.engine.classic.core.filter.StaticDataSource;
 import org.pentaho.reporting.engine.classic.core.filter.URLFilter;
 import org.pentaho.reporting.engine.classic.core.function.ExpressionRuntime;
 
+import java.net.URL;
+
 /**
  * An image URL element template, which reads the image from a static URL.
  *
  * @author Thomas Morgner
  */
-public class DrawableURLElementTemplate extends AbstractTemplate
-{
+public class DrawableURLElementTemplate extends AbstractTemplate {
   /**
    * The image load filter.
    */
@@ -50,13 +49,12 @@ public class DrawableURLElementTemplate extends AbstractTemplate
   /**
    * Creates a new template.
    */
-  public DrawableURLElementTemplate()
-  {
+  public DrawableURLElementTemplate() {
     staticDataSource = new StaticDataSource();
     urlFilter = new URLFilter();
-    urlFilter.setDataSource(staticDataSource);
+    urlFilter.setDataSource( staticDataSource );
     imageLoadFilter = new DrawableLoadFilter();
-    imageLoadFilter.setDataSource(urlFilter);
+    imageLoadFilter.setDataSource( urlFilter );
   }
 
   /**
@@ -64,9 +62,8 @@ public class DrawableURLElementTemplate extends AbstractTemplate
    *
    * @param content the URL.
    */
-  public void setContent(final String content)
-  {
-    staticDataSource.setValue(content);
+  public void setContent( final String content ) {
+    staticDataSource.setValue( content );
   }
 
   /**
@@ -74,9 +71,8 @@ public class DrawableURLElementTemplate extends AbstractTemplate
    *
    * @return The URL text.
    */
-  public String getContent()
-  {
-    return (String) (staticDataSource.getValue(null, null));
+  public String getContent() {
+    return (String) ( staticDataSource.getValue( null, null ) );
   }
 
   /**
@@ -84,8 +80,7 @@ public class DrawableURLElementTemplate extends AbstractTemplate
    *
    * @return The URL.
    */
-  public URL getBaseURL()
-  {
+  public URL getBaseURL() {
     return urlFilter.getBaseURL();
   }
 
@@ -94,9 +89,8 @@ public class DrawableURLElementTemplate extends AbstractTemplate
    *
    * @param baseURL the URL.
    */
-  public void setBaseURL(final URL baseURL)
-  {
-    urlFilter.setBaseURL(baseURL);
+  public void setBaseURL( final URL baseURL ) {
+    urlFilter.setBaseURL( baseURL );
   }
 
   /**
@@ -107,9 +101,8 @@ public class DrawableURLElementTemplate extends AbstractTemplate
    * @param element
    * @return the value.
    */
-  public Object getValue(final ExpressionRuntime runtime, final ReportElement element)
-  {
-    return imageLoadFilter.getValue(runtime, element);
+  public Object getValue( final ExpressionRuntime runtime, final ReportElement element ) {
+    return imageLoadFilter.getValue( runtime, element );
   }
 
   /**
@@ -119,8 +112,7 @@ public class DrawableURLElementTemplate extends AbstractTemplate
    * @throws CloneNotSupportedException this should never happen.
    */
   public DrawableURLElementTemplate clone()
-      throws CloneNotSupportedException
-  {
+    throws CloneNotSupportedException {
     final DrawableURLElementTemplate template = (DrawableURLElementTemplate) super.clone();
     template.imageLoadFilter = imageLoadFilter.clone();
     template.urlFilter = (URLFilter) template.imageLoadFilter.getDataSource();

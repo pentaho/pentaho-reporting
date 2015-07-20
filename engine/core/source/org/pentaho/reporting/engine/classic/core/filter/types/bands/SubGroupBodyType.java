@@ -20,17 +20,14 @@ package org.pentaho.reporting.engine.classic.core.filter.types.bands;
 import org.pentaho.reporting.engine.classic.core.ReportElement;
 import org.pentaho.reporting.engine.classic.core.SubGroupBody;
 
-public class SubGroupBodyType extends AbstractSectionType
-{
+public class SubGroupBodyType extends AbstractSectionType {
   public static final SubGroupBodyType INSTANCE = new SubGroupBodyType();
 
-  public SubGroupBodyType()
-  {
-    super("sub-group-body", true);
+  public SubGroupBodyType() {
+    super( "sub-group-body", true );
   }
 
-  public ReportElement create()
-  {
+  public ReportElement create() {
     return new SubGroupBody();
   }
 }

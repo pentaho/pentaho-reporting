@@ -24,48 +24,36 @@ import org.pentaho.reporting.engine.classic.core.util.StagingMode;
  *
  * @author Thomas Morgner
  */
-public class StagingModeValueConverter implements ValueConverter
-{
-  public StagingModeValueConverter()
-  {
+public class StagingModeValueConverter implements ValueConverter {
+  public StagingModeValueConverter() {
   }
 
-  public String toAttributeValue(final Object o) throws BeanException
-  {
-    if (o == null)
-    {
+  public String toAttributeValue( final Object o ) throws BeanException {
+    if ( o == null ) {
       throw new NullPointerException();
     }
 
-    if (o instanceof StagingMode)
-    {
-      return String.valueOf(o);
-    }
-    else
-    {
-      throw new BeanException("Failed to convert object of type " + o.getClass() + ": Not a StagingMode.");
+    if ( o instanceof StagingMode ) {
+      return String.valueOf( o );
+    } else {
+      throw new BeanException( "Failed to convert object of type " + o.getClass() + ": Not a StagingMode." );
     }
 
   }
 
-  public Object toPropertyValue(final String o) throws BeanException
-  {
-    if (o == null)
-    {
+  public Object toPropertyValue( final String o ) throws BeanException {
+    if ( o == null ) {
       throw new NullPointerException();
     }
-    if (StagingMode.MEMORY.toString().equals(o))
-    {
+    if ( StagingMode.MEMORY.toString().equals( o ) ) {
       return StagingMode.MEMORY;
     }
-    if (StagingMode.THRU.toString().equals(o))
-    {
+    if ( StagingMode.THRU.toString().equals( o ) ) {
       return StagingMode.THRU;
     }
-    if (StagingMode.TMPFILE.toString().equals(o))
-    {
+    if ( StagingMode.TMPFILE.toString().equals( o ) ) {
       return StagingMode.TMPFILE;
     }
-    throw new BeanException("Invalid value specified for StagingMode");
+    throw new BeanException( "Invalid value specified for StagingMode" );
   }
 }

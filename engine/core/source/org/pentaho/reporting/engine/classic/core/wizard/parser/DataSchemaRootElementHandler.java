@@ -17,23 +17,21 @@
 
 package org.pentaho.reporting.engine.classic.core.wizard.parser;
 
-import java.util.ArrayList;
-
+import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.pentaho.reporting.engine.classic.core.wizard.DataSchemaRule;
 import org.pentaho.reporting.engine.classic.core.wizard.DefaultDataSchemaDefinition;
-import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.pentaho.reporting.libraries.xmlns.parser.AbstractXmlReadHandler;
 import org.pentaho.reporting.libraries.xmlns.parser.XmlReadHandler;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 
-public class DataSchemaRootElementHandler extends AbstractXmlReadHandler
-{
+import java.util.ArrayList;
+
+public class DataSchemaRootElementHandler extends AbstractXmlReadHandler {
   private ArrayList handlers;
   private DefaultDataSchemaDefinition dataSchemaDefinition;
 
-  public DataSchemaRootElementHandler()
-  {
+  public DataSchemaRootElementHandler() {
     handlers = new ArrayList();
   }
 
@@ -46,31 +44,28 @@ public class DataSchemaRootElementHandler extends AbstractXmlReadHandler
    * @return the handler or null, if the tagname is invalid.
    * @throws SAXException if there is a parsing error.
    */
-  protected XmlReadHandler getHandlerForChild(final String uri,
-                                              final String tagName,
-                                              final Attributes atts) throws SAXException
-  {
-    if (ClassicEngineBoot.DATASCHEMA_NAMESPACE.equals(uri) == false)
-    return null;
+  protected XmlReadHandler getHandlerForChild( final String uri,
+                                               final String tagName,
+                                               final Attributes atts ) throws SAXException {
+    if ( ClassicEngineBoot.DATASCHEMA_NAMESPACE.equals( uri ) == false ) {
+      return null;
+    }
 
-    if ("global-mapping".equals(tagName))
-    {
+    if ( "global-mapping".equals( tagName ) ) {
       final XmlReadHandler handler = new GlobalRuleReadHandler();
-      handlers.add(handler);
+      handlers.add( handler );
       return handler;
     }
 
-    if ("direct-mapping".equals(tagName))
-    {
+    if ( "direct-mapping".equals( tagName ) ) {
       final XmlReadHandler handler = new DirectRuleReadHandler();
-      handlers.add(handler);
+      handlers.add( handler );
       return handler;
     }
 
-    if ("indirect-mapping".equals(tagName))
-    {
+    if ( "indirect-mapping".equals( tagName ) ) {
       final XmlReadHandler handler = new MetaSelectorRuleReadHandler();
-      handlers.add(handler);
+      handlers.add( handler );
       return handler;
     }
 
@@ -83,14 +78,12 @@ public class DataSchemaRootElementHandler extends AbstractXmlReadHandler
    *
    * @throws SAXException if there is a parsing error.
    */
-  protected void doneParsing() throws SAXException
-  {
+  protected void doneParsing() throws SAXException {
     dataSchemaDefinition = new DefaultDataSchemaDefinition();
-    for (int i = 0; i < handlers.size(); i++)
-    {
-      final XmlReadHandler handler = (XmlReadHandler) handlers.get(i);
+    for ( int i = 0; i < handlers.size(); i++ ) {
+      final XmlReadHandler handler = (XmlReadHandler) handlers.get( i );
       final DataSchemaRule rule = (DataSchemaRule) handler.getObject();
-      dataSchemaDefinition.addRule(rule);
+      dataSchemaDefinition.addRule( rule );
     }
   }
 
@@ -100,8 +93,7 @@ public class DataSchemaRootElementHandler extends AbstractXmlReadHandler
    * @return the object.
    * @throws SAXException if an parser error occured.
    */
-  public Object getObject() throws SAXException
-  {
+  public Object getObject() throws SAXException {
     return dataSchemaDefinition;
   }
 }

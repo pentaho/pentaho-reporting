@@ -23,13 +23,11 @@ import org.pentaho.reporting.libraries.xmlns.common.ParserUtil;
 import org.pentaho.reporting.libraries.xmlns.parser.ParseException;
 import org.xml.sax.SAXException;
 
-public abstract class AbstractImageElementReadHandler extends AbstractElementReadHandler
-{
+public abstract class AbstractImageElementReadHandler extends AbstractElementReadHandler {
   private static final String SCALE_ATT = "scale";
   private static final String KEEP_ASPECT_RATIO_ATT = "keepAspectRatio";
 
-  protected AbstractImageElementReadHandler()
-  {
+  protected AbstractImageElementReadHandler() {
   }
 
   /**
@@ -38,27 +36,24 @@ public abstract class AbstractImageElementReadHandler extends AbstractElementRea
    * @param atts the attributes.
    * @throws org.xml.sax.SAXException if there is a parsing error.
    */
-  protected void startParsing(final PropertyAttributes atts)
-      throws SAXException
-  {
-    super.startParsing(atts);
-    handleScale(atts);
-    handleKeepAspectRatio(atts);
+  protected void startParsing( final PropertyAttributes atts )
+    throws SAXException {
+    super.startParsing( atts );
+    handleScale( atts );
+    handleKeepAspectRatio( atts );
   }
 
-  protected void handleScale(final PropertyAttributes atts) throws ParseException
-  {
-    final String booleanValue = atts.getValue(getUri(), AbstractImageElementReadHandler.SCALE_ATT);
+  protected void handleScale( final PropertyAttributes atts ) throws ParseException {
+    final String booleanValue = atts.getValue( getUri(), AbstractImageElementReadHandler.SCALE_ATT );
     final AbstractContentElementFactory elementFactory = (AbstractContentElementFactory) getElementFactory();
-    final Boolean scale = ParserUtil.parseBoolean(booleanValue, getLocator());
-    elementFactory.setScale(scale);
+    final Boolean scale = ParserUtil.parseBoolean( booleanValue, getLocator() );
+    elementFactory.setScale( scale );
   }
 
-  protected void handleKeepAspectRatio(final PropertyAttributes atts) throws ParseException
-  {
-    final String booleanValue = atts.getValue(getUri(), AbstractImageElementReadHandler.KEEP_ASPECT_RATIO_ATT);
+  protected void handleKeepAspectRatio( final PropertyAttributes atts ) throws ParseException {
+    final String booleanValue = atts.getValue( getUri(), AbstractImageElementReadHandler.KEEP_ASPECT_RATIO_ATT );
     final AbstractContentElementFactory elementFactory = (AbstractContentElementFactory) getElementFactory();
-    final Boolean keepAspectRatio = ParserUtil.parseBoolean(booleanValue, getLocator());
-    elementFactory.setKeepAspectRatio(keepAspectRatio);
+    final Boolean keepAspectRatio = ParserUtil.parseBoolean( booleanValue, getLocator() );
+    elementFactory.setKeepAspectRatio( keepAspectRatio );
   }
 }

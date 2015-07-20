@@ -17,9 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.core.layout.process.alignment;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-
 import org.pentaho.reporting.engine.classic.core.layout.model.InlineRenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.LayoutNodeTypes;
 import org.pentaho.reporting.engine.classic.core.layout.model.PageGrid;
@@ -39,16 +36,18 @@ import org.pentaho.reporting.engine.classic.core.style.WhitespaceCollapse;
 import org.pentaho.reporting.engine.classic.core.util.LongList;
 import org.pentaho.reporting.libraries.base.util.FastStack;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 
 /**
  * Todo: The whole horizontal alignment is not suitable for spanned page breaks.
  *
  * @author Thomas Morgner
  */
-public abstract class AbstractAlignmentProcessor implements TextAlignmentProcessor, LastLineTextAlignmentProcessor
-{
-  private static final InlineSequenceElement[] EMPTY_ELEMENTS = new InlineSequenceElement[0];
-  private static final RenderNode[] EMPTY_NODES = new RenderNode[0];
+public abstract class AbstractAlignmentProcessor implements TextAlignmentProcessor, LastLineTextAlignmentProcessor {
+  private static final InlineSequenceElement[] EMPTY_ELEMENTS = new InlineSequenceElement[ 0 ];
+  private static final RenderNode[] EMPTY_NODES = new RenderNode[ 0 ];
 
   private long startOfLine;
   private long endOfLine;
@@ -73,103 +72,85 @@ public abstract class AbstractAlignmentProcessor implements TextAlignmentProcess
   private long[] elementDimensions;
   private FastStack<RenderBox> contexts;
   private ArrayList<RenderNode> pendingElements;
-  private static final long[] EMPTY = new long[0];
+  private static final long[] EMPTY = new long[ 0 ];
   private boolean lastLineAlignment;
   private LeftAlignmentProcessor leftAlignProcessor;
   private boolean overflowX;
   private LongList pageLongList;
 
 
-  protected AbstractAlignmentProcessor()
-  {
-    this.contexts = new FastStack<RenderBox>(50);
+  protected AbstractAlignmentProcessor() {
+    this.contexts = new FastStack<RenderBox>( 50 );
     this.pendingElements = new ArrayList<RenderNode>();
     this.elementDimensions = AbstractAlignmentProcessor.EMPTY;
     this.elementPositions = AbstractAlignmentProcessor.EMPTY;
   }
 
-  public boolean isLastLineAlignment()
-  {
+  public boolean isLastLineAlignment() {
     return lastLineAlignment;
   }
 
-  protected long getStartOfLine()
-  {
+  protected long getStartOfLine() {
     return startOfLine;
   }
 
-  protected PageGrid getPageGrid()
-  {
+  protected PageGrid getPageGrid() {
     return pageGrid;
   }
 
-  protected InlineSequenceElement[] getSequenceElements()
-  {
+  protected InlineSequenceElement[] getSequenceElements() {
     return sequenceElements;
   }
 
-  protected RenderNode[] getNodes()
-  {
+  protected RenderNode[] getNodes() {
     return nodes;
   }
 
-  protected long[] getElementPositions()
-  {
+  protected long[] getElementPositions() {
     return elementPositions;
   }
 
-  protected long[] getElementDimensions()
-  {
+  protected long[] getElementDimensions() {
     return elementDimensions;
   }
 
-  protected long getEndOfLine()
-  {
+  protected long getEndOfLine() {
     return endOfLine;
   }
 
-  public int getPagebreakCount()
-  {
+  public int getPagebreakCount() {
     return pagebreakCount;
   }
 
-  protected long getPageBreak(final int pageIndex)
-  {
-    if (pageIndex < 0 || pageIndex >= pagebreakCount)
-    {
+  protected long getPageBreak( final int pageIndex ) {
+    if ( pageIndex < 0 || pageIndex >= pagebreakCount ) {
       throw new IndexOutOfBoundsException();
     }
-    return pagebreaks[pageIndex];
+    return pagebreaks[ pageIndex ];
   }
 
-  protected long[] getPageBreaks()
-  {
+  protected long[] getPageBreaks() {
     return pagebreaks;
   }
 
-  protected void updatePageBreaks(final long[] pagebreaks, final int pageBreakCount)
-  {
+  protected void updatePageBreaks( final long[] pagebreaks, final int pageBreakCount ) {
     this.pagebreakCount = pageBreakCount;
     this.pagebreaks = pagebreaks;
   }
 
-  protected int getBreakableIndex()
-  {
+  protected int getBreakableIndex() {
     return breakableIndex;
   }
 
-  protected void setBreakableIndex(final int breakableIndex)
-  {
+  protected void setBreakableIndex( final int breakableIndex ) {
     this.breakableIndex = breakableIndex;
   }
 
-  protected int getSkipIndex()
-  {
+  protected int getSkipIndex() {
     return skipIndex;
   }
 
-  protected void setSkipIndex(final int skipIndex)
-  {
+  protected void setSkipIndex( final int skipIndex ) {
     this.skipIndex = skipIndex;
   }
 
@@ -181,8 +162,7 @@ public abstract class AbstractAlignmentProcessor implements TextAlignmentProcess
    * @param maxPos
    * @return
    */
-  protected int iterate(final InlineSequenceElement[] elements, final int maxPos)
-  {
+  protected int iterate( final InlineSequenceElement[] elements, final int maxPos ) {
     breakableIndex = -1;
     skipIndex = -1;
     // The state transitions are as follows:
@@ -195,40 +175,36 @@ public abstract class AbstractAlignmentProcessor implements TextAlignmentProcess
     // while X means, that it is possible to break the inline flow at that
     // position.
 
-    if (maxPos == 0)
-    {
+    if ( maxPos == 0 ) {
       // nothing to do ..
       return 0;
     }
 
 
-    int lastElementType = elements[0].getClassification();
+    int lastElementType = elements[ 0 ].getClassification();
     int startIndex = 0;
-    boolean lastNodeWasSpacer = (lastElementType == InlineSequenceElement.CONTENT &&
-        nodes[0].getNodeType() == LayoutNodeTypes.TYPE_NODE_SPACER);
-    for (int i = 1; i < maxPos; i++)
-    {
-      final InlineSequenceElement element = elements[i];
+    boolean lastNodeWasSpacer = ( lastElementType == InlineSequenceElement.CONTENT &&
+      nodes[ 0 ].getNodeType() == LayoutNodeTypes.TYPE_NODE_SPACER );
+    for ( int i = 1; i < maxPos; i++ ) {
+      final InlineSequenceElement element = elements[ i ];
       final int elementType = element.getClassification();
-      if (lastNodeWasSpacer == false &&
-          lastElementType != InlineSequenceElement.START &&
-          elementType != InlineSequenceElement.END)
-      {
-        final int newIndex = handleElement(startIndex, i - startIndex);
-        if (newIndex <= startIndex)
-        {
+      if ( lastNodeWasSpacer == false &&
+        lastElementType != InlineSequenceElement.START &&
+        elementType != InlineSequenceElement.END ) {
+        final int newIndex = handleElement( startIndex, i - startIndex );
+        if ( newIndex <= startIndex ) {
           return startIndex;
         }
 
         startIndex = i;
       }
 
-      lastNodeWasSpacer = (elementType == InlineSequenceElement.CONTENT &&
-          nodes[i].getNodeType() == LayoutNodeTypes.TYPE_NODE_SPACER);
+      lastNodeWasSpacer = ( elementType == InlineSequenceElement.CONTENT &&
+        nodes[ i ].getNodeType() == LayoutNodeTypes.TYPE_NODE_SPACER );
       lastElementType = elementType;
     }
 
-    return handleElement(startIndex, maxPos - startIndex);
+    return handleElement( startIndex, maxPos - startIndex );
   }
 
   /**
@@ -240,140 +216,112 @@ public abstract class AbstractAlignmentProcessor implements TextAlignmentProcess
    * @param end
    * @param breaks
    */
-  public void initialize(final OutputProcessorMetaData metaData,
-                         final SequenceList sequence,
-                         final long start,
-                         final long end,
-                         final PageGrid breaks,
-                         final boolean overflowX)
-  {
-    if (sequence == null)
-    {
+  public void initialize( final OutputProcessorMetaData metaData,
+                          final SequenceList sequence,
+                          final long start,
+                          final long end,
+                          final PageGrid breaks,
+                          final boolean overflowX ) {
+    if ( sequence == null ) {
       throw new NullPointerException();
     }
-    if (metaData == null)
-    {
+    if ( metaData == null ) {
       throw new NullPointerException();
     }
-    if (breaks == null)
-    {
+    if ( breaks == null ) {
       throw new NullPointerException();
     }
-    if (end < start)
-    {
+    if ( end < start ) {
       // This is most certainly an error, treat it as such ..
-      throw new IllegalArgumentException("Start is <= end; which is stupid!: " + end + ' ' + start);
+      throw new IllegalArgumentException( "Start is <= end; which is stupid!: " + end + ' ' + start );
     }
 
     this.overflowX = overflowX;
-    this.sequenceElements = sequence.getSequenceElements(this.sequenceElements);
-    this.nodes = sequence.getNodes(this.nodes);
+    this.sequenceElements = sequence.getSequenceElements( this.sequenceElements );
+    this.nodes = sequence.getNodes( this.nodes );
     this.sequenceFill = sequence.size();
     this.pageGrid = breaks;
-    if (elementPositions.length < sequenceFill)
-    {
-      this.elementPositions = new long[sequenceFill];
-    }
-    else
-    {
-      Arrays.fill(this.elementPositions, 0);
+    if ( elementPositions.length < sequenceFill ) {
+      this.elementPositions = new long[ sequenceFill ];
+    } else {
+      Arrays.fill( this.elementPositions, 0 );
     }
 
-    if (elementDimensions.length < sequenceFill)
-    {
-      this.elementDimensions = new long[sequenceFill];
+    if ( elementDimensions.length < sequenceFill ) {
+      this.elementDimensions = new long[ sequenceFill ];
+    } else {
+      Arrays.fill( this.elementDimensions, 0 );
     }
-    else
-    {
-      Arrays.fill(this.elementDimensions, 0);
-    }
-    updateLineSize(start, end);
+    updateLineSize( start, end );
   }
 
-  public void updateLineSize(final long start, final long end)
-  {
+  public void updateLineSize( final long start, final long end ) {
     // to be computed by the pagegrid ..
-    if (startOfLine != start || endOfLine != end || pagebreaks == null)
-    {
+    if ( startOfLine != start || endOfLine != end || pagebreaks == null ) {
       this.startOfLine = start;
       this.endOfLine = end;
       updateBreaks();
     }
   }
 
-  public void deinitialize()
-  {
+  public void deinitialize() {
     this.pageGrid = null;
     this.pendingElements.clear();
     this.contexts.clear();
     this.sequenceFill = 0;
   }
 
-  private void updateBreaks()
-  {
+  private void updateBreaks() {
     final long[] horizontalBreaks = pageGrid.getHorizontalBreaks();
     final int breakCount = horizontalBreaks.length;
-    if (pageLongList == null)
-    {
-      pageLongList = new LongList(breakCount);
-    }
-    else
-    {
+    if ( pageLongList == null ) {
+      pageLongList = new LongList( breakCount );
+    } else {
       pageLongList.clear();
     }
-    for (int i = 0; i < breakCount; i++)
-    {
-      final long pos = horizontalBreaks[i];
-      if (pos <= startOfLine)
-      {
+    for ( int i = 0; i < breakCount; i++ ) {
+      final long pos = horizontalBreaks[ i ];
+      if ( pos <= startOfLine ) {
         // skip ..
         continue;
       }
-      if (pos >= endOfLine)
-      {
+      if ( pos >= endOfLine ) {
         break;
       }
-      if (overflowX == false || (i < (breakCount - 1)))
-      {
-        pageLongList.add(pos);
+      if ( overflowX == false || ( i < ( breakCount - 1 ) ) ) {
+        pageLongList.add( pos );
       }
     }
-    pageLongList.add(endOfLine);
+    pageLongList.add( endOfLine );
 
-    this.pagebreaks = pageLongList.toArray(this.pagebreaks);
+    this.pagebreaks = pageLongList.toArray( this.pagebreaks );
     this.pagebreakCount = pageLongList.size();
   }
 
-  public boolean hasNext()
-  {
+  public boolean hasNext() {
     return sequenceFill > 0;
   }
 
-  public RenderBox next()
-  {
+  public RenderBox next() {
     cleanFirstSpacers();
 
-    Arrays.fill(elementDimensions, 0);
-    Arrays.fill(elementPositions, 0);
+    Arrays.fill( elementDimensions, 0 );
+    Arrays.fill( elementPositions, 0 );
 
-    int lastPosition = iterate(sequenceElements, sequenceFill);
-    if (lastPosition == 0)
-    {
+    int lastPosition = iterate( sequenceElements, sequenceFill );
+    if ( lastPosition == 0 ) {
       // This could evolve into an infinite loop. Thats evil.
       // We have two choices to prevent that:
       // (1) Try to break the element.
-//      if (getBreakableIndex() >= 0)
-//      {
-//        // Todo: Breaking is not yet implemented ..
-//      }
-      if (getSkipIndex() >= 0)
-      {
+      //      if (getBreakableIndex() >= 0)
+      //      {
+      //        // Todo: Breaking is not yet implemented ..
+      //      }
+      if ( getSkipIndex() >= 0 ) {
         // This causes an overflow ..
-        performSkipAlignment(getSkipIndex());
+        performSkipAlignment( getSkipIndex() );
         lastPosition = getSkipIndex();
-      }
-      else
-      {
+      } else {
         // Skip the complete line. Oh, thats not good, really!
         lastPosition = sequenceFill;
       }
@@ -384,91 +332,75 @@ public abstract class AbstractAlignmentProcessor implements TextAlignmentProcess
     contexts.clear();
     RenderBox firstBox = null;
     RenderBox box = null;
-    for (int i = 0; i < lastPosition; i++)
-    {
-      final RenderNode node = nodes[i];
-      final InlineSequenceElement element = sequenceElements[i];
-      if (element instanceof EndSequenceElement)
-      {
+    for ( int i = 0; i < lastPosition; i++ ) {
+      final RenderNode node = nodes[ i ];
+      final InlineSequenceElement element = sequenceElements[ i ];
+      if ( element instanceof EndSequenceElement ) {
         contexts.pop();
-        final long boxX2 = (elementPositions[i] + elementDimensions[i]);
-        box.setCachedWidth(boxX2 - box.getCachedX());
+        final long boxX2 = ( elementPositions[ i ] + elementDimensions[ i ] );
+        box.setCachedWidth( boxX2 - box.getCachedX() );
 
-        if (contexts.isEmpty())
-        {
+        if ( contexts.isEmpty() ) {
           box = null;
-        }
-        else
-        {
+        } else {
           final RenderNode tmpnode = box;
           box = contexts.peek();
-          box.addGeneratedChild(tmpnode);
+          box.addGeneratedChild( tmpnode );
         }
         continue;
       }
 
-      if (element instanceof StartSequenceElement)
-      {
-        box = (RenderBox) node.derive(false);
-        box.setCachedX(elementPositions[i]);
-        contexts.push(box);
-        if (firstBox == null)
-        {
+      if ( element instanceof StartSequenceElement ) {
+        box = (RenderBox) node.derive( false );
+        box.setCachedX( elementPositions[ i ] );
+        contexts.push( box );
+        if ( firstBox == null ) {
           firstBox = box;
         }
         continue;
       }
 
-      if (box == null)
-      {
-        throw new IllegalStateException("Invalid sequence: " +
-            "Cannot have elements before we open the box context.");
+      if ( box == null ) {
+        throw new IllegalStateException( "Invalid sequence: " +
+          "Cannot have elements before we open the box context." );
       }
 
       // Content element: Perform a deep-deriveForAdvance, so that we preserve the
       // possibly existing sub-nodes.
-      final RenderNode child = node.derive(true);
-      child.setCachedX(elementPositions[i]);
-      child.setCachedWidth(elementDimensions[i]);
-      if (box.getStaticBoxLayoutProperties().isPreserveSpace() &&
-          box.getStyleSheet().getBooleanStyleProperty(TextStyleKeys.TRIM_TEXT_CONTENT) == false)
-      {
+      final RenderNode child = node.derive( true );
+      child.setCachedX( elementPositions[ i ] );
+      child.setCachedWidth( elementDimensions[ i ] );
+      if ( box.getStaticBoxLayoutProperties().isPreserveSpace() &&
+        box.getStyleSheet().getBooleanStyleProperty( TextStyleKeys.TRIM_TEXT_CONTENT ) == false ) {
         // Take a shortcut as we know that we will never have any pending elements if preserve is true and
         // trim-content is false.
-        box.addGeneratedChild(child);
+        box.addGeneratedChild( child );
         continue;
       }
 
-      if (child.isIgnorableForRendering())
-      {
-        pendingElements.add(child);
-      }
-      else
-      {
-        for (int j = 0; j < pendingElements.size(); j++)
-        {
-          final RenderNode pendingNode = pendingElements.get(j);
-          box.addGeneratedChild(pendingNode);
+      if ( child.isIgnorableForRendering() ) {
+        pendingElements.add( child );
+      } else {
+        for ( int j = 0; j < pendingElements.size(); j++ ) {
+          final RenderNode pendingNode = pendingElements.get( j );
+          box.addGeneratedChild( pendingNode );
         }
         pendingElements.clear();
-        box.addGeneratedChild(child);
+        box.addGeneratedChild( child );
       }
     }
 
     // Remove all spacers and other non printable content that might
     // look ugly at the beginning of a new line ..
-    for (; lastPosition < sequenceFill; lastPosition++)
-    {
-      final RenderNode node = nodes[lastPosition];
+    for (; lastPosition < sequenceFill; lastPosition++ ) {
+      final RenderNode node = nodes[ lastPosition ];
       final StyleSheet styleSheet = node.getStyleSheet();
-      if (WhitespaceCollapse.PRESERVE.equals(styleSheet.getStyleProperty(TextStyleKeys.WHITE_SPACE_COLLAPSE)) &&
-          styleSheet.getBooleanStyleProperty(TextStyleKeys.TRIM_TEXT_CONTENT) == false)
-      {
+      if ( WhitespaceCollapse.PRESERVE.equals( styleSheet.getStyleProperty( TextStyleKeys.WHITE_SPACE_COLLAPSE ) ) &&
+        styleSheet.getBooleanStyleProperty( TextStyleKeys.TRIM_TEXT_CONTENT ) == false ) {
         break;
       }
 
-      if (node.isIgnorableForRendering() == false)
-      {
+      if ( node.isIgnorableForRendering() == false ) {
         break;
       }
     }
@@ -477,51 +409,44 @@ public abstract class AbstractAlignmentProcessor implements TextAlignmentProcess
     // and update the width of the current line
     RenderBox previousContext = null;
     final int openContexts = contexts.size();
-    for (int i = 0; i < openContexts; i++)
-    {
-      final RenderBox renderBox = contexts.get(i);
+    for ( int i = 0; i < openContexts; i++ ) {
+      final RenderBox renderBox = contexts.get( i );
       final long cachedWidth = getEndOfLine() - renderBox.getCachedX();
-      renderBox.setCachedWidth(cachedWidth);
+      renderBox.setCachedWidth( cachedWidth );
 
-      final InlineRenderBox rightBox = (InlineRenderBox) renderBox.split(RenderNode.HORIZONTAL_AXIS);
-      sequenceElements[i] = StartSequenceElement.INSTANCE;
-      nodes[i] = rightBox;
-      if (previousContext != null)
-      {
-        previousContext.addGeneratedChild(renderBox);
+      final InlineRenderBox rightBox = (InlineRenderBox) renderBox.split( RenderNode.HORIZONTAL_AXIS );
+      sequenceElements[ i ] = StartSequenceElement.INSTANCE;
+      nodes[ i ] = rightBox;
+      if ( previousContext != null ) {
+        previousContext.addGeneratedChild( renderBox );
       }
       previousContext = renderBox;
     }
 
     final int length = sequenceFill - lastPosition;
-    System.arraycopy(sequenceElements, lastPosition, sequenceElements, openContexts, length);
-    System.arraycopy(nodes, lastPosition, nodes, openContexts, length);
+    System.arraycopy( sequenceElements, lastPosition, sequenceElements, openContexts, length );
+    System.arraycopy( nodes, lastPosition, nodes, openContexts, length );
     sequenceFill = openContexts + length;
-    Arrays.fill(sequenceElements, sequenceFill, sequenceElements.length, null);
-    Arrays.fill(nodes, sequenceFill, nodes.length, null);
+    Arrays.fill( sequenceElements, sequenceFill, sequenceElements.length, null );
+    Arrays.fill( nodes, sequenceFill, nodes.length, null );
 
     return firstBox;
   }
 
-  private void cleanFirstSpacers()
-  {
+  private void cleanFirstSpacers() {
     InlineSequenceElement[] sequenceElements = this.sequenceElements;
     RenderNode[] nodes = this.nodes;
     int sequenceFill = this.sequenceFill;
 
     boolean changed = false;
     int targetIndex = 0;
-    for (int i = 0; i < this.sequenceFill; i += 1)
-    {
-      final InlineSequenceElement ise = this.sequenceElements[i];
+    for ( int i = 0; i < this.sequenceFill; i += 1 ) {
+      final InlineSequenceElement ise = this.sequenceElements[ i ];
       final InlineSequenceElement.Classification type = ise.getType();
-      if (type == InlineSequenceElement.Classification.CONTENT)
-      {
-        final RenderNode node = this.nodes[i];
-        if (node instanceof SpacerRenderNode)
-        {
-          if (changed == false)
-          {
+      if ( type == InlineSequenceElement.Classification.CONTENT ) {
+        final RenderNode node = this.nodes[ i ];
+        if ( node instanceof SpacerRenderNode ) {
+          if ( changed == false ) {
             // copy on demand ...
             sequenceElements = this.sequenceElements.clone();
             nodes = this.nodes.clone();
@@ -532,24 +457,21 @@ public abstract class AbstractAlignmentProcessor implements TextAlignmentProcess
         }
       }
 
-      if (changed)
-      {
+      if ( changed ) {
         // only copy if there is a change..
-        sequenceElements[targetIndex] = ise;
-        nodes[targetIndex] = this.nodes[i];
+        sequenceElements[ targetIndex ] = ise;
+        nodes[ targetIndex ] = this.nodes[ i ];
       }
 
-      if (type != InlineSequenceElement.Classification.START)
-      {
-        if (!changed)
-        {
+      if ( type != InlineSequenceElement.Classification.START ) {
+        if ( !changed ) {
           return;
         }
 
-        System.arraycopy(this.sequenceElements, i, sequenceElements, targetIndex, this.sequenceFill - i);
-        System.arraycopy(this.nodes, i, nodes, targetIndex, this.sequenceFill - i);
-        Arrays.fill(nodes, sequenceFill, nodes.length, null);
-        Arrays.fill(sequenceElements, sequenceFill, sequenceElements.length, null);
+        System.arraycopy( this.sequenceElements, i, sequenceElements, targetIndex, this.sequenceFill - i );
+        System.arraycopy( this.nodes, i, nodes, targetIndex, this.sequenceFill - i );
+        Arrays.fill( nodes, sequenceFill, nodes.length, null );
+        Arrays.fill( sequenceElements, sequenceFill, sequenceElements.length, null );
 
         this.sequenceElements = sequenceElements;
         this.nodes = nodes;
@@ -567,69 +489,60 @@ public abstract class AbstractAlignmentProcessor implements TextAlignmentProcess
    * @param start the start index
    * @param count the number of elements in the sequence
    * @return the processing position. Linebreaks will be inserted, if the returned value is equal or less the start
-   *         index.
+   * index.
    */
-  protected abstract int handleElement(final int start, final int count);
+  protected abstract int handleElement( final int start, final int count );
 
-  protected void computeInlineBlock(final RenderBox box,
-                                    final long position,
-                                    final long itemElementWidth)
-  {
+  protected void computeInlineBlock( final RenderBox box,
+                                     final long position,
+                                     final long itemElementWidth ) {
     final StaticBoxLayoutProperties blp = box.getStaticBoxLayoutProperties();
-    box.setCachedX(position + blp.getMarginLeft());
+    box.setCachedX( position + blp.getMarginLeft() );
     final long width = itemElementWidth - blp.getMarginLeft() - blp.getMarginRight();
-    if (width == 0)
-    {
+    if ( width == 0 ) {
       //ModelPrinter.printParents(box);
 
-      throw new IllegalStateException("A box without any width? " +
-          Integer.toHexString(System.identityHashCode(box)) + ' ' + box.getClass());
+      throw new IllegalStateException( "A box without any width? " +
+        Integer.toHexString( System.identityHashCode( box ) ) + ' ' + box.getClass() );
     }
-    box.setCachedWidth(width);
+    box.setCachedWidth( width );
 
     final BoxDefinition bdef = box.getBoxDefinition();
     final long leftInsets = bdef.getPaddingLeft() + blp.getBorderLeft();
     final long rightInsets = bdef.getPaddingRight() + blp.getBorderRight();
-    box.setContentAreaX1(box.getCachedX() + leftInsets);
-    box.setContentAreaX2(box.getCachedX() + box.getCachedWidth() - rightInsets);
+    box.setContentAreaX1( box.getCachedX() + leftInsets );
+    box.setContentAreaX2( box.getCachedX() + box.getCachedWidth() - rightInsets );
 
-//    final InfiniteMinorAxisLayoutStep layoutStep = new InfiniteMinorAxisLayoutStep(metaData);
-//    layoutStep.continueComputation(getPageGrid(), box);
+    //    final InfiniteMinorAxisLayoutStep layoutStep = new InfiniteMinorAxisLayoutStep(metaData);
+    //    layoutStep.continueComputation(getPageGrid(), box);
   }
 
-  protected int getSequenceFill()
-  {
+  protected int getSequenceFill() {
     return sequenceFill;
   }
 
-  public void performLastLineAlignment()
-  {
-    if (pagebreakCount == 0)
-    {
-      throw new IllegalStateException("Alignment processor has not been initialized correctly.");
+  public void performLastLineAlignment() {
+    if ( pagebreakCount == 0 ) {
+      throw new IllegalStateException( "Alignment processor has not been initialized correctly." );
     }
 
-    Arrays.fill(elementDimensions, 0);
-    Arrays.fill(elementPositions, 0);
+    Arrays.fill( elementDimensions, 0 );
+    Arrays.fill( elementPositions, 0 );
 
-    int lastPosition = iterate(sequenceElements, sequenceFill);
-    if (lastPosition == 0)
-    {
+    int lastPosition = iterate( sequenceElements, sequenceFill );
+    if ( lastPosition == 0 ) {
       // This could evolve into an infinite loop. Thats evil.
       // We have two choices to prevent that:
       // (1) Try to break the element.
-//      if (getBreakableIndex() >= 0)
-//      {
-//        // Todo: Breaking is not yet implemented ..
-//      }
-      if (getSkipIndex() >= 0)
-      {
+      //      if (getBreakableIndex() >= 0)
+      //      {
+      //        // Todo: Breaking is not yet implemented ..
+      //      }
+      if ( getSkipIndex() >= 0 ) {
         // This causes an overflow ..
-        performSkipAlignment(getSkipIndex());
+        performSkipAlignment( getSkipIndex() );
         lastPosition = getSkipIndex();
-      }
-      else
-      {
+      } else {
         // Skip the complete line. Oh, thats not good, really!
         lastPosition = sequenceFill;
       }
@@ -638,28 +551,23 @@ public abstract class AbstractAlignmentProcessor implements TextAlignmentProcess
     // the elements up to the 'lastPosition' are now aligned according to the alignment rules.
     // now, update the element's positions and dimensions ..
 
-    if (lastPosition == sequenceFill || lastLineAlignment)
-    {
+    if ( lastPosition == sequenceFill || lastLineAlignment ) {
       // First, the simple case: The line's content did fully fit into the linebox. No linebreaks were necessary.
       RenderBox firstBox = null;
-      for (int i = 0; i < lastPosition; i++)
-      {
-        final RenderNode node = nodes[i];
-        final InlineSequenceElement element = sequenceElements[i];
-        if (element instanceof EndSequenceElement)
-        {
-          final long boxX2 = (elementPositions[i] + elementDimensions[i]);
+      for ( int i = 0; i < lastPosition; i++ ) {
+        final RenderNode node = nodes[ i ];
+        final InlineSequenceElement element = sequenceElements[ i ];
+        if ( element instanceof EndSequenceElement ) {
+          final long boxX2 = ( elementPositions[ i ] + elementDimensions[ i ] );
           final RenderBox box = (RenderBox) node;
-          box.setCachedWidth(boxX2 - box.getCachedX());
+          box.setCachedWidth( boxX2 - box.getCachedX() );
           continue;
         }
 
-        if (element instanceof StartSequenceElement)
-        {
+        if ( element instanceof StartSequenceElement ) {
           final RenderBox box = (RenderBox) node;
-          box.setCachedX(elementPositions[i]);
-          if (firstBox == null)
-          {
+          box.setCachedX( elementPositions[ i ] );
+          if ( firstBox == null ) {
             firstBox = box;
           }
           continue;
@@ -667,8 +575,8 @@ public abstract class AbstractAlignmentProcessor implements TextAlignmentProcess
 
         // Content element: Perform a deep-deriveForAdvance, so that we preserve the
         // possibly existing sub-nodes.
-        node.setCachedX(elementPositions[i]);
-        node.setCachedWidth(elementDimensions[i]);
+        node.setCachedX( elementPositions[ i ] );
+        node.setCachedWidth( elementDimensions[ i ] );
       }
 
       return;
@@ -677,29 +585,25 @@ public abstract class AbstractAlignmentProcessor implements TextAlignmentProcess
     // The second case is more complicated. The text did not fit fully into the text-element.
 
     // Left align all elements after the layouted content ..
-    if (leftAlignProcessor == null)
-    {
+    if ( leftAlignProcessor == null ) {
       leftAlignProcessor = new LeftAlignmentProcessor();
     }
-    leftAlignProcessor.initializeForLastLineAlignment(this);
+    leftAlignProcessor.initializeForLastLineAlignment( this );
     leftAlignProcessor.performLastLineAlignment();
     leftAlignProcessor.deinitialize();
   }
 
-  public void performSkipAlignment(final int endIndex)
-  {
+  public void performSkipAlignment( final int endIndex ) {
     // Left align all elements after the layouted content ..
-    if (leftAlignProcessor == null)
-    {
+    if ( leftAlignProcessor == null ) {
       leftAlignProcessor = new LeftAlignmentProcessor();
     }
-    leftAlignProcessor.initializeForSkipAlignment(this, endIndex);
+    leftAlignProcessor.initializeForSkipAlignment( this, endIndex );
     leftAlignProcessor.performLastLineAlignment();
     leftAlignProcessor.deinitialize();
   }
 
-  protected void initializeForSkipAlignment(final AbstractAlignmentProcessor proc, final int endIndex)
-  {
+  protected void initializeForSkipAlignment( final AbstractAlignmentProcessor proc, final int endIndex ) {
     this.lastLineAlignment = true;
     this.sequenceElements = proc.sequenceElements;
     this.nodes = proc.nodes;
@@ -707,25 +611,21 @@ public abstract class AbstractAlignmentProcessor implements TextAlignmentProcess
     this.pageGrid = proc.pageGrid;
     this.elementDimensions = proc.elementDimensions;
     this.elementPositions = proc.elementPositions;
-    Arrays.fill(this.elementPositions, 0);
-    Arrays.fill(this.elementDimensions, 0);
+    Arrays.fill( this.elementPositions, 0 );
+    Arrays.fill( this.elementDimensions, 0 );
 
     this.startOfLine = proc.startOfLine;
     this.endOfLine = proc.endOfLine;
-    if (this.pagebreaks == null || this.pagebreaks.length < proc.pagebreakCount)
-    {
+    if ( this.pagebreaks == null || this.pagebreaks.length < proc.pagebreakCount ) {
       this.pagebreaks = proc.pagebreaks.clone();
       this.pagebreakCount = proc.pagebreakCount;
-    }
-    else
-    {
-      System.arraycopy(proc.pagebreaks, 0, this.pagebreaks, 0, proc.pagebreakCount);
+    } else {
+      System.arraycopy( proc.pagebreaks, 0, this.pagebreaks, 0, proc.pagebreakCount );
       this.pagebreakCount = proc.pagebreakCount;
     }
   }
 
-  protected void initializeForLastLineAlignment(final AbstractAlignmentProcessor proc)
-  {
+  protected void initializeForLastLineAlignment( final AbstractAlignmentProcessor proc ) {
     this.lastLineAlignment = true;
     this.sequenceElements = proc.sequenceElements;
     this.nodes = proc.nodes;
@@ -733,8 +633,8 @@ public abstract class AbstractAlignmentProcessor implements TextAlignmentProcess
     this.pageGrid = proc.pageGrid;
     this.elementDimensions = proc.elementDimensions;
     this.elementPositions = proc.elementPositions;
-    Arrays.fill(this.elementPositions, 0);
-    Arrays.fill(this.elementDimensions, 0);
+    Arrays.fill( this.elementPositions, 0 );
+    Arrays.fill( this.elementDimensions, 0 );
 
     this.startOfLine = proc.startOfLine;
     this.endOfLine = proc.endOfLine;
@@ -742,8 +642,7 @@ public abstract class AbstractAlignmentProcessor implements TextAlignmentProcess
     updateBreaksForLastLineAlignment();
   }
 
-  protected void updateBreaksForLastLineAlignment()
-  {
+  protected void updateBreaksForLastLineAlignment() {
     updateBreaks();
   }
 }

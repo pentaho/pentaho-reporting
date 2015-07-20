@@ -17,8 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.core.states.datarow;
 
-import javax.swing.table.TableModel;
-
 import org.pentaho.reporting.engine.classic.core.DataFactory;
 import org.pentaho.reporting.engine.classic.core.DataRow;
 import org.pentaho.reporting.engine.classic.core.ParameterDataRow;
@@ -30,8 +28,9 @@ import org.pentaho.reporting.engine.classic.core.states.crosstab.CrosstabSpecifi
 import org.pentaho.reporting.engine.classic.core.wizard.DataSchema;
 import org.pentaho.reporting.engine.classic.core.wizard.DataSchemaDefinition;
 
-public interface MasterDataRow
-{
+import javax.swing.table.TableModel;
+
+public interface MasterDataRow {
   public ResourceBundleFactory getResourceBundleFactory();
 
   public DataFactory getDataFactory();
@@ -58,7 +57,7 @@ public interface MasterDataRow
 
   public DataRow getGlobalView();
 
-  public void setImportedDataRow(final ImportedVariablesDataRow importedDataRow);
+  public void setImportedDataRow( final ImportedVariablesDataRow importedDataRow );
 
   public MasterDataRow getParentDataRow();
 
@@ -67,27 +66,28 @@ public interface MasterDataRow
 
   public MasterDataRow advance();
 
-  public MasterDataRow advanceRecursively(final boolean deepTraversingOnly,
-                                          final MasterDataRow subReportRow);
+  public MasterDataRow advanceRecursively( final boolean deepTraversingOnly,
+                                           final MasterDataRow subReportRow );
 
 
-  public void fireReportEvent(ReportEvent event);
+  public void fireReportEvent( ReportEvent event );
 
-  public MasterDataRow startCrosstabMode(CrosstabSpecification crosstabSpecification);
+  public MasterDataRow startCrosstabMode( CrosstabSpecification crosstabSpecification );
 
   public MasterDataRow endCrosstabMode();
 
   public MasterDataRow clearExportedParameters();
 
   public MasterDataRow derive();
+
   public void requireStructuralProcessing();
 
-  public MasterDataRow deriveSubDataRow(final ProcessingContext reportContext,
-                                        final DataFactory dataFactory,
-                                        final ParameterDataRow parameterDataRow,
-                                        final ResourceBundleFactory resourceBundleFactory);
+  public MasterDataRow deriveSubDataRow( final ProcessingContext reportContext,
+                                         final DataFactory dataFactory,
+                                         final ParameterDataRow parameterDataRow,
+                                         final ResourceBundleFactory resourceBundleFactory );
 
-  public MasterDataRow deriveWithQueryData(final TableModel tableData);
+  public MasterDataRow deriveWithQueryData( final TableModel tableData );
 
   public MasterDataRow deriveWithReturnFromQuery();
 
@@ -95,7 +95,7 @@ public interface MasterDataRow
 
   public GlobalMasterRow rebuild();
 
-  public MasterDataRow updateDataSchema(DataSchemaDefinition dataSchemaDefinition);
+  public MasterDataRow updateDataSchema( DataSchemaDefinition dataSchemaDefinition );
 
   public void refresh();
 
@@ -106,6 +106,7 @@ public interface MasterDataRow
   public boolean isCrosstabActive();
 
   public MasterDataRow recordCrosstabRowState();
+
   public MasterDataRow clearRecordedCrosstabRowState();
 
   public MasterDataRow replayStoredCrosstabRowState();

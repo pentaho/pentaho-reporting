@@ -17,21 +17,20 @@
 
 package org.pentaho.reporting.engine.classic.core.filter.templates;
 
-import java.util.MissingResourceException;
-
 import org.pentaho.reporting.engine.classic.core.ReportElement;
 import org.pentaho.reporting.engine.classic.core.filter.DataRowDataSource;
 import org.pentaho.reporting.engine.classic.core.filter.ResourceFileFilter;
 import org.pentaho.reporting.engine.classic.core.filter.StringFilter;
 import org.pentaho.reporting.engine.classic.core.function.ExpressionRuntime;
 
+import java.util.MissingResourceException;
+
 /**
  * A resource field template, which reads a String value from a ResourceBundle.
  *
  * @author Thomas Morgner
  */
-public class ResourceFieldTemplate extends AbstractTemplate
-{
+public class ResourceFieldTemplate extends AbstractTemplate {
   /**
    * A data-row accessor.
    */
@@ -50,13 +49,12 @@ public class ResourceFieldTemplate extends AbstractTemplate
   /**
    * Creates a new template.
    */
-  public ResourceFieldTemplate()
-  {
+  public ResourceFieldTemplate() {
     dataRowDataSource = new DataRowDataSource();
     resourceFilter = new ResourceFileFilter();
-    resourceFilter.setDataSource(dataRowDataSource);
+    resourceFilter.setDataSource( dataRowDataSource );
     stringFilter = new StringFilter();
-    stringFilter.setDataSource(resourceFilter);
+    stringFilter.setDataSource( resourceFilter );
   }
 
   /**
@@ -64,8 +62,7 @@ public class ResourceFieldTemplate extends AbstractTemplate
    *
    * @return The field name.
    */
-  public String getField()
-  {
+  public String getField() {
     return dataRowDataSource.getDataSourceColumnName();
   }
 
@@ -74,9 +71,8 @@ public class ResourceFieldTemplate extends AbstractTemplate
    *
    * @param field the field name.
    */
-  public void setField(final String field)
-  {
-    dataRowDataSource.setDataSourceColumnName(field);
+  public void setField( final String field ) {
+    dataRowDataSource.setDataSourceColumnName( field );
   }
 
   /**
@@ -84,8 +80,7 @@ public class ResourceFieldTemplate extends AbstractTemplate
    *
    * @return the formula.
    */
-  public String getFormula()
-  {
+  public String getFormula() {
     return dataRowDataSource.getFormula();
   }
 
@@ -94,9 +89,8 @@ public class ResourceFieldTemplate extends AbstractTemplate
    *
    * @param formula the formula for the data source.
    */
-  public void setFormula(final String formula)
-  {
-    dataRowDataSource.setFormula(formula);
+  public void setFormula( final String formula ) {
+    dataRowDataSource.setFormula( formula );
   }
 
 
@@ -105,8 +99,7 @@ public class ResourceFieldTemplate extends AbstractTemplate
    *
    * @return The resource class name.
    */
-  public String getResourceIdentifier()
-  {
+  public String getResourceIdentifier() {
     return resourceFilter.getResourceIdentifier();
   }
 
@@ -116,10 +109,9 @@ public class ResourceFieldTemplate extends AbstractTemplate
    * @param resourceClassName the resource class name.
    * @throws MissingResourceException if the resource is missing.
    */
-  public void setResourceIdentifier(final String resourceClassName)
-      throws MissingResourceException
-  {
-    resourceFilter.setResourceIdentifier(resourceClassName);
+  public void setResourceIdentifier( final String resourceClassName )
+    throws MissingResourceException {
+    resourceFilter.setResourceIdentifier( resourceClassName );
   }
 
   /**
@@ -127,8 +119,7 @@ public class ResourceFieldTemplate extends AbstractTemplate
    *
    * @return The string that represents a <code>null</code> value.
    */
-  public String getNullValue()
-  {
+  public String getNullValue() {
     return stringFilter.getNullValue();
   }
 
@@ -137,9 +128,8 @@ public class ResourceFieldTemplate extends AbstractTemplate
    *
    * @param nullValue the string that represents a <code>null</code> value.
    */
-  public void setNullValue(final String nullValue)
-  {
-    stringFilter.setNullValue(nullValue);
+  public void setNullValue( final String nullValue ) {
+    stringFilter.setNullValue( nullValue );
   }
 
   /**
@@ -150,9 +140,8 @@ public class ResourceFieldTemplate extends AbstractTemplate
    * @param element
    * @return the value.
    */
-  public Object getValue(final ExpressionRuntime runtime, final ReportElement element)
-  {
-    return stringFilter.getValue(runtime, element);
+  public Object getValue( final ExpressionRuntime runtime, final ReportElement element ) {
+    return stringFilter.getValue( runtime, element );
   }
 
   /**
@@ -162,8 +151,7 @@ public class ResourceFieldTemplate extends AbstractTemplate
    * @throws CloneNotSupportedException this should never happen.
    */
   public ResourceFieldTemplate clone()
-      throws CloneNotSupportedException
-  {
+    throws CloneNotSupportedException {
     final ResourceFieldTemplate template = (ResourceFieldTemplate) super.clone();
     template.stringFilter = stringFilter.clone();
     template.resourceFilter = (ResourceFileFilter) template.stringFilter.getDataSource();
@@ -176,8 +164,7 @@ public class ResourceFieldTemplate extends AbstractTemplate
    *
    * @return the datarow data source.
    */
-  protected DataRowDataSource getDataRowDataSource()
-  {
+  protected DataRowDataSource getDataRowDataSource() {
     return dataRowDataSource;
   }
 }

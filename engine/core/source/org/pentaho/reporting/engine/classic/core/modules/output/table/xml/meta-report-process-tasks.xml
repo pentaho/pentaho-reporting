@@ -4,7 +4,7 @@
                 bundle-name="org.pentaho.reporting.engine.classic.core.modules.output.table.xml.TableXmlReportProcessTaskBundle"
                 expert="false" hidden="true" preferred="false"
                 configuration-prefix="org.pentaho.reporting.engine.classic.core.modules.output.table.xml.">
-      <alias>xml+stream</alias>
+    <alias>xml+stream</alias>
   </process-task>
 
 </meta-data>

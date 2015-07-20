@@ -17,12 +17,12 @@
 
 package org.pentaho.reporting.engine.classic.core.layout.process.linebreak;
 
-import java.util.Arrays;
-
 import org.pentaho.reporting.engine.classic.core.layout.model.InlineRenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.ParagraphRenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderNode;
+
+import java.util.Arrays;
 
 /**
  * This implementation is used in the simple mode. The pool-box is used as is - none of the nodes get derived, but we
@@ -31,10 +31,8 @@ import org.pentaho.reporting.engine.classic.core.layout.model.RenderNode;
  *
  * @author Thomas Morgner
  */
-public final class SimpleLinebreaker implements ParagraphLinebreaker
-{
-  private enum BreakMethod
-  {
+public final class SimpleLinebreaker implements ParagraphLinebreaker {
+  private enum BreakMethod {
     StartBlock, FinishBlock, StartInline, FinishInline, Node
   }
 
@@ -46,174 +44,145 @@ public final class SimpleLinebreaker implements ParagraphLinebreaker
   private Object suspendItem;
   private boolean breakRequested;
 
-  public SimpleLinebreaker(final ParagraphRenderBox paragraphRenderBox)
-  {
+  public SimpleLinebreaker( final ParagraphRenderBox paragraphRenderBox ) {
     this.paragraphRenderBox = paragraphRenderBox;
-    final int poolSize = Math.max(20, paragraphRenderBox.getPoolSize());
-    this.methods = new BreakMethod[poolSize];
-    this.parameters = new Object[poolSize];
+    final int poolSize = Math.max( 20, paragraphRenderBox.getPoolSize() );
+    this.methods = new BreakMethod[ poolSize ];
+    this.parameters = new Object[ poolSize ];
   }
 
-  public void dispose()
-  {
+  public void dispose() {
     counter = 0;
     paragraphRenderBox = null;
     suspendItem = null;
     breakRequested = false;
   }
 
-  public void recycle(final ParagraphRenderBox box)
-  {
+  public void recycle( final ParagraphRenderBox box ) {
     this.counter = 0;
     this.paragraphRenderBox = box;
     this.suspendItem = null;
     this.breakRequested = false;
     final int poolSize = this.paragraphRenderBox.getPoolSize();
-    if (poolSize > this.methods.length)
-    {
-      this.methods = new BreakMethod[poolSize];
-      this.parameters = new Object[poolSize];
+    if ( poolSize > this.methods.length ) {
+      this.methods = new BreakMethod[ poolSize ];
+      this.parameters = new Object[ poolSize ];
     }
   }
 
 
-  private void add(final BreakMethod method, final Object parameter)
-  {
-    if (methods.length == counter)
-    {
+  private void add( final BreakMethod method, final Object parameter ) {
+    if ( methods.length == counter ) {
       // Grow the arrays ..
-      final int nextSize = Math.max(30, (methods.length * 2));
-      final BreakMethod[] newMethods = new BreakMethod[nextSize];
-      System.arraycopy(methods, 0, newMethods, 0, methods.length);
+      final int nextSize = Math.max( 30, ( methods.length * 2 ) );
+      final BreakMethod[] newMethods = new BreakMethod[ nextSize ];
+      System.arraycopy( methods, 0, newMethods, 0, methods.length );
 
-      final Object[] newParameters = new Object[nextSize];
-      System.arraycopy(parameters, 0, newParameters, 0, parameters.length);
+      final Object[] newParameters = new Object[ nextSize ];
+      System.arraycopy( parameters, 0, newParameters, 0, parameters.length );
 
       this.methods = newMethods;
       this.parameters = newParameters;
     }
 
-    methods[counter] = method;
-    parameters[counter] = parameter;
+    methods[ counter ] = method;
+    parameters[ counter ] = parameter;
     counter += 1;
   }
 
-  public boolean isWritable()
-  {
+  public boolean isWritable() {
     return true;
   }
 
-  public FullLinebreaker startComplexLayout()
-  {
-    final FullLinebreaker fullBreaker = new FullLinebreaker(paragraphRenderBox);
-    for (int i = 0; i < counter; i++)
-    {
-      final BreakMethod method = methods[i];
-      final Object parameter = parameters[i];
-      switch (method)
-      {
-        case StartBlock:
-        {
-          fullBreaker.startBlockBox((RenderBox) parameter);
+  public FullLinebreaker startComplexLayout() {
+    final FullLinebreaker fullBreaker = new FullLinebreaker( paragraphRenderBox );
+    for ( int i = 0; i < counter; i++ ) {
+      final BreakMethod method = methods[ i ];
+      final Object parameter = parameters[ i ];
+      switch( method ) {
+        case StartBlock: {
+          fullBreaker.startBlockBox( (RenderBox) parameter );
           break;
         }
-        case FinishBlock:
-        {
-          fullBreaker.finishBlockBox((RenderBox) parameter);
+        case FinishBlock: {
+          fullBreaker.finishBlockBox( (RenderBox) parameter );
           break;
         }
-        case StartInline:
-        {
-          fullBreaker.startInlineBox((InlineRenderBox) parameter);
+        case StartInline: {
+          fullBreaker.startInlineBox( (InlineRenderBox) parameter );
           break;
         }
-        case FinishInline:
-        {
-          fullBreaker.finishInlineBox((InlineRenderBox) parameter);
+        case FinishInline: {
+          fullBreaker.finishInlineBox( (InlineRenderBox) parameter );
           break;
         }
-        case Node:
-        {
-          fullBreaker.addNode((RenderNode) parameter);
+        case Node: {
+          fullBreaker.addNode( (RenderNode) parameter );
           break;
         }
-        default:
-        {
+        default: {
           throw new IllegalStateException();
         }
       }
     }
 
-    paragraphRenderBox.setPoolSize(counter);
+    paragraphRenderBox.setPoolSize( counter );
     // replay ..
     return fullBreaker;
   }
 
-  public void startBlockBox(final RenderBox child)
-  {
-    if (suspendItem != null)
-    {
+  public void startBlockBox( final RenderBox child ) {
+    if ( suspendItem != null ) {
       suspendItem = child.getInstanceId();
     }
 
-    add(BreakMethod.StartBlock, child);
+    add( BreakMethod.StartBlock, child );
   }
 
-  public void finishBlockBox(final RenderBox box)
-  {
-    if (suspendItem == box.getInstanceId())
-    {
+  public void finishBlockBox( final RenderBox box ) {
+    if ( suspendItem == box.getInstanceId() ) {
       suspendItem = null;
     }
 
-    add(BreakMethod.FinishBlock, box);
+    add( BreakMethod.FinishBlock, box );
   }
 
-  public ParagraphLinebreaker startParagraphBox(final ParagraphRenderBox box)
-  {
+  public ParagraphLinebreaker startParagraphBox( final ParagraphRenderBox box ) {
     throw new UnsupportedOperationException();
   }
 
-  public void finishParagraphBox(final ParagraphRenderBox box)
-  {
+  public void finishParagraphBox( final ParagraphRenderBox box ) {
     throw new UnsupportedOperationException();
   }
 
-  public boolean isSuspended()
-  {
+  public boolean isSuspended() {
     return suspendItem != null;
   }
 
-  public void finish()
-  {
-    paragraphRenderBox.setPoolSize(counter);
-    paragraphRenderBox.setLineBoxAge(paragraphRenderBox.getPool().getChangeTracker());
+  public void finish() {
+    paragraphRenderBox.setPoolSize( counter );
+    paragraphRenderBox.setLineBoxAge( paragraphRenderBox.getPool().getChangeTracker() );
     counter = 0;
-    Arrays.fill(parameters, null);
+    Arrays.fill( parameters, null );
   }
 
-  public void startInlineBox(final InlineRenderBox box)
-  {
-    add(BreakMethod.StartInline, box);
+  public void startInlineBox( final InlineRenderBox box ) {
+    add( BreakMethod.StartInline, box );
   }
 
-  public void finishInlineBox(final InlineRenderBox box)
-  {
-    add(BreakMethod.FinishInline, box);
+  public void finishInlineBox( final InlineRenderBox box ) {
+    add( BreakMethod.FinishInline, box );
   }
 
-  public boolean isBreakRequested()
-  {
+  public boolean isBreakRequested() {
     return breakRequested;
   }
 
-  public void addNode(final RenderNode node)
-  {
-    add(BreakMethod.Node, node);
+  public void addNode( final RenderNode node ) {
+    add( BreakMethod.Node, node );
   }
 
-  public void setBreakRequested(final boolean breakRequested)
-  {
+  public void setBreakRequested( final boolean breakRequested ) {
     this.breakRequested = breakRequested;
   }
 }

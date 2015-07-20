@@ -20,17 +20,14 @@ package org.pentaho.reporting.engine.classic.core.filter.types.bands;
 import org.pentaho.reporting.engine.classic.core.GroupDataBody;
 import org.pentaho.reporting.engine.classic.core.ReportElement;
 
-public class GroupDataBodyType extends AbstractSectionType
-{
+public class GroupDataBodyType extends AbstractSectionType {
   public static final GroupDataBodyType INSTANCE = new GroupDataBodyType();
 
-  public GroupDataBodyType()
-  {
-    super("group-data-body", true);
+  public GroupDataBodyType() {
+    super( "group-data-body", true );
   }
 
-  public ReportElement create()
-  {
+  public ReportElement create() {
     return new GroupDataBody();
   }
 }

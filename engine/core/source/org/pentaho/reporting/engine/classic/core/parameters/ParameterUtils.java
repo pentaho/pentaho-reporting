@@ -21,47 +21,40 @@ import org.pentaho.reporting.engine.classic.core.MasterReport;
 import org.pentaho.reporting.engine.classic.core.ReportDataFactoryException;
 import org.pentaho.reporting.engine.classic.core.util.ReportParameterValues;
 
-public class ParameterUtils
-{
+public class ParameterUtils {
 
-  private ParameterUtils()
-  {
+  private ParameterUtils() {
   }
 
   /**
-   * Enriches the parameter values with computed default values. Warning: This is a dangerous thing
-   * as this may use untrusted input for the default value computation.
-   * 
+   * Enriches the parameter values with computed default values. Warning: This is a dangerous thing as this may use
+   * untrusted input for the default value computation.
+   *
    * @param report
    * @param context
    * @return
    * @throws ReportDataFactoryException
    * @deprecated
    */
-  public static ReportParameterValues initializeDefaultValues(final MasterReport report,
-                                                              final ParameterContext context)
-      throws ReportDataFactoryException
-  {
-    if (report == null)
-    {
+  public static ReportParameterValues initializeDefaultValues( final MasterReport report,
+                                                               final ParameterContext context )
+    throws ReportDataFactoryException {
+    if ( report == null ) {
       throw new NullPointerException();
     }
-    if (context == null)
-    {
+    if ( context == null ) {
       throw new NullPointerException();
     }
 
     final ReportParameterDefinition definition = report.getParameterDefinition();
-    final ReportParameterValues parameters = new ReportParameterValues(report.getParameterValues());
-    final ParameterContextWrapper wrapper = new ParameterContextWrapper(context, parameters);
+    final ReportParameterValues parameters = new ReportParameterValues( report.getParameterValues() );
+    final ParameterContextWrapper wrapper = new ParameterContextWrapper( context, parameters );
     final ParameterDefinitionEntry[] entries = definition.getParameterDefinitions();
-    for (int i = 0; i < entries.length; i++)
-    {
-      final ParameterDefinitionEntry entry = entries[i];
-      final Object oldValue = parameters.get(entry.getName());
-      if (oldValue == null)
-      {
-        parameters.put(entry.getName(), entry.getDefaultValue(wrapper));
+    for ( int i = 0; i < entries.length; i++ ) {
+      final ParameterDefinitionEntry entry = entries[ i ];
+      final Object oldValue = parameters.get( entry.getName() );
+      if ( oldValue == null ) {
+        parameters.put( entry.getName(), entry.getDefaultValue( wrapper ) );
       }
     }
     return parameters;

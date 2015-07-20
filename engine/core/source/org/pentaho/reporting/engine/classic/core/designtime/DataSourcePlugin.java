@@ -25,14 +25,13 @@ import org.pentaho.reporting.engine.classic.core.metadata.DataFactoryMetaData;
  *
  * @author Thomas Morgner
  */
-public interface DataSourcePlugin
-{
-  public DataFactory performEdit(DesignTimeContext context,
-                                 DataFactory input,
-                                 String selectedQueryName,
-                                 DataFactoryChangeRecorder changeRecorder);
+public interface DataSourcePlugin {
+  public DataFactory performEdit( DesignTimeContext context,
+                                  DataFactory input,
+                                  String selectedQueryName,
+                                  DataFactoryChangeRecorder changeRecorder );
 
-  public boolean canHandle(DataFactory dataFactory);
+  public boolean canHandle( DataFactory dataFactory );
 
   public DataFactoryMetaData getMetaData();
 }

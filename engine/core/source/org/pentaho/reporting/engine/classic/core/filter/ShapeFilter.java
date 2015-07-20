@@ -17,18 +17,17 @@
 
 package org.pentaho.reporting.engine.classic.core.filter;
 
-import java.awt.Shape;
-
 import org.pentaho.reporting.engine.classic.core.ReportElement;
 import org.pentaho.reporting.engine.classic.core.function.ExpressionRuntime;
+
+import java.awt.*;
 
 /**
  * A shape filter.
  *
  * @author Thomas Morgner.
  */
-public class ShapeFilter implements DataFilter
-{
+public class ShapeFilter implements DataFilter {
   /**
    * The data source.
    */
@@ -37,8 +36,7 @@ public class ShapeFilter implements DataFilter
   /**
    * Default constructor.
    */
-  public ShapeFilter()
-  {
+  public ShapeFilter() {
   }
 
   /**
@@ -46,8 +44,7 @@ public class ShapeFilter implements DataFilter
    *
    * @return The data source.
    */
-  public DataSource getDataSource()
-  {
+  public DataSource getDataSource() {
     return dataSource;
   }
 
@@ -56,8 +53,7 @@ public class ShapeFilter implements DataFilter
    *
    * @param dataSource The data source.
    */
-  public void setDataSource(final DataSource dataSource)
-  {
+  public void setDataSource( final DataSource dataSource ) {
     this.dataSource = dataSource;
   }
 
@@ -70,16 +66,13 @@ public class ShapeFilter implements DataFilter
    * @param element
    * @return The value.
    */
-  public Object getValue(final ExpressionRuntime runtime, final ReportElement element)
-  {
+  public Object getValue( final ExpressionRuntime runtime, final ReportElement element ) {
     final DataSource ds = getDataSource();
-    if (ds == null)
-    {
+    if ( ds == null ) {
       return null;
     }
-    final Object o = ds.getValue(runtime, element);
-    if (o instanceof Shape)
-    {
+    final Object o = ds.getValue( runtime, element );
+    if ( o instanceof Shape ) {
       return o;
     }
     return null;
@@ -92,11 +85,9 @@ public class ShapeFilter implements DataFilter
    * @throws CloneNotSupportedException this should never happen.
    */
   public ShapeFilter clone()
-      throws CloneNotSupportedException
-  {
+    throws CloneNotSupportedException {
     final ShapeFilter r = (ShapeFilter) super.clone();
-    if (dataSource != null)
-    {
+    if ( dataSource != null ) {
       r.dataSource = dataSource.clone();
     }
     return r;

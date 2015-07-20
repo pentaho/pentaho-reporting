@@ -17,8 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.core.bugs;
 
-import java.io.File;
-
 import junit.framework.TestCase;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineCoreModule;
@@ -32,44 +30,40 @@ import org.pentaho.reporting.engine.classic.core.testsupport.selector.MatchFacto
 import org.pentaho.reporting.libraries.resourceloader.Resource;
 import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 
-public class Prd3857Test extends TestCase
-{
-  public Prd3857Test()
-  {
+import java.io.File;
+
+public class Prd3857Test extends TestCase {
+  public Prd3857Test() {
   }
 
-  protected void setUp() throws Exception
-  {
+  protected void setUp() throws Exception {
     ClassicEngineBoot.getInstance().start();
   }
 
-  public void testGoldRun () throws Exception
-  {
-    final File file = GoldTestBase.locateGoldenSampleReport("Prd-3239.prpt");
+  public void testGoldRun() throws Exception {
+    final File file = GoldTestBase.locateGoldenSampleReport( "Prd-3239.prpt" );
     final ResourceManager mgr = new ResourceManager();
     mgr.registerDefaults();
-    final Resource directly = mgr.createDirectly(file, MasterReport.class);
+    final Resource directly = mgr.createDirectly( file, MasterReport.class );
     final MasterReport report = (MasterReport) directly.getResource();
-    report.setCompatibilityLevel(ClassicEngineBoot.computeVersionId(3, 8, 0));
+    report.setCompatibilityLevel( ClassicEngineBoot.computeVersionId( 3, 8, 0 ) );
 
-    DebugReportRunner.createXmlFlow(report);
-    DebugReportRunner.showDialog(report);
+    DebugReportRunner.createXmlFlow( report );
+    DebugReportRunner.showDialog( report );
   }
 
-  public void testGoldRun3857Visually () throws Exception
-  {
-    final File file = GoldTestBase.locateGoldenSampleReport("Prd-3857-001.prpt");
+  public void testGoldRun3857Visually() throws Exception {
+    final File file = GoldTestBase.locateGoldenSampleReport( "Prd-3857-001.prpt" );
     final ResourceManager mgr = new ResourceManager();
     mgr.registerDefaults();
-    final Resource directly = mgr.createDirectly(file, MasterReport.class);
+    final Resource directly = mgr.createDirectly( file, MasterReport.class );
     final MasterReport report = (MasterReport) directly.getResource();
 
-//    DebugReportRunner.createXmlFlow(report);
-    DebugReportRunner.showDialog(report);
+    //    DebugReportRunner.createXmlFlow(report);
+    DebugReportRunner.showDialog( report );
   }
 
-  public void testRowBoxesEstablishOwnBlockContext() throws Exception
-  {
+  public void testRowBoxesEstablishOwnBlockContext() throws Exception {
     // this report defines that the group as well as all bands within that group are row-layout.
     // therefore the two itembands end on the same row.
 
@@ -79,20 +73,21 @@ public class Prd3857Test extends TestCase
     // A band without a width defined (the itemband!), does not establish an own block-context, so it
     // takes the block context of the parent, or as fallback: page.
 
-    final File file = GoldTestBase.locateGoldenSampleReport("Prd-3479.prpt");
+    final File file = GoldTestBase.locateGoldenSampleReport( "Prd-3479.prpt" );
     final ResourceManager mgr = new ResourceManager();
     mgr.registerDefaults();
-    final Resource directly = mgr.createDirectly(file, MasterReport.class);
+    final Resource directly = mgr.createDirectly( file, MasterReport.class );
     final MasterReport report = (MasterReport) directly.getResource();
-    report.setCompatibilityLevel(null);
-    report.getReportConfiguration().setConfigProperty(ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY, "false");
+    report.setCompatibilityLevel( null );
+    report.getReportConfiguration()
+      .setConfigProperty( ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY, "false" );
 
-    final LogicalPageBox logicalPageBox = DebugReportRunner.layoutPage(report, 0);
-    final RenderNode[] itembands = MatchFactory.findElementsByElementType(logicalPageBox, ItemBandType.INSTANCE);
+    final LogicalPageBox logicalPageBox = DebugReportRunner.layoutPage( report, 0 );
+    final RenderNode[] itembands = MatchFactory.findElementsByElementType( logicalPageBox, ItemBandType.INSTANCE );
 
-    assertEquals(2, itembands.length);
-    assertEquals(48208843, itembands[0].getWidth());
-    assertEquals(48208843, itembands[1].getWidth());
-    assertEquals(48208843, itembands[1].getX());
+    assertEquals( 2, itembands.length );
+    assertEquals( 48208843, itembands[ 0 ].getWidth() );
+    assertEquals( 48208843, itembands[ 1 ].getWidth() );
+    assertEquals( 48208843, itembands[ 1 ].getX() );
   }
 }

@@ -17,26 +17,23 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.output.pageable.graphics.internal;
 
-import java.awt.Graphics;
-import java.awt.Graphics2D;
+import org.pentaho.reporting.engine.classic.core.modules.output.pageable.graphics.PageDrawable;
+
+import java.awt.*;
 import java.awt.geom.Rectangle2D;
 import java.awt.print.PageFormat;
 import java.awt.print.Printable;
 import java.awt.print.PrinterException;
-
-import org.pentaho.reporting.engine.classic.core.modules.output.pageable.graphics.PageDrawable;
 
 /**
  * Creation-Date: 15.11.2006, 22:14:09
  *
  * @author Thomas Morgner
  */
-public class DrawablePrintable implements Printable
-{
+public class DrawablePrintable implements Printable {
   private PageDrawable drawable;
 
-  public DrawablePrintable(final PageDrawable drawable)
-  {
+  public DrawablePrintable( final PageDrawable drawable ) {
     this.drawable = drawable;
   }
 
@@ -54,22 +51,19 @@ public class DrawablePrintable implements Printable
    * @param pageFormat the size and orientation of the page being drawn
    * @param pageIndex  the zero based index of the page to be drawn
    * @return PAGE_EXISTS if the page is rendered successfully or NO_SUCH_PAGE if <code>pageIndex</code> specifies a
-   *         non-existent page.
-   * @throws java.awt.print.PrinterException
-   *          thrown when the print job is terminated.
+   * non-existent page.
+   * @throws java.awt.print.PrinterException thrown when the print job is terminated.
    */
-  public int print(final Graphics graphics, final PageFormat pageFormat, final int pageIndex)
-      throws PrinterException
-  {
-    if (drawable == null)
-    {
+  public int print( final Graphics graphics, final PageFormat pageFormat, final int pageIndex )
+    throws PrinterException {
+    if ( drawable == null ) {
       return Printable.NO_SUCH_PAGE;
     }
 
     final Graphics2D g2 = (Graphics2D) graphics;
     final Rectangle2D bounds = new Rectangle2D.Double
-        (0, 0, pageFormat.getImageableWidth(), pageFormat.getImageableHeight());
-    drawable.draw(g2, bounds);
+      ( 0, 0, pageFormat.getImageableWidth(), pageFormat.getImageableHeight() );
+    drawable.draw( g2, bounds );
     return Printable.PAGE_EXISTS;
   }
 }

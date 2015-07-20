@@ -17,8 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.parser.ext.readhandlers;
 
-import java.util.ArrayList;
-
 import org.pentaho.reporting.engine.classic.core.CustomPageDefinition;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
 import org.pentaho.reporting.engine.classic.core.modules.parser.base.PropertyAttributes;
@@ -27,12 +25,12 @@ import org.pentaho.reporting.engine.classic.core.modules.parser.base.common.Abst
 import org.pentaho.reporting.libraries.xmlns.parser.XmlReadHandler;
 import org.xml.sax.SAXException;
 
-public class PageDefinitionReadHandler extends AbstractPropertyXmlReadHandler
-{
+import java.util.ArrayList;
+
+public class PageDefinitionReadHandler extends AbstractPropertyXmlReadHandler {
   private ArrayList pageDefList;
 
-  public PageDefinitionReadHandler()
-  {
+  public PageDefinitionReadHandler() {
     pageDefList = new ArrayList();
   }
 
@@ -44,20 +42,17 @@ public class PageDefinitionReadHandler extends AbstractPropertyXmlReadHandler
    * @return the handler or null, if the tagname is invalid.
    * @throws org.xml.sax.SAXException if there is a parsing error.
    */
-  protected XmlReadHandler getHandlerForChild(final String uri,
-                                              final String tagName,
-                                              final PropertyAttributes atts)
-      throws SAXException
-  {
-    if (isSameNamespace(uri) == false)
-    {
+  protected XmlReadHandler getHandlerForChild( final String uri,
+                                               final String tagName,
+                                               final PropertyAttributes atts )
+    throws SAXException {
+    if ( isSameNamespace( uri ) == false ) {
       return null;
     }
 
-    if ("page".equals(tagName))
-    {
+    if ( "page".equals( tagName ) ) {
       final PageReadHandler readHandler = new PageReadHandler();
-      pageDefList.add(readHandler);
+      pageDefList.add( readHandler );
       return readHandler;
     }
     return null;
@@ -68,26 +63,23 @@ public class PageDefinitionReadHandler extends AbstractPropertyXmlReadHandler
    *
    * @throws org.xml.sax.SAXException if there is a parsing error.
    */
-  protected void doneParsing() throws SAXException
-  {
-    if (pageDefList.isEmpty())
-    {
+  protected void doneParsing() throws SAXException {
+    if ( pageDefList.isEmpty() ) {
       throw new SAXException
-          ("page-definition element needs at least one page definition.");
+        ( "page-definition element needs at least one page definition." );
     }
 
     final CustomPageDefinition pageDefinition = new CustomPageDefinition();
 
-    for (int i = 0; i < pageDefList.size(); i++)
-    {
-      final PageReadHandler readHandler = (PageReadHandler) pageDefList.get(i);
-      pageDefinition.addPageFormat(readHandler.getPageFormat(),
-          readHandler.getX(), readHandler.getY());
+    for ( int i = 0; i < pageDefList.size(); i++ ) {
+      final PageReadHandler readHandler = (PageReadHandler) pageDefList.get( i );
+      pageDefinition.addPageFormat( readHandler.getPageFormat(),
+        readHandler.getX(), readHandler.getY() );
     }
 
     final MasterReport report = (MasterReport)
-        getRootHandler().getHelperObject(ReportParserUtil.HELPER_OBJ_REPORT_NAME);
-    report.setPageDefinition(pageDefinition);
+      getRootHandler().getHelperObject( ReportParserUtil.HELPER_OBJ_REPORT_NAME );
+    report.setPageDefinition( pageDefinition );
   }
 
   /**
@@ -95,8 +87,7 @@ public class PageDefinitionReadHandler extends AbstractPropertyXmlReadHandler
    *
    * @return the object.
    */
-  public Object getObject()
-  {
+  public Object getObject() {
     return null;
   }
 }

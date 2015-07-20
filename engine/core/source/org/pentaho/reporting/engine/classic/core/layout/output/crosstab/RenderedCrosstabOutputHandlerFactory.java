@@ -22,33 +22,21 @@ import org.pentaho.reporting.engine.classic.core.layout.output.GroupOutputHandle
 import org.pentaho.reporting.engine.classic.core.layout.output.GroupOutputHandlerFactory;
 import org.pentaho.reporting.engine.classic.core.layout.output.RelationalGroupOutputHandler;
 
-public class RenderedCrosstabOutputHandlerFactory implements GroupOutputHandlerFactory
-{
-  public RenderedCrosstabOutputHandlerFactory()
-  {
+public class RenderedCrosstabOutputHandlerFactory implements GroupOutputHandlerFactory {
+  public RenderedCrosstabOutputHandlerFactory() {
   }
 
-  public GroupOutputHandler getOutputHandler(final ReportEvent event, final int beginOfRow)
-  {
+  public GroupOutputHandler getOutputHandler( final ReportEvent event, final int beginOfRow ) {
     final int type = event.getType();
-    if ((type & ReportEvent.CROSSTABBING_TABLE) == ReportEvent.CROSSTABBING_TABLE)
-    {
+    if ( ( type & ReportEvent.CROSSTABBING_TABLE ) == ReportEvent.CROSSTABBING_TABLE ) {
       return new CrosstabOutputHandler();
-    }
-    else if ((type & ReportEvent.CROSSTABBING_OTHER) == ReportEvent.CROSSTABBING_OTHER)
-    {
+    } else if ( ( type & ReportEvent.CROSSTABBING_OTHER ) == ReportEvent.CROSSTABBING_OTHER ) {
       return new CrosstabOtherOutputHandler();
-    }
-    else if ((type & ReportEvent.CROSSTABBING_ROW) == ReportEvent.CROSSTABBING_ROW)
-    {
+    } else if ( ( type & ReportEvent.CROSSTABBING_ROW ) == ReportEvent.CROSSTABBING_ROW ) {
       return new CrosstabRowOutputHandler();
-    }
-    else if ((type & ReportEvent.CROSSTABBING_COL) == ReportEvent.CROSSTABBING_COL)
-    {
+    } else if ( ( type & ReportEvent.CROSSTABBING_COL ) == ReportEvent.CROSSTABBING_COL ) {
       return new CrosstabColumnOutputHandler();
-    }
-    else
-    {
+    } else {
       return new RelationalGroupOutputHandler();
     }
   }

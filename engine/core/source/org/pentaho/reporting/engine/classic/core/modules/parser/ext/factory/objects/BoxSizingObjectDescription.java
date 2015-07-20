@@ -26,15 +26,13 @@ import org.pentaho.reporting.engine.classic.core.style.BoxSizing;
  *
  * @author Thomas Morgner
  */
-public class BoxSizingObjectDescription extends AbstractObjectDescription
-{
+public class BoxSizingObjectDescription extends AbstractObjectDescription {
   /**
    * Creates a new object description.
    */
-  public BoxSizingObjectDescription()
-  {
-    super(BoxSizing.class);
-    setParameterDefinition("value", String.class);
+  public BoxSizingObjectDescription() {
+    super( BoxSizing.class );
+    setParameterDefinition( "value", String.class );
   }
 
   /**
@@ -42,19 +40,15 @@ public class BoxSizingObjectDescription extends AbstractObjectDescription
    *
    * @return The object.
    */
-  public Object createObject()
-  {
-    final String o = (String) getParameter("value");
-    if (o == null)
-    {
+  public Object createObject() {
+    final String o = (String) getParameter( "value" );
+    if ( o == null ) {
       return null;
     }
-    if (BoxSizing.BORDER_BOX.toString().equals(o))
-    {
+    if ( BoxSizing.BORDER_BOX.toString().equals( o ) ) {
       return BoxSizing.BORDER_BOX;
     }
-    if (BoxSizing.CONTENT_BOX.toString().equals(o))
-    {
+    if ( BoxSizing.CONTENT_BOX.toString().equals( o ) ) {
       return BoxSizing.CONTENT_BOX;
     }
     return null;
@@ -64,23 +58,19 @@ public class BoxSizingObjectDescription extends AbstractObjectDescription
    * Sets the parameters in the object description to match the specified object.
    *
    * @param o the object (an {@link org.pentaho.reporting.engine.classic.core.ElementAlignment} instance).
-   * @throws org.pentaho.reporting.engine.classic.core.modules.parser.ext.factory.base.ObjectFactoryException
-   *          if the object is not recognised.
+   * @throws org.pentaho.reporting.engine.classic.core.modules.parser.ext.factory.base.ObjectFactoryException if the
+   * object
+   *                                                                                                          is not
+   *                                                                                                          recognised.
    */
-  public void setParameterFromObject(final Object o)
-      throws ObjectFactoryException
-  {
-    if (o.equals(BoxSizing.BORDER_BOX))
-    {
-      setParameter("value", BoxSizing.BORDER_BOX.toString());
-    }
-    else if (o.equals(BoxSizing.CONTENT_BOX))
-    {
-      setParameter("value", BoxSizing.CONTENT_BOX.toString());
-    }
-    else
-    {
-      throw new ObjectFactoryException("Invalid value specified for ElementAlignment");
+  public void setParameterFromObject( final Object o )
+    throws ObjectFactoryException {
+    if ( o.equals( BoxSizing.BORDER_BOX ) ) {
+      setParameter( "value", BoxSizing.BORDER_BOX.toString() );
+    } else if ( o.equals( BoxSizing.CONTENT_BOX ) ) {
+      setParameter( "value", BoxSizing.CONTENT_BOX.toString() );
+    } else {
+      throw new ObjectFactoryException( "Invalid value specified for ElementAlignment" );
     }
   }
 

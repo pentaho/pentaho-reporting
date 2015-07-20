@@ -26,14 +26,12 @@ import org.w3c.css.sac.Condition;
  *
  * @author Thomas Morgner
  */
-public final class OrCSSCondition implements CombinatorCondition, CSSCondition
-{
+public final class OrCSSCondition implements CombinatorCondition, CSSCondition {
   private CSSCondition firstCondition;
   private CSSCondition secondCondition;
 
-  public OrCSSCondition(final CSSCondition firstCondition,
-                        final CSSCondition secondCondition)
-  {
+  public OrCSSCondition( final CSSCondition firstCondition,
+                         final CSSCondition secondCondition ) {
     this.firstCondition = firstCondition;
     this.secondCondition = secondCondition;
   }
@@ -41,29 +39,25 @@ public final class OrCSSCondition implements CombinatorCondition, CSSCondition
   /**
    * Returns the first condition.
    */
-  public Condition getFirstCondition()
-  {
+  public Condition getFirstCondition() {
     return firstCondition;
   }
 
   /**
    * Returns the second condition.
    */
-  public Condition getSecondCondition()
-  {
+  public Condition getSecondCondition() {
     return secondCondition;
   }
 
   /**
    * An integer indicating the type of <code>Condition</code>.
    */
-  public short getConditionType()
-  {
+  public short getConditionType() {
     return Condition.SAC_AND_CONDITION;
   }
 
-  public String print(final NamespaceCollection namespaces)
-  {
-    return firstCondition.print(namespaces) + ", " + secondCondition.print(namespaces);
+  public String print( final NamespaceCollection namespaces ) {
+    return firstCondition.print( namespaces ) + ", " + secondCondition.print( namespaces );
   }
 }

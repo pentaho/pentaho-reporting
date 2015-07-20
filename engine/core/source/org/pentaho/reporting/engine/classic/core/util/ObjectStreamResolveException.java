@@ -25,22 +25,19 @@ import java.io.ObjectStreamException;
  *
  * @author Thomas Morgner
  */
-public class ObjectStreamResolveException extends ObjectStreamException
-{
+public class ObjectStreamResolveException extends ObjectStreamException {
   /**
    * Create an ObjectStreamException with the specified argument.
    *
    * @param classname the detailed message for the exception
    */
-  public ObjectStreamResolveException(final String classname)
-  {
-    super(classname);
+  public ObjectStreamResolveException( final String classname ) {
+    super( classname );
   }
 
   /**
    * Create an ObjectStreamException.
    */
-  public ObjectStreamResolveException()
-  {
+  public ObjectStreamResolveException() {
   }
 }

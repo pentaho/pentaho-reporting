@@ -17,8 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.core.metadata.parser;
 
-import java.beans.PropertyEditor;
-
 import org.pentaho.reporting.engine.classic.core.metadata.DefaultStyleKeyMetaData;
 import org.pentaho.reporting.engine.classic.core.metadata.StyleMetaData;
 import org.pentaho.reporting.engine.classic.core.metadata.builder.StyleMetaDataBuilder;
@@ -27,27 +25,25 @@ import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 
+import java.beans.PropertyEditor;
+
 /**
  * @noinspection HardCodedStringLiteral
  */
-public class StyleReadHandler extends AbstractMetaDataReadHandler
-{
+public class StyleReadHandler extends AbstractMetaDataReadHandler {
   private String defaultBundleName;
   private StyleMetaDataBuilder builder;
 
-  public StyleReadHandler(final String bundleName)
-  {
+  public StyleReadHandler( final String bundleName ) {
     this.defaultBundleName = bundleName;
     this.builder = new StyleMetaDataBuilder();
   }
 
-  public StyleMetaDataBuilder getBuilder()
-  {
+  public StyleMetaDataBuilder getBuilder() {
     return builder;
   }
 
-  protected boolean isDerivedName()
-  {
+  protected boolean isDerivedName() {
     return true;
   }
 
@@ -57,27 +53,22 @@ public class StyleReadHandler extends AbstractMetaDataReadHandler
    * @param attrs the attributes.
    * @throws SAXException if there is a parsing error.
    */
-  protected void startParsing(final Attributes attrs) throws SAXException
-  {
-    super.startParsing(attrs);
+  protected void startParsing( final Attributes attrs ) throws SAXException {
+    super.startParsing( attrs );
 
-    getBuilder().key(StyleKey.getStyleKey(parseName(attrs)));
-    getBuilder().propertyEditor(ObjectUtilities.loadAndValidate
-        (attrs.getValue(getUri(), "propertyEditor"), AttributeReadHandler.class, PropertyEditor.class)); // NON-NLS
+    getBuilder().key( StyleKey.getStyleKey( parseName( attrs ) ) );
+    getBuilder().propertyEditor( ObjectUtilities.loadAndValidate
+      ( attrs.getValue( getUri(), "propertyEditor" ), AttributeReadHandler.class, PropertyEditor.class ) ); // NON-NLS
 
-    if (getBundle() != null)
-    {
-      getBuilder().bundle(getBundle(), "style.");
-    }
-    else
-    {
-      getBuilder().bundle(getDefaultBundleName(), "style.");
+    if ( getBundle() != null ) {
+      getBuilder().bundle( getBundle(), "style." );
+    } else {
+      getBuilder().bundle( getDefaultBundleName(), "style." );
     }
   }
 
   @Deprecated
-  public boolean isMandatory()
-  {
+  public boolean isMandatory() {
     return false;
   }
 
@@ -87,24 +78,20 @@ public class StyleReadHandler extends AbstractMetaDataReadHandler
    * @return the object.
    * @throws SAXException if an parser error occured.
    */
-  public Object getObject() throws SAXException
-  {
+  public Object getObject() throws SAXException {
     return this;
   }
 
   @Deprecated
-  public String getBundleName()
-  {
+  public String getBundleName() {
     return getDefaultBundleName();
   }
 
-  public String getDefaultBundleName()
-  {
+  public String getDefaultBundleName() {
     return defaultBundleName;
   }
 
-  public StyleMetaData getMetaData()
-  {
-    return new DefaultStyleKeyMetaData(getBuilder());
+  public StyleMetaData getMetaData() {
+    return new DefaultStyleKeyMetaData( getBuilder() );
   }
 }

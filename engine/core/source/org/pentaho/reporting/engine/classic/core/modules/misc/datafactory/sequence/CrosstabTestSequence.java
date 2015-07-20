@@ -17,103 +17,92 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.misc.datafactory.sequence;
 
-import java.text.MessageFormat;
-import java.util.Arrays;
-import java.util.Random;
-import javax.swing.table.TableModel;
-
 import org.pentaho.reporting.engine.classic.core.DataFactoryContext;
 import org.pentaho.reporting.engine.classic.core.DataRow;
 import org.pentaho.reporting.engine.classic.core.ReportDataFactoryException;
 import org.pentaho.reporting.engine.classic.core.util.TypedTableModel;
 import org.pentaho.reporting.libraries.base.util.StringUtils;
 
-/** @noinspection UnnecessaryLocalVariable*/
-public class CrosstabTestSequence extends AbstractSequence
-{
-  public CrosstabTestSequence()
-  {
+import javax.swing.table.TableModel;
+import java.text.MessageFormat;
+import java.util.Arrays;
+import java.util.Random;
+
+/**
+ * @noinspection UnnecessaryLocalVariable
+ */
+public class CrosstabTestSequence extends AbstractSequence {
+  public CrosstabTestSequence() {
   }
 
-  public SequenceDescription getSequenceDescription()
-  {
+  public SequenceDescription getSequenceDescription() {
     return new CrosstabTestSequenceDescription();
   }
 
-  public TableModel produce(final DataRow parameters,
-                            final DataFactoryContext dataFactoryContext) throws ReportDataFactoryException
-  {
+  public TableModel produce( final DataRow parameters,
+                             final DataFactoryContext dataFactoryContext ) throws ReportDataFactoryException {
 
-    final Integer colDimsRaw = getTypedParameter("column-dimensions", Integer.class, Integer.valueOf(3));
-    if (colDimsRaw == null)
-    {
-      throw new ReportDataFactoryException("Parameter column-dimensions is not defined.");
+    final Integer colDimsRaw = getTypedParameter( "column-dimensions", Integer.class, Integer.valueOf( 3 ) );
+    if ( colDimsRaw == null ) {
+      throw new ReportDataFactoryException( "Parameter column-dimensions is not defined." );
     }
-    if (colDimsRaw < 1)
-    {
-      throw new ReportDataFactoryException("Parameter column-dimensions has an invalid value.");
+    if ( colDimsRaw < 1 ) {
+      throw new ReportDataFactoryException( "Parameter column-dimensions has an invalid value." );
     }
     final int colDims = colDimsRaw;
-    final Integer[] colCardsRaw = getTypedParameter("column-cardinality", Integer[].class, null);
-    final String[] colPatternRaw = getTypedParameter("column-pattern", String[].class, null);
+    final Integer[] colCardsRaw = getTypedParameter( "column-cardinality", Integer[].class, null );
+    final String[] colPatternRaw = getTypedParameter( "column-pattern", String[].class, null );
 
-    final Integer rowDimsRaw = getTypedParameter("row-dimensions", Integer.class, Integer.valueOf(3));
-    if (rowDimsRaw == null)
-    {
-      throw new ReportDataFactoryException("Parameter row-dimensions is not defined.");
+    final Integer rowDimsRaw = getTypedParameter( "row-dimensions", Integer.class, Integer.valueOf( 3 ) );
+    if ( rowDimsRaw == null ) {
+      throw new ReportDataFactoryException( "Parameter row-dimensions is not defined." );
     }
-    if (rowDimsRaw < 1)
-    {
-      throw new ReportDataFactoryException("Parameter row-dimensions has an invalid value.");
+    if ( rowDimsRaw < 1 ) {
+      throw new ReportDataFactoryException( "Parameter row-dimensions has an invalid value." );
     }
     final int rowDims = rowDimsRaw;
-    final Integer[] rowCardsRaw = getTypedParameter("row-cardinality", Integer[].class, null);
-    final String[] rowPatternRaw = getTypedParameter("row-pattern", String[].class, null);
+    final Integer[] rowCardsRaw = getTypedParameter( "row-cardinality", Integer[].class, null );
+    final String[] rowPatternRaw = getTypedParameter( "row-pattern", String[].class, null );
 
 
-    final int[] rowCards = populateCardinality(rowCardsRaw, rowDims);
-    final int[] colCards = populateCardinality(colCardsRaw, colDims);
-    final int rowCount = computeRowCount (rowCards, colCards);
+    final int[] rowCards = populateCardinality( rowCardsRaw, rowDims );
+    final int[] colCards = populateCardinality( colCardsRaw, colDims );
+    final int rowCount = computeRowCount( rowCards, colCards );
     final int colCount = rowDims + colDims + 1;
-    final String[] rowPattern = populatePatterns("Row-", rowPatternRaw, rowDims);
-    final String[] colPattern = populatePatterns("Col-", colPatternRaw, colDims);
+    final String[] rowPattern = populatePatterns( "Row-", rowPatternRaw, rowDims );
+    final String[] colPattern = populatePatterns( "Col-", colPatternRaw, colDims );
 
-    final TypedTableModel model = new TypedTableModel(rowCount, colCount);
-    for (int r = 0; r < rowDims; r+= 1)
-    {
-      model.addColumn("r" + r, String.class);
+    final TypedTableModel model = new TypedTableModel( rowCount, colCount );
+    for ( int r = 0; r < rowDims; r += 1 ) {
+      model.addColumn( "r" + r, String.class );
     }
-    for (int c = 0; c < colDims; c+= 1)
-    {
-      model.addColumn("c" + c, String.class);
+    for ( int c = 0; c < colDims; c += 1 ) {
+      model.addColumn( "c" + c, String.class );
     }
-    model.addColumn("value", Double.class);
+    model.addColumn( "value", Double.class );
 
-    final Long seed = getTypedParameter("random-seed", Long.class, System.currentTimeMillis());
+    final Long seed = getTypedParameter( "random-seed", Long.class, System.currentTimeMillis() );
 
-    final Random r = new Random(seed);
-    final Object[] values = new Object[rowDims + colDims + 1];
-    final int[] cards = new int[rowDims + colDims];
-    Arrays.fill(cards, -1);
+    final Random r = new Random( seed );
+    final Object[] values = new Object[ rowDims + colDims + 1 ];
+    final int[] cards = new int[ rowDims + colDims ];
+    Arrays.fill( cards, -1 );
     int pos = 0;
-    while (pos >= 0)
-    {
-      if (pos == cards.length)
-      {
-        values[pos] = r.nextDouble();
-        model.addRow(values);
+    while ( pos >= 0 ) {
+      if ( pos == cards.length ) {
+        values[ pos ] = r.nextDouble();
+        model.addRow( values );
 
         pos -= 1;
         continue;
       }
 
-      cards[pos] += 1;
-      values[pos] = MessageFormat.format(queryPattern(rowPattern, colPattern, pos), cards[pos]);
+      cards[ pos ] += 1;
+      values[ pos ] = MessageFormat.format( queryPattern( rowPattern, colPattern, pos ), cards[ pos ] );
 
-      final int maxCard = queryCardinality(rowCards, colCards, pos);
-      if (cards[pos] >= maxCard)
-      {
-        cards[pos] = -1;
+      final int maxCard = queryCardinality( rowCards, colCards, pos );
+      if ( cards[ pos ] >= maxCard ) {
+        cards[ pos ] = -1;
         pos -= 1;
         continue;
       }
@@ -124,101 +113,81 @@ public class CrosstabTestSequence extends AbstractSequence
     return model;
   }
 
-  private int computeRowCount(final int[] rowCards, final int[] colCards)
-  {
+  private int computeRowCount( final int[] rowCards, final int[] colCards ) {
     int rowCount = 1;
-    for (int i = 0; i < rowCards.length; i++)
-    {
-      int rowCard = rowCards[i];
+    for ( int i = 0; i < rowCards.length; i++ ) {
+      int rowCard = rowCards[ i ];
       rowCount *= rowCard;
     }
-    for (int i = 0; i < colCards.length; i++)
-    {
-      int rowCard = colCards[i];
+    for ( int i = 0; i < colCards.length; i++ ) {
+      int rowCard = colCards[ i ];
       rowCount *= rowCard;
     }
     return rowCount;
   }
 
-  private int queryCardinality(final int[] rows, final int[] cols, int pos)
-  {
-    if (pos < rows.length)
-    {
-      return rows[pos];
+  private int queryCardinality( final int[] rows, final int[] cols, int pos ) {
+    if ( pos < rows.length ) {
+      return rows[ pos ];
     }
     pos -= rows.length;
-    if (pos < cols.length)
-    {
-      return cols[pos];
+    if ( pos < cols.length ) {
+      return cols[ pos ];
     }
     return -1;
   }
 
-  private String queryPattern (final String[] rows, final String[] cols, int pos)
-  {
-    if (pos < rows.length)
-    {
-      return rows[pos];
+  private String queryPattern( final String[] rows, final String[] cols, int pos ) {
+    if ( pos < rows.length ) {
+      return rows[ pos ];
     }
     pos -= rows.length;
-    if (pos < cols.length)
-    {
-      return cols[pos];
+    if ( pos < cols.length ) {
+      return cols[ pos ];
     }
     return null;
   }
 
-  private int[] populateCardinality (final Integer[] array, final int size)
-  {
-    final int[] retval = new int[size];
-    Arrays.fill(retval, 1);
+  private int[] populateCardinality( final Integer[] array, final int size ) {
+    final int[] retval = new int[ size ];
+    Arrays.fill( retval, 1 );
 
-    if (array == null)
-    {
+    if ( array == null ) {
       return retval;
     }
 
-    for (int i = 0; i < Math.min (array.length, size); i++)
-    {
-      final Integer integer = array[i];
-      if (integer != null)
-      {
-        retval[i] = Math.max (integer.intValue(), 1);
+    for ( int i = 0; i < Math.min( array.length, size ); i++ ) {
+      final Integer integer = array[ i ];
+      if ( integer != null ) {
+        retval[ i ] = Math.max( integer.intValue(), 1 );
       }
     }
     return retval;
   }
 
-  private String toSequenceChar(final int value)
-  {
+  private String toSequenceChar( final int value ) {
     final int size = 'Z' - 'A';
-    if (value <= size)
-    {
-      return String.valueOf((char) ('A' + value));
+    if ( value <= size ) {
+      return String.valueOf( (char) ( 'A' + value ) );
     }
-    return String.valueOf (value - size - 1);
+    return String.valueOf( value - size - 1 );
   }
 
-  private String[] populatePatterns (final String prefix, final String[] array, final int size)
-  {
-    final String[] retval = new String[size];
-    for (int i = 0; i < retval.length; i++)
-    {
+  private String[] populatePatterns( final String prefix, final String[] array, final int size ) {
+    final String[] retval = new String[ size ];
+    for ( int i = 0; i < retval.length; i++ ) {
 
-      retval[i] = prefix + toSequenceChar(i) + "-{0}";
+      retval[ i ] = prefix + toSequenceChar( i ) + "-{0}";
     }
 
-    if (array == null)
-    {
+    if ( array == null ) {
       return retval;
     }
 
-    for (int i = 0; i < Math.min (array.length, size); i++)
-    {
-      final String pattern = array[i];
-      if (StringUtils.isEmpty(pattern) == false)
-      {
-        retval[i] = pattern;
+    for ( int i = 0; i < Math.min( array.length, size ); i++ ) {
+      final String pattern = array[ i ];
+      if ( StringUtils.isEmpty( pattern ) == false ) {
+        retval[ i ] = pattern;
       }
     }
     return retval;

@@ -20,21 +20,28 @@ package org.pentaho.reporting.engine.classic.core.modules.misc.datafactory.seque
 import java.beans.PropertyEditor;
 import java.util.Locale;
 
-public interface SequenceDescription
-{
+public interface SequenceDescription {
   public int getParameterCount();
-  public String getParameterName(int position);
-  public String getParameterDisplayName(int position, Locale locale);
-  public String getParameterDescription(int position, Locale locale);
-  public Class getParameterType(int position);
-  public String getParameterRole(int position, Locale locale);
-  public Object getParameterDefault(int position);
-  
-  public String getSequenceGroup(final Locale locale);
-  public PropertyEditor getEditor(final int position);
 
-  public String getDisplayName(final Locale locale);
-  public String getDescription(final Locale locale);
+  public String getParameterName( int position );
+
+  public String getParameterDisplayName( int position, Locale locale );
+
+  public String getParameterDescription( int position, Locale locale );
+
+  public Class getParameterType( int position );
+
+  public String getParameterRole( int position, Locale locale );
+
+  public Object getParameterDefault( int position );
+
+  public String getSequenceGroup( final Locale locale );
+
+  public PropertyEditor getEditor( final int position );
+
+  public String getDisplayName( final Locale locale );
+
+  public String getDescription( final Locale locale );
 
   public Sequence newInstance();
 }

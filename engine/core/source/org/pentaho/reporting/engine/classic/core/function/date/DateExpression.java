@@ -17,12 +17,12 @@
 
 package org.pentaho.reporting.engine.classic.core.function.date;
 
+import org.pentaho.reporting.engine.classic.core.ResourceBundleFactory;
+import org.pentaho.reporting.engine.classic.core.function.AbstractExpression;
+
 import java.util.Calendar;
 import java.util.Date;
 import java.util.TimeZone;
-
-import org.pentaho.reporting.engine.classic.core.ResourceBundleFactory;
-import org.pentaho.reporting.engine.classic.core.function.AbstractExpression;
 
 /**
  * The DateExpression can be used to construct a static date object. The Calendar object used as base is initialized to
@@ -32,8 +32,7 @@ import org.pentaho.reporting.engine.classic.core.function.AbstractExpression;
  *
  * @author Thomas Morgner
  */
-public class DateExpression extends AbstractExpression
-{
+public class DateExpression extends AbstractExpression {
   /**
    * A property holding the month of the year.
    */
@@ -98,8 +97,7 @@ public class DateExpression extends AbstractExpression
   /**
    * Default Constructor.
    */
-  public DateExpression()
-  {
+  public DateExpression() {
   }
 
   /**
@@ -107,8 +105,7 @@ public class DateExpression extends AbstractExpression
    *
    * @return the time-zone or null, if none is set.
    */
-  public TimeZone getTimeZone()
-  {
+  public TimeZone getTimeZone() {
     return timeZone;
   }
 
@@ -117,8 +114,7 @@ public class DateExpression extends AbstractExpression
    *
    * @param timeZone the time-zone.
    */
-  public void setTimeZone(final TimeZone timeZone)
-  {
+  public void setTimeZone( final TimeZone timeZone ) {
     this.timeZone = timeZone;
   }
 
@@ -127,8 +123,7 @@ public class DateExpression extends AbstractExpression
    *
    * @return the month property.
    */
-  public Integer getMonth()
-  {
+  public Integer getMonth() {
     return month;
   }
 
@@ -137,8 +132,7 @@ public class DateExpression extends AbstractExpression
    *
    * @param month the month property.
    */
-  public void setMonth(final Integer month)
-  {
+  public void setMonth( final Integer month ) {
     this.month = month;
   }
 
@@ -147,8 +141,7 @@ public class DateExpression extends AbstractExpression
    *
    * @return the day of the month property.
    */
-  public Integer getDay()
-  {
+  public Integer getDay() {
     return dayOfMonth;
   }
 
@@ -157,8 +150,7 @@ public class DateExpression extends AbstractExpression
    *
    * @param day the day of the month property.
    */
-  public void setDay(final Integer day)
-  {
+  public void setDay( final Integer day ) {
     this.dayOfMonth = day;
   }
 
@@ -167,8 +159,7 @@ public class DateExpression extends AbstractExpression
    *
    * @return the year property.
    */
-  public Integer getYear()
-  {
+  public Integer getYear() {
     return year;
   }
 
@@ -177,8 +168,7 @@ public class DateExpression extends AbstractExpression
    *
    * @param year the year property.
    */
-  public void setYear(final Integer year)
-  {
+  public void setYear( final Integer year ) {
     this.year = year;
   }
 
@@ -187,8 +177,7 @@ public class DateExpression extends AbstractExpression
    *
    * @return the hour property.
    */
-  public Integer getHour()
-  {
+  public Integer getHour() {
     return hour;
   }
 
@@ -197,8 +186,7 @@ public class DateExpression extends AbstractExpression
    *
    * @param hour the hour property.
    */
-  public void setHour(final Integer hour)
-  {
+  public void setHour( final Integer hour ) {
     this.hour = hour;
   }
 
@@ -207,8 +195,7 @@ public class DateExpression extends AbstractExpression
    *
    * @return the minute property.
    */
-  public Integer getMinute()
-  {
+  public Integer getMinute() {
     return minute;
   }
 
@@ -217,8 +204,7 @@ public class DateExpression extends AbstractExpression
    *
    * @param minute the minute property.
    */
-  public void setMinute(final Integer minute)
-  {
+  public void setMinute( final Integer minute ) {
     this.minute = minute;
   }
 
@@ -227,8 +213,7 @@ public class DateExpression extends AbstractExpression
    *
    * @return the second property.
    */
-  public Integer getSecond()
-  {
+  public Integer getSecond() {
     return second;
   }
 
@@ -237,8 +222,7 @@ public class DateExpression extends AbstractExpression
    *
    * @param second the second property.
    */
-  public void setSecond(final Integer second)
-  {
+  public void setSecond( final Integer second ) {
     this.second = second;
   }
 
@@ -247,8 +231,7 @@ public class DateExpression extends AbstractExpression
    *
    * @return the milli-second property.
    */
-  public Integer getMilliSecond()
-  {
+  public Integer getMilliSecond() {
     return milliSecond;
   }
 
@@ -257,8 +240,7 @@ public class DateExpression extends AbstractExpression
    *
    * @param milliSecond the milli-seconds property.
    */
-  public void setMilliSecond(final Integer milliSecond)
-  {
+  public void setMilliSecond( final Integer milliSecond ) {
     this.milliSecond = milliSecond;
   }
 
@@ -267,8 +249,7 @@ public class DateExpression extends AbstractExpression
    *
    * @return the time in milli-seconds since 01-Jan-1970.
    */
-  public Long getTime()
-  {
+  public Long getTime() {
     return time;
   }
 
@@ -277,8 +258,7 @@ public class DateExpression extends AbstractExpression
    *
    * @param time the time in milli-seconds since 01-Jan-1970.
    */
-  public void setTime(final Long time)
-  {
+  public void setTime( final Long time ) {
     this.time = time;
   }
 
@@ -287,8 +267,7 @@ public class DateExpression extends AbstractExpression
    *
    * @return the time in seconds since 01-Jan-1970.
    */
-  public Long getEpochTime()
-  {
+  public Long getEpochTime() {
     return epochTime;
   }
 
@@ -297,8 +276,7 @@ public class DateExpression extends AbstractExpression
    *
    * @param epochTime the time in seconds since 01-Jan-1970.
    */
-  public void setEpochTime(final Long epochTime)
-  {
+  public void setEpochTime( final Long epochTime ) {
     this.epochTime = epochTime;
   }
 
@@ -307,8 +285,7 @@ public class DateExpression extends AbstractExpression
    *
    * @return the day-of-the-week property.
    */
-  public Integer getDayOfWeek()
-  {
+  public Integer getDayOfWeek() {
     return dayOfWeek;
   }
 
@@ -317,8 +294,7 @@ public class DateExpression extends AbstractExpression
    *
    * @param dayOfWeek the day-of-the-week property.
    */
-  public void setDayOfWeek(final Integer dayOfWeek)
-  {
+  public void setDayOfWeek( final Integer dayOfWeek ) {
     this.dayOfWeek = dayOfWeek;
   }
 
@@ -327,8 +303,7 @@ public class DateExpression extends AbstractExpression
    *
    * @return the day-of-the-year property.
    */
-  public Integer getDayOfYear()
-  {
+  public Integer getDayOfYear() {
     return dayOfYear;
   }
 
@@ -337,8 +312,7 @@ public class DateExpression extends AbstractExpression
    *
    * @param dayOfYear the day-of-the-year property.
    */
-  public void setDayOfYear(final Integer dayOfYear)
-  {
+  public void setDayOfYear( final Integer dayOfYear ) {
     this.dayOfYear = dayOfYear;
   }
 
@@ -347,8 +321,7 @@ public class DateExpression extends AbstractExpression
    *
    * @return the day-of-the-month property.
    */
-  public Integer getDayOfMonth()
-  {
+  public Integer getDayOfMonth() {
     return dayOfMonth;
   }
 
@@ -357,8 +330,7 @@ public class DateExpression extends AbstractExpression
    *
    * @param dayOfMonth the day-of-the-month property.
    */
-  public void setDayOfMonth(final Integer dayOfMonth)
-  {
+  public void setDayOfMonth( final Integer dayOfMonth ) {
     this.dayOfMonth = dayOfMonth;
   }
 
@@ -367,8 +339,7 @@ public class DateExpression extends AbstractExpression
    *
    * @return the day of the week in the month property.
    */
-  public Integer getDayOfWeekInMonth()
-  {
+  public Integer getDayOfWeekInMonth() {
     return dayOfWeekInMonth;
   }
 
@@ -377,8 +348,7 @@ public class DateExpression extends AbstractExpression
    *
    * @param dayOfWeekInMonth the day of the week in the month property.
    */
-  public void setDayOfWeekInMonth(final Integer dayOfWeekInMonth)
-  {
+  public void setDayOfWeekInMonth( final Integer dayOfWeekInMonth ) {
     this.dayOfWeekInMonth = dayOfWeekInMonth;
   }
 
@@ -387,8 +357,7 @@ public class DateExpression extends AbstractExpression
    *
    * @return the week of the year property.
    */
-  public Integer getWeekOfYear()
-  {
+  public Integer getWeekOfYear() {
     return weekOfYear;
   }
 
@@ -397,18 +366,15 @@ public class DateExpression extends AbstractExpression
    *
    * @param weekOfYear the week of the year property.
    */
-  public void setWeekOfYear(final Integer weekOfYear)
-  {
+  public void setWeekOfYear( final Integer weekOfYear ) {
     this.weekOfYear = weekOfYear;
   }
 
-  public Integer getWeekOfMonth()
-  {
+  public Integer getWeekOfMonth() {
     return weekOfMonth;
   }
 
-  public void setWeekOfMonth(final Integer weekOfMonth)
-  {
+  public void setWeekOfMonth( final Integer weekOfMonth ) {
     this.weekOfMonth = weekOfMonth;
   }
 
@@ -417,10 +383,9 @@ public class DateExpression extends AbstractExpression
    *
    * @return the value of the function.
    */
-  public Object getValue()
-  {
+  public Object getValue() {
     final Calendar calendar = getCalendar();
-    configureCalendar(calendar);
+    configureCalendar( calendar );
     return calendar.getTime();
   }
 
@@ -429,67 +394,51 @@ public class DateExpression extends AbstractExpression
    *
    * @param calendar the week of the year property.
    */
-  protected void configureCalendar(final Calendar calendar)
-  {
-    if (time != null)
-    {
-      calendar.setTime(new Date(time.longValue()));
+  protected void configureCalendar( final Calendar calendar ) {
+    if ( time != null ) {
+      calendar.setTime( new Date( time.longValue() ) );
     }
-    if (epochTime != null)
-    {
-      calendar.setTime(new Date(epochTime.longValue() * 1000));
+    if ( epochTime != null ) {
+      calendar.setTime( new Date( epochTime.longValue() * 1000 ) );
     }
-    if (month != null)
-    {
-      calendar.set(Calendar.MONTH, month.intValue());
+    if ( month != null ) {
+      calendar.set( Calendar.MONTH, month.intValue() );
     }
-    if (dayOfMonth != null)
-    {
-      calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth.intValue());
+    if ( dayOfMonth != null ) {
+      calendar.set( Calendar.DAY_OF_MONTH, dayOfMonth.intValue() );
     }
-    if (year != null)
-    {
-      calendar.set(Calendar.YEAR, year.intValue());
+    if ( year != null ) {
+      calendar.set( Calendar.YEAR, year.intValue() );
     }
-    if (hour != null)
-    {
-      calendar.set(Calendar.HOUR_OF_DAY, hour.intValue());
+    if ( hour != null ) {
+      calendar.set( Calendar.HOUR_OF_DAY, hour.intValue() );
     }
-    if (minute != null)
-    {
-      calendar.set(Calendar.MINUTE, minute.intValue());
+    if ( minute != null ) {
+      calendar.set( Calendar.MINUTE, minute.intValue() );
     }
-    if (second != null)
-    {
-      calendar.set(Calendar.SECOND, second.intValue());
+    if ( second != null ) {
+      calendar.set( Calendar.SECOND, second.intValue() );
     }
-    if (milliSecond != null)
-    {
-      calendar.set(Calendar.MILLISECOND, milliSecond.intValue());
+    if ( milliSecond != null ) {
+      calendar.set( Calendar.MILLISECOND, milliSecond.intValue() );
     }
-    if (dayOfWeek != null)
-    {
-      calendar.set(Calendar.DAY_OF_WEEK, dayOfWeek.intValue());
+    if ( dayOfWeek != null ) {
+      calendar.set( Calendar.DAY_OF_WEEK, dayOfWeek.intValue() );
     }
-    if (dayOfYear != null)
-    {
-      calendar.set(Calendar.DAY_OF_YEAR, dayOfYear.intValue());
+    if ( dayOfYear != null ) {
+      calendar.set( Calendar.DAY_OF_YEAR, dayOfYear.intValue() );
     }
-    if (dayOfWeekInMonth != null)
-    {
-      calendar.set(Calendar.DAY_OF_WEEK_IN_MONTH, dayOfWeekInMonth.intValue());
+    if ( dayOfWeekInMonth != null ) {
+      calendar.set( Calendar.DAY_OF_WEEK_IN_MONTH, dayOfWeekInMonth.intValue() );
     }
-    if (weekOfYear != null)
-    {
-      calendar.set(Calendar.WEEK_OF_YEAR, weekOfYear.intValue());
+    if ( weekOfYear != null ) {
+      calendar.set( Calendar.WEEK_OF_YEAR, weekOfYear.intValue() );
     }
-    if (weekOfMonth != null)
-    {
-      calendar.set(Calendar.WEEK_OF_MONTH, weekOfMonth.intValue());
+    if ( weekOfMonth != null ) {
+      calendar.set( Calendar.WEEK_OF_MONTH, weekOfMonth.intValue() );
     }
-    if (timeZone != null)
-    {
-      calendar.setTimeZone(getTimeZone());
+    if ( timeZone != null ) {
+      calendar.setTimeZone( getTimeZone() );
     }
   }
 
@@ -499,9 +448,8 @@ public class DateExpression extends AbstractExpression
    *
    * @return the calendar.
    */
-  protected Calendar getCalendar()
-  {
+  protected Calendar getCalendar() {
     final ResourceBundleFactory rf = getResourceBundleFactory();
-    return Calendar.getInstance(rf.getLocale());
+    return Calendar.getInstance( rf.getLocale() );
   }
 }

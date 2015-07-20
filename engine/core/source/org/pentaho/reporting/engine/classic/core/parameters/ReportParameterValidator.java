@@ -17,10 +17,10 @@
 
 package org.pentaho.reporting.engine.classic.core.parameters;
 
-import java.io.Serializable;
-
 import org.pentaho.reporting.engine.classic.core.ReportDataFactoryException;
 import org.pentaho.reporting.engine.classic.core.ReportProcessingException;
+
+import java.io.Serializable;
 
 /**
  * The report parameter validator is responsible for validating the values provided by the user. The parameters must be
@@ -29,8 +29,7 @@ import org.pentaho.reporting.engine.classic.core.ReportProcessingException;
  *
  * @author Thomas Morgner
  */
-public interface ReportParameterValidator extends Serializable
-{
+public interface ReportParameterValidator extends Serializable {
   /**
    * Validates the parameter set.
    *
@@ -39,8 +38,8 @@ public interface ReportParameterValidator extends Serializable
    * @param parameterContext    the parameter context
    * @return the validation result, never null.
    */
-  public ValidationResult validate(final ValidationResult result,
-                                   final ReportParameterDefinition parameterDefinition,
-                                   final ParameterContext parameterContext)
-      throws ReportDataFactoryException,ReportProcessingException;
+  public ValidationResult validate( final ValidationResult result,
+                                    final ReportParameterDefinition parameterDefinition,
+                                    final ParameterContext parameterContext )
+    throws ReportDataFactoryException, ReportProcessingException;
 }

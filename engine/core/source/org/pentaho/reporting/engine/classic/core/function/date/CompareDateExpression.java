@@ -17,9 +17,9 @@
 
 package org.pentaho.reporting.engine.classic.core.function.date;
 
-import java.util.Date;
-
 import org.pentaho.reporting.engine.classic.core.function.AbstractCompareExpression;
+
+import java.util.Date;
 
 /**
  * This expression compares a static date with the value read from a field.
@@ -27,9 +27,8 @@ import org.pentaho.reporting.engine.classic.core.function.AbstractCompareExpress
  * @author Thomas Morgner
  * @deprecated This can be solved easier using the Inline-Expression language.
  */
-@SuppressWarnings("deprecation")
-public class CompareDateExpression extends AbstractCompareExpression
-{
+@SuppressWarnings( "deprecation" )
+public class CompareDateExpression extends AbstractCompareExpression {
   /**
    * The static date that is used in the comparison.
    */
@@ -38,8 +37,7 @@ public class CompareDateExpression extends AbstractCompareExpression
   /**
    * Default Constructor.
    */
-  public CompareDateExpression()
-  {
+  public CompareDateExpression() {
   }
 
   /**
@@ -47,8 +45,7 @@ public class CompareDateExpression extends AbstractCompareExpression
    *
    * @return the date.
    */
-  public Date getDate()
-  {
+  public Date getDate() {
     return date;
   }
 
@@ -57,8 +54,7 @@ public class CompareDateExpression extends AbstractCompareExpression
    *
    * @param date the static date for the comparison.
    */
-  public void setDate(final Date date)
-  {
+  public void setDate( final Date date ) {
     this.date = date;
   }
 
@@ -67,8 +63,7 @@ public class CompareDateExpression extends AbstractCompareExpression
    *
    * @return the static comparable.
    */
-  protected Comparable getComparable()
-  {
+  protected Comparable getComparable() {
     return date;
   }
 }

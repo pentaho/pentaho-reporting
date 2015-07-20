@@ -27,103 +27,83 @@ import org.pentaho.reporting.libraries.xmlns.common.AttributeMap;
  *
  * @author Thomas Morgner
  */
-public class ReportAttributeMap<T> extends AttributeMap<T>
-{
+public class ReportAttributeMap<T> extends AttributeMap<T> {
   public static final ReportAttributeMap EMPTY_MAP = new ReportAttributeMap().createUnmodifiableMap();
-  private static final Log logger = LogFactory.getLog(ReportAttributeMap.class);
+  private static final Log logger = LogFactory.getLog( ReportAttributeMap.class );
   private long changeTracker;
   private boolean readOnly;
 
-  public static <T> ReportAttributeMap<T> emptyMap()
-  {
+  public static <T> ReportAttributeMap<T> emptyMap() {
     return (ReportAttributeMap<T>) EMPTY_MAP;
   }
 
-  public ReportAttributeMap()
-  {
+  public ReportAttributeMap() {
     this.changeTracker = 0;
   }
 
-  public ReportAttributeMap(final long changeTracker)
-  {
+  public ReportAttributeMap( final long changeTracker ) {
     this.changeTracker = changeTracker;
   }
 
-  public ReportAttributeMap(final ReportAttributeMap copy)
-  {
-    super(copy);
+  public ReportAttributeMap( final ReportAttributeMap copy ) {
+    super( copy );
     this.changeTracker = copy.changeTracker;
   }
 
-  public ReportAttributeMap<T> createUnmodifiableMap()
-  {
-    try
-    {
+  public ReportAttributeMap<T> createUnmodifiableMap() {
+    try {
       //noinspection unchecked
       final ReportAttributeMap<T> o = (ReportAttributeMap<T>) super.clone();
       o.readOnly = true;
       return o;
-    }
-    catch (Exception e)
-    {
-      logger.error("Clone failed for ReportAttributeMap.createUnmodifiableMap", e);
-      throw new IllegalStateException("Clone failed for ReportAttributeMap.createUnmodifiableMap");
+    } catch ( Exception e ) {
+      logger.error( "Clone failed for ReportAttributeMap.createUnmodifiableMap", e );
+      throw new IllegalStateException( "Clone failed for ReportAttributeMap.createUnmodifiableMap" );
     }
   }
 
-  public ReportAttributeMap<T> clone()
-  {
+  public ReportAttributeMap<T> clone() {
     return (ReportAttributeMap<T>) super.clone();
   }
 
-  public long getChangeTracker()
-  {
+  public long getChangeTracker() {
     return changeTracker;
   }
 
-  public <TS extends T> TS getAttributeTyped(final String namespace, final String attribute, final Class<TS> filter)
-  {
-    T val = getAttribute(namespace, attribute);
-    if (filter.isInstance(val))
-    {
-      return filter.cast(val);
+  public <TS extends T> TS getAttributeTyped( final String namespace, final String attribute, final Class<TS> filter ) {
+    T val = getAttribute( namespace, attribute );
+    if ( filter.isInstance( val ) ) {
+      return filter.cast( val );
     }
     return null;
   }
 
   @Override
-  public T setAttribute(final String namespace, final String attribute, final T value)
-  {
-    if (readOnly)
-    {
-      throw new UnsupportedOperationException("This collection is marked as read-only");
+  public T setAttribute( final String namespace, final String attribute, final T value ) {
+    if ( readOnly ) {
+      throw new UnsupportedOperationException( "This collection is marked as read-only" );
     }
-    final T oldValue = super.setAttribute(namespace, attribute, value);
-    if (oldValue == value)
-    {
+    final T oldValue = super.setAttribute( namespace, attribute, value );
+    if ( oldValue == value ) {
       return oldValue;
     }
 
-    if (ObjectUtilities.equal(oldValue, value) == false)
-    {
+    if ( ObjectUtilities.equal( oldValue, value ) == false ) {
       changeTracker += 1;
     }
     return oldValue;
   }
 
-  public boolean isReadOnly()
-  {
+  public boolean isReadOnly() {
     return readOnly;
   }
 
   @Override
-  public void putAll(final AttributeMap<T> attributeMap)
-  {
-    if (isReadOnly())
-    {
-      throw new UnsupportedOperationException("This collection is marked as read-only");
+  public void putAll( final AttributeMap<T> attributeMap ) {
+    if ( isReadOnly() ) {
+      throw new UnsupportedOperationException( "This collection is marked as read-only" );
     }
-    super.putAll(attributeMap);
+    super.putAll( attributeMap );
     changeTracker += 1;
   }
 }

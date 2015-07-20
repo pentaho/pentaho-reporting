@@ -17,9 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.core.layout;
 
-import java.awt.print.PageFormat;
-import java.net.URL;
-
 import junit.framework.TestCase;
 import org.pentaho.reporting.engine.classic.core.Band;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
@@ -32,37 +29,36 @@ import org.pentaho.reporting.libraries.resourceloader.Resource;
 import org.pentaho.reporting.libraries.resourceloader.ResourceException;
 import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 
+import java.awt.print.PageFormat;
+import java.net.URL;
+
 /**
  * Creation-Date: 05.04.2007, 17:35:00
  *
  * @author Thomas Morgner
  */
-public class WeirdLayoutTest extends TestCase
-{
-  public WeirdLayoutTest()
-  {
+public class WeirdLayoutTest extends TestCase {
+  public WeirdLayoutTest() {
   }
 
-  protected void setUp() throws Exception
-  {
+  protected void setUp() throws Exception {
     ClassicEngineBoot.getInstance().start();
   }
 
-  public void testLayout() throws ResourceException, ContentProcessingException, ReportProcessingException
-  {
+  public void testLayout() throws ResourceException, ContentProcessingException, ReportProcessingException {
     final MasterReport basereport = new MasterReport();
-    basereport.setPageDefinition(new SimplePageDefinition(new PageFormat()));
+    basereport.setPageDefinition( new SimplePageDefinition( new PageFormat() ) );
 
-    final URL target = WeirdLayoutTest.class.getResource("weird-layouting.xml");
+    final URL target = WeirdLayoutTest.class.getResource( "weird-layouting.xml" );
     final ResourceManager rm = new ResourceManager();
     rm.registerDefaults();
-    final Resource directly = rm.createDirectly(target, MasterReport.class);
+    final Resource directly = rm.createDirectly( target, MasterReport.class );
     final MasterReport report = (MasterReport) directly.getResource();
 
     final Band band = report.getReportHeader();
-    band.setName("ReportHeader1");
+    band.setName( "ReportHeader1" );
 
-    DebugReportRunner.layoutSingleBand(report, band, false, true);
+    DebugReportRunner.layoutSingleBand( report, band, false, true );
 
   }
 

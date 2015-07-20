@@ -25,13 +25,11 @@ import org.pentaho.reporting.engine.classic.core.style.BandStyleKeys;
 import org.pentaho.reporting.libraries.xmlns.common.ParserUtil;
 import org.xml.sax.SAXException;
 
-public class ReportHeaderReadHandler extends RootLevelBandReadHandler
-{
-  private static final Log logger = LogFactory.getLog(ReportHeaderReadHandler.class);
+public class ReportHeaderReadHandler extends RootLevelBandReadHandler {
+  private static final Log logger = LogFactory.getLog( ReportHeaderReadHandler.class );
 
-  public ReportHeaderReadHandler(final Band band)
-  {
-    super(band);
+  public ReportHeaderReadHandler( final Band band ) {
+    super( band );
   }
 
   /**
@@ -40,23 +38,20 @@ public class ReportHeaderReadHandler extends RootLevelBandReadHandler
    * @param attr the attributes.
    * @throws org.xml.sax.SAXException if there is a parsing error.
    */
-  protected void startParsing(final PropertyAttributes attr)
-      throws SAXException
-  {
-    super.startParsing(attr);
-    handleOwnPageAttr(attr);
+  protected void startParsing( final PropertyAttributes attr )
+    throws SAXException {
+    super.startParsing( attr );
+    handleOwnPageAttr( attr );
   }
 
-  private void handleOwnPageAttr(final PropertyAttributes attr)
-      throws SAXException
-  {
-    final String ownPageAttr = attr.getValue(getUri(), "ownpage");
-    if (ownPageAttr != null)
-    {
-      ReportHeaderReadHandler.logger.warn("The 'ownpage' attribute of the <report-header> tag is deprecated. " +
-          "Use the 'pagebreak-after' attribute instead.");
-      final Boolean ownPage = ParserUtil.parseBoolean(ownPageAttr, getLocator());
-      getBand().getStyle().setStyleProperty(BandStyleKeys.PAGEBREAK_AFTER, ownPage);
+  private void handleOwnPageAttr( final PropertyAttributes attr )
+    throws SAXException {
+    final String ownPageAttr = attr.getValue( getUri(), "ownpage" );
+    if ( ownPageAttr != null ) {
+      ReportHeaderReadHandler.logger.warn( "The 'ownpage' attribute of the <report-header> tag is deprecated. " +
+        "Use the 'pagebreak-after' attribute instead." );
+      final Boolean ownPage = ParserUtil.parseBoolean( ownPageAttr, getLocator() );
+      getBand().getStyle().setStyleProperty( BandStyleKeys.PAGEBREAK_AFTER, ownPage );
     }
   }
 

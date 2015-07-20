@@ -28,16 +28,14 @@ import org.pentaho.reporting.libraries.base.boot.SubSystem;
  *
  * @author Thomas Morgner
  */
-public class ParserBaseModule extends AbstractModule
-{
+public class ParserBaseModule extends AbstractModule {
   /**
    * DefaultConstructor. Loads the module specification.
    *
    * @throws ModuleInitializeException if an error occured.
    */
   public ParserBaseModule()
-      throws ModuleInitializeException
-  {
+    throws ModuleInitializeException {
     loadModuleInfo();
   }
 
@@ -49,11 +47,10 @@ public class ParserBaseModule extends AbstractModule
    * @param subSystem the subSystem.
    * @throws ModuleInitializeException if an error ocurred while initializing the module.
    */
-  public void initialize(final SubSystem subSystem)
-      throws ModuleInitializeException
-  {
-    PasswordEncryptionService.getInstance().registerService(new PlainTextPasswordEncryptionServiceProvider());
-    PasswordEncryptionService.getInstance().registerService(new StaticAESPasswordEncryptionServiceProvider());
-    PasswordEncryptionService.getInstance().registerService(new ObscurificatePasswordEncryptionServiceProvider());
+  public void initialize( final SubSystem subSystem )
+    throws ModuleInitializeException {
+    PasswordEncryptionService.getInstance().registerService( new PlainTextPasswordEncryptionServiceProvider() );
+    PasswordEncryptionService.getInstance().registerService( new StaticAESPasswordEncryptionServiceProvider() );
+    PasswordEncryptionService.getInstance().registerService( new ObscurificatePasswordEncryptionServiceProvider() );
   }
 }

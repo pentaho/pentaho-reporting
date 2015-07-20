@@ -21,16 +21,13 @@ import org.pentaho.reporting.engine.classic.core.DetailsHeader;
 import org.pentaho.reporting.engine.classic.core.filter.types.bands.DetailsHeaderType;
 import org.pentaho.reporting.libraries.xmlns.parser.ParseException;
 
-public class DetailsHeaderBandReadHandler extends BandReadHandler
-{
+public class DetailsHeaderBandReadHandler extends BandReadHandler {
   public DetailsHeaderBandReadHandler()
-      throws ParseException
-  {
-    super(DetailsHeaderType.INSTANCE);
+    throws ParseException {
+    super( DetailsHeaderType.INSTANCE );
   }
 
-  public DetailsHeader getElement()
-  {
+  public DetailsHeader getElement() {
     return (DetailsHeader) super.getElement();
   }
 }

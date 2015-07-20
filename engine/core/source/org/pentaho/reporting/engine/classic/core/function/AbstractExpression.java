@@ -31,8 +31,7 @@ import org.pentaho.reporting.libraries.base.config.Configuration;
  *
  * @author Thomas Morgner
  */
-public abstract class AbstractExpression implements Expression
-{
+public abstract class AbstractExpression implements Expression {
   /**
    * The expression name.
    */
@@ -58,8 +57,7 @@ public abstract class AbstractExpression implements Expression
    * Creates an unnamed expression. Make sure the name of the expression is set using {@link #setName} before the
    * expression is added to the report's expression collection.
    */
-  protected AbstractExpression()
-  {
+  protected AbstractExpression() {
   }
 
   /**
@@ -67,8 +65,7 @@ public abstract class AbstractExpression implements Expression
    *
    * @return the name.
    */
-  public String getName()
-  {
+  public String getName() {
     return name;
   }
 
@@ -81,8 +78,7 @@ public abstract class AbstractExpression implements Expression
    *
    * @param name the name (<code>null</code> not permitted).
    */
-  public void setName(final String name)
-  {
+  public void setName( final String name ) {
     this.name = name;
   }
 
@@ -93,8 +89,7 @@ public abstract class AbstractExpression implements Expression
    * @return true as all expressions are always evaluated now.
    * @deprecated The Active-Flag is no longer evaluated. We always assume it to be true.
    */
-  public final boolean isActive()
-  {
+  public final boolean isActive() {
     return true;
   }
 
@@ -104,8 +99,7 @@ public abstract class AbstractExpression implements Expression
    * @param active a flag.
    * @deprecated All expressions are always active. This method has no effect anymore.
    */
-  public final void setActive(final boolean active)
-  {
+  public final void setActive( final boolean active ) {
   }
 
   /**
@@ -113,8 +107,7 @@ public abstract class AbstractExpression implements Expression
    *
    * @return the level.
    */
-  public int getDependencyLevel()
-  {
+  public int getDependencyLevel() {
     return dependency;
   }
 
@@ -127,13 +120,11 @@ public abstract class AbstractExpression implements Expression
    *
    * @param level the level (must be greater than or equal to 0).
    */
-  public void setDependencyLevel(final int level)
-  {
-    if (level < 0)
-    {
+  public void setDependencyLevel( final int level ) {
+    if ( level < 0 ) {
       throw new IllegalArgumentException(
-          "AbstractExpression.setDependencyLevel(...) : negative "
-              + "dependency not allowed for user-defined expressions.");
+        "AbstractExpression.setDependencyLevel(...) : negative "
+          + "dependency not allowed for user-defined expressions." );
     }
     this.dependency = level;
   }
@@ -143,11 +134,9 @@ public abstract class AbstractExpression implements Expression
    *
    * @return the data row.
    */
-  public DataRow getDataRow()
-  {
-    if (runtime == null)
-    {
-      throw new IllegalStateException("Runtime is null");
+  public DataRow getDataRow() {
+    if ( runtime == null ) {
+      throw new IllegalStateException( "Runtime is null" );
     }
     return runtime.getDataRow();
   }
@@ -161,8 +150,7 @@ public abstract class AbstractExpression implements Expression
    * @throws CloneNotSupportedException this should never happen.
    */
   public Object clone()
-      throws CloneNotSupportedException
-  {
+    throws CloneNotSupportedException {
     return super.clone();
   }
 
@@ -172,34 +160,26 @@ public abstract class AbstractExpression implements Expression
    *
    * @return a copy of this function.
    */
-  public Expression getInstance()
-  {
-    try
-    {
+  public Expression getInstance() {
+    try {
       final AbstractExpression abstractExpression = (AbstractExpression) clone();
-      abstractExpression.setRuntime(null);
+      abstractExpression.setRuntime( null );
       return abstractExpression;
-    }
-    catch (CloneNotSupportedException cne)
-    {
-      throw new IllegalStateException("Clone must always be supported.");
+    } catch ( CloneNotSupportedException cne ) {
+      throw new IllegalStateException( "Clone must always be supported." );
     }
   }
 
-  public ResourceBundleFactory getResourceBundleFactory()
-  {
-    if (runtime == null)
-    {
-      throw new IllegalStateException("Runtime is null");
+  public ResourceBundleFactory getResourceBundleFactory() {
+    if ( runtime == null ) {
+      throw new IllegalStateException( "Runtime is null" );
     }
     return runtime.getResourceBundleFactory();
   }
 
-  public Configuration getReportConfiguration()
-  {
-    if (runtime == null)
-    {
-      throw new IllegalStateException("Runtime is null");
+  public Configuration getReportConfiguration() {
+    if ( runtime == null ) {
+      throw new IllegalStateException( "Runtime is null" );
     }
     return runtime.getConfiguration();
   }
@@ -211,8 +191,7 @@ public abstract class AbstractExpression implements Expression
    *
    * @param runtime the runtime information for the expression
    */
-  public void setRuntime(final ExpressionRuntime runtime)
-  {
+  public void setRuntime( final ExpressionRuntime runtime ) {
     this.runtime = runtime;
   }
 
@@ -223,8 +202,7 @@ public abstract class AbstractExpression implements Expression
    *
    * @return the runtime information for the expression
    */
-  public ExpressionRuntime getRuntime()
-  {
+  public ExpressionRuntime getRuntime() {
     return runtime;
   }
 
@@ -234,8 +212,7 @@ public abstract class AbstractExpression implements Expression
    *
    * @return false.
    */
-  public boolean isDeepTraversing()
-  {
+  public boolean isDeepTraversing() {
     return false;
   }
 
@@ -244,8 +221,7 @@ public abstract class AbstractExpression implements Expression
    *
    * @return true, if the expression's last value is preserved, false otherwise.
    */
-  public boolean isPreserve()
-  {
+  public boolean isPreserve() {
     return preserve;
   }
 
@@ -254,8 +230,7 @@ public abstract class AbstractExpression implements Expression
    *
    * @param preserve true, if the expression's last value is preserved, false otherwise.
    */
-  public void setPreserve(final boolean preserve)
-  {
+  public void setPreserve( final boolean preserve ) {
     this.preserve = preserve;
   }
 }

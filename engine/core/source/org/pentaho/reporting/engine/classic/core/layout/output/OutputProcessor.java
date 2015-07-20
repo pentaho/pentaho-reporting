@@ -28,10 +28,9 @@ import org.pentaho.reporting.engine.classic.core.layout.model.LogicalPageBox;
  *
  * @author Thomas Morgner
  */
-public interface OutputProcessor
-{
-  public void processingStarted(final ReportDefinition report, final ProcessingContext processingContext);
-  
+public interface OutputProcessor {
+  public void processingStarted( final ReportDefinition report, final ProcessingContext processingContext );
+
   public OutputProcessorMetaData getMetaData();
 
   /**
@@ -39,9 +38,9 @@ public interface OutputProcessor
    *
    * @param pageBox
    */
-  public void processContent(final LogicalPageBox pageBox) throws ContentProcessingException;
+  public void processContent( final LogicalPageBox pageBox ) throws ContentProcessingException;
 
-  public void processRecomputedContent(final LogicalPageBox pageBox) throws ContentProcessingException;
+  public void processRecomputedContent( final LogicalPageBox pageBox ) throws ContentProcessingException;
 
   /**
    * A call-back to indicate that the processing of the current process-run has been finished.
@@ -50,11 +49,11 @@ public interface OutputProcessor
 
   public int getPageCursor();
 
-  public void setPageCursor(int pc);
+  public void setPageCursor( int pc );
 
   public int getLogicalPageCount();
 
-  public LogicalPageKey getLogicalPage(int page);
+  public LogicalPageKey getLogicalPage( int page );
 
   /**
    * Checks whether the 'processingFinished' event had been received at least once.

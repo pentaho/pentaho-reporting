@@ -20,9 +20,7 @@ package org.pentaho.reporting.engine.classic.core.layout;
 /**
  * @deprecated This layout manager is no longer used.
  */
-public class StackedLayoutManager implements BandLayoutManager
-{
-  public StackedLayoutManager()
-  {
+public class StackedLayoutManager implements BandLayoutManager {
+  public StackedLayoutManager() {
   }
 }

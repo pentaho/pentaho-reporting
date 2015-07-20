@@ -29,15 +29,13 @@ import java.util.TimeZone;
  *
  * @author Thomas Morgner
  */
-public class SimpleDateFormatObjectDescription extends BeanObjectDescription
-{
+public class SimpleDateFormatObjectDescription extends BeanObjectDescription {
 
   /**
    * Creates a new object description.
    */
-  public SimpleDateFormatObjectDescription()
-  {
-    this(SimpleDateFormat.class);
+  public SimpleDateFormatObjectDescription() {
+    this( SimpleDateFormat.class );
   }
 
   /**
@@ -45,9 +43,8 @@ public class SimpleDateFormatObjectDescription extends BeanObjectDescription
    *
    * @param className the class.
    */
-  public SimpleDateFormatObjectDescription(final Class className)
-  {
-    this(className, true);
+  public SimpleDateFormatObjectDescription( final Class className ) {
+    this( className, true );
   }
 
   /**
@@ -56,19 +53,18 @@ public class SimpleDateFormatObjectDescription extends BeanObjectDescription
    * @param className the class.
    * @param init      initialise?
    */
-  public SimpleDateFormatObjectDescription(final Class className, final boolean init)
-  {
-    super(className, false);
-    setParameterDefinition("2DigitYearStart", Date.class);
-    setParameterDefinition("calendar", Calendar.class);
-    setParameterDefinition("dateFormatSymbols", DateFormatSymbols.class);
-    setParameterDefinition("lenient", Boolean.TYPE);
-    setParameterDefinition("numberFormat", NumberFormat.class);
-    setParameterDefinition("timeZone", TimeZone.class);
-    setParameterDefinition("localizedPattern", String.class);
-    setParameterDefinition("pattern", String.class);
-    ignoreParameter("localizedPattern");
-    ignoreParameter("pattern");
+  public SimpleDateFormatObjectDescription( final Class className, final boolean init ) {
+    super( className, false );
+    setParameterDefinition( "2DigitYearStart", Date.class );
+    setParameterDefinition( "calendar", Calendar.class );
+    setParameterDefinition( "dateFormatSymbols", DateFormatSymbols.class );
+    setParameterDefinition( "lenient", Boolean.TYPE );
+    setParameterDefinition( "numberFormat", NumberFormat.class );
+    setParameterDefinition( "timeZone", TimeZone.class );
+    setParameterDefinition( "localizedPattern", String.class );
+    setParameterDefinition( "pattern", String.class );
+    ignoreParameter( "localizedPattern" );
+    ignoreParameter( "pattern" );
   }
 
   /**
@@ -77,12 +73,11 @@ public class SimpleDateFormatObjectDescription extends BeanObjectDescription
    * @param o the object.
    * @throws ObjectFactoryException if there is a problem while reading the properties of the given object.
    */
-  public void setParameterFromObject(final Object o)
-      throws ObjectFactoryException
-  {
-    super.setParameterFromObject(o);
+  public void setParameterFromObject( final Object o )
+    throws ObjectFactoryException {
+    super.setParameterFromObject( o );
     final SimpleDateFormat format = (SimpleDateFormat) o;
-    setParameter("pattern", format.toPattern());
+    setParameter( "pattern", format.toPattern() );
   }
 
   /**
@@ -90,12 +85,10 @@ public class SimpleDateFormatObjectDescription extends BeanObjectDescription
    *
    * @return The object.
    */
-  public Object createObject()
-  {
+  public Object createObject() {
     final SimpleDateFormat format = (SimpleDateFormat) super.createObject();
-    if (getParameter("pattern") != null)
-    {
-      format.applyPattern((String) getParameter("pattern"));
+    if ( getParameter( "pattern" ) != null ) {
+      format.applyPattern( (String) getParameter( "pattern" ) );
     }
     return format;
   }

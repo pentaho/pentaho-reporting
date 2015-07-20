@@ -36,26 +36,26 @@ import org.pentaho.reporting.engine.classic.core.style.BandStyleKeys;
  * &lt;report&gt;
  *   &lt;configuration&gt;
  *     &lt;!-- where sheetNameExpression is pointing to a valid function declared in this report --&gt;
- *     &lt;property name="org.pentaho.reporting.engine.classic.core.targets.table.TableWriter.SheetNameFunction"&gtsheetNameExpression&lt;/property&gt;
+ *     &lt;property name="org.pentaho.reporting.engine.classic.core.targets.table.TableWriter
+ *     .SheetNameFunction"&gtsheetNameExpression&lt;/property&gt;
  *   &lt;/configuration&gt;
  *   ...
  * &lt;/report&gt;
  * </pre>
  *
  * @author Cedric Pronzato
- * @deprecated This way of defining a sheetname for elements is deprecated. Sheetnames should be declared or computed directly on
- *             the bands by specifiing a sheetname using the "computed-sheetname" style-property.
+ * @deprecated This way of defining a sheetname for elements is deprecated. Sheetnames should be declared or computed
+ * directly on the bands by specifiing a sheetname using the "computed-sheetname" style-property.
  */
-@SuppressWarnings("deprecation")
-public class SheetNameFunction extends AbstractElementFormatFunction implements StructureFunction
-{
-  private static final Log logger = LogFactory.getLog(SheetNameFunction.class);
+@SuppressWarnings( "deprecation" )
+public class SheetNameFunction extends AbstractElementFormatFunction implements StructureFunction {
+  private static final Log logger = LogFactory.getLog( SheetNameFunction.class );
 
   /**
    * The configuration property declaring the function name to call in order to generate sheet names.<br/>
    */
   private static final String DECALRED_SHEETNAME_FUNCTION_KEY =
-      "org.pentaho.reporting.engine.classic.core.targets.table.TableWriter.SheetNameFunction";
+    "org.pentaho.reporting.engine.classic.core.targets.table.TableWriter.SheetNameFunction";
 
   /**
    * A property that holds the last computed value of the sheetname function.
@@ -69,45 +69,38 @@ public class SheetNameFunction extends AbstractElementFormatFunction implements 
   /**
    * Default constructor.
    */
-  public SheetNameFunction()
-  {
+  public SheetNameFunction() {
   }
 
 
-  public void reportInitialized(final ReportEvent event)
-  {
-    functionToCall = this.getReportConfiguration().getConfigProperty(SheetNameFunction.DECALRED_SHEETNAME_FUNCTION_KEY);
-    super.reportInitialized(event);
+  public void reportInitialized( final ReportEvent event ) {
+    functionToCall =
+      this.getReportConfiguration().getConfigProperty( SheetNameFunction.DECALRED_SHEETNAME_FUNCTION_KEY );
+    super.reportInitialized( event );
   }
 
-  public int getProcessingPriority()
-  {
+  public int getProcessingPriority() {
     return 3000;
   }
 
-  protected boolean isExecutable()
-  {
-    if (functionToCall == null)
-    {
+  protected boolean isExecutable() {
+    if ( functionToCall == null ) {
       return false;
     }
 
-    if (!getRuntime().getExportDescriptor().startsWith("table/"))
-    {
+    if ( !getRuntime().getExportDescriptor().startsWith( "table/" ) ) {
       return false;
     }
     return true;
   }
 
-  protected boolean evaluateElement(final ReportElement e)
-  {
+  protected boolean evaluateElement( final ReportElement e ) {
     lastValue = null;
     // if exporting to a table/* export
-    final Object value = this.getDataRow().get(functionToCall);
-    if (value != null)
-    {
+    final Object value = this.getDataRow().get( functionToCall );
+    if ( value != null ) {
       lastValue = value.toString();
-      e.getStyle().setStyleProperty(BandStyleKeys.COMPUTED_SHEETNAME, lastValue);
+      e.getStyle().setStyleProperty( BandStyleKeys.COMPUTED_SHEETNAME, lastValue );
     }
 
     return true;
@@ -118,8 +111,7 @@ public class SheetNameFunction extends AbstractElementFormatFunction implements 
    *
    * @return <code>null</code>
    */
-  public Object getValue()
-  {
+  public Object getValue() {
     return lastValue;
   }
 }

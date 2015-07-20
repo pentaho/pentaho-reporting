@@ -17,6 +17,10 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.output.csv;
 
+import org.pentaho.reporting.engine.classic.core.MasterReport;
+import org.pentaho.reporting.engine.classic.core.ReportProcessingException;
+import org.pentaho.reporting.libraries.fonts.encoding.EncodingRegistry;
+
 import java.io.BufferedWriter;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -24,22 +28,16 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
 
-import org.pentaho.reporting.engine.classic.core.MasterReport;
-import org.pentaho.reporting.engine.classic.core.ReportProcessingException;
-import org.pentaho.reporting.libraries.fonts.encoding.EncodingRegistry;
-
 /**
  * Utility class to provide an easy to use default implementation of CSV table exports.
  *
  * @author Thomas Morgner
  */
-public final class CSVDataReportUtil
-{
+public final class CSVDataReportUtil {
   /**
    * DefaultConstructor.
    */
-  private CSVDataReportUtil()
-  {
+  private CSVDataReportUtil() {
   }
 
   /**
@@ -47,14 +45,12 @@ public final class CSVDataReportUtil
    *
    * @param report the report.
    * @param writer the writer
-   * @throws org.pentaho.reporting.engine.classic.core.ReportProcessingException
-   *          if the report processing failed.
+   * @throws org.pentaho.reporting.engine.classic.core.ReportProcessingException if the report processing failed.
    */
-  public static void createCSV(final MasterReport report, final Writer writer)
-      throws ReportProcessingException
-  {
-    final CSVProcessor pr = new CSVProcessor(report);
-    pr.setWriter(writer);
+  public static void createCSV( final MasterReport report, final Writer writer )
+    throws ReportProcessingException {
+    final CSVProcessor pr = new CSVProcessor( report );
+    pr.setWriter( writer );
     pr.processReport();
   }
 
@@ -63,16 +59,15 @@ public final class CSVDataReportUtil
    *
    * @param report   the report.
    * @param filename target file name.
-   * @throws org.pentaho.reporting.engine.classic.core.ReportProcessingException
-   *                             if the report processing failed.
-   * @throws java.io.IOException if there was an IOerror while processing the report.
+   * @throws org.pentaho.reporting.engine.classic.core.ReportProcessingException if the report processing failed.
+   * @throws java.io.IOException                                                 if there was an IOerror while
+   *                                                                             processing the report.
    */
-  public static void createCSV(final MasterReport report, final String filename)
-      throws ReportProcessingException, IOException
-  {
+  public static void createCSV( final MasterReport report, final String filename )
+    throws ReportProcessingException, IOException {
     final String encoding = report.getConfiguration().getConfigProperty
-        (CSVProcessor.CSV_ENCODING, EncodingRegistry.getPlatformDefaultEncoding());
-    createCSV(report, filename, encoding);
+      ( CSVProcessor.CSV_ENCODING, EncodingRegistry.getPlatformDefaultEncoding() );
+    createCSV( report, filename, encoding );
   }
 
   /**
@@ -81,31 +76,29 @@ public final class CSVDataReportUtil
    * @param report   the report.
    * @param filename target file name.
    * @param encoding the encoding that should be used.
-   * @throws org.pentaho.reporting.engine.classic.core.ReportProcessingException
-   *                             if the report processing failed.
-   * @throws java.io.IOException if there was an IOerror while processing the report.
+   * @throws org.pentaho.reporting.engine.classic.core.ReportProcessingException if the report processing failed.
+   * @throws java.io.IOException                                                 if there was an IOerror while
+   *                                                                             processing the report.
    */
-  public static void createCSV(final MasterReport report,
-                               final String filename,
-                               final String encoding)
-      throws ReportProcessingException, IOException
-  {
-    final CSVProcessor pr = new CSVProcessor(report);
-    final FileOutputStream outstr = new FileOutputStream(filename);
-    final Writer fout = new BufferedWriter(new OutputStreamWriter(outstr, encoding));
-    pr.setWriter(fout);
+  public static void createCSV( final MasterReport report,
+                                final String filename,
+                                final String encoding )
+    throws ReportProcessingException, IOException {
+    final CSVProcessor pr = new CSVProcessor( report );
+    final FileOutputStream outstr = new FileOutputStream( filename );
+    final Writer fout = new BufferedWriter( new OutputStreamWriter( outstr, encoding ) );
+    pr.setWriter( fout );
     pr.processReport();
     fout.close();
   }
 
-  public static void createCSV(final MasterReport report,
-                               final OutputStream outputStream,
-                               final String encoding)
-      throws ReportProcessingException, IOException
-  {
-    final CSVProcessor pr = new CSVProcessor(report);
-    final Writer fout = new BufferedWriter(new OutputStreamWriter(outputStream, encoding));
-    pr.setWriter(fout);
+  public static void createCSV( final MasterReport report,
+                                final OutputStream outputStream,
+                                final String encoding )
+    throws ReportProcessingException, IOException {
+    final CSVProcessor pr = new CSVProcessor( report );
+    final Writer fout = new BufferedWriter( new OutputStreamWriter( outputStream, encoding ) );
+    pr.setWriter( fout );
     pr.processReport();
     fout.flush();
   }

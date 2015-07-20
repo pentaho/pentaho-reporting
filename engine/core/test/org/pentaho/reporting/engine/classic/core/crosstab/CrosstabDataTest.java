@@ -46,247 +46,225 @@ import org.pentaho.reporting.engine.classic.core.util.TypedTableModel;
 /**
  * @noinspection HardCodedStringLiteral
  */
-public class CrosstabDataTest extends TestCase
-{
-  private static final Log logger = LogFactory.getLog(CrosstabMultiFactDataTest.class);
+public class CrosstabDataTest extends TestCase {
+  private static final Log logger = LogFactory.getLog( CrosstabMultiFactDataTest.class );
 
-  public CrosstabDataTest(final String name)
-  {
-    super(name);
+  public CrosstabDataTest( final String name ) {
+    super( name );
   }
 
-  public CrosstabDataTest()
-  {
+  public CrosstabDataTest() {
   }
 
-  protected void setUp() throws Exception
-  {
+  protected void setUp() throws Exception {
     ClassicEngineBoot.getInstance().start();
   }
 
-  public void testDiagonalMasterDatarow() throws ReportProcessingException
-  {
-    final TypedTableModel model = new TypedTableModel(new String[]{"Rows", "Cols", "Data"});
-    model.addRow("R0", "C0", 1);
-    model.addRow("R1", "C1", 2);
-    model.addRow("R2", "C2", 3);
-    model.addRow("R3", "C3", 4);
+  public void testDiagonalMasterDatarow() throws ReportProcessingException {
+    final TypedTableModel model = new TypedTableModel( new String[] { "Rows", "Cols", "Data" } );
+    model.addRow( "R0", "C0", 1 );
+    model.addRow( "R1", "C1", 2 );
+    model.addRow( "R2", "C2", 3 );
+    model.addRow( "R3", "C3", 4 );
 
 
     final String[][] validateData = new String[][]
-        {
-            {"R0", "C0"},
-            {"R0", "C1"},
-            {"R0", "C2"},
-            {"R0", "C3"},
-            {"R1", "C0"},
-            {"R1", "C1"},
-            {"R1", "C2"},
-            {"R1", "C3"},
-            {"R2", "C0"},
-            {"R2", "C1"},
-            {"R2", "C2"},
-            {"R2", "C3"},
-            {"R3", "C0"},
-            {"R3", "C1"},
-            {"R3", "C2"},
-            {"R3", "C3"},
-        };
+      {
+        { "R0", "C0" },
+        { "R0", "C1" },
+        { "R0", "C2" },
+        { "R0", "C3" },
+        { "R1", "C0" },
+        { "R1", "C1" },
+        { "R1", "C2" },
+        { "R1", "C3" },
+        { "R2", "C0" },
+        { "R2", "C1" },
+        { "R2", "C2" },
+        { "R2", "C3" },
+        { "R3", "C0" },
+        { "R3", "C1" },
+        { "R3", "C2" },
+        { "R3", "C3" },
+      };
 
-    final CrosstabSpecification crosstabSpecification = CrosstabTestUtil.fillSortedCrosstabSpec(model);
-    final int itCount = CrosstabTestUtil.advanceCrosstab(crosstabSpecification, model, validateData);
-    assertEquals(16, itCount);
+    final CrosstabSpecification crosstabSpecification = CrosstabTestUtil.fillSortedCrosstabSpec( model );
+    final int itCount = CrosstabTestUtil.advanceCrosstab( crosstabSpecification, model, validateData );
+    assertEquals( 16, itCount );
   }
 
-  private static CrosstabGroup createCrosstab()
-  {
+  private static CrosstabGroup createCrosstab() {
     final CrosstabGroup crosstabGroup = new CrosstabGroup();
 
     final CrosstabRowGroupBody rowBody = (CrosstabRowGroupBody) crosstabGroup.getBody();
     final CrosstabRowGroup rowGroup = rowBody.getGroup();
-    rowGroup.setField("Rows");
-    rowGroup.getTitleHeader().addElement(createDataItem("Rows"));
-    rowGroup.getHeader().addElement(createFieldItem("Rows"));
+    rowGroup.setField( "Rows" );
+    rowGroup.getTitleHeader().addElement( createDataItem( "Rows" ) );
+    rowGroup.getHeader().addElement( createFieldItem( "Rows" ) );
 
     final CrosstabColumnGroupBody columnGroupBody = (CrosstabColumnGroupBody) rowGroup.getBody();
     final CrosstabColumnGroup columnGroup = columnGroupBody.getGroup();
-    columnGroup.setField("Cols");
-    columnGroup.getTitleHeader().addElement(createDataItem("Cols"));
-    columnGroup.getHeader().addElement(createFieldItem("Cols"));
+    columnGroup.setField( "Cols" );
+    columnGroup.getTitleHeader().addElement( createDataItem( "Cols" ) );
+    columnGroup.getHeader().addElement( createFieldItem( "Cols" ) );
 
     final CrosstabCellBody body = (CrosstabCellBody) columnGroup.getBody();
     final CrosstabCell cell = new CrosstabCell();
-    cell.addElement(createFieldItem("Data"));
-    body.addElement(cell);
+    cell.addElement( createFieldItem( "Data" ) );
+    body.addElement( cell );
     return crosstabGroup;
   }
 
-  public static Element createDataItem(final String text)
-  {
+  public static Element createDataItem( final String text ) {
     final Element label = new Element();
-    label.setElementType(LabelType.INSTANCE);
-    label.setAttribute(AttributeNames.Core.NAMESPACE, AttributeNames.Core.VALUE, text);
-    label.getStyle().setStyleProperty(ElementStyleKeys.MIN_WIDTH, 100f);
-    label.getStyle().setStyleProperty(ElementStyleKeys.MIN_HEIGHT, 200f);
+    label.setElementType( LabelType.INSTANCE );
+    label.setAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.VALUE, text );
+    label.getStyle().setStyleProperty( ElementStyleKeys.MIN_WIDTH, 100f );
+    label.getStyle().setStyleProperty( ElementStyleKeys.MIN_HEIGHT, 200f );
     return label;
   }
 
-  public static Element createFieldItem(final String text)
-  {
+  public static Element createFieldItem( final String text ) {
     final Element label = new Element();
-    label.setElementType(TextFieldType.INSTANCE);
-    label.setAttribute(AttributeNames.Core.NAMESPACE, AttributeNames.Core.FIELD, text);
-    label.getStyle().setStyleProperty(ElementStyleKeys.MIN_WIDTH, 100f);
-    label.getStyle().setStyleProperty(ElementStyleKeys.MIN_HEIGHT, 200f);
+    label.setElementType( TextFieldType.INSTANCE );
+    label.setAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.FIELD, text );
+    label.getStyle().setStyleProperty( ElementStyleKeys.MIN_WIDTH, 100f );
+    label.getStyle().setStyleProperty( ElementStyleKeys.MIN_HEIGHT, 200f );
     return label;
   }
 
-  public void testDiagonalReverseMasterRow() throws ReportProcessingException
-  {
-    final TypedTableModel model = new TypedTableModel(new String[]{"Rows", "Cols", "Data"});
-    model.addRow("R0", "C3", 1);
-    model.addRow("R1", "C2", 2);
-    model.addRow("R2", "C1", 3);
-    model.addRow("R3", "C0", 4);
+  public void testDiagonalReverseMasterRow() throws ReportProcessingException {
+    final TypedTableModel model = new TypedTableModel( new String[] { "Rows", "Cols", "Data" } );
+    model.addRow( "R0", "C3", 1 );
+    model.addRow( "R1", "C2", 2 );
+    model.addRow( "R2", "C1", 3 );
+    model.addRow( "R3", "C0", 4 );
 
     final String[][] validateData = new String[][]
-        {
-            {"R0", "C3"},
-            {"R0", "C2"},
-            {"R0", "C1"},
-            {"R0", "C0"},
-            {"R1", "C3"},
-            {"R1", "C2"},
-            {"R1", "C1"},
-            {"R1", "C0"},
-            {"R2", "C3"},
-            {"R2", "C2"},
-            {"R2", "C1"},
-            {"R2", "C0"},
-            {"R3", "C3"},
-            {"R3", "C2"},
-            {"R3", "C1"},
-            {"R3", "C0"},
-        };
+      {
+        { "R0", "C3" },
+        { "R0", "C2" },
+        { "R0", "C1" },
+        { "R0", "C0" },
+        { "R1", "C3" },
+        { "R1", "C2" },
+        { "R1", "C1" },
+        { "R1", "C0" },
+        { "R2", "C3" },
+        { "R2", "C2" },
+        { "R2", "C1" },
+        { "R2", "C0" },
+        { "R3", "C3" },
+        { "R3", "C2" },
+        { "R3", "C1" },
+        { "R3", "C0" },
+      };
 
-    final CrosstabSpecification crosstabSpecification = CrosstabTestUtil.fillOrderedCrosstabSpec(model);
-    final int itCount = CrosstabTestUtil.advanceCrosstab(crosstabSpecification, model, validateData);
-    assertEquals(16, itCount);
+    final CrosstabSpecification crosstabSpecification = CrosstabTestUtil.fillOrderedCrosstabSpec( model );
+    final int itCount = CrosstabTestUtil.advanceCrosstab( crosstabSpecification, model, validateData );
+    assertEquals( 16, itCount );
   }
 
-  public void testDiagonalReportProcessing() throws Exception
-  {
-    final TypedTableModel model = new TypedTableModel(new String[]{"Rows", "Cols", "Data"});
-    model.addRow("R0", "C0", 1);
-    model.addRow("R1", "C1", 2);
-    model.addRow("R2", "C2", 3);
-    model.addRow("R3", "C3", 4);
+  public void testDiagonalReportProcessing() throws Exception {
+    final TypedTableModel model = new TypedTableModel( new String[] { "Rows", "Cols", "Data" } );
+    model.addRow( "R0", "C0", 1 );
+    model.addRow( "R1", "C1", 2 );
+    model.addRow( "R2", "C2", 3 );
+    model.addRow( "R3", "C3", 4 );
 
     final MasterReport report = new MasterReport();
-    report.setQuery("default");
-    report.setDataFactory(new TableDataFactory("default", model));
-    report.setRootGroup(createCrosstab());
-    report.addExpression(new ValidateExpression(false));
+    report.setQuery( "default" );
+    report.setDataFactory( new TableDataFactory( "default", model ) );
+    report.setRootGroup( createCrosstab() );
+    report.addExpression( new ValidateExpression( false ) );
 
-    DebugReportRunner.showDialog(report);
-    DebugReportRunner.layoutPage(report, 0);
+    DebugReportRunner.showDialog( report );
+    DebugReportRunner.layoutPage( report, 0 );
   }
 
-  public void testDiagonalReverseReportProcessing() throws Exception
-  {
-    final TypedTableModel model = new TypedTableModel(new String[]{"Rows", "Cols", "Data"});
-    model.addRow("R0", "C3", 4);
-    model.addRow("R1", "C2", 3);
-    model.addRow("R2", "C1", 2);
-    model.addRow("R3", "C0", 1);
+  public void testDiagonalReverseReportProcessing() throws Exception {
+    final TypedTableModel model = new TypedTableModel( new String[] { "Rows", "Cols", "Data" } );
+    model.addRow( "R0", "C3", 4 );
+    model.addRow( "R1", "C2", 3 );
+    model.addRow( "R2", "C1", 2 );
+    model.addRow( "R3", "C0", 1 );
 
     final MasterReport report = new MasterReport();
-    report.setQuery("default");
-    report.setDataFactory(new TableDataFactory("default", model));
-    report.setRootGroup(createCrosstab());
-    report.addExpression(new ValidateExpression(true));
+    report.setQuery( "default" );
+    report.setDataFactory( new TableDataFactory( "default", model ) );
+    report.setRootGroup( createCrosstab() );
+    report.addExpression( new ValidateExpression( true ) );
 
-    DebugReportRunner.showDialog(report);
-    DebugReportRunner.layoutPage(report, 0);
+    DebugReportRunner.showDialog( report );
+    DebugReportRunner.layoutPage( report, 0 );
   }
 
-  private static class ValidateExpression extends AbstractExpression
-  {
+  private static class ValidateExpression extends AbstractExpression {
     private Object[][] validateData;
 
-    private ValidateExpression(final boolean reverse)
-    {
-      setName("Validate");
-      if (reverse)
-      {
+    private ValidateExpression( final boolean reverse ) {
+      setName( "Validate" );
+      if ( reverse ) {
         validateData = new Object[][]
-            {
-                {"R0", "C0", null},
-                {"R0", "C1", null},
-                {"R0", "C2", null},
-                {"R0", "C3", Integer.valueOf(4)},
-                {"R1", "C0", null},
-                {"R1", "C1", null},
-                {"R1", "C2", Integer.valueOf(3)},
-                {"R1", "C3", null},
-                {"R2", "C0", null},
-                {"R2", "C1", Integer.valueOf(2)},
-                {"R2", "C2", null},
-                {"R2", "C3", null},
-                {"R3", "C0", Integer.valueOf(1)},
-                {"R3", "C1", null},
-                {"R3", "C2", null},
-                {"R3", "C3", null},
-            };
-      }
-      else
-      {
+          {
+            { "R0", "C0", null },
+            { "R0", "C1", null },
+            { "R0", "C2", null },
+            { "R0", "C3", Integer.valueOf( 4 ) },
+            { "R1", "C0", null },
+            { "R1", "C1", null },
+            { "R1", "C2", Integer.valueOf( 3 ) },
+            { "R1", "C3", null },
+            { "R2", "C0", null },
+            { "R2", "C1", Integer.valueOf( 2 ) },
+            { "R2", "C2", null },
+            { "R2", "C3", null },
+            { "R3", "C0", Integer.valueOf( 1 ) },
+            { "R3", "C1", null },
+            { "R3", "C2", null },
+            { "R3", "C3", null },
+          };
+      } else {
         validateData = new Object[][]
-            {
-                {"R0", "C0", Integer.valueOf(1)},
-                {"R0", "C1", null},
-                {"R0", "C2", null},
-                {"R0", "C3", null},
-                {"R1", "C0", null},
-                {"R1", "C1", Integer.valueOf(2)},
-                {"R1", "C2", null},
-                {"R1", "C3", null},
-                {"R2", "C0", null},
-                {"R2", "C1", null},
-                {"R2", "C2", Integer.valueOf(3)},
-                {"R2", "C3", null},
-                {"R3", "C0", null},
-                {"R3", "C1", null},
-                {"R3", "C2", null},
-                {"R3", "C3", Integer.valueOf(4)},
-            };
+          {
+            { "R0", "C0", Integer.valueOf( 1 ) },
+            { "R0", "C1", null },
+            { "R0", "C2", null },
+            { "R0", "C3", null },
+            { "R1", "C0", null },
+            { "R1", "C1", Integer.valueOf( 2 ) },
+            { "R1", "C2", null },
+            { "R1", "C3", null },
+            { "R2", "C0", null },
+            { "R2", "C1", null },
+            { "R2", "C2", Integer.valueOf( 3 ) },
+            { "R2", "C3", null },
+            { "R3", "C0", null },
+            { "R3", "C1", null },
+            { "R3", "C2", null },
+            { "R3", "C3", Integer.valueOf( 4 ) },
+          };
       }
     }
 
-    public Object getValue()
-    {
-      if (getRuntime().getProcessingContext().getProcessingLevel() == LayoutProcess.LEVEL_STRUCTURAL_PREPROCESSING)
-      {
+    public Object getValue() {
+      if ( getRuntime().getProcessingContext().getProcessingLevel() == LayoutProcess.LEVEL_STRUCTURAL_PREPROCESSING ) {
         return false;
       }
-      if (getRuntime().isCrosstabActive() == false)
-      {
+      if ( getRuntime().isCrosstabActive() == false ) {
         return false;
       }
       final int currentRow = getRuntime().getCurrentRow();
 
-      final Object row = getDataRow().get("Rows");
-      final Object col = getDataRow().get("Cols");
-      final Object data = getDataRow().get("Data");
-      try
-      {
-        assertEquals(validateData[currentRow][0], row);
-        assertEquals(validateData[currentRow][1], col);
-        assertEquals(validateData[currentRow][2], data);
+      final Object row = getDataRow().get( "Rows" );
+      final Object col = getDataRow().get( "Cols" );
+      final Object data = getDataRow().get( "Data" );
+      try {
+        assertEquals( validateData[ currentRow ][ 0 ], row );
+        assertEquals( validateData[ currentRow ][ 1 ], col );
+        assertEquals( validateData[ currentRow ][ 2 ], data );
         return currentRow;
-      }
-      catch (AssertionFailedError afe)
-      {
+      } catch ( AssertionFailedError afe ) {
         //throw afe;
         return afe;
       }
@@ -294,20 +272,19 @@ public class CrosstabDataTest extends TestCase
   }
 
 
-  public void testInvalidReportProcessing() throws Exception
-  {
+  public void testInvalidReportProcessing() throws Exception {
     final TypedTableModel model = new TypedTableModel();
     model.addRow();
     model.addRow();
     model.addRow();
 
     final MasterReport report = new MasterReport();
-    report.setQuery("default");
-    report.setDataFactory(new TableDataFactory("default", model));
-    report.setRootGroup(createCrosstab());
-    report.addExpression(new ValidateExpression(false));
+    report.setQuery( "default" );
+    report.setDataFactory( new TableDataFactory( "default", model ) );
+    report.setRootGroup( createCrosstab() );
+    report.addExpression( new ValidateExpression( false ) );
 
-    DebugReportRunner.layoutPage(report, 0);
+    DebugReportRunner.layoutPage( report, 0 );
   }
 
 }

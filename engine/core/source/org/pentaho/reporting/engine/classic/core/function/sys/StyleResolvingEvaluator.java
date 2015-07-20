@@ -17,10 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.core.function.sys;
 
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.Serializable;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.pentaho.reporting.engine.classic.core.AttributeNames;
@@ -42,105 +38,92 @@ import org.pentaho.reporting.engine.classic.core.util.DoubleKeyedCounter;
 import org.pentaho.reporting.libraries.resourceloader.ResourceKey;
 import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 
-public class StyleResolvingEvaluator extends AbstractElementFormatFunction implements StructureFunction
-{
-  private static class StyleResolverCacheEntry implements Serializable
-  {
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.Serializable;
+
+public class StyleResolvingEvaluator extends AbstractElementFormatFunction implements StructureFunction {
+  private static class StyleResolverCacheEntry implements Serializable {
     private long elementChangeTracker;
     private long styleChangeHash;
     private long styleModificationCount;
 
-    private StyleResolverCacheEntry(final long elementChangeTracker,
-                                    final long styleChangeHash,
-                                    final long styleModificationCount)
-    {
+    private StyleResolverCacheEntry( final long elementChangeTracker,
+                                     final long styleChangeHash,
+                                     final long styleModificationCount ) {
       this.elementChangeTracker = elementChangeTracker;
       this.styleChangeHash = styleChangeHash;
       this.styleModificationCount = styleModificationCount;
     }
 
-    public StyleResolverCacheEntry(final StyleResolverCacheEntry parentEntry, final ReportElement e)
-    {
-      if (parentEntry == null)
-      {
+    public StyleResolverCacheEntry( final StyleResolverCacheEntry parentEntry, final ReportElement e ) {
+      if ( parentEntry == null ) {
         this.elementChangeTracker = e.getChangeTracker();
         this.styleChangeHash = e.getStyle().getChangeTrackerHash();
         this.styleModificationCount = e.getStyle().getModificationCount();
-      }
-      else
-      {
+      } else {
         this.elementChangeTracker = parentEntry.getElementChangeTracker() * 31 + e.getChangeTracker();
         this.styleChangeHash = parentEntry.getStyleChangeHash() * 31 + e.getStyle().getChangeTrackerHash();
-        this.styleModificationCount = parentEntry.getStyleModificationCount() * 31 + e.getStyle().getModificationCount();
+        this.styleModificationCount =
+          parentEntry.getStyleModificationCount() * 31 + e.getStyle().getModificationCount();
       }
     }
 
-    public long getElementChangeTracker()
-    {
+    public long getElementChangeTracker() {
       return elementChangeTracker;
     }
 
-    public long getStyleChangeHash()
-    {
+    public long getStyleChangeHash() {
       return styleChangeHash;
     }
 
-    public long getStyleModificationCount()
-    {
+    public long getStyleModificationCount() {
       return styleModificationCount;
     }
 
-    public boolean equals(final Object o)
-    {
-      if (this == o)
-      {
+    public boolean equals( final Object o ) {
+      if ( this == o ) {
         return true;
       }
-      if (o == null || getClass() != o.getClass())
-      {
+      if ( o == null || getClass() != o.getClass() ) {
         return false;
       }
 
       final StyleResolverCacheEntry that = (StyleResolverCacheEntry) o;
 
-      if (elementChangeTracker != that.elementChangeTracker)
-      {
+      if ( elementChangeTracker != that.elementChangeTracker ) {
         return false;
       }
-      if (styleChangeHash != that.styleChangeHash)
-      {
+      if ( styleChangeHash != that.styleChangeHash ) {
         return false;
       }
-      if (styleModificationCount != that.styleModificationCount)
-      {
+      if ( styleModificationCount != that.styleModificationCount ) {
         return false;
       }
 
       return true;
     }
 
-    public int hashCode()
-    {
-      int result = (int) (elementChangeTracker ^ (elementChangeTracker >>> 32));
-      result = 31 * result + (int) (styleChangeHash ^ (styleChangeHash >>> 32));
-      result = 31 * result + (int) (styleModificationCount ^ (styleModificationCount >>> 32));
+    public int hashCode() {
+      int result = (int) ( elementChangeTracker ^ ( elementChangeTracker >>> 32 ) );
+      result = 31 * result + (int) ( styleChangeHash ^ ( styleChangeHash >>> 32 ) );
+      result = 31 * result + (int) ( styleModificationCount ^ ( styleModificationCount >>> 32 ) );
       return result;
     }
 
-    public String toString()
-    {
+    public String toString() {
       final StringBuilder sb = new StringBuilder();
-      sb.append("StyleResolverCacheEntry");
-      sb.append("{elementChangeTracker=").append(elementChangeTracker);
-      sb.append(", styleChangeHash=").append(styleChangeHash);
-      sb.append(", styleModificationCount=").append(styleModificationCount);
-      sb.append('}');
+      sb.append( "StyleResolverCacheEntry" );
+      sb.append( "{elementChangeTracker=" ).append( elementChangeTracker );
+      sb.append( ", styleChangeHash=" ).append( styleChangeHash );
+      sb.append( ", styleModificationCount=" ).append( styleModificationCount );
+      sb.append( '}' );
       return sb.toString();
     }
   }
 
-  private static final Log logger = LogFactory.getLog(StyleResolvingEvaluator.class);
-  private static final StyleResolverCacheEntry INVALID = new StyleResolverCacheEntry(0, 0, 0);
+  private static final Log logger = LogFactory.getLog( StyleResolvingEvaluator.class );
+  private static final StyleResolverCacheEntry INVALID = new StyleResolverCacheEntry( 0, 0, 0 );
 
   private transient StyleResolver resolver;
   private transient ResolverStyleSheet styleSheet;
@@ -148,129 +131,106 @@ public class StyleResolvingEvaluator extends AbstractElementFormatFunction imple
   private DoubleKeyedCounter<String, Long> statisticsHit;
   private DoubleKeyedCounter<String, Long> statisticsMiss;
 
-  public StyleResolvingEvaluator()
-  {
-    styleCache = new DefaultStyleCache("StyleResolver");
+  public StyleResolvingEvaluator() {
+    styleCache = new DefaultStyleCache( "StyleResolver" );
     statisticsHit = new DoubleKeyedCounter<String, Long>();
     statisticsMiss = new DoubleKeyedCounter<String, Long>();
   }
 
-  public void reportInitialized(final ReportEvent event)
-  {
-    if (FunctionUtilities.isLayoutLevel(event) == false)
-    {
+  public void reportInitialized( final ReportEvent event ) {
+    if ( FunctionUtilities.isLayoutLevel( event ) == false ) {
       // dont do anything if there is no printing done ...
       return;
     }
 
-    ReportDefinition reportDefinition = locateMasterReport(event.getState());
-    resolver = createStyleResolver(reportDefinition, getRuntime().getProcessingContext());
+    ReportDefinition reportDefinition = locateMasterReport( event.getState() );
+    resolver = createStyleResolver( reportDefinition, getRuntime().getProcessingContext() );
     styleSheet = new ResolverStyleSheet();
-    super.reportInitialized(event);
+    super.reportInitialized( event );
   }
 
-  private ReportDefinition locateMasterReport(final ReportState state)
-  {
-    if (state.isSubReportEvent())
-    {
+  private ReportDefinition locateMasterReport( final ReportState state ) {
+    if ( state.isSubReportEvent() ) {
       ReportState parentState = state.getParentState();
-      if (parentState != null)
-      {
-        return locateMasterReport(parentState);
+      if ( parentState != null ) {
+        return locateMasterReport( parentState );
       }
     }
 
     return state.getReport();
   }
 
-  private static StyleResolver createStyleResolver(final ReportDefinition reportDefinition,
-                                                   final ProcessingContext pc)
-  {
+  private static StyleResolver createStyleResolver( final ReportDefinition reportDefinition,
+                                                    final ProcessingContext pc ) {
     final ResourceManager resourceManager = pc.getResourceManager();
     final ResourceKey contentBase = pc.getContentBase();
 
-    return CSSStyleResolver.createDesignTimeResolver(reportDefinition, resourceManager, contentBase, false);
+    return CSSStyleResolver.createDesignTimeResolver( reportDefinition, resourceManager, contentBase, false );
   }
 
 
-  protected void recordCacheHit(final ReportElement e)
-  {
-    super.recordCacheHit(e);
-    statisticsHit.increaseCounter(e.getElementType().getMetaData().getName(), e.getChangeTracker());
+  protected void recordCacheHit( final ReportElement e ) {
+    super.recordCacheHit( e );
+    statisticsHit.increaseCounter( e.getElementType().getMetaData().getName(), e.getChangeTracker() );
   }
 
-  protected void recordCacheMiss(final ReportElement e)
-  {
-    super.recordCacheMiss(e);
-    statisticsMiss.increaseCounter(e.getElementType().getMetaData().getName(), e.getChangeTracker());
+  protected void recordCacheMiss( final ReportElement e ) {
+    super.recordCacheMiss( e );
+    statisticsMiss.increaseCounter( e.getElementType().getMetaData().getName(), e.getChangeTracker() );
   }
 
-  protected void reportCachePerformance()
-  {
+  protected void reportCachePerformance() {
     super.reportCachePerformance();
-//    logger.debug(statisticsHit.printStatistic() + "\n" + statisticsMiss.printStatistic());
+    //    logger.debug(statisticsHit.printStatistic() + "\n" + statisticsMiss.printStatistic());
   }
 
-  protected boolean evaluateElement(final ReportElement e)
-  {
-    final StyleResolverCacheEntry parentEntry = get(e.getParentSection());
-    final StyleResolverCacheEntry existingEntry = get(e);
-    final StyleResolverCacheEntry currentEntry = new StyleResolverCacheEntry(parentEntry, e);
-    if (currentEntry.equals(existingEntry))
-    {
+  protected boolean evaluateElement( final ReportElement e ) {
+    final StyleResolverCacheEntry parentEntry = get( e.getParentSection() );
+    final StyleResolverCacheEntry existingEntry = get( e );
+    final StyleResolverCacheEntry currentEntry = new StyleResolverCacheEntry( parentEntry, e );
+    if ( currentEntry.equals( existingEntry ) ) {
       return false;
     }
 
-    try
-    {
-      e.setAttribute(AttributeNames.Internal.NAMESPACE, "style-resolver-change-tracker", currentEntry, false);
-      resolver.resolve(e, styleSheet);
-      e.setComputedStyle(styleCache.getStyleSheet(styleSheet));
+    try {
+      e.setAttribute( AttributeNames.Internal.NAMESPACE, "style-resolver-change-tracker", currentEntry, false );
+      resolver.resolve( e, styleSheet );
+      e.setComputedStyle( styleCache.getStyleSheet( styleSheet ) );
       return true;
-    }
-    catch (Exception ex)
-    {
-      throw new InvalidReportStateException("Failed to resolve style.", ex);
+    } catch ( Exception ex ) {
+      throw new InvalidReportStateException( "Failed to resolve style.", ex );
     }
   }
 
-  private StyleResolverCacheEntry get(final ReportElement element)
-  {
-    if (element == null)
-    {
+  private StyleResolverCacheEntry get( final ReportElement element ) {
+    if ( element == null ) {
       return null;
     }
 
-    final Object attribute = element.getAttribute(AttributeNames.Internal.NAMESPACE, "style-resolver-change-tracker");
+    final Object attribute = element.getAttribute( AttributeNames.Internal.NAMESPACE, "style-resolver-change-tracker" );
     final StyleResolverCacheEntry cacheEntry;
-    if (attribute instanceof StyleResolverCacheEntry)
-    {
+    if ( attribute instanceof StyleResolverCacheEntry ) {
       cacheEntry = (StyleResolverCacheEntry) attribute;
-    }
-    else
-    {
+    } else {
       cacheEntry = null;
     }
     return cacheEntry;
   }
 
-  public int getProcessingPriority()
-  {
+  public int getProcessingPriority() {
     // run after the style-expressions have been evaluated. Hard-coded styles on the element have the effect
     // of a style-attribute in HTML - they override everything that has been resolved elsewhere.
     return 50000;
   }
 
-  public void reportDone(final ReportEvent event)
-  {
-    if (FunctionUtilities.isLayoutLevel(event) == false)
-    {
+  public void reportDone( final ReportEvent event ) {
+    if ( FunctionUtilities.isLayoutLevel( event ) == false ) {
       // dont do anything if there is no printing done ...
       return;
     }
 
-    super.reportDone(event);
-//    logger.info(styleCache.printPerformanceStats() + "\n" + resolver.toString());
+    super.reportDone( event );
+    //    logger.info(styleCache.printPerformanceStats() + "\n" + resolver.toString());
   }
 
 
@@ -281,17 +241,15 @@ public class StyleResolvingEvaluator extends AbstractElementFormatFunction imple
    * @throws java.io.IOException    when reading the stream fails.
    * @throws ClassNotFoundException if a class definition for a serialized object could not be found.
    */
-  private void readObject(final ObjectInputStream in)
-      throws IOException, ClassNotFoundException
-  {
+  private void readObject( final ObjectInputStream in )
+    throws IOException, ClassNotFoundException {
     in.defaultReadObject();
-    styleCache = new DefaultStyleCache("StyleResolver");
+    styleCache = new DefaultStyleCache( "StyleResolver" );
   }
 
-  public StyleResolvingEvaluator getInstance()
-  {
+  public StyleResolvingEvaluator getInstance() {
     final StyleResolvingEvaluator expression = (StyleResolvingEvaluator) super.getInstance();
-    expression.styleCache = new DefaultStyleCache("StyleResolver");
+    expression.styleCache = new DefaultStyleCache( "StyleResolver" );
     expression.statisticsHit = new DoubleKeyedCounter<String, Long>();
     expression.statisticsMiss = new DoubleKeyedCounter<String, Long>();
     return expression;

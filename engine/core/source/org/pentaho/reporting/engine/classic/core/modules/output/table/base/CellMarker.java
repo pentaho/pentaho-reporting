@@ -19,10 +19,8 @@ package org.pentaho.reporting.engine.classic.core.modules.output.table.base;
 
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderBox;
 
-public interface CellMarker
-{
-  public enum SectionType
-  {
+public interface CellMarker {
+  public enum SectionType {
     TYPE_INVALID, TYPE_NORMALFLOW, TYPE_HEADER, TYPE_FOOTER, TYPE_REPEAT_FOOTER;
   }
 

@@ -24,15 +24,13 @@ import org.pentaho.reporting.engine.classic.core.filter.templates.AnchorFieldTem
  *
  * @author Thomas Morgner.
  */
-public class AnchorFieldTemplateDescription extends AbstractTemplateDescription
-{
+public class AnchorFieldTemplateDescription extends AbstractTemplateDescription {
   /**
    * Creates a new template description.
    *
    * @param name the name.
    */
-  public AnchorFieldTemplateDescription(final String name)
-  {
-    super(name, AnchorFieldTemplate.class, true);
+  public AnchorFieldTemplateDescription( final String name ) {
+    super( name, AnchorFieldTemplate.class, true );
   }
 }

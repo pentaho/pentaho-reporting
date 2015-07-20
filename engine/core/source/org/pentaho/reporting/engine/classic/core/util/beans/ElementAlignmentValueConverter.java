@@ -24,62 +24,46 @@ import org.pentaho.reporting.engine.classic.core.ElementAlignment;
  *
  * @author Thomas Morgner
  */
-public class ElementAlignmentValueConverter implements ValueConverter
-{
-  public ElementAlignmentValueConverter()
-  {
+public class ElementAlignmentValueConverter implements ValueConverter {
+  public ElementAlignmentValueConverter() {
   }
 
-  public String toAttributeValue(final Object o) throws BeanException
-  {
-    if (o == null)
-    {
+  public String toAttributeValue( final Object o ) throws BeanException {
+    if ( o == null ) {
       throw new NullPointerException();
     }
-    if (o instanceof ElementAlignment)
-    {
-      return String.valueOf(o).toLowerCase();
-    }
-    else
-    {
-      throw new BeanException("Failed to convert object of type " + o.getClass() + ": Not a ElementAlignment.");
+    if ( o instanceof ElementAlignment ) {
+      return String.valueOf( o ).toLowerCase();
+    } else {
+      throw new BeanException( "Failed to convert object of type " + o.getClass() + ": Not a ElementAlignment." );
     }
   }
 
-  public Object toPropertyValue(final String o) throws BeanException
-  {
-    if (o == null)
-    {
+  public Object toPropertyValue( final String o ) throws BeanException {
+    if ( o == null ) {
       throw new NullPointerException();
     }
-    if ("left".equalsIgnoreCase(o))
-    {
+    if ( "left".equalsIgnoreCase( o ) ) {
       return ElementAlignment.LEFT;
     }
-    if ("right".equalsIgnoreCase(o))
-    {
+    if ( "right".equalsIgnoreCase( o ) ) {
       return ElementAlignment.RIGHT;
     }
-    if ("justify".equalsIgnoreCase(o))
-    {
+    if ( "justify".equalsIgnoreCase( o ) ) {
       return ElementAlignment.JUSTIFY;
     }
-    if ("center".equalsIgnoreCase(o))
-    {
+    if ( "center".equalsIgnoreCase( o ) ) {
       return ElementAlignment.CENTER;
     }
-    if ("top".equalsIgnoreCase(o))
-    {
+    if ( "top".equalsIgnoreCase( o ) ) {
       return ElementAlignment.TOP;
     }
-    if ("middle".equalsIgnoreCase(o))
-    {
+    if ( "middle".equalsIgnoreCase( o ) ) {
       return ElementAlignment.MIDDLE;
     }
-    if ("bottom".equalsIgnoreCase(o))
-    {
+    if ( "bottom".equalsIgnoreCase( o ) ) {
       return ElementAlignment.BOTTOM;
     }
-    throw new BeanException("Invalid value specified for ElementAlignment");
+    throw new BeanException( "Invalid value specified for ElementAlignment" );
   }
 }

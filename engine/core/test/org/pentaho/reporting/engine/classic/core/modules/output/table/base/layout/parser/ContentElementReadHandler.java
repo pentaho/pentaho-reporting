@@ -28,24 +28,20 @@ import org.xml.sax.SAXException;
  *
  * @author Thomas Morgner
  */
-public class ContentElementReadHandler extends AbstractElementReadHandler
-{
+public class ContentElementReadHandler extends AbstractElementReadHandler {
   private LabelElementFactory factory;
 
-  public ContentElementReadHandler()
-  {
+  public ContentElementReadHandler() {
     factory = new LabelElementFactory();
   }
 
-  protected ElementFactory getElementFactory()
-  {
+  protected ElementFactory getElementFactory() {
     return factory;
   }
 
-  protected void startParsing(final PropertyAttributes atts) throws SAXException
-  {
-    super.startParsing(atts);
-    factory.setName(atts.getValue(getUri(), "id"));
-    factory.setText(atts.getValue(getUri(), "id"));
+  protected void startParsing( final PropertyAttributes atts ) throws SAXException {
+    super.startParsing( atts );
+    factory.setName( atts.getValue( getUri(), "id" ) );
+    factory.setText( atts.getValue( getUri(), "id" ) );
   }
 }

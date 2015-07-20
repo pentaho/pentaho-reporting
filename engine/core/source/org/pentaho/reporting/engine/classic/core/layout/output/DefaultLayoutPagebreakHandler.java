@@ -24,51 +24,41 @@ import org.pentaho.reporting.engine.classic.core.states.ReportState;
  *
  * @author Thomas Morgner
  */
-public class DefaultLayoutPagebreakHandler implements LayoutPagebreakHandler, Cloneable
-{
+public class DefaultLayoutPagebreakHandler implements LayoutPagebreakHandler, Cloneable {
   private ReportState reportState;
 
-  public DefaultLayoutPagebreakHandler(final ReportState reportState)
-  {
+  public DefaultLayoutPagebreakHandler( final ReportState reportState ) {
     this.reportState = reportState;
   }
 
-  public DefaultLayoutPagebreakHandler()
-  {
+  public DefaultLayoutPagebreakHandler() {
   }
 
-  public ReportState getReportState()
-  {
+  public ReportState getReportState() {
     return reportState;
   }
 
-  public void setReportState(final ReportState reportState)
-  {
+  public void setReportState( final ReportState reportState ) {
     this.reportState = reportState;
   }
 
-  public void pageFinished()
-  {
-    if (reportState == null)
-    {
+  public void pageFinished() {
+    if ( reportState == null ) {
       throw new IllegalStateException
-          ("A Report-State must be given. If you dont have a report state, then you're doing something wrong.");
+        ( "A Report-State must be given. If you dont have a report state, then you're doing something wrong." );
     }
-    reportState.firePageFinishedEvent(false);
+    reportState.firePageFinishedEvent( false );
   }
 
-  public void pageStarted()
-  {
-    if (reportState == null)
-    {
+  public void pageStarted() {
+    if ( reportState == null ) {
       throw new IllegalStateException
-          ("A Report-State must be given. If you dont have a report state, then you're doing something wrong.");
+        ( "A Report-State must be given. If you dont have a report state, then you're doing something wrong." );
     }
-    reportState.firePageStartedEvent(reportState.getEventCode());
+    reportState.firePageStartedEvent( reportState.getEventCode() );
   }
 
-  public Object clone() throws CloneNotSupportedException
-  {
+  public Object clone() throws CloneNotSupportedException {
     return super.clone();
   }
 }

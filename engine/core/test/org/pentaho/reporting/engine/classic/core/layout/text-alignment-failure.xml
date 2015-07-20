@@ -24,28 +24,47 @@ FROM
       <groupheader repeat="true" height="20" color="#000000" fontname="SansSerif" fontsize="11" fontstyle="bold">
         <band name="DummyGroupNoDataBandElement">
           <label height="11" vertical-alignment="middle" alignment="left" width="100%" x="0%"
-                 y="0">No Data Available</label>
+                 y="0">No Data Available
+          </label>
         </band>
         <band name="DummyGroupDataBandElement" y="2" height="20">
           <rectangle color="#C0C0C0" draw="false" fill="true" height="18" width="100%" x="0%" y="0"/>
           <label color="#000000" fontname="SansSerif" fontsize="12" fontstyle="bold" height="18"
-                 vertical-alignment="middle" alignment="left" width="11.11111111111111%" x="0.0%" y="0">PRODUCTS_PRODUCTCODE</label>
+                 vertical-alignment="middle" alignment="left" width="11.11111111111111%" x="0.0%" y="0">
+            PRODUCTS_PRODUCTCODE
+          </label>
           <label color="#000000" fontname="SansSerif" fontsize="12" fontstyle="bold" height="18"
-                 vertical-alignment="middle" alignment="left" width="11.11111111111111%" x="11.11111111111111%" y="0">PRODUCTS_PRODUCTNAME</label>
+                 vertical-alignment="middle" alignment="left" width="11.11111111111111%" x="11.11111111111111%" y="0">
+            PRODUCTS_PRODUCTNAME
+          </label>
           <label color="#000000" fontname="SansSerif" fontsize="12" fontstyle="bold" height="18"
-                 vertical-alignment="middle" alignment="left" width="11.11111111111111%" x="22.22222222222222%" y="0">PRODUCTS_PRODUCTLINE</label>
+                 vertical-alignment="middle" alignment="left" width="11.11111111111111%" x="22.22222222222222%" y="0">
+            PRODUCTS_PRODUCTLINE
+          </label>
           <label color="#000000" fontname="SansSerif" fontsize="12" fontstyle="bold" height="18"
-                 vertical-alignment="middle" alignment="left" width="11.11111111111111%" x="33.33333333333333%" y="0">PRODUCTS_PRODUCTSCALE</label>
+                 vertical-alignment="middle" alignment="left" width="11.11111111111111%" x="33.33333333333333%" y="0">
+            PRODUCTS_PRODUCTSCALE
+          </label>
           <label color="#000000" fontname="SansSerif" fontsize="12" fontstyle="bold" height="18"
-                 vertical-alignment="middle" alignment="left" width="11.11111111111111%" x="44.44444444444444%" y="0">PRODUCTS_PRODUCTVENDOR</label>
+                 vertical-alignment="middle" alignment="left" width="11.11111111111111%" x="44.44444444444444%" y="0">
+            PRODUCTS_PRODUCTVENDOR
+          </label>
           <label color="#000000" fontname="SansSerif" fontsize="12" fontstyle="bold" height="18"
-                 vertical-alignment="middle" alignment="left" width="11.11111111111111%" x="55.55555555555556%" y="0">PRODUCTS_PRODUCTDESCRIPTION</label>
+                 vertical-alignment="middle" alignment="left" width="11.11111111111111%" x="55.55555555555556%" y="0">
+            PRODUCTS_PRODUCTDESCRIPTION
+          </label>
           <label color="#000000" fontname="SansSerif" fontsize="12" fontstyle="bold" height="18"
-                 vertical-alignment="middle" alignment="right" width="11.11111111111111%" x="66.66666666666667%" y="0">PRODUCTS_QUANTITYINSTOCK</label>
+                 vertical-alignment="middle" alignment="right" width="11.11111111111111%" x="66.66666666666667%" y="0">
+            PRODUCTS_QUANTITYINSTOCK
+          </label>
           <label color="#000000" fontname="SansSerif" fontsize="12" fontstyle="bold" height="18"
-                 vertical-alignment="middle" alignment="right" width="11.11111111111111%" x="77.77777777777779%" y="0">PRODUCTS_BUYPRICE</label>
+                 vertical-alignment="middle" alignment="right" width="11.11111111111111%" x="77.77777777777779%" y="0">
+            PRODUCTS_BUYPRICE
+          </label>
           <label color="#000000" fontname="SansSerif" fontsize="12" fontstyle="bold" height="18"
-                 vertical-alignment="middle" alignment="right" width="11.1111111111111%" x="88.8888888888889%" y="0">PRODUCTS_MSRP</label>
+                 vertical-alignment="middle" alignment="right" width="11.1111111111111%" x="88.8888888888889%" y="0">
+            PRODUCTS_MSRP
+          </label>
         </band>
       </groupheader>
       <groupfooter name="dummyGroupFooter" color="#000000" fontname="SansSerif" fontsize="11" fontstyle="bold">
@@ -56,7 +75,9 @@ FROM
                       alignment="right" width="11.11111111111111%" x="77.77777777777779%" y="2"/>
         <number-field fieldname="Summary_PRODUCTS_MSRPExpression" height="15" vertical-alignment="middle"
                       alignment="right" width="11.1111111111111%" x="88.8888888888889%" y="2"/>
-        <message-field height="15" x="0%" width="66.66666666666667%" y="2" alignment="left" vertical-alignment="middle">Grand Total</message-field>
+        <message-field height="15" x="0%" width="66.66666666666667%" y="2" alignment="left" vertical-alignment="middle">
+          Grand Total
+        </message-field>
       </groupfooter>
     </group>
   </groups>

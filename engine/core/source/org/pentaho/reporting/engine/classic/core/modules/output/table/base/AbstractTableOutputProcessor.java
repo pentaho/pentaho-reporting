@@ -17,8 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.output.table.base;
 
-import java.util.ArrayList;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.pentaho.reporting.engine.classic.core.ReportDefinition;
@@ -33,178 +31,159 @@ import org.pentaho.reporting.engine.classic.core.layout.output.OutputProcessorFe
 import org.pentaho.reporting.libraries.base.util.MemoryUsageMessage;
 import org.pentaho.reporting.libraries.formatting.FastMessageFormat;
 
+import java.util.ArrayList;
+
 /**
  * The Table-Output processor uses the pagination stage to build a list of table-layouts.
  *
  * @author Thomas Morgner
  */
 public abstract class AbstractTableOutputProcessor extends AbstractOutputProcessor
-    implements IterativeOutputProcessor
-{
-  private static final Log logger = LogFactory.getLog(AbstractTableOutputProcessor.class);
+  implements IterativeOutputProcessor {
+  private static final Log logger = LogFactory.getLog( AbstractTableOutputProcessor.class );
 
   public static final OutputProcessorFeature.BooleanOutputProcessorFeature STRICT_LAYOUT =
-      new OutputProcessorFeature.BooleanOutputProcessorFeature("strict-layout");
+    new OutputProcessorFeature.BooleanOutputProcessorFeature( "strict-layout" );
   public static final OutputProcessorFeature.BooleanOutputProcessorFeature TREAT_ELLIPSE_AS_RECTANGLE =
-      new OutputProcessorFeature.BooleanOutputProcessorFeature("treat-ellipse-as-rectangle");
+    new OutputProcessorFeature.BooleanOutputProcessorFeature( "treat-ellipse-as-rectangle" );
   public static final OutputProcessorFeature.BooleanOutputProcessorFeature SHAPES_CONTENT =
-      new OutputProcessorFeature.BooleanOutputProcessorFeature("shape-content");
+    new OutputProcessorFeature.BooleanOutputProcessorFeature( "shape-content" );
 
   private ArrayList<TableLayoutProducer> sheetLayouts;
   private TableLayoutProducer currentLayout;
   private TableContentProducer currentContent;
   private long lastTime;
 
-  protected AbstractTableOutputProcessor()
-  {
+  protected AbstractTableOutputProcessor() {
     this.sheetLayouts = new ArrayList<TableLayoutProducer>();
   }
 
-  public void processingStarted(final ReportDefinition report, final ProcessingContext processingContext)
-  {
-    super.processingStarted(report, processingContext);
+  public void processingStarted( final ReportDefinition report, final ProcessingContext processingContext ) {
+    super.processingStarted( report, processingContext );
     lastTime = System.currentTimeMillis();
   }
 
-  public boolean isNeedAlignedPage()
-  {
-    return getMetaData().isFeatureSupported(OutputProcessorFeature.UNALIGNED_PAGEBANDS) == false;
+  public boolean isNeedAlignedPage() {
+    return getMetaData().isFeatureSupported( OutputProcessorFeature.UNALIGNED_PAGEBANDS ) == false;
   }
 
-  protected final void processPaginationContent(final LogicalPageKey logicalPageKey, final LogicalPageBox logicalPage)
-  {
-    if (currentLayout == null)
-    {
-      currentLayout = new TableLayoutProducer(getMetaData());
+  protected final void processPaginationContent( final LogicalPageKey logicalPageKey,
+                                                 final LogicalPageBox logicalPage ) {
+    if ( currentLayout == null ) {
+      currentLayout = new TableLayoutProducer( getMetaData() );
     }
-    currentLayout.update(logicalPage, false);
+    currentLayout.update( logicalPage, false );
     currentLayout.pageCompleted();
 
     //ModelPrinter.print(logicalPage);
     final long rowCount = currentLayout.getLayout().getRowCount();
-    logPerformance("Pagination done: ", rowCount, true);
+    logPerformance( "Pagination done: ", rowCount, true );
 
-    sheetLayouts.add(currentLayout);
+    sheetLayouts.add( currentLayout );
     currentLayout = null;
   }
 
-  protected final void processPageContent(final LogicalPageKey logicalPageKey, final LogicalPageBox logicalPage)
-      throws ContentProcessingException
-  {
+  protected final void processPageContent( final LogicalPageKey logicalPageKey, final LogicalPageBox logicalPage )
+    throws ContentProcessingException {
     // this one is only called after the pagination is complete. In that case we have a valid table.
     final FlowSelector tableInterceptor = getFlowSelector();
-    if (tableInterceptor == null)
-    {
+    if ( tableInterceptor == null ) {
       return;
     }
 
-    if (tableInterceptor.isLogicalPageAccepted(logicalPageKey) == false)
-    {
+    if ( tableInterceptor.isLogicalPageAccepted( logicalPageKey ) == false ) {
       return;
     }
 
-    if (currentContent == null)
-    {
+    if ( currentContent == null ) {
       final int pageCursor = getPageCursor();
-      final TableLayoutProducer sheetLayout = sheetLayouts.get(pageCursor);
-      currentContent = createTableContentProducer(sheetLayout.getLayout());
+      final TableLayoutProducer sheetLayout = sheetLayouts.get( pageCursor );
+      currentContent = createTableContentProducer( sheetLayout.getLayout() );
     }
 
-    currentContent.compute(logicalPage, false);
-//    ModelPrinter.print(logicalPage);
-    processTableContent(logicalPageKey, logicalPage, currentContent);
+    currentContent.compute( logicalPage, false );
+    //    ModelPrinter.print(logicalPage);
+    processTableContent( logicalPageKey, logicalPage, currentContent );
     currentContent.clearFinishedBoxes();
 
 
     final long rowCount = currentContent.getContentRowCount();
-    logPerformance("Content done: ", rowCount, true);
+    logPerformance( "Content done: ", rowCount, true );
 
     currentContent = null;
   }
 
-  protected abstract void processTableContent(final LogicalPageKey logicalPageKey,
-                                              final LogicalPageBox logicalPage,
-                                              final TableContentProducer contentProducer)
-      throws ContentProcessingException;
+  protected abstract void processTableContent( final LogicalPageKey logicalPageKey,
+                                               final LogicalPageBox logicalPage,
+                                               final TableContentProducer contentProducer )
+    throws ContentProcessingException;
 
 
-  public final void processIterativeContent(final LogicalPageBox logicalPageBox,
-                                            final boolean performOutput) throws ContentProcessingException
-  {
-    if (isContentGeneratable() == false)
-    {
+  public final void processIterativeContent( final LogicalPageBox logicalPageBox,
+                                             final boolean performOutput ) throws ContentProcessingException {
+    if ( isContentGeneratable() == false ) {
       // In pagination mode.
-      if (currentLayout == null)
-      {
-        currentLayout = new TableLayoutProducer(getMetaData());
+      if ( currentLayout == null ) {
+        currentLayout = new TableLayoutProducer( getMetaData() );
       }
-      currentLayout.update(logicalPageBox, true);
+      currentLayout.update( logicalPageBox, true );
 
       final long rowCount = currentLayout.getLayout().getRowCount();
-      logPerformance("Still Iterating: ", rowCount, false);
-    }
-    else
-    {
+      logPerformance( "Still Iterating: ", rowCount, false );
+    } else {
       // In content generation mode.
       final int pageCursor = getPageCursor();
-      final LogicalPageKey logicalPageKey = getLogicalPage(pageCursor);
+      final LogicalPageKey logicalPageKey = getLogicalPage( pageCursor );
       final FlowSelector tableInterceptor = getFlowSelector();
-      if (tableInterceptor == null)
-      {
+      if ( tableInterceptor == null ) {
         return;
       }
 
-      if (tableInterceptor.isLogicalPageAccepted(logicalPageKey) == false)
-      {
+      if ( tableInterceptor.isLogicalPageAccepted( logicalPageKey ) == false ) {
         return;
       }
 
-      if (currentContent == null)
-      {
-        final TableLayoutProducer sheetLayout = sheetLayouts.get(pageCursor);
-        currentContent = createTableContentProducer(sheetLayout.getLayout());
+      if ( currentContent == null ) {
+        final TableLayoutProducer sheetLayout = sheetLayouts.get( pageCursor );
+        currentContent = createTableContentProducer( sheetLayout.getLayout() );
       }
 
-      currentContent.compute(logicalPageBox, true);
-      updateTableContent(logicalPageKey, logicalPageBox, currentContent, performOutput);
+      currentContent.compute( logicalPageBox, true );
+      updateTableContent( logicalPageKey, logicalPageBox, currentContent, performOutput );
       currentContent.clearFinishedBoxes();
 
       final long rowCount = currentContent.getContentRowCount();
-      logPerformance("Still Iterating: ", rowCount, false);
+      logPerformance( "Still Iterating: ", rowCount, false );
     }
   }
 
-  private void logPerformance(final String message, final long rowCount, final boolean force)
-  {
+  private void logPerformance( final String message, final long rowCount, final boolean force ) {
     final long time = System.currentTimeMillis();
     final double deltaTime = time - lastTime;
-    if (force || deltaTime > 30000)
-    {
+    if ( force || deltaTime > 30000 ) {
       lastTime = time;
-      if (logger.isDebugEnabled())
-      {
-        final double rowsPerSec = (rowCount * 1000.0 / deltaTime);
+      if ( logger.isDebugEnabled() ) {
+        final double rowsPerSec = ( rowCount * 1000.0 / deltaTime );
 
         final FastMessageFormat messageFormat =
-            new FastMessageFormat("{0} - Rows: {1} - Time: {2,number,0.000}sec - Throughput: ({3,number,0.000} rows/sec) ");
-        logger.debug(new MemoryUsageMessage(messageFormat.format(
-            new Object[]{message, rowCount, deltaTime / 1000.0, rowsPerSec})));
+          new FastMessageFormat(
+            "{0} - Rows: {1} - Time: {2,number,0.000}sec - Throughput: ({3,number,0.000} rows/sec) " );
+        logger.debug( new MemoryUsageMessage( messageFormat.format(
+          new Object[] { message, rowCount, deltaTime / 1000.0, rowsPerSec } ) ) );
       }
     }
   }
 
-  protected TableContentProducer createTableContentProducer(final SheetLayout layout)
-  {
-    return new TableContentProducer(layout, getMetaData());
+  protected TableContentProducer createTableContentProducer( final SheetLayout layout ) {
+    return new TableContentProducer( layout, getMetaData() );
   }
 
-  protected void updateTableContent(final LogicalPageKey logicalPageKey,
-                                    final LogicalPageBox logicalPageBox,
-                                    final TableContentProducer tableContentProducer,
-                                    final boolean performOutput) throws ContentProcessingException
-  {
+  protected void updateTableContent( final LogicalPageKey logicalPageKey,
+                                     final LogicalPageBox logicalPageBox,
+                                     final TableContentProducer tableContentProducer,
+                                     final boolean performOutput ) throws ContentProcessingException {
     throw new UnsupportedOperationException
-        ("This output processor does not implement the iterative content processing protocol.");
+      ( "This output processor does not implement the iterative content processing protocol." );
   }
 
   protected abstract FlowSelector getFlowSelector();

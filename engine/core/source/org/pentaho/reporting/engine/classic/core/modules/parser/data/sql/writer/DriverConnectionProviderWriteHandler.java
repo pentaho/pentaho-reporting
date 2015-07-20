@@ -17,8 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.parser.data.sql.writer;
 
-import java.io.IOException;
-
 import org.pentaho.reporting.engine.classic.core.modules.misc.datafactory.sql.ConnectionProvider;
 import org.pentaho.reporting.engine.classic.core.modules.misc.datafactory.sql.DriverConnectionProvider;
 import org.pentaho.reporting.engine.classic.core.modules.parser.base.PasswordEncryptionService;
@@ -29,66 +27,57 @@ import org.pentaho.reporting.libraries.docbundle.WriteableDocumentBundle;
 import org.pentaho.reporting.libraries.xmlns.writer.XmlWriter;
 import org.pentaho.reporting.libraries.xmlns.writer.XmlWriterSupport;
 
+import java.io.IOException;
+
 public class DriverConnectionProviderWriteHandler
-    implements ConnectionProviderWriteHandler
-{
-  public DriverConnectionProviderWriteHandler()
-  {
+  implements ConnectionProviderWriteHandler {
+  public DriverConnectionProviderWriteHandler() {
   }
 
-  public String writeReport(final WriteableDocumentBundle bundle,
-                            final BundleWriterState state,
-                            final XmlWriter xmlWriter,
-                            final ConnectionProvider connectionProvider) throws IOException, BundleWriterException
-  {
-    if (bundle == null)
-    {
+  public String writeReport( final WriteableDocumentBundle bundle,
+                             final BundleWriterState state,
+                             final XmlWriter xmlWriter,
+                             final ConnectionProvider connectionProvider ) throws IOException, BundleWriterException {
+    if ( bundle == null ) {
       throw new NullPointerException();
     }
-    if (xmlWriter == null)
-    {
+    if ( xmlWriter == null ) {
       throw new NullPointerException();
     }
-    if (state == null)
-    {
+    if ( state == null ) {
       throw new NullPointerException();
     }
-    if (connectionProvider == null)
-    {
+    if ( connectionProvider == null ) {
       throw new NullPointerException();
     }
 
     final DriverConnectionProvider driverProvider =
-        (DriverConnectionProvider) connectionProvider;
+      (DriverConnectionProvider) connectionProvider;
     xmlWriter.writeTag
-        (SQLDataFactoryModule.NAMESPACE, "connection", XmlWriterSupport.OPEN);
+      ( SQLDataFactoryModule.NAMESPACE, "connection", XmlWriterSupport.OPEN );
 
     xmlWriter.writeTag
-        (SQLDataFactoryModule.NAMESPACE, "driver", XmlWriterSupport.OPEN);
-    xmlWriter.writeTextNormalized(driverProvider.getDriver(), false);
+      ( SQLDataFactoryModule.NAMESPACE, "driver", XmlWriterSupport.OPEN );
+    xmlWriter.writeTextNormalized( driverProvider.getDriver(), false );
     xmlWriter.writeCloseTag();
 
     xmlWriter.writeTag
-        (SQLDataFactoryModule.NAMESPACE, "url", XmlWriterSupport.OPEN);
-    xmlWriter.writeTextNormalized(driverProvider.getUrl(), false);
+      ( SQLDataFactoryModule.NAMESPACE, "url", XmlWriterSupport.OPEN );
+    xmlWriter.writeTextNormalized( driverProvider.getUrl(), false );
     xmlWriter.writeCloseTag();
 
     xmlWriter.writeTag
-        (SQLDataFactoryModule.NAMESPACE, "properties", XmlWriterSupport.OPEN);
+      ( SQLDataFactoryModule.NAMESPACE, "properties", XmlWriterSupport.OPEN );
     final String[] propertyNames = driverProvider.getPropertyNames();
-    for (int i = 0; i < propertyNames.length; i++)
-    {
-      final String name = propertyNames[i];
-      final String value = driverProvider.getProperty(name);
-      xmlWriter.writeTag(SQLDataFactoryModule.NAMESPACE,
-          "property", "name", name, XmlWriterSupport.OPEN);
-      if (name.toLowerCase().contains("password"))
-      {
-        xmlWriter.writeTextNormalized(PasswordEncryptionService.getInstance().encrypt(value), false);
-      }
-      else
-      {
-        xmlWriter.writeTextNormalized(value, false);
+    for ( int i = 0; i < propertyNames.length; i++ ) {
+      final String name = propertyNames[ i ];
+      final String value = driverProvider.getProperty( name );
+      xmlWriter.writeTag( SQLDataFactoryModule.NAMESPACE,
+        "property", "name", name, XmlWriterSupport.OPEN );
+      if ( name.toLowerCase().contains( "password" ) ) {
+        xmlWriter.writeTextNormalized( PasswordEncryptionService.getInstance().encrypt( value ), false );
+      } else {
+        xmlWriter.writeTextNormalized( value, false );
       }
       xmlWriter.writeCloseTag();
     }

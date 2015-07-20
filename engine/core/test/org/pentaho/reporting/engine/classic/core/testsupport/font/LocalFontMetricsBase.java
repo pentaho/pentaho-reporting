@@ -17,51 +17,42 @@
 
 package org.pentaho.reporting.engine.classic.core.testsupport.font;
 
+import org.pentaho.reporting.libraries.fonts.registry.BaselineInfo;
+
 import java.io.Serializable;
 import java.util.HashMap;
 
-import org.pentaho.reporting.libraries.fonts.registry.BaselineInfo;
-
-public class LocalFontMetricsBase implements Serializable
-{
-  private static class KerningKey implements Serializable
-  {
+public class LocalFontMetricsBase implements Serializable {
+  private static class KerningKey implements Serializable {
     private int prev;
     private int codepoint;
 
-    private KerningKey(final int prev, final int codepoint)
-    {
+    private KerningKey( final int prev, final int codepoint ) {
       this.prev = prev;
       this.codepoint = codepoint;
     }
 
-    public boolean equals(final Object o)
-    {
-      if (this == o)
-      {
+    public boolean equals( final Object o ) {
+      if ( this == o ) {
         return true;
       }
-      if (o == null || getClass() != o.getClass())
-      {
+      if ( o == null || getClass() != o.getClass() ) {
         return false;
       }
 
       final KerningKey that = (KerningKey) o;
 
-      if (codepoint != that.codepoint)
-      {
+      if ( codepoint != that.codepoint ) {
         return false;
       }
-      if (prev != that.prev)
-      {
+      if ( prev != that.prev ) {
         return false;
       }
 
       return true;
     }
 
-    public int hashCode()
-    {
+    public int hashCode() {
       int result = prev;
       result = 31 * result + codepoint;
       return result;
@@ -85,190 +76,156 @@ public class LocalFontMetricsBase implements Serializable
   private long italicAngle;
   private boolean uniformFontMetrics;
 
-  public LocalFontMetricsBase()
-  {
-    charWidth = new int[65535];
+  public LocalFontMetricsBase() {
+    charWidth = new int[ 65535 ];
     kerningMap = new HashMap<KerningKey, Integer>();
   }
 
-  public long getAscent()
-  {
+  public long getAscent() {
     return ascent;
   }
 
-  public void setAscent(final long ascent)
-  {
+  public void setAscent( final long ascent ) {
     this.ascent = ascent;
   }
 
-  public long getDescent()
-  {
+  public long getDescent() {
     return descent;
   }
 
-  public void setDescent(final long descent)
-  {
+  public void setDescent( final long descent ) {
     this.descent = descent;
   }
 
-  public long getLeading()
-  {
+  public long getLeading() {
     return leading;
   }
 
-  public void setLeading(final long leading)
-  {
+  public void setLeading( final long leading ) {
     this.leading = leading;
   }
 
-  public long getXHeight()
-  {
+  public long getXHeight() {
     return xheight;
   }
 
-  public void setXHeight(final long xheight)
-  {
+  public void setXHeight( final long xheight ) {
     this.xheight = xheight;
   }
 
-  public long getOverlinePosition()
-  {
+  public long getOverlinePosition() {
     return overlinePosition;
   }
 
-  public void setOverlinePosition(final long overlinePosition)
-  {
+  public void setOverlinePosition( final long overlinePosition ) {
     this.overlinePosition = overlinePosition;
   }
 
-  public long getUnderlinePosition()
-  {
+  public long getUnderlinePosition() {
     return underlinePosition;
   }
 
-  public void setUnderlinePosition(final long underlinePosition)
-  {
+  public void setUnderlinePosition( final long underlinePosition ) {
     this.underlinePosition = underlinePosition;
   }
 
-  public long getStrikeThroughPosition()
-  {
+  public long getStrikeThroughPosition() {
     return strikethroughPosition;
   }
 
-  public void setStrikeThroughPosition(final long strikethroughPosition)
-  {
+  public void setStrikeThroughPosition( final long strikethroughPosition ) {
     this.strikethroughPosition = strikethroughPosition;
   }
 
-  public long getMaxAscent()
-  {
+  public long getMaxAscent() {
     return maxAscent;
   }
 
-  public void setMaxAscent(final long maxAscent)
-  {
+  public void setMaxAscent( final long maxAscent ) {
     this.maxAscent = maxAscent;
   }
 
-  public long getMaxDescent()
-  {
+  public long getMaxDescent() {
     return maxDescent;
   }
 
-  public void setMaxDescent(final long maxDescent)
-  {
+  public void setMaxDescent( final long maxDescent ) {
     this.maxDescent = maxDescent;
   }
 
-  public long getMaxHeight()
-  {
+  public long getMaxHeight() {
     return maxHeight;
   }
 
-  public void setMaxHeight(final long maxHeight)
-  {
+  public void setMaxHeight( final long maxHeight ) {
     this.maxHeight = maxHeight;
   }
 
-  public long getMaxCharAdvance()
-  {
+  public long getMaxCharAdvance() {
     return maxCharAdvance;
   }
 
-  public void setMaxCharAdvance(final long maxCharAdvance)
-  {
+  public void setMaxCharAdvance( final long maxCharAdvance ) {
     this.maxCharAdvance = maxCharAdvance;
   }
 
-  public long getItalicAngle()
-  {
+  public long getItalicAngle() {
     return italicAngle;
   }
 
-  public void setItalicAngle(final long italicAngle)
-  {
+  public void setItalicAngle( final long italicAngle ) {
     this.italicAngle = italicAngle;
   }
 
-  public boolean isUniformFontMetrics()
-  {
+  public boolean isUniformFontMetrics() {
     return uniformFontMetrics;
   }
 
-  public void setUniformFontMetrics(final boolean uniformFontMetrics)
-  {
+  public void setUniformFontMetrics( final boolean uniformFontMetrics ) {
     this.uniformFontMetrics = uniformFontMetrics;
   }
 
-  public long getCharWidth(final int codePoint)
-  {
-    if (codePoint < 0 || codePoint >= charWidth.length)
-    {
-      throw new IndexOutOfBoundsException("Code-point '" + codePoint + "' is greater than maximum of " + charWidth.length);
+  public long getCharWidth( final int codePoint ) {
+    if ( codePoint < 0 || codePoint >= charWidth.length ) {
+      throw new IndexOutOfBoundsException(
+        "Code-point '" + codePoint + "' is greater than maximum of " + charWidth.length );
     }
-    return charWidth[codePoint];
+    return charWidth[ codePoint ];
   }
 
-  public long getKerning(final int previous, final int codePoint)
-  {
-    final Integer o = kerningMap.get(new KerningKey(previous, codePoint));
-    if (o == null)
-    {
+  public long getKerning( final int previous, final int codePoint ) {
+    final Integer o = kerningMap.get( new KerningKey( previous, codePoint ) );
+    if ( o == null ) {
       return 0;
     }
     return o.longValue();
   }
 
-  public BaselineInfo getBaselines(final int codePoint, BaselineInfo info)
-  {
-    if (info == null)
-    {
+  public BaselineInfo getBaselines( final int codePoint, BaselineInfo info ) {
+    if ( info == null ) {
       info = new BaselineInfo();
     }
 
     // If we had more data, we could surely create something better. Well, this has to be enough ..
     final long maxAscent = getMaxAscent();
-    info.setBaseline(BaselineInfo.MATHEMATICAL, maxAscent - getXHeight());
-    info.setBaseline(BaselineInfo.IDEOGRAPHIC, getMaxHeight());
-    info.setBaseline(BaselineInfo.MIDDLE, maxAscent / 2);
-    info.setBaseline(BaselineInfo.ALPHABETIC, maxAscent);
-    info.setBaseline(BaselineInfo.CENTRAL, maxAscent / 2);
-    info.setBaseline(BaselineInfo.HANGING, maxAscent - getXHeight());
-    info.setDominantBaseline(BaselineInfo.ALPHABETIC);
+    info.setBaseline( BaselineInfo.MATHEMATICAL, maxAscent - getXHeight() );
+    info.setBaseline( BaselineInfo.IDEOGRAPHIC, getMaxHeight() );
+    info.setBaseline( BaselineInfo.MIDDLE, maxAscent / 2 );
+    info.setBaseline( BaselineInfo.ALPHABETIC, maxAscent );
+    info.setBaseline( BaselineInfo.CENTRAL, maxAscent / 2 );
+    info.setBaseline( BaselineInfo.HANGING, maxAscent - getXHeight() );
+    info.setDominantBaseline( BaselineInfo.ALPHABETIC );
 
     final BaselineInfo cached = new BaselineInfo();
-    cached.update(info);
+    cached.update( info );
     return info;
   }
 
-  public void setCharWidth(final int codepoint, final int value)
-  {
-    charWidth[codepoint] = value;
+  public void setCharWidth( final int codepoint, final int value ) {
+    charWidth[ codepoint ] = value;
   }
 
-  public void setKerning(final int codepoint, final int prev, final int value)
-  {
-    kerningMap.put(new KerningKey(prev, codepoint), value);
+  public void setKerning( final int codepoint, final int prev, final int value ) {
+    kerningMap.put( new KerningKey( prev, codepoint ), value );
   }
 }

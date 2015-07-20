@@ -24,11 +24,9 @@ import org.pentaho.reporting.engine.classic.core.filter.types.CrosstabElementTyp
  *
  * @author Sulaiman Karmali
  */
-public class CrosstabElement extends SubReport
-{
-  public CrosstabElement()
-  {
-    setElementType(CrosstabElementType.INSTANCE);
-    setRootGroup(new CrosstabGroup());
+public class CrosstabElement extends SubReport {
+  public CrosstabElement() {
+    setElementType( CrosstabElementType.INSTANCE );
+    setRootGroup( new CrosstabGroup() );
   }
 }

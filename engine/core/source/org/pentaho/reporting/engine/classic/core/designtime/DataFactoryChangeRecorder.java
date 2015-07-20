@@ -17,7 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.core.designtime;
 
-public interface DataFactoryChangeRecorder
-{
-  public void recordChange(DataFactoryChange change);
+public interface DataFactoryChangeRecorder {
+  public void recordChange( DataFactoryChange change );
 }

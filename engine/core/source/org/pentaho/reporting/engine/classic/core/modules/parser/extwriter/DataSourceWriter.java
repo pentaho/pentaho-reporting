@@ -17,8 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.parser.extwriter;
 
-import java.io.IOException;
-
 import org.pentaho.reporting.engine.classic.core.filter.DataSource;
 import org.pentaho.reporting.engine.classic.core.modules.parser.ext.ExtParserModule;
 import org.pentaho.reporting.engine.classic.core.modules.parser.ext.factory.base.ObjectDescription;
@@ -26,13 +24,14 @@ import org.pentaho.reporting.engine.classic.core.modules.parser.ext.factory.data
 import org.pentaho.reporting.libraries.xmlns.writer.XmlWriter;
 import org.pentaho.reporting.libraries.xmlns.writer.XmlWriterSupport;
 
+import java.io.IOException;
+
 /**
  * A data-source writer. Writes datasources and templates.
  *
  * @author Thomas Morgner.
  */
-public class DataSourceWriter extends ObjectWriter
-{
+public class DataSourceWriter extends ObjectWriter {
   /**
    * The data-source.
    */
@@ -48,17 +47,15 @@ public class DataSourceWriter extends ObjectWriter
    * @throws ReportWriterException    if an error occured.
    * @throws IllegalArgumentException if the object description does not describe a datasource.
    */
-  public DataSourceWriter(final ReportWriterContext reportWriter,
-                          final DataSource baseObject,
-                          final ObjectDescription objectDescription,
-                          final XmlWriter indent)
-      throws ReportWriterException
-  {
-    super(reportWriter, baseObject, objectDescription, indent);
-    if (DataSource.class.isAssignableFrom(objectDescription.getObjectClass()) == false)
-    {
-      throw new IllegalArgumentException("Expect a datasource description, but got "
-          + objectDescription.getObjectClass());
+  public DataSourceWriter( final ReportWriterContext reportWriter,
+                           final DataSource baseObject,
+                           final ObjectDescription objectDescription,
+                           final XmlWriter indent )
+    throws ReportWriterException {
+    super( reportWriter, baseObject, objectDescription, indent );
+    if ( DataSource.class.isAssignableFrom( objectDescription.getObjectClass() ) == false ) {
+      throw new IllegalArgumentException( "Expect a datasource description, but got "
+        + objectDescription.getObjectClass() );
     }
     dataSourceCollector = getReportWriter().getDataSourceCollector();
   }
@@ -70,31 +67,28 @@ public class DataSourceWriter extends ObjectWriter
    * @throws IOException           if there is an I/O problem.
    * @throws ReportWriterException if the report definition could not be written.
    */
-  protected void writeParameter(final String name)
-      throws IOException, ReportWriterException
-  {
-    if ("dataSource".equals(name) == false)
-    {
-      super.writeParameter(name);
+  protected void writeParameter( final String name )
+    throws IOException, ReportWriterException {
+    if ( "dataSource".equals( name ) == false ) {
+      super.writeParameter( name );
       return;
     }
 
-    final DataSource ds = (DataSource) getObjectDescription().getParameter(name);
-    final ObjectDescription dsDesc = getParameterDescription(name);
-    final String dsname = dataSourceCollector.getDataSourceName(dsDesc);
+    final DataSource ds = (DataSource) getObjectDescription().getParameter( name );
+    final ObjectDescription dsDesc = getParameterDescription( name );
+    final String dsname = dataSourceCollector.getDataSourceName( dsDesc );
 
-    if (dsname == null)
-    {
-      throw new ReportWriterException("The datasource type is not registered: "
-          + ds.getClass());
+    if ( dsname == null ) {
+      throw new ReportWriterException( "The datasource type is not registered: "
+        + ds.getClass() );
     }
 
     final XmlWriter writer = getXmlWriter();
-    writer.writeTag(ExtParserModule.NAMESPACE, AbstractXMLDefinitionWriter.DATASOURCE_TAG,
-        "type", dsname, XmlWriterSupport.OPEN);
+    writer.writeTag( ExtParserModule.NAMESPACE, AbstractXMLDefinitionWriter.DATASOURCE_TAG,
+      "type", dsname, XmlWriterSupport.OPEN );
 
     final DataSourceWriter dsWriter =
-        new DataSourceWriter(getReportWriter(), ds, dsDesc, writer);
+      new DataSourceWriter( getReportWriter(), ds, dsDesc, writer );
     dsWriter.write();
     writer.writeCloseTag();
   }

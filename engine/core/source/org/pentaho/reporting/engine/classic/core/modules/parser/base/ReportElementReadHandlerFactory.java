@@ -20,29 +20,24 @@ package org.pentaho.reporting.engine.classic.core.modules.parser.base;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.pentaho.reporting.libraries.xmlns.parser.AbstractReadHandlerFactory;
 
-public class ReportElementReadHandlerFactory extends AbstractReadHandlerFactory<ReportElementReadHandler>
-{
+public class ReportElementReadHandlerFactory extends AbstractReadHandlerFactory<ReportElementReadHandler> {
   private static final String PREFIX_SELECTOR =
-      "org.pentaho.reporting.engine.classic.core.modules.parser.report-element-factory-prefix.";
+    "org.pentaho.reporting.engine.classic.core.modules.parser.report-element-factory-prefix.";
 
   private static ReportElementReadHandlerFactory readHandlerFactory;
 
-  public static synchronized ReportElementReadHandlerFactory getInstance()
-  {
-    if (readHandlerFactory == null)
-    {
+  public static synchronized ReportElementReadHandlerFactory getInstance() {
+    if ( readHandlerFactory == null ) {
       readHandlerFactory = new ReportElementReadHandlerFactory();
-      readHandlerFactory.configureGlobal(ClassicEngineBoot.getInstance().getGlobalConfig(), PREFIX_SELECTOR);
+      readHandlerFactory.configureGlobal( ClassicEngineBoot.getInstance().getGlobalConfig(), PREFIX_SELECTOR );
     }
     return readHandlerFactory;
   }
 
-  private ReportElementReadHandlerFactory()
-  {
+  private ReportElementReadHandlerFactory() {
   }
 
-  protected Class<ReportElementReadHandler> getTargetClass()
-  {
+  protected Class<ReportElementReadHandler> getTargetClass() {
     return ReportElementReadHandler.class;
   }
 }

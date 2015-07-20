@@ -17,12 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.output.table.xls;
 
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
 import org.pentaho.reporting.engine.classic.core.layout.model.LogicalPageBox;
 import org.pentaho.reporting.engine.classic.core.layout.output.ContentProcessingException;
 import org.pentaho.reporting.engine.classic.core.layout.output.DisplayAllFlowSelector;
@@ -40,139 +34,120 @@ import org.pentaho.reporting.engine.classic.core.modules.output.table.xls.helper
 import org.pentaho.reporting.libraries.base.config.Configuration;
 import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 public class PageableExcelOutputProcessor extends AbstractTableOutputProcessor
-    implements PageableOutputProcessor
-{
+  implements PageableOutputProcessor {
   private List<PhysicalPageKey> physicalPages;
   private OutputProcessorMetaData metaData;
   private ExcelPrinter printer;
   private FlowSelector flowSelector;
 
-  public PageableExcelOutputProcessor(final Configuration configuration,
-                                      final OutputStream outputStream,
-                                      final ResourceManager resourceManager)
-  {
-    if (configuration == null)
-    {
+  public PageableExcelOutputProcessor( final Configuration configuration,
+                                       final OutputStream outputStream,
+                                       final ResourceManager resourceManager ) {
+    if ( configuration == null ) {
       throw new NullPointerException();
     }
-    if (outputStream == null)
-    {
+    if ( outputStream == null ) {
       throw new NullPointerException();
     }
-    if (resourceManager == null)
-    {
+    if ( resourceManager == null ) {
       throw new NullPointerException();
     }
 
     this.physicalPages = new ArrayList<PhysicalPageKey>();
-    this.metaData = new ExcelOutputProcessorMetaData(ExcelOutputProcessorMetaData.PAGINATION_FULL);
+    this.metaData = new ExcelOutputProcessorMetaData( ExcelOutputProcessorMetaData.PAGINATION_FULL );
     this.flowSelector = new DisplayAllFlowSelector();
 
-    this.printer = new ExcelPrinter(outputStream, resourceManager);
+    this.printer = new ExcelPrinter( outputStream, resourceManager );
   }
 
-  public boolean isUseXlsxFormat()
-  {
+  public boolean isUseXlsxFormat() {
     return printer.isUseXlsxFormat();
   }
 
-  public void setUseXlsxFormat(final boolean useXlsxFormat)
-  {
-    printer.setUseXlsxFormat(useXlsxFormat);
+  public void setUseXlsxFormat( final boolean useXlsxFormat ) {
+    printer.setUseXlsxFormat( useXlsxFormat );
   }
 
-  public InputStream getTemplateInputStream()
-  {
+  public InputStream getTemplateInputStream() {
     return printer.getTemplateInputStream();
   }
 
-  public void setTemplateInputStream(final InputStream templateInputStream)
-  {
-    printer.setTemplateInputStream(templateInputStream);
+  public void setTemplateInputStream( final InputStream templateInputStream ) {
+    printer.setTemplateInputStream( templateInputStream );
   }
 
 
-  protected void processingPagesFinished()
-  {
+  protected void processingPagesFinished() {
     super.processingPagesFinished();
-    physicalPages = Collections.unmodifiableList(physicalPages);
+    physicalPages = Collections.unmodifiableList( physicalPages );
   }
 
-  public int getPhysicalPageCount()
-  {
+  public int getPhysicalPageCount() {
     return physicalPages.size();
   }
 
-  public PhysicalPageKey getPhysicalPage(final int page)
-  {
-    if (isPaginationFinished() == false)
-    {
+  public PhysicalPageKey getPhysicalPage( final int page ) {
+    if ( isPaginationFinished() == false ) {
       throw new IllegalStateException();
     }
 
-    return (PhysicalPageKey) physicalPages.get(page);
+    return (PhysicalPageKey) physicalPages.get( page );
   }
 
-  protected LogicalPageKey createLogicalPage(final int width,
-                                             final int height)
-  {
-    final LogicalPageKey key = super.createLogicalPage(width, height);
-    for (int h = 0; h < key.getHeight(); h++)
-    {
-      for (int w = 0; w < key.getWidth(); w++)
-      {
-        physicalPages.add(key.getPage(w, h));
+  protected LogicalPageKey createLogicalPage( final int width,
+                                              final int height ) {
+    final LogicalPageKey key = super.createLogicalPage( width, height );
+    for ( int h = 0; h < key.getHeight(); h++ ) {
+      for ( int w = 0; w < key.getWidth(); w++ ) {
+        physicalPages.add( key.getPage( w, h ) );
       }
     }
     return key;
   }
 
-  public OutputProcessorMetaData getMetaData()
-  {
+  public OutputProcessorMetaData getMetaData() {
     return metaData;
   }
 
-  public FlowSelector getFlowSelector()
-  {
+  public FlowSelector getFlowSelector() {
     return flowSelector;
   }
 
-  public void setFlowSelector(final FlowSelector flowSelector)
-  {
+  public void setFlowSelector( final FlowSelector flowSelector ) {
     this.flowSelector = flowSelector;
   }
 
-  protected void processTableContent(final LogicalPageKey logicalPageKey,
-                                     final LogicalPageBox logicalPage,
-                                     final TableContentProducer contentProducer)
-      throws ContentProcessingException
-  {
-    if (!this.printer.isInitialized())
-    {
-      this.printer.init(metaData);
+  protected void processTableContent( final LogicalPageKey logicalPageKey,
+                                      final LogicalPageBox logicalPage,
+                                      final TableContentProducer contentProducer )
+    throws ContentProcessingException {
+    if ( !this.printer.isInitialized() ) {
+      this.printer.init( metaData );
     }
 
-    printer.print(logicalPageKey, logicalPage, contentProducer, false);
+    printer.print( logicalPageKey, logicalPage, contentProducer, false );
   }
 
-  protected void processingContentFinished()
-  {
-    if (isContentGeneratable() == false)
-    {
+  protected void processingContentFinished() {
+    if ( isContentGeneratable() == false ) {
       return;
     }
-    if (!this.printer.isInitialized())
-    {
-      this.printer.init(metaData);
+    if ( !this.printer.isInitialized() ) {
+      this.printer.init( metaData );
     }
 
     this.metaData.commit();
     printer.close();
   }
 
-  protected TableContentProducer createTableContentProducer(final SheetLayout layout)
-  {
-    return new ExcelTableContentProducer(layout, getMetaData());
+  protected TableContentProducer createTableContentProducer( final SheetLayout layout ) {
+    return new ExcelTableContentProducer( layout, getMetaData() );
   }
 }

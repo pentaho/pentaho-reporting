@@ -17,43 +17,36 @@
 
 package org.pentaho.reporting.engine.classic.core.util;
 
-import java.util.Map;
-
 import org.pentaho.reporting.libraries.base.util.ArgumentNullException;
 
-public class TypedMapWrapper<K,V>
-{
-  private Map<K,V> backend;
+import java.util.Map;
 
-  public TypedMapWrapper(final Map<K, V> backend)
-  {
-    ArgumentNullException.validate("backend", backend);
+public class TypedMapWrapper<K, V> {
+  private Map<K, V> backend;
+
+  public TypedMapWrapper( final Map<K, V> backend ) {
+    ArgumentNullException.validate( "backend", backend );
 
     this.backend = backend;
   }
 
-  public <T> T get(K key, Class<T> context)
-  {
-    Object o = backend.get(key);
-    if (context.isInstance(o))
-    {
-      return context.cast(o);
+  public <T> T get( K key, Class<T> context ) {
+    Object o = backend.get( key );
+    if ( context.isInstance( o ) ) {
+      return context.cast( o );
     }
     return null;
   }
 
-  public <T> T get(K key, T defaultValue, Class<T> context)
-  {
-    Object o = backend.get(key);
-    if (context.isInstance(o))
-    {
-      return context.cast(o);
+  public <T> T get( K key, T defaultValue, Class<T> context ) {
+    Object o = backend.get( key );
+    if ( context.isInstance( o ) ) {
+      return context.cast( o );
     }
     return defaultValue;
   }
 
-  public Boolean exists(final K key)
-  {
-    return backend.containsKey(key);
+  public Boolean exists( final K key ) {
+    return backend.containsKey( key );
   }
 }

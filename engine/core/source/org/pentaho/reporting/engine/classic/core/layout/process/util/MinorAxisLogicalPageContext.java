@@ -19,28 +19,23 @@ package org.pentaho.reporting.engine.classic.core.layout.process.util;
 
 import org.pentaho.reporting.engine.classic.core.layout.model.LogicalPageBox;
 
-public class MinorAxisLogicalPageContext extends MinorAxisNodeContext
-{
+public class MinorAxisLogicalPageContext extends MinorAxisNodeContext {
   private long pageWidth;
 
-  public MinorAxisLogicalPageContext(final LogicalPageBox logicalPageBox)
-  {
-    super(null);
+  public MinorAxisLogicalPageContext( final LogicalPageBox logicalPageBox ) {
+    super( null );
     pageWidth = logicalPageBox.getPageWidth();
   }
 
-  public MinorAxisNodeContext pop()
-  {
+  public MinorAxisNodeContext pop() {
     return null;
   }
 
-  public long getResolvedPreferredSize()
-  {
+  public long getResolvedPreferredSize() {
     return pageWidth;
   }
 
-  public long getBlockContextWidth()
-  {
+  public long getBlockContextWidth() {
     return pageWidth;
   }
 }

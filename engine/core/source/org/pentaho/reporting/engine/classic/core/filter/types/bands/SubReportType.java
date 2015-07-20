@@ -20,17 +20,14 @@ package org.pentaho.reporting.engine.classic.core.filter.types.bands;
 import org.pentaho.reporting.engine.classic.core.ReportElement;
 import org.pentaho.reporting.engine.classic.core.SubReport;
 
-public class SubReportType extends AbstractSectionType
-{
+public class SubReportType extends AbstractSectionType {
   public static final SubReportType INSTANCE = new SubReportType();
 
-  public SubReportType()
-  {
-    super("sub-report", true);
+  public SubReportType() {
+    super( "sub-report", true );
   }
 
-  public ReportElement create()
-  {
+  public ReportElement create() {
     return new SubReport();
   }
 }

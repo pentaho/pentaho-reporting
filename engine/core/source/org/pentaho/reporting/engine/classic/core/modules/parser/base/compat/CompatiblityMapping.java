@@ -17,14 +17,14 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.parser.base.compat;
 
-public interface CompatiblityMapping
-{
-  public String mapClassName(String className);
+public interface CompatiblityMapping {
+  public String mapClassName( String className );
 
-  public String mapConfigurationKey(String key);
+  public String mapConfigurationKey( String key );
 
-  public String mapConfigurationValue(String key, String mappedKey, String value);
+  public String mapConfigurationValue( String key, String mappedKey, String value );
 
-  public String mapExpressionProperty(final String expressionName, final String mappedExpression, final String propertyName);
+  public String mapExpressionProperty( final String expressionName, final String mappedExpression,
+                                       final String propertyName );
 
 }

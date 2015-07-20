@@ -26,7 +26,6 @@ import org.pentaho.reporting.engine.classic.core.modules.gui.commonswing.ActionP
  *
  * @author Thomas Morgner
  */
-public interface ControlActionPlugin extends ActionPlugin
-{
-  public boolean configure(PreviewPane pane);
+public interface ControlActionPlugin extends ActionPlugin {
+  public boolean configure( PreviewPane pane );
 }

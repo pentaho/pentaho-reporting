@@ -22,11 +22,9 @@ package org.pentaho.reporting.engine.classic.core.layout.model.table.cells;
  *
  * @author Thomas Morgner
  */
-public class RemovedCell extends TableCell
-{
-  public RemovedCell(final int rowSpan,
-                     final int colSpan)
-  {
-    super(rowSpan, colSpan);
+public class RemovedCell extends TableCell {
+  public RemovedCell( final int rowSpan,
+                      final int colSpan ) {
+    super( rowSpan, colSpan );
   }
 }

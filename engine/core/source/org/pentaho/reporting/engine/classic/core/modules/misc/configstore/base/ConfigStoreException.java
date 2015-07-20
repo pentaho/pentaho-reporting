@@ -23,13 +23,11 @@ package org.pentaho.reporting.engine.classic.core.modules.misc.configstore.base;
  *
  * @author Thomas Morgner
  */
-public class ConfigStoreException extends Exception
-{
+public class ConfigStoreException extends Exception {
   /**
    * DefaultConstructor.
    */
-  public ConfigStoreException()
-  {
+  public ConfigStoreException() {
   }
 
   /**
@@ -38,9 +36,8 @@ public class ConfigStoreException extends Exception
    * @param s the exception message.
    * @param e the exception that caused all the trouble.
    */
-  public ConfigStoreException(final String s, final Exception e)
-  {
-    super(s, e);
+  public ConfigStoreException( final String s, final Exception e ) {
+    super( s, e );
   }
 
   /**
@@ -48,8 +45,7 @@ public class ConfigStoreException extends Exception
    *
    * @param s the message.
    */
-  public ConfigStoreException(final String s)
-  {
-    super(s);
+  public ConfigStoreException( final String s ) {
+    super( s );
   }
 }

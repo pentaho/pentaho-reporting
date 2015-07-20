@@ -17,14 +17,14 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.misc.datafactory;
 
-public interface ScriptValueConverter
-{
+public interface ScriptValueConverter {
   /**
-   * Attempts to convert a script-engine internal value to a pure java value. It is important to return <code>null</code>
-   * for all values that cannot be converted by this implementation to let other implementations have its turn.
+   * Attempts to convert a script-engine internal value to a pure java value. It is important to return
+   * <code>null</code> for all values that cannot be converted by this implementation to let other implementations have
+   * its turn.
    *
    * @param o the value to be converted.
    * @return the converted value or null if the value is not convertible.
    */
-  public Object convert(Object o);
+  public Object convert( Object o );
 }

@@ -28,23 +28,19 @@ import org.pentaho.reporting.engine.classic.core.function.ExpressionRuntime;
  *
  * @author Sulaiman Karmali
  */
-public class CrosstabElementType extends AbstractSectionType
-{
+public class CrosstabElementType extends AbstractSectionType {
   public static final CrosstabElementType INSTANCE = new CrosstabElementType();
 
-  public CrosstabElementType()
-  {
-    super("crosstab-report", true);
+  public CrosstabElementType() {
+    super( "crosstab-report", true );
   }
 
-  public ReportElement create()
-  {
+  public ReportElement create() {
     return new CrosstabElement();
   }
 
   @Override
-  public Object getDesignValue(final ExpressionRuntime runtime, final ReportElement element)
-  {
+  public Object getDesignValue( final ExpressionRuntime runtime, final ReportElement element ) {
     return "Crosstab-Report";
   }
 }

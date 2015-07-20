@@ -20,17 +20,14 @@ package org.pentaho.reporting.engine.classic.core.filter.types.bands;
 import org.pentaho.reporting.engine.classic.core.CrosstabOtherGroup;
 import org.pentaho.reporting.engine.classic.core.ReportElement;
 
-public class CrosstabOtherGroupType extends AbstractSectionType
-{
+public class CrosstabOtherGroupType extends AbstractSectionType {
   public static final CrosstabOtherGroupType INSTANCE = new CrosstabOtherGroupType();
 
-  public CrosstabOtherGroupType()
-  {
-    super("crosstab-other-group", true);
+  public CrosstabOtherGroupType() {
+    super( "crosstab-other-group", true );
   }
 
-  public ReportElement create()
-  {
+  public ReportElement create() {
     return new CrosstabOtherGroup();
   }
 

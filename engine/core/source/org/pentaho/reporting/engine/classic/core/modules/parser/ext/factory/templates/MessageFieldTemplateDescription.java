@@ -24,16 +24,14 @@ import org.pentaho.reporting.engine.classic.core.filter.templates.MessageFieldTe
  *
  * @author Thomas Morgner
  */
-public class MessageFieldTemplateDescription extends AbstractTemplateDescription
-{
+public class MessageFieldTemplateDescription extends AbstractTemplateDescription {
   /**
    * Creates a new template description.
    *
    * @param name the name.
    */
-  public MessageFieldTemplateDescription(final String name)
-  {
-    super(name, MessageFieldTemplate.class, true);
+  public MessageFieldTemplateDescription( final String name ) {
+    super( name, MessageFieldTemplate.class, true );
   }
 
 }

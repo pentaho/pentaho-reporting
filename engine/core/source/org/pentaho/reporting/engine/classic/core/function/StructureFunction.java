@@ -27,7 +27,6 @@ package org.pentaho.reporting.engine.classic.core.function;
  *
  * @author Thomas Morgner
  */
-public interface StructureFunction extends Function
-{
+public interface StructureFunction extends Function {
   public int getProcessingPriority();
 }

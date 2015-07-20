@@ -17,13 +17,13 @@
 
 package org.pentaho.reporting.engine.classic.core.util;
 
-import java.io.Serializable;
-
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.pentaho.reporting.engine.classic.core.DataRow;
 import org.pentaho.reporting.engine.classic.core.StaticDataRow;
 import org.pentaho.reporting.libraries.base.config.Configuration;
 import org.pentaho.reporting.libraries.base.util.FastStack;
+
+import java.io.Serializable;
 
 /**
  * The property lookup parser is used to resolve embedded references to properties within strings.
@@ -34,8 +34,7 @@ import org.pentaho.reporting.libraries.base.util.FastStack;
  *
  * @author Thomas Morgner
  */
-public abstract class PropertyLookupParser implements Serializable
-{
+public abstract class PropertyLookupParser implements Serializable {
 
   public static final int ESCAPE_MODE_NONE = 0;
   public static final int ESCAPE_MODE_ALL = 2;
@@ -78,8 +77,7 @@ public abstract class PropertyLookupParser implements Serializable
   /**
    * Initializes the parser to the default format of "${..}". The escape char will be a backslash.
    */
-  protected PropertyLookupParser()
-  {
+  protected PropertyLookupParser() {
     markerChar = '$';
     closingBraceChar = '}';
     openingBraceChar = '{';
@@ -87,28 +85,21 @@ public abstract class PropertyLookupParser implements Serializable
 
     final Configuration configuration = ClassicEngineBoot.getInstance().getGlobalConfig();
     final String escapeModeText = configuration.getConfigProperty
-        ("org.pentaho.reporting.engine.classic.core.util.PropertyLookupParserEscapeMode", "strict");
-    if ("all".equals(escapeModeText))
-    {
+      ( "org.pentaho.reporting.engine.classic.core.util.PropertyLookupParserEscapeMode", "strict" );
+    if ( "all".equals( escapeModeText ) ) {
       escapeMode = ESCAPE_MODE_ALL;
-    }
-    else if ("none".equals(escapeModeText))
-    {
+    } else if ( "none".equals( escapeModeText ) ) {
       escapeMode = ESCAPE_MODE_NONE;
-    }
-    else
-    {
+    } else {
       escapeMode = ESCAPE_MODE_STRICT;
     }
   }
 
-  public int getEscapeMode()
-  {
+  public int getEscapeMode() {
     return escapeMode;
   }
 
-  public void setEscapeMode(final int escapeMode)
-  {
+  public void setEscapeMode( final int escapeMode ) {
     this.escapeMode = escapeMode;
   }
 
@@ -117,8 +108,7 @@ public abstract class PropertyLookupParser implements Serializable
    *
    * @return the closed-brace char.
    */
-  public char getClosingBraceChar()
-  {
+  public char getClosingBraceChar() {
     return closingBraceChar;
   }
 
@@ -127,8 +117,7 @@ public abstract class PropertyLookupParser implements Serializable
    *
    * @param closingBraceChar the closed-brace character.
    */
-  public void setClosingBraceChar(final char closingBraceChar)
-  {
+  public void setClosingBraceChar( final char closingBraceChar ) {
     this.closingBraceChar = closingBraceChar;
   }
 
@@ -137,8 +126,7 @@ public abstract class PropertyLookupParser implements Serializable
    *
    * @return the escape char.
    */
-  public char getEscapeChar()
-  {
+  public char getEscapeChar() {
     return escapeChar;
   }
 
@@ -147,8 +135,7 @@ public abstract class PropertyLookupParser implements Serializable
    *
    * @param escapeChar the escape char
    */
-  public void setEscapeChar(final char escapeChar)
-  {
+  public void setEscapeChar( final char escapeChar ) {
     this.escapeChar = escapeChar;
   }
 
@@ -157,8 +144,7 @@ public abstract class PropertyLookupParser implements Serializable
    *
    * @return the opening-brace char.
    */
-  public char getOpeningBraceChar()
-  {
+  public char getOpeningBraceChar() {
     return openingBraceChar;
   }
 
@@ -167,8 +153,7 @@ public abstract class PropertyLookupParser implements Serializable
    *
    * @param openingBraceChar the opening-brace character.
    */
-  public void setOpeningBraceChar(final char openingBraceChar)
-  {
+  public void setOpeningBraceChar( final char openingBraceChar ) {
     this.openingBraceChar = openingBraceChar;
   }
 
@@ -177,8 +162,7 @@ public abstract class PropertyLookupParser implements Serializable
    *
    * @return the initial property marker character.
    */
-  public char getMarkerChar()
-  {
+  public char getMarkerChar() {
     return markerChar;
   }
 
@@ -187,8 +171,7 @@ public abstract class PropertyLookupParser implements Serializable
    *
    * @param markerChar the initial property marker character.
    */
-  public void setMarkerChar(final char markerChar)
-  {
+  public void setMarkerChar( final char markerChar ) {
     this.markerChar = markerChar;
   }
 
@@ -198,9 +181,8 @@ public abstract class PropertyLookupParser implements Serializable
    * @param value the raw value,
    * @return the fully translated string.
    */
-  public String translateAndLookup(final String value)
-  {
-    return translateAndLookup(value, new StaticDataRow());
+  public String translateAndLookup( final String value ) {
+    return translateAndLookup( value, new StaticDataRow() );
   }
 
   /**
@@ -209,121 +191,94 @@ public abstract class PropertyLookupParser implements Serializable
    * @param value the raw value,
    * @return the fully translated string.
    */
-  public String translateAndLookup(final String value, final DataRow parameters)
-  {
-    if (value == null)
-    {
+  public String translateAndLookup( final String value, final DataRow parameters ) {
+    if ( value == null ) {
       return null;
     }
 
     final char[] chars = value.toCharArray();
-    StringBuilder result = new StringBuilder(chars.length);
+    StringBuilder result = new StringBuilder( chars.length );
 
     boolean haveEscape = false;
     int state = PropertyLookupParser.EXPECT_DOLLAR;
     final FastStack<StringBuilder> stack = new FastStack<StringBuilder>();
 
-    for (int i = 0; i < chars.length; i++)
-    {
-      final char c = chars[i];
+    for ( int i = 0; i < chars.length; i++ ) {
+      final char c = chars[ i ];
 
-      if (haveEscape)
-      {
+      if ( haveEscape ) {
         haveEscape = false;
-        if (state == PropertyLookupParser.EXPECT_CLOSE_BRACE ||
-            escapeMode == ESCAPE_MODE_ALL)
-        {
-          result.append(c);
-        }
-        else
-        {
-          if (c == openingBraceChar || c == closingBraceChar || c == escapeChar || c == markerChar)
-          {
-            result.append(c);
-          }
-          else
-          {
-            result.append(escapeChar);
-            result.append(c);
+        if ( state == PropertyLookupParser.EXPECT_CLOSE_BRACE ||
+          escapeMode == ESCAPE_MODE_ALL ) {
+          result.append( c );
+        } else {
+          if ( c == openingBraceChar || c == closingBraceChar || c == escapeChar || c == markerChar ) {
+            result.append( c );
+          } else {
+            result.append( escapeChar );
+            result.append( c );
           }
         }
         continue;
       }
 
-      if ((state == PropertyLookupParser.EXPECT_DOLLAR || state == PropertyLookupParser.EXPECT_CLOSE_BRACE)
-          && c == markerChar)
-      {
+      if ( ( state == PropertyLookupParser.EXPECT_DOLLAR || state == PropertyLookupParser.EXPECT_CLOSE_BRACE )
+        && c == markerChar ) {
         state = PropertyLookupParser.EXPECT_OPEN_BRACE;
         continue;
       }
 
-      if (state == PropertyLookupParser.EXPECT_CLOSE_BRACE && c == closingBraceChar)
-      {
+      if ( state == PropertyLookupParser.EXPECT_CLOSE_BRACE && c == closingBraceChar ) {
         final String columnName = result.toString();
         result = stack.pop();
-        handleVariableLookup(result, parameters, columnName);
+        handleVariableLookup( result, parameters, columnName );
 
-        if (stack.isEmpty())
-        {
+        if ( stack.isEmpty() ) {
           state = PropertyLookupParser.EXPECT_DOLLAR;
-        }
-        else
-        {
+        } else {
           state = PropertyLookupParser.EXPECT_CLOSE_BRACE;
         }
         continue;
       }
 
-      if (state == PropertyLookupParser.EXPECT_OPEN_BRACE)
-      {
-        if (c == openingBraceChar)
-        {
+      if ( state == PropertyLookupParser.EXPECT_OPEN_BRACE ) {
+        if ( c == openingBraceChar ) {
           state = PropertyLookupParser.EXPECT_CLOSE_BRACE;
-          stack.push(result);
-          result = new StringBuilder(100);
+          stack.push( result );
+          result = new StringBuilder( 100 );
           continue;
         }
 
-        result.append(markerChar);
-        if (stack.isEmpty())
-        {
+        result.append( markerChar );
+        if ( stack.isEmpty() ) {
           state = PropertyLookupParser.EXPECT_DOLLAR;
-        }
-        else
-        {
+        } else {
           state = PropertyLookupParser.EXPECT_CLOSE_BRACE;
         }
 
         // continue with adding the current char ..
       }
 
-      if (c == escapeChar && escapeMode != ESCAPE_MODE_NONE)
-      {
+      if ( c == escapeChar && escapeMode != ESCAPE_MODE_NONE ) {
         haveEscape = true;
         continue;
       }
 
-      if (state != PropertyLookupParser.EXPECT_DOLLAR)
-      {
-        result.append(postProcessCharacter(c));
-      }
-      else
-      {
-        result.append(c);
+      if ( state != PropertyLookupParser.EXPECT_DOLLAR ) {
+        result.append( postProcessCharacter( c ) );
+      } else {
+        result.append( c );
       }
     }
 
-    if (state != PropertyLookupParser.EXPECT_DOLLAR)
-    {
-      while (stack.isEmpty() == false)
-      {
+    if ( state != PropertyLookupParser.EXPECT_DOLLAR ) {
+      while ( stack.isEmpty() == false ) {
         final String columnName = result.toString();
         result = stack.pop();
-        result.append(markerChar);
-        if (state != PropertyLookupParser.EXPECT_OPEN_BRACE)
-        {
-          result.append(openingBraceChar);
-          result.append(columnName);
+        result.append( markerChar );
+        if ( state != PropertyLookupParser.EXPECT_OPEN_BRACE ) {
+          result.append( openingBraceChar );
+          result.append( columnName );
           state = PropertyLookupParser.EXPECT_CLOSE_BRACE;
         }
       }
@@ -331,26 +286,21 @@ public abstract class PropertyLookupParser implements Serializable
     return result.toString();
   }
 
-  protected char postProcessCharacter(final char c)
-  {
+  protected char postProcessCharacter( final char c ) {
     return c;
   }
 
-  protected void handleVariableLookup(final StringBuilder result,
-                                      final DataRow parameters,
-                                      final String columnName)
-  {
-    final String s = lookupVariable(columnName);
-    if (s == null)
-    {
-      result.append(markerChar);
-      result.append(openingBraceChar);
-      result.append(columnName);
-      result.append(closingBraceChar);
-    }
-    else
-    {
-      result.append(s);
+  protected void handleVariableLookup( final StringBuilder result,
+                                       final DataRow parameters,
+                                       final String columnName ) {
+    final String s = lookupVariable( columnName );
+    if ( s == null ) {
+      result.append( markerChar );
+      result.append( openingBraceChar );
+      result.append( columnName );
+      result.append( closingBraceChar );
+    } else {
+      result.append( s );
     }
   }
 
@@ -360,5 +310,5 @@ public abstract class PropertyLookupParser implements Serializable
    * @param property the name of the property to look up.
    * @return the translated value.
    */
-  protected abstract String lookupVariable(String property);
+  protected abstract String lookupVariable( String property );
 }

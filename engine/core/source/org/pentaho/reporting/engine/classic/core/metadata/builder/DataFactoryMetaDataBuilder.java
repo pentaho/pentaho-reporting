@@ -20,76 +20,63 @@ package org.pentaho.reporting.engine.classic.core.metadata.builder;
 import org.pentaho.reporting.engine.classic.core.metadata.DataFactoryCore;
 import org.pentaho.reporting.engine.classic.core.metadata.DefaultDataFactoryCore;
 
-public class DataFactoryMetaDataBuilder extends MetaDataBuilder<DataFactoryMetaDataBuilder>
-{
+public class DataFactoryMetaDataBuilder extends MetaDataBuilder<DataFactoryMetaDataBuilder> {
   private Class<?> editorClass;
   private boolean editable;
   private boolean freeformQuery;
   private boolean formattingMetadataSource;
   private DataFactoryCore dataFactoryCore;
 
-  public DataFactoryMetaDataBuilder()
-  {
+  public DataFactoryMetaDataBuilder() {
     dataFactoryCore = new DefaultDataFactoryCore();
   }
 
-  public DataFactoryMetaDataBuilder editable(final boolean editable)
-  {
+  public DataFactoryMetaDataBuilder editable( final boolean editable ) {
     this.editable = editable;
     return self();
   }
 
-  public DataFactoryMetaDataBuilder editorClass(final Class<?> editorClass)
-  {
+  public DataFactoryMetaDataBuilder editorClass( final Class<?> editorClass ) {
     this.editorClass = editorClass;
     return self();
   }
 
-  public DataFactoryMetaDataBuilder freeformQuery(final boolean freeformQuery)
-  {
+  public DataFactoryMetaDataBuilder freeformQuery( final boolean freeformQuery ) {
     this.freeformQuery = freeformQuery;
     return self();
   }
 
-  public DataFactoryMetaDataBuilder formattingMetadataSource(final boolean formattingMetadataSource)
-  {
+  public DataFactoryMetaDataBuilder formattingMetadataSource( final boolean formattingMetadataSource ) {
     this.formattingMetadataSource = formattingMetadataSource;
     return self();
   }
 
-  public DataFactoryMetaDataBuilder dataFactoryCore(final DataFactoryCore dataFactoryCore)
-  {
+  public DataFactoryMetaDataBuilder dataFactoryCore( final DataFactoryCore dataFactoryCore ) {
     this.dataFactoryCore = dataFactoryCore;
     return self();
   }
 
-  public Class<?> getEditorClass()
-  {
+  public Class<?> getEditorClass() {
     return editorClass;
   }
 
-  public boolean isEditable()
-  {
+  public boolean isEditable() {
     return editable;
   }
 
-  public boolean isFreeformQuery()
-  {
+  public boolean isFreeformQuery() {
     return freeformQuery;
   }
 
-  public boolean isFormattingMetadataSource()
-  {
+  public boolean isFormattingMetadataSource() {
     return formattingMetadataSource;
   }
 
-  public DataFactoryCore getDataFactoryCore()
-  {
+  public DataFactoryCore getDataFactoryCore() {
     return dataFactoryCore;
   }
 
-  protected DataFactoryMetaDataBuilder self()
-  {
+  protected DataFactoryMetaDataBuilder self() {
     return this;
   }
 }

@@ -17,11 +17,11 @@
 
 package org.pentaho.reporting.engine.classic.core.filter;
 
-import java.text.Format;
-
 import org.pentaho.reporting.engine.classic.core.ReportElement;
 import org.pentaho.reporting.engine.classic.core.function.ExpressionRuntime;
 import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
+
+import java.text.Format;
 
 /**
  * The base class for filters that format data.  Data is received from a DataSource and formatted. The data source might
@@ -37,8 +37,7 @@ import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
  *
  * @author Thomas Morgner
  */
-public class FormatFilter implements DataFilter, RawDataSource
-{
+public class FormatFilter implements DataFilter, RawDataSource {
   /**
    * The format used to create the string representation of the data.
    */
@@ -70,16 +69,14 @@ public class FormatFilter implements DataFilter, RawDataSource
   /**
    * Default constructor.
    */
-  public FormatFilter()
-  {
+  public FormatFilter() {
     nullvalue = null;
   }
 
   /**
    * Clears all cached values and forces a complete recomputation of all formattings.
    */
-  protected void invalidateCache()
-  {
+  protected void invalidateCache() {
     cachedFormat = null;
     cachedValue = null;
     cachedResult = null;
@@ -91,10 +88,8 @@ public class FormatFilter implements DataFilter, RawDataSource
    * @param format The format.
    * @throws NullPointerException if the given format is null
    */
-  public void setFormatter(final Format format)
-  {
-    if (format == null)
-    {
+  public void setFormatter( final Format format ) {
+    if ( format == null ) {
       throw new NullPointerException();
     }
     this.format = format;
@@ -105,8 +100,7 @@ public class FormatFilter implements DataFilter, RawDataSource
    *
    * @return The format.
    */
-  public Format getFormatter()
-  {
+  public Format getFormatter() {
     return this.format;
   }
 
@@ -122,38 +116,30 @@ public class FormatFilter implements DataFilter, RawDataSource
    * @param element
    * @return The formatted value.
    */
-  public Object getValue(final ExpressionRuntime runtime, final ReportElement element)
-  {
+  public Object getValue( final ExpressionRuntime runtime, final ReportElement element ) {
     final Format f = getFormatter();
-    if (f == null)
-    {
+    if ( f == null ) {
       return getNullValue();
     }
 
     final DataSource ds = getDataSource();
-    if (ds == null)
-    {
+    if ( ds == null ) {
       return getNullValue();
     }
 
-    final Object o = ds.getValue(runtime, element);
-    if (o == null)
-    {
+    final Object o = ds.getValue( runtime, element );
+    if ( o == null ) {
       return getNullValue();
     }
 
-    if (cachedResult != null && (cachedFormat != f) &&
-        ObjectUtilities.equal(cachedValue, o))
-    {
+    if ( cachedResult != null && ( cachedFormat != f ) &&
+      ObjectUtilities.equal( cachedValue, o ) ) {
       return cachedResult;
     }
 
-    try
-    {
-      cachedResult = f.format(o);
-    }
-    catch (IllegalArgumentException e)
-    {
+    try {
+      cachedResult = f.format( o );
+    } catch ( IllegalArgumentException e ) {
       cachedResult = getNullValue();
     }
 
@@ -167,10 +153,8 @@ public class FormatFilter implements DataFilter, RawDataSource
    *
    * @param nullvalue The string.
    */
-  public void setNullValue(final String nullvalue)
-  {
-    if (nullvalue == null)
-    {
+  public void setNullValue( final String nullvalue ) {
+    if ( nullvalue == null ) {
       throw new NullPointerException();
     }
     this.nullvalue = nullvalue;
@@ -181,8 +165,7 @@ public class FormatFilter implements DataFilter, RawDataSource
    *
    * @return The string.
    */
-  public String getNullValue()
-  {
+  public String getNullValue() {
     return nullvalue;
   }
 
@@ -191,8 +174,7 @@ public class FormatFilter implements DataFilter, RawDataSource
    *
    * @return The data source.
    */
-  public DataSource getDataSource()
-  {
+  public DataSource getDataSource() {
     return datasource;
   }
 
@@ -201,10 +183,8 @@ public class FormatFilter implements DataFilter, RawDataSource
    *
    * @param ds The data source.
    */
-  public void setDataSource(final DataSource ds)
-  {
-    if (ds == null)
-    {
+  public void setDataSource( final DataSource ds ) {
+    if ( ds == null ) {
       throw new NullPointerException();
     }
     this.datasource = ds;
@@ -217,44 +197,36 @@ public class FormatFilter implements DataFilter, RawDataSource
    * @throws CloneNotSupportedException this should never happen.
    */
   public FormatFilter clone()
-      throws CloneNotSupportedException
-  {
+    throws CloneNotSupportedException {
     final FormatFilter f = (FormatFilter) super.clone();
-    if (datasource != null)
-    {
+    if ( datasource != null ) {
       f.datasource = datasource.clone();
     }
-    if (format != null)
-    {
+    if ( format != null ) {
       f.format = (Format) format.clone();
-      if (cachedFormat == format)
-      {
+      if ( cachedFormat == format ) {
         f.cachedFormat = f.format;
       }
     }
     return f;
   }
 
-  public Object getRawValue(final ExpressionRuntime runtime, final ReportElement element)
-  {
-    return datasource.getValue(runtime, element);
+  public Object getRawValue( final ExpressionRuntime runtime, final ReportElement element ) {
+    return datasource.getValue( runtime, element );
   }
 
 
-  public FormatSpecification getFormatString(final ExpressionRuntime runtime,
-                                             final ReportElement element,
-                                             FormatSpecification formatSpecification)
-  {
-    if (datasource instanceof RawDataSource)
-    {
+  public FormatSpecification getFormatString( final ExpressionRuntime runtime,
+                                              final ReportElement element,
+                                              FormatSpecification formatSpecification ) {
+    if ( datasource instanceof RawDataSource ) {
       final RawDataSource rds = (RawDataSource) datasource;
-      return rds.getFormatString(runtime, element, formatSpecification);
+      return rds.getFormatString( runtime, element, formatSpecification );
     }
-    if (formatSpecification == null)
-    {
+    if ( formatSpecification == null ) {
       formatSpecification = new FormatSpecification();
     }
-    formatSpecification.redefine(FormatSpecification.TYPE_UNDEFINED, null);
+    formatSpecification.redefine( FormatSpecification.TYPE_UNDEFINED, null );
     return formatSpecification;
   }
 

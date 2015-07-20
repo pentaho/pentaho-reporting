@@ -23,6 +23,5 @@ package org.pentaho.reporting.engine.classic.core.filter;
  *
  * @author Thomas Morgner
  */
-public interface DataFilter extends DataSource, DataTarget
-{
+public interface DataFilter extends DataSource, DataTarget {
 }

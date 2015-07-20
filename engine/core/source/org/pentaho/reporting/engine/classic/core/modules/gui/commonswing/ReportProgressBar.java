@@ -17,17 +17,13 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.gui.commonswing;
 
-import javax.swing.JProgressBar;
-import javax.swing.SwingConstants;
-import javax.swing.SwingUtilities;
-
 import org.pentaho.reporting.engine.classic.core.event.ReportProgressEvent;
 import org.pentaho.reporting.engine.classic.core.event.ReportProgressListener;
 
-public class ReportProgressBar extends JProgressBar implements ReportProgressListener
-{
-  private class ScreenUpdateRunnable implements Runnable
-  {
+import javax.swing.*;
+
+public class ReportProgressBar extends JProgressBar implements ReportProgressListener {
+  private class ScreenUpdateRunnable implements Runnable {
     /**
      * This is the event upon which we will update the report progress information
      */
@@ -36,37 +32,31 @@ public class ReportProgressBar extends JProgressBar implements ReportProgressLis
     /**
      * Constructor for the screen updatable thread
      */
-    protected ScreenUpdateRunnable()
-    {
+    protected ScreenUpdateRunnable() {
     }
 
-    public ReportProgressEvent getReportProgressEvent()
-    {
+    public ReportProgressEvent getReportProgressEvent() {
       return reportProgressEvent;
     }
 
-    public void setReportProgressEvent(final ReportProgressEvent reportProgressEvent)
-    {
+    public void setReportProgressEvent( final ReportProgressEvent reportProgressEvent ) {
       this.reportProgressEvent = reportProgressEvent;
     }
 
     /**
      * Performs the process of actually updaing the UI
      */
-    public synchronized void run()
-    {
-      if (reportProgressEvent == null)
-      {
+    public synchronized void run() {
+      if ( reportProgressEvent == null ) {
         return;
       }
 
-      setValue((int) ReportProgressEvent.computePercentageComplete(reportProgressEvent, isOnlyPagination()));
+      setValue( (int) ReportProgressEvent.computePercentageComplete( reportProgressEvent, isOnlyPagination() ) );
       reportProgressEvent = null;
     }
 
-    public boolean update(final ReportProgressEvent event)
-    {
-      final boolean retval = (reportProgressEvent == null);
+    public boolean update( final ReportProgressEvent event ) {
+      final boolean retval = ( reportProgressEvent == null );
       this.reportProgressEvent = event;
       return retval;
     }
@@ -88,71 +78,50 @@ public class ReportProgressBar extends JProgressBar implements ReportProgressLis
    * @see #setString
    * @see #setIndeterminate
    */
-  public ReportProgressBar()
-  {
-    super(SwingConstants.HORIZONTAL, 0, 100);
+  public ReportProgressBar() {
+    super( SwingConstants.HORIZONTAL, 0, 100 );
     this.runnable = new ScreenUpdateRunnable();
   }
 
-  public boolean isOnlyPagination()
-  {
+  public boolean isOnlyPagination() {
     return onlyPagination;
   }
 
-  public void setOnlyPagination(final boolean onlyPagination)
-  {
+  public void setOnlyPagination( final boolean onlyPagination ) {
     this.onlyPagination = onlyPagination;
   }
 
-  public void reportProcessingStarted(final ReportProgressEvent event)
-  {
-    synchronized (runnable)
-    {
-      if (runnable.update(event))
-      {
-        if (SwingUtilities.isEventDispatchThread())
-        {
+  public void reportProcessingStarted( final ReportProgressEvent event ) {
+    synchronized( runnable ) {
+      if ( runnable.update( event ) ) {
+        if ( SwingUtilities.isEventDispatchThread() ) {
           runnable.run();
-        }
-        else
-        {
-          SwingUtilities.invokeLater(runnable);
+        } else {
+          SwingUtilities.invokeLater( runnable );
         }
       }
     }
   }
 
-  public void reportProcessingUpdate(final ReportProgressEvent event)
-  {
-    synchronized (runnable)
-    {
-      if (runnable.update(event))
-      {
-        if (SwingUtilities.isEventDispatchThread())
-        {
+  public void reportProcessingUpdate( final ReportProgressEvent event ) {
+    synchronized( runnable ) {
+      if ( runnable.update( event ) ) {
+        if ( SwingUtilities.isEventDispatchThread() ) {
           runnable.run();
-        }
-        else
-        {
-          SwingUtilities.invokeLater(runnable);
+        } else {
+          SwingUtilities.invokeLater( runnable );
         }
       }
     }
   }
 
-  public void reportProcessingFinished(final ReportProgressEvent event)
-  {
-    synchronized (runnable)
-    {
-      if (runnable.update(event))
-      {
-        if (SwingUtilities.isEventDispatchThread())
-        {
+  public void reportProcessingFinished( final ReportProgressEvent event ) {
+    synchronized( runnable ) {
+      if ( runnable.update( event ) ) {
+        if ( SwingUtilities.isEventDispatchThread() ) {
           runnable.run();
-        }
-        else
-        {
-          SwingUtilities.invokeLater(runnable);
+        } else {
+          SwingUtilities.invokeLater( runnable );
         }
       }
     }

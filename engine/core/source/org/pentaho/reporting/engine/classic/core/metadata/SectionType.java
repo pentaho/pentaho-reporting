@@ -23,8 +23,7 @@ package org.pentaho.reporting.engine.classic.core.metadata;
  *
  * @author Thomas Morgner
  */
-public interface SectionType extends ElementType
-{
+public interface SectionType extends ElementType {
   /**
    * A band that serves a specific purpose within a slotted parent should return "true" here. Plain elemetns and bands
    * that can be freely combined should return false. </p>

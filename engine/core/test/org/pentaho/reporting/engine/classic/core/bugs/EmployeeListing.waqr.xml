@@ -9,18 +9,23 @@
   </parser-config>
   <reportheader color="#DE6118" fontname="Arial" fontsize="16">
     <message-field alignment="left" height="24" vertical-alignment="middle" width="100%" x="0%"
-                   y="0">${reportheader}</message-field>
+                   y="0">${reportheader}
+    </message-field>
   </reportheader>
   <reportfooter color="#DE6118" fontname="Arial" fontsize="16">
     <message-field alignment="left" height="24" vertical-alignment="middle" width="100%" x="0%"
-                   y="0">${reportfooter}</message-field>
+                   y="0">${reportfooter}
+    </message-field>
   </reportfooter>
   <pageheader color="#2F2C35" fontname="Arial" fontsize="8">
     <round-rectangle height="18" arc-height="6" arc-width="6" color="#FDDE85" width="100%" x="0%" y="0" fill="true"
                      draw="true" dynamic="false" layout-cachable="false"/>
     <message-field alignment="left" height="18" vertical-alignment="middle" width="50%" x="0%"
-                   y="0">${pageheader}</message-field>
-    <message-field alignment="right" height="18" vertical-alignment="middle" width="50%" x="50%" y="0">$(report.date, date, MMMM dd, yyyy @ hh:mm )</message-field>
+                   y="0">${pageheader}
+    </message-field>
+    <message-field alignment="right" height="18" vertical-alignment="middle" width="50%" x="50%" y="0">$(report.date,
+      date, MMMM dd, yyyy @ hh:mm )
+    </message-field>
     <line color="#1A7439" height="3" weight="3" width="100%" x1="0%" x2="100%" y1="18" y2="18"/>
   </pageheader>
   <pagefooter color="#2F2C35" fontname="Arial" fontsize="8">
@@ -109,7 +114,8 @@
       <groupheader name="dummyGroupHeader" color="#1A7439" fontname="Arial" fontsize="12" fontstyle="bold"
                    repeat="false">
         <label name="noDataLabelElement" height="12" vertical-alignment="middle" alignment="left" width="100%" x="0%"
-               y="0" visible="false">No Data Available</label>
+               y="0" visible="false">No Data Available
+        </label>
       </groupheader>
       <groupfooter name="dummyGroupFooter" color="#1A7439" fontname="Arial" fontsize="12" fontstyle="bold"/>
     </group>
@@ -122,25 +128,34 @@
                    height="43">
         <rectangle color="#FFFFFF" draw="false" fill="false" height="17" width="100%" x="0%" y="0"/>
         <string-field fieldname="BC_OFFICES_TERRITORY" height="17" vertical-alignment="top" alignment="left"
-                      width="100%" x="0%" y="0" nullstring="-">Territory: $(BC_OFFICES_TERRITORY)</string-field>
+                      width="100%" x="0%" y="0" nullstring="-">Territory: $(BC_OFFICES_TERRITORY)
+        </string-field>
         <rectangle color="#F98F13" draw="false" fill="true" height="18" width="100%" x="0%" y="19"/>
         <rectangle draw="false" fill="false" height="2" width="100%" x="0%" y="17"/>
         <label color="#1A7439" fontname="Arial" fontsize="10" fontstyle="plain" height="18" vertical-alignment="middle"
-               alignment="left" width="12.5%" x="0.0%" y="19">Employee ID</label>
+               alignment="left" width="12.5%" x="0.0%" y="19">Employee ID
+        </label>
         <label color="#1A7439" fontname="Arial" fontsize="10" fontstyle="plain" height="18" vertical-alignment="middle"
-               alignment="left" width="12.5%" x="12.5%" y="19">Last Name</label>
+               alignment="left" width="12.5%" x="12.5%" y="19">Last Name
+        </label>
         <label color="#1A7439" fontname="Arial" fontsize="10" fontstyle="plain" height="18" vertical-alignment="middle"
-               alignment="left" width="12.5%" x="25.0%" y="19">First Name</label>
+               alignment="left" width="12.5%" x="25.0%" y="19">First Name
+        </label>
         <label color="#1A7439" fontname="Arial" fontsize="10" fontstyle="plain" height="18" vertical-alignment="middle"
-               alignment="left" width="12.5%" x="37.5%" y="19">Job Title</label>
+               alignment="left" width="12.5%" x="37.5%" y="19">Job Title
+        </label>
         <label color="#1A7439" fontname="Arial" fontsize="10" fontstyle="plain" height="18" vertical-alignment="middle"
-               alignment="right" width="12.5%" x="50.0%" y="19">Manager</label>
+               alignment="right" width="12.5%" x="50.0%" y="19">Manager
+        </label>
         <label color="#1A7439" fontname="Arial" fontsize="10" fontstyle="plain" height="18" vertical-alignment="middle"
-               alignment="left" width="12.5%" x="62.5%" y="19">Phone Number</label>
+               alignment="left" width="12.5%" x="62.5%" y="19">Phone Number
+        </label>
         <label color="#1A7439" fontname="Arial" fontsize="10" fontstyle="plain" height="18" vertical-alignment="middle"
-               alignment="left" width="12.5%" x="75.0%" y="19">Extension</label>
+               alignment="left" width="12.5%" x="75.0%" y="19">Extension
+        </label>
         <label color="#1A7439" fontname="Arial" fontsize="10" fontstyle="plain" height="18" vertical-alignment="middle"
-               alignment="left" width="12.5%" x="87.5%" y="19">Email</label>
+               alignment="left" width="12.5%" x="87.5%" y="19">Email
+        </label>
       </groupheader>
       <groupfooter name="BC_OFFICES_TERRITORYGroupFooter" color="#1A7439" fontname="Arial" fontsize="12"
                    fontstyle="bold" pagebreak-before-print="false" pagebreak-after-print="false"/>

@@ -27,32 +27,31 @@ import org.pentaho.reporting.engine.classic.core.layout.model.RenderNode;
  *
  * @author Thomas Morgner
  */
-public interface ParagraphLinebreaker
-{
+public interface ParagraphLinebreaker {
   public boolean isWritable();
 
   public FullLinebreaker startComplexLayout();
 
-  public void startBlockBox(final RenderBox child);
+  public void startBlockBox( final RenderBox child );
 
-  public void finishBlockBox(final RenderBox box);
+  public void finishBlockBox( final RenderBox box );
 
-  public ParagraphLinebreaker startParagraphBox(final ParagraphRenderBox box);
+  public ParagraphLinebreaker startParagraphBox( final ParagraphRenderBox box );
 
-  public void finishParagraphBox(final ParagraphRenderBox box);
+  public void finishParagraphBox( final ParagraphRenderBox box );
 
   //  public Object getSuspendItem();
   public boolean isSuspended();
 
   public void finish();
 
-  public void startInlineBox(final InlineRenderBox box);
+  public void startInlineBox( final InlineRenderBox box );
 
-  public void finishInlineBox(final InlineRenderBox box);
+  public void finishInlineBox( final InlineRenderBox box );
 
   public boolean isBreakRequested();
 
-  public void addNode(final RenderNode node);
+  public void addNode( final RenderNode node );
 
-  public void setBreakRequested(final boolean breakRequested);
+  public void setBreakRequested( final boolean breakRequested );
 }

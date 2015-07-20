@@ -17,11 +17,9 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.misc.datafactory.sequence;
 
-public class PrinterNamesSequenceDescription extends AbstractSequenceDescription
-{
-  public PrinterNamesSequenceDescription()
-  {
-    super("org.pentaho.reporting.engine.classic.core.modules.misc.datafactory.sequence.PrinterNamesSequenceBundle",
-        PrinterNamesSequence.class);
+public class PrinterNamesSequenceDescription extends AbstractSequenceDescription {
+  public PrinterNamesSequenceDescription() {
+    super( "org.pentaho.reporting.engine.classic.core.modules.misc.datafactory.sequence.PrinterNamesSequenceBundle",
+      PrinterNamesSequence.class );
   }
 }

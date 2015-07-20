@@ -17,8 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.core.states.datarow;
 
-import java.util.Iterator;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.pentaho.reporting.engine.classic.core.InvalidReportStateException;
@@ -28,857 +26,643 @@ import org.pentaho.reporting.engine.classic.core.function.Expression;
 import org.pentaho.reporting.engine.classic.core.function.ExpressionRuntime;
 import org.pentaho.reporting.engine.classic.core.function.Function;
 
-@SuppressWarnings("HardCodedStringLiteral")
-public abstract class ExpressionEventHelper
-{
+import java.util.Iterator;
 
-  private static final Log logger = LogFactory.getLog(ExpressionEventHelper.class);
+@SuppressWarnings( "HardCodedStringLiteral" )
+public abstract class ExpressionEventHelper {
 
-  protected void fireReportEvent(final ReportEvent event)
-  {
-    if ((event.getType() & ReportEvent.PAGE_STARTED) == ReportEvent.PAGE_STARTED)
-    {
-      firePageStartedEvent(event);
-    }
-    else if ((event.getType() & ReportEvent.PAGE_FINISHED) == ReportEvent.PAGE_FINISHED)
-    {
-      firePageFinishedEvent(event);
-    }
-    else if ((event.getType() & ReportEvent.ITEMS_ADVANCED) == ReportEvent.ITEMS_ADVANCED)
-    {
-      fireItemsAdvancedEvent(event);
-    }
-    else if ((event.getType() & ReportEvent.ITEMS_FINISHED) == ReportEvent.ITEMS_FINISHED)
-    {
-      fireItemsFinishedEvent(event);
-    }
-    else if ((event.getType() & ReportEvent.ITEMS_STARTED) == ReportEvent.ITEMS_STARTED)
-    {
-      fireItemsStartedEvent(event);
-    }
-    else if ((event.getType() & ReportEvent.GROUP_FINISHED) == ReportEvent.GROUP_FINISHED)
-    {
-      fireGroupFinishedEvent(event);
-    }
-    else if ((event.getType() & ReportEvent.GROUP_STARTED) == ReportEvent.GROUP_STARTED)
-    {
-      fireGroupStartedEvent(event);
-    }
-    else if ((event.getType() & ReportEvent.REPORT_INITIALIZED) == ReportEvent.REPORT_INITIALIZED)
-    {
-      fireReportInitializedEvent(event);
-    }
-    else if ((event.getType() & ReportEvent.REPORT_DONE) == ReportEvent.REPORT_DONE)
-    {
-      fireReportDoneEvent(event);
-    }
-    else if ((event.getType() & ReportEvent.REPORT_FINISHED) == ReportEvent.REPORT_FINISHED)
-    {
-      fireReportFinishedEvent(event);
-    }
-    else if ((event.getType() & ReportEvent.REPORT_STARTED) == ReportEvent.REPORT_STARTED)
-    {
-      fireReportStartedEvent(event);
-    }
-    else if ((event.getType() & ReportEvent.SUMMARY_ROW) == ReportEvent.SUMMARY_ROW)
-    {
-      fireSummaryRowEvent(event);
-    }
-    else //noinspection StatementWithEmptyBody
-      if ((event.getType() & ReportEvent.GROUP_BODY_FINISHED) == ReportEvent.GROUP_BODY_FINISHED)
-    {
-      // ignore, nothing we handle here
-    }
-    else
-    {
-      throw new IllegalArgumentException();
-    }
+  private static final Log logger = LogFactory.getLog( ExpressionEventHelper.class );
+
+  protected void fireReportEvent( final ReportEvent event ) {
+    if ( ( event.getType() & ReportEvent.PAGE_STARTED ) == ReportEvent.PAGE_STARTED ) {
+      firePageStartedEvent( event );
+    } else if ( ( event.getType() & ReportEvent.PAGE_FINISHED ) == ReportEvent.PAGE_FINISHED ) {
+      firePageFinishedEvent( event );
+    } else if ( ( event.getType() & ReportEvent.ITEMS_ADVANCED ) == ReportEvent.ITEMS_ADVANCED ) {
+      fireItemsAdvancedEvent( event );
+    } else if ( ( event.getType() & ReportEvent.ITEMS_FINISHED ) == ReportEvent.ITEMS_FINISHED ) {
+      fireItemsFinishedEvent( event );
+    } else if ( ( event.getType() & ReportEvent.ITEMS_STARTED ) == ReportEvent.ITEMS_STARTED ) {
+      fireItemsStartedEvent( event );
+    } else if ( ( event.getType() & ReportEvent.GROUP_FINISHED ) == ReportEvent.GROUP_FINISHED ) {
+      fireGroupFinishedEvent( event );
+    } else if ( ( event.getType() & ReportEvent.GROUP_STARTED ) == ReportEvent.GROUP_STARTED ) {
+      fireGroupStartedEvent( event );
+    } else if ( ( event.getType() & ReportEvent.REPORT_INITIALIZED ) == ReportEvent.REPORT_INITIALIZED ) {
+      fireReportInitializedEvent( event );
+    } else if ( ( event.getType() & ReportEvent.REPORT_DONE ) == ReportEvent.REPORT_DONE ) {
+      fireReportDoneEvent( event );
+    } else if ( ( event.getType() & ReportEvent.REPORT_FINISHED ) == ReportEvent.REPORT_FINISHED ) {
+      fireReportFinishedEvent( event );
+    } else if ( ( event.getType() & ReportEvent.REPORT_STARTED ) == ReportEvent.REPORT_STARTED ) {
+      fireReportStartedEvent( event );
+    } else if ( ( event.getType() & ReportEvent.SUMMARY_ROW ) == ReportEvent.SUMMARY_ROW ) {
+      fireSummaryRowEvent( event );
+    } else //noinspection StatementWithEmptyBody
+      if ( ( event.getType() & ReportEvent.GROUP_BODY_FINISHED ) == ReportEvent.GROUP_BODY_FINISHED ) {
+        // ignore, nothing we handle here
+      } else {
+        throw new IllegalArgumentException();
+      }
   }
 
   protected abstract int getRunLevelCount();
 
-  protected abstract LevelStorage getRunLevel(int index);
+  protected abstract LevelStorage getRunLevel( int index );
 
   protected abstract ExpressionRuntime getRuntime();
 
-  protected int getProcessingLevel()
-  {
+  protected int getProcessingLevel() {
     return getRuntime().getProcessingContext().getProcessingLevel();
   }
 
-  private void fireItemsAdvancedEvent(final ReportEvent event)
-  {
+  private void fireItemsAdvancedEvent( final ReportEvent event ) {
     final boolean deepTraversing = event.isDeepTraversing();
     final int activeLevel = getProcessingLevel();
     final ExpressionRuntime runtime = getRuntime();
 
     final int runlevelCount = getRunLevelCount();
-    for (int levelIdx = 0; levelIdx < runlevelCount; levelIdx++)
-    {
-      final LevelStorage levelData = getRunLevel(levelIdx);
+    for ( int levelIdx = 0; levelIdx < runlevelCount; levelIdx++ ) {
+      final LevelStorage levelData = getRunLevel( levelIdx );
       final int level = levelData.getLevelNumber();
-      if (level < activeLevel)
-      {
+      if ( level < activeLevel ) {
         break;
       }
 
       final Iterator<Expression> expressions = levelData.getActiveExpressions();
-      while (expressions.hasNext())
-      {
+      while ( expressions.hasNext() ) {
         final Expression expression = expressions.next();
-        if (deepTraversing && expression.isDeepTraversing() == false)
-        {
+        if ( deepTraversing && expression.isDeepTraversing() == false ) {
           continue;
         }
 
         final ExpressionRuntime oldRuntime = expression.getRuntime();
-        expression.setRuntime(runtime);
-        try
-        {
-          if (expression instanceof Function)
-          {
+        expression.setRuntime( runtime );
+        try {
+          if ( expression instanceof Function ) {
             final Function e = (Function) expression;
-            e.itemsAdvanced(event);
+            e.itemsAdvanced( event );
           }
-          evaluateSingleExpression(expression);
-        }
-        catch (final InvalidReportStateException rse)
-        {
+          evaluateSingleExpression( expression );
+        } catch ( final InvalidReportStateException rse ) {
           throw rse;
-        }
-        catch (final Exception ex)
-        {
-          if (logger.isDebugEnabled())
-          {
-            logger.error("Failed to fire prepare event", ex);
+        } catch ( final Exception ex ) {
+          if ( logger.isDebugEnabled() ) {
+            logger.error( "Failed to fire prepare event", ex );
+          } else {
+            logger.error( "Failed to fire prepare event: " + ex );
           }
-          else
-          {
-            logger.error("Failed to fire prepare event: " + ex);
-          }
-          evaluateToNull(expression);
+          evaluateToNull( expression );
         }
 
-        expression.setRuntime(oldRuntime);
+        expression.setRuntime( oldRuntime );
       }
     }
   }
 
-  private void fireItemsStartedEvent(final ReportEvent event)
-  {
+  private void fireItemsStartedEvent( final ReportEvent event ) {
     final boolean deepTraversing = event.isDeepTraversing();
     final int activeLevel = getProcessingLevel();
     final ExpressionRuntime runtime = getRuntime();
 
     final int runlevelCount = getRunLevelCount();
-    for (int levelIdx = 0; levelIdx < runlevelCount; levelIdx++)
-    {
-      final LevelStorage levelData = getRunLevel(levelIdx);
+    for ( int levelIdx = 0; levelIdx < runlevelCount; levelIdx++ ) {
+      final LevelStorage levelData = getRunLevel( levelIdx );
       final int level = levelData.getLevelNumber();
-      if (level < activeLevel)
-      {
+      if ( level < activeLevel ) {
         break;
       }
 
       final Iterator<Expression> expressions = levelData.getActiveExpressions();
-      while (expressions.hasNext())
-      {
+      while ( expressions.hasNext() ) {
         final Expression expression = expressions.next();
-        if (deepTraversing && expression.isDeepTraversing() == false)
-        {
+        if ( deepTraversing && expression.isDeepTraversing() == false ) {
           continue;
         }
 
         final ExpressionRuntime oldRuntime = expression.getRuntime();
-        expression.setRuntime(runtime);
-        try
-        {
-          if (expression instanceof Function)
-          {
+        expression.setRuntime( runtime );
+        try {
+          if ( expression instanceof Function ) {
             final Function e = (Function) expression;
-            e.itemsStarted(event);
+            e.itemsStarted( event );
           }
-          evaluateSingleExpression(expression);
-        }
-        catch (final InvalidReportStateException rse)
-        {
+          evaluateSingleExpression( expression );
+        } catch ( final InvalidReportStateException rse ) {
           throw rse;
-        }
-        catch (final Exception ex)
-        {
-          if (logger.isDebugEnabled())
-          {
-            logger.error("Failed to fire prepare event", ex);
+        } catch ( final Exception ex ) {
+          if ( logger.isDebugEnabled() ) {
+            logger.error( "Failed to fire prepare event", ex );
+          } else {
+            logger.error( "Failed to fire prepare event: " + ex );
           }
-          else
-          {
-            logger.error("Failed to fire prepare event: " + ex);
-          }
-          evaluateToNull(expression);
+          evaluateToNull( expression );
         }
 
-        expression.setRuntime(oldRuntime);
+        expression.setRuntime( oldRuntime );
 
       }
     }
   }
 
-  private void fireItemsFinishedEvent(final ReportEvent event)
-  {
+  private void fireItemsFinishedEvent( final ReportEvent event ) {
     final boolean deepTraversing = event.isDeepTraversing();
     final int activeLevel = getProcessingLevel();
     final ExpressionRuntime runtime = getRuntime();
 
     final int runlevelCount = getRunLevelCount();
-    for (int levelIdx = 0; levelIdx < runlevelCount; levelIdx++)
-    {
-      final LevelStorage levelData = getRunLevel(levelIdx);
+    for ( int levelIdx = 0; levelIdx < runlevelCount; levelIdx++ ) {
+      final LevelStorage levelData = getRunLevel( levelIdx );
       final int level = levelData.getLevelNumber();
-      if (level < activeLevel)
-      {
+      if ( level < activeLevel ) {
         break;
       }
 
       final Iterator<Expression> expressions = levelData.getActiveExpressions();
-      while (expressions.hasNext())
-      {
+      while ( expressions.hasNext() ) {
         final Expression expression = expressions.next();
-        if (deepTraversing && expression.isDeepTraversing() == false)
-        {
+        if ( deepTraversing && expression.isDeepTraversing() == false ) {
           continue;
         }
 
         final ExpressionRuntime oldRuntime = expression.getRuntime();
-        expression.setRuntime(runtime);
-        try
-        {
-          if (expression instanceof Function)
-          {
+        expression.setRuntime( runtime );
+        try {
+          if ( expression instanceof Function ) {
             final Function e = (Function) expression;
-            e.itemsFinished(event);
+            e.itemsFinished( event );
           }
-          evaluateSingleExpression(expression);
-        }
-        catch (final InvalidReportStateException rse)
-        {
+          evaluateSingleExpression( expression );
+        } catch ( final InvalidReportStateException rse ) {
           throw rse;
-        }
-        catch (final Exception ex)
-        {
-          if (logger.isDebugEnabled())
-          {
-            logger.error("Failed to fire prepare event", ex);
+        } catch ( final Exception ex ) {
+          if ( logger.isDebugEnabled() ) {
+            logger.error( "Failed to fire prepare event", ex );
+          } else {
+            logger.error( "Failed to fire prepare event: " + ex );
           }
-          else
-          {
-            logger.error("Failed to fire prepare event: " + ex);
-          }
-          evaluateToNull(expression);
+          evaluateToNull( expression );
         }
 
-        expression.setRuntime(oldRuntime);
+        expression.setRuntime( oldRuntime );
       }
     }
   }
 
-  private void fireGroupStartedEvent(final ReportEvent event)
-  {
+  private void fireGroupStartedEvent( final ReportEvent event ) {
     final boolean deepTraversing = event.isDeepTraversing();
     final int activeLevel = getProcessingLevel();
     final ExpressionRuntime runtime = getRuntime();
 
     final int runlevelCount = getRunLevelCount();
-    for (int levelIdx = 0; levelIdx < runlevelCount; levelIdx++)
-    {
-      final LevelStorage levelData = getRunLevel(levelIdx);
+    for ( int levelIdx = 0; levelIdx < runlevelCount; levelIdx++ ) {
+      final LevelStorage levelData = getRunLevel( levelIdx );
       final int level = levelData.getLevelNumber();
-      if (level < activeLevel)
-      {
+      if ( level < activeLevel ) {
         break;
       }
 
       final Iterator<Expression> expressions = levelData.getActiveExpressions();
-      while (expressions.hasNext())
-      {
+      while ( expressions.hasNext() ) {
         final Expression expression = expressions.next();
-        if (deepTraversing && expression.isDeepTraversing() == false)
-        {
+        if ( deepTraversing && expression.isDeepTraversing() == false ) {
           continue;
         }
 
         final ExpressionRuntime oldRuntime = expression.getRuntime();
-        expression.setRuntime(runtime);
-        try
-        {
-          if (expression instanceof Function)
-          {
+        expression.setRuntime( runtime );
+        try {
+          if ( expression instanceof Function ) {
             final Function e = (Function) expression;
-            e.groupStarted(event);
+            e.groupStarted( event );
           }
-          evaluateSingleExpression(expression);
-        }
-        catch (final InvalidReportStateException rse)
-        {
+          evaluateSingleExpression( expression );
+        } catch ( final InvalidReportStateException rse ) {
           throw rse;
-        }
-        catch (final Exception ex)
-        {
-          if (logger.isDebugEnabled())
-          {
-            logger.error("Failed to fire group-started event", ex);
+        } catch ( final Exception ex ) {
+          if ( logger.isDebugEnabled() ) {
+            logger.error( "Failed to fire group-started event", ex );
+          } else {
+            logger.error( "Failed to fire group-started event: " + ex );
           }
-          else
-          {
-            logger.error("Failed to fire group-started event: " + ex);
-          }
-          evaluateToNull(expression);
+          evaluateToNull( expression );
         }
 
-        expression.setRuntime(oldRuntime);
+        expression.setRuntime( oldRuntime );
       }
     }
   }
 
-  private void fireGroupFinishedEvent(final ReportEvent event)
-  {
+  private void fireGroupFinishedEvent( final ReportEvent event ) {
     final boolean deepTraversing = event.isDeepTraversing();
     final int activeLevel = getProcessingLevel();
     final ExpressionRuntime runtime = getRuntime();
 
     final int runlevelCount = getRunLevelCount();
-    for (int levelIdx = 0; levelIdx < runlevelCount; levelIdx++)
-    {
-      final LevelStorage levelData = getRunLevel(levelIdx);
+    for ( int levelIdx = 0; levelIdx < runlevelCount; levelIdx++ ) {
+      final LevelStorage levelData = getRunLevel( levelIdx );
       final int level = levelData.getLevelNumber();
-      if (level < activeLevel)
-      {
+      if ( level < activeLevel ) {
         break;
       }
 
       final Iterator<Expression> expressions = levelData.getActiveExpressions();
-      while (expressions.hasNext())
-      {
+      while ( expressions.hasNext() ) {
         final Expression expression = expressions.next();
-        if (deepTraversing && expression.isDeepTraversing() == false)
-        {
+        if ( deepTraversing && expression.isDeepTraversing() == false ) {
           continue;
         }
 
         final ExpressionRuntime oldRuntime = expression.getRuntime();
-        expression.setRuntime(runtime);
-        try
-        {
-          if (expression instanceof Function)
-          {
+        expression.setRuntime( runtime );
+        try {
+          if ( expression instanceof Function ) {
             final Function e = (Function) expression;
-            e.groupFinished(event);
+            e.groupFinished( event );
           }
-          evaluateSingleExpression(expression);
-        }
-        catch (final InvalidReportStateException rse)
-        {
+          evaluateSingleExpression( expression );
+        } catch ( final InvalidReportStateException rse ) {
           throw rse;
-        }
-        catch (final Exception ex)
-        {
-          if (logger.isDebugEnabled())
-          {
-            logger.error("Failed to fire group-finished event", ex);
+        } catch ( final Exception ex ) {
+          if ( logger.isDebugEnabled() ) {
+            logger.error( "Failed to fire group-finished event", ex );
+          } else {
+            logger.error( "Failed to fire group-finished event: " + ex );
           }
-          else
-          {
-            logger.error("Failed to fire group-finished event: " + ex);
-          }
-          evaluateToNull(expression);
+          evaluateToNull( expression );
         }
 
-        expression.setRuntime(oldRuntime);
+        expression.setRuntime( oldRuntime );
       }
     }
   }
 
-  private void fireSummaryRowEvent(final ReportEvent event)
-  {
+  private void fireSummaryRowEvent( final ReportEvent event ) {
     final boolean deepTraversing = event.isDeepTraversing();
     final int activeLevel = getProcessingLevel();
     final ExpressionRuntime runtime = getRuntime();
 
     final int runlevelCount = getRunLevelCount();
-    for (int levelIdx = 0; levelIdx < runlevelCount; levelIdx++)
-    {
-      final LevelStorage levelData = getRunLevel(levelIdx);
+    for ( int levelIdx = 0; levelIdx < runlevelCount; levelIdx++ ) {
+      final LevelStorage levelData = getRunLevel( levelIdx );
       final int level = levelData.getLevelNumber();
-      if (level < activeLevel)
-      {
+      if ( level < activeLevel ) {
         break;
       }
 
       final Iterator<Expression> expressions = levelData.getActiveExpressions();
-      while (expressions.hasNext())
-      {
+      while ( expressions.hasNext() ) {
         final Expression expression = expressions.next();
-        if (deepTraversing && expression.isDeepTraversing() == false)
-        {
+        if ( deepTraversing && expression.isDeepTraversing() == false ) {
           continue;
         }
 
         final ExpressionRuntime oldRuntime = expression.getRuntime();
-        expression.setRuntime(runtime);
-        try
-        {
-          if (expression instanceof Function)
-          {
+        expression.setRuntime( runtime );
+        try {
+          if ( expression instanceof Function ) {
             final Function e = (Function) expression;
-            e.summaryRowSelection(event);
+            e.summaryRowSelection( event );
           }
-          evaluateSingleExpression(expression);
-        }
-        catch (final InvalidReportStateException rse)
-        {
+          evaluateSingleExpression( expression );
+        } catch ( final InvalidReportStateException rse ) {
           throw rse;
-        }
-        catch (final Exception ex)
-        {
-          if (logger.isDebugEnabled())
-          {
-            logger.error("Failed to fire group-finished event", ex);
+        } catch ( final Exception ex ) {
+          if ( logger.isDebugEnabled() ) {
+            logger.error( "Failed to fire group-finished event", ex );
+          } else {
+            logger.error( "Failed to fire group-finished event: " + ex );
           }
-          else
-          {
-            logger.error("Failed to fire group-finished event: " + ex);
-          }
-          evaluateToNull(expression);
+          evaluateToNull( expression );
         }
 
-        expression.setRuntime(oldRuntime);
+        expression.setRuntime( oldRuntime );
       }
     }
   }
 
-  private void fireReportStartedEvent(final ReportEvent event)
-  {
+  private void fireReportStartedEvent( final ReportEvent event ) {
     final boolean deepTraversing = event.isDeepTraversing();
     final int activeLevel = getProcessingLevel();
     final ExpressionRuntime runtime = getRuntime();
 
     final int runlevelCount = getRunLevelCount();
-    for (int levelIdx = 0; levelIdx < runlevelCount; levelIdx++)
-    {
-      final LevelStorage levelData = getRunLevel(levelIdx);
+    for ( int levelIdx = 0; levelIdx < runlevelCount; levelIdx++ ) {
+      final LevelStorage levelData = getRunLevel( levelIdx );
       final int level = levelData.getLevelNumber();
-      if (level < activeLevel)
-      {
+      if ( level < activeLevel ) {
         break;
       }
 
       final Iterator<Expression> expressions = levelData.getActiveExpressions();
-      while (expressions.hasNext())
-      {
+      while ( expressions.hasNext() ) {
         final Expression expression = expressions.next();
-        if (deepTraversing && expression.isDeepTraversing() == false)
-        {
+        if ( deepTraversing && expression.isDeepTraversing() == false ) {
           continue;
         }
 
         final ExpressionRuntime oldRuntime = expression.getRuntime();
-        expression.setRuntime(runtime);
-        try
-        {
-          if (expression instanceof Function)
-          {
+        expression.setRuntime( runtime );
+        try {
+          if ( expression instanceof Function ) {
             final Function e = (Function) expression;
-            e.reportStarted(event);
+            e.reportStarted( event );
           }
-          evaluateSingleExpression(expression);
-        }
-        catch (final InvalidReportStateException rse)
-        {
+          evaluateSingleExpression( expression );
+        } catch ( final InvalidReportStateException rse ) {
           throw rse;
-        }
-        catch (final Exception ex)
-        {
-          if (logger.isDebugEnabled())
-          {
-            logger.error("Failed to fire report-started event", ex);
+        } catch ( final Exception ex ) {
+          if ( logger.isDebugEnabled() ) {
+            logger.error( "Failed to fire report-started event", ex );
+          } else {
+            logger.error( "Failed to fire report-started event: " + ex );
           }
-          else
-          {
-            logger.error("Failed to fire report-started event: " + ex);
-          }
-          evaluateToNull(expression);
+          evaluateToNull( expression );
         }
 
-        expression.setRuntime(oldRuntime);
+        expression.setRuntime( oldRuntime );
       }
     }
   }
 
-  private void fireReportDoneEvent(final ReportEvent event)
-  {
+  private void fireReportDoneEvent( final ReportEvent event ) {
     final boolean deepTraversing = event.isDeepTraversing();
     final int activeLevel = getProcessingLevel();
     final ExpressionRuntime runtime = getRuntime();
 
     final int runlevelCount = getRunLevelCount();
-    for (int levelIdx = 0; levelIdx < runlevelCount; levelIdx++)
-    {
-      final LevelStorage levelData = getRunLevel(levelIdx);
+    for ( int levelIdx = 0; levelIdx < runlevelCount; levelIdx++ ) {
+      final LevelStorage levelData = getRunLevel( levelIdx );
       final int level = levelData.getLevelNumber();
-      if (level < activeLevel)
-      {
+      if ( level < activeLevel ) {
         break;
       }
 
       final Iterator<Expression> expressions = levelData.getActiveExpressions();
-      while (expressions.hasNext())
-      {
+      while ( expressions.hasNext() ) {
         final Expression expression = expressions.next();
-        if (deepTraversing && expression.isDeepTraversing() == false)
-        {
+        if ( deepTraversing && expression.isDeepTraversing() == false ) {
           continue;
         }
 
         final ExpressionRuntime oldRuntime = expression.getRuntime();
-        expression.setRuntime(runtime);
-        try
-        {
-          if (expression instanceof Function)
-          {
+        expression.setRuntime( runtime );
+        try {
+          if ( expression instanceof Function ) {
             final Function e = (Function) expression;
-            e.reportDone(event);
+            e.reportDone( event );
           }
-          evaluateSingleExpression(expression);
-        }
-        catch (final InvalidReportStateException rse)
-        {
+          evaluateSingleExpression( expression );
+        } catch ( final InvalidReportStateException rse ) {
           throw rse;
-        }
-        catch (final Exception ex)
-        {
-          if (logger.isDebugEnabled())
-          {
-            logger.error("Failed to fire report-done event", ex);
+        } catch ( final Exception ex ) {
+          if ( logger.isDebugEnabled() ) {
+            logger.error( "Failed to fire report-done event", ex );
+          } else {
+            logger.error( "Failed to fire report-done event: " + ex );
           }
-          else
-          {
-            logger.error("Failed to fire report-done event: " + ex);
-          }
-          evaluateToNull(expression);
+          evaluateToNull( expression );
         }
 
-        expression.setRuntime(oldRuntime);
+        expression.setRuntime( oldRuntime );
       }
     }
   }
 
-  private void fireReportFinishedEvent(final ReportEvent event)
-  {
+  private void fireReportFinishedEvent( final ReportEvent event ) {
     final boolean deepTraversing = event.isDeepTraversing();
     final int activeLevel = getProcessingLevel();
     final ExpressionRuntime runtime = getRuntime();
 
     final int runlevelCount = getRunLevelCount();
-    for (int levelIdx = 0; levelIdx < runlevelCount; levelIdx++)
-    {
-      final LevelStorage levelData = getRunLevel(levelIdx);
+    for ( int levelIdx = 0; levelIdx < runlevelCount; levelIdx++ ) {
+      final LevelStorage levelData = getRunLevel( levelIdx );
       final int level = levelData.getLevelNumber();
-      if (level < activeLevel)
-      {
+      if ( level < activeLevel ) {
         break;
       }
 
       final Iterator<Expression> expressions = levelData.getActiveExpressions();
-      while (expressions.hasNext())
-      {
+      while ( expressions.hasNext() ) {
         final Expression expression = expressions.next();
-        if (deepTraversing && expression.isDeepTraversing() == false)
-        {
+        if ( deepTraversing && expression.isDeepTraversing() == false ) {
           continue;
         }
 
         final ExpressionRuntime oldRuntime = expression.getRuntime();
-        expression.setRuntime(runtime);
-        try
-        {
-          if (expression instanceof Function)
-          {
+        expression.setRuntime( runtime );
+        try {
+          if ( expression instanceof Function ) {
             final Function e = (Function) expression;
-            e.reportFinished(event);
+            e.reportFinished( event );
           }
-          evaluateSingleExpression(expression);
-        }
-        catch (final InvalidReportStateException rse)
-        {
+          evaluateSingleExpression( expression );
+        } catch ( final InvalidReportStateException rse ) {
           throw rse;
-        }
-        catch (final Exception ex)
-        {
-          if (logger.isDebugEnabled())
-          {
-            logger.error("Failed to fire report-finished event", ex);
+        } catch ( final Exception ex ) {
+          if ( logger.isDebugEnabled() ) {
+            logger.error( "Failed to fire report-finished event", ex );
+          } else {
+            logger.error( "Failed to fire report-finished event: " + ex );
           }
-          else
-          {
-            logger.error("Failed to fire report-finished event: " + ex);
-          }
-          evaluateToNull(expression);
+          evaluateToNull( expression );
         }
 
-        expression.setRuntime(oldRuntime);
+        expression.setRuntime( oldRuntime );
       }
     }
   }
 
-  private void fireReportInitializedEvent(final ReportEvent event)
-  {
+  private void fireReportInitializedEvent( final ReportEvent event ) {
     final boolean deepTraversing = event.isDeepTraversing();
     final int activeLevel = getProcessingLevel();
     final ExpressionRuntime runtime = getRuntime();
 
     final int runlevelCount = getRunLevelCount();
-    for (int levelIdx = 0; levelIdx < runlevelCount; levelIdx++)
-    {
-      final LevelStorage levelData = getRunLevel(levelIdx);
+    for ( int levelIdx = 0; levelIdx < runlevelCount; levelIdx++ ) {
+      final LevelStorage levelData = getRunLevel( levelIdx );
       final int level = levelData.getLevelNumber();
-      if (level < activeLevel)
-      {
+      if ( level < activeLevel ) {
         break;
       }
 
       final Iterator<Expression> expressions = levelData.getActiveExpressions();
-      while (expressions.hasNext())
-      {
+      while ( expressions.hasNext() ) {
         final Expression expression = expressions.next();
-        if (deepTraversing && expression.isDeepTraversing() == false)
-        {
+        if ( deepTraversing && expression.isDeepTraversing() == false ) {
           continue;
         }
 
         final ExpressionRuntime oldRuntime = expression.getRuntime();
-        expression.setRuntime(runtime);
-        try
-        {
-          if (expression instanceof Function)
-          {
+        expression.setRuntime( runtime );
+        try {
+          if ( expression instanceof Function ) {
             final Function e = (Function) expression;
-            e.reportInitialized(event);
+            e.reportInitialized( event );
           }
-          evaluateSingleExpression(expression);
-        }
-        catch (final InvalidReportStateException rse)
-        {
+          evaluateSingleExpression( expression );
+        } catch ( final InvalidReportStateException rse ) {
           throw rse;
-        }
-        catch (final Exception ex)
-        {
-          if (logger.isDebugEnabled())
-          {
-            logger.error("Failed to fire report-initialized event", ex);
+        } catch ( final Exception ex ) {
+          if ( logger.isDebugEnabled() ) {
+            logger.error( "Failed to fire report-initialized event", ex );
+          } else {
+            logger.error( "Failed to fire report-initialized event: " + ex );
           }
-          else
-          {
-            logger.error("Failed to fire report-initialized event: " + ex);
-          }
-          evaluateToNull(expression);
+          evaluateToNull( expression );
         }
 
-        expression.setRuntime(oldRuntime);
+        expression.setRuntime( oldRuntime );
       }
     }
   }
 
-  private void firePageStartedEvent(final ReportEvent event)
-  {
+  private void firePageStartedEvent( final ReportEvent event ) {
     final boolean deepTraversing = event.isDeepTraversing();
     final int activeLevel = getProcessingLevel();
     final ExpressionRuntime runtime = getRuntime();
 
     final int runlevelCount = getRunLevelCount();
-    for (int levelIdx = 0; levelIdx < runlevelCount; levelIdx++)
-    {
-      final LevelStorage levelData = getRunLevel(levelIdx);
+    for ( int levelIdx = 0; levelIdx < runlevelCount; levelIdx++ ) {
+      final LevelStorage levelData = getRunLevel( levelIdx );
       final int level = levelData.getLevelNumber();
-      if (level < activeLevel)
-      {
+      if ( level < activeLevel ) {
         break;
       }
 
       final Iterator<Expression> expressions = levelData.getActiveExpressions();
-      while (expressions.hasNext())
-      {
+      while ( expressions.hasNext() ) {
         final Expression expression = expressions.next();
-        if (deepTraversing && expression.isDeepTraversing() == false)
-        {
+        if ( deepTraversing && expression.isDeepTraversing() == false ) {
           continue;
         }
 
         final ExpressionRuntime oldRuntime = expression.getRuntime();
-        expression.setRuntime(runtime);
-        try
-        {
-          if (expression instanceof PageEventListener)
-          {
+        expression.setRuntime( runtime );
+        try {
+          if ( expression instanceof PageEventListener ) {
             final PageEventListener e = (PageEventListener) expression;
-            e.pageStarted(event);
+            e.pageStarted( event );
           }
-          evaluateSingleExpression(expression);
-        }
-        catch (final InvalidReportStateException rse)
-        {
+          evaluateSingleExpression( expression );
+        } catch ( final InvalidReportStateException rse ) {
           throw rse;
-        }
-        catch (final Exception ex)
-        {
-          if (logger.isDebugEnabled())
-          {
-            logger.error("Failed to fire page-started event", ex);
+        } catch ( final Exception ex ) {
+          if ( logger.isDebugEnabled() ) {
+            logger.error( "Failed to fire page-started event", ex );
+          } else {
+            logger.error( "Failed to fire page-started event: " + ex );
           }
-          else
-          {
-            logger.error("Failed to fire page-started event: " + ex);
-          }
-          evaluateToNull(expression);
+          evaluateToNull( expression );
         }
 
-        expression.setRuntime(oldRuntime);
+        expression.setRuntime( oldRuntime );
       }
     }
   }
 
-  private void firePageFinishedEvent(final ReportEvent event)
-  {
+  private void firePageFinishedEvent( final ReportEvent event ) {
     final boolean deepTraversing = event.isDeepTraversing();
     final int activeLevel = getProcessingLevel();
     final ExpressionRuntime runtime = getRuntime();
 
     final int runlevelCount = getRunLevelCount();
-    for (int levelIdx = 0; levelIdx < runlevelCount; levelIdx++)
-    {
-      final LevelStorage levelData = getRunLevel(levelIdx);
+    for ( int levelIdx = 0; levelIdx < runlevelCount; levelIdx++ ) {
+      final LevelStorage levelData = getRunLevel( levelIdx );
       final int level = levelData.getLevelNumber();
-      if (level < activeLevel)
-      {
+      if ( level < activeLevel ) {
         break;
       }
 
       final Iterator<Expression> expressions = levelData.getActiveExpressions();
-      while (expressions.hasNext())
-      {
+      while ( expressions.hasNext() ) {
         final Expression expression = expressions.next();
-        if (deepTraversing && expression.isDeepTraversing() == false)
-        {
+        if ( deepTraversing && expression.isDeepTraversing() == false ) {
           continue;
         }
 
         final ExpressionRuntime oldRuntime = expression.getRuntime();
-        expression.setRuntime(runtime);
-        try
-        {
-          if (expression instanceof PageEventListener)
-          {
+        expression.setRuntime( runtime );
+        try {
+          if ( expression instanceof PageEventListener ) {
             final PageEventListener e = (PageEventListener) expression;
-            e.pageFinished(event);
+            e.pageFinished( event );
           }
-          evaluateSingleExpression(expression);
-        }
-        catch (final InvalidReportStateException rse)
-        {
+          evaluateSingleExpression( expression );
+        } catch ( final InvalidReportStateException rse ) {
           throw rse;
-        }
-        catch (final Exception ex)
-        {
-          if (logger.isDebugEnabled())
-          {
-            logger.error("Failed to fire page-finished event: ", ex);
+        } catch ( final Exception ex ) {
+          if ( logger.isDebugEnabled() ) {
+            logger.error( "Failed to fire page-finished event: ", ex );
+          } else {
+            logger.error( "Failed to fire page-finished event: " + ex );
           }
-          else
-          {
-            logger.error("Failed to fire page-finished event: " + ex);
-          }
-          evaluateToNull(expression);
+          evaluateToNull( expression );
         }
 
-        expression.setRuntime(oldRuntime);
+        expression.setRuntime( oldRuntime );
       }
     }
   }
 
-  protected void reactivateExpressions(final boolean deepTraversing)
-  {
+  protected void reactivateExpressions( final boolean deepTraversing ) {
     final int activeLevel = getProcessingLevel();
     final ExpressionRuntime runtime = getRuntime();
 
     final int runlevelCount = getRunLevelCount();
-    for (int levelIdx = 0; levelIdx < runlevelCount; levelIdx++)
-    {
-      final LevelStorage levelData = getRunLevel(levelIdx);
+    for ( int levelIdx = 0; levelIdx < runlevelCount; levelIdx++ ) {
+      final LevelStorage levelData = getRunLevel( levelIdx );
       final int level = levelData.getLevelNumber();
-      if (level < activeLevel)
-      {
+      if ( level < activeLevel ) {
         break;
       }
 
       final Iterator<Expression> expressions = levelData.getActiveExpressions();
-      while (expressions.hasNext())
-      {
+      while ( expressions.hasNext() ) {
         final Expression expression = expressions.next();
-        if (deepTraversing && expression.isDeepTraversing() == false)
-        {
+        if ( deepTraversing && expression.isDeepTraversing() == false ) {
           continue;
         }
 
         final ExpressionRuntime oldRuntime = expression.getRuntime();
-        expression.setRuntime(runtime);
-        evaluateSingleExpression(expression);
-        expression.setRuntime(oldRuntime);
+        expression.setRuntime( runtime );
+        evaluateSingleExpression( expression );
+        expression.setRuntime( oldRuntime );
       }
     }
   }
 
-  protected void evaluateSingleExpression(final Expression expression)
-  {
+  protected void evaluateSingleExpression( final Expression expression ) {
     final int activeLevel = getProcessingLevel();
     final String name = expression.getName();
     Object value;
-    try
-    {
-      if (activeLevel <= expression.getDependencyLevel())
-      {
+    try {
+      if ( activeLevel <= expression.getDependencyLevel() ) {
         value = expression.getValue();
-      }
-      else
-      {
+      } else {
         value = null;
       }
-    }
-    catch (final InvalidReportStateException fe)
-    {
+    } catch ( final InvalidReportStateException fe ) {
       throw fe;
-    }
-    catch (final Exception e)
-    {
-      logger.info("Evaluation of expression '" + name + "'failed.", e);
+    } catch ( final Exception e ) {
+      logger.info( "Evaluation of expression '" + name + "'failed.", e );
       value = null;
     }
 
-    if (name != null)
-    {
-//      DebugLog.log("Eval Expression: " + name + " " + value);
-      updateMasterDataRow(name, value);
+    if ( name != null ) {
+      //      DebugLog.log("Eval Expression: " + name + " " + value);
+      updateMasterDataRow( name, value );
     }
   }
 
-  protected void evaluateToNull(final Expression expression)
-  {
+  protected void evaluateToNull( final Expression expression ) {
     final String name = expression.getName();
-    if (name != null)
-    {
-      updateMasterDataRow(name, null);
+    if ( name != null ) {
+      updateMasterDataRow( name, null );
     }
   }
 
-  protected void updateMasterDataRow(final String name, final Object value)
-  {
+  protected void updateMasterDataRow( final String name, final Object value ) {
   }
 
 }

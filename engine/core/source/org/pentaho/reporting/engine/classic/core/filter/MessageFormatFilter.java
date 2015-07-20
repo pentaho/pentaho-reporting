@@ -17,13 +17,13 @@
 
 package org.pentaho.reporting.engine.classic.core.filter;
 
-import java.util.Locale;
-import java.util.TimeZone;
-
 import org.pentaho.reporting.engine.classic.core.ReportElement;
 import org.pentaho.reporting.engine.classic.core.ResourceBundleFactory;
 import org.pentaho.reporting.engine.classic.core.function.ExpressionRuntime;
 import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
+
+import java.util.Locale;
+import java.util.TimeZone;
 
 /**
  * A filter that formats values from a data source to a string representation.
@@ -35,8 +35,7 @@ import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
  * @author Thomas Morgner
  * @see java.text.MessageFormat
  */
-public class MessageFormatFilter implements DataSource
-{
+public class MessageFormatFilter implements DataSource {
 
   /**
    * The message format support translates raw message strings into useable MessageFormat parameters and read the
@@ -52,8 +51,7 @@ public class MessageFormatFilter implements DataSource
   /**
    * Default constructor. <P> Uses a general number format for the current locale.
    */
-  public MessageFormatFilter()
-  {
+  public MessageFormatFilter() {
     messageFormatSupport = new MessageFormatSupport();
   }
 
@@ -62,9 +60,8 @@ public class MessageFormatFilter implements DataSource
    *
    * @param format the message format.
    */
-  public void setFormatString(final String format)
-  {
-    messageFormatSupport.setFormatString(format);
+  public void setFormatString( final String format ) {
+    messageFormatSupport.setFormatString( format );
   }
 
   /**
@@ -72,8 +69,7 @@ public class MessageFormatFilter implements DataSource
    *
    * @return the format string.
    */
-  public String getFormatString()
-  {
+  public String getFormatString() {
     return messageFormatSupport.getFormatString();
   }
 
@@ -89,27 +85,23 @@ public class MessageFormatFilter implements DataSource
    * @param element
    * @return The formatted value.
    */
-  public Object getValue(final ExpressionRuntime runtime, final ReportElement element)
-  {
-    if (runtime == null)
-    {
+  public Object getValue( final ExpressionRuntime runtime, final ReportElement element ) {
+    if ( runtime == null ) {
       return null;
     }
 
     final ResourceBundleFactory resourceBundleFactory = runtime.getResourceBundleFactory();
     final Locale newLocale = resourceBundleFactory.getLocale();
-    if (ObjectUtilities.equal(newLocale, locale) == false)
-    {
-      messageFormatSupport.setLocale(resourceBundleFactory.getLocale());
+    if ( ObjectUtilities.equal( newLocale, locale ) == false ) {
+      messageFormatSupport.setLocale( resourceBundleFactory.getLocale() );
       locale = newLocale;
     }
     final TimeZone newTimeZone = resourceBundleFactory.getTimeZone();
-    if (ObjectUtilities.equal(newTimeZone, timeZone) == false)
-    {
-      messageFormatSupport.setTimeZone(newTimeZone);
+    if ( ObjectUtilities.equal( newTimeZone, timeZone ) == false ) {
+      messageFormatSupport.setTimeZone( newTimeZone );
       timeZone = newTimeZone;
     }
-    return messageFormatSupport.performFormat(runtime.getDataRow());
+    return messageFormatSupport.performFormat( runtime.getDataRow() );
   }
 
   /**
@@ -119,8 +111,7 @@ public class MessageFormatFilter implements DataSource
    * @throws CloneNotSupportedException this should never happen.
    */
   public MessageFormatFilter clone()
-      throws CloneNotSupportedException
-  {
+    throws CloneNotSupportedException {
     final MessageFormatFilter mf = (MessageFormatFilter) super.clone();
     mf.messageFormatSupport = (MessageFormatSupport) messageFormatSupport.clone();
     return mf;
@@ -131,8 +122,7 @@ public class MessageFormatFilter implements DataSource
    *
    * @return the replacement string for null-values.
    */
-  public String getNullString()
-  {
+  public String getNullString() {
     return messageFormatSupport.getNullString();
   }
 
@@ -141,8 +131,7 @@ public class MessageFormatFilter implements DataSource
    *
    * @param nullString the replacement string for null-values.
    */
-  public void setNullString(final String nullString)
-  {
-    this.messageFormatSupport.setNullString(nullString);
+  public void setNullString( final String nullString ) {
+    this.messageFormatSupport.setNullString( nullString );
   }
 }

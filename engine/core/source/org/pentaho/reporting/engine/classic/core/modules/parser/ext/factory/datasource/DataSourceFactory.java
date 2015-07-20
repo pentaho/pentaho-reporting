@@ -17,10 +17,10 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.parser.ext.factory.datasource;
 
-import java.util.Iterator;
-
 import org.pentaho.reporting.engine.classic.core.modules.parser.ext.factory.base.ClassFactory;
 import org.pentaho.reporting.engine.classic.core.modules.parser.ext.factory.base.ObjectDescription;
+
+import java.util.Iterator;
 
 
 /**
@@ -28,15 +28,14 @@ import org.pentaho.reporting.engine.classic.core.modules.parser.ext.factory.base
  *
  * @author Thomas Morgner
  */
-public interface DataSourceFactory extends ClassFactory
-{
+public interface DataSourceFactory extends ClassFactory {
   /**
    * Returns a data source description.
    *
    * @param name the name.
    * @return The description.
    */
-  public ObjectDescription getDataSourceDescription(String name);
+  public ObjectDescription getDataSourceDescription( String name );
 
   /**
    * Returns a data source name.
@@ -44,7 +43,7 @@ public interface DataSourceFactory extends ClassFactory
    * @param od the description.
    * @return The name.
    */
-  public String getDataSourceName(ObjectDescription od);
+  public String getDataSourceName( ObjectDescription od );
 
   /**
    * Returns the names of all registered datasources as iterator.

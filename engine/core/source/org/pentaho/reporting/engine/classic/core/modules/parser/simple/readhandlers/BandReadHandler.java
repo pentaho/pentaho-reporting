@@ -17,8 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.parser.simple.readhandlers;
 
-import java.util.ArrayList;
-
 import org.pentaho.reporting.engine.classic.core.AttributeNames;
 import org.pentaho.reporting.engine.classic.core.Band;
 import org.pentaho.reporting.engine.classic.core.Element;
@@ -33,8 +31,9 @@ import org.pentaho.reporting.libraries.xmlns.parser.XmlReadHandler;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 
-public class BandReadHandler extends AbstractTextElementReadHandler
-{
+import java.util.ArrayList;
+
+public class BandReadHandler extends AbstractTextElementReadHandler {
   /**
    * Literal text for an XML report element.
    */
@@ -141,25 +140,21 @@ public class BandReadHandler extends AbstractTextElementReadHandler
   private ArrayList<ReportElementReadHandler> elementHandlers;
   private ArrayList<StyleExpressionHandler> styleExpressionHandlers;
 
-  public BandReadHandler()
-  {
-    this(new Band());
+  public BandReadHandler() {
+    this( new Band() );
   }
 
-  protected BandReadHandler(final Band band)
-  {
-    if (band == null)
-    {
+  protected BandReadHandler( final Band band ) {
+    if ( band == null ) {
       throw new NullPointerException();
     }
     this.band = band;
-    this.bandFactory = new BandElementFactory(band);
+    this.bandFactory = new BandElementFactory( band );
     this.elementHandlers = new ArrayList<ReportElementReadHandler>();
     styleExpressionHandlers = new ArrayList<StyleExpressionHandler>();
   }
 
-  protected TextElementFactory getTextElementFactory()
-  {
+  protected TextElementFactory getTextElementFactory() {
     return bandFactory;
   }
 
@@ -169,42 +164,31 @@ public class BandReadHandler extends AbstractTextElementReadHandler
    * @param attr the attributes.
    * @throws org.xml.sax.SAXException if there is a parsing error.
    */
-  protected void startParsing(final PropertyAttributes attr)
-      throws SAXException
-  {
-    super.startParsing(attr);
-    handleLayout(attr);
+  protected void startParsing( final PropertyAttributes attr )
+    throws SAXException {
+    super.startParsing( attr );
+    handleLayout( attr );
   }
 
-  public Band getBand()
-  {
+  public Band getBand() {
     return band;
   }
 
-  private void handleLayout(final Attributes attr)
-  {
-    final String layoutManagerName = attr.getValue(getUri(), BandReadHandler.LAYOUT_ATT);
-    if (layoutManagerName != null)
-    {
-      if ("org.jfree.report.layout.StaticLayoutManager".equals(layoutManagerName))
-      {
-        getBand().getStyle().setStyleProperty(BandStyleKeys.LAYOUT, "canvas");
+  private void handleLayout( final Attributes attr ) {
+    final String layoutManagerName = attr.getValue( getUri(), BandReadHandler.LAYOUT_ATT );
+    if ( layoutManagerName != null ) {
+      if ( "org.jfree.report.layout.StaticLayoutManager".equals( layoutManagerName ) ) {
+        getBand().getStyle().setStyleProperty( BandStyleKeys.LAYOUT, "canvas" );
+      } else if ( "org.jfree.report.layout.StackedLayoutManager".equals( layoutManagerName ) ) {
+        getBand().getStyle().setStyleProperty( BandStyleKeys.LAYOUT, "block" );
       }
-      else if ("org.jfree.report.layout.StackedLayoutManager".equals(layoutManagerName))
-      {
-        getBand().getStyle().setStyleProperty(BandStyleKeys.LAYOUT, "block");
-      }
-      if ("org.pentaho.reporting.engine.classic.core.layout.StaticLayoutManager".equals(layoutManagerName))
-      {
-        getBand().getStyle().setStyleProperty(BandStyleKeys.LAYOUT, "canvas");
-      }
-      else if ("org.pentaho.reporting.engine.classic.core.layout.StackedLayoutManager".equals(layoutManagerName))
-      {
-        getBand().getStyle().setStyleProperty(BandStyleKeys.LAYOUT, "block");
-      }
-      else
-      {
-        getBand().getStyle().setStyleProperty(BandStyleKeys.LAYOUT, layoutManagerName);
+      if ( "org.pentaho.reporting.engine.classic.core.layout.StaticLayoutManager".equals( layoutManagerName ) ) {
+        getBand().getStyle().setStyleProperty( BandStyleKeys.LAYOUT, "canvas" );
+      } else if ( "org.pentaho.reporting.engine.classic.core.layout.StackedLayoutManager"
+        .equals( layoutManagerName ) ) {
+        getBand().getStyle().setStyleProperty( BandStyleKeys.LAYOUT, "block" );
+      } else {
+        getBand().getStyle().setStyleProperty( BandStyleKeys.LAYOUT, layoutManagerName );
       }
     }
   }
@@ -217,29 +201,25 @@ public class BandReadHandler extends AbstractTextElementReadHandler
    * @return the handler or null, if the tagname is invalid.
    * @throws SAXException if there is a parsing error.
    */
-  protected XmlReadHandler getHandlerForChild(final String uri,
-                                              final String tagName,
-                                              final PropertyAttributes atts)
-      throws SAXException
-  {
+  protected XmlReadHandler getHandlerForChild( final String uri,
+                                               final String tagName,
+                                               final PropertyAttributes atts )
+    throws SAXException {
     final ReportElementReadHandlerFactory factory = ReportElementReadHandlerFactory.getInstance();
-    final ReportElementReadHandler handler = factory.getHandler(uri, tagName);
-    if (handler != null)
-    {
-      elementHandlers.add(handler);
+    final ReportElementReadHandler handler = factory.getHandler( uri, tagName );
+    if ( handler != null ) {
+      elementHandlers.add( handler );
       return handler;
     }
 
 
-    if (isSameNamespace(uri) == false)
-    {
+    if ( isSameNamespace( uri ) == false ) {
       return null;
     }
 
-    if ("style-expression".equals(tagName))
-    {
+    if ( "style-expression".equals( tagName ) ) {
       final StyleExpressionHandler stylehandler = new StyleExpressionHandler();
-      styleExpressionHandlers.add(stylehandler);
+      styleExpressionHandlers.add( stylehandler );
       return stylehandler;
     }
     return null;
@@ -252,25 +232,21 @@ public class BandReadHandler extends AbstractTextElementReadHandler
    * @throws SAXException if there is a parsing error.
    */
   protected void doneParsing()
-      throws SAXException
-  {
-    for (int i = 0; i < elementHandlers.size(); i++)
-    {
-      final XmlReadHandler readHandler = elementHandlers.get(i);
+    throws SAXException {
+    for ( int i = 0; i < elementHandlers.size(); i++ ) {
+      final XmlReadHandler readHandler = elementHandlers.get( i );
       final Element e = (Element) readHandler.getObject();
-      band.addElement(e);
+      band.addElement( e );
     }
 
-    for (int i = 0; i < styleExpressionHandlers.size(); i++)
-    {
-      final StyleExpressionHandler handler = styleExpressionHandlers.get(i);
-      if (handler.getKey() != null)
-      {
-        band.setStyleExpression(handler.getKey(), handler.getExpression());
+    for ( int i = 0; i < styleExpressionHandlers.size(); i++ ) {
+      final StyleExpressionHandler handler = styleExpressionHandlers.get( i );
+      if ( handler.getKey() != null ) {
+        band.setStyleExpression( handler.getKey(), handler.getExpression() );
       }
     }
 
-    band.setAttribute(AttributeNames.Core.NAMESPACE, AttributeNames.Core.SOURCE, getRootHandler().getSource());
+    band.setAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.SOURCE, getRootHandler().getSource() );
     super.doneParsing();
   }
 
@@ -279,8 +255,7 @@ public class BandReadHandler extends AbstractTextElementReadHandler
    *
    * @return the object.
    */
-  public Object getObject()
-  {
+  public Object getObject() {
     return band;
   }
 }

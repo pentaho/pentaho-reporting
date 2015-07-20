@@ -17,10 +17,10 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.parser.ext.factory.base;
 
+import org.pentaho.reporting.libraries.base.config.Configuration;
+
 import java.util.ArrayList;
 import java.util.Iterator;
-
-import org.pentaho.reporting.libraries.base.config.Configuration;
 
 
 /**
@@ -29,14 +29,12 @@ import org.pentaho.reporting.libraries.base.config.Configuration;
  *
  * @author Thomas Morgner.
  */
-public class ArrayClassFactory implements ClassFactory
-{
+public class ArrayClassFactory implements ClassFactory {
 
   /**
    * Default constructor.
    */
-  public ArrayClassFactory()
-  {
+  public ArrayClassFactory() {
     super();
   }
 
@@ -46,14 +44,10 @@ public class ArrayClassFactory implements ClassFactory
    * @param c the class.
    * @return The object description.
    */
-  public ObjectDescription getDescriptionForClass(final Class c)
-  {
-    if (c.isArray())
-    {
-      return new ArrayObjectDescription(c);
-    }
-    else
-    {
+  public ObjectDescription getDescriptionForClass( final Class c ) {
+    if ( c.isArray() ) {
+      return new ArrayObjectDescription( c );
+    } else {
       return null;
     }
   }
@@ -66,8 +60,7 @@ public class ArrayClassFactory implements ClassFactory
    * @return The object description.
    */
   public ObjectDescription getSuperClassObjectDescription
-      (final Class d, final ObjectDescription knownSuperClass)
-  {
+  ( final Class d, final ObjectDescription knownSuperClass ) {
     return null;
   }
 
@@ -79,10 +72,9 @@ public class ArrayClassFactory implements ClassFactory
    *
    * @return The iterator.
    */
-  public Iterator getRegisteredClasses()
-  {
+  public Iterator getRegisteredClasses() {
     final ArrayList l = new ArrayList();
-    l.add(Object[].class);
+    l.add( Object[].class );
     return l.iterator();
   }
 
@@ -94,8 +86,7 @@ public class ArrayClassFactory implements ClassFactory
    *
    * @param config the configuration, never null
    */
-  public void configure(final Configuration config)
-  {
+  public void configure( final Configuration config ) {
     // nothing required
   }
 
@@ -105,14 +96,11 @@ public class ArrayClassFactory implements ClassFactory
    * @param o the other object.
    * @return true, if both object factories describe the same objects, false otherwise.
    */
-  public boolean equals(final Object o)
-  {
-    if (this == o)
-    {
+  public boolean equals( final Object o ) {
+    if ( this == o ) {
       return true;
     }
-    if (!(o instanceof ArrayClassFactory))
-    {
+    if ( !( o instanceof ArrayClassFactory ) ) {
       return false;
     }
     return true;
@@ -124,8 +112,7 @@ public class ArrayClassFactory implements ClassFactory
    *
    * @return the computed hashcode.
    */
-  public int hashCode()
-  {
+  public int hashCode() {
     return getClass().hashCode();
   }
 }

@@ -17,10 +17,9 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.gui.base.internal;
 
-import java.awt.Component;
-import java.awt.Dimension;
-import javax.swing.JScrollPane;
+import javax.swing.*;
 import javax.swing.plaf.ComponentUI;
+import java.awt.*;
 
 /**
  * Rewires the scrollpane's preferred size property to the minimum-size property to avoid a non-linear behavior when
@@ -28,8 +27,7 @@ import javax.swing.plaf.ComponentUI;
  *
  * @author Thomas Morgner
  */
-public class MinimalScrollPane extends JScrollPane
-{
+public class MinimalScrollPane extends JScrollPane {
   /**
    * Creates a <code>JScrollPane</code> that displays the view component in a viewport whose view position can be
    * controlled with a pair of scrollbars. The scrollbar policies specify when the scrollbars are displayed, For
@@ -42,9 +40,8 @@ public class MinimalScrollPane extends JScrollPane
    * @param hsbPolicy an integer that specifies the horizontal scrollbar policy
    * @see #setViewportView
    */
-  public MinimalScrollPane(final Component view, final int vsbPolicy, final int hsbPolicy)
-  {
-    super(view, vsbPolicy, hsbPolicy);
+  public MinimalScrollPane( final Component view, final int vsbPolicy, final int hsbPolicy ) {
+    super( view, vsbPolicy, hsbPolicy );
   }
 
   /**
@@ -54,9 +51,8 @@ public class MinimalScrollPane extends JScrollPane
    * @param view the component to display in the scrollpane's viewport
    * @see #setViewportView
    */
-  public MinimalScrollPane(final Component view)
-  {
-    super(view);
+  public MinimalScrollPane( final Component view ) {
+    super( view );
   }
 
   /**
@@ -67,17 +63,15 @@ public class MinimalScrollPane extends JScrollPane
    * @param hsbPolicy an integer that specifies the horizontal scrollbar policy
    * @see #setViewportView
    */
-  public MinimalScrollPane(final int vsbPolicy, final int hsbPolicy)
-  {
-    super(vsbPolicy, hsbPolicy);
+  public MinimalScrollPane( final int vsbPolicy, final int hsbPolicy ) {
+    super( vsbPolicy, hsbPolicy );
   }
 
   /**
    * Creates an empty (no viewport view) <code>JScrollPane</code> where both horizontal and vertical scrollbars appear
    * when needed.
    */
-  public MinimalScrollPane()
-  {
+  public MinimalScrollPane() {
   }
 
   /**
@@ -89,11 +83,9 @@ public class MinimalScrollPane extends JScrollPane
    * @see #setPreferredSize
    * @see ComponentUI
    */
-  public Dimension getPreferredSize()
-  {
+  public Dimension getPreferredSize() {
     final Dimension preferredSize = super.getPreferredSize();
-    if (preferredSize == null)
-    {
+    if ( preferredSize == null ) {
       return null;
     }
     return super.getMinimumSize();

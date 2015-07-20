@@ -23,12 +23,10 @@ import org.pentaho.reporting.engine.classic.core.modules.parser.base.PropertyAtt
 import org.xml.sax.SAXException;
 
 public class ImageFieldReadHandler
-    extends AbstractImageElementReadHandler
-{
+  extends AbstractImageElementReadHandler {
   private ContentFieldElementFactory elementFactory;
 
-  public ImageFieldReadHandler()
-  {
+  public ImageFieldReadHandler() {
     this.elementFactory = new ContentFieldElementFactory();
   }
 
@@ -38,26 +36,22 @@ public class ImageFieldReadHandler
    * @param atts the attributes.
    * @throws org.xml.sax.SAXException if there is a parsing error.
    */
-  protected void startParsing(final PropertyAttributes atts)
-      throws SAXException
-  {
-    super.startParsing(atts);
-    handleFieldName(atts);
+  protected void startParsing( final PropertyAttributes atts )
+    throws SAXException {
+    super.startParsing( atts );
+    handleFieldName( atts );
   }
 
-  private void handleFieldName(final PropertyAttributes atts)
-      throws SAXException
-  {
-    final String fieldName = atts.getValue(getUri(), "fieldname");
-    if (fieldName == null)
-    {
-      throw new SAXException("Required attribute 'fieldname' is missing.");
+  private void handleFieldName( final PropertyAttributes atts )
+    throws SAXException {
+    final String fieldName = atts.getValue( getUri(), "fieldname" );
+    if ( fieldName == null ) {
+      throw new SAXException( "Required attribute 'fieldname' is missing." );
     }
-    elementFactory.setFieldname(fieldName);
+    elementFactory.setFieldname( fieldName );
   }
 
-  protected ElementFactory getElementFactory()
-  {
+  protected ElementFactory getElementFactory() {
     return elementFactory;
   }
 }

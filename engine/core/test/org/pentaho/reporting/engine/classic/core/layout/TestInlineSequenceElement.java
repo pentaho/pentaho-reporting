@@ -20,37 +20,30 @@ package org.pentaho.reporting.engine.classic.core.layout;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderNode;
 import org.pentaho.reporting.engine.classic.core.layout.process.layoutrules.InlineSequenceElement;
 
-class TestInlineSequenceElement implements InlineSequenceElement
-{
+class TestInlineSequenceElement implements InlineSequenceElement {
   private Classification classification;
 
-  TestInlineSequenceElement(final Classification classification)
-  {
+  TestInlineSequenceElement( final Classification classification ) {
     this.classification = classification;
   }
 
-  public long getMinimumWidth(final RenderNode node)
-  {
+  public long getMinimumWidth( final RenderNode node ) {
     return 10;
   }
 
-  public long getMaximumWidth(final RenderNode node)
-  {
+  public long getMaximumWidth( final RenderNode node ) {
     return 10;
   }
 
-  public boolean isPreserveWhitespace(final RenderNode node)
-  {
+  public boolean isPreserveWhitespace( final RenderNode node ) {
     return false;
   }
 
-  public int getClassification()
-  {
+  public int getClassification() {
     return classification.ordinal();
   }
 
-  public Classification getType()
-  {
+  public Classification getType() {
     return classification;
   }
 }

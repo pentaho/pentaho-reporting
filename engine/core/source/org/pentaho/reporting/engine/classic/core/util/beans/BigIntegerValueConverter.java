@@ -25,14 +25,12 @@ import java.math.BigInteger;
  *
  * @author Thomas Morgner
  */
-public class BigIntegerValueConverter implements ValueConverter
-{
+public class BigIntegerValueConverter implements ValueConverter {
 
   /**
    * Creates a new value converter.
    */
-  public BigIntegerValueConverter()
-  {
+  public BigIntegerValueConverter() {
   }
 
   /**
@@ -41,17 +39,14 @@ public class BigIntegerValueConverter implements ValueConverter
    * @param o the attribute ({@link java.math.BigInteger} expected).
    * @return A string representing the {@link java.math.BigInteger} value.
    */
-  public String toAttributeValue(final Object o) throws BeanException
-  {
-    if (o == null)
-    {
+  public String toAttributeValue( final Object o ) throws BeanException {
+    if ( o == null ) {
       throw new NullPointerException();
     }
-    if (o instanceof BigInteger)
-    {
+    if ( o instanceof BigInteger ) {
       return o.toString();
     }
-    throw new BeanException("Failed to convert object of type " + o.getClass() + ": Not a big-integer.");
+    throw new BeanException( "Failed to convert object of type " + o.getClass() + ": Not a big-integer." );
   }
 
   /**
@@ -60,25 +55,19 @@ public class BigIntegerValueConverter implements ValueConverter
    * @param s the string.
    * @return a {@link java.math.BigInteger}.
    */
-  public Object toPropertyValue(final String s) throws BeanException
-  {
-    if (s == null)
-    {
+  public Object toPropertyValue( final String s ) throws BeanException {
+    if ( s == null ) {
       throw new NullPointerException();
     }
     final String val = s.trim();
-    if (val.length() == 0)
-    {
-      throw BeanException.getInstance("Failed to convert empty string to number", null);
+    if ( val.length() == 0 ) {
+      throw BeanException.getInstance( "Failed to convert empty string to number", null );
     }
 
-    try
-    {
-      return new BigInteger(val);
-    }
-    catch (NumberFormatException be)
-    {
-      throw BeanException.getInstance("Failed to parse string as number", be);
+    try {
+      return new BigInteger( val );
+    } catch ( NumberFormatException be ) {
+      throw BeanException.getInstance( "Failed to parse string as number", be );
     }
   }
 }

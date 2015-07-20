@@ -30,61 +30,51 @@ import org.pentaho.reporting.engine.classic.core.modules.output.table.base.Sheet
 import org.pentaho.reporting.engine.classic.core.modules.output.table.base.TableContentProducer;
 import org.pentaho.reporting.engine.classic.core.modules.output.table.base.layout.model.ResultTable;
 
-public class TableDebugOutputProcessor extends AbstractTableOutputProcessor
-{
+public class TableDebugOutputProcessor extends AbstractTableOutputProcessor {
   private OutputProcessorMetaData metaData;
   private FlowSelector flowSelector;
   private SheetLayout layout;
   private LogicalPageBox logicalPage;
   private TableContentProducer contentProducer;
 
-  public TableDebugOutputProcessor(final OutputProcessorMetaData metaData)
-  {
+  public TableDebugOutputProcessor( final OutputProcessorMetaData metaData ) {
     this.metaData = metaData;
-    this.flowSelector = new AllPageFlowSelector(true);
+    this.flowSelector = new AllPageFlowSelector( true );
   }
 
-  protected void updateTableContent(final LogicalPageKey logicalPageKey,
-                                    final LogicalPageBox logicalPageBox,
-                                    final TableContentProducer tableContentProducer,
-                                    final boolean performOutput) throws ContentProcessingException
-  {
+  protected void updateTableContent( final LogicalPageKey logicalPageKey,
+                                     final LogicalPageBox logicalPageBox,
+                                     final TableContentProducer tableContentProducer,
+                                     final boolean performOutput ) throws ContentProcessingException {
     this.logicalPage = logicalPageBox;
     this.contentProducer = tableContentProducer;
     this.layout = contentProducer.getSheetLayout();
   }
 
-  protected void processTableContent(final LogicalPageKey logicalPageKey,
-                                     final LogicalPageBox logicalPage,
-                                     final TableContentProducer contentProducer) throws ContentProcessingException
-  {
+  protected void processTableContent( final LogicalPageKey logicalPageKey,
+                                      final LogicalPageBox logicalPage,
+                                      final TableContentProducer contentProducer ) throws ContentProcessingException {
     this.logicalPage = logicalPage;
     this.contentProducer = contentProducer;
     this.layout = contentProducer.getSheetLayout();
   }
 
-  public void validate(final ResultTable resultTable)
-  {
-    try
-    {
+  public void validate( final ResultTable resultTable ) {
+    try {
       // then add it to the layout-producer ..
-      resultTable.validate(logicalPage, layout, contentProducer);
-    }
-    catch (AssertionFailedError afe)
-    {
-      ModelPrinter.INSTANCE.print(logicalPage);
-      SheetLayoutPrinter.print(logicalPage, layout, contentProducer);
+      resultTable.validate( logicalPage, layout, contentProducer );
+    } catch ( AssertionFailedError afe ) {
+      ModelPrinter.INSTANCE.print( logicalPage );
+      SheetLayoutPrinter.print( logicalPage, layout, contentProducer );
       throw afe;
     }
   }
 
-  protected FlowSelector getFlowSelector()
-  {
+  protected FlowSelector getFlowSelector() {
     return flowSelector;
   }
 
-  public OutputProcessorMetaData getMetaData()
-  {
+  public OutputProcessorMetaData getMetaData() {
     return metaData;
   }
 

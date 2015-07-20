@@ -17,14 +17,13 @@
 
 package org.pentaho.reporting.engine.classic.core.function;
 
-import java.awt.BorderLayout;
-import java.awt.Frame;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
+
+import java.awt.*;
+import java.io.IOException;
+import java.io.ObjectInputStream;
 
 /**
  * Paints a AWT or Swing Component, fitting the component into the element bounds. The component must be contained in
@@ -34,13 +33,11 @@ import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
  *
  * @author Thomas Morgner
  * @deprecated Use the new Component-Element instead. It uses drawables for this job, and therefore the result looks
- *             much better. This method does no longer work, as it depended on implementation details that are no longer
- *             in use.
+ * much better. This method does no longer work, as it depended on implementation details that are no longer in use.
  */
-@SuppressWarnings("deprecation")
-public class PaintComponentFunction extends AbstractFunction
-{
-  private static final Log logger = LogFactory.getLog(PaintComponentFunction.class);
+@SuppressWarnings( "deprecation" )
+public class PaintComponentFunction extends AbstractFunction {
+  private static final Log logger = LogFactory.getLog( PaintComponentFunction.class );
 
   /**
    * Supplies a valid AWT-peer for the draw operation.
@@ -64,12 +61,10 @@ public class PaintComponentFunction extends AbstractFunction
   /**
    * DefaultConstructor.
    */
-  public PaintComponentFunction()
-  {
-    if (PaintComponentFunction.isHeadless() == false)
-    {
+  public PaintComponentFunction() {
+    if ( PaintComponentFunction.isHeadless() == false ) {
       peerSupply = new Frame();
-      peerSupply.setLayout(new BorderLayout());
+      peerSupply.setLayout( new BorderLayout() );
     }
     this.scale = 1;
   }
@@ -80,8 +75,7 @@ public class PaintComponentFunction extends AbstractFunction
    *
    * @return The field name.
    */
-  public String getElement()
-  {
+  public String getElement() {
     return element;
   }
 
@@ -91,10 +85,8 @@ public class PaintComponentFunction extends AbstractFunction
    *
    * @param field the field name (null not permitted).
    */
-  public void setElement(final String field)
-  {
-    if (field == null)
-    {
+  public void setElement( final String field ) {
+    if ( field == null ) {
       throw new NullPointerException();
     }
     this.element = field;
@@ -105,8 +97,7 @@ public class PaintComponentFunction extends AbstractFunction
    *
    * @return The field name.
    */
-  public String getField()
-  {
+  public String getField() {
     return field;
   }
 
@@ -115,8 +106,7 @@ public class PaintComponentFunction extends AbstractFunction
    *
    * @param field the field name.
    */
-  public void setField(final String field)
-  {
+  public void setField( final String field ) {
     this.field = field;
   }
 
@@ -125,10 +115,9 @@ public class PaintComponentFunction extends AbstractFunction
    *
    * @return true, if this is an headless environment, false otherwise.
    */
-  protected static boolean isHeadless()
-  {
-    return "true".equals(ClassicEngineBoot.getInstance().getGlobalConfig().getConfigProperty
-        ("java.awt.headless", "false"));
+  protected static boolean isHeadless() {
+    return "true".equals( ClassicEngineBoot.getInstance().getGlobalConfig().getConfigProperty
+      ( "java.awt.headless", "false" ) );
   }
 
   /**
@@ -136,8 +125,7 @@ public class PaintComponentFunction extends AbstractFunction
    *
    * @return the value of the function.
    */
-  public Object getValue()
-  {
+  public Object getValue() {
     return null;
   }
 
@@ -147,8 +135,7 @@ public class PaintComponentFunction extends AbstractFunction
    *
    * @param scale the scale factor.
    */
-  public void setScale(final float scale)
-  {
+  public void setScale( final float scale ) {
     this.scale = scale;
   }
 
@@ -158,8 +145,7 @@ public class PaintComponentFunction extends AbstractFunction
    *
    * @return the scale factor.
    */
-  public float getScale()
-  {
+  public float getScale() {
     return scale;
   }
 
@@ -169,13 +155,11 @@ public class PaintComponentFunction extends AbstractFunction
    *
    * @return a copy of this function.
    */
-  public Expression getInstance()
-  {
+  public Expression getInstance() {
     final PaintComponentFunction pc = (PaintComponentFunction) super.getInstance();
-    if (PaintComponentFunction.isHeadless() == false)
-    {
+    if ( PaintComponentFunction.isHeadless() == false ) {
       pc.peerSupply = new Frame();
-      pc.peerSupply.setLayout(new BorderLayout());
+      pc.peerSupply.setLayout( new BorderLayout() );
     }
     return pc;
   }
@@ -187,14 +171,12 @@ public class PaintComponentFunction extends AbstractFunction
    * @throws IOException            when reading the stream fails.
    * @throws ClassNotFoundException if a class definition for a serialized object could not be found.
    */
-  private void readObject(final ObjectInputStream in)
-      throws IOException, ClassNotFoundException
-  {
+  private void readObject( final ObjectInputStream in )
+    throws IOException, ClassNotFoundException {
     in.defaultReadObject();
-    if (PaintComponentFunction.isHeadless() == false)
-    {
+    if ( PaintComponentFunction.isHeadless() == false ) {
       peerSupply = new Frame();
-      peerSupply.setLayout(new BorderLayout());
+      peerSupply.setLayout( new BorderLayout() );
     }
   }
 }

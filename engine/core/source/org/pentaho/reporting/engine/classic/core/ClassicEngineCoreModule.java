@@ -17,11 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.core;
 
-import java.awt.BasicStroke;
-import java.beans.PropertyEditorManager;
-import java.io.InputStream;
-import java.util.TimeZone;
-
 import org.pentaho.reporting.engine.classic.core.metadata.ElementMetaDataParser;
 import org.pentaho.reporting.engine.classic.core.metadata.ElementType;
 import org.pentaho.reporting.engine.classic.core.metadata.ElementTypeRegistry;
@@ -65,6 +60,11 @@ import org.pentaho.reporting.libraries.base.boot.ModuleInitializeException;
 import org.pentaho.reporting.libraries.base.boot.SubSystem;
 import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
 
+import java.awt.*;
+import java.beans.PropertyEditorManager;
+import java.io.InputStream;
+import java.util.TimeZone;
+
 
 /**
  * The CoreModule is used to represent the base classes of JFreeReport in a PackageManager-compatible way. Modules may
@@ -75,34 +75,33 @@ import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
  *
  * @author Thomas Morgner
  */
-public class ClassicEngineCoreModule extends AbstractModule
-{
+public class ClassicEngineCoreModule extends AbstractModule {
   /**
    * The 'no-printer-available' property key.
    */
   public static final String NO_PRINTER_AVAILABLE_KEY
-      = "org.pentaho.reporting.engine.classic.core.NoPrinterAvailable";
+    = "org.pentaho.reporting.engine.classic.core.NoPrinterAvailable";
 
   /**
    * The G2 fontrenderer bug override configuration key.
    */
   public static final String FONTRENDERER_ISBUGGY_FRC_KEY
-      = "org.pentaho.reporting.engine.classic.core.layout.fontrenderer.IsBuggyFRC";
+    = "org.pentaho.reporting.engine.classic.core.layout.fontrenderer.IsBuggyFRC";
 
   /**
    * The text aliasing configuration key.
    */
   public static final String FONTRENDERER_USEALIASING_KEY
-      = "org.pentaho.reporting.engine.classic.core.layout.fontrenderer.UseAliasing";
+    = "org.pentaho.reporting.engine.classic.core.layout.fontrenderer.UseAliasing";
 
   /**
    * A configuration key that defines, whether errors will abort the report processing. This defaults to true.
    */
   public static final String STRICT_ERROR_HANDLING_KEY
-      = "org.pentaho.reporting.engine.classic.core.StrictErrorHandling";
+    = "org.pentaho.reporting.engine.classic.core.StrictErrorHandling";
 
   public static final String COMPLEX_TEXT_CONFIG_OVERRIDE_KEY =
-      "org.pentaho.reporting.engine.classic.core.layout.fontrenderer.ComplexTextLayout";
+    "org.pentaho.reporting.engine.classic.core.layout.fontrenderer.ComplexTextLayout";
 
   /**
    * Creates a new module definition based on the 'coremodule.properties' file of this package.
@@ -110,16 +109,14 @@ public class ClassicEngineCoreModule extends AbstractModule
    * @throws ModuleInitializeException if the file could not be loaded.
    */
   public ClassicEngineCoreModule()
-      throws ModuleInitializeException
-  {
+    throws ModuleInitializeException {
     final InputStream in = ObjectUtilities.getResourceRelativeAsStream
-        ("coremodule.properties", ClassicEngineCoreModule.class);
-    if (in == null)
-    {
+      ( "coremodule.properties", ClassicEngineCoreModule.class );
+    if ( in == null ) {
       throw new ModuleInitializeException
-          ("File 'coremodule.properties' not found in JFreeReport package.");
+        ( "File 'coremodule.properties' not found in JFreeReport package." );
     }
-    loadModuleInfo(in);
+    loadModuleInfo( in );
   }
 
   /**
@@ -130,59 +127,70 @@ public class ClassicEngineCoreModule extends AbstractModule
    * @param subSystem the subSystem.
    * @throws ModuleInitializeException if an error ocurred while initializing the module.
    */
-  public void initialize(final SubSystem subSystem)
-      throws ModuleInitializeException
-  {
-    DataSchemaXmlResourceFactory.register(DataSchemaXmlFactoryModule.class);
-    DataFactoryMetaDataResourceFactory.register(DataFactoryMetaDataXmlFactoryModule.class);
-    ElementMetaDataResourceFactory.register(ElementMetaDataXmlFactoryModule.class);
-    ExpressionMetaDataResourceFactory.register(ExpressionMetaDataXmlFactoryModule.class);
-    GlobalMetaDefinitionResourceFactory.register(GlobalMetaDefinitionXmlFactoryModule.class);
-    ReportPreProcessorMetaDataResourceFactory.register(ReportPreProcessorMetaDataXmlFactoryModule.class);
-    ReportProcessTaskMetaDataResourceFactory.register(ReportProcessTaskMetaDataXmlFactoryModule.class);
+  public void initialize( final SubSystem subSystem )
+    throws ModuleInitializeException {
+    DataSchemaXmlResourceFactory.register( DataSchemaXmlFactoryModule.class );
+    DataFactoryMetaDataResourceFactory.register( DataFactoryMetaDataXmlFactoryModule.class );
+    ElementMetaDataResourceFactory.register( ElementMetaDataXmlFactoryModule.class );
+    ExpressionMetaDataResourceFactory.register( ExpressionMetaDataXmlFactoryModule.class );
+    GlobalMetaDefinitionResourceFactory.register( GlobalMetaDefinitionXmlFactoryModule.class );
+    ReportPreProcessorMetaDataResourceFactory.register( ReportPreProcessorMetaDataXmlFactoryModule.class );
+    ReportProcessTaskMetaDataResourceFactory.register( ReportProcessTaskMetaDataXmlFactoryModule.class );
 
-    StyleKey.registerClass(ElementStyleKeys.class);
-    StyleKey.registerClass(TextStyleKeys.class);
-    StyleKey.registerClass(BandStyleKeys.class);
+    StyleKey.registerClass( ElementStyleKeys.class );
+    StyleKey.registerClass( TextStyleKeys.class );
+    StyleKey.registerClass( BandStyleKeys.class );
     StyleKey.registerDefaults();
 
-    ElementTypeRegistry.getInstance().registerNamespacePrefix(AttributeNames.Core.NAMESPACE, "core");
-    ElementTypeRegistry.getInstance().registerNamespacePrefix(AttributeNames.Crosstab.NAMESPACE, "crosstab");
-    ElementTypeRegistry.getInstance().registerNamespacePrefix(AttributeNames.Designtime.NAMESPACE, "report-designer");
-    ElementTypeRegistry.getInstance().registerNamespacePrefix(AttributeNames.Excel.NAMESPACE, "excel");
-    ElementTypeRegistry.getInstance().registerNamespacePrefix(AttributeNames.Html.NAMESPACE, "html");
-    ElementTypeRegistry.getInstance().registerNamespacePrefix(AttributeNames.Internal.NAMESPACE, "internal");
-    ElementTypeRegistry.getInstance().registerNamespacePrefix(AttributeNames.Pdf.NAMESPACE, "pdf");
-    ElementTypeRegistry.getInstance().registerNamespacePrefix(AttributeNames.Pentaho.NAMESPACE, "pentaho");
-    ElementTypeRegistry.getInstance().registerNamespacePrefix(AttributeNames.Swing.NAMESPACE, "action");
-    ElementTypeRegistry.getInstance().registerNamespacePrefix(AttributeNames.Table.NAMESPACE, "table");
-    ElementTypeRegistry.getInstance().registerNamespacePrefix(AttributeNames.Wizard.NAMESPACE, "wizard");
-    ElementTypeRegistry.getInstance().registerNamespacePrefix(AttributeNames.Xml.NAMESPACE, "xml");
+    ElementTypeRegistry.getInstance().registerNamespacePrefix( AttributeNames.Core.NAMESPACE, "core" );
+    ElementTypeRegistry.getInstance().registerNamespacePrefix( AttributeNames.Crosstab.NAMESPACE, "crosstab" );
+    ElementTypeRegistry.getInstance().registerNamespacePrefix( AttributeNames.Designtime.NAMESPACE, "report-designer" );
+    ElementTypeRegistry.getInstance().registerNamespacePrefix( AttributeNames.Excel.NAMESPACE, "excel" );
+    ElementTypeRegistry.getInstance().registerNamespacePrefix( AttributeNames.Html.NAMESPACE, "html" );
+    ElementTypeRegistry.getInstance().registerNamespacePrefix( AttributeNames.Internal.NAMESPACE, "internal" );
+    ElementTypeRegistry.getInstance().registerNamespacePrefix( AttributeNames.Pdf.NAMESPACE, "pdf" );
+    ElementTypeRegistry.getInstance().registerNamespacePrefix( AttributeNames.Pentaho.NAMESPACE, "pentaho" );
+    ElementTypeRegistry.getInstance().registerNamespacePrefix( AttributeNames.Swing.NAMESPACE, "action" );
+    ElementTypeRegistry.getInstance().registerNamespacePrefix( AttributeNames.Table.NAMESPACE, "table" );
+    ElementTypeRegistry.getInstance().registerNamespacePrefix( AttributeNames.Wizard.NAMESPACE, "wizard" );
+    ElementTypeRegistry.getInstance().registerNamespacePrefix( AttributeNames.Xml.NAMESPACE, "xml" );
 
-    PropertyEditorManager.registerEditor(BasicStroke.class, BasicStrokeEditor.class);
-    PropertyEditorManager.registerEditor(BorderStyle.class, BorderStylePropertyEditor.class);
-    PropertyEditorManager.registerEditor(BoxSizing.class, BoxSizingPropertyEditor.class);
-    PropertyEditorManager.registerEditor(ElementType.class, ElementTypePropertyEditor.class);
-    PropertyEditorManager.registerEditor(StagingMode.class, StagingModePropertyEditor.class);
-    PropertyEditorManager.registerEditor(TextWrap.class, TextWrapPropertyEditor.class);
-    PropertyEditorManager.registerEditor(TextDirection.class, TextDirectionPropertyEditor.class);
-    PropertyEditorManager.registerEditor(TimeZone.class, TimeZonePropertyEditor.class);
-    PropertyEditorManager.registerEditor(VerticalTextAlign.class, VerticalTextAlignmentPropertyEditor.class);
-    PropertyEditorManager.registerEditor(WhitespaceCollapse.class, WhitespaceCollapsePropertyEditor.class);
+    PropertyEditorManager.registerEditor( BasicStroke.class, BasicStrokeEditor.class );
+    PropertyEditorManager.registerEditor( BorderStyle.class, BorderStylePropertyEditor.class );
+    PropertyEditorManager.registerEditor( BoxSizing.class, BoxSizingPropertyEditor.class );
+    PropertyEditorManager.registerEditor( ElementType.class, ElementTypePropertyEditor.class );
+    PropertyEditorManager.registerEditor( StagingMode.class, StagingModePropertyEditor.class );
+    PropertyEditorManager.registerEditor( TextWrap.class, TextWrapPropertyEditor.class );
+    PropertyEditorManager.registerEditor( TextDirection.class, TextDirectionPropertyEditor.class );
+    PropertyEditorManager.registerEditor( TimeZone.class, TimeZonePropertyEditor.class );
+    PropertyEditorManager.registerEditor( VerticalTextAlign.class, VerticalTextAlignmentPropertyEditor.class );
+    PropertyEditorManager.registerEditor( WhitespaceCollapse.class, WhitespaceCollapsePropertyEditor.class );
 
     ElementMetaDataParser.registerNamespaces();
-    ElementMetaDataParser.initializeOptionalElementMetaData("org/pentaho/reporting/engine/classic/core/metadata/meta-elements.xml");
-    ElementMetaDataParser.initializeOptionalElementMetaData("org/pentaho/reporting/engine/classic/core/metadata/meta-elements-data.xml");
-    ElementMetaDataParser.initializeOptionalElementMetaData("org/pentaho/reporting/engine/classic/core/metadata/meta-elements-crosstab.xml");
+    ElementMetaDataParser
+      .initializeOptionalElementMetaData( "org/pentaho/reporting/engine/classic/core/metadata/meta-elements.xml" );
+    ElementMetaDataParser
+      .initializeOptionalElementMetaData( "org/pentaho/reporting/engine/classic/core/metadata/meta-elements-data.xml" );
+    ElementMetaDataParser.initializeOptionalElementMetaData(
+      "org/pentaho/reporting/engine/classic/core/metadata/meta-elements-crosstab.xml" );
 
-    ElementMetaDataParser.initializeOptionalExpressionsMetaData("org/pentaho/reporting/engine/classic/core/function/meta-expressions.xml");
-    ElementMetaDataParser.initializeOptionalExpressionsMetaData("org/pentaho/reporting/engine/classic/core/function/meta-expressions-deprecated.xml");
-    ElementMetaDataParser.initializeOptionalExpressionsMetaData("org/pentaho/reporting/engine/classic/core/function/bool/meta-expressions.xml");
-    ElementMetaDataParser.initializeOptionalExpressionsMetaData("org/pentaho/reporting/engine/classic/core/function/date/meta-expressions.xml");
-    ElementMetaDataParser.initializeOptionalExpressionsMetaData("org/pentaho/reporting/engine/classic/core/function/numeric/meta-expressions.xml");
-    ElementMetaDataParser.initializeOptionalExpressionsMetaData("org/pentaho/reporting/engine/classic/core/function/strings/meta-expressions.xml");
-    ElementMetaDataParser.initializeOptionalExpressionsMetaData("org/pentaho/reporting/engine/classic/core/function/sys/meta-expressions.xml");
-    ElementMetaDataParser.initializeOptionalDataFactoryMetaData("org/pentaho/reporting/engine/classic/core/metadata/meta-datafactory.xml");
-    ElementMetaDataParser.initializeOptionalReportPreProcessorMetaData("org/pentaho/reporting/engine/classic/core/metadata/meta-report-preprocessors.xml");
+    ElementMetaDataParser.initializeOptionalExpressionsMetaData(
+      "org/pentaho/reporting/engine/classic/core/function/meta-expressions.xml" );
+    ElementMetaDataParser.initializeOptionalExpressionsMetaData(
+      "org/pentaho/reporting/engine/classic/core/function/meta-expressions-deprecated.xml" );
+    ElementMetaDataParser.initializeOptionalExpressionsMetaData(
+      "org/pentaho/reporting/engine/classic/core/function/bool/meta-expressions.xml" );
+    ElementMetaDataParser.initializeOptionalExpressionsMetaData(
+      "org/pentaho/reporting/engine/classic/core/function/date/meta-expressions.xml" );
+    ElementMetaDataParser.initializeOptionalExpressionsMetaData(
+      "org/pentaho/reporting/engine/classic/core/function/numeric/meta-expressions.xml" );
+    ElementMetaDataParser.initializeOptionalExpressionsMetaData(
+      "org/pentaho/reporting/engine/classic/core/function/strings/meta-expressions.xml" );
+    ElementMetaDataParser.initializeOptionalExpressionsMetaData(
+      "org/pentaho/reporting/engine/classic/core/function/sys/meta-expressions.xml" );
+    ElementMetaDataParser.initializeOptionalDataFactoryMetaData(
+      "org/pentaho/reporting/engine/classic/core/metadata/meta-datafactory.xml" );
+    ElementMetaDataParser.initializeOptionalReportPreProcessorMetaData(
+      "org/pentaho/reporting/engine/classic/core/metadata/meta-report-preprocessors.xml" );
   }
 }

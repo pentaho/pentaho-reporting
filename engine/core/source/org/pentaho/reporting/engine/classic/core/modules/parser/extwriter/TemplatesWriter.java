@@ -17,9 +17,9 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.parser.extwriter;
 
-import java.io.IOException;
-
 import org.pentaho.reporting.libraries.xmlns.writer.XmlWriter;
+
+import java.io.IOException;
 
 /**
  * The templates writer is responsible to write the templates section.
@@ -27,17 +27,15 @@ import org.pentaho.reporting.libraries.xmlns.writer.XmlWriter;
  * @author Thomas Morgner
  * @deprecated No longer used.
  */
-public class TemplatesWriter extends AbstractXMLDefinitionWriter
-{
+public class TemplatesWriter extends AbstractXMLDefinitionWriter {
   /**
    * Creates a new writer.
    *
    * @param reportWriter the report writer.
    * @param writer       the current indention level.
    */
-  public TemplatesWriter(final ReportWriter reportWriter, final XmlWriter writer)
-  {
-    super(reportWriter, writer);
+  public TemplatesWriter( final ReportWriter reportWriter, final XmlWriter writer ) {
+    super( reportWriter, writer );
   }
 
   /**
@@ -47,8 +45,7 @@ public class TemplatesWriter extends AbstractXMLDefinitionWriter
    * @throws ReportWriterException if there is a problem writing the report.
    */
   public void write()
-      throws IOException, ReportWriterException
-  {
+    throws IOException, ReportWriterException {
     // templates are no longer written here. The templates are written as fully
     // resolved template declarations in the elements instead.
   }

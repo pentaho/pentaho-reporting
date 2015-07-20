@@ -22,28 +22,23 @@ import org.pentaho.reporting.engine.classic.core.filter.types.AbstractElementTyp
 import org.pentaho.reporting.engine.classic.core.function.ExpressionRuntime;
 import org.pentaho.reporting.engine.classic.core.metadata.SectionType;
 
-public abstract class AbstractSectionType extends AbstractElementType implements SectionType
-{
+public abstract class AbstractSectionType extends AbstractElementType implements SectionType {
   private boolean restricted;
 
-  protected AbstractSectionType(final String id, final boolean restricted)
-  {
-    super(id);
+  protected AbstractSectionType( final String id, final boolean restricted ) {
+    super( id );
     this.restricted = restricted;
   }
 
-  public boolean isRestricted()
-  {
+  public boolean isRestricted() {
     return restricted;
   }
 
-  public Object getDesignValue(final ExpressionRuntime runtime, final ReportElement element)
-  {
+  public Object getDesignValue( final ExpressionRuntime runtime, final ReportElement element ) {
     return null;
   }
 
-  public Object getValue(final ExpressionRuntime runtime, final ReportElement element)
-  {
+  public Object getValue( final ExpressionRuntime runtime, final ReportElement element ) {
     return null;
   }
 }

@@ -17,11 +17,10 @@
 
 package org.pentaho.reporting.engine.classic.core.elementfactory;
 
-import java.awt.Color;
-import java.awt.Stroke;
-
 import org.pentaho.reporting.engine.classic.core.style.ElementStyleKeys;
 import org.pentaho.reporting.engine.classic.core.style.ElementStyleSheet;
+
+import java.awt.*;
 
 /**
  * The drawable field element factory can be used to create elements that display <code>Drawable</code> elements.
@@ -32,8 +31,7 @@ import org.pentaho.reporting.engine.classic.core.style.ElementStyleSheet;
  *
  * @author Thomas Morgner
  */
-public abstract class AbstractContentElementFactory extends ElementFactory
-{
+public abstract class AbstractContentElementFactory extends ElementFactory {
   /**
    * The image element scaling property.
    */
@@ -64,8 +62,7 @@ public abstract class AbstractContentElementFactory extends ElementFactory
   /**
    * DefaultConstructor.
    */
-  protected AbstractContentElementFactory()
-  {
+  protected AbstractContentElementFactory() {
   }
 
   /**
@@ -73,8 +70,7 @@ public abstract class AbstractContentElementFactory extends ElementFactory
    *
    * @return the scale flag of the image element.
    */
-  public Boolean getScale()
-  {
+  public Boolean getScale() {
     return scale;
   }
 
@@ -83,8 +79,7 @@ public abstract class AbstractContentElementFactory extends ElementFactory
    *
    * @param scale the scale flag of the image element.
    */
-  public void setScale(final Boolean scale)
-  {
+  public void setScale( final Boolean scale ) {
     this.scale = scale;
   }
 
@@ -94,8 +89,7 @@ public abstract class AbstractContentElementFactory extends ElementFactory
    *
    * @return the keep aspect ratio flag.
    */
-  public Boolean getKeepAspectRatio()
-  {
+  public Boolean getKeepAspectRatio() {
     return keepAspectRatio;
   }
 
@@ -105,8 +99,7 @@ public abstract class AbstractContentElementFactory extends ElementFactory
    *
    * @param keepAspectRatio whether to keep the aspect ratio of the image content during the scaling.
    */
-  public void setKeepAspectRatio(final Boolean keepAspectRatio)
-  {
+  public void setKeepAspectRatio( final Boolean keepAspectRatio ) {
     this.keepAspectRatio = keepAspectRatio;
   }
 
@@ -116,8 +109,7 @@ public abstract class AbstractContentElementFactory extends ElementFactory
    *
    * @return the stoke.
    */
-  public Stroke getStroke()
-  {
+  public Stroke getStroke() {
     return stroke;
   }
 
@@ -126,8 +118,7 @@ public abstract class AbstractContentElementFactory extends ElementFactory
    *
    * @param stroke the stoke.
    */
-  public void setStroke(final Stroke stroke)
-  {
+  public void setStroke( final Stroke stroke ) {
     this.stroke = stroke;
   }
 
@@ -136,8 +127,7 @@ public abstract class AbstractContentElementFactory extends ElementFactory
    *
    * @return the should fill flag.
    */
-  public Boolean getShouldFill()
-  {
+  public Boolean getShouldFill() {
     return shouldFill;
   }
 
@@ -146,8 +136,7 @@ public abstract class AbstractContentElementFactory extends ElementFactory
    *
    * @param shouldFill the fill flag.
    */
-  public void setShouldFill(final Boolean shouldFill)
-  {
+  public void setShouldFill( final Boolean shouldFill ) {
     this.shouldFill = shouldFill;
   }
 
@@ -156,8 +145,7 @@ public abstract class AbstractContentElementFactory extends ElementFactory
    *
    * @return the draw shape flag.
    */
-  public Boolean getShouldDraw()
-  {
+  public Boolean getShouldDraw() {
     return shouldDraw;
   }
 
@@ -166,18 +154,15 @@ public abstract class AbstractContentElementFactory extends ElementFactory
    *
    * @param shouldDraw the draw shape flag.
    */
-  public void setShouldDraw(final Boolean shouldDraw)
-  {
+  public void setShouldDraw( final Boolean shouldDraw ) {
     this.shouldDraw = shouldDraw;
   }
 
-  public Color getFillColor()
-  {
+  public Color getFillColor() {
     return fillColor;
   }
 
-  public void setFillColor(final Color fillColor)
-  {
+  public void setFillColor( final Color fillColor ) {
     this.fillColor = fillColor;
   }
 
@@ -186,32 +171,25 @@ public abstract class AbstractContentElementFactory extends ElementFactory
    *
    * @param style the element stylesheet which should receive the style definition.
    */
-  protected void applyStyle(final ElementStyleSheet style)
-  {
-    super.applyStyle(style);
-    if (keepAspectRatio != null)
-    {
-      style.setStyleProperty(ElementStyleKeys.KEEP_ASPECT_RATIO, getKeepAspectRatio());
+  protected void applyStyle( final ElementStyleSheet style ) {
+    super.applyStyle( style );
+    if ( keepAspectRatio != null ) {
+      style.setStyleProperty( ElementStyleKeys.KEEP_ASPECT_RATIO, getKeepAspectRatio() );
     }
-    if (scale != null)
-    {
-      style.setStyleProperty(ElementStyleKeys.SCALE, getScale());
+    if ( scale != null ) {
+      style.setStyleProperty( ElementStyleKeys.SCALE, getScale() );
     }
-    if (fillColor != null)
-    {
-      style.setStyleProperty(ElementStyleKeys.FILL_COLOR, getFillColor());
+    if ( fillColor != null ) {
+      style.setStyleProperty( ElementStyleKeys.FILL_COLOR, getFillColor() );
     }
-    if (stroke != null)
-    {
-      style.setStyleProperty(ElementStyleKeys.STROKE, getStroke());
+    if ( stroke != null ) {
+      style.setStyleProperty( ElementStyleKeys.STROKE, getStroke() );
     }
-    if (shouldDraw != null)
-    {
-      style.setStyleProperty(ElementStyleKeys.DRAW_SHAPE, getShouldDraw());
+    if ( shouldDraw != null ) {
+      style.setStyleProperty( ElementStyleKeys.DRAW_SHAPE, getShouldDraw() );
     }
-    if (shouldFill != null)
-    {
-      style.setStyleProperty(ElementStyleKeys.FILL_SHAPE, getShouldFill());
+    if ( shouldFill != null ) {
+      style.setStyleProperty( ElementStyleKeys.FILL_SHAPE, getShouldFill() );
     }
   }
 }

@@ -25,13 +25,11 @@ import org.pentaho.reporting.engine.classic.core.style.BandStyleKeys;
 import org.pentaho.reporting.libraries.xmlns.common.ParserUtil;
 import org.xml.sax.SAXException;
 
-public class GroupFooterReadHandler extends RootLevelBandReadHandler
-{
-  private static final Log logger = LogFactory.getLog(GroupFooterReadHandler.class);
+public class GroupFooterReadHandler extends RootLevelBandReadHandler {
+  private static final Log logger = LogFactory.getLog( GroupFooterReadHandler.class );
 
-  public GroupFooterReadHandler(final Band band)
-  {
-    super(band);
+  public GroupFooterReadHandler( final Band band ) {
+    super( band );
   }
 
 
@@ -41,39 +39,34 @@ public class GroupFooterReadHandler extends RootLevelBandReadHandler
    * @param attr the attributes.
    * @throws org.xml.sax.SAXException if there is a parsing error.
    */
-  protected void startParsing(final PropertyAttributes attr)
-      throws SAXException
-  {
-    super.startParsing(attr);
-    handlePagebreakAttr(attr);
-    handleRepeat(attr);
-    handleSticky(attr);
+  protected void startParsing( final PropertyAttributes attr )
+    throws SAXException {
+    super.startParsing( attr );
+    handlePagebreakAttr( attr );
+    handleRepeat( attr );
+    handleSticky( attr );
   }
 
-  private void handleSticky(final PropertyAttributes attr) throws SAXException
-  {
-    final String repeat = attr.getValue(getUri(), "sticky");
-    final Boolean repeatVal = ParserUtil.parseBoolean(repeat, getLocator());
-    getBand().getStyle().setStyleProperty(BandStyleKeys.STICKY, repeatVal);
+  private void handleSticky( final PropertyAttributes attr ) throws SAXException {
+    final String repeat = attr.getValue( getUri(), "sticky" );
+    final Boolean repeatVal = ParserUtil.parseBoolean( repeat, getLocator() );
+    getBand().getStyle().setStyleProperty( BandStyleKeys.STICKY, repeatVal );
   }
 
-  private void handleRepeat(final PropertyAttributes attr) throws SAXException
-  {
-    final String repeat = attr.getValue(getUri(), "repeat");
-    final Boolean repeatVal = ParserUtil.parseBoolean(repeat, getLocator());
-    getBand().getStyle().setStyleProperty(BandStyleKeys.REPEAT_HEADER, repeatVal);
+  private void handleRepeat( final PropertyAttributes attr ) throws SAXException {
+    final String repeat = attr.getValue( getUri(), "repeat" );
+    final Boolean repeatVal = ParserUtil.parseBoolean( repeat, getLocator() );
+    getBand().getStyle().setStyleProperty( BandStyleKeys.REPEAT_HEADER, repeatVal );
   }
 
-  private void handlePagebreakAttr(final PropertyAttributes attr)
-      throws SAXException
-  {
-    final String ownPageAttr = attr.getValue(getUri(), "pagebreak");
-    if (ownPageAttr != null)
-    {
-      GroupFooterReadHandler.logger.warn("The 'pagebreak' attribute of the <group-footer> tag is deprecated. " +
-          "Use the 'pagebreak-after' attribute instead.");
-      final Boolean ownPage = ParserUtil.parseBoolean(ownPageAttr, getLocator());
-      getBand().getStyle().setStyleProperty(BandStyleKeys.PAGEBREAK_AFTER, ownPage);
+  private void handlePagebreakAttr( final PropertyAttributes attr )
+    throws SAXException {
+    final String ownPageAttr = attr.getValue( getUri(), "pagebreak" );
+    if ( ownPageAttr != null ) {
+      GroupFooterReadHandler.logger.warn( "The 'pagebreak' attribute of the <group-footer> tag is deprecated. " +
+        "Use the 'pagebreak-after' attribute instead." );
+      final Boolean ownPage = ParserUtil.parseBoolean( ownPageAttr, getLocator() );
+      getBand().getStyle().setStyleProperty( BandStyleKeys.PAGEBREAK_AFTER, ownPage );
     }
   }
 }

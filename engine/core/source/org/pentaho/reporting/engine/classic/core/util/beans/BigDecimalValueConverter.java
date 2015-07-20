@@ -25,14 +25,12 @@ import java.math.BigDecimal;
  *
  * @author Thomas Morgner
  */
-public class BigDecimalValueConverter implements ValueConverter
-{
+public class BigDecimalValueConverter implements ValueConverter {
 
   /**
    * Creates a new value converter.
    */
-  public BigDecimalValueConverter()
-  {
+  public BigDecimalValueConverter() {
     super();
   }
 
@@ -42,17 +40,14 @@ public class BigDecimalValueConverter implements ValueConverter
    * @param o the attribute ({@link BigDecimal} expected).
    * @return A string representing the {@link BigDecimal} value.
    */
-  public String toAttributeValue(final Object o) throws BeanException
-  {
-    if (o == null)
-    {
+  public String toAttributeValue( final Object o ) throws BeanException {
+    if ( o == null ) {
       throw new NullPointerException();
     }
-    if (o instanceof Number)
-    {
+    if ( o instanceof Number ) {
       return o.toString();
     }
-    throw new BeanException("Failed to convert object of type " + o.getClass() + ": Not a big-decimal.");
+    throw new BeanException( "Failed to convert object of type " + o.getClass() + ": Not a big-decimal." );
   }
 
   /**
@@ -61,25 +56,19 @@ public class BigDecimalValueConverter implements ValueConverter
    * @param s the string.
    * @return a {@link BigDecimal}.
    */
-  public Object toPropertyValue(final String s) throws BeanException
-  {
-    if (s == null)
-    {
+  public Object toPropertyValue( final String s ) throws BeanException {
+    if ( s == null ) {
       throw new NullPointerException();
     }
     final String val = s.trim();
-    if (val.length() == 0)
-    {
-      throw BeanException.getInstance("Failed to convert empty string to number", null);
+    if ( val.length() == 0 ) {
+      throw BeanException.getInstance( "Failed to convert empty string to number", null );
     }
 
-    try
-    {
-      return new BigDecimal(val);
-    }
-    catch (NumberFormatException be)
-    {
-      throw BeanException.getInstance("Failed to convert", be);
+    try {
+      return new BigDecimal( val );
+    } catch ( NumberFormatException be ) {
+      throw BeanException.getInstance( "Failed to convert", be );
     }
   }
 }

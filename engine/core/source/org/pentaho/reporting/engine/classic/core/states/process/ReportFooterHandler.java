@@ -26,43 +26,36 @@ import org.pentaho.reporting.engine.classic.core.event.ReportEvent;
  *
  * @author Thomas Morgner
  */
-public class ReportFooterHandler implements AdvanceHandler
-{
+public class ReportFooterHandler implements AdvanceHandler {
   public static final AdvanceHandler HANDLER = new ReportFooterHandler();
 
-  private ReportFooterHandler()
-  {
+  private ReportFooterHandler() {
   }
 
-  public int getEventCode()
-  {
+  public int getEventCode() {
     return ReportEvent.REPORT_FINISHED;
   }
 
-  public ProcessState advance(final ProcessState state) throws ReportProcessingException
-  {
+  public ProcessState advance( final ProcessState state ) throws ReportProcessingException {
     final ProcessState next = state.deriveForAdvance();
     next.fireReportEvent();
-    return InlineSubreportProcessor.processInline(next, next.getReport().getReportFooter());
+    return InlineSubreportProcessor.processInline( next, next.getReport().getReportFooter() );
   }
 
 
-  public ProcessState commit(final ProcessState next) throws ReportProcessingException
-  {
-    next.setAdvanceHandler(ReportDoneHandler.HANDLER);
+  public ProcessState commit( final ProcessState next ) throws ReportProcessingException {
+    next.setAdvanceHandler( ReportDoneHandler.HANDLER );
 
     final RootLevelBand rootLevelBand = next.getReport().getReportFooter();
 
-    return InlineSubreportProcessor.processBandedSubReports(next, rootLevelBand);
+    return InlineSubreportProcessor.processBandedSubReports( next, rootLevelBand );
   }
 
-  public boolean isFinish()
-  {
+  public boolean isFinish() {
     return false;
   }
 
-  public boolean isRestoreHandler()
-  {
+  public boolean isRestoreHandler() {
     return false;
   }
 }

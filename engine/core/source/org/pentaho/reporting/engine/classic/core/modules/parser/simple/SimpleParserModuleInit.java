@@ -17,12 +17,12 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.parser.simple;
 
-import java.net.URL;
-
 import org.pentaho.reporting.libraries.base.boot.ModuleInitializeException;
 import org.pentaho.reporting.libraries.base.boot.ModuleInitializer;
 import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
 import org.pentaho.reporting.libraries.xmlns.parser.ParserEntityResolver;
+
+import java.net.URL;
 
 /**
  * Handles the initalisation of the simple parser module. This contains support for the simple report definition
@@ -30,8 +30,7 @@ import org.pentaho.reporting.libraries.xmlns.parser.ParserEntityResolver;
  *
  * @author Thomas Morgner
  */
-public class SimpleParserModuleInit implements ModuleInitializer
-{
+public class SimpleParserModuleInit implements ModuleInitializer {
 
   /**
    * the document element tag for the simple report format.
@@ -42,20 +41,19 @@ public class SimpleParserModuleInit implements ModuleInitializer
    * the Public ID for the simple version of JFreeReport XML definitions.
    */
   public static final String PUBLIC_ID_SIMPLE =
-      "-//JFreeReport//DTD report definition//EN//simple/version 0.8.5";
+    "-//JFreeReport//DTD report definition//EN//simple/version 0.8.5";
 
   /**
    * the Public ID for the simple version of JFreeReport XML definitions (pre 0.8.5).
    */
   private static final String PUBLIC_ID_SIMPLE_084 =
-      "-//JFreeReport//DTD report definition//EN//simple";
+    "-//JFreeReport//DTD report definition//EN//simple";
   public static final String SYSTEM_ID = "http://jfreereport.sourceforge.net/report-085.dtd";
 
   /**
    * DefaultConstructor. Does nothing.
    */
-  public SimpleParserModuleInit()
-  {
+  public SimpleParserModuleInit() {
   }
 
   /**
@@ -64,21 +62,20 @@ public class SimpleParserModuleInit implements ModuleInitializer
    * @throws ModuleInitializeException if initializing the module failes.
    */
   public void performInit()
-      throws ModuleInitializeException
-  {
+    throws ModuleInitializeException {
     final ParserEntityResolver res = ParserEntityResolver.getDefaultResolver();
 
     final URL urlReportDTD = ObjectUtilities.getResource
-        ("org/pentaho/reporting/engine/classic/core/modules/parser/simple/resources/report-085.dtd",
-            SimpleParserModuleInit.class);
+      ( "org/pentaho/reporting/engine/classic/core/modules/parser/simple/resources/report-085.dtd",
+        SimpleParserModuleInit.class );
 
-    res.setDTDLocation(SimpleParserModuleInit.PUBLIC_ID_SIMPLE, SimpleParserModuleInit.SYSTEM_ID, urlReportDTD);
-    res.setDTDLocation(SimpleParserModuleInit.PUBLIC_ID_SIMPLE_084, SimpleParserModuleInit.SYSTEM_ID, urlReportDTD);
-    res.setDeprecatedDTDMessage(SimpleParserModuleInit.PUBLIC_ID_SIMPLE_084,
-        "The given public identifier for the XML document is deprecated. " +
-            "Please use the current document type declaration instead: \n" +
-            "  <!DOCTYPE report PUBLIC \n" +
-            "      \"-//JFreeReport//DTD report definition//EN//simple/version 0.8.5\"\n" +
-            "      \"http://jfreereport.sourceforge.net/report-085.dtd\">");
+    res.setDTDLocation( SimpleParserModuleInit.PUBLIC_ID_SIMPLE, SimpleParserModuleInit.SYSTEM_ID, urlReportDTD );
+    res.setDTDLocation( SimpleParserModuleInit.PUBLIC_ID_SIMPLE_084, SimpleParserModuleInit.SYSTEM_ID, urlReportDTD );
+    res.setDeprecatedDTDMessage( SimpleParserModuleInit.PUBLIC_ID_SIMPLE_084,
+      "The given public identifier for the XML document is deprecated. " +
+        "Please use the current document type declaration instead: \n" +
+        "  <!DOCTYPE report PUBLIC \n" +
+        "      \"-//JFreeReport//DTD report definition//EN//simple/version 0.8.5\"\n" +
+        "      \"http://jfreereport.sourceforge.net/report-085.dtd\">" );
   }
 }

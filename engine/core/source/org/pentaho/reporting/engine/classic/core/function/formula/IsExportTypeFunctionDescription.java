@@ -29,14 +29,12 @@ import org.pentaho.reporting.libraries.formula.typing.coretypes.TextType;
  *
  * @author Thomas Morgner
  */
-public class IsExportTypeFunctionDescription extends AbstractFunctionDescription
-{
+public class IsExportTypeFunctionDescription extends AbstractFunctionDescription {
   /**
    * Default Constructor.
    */
-  public IsExportTypeFunctionDescription()
-  {
-    super("ISEXPORTTYPE", "org.pentaho.reporting.engine.classic.core.function.formula.IsExportType-Function");
+  public IsExportTypeFunctionDescription() {
+    super( "ISEXPORTTYPE", "org.pentaho.reporting.engine.classic.core.function.formula.IsExportType-Function" );
   }
 
   /**
@@ -44,8 +42,7 @@ public class IsExportTypeFunctionDescription extends AbstractFunctionDescription
    *
    * @return LogicalType.TYPE
    */
-  public Type getValueType()
-  {
+  public Type getValueType() {
     return LogicalType.TYPE;
   }
 
@@ -54,8 +51,7 @@ public class IsExportTypeFunctionDescription extends AbstractFunctionDescription
    *
    * @return 1.
    */
-  public int getParameterCount()
-  {
+  public int getParameterCount() {
     return 1;
   }
 
@@ -65,8 +61,7 @@ public class IsExportTypeFunctionDescription extends AbstractFunctionDescription
    * @param position the parameter index.
    * @return always TextType.TYPE.
    */
-  public Type getParameterType(final int position)
-  {
+  public Type getParameterType( final int position ) {
     return TextType.TYPE;
   }
 
@@ -77,8 +72,7 @@ public class IsExportTypeFunctionDescription extends AbstractFunctionDescription
    * @param position the position of the parameter.
    * @return true, as all parameters are mandatory.
    */
-  public boolean isParameterMandatory(final int position)
-  {
+  public boolean isParameterMandatory( final int position ) {
     return true;
   }
 
@@ -87,8 +81,7 @@ public class IsExportTypeFunctionDescription extends AbstractFunctionDescription
    *
    * @return InformationFunctionCategory.CATEGORY.
    */
-  public FunctionCategory getCategory()
-  {
+  public FunctionCategory getCategory() {
     return InformationFunctionCategory.CATEGORY;
   }
 }

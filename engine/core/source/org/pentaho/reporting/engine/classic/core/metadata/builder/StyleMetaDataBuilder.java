@@ -17,50 +17,43 @@
 
 package org.pentaho.reporting.engine.classic.core.metadata.builder;
 
-import java.beans.PropertyEditor;
-
 import org.pentaho.reporting.engine.classic.core.style.StyleKey;
 
-public class StyleMetaDataBuilder extends MetaDataBuilder<StyleMetaDataBuilder>
-{
+import java.beans.PropertyEditor;
+
+public class StyleMetaDataBuilder extends MetaDataBuilder<StyleMetaDataBuilder> {
   private StyleKey key;
   private Class<? extends PropertyEditor> propertyEditor;
 
-  public StyleMetaDataBuilder()
-  {
+  public StyleMetaDataBuilder() {
   }
 
-  public StyleMetaDataBuilder propertyEditor(Class<? extends PropertyEditor> propertyEditor) {
+  public StyleMetaDataBuilder propertyEditor( Class<? extends PropertyEditor> propertyEditor ) {
     this.propertyEditor = propertyEditor;
     return self();
   }
 
-  public StyleMetaDataBuilder key(StyleKey key)
-  {
+  public StyleMetaDataBuilder key( StyleKey key ) {
     this.key = key;
     return self();
   }
 
-  public String getName()
-  {
-    if (key == null) {
+  public String getName() {
+    if ( key == null ) {
       return null;
     }
     return key.getName();
   }
 
-  protected StyleMetaDataBuilder self()
-  {
+  protected StyleMetaDataBuilder self() {
     return this;
   }
 
-  public StyleKey getKey()
-  {
+  public StyleKey getKey() {
     return key;
   }
 
-  public Class<? extends PropertyEditor> getPropertyEditor()
-  {
+  public Class<? extends PropertyEditor> getPropertyEditor() {
     return propertyEditor;
   }
 }

@@ -17,8 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.core.metadata;
 
-import java.beans.PropertyEditor;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.pentaho.reporting.engine.classic.core.ReportElement;
@@ -26,9 +24,10 @@ import org.pentaho.reporting.engine.classic.core.metadata.builder.AttributeMetaD
 import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
 import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 
-public class DefaultAttributeMetaData extends AbstractMetaData implements AttributeMetaData
-{
-  private static final Log logger = LogFactory.getLog(DefaultAttributeMetaData.class);
+import java.beans.PropertyEditor;
+
+public class DefaultAttributeMetaData extends AbstractMetaData implements AttributeMetaData {
+  private static final Log logger = LogFactory.getLog( DefaultAttributeMetaData.class );
 
   private String valueRole;
   private boolean bulk;
@@ -43,8 +42,8 @@ public class DefaultAttributeMetaData extends AbstractMetaData implements Attrib
   private boolean computed;
 
   /**
-   * Indicates if the value is transient. These values will not be written when the Element is serialized.
-   * NOTE: an Element that is computed may or may not be transient.
+   * Indicates if the value is transient. These values will not be written when the Element is serialized. NOTE: an
+   * Element that is computed may or may not be transient.
    */
   private boolean transientFlag;
 
@@ -55,8 +54,8 @@ public class DefaultAttributeMetaData extends AbstractMetaData implements Attrib
   /**
    * Creates an expert, non-preferred, hidden, non-mandatory, non-computed and non-transient attribute.
    * <p/>
-   * This is a suitable constructor to declare internal attributes that should not be edited by an end-user
-   * in the report-designer. This constructor is only used for testing.
+   * This is a suitable constructor to declare internal attributes that should not be edited by an end-user in the
+   * report-designer. This constructor is only used for testing.
    *
    * @param namespace
    * @param name
@@ -66,21 +65,20 @@ public class DefaultAttributeMetaData extends AbstractMetaData implements Attrib
    * @param designTimeValue
    * @param compatibilityLevel
    */
-  public DefaultAttributeMetaData(final String namespace,
-                                  final String name,
-                                  final String bundleLocation,
-                                  final String keyPrefix,
-                                  final Class<?> targetClass,
-                                  final boolean designTimeValue,
-                                  final int compatibilityLevel)
-  {
-    this(namespace, name, bundleLocation, keyPrefix, null, targetClass, true, false, true, false, false, false, false,
-        VALUEROLE_VALUE, false, designTimeValue, new DefaultAttributeCore(), MaturityLevel.Production, compatibilityLevel);
+  public DefaultAttributeMetaData( final String namespace,
+                                   final String name,
+                                   final String bundleLocation,
+                                   final String keyPrefix,
+                                   final Class<?> targetClass,
+                                   final boolean designTimeValue,
+                                   final int compatibilityLevel ) {
+    this( namespace, name, bundleLocation, keyPrefix, null, targetClass, true, false, true, false, false, false, false,
+      VALUEROLE_VALUE, false, designTimeValue, new DefaultAttributeCore(), MaturityLevel.Production,
+      compatibilityLevel );
   }
 
-  public DefaultAttributeMetaData(final AttributeMetaDataBuilder builder)
-  {
-    super(builder);
+  public DefaultAttributeMetaData( final AttributeMetaDataBuilder builder ) {
+    super( builder );
 
     this.attributeCore = builder.getCore();
     this.propertyEditorClass = builder.getPropertyEditor();
@@ -93,56 +91,49 @@ public class DefaultAttributeMetaData extends AbstractMetaData implements Attrib
     this.bulk = builder.isBulk();
     this.designTimeValue = builder.isDesignTime();
 
-    if (namespace == null)
-    {
+    if ( namespace == null ) {
       throw new NullPointerException();
     }
-    if (attributeCore == null)
-    {
+    if ( attributeCore == null ) {
       throw new NullPointerException();
     }
-    if (targetClass == null)
-    {
+    if ( targetClass == null ) {
       throw new NullPointerException();
     }
   }
 
-  public DefaultAttributeMetaData(final String namespace,
-                                  final String name,
-                                  final String bundleLocation,
-                                  final String keyPrefix,
-                                  final String propertyEditorClass,
-                                  final Class<?> targetClass,
-                                  final boolean expert,
-                                  final boolean preferred,
-                                  final boolean hidden,
-                                  final boolean deprecated,
-                                  final boolean mandatory,
-                                  final boolean computed,
-                                  final boolean transientFlag,
-                                  final String valueRole,
-                                  final boolean bulk,
-                                  final boolean designTimeValue,
-                                  final AttributeCore attributeCore,
-                                  final MaturityLevel maturityLevel,
-                                  final int compatibilityLevel)
-  {
-    super(name, bundleLocation, keyPrefix, expert, preferred, hidden, deprecated, maturityLevel, compatibilityLevel);
-    if (namespace == null)
-    {
+  public DefaultAttributeMetaData( final String namespace,
+                                   final String name,
+                                   final String bundleLocation,
+                                   final String keyPrefix,
+                                   final String propertyEditorClass,
+                                   final Class<?> targetClass,
+                                   final boolean expert,
+                                   final boolean preferred,
+                                   final boolean hidden,
+                                   final boolean deprecated,
+                                   final boolean mandatory,
+                                   final boolean computed,
+                                   final boolean transientFlag,
+                                   final String valueRole,
+                                   final boolean bulk,
+                                   final boolean designTimeValue,
+                                   final AttributeCore attributeCore,
+                                   final MaturityLevel maturityLevel,
+                                   final int compatibilityLevel ) {
+    super( name, bundleLocation, keyPrefix, expert, preferred, hidden, deprecated, maturityLevel, compatibilityLevel );
+    if ( namespace == null ) {
       throw new NullPointerException();
     }
-    if (attributeCore == null)
-    {
+    if ( attributeCore == null ) {
       throw new NullPointerException();
     }
-    if (targetClass == null)
-    {
+    if ( targetClass == null ) {
       throw new NullPointerException();
     }
 
     this.attributeCore = attributeCore;
-    this.propertyEditorClass = validatePropertyEditor(propertyEditorClass);
+    this.propertyEditorClass = validatePropertyEditor( propertyEditorClass );
     this.namespace = namespace;
     this.targetClass = targetClass;
     this.mandatory = mandatory;
@@ -153,9 +144,8 @@ public class DefaultAttributeMetaData extends AbstractMetaData implements Attrib
     this.designTimeValue = designTimeValue;
   }
 
-  private Class<? extends PropertyEditor> validatePropertyEditor(final String className)
-  {
-    return ObjectUtilities.loadAndValidate(className, DefaultAttributeMetaData.class, PropertyEditor.class);
+  private Class<? extends PropertyEditor> validatePropertyEditor( final String className ) {
+    return ObjectUtilities.loadAndValidate( className, DefaultAttributeMetaData.class, PropertyEditor.class );
   }
 
   /**
@@ -164,97 +154,79 @@ public class DefaultAttributeMetaData extends AbstractMetaData implements Attrib
    *
    * @return
    */
-  public String getValueRole()
-  {
+  public String getValueRole() {
     return valueRole;
   }
 
-  public boolean isDesignTimeValue()
-  {
+  public boolean isDesignTimeValue() {
     return designTimeValue;
   }
 
-  public boolean isBulk()
-  {
+  public boolean isBulk() {
     return bulk;
   }
 
-  public boolean isComputed()
-  {
+  public boolean isComputed() {
     return computed;
   }
 
-  public boolean isTransient()
-  {
+  public boolean isTransient() {
     return transientFlag;
   }
 
-  public boolean isMandatory()
-  {
+  public boolean isMandatory() {
     return mandatory;
   }
 
-  public String getNameSpace()
-  {
+  public String getNameSpace() {
     return namespace;
   }
 
-  public Class<?> getTargetType()
-  {
+  public Class<?> getTargetType() {
     return targetClass;
   }
 
-  public PropertyEditor getEditor()
-  {
-    if (propertyEditorClass == null)
-    {
+  public PropertyEditor getEditor() {
+    if ( propertyEditorClass == null ) {
       return null;
     }
-    try
-    {
+    try {
       return propertyEditorClass.newInstance();
-    }
-    catch (Exception e)
-    {
-      logger.warn("Property editor threw error on instantiation", e);
+    } catch ( Exception e ) {
+      logger.warn( "Property editor threw error on instantiation", e );
       return null;
     }
   }
 
 
-  public String[] getReferencedFields(final ReportElement element, final Object attributeValue)
-  {
-    return attributeCore.getReferencedFields(this, element, attributeValue);
+  public String[] getReferencedFields( final ReportElement element, final Object attributeValue ) {
+    return attributeCore.getReferencedFields( this, element, attributeValue );
   }
 
-  public String[] getReferencedGroups(final ReportElement element, final Object attributeValue)
-  {
-    return attributeCore.getReferencedGroups(this, element, attributeValue);
+  public String[] getReferencedGroups( final ReportElement element, final Object attributeValue ) {
+    return attributeCore.getReferencedGroups( this, element, attributeValue );
   }
 
-  public ResourceReference[] getReferencedResources(final ReportElement element,
-                                                    final ResourceManager resourceManager,
-                                                    final Object attributeValue)
-  {
-    return attributeCore.getReferencedResources(this, element, resourceManager, attributeValue);
+  public ResourceReference[] getReferencedResources( final ReportElement element,
+                                                     final ResourceManager resourceManager,
+                                                     final Object attributeValue ) {
+    return attributeCore.getReferencedResources( this, element, resourceManager, attributeValue );
   }
 
-  public String toString()
-  {
+  public String toString() {
     return "org.pentaho.reporting.engine.classic.core.metadata.DefaultAttributeMetaData{" +
-        "valueRole='" + valueRole + '\'' +
-        ", namespace='" + namespace + '\'' +
-        ", name='" + getName() + '\'' +
-        ", targetType=" + targetClass +
-        ", mandatory=" + mandatory +
-        ", computed=" + computed +
-        ", transient=" + transientFlag +
-        ", editor=" + getEditor() +
-        '}';
+      "valueRole='" + valueRole + '\'' +
+      ", namespace='" + namespace + '\'' +
+      ", name='" + getName() + '\'' +
+      ", targetType=" + targetClass +
+      ", mandatory=" + mandatory +
+      ", computed=" + computed +
+      ", transient=" + transientFlag +
+      ", editor=" + getEditor() +
+      '}';
   }
 
-  public String[] getExtraCalculationFields()
-  {
-    return attributeCore.getExtraCalculationFields(this);
+  public String[] getExtraCalculationFields() {
+    return attributeCore.getExtraCalculationFields( this );
   }
 }

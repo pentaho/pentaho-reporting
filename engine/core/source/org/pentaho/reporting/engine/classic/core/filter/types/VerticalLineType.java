@@ -17,20 +17,18 @@
 
 package org.pentaho.reporting.engine.classic.core.filter.types;
 
-import java.awt.geom.Line2D;
-import java.util.Locale;
-
 import org.pentaho.reporting.engine.classic.core.ReportElement;
 import org.pentaho.reporting.engine.classic.core.function.ExpressionRuntime;
 import org.pentaho.reporting.engine.classic.core.style.ElementStyleKeys;
 
-public class VerticalLineType extends AbstractElementType
-{
+import java.awt.geom.Line2D;
+import java.util.Locale;
+
+public class VerticalLineType extends AbstractElementType {
   public static final VerticalLineType INSTANCE = new VerticalLineType();
 
-  public VerticalLineType()
-  {
-    super("vertical-line");
+  public VerticalLineType() {
+    super( "vertical-line" );
   }
 
   /**
@@ -41,20 +39,17 @@ public class VerticalLineType extends AbstractElementType
    * @param element the element for which the data is computed.
    * @return the value.
    */
-  public Object getValue(final ExpressionRuntime runtime, final ReportElement element)
-  {
-    return new Line2D.Float(0, 0, 0, 100);
+  public Object getValue( final ExpressionRuntime runtime, final ReportElement element ) {
+    return new Line2D.Float( 0, 0, 0, 100 );
   }
 
-  public Object getDesignValue(final ExpressionRuntime runtime, final ReportElement element)
-  {
-    return new Line2D.Float(0, 0, 0, 100);
+  public Object getDesignValue( final ExpressionRuntime runtime, final ReportElement element ) {
+    return new Line2D.Float( 0, 0, 0, 100 );
   }
 
-  public void configureDesignTimeDefaults(final ReportElement element, final Locale locale)
-  {
-    element.getStyle().setStyleProperty(ElementStyleKeys.SCALE, Boolean.TRUE);
-    element.getStyle().setStyleProperty(ElementStyleKeys.DRAW_SHAPE, Boolean.TRUE);
-    element.getStyle().setStyleProperty(ElementStyleKeys.MIN_WIDTH, new Float(0f));
+  public void configureDesignTimeDefaults( final ReportElement element, final Locale locale ) {
+    element.getStyle().setStyleProperty( ElementStyleKeys.SCALE, Boolean.TRUE );
+    element.getStyle().setStyleProperty( ElementStyleKeys.DRAW_SHAPE, Boolean.TRUE );
+    element.getStyle().setStyleProperty( ElementStyleKeys.MIN_WIDTH, new Float( 0f ) );
   }
 }

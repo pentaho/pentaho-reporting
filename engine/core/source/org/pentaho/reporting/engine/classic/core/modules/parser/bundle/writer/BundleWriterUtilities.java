@@ -32,53 +32,46 @@ import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
  *
  * @author Thomas Morgner
  */
-public class BundleWriterUtilities
-{
-  private static final Log logger = LogFactory.getLog(BundleWriterUtilities.class);
+public class BundleWriterUtilities {
+  private static final Log logger = LogFactory.getLog( BundleWriterUtilities.class );
 
-  private static final String DATA_PREFIX = "org.pentaho.reporting.engine.classic.core.modules.parser.bundle.writer.data-factory-handler.";
-  private static final String ELEMENT_PREFIX = "org.pentaho.reporting.engine.classic.core.modules.parser.bundle.writer.element-handler.";
+  private static final String DATA_PREFIX =
+    "org.pentaho.reporting.engine.classic.core.modules.parser.bundle.writer.data-factory-handler.";
+  private static final String ELEMENT_PREFIX =
+    "org.pentaho.reporting.engine.classic.core.modules.parser.bundle.writer.element-handler.";
 
-  private BundleWriterUtilities()
-  {
+  private BundleWriterUtilities() {
   }
 
-  public static BundleDataFactoryWriterHandler lookupWriteHandler(final DataFactory dataFactory)
-  {
-    if (dataFactory == null)
-    {
+  public static BundleDataFactoryWriterHandler lookupWriteHandler( final DataFactory dataFactory ) {
+    if ( dataFactory == null ) {
       throw new NullPointerException();
     }
 
     final String configKey = DATA_PREFIX + dataFactory.getClass().getName();
     final Configuration globalConfig = ClassicEngineBoot.getInstance().getGlobalConfig();
-    final String value = globalConfig.getConfigProperty(configKey);
-    if (value != null)
-    {
+    final String value = globalConfig.getConfigProperty( configKey );
+    if ( value != null ) {
 
       final BundleDataFactoryWriterHandler dataFactoryWriterHandler =
-          (BundleDataFactoryWriterHandler) ObjectUtilities.loadAndInstantiate
-              (value, dataFactory.getClass(), BundleDataFactoryWriterHandler.class);
-      if (dataFactoryWriterHandler == null)
-      {
-        logger.warn("Specified data-source write handler implementation could not be loaded: " + value);
+        (BundleDataFactoryWriterHandler) ObjectUtilities.loadAndInstantiate
+          ( value, dataFactory.getClass(), BundleDataFactoryWriterHandler.class );
+      if ( dataFactoryWriterHandler == null ) {
+        logger.warn( "Specified data-source write handler implementation could not be loaded: " + value );
       }
       return dataFactoryWriterHandler;
     }
-    logger.warn("No data-source write handler known for: " + value);
+    logger.warn( "No data-source write handler known for: " + value );
     return null;
   }
 
-  public static BundleDataFactoryWriterHandler lookupWriteHandler(final Element element)
-  {
-    if (element == null)
-    {
+  public static BundleDataFactoryWriterHandler lookupWriteHandler( final Element element ) {
+    if ( element == null ) {
       throw new NullPointerException();
     }
 
     final ElementType type = element.getElementType();
-    if (type == null)
-    {
+    if ( type == null ) {
       // A legacy element. Cannot handle that this way.
       return null;
     }
@@ -86,11 +79,10 @@ public class BundleWriterUtilities
     final ElementMetaData metaData = type.getMetaData();
     final String configKey = ELEMENT_PREFIX + metaData.getName();
     final Configuration globalConfig = ClassicEngineBoot.getInstance().getGlobalConfig();
-    final String value = globalConfig.getConfigProperty(configKey);
-    if (value != null)
-    {
+    final String value = globalConfig.getConfigProperty( configKey );
+    if ( value != null ) {
       return (BundleDataFactoryWriterHandler) ObjectUtilities.loadAndInstantiate
-          (value, metaData.getClass(), BundleDataFactoryWriterHandler.class);
+        ( value, metaData.getClass(), BundleDataFactoryWriterHandler.class );
     }
     return null;
   }

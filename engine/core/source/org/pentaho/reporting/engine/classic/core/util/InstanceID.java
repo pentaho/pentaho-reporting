@@ -25,13 +25,11 @@ import java.io.Serializable;
  *
  * @author Thomas Morgner
  */
-public final class InstanceID implements Serializable
-{
+public final class InstanceID implements Serializable {
   /**
    * DefaultConstructor.
    */
-  public InstanceID()
-  {
+  public InstanceID() {
   }
 
   /**
@@ -39,8 +37,7 @@ public final class InstanceID implements Serializable
    *
    * @return the string representation.
    */
-  public String toString()
-  {
+  public String toString() {
     return "InstanceID[" + hashCode() + ']';
   }
 }

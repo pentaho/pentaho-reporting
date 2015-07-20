@@ -17,24 +17,19 @@
 
 package org.pentaho.reporting.engine.classic.core.layout.process.util;
 
-public class StaticRootChunkWidthUpdate extends StaticChunkWidthUpdate
-{
-  public StaticRootChunkWidthUpdate()
-  {
+public class StaticRootChunkWidthUpdate extends StaticChunkWidthUpdate {
+  public StaticRootChunkWidthUpdate() {
   }
 
-  public void update(final long minChunkWidth)
-  {
+  public void update( final long minChunkWidth ) {
 
   }
 
-  public void finish()
-  {
+  public void finish() {
 
   }
 
-  public StaticChunkWidthUpdate pop()
-  {
+  public StaticChunkWidthUpdate pop() {
     return this;
   }
 }

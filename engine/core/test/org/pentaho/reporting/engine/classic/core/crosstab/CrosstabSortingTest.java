@@ -17,10 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.core.crosstab;
 
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
-
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -29,30 +25,30 @@ import org.pentaho.reporting.engine.classic.core.MasterReport;
 import org.pentaho.reporting.engine.classic.core.sorting.SortConstraint;
 import org.pentaho.reporting.engine.classic.core.sorting.SortOrderReportPreProcessor;
 import org.pentaho.reporting.engine.classic.core.testsupport.DebugReportRunner;
-import org.pentaho.reporting.libraries.base.util.DebugLog;
 import org.pentaho.reporting.libraries.resourceloader.ResourceException;
 import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 
-public class CrosstabSortingTest
-{
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
+
+public class CrosstabSortingTest {
   @Before
-  public void setUp() throws Exception
-  {
+  public void setUp() throws Exception {
     ClassicEngineBoot.getInstance().start();
   }
 
   @Test
-  public void testSorting() throws ResourceException
-  {
-    URL url = getClass().getResource("crosstab-sorting.prpt");
-    MasterReport report = (MasterReport) new ResourceManager().createDirectly(url, MasterReport.class).getResource();
-    report.setAutoSort(true);
+  public void testSorting() throws ResourceException {
+    URL url = getClass().getResource( "crosstab-sorting.prpt" );
+    MasterReport report = (MasterReport) new ResourceManager().createDirectly( url, MasterReport.class ).getResource();
+    report.setAutoSort( true );
     SortOrderReportPreProcessor p = new SortOrderReportPreProcessor();
-    List<SortConstraint> sortConstraints = p.computeSortConstraints(report.getReportFooter().getSubReport(0));
+    List<SortConstraint> sortConstraints = p.computeSortConstraints( report.getReportFooter().getSubReport( 0 ) );
     List<SortConstraint> expectedSortConstraints = new ArrayList<SortConstraint>();
-    expectedSortConstraints.add(new SortConstraint("year", true));
-    expectedSortConstraints.add(new SortConstraint("month", true));
-    Assert.assertEquals(expectedSortConstraints, sortConstraints);
-    DebugReportRunner.execGraphics2D(report);
+    expectedSortConstraints.add( new SortConstraint( "year", true ) );
+    expectedSortConstraints.add( new SortConstraint( "month", true ) );
+    Assert.assertEquals( expectedSortConstraints, sortConstraints );
+    DebugReportRunner.execGraphics2D( report );
   }
 }

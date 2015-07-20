@@ -24,14 +24,12 @@ import org.pentaho.reporting.libraries.xmlns.parser.ParseException;
 import org.pentaho.reporting.libraries.xmlns.parser.RootXmlReadHandler;
 import org.xml.sax.SAXException;
 
-public class TemplateReadHandler extends CompoundObjectReadHandler
-{
+public class TemplateReadHandler extends CompoundObjectReadHandler {
   private TemplateCollection templateCollection;
   private boolean nameRequired;
 
-  public TemplateReadHandler(final boolean nameRequired)
-  {
-    super(null);
+  public TemplateReadHandler( final boolean nameRequired ) {
+    super( null );
     this.nameRequired = nameRequired;
   }
 
@@ -42,13 +40,12 @@ public class TemplateReadHandler extends CompoundObjectReadHandler
    * @param rootHandler the root handler.
    * @param tagName     the tag name.
    */
-  public void init(final RootXmlReadHandler rootHandler,
-                   final String uri,
-                   final String tagName) throws SAXException
-  {
-    super.init(rootHandler, uri, tagName);
+  public void init( final RootXmlReadHandler rootHandler,
+                    final String uri,
+                    final String tagName ) throws SAXException {
+    super.init( rootHandler, uri, tagName );
     templateCollection = (TemplateCollection) rootHandler.getHelperObject
-        (ReportDefinitionReadHandler.TEMPLATE_FACTORY_KEY);
+      ( ReportDefinitionReadHandler.TEMPLATE_FACTORY_KEY );
   }
 
 
@@ -58,35 +55,30 @@ public class TemplateReadHandler extends CompoundObjectReadHandler
    * @param attrs the attributes.
    * @throws org.xml.sax.SAXException if there is a parsing error.
    */
-  protected void startParsing(final PropertyAttributes attrs)
-      throws SAXException
-  {
-    final String templateName = attrs.getValue(getUri(), "name");
-    if (nameRequired && templateName == null)
-    {
-      throw new ParseException("The 'name' attribute is required for template definitions",
-          getRootHandler().getDocumentLocator());
+  protected void startParsing( final PropertyAttributes attrs )
+    throws SAXException {
+    final String templateName = attrs.getValue( getUri(), "name" );
+    if ( nameRequired && templateName == null ) {
+      throw new ParseException( "The 'name' attribute is required for template definitions",
+        getRootHandler().getDocumentLocator() );
     }
-    final String references = attrs.getValue(getUri(), "references");
-    if (references == null)
-    {
-      throw new ParseException("The 'references' attribute is required for template definitions",
-          getRootHandler().getDocumentLocator());
+    final String references = attrs.getValue( getUri(), "references" );
+    if ( references == null ) {
+      throw new ParseException( "The 'references' attribute is required for template definitions",
+        getRootHandler().getDocumentLocator() );
     }
-    TemplateDescription template = templateCollection.getTemplate(references);
-    if (template == null)
-    {
-      throw new ParseException("The template '" + references + "' is not defined",
-          getRootHandler().getDocumentLocator());
+    TemplateDescription template = templateCollection.getTemplate( references );
+    if ( template == null ) {
+      throw new ParseException( "The template '" + references + "' is not defined",
+        getRootHandler().getDocumentLocator() );
     }
 
     // Clone the defined template ... we don't change the original ..
     template = (TemplateDescription) template.getInstance();
-    if (templateName != null)
-    {
-      template.setName(templateName);
-      templateCollection.addTemplate(template);
+    if ( templateName != null ) {
+      template.setName( templateName );
+      templateCollection.addTemplate( template );
     }
-    setObjectDescription(template);
+    setObjectDescription( template );
   }
 }

@@ -17,12 +17,11 @@
 
 package org.pentaho.reporting.engine.classic.core.wizard;
 
-import java.util.Locale;
-
 import org.pentaho.reporting.engine.classic.core.layout.output.OutputProcessorMetaData;
 
-public interface DataAttributeContext
-{
+import java.util.Locale;
+
+public interface DataAttributeContext {
   public Locale getLocale();
 
   public OutputProcessorMetaData getOutputProcessorMetaData();

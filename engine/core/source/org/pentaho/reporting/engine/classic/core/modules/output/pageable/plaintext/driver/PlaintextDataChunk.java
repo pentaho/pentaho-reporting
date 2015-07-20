@@ -20,8 +20,7 @@ package org.pentaho.reporting.engine.classic.core.modules.output.pageable.plaint
 /**
  * A data carrier to collect and store text data for the output.
  */
-public class PlaintextDataChunk
-{
+public class PlaintextDataChunk {
   /**
    * The text that should be printed.
    */
@@ -64,36 +63,29 @@ public class PlaintextDataChunk
    * @param y             the row of the text
    * @param w             the number of characters of the text that should be printed.
    */
-  protected PlaintextDataChunk(final String text,
-                               final String font, final boolean bold, final boolean italic,
-                               final boolean underline, final boolean strikethrough,
-                               final int x, final int y, final int w)
-  {
-    if (font == null)
-    {
-      throw new NullPointerException("Font must not be null");
+  protected PlaintextDataChunk( final String text,
+                                final String font, final boolean bold, final boolean italic,
+                                final boolean underline, final boolean strikethrough,
+                                final int x, final int y, final int w ) {
+    if ( font == null ) {
+      throw new NullPointerException( "Font must not be null" );
     }
-    if (text == null)
-    {
-      throw new NullPointerException("Text must not be null");
+    if ( text == null ) {
+      throw new NullPointerException( "Text must not be null" );
     }
-    if (x < 0)
-    {
+    if ( x < 0 ) {
       throw new IllegalArgumentException();
     }
 
-    if (y < 0)
-    {
+    if ( y < 0 ) {
       throw new IllegalArgumentException();
     }
 
-    if (w < 1)
-    {
-      throw new IllegalArgumentException("PlaintextDataChunk: Width is empty or negative. " + w);
+    if ( w < 1 ) {
+      throw new IllegalArgumentException( "PlaintextDataChunk: Width is empty or negative. " + w );
     }
-    if (w > text.length())
-    {
-      throw new IllegalArgumentException("Size limit: " + w + " vs. " + text.length());
+    if ( w > text.length() ) {
+      throw new IllegalArgumentException( "Size limit: " + w + " vs. " + text.length() );
     }
 
     this.underline = underline;
@@ -107,13 +99,11 @@ public class PlaintextDataChunk
     this.italic = italic;
   }
 
-  public boolean isUnderline()
-  {
+  public boolean isUnderline() {
     return underline;
   }
 
-  public boolean isStrikethrough()
-  {
+  public boolean isStrikethrough() {
     return strikethrough;
   }
 
@@ -122,23 +112,19 @@ public class PlaintextDataChunk
    *
    * @return the text
    */
-  public String getText()
-  {
+  public String getText() {
     return text;
   }
 
-  public boolean isBold()
-  {
+  public boolean isBold() {
     return bold;
   }
 
-  public boolean isItalic()
-  {
+  public boolean isItalic() {
     return italic;
   }
 
-  public String getFont()
-  {
+  public String getFont() {
     return font;
   }
 
@@ -147,8 +133,7 @@ public class PlaintextDataChunk
    *
    * @return the column of the first character.
    */
-  public int getX()
-  {
+  public int getX() {
     return x;
   }
 
@@ -157,8 +142,7 @@ public class PlaintextDataChunk
    *
    * @return the row.
    */
-  public int getY()
-  {
+  public int getY() {
     return y;
   }
 
@@ -167,8 +151,7 @@ public class PlaintextDataChunk
    *
    * @return the number of printable characters.
    */
-  public int getWidth()
-  {
+  public int getWidth() {
     return width;
   }
 }

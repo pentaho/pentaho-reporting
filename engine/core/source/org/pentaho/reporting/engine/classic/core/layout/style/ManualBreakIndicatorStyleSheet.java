@@ -31,65 +31,53 @@ import org.pentaho.reporting.engine.classic.core.util.InstanceID;
  *
  * @author Thomas Morgner
  */
-public class ManualBreakIndicatorStyleSheet extends AbstractStyleSheet
-{
-  private static final Float WIDTH = new Float(-100);
-  private static final Float ZERO = new Float(0);
+public class ManualBreakIndicatorStyleSheet extends AbstractStyleSheet {
+  private static final Float WIDTH = new Float( -100 );
+  private static final Float ZERO = new Float( 0 );
   private StyleSheet parent;
 
-  public ManualBreakIndicatorStyleSheet()
-  {
+  public ManualBreakIndicatorStyleSheet() {
     this.parent = BandDefaultStyleSheet.getBandDefaultStyle();
   }
 
-  public StyleSheet getParent()
-  {
+  public StyleSheet getParent() {
     return parent;
   }
 
-  public InstanceID getId()
-  {
+  public InstanceID getId() {
     return parent.getId();
   }
 
-  public long getChangeTracker()
-  {
+  public long getChangeTracker() {
     return parent.getChangeTracker();
   }
 
-  public Object getStyleProperty(final StyleKey key, final Object defaultValue)
-  {
-    if (ElementStyleKeys.MIN_WIDTH.equals(key))
-    {
+  public Object getStyleProperty( final StyleKey key, final Object defaultValue ) {
+    if ( ElementStyleKeys.MIN_WIDTH.equals( key ) ) {
       return ManualBreakIndicatorStyleSheet.WIDTH;
     }
-    if (ElementStyleKeys.MIN_HEIGHT.equals(key))
-    {
+    if ( ElementStyleKeys.MIN_HEIGHT.equals( key ) ) {
       return ManualBreakIndicatorStyleSheet.ZERO;
     }
-    if (ElementStyleKeys.POS_X.equals(key))
-    {
+    if ( ElementStyleKeys.POS_X.equals( key ) ) {
       return ManualBreakIndicatorStyleSheet.ZERO;
     }
-    if (ElementStyleKeys.POS_Y.equals(key))
-    {
+    if ( ElementStyleKeys.POS_Y.equals( key ) ) {
       return ManualBreakIndicatorStyleSheet.ZERO;
     }
-    if (BandStyleKeys.PAGEBREAK_BEFORE.equals(key))
-    {
+    if ( BandStyleKeys.PAGEBREAK_BEFORE.equals( key ) ) {
       return Boolean.TRUE;
     }
-    return parent.getStyleProperty(key, defaultValue);
+    return parent.getStyleProperty( key, defaultValue );
   }
 
-  public Object[] toArray()
-  {
+  public Object[] toArray() {
     final Object[] objects = parent.toArray();
-    objects[ElementStyleKeys.MIN_WIDTH.getIdentifier()] = ManualBreakIndicatorStyleSheet.WIDTH;
-    objects[ElementStyleKeys.MIN_HEIGHT.getIdentifier()] = ManualBreakIndicatorStyleSheet.WIDTH;
-    objects[ElementStyleKeys.POS_X.getIdentifier()] = ManualBreakIndicatorStyleSheet.ZERO;
-    objects[ElementStyleKeys.POS_Y.getIdentifier()] = ManualBreakIndicatorStyleSheet.ZERO;
-    objects[BandStyleKeys.PAGEBREAK_BEFORE.getIdentifier()] = Boolean.TRUE;
+    objects[ ElementStyleKeys.MIN_WIDTH.getIdentifier() ] = ManualBreakIndicatorStyleSheet.WIDTH;
+    objects[ ElementStyleKeys.MIN_HEIGHT.getIdentifier() ] = ManualBreakIndicatorStyleSheet.WIDTH;
+    objects[ ElementStyleKeys.POS_X.getIdentifier() ] = ManualBreakIndicatorStyleSheet.ZERO;
+    objects[ ElementStyleKeys.POS_Y.getIdentifier() ] = ManualBreakIndicatorStyleSheet.ZERO;
+    objects[ BandStyleKeys.PAGEBREAK_BEFORE.getIdentifier() ] = Boolean.TRUE;
     return objects;
   }
 }

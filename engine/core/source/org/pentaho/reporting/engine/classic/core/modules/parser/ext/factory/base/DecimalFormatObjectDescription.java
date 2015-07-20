@@ -25,15 +25,13 @@ import java.text.DecimalFormatSymbols;
  *
  * @author Thomas Morgner
  */
-public class DecimalFormatObjectDescription extends BeanObjectDescription
-{
+public class DecimalFormatObjectDescription extends BeanObjectDescription {
 
   /**
    * Creates a new object description.
    */
-  public DecimalFormatObjectDescription()
-  {
-    this(DecimalFormat.class);
+  public DecimalFormatObjectDescription() {
+    this( DecimalFormat.class );
   }
 
   /**
@@ -41,28 +39,27 @@ public class DecimalFormatObjectDescription extends BeanObjectDescription
    *
    * @param className the class.
    */
-  public DecimalFormatObjectDescription(final Class className)
-  {
-    super(className, false);
-    setParameterDefinition("localizedPattern", String.class);
-    setParameterDefinition("pattern", String.class);
-    setParameterDefinition("decimalFormatSymbols", DecimalFormatSymbols.class);
-    setParameterDefinition("decimalSeparatorAlwaysShown", Boolean.TYPE);
-    setParameterDefinition("groupingSize", Integer.TYPE);
-    setParameterDefinition("groupingUsed", Boolean.TYPE);
-    setParameterDefinition("maximumFractionDigits", Integer.TYPE);
-    setParameterDefinition("maximumIntegerDigits", Integer.TYPE);
-    setParameterDefinition("minimumFractionDigits", Integer.TYPE);
-    setParameterDefinition("minimumIntegerDigits", Integer.TYPE);
-    setParameterDefinition("multiplier", Integer.TYPE);
-    setParameterDefinition("negativePrefix", String.class);
-    setParameterDefinition("negativeSuffix", String.class);
-//        setParameterDefinition("parseBigDecimal", Boolean.TYPE);
-    setParameterDefinition("parseIntegerOnly", Boolean.TYPE);
-    setParameterDefinition("positivePrefix", String.class);
-    setParameterDefinition("positiveSuffix", String.class);
-    ignoreParameter("localizedPattern");
-    ignoreParameter("pattern");
+  public DecimalFormatObjectDescription( final Class className ) {
+    super( className, false );
+    setParameterDefinition( "localizedPattern", String.class );
+    setParameterDefinition( "pattern", String.class );
+    setParameterDefinition( "decimalFormatSymbols", DecimalFormatSymbols.class );
+    setParameterDefinition( "decimalSeparatorAlwaysShown", Boolean.TYPE );
+    setParameterDefinition( "groupingSize", Integer.TYPE );
+    setParameterDefinition( "groupingUsed", Boolean.TYPE );
+    setParameterDefinition( "maximumFractionDigits", Integer.TYPE );
+    setParameterDefinition( "maximumIntegerDigits", Integer.TYPE );
+    setParameterDefinition( "minimumFractionDigits", Integer.TYPE );
+    setParameterDefinition( "minimumIntegerDigits", Integer.TYPE );
+    setParameterDefinition( "multiplier", Integer.TYPE );
+    setParameterDefinition( "negativePrefix", String.class );
+    setParameterDefinition( "negativeSuffix", String.class );
+    //        setParameterDefinition("parseBigDecimal", Boolean.TYPE);
+    setParameterDefinition( "parseIntegerOnly", Boolean.TYPE );
+    setParameterDefinition( "positivePrefix", String.class );
+    setParameterDefinition( "positiveSuffix", String.class );
+    ignoreParameter( "localizedPattern" );
+    ignoreParameter( "pattern" );
   }
 
   /**
@@ -72,10 +69,9 @@ public class DecimalFormatObjectDescription extends BeanObjectDescription
    * @param init      initialise
    * @deprecated should no longer be used...
    */
-  public DecimalFormatObjectDescription(final Class className,
-                                        final boolean init)
-  {
-    this(className);
+  public DecimalFormatObjectDescription( final Class className,
+                                         final boolean init ) {
+    this( className );
   }
 
   /**
@@ -84,13 +80,12 @@ public class DecimalFormatObjectDescription extends BeanObjectDescription
    * @param o the object (should be an instance of <code>DecimalFormat</code>).
    * @throws ObjectFactoryException if there is a problem while reading the properties of the given object.
    */
-  public void setParameterFromObject(final Object o)
-      throws ObjectFactoryException
-  {
-    super.setParameterFromObject(o);
+  public void setParameterFromObject( final Object o )
+    throws ObjectFactoryException {
+    super.setParameterFromObject( o );
     final DecimalFormat format = (DecimalFormat) o;
     //setParameter("localizedPattern", format.toLocalizedPattern());
-    setParameter("pattern", format.toPattern());
+    setParameter( "pattern", format.toPattern() );
   }
 
   /**
@@ -98,16 +93,14 @@ public class DecimalFormatObjectDescription extends BeanObjectDescription
    *
    * @return The object.
    */
-  public Object createObject()
-  {
+  public Object createObject() {
     final DecimalFormat format = (DecimalFormat) super.createObject();
-    if (getParameter("pattern") != null)
-    {
-      format.applyPattern((String) getParameter("pattern"));
+    if ( getParameter( "pattern" ) != null ) {
+      format.applyPattern( (String) getParameter( "pattern" ) );
     }
-//        if (getParameter("localizedPattern") != null) {
-//            format.applyLocalizedPattern((String) getParameter("localizedPattern"));
-//        }
+    //        if (getParameter("localizedPattern") != null) {
+    //            format.applyLocalizedPattern((String) getParameter("localizedPattern"));
+    //        }
     return format;
   }
 }

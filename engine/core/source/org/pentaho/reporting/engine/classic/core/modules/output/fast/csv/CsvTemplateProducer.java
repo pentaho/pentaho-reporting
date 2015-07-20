@@ -17,11 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.output.fast.csv;
 
-import java.io.PrintWriter;
-import java.io.StringWriter;
-import java.util.HashMap;
-import java.util.Locale;
-
 import org.pentaho.reporting.engine.classic.core.InvalidReportStateException;
 import org.pentaho.reporting.engine.classic.core.filter.MessageFormatSupport;
 import org.pentaho.reporting.engine.classic.core.layout.model.LogicalPageBox;
@@ -38,8 +33,12 @@ import org.pentaho.reporting.engine.classic.core.util.InstanceID;
 import org.pentaho.reporting.libraries.base.util.CSVQuoter;
 import org.pentaho.reporting.libraries.fonts.encoding.EncodingRegistry;
 
-public class CsvTemplateProducer implements FastExportTemplateProducer
-{
+import java.io.PrintWriter;
+import java.io.StringWriter;
+import java.util.HashMap;
+import java.util.Locale;
+
+public class CsvTemplateProducer implements FastExportTemplateProducer {
   private OutputProcessorMetaData metaData;
   private SheetLayout sheetLayout;
   private String encoding;
@@ -47,36 +46,33 @@ public class CsvTemplateProducer implements FastExportTemplateProducer
   private String template;
   private CSVQuoter quoter;
 
-  public CsvTemplateProducer(final OutputProcessorMetaData metaData,
-                             final SheetLayout sheetLayout,
-                             final String encoding)
-  {
+  public CsvTemplateProducer( final OutputProcessorMetaData metaData,
+                              final SheetLayout sheetLayout,
+                              final String encoding ) {
     this.metaData = metaData;
     this.sheetLayout = sheetLayout;
     this.encoding = encoding;
     this.idMapping = new HashMap<InstanceID, String>();
 
     final String separator = metaData.getConfiguration().getConfigProperty
-            (CSVTableModule.SEPARATOR, CSVTableModule.SEPARATOR_DEFAULT);
-    if (separator.length() == 0)
-    {
-      throw new IllegalArgumentException("CSV separate cannot be an empty string.");
+      ( CSVTableModule.SEPARATOR, CSVTableModule.SEPARATOR_DEFAULT );
+    if ( separator.length() == 0 ) {
+      throw new IllegalArgumentException( "CSV separate cannot be an empty string." );
     }
 
-    if (this.encoding == null)
-    {
+    if ( this.encoding == null ) {
       this.encoding = metaData.getConfiguration().getConfigProperty
-          ("org.pentaho.reporting.engine.classic.core.modules.output.table.csv.Encoding",
-              EncodingRegistry.getPlatformDefaultEncoding());
+        ( "org.pentaho.reporting.engine.classic.core.modules.output.table.csv.Encoding",
+          EncodingRegistry.getPlatformDefaultEncoding() );
     }
 
 
-    quoter = new CSVQuoter(separator.charAt(0));
+    quoter = new CSVQuoter( separator.charAt( 0 ) );
   }
 
-  public void produceTemplate(final LogicalPageBox pageBox)
-  {
-    TableContentProducer contentProducer = TemplatingOutputProcessor.produceTableLayout(pageBox, sheetLayout, metaData);
+  public void produceTemplate( final LogicalPageBox pageBox ) {
+    TableContentProducer contentProducer =
+      TemplatingOutputProcessor.produceTableLayout( pageBox, sheetLayout, metaData );
 
     final SheetLayout sheetLayout = contentProducer.getSheetLayout();
     final int columnCount = contentProducer.getColumnCount();
@@ -85,49 +81,42 @@ public class CsvTemplateProducer implements FastExportTemplateProducer
     final int startRow = contentProducer.getFinishedRows();
     final int finishRow = contentProducer.getFilledRows();
     StringWriter swriter = new StringWriter();
-    PrintWriter writer = new PrintWriter(swriter);
+    PrintWriter writer = new PrintWriter( swriter );
 
-    for (int row = startRow; row < finishRow; row++)
-    {
-      for (short col = 0; col < columnCount; col++)
-      {
-        final RenderBox content = contentProducer.getContent(row, col);
-        if (content == null)
-        {
-          writer.print(quoter.getSeparator());
+    for ( int row = startRow; row < finishRow; row++ ) {
+      for ( short col = 0; col < columnCount; col++ ) {
+        final RenderBox content = contentProducer.getContent( row, col );
+        if ( content == null ) {
+          writer.print( quoter.getSeparator() );
           continue;
         }
 
-        if (content.isCommited() == false)
-        {
-          throw new InvalidReportStateException("Uncommited content encountered");
+        if ( content.isCommited() == false ) {
+          throw new InvalidReportStateException( "Uncommited content encountered" );
         }
 
-        final long contentOffset = contentProducer.getContentOffset(row, col);
+        final long contentOffset = contentProducer.getContentOffset( row, col );
         final TableRectangle rectangle = sheetLayout.getTableBounds
-            (content.getX(), content.getY() + contentOffset,
-                content.getWidth(), content.getHeight(), null);
-        if (rectangle.isOrigin(col, row) == false)
-        {
+          ( content.getX(), content.getY() + contentOffset,
+            content.getWidth(), content.getHeight(), null );
+        if ( rectangle.isOrigin( col, row ) == false ) {
           // A spanned cell ..
           continue;
         }
 
         InstanceID instanceId = content.getNodeLayoutProperties().getInstanceId();
-        String uuid = idMapping.get(instanceId);
-        if (uuid == null)
-        {
-          uuid = String.valueOf(idMapping.size());
-          idMapping.put(instanceId, uuid);
+        String uuid = idMapping.get( instanceId );
+        if ( uuid == null ) {
+          uuid = String.valueOf( idMapping.size() );
+          idMapping.put( instanceId, uuid );
         }
 
         final String formattedtext = "$(" + uuid + ")";
-        writer.write(formattedtext);
-        if (col < lastColumn)
-        {
-          writer.print(quoter.getSeparator());
+        writer.write( formattedtext );
+        if ( col < lastColumn ) {
+          writer.print( quoter.getSeparator() );
         }
-        content.setFinishedTable(true);
+        content.setFinishedTable( true );
       }
 
       writer.println();
@@ -137,22 +126,19 @@ public class CsvTemplateProducer implements FastExportTemplateProducer
     template = swriter.toString();
   }
 
-  public CSVQuoter getQuoter()
-  {
+  public CSVQuoter getQuoter() {
     return quoter;
   }
 
-  public String getTemplate()
-  {
+  public String getTemplate() {
     return template;
   }
 
-  public FormattedDataBuilder createDataBuilder()
-  {
+  public FormattedDataBuilder createDataBuilder() {
     MessageFormatSupport messageFormatSupport = new MessageFormatSupport();
-    messageFormatSupport.setLocale(Locale.ENGLISH);
-    messageFormatSupport.setFormatString(getTemplate());
-    messageFormatSupport.setNullString("");
-    return new CsvFormattedDataBuilder(idMapping, messageFormatSupport, getQuoter(), encoding);
+    messageFormatSupport.setLocale( Locale.ENGLISH );
+    messageFormatSupport.setFormatString( getTemplate() );
+    messageFormatSupport.setNullString( "" );
+    return new CsvFormattedDataBuilder( idMapping, messageFormatSupport, getQuoter(), encoding );
   }
 }

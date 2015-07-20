@@ -28,12 +28,11 @@ package org.pentaho.reporting.engine.classic.core.util;
  *
  * @author Thomas Morgner
  */
-public class FloatList
-{
+public class FloatList {
   /**
    * An empty array used to avoid object creation.
    */
-  private static final float[] EMPTY_ARRAY = new float[0];
+  private static final float[] EMPTY_ARRAY = new float[ 0 ];
   /**
    * The array holding the list data.
    */
@@ -53,9 +52,8 @@ public class FloatList
    *
    * @param capacity the initial capacity.
    */
-  public FloatList(final int capacity)
-  {
-    data = new float[capacity];
+  public FloatList( final int capacity ) {
+    data = new float[ capacity ];
     increment = capacity;
   }
 
@@ -65,12 +63,10 @@ public class FloatList
    *
    * @param c the new capacity of the list.
    */
-  private void ensureCapacity(final int c)
-  {
-    if (data.length <= c)
-    {
-      final float[] newData = new float[Math.max(data.length + increment, c + 1)];
-      System.arraycopy(data, 0, newData, 0, size);
+  private void ensureCapacity( final int c ) {
+    if ( data.length <= c ) {
+      final float[] newData = new float[ Math.max( data.length + increment, c + 1 ) ];
+      System.arraycopy( data, 0, newData, 0, size );
       data = newData;
     }
   }
@@ -80,10 +76,9 @@ public class FloatList
    *
    * @param value the new value to be added.
    */
-  public void add(final float value)
-  {
-    ensureCapacity(size);
-    data[size] = value;
+  public void add( final float value ) {
+    ensureCapacity( size );
+    data[ size ] = value;
     size += 1;
   }
 
@@ -94,20 +89,17 @@ public class FloatList
    * @return the value at the given index
    * @throws IndexOutOfBoundsException if the index is greater or equal to the list size or if the index is negative.
    */
-  public float get(final int index)
-  {
-    if (index >= size || index < 0)
-    {
-      throw new IndexOutOfBoundsException(String.valueOf(index));
+  public float get( final int index ) {
+    if ( index >= size || index < 0 ) {
+      throw new IndexOutOfBoundsException( String.valueOf( index ) );
     }
-    return data[index];
+    return data[ index ];
   }
 
   /**
    * Clears the list.
    */
-  public void clear()
-  {
+  public void clear() {
     size = 0;
   }
 
@@ -116,8 +108,7 @@ public class FloatList
    *
    * @return the number of elements in the list
    */
-  public int size()
-  {
+  public int size() {
     return size;
   }
 
@@ -126,15 +117,13 @@ public class FloatList
    *
    * @return the list contents as array.
    */
-  public float[] toArray()
-  {
-    if (size == 0)
-    {
+  public float[] toArray() {
+    if ( size == 0 ) {
       return FloatList.EMPTY_ARRAY;
     }
 
-    final float[] retval = new float[size];
-    System.arraycopy(data, 0, retval, 0, size);
+    final float[] retval = new float[ size ];
+    System.arraycopy( data, 0, retval, 0, size );
     return retval;
   }
 }

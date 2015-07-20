@@ -25,14 +25,12 @@ import org.pentaho.reporting.engine.classic.core.filter.types.bands.ItemBandType
  *
  * @author David Gilbert
  */
-public class ItemBand extends AbstractRootLevelBand
-{
+public class ItemBand extends AbstractRootLevelBand {
   /**
    * Constructs an item band, containing no elements.
    */
-  public ItemBand()
-  {
-    setElementType(new ItemBandType());
+  public ItemBand() {
+    setElementType( new ItemBandType() );
   }
 
 }

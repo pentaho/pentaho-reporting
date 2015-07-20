@@ -26,22 +26,19 @@ import org.pentaho.reporting.engine.classic.core.layout.model.LogicalPageBox;
 import org.pentaho.reporting.engine.classic.core.testsupport.DebugReportRunner;
 import org.pentaho.reporting.engine.classic.core.testsupport.selector.MatchFactory;
 
-public class Prd4909Test
-{
+public class Prd4909Test {
   @Before
-  public void setUp() throws Exception
-  {
+  public void setUp() throws Exception {
     ClassicEngineBoot.getInstance().start();
   }
 
   @Test
-  public void testReportRun() throws Exception
-  {
-    MasterReport report = DebugReportRunner.parseGoldenSampleReport("Prd-4909.prpt");
-    LogicalPageBox logicalPageBox = DebugReportRunner.layoutPage(report, 0);
+  public void testReportRun() throws Exception {
+    MasterReport report = DebugReportRunner.parseGoldenSampleReport( "Prd-4909.prpt" );
+    LogicalPageBox logicalPageBox = DebugReportRunner.layoutPage( report, 0 );
     // crashes if not fixed.
-    Assert.assertNotNull(MatchFactory.findElementByName(logicalPageBox, "sr0"));
-    Assert.assertNotNull(MatchFactory.findElementByName(logicalPageBox, "sr-0-0"));
-    Assert.assertNotNull(MatchFactory.findElementByName(logicalPageBox, "sr-0-1"));
+    Assert.assertNotNull( MatchFactory.findElementByName( logicalPageBox, "sr0" ) );
+    Assert.assertNotNull( MatchFactory.findElementByName( logicalPageBox, "sr-0-0" ) );
+    Assert.assertNotNull( MatchFactory.findElementByName( logicalPageBox, "sr-0-1" ) );
   }
 }

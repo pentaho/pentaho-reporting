@@ -34,234 +34,187 @@ import org.pentaho.reporting.engine.classic.core.states.PerformanceMonitorContex
 import org.pentaho.reporting.engine.classic.core.states.ReportStateKey;
 import org.pentaho.reporting.engine.classic.core.util.InstanceID;
 
-public class DummyRenderer implements Renderer
-{
+public class DummyRenderer implements Renderer {
   private boolean finished;
   private ReportStateKey lastStateKey;
   private OutputProcessor outputProcessor;
   private LayoutModelBuilder modelBuilder;
 
-  public DummyRenderer(final OutputProcessor outputProcessor)
-  {
+  public DummyRenderer( final OutputProcessor outputProcessor ) {
     this.outputProcessor = outputProcessor;
   }
 
-  public OutputProcessor getOutputProcessor()
-  {
+  public OutputProcessor getOutputProcessor() {
     return outputProcessor;
   }
 
-  public LayoutModelBuilder getNormalFlowLayoutModelBuilder()
-  {
+  public LayoutModelBuilder getNormalFlowLayoutModelBuilder() {
     return modelBuilder;
   }
 
-  public void startReport(final ReportDefinition pageDefinition,
-                          final ProcessingContext processingContext,
-                          final PerformanceMonitorContext performanceMonitorContext)
-  {
+  public void startReport( final ReportDefinition pageDefinition,
+                           final ProcessingContext processingContext,
+                           final PerformanceMonitorContext performanceMonitorContext ) {
     modelBuilder = new DummyLayoutModelBuilder();
   }
 
-  public void startSubReport(final ReportDefinition report, final InstanceID insertationPoint)
-  {
+  public void startSubReport( final ReportDefinition report, final InstanceID insertationPoint ) {
 
   }
 
-  public void startGroup(final Group group, final Integer predictedStateCount)
-  {
+  public void startGroup( final Group group, final Integer predictedStateCount ) {
 
   }
 
-  public void startGroupBody(final GroupBody groupBody, final Integer predictedStateCount)
-  {
+  public void startGroupBody( final GroupBody groupBody, final Integer predictedStateCount ) {
 
   }
 
-  public void startSection(final SectionType type)
-  {
+  public void startSection( final SectionType type ) {
 
   }
 
-  public InlineSubreportMarker[] endSection()
-  {
-    return new InlineSubreportMarker[0];
+  public InlineSubreportMarker[] endSection() {
+    return new InlineSubreportMarker[ 0 ];
   }
 
-  public void addProgressBox() throws ReportProcessingException
-  {
-
-  }
-
-  public void addEmptyRootLevelBand() throws ReportProcessingException
-  {
+  public void addProgressBox() throws ReportProcessingException {
 
   }
 
-  public void add(final Band band, final ExpressionRuntime runtime) throws ReportProcessingException
-  {
+  public void addEmptyRootLevelBand() throws ReportProcessingException {
 
   }
 
-  public void addToNormalFlow(final Band band, final ExpressionRuntime runtime) throws ReportProcessingException
-  {
+  public void add( final Band band, final ExpressionRuntime runtime ) throws ReportProcessingException {
 
   }
 
-  public void endGroupBody()
-  {
+  public void addToNormalFlow( final Band band, final ExpressionRuntime runtime ) throws ReportProcessingException {
 
   }
 
-  public void endGroup()
-  {
+  public void endGroupBody() {
 
   }
 
-  public void endSubReport()
-  {
+  public void endGroup() {
 
   }
 
-  public void endReport()
-  {
+  public void endSubReport() {
+
+  }
+
+  public void endReport() {
     finished = true;
   }
 
-  public LayoutResult validatePages() throws ContentProcessingException
-  {
-    if (finished == false)
-    {
+  public LayoutResult validatePages() throws ContentProcessingException {
+    if ( finished == false ) {
       return LayoutResult.LAYOUT_UNVALIDATABLE;
     }
     return LayoutResult.LAYOUT_PAGEBREAK;
   }
 
-  public boolean processPage(final LayoutPagebreakHandler handler,
-                             final Object commitMarker,
-                             final boolean performOutput) throws ContentProcessingException
-  {
-    if (finished)
-    {
+  public boolean processPage( final LayoutPagebreakHandler handler,
+                              final Object commitMarker,
+                              final boolean performOutput ) throws ContentProcessingException {
+    if ( finished ) {
       outputProcessor.processingFinished();
       return true;
     }
     return false;
   }
 
-  public void processIncrementalUpdate(final boolean performOutput) throws ContentProcessingException
-  {
+  public void processIncrementalUpdate( final boolean performOutput ) throws ContentProcessingException {
 
   }
 
-  public int getPagebreaks()
-  {
+  public int getPagebreaks() {
     return 0;
   }
 
-  public boolean isOpen()
-  {
+  public boolean isOpen() {
     return !finished;
   }
 
-  public ReportStateKey getLastStateKey()
-  {
+  public ReportStateKey getLastStateKey() {
     return lastStateKey;
   }
 
-  public void addPagebreak()
-  {
+  public void addPagebreak() {
 
   }
 
-  public boolean clearPendingPageStart(final LayoutPagebreakHandler layoutPagebreakHandler)
-  {
+  public boolean clearPendingPageStart( final LayoutPagebreakHandler layoutPagebreakHandler ) {
     return false;
   }
 
-  public boolean isPageStartPending()
-  {
+  public boolean isPageStartPending() {
     return false;
   }
 
-  public boolean isCurrentPageEmpty()
-  {
+  public boolean isCurrentPageEmpty() {
     return false;
   }
 
-  public Renderer deriveForStorage()
-  {
+  public Renderer deriveForStorage() {
     return clone();
   }
 
-  public Renderer deriveForPagebreak()
-  {
+  public Renderer deriveForPagebreak() {
     return clone();
   }
 
-  public boolean isValid()
-  {
+  public boolean isValid() {
     return false;
   }
 
-  public void createRollbackInformation()
-  {
+  public void createRollbackInformation() {
 
   }
 
-  public void applyRollbackInformation()
-  {
+  public void applyRollbackInformation() {
 
   }
 
-  public void rollback()
-  {
+  public void rollback() {
 
   }
 
-  public void setStateKey(final ReportStateKey stateKey)
-  {
+  public void setStateKey( final ReportStateKey stateKey ) {
     lastStateKey = stateKey;
   }
 
-  public void applyAutoCommit()
-  {
+  public void applyAutoCommit() {
 
   }
 
-  public boolean isPendingPageHack()
-  {
+  public boolean isPendingPageHack() {
     return false;
   }
 
-  public boolean isSafeToStore()
-  {
+  public boolean isSafeToStore() {
     return true;
   }
 
-  public void print()
-  {
+  public void print() {
 
   }
 
-  public void newPageStarted()
-  {
+  public void newPageStarted() {
 
   }
 
-  public int getPageCount()
-  {
+  public int getPageCount() {
     return 0;
   }
 
-  public Renderer clone ()
-  {
-    try
-    {
+  public Renderer clone() {
+    try {
       return (Renderer) super.clone();
-    }
-    catch (CloneNotSupportedException e)
-    {
+    } catch ( CloneNotSupportedException e ) {
       throw new IllegalStateException();
     }
   }

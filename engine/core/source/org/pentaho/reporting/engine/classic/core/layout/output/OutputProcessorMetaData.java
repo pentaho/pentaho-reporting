@@ -32,21 +32,20 @@ import org.pentaho.reporting.libraries.fonts.registry.FontMetrics;
  *
  * @author Thomas Morgner
  */
-public interface OutputProcessorMetaData
-{
-  public void initialize (final Configuration configuration);
+public interface OutputProcessorMetaData {
+  public void initialize( final Configuration configuration );
 
-  public boolean isFeatureSupported(OutputProcessorFeature.BooleanOutputProcessorFeature feature);
+  public boolean isFeatureSupported( OutputProcessorFeature.BooleanOutputProcessorFeature feature );
 
-  public double getNumericFeatureValue(OutputProcessorFeature.NumericOutputProcessorFeature feature);
+  public double getNumericFeatureValue( OutputProcessorFeature.NumericOutputProcessorFeature feature );
 
-  public boolean isContentSupported(Object content);
+  public boolean isContentSupported( Object content );
 
-  public FontMetrics getFontMetrics(StyleSheet styleSheet);
+  public FontMetrics getFontMetrics( StyleSheet styleSheet );
 
-  public ExtendedBaselineInfo getBaselineInfo(int codePoint, StyleSheet styleSheet);
+  public ExtendedBaselineInfo getBaselineInfo( int codePoint, StyleSheet styleSheet );
 
-  public String getNormalizedFontFamilyName(final String name);
+  public String getNormalizedFontFamilyName( final String name );
 
   /**
    * The export descriptor is a string that describes the output characteristics. For libLayout outputs, it should start
@@ -62,12 +61,12 @@ public interface OutputProcessorMetaData
   public void commit();
 
   /**
-   * Checks whether this element provides some extra content that is not part of the visible layout structure.
-   * This can be embedded scripts, anchors etc.
-   * 
+   * Checks whether this element provides some extra content that is not part of the visible layout structure. This can
+   * be embedded scripts, anchors etc.
+   *
    * @param style
    * @param attributes
    * @return
    */
-  public boolean isExtraContentElement(final StyleSheet style, final ReportAttributeMap attributes);
+  public boolean isExtraContentElement( final StyleSheet style, final ReportAttributeMap attributes );
 }

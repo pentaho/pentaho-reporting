@@ -38,65 +38,49 @@ import org.xml.sax.SAXException;
  * @author Thomas Morgner
  */
 public class DataFactoryRefReadHandler extends AbstractPropertyXmlReadHandler
-    implements DataFactoryReadHandler
-{
+  implements DataFactoryReadHandler {
   private DataFactory dataFactory;
 
-  public DataFactoryRefReadHandler()
-  {
+  public DataFactoryRefReadHandler() {
   }
 
-  protected void startParsing(final PropertyAttributes attrs)
-      throws SAXException
-  {
-    final String href = attrs.getValue(getUri(), "href");
+  protected void startParsing( final PropertyAttributes attrs )
+    throws SAXException {
+    final String href = attrs.getValue( getUri(), "href" );
     // we have a HREF given, ...
-    if (href != null)
-    {
+    if ( href != null ) {
       // load ..
 
       final ResourceKey key = getRootHandler().getSource();
       final ResourceManager manager = getRootHandler().getResourceManager();
-      try
-      {
-        final ResourceKey derivedKey = manager.deriveKey(key, href);
-        final Resource resource = manager.create(derivedKey, null, DataFactory.class);
-        getRootHandler().getDependencyCollector().add(resource);
+      try {
+        final ResourceKey derivedKey = manager.deriveKey( key, href );
+        final Resource resource = manager.create( derivedKey, null, DataFactory.class );
+        getRootHandler().getDependencyCollector().add( resource );
         dataFactory = (DataFactory) resource.getResource();
-      }
-      catch (ResourceKeyCreationException e)
-      {
-        throw new ParseException("Unable to derive key for " + key + " and " + href, e, getLocator());
-      }
-      catch (ResourceCreationException e)
-      {
-        throw new ParseException("Unable to parse resource for " + key + " and " + href, e, getLocator());
-      }
-      catch (ResourceLoadingException e)
-      {
-        throw new ParseException("Unable to load resource data for " + key + " and " + href, e, getLocator());
-      }
-      catch (ResourceException e)
-      {
-        throw new ParseException("Unable to parse resource for " + key + " and " + href, e, getLocator());
+      } catch ( ResourceKeyCreationException e ) {
+        throw new ParseException( "Unable to derive key for " + key + " and " + href, e, getLocator() );
+      } catch ( ResourceCreationException e ) {
+        throw new ParseException( "Unable to parse resource for " + key + " and " + href, e, getLocator() );
+      } catch ( ResourceLoadingException e ) {
+        throw new ParseException( "Unable to load resource data for " + key + " and " + href, e, getLocator() );
+      } catch ( ResourceException e ) {
+        throw new ParseException( "Unable to parse resource for " + key + " and " + href, e, getLocator() );
       }
       return;
     }
 
-    final String dfType = CompatibilityMapperUtil.mapClassName(attrs.getValue(getUri(), "type"));
-    if (dfType != null)
-    {
-      final Object o = ObjectUtilities.loadAndInstantiate(dfType, getClass(), DataFactory.class);
-      if (o == null)
-      {
-        throw new ParseException("'type' did not point to a usable DataFactory implementation.", getLocator());
+    final String dfType = CompatibilityMapperUtil.mapClassName( attrs.getValue( getUri(), "type" ) );
+    if ( dfType != null ) {
+      final Object o = ObjectUtilities.loadAndInstantiate( dfType, getClass(), DataFactory.class );
+      if ( o == null ) {
+        throw new ParseException( "'type' did not point to a usable DataFactory implementation.", getLocator() );
       }
       dataFactory = (DataFactory) o;
     }
   }
 
-  public DataFactory getDataFactory()
-  {
+  public DataFactory getDataFactory() {
     return dataFactory;
   }
 
@@ -105,8 +89,7 @@ public class DataFactoryRefReadHandler extends AbstractPropertyXmlReadHandler
    *
    * @return the object.
    */
-  public Object getObject()
-  {
+  public Object getObject() {
     return dataFactory;
   }
 }

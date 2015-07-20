@@ -17,9 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.core.function.strings;
 
-import java.io.UnsupportedEncodingException;
-import java.util.Date;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.pentaho.reporting.engine.classic.core.DataRow;
@@ -29,23 +26,23 @@ import org.pentaho.reporting.engine.classic.core.function.AbstractExpression;
 import org.pentaho.reporting.engine.classic.core.function.Expression;
 import org.pentaho.reporting.libraries.base.util.URLEncoder;
 
+import java.io.UnsupportedEncodingException;
+import java.util.Date;
+
 /**
- * Formats a message using named parameters. The parameters are resolved against the current
- * data-row.
+ * Formats a message using named parameters. The parameters are resolved against the current data-row.
  * <p/>
  * This performs the same task as the MessageFormatFilter does inside a text-element.
  *
  * @author Thomas Morgner
  */
-public class MessageFormatExpression extends AbstractExpression
-{
-  private static final Log logger = LogFactory.getLog(MessageFormatExpression.class);
+public class MessageFormatExpression extends AbstractExpression {
+  private static final Log logger = LogFactory.getLog( MessageFormatExpression.class );
 
   /**
    * A internal data-row wrapper that URL-encodes all values returned by the data-row.
    */
-  private static class EncodeDataRow implements DataRow
-  {
+  private static class EncodeDataRow implements DataRow {
     /**
      * The wrappedDataRow datarow.
      */
@@ -58,8 +55,7 @@ public class MessageFormatExpression extends AbstractExpression
     /**
      * Default Constructor.
      */
-    protected EncodeDataRow()
-    {
+    protected EncodeDataRow() {
     }
 
     /**
@@ -67,8 +63,7 @@ public class MessageFormatExpression extends AbstractExpression
      *
      * @return the wrapped data-row.
      */
-    public DataRow getWrappedDataRow()
-    {
+    public DataRow getWrappedDataRow() {
       return wrappedDataRow;
     }
 
@@ -77,8 +72,7 @@ public class MessageFormatExpression extends AbstractExpression
      *
      * @param wrappedDataRow the wrapped datarow.
      */
-    public void setWrappedDataRow(final DataRow wrappedDataRow)
-    {
+    public void setWrappedDataRow( final DataRow wrappedDataRow ) {
       this.wrappedDataRow = wrappedDataRow;
     }
 
@@ -87,8 +81,7 @@ public class MessageFormatExpression extends AbstractExpression
      *
      * @return the string-encoding.
      */
-    public String getEncoding()
-    {
+    public String getEncoding() {
       return encoding;
     }
 
@@ -97,10 +90,8 @@ public class MessageFormatExpression extends AbstractExpression
      *
      * @param encoding the string-encoding.
      */
-    public void setEncoding(final String encoding)
-    {
-      if (encoding == null)
-      {
+    public void setEncoding( final String encoding ) {
+      if ( encoding == null ) {
         throw new NullPointerException();
       }
       this.encoding = encoding;
@@ -112,27 +103,19 @@ public class MessageFormatExpression extends AbstractExpression
      * @param fieldValue the value that should be encoded.
      * @return the encoded value.
      */
-    private Object encode(final Object fieldValue)
-    {
-      if (fieldValue == null)
-      {
+    private Object encode( final Object fieldValue ) {
+      if ( fieldValue == null ) {
         return null;
       }
-      if (fieldValue instanceof Date)
-      {
+      if ( fieldValue instanceof Date ) {
+        return fieldValue;
+      } else if ( fieldValue instanceof Number ) {
         return fieldValue;
       }
-      else if (fieldValue instanceof Number)
-      {
-        return fieldValue;
-      }
-      try
-      {
-        return URLEncoder.encode(String.valueOf(fieldValue), encoding);
-      }
-      catch (UnsupportedEncodingException e)
-      {
-        MessageFormatExpression.logger.debug("Unsupported Encoding: " + encoding);
+      try {
+        return URLEncoder.encode( String.valueOf( fieldValue ), encoding );
+      } catch ( UnsupportedEncodingException e ) {
+        MessageFormatExpression.logger.debug( "Unsupported Encoding: " + encoding );
         return null;
       }
     }
@@ -147,9 +130,8 @@ public class MessageFormatExpression extends AbstractExpression
      * @return the value.
      * @throws IllegalStateException if the datarow detected a deadlock.
      */
-    public Object get(final String col) throws IllegalStateException
-    {
-      return encode(wrappedDataRow.get(col));
+    public Object get( final String col ) throws IllegalStateException {
+      return encode( wrappedDataRow.get( col ) );
     }
 
     /**
@@ -158,13 +140,11 @@ public class MessageFormatExpression extends AbstractExpression
      * @param name the name of the column.
      * @return true, if the value has changed, false otherwise.
      */
-    public boolean isChanged(final String name)
-    {
-      return wrappedDataRow.isChanged(name);
+    public boolean isChanged( final String name ) {
+      return wrappedDataRow.isChanged( name );
     }
 
-    public String[] getColumnNames()
-    {
+    public String[] getColumnNames() {
       return wrappedDataRow.getColumnNames();
     }
   }
@@ -195,8 +175,7 @@ public class MessageFormatExpression extends AbstractExpression
   /**
    * Default constructor.
    */
-  public MessageFormatExpression()
-  {
+  public MessageFormatExpression() {
     messageFormatSupport = new MessageFormatSupport();
     encoding = "UTF-8";
   }
@@ -207,8 +186,7 @@ public class MessageFormatExpression extends AbstractExpression
    *
    * @return the format string.
    */
-  public String getPattern()
-  {
+  public String getPattern() {
     return pattern;
   }
 
@@ -217,8 +195,7 @@ public class MessageFormatExpression extends AbstractExpression
    *
    * @param pattern the message format.
    */
-  public void setPattern(final String pattern)
-  {
+  public void setPattern( final String pattern ) {
     this.pattern = pattern;
   }
 
@@ -227,8 +204,7 @@ public class MessageFormatExpression extends AbstractExpression
    *
    * @return the encoding.
    */
-  public String getEncoding()
-  {
+  public String getEncoding() {
     return encoding;
   }
 
@@ -237,10 +213,8 @@ public class MessageFormatExpression extends AbstractExpression
    *
    * @param encoding the encoding.
    */
-  public void setEncoding(final String encoding)
-  {
-    if (encoding == null)
-    {
+  public void setEncoding( final String encoding ) {
+    if ( encoding == null ) {
       throw new NullPointerException();
     }
     this.encoding = encoding;
@@ -253,8 +227,7 @@ public class MessageFormatExpression extends AbstractExpression
    * @param urlEncode true, if the values from the data-row should be URL encoded before they are passed to the
    *                  MessageFormat, false otherwise.
    */
-  public void setUrlEncodeValues(final boolean urlEncode)
-  {
+  public void setUrlEncodeValues( final boolean urlEncode ) {
     this.urlEncodeData = urlEncode;
   }
 
@@ -263,8 +236,7 @@ public class MessageFormatExpression extends AbstractExpression
    *
    * @return true, if the values are encoded, false otherwise.
    */
-  public boolean isUrlEncodeValues()
-  {
+  public boolean isUrlEncodeValues() {
     return urlEncodeData;
   }
 
@@ -273,8 +245,7 @@ public class MessageFormatExpression extends AbstractExpression
    *
    * @return true, if the formatted result will be encoded, false otherwise.
    */
-  public boolean isUrlEncodeResult()
-  {
+  public boolean isUrlEncodeResult() {
     return urlEncodeResult;
   }
 
@@ -283,8 +254,7 @@ public class MessageFormatExpression extends AbstractExpression
    *
    * @param urlEncodeResult true, if the formatted result will be encoded, false otherwise.
    */
-  public void setUrlEncodeResult(final boolean urlEncodeResult)
-  {
+  public void setUrlEncodeResult( final boolean urlEncodeResult ) {
     this.urlEncodeResult = urlEncodeResult;
   }
 
@@ -293,8 +263,7 @@ public class MessageFormatExpression extends AbstractExpression
    *
    * @return the replacement text for null-values.
    */
-  public String getNullString()
-  {
+  public String getNullString() {
     return messageFormatSupport.getNullString();
   }
 
@@ -303,9 +272,8 @@ public class MessageFormatExpression extends AbstractExpression
    *
    * @param nullString the replacement text for null-values.
    */
-  public void setNullString(final String nullString)
-  {
-    this.messageFormatSupport.setNullString(nullString);
+  public void setNullString( final String nullString ) {
+    this.messageFormatSupport.setNullString( nullString );
   }
 
   /**
@@ -313,46 +281,35 @@ public class MessageFormatExpression extends AbstractExpression
    *
    * @return the formatted message.
    */
-  public Object getValue()
-  {
+  public Object getValue() {
     final ResourceBundleFactory resourceBundleFactory = getResourceBundleFactory();
-    messageFormatSupport.setFormatString(pattern);
-    messageFormatSupport.setLocale(resourceBundleFactory.getLocale());
+    messageFormatSupport.setFormatString( pattern );
+    messageFormatSupport.setLocale( resourceBundleFactory.getLocale() );
 
     final String result;
-    if (isUrlEncodeValues())
-    {
+    if ( isUrlEncodeValues() ) {
       final EncodeDataRow dataRow = new EncodeDataRow();
-      dataRow.setEncoding(encoding);
-      dataRow.setWrappedDataRow(getDataRow());
-      result = messageFormatSupport.performFormat(dataRow);
-    }
-    else
-    {
-      result = messageFormatSupport.performFormat(getDataRow());
+      dataRow.setEncoding( encoding );
+      dataRow.setWrappedDataRow( getDataRow() );
+      result = messageFormatSupport.performFormat( dataRow );
+    } else {
+      result = messageFormatSupport.performFormat( getDataRow() );
     }
 
-    if (isUrlEncodeResult())
-    {
-      try
-      {
-        return URLEncoder.encode(result, getEncoding());
-      }
-      catch (UnsupportedEncodingException e)
-      {
-        MessageFormatExpression.logger.debug("Unsupported Encoding: " + encoding);
+    if ( isUrlEncodeResult() ) {
+      try {
+        return URLEncoder.encode( result, getEncoding() );
+      } catch ( UnsupportedEncodingException e ) {
+        MessageFormatExpression.logger.debug( "Unsupported Encoding: " + encoding );
         return null;
       }
-    }
-    else
-    {
+    } else {
       return result;
     }
   }
 
 
-  public Expression getInstance()
-  {
+  public Expression getInstance() {
     final MessageFormatExpression ex = (MessageFormatExpression) super.getInstance();
     ex.messageFormatSupport = new MessageFormatSupport();
     return ex;

@@ -23,15 +23,14 @@ package org.pentaho.reporting.engine.classic.core.layout.output;
  *
  * @author Thomas Morgner.
  */
-public interface PageStateList
-{
+public interface PageStateList {
   public int size();
 
-  public void add(PageState state);
+  public void add( PageState state );
 
   public void clear();
 
-  public PageState get(int index);
+  public PageState get( int index );
 }
 
 

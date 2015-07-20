@@ -26,37 +26,30 @@ import org.xml.sax.SAXException;
  *
  * @author Thomas Morgner
  */
-public class ParameterMappingReadHandler extends AbstractPropertyXmlReadHandler
-{
+public class ParameterMappingReadHandler extends AbstractPropertyXmlReadHandler {
   private String name;
   private String alias;
 
-  public ParameterMappingReadHandler()
-  {
+  public ParameterMappingReadHandler() {
   }
 
-  protected void startParsing(final PropertyAttributes attrs)
-      throws SAXException
-  {
-    name = attrs.getValue(getUri(), "name");
-    if (name == null)
-    {
-      throw new ParseException("Required attribute 'name' is missing.", getLocator());
+  protected void startParsing( final PropertyAttributes attrs )
+    throws SAXException {
+    name = attrs.getValue( getUri(), "name" );
+    if ( name == null ) {
+      throw new ParseException( "Required attribute 'name' is missing.", getLocator() );
     }
-    alias = attrs.getValue(getUri(), "alias");
-    if (alias == null)
-    {
+    alias = attrs.getValue( getUri(), "alias" );
+    if ( alias == null ) {
       alias = name;
     }
   }
 
-  public String getName()
-  {
+  public String getName() {
     return name;
   }
 
-  public String getAlias()
-  {
+  public String getAlias() {
     return alias;
   }
 
@@ -66,8 +59,7 @@ public class ParameterMappingReadHandler extends AbstractPropertyXmlReadHandler
    * @return the object.
    * @throws SAXException if there is a parsing error.
    */
-  public Object getObject() throws SAXException
-  {
+  public Object getObject() throws SAXException {
     return getName();
   }
 }

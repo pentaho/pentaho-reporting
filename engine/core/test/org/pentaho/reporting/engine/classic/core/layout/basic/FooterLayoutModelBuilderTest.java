@@ -17,8 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.core.layout.basic;
 
-import java.util.ArrayList;
-
 import junit.framework.TestCase;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.pentaho.reporting.engine.classic.core.ReportFooter;
@@ -36,59 +34,55 @@ import org.pentaho.reporting.engine.classic.core.layout.style.SimpleStyleSheet;
 import org.pentaho.reporting.engine.classic.core.testsupport.DebugExpressionRuntime;
 import org.pentaho.reporting.engine.classic.core.testsupport.DebugOutputProcessorMetaData;
 
-public class FooterLayoutModelBuilderTest extends TestCase
-{
-  public FooterLayoutModelBuilderTest()
-  {
+import java.util.ArrayList;
+
+public class FooterLayoutModelBuilderTest extends TestCase {
+  public FooterLayoutModelBuilderTest() {
   }
 
-  public FooterLayoutModelBuilderTest(final String name)
-  {
-    super(name);
+  public FooterLayoutModelBuilderTest( final String name ) {
+    super( name );
   }
 
-  protected void setUp() throws Exception
-  {
+  protected void setUp() throws Exception {
     ClassicEngineBoot.getInstance().start();
   }
 
-  public void testComplexFooter() throws ReportProcessingException
-  {
+  public void testComplexFooter() throws ReportProcessingException {
     final DefaultLayoutModelBuilder builder = new DefaultLayoutModelBuilder();
-    builder.setLimitedSubReports(true);
-    builder.setCollapseProgressMarker(false);
+    builder.setLimitedSubReports( true );
+    builder.setCollapseProgressMarker( false );
 
     final LayoutBuilderStrategy builderStrategy = new DefaultLayoutBuilderStrategy();
     final DefaultRenderNodeFactory renderNodeFactory = new DefaultRenderNodeFactory();
-    renderNodeFactory.initialize(new DebugOutputProcessorMetaData());
+    renderNodeFactory.initialize( new DebugOutputProcessorMetaData() );
 
     final RenderBox parentBox = new BlockRenderBox();
-    builder.initialize(new DefaultProcessingContext(), parentBox, renderNodeFactory);
+    builder.initialize( new DefaultProcessingContext(), parentBox, renderNodeFactory );
     builder.startSection();
 
     ReportFooter reportFooter = new ReportFooter();
-    reportFooter.setComputedStyle(new SimpleStyleSheet(reportFooter.getDefaultStyleSheet()));
-    builderStrategy.add(new DebugExpressionRuntime(), builder, reportFooter, new ArrayList<InlineSubreportMarker>());
-    builderStrategy.add(new DebugExpressionRuntime(), builder, reportFooter, new ArrayList<InlineSubreportMarker>());
-    builderStrategy.add(new DebugExpressionRuntime(), builder, reportFooter, new ArrayList<InlineSubreportMarker>());
+    reportFooter.setComputedStyle( new SimpleStyleSheet( reportFooter.getDefaultStyleSheet() ) );
+    builderStrategy.add( new DebugExpressionRuntime(), builder, reportFooter, new ArrayList<InlineSubreportMarker>() );
+    builderStrategy.add( new DebugExpressionRuntime(), builder, reportFooter, new ArrayList<InlineSubreportMarker>() );
+    builderStrategy.add( new DebugExpressionRuntime(), builder, reportFooter, new ArrayList<InlineSubreportMarker>() );
 
     builder.endSection();
 
-    assertEquals(3, countChilds((RenderBox) parentBox.getFirstChild()));
+    assertEquals( 3, countChilds( (RenderBox) parentBox.getFirstChild() ) );
   }
 
 
-  public void testMergingProgressMarker() throws ReportProcessingException
-  {
+  public void testMergingProgressMarker() throws ReportProcessingException {
     final DefaultLayoutModelBuilder builder = new DefaultLayoutModelBuilder();
-    builder.setLimitedSubReports(true);
-    builder.setCollapseProgressMarker(true);
+    builder.setLimitedSubReports( true );
+    builder.setCollapseProgressMarker( true );
 
     final DefaultRenderNodeFactory renderNodeFactory = new DefaultRenderNodeFactory();
-    renderNodeFactory.initialize(new DebugOutputProcessorMetaData());
+    renderNodeFactory.initialize( new DebugOutputProcessorMetaData() );
 
     final RenderBox parentBox = new BlockRenderBox();
-    builder.initialize(new DefaultProcessingContext(), parentBox, renderNodeFactory);
+    builder.initialize( new DefaultProcessingContext(), parentBox, renderNodeFactory );
     builder.startSection();
 
     builder.addProgressMarkerBox();
@@ -97,15 +91,13 @@ public class FooterLayoutModelBuilderTest extends TestCase
 
     builder.endSection();
 
-    assertEquals(1, countChilds((RenderBox) parentBox.getFirstChild()));
+    assertEquals( 1, countChilds( (RenderBox) parentBox.getFirstChild() ) );
   }
 
-  public int countChilds(RenderBox b)
-  {
+  public int countChilds( RenderBox b ) {
     int count = 0;
     RenderNode child = b.getFirstChild();
-    while (child != null)
-    {
+    while ( child != null ) {
       count += 1;
       child = child.getNext();
     }

@@ -20,31 +20,25 @@ package org.pentaho.reporting.engine.classic.core.wizard;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class DefaultDataSchemaDefinition implements DataSchemaDefinition
-{
+public class DefaultDataSchemaDefinition implements DataSchemaDefinition {
   private ArrayList<DataSchemaRule> backend;
 
-  public DefaultDataSchemaDefinition()
-  {
+  public DefaultDataSchemaDefinition() {
     backend = new ArrayList<DataSchemaRule>();
   }
 
-  public void addRule(final DataSchemaRule rule)
-  {
-    if (rule == null)
-    {
+  public void addRule( final DataSchemaRule rule ) {
+    if ( rule == null ) {
       throw new NullPointerException();
     }
-    backend.add(rule);
+    backend.add( rule );
   }
 
-  public DataSchemaRule getRule(final int index)
-  {
-    return backend.get(index);
+  public DataSchemaRule getRule( final int index ) {
+    return backend.get( index );
   }
 
-  public int getRuleCount()
-  {
+  public int getRuleCount() {
     return backend.size();
   }
 
@@ -53,46 +47,37 @@ public class DefaultDataSchemaDefinition implements DataSchemaDefinition
    *
    * @return
    */
-  public GlobalRule[] getGlobalRules()
-  {
+  public GlobalRule[] getGlobalRules() {
     final ArrayList<GlobalRule> retval = new ArrayList<GlobalRule>();
-    for (int i = 0; i < backend.size(); i++)
-    {
-      final DataSchemaRule rule = backend.get(i);
-      if (rule instanceof GlobalRule)
-      {
-        retval.add((GlobalRule) rule);
+    for ( int i = 0; i < backend.size(); i++ ) {
+      final DataSchemaRule rule = backend.get( i );
+      if ( rule instanceof GlobalRule ) {
+        retval.add( (GlobalRule) rule );
       }
     }
-    return retval.toArray(new GlobalRule[retval.size()]);
+    return retval.toArray( new GlobalRule[ retval.size() ] );
   }
 
-  public MetaSelectorRule[] getIndirectRules()
-  {
+  public MetaSelectorRule[] getIndirectRules() {
     final ArrayList<MetaSelectorRule> retval = new ArrayList<MetaSelectorRule>();
-    for (int i = 0; i < backend.size(); i++)
-    {
-      final DataSchemaRule rule = backend.get(i);
-      if (rule instanceof MetaSelectorRule)
-      {
-        retval.add((MetaSelectorRule) rule);
+    for ( int i = 0; i < backend.size(); i++ ) {
+      final DataSchemaRule rule = backend.get( i );
+      if ( rule instanceof MetaSelectorRule ) {
+        retval.add( (MetaSelectorRule) rule );
       }
     }
-    return retval.toArray(new MetaSelectorRule[retval.size()]);
+    return retval.toArray( new MetaSelectorRule[ retval.size() ] );
   }
 
-  public DirectFieldSelectorRule[] getDirectRules()
-  {
+  public DirectFieldSelectorRule[] getDirectRules() {
     final ArrayList<DirectFieldSelectorRule> retval = new ArrayList<DirectFieldSelectorRule>();
-    for (int i = 0; i < backend.size(); i++)
-    {
-      final DataSchemaRule rule = backend.get(i);
-      if (rule instanceof DirectFieldSelectorRule)
-      {
-        retval.add((DirectFieldSelectorRule) rule);
+    for ( int i = 0; i < backend.size(); i++ ) {
+      final DataSchemaRule rule = backend.get( i );
+      if ( rule instanceof DirectFieldSelectorRule ) {
+        retval.add( (DirectFieldSelectorRule) rule );
       }
     }
-    return retval.toArray(new DirectFieldSelectorRule[retval.size()]);
+    return retval.toArray( new DirectFieldSelectorRule[ retval.size() ] );
   }
 
   /**
@@ -100,37 +85,30 @@ public class DefaultDataSchemaDefinition implements DataSchemaDefinition
    *
    * @return
    */
-  public DataSchemaRule[] getRules()
-  {
-    return backend.toArray(new DataSchemaRule[backend.size()]);
+  public DataSchemaRule[] getRules() {
+    return backend.toArray( new DataSchemaRule[ backend.size() ] );
   }
 
-  public void merge(final DataSchemaDefinition schemaDefinition)
-  {
-    if (schemaDefinition == null)
-    {
+  public void merge( final DataSchemaDefinition schemaDefinition ) {
+    if ( schemaDefinition == null ) {
       throw new NullPointerException();
     }
     final GlobalRule[] globalRules = schemaDefinition.getGlobalRules();
     final MetaSelectorRule[] indirectRules = schemaDefinition.getIndirectRules();
     final DirectFieldSelectorRule[] directRules = schemaDefinition.getDirectRules();
-    backend.ensureCapacity(backend.size() + globalRules.length + indirectRules.length + directRules.length);
-    backend.addAll(Arrays.asList(globalRules));
-    backend.addAll(Arrays.asList(indirectRules));
-    backend.addAll(Arrays.asList(directRules));
+    backend.ensureCapacity( backend.size() + globalRules.length + indirectRules.length + directRules.length );
+    backend.addAll( Arrays.asList( globalRules ) );
+    backend.addAll( Arrays.asList( indirectRules ) );
+    backend.addAll( Arrays.asList( directRules ) );
   }
 
-  public Object clone()
-  {
-    try
-    {
+  public Object clone() {
+    try {
       final DefaultDataSchemaDefinition def = (DefaultDataSchemaDefinition) super.clone();
       def.backend = (ArrayList<DataSchemaRule>) backend.clone();
       return def;
-    }
-    catch (CloneNotSupportedException cne)
-    {
-      throw new IllegalStateException("Clone should always be supported in this class");
+    } catch ( CloneNotSupportedException cne ) {
+      throw new IllegalStateException( "Clone should always be supported in this class" );
     }
   }
 }

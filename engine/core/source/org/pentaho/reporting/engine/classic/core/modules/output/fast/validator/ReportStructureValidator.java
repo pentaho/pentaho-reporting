@@ -17,8 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.output.fast.validator;
 
-import java.util.HashSet;
-
 import org.pentaho.reporting.engine.classic.core.AbstractReportDefinition;
 import org.pentaho.reporting.engine.classic.core.AttributeNames;
 import org.pentaho.reporting.engine.classic.core.CrosstabGroup;
@@ -36,47 +34,41 @@ import org.pentaho.reporting.engine.classic.core.function.RowBandingFunction;
 import org.pentaho.reporting.engine.classic.core.util.AbstractStructureVisitor;
 import org.pentaho.reporting.engine.classic.core.wizard.RelationalAutoGeneratorPreProcessor;
 
+import java.util.HashSet;
+
 /**
- * Filter out reports that have any kind of visible style expressions, inline subreport or graphical elements.
- * Also filter reports that utilize any of the formatting functions, except for the row-banding function.
+ * Filter out reports that have any kind of visible style expressions, inline subreport or graphical elements. Also
+ * filter reports that utilize any of the formatting functions, except for the row-banding function.
  */
-public class ReportStructureValidator extends AbstractStructureVisitor
-{
+public class ReportStructureValidator extends AbstractStructureVisitor {
   private boolean valid;
   private HashSet<String> preProcessorWhiteList;
 
-  public ReportStructureValidator()
-  {
+  public ReportStructureValidator() {
     preProcessorWhiteList = new HashSet<String>();
-    preProcessorWhiteList.add("org.pentaho.reporting.engine.classic.wizard.WizardProcessor");
-    preProcessorWhiteList.add(RelationalAutoGeneratorPreProcessor.class.getName());
+    preProcessorWhiteList.add( "org.pentaho.reporting.engine.classic.wizard.WizardProcessor" );
+    preProcessorWhiteList.add( RelationalAutoGeneratorPreProcessor.class.getName() );
   }
 
-  public boolean isValidForFastProcessing(MasterReport report)
-  {
+  public boolean isValidForFastProcessing( MasterReport report ) {
     valid = true;
-    inspect(report);
+    inspect( report );
     return valid;
   }
 
-  protected void traverseSection(final Section section)
-  {
-    traverseSectionWithSubReports(section);
+  protected void traverseSection( final Section section ) {
+    traverseSectionWithSubReports( section );
   }
 
-  private boolean isInlineSubReport(final SubReport reportDefinition)
-  {
+  private boolean isInlineSubReport( final SubReport reportDefinition ) {
     Section parentSection = reportDefinition.getParentSection();
-    if (parentSection instanceof RootLevelBand == false)
-    {
+    if ( parentSection instanceof RootLevelBand == false ) {
       return true;
     }
 
     RootLevelBand rlb = (RootLevelBand) parentSection;
-    for (final SubReport s : rlb.getSubReports())
-    {
-      if (s == reportDefinition)
-      {
+    for ( final SubReport s : rlb.getSubReports() ) {
+      if ( s == reportDefinition ) {
         return false;
       }
     }
@@ -84,68 +76,53 @@ public class ReportStructureValidator extends AbstractStructureVisitor
     return true;
   }
 
-  protected void inspectElement(final ReportElement element)
-  {
-    traverseStyleExpressions(element);
+  protected void inspectElement( final ReportElement element ) {
+    traverseStyleExpressions( element );
 
-    if (element.getAttribute(AttributeNames.Core.NAMESPACE, AttributeNames.Core.RICH_TEXT_TYPE) != null)
-    {
+    if ( element.getAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.RICH_TEXT_TYPE ) != null ) {
       valid = false;
       return;
     }
 
-    if (element.getAttributeExpression(AttributeNames.Core.NAMESPACE, AttributeNames.Core.RICH_TEXT_TYPE) != null)
-    {
+    if ( element.getAttributeExpression( AttributeNames.Core.NAMESPACE, AttributeNames.Core.RICH_TEXT_TYPE ) != null ) {
       valid = false;
       return;
     }
 
-    if (element instanceof AbstractReportDefinition)
-    {
+    if ( element instanceof AbstractReportDefinition ) {
       AbstractReportDefinition report = (AbstractReportDefinition) element;
-      for (ReportPreProcessor reportPreProcessor : report.getPreProcessors())
-      {
-        if (preProcessorWhiteList.contains(reportPreProcessor.getClass().getName()))
-        {
+      for ( ReportPreProcessor reportPreProcessor : report.getPreProcessors() ) {
+        if ( preProcessorWhiteList.contains( reportPreProcessor.getClass().getName() ) ) {
           continue;
         }
         valid = false;
         return;
       }
 
-      if (report instanceof SubReport)
-      {
+      if ( report instanceof SubReport ) {
         final SubReport sr = (SubReport) report;
-        if (isInlineSubReport(sr))
-        {
+        if ( isInlineSubReport( sr ) ) {
           valid = false;
           return;
         }
       }
-    }
-    else if (element instanceof CrosstabGroup)
-    {
+    } else if ( element instanceof CrosstabGroup ) {
       valid = false;
     }
   }
 
-  protected void inspectExpression(final AbstractReportDefinition report, final Expression expression)
-  {
-    super.inspectExpression(report, expression);
-    if (expression instanceof RowBandingFunction)
-    {
+  protected void inspectExpression( final AbstractReportDefinition report, final Expression expression ) {
+    super.inspectExpression( report, expression );
+    if ( expression instanceof RowBandingFunction ) {
       // later we can add code to handle row-banding safely.
       valid = false;
       return;
     }
-    if (expression instanceof LayoutProcessorFunction)
-    {
+    if ( expression instanceof LayoutProcessorFunction ) {
       valid = false;
     }
-    if (expression instanceof PageEventListener)
-    {
-      if (expression instanceof PageFunction == false)
-      {
+    if ( expression instanceof PageEventListener ) {
+      if ( expression instanceof PageFunction == false ) {
         valid = false;
       }
     }

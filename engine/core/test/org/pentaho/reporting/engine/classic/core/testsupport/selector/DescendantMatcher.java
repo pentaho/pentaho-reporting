@@ -20,27 +20,21 @@ package org.pentaho.reporting.engine.classic.core.testsupport.selector;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderNode;
 
-public class DescendantMatcher implements NodeMatcher
-{
+public class DescendantMatcher implements NodeMatcher {
   private NodeMatcher childMatcher;
 
-  public DescendantMatcher(final NodeMatcher childMatcher)
-  {
+  public DescendantMatcher( final NodeMatcher childMatcher ) {
     this.childMatcher = childMatcher;
   }
 
-  public boolean matches(final RenderNode node)
-  {
+  public boolean matches( final RenderNode node ) {
     RenderNode n = node;
-    while (n != null)
-    {
+    while ( n != null ) {
       final RenderBox parent = n.getParent();
-      if (parent == null)
-      {
+      if ( parent == null ) {
         break;
       }
-      if (childMatcher.matches(parent))
-      {
+      if ( childMatcher.matches( parent ) ) {
         return true;
       }
       n = parent;
@@ -49,12 +43,11 @@ public class DescendantMatcher implements NodeMatcher
   }
 
 
-  public String toString()
-  {
+  public String toString() {
     final StringBuilder b = new StringBuilder();
-    b.append("Descendant(");
-    b.append(childMatcher);
-    b.append(")");
+    b.append( "Descendant(" );
+    b.append( childMatcher );
+    b.append( ")" );
     return b.toString();
   }
 }

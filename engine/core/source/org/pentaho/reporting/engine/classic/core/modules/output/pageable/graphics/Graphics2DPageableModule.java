@@ -28,8 +28,7 @@ import org.pentaho.reporting.libraries.base.boot.SubSystem;
  *
  * @author Thomas Morgner
  */
-public class Graphics2DPageableModule extends AbstractModule
-{
+public class Graphics2DPageableModule extends AbstractModule {
   public static final String GRAPHICS_EXPORT_TYPE = "pageable/X-AWT-Graphics";
   public static final String PNG_EXPORT_TYPE = "pageable/X-AWT-Graphics;image-type=png";
 
@@ -39,8 +38,7 @@ public class Graphics2DPageableModule extends AbstractModule
    * @throws ModuleInitializeException if an error occured.
    */
   public Graphics2DPageableModule()
-      throws ModuleInitializeException
-  {
+    throws ModuleInitializeException {
     loadModuleInfo();
   }
 
@@ -53,10 +51,9 @@ public class Graphics2DPageableModule extends AbstractModule
    * @param subSystem the subSystem.
    * @throws ModuleInitializeException if an error ocurred while initializing the module.
    */
-  public void initialize(final SubSystem subSystem)
-      throws ModuleInitializeException
-  {
+  public void initialize( final SubSystem subSystem )
+    throws ModuleInitializeException {
     ElementMetaDataParser.initializeOptionalReportProcessTaskMetaData
-        ("org/pentaho/reporting/engine/classic/core/modules/output/pageable/graphics/meta-report-process-tasks.xml");
+      ( "org/pentaho/reporting/engine/classic/core/modules/output/pageable/graphics/meta-report-process-tasks.xml" );
   }
 }

@@ -27,10 +27,8 @@ import org.w3c.css.sac.LangCondition;
 import org.w3c.css.sac.NegativeCondition;
 import org.w3c.css.sac.PositionalCondition;
 
-public class CSSConditionFactory implements ConditionFactory
-{
-  public CSSConditionFactory()
-  {
+public class CSSConditionFactory implements ConditionFactory {
+  public CSSConditionFactory() {
   }
 
   /**
@@ -41,11 +39,10 @@ public class CSSConditionFactory implements ConditionFactory
    * @return A combinator condition
    * @throws CSSException if this exception is not supported.
    */
-  public CombinatorCondition createAndCondition(final Condition first,
-                                                final Condition second)
-      throws CSSException
-  {
-    return new AndCSSCondition((CSSCondition) first, (CSSCondition) second);
+  public CombinatorCondition createAndCondition( final Condition first,
+                                                 final Condition second )
+    throws CSSException {
+    return new AndCSSCondition( (CSSCondition) first, (CSSCondition) second );
   }
 
   /**
@@ -56,11 +53,10 @@ public class CSSConditionFactory implements ConditionFactory
    * @return A combinator condition
    * @throws CSSException if this exception is not supported.
    */
-  public CombinatorCondition createOrCondition(final Condition first,
-                                               final Condition second)
-      throws CSSException
-  {
-    return new OrCSSCondition((CSSCondition) first, (CSSCondition) second);
+  public CombinatorCondition createOrCondition( final Condition first,
+                                                final Condition second )
+    throws CSSException {
+    return new OrCSSCondition( (CSSCondition) first, (CSSCondition) second );
   }
 
   /**
@@ -70,30 +66,27 @@ public class CSSConditionFactory implements ConditionFactory
    * @return A negative condition
    * @throws CSSException if this exception is not supported.
    */
-  public NegativeCondition createNegativeCondition(final Condition condition)
-      throws CSSException
-  {
-    return new NegativeCSSCondition((CSSCondition) condition);
+  public NegativeCondition createNegativeCondition( final Condition condition )
+    throws CSSException {
+    return new NegativeCSSCondition( (CSSCondition) condition );
   }
 
   /**
    * Creates a positional condition
    *
    * @param position the position of the node in the list.
-   * @param typeNode <code>true</code> if the list should contain only nodes of
-   *                 the same type (element, text node, ...).
-   * @param type     <code>true</code> true if the list should contain only
-   *                 nodes of the same node (for element, same localName and
-   *                 same namespaceURI).
+   * @param typeNode <code>true</code> if the list should contain only nodes of the same type (element, text node,
+   *                 ...).
+   * @param type     <code>true</code> true if the list should contain only nodes of the same node (for element, same
+   *                 localName and same namespaceURI).
    * @return A positional condition
    * @throws CSSException if this exception is not supported.
    */
-  public PositionalCondition createPositionalCondition(final int position,
-                                                       final boolean typeNode,
-                                                       final boolean type)
-      throws CSSException
-  {
-    return new PositionalCSSCondition(position, typeNode, type);
+  public PositionalCondition createPositionalCondition( final int position,
+                                                        final boolean typeNode,
+                                                        final boolean type )
+    throws CSSException {
+    return new PositionalCSSCondition( position, typeNode, type );
   }
 
   /**
@@ -101,19 +94,17 @@ public class CSSConditionFactory implements ConditionFactory
    *
    * @param localName    the localName of the attribute
    * @param namespaceURI the namespace URI of the attribute
-   * @param specified    <code>true</code> if the attribute must be specified in
-   *                     the document.
+   * @param specified    <code>true</code> if the attribute must be specified in the document.
    * @param value        the value of this attribute.
    * @return An attribute condition
    * @throws CSSException if this exception is not supported.
    */
-  public AttributeCondition createAttributeCondition(final String localName,
-                                                     final String namespaceURI,
-                                                     final boolean specified,
-                                                     final String value)
-      throws CSSException
-  {
-    return new AttributeCSSCondition(localName, namespaceURI, specified, value);
+  public AttributeCondition createAttributeCondition( final String localName,
+                                                      final String namespaceURI,
+                                                      final boolean specified,
+                                                      final String value )
+    throws CSSException {
+    return new AttributeCSSCondition( localName, namespaceURI, specified, value );
   }
 
   /**
@@ -123,9 +114,8 @@ public class CSSConditionFactory implements ConditionFactory
    * @return An Id condition
    * @throws CSSException if this exception is not supported.
    */
-  public AttributeCondition createIdCondition(final String value) throws CSSException
-  {
-    return new IdCSSCondition(value);
+  public AttributeCondition createIdCondition( final String value ) throws CSSException {
+    return new IdCSSCondition( value );
   }
 
   /**
@@ -135,9 +125,8 @@ public class CSSConditionFactory implements ConditionFactory
    * @return A lang condition
    * @throws CSSException if this exception is not supported.
    */
-  public LangCondition createLangCondition(final String lang) throws CSSException
-  {
-    return new LangCSSCondition(lang);
+  public LangCondition createLangCondition( final String lang ) throws CSSException {
+    return new LangCSSCondition( lang );
   }
 
   /**
@@ -145,19 +134,17 @@ public class CSSConditionFactory implements ConditionFactory
    *
    * @param localName    the localName of the attribute
    * @param namespaceURI the namespace URI of the attribute
-   * @param specified    <code>true</code> if the attribute must be specified in
-   *                     the document.
+   * @param specified    <code>true</code> if the attribute must be specified in the document.
    * @param value        the value of this attribute.
    * @return A "one of" attribute condition
    * @throws CSSException if this exception is not supported.
    */
-  public AttributeCondition createOneOfAttributeCondition(final String localName,
-                                                          final String namespaceURI,
-                                                          final boolean specified,
-                                                          final String value)
-      throws CSSException
-  {
-    return new OneOfAttributeCSSCondition(localName, namespaceURI, specified, value);
+  public AttributeCondition createOneOfAttributeCondition( final String localName,
+                                                           final String namespaceURI,
+                                                           final boolean specified,
+                                                           final String value )
+    throws CSSException {
+    return new OneOfAttributeCSSCondition( localName, namespaceURI, specified, value );
   }
 
   /**
@@ -168,11 +155,10 @@ public class CSSConditionFactory implements ConditionFactory
    * @return A class condition
    * @throws CSSException if this exception is not supported.
    */
-  public AttributeCondition createClassCondition(final String namespaceURI,
-                                                 final String value)
-      throws CSSException
-  {
-    return new ClassCSSCondition(namespaceURI, value);
+  public AttributeCondition createClassCondition( final String namespaceURI,
+                                                  final String value )
+    throws CSSException {
+    return new ClassCSSCondition( namespaceURI, value );
   }
 
   /**
@@ -183,11 +169,10 @@ public class CSSConditionFactory implements ConditionFactory
    * @return A pseudo class condition
    * @throws CSSException if this exception is not supported.
    */
-  public AttributeCondition createPseudoClassCondition(final String namespaceURI,
-                                                       final String value)
-      throws CSSException
-  {
-    return new PseudoClassCSSCondition(namespaceURI, value);
+  public AttributeCondition createPseudoClassCondition( final String namespaceURI,
+                                                        final String value )
+    throws CSSException {
+    return new PseudoClassCSSCondition( namespaceURI, value );
   }
 
 
@@ -196,19 +181,17 @@ public class CSSConditionFactory implements ConditionFactory
    *
    * @param localName    the localName of the attribute
    * @param namespaceURI the namespace URI of the attribute
-   * @param specified    <code>true</code> if the attribute must be specified in
-   *                     the document.
+   * @param specified    <code>true</code> if the attribute must be specified in the document.
    * @param value        the value of this attribute.
    * @return A "begin hyphen" attribute condition
    * @throws CSSException if this exception is not supported.
    */
-  public AttributeCondition createBeginHyphenAttributeCondition(final String localName,
-                                                                final String namespaceURI,
-                                                                final boolean specified,
-                                                                final String value)
-      throws CSSException
-  {
-    return new BeginHyphenAttributeCSSCondition(localName, namespaceURI, specified, value);
+  public AttributeCondition createBeginHyphenAttributeCondition( final String localName,
+                                                                 final String namespaceURI,
+                                                                 final boolean specified,
+                                                                 final String value )
+    throws CSSException {
+    return new BeginHyphenAttributeCSSCondition( localName, namespaceURI, specified, value );
   }
 
   /**
@@ -217,8 +200,7 @@ public class CSSConditionFactory implements ConditionFactory
    * @return A "only one" child condition
    * @throws CSSException if this exception is not supported.
    */
-  public Condition createOnlyChildCondition() throws CSSException
-  {
+  public Condition createOnlyChildCondition() throws CSSException {
     return null;
   }
 
@@ -228,8 +210,7 @@ public class CSSConditionFactory implements ConditionFactory
    * @return A "only one" type condition
    * @throws CSSException if this exception is not supported.
    */
-  public Condition createOnlyTypeCondition() throws CSSException
-  {
+  public Condition createOnlyTypeCondition() throws CSSException {
     return null;
   }
 
@@ -240,9 +221,8 @@ public class CSSConditionFactory implements ConditionFactory
    * @return A content condition
    * @throws CSSException if this exception is not supported.
    */
-  public ContentCondition createContentCondition(final String data)
-      throws CSSException
-  {
-    return new ContentCSSCondition(data);
+  public ContentCondition createContentCondition( final String data )
+    throws CSSException {
+    return new ContentCSSCondition( data );
   }
 }

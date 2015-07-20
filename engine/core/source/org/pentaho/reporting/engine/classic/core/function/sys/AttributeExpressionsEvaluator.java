@@ -17,12 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.core.function.sys;
 
-import java.beans.PropertyEditor;
-import java.io.IOException;
-import java.sql.Blob;
-import java.sql.Clob;
-import java.sql.SQLException;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.pentaho.reporting.engine.classic.core.InvalidReportStateException;
@@ -40,6 +34,12 @@ import org.pentaho.reporting.engine.classic.core.util.beans.ValueConverter;
 import org.pentaho.reporting.libraries.base.util.IOUtils;
 import org.pentaho.reporting.libraries.formula.ErrorValue;
 
+import java.beans.PropertyEditor;
+import java.io.IOException;
+import java.sql.Blob;
+import java.sql.Clob;
+import java.sql.SQLException;
+
 /**
  * Evaluates style-expressions and updates the stylesheet. This is an internal helper function. It is not meant to be
  * used by end-users and manually adding this function to a report will cause funny side-effects.
@@ -47,16 +47,15 @@ import org.pentaho.reporting.libraries.formula.ErrorValue;
  * @author Thomas Morgner
  */
 public class AttributeExpressionsEvaluator extends AbstractElementFormatFunction
-    implements StructureFunction
-{
-  private static final Log logger = LogFactory.getLog(AttributeExpressionsEvaluator.class);
+  implements StructureFunction {
+  private static final Log logger = LogFactory.getLog( AttributeExpressionsEvaluator.class );
 
   private boolean failOnErrors;
+
   /**
    * Default Constructor.
    */
-  public AttributeExpressionsEvaluator()
-  {
+  public AttributeExpressionsEvaluator() {
   }
 
   /**
@@ -65,24 +64,21 @@ public class AttributeExpressionsEvaluator extends AbstractElementFormatFunction
    *
    * @param event The event.
    */
-  public void reportInitialized(final ReportEvent event)
-  {
-    failOnErrors = "true".equals(getRuntime().getConfiguration().getConfigProperty
-        ("org.pentaho.reporting.engine.classic.core.FailOnAttributeExpressionErrors"));
+  public void reportInitialized( final ReportEvent event ) {
+    failOnErrors = "true".equals( getRuntime().getConfiguration().getConfigProperty
+      ( "org.pentaho.reporting.engine.classic.core.FailOnAttributeExpressionErrors" ) );
 
-    if (FunctionUtilities.isLayoutLevel(event) == false)
-    {
+    if ( FunctionUtilities.isLayoutLevel( event ) == false ) {
       // dont do anything if there is no printing done ...
       return;
     }
 
-    super.reportInitialized(event);
+    super.reportInitialized( event );
 
-    if (event.getState().isSubReportEvent() == false)
-    {
+    if ( event.getState().isSubReportEvent() == false ) {
       // only evaluate master-reports. Subreports are evaluated when their parent-band is evaluated.
       final ReportDefinition definition = event.getReport();
-      evaluateElement(definition);
+      evaluateElement( definition );
     }
   }
 
@@ -93,15 +89,12 @@ public class AttributeExpressionsEvaluator extends AbstractElementFormatFunction
    * @param e the element that should be updated.
    * @return true, if the element had attribute-expressions, false otherwise.
    */
-  protected boolean evaluateElement(final ReportElement e)
-  {
-    if (e == null)
-    {
+  protected boolean evaluateElement( final ReportElement e ) {
+    if ( e == null ) {
       throw new NullPointerException();
     }
     final String[] namespaces = e.getAttributeExpressionNamespaces();
-    if (namespaces.length == 0)
-    {
+    if ( namespaces.length == 0 ) {
       return false;
     }
 
@@ -109,131 +102,97 @@ public class AttributeExpressionsEvaluator extends AbstractElementFormatFunction
     final ElementMetaData metaData = e.getMetaData();
     boolean retval = false;
 
-    for (int namespaceIdx = 0; namespaceIdx < namespaces.length; namespaceIdx++)
-    {
-      final String namespace = namespaces[namespaceIdx];
-      final String[] names = e.getAttributeExpressionNames(namespace);
-      for (int nameIdx = 0; nameIdx < names.length; nameIdx++)
-      {
-        final String name = names[nameIdx];
-        final Expression ex = e.getAttributeExpression(namespace, name);
-        if (ex == null)
-        {
+    for ( int namespaceIdx = 0; namespaceIdx < namespaces.length; namespaceIdx++ ) {
+      final String namespace = namespaces[ namespaceIdx ];
+      final String[] names = e.getAttributeExpressionNames( namespace );
+      for ( int nameIdx = 0; nameIdx < names.length; nameIdx++ ) {
+        final String name = names[ nameIdx ];
+        final Expression ex = e.getAttributeExpression( namespace, name );
+        if ( ex == null ) {
           continue;
         }
 
-        final AttributeMetaData attribute = metaData.getAttributeDescription(namespace, name);
-        if (attribute != null && attribute.isDesignTimeValue())
-        {
+        final AttributeMetaData attribute = metaData.getAttributeDescription( namespace, name );
+        if ( attribute != null && attribute.isDesignTimeValue() ) {
           continue;
         }
 
         retval = true;
-        ex.setRuntime(getRuntime());
-        try
-        {
-          final Object value = evaluate(ex);
-          if (attribute == null)
-          {
+        ex.setRuntime( getRuntime() );
+        try {
+          final Object value = evaluate( ex );
+          if ( attribute == null ) {
             // Not a declared attribute, but maybe one of the output-handlers can work on this one. 
-            e.setAttribute(namespace, name, value);
-          }
-          else
-          {
+            e.setAttribute( namespace, name, value );
+          } else {
             final Class<?> type = attribute.getTargetType();
-            if (value == null || type.isAssignableFrom(value.getClass()))
-            {
-              e.setAttribute(namespace, name, value);
-            }
-            else if (value instanceof ErrorValue)
-            {
-              if (failOnErrors)
-              {
-                throw new InvalidReportStateException(String.format
-                    ("Failed to evaluate attribute-expression for attribute %s:%s on element [%s]", // NON-NLS
-                        namespace, name,
-                        FunctionUtilities.computeElementLocation(e)));
+            if ( value == null || type.isAssignableFrom( value.getClass() ) ) {
+              e.setAttribute( namespace, name, value );
+            } else if ( value instanceof ErrorValue ) {
+              if ( failOnErrors ) {
+                throw new InvalidReportStateException( String.format
+                  ( "Failed to evaluate attribute-expression for attribute %s:%s on element [%s]", // NON-NLS
+                    namespace, name,
+                    FunctionUtilities.computeElementLocation( e ) ) );
               }
-              e.setAttribute(namespace, name, null);
-            }
-            else
-            {
+              e.setAttribute( namespace, name, null );
+            } else {
 
               final PropertyEditor propertyEditor = attribute.getEditor();
-              if (propertyEditor != null)
-              {
-                propertyEditor.setAsText(String.valueOf(value));
-                e.setAttribute(namespace, name, propertyEditor.getValue());
-              }
-              else
-              {
-                final ValueConverter valueConverter = instance.getValueConverter(type);
-                if (type.isAssignableFrom(String.class))
-                {
+              if ( propertyEditor != null ) {
+                propertyEditor.setAsText( String.valueOf( value ) );
+                e.setAttribute( namespace, name, propertyEditor.getValue() );
+              } else {
+                final ValueConverter valueConverter = instance.getValueConverter( type );
+                if ( type.isAssignableFrom( String.class ) ) {
                   // the attribute would allow raw-string values, so copy the element ..
-                  e.setAttribute(namespace, name, value);
-                }
-                else if (valueConverter != null)
-                {
-                  final Object o = ConverterRegistry.toPropertyValue(String.valueOf(value), type);
-                  e.setAttribute(namespace, name, o);
-                }
-                else
-                {
+                  e.setAttribute( namespace, name, value );
+                } else if ( valueConverter != null ) {
+                  final Object o = ConverterRegistry.toPropertyValue( String.valueOf( value ), type );
+                  e.setAttribute( namespace, name, o );
+                } else {
                   // undo any previous computation
-                  e.setAttribute(namespace, name, null);
+                  e.setAttribute( namespace, name, null );
                 }
               }
             }
           }
-        }
-        catch (InvalidReportStateException exception)
-        {
+        } catch ( InvalidReportStateException exception ) {
           throw exception;
-        }
-        catch (Exception exception)
-        {
-          if (logger.isDebugEnabled())
-          {
-            logger.debug(String.format
-                ("Failed to evaluate attribute-expression for attribute %s:%s on element [%s]", // NON-NLS
-                    namespace, name,
-                    FunctionUtilities.computeElementLocation(e)), exception);
+        } catch ( Exception exception ) {
+          if ( logger.isDebugEnabled() ) {
+            logger.debug( String.format
+              ( "Failed to evaluate attribute-expression for attribute %s:%s on element [%s]", // NON-NLS
+                namespace, name,
+                FunctionUtilities.computeElementLocation( e ) ), exception );
           }
-          if (failOnErrors)
-          {
-            throw new InvalidReportStateException(String.format
-                ("Failed to evaluate attribute-expression for attribute %s:%s on element [%s]", // NON-NLS
-                    namespace, name,
-                    FunctionUtilities.computeElementLocation(e)), exception);
+          if ( failOnErrors ) {
+            throw new InvalidReportStateException( String.format
+              ( "Failed to evaluate attribute-expression for attribute %s:%s on element [%s]", // NON-NLS
+                namespace, name,
+                FunctionUtilities.computeElementLocation( e ) ), exception );
           }
-          e.setAttribute(namespace, name, null);
-        }
-        finally
-        {
-          ex.setRuntime(null);
+          e.setAttribute( namespace, name, null );
+        } finally {
+          ex.setRuntime( null );
         }
       }
     }
     return retval;
   }
 
-  private Object evaluate(final Expression ex) throws IOException, SQLException
-  {
+  private Object evaluate( final Expression ex ) throws IOException, SQLException {
     final Object retval = ex.getValue();
-    if (retval instanceof Clob)
-    {
-      return IOUtils.getInstance().readClob((Clob) retval);
+    if ( retval instanceof Clob ) {
+      return IOUtils.getInstance().readClob( (Clob) retval );
     }
-    if (retval instanceof Blob)
-    {
-      return IOUtils.getInstance().readBlob((Blob) retval);
+    if ( retval instanceof Blob ) {
+      return IOUtils.getInstance().readBlob( (Blob) retval );
     }
     return retval;
   }
 
-  public int getProcessingPriority()
-  {
+  public int getProcessingPriority() {
     return 2000;
   }
 }

@@ -31,11 +31,9 @@ import org.pentaho.reporting.engine.classic.core.layout.process.layoutrules.Text
  *
  * @author Thomas Morgner
  */
-public final class RightAlignmentProcessor extends AbstractAlignmentProcessor
-{
+public final class RightAlignmentProcessor extends AbstractAlignmentProcessor {
 
-  public RightAlignmentProcessor()
-  {
+  public RightAlignmentProcessor() {
   }
 
   /**
@@ -45,8 +43,7 @@ public final class RightAlignmentProcessor extends AbstractAlignmentProcessor
    * @param count the number of elements in the sequence
    * @return the index of the last element that will fit on the current line.
    */
-  protected int handleElement(final int start, final int count)
-  {
+  protected int handleElement( final int start, final int count ) {
     final RenderNode[] nodes = getNodes();
     final InlineSequenceElement[] sequenceElements = getSequenceElements();
     final long[] elementDimensions = getElementDimensions();
@@ -59,128 +56,113 @@ public final class RightAlignmentProcessor extends AbstractAlignmentProcessor
     long usedWidth = 0;
     int contentIndex = start;
     InlineSequenceElement contentElement = null;
-    for (int i = 0; i < endIndex; i++)
-    {
-      final InlineSequenceElement element = sequenceElements[i];
-      final RenderNode node = nodes[i];
-      usedWidth += element.getMaximumWidth(node);
-      if (element instanceof StartSequenceElement ||
-          element instanceof EndSequenceElement)
-      {
+    for ( int i = 0; i < endIndex; i++ ) {
+      final InlineSequenceElement element = sequenceElements[ i ];
+      final RenderNode node = nodes[ i ];
+      usedWidth += element.getMaximumWidth( node );
+      if ( element instanceof StartSequenceElement ||
+        element instanceof EndSequenceElement ) {
         continue;
       }
       contentElement = element;
       contentIndex = i;
     }
 
-    final long nextPosition = (getStartOfLine() + usedWidth);
-    final long lastPageBreak = getPageBreak(getPagebreakCount() - 1);
-    if (nextPosition > lastPageBreak)
-    {
+    final long nextPosition = ( getStartOfLine() + usedWidth );
+    final long lastPageBreak = getPageBreak( getPagebreakCount() - 1 );
+    if ( nextPosition > lastPageBreak ) {
       // The contents we processed so far will not fit on the current line. That's dangerous.
       // We have to right align the content up to the element denoted with 'start'.
 
       // Ignore the retval, we know that it fits (or at least that it is correct some how ..)
-      rightAlign(start, sequenceElements, nodes, elementPositions, elementDimensions);
+      rightAlign( start, sequenceElements, nodes, elementPositions, elementDimensions );
 
       // we cross a pagebreak. Stop working on it - we bail out here.
 
-      if (contentElement instanceof TextSequenceElement)
-      {
+      if ( contentElement instanceof TextSequenceElement ) {
         // the element may be splittable. Test, and if so, give a hint to the
         // outside world ..
-        setSkipIndex(endIndex);
-        setBreakableIndex(contentIndex);
-        return (start);
+        setSkipIndex( endIndex );
+        setBreakableIndex( contentIndex );
+        return ( start );
       }
 
       // This is the first element and it still does not fit. How evil.
-      if (start == 0)
-      {
-        if (contentElement instanceof InlineBoxSequenceElement)
-        {
-          final RenderNode node = nodes[contentIndex];
-          if ((node.getNodeType() & LayoutNodeTypes.MASK_BOX) == LayoutNodeTypes.MASK_BOX)
-          {
+      if ( start == 0 ) {
+        if ( contentElement instanceof InlineBoxSequenceElement ) {
+          final RenderNode node = nodes[ contentIndex ];
+          if ( ( node.getNodeType() & LayoutNodeTypes.MASK_BOX ) == LayoutNodeTypes.MASK_BOX ) {
             // OK, limit the size of the box to the maximum line width and
             // revalidate it.
-            final long contentPosition = elementPositions[contentIndex];
+            final long contentPosition = elementPositions[ contentIndex ];
             final RenderBox box = (RenderBox) node;
-            final long maxWidth = (getEndOfLine() - contentPosition);
-            computeInlineBlock(box, contentPosition, maxWidth);
+            final long maxWidth = ( getEndOfLine() - contentPosition );
+            computeInlineBlock( box, contentPosition, maxWidth );
 
-            elementDimensions[endIndex - 1] = node.getCachedWidth();
+            elementDimensions[ endIndex - 1 ] = node.getCachedWidth();
           }
         }
-        setSkipIndex(endIndex);
+        setSkipIndex( endIndex );
       }
-      return (start);
+      return ( start );
     }
 
     // This implementation does not handle inline-block elements correctly.
     // but for the classic engine, this is less important, as we do not allow them anyway.
 
-    if (rightAlign(endIndex, sequenceElements, nodes, elementPositions, elementDimensions))
-    {
+    if ( rightAlign( endIndex, sequenceElements, nodes, elementPositions, elementDimensions ) ) {
       return endIndex;
     }
     return start;
   }
 
-  private boolean rightAlign(final int endIndex,
-                             final InlineSequenceElement[] sequenceElements,
-                             final RenderNode[] nodes,
-                             final long[] elementPositions, final long[] elementDimensions)
-  {
+  private boolean rightAlign( final int endIndex,
+                              final InlineSequenceElement[] sequenceElements,
+                              final RenderNode[] nodes,
+                              final long[] elementPositions, final long[] elementDimensions ) {
     // iterate backwards ..
     // The left-edge. This one is fixed; crossing this edge will be punished ..
     final long startOfLine = getStartOfLine();
     // the current segment.
     int segment = getPagebreakCount() - 1;
     long endPosition = getEndOfLine();
-    long segmentStart = getStartOfSegment(segment);
+    long segmentStart = getStartOfSegment( segment );
 
-    for (int i = endIndex - 1; i >= 0; i--)
-    {
-      final InlineSequenceElement element = sequenceElements[i];
-      final long elementWidth = element.getMaximumWidth(nodes[i]);
+    for ( int i = endIndex - 1; i >= 0; i-- ) {
+      final InlineSequenceElement element = sequenceElements[ i ];
+      final long elementWidth = element.getMaximumWidth( nodes[ i ] );
       long elementStart = endPosition - elementWidth;
-      if (elementStart < startOfLine)
-      {
+      if ( elementStart < startOfLine ) {
         // this element will not fit. Skip it.
         return false;
       }
 
-      while (segment > 0 && elementStart < segmentStart)
-      {
+      while ( segment > 0 && elementStart < segmentStart ) {
         // the element will not fit into the current segment. Move it to the next segment.
         elementStart = segmentStart - elementWidth;
         segment -= 1;
-        segmentStart = getStartOfSegment(segment);
+        segmentStart = getStartOfSegment( segment );
       }
 
-      if (elementStart < segmentStart)
-      {
+      if ( elementStart < segmentStart ) {
         // the element will not fit into any of the remaining segments. So skip it.
         return false;
       }
 
-      elementPositions[i] = elementStart;
-      elementDimensions[i] = elementWidth;
+      elementPositions[ i ] = elementStart;
+      elementDimensions[ i ] = elementWidth;
       endPosition = elementStart;
     }
 
     return true;
   }
 
-  private long getStartOfSegment(final int segment)
-  {
-    if (segment == 0)
-    {
+  private long getStartOfSegment( final int segment ) {
+    if ( segment == 0 ) {
       return getStartOfLine();
     }
 
-    return getPageBreak(segment - 1);
+    return getPageBreak( segment - 1 );
   }
 
 }

@@ -17,8 +17,7 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.gui.base;
 
-import javax.swing.JComponent;
-import javax.swing.JMenu;
+import javax.swing.*;
 
 /**
  * A report controler. This provides some means of configuring the preview components.
@@ -30,8 +29,7 @@ import javax.swing.JMenu;
  *
  * @author Thomas Morgner
  */
-public interface ReportController
-{
+public interface ReportController {
   /**
    * Returns the graphical representation of the controler. This component will be added between the menu bar and the
    * toolbar.
@@ -73,12 +71,12 @@ public interface ReportController
    *
    * @param pane
    */
-  public void initialize(PreviewPane pane);
+  public void initialize( PreviewPane pane );
 
   /**
    * Called when the report controller gets removed.
-   * 
+   *
    * @param pane
    */
-  public void deinitialize(PreviewPane pane);
+  public void deinitialize( PreviewPane pane );
 }

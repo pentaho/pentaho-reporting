@@ -17,9 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.core.devtools;
 
-import java.util.Arrays;
-import java.util.Locale;
-
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.pentaho.reporting.engine.classic.core.metadata.AbstractMetaData;
 import org.pentaho.reporting.engine.classic.core.metadata.ExpressionMetaData;
@@ -29,114 +26,98 @@ import org.pentaho.reporting.engine.classic.core.metadata.GroupedMetaDataCompara
 import org.pentaho.reporting.engine.classic.core.metadata.MetaData;
 import org.pentaho.reporting.libraries.base.util.StringUtils;
 
-public class ExpressionsBundleGenerator
-{
-  private ExpressionsBundleGenerator()
-  {
+import java.util.Arrays;
+import java.util.Locale;
+
+public class ExpressionsBundleGenerator {
+  private ExpressionsBundleGenerator() {
   }
 
-  public static void main(final String[] args)
-  {
+  public static void main( final String[] args ) {
     ClassicEngineBoot.getInstance().start();
     final ExpressionMetaData[] datas = ExpressionRegistry.getInstance().getAllExpressionMetaDatas();
-    Arrays.sort(datas, GroupedMetaDataComparator.ENGLISH);
-    for (int i = 0; i < datas.length; i++)
-    {
-      final ExpressionMetaData data = datas[i];
-      if (data instanceof AbstractMetaData == false)
-      {
+    Arrays.sort( datas, GroupedMetaDataComparator.ENGLISH );
+    for ( int i = 0; i < datas.length; i++ ) {
+      final ExpressionMetaData data = datas[ i ];
+      if ( data instanceof AbstractMetaData == false ) {
         continue;
       }
-      printMetaBundle(data);
+      printMetaBundle( data );
     }
   }
 
-  private static void printMetaBundle(final ExpressionMetaData type)
-  {
-    System.out.println("# -----------------------------------------------------");
-    System.out.println("# " + printBundleLocation(type));
-    System.out.println("# -----------------------------------------------------");
-    final String prefix = calculatePrefix(type);
+  private static void printMetaBundle( final ExpressionMetaData type ) {
+    System.out.println( "# -----------------------------------------------------" );
+    System.out.println( "# " + printBundleLocation( type ) );
+    System.out.println( "# -----------------------------------------------------" );
+    final String prefix = calculatePrefix( type );
 
-    printMetadata(type, prefix, "display-name", type.getName());
-    printMetadata(type, prefix, "grouping", "");
-    printMetadata(type, prefix, "grouping.ordinal", "0");
-    printMetadata(type, prefix, "ordinal", "0");
-    printMetadata(type, prefix, "description", "");
-    printMetadata(type, prefix, "deprecated", "");
-    printMetadata(type, prefix, "icon", "");
+    printMetadata( type, prefix, "display-name", type.getName() );
+    printMetadata( type, prefix, "grouping", "" );
+    printMetadata( type, prefix, "grouping.ordinal", "0" );
+    printMetadata( type, prefix, "ordinal", "0" );
+    printMetadata( type, prefix, "description", "" );
+    printMetadata( type, prefix, "deprecated", "" );
+    printMetadata( type, prefix, "icon", "" );
     System.out.println();
 
     final ExpressionPropertyMetaData[] attributes = type.getPropertyDescriptions();
-    Arrays.sort(attributes, GroupedMetaDataComparator.ENGLISH);
+    Arrays.sort( attributes, GroupedMetaDataComparator.ENGLISH );
 
-    for (int j = 0; j < attributes.length; j++)
-    {
-      final ExpressionPropertyMetaData attribute = attributes[j];
-      final String propertyPrefix = calculatePrefix(attribute);
+    for ( int j = 0; j < attributes.length; j++ ) {
+      final ExpressionPropertyMetaData attribute = attributes[ j ];
+      final String propertyPrefix = calculatePrefix( attribute );
 
-      printMetadata(attribute, propertyPrefix, "display-name", attribute.getName());
-      printMetadata(attribute, propertyPrefix, "grouping", "");
-      printMetadata(attribute, propertyPrefix, "grouping.ordinal", "0");
-      printMetadata(attribute, propertyPrefix, "ordinal", "0");
-      printMetadata(attribute, propertyPrefix, "description", "");
-      printMetadata(attribute, propertyPrefix, "deprecated", "");
+      printMetadata( attribute, propertyPrefix, "display-name", attribute.getName() );
+      printMetadata( attribute, propertyPrefix, "grouping", "" );
+      printMetadata( attribute, propertyPrefix, "grouping.ordinal", "0" );
+      printMetadata( attribute, propertyPrefix, "ordinal", "0" );
+      printMetadata( attribute, propertyPrefix, "description", "" );
+      printMetadata( attribute, propertyPrefix, "deprecated", "" );
       System.out.println();
     }
 
-    System.out.println("-----------------------------------------------------");
+    System.out.println( "-----------------------------------------------------" );
   }
 
-  private static String calculatePrefix(final MetaData type)
-  {
+  private static String calculatePrefix( final MetaData type ) {
     final String prefix;
-    if (type instanceof AbstractMetaData)
-    {
+    if ( type instanceof AbstractMetaData ) {
       final AbstractMetaData metaData = (AbstractMetaData) type;
       final String prefixMetadata = metaData.getKeyPrefix();
-      if (StringUtils.isEmpty(prefixMetadata))
-      {
+      if ( StringUtils.isEmpty( prefixMetadata ) ) {
         prefix = "";
-      }
-      else
-      {
+      } else {
         prefix = prefixMetadata + type.getName() + ".";
       }
-    }
-    else
-    {
+    } else {
       prefix = "";
     }
     return prefix;
   }
 
 
-  private static String readMetadataAttribute(final MetaData metaData, final String name, final String defaultValue)
-  {
-    final String metaAttribute = metaData.getMetaAttribute(name, Locale.ENGLISH);
-    if (metaAttribute == null)
-    {
+  private static String readMetadataAttribute( final MetaData metaData, final String name, final String defaultValue ) {
+    final String metaAttribute = metaData.getMetaAttribute( name, Locale.ENGLISH );
+    if ( metaAttribute == null ) {
       return defaultValue;
     }
     return metaAttribute;
   }
 
-  private static void printMetadata(final MetaData metaData,
-                                    final String prefix,
-                                    final String name,
-                                    final String defaultValue)
-  {
-    System.out.println(prefix + name + "=" + readMetadataAttribute(metaData, name, defaultValue));
+  private static void printMetadata( final MetaData metaData,
+                                     final String prefix,
+                                     final String name,
+                                     final String defaultValue ) {
+    System.out.println( prefix + name + "=" + readMetadataAttribute( metaData, name, defaultValue ) );
   }
 
-  private static String printBundleLocation (final ExpressionMetaData metaData)
-  {
-    if (metaData instanceof AbstractMetaData)
-    {
+  private static String printBundleLocation( final ExpressionMetaData metaData ) {
+    if ( metaData instanceof AbstractMetaData ) {
       final AbstractMetaData metaDataImpl = (AbstractMetaData) metaData;
-      return metaDataImpl.getBundleLocation().replace('.', '/') + ".properties";
+      return metaDataImpl.getBundleLocation().replace( '.', '/' ) + ".properties";
     }
 
-    return metaData.getExpressionType().getCanonicalName().replace('.', '/') + "Bundle.properties";
+    return metaData.getExpressionType().getCanonicalName().replace( '.', '/' ) + "Bundle.properties";
   }
 }

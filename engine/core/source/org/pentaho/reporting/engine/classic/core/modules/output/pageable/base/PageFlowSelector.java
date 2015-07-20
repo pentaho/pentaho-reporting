@@ -25,7 +25,6 @@ import org.pentaho.reporting.engine.classic.core.layout.output.PhysicalPageKey;
  *
  * @author Thomas Morgner
  */
-public interface PageFlowSelector extends FlowSelector
-{
-  public boolean isPhysicalPageAccepted(PhysicalPageKey key);
+public interface PageFlowSelector extends FlowSelector {
+  public boolean isPhysicalPageAccepted( PhysicalPageKey key );
 }

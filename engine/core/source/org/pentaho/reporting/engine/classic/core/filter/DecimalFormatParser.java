@@ -17,13 +17,13 @@
 
 package org.pentaho.reporting.engine.classic.core.filter;
 
+import org.pentaho.reporting.engine.classic.core.ReportElement;
+import org.pentaho.reporting.engine.classic.core.function.ExpressionRuntime;
+
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.text.Format;
 import java.util.Locale;
-
-import org.pentaho.reporting.engine.classic.core.ReportElement;
-import org.pentaho.reporting.engine.classic.core.function.ExpressionRuntime;
 
 /**
  * A filter that parses string values from a data source to a number using the decimal numeric system as base.
@@ -39,8 +39,7 @@ import org.pentaho.reporting.engine.classic.core.function.ExpressionRuntime;
  * @see java.text.NumberFormat
  * @see java.lang.Number
  */
-public class DecimalFormatParser extends NumberFormatParser
-{
+public class DecimalFormatParser extends NumberFormatParser {
   /**
    * The last locale used to convert numbers.
    */
@@ -53,9 +52,8 @@ public class DecimalFormatParser extends NumberFormatParser
   /**
    * DefaultConstructor, this object is initialized using a DecimalFormat with the default pattern for this locale.
    */
-  public DecimalFormatParser()
-  {
-    setFormatter(new DecimalFormat());
+  public DecimalFormatParser() {
+    setFormatter( new DecimalFormat() );
   }
 
   /**
@@ -63,8 +61,7 @@ public class DecimalFormatParser extends NumberFormatParser
    *
    * @return the formatter.
    */
-  public DecimalFormat getDecimalFormat()
-  {
+  public DecimalFormat getDecimalFormat() {
     return (DecimalFormat) getFormatter();
   }
 
@@ -74,9 +71,8 @@ public class DecimalFormatParser extends NumberFormatParser
    * @param format the format.
    * @throws NullPointerException if the given format is null.
    */
-  public void setDecimalFormat(final DecimalFormat format)
-  {
-    setFormatter(format);
+  public void setDecimalFormat( final DecimalFormat format ) {
+    setFormatter( format );
   }
 
   /**
@@ -86,15 +82,13 @@ public class DecimalFormatParser extends NumberFormatParser
    * @throws NullPointerException if the given format is null
    * @throws ClassCastException   if the format is no decimal format
    */
-  public void setFormatter(final Format format)
-  {
-    if (format == null)
-    {
-      throw new NullPointerException("The number format given must not be null.");
+  public void setFormatter( final Format format ) {
+    if ( format == null ) {
+      throw new NullPointerException( "The number format given must not be null." );
     }
     final DecimalFormat dfmt = (DecimalFormat) format;
-    dfmt.setParseBigDecimal(true);
-    super.setFormatter(dfmt);
+    dfmt.setParseBigDecimal( true );
+    super.setFormatter( dfmt );
   }
 
   /**
@@ -102,8 +96,7 @@ public class DecimalFormatParser extends NumberFormatParser
    *
    * @return the pattern string of the format object contained in this filter.
    */
-  public String getFormatString()
-  {
+  public String getFormatString() {
     return getDecimalFormat().toPattern();
   }
 
@@ -112,9 +105,8 @@ public class DecimalFormatParser extends NumberFormatParser
    *
    * @param format the format string.
    */
-  public void setFormatString(final String format)
-  {
-    getDecimalFormat().applyPattern(format);
+  public void setFormatString( final String format ) {
+    getDecimalFormat().applyPattern( format );
   }
 
   /**
@@ -122,8 +114,7 @@ public class DecimalFormatParser extends NumberFormatParser
    *
    * @return the localized pattern string of the format-object.
    */
-  public String getLocalizedFormatString()
-  {
+  public String getLocalizedFormatString() {
     return getDecimalFormat().toLocalizedPattern();
   }
 
@@ -132,9 +123,8 @@ public class DecimalFormatParser extends NumberFormatParser
    *
    * @param format the format string.
    */
-  public void setLocalizedFormatString(final String format)
-  {
-    getDecimalFormat().applyLocalizedPattern(format);
+  public void setLocalizedFormatString( final String format ) {
+    getDecimalFormat().applyLocalizedPattern( format );
   }
 
 
@@ -144,8 +134,7 @@ public class DecimalFormatParser extends NumberFormatParser
    *
    * @return true, if the locale should not update the DateSymbols, false otherwise.
    */
-  public boolean isKeepState()
-  {
+  public boolean isKeepState() {
     return keepState;
   }
 
@@ -155,8 +144,7 @@ public class DecimalFormatParser extends NumberFormatParser
    *
    * @param keepState set to true, if the locale should not update the DateSymbols, false otherwise.
    */
-  public void setKeepState(final boolean keepState)
-  {
+  public void setKeepState( final boolean keepState ) {
     this.keepState = keepState;
   }
 
@@ -172,17 +160,14 @@ public class DecimalFormatParser extends NumberFormatParser
    * @param element
    * @return The formatted value.
    */
-  public Object getValue(final ExpressionRuntime runtime, final ReportElement element)
-  {
-    if (keepState == false && runtime != null)
-    {
+  public Object getValue( final ExpressionRuntime runtime, final ReportElement element ) {
+    if ( keepState == false && runtime != null ) {
       final Locale locale = runtime.getResourceBundleFactory().getLocale();
-      if (locale != null && locale.equals(lastLocale) == false)
-      {
+      if ( locale != null && locale.equals( lastLocale ) == false ) {
         lastLocale = locale;
-        getDecimalFormat().setDecimalFormatSymbols(new DecimalFormatSymbols(locale));
+        getDecimalFormat().setDecimalFormatSymbols( new DecimalFormatSymbols( locale ) );
       }
     }
-    return super.getValue(runtime, element);
+    return super.getValue( runtime, element );
   }
 }

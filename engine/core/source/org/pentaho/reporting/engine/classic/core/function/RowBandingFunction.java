@@ -17,8 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.core.function;
 
-import java.awt.Color;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.pentaho.reporting.engine.classic.core.AttributeNames;
@@ -34,6 +32,8 @@ import org.pentaho.reporting.engine.classic.core.event.ReportEvent;
 import org.pentaho.reporting.engine.classic.core.style.ElementStyleKeys;
 import org.pentaho.reporting.libraries.base.util.StringUtils;
 
+import java.awt.*;
+
 /**
  * A function that alternates the background-color for each item-band within a group. If the function evaluates to true,
  * then the background of the named element will be set to the visible-color, else it will be set to the
@@ -46,9 +46,8 @@ import org.pentaho.reporting.libraries.base.util.StringUtils;
  * @author Thomas Morgner
  * @author Michael D'Amour
  */
-public class RowBandingFunction extends AbstractFunction implements PageEventListener, LayoutProcessorFunction
-{
-  private static final Log logger = LogFactory.getLog(RowBandingFunction.class);
+public class RowBandingFunction extends AbstractFunction implements PageEventListener, LayoutProcessorFunction {
+  private static final Log logger = LogFactory.getLog( RowBandingFunction.class );
 
   /**
    * The computed visibility value.
@@ -97,8 +96,7 @@ public class RowBandingFunction extends AbstractFunction implements PageEventLis
   /**
    * Default constructor.
    */
-  public RowBandingFunction()
-  {
+  public RowBandingFunction() {
     warned = false;
     numberOfElements = 1;
   }
@@ -108,13 +106,11 @@ public class RowBandingFunction extends AbstractFunction implements PageEventLis
    *
    * @param event the event.
    */
-  public void pageStarted(final ReportEvent event)
-  {
-    if (newPageState != null)
-    {
+  public void pageStarted( final ReportEvent event ) {
+    if ( newPageState != null ) {
       trigger = !newPageState.booleanValue();
       count = 0;
-      triggerVisibleState(event);
+      triggerVisibleState( event );
     }
   }
 
@@ -123,8 +119,7 @@ public class RowBandingFunction extends AbstractFunction implements PageEventLis
    *
    * @param event The event.
    */
-  public void pageFinished(final ReportEvent event)
-  {
+  public void pageFinished( final ReportEvent event ) {
   }
 
   /**
@@ -133,25 +128,18 @@ public class RowBandingFunction extends AbstractFunction implements PageEventLis
    *
    * @param event The event.
    */
-  public void reportInitialized(final ReportEvent event)
-  {
-    if (ignoreCrosstabMode)
-    {
+  public void reportInitialized( final ReportEvent event ) {
+    if ( ignoreCrosstabMode ) {
       // If the user forces us into relational-mode, then we obey ..
-      rowbandingOnGroup = StringUtils.isEmpty(group) == false;
-    }
-    else
-    {
+      rowbandingOnGroup = StringUtils.isEmpty( group ) == false;
+    } else {
       // check whether there is a crosstab
-      if (FunctionUtilities.isCrosstabDefined(event))
-      {
+      if ( FunctionUtilities.isCrosstabDefined( event ) ) {
         // when we have one, we always rowband on a group instead of an item-count
         rowbandingOnGroup = true;
-      }
-      else
-      {
+      } else {
         // we only row-band on an item-count if the group is not empty.
-        rowbandingOnGroup = StringUtils.isEmpty(group) == false;
+        rowbandingOnGroup = StringUtils.isEmpty( group ) == false;
       }
     }
 
@@ -165,10 +153,8 @@ public class RowBandingFunction extends AbstractFunction implements PageEventLis
    *
    * @param event Information about the event.
    */
-  public void itemsStarted(final ReportEvent event)
-  {
-    if (rowbandingOnGroup == false)
-    {
+  public void itemsStarted( final ReportEvent event ) {
+    if ( rowbandingOnGroup == false ) {
       trigger = !getInitialState();
       count = 0;
     }
@@ -180,38 +166,28 @@ public class RowBandingFunction extends AbstractFunction implements PageEventLis
    *
    * @param event the report event.
    */
-  public void itemsAdvanced(final ReportEvent event)
-  {
-    if (rowbandingOnGroup == false && StringUtils.isEmpty(group))
-    {
-      triggerVisibleState(event);
+  public void itemsAdvanced( final ReportEvent event ) {
+    if ( rowbandingOnGroup == false && StringUtils.isEmpty( group ) ) {
+      triggerVisibleState( event );
     }
   }
 
-  public void groupStarted(final ReportEvent event)
-  {
-    if (rowbandingOnGroup == false)
-    {
+  public void groupStarted( final ReportEvent event ) {
+    if ( rowbandingOnGroup == false ) {
       return;
     }
 
-    if (StringUtils.isEmpty(group))
-    {
-      final Group group = event.getReport().getGroup(event.getState().getCurrentGroupIndex());
-      if (group instanceof CrosstabRowGroup)
-      {
+    if ( StringUtils.isEmpty( group ) ) {
+      final Group group = event.getReport().getGroup( event.getState().getCurrentGroupIndex() );
+      if ( group instanceof CrosstabRowGroup ) {
         final GroupBody body = group.getBody();
-        if (body instanceof CrosstabColumnGroupBody)
-        {
-          triggerVisibleStateCrosstab(event);
+        if ( body instanceof CrosstabColumnGroupBody ) {
+          triggerVisibleStateCrosstab( event );
         }
       }
-    }
-    else
-    {
-      if (FunctionUtilities.isDefinedGroup(group, event))
-      {
-        triggerVisibleStateCrosstab(event);
+    } else {
+      if ( FunctionUtilities.isDefinedGroup( group, event ) ) {
+        triggerVisibleStateCrosstab( event );
       }
     }
   }
@@ -222,59 +198,41 @@ public class RowBandingFunction extends AbstractFunction implements PageEventLis
    *
    * @param event the current report event.
    */
-  private void triggerVisibleState(final ReportEvent event)
-  {
+  private void triggerVisibleState( final ReportEvent event ) {
     // avoid divide by zero exception
-    if(numberOfElements == 0)
-    {
+    if ( numberOfElements == 0 ) {
       return;
     }
 
-    if ((count % numberOfElements) == 0)
-    {
-      trigger = (!trigger);
+    if ( ( count % numberOfElements ) == 0 ) {
+      trigger = ( !trigger );
     }
     count += 1;
 
     final ItemBand itemBand = event.getReport().getItemBand();
-    if (itemBand == null)
-    {
+    if ( itemBand == null ) {
       return;
     }
 
-    if (element == null)
-    {
-      if (trigger)
-      {
-        itemBand.getStyle().setStyleProperty(ElementStyleKeys.BACKGROUND_COLOR, visibleBackground);
+    if ( element == null ) {
+      if ( trigger ) {
+        itemBand.getStyle().setStyleProperty( ElementStyleKeys.BACKGROUND_COLOR, visibleBackground );
+      } else {
+        itemBand.getStyle().setStyleProperty( ElementStyleKeys.BACKGROUND_COLOR, invisibleBackground );
       }
-      else
-      {
-        itemBand.getStyle().setStyleProperty(ElementStyleKeys.BACKGROUND_COLOR, invisibleBackground);
-      }
-    }
-    else
-    {
-      final Element[] e = FunctionUtilities.findAllElements(itemBand, getElement());
-      if (e.length > 0)
-      {
-        for (int i = 0; i < e.length; i++)
-        {
-          if (trigger)
-          {
-            e[i].getStyle().setStyleProperty(ElementStyleKeys.BACKGROUND_COLOR, visibleBackground);
-          }
-          else
-          {
-            e[i].getStyle().setStyleProperty(ElementStyleKeys.BACKGROUND_COLOR, invisibleBackground);
+    } else {
+      final Element[] e = FunctionUtilities.findAllElements( itemBand, getElement() );
+      if ( e.length > 0 ) {
+        for ( int i = 0; i < e.length; i++ ) {
+          if ( trigger ) {
+            e[ i ].getStyle().setStyleProperty( ElementStyleKeys.BACKGROUND_COLOR, visibleBackground );
+          } else {
+            e[ i ].getStyle().setStyleProperty( ElementStyleKeys.BACKGROUND_COLOR, invisibleBackground );
           }
         }
-      }
-      else
-      {
-        if (warned == false)
-        {
-          RowBandingFunction.logger.warn("The Band does not contain an element named " + getElement());
+      } else {
+        if ( warned == false ) {
+          RowBandingFunction.logger.warn( "The Band does not contain an element named " + getElement() );
           warned = true;
         }
       }
@@ -287,106 +245,78 @@ public class RowBandingFunction extends AbstractFunction implements PageEventLis
    *
    * @param event the current report event.
    */
-  private void triggerVisibleStateCrosstab(final ReportEvent event)
-  {
-    if ((count % numberOfElements) == 0)
-    {
-      trigger = (!trigger);
+  private void triggerVisibleStateCrosstab( final ReportEvent event ) {
+    if ( ( count % numberOfElements ) == 0 ) {
+      trigger = ( !trigger );
     }
     count += 1;
 
     final CrosstabCellBody cellBody = event.getReport().getCrosstabCellBody();
-    if (cellBody == null)
-    {
+    if ( cellBody == null ) {
       return;
     }
 
-    if (element == null)
-    {
+    if ( element == null ) {
       final int elementCount = cellBody.getElementCount();
-      for (int i = 1; i < elementCount; i += 1)
-      {
-        final Element cell = cellBody.getElement(i);
-        if (trigger)
-        {
-          cell.getStyle().setStyleProperty(ElementStyleKeys.BACKGROUND_COLOR, visibleBackground);
-        }
-        else
-        {
-          cell.getStyle().setStyleProperty(ElementStyleKeys.BACKGROUND_COLOR, invisibleBackground);
+      for ( int i = 1; i < elementCount; i += 1 ) {
+        final Element cell = cellBody.getElement( i );
+        if ( trigger ) {
+          cell.getStyle().setStyleProperty( ElementStyleKeys.BACKGROUND_COLOR, visibleBackground );
+        } else {
+          cell.getStyle().setStyleProperty( ElementStyleKeys.BACKGROUND_COLOR, invisibleBackground );
         }
       }
-    }
-    else
-    {
-      final Element[] e = FunctionUtilities.findAllElements(cellBody, getElement());
-      if (e.length > 0)
-      {
-        for (int i = 0; i < e.length; i++)
-        {
-          if (trigger)
-          {
-            e[i].getStyle().setStyleProperty(ElementStyleKeys.BACKGROUND_COLOR, visibleBackground);
-          }
-          else
-          {
-            e[i].getStyle().setStyleProperty(ElementStyleKeys.BACKGROUND_COLOR, invisibleBackground);
+    } else {
+      final Element[] e = FunctionUtilities.findAllElements( cellBody, getElement() );
+      if ( e.length > 0 ) {
+        for ( int i = 0; i < e.length; i++ ) {
+          if ( trigger ) {
+            e[ i ].getStyle().setStyleProperty( ElementStyleKeys.BACKGROUND_COLOR, visibleBackground );
+          } else {
+            e[ i ].getStyle().setStyleProperty( ElementStyleKeys.BACKGROUND_COLOR, invisibleBackground );
           }
         }
-      }
-      else
-      {
-        if (warned == false)
-        {
-          RowBandingFunction.logger.warn("The cell-body does not contain an element named " + getElement());
+      } else {
+        if ( warned == false ) {
+          RowBandingFunction.logger.warn( "The cell-body does not contain an element named " + getElement() );
           warned = true;
         }
       }
     }
   }
 
-  public void summaryRowSelection(final ReportEvent event)
-  {
-    if (rowbandingOnGroup == false)
-    {
+  public void summaryRowSelection( final ReportEvent event ) {
+    if ( rowbandingOnGroup == false ) {
       return;
     }
 
-    if (StringUtils.isEmpty(group))
-    {
-      final Group group = event.getReport().getGroup(event.getState().getCurrentGroupIndex());
-      if (group instanceof CrosstabRowGroup)
-      {
+    if ( StringUtils.isEmpty( group ) ) {
+      final Group group = event.getReport().getGroup( event.getState().getCurrentGroupIndex() );
+      if ( group instanceof CrosstabRowGroup ) {
         final GroupBody body = group.getBody();
-        if (body instanceof CrosstabColumnGroupBody)
-        {
-          if (Boolean.TRUE.equals(group.getAttribute(AttributeNames.Crosstab.NAMESPACE, AttributeNames.Crosstab.PRINT_SUMMARY)))
-          {
-            triggerVisibleStateCrosstab(event);
+        if ( body instanceof CrosstabColumnGroupBody ) {
+          if ( Boolean.TRUE.equals(
+            group.getAttribute( AttributeNames.Crosstab.NAMESPACE, AttributeNames.Crosstab.PRINT_SUMMARY ) ) ) {
+            triggerVisibleStateCrosstab( event );
           }
         }
       }
-    }
-    else
-    {
-      if (FunctionUtilities.isDefinedGroup(group, event))
-      {
-        final Group group = event.getReport().getGroup(event.getState().getCurrentGroupIndex());
-        if (Boolean.TRUE.equals(group.getAttribute(AttributeNames.Crosstab.NAMESPACE, AttributeNames.Crosstab.PRINT_SUMMARY)))
-        {
-          triggerVisibleStateCrosstab(event);
+    } else {
+      if ( FunctionUtilities.isDefinedGroup( group, event ) ) {
+        final Group group = event.getReport().getGroup( event.getState().getCurrentGroupIndex() );
+        if ( Boolean.TRUE
+          .equals( group.getAttribute( AttributeNames.Crosstab.NAMESPACE, AttributeNames.Crosstab.PRINT_SUMMARY ) ) ) {
+          triggerVisibleStateCrosstab( event );
         }
       }
     }
   }
 
-  public boolean isIgnoreCrosstabMode()
-  {
+  public boolean isIgnoreCrosstabMode() {
     return ignoreCrosstabMode;
   }
 
-  public void setIgnoreCrosstabMode(final boolean ignoreCrosstabMode)
-  {
+  public void setIgnoreCrosstabMode( final boolean ignoreCrosstabMode ) {
     this.ignoreCrosstabMode = ignoreCrosstabMode;
   }
 
@@ -395,8 +325,7 @@ public class RowBandingFunction extends AbstractFunction implements PageEventLis
    *
    * @return a color.
    */
-  public Color getInvisibleBackground()
-  {
+  public Color getInvisibleBackground() {
     return invisibleBackground;
   }
 
@@ -405,8 +334,7 @@ public class RowBandingFunction extends AbstractFunction implements PageEventLis
    *
    * @param invisibleBackground a color.
    */
-  public void setInvisibleBackground(final Color invisibleBackground)
-  {
+  public void setInvisibleBackground( final Color invisibleBackground ) {
     this.invisibleBackground = invisibleBackground;
   }
 
@@ -415,8 +343,7 @@ public class RowBandingFunction extends AbstractFunction implements PageEventLis
    *
    * @return a color.
    */
-  public Color getVisibleBackground()
-  {
+  public Color getVisibleBackground() {
     return visibleBackground;
   }
 
@@ -425,8 +352,7 @@ public class RowBandingFunction extends AbstractFunction implements PageEventLis
    *
    * @param visibleBackground a color.
    */
-  public void setVisibleBackground(final Color visibleBackground)
-  {
+  public void setVisibleBackground( final Color visibleBackground ) {
     this.visibleBackground = visibleBackground;
   }
 
@@ -435,8 +361,7 @@ public class RowBandingFunction extends AbstractFunction implements PageEventLis
    *
    * @return a row count.
    */
-  public int getNumberOfElements()
-  {
+  public int getNumberOfElements() {
     return numberOfElements;
   }
 
@@ -445,8 +370,7 @@ public class RowBandingFunction extends AbstractFunction implements PageEventLis
    *
    * @param numberOfElements a row count.
    */
-  public void setNumberOfElements(final int numberOfElements)
-  {
+  public void setNumberOfElements( final int numberOfElements ) {
     this.numberOfElements = numberOfElements;
   }
 
@@ -455,8 +379,7 @@ public class RowBandingFunction extends AbstractFunction implements PageEventLis
    *
    * @return the initial value for the trigger.
    */
-  public boolean getInitialState()
-  {
+  public boolean getInitialState() {
     return initialState;
   }
 
@@ -465,8 +388,7 @@ public class RowBandingFunction extends AbstractFunction implements PageEventLis
    *
    * @param initialState the initial value for the trigger.
    */
-  public void setInitialState(final boolean initialState)
-  {
+  public void setInitialState( final boolean initialState ) {
     this.initialState = initialState;
   }
 
@@ -475,10 +397,11 @@ public class RowBandingFunction extends AbstractFunction implements PageEventLis
    * possible to define multiple elements with the same name to apply the modification to all of these elements.
    *
    * @param name The element name.
-   * @see org.pentaho.reporting.engine.classic.core.function.FunctionUtilities#findAllElements(org.pentaho.reporting.engine.classic.core.Band, String)
+   * @see org.pentaho.reporting.engine.classic.core.function.FunctionUtilities#findAllElements(org.pentaho.reporting
+   * .engine.classic.core.Band,
+   * String)
    */
-  public void setElement(final String name)
-  {
+  public void setElement( final String name ) {
     this.element = name;
   }
 
@@ -488,18 +411,15 @@ public class RowBandingFunction extends AbstractFunction implements PageEventLis
    * @return The element name.
    * @see #setElement(String)
    */
-  public String getElement()
-  {
+  public String getElement() {
     return element;
   }
 
-  public String getGroup()
-  {
+  public String getGroup() {
     return group;
   }
 
-  public void setGroup(final String group)
-  {
+  public void setGroup( final String group ) {
     this.group = group;
   }
 
@@ -509,8 +429,7 @@ public class RowBandingFunction extends AbstractFunction implements PageEventLis
    *
    * @return the state on new pages.
    */
-  public Boolean getNewPageState()
-  {
+  public Boolean getNewPageState() {
     return newPageState;
   }
 
@@ -520,8 +439,7 @@ public class RowBandingFunction extends AbstractFunction implements PageEventLis
    *
    * @param newPageState the state on new pages or null to use the initialState.
    */
-  public void setNewPageState(final Boolean newPageState)
-  {
+  public void setNewPageState( final Boolean newPageState ) {
     this.newPageState = newPageState;
   }
 
@@ -530,14 +448,10 @@ public class RowBandingFunction extends AbstractFunction implements PageEventLis
    *
    * @return the visibility of the element, either Boolean.TRUE or Boolean.FALSE.
    */
-  public Object getValue()
-  {
-    if (trigger)
-    {
+  public Object getValue() {
+    if ( trigger ) {
       return Boolean.TRUE;
-    }
-    else
-    {
+    } else {
       return Boolean.FALSE;
     }
   }

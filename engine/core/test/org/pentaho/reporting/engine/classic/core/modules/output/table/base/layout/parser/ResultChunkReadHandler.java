@@ -29,38 +29,31 @@ import org.xml.sax.SAXException;
  *
  * @author Thomas Morgner
  */
-public class ResultChunkReadHandler extends AbstractXmlReadHandler
-{
+public class ResultChunkReadHandler extends AbstractXmlReadHandler {
   private ResultTable resultTable;
   private int row;
 
-  public ResultChunkReadHandler()
-  {
+  public ResultChunkReadHandler() {
     resultTable = new ResultTable();
     row = -1;
   }
 
-  protected void startParsing(final Attributes attrs) throws SAXException
-  {
+  protected void startParsing( final Attributes attrs ) throws SAXException {
   }
 
-  protected XmlReadHandler getHandlerForChild(final String uri, final String tagName, final Attributes atts)
-      throws SAXException
-  {
-    if (ObjectUtilities.equal(uri, getUri()) == false)
-    {
+  protected XmlReadHandler getHandlerForChild( final String uri, final String tagName, final Attributes atts )
+    throws SAXException {
+    if ( ObjectUtilities.equal( uri, getUri() ) == false ) {
       return null;
     }
-    if ("row".equals(tagName))
-    {
+    if ( "row".equals( tagName ) ) {
       row += 1;
-      return new RowReadHandler(resultTable, row);
+      return new RowReadHandler( resultTable, row );
     }
     return null;
   }
 
-  public Object getObject() throws SAXException
-  {
+  public Object getObject() throws SAXException {
     return resultTable;
   }
 }

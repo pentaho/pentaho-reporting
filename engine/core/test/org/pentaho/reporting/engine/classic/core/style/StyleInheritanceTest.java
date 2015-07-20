@@ -34,103 +34,95 @@ import org.pentaho.reporting.engine.classic.core.style.css.selector.CSSSelectorF
 import org.pentaho.reporting.engine.classic.core.testsupport.DebugReportRunner;
 import org.pentaho.reporting.engine.classic.core.testsupport.selector.MatchFactory;
 
-public class StyleInheritanceTest extends TestCase
-{
-  public StyleInheritanceTest()
-  {
+public class StyleInheritanceTest extends TestCase {
+  public StyleInheritanceTest() {
   }
 
-  protected void setUp() throws Exception
-  {
+  protected void setUp() throws Exception {
     ClassicEngineBoot.getInstance().start();
   }
 
-  private Element createLabel(final String text)
-  {
+  private Element createLabel( final String text ) {
     final Element element = new Element();
-    element.setName(text);
-    element.setElementType(LabelType.INSTANCE);
-    element.getStyle().setStyleProperty(ElementStyleKeys.MIN_HEIGHT, new Float(20));
-    element.getStyle().setStyleProperty(ElementStyleKeys.MIN_WIDTH, new Float(200));
-    element.setAttribute(AttributeNames.Core.NAMESPACE, AttributeNames.Core.VALUE, text);
+    element.setName( text );
+    element.setElementType( LabelType.INSTANCE );
+    element.getStyle().setStyleProperty( ElementStyleKeys.MIN_HEIGHT, new Float( 20 ) );
+    element.getStyle().setStyleProperty( ElementStyleKeys.MIN_WIDTH, new Float( 200 ) );
+    element.setAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.VALUE, text );
     return element;
   }
 
-  public void testStyleInheritance() throws Exception
-  {
+  public void testStyleInheritance() throws Exception {
     MasterReport report = new MasterReport();
     ReportHeader reportHeader = report.getReportHeader();
-    reportHeader.addElement(createLabel("Master-Report-Header-Label"));
-    report.setStyleDefinition(createStyleDefinition("selected-font"));
+    reportHeader.addElement( createLabel( "Master-Report-Header-Label" ) );
+    report.setStyleDefinition( createStyleDefinition( "selected-font" ) );
 
-    LogicalPageBox box = DebugReportRunner.layoutPage(report, 0);
-    RenderNode elementByName = MatchFactory.findElementByName(box, "Master-Report-Header-Label");
-    assertNotNull(elementByName);
-    assertEquals("selected-font", elementByName.getStyleSheet().getStyleProperty(TextStyleKeys.FONT));
+    LogicalPageBox box = DebugReportRunner.layoutPage( report, 0 );
+    RenderNode elementByName = MatchFactory.findElementByName( box, "Master-Report-Header-Label" );
+    assertNotNull( elementByName );
+    assertEquals( "selected-font", elementByName.getStyleSheet().getStyleProperty( TextStyleKeys.FONT ) );
   }
 
-  public void testStyleInheritanceOnSubReport() throws Exception
-  {
+  public void testStyleInheritanceOnSubReport() throws Exception {
     SubReport bandedSr = new SubReport();
-    bandedSr.getReportHeader().addElement(createLabel("Banded-SubReport-Header-Label"));
+    bandedSr.getReportHeader().addElement( createLabel( "Banded-SubReport-Header-Label" ) );
 
     SubReport inlineSr = new SubReport();
-    inlineSr.getReportHeader().addElement(createLabel("Inline-SubReport-Header-Label"));
+    inlineSr.getReportHeader().addElement( createLabel( "Inline-SubReport-Header-Label" ) );
 
     MasterReport report = new MasterReport();
-    report.getReportFooter().addElement(inlineSr);
-    report.getReportFooter().addElement(bandedSr);
-    report.setStyleDefinition(createStyleDefinition("selected-font"));
+    report.getReportFooter().addElement( inlineSr );
+    report.getReportFooter().addElement( bandedSr );
+    report.setStyleDefinition( createStyleDefinition( "selected-font" ) );
 
-    LogicalPageBox box = DebugReportRunner.layoutPage(report, 0);
+    LogicalPageBox box = DebugReportRunner.layoutPage( report, 0 );
 
-    RenderNode inlineElement = MatchFactory.findElementByName(box, "Inline-SubReport-Header-Label");
-    assertNotNull(inlineElement);
-    assertEquals("selected-font", inlineElement.getStyleSheet().getStyleProperty(TextStyleKeys.FONT));
+    RenderNode inlineElement = MatchFactory.findElementByName( box, "Inline-SubReport-Header-Label" );
+    assertNotNull( inlineElement );
+    assertEquals( "selected-font", inlineElement.getStyleSheet().getStyleProperty( TextStyleKeys.FONT ) );
 
-    RenderNode bandedElement = MatchFactory.findElementByName(box, "Banded-SubReport-Header-Label");
-    assertNotNull(bandedElement);
-    assertEquals("selected-font", bandedElement.getStyleSheet().getStyleProperty(TextStyleKeys.FONT));
+    RenderNode bandedElement = MatchFactory.findElementByName( box, "Banded-SubReport-Header-Label" );
+    assertNotNull( bandedElement );
+    assertEquals( "selected-font", bandedElement.getStyleSheet().getStyleProperty( TextStyleKeys.FONT ) );
   }
 
-  public void testStylesOnSubreportAreNotSupported() throws Exception
-  {
+  public void testStylesOnSubreportAreNotSupported() throws Exception {
     SubReport bandedSr = new SubReport();
-    bandedSr.getReportHeader().addElement(createLabel("Banded-SubReport-Header-Label"));
-    bandedSr.setAttribute(AttributeNames.Core.NAMESPACE,
-        AttributeNames.Core.STYLE_SHEET, createStyleDefinition("selected-font-banded"));
+    bandedSr.getReportHeader().addElement( createLabel( "Banded-SubReport-Header-Label" ) );
+    bandedSr.setAttribute( AttributeNames.Core.NAMESPACE,
+      AttributeNames.Core.STYLE_SHEET, createStyleDefinition( "selected-font-banded" ) );
 
     SubReport inlineSr = new SubReport();
-    inlineSr.getReportHeader().addElement(createLabel("Inline-SubReport-Header-Label"));
-    inlineSr.setAttribute(AttributeNames.Core.NAMESPACE,
-        AttributeNames.Core.STYLE_SHEET, createStyleDefinition("selected-font-inline"));
+    inlineSr.getReportHeader().addElement( createLabel( "Inline-SubReport-Header-Label" ) );
+    inlineSr.setAttribute( AttributeNames.Core.NAMESPACE,
+      AttributeNames.Core.STYLE_SHEET, createStyleDefinition( "selected-font-inline" ) );
 
     MasterReport report = new MasterReport();
-    report.getReportFooter().addElement(inlineSr);
-    report.getReportFooter().addElement(bandedSr);
-    report.setStyleDefinition(createStyleDefinition("selected-font"));
+    report.getReportFooter().addElement( inlineSr );
+    report.getReportFooter().addElement( bandedSr );
+    report.setStyleDefinition( createStyleDefinition( "selected-font" ) );
 
-    LogicalPageBox box = DebugReportRunner.layoutPage(report, 0);
+    LogicalPageBox box = DebugReportRunner.layoutPage( report, 0 );
 
-    RenderNode inlineElement = MatchFactory.findElementByName(box, "Inline-SubReport-Header-Label");
-    assertNotNull(inlineElement);
-    assertEquals("selected-font", inlineElement.getStyleSheet().getStyleProperty(TextStyleKeys.FONT));
+    RenderNode inlineElement = MatchFactory.findElementByName( box, "Inline-SubReport-Header-Label" );
+    assertNotNull( inlineElement );
+    assertEquals( "selected-font", inlineElement.getStyleSheet().getStyleProperty( TextStyleKeys.FONT ) );
 
-    RenderNode bandedElement = MatchFactory.findElementByName(box, "Banded-SubReport-Header-Label");
-    assertNotNull(bandedElement);
-    assertEquals("selected-font", bandedElement.getStyleSheet().getStyleProperty(TextStyleKeys.FONT));
+    RenderNode bandedElement = MatchFactory.findElementByName( box, "Banded-SubReport-Header-Label" );
+    assertNotNull( bandedElement );
+    assertEquals( "selected-font", bandedElement.getStyleSheet().getStyleProperty( TextStyleKeys.FONT ) );
   }
 
-  private ElementStyleDefinition createStyleDefinition(final String targetName)
-  {
+  private ElementStyleDefinition createStyleDefinition( final String targetName ) {
     CSSSelectorFactory factory = new CSSSelectorFactory();
 
     ElementStyleRule rule = new ElementStyleRule();
-    rule.addSelector((CSSSelector) factory.createElementSelector(null, "label"));
-    rule.setStyleProperty(TextStyleKeys.FONT, targetName);
+    rule.addSelector( (CSSSelector) factory.createElementSelector( null, "label" ) );
+    rule.setStyleProperty( TextStyleKeys.FONT, targetName );
 
     ElementStyleDefinition def = new ElementStyleDefinition();
-    def.addRule(rule);
+    def.addRule( rule );
     return def;
   }
 

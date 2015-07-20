@@ -17,8 +17,8 @@
 
 package org.pentaho.reporting.engine.classic.core;
 
-import java.util.LinkedHashMap;
 import javax.swing.table.TableModel;
+import java.util.LinkedHashMap;
 
 /**
  * The TableDataFactory provides keyed access to predefined tablemodels. The factory does not accept parameters and
@@ -27,8 +27,7 @@ import javax.swing.table.TableModel;
  *
  * @author Thomas Morgner
  */
-public class TableDataFactory extends AbstractDataFactory
-{
+public class TableDataFactory extends AbstractDataFactory {
   /**
    * A unique identifier for long term persistance.
    */
@@ -37,14 +36,13 @@ public class TableDataFactory extends AbstractDataFactory
   /**
    * The tables for this factory.
    */
-  private LinkedHashMap<String,TableModel> tables;
+  private LinkedHashMap<String, TableModel> tables;
 
   /**
    * Default Constructor.
    */
-  public TableDataFactory()
-  {
-    this.tables = new LinkedHashMap<String,TableModel>();
+  public TableDataFactory() {
+    this.tables = new LinkedHashMap<String, TableModel>();
   }
 
   /**
@@ -53,10 +51,9 @@ public class TableDataFactory extends AbstractDataFactory
    * @param name       the name of the table.
    * @param tableModel the tablemodel.
    */
-  public TableDataFactory(final String name, final TableModel tableModel)
-  {
+  public TableDataFactory( final String name, final TableModel tableModel ) {
     this();
-    addTable(name, tableModel);
+    addTable( name, tableModel );
   }
 
   /**
@@ -66,9 +63,8 @@ public class TableDataFactory extends AbstractDataFactory
    * @param parameters
    * @return
    */
-  public boolean isQueryExecutable(final String query, final DataRow parameters)
-  {
-    return tables.containsKey(query);
+  public boolean isQueryExecutable( final String query, final DataRow parameters ) {
+    return tables.containsKey( query );
   }
 
 
@@ -79,17 +75,14 @@ public class TableDataFactory extends AbstractDataFactory
    * @param name       the name of the table.
    * @param tableModel the tablemodel that should be registered.
    */
-  public void addTable(final String name, final TableModel tableModel)
-  {
-    if (tableModel == null)
-    {
+  public void addTable( final String name, final TableModel tableModel ) {
+    if ( tableModel == null ) {
       throw new NullPointerException();
     }
-    if (name == null)
-    {
+    if ( name == null ) {
       throw new NullPointerException();
     }
-    tables.put(name, tableModel);
+    tables.put( name, tableModel );
   }
 
   /**
@@ -97,15 +90,14 @@ public class TableDataFactory extends AbstractDataFactory
    *
    * @param name the name of the table to be removed.
    */
-  public void removeTable(final String name)
-  {
-    tables.remove(name);
+  public void removeTable( final String name ) {
+    tables.remove( name );
   }
 
-  public TableModel getTable(final String name)
-  {
-    return tables.get(name);
+  public TableModel getTable( final String name ) {
+    return tables.get( name );
   }
+
   /**
    * Queries a datasource. The string 'query' defines the name of the query. The Parameterset given here may contain
    * more data than actually needed.
@@ -116,12 +108,10 @@ public class TableDataFactory extends AbstractDataFactory
    * @param parameters are ignored for this factory.
    * @return the report data or null.
    */
-  public TableModel queryData(final String query, final DataRow parameters) throws ReportDataFactoryException
-  {
-    final TableModel tableModel = tables.get(query);
-    if (tableModel == null)
-    {
-      throw new ReportDataFactoryException("The specified query '" + query + "' is not recognized.");
+  public TableModel queryData( final String query, final DataRow parameters ) throws ReportDataFactoryException {
+    final TableModel tableModel = tables.get( query );
+    if ( tableModel == null ) {
+      throw new ReportDataFactoryException( "The specified query '" + query + "' is not recognized." );
     }
     return tableModel;
   }
@@ -129,8 +119,7 @@ public class TableDataFactory extends AbstractDataFactory
   /**
    * Closes the data factory. Actually, this one does nothing at all.
    */
-  public void close()
-  {
+  public void close() {
   }
 
   /**
@@ -139,8 +128,7 @@ public class TableDataFactory extends AbstractDataFactory
    *
    * @return a copy of the data factory.
    */
-  public DataFactory derive()
-  {
+  public DataFactory derive() {
     return (DataFactory) clone();
   }
 
@@ -149,15 +137,13 @@ public class TableDataFactory extends AbstractDataFactory
    *
    * @return the copy of the data-factory, never null.
    */
-  public TableDataFactory clone()
-  {
+  public TableDataFactory clone() {
     final TableDataFactory dataFactory = (TableDataFactory) super.clone();
-    dataFactory.tables = (LinkedHashMap<String,TableModel>) tables.clone();
+    dataFactory.tables = (LinkedHashMap<String, TableModel>) tables.clone();
     return dataFactory;
   }
 
-  public String[] getQueryNames()
-  {
-    return tables.keySet().toArray(new String[tables.size()]);
+  public String[] getQueryNames() {
+    return tables.keySet().toArray( new String[ tables.size() ] );
   }
 }

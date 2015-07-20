@@ -21,10 +21,8 @@ import org.pentaho.reporting.engine.classic.core.filter.types.VerticalLineType;
 import org.pentaho.reporting.libraries.xmlns.parser.ParseException;
 
 @Deprecated
-public class VerticalLineReadHandler extends AbstractElementReadHandler
-{
-  public VerticalLineReadHandler() throws ParseException
-  {
-    super(VerticalLineType.INSTANCE);
+public class VerticalLineReadHandler extends AbstractElementReadHandler {
+  public VerticalLineReadHandler() throws ParseException {
+    super( VerticalLineType.INSTANCE );
   }
 }

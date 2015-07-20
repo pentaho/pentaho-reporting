@@ -22,7 +22,6 @@ package org.pentaho.reporting.engine.classic.core.modules.gui.commonswing;
  *
  * @author Thomas Morgner
  */
-public interface ActionFactory
-{
-  public ActionPlugin[] getActions(SwingGuiContext context, String category);
+public interface ActionFactory {
+  public ActionPlugin[] getActions( SwingGuiContext context, String category );
 }

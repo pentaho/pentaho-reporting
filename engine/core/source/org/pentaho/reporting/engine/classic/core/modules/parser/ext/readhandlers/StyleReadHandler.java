@@ -17,9 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.parser.ext.readhandlers;
 
-import java.util.HashMap;
-
-import org.pentaho.reporting.engine.classic.core.ReportDefinition;
 import org.pentaho.reporting.engine.classic.core.modules.parser.base.PropertyAttributes;
 import org.pentaho.reporting.engine.classic.core.modules.parser.base.ReportParserUtil;
 import org.pentaho.reporting.engine.classic.core.style.ElementStyleKeys;
@@ -30,23 +27,22 @@ import org.pentaho.reporting.libraries.xmlns.parser.RootXmlReadHandler;
 import org.pentaho.reporting.libraries.xmlns.parser.XmlReadHandler;
 import org.xml.sax.SAXException;
 
-public class StyleReadHandler extends CompoundObjectReadHandler
-{
+import java.util.HashMap;
 
-  private HashMap<String,ElementStyleSheet> styleSheetCollection;
+public class StyleReadHandler extends CompoundObjectReadHandler {
+
+  private HashMap<String, ElementStyleSheet> styleSheetCollection;
   private ElementStyleSheet styleSheet;
   private boolean createStyle;
 
-  public StyleReadHandler()
-  {
-    this(null);
+  public StyleReadHandler() {
+    this( null );
   }
 
-  public StyleReadHandler(final ElementStyleSheet styleSheet)
-  {
-    super(new ElementStyleSheetObjectDescription());
+  public StyleReadHandler( final ElementStyleSheet styleSheet ) {
+    super( new ElementStyleSheetObjectDescription() );
     this.styleSheet = styleSheet;
-    this.createStyle = (styleSheet == null);
+    this.createStyle = ( styleSheet == null );
   }
 
   /**
@@ -55,13 +51,12 @@ public class StyleReadHandler extends CompoundObjectReadHandler
    * @param rootHandler the root handler.
    * @param tagName     the tag name.
    */
-  public void init(final RootXmlReadHandler rootHandler,
-                   final String uri,
-                   final String tagName) throws SAXException
-  {
-    super.init(rootHandler, uri, tagName);
-    styleSheetCollection = (HashMap<String,ElementStyleSheet>)
-        rootHandler.getHelperObject(ReportParserUtil.HELPER_OBJ_LEGACY_STYLES);
+  public void init( final RootXmlReadHandler rootHandler,
+                    final String uri,
+                    final String tagName ) throws SAXException {
+    super.init( rootHandler, uri, tagName );
+    styleSheetCollection = (HashMap<String, ElementStyleSheet>)
+      rootHandler.getHelperObject( ReportParserUtil.HELPER_OBJ_LEGACY_STYLES );
   }
 
 
@@ -71,24 +66,21 @@ public class StyleReadHandler extends CompoundObjectReadHandler
    * @param attrs the attributes.
    * @throws org.xml.sax.SAXException if there is a parsing error.
    */
-  protected void startParsing(final PropertyAttributes attrs)
-      throws SAXException
-  {
-    if (createStyle)
-    {
-      final String name = attrs.getValue(getUri(), "name");
-      if (name == null)
-      {
+  protected void startParsing( final PropertyAttributes attrs )
+    throws SAXException {
+    if ( createStyle ) {
+      final String name = attrs.getValue( getUri(), "name" );
+      if ( name == null ) {
         throw new ParseException
-            ("Required attribute 'name' is missing.", getLocator());
+          ( "Required attribute 'name' is missing.", getLocator() );
       }
       styleSheet = new ElementStyleSheet();
-      styleSheetCollection.put (name, styleSheet);
+      styleSheetCollection.put( name, styleSheet );
     }
 
     final ElementStyleSheetObjectDescription objectDescription =
-        (ElementStyleSheetObjectDescription) getObjectDescription();
-    objectDescription.init(getRootHandler(), styleSheet);
+      (ElementStyleSheetObjectDescription) getObjectDescription();
+    objectDescription.init( getRootHandler(), styleSheet );
   }
 
   /**
@@ -99,38 +91,30 @@ public class StyleReadHandler extends CompoundObjectReadHandler
    * @return the handler or null, if the tagname is invalid.
    * @throws org.xml.sax.SAXException if there is a parsing error.
    */
-  protected XmlReadHandler getHandlerForChild(final String uri,
-                                              final String tagName,
-                                              final PropertyAttributes atts)
-      throws SAXException
-  {
-    if (isSameNamespace(uri) == false)
-    {
+  protected XmlReadHandler getHandlerForChild( final String uri,
+                                               final String tagName,
+                                               final PropertyAttributes atts )
+    throws SAXException {
+    if ( isSameNamespace( uri ) == false ) {
       return null;
     }
 
-    if ("extends".equals(tagName))
-    {
-      return new StyleExtendsReadHandler(styleSheetCollection, styleSheet);
+    if ( "extends".equals( tagName ) ) {
+      return new StyleExtendsReadHandler( styleSheetCollection, styleSheet );
     }
 
-    if ("basic-key".equals(tagName))
-    {
-      final String name = atts.getValue(getUri(), "name");
-      if (ElementStyleKeys.isLegacyKey(name))
-      {
+    if ( "basic-key".equals( tagName ) ) {
+      final String name = atts.getValue( getUri(), "name" );
+      if ( ElementStyleKeys.isLegacyKey( name ) ) {
         return new IgnoreAnyChildReadHandler();
       }
-      return handleBasicObject(atts);
-    }
-    else if ("compound-key".equals(tagName))
-    {
-      final String name = atts.getValue(getUri(), "name");
-      if (ElementStyleKeys.isLegacyKey(name))
-      {
+      return handleBasicObject( atts );
+    } else if ( "compound-key".equals( tagName ) ) {
+      final String name = atts.getValue( getUri(), "name" );
+      if ( ElementStyleKeys.isLegacyKey( name ) ) {
         return new IgnoreAnyChildReadHandler();
       }
-      return handleCompoundObject(atts);
+      return handleCompoundObject( atts );
     }
     return null;
   }
@@ -141,8 +125,7 @@ public class StyleReadHandler extends CompoundObjectReadHandler
    *
    * @return the object.
    */
-  public Object getObject()
-  {
+  public Object getObject() {
     return styleSheet;
   }
 }

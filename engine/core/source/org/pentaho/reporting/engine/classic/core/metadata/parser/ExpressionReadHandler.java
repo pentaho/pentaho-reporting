@@ -17,8 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.core.metadata.parser;
 
-import java.util.ArrayList;
-
 import org.pentaho.reporting.engine.classic.core.function.Expression;
 import org.pentaho.reporting.engine.classic.core.metadata.DefaultExpressionMetaData;
 import org.pentaho.reporting.engine.classic.core.metadata.SharedBeanInfo;
@@ -29,28 +27,26 @@ import org.pentaho.reporting.libraries.xmlns.parser.XmlReadHandler;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 
+import java.util.ArrayList;
+
 /**
  * @noinspection HardCodedStringLiteral
  */
-public class ExpressionReadHandler extends AbstractMetaDataReadHandler
-{
+public class ExpressionReadHandler extends AbstractMetaDataReadHandler {
   private ArrayList<ExpressionPropertyReadHandler> propertyHandlers;
   private SharedBeanInfo beanInfo;
   private ExpressionMetaDataBuilder builder;
 
-  public ExpressionReadHandler()
-  {
+  public ExpressionReadHandler() {
     propertyHandlers = new ArrayList<ExpressionPropertyReadHandler>();
     builder = new ExpressionMetaDataBuilder();
   }
 
-  public ExpressionMetaDataBuilder getBuilder()
-  {
+  public ExpressionMetaDataBuilder getBuilder() {
     return builder;
   }
 
-  protected boolean isDerivedName()
-  {
+  protected boolean isDerivedName() {
     return true;
   }
 
@@ -60,79 +56,59 @@ public class ExpressionReadHandler extends AbstractMetaDataReadHandler
    * @param attrs the attributes.
    * @throws SAXException if there is a parsing error.
    */
-  protected void startParsing(final Attributes attrs) throws SAXException
-  {
-    super.startParsing(attrs);
+  protected void startParsing( final Attributes attrs ) throws SAXException {
+    super.startParsing( attrs );
 
-    getBuilder().layoutComputation(parseLayoutProcessorMode(attrs));
-    getBuilder().impl(parseExpressionImpl(attrs));
-    getBuilder().resultType(parseResultType(attrs));
-    getBuilder().bundle(getBundle(), "");
-    this.beanInfo = new SharedBeanInfo(getBuilder().getImpl());
+    getBuilder().layoutComputation( parseLayoutProcessorMode( attrs ) );
+    getBuilder().impl( parseExpressionImpl( attrs ) );
+    getBuilder().resultType( parseResultType( attrs ) );
+    getBuilder().bundle( getBundle(), "" );
+    this.beanInfo = new SharedBeanInfo( getBuilder().getImpl() );
   }
 
-  private Class<?> parseResultType(final Attributes attrs) throws ParseException
-  {
+  private Class<?> parseResultType( final Attributes attrs ) throws ParseException {
     final Class<?> resultType;
-    final String resultTypeText = attrs.getValue(getUri(), "result");
-    if (resultTypeText == null)
-    {
-      throw new ParseException("Attribute 'result' is undefined", getLocator());
+    final String resultTypeText = attrs.getValue( getUri(), "result" );
+    if ( resultTypeText == null ) {
+      throw new ParseException( "Attribute 'result' is undefined", getLocator() );
     }
-    try
-    {
-      final ClassLoader loader = ObjectUtilities.getClassLoader(ExpressionReadHandler.class);
-      resultType = Class.forName(resultTypeText, false, loader);
-    }
-    catch (final Exception e)
-    {
-      throw new ParseException("Attribute 'result' is not valid", e, getLocator());
+    try {
+      final ClassLoader loader = ObjectUtilities.getClassLoader( ExpressionReadHandler.class );
+      resultType = Class.forName( resultTypeText, false, loader );
+    } catch ( final Exception e ) {
+      throw new ParseException( "Attribute 'result' is not valid", e, getLocator() );
     }
     return resultType;
   }
 
-  private int parseLayoutProcessorMode(final Attributes attrs)
-  {
-    final String layoutProcessorMode = attrs.getValue(getUri(), "layout-processor-mode");
+  private int parseLayoutProcessorMode( final Attributes attrs ) {
+    final String layoutProcessorMode = attrs.getValue( getUri(), "layout-processor-mode" );
     int layoutComputation;
-    if ("global".equals(layoutProcessorMode))
-    {
+    if ( "global".equals( layoutProcessorMode ) ) {
       layoutComputation = DefaultExpressionMetaData.GLOBAL_LAYOUT_PROCESSOR;
-    }
-    else if ("element".equals(layoutProcessorMode))
-    {
+    } else if ( "element".equals( layoutProcessorMode ) ) {
       layoutComputation = DefaultExpressionMetaData.ELEMENT_LAYOUT_PROCESSOR;
-    }
-    else
-    {
+    } else {
       layoutComputation = DefaultExpressionMetaData.NO_LAYOUT_PROCESSOR;
     }
     return layoutComputation;
   }
 
-  private Class<? extends Expression> parseExpressionImpl(final Attributes attrs) throws ParseException
-  {
-    final String implText = attrs.getValue(getUri(), "class");
+  private Class<? extends Expression> parseExpressionImpl( final Attributes attrs ) throws ParseException {
+    final String implText = attrs.getValue( getUri(), "class" );
     Class<? extends Expression> expressionClass;
-    if (implText == null)
-    {
-      throw new ParseException("Attribute 'class' is undefined", getLocator());
+    if ( implText == null ) {
+      throw new ParseException( "Attribute 'class' is undefined", getLocator() );
     }
-    try
-    {
-      expressionClass = ObjectUtilities.loadAndValidate(implText, ExpressionReadHandler.class, Expression.class);
-      if (expressionClass == null)
-      {
-        throw new ParseException("Attribute 'class' is not valid", getLocator());
+    try {
+      expressionClass = ObjectUtilities.loadAndValidate( implText, ExpressionReadHandler.class, Expression.class );
+      if ( expressionClass == null ) {
+        throw new ParseException( "Attribute 'class' is not valid", getLocator() );
       }
-    }
-    catch (final ParseException pe)
-    {
+    } catch ( final ParseException pe ) {
       throw pe;
-    }
-    catch (final Exception e)
-    {
-      throw new ParseException("Attribute 'class' is not valid", e, getLocator());
+    } catch ( final Exception e ) {
+      throw new ParseException( "Attribute 'class' is not valid", e, getLocator() );
     }
     return expressionClass;
   }
@@ -146,20 +122,17 @@ public class ExpressionReadHandler extends AbstractMetaDataReadHandler
    * @return the handler or null, if the tagname is invalid.
    * @throws SAXException if there is a parsing error.
    */
-  protected XmlReadHandler getHandlerForChild(final String uri,
-                                              final String tagName,
-                                              final Attributes atts) throws SAXException
-  {
-    if (getUri().equals(uri) == false)
-    {
+  protected XmlReadHandler getHandlerForChild( final String uri,
+                                               final String tagName,
+                                               final Attributes atts ) throws SAXException {
+    if ( getUri().equals( uri ) == false ) {
       return null;
     }
 
 
-    if ("property".equals(tagName))
-    {
-      final ExpressionPropertyReadHandler readHandler = new ExpressionPropertyReadHandler(beanInfo, getBundle());
-      propertyHandlers.add(readHandler);
+    if ( "property".equals( tagName ) ) {
+      final ExpressionPropertyReadHandler readHandler = new ExpressionPropertyReadHandler( beanInfo, getBundle() );
+      propertyHandlers.add( readHandler );
       return readHandler;
     }
 
@@ -171,12 +144,10 @@ public class ExpressionReadHandler extends AbstractMetaDataReadHandler
    *
    * @throws SAXException if there is a parsing error.
    */
-  protected void doneParsing() throws SAXException
-  {
-    for (int i = 0; i < propertyHandlers.size(); i++)
-    {
-      final ExpressionPropertyReadHandler handler = propertyHandlers.get(i);
-      getBuilder().property(handler.getObject());
+  protected void doneParsing() throws SAXException {
+    for ( int i = 0; i < propertyHandlers.size(); i++ ) {
+      final ExpressionPropertyReadHandler handler = propertyHandlers.get( i );
+      getBuilder().property( handler.getObject() );
     }
   }
 
@@ -186,8 +157,7 @@ public class ExpressionReadHandler extends AbstractMetaDataReadHandler
    * @return the object.
    * @throws SAXException if an parser error occured.
    */
-  public Object getObject() throws SAXException
-  {
-    return new DefaultExpressionMetaData(getBuilder());
+  public Object getObject() throws SAXException {
+    return new DefaultExpressionMetaData( getBuilder() );
   }
 }

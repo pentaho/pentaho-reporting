@@ -20,67 +20,55 @@ package org.pentaho.reporting.engine.classic.core.layout.process.util;
 import org.pentaho.reporting.engine.classic.core.layout.model.table.TableRenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.table.columns.TableColumnModel;
 
-public class MinorAxisTableContext
-{
+public class MinorAxisTableContext {
   private TableRenderBox table;
   private MinorAxisTableContext context;
   private boolean secondPassNeeded;
   private long cellPosition;
 
-  public MinorAxisTableContext(final TableRenderBox table, final MinorAxisTableContext context)
-  {
+  public MinorAxisTableContext( final TableRenderBox table, final MinorAxisTableContext context ) {
     this.table = table;
     this.context = context;
     this.secondPassNeeded = true;
   }
 
-  public TableRenderBox getTable()
-  {
+  public TableRenderBox getTable() {
     return table;
   }
 
-  public TableColumnModel getColumnModel()
-  {
+  public TableColumnModel getColumnModel() {
     return table.getColumnModel();
   }
 
-  public void setStructureValidated(final boolean structureValidated)
-  {
-    table.setStructureValidated(structureValidated);
+  public void setStructureValidated( final boolean structureValidated ) {
+    table.setStructureValidated( structureValidated );
   }
 
-  public long getCellPosition()
-  {
+  public long getCellPosition() {
     return cellPosition;
   }
 
-  public void setCellPosition(final long cellPosition)
-  {
+  public void setCellPosition( final long cellPosition ) {
     this.cellPosition = cellPosition;
   }
 
-  public boolean isStructureValidated()
-  {
+  public boolean isStructureValidated() {
     return table.isStructureValidated();
   }
 
-  public boolean isSecondPassNeeded()
-  {
+  public boolean isSecondPassNeeded() {
     return secondPassNeeded;
   }
 
-  public void setSecondPassNeeded(final boolean secondPassNeeded)
-  {
+  public void setSecondPassNeeded( final boolean secondPassNeeded ) {
     this.secondPassNeeded = secondPassNeeded;
   }
 
-  public MinorAxisTableContext pop()
-  {
+  public MinorAxisTableContext pop() {
     return context;
   }
 
-  public void startRow()
-  {
+  public void startRow() {
     cellPosition = 0;
   }
 }

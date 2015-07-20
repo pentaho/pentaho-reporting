@@ -17,31 +17,26 @@
 
 package org.pentaho.reporting.engine.classic.core.states;
 
-public class GroupStartRecord
-{
+public class GroupStartRecord {
   private int row;
   private String groupName;
   private String generatedGroupName;
 
-  public GroupStartRecord(final int row, final String groupName, final String generatedGroupName)
-  {
+  public GroupStartRecord( final int row, final String groupName, final String generatedGroupName ) {
     this.row = row;
     this.groupName = groupName;
     this.generatedGroupName = generatedGroupName;
   }
 
-  public int getRow()
-  {
+  public int getRow() {
     return row;
   }
 
-  public String getGroupName()
-  {
+  public String getGroupName() {
     return groupName;
   }
 
-  public String getGeneratedGroupName()
-  {
+  public String getGeneratedGroupName() {
     return generatedGroupName;
   }
 }

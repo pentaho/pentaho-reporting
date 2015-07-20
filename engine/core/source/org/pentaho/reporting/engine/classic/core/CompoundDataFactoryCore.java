@@ -22,43 +22,34 @@ import org.pentaho.reporting.engine.classic.core.metadata.DefaultDataFactoryCore
 import org.pentaho.reporting.engine.classic.core.metadata.ResourceReference;
 import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 
-public class CompoundDataFactoryCore extends DefaultDataFactoryCore
-{
-  public CompoundDataFactoryCore()
-  {
+public class CompoundDataFactoryCore extends DefaultDataFactoryCore {
+  public CompoundDataFactoryCore() {
   }
 
-  public String[] getReferencedFields(final DataFactoryMetaData metaData,
-                                      final DataFactory element,
-                                      final String query,
-                                      final DataRow parameter)
-  {
-    DataFactory m = getDataFactoryForQuery(element, query);
-    if (m == null)
-    {
+  public String[] getReferencedFields( final DataFactoryMetaData metaData,
+                                       final DataFactory element,
+                                       final String query,
+                                       final DataRow parameter ) {
+    DataFactory m = getDataFactoryForQuery( element, query );
+    if ( m == null ) {
       return null;
     }
     DataFactoryMetaData md = m.getMetaData();
-    if (md == null)
-    {
+    if ( md == null ) {
       return null;
     }
-    return md.getReferencedFields(m, query, parameter);
+    return md.getReferencedFields( m, query, parameter );
   }
 
-  protected DataFactory getDataFactoryForQuery(final DataFactory element, final String query)
-  {
-    if (element instanceof CompoundDataFactorySupport == false)
-    {
+  protected DataFactory getDataFactoryForQuery( final DataFactory element, final String query ) {
+    if ( element instanceof CompoundDataFactorySupport == false ) {
       return null;
     }
     CompoundDataFactorySupport cdf = (CompoundDataFactorySupport) element;
-    DataFactory dataFactoryForQuery = cdf.getDataFactoryForQuery(query, false);
-    if (dataFactoryForQuery == null)
-    {
-      dataFactoryForQuery = cdf.getDataFactoryForQuery(query, true);
-      if (dataFactoryForQuery == null)
-      {
+    DataFactory dataFactoryForQuery = cdf.getDataFactoryForQuery( query, false );
+    if ( dataFactoryForQuery == null ) {
+      dataFactoryForQuery = cdf.getDataFactoryForQuery( query, true );
+      if ( dataFactoryForQuery == null ) {
         return null;
       }
     }
@@ -66,40 +57,34 @@ public class CompoundDataFactoryCore extends DefaultDataFactoryCore
     return dataFactoryForQuery;
   }
 
-  public ResourceReference[] getReferencedResources(final DataFactoryMetaData metaData,
-                                                    final DataFactory element,
-                                                    final ResourceManager resourceManager,
-                                                    final String query,
-                                                    final DataRow parameter)
-  {
-    DataFactory m = getDataFactoryForQuery(element, query);
-    if (m == null)
-    {
+  public ResourceReference[] getReferencedResources( final DataFactoryMetaData metaData,
+                                                     final DataFactory element,
+                                                     final ResourceManager resourceManager,
+                                                     final String query,
+                                                     final DataRow parameter ) {
+    DataFactory m = getDataFactoryForQuery( element, query );
+    if ( m == null ) {
       return null;
     }
     DataFactoryMetaData md = m.getMetaData();
-    if (md == null)
-    {
+    if ( md == null ) {
       return null;
     }
-    return md.getReferencedResources(m, resourceManager, query, parameter);
+    return md.getReferencedResources( m, resourceManager, query, parameter );
   }
 
-  public Object getQueryHash(final DataFactoryMetaData dataFactoryMetaData,
-                             final DataFactory dataFactory,
-                             final String queryName,
-                             final DataRow parameter)
-  {
-    DataFactory m = getDataFactoryForQuery(dataFactory, queryName);
-    if (m == null)
-    {
+  public Object getQueryHash( final DataFactoryMetaData dataFactoryMetaData,
+                              final DataFactory dataFactory,
+                              final String queryName,
+                              final DataRow parameter ) {
+    DataFactory m = getDataFactoryForQuery( dataFactory, queryName );
+    if ( m == null ) {
       return null;
     }
     DataFactoryMetaData md = m.getMetaData();
-    if (md == null)
-    {
+    if ( md == null ) {
       return null;
     }
-    return md.getQueryHash(m, queryName, parameter);
+    return md.getQueryHash( m, queryName, parameter );
   }
 }

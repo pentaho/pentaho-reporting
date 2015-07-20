@@ -24,15 +24,13 @@ import org.pentaho.reporting.engine.classic.core.filter.templates.ComponentField
  *
  * @author Thomas Morgner.
  */
-public class ComponentFieldTemplateDescription extends AbstractTemplateDescription
-{
+public class ComponentFieldTemplateDescription extends AbstractTemplateDescription {
   /**
    * Creates a new template description.
    *
    * @param name the name.
    */
-  public ComponentFieldTemplateDescription(final String name)
-  {
-    super(name, ComponentFieldTemplate.class, true);
+  public ComponentFieldTemplateDescription( final String name ) {
+    super( name, ComponentFieldTemplate.class, true );
   }
 }

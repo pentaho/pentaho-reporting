@@ -4,8 +4,8 @@
                 bundle-name="org.pentaho.reporting.engine.classic.core.modules.output.table.rtf.StreamRTFReportProcessTaskBundle"
                 expert="false" hidden="true" preferred="false"
                 configuration-prefix="org.pentaho.reporting.engine.classic.core.modules.output.table.rtf.">
-      <alias>rtf</alias>
-      <alias>rtf+stream</alias>
+    <alias>rtf</alias>
+    <alias>rtf+stream</alias>
   </process-task>
 
   <process-task name="table/rtf;page-mode=flow"
@@ -13,7 +13,7 @@
                 bundle-name="org.pentaho.reporting.engine.classic.core.modules.output.table.rtf.FlowRTFReportProcessTaskBundle"
                 expert="false" hidden="true" preferred="false"
                 configuration-prefix="org.pentaho.reporting.engine.classic.core.modules.output.table.rtf.">
-      <alias>rtf+flow</alias>
+    <alias>rtf+flow</alias>
   </process-task>
 
 </meta-data>

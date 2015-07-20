@@ -26,26 +26,21 @@ import org.pentaho.reporting.libraries.base.config.Configuration;
 import org.pentaho.reporting.libraries.repository.ContentLocation;
 import org.pentaho.reporting.libraries.repository.NameGenerator;
 
-public class FlowCSVReportProcessTask extends AbstractMultiStreamReportProcessTask
-{
-  public FlowCSVReportProcessTask()
-  {
+public class FlowCSVReportProcessTask extends AbstractMultiStreamReportProcessTask {
+  public FlowCSVReportProcessTask() {
   }
 
   /**
    * @noinspection ThrowableInstanceNeverThrown
    */
-  public void run()
-  {
-    if (isValid() == false)
-    {
-      setError(new ReportProcessingException("Error: The task is not configured properly."));
+  public void run() {
+    if ( isValid() == false ) {
+      setError( new ReportProcessingException( "Error: The task is not configured properly." ) );
       return;
     }
 
-    setError(null);
-    try
-    {
+    setError( null );
+    try {
       final MasterReport masterReport = getReport();
       final Configuration configuration = masterReport.getConfiguration();
 
@@ -53,35 +48,28 @@ public class FlowCSVReportProcessTask extends AbstractMultiStreamReportProcessTa
       final NameGenerator nameGenerator = getBodyNameGenerator();
 
       final FlowCSVOutputProcessor outputProcessor =
-          new FlowCSVOutputProcessor(configuration);
-      outputProcessor.setContentLocation(contentLocation);
-      outputProcessor.setContentNameGenerator(nameGenerator);
+        new FlowCSVOutputProcessor( configuration );
+      outputProcessor.setContentLocation( contentLocation );
+      outputProcessor.setContentNameGenerator( nameGenerator );
 
       final FlowReportProcessor streamReportProcessor =
-          new FlowReportProcessor(masterReport, outputProcessor);
-      try
-      {
+        new FlowReportProcessor( masterReport, outputProcessor );
+      try {
         final ReportProgressListener[] progressListeners = getReportProgressListeners();
-        for (int i = 0; i < progressListeners.length; i++)
-        {
-          final ReportProgressListener listener = progressListeners[i];
-          streamReportProcessor.addReportProgressListener(listener);
+        for ( int i = 0; i < progressListeners.length; i++ ) {
+          final ReportProgressListener listener = progressListeners[ i ];
+          streamReportProcessor.addReportProgressListener( listener );
         }
         streamReportProcessor.processReport();
-      }
-      finally
-      {
+      } finally {
         streamReportProcessor.close();
       }
-    }
-    catch (Throwable e)
-    {
-      setError(e);
+    } catch ( Throwable e ) {
+      setError( e );
     }
   }
 
-  public String getReportMimeType()
-  {
+  public String getReportMimeType() {
     return "text/csv";
   }
 }

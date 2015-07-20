@@ -17,15 +17,15 @@
 
 package org.pentaho.reporting.engine.classic.core;
 
-import java.awt.print.PageFormat;
-import java.util.LinkedHashMap;
-
 import org.pentaho.reporting.engine.classic.core.designtime.DesignTimeUtil;
 import org.pentaho.reporting.engine.classic.core.designtime.SubReportParameterChange;
 import org.pentaho.reporting.engine.classic.core.filter.types.bands.SubReportType;
 import org.pentaho.reporting.engine.classic.core.function.Expression;
 import org.pentaho.reporting.engine.classic.core.util.InstanceID;
 import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
+
+import java.awt.print.PageFormat;
+import java.util.LinkedHashMap;
 
 /**
  * A subreport element. A subreport can be attached to a root-level band and will be printed afterwards. Subreports have
@@ -41,58 +41,53 @@ import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
  *
  * @author Thomas Morgner
  */
-public class SubReport extends AbstractReportDefinition
-{
+public class SubReport extends AbstractReportDefinition {
   /**
    * A mapping of export parameters.
    */
-  private LinkedHashMap<String,String> exportParameters;
+  private LinkedHashMap<String, String> exportParameters;
   /**
    * A mapping of import parameters.
    */
-  private LinkedHashMap<String,String> inputParameters;
+  private LinkedHashMap<String, String> inputParameters;
 
   private DataFactory dataFactory;
 
   /**
    * Creates a new subreport instance.
    */
-  public SubReport()
-  {
-    setElementType(new SubReportType());
+  public SubReport() {
+    setElementType( new SubReportType() );
 
-    exportParameters = new LinkedHashMap<String,String>();
-    inputParameters = new LinkedHashMap<String,String>();
+    exportParameters = new LinkedHashMap<String, String>();
+    inputParameters = new LinkedHashMap<String, String>();
   }
 
-  public SubReport(final InstanceID id)
-  {
-    super(id);
-    setElementType(new SubReportType());
+  public SubReport( final InstanceID id ) {
+    super( id );
+    setElementType( new SubReportType() );
 
     exportParameters = new LinkedHashMap<String, String>();
     inputParameters = new LinkedHashMap<String, String>();
 
   }
+
   /**
    * Returns the page definition assigned to the report definition. The page definition defines the report area and how
    * the report is subdivided by the child pages.
    *
    * @return null, as subreports have no page-definition at all.
    */
-  public PageDefinition getPageDefinition()
-  {
+  public PageDefinition getPageDefinition() {
     ReportElement parent = getParentSection();
-    while (parent != null)
-    {
-      if (parent instanceof MasterReport)
-      {
+    while ( parent != null ) {
+      if ( parent instanceof MasterReport ) {
         final MasterReport masterReport = (MasterReport) parent;
         return masterReport.getPageDefinition();
       }
       parent = parent.getParentSection();
     }
-    return new SimplePageDefinition(new PageFormat());
+    return new SimplePageDefinition( new PageFormat() );
   }
 
   /**
@@ -100,21 +95,18 @@ public class SubReport extends AbstractReportDefinition
    *
    * @return the clone.
    */
-  public SubReport derive(final boolean preserveElementInstanceIds)
-  {
-    final SubReport o = (SubReport) super.derive(preserveElementInstanceIds);
+  public SubReport derive( final boolean preserveElementInstanceIds ) {
+    final SubReport o = (SubReport) super.derive( preserveElementInstanceIds );
     o.exportParameters = (LinkedHashMap<String, String>) exportParameters.clone();
     o.inputParameters = (LinkedHashMap<String, String>) inputParameters.clone();
-    if (dataFactory != null)
-    {
+    if ( dataFactory != null ) {
       o.dataFactory = dataFactory.derive();
     }
     return o;
   }
 
-  public void reconnectParent (final Section parentSection)
-  {
-    parentSection.registerAsChild(this);
+  public void reconnectParent( final Section parentSection ) {
+    parentSection.registerAsChild( this );
   }
 
   /**
@@ -122,13 +114,11 @@ public class SubReport extends AbstractReportDefinition
    *
    * @return the clone.
    */
-  public SubReport clone()
-  {
+  public SubReport clone() {
     final SubReport o = (SubReport) super.clone();
     o.exportParameters = (LinkedHashMap<String, String>) exportParameters.clone();
     o.inputParameters = (LinkedHashMap<String, String>) inputParameters.clone();
-    if (dataFactory != null)
-    {
+    if ( dataFactory != null ) {
       o.dataFactory = dataFactory.derive();
     }
     return o;
@@ -141,21 +131,18 @@ public class SubReport extends AbstractReportDefinition
    * @param outerName    the name the parameter will get in the master report.
    * @param sourceColumn the source-column in the sub-report.
    */
-  public void addExportParameter(final String outerName, final String sourceColumn)
-  {
-    if (outerName == null)
-    {
+  public void addExportParameter( final String outerName, final String sourceColumn ) {
+    if ( outerName == null ) {
       throw new NullPointerException();
     }
-    if (sourceColumn == null)
-    {
+    if ( sourceColumn == null ) {
       throw new NullPointerException();
     }
 
     final ParameterMapping[] oldMappings = getExportMappings();
-    exportParameters.put(outerName, sourceColumn);
-    notifyNodePropertiesChanged(new SubReportParameterChange
-        (SubReportParameterChange.Type.EXPORT, oldMappings, getExportMappings()));
+    exportParameters.put( outerName, sourceColumn );
+    notifyNodePropertiesChanged( new SubReportParameterChange
+      ( SubReportParameterChange.Type.EXPORT, oldMappings, getExportMappings() ) );
   }
 
   /**
@@ -163,16 +150,14 @@ public class SubReport extends AbstractReportDefinition
    *
    * @param outerName the name of the parameter as it is known in the master report.
    */
-  public void removeExportParameter(final String outerName)
-  {
-    if (outerName == null)
-    {
+  public void removeExportParameter( final String outerName ) {
+    if ( outerName == null ) {
       throw new NullPointerException();
     }
     final ParameterMapping[] oldMappings = getExportMappings();
-    exportParameters.remove(outerName);
-    notifyNodePropertiesChanged(new SubReportParameterChange
-        (SubReportParameterChange.Type.EXPORT, oldMappings, getExportMappings()));
+    exportParameters.remove( outerName );
+    notifyNodePropertiesChanged( new SubReportParameterChange
+      ( SubReportParameterChange.Type.EXPORT, oldMappings, getExportMappings() ) );
   }
 
   /**
@@ -181,39 +166,34 @@ public class SubReport extends AbstractReportDefinition
    *
    * @return the parameter mappings array.
    */
-  public ParameterMapping[] getExportMappings()
-  {
+  public ParameterMapping[] getExportMappings() {
     final int length = exportParameters.size();
-    final String[] keys = exportParameters.keySet().toArray(new String[length]);
-    final ParameterMapping[] mapping = new ParameterMapping[length];
+    final String[] keys = exportParameters.keySet().toArray( new String[ length ] );
+    final ParameterMapping[] mapping = new ParameterMapping[ length ];
 
-    for (int i = 0; i < length; i++)
-    {
-      final String name = keys[i];
-      final String alias = exportParameters.get(name);
-      mapping[i] = new ParameterMapping(name, alias);
+    for ( int i = 0; i < length; i++ ) {
+      final String name = keys[ i ];
+      final String alias = exportParameters.get( name );
+      mapping[ i ] = new ParameterMapping( name, alias );
     }
     return mapping;
   }
 
-  public void setExportMappings(final ParameterMapping[] mappings)
-  {
-    if (mappings == null)
-    {
+  public void setExportMappings( final ParameterMapping[] mappings ) {
+    if ( mappings == null ) {
       throw new NullPointerException();
     }
 
     final ParameterMapping[] oldMappings = getExportMappings();
 
     exportParameters.clear();
-    for (int i = 0; i < mappings.length; i++)
-    {
-      final ParameterMapping mapping = mappings[i];
-      exportParameters.put(mapping.getName(), mapping.getAlias());
+    for ( int i = 0; i < mappings.length; i++ ) {
+      final ParameterMapping mapping = mappings[ i ];
+      exportParameters.put( mapping.getName(), mapping.getAlias() );
     }
 
-    notifyNodePropertiesChanged(new SubReportParameterChange
-        (SubReportParameterChange.Type.EXPORT, oldMappings, getExportMappings()));
+    notifyNodePropertiesChanged( new SubReportParameterChange
+      ( SubReportParameterChange.Type.EXPORT, oldMappings, getExportMappings() ) );
   }
 
   /**
@@ -226,21 +206,18 @@ public class SubReport extends AbstractReportDefinition
    * @param outerName    the name of the parent report's column that provides the data.
    * @param sourceColumn the name under which the parameter will be available in the subreport.
    */
-  public void addInputParameter(final String outerName, final String sourceColumn)
-  {
-    if (outerName == null)
-    {
+  public void addInputParameter( final String outerName, final String sourceColumn ) {
+    if ( outerName == null ) {
       throw new NullPointerException();
     }
-    if (sourceColumn == null)
-    {
+    if ( sourceColumn == null ) {
       throw new NullPointerException();
     }
     final ParameterMapping[] oldMappings = getInputMappings();
 
-    inputParameters.put(sourceColumn, outerName);
-    notifyNodePropertiesChanged(new SubReportParameterChange
-        (SubReportParameterChange.Type.INPUT, oldMappings, getInputMappings()));
+    inputParameters.put( sourceColumn, outerName );
+    notifyNodePropertiesChanged( new SubReportParameterChange
+      ( SubReportParameterChange.Type.INPUT, oldMappings, getInputMappings() ) );
   }
 
   /**
@@ -248,37 +225,33 @@ public class SubReport extends AbstractReportDefinition
    *
    * @param sourceColumn the name of the column of the subreport report that acts as source for the input parameter.
    */
-  public void removeInputParameter(final String sourceColumn)
-  {
-    if (sourceColumn == null)
-    {
+  public void removeInputParameter( final String sourceColumn ) {
+    if ( sourceColumn == null ) {
       throw new NullPointerException();
     }
 
     final ParameterMapping[] oldMappings = getInputMappings();
 
-    inputParameters.remove(sourceColumn);
-    notifyNodePropertiesChanged(new SubReportParameterChange
-        (SubReportParameterChange.Type.INPUT, oldMappings, getInputMappings()));
+    inputParameters.remove( sourceColumn );
+    notifyNodePropertiesChanged( new SubReportParameterChange
+      ( SubReportParameterChange.Type.INPUT, oldMappings, getInputMappings() ) );
   }
 
-  public void clearInputParameters()
-  {
+  public void clearInputParameters() {
     final ParameterMapping[] oldMappings = getInputMappings();
 
     inputParameters.clear();
-    notifyNodePropertiesChanged(new SubReportParameterChange
-        (SubReportParameterChange.Type.INPUT, oldMappings, getInputMappings()));
+    notifyNodePropertiesChanged( new SubReportParameterChange
+      ( SubReportParameterChange.Type.INPUT, oldMappings, getInputMappings() ) );
   }
 
-  public void clearExportParameters()
-  {
+  public void clearExportParameters() {
     final ParameterMapping[] oldMappings = getExportMappings();
 
     exportParameters.clear();
     notifyNodePropertiesChanged();
-    notifyNodePropertiesChanged(new SubReportParameterChange
-        (SubReportParameterChange.Type.EXPORT, oldMappings, getExportMappings()));
+    notifyNodePropertiesChanged( new SubReportParameterChange
+      ( SubReportParameterChange.Type.EXPORT, oldMappings, getExportMappings() ) );
   }
 
   /**
@@ -286,39 +259,34 @@ public class SubReport extends AbstractReportDefinition
    *
    * @return the input mappings, never null.
    */
-  public ParameterMapping[] getInputMappings()
-  {
+  public ParameterMapping[] getInputMappings() {
     final int length = inputParameters.size();
-    final String[] keys = inputParameters.keySet().toArray(new String[length]);
-    final ParameterMapping[] mapping = new ParameterMapping[length];
+    final String[] keys = inputParameters.keySet().toArray( new String[ length ] );
+    final ParameterMapping[] mapping = new ParameterMapping[ length ];
 
-    for (int i = 0; i < length; i++)
-    {
-      final String alias = keys[i];
-      final String name = inputParameters.get(alias);
-      mapping[i] = new ParameterMapping(name, alias);
+    for ( int i = 0; i < length; i++ ) {
+      final String alias = keys[ i ];
+      final String name = inputParameters.get( alias );
+      mapping[ i ] = new ParameterMapping( name, alias );
     }
     return mapping;
   }
 
-  public void setInputMappings(final ParameterMapping[] mappings)
-  {
-    if (mappings == null)
-    {
+  public void setInputMappings( final ParameterMapping[] mappings ) {
+    if ( mappings == null ) {
       throw new NullPointerException();
     }
 
     final ParameterMapping[] oldMappings = getInputMappings();
 
     inputParameters.clear();
-    for (int i = 0; i < mappings.length; i++)
-    {
-      final ParameterMapping mapping = mappings[i];
-      inputParameters.put(mapping.getAlias(), mapping.getName());
+    for ( int i = 0; i < mappings.length; i++ ) {
+      final ParameterMapping mapping = mappings[ i ];
+      inputParameters.put( mapping.getAlias(), mapping.getName() );
     }
 
-    notifyNodePropertiesChanged(new SubReportParameterChange
-        (SubReportParameterChange.Type.INPUT, oldMappings, getInputMappings()));
+    notifyNodePropertiesChanged( new SubReportParameterChange
+      ( SubReportParameterChange.Type.INPUT, oldMappings, getInputMappings() ) );
   }
 
   /**
@@ -326,9 +294,8 @@ public class SubReport extends AbstractReportDefinition
    *
    * @return true, if there is a global import defined, false otherwise.
    */
-  public boolean isGlobalImport()
-  {
-    return "*".equals(inputParameters.get("*"));
+  public boolean isGlobalImport() {
+    return "*".equals( inputParameters.get( "*" ) );
   }
 
   /**
@@ -336,13 +303,11 @@ public class SubReport extends AbstractReportDefinition
    *
    * @return true, if there is a global export defined, false otherwise.
    */
-  public boolean isGlobalExport()
-  {
-    return "*".equals(exportParameters.get("*"));
+  public boolean isGlobalExport() {
+    return "*".equals( exportParameters.get( "*" ) );
   }
 
-  public DataFactory getDataFactory()
-  {
+  public DataFactory getDataFactory() {
     return dataFactory;
   }
 
@@ -352,46 +317,38 @@ public class SubReport extends AbstractReportDefinition
    *
    * @param dataFactory
    */
-  public void setDataFactory(final DataFactory dataFactory)
-  {
+  public void setDataFactory( final DataFactory dataFactory ) {
     final DataFactory old = this.dataFactory;
     this.dataFactory = dataFactory;
-    if (old != null)
-    {
-      notifyNodeChildRemoved(old);
+    if ( old != null ) {
+      notifyNodeChildRemoved( old );
     }
-    if (dataFactory != null)
-    {
-      notifyNodeChildAdded(dataFactory);
+    if ( dataFactory != null ) {
+      notifyNodeChildAdded( dataFactory );
     }
   }
 
-  public Expression getActivationExpression()
-  {
-    return getAttributeExpression(AttributeNames.Core.NAMESPACE, AttributeNames.Core.SUBREPORT_ACTIVE);
+  public Expression getActivationExpression() {
+    return getAttributeExpression( AttributeNames.Core.NAMESPACE, AttributeNames.Core.SUBREPORT_ACTIVE );
   }
 
-  public void setActivationExpression(final Expression activationExpression)
-  {
-    setAttributeExpression(AttributeNames.Core.NAMESPACE, AttributeNames.Core.SUBREPORT_ACTIVE, activationExpression);
+  public void setActivationExpression( final Expression activationExpression ) {
+    setAttributeExpression( AttributeNames.Core.NAMESPACE, AttributeNames.Core.SUBREPORT_ACTIVE, activationExpression );
   }
 
-  protected void updateChangedFlagInternal(final ReportElement element, final int type, final Object parameter)
-  {
+  protected void updateChangedFlagInternal( final ReportElement element, final int type, final Object parameter ) {
     // also notify all local listeners on all changes.
-    super.fireModelLayoutChanged(element, type, parameter);
-    super.updateChangedFlagInternal(element, type, parameter);
+    super.fireModelLayoutChanged( element, type, parameter );
+    super.updateChangedFlagInternal( element, type, parameter );
   }
 
   @Deprecated
-  public ResourceManager getResourceManager()
-  {
-    return DesignTimeUtil.getResourceManager(this);
+  public ResourceManager getResourceManager() {
+    return DesignTimeUtil.getResourceManager( this );
   }
 
   @Deprecated
-  public ResourceBundleFactory getResourceBundleFactory()
-  {
+  public ResourceBundleFactory getResourceBundleFactory() {
     return super.getResourceBundleFactory();
   }
 }

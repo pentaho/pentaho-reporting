@@ -17,21 +17,19 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.parser.base.common;
 
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-
 import org.pentaho.reporting.engine.classic.core.modules.parser.base.PropertyAttributes;
 import org.pentaho.reporting.libraries.xmlns.parser.ParseException;
 import org.pentaho.reporting.libraries.xmlns.parser.XmlReadHandler;
 import org.xml.sax.SAXException;
 
-public class ParserConfigurationReadHandler extends AbstractPropertyXmlReadHandler
-{
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+
+public class ParserConfigurationReadHandler extends AbstractPropertyXmlReadHandler {
   private HashMap fieldHandlers;
 
-  public ParserConfigurationReadHandler()
-  {
+  public ParserConfigurationReadHandler() {
     this.fieldHandlers = new HashMap();
   }
 
@@ -43,26 +41,22 @@ public class ParserConfigurationReadHandler extends AbstractPropertyXmlReadHandl
    * @return the handler or null, if the tagname is invalid.
    * @throws org.xml.sax.SAXException if there is a parsing error.
    */
-  protected XmlReadHandler getHandlerForChild(final String uri,
-                                              final String tagName,
-                                              final PropertyAttributes atts)
-      throws SAXException
-  {
-    if (getUri().equals(uri) == false)
-    {
+  protected XmlReadHandler getHandlerForChild( final String uri,
+                                               final String tagName,
+                                               final PropertyAttributes atts )
+    throws SAXException {
+    if ( getUri().equals( uri ) == false ) {
       return null;
     }
 
-    if ("property".equals(tagName))
-    {
-      final String name = atts.getValue(getUri(), "name");
-      if (name == null)
-      {
-        throw new ParseException("Required attribute 'name' is missing.", getLocator());
+    if ( "property".equals( tagName ) ) {
+      final String name = atts.getValue( getUri(), "name" );
+      if ( name == null ) {
+        throw new ParseException( "Required attribute 'name' is missing.", getLocator() );
       }
 
       final PropertyReferenceReadHandler readHandler = new PropertyReferenceReadHandler();
-      fieldHandlers.put(name, readHandler);
+      fieldHandlers.put( name, readHandler );
       return readHandler;
     }
     return null;
@@ -74,20 +68,17 @@ public class ParserConfigurationReadHandler extends AbstractPropertyXmlReadHandl
    * @throws org.xml.sax.SAXException if there is a parsing error.
    */
   protected void doneParsing()
-      throws SAXException
-  {
+    throws SAXException {
     final Iterator it = fieldHandlers.entrySet().iterator();
-    while (it.hasNext())
-    {
+    while ( it.hasNext() ) {
       final Map.Entry entry = (Map.Entry) it.next();
       final String key = (String) entry.getKey();
-      if (key.startsWith("::"))
-      {
-        throw new ParseException("The key value '" + key +
-            "' is invalid. Internal keys (starting with '::') cannot be redefined.", getLocator());
+      if ( key.startsWith( "::" ) ) {
+        throw new ParseException( "The key value '" + key +
+          "' is invalid. Internal keys (starting with '::') cannot be redefined.", getLocator() );
       }
       final PropertyReferenceReadHandler readHandler = (PropertyReferenceReadHandler) entry.getValue();
-      getRootHandler().setHelperObject(key, readHandler.getObject());
+      getRootHandler().setHelperObject( key, readHandler.getObject() );
     }
   }
 
@@ -96,8 +87,7 @@ public class ParserConfigurationReadHandler extends AbstractPropertyXmlReadHandl
    *
    * @return the object.
    */
-  public Object getObject()
-  {
+  public Object getObject() {
     return null;
   }
 }

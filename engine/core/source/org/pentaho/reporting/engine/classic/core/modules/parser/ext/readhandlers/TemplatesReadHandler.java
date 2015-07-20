@@ -17,8 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.parser.ext.readhandlers;
 
-import java.util.ArrayList;
-
 import org.pentaho.reporting.engine.classic.core.modules.parser.base.PropertyAttributes;
 import org.pentaho.reporting.engine.classic.core.modules.parser.base.common.AbstractPropertyXmlReadHandler;
 import org.pentaho.reporting.engine.classic.core.modules.parser.ext.factory.templates.TemplateCollection;
@@ -26,12 +24,12 @@ import org.pentaho.reporting.engine.classic.core.modules.parser.ext.factory.temp
 import org.pentaho.reporting.libraries.xmlns.parser.XmlReadHandler;
 import org.xml.sax.SAXException;
 
-public class TemplatesReadHandler extends AbstractPropertyXmlReadHandler
-{
+import java.util.ArrayList;
+
+public class TemplatesReadHandler extends AbstractPropertyXmlReadHandler {
   private ArrayList templateList;
 
-  public TemplatesReadHandler()
-  {
+  public TemplatesReadHandler() {
     templateList = new ArrayList();
   }
 
@@ -43,20 +41,17 @@ public class TemplatesReadHandler extends AbstractPropertyXmlReadHandler
    * @return the handler or null, if the tagname is invalid.
    * @throws org.xml.sax.SAXException if there is a parsing error.
    */
-  protected XmlReadHandler getHandlerForChild(final String uri,
-                                              final String tagName,
-                                              final PropertyAttributes atts)
-      throws SAXException
-  {
-    if (isSameNamespace(uri) == false)
-    {
+  protected XmlReadHandler getHandlerForChild( final String uri,
+                                               final String tagName,
+                                               final PropertyAttributes atts )
+    throws SAXException {
+    if ( isSameNamespace( uri ) == false ) {
       return null;
     }
 
-    if ("template".equals(tagName))
-    {
-      final TemplateReadHandler readHandler = new TemplateReadHandler(true);
-      templateList.add(readHandler);
+    if ( "template".equals( tagName ) ) {
+      final TemplateReadHandler readHandler = new TemplateReadHandler( true );
+      templateList.add( readHandler );
       return readHandler;
     }
     return null;
@@ -68,17 +63,15 @@ public class TemplatesReadHandler extends AbstractPropertyXmlReadHandler
    * @throws org.xml.sax.SAXException if there is a parsing error.
    */
   protected void doneParsing()
-      throws SAXException
-  {
+    throws SAXException {
     final TemplateCollection templateCollection = (TemplateCollection)
-        getRootHandler().getHelperObject
-            (ReportDefinitionReadHandler.TEMPLATE_FACTORY_KEY);
-    for (int i = 0; i < templateList.size(); i++)
-    {
+      getRootHandler().getHelperObject
+        ( ReportDefinitionReadHandler.TEMPLATE_FACTORY_KEY );
+    for ( int i = 0; i < templateList.size(); i++ ) {
       final TemplateReadHandler readHandler =
-          (TemplateReadHandler) templateList.get(i);
+        (TemplateReadHandler) templateList.get( i );
       templateCollection.addTemplate
-          ((TemplateDescription) readHandler.getObjectDescription());
+        ( (TemplateDescription) readHandler.getObjectDescription() );
     }
   }
 
@@ -87,8 +80,7 @@ public class TemplatesReadHandler extends AbstractPropertyXmlReadHandler
    *
    * @return the object.
    */
-  public Object getObject()
-  {
+  public Object getObject() {
     return null;
   }
 }

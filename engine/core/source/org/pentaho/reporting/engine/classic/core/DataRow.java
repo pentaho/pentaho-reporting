@@ -29,8 +29,7 @@ package org.pentaho.reporting.engine.classic.core;
  * @see org.pentaho.reporting.engine.classic.core.function.Function
  * @see javax.swing.table.TableModel
  */
-public interface DataRow
-{
+public interface DataRow {
   /**
    * Returns the value of the function, expression or column using its specific name. The given name is translated into
    * a valid column number and the the column is queried. For functions and expressions, the <code>getValue()</code>
@@ -40,12 +39,12 @@ public interface DataRow
    * @param col the item index.
    * @return the value.
    */
-  public Object get(String col);
+  public Object get( String col );
 
   /**
-   * Returns the known column names, this data-row understands. The column names may change over time but do not
-   * change while a event is processed by a function. The array returned is a copy of the internal data-storage
-   * and can be safely modified. 
+   * Returns the known column names, this data-row understands. The column names may change over time but do not change
+   * while a event is processed by a function. The array returned is a copy of the internal data-storage and can be
+   * safely modified.
    *
    * @return the column names as array.
    */
@@ -57,5 +56,5 @@ public interface DataRow
    * @param name the name of the column.
    * @return true, if the value has changed, false otherwise.
    */
-  public boolean isChanged(String name);
+  public boolean isChanged( String name );
 }

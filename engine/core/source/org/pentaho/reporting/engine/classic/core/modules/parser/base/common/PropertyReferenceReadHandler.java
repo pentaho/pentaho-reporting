@@ -29,9 +29,8 @@ import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
 import org.pentaho.reporting.libraries.xmlns.parser.ParseException;
 import org.xml.sax.SAXException;
 
-public class PropertyReferenceReadHandler extends PropertyStringReadHandler
-{
-  private static final Log logger = LogFactory.getLog(PropertyReferenceReadHandler.class);
+public class PropertyReferenceReadHandler extends PropertyStringReadHandler {
+  private static final Log logger = LogFactory.getLog( PropertyReferenceReadHandler.class );
 
   private static final String CLASS_ATT = "class";
   private static final String NAME_ATT = "name";
@@ -40,8 +39,7 @@ public class PropertyReferenceReadHandler extends PropertyStringReadHandler
   private Object value;
   private ValueConverter valueType;
 
-  public PropertyReferenceReadHandler()
-  {
+  public PropertyReferenceReadHandler() {
   }
 
   /**
@@ -50,38 +48,29 @@ public class PropertyReferenceReadHandler extends PropertyStringReadHandler
    * @param attrs the attributes.
    * @throws org.xml.sax.SAXException if there is a parsing error.
    */
-  public void startParsing(final PropertyAttributes attrs)
-      throws SAXException
-  {
-    super.startParsing(attrs);
-    propertyName = attrs.getValue(getUri(), PropertyReferenceReadHandler.NAME_ATT);
-    if (propertyName == null)
-    {
-      throw new ParseException("Required attribute 'name' is null.", getLocator());
+  public void startParsing( final PropertyAttributes attrs )
+    throws SAXException {
+    super.startParsing( attrs );
+    propertyName = attrs.getValue( getUri(), PropertyReferenceReadHandler.NAME_ATT );
+    if ( propertyName == null ) {
+      throw new ParseException( "Required attribute 'name' is null.", getLocator() );
     }
 
     final String className = CompatibilityMapperUtil.mapClassName
-        (attrs.getValue(getUri(), PropertyReferenceReadHandler.CLASS_ATT));
-    if (className == null)
-    {
+      ( attrs.getValue( getUri(), PropertyReferenceReadHandler.CLASS_ATT ) );
+    if ( className == null ) {
       valueType = new StringValueConverter();
-    }
-    else
-    {
-      try
-      {
-        final ClassLoader classLoader = ObjectUtilities.getClassLoader(getClass());
-        final Class c = Class.forName(className);
-        valueType = ConverterRegistry.getInstance().getValueConverter(c);
-        if (valueType == null)
-        {
-          PropertyReferenceReadHandler.logger.warn("Unable to find a suitable value-converter for " + c);
+    } else {
+      try {
+        final ClassLoader classLoader = ObjectUtilities.getClassLoader( getClass() );
+        final Class c = Class.forName( className );
+        valueType = ConverterRegistry.getInstance().getValueConverter( c );
+        if ( valueType == null ) {
+          PropertyReferenceReadHandler.logger.warn( "Unable to find a suitable value-converter for " + c );
           valueType = new StringValueConverter();
         }
-      }
-      catch (Exception e)
-      {
-        throw new SAXException("Attribute 'class' is invalid.");
+      } catch ( Exception e ) {
+        throw new SAXException( "Attribute 'class' is invalid." );
       }
     }
   }
@@ -92,25 +81,18 @@ public class PropertyReferenceReadHandler extends PropertyStringReadHandler
    * @throws org.xml.sax.SAXException if there is a parsing error.
    */
   public void doneParsing()
-      throws SAXException
-  {
+    throws SAXException {
     super.doneParsing();
     final String result = getResult();
-    final boolean strictPropertyErrorHandling = (result.trim().length() != 0);
+    final boolean strictPropertyErrorHandling = ( result.trim().length() != 0 );
 
-    try
-    {
-      value = valueType.toPropertyValue(result);
-    }
-    catch (BeanException e)
-    {
-      if (strictPropertyErrorHandling)
-      {
-        throw new ParseException("Failed to parse property value for property " + propertyName, e);
-      }
-      else
-      {
-        PropertyReferenceReadHandler.logger.warn("Failed to parse property value for property: " + propertyName, e);
+    try {
+      value = valueType.toPropertyValue( result );
+    } catch ( BeanException e ) {
+      if ( strictPropertyErrorHandling ) {
+        throw new ParseException( "Failed to parse property value for property " + propertyName, e );
+      } else {
+        PropertyReferenceReadHandler.logger.warn( "Failed to parse property value for property: " + propertyName, e );
       }
     }
   }
@@ -120,13 +102,11 @@ public class PropertyReferenceReadHandler extends PropertyStringReadHandler
    *
    * @return the object.
    */
-  public Object getObject()
-  {
+  public Object getObject() {
     return value;
   }
 
-  public String getPropertyName()
-  {
+  public String getPropertyName() {
     return propertyName;
   }
 }

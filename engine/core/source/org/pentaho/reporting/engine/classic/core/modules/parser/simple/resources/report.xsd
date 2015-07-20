@@ -425,7 +425,8 @@
     <xsd:annotation>
       <xsd:documentation>
         A defined function has a valid implementing class that implement
-        the org.pentaho.reporting.engine.classic.core.function.Function interface. Functions have access to the datarow and
+        the org.pentaho.reporting.engine.classic.core.function.Function interface. Functions have access to the datarow
+        and
         can access other functions or expressions or the datasource. Functions are statefull and maintain
         their state during the report generation. For stateless user defined computations consider using
         an expression instead of functions, as expression are cheaper to compute and maintain when using

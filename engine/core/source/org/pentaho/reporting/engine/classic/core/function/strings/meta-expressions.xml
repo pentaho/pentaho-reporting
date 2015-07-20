@@ -36,7 +36,7 @@
     <property name="nullValue" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
     <property name="text" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
   </expression>
-  
+
   <expression class="org.pentaho.reporting.engine.classic.core.function.strings.ResourceMesssageFormatExpression"
               bundle-name="org.pentaho.reporting.engine.classic.core.function.strings.ResourceMesssageFormatExpressionBundle"
               result="java.lang.String" expert="false" hidden="false" preferred="false">

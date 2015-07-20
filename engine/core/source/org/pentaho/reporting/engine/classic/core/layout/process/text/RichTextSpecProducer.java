@@ -19,16 +19,6 @@
 
 package org.pentaho.reporting.engine.classic.core.layout.process.text;
 
-import java.awt.Image;
-import java.awt.font.GraphicAttribute;
-import java.awt.font.ImageGraphicAttribute;
-import java.awt.font.TextAttribute;
-import java.text.AttributedCharacterIterator.Attribute;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import org.pentaho.reporting.engine.classic.core.ReportAttributeMap;
 import org.pentaho.reporting.engine.classic.core.layout.model.LayoutNodeTypes;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderBox;
@@ -45,10 +35,18 @@ import org.pentaho.reporting.engine.classic.core.util.InstanceID;
 import org.pentaho.reporting.libraries.base.util.ArgumentNullException;
 import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 
-public class RichTextSpecProducer
-{
-  private static class AttributedStringChunk
-  {
+import java.awt.*;
+import java.awt.font.GraphicAttribute;
+import java.awt.font.ImageGraphicAttribute;
+import java.awt.font.TextAttribute;
+import java.text.AttributedCharacterIterator.Attribute;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+public class RichTextSpecProducer {
+  private static class AttributedStringChunk {
     private String text;
     private Map<Attribute, Object> attributes;
     private ReportAttributeMap<Object> originalAttributes;
@@ -56,25 +54,21 @@ public class RichTextSpecProducer
     private InstanceID instanceID;
     private RenderNode node;
 
-    private AttributedStringChunk(final String text,
-                                  final Map<Attribute, Object> attributes,
-                                  final ReportAttributeMap<Object> originalAttributes,
-                                  final StyleSheet styleSheet, final InstanceID instanceID,
-                                  final RenderNode node)
-    {
-      ArgumentNullException.validate("text", text);
-      ArgumentNullException.validate("attributes", attributes);
-      ArgumentNullException.validate("node", node);
-      ArgumentNullException.validate("originalAttributes", originalAttributes);
-      ArgumentNullException.validate("styleSheet", styleSheet);
-      ArgumentNullException.validate("instanceID", instanceID);
+    private AttributedStringChunk( final String text,
+                                   final Map<Attribute, Object> attributes,
+                                   final ReportAttributeMap<Object> originalAttributes,
+                                   final StyleSheet styleSheet, final InstanceID instanceID,
+                                   final RenderNode node ) {
+      ArgumentNullException.validate( "text", text );
+      ArgumentNullException.validate( "attributes", attributes );
+      ArgumentNullException.validate( "node", node );
+      ArgumentNullException.validate( "originalAttributes", originalAttributes );
+      ArgumentNullException.validate( "styleSheet", styleSheet );
+      ArgumentNullException.validate( "instanceID", instanceID );
 
-      if (text.length() == 0)
-      {
+      if ( text.length() == 0 ) {
         this.text = "\u0200";
-      }
-      else
-      {
+      } else {
         this.text = text;
       }
       this.instanceID = instanceID;
@@ -84,215 +78,178 @@ public class RichTextSpecProducer
       this.styleSheet = styleSheet;
     }
 
-    public String getText()
-    {
+    public String getText() {
       return text;
     }
 
-    public Map<Attribute, Object> getAttributes()
-    {
+    public Map<Attribute, Object> getAttributes() {
       return attributes;
     }
 
-    public ReportAttributeMap<Object> getOriginalAttributes()
-    {
+    public ReportAttributeMap<Object> getOriginalAttributes() {
       return originalAttributes;
     }
 
-    public StyleSheet getStyleSheet()
-    {
+    public StyleSheet getStyleSheet() {
       return styleSheet;
     }
 
-    public InstanceID getInstanceID()
-    {
+    public InstanceID getInstanceID() {
       return instanceID;
     }
 
-    public RenderNode getNode()
-    {
+    public RenderNode getNode() {
       return node;
     }
   }
 
-  public static RichTextSpec compute(final RenderBox lineBoxContainer,
-                                     final OutputProcessorMetaData metaData,
-                                     final ResourceManager resourceManager)
-  {
-    return new RichTextSpecProducer(metaData, resourceManager).computeText(lineBoxContainer);
+  public static RichTextSpec compute( final RenderBox lineBoxContainer,
+                                      final OutputProcessorMetaData metaData,
+                                      final ResourceManager resourceManager ) {
+    return new RichTextSpecProducer( metaData, resourceManager ).computeText( lineBoxContainer );
   }
 
   private RichTextImageProducer imageProducer;
   private OutputProcessorMetaData metaData;
 
-  public RichTextSpecProducer(final OutputProcessorMetaData metaData,
-                              final ResourceManager resourceManager)
-  {
-    ArgumentNullException.validate("metaData", metaData);
-    ArgumentNullException.validate("resourceManager", resourceManager);
+  public RichTextSpecProducer( final OutputProcessorMetaData metaData,
+                               final ResourceManager resourceManager ) {
+    ArgumentNullException.validate( "metaData", metaData );
+    ArgumentNullException.validate( "resourceManager", resourceManager );
 
     this.metaData = metaData;
-    imageProducer = new RichTextImageProducer(metaData, resourceManager);
+    imageProducer = new RichTextImageProducer( metaData, resourceManager );
   }
 
-  private RichTextSpec computeText(final RenderBox lineBoxContainer)
-  {
+  private RichTextSpec computeText( final RenderBox lineBoxContainer ) {
     List<AttributedStringChunk> attr = new ArrayList<AttributedStringChunk>();
-    computeText(lineBoxContainer, attr);
-    if (attr.isEmpty())
-    {
-      attr.add(new AttributedStringChunk("", computeStyle(lineBoxContainer.getStyleSheet()),
-          lineBoxContainer.getAttributes(), lineBoxContainer.getStyleSheet(), new InstanceID(), lineBoxContainer));
+    computeText( lineBoxContainer, attr );
+    if ( attr.isEmpty() ) {
+      attr.add( new AttributedStringChunk( "", computeStyle( lineBoxContainer.getStyleSheet() ),
+        lineBoxContainer.getAttributes(), lineBoxContainer.getStyleSheet(), new InstanceID(), lineBoxContainer ) );
     }
 
-    attr = processWhitespaceRules(lineBoxContainer, attr);
+    attr = processWhitespaceRules( lineBoxContainer, attr );
 
     StringBuilder text = new StringBuilder();
-    for (final AttributedStringChunk chunk : attr)
-    {
-      text.append(chunk.getText());
+    for ( final AttributedStringChunk chunk : attr ) {
+      text.append( chunk.getText() );
     }
 
     TextDirection direction = (TextDirection)
-        lineBoxContainer.getStyleSheet().getStyleProperty(TextStyleKeys.DIRECTION, TextDirection.LTR);
-    return new RichTextSpec(text.toString(), direction, convertNodes(attr));
+      lineBoxContainer.getStyleSheet().getStyleProperty( TextStyleKeys.DIRECTION, TextDirection.LTR );
+    return new RichTextSpec( text.toString(), direction, convertNodes( attr ) );
   }
 
-  public RichTextSpec computeText(final RenderableComplexText textNode,
-                                  final String textChunk)
-  {
+  public RichTextSpec computeText( final RenderableComplexText textNode,
+                                   final String textChunk ) {
     List<AttributedStringChunk> attr = new ArrayList<AttributedStringChunk>();
-    attr.add(new AttributedStringChunk(textChunk,
-        computeStyle(textNode.getStyleSheet()), textNode.getAttributes(),
-        textNode.getStyleSheet(), textNode.getInstanceId(), textNode));
+    attr.add( new AttributedStringChunk( textChunk,
+      computeStyle( textNode.getStyleSheet() ), textNode.getAttributes(),
+      textNode.getStyleSheet(), textNode.getInstanceId(), textNode ) );
 
     StringBuilder text = new StringBuilder();
-    for (final AttributedStringChunk chunk : attr)
-    {
-      text.append(chunk.getText());
+    for ( final AttributedStringChunk chunk : attr ) {
+      text.append( chunk.getText() );
     }
 
     TextDirection direction = (TextDirection)
-        textNode.getStyleSheet().getStyleProperty(TextStyleKeys.DIRECTION, TextDirection.LTR);
-    return new RichTextSpec(text.toString(), direction, convertNodes(attr));
+      textNode.getStyleSheet().getStyleProperty( TextStyleKeys.DIRECTION, TextDirection.LTR );
+    return new RichTextSpec( text.toString(), direction, convertNodes( attr ) );
   }
 
-  private List<RichTextSpec.StyledChunk> convertNodes(final List<AttributedStringChunk> chunks)
-  {
-    ArrayList<RichTextSpec.StyledChunk> result = new ArrayList<RichTextSpec.StyledChunk>(chunks.size());
+  private List<RichTextSpec.StyledChunk> convertNodes( final List<AttributedStringChunk> chunks ) {
+    ArrayList<RichTextSpec.StyledChunk> result = new ArrayList<RichTextSpec.StyledChunk>( chunks.size() );
     int startPosition = 0;
-    for (final AttributedStringChunk chunk : chunks)
-    {
+    for ( final AttributedStringChunk chunk : chunks ) {
       int length = chunk.getText().length();
       int endIndex = startPosition + length;
-      result.add(new RichTextSpec.StyledChunk(startPosition, endIndex, chunk.getNode(), chunk.getAttributes(),
-          chunk.getOriginalAttributes(), chunk.getStyleSheet(), chunk.getInstanceID(), chunk.getText()));
+      result.add( new RichTextSpec.StyledChunk( startPosition, endIndex, chunk.getNode(), chunk.getAttributes(),
+        chunk.getOriginalAttributes(), chunk.getStyleSheet(), chunk.getInstanceID(), chunk.getText() ) );
       startPosition = endIndex;
     }
     return result;
   }
 
-  private List<AttributedStringChunk> processWhitespaceRules(final RenderBox lineBoxContainer,
-                                                             final List<AttributedStringChunk> attrs)
-  {
+  private List<AttributedStringChunk> processWhitespaceRules( final RenderBox lineBoxContainer,
+                                                              final List<AttributedStringChunk> attrs ) {
     // todo
-    Object ws = lineBoxContainer.getStyleSheet().getStyleProperty(TextStyleKeys.WHITE_SPACE_COLLAPSE);
-    if (WhitespaceCollapse.PRESERVE_BREAKS.equals(ws))
-    {
+    Object ws = lineBoxContainer.getStyleSheet().getStyleProperty( TextStyleKeys.WHITE_SPACE_COLLAPSE );
+    if ( WhitespaceCollapse.PRESERVE_BREAKS.equals( ws ) ) {
       // linebreaks disabled
 
-    }
-    else if (WhitespaceCollapse.COLLAPSE.equals(ws))
-    {
+    } else if ( WhitespaceCollapse.COLLAPSE.equals( ws ) ) {
       // normal linebreaks, but duplicate spaces removed
-    }
-    else if (WhitespaceCollapse.DISCARD.equals(ws))
-    {
+    } else if ( WhitespaceCollapse.DISCARD.equals( ws ) ) {
       // all whitespaces removed
     }
     return attrs;
   }
 
-  private void computeText(final RenderBox box, final List<AttributedStringChunk> chunks)
-  {
+  private void computeText( final RenderBox box, final List<AttributedStringChunk> chunks ) {
     RenderNode node = box.getFirstChild();
-    while (node != null)
-    {
-      if (node.getNodeType() == LayoutNodeTypes.TYPE_NODE_COMPLEX_TEXT)
-      {
+    while ( node != null ) {
+      if ( node.getNodeType() == LayoutNodeTypes.TYPE_NODE_COMPLEX_TEXT ) {
         final RenderableComplexText complexNode = (RenderableComplexText) node;
-        chunks.add(new AttributedStringChunk(complexNode.getRawText(), computeStyle(node.getStyleSheet()),
-            node.getAttributes(), node.getStyleSheet(), node.getInstanceId(), node));
-      }
-      else if (node.getNodeType() == LayoutNodeTypes.TYPE_BOX_CONTENT)
-      {
+        chunks.add( new AttributedStringChunk( complexNode.getRawText(), computeStyle( node.getStyleSheet() ),
+          node.getAttributes(), node.getStyleSheet(), node.getInstanceId(), node ) );
+      } else if ( node.getNodeType() == LayoutNodeTypes.TYPE_BOX_CONTENT ) {
         final RenderableReplacedContentBox contentBox = (RenderableReplacedContentBox) node;
-        final long width = ReplacedContentUtil.computeWidth(contentBox);
-        final long height = ReplacedContentUtil.computeHeight(contentBox, 0, width);
-        contentBox.setCachedWidth(width);
-        contentBox.setCachedHeight(height);
-        contentBox.setWidth(width);
-        contentBox.setHeight(height);
+        final long width = ReplacedContentUtil.computeWidth( contentBox );
+        final long height = ReplacedContentUtil.computeHeight( contentBox, 0, width );
+        contentBox.setCachedWidth( width );
+        contentBox.setCachedHeight( height );
+        contentBox.setWidth( width );
+        contentBox.setHeight( height );
 
-        chunks.add(new AttributedStringChunk("@", computeImageStyle(node.getStyleSheet(), contentBox),
-            node.getAttributes(), node.getStyleSheet(), node.getInstanceId(), node));
-      }
-      else if (node instanceof RenderBox)
-      {
-        computeText((RenderBox) node, chunks);
+        chunks.add( new AttributedStringChunk( "@", computeImageStyle( node.getStyleSheet(), contentBox ),
+          node.getAttributes(), node.getStyleSheet(), node.getInstanceId(), node ) );
+      } else if ( node instanceof RenderBox ) {
+        computeText( (RenderBox) node, chunks );
       }
       node = node.getNext();
     }
   }
 
-  private Map<Attribute, Object> computeImageStyle(final StyleSheet layoutContext,
-                                                   final RenderableReplacedContentBox content)
-  {
-    final Image image = imageProducer.createImagePlaceholder(content);
+  private Map<Attribute, Object> computeImageStyle( final StyleSheet layoutContext,
+                                                    final RenderableReplacedContentBox content ) {
+    final Image image = imageProducer.createImagePlaceholder( content );
     ImageGraphicAttribute iga =
-        new ImageGraphicAttribute(image, GraphicAttribute.BOTTOM_ALIGNMENT);
+      new ImageGraphicAttribute( image, GraphicAttribute.BOTTOM_ALIGNMENT );
 
-    Map<Attribute, Object> attrs = computeStyle(layoutContext);
-    attrs.put(TextAttribute.CHAR_REPLACEMENT, iga);
+    Map<Attribute, Object> attrs = computeStyle( layoutContext );
+    attrs.put( TextAttribute.CHAR_REPLACEMENT, iga );
     return attrs;
   }
 
-  private Map<Attribute, Object> computeStyle(final StyleSheet layoutContext)
-  {
+  private Map<Attribute, Object> computeStyle( final StyleSheet layoutContext ) {
     Map<Attribute, Object> result = new HashMap<Attribute, Object>();
     // Determine font style
-    if (layoutContext.getBooleanStyleProperty(TextStyleKeys.ITALIC))
-    {
-      result.put(TextAttribute.POSTURE, TextAttribute.POSTURE_OBLIQUE);
+    if ( layoutContext.getBooleanStyleProperty( TextStyleKeys.ITALIC ) ) {
+      result.put( TextAttribute.POSTURE, TextAttribute.POSTURE_OBLIQUE );
+    } else {
+      result.put( TextAttribute.POSTURE, TextAttribute.POSTURE_REGULAR );
     }
-    else
-    {
-      result.put(TextAttribute.POSTURE, TextAttribute.POSTURE_REGULAR);
-    }
-    if (layoutContext.getBooleanStyleProperty(TextStyleKeys.BOLD))
-    {
-      result.put(TextAttribute.WEIGHT, TextAttribute.WEIGHT_BOLD);
-    }
-    else
-    {
-      result.put(TextAttribute.WEIGHT, TextAttribute.WEIGHT_REGULAR);
+    if ( layoutContext.getBooleanStyleProperty( TextStyleKeys.BOLD ) ) {
+      result.put( TextAttribute.WEIGHT, TextAttribute.WEIGHT_BOLD );
+    } else {
+      result.put( TextAttribute.WEIGHT, TextAttribute.WEIGHT_REGULAR );
     }
 
-    final String fontNameRaw = (String) layoutContext.getStyleProperty(TextStyleKeys.FONT);
-    final String fontName = metaData.getNormalizedFontFamilyName(fontNameRaw);
-    result.put(TextAttribute.FAMILY, fontName);
-    result.put(TextAttribute.SIZE, layoutContext.getIntStyleProperty(TextStyleKeys.FONTSIZE, 12));
-    if (layoutContext.getBooleanStyleProperty(TextStyleKeys.UNDERLINED))
-    {
-      result.put(TextAttribute.UNDERLINE, TextAttribute.UNDERLINE_ON);
+    final String fontNameRaw = (String) layoutContext.getStyleProperty( TextStyleKeys.FONT );
+    final String fontName = metaData.getNormalizedFontFamilyName( fontNameRaw );
+    result.put( TextAttribute.FAMILY, fontName );
+    result.put( TextAttribute.SIZE, layoutContext.getIntStyleProperty( TextStyleKeys.FONTSIZE, 12 ) );
+    if ( layoutContext.getBooleanStyleProperty( TextStyleKeys.UNDERLINED ) ) {
+      result.put( TextAttribute.UNDERLINE, TextAttribute.UNDERLINE_ON );
     }
-    if (layoutContext.getBooleanStyleProperty(TextStyleKeys.STRIKETHROUGH))
-    {
-      result.put(TextAttribute.STRIKETHROUGH, TextAttribute.STRIKETHROUGH_ON);
+    if ( layoutContext.getBooleanStyleProperty( TextStyleKeys.STRIKETHROUGH ) ) {
+      result.put( TextAttribute.STRIKETHROUGH, TextAttribute.STRIKETHROUGH_ON );
     }
 
     // character spacing
-    result.put(TextAttribute.TRACKING, layoutContext.getDoubleStyleProperty(TextStyleKeys.X_MIN_LETTER_SPACING, 0) / 10);
+    result.put( TextAttribute.TRACKING,
+      layoutContext.getDoubleStyleProperty( TextStyleKeys.X_MIN_LETTER_SPACING, 0 ) / 10 );
 
     return result;
   }

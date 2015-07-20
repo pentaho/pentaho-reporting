@@ -28,8 +28,7 @@ import org.pentaho.reporting.engine.classic.core.function.ExpressionRuntime;
  *
  * @author Thomas Morgner
  */
-public class ImageFieldTemplate extends AbstractTemplate
-{
+public class ImageFieldTemplate extends AbstractTemplate {
   /**
    * The data row reader.
    */
@@ -48,13 +47,12 @@ public class ImageFieldTemplate extends AbstractTemplate
   /**
    * Creates a new image field template.
    */
-  public ImageFieldTemplate()
-  {
+  public ImageFieldTemplate() {
     dataRowDataSource = new DataRowDataSource();
     imageLoadFilter = new ImageLoadFilter();
-    imageLoadFilter.setDataSource(dataRowDataSource);
+    imageLoadFilter.setDataSource( dataRowDataSource );
     imageRefFilter = new ImageRefFilter();
-    imageRefFilter.setDataSource(imageLoadFilter);
+    imageRefFilter.setDataSource( imageLoadFilter );
   }
 
   /**
@@ -62,8 +60,7 @@ public class ImageFieldTemplate extends AbstractTemplate
    *
    * @return The field name.
    */
-  public String getField()
-  {
+  public String getField() {
     return dataRowDataSource.getDataSourceColumnName();
   }
 
@@ -72,9 +69,8 @@ public class ImageFieldTemplate extends AbstractTemplate
    *
    * @param field the field name.
    */
-  public void setField(final String field)
-  {
-    dataRowDataSource.setDataSourceColumnName(field);
+  public void setField( final String field ) {
+    dataRowDataSource.setDataSourceColumnName( field );
   }
 
   /**
@@ -82,8 +78,7 @@ public class ImageFieldTemplate extends AbstractTemplate
    *
    * @return the formula.
    */
-  public String getFormula()
-  {
+  public String getFormula() {
     return dataRowDataSource.getFormula();
   }
 
@@ -92,9 +87,8 @@ public class ImageFieldTemplate extends AbstractTemplate
    *
    * @param formula the formula for the data source.
    */
-  public void setFormula(final String formula)
-  {
-    dataRowDataSource.setFormula(formula);
+  public void setFormula( final String formula ) {
+    dataRowDataSource.setFormula( formula );
   }
 
 
@@ -106,9 +100,8 @@ public class ImageFieldTemplate extends AbstractTemplate
    * @param element
    * @return the value.
    */
-  public Object getValue(final ExpressionRuntime runtime, final ReportElement element)
-  {
-    return imageRefFilter.getValue(runtime, element);
+  public Object getValue( final ExpressionRuntime runtime, final ReportElement element ) {
+    return imageRefFilter.getValue( runtime, element );
   }
 
   /**
@@ -118,8 +111,7 @@ public class ImageFieldTemplate extends AbstractTemplate
    * @throws CloneNotSupportedException this should never happen.
    */
   public ImageFieldTemplate clone()
-      throws CloneNotSupportedException
-  {
+    throws CloneNotSupportedException {
     final ImageFieldTemplate template = (ImageFieldTemplate) super.clone();
     template.imageRefFilter = imageRefFilter.clone();
     template.imageLoadFilter = (ImageLoadFilter) imageRefFilter.getDataSource();
@@ -132,8 +124,7 @@ public class ImageFieldTemplate extends AbstractTemplate
    *
    * @return the datarow data source.
    */
-  protected DataRowDataSource getDataRowDataSource()
-  {
+  protected DataRowDataSource getDataRowDataSource() {
     return dataRowDataSource;
   }
 }

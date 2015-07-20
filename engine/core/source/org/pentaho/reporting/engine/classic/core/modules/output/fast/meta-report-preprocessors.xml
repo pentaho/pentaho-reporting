@@ -16,8 +16,9 @@
   -->
 
 <meta-data xmlns="http://reporting.pentaho.org/namespaces/engine/classic/metadata/1.0">
-  <pre-processor class="org.pentaho.reporting.engine.classic.core.modules.output.fast.validator.ReportDynamicStyleAnalyzerPreProcessor"
-                 bundle-name="org.pentaho.reporting.engine.classic.core.modules.output.fast.validator.ReportDynamicStyleAnalyzerPreProcessorBundle"
-                 expert="false" hidden="true" preferred="false" auto-process="true" priority="100000">
+  <pre-processor
+      class="org.pentaho.reporting.engine.classic.core.modules.output.fast.validator.ReportDynamicStyleAnalyzerPreProcessor"
+      bundle-name="org.pentaho.reporting.engine.classic.core.modules.output.fast.validator.ReportDynamicStyleAnalyzerPreProcessorBundle"
+      expert="false" hidden="true" preferred="false" auto-process="true" priority="100000">
   </pre-processor>
 </meta-data>

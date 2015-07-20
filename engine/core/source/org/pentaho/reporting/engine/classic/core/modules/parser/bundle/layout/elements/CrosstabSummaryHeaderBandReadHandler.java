@@ -21,16 +21,13 @@ import org.pentaho.reporting.engine.classic.core.CrosstabSummaryHeader;
 import org.pentaho.reporting.engine.classic.core.filter.types.bands.CrosstabSummaryHeaderType;
 import org.pentaho.reporting.libraries.xmlns.parser.ParseException;
 
-public class CrosstabSummaryHeaderBandReadHandler extends BandReadHandler
-{
+public class CrosstabSummaryHeaderBandReadHandler extends BandReadHandler {
   public CrosstabSummaryHeaderBandReadHandler()
-      throws ParseException
-  {
-    super(CrosstabSummaryHeaderType.INSTANCE);
+    throws ParseException {
+    super( CrosstabSummaryHeaderType.INSTANCE );
   }
 
-  public CrosstabSummaryHeader getElement()
-  {
+  public CrosstabSummaryHeader getElement() {
     return (CrosstabSummaryHeader) super.getElement();
   }
 }

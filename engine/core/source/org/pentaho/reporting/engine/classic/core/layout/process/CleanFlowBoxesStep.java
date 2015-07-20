@@ -27,20 +27,16 @@ import org.pentaho.reporting.engine.classic.core.layout.model.RenderNode;
  *
  * @author Thomas Morgner
  */
-public final class CleanFlowBoxesStep extends CleanPaginatedBoxesStep
-{
-  public CleanFlowBoxesStep()
-  {
+public final class CleanFlowBoxesStep extends CleanPaginatedBoxesStep {
+  public CleanFlowBoxesStep() {
   }
 
-  protected boolean checkFinishedForNode(final RenderNode currentNode)
-  {
+  protected boolean checkFinishedForNode( final RenderNode currentNode ) {
     // todo: We should be able to consolidate the FINISH_TABLE and FINISH_PAGE flags into one.
     return currentNode.isFinishedTable();
   }
 
-  public long compute(final LogicalPageBox pageBox)
-  {
-    return super.compute(pageBox, pageBox.getProcessedTableOffset());
+  public long compute( final LogicalPageBox pageBox ) {
+    return super.compute( pageBox, pageBox.getProcessedTableOffset() );
   }
 }

@@ -17,18 +17,17 @@
 
 package org.pentaho.reporting.engine.classic.core.layout.build;
 
-import java.util.List;
-
 import org.pentaho.reporting.engine.classic.core.Band;
 import org.pentaho.reporting.engine.classic.core.ReportProcessingException;
 import org.pentaho.reporting.engine.classic.core.function.ExpressionRuntime;
 import org.pentaho.reporting.engine.classic.core.layout.InlineSubreportMarker;
 
-public interface LayoutBuilderStrategy
-{
-  void add(ExpressionRuntime runtime,
-           LayoutModelBuilder builder,
-           Band band,
-           List<InlineSubreportMarker> collectedSubReports)
-      throws ReportProcessingException;
+import java.util.List;
+
+public interface LayoutBuilderStrategy {
+  void add( ExpressionRuntime runtime,
+            LayoutModelBuilder builder,
+            Band band,
+            List<InlineSubreportMarker> collectedSubReports )
+    throws ReportProcessingException;
 }

@@ -17,10 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.core.layout;
 
-import java.awt.geom.Point2D;
-import java.awt.print.PageFormat;
-import java.awt.print.Paper;
-
 import junit.framework.TestCase;
 import org.junit.Assert;
 import org.pentaho.reporting.engine.classic.core.Band;
@@ -46,142 +42,133 @@ import org.pentaho.reporting.engine.classic.core.util.PageSize;
 import org.pentaho.reporting.engine.classic.core.util.geom.StrictGeomUtility;
 import org.pentaho.reporting.libraries.base.util.FloatDimension;
 
-public class AlignmentLeftTest extends TestCase
-{
-  public AlignmentLeftTest()
-  {
+import java.awt.geom.Point2D;
+import java.awt.print.PageFormat;
+import java.awt.print.Paper;
+
+public class AlignmentLeftTest extends TestCase {
+  public AlignmentLeftTest() {
   }
 
-  protected void setUp() throws Exception
-  {
+  protected void setUp() throws Exception {
     ClassicEngineBoot.getInstance().start();
   }
 
-  public void testLegacy() throws ReportProcessingException, ContentProcessingException
-  {
-    final MasterReport report = createReport(false);
+  public void testLegacy() throws ReportProcessingException, ContentProcessingException {
+    final MasterReport report = createReport( false );
 
-    report.getReportConfiguration().setConfigProperty(ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY, "false");
-    final LogicalPageBox logicalPageBox = DebugReportRunner.layoutSingleBand(report, report.getPageHeader(), false, false);
+    report.getReportConfiguration()
+      .setConfigProperty( ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY, "false" );
+    final LogicalPageBox logicalPageBox =
+      DebugReportRunner.layoutSingleBand( report, report.getPageHeader(), false, false );
     // simple test, we assert that all paragraph-poolboxes are on either 485000 or 400000
     // and that only two lines exist for each
-    new ValidateRunner().startValidation(logicalPageBox, false, false);
+    new ValidateRunner().startValidation( logicalPageBox, false, false );
   }
 
-  public void testLegacyNoEffectOfWrap() throws ReportProcessingException, ContentProcessingException
-  {
-    final MasterReport report = createReport(true);
+  public void testLegacyNoEffectOfWrap() throws ReportProcessingException, ContentProcessingException {
+    final MasterReport report = createReport( true );
 
-    report.getReportConfiguration().setConfigProperty(ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY, "false");
-    final LogicalPageBox logicalPageBox = DebugReportRunner.layoutSingleBand(report, report.getPageHeader(), false, false);
+    report.getReportConfiguration()
+      .setConfigProperty( ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY, "false" );
+    final LogicalPageBox logicalPageBox =
+      DebugReportRunner.layoutSingleBand( report, report.getPageHeader(), false, false );
     // simple test, we assert that all paragraph-poolboxes are on either 485000 or 400000
     // and that only two lines exist for each
-    new ValidateRunner().startValidation(logicalPageBox, false, false);
+    new ValidateRunner().startValidation( logicalPageBox, false, false );
   }
 
-  public void testComplex() throws ReportProcessingException, ContentProcessingException
-  {
-    final MasterReport report = createReport(false);
+  public void testComplex() throws ReportProcessingException, ContentProcessingException {
+    final MasterReport report = createReport( false );
 
-    report.getReportConfiguration().setConfigProperty(ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY, "true");
-    final LogicalPageBox logicalPageBox = DebugReportRunner.layoutSingleBand(report, report.getPageHeader(), false, false);
+    report.getReportConfiguration()
+      .setConfigProperty( ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY, "true" );
+    final LogicalPageBox logicalPageBox =
+      DebugReportRunner.layoutSingleBand( report, report.getPageHeader(), false, false );
     // simple test, we assert that all paragraph-poolboxes are on either 485000 or 400000
     // and that only two lines exist for each
-    new ValidateRunner().startValidation(logicalPageBox, true, false);
+    new ValidateRunner().startValidation( logicalPageBox, true, false );
   }
 
-  public void testComplexLegacy() throws ReportProcessingException, ContentProcessingException
-  {
-    final MasterReport report = createReport(true);
+  public void testComplexLegacy() throws ReportProcessingException, ContentProcessingException {
+    final MasterReport report = createReport( true );
 
-    report.getReportConfiguration().setConfigProperty(ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY, "true");
-    final LogicalPageBox logicalPageBox = DebugReportRunner.layoutSingleBand(report, report.getPageHeader(), false, false);
+    report.getReportConfiguration()
+      .setConfigProperty( ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY, "true" );
+    final LogicalPageBox logicalPageBox =
+      DebugReportRunner.layoutSingleBand( report, report.getPageHeader(), false, false );
     // simple test, we assert that all paragraph-poolboxes are on either 485000 or 400000
     // and that only two lines exist for each
-    new ValidateRunner().startValidation(logicalPageBox, true, true);
+    new ValidateRunner().startValidation( logicalPageBox, true, true );
   }
 
-  private MasterReport createReport(final boolean wrap)
-  {
+  private MasterReport createReport( final boolean wrap ) {
     final MasterReport report = new MasterReport();
     final PageFormatFactory pff = PageFormatFactory.getInstance();
-    final Paper paper = pff.createPaper(PageSize.A4);
-    pff.setBorders(paper, 36.0f, 36.0f, 36.0f, 36.0f);
-    final PageFormat format = pff.createPageFormat(paper, PageFormat.PORTRAIT);
-    report.setPageDefinition(new SimplePageDefinition(format));
+    final Paper paper = pff.createPaper( PageSize.A4 );
+    pff.setBorders( paper, 36.0f, 36.0f, 36.0f, 36.0f );
+    final PageFormat format = pff.createPageFormat( paper, PageFormat.PORTRAIT );
+    report.setPageDefinition( new SimplePageDefinition( format ) );
 
     final Band pageHeader = report.getPageHeader();
-    pageHeader.getStyle().setStyleProperty(ElementStyleKeys.MIN_HEIGHT, 10.0f);
+    pageHeader.getStyle().setStyleProperty( ElementStyleKeys.MIN_HEIGHT, 10.0f );
 
     // the main heading is just a fixed label centered on the page...
     final LabelElementFactory labelFactory = new LabelElementFactory();
-    labelFactory.setText("Free/OpenSourceSoftwareSurvey");
-    labelFactory.setFontName("SansSerif");
-    labelFactory.setFontSize(new Integer(10));
-    labelFactory.setBold(Boolean.TRUE);
-    labelFactory.setAbsolutePosition(new Point2D.Double(15, 10.0));
-    labelFactory.setMinimumSize(new FloatDimension(40, 10.0f));
-    labelFactory.setHorizontalAlignment(ElementAlignment.LEFT);
+    labelFactory.setText( "Free/OpenSourceSoftwareSurvey" );
+    labelFactory.setFontName( "SansSerif" );
+    labelFactory.setFontSize( new Integer( 10 ) );
+    labelFactory.setBold( Boolean.TRUE );
+    labelFactory.setAbsolutePosition( new Point2D.Double( 15, 10.0 ) );
+    labelFactory.setMinimumSize( new FloatDimension( 40, 10.0f ) );
+    labelFactory.setHorizontalAlignment( ElementAlignment.LEFT );
     Element element = labelFactory.createElement();
-    element.getStyle().setStyleProperty(TextStyleKeys.WORDBREAK, wrap);
-    pageHeader.addElement(element);
+    element.getStyle().setStyleProperty( TextStyleKeys.WORDBREAK, wrap );
+    pageHeader.addElement( element );
     return report;
   }
 
-  private static class ValidateRunner extends IterateStructuralProcessStep
-  {
+  private static class ValidateRunner extends IterateStructuralProcessStep {
     private int count;
     private boolean complexText;
     private boolean wrapWord;
 
-    protected void processParagraphChilds(final ParagraphRenderBox box)
-    {
+    protected void processParagraphChilds( final ParagraphRenderBox box ) {
       count = 0;
-      processBoxChilds(box);
+      processBoxChilds( box );
       //ModelPrinter.INSTANCE.print(box);
-      if (complexText)
-      {
-        if (wrapWord)
-        {
-          assertEquals("Line-Count", 2, count);
+      if ( complexText ) {
+        if ( wrapWord ) {
+          assertEquals( "Line-Count", 2, count );
+        } else {
+          assertEquals( "Line-Count", 5, count );
         }
-        else
-        {
-          assertEquals("Line-Count", 5, count);
-        }
-      }
-      else
-      {
-        assertEquals("Line-Count", 1, count);
+      } else {
+        assertEquals( "Line-Count", 1, count );
       }
     }
 
-    protected boolean startInlineBox(final InlineRenderBox box)
-    {
-      if (box instanceof ParagraphPoolBox)
-      {
+    protected boolean startInlineBox( final InlineRenderBox box ) {
+      if ( box instanceof ParagraphPoolBox ) {
         count += 1;
         final long x = box.getX();
-        if (x == 0)
-        {
-          Assert.fail("X position is wrong: " + x);
+        if ( x == 0 ) {
+          Assert.fail( "X position is wrong: " + x );
         }
-        if (complexText && wrapWord == false)
-        {
-          Assert.assertTrue("Box width of '" + box.getWidth() + "' is less than 40pt",
-              box.getWidth() <= StrictGeomUtility.toInternalValue(40));
+        if ( complexText && wrapWord == false ) {
+          Assert.assertTrue( "Box width of '" + box.getWidth() + "' is less than 40pt",
+            box.getWidth() <= StrictGeomUtility.toInternalValue( 40 ) );
         }
       }
-      return super.startInlineBox(box);
+      return super.startInlineBox( box );
     }
 
-    public void startValidation(final LogicalPageBox logicalPageBox,
-                                final boolean complexText,
-                                final boolean wrapWord)
-    {
+    public void startValidation( final LogicalPageBox logicalPageBox,
+                                 final boolean complexText,
+                                 final boolean wrapWord ) {
       this.complexText = complexText;
       this.wrapWord = wrapWord;
-      startProcessing(logicalPageBox);
+      startProcessing( logicalPageBox );
     }
   }
 }

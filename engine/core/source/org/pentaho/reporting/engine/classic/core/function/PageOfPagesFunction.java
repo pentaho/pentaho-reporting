@@ -17,12 +17,12 @@
 
 package org.pentaho.reporting.engine.classic.core.function;
 
-import java.text.MessageFormat;
-import java.util.Locale;
-
 import org.pentaho.reporting.engine.classic.core.event.ReportEvent;
 import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
 import org.pentaho.reporting.libraries.formatting.FastMessageFormat;
+
+import java.text.MessageFormat;
+import java.util.Locale;
 
 
 /**
@@ -31,8 +31,7 @@ import org.pentaho.reporting.libraries.formatting.FastMessageFormat;
  *
  * @author J&ouml;rg Schaible
  */
-public class PageOfPagesFunction extends PageFunction
-{
+public class PageOfPagesFunction extends PageFunction {
   /**
    * A internal function delegate that computes the total number of pages.
    */
@@ -66,8 +65,7 @@ public class PageOfPagesFunction extends PageFunction
   /**
    * Default Constructor.
    */
-  public PageOfPagesFunction()
-  {
+  public PageOfPagesFunction() {
     this.pageTotalFunction = new PageTotalFunction();
     this.format = "{0} / {1}";
   }
@@ -77,10 +75,9 @@ public class PageOfPagesFunction extends PageFunction
    *
    * @param name the function name.
    */
-  public PageOfPagesFunction(final String name)
-  {
+  public PageOfPagesFunction( final String name ) {
     this();
-    setName(name);
+    setName( name );
   }
 
   /**
@@ -89,8 +86,7 @@ public class PageOfPagesFunction extends PageFunction
    * @return the format string.
    * @see MessageFormat
    */
-  public String getFormat()
-  {
+  public String getFormat() {
     return format;
   }
 
@@ -100,11 +96,9 @@ public class PageOfPagesFunction extends PageFunction
    *
    * @param format the format string.
    */
-  public void setFormat(final String format)
-  {
-    if (format == null)
-    {
-      throw new NullPointerException("Format must not be null.");
+  public void setFormat( final String format ) {
+    if ( format == null ) {
+      throw new NullPointerException( "Format must not be null." );
     }
     this.format = format;
     this.messageFormat = null;
@@ -115,10 +109,9 @@ public class PageOfPagesFunction extends PageFunction
    *
    * @param event the received report event.
    */
-  public void reportInitialized(final ReportEvent event)
-  {
-    super.reportInitialized(event);
-    pageTotalFunction.reportInitialized(event);
+  public void reportInitialized( final ReportEvent event ) {
+    super.reportInitialized( event );
+    pageTotalFunction.reportInitialized( event );
   }
 
   /**
@@ -126,10 +119,9 @@ public class PageOfPagesFunction extends PageFunction
    *
    * @param event the received report event.
    */
-  public void pageStarted(final ReportEvent event)
-  {
-    super.pageStarted(event);
-    pageTotalFunction.pageStarted(event);
+  public void pageStarted( final ReportEvent event ) {
+    super.pageStarted( event );
+    pageTotalFunction.pageStarted( event );
   }
 
   /**
@@ -137,10 +129,9 @@ public class PageOfPagesFunction extends PageFunction
    *
    * @param event the received report event.
    */
-  public void pageFinished(final ReportEvent event)
-  {
-    super.pageFinished(event);
-    pageTotalFunction.pageFinished(event);
+  public void pageFinished( final ReportEvent event ) {
+    super.pageFinished( event );
+    pageTotalFunction.pageFinished( event );
   }
 
   /**
@@ -148,16 +139,14 @@ public class PageOfPagesFunction extends PageFunction
    *
    * @param event the received report event.
    */
-  public void groupStarted(final ReportEvent event)
-  {
-    super.groupStarted(event);
-    pageTotalFunction.groupStarted(event);
+  public void groupStarted( final ReportEvent event ) {
+    super.groupStarted( event );
+    pageTotalFunction.groupStarted( event );
   }
 
-  public void groupFinished(final ReportEvent event)
-  {
-    super.groupFinished(event);
-    pageTotalFunction.groupFinished(event);
+  public void groupFinished( final ReportEvent event ) {
+    super.groupFinished( event );
+    pageTotalFunction.groupFinished( event );
   }
 
   /**
@@ -166,10 +155,9 @@ public class PageOfPagesFunction extends PageFunction
    *
    * @param event The event.
    */
-  public void reportDone(final ReportEvent event)
-  {
-    super.reportDone(event);
-    pageTotalFunction.reportDone(event);
+  public void reportDone( final ReportEvent event ) {
+    super.reportDone( event );
+    pageTotalFunction.reportDone( event );
   }
 
   /**
@@ -178,27 +166,23 @@ public class PageOfPagesFunction extends PageFunction
    *
    * @return the formatted value with current page and total number of pages.
    */
-  public Object getValue()
-  {
+  public Object getValue() {
     final Integer page = (Integer) super.getValue();
     final Integer pages = (Integer) pageTotalFunction.getValue();
     Locale locale = getResourceBundleFactory().getLocale();
-    if (locale == null)
-    {
+    if ( locale == null ) {
       locale = Locale.getDefault();
     }
 
-    if (messageFormat == null || ObjectUtilities.equal(locale, lastLocale) == false)
-    {
-      this.messageFormat = new FastMessageFormat(getFormat(), locale);
+    if ( messageFormat == null || ObjectUtilities.equal( locale, lastLocale ) == false ) {
+      this.messageFormat = new FastMessageFormat( getFormat(), locale );
       this.lastLocale = locale;
     }
 
-    if (lastMessage == null ||
-        ObjectUtilities.equal(page, this.lastPage) == false ||
-        ObjectUtilities.equal(pages, this.lastTotalPage) == false)
-    {
-      this.lastMessage = messageFormat.format(new Object[]{page, pages});
+    if ( lastMessage == null ||
+      ObjectUtilities.equal( page, this.lastPage ) == false ||
+      ObjectUtilities.equal( pages, this.lastTotalPage ) == false ) {
+      this.lastMessage = messageFormat.format( new Object[] { page, pages } );
       this.lastPage = page;
       this.lastTotalPage = pages;
     }
@@ -210,10 +194,9 @@ public class PageOfPagesFunction extends PageFunction
    *
    * @param group the group name.
    */
-  public void setGroup(final String group)
-  {
-    super.setGroup(group);
-    pageTotalFunction.setGroup(group);
+  public void setGroup( final String group ) {
+    super.setGroup( group );
+    pageTotalFunction.setGroup( group );
   }
 
   /**
@@ -221,10 +204,9 @@ public class PageOfPagesFunction extends PageFunction
    *
    * @param startPage the page number of the first page.
    */
-  public void setStartPage(final int startPage)
-  {
-    super.setStartPage(startPage);
-    pageTotalFunction.setStartPage(startPage);
+  public void setStartPage( final int startPage ) {
+    super.setStartPage( startPage );
+    pageTotalFunction.setStartPage( startPage );
   }
 
   /**
@@ -232,10 +214,9 @@ public class PageOfPagesFunction extends PageFunction
    *
    * @param level the dependency level.
    */
-  public void setDependencyLevel(final int level)
-  {
-    super.setDependencyLevel(level);
-    pageTotalFunction.setDependencyLevel(level);
+  public void setDependencyLevel( final int level ) {
+    super.setDependencyLevel( level );
+    pageTotalFunction.setDependencyLevel( level );
   }
 
   /**
@@ -243,8 +224,7 @@ public class PageOfPagesFunction extends PageFunction
    *
    * @return the dependency level.
    */
-  public int getDependencyLevel()
-  {
+  public int getDependencyLevel() {
     return pageTotalFunction.getDependencyLevel();
   }
 
@@ -254,8 +234,7 @@ public class PageOfPagesFunction extends PageFunction
    *
    * @return a copy of this function.
    */
-  public Expression getInstance()
-  {
+  public Expression getInstance() {
     final PageOfPagesFunction function = (PageOfPagesFunction) super.getInstance();
     function.pageTotalFunction = (PageTotalFunction) pageTotalFunction.getInstance();
     return function;
@@ -268,10 +247,9 @@ public class PageOfPagesFunction extends PageFunction
    *
    * @param runtime the runtime information for the expression
    */
-  public void setRuntime(final ExpressionRuntime runtime)
-  {
-    super.setRuntime(runtime);
-    pageTotalFunction.setRuntime(runtime);
+  public void setRuntime( final ExpressionRuntime runtime ) {
+    super.setRuntime( runtime );
+    pageTotalFunction.setRuntime( runtime );
   }
 
   /**
@@ -280,8 +258,7 @@ public class PageOfPagesFunction extends PageFunction
    * @return the clone.
    * @throws CloneNotSupportedException if an error occurs.
    */
-  public Object clone() throws CloneNotSupportedException
-  {
+  public Object clone() throws CloneNotSupportedException {
     final PageOfPagesFunction function = (PageOfPagesFunction) super.clone();
     function.pageTotalFunction = (PageTotalFunction) pageTotalFunction.clone();
     return function;

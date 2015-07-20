@@ -29,16 +29,14 @@ import org.pentaho.reporting.engine.classic.core.style.TextStyleKeys;
  *
  * @author Thomas Morgner
  */
-public class DefaultStyleKeyFactory extends AbstractStyleKeyFactory
-{
+public class DefaultStyleKeyFactory extends AbstractStyleKeyFactory {
   /**
    * Creates a new factory.
    */
-  public DefaultStyleKeyFactory()
-  {
-    loadFromClass(ElementStyleKeys.class);
-    loadFromClass(TextStyleKeys.class);
-    loadFromClass(BandStyleKeys.class);
+  public DefaultStyleKeyFactory() {
+    loadFromClass( ElementStyleKeys.class );
+    loadFromClass( TextStyleKeys.class );
+    loadFromClass( BandStyleKeys.class );
   }
 
 

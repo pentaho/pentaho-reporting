@@ -17,9 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.core.layout;
 
-import java.awt.print.PageFormat;
-import java.net.URL;
-
 import junit.framework.TestCase;
 import org.pentaho.reporting.engine.classic.core.Band;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
@@ -41,216 +38,190 @@ import org.pentaho.reporting.libraries.base.util.DebugLog;
 import org.pentaho.reporting.libraries.resourceloader.Resource;
 import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 
-public class ReplacedContentTest extends TestCase
-{
-  public ReplacedContentTest()
-  {
+import java.awt.print.PageFormat;
+import java.net.URL;
+
+public class ReplacedContentTest extends TestCase {
+  public ReplacedContentTest() {
     super();
   }
 
-  public ReplacedContentTest(final String s)
-  {
-    super(s);
+  public ReplacedContentTest( final String s ) {
+    super( s );
   }
 
-  protected void setUp() throws Exception
-  {
+  protected void setUp() throws Exception {
     ClassicEngineBoot.getInstance().start();
   }
 
-  public void testReplacedContent() throws Exception
-  {
+  public void testReplacedContent() throws Exception {
     final MasterReport basereport = new MasterReport();
-    basereport.setPageDefinition(new SimplePageDefinition(new PageFormat()));
+    basereport.setPageDefinition( new SimplePageDefinition( new PageFormat() ) );
 
-    final URL target = LayoutTest.class.getResource("replaced-content.xml");
+    final URL target = LayoutTest.class.getResource( "replaced-content.xml" );
     final ResourceManager rm = new ResourceManager();
     rm.registerDefaults();
-    final Resource directly = rm.createDirectly(target, MasterReport.class);
+    final Resource directly = rm.createDirectly( target, MasterReport.class );
     final MasterReport report = (MasterReport) directly.getResource();
 
     final LogicalPageBox logicalPageBox = DebugReportRunner.layoutSingleBand
-        (basereport, report.getReportHeader(), true, false);
+      ( basereport, report.getReportHeader(), true, false );
     // simple test, we assert that all paragraph-poolboxes are on either 485000 or 400000
     // and that only two lines exist for each
     // ModelPrinter.print(logicalPageBox);
-    new ValidateRunner().startValidation(logicalPageBox);
+    new ValidateRunner().startValidation( logicalPageBox );
   }
 
 
-  public void testReplacedContentRel() throws Exception
-  {
+  public void testReplacedContentRel() throws Exception {
     final MasterReport basereport = new MasterReport();
-    basereport.setPageDefinition(new SimplePageDefinition(new PageFormat()));
+    basereport.setPageDefinition( new SimplePageDefinition( new PageFormat() ) );
 
-    final URL target = LayoutTest.class.getResource("replaced-content-relative.xml");
+    final URL target = LayoutTest.class.getResource( "replaced-content-relative.xml" );
     final ResourceManager rm = new ResourceManager();
     rm.registerDefaults();
-    final Resource directly = rm.createDirectly(target, MasterReport.class);
+    final Resource directly = rm.createDirectly( target, MasterReport.class );
     final MasterReport report = (MasterReport) directly.getResource();
-    PageFormat pageFormat = report.getPageDefinition().getPageFormat(0);
-    DebugLog.log(PageFormatFactory.printPageFormat(pageFormat));
+    PageFormat pageFormat = report.getPageDefinition().getPageFormat( 0 );
+    DebugLog.log( PageFormatFactory.printPageFormat( pageFormat ) );
     final Band containerBand = report.getReportHeader();
 
     // Each character (regarless of font or font-size) will be 8pt high and 4pt wide.
     // this makes this test independent of the fonts installed on the system we run on.
-    final LogicalPageBox logicalPageBox = DebugReportRunner.layoutSingleBand(report, containerBand, true, false);
+    final LogicalPageBox logicalPageBox = DebugReportRunner.layoutSingleBand( report, containerBand, true, false );
     // simple test, we assert that all paragraph-poolboxes are on either 485000 or 400000
     // and that only two lines exist for each
     // ModelPrinter.INSTANCE.print(logicalPageBox);
-    new ValidateRelativeRunner().startValidation(logicalPageBox);
+    new ValidateRelativeRunner().startValidation( logicalPageBox );
   }
 
-  private static class ValidateRunner extends IterateStructuralProcessStep
-  {
-    protected void processRenderableContent(final RenderableReplacedContentBox node)
-    {
+  private static class ValidateRunner extends IterateStructuralProcessStep {
+    protected void processRenderableContent( final RenderableReplacedContentBox node ) {
       final String s = node.getName();
-      if (s.endsWith("i") ||
-          s.charAt(s.length() - 2) == 'i')
-      {
+      if ( s.endsWith( "i" ) ||
+        s.charAt( s.length() - 2 ) == 'i' ) {
         // inline elements take the intrinsinc width/height unless explicitly defined otherwise
-        assertEquals("Rect height=100000; " + node.getName(), StrictGeomUtility.toInternalValue(100), node.getCachedHeight());
+        assertEquals( "Rect height=100000; " + node.getName(), StrictGeomUtility.toInternalValue( 100 ),
+          node.getCachedHeight() );
+      } else {
+        assertEquals( "Rect height=10000; " + node.getName(), StrictGeomUtility.toInternalValue( 10 ),
+          node.getCachedHeight() );
       }
-      else
-      {
-        assertEquals("Rect height=10000; " + node.getName(), StrictGeomUtility.toInternalValue(10), node.getCachedHeight());
-      }
-      assertEquals("Rect width=100000; " + node.getName(), StrictGeomUtility.toInternalValue(100), node.getCachedWidth());
+      assertEquals( "Rect width=100000; " + node.getName(), StrictGeomUtility.toInternalValue( 100 ),
+        node.getCachedWidth() );
     }
 
-    protected boolean startBox(final RenderBox box)
-    {
+    protected boolean startBox( final RenderBox box ) {
       final String name = box.getName();
-      if (name == null)
-      {
+      if ( name == null ) {
         return true;
       }
-      if (box instanceof ParagraphRenderBox)
-      {
-        assertNotNull("Have at only one child", box.getFirstChild());
-        assertNotNull("Have at only one child", box.getLastChild());
-        assertSame("Have at only one child", box.getFirstChild(), box.getLastChild());
+      if ( box instanceof ParagraphRenderBox ) {
+        assertNotNull( "Have at only one child", box.getFirstChild() );
+        assertNotNull( "Have at only one child", box.getLastChild() );
+        assertSame( "Have at only one child", box.getFirstChild(), box.getLastChild() );
       }
 
       return true;
     }
 
-    protected boolean startCanvasBox(final CanvasRenderBox box)
-    {
-      return startBox(box);
+    protected boolean startCanvasBox( final CanvasRenderBox box ) {
+      return startBox( box );
     }
 
-    protected boolean startBlockBox(final BlockRenderBox box)
-    {
-      return startBox(box);
+    protected boolean startBlockBox( final BlockRenderBox box ) {
+      return startBox( box );
     }
 
-    protected boolean startInlineBox(final InlineRenderBox box)
-    {
-      return startBox(box);
+    protected boolean startInlineBox( final InlineRenderBox box ) {
+      return startBox( box );
     }
 
-    protected boolean startRowBox(final RenderBox box)
-    {
-      return startBox(box);
+    protected boolean startRowBox( final RenderBox box ) {
+      return startBox( box );
     }
 
-    protected void processParagraphChilds(final ParagraphRenderBox box)
-    {
-      processBoxChilds(box);
+    protected void processParagraphChilds( final ParagraphRenderBox box ) {
+      processBoxChilds( box );
     }
 
-    public void startValidation(final LogicalPageBox logicalPageBox)
-    {
-      startProcessing(logicalPageBox);
+    public void startValidation( final LogicalPageBox logicalPageBox ) {
+      startProcessing( logicalPageBox );
     }
   }
 
-  private static class ValidateRelativeRunner extends IterateStructuralProcessStep
-  {
-    protected void processRenderableContent(final RenderableReplacedContentBox node)
-    {
-      if (node.getParent() instanceof InlineRenderBox ||
-          node.getName().startsWith("rect-i"))
-      {
-        assertEquals("Rect height=100000; " + node.getName(), StrictGeomUtility.toInternalValue(100), node.getCachedHeight());
-        assertEquals("Rect width=100000; " + node.getName(), StrictGeomUtility.toInternalValue(100), node.getCachedWidth());
-      }
-      else if (node.getName().equals("rect-cb") ||
-          node.getName().equals("rect-rb"))
-      {
-        assertEquals("Rect height=0; " + node.getName(), 0, node.getCachedHeight());
-        assertEquals("Rect width=100000; " + node.getName(), StrictGeomUtility.toInternalValue(100), node.getCachedWidth());
-      }
-      else if (node.getName().equals("rect-bb"))
-      {
-        assertEquals("Rect height=0; " + node.getName(), 0, node.getCachedHeight());
-        assertEquals("Rect width=545000; " + node.getName(), StrictGeomUtility.toInternalValue(545), node.getCachedWidth());
-      }
-      else if (node.getName().equals("rect-bc") ||
-          node.getName().equals("rect-br"))
-      {
-        assertEquals("Rect height=10000; " + node.getName(), StrictGeomUtility.toInternalValue(10), node.getCachedHeight());
-        assertEquals("Rect width=545000; " + node.getName(), StrictGeomUtility.toInternalValue(545), node.getCachedWidth());
-      }
-      else if (node.getParent() instanceof RowRenderBox)
-      {
-        assertEquals("Rect height=10000; " + node.getName(), StrictGeomUtility.toInternalValue(10), node.getCachedHeight());
-        assertEquals("Rect width=100000; " + node.getName(), StrictGeomUtility.toInternalValue(100), node.getCachedWidth());
-      }
-      else
-      {
-        assertEquals("Rect height=10000; " + node.getName(), StrictGeomUtility.toInternalValue(10), node.getCachedHeight());
-        assertEquals("Rect width=100000; " + node.getName(), StrictGeomUtility.toInternalValue(100), node.getCachedWidth());
+  private static class ValidateRelativeRunner extends IterateStructuralProcessStep {
+    protected void processRenderableContent( final RenderableReplacedContentBox node ) {
+      if ( node.getParent() instanceof InlineRenderBox ||
+        node.getName().startsWith( "rect-i" ) ) {
+        assertEquals( "Rect height=100000; " + node.getName(), StrictGeomUtility.toInternalValue( 100 ),
+          node.getCachedHeight() );
+        assertEquals( "Rect width=100000; " + node.getName(), StrictGeomUtility.toInternalValue( 100 ),
+          node.getCachedWidth() );
+      } else if ( node.getName().equals( "rect-cb" ) ||
+        node.getName().equals( "rect-rb" ) ) {
+        assertEquals( "Rect height=0; " + node.getName(), 0, node.getCachedHeight() );
+        assertEquals( "Rect width=100000; " + node.getName(), StrictGeomUtility.toInternalValue( 100 ),
+          node.getCachedWidth() );
+      } else if ( node.getName().equals( "rect-bb" ) ) {
+        assertEquals( "Rect height=0; " + node.getName(), 0, node.getCachedHeight() );
+        assertEquals( "Rect width=545000; " + node.getName(), StrictGeomUtility.toInternalValue( 545 ),
+          node.getCachedWidth() );
+      } else if ( node.getName().equals( "rect-bc" ) ||
+        node.getName().equals( "rect-br" ) ) {
+        assertEquals( "Rect height=10000; " + node.getName(), StrictGeomUtility.toInternalValue( 10 ),
+          node.getCachedHeight() );
+        assertEquals( "Rect width=545000; " + node.getName(), StrictGeomUtility.toInternalValue( 545 ),
+          node.getCachedWidth() );
+      } else if ( node.getParent() instanceof RowRenderBox ) {
+        assertEquals( "Rect height=10000; " + node.getName(), StrictGeomUtility.toInternalValue( 10 ),
+          node.getCachedHeight() );
+        assertEquals( "Rect width=100000; " + node.getName(), StrictGeomUtility.toInternalValue( 100 ),
+          node.getCachedWidth() );
+      } else {
+        assertEquals( "Rect height=10000; " + node.getName(), StrictGeomUtility.toInternalValue( 10 ),
+          node.getCachedHeight() );
+        assertEquals( "Rect width=100000; " + node.getName(), StrictGeomUtility.toInternalValue( 100 ),
+          node.getCachedWidth() );
       }
     }
 
-    protected boolean startBox(final RenderBox box)
-    {
+    protected boolean startBox( final RenderBox box ) {
       final String name = box.getName();
-      if (name == null)
-      {
+      if ( name == null ) {
         return true;
       }
-      if (box instanceof ParagraphRenderBox)
-      {
-        assertNotNull("Have at only one child", box.getFirstChild());
-        assertNotNull("Have at only one child", box.getLastChild());
-        assertSame("Have at only one child", box.getFirstChild(), box.getLastChild());
+      if ( box instanceof ParagraphRenderBox ) {
+        assertNotNull( "Have at only one child", box.getFirstChild() );
+        assertNotNull( "Have at only one child", box.getLastChild() );
+        assertSame( "Have at only one child", box.getFirstChild(), box.getLastChild() );
       }
 
       return true;
     }
 
-    protected boolean startCanvasBox(final CanvasRenderBox box)
-    {
-      return startBox(box);
+    protected boolean startCanvasBox( final CanvasRenderBox box ) {
+      return startBox( box );
     }
 
-    protected boolean startBlockBox(final BlockRenderBox box)
-    {
-      return startBox(box);
+    protected boolean startBlockBox( final BlockRenderBox box ) {
+      return startBox( box );
     }
 
-    protected boolean startInlineBox(final InlineRenderBox box)
-    {
-      return startBox(box);
+    protected boolean startInlineBox( final InlineRenderBox box ) {
+      return startBox( box );
     }
 
-    protected boolean startRowBox(final RenderBox box)
-    {
-      return startBox(box);
+    protected boolean startRowBox( final RenderBox box ) {
+      return startBox( box );
     }
 
-    protected void processParagraphChilds(final ParagraphRenderBox box)
-    {
-      processBoxChilds(box);
+    protected void processParagraphChilds( final ParagraphRenderBox box ) {
+      processBoxChilds( box );
     }
 
-    public void startValidation(final LogicalPageBox logicalPageBox)
-    {
-      startProcessing(logicalPageBox);
+    public void startValidation( final LogicalPageBox logicalPageBox ) {
+      startProcessing( logicalPageBox );
     }
   }
 

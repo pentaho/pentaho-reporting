@@ -18,7 +18,6 @@
 package org.pentaho.reporting.engine.classic.core;
 
 import org.pentaho.reporting.engine.classic.core.filter.types.bands.ReportHeaderType;
-import org.pentaho.reporting.engine.classic.core.style.BandStyleKeys;
 
 
 /**
@@ -33,13 +32,11 @@ import org.pentaho.reporting.engine.classic.core.style.BandStyleKeys;
  * @author David Gilbert
  * @author Thomas Morgner
  */
-public class ReportHeader extends AbstractRootLevelBand
-{
+public class ReportHeader extends AbstractRootLevelBand {
   /**
    * Constructs a report header, initially containing no elements.
    */
-  public ReportHeader()
-  {
-    setElementType(new ReportHeaderType());
+  public ReportHeader() {
+    setElementType( new ReportHeaderType() );
   }
 }

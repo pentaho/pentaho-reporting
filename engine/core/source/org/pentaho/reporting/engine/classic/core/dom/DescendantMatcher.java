@@ -20,28 +20,22 @@ package org.pentaho.reporting.engine.classic.core.dom;
 import org.pentaho.reporting.engine.classic.core.ReportElement;
 import org.pentaho.reporting.engine.classic.core.Section;
 
-public class DescendantMatcher implements NodeMatcher
-{
+public class DescendantMatcher implements NodeMatcher {
   private NodeMatcher childMatcher;
 
-  public DescendantMatcher(final NodeMatcher childMatcher)
-  {
+  public DescendantMatcher( final NodeMatcher childMatcher ) {
     this.childMatcher = childMatcher;
   }
 
-  public boolean matches(final MatcherContext context, final ReportElement node)
-  {
+  public boolean matches( final MatcherContext context, final ReportElement node ) {
     ReportElement n = node;
-    while (n != null)
-    {
+    while ( n != null ) {
 
-      final Section parent = context.getParent(n);
-      if (parent == null)
-      {
+      final Section parent = context.getParent( n );
+      if ( parent == null ) {
         break;
       }
-      if (childMatcher.matches(context, parent))
-      {
+      if ( childMatcher.matches( context, parent ) ) {
         return true;
       }
       n = parent;
@@ -50,12 +44,11 @@ public class DescendantMatcher implements NodeMatcher
   }
 
 
-  public String toString()
-  {
+  public String toString() {
     final StringBuilder b = new StringBuilder();
-    b.append("Descendant(");
-    b.append(childMatcher);
-    b.append(")");
+    b.append( "Descendant(" );
+    b.append( childMatcher );
+    b.append( ")" );
     return b.toString();
   }
 }

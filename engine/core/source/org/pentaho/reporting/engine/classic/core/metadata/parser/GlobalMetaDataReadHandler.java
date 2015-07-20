@@ -22,12 +22,10 @@ import org.pentaho.reporting.libraries.xmlns.parser.XmlReadHandler;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 
-public class GlobalMetaDataReadHandler extends AbstractXmlReadHandler
-{
+public class GlobalMetaDataReadHandler extends AbstractXmlReadHandler {
   private GlobalMetaDefinition globalMetaDefinition;
 
-  public GlobalMetaDataReadHandler()
-  {
+  public GlobalMetaDataReadHandler() {
     globalMetaDefinition = new GlobalMetaDefinition();
   }
 
@@ -40,21 +38,17 @@ public class GlobalMetaDataReadHandler extends AbstractXmlReadHandler
    * @return the handler or null, if the tagname is invalid.
    * @throws SAXException if there is a parsing error.
    */
-  protected XmlReadHandler getHandlerForChild(final String uri,
-                                              final String tagName,
-                                              final Attributes atts) throws SAXException
-  {
-    if (getUri().equals(uri) == false)
-    {
+  protected XmlReadHandler getHandlerForChild( final String uri,
+                                               final String tagName,
+                                               final Attributes atts ) throws SAXException {
+    if ( getUri().equals( uri ) == false ) {
       return null;
     }
-    if ("attribute-group".equals(tagName))
-    {
-      return new AttributeGroupReadHandler(globalMetaDefinition);
+    if ( "attribute-group".equals( tagName ) ) {
+      return new AttributeGroupReadHandler( globalMetaDefinition );
     }
-    if ("style-group".equals(tagName))
-    {
-      return new StyleGroupReadHandler(globalMetaDefinition);
+    if ( "style-group".equals( tagName ) ) {
+      return new StyleGroupReadHandler( globalMetaDefinition );
     }
     return null;
   }
@@ -65,8 +59,7 @@ public class GlobalMetaDataReadHandler extends AbstractXmlReadHandler
    * @return the object.
    * @throws SAXException if an parser error occured.
    */
-  public Object getObject() throws SAXException
-  {
+  public Object getObject() throws SAXException {
     return globalMetaDefinition;
   }
 }

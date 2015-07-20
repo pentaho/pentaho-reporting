@@ -26,55 +26,44 @@ import org.pentaho.reporting.engine.classic.core.states.LayoutProcess;
  *
  * @author Thomas Morgner
  */
-public class BeginReportHandler implements AdvanceHandler
-{
+public class BeginReportHandler implements AdvanceHandler {
   public static final AdvanceHandler HANDLER = new BeginReportHandler();
 
-  private BeginReportHandler()
-  {
+  private BeginReportHandler() {
   }
 
-  public int getEventCode()
-  {
+  public int getEventCode() {
     return ReportEvent.REPORT_INITIALIZED;
   }
 
-  public boolean isFinish()
-  {
+  public boolean isFinish() {
     return false;
   }
 
-  public ProcessState advance(final ProcessState state) throws ReportProcessingException
-  {
-    if (!state.getFlowController().getMasterRow().getExpressionDataRow().isValid())
-    {
-      throw new IllegalStateException("The expression data-row must be valid upon the start of the report processing.");
+  public ProcessState advance( final ProcessState state ) throws ReportProcessingException {
+    if ( !state.getFlowController().getMasterRow().getExpressionDataRow().isValid() ) {
+      throw new IllegalStateException(
+        "The expression data-row must be valid upon the start of the report processing." );
     }
 
     final ProcessState next = state.deriveForAdvance();
     next.fireReportEvent();
-    if (next.isSubReportEvent() && next.getLevel() == LayoutProcess.LEVEL_PAGINATE)
-    {
-      next.firePageStartedEvent(ReportEvent.REPORT_INITIALIZED | ReportEvent.NO_PARENT_PASSING_EVENT);
+    if ( next.isSubReportEvent() && next.getLevel() == LayoutProcess.LEVEL_PAGINATE ) {
+      next.firePageStartedEvent( ReportEvent.REPORT_INITIALIZED | ReportEvent.NO_PARENT_PASSING_EVENT );
     }
     return next;
   }
 
-  public ProcessState commit(final ProcessState next) throws ReportProcessingException
-  {
-    if (next.isSubReportExecutable())
-    {
-      next.setAdvanceHandler(ReportHeaderHandler.HANDLER);
-    }
-    else
-    {
-      next.setAdvanceHandler(ReportDoneHandler.HANDLER);
+  public ProcessState commit( final ProcessState next ) throws ReportProcessingException {
+    if ( next.isSubReportExecutable() ) {
+      next.setAdvanceHandler( ReportHeaderHandler.HANDLER );
+    } else {
+      next.setAdvanceHandler( ReportDoneHandler.HANDLER );
     }
     return next;
   }
 
-  public boolean isRestoreHandler()
-  {
+  public boolean isRestoreHandler() {
     return false;
   }
 }

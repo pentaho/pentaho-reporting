@@ -17,9 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.misc.bsf;
 
-import java.io.IOException;
-import java.io.ObjectInputStream;
-
 import org.apache.bsf.BSFException;
 import org.apache.bsf.BSFManager;
 import org.apache.commons.logging.Log;
@@ -30,14 +27,16 @@ import org.pentaho.reporting.engine.classic.core.function.ExpressionRuntime;
 import org.pentaho.reporting.engine.classic.core.function.WrapperExpressionRuntime;
 import org.pentaho.reporting.engine.classic.core.states.LegacyDataRowWrapper;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
+
 /**
  * An expression that uses the Bean scripting framework to perform a scripted calculation.
  *
  * @author Thomas Morgner
  */
-public class BSFExpression extends AbstractExpression
-{
-  private static final Log logger = LogFactory.getLog(BSFExpression.class);
+public class BSFExpression extends AbstractExpression {
+  private static final Log logger = LogFactory.getLog( BSFExpression.class );
   /**
    * The interpreter used to evaluate the expression.
    */
@@ -53,8 +52,7 @@ public class BSFExpression extends AbstractExpression
   /**
    * Default constructor, create a new BeanShellExpression.
    */
-  public BSFExpression()
-  {
+  public BSFExpression() {
   }
 
   /**
@@ -62,17 +60,13 @@ public class BSFExpression extends AbstractExpression
    *
    * @return the interpreter or null, if there was an error.
    */
-  protected BSFManager createInterpreter()
-  {
-    try
-    {
+  protected BSFManager createInterpreter() {
+    try {
       final BSFManager interpreter = new BSFManager();
-      initializeInterpreter(interpreter);
+      initializeInterpreter( interpreter );
       return interpreter;
-    }
-    catch (Exception e)
-    {
-      BSFExpression.logger.error("Unable to initialize the expression", e); //$NON-NLS-1$
+    } catch ( Exception e ) {
+      BSFExpression.logger.error( "Unable to initialize the expression", e ); //$NON-NLS-1$
       return null;
     }
   }
@@ -83,17 +77,15 @@ public class BSFExpression extends AbstractExpression
    * @param interpreter the BSF-Manager that should be initialized.
    * @throws BSFException if an error occured.
    */
-  protected void initializeInterpreter(final BSFManager interpreter)
-      throws BSFException
-  {
+  protected void initializeInterpreter( final BSFManager interpreter )
+    throws BSFException {
     dataRowWrapper = new LegacyDataRowWrapper();
     runtimeWrapper = new WrapperExpressionRuntime();
-    runtimeWrapper.update(getDataRow(), getRuntime());
-    interpreter.declareBean("runtime", runtimeWrapper, ExpressionRuntime.class); //$NON-NLS-1$
-    interpreter.declareBean("dataRow", dataRowWrapper, DataRow.class); //$NON-NLS-1$
-    if (script != null)
-    {
-      interpreter.exec(getLanguage(), "script", 1, 1, getScript()); //$NON-NLS-1$
+    runtimeWrapper.update( getDataRow(), getRuntime() );
+    interpreter.declareBean( "runtime", runtimeWrapper, ExpressionRuntime.class ); //$NON-NLS-1$
+    interpreter.declareBean( "dataRow", dataRowWrapper, DataRow.class ); //$NON-NLS-1$
+    if ( script != null ) {
+      interpreter.exec( getLanguage(), "script", 1, 1, getScript() ); //$NON-NLS-1$
     }
   }
 
@@ -107,38 +99,29 @@ public class BSFExpression extends AbstractExpression
    *
    * @return the evaluated value or null.
    */
-  public Object getValue()
-  {
-    if (invalid || expression == null)
-    {
+  public Object getValue() {
+    if ( invalid || expression == null ) {
       return null;
     }
-    if (interpreter == null)
-    {
+    if ( interpreter == null ) {
       interpreter = createInterpreter();
-      if (interpreter == null)
-      {
+      if ( interpreter == null ) {
         invalid = true;
         return null;
       }
     }
-    try
-    {
-      runtimeWrapper.update(null, getRuntime());
-      dataRowWrapper.setParent(getDataRow());
+    try {
+      runtimeWrapper.update( null, getRuntime() );
+      dataRowWrapper.setParent( getDataRow() );
       return interpreter.eval
-          (getLanguage(), "expression", 1, 1, getExpression()); //$NON-NLS-1$
-    }
-    catch (Exception e)
-    {
-      BSFExpression.logger.warn("Evaluation error: " + //$NON-NLS-1$
-          e.getClass() + " - " + e.getMessage(), e); //$NON-NLS-1$
+        ( getLanguage(), "expression", 1, 1, getExpression() ); //$NON-NLS-1$
+    } catch ( Exception e ) {
+      BSFExpression.logger.warn( "Evaluation error: " + //$NON-NLS-1$
+        e.getClass() + " - " + e.getMessage(), e ); //$NON-NLS-1$
       return null;
-    }
-    finally
-    {
-      runtimeWrapper.update(null, null);
-      dataRowWrapper.setParent(null);
+    } finally {
+      runtimeWrapper.update( null, null );
+      dataRowWrapper.setParent( null );
     }
   }
 
@@ -149,8 +132,7 @@ public class BSFExpression extends AbstractExpression
    * @throws CloneNotSupportedException this should never happen.
    */
   public Object clone()
-      throws CloneNotSupportedException
-  {
+    throws CloneNotSupportedException {
     final BSFExpression expression = (BSFExpression) super.clone();
     expression.interpreter = null;
     return expression;
@@ -164,9 +146,8 @@ public class BSFExpression extends AbstractExpression
    * @throws IOException            if there is an I/O error.
    * @throws ClassNotFoundException if a serialized class is not defined on this system.
    */
-  private void readObject(final ObjectInputStream in)
-      throws IOException, ClassNotFoundException
-  {
+  private void readObject( final ObjectInputStream in )
+    throws IOException, ClassNotFoundException {
     in.defaultReadObject();
   }
 
@@ -175,16 +156,14 @@ public class BSFExpression extends AbstractExpression
    *
    * @return the script.
    */
-  public String getExpression()
-  {
+  public String getExpression() {
     return expression;
   }
 
   /**
    * Invalidates the interpreter-cache and forces a reinterpretation of the script.
    */
-  protected void invalidate()
-  {
+  protected void invalidate() {
     this.interpreter = null;
   }
 
@@ -193,8 +172,7 @@ public class BSFExpression extends AbstractExpression
    *
    * @param expression the script.
    */
-  public void setExpression(final String expression)
-  {
+  public void setExpression( final String expression ) {
     this.expression = expression;
     this.interpreter = null;
   }
@@ -204,8 +182,7 @@ public class BSFExpression extends AbstractExpression
    *
    * @return the programming language, which must be one of the supported BSF-Languages.
    */
-  public String getLanguage()
-  {
+  public String getLanguage() {
     return language;
   }
 
@@ -214,8 +191,7 @@ public class BSFExpression extends AbstractExpression
    *
    * @param language the programming language of the script.
    */
-  public void setLanguage(final String language)
-  {
+  public void setLanguage( final String language ) {
     this.language = language;
     this.interpreter = null;
   }
@@ -226,8 +202,7 @@ public class BSFExpression extends AbstractExpression
    *
    * @return the script (can be null).
    */
-  public String getScript()
-  {
+  public String getScript() {
     return script;
   }
 
@@ -237,8 +212,7 @@ public class BSFExpression extends AbstractExpression
    *
    * @param script an initialization script.
    */
-  public void setScript(final String script)
-  {
+  public void setScript( final String script ) {
     this.script = script;
     this.interpreter = null;
   }

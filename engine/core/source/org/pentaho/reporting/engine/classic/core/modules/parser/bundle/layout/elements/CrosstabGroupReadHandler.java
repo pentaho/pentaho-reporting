@@ -25,8 +25,7 @@ import org.pentaho.reporting.libraries.xmlns.parser.XmlReadHandler;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 
-public class CrosstabGroupReadHandler extends AbstractElementReadHandler
-{
+public class CrosstabGroupReadHandler extends AbstractElementReadHandler {
   private GroupHeaderReadHandler headerReadHandler;
   private GroupFooterReadHandler footerReadHandler;
 
@@ -35,9 +34,8 @@ public class CrosstabGroupReadHandler extends AbstractElementReadHandler
   private NoDataBandReadHandler noDataBandReadHandler;
 
   public CrosstabGroupReadHandler()
-      throws ParseException
-  {
-    super(CrosstabGroupType.INSTANCE);
+    throws ParseException {
+    super( CrosstabGroupType.INSTANCE );
   }
 
   /**
@@ -49,45 +47,36 @@ public class CrosstabGroupReadHandler extends AbstractElementReadHandler
    * @return the handler or null, if the tagname is invalid.
    * @throws SAXException if there is a parsing error.
    */
-  protected XmlReadHandler getHandlerForChild(final String uri,
-                                              final String tagName,
-                                              final Attributes atts) throws SAXException
-  {
-    if (BundleNamespaces.LAYOUT.equals(uri))
-    {
-      if ("group-header".equals(tagName))
-      {
-        if (headerReadHandler == null)
-        {
+  protected XmlReadHandler getHandlerForChild( final String uri,
+                                               final String tagName,
+                                               final Attributes atts ) throws SAXException {
+    if ( BundleNamespaces.LAYOUT.equals( uri ) ) {
+      if ( "group-header".equals( tagName ) ) {
+        if ( headerReadHandler == null ) {
           headerReadHandler = new GroupHeaderReadHandler();
         }
         return headerReadHandler;
       }
-      if ("group-footer".equals(tagName))
-      {
-        if (footerReadHandler == null)
-        {
+      if ( "group-footer".equals( tagName ) ) {
+        if ( footerReadHandler == null ) {
           footerReadHandler = new GroupFooterReadHandler();
         }
         return footerReadHandler;
       }
-      if ("no-data".equals(tagName))
-      {
+      if ( "no-data".equals( tagName ) ) {
         noDataBandReadHandler = new NoDataBandReadHandler();
         return noDataBandReadHandler;
       }
-      if ("crosstab-other-group-body".equals(tagName))
-      {
+      if ( "crosstab-other-group-body".equals( tagName ) ) {
         otherSubGroupBodyReadHandler = new CrosstabOtherSubGroupBodyReadHandler();
         return otherSubGroupBodyReadHandler;
       }
-      if ("crosstab-row-group-body".equals(tagName))
-      {
+      if ( "crosstab-row-group-body".equals( tagName ) ) {
         rowSubGroupBodyReadHandler = new CrosstabRowSubGroupBodyReadHandler();
         return rowSubGroupBodyReadHandler;
       }
     }
-    return super.getHandlerForChild(uri, tagName, atts);
+    return super.getHandlerForChild( uri, tagName, atts );
   }
 
   /**
@@ -95,35 +84,27 @@ public class CrosstabGroupReadHandler extends AbstractElementReadHandler
    *
    * @throws SAXException if there is a parsing error.
    */
-  protected void doneParsing() throws SAXException
-  {
+  protected void doneParsing() throws SAXException {
     super.doneParsing();
 
     final CrosstabGroup group = getElement();
-    if (headerReadHandler != null)
-    {
-      group.setHeader(headerReadHandler.getElement());
+    if ( headerReadHandler != null ) {
+      group.setHeader( headerReadHandler.getElement() );
     }
-    if (footerReadHandler != null)
-    {
-      group.setFooter(footerReadHandler.getElement());
+    if ( footerReadHandler != null ) {
+      group.setFooter( footerReadHandler.getElement() );
     }
-    if (noDataBandReadHandler != null)
-    {
-      group.setNoDataBand(noDataBandReadHandler.getElement());
+    if ( noDataBandReadHandler != null ) {
+      group.setNoDataBand( noDataBandReadHandler.getElement() );
     }
-    if (rowSubGroupBodyReadHandler != null)
-    {
-      group.setBody(rowSubGroupBodyReadHandler.getElement());
-    }
-    else if (otherSubGroupBodyReadHandler != null)
-    {
-      group.setBody(otherSubGroupBodyReadHandler.getElement());
+    if ( rowSubGroupBodyReadHandler != null ) {
+      group.setBody( rowSubGroupBodyReadHandler.getElement() );
+    } else if ( otherSubGroupBodyReadHandler != null ) {
+      group.setBody( otherSubGroupBodyReadHandler.getElement() );
     }
   }
 
-  public CrosstabGroup getElement()
-  {
+  public CrosstabGroup getElement() {
     return (CrosstabGroup) super.getElement();
   }
 }

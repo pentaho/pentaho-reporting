@@ -19,35 +19,29 @@ package org.pentaho.reporting.engine.classic.core.layout.richtext;
 
 import java.util.HashMap;
 
-public class RichTextConverterRegistry
-{
+public class RichTextConverterRegistry {
   private static RichTextConverterRegistry registry;
 
-  public static synchronized RichTextConverterRegistry getRegistry()
-  {
-    if (registry == null)
-    {
+  public static synchronized RichTextConverterRegistry getRegistry() {
+    if ( registry == null ) {
       registry = new RichTextConverterRegistry();
     }
     return registry;
   }
 
-  private HashMap<String,RichTextConverter> richTextConverters;
+  private HashMap<String, RichTextConverter> richTextConverters;
 
-  private RichTextConverterRegistry()
-  {
-    richTextConverters = new HashMap<String,RichTextConverter>();
-    richTextConverters.put("text/html", new HtmlRichTextConverter());
-    richTextConverters.put("text/rtf", new RtfRichTextConverter());
+  private RichTextConverterRegistry() {
+    richTextConverters = new HashMap<String, RichTextConverter>();
+    richTextConverters.put( "text/html", new HtmlRichTextConverter() );
+    richTextConverters.put( "text/rtf", new RtfRichTextConverter() );
   }
 
-  public RichTextConverter getConverter(final String key)
-  {
-    if (key == null)
-    {
+  public RichTextConverter getConverter( final String key ) {
+    if ( key == null ) {
       return null;
     }
 
-    return richTextConverters.get(key);
+    return richTextConverters.get( key );
   }
 }

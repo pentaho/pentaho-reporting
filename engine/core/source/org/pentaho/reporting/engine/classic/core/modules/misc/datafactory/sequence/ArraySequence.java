@@ -17,47 +17,40 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.misc.datafactory.sequence;
 
-import java.lang.reflect.Array;
-import javax.swing.table.TableModel;
-
 import org.pentaho.reporting.engine.classic.core.DataFactoryContext;
 import org.pentaho.reporting.engine.classic.core.DataRow;
 import org.pentaho.reporting.engine.classic.core.ReportDataFactoryException;
 import org.pentaho.reporting.engine.classic.core.util.TypedTableModel;
 
-public class ArraySequence extends AbstractSequence
-{
-  public ArraySequence()
-  {
+import javax.swing.table.TableModel;
+import java.lang.reflect.Array;
+
+public class ArraySequence extends AbstractSequence {
+  public ArraySequence() {
   }
 
-  public SequenceDescription getSequenceDescription()
-  {
+  public SequenceDescription getSequenceDescription() {
     return new ArraySequenceDescription();
   }
 
-  public TableModel produce(final DataRow parameters,
-                            final DataFactoryContext dataFactoryContext) throws ReportDataFactoryException
-  {
-    final String col = getTypedParameter("column", String.class);
-    if (col == null)
-    {
-      throw new ReportDataFactoryException("Column parameter is not defined.");
+  public TableModel produce( final DataRow parameters,
+                             final DataFactoryContext dataFactoryContext ) throws ReportDataFactoryException {
+    final String col = getTypedParameter( "column", String.class );
+    if ( col == null ) {
+      throw new ReportDataFactoryException( "Column parameter is not defined." );
     }
 
-    final String displayName = getTypedParameter("display-name", String.class, col);
-    final Object o = parameters.get(col);
-    if (o == null || o.getClass().isArray() == false)
-    {
-      return new TypedTableModel(new String[]{displayName});
+    final String displayName = getTypedParameter( "display-name", String.class, col );
+    final Object o = parameters.get( col );
+    if ( o == null || o.getClass().isArray() == false ) {
+      return new TypedTableModel( new String[] { displayName } );
     }
 
     final TypedTableModel model =
-        new TypedTableModel(new String[]{displayName}, new Class[]{o.getClass().getComponentType()});
-    final int length = Array.getLength(o);
-    for (int i = 0; i < length; i+= 1)
-    {
-      model.addRow(Array.get(o, i));
+      new TypedTableModel( new String[] { displayName }, new Class[] { o.getClass().getComponentType() } );
+    final int length = Array.getLength( o );
+    for ( int i = 0; i < length; i += 1 ) {
+      model.addRow( Array.get( o, i ) );
     }
 
     return model;

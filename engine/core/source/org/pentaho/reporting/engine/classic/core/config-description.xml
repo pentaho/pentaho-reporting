@@ -1,15 +1,19 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <config-description xmlns="http://jfreereport.sourceforge.net/namespaces/config-description">
   <key name="org.pentaho.reporting.engine.classic.core.FailOnAttributeExpressionErrors">
-    <description>Defines whether attribute-expression evaluation errors cause the report processing to fail with an error. Use this to prevent errors in calculated fields from producing invalid reporting results.</description>
+    <description>Defines whether attribute-expression evaluation errors cause the report processing to fail with an
+      error. Use this to prevent errors in calculated fields from producing invalid reporting results.
+    </description>
     <enum>
       <text>true</text>
       <text>false</text>
     </enum>
   </key>
-  
+
   <key name="org.pentaho.reporting.engine.classic.core.FailOnStyleExpressionErrors">
-    <description>Defines whether style-expression evaluation errors cause the report processing to fail with an error. Use this to prevent errors in calculated fields from producing invalid reporting results.</description>
+    <description>Defines whether style-expression evaluation errors cause the report processing to fail with an error.
+      Use this to prevent errors in calculated fields from producing invalid reporting results.
+    </description>
     <enum>
       <text>true</text>
       <text>false</text>
@@ -25,7 +29,9 @@
   </key>
 
   <key name="org.pentaho.reporting.engine.classic.core.WatermarkPrintedOnTopOfContent" global="false" hidden="false">
-    <description>Defines whether the watermark band is printed on top of all content (true, overlaying the page content) or whether it shall be printed beneath the page content (false, default)</description>
+    <description>Defines whether the watermark band is printed on top of all content (true, overlaying the page content)
+      or whether it shall be printed beneath the page content (false, default)
+    </description>
     <enum>
       <text>true</text>
       <text>false</text>
@@ -33,9 +39,11 @@
   </key>
 
   <key name="org.pentaho.reporting.engine.classic.core.UseNativeScaling" global="false" hidden="false">
-    <description>Defines whether image scaling in the reporting engine uses the built-in Graphics2D scaling or a slower but higher quality algorithm that scales images in several steps to reduce artifacts.
+    <description>Defines whether image scaling in the reporting engine uses the built-in Graphics2D scaling or a slower
+      but higher quality algorithm that scales images in several steps to reduce artifacts.
 
-Defaults to true as most people prefer speed over quality.</description>
+      Defaults to true as most people prefer speed over quality.
+    </description>
     <enum>
       <text>true</text>
       <text>false</text>
@@ -43,11 +51,16 @@ Defaults to true as most people prefer speed over quality.</description>
   </key>
 
   <key name="org.pentaho.reporting.engine.classic.core.DetectExtraContent" global="false" hidden="false">
-    <description>Defines whether the reporting engine will treat elements carrying non-printable information, like anchor names or html-extra-raw-content as content elements. If set to true, these elements will compete with all other elements for space in the table.
+    <description>Defines whether the reporting engine will treat elements carrying non-printable information, like
+      anchor names or html-extra-raw-content as content elements. If set to true, these elements will compete with all
+      other elements for space in the table.
 
-Defaults to true to solve the case where a empty element has extra content and where it would not appear unless that extra content is detected.
+      Defaults to true to solve the case where a empty element has extra content and where it would not appear unless
+      that extra content is detected.
 
-Set to false to restore the PRD-3.6 behaviour. Make sure your extra-content elements generate some sort of output or they will not be included in the final report output.</description>
+      Set to false to restore the PRD-3.6 behaviour. Make sure your extra-content elements generate some sort of output
+      or they will not be included in the final report output.
+    </description>
     <enum>
       <text>true</text>
       <text>false</text>
@@ -61,9 +74,12 @@ Set to false to restore the PRD-3.6 behaviour. Make sure your extra-content elem
   </key>
 
   <key name="org.pentaho.reporting.engine.classic.core.AllowOwnPeerForComponentDrawable" global="false" hidden="false">
-    <description>Defines, that components drawn in a Component-Element or a ComponentDrawable are allowed to supply their own window-object as native peer. Allowing foreign peers can lead to very strange behaviour, ranging from unpredictable effects in the UI of the calling programm to even memory leaks. 
+    <description>Defines, that components drawn in a Component-Element or a ComponentDrawable are allowed to supply
+      their own window-object as native peer. Allowing foreign peers can lead to very strange behaviour, ranging from
+      unpredictable effects in the UI of the calling programm to even memory leaks.
 
-This property defaults to false.</description>
+      This property defaults to false.
+    </description>
     <enum>
       <text>true</text>
       <text>false</text>
@@ -72,11 +88,16 @@ This property defaults to false.</description>
   <key name="org.pentaho.reporting.engine.classic.core.ComponentDrawableMode" global="false" hidden="false">
     <description>Defines how the system processes AWT-components. Possible values are:
 
-&apos;private&apos; - All components get their own peer. This may result in problems on Windows. If you receive the message &apos;No more handles available&apos;, switch back to &apos;shared&apos; mode.
+      &apos;private&apos; - All components get their own peer. This may result in problems on Windows. If you receive
+      the message &apos;No more handles available&apos;, switch back to &apos;shared&apos; mode.
 
-&apos;synchronized&apos; - All components get their own peer, but all drawing operations will be executed on the AWT-EventDispatcher thread. This may result in problems on Windows. If you receive the message &apos;No more handles available&apos;, switch back to &apos;shared&apos; mode.
+      &apos;synchronized&apos; - All components get their own peer, but all drawing operations will be executed on the
+      AWT-EventDispatcher thread. This may result in problems on Windows. If you receive the message &apos;No more
+      handles available&apos;, switch back to &apos;shared&apos; mode.
 
-&apos;shared&apos; - All components of a given report share a single AWT-peer. All drawing operations will be executed on the AWT-EventDispatcher thread.</description>
+      &apos;shared&apos; - All components of a given report share a single AWT-peer. All drawing operations will be
+      executed on the AWT-EventDispatcher thread.
+    </description>
     <enum>
       <text>private</text>
       <text>synchronized</text>
@@ -84,9 +105,11 @@ This property defaults to false.</description>
     </enum>
   </key>
   <key name="org.pentaho.reporting.engine.classic.core.ParameterAutoSubmit" global="true" hidden="false">
-    <description>A global setting on whether parameter UIs should have their Auto-Submit feature enabled by default or not.
+    <description>A global setting on whether parameter UIs should have their Auto-Submit feature enabled by default or
+      not.
 
-This property defaults to false.</description>
+      This property defaults to false.
+    </description>
     <enum>
       <text>true</text>
       <text>false</text>
@@ -94,18 +117,22 @@ This property defaults to false.</description>
     </enum>
   </key>
   <key name="org.pentaho.reporting.engine.classic.core.ParameterAutoSubmitUI" global="true" hidden="false">
-    <description>Defines the default value for the auto-submit checkbox in parameter-UIs, if the autosubmit parameter is set to prompt.
+    <description>Defines the default value for the auto-submit checkbox in parameter-UIs, if the autosubmit parameter is
+      set to prompt.
 
-This property defaults to true.</description>
+      This property defaults to true.
+    </description>
     <enum>
       <text>true</text>
       <text>false</text>
     </enum>
   </key>
   <key name="org.pentaho.reporting.engine.classic.core.ParameterAutoFillsSelection" global="false" hidden="false">
-    <description>Defines whether list-parameter without a value default to the first value in the list of available values.
+    <description>Defines whether list-parameter without a value default to the first value in the list of available
+      values.
 
-This property defaults to false.</description>
+      This property defaults to false.
+    </description>
     <enum>
       <text>true</text>
       <text>false</text>
@@ -114,11 +141,12 @@ This property defaults to false.</description>
   <key name="org.pentaho.reporting.engine.classic.core.ParameterUiLayout" global="false" hidden="false">
     <description>Defines the layouting strategy for the parameter UI. This can be either one of
 
- vertical - (default) all parameter are layouted along the y-axis,
- horizontal - all parameter are layouted along the x-axis with no linebreak or
- flow - all parameter are layouted along the x-axis with potential linebreaks if the end of the available
-          space  is reached.
-This property defaults to vertical.</description>
+      vertical - (default) all parameter are layouted along the y-axis,
+      horizontal - all parameter are layouted along the x-axis with no linebreak or
+      flow - all parameter are layouted along the x-axis with potential linebreaks if the end of the available
+      space is reached.
+      This property defaults to vertical.
+    </description>
     <enum>
       <text>vertical</text>
       <text>horizontal</text>
@@ -139,16 +167,22 @@ org.pentaho.reporting.engine.classic.core.ParameterUiLayout=vertical
     <text/>
   </key>
   <key name="org.pentaho.reporting.engine.classic.core.DebugDataSources" global="true" hidden="false">
-    <description>Defines whether datasources should provide additional log messages. As this kind of logging can result in large amounts of data it is set to &apos;fase&apos; as default. Set it to &apos;true&apos; to enable the logging.</description>
+    <description>Defines whether datasources should provide additional log messages. As this kind of logging can result
+      in large amounts of data it is set to &apos;fase&apos; as default. Set it to &apos;true&apos; to enable the
+      logging.
+    </description>
     <enum>
       <text>true</text>
       <text>false</text>
     </enum>
   </key>
   <key name="org.pentaho.reporting.engine.classic.core.DynamicStrokeDashes" global="true" hidden="false">
-    <description>Defines, whether the stroke dashs should take the pen width into account or whether the stroke dashes should always be static.
+    <description>Defines, whether the stroke dashs should take the pen width into account or whether the stroke dashes
+      should always be static.
 
-The static version was the default until JFreeReport 0.8.7-4 and has been changed to the more sensible dynamic model since that version.</description>
+      The static version was the default until JFreeReport 0.8.7-4 and has been changed to the more sensible dynamic
+      model since that version.
+    </description>
     <enum>
       <text>true</text>
       <text>false</text>
@@ -157,187 +191,250 @@ The static version was the default until JFreeReport 0.8.7-4 and has been change
   <key name="org.pentaho.reporting.engine.classic.core.EnableBrokenImage" global="false" hidden="false">
     <description>This property defines if a broken image icon should be displayed for elements whose images are missing.
 
-This property is disabled by default to preserve full backward compatiblity.</description>
+      This property is disabled by default to preserve full backward compatiblity.
+    </description>
     <enum>
       <text>true</text>
       <text>false</text>
     </enum>
   </key>
   <key name="org.pentaho.reporting.engine.classic.core.EnableGlobalSubReportImports" global="false" hidden="false">
-    <description>This property defines how global * imports from subreports to their master-reports are handled. If the subreport contains rows with the same name as the parent, this feature will mask the parent&apos;s fields making them unavailable once the subreport executed.
+    <description>This property defines how global * imports from subreports to their master-reports are handled. If the
+      subreport contains rows with the same name as the parent, this feature will mask the parent&apos;s fields making
+      them unavailable once the subreport executed.
 
-In general, there should be no need to ever enable this feature, and if you do you are on your own. Passing data from subreports to master reports should be done by explicit mappings carefully avoiding any duplicate columns.
+      In general, there should be no need to ever enable this feature, and if you do you are on your own. Passing data
+      from subreports to master reports should be done by explicit mappings carefully avoiding any duplicate columns.
 
-This setting defaults to &quot;false&quot;.</description>
+      This setting defaults to &quot;false&quot;.
+    </description>
     <enum>
       <text>true</text>
       <text>false</text>
     </enum>
   </key>
   <key name="org.pentaho.reporting.engine.classic.core.FixImageResolutionMapping" global="false" hidden="false">
-    <description>Defines that the layouter uses the System&apos;s native resolution to compute the size of images. This fixes problems with the HTML output, which assumes that images are rendered with a resolution of 96dpi.
+    <description>Defines that the layouter uses the System&apos;s native resolution to compute the size of images. This
+      fixes problems with the HTML output, which assumes that images are rendered with a resolution of 96dpi.
 
-This setting defaults to true. To make use of it, the Device-Resolution configuration setting has to be defined as well.</description>
+      This setting defaults to true. To make use of it, the Device-Resolution configuration setting has to be defined as
+      well.
+    </description>
     <enum>
       <text>true</text>
       <text>false</text>
     </enum>
   </key>
   <key name="org.pentaho.reporting.engine.classic.core.LastLineBreaksOnWordBoundary" global="false" hidden="false">
-    <description>Defines, whether the last line will only print complete words. If set to true, the ellipse (the &apos;..&apos;) will remove the last incomplete word before printing the dots. If set to false, the engine will print as much characters as possible without overlapping with the ellipse.
+    <description>Defines, whether the last line will only print complete words. If set to true, the ellipse (the &apos;..&apos;)
+      will remove the last incomplete word before printing the dots. If set to false, the engine will print as much
+      characters as possible without overlapping with the ellipse.
 
-Defaults to &quot;true&quot;.</description>
+      Defaults to &quot;true&quot;.
+    </description>
     <enum>
       <text>true</text>
       <text>false</text>
     </enum>
   </key>
   <key name="org.pentaho.reporting.engine.classic.core.NoPrinterAvailable" global="true" hidden="false">
-    <description>Defines, whether JFreeReport should query the default page format from the printerdriver. If there is no printer installed on Windows, this seems to block the JavaVM until a time out is reached.
+    <description>Defines, whether JFreeReport should query the default page format from the printerdriver. If there is
+      no printer installed on Windows, this seems to block the JavaVM until a time out is reached.
 
-If this property is set to &quot;true&quot; a hard coded default page format is used instead. By default, the engine assumes that a printer is available and therefore this property defaults to &apos;false&apos;.</description>
+      If this property is set to &quot;true&quot; a hard coded default page format is used instead. By default, the
+      engine assumes that a printer is available and therefore this property defaults to &apos;false&apos;.
+    </description>
     <enum>
       <text>true</text>
       <text>false</text>
     </enum>
   </key>
   <key name="org.pentaho.reporting.engine.classic.core.ProfileDataSources" global="true" hidden="false">
-    <description>Defines whether datasources should log performance metrics. This logging can also be used to measure the execution time of queries. This setting defaults to &apos;false&apos; by default.</description>
+    <description>Defines whether datasources should log performance metrics. This logging can also be used to measure
+      the execution time of queries. This setting defaults to &apos;false&apos; by default.
+    </description>
     <enum>
       <text>true</text>
       <text>false</text>
     </enum>
   </key>
   <key name="org.pentaho.reporting.engine.classic.core.ProfileReportProcessing" global="false" hidden="false">
-    <description>Defines, whether the report processor should print performance related data during the report processing. This defaults to false, but can savely be set to true to get more details on the report performance.</description>
+    <description>Defines, whether the report processor should print performance related data during the report
+      processing. This defaults to false, but can savely be set to true to get more details on the report performance.
+    </description>
     <enum>
       <text>true</text>
       <text>false</text>
     </enum>
   </key>
   <key name="org.pentaho.reporting.engine.classic.core.performance.LogRowProgress" global="false" hidden="false">
-    <description>Defines, whether the report processor should print performance related data during the report processing.
-      This defaults to false, and if enabled prints a log message every 50000 rows.</description>
+    <description>Defines, whether the report processor should print performance related data during the report
+      processing.
+      This defaults to false, and if enabled prints a log message every 50000 rows.
+    </description>
     <enum>
       <text>true</text>
       <text>false</text>
     </enum>
   </key>
   <key name="org.pentaho.reporting.engine.classic.core.performance.LogPageProgress" global="false" hidden="false">
-    <description>Defines, whether the report processor should print performance related data during the report processing.
-      This defaults to false, and if enabled prints a log message on every page processed.</description>
+    <description>Defines, whether the report processor should print performance related data during the report
+      processing.
+      This defaults to false, and if enabled prints a log message on every page processed.
+    </description>
     <enum>
       <text>true</text>
       <text>false</text>
     </enum>
   </key>
   <key name="org.pentaho.reporting.engine.classic.core.performance.LogLevelProgress" global="false" hidden="false">
-    <description>Defines, whether the report processor should print performance related data during the report processing.
-      This defaults to false, and if enabled prints a log message on every processing level that has started.</description>
+    <description>Defines, whether the report processor should print performance related data during the report
+      processing.
+      This defaults to false, and if enabled prints a log message on every processing level that has started.
+    </description>
     <enum>
       <text>true</text>
       <text>false</text>
     </enum>
   </key>
   <key name="org.pentaho.reporting.engine.classic.core.StrictErrorHandling" global="true" hidden="false">
-    <description>Defines a stricter error handling, if set to &apos;true&apos;, then all errors that occur during the report processing will cause the report processing to fail. It is safe to set this to &apos;true&apos;, as valid reports never throw exceptions.</description>
+    <description>Defines a stricter error handling, if set to &apos;true&apos;, then all errors that occur during the
+      report processing will cause the report processing to fail. It is safe to set this to &apos;true&apos;, as valid
+      reports never throw exceptions.
+    </description>
     <enum>
       <text>true</text>
       <text>false</text>
     </enum>
   </key>
   <key name="org.pentaho.reporting.engine.classic.core.URLEncoding" global="false" hidden="false">
-    <description>Defines the character encoding that is used when encoding text for URLs. This setting default to ISO-8859-1 as this is the common standard.</description>
+    <description>Defines the character encoding that is used when encoding text for URLs. This setting default to
+      ISO-8859-1 as this is the common standard.
+    </description>
     <text/>
   </key>
   <key name="org.pentaho.reporting.engine.classic.core.WarnInvalidColumns" global="true" hidden="false">
-    <description>Defines, whether the datarow prints warning on invalid columns. Requests to invalid columns are non fatal, but these messages give usefull hints on invalid report definitions.
+    <description>Defines, whether the datarow prints warning on invalid columns. Requests to invalid columns are non
+      fatal, but these messages give usefull hints on invalid report definitions.
 
-If set to true, an additional logging entry is added whenever an invalid column is encountered.</description>
+      If set to true, an additional logging entry is added whenever an invalid column is encountered.
+    </description>
     <enum>
       <text>true</text>
       <text>false</text>
     </enum>
   </key>
   <key name="org.pentaho.reporting.engine.classic.core.YieldRate" global="false" hidden="false">
-    <description>Defines how often the report processing thread should yield to let other processes continue. Setting this property to a value greater than zero enables the Yield-feature and improves the overal reponsiveness of the application at the cost of some performance.
+    <description>Defines how often the report processing thread should yield to let other processes continue. Setting
+      this property to a value greater than zero enables the Yield-feature and improves the overal reponsiveness of the
+      application at the cost of some performance.
 
-This property default to &apos;100&apos;. Set it to zero to disable yielding.</description>
+      This property default to &apos;100&apos;. Set it to zero to disable yielding.
+    </description>
     <text/>
   </key>
-  <key name="org.pentaho.reporting.engine.classic.core.auto-report-preprocessors.Aggregate-Function-Processor" global="true" hidden="true">
+  <key name="org.pentaho.reporting.engine.classic.core.auto-report-preprocessors.Aggregate-Function-Processor"
+       global="true" hidden="true">
     <description>Internal Configuration setting. Do not modify.</description>
     <text/>
   </key>
   <key name="org.pentaho.reporting.engine.classic.core.environment.designtime.Locale" global="false" hidden="false">
-    <description>Defines a design-time locale. This locale is only active when using the DefaultReportEnvironment.</description>
+    <description>Defines a design-time locale. This locale is only active when using the DefaultReportEnvironment.
+    </description>
     <text/>
   </key>
   <key name="org.pentaho.reporting.engine.classic.core.environment.designtime.TimeZone" global="false" hidden="false">
-    <description>Defines a design-time TimeZone. This TimeZone is only active when using the DefaultReportEnvironment.</description>
+    <description>Defines a design-time TimeZone. This TimeZone is only active when using the DefaultReportEnvironment.
+    </description>
     <text/>
   </key>
   <key name="org.pentaho.reporting.engine.classic.core.function.LogFormulaFailureCause" global="true" hidden="false">
-    <description>A debug-helper property that enables verbose logging for any errors which happen during formula evaluations. Defaults to true to give maximum insight, but for production systems this should be set to false to make sure that evaluation errors do not slow down the report processing.
+    <description>A debug-helper property that enables verbose logging for any errors which happen during formula
+      evaluations. Defaults to true to give maximum insight, but for production systems this should be set to false to
+      make sure that evaluation errors do not slow down the report processing.
 
-Defaults to &quot;true&quot;.</description>
+      Defaults to &quot;true&quot;.
+    </description>
     <enum>
       <text>true</text>
       <text>false</text>
     </enum>
   </key>
   <key name="org.pentaho.reporting.engine.classic.core.layout.DeviceResolution" global="true" hidden="false">
-    <description>Defines the user-defined output-device resolution. Images will be scaled to fit this resolution if the setting FixImageResolutionMapping is set to true.</description>
+    <description>Defines the user-defined output-device resolution. Images will be scaled to fit this resolution if the
+      setting FixImageResolutionMapping is set to true.
+    </description>
     <text/>
   </key>
   <key name="org.pentaho.reporting.engine.classic.core.layout.ParanoidChecks" global="true" hidden="true">
-    <description>Defines, whether the reporting engine performs additional checks on its internal data-structures.</description>
+    <description>Defines, whether the reporting engine performs additional checks on its internal data-structures.
+    </description>
     <enum>
       <text>true</text>
       <text>false</text>
     </enum>
   </key>
   <key name="org.pentaho.reporting.engine.classic.core.layout.defaults.FontSize" global="false" hidden="false">
-    <description>Defines the default font size that should be used if there is no other font-information available.</description>
+    <description>Defines the default font size that should be used if there is no other font-information available.
+    </description>
     <text/>
   </key>
-  <key name="org.pentaho.reporting.engine.classic.core.layout.defaults.FontSmoothThreshold" global="false" hidden="false">
-    <description>Defines the minimum font size in point to which Text-Antialiasing is applied if the Font-Smooth property is set to auto. This setting defaults to &apos;8&apos; as smaller fonts tend become unreadable with aliasing applied to them.</description>
+  <key name="org.pentaho.reporting.engine.classic.core.layout.defaults.FontSmoothThreshold" global="false"
+       hidden="false">
+    <description>Defines the minimum font size in point to which Text-Antialiasing is applied if the Font-Smooth
+      property is set to auto. This setting defaults to &apos;8&apos; as smaller fonts tend become unreadable with
+      aliasing applied to them.
+    </description>
     <text/>
   </key>
   <key name="org.pentaho.reporting.engine.classic.core.layout.fontrenderer.IsBuggyFRC" global="true" hidden="true">
-    <description>This is a override setting. Some Graphics2D implementations have problems with the font positioning. I don&apos;t know a way to resolve that bug on the root, so if the bug happens to you, try setting this property to &quot;true&quot; to resolve wrong or buggy string draw results.
+    <description>This is a override setting. Some Graphics2D implementations have problems with the font positioning. I
+      don&apos;t know a way to resolve that bug on the root, so if the bug happens to you, try setting this property to
+      &quot;true&quot; to resolve wrong or buggy string draw results.
 
-(This property is no longer used.)</description>
+      (This property is no longer used.)
+    </description>
     <enum>
       <text>true</text>
       <text>false</text>
     </enum>
   </key>
   <key name="org.pentaho.reporting.engine.classic.core.layout.fontrenderer.UseAliasing" global="true" hidden="true">
-    <description>Enable aliasing for Graphics2D. This may result is textlayout errors. If your text is not correctly aligned, disable this property.
+    <description>Enable aliasing for Graphics2D. This may result is textlayout errors. If your text is not correctly
+      aligned, disable this property.
 
-(This property is no longer used.)</description>
+      (This property is no longer used.)
+    </description>
     <text/>
   </key>
-  <key name="org.pentaho.reporting.engine.classic.core.layout.fontrenderer.UseMaxCharBounds" global="false" hidden="false">
-    <description>The old JFreeReport way of computing line heights is not working correctly in some cases. Under some conditions, a character may exceed its normal line height (for instance if it is an upper case letter with accents). In that case, using the font size as line height is not working correctly, causing the text to be clipped.
+  <key name="org.pentaho.reporting.engine.classic.core.layout.fontrenderer.UseMaxCharBounds" global="false"
+       hidden="false">
+    <description>The old JFreeReport way of computing line heights is not working correctly in some cases. Under some
+      conditions, a character may exceed its normal line height (for instance if it is an upper case letter with
+      accents). In that case, using the font size as line height is not working correctly, causing the text to be
+      clipped.
 
-If this property is set to &apos;true&apos;, the line height is computed from the maximum character size for the specified font. If set to &apos;false&apos;, the line height is set to match the declared font size, so that the old behaviour of previous versions of JFreeReport is preserved.</description>
+      If this property is set to &apos;true&apos;, the line height is computed from the maximum character size for the
+      specified font. If set to &apos;false&apos;, the line height is set to match the declared font size, so that the
+      old behaviour of previous versions of JFreeReport is preserved.
+    </description>
     <enum>
       <text>true</text>
       <text>false</text>
     </enum>
   </key>
-  <key name="org.pentaho.reporting.engine.classic.core.metadata.global-includes.core-include" global="true" hidden="true">
+  <key name="org.pentaho.reporting.engine.classic.core.metadata.global-includes.core-include" global="true"
+       hidden="true">
     <description>Internal Configuration setting. Do not modify.</description>
     <text/>
   </key>
-  <key name="org.pentaho.reporting.engine.classic.core.metadata.global-includes.report-designer" global="true" hidden="true">
+  <key name="org.pentaho.reporting.engine.classic.core.metadata.global-includes.report-designer" global="true"
+       hidden="true">
     <description>Internal Configuration setting. Do not modify.</description>
     <text/>
   </key>
-  <key name="org.pentaho.reporting.engine.classic.core.metadata.global-includes.report-designer-parser" global="true" hidden="true">
+  <key name="org.pentaho.reporting.engine.classic.core.metadata.global-includes.report-designer-parser" global="true"
+       hidden="true">
     <description>Internal Configuration setting. Do not modify.</description>
     <text/>
   </key>
@@ -381,19 +478,25 @@ If this property is set to &apos;true&apos;, the line height is computed from th
     <description>A internal XML parser property. Do not edit.</description>
     <text/>
   </key>
-  <key name="org.pentaho.reporting.engine.classic.core.modules.parser.data-factory-prefix.built-in.compound" global="true" hidden="true">
+  <key name="org.pentaho.reporting.engine.classic.core.modules.parser.data-factory-prefix.built-in.compound"
+       global="true" hidden="true">
     <description>A internal configuration that controls an XML-Generator. Do not edit.</description>
     <text/>
   </key>
-  <key name="org.pentaho.reporting.engine.classic.core.modules.parser.data-factory-prefix.built-in.sql" global="true" hidden="true">
+  <key name="org.pentaho.reporting.engine.classic.core.modules.parser.data-factory-prefix.built-in.sql" global="true"
+       hidden="true">
     <description>A internal configuration that controls an XML-Generator. Do not edit.</description>
     <text/>
   </key>
 
   <key name="org.pentaho.reporting.engine.classic.core.states.NullDataSourceHandling" global="true" hidden="false">
-    <description>Defines how the engine behaves, if a data-factory returns null instead of throwing an exception if it cannot handle a query. The implementations of 0.8.9 illegally returned null and therefore several reports depend on the behavior that in that case an empty tablemodel is auto-generated.
+    <description>Defines how the engine behaves, if a data-factory returns null instead of throwing an exception if it
+      cannot handle a query. The implementations of 0.8.9 illegally returned null and therefore several reports depend
+      on the behavior that in that case an empty tablemodel is auto-generated.
 
-For now, we will warn that this is illegal behavior. In the next version, we will switch the property from &quot;warn&quot; to &quot;fail&quot; enforcing the correct behavior by default.</description>
+      For now, we will warn that this is illegal behavior. In the next version, we will switch the property from &quot;warn&quot;
+      to &quot;fail&quot; enforcing the correct behavior by default.
+    </description>
     <enum>
       <text>warn</text>
       <text>fail</text>
@@ -419,10 +522,15 @@ For now, we will warn that this is illegal behavior. In the next version, we wil
     <description>A internal configuration that controls the report-engine initialization. Do not edit.</description>
     <text/>
   </key>
-  <key name="org.pentaho.reporting.engine.classic.core.util.PropertyLookupParserEscapeMode" global="false" hidden="false">
-    <description>Defines how the property-parser will handle escape sequences in parsed text. The property parser is used to inject named parameters in the format of ${name} or $(name) into parsed xml-text and queries in the datafactories. The property defaults to &apos;strict&apos; to maintain a sensible level of backward compatiblity while causing minimal impact otherwise.
+  <key name="org.pentaho.reporting.engine.classic.core.util.PropertyLookupParserEscapeMode" global="false"
+       hidden="false">
+    <description>Defines how the property-parser will handle escape sequences in parsed text. The property parser is
+      used to inject named parameters in the format of ${name} or $(name) into parsed xml-text and queries in the
+      datafactories. The property defaults to &apos;strict&apos; to maintain a sensible level of backward compatiblity
+      while causing minimal impact otherwise.
 
-Possible values are &quot;strict&quot;, &quot;all&quot; or &quot;none&quot;.</description>
+      Possible values are &quot;strict&quot;, &quot;all&quot; or &quot;none&quot;.
+    </description>
     <enum>
       <text>strict</text>
       <text>all</text>
@@ -430,157 +538,219 @@ Possible values are &quot;strict&quot;, &quot;all&quot; or &quot;none&quot;.</de
     </enum>
   </key>
 
-  <key name="org.pentaho.reporting.engine.classic.extensions.modules.datasource-editor.external.Module" global="true" hidden="true">
+  <key name="org.pentaho.reporting.engine.classic.extensions.modules.datasource-editor.external.Module" global="true"
+       hidden="true">
     <description>A module definition. Please do not edit this entry.</description>
     <text/>
   </key>
-  <key name="org.pentaho.reporting.engine.classic.extensions.modules.datasource-editor.jdbc.Module" global="true" hidden="true">
+  <key name="org.pentaho.reporting.engine.classic.extensions.modules.datasource-editor.jdbc.Module" global="true"
+       hidden="true">
     <description>A module definition. Please do not edit this entry.</description>
     <text/>
   </key>
-  <key name="org.pentaho.reporting.engine.classic.extensions.modules.datasource-editor.kettle.Module" global="true" hidden="true">
+  <key name="org.pentaho.reporting.engine.classic.extensions.modules.datasource-editor.kettle.Module" global="true"
+       hidden="true">
     <description>A module definition. Please do not edit this entry.</description>
     <text/>
   </key>
-  <key name="org.pentaho.reporting.engine.classic.extensions.modules.datasource-editor.mondrian.Module" global="true" hidden="true">
+  <key name="org.pentaho.reporting.engine.classic.extensions.modules.datasource-editor.mondrian.Module" global="true"
+       hidden="true">
     <description>A module definition. Please do not edit this entry.</description>
     <text/>
   </key>
-  <key name="org.pentaho.reporting.engine.classic.extensions.modules.datasource-editor.olap4j.Module" global="true" hidden="true">
+  <key name="org.pentaho.reporting.engine.classic.extensions.modules.datasource-editor.olap4j.Module" global="true"
+       hidden="true">
     <description>A module definition. Please do not edit this entry.</description>
     <text/>
   </key>
-  <key name="org.pentaho.reporting.engine.classic.extensions.modules.datasource-editor.pmd.Module" global="true" hidden="true">
+  <key name="org.pentaho.reporting.engine.classic.extensions.modules.datasource-editor.pmd.Module" global="true"
+       hidden="true">
     <description>A module definition. Please do not edit this entry.</description>
     <text/>
   </key>
-  <key name="org.pentaho.reporting.engine.classic.extensions.modules.datasource-editor.reflection.Module" global="true" hidden="true">
+  <key name="org.pentaho.reporting.engine.classic.extensions.modules.datasource-editor.reflection.Module" global="true"
+       hidden="true">
     <description>A module definition. Please do not edit this entry.</description>
     <text/>
   </key>
-  <key name="org.pentaho.reporting.engine.classic.extensions.modules.datasource-editor.table.Module" global="true" hidden="true">
+  <key name="org.pentaho.reporting.engine.classic.extensions.modules.datasource-editor.table.Module" global="true"
+       hidden="true">
     <description>A module definition. Please do not edit this entry.</description>
     <text/>
   </key>
-  <key name="org.pentaho.reporting.engine.classic.extensions.modules.datasource-editor.xpath.Module" global="true" hidden="true">
+  <key name="org.pentaho.reporting.engine.classic.extensions.modules.datasource-editor.xpath.Module" global="true"
+       hidden="true">
     <description>A module definition. Please do not edit this entry.</description>
     <text/>
   </key>
 
-  <key name="org.pentaho.reporting.engine.classic.extensions.modules.report-designer-parser.Module" global="true" hidden="true">
+  <key name="org.pentaho.reporting.engine.classic.extensions.modules.report-designer-parser.Module" global="true"
+       hidden="true">
     <description>A module definition. Please do not edit this entry.</description>
     <text/>
   </key>
-  <key name="org.pentaho.reporting.engine.classic.metadata.datafactory-editor.org.pentaho.reporting.engine.classic.core.ExternalDataFactory" global="true" hidden="true">
+  <key
+      name="org.pentaho.reporting.engine.classic.metadata.datafactory-editor.org.pentaho.reporting.engine.classic.core.ExternalDataFactory"
+      global="true" hidden="true">
     <description>Internal DataFactory-Editor configuration. Do not modify.</description>
     <text/>
   </key>
-  <key name="org.pentaho.reporting.engine.classic.metadata.datafactory-editor.org.pentaho.reporting.engine.classic.core.TableDataFactory" global="true" hidden="true">
+  <key
+      name="org.pentaho.reporting.engine.classic.metadata.datafactory-editor.org.pentaho.reporting.engine.classic.core.TableDataFactory"
+      global="true" hidden="true">
     <description>Internal DataFactory-Editor configuration. Do not modify.</description>
     <text/>
   </key>
-  <key name="org.pentaho.reporting.engine.classic.metadata.datafactory-editor.org.pentaho.reporting.engine.classic.core.modules.misc.datafactory.NamedStaticDataFactory" global="true" hidden="true">
+  <key
+      name="org.pentaho.reporting.engine.classic.metadata.datafactory-editor.org.pentaho.reporting.engine.classic.core.modules.misc.datafactory.NamedStaticDataFactory"
+      global="true" hidden="true">
     <description>Internal DataFactory-Editor configuration. Do not modify.</description>
     <text/>
   </key>
-  <key name="org.pentaho.reporting.engine.classic.metadata.datafactory-editor.org.pentaho.reporting.engine.classic.core.modules.misc.datafactory.StaticDataFactory" global="true" hidden="true">
+  <key
+      name="org.pentaho.reporting.engine.classic.metadata.datafactory-editor.org.pentaho.reporting.engine.classic.core.modules.misc.datafactory.StaticDataFactory"
+      global="true" hidden="true">
     <description>Internal DataFactory-Editor configuration. Do not modify.</description>
     <text/>
   </key>
-  <key name="org.pentaho.reporting.engine.classic.metadata.datafactory-editor.org.pentaho.reporting.engine.classic.core.modules.misc.datafactory.sql.SQLReportDataFactory" global="true" hidden="true">
+  <key
+      name="org.pentaho.reporting.engine.classic.metadata.datafactory-editor.org.pentaho.reporting.engine.classic.core.modules.misc.datafactory.sql.SQLReportDataFactory"
+      global="true" hidden="true">
     <description>Internal DataFactory-Editor configuration. Do not modify.</description>
     <text/>
   </key>
-  <key name="org.pentaho.reporting.engine.classic.metadata.datafactory-editor.org.pentaho.reporting.engine.classic.core.modules.misc.datafactory.sql.SimpleSQLReportDataFactory" global="true" hidden="true">
+  <key
+      name="org.pentaho.reporting.engine.classic.metadata.datafactory-editor.org.pentaho.reporting.engine.classic.core.modules.misc.datafactory.sql.SimpleSQLReportDataFactory"
+      global="true" hidden="true">
     <description>Internal DataFactory-Editor configuration. Do not modify.</description>
     <text/>
   </key>
-  <key name="org.pentaho.reporting.engine.classic.metadata.datafactory-editor.org.pentaho.reporting.engine.classic.extensions.datasources.kettle.KettleDataFactory" global="true" hidden="true">
+  <key
+      name="org.pentaho.reporting.engine.classic.metadata.datafactory-editor.org.pentaho.reporting.engine.classic.extensions.datasources.kettle.KettleDataFactory"
+      global="true" hidden="true">
     <description>Internal DataFactory-Editor configuration. Do not modify.</description>
     <text/>
   </key>
-  <key name="org.pentaho.reporting.engine.classic.metadata.datafactory-editor.org.pentaho.reporting.engine.classic.extensions.datasources.mondrian.BandedMDXDataFactory" global="true" hidden="true">
+  <key
+      name="org.pentaho.reporting.engine.classic.metadata.datafactory-editor.org.pentaho.reporting.engine.classic.extensions.datasources.mondrian.BandedMDXDataFactory"
+      global="true" hidden="true">
     <description>Internal DataFactory-Editor configuration. Do not modify.</description>
     <text/>
   </key>
-  <key name="org.pentaho.reporting.engine.classic.metadata.datafactory-editor.org.pentaho.reporting.engine.classic.extensions.datasources.mondrian.DenormalizedMDXDataFactory" global="true" hidden="true">
+  <key
+      name="org.pentaho.reporting.engine.classic.metadata.datafactory-editor.org.pentaho.reporting.engine.classic.extensions.datasources.mondrian.DenormalizedMDXDataFactory"
+      global="true" hidden="true">
     <description>Internal DataFactory-Editor configuration. Do not modify.</description>
     <text/>
   </key>
-  <key name="org.pentaho.reporting.engine.classic.metadata.datafactory-editor.org.pentaho.reporting.engine.classic.extensions.datasources.mondrian.LegacyBandedMDXDataFactory" global="true" hidden="true">
+  <key
+      name="org.pentaho.reporting.engine.classic.metadata.datafactory-editor.org.pentaho.reporting.engine.classic.extensions.datasources.mondrian.LegacyBandedMDXDataFactory"
+      global="true" hidden="true">
     <description>Internal DataFactory-Editor configuration. Do not modify.</description>
     <text/>
   </key>
-  <key name="org.pentaho.reporting.engine.classic.metadata.datafactory-editor.org.pentaho.reporting.engine.classic.extensions.datasources.olap4j.BandedMDXDataFactory" global="true" hidden="true">
+  <key
+      name="org.pentaho.reporting.engine.classic.metadata.datafactory-editor.org.pentaho.reporting.engine.classic.extensions.datasources.olap4j.BandedMDXDataFactory"
+      global="true" hidden="true">
     <description>Internal DataFactory-Editor configuration. Do not modify.</description>
     <text/>
   </key>
-  <key name="org.pentaho.reporting.engine.classic.metadata.datafactory-editor.org.pentaho.reporting.engine.classic.extensions.datasources.olap4j.DenormalizedMDXDataFactory" global="true" hidden="true">
+  <key
+      name="org.pentaho.reporting.engine.classic.metadata.datafactory-editor.org.pentaho.reporting.engine.classic.extensions.datasources.olap4j.DenormalizedMDXDataFactory"
+      global="true" hidden="true">
     <description>Internal DataFactory-Editor configuration. Do not modify.</description>
     <text/>
   </key>
-  <key name="org.pentaho.reporting.engine.classic.metadata.datafactory-editor.org.pentaho.reporting.engine.classic.extensions.datasources.olap4j.LegacyBandedMDXDataFactory" global="true" hidden="true">
+  <key
+      name="org.pentaho.reporting.engine.classic.metadata.datafactory-editor.org.pentaho.reporting.engine.classic.extensions.datasources.olap4j.LegacyBandedMDXDataFactory"
+      global="true" hidden="true">
     <description>Internal DataFactory-Editor configuration. Do not modify.</description>
     <text/>
   </key>
-  <key name="org.pentaho.reporting.engine.classic.metadata.datafactory-editor.org.pentaho.reporting.engine.classic.extensions.datasources.pmd.PmdDataFactory" global="true" hidden="true">
+  <key
+      name="org.pentaho.reporting.engine.classic.metadata.datafactory-editor.org.pentaho.reporting.engine.classic.extensions.datasources.pmd.PmdDataFactory"
+      global="true" hidden="true">
     <description>Internal DataFactory-Editor configuration. Do not modify.</description>
     <text/>
   </key>
-  <key name="org.pentaho.reporting.engine.classic.metadata.datafactory-editor.org.pentaho.reporting.engine.classic.extensions.datasources.scriptable.ScriptableDataFactory" global="true" hidden="true">
+  <key
+      name="org.pentaho.reporting.engine.classic.metadata.datafactory-editor.org.pentaho.reporting.engine.classic.extensions.datasources.scriptable.ScriptableDataFactory"
+      global="true" hidden="true">
     <description>Internal DataFactory-Editor configuration. Do not modify.</description>
     <text/>
   </key>
-  <key name="org.pentaho.reporting.engine.classic.metadata.datafactory-editor.org.pentaho.reporting.engine.classic.extensions.datasources.xpath.XPathDataFactory" global="true" hidden="true">
+  <key
+      name="org.pentaho.reporting.engine.classic.metadata.datafactory-editor.org.pentaho.reporting.engine.classic.extensions.datasources.xpath.XPathDataFactory"
+      global="true" hidden="true">
     <description>Internal DataFactory-Editor configuration. Do not modify.</description>
     <text/>
   </key>
-  <key name="org.pentaho.reporting.libraries.resourceloader.factory.modules.org.pentaho.reporting.engine.classic.core.DataFactory.compound" global="true" hidden="true">
+  <key
+      name="org.pentaho.reporting.libraries.resourceloader.factory.modules.org.pentaho.reporting.engine.classic.core.DataFactory.compound"
+      global="true" hidden="true">
     <description>A internal configuration that controls an XML-Generator. Do not edit.</description>
     <text/>
   </key>
-  <key name="org.pentaho.reporting.libraries.resourceloader.factory.modules.org.pentaho.reporting.engine.classic.core.MasterReport.report-designer" global="true" hidden="true">
+  <key
+      name="org.pentaho.reporting.libraries.resourceloader.factory.modules.org.pentaho.reporting.engine.classic.core.MasterReport.report-designer"
+      global="true" hidden="true">
     <description>A internal configuration that controls an XML-Generator. Do not edit.</description>
     <text/>
   </key>
-  <key name="org.pentaho.reporting.libraries.resourceloader.factory.modules.org.pentaho.reporting.engine.classic.core.SubReport.report-designer" global="true" hidden="true">
+  <key
+      name="org.pentaho.reporting.libraries.resourceloader.factory.modules.org.pentaho.reporting.engine.classic.core.SubReport.report-designer"
+      global="true" hidden="true">
     <description>A internal configuration that controls an XML-Generator. Do not edit.</description>
     <text/>
   </key>
-  <key name="org.pentaho.reporting.libraries.resourceloader.factory.modules.org.pentaho.reporting.engine.classic.core.metadata.parser.DataFactoryMetaDataCollection" global="true" hidden="true">
+  <key
+      name="org.pentaho.reporting.libraries.resourceloader.factory.modules.org.pentaho.reporting.engine.classic.core.metadata.parser.DataFactoryMetaDataCollection"
+      global="true" hidden="true">
     <description>A internal configuration that controls an XML-Generator. Do not edit.</description>
     <text/>
   </key>
-  <key name="org.pentaho.reporting.libraries.resourceloader.factory.modules.org.pentaho.reporting.engine.classic.core.metadata.parser.ElementTypeCollection.default" global="true" hidden="true">
+  <key
+      name="org.pentaho.reporting.libraries.resourceloader.factory.modules.org.pentaho.reporting.engine.classic.core.metadata.parser.ElementTypeCollection.default"
+      global="true" hidden="true">
     <description>A internal configuration that controls an XML-Generator. Do not edit.</description>
     <text/>
   </key>
-  <key name="org.pentaho.reporting.libraries.resourceloader.factory.modules.org.pentaho.reporting.engine.classic.core.metadata.parser.ExpressionMetaDataCollection.default" global="true" hidden="true">
+  <key
+      name="org.pentaho.reporting.libraries.resourceloader.factory.modules.org.pentaho.reporting.engine.classic.core.metadata.parser.ExpressionMetaDataCollection.default"
+      global="true" hidden="true">
     <description>A internal configuration that controls the report-engine initialization. Do not edit.</description>
     <text/>
   </key>
-  <key name="org.pentaho.reporting.libraries.resourceloader.factory.modules.org.pentaho.reporting.engine.classic.core.metadata.parser.GlobalMetaDefinition.default" global="true" hidden="true">
+  <key
+      name="org.pentaho.reporting.libraries.resourceloader.factory.modules.org.pentaho.reporting.engine.classic.core.metadata.parser.GlobalMetaDefinition.default"
+      global="true" hidden="true">
     <description>A internal configuration that controls the report-engine initialization. Do not edit.</description>
     <text/>
   </key>
-  <key name="org.pentaho.reporting.libraries.resourceloader.factory.modules.org.pentaho.reporting.engine.classic.core.metadata.parser.ReportPreProcessorMetaDataCollection" global="true" hidden="true">
+  <key
+      name="org.pentaho.reporting.libraries.resourceloader.factory.modules.org.pentaho.reporting.engine.classic.core.metadata.parser.ReportPreProcessorMetaDataCollection"
+      global="true" hidden="true">
     <description>A internal configuration that controls an XML-Generator. Do not edit.</description>
     <text/>
   </key>
 
-  <key name="org.pentaho.reporting.engine.classic.core.performance.pagestates.PrimaryPoolSize" global="false" hidden="false">
+  <key name="org.pentaho.reporting.engine.classic.core.performance.pagestates.PrimaryPoolSize" global="false"
+       hidden="false">
     <description>A performance tuning setting</description>
     <text/>
   </key>
-  <key name="org.pentaho.reporting.engine.classic.core.performance.pagestates.SecondaryPoolFrequency" global="false" hidden="false">
+  <key name="org.pentaho.reporting.engine.classic.core.performance.pagestates.SecondaryPoolFrequency" global="false"
+       hidden="false">
     <description>A performance tuning setting.</description>
     <text/>
   </key>
-  <key name="org.pentaho.reporting.engine.classic.core.performance.pagestates.SecondaryPoolSize" global="false" hidden="false">
+  <key name="org.pentaho.reporting.engine.classic.core.performance.pagestates.SecondaryPoolSize" global="false"
+       hidden="false">
     <description>A performance tuning setting.</description>
     <text/>
   </key>
-  <key name="org.pentaho.reporting.engine.classic.core.performance.pagestates.TertiaryPoolFrequency" global="false" hidden="false">
+  <key name="org.pentaho.reporting.engine.classic.core.performance.pagestates.TertiaryPoolFrequency" global="false"
+       hidden="false">
     <description>A performance tuning setting.</description>
     <text/>
   </key>

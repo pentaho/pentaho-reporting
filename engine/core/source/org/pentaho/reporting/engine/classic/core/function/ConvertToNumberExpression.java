@@ -17,15 +17,14 @@
 
 package org.pentaho.reporting.engine.classic.core.function;
 
-import java.lang.reflect.Method;
+import org.pentaho.reporting.engine.classic.core.DataRow;
+import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
+
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.text.ParseException;
 import java.util.Locale;
-
-import org.pentaho.reporting.engine.classic.core.DataRow;
-import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
 
 /**
  * Parses a string into a number using the given decimal-format.
@@ -33,26 +32,25 @@ import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
  * @author Thomas Morgner
  * @see java.text.DecimalFormat
  */
-public class ConvertToNumberExpression extends AbstractExpression
-{
+public class ConvertToNumberExpression extends AbstractExpression {
   /**
    * The default pattern if no other format-string was given. This parses decimal integer numbers with the highest
    * precision. This pattern was the default for JDK 1.4 and below, but changed in JDK 1.5. We stick with the original
    * pattern here.
    */
   private static final String DECIMALFORMAT_DEFAULT_PATTERN =
-      "#,###.###################################################" +
-          "#########################################################" +
-          "#########################################################" +
-          "#########################################################" +
-          "#########################################################" +
-          "#########################################################" +
-          "####";
+    "#,###.###################################################" +
+      "#########################################################" +
+      "#########################################################" +
+      "#########################################################" +
+      "#########################################################" +
+      "#########################################################" +
+      "####";
 
   /**
    * A constant for the numeric value zero.
    */
-  private static final BigDecimal ZERO = new BigDecimal(0);
+  private static final BigDecimal ZERO = new BigDecimal( 0 );
 
   /**
    * The name of the data-row column from where to read the string that should be parsed.
@@ -78,8 +76,7 @@ public class ConvertToNumberExpression extends AbstractExpression
   /**
    * Default Constructor.
    */
-  public ConvertToNumberExpression()
-  {
+  public ConvertToNumberExpression() {
   }
 
   /**
@@ -87,8 +84,7 @@ public class ConvertToNumberExpression extends AbstractExpression
    *
    * @return the field name.
    */
-  public String getField()
-  {
+  public String getField() {
     return field;
   }
 
@@ -97,8 +93,7 @@ public class ConvertToNumberExpression extends AbstractExpression
    *
    * @param field the name of the field.
    */
-  public void setField(final String field)
-  {
+  public void setField( final String field ) {
     this.field = field;
   }
 
@@ -108,8 +103,7 @@ public class ConvertToNumberExpression extends AbstractExpression
    * @return the pattern string.
    * @see java.text.DecimalFormat
    */
-  public String getFormat()
-  {
+  public String getFormat() {
     return format;
   }
 
@@ -119,8 +113,7 @@ public class ConvertToNumberExpression extends AbstractExpression
    * @param format the pattern string.
    * @see DecimalFormat
    */
-  public void setFormat(final String format)
-  {
+  public void setFormat( final String format ) {
     this.format = format;
     this.lastLocale = null;
     this.decimalFormat = null;
@@ -131,8 +124,7 @@ public class ConvertToNumberExpression extends AbstractExpression
    *
    * @return the locale.
    */
-  public Locale getLocale()
-  {
+  public Locale getLocale() {
     return locale;
   }
 
@@ -141,8 +133,7 @@ public class ConvertToNumberExpression extends AbstractExpression
    *
    * @param locale the locale.
    */
-  public void setLocale(final Locale locale)
-  {
+  public void setLocale( final Locale locale ) {
     this.locale = locale;
     this.lastLocale = null;
     this.decimalFormat = null;
@@ -154,49 +145,39 @@ public class ConvertToNumberExpression extends AbstractExpression
    *
    * @return the value of the function.
    */
-  public Object getValue()
-  {
+  public Object getValue() {
     final DataRow dataRow = getDataRow();
     // get the row directly as a Number
-    final Object o = dataRow.get(field);
+    final Object o = dataRow.get( field );
     // check if that thing is a Number
-    if (o instanceof Number)
-    {
+    if ( o instanceof Number ) {
       return o;
     }
 
     // get a string and convert
     final String formatString = getFormat();
-    try
-    {
+    try {
       Locale localeUsed = locale;
-      if (localeUsed == null)
-      {
+      if ( localeUsed == null ) {
         localeUsed = getResourceBundleFactory().getLocale();
       }
 
-      if (decimalFormat == null || ObjectUtilities.equal(lastLocale, localeUsed) == false)
-      {
+      if ( decimalFormat == null || ObjectUtilities.equal( lastLocale, localeUsed ) == false ) {
         final String effectiveFormatString;
-        if (formatString == null || formatString.length() == 0)
-        {
+        if ( formatString == null || formatString.length() == 0 ) {
           // this is a workaround for a bug in JDK 1.5
           effectiveFormatString = ConvertToNumberExpression.DECIMALFORMAT_DEFAULT_PATTERN;
-        }
-        else
-        {
+        } else {
           effectiveFormatString = formatString;
         }
         lastLocale = localeUsed;
-        decimalFormat = new DecimalFormat(effectiveFormatString);
-        decimalFormat.setParseBigDecimal(true);
-        decimalFormat.setDecimalFormatSymbols(new DecimalFormatSymbols(localeUsed));
+        decimalFormat = new DecimalFormat( effectiveFormatString );
+        decimalFormat.setParseBigDecimal( true );
+        decimalFormat.setDecimalFormatSymbols( new DecimalFormatSymbols( localeUsed ) );
       }
 
-      return decimalFormat.parse(String.valueOf(o));
-    }
-    catch (ParseException e)
-    {
+      return decimalFormat.parse( String.valueOf( o ) );
+    } catch ( ParseException e ) {
       return ConvertToNumberExpression.ZERO;
     }
   }

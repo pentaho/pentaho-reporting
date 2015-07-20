@@ -19,41 +19,35 @@ package org.pentaho.reporting.engine.classic.core.designtime;
 
 /**
  * Simple bean-like class for holding all the information about an attribute change.
-*
-* @author Thomas Morgner.
-*/
-public class AttributeChange implements Change
-{
+ *
+ * @author Thomas Morgner.
+ */
+public class AttributeChange implements Change {
   private String namespace;
   private String name;
   private Object oldValue;
   private Object newValue;
 
-  public AttributeChange(final String namespace, final String name, final Object oldValue, final Object newValue)
-  {
+  public AttributeChange( final String namespace, final String name, final Object oldValue, final Object newValue ) {
     this.namespace = namespace;
     this.name = name;
     this.oldValue = oldValue;
     this.newValue = newValue;
   }
 
-  public String getNamespace()
-  {
+  public String getNamespace() {
     return namespace;
   }
 
-  public String getName()
-  {
+  public String getName() {
     return name;
   }
 
-  public Object getOldValue()
-  {
+  public Object getOldValue() {
     return oldValue;
   }
 
-  public Object getNewValue()
-  {
+  public Object getNewValue() {
     return newValue;
   }
 }

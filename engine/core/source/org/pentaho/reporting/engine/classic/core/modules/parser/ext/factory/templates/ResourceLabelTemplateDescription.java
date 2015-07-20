@@ -24,15 +24,13 @@ import org.pentaho.reporting.engine.classic.core.filter.templates.ResourceLabelT
  *
  * @author Thomas Morgner
  */
-public class ResourceLabelTemplateDescription extends AbstractTemplateDescription
-{
+public class ResourceLabelTemplateDescription extends AbstractTemplateDescription {
   /**
    * Creates a new template description.
    *
    * @param name the name.
    */
-  public ResourceLabelTemplateDescription(final String name)
-  {
-    super(name, ResourceLabelTemplate.class, true);
+  public ResourceLabelTemplateDescription( final String name ) {
+    super( name, ResourceLabelTemplate.class, true );
   }
 }

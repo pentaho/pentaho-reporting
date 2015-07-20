@@ -17,9 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.parser.extwriter;
 
-import java.io.IOException;
-import java.util.Iterator;
-
 import org.pentaho.reporting.engine.classic.core.modules.parser.ext.ExtParserModule;
 import org.pentaho.reporting.engine.classic.core.modules.parser.ext.factory.templates.TemplateDescription;
 import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
@@ -27,14 +24,16 @@ import org.pentaho.reporting.libraries.xmlns.common.AttributeList;
 import org.pentaho.reporting.libraries.xmlns.writer.XmlWriter;
 import org.pentaho.reporting.libraries.xmlns.writer.XmlWriterSupport;
 
+import java.io.IOException;
+import java.util.Iterator;
+
 /**
  * The template writer writes a single template definition to the xml-definition stream. This writer requires report
  * builder hints to be present for all templates.
  *
  * @author Thomas Morgner
  */
-public class TemplateWriter extends ObjectWriter
-{
+public class TemplateWriter extends ObjectWriter {
   /**
    * The template that should be written.
    */
@@ -52,19 +51,16 @@ public class TemplateWriter extends ObjectWriter
    * @param template     the template that should be written.
    * @param parent       the parent of the template.
    */
-  public TemplateWriter(final ReportWriterContext reportWriter,
-                        final XmlWriter indentLevel,
-                        final TemplateDescription template,
-                        final TemplateDescription parent)
-  {
-    super(reportWriter, template, indentLevel);
-    if (template == null)
-    {
-      throw new NullPointerException("Template is null.");
+  public TemplateWriter( final ReportWriterContext reportWriter,
+                         final XmlWriter indentLevel,
+                         final TemplateDescription template,
+                         final TemplateDescription parent ) {
+    super( reportWriter, template, indentLevel );
+    if ( template == null ) {
+      throw new NullPointerException( "Template is null." );
     }
-    if (parent == null)
-    {
-      throw new NullPointerException("Parent is null.");
+    if ( parent == null ) {
+      throw new NullPointerException( "Parent is null." );
     }
     this.parent = parent;
     this.template = template;
@@ -79,44 +75,35 @@ public class TemplateWriter extends ObjectWriter
    * @throws ReportWriterException if the report serialisation failed.
    */
   public void write()
-      throws IOException, ReportWriterException
-  {
+    throws IOException, ReportWriterException {
     final AttributeList attList = new AttributeList();
-    if (template.getName() != null)
-    {
+    if ( template.getName() != null ) {
       // dont copy the parent name for anonymous templates ...
-      if (template.getName().equals(parent.getName()) == false)
-      {
-        attList.setAttribute(ExtParserModule.NAMESPACE, "name", template.getName());
+      if ( template.getName().equals( parent.getName() ) == false ) {
+        attList.setAttribute( ExtParserModule.NAMESPACE, "name", template.getName() );
       }
     }
-    attList.setAttribute(ExtParserModule.NAMESPACE, "references", parent.getName());
+    attList.setAttribute( ExtParserModule.NAMESPACE, "references", parent.getName() );
 
     boolean tagWritten = false;
     final XmlWriter writer = getXmlWriter();
     final Iterator it = template.getParameterNames();
-    while (it.hasNext())
-    {
+    while ( it.hasNext() ) {
       final String name = (String) it.next();
-      if (shouldWriteParameter(name))
-      {
-        if (tagWritten == false)
-        {
-          writer.writeTag(ExtParserModule.NAMESPACE, AbstractXMLDefinitionWriter.TEMPLATE_TAG, attList,
-              XmlWriterSupport.OPEN);
+      if ( shouldWriteParameter( name ) ) {
+        if ( tagWritten == false ) {
+          writer.writeTag( ExtParserModule.NAMESPACE, AbstractXMLDefinitionWriter.TEMPLATE_TAG, attList,
+            XmlWriterSupport.OPEN );
           tagWritten = true;
         }
-        writeParameter(name);
+        writeParameter( name );
       }
     }
-    if (tagWritten)
-    {
+    if ( tagWritten ) {
       writer.writeCloseTag();
-    }
-    else
-    {
+    } else {
       writer.writeTag
-          (ExtParserModule.NAMESPACE, AbstractXMLDefinitionWriter.TEMPLATE_TAG, attList, XmlWriterSupport.CLOSE);
+        ( ExtParserModule.NAMESPACE, AbstractXMLDefinitionWriter.TEMPLATE_TAG, attList, XmlWriterSupport.CLOSE );
     }
   }
 
@@ -127,17 +114,14 @@ public class TemplateWriter extends ObjectWriter
    * @param parameterName the name of the parameter that should be tested
    * @return true, if the parameter should be written, false otherwise.
    */
-  private boolean shouldWriteParameter(final String parameterName)
-  {
-    final Object parameterObject = template.getParameter(parameterName);
-    if (parameterObject == null)
-    {
+  private boolean shouldWriteParameter( final String parameterName ) {
+    final Object parameterObject = template.getParameter( parameterName );
+    if ( parameterObject == null ) {
       //Log.debug ("Should not write: Parameter is null.");
       return false;
     }
-    final Object parentObject = parent.getParameter(parameterName);
-    if (ObjectUtilities.equal(parameterObject, parentObject))
-    {
+    final Object parentObject = parent.getParameter( parameterName );
+    if ( ObjectUtilities.equal( parameterObject, parentObject ) ) {
       //Log.debug ("Should not write: Parameter objects are equal.");
       return false;
     }

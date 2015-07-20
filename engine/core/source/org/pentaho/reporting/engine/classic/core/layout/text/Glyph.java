@@ -19,8 +19,7 @@ package org.pentaho.reporting.engine.classic.core.layout.text;
 
 import org.pentaho.reporting.libraries.fonts.text.Spacing;
 
-public interface Glyph
-{
+public interface Glyph {
   int SPACE_CHAR = 0;
   int LETTER = 1;
 

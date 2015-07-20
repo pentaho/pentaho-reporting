@@ -17,22 +17,21 @@
 
 package org.pentaho.reporting.engine.classic.core.function;
 
+import org.pentaho.reporting.engine.classic.core.DataRow;
+
 import java.util.ArrayList;
 import java.util.Arrays;
-
-import org.pentaho.reporting.engine.classic.core.DataRow;
 
 /**
  * The base-class for all expressions that aggregate values from multiple columns.
  *
  * @author Thomas Morgner
  */
-public abstract class ColumnAggregationExpression extends AbstractExpression
-{
+public abstract class ColumnAggregationExpression extends AbstractExpression {
   /**
    * An ordered list containing the fieldnames used in the expression.
    */
-  private ArrayList <String> fields;
+  private ArrayList<String> fields;
   /**
    * A temporary array to reduce the number of object creations.
    */
@@ -41,8 +40,7 @@ public abstract class ColumnAggregationExpression extends AbstractExpression
   /**
    * Default Constructor.
    */
-  protected ColumnAggregationExpression()
-  {
+  protected ColumnAggregationExpression() {
     fields = new ArrayList<String>();
   }
 
@@ -51,21 +49,17 @@ public abstract class ColumnAggregationExpression extends AbstractExpression
    *
    * @return an Object-array containing all defined values from the datarow
    */
-  protected Object[] getFieldValues()
-  {
+  protected Object[] getFieldValues() {
     final int size = fields.size();
-    if (fieldValues == null || fieldValues.length != size)
-    {
-      fieldValues = new Object[size];
+    if ( fieldValues == null || fieldValues.length != size ) {
+      fieldValues = new Object[ size ];
     }
 
     final DataRow dataRow = getDataRow();
-    for (int i = 0; i < size; i++)
-    {
-      final String field = fields.get(i);
-      if (field != null)
-      {
-        fieldValues[i] = dataRow.get(field);
+    for ( int i = 0; i < size; i++ ) {
+      final String field = fields.get( i );
+      if ( field != null ) {
+        fieldValues[ i ] = dataRow.get( field );
       }
     }
     return fieldValues;
@@ -77,15 +71,11 @@ public abstract class ColumnAggregationExpression extends AbstractExpression
    * @param index the position in the list, where the field should be defined.
    * @param field the name of the field.
    */
-  public void setField(final int index, final String field)
-  {
-    if (fields.size() == index)
-    {
-      fields.add(field);
-    }
-    else
-    {
-      fields.set(index, field);
+  public void setField( final int index, final String field ) {
+    if ( fields.size() == index ) {
+      fields.add( field );
+    } else {
+      fields.set( index, field );
     }
     this.fieldValues = null;
   }
@@ -96,9 +86,8 @@ public abstract class ColumnAggregationExpression extends AbstractExpression
    * @param index the position of the field name that should be queried.
    * @return the field name at the given position.
    */
-  public String getField(final int index)
-  {
-    return fields.get(index);
+  public String getField( final int index ) {
+    return fields.get( index );
   }
 
   /**
@@ -106,8 +95,7 @@ public abstract class ColumnAggregationExpression extends AbstractExpression
    *
    * @return the number of fields.
    */
-  public int getFieldCount()
-  {
+  public int getFieldCount() {
     return fields.size();
   }
 
@@ -116,9 +104,8 @@ public abstract class ColumnAggregationExpression extends AbstractExpression
    *
    * @return all the fields.
    */
-  public String[] getField()
-  {
-    return fields.toArray(new String[fields.size()]);
+  public String[] getField() {
+    return fields.toArray( new String[ fields.size() ] );
   }
 
   /**
@@ -126,10 +113,9 @@ public abstract class ColumnAggregationExpression extends AbstractExpression
    *
    * @param fields the new list of fields.
    */
-  public void setField(final String[] fields)
-  {
+  public void setField( final String[] fields ) {
     this.fields.clear();
-    this.fields.addAll(Arrays.asList(fields));
+    this.fields.addAll( Arrays.asList( fields ) );
     this.fieldValues = null;
   }
 
@@ -139,8 +125,7 @@ public abstract class ColumnAggregationExpression extends AbstractExpression
    *
    * @return a copy of this function.
    */
-  public Expression getInstance()
-  {
+  public Expression getInstance() {
     final ColumnAggregationExpression cae = (ColumnAggregationExpression) super.getInstance();
     cae.fields = (ArrayList) fields.clone();
     return cae;

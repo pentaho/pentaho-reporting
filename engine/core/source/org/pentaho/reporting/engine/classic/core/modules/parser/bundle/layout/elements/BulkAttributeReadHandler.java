@@ -22,20 +22,16 @@ import org.pentaho.reporting.libraries.xmlns.parser.StringReadHandler;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 
-public class BulkAttributeReadHandler extends StringReadHandler
-{
+public class BulkAttributeReadHandler extends StringReadHandler {
   private String namespace;
   private String name;
   private ReportAttributeMap<String> attributes;
 
-  public BulkAttributeReadHandler(final String namespace, final String name)
-  {
-    if (namespace == null)
-    {
+  public BulkAttributeReadHandler( final String namespace, final String name ) {
+    if ( namespace == null ) {
       throw new NullPointerException();
     }
-    if (name == null)
-    {
+    if ( name == null ) {
       throw new NullPointerException();
     }
     this.namespace = namespace;
@@ -43,28 +39,23 @@ public class BulkAttributeReadHandler extends StringReadHandler
     this.attributes = new ReportAttributeMap<String>();
   }
 
-  protected void startParsing(final Attributes attrs) throws SAXException
-  {
-    super.startParsing(attrs);
+  protected void startParsing( final Attributes attrs ) throws SAXException {
+    super.startParsing( attrs );
     final int length = attrs.getLength();
-    for (int i = 0; i < length; i++)
-    {
-      attributes.setAttribute(attrs.getURI(i), attrs.getLocalName(i), attrs.getValue(i));
+    for ( int i = 0; i < length; i++ ) {
+      attributes.setAttribute( attrs.getURI( i ), attrs.getLocalName( i ), attrs.getValue( i ) );
     }
   }
 
-  public String getNamespace()
-  {
+  public String getNamespace() {
     return namespace;
   }
 
-  public String getName()
-  {
+  public String getName() {
     return name;
   }
 
-  public ReportAttributeMap<String> getAttributes()
-  {
+  public ReportAttributeMap<String> getAttributes() {
     return attributes;
   }
 }

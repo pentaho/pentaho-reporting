@@ -22,22 +22,19 @@ package org.pentaho.reporting.engine.classic.core.modules.gui.common;
  *
  * @author Thomas Morgner
  */
-public class StatusType
-{
-  public static final StatusType ERROR = new StatusType("ERROR"); //$NON-NLS-1$
-  public static final StatusType WARNING = new StatusType("WARNING"); //$NON-NLS-1$
-  public static final StatusType INFORMATION = new StatusType("INFORMATION"); //$NON-NLS-1$
-  public static final StatusType NONE = new StatusType("NONE"); //$NON-NLS-1$
+public class StatusType {
+  public static final StatusType ERROR = new StatusType( "ERROR" ); //$NON-NLS-1$
+  public static final StatusType WARNING = new StatusType( "WARNING" ); //$NON-NLS-1$
+  public static final StatusType INFORMATION = new StatusType( "INFORMATION" ); //$NON-NLS-1$
+  public static final StatusType NONE = new StatusType( "NONE" ); //$NON-NLS-1$
 
   private final String myName; // for debug only
 
-  private StatusType(final String name)
-  {
+  private StatusType( final String name ) {
     myName = name;
   }
 
-  public String toString()
-  {
+  public String toString() {
     return myName;
   }
 }

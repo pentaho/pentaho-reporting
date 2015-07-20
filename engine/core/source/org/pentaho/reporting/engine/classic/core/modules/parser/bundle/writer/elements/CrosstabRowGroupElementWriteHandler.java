@@ -17,8 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.parser.bundle.writer.elements;
 
-import java.io.IOException;
-
 import org.pentaho.reporting.engine.classic.core.CrosstabRowGroup;
 import org.pentaho.reporting.engine.classic.core.Element;
 import org.pentaho.reporting.engine.classic.core.Section;
@@ -30,15 +28,15 @@ import org.pentaho.reporting.libraries.xmlns.common.AttributeList;
 import org.pentaho.reporting.libraries.xmlns.writer.XmlWriter;
 import org.pentaho.reporting.libraries.xmlns.writer.XmlWriterSupport;
 
+import java.io.IOException;
+
 /**
  * Todo: Document Me
  *
  * @author Thomas Morgner
  */
-public class CrosstabRowGroupElementWriteHandler extends AbstractElementWriteHandler
-{
-  public CrosstabRowGroupElementWriteHandler()
-  {
+public class CrosstabRowGroupElementWriteHandler extends AbstractElementWriteHandler {
+  public CrosstabRowGroupElementWriteHandler() {
   }
 
   /**
@@ -51,41 +49,35 @@ public class CrosstabRowGroupElementWriteHandler extends AbstractElementWriteHan
    * @throws IOException           if an IO error occured.
    * @throws BundleWriterException if an Bundle writer.
    */
-  public void writeElement(final WriteableDocumentBundle bundle,
-                           final BundleWriterState state,
-                           final XmlWriter xmlWriter,
-                           final Element element)
-      throws IOException, BundleWriterException
-  {
-    if (bundle == null)
-    {
+  public void writeElement( final WriteableDocumentBundle bundle,
+                            final BundleWriterState state,
+                            final XmlWriter xmlWriter,
+                            final Element element )
+    throws IOException, BundleWriterException {
+    if ( bundle == null ) {
       throw new NullPointerException();
     }
-    if (state == null)
-    {
+    if ( state == null ) {
       throw new NullPointerException();
     }
-    if (xmlWriter == null)
-    {
+    if ( xmlWriter == null ) {
       throw new NullPointerException();
     }
-    if (element == null)
-    {
+    if ( element == null ) {
       throw new NullPointerException();
     }
 
-    final AttributeList attList = createMainAttributes(element, xmlWriter);
-    xmlWriter.writeTag(BundleNamespaces.LAYOUT, "crosstab-row-group", attList, XmlWriterSupport.OPEN);
+    final AttributeList attList = createMainAttributes( element, xmlWriter );
+    xmlWriter.writeTag( BundleNamespaces.LAYOUT, "crosstab-row-group", attList, XmlWriterSupport.OPEN );
 
     final CrosstabRowGroup group = (CrosstabRowGroup) element;
-    if (group.getField() != null)
-    {
-      xmlWriter.writeTag(BundleNamespaces.LAYOUT, "field", XmlWriterSupport.OPEN);
-      xmlWriter.writeTextNormalized(group.getField(), false);
+    if ( group.getField() != null ) {
+      xmlWriter.writeTag( BundleNamespaces.LAYOUT, "field", XmlWriterSupport.OPEN );
+      xmlWriter.writeTextNormalized( group.getField(), false );
       xmlWriter.writeCloseTag();
     }
-    writeElementBody(bundle, state, element, xmlWriter);
-    writeChildElements(bundle, state, xmlWriter, (Section) element);
+    writeElementBody( bundle, state, element, xmlWriter );
+    writeChildElements( bundle, state, xmlWriter, (Section) element );
     xmlWriter.writeCloseTag();
 
   }

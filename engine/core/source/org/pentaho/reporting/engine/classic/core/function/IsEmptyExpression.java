@@ -24,8 +24,7 @@ package org.pentaho.reporting.engine.classic.core.function;
  * @author Thomas Morgner
  * @deprecated Use a Formula Instead
  */
-public class IsEmptyExpression extends AbstractExpression
-{
+public class IsEmptyExpression extends AbstractExpression {
   /**
    * The field name.
    */
@@ -34,8 +33,7 @@ public class IsEmptyExpression extends AbstractExpression
   /**
    * Default constructor.
    */
-  public IsEmptyExpression()
-  {
+  public IsEmptyExpression() {
   }
 
   /**
@@ -43,8 +41,7 @@ public class IsEmptyExpression extends AbstractExpression
    *
    * @return the field.
    */
-  public String getField()
-  {
+  public String getField() {
     return field;
   }
 
@@ -53,8 +50,7 @@ public class IsEmptyExpression extends AbstractExpression
    *
    * @param field the field.
    */
-  public void setField(final String field)
-  {
+  public void setField( final String field ) {
     this.field = field;
   }
 
@@ -63,27 +59,21 @@ public class IsEmptyExpression extends AbstractExpression
    *
    * @return the value of the function.
    */
-  public Object getValue()
-  {
-    final Object o = getDataRow().get(getField());
-    if (o == null)
-    {
+  public Object getValue() {
+    final Object o = getDataRow().get( getField() );
+    if ( o == null ) {
       return Boolean.TRUE;
     }
-    if (o instanceof String)
-    {
+    if ( o instanceof String ) {
       final String s = (String) o;
-      if (s.trim().length() == 0)
-      {
+      if ( s.trim().length() == 0 ) {
         return Boolean.TRUE;
       }
       return Boolean.FALSE;
     }
-    if (o instanceof Number)
-    {
+    if ( o instanceof Number ) {
       final Number n = (Number) o;
-      if (n.doubleValue() == 0)
-      {
+      if ( n.doubleValue() == 0 ) {
         return Boolean.TRUE;
       }
       return Boolean.FALSE;

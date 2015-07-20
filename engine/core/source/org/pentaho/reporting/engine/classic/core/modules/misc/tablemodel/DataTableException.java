@@ -22,20 +22,16 @@ package org.pentaho.reporting.engine.classic.core.modules.misc.tablemodel;
  *
  * @author Thomas Morgner
  */
-public class DataTableException extends RuntimeException
-{
+public class DataTableException extends RuntimeException {
 
-  public DataTableException()
-  {
+  public DataTableException() {
   }
 
-  public DataTableException(final String message, final Exception ex)
-  {
-    super(message, ex);
+  public DataTableException( final String message, final Exception ex ) {
+    super( message, ex );
   }
 
-  public DataTableException(final String message)
-  {
-    super(message);
+  public DataTableException( final String message ) {
+    super( message );
   }
 }

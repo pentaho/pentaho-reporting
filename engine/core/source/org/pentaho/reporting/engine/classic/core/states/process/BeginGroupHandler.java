@@ -29,64 +29,52 @@ import org.pentaho.reporting.engine.classic.core.event.ReportEvent;
  *
  * @author Thomas Morgner
  */
-public class BeginGroupHandler implements AdvanceHandler
-{
+public class BeginGroupHandler implements AdvanceHandler {
   public static final AdvanceHandler HANDLER = new BeginGroupHandler();
 
-  private BeginGroupHandler()
-  {
+  private BeginGroupHandler() {
   }
 
-  public int getEventCode()
-  {
+  public int getEventCode() {
     return ReportEvent.GROUP_STARTED;
   }
 
-  private boolean hasMoreGroups(final ProcessState state)
-  {
-    return state.getCurrentGroupIndex() < (state.getReport().getGroupCount() - 1);
+  private boolean hasMoreGroups( final ProcessState state ) {
+    return state.getCurrentGroupIndex() < ( state.getReport().getGroupCount() - 1 );
   }
 
-  public ProcessState advance(final ProcessState state) throws ReportProcessingException
-  {
+  public ProcessState advance( final ProcessState state ) throws ReportProcessingException {
     final ProcessState next = state.deriveForAdvance();
     next.enterGroup();
     next.fireReportEvent();
     next.enterPresentationGroup();
-    final RelationalGroup group = (RelationalGroup) next.getReport().getGroup(next.getCurrentGroupIndex());
-    return InlineSubreportProcessor.processInline(next, group.getHeader());
+    final RelationalGroup group = (RelationalGroup) next.getReport().getGroup( next.getCurrentGroupIndex() );
+    return InlineSubreportProcessor.processInline( next, group.getHeader() );
   }
 
-  public ProcessState commit(final ProcessState next) throws ReportProcessingException
-  {
+  public ProcessState commit( final ProcessState next ) throws ReportProcessingException {
 
-    if (hasMoreGroups(next) == false)
-    {
-      next.setAdvanceHandler(BeginDetailsHandler.HANDLER);
-    }
-    else
-    {
+    if ( hasMoreGroups( next ) == false ) {
+      next.setAdvanceHandler( BeginDetailsHandler.HANDLER );
+    } else {
       // it is safe to query the next group instance here ...
-      final Group nextGroup = next.getReport().getGroup(next.getCurrentGroupIndex() + 1);
-      if (nextGroup instanceof CrosstabGroup)
-      {
-        next.setAdvanceHandler(BeginCrosstabHandler.HANDLER);
+      final Group nextGroup = next.getReport().getGroup( next.getCurrentGroupIndex() + 1 );
+      if ( nextGroup instanceof CrosstabGroup ) {
+        next.setAdvanceHandler( BeginCrosstabHandler.HANDLER );
       }
       // else stick with begin-group as there will be a next group to start ..
     }
 
-    final RelationalGroup group = (RelationalGroup) next.getReport().getGroup(next.getCurrentGroupIndex());
+    final RelationalGroup group = (RelationalGroup) next.getReport().getGroup( next.getCurrentGroupIndex() );
     final RootLevelBand rootLevelBand = group.getHeader();
-    return InlineSubreportProcessor.processBandedSubReports(next, rootLevelBand);
+    return InlineSubreportProcessor.processBandedSubReports( next, rootLevelBand );
   }
 
-  public boolean isFinish()
-  {
+  public boolean isFinish() {
     return false;
   }
 
-  public boolean isRestoreHandler()
-  {
+  public boolean isRestoreHandler() {
     return false;
   }
 }

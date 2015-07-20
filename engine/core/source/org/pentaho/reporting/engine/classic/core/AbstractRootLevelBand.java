@@ -17,10 +17,10 @@
 
 package org.pentaho.reporting.engine.classic.core;
 
-import java.util.ArrayList;
-
 import org.pentaho.reporting.engine.classic.core.style.ElementStyleSheet;
 import org.pentaho.reporting.engine.classic.core.style.RootLevelBandDefaultStyleSheet;
+
+import java.util.ArrayList;
 
 /**
  * The root-level band is the container that is processed by a report-state. The root-level band processing is atomic -
@@ -28,12 +28,11 @@ import org.pentaho.reporting.engine.classic.core.style.RootLevelBandDefaultStyle
  *
  * @author Thomas Morgner
  */
-public abstract class AbstractRootLevelBand extends Band implements RootLevelBand
-{
+public abstract class AbstractRootLevelBand extends Band implements RootLevelBand {
   /**
    * A empty array. (For performance reasons.)
    */
-  private static final SubReport[] EMPTY_SUBREPORTS = new SubReport[0];
+  private static final SubReport[] EMPTY_SUBREPORTS = new SubReport[ 0 ];
   /**
    * The list of follow-up root-level sub-reports.
    */
@@ -42,8 +41,7 @@ public abstract class AbstractRootLevelBand extends Band implements RootLevelBan
   /**
    * Constructs a new band (initially empty).
    */
-  protected AbstractRootLevelBand()
-  {
+  protected AbstractRootLevelBand() {
   }
 
   /**
@@ -52,10 +50,9 @@ public abstract class AbstractRootLevelBand extends Band implements RootLevelBan
    * @param pagebreakAfter  defines, whether a pagebreak should be done after that band was printed.
    * @param pagebreakBefore defines, whether a pagebreak should be done before that band gets printed.
    */
-  protected AbstractRootLevelBand(final boolean pagebreakBefore,
-                                  final boolean pagebreakAfter)
-  {
-    super(pagebreakBefore, pagebreakAfter);
+  protected AbstractRootLevelBand( final boolean pagebreakBefore,
+                                   final boolean pagebreakAfter ) {
+    super( pagebreakBefore, pagebreakAfter );
   }
 
   /**
@@ -63,10 +60,8 @@ public abstract class AbstractRootLevelBand extends Band implements RootLevelBan
    *
    * @return the number of subreports.
    */
-  public int getSubReportCount()
-  {
-    if (subReports == null)
-    {
+  public int getSubReportCount() {
+    if ( subReports == null ) {
       return 0;
     }
     return subReports.size();
@@ -78,19 +73,16 @@ public abstract class AbstractRootLevelBand extends Band implements RootLevelBan
    *
    * @return the clone of this band.
    */
-  public AbstractRootLevelBand clone()
-  {
+  public AbstractRootLevelBand clone() {
     final AbstractRootLevelBand rootLevelBand = (AbstractRootLevelBand) super.clone();
-    if (rootLevelBand.subReports != null)
-    {
+    if ( rootLevelBand.subReports != null ) {
       rootLevelBand.subReports = (ArrayList<SubReport>) rootLevelBand.subReports.clone();
       rootLevelBand.subReports.clear();
-      for (int i = 0; i < subReports.size(); i++)
-      {
-        final SubReport report = subReports.get(i);
+      for ( int i = 0; i < subReports.size(); i++ ) {
+        final SubReport report = subReports.get( i );
         final SubReport clone = (SubReport) report.clone();
-        clone.setParent(rootLevelBand);
-        rootLevelBand.subReports.add(clone);
+        clone.setParent( rootLevelBand );
+        rootLevelBand.subReports.add( clone );
       }
     }
     return rootLevelBand;
@@ -101,19 +93,16 @@ public abstract class AbstractRootLevelBand extends Band implements RootLevelBan
    *
    * @return the copy of the element.
    */
-  public AbstractRootLevelBand derive(final boolean preserveElementInstanceIds)
-  {
-    final AbstractRootLevelBand rootLevelBand = (AbstractRootLevelBand) super.derive(preserveElementInstanceIds);
-    if (rootLevelBand.subReports != null)
-    {
+  public AbstractRootLevelBand derive( final boolean preserveElementInstanceIds ) {
+    final AbstractRootLevelBand rootLevelBand = (AbstractRootLevelBand) super.derive( preserveElementInstanceIds );
+    if ( rootLevelBand.subReports != null ) {
       rootLevelBand.subReports = (ArrayList<SubReport>) rootLevelBand.subReports.clone();
       rootLevelBand.subReports.clear();
-      for (int i = 0; i < subReports.size(); i++)
-      {
-        final SubReport report = subReports.get(i);
-        final SubReport clone = (SubReport) report.derive(preserveElementInstanceIds);
-        clone.setParent(rootLevelBand);
-        rootLevelBand.subReports.add(clone);
+      for ( int i = 0; i < subReports.size(); i++ ) {
+        final SubReport report = subReports.get( i );
+        final SubReport clone = (SubReport) report.derive( preserveElementInstanceIds );
+        clone.setParent( rootLevelBand );
+        rootLevelBand.subReports.add( clone );
       }
     }
     return rootLevelBand;
@@ -126,13 +115,11 @@ public abstract class AbstractRootLevelBand extends Band implements RootLevelBan
    * @return the subreport stored at the given index.
    * @throws IndexOutOfBoundsException if there is no such subreport.
    */
-  public SubReport getSubReport(final int index)
-  {
-    if (subReports == null)
-    {
+  public SubReport getSubReport( final int index ) {
+    if ( subReports == null ) {
       throw new IndexOutOfBoundsException();
     }
-    return subReports.get(index);
+    return subReports.get( index );
   }
 
   /**
@@ -141,27 +128,23 @@ public abstract class AbstractRootLevelBand extends Band implements RootLevelBan
    * @param index
    * @param element the subreport, never null.
    */
-  public void addSubReport(final int index, final SubReport element)
-  {
-    if (element == null)
-    {
-      throw new NullPointerException("Parameter 'report' must not be null");
+  public void addSubReport( final int index, final SubReport element ) {
+    if ( element == null ) {
+      throw new NullPointerException( "Parameter 'report' must not be null" );
     }
 
-    validateLooping(element);
-    if (unregisterParent(element))
-    {
+    validateLooping( element );
+    if ( unregisterParent( element ) ) {
       return;
     }
 
     // add the element, update the childs Parent and the childs stylesheet.
-    if (subReports == null)
-    {
+    if ( subReports == null ) {
       subReports = new ArrayList<SubReport>();
     }
-    subReports.add(index, element);
-    registerAsChild(element);
-    notifyNodeChildAdded(element);
+    subReports.add( index, element );
+    registerAsChild( element );
+    notifyNodeChildAdded( element );
   }
 
   /**
@@ -169,27 +152,23 @@ public abstract class AbstractRootLevelBand extends Band implements RootLevelBan
    *
    * @param element the subreport, never null.
    */
-  public void addSubReport(final SubReport element)
-  {
-    if (element == null)
-    {
-      throw new NullPointerException("Parameter 'report' must not be null");
+  public void addSubReport( final SubReport element ) {
+    if ( element == null ) {
+      throw new NullPointerException( "Parameter 'report' must not be null" );
     }
 
-    validateLooping(element);
-    if (unregisterParent(element))
-    {
+    validateLooping( element );
+    if ( unregisterParent( element ) ) {
       return;
     }
 
     // add the element, update the childs Parent and the childs stylesheet.
-    if (subReports == null)
-    {
+    if ( subReports == null ) {
       subReports = new ArrayList<SubReport>();
     }
-    subReports.add(element);
-    registerAsChild(element);
-    notifyNodeChildAdded(element);
+    subReports.add( element );
+    registerAsChild( element );
+    notifyNodeChildAdded( element );
   }
 
   /**
@@ -197,29 +176,24 @@ public abstract class AbstractRootLevelBand extends Band implements RootLevelBan
    *
    * @param e the subreport to be removed.
    */
-  public void removeSubreport(final SubReport e)
-  {
-    if (e == null)
-    {
-      throw new NullPointerException("Parameter 'report' must not be null");
+  public void removeSubreport( final SubReport e ) {
+    if ( e == null ) {
+      throw new NullPointerException( "Parameter 'report' must not be null" );
     }
-    if (subReports == null)
-    {
+    if ( subReports == null ) {
       return;
     }
-    if (e.getParentSection() != this)
-    {
+    if ( e.getParentSection() != this ) {
       // this is none of my childs, ignore the request ...
       return;
     }
-    if (subReports.contains(e) == false)
-    {
+    if ( subReports.contains( e ) == false ) {
       return;
     }
 
-    e.setParent(null);
-    subReports.remove(e);
-    notifyNodeChildRemoved(e);
+    e.setParent( null );
+    subReports.remove( e );
+    notifyNodeChildRemoved( e );
   }
 
   /**
@@ -227,17 +201,14 @@ public abstract class AbstractRootLevelBand extends Band implements RootLevelBan
    *
    * @return the sub-reports as array.
    */
-  public SubReport[] getSubReports()
-  {
-    if (subReports == null)
-    {
+  public SubReport[] getSubReports() {
+    if ( subReports == null ) {
       return AbstractRootLevelBand.EMPTY_SUBREPORTS;
     }
-    return subReports.toArray(new SubReport[subReports.size()]);
+    return subReports.toArray( new SubReport[ subReports.size() ] );
   }
 
-  public ElementStyleSheet getDefaultStyleSheet()
-  {
+  public ElementStyleSheet getDefaultStyleSheet() {
     return RootLevelBandDefaultStyleSheet.getRootLevelBandDefaultStyle();
   }
 }

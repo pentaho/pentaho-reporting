@@ -17,26 +17,25 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.parser.ext.factory.stylekey;
 
-import java.io.Serializable;
-import java.util.Iterator;
-
 import org.pentaho.reporting.engine.classic.core.modules.parser.ext.factory.base.ClassFactory;
 import org.pentaho.reporting.engine.classic.core.style.StyleKey;
+
+import java.io.Serializable;
+import java.util.Iterator;
 
 /**
  * A style key factory.
  *
  * @author Thomas Morgner
  */
-public interface StyleKeyFactory extends Serializable
-{
+public interface StyleKeyFactory extends Serializable {
   /**
    * Returns a style key.
    *
    * @param name the name.
    * @return The style key.
    */
-  public StyleKey getStyleKey(String name);
+  public StyleKey getStyleKey( String name );
 
   /**
    * Creates an object.
@@ -47,7 +46,7 @@ public interface StyleKeyFactory extends Serializable
    * @param cf    the class factory used to create the basic object.
    * @return The object.
    */
-  public Object createBasicObject(StyleKey k, String value, Class c, ClassFactory cf);
+  public Object createBasicObject( StyleKey k, String value, Class c, ClassFactory cf );
 
   /**
    * Returns an iterator that provides access to the registered keys.

@@ -24,15 +24,13 @@ import org.pentaho.reporting.engine.classic.core.filter.templates.EllipseTemplat
  *
  * @author Thomas Morgner
  */
-public class EllipseTemplateDescription extends AbstractTemplateDescription
-{
+public class EllipseTemplateDescription extends AbstractTemplateDescription {
   /**
    * Creates a new template description.
    *
    * @param name the name.
    */
-  public EllipseTemplateDescription(final String name)
-  {
-    super(name, EllipseTemplate.class, true);
+  public EllipseTemplateDescription( final String name ) {
+    super( name, EllipseTemplate.class, true );
   }
 }

@@ -26,8 +26,7 @@ import java.math.BigDecimal;
  * @author Thomas Morgner
  * @deprecated Use a formula
  */
-public class ColumnDivisionExpression extends ColumnAggregationExpression
-{
+public class ColumnDivisionExpression extends ColumnAggregationExpression {
   /**
    * The scale-property defines the precission of the divide-operation.
    */
@@ -40,8 +39,7 @@ public class ColumnDivisionExpression extends ColumnAggregationExpression
   /**
    * Default constructor.
    */
-  public ColumnDivisionExpression()
-  {
+  public ColumnDivisionExpression() {
     scale = 14;
     roundingMode = BigDecimal.ROUND_HALF_UP;
   }
@@ -52,8 +50,7 @@ public class ColumnDivisionExpression extends ColumnAggregationExpression
    * @return the rounding mode.
    * @see java.math.BigDecimal#divide(java.math.BigDecimal, int)
    */
-  public int getRoundingMode()
-  {
+  public int getRoundingMode() {
     return roundingMode;
   }
 
@@ -63,8 +60,7 @@ public class ColumnDivisionExpression extends ColumnAggregationExpression
    * @param roundingMode the rounding mode.
    * @see java.math.BigDecimal#divide(java.math.BigDecimal, int)
    */
-  public void setRoundingMode(final int roundingMode)
-  {
+  public void setRoundingMode( final int roundingMode ) {
     this.roundingMode = roundingMode;
   }
 
@@ -73,8 +69,7 @@ public class ColumnDivisionExpression extends ColumnAggregationExpression
    *
    * @return the scale.
    */
-  public int getScale()
-  {
+  public int getScale() {
     return scale;
   }
 
@@ -83,8 +78,7 @@ public class ColumnDivisionExpression extends ColumnAggregationExpression
    *
    * @param scale the scale.
    */
-  public void setScale(final int scale)
-  {
+  public void setScale( final int scale ) {
     this.scale = scale;
   }
 
@@ -93,37 +87,29 @@ public class ColumnDivisionExpression extends ColumnAggregationExpression
    *
    * @return the value of the function.
    */
-  public Object getValue()
-  {
+  public Object getValue() {
     final Object[] values = getFieldValues();
     BigDecimal computedResult = null;
 
-    for (int i = 0; i < values.length; i++)
-    {
-      final Object value = values[i];
-      if (value instanceof Number == false)
-      {
+    for ( int i = 0; i < values.length; i++ ) {
+      final Object value = values[ i ];
+      if ( value instanceof Number == false ) {
         continue;
       }
 
       final Number n = (Number) value;
-      final BigDecimal nval = new BigDecimal(n.toString());
-      if (computedResult == null)
-      {
+      final BigDecimal nval = new BigDecimal( n.toString() );
+      if ( computedResult == null ) {
         computedResult = nval;
-        if (n.doubleValue() == 0)
-        {
+        if ( n.doubleValue() == 0 ) {
           // No matter what goes in next, we will always result in zero.
           return n;
         }
-      }
-      else
-      {
-        if (n.doubleValue() == 0)
-        {
+      } else {
+        if ( n.doubleValue() == 0 ) {
           return null;
         }
-        computedResult = computedResult.divide(nval, scale, roundingMode);
+        computedResult = computedResult.divide( nval, scale, roundingMode );
       }
     }
 

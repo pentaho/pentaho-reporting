@@ -21,17 +21,14 @@ import org.pentaho.reporting.engine.classic.core.DetailsFooter;
 import org.pentaho.reporting.engine.classic.core.filter.types.bands.DetailsFooterType;
 import org.pentaho.reporting.libraries.xmlns.parser.ParseException;
 
-public class DetailsFooterBandReadHandler extends BandReadHandler
-{
+public class DetailsFooterBandReadHandler extends BandReadHandler {
   public DetailsFooterBandReadHandler()
-      throws ParseException
-  {
-    super(DetailsFooterType.INSTANCE);
+    throws ParseException {
+    super( DetailsFooterType.INSTANCE );
   }
 
 
-  public DetailsFooter getElement()
-  {
+  public DetailsFooter getElement() {
     return (DetailsFooter) super.getElement();
   }
 }

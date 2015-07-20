@@ -17,14 +17,13 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.output.table.excel;
 
-import java.awt.Color;
-
 import junit.framework.TestCase;
 import org.apache.poi.hssf.util.HSSFColor;
 import org.pentaho.reporting.engine.classic.core.modules.output.table.xls.helper.StaticExcelColorSupport;
 
-public class ExcelColorSupportTest extends TestCase
-{
+import java.awt.*;
+
+public class ExcelColorSupportTest extends TestCase {
   // These colors are not mapped correctly  #C6C3C6,#949694,#848284
 /*
  * 8 = new Color(0, 0, 0),
@@ -83,41 +82,37 @@ public class ExcelColorSupportTest extends TestCase
  * 62 = new Color(51, 51, 153),
  * 63 = new Color(51, 51, 51),
  */
+
   /**
    *
    */
-  public ExcelColorSupportTest()
-  {
+  public ExcelColorSupportTest() {
   }
 
-  public ExcelColorSupportTest(final String s)
-  {
-    super(s);
+  public ExcelColorSupportTest( final String s ) {
+    super( s );
   }
 
-  public void testMapping()
-  {
-    System.out.println ("0xC6=" + 0xC6);
-    final Color c = new Color(0xC6C3C6);
+  public void testMapping() {
+    System.out.println( "0xC6=" + 0xC6 );
+    final Color c = new Color( 0xC6C3C6 );
     final StaticExcelColorSupport colorSupport = new StaticExcelColorSupport();
-    final short nearestColor = colorSupport.getNearestColor(c);
-    assertEquals("Color: " + c + " -> " + colorSupport.getColor(nearestColor).getHexString(), 22, nearestColor);
+    final short nearestColor = colorSupport.getNearestColor( c );
+    assertEquals( "Color: " + c + " -> " + colorSupport.getColor( nearestColor ).getHexString(), 22, nearestColor );
   }
 
-  public void testMappingWhite()
-  {
+  public void testMappingWhite() {
     final Color c = Color.WHITE;
     final StaticExcelColorSupport colorSupport = new StaticExcelColorSupport();
-    final short nearestColor = colorSupport.getNearestColor(c);
-    assertEquals(HSSFColor.WHITE.index, nearestColor);
+    final short nearestColor = colorSupport.getNearestColor( c );
+    assertEquals( HSSFColor.WHITE.index, nearestColor );
   }
 
-  public void testMappingBlack()
-  {
+  public void testMappingBlack() {
     final Color c = Color.BLACK;
     final StaticExcelColorSupport colorSupport = new StaticExcelColorSupport();
-    final short nearestColor = colorSupport.getNearestColor(c);
-    assertEquals(HSSFColor.BLACK.index, nearestColor);
+    final short nearestColor = colorSupport.getNearestColor( c );
+    assertEquals( HSSFColor.BLACK.index, nearestColor );
   }
 
 

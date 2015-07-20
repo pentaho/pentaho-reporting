@@ -29,128 +29,109 @@ import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
  *
  * @author Thomas Morgner
  */
-public class TextCache
-{
-  public static class Result
-  {
+public class TextCache {
+  public static class Result {
     private RenderNode[] text;
     private RenderNode[] finish;
     private StyleSheet styleSheet;
     private ReportAttributeMap attributeMap;
 
-    protected Result(final RenderNode[] text,
-                     final RenderNode[] finish,
-                     final StyleSheet styleSheet,
-                     final ReportAttributeMap attributeMap)
-    {
+    protected Result( final RenderNode[] text,
+                      final RenderNode[] finish,
+                      final StyleSheet styleSheet,
+                      final ReportAttributeMap attributeMap ) {
       this.styleSheet = styleSheet;
       this.attributeMap = attributeMap;
       this.text = text.clone();
       this.finish = finish.clone();
     }
 
-    public ReportAttributeMap getAttributeMap()
-    {
+    public ReportAttributeMap getAttributeMap() {
       return attributeMap;
     }
 
-    public StyleSheet getStyleSheet()
-    {
+    public StyleSheet getStyleSheet() {
       return styleSheet;
     }
 
-    public RenderNode[] getText()
-    {
+    public RenderNode[] getText() {
       final RenderNode[] nodes = text.clone();
       final int nodeCount = nodes.length;
-      for (int i = 0; i < nodeCount; i++)
-      {
-        final RenderNode node = nodes[i];
-        nodes[i] = node.derive(true);
+      for ( int i = 0; i < nodeCount; i++ ) {
+        final RenderNode node = nodes[ i ];
+        nodes[ i ] = node.derive( true );
       }
       return nodes;
     }
 
-    public RenderNode[] getFinish()
-    {
+    public RenderNode[] getFinish() {
       final RenderNode[] nodes = finish.clone();
       final int nodeCount = nodes.length;
-      for (int i = 0; i < nodeCount; i++)
-      {
-        final RenderNode node = nodes[i];
-        nodes[i] = node.derive(true);
+      for ( int i = 0; i < nodeCount; i++ ) {
+        final RenderNode node = nodes[ i ];
+        nodes[ i ] = node.derive( true );
       }
       return nodes;
     }
   }
 
-  private static class InternalResult extends Result
-  {
+  private static class InternalResult extends Result {
     private long changeTracker;
     private long attrChangeTracker;
     private String originalText;
 
-    protected InternalResult(final RenderNode[] text,
-                             final RenderNode[] finish,
-                             final StyleSheet styleSheet,
-                             final long styleChangeTracker,
-                             final ReportAttributeMap attributeMap,
-                             final long attrChangeTracker,
-                             final String originalText)
-    {
-      super(text, finish, styleSheet, attributeMap);
+    protected InternalResult( final RenderNode[] text,
+                              final RenderNode[] finish,
+                              final StyleSheet styleSheet,
+                              final long styleChangeTracker,
+                              final ReportAttributeMap attributeMap,
+                              final long attrChangeTracker,
+                              final String originalText ) {
+      super( text, finish, styleSheet, attributeMap );
       this.changeTracker = styleChangeTracker;
       this.attrChangeTracker = attrChangeTracker;
       this.originalText = originalText;
     }
 
-    public boolean isValid(final long changeTracker,
-                           final long attrsChangeTracker,
-                           final String text)
-    {
-      if (changeTracker != this.changeTracker)
-      {
+    public boolean isValid( final long changeTracker,
+                            final long attrsChangeTracker,
+                            final String text ) {
+      if ( changeTracker != this.changeTracker ) {
         return false;
       }
-      if (attrsChangeTracker != this.attrChangeTracker)
-      {
+      if ( attrsChangeTracker != this.attrChangeTracker ) {
         return false;
       }
-      return ObjectUtilities.equal(text, originalText);
+      return ObjectUtilities.equal( text, originalText );
     }
   }
 
-  private LFUMap<InstanceID,InternalResult> cache;
+  private LFUMap<InstanceID, InternalResult> cache;
 
-  public TextCache(final int maxEntries)
-  {
-    cache = new LFUMap<InstanceID,InternalResult>(maxEntries);
+  public TextCache( final int maxEntries ) {
+    cache = new LFUMap<InstanceID, InternalResult>( maxEntries );
   }
 
-  public void store(final InstanceID instanceID,
-                    final long styleChangeTracker,
-                    final long attrChangeTracker,
-                    final String originalText,
-                    final StyleSheet styleSheet,
-                    final ReportAttributeMap attributeMap,
-                    final RenderNode[] text,
-                    final RenderNode[] finish)
-  {
-    cache.put(instanceID, new InternalResult
-        (text, finish, styleSheet, styleChangeTracker, attributeMap, attrChangeTracker, originalText));
+  public void store( final InstanceID instanceID,
+                     final long styleChangeTracker,
+                     final long attrChangeTracker,
+                     final String originalText,
+                     final StyleSheet styleSheet,
+                     final ReportAttributeMap attributeMap,
+                     final RenderNode[] text,
+                     final RenderNode[] finish ) {
+    cache.put( instanceID, new InternalResult
+      ( text, finish, styleSheet, styleChangeTracker, attributeMap, attrChangeTracker, originalText ) );
   }
 
-  public Result get(final InstanceID instanceID, final long styleChangeTracker,
-                    final long attributeChangeTracker, final String originalText)
-  {
-    final InternalResult o = cache.get(instanceID);
-    if (o == null)
-    {
+  public Result get( final InstanceID instanceID, final long styleChangeTracker,
+                     final long attributeChangeTracker, final String originalText ) {
+    final InternalResult o = cache.get( instanceID );
+    if ( o == null ) {
       return null;
     }
-    if (o.isValid(styleChangeTracker, attributeChangeTracker, originalText) == false)
-    {
-      cache.remove(instanceID);
+    if ( o.isValid( styleChangeTracker, attributeChangeTracker, originalText ) == false ) {
+      cache.remove( instanceID );
       return null;
     }
     return o;

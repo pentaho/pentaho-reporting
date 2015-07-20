@@ -17,11 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.parser.extwriter;
 
-import java.awt.print.PageFormat;
-import java.awt.print.Paper;
-import java.io.IOException;
-import java.util.Enumeration;
-
 import org.pentaho.reporting.engine.classic.core.AbstractReportDefinition;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
 import org.pentaho.reporting.engine.classic.core.PageDefinition;
@@ -33,13 +28,17 @@ import org.pentaho.reporting.libraries.xmlns.common.AttributeList;
 import org.pentaho.reporting.libraries.xmlns.writer.XmlWriter;
 import org.pentaho.reporting.libraries.xmlns.writer.XmlWriterSupport;
 
+import java.awt.print.PageFormat;
+import java.awt.print.Paper;
+import java.io.IOException;
+import java.util.Enumeration;
+
 /**
  * A report configuration writer.
  *
  * @author Thomas Morgner.
  */
-public class ReportConfigWriter extends AbstractXMLDefinitionWriter
-{
+public class ReportConfigWriter extends AbstractXMLDefinitionWriter {
   protected static final String PAGE_DEFINITION_TAG = "page-definition";
   protected static final String SIMPLE_PAGE_DEFINITION_TAG = "simple-page-definition";
   protected static final String PAGE_TAG = "page";
@@ -115,10 +114,9 @@ public class ReportConfigWriter extends AbstractXMLDefinitionWriter
    * @param reportWriter the report writer.
    * @param xmlWriter    the current indention level.
    */
-  public ReportConfigWriter(final ReportWriterContext reportWriter,
-                            final XmlWriter xmlWriter)
-  {
-    super(reportWriter, xmlWriter);
+  public ReportConfigWriter( final ReportWriterContext reportWriter,
+                             final XmlWriter xmlWriter ) {
+    super( reportWriter, xmlWriter );
   }
 
   /**
@@ -127,42 +125,38 @@ public class ReportConfigWriter extends AbstractXMLDefinitionWriter
    * @throws java.io.IOException if there is an I/O problem.
    */
   public void write()
-      throws IOException, ReportWriterException
-  {
+    throws IOException, ReportWriterException {
     final XmlWriter xmlWriter = getXmlWriter();
-    xmlWriter.writeTag(ExtParserModule.NAMESPACE, AbstractXMLDefinitionWriter.REPORT_CONFIG_TAG, XmlWriterSupport.OPEN);
+    xmlWriter
+      .writeTag( ExtParserModule.NAMESPACE, AbstractXMLDefinitionWriter.REPORT_CONFIG_TAG, XmlWriterSupport.OPEN );
 
     final AbstractReportDefinition report = getReport();
-    if (report instanceof MasterReport)
-    {
+    if ( report instanceof MasterReport ) {
       final MasterReport masterReport = (MasterReport) report;
-      final DataFactoryWriter writer = new DataFactoryWriter(getReportWriter(), getXmlWriter());
+      final DataFactoryWriter writer = new DataFactoryWriter( getReportWriter(), getXmlWriter() );
       writer.write();
 
       writePageDefinition();
-      writeReportConfig(masterReport.getConfiguration());
+      writeReportConfig( masterReport.getConfiguration() );
     }
 
     xmlWriter.writeCloseTag();
   }
 
-  private void writeReportConfig(final Configuration config)
-      throws IOException
-  {
+  private void writeReportConfig( final Configuration config )
+    throws IOException {
     final XmlWriter writer = getXmlWriter();
     final Enumeration properties = config.getConfigProperties();
 
-    if (properties.hasMoreElements())
-    {
-      writer.writeTag(ExtParserModule.NAMESPACE, AbstractXMLDefinitionWriter.CONFIGURATION_TAG, XmlWriterSupport.OPEN);
-      while (properties.hasMoreElements())
-      {
+    if ( properties.hasMoreElements() ) {
+      writer
+        .writeTag( ExtParserModule.NAMESPACE, AbstractXMLDefinitionWriter.CONFIGURATION_TAG, XmlWriterSupport.OPEN );
+      while ( properties.hasMoreElements() ) {
         final String key = (String) properties.nextElement();
-        final String value = config.getConfigProperty(key);
-        if (value != null)
-        {
-          writer.writeTag(ExtParserModule.NAMESPACE, "property", "name", key, XmlWriterSupport.OPEN);
-          writer.writeTextNormalized(value, false);
+        final String value = config.getConfigProperty( key );
+        if ( value != null ) {
+          writer.writeTag( ExtParserModule.NAMESPACE, "property", "name", key, XmlWriterSupport.OPEN );
+          writer.writeTextNormalized( value, false );
           writer.writeCloseTag();
         }
       }
@@ -172,39 +166,34 @@ public class ReportConfigWriter extends AbstractXMLDefinitionWriter
   }
 
 
-  private void writePageDefinition() throws IOException
-  {
+  private void writePageDefinition() throws IOException {
     final XmlWriter xmlWriter = getXmlWriter();
     final PageDefinition pageDefinition = getReport().getPageDefinition();
-    if (pageDefinition instanceof SimplePageDefinition)
-    {
+    if ( pageDefinition instanceof SimplePageDefinition ) {
       final SimplePageDefinition spdef = (SimplePageDefinition) pageDefinition;
       final AttributeList attr = new AttributeList();
-      attr.setAttribute(ExtParserModule.NAMESPACE, "width",
-          String.valueOf(spdef.getPageCountHorizontal()));
-      attr.setAttribute(ExtParserModule.NAMESPACE, "height",
-          String.valueOf(spdef.getPageCountVertical()));
-      xmlWriter.writeTag(ExtParserModule.NAMESPACE,
-          ReportConfigWriter.SIMPLE_PAGE_DEFINITION_TAG, attr, XmlWriterSupport.OPEN);
+      attr.setAttribute( ExtParserModule.NAMESPACE, "width",
+        String.valueOf( spdef.getPageCountHorizontal() ) );
+      attr.setAttribute( ExtParserModule.NAMESPACE, "height",
+        String.valueOf( spdef.getPageCountVertical() ) );
+      xmlWriter.writeTag( ExtParserModule.NAMESPACE,
+        ReportConfigWriter.SIMPLE_PAGE_DEFINITION_TAG, attr, XmlWriterSupport.OPEN );
 
-      final AttributeList attributes = buildPageFormatProperties(spdef.getPageFormat(0));
-      xmlWriter.writeTag(ExtParserModule.NAMESPACE,
-          ReportConfigWriter.PAGE_TAG, attributes, XmlWriterSupport.CLOSE);
+      final AttributeList attributes = buildPageFormatProperties( spdef.getPageFormat( 0 ) );
+      xmlWriter.writeTag( ExtParserModule.NAMESPACE,
+        ReportConfigWriter.PAGE_TAG, attributes, XmlWriterSupport.CLOSE );
       xmlWriter.writeCloseTag();
-    }
-    else
-    {
-      xmlWriter.writeTag(ExtParserModule.NAMESPACE,
-          ReportConfigWriter.PAGE_DEFINITION_TAG, XmlWriterSupport.OPEN);
+    } else {
+      xmlWriter.writeTag( ExtParserModule.NAMESPACE,
+        ReportConfigWriter.PAGE_DEFINITION_TAG, XmlWriterSupport.OPEN );
 
       final int max = pageDefinition.getPageCount();
-      for (int i = 0; i < max; i++)
-      {
-        final PageFormat fmt = pageDefinition.getPageFormat(i);
+      for ( int i = 0; i < max; i++ ) {
+        final PageFormat fmt = pageDefinition.getPageFormat( i );
 
-        final AttributeList attributes = buildPageFormatProperties(fmt);
-        xmlWriter.writeTag(ExtParserModule.NAMESPACE, ReportConfigWriter.PAGE_TAG,
-            attributes, XmlWriterSupport.CLOSE);
+        final AttributeList attributes = buildPageFormatProperties( fmt );
+        xmlWriter.writeTag( ExtParserModule.NAMESPACE, ReportConfigWriter.PAGE_TAG,
+          attributes, XmlWriterSupport.CLOSE );
       }
       xmlWriter.writeCloseTag();
     }
@@ -215,66 +204,57 @@ public class ReportConfigWriter extends AbstractXMLDefinitionWriter
    *
    * @return The properties.
    */
-  private AttributeList buildPageFormatProperties(final PageFormat fmt)
-  {
+  private AttributeList buildPageFormatProperties( final PageFormat fmt ) {
     final AttributeList retval = new AttributeList();
-    final int[] borders = getBorders(fmt.getPaper());
+    final int[] borders = getBorders( fmt.getPaper() );
 
-    if (fmt.getOrientation() == PageFormat.LANDSCAPE)
-    {
-      retval.setAttribute(ExtParserModule.NAMESPACE,
-          ReportConfigWriter.ORIENTATION_ATT, ReportConfigWriter.ORIENTATION_LANDSCAPE_VAL);
-      retval.setAttribute(ExtParserModule.NAMESPACE,
-          ReportConfigWriter.TOPMARGIN_ATT, String.valueOf(borders[ReportConfigWriter.RIGHT_BORDER]));
-      retval.setAttribute(ExtParserModule.NAMESPACE,
-          ReportConfigWriter.LEFTMARGIN_ATT, String.valueOf(borders[ReportConfigWriter.TOP_BORDER]));
-      retval.setAttribute(ExtParserModule.NAMESPACE,
-          ReportConfigWriter.BOTTOMMARGIN_ATT, String.valueOf(borders[ReportConfigWriter.LEFT_BORDER]));
-      retval.setAttribute(ExtParserModule.NAMESPACE,
-          ReportConfigWriter.RIGHTMARGIN_ATT, String.valueOf(borders[ReportConfigWriter.BOTTOM_BORDER]));
-    }
-    else if (fmt.getOrientation() == PageFormat.PORTRAIT)
-    {
-      retval.setAttribute(ExtParserModule.NAMESPACE,
-          ReportConfigWriter.ORIENTATION_ATT, ReportConfigWriter.ORIENTATION_PORTRAIT_VAL);
-      retval.setAttribute(ExtParserModule.NAMESPACE,
-          ReportConfigWriter.TOPMARGIN_ATT, String.valueOf(borders[ReportConfigWriter.TOP_BORDER]));
-      retval.setAttribute(ExtParserModule.NAMESPACE,
-          ReportConfigWriter.LEFTMARGIN_ATT, String.valueOf(borders[ReportConfigWriter.LEFT_BORDER]));
-      retval.setAttribute(ExtParserModule.NAMESPACE,
-          ReportConfigWriter.BOTTOMMARGIN_ATT, String.valueOf(borders[ReportConfigWriter.BOTTOM_BORDER]));
-      retval.setAttribute(ExtParserModule.NAMESPACE,
-          ReportConfigWriter.RIGHTMARGIN_ATT, String.valueOf(borders[ReportConfigWriter.RIGHT_BORDER]));
-    }
-    else
-    {
-      retval.setAttribute(ExtParserModule.NAMESPACE,
-          ReportConfigWriter.ORIENTATION_ATT, ReportConfigWriter.ORIENTATION_REVERSE_LANDSCAPE_VAL);
-      retval.setAttribute(ExtParserModule.NAMESPACE,
-          ReportConfigWriter.TOPMARGIN_ATT, String.valueOf(borders[ReportConfigWriter.LEFT_BORDER]));
-      retval.setAttribute(ExtParserModule.NAMESPACE,
-          ReportConfigWriter.LEFTMARGIN_ATT, String.valueOf(borders[ReportConfigWriter.BOTTOM_BORDER]));
-      retval.setAttribute(ExtParserModule.NAMESPACE,
-          ReportConfigWriter.BOTTOMMARGIN_ATT, String.valueOf(borders[ReportConfigWriter.RIGHT_BORDER]));
-      retval.setAttribute(ExtParserModule.NAMESPACE,
-          ReportConfigWriter.RIGHTMARGIN_ATT, String.valueOf(borders[ReportConfigWriter.TOP_BORDER]));
+    if ( fmt.getOrientation() == PageFormat.LANDSCAPE ) {
+      retval.setAttribute( ExtParserModule.NAMESPACE,
+        ReportConfigWriter.ORIENTATION_ATT, ReportConfigWriter.ORIENTATION_LANDSCAPE_VAL );
+      retval.setAttribute( ExtParserModule.NAMESPACE,
+        ReportConfigWriter.TOPMARGIN_ATT, String.valueOf( borders[ ReportConfigWriter.RIGHT_BORDER ] ) );
+      retval.setAttribute( ExtParserModule.NAMESPACE,
+        ReportConfigWriter.LEFTMARGIN_ATT, String.valueOf( borders[ ReportConfigWriter.TOP_BORDER ] ) );
+      retval.setAttribute( ExtParserModule.NAMESPACE,
+        ReportConfigWriter.BOTTOMMARGIN_ATT, String.valueOf( borders[ ReportConfigWriter.LEFT_BORDER ] ) );
+      retval.setAttribute( ExtParserModule.NAMESPACE,
+        ReportConfigWriter.RIGHTMARGIN_ATT, String.valueOf( borders[ ReportConfigWriter.BOTTOM_BORDER ] ) );
+    } else if ( fmt.getOrientation() == PageFormat.PORTRAIT ) {
+      retval.setAttribute( ExtParserModule.NAMESPACE,
+        ReportConfigWriter.ORIENTATION_ATT, ReportConfigWriter.ORIENTATION_PORTRAIT_VAL );
+      retval.setAttribute( ExtParserModule.NAMESPACE,
+        ReportConfigWriter.TOPMARGIN_ATT, String.valueOf( borders[ ReportConfigWriter.TOP_BORDER ] ) );
+      retval.setAttribute( ExtParserModule.NAMESPACE,
+        ReportConfigWriter.LEFTMARGIN_ATT, String.valueOf( borders[ ReportConfigWriter.LEFT_BORDER ] ) );
+      retval.setAttribute( ExtParserModule.NAMESPACE,
+        ReportConfigWriter.BOTTOMMARGIN_ATT, String.valueOf( borders[ ReportConfigWriter.BOTTOM_BORDER ] ) );
+      retval.setAttribute( ExtParserModule.NAMESPACE,
+        ReportConfigWriter.RIGHTMARGIN_ATT, String.valueOf( borders[ ReportConfigWriter.RIGHT_BORDER ] ) );
+    } else {
+      retval.setAttribute( ExtParserModule.NAMESPACE,
+        ReportConfigWriter.ORIENTATION_ATT, ReportConfigWriter.ORIENTATION_REVERSE_LANDSCAPE_VAL );
+      retval.setAttribute( ExtParserModule.NAMESPACE,
+        ReportConfigWriter.TOPMARGIN_ATT, String.valueOf( borders[ ReportConfigWriter.LEFT_BORDER ] ) );
+      retval.setAttribute( ExtParserModule.NAMESPACE,
+        ReportConfigWriter.LEFTMARGIN_ATT, String.valueOf( borders[ ReportConfigWriter.BOTTOM_BORDER ] ) );
+      retval.setAttribute( ExtParserModule.NAMESPACE,
+        ReportConfigWriter.BOTTOMMARGIN_ATT, String.valueOf( borders[ ReportConfigWriter.RIGHT_BORDER ] ) );
+      retval.setAttribute( ExtParserModule.NAMESPACE,
+        ReportConfigWriter.RIGHTMARGIN_ATT, String.valueOf( borders[ ReportConfigWriter.TOP_BORDER ] ) );
     }
 
     final int w = (int) fmt.getPaper().getWidth();
     final int h = (int) fmt.getPaper().getHeight();
 
-    final String pageDefinition = PageFormatFactory.getInstance().getPageFormatName(w, h);
-    if (pageDefinition != null)
-    {
-      retval.setAttribute(ExtParserModule.NAMESPACE,
-          ReportConfigWriter.PAGEFORMAT_ATT, pageDefinition);
-    }
-    else
-    {
-      retval.setAttribute(ExtParserModule.NAMESPACE,
-          AbstractXMLDefinitionWriter.WIDTH_ATT, String.valueOf(w));
-      retval.setAttribute(ExtParserModule.NAMESPACE,
-          AbstractXMLDefinitionWriter.HEIGHT_ATT, String.valueOf(h));
+    final String pageDefinition = PageFormatFactory.getInstance().getPageFormatName( w, h );
+    if ( pageDefinition != null ) {
+      retval.setAttribute( ExtParserModule.NAMESPACE,
+        ReportConfigWriter.PAGEFORMAT_ATT, pageDefinition );
+    } else {
+      retval.setAttribute( ExtParserModule.NAMESPACE,
+        AbstractXMLDefinitionWriter.WIDTH_ATT, String.valueOf( w ) );
+      retval.setAttribute( ExtParserModule.NAMESPACE,
+        AbstractXMLDefinitionWriter.HEIGHT_ATT, String.valueOf( h ) );
     }
     return retval;
   }
@@ -285,14 +265,14 @@ public class ReportConfigWriter extends AbstractXMLDefinitionWriter
    * @param p the paper.
    * @return The borders.
    */
-  private int[] getBorders(final Paper p)
-  {
-    final int[] retval = new int[4];
+  private int[] getBorders( final Paper p ) {
+    final int[] retval = new int[ 4 ];
 
-    retval[ReportConfigWriter.TOP_BORDER] = (int) p.getImageableY();
-    retval[ReportConfigWriter.LEFT_BORDER] = (int) p.getImageableX();
-    retval[ReportConfigWriter.BOTTOM_BORDER] = (int) (p.getHeight() - (p.getImageableY() + p.getImageableHeight()));
-    retval[ReportConfigWriter.RIGHT_BORDER] = (int) (p.getWidth() - (p.getImageableX() + p.getImageableWidth()));
+    retval[ ReportConfigWriter.TOP_BORDER ] = (int) p.getImageableY();
+    retval[ ReportConfigWriter.LEFT_BORDER ] = (int) p.getImageableX();
+    retval[ ReportConfigWriter.BOTTOM_BORDER ] =
+      (int) ( p.getHeight() - ( p.getImageableY() + p.getImageableHeight() ) );
+    retval[ ReportConfigWriter.RIGHT_BORDER ] = (int) ( p.getWidth() - ( p.getImageableX() + p.getImageableWidth() ) );
     return retval;
   }
 }

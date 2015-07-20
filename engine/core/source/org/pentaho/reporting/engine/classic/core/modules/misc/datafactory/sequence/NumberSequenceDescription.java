@@ -17,11 +17,9 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.misc.datafactory.sequence;
 
-public class NumberSequenceDescription extends AbstractSequenceDescription
-{
-  public NumberSequenceDescription()
-  {
-    super("org.pentaho.reporting.engine.classic.core.modules.misc.datafactory.sequence.NumberSequenceBundle",
-        NumberSequence.class);
+public class NumberSequenceDescription extends AbstractSequenceDescription {
+  public NumberSequenceDescription() {
+    super( "org.pentaho.reporting.engine.classic.core.modules.misc.datafactory.sequence.NumberSequenceBundle",
+      NumberSequence.class );
   }
 }

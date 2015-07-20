@@ -25,45 +25,37 @@ import org.pentaho.reporting.libraries.formula.FormulaContext;
 import org.pentaho.reporting.libraries.resourceloader.ResourceKey;
 import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 
-public class ProcessingDataFactoryContext implements DataFactoryContext
-{
+public class ProcessingDataFactoryContext implements DataFactoryContext {
   private ProcessingContext processingContext;
   private DataFactory contextDataFactory;
 
-  public ProcessingDataFactoryContext(final ProcessingContext processingContext,
-                                      final DataFactory contextDataFactory)
-  {
+  public ProcessingDataFactoryContext( final ProcessingContext processingContext,
+                                       final DataFactory contextDataFactory ) {
     this.processingContext = processingContext;
     this.contextDataFactory = contextDataFactory;
   }
 
-  public Configuration getConfiguration()
-  {
+  public Configuration getConfiguration() {
     return processingContext.getConfiguration();
   }
 
-  public ResourceManager getResourceManager()
-  {
+  public ResourceManager getResourceManager() {
     return processingContext.getResourceManager();
   }
 
-  public ResourceKey getContextKey()
-  {
+  public ResourceKey getContextKey() {
     return processingContext.getContentBase();
   }
 
-  public ResourceBundleFactory getResourceBundleFactory()
-  {
+  public ResourceBundleFactory getResourceBundleFactory() {
     return processingContext.getResourceBundleFactory();
   }
 
-  public DataFactory getContextDataFactory()
-  {
+  public DataFactory getContextDataFactory() {
     return contextDataFactory;
   }
 
-  public FormulaContext getFormulaContext()
-  {
+  public FormulaContext getFormulaContext() {
     return processingContext.getFormulaContext();
   }
 }

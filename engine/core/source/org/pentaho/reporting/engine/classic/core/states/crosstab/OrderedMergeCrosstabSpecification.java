@@ -17,14 +17,14 @@
 
 package org.pentaho.reporting.engine.classic.core.states.crosstab;
 
-import java.util.ArrayList;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.pentaho.reporting.engine.classic.core.DataRow;
 import org.pentaho.reporting.engine.classic.core.InvalidReportStateException;
 import org.pentaho.reporting.engine.classic.core.states.ReportStateKey;
 import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
+
+import java.util.ArrayList;
 
 /**
  * Computed structural data of a crosstab. It basically contains the full dataset of the column axis, which then allows
@@ -39,9 +39,8 @@ import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
  *
  * @author Thomas Morgner
  */
-public class OrderedMergeCrosstabSpecification implements CrosstabSpecification
-{
-  private static final Log logger = LogFactory.getLog(OrderedMergeCrosstabSpecification.class);
+public class OrderedMergeCrosstabSpecification implements CrosstabSpecification {
+  private static final Log logger = LogFactory.getLog( OrderedMergeCrosstabSpecification.class );
 
   private int insertationCursor;
   private ArrayList<Object[]> entries;
@@ -49,16 +48,13 @@ public class OrderedMergeCrosstabSpecification implements CrosstabSpecification
   private String[] rowSet;
   private ReportStateKey key;
 
-  public OrderedMergeCrosstabSpecification(final ReportStateKey key,
-                                           final String[] dimensionColumnSet,
-                                           final String[] rowDimensionSet)
-  {
-    if (key == null)
-    {
+  public OrderedMergeCrosstabSpecification( final ReportStateKey key,
+                                            final String[] dimensionColumnSet,
+                                            final String[] rowDimensionSet ) {
+    if ( key == null ) {
       throw new NullPointerException();
     }
-    if (dimensionColumnSet == null)
-    {
+    if ( dimensionColumnSet == null ) {
       throw new NullPointerException();
     }
 
@@ -69,146 +65,122 @@ public class OrderedMergeCrosstabSpecification implements CrosstabSpecification
     this.entries = new ArrayList<Object[]>();
   }
 
-  public int indexOf(final int start, final Object[] key)
-  {
-    if (key == null)
-    {
+  public int indexOf( final int start, final Object[] key ) {
+    if ( key == null ) {
       throw new NullPointerException();
     }
-    if (start < 0)
-    {
+    if ( start < 0 ) {
       throw new IndexOutOfBoundsException();
     }
 
     final int size = entries.size();
-    for (int i = start; i < size; i++)
-    {
-      final Object[] objects = entries.get(i);
-      if (ObjectUtilities.equalArray(key, objects))
-      {
+    for ( int i = start; i < size; i++ ) {
+      final Object[] objects = entries.get( i );
+      if ( ObjectUtilities.equalArray( key, objects ) ) {
         return i;
       }
     }
     return -1;
   }
 
-  public String[] getColumnDimensionNames()
-  {
+  public String[] getColumnDimensionNames() {
     return columnSet.clone();
   }
 
-  public String[] getRowDimensionNames()
-  {
+  public String[] getRowDimensionNames() {
     return rowSet.clone();
   }
 
-  public ReportStateKey getKey()
-  {
+  public ReportStateKey getKey() {
     return key;
   }
 
-  public void startRow()
-  {
+  public void startRow() {
     insertationCursor = 0;
   }
 
-  public void endRow()
-  {
+  public void endRow() {
   }
 
-  public void endCrosstab()
-  {
+  public void endCrosstab() {
 
   }
 
-  public void add(final DataRow dataRow)
-  {
-    final Object[] newKey = new Object[columnSet.length];
-    for (int i = 0; i < columnSet.length; i++)
-    {
-      final String columnName = columnSet[i];
-      newKey[i] = dataRow.get(columnName);
+  public void add( final DataRow dataRow ) {
+    final Object[] newKey = new Object[ columnSet.length ];
+    for ( int i = 0; i < columnSet.length; i++ ) {
+      final String columnName = columnSet[ i ];
+      newKey[ i ] = dataRow.get( columnName );
     }
 
-    final int insertPosition = findInserationPoint(newKey, 0);
-    if (insertPosition != -1)
-    {
-      if (insertPosition < insertationCursor)
-      {
-        throw new InvalidReportStateException("Conflicting data in crosstab. " +
-            "Cannot use insertion-order as base for normalization. Use a SortedMerge-Specification instead.");
+    final int insertPosition = findInserationPoint( newKey, 0 );
+    if ( insertPosition != -1 ) {
+      if ( insertPosition < insertationCursor ) {
+        throw new InvalidReportStateException( "Conflicting data in crosstab. " +
+          "Cannot use insertion-order as base for normalization. Use a SortedMerge-Specification instead." );
       }
-      final Object[] existingKey = entries.get(insertPosition);
-      if (ObjectUtilities.equalArray(existingKey, newKey))
-      {
+      final Object[] existingKey = entries.get( insertPosition );
+      if ( ObjectUtilities.equalArray( existingKey, newKey ) ) {
         // key already exists, so we skip forward to that position.
-        logger.debug ("Known Key: " + insertPosition + " " + insertationCursor +" -> " + printKey(newKey));
+        logger.debug( "Known Key: " + insertPosition + " " + insertationCursor + " -> " + printKey( newKey ) );
         insertationCursor = insertPosition;
         return;
       }
     }
 
     insertationCursor = entries.size();
-    logger.debug("Added Key: " + insertationCursor + " -> " + printKey(newKey));
-    entries.add(newKey);
+    logger.debug( "Added Key: " + insertationCursor + " -> " + printKey( newKey ) );
+    entries.add( newKey );
   }
 
-  private String printKey(final Object[] data)
-  {
-    final StringBuilder s = new StringBuilder("{");
-    for (int i = 0; i < data.length; i++)
-    {
-      if (i > 0)
-      {
-        s.append(',');
+  private String printKey( final Object[] data ) {
+    final StringBuilder s = new StringBuilder( "{" );
+    for ( int i = 0; i < data.length; i++ ) {
+      if ( i > 0 ) {
+        s.append( ',' );
       }
-      s.append(data[i]);
+      s.append( data[ i ] );
     }
-    return s.append('}').toString();
+    return s.append( '}' ).toString();
   }
 
-  private int findInserationPoint(final Object[] key, final int inserationPoint)
-  {
-    for (int i = inserationPoint; i < entries.size(); i++)
-    {
-      final Object[] existingKey = entries.get(i);
-      if (ObjectUtilities.equalArray(existingKey, key))
-      {
+  private int findInserationPoint( final Object[] key, final int inserationPoint ) {
+    for ( int i = inserationPoint; i < entries.size(); i++ ) {
+      final Object[] existingKey = entries.get( i );
+      if ( ObjectUtilities.equalArray( existingKey, key ) ) {
         return i;
       }
     }
     return -1;
   }
 
-  public int size()
-  {
+  public int size() {
     return entries.size();
   }
 
-  public Object[] getKeyAt(final int column)
-  {
-    final Object[] data = entries.get(column);
+  public Object[] getKeyAt( final int column ) {
+    final Object[] data = entries.get( column );
     return data.clone();
   }
-//
-//  public static void main(String[] args)
-//  {
-//    final String[] NAMES = {"Product", "Year"};
-//    final DataRow r1 = new StaticDataRow (NAMES, new Object[]{"Planes", new Integer(2004)});
-//    final DataRow r2 = new StaticDataRow (NAMES, new Object[]{"Planes", new Integer(2005)});
-//    final DataRow r3 = new StaticDataRow (NAMES, new Object[]{"Planes", new Integer(2001)});
-//    final DataRow r4 = new StaticDataRow (NAMES, new Object[]{"Planes", new Integer(2002)});
-//    final DataRow r5 = new StaticDataRow (NAMES, new Object[]{"Planes", new Integer(2003)});
-//
-//    CrosstabSpecification cs = new CrosstabSpecification(NAMES);
-//    cs.startRow();
-//    cs.add(r1);
-//    cs.add(r2);
-//    cs.endRow();
-//    cs.startRow();
-//    cs.add(r3);
-//    cs.add(r4);
-//    cs.add(r5);
-//    cs.endRow();
-//  }
+  //
+  //  public static void main(String[] args)
+  //  {
+  //    final String[] NAMES = {"Product", "Year"};
+  //    final DataRow r1 = new StaticDataRow (NAMES, new Object[]{"Planes", new Integer(2004)});
+  //    final DataRow r2 = new StaticDataRow (NAMES, new Object[]{"Planes", new Integer(2005)});
+  //    final DataRow r3 = new StaticDataRow (NAMES, new Object[]{"Planes", new Integer(2001)});
+  //    final DataRow r4 = new StaticDataRow (NAMES, new Object[]{"Planes", new Integer(2002)});
+  //    final DataRow r5 = new StaticDataRow (NAMES, new Object[]{"Planes", new Integer(2003)});
+  //
+  //    CrosstabSpecification cs = new CrosstabSpecification(NAMES);
+  //    cs.startRow();
+  //    cs.add(r1);
+  //    cs.add(r2);
+  //    cs.endRow();
+  //    cs.startRow();
+  //    cs.add(r3);
+  //    cs.add(r4);
+  //    cs.add(r5);
+  //    cs.endRow();
+  //  }
 }

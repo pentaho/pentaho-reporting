@@ -17,8 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.core.designtime;
 
-import java.awt.Window;
-
 import org.pentaho.reporting.engine.classic.core.AbstractReportDefinition;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.pentaho.reporting.engine.classic.core.designtime.datafactory.DesignTimeDataFactoryContext;
@@ -29,18 +27,17 @@ import org.pentaho.reporting.engine.classic.core.wizard.DataSchemaModel;
 import org.pentaho.reporting.libraries.designtime.swing.settings.DefaultLocaleSettings;
 import org.pentaho.reporting.libraries.designtime.swing.settings.LocaleSettings;
 
-public class DefaultDesignTimeContext implements DesignTimeContext
-{
+import java.awt.*;
+
+public class DefaultDesignTimeContext implements DesignTimeContext {
   private final DesignTimeDataFactoryContext dataFactoryContext;
   private final AbstractReportDefinition report;
   private final LocaleSettings localeSettings;
   private Window parentWindow;
   private ContextAwareDataSchemaModel dataSchemaModel;
 
-  public DefaultDesignTimeContext(final AbstractReportDefinition report)
-  {
-    if (report == null)
-    {
+  public DefaultDesignTimeContext( final AbstractReportDefinition report ) {
+    if ( report == null ) {
       throw new NullPointerException();
     }
     this.report = report;
@@ -53,13 +50,11 @@ public class DefaultDesignTimeContext implements DesignTimeContext
    *
    * @return the active report.
    */
-  public AbstractReportDefinition getReport()
-  {
+  public AbstractReportDefinition getReport() {
     return report;
   }
 
-  public void setParentWindow(final Window parentWindow)
-  {
+  public void setParentWindow( final Window parentWindow ) {
     this.parentWindow = parentWindow;
   }
 
@@ -68,53 +63,44 @@ public class DefaultDesignTimeContext implements DesignTimeContext
    *
    * @return the window or null, if there is no parent.
    */
-  public Window getParentWindow()
-  {
+  public Window getParentWindow() {
     return parentWindow;
   }
 
-  public DataSchemaModel getDataSchemaModel()
-  {
-    if (dataSchemaModel == null) {
+  public DataSchemaModel getDataSchemaModel() {
+    if ( dataSchemaModel == null ) {
       final ContextAwareDataSchemaModelFactory factory =
-          ClassicEngineBoot.getInstance().getObjectFactory().get(ContextAwareDataSchemaModelFactory.class);
-      dataSchemaModel = factory.create(report);
+        ClassicEngineBoot.getInstance().getObjectFactory().get( ContextAwareDataSchemaModelFactory.class );
+      dataSchemaModel = factory.create( report );
     }
     return dataSchemaModel;
   }
 
-  public void error(final Exception e)
-  {
+  public void error( final Exception e ) {
     e.printStackTrace();
   }
 
-  public void userError(final Exception e)
-  {
+  public void userError( final Exception e ) {
     e.printStackTrace();
   }
 
-  public LocaleSettings getLocaleSettings()
-  {
+  public LocaleSettings getLocaleSettings() {
     return localeSettings;
   }
 
-  public boolean isShowExpertItems()
-  {
+  public boolean isShowExpertItems() {
     return true;
   }
 
-  public boolean isShowDeprecatedItems()
-  {
+  public boolean isShowDeprecatedItems() {
     return true;
   }
 
-  public DesignTimeDataFactoryContext getDataFactoryContext()
-  {
+  public DesignTimeDataFactoryContext getDataFactoryContext() {
     return dataFactoryContext;
   }
 
-  public MaturityLevel getMaturityLevel()
-  {
+  public MaturityLevel getMaturityLevel() {
     return MaturityLevel.Snapshot;
   }
 }

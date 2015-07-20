@@ -17,30 +17,26 @@
 
 package org.pentaho.reporting.engine.classic.core.metadata.parser;
 
-import java.io.Serializable;
-
 import org.pentaho.reporting.engine.classic.core.metadata.ElementMetaData;
+
+import java.io.Serializable;
 
 /**
  * This class represents a parse-result.
  *
  * @author Thomas Morgner
  */
-public class ElementTypeCollection implements Serializable
-{
+public class ElementTypeCollection implements Serializable {
   private ElementMetaData[] elementTypes;
 
-  public ElementTypeCollection(final ElementMetaData[] elementTypes)
-  {
-    if (elementTypes == null)
-    {
+  public ElementTypeCollection( final ElementMetaData[] elementTypes ) {
+    if ( elementTypes == null ) {
       throw new NullPointerException();
     }
     this.elementTypes = elementTypes.clone();
   }
 
-  public ElementMetaData[] getElementTypes()
-  {
+  public ElementMetaData[] getElementTypes() {
     return elementTypes.clone();
   }
 }

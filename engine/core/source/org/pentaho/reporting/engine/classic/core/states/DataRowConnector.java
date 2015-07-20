@@ -28,8 +28,7 @@ import org.pentaho.reporting.engine.classic.core.filter.DataTarget;
  *
  * @author Thomas Morgner
  */
-public final class DataRowConnector implements DataRow
-{
+public final class DataRowConnector implements DataRow {
   /**
    * The data row backend.
    */
@@ -38,8 +37,7 @@ public final class DataRowConnector implements DataRow
   /**
    * Default constructor.
    */
-  public DataRowConnector()
-  {
+  public DataRowConnector() {
   }
 
   /**
@@ -47,16 +45,13 @@ public final class DataRowConnector implements DataRow
    *
    * @return the currently assigned DataRowBackend for this DataRowConnector.
    */
-  public DataRow getDataRowBackend()
-  {
+  public DataRow getDataRowBackend() {
     return dataRow;
   }
 
-  public String[] getColumnNames()
-  {
-    if (dataRow == null)
-    {
-      throw new IllegalStateException("Not connected");
+  public String[] getColumnNames() {
+    if ( dataRow == null ) {
+      throw new IllegalStateException( "Not connected" );
     }
     return dataRow.getColumnNames();
   }
@@ -67,8 +62,7 @@ public final class DataRowConnector implements DataRow
    *
    * @param dataRow the data row backend
    */
-  public void setDataRowBackend(final DataRow dataRow)
-  {
+  public void setDataRowBackend( final DataRow dataRow ) {
     this.dataRow = dataRow;
   }
 
@@ -77,16 +71,13 @@ public final class DataRowConnector implements DataRow
    *
    * @param col the column, function or expression index.
    * @return The column, function or expression value.
-   * @throws java.lang.IllegalStateException
-   *          if there is no backend connected
+   * @throws java.lang.IllegalStateException if there is no backend connected
    */
-  public Object get(final String col)
-  {
-    if (dataRow == null)
-    {
-      throw new IllegalStateException("Not connected");
+  public Object get( final String col ) {
+    if ( dataRow == null ) {
+      throw new IllegalStateException( "Not connected" );
     }
-    return dataRow.get(col);
+    return dataRow.get( col );
   }
 
   /**
@@ -99,15 +90,12 @@ public final class DataRowConnector implements DataRow
    * @return The last DataSource in the chain.
    * @deprecated no longer used.
    */
-  public static DataSource getLastDatasource(final DataTarget e)
-  {
-    if (e == null)
-    {
+  public static DataSource getLastDatasource( final DataTarget e ) {
+    if ( e == null ) {
       throw new NullPointerException();
     }
     DataSource s = e.getDataSource();
-    while (s instanceof DataTarget)
-    {
+    while ( s instanceof DataTarget ) {
       final DataTarget tgt = (DataTarget) s;
       s = tgt.getDataSource();
     }
@@ -119,19 +107,16 @@ public final class DataRowConnector implements DataRow
    *
    * @return The string.
    */
-  public String toString()
-  {
-    if (dataRow == null)
-    {
+  public String toString() {
+    if ( dataRow == null ) {
       return "org.pentaho.reporting.engine.classic.core.states.DataRowConnector=Not Connected";
     }
     return "org.pentaho.reporting.engine.classic.core.states.DataRowConnector=Connected:" + dataRow;
 
   }
 
-  public boolean isChanged(final String name)
-  {
-    return dataRow.isChanged(name);
+  public boolean isChanged( final String name ) {
+    return dataRow.isChanged( name );
   }
 
 }

@@ -24,6 +24,5 @@ import org.pentaho.reporting.libraries.xmlns.parser.XmlReadHandler;
  *
  * @author Thomas Morgner
  */
-public interface ReportElementReadHandler extends XmlReadHandler
-{
+public interface ReportElementReadHandler extends XmlReadHandler {
 }

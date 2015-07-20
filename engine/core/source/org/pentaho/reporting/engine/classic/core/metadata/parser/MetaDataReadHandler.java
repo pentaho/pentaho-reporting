@@ -17,9 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.core.metadata.parser;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
@@ -36,17 +33,20 @@ import org.pentaho.reporting.libraries.xmlns.parser.XmlReadHandler;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 
-/** @noinspection HardCodedStringLiteral*/
-public class MetaDataReadHandler extends AbstractXmlReadHandler
-{
+import java.util.ArrayList;
+import java.util.Iterator;
 
-  private static final Log logger = LogFactory.getLog(MetaDataReadHandler.class);
+/**
+ * @noinspection HardCodedStringLiteral
+ */
+public class MetaDataReadHandler extends AbstractXmlReadHandler {
+
+  private static final Log logger = LogFactory.getLog( MetaDataReadHandler.class );
   private ArrayList<ElementReadHandler> elements;
   private GlobalMetaDefinition globalMetaDefinition;
   private ElementTypeCollection typeCollection;
 
-  public MetaDataReadHandler()
-  {
+  public MetaDataReadHandler() {
     globalMetaDefinition = new GlobalMetaDefinition();
     elements = new ArrayList<ElementReadHandler>();
   }
@@ -57,33 +57,27 @@ public class MetaDataReadHandler extends AbstractXmlReadHandler
    * @param attrs the attributes.
    * @throws SAXException if there is a parsing error.
    */
-  protected void startParsing(final Attributes attrs) throws SAXException
-  {
-    super.startParsing(attrs);
+  protected void startParsing( final Attributes attrs ) throws SAXException {
+    super.startParsing( attrs );
 
     final ResourceManager resourceManager = getRootHandler().getResourceManager();
     final ResourceKey context = getRootHandler().getContext();
 
     final Configuration configuration = ClassicEngineBoot.getInstance().getGlobalConfig();
-    final Iterator keys = configuration.findPropertyKeys(ElementMetaDataParser.GLOBAL_INCLUDES_PREFIX);
-    while (keys.hasNext())
-    {
+    final Iterator keys = configuration.findPropertyKeys( ElementMetaDataParser.GLOBAL_INCLUDES_PREFIX );
+    while ( keys.hasNext() ) {
       final String key = (String) keys.next();
-      final String href = configuration.getConfigProperty(key);
-      if (StringUtils.isEmpty(href, true))
-      {
+      final String href = configuration.getConfigProperty( key );
+      if ( StringUtils.isEmpty( href, true ) ) {
         continue;
       }
 
-      try
-      {
-        final ResourceKey resourceKey = resourceManager.deriveKey(context, href);
-        final Resource resource = resourceManager.create(resourceKey, null, GlobalMetaDefinition.class);
-        globalMetaDefinition.merge((GlobalMetaDefinition) resource.getResource());
-      }
-      catch (ResourceException e)
-      {
-        logger.warn("Failed to parse included global definitions: " + getLocator(), e);
+      try {
+        final ResourceKey resourceKey = resourceManager.deriveKey( context, href );
+        final Resource resource = resourceManager.create( resourceKey, null, GlobalMetaDefinition.class );
+        globalMetaDefinition.merge( (GlobalMetaDefinition) resource.getResource() );
+      } catch ( ResourceException e ) {
+        logger.warn( "Failed to parse included global definitions: " + getLocator(), e );
       }
     }
 
@@ -98,30 +92,24 @@ public class MetaDataReadHandler extends AbstractXmlReadHandler
    * @return the handler or null, if the tagname is invalid.
    * @throws SAXException if there is a parsing error.
    */
-  protected XmlReadHandler getHandlerForChild(final String uri,
-                                              final String tagName,
-                                              final Attributes atts) throws SAXException
-  {
-    if (getUri().equals(uri) == false)
-    {
+  protected XmlReadHandler getHandlerForChild( final String uri,
+                                               final String tagName,
+                                               final Attributes atts ) throws SAXException {
+    if ( getUri().equals( uri ) == false ) {
       return null;
     }
-    if ("attribute-group".equals(tagName))
-    {
-      return new AttributeGroupReadHandler(globalMetaDefinition);
+    if ( "attribute-group".equals( tagName ) ) {
+      return new AttributeGroupReadHandler( globalMetaDefinition );
     }
-    if ("style-group".equals(tagName))
-    {
-      return new StyleGroupReadHandler(globalMetaDefinition);
+    if ( "style-group".equals( tagName ) ) {
+      return new StyleGroupReadHandler( globalMetaDefinition );
     }
-    if ("include-globals".equals(tagName))
-    {
-      return new IncludeGlobalMetaDataReadHandler(globalMetaDefinition);
+    if ( "include-globals".equals( tagName ) ) {
+      return new IncludeGlobalMetaDataReadHandler( globalMetaDefinition );
     }
-    if ("element".equals(tagName))
-    {
-      final ElementReadHandler readHandler = new ElementReadHandler(globalMetaDefinition);
-      elements.add(readHandler);
+    if ( "element".equals( tagName ) ) {
+      final ElementReadHandler readHandler = new ElementReadHandler( globalMetaDefinition );
+      elements.add( readHandler );
       return readHandler;
     }
     return null;
@@ -132,16 +120,14 @@ public class MetaDataReadHandler extends AbstractXmlReadHandler
    *
    * @throws SAXException if there is a parsing error.
    */
-  protected void doneParsing() throws SAXException
-  {
-    final ElementMetaData[] result = new ElementMetaData[elements.size()];
-    for (int i = 0; i < elements.size(); i++)
-    {
-      final ElementReadHandler handler = elements.get(i);
-      result[i] = (ElementMetaData) handler.getObject();
+  protected void doneParsing() throws SAXException {
+    final ElementMetaData[] result = new ElementMetaData[ elements.size() ];
+    for ( int i = 0; i < elements.size(); i++ ) {
+      final ElementReadHandler handler = elements.get( i );
+      result[ i ] = (ElementMetaData) handler.getObject();
     }
 
-    typeCollection = new ElementTypeCollection(result);
+    typeCollection = new ElementTypeCollection( result );
   }
 
   /**
@@ -150,8 +136,7 @@ public class MetaDataReadHandler extends AbstractXmlReadHandler
    * @return the object.
    * @throws SAXException if an parser error occured.
    */
-  public Object getObject() throws SAXException
-  {
+  public Object getObject() throws SAXException {
     return typeCollection;
   }
 }

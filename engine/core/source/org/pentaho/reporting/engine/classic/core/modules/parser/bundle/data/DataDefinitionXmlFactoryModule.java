@@ -22,10 +22,8 @@ import org.pentaho.reporting.libraries.xmlns.parser.XmlDocumentInfo;
 import org.pentaho.reporting.libraries.xmlns.parser.XmlFactoryModule;
 import org.pentaho.reporting.libraries.xmlns.parser.XmlReadHandler;
 
-public class DataDefinitionXmlFactoryModule implements XmlFactoryModule
-{
-  public DataDefinitionXmlFactoryModule()
-  {
+public class DataDefinitionXmlFactoryModule implements XmlFactoryModule {
+  public DataDefinitionXmlFactoryModule() {
   }
 
   /**
@@ -35,22 +33,15 @@ public class DataDefinitionXmlFactoryModule implements XmlFactoryModule
    * @param documentInfo the document information collection.
    * @return an integer value indicating how good the document matches the factories requirements.
    */
-  public int getDocumentSupport(final XmlDocumentInfo documentInfo)
-  {
+  public int getDocumentSupport( final XmlDocumentInfo documentInfo ) {
     final String rootNamespace = documentInfo.getRootElementNameSpace();
-    if (rootNamespace != null && rootNamespace.length() > 0)
-    {
-      if (BundleNamespaces.DATADEFINITION.equals(rootNamespace) == false)
-      {
+    if ( rootNamespace != null && rootNamespace.length() > 0 ) {
+      if ( BundleNamespaces.DATADEFINITION.equals( rootNamespace ) == false ) {
         return XmlFactoryModule.NOT_RECOGNIZED;
-      }
-      else if ("data-definition".equals(documentInfo.getRootElement()))
-      {
+      } else if ( "data-definition".equals( documentInfo.getRootElement() ) ) {
         return XmlFactoryModule.RECOGNIZED_BY_NAMESPACE;
       }
-    }
-    else if ("data-definition".equals(documentInfo.getRootElement()))
-    {
+    } else if ( "data-definition".equals( documentInfo.getRootElement() ) ) {
       return XmlFactoryModule.RECOGNIZED_BY_TAGNAME;
     }
 
@@ -64,8 +55,7 @@ public class DataDefinitionXmlFactoryModule implements XmlFactoryModule
    * @param documentInfo the document information that has been extracted from the parser.
    * @return the root handler or null.
    */
-  public XmlReadHandler createReadHandler(final XmlDocumentInfo documentInfo)
-  {
+  public XmlReadHandler createReadHandler( final XmlDocumentInfo documentInfo ) {
     return new DataDefinitionRootElementHandler();
   }
 
@@ -75,8 +65,7 @@ public class DataDefinitionXmlFactoryModule implements XmlFactoryModule
    * @param documentInfo the document information.
    * @return the default namespace uri for the document.
    */
-  public String getDefaultNamespace(final XmlDocumentInfo documentInfo)
-  {
+  public String getDefaultNamespace( final XmlDocumentInfo documentInfo ) {
     return BundleNamespaces.DATADEFINITION;
   }
 }

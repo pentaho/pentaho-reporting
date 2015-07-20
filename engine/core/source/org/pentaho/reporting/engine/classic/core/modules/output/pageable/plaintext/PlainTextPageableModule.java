@@ -28,13 +28,12 @@ import org.pentaho.reporting.libraries.fonts.encoding.EncodingRegistry;
  *
  * @author Thomas Morgner
  */
-public class PlainTextPageableModule extends AbstractModule
-{
+public class PlainTextPageableModule extends AbstractModule {
   /**
    * The configuration prefix for all properties.
    */
   public static final String CONFIGURATION_PREFIX =
-      "org.pentaho.reporting.engine.classic.core.modules.output.pageable.plaintext.";
+    "org.pentaho.reporting.engine.classic.core.modules.output.pageable.plaintext.";
 
   /**
    * A default value of the 'text encoding' property key.
@@ -61,8 +60,7 @@ public class PlainTextPageableModule extends AbstractModule
    * @throws ModuleInitializeException if an error occured.
    */
   public PlainTextPageableModule()
-      throws ModuleInitializeException
-  {
+    throws ModuleInitializeException {
     loadModuleInfo();
   }
 
@@ -72,10 +70,9 @@ public class PlainTextPageableModule extends AbstractModule
    * @throws ModuleInitializeException if an error occured.
    * @see org.pentaho.reporting.libraries.base.boot.Module#initialize(SubSystem)
    */
-  public void initialize(final SubSystem subSystem)
-      throws ModuleInitializeException
-  {
+  public void initialize( final SubSystem subSystem )
+    throws ModuleInitializeException {
     ElementMetaDataParser.initializeOptionalReportProcessTaskMetaData
-        ("org/pentaho/reporting/engine/classic/core/modules/output/pageable/plaintext/meta-report-process-tasks.xml");
+      ( "org/pentaho/reporting/engine/classic/core/modules/output/pageable/plaintext/meta-report-process-tasks.xml" );
   }
 }

@@ -17,30 +17,25 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.gui.base.parameters;
 
-import java.text.Format;
-import java.util.Locale;
-import java.util.TimeZone;
-import javax.swing.JComponent;
-import javax.swing.JTextField;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
-
 import org.pentaho.reporting.engine.classic.core.modules.gui.base.ParameterReportControllerPane;
 import org.pentaho.reporting.engine.classic.core.parameters.ParameterAttributeNames;
 import org.pentaho.reporting.engine.classic.core.parameters.ParameterContext;
 import org.pentaho.reporting.engine.classic.core.parameters.ParameterDefinitionEntry;
 import org.pentaho.reporting.engine.classic.core.util.beans.ConverterRegistry;
 
-public class TextFieldParameterComponent extends JTextField implements ParameterComponent
-{
-  private class TextUpdateHandler implements ChangeListener
-  {
-    private TextUpdateHandler()
-    {
+import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+import java.text.Format;
+import java.util.Locale;
+import java.util.TimeZone;
+
+public class TextFieldParameterComponent extends JTextField implements ParameterComponent {
+  private class TextUpdateHandler implements ChangeListener {
+    private TextUpdateHandler() {
     }
 
-    public void stateChanged(final ChangeEvent e)
-    {
+    public void stateChanged( final ChangeEvent e ) {
       initialize();
     }
   }
@@ -50,71 +45,56 @@ public class TextFieldParameterComponent extends JTextField implements Parameter
   private TextComponentEditHandler handler;
   private Format format;
 
-  public TextFieldParameterComponent(final ParameterDefinitionEntry entry,
-                                     final ParameterContext parameterContext,
-                                     final ParameterUpdateContext updateContext)
-  {
+  public TextFieldParameterComponent( final ParameterDefinitionEntry entry,
+                                      final ParameterContext parameterContext,
+                                      final ParameterUpdateContext updateContext ) {
     this.updateContext = updateContext;
     this.parameterName = entry.getName();
 
-    final String formatString = entry.getParameterAttribute(ParameterAttributeNames.Core.NAMESPACE,
-        ParameterAttributeNames.Core.DATA_FORMAT, parameterContext);
-    final String timeZoneSpec = entry.getParameterAttribute(ParameterAttributeNames.Core.NAMESPACE,
-        ParameterAttributeNames.Core.TIMEZONE, parameterContext);
+    final String formatString = entry.getParameterAttribute( ParameterAttributeNames.Core.NAMESPACE,
+      ParameterAttributeNames.Core.DATA_FORMAT, parameterContext );
+    final String timeZoneSpec = entry.getParameterAttribute( ParameterAttributeNames.Core.NAMESPACE,
+      ParameterAttributeNames.Core.TIMEZONE, parameterContext );
     final Locale locale = parameterContext.getResourceBundleFactory().getLocale();
-    final TimeZone timeZone = TextComponentEditHandler.createTimeZone(timeZoneSpec,
-        parameterContext.getResourceBundleFactory().getTimeZone());
+    final TimeZone timeZone = TextComponentEditHandler.createTimeZone( timeZoneSpec,
+      parameterContext.getResourceBundleFactory().getTimeZone() );
 
-    format = TextComponentEditHandler.createFormat(formatString, locale, timeZone, entry.getValueType());
-    handler = new TextComponentEditHandler(entry.getValueType(), entry.getName(), this, updateContext, format);
-    
-    setColumns(60);
-    getDocument().addDocumentListener(handler);
-    addActionListener(handler);
+    format = TextComponentEditHandler.createFormat( formatString, locale, timeZone, entry.getValueType() );
+    handler = new TextComponentEditHandler( entry.getValueType(), entry.getName(), this, updateContext, format );
+
+    setColumns( 60 );
+    getDocument().addDocumentListener( handler );
+    addActionListener( handler );
 
 
-    updateContext.addChangeListener(new TextUpdateHandler());
+    updateContext.addChangeListener( new TextUpdateHandler() );
   }
 
-  public JComponent getUIComponent()
-  {
+  public JComponent getUIComponent() {
     return this;
   }
 
-  public void initialize()
-  {
-    handler.setAdjustingToExternalInput(true);
-    try
-    {
-      final Object value = updateContext.getParameterValue(parameterName);
-      if (value != null)
-      {
-        try
-        {
-          if (format != null)
-          {
-            setText(format.format(value));
+  public void initialize() {
+    handler.setAdjustingToExternalInput( true );
+    try {
+      final Object value = updateContext.getParameterValue( parameterName );
+      if ( value != null ) {
+        try {
+          if ( format != null ) {
+            setText( format.format( value ) );
+          } else {
+            setText( ConverterRegistry.toAttributeValue( value ) );
           }
-          else
-          {
-            setText(ConverterRegistry.toAttributeValue(value));
-          }
-        }
-        catch (Exception e)
-        {
+        } catch ( Exception e ) {
           // ignore illegal values, set them as plain text.
-          setText(value.toString());
-          setBackground(ParameterReportControllerPane.ERROR_COLOR);
+          setText( value.toString() );
+          setBackground( ParameterReportControllerPane.ERROR_COLOR );
         }
+      } else {
+        setText( null );
       }
-      else
-      {
-        setText(null);
-      }
-    }
-    finally
-    {
-      handler.setAdjustingToExternalInput(false);
+    } finally {
+      handler.setAdjustingToExternalInput( false );
     }
   }
 }

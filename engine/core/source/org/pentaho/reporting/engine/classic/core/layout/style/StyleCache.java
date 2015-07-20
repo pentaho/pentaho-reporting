@@ -19,8 +19,8 @@ package org.pentaho.reporting.engine.classic.core.layout.style;
 
 import org.pentaho.reporting.engine.classic.core.style.StyleSheet;
 
-public interface StyleCache
-{
-  public SimpleStyleSheet getStyleSheet(final StyleSheet styleSheet);
+public interface StyleCache {
+  public SimpleStyleSheet getStyleSheet( final StyleSheet styleSheet );
+
   public String printPerformanceStats();
 }

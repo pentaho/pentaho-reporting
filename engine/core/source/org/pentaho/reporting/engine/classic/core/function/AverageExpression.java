@@ -27,9 +27,8 @@ import java.util.Arrays;
  * @author Thomas Morgner
  * @deprecated this has been replaced by the ColumnAverageExpression.
  */
-@SuppressWarnings("deprecation")
-public class AverageExpression extends AbstractExpression
-{
+@SuppressWarnings( "deprecation" )
+public class AverageExpression extends AbstractExpression {
   /**
    * An ordered list containing the fieldnames used in the expression.
    */
@@ -42,14 +41,13 @@ public class AverageExpression extends AbstractExpression
    * The rounding-property defines the precission of the divide-operation.
    */
   private int roundingMode;
-  private static final BigDecimal ZERO = new BigDecimal("0");
+  private static final BigDecimal ZERO = new BigDecimal( "0" );
 
   /**
    * Creates a new expression.  The fields used by the expression are defined using properties named '0', '1', ... 'N'.
    * These fields should contain {@link Number} instances.
    */
-  public AverageExpression()
-  {
+  public AverageExpression() {
     this.fieldList = new ArrayList();
     scale = 14;
     roundingMode = BigDecimal.ROUND_HALF_UP;
@@ -59,10 +57,9 @@ public class AverageExpression extends AbstractExpression
    * Returns the defined rounding mode. This influences the precision of the divide-operation.
    *
    * @return the rounding mode.
-   * @see java.math.BigDecimal#divide(java.math.BigDecimal,int)
+   * @see java.math.BigDecimal#divide(java.math.BigDecimal, int)
    */
-  public int getRoundingMode()
-  {
+  public int getRoundingMode() {
     return roundingMode;
   }
 
@@ -70,10 +67,9 @@ public class AverageExpression extends AbstractExpression
    * Defines the rounding mode. This influences the precision of the divide-operation.
    *
    * @param roundingMode the rounding mode.
-   * @see java.math.BigDecimal#divide(java.math.BigDecimal,int)
+   * @see java.math.BigDecimal#divide(java.math.BigDecimal, int)
    */
-  public void setRoundingMode(final int roundingMode)
-  {
+  public void setRoundingMode( final int roundingMode ) {
     this.roundingMode = roundingMode;
   }
 
@@ -82,8 +78,7 @@ public class AverageExpression extends AbstractExpression
    *
    * @return the scale.
    */
-  public int getScale()
-  {
+  public int getScale() {
     return scale;
   }
 
@@ -92,8 +87,7 @@ public class AverageExpression extends AbstractExpression
    *
    * @param scale the scale.
    */
-  public void setScale(final int scale)
-  {
+  public void setScale( final int scale ) {
     this.scale = scale;
   }
 
@@ -103,23 +97,19 @@ public class AverageExpression extends AbstractExpression
    *
    * @return a BigDecimal instance.
    */
-  public Object getValue()
-  {
+  public Object getValue() {
     final Number[] values = collectValues();
     BigDecimal total = ZERO;
     int count = 0;
-    for (int i = 0; i < values.length; i++)
-    {
-      final Number n = values[i];
-      if (n != null)
-      {
-        total = total.add(new BigDecimal(n.toString()));
+    for ( int i = 0; i < values.length; i++ ) {
+      final Number n = values[ i ];
+      if ( n != null ) {
+        total = total.add( new BigDecimal( n.toString() ) );
         count++;
       }
     }
-    if (count > 0)
-    {
-      return total.divide(new BigDecimal(String.valueOf(count)), scale, roundingMode);
+    if ( count > 0 ) {
+      return total.divide( new BigDecimal( String.valueOf( count ) ), scale, roundingMode );
     }
     return ZERO;
   }
@@ -129,16 +119,13 @@ public class AverageExpression extends AbstractExpression
    *
    * @return an Objectarray containing all defined values from the datarow
    */
-  private Number[] collectValues()
-  {
-    final Number[] retval = new Number[this.fieldList.size()];
-    for (int i = 0; i < this.fieldList.size(); i++)
-    {
-      final String field = (String) this.fieldList.get(i);
-      final Object o = getDataRow().get(field);
-      if (o instanceof Number)
-      {
-        retval[i] = (Number) o;
+  private Number[] collectValues() {
+    final Number[] retval = new Number[ this.fieldList.size() ];
+    for ( int i = 0; i < this.fieldList.size(); i++ ) {
+      final String field = (String) this.fieldList.get( i );
+      final Object o = getDataRow().get( field );
+      if ( o instanceof Number ) {
+        retval[ i ] = (Number) o;
       }
     }
     return retval;
@@ -149,8 +136,7 @@ public class AverageExpression extends AbstractExpression
    *
    * @return A copy of this expression.
    */
-  public Expression getInstance()
-  {
+  public Expression getInstance() {
     final AverageExpression ae = (AverageExpression) super.getInstance();
     ae.fieldList = (ArrayList) fieldList.clone();
     return ae;
@@ -161,9 +147,8 @@ public class AverageExpression extends AbstractExpression
    *
    * @return the fields
    */
-  public String[] getField()
-  {
-    return (String[]) fieldList.toArray(new String[fieldList.size()]);
+  public String[] getField() {
+    return (String[]) fieldList.toArray( new String[ fieldList.size() ] );
   }
 
   /**
@@ -171,10 +156,9 @@ public class AverageExpression extends AbstractExpression
    *
    * @param fields the new list of fields.
    */
-  public void setField(final String[] fields)
-  {
+  public void setField( final String[] fields ) {
     this.fieldList.clear();
-    this.fieldList.addAll(Arrays.asList(fields));
+    this.fieldList.addAll( Arrays.asList( fields ) );
   }
 
   /**
@@ -183,9 +167,8 @@ public class AverageExpression extends AbstractExpression
    * @param index the position of the field name that should be queried.
    * @return the field name at the given position.
    */
-  public String getField(final int index)
-  {
-    return (String) this.fieldList.get(index);
+  public String getField( final int index ) {
+    return (String) this.fieldList.get( index );
   }
 
   /**
@@ -194,15 +177,11 @@ public class AverageExpression extends AbstractExpression
    * @param index the position in the list, where the field should be defined.
    * @param field the name of the field.
    */
-  public void setField(final int index, final String field)
-  {
-    if (this.fieldList.size() == index)
-    {
-      this.fieldList.add(field);
-    }
-    else
-    {
-      this.fieldList.set(index, field);
+  public void setField( final int index, final String field ) {
+    if ( this.fieldList.size() == index ) {
+      this.fieldList.add( field );
+    } else {
+      this.fieldList.set( index, field );
     }
   }
 
@@ -211,8 +190,7 @@ public class AverageExpression extends AbstractExpression
    *
    * @return the number of fields.
    */
-  public int getFieldCount()
-  {
+  public int getFieldCount() {
     return fieldList.size();
   }
 }

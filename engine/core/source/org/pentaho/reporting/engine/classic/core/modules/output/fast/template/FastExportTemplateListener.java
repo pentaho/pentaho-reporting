@@ -19,7 +19,6 @@ package org.pentaho.reporting.engine.classic.core.modules.output.fast.template;
 
 import org.pentaho.reporting.engine.classic.core.layout.model.LogicalPageBox;
 
-public interface FastExportTemplateListener
-{
-  public void produceTemplate(LogicalPageBox pageBox);
+public interface FastExportTemplateListener {
+  public void produceTemplate( LogicalPageBox pageBox );
 }

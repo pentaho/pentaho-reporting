@@ -29,15 +29,14 @@ import java.io.Serializable;
  *
  * @author Thomas Morgner
  */
-public interface ReportParameterDefinition extends Serializable, Cloneable
-{
+public interface ReportParameterDefinition extends Serializable, Cloneable {
   public Object clone();
 
   public int getParameterCount();
 
   public ParameterDefinitionEntry[] getParameterDefinitions();
 
-  public ParameterDefinitionEntry getParameterDefinition(int parameter);
+  public ParameterDefinitionEntry getParameterDefinition( int parameter );
 
   public ReportParameterValidator getValidator();
 }

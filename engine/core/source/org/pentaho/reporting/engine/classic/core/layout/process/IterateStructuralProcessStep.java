@@ -39,282 +39,205 @@ import org.pentaho.reporting.engine.classic.core.layout.model.table.TableSection
  *
  * @author Thomas Morgner
  */
-public abstract class IterateStructuralProcessStep
-{
-  protected IterateStructuralProcessStep()
-  {
+public abstract class IterateStructuralProcessStep {
+  protected IterateStructuralProcessStep() {
   }
 
-  protected final void startProcessing(final RenderNode node)
-  {
+  protected final void startProcessing( final RenderNode node ) {
     final int nodeType = node.getNodeType();
-    if (nodeType == LayoutNodeTypes.TYPE_BOX_AUTOLAYOUT)
-    {
+    if ( nodeType == LayoutNodeTypes.TYPE_BOX_AUTOLAYOUT ) {
       final RenderBox box = (RenderBox) node;
-      if (startAutoBox(box))
-      {
-        processBoxChilds(box);
+      if ( startAutoBox( box ) ) {
+        processBoxChilds( box );
       }
-      finishAutoBox(box);
-    }
-    else if (nodeType == LayoutNodeTypes.TYPE_BOX_CONTENT)
-    {
-      processRenderableContent((RenderableReplacedContentBox) node);
-    }
-    else if (nodeType == LayoutNodeTypes.TYPE_BOX_TABLE_COL)
-    {
-      processTableColumn((TableColumnNode) node);
-    }
-    else if ((nodeType & LayoutNodeTypes.MASK_BOX) == LayoutNodeTypes.MASK_BOX)
-    {
-      if (nodeType == LayoutNodeTypes.TYPE_BOX_TABLE)
-      {
+      finishAutoBox( box );
+    } else if ( nodeType == LayoutNodeTypes.TYPE_BOX_CONTENT ) {
+      processRenderableContent( (RenderableReplacedContentBox) node );
+    } else if ( nodeType == LayoutNodeTypes.TYPE_BOX_TABLE_COL ) {
+      processTableColumn( (TableColumnNode) node );
+    } else if ( ( nodeType & LayoutNodeTypes.MASK_BOX ) == LayoutNodeTypes.MASK_BOX ) {
+      if ( nodeType == LayoutNodeTypes.TYPE_BOX_TABLE ) {
         final TableRenderBox box = (TableRenderBox) node;
-        if (startTableBox(box))
-        {
-          processBoxChilds(box);
+        if ( startTableBox( box ) ) {
+          processBoxChilds( box );
         }
-        finishTableBox(box);
-      }
-      else if (nodeType == LayoutNodeTypes.TYPE_BOX_TABLE_COL_GROUP)
-      {
+        finishTableBox( box );
+      } else if ( nodeType == LayoutNodeTypes.TYPE_BOX_TABLE_COL_GROUP ) {
         final TableColumnGroupNode box = (TableColumnGroupNode) node;
-        if (startTableColumnGroupBox(box))
-        {
-          processBoxChilds(box);
+        if ( startTableColumnGroupBox( box ) ) {
+          processBoxChilds( box );
         }
-        finishTableColumnGroupBox(box);
-      }
-      else if (nodeType == LayoutNodeTypes.TYPE_BOX_TABLE_SECTION)
-      {
+        finishTableColumnGroupBox( box );
+      } else if ( nodeType == LayoutNodeTypes.TYPE_BOX_TABLE_SECTION ) {
         final TableSectionRenderBox box = (TableSectionRenderBox) node;
-        if (startTableSectionBox(box))
-        {
-          processBoxChilds(box);
+        if ( startTableSectionBox( box ) ) {
+          processBoxChilds( box );
         }
-        finishTableSectionBox(box);
-      }
-      else if (nodeType == LayoutNodeTypes.TYPE_BOX_TABLE_ROW)
-      {
+        finishTableSectionBox( box );
+      } else if ( nodeType == LayoutNodeTypes.TYPE_BOX_TABLE_ROW ) {
         final TableRowRenderBox box = (TableRowRenderBox) node;
-        if (startTableRowBox(box))
-        {
-          processBoxChilds(box);
+        if ( startTableRowBox( box ) ) {
+          processBoxChilds( box );
         }
-        finishTableRowBox(box);
-      }
-      else if (nodeType == LayoutNodeTypes.TYPE_BOX_TABLE_CELL)
-      {
+        finishTableRowBox( box );
+      } else if ( nodeType == LayoutNodeTypes.TYPE_BOX_TABLE_CELL ) {
         final TableCellRenderBox box = (TableCellRenderBox) node;
-        if (startTableCellBox(box))
-        {
-          processBoxChilds(box);
+        if ( startTableCellBox( box ) ) {
+          processBoxChilds( box );
         }
-        finishTableCellBox(box);
-      }
-      else if ((nodeType & LayoutNodeTypes.MASK_BOX_BLOCK) == LayoutNodeTypes.MASK_BOX_BLOCK)
-      {
-        if (nodeType == LayoutNodeTypes.TYPE_BOX_PARAGRAPH)
-        {
+        finishTableCellBox( box );
+      } else if ( ( nodeType & LayoutNodeTypes.MASK_BOX_BLOCK ) == LayoutNodeTypes.MASK_BOX_BLOCK ) {
+        if ( nodeType == LayoutNodeTypes.TYPE_BOX_PARAGRAPH ) {
           final ParagraphRenderBox box = (ParagraphRenderBox) node;
-          if (startBlockBox(box))
-          {
-            processParagraphChilds(box);
+          if ( startBlockBox( box ) ) {
+            processParagraphChilds( box );
           }
-          finishBlockBox(box);
-        }
-        else if (nodeType == LayoutNodeTypes.TYPE_BOX_LOGICALPAGE)
-        {
+          finishBlockBox( box );
+        } else if ( nodeType == LayoutNodeTypes.TYPE_BOX_LOGICALPAGE ) {
           final LogicalPageBox box = (LogicalPageBox) node;
-          if (startBlockBox(box))
-          {
-            startProcessing(box.getWatermarkArea());
-            startProcessing(box.getHeaderArea());
-            processBoxChilds(box);
-            startProcessing(box.getRepeatFooterArea());
-            startProcessing(box.getFooterArea());
+          if ( startBlockBox( box ) ) {
+            startProcessing( box.getWatermarkArea() );
+            startProcessing( box.getHeaderArea() );
+            processBoxChilds( box );
+            startProcessing( box.getRepeatFooterArea() );
+            startProcessing( box.getFooterArea() );
           }
-          finishBlockBox(box);
-        }
-        else
-        {
+          finishBlockBox( box );
+        } else {
           final BlockRenderBox box = (BlockRenderBox) node;
-          if (startBlockBox(box))
-          {
-            processBoxChilds(box);
+          if ( startBlockBox( box ) ) {
+            processBoxChilds( box );
           }
-          finishBlockBox(box);
+          finishBlockBox( box );
         }
-      }
-      else if ((nodeType & LayoutNodeTypes.MASK_BOX_CANVAS) == LayoutNodeTypes.MASK_BOX_CANVAS)
-      {
+      } else if ( ( nodeType & LayoutNodeTypes.MASK_BOX_CANVAS ) == LayoutNodeTypes.MASK_BOX_CANVAS ) {
         final CanvasRenderBox box = (CanvasRenderBox) node;
-        if (startCanvasBox(box))
-        {
-          processBoxChilds(box);
+        if ( startCanvasBox( box ) ) {
+          processBoxChilds( box );
         }
-        finishCanvasBox(box);
-      }
-      else if ((nodeType & LayoutNodeTypes.MASK_BOX_INLINE) == LayoutNodeTypes.MASK_BOX_INLINE)
-      {
+        finishCanvasBox( box );
+      } else if ( ( nodeType & LayoutNodeTypes.MASK_BOX_INLINE ) == LayoutNodeTypes.MASK_BOX_INLINE ) {
         final InlineRenderBox box = (InlineRenderBox) node;
-        if (startInlineBox(box))
-        {
-          processBoxChilds(box);
+        if ( startInlineBox( box ) ) {
+          processBoxChilds( box );
         }
-        finishInlineBox(box);
-      }
-      else if ((nodeType & LayoutNodeTypes.MASK_BOX_ROW) == LayoutNodeTypes.MASK_BOX_ROW)
-      {
+        finishInlineBox( box );
+      } else if ( ( nodeType & LayoutNodeTypes.MASK_BOX_ROW ) == LayoutNodeTypes.MASK_BOX_ROW ) {
         final RenderBox box = (RenderBox) node;
-        if (startRowBox(box))
-        {
-          processBoxChilds(box);
+        if ( startRowBox( box ) ) {
+          processBoxChilds( box );
         }
-        finishRowBox(box);
-      }
-      else
-      {
+        finishRowBox( box );
+      } else {
         final RenderBox box = (RenderBox) node;
-        if (startOtherBox(box))
-        {
-          processBoxChilds(box);
+        if ( startOtherBox( box ) ) {
+          processBoxChilds( box );
         }
-        finishOtherBox(box);
+        finishOtherBox( box );
       }
-    }
-    else
-    {
-      processOtherNode(node);
+    } else {
+      processOtherNode( node );
     }
   }
 
-  protected void finishTableCellBox(final TableCellRenderBox box)
-  {
+  protected void finishTableCellBox( final TableCellRenderBox box ) {
   }
 
-  protected boolean startTableCellBox(final TableCellRenderBox box)
-  {
+  protected boolean startTableCellBox( final TableCellRenderBox box ) {
     return true;
   }
 
-  protected void finishTableRowBox(final TableRowRenderBox box)
-  {
+  protected void finishTableRowBox( final TableRowRenderBox box ) {
   }
 
-  protected boolean startTableRowBox(final TableRowRenderBox box)
-  {
+  protected boolean startTableRowBox( final TableRowRenderBox box ) {
     return true;
   }
 
-  protected void processTableColumn(final TableColumnNode node)
-  {
+  protected void processTableColumn( final TableColumnNode node ) {
 
   }
 
-  protected boolean startTableSectionBox(final TableSectionRenderBox box)
-  {
+  protected boolean startTableSectionBox( final TableSectionRenderBox box ) {
     return true;
   }
 
-  protected void finishTableSectionBox(final TableSectionRenderBox box)
-  {
+  protected void finishTableSectionBox( final TableSectionRenderBox box ) {
   }
 
-  protected boolean startTableColumnGroupBox(final TableColumnGroupNode box)
-  {
+  protected boolean startTableColumnGroupBox( final TableColumnGroupNode box ) {
     return true;
   }
 
-  protected void finishTableColumnGroupBox(final TableColumnGroupNode box)
-  {
+  protected void finishTableColumnGroupBox( final TableColumnGroupNode box ) {
   }
 
-  protected boolean startTableBox(final TableRenderBox box)
-  {
+  protected boolean startTableBox( final TableRenderBox box ) {
     return true;
   }
 
-  protected void finishTableBox(final TableRenderBox box)
-  {
+  protected void finishTableBox( final TableRenderBox box ) {
 
   }
 
-  protected void finishCanvasBox(final CanvasRenderBox box)
-  {
+  protected void finishCanvasBox( final CanvasRenderBox box ) {
 
   }
 
-  protected boolean startCanvasBox(final CanvasRenderBox box)
-  {
+  protected boolean startCanvasBox( final CanvasRenderBox box ) {
     return true;
   }
 
-  protected void processParagraphChilds(final ParagraphRenderBox box)
-  {
-    processBoxChilds(box.getPool());
+  protected void processParagraphChilds( final ParagraphRenderBox box ) {
+    processBoxChilds( box.getPool() );
   }
 
-  protected final void processBoxChilds(final RenderBox box)
-  {
+  protected final void processBoxChilds( final RenderBox box ) {
     RenderNode node = box.getFirstChild();
-    while (node != null)
-    {
-      startProcessing(node);
+    while ( node != null ) {
+      startProcessing( node );
       node = node.getNext();
     }
   }
 
-  protected void processOtherNode(final RenderNode node)
-  {
+  protected void processOtherNode( final RenderNode node ) {
   }
 
-  protected boolean startBlockBox(final BlockRenderBox box)
-  {
+  protected boolean startBlockBox( final BlockRenderBox box ) {
     return true;
   }
 
-  protected void finishBlockBox(final BlockRenderBox box)
-  {
+  protected void finishBlockBox( final BlockRenderBox box ) {
   }
 
-  protected boolean startInlineBox(final InlineRenderBox box)
-  {
+  protected boolean startInlineBox( final InlineRenderBox box ) {
     return true;
   }
 
-  protected void finishInlineBox(final InlineRenderBox box)
-  {
+  protected void finishInlineBox( final InlineRenderBox box ) {
   }
 
-  protected boolean startOtherBox(final RenderBox box)
-  {
+  protected boolean startOtherBox( final RenderBox box ) {
     return true;
   }
 
-  protected void finishOtherBox(final RenderBox box)
-  {
+  protected void finishOtherBox( final RenderBox box ) {
   }
 
-  protected void processRenderableContent(final RenderableReplacedContentBox box)
-  {
+  protected void processRenderableContent( final RenderableReplacedContentBox box ) {
   }
 
-  protected boolean startRowBox(final RenderBox box)
-  {
+  protected boolean startRowBox( final RenderBox box ) {
     return true;
   }
 
-  protected void finishRowBox(final RenderBox box)
-  {
+  protected void finishRowBox( final RenderBox box ) {
   }
 
-  protected boolean startAutoBox(final RenderBox box)
-  {
+  protected boolean startAutoBox( final RenderBox box ) {
     return true;
   }
 
-  protected void finishAutoBox(final RenderBox box)
-  {
+  protected void finishAutoBox( final RenderBox box ) {
   }
 }

@@ -17,47 +17,41 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.gui.base.event;
 
-import java.util.EventObject;
-
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderNode;
 
-public class ReportHyperlinkEvent extends EventObject
-{
+import java.util.EventObject;
+
+public class ReportHyperlinkEvent extends EventObject {
   private RenderNode sourceNode;
   private String target;
   private String window;
   private String title;
 
-  public ReportHyperlinkEvent(final Object source,
-                              final RenderNode sourceNode,
-                              final String target,
-                              final String window,
-                              final String title)
-  {
-    super(source);
+  public ReportHyperlinkEvent( final Object source,
+                               final RenderNode sourceNode,
+                               final String target,
+                               final String window,
+                               final String title ) {
+    super( source );
     this.sourceNode = sourceNode;
     this.target = target;
     this.window = window;
     this.title = title;
   }
 
-  public RenderNode getSourceNode()
-  {
+  public RenderNode getSourceNode() {
     return sourceNode;
   }
 
-  public String getTarget()
-  {
+  public String getTarget() {
     return target;
   }
 
-  public String getWindow()
-  {
+  public String getWindow() {
     return window;
   }
 
-  public String getTitle()
-  {
+  public String getTitle() {
     return title;
   }
 }

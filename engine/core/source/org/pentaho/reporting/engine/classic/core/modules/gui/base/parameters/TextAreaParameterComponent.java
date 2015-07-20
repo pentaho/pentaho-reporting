@@ -17,15 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.gui.base.parameters;
 
-import java.text.Format;
-import java.util.Locale;
-import java.util.TimeZone;
-import javax.swing.JComponent;
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
-
 import org.pentaho.reporting.engine.classic.core.modules.gui.base.ParameterReportControllerPane;
 import org.pentaho.reporting.engine.classic.core.parameters.ParameterAttributeNames;
 import org.pentaho.reporting.engine.classic.core.parameters.ParameterContext;
@@ -33,16 +24,19 @@ import org.pentaho.reporting.engine.classic.core.parameters.ParameterDefinitionE
 import org.pentaho.reporting.engine.classic.core.util.beans.BeanException;
 import org.pentaho.reporting.engine.classic.core.util.beans.ConverterRegistry;
 
-public class TextAreaParameterComponent extends JScrollPane implements ParameterComponent
-{
-  private class TextUpdateHandler implements ChangeListener
-  {
-    private TextUpdateHandler()
-    {
+import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+import java.text.Format;
+import java.util.Locale;
+import java.util.TimeZone;
+
+public class TextAreaParameterComponent extends JScrollPane implements ParameterComponent {
+  private class TextUpdateHandler implements ChangeListener {
+    private TextUpdateHandler() {
     }
 
-    public void stateChanged(final ChangeEvent e)
-    {
+    public void stateChanged( final ChangeEvent e ) {
       initialize();
     }
   }
@@ -53,74 +47,59 @@ public class TextAreaParameterComponent extends JScrollPane implements Parameter
   private TextComponentEditHandler handler;
   private Format format;
 
-  public TextAreaParameterComponent(final ParameterDefinitionEntry entry,
-                                    final ParameterContext parameterContext,
-                                    final ParameterUpdateContext updateContext)
-  {
+  public TextAreaParameterComponent( final ParameterDefinitionEntry entry,
+                                     final ParameterContext parameterContext,
+                                     final ParameterUpdateContext updateContext ) {
     this.updateContext = updateContext;
 
-    final String formatString = entry.getParameterAttribute(ParameterAttributeNames.Core.NAMESPACE,
-        ParameterAttributeNames.Core.DATA_FORMAT, parameterContext);
-    final String timeZoneSpec = entry.getParameterAttribute(ParameterAttributeNames.Core.NAMESPACE,
-        ParameterAttributeNames.Core.TIMEZONE, parameterContext);
+    final String formatString = entry.getParameterAttribute( ParameterAttributeNames.Core.NAMESPACE,
+      ParameterAttributeNames.Core.DATA_FORMAT, parameterContext );
+    final String timeZoneSpec = entry.getParameterAttribute( ParameterAttributeNames.Core.NAMESPACE,
+      ParameterAttributeNames.Core.TIMEZONE, parameterContext );
     final Locale locale = parameterContext.getResourceBundleFactory().getLocale();
-    final TimeZone timeZone = TextComponentEditHandler.createTimeZone(timeZoneSpec,
-        parameterContext.getResourceBundleFactory().getTimeZone());
+    final TimeZone timeZone = TextComponentEditHandler.createTimeZone( timeZoneSpec,
+      parameterContext.getResourceBundleFactory().getTimeZone() );
 
     textArea = new JTextArea();
 
-    format = TextComponentEditHandler.createFormat(formatString, locale, timeZone, entry.getValueType());
-    handler = new TextComponentEditHandler(entry.getValueType(), entry.getName(), textArea, updateContext, format);
+    format = TextComponentEditHandler.createFormat( formatString, locale, timeZone, entry.getValueType() );
+    handler = new TextComponentEditHandler( entry.getValueType(), entry.getName(), textArea, updateContext, format );
 
-    textArea.getDocument().addDocumentListener(handler);
-    textArea.setColumns(60);
-    textArea.setRows(10);
+    textArea.getDocument().addDocumentListener( handler );
+    textArea.setColumns( 60 );
+    textArea.setRows( 10 );
 
-    setViewportView(textArea);
+    setViewportView( textArea );
 
     parameterName = entry.getName();
-    updateContext.addChangeListener(new TextUpdateHandler());
+    updateContext.addChangeListener( new TextUpdateHandler() );
   }
 
-  public JComponent getUIComponent()
-  {
+  public JComponent getUIComponent() {
     return this;
   }
 
-  public void initialize()
-  {
-    handler.setAdjustingToExternalInput(true);
-    try
-    {
-      final Object value = updateContext.getParameterValue(parameterName);
-      if (value != null)
-      {
-        try
-        {
-          if (format != null)
-          {
-            textArea.setText(format.format(value));
+  public void initialize() {
+    handler.setAdjustingToExternalInput( true );
+    try {
+      final Object value = updateContext.getParameterValue( parameterName );
+      if ( value != null ) {
+        try {
+          if ( format != null ) {
+            textArea.setText( format.format( value ) );
+          } else {
+            textArea.setText( ConverterRegistry.toAttributeValue( value ) );
           }
-          else
-          {
-            textArea.setText(ConverterRegistry.toAttributeValue(value));
-          }
-        }
-        catch (BeanException e)
-        {
+        } catch ( BeanException e ) {
           // ignore illegal values, set them as plain text.
-          textArea.setText(value.toString());
-          setBackground(ParameterReportControllerPane.ERROR_COLOR);
+          textArea.setText( value.toString() );
+          setBackground( ParameterReportControllerPane.ERROR_COLOR );
         }
+      } else {
+        textArea.setText( null );
       }
-      else
-      {
-        textArea.setText(null);
-      }
-    }
-    finally
-    {
-      handler.setAdjustingToExternalInput(false);
+    } finally {
+      handler.setAdjustingToExternalInput( false );
     }
   }
 }

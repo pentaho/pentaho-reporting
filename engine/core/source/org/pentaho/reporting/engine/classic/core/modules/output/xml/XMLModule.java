@@ -27,16 +27,14 @@ import org.pentaho.reporting.libraries.base.boot.SubSystem;
  * @author Thomas Morgner
  * @deprecated The whole basic XML output is deprecated as it cannot handle inline subreports.
  */
-public class XMLModule extends AbstractModule
-{
+public class XMLModule extends AbstractModule {
   /**
    * DefaultConstructor. Loads the module specification.
    *
    * @throws ModuleInitializeException if an error occured.
    */
   public XMLModule()
-      throws ModuleInitializeException
-  {
+    throws ModuleInitializeException {
     loadModuleInfo();
   }
 
@@ -48,8 +46,7 @@ public class XMLModule extends AbstractModule
    * @param subSystem the subSystem.
    * @throws ModuleInitializeException if an error ocurred while initializing the module.
    */
-  public void initialize(final SubSystem subSystem)
-      throws ModuleInitializeException
-  {
+  public void initialize( final SubSystem subSystem )
+    throws ModuleInitializeException {
   }
 }

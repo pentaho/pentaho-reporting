@@ -17,8 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.parser.base.common;
 
-import java.beans.IntrospectionException;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.pentaho.reporting.engine.classic.core.function.Expression;
@@ -33,17 +31,17 @@ import org.pentaho.reporting.libraries.xmlns.parser.ParseException;
 import org.pentaho.reporting.libraries.xmlns.parser.XmlReadHandler;
 import org.xml.sax.SAXException;
 
-public class StyleExpressionHandler extends AbstractPropertyXmlReadHandler
-{
-  private static final Log logger = LogFactory.getLog(StyleExpressionHandler.class);
+import java.beans.IntrospectionException;
+
+public class StyleExpressionHandler extends AbstractPropertyXmlReadHandler {
+  private static final Log logger = LogFactory.getLog( StyleExpressionHandler.class );
 
   private String originalClassName;
   private String expressionClassName;
   private Expression expression;
   private StyleKey key;
 
-  public StyleExpressionHandler()
-  {
+  public StyleExpressionHandler() {
   }
 
 
@@ -53,56 +51,46 @@ public class StyleExpressionHandler extends AbstractPropertyXmlReadHandler
    * @param attrs the attributes.
    * @throws org.xml.sax.SAXException if there is a parsing error.
    */
-  protected void startParsing(final PropertyAttributes attrs)
-      throws SAXException
-  {
-    final String expressionName = attrs.getValue(getUri(), "style-key");
-    if (expressionName == null)
-    {
-      throw new SAXException("Required attribute 'style-key' is missing.");
+  protected void startParsing( final PropertyAttributes attrs )
+    throws SAXException {
+    final String expressionName = attrs.getValue( getUri(), "style-key" );
+    if ( expressionName == null ) {
+      throw new SAXException( "Required attribute 'style-key' is missing." );
     }
 
-    if (ElementStyleKeys.isLegacyKey(expressionName))
-    {
+    if ( ElementStyleKeys.isLegacyKey( expressionName ) ) {
       return;
     }
-    
-    key = StyleKey.getStyleKey(expressionName);
-    if (key == null)
-    {
-      throw new SAXException("Required attribute 'style-key' is invalid.");
+
+    key = StyleKey.getStyleKey( expressionName );
+    if ( key == null ) {
+      throw new SAXException( "Required attribute 'style-key' is invalid." );
     }
 
-    final String className = attrs.getValue(getUri(), "class");
-    final String formula = attrs.getValue(getUri(), "formula");
-    if (className == null)
-    {
-      if (formula != null)
-      {
+    final String className = attrs.getValue( getUri(), "class" );
+    final String formula = attrs.getValue( getUri(), "formula" );
+    if ( className == null ) {
+      if ( formula != null ) {
         final FormulaExpression expression = new FormulaExpression();
-        expression.setFormula(formula);
+        expression.setFormula( formula );
         this.expression = expression;
-        this.expression.setName(expressionName);
+        this.expression.setName( expressionName );
 
         this.originalClassName = FormulaExpression.class.getName();
         this.expressionClassName = FormulaExpression.class.getName();
-      }
-      else
-      {
-        logger.warn("Required attribute 'class' is missing. Gracefully ignoring the error." + getLocator());
+      } else {
+        logger.warn( "Required attribute 'class' is missing. Gracefully ignoring the error." + getLocator() );
       }
     }
 
-    if (expression == null && className != null)
-    {
+    if ( expression == null && className != null ) {
 
-      final String mappedClassName = CompatibilityMapperUtil.mapClassName(className);
+      final String mappedClassName = CompatibilityMapperUtil.mapClassName( className );
       expression = (Expression) ObjectUtilities.loadAndInstantiate
-          (mappedClassName, getClass(), Expression.class);
-      if (expression == null)
-      {
-        throw new ParseException("Expression '" + className +
-            "' is not valid. The specified class was not found.", getLocator());
+        ( mappedClassName, getClass(), Expression.class );
+      if ( expression == null ) {
+        throw new ParseException( "Expression '" + className +
+          "' is not valid. The specified class was not found.", getLocator() );
       }
 
       this.originalClassName = className;
@@ -118,30 +106,23 @@ public class StyleExpressionHandler extends AbstractPropertyXmlReadHandler
    * @return the handler or null, if the tagname is invalid.
    * @throws org.xml.sax.SAXException if there is a parsing error.
    */
-  protected XmlReadHandler getHandlerForChild(final String uri,
-                                              final String tagName,
-                                              final PropertyAttributes atts)
-      throws SAXException
-  {
-    if (isSameNamespace(uri) == false)
-    {
+  protected XmlReadHandler getHandlerForChild( final String uri,
+                                               final String tagName,
+                                               final PropertyAttributes atts )
+    throws SAXException {
+    if ( isSameNamespace( uri ) == false ) {
       return null;
     }
 
-    if (key == null)
-    {
+    if ( key == null ) {
       return new IgnoreAnyChildReadHandler();
     }
-    if ("properties".equals(tagName) &&  expression != null)
-    {
-      try
-      {
-        return new ExpressionPropertiesReadHandler(expression, originalClassName, expressionClassName);
-      }
-      catch (IntrospectionException e)
-      {
+    if ( "properties".equals( tagName ) && expression != null ) {
+      try {
+        return new ExpressionPropertiesReadHandler( expression, originalClassName, expressionClassName );
+      } catch ( IntrospectionException e ) {
         throw new SAXException
-            ("Unable to create Introspector for the specified expression.");
+          ( "Unable to create Introspector for the specified expression." );
       }
     }
     return null;
@@ -152,18 +133,15 @@ public class StyleExpressionHandler extends AbstractPropertyXmlReadHandler
    *
    * @return the object.
    */
-  public Object getObject()
-  {
+  public Object getObject() {
     return expression;
   }
 
-  public Expression getExpression()
-  {
+  public Expression getExpression() {
     return expression;
   }
 
-  public StyleKey getKey()
-  {
+  public StyleKey getKey() {
     return key;
   }
 }

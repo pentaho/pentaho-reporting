@@ -17,8 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.parser.bundle.layout.elements;
 
-import java.util.ArrayList;
-
 import org.pentaho.reporting.engine.classic.core.AbstractRootLevelBand;
 import org.pentaho.reporting.engine.classic.core.SubReport;
 import org.pentaho.reporting.engine.classic.core.metadata.ElementType;
@@ -31,34 +29,29 @@ import org.pentaho.reporting.libraries.xmlns.parser.XmlReadHandler;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 
-public abstract class AbstractRootLevelBandReadHandler extends AbstractXmlReadHandler
-{
+import java.util.ArrayList;
+
+public abstract class AbstractRootLevelBandReadHandler extends AbstractXmlReadHandler {
   private RootLevelContentReadHandler contentReadHandler;
   private ArrayList<ElementReadHandler> subReportReadHandler;
   private AbstractRootLevelBand element;
   private ElementType elementType;
 
-  public AbstractRootLevelBandReadHandler(final ElementType elementType) throws ParseException
-  {
+  public AbstractRootLevelBandReadHandler( final ElementType elementType ) throws ParseException {
     this.elementType = elementType;
     this.subReportReadHandler = new ArrayList<ElementReadHandler>();
   }
 
-  public void init(final RootXmlReadHandler rootHandler, final String uri, final String tagName) throws SAXException
-  {
-    super.init(rootHandler, uri, tagName);
-    this.contentReadHandler = new RootLevelContentReadHandler(elementType, createElement());
+  public void init( final RootXmlReadHandler rootHandler, final String uri, final String tagName ) throws SAXException {
+    super.init( rootHandler, uri, tagName );
+    this.contentReadHandler = new RootLevelContentReadHandler( elementType, createElement() );
   }
 
-  protected AbstractRootLevelBand createElement() throws ParseException
-  {
-    try
-    {
-    return (AbstractRootLevelBand) elementType.create();
-    }
-    catch (Exception e)
-    {
-      throw new ParseException(e);
+  protected AbstractRootLevelBand createElement() throws ParseException {
+    try {
+      return (AbstractRootLevelBand) elementType.create();
+    } catch ( Exception e ) {
+      throw new ParseException( e );
     }
   }
 
@@ -71,24 +64,18 @@ public abstract class AbstractRootLevelBandReadHandler extends AbstractXmlReadHa
    * @return the handler or null, if the tagname is invalid.
    * @throws SAXException if there is a parsing error.
    */
-  protected XmlReadHandler getHandlerForChild(final String uri,
-                                              final String tagName,
-                                              final Attributes atts)
-      throws SAXException
-  {
-    if (isSameNamespace(uri))
-    {
-      if ("root-level-content".equals(tagName))
-      {
+  protected XmlReadHandler getHandlerForChild( final String uri,
+                                               final String tagName,
+                                               final Attributes atts )
+    throws SAXException {
+    if ( isSameNamespace( uri ) ) {
+      if ( "root-level-content".equals( tagName ) ) {
         return contentReadHandler;
-      }
-      else
-      {
+      } else {
         final ElementReadHandler readHandler =
-            BundleElementRegistry.getInstance().getReadHandler(uri, tagName, getLocator());
-        if (readHandler != null)
-        {
-          this.subReportReadHandler.add(readHandler);
+          BundleElementRegistry.getInstance().getReadHandler( uri, tagName, getLocator() );
+        if ( readHandler != null ) {
+          this.subReportReadHandler.add( readHandler );
         }
         return readHandler;
       }
@@ -102,16 +89,13 @@ public abstract class AbstractRootLevelBandReadHandler extends AbstractXmlReadHa
    *
    * @throws SAXException if there is a parsing error.
    */
-  protected void doneParsing() throws SAXException
-  {
+  protected void doneParsing() throws SAXException {
     element = (AbstractRootLevelBand) contentReadHandler.getElement();
-    for (int i = 0; i < subReportReadHandler.size(); i++)
-    {
-      final ElementReadHandler handler = subReportReadHandler.get(i);
+    for ( int i = 0; i < subReportReadHandler.size(); i++ ) {
+      final ElementReadHandler handler = subReportReadHandler.get( i );
       final Object o = handler.getObject();
-      if (o instanceof SubReport)
-      {
-        element.addSubReport((SubReport) o);
+      if ( o instanceof SubReport ) {
+        element.addSubReport( (SubReport) o );
       }
     }
   }
@@ -122,13 +106,11 @@ public abstract class AbstractRootLevelBandReadHandler extends AbstractXmlReadHa
    * @return the object.
    * @throws SAXException if an parser error occured.
    */
-  public Object getObject() throws SAXException
-  {
+  public Object getObject() throws SAXException {
     return element;
   }
 
-  public AbstractRootLevelBand getElement()
-  {
+  public AbstractRootLevelBand getElement() {
     return element;
   }
 }

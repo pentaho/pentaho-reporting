@@ -313,7 +313,7 @@
                hidden="true"
                value-type="java.lang.String"
                value-role="Value"/>
-    
+
     <style-group-ref ref="borders"/>
     <style-group-ref ref="common"/>
     <style-group-ref ref="text"/>

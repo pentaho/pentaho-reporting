@@ -26,36 +26,30 @@ import org.pentaho.reporting.engine.classic.core.layout.text.ExtendedBaselineInf
  *
  * @author Thomas Morgner
  */
-public final class InlineBlockAlignContext extends AlignContext
-{
+public final class InlineBlockAlignContext extends AlignContext {
   private long[] baselines;
   private long baselineShift;
 
-  public InlineBlockAlignContext(final RenderBox box)
-  {
-    super(box);
+  public InlineBlockAlignContext( final RenderBox box ) {
+    super( box );
     final ExtendedBaselineInfo baselineInfo = box.getBaselineInfo();
     this.baselines = baselineInfo.getBaselines();
-    setDominantBaseline(baselineInfo.getDominantBaseline());
+    setDominantBaseline( baselineInfo.getDominantBaseline() );
   }
 
-  public long getBaselineDistance(final int baseline)
-  {
-    return (baselines[baseline] - baselines[getDominantBaseline()]) + baselineShift;
+  public long getBaselineDistance( final int baseline ) {
+    return ( baselines[ baseline ] - baselines[ getDominantBaseline() ] ) + baselineShift;
   }
 
-  public void shift(final long delta)
-  {
+  public void shift( final long delta ) {
     baselineShift += delta;
   }
 
-  public long getAfterEdge()
-  {
-    return this.baselines[ExtendedBaselineInfo.AFTER_EDGE] + baselineShift;
+  public long getAfterEdge() {
+    return this.baselines[ ExtendedBaselineInfo.AFTER_EDGE ] + baselineShift;
   }
 
-  public long getBeforeEdge()
-  {
-    return this.baselines[ExtendedBaselineInfo.BEFORE_EDGE] + baselineShift;
+  public long getBeforeEdge() {
+    return this.baselines[ ExtendedBaselineInfo.BEFORE_EDGE ] + baselineShift;
   }
 }

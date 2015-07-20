@@ -19,15 +19,14 @@ package org.pentaho.reporting.engine.classic.core.style.css.namespaces;
 
 import org.pentaho.reporting.libraries.resourceloader.ResourceKey;
 
-public interface NamespaceDefinition
-{
-  public String getPrefix ();
-  
+public interface NamespaceDefinition {
+  public String getPrefix();
+
   public String getURI();
 
-  public String[] getClassAttribute(String element);
+  public String[] getClassAttribute( String element );
 
-  public String[] getStyleAttribute(String element);
+  public String[] getStyleAttribute( String element );
 
   public ResourceKey getDefaultStyleSheetLocation();
 }

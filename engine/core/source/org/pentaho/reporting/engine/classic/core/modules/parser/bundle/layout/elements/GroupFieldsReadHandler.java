@@ -17,21 +17,19 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.parser.bundle.layout.elements;
 
-import java.util.ArrayList;
-
 import org.pentaho.reporting.libraries.xmlns.parser.AbstractXmlReadHandler;
 import org.pentaho.reporting.libraries.xmlns.parser.StringReadHandler;
 import org.pentaho.reporting.libraries.xmlns.parser.XmlReadHandler;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 
-public class GroupFieldsReadHandler extends AbstractXmlReadHandler
-{
+import java.util.ArrayList;
+
+public class GroupFieldsReadHandler extends AbstractXmlReadHandler {
   private String[] fields;
   private ArrayList<StringReadHandler> fieldHandlers;
 
-  public GroupFieldsReadHandler()
-  {
+  public GroupFieldsReadHandler() {
     this.fieldHandlers = new ArrayList<StringReadHandler>();
   }
 
@@ -43,20 +41,17 @@ public class GroupFieldsReadHandler extends AbstractXmlReadHandler
    * @return the handler or null, if the tagname is invalid.
    * @throws org.xml.sax.SAXException if there is a parsing error.
    */
-  protected XmlReadHandler getHandlerForChild(final String uri,
-                                              final String tagName,
-                                              final Attributes atts)
-      throws SAXException
-  {
-    if (getUri().equals(uri) == false)
-    {
+  protected XmlReadHandler getHandlerForChild( final String uri,
+                                               final String tagName,
+                                               final Attributes atts )
+    throws SAXException {
+    if ( getUri().equals( uri ) == false ) {
       return null;
     }
 
-    if ("field".equals(tagName))
-    {
+    if ( "field".equals( tagName ) ) {
       final StringReadHandler readHandler = new StringReadHandler();
-      fieldHandlers.add(readHandler);
+      fieldHandlers.add( readHandler );
       return readHandler;
     }
     return null;
@@ -67,14 +62,12 @@ public class GroupFieldsReadHandler extends AbstractXmlReadHandler
    *
    * @throws org.xml.sax.SAXException if there is a parsing error.
    */
-  protected void doneParsing() throws SAXException
-  {
+  protected void doneParsing() throws SAXException {
     final int size = fieldHandlers.size();
-    fields = new String[size];
-    for (int i = 0; i < size; i++)
-    {
-      final StringReadHandler readHandler = fieldHandlers.get(i);
-      fields[i] = readHandler.getResult();
+    fields = new String[ size ];
+    for ( int i = 0; i < size; i++ ) {
+      final StringReadHandler readHandler = fieldHandlers.get( i );
+      fields[ i ] = readHandler.getResult();
     }
   }
 
@@ -84,13 +77,11 @@ public class GroupFieldsReadHandler extends AbstractXmlReadHandler
    * @return the object.
    * @throws SAXException if an parser error occured.
    */
-  public Object getObject() throws SAXException
-  {
+  public Object getObject() throws SAXException {
     return fields;
   }
 
-  public String[] getFields()
-  {
+  public String[] getFields() {
     return fields;
   }
 }

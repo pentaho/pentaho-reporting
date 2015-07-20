@@ -23,12 +23,10 @@ import org.pentaho.reporting.engine.classic.core.modules.parser.base.common.Abst
 import org.pentaho.reporting.libraries.xmlns.parser.XmlReadHandler;
 import org.xml.sax.SAXException;
 
-public class GroupsReadHandler extends AbstractPropertyXmlReadHandler
-{
+public class GroupsReadHandler extends AbstractPropertyXmlReadHandler {
   private GroupList groupList;
 
-  public GroupsReadHandler(final GroupList groupList)
-  {
+  public GroupsReadHandler( final GroupList groupList ) {
     this.groupList = groupList;
   }
 
@@ -40,19 +38,16 @@ public class GroupsReadHandler extends AbstractPropertyXmlReadHandler
    * @return the handler or null, if the tagname is invalid.
    * @throws org.xml.sax.SAXException if there is a parsing error.
    */
-  protected XmlReadHandler getHandlerForChild(final String uri,
-                                              final String tagName,
-                                              final PropertyAttributes atts)
-      throws SAXException
-  {
-    if (isSameNamespace(uri) == false)
-    {
+  protected XmlReadHandler getHandlerForChild( final String uri,
+                                               final String tagName,
+                                               final PropertyAttributes atts )
+    throws SAXException {
+    if ( isSameNamespace( uri ) == false ) {
       return null;
     }
 
-    if ("group".equals(tagName))
-    {
-      return new GroupReadHandler(groupList);
+    if ( "group".equals( tagName ) ) {
+      return new GroupReadHandler( groupList );
     }
     return null;
   }
@@ -62,8 +57,7 @@ public class GroupsReadHandler extends AbstractPropertyXmlReadHandler
    *
    * @return the object.
    */
-  public Object getObject()
-  {
+  public Object getObject() {
     return groupList;
   }
 }

@@ -17,8 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.core.metadata.parser;
 
-import java.util.ArrayList;
-
 import org.pentaho.reporting.engine.classic.core.metadata.builder.StyleMetaDataBuilder;
 import org.pentaho.reporting.libraries.xmlns.parser.AbstractXmlReadHandler;
 import org.pentaho.reporting.libraries.xmlns.parser.ParseException;
@@ -26,16 +24,16 @@ import org.pentaho.reporting.libraries.xmlns.parser.XmlReadHandler;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 
-public class StyleGroupReadHandler extends AbstractXmlReadHandler
-{
+import java.util.ArrayList;
+
+public class StyleGroupReadHandler extends AbstractXmlReadHandler {
   private ArrayList<StyleReadHandler> styleHandlers;
   private String name;
   private GlobalMetaDefinition styleGroups;
   private StyleGroup group;
   private String bundle;
 
-  public StyleGroupReadHandler(final GlobalMetaDefinition styleGroups)
-  {
+  public StyleGroupReadHandler( final GlobalMetaDefinition styleGroups ) {
     this.styleGroups = styleGroups;
     this.styleHandlers = new ArrayList<StyleReadHandler>();
   }
@@ -47,15 +45,13 @@ public class StyleGroupReadHandler extends AbstractXmlReadHandler
    * @param attrs the attributes.
    * @throws SAXException if there is a parsing error.
    */
-  protected void startParsing(final Attributes attrs) throws SAXException
-  {
-    name = attrs.getValue(getUri(), "name"); // NON-NLS
-    if (name == null)
-    {
-      throw new ParseException("Attribute 'name' is undefined", getLocator());
+  protected void startParsing( final Attributes attrs ) throws SAXException {
+    name = attrs.getValue( getUri(), "name" ); // NON-NLS
+    if ( name == null ) {
+      throw new ParseException( "Attribute 'name' is undefined", getLocator() );
     }
 
-    bundle = attrs.getValue(getUri(), "bundle-name"); // NON-NLS
+    bundle = attrs.getValue( getUri(), "bundle-name" ); // NON-NLS
   }
 
   /**
@@ -67,18 +63,16 @@ public class StyleGroupReadHandler extends AbstractXmlReadHandler
    * @return the handler or null, if the tagname is invalid.
    * @throws SAXException if there is a parsing error.
    */
-  protected XmlReadHandler getHandlerForChild(final String uri,
-                                              final String tagName,
-                                              final Attributes atts) throws SAXException
-  {
-    if (getUri().equals(uri) == false)
-    {
+  protected XmlReadHandler getHandlerForChild( final String uri,
+                                               final String tagName,
+                                               final Attributes atts ) throws SAXException {
+    if ( getUri().equals( uri ) == false ) {
       return null;
     }
-    if ("style".equals(tagName)) // NON-NLS
+    if ( "style".equals( tagName ) ) // NON-NLS
     {
-      final StyleReadHandler handler = new StyleReadHandler(bundle);
-      styleHandlers.add(handler);
+      final StyleReadHandler handler = new StyleReadHandler( bundle );
+      styleHandlers.add( handler );
       return handler;
     }
     return null;
@@ -89,18 +83,16 @@ public class StyleGroupReadHandler extends AbstractXmlReadHandler
    *
    * @throws SAXException if there is a parsing error.
    */
-  protected void doneParsing() throws SAXException
-  {
+  protected void doneParsing() throws SAXException {
     final ArrayList<StyleMetaDataBuilder> styles = new ArrayList<StyleMetaDataBuilder>();
-    for (final StyleReadHandler styleHandler : styleHandlers)
-    {
-      if (styleHandler.getBuilder().getKey() == null) {
+    for ( final StyleReadHandler styleHandler : styleHandlers ) {
+      if ( styleHandler.getBuilder().getKey() == null ) {
         throw new IllegalStateException();
       }
-      styles.add(styleHandler.getBuilder().clone());
+      styles.add( styleHandler.getBuilder().clone() );
     }
-    group = new StyleGroup(name, styles);
-    styleGroups.addStyleGroup(group);
+    group = new StyleGroup( name, styles );
+    styleGroups.addStyleGroup( group );
   }
 
   /**
@@ -109,8 +101,7 @@ public class StyleGroupReadHandler extends AbstractXmlReadHandler
    * @return the object.
    * @throws SAXException if an parser error occured.
    */
-  public Object getObject() throws SAXException
-  {
+  public Object getObject() throws SAXException {
     return group;
   }
 }

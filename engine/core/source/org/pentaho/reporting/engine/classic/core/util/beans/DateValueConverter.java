@@ -28,44 +28,34 @@ import java.util.Locale;
  *
  * @author Thomas Morgner
  */
-public class DateValueConverter implements ValueConverter
-{
+public class DateValueConverter implements ValueConverter {
   private SimpleDateFormat dateFormat;
 
-  public DateValueConverter()
-  {
-    dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ", Locale.US);
-    dateFormat.setLenient(false);
+  public DateValueConverter() {
+    dateFormat = new SimpleDateFormat( "yyyy-MM-dd'T'HH:mm:ss.SSSZ", Locale.US );
+    dateFormat.setLenient( false );
   }
 
-  public String toAttributeValue(final Object o) throws BeanException
-  {
-    if (o == null)
-    {
+  public String toAttributeValue( final Object o ) throws BeanException {
+    if ( o == null ) {
       throw new NullPointerException();
     }
-    if (o instanceof Date == false)
-    {
-      throw new BeanException("Failed to convert object of type " + o.getClass() + ": Not a Date.");
+    if ( o instanceof Date == false ) {
+      throw new BeanException( "Failed to convert object of type " + o.getClass() + ": Not a Date." );
     }
     final DateFormat format = (DateFormat) dateFormat.clone();
-    return format.format((Date) o);
+    return format.format( (Date) o );
   }
 
-  public Object toPropertyValue(final String s) throws BeanException
-  {
-    if (s == null)
-    {
+  public Object toPropertyValue( final String s ) throws BeanException {
+    if ( s == null ) {
       throw new NullPointerException();
     }
-    try
-    {
+    try {
       final DateFormat format = (DateFormat) dateFormat.clone();
-      return format.parse(s);
-    }
-    catch (ParseException e)
-    {
-      throw new BeanException("Failed to parse date", e);
+      return format.parse( s );
+    } catch ( ParseException e ) {
+      throw new BeanException( "Failed to parse date", e );
     }
   }
 }

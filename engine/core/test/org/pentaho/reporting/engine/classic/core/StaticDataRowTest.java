@@ -20,28 +20,23 @@ package org.pentaho.reporting.engine.classic.core;
 
 import junit.framework.TestCase;
 
-public class StaticDataRowTest extends TestCase
-{
-  public StaticDataRowTest()
-  {
+public class StaticDataRowTest extends TestCase {
+  public StaticDataRowTest() {
   }
 
-  public StaticDataRowTest(final String name)
-  {
-    super(name);
+  public StaticDataRowTest( final String name ) {
+    super( name );
   }
 
-  protected void setUp() throws Exception
-  {
+  protected void setUp() throws Exception {
     ClassicEngineBoot.getInstance().start();
   }
 
-  public void testSetAndRetrieve() throws Exception
-  {
-    final StaticDataRow sdr = new StaticDataRow(new String[]{"parameter1", "parameter2"},
-        new Object[]{"test", new Integer(5)});
+  public void testSetAndRetrieve() throws Exception {
+    final StaticDataRow sdr = new StaticDataRow( new String[] { "parameter1", "parameter2" },
+      new Object[] { "test", new Integer( 5 ) } );
 
-    assertEquals("test", sdr.get("parameter1"));
-    assertEquals(new Integer(5), sdr.get("parameter2"));
+    assertEquals( "test", sdr.get( "parameter1" ) );
+    assertEquals( new Integer( 5 ), sdr.get( "parameter2" ) );
   }
 }

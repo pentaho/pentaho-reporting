@@ -29,29 +29,25 @@ import org.xml.sax.SAXException;
  *
  * @author Thomas Morgner
  */
-public class HorizontalLineElementReadHandler extends AbstractElementReadHandler
-{
+public class HorizontalLineElementReadHandler extends AbstractElementReadHandler {
   private HorizontalLineElementFactory factory;
 
-  public HorizontalLineElementReadHandler()
-  {
+  public HorizontalLineElementReadHandler() {
     factory = new HorizontalLineElementFactory();
   }
 
-  protected ElementFactory getElementFactory()
-  {
+  protected ElementFactory getElementFactory() {
     return factory;
   }
 
-  protected void startParsing(final PropertyAttributes atts) throws SAXException
-  {
-    super.startParsing(atts);
+  protected void startParsing( final PropertyAttributes atts ) throws SAXException {
+    super.startParsing( atts );
 
-    factory.setName(atts.getValue(getUri(), "name"));
-    factory.setScale(Boolean.TRUE);
-    factory.setKeepAspectRatio(Boolean.FALSE);
-    factory.setShouldFill(Boolean.FALSE);
-    factory.setShouldDraw(Boolean.TRUE);
-    factory.setStroke(ReportParserUtil.parseStroke(atts.getValue(getUri(), "stroke"), 1));
+    factory.setName( atts.getValue( getUri(), "name" ) );
+    factory.setScale( Boolean.TRUE );
+    factory.setKeepAspectRatio( Boolean.FALSE );
+    factory.setShouldFill( Boolean.FALSE );
+    factory.setShouldDraw( Boolean.TRUE );
+    factory.setStroke( ReportParserUtil.parseStroke( atts.getValue( getUri(), "stroke" ), 1 ) );
   }
 }

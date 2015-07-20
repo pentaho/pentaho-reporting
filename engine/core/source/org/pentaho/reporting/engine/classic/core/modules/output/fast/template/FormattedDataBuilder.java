@@ -17,18 +17,17 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.output.fast.template;
 
-import java.io.IOException;
-import java.io.OutputStream;
-
 import org.pentaho.reporting.engine.classic.core.Band;
 import org.pentaho.reporting.engine.classic.core.ReportProcessingException;
 import org.pentaho.reporting.engine.classic.core.function.ExpressionRuntime;
 import org.pentaho.reporting.engine.classic.core.layout.output.ContentProcessingException;
 
-public interface FormattedDataBuilder
-{
-  void compute(Band band,
-               ExpressionRuntime runtime,
-               OutputStream out)
-      throws ReportProcessingException, ContentProcessingException, IOException;
+import java.io.IOException;
+import java.io.OutputStream;
+
+public interface FormattedDataBuilder {
+  void compute( Band band,
+                ExpressionRuntime runtime,
+                OutputStream out )
+    throws ReportProcessingException, ContentProcessingException, IOException;
 }

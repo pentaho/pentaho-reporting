@@ -20,17 +20,14 @@ package org.pentaho.reporting.engine.classic.core.filter.types.bands;
 import org.pentaho.reporting.engine.classic.core.ReportElement;
 import org.pentaho.reporting.engine.classic.core.ReportFooter;
 
-public class ReportFooterType extends AbstractSectionType
-{
+public class ReportFooterType extends AbstractSectionType {
   public static final ReportFooterType INSTANCE = new ReportFooterType();
 
-  public ReportFooterType()
-  {
-    super("report-footer", true);
+  public ReportFooterType() {
+    super( "report-footer", true );
   }
 
-  public ReportElement create()
-  {
+  public ReportElement create() {
     return new ReportFooter();
   }
 }

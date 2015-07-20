@@ -17,48 +17,41 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.parser.bundle.settings;
 
-import java.util.Enumeration;
-
 import org.pentaho.reporting.libraries.base.config.Configuration;
 import org.pentaho.reporting.libraries.base.config.DefaultConfiguration;
+
+import java.util.Enumeration;
 
 /**
  * Todo: Document Me
  *
  * @author Thomas Morgner
  */
-public class BundleSettings implements Cloneable
-{
+public class BundleSettings implements Cloneable {
   private DefaultConfiguration configuration;
 
-  public BundleSettings(final Configuration configuration)
-  {
-    if (configuration == null)
-    {
+  public BundleSettings( final Configuration configuration ) {
+    if ( configuration == null ) {
       throw new NullPointerException();
     }
 
     final DefaultConfiguration defConf = new DefaultConfiguration();
     final Enumeration configProperties = configuration.getConfigProperties();
-    while (configProperties.hasMoreElements())
-    {
+    while ( configProperties.hasMoreElements() ) {
       final String key = (String) configProperties.nextElement();
-      final String value = configuration.getConfigProperty(key);
-      if (value != null)
-      {
-        defConf.setConfigProperty(key, value);
+      final String value = configuration.getConfigProperty( key );
+      if ( value != null ) {
+        defConf.setConfigProperty( key, value );
       }
     }
     this.configuration = defConf;
   }
 
-  public Configuration getConfiguration()
-  {
+  public Configuration getConfiguration() {
     return (Configuration) configuration.clone();
   }
 
-  public Object clone() throws CloneNotSupportedException
-  {
+  public Object clone() throws CloneNotSupportedException {
     final BundleSettings settings = (BundleSettings) super.clone();
     settings.configuration = (DefaultConfiguration) configuration.clone();
     return settings;

@@ -46,425 +46,338 @@ import org.pentaho.reporting.engine.classic.core.layout.process.util.MinorAxisTa
  * @author Thomas Morgner
  * @noinspection PointlessArithmeticExpression
  */
-public final class InfiniteMinorAxisLayoutStep extends AbstractMinorAxisLayoutStep
-{
+public final class InfiniteMinorAxisLayoutStep extends AbstractMinorAxisLayoutStep {
   private MinorAxisNodeContext nodeContext;
   private MinorAxisNodeContextPool nodeContextPool;
 
-  public InfiniteMinorAxisLayoutStep()
-  {
+  public InfiniteMinorAxisLayoutStep() {
     nodeContextPool = new MinorAxisNodeContextPool();
   }
 
-  public void compute(final LogicalPageBox root)
-  {
-    super.compute(root);
+  public void compute( final LogicalPageBox root ) {
+    super.compute( root );
   }
 
-  protected void processParagraphChilds(final ParagraphRenderBox box)
-  {
-    nodeContext.updateX2(nodeContext.getX() + box.getInsetsLeft() + box.getMinimumChunkWidth());
+  protected void processParagraphChilds( final ParagraphRenderBox box ) {
+    nodeContext.updateX2( nodeContext.getX() + box.getInsetsLeft() + box.getMinimumChunkWidth() );
   }
 
-  protected MinorAxisNodeContext getNodeContext()
-  {
+  protected MinorAxisNodeContext getNodeContext() {
     return nodeContext;
   }
 
-  protected boolean startBlockLevelBox(final RenderBox box)
-  {
-    nodeContext = nodeContextPool.createContext(box, nodeContext, true);
+  protected boolean startBlockLevelBox( final RenderBox box ) {
+    nodeContext = nodeContextPool.createContext( box, nodeContext, true );
 
-    if (checkCacheValid(box))
-    {
+    if ( checkCacheValid( box ) ) {
       return false;
     }
 
-    startTableContext(box);
+    startTableContext( box );
 
     final long x = nodeContext.getParentX1();
     final long left = box.getInsetsLeft();
     final long right = box.getInsetsRight();
-    final long width = MinorAxisLayoutStepUtil.resolveNodeWidthOnStart(box, nodeContext, x);
+    final long width = MinorAxisLayoutStepUtil.resolveNodeWidthOnStart( box, nodeContext, x );
 
     assert width >= 0;
 
-    nodeContext.setArea(x, left, right, width);
+    nodeContext.setArea( x, left, right, width );
 
     return true;
   }
 
-  protected void processBlockLevelNode(final RenderNode node)
-  {
-    assert (node instanceof FinishedRenderNode);
+  protected void processBlockLevelNode( final RenderNode node ) {
+    assert ( node instanceof FinishedRenderNode );
 
-    node.setCachedX(nodeContext.getX1());
-    node.setCachedWidth(nodeContext.getContentAreaWidth());
+    node.setCachedX( nodeContext.getX1() );
+    node.setCachedWidth( nodeContext.getContentAreaWidth() );
   }
 
-  protected void finishBlockLevelBox(final RenderBox box)
-  {
-    try
-    {
-      if (checkCacheValid(box))
-      {
-        if (box.isVisible())
-        {
-          nodeContext.updateParentX2(box.getCachedX2());
+  protected void finishBlockLevelBox( final RenderBox box ) {
+    try {
+      if ( checkCacheValid( box ) ) {
+        if ( box.isVisible() ) {
+          nodeContext.updateParentX2( box.getCachedX2() );
         }
         return;
       }
 
-      box.setCachedX(nodeContext.getX());
-      box.setContentAreaX1(nodeContext.getX1());
-      box.setContentAreaX2(nodeContext.getX2());
-      if (finishTableContext(box) == false)
-      {
-        box.setCachedWidth(MinorAxisLayoutStepUtil.resolveNodeWidthOnFinish(box, nodeContext, isStrictLegacyMode()));
+      box.setCachedX( nodeContext.getX() );
+      box.setContentAreaX1( nodeContext.getX1() );
+      box.setContentAreaX2( nodeContext.getX2() );
+      if ( finishTableContext( box ) == false ) {
+        box
+          .setCachedWidth( MinorAxisLayoutStepUtil.resolveNodeWidthOnFinish( box, nodeContext, isStrictLegacyMode() ) );
       }
-      if (box.isVisible())
-      {
-        nodeContext.updateParentX2(box.getCachedX2());
+      if ( box.isVisible() ) {
+        nodeContext.updateParentX2( box.getCachedX2() );
       }
-    }
-    finally
-    {
+    } finally {
       nodeContext = nodeContext.pop();
     }
   }
 
-  private long computeCanvasPosition(final RenderNode node)
-  {
+  private long computeCanvasPosition( final RenderNode node ) {
     final long contentAreaX1 = nodeContext.getParentX1();
     final long bcw = nodeContext.getBlockContextWidth();
     final double posX = node.getNodeLayoutProperties().getPosX();
-    final long position = RenderLength.resolveLength(bcw, posX);
-    return (contentAreaX1 + position);
+    final long position = RenderLength.resolveLength( bcw, posX );
+    return ( contentAreaX1 + position );
   }
 
-  protected boolean startCanvasLevelBox(final RenderBox box)
-  {
-    nodeContext = nodeContextPool.createContext(box, nodeContext, false);
+  protected boolean startCanvasLevelBox( final RenderBox box ) {
+    nodeContext = nodeContextPool.createContext( box, nodeContext, false );
 
-    if (checkCacheValid(box))
-    {
+    if ( checkCacheValid( box ) ) {
       return false;
     }
 
-    startTableContext(box);
+    startTableContext( box );
 
-    final long x = computeCanvasPosition(box);
+    final long x = computeCanvasPosition( box );
     final long left = box.getInsetsLeft();
     final long right = box.getInsetsRight();
     final long width;
-    if (isStrictLegacyMode() && box.useMinimumChunkWidth() == false)
-    {
-      width = MinorAxisLayoutStepUtil.resolveNodeWidthOnStartForCanvasLegacy(box, nodeContext, x);
-    }
-    else
-    {
-      width = MinorAxisLayoutStepUtil.resolveNodeWidthOnStart(box, nodeContext, x);
+    if ( isStrictLegacyMode() && box.useMinimumChunkWidth() == false ) {
+      width = MinorAxisLayoutStepUtil.resolveNodeWidthOnStartForCanvasLegacy( box, nodeContext, x );
+    } else {
+      width = MinorAxisLayoutStepUtil.resolveNodeWidthOnStart( box, nodeContext, x );
     }
 
     assert width >= 0;
 
-    nodeContext.setArea(x, left, right, width);
+    nodeContext.setArea( x, left, right, width );
 
     return true;
   }
 
-  protected void processCanvasLevelNode(final RenderNode node)
-  {
-    assert (node instanceof FinishedRenderNode);
+  protected void processCanvasLevelNode( final RenderNode node ) {
+    assert ( node instanceof FinishedRenderNode );
 
-    node.setCachedX(computeCanvasPosition(node));
-    node.setCachedWidth(node.getMaximumBoxWidth());
-    if (node.isVisible())
-    {
-      nodeContext.updateParentX2(node.getCachedX2());
+    node.setCachedX( computeCanvasPosition( node ) );
+    node.setCachedWidth( node.getMaximumBoxWidth() );
+    if ( node.isVisible() ) {
+      nodeContext.updateParentX2( node.getCachedX2() );
     }
   }
 
-  protected void finishCanvasLevelBox(final RenderBox box)
-  {
-    try
-    {
-      if (checkCacheValid(box))
-      {
-        if (box.isVisible())
-        {
-          nodeContext.updateParentX2(box.getCachedX2());
+  protected void finishCanvasLevelBox( final RenderBox box ) {
+    try {
+      if ( checkCacheValid( box ) ) {
+        if ( box.isVisible() ) {
+          nodeContext.updateParentX2( box.getCachedX2() );
         }
         return;
       }
 
       // make sure that the width takes all the borders and paddings into account.
-      box.setCachedX(nodeContext.getX());
-      box.setContentAreaX1(nodeContext.getX1());
-      box.setContentAreaX2(nodeContext.getX2());
-      if (finishTableContext(box) == false)
-      {
-        box.setCachedWidth(MinorAxisLayoutStepUtil.resolveNodeWidthOnFinish(box, nodeContext, isStrictLegacyMode()));
+      box.setCachedX( nodeContext.getX() );
+      box.setContentAreaX1( nodeContext.getX1() );
+      box.setContentAreaX2( nodeContext.getX2() );
+      if ( finishTableContext( box ) == false ) {
+        box
+          .setCachedWidth( MinorAxisLayoutStepUtil.resolveNodeWidthOnFinish( box, nodeContext, isStrictLegacyMode() ) );
       }
-      if (box.isVisible())
-      {
-        nodeContext.updateParentX2(box.getCachedX2());
+      if ( box.isVisible() ) {
+        nodeContext.updateParentX2( box.getCachedX2() );
       }
-    }
-    finally
-    {
+    } finally {
       nodeContext = nodeContext.pop();
     }
   }
 
-  private long computeRowPosition(final RenderNode node)
-  {
+  private long computeRowPosition( final RenderNode node ) {
     // The y-position of a box depends on the parent.
     final RenderBox parent = node.getParent();
 
     // A table row is something special. Although it is a block box,
     // it layouts its children from left to right
-    if (parent == null)
-    {
+    if ( parent == null ) {
       // there's no parent ..
       return 0;
     }
 
     final RenderNode prev = node.getPrev();
-    if (prev != null)
-    {
-      if (prev.isVisible())
-      {
+    if ( prev != null ) {
+      if ( prev.isVisible() ) {
         // we have a sibling. Position yourself directly to the right of your sibling ..
         return prev.getCachedX() + prev.getCachedWidth();
-      }
-      else
-      {
+      } else {
         // we have a sibling. Position yourself directly to the right of your sibling ..
         return prev.getCachedX();
       }
-    }
-    else
-    {
+    } else {
       return nodeContext.getParentX1();
     }
   }
 
-  protected boolean startRowLevelBox(final RenderBox box)
-  {
-    nodeContext = nodeContextPool.createContext(box, nodeContext, false);
+  protected boolean startRowLevelBox( final RenderBox box ) {
+    nodeContext = nodeContextPool.createContext( box, nodeContext, false );
 
-    if (checkCacheValid(box))
-    {
+    if ( checkCacheValid( box ) ) {
       return false;
     }
 
-    startTableContext(box);
+    startTableContext( box );
 
-    final long x = computeRowPosition(box);
+    final long x = computeRowPosition( box );
     final long left = box.getInsetsLeft();
     final long right = box.getInsetsRight();
-    final long width = MinorAxisLayoutStepUtil.resolveNodeWidthOnStart(box, nodeContext, x);
+    final long width = MinorAxisLayoutStepUtil.resolveNodeWidthOnStart( box, nodeContext, x );
     assert width >= 0;
 
-    nodeContext.setArea(x, left, right, width);
+    nodeContext.setArea( x, left, right, width );
 
     return true;
   }
 
-  protected void processRowLevelNode(final RenderNode node)
-  {
-    assert (node instanceof FinishedRenderNode);
+  protected void processRowLevelNode( final RenderNode node ) {
+    assert ( node instanceof FinishedRenderNode );
 
-    node.setCachedX(computeRowPosition(node));
-    node.setCachedWidth(node.getMaximumBoxWidth());
-    if (node.isVisible())
-    {
-      nodeContext.updateParentX2(node.getCachedX2());
+    node.setCachedX( computeRowPosition( node ) );
+    node.setCachedWidth( node.getMaximumBoxWidth() );
+    if ( node.isVisible() ) {
+      nodeContext.updateParentX2( node.getCachedX2() );
     }
   }
 
-  protected void finishRowLevelBox(final RenderBox box)
-  {
-    try
-    {
-      if (checkCacheValid(box))
-      {
-        if (box.isVisible())
-        {
-          nodeContext.updateParentX2(box.getCachedX2());
+  protected void finishRowLevelBox( final RenderBox box ) {
+    try {
+      if ( checkCacheValid( box ) ) {
+        if ( box.isVisible() ) {
+          nodeContext.updateParentX2( box.getCachedX2() );
         }
         return;
       }
 
-      box.setCachedX(nodeContext.getX());
-      box.setContentAreaX1(nodeContext.getX1());
-      box.setContentAreaX2(nodeContext.getX2());
-      if (finishTableContext(box) == false)
-      {
-        box.setCachedWidth(MinorAxisLayoutStepUtil.resolveNodeWidthOnFinish(box, nodeContext, isStrictLegacyMode()));
+      box.setCachedX( nodeContext.getX() );
+      box.setContentAreaX1( nodeContext.getX1() );
+      box.setContentAreaX2( nodeContext.getX2() );
+      if ( finishTableContext( box ) == false ) {
+        box
+          .setCachedWidth( MinorAxisLayoutStepUtil.resolveNodeWidthOnFinish( box, nodeContext, isStrictLegacyMode() ) );
       }
-      if (box.isVisible())
-      {
-        nodeContext.updateParentX2(box.getCachedX2());
+      if ( box.isVisible() ) {
+        nodeContext.updateParentX2( box.getCachedX2() );
       }
-    }
-    finally
-    {
+    } finally {
       nodeContext = nodeContext.pop();
     }
   }
 
-  protected boolean startInlineLevelBox(final RenderBox box)
-  {
+  protected boolean startInlineLevelBox( final RenderBox box ) {
     return false;
   }
 
   // Table-sections or auto-boxes masking as tables (treated as table-sections nonetheless).
-  protected boolean startTableLevelBox(final RenderBox box)
-  {
-    nodeContext = nodeContextPool.createContext(box, nodeContext, true);
+  protected boolean startTableLevelBox( final RenderBox box ) {
+    nodeContext = nodeContextPool.createContext( box, nodeContext, true );
 
-    if (checkCacheValid(box))
-    {
+    if ( checkCacheValid( box ) ) {
       return false;
     }
 
-    if (box.getNodeType() == LayoutNodeTypes.TYPE_BOX_TABLE_COL_GROUP)
-    {
-      startTableColGroup((TableColumnGroupNode) box);
-    }
-    else if (box.getNodeType() == LayoutNodeTypes.TYPE_BOX_TABLE_COL)
-    {
-      startTableCol((TableColumnNode) box);
-    }
-    else
-    {
-      startTableSectionOrRow(box);
+    if ( box.getNodeType() == LayoutNodeTypes.TYPE_BOX_TABLE_COL_GROUP ) {
+      startTableColGroup( (TableColumnGroupNode) box );
+    } else if ( box.getNodeType() == LayoutNodeTypes.TYPE_BOX_TABLE_COL ) {
+      startTableCol( (TableColumnNode) box );
+    } else {
+      startTableSectionOrRow( box );
     }
     return true;
   }
 
-  private void startTableSectionOrRow(final RenderBox box)
-  {
+  private void startTableSectionOrRow( final RenderBox box ) {
     final MinorAxisTableContext tableContext = getTableContext();
     final long x = nodeContext.getParentX1();
 
     final long width;
-    if (tableContext.isStructureValidated())
-    {
+    if ( tableContext.isStructureValidated() ) {
       width = tableContext.getTable().getColumnModel().getCachedSize();
+    } else {
+      width = MinorAxisLayoutStepUtil.resolveNodeWidthOnStart( box, nodeContext, x );
     }
-    else
-    {
-      width = MinorAxisLayoutStepUtil.resolveNodeWidthOnStart(box, nodeContext, x);
-    }
-    nodeContext.setArea(x, 0, 0, width);
+    nodeContext.setArea( x, 0, 0, width );
   }
 
-  protected void processTableLevelNode(final RenderNode node)
-  {
-    assert (node instanceof FinishedRenderNode);
+  protected void processTableLevelNode( final RenderNode node ) {
+    assert ( node instanceof FinishedRenderNode );
 
-    node.setCachedX(nodeContext.getX1());
-    node.setCachedWidth(nodeContext.getContentAreaWidth());
+    node.setCachedX( nodeContext.getX1() );
+    node.setCachedWidth( nodeContext.getContentAreaWidth() );
   }
 
-  protected void finishTableLevelBox(final RenderBox box)
-  {
-    try
-    {
-      if (checkCacheValid(box))
-      {
-        if (box.isVisible())
-        {
-          nodeContext.updateParentX2(box.getCachedX2());
+  protected void finishTableLevelBox( final RenderBox box ) {
+    try {
+      if ( checkCacheValid( box ) ) {
+        if ( box.isVisible() ) {
+          nodeContext.updateParentX2( box.getCachedX2() );
         }
         return;
       }
 
-      if (box.getNodeType() == LayoutNodeTypes.TYPE_BOX_TABLE_COL_GROUP)
-      {
-        finishTableColGroup((TableColumnGroupNode) box);
-      }
-      else if (box.getNodeType() == LayoutNodeTypes.TYPE_BOX_TABLE_COL)
-      {
-        finishTableCol((TableColumnNode) box);
-      }
-      else
-      {
-        box.setCachedX(nodeContext.getX());
-        box.setContentAreaX1(nodeContext.getX1());
-        box.setContentAreaX2(nodeContext.getX2());
-        box.setCachedWidth(resolveTableWidthOnFinish(box));
-        if (box.isVisible())
-        {
-          nodeContext.updateParentX2(box.getCachedX2());
+      if ( box.getNodeType() == LayoutNodeTypes.TYPE_BOX_TABLE_COL_GROUP ) {
+        finishTableColGroup( (TableColumnGroupNode) box );
+      } else if ( box.getNodeType() == LayoutNodeTypes.TYPE_BOX_TABLE_COL ) {
+        finishTableCol( (TableColumnNode) box );
+      } else {
+        box.setCachedX( nodeContext.getX() );
+        box.setContentAreaX1( nodeContext.getX1() );
+        box.setContentAreaX2( nodeContext.getX2() );
+        box.setCachedWidth( resolveTableWidthOnFinish( box ) );
+        if ( box.isVisible() ) {
+          nodeContext.updateParentX2( box.getCachedX2() );
         }
       }
-    }
-    finally
-    {
+    } finally {
       nodeContext = nodeContext.pop();
     }
   }
 
-  protected boolean startTableSectionLevelBox(final RenderBox box)
-  {
-    nodeContext = nodeContextPool.createContext(box, nodeContext, true);
+  protected boolean startTableSectionLevelBox( final RenderBox box ) {
+    nodeContext = nodeContextPool.createContext( box, nodeContext, true );
 
-    startTableSectionOrRow(box);
+    startTableSectionOrRow( box );
     return true;
   }
 
-  protected void processTableSectionLevelNode(final RenderNode node)
-  {
-    assert (node instanceof FinishedRenderNode);
+  protected void processTableSectionLevelNode( final RenderNode node ) {
+    assert ( node instanceof FinishedRenderNode );
 
-    node.setCachedX(nodeContext.getX1());
-    node.setCachedWidth(nodeContext.getContentAreaWidth());
+    node.setCachedX( nodeContext.getX1() );
+    node.setCachedWidth( nodeContext.getContentAreaWidth() );
   }
 
-  protected void finishTableSectionLevelBox(final RenderBox box)
-  {
-    try
-    {
-      box.setCachedX(nodeContext.getX());
-      box.setContentAreaX1(nodeContext.getX1());
-      box.setContentAreaX2(nodeContext.getX2());
-      box.setCachedWidth(resolveTableWidthOnFinish(box));
+  protected void finishTableSectionLevelBox( final RenderBox box ) {
+    try {
+      box.setCachedX( nodeContext.getX() );
+      box.setContentAreaX1( nodeContext.getX1() );
+      box.setContentAreaX2( nodeContext.getX2() );
+      box.setCachedWidth( resolveTableWidthOnFinish( box ) );
 
-      if (box.isVisible())
-      {
-        nodeContext.updateParentX2(box.getCachedX2());
+      if ( box.isVisible() ) {
+        nodeContext.updateParentX2( box.getCachedX2() );
       }
-    }
-    finally
-    {
+    } finally {
       nodeContext = nodeContext.pop();
     }
   }
 
-  private long resolveTableWidthOnFinish(final RenderBox box)
-  {
+  private long resolveTableWidthOnFinish( final RenderBox box ) {
     final MinorAxisTableContext tableContext = getTableContext();
-    if (tableContext.isStructureValidated())
-    {
+    if ( tableContext.isStructureValidated() ) {
       return tableContext.getTable().getColumnModel().getCachedSize();
-    }
-    else
-    {
-      return MinorAxisLayoutStepUtil.resolveNodeWidthOnFinish(box, nodeContext, isStrictLegacyMode());
+    } else {
+      return MinorAxisLayoutStepUtil.resolveNodeWidthOnFinish( box, nodeContext, isStrictLegacyMode() );
     }
   }
 
-  protected boolean startTableRowLevelBox(final RenderBox box)
-  {
-    nodeContext = nodeContextPool.createContext(box, nodeContext, false);
+  protected boolean startTableRowLevelBox( final RenderBox box ) {
+    nodeContext = nodeContextPool.createContext( box, nodeContext, false );
 
-    if (box.getNodeType() != LayoutNodeTypes.TYPE_BOX_TABLE_CELL)
-    {
-      startTableSectionOrRow(box);
+    if ( box.getNodeType() != LayoutNodeTypes.TYPE_BOX_TABLE_CELL ) {
+      startTableSectionOrRow( box );
       return true;
     }
 
@@ -478,130 +391,105 @@ public final class InfiniteMinorAxisLayoutStep extends AbstractMinorAxisLayoutSt
     // cell-size does not include border spacing
     final long startOfRowX = nodeContext.getParentX1();
 
-    final long x = startOfRowX + columnModel.getCellPosition(columnIndex);
-    final long insetsLeft = Math.max(box.getInsetsLeft(), columnModel.getBorderSpacing() / 2);
-    final long insetsRight = Math.max(box.getInsetsRight(), columnModel.getBorderSpacing() / 2);
-    final long width = computeCellWidth(tableCellRenderBox);
-    nodeContext.setArea(x, insetsLeft, insetsRight, width);
+    final long x = startOfRowX + columnModel.getCellPosition( columnIndex );
+    final long insetsLeft = Math.max( box.getInsetsLeft(), columnModel.getBorderSpacing() / 2 );
+    final long insetsRight = Math.max( box.getInsetsRight(), columnModel.getBorderSpacing() / 2 );
+    final long width = computeCellWidth( tableCellRenderBox );
+    nodeContext.setArea( x, insetsLeft, insetsRight, width );
     return true;
   }
 
-  protected void processTableRowLevelNode(final RenderNode node)
-  {
-    assert (node instanceof FinishedRenderNode);
+  protected void processTableRowLevelNode( final RenderNode node ) {
+    assert ( node instanceof FinishedRenderNode );
 
-    node.setCachedX(nodeContext.getX1());
-    node.setCachedWidth(nodeContext.getContentAreaWidth());
+    node.setCachedX( nodeContext.getX1() );
+    node.setCachedWidth( nodeContext.getContentAreaWidth() );
   }
 
-  protected void finishTableRowLevelBox(final RenderBox box)
-  {
-    try
-    {
-      box.setCachedX(nodeContext.getX());
-      box.setContentAreaX1(nodeContext.getX1());
-      box.setContentAreaX2(nodeContext.getX2());
+  protected void finishTableRowLevelBox( final RenderBox box ) {
+    try {
+      box.setCachedX( nodeContext.getX() );
+      box.setContentAreaX1( nodeContext.getX1() );
+      box.setContentAreaX2( nodeContext.getX2() );
 
-      if (box.getNodeType() != LayoutNodeTypes.TYPE_BOX_TABLE_CELL)
-      {
+      if ( box.getNodeType() != LayoutNodeTypes.TYPE_BOX_TABLE_CELL ) {
         // break-marker boxes etc.
-        box.setCachedWidth(resolveTableWidthOnFinish(box));
-        if (box.isVisible())
-        {
-          nodeContext.updateParentX2(box.getCachedX2());
+        box.setCachedWidth( resolveTableWidthOnFinish( box ) );
+        if ( box.isVisible() ) {
+          nodeContext.updateParentX2( box.getCachedX2() );
         }
-      }
-      else
-      {
-        box.setCachedWidth(MinorAxisLayoutStepUtil.resolveNodeWidthOnFinish(box, nodeContext, isStrictLegacyMode()));
+      } else {
+        box
+          .setCachedWidth( MinorAxisLayoutStepUtil.resolveNodeWidthOnFinish( box, nodeContext, isStrictLegacyMode() ) );
 
         final TableCellRenderBox cell = (TableCellRenderBox) box;
         final MinorAxisTableContext tableContext = getTableContext();
         final TableRenderBox table = tableContext.getTable();
-        if (tableContext.isStructureValidated() == false)
-        {
-          table.getColumnModel().updateCellSize(cell.getColumnIndex(), cell.getColSpan(), box.getCachedWidth() - box.getInsets());
+        if ( tableContext.isStructureValidated() == false ) {
+          table.getColumnModel()
+            .updateCellSize( cell.getColumnIndex(), cell.getColSpan(), box.getCachedWidth() - box.getInsets() );
         }
-        if (box.isVisible())
-        {
-          nodeContext.updateParentX2(box.getCachedX2());
+        if ( box.isVisible() ) {
+          nodeContext.updateParentX2( box.getCachedX2() );
         }
       }
-    }
-    finally
-    {
+    } finally {
       nodeContext = nodeContext.pop();
     }
   }
 
-  protected boolean startTableCellLevelBox(final RenderBox box)
-  {
-    return startBlockLevelBox(box);
+  protected boolean startTableCellLevelBox( final RenderBox box ) {
+    return startBlockLevelBox( box );
   }
 
-  protected void processTableCellLevelNode(final RenderNode node)
-  {
-    processBlockLevelNode(node);
+  protected void processTableCellLevelNode( final RenderNode node ) {
+    processBlockLevelNode( node );
   }
 
-  protected void finishTableCellLevelBox(final RenderBox box)
-  {
-    finishBlockLevelBox(box);
+  protected void finishTableCellLevelBox( final RenderBox box ) {
+    finishBlockLevelBox( box );
   }
 
-  protected boolean startTableColGroupLevelBox(final RenderBox box)
-  {
-    nodeContext = nodeContextPool.createContext(box, nodeContext, false);
+  protected boolean startTableColGroupLevelBox( final RenderBox box ) {
+    nodeContext = nodeContextPool.createContext( box, nodeContext, false );
 
-    if (checkCacheValid(box))
-    {
+    if ( checkCacheValid( box ) ) {
       return false;
     }
 
-    if (box.getNodeType() == LayoutNodeTypes.TYPE_BOX_TABLE_COL)
-    {
-      startTableCol((TableColumnNode) box);
+    if ( box.getNodeType() == LayoutNodeTypes.TYPE_BOX_TABLE_COL ) {
+      startTableCol( (TableColumnNode) box );
     }
     return false;
   }
 
-  protected void finishTableColGroupLevelBox(final RenderBox box)
-  {
-    try
-    {
-      if (checkCacheValid(box))
-      {
+  protected void finishTableColGroupLevelBox( final RenderBox box ) {
+    try {
+      if ( checkCacheValid( box ) ) {
         return;
       }
 
-      if (box.getNodeType() == LayoutNodeTypes.TYPE_BOX_TABLE_COL)
-      {
-        finishTableCol((TableColumnNode) box);
+      if ( box.getNodeType() == LayoutNodeTypes.TYPE_BOX_TABLE_COL ) {
+        finishTableCol( (TableColumnNode) box );
       }
-    }
-    finally
-    {
+    } finally {
       nodeContext = nodeContext.pop();
     }
   }
 
-  private void startTableCol(final TableColumnNode box)
-  {
+  private void startTableCol( final TableColumnNode box ) {
     // todo: Support col- and col-group elements
   }
 
-  private void finishTableCol(final TableColumnNode box)
-  {
+  private void finishTableCol( final TableColumnNode box ) {
     // todo: Support col- and col-group elements
   }
 
-  private void startTableColGroup(final TableColumnGroupNode box)
-  {
+  private void startTableColGroup( final TableColumnGroupNode box ) {
     // todo: Support col- and col-group elements
   }
 
-  private void finishTableColGroup(final TableColumnGroupNode box)
-  {
+  private void finishTableColGroup( final TableColumnGroupNode box ) {
     // todo: Support col- and col-group elements
   }
 }

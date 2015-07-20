@@ -17,10 +17,10 @@
 
 package org.pentaho.reporting.engine.classic.core.function.bool;
 
-import javax.swing.table.TableModel;
-
 import org.pentaho.reporting.engine.classic.core.function.AbstractExpression;
 import org.pentaho.reporting.engine.classic.core.function.ExpressionRuntime;
+
+import javax.swing.table.TableModel;
 
 /**
  * An expression that checks, whether the current report has a non-empty datasource.
@@ -28,13 +28,11 @@ import org.pentaho.reporting.engine.classic.core.function.ExpressionRuntime;
  * @author Thomas Morgner
  * @deprecated Use a formula instead or make proper use of the No-Data band.
  */
-public class IsEmptyDataExpression extends AbstractExpression
-{
+public class IsEmptyDataExpression extends AbstractExpression {
   /**
    * Default Constructor.
    */
-  public IsEmptyDataExpression()
-  {
+  public IsEmptyDataExpression() {
   }
 
   /**
@@ -43,21 +41,17 @@ public class IsEmptyDataExpression extends AbstractExpression
    *
    * @return the value of the function.
    */
-  public Object getValue()
-  {
+  public Object getValue() {
 
     final ExpressionRuntime runtime = getRuntime();
-    if (runtime == null)
-    {
+    if ( runtime == null ) {
       return null;
     }
     final TableModel data = runtime.getData();
-    if (data == null)
-    {
+    if ( data == null ) {
       return null;
     }
-    if (data.getRowCount() == 0)
-    {
+    if ( data.getRowCount() == 0 ) {
       return Boolean.TRUE;
     }
     return Boolean.FALSE;

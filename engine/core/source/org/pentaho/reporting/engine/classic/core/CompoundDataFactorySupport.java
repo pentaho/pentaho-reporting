@@ -19,17 +19,21 @@ package org.pentaho.reporting.engine.classic.core;
 
 import javax.swing.table.TableModel;
 
-public interface CompoundDataFactorySupport extends DataFactory
-{
-  public TableModel queryStatic(String query, DataRow parameters) throws ReportDataFactoryException;
-  public TableModel queryFreeForm(String query, DataRow parameter) throws ReportDataFactoryException;
+public interface CompoundDataFactorySupport extends DataFactory {
+  public TableModel queryStatic( String query, DataRow parameters ) throws ReportDataFactoryException;
 
-  public TableModel queryDesignTimeStructureStatic(String query, DataRow parameters) throws ReportDataFactoryException;
-  public TableModel queryDesignTimeStructureFreeForm(String query, DataRow parameter) throws ReportDataFactoryException;
+  public TableModel queryFreeForm( String query, DataRow parameter ) throws ReportDataFactoryException;
 
-  public boolean isStaticQueryExecutable(String query, DataRow parameters);
-  public boolean isFreeFormQueryExecutable(String query, DataRow parameter);
+  public TableModel queryDesignTimeStructureStatic( String query, DataRow parameters )
+    throws ReportDataFactoryException;
 
-  public DataFactory getDataFactoryForQuery(final String queryName, final boolean freeform);
+  public TableModel queryDesignTimeStructureFreeForm( String query, DataRow parameter )
+    throws ReportDataFactoryException;
+
+  public boolean isStaticQueryExecutable( String query, DataRow parameters );
+
+  public boolean isFreeFormQueryExecutable( String query, DataRow parameter );
+
+  public DataFactory getDataFactoryForQuery( final String queryName, final boolean freeform );
 
 }

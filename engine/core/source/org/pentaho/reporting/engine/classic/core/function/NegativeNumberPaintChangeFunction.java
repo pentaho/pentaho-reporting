@@ -17,11 +17,11 @@
 
 package org.pentaho.reporting.engine.classic.core.function;
 
-import java.awt.Color;
-
 import org.pentaho.reporting.engine.classic.core.ReportElement;
 import org.pentaho.reporting.engine.classic.core.style.ElementStyleKeys;
 import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
+
+import java.awt.*;
 
 /**
  * This function changes the color of the named elements according to the current value of a numeric field. If the value
@@ -30,8 +30,7 @@ import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
  * @author Thomas Morgner
  * @deprecated The same thing can be achieved using a simple StyleExpression on the element's PAINT stylekey.
  */
-public class NegativeNumberPaintChangeFunction extends AbstractElementFormatFunction
-{
+public class NegativeNumberPaintChangeFunction extends AbstractElementFormatFunction {
   /**
    * The name of the data-row column from where to read the numeric value.
    */
@@ -52,16 +51,13 @@ public class NegativeNumberPaintChangeFunction extends AbstractElementFormatFunc
   /**
    * Default Constructor.
    */
-  public NegativeNumberPaintChangeFunction()
-  {
+  public NegativeNumberPaintChangeFunction() {
   }
 
-  protected boolean evaluateElement(final ReportElement e)
-  {
-    if (ObjectUtilities.equal(e.getName(), getElement()))
-    {
+  protected boolean evaluateElement( final ReportElement e ) {
+    if ( ObjectUtilities.equal( e.getName(), getElement() ) ) {
       final Color color = computeColor();
-      e.getStyle().setStyleProperty(ElementStyleKeys.PAINT, color);
+      e.getStyle().setStyleProperty( ElementStyleKeys.PAINT, color );
       return true;
     }
     return false;
@@ -72,26 +68,21 @@ public class NegativeNumberPaintChangeFunction extends AbstractElementFormatFunc
    *
    * @return the computed color.
    */
-  protected Color computeColor()
-  {
-    final Object o = getDataRow().get(getField());
-    if (o instanceof Number == false)
-    {
+  protected Color computeColor() {
+    final Object o = getDataRow().get( getField() );
+    if ( o instanceof Number == false ) {
       return getPositiveColor();
     }
     final Number n = (Number) o;
     final double d = n.doubleValue();
-    if (d < 0)
-    {
+    if ( d < 0 ) {
       return getNegativeColor();
     }
-    if (d > 0)
-    {
+    if ( d > 0 ) {
       return getPositiveColor();
     }
     final Color zeroColor = getZeroColor();
-    if (zeroColor == null)
-    {
+    if ( zeroColor == null ) {
       return getPositiveColor();
     }
     return zeroColor;
@@ -102,8 +93,7 @@ public class NegativeNumberPaintChangeFunction extends AbstractElementFormatFunc
    *
    * @return the color for positive values.
    */
-  public Color getPositiveColor()
-  {
+  public Color getPositiveColor() {
     return positiveColor;
   }
 
@@ -112,8 +102,7 @@ public class NegativeNumberPaintChangeFunction extends AbstractElementFormatFunc
    *
    * @param positiveColor the color for positive values.
    */
-  public void setPositiveColor(final Color positiveColor)
-  {
+  public void setPositiveColor( final Color positiveColor ) {
     this.positiveColor = positiveColor;
   }
 
@@ -122,8 +111,7 @@ public class NegativeNumberPaintChangeFunction extends AbstractElementFormatFunc
    *
    * @return the color for negative values.
    */
-  public Color getNegativeColor()
-  {
+  public Color getNegativeColor() {
     return negativeColor;
   }
 
@@ -132,8 +120,7 @@ public class NegativeNumberPaintChangeFunction extends AbstractElementFormatFunc
    *
    * @param negativeColor the color for negative values.
    */
-  public void setNegativeColor(final Color negativeColor)
-  {
+  public void setNegativeColor( final Color negativeColor ) {
     this.negativeColor = negativeColor;
   }
 
@@ -142,8 +129,7 @@ public class NegativeNumberPaintChangeFunction extends AbstractElementFormatFunc
    *
    * @return the color for zero values.
    */
-  public Color getZeroColor()
-  {
+  public Color getZeroColor() {
     return zeroColor;
   }
 
@@ -152,8 +138,7 @@ public class NegativeNumberPaintChangeFunction extends AbstractElementFormatFunc
    *
    * @param zeroColor the color for zero values.
    */
-  public void setZeroColor(final Color zeroColor)
-  {
+  public void setZeroColor( final Color zeroColor ) {
     this.zeroColor = zeroColor;
   }
 
@@ -162,8 +147,7 @@ public class NegativeNumberPaintChangeFunction extends AbstractElementFormatFunc
    *
    * @return the field name.
    */
-  public String getField()
-  {
+  public String getField() {
     return field;
   }
 
@@ -172,8 +156,7 @@ public class NegativeNumberPaintChangeFunction extends AbstractElementFormatFunc
    *
    * @param field the field name.
    */
-  public void setField(final String field)
-  {
+  public void setField( final String field ) {
     this.field = field;
   }
 }

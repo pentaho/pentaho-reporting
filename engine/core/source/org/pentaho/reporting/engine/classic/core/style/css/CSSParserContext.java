@@ -17,22 +17,18 @@
 
 package org.pentaho.reporting.engine.classic.core.style.css;
 
-public class CSSParserContext
-{
+public class CSSParserContext {
   private static final CSSParserContext instance = new CSSParserContext();
-  
-  public static CSSParserContext getInstance()
-  {
+
+  public static CSSParserContext getInstance() {
     return instance;
   }
 
-  public String getDefaultNamespace()
-  {
+  public String getDefaultNamespace() {
     return null;
   }
 
-  public String lookupNamespaceURI (String id)
-  {
+  public String lookupNamespaceURI( String id ) {
     return null;
   }
 }

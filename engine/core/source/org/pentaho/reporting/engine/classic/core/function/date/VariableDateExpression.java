@@ -27,8 +27,7 @@ import java.util.TimeZone;
  *
  * @author Thomas Morgner
  */
-public class VariableDateExpression extends DateExpression
-{
+public class VariableDateExpression extends DateExpression {
   /**
    * The name of the field that contains the month.
    */
@@ -93,8 +92,7 @@ public class VariableDateExpression extends DateExpression
   /**
    * Default Constructor.
    */
-  public VariableDateExpression()
-  {
+  public VariableDateExpression() {
   }
 
   /**
@@ -102,8 +100,7 @@ public class VariableDateExpression extends DateExpression
    *
    * @return a fieldname.
    */
-  public String getEpochTimeField()
-  {
+  public String getEpochTimeField() {
     return epochTimeField;
   }
 
@@ -112,8 +109,7 @@ public class VariableDateExpression extends DateExpression
    *
    * @param epochTimeField a fieldname.
    */
-  public void setEpochTimeField(final String epochTimeField)
-  {
+  public void setEpochTimeField( final String epochTimeField ) {
     this.epochTimeField = epochTimeField;
   }
 
@@ -122,8 +118,7 @@ public class VariableDateExpression extends DateExpression
    *
    * @return a fieldname.
    */
-  public String getMonthField()
-  {
+  public String getMonthField() {
     return monthField;
   }
 
@@ -132,8 +127,7 @@ public class VariableDateExpression extends DateExpression
    *
    * @param monthField a fieldname.
    */
-  public void setMonthField(final String monthField)
-  {
+  public void setMonthField( final String monthField ) {
     this.monthField = monthField;
   }
 
@@ -142,8 +136,7 @@ public class VariableDateExpression extends DateExpression
    *
    * @return a fieldname.
    */
-  public String getYearField()
-  {
+  public String getYearField() {
     return yearField;
   }
 
@@ -152,8 +145,7 @@ public class VariableDateExpression extends DateExpression
    *
    * @param yearField a fieldname.
    */
-  public void setYearField(final String yearField)
-  {
+  public void setYearField( final String yearField ) {
     this.yearField = yearField;
   }
 
@@ -162,8 +154,7 @@ public class VariableDateExpression extends DateExpression
    *
    * @return a fieldname.
    */
-  public String getHourField()
-  {
+  public String getHourField() {
     return hourField;
   }
 
@@ -172,8 +163,7 @@ public class VariableDateExpression extends DateExpression
    *
    * @param hourField a fieldname.
    */
-  public void setHourField(final String hourField)
-  {
+  public void setHourField( final String hourField ) {
     this.hourField = hourField;
   }
 
@@ -182,8 +172,7 @@ public class VariableDateExpression extends DateExpression
    *
    * @return a fieldname.
    */
-  public String getMinuteField()
-  {
+  public String getMinuteField() {
     return minuteField;
   }
 
@@ -192,8 +181,7 @@ public class VariableDateExpression extends DateExpression
    *
    * @param minuteField a fieldname.
    */
-  public void setMinuteField(final String minuteField)
-  {
+  public void setMinuteField( final String minuteField ) {
     this.minuteField = minuteField;
   }
 
@@ -202,8 +190,7 @@ public class VariableDateExpression extends DateExpression
    *
    * @return a fieldname.
    */
-  public String getSecondField()
-  {
+  public String getSecondField() {
     return secondField;
   }
 
@@ -212,8 +199,7 @@ public class VariableDateExpression extends DateExpression
    *
    * @param secondField a fieldname.
    */
-  public void setSecondField(final String secondField)
-  {
+  public void setSecondField( final String secondField ) {
     this.secondField = secondField;
   }
 
@@ -222,8 +208,7 @@ public class VariableDateExpression extends DateExpression
    *
    * @return a fieldname.
    */
-  public String getMilliSecondField()
-  {
+  public String getMilliSecondField() {
     return milliSecondField;
   }
 
@@ -232,8 +217,7 @@ public class VariableDateExpression extends DateExpression
    *
    * @param milliSecondField a fieldname.
    */
-  public void setMilliSecondField(final String milliSecondField)
-  {
+  public void setMilliSecondField( final String milliSecondField ) {
     this.milliSecondField = milliSecondField;
   }
 
@@ -242,8 +226,7 @@ public class VariableDateExpression extends DateExpression
    *
    * @return a fieldname.
    */
-  public String getTimeField()
-  {
+  public String getTimeField() {
     return timeField;
   }
 
@@ -252,8 +235,7 @@ public class VariableDateExpression extends DateExpression
    *
    * @param timeField a fieldname.
    */
-  public void setTimeField(final String timeField)
-  {
+  public void setTimeField( final String timeField ) {
     this.timeField = timeField;
   }
 
@@ -262,8 +244,7 @@ public class VariableDateExpression extends DateExpression
    *
    * @return a fieldname.
    */
-  public String getDayOfWeekField()
-  {
+  public String getDayOfWeekField() {
     return dayOfWeekField;
   }
 
@@ -272,8 +253,7 @@ public class VariableDateExpression extends DateExpression
    *
    * @param dayOfWeekField a fieldname.
    */
-  public void setDayOfWeekField(final String dayOfWeekField)
-  {
+  public void setDayOfWeekField( final String dayOfWeekField ) {
     this.dayOfWeekField = dayOfWeekField;
   }
 
@@ -282,8 +262,7 @@ public class VariableDateExpression extends DateExpression
    *
    * @return a fieldname.
    */
-  public String getDayOfYearField()
-  {
+  public String getDayOfYearField() {
     return dayOfYearField;
   }
 
@@ -292,8 +271,7 @@ public class VariableDateExpression extends DateExpression
    *
    * @param dayOfYearField a fieldname.
    */
-  public void setDayOfYearField(final String dayOfYearField)
-  {
+  public void setDayOfYearField( final String dayOfYearField ) {
     this.dayOfYearField = dayOfYearField;
   }
 
@@ -302,8 +280,7 @@ public class VariableDateExpression extends DateExpression
    *
    * @return a fieldname.
    */
-  public String getDayOfMonthField()
-  {
+  public String getDayOfMonthField() {
     return dayOfMonthField;
   }
 
@@ -312,8 +289,7 @@ public class VariableDateExpression extends DateExpression
    *
    * @param dayOfMonthField a fieldname.
    */
-  public void setDayOfMonthField(final String dayOfMonthField)
-  {
+  public void setDayOfMonthField( final String dayOfMonthField ) {
     this.dayOfMonthField = dayOfMonthField;
   }
 
@@ -322,8 +298,7 @@ public class VariableDateExpression extends DateExpression
    *
    * @return a fieldname.
    */
-  public String getDayOfWeekInMonthField()
-  {
+  public String getDayOfWeekInMonthField() {
     return dayOfWeekInMonthField;
   }
 
@@ -332,8 +307,7 @@ public class VariableDateExpression extends DateExpression
    *
    * @param dayOfWeekInMonthField a fieldname.
    */
-  public void setDayOfWeekInMonthField(final String dayOfWeekInMonthField)
-  {
+  public void setDayOfWeekInMonthField( final String dayOfWeekInMonthField ) {
     this.dayOfWeekInMonthField = dayOfWeekInMonthField;
   }
 
@@ -342,8 +316,7 @@ public class VariableDateExpression extends DateExpression
    *
    * @return a fieldname.
    */
-  public String getTimeZoneField()
-  {
+  public String getTimeZoneField() {
     return timeZoneField;
   }
 
@@ -352,8 +325,7 @@ public class VariableDateExpression extends DateExpression
    *
    * @param timeZoneField a fieldname.
    */
-  public void setTimeZoneField(final String timeZoneField)
-  {
+  public void setTimeZoneField( final String timeZoneField ) {
     this.timeZoneField = timeZoneField;
   }
 
@@ -362,8 +334,7 @@ public class VariableDateExpression extends DateExpression
    *
    * @return a fieldname.
    */
-  public String getWeekOfYearField()
-  {
+  public String getWeekOfYearField() {
     return weekOfYearField;
   }
 
@@ -372,8 +343,7 @@ public class VariableDateExpression extends DateExpression
    *
    * @param weekOfYearField a fieldname.
    */
-  public void setWeekOfYearField(final String weekOfYearField)
-  {
+  public void setWeekOfYearField( final String weekOfYearField ) {
     this.weekOfYearField = weekOfYearField;
   }
 
@@ -382,8 +352,7 @@ public class VariableDateExpression extends DateExpression
    *
    * @return a fieldname.
    */
-  public String getWeekOfMonthField()
-  {
+  public String getWeekOfMonthField() {
     return weekOfMonthField;
   }
 
@@ -392,8 +361,7 @@ public class VariableDateExpression extends DateExpression
    *
    * @param weekOfMonthField a fieldname.
    */
-  public void setWeekOfMonthField(final String weekOfMonthField)
-  {
+  public void setWeekOfMonthField( final String weekOfMonthField ) {
     this.weekOfMonthField = weekOfMonthField;
   }
 
@@ -402,94 +370,71 @@ public class VariableDateExpression extends DateExpression
    *
    * @param calendar the week of the year property.
    */
-  protected void configureCalendar(final Calendar calendar)
-  {
+  protected void configureCalendar( final Calendar calendar ) {
     // first add the hardcoded values, if any ...
-    super.configureCalendar(calendar);
+    super.configureCalendar( calendar );
 
     // then the variable values ..
-    if (timeField != null)
-    {
-      final Object o = getDataRow().get(timeField);
-      if (o instanceof Number)
-      {
+    if ( timeField != null ) {
+      final Object o = getDataRow().get( timeField );
+      if ( o instanceof Number ) {
         final Number n = (Number) o;
-        calendar.setTime(new Date(n.longValue()));
-      }
-      else if (o instanceof Date)
-      {
+        calendar.setTime( new Date( n.longValue() ) );
+      } else if ( o instanceof Date ) {
         final Date d = (Date) o;
-        calendar.setTime(d);
+        calendar.setTime( d );
       }
     }
 
-    if (epochTimeField != null)
-    {
-      final Object o = getDataRow().get(epochTimeField);
-      if (o instanceof Number)
-      {
+    if ( epochTimeField != null ) {
+      final Object o = getDataRow().get( epochTimeField );
+      if ( o instanceof Number ) {
         final Number n = (Number) o;
-        calendar.setTime(new Date(n.longValue() * 1000));
+        calendar.setTime( new Date( n.longValue() * 1000 ) );
       }
     }
-    if (monthField != null)
-    {
-      trySetField(calendar, Calendar.MONTH, monthField);
+    if ( monthField != null ) {
+      trySetField( calendar, Calendar.MONTH, monthField );
     }
-    if (dayOfMonthField != null)
-    {
-      trySetField(calendar, Calendar.DAY_OF_MONTH, dayOfMonthField);
+    if ( dayOfMonthField != null ) {
+      trySetField( calendar, Calendar.DAY_OF_MONTH, dayOfMonthField );
     }
-    if (yearField != null)
-    {
-      trySetField(calendar, Calendar.YEAR, yearField);
+    if ( yearField != null ) {
+      trySetField( calendar, Calendar.YEAR, yearField );
     }
-    if (hourField != null)
-    {
-      trySetField(calendar, Calendar.HOUR_OF_DAY, hourField);
+    if ( hourField != null ) {
+      trySetField( calendar, Calendar.HOUR_OF_DAY, hourField );
     }
-    if (minuteField != null)
-    {
-      trySetField(calendar, Calendar.MINUTE, minuteField);
+    if ( minuteField != null ) {
+      trySetField( calendar, Calendar.MINUTE, minuteField );
     }
-    if (secondField != null)
-    {
-      trySetField(calendar, Calendar.SECOND, secondField);
+    if ( secondField != null ) {
+      trySetField( calendar, Calendar.SECOND, secondField );
     }
-    if (milliSecondField != null)
-    {
-      trySetField(calendar, Calendar.MILLISECOND, milliSecondField);
+    if ( milliSecondField != null ) {
+      trySetField( calendar, Calendar.MILLISECOND, milliSecondField );
     }
-    if (dayOfWeekField != null)
-    {
-      trySetField(calendar, Calendar.DAY_OF_WEEK, dayOfWeekField);
+    if ( dayOfWeekField != null ) {
+      trySetField( calendar, Calendar.DAY_OF_WEEK, dayOfWeekField );
     }
-    if (dayOfYearField != null)
-    {
-      trySetField(calendar, Calendar.DAY_OF_YEAR, dayOfYearField);
+    if ( dayOfYearField != null ) {
+      trySetField( calendar, Calendar.DAY_OF_YEAR, dayOfYearField );
     }
-    if (dayOfWeekInMonthField != null)
-    {
-      trySetField(calendar, Calendar.DAY_OF_WEEK_IN_MONTH, dayOfWeekInMonthField);
+    if ( dayOfWeekInMonthField != null ) {
+      trySetField( calendar, Calendar.DAY_OF_WEEK_IN_MONTH, dayOfWeekInMonthField );
     }
-    if (weekOfMonthField != null)
-    {
-      trySetField(calendar, Calendar.WEEK_OF_MONTH, weekOfMonthField);
+    if ( weekOfMonthField != null ) {
+      trySetField( calendar, Calendar.WEEK_OF_MONTH, weekOfMonthField );
     }
-    if (weekOfYearField != null)
-    {
-      trySetField(calendar, Calendar.WEEK_OF_YEAR, weekOfYearField);
+    if ( weekOfYearField != null ) {
+      trySetField( calendar, Calendar.WEEK_OF_YEAR, weekOfYearField );
     }
-    if (timeZoneField != null)
-    {
-      final Object o = getDataRow().get(getTimeZoneField());
-      if (o instanceof String)
-      {
-        calendar.setTimeZone(TimeZone.getTimeZone((String) o));
-      }
-      else if (o instanceof TimeZone)
-      {
-        calendar.setTimeZone((TimeZone) o);
+    if ( timeZoneField != null ) {
+      final Object o = getDataRow().get( getTimeZoneField() );
+      if ( o instanceof String ) {
+        calendar.setTimeZone( TimeZone.getTimeZone( (String) o ) );
+      } else if ( o instanceof TimeZone ) {
+        calendar.setTimeZone( (TimeZone) o );
       }
     }
   }
@@ -502,18 +447,15 @@ public class VariableDateExpression extends DateExpression
    * @param field    the field as specified in the Calendar class
    * @param column   the data-row column from where to read the number
    */
-  private void trySetField(final Calendar calendar, final int field, final String column)
-  {
-    if (column == null)
-    {
+  private void trySetField( final Calendar calendar, final int field, final String column ) {
+    if ( column == null ) {
       return;
     }
-    final Object o = getDataRow().get(column);
-    if (o instanceof Number == false)
-    {
+    final Object o = getDataRow().get( column );
+    if ( o instanceof Number == false ) {
       return;
     }
     final Number n = (Number) o;
-    calendar.set(field, n.intValue());
+    calendar.set( field, n.intValue() );
   }
 }

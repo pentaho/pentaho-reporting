@@ -23,11 +23,9 @@ import org.pentaho.reporting.engine.classic.core.style.BandStyleKeys;
 import org.pentaho.reporting.libraries.xmlns.common.ParserUtil;
 import org.xml.sax.SAXException;
 
-public class WatermarkReadHandler extends RootLevelBandReadHandler
-{
-  public WatermarkReadHandler(final Band band)
-  {
-    super(band);
+public class WatermarkReadHandler extends RootLevelBandReadHandler {
+  public WatermarkReadHandler( final Band band ) {
+    super( band );
   }
 
   /**
@@ -36,22 +34,19 @@ public class WatermarkReadHandler extends RootLevelBandReadHandler
    * @param attr the attributes.
    * @throws org.xml.sax.SAXException if there is a parsing error.
    */
-  protected void startParsing(final PropertyAttributes attr)
-      throws SAXException
-  {
-    super.startParsing(attr);
-    handleSticky(attr);
+  protected void startParsing( final PropertyAttributes attr )
+    throws SAXException {
+    super.startParsing( attr );
+    handleSticky( attr );
   }
 
-  private void handleSticky(final PropertyAttributes attr) throws SAXException
-  {
-    final String repeat = attr.getValue(getUri(), "sticky");
-    final Boolean repeatVal = ParserUtil.parseBoolean(repeat, getLocator());
-    getBand().getStyle().setStyleProperty(BandStyleKeys.STICKY, repeatVal);
+  private void handleSticky( final PropertyAttributes attr ) throws SAXException {
+    final String repeat = attr.getValue( getUri(), "sticky" );
+    final Boolean repeatVal = ParserUtil.parseBoolean( repeat, getLocator() );
+    getBand().getStyle().setStyleProperty( BandStyleKeys.STICKY, repeatVal );
   }
 
-  protected boolean isManualBreakAllowed()
-  {
+  protected boolean isManualBreakAllowed() {
     return false;
   }
 

@@ -24,15 +24,13 @@ import org.pentaho.reporting.engine.classic.core.filter.templates.ShapeFieldTemp
  *
  * @author Thomas Morgner.
  */
-public class ShapeFieldTemplateDescription extends AbstractTemplateDescription
-{
+public class ShapeFieldTemplateDescription extends AbstractTemplateDescription {
   /**
    * Creates a new template description.
    *
    * @param name the name.
    */
-  public ShapeFieldTemplateDescription(final String name)
-  {
-    super(name, ShapeFieldTemplate.class, true);
+  public ShapeFieldTemplateDescription( final String name ) {
+    super( name, ShapeFieldTemplate.class, true );
   }
 }

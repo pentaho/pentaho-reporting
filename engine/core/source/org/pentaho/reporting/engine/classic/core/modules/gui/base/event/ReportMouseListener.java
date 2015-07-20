@@ -24,15 +24,14 @@ import java.util.EventListener;
  *
  * @author Thomas Morgner
  */
-public interface ReportMouseListener extends EventListener
-{
-  public void reportMouseClicked(ReportMouseEvent event);
+public interface ReportMouseListener extends EventListener {
+  public void reportMouseClicked( ReportMouseEvent event );
 
-  public void reportMousePressed(ReportMouseEvent event);
+  public void reportMousePressed( ReportMouseEvent event );
 
-  public void reportMouseReleased(ReportMouseEvent event);
+  public void reportMouseReleased( ReportMouseEvent event );
 
-  public void reportMouseMoved(ReportMouseEvent event);
+  public void reportMouseMoved( ReportMouseEvent event );
 
-  public void reportMouseDragged(ReportMouseEvent event);
+  public void reportMouseDragged( ReportMouseEvent event );
 }

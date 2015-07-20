@@ -17,10 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.parser.data.external.writer;
 
-import java.io.IOException;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-
 import org.pentaho.reporting.engine.classic.core.DataFactory;
 import org.pentaho.reporting.engine.classic.core.modules.parser.bundle.writer.BundleDataFactoryWriterHandler;
 import org.pentaho.reporting.engine.classic.core.modules.parser.bundle.writer.BundleWriterException;
@@ -33,10 +29,12 @@ import org.pentaho.reporting.libraries.xmlns.writer.DefaultTagDescription;
 import org.pentaho.reporting.libraries.xmlns.writer.XmlWriter;
 import org.pentaho.reporting.libraries.xmlns.writer.XmlWriterSupport;
 
-public class ExternalDataFactoryWriteHandler implements BundleDataFactoryWriterHandler
-{
-  public ExternalDataFactoryWriteHandler()
-  {
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+
+public class ExternalDataFactoryWriteHandler implements BundleDataFactoryWriterHandler {
+  public ExternalDataFactoryWriteHandler() {
   }
 
   /**
@@ -48,40 +46,38 @@ public class ExternalDataFactoryWriteHandler implements BundleDataFactoryWriterH
    * @param dataFactory the data factory that should be written.
    * @param state       the writer state to hold the current processing information.
    * @return the name of the newly generated file or null if no file was created.
-   * @throws java.io.IOException if any error occured
-   * @throws org.pentaho.reporting.engine.classic.core.modules.parser.bundle.writer.BundleWriterException
-   *                             if a bundle-management error occured.
+   * @throws java.io.IOException                                                                          if any error
+   *                                                                                                      occured
+   * @throws org.pentaho.reporting.engine.classic.core.modules.parser.bundle.writer.BundleWriterException if a
+   * bundle-management
+   *                                                                                                      error occured.
    */
-  public String writeDataFactory(final WriteableDocumentBundle bundle,
-                                 final DataFactory dataFactory,
-                                 final BundleWriterState state) throws IOException, BundleWriterException
-  {
-    if (bundle == null)
-    {
+  public String writeDataFactory( final WriteableDocumentBundle bundle,
+                                  final DataFactory dataFactory,
+                                  final BundleWriterState state ) throws IOException, BundleWriterException {
+    if ( bundle == null ) {
       throw new NullPointerException();
     }
-    if (dataFactory == null)
-    {
+    if ( dataFactory == null ) {
       throw new NullPointerException();
     }
-    if (state == null)
-    {
+    if ( state == null ) {
       throw new NullPointerException();
     }
 
-    final String fileName = BundleUtilities.getUniqueName(bundle, state.getFileName(), "datasources/external-ds{0}.xml");
-    if (fileName == null)
-    {
-      throw new IOException("Unable to generate unique name for External-Data-Source");
+    final String fileName =
+      BundleUtilities.getUniqueName( bundle, state.getFileName(), "datasources/external-ds{0}.xml" );
+    if ( fileName == null ) {
+      throw new IOException( "Unable to generate unique name for External-Data-Source" );
     }
 
-    final OutputStream outputStream = bundle.createEntry(fileName, "text/xml");
+    final OutputStream outputStream = bundle.createEntry( fileName, "text/xml" );
     final DefaultTagDescription tagDescription = new DefaultTagDescription();
-    final XmlWriter xmlWriter = new XmlWriter(new OutputStreamWriter(outputStream, "UTF-8"), tagDescription, "  ",
-        "\n");
+    final XmlWriter xmlWriter = new XmlWriter( new OutputStreamWriter( outputStream, "UTF-8" ), tagDescription, "  ",
+      "\n" );
     final AttributeList rootAttrs = new AttributeList();
-    rootAttrs.addNamespaceDeclaration("data", ExternalDataFactoryModule.NAMESPACE);
-    xmlWriter.writeTag(ExternalDataFactoryModule.NAMESPACE, "external-datasource", rootAttrs, XmlWriterSupport.CLOSE);
+    rootAttrs.addNamespaceDeclaration( "data", ExternalDataFactoryModule.NAMESPACE );
+    xmlWriter.writeTag( ExternalDataFactoryModule.NAMESPACE, "external-datasource", rootAttrs, XmlWriterSupport.CLOSE );
     xmlWriter.close();
 
     return fileName;

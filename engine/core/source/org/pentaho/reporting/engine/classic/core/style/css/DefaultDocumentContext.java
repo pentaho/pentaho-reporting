@@ -21,20 +21,18 @@ import org.pentaho.reporting.engine.classic.core.style.css.namespaces.NamespaceC
 import org.pentaho.reporting.libraries.resourceloader.ResourceKey;
 import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 
-public class DefaultDocumentContext implements DocumentContext
-{
+public class DefaultDocumentContext implements DocumentContext {
   private NamespaceCollection namespaces;
   private ResourceManager resourceManager;
   private ResourceKey contextKey;
   private Object styleResourceKey;
   private ElementStyleDefinition styleDefinition;
 
-  public DefaultDocumentContext(final NamespaceCollection namespaces,
-                                final ResourceManager resourceManager,
-                                final ResourceKey contextKey,
-                                final Object styleResourceKey,
-                                final ElementStyleDefinition styleDefinition)
-  {
+  public DefaultDocumentContext( final NamespaceCollection namespaces,
+                                 final ResourceManager resourceManager,
+                                 final ResourceKey contextKey,
+                                 final Object styleResourceKey,
+                                 final ElementStyleDefinition styleDefinition ) {
     this.namespaces = namespaces;
     this.resourceManager = resourceManager;
     this.contextKey = contextKey;
@@ -42,28 +40,23 @@ public class DefaultDocumentContext implements DocumentContext
     this.styleDefinition = styleDefinition;
   }
 
-  public ResourceManager getResourceManager()
-  {
+  public ResourceManager getResourceManager() {
     return resourceManager;
   }
 
-  public ResourceKey getContextKey()
-  {
+  public ResourceKey getContextKey() {
     return contextKey;
   }
 
-  public NamespaceCollection getNamespaces()
-  {
+  public NamespaceCollection getNamespaces() {
     return namespaces;
   }
 
-  public Object getStyleResource()
-  {
+  public Object getStyleResource() {
     return styleResourceKey;
   }
 
-  public ElementStyleDefinition getStyleDefinition()
-  {
+  public ElementStyleDefinition getStyleDefinition() {
     return styleDefinition;
   }
 

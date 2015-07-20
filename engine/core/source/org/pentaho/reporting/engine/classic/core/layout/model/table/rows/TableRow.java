@@ -19,15 +19,14 @@ package org.pentaho.reporting.engine.classic.core.layout.model.table.rows;
 
 import org.pentaho.reporting.engine.classic.core.layout.model.Border;
 
-public interface TableRow
-{
+public interface TableRow {
   long getPreferredSize();
 
-  long getPreferredSize(int colspan);
+  long getPreferredSize( int colspan );
 
   long getValidatedLeadingSize();
 
-  long getValidatedTrailingSize(int rowSpan);
+  long getValidatedTrailingSize( int rowSpan );
 
   int getMaxValidatedRowSpan();
 

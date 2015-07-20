@@ -23,15 +23,13 @@ import org.pentaho.reporting.engine.classic.core.function.OutputFunction;
 import org.pentaho.reporting.engine.classic.core.layout.output.AbstractReportProcessor;
 import org.pentaho.reporting.engine.classic.core.layout.output.DefaultOutputFunction;
 
-public class DebugReportProcessor extends AbstractReportProcessor
-{
+public class DebugReportProcessor extends AbstractReportProcessor {
   private DebugRenderer renderer;
 
-  public DebugReportProcessor(final MasterReport report,
-                              final DebugRenderer renderer)
-      throws ReportProcessingException
-  {
-    super(report, renderer.getOutputProcessor());
+  public DebugReportProcessor( final MasterReport report,
+                               final DebugRenderer renderer )
+    throws ReportProcessingException {
+    super( report, renderer.getOutputProcessor() );
     this.renderer = renderer;
   }
 
@@ -41,10 +39,9 @@ public class DebugReportProcessor extends AbstractReportProcessor
    *
    * @return the page layouter.
    */
-  protected OutputFunction createLayoutManager()
-  {
+  protected OutputFunction createLayoutManager() {
     final DefaultOutputFunction pageableOutputFunction = new DefaultOutputFunction();
-    pageableOutputFunction.setRenderer(renderer);
+    pageableOutputFunction.setRenderer( renderer );
     return pageableOutputFunction;
   }
 

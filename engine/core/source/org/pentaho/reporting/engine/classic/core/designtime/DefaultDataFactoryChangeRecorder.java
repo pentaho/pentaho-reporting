@@ -17,54 +17,45 @@
 
 package org.pentaho.reporting.engine.classic.core.designtime;
 
-import java.util.ArrayList;
-
 import org.pentaho.reporting.engine.classic.core.CompoundDataFactory;
 import org.pentaho.reporting.engine.classic.core.DataFactory;
 
-public class DefaultDataFactoryChangeRecorder implements DataFactoryChangeRecorder
-{
+import java.util.ArrayList;
+
+public class DefaultDataFactoryChangeRecorder implements DataFactoryChangeRecorder {
   private ArrayList<DataFactoryChange> changes;
 
-  public DefaultDataFactoryChangeRecorder()
-  {
+  public DefaultDataFactoryChangeRecorder() {
     changes = new ArrayList<DataFactoryChange>();
   }
 
-  public void recordChange(final DataFactoryChange change)
-  {
-    changes.add(change);
+  public void recordChange( final DataFactoryChange change ) {
+    changes.add( change );
   }
 
-  public DataFactoryChange[] getChanges()
-  {
-    return changes.toArray(new DataFactoryChange[changes.size()]);
+  public DataFactoryChange[] getChanges() {
+    return changes.toArray( new DataFactoryChange[ changes.size() ] );
   }
 
-  public static void applyChanges (final CompoundDataFactory cdf, final DataFactoryChange[] changes)
-  {
-    for (int i = 0; i < changes.length; i++)
-    {
-      final DataFactoryChange change = changes[i];
+  public static void applyChanges( final CompoundDataFactory cdf, final DataFactoryChange[] changes ) {
+    for ( int i = 0; i < changes.length; i++ ) {
+      final DataFactoryChange change = changes[ i ];
       final DataFactory oldValue = change.getOldValue();
       final DataFactory newValue = change.getNewValue();
-      if (oldValue == newValue)
-      {
+      if ( oldValue == newValue ) {
         continue;
       }
-      if (oldValue != null && newValue != null)
-      {
-        final int index = cdf.indexOfByReference(oldValue);
-        cdf.set(index, newValue);
+      if ( oldValue != null && newValue != null ) {
+        final int index = cdf.indexOfByReference( oldValue );
+        cdf.set( index, newValue );
         continue;
       }
-      if (oldValue != null)
-      {
-        final int index = cdf.indexOfByReference(oldValue);
-        cdf.remove(index);
+      if ( oldValue != null ) {
+        final int index = cdf.indexOfByReference( oldValue );
+        cdf.remove( index );
         continue;
       }
-      cdf.add(newValue);
+      cdf.add( newValue );
     }
   }
 }

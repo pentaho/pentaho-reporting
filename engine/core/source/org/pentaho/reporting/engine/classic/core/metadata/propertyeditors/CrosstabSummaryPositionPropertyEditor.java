@@ -19,10 +19,8 @@ package org.pentaho.reporting.engine.classic.core.metadata.propertyeditors;
 
 import org.pentaho.reporting.engine.classic.core.CrosstabSummaryPosition;
 
-public class CrosstabSummaryPositionPropertyEditor extends EnumPropertyEditor
-{
-  public CrosstabSummaryPositionPropertyEditor()
-  {
-    super(CrosstabSummaryPosition.class, true);
+public class CrosstabSummaryPositionPropertyEditor extends EnumPropertyEditor {
+  public CrosstabSummaryPositionPropertyEditor() {
+    super( CrosstabSummaryPosition.class, true );
   }
 }

@@ -17,10 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.core.function;
 
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.Serializable;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.pentaho.reporting.engine.classic.core.AttributeNames;
@@ -49,6 +45,10 @@ import org.pentaho.reporting.engine.classic.core.states.LayoutProcess;
 import org.pentaho.reporting.engine.classic.core.states.ReportState;
 import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.Serializable;
+
 /**
  * The AbstractElementFormatFunction provides a common base implementation for all functions that need to modify the
  * report definition or the style of an report element or band during the report processing.
@@ -59,47 +59,40 @@ import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
  * @author Thomas Morgner
  */
 public abstract class AbstractElementFormatFunction extends AbstractFunction
-    implements PageEventListener, LayoutProcessorFunction
-{
-  private static class NeedEvalResult
-  {
+  implements PageEventListener, LayoutProcessorFunction {
+  private static class NeedEvalResult {
     private boolean needToRun;
     private long changeTracker;
 
-    private NeedEvalResult(final boolean needToRun, final long changeTracker)
-    {
+    private NeedEvalResult( final boolean needToRun, final long changeTracker ) {
       this.needToRun = needToRun;
       this.changeTracker = changeTracker;
     }
 
-    public boolean isNeedToRun()
-    {
+    public boolean isNeedToRun() {
       return needToRun;
     }
 
-    public long getChangeTracker()
-    {
+    public long getChangeTracker() {
       return changeTracker;
     }
 
-    public String toString()
-    {
+    public String toString() {
       return "NeedEvalResult{" +
-          "needToRun=" + needToRun +
-          ", changeTracker=" + changeTracker +
-          '}';
+        "needToRun=" + needToRun +
+        ", changeTracker=" + changeTracker +
+        '}';
     }
   }
 
-  private static class PerformanceCollector implements Serializable
-  {
+  private static class PerformanceCollector implements Serializable {
     public int totalEvaluations;
     public int evaluations;
     public int skippedEvaluations;
   }
 
   private PerformanceCollector performanceCollector;
-  private final Log performanceLogger = LogFactory.getLog(getClass());
+  private final Log performanceLogger = LogFactory.getLog( getClass() );
   /**
    * The name of the element that should be formatted.
    */
@@ -110,8 +103,7 @@ public abstract class AbstractElementFormatFunction extends AbstractFunction
    * Creates an unnamed function. Make sure the name of the function is set using {@link #setName} before the function
    * is added to the report's function collection.
    */
-  protected AbstractElementFormatFunction()
-  {
+  protected AbstractElementFormatFunction() {
     attrName = computeUniqueIdentifier();
   }
 
@@ -120,10 +112,11 @@ public abstract class AbstractElementFormatFunction extends AbstractFunction
    * possible to define multiple elements with the same name to apply the modification to all of these elements.
    *
    * @param name The element name.
-   * @see org.pentaho.reporting.engine.classic.core.function.FunctionUtilities#findAllElements(org.pentaho.reporting.engine.classic.core.Band, String)
+   * @see org.pentaho.reporting.engine.classic.core.function.FunctionUtilities#findAllElements(org.pentaho.reporting
+   * .engine.classic.core.Band,
+   * String)
    */
-  public void setElement(final String name)
-  {
+  public void setElement( final String name ) {
     this.element = name;
   }
 
@@ -133,8 +126,7 @@ public abstract class AbstractElementFormatFunction extends AbstractFunction
    * @return The element name.
    * @see #setElement(String)
    */
-  public String getElement()
-  {
+  public String getElement() {
     return element;
   }
 
@@ -145,27 +137,23 @@ public abstract class AbstractElementFormatFunction extends AbstractFunction
    *
    * @param event The event.
    */
-  public void reportInitialized(final ReportEvent event)
-  {
-    if (FunctionUtilities.isLayoutLevel(event) == false)
-    {
+  public void reportInitialized( final ReportEvent event ) {
+    if ( FunctionUtilities.isLayoutLevel( event ) == false ) {
       // dont do anything if there is no printing done ...
       return;
     }
 
     performanceCollector = new PerformanceCollector();
 
-    if (isExecutable() == false)
-    {
+    if ( isExecutable() == false ) {
       return;
     }
 
-    if (event.getState().isSubReportEvent() == false)
-    {
-      evaluateElement(event.getReport());
+    if ( event.getState().isSubReportEvent() == false ) {
+      evaluateElement( event.getReport() );
     }
-    processRootBand(event.getReport().getPageHeader());
-    processRootBand(event.getReport().getWatermark());
+    processRootBand( event.getReport().getPageHeader() );
+    processRootBand( event.getReport().getWatermark() );
   }
 
   /**
@@ -173,22 +161,19 @@ public abstract class AbstractElementFormatFunction extends AbstractFunction
    *
    * @param event the event.
    */
-  public void reportStarted(final ReportEvent event)
-  {
-    if (FunctionUtilities.isLayoutLevel(event) == false)
-    {
+  public void reportStarted( final ReportEvent event ) {
+    if ( FunctionUtilities.isLayoutLevel( event ) == false ) {
       // dont do anything if there is no printing done ...
       return;
     }
-    if (isExecutable() == false)
-    {
+    if ( isExecutable() == false ) {
       return;
     }
 
     final Band b = event.getReport().getReportHeader();
-    processRootBand(b);
+    processRootBand( b );
 
-    processFooterBands(event.getState());
+    processFooterBands( event.getState() );
   }
 
   /**
@@ -196,24 +181,21 @@ public abstract class AbstractElementFormatFunction extends AbstractFunction
    *
    * @param event the event.
    */
-  public void groupStarted(final ReportEvent event)
-  {
-    if (FunctionUtilities.isLayoutLevel(event) == false)
-    {
+  public void groupStarted( final ReportEvent event ) {
+    if ( FunctionUtilities.isLayoutLevel( event ) == false ) {
       // dont do anything if there is no printing done ...
       return;
     }
-    if (isExecutable() == false)
-    {
+    if ( isExecutable() == false ) {
       return;
     }
 
-    final Group group = FunctionUtilities.getCurrentGroup(event);
-    evaluateElement(group);
-    processGroupHeaders(group);
-    evaluateElement(group.getBody());
+    final Group group = FunctionUtilities.getCurrentGroup( event );
+    evaluateElement( group );
+    processGroupHeaders( group );
+    evaluateElement( group.getBody() );
 
-    processFooterBands(event.getState());
+    processFooterBands( event.getState() );
   }
 
   /**
@@ -221,32 +203,26 @@ public abstract class AbstractElementFormatFunction extends AbstractFunction
    *
    * @param event the report event.
    */
-  public void itemsStarted(final ReportEvent event)
-  {
-    if (FunctionUtilities.isLayoutLevel(event) == false)
-    {
+  public void itemsStarted( final ReportEvent event ) {
+    if ( FunctionUtilities.isLayoutLevel( event ) == false ) {
       // dont do anything if there is no printing done ...
       return;
     }
 
-    if (isExecutable() == false)
-    {
+    if ( isExecutable() == false ) {
       return;
     }
 
-    if (event.getState().isCrosstabActive())
-    {
+    if ( event.getState().isCrosstabActive() ) {
       final CrosstabCellBody crosstabCellBody = event.getReport().getCrosstabCellBody();
-      processRootBand(crosstabCellBody.getHeader());
-      processRootBand(crosstabCellBody.findElement(null, null));
-    }
-    else
-    {
+      processRootBand( crosstabCellBody.getHeader() );
+      processRootBand( crosstabCellBody.findElement( null, null ) );
+    } else {
       final ReportDefinition reportDefinition = event.getReport();
-      processRootBand(reportDefinition.getDetailsHeader());
-      processRootBand(reportDefinition.getNoDataBand());
+      processRootBand( reportDefinition.getDetailsHeader() );
+      processRootBand( reportDefinition.getNoDataBand() );
     }
-    processFooterBands(event.getState());
+    processFooterBands( event.getState() );
   }
 
   /**
@@ -254,29 +230,23 @@ public abstract class AbstractElementFormatFunction extends AbstractFunction
    *
    * @param event the event.
    */
-  public void itemsAdvanced(final ReportEvent event)
-  {
-    if (FunctionUtilities.isLayoutLevel(event) == false)
-    {
+  public void itemsAdvanced( final ReportEvent event ) {
+    if ( FunctionUtilities.isLayoutLevel( event ) == false ) {
       // dont do anything if there is no printing done ...
       return;
     }
-    if (isExecutable() == false)
-    {
+    if ( isExecutable() == false ) {
       return;
     }
 
-    if (event.getState().isCrosstabActive())
-    {
+    if ( event.getState().isCrosstabActive() ) {
       final CrosstabCellBody crosstabCellBody = event.getReport().getCrosstabCellBody();
-      processRootBand(crosstabCellBody.findElement(null, null));
-    }
-    else
-    {
+      processRootBand( crosstabCellBody.findElement( null, null ) );
+    } else {
       final ItemBand itemBand = event.getReport().getItemBand();
-      processRootBand(itemBand);
+      processRootBand( itemBand );
     }
-    processFooterBands(event.getState());
+    processFooterBands( event.getState() );
   }
 
   /**
@@ -285,28 +255,22 @@ public abstract class AbstractElementFormatFunction extends AbstractFunction
    *
    * @param event The event.
    */
-  public void itemsFinished(final ReportEvent event)
-  {
-    if (FunctionUtilities.isLayoutLevel(event) == false)
-    {
+  public void itemsFinished( final ReportEvent event ) {
+    if ( FunctionUtilities.isLayoutLevel( event ) == false ) {
       // dont do anything if there is no printing done ...
       return;
     }
-    if (isExecutable() == false)
-    {
+    if ( isExecutable() == false ) {
       return;
     }
 
-    if (event.getState().isCrosstabActive())
-    {
+    if ( event.getState().isCrosstabActive() ) {
       final CrosstabCellBody crosstabCellBody = event.getReport().getCrosstabCellBody();
-      processRootBand(crosstabCellBody.findElement(null, null));
+      processRootBand( crosstabCellBody.findElement( null, null ) );
+    } else {
+      processRootBand( event.getReport().getDetailsFooter() );
     }
-    else
-    {
-      processRootBand(event.getReport().getDetailsFooter());
-    }
-    processFooterBands(event.getState());
+    processFooterBands( event.getState() );
   }
 
   /**
@@ -314,53 +278,41 @@ public abstract class AbstractElementFormatFunction extends AbstractFunction
    *
    * @param event the event.
    */
-  public void groupFinished(final ReportEvent event)
-  {
-    if (FunctionUtilities.isLayoutLevel(event) == false)
-    {
+  public void groupFinished( final ReportEvent event ) {
+    if ( FunctionUtilities.isLayoutLevel( event ) == false ) {
       // dont do anything if there is no printing done ...
       return;
     }
-    if (isExecutable() == false)
-    {
+    if ( isExecutable() == false ) {
       return;
     }
 
 
-    final Group group = FunctionUtilities.getCurrentGroup(event);
-    if (group instanceof CrosstabColumnGroup)
-    {
+    final Group group = FunctionUtilities.getCurrentGroup( event );
+    if ( group instanceof CrosstabColumnGroup ) {
       final CrosstabCellBody crosstabCellBody = event.getReport().getCrosstabCellBody();
       final int elementCount = crosstabCellBody.getElementCount();
-      for (int i = 1; i < elementCount; i += 1)
-      {
-        final CrosstabCell cell = (CrosstabCell) crosstabCellBody.getElement(i);
-        if (cell.getRowField() == null)
-        {
-          processRootBand(cell);
+      for ( int i = 1; i < elementCount; i += 1 ) {
+        final CrosstabCell cell = (CrosstabCell) crosstabCellBody.getElement( i );
+        if ( cell.getRowField() == null ) {
+          processRootBand( cell );
         }
       }
-    }
-    else if (group instanceof CrosstabRowGroup)
-    {
+    } else if ( group instanceof CrosstabRowGroup ) {
       final CrosstabRowGroup rowGroup = (CrosstabRowGroup) group;
       final CrosstabCellBody crosstabCellBody = event.getReport().getCrosstabCellBody();
       final int elementCount = crosstabCellBody.getElementCount();
-      for (int i = 1; i < elementCount; i += 1)
-      {
-        final CrosstabCell cell = (CrosstabCell) crosstabCellBody.getElement(i);
-        if (ObjectUtilities.equal(cell.getRowField(), rowGroup.getField()))
-        {
-          processRootBand(cell);
+      for ( int i = 1; i < elementCount; i += 1 ) {
+        final CrosstabCell cell = (CrosstabCell) crosstabCellBody.getElement( i );
+        if ( ObjectUtilities.equal( cell.getRowField(), rowGroup.getField() ) ) {
+          processRootBand( cell );
         }
       }
-    }
-    else
-    {
-      processAllGroupFooterBands(group);
+    } else {
+      processAllGroupFooterBands( group );
     }
 
-    processFooterBands(event.getState());
+    processFooterBands( event.getState() );
   }
 
   /**
@@ -368,85 +320,73 @@ public abstract class AbstractElementFormatFunction extends AbstractFunction
    *
    * @param event the event.
    */
-  public void reportFinished(final ReportEvent event)
-  {
-    if (FunctionUtilities.isLayoutLevel(event) == false)
-    {
+  public void reportFinished( final ReportEvent event ) {
+    if ( FunctionUtilities.isLayoutLevel( event ) == false ) {
       // dont do anything if there is no printing done ...
       return;
     }
-    if (isExecutable() == false)
-    {
+    if ( isExecutable() == false ) {
       return;
     }
 
     final Band b = event.getReport().getReportFooter();
-    processRootBand(b);
-    processFooterBands(event.getState());
+    processRootBand( b );
+    processFooterBands( event.getState() );
   }
 
-  public void reportDone(final ReportEvent event)
-  {
-    if (FunctionUtilities.isLayoutLevel(event) == false)
-    {
+  public void reportDone( final ReportEvent event ) {
+    if ( FunctionUtilities.isLayoutLevel( event ) == false ) {
       // dont do anything if there is no printing done ...
       return;
     }
 
-    final OutputProcessorMetaData outputProcessorMetaData = getRuntime().getProcessingContext().getOutputProcessorMetaData();
-    if (outputProcessorMetaData.isFeatureSupported(OutputProcessorFeature.DESIGNTIME) == false)
-    {
+    final OutputProcessorMetaData outputProcessorMetaData =
+      getRuntime().getProcessingContext().getOutputProcessorMetaData();
+    if ( outputProcessorMetaData.isFeatureSupported( OutputProcessorFeature.DESIGNTIME ) == false ) {
       reportCachePerformance();
     }
   }
 
-  protected void reportCachePerformance()
-  {
-    if (performanceLogger.isInfoEnabled())
-    {
-      performanceLogger.info(String.format("Performance: %s => total=%d, evaluated=%d (%f%%), avoided=%d (%f%%)", getClass(),
+  protected void reportCachePerformance() {
+    if ( performanceLogger.isInfoEnabled() ) {
+      performanceLogger
+        .info( String.format( "Performance: %s => total=%d, evaluated=%d (%f%%), avoided=%d (%f%%)", getClass(),
           performanceCollector.totalEvaluations,
           performanceCollector.evaluations,
-          100f * performanceCollector.evaluations / Math.max(1.0f, performanceCollector.totalEvaluations),
+          100f * performanceCollector.evaluations / Math.max( 1.0f, performanceCollector.totalEvaluations ),
           performanceCollector.skippedEvaluations,
-          100f * performanceCollector.skippedEvaluations / Math.max(1.0f, performanceCollector.totalEvaluations)));
+          100f * performanceCollector.skippedEvaluations / Math.max( 1.0f, performanceCollector.totalEvaluations ) ) );
     }
   }
 
-  protected void processGroupHeaders(final Group group)
-  {
+  protected void processGroupHeaders( final Group group ) {
     final int elementCount = group.getElementCount();
-    for (int i = 0; i < elementCount; i += 1)
-    {
-      final Element e = group.getElement(i);
+    for ( int i = 0; i < elementCount; i += 1 ) {
+      final Element e = group.getElement( i );
       final ElementMetaData.TypeClassification reportElementType = e.getMetaData().getReportElementType();
-      if ((reportElementType != ElementMetaData.TypeClassification.RELATIONAL_HEADER) &&
-          (reportElementType != ElementMetaData.TypeClassification.HEADER))
-      {
+      if ( ( reportElementType != ElementMetaData.TypeClassification.RELATIONAL_HEADER ) &&
+        ( reportElementType != ElementMetaData.TypeClassification.HEADER ) ) {
         continue;
       }
 
       final Band b = (Band) e;
-      processRootBand(b);
+      processRootBand( b );
     }
   }
 
 
-  private void processAllGroupFooterBands(final Group group)
-  {
+  private void processAllGroupFooterBands( final Group group ) {
     final int elementCount = group.getElementCount();
-    for (int i = 0; i < elementCount; i += 1)
-    {
-      final Element e = group.getElement(i);
+    for ( int i = 0; i < elementCount; i += 1 ) {
+      final Element e = group.getElement( i );
       final ElementMetaData.TypeClassification reportElementType = e.getMetaData().getReportElementType();
-      if ((reportElementType != ElementMetaData.TypeClassification.RELATIONAL_FOOTER) &&
-          (reportElementType != ElementMetaData.TypeClassification.FOOTER))
-      {
+      if ( ( reportElementType != ElementMetaData.TypeClassification.RELATIONAL_FOOTER ) &&
+        ( reportElementType != ElementMetaData.TypeClassification.FOOTER ) ) {
         continue;
       }
 
       final Band b = (Band) e;
-      processRootBand(b);
+      processRootBand( b );
     }
   }
 
@@ -455,20 +395,17 @@ public abstract class AbstractElementFormatFunction extends AbstractFunction
    *
    * @param event the event.
    */
-  public void pageFinished(final ReportEvent event)
-  {
-    if (FunctionUtilities.isLayoutLevel(event) == false)
-    {
+  public void pageFinished( final ReportEvent event ) {
+    if ( FunctionUtilities.isLayoutLevel( event ) == false ) {
       // dont do anything if there is no printing done ...
       return;
     }
-    if (isExecutable() == false)
-    {
+    if ( isExecutable() == false ) {
       return;
     }
 
     final Band b = event.getReport().getPageFooter();
-    processRootBand(b);
+    processRootBand( b );
   }
 
   /**
@@ -476,64 +413,51 @@ public abstract class AbstractElementFormatFunction extends AbstractFunction
    *
    * @param event the event.
    */
-  public void pageStarted(final ReportEvent event)
-  {
-    if (FunctionUtilities.isLayoutLevel(event) == false)
-    {
+  public void pageStarted( final ReportEvent event ) {
+    if ( FunctionUtilities.isLayoutLevel( event ) == false ) {
       // dont do anything if there is no printing done ...
       return;
     }
 
-    if (isExecutable() == false)
-    {
+    if ( isExecutable() == false ) {
       return;
     }
 
-    if (performanceCollector == null)
-    {
+    if ( performanceCollector == null ) {
       // this is part of a bug. LayoutProcessorFunctions seem to get informed of page-started before they receive
       // a reportInitialized event.
       performanceCollector = new PerformanceCollector();
     }
 
     final Band w = event.getReport().getWatermark();
-    processRootBand(w);
+    processRootBand( w );
 
-    processHeaderBands(event.getState());
-    processFooterBands(event.getState());
+    processHeaderBands( event.getState() );
+    processFooterBands( event.getState() );
   }
 
-  protected void processFooterBands(ReportState state)
-  {
-    while (state != null)
-    {
+  protected void processFooterBands( ReportState state ) {
+    while ( state != null ) {
       final ReportDefinition reportDefinition = state.getReport();
-      processRootBand(reportDefinition.getPageFooter());
-      if (state.isInItemGroup())
-      {
-        processRootBand(reportDefinition.getDetailsFooter());
+      processRootBand( reportDefinition.getPageFooter() );
+      if ( state.isInItemGroup() ) {
+        processRootBand( reportDefinition.getDetailsFooter() );
       }
       Group g = reportDefinition.getRootGroup();
       int groupCounter = 0;
-      while (g != null && groupCounter <= state.getCurrentGroupIndex())
-      {
-        processAllGroupFooterBands(g);
+      while ( g != null && groupCounter <= state.getCurrentGroupIndex() ) {
+        processAllGroupFooterBands( g );
 
         final GroupBody body = g.getBody();
-        if (body instanceof SubGroupBody)
-        {
+        if ( body instanceof SubGroupBody ) {
           groupCounter += 1;
           final SubGroupBody sgb = (SubGroupBody) body;
           g = sgb.getGroup();
-        }
-        else if (body instanceof CrosstabOtherGroupBody)
-        {
+        } else if ( body instanceof CrosstabOtherGroupBody ) {
           groupCounter += 1;
           final CrosstabOtherGroupBody sgb = (CrosstabOtherGroupBody) body;
           g = sgb.getGroup();
-        }
-        else
-        {
+        } else {
           break;
         }
       }
@@ -543,37 +467,28 @@ public abstract class AbstractElementFormatFunction extends AbstractFunction
 
   }
 
-  protected void processHeaderBands(ReportState state)
-  {
-    while (state != null)
-    {
+  protected void processHeaderBands( ReportState state ) {
+    while ( state != null ) {
       final ReportDefinition reportDefinition = state.getReport();
-      processRootBand(reportDefinition.getPageHeader());
-      if (state.isInItemGroup())
-      {
-        processRootBand(reportDefinition.getDetailsHeader());
+      processRootBand( reportDefinition.getPageHeader() );
+      if ( state.isInItemGroup() ) {
+        processRootBand( reportDefinition.getDetailsHeader() );
       }
       Group g = reportDefinition.getRootGroup();
       int groupCounter = 0;
-      while (g != null && groupCounter <= state.getCurrentGroupIndex())
-      {
-        processGroupHeaders(g);
+      while ( g != null && groupCounter <= state.getCurrentGroupIndex() ) {
+        processGroupHeaders( g );
 
         final GroupBody body = g.getBody();
-        if (body instanceof SubGroupBody)
-        {
+        if ( body instanceof SubGroupBody ) {
           groupCounter += 1;
           final SubGroupBody sgb = (SubGroupBody) body;
           g = sgb.getGroup();
-        }
-        else if (body instanceof CrosstabOtherGroupBody)
-        {
+        } else if ( body instanceof CrosstabOtherGroupBody ) {
           groupCounter += 1;
           final CrosstabOtherGroupBody sgb = (CrosstabOtherGroupBody) body;
           g = sgb.getGroup();
-        }
-        else
-        {
+        } else {
           break;
         }
       }
@@ -588,13 +503,11 @@ public abstract class AbstractElementFormatFunction extends AbstractFunction
    *
    * @return null, as format functions do not compute values.
    */
-  public Object getValue()
-  {
+  public Object getValue() {
     return null;
   }
 
-  protected boolean isExecutable()
-  {
+  protected boolean isExecutable() {
     return true;
   }
 
@@ -603,85 +516,69 @@ public abstract class AbstractElementFormatFunction extends AbstractFunction
    *
    * @param b the band.
    */
-  protected final void processRootBand(final Section b)
-  {
-    if (b == null)
-    {
+  protected final void processRootBand( final Section b ) {
+    if ( b == null ) {
       return;
     }
 
-    final NeedEvalResult needToRun = (NeedEvalResult) b.getAttribute(AttributeNames.Internal.NAMESPACE, attrName);
-    if (needToRun != null)
-    {
-      if (needToRun.isNeedToRun() == false)
-      {
-        if (b.getChangeTracker() == needToRun.getChangeTracker())
-        {
-          recordCacheHit(b);
+    final NeedEvalResult needToRun = (NeedEvalResult) b.getAttribute( AttributeNames.Internal.NAMESPACE, attrName );
+    if ( needToRun != null ) {
+      if ( needToRun.isNeedToRun() == false ) {
+        if ( b.getChangeTracker() == needToRun.getChangeTracker() ) {
+          recordCacheHit( b );
           return;
         }
       }
     }
 
-    recordCacheMiss(b);
+    recordCacheMiss( b );
 
-    final boolean needToRunVal = processBand(b);
-    b.setAttribute(AttributeNames.Internal.NAMESPACE, attrName, new NeedEvalResult(needToRunVal, b.getChangeTracker()), false);
+    final boolean needToRunVal = processBand( b );
+    b.setAttribute( AttributeNames.Internal.NAMESPACE, attrName,
+      new NeedEvalResult( needToRunVal, b.getChangeTracker() ), false );
   }
 
-  protected void recordCacheHit(final ReportElement e)
-  {
+  protected void recordCacheHit( final ReportElement e ) {
     performanceCollector.totalEvaluations += 1;
     performanceCollector.skippedEvaluations += 1;
   }
 
-  protected void recordCacheMiss(final ReportElement e)
-  {
+  protected void recordCacheMiss( final ReportElement e ) {
     performanceCollector.totalEvaluations += 1;
     performanceCollector.evaluations += 1;
   }
 
-  protected abstract boolean evaluateElement(final ReportElement e);
+  protected abstract boolean evaluateElement( final ReportElement e );
 
-  protected final boolean processBand(final Section b)
-  {
-    boolean hasAttrExpressions = evaluateElement(b);
+  protected final boolean processBand( final Section b ) {
+    boolean hasAttrExpressions = evaluateElement( b );
 
     final int length = b.getElementCount();
-    for (int i = 0; i < length; i++)
-    {
-      final Element element = b.getElement(i);
+    for ( int i = 0; i < length; i++ ) {
+      final Element element = b.getElement( i );
 
       final ElementMetaData.TypeClassification reportElementType = element.getMetaData().getReportElementType();
-      if (reportElementType == ElementMetaData.TypeClassification.DATA ||
-          reportElementType == ElementMetaData.TypeClassification.CONTROL ||
-          reportElementType == ElementMetaData.TypeClassification.SUBREPORT ||
-          element instanceof Section == false)
-      {
-        if (evaluateElement(element))
-        {
+      if ( reportElementType == ElementMetaData.TypeClassification.DATA ||
+        reportElementType == ElementMetaData.TypeClassification.CONTROL ||
+        reportElementType == ElementMetaData.TypeClassification.SUBREPORT ||
+        element instanceof Section == false ) {
+        if ( evaluateElement( element ) ) {
           hasAttrExpressions = true;
         }
-      }
-      else
-      {
+      } else {
         final Section section = (Section) element;
-        if (processBand(section))
-        {
+        if ( processBand( section ) ) {
           hasAttrExpressions = true;
         }
       }
     }
 
-    if (b instanceof RootLevelBand)
-    {
+    if ( b instanceof RootLevelBand ) {
       final RootLevelBand rlb = (RootLevelBand) b;
       final SubReport[] reports = rlb.getSubReports();
-      for (int i = 0; i < reports.length; i++)
-      {
-        final SubReport subReport = reports[i];
-        if (evaluateElement(subReport))
-        {
+      for ( int i = 0; i < reports.length; i++ ) {
+        final SubReport subReport = reports[ i ];
+        if ( evaluateElement( subReport ) ) {
           hasAttrExpressions = true;
         }
       }
@@ -689,8 +586,7 @@ public abstract class AbstractElementFormatFunction extends AbstractFunction
     return hasAttrExpressions;
   }
 
-  public final int getDependencyLevel()
-  {
+  public final int getDependencyLevel() {
     return LayoutProcess.LEVEL_PAGINATE;
   }
 
@@ -702,23 +598,20 @@ public abstract class AbstractElementFormatFunction extends AbstractFunction
    * @throws java.io.IOException    when reading the stream fails.
    * @throws ClassNotFoundException if a class definition for a serialized object could not be found.
    */
-  private void readObject(final ObjectInputStream in)
-      throws IOException, ClassNotFoundException
-  {
+  private void readObject( final ObjectInputStream in )
+    throws IOException, ClassNotFoundException {
     in.defaultReadObject();
     attrName = computeUniqueIdentifier();
   }
 
-  public AbstractElementFormatFunction getInstance()
-  {
+  public AbstractElementFormatFunction getInstance() {
     final AbstractElementFormatFunction expression = (AbstractElementFormatFunction) super.getInstance();
     expression.attrName = computeUniqueIdentifier();
     return expression;
   }
 
-  private String computeUniqueIdentifier()
-  {
-    return "need-eval-result:" + getClass().getName() + '@' + System.identityHashCode(this);
+  private String computeUniqueIdentifier() {
+    return "need-eval-result:" + getClass().getName() + '@' + System.identityHashCode( this );
   }
 
 }

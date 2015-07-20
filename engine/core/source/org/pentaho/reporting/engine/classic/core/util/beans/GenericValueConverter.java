@@ -26,40 +26,32 @@ import java.beans.PropertyEditor;
  *
  * @author Thomas Morgner
  */
-public class GenericValueConverter implements ValueConverter
-{
+public class GenericValueConverter implements ValueConverter {
   private PropertyDescriptor propertyDescriptor;
   private PropertyEditor propertyEditor;
 
   /**
    * Creates a new value converter.
    */
-  public GenericValueConverter(final PropertyDescriptor pd)
-      throws IntrospectionException
-  {
-    if (pd == null)
-    {
-      throw new NullPointerException("PropertyDescriptor must not be null.");
+  public GenericValueConverter( final PropertyDescriptor pd )
+    throws IntrospectionException {
+    if ( pd == null ) {
+      throw new NullPointerException( "PropertyDescriptor must not be null." );
     }
-    if (pd.getPropertyEditorClass() == null)
-    {
-      throw new IntrospectionException("Property has no editor.");
+    if ( pd.getPropertyEditorClass() == null ) {
+      throw new IntrospectionException( "Property has no editor." );
     }
     this.propertyDescriptor = pd;
-    this.propertyEditor = createPropertyEditor(pd);
+    this.propertyEditor = createPropertyEditor( pd );
   }
 
-  private PropertyEditor createPropertyEditor(final PropertyDescriptor pi)
-      throws IntrospectionException
-  {
+  private PropertyEditor createPropertyEditor( final PropertyDescriptor pi )
+    throws IntrospectionException {
     final Class c = pi.getPropertyEditorClass();
-    try
-    {
+    try {
       return (PropertyEditor) c.newInstance();
-    }
-    catch (Exception e)
-    {
-      throw new IntrospectionException("Unable to create PropertyEditor.");
+    } catch ( Exception e ) {
+      throw new IntrospectionException( "Unable to create PropertyEditor." );
     }
   }
 
@@ -71,19 +63,16 @@ public class GenericValueConverter implements ValueConverter
    * @return A string representing the {@link Integer} value.
    * @throws BeanException if there was an error during the conversion.
    */
-  public String toAttributeValue(final Object o) throws BeanException
-  {
-    if (o == null)
-    {
+  public String toAttributeValue( final Object o ) throws BeanException {
+    if ( o == null ) {
       throw new NullPointerException();
     }
-    final Class aClass = BeanUtility.getPropertyType(propertyDescriptor);
-    if (aClass.isInstance(o) == false)
-    {
-      throw new BeanException("Failed to convert object of type " + o.getClass() + ": Not a " + aClass.getName());
+    final Class aClass = BeanUtility.getPropertyType( propertyDescriptor );
+    if ( aClass.isInstance( o ) == false ) {
+      throw new BeanException( "Failed to convert object of type " + o.getClass() + ": Not a " + aClass.getName() );
     }
 
-    propertyEditor.setValue(o);
+    propertyEditor.setValue( o );
     return propertyEditor.getAsText();
   }
 
@@ -93,13 +82,11 @@ public class GenericValueConverter implements ValueConverter
    * @param s the string.
    * @return a {@link Integer}.
    */
-  public Object toPropertyValue(final String s)
-  {
-    if (s == null)
-    {
+  public Object toPropertyValue( final String s ) {
+    if ( s == null ) {
       throw new NullPointerException();
     }
-    propertyEditor.setAsText(s);
+    propertyEditor.setAsText( s );
     return propertyEditor.getValue();
   }
 }

@@ -17,12 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.misc.datafactory.sql;
 
-import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
-import java.sql.SQLException;
-import java.sql.Statement;
-import javax.swing.table.AbstractTableModel;
-
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.pentaho.reporting.engine.classic.core.MetaTableModel;
 import org.pentaho.reporting.engine.classic.core.modules.misc.tablemodel.DataTableException;
@@ -32,6 +26,12 @@ import org.pentaho.reporting.engine.classic.core.util.CloseableTableModel;
 import org.pentaho.reporting.engine.classic.core.wizard.DataAttributes;
 import org.pentaho.reporting.engine.classic.core.wizard.EmptyDataAttributes;
 import org.pentaho.reporting.libraries.base.config.Configuration;
+
+import javax.swing.table.AbstractTableModel;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 /**
  * A tableModel which is backed up by a java.sql.ResultSet. Use this to directly feed your database data into
@@ -44,8 +44,7 @@ import org.pentaho.reporting.libraries.base.config.Configuration;
  * @author Thomas Morgner
  */
 public class ScrollableResultSetTableModel extends AbstractTableModel
-    implements CloseableTableModel, MetaTableModel
-{
+  implements CloseableTableModel, MetaTableModel {
   /**
    * The scrollable ResultSet source.
    */
@@ -73,40 +72,35 @@ public class ScrollableResultSetTableModel extends AbstractTableModel
   /**
    * Constructs the model.
    *
-   * @param resultset      the result set.
-   * @param columnNameMapping   defines, whether to use column names or column labels to compute the column index.
-   * @param closeStatement a flag indicating whether the statement, that created the resultset should be closed when
-   *                       the resultset gets closed.
+   * @param resultset         the result set.
+   * @param columnNameMapping defines, whether to use column names or column labels to compute the column index.
+   * @param closeStatement    a flag indicating whether the statement, that created the resultset should be closed when
+   *                          the resultset gets closed.
    * @throws SQLException if there is a problem with the result set.
    */
-  public ScrollableResultSetTableModel(final ResultSet resultset,
-                                       final boolean columnNameMapping,
-                                       final boolean closeStatement)
-      throws SQLException
-  {
+  public ScrollableResultSetTableModel( final ResultSet resultset,
+                                        final boolean columnNameMapping,
+                                        final boolean closeStatement )
+    throws SQLException {
     this.columnNameMapping = columnNameMapping;
     this.closeStatement = closeStatement;
     this.rowCount = -1;
-    if (resultset != null)
-    {
-      updateResultSet(resultset);
-    }
-    else
-    {
+    if ( resultset != null ) {
+      updateResultSet( resultset );
+    } else {
       close();
     }
   }
 
   /**
-   * Returns the column name mode used to map column names into column indices. If true, then the Name is used, else
-   * the Label is used.
+   * Returns the column name mode used to map column names into column indices. If true, then the Name is used, else the
+   * Label is used.
    *
    * @return true, if the column name is used for the mapping, false otherwise.
    * @see ResultSetMetaData#getColumnLabel
    * @see ResultSetMetaData#getColumnName
    */
-  public boolean isColumnNameMapping()
-  {
+  public boolean isColumnNameMapping() {
     return columnNameMapping;
   }
 
@@ -116,29 +110,23 @@ public class ScrollableResultSetTableModel extends AbstractTableModel
    * @param resultset the new result set.
    * @throws SQLException if there is a problem with the result set.
    */
-  public void updateResultSet(final ResultSet resultset)
-      throws SQLException
-  {
-    if (this.resultset != null)
-    {
+  public void updateResultSet( final ResultSet resultset )
+    throws SQLException {
+    if ( this.resultset != null ) {
       close();
     }
 
     this.resultset = resultset;
     this.dbmd = resultset.getMetaData();
     final int colcount = dbmd.getColumnCount();
-    this.metaData = new DefaultTableMetaData(colcount);
-    for (int i = 0; i < colcount; i++)
-    {
-      ResultSetTableModelFactory.updateMetaData(dbmd, metaData, i);
+    this.metaData = new DefaultTableMetaData( colcount );
+    for ( int i = 0; i < colcount; i++ ) {
+      ResultSetTableModelFactory.updateMetaData( dbmd, metaData, i );
     }
 
-    if (resultset.last())
-    {
+    if ( resultset.last() ) {
       rowCount = resultset.getRow();
-    }
-    else
-    {
+    } else {
       rowCount = 0;
     }
 
@@ -148,43 +136,30 @@ public class ScrollableResultSetTableModel extends AbstractTableModel
   /**
    * Clears the model of the current result set. The resultset is closed.
    */
-  public void close()
-  {
+  public void close() {
     // Close the old result set if needed.
-    if (resultset != null)
-    {
+    if ( resultset != null ) {
       Statement statement = null;
-      try
-      {
+      try {
         statement = resultset.getStatement();
-      }
-      catch (SQLException sqle)
-      {
+      } catch ( SQLException sqle ) {
         // yeah, whatever
         // logger.warn("Failed to close statement", sqle);
       }
-      try
-      {
+      try {
         resultset.close();
-      }
-      catch (SQLException e)
-      {
+      } catch ( SQLException e ) {
         // Just in case the JDBC driver can't close a result set twice.
         //  e.printStackTrace();
         // Closing is fine if it fails ..
       }
 
-      if (closeStatement)
-      {
-        try
-        {
-          if (statement != null)
-          {
+      if ( closeStatement ) {
+        try {
+          if ( statement != null ) {
             statement.close();
           }
-        }
-        catch (SQLException sqle)
-        {
+        } catch ( SQLException sqle ) {
           // yeah, whatever
         }
       }
@@ -201,37 +176,27 @@ public class ScrollableResultSetTableModel extends AbstractTableModel
    *
    * @return the row count.
    */
-  public int getRowCount()
-  {
-    if (resultset == null)
-    {
+  public int getRowCount() {
+    if ( resultset == null ) {
       return 0;
     }
 
-    if (rowCount > -1)
-    {
+    if ( rowCount > -1 ) {
       return rowCount;
     }
 
-    try
-    {
-      if (resultset.last())
-      {
+    try {
+      if ( resultset.last() ) {
         rowCount = resultset.getRow();
-        if (rowCount == -1)
-        {
+        if ( rowCount == -1 ) {
           rowCount = 0;
         }
-      }
-      else
-      {
+      } else {
         rowCount = 0;
       }
-    }
-    catch (SQLException sqle)
-    {
+    } catch ( SQLException sqle ) {
       //Log.debug ("GetRowCount failed, returning 0 rows", sqle);
-      throw new DataTableException("Accessing the result set failed: ", sqle);
+      throw new DataTableException( "Accessing the result set failed: ", sqle );
     }
     return rowCount;
   }
@@ -243,23 +208,17 @@ public class ScrollableResultSetTableModel extends AbstractTableModel
    * @return the column count.
    * @see java.sql.ResultSetMetaData#getColumnCount()
    */
-  public int getColumnCount()
-  {
-    if (resultset == null)
-    {
+  public int getColumnCount() {
+    if ( resultset == null ) {
       return 0;
     }
 
-    if (dbmd != null)
-    {
-      try
-      {
+    if ( dbmd != null ) {
+      try {
         return dbmd.getColumnCount();
-      }
-      catch (SQLException e)
-      {
+      } catch ( SQLException e ) {
         //Log.debug ("GetColumnCount failed", e);
-        throw new DataTableException("Accessing the result set failed: ", e);
+        throw new DataTableException( "Accessing the result set failed: ", e );
       }
     }
     return 0;
@@ -273,48 +232,42 @@ public class ScrollableResultSetTableModel extends AbstractTableModel
    * @return the column name.
    * @see java.sql.ResultSetMetaData#getColumnLabel(int)
    */
-  public String getColumnName(final int column)
-  {
-    if (dbmd != null)
-    {
-      try
-      {
-        // In past many database drivers were returning same value for column label and column name.  So it is inconsistent
+  public String getColumnName( final int column ) {
+    if ( dbmd != null ) {
+      try {
+        // In past many database drivers were returning same value for column label and column name.  So it is
+        // inconsistent
         // what the database driver will return for column name vs column label.
-        // We have a legacy configuration for this.  If set, then if column label is null or empty then return column name.
+        // We have a legacy configuration for this.  If set, then if column label is null or empty then return column
+        // name.
         // Otherwise return column label.
-        // If non-legacy mode, then we return exactly what the JDBC driver returns (label for label, name for name) without
+        // If non-legacy mode, then we return exactly what the JDBC driver returns (label for label, name for name)
+        // without
         // any interpretation or interpolation.
         final Configuration globalConfig = ClassicEngineBoot.getInstance().getGlobalConfig();
-        final boolean useLegacyColumnMapping =  "legacy".equalsIgnoreCase(                                                                          // NON-NLS
-            globalConfig.getConfigProperty("org.pentaho.reporting.engine.classic.core.modules.misc.datafactory.sql.ColumnMappingMode", "legacy"));  // NON-NLS
+        final boolean useLegacyColumnMapping =
+          "legacy".equalsIgnoreCase(                                                                          // NON-NLS
+            globalConfig.getConfigProperty(
+              "org.pentaho.reporting.engine.classic.core.modules.misc.datafactory.sql.ColumnMappingMode",
+              "legacy" ) );  // NON-NLS
 
-        String columnLabel = dbmd.getColumnLabel(column + 1);
-        if (useLegacyColumnMapping)
-        {
-          if ((columnLabel == null) || (columnLabel.isEmpty()))
-          {
+        String columnLabel = dbmd.getColumnLabel( column + 1 );
+        if ( useLegacyColumnMapping ) {
+          if ( ( columnLabel == null ) || ( columnLabel.isEmpty() ) ) {
             // We are in legacy mode and column label is either null or empty, we then use column name instead.
-            columnLabel = dbmd.getColumnName(column + 1);
+            columnLabel = dbmd.getColumnName( column + 1 );
           }
 
           return columnLabel;
-        }
-        else
-        {
-          if (isColumnNameMapping())
-          {
-            return dbmd.getColumnName(column + 1);
-          }
-          else
-          {
+        } else {
+          if ( isColumnNameMapping() ) {
+            return dbmd.getColumnName( column + 1 );
+          } else {
             return columnLabel;
           }
         }
-      }
-      catch (SQLException e)
-      {
-        throw new DataTableException("Accessing the result set failed: ", e);
+      } catch ( SQLException e ) {
+        throw new DataTableException( "Accessing the result set failed: ", e );
       }
     }
     return null;
@@ -327,18 +280,13 @@ public class ScrollableResultSetTableModel extends AbstractTableModel
    * @param column the column index.
    * @return the value.
    */
-  public Object getValueAt(final int row, final int column)
-  {
-    if (resultset != null)
-    {
-      try
-      {
-        resultset.absolute(row + 1);
-        return resultset.getObject(column + 1);
-      }
-      catch (SQLException e)
-      {
-        throw new DataTableException("Accessing the result set failed: ", e);
+  public Object getValueAt( final int row, final int column ) {
+    if ( resultset != null ) {
+      try {
+        resultset.absolute( row + 1 );
+        return resultset.getObject( column + 1 );
+      } catch ( SQLException e ) {
+        throw new DataTableException( "Accessing the result set failed: ", e );
       }
     }
     return null;
@@ -350,25 +298,18 @@ public class ScrollableResultSetTableModel extends AbstractTableModel
    * @param column the column index.
    * @return the column class.
    */
-  public Class getColumnClass(final int column)
-  {
-    if (types != null)
-    {
-      return types[column];
+  public Class getColumnClass( final int column ) {
+    if ( types != null ) {
+      return types[ column ];
     }
-    if (dbmd != null)
-    {
-      try
-      {
-        types = TypeMapper.mapTypes(dbmd);
-        if (types != null)
-        {
-          return types[column];
+    if ( dbmd != null ) {
+      try {
+        types = TypeMapper.mapTypes( dbmd );
+        if ( types != null ) {
+          return types[ column ];
         }
-      }
-      catch (Exception e)
-      {
-        throw new DataTableException("Accessing the result set failed: ", e);
+      } catch ( Exception e ) {
+        throw new DataTableException( "Accessing the result set failed: ", e );
       }
     }
     return Object.class;
@@ -385,27 +326,22 @@ public class ScrollableResultSetTableModel extends AbstractTableModel
    * @param column the index of the column for which the meta-data is queried.
    * @return the meta-data object.
    */
-  public DataAttributes getCellDataAttributes(final int row, final int column)
-  {
-    if (metaData == null)
-    {
+  public DataAttributes getCellDataAttributes( final int row, final int column ) {
+    if ( metaData == null ) {
       return EmptyDataAttributes.INSTANCE;
     }
-    return metaData.getCellDataAttribute(row, column);
+    return metaData.getCellDataAttribute( row, column );
   }
 
-  public boolean isCellDataAttributesSupported()
-  {
+  public boolean isCellDataAttributesSupported() {
     return metaData.isCellDataAttributesSupported();
   }
 
-  public DataAttributes getColumnAttributes(final int column)
-  {
-    if (metaData == null)
-    {
+  public DataAttributes getColumnAttributes( final int column ) {
+    if ( metaData == null ) {
       return EmptyDataAttributes.INSTANCE;
     }
-    return metaData.getColumnAttribute(column);
+    return metaData.getColumnAttribute( column );
   }
 
   /**
@@ -414,10 +350,8 @@ public class ScrollableResultSetTableModel extends AbstractTableModel
    *
    * @return
    */
-  public DataAttributes getTableAttributes()
-  {
-    if (metaData == null)
-    {
+  public DataAttributes getTableAttributes() {
+    if ( metaData == null ) {
       return null;
     }
     return metaData.getTableAttribute();

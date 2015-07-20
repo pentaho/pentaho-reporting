@@ -17,8 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.core.function.formula;
 
-import java.net.URL;
-
 import junit.framework.Assert;
 import junit.framework.TestCase;
 import org.pentaho.reporting.engine.classic.core.AttributeNames;
@@ -28,65 +26,56 @@ import org.pentaho.reporting.engine.classic.core.function.FormulaExpression;
 import org.pentaho.reporting.engine.classic.core.testsupport.DebugReportRunner;
 import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 
-public class SingleValueQueryFunctionTest extends TestCase
-{
-  public SingleValueQueryFunctionTest()
-  {
+import java.net.URL;
+
+public class SingleValueQueryFunctionTest extends TestCase {
+  public SingleValueQueryFunctionTest() {
   }
 
-  public void setUp() throws Exception
-  {
+  public void setUp() throws Exception {
     ClassicEngineBoot.getInstance().start();
   }
 
-  public void testErrorHandlingGood() throws Exception
-  {
-    final URL url = getClass().getResource("Prd-3985.prpt");
+  public void testErrorHandlingGood() throws Exception {
+    final URL url = getClass().getResource( "Prd-3985.prpt" );
     final ResourceManager mgr = new ResourceManager();
-    final MasterReport report = (MasterReport) mgr.createDirectly(url, MasterReport.class).getResource();
+    final MasterReport report = (MasterReport) mgr.createDirectly( url, MasterReport.class ).getResource();
     report.getReportConfiguration().setConfigProperty
-        ("org.pentaho.reporting.engine.classic.core.FailOnAttributeExpressionErrors", "true");
+      ( "org.pentaho.reporting.engine.classic.core.FailOnAttributeExpressionErrors", "true" );
 
     final FormulaExpression function = new FormulaExpression();
-    function.setName("Test");
-    function.setFormula("=SINGLEVALUEQUERY(\"Good\")");
+    function.setName( "Test" );
+    function.setFormula( "=SINGLEVALUEQUERY(\"Good\")" );
 
     report.getReportHeader().setAttributeExpression
-        (AttributeNames.Core.NAMESPACE, AttributeNames.Core.NAME, function);
+      ( AttributeNames.Core.NAMESPACE, AttributeNames.Core.NAME, function );
 
-    try
-    {
-      DebugReportRunner.createPDF(report);
-    }
-    catch (Exception e)
-    {
+    try {
+      DebugReportRunner.createPDF( report );
+    } catch ( Exception e ) {
       Assert.fail();
     }
 
   }
 
-  public void testErrorHandlingBad() throws Exception
-  {
-    final URL url = getClass().getResource("Prd-3985.prpt");
+  public void testErrorHandlingBad() throws Exception {
+    final URL url = getClass().getResource( "Prd-3985.prpt" );
     final ResourceManager mgr = new ResourceManager();
-    final MasterReport report = (MasterReport) mgr.createDirectly(url, MasterReport.class).getResource();
+    final MasterReport report = (MasterReport) mgr.createDirectly( url, MasterReport.class ).getResource();
     report.getReportConfiguration().setConfigProperty
-        ("org.pentaho.reporting.engine.classic.core.FailOnAttributeExpressionErrors", "true");
+      ( "org.pentaho.reporting.engine.classic.core.FailOnAttributeExpressionErrors", "true" );
 
     final FormulaExpression function = new FormulaExpression();
-    function.setName("Test");
-    function.setFormula("=SINGLEVALUEQUERY(\"Bad\")");
+    function.setName( "Test" );
+    function.setFormula( "=SINGLEVALUEQUERY(\"Bad\")" );
 
     report.getReportHeader().setAttributeExpression
-        (AttributeNames.Core.NAMESPACE, AttributeNames.Core.NAME, function);
+      ( AttributeNames.Core.NAMESPACE, AttributeNames.Core.NAME, function );
 
-    try
-    {
-      DebugReportRunner.createPDF(report);
+    try {
+      DebugReportRunner.createPDF( report );
       Assert.fail();
-    }
-    catch (Exception e)
-    {
+    } catch ( Exception e ) {
     }
 
   }

@@ -32,86 +32,80 @@ import org.pentaho.reporting.engine.classic.core.style.TextStyleKeys;
 import org.pentaho.reporting.engine.classic.core.testsupport.DebugReportRunner;
 import org.pentaho.reporting.engine.classic.core.testsupport.selector.MatchFactory;
 
-public class Prd4295Test extends TestCase
-{
-  public Prd4295Test()
-  {
+public class Prd4295Test extends TestCase {
+  public Prd4295Test() {
   }
 
-  public void setUp()
-  {
+  public void setUp() {
     ClassicEngineBoot.getInstance().start();
   }
 
-  public void testBold() throws Exception
-  {
-    final MasterReport masterReport = DebugReportRunner.parseGoldenSampleReport("Prd-3857-002.prpt");
-    masterReport.getReportConfiguration().setConfigProperty(ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY, "false");
-    masterReport.setQueryLimit(1);
+  public void testBold() throws Exception {
+    final MasterReport masterReport = DebugReportRunner.parseGoldenSampleReport( "Prd-3857-002.prpt" );
+    masterReport.getReportConfiguration()
+      .setConfigProperty( ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY, "false" );
+    masterReport.setQueryLimit( 1 );
     final CrosstabCellBody crosstabCellBody = masterReport.getCrosstabCellBody();
-    final CrosstabCell element = crosstabCellBody.findElement(null, null);
-    element.setName("Cell-Sample");
-    element.getStyle().setStyleProperty(TextStyleKeys.BOLD, true);
-    final LogicalPageBox logicalPageBox = DebugReportRunner.layoutPage(masterReport, 0);
-    final RenderNode[] elementsByName = MatchFactory.findElementsByName(logicalPageBox, "Cell-Sample");
-    assertTrue(elementsByName.length > 0);
-    final RenderNode renderNode = elementsByName[0];
-    assertEquals(Boolean.TRUE,
-        renderNode.getNodeLayoutProperties().getStyleSheet().getStyleProperty(TextStyleKeys.BOLD));
+    final CrosstabCell element = crosstabCellBody.findElement( null, null );
+    element.setName( "Cell-Sample" );
+    element.getStyle().setStyleProperty( TextStyleKeys.BOLD, true );
+    final LogicalPageBox logicalPageBox = DebugReportRunner.layoutPage( masterReport, 0 );
+    final RenderNode[] elementsByName = MatchFactory.findElementsByName( logicalPageBox, "Cell-Sample" );
+    assertTrue( elementsByName.length > 0 );
+    final RenderNode renderNode = elementsByName[ 0 ];
+    assertEquals( Boolean.TRUE,
+      renderNode.getNodeLayoutProperties().getStyleSheet().getStyleProperty( TextStyleKeys.BOLD ) );
 
-//    ModelPrinter.INSTANCE.print(renderNode);
+    //    ModelPrinter.INSTANCE.print(renderNode);
     final RenderNode[] texts =
-        MatchFactory.findElementsByNodeType(renderNode, LayoutNodeTypes.TYPE_NODE_TEXT);
-    assertEquals(Boolean.TRUE,
-        texts[0].getStyleSheet().getStyleProperty(TextStyleKeys.BOLD));
-    assertEquals(1945000,
-        texts[0].getMinimumChunkWidth());
+      MatchFactory.findElementsByNodeType( renderNode, LayoutNodeTypes.TYPE_NODE_TEXT );
+    assertEquals( Boolean.TRUE,
+      texts[ 0 ].getStyleSheet().getStyleProperty( TextStyleKeys.BOLD ) );
+    assertEquals( 1945000,
+      texts[ 0 ].getMinimumChunkWidth() );
 
-    DebugReportRunner.showDialog(masterReport);
+    DebugReportRunner.showDialog( masterReport );
   }
 
-  public void testBoldComplex() throws Exception
-  {
-    final MasterReport masterReport = DebugReportRunner.parseGoldenSampleReport("Prd-3857-002.prpt");
-    masterReport.getReportConfiguration().setConfigProperty(ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY, "true");
-    masterReport.getStyle().setStyleProperty(TextStyleKeys.WORDBREAK, true);
-    masterReport.setQueryLimit(1);
+  public void testBoldComplex() throws Exception {
+    final MasterReport masterReport = DebugReportRunner.parseGoldenSampleReport( "Prd-3857-002.prpt" );
+    masterReport.getReportConfiguration()
+      .setConfigProperty( ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY, "true" );
+    masterReport.getStyle().setStyleProperty( TextStyleKeys.WORDBREAK, true );
+    masterReport.setQueryLimit( 1 );
     final CrosstabCellBody crosstabCellBody = masterReport.getCrosstabCellBody();
-    final CrosstabCell element = crosstabCellBody.findElement(null, null);
-    element.setName("Cell-Sample");
-    element.getStyle().setStyleProperty(TextStyleKeys.BOLD, true);
-    final LogicalPageBox logicalPageBox = DebugReportRunner.layoutPage(masterReport, 0);
-    final RenderNode[] elementsByName = MatchFactory.findElementsByName(logicalPageBox, "Cell-Sample");
-    assertTrue(elementsByName.length > 0);
-    final RenderNode renderNode = elementsByName[0];
-    assertEquals(Boolean.TRUE,
-        renderNode.getNodeLayoutProperties().getStyleSheet().getStyleProperty(TextStyleKeys.BOLD));
+    final CrosstabCell element = crosstabCellBody.findElement( null, null );
+    element.setName( "Cell-Sample" );
+    element.getStyle().setStyleProperty( TextStyleKeys.BOLD, true );
+    final LogicalPageBox logicalPageBox = DebugReportRunner.layoutPage( masterReport, 0 );
+    final RenderNode[] elementsByName = MatchFactory.findElementsByName( logicalPageBox, "Cell-Sample" );
+    assertTrue( elementsByName.length > 0 );
+    final RenderNode renderNode = elementsByName[ 0 ];
+    assertEquals( Boolean.TRUE,
+      renderNode.getNodeLayoutProperties().getStyleSheet().getStyleProperty( TextStyleKeys.BOLD ) );
 
-//    ModelPrinter.INSTANCE.print(renderNode);
+    //    ModelPrinter.INSTANCE.print(renderNode);
     final RenderNode[] texts =
-        MatchFactory.findElementsByNodeType(renderNode, LayoutNodeTypes.TYPE_NODE_COMPLEX_TEXT);
-    assertEquals(Boolean.TRUE,
-        texts[0].getStyleSheet().getStyleProperty(TextStyleKeys.BOLD));
-    assertTrue(texts[0].getWidth() > 0);
+      MatchFactory.findElementsByNodeType( renderNode, LayoutNodeTypes.TYPE_NODE_COMPLEX_TEXT );
+    assertEquals( Boolean.TRUE,
+      texts[ 0 ].getStyleSheet().getStyleProperty( TextStyleKeys.BOLD ) );
+    assertTrue( texts[ 0 ].getWidth() > 0 );
     // complex-text nodes no longer have a min-chunk width after line-breaking
-    assertEquals(texts[0].getWidth(), extractOriginalPool(texts[0]).getMinimumChunkWidth());
+    assertEquals( texts[ 0 ].getWidth(), extractOriginalPool( texts[ 0 ] ).getMinimumChunkWidth() );
 
-    DebugReportRunner.showDialog(masterReport);
+    DebugReportRunner.showDialog( masterReport );
   }
 
-  private RenderNode extractOriginalPool(RenderNode n)
-  {
-    if (n instanceof ParagraphRenderBox)
-    {
+  private RenderNode extractOriginalPool( RenderNode n ) {
+    if ( n instanceof ParagraphRenderBox ) {
       ParagraphRenderBox para = (ParagraphRenderBox) n;
       return para.getPool();
     }
-    if (n.getParent() == null)
-    {
+    if ( n.getParent() == null ) {
       Assert.fail();
       return null;
     }
-    return extractOriginalPool(n.getParent());
+    return extractOriginalPool( n.getParent() );
   }
 
 }

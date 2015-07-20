@@ -17,12 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.gui.base.actions;
 
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-import java.util.Locale;
-import javax.swing.Icon;
-import javax.swing.KeyStroke;
-
 import org.pentaho.reporting.engine.classic.core.modules.gui.base.PreviewPane;
 import org.pentaho.reporting.engine.classic.core.modules.gui.base.SwingPreviewModule;
 import org.pentaho.reporting.engine.classic.core.modules.gui.commonswing.AbstractActionPlugin;
@@ -31,22 +25,23 @@ import org.pentaho.reporting.engine.classic.core.modules.gui.commonswing.SwingGu
 import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
 import org.pentaho.reporting.libraries.base.util.ResourceBundleSupport;
 
+import javax.swing.*;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.util.Locale;
+
 /**
  * Creation-Date: 16.11.2006, 16:34:55
  *
  * @author Thomas Morgner
  */
 public class GoToNextPageActionPlugin extends AbstractActionPlugin
-    implements ControlActionPlugin
-{
-  private class PageUpdateListener implements PropertyChangeListener
-  {
-    protected PageUpdateListener()
-    {
+  implements ControlActionPlugin {
+  private class PageUpdateListener implements PropertyChangeListener {
+    protected PageUpdateListener() {
     }
 
-    public void propertyChange(final PropertyChangeEvent evt)
-    {
+    public void propertyChange( final PropertyChangeEvent evt ) {
       revalidate();
     }
 
@@ -56,51 +51,43 @@ public class GoToNextPageActionPlugin extends AbstractActionPlugin
   private ReportEventSource eventSource;
   private PageUpdateListener updateListener;
 
-  public GoToNextPageActionPlugin()
-  {
+  public GoToNextPageActionPlugin() {
     updateListener = new PageUpdateListener();
   }
 
-  public void deinitialize(final SwingGuiContext swingGuiContext)
-  {
-    super.deinitialize(swingGuiContext);
-    swingGuiContext.getEventSource().removePropertyChangeListener(updateListener);
+  public void deinitialize( final SwingGuiContext swingGuiContext ) {
+    super.deinitialize( swingGuiContext );
+    swingGuiContext.getEventSource().removePropertyChangeListener( updateListener );
   }
 
 
-  private void revalidate()
-  {
-    if (eventSource.isPaginated() == false)
-    {
-      setEnabled(false);
+  private void revalidate() {
+    if ( eventSource.isPaginated() == false ) {
+      setEnabled( false );
       return;
     }
-    if (eventSource.getPageNumber() < 1)
-    {
-      setEnabled(false);
+    if ( eventSource.getPageNumber() < 1 ) {
+      setEnabled( false );
       return;
     }
-    if (eventSource.getPageNumber() == eventSource.getNumberOfPages())
-    {
-      setEnabled(false);
+    if ( eventSource.getPageNumber() == eventSource.getNumberOfPages() ) {
+      setEnabled( false );
       return;
     }
-    setEnabled(true);
+    setEnabled( true );
   }
 
-  public boolean initialize(final SwingGuiContext context)
-  {
-    super.initialize(context);
-    resources = new ResourceBundleSupport(context.getLocale(),
-        SwingPreviewModule.BUNDLE_NAME, ObjectUtilities.getClassLoader(SwingPreviewModule.class));
+  public boolean initialize( final SwingGuiContext context ) {
+    super.initialize( context );
+    resources = new ResourceBundleSupport( context.getLocale(),
+      SwingPreviewModule.BUNDLE_NAME, ObjectUtilities.getClassLoader( SwingPreviewModule.class ) );
     eventSource = context.getEventSource();
-    eventSource.addPropertyChangeListener(updateListener);
+    eventSource.addPropertyChangeListener( updateListener );
     revalidate();
     return true;
   }
 
-  protected String getConfigurationPrefix()
-  {
+  protected String getConfigurationPrefix() {
     return "org.pentaho.reporting.engine.classic.core.modules.gui.base.go-to-next."; //$NON-NLS-1$
   }
 
@@ -109,9 +96,8 @@ public class GoToNextPageActionPlugin extends AbstractActionPlugin
    *
    * @return The display name.
    */
-  public String getDisplayName()
-  {
-    return resources.getString("action.forward.name"); //$NON-NLS-1$
+  public String getDisplayName() {
+    return resources.getString( "action.forward.name" ); //$NON-NLS-1$
   }
 
   /**
@@ -119,9 +105,8 @@ public class GoToNextPageActionPlugin extends AbstractActionPlugin
    *
    * @return The short description.
    */
-  public String getShortDescription()
-  {
-    return resources.getString("action.forward.description"); //$NON-NLS-1$
+  public String getShortDescription() {
+    return resources.getString( "action.forward.description" ); //$NON-NLS-1$
   }
 
   /**
@@ -129,10 +114,9 @@ public class GoToNextPageActionPlugin extends AbstractActionPlugin
    *
    * @return The icon.
    */
-  public Icon getSmallIcon()
-  {
+  public Icon getSmallIcon() {
     final Locale locale = getContext().getLocale();
-    return getIconTheme().getSmallIcon(locale, "action.forward.small-icon"); //$NON-NLS-1$
+    return getIconTheme().getSmallIcon( locale, "action.forward.small-icon" ); //$NON-NLS-1$
   }
 
   /**
@@ -140,10 +124,9 @@ public class GoToNextPageActionPlugin extends AbstractActionPlugin
    *
    * @return The icon.
    */
-  public Icon getLargeIcon()
-  {
+  public Icon getLargeIcon() {
     final Locale locale = getContext().getLocale();
-    return getIconTheme().getLargeIcon(locale, "action.forward.icon"); //$NON-NLS-1$
+    return getIconTheme().getLargeIcon( locale, "action.forward.icon" ); //$NON-NLS-1$
   }
 
   /**
@@ -151,9 +134,8 @@ public class GoToNextPageActionPlugin extends AbstractActionPlugin
    *
    * @return The accelerator key.
    */
-  public KeyStroke getAcceleratorKey()
-  {
-    return resources.getOptionalKeyStroke("action.forward.accelerator"); //$NON-NLS-1$
+  public KeyStroke getAcceleratorKey() {
+    return resources.getOptionalKeyStroke( "action.forward.accelerator" ); //$NON-NLS-1$
   }
 
   /**
@@ -161,15 +143,13 @@ public class GoToNextPageActionPlugin extends AbstractActionPlugin
    *
    * @return The code.
    */
-  public Integer getMnemonicKey()
-  {
-    return resources.getOptionalMnemonic("action.forward.mnemonic"); //$NON-NLS-1$
+  public Integer getMnemonicKey() {
+    return resources.getOptionalMnemonic( "action.forward.mnemonic" ); //$NON-NLS-1$
   }
 
-  public boolean configure(final PreviewPane reportPane)
-  {
-    reportPane.setPageNumber(Math.min
-        (reportPane.getNumberOfPages(), reportPane.getPageNumber() + 1));
+  public boolean configure( final PreviewPane reportPane ) {
+    reportPane.setPageNumber( Math.min
+      ( reportPane.getNumberOfPages(), reportPane.getPageNumber() + 1 ) );
     return true;
   }
 

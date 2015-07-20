@@ -28,174 +28,135 @@ import org.pentaho.reporting.engine.classic.core.layout.output.ContentProcessing
 import org.pentaho.reporting.engine.classic.core.style.BandStyleKeys;
 import org.pentaho.reporting.engine.classic.core.style.StyleSheet;
 
-public class FastTextExtractor
-{
+public class FastTextExtractor {
   private final StringBuilder textBuffer;
   private ExpressionRuntime runtime;
   private Object rawResult;
   private int inlineLayout;
 
-  public FastTextExtractor()
-  {
+  public FastTextExtractor() {
     this.textBuffer = new StringBuilder();
   }
 
-  public Object compute(final ReportElement content,
-                        final ExpressionRuntime runtime) throws ContentProcessingException
-  {
+  public Object compute( final ReportElement content,
+                         final ExpressionRuntime runtime ) throws ContentProcessingException {
     this.runtime = runtime;
     this.rawResult = null;
-    this.textBuffer.delete(0, this.textBuffer.length());
+    this.textBuffer.delete( 0, this.textBuffer.length() );
     this.inlineLayout = 0;
-    try
-    {
-      if (content instanceof Section)
-      {
-        traverseSection((Section) content);
-      }
-      else
-      {
-        inspectElement(content, true);
+    try {
+      if ( content instanceof Section ) {
+        traverseSection( (Section) content );
+      } else {
+        inspectElement( content, true );
       }
       // A simple result. So there's no need to create a rich-text string.
-      if (rawResult != null)
-      {
+      if ( rawResult != null ) {
         return rawResult;
       }
       return textBuffer.toString();
-    }
-    finally
-    {
+    } finally {
       this.runtime = null;
     }
   }
 
-  public void setRuntime(final ExpressionRuntime runtime)
-  {
+  public void setRuntime( final ExpressionRuntime runtime ) {
     this.runtime = runtime;
   }
 
-  protected void clearText()
-  {
-    textBuffer.delete(0, textBuffer.length());
+  protected void clearText() {
+    textBuffer.delete( 0, textBuffer.length() );
   }
 
-  public Object getRawResult()
-  {
+  public Object getRawResult() {
     return rawResult;
   }
 
-  public String getText()
-  {
+  public String getText() {
     return textBuffer.toString();
   }
 
 
-  protected void traverseSection(final Section section) throws ContentProcessingException
-  {
+  protected void traverseSection( final Section section ) throws ContentProcessingException {
     boolean inlineSection;
-    if (inlineLayout == 0)
-    {
+    if ( inlineLayout == 0 ) {
       StyleSheet styleSheet = section.getComputedStyle();
-      if (BandStyleKeys.LAYOUT_INLINE.equals(styleSheet.getStyleProperty(BandStyleKeys.LAYOUT)))
-      {
+      if ( BandStyleKeys.LAYOUT_INLINE.equals( styleSheet.getStyleProperty( BandStyleKeys.LAYOUT ) ) ) {
         inlineLayout += 1;
         inlineSection = true;
-      }
-      else
-      {
+      } else {
         inlineSection = false;
       }
-    }
-    else
-    {
+    } else {
       inlineLayout += 1;
       inlineSection = true;
     }
 
-    if (inspectStartSection(section, inlineSection))
-    {
+    if ( inspectStartSection( section, inlineSection ) ) {
       final int count = section.getElementCount();
-      for (int i = 0; i < count; i++)
-      {
-        final ReportElement element = section.getElement(i);
-        if (element instanceof SubReport)
-        {
-          inspectStartSection(element,  inlineSection);
-          inspectElement(element, inlineSection);
-          inspectEndSection(element,  inlineSection);
-        }
-        else if (element instanceof Section)
-        {
-          traverseSection((Section) element);
-        }
-        else
-        {
-          inspectStartSection(element,  inlineSection);
-          inspectElement(element, inlineSection);
-          inspectEndSection(element,  inlineSection);
+      for ( int i = 0; i < count; i++ ) {
+        final ReportElement element = section.getElement( i );
+        if ( element instanceof SubReport ) {
+          inspectStartSection( element, inlineSection );
+          inspectElement( element, inlineSection );
+          inspectEndSection( element, inlineSection );
+        } else if ( element instanceof Section ) {
+          traverseSection( (Section) element );
+        } else {
+          inspectStartSection( element, inlineSection );
+          inspectElement( element, inlineSection );
+          inspectEndSection( element, inlineSection );
         }
       }
     }
 
-    inspectEndSection(section, inlineSection);
+    inspectEndSection( section, inlineSection );
 
-    if (inlineLayout > 0)
-    {
+    if ( inlineLayout > 0 ) {
       inlineLayout -= 1;
     }
   }
 
-  protected void inspectEndSection(final ReportElement section, final boolean inlineSection)
-  {
+  protected void inspectEndSection( final ReportElement section, final boolean inlineSection ) {
   }
 
-  protected boolean inspectStartSection(final ReportElement section, final boolean inlineSection)
-  {
+  protected boolean inspectStartSection( final ReportElement section, final boolean inlineSection ) {
     return false;
   }
 
-  protected void inspectElement(final ReportElement element, final boolean inlineSection) throws ContentProcessingException
-  {
-    if (element instanceof Section)
-    {
+  protected void inspectElement( final ReportElement element, final boolean inlineSection )
+    throws ContentProcessingException {
+    if ( element instanceof Section ) {
       // subreports and so on ..
       return;
     }
 
     Object value = AbstractFormattedDataBuilder.filterRichText
-        (element, element.getElementType().getValue(runtime, element));
-    if (value == null)
-    {
+      ( element, element.getElementType().getValue( runtime, element ) );
+    if ( value == null ) {
       return;
     }
-    if (value instanceof Section)
-    {
+    if ( value instanceof Section ) {
       Section section = (Section) value;
-      RichTextStyleResolver.resolveStyle(section);
-      traverseSection(section);
+      RichTextStyleResolver.resolveStyle( section );
+      traverseSection( section );
       return;
     }
 
-    handleValueContent(element, value, inlineSection);
+    handleValueContent( element, value, inlineSection );
   }
 
-  protected void handleValueContent(final ReportElement element,
-                                    final Object value,
-                                    final boolean inlineSection) throws ContentProcessingException
-  {
-    if (value instanceof String)
-    {
-      textBuffer.append(value);
+  protected void handleValueContent( final ReportElement element,
+                                     final Object value,
+                                     final boolean inlineSection ) throws ContentProcessingException {
+    if ( value instanceof String ) {
+      textBuffer.append( value );
 
       final DataSource dataSource = element.getElementType();
-      if (dataSource instanceof RawDataSource)
-      {
+      if ( dataSource instanceof RawDataSource ) {
         final RawDataSource rds = (RawDataSource) dataSource;
-        rawResult = rds.getRawValue(runtime, element);
-      }
-      else
-      {
+        rawResult = rds.getRawValue( runtime, element );
+      } else {
         rawResult = null;
       }
       return;
@@ -204,18 +165,15 @@ public class FastTextExtractor
     rawResult = value;
   }
 
-  protected StringBuilder getTextBuffer()
-  {
+  protected StringBuilder getTextBuffer() {
     return textBuffer;
   }
 
-  protected void setRawResult(final Object rawResult)
-  {
+  protected void setRawResult( final Object rawResult ) {
     this.rawResult = rawResult;
   }
 
-  protected int getTextLength()
-  {
+  protected int getTextLength() {
     return textBuffer.length();
   }
 }

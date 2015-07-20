@@ -29,77 +29,63 @@ import org.pentaho.reporting.engine.classic.core.states.datarow.DefaultFlowContr
  *
  * @author Thomas Morgner
  */
-public class JoinEndGroupHandler implements AdvanceHandler
-{
+public class JoinEndGroupHandler implements AdvanceHandler {
   public static final AdvanceHandler HANDLER = new JoinEndGroupHandler();
 
-  private JoinEndGroupHandler()
-  {
+  private JoinEndGroupHandler() {
   }
 
-  public int getEventCode()
-  {
+  public int getEventCode() {
     return ReportEvent.GROUP_FINISHED | ProcessState.ARTIFICIAL_EVENT_CODE;
   }
 
-  public ProcessState advance(final ProcessState state) throws ReportProcessingException
-  {
+  public ProcessState advance( final ProcessState state ) throws ReportProcessingException {
     return state.deriveForAdvance();
   }
 
-  public ProcessState commit(final ProcessState next) throws ReportProcessingException
-  {
+  public ProcessState commit( final ProcessState next ) throws ReportProcessingException {
     next.leaveGroup();
     final DefaultFlowController fc = next.getFlowController();
     final boolean advanceRequested = fc.isAdvanceRequested();
     final boolean advanceable = fc.getMasterRow().isAdvanceable();
-    if (isRootGroup(next))
-    {
+    if ( isRootGroup( next ) ) {
       // there is no parent group. So if there is more data, print the next header for this group,
       // else print the report-footer and finish the report processing.
-      if (advanceRequested && advanceable)
-      {
+      if ( advanceRequested && advanceable ) {
         final DefaultFlowController cfc = fc.performCommit();
-        next.setFlowController(cfc);
-        next.setAdvanceHandler(BeginGroupHandler.HANDLER);
+        next.setFlowController( cfc );
+        next.setAdvanceHandler( BeginGroupHandler.HANDLER );
         return next;
-      }
-      else
-      {
-        next.setAdvanceHandler(ReportFooterHandler.HANDLER);
+      } else {
+        next.setAdvanceHandler( ReportFooterHandler.HANDLER );
         return next;
       }
     }
 
-    if (advanceRequested == false || advanceable == false)
-    {
+    if ( advanceRequested == false || advanceable == false ) {
       // This happens for empty - reports. Empty-Reports are never advanceable, therefore we can
       // reach an non-advance state where inner group-footers are printed.
-      next.setAdvanceHandler(EndGroupBodyHandler.HANDLER);
+      next.setAdvanceHandler( EndGroupBodyHandler.HANDLER );
       return next;
     }
 
     // This group is not the outer-most group ..
-    final Group group = next.getReport().getGroup(next.getCurrentGroupIndex());
+    final Group group = next.getReport().getGroup( next.getCurrentGroupIndex() );
     final DefaultFlowController cfc = fc.performCommit();
-    if (ProcessState.isLastItemInGroup(group, fc.getMasterRow(), cfc.getMasterRow()))
-    {
+    if ( ProcessState.isLastItemInGroup( group, fc.getMasterRow(), cfc.getMasterRow() ) ) {
       // continue with an other EndGroup-State ...
-      next.setAdvanceHandler(EndGroupBodyHandler.HANDLER);
+      next.setAdvanceHandler( EndGroupBodyHandler.HANDLER );
       return next;
-    }
-    else
-    {
+    } else {
       // The parent group is not finished, so finalize the createRollbackInformation.
       // more data in parent group, print the next header
-      next.setFlowController(cfc);
-      next.setAdvanceHandler(BeginGroupHandler.HANDLER);
+      next.setFlowController( cfc );
+      next.setAdvanceHandler( BeginGroupHandler.HANDLER );
       return next;
     }
   }
 
-  public boolean isFinish()
-  {
+  public boolean isFinish() {
     return false;
   }
 
@@ -108,13 +94,11 @@ public class JoinEndGroupHandler implements AdvanceHandler
    *
    * @return true if this is the last (outer-most) group.
    */
-  private boolean isRootGroup(final ProcessState state)
-  {
+  private boolean isRootGroup( final ProcessState state ) {
     return state.getCurrentGroupIndex() == ReportState.BEFORE_FIRST_GROUP;
   }
 
-  public boolean isRestoreHandler()
-  {
+  public boolean isRestoreHandler() {
     return false;
   }
 }

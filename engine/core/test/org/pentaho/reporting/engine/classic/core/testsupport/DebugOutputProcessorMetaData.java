@@ -25,44 +25,35 @@ import org.pentaho.reporting.libraries.fonts.monospace.MonospaceFontRegistry;
 import org.pentaho.reporting.libraries.fonts.registry.DefaultFontStorage;
 import org.pentaho.reporting.libraries.fonts.registry.FontStorage;
 
-public class DebugOutputProcessorMetaData extends AbstractOutputProcessorMetaData
-{
+public class DebugOutputProcessorMetaData extends AbstractOutputProcessorMetaData {
   private static LocalFontRegistry localFontRegistry;
 
-  public DebugOutputProcessorMetaData()
-  {
-    this(getLocalFontStorage());
+  public DebugOutputProcessorMetaData() {
+    this( getLocalFontStorage() );
   }
 
-  public DebugOutputProcessorMetaData(final FontStorage fontStorage)
-  {
-    super(fontStorage);
+  public DebugOutputProcessorMetaData( final FontStorage fontStorage ) {
+    super( fontStorage );
   }
 
-  public void initialize(final Configuration configuration)
-  {
-    super.initialize(configuration);
-    addFeature(OutputProcessorFeature.FAST_FONTRENDERING);
-    addFeature(OutputProcessorFeature.BACKGROUND_IMAGE);
-    addFeature(OutputProcessorFeature.PAGE_SECTIONS);
-    addFeature(OutputProcessorFeature.PAGEBREAKS);
-    addFeature(OutputProcessorFeature.SPACING_SUPPORTED);
-    addFeature(OutputProcessorFeature.WATERMARK_SECTION);
-    if (getFontRegistry() instanceof MonospaceFontRegistry)
-    {
-      removeFeature(OutputProcessorFeature.LEGACY_LINEHEIGHT_CALC);
+  public void initialize( final Configuration configuration ) {
+    super.initialize( configuration );
+    addFeature( OutputProcessorFeature.FAST_FONTRENDERING );
+    addFeature( OutputProcessorFeature.BACKGROUND_IMAGE );
+    addFeature( OutputProcessorFeature.PAGE_SECTIONS );
+    addFeature( OutputProcessorFeature.PAGEBREAKS );
+    addFeature( OutputProcessorFeature.SPACING_SUPPORTED );
+    addFeature( OutputProcessorFeature.WATERMARK_SECTION );
+    if ( getFontRegistry() instanceof MonospaceFontRegistry ) {
+      removeFeature( OutputProcessorFeature.LEGACY_LINEHEIGHT_CALC );
     }
   }
 
-  public void setDesignTime(boolean designTime)
-  {
-    if (designTime)
-    {
-      addFeature(OutputProcessorFeature.DESIGNTIME);
-    }
-    else
-    {
-      removeFeature(OutputProcessorFeature.DESIGNTIME);
+  public void setDesignTime( boolean designTime ) {
+    if ( designTime ) {
+      addFeature( OutputProcessorFeature.DESIGNTIME );
+    } else {
+      removeFeature( OutputProcessorFeature.DESIGNTIME );
     }
   }
 
@@ -73,18 +64,15 @@ public class DebugOutputProcessorMetaData extends AbstractOutputProcessorMetaDat
    *
    * @return the export descriptor.
    */
-  public String getExportDescriptor()
-  {
+  public String getExportDescriptor() {
     return "pageable/debug";
   }
 
-  public static synchronized FontStorage getLocalFontStorage()
-  {
-    if (localFontRegistry == null)
-    {
+  public static synchronized FontStorage getLocalFontStorage() {
+    if ( localFontRegistry == null ) {
       localFontRegistry = new LocalFontRegistry();
       localFontRegistry.initialize();
     }
-    return new DefaultFontStorage(localFontRegistry);
+    return new DefaultFontStorage( localFontRegistry );
   }
 }

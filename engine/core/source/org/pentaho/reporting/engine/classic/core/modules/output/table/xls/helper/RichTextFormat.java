@@ -17,28 +17,23 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.output.table.xls.helper;
 
-public class RichTextFormat
-{
+public class RichTextFormat {
   private int position;
   private HSSFFontWrapper font;
 
-  public RichTextFormat(final int position, final HSSFFontWrapper font)
-  {
-    if (font == null)
-    {
+  public RichTextFormat( final int position, final HSSFFontWrapper font ) {
+    if ( font == null ) {
       throw new NullPointerException();
     }
     this.position = position;
     this.font = font;
   }
 
-  public int getPosition()
-  {
+  public int getPosition() {
     return position;
   }
 
-  public HSSFFontWrapper getFont()
-  {
+  public HSSFFontWrapper getFont() {
     return font;
   }
 

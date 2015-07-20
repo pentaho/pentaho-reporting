@@ -17,16 +17,15 @@
 
 package org.pentaho.reporting.engine.classic.core.util;
 
-import java.awt.Color;
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 
 /**
  * Needed for the BeanUtilityTest class.
  */
-@SuppressWarnings("UnusedDeclaration")
-public class TestBean
-{
+@SuppressWarnings( "UnusedDeclaration" )
+public class TestBean {
   private String simpleString;
   private int simpleInt;
   private boolean simpleBool;
@@ -36,119 +35,92 @@ public class TestBean
   private String[] arrayOnly;
   private ArrayList<String> indexOnly;
 
-  public TestBean ()
-  {
+  public TestBean() {
     indexOnly = new ArrayList<String>();
     fullyIndexed = new ArrayList<String>();
   }
 
-  public String[] getArrayOnly ()
-  {
+  public String[] getArrayOnly() {
     return arrayOnly;
   }
 
-  public void setArrayOnly (final String[] arrayOnly)
-  {
+  public void setArrayOnly( final String[] arrayOnly ) {
     this.arrayOnly = arrayOnly;
   }
 
-  public String[] getFullyIndexed ()
-  {
-    return fullyIndexed.toArray(new String [fullyIndexed.size()]);
+  public String[] getFullyIndexed() {
+    return fullyIndexed.toArray( new String[ fullyIndexed.size() ] );
   }
 
-  public void setFullyIndexed (final String[] fullyIndexed)
-  {
+  public void setFullyIndexed( final String[] fullyIndexed ) {
     this.fullyIndexed.clear();
-    if (fullyIndexed != null)
-    {
-      this.fullyIndexed.addAll(Arrays.asList(fullyIndexed));
+    if ( fullyIndexed != null ) {
+      this.fullyIndexed.addAll( Arrays.asList( fullyIndexed ) );
     }
   }
 
-  public String getFullyIndexed (final int idx)
-  {
-    return fullyIndexed.get(idx);
+  public String getFullyIndexed( final int idx ) {
+    return fullyIndexed.get( idx );
   }
 
-  public void setFullyIndexed (final int idx, final String indexOnly)
-  {
-    if (this.fullyIndexed.size() == idx)
-    {
-      this.fullyIndexed.add(indexOnly);
-    }
-    else
-    {
-      this.fullyIndexed.set(idx, indexOnly);
+  public void setFullyIndexed( final int idx, final String indexOnly ) {
+    if ( this.fullyIndexed.size() == idx ) {
+      this.fullyIndexed.add( indexOnly );
+    } else {
+      this.fullyIndexed.set( idx, indexOnly );
     }
   }
 
-  public String getIndexOnly (final int idx)
-  {
-    return indexOnly.get(idx);
+  public String getIndexOnly( final int idx ) {
+    return indexOnly.get( idx );
   }
 
-  public void setIndexOnly (final int idx, final String indexOnly)
-  {
-    if (this.indexOnly.size() == idx)
-    {
-      this.indexOnly.add(indexOnly);
-    }
-    else
-    {
-      this.indexOnly.set(idx, indexOnly);
+  public void setIndexOnly( final int idx, final String indexOnly ) {
+    if ( this.indexOnly.size() == idx ) {
+      this.indexOnly.add( indexOnly );
+    } else {
+      this.indexOnly.set( idx, indexOnly );
     }
   }
 
 
-
-  public boolean isSimpleBool ()
-  {
+  public boolean isSimpleBool() {
     return simpleBool;
   }
 
-  public void setSimpleBool (final boolean simpleBool)
-  {
+  public void setSimpleBool( final boolean simpleBool ) {
     this.simpleBool = simpleBool;
   }
 
-  public Color getSimpleColor ()
-  {
+  public Color getSimpleColor() {
     return simpleColor;
   }
 
-  public void setSimpleColor (final Color simpleColor)
-  {
+  public void setSimpleColor( final Color simpleColor ) {
     this.simpleColor = simpleColor;
   }
 
-  public double getSimpleDouble ()
-  {
+  public double getSimpleDouble() {
     return simpleDouble;
   }
 
-  public void setSimpleDouble (final double simpleDouble)
-  {
+  public void setSimpleDouble( final double simpleDouble ) {
     this.simpleDouble = simpleDouble;
   }
 
-  public int getSimpleInt ()
-  {
+  public int getSimpleInt() {
     return simpleInt;
   }
 
-  public void setSimpleInt (final int simpleInt)
-  {
+  public void setSimpleInt( final int simpleInt ) {
     this.simpleInt = simpleInt;
   }
 
-  public String getSimpleString ()
-  {
+  public String getSimpleString() {
     return simpleString;
   }
 
-  public void setSimpleString (final String simpleString)
-  {
+  public void setSimpleString( final String simpleString ) {
     this.simpleString = simpleString;
   }
 }

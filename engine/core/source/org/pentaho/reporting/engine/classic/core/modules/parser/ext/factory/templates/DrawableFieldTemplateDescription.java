@@ -24,15 +24,13 @@ import org.pentaho.reporting.engine.classic.core.filter.templates.DrawableFieldT
  *
  * @author Thomas Morgner.
  */
-public class DrawableFieldTemplateDescription extends AbstractTemplateDescription
-{
+public class DrawableFieldTemplateDescription extends AbstractTemplateDescription {
   /**
    * Creates a new template description.
    *
    * @param name the name.
    */
-  public DrawableFieldTemplateDescription(final String name)
-  {
-    super(name, DrawableFieldTemplate.class, true);
+  public DrawableFieldTemplateDescription( final String name ) {
+    super( name, DrawableFieldTemplate.class, true );
   }
 }

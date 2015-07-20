@@ -17,15 +17,15 @@
 
 package org.pentaho.reporting.engine.classic.core.util;
 
-import java.awt.Insets;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
+import java.awt.*;
 import java.awt.print.PageFormat;
 import java.awt.print.Paper;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.util.ArrayList;
-
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 
 /**
  * The PageFormatFactory is used to create PageFormats on a higher level. The Factory contains templates for all
@@ -39,31 +39,29 @@ import org.apache.commons.logging.LogFactory;
  * PageFormatFactory.setBordersMm (paper, 25, 25, 25, 25);
  * PageFormat format = PageFormatFactory.createPageFormat (paper, PageFormat.PORTRAIT);
  * </code>
- * <p/>
+ *
  * Defining a pageformat can be an ugly task and full of dependencies. The call to
  * PageFormatFactory.setBorders(...) will setup the paper's border and always assumes
  * that the paper is laid out in Portrait.
- * <p/>
+ *
  * Changing the PageFormat's orientation does not change the PageFormat's paper object,
  * but it changes the way, how the paper object is interpreted.
  *
  * @author Thomas Morgner
  */
-public final class PageFormatFactory
-{
-  private static final Log logger = LogFactory.getLog(PageFormatFactory.class);
+public final class PageFormatFactory {
+  private static final Log logger = LogFactory.getLog( PageFormatFactory.class );
 
   /**
    * A single instance of the factory.
    */
   private static PageFormatFactory singleton;
-  private static final String[] EMPTY_PAGEFORMATS = new String[0];
+  private static final String[] EMPTY_PAGEFORMATS = new String[ 0 ];
 
   /**
    * Default constructor.
    */
-  private PageFormatFactory()
-  {
+  private PageFormatFactory() {
   }
 
   /**
@@ -71,10 +69,8 @@ public final class PageFormatFactory
    *
    * @return an instance of a PageFormatFactory.
    */
-  public static synchronized PageFormatFactory getInstance()
-  {
-    if (singleton == null)
-    {
+  public static synchronized PageFormatFactory getInstance() {
+    if ( singleton == null ) {
       singleton = new PageFormatFactory();
     }
     return singleton;
@@ -88,14 +84,12 @@ public final class PageFormatFactory
    * @param papersize the definition of the papersize in a 2-element int-array
    * @return the created paper
    */
-  public Paper createPaper(final int[] papersize)
-  {
-    if (papersize.length != 2)
-    {
-      throw new IllegalArgumentException("Paper must have a width and a height");
+  public Paper createPaper( final int[] papersize ) {
+    if ( papersize.length != 2 ) {
+      throw new IllegalArgumentException( "Paper must have a width and a height" );
     }
 
-    return createPaper((double) papersize[0], (double) papersize[1]);
+    return createPaper( (double) papersize[ 0 ], (double) papersize[ 1 ] );
   }
 
   /**
@@ -106,9 +100,8 @@ public final class PageFormatFactory
    * @param papersize the definition of the papersize in a 2-element int-array
    * @return the created paper
    */
-  public Paper createPaper(final PageSize papersize)
-  {
-    return createPaper(papersize.getWidth(), papersize.getHeight());
+  public Paper createPaper( final PageSize papersize ) {
+    return createPaper( papersize.getWidth(), papersize.getHeight() );
   }
 
   /**
@@ -118,11 +111,10 @@ public final class PageFormatFactory
    * @param height the height of the paper in points
    * @return the created paper
    */
-  public Paper createPaper(final double width, final double height)
-  {
+  public Paper createPaper( final double width, final double height ) {
     final Paper p = new Paper();
-    p.setSize(width, height);
-    setBorders(p, 0, 0, 0, 0);
+    p.setSize( width, height );
+    setBorders( p, 0, 0, 0, 0 );
     return p;
   }
 
@@ -136,12 +128,11 @@ public final class PageFormatFactory
    * @param bottom the border in points in the bottom
    * @param right  the border in points in the right
    */
-  public void setBorders(final Paper paper, final double top,
-                         final double left, final double bottom, final double right)
-  {
-    final double w = paper.getWidth() - (right + left);
-    final double h = paper.getHeight() - (bottom + top);
-    paper.setImageableArea(left, top, w, h);
+  public void setBorders( final Paper paper, final double top,
+                          final double left, final double bottom, final double right ) {
+    final double w = paper.getWidth() - ( right + left );
+    final double h = paper.getHeight() - ( bottom + top );
+    paper.setImageableArea( left, top, w, h );
   }
 
   /**
@@ -155,11 +146,10 @@ public final class PageFormatFactory
    * @param right  the border in points in the right
    */
   public void setBordersInch
-      (final Paper paper, final double top, final double left,
-       final double bottom, final double right)
-  {
-    setBorders(paper, convertInchToPoints(top), convertInchToPoints(left),
-        convertInchToPoints(bottom), convertInchToPoints(right));
+  ( final Paper paper, final double top, final double left,
+    final double bottom, final double right ) {
+    setBorders( paper, convertInchToPoints( top ), convertInchToPoints( left ),
+      convertInchToPoints( bottom ), convertInchToPoints( right ) );
   }
 
   /**
@@ -173,11 +163,10 @@ public final class PageFormatFactory
    * @param right  the border in points in the right
    */
   public void setBordersMm
-      (final Paper paper, final double top, final double left,
-       final double bottom, final double right)
-  {
-    setBorders(paper, convertMmToPoints(top), convertMmToPoints(left),
-        convertMmToPoints(bottom), convertMmToPoints(right));
+  ( final Paper paper, final double top, final double left,
+    final double bottom, final double right ) {
+    setBorders( paper, convertMmToPoints( top ), convertMmToPoints( left ),
+      convertMmToPoints( bottom ), convertMmToPoints( right ) );
   }
 
   /**
@@ -186,8 +175,7 @@ public final class PageFormatFactory
    * @param inches the size in inch
    * @return the size in points
    */
-  public double convertInchToPoints(final double inches)
-  {
+  public double convertInchToPoints( final double inches ) {
     return inches * 72.0f;
   }
 
@@ -197,9 +185,8 @@ public final class PageFormatFactory
    * @param mm the size in inch
    * @return the size in points
    */
-  public double convertMmToPoints(final double mm)
-  {
-    return mm * (72.0d / 254.0d) * 10;
+  public double convertMmToPoints( final double mm ) {
+    return mm * ( 72.0d / 254.0d ) * 10;
   }
 
   /**
@@ -210,15 +197,13 @@ public final class PageFormatFactory
    * @return the created Pageformat
    * @throws NullPointerException if the paper given was null
    */
-  public PageFormat createPageFormat(final Paper paper, final int orientation)
-  {
-    if (paper == null)
-    {
-      throw new NullPointerException("Paper given must not be null");
+  public PageFormat createPageFormat( final Paper paper, final int orientation ) {
+    if ( paper == null ) {
+      throw new NullPointerException( "Paper given must not be null" );
     }
     final PageFormat pf = new PageFormat();
-    pf.setPaper(paper);
-    pf.setOrientation(orientation);
+    pf.setPaper( paper );
+    pf.setOrientation( orientation );
     return pf;
   }
 
@@ -229,38 +214,30 @@ public final class PageFormatFactory
    * @param name the name of the constant defining the papersize
    * @return the defined paper or null, if the name was invalid.
    */
-  public Paper createPaper(final String name)
-  {
-    try
-    {
-      final Field f = PageSize.class.getDeclaredField(name);
-      final Object o = f.get(null);
-      if (o instanceof PageSize == false)
-      {
+  public Paper createPaper( final String name ) {
+    try {
+      final Field f = PageSize.class.getDeclaredField( name );
+      final Object o = f.get( null );
+      if ( o instanceof PageSize == false ) {
         // Log.debug ("Is no valid pageformat definition");
         return null;
       }
       final PageSize pageformat = (PageSize) o;
-      return createPaper(pageformat);
-    }
-    catch (NoSuchFieldException nfe)
-    {
+      return createPaper( pageformat );
+    } catch ( NoSuchFieldException nfe ) {
       // Log.debug ("There is no pageformat " + name + " defined.");
       return null;
-    }
-    catch (IllegalAccessException aie)
-    {
+    } catch ( IllegalAccessException aie ) {
       // Log.debug ("There is no pageformat " + name + " accessible.");
       return null;
     }
   }
 
 
-  public static PageFormat create (final PageSize papersize, final int orientation, final Insets margins)
-  {
+  public static PageFormat create( final PageSize papersize, final int orientation, final Insets margins ) {
     final PageFormatFactory instance = PageFormatFactory.getInstance();
-    final PageFormat pageFormat = instance.createPageFormat(instance.createPaper(papersize), orientation);
-    instance.setPageMargins(pageFormat, margins);
+    final PageFormat pageFormat = instance.createPageFormat( instance.createPaper( papersize ), orientation );
+    instance.setPageMargins( pageFormat, margins );
     return pageFormat;
   }
 
@@ -269,49 +246,46 @@ public final class PageFormatFactory
    *
    * @param pf the page format.
    */
-  public static void logPageFormat(final PageFormat pf)
-  {
-    logger.debug(printPageFormat(pf));
+  public static void logPageFormat( final PageFormat pf ) {
+    logger.debug( printPageFormat( pf ) );
   }
 
-  public static String printPageFormat(final PageFormat pf)
-  {
+  public static String printPageFormat( final PageFormat pf ) {
     StringBuffer b = new StringBuffer();
-    b.append("PageFormat={width=");
-    b.append(pf.getWidth());
-    b.append(", height=");
-    b.append(pf.getHeight());
-    b.append(", imageableX=");
-    b.append(pf.getImageableX());
-    b.append(", imageableY=");
-    b.append(pf.getImageableY());
-    b.append(", imageableWidth=");
-    b.append(pf.getImageableWidth());
-    b.append(", imageableHeight=");
-    b.append(pf.getImageableHeight());
-    b.append(", orientation=").append(pf.getOrientation());
-    b.append(", paper=");
-    b.append(printPaper(pf.getPaper()));
-    b.append("}");
+    b.append( "PageFormat={width=" );
+    b.append( pf.getWidth() );
+    b.append( ", height=" );
+    b.append( pf.getHeight() );
+    b.append( ", imageableX=" );
+    b.append( pf.getImageableX() );
+    b.append( ", imageableY=" );
+    b.append( pf.getImageableY() );
+    b.append( ", imageableWidth=" );
+    b.append( pf.getImageableWidth() );
+    b.append( ", imageableHeight=" );
+    b.append( pf.getImageableHeight() );
+    b.append( ", orientation=" ).append( pf.getOrientation() );
+    b.append( ", paper=" );
+    b.append( printPaper( pf.getPaper() ) );
+    b.append( "}" );
     return b.toString();
   }
 
-  private static String printPaper(final Paper paper)
-  {
+  private static String printPaper( final Paper paper ) {
     StringBuffer b = new StringBuffer();
-    b.append("Paper={width=");
-    b.append(paper.getWidth());
-    b.append(", height=");
-    b.append(paper.getHeight());
-    b.append(", imageableX=");
-    b.append(paper.getImageableX());
-    b.append(", imageableY=");
-    b.append(paper.getImageableY());
-    b.append(", imageableWidth=");
-    b.append(paper.getImageableWidth());
-    b.append(", imageableHeight=");
-    b.append(paper.getImageableHeight());
-    b.append("}");
+    b.append( "Paper={width=" );
+    b.append( paper.getWidth() );
+    b.append( ", height=" );
+    b.append( paper.getHeight() );
+    b.append( ", imageableX=" );
+    b.append( paper.getImageableX() );
+    b.append( ", imageableY=" );
+    b.append( paper.getImageableY() );
+    b.append( ", imageableWidth=" );
+    b.append( paper.getImageableWidth() );
+    b.append( ", imageableHeight=" );
+    b.append( paper.getImageableHeight() );
+    b.append( "}" );
     return b.toString();
   }
 
@@ -320,9 +294,8 @@ public final class PageFormatFactory
    *
    * @param pf the paper size.
    */
-  public static void logPaper(final Paper pf)
-  {
-    logger.debug(printPaper(pf));
+  public static void logPaper( final Paper pf ) {
+    logger.debug( printPaper( pf ) );
   }
 
   /**
@@ -332,46 +305,36 @@ public final class PageFormatFactory
    * @param pf2 the second page format that should be compared.
    * @return true, if both page formats are equal, false otherwise.
    */
-  public static boolean isEqual(final PageFormat pf1, final PageFormat pf2)
-  {
-    if (pf1 == pf2)
-    {
+  public static boolean isEqual( final PageFormat pf1, final PageFormat pf2 ) {
+    if ( pf1 == pf2 ) {
       return true;
     }
-    if (pf1 == null || pf2 == null)
-    {
+    if ( pf1 == null || pf2 == null ) {
       return false;
     }
 
-    if (pf1.getOrientation() != pf2.getOrientation())
-    {
+    if ( pf1.getOrientation() != pf2.getOrientation() ) {
       return false;
     }
     final Paper p1 = pf1.getPaper();
     final Paper p2 = pf2.getPaper();
 
-    if (p1.getWidth() != p2.getWidth())
-    {
+    if ( p1.getWidth() != p2.getWidth() ) {
       return false;
     }
-    if (p1.getHeight() != p2.getHeight())
-    {
+    if ( p1.getHeight() != p2.getHeight() ) {
       return false;
     }
-    if (p1.getImageableX() != p2.getImageableX())
-    {
+    if ( p1.getImageableX() != p2.getImageableX() ) {
       return false;
     }
-    if (p1.getImageableY() != p2.getImageableY())
-    {
+    if ( p1.getImageableY() != p2.getImageableY() ) {
       return false;
     }
-    if (p1.getImageableWidth() != p2.getImageableWidth())
-    {
+    if ( p1.getImageableWidth() != p2.getImageableWidth() ) {
       return false;
     }
-    if (p1.getImageableHeight() != p2.getImageableHeight())
-    {
+    if ( p1.getImageableHeight() != p2.getImageableHeight() ) {
       return false;
     }
     return true;
@@ -383,8 +346,7 @@ public final class PageFormatFactory
    * @param p the paper that defines the borders.
    * @return the left border.
    */
-  public double getLeftBorder(final Paper p)
-  {
+  public double getLeftBorder( final Paper p ) {
     return p.getImageableX();
   }
 
@@ -394,9 +356,8 @@ public final class PageFormatFactory
    * @param p the paper that defines the borders.
    * @return the right border.
    */
-  public double getRightBorder(final Paper p)
-  {
-    return p.getWidth() - (p.getImageableX() + p.getImageableWidth());
+  public double getRightBorder( final Paper p ) {
+    return p.getWidth() - ( p.getImageableX() + p.getImageableWidth() );
   }
 
   /**
@@ -405,8 +366,7 @@ public final class PageFormatFactory
    * @param p the paper that defines the borders.
    * @return the top border.
    */
-  public double getTopBorder(final Paper p)
-  {
+  public double getTopBorder( final Paper p ) {
     return p.getImageableY();
   }
 
@@ -416,84 +376,66 @@ public final class PageFormatFactory
    * @param p the paper that defines the borders.
    * @return the bottom border.
    */
-  public double getBottomBorder(final Paper p)
-  {
-    return p.getHeight() - (p.getImageableY() + p.getImageableHeight());
+  public double getBottomBorder( final Paper p ) {
+    return p.getHeight() - ( p.getImageableY() + p.getImageableHeight() );
   }
 
-  public Insets getPageMargins(final PageFormat format)
-  {
+  public Insets getPageMargins( final PageFormat format ) {
 
     final int marginLeft = (int) format.getImageableX();
     final int marginRight = (int)
-        (format.getWidth() - format.getImageableWidth() - format.getImageableX());
-    final int marginTop = (int) (format.getImageableY());
+      ( format.getWidth() - format.getImageableWidth() - format.getImageableX() );
+    final int marginTop = (int) ( format.getImageableY() );
     final int marginBottom = (int)
-        (format.getHeight() - format.getImageableHeight() - format.getImageableY());
-    return new Insets(marginTop, marginLeft, marginBottom, marginRight);
+      ( format.getHeight() - format.getImageableHeight() - format.getImageableY() );
+    return new Insets( marginTop, marginLeft, marginBottom, marginRight );
   }
 
-  public String getPageFormatName(final double width, final double height)
-  {
-    try
-    {
+  public String getPageFormatName( final double width, final double height ) {
+    try {
       final Field[] fields = PageSize.class.getFields();
-      for (int i = 0; i < fields.length; i++)
-      {
-        final Field f = fields[i];
-        if (Modifier.isPublic(f.getModifiers()) && Modifier.isStatic(f.getModifiers()))
-        {
-          final Object o = f.get(PageFormatFactory.getInstance());
-          if (o instanceof PageSize)
-          {
+      for ( int i = 0; i < fields.length; i++ ) {
+        final Field f = fields[ i ];
+        if ( Modifier.isPublic( f.getModifiers() ) && Modifier.isStatic( f.getModifiers() ) ) {
+          final Object o = f.get( PageFormatFactory.getInstance() );
+          if ( o instanceof PageSize ) {
             final PageSize pageDef = (PageSize) o;
-            if (pageDef.getWidth() == width && pageDef.getHeight() == height)
-            {
+            if ( pageDef.getWidth() == width && pageDef.getHeight() == height ) {
               return f.getName();
             }
           }
         }
       }
-    }
-    catch (Exception e)
-    {
-      PageFormatFactory.logger.warn("Unable to lookup the page name", e);
+    } catch ( Exception e ) {
+      PageFormatFactory.logger.warn( "Unable to lookup the page name", e );
     }
     return null;
   }
 
-  public String[] getPageFormats()
-  {
-    try
-    {
+  public String[] getPageFormats() {
+    try {
       final ArrayList a = new ArrayList();
       final Field[] fields = PageSize.class.getFields();
-      for (int i = 0; i < fields.length; i++)
-      {
-        final Field f = fields[i];
-        if (Modifier.isPublic(f.getModifiers()) && Modifier.isStatic(f.getModifiers()))
-        {
-          final Object o = f.get(PageFormatFactory.getInstance());
-          if (o instanceof PageSize)
-          {
-            a.add(f.getName());
+      for ( int i = 0; i < fields.length; i++ ) {
+        final Field f = fields[ i ];
+        if ( Modifier.isPublic( f.getModifiers() ) && Modifier.isStatic( f.getModifiers() ) ) {
+          final Object o = f.get( PageFormatFactory.getInstance() );
+          if ( o instanceof PageSize ) {
+            a.add( f.getName() );
           }
         }
       }
 
-      return (String[]) a.toArray(new String[a.size()]);
-    }
-    catch (Exception e)
-    {
-      PageFormatFactory.logger.warn("Unable to lookup the page name", e);
+      return (String[]) a.toArray( new String[ a.size() ] );
+    } catch ( Exception e ) {
+      PageFormatFactory.logger.warn( "Unable to lookup the page name", e );
     }
     return PageFormatFactory.EMPTY_PAGEFORMATS;
   }
 
-  public void setPageMargins(final PageFormat pageFormat, final Insets pageMargins)
-  {
+  public void setPageMargins( final PageFormat pageFormat, final Insets pageMargins ) {
     final Paper paper = pageFormat.getPaper();
-    setBorders(paper, pageMargins.top, pageMargins.left, pageMargins.bottom, pageMargins.right);
-    pageFormat.setPaper(paper);
+    setBorders( paper, pageMargins.top, pageMargins.left, pageMargins.bottom, pageMargins.right );
+    pageFormat.setPaper( paper );
   }
 }

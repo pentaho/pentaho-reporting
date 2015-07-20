@@ -17,11 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.gui.plaintext;
 
-import java.util.Locale;
-import javax.swing.Icon;
-import javax.swing.KeyStroke;
-import javax.swing.WindowConstants;
-
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
 import org.pentaho.reporting.engine.classic.core.modules.gui.commonswing.AbstractExportActionPlugin;
@@ -31,13 +26,15 @@ import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
 import org.pentaho.reporting.libraries.base.util.ResourceBundleSupport;
 import org.pentaho.reporting.libraries.designtime.swing.LibSwingUtil;
 
+import javax.swing.*;
+import java.util.Locale;
+
 /**
  * Encapsulates the PlainTextExportDialog into a separate plugin.
  *
  * @author Thomas Morgner
  */
-public class PlainTextExportPlugin extends AbstractExportActionPlugin
-{
+public class PlainTextExportPlugin extends AbstractExportActionPlugin {
   /**
    * Localised resources.
    */
@@ -46,20 +43,16 @@ public class PlainTextExportPlugin extends AbstractExportActionPlugin
   /**
    * DefaultConstructor.
    */
-  public PlainTextExportPlugin()
-  {
-    resources = new ResourceBundleSupport(Locale.getDefault(), PlainTextExportGUIModule.BUNDLE_NAME,
-        ObjectUtilities.getClassLoader(PlainTextExportGUIModule.class));
+  public PlainTextExportPlugin() {
+    resources = new ResourceBundleSupport( Locale.getDefault(), PlainTextExportGUIModule.BUNDLE_NAME,
+      ObjectUtilities.getClassLoader( PlainTextExportGUIModule.class ) );
   }
 
-  public boolean initialize(final SwingGuiContext context)
-  {
-    if (super.initialize(context) == false)
-    {
+  public boolean initialize( final SwingGuiContext context ) {
+    if ( super.initialize( context ) == false ) {
       return false;
     }
-    if (ClassicEngineBoot.getInstance().isModuleAvailable(PlainTextExportGUIModule.class.getName()) == false)
-    {
+    if ( ClassicEngineBoot.getInstance().isModuleAvailable( PlainTextExportGUIModule.class.getName() ) == false ) {
       return false;
     }
     return true;
@@ -71,18 +64,16 @@ public class PlainTextExportPlugin extends AbstractExportActionPlugin
    *
    * @return the progress monitor dialog.
    */
-  protected ReportProgressDialog createProgressDialog()
-  {
+  protected ReportProgressDialog createProgressDialog() {
     final ReportProgressDialog progressDialog = super.createProgressDialog();
-    progressDialog.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
-    progressDialog.setMessage(resources.getString("plaintext-export.progressdialog.message")); //$NON-NLS-1$
+    progressDialog.setDefaultCloseOperation( WindowConstants.DO_NOTHING_ON_CLOSE );
+    progressDialog.setMessage( resources.getString( "plaintext-export.progressdialog.message" ) ); //$NON-NLS-1$
     progressDialog.pack();
-    LibSwingUtil.positionFrameRandomly(progressDialog);
+    LibSwingUtil.positionFrameRandomly( progressDialog );
     return progressDialog;
   }
 
-  protected String getConfigurationPrefix()
-  {
+  protected String getConfigurationPrefix() {
     return "org.pentaho.reporting.engine.classic.core.modules.gui.plaintext.export."; //$NON-NLS-1$
   }
 
@@ -92,38 +83,30 @@ public class PlainTextExportPlugin extends AbstractExportActionPlugin
    * @param report the report being processed.
    * @return true or false.
    */
-  public boolean performExport(final MasterReport report)
-  {
+  public boolean performExport( final MasterReport report ) {
     final boolean result = performShowExportDialog
-        (report, "org.pentaho.reporting.engine.classic.core.modules.gui.plaintext.Dialog"); //$NON-NLS-1$
-    if (result == false)
-    {
+      ( report, "org.pentaho.reporting.engine.classic.core.modules.gui.plaintext.Dialog" ); //$NON-NLS-1$
+    if ( result == false ) {
       // user canceled the dialog ...
       return false;
     }
 
     final ReportProgressDialog progressDialog;
-    if (isProgressDialogEnabled(report,
-        "org.pentaho.reporting.engine.classic.core.modules.gui.plaintext.ProgressDialogEnabled"))
-    {
+    if ( isProgressDialogEnabled( report,
+      "org.pentaho.reporting.engine.classic.core.modules.gui.plaintext.ProgressDialogEnabled" ) ) {
       progressDialog = createProgressDialog();
-      if (report.getTitle() == null)
-      {
-        progressDialog.setTitle(getResources().getString("ProgressDialog.EMPTY_TITLE"));
+      if ( report.getTitle() == null ) {
+        progressDialog.setTitle( getResources().getString( "ProgressDialog.EMPTY_TITLE" ) );
+      } else {
+        progressDialog.setTitle( getResources().formatMessage( "ProgressDialog.TITLE", report.getTitle() ) );
       }
-      else
-      {
-        progressDialog.setTitle(getResources().formatMessage("ProgressDialog.TITLE", report.getTitle()));
-      }
-    }
-    else
-    {
+    } else {
       progressDialog = null;
     }
 
 
-    final PlainTextExportTask task = new PlainTextExportTask(report, progressDialog, getContext());
-    final Thread thread = new Thread(task);
+    final PlainTextExportTask task = new PlainTextExportTask( report, progressDialog, getContext() );
+    final Thread thread = new Thread( task );
     thread.start();
     return true;
   }
@@ -133,9 +116,8 @@ public class PlainTextExportPlugin extends AbstractExportActionPlugin
    *
    * @return The display name.
    */
-  public String getDisplayName()
-  {
-    return resources.getString("action.export-to-plaintext.name"); //$NON-NLS-1$
+  public String getDisplayName() {
+    return resources.getString( "action.export-to-plaintext.name" ); //$NON-NLS-1$
   }
 
   /**
@@ -143,9 +125,8 @@ public class PlainTextExportPlugin extends AbstractExportActionPlugin
    *
    * @return The short description.
    */
-  public String getShortDescription()
-  {
-    return resources.getString("action.export-to-plaintext.description"); //$NON-NLS-1$
+  public String getShortDescription() {
+    return resources.getString( "action.export-to-plaintext.description" ); //$NON-NLS-1$
   }
 
   /**
@@ -153,10 +134,9 @@ public class PlainTextExportPlugin extends AbstractExportActionPlugin
    *
    * @return The icon.
    */
-  public Icon getSmallIcon()
-  {
+  public Icon getSmallIcon() {
     final Locale locale = getContext().getLocale();
-    return getIconTheme().getSmallIcon(locale, "action.export-to-plaintext.small-icon"); //$NON-NLS-1$
+    return getIconTheme().getSmallIcon( locale, "action.export-to-plaintext.small-icon" ); //$NON-NLS-1$
   }
 
   /**
@@ -164,10 +144,9 @@ public class PlainTextExportPlugin extends AbstractExportActionPlugin
    *
    * @return The icon.
    */
-  public Icon getLargeIcon()
-  {
+  public Icon getLargeIcon() {
     final Locale locale = getContext().getLocale();
-    return getIconTheme().getLargeIcon(locale, "action.export-to-plaintext.icon"); //$NON-NLS-1$
+    return getIconTheme().getLargeIcon( locale, "action.export-to-plaintext.icon" ); //$NON-NLS-1$
   }
 
   /**
@@ -175,9 +154,8 @@ public class PlainTextExportPlugin extends AbstractExportActionPlugin
    *
    * @return The accelerator key.
    */
-  public KeyStroke getAcceleratorKey()
-  {
-    return resources.getOptionalKeyStroke("action.export-to-plaintext.accelerator"); //$NON-NLS-1$
+  public KeyStroke getAcceleratorKey() {
+    return resources.getOptionalKeyStroke( "action.export-to-plaintext.accelerator" ); //$NON-NLS-1$
   }
 
   /**
@@ -185,9 +163,8 @@ public class PlainTextExportPlugin extends AbstractExportActionPlugin
    *
    * @return The key code.
    */
-  public Integer getMnemonicKey()
-  {
-    return resources.getOptionalMnemonic("action.export-to-plaintext.mnemonic"); //$NON-NLS-1$
+  public Integer getMnemonicKey() {
+    return resources.getOptionalMnemonic( "action.export-to-plaintext.mnemonic" ); //$NON-NLS-1$
   }
 
   /**
@@ -195,8 +172,7 @@ public class PlainTextExportPlugin extends AbstractExportActionPlugin
    *
    * @return the resourcebundle for the localisation.
    */
-  protected ResourceBundleSupport getResources()
-  {
+  protected ResourceBundleSupport getResources() {
     return resources;
   }
 }

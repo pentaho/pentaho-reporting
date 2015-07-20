@@ -17,67 +17,55 @@
 
 package org.pentaho.reporting.engine.classic.core.util;
 
-import java.awt.Graphics2D;
-import java.awt.Image;
-import java.awt.Dimension;
-import java.awt.geom.Rectangle2D;
-
 import org.pentaho.reporting.engine.classic.core.ResourceBundleFactory;
 import org.pentaho.reporting.engine.classic.core.imagemap.ImageMap;
 import org.pentaho.reporting.engine.classic.core.style.StyleSheet;
 import org.pentaho.reporting.libraries.base.config.Configuration;
 import org.pentaho.reporting.libraries.base.util.WaitingImageObserver;
 
-public class ReportDrawableImage implements ReportDrawable
-{
+import java.awt.*;
+import java.awt.geom.Rectangle2D;
+
+public class ReportDrawableImage implements ReportDrawable {
   private Image image;
 
-  public ReportDrawableImage(final Image aImage)
-  {
-    if (aImage == null)
-    {
+  public ReportDrawableImage( final Image aImage ) {
+    if ( aImage == null ) {
       throw new NullPointerException();
     }
     this.image = aImage;
   }
 
 
-  public void draw(final Graphics2D graphics2D, final Rectangle2D bounds)
-  {
-    final WaitingImageObserver obs = new WaitingImageObserver(image);
+  public void draw( final Graphics2D graphics2D, final Rectangle2D bounds ) {
+    final WaitingImageObserver obs = new WaitingImageObserver( image );
     obs.waitImageLoaded();
 
-    graphics2D.drawImage(image, 0, 0, image.getWidth(null), image.getHeight(null), null);
+    graphics2D.drawImage( image, 0, 0, image.getWidth( null ), image.getHeight( null ), null );
   }
 
-  public boolean isKeepAspectRatio()
-  {
+  public boolean isKeepAspectRatio() {
     return true;
   }
 
-  public Dimension getPreferredSize()
-  {
-    final WaitingImageObserver obs = new WaitingImageObserver(image);
+  public Dimension getPreferredSize() {
+    final WaitingImageObserver obs = new WaitingImageObserver( image );
     obs.waitImageLoaded();
 
-    return new Dimension(image.getWidth(null), image.getHeight(null));
+    return new Dimension( image.getWidth( null ), image.getHeight( null ) );
   }
 
-  public ImageMap getImageMap(final Rectangle2D bounds)
-  {
+  public ImageMap getImageMap( final Rectangle2D bounds ) {
     return null;
   }
 
-  public void setConfiguration(final Configuration config)
-  {
+  public void setConfiguration( final Configuration config ) {
   }
 
-  public void setResourceBundleFactory(final ResourceBundleFactory bundleFactory)
-  {
+  public void setResourceBundleFactory( final ResourceBundleFactory bundleFactory ) {
   }
 
-  public void setStyleSheet(final StyleSheet style)
-  {
+  public void setStyleSheet( final StyleSheet style ) {
   }
 
 }

@@ -17,10 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.parser.data.sequence.writer;
 
-import java.io.IOException;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-
 import org.pentaho.reporting.engine.classic.core.DataFactory;
 import org.pentaho.reporting.engine.classic.core.modules.misc.datafactory.sequence.Sequence;
 import org.pentaho.reporting.engine.classic.core.modules.misc.datafactory.sequence.SequenceDataFactory;
@@ -38,10 +34,12 @@ import org.pentaho.reporting.libraries.xmlns.writer.DefaultTagDescription;
 import org.pentaho.reporting.libraries.xmlns.writer.XmlWriter;
 import org.pentaho.reporting.libraries.xmlns.writer.XmlWriterSupport;
 
-public class SequenceDataFactoryWriteHandler implements BundleDataFactoryWriterHandler
-{
-  public SequenceDataFactoryWriteHandler()
-  {
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+
+public class SequenceDataFactoryWriteHandler implements BundleDataFactoryWriterHandler {
+  public SequenceDataFactoryWriteHandler() {
   }
 
   /**
@@ -55,71 +53,65 @@ public class SequenceDataFactoryWriteHandler implements BundleDataFactoryWriterH
    * @throws IOException           if any error occured
    * @throws BundleWriterException if a bundle-management error occured.
    */
-  public String writeDataFactory(final WriteableDocumentBundle bundle,
-                                 final DataFactory dataFactory,
-                                 final BundleWriterState state)
-      throws IOException, BundleWriterException
-  {
-    if (bundle == null)
-    {
+  public String writeDataFactory( final WriteableDocumentBundle bundle,
+                                  final DataFactory dataFactory,
+                                  final BundleWriterState state )
+    throws IOException, BundleWriterException {
+    if ( bundle == null ) {
       throw new NullPointerException();
     }
-    if (dataFactory == null)
-    {
+    if ( dataFactory == null ) {
       throw new NullPointerException();
     }
-    if (state == null)
-    {
+    if ( state == null ) {
       throw new NullPointerException();
     }
 
 
     final SequenceDataFactory sequenceDataFactory = (SequenceDataFactory) dataFactory;
 
-    final String fileName = BundleUtilities.getUniqueName(bundle, state.getFileName(),
-        "datasources/sequence-ds{0}.xml");
-    if (fileName == null)
-    {
-      throw new IOException("Unable to generate unique name for Sequence-Data-Source");
+    final String fileName = BundleUtilities.getUniqueName( bundle, state.getFileName(),
+      "datasources/sequence-ds{0}.xml" );
+    if ( fileName == null ) {
+      throw new IOException( "Unable to generate unique name for Sequence-Data-Source" );
     }
 
-    try
-    {
-      final OutputStream outputStream = bundle.createEntry(fileName, "text/xml");
+    try {
+      final OutputStream outputStream = bundle.createEntry( fileName, "text/xml" );
       final DefaultTagDescription tagDescription = new DefaultTagDescription();
-      tagDescription.setNamespaceHasCData(SequenceDataFactoryModule.NAMESPACE, false);
-      tagDescription.setElementHasCData(SequenceDataFactoryModule.NAMESPACE, "property", true);
+      tagDescription.setNamespaceHasCData( SequenceDataFactoryModule.NAMESPACE, false );
+      tagDescription.setElementHasCData( SequenceDataFactoryModule.NAMESPACE, "property", true );
 
       final XmlWriter xmlWriter = new XmlWriter
-          (new OutputStreamWriter(outputStream, "UTF-8"), tagDescription, "  ", "\n");
+        ( new OutputStreamWriter( outputStream, "UTF-8" ), tagDescription, "  ", "\n" );
       final AttributeList rootAttrs = new AttributeList();
-      rootAttrs.addNamespaceDeclaration("data", SequenceDataFactoryModule.NAMESPACE);
-      xmlWriter.writeTag(SequenceDataFactoryModule.NAMESPACE, "sequence-datasource", rootAttrs, XmlWriterSupport.OPEN);
+      rootAttrs.addNamespaceDeclaration( "data", SequenceDataFactoryModule.NAMESPACE );
+      xmlWriter
+        .writeTag( SequenceDataFactoryModule.NAMESPACE, "sequence-datasource", rootAttrs, XmlWriterSupport.OPEN );
 
       final String[] tables = sequenceDataFactory.getQueryNames();
-      for (int i = 0; i < tables.length; i++)
-      {
-        final String queryName = tables[i];
-        final Sequence sequence = sequenceDataFactory.getSequence(queryName);
+      for ( int i = 0; i < tables.length; i++ ) {
+        final String queryName = tables[ i ];
+        final Sequence sequence = sequenceDataFactory.getSequence( queryName );
 
         final AttributeList sequenceAttributes = new AttributeList();
-        sequenceAttributes.setAttribute(SequenceDataFactoryModule.NAMESPACE, "name", queryName);
-        sequenceAttributes.setAttribute(SequenceDataFactoryModule.NAMESPACE, "class", sequence.getClass().getName());
-        xmlWriter.writeTag(SequenceDataFactoryModule.NAMESPACE, "sequence", sequenceAttributes, XmlWriterSupport.OPEN);
+        sequenceAttributes.setAttribute( SequenceDataFactoryModule.NAMESPACE, "name", queryName );
+        sequenceAttributes.setAttribute( SequenceDataFactoryModule.NAMESPACE, "class", sequence.getClass().getName() );
+        xmlWriter
+          .writeTag( SequenceDataFactoryModule.NAMESPACE, "sequence", sequenceAttributes, XmlWriterSupport.OPEN );
 
         final SequenceDescription sequenceDescription = sequence.getSequenceDescription();
         final int parameterCount = sequenceDescription.getParameterCount();
-        for (int p = 0; p < parameterCount; p++)
-        {
-          final String paramName = sequenceDescription.getParameterName(p);
-          final Object parameter = sequence.getParameter(paramName);
-          if (parameter == null)
-          {
+        for ( int p = 0; p < parameterCount; p++ ) {
+          final String paramName = sequenceDescription.getParameterName( p );
+          final Object parameter = sequence.getParameter( paramName );
+          if ( parameter == null ) {
             continue;
           }
-          final String attrValue = ConverterRegistry.toAttributeValue(parameter);
-          xmlWriter.writeTag(SequenceDataFactoryModule.NAMESPACE, "property", "name", paramName, XmlWriterSupport.OPEN);
-          xmlWriter.writeTextNormalized(attrValue, true);
+          final String attrValue = ConverterRegistry.toAttributeValue( parameter );
+          xmlWriter
+            .writeTag( SequenceDataFactoryModule.NAMESPACE, "property", "name", paramName, XmlWriterSupport.OPEN );
+          xmlWriter.writeTextNormalized( attrValue, true );
           xmlWriter.writeCloseTag();
         }
 
@@ -128,10 +120,8 @@ public class SequenceDataFactoryWriteHandler implements BundleDataFactoryWriterH
       xmlWriter.writeCloseTag();
       xmlWriter.close();
       return fileName;
-    }
-    catch (BeanException e)
-    {
-      throw new BundleWriterException("Unable to serialize sequence parameter", e);
+    } catch ( BeanException e ) {
+      throw new BundleWriterException( "Unable to serialize sequence parameter", e );
     }
   }
 }

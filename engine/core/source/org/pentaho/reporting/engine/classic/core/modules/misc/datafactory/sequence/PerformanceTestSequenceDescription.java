@@ -17,11 +17,9 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.misc.datafactory.sequence;
 
-public class PerformanceTestSequenceDescription extends AbstractSequenceDescription
-{
-  public PerformanceTestSequenceDescription()
-  {
-    super("org.pentaho.reporting.engine.classic.core.modules.misc.datafactory.sequence.PerformanceTestSequenceBundle",
-        PerformanceTestSequence.class);
+public class PerformanceTestSequenceDescription extends AbstractSequenceDescription {
+  public PerformanceTestSequenceDescription() {
+    super( "org.pentaho.reporting.engine.classic.core.modules.misc.datafactory.sequence.PerformanceTestSequenceBundle",
+      PerformanceTestSequence.class );
   }
 }

@@ -24,48 +24,37 @@ import org.pentaho.reporting.engine.classic.core.style.WhitespaceCollapse;
  *
  * @author Thomas Morgner
  */
-public class WhitespaceCollapseValueConverter implements ValueConverter
-{
-  public WhitespaceCollapseValueConverter()
-  {
+public class WhitespaceCollapseValueConverter implements ValueConverter {
+  public WhitespaceCollapseValueConverter() {
   }
 
-  public String toAttributeValue(final Object o) throws BeanException
-  {
-    if (o == null)
-    {
+  public String toAttributeValue( final Object o ) throws BeanException {
+    if ( o == null ) {
       throw new NullPointerException();
     }
-    if (o instanceof WhitespaceCollapse)
-    {
-      return String.valueOf(o);
+    if ( o instanceof WhitespaceCollapse ) {
+      return String.valueOf( o );
     }
 
-    throw new BeanException("Failed to convert object of type " + o.getClass() + ": Not a WhitespaceCollapse.");
+    throw new BeanException( "Failed to convert object of type " + o.getClass() + ": Not a WhitespaceCollapse." );
   }
 
-  public Object toPropertyValue(final String o) throws BeanException
-  {
-    if (o == null)
-    {
+  public Object toPropertyValue( final String o ) throws BeanException {
+    if ( o == null ) {
       throw new NullPointerException();
     }
-    if ("discard".equalsIgnoreCase(o))
-    {
+    if ( "discard".equalsIgnoreCase( o ) ) {
       return WhitespaceCollapse.DISCARD;
     }
-    if ("collapse".equalsIgnoreCase(o))
-    {
+    if ( "collapse".equalsIgnoreCase( o ) ) {
       return WhitespaceCollapse.COLLAPSE;
     }
-    if ("preserve".equalsIgnoreCase(o))
-    {
+    if ( "preserve".equalsIgnoreCase( o ) ) {
       return WhitespaceCollapse.PRESERVE;
     }
-    if ("preserve-breaks".equalsIgnoreCase(o))
-    {
+    if ( "preserve-breaks".equalsIgnoreCase( o ) ) {
       return WhitespaceCollapse.PRESERVE_BREAKS;
     }
-    throw new BeanException("Invalid value encountered for VerticalTextAlign");
+    throw new BeanException( "Invalid value encountered for VerticalTextAlign" );
   }
 }

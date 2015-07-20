@@ -17,13 +17,13 @@
 
 package org.pentaho.reporting.engine.classic.core.function;
 
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.util.HashMap;
-
 import org.pentaho.reporting.engine.classic.core.event.ReportEvent;
 import org.pentaho.reporting.engine.classic.core.states.ReportStateKey;
 import org.pentaho.reporting.engine.classic.core.util.Sequence;
+
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.util.HashMap;
 
 /**
  * A report function that stores the result of a calculation for a group or the complete report. This function can be
@@ -33,8 +33,7 @@ import org.pentaho.reporting.engine.classic.core.util.Sequence;
  *
  * @author Thomas Morgner
  */
-public class TotalCalculationFunction extends AbstractFunction
-{
+public class TotalCalculationFunction extends AbstractFunction {
   /**
    * A map of results, keyed by the process-key.
    */
@@ -65,8 +64,7 @@ public class TotalCalculationFunction extends AbstractFunction
    * Constructs a new function. <P> Initially the function has no name...be sure to assign one before using the
    * function.
    */
-  public TotalCalculationFunction()
-  {
+  public TotalCalculationFunction() {
     results = new HashMap<ReportStateKey, Sequence<Object>>();
   }
 
@@ -75,19 +73,15 @@ public class TotalCalculationFunction extends AbstractFunction
    *
    * @param event the event.
    */
-  public void reportInitialized(final ReportEvent event)
-  {
+  public void reportInitialized( final ReportEvent event ) {
     globalStateKey = event.getState().getProcessKey();
-    if (FunctionUtilities.isDefinedPrepareRunLevel(this, event))
-    {
+    if ( FunctionUtilities.isDefinedPrepareRunLevel( this, event ) ) {
       result = new Sequence<Object>();
       results.clear();
-      results.put(globalStateKey, result);
+      results.put( globalStateKey, result );
       lastGroupSequenceNumber = 0;
-    }
-    else
-    {
-      result = results.get(globalStateKey);
+    } else {
+      result = results.get( globalStateKey );
       lastGroupSequenceNumber = 0;
     }
   }
@@ -97,30 +91,24 @@ public class TotalCalculationFunction extends AbstractFunction
    *
    * @param event the event.
    */
-  public void groupStarted(final ReportEvent event)
-  {
-    if (FunctionUtilities.isDefinedGroup(getGroup(), event))
-    {
+  public void groupStarted( final ReportEvent event ) {
+    if ( FunctionUtilities.isDefinedGroup( getGroup(), event ) ) {
       final ReportStateKey groupStateKey = event.getState().getProcessKey();
-      if (FunctionUtilities.isDefinedPrepareRunLevel(this, event))
-      {
+      if ( FunctionUtilities.isDefinedPrepareRunLevel( this, event ) ) {
         result = new Sequence<Object>();
         lastGroupSequenceNumber = 0;
 
-        results.put(globalStateKey, result);
-        results.put(groupStateKey, result);
-      }
-      else
-      {
+        results.put( globalStateKey, result );
+        results.put( groupStateKey, result );
+      } else {
         // Activate the current group, which was filled in the prepare run.
-        result = results.get(groupStateKey);
+        result = results.get( groupStateKey );
       }
     }
 
-    if (FunctionUtilities.isDefinedGroup(getCrosstabFilterGroup(), event))
-    {
+    if ( FunctionUtilities.isDefinedGroup( getCrosstabFilterGroup(), event ) ) {
       final int groupIndex = event.getState().getCurrentGroupIndex();
-      this.lastGroupSequenceNumber = (int) event.getState().getCrosstabColumnSequenceCounter(groupIndex);
+      this.lastGroupSequenceNumber = (int) event.getState().getCrosstabColumnSequenceCounter( groupIndex );
     }
   }
 
@@ -129,28 +117,23 @@ public class TotalCalculationFunction extends AbstractFunction
    *
    * @param event the event.
    */
-  public void itemsAdvanced(final ReportEvent event)
-  {
-    if (field == null)
-    {
+  public void itemsAdvanced( final ReportEvent event ) {
+    if ( field == null ) {
       return;
     }
 
-    if (FunctionUtilities.isDefinedPrepareRunLevel(this, event) == false)
-    {
+    if ( FunctionUtilities.isDefinedPrepareRunLevel( this, event ) == false ) {
       return;
     }
 
-    final Object value = event.getDataRow().get(getField());
-    result.set(lastGroupSequenceNumber, value);
+    final Object value = event.getDataRow().get( getField() );
+    result.set( lastGroupSequenceNumber, value );
   }
 
-  public void summaryRowSelection(final ReportEvent event)
-  {
-    if (FunctionUtilities.isDefinedGroup(getCrosstabFilterGroup(), event))
-    {
+  public void summaryRowSelection( final ReportEvent event ) {
+    if ( FunctionUtilities.isDefinedGroup( getCrosstabFilterGroup(), event ) ) {
       final int groupIndex = event.getState().getCurrentGroupIndex();
-      this.lastGroupSequenceNumber = (int) event.getState().getCrosstabColumnSequenceCounter(groupIndex);
+      this.lastGroupSequenceNumber = (int) event.getState().getCrosstabColumnSequenceCounter( groupIndex );
     }
   }
 
@@ -159,8 +142,7 @@ public class TotalCalculationFunction extends AbstractFunction
    *
    * @return the group name.
    */
-  public String getGroup()
-  {
+  public String getGroup() {
     return group;
   }
 
@@ -169,8 +151,7 @@ public class TotalCalculationFunction extends AbstractFunction
    *
    * @param group the group name.
    */
-  public void setGroup(final String group)
-  {
+  public void setGroup( final String group ) {
     this.group = group;
   }
 
@@ -179,8 +160,7 @@ public class TotalCalculationFunction extends AbstractFunction
    *
    * @return The field name.
    */
-  public String getField()
-  {
+  public String getField() {
     return field;
   }
 
@@ -189,8 +169,7 @@ public class TotalCalculationFunction extends AbstractFunction
    *
    * @param field the field name.
    */
-  public void setField(final String field)
-  {
+  public void setField( final String field ) {
     this.field = field;
   }
 
@@ -199,23 +178,19 @@ public class TotalCalculationFunction extends AbstractFunction
    *
    * @return the value of the function.
    */
-  public Object getValue()
-  {
-    if (result == null)
-    {
+  public Object getValue() {
+    if ( result == null ) {
       return null;
     }
 
-    return result.get(lastGroupSequenceNumber);
+    return result.get( lastGroupSequenceNumber );
   }
 
-  public String getCrosstabFilterGroup()
-  {
+  public String getCrosstabFilterGroup() {
     return crosstabFilterGroup;
   }
 
-  public void setCrosstabFilterGroup(final String crosstabFilterGroup)
-  {
+  public void setCrosstabFilterGroup( final String crosstabFilterGroup ) {
     this.crosstabFilterGroup = crosstabFilterGroup;
   }
 
@@ -226,17 +201,15 @@ public class TotalCalculationFunction extends AbstractFunction
    * @throws java.io.IOException    when reading the stream fails.
    * @throws ClassNotFoundException if a class definition for a serialized object could not be found.
    */
-  private void readObject(final ObjectInputStream in)
-      throws IOException, ClassNotFoundException
-  {
+  private void readObject( final ObjectInputStream in )
+    throws IOException, ClassNotFoundException {
     in.defaultReadObject();
     results = new HashMap<ReportStateKey, Sequence<Object>>();
   }
 
-  public Expression getInstance()
-  {
+  public Expression getInstance() {
     final TotalCalculationFunction fn =
-        (TotalCalculationFunction) super.getInstance();
+      (TotalCalculationFunction) super.getInstance();
     fn.results = new HashMap<ReportStateKey, Sequence<Object>>();
     return fn;
   }

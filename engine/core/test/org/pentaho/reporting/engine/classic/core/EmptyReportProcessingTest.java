@@ -17,32 +17,27 @@
 
 package org.pentaho.reporting.engine.classic.core;
 
-import javax.swing.table.DefaultTableModel;
-
 import junit.framework.TestCase;
 import org.pentaho.reporting.engine.classic.core.testsupport.DebugReportRunner;
 
-public class EmptyReportProcessingTest extends TestCase
-{
-  public EmptyReportProcessingTest()
-  {
+import javax.swing.table.DefaultTableModel;
+
+public class EmptyReportProcessingTest extends TestCase {
+  public EmptyReportProcessingTest() {
   }
 
-  public EmptyReportProcessingTest(final String s)
-  {
-    super(s);
+  public EmptyReportProcessingTest( final String s ) {
+    super( s );
   }
 
-  protected void setUp() throws Exception
-  {
+  protected void setUp() throws Exception {
     ClassicEngineBoot.getInstance().start();
   }
 
-  public void testFailure() throws Exception
-  {
+  public void testFailure() throws Exception {
     final MasterReport report = new MasterReport();
-    report.setDataFactory(new TableDataFactory("default", new DefaultTableModel(1, 1)));
-    DebugReportRunner.executeAll(report);
+    report.setDataFactory( new TableDataFactory( "default", new DefaultTableModel( 1, 1 ) ) );
+    DebugReportRunner.executeAll( report );
 
   }
 

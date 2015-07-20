@@ -19,8 +19,7 @@ package org.pentaho.reporting.engine.classic.core;
 
 import org.pentaho.reporting.engine.classic.core.parameters.ValidationResult;
 
-public class ReportParameterValidationException extends ReportProcessingException
-{
+public class ReportParameterValidationException extends ReportProcessingException {
   private ValidationResult validationResult;
 
   /**
@@ -29,18 +28,15 @@ public class ReportParameterValidationException extends ReportProcessingExceptio
    * @param message          the exception message.
    * @param validationResult
    */
-  public ReportParameterValidationException(final String message, final ValidationResult validationResult)
-  {
-    super(message);
-    if (validationResult == null)
-    {
+  public ReportParameterValidationException( final String message, final ValidationResult validationResult ) {
+    super( message );
+    if ( validationResult == null ) {
       throw new NullPointerException();
     }
     this.validationResult = validationResult;
   }
 
-  public ValidationResult getValidationResult()
-  {
+  public ValidationResult getValidationResult() {
     return validationResult;
   }
 }

@@ -38,17 +38,14 @@ import org.pentaho.reporting.engine.classic.core.style.TableLayout;
 import org.pentaho.reporting.engine.classic.core.util.InstanceID;
 
 /**
- * A table render box contains table header, table footer and the table body.
- * The table body itself may also contain table header cells - which get
- * repeated after pagebreaks.
+ * A table render box contains table header, table footer and the table body. The table body itself may also contain
+ * table header cells - which get repeated after pagebreaks.
  * <p/>
- * Tables contain more than just rows, in fact, they are separated into three
- * sections.
+ * Tables contain more than just rows, in fact, they are separated into three sections.
  *
  * @author Thomas Morgner
  */
-public class TableRenderBox extends BlockRenderBox
-{
+public class TableRenderBox extends BlockRenderBox {
   private TableColumnModel columnModel;
 
   private TableLayoutInfo tableInfo;
@@ -58,159 +55,130 @@ public class TableRenderBox extends BlockRenderBox
   private boolean structureValidated;
   private boolean predefinedColumnsValidated;
 
-  public TableRenderBox()
-  {
-    this(SimpleStyleSheet.EMPTY_STYLE, new InstanceID(), BoxDefinition.EMPTY,
-        AutoLayoutBoxType.INSTANCE, ReportAttributeMap.EMPTY_MAP, null);
+  public TableRenderBox() {
+    this( SimpleStyleSheet.EMPTY_STYLE, new InstanceID(), BoxDefinition.EMPTY,
+      AutoLayoutBoxType.INSTANCE, ReportAttributeMap.EMPTY_MAP, null );
   }
-  
-  public TableRenderBox(final StyleSheet styleSheet,
-                        final InstanceID instanceID,
-                        final BoxDefinition boxDefinition,
-                        final ElementType elementType,
-                        final ReportAttributeMap attributes,
-                        final ReportStateKey stateKey)
-  {
-    super(styleSheet, instanceID, boxDefinition, elementType, attributes, stateKey);
+
+  public TableRenderBox( final StyleSheet styleSheet,
+                         final InstanceID instanceID,
+                         final BoxDefinition boxDefinition,
+                         final ElementType elementType,
+                         final ReportAttributeMap attributes,
+                         final ReportStateKey stateKey ) {
+    super( styleSheet, instanceID, boxDefinition, elementType, attributes, stateKey );
 
     this.columnModel = new SeparateColumnModel();
     this.tableInfo = new TableLayoutInfo();
-    this.tableInfo.setDisplayEmptyCells(true);
-    this.tableInfo.setCollapsingBorderModel(false);
-    final Object styleProperty = styleSheet.getStyleProperty(BandStyleKeys.TABLE_LAYOUT);
-    this.tableInfo.setAutoLayout(TableLayout.auto.equals(styleProperty));
-    this.tableInfo.setRowSpacing(RenderLength.EMPTY);
-    increaseTableReferenceCount(1, this);
+    this.tableInfo.setDisplayEmptyCells( true );
+    this.tableInfo.setCollapsingBorderModel( false );
+    final Object styleProperty = styleSheet.getStyleProperty( BandStyleKeys.TABLE_LAYOUT );
+    this.tableInfo.setAutoLayout( TableLayout.auto.equals( styleProperty ) );
+    this.tableInfo.setRowSpacing( RenderLength.EMPTY );
+    increaseTableReferenceCount( 1, this );
   }
 
-  public int getNodeType()
-  {
+  public int getNodeType() {
     return LayoutNodeTypes.TYPE_BOX_TABLE;
   }
 
-  public boolean isPredefinedColumnsValidated()
-  {
+  public boolean isPredefinedColumnsValidated() {
     return predefinedColumnsValidated;
   }
 
-  public void setPredefinedColumnsValidated(final boolean predefinedColumnsValidated)
-  {
+  public void setPredefinedColumnsValidated( final boolean predefinedColumnsValidated ) {
     this.predefinedColumnsValidated = predefinedColumnsValidated;
   }
 
-  public boolean isStructureValidated()
-  {
+  public boolean isStructureValidated() {
     return structureValidated;
   }
 
-  public void setStructureValidated(final boolean structureValidated)
-  {
+  public void setStructureValidated( final boolean structureValidated ) {
     this.structureValidated = structureValidated;
   }
 
-  public TableColumnModel getColumnModel()
-  {
+  public TableColumnModel getColumnModel() {
     return columnModel;
   }
 
-  public RenderLength getRowSpacing()
-  {
+  public RenderLength getRowSpacing() {
     return tableInfo.getRowSpacing();
   }
 
-  public boolean isDisplayEmptyCells()
-  {
+  public boolean isDisplayEmptyCells() {
     return tableInfo.isDisplayEmptyCells();
   }
 
-  public boolean isCollapsingBorderModel()
-  {
+  public boolean isCollapsingBorderModel() {
     return tableInfo.isCollapsingBorderModel();
   }
 
-  public boolean isAutoLayout()
-  {
+  public boolean isAutoLayout() {
     return tableInfo.isAutoLayout();
   }
 
-  public boolean useMinimumChunkWidth()
-  {
+  public boolean useMinimumChunkWidth() {
     return true;
   }
 
-  public Object clone()
-  {
-    try
-    {
+  public Object clone() {
+    try {
       final TableRenderBox box = (TableRenderBox) super.clone();
-      if (box.isStructureValidated() == false)
-      {
+      if ( box.isStructureValidated() == false ) {
         box.columnModel = (TableColumnModel) columnModel.clone();
       }
       return box;
-    }
-    catch (CloneNotSupportedException e)
-    {
-      throw new IllegalStateException("Clone failed for some reason.");
+    } catch ( CloneNotSupportedException e ) {
+      throw new IllegalStateException( "Clone failed for some reason." );
     }
   }
 
-  public void addChild(final RenderNode child)
-  {
-    if (isValid(child) == false)
-    {
+  public void addChild( final RenderNode child ) {
+    if ( isValid( child ) == false ) {
       TableSectionRenderBox tsrb = new TableSectionRenderBox();
-      tsrb.addChild(child);
-      addChild(tsrb);
+      tsrb.addChild( child );
+      addChild( tsrb );
       tsrb.close();
       return;
     }
 
-    super.addChild(child);
+    super.addChild( child );
   }
 
-  private boolean isValid(final RenderNode child)
-  {
-    if ((child.getNodeType() & LayoutNodeTypes.MASK_BOX) != LayoutNodeTypes.MASK_BOX)
-    {
+  private boolean isValid( final RenderNode child ) {
+    if ( ( child.getNodeType() & LayoutNodeTypes.MASK_BOX ) != LayoutNodeTypes.MASK_BOX ) {
       return true;
     }
 
-    if (child.getNodeType() == LayoutNodeTypes.TYPE_BOX_AUTOLAYOUT)
-    {
+    if ( child.getNodeType() == LayoutNodeTypes.TYPE_BOX_AUTOLAYOUT ) {
       return true;
     }
 
-    if (child.getNodeType() == LayoutNodeTypes.TYPE_BOX_BREAKMARK)
-    {
+    if ( child.getNodeType() == LayoutNodeTypes.TYPE_BOX_BREAKMARK ) {
       return true;
     }
 
-    if (child.getNodeType() == LayoutNodeTypes.TYPE_BOX_PROGRESS_MARKER)
-    {
+    if ( child.getNodeType() == LayoutNodeTypes.TYPE_BOX_PROGRESS_MARKER ) {
       return true;
     }
 
-    if (child.getNodeType() == LayoutNodeTypes.TYPE_BOX_TABLE_SECTION)
-    {
+    if ( child.getNodeType() == LayoutNodeTypes.TYPE_BOX_TABLE_SECTION ) {
       return true;
     }
 
-    if (child.getNodeType() == LayoutNodeTypes.TYPE_BOX_TABLE_COL_GROUP)
-    {
+    if ( child.getNodeType() == LayoutNodeTypes.TYPE_BOX_TABLE_COL_GROUP ) {
       return true;
     }
 
-    if (child.getNodeType() == LayoutNodeTypes.TYPE_BOX_TABLE_COL)
-    {
+    if ( child.getNodeType() == LayoutNodeTypes.TYPE_BOX_TABLE_COL ) {
       return true;
     }
     return false;
   }
 
-  public RenderBox create(final StyleSheet styleSheet)
-  {
-    return new AutoRenderBox(styleSheet);
+  public RenderBox create( final StyleSheet styleSheet ) {
+    return new AutoRenderBox( styleSheet );
   }
 
 

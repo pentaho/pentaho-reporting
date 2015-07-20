@@ -17,16 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.core;
 
-import java.awt.print.PageFormat;
-import java.awt.print.PrinterJob;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.util.Date;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.pentaho.reporting.engine.classic.core.designtime.AttributeChange;
@@ -57,6 +47,16 @@ import org.pentaho.reporting.libraries.resourceloader.ResourceException;
 import org.pentaho.reporting.libraries.resourceloader.ResourceKey;
 import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+import java.awt.print.PageFormat;
+import java.awt.print.PrinterJob;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.util.Date;
+
 /**
  * A JFreeReport instance is used as report template to define the visual layout of a report and to collect all data
  * sources for the reporting. Possible data sources are the {@link TableModel}, {@link Expression}s or {@link
@@ -86,7 +86,8 @@ import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
  * All report elements share the same stylesheet collection. Report elements cannot be shared between two different
  * report instances. Adding a report element to one band will remove it from the other one.
  * <p/>
- * For dynamic computation of content you can add {@link Expression}s and {@link org.pentaho.reporting.engine.classic.core.function.Function}s
+ * For dynamic computation of content you can add {@link Expression}s and {@link org.pentaho.reporting.engine.classic
+ * .core.function.Function}s
  * to the report.
  * <p/>
  * Creating a new instance of JFreeReport seems to lock down the JDK on some Windows Systems, where no printer driver is
@@ -100,33 +101,26 @@ import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
  * @author David Gilbert
  * @author Thomas Morgner
  */
-public class MasterReport extends AbstractReportDefinition
-{
+public class MasterReport extends AbstractReportDefinition {
 
   /**
    * Listens for changes to the DocumentBundle being used by a report and will update the ResourceManager to use that
    * DocumentBundle.
    */
-  private static class ResourceBundleChangeHandler implements ReportModelListener
-  {
-    private ResourceBundleChangeHandler()
-    {
+  private static class ResourceBundleChangeHandler implements ReportModelListener {
+    private ResourceBundleChangeHandler() {
     }
 
-    public void nodeChanged(final ReportModelEvent event)
-    {
-      if (event.isNodeStructureChanged())
-      {
+    public void nodeChanged( final ReportModelEvent event ) {
+      if ( event.isNodeStructureChanged() ) {
         return;
       }
-      if (event.getParameter() instanceof StyleChange)
-      {
+      if ( event.getParameter() instanceof StyleChange ) {
         return;
       }
 
       final Object element = event.getElement();
-      if (element instanceof MasterReport == false)
-      {
+      if ( element instanceof MasterReport == false ) {
         return;
       }
       final MasterReport report = (MasterReport) element;
@@ -138,52 +132,42 @@ public class MasterReport extends AbstractReportDefinition
    * Listens for changes to the DocumentBundle being used by a report and will update the ResourceManager to use that
    * DocumentBundle.
    */
-  private static class DocumentBundleChangeHandler implements ReportModelListener
-  {
-    private static final Log log = LogFactory.getLog(DocumentBundleChangeHandler.class);
+  private static class DocumentBundleChangeHandler implements ReportModelListener {
+    private static final Log log = LogFactory.getLog( DocumentBundleChangeHandler.class );
 
-    private DocumentBundleChangeHandler()
-    {
+    private DocumentBundleChangeHandler() {
     }
 
-    public void nodeChanged(final ReportModelEvent event)
-    {
-      if (event.getElement() instanceof MasterReport == false)
-      {
+    public void nodeChanged( final ReportModelEvent event ) {
+      if ( event.getElement() instanceof MasterReport == false ) {
         return;
       }
       final MasterReport report = (MasterReport) event.getElement();
 
-      if (event.getParameter() instanceof AttributeChange)
-      {
+      if ( event.getParameter() instanceof AttributeChange ) {
         final AttributeChange attributeChange = (AttributeChange) event.getParameter();
 
         // This is an attribute change event on the master report ... see if it is one we are concerned about
-        if (AttributeNames.Core.NAMESPACE.equals(attributeChange.getNamespace()) &&
-            AttributeNames.Core.BUNDLE.equals(attributeChange.getName()))
-        {
+        if ( AttributeNames.Core.NAMESPACE.equals( attributeChange.getNamespace() ) &&
+          AttributeNames.Core.BUNDLE.equals( attributeChange.getName() ) ) {
           final Object value = attributeChange.getNewValue();
-          if ((value instanceof DocumentBundle) == false)
-          {
+          if ( ( value instanceof DocumentBundle ) == false ) {
             return;
           }
 
           // Insert the DocumentBundle's ResourceManager as the MasterReports resource manager
-          log.debug("DocumentBundle change detected - changing the ResourceManager for the MasterReport");
+          log.debug( "DocumentBundle change detected - changing the ResourceManager for the MasterReport" );
           final DocumentBundle newDocumentBundle = (DocumentBundle) value;
           final ResourceManager resourceManager = newDocumentBundle.getResourceManager();
-          report.setContentBase(newDocumentBundle.getBundleKey());
-          report.setResourceManager(resourceManager);
+          report.setContentBase( newDocumentBundle.getBundleKey() );
+          report.setResourceManager( resourceManager );
         }
-      }
-      else if (event.getParameter() instanceof ResourceManager)
-      {
+      } else if ( event.getParameter() instanceof ResourceManager ) {
         final ResourceManager mgr = report.getResourceManager();
         final ResourceBundleFactory resourceBundleFactory = report.getResourceBundleFactory();
-        if (resourceBundleFactory instanceof LibLoaderResourceBundleFactory)
-        {
+        if ( resourceBundleFactory instanceof LibLoaderResourceBundleFactory ) {
           LibLoaderResourceBundleFactory ll = (LibLoaderResourceBundleFactory) resourceBundleFactory;
-          ll.setResourceLoader(mgr, report.getContentBase());
+          ll.setResourceLoader( mgr, report.getContentBase() );
         }
       }
     }
@@ -216,66 +200,58 @@ public class MasterReport extends AbstractReportDefinition
   /**
    * The default constructor. Creates an empty but fully initialized report.
    */
-  public MasterReport()
-  {
-    setElementType(new MasterReportType());
-    setResourceBundleFactory(new LibLoaderResourceBundleFactory());
+  public MasterReport() {
+    setElementType( new MasterReportType() );
+    setResourceBundleFactory( new LibLoaderResourceBundleFactory() );
 
     this.reportConfiguration = new HierarchicalConfiguration
-        (ClassicEngineBoot.getInstance().getGlobalConfig());
+      ( ClassicEngineBoot.getInstance().getGlobalConfig() );
     this.parameterValues = new ReportParameterValues();
 
-    setPageDefinition(null);
+    setPageDefinition( null );
 
     final TableDataFactory dataFactory = new TableDataFactory();
-    dataFactory.addTable("default", new DefaultTableModel());
+    dataFactory.addTable( "default", new DefaultTableModel() );
     this.dataFactory = dataFactory;
-    setQuery("default");
+    setQuery( "default" );
 
     // Add a listener that will handle keeping the ResourceManager in sync with changes to the Document Bundle
-    addReportModelListener(new DocumentBundleChangeHandler());
+    addReportModelListener( new DocumentBundleChangeHandler() );
 
-    this.reportEnvironment = new DefaultReportEnvironment(getConfiguration());
+    this.reportEnvironment = new DefaultReportEnvironment( getConfiguration() );
     this.parameterDefinition = new DefaultParameterDefinition();
     final MemoryDocumentBundle documentBundle = new MemoryDocumentBundle();
-    documentBundle.getWriteableDocumentMetaData().setBundleType(ClassicEngineBoot.BUNDLE_TYPE);
+    documentBundle.getWriteableDocumentMetaData().setBundleType( ClassicEngineBoot.BUNDLE_TYPE );
     documentBundle.getWriteableDocumentMetaData().setBundleAttribute
-        (ODFMetaAttributeNames.Meta.NAMESPACE, ODFMetaAttributeNames.Meta.CREATION_DATE, new Date());
-    setBundle(documentBundle);
+      ( ODFMetaAttributeNames.Meta.NAMESPACE, ODFMetaAttributeNames.Meta.CREATION_DATE, new Date() );
+    setBundle( documentBundle );
 
-    setContentBase(documentBundle.getBundleMainKey());
+    setContentBase( documentBundle.getBundleMainKey() );
 
-    addReportModelListener(new ResourceBundleChangeHandler());
+    addReportModelListener( new ResourceBundleChangeHandler() );
     updateResourceBundleFactoryInternal();
   }
 
   public static ResourceBundleFactory computeAndInitResourceBundleFactory
-      (final ResourceBundleFactory resourceBundleFactory,
-       final ReportEnvironment environment)
-  {
-    if (resourceBundleFactory instanceof ExtendedResourceBundleFactory == false)
-    {
+    ( final ResourceBundleFactory resourceBundleFactory,
+      final ReportEnvironment environment ) {
+    if ( resourceBundleFactory instanceof ExtendedResourceBundleFactory == false ) {
       return resourceBundleFactory;
     }
     final ExtendedResourceBundleFactory rawResourceBundleFactory =
-        (ExtendedResourceBundleFactory) resourceBundleFactory;
-    try
-    {
+      (ExtendedResourceBundleFactory) resourceBundleFactory;
+    try {
       final ExtendedResourceBundleFactory extendedResourceBundleFactory =
-          (ExtendedResourceBundleFactory) rawResourceBundleFactory.clone();
-      if (extendedResourceBundleFactory.getLocale() == null)
-      {
-        extendedResourceBundleFactory.setLocale(environment.getLocale());
+        (ExtendedResourceBundleFactory) rawResourceBundleFactory.clone();
+      if ( extendedResourceBundleFactory.getLocale() == null ) {
+        extendedResourceBundleFactory.setLocale( environment.getLocale() );
       }
-      if (extendedResourceBundleFactory.getTimeZone() == null)
-      {
-        extendedResourceBundleFactory.setTimeZone(environment.getTimeZone());
+      if ( extendedResourceBundleFactory.getTimeZone() == null ) {
+        extendedResourceBundleFactory.setTimeZone( environment.getTimeZone() );
       }
       return extendedResourceBundleFactory;
-    }
-    catch (CloneNotSupportedException e)
-    {
-      throw new IllegalStateException("Cannot clone resource-bundle factory");
+    } catch ( CloneNotSupportedException e ) {
+      throw new IllegalStateException( "Cannot clone resource-bundle factory" );
     }
   }
 
@@ -286,8 +262,7 @@ public class MasterReport extends AbstractReportDefinition
    *
    * @return the assigned resource bundle factory.
    */
-  public ResourceBundleFactory getResourceBundleFactory()
-  {
+  public ResourceBundleFactory getResourceBundleFactory() {
     return resourceBundleFactory;
   }
 
@@ -297,77 +272,62 @@ public class MasterReport extends AbstractReportDefinition
    * @param resourceBundleFactory the new resource bundle factory, never null.
    * @throws NullPointerException if the given ResourceBundleFactory is null.
    */
-  public void setResourceBundleFactory(final ResourceBundleFactory resourceBundleFactory)
-  {
-    ArgumentNullException.validate("resourceBundleFactory", resourceBundleFactory);
+  public void setResourceBundleFactory( final ResourceBundleFactory resourceBundleFactory ) {
+    ArgumentNullException.validate( "resourceBundleFactory", resourceBundleFactory );
 
     this.resourceBundleFactory = resourceBundleFactory;
     this.notifyNodePropertiesChanged();
   }
 
-  public DocumentBundle getBundle()
-  {
-    final Object o = getAttribute(AttributeNames.Core.NAMESPACE, AttributeNames.Core.BUNDLE);
-    if (o instanceof DocumentBundle)
-    {
+  public DocumentBundle getBundle() {
+    final Object o = getAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.BUNDLE );
+    if ( o instanceof DocumentBundle ) {
       return (DocumentBundle) o;
     }
     return null;
   }
 
-  public void setBundle(final DocumentBundle bundle)
-  {
-    setAttribute(AttributeNames.Core.NAMESPACE, AttributeNames.Core.BUNDLE, bundle);
+  public void setBundle( final DocumentBundle bundle ) {
+    setAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.BUNDLE, bundle );
   }
 
-  public ReportParameterDefinition getParameterDefinition()
-  {
+  public ReportParameterDefinition getParameterDefinition() {
     return parameterDefinition;
   }
 
-  public void setParameterDefinition(final ReportParameterDefinition parameterDefinition)
-  {
-    if (parameterDefinition == null)
-    {
+  public void setParameterDefinition( final ReportParameterDefinition parameterDefinition ) {
+    if ( parameterDefinition == null ) {
       throw new NullPointerException();
     }
     this.parameterDefinition = parameterDefinition;
     notifyNodePropertiesChanged();
   }
 
-  public ModifiableReportParameterDefinition getModifiableParameterDefinition()
-  {
-    if (this.parameterDefinition instanceof ModifiableReportParameterDefinition)
-    {
+  public ModifiableReportParameterDefinition getModifiableParameterDefinition() {
+    if ( this.parameterDefinition instanceof ModifiableReportParameterDefinition ) {
       return (ModifiableReportParameterDefinition) this.parameterDefinition;
     }
     return null;
   }
 
-  public ReportEnvironment getReportEnvironment()
-  {
+  public ReportEnvironment getReportEnvironment() {
     return reportEnvironment;
   }
 
-  public void setReportEnvironment(final ReportEnvironment reportEnvironment)
-  {
-    if (reportEnvironment == null)
-    {
+  public void setReportEnvironment( final ReportEnvironment reportEnvironment ) {
+    if ( reportEnvironment == null ) {
       throw new NullPointerException();
     }
     this.reportEnvironment = reportEnvironment;
     notifyNodePropertiesChanged();
   }
 
-  public String getTitle()
-  {
+  public String getTitle() {
     final DocumentBundle bundle = getBundle();
-    if (bundle != null)
-    {
+    if ( bundle != null ) {
       final Object o = bundle.getMetaData().getBundleAttribute
-          (ODFMetaAttributeNames.DublinCore.NAMESPACE, ODFMetaAttributeNames.DublinCore.TITLE);
-      if (o != null)
-      {
+        ( ODFMetaAttributeNames.DublinCore.NAMESPACE, ODFMetaAttributeNames.DublinCore.TITLE );
+      if ( o != null ) {
         return o.toString();
       }
     }
@@ -379,12 +339,10 @@ public class MasterReport extends AbstractReportDefinition
    *
    * @return the page definition.
    */
-  public PageDefinition getPageDefinition()
-  {
+  public PageDefinition getPageDefinition() {
     final PageDefinition pageDefinition = (PageDefinition)
-        getAttribute(AttributeNames.Core.NAMESPACE, AttributeNames.Core.PAGE_DEFINITION);
-    if (pageDefinition == null)
-    {
+      getAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.PAGE_DEFINITION );
+    if ( pageDefinition == null ) {
       return createDefaultPageDefinition();
     }
     return pageDefinition;
@@ -400,27 +358,21 @@ public class MasterReport extends AbstractReportDefinition
    *
    * @param format the default format (<code>null</code> permitted).
    */
-  public void setPageDefinition(PageDefinition format)
-  {
-    if (format == null)
-    {
+  public void setPageDefinition( PageDefinition format ) {
+    if ( format == null ) {
       format = createDefaultPageDefinition();
     }
-    setAttribute(AttributeNames.Core.NAMESPACE, AttributeNames.Core.PAGE_DEFINITION, format);
+    setAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.PAGE_DEFINITION, format );
     notifyNodePropertiesChanged();
   }
 
-  private PageDefinition createDefaultPageDefinition()
-  {
+  private PageDefinition createDefaultPageDefinition() {
     final PageDefinition format;
     final ExtendedConfiguration config = ClassicEngineBoot.getInstance().getExtendedConfig();
-    if (config.getBoolProperty(ClassicEngineCoreModule.NO_PRINTER_AVAILABLE_KEY))
-    {
-      format = new SimplePageDefinition(new PageFormat());
-    }
-    else
-    {
-      format = new SimplePageDefinition(PrinterJob.getPrinterJob().defaultPage());
+    if ( config.getBoolProperty( ClassicEngineCoreModule.NO_PRINTER_AVAILABLE_KEY ) ) {
+      format = new SimplePageDefinition( new PageFormat() );
+    } else {
+      format = new SimplePageDefinition( PrinterJob.getPrinterJob().defaultPage() );
     }
     return format;
   }
@@ -430,8 +382,7 @@ public class MasterReport extends AbstractReportDefinition
    *
    * @return the data factory.
    */
-  public DataFactory getDataFactory()
-  {
+  public DataFactory getDataFactory() {
     return dataFactory;
   }
 
@@ -440,17 +391,15 @@ public class MasterReport extends AbstractReportDefinition
    *
    * @param dataFactory the data factory for the report, never null.
    */
-  public void setDataFactory(final DataFactory dataFactory)
-  {
-    if (dataFactory == null)
-    {
+  public void setDataFactory( final DataFactory dataFactory ) {
+    if ( dataFactory == null ) {
       throw new NullPointerException();
     }
 
     final DataFactory old = this.dataFactory;
     this.dataFactory = dataFactory;
-    notifyNodeChildRemoved(old);
-    notifyNodeChildAdded(dataFactory);
+    notifyNodeChildRemoved( old );
+    notifyNodeChildAdded( dataFactory );
   }
 
   /**
@@ -458,46 +407,42 @@ public class MasterReport extends AbstractReportDefinition
    *
    * @return the clone.
    */
-  public MasterReport clone()
-  {
+  public MasterReport clone() {
     final MasterReport report = (MasterReport) super.clone();
     report.reportConfiguration = (HierarchicalConfiguration) reportConfiguration.clone();
     report.reportEnvironment = (ReportEnvironment) reportEnvironment.clone();
-    if (report.reportEnvironment instanceof DefaultReportEnvironment)
-    {
+    if ( report.reportEnvironment instanceof DefaultReportEnvironment ) {
       // this is a ugly hack. Needs to be addressed in Sugar
       final DefaultReportEnvironment dre = (DefaultReportEnvironment) report.reportEnvironment;
-      dre.update(report.reportConfiguration);
+      dre.update( report.reportConfiguration );
     }
     report.parameterDefinition = (ReportParameterDefinition) parameterDefinition.clone();
     report.parameterValues = (ReportParameterValues) parameterValues.clone();
     report.dataFactory = dataFactory.derive();
 
     // Add a listener that will handle keeping the ResourceManager in sync with changes to the Document Bundle
-    report.addReportModelListener(new DocumentBundleChangeHandler());
-    report.addReportModelListener(new ResourceBundleChangeHandler());
+    report.addReportModelListener( new DocumentBundleChangeHandler() );
+    report.addReportModelListener( new ResourceBundleChangeHandler() );
 
     return report;
   }
 
-  public MasterReport derive(final boolean preserveElementInstanceIds)
-  {
-    final MasterReport report = (MasterReport) super.derive(preserveElementInstanceIds);
+  public MasterReport derive( final boolean preserveElementInstanceIds ) {
+    final MasterReport report = (MasterReport) super.derive( preserveElementInstanceIds );
     report.reportConfiguration = (HierarchicalConfiguration) reportConfiguration.clone();
     report.reportEnvironment = (ReportEnvironment) reportEnvironment.clone();
-    if (report.reportEnvironment instanceof DefaultReportEnvironment)
-    {
+    if ( report.reportEnvironment instanceof DefaultReportEnvironment ) {
       // this is a ugly hack. Needs to be addressed in Sugar
       final DefaultReportEnvironment dre = (DefaultReportEnvironment) report.reportEnvironment;
-      dre.update(report.reportConfiguration);
+      dre.update( report.reportConfiguration );
     }
     report.parameterDefinition = (ReportParameterDefinition) parameterDefinition.clone();
     report.parameterValues = (ReportParameterValues) parameterValues.clone();
     report.dataFactory = dataFactory.derive();
 
     // Add a listener that will handle keeping the ResourceManager in sync with changes to the Document Bundle
-    report.addReportModelListener(new DocumentBundleChangeHandler());
-    report.addReportModelListener(new ResourceBundleChangeHandler());
+    report.addReportModelListener( new DocumentBundleChangeHandler() );
+    report.addReportModelListener( new ResourceBundleChangeHandler() );
 
     return report;
   }
@@ -510,8 +455,7 @@ public class MasterReport extends AbstractReportDefinition
    *
    * @return the report configuration.
    */
-  public ModifiableConfiguration getReportConfiguration()
-  {
+  public ModifiableConfiguration getReportConfiguration() {
     return reportConfiguration;
   }
 
@@ -520,8 +464,7 @@ public class MasterReport extends AbstractReportDefinition
    *
    * @return the configuration.
    */
-  public Configuration getConfiguration()
-  {
+  public Configuration getConfiguration() {
     return reportConfiguration;
   }
 
@@ -534,10 +477,8 @@ public class MasterReport extends AbstractReportDefinition
    *
    * @return the resource manager, never null.
    */
-  public ResourceManager getResourceManager()
-  {
-    if (resourceManager == null)
-    {
+  public ResourceManager getResourceManager() {
+    if ( resourceManager == null ) {
       resourceManager = new ResourceManager();
       updateResourceBundleFactoryInternal();
     }
@@ -550,20 +491,17 @@ public class MasterReport extends AbstractReportDefinition
    *
    * @param resourceManager the new resource manager or null.
    */
-  public void setResourceManager(final ResourceManager resourceManager)
-  {
+  public void setResourceManager( final ResourceManager resourceManager ) {
     this.resourceManager = resourceManager;
-    notifyNodePropertiesChanged(resourceManager);
+    notifyNodePropertiesChanged( resourceManager );
   }
 
-  public ReportParameterValues getParameterValues()
-  {
+  public ReportParameterValues getParameterValues() {
     return parameterValues;
   }
 
-  protected void updateChangedFlagInternal(final ReportElement element, final int type, final Object parameter)
-  {
-    fireModelLayoutChanged(element, type, parameter);
+  protected void updateChangedFlagInternal( final ReportElement element, final int type, final Object parameter ) {
+    fireModelLayoutChanged( element, type, parameter );
   }
 
   /**
@@ -572,27 +510,23 @@ public class MasterReport extends AbstractReportDefinition
    * @param stream the stream to which the element should be serialized.
    * @throws IOException if an IO error occured or a property was not serializable.
    */
-  private void writeObject(final ObjectOutputStream stream)
-      throws IOException
-  {
+  private void writeObject( final ObjectOutputStream stream )
+    throws IOException {
     stream.defaultWriteObject();
-    try
-    {
+    try {
       final DocumentBundle bundle = getBundle();
-      stream.writeObject(bundle.getMetaData().getBundleType());
+      stream.writeObject( bundle.getMetaData().getBundleType() );
 
       final MemoryDocumentBundle mem = new MemoryDocumentBundle();
-      BundleUtilities.copyStickyInto(mem, bundle);
-      BundleUtilities.copyInto(mem, bundle, LegacyBundleResourceRegistry.getInstance().getRegisteredFiles(), true);
-      BundleUtilities.copyMetaData(mem, bundle);
-      mem.getWriteableDocumentMetaData().setBundleType("application/vnd.pentaho.serialized-bundle");
+      BundleUtilities.copyStickyInto( mem, bundle );
+      BundleUtilities.copyInto( mem, bundle, LegacyBundleResourceRegistry.getInstance().getRegisteredFiles(), true );
+      BundleUtilities.copyMetaData( mem, bundle );
+      mem.getWriteableDocumentMetaData().setBundleType( "application/vnd.pentaho.serialized-bundle" );
       final ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-      BundleUtilities.writeAsZip(outputStream, mem);
-      stream.writeObject(outputStream.toByteArray());
-    }
-    catch (ContentIOException e)
-    {
-      throw new IOException("Unable to serialize the bundle", e);
+      BundleUtilities.writeAsZip( outputStream, mem );
+      stream.writeObject( outputStream.toByteArray() );
+    } catch ( ContentIOException e ) {
+      throw new IOException( "Unable to serialize the bundle", e );
     }
   }
 
@@ -603,101 +537,84 @@ public class MasterReport extends AbstractReportDefinition
    * @throws IOException            if an IO error occured.
    * @throws ClassNotFoundException if an referenced class cannot be found.
    */
-  private void readObject(final ObjectInputStream stream)
-      throws IOException, ClassNotFoundException
-  {
+  private void readObject( final ObjectInputStream stream )
+    throws IOException, ClassNotFoundException {
     stream.defaultReadObject();
 
     updateResourceBundleFactoryInternal();
 
-    reportConfiguration.reconnectConfiguration(ClassicEngineBoot.getInstance().getGlobalConfig());
-    addReportModelListener(new DocumentBundleChangeHandler());
+    reportConfiguration.reconnectConfiguration( ClassicEngineBoot.getInstance().getGlobalConfig() );
+    addReportModelListener( new DocumentBundleChangeHandler() );
 
-    try
-    {
+    try {
       final String bundleType = (String) stream.readObject();
 
       final byte[] bundleRawZip = (byte[]) stream.readObject();
       final ResourceManager mgr = getResourceManager();
-      final Resource bundleResource = mgr.createDirectly(bundleRawZip, DocumentBundle.class);
+      final Resource bundleResource = mgr.createDirectly( bundleRawZip, DocumentBundle.class );
       final DocumentBundle bundle = (DocumentBundle) bundleResource.getResource();
 
-      final MemoryDocumentBundle mem = new MemoryDocumentBundle(getContentBase());
-      BundleUtilities.copyStickyInto(mem, bundle);
-      BundleUtilities.copyInto(mem, bundle, LegacyBundleResourceRegistry.getInstance().getRegisteredFiles(), true);
-      BundleUtilities.copyMetaData(mem, bundle);
-      mem.getWriteableDocumentMetaData().setBundleType(bundleType);
-      setBundle(mem);
-    }
-    catch (ResourceException e)
-    {
-      throw new IOException(e);
+      final MemoryDocumentBundle mem = new MemoryDocumentBundle( getContentBase() );
+      BundleUtilities.copyStickyInto( mem, bundle );
+      BundleUtilities.copyInto( mem, bundle, LegacyBundleResourceRegistry.getInstance().getRegisteredFiles(), true );
+      BundleUtilities.copyMetaData( mem, bundle );
+      mem.getWriteableDocumentMetaData().setBundleType( bundleType );
+      setBundle( mem );
+    } catch ( ResourceException e ) {
+      throw new IOException( e );
     }
   }
 
-  private void updateResourceBundleFactoryInternal()
-  {
-    if (resourceBundleFactory instanceof ExtendedResourceBundleFactory)
-    {
+  private void updateResourceBundleFactoryInternal() {
+    if ( resourceBundleFactory instanceof ExtendedResourceBundleFactory ) {
       final ExtendedResourceBundleFactory erbf = (ExtendedResourceBundleFactory) resourceBundleFactory;
-      erbf.setResourceLoader(getResourceManager(), getContentBase());
+      erbf.setResourceLoader( getResourceManager(), getContentBase() );
     }
   }
 
-  public Integer getCompatibilityLevel()
-  {
+  public Integer getCompatibilityLevel() {
     final Object definedCompatLevel =
-        getAttribute(AttributeNames.Internal.NAMESPACE, AttributeNames.Internal.COMAPTIBILITY_LEVEL);
-    if (definedCompatLevel instanceof Integer)
-    {
+      getAttribute( AttributeNames.Internal.NAMESPACE, AttributeNames.Internal.COMAPTIBILITY_LEVEL );
+    if ( definedCompatLevel instanceof Integer ) {
       return (Integer) definedCompatLevel;
     }
     return null;
   }
 
-  public void setCompatibilityLevel(final Integer level)
-  {
-    setAttribute(AttributeNames.Internal.NAMESPACE, AttributeNames.Internal.COMAPTIBILITY_LEVEL, level);
+  public void setCompatibilityLevel( final Integer level ) {
+    setAttribute( AttributeNames.Internal.NAMESPACE, AttributeNames.Internal.COMAPTIBILITY_LEVEL, level );
   }
 
-  public void updateLegacyConfiguration()
-  {
+  public void updateLegacyConfiguration() {
   }
 
-  public ElementStyleDefinition getStyleDefinition()
-  {
-    return (ElementStyleDefinition) getAttribute(AttributeNames.Core.NAMESPACE, AttributeNames.Core.STYLE_SHEET);
+  public ElementStyleDefinition getStyleDefinition() {
+    return (ElementStyleDefinition) getAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.STYLE_SHEET );
   }
 
-  public void setStyleDefinition(final ElementStyleDefinition styleDefinition)
-  {
-    setAttribute(AttributeNames.Core.NAMESPACE, AttributeNames.Core.STYLE_SHEET, styleDefinition);
+  public void setStyleDefinition( final ElementStyleDefinition styleDefinition ) {
+    setAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.STYLE_SHEET, styleDefinition );
   }
 
-  public ResourceKey getStyleSheetReference()
-  {
-    return (ResourceKey) getAttribute(AttributeNames.Core.NAMESPACE, AttributeNames.Core.STYLE_SHEET_REFERENCE);
+  public ResourceKey getStyleSheetReference() {
+    return (ResourceKey) getAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.STYLE_SHEET_REFERENCE );
   }
 
-  public void setStyleSheetReference(final ResourceKey styleSheetReference)
-  {
-    setAttribute(AttributeNames.Core.NAMESPACE, AttributeNames.Core.STYLE_SHEET_REFERENCE, styleSheetReference);
+  public void setStyleSheetReference( final ResourceKey styleSheetReference ) {
+    setAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.STYLE_SHEET_REFERENCE, styleSheetReference );
   }
 
-  public boolean isStrictLegacyMode()
-  {
-    return "true".equals(getReportConfiguration().getConfigProperty
-        ("org.pentaho.reporting.engine.classic.core.legacy.StrictCompatibility"));
+  public boolean isStrictLegacyMode() {
+    return "true".equals( getReportConfiguration().getConfigProperty
+      ( "org.pentaho.reporting.engine.classic.core.legacy.StrictCompatibility" ) );
   }
 
-  public void setStrictLegacyMode(final boolean strict)
-  {
+  public void setStrictLegacyMode( final boolean strict ) {
     getReportConfiguration().setConfigProperty
-        ("org.pentaho.reporting.engine.classic.core.legacy.StrictCompatibility", String.valueOf(strict));
+      ( "org.pentaho.reporting.engine.classic.core.legacy.StrictCompatibility", String.valueOf( strict ) );
   }
 
-  public ReportDefinition getMasterReport()
-  {
+  public ReportDefinition getMasterReport() {
     return this;
   }
 }

@@ -27,46 +27,38 @@ import org.pentaho.reporting.libraries.xmlns.parser.RootXmlReadHandler;
 import org.pentaho.reporting.libraries.xmlns.parser.XmlFactoryModule;
 import org.pentaho.reporting.libraries.xmlns.parser.XmlFactoryModuleRegistry;
 
-public class ElementMetaDataResourceFactory extends AbstractXmlResourceFactory
-{
+public class ElementMetaDataResourceFactory extends AbstractXmlResourceFactory {
   private static final XmlFactoryModuleRegistry registry = new XmlFactoryModuleRegistry();
 
-  public static void register(final Class<? extends XmlFactoryModule> readHandler)
-  {
-    registry.register(readHandler);
+  public static void register( final Class<? extends XmlFactoryModule> readHandler ) {
+    registry.register( readHandler );
   }
 
-  public ElementMetaDataResourceFactory()
-  {
+  public ElementMetaDataResourceFactory() {
   }
 
-  public void initializeDefaults()
-  {
+  public void initializeDefaults() {
     super.initializeDefaults();
     final XmlFactoryModule[] registeredHandlers = registry.getRegisteredHandlers();
-    for (int i = 0; i < registeredHandlers.length; i++)
-    {
-      registerModule(registeredHandlers[i]);
+    for ( int i = 0; i < registeredHandlers.length; i++ ) {
+      registerModule( registeredHandlers[ i ] );
     }
   }
 
-  protected Configuration getConfiguration()
-  {
+  protected Configuration getConfiguration() {
     return ClassicEngineBoot.getInstance().getGlobalConfig();
   }
 
-  public Class<?> getFactoryType()
-  {
+  public Class<?> getFactoryType() {
     return ElementTypeCollection.class;
   }
 
-  protected Resource createResource(final ResourceKey targetKey,
-                                    final RootXmlReadHandler handler,
-                                    final Object createdProduct,
-                                    final Class createdType)
-  {
+  protected Resource createResource( final ResourceKey targetKey,
+                                     final RootXmlReadHandler handler,
+                                     final Object createdProduct,
+                                     final Class createdType ) {
     return new ReportResource
-        (targetKey, handler.getDependencyCollector(), createdProduct, createdType, true);
+      ( targetKey, handler.getDependencyCollector(), createdProduct, createdType, true );
   }
 
 

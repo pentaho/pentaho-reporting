@@ -28,9 +28,8 @@ import org.pentaho.reporting.engine.classic.core.function.Expression;
  *
  * @author Thomas Morgner
  */
-public class SubReportDataDefinition
-{
-  private static final Expression[] EMPTY_EXPRESSIONS = new Expression[0];
+public class SubReportDataDefinition {
+  private static final Expression[] EMPTY_EXPRESSIONS = new Expression[ 0 ];
 
   private ParameterMapping[] importParameters;
   private ParameterMapping[] exportParameters;
@@ -40,21 +39,18 @@ public class SubReportDataDefinition
   private int queryLimit;
   private int queryTimeout;
 
-  public SubReportDataDefinition(final ParameterMapping[] importParameters,
-                                 final ParameterMapping[] exportParameters,
-                                 final DataFactory primaryDataFactory,
-                                 final String query,
-                                 final int queryLimit,
-                                 final int queryTimeout,
-                                 final Expression[] expressions)
-  {
+  public SubReportDataDefinition( final ParameterMapping[] importParameters,
+                                  final ParameterMapping[] exportParameters,
+                                  final DataFactory primaryDataFactory,
+                                  final String query,
+                                  final int queryLimit,
+                                  final int queryTimeout,
+                                  final Expression[] expressions ) {
     this.primaryDataFactory = primaryDataFactory;
-    if (exportParameters != null)
-    {
+    if ( exportParameters != null ) {
       this.exportParameters = (ParameterMapping[]) exportParameters.clone();
     }
-    if (importParameters != null)
-    {
+    if ( importParameters != null ) {
       this.importParameters = (ParameterMapping[]) importParameters.clone();
     }
     this.query = query;
@@ -64,59 +60,47 @@ public class SubReportDataDefinition
   }
 
 
-  public String getQuery()
-  {
+  public String getQuery() {
     return query;
   }
 
-  public int getQueryLimit()
-  {
+  public int getQueryLimit() {
     return queryLimit;
   }
 
-  public int getQueryTimeout()
-  {
+  public int getQueryTimeout() {
     return queryTimeout;
   }
 
-  public Expression[] getExpressions()
-  {
-    if (expressions == null)
-    {
+  public Expression[] getExpressions() {
+    if ( expressions == null ) {
       return EMPTY_EXPRESSIONS;
     }
 
-    final Expression[] targetExpressions = new Expression[expressions.length];
-    for (int i = 0; i < expressions.length; i++)
-    {
-      final Expression expression = expressions[i];
-      targetExpressions[i] = expression.getInstance();
+    final Expression[] targetExpressions = new Expression[ expressions.length ];
+    for ( int i = 0; i < expressions.length; i++ ) {
+      final Expression expression = expressions[ i ];
+      targetExpressions[ i ] = expression.getInstance();
     }
     return targetExpressions;
   }
 
-  public ParameterMapping[] getExportParameters()
-  {
-    if (exportParameters == null)
-    {
+  public ParameterMapping[] getExportParameters() {
+    if ( exportParameters == null ) {
       return null;
     }
     return (ParameterMapping[]) exportParameters.clone();
   }
 
-  public ParameterMapping[] getImportParameters()
-  {
-    if (importParameters == null)
-    {
+  public ParameterMapping[] getImportParameters() {
+    if ( importParameters == null ) {
       return null;
     }
     return (ParameterMapping[]) importParameters.clone();
   }
 
-  public DataFactory getDataFactory() throws ReportDataFactoryException
-  {
-    if (primaryDataFactory != null)
-    {
+  public DataFactory getDataFactory() throws ReportDataFactoryException {
+    if ( primaryDataFactory != null ) {
       return primaryDataFactory.derive();
     }
     return null;

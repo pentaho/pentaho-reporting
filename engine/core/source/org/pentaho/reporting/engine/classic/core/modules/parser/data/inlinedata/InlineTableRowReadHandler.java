@@ -17,25 +17,22 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.parser.data.inlinedata;
 
-import java.util.ArrayList;
-
 import org.pentaho.reporting.libraries.xmlns.parser.AbstractXmlReadHandler;
 import org.pentaho.reporting.libraries.xmlns.parser.IgnoreAnyChildReadHandler;
 import org.pentaho.reporting.libraries.xmlns.parser.XmlReadHandler;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 
-public class InlineTableRowReadHandler extends AbstractXmlReadHandler
-{
+import java.util.ArrayList;
+
+public class InlineTableRowReadHandler extends AbstractXmlReadHandler {
   private ArrayList data;
   private Class[] types;
   private int columnCount;
 
-  public InlineTableRowReadHandler(final Class[] types)
-  {
-    if (types == null)
-    {
-      throw new NullPointerException("Type-array must not be null.");
+  public InlineTableRowReadHandler( final Class[] types ) {
+    if ( types == null ) {
+      throw new NullPointerException( "Type-array must not be null." );
     }
     this.types = (Class[]) types.clone();
     this.data = new ArrayList();
@@ -50,25 +47,21 @@ public class InlineTableRowReadHandler extends AbstractXmlReadHandler
    * @return the handler or null, if the tagname is invalid.
    * @throws SAXException if there is a parsing error.
    */
-  protected XmlReadHandler getHandlerForChild(final String uri,
-                                              final String tagName,
-                                              final Attributes atts) throws SAXException
-  {
-    if (isSameNamespace(uri) == false)
-    {
+  protected XmlReadHandler getHandlerForChild( final String uri,
+                                               final String tagName,
+                                               final Attributes atts ) throws SAXException {
+    if ( isSameNamespace( uri ) == false ) {
       return null;
     }
 
-    if ("data".equals(tagName))
-    {
-      if (columnCount >= types.length)
-      {
+    if ( "data".equals( tagName ) ) {
+      if ( columnCount >= types.length ) {
         return new IgnoreAnyChildReadHandler();
       }
 
-      final InlineTableDataReadHandler dataReadHandler = new InlineTableDataReadHandler(types[columnCount]);
+      final InlineTableDataReadHandler dataReadHandler = new InlineTableDataReadHandler( types[ columnCount ] );
       columnCount += 1;
-      data.add(dataReadHandler);
+      data.add( dataReadHandler );
       return dataReadHandler;
     }
 
@@ -82,15 +75,13 @@ public class InlineTableRowReadHandler extends AbstractXmlReadHandler
    * @return the object.
    * @throws SAXException if an parser error occured.
    */
-  public Object getObject() throws SAXException
-  {
-    final Object[] result = new Object[types.length];
+  public Object getObject() throws SAXException {
+    final Object[] result = new Object[ types.length ];
 
-    final int size = Math.min(data.size(), types.length);
-    for (int i = 0; i < size; i++)
-    {
-      final InlineTableDataReadHandler handler = (InlineTableDataReadHandler) data.get(i);
-      result[i] = handler.getObject();
+    final int size = Math.min( data.size(), types.length );
+    for ( int i = 0; i < size; i++ ) {
+      final InlineTableDataReadHandler handler = (InlineTableDataReadHandler) data.get( i );
+      result[ i ] = handler.getObject();
     }
 
     return result;

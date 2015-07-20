@@ -17,8 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.core.layout.build;
 
-import java.util.ArrayList;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.pentaho.reporting.engine.classic.core.ReportElement;
@@ -34,9 +32,10 @@ import org.pentaho.reporting.engine.classic.core.states.ReportStateKey;
 import org.pentaho.reporting.engine.classic.core.style.BandStyleKeys;
 import org.pentaho.reporting.engine.classic.core.util.InstanceID;
 
-public class FooterLayoutModelBuilder extends LayoutModelBuilderWrapper
-{
-  private static final Log logger = LogFactory.getLog(FooterLayoutModelBuilder.class);
+import java.util.ArrayList;
+
+public class FooterLayoutModelBuilder extends LayoutModelBuilderWrapper {
+  private static final Log logger = LogFactory.getLog( FooterLayoutModelBuilder.class );
 
   private ArrayList<RenderNode> slots;
   private int slotCounter;
@@ -46,182 +45,149 @@ public class FooterLayoutModelBuilder extends LayoutModelBuilderWrapper
   private boolean empty;
   private OutputProcessorMetaData metaData;
 
-  public FooterLayoutModelBuilder(final LayoutModelBuilder backend)
-  {
-    super(backend);
-    backend.setLimitedSubReports(true);
-    backend.setCollapseProgressMarker(false);
+  public FooterLayoutModelBuilder( final LayoutModelBuilder backend ) {
+    super( backend );
+    backend.setLimitedSubReports( true );
+    backend.setCollapseProgressMarker( false );
     this.slots = new ArrayList<RenderNode>();
   }
 
-  public void initialize(final ProcessingContext metaData,
-                         final RenderBox parentBox,
-                         final RenderNodeFactory renderNodeFactory)
-  {
+  public void initialize( final ProcessingContext metaData,
+                          final RenderBox parentBox,
+                          final RenderNodeFactory renderNodeFactory ) {
     this.parentBox = parentBox;
-    getParent().initialize(metaData, parentBox, renderNodeFactory);
+    getParent().initialize( metaData, parentBox, renderNodeFactory );
     this.metaData = metaData.getOutputProcessorMetaData();
   }
 
-  public void setLimitedSubReports(final boolean limitedSubReports)
-  {
+  public void setLimitedSubReports( final boolean limitedSubReports ) {
 
   }
 
-  public void updateState(final ReportStateKey stateKey)
-  {
+  public void updateState( final ReportStateKey stateKey ) {
     this.stateKey = stateKey;
-    getParent().updateState(stateKey);
+    getParent().updateState( stateKey );
   }
 
-  public InstanceID startBox(final ReportElement element)
-  {
-    InstanceID instanceID = getParent().startBox(element);
-    if (inBoxDepth == 0)
-    {
-      if (logger.isDebugEnabled())
-      {
-        logger.debug("Started a Box: " + slotCounter + " " + element);
+  public InstanceID startBox( final ReportElement element ) {
+    InstanceID instanceID = getParent().startBox( element );
+    if ( inBoxDepth == 0 ) {
+      if ( logger.isDebugEnabled() ) {
+        logger.debug( "Started a Box: " + slotCounter + " " + element );
       }
     }
     inBoxDepth += 1;
     return instanceID;
   }
 
-  public void startSection(final ReportElement element, final int sectionSize)
-  {
-    throw new UnsupportedOperationException("Global sections cannot be started for page headers");
+  public void startSection( final ReportElement element, final int sectionSize ) {
+    throw new UnsupportedOperationException( "Global sections cannot be started for page headers" );
   }
 
-  public InlineSubreportMarker processSubReport(final SubReport element)
-  {
-    throw new UnsupportedOperationException("SubReports cannot be started for page headers");
+  public InlineSubreportMarker processSubReport( final SubReport element ) {
+    throw new UnsupportedOperationException( "SubReports cannot be started for page headers" );
   }
 
-  public boolean finishBox()
-  {
-    if (inBoxDepth == 1)
-    {
+  public boolean finishBox() {
+    if ( inBoxDepth == 1 ) {
       empty &= super.isEmpty();
     }
-    
+
     super.finishBox();
     inBoxDepth -= 1;
-    if (inBoxDepth == 0)
-    {
+    if ( inBoxDepth == 0 ) {
       slotCounter += 1;
-      if (logger.isDebugEnabled())
-      {
-        logger.debug("Finshed a Box: " + slotCounter + " - empty: " + super.isEmpty());
+      if ( logger.isDebugEnabled() ) {
+        logger.debug( "Finshed a Box: " + slotCounter + " - empty: " + super.isEmpty() );
       }
       return super.isEmpty();
     }
     return empty;
   }
 
-  public boolean isEmpty()
-  {
-    if (inBoxDepth == 0)
-    {
+  public boolean isEmpty() {
+    if ( inBoxDepth == 0 ) {
       return empty;
     }
     return super.isEmpty();
   }
 
-  public void endSubFlow()
-  {
-    throw new UnsupportedOperationException("SubReport sections cannot be started for page headers");
+  public void endSubFlow() {
+    throw new UnsupportedOperationException( "SubReport sections cannot be started for page headers" );
   }
 
-  public void addProgressMarkerBox()
-  {
+  public void addProgressMarkerBox() {
     super.addProgressMarkerBox();
     slotCounter += 1;
   }
 
-  public void addManualPageBreakBox(final long range)
-  {
-    throw new UnsupportedOperationException("PageBreak sections cannot be started for page headers");
+  public void addManualPageBreakBox( final long range ) {
+    throw new UnsupportedOperationException( "PageBreak sections cannot be started for page headers" );
   }
 
-  public LayoutModelBuilder deriveForStorage(final RenderBox clonedContent)
-  {
-    final FooterLayoutModelBuilder clone = (FooterLayoutModelBuilder) super.deriveForStorage(clonedContent);
+  public LayoutModelBuilder deriveForStorage( final RenderBox clonedContent ) {
+    final FooterLayoutModelBuilder clone = (FooterLayoutModelBuilder) super.deriveForStorage( clonedContent );
     clone.slots = (ArrayList<RenderNode>) slots.clone();
     clone.slots.clear();
     clone.parentBox = clonedContent;
     return clone;
   }
 
-  public LayoutModelBuilder deriveForPageBreak()
-  {
+  public LayoutModelBuilder deriveForPageBreak() {
     final FooterLayoutModelBuilder clone = (FooterLayoutModelBuilder) super.deriveForPageBreak();
     clone.slots = (ArrayList<RenderNode>) slots.clone();
     clone.slots.clear();
     return clone;
   }
 
-  public void startSection()
-  {
+  public void startSection() {
     empty = true;
 
     slots.clear();
     slotCounter = 0;
     // check what slots are filled and update the list
     final RenderNode firstChild = parentBox.getFirstChild();
-    if (firstChild instanceof RenderBox)
-    {
+    if ( firstChild instanceof RenderBox ) {
       final RenderBox slottedContent = (RenderBox) firstChild;
       RenderNode box = slottedContent.getFirstChild();
-      if (logger.isDebugEnabled())
-      {
-        logger.debug("Start Section: " + parentBox);
-        logger.debug("      Section: " + slottedContent);
-        logger.debug("      Section: " + box);
-        logger.debug("      Key    : " + stateKey);
+      if ( logger.isDebugEnabled() ) {
+        logger.debug( "Start Section: " + parentBox );
+        logger.debug( "      Section: " + slottedContent );
+        logger.debug( "      Section: " + box );
+        logger.debug( "      Key    : " + stateKey );
       }
 
       boolean sticky = false;
-      while (box != null)
-      {
-        if (box.getStyleSheet().getBooleanStyleProperty(BandStyleKeys.STICKY))
-        {
+      while ( box != null ) {
+        if ( box.getStyleSheet().getBooleanStyleProperty( BandStyleKeys.STICKY ) ) {
           sticky = true;
         }
-        if (sticky)
-        {
-          if (logger.isDebugEnabled())
-          {
-            logger.debug("Added Slot[]: " + box);
-            logger.debug("      Slot[]: " + box.getElementType());
-            logger.debug("      Slot[]: " + box.getStateKey());
+        if ( sticky ) {
+          if ( logger.isDebugEnabled() ) {
+            logger.debug( "Added Slot[]: " + box );
+            logger.debug( "      Slot[]: " + box.getElementType() );
+            logger.debug( "      Slot[]: " + box.getStateKey() );
           }
-          slots.add(box);
+          slots.add( box );
         }
         box = box.getNext();
 
       }
-    }
-    else
-    {
-      if (logger.isDebugEnabled())
-      {
-        logger.debug("Added Reverse Section: " + slotCounter + " " + slots.size() + " " + firstChild);
+    } else {
+      if ( logger.isDebugEnabled() ) {
+        logger.debug( "Added Reverse Section: " + slotCounter + " " + slots.size() + " " + firstChild );
       }
     }
 
-    if (logger.isDebugEnabled())
-    {
-      logger.debug("Clear Footer for new print.");
+    if ( logger.isDebugEnabled() ) {
+      logger.debug( "Clear Footer for new print." );
     }
     parentBox.clear();
     super.startSection();
   }
 
-  public void endSection()
-  {
-    if (metaData.isFeatureSupported(OutputProcessorFeature.STRICT_COMPATIBILITY))
-    {
+  public void endSection() {
+    if ( metaData.isFeatureSupported( OutputProcessorFeature.STRICT_COMPATIBILITY ) ) {
       super.legacyFlagNotEmpty();
     }
     super.endSection();
@@ -233,34 +199,29 @@ public class FooterLayoutModelBuilder extends LayoutModelBuilderWrapper
      * To make sticky page-footers behave correctly, we need to ensure that progress-marker are not merged
      * and that empty bands produce exactly one progress marker. 
      */
-    if (logger.isDebugEnabled())
-    {
-      logger.debug("Slot counter: " + slotCounter + " " + slots.size());
-      for (int i = 0; i < slots.size(); i++)
-      {
-        final RenderNode renderNode = slots.get(i);
-        logger.debug("Slots[" + i + "]: " + renderNode);
-        logger.debug("     [" + i + "]: " + renderNode.getStateKey());
+    if ( logger.isDebugEnabled() ) {
+      logger.debug( "Slot counter: " + slotCounter + " " + slots.size() );
+      for ( int i = 0; i < slots.size(); i++ ) {
+        final RenderNode renderNode = slots.get( i );
+        logger.debug( "Slots[" + i + "]: " + renderNode );
+        logger.debug( "     [" + i + "]: " + renderNode.getStateKey() );
       }
     }
     // this is not correct ... we should insert the new band before the old one ..
     final RenderNode firstChild = parentBox.getFirstChild();
-    if (slotCounter < slots.size() &&
-        (firstChild.getLayoutNodeType() & LayoutNodeTypes.MASK_BOX) == LayoutNodeTypes.MASK_BOX)
-    {
+    if ( slotCounter < slots.size() &&
+      ( firstChild.getLayoutNodeType() & LayoutNodeTypes.MASK_BOX ) == LayoutNodeTypes.MASK_BOX ) {
       final ArrayList<RenderNode> childsAdded = new ArrayList<RenderNode>();
 
       // Store the added children until we need them ..
       final RenderBox sectionBox = (RenderBox) firstChild;
       RenderNode child = sectionBox.getFirstChild();
-      while (child != null)
-      {
+      while ( child != null ) {
         final RenderNode next = child.getNext();
-        sectionBox.remove(child);
-        childsAdded.add(child);
-        if (logger.isDebugEnabled())
-        {
-          logger.debug("New[" + "]: " + child);
+        sectionBox.remove( child );
+        childsAdded.add( child );
+        if ( logger.isDebugEnabled() ) {
+          logger.debug( "New[" + "]: " + child );
         }
         child = next;
       }
@@ -268,47 +229,39 @@ public class FooterLayoutModelBuilder extends LayoutModelBuilderWrapper
       sectionBox.clear();
 
       // first insert the saved ones ...
-      for (int i = slots.size() - slotCounter - 1; i >= 0; i--)
-      {
-        final RenderNode node = slots.get(i);
-        final RenderNode derived = node.derive(true);
+      for ( int i = slots.size() - slotCounter - 1; i >= 0; i-- ) {
+        final RenderNode node = slots.get( i );
+        final RenderNode derived = node.derive( true );
 
-        if (logger.isDebugEnabled())
-        {
-          logger.debug("Rescued[" + i + "]: " + slots.get(i));
+        if ( logger.isDebugEnabled() ) {
+          logger.debug( "Rescued[" + i + "]: " + slots.get( i ) );
         }
-        sectionBox.addGeneratedChild(derived);
+        sectionBox.addGeneratedChild( derived );
       }
 
-      for (int i = 0; i < childsAdded.size(); i++)
-      {
-        final RenderNode node = childsAdded.get(i);
-        if (logger.isDebugEnabled())
-        {
-          logger.debug("New[" + "]: " + node);
+      for ( int i = 0; i < childsAdded.size(); i++ ) {
+        final RenderNode node = childsAdded.get( i );
+        if ( logger.isDebugEnabled() ) {
+          logger.debug( "New[" + "]: " + node );
         }
-        sectionBox.addGeneratedChild(node);
+        sectionBox.addGeneratedChild( node );
       }
     }
   }
 
-  public InstanceID createSubflowPlaceholder(final ReportElement element)
-  {
-    throw new UnsupportedOperationException("SubReport sections cannot be started for page headers");
+  public InstanceID createSubflowPlaceholder( final ReportElement element ) {
+    throw new UnsupportedOperationException( "SubReport sections cannot be started for page headers" );
   }
 
-  public void startSubFlow(final InstanceID insertationPoint)
-  {
-    throw new UnsupportedOperationException("SubReport sections cannot be started for page headers");
+  public void startSubFlow( final InstanceID insertationPoint ) {
+    throw new UnsupportedOperationException( "SubReport sections cannot be started for page headers" );
   }
 
-  public void startSubFlow(final ReportElement element)
-  {
-    throw new UnsupportedOperationException("SubReport sections cannot be started for page headers");
+  public void startSubFlow( final ReportElement element ) {
+    throw new UnsupportedOperationException( "SubReport sections cannot be started for page headers" );
   }
 
-  public void suspendSubFlow()
-  {
-    throw new UnsupportedOperationException("SubReport sections cannot be started for page headers");
+  public void suspendSubFlow() {
+    throw new UnsupportedOperationException( "SubReport sections cannot be started for page headers" );
   }
 }

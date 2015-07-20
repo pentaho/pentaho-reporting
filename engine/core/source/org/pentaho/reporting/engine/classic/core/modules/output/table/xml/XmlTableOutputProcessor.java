@@ -17,12 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.output.table.xml;
 
-import java.io.IOException;
-import java.io.OutputStream;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
 import org.pentaho.reporting.engine.classic.core.InvalidReportStateException;
 import org.pentaho.reporting.engine.classic.core.layout.model.LogicalPageBox;
 import org.pentaho.reporting.engine.classic.core.layout.output.ContentProcessingException;
@@ -37,29 +31,30 @@ import org.pentaho.reporting.engine.classic.core.modules.output.table.base.Table
 import org.pentaho.reporting.engine.classic.core.modules.output.table.xml.internal.XmlDocumentWriter;
 import org.pentaho.reporting.engine.classic.core.modules.output.table.xml.internal.XmlTableOutputProcessorMetaData;
 
-public class XmlTableOutputProcessor extends AbstractTableOutputProcessor implements PageableOutputProcessor
-{
+import java.io.IOException;
+import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+public class XmlTableOutputProcessor extends AbstractTableOutputProcessor implements PageableOutputProcessor {
   private List<PhysicalPageKey> physicalPages;
   private FlowSelector flowSelector;
   private OutputProcessorMetaData metaData;
   private OutputStream outputStream;
   private XmlDocumentWriter writer;
 
-  public XmlTableOutputProcessor(final OutputStream outputStream)
-  {
-    this(outputStream, new XmlTableOutputProcessorMetaData());
+  public XmlTableOutputProcessor( final OutputStream outputStream ) {
+    this( outputStream, new XmlTableOutputProcessorMetaData() );
   }
 
-  public XmlTableOutputProcessor(final OutputStream outputStream,
-                                 final OutputProcessorMetaData metaData)
-  {
-    if (metaData == null)
-    {
-      throw new NullPointerException("MetaData must not be null");
+  public XmlTableOutputProcessor( final OutputStream outputStream,
+                                  final OutputProcessorMetaData metaData ) {
+    if ( metaData == null ) {
+      throw new NullPointerException( "MetaData must not be null" );
     }
-    if (outputStream == null)
-    {
-      throw new NullPointerException("OutputStream must not be null");
+    if ( outputStream == null ) {
+      throw new NullPointerException( "OutputStream must not be null" );
     }
 
     this.outputStream = outputStream;
@@ -69,108 +64,83 @@ public class XmlTableOutputProcessor extends AbstractTableOutputProcessor implem
     this.flowSelector = new DisplayAllFlowSelector();
   }
 
-  protected void processingPagesFinished()
-  {
+  protected void processingPagesFinished() {
     super.processingPagesFinished();
-    physicalPages = Collections.unmodifiableList(physicalPages);
+    physicalPages = Collections.unmodifiableList( physicalPages );
   }
 
-  public int getPhysicalPageCount()
-  {
+  public int getPhysicalPageCount() {
     return physicalPages.size();
   }
 
-  public PhysicalPageKey getPhysicalPage(final int page)
-  {
-    if (isPaginationFinished() == false)
-    {
+  public PhysicalPageKey getPhysicalPage( final int page ) {
+    if ( isPaginationFinished() == false ) {
       throw new IllegalStateException();
     }
 
-    return physicalPages.get(page);
+    return physicalPages.get( page );
   }
 
-  protected LogicalPageKey createLogicalPage(final int width,
-                                             final int height)
-  {
-    final LogicalPageKey key = super.createLogicalPage(width, height);
-    for (int h = 0; h < key.getHeight(); h++)
-    {
-      for (int w = 0; w < key.getWidth(); w++)
-      {
-        physicalPages.add(key.getPage(w, h));
+  protected LogicalPageKey createLogicalPage( final int width,
+                                              final int height ) {
+    final LogicalPageKey key = super.createLogicalPage( width, height );
+    for ( int h = 0; h < key.getHeight(); h++ ) {
+      for ( int w = 0; w < key.getWidth(); w++ ) {
+        physicalPages.add( key.getPage( w, h ) );
       }
     }
     return key;
   }
 
-  protected void processingContentFinished()
-  {
-    if (isContentGeneratable() == false)
-    {
+  protected void processingContentFinished() {
+    if ( isContentGeneratable() == false ) {
       return;
     }
 
-    if (writer != null)
-    {
-      try
-      {
+    if ( writer != null ) {
+      try {
         this.metaData.commit();
         writer.close();
-      }
-      catch (IOException e)
-      {
-        throw new InvalidReportStateException("Failed to close writer");
+      } catch ( IOException e ) {
+        throw new InvalidReportStateException( "Failed to close writer" );
       }
     }
   }
 
-  protected void processTableContent(final LogicalPageKey logicalPageKey,
+  protected void processTableContent( final LogicalPageKey logicalPageKey,
+                                      final LogicalPageBox logicalPage,
+                                      final TableContentProducer contentProducer ) throws ContentProcessingException {
+    try {
+      if ( writer == null ) {
+        writer = new XmlDocumentWriter( outputStream, metaData );
+        writer.open();
+      }
+      writer.processTableContent( logicalPage, metaData, contentProducer, false );
+    } catch ( Exception e ) {
+      throw new ContentProcessingException( "Failed to generate PDF document", e );
+    }
+  }
+
+  protected void updateTableContent( final LogicalPageKey logicalPageKey,
                                      final LogicalPageBox logicalPage,
-                                     final TableContentProducer contentProducer) throws ContentProcessingException
-  {
-    try
-    {
-      if (writer == null)
-      {
-        writer = new XmlDocumentWriter(outputStream, metaData);
+                                     final TableContentProducer contentProducer,
+                                     final boolean performOutput ) throws ContentProcessingException {
+    try {
+      if ( writer == null ) {
+        writer = new XmlDocumentWriter( outputStream, metaData );
         writer.open();
       }
-      writer.processTableContent(logicalPage, metaData, contentProducer, false);
-    }
-    catch (Exception e)
-    {
-      throw new ContentProcessingException("Failed to generate PDF document", e);
+      writer.processTableContent( logicalPage, metaData, contentProducer, true );
+    } catch ( Exception e ) {
+      throw new ContentProcessingException( "Failed to generate PDF document", e );
     }
   }
 
-  protected void updateTableContent(final LogicalPageKey logicalPageKey,
-                                    final LogicalPageBox logicalPage,
-                                    final TableContentProducer contentProducer,
-                                    final boolean performOutput) throws ContentProcessingException
-  {
-    try
-    {
-      if (writer == null)
-      {
-        writer = new XmlDocumentWriter(outputStream, metaData);
-        writer.open();
-      }
-      writer.processTableContent(logicalPage, metaData, contentProducer, true);
-    }
-    catch (Exception e)
-    {
-      throw new ContentProcessingException("Failed to generate PDF document", e);
-    }
-  }
-
-  protected FlowSelector getFlowSelector()
-  {
+  protected FlowSelector getFlowSelector() {
     return flowSelector;
   }
 
-  public OutputProcessorMetaData getMetaData()
-  {
+  public OutputProcessorMetaData getMetaData() {
     return metaData;
   }
 }

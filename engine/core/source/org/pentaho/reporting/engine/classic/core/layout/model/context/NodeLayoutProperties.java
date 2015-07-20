@@ -17,8 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.core.layout.model.context;
 
-import java.io.Serializable;
-
 import org.pentaho.reporting.engine.classic.core.ElementAlignment;
 import org.pentaho.reporting.engine.classic.core.InvalidReportStateException;
 import org.pentaho.reporting.engine.classic.core.ReportAttributeMap;
@@ -34,6 +32,8 @@ import org.pentaho.reporting.engine.classic.core.style.TextStyleKeys;
 import org.pentaho.reporting.engine.classic.core.style.VerticalTextAlign;
 import org.pentaho.reporting.engine.classic.core.util.InstanceID;
 
+import java.io.Serializable;
+
 
 /**
  * A static properties collection. That one is static; once computed it does not change anymore. It does not (under no
@@ -41,9 +41,8 @@ import org.pentaho.reporting.engine.classic.core.util.InstanceID;
  *
  * @author Thomas Morgner
  */
-public final class NodeLayoutProperties implements Serializable, Cloneable
-{
-  private static final Float ZERO = new Float(0);
+public final class NodeLayoutProperties implements Serializable, Cloneable {
+  private static final Float ZERO = new Float( 0 );
   public static final InstanceID SIMPLE_NODE_ID = new InstanceID();
   public static final NodeLayoutProperties GENERIC_PROPERTIES = new NodeLayoutProperties();
   // ComputedMetrics:
@@ -56,8 +55,8 @@ public final class NodeLayoutProperties implements Serializable, Cloneable
   private StyleSheet styleSheet;
 
   /**
-   * The instance id identifies the original report-element that was used to create this render-element.
-   * There is no guarantee of uniqueness in this id, as the same element can be printed multiple times.
+   * The instance id identifies the original report-element that was used to create this render-element. There is no
+   * guarantee of uniqueness in this id, as the same element can be printed multiple times.
    */
   private InstanceID instanceId;
   private Float posY;
@@ -66,56 +65,46 @@ public final class NodeLayoutProperties implements Serializable, Cloneable
   private ElementType elementType;
   private boolean visible;
 
-  private NodeLayoutProperties()
-  {
-    this(SimpleStyleSheet.EMPTY_STYLE,
-        ReportAttributeMap.emptyMap(), NodeLayoutProperties.SIMPLE_NODE_ID, AutoLayoutBoxType.INSTANCE);
+  private NodeLayoutProperties() {
+    this( SimpleStyleSheet.EMPTY_STYLE,
+      ReportAttributeMap.emptyMap(), NodeLayoutProperties.SIMPLE_NODE_ID, AutoLayoutBoxType.INSTANCE );
   }
 
-  public NodeLayoutProperties(final StyleSheet styleSheet,
-                              final ReportAttributeMap<Object> attributes,
-                              final InstanceID instanceID,
-                              final ElementType elementType)
-  {
-    this(RenderNode.VERTICAL_AXIS, RenderNode.HORIZONTAL_AXIS, styleSheet, attributes, instanceID, elementType);
+  public NodeLayoutProperties( final StyleSheet styleSheet,
+                               final ReportAttributeMap<Object> attributes,
+                               final InstanceID instanceID,
+                               final ElementType elementType ) {
+    this( RenderNode.VERTICAL_AXIS, RenderNode.HORIZONTAL_AXIS, styleSheet, attributes, instanceID, elementType );
   }
 
-  public NodeLayoutProperties(final int majorAxis,
-                              final int minorAxis,
-                              final StyleSheet styleSheet,
-                              final ReportAttributeMap<Object> attributes,
-                              final InstanceID instanceID,
-                              final ElementType elementType)
-  {
-    if (instanceID == null)
-    {
+  public NodeLayoutProperties( final int majorAxis,
+                               final int minorAxis,
+                               final StyleSheet styleSheet,
+                               final ReportAttributeMap<Object> attributes,
+                               final InstanceID instanceID,
+                               final ElementType elementType ) {
+    if ( instanceID == null ) {
       throw new NullPointerException();
     }
-    if (styleSheet == null)
-    {
+    if ( styleSheet == null ) {
       throw new NullPointerException();
     }
-    if (attributes == null)
-    {
+    if ( attributes == null ) {
       throw new NullPointerException();
     }
 
-    if (styleSheet instanceof ResolverStyleSheet)
-    {
+    if ( styleSheet instanceof ResolverStyleSheet ) {
       throw new IllegalStateException();
     }
 
-    if (styleSheet instanceof ElementStyleSheet)
-    {
-      throw new InvalidReportStateException("Cannot have render-nodes with mutable style");
+    if ( styleSheet instanceof ElementStyleSheet ) {
+      throw new InvalidReportStateException( "Cannot have render-nodes with mutable style" );
     }
-    if (styleSheet.getStyleProperty(TextStyleKeys.FONTSIZE) == null)
-    {
-      throw new InvalidReportStateException("Every resolved style must have a non-null font-size");
+    if ( styleSheet.getStyleProperty( TextStyleKeys.FONTSIZE ) == null ) {
+      throw new InvalidReportStateException( "Every resolved style must have a non-null font-size" );
     }
-    if (styleSheet.getStyleProperty(ElementStyleKeys.STROKE) == null)
-    {
-      throw new InvalidReportStateException("Every resolved style must have a non-null stroke");
+    if ( styleSheet.getStyleProperty( ElementStyleKeys.STROKE ) == null ) {
+      throw new InvalidReportStateException( "Every resolved style must have a non-null stroke" );
     }
 
     this.majorAxis = majorAxis;
@@ -125,117 +114,91 @@ public final class NodeLayoutProperties implements Serializable, Cloneable
     this.attributes = attributes;
     this.elementType = elementType;
 
-    final Object vTextAlign = styleSheet.getStyleProperty(TextStyleKeys.VERTICAL_TEXT_ALIGNMENT);
-    if (vTextAlign != null)
-    {
+    final Object vTextAlign = styleSheet.getStyleProperty( TextStyleKeys.VERTICAL_TEXT_ALIGNMENT );
+    if ( vTextAlign != null ) {
       verticalTextAlign = (VerticalTextAlign) vTextAlign;
-    }
-    else
-    {
+    } else {
       verticalTextAlign = VerticalTextAlign.BASELINE;
     }
     this.visible = true;
   }
 
-  public void setVisible(final boolean visible)
-  {
+  public void setVisible( final boolean visible ) {
     this.visible = visible;
   }
 
-  public boolean isVisible()
-  {
+  public boolean isVisible() {
     return visible;
   }
 
-  public VerticalTextAlign getVerticalTextAlign()
-  {
+  public VerticalTextAlign getVerticalTextAlign() {
     return verticalTextAlign;
   }
 
-  public StyleSheet getStyleSheet()
-  {
+  public StyleSheet getStyleSheet() {
     return styleSheet;
   }
 
-  public InstanceID getInstanceId()
-  {
+  public InstanceID getInstanceId() {
     return instanceId;
   }
 
-  public int getMajorAxis()
-  {
+  public int getMajorAxis() {
     return majorAxis;
   }
 
-  public int getMinorAxis()
-  {
+  public int getMinorAxis() {
     return minorAxis;
   }
 
-  public Object clone() throws CloneNotSupportedException
-  {
+  public Object clone() throws CloneNotSupportedException {
     return super.clone();
   }
 
-  public ElementAlignment getVerticalAlignment()
-  {
-    if (verticalAlignment == null)
-    {
-      this.verticalAlignment = (ElementAlignment) styleSheet.getStyleProperty(ElementStyleKeys.VALIGNMENT);
+  public ElementAlignment getVerticalAlignment() {
+    if ( verticalAlignment == null ) {
+      this.verticalAlignment = (ElementAlignment) styleSheet.getStyleProperty( ElementStyleKeys.VALIGNMENT );
     }
     return verticalAlignment;
   }
 
-  public double getPosY()
-  {
-    if (posY == null)
-    {
-      final Object o = styleSheet.getStyleProperty(ElementStyleKeys.POS_Y);
-      if (o == null)
-      {
+  public double getPosY() {
+    if ( posY == null ) {
+      final Object o = styleSheet.getStyleProperty( ElementStyleKeys.POS_Y );
+      if ( o == null ) {
         posY = ZERO;
-      }
-      else
-      {
+      } else {
         posY = (Float) o;
       }
     }
     return posY.doubleValue();
   }
 
-  public double getPosX()
-  {
-    if (posX == null)
-    {
-      final Object o = styleSheet.getStyleProperty(ElementStyleKeys.POS_X);
-      if (o == null)
-      {
+  public double getPosX() {
+    if ( posX == null ) {
+      final Object o = styleSheet.getStyleProperty( ElementStyleKeys.POS_X );
+      if ( o == null ) {
         posX = ZERO;
-      }
-      else
-      {
+      } else {
         posX = (Float) o;
       }
     }
     return posX.doubleValue();
   }
 
-  public ReportAttributeMap<Object> getAttributes()
-  {
+  public ReportAttributeMap<Object> getAttributes() {
     return attributes;
   }
 
-  public ElementType getElementType()
-  {
+  public ElementType getElementType() {
     return elementType;
   }
 
-  public String toString()
-  {
+  public String toString() {
     return "NodeLayoutProperties{" +
-        "verticalAlignment=" + getVerticalAlignment() +
-        ", majorAxis=" + majorAxis +
-        ", minorAxis=" + minorAxis +
-        '}';
+      "verticalAlignment=" + getVerticalAlignment() +
+      ", majorAxis=" + majorAxis +
+      ", minorAxis=" + minorAxis +
+      '}';
   }
 }

@@ -26,15 +26,13 @@ import org.pentaho.reporting.libraries.fonts.registry.FontRecord;
  *
  * @author Thomas Morgner
  */
-public class LocalFontFamily implements FontFamily
-{
+public class LocalFontFamily implements FontFamily {
   private String fontName;
   private LocalFontRecord[] fonts;
 
-  public LocalFontFamily(final String fontName)
-  {
+  public LocalFontFamily( final String fontName ) {
     this.fontName = fontName;
-    this.fonts = new LocalFontRecord[4];
+    this.fonts = new LocalFontRecord[ 4 ];
   }
 
   /**
@@ -42,76 +40,62 @@ public class LocalFontFamily implements FontFamily
    *
    * @return
    */
-  public String getFamilyName()
-  {
+  public String getFamilyName() {
     return fontName;
   }
 
-  public String[] getAllNames()
-  {
-    return new String[]{fontName};
+  public String[] getAllNames() {
+    return new String[] { fontName };
   }
 
   /**
-   * This selects the most suitable font in that family. Italics fonts are
-   * preferred over oblique fonts.
+   * This selects the most suitable font in that family. Italics fonts are preferred over oblique fonts.
    *
    * @param bold
    * @param italics
    * @return
    */
-  public FontRecord getFontRecord(final boolean bold, final boolean italics)
-  {
+  public FontRecord getFontRecord( final boolean bold, final boolean italics ) {
 
     int index = 0;
-    if (bold)
-    {
+    if ( bold ) {
       index += 1;
     }
-    if (italics)
-    {
+    if ( italics ) {
       index += 2;
     }
-    return fonts[index];
+    return fonts[ index ];
   }
 
-  public void setFontRecord (final boolean bold, final boolean italics, final String sourceFile)
-  {
+  public void setFontRecord( final boolean bold, final boolean italics, final String sourceFile ) {
     int index = 0;
-    if (bold)
-    {
+    if ( bold ) {
       index += 1;
     }
-    if (italics)
-    {
+    if ( italics ) {
       index += 2;
     }
-    fonts[index] = new LocalFontRecord(this, sourceFile, bold, italics);
+    fonts[ index ] = new LocalFontRecord( this, sourceFile, bold, italics );
   }
 
-  public boolean equals(final Object o)
-  {
-    if (this == o)
-    {
+  public boolean equals( final Object o ) {
+    if ( this == o ) {
       return true;
     }
-    if (o == null || getClass() != o.getClass())
-    {
+    if ( o == null || getClass() != o.getClass() ) {
       return false;
     }
 
     final LocalFontFamily that = (LocalFontFamily) o;
 
-    if (!fontName.equals(that.fontName))
-    {
+    if ( !fontName.equals( that.fontName ) ) {
       return false;
     }
 
     return true;
   }
 
-  public int hashCode()
-  {
+  public int hashCode() {
     return fontName.hashCode();
   }
 }

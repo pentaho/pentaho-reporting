@@ -26,13 +26,11 @@ import org.pentaho.reporting.libraries.xmlns.parser.ParseException;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 
-public class IncludeGlobalMetaDataReadHandler extends AbstractXmlReadHandler
-{
+public class IncludeGlobalMetaDataReadHandler extends AbstractXmlReadHandler {
   private GlobalMetaDefinition result;
   private GlobalMetaDefinition globalMetaDefinition;
 
-  public IncludeGlobalMetaDataReadHandler(final GlobalMetaDefinition globalMetaDefinition)
-  {
+  public IncludeGlobalMetaDataReadHandler( final GlobalMetaDefinition globalMetaDefinition ) {
     this.globalMetaDefinition = globalMetaDefinition;
   }
 
@@ -42,35 +40,28 @@ public class IncludeGlobalMetaDataReadHandler extends AbstractXmlReadHandler
    * @param attrs the attributes.
    * @throws SAXException if there is a parsing error.
    */
-  protected void startParsing(final Attributes attrs) throws SAXException
-  {
-    final String href = attrs.getValue(getUri(), "src");
-    if (href == null)
-    {
-      throw new ParseException("Required attribute 'src' is missing", getLocator());
+  protected void startParsing( final Attributes attrs ) throws SAXException {
+    final String href = attrs.getValue( getUri(), "src" );
+    if ( href == null ) {
+      throw new ParseException( "Required attribute 'src' is missing", getLocator() );
     }
 
     final ResourceManager resourceManager = getRootHandler().getResourceManager();
     final ResourceKey context = getRootHandler().getContext();
-    try
-    {
-      final ResourceKey resourceKey = resourceManager.deriveKey(context, href);
-      final Resource resource = resourceManager.create(resourceKey, null, GlobalMetaDefinition.class);
+    try {
+      final ResourceKey resourceKey = resourceManager.deriveKey( context, href );
+      final Resource resource = resourceManager.create( resourceKey, null, GlobalMetaDefinition.class );
       result = (GlobalMetaDefinition) resource.getResource();
-    }
-    catch (ResourceException e)
-    {
-      throw new ParseException("Failed to parse included global definitions", e, getLocator());
+    } catch ( ResourceException e ) {
+      throw new ParseException( "Failed to parse included global definitions", e, getLocator() );
     }
 
-    if (globalMetaDefinition != null)
-    {
-      globalMetaDefinition.merge(result);
+    if ( globalMetaDefinition != null ) {
+      globalMetaDefinition.merge( result );
     }
   }
 
-  public GlobalMetaDefinition getResult()
-  {
+  public GlobalMetaDefinition getResult() {
     return result;
   }
 
@@ -80,8 +71,7 @@ public class IncludeGlobalMetaDataReadHandler extends AbstractXmlReadHandler
    * @return the object.
    * @throws SAXException if an parser error occured.
    */
-  public Object getObject() throws SAXException
-  {
+  public Object getObject() throws SAXException {
     return result;
   }
 }

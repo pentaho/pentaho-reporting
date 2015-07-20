@@ -17,9 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.core.elementfactory;
 
-import java.awt.Color;
-import java.awt.geom.Rectangle2D;
-
 import org.pentaho.reporting.engine.classic.core.AttributeNames;
 import org.pentaho.reporting.engine.classic.core.Element;
 import org.pentaho.reporting.engine.classic.core.ElementAlignment;
@@ -27,14 +24,16 @@ import org.pentaho.reporting.engine.classic.core.filter.types.TextFieldType;
 import org.pentaho.reporting.engine.classic.core.function.FormulaExpression;
 import org.pentaho.reporting.engine.classic.core.style.FontDefinition;
 
+import java.awt.*;
+import java.awt.geom.Rectangle2D;
+
 /**
  * A factory to define text fields. Text fields read their content from the dataRow and try to print it as plain text
  * (using toString() if required).
  *
  * @author Thomas Morgner
  */
-public class TextFieldElementFactory extends TextElementFactory
-{
+public class TextFieldElementFactory extends TextElementFactory {
   /**
    * The fieldname of the datarow from where to read the content.
    */
@@ -53,8 +52,7 @@ public class TextFieldElementFactory extends TextElementFactory
   /**
    * DefaultConstructor.
    */
-  public TextFieldElementFactory()
-  {
+  public TextFieldElementFactory() {
   }
 
   /**
@@ -62,8 +60,7 @@ public class TextFieldElementFactory extends TextElementFactory
    *
    * @return the field name.
    */
-  public String getFieldname()
-  {
+  public String getFieldname() {
     return fieldname;
   }
 
@@ -73,8 +70,7 @@ public class TextFieldElementFactory extends TextElementFactory
    *
    * @param fieldname the field name.
    */
-  public void setFieldname(final String fieldname)
-  {
+  public void setFieldname( final String fieldname ) {
     this.fieldname = fieldname;
   }
 
@@ -84,8 +80,7 @@ public class TextFieldElementFactory extends TextElementFactory
    *
    * @return the formula as string.
    */
-  public String getFormula()
-  {
+  public String getFormula() {
     return formula;
   }
 
@@ -95,8 +90,7 @@ public class TextFieldElementFactory extends TextElementFactory
    *
    * @param formula the formula as a string.
    */
-  public void setFormula(final String formula)
-  {
+  public void setFormula( final String formula ) {
     this.formula = formula;
   }
 
@@ -105,8 +99,7 @@ public class TextFieldElementFactory extends TextElementFactory
    *
    * @return the null string.
    */
-  public String getNullString()
-  {
+  public String getNullString() {
     return nullString;
   }
 
@@ -116,8 +109,7 @@ public class TextFieldElementFactory extends TextElementFactory
    *
    * @param nullString the null string.
    */
-  public void setNullString(final String nullString)
-  {
+  public void setNullString( final String nullString ) {
     this.nullString = nullString;
   }
 
@@ -127,24 +119,21 @@ public class TextFieldElementFactory extends TextElementFactory
    * @return the generated text field element
    * @see org.pentaho.reporting.engine.classic.core.elementfactory.ElementFactory#createElement()
    */
-  public Element createElement()
-  {
+  public Element createElement() {
     final Element element = new Element();
-    applyElementName(element);
-    applyStyle(element.getStyle());
-    element.setElementType(new TextFieldType());
-    if (getFieldname() != null)
-    {
-      element.setAttribute(AttributeNames.Core.NAMESPACE, AttributeNames.Core.FIELD, getFieldname());
+    applyElementName( element );
+    applyStyle( element.getStyle() );
+    element.setElementType( new TextFieldType() );
+    if ( getFieldname() != null ) {
+      element.setAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.FIELD, getFieldname() );
     }
-    if (getFormula() != null)
-    {
+    if ( getFormula() != null ) {
       final FormulaExpression formulaExpression = new FormulaExpression();
-      formulaExpression.setFormula(getFormula());
-      element.setAttributeExpression(AttributeNames.Core.NAMESPACE, AttributeNames.Core.VALUE, formulaExpression);
+      formulaExpression.setFormula( getFormula() );
+      element.setAttributeExpression( AttributeNames.Core.NAMESPACE, AttributeNames.Core.VALUE, formulaExpression );
     }
 
-    element.setAttribute(AttributeNames.Core.NAMESPACE, AttributeNames.Core.NULL_VALUE, getNullString());
+    element.setAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.NULL_VALUE, getNullString() );
     return element;
   }
 
@@ -163,16 +152,15 @@ public class TextFieldElementFactory extends TextElementFactory
    * @throws IllegalArgumentException if the given alignment is invalid
    * @deprecated Use a more fine-grained approach to define this element by using the element-factory directly.
    */
-  public static Element createStringElement(final String name,
-                                            final Rectangle2D bounds,
-                                            final Color paint,
-                                            final ElementAlignment alignment,
-                                            final FontDefinition font,
-                                            final String nullString,
-                                            final String field)
-  {
-    return createStringElement(name, bounds, paint, alignment,
-        ElementAlignment.TOP, font, nullString, field);
+  public static Element createStringElement( final String name,
+                                             final Rectangle2D bounds,
+                                             final Color paint,
+                                             final ElementAlignment alignment,
+                                             final FontDefinition font,
+                                             final String nullString,
+                                             final String field ) {
+    return createStringElement( name, bounds, paint, alignment,
+      ElementAlignment.TOP, font, nullString, field );
   }
 
   /**
@@ -191,38 +179,36 @@ public class TextFieldElementFactory extends TextElementFactory
    * @throws IllegalArgumentException if the given alignment is invalid
    * @deprecated Use a more fine-grained approach to define this element by using the element-factory directly.
    */
-  public static Element createStringElement(final String name,
-                                            final Rectangle2D bounds,
-                                            final Color paint,
-                                            final ElementAlignment alignment,
-                                            final ElementAlignment valign,
-                                            final FontDefinition font,
-                                            final String nullString,
-                                            final String field)
-  {
+  public static Element createStringElement( final String name,
+                                             final Rectangle2D bounds,
+                                             final Color paint,
+                                             final ElementAlignment alignment,
+                                             final ElementAlignment valign,
+                                             final FontDefinition font,
+                                             final String nullString,
+                                             final String field ) {
     final TextFieldElementFactory factory = new TextFieldElementFactory();
-    factory.setX(new Float(bounds.getX()));
-    factory.setY(new Float(bounds.getY()));
-    factory.setMinimumWidth(new Float(bounds.getWidth()));
-    factory.setMinimumHeight(new Float(bounds.getHeight()));
-    factory.setName(name);
-    factory.setColor(paint);
-    factory.setHorizontalAlignment(alignment);
-    factory.setVerticalAlignment(valign);
+    factory.setX( new Float( bounds.getX() ) );
+    factory.setY( new Float( bounds.getY() ) );
+    factory.setMinimumWidth( new Float( bounds.getWidth() ) );
+    factory.setMinimumHeight( new Float( bounds.getHeight() ) );
+    factory.setName( name );
+    factory.setColor( paint );
+    factory.setHorizontalAlignment( alignment );
+    factory.setVerticalAlignment( valign );
 
-    if (font != null)
-    {
-      factory.setFontName(font.getFontName());
-      factory.setFontSize(new Integer(font.getFontSize()));
-      factory.setBold(ElementFactory.getBooleanValue(font.isBold()));
-      factory.setItalic(ElementFactory.getBooleanValue(font.isItalic()));
-      factory.setEncoding(font.getFontEncoding(null));
-      factory.setUnderline(ElementFactory.getBooleanValue(font.isUnderline()));
-      factory.setStrikethrough(ElementFactory.getBooleanValue(font.isStrikeThrough()));
-      factory.setEmbedFont(ElementFactory.getBooleanValue(font.isEmbeddedFont()));
+    if ( font != null ) {
+      factory.setFontName( font.getFontName() );
+      factory.setFontSize( new Integer( font.getFontSize() ) );
+      factory.setBold( ElementFactory.getBooleanValue( font.isBold() ) );
+      factory.setItalic( ElementFactory.getBooleanValue( font.isItalic() ) );
+      factory.setEncoding( font.getFontEncoding( null ) );
+      factory.setUnderline( ElementFactory.getBooleanValue( font.isUnderline() ) );
+      factory.setStrikethrough( ElementFactory.getBooleanValue( font.isStrikeThrough() ) );
+      factory.setEmbedFont( ElementFactory.getBooleanValue( font.isEmbeddedFont() ) );
     }
-    factory.setFieldname(field);
-    factory.setNullString(nullString);
+    factory.setFieldname( field );
+    factory.setNullString( nullString );
     return factory.createElement();
   }
 

@@ -31,6 +31,5 @@ import org.pentaho.reporting.engine.classic.core.event.ReportListener;
  *
  * @author Thomas Morgner
  */
-public interface Function extends ReportListener, Expression
-{
+public interface Function extends ReportListener, Expression {
 }

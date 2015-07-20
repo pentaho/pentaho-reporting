@@ -25,10 +25,8 @@ import java.util.Comparator;
  *
  * @author Thomas Morgner
  */
-public class ActionPluginMenuComparator implements Comparator<ActionPlugin>, Serializable
-{
-  public ActionPluginMenuComparator()
-  {
+public class ActionPluginMenuComparator implements Comparator<ActionPlugin>, Serializable {
+  public ActionPluginMenuComparator() {
   }
 
   /**
@@ -52,20 +50,17 @@ public class ActionPluginMenuComparator implements Comparator<ActionPlugin>, Ser
    * @param a1 the first object to be compared.
    * @param a2 the second object to be compared.
    * @return a negative integer, zero, or a positive integer as the first argument is less than, equal to, or greater
-   *         than the second.
+   * than the second.
    * @throws ClassCastException if the arguments' types prevent them from being compared by this Comparator.
    */
 
-  public int compare(final ActionPlugin a1, final ActionPlugin a2)
-  {
+  public int compare( final ActionPlugin a1, final ActionPlugin a2 ) {
     final int toolbarOrder = a1.getMenuOrder();
     final int toolbarOrder2 = a2.getMenuOrder();
-    if (toolbarOrder < toolbarOrder2)
-    {
+    if ( toolbarOrder < toolbarOrder2 ) {
       return -1;
     }
-    if (toolbarOrder > toolbarOrder2)
-    {
+    if ( toolbarOrder > toolbarOrder2 ) {
       return 1;
     }
     return 0;

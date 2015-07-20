@@ -17,8 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.parser.bundle.data;
 
-import java.util.ArrayList;
-
 import org.pentaho.reporting.engine.classic.core.modules.parser.base.compat.CompatibilityMapperUtil;
 import org.pentaho.reporting.engine.classic.core.parameters.AbstractParameter;
 import org.pentaho.reporting.engine.classic.core.util.beans.BeanException;
@@ -30,16 +28,16 @@ import org.pentaho.reporting.libraries.xmlns.parser.XmlReadHandler;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 
-public abstract class AbstractParameterReadHandler extends AbstractXmlReadHandler
-{
+import java.util.ArrayList;
+
+public abstract class AbstractParameterReadHandler extends AbstractXmlReadHandler {
   private String name;
   private Class type;
   private boolean mandatory;
   private Object defaultValue;
   private ArrayList<ParameterAttributeReadHandler> attributeReadHandlers;
 
-  protected AbstractParameterReadHandler()
-  {
+  protected AbstractParameterReadHandler() {
     attributeReadHandlers = new ArrayList<ParameterAttributeReadHandler>();
   }
 
@@ -49,99 +47,77 @@ public abstract class AbstractParameterReadHandler extends AbstractXmlReadHandle
    * @param attrs the attributes.
    * @throws org.xml.sax.SAXException if there is a parsing error.
    */
-  protected void startParsing(final Attributes attrs) throws SAXException
-  {
-    name = attrs.getValue(getUri(), "name");
-    if (name == null)
-    {
-      throw new ParseException("Required parameter 'name' is missing.", getLocator());
+  protected void startParsing( final Attributes attrs ) throws SAXException {
+    name = attrs.getValue( getUri(), "name" );
+    if ( name == null ) {
+      throw new ParseException( "Required parameter 'name' is missing.", getLocator() );
     }
 
-    final String typeText = attrs.getValue(getUri(), "type");
-    if (typeText == null)
-    {
+    final String typeText = attrs.getValue( getUri(), "type" );
+    if ( typeText == null ) {
       type = Object.class;
-    }
-    else
-    {
-      try
-      {
-        final String realClassName = CompatibilityMapperUtil.mapClassName(typeText);
-        final ClassLoader classLoader = ObjectUtilities.getClassLoader(getClass());
-        type = Class.forName(realClassName, false, classLoader);
-      }
-      catch (final Throwable e)
-      {
-        throw new ParseException("Required parameter 'type' is invalid.", getLocator());
+    } else {
+      try {
+        final String realClassName = CompatibilityMapperUtil.mapClassName( typeText );
+        final ClassLoader classLoader = ObjectUtilities.getClassLoader( getClass() );
+        type = Class.forName( realClassName, false, classLoader );
+      } catch ( final Throwable e ) {
+        throw new ParseException( "Required parameter 'type' is invalid.", getLocator() );
       }
     }
 
-    mandatory = "true".equals(attrs.getValue(getUri(), "mandatory"));
+    mandatory = "true".equals( attrs.getValue( getUri(), "mandatory" ) );
 
-    final String defaultValueText = attrs.getValue(getUri(), "default-value");
-    if (defaultValueText != null)
-    {
-      try
-      {
-        defaultValue = ConverterRegistry.toPropertyValue(defaultValueText, type);
-      }
-      catch (BeanException e)
-      {
-        throw new ParseException("Specified parameter 'default-value' is invalid.", getLocator());
+    final String defaultValueText = attrs.getValue( getUri(), "default-value" );
+    if ( defaultValueText != null ) {
+      try {
+        defaultValue = ConverterRegistry.toPropertyValue( defaultValueText, type );
+      } catch ( BeanException e ) {
+        throw new ParseException( "Specified parameter 'default-value' is invalid.", getLocator() );
       }
     }
   }
 
-  protected XmlReadHandler getHandlerForChild(final String uri,
-                                              final String tagName,
-                                              final Attributes atts) throws SAXException
-  {
-    if (isSameNamespace(uri) == false)
-    {
+  protected XmlReadHandler getHandlerForChild( final String uri,
+                                               final String tagName,
+                                               final Attributes atts ) throws SAXException {
+    if ( isSameNamespace( uri ) == false ) {
       return null;
     }
 
-    if ("attribute".equals(tagName))
-    {
+    if ( "attribute".equals( tagName ) ) {
       final ParameterAttributeReadHandler readHandler = new ParameterAttributeReadHandler();
-      attributeReadHandlers.add(readHandler);
+      attributeReadHandlers.add( readHandler );
       return readHandler;
     }
     return null;
   }
 
-  protected void applyAttributes(final AbstractParameter parameter)
-  {
+  protected void applyAttributes( final AbstractParameter parameter ) {
     final ParameterAttributeReadHandler[] parameterAttributeReadHandlers = getAttributeReadHandlers();
-    for (int i = 0; i < parameterAttributeReadHandlers.length; i++)
-    {
-      final ParameterAttributeReadHandler handler = parameterAttributeReadHandlers[i];
-      parameter.setParameterAttribute(handler.getNamespace(), handler.getName(), handler.getResult());
+    for ( int i = 0; i < parameterAttributeReadHandlers.length; i++ ) {
+      final ParameterAttributeReadHandler handler = parameterAttributeReadHandlers[ i ];
+      parameter.setParameterAttribute( handler.getNamespace(), handler.getName(), handler.getResult() );
     }
   }
 
-  private ParameterAttributeReadHandler[] getAttributeReadHandlers()
-  {
-    return attributeReadHandlers.toArray(new ParameterAttributeReadHandler[attributeReadHandlers.size()]);
+  private ParameterAttributeReadHandler[] getAttributeReadHandlers() {
+    return attributeReadHandlers.toArray( new ParameterAttributeReadHandler[ attributeReadHandlers.size() ] );
   }
 
-  public boolean isMandatory()
-  {
+  public boolean isMandatory() {
     return mandatory;
   }
 
-  public String getName()
-  {
+  public String getName() {
     return name;
   }
 
-  public Class getType()
-  {
+  public Class getType() {
     return type;
   }
 
-  public Object getDefaultValue()
-  {
+  public Object getDefaultValue() {
     return defaultValue;
   }
 }

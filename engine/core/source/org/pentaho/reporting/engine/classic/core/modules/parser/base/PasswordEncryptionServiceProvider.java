@@ -17,9 +17,10 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.parser.base;
 
-public interface PasswordEncryptionServiceProvider
-{
+public interface PasswordEncryptionServiceProvider {
   public String getPrefix();
-  public String encrypt(String rawPassword);
-  public String decrypt(String encryptedPassword);
+
+  public String encrypt( String rawPassword );
+
+  public String decrypt( String encryptedPassword );
 }

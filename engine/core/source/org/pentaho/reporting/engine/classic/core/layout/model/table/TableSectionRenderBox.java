@@ -17,8 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.core.layout.model.table;
 
-import java.util.HashMap;
-
 import org.pentaho.reporting.engine.classic.core.ReportAttributeMap;
 import org.pentaho.reporting.engine.classic.core.filter.types.AutoLayoutBoxType;
 import org.pentaho.reporting.engine.classic.core.layout.model.AutoRenderBox;
@@ -37,16 +35,16 @@ import org.pentaho.reporting.engine.classic.core.style.BandStyleKeys;
 import org.pentaho.reporting.engine.classic.core.style.StyleSheet;
 import org.pentaho.reporting.engine.classic.core.util.InstanceID;
 
+import java.util.HashMap;
+
 /**
- * A table section box does not much rendering or layouting at all. It
- * represents one of the three possible sections and behaves like any other
- * block box. But (here it comes!) it refuses to be added to anything else than
- * a TableRenderBox (a small check to save me a lot of insanity ..).
+ * A table section box does not much rendering or layouting at all. It represents one of the three possible sections and
+ * behaves like any other block box. But (here it comes!) it refuses to be added to anything else than a TableRenderBox
+ * (a small check to save me a lot of insanity ..).
  *
  * @author Thomas Morgner
  */
-public class TableSectionRenderBox extends BlockRenderBox
-{
+public class TableSectionRenderBox extends BlockRenderBox {
   private static final int FLAG_TABLE_SECTION_STRUCTURE_VALIDATED = FLAG_BOX_TABLE_SECTION_RESERVED;
   private static final int FLAG_TABLE_SECTION_ACTIVE = FLAG_BOX_TABLE_SECTION_RESERVED4;
   private static final int FLAG_TABLE_SECTION_MARKED_ACTIVE = FLAG_BOX_TABLE_SECTION_RESERVED2;
@@ -55,222 +53,183 @@ public class TableSectionRenderBox extends BlockRenderBox
   private Role displayRole;
   private TableRowModel rowModel;
 
-  private HashMap<Long,Long> headerShift;
-  private HashMap<Long,Long> markedHeaderShift;
-  private HashMap<Long,Long> appliedHeaderShift;
+  private HashMap<Long, Long> headerShift;
+  private HashMap<Long, Long> markedHeaderShift;
+  private HashMap<Long, Long> appliedHeaderShift;
   private long rowModelAge;
 
-  public static enum Role
-  {
+  public static enum Role {
     BODY, HEADER, FOOTER
   }
 
-  public TableSectionRenderBox()
-  {
-    this(SimpleStyleSheet.EMPTY_STYLE, new InstanceID(), BoxDefinition.EMPTY,
-        AutoLayoutBoxType.INSTANCE, ReportAttributeMap.EMPTY_MAP, null);
+  public TableSectionRenderBox() {
+    this( SimpleStyleSheet.EMPTY_STYLE, new InstanceID(), BoxDefinition.EMPTY,
+      AutoLayoutBoxType.INSTANCE, ReportAttributeMap.EMPTY_MAP, null );
   }
 
-  public TableSectionRenderBox(final StyleSheet styleSheet,
-                               final InstanceID instanceID,
-                               final BoxDefinition boxDefinition,
-                               final ElementType elementType,
-                               final ReportAttributeMap attributes,
-                               final ReportStateKey stateKey)
-  {
-    super(styleSheet, instanceID, boxDefinition, elementType, attributes, stateKey);
+  public TableSectionRenderBox( final StyleSheet styleSheet,
+                                final InstanceID instanceID,
+                                final BoxDefinition boxDefinition,
+                                final ElementType elementType,
+                                final ReportAttributeMap attributes,
+                                final ReportStateKey stateKey ) {
+    super( styleSheet, instanceID, boxDefinition, elementType, attributes, stateKey );
     this.rowModel = new SeparateRowModel();
-    this.rowModel.setDebugInformation(elementType, instanceID);
+    this.rowModel.setDebugInformation( elementType, instanceID );
     this.appliedHeaderShift = new HashMap<Long, Long>();
     this.markedHeaderShift = new HashMap<Long, Long>();
     this.headerShift = new HashMap<Long, Long>();
-    final Object layoutMode = styleSheet.getStyleProperty(BandStyleKeys.LAYOUT);
-    if (BandStyleKeys.LAYOUT_TABLE_FOOTER.equals(layoutMode))
-    {
+    final Object layoutMode = styleSheet.getStyleProperty( BandStyleKeys.LAYOUT );
+    if ( BandStyleKeys.LAYOUT_TABLE_FOOTER.equals( layoutMode ) ) {
       this.displayRole = Role.FOOTER;
-    }
-    else if (BandStyleKeys.LAYOUT_TABLE_HEADER.equals(layoutMode))
-    {
+    } else if ( BandStyleKeys.LAYOUT_TABLE_HEADER.equals( layoutMode ) ) {
       this.displayRole = Role.HEADER;
-    }
-    else
-    {
+    } else {
       this.displayRole = Role.BODY;
     }
   }
 
-  public long getRowModelAge()
-  {
+  public long getRowModelAge() {
     return rowModelAge;
   }
 
-  public void setRowModelAge(final long rowModelAge)
-  {
+  public void setRowModelAge( final long rowModelAge ) {
     this.rowModelAge = rowModelAge;
   }
 
-  public boolean useMinimumChunkWidth()
-  {
+  public boolean useMinimumChunkWidth() {
     return true;
   }
 
-  public long getHeaderShift(final long pageOffset)
-  {
-    final Long retval = headerShift.get(pageOffset);
-    if (retval == null)
+  public long getHeaderShift( final long pageOffset ) {
+    final Long retval = headerShift.get( pageOffset );
+    if ( retval == null ) {
       return 0;
+    }
     return retval;
   }
 
-  public void setHeaderShift(final long pageOffset, final long headerShift)
-  {
-    this.headerShift.put(pageOffset, headerShift);
+  public void setHeaderShift( final long pageOffset, final long headerShift ) {
+    this.headerShift.put( pageOffset, headerShift );
   }
 
-  public Object clone()
-  {
+  public Object clone() {
     final TableSectionRenderBox clone = (TableSectionRenderBox) super.clone();
     clone.headerShift = (HashMap<Long, Long>) headerShift.clone();
     return clone;
   }
 
-  public boolean isBody()
-  {
-    return Role.BODY.equals(displayRole);
+  public boolean isBody() {
+    return Role.BODY.equals( displayRole );
   }
 
-  public Role getDisplayRole()
-  {
+  public Role getDisplayRole() {
     return displayRole;
   }
 
-  public int getNodeType()
-  {
+  public int getNodeType() {
     return LayoutNodeTypes.TYPE_BOX_TABLE_SECTION;
   }
 
-  public TableColumnModel getColumnModel()
-  {
-    final TableRenderBox table = TableHelper.lookupTable(this);
-    if (table == null)
-    {
+  public TableColumnModel getColumnModel() {
+    final TableRenderBox table = TableHelper.lookupTable( this );
+    if ( table == null ) {
       return null;
     }
     return table.getColumnModel();
   }
 
-  public TableRowModel getRowModel()
-  {
+  public TableRowModel getRowModel() {
     return rowModel;
   }
 
-  public boolean isStructureValidated()
-  {
-    return isFlag(FLAG_TABLE_SECTION_STRUCTURE_VALIDATED);
+  public boolean isStructureValidated() {
+    return isFlag( FLAG_TABLE_SECTION_STRUCTURE_VALIDATED );
   }
 
-  public void setStructureValidated(final boolean structureValidated)
-  {
-    setFlag(FLAG_TABLE_SECTION_STRUCTURE_VALIDATED, structureValidated);
+  public void setStructureValidated( final boolean structureValidated ) {
+    setFlag( FLAG_TABLE_SECTION_STRUCTURE_VALIDATED, structureValidated );
   }
 
-  public boolean isActive()
-  {
-    return isFlag(FLAG_TABLE_SECTION_ACTIVE);
+  public boolean isActive() {
+    return isFlag( FLAG_TABLE_SECTION_ACTIVE );
   }
 
-  protected void setActive(final boolean active)
-  {
-    setFlag(FLAG_TABLE_SECTION_ACTIVE, active);
+  protected void setActive( final boolean active ) {
+    setFlag( FLAG_TABLE_SECTION_ACTIVE, active );
   }
 
-  public boolean isMarkedActive()
-  {
-    return isFlag(FLAG_TABLE_SECTION_MARKED_ACTIVE);
+  public boolean isMarkedActive() {
+    return isFlag( FLAG_TABLE_SECTION_MARKED_ACTIVE );
   }
 
-  protected void setMarkedActive(final boolean active)
-  {
-    setFlag(FLAG_TABLE_SECTION_MARKED_ACTIVE, active);
+  protected void setMarkedActive( final boolean active ) {
+    setFlag( FLAG_TABLE_SECTION_MARKED_ACTIVE, active );
   }
 
-  public boolean isAppliedActive()
-  {
-    return isFlag(FLAG_TABLE_SECTION_APPLIED_ACTIVE);
+  public boolean isAppliedActive() {
+    return isFlag( FLAG_TABLE_SECTION_APPLIED_ACTIVE );
   }
 
-  protected void setAppliedActive(final boolean active)
-  {
-    setFlag(FLAG_TABLE_SECTION_APPLIED_ACTIVE, active);
+  protected void setAppliedActive( final boolean active ) {
+    setFlag( FLAG_TABLE_SECTION_APPLIED_ACTIVE, active );
   }
 
-  public void markBoxSeen()
-  {
+  public void markBoxSeen() {
     super.markBoxSeen();
-    setMarkedActive(isActive());
+    setMarkedActive( isActive() );
     markedHeaderShift = (HashMap<Long, Long>) headerShift.clone();
   }
 
-  public void commit()
-  {
+  public void commit() {
     super.commit();
     appliedHeaderShift = (HashMap<Long, Long>) markedHeaderShift.clone();
-    setAppliedActive(isMarkedActive());
+    setAppliedActive( isMarkedActive() );
   }
 
-  public void rollback(final boolean deepDirty)
-  {
-    super.rollback(deepDirty);
-    setActive(isAppliedActive());
+  public void rollback( final boolean deepDirty ) {
+    super.rollback( deepDirty );
+    setActive( isAppliedActive() );
     this.headerShift = (HashMap<Long, Long>) appliedHeaderShift.clone();
   }
 
 
-  public void addChild(final RenderNode child)
-  {
-    if (isValid(child) == false)
-    {
+  public void addChild( final RenderNode child ) {
+    if ( isValid( child ) == false ) {
       TableRowRenderBox tsrb = new TableRowRenderBox();
-      tsrb.addChild(child);
-      addChild(tsrb);
+      tsrb.addChild( child );
+      addChild( tsrb );
       tsrb.close();
       return;
     }
 
-    super.addChild(child);
+    super.addChild( child );
   }
 
-  private boolean isValid(final RenderNode child)
-  {
-    if ((child.getNodeType() & LayoutNodeTypes.MASK_BOX) != LayoutNodeTypes.MASK_BOX)
-    {
+  private boolean isValid( final RenderNode child ) {
+    if ( ( child.getNodeType() & LayoutNodeTypes.MASK_BOX ) != LayoutNodeTypes.MASK_BOX ) {
       return true;
     }
 
-    if (child.getNodeType() == LayoutNodeTypes.TYPE_BOX_AUTOLAYOUT)
-    {
+    if ( child.getNodeType() == LayoutNodeTypes.TYPE_BOX_AUTOLAYOUT ) {
       return true;
     }
 
-    if (child.getNodeType() == LayoutNodeTypes.TYPE_BOX_BREAKMARK)
-    {
+    if ( child.getNodeType() == LayoutNodeTypes.TYPE_BOX_BREAKMARK ) {
       return true;
     }
 
-    if (child.getNodeType() == LayoutNodeTypes.TYPE_BOX_PROGRESS_MARKER)
-    {
+    if ( child.getNodeType() == LayoutNodeTypes.TYPE_BOX_PROGRESS_MARKER ) {
       return true;
     }
 
-    if (child.getNodeType() == LayoutNodeTypes.TYPE_BOX_TABLE_ROW)
-    {
+    if ( child.getNodeType() == LayoutNodeTypes.TYPE_BOX_TABLE_ROW ) {
       return true;
     }
     return false;
   }
 
-  public RenderBox create(final StyleSheet styleSheet)
-  {
-    return new AutoRenderBox(styleSheet);
+  public RenderBox create( final StyleSheet styleSheet ) {
+    return new AutoRenderBox( styleSheet );
   }
 }

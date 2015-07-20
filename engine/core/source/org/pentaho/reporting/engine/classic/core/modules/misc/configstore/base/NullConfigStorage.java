@@ -25,13 +25,11 @@ import org.pentaho.reporting.libraries.base.config.Configuration;
  *
  * @author Thomas Morgner
  */
-public class NullConfigStorage implements ConfigStorage
-{
+public class NullConfigStorage implements ConfigStorage {
   /**
    * DefaultConstructor.
    */
-  public NullConfigStorage()
-  {
+  public NullConfigStorage() {
   }
 
   /**
@@ -40,10 +38,9 @@ public class NullConfigStorage implements ConfigStorage
    * @param configPath this parameter is not used.
    * @param properties this parameter is not used.
    * @see org.pentaho.reporting.engine.classic.core.modules.misc.configstore.base.ConfigStorage#store (java.lang.String,
-   *      java.util.Properties)
+   * java.util.Properties)
    */
-  public void store(final String configPath, final Configuration properties)
-  {
+  public void store( final String configPath, final Configuration properties ) {
   }
 
   /**
@@ -56,10 +53,9 @@ public class NullConfigStorage implements ConfigStorage
    * @return the loaded properties
    * @throws ConfigStoreException always throws this exception as the specified resource will be not available.
    */
-  public Configuration load(final String configPath, final Configuration defaults)
-      throws ConfigStoreException
-  {
-    throw new ConfigStoreException("This configuration path is not available."); //$NON-NLS-1$
+  public Configuration load( final String configPath, final Configuration defaults )
+    throws ConfigStoreException {
+    throw new ConfigStoreException( "This configuration path is not available." ); //$NON-NLS-1$
   }
 
   /**
@@ -70,8 +66,7 @@ public class NullConfigStorage implements ConfigStorage
    * @param configPath the configuration path to the property storage.
    * @return always false as this implementation does not store anything.
    */
-  public boolean isAvailable(final String configPath)
-  {
+  public boolean isAvailable( final String configPath ) {
     return false;
   }
 }

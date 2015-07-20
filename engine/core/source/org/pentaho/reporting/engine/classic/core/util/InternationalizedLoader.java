@@ -19,83 +19,64 @@ package org.pentaho.reporting.engine.classic.core.util;
 
 import java.util.Locale;
 
-public abstract class InternationalizedLoader<T>
-{
+public abstract class InternationalizedLoader<T> {
 
-  protected InternationalizedLoader()
-  {
+  protected InternationalizedLoader() {
   }
 
-  protected T load(final String keyAsPath, final Locale locale)
-  {
+  protected T load( final String keyAsPath, final Locale locale ) {
     final String variant = locale.getVariant();
     final String country = locale.getCountry();
     final String language = locale.getLanguage();
 
     final String fullName;
-    if ("".equals(variant) == false)
-    {
+    if ( "".equals( variant ) == false ) {
       fullName = locale.getLanguage() + '_' + locale.getCountry() + '_' + locale.getVariant();
-    }
-    else
-    {
+    } else {
       fullName = null;
     }
 
     final String cntryName;
-    if ("".equals(country) == false)
-    {
+    if ( "".equals( country ) == false ) {
       cntryName = locale.getLanguage() + '_' + locale.getCountry();
-    }
-    else
-    {
+    } else {
       cntryName = null;
     }
 
     final String langName;
-    if ("".equals(language) == false)
-    {
+    if ( "".equals( language ) == false ) {
       langName = locale.getLanguage();
-    }
-    else
-    {
+    } else {
       langName = null;
     }
 
-    if (fullName != null)
-    {
+    if ( fullName != null ) {
       final String propsName = keyAsPath + '_' + fullName + getExtension(); // NON-NLS
-      final T value = loadData(propsName);
-      if (value != null)
-      {
+      final T value = loadData( propsName );
+      if ( value != null ) {
         return value;
       }
     }
 
-    if (cntryName != null)
-    {
+    if ( cntryName != null ) {
       final String propsName = keyAsPath + '_' + cntryName + getExtension(); // NON-NLS
-      final T value = loadData(propsName);
-      if (value != null)
-      {
+      final T value = loadData( propsName );
+      if ( value != null ) {
         return value;
       }
     }
 
-    if (langName != null)
-    {
+    if ( langName != null ) {
       final String propsName = keyAsPath + '_' + langName + getExtension(); // NON-NLS
-      final T value = loadData(propsName);
-      if (value != null)
-      {
+      final T value = loadData( propsName );
+      if ( value != null ) {
         return value;
       }
     }
 
     final String propsName = keyAsPath + getExtension(); // NON-NLS
-    final T value = loadData(propsName);
-    if (value != null)
-    {
+    final T value = loadData( propsName );
+    if ( value != null ) {
       return value;
     }
 
@@ -104,6 +85,6 @@ public abstract class InternationalizedLoader<T>
 
   protected abstract String getExtension();
 
-  protected abstract T loadData(final String name);
+  protected abstract T loadData( final String name );
 
 }

@@ -17,13 +17,13 @@
 
 package org.pentaho.reporting.engine.classic.core.filter;
 
+import org.pentaho.reporting.engine.classic.core.ReportElement;
+import org.pentaho.reporting.engine.classic.core.function.ExpressionRuntime;
+
 import java.text.DateFormatSymbols;
 import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.util.Locale;
-
-import org.pentaho.reporting.engine.classic.core.ReportElement;
-import org.pentaho.reporting.engine.classic.core.function.ExpressionRuntime;
 
 /**
  * A filter that creates string from dates. This filter will format java.util. Date objects using a
@@ -36,8 +36,7 @@ import org.pentaho.reporting.engine.classic.core.function.ExpressionRuntime;
  * @author Thomas Morgner
  * @see java.text.SimpleDateFormat
  */
-public class SimpleDateFormatFilter extends DateFormatFilter
-{
+public class SimpleDateFormatFilter extends DateFormatFilter {
   /**
    * The last locale used to convert numbers.
    */
@@ -50,9 +49,8 @@ public class SimpleDateFormatFilter extends DateFormatFilter
   /**
    * DefaultConstructor.
    */
-  public SimpleDateFormatFilter()
-  {
-    setFormatter(new SimpleDateFormat());
+  public SimpleDateFormatFilter() {
+    setFormatter( new SimpleDateFormat() );
   }
 
   /**
@@ -60,8 +58,7 @@ public class SimpleDateFormatFilter extends DateFormatFilter
    *
    * @return The date format object.
    */
-  public SimpleDateFormat getSimpleDateFormat()
-  {
+  public SimpleDateFormat getSimpleDateFormat() {
     return (SimpleDateFormat) getFormatter();
   }
 
@@ -71,9 +68,8 @@ public class SimpleDateFormatFilter extends DateFormatFilter
    * @param format The format.
    * @throws NullPointerException if the format given is null
    */
-  public void setSimpleDateFormat(final SimpleDateFormat format)
-  {
-    super.setFormatter(format);
+  public void setSimpleDateFormat( final SimpleDateFormat format ) {
+    super.setFormatter( format );
   }
 
   /**
@@ -83,10 +79,9 @@ public class SimpleDateFormatFilter extends DateFormatFilter
    * @throws NullPointerException if the format given is null
    * @throws ClassCastException   if the format given is no DateFormat
    */
-  public void setFormatter(final Format format)
-  {
+  public void setFormatter( final Format format ) {
     final SimpleDateFormat sdfmt = (SimpleDateFormat) format;
-    super.setFormatter(sdfmt);
+    super.setFormatter( sdfmt );
   }
 
   /**
@@ -96,8 +91,7 @@ public class SimpleDateFormatFilter extends DateFormatFilter
    * @return the format string for the used DateFormat.
    * @see java.text.SimpleDateFormat
    */
-  public String getFormatString()
-  {
+  public String getFormatString() {
     return getSimpleDateFormat().toPattern();
   }
 
@@ -107,13 +101,11 @@ public class SimpleDateFormatFilter extends DateFormatFilter
    * @param format the formatString
    * @throws IllegalArgumentException if the string is invalid
    */
-  public void setFormatString(final String format)
-  {
-    if (format == null)
-    {
+  public void setFormatString( final String format ) {
+    if ( format == null ) {
       throw new NullPointerException();
     }
-    getSimpleDateFormat().applyPattern(format);
+    getSimpleDateFormat().applyPattern( format );
     invalidateCache();
   }
 
@@ -124,8 +116,7 @@ public class SimpleDateFormatFilter extends DateFormatFilter
    * @return the localized format string.
    * @see java.text.SimpleDateFormat
    */
-  public String getLocalizedFormatString()
-  {
+  public String getLocalizedFormatString() {
     return getSimpleDateFormat().toLocalizedPattern();
   }
 
@@ -136,9 +127,8 @@ public class SimpleDateFormatFilter extends DateFormatFilter
    * @param format the formatString
    * @throws IllegalArgumentException if the string is invalid
    */
-  public void setLocalizedFormatString(final String format)
-  {
-    getSimpleDateFormat().applyLocalizedPattern(format);
+  public void setLocalizedFormatString( final String format ) {
+    getSimpleDateFormat().applyLocalizedPattern( format );
     invalidateCache();
   }
 
@@ -148,8 +138,7 @@ public class SimpleDateFormatFilter extends DateFormatFilter
    *
    * @return true, if the locale should not update the DateSymbols, false otherwise.
    */
-  public boolean isKeepState()
-  {
+  public boolean isKeepState() {
     return keepState;
   }
 
@@ -159,8 +148,7 @@ public class SimpleDateFormatFilter extends DateFormatFilter
    *
    * @param keepState set to true, if the locale should not update the DateSymbols, false otherwise.
    */
-  public void setKeepState(final boolean keepState)
-  {
+  public void setKeepState( final boolean keepState ) {
     this.keepState = keepState;
   }
 
@@ -176,31 +164,26 @@ public class SimpleDateFormatFilter extends DateFormatFilter
    * @param element
    * @return The formatted value.
    */
-  public Object getValue(final ExpressionRuntime runtime, final ReportElement element)
-  {
-    if (keepState == false && runtime != null)
-    {
+  public Object getValue( final ExpressionRuntime runtime, final ReportElement element ) {
+    if ( keepState == false && runtime != null ) {
       final Locale locale = runtime.getResourceBundleFactory().getLocale();
-      if (locale != null && locale.equals(lastLocale) == false)
-      {
+      if ( locale != null && locale.equals( lastLocale ) == false ) {
         lastLocale = locale;
-        getSimpleDateFormat().setDateFormatSymbols(new DateFormatSymbols(locale));
+        getSimpleDateFormat().setDateFormatSymbols( new DateFormatSymbols( locale ) );
         invalidateCache();
       }
     }
-    return super.getValue(runtime, element);
+    return super.getValue( runtime, element );
   }
 
 
-  public FormatSpecification getFormatString(final ExpressionRuntime runtime,
-                                             final ReportElement element,
-                                             FormatSpecification formatSpecification)
-  {
-    if (formatSpecification == null)
-    {
+  public FormatSpecification getFormatString( final ExpressionRuntime runtime,
+                                              final ReportElement element,
+                                              FormatSpecification formatSpecification ) {
+    if ( formatSpecification == null ) {
       formatSpecification = new FormatSpecification();
     }
-    formatSpecification.redefine(FormatSpecification.TYPE_DATE_FORMAT, getFormatString());
+    formatSpecification.redefine( FormatSpecification.TYPE_DATE_FORMAT, getFormatString() );
     return formatSpecification;
   }
 

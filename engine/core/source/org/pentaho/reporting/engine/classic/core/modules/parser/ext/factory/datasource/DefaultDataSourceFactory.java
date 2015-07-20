@@ -49,51 +49,49 @@ import org.pentaho.reporting.engine.classic.core.modules.parser.ext.factory.temp
  *
  * @author Thomas Morgner
  */
-public class DefaultDataSourceFactory extends AbstractDataSourceFactory
-{
+public class DefaultDataSourceFactory extends AbstractDataSourceFactory {
   /**
    * Creates a new factory.
    */
-  public DefaultDataSourceFactory()
-  {
-    registerDataSources("AnchorFilter", new BeanObjectDescription(AnchorFilter.class));
-    registerDataSources("ComponentDrawableFilter",
-        new BeanObjectDescription(ComponentDrawableFilter.class));
-    registerDataSources("DataRowDataSource", new BeanObjectDescription(DataRowDataSource.class));
-    registerDataSources("DateFormatFilter", new BeanObjectDescription(DateFormatFilter.class));
-    registerDataSources("DateFormatParser", new BeanObjectDescription(DateFormatParser.class));
-    registerDataSources("DecimalFormatFilter",
-        new BeanObjectDescription(DecimalFormatFilter.class));
-    registerDataSources("DecimalFormatParser",
-        new BeanObjectDescription(DecimalFormatParser.class));
-    registerDataSources("DrawableLoadFilter",
-        new BeanObjectDescription(DrawableLoadFilter.class));
-    registerDataSources("EmptyDataSource", new BeanObjectDescription(EmptyDataSource.class));
-    registerDataSources("FormatFilter", new BeanObjectDescription(FormatFilter.class));
-    registerDataSources("FormatParser", new BeanObjectDescription(FormatParser.class));
-    registerDataSources("ImageLoadFilter", new BeanObjectDescription(ImageLoadFilter.class));
-    registerDataSources("ImageRefFilter", new BeanObjectDescription(ImageRefFilter.class));
-    registerDataSources("MessageFormatFilter", new BeanObjectDescription(MessageFormatFilter.class));
-    registerDataSources("NumberFormatFilter", new BeanObjectDescription(NumberFormatFilter.class));
-    registerDataSources("NumberFormatParser", new BeanObjectDescription(NumberFormatParser.class));
-    registerDataSources("ResourceFileFilter", new BeanObjectDescription(ResourceFileFilter.class));
-    registerDataSources("ResourceMessageFormatFilter", new BeanObjectDescription(ResourceMessageFormatFilter.class));
-    registerDataSources("ShapeFilter", new BeanObjectDescription(ShapeFilter.class));
-    registerDataSources("SimpleDateFormatFilter",
-        new BeanObjectDescription(SimpleDateFormatFilter.class));
-    registerDataSources("SimpleDateFormatParser",
-        new BeanObjectDescription(SimpleDateFormatParser.class));
-    registerDataSources("StaticDataSource", new BeanObjectDescription(StaticDataSource.class));
-    registerDataSources("StringFilter", new BeanObjectDescription(StringFilter.class));
-    registerDataSources("URLFilter", new URLFilterObjectDescription(URLFilter.class));
+  public DefaultDataSourceFactory() {
+    registerDataSources( "AnchorFilter", new BeanObjectDescription( AnchorFilter.class ) );
+    registerDataSources( "ComponentDrawableFilter",
+      new BeanObjectDescription( ComponentDrawableFilter.class ) );
+    registerDataSources( "DataRowDataSource", new BeanObjectDescription( DataRowDataSource.class ) );
+    registerDataSources( "DateFormatFilter", new BeanObjectDescription( DateFormatFilter.class ) );
+    registerDataSources( "DateFormatParser", new BeanObjectDescription( DateFormatParser.class ) );
+    registerDataSources( "DecimalFormatFilter",
+      new BeanObjectDescription( DecimalFormatFilter.class ) );
+    registerDataSources( "DecimalFormatParser",
+      new BeanObjectDescription( DecimalFormatParser.class ) );
+    registerDataSources( "DrawableLoadFilter",
+      new BeanObjectDescription( DrawableLoadFilter.class ) );
+    registerDataSources( "EmptyDataSource", new BeanObjectDescription( EmptyDataSource.class ) );
+    registerDataSources( "FormatFilter", new BeanObjectDescription( FormatFilter.class ) );
+    registerDataSources( "FormatParser", new BeanObjectDescription( FormatParser.class ) );
+    registerDataSources( "ImageLoadFilter", new BeanObjectDescription( ImageLoadFilter.class ) );
+    registerDataSources( "ImageRefFilter", new BeanObjectDescription( ImageRefFilter.class ) );
+    registerDataSources( "MessageFormatFilter", new BeanObjectDescription( MessageFormatFilter.class ) );
+    registerDataSources( "NumberFormatFilter", new BeanObjectDescription( NumberFormatFilter.class ) );
+    registerDataSources( "NumberFormatParser", new BeanObjectDescription( NumberFormatParser.class ) );
+    registerDataSources( "ResourceFileFilter", new BeanObjectDescription( ResourceFileFilter.class ) );
+    registerDataSources( "ResourceMessageFormatFilter",
+      new BeanObjectDescription( ResourceMessageFormatFilter.class ) );
+    registerDataSources( "ShapeFilter", new BeanObjectDescription( ShapeFilter.class ) );
+    registerDataSources( "SimpleDateFormatFilter",
+      new BeanObjectDescription( SimpleDateFormatFilter.class ) );
+    registerDataSources( "SimpleDateFormatParser",
+      new BeanObjectDescription( SimpleDateFormatParser.class ) );
+    registerDataSources( "StaticDataSource", new BeanObjectDescription( StaticDataSource.class ) );
+    registerDataSources( "StringFilter", new BeanObjectDescription( StringFilter.class ) );
+    registerDataSources( "URLFilter", new URLFilterObjectDescription( URLFilter.class ) );
 
     final DefaultTemplateCollection templateCollection = new DefaultTemplateCollection();
 
     final String[] templateNames = templateCollection.getNames();
-    for (int i = 0; i < templateNames.length; i++)
-    {
-      final String name = templateNames[i];
-      registerDataSources(name, templateCollection.getTemplate(name));
+    for ( int i = 0; i < templateNames.length; i++ ) {
+      final String name = templateNames[ i ];
+      registerDataSources( name, templateCollection.getTemplate( name ) );
     }
   }
 

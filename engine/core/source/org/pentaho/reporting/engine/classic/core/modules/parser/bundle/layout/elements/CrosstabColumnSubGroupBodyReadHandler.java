@@ -24,14 +24,12 @@ import org.pentaho.reporting.libraries.xmlns.parser.XmlReadHandler;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 
-public class CrosstabColumnSubGroupBodyReadHandler extends AbstractElementReadHandler
-{
+public class CrosstabColumnSubGroupBodyReadHandler extends AbstractElementReadHandler {
   private CrosstabColumnGroupReadHandler groupColumnReadHandler;
 
   public CrosstabColumnSubGroupBodyReadHandler()
-      throws ParseException
-  {
-    super(CrosstabColumnGroupBodyType.INSTANCE);
+    throws ParseException {
+    super( CrosstabColumnGroupBodyType.INSTANCE );
   }
 
   /**
@@ -43,42 +41,35 @@ public class CrosstabColumnSubGroupBodyReadHandler extends AbstractElementReadHa
    * @return the handler or null, if the tagname is invalid.
    * @throws SAXException if there is a parsing error.
    */
-  protected XmlReadHandler getHandlerForChild(final String uri,
-                                              final String tagName,
-                                              final Attributes atts) throws SAXException
-  {
-    if (isSameNamespace(uri))
-    {
-      if ("crosstab-column-group".equals(tagName))
-      {
+  protected XmlReadHandler getHandlerForChild( final String uri,
+                                               final String tagName,
+                                               final Attributes atts ) throws SAXException {
+    if ( isSameNamespace( uri ) ) {
+      if ( "crosstab-column-group".equals( tagName ) ) {
         groupColumnReadHandler = new CrosstabColumnGroupReadHandler();
         return groupColumnReadHandler;
       }
     }
-    return super.getHandlerForChild(uri, tagName, atts);
+    return super.getHandlerForChild( uri, tagName, atts );
   }
 
-  public CrosstabColumnGroupBody getElement()
-  {
+  public CrosstabColumnGroupBody getElement() {
     return (CrosstabColumnGroupBody) super.getElement();
   }
+
   /**
    * Done parsing.
    *
    * @throws SAXException if there is a parsing error.
    */
-  protected void doneParsing() throws SAXException
-  {
+  protected void doneParsing() throws SAXException {
     super.doneParsing();
 
     final CrosstabColumnGroupBody body = getElement();
-    if (groupColumnReadHandler != null)
-    {
-      body.setGroup(groupColumnReadHandler.getElement());
-    }
-    else
-    {
-      throw new ParseException("A 'crosstab-column-group' element must be present");
+    if ( groupColumnReadHandler != null ) {
+      body.setGroup( groupColumnReadHandler.getElement() );
+    } else {
+      throw new ParseException( "A 'crosstab-column-group' element must be present" );
     }
   }
 }

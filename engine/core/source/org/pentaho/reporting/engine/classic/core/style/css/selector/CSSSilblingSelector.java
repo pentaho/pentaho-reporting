@@ -17,83 +17,72 @@
 
 package org.pentaho.reporting.engine.classic.core.style.css.selector;
 
-import java.io.Serializable;
-
 import org.pentaho.reporting.engine.classic.core.style.css.namespaces.NamespaceCollection;
 import org.w3c.css.sac.Selector;
 import org.w3c.css.sac.SiblingSelector;
 import org.w3c.css.sac.SimpleSelector;
 
+import java.io.Serializable;
+
 /**
- * We do not support DOM node types, we always assume elements here (or evaluate
- * both selectors to see if they match).
+ * We do not support DOM node types, we always assume elements here (or evaluate both selectors to see if they match).
  *
  * @author Thomas Morgner
  */
 public class CSSSilblingSelector extends AbstractSelector
-    implements SiblingSelector, Serializable
-{
+  implements SiblingSelector, Serializable {
   private short nodeType;
   private Selector selector;
   private SimpleSelector silblingSelector;
 
-  public CSSSilblingSelector(final short nodeType,
-                             final Selector selector,
-                             final SimpleSelector silblingSelector)
-  {
+  public CSSSilblingSelector( final short nodeType,
+                              final Selector selector,
+                              final SimpleSelector silblingSelector ) {
     this.nodeType = nodeType;
     this.selector = selector;
     this.silblingSelector = silblingSelector;
   }
 
   /**
-   * The node type to considered in the siblings list. All DOM node types are
-   * supported. In order to support the "any" node type, the code ANY_NODE is
-   * added to the DOM node types.
+   * The node type to considered in the siblings list. All DOM node types are supported. In order to support the "any"
+   * node type, the code ANY_NODE is added to the DOM node types.
    */
-  public short getNodeType()
-  {
+  public short getNodeType() {
     return nodeType;
   }
 
   /**
    * Returns the first selector.
    */
-  public Selector getSelector()
-  {
+  public Selector getSelector() {
     return selector;
   }
 
   /*
   * Returns the second selector.
   */
-  public SimpleSelector getSiblingSelector()
-  {
+  public SimpleSelector getSiblingSelector() {
     return silblingSelector;
   }
 
   /**
    * An integer indicating the type of <code>Selector</code>
    */
-  public short getSelectorType()
-  {
+  public short getSelectorType() {
     return SAC_DIRECT_ADJACENT_SELECTOR;
   }
 
-  protected SelectorWeight createWeight()
-  {
-    if (silblingSelector instanceof CSSSelector == false ||
-        selector instanceof CSSSelector == false)
-    {
-      throw new ClassCastException("Invalid selector implementation!");
+  protected SelectorWeight createWeight() {
+    if ( silblingSelector instanceof CSSSelector == false ||
+      selector instanceof CSSSelector == false ) {
+      throw new ClassCastException( "Invalid selector implementation!" );
     }
     final CSSSelector anchestor = (CSSSelector) silblingSelector;
     final CSSSelector simple = (CSSSelector) selector;
-    return new SelectorWeight(anchestor.getWeight(), simple.getWeight());
+    return new SelectorWeight( anchestor.getWeight(), simple.getWeight() );
   }
 
-  public String print(final NamespaceCollection namespaces)
-  {
+  public String print( final NamespaceCollection namespaces ) {
     return selector + " ~ " + silblingSelector;
   }
 }

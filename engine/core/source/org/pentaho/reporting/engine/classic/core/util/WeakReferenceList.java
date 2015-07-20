@@ -17,14 +17,14 @@
 
 package org.pentaho.reporting.engine.classic.core.util;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.Serializable;
 import java.lang.ref.Reference;
 import java.lang.ref.WeakReference;
-
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 
 /**
  * The WeakReference list uses <code>java.lang.ref.WeakReference</code>s to store its contents. In contrast to the
@@ -45,9 +45,8 @@ import org.apache.commons.logging.LogFactory;
  *
  * @author Thomas Morgner
  */
-public abstract class WeakReferenceList<T> implements Serializable, Cloneable
-{
-  private static final Log logger = LogFactory.getLog(WeakReferenceList.class);
+public abstract class WeakReferenceList<T> implements Serializable, Cloneable {
+  private static final Log logger = LogFactory.getLog( WeakReferenceList.class );
   /**
    * The master element.
    */
@@ -73,11 +72,10 @@ public abstract class WeakReferenceList<T> implements Serializable, Cloneable
    *
    * @param maxChildCount the maximum number of elements.
    */
-  protected WeakReferenceList(final int maxChildCount)
-  {
+  protected WeakReferenceList( final int maxChildCount ) {
     this.maxChilds = maxChildCount;
     //noinspection unchecked
-    this.childs = new Reference[maxChildCount - 1];
+    this.childs = new Reference[ maxChildCount - 1 ];
   }
 
   /**
@@ -85,8 +83,7 @@ public abstract class WeakReferenceList<T> implements Serializable, Cloneable
    *
    * @return the maximum number of elements in this list.
    */
-  protected final int getMaxChildCount()
-  {
+  protected final int getMaxChildCount() {
     return maxChilds;
   }
 
@@ -96,13 +93,11 @@ public abstract class WeakReferenceList<T> implements Serializable, Cloneable
    *
    * @return the master element
    */
-  protected Object getMaster()
-  {
+  protected Object getMaster() {
     return master;
   }
 
-  protected void setMaster(final T master)
-  {
+  protected void setMaster( final T master ) {
     this.master = master;
   }
 
@@ -112,7 +107,7 @@ public abstract class WeakReferenceList<T> implements Serializable, Cloneable
    * @param index the index.
    * @return null if the child could not be restored or the restored child.
    */
-  protected abstract T restoreChild(int index);
+  protected abstract T restoreChild( int index );
 
   /**
    * Returns the child stored at the given index. If the child has been garbage collected, it gets restored using the
@@ -121,41 +116,30 @@ public abstract class WeakReferenceList<T> implements Serializable, Cloneable
    * @param index the index.
    * @return the object.
    */
-  public Object get(final int index)
-  {
-    if (isMaster(index))
-    {
+  public Object get( final int index ) {
+    if ( isMaster( index ) ) {
       return master;
-    }
-    else
-    {
-      final Reference<T> ref = childs[getChildPos(index)];
-      if (ref == null)
-      {
-        throw new IllegalStateException("State: " + index);
+    } else {
+      final Reference<T> ref = childs[ getChildPos( index ) ];
+      if ( ref == null ) {
+        throw new IllegalStateException( "State: " + index );
       }
       T ob = ref.get();
-      if (ob == null)
-      {
-        ob = restoreChild(index);
-        childs[getChildPos(index)] = createReference(ob);
+      if ( ob == null ) {
+        ob = restoreChild( index );
+        childs[ getChildPos( index ) ] = createReference( ob );
       }
       return ob;
     }
   }
 
-  public T getRaw(final int index)
-  {
-    if (isMaster(index))
-    {
+  public T getRaw( final int index ) {
+    if ( isMaster( index ) ) {
       return master;
-    }
-    else
-    {
-      final Reference<T> ref = childs[getChildPos(index)];
-      if (ref == null)
-      {
-        throw new IllegalStateException("State: " + index);
+    } else {
+      final Reference<T> ref = childs[ getChildPos( index ) ];
+      if ( ref == null ) {
+        throw new IllegalStateException( "State: " + index );
       }
       return ref.get();
     }
@@ -167,15 +151,11 @@ public abstract class WeakReferenceList<T> implements Serializable, Cloneable
    * @param report the object.
    * @param index  the index.
    */
-  public void set(final T report, final int index)
-  {
-    if (isMaster(index))
-    {
+  public void set( final T report, final int index ) {
+    if ( isMaster( index ) ) {
       master = report;
-    }
-    else
-    {
-      childs[getChildPos(index)] = createReference(report);
+    } else {
+      childs[ getChildPos( index ) ] = createReference( report );
     }
   }
 
@@ -185,9 +165,8 @@ public abstract class WeakReferenceList<T> implements Serializable, Cloneable
    * @param o the object.
    * @return a WeakReference for the object o without any ReferenceQueue attached.
    */
-  private Reference<T> createReference(final T o)
-  {
-    return new WeakReference<T>(o);
+  private Reference<T> createReference( final T o ) {
+    return new WeakReference<T>( o );
   }
 
   /**
@@ -197,24 +176,17 @@ public abstract class WeakReferenceList<T> implements Serializable, Cloneable
    * @param rs the object.
    * @return true, if the object was successfully added to the list, false otherwise
    */
-  public boolean add(final T rs)
-  {
-    if (size == 0)
-    {
+  public boolean add( final T rs ) {
+    if ( size == 0 ) {
       master = rs;
       size = 1;
       return true;
-    }
-    else
-    {
-      if (size < getMaxChildCount())
-      {
-        childs[size - 1] = createReference(rs);
+    } else {
+      if ( size < getMaxChildCount() ) {
+        childs[ size - 1 ] = createReference( rs );
         size++;
         return true;
-      }
-      else
-      {
+      } else {
         // was not able to add this to this list, maximum number of entries reached.
         return false;
       }
@@ -227,8 +199,7 @@ public abstract class WeakReferenceList<T> implements Serializable, Cloneable
    * @param index the index.
    * @return true if the index is a master index.
    */
-  protected boolean isMaster(final int index)
-  {
+  protected boolean isMaster( final int index ) {
     return index % getMaxChildCount() == 0;
   }
 
@@ -238,8 +209,7 @@ public abstract class WeakReferenceList<T> implements Serializable, Cloneable
    * @param index the index.
    * @return the internal storage index.
    */
-  protected int getChildPos(final int index)
-  {
+  protected int getChildPos( final int index ) {
     return index % getMaxChildCount() - 1;
   }
 
@@ -248,8 +218,7 @@ public abstract class WeakReferenceList<T> implements Serializable, Cloneable
    *
    * @return the size.
    */
-  public int getSize()
-  {
+  public int getSize() {
     return size;
   }
 
@@ -261,14 +230,12 @@ public abstract class WeakReferenceList<T> implements Serializable, Cloneable
    * @throws ClassNotFoundException if a serialized class is not defined on this system.
    * @noinspection unchecked
    */
-  private void readObject(final ObjectInputStream in)
-      throws IOException, ClassNotFoundException
-  {
+  private void readObject( final ObjectInputStream in )
+    throws IOException, ClassNotFoundException {
     in.defaultReadObject();
-    childs = new Reference[getMaxChildCount() - 1];
-    for (int i = 0; i < childs.length; i++)
-    {
-      childs[i] = createReference(null);
+    childs = new Reference[ getMaxChildCount() - 1 ];
+    for ( int i = 0; i < childs.length; i++ ) {
+      childs[ i ] = createReference( null );
     }
   }
 
@@ -284,25 +251,25 @@ public abstract class WeakReferenceList<T> implements Serializable, Cloneable
    * <pre>
    * x.clone().equals(x)</pre></blockquote>
    * will be <tt>true</tt>, this is not an absolute requirement.
-   * <p/>
+   *
    * By convention, the returned object should be obtained by calling <tt>super.clone</tt>.  If a class and all of its
    * superclasses (except <tt>Object</tt>) obey this convention, it will be the case that <tt>x.clone().getClass() ==
    * x.getClass()</tt>.
-   * <p/>
+   *
    * By convention, the object returned by this method should be independent of this object (which is being cloned).  To
    * achieve this independence, it may be necessary to modify one or more fields of the object returned by
    * <tt>super.clone</tt> before returning it.  Typically, this means copying any mutable objects that comprise the
    * internal "deep structure" of the object being cloned and replacing the references to these objects with references
    * to the copies.  If a class contains only primitive fields or references to immutable objects, then it is usually
    * the case that no fields in the object returned by <tt>super.clone</tt> need to be modified.
-   * <p/>
+   *
    * The method <tt>clone</tt> for class <tt>Object</tt> performs a specific cloning operation. First, if the class of
    * this object does not implement the interface <tt>Cloneable</tt>, then a <tt>CloneNotSupportedException</tt> is
    * thrown. Note that all arrays are considered to implement the interface <tt>Cloneable</tt>. Otherwise, this method
    * creates a new instance of the class of this object and initializes all its fields with exactly the contents of the
    * corresponding fields of this object, as if by assignment; the contents of the fields are not themselves cloned.
    * Thus, this method performs a "shallow copy" of this object, not a "deep copy" operation.
-   * <p/>
+   *
    * The class <tt>Object</tt> does not itself implement the interface <tt>Cloneable</tt>, so calling the <tt>clone</tt>
    * method on an object whose class is <tt>Object</tt> will result in throwing an exception at run time.
    *
@@ -313,8 +280,7 @@ public abstract class WeakReferenceList<T> implements Serializable, Cloneable
    * @see Cloneable
    */
   protected Object clone()
-      throws CloneNotSupportedException
-  {
+    throws CloneNotSupportedException {
     final WeakReferenceList list = (WeakReferenceList) super.clone();
     list.childs = childs.clone();
     return list;

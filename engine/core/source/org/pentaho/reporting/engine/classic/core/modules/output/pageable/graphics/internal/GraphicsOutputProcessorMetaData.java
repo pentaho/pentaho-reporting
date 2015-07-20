@@ -26,60 +26,50 @@ import org.pentaho.reporting.libraries.fonts.awt.AWTFontRegistry;
 import org.pentaho.reporting.libraries.fonts.registry.DefaultFontStorage;
 import org.pentaho.reporting.libraries.fonts.registry.FontStorage;
 
-public class GraphicsOutputProcessorMetaData extends AbstractOutputProcessorMetaData
-{
-  public GraphicsOutputProcessorMetaData()
-  {
-    this(new DefaultFontStorage(new AWTFontRegistry()));
+public class GraphicsOutputProcessorMetaData extends AbstractOutputProcessorMetaData {
+  public GraphicsOutputProcessorMetaData() {
+    this( new DefaultFontStorage( new AWTFontRegistry() ) );
   }
 
-  public GraphicsOutputProcessorMetaData(final FontStorage storage)
-  {
-    super(storage);
+  public GraphicsOutputProcessorMetaData( final FontStorage storage ) {
+    super( storage );
   }
 
-  public void initialize(final Configuration configuration)
-  {
-    super.initialize(configuration);
-    addFeature(OutputProcessorFeature.FAST_FONTRENDERING);
-    addFeature(OutputProcessorFeature.BACKGROUND_IMAGE);
-    addFeature(OutputProcessorFeature.PAGE_SECTIONS);
-    addFeature(OutputProcessorFeature.PAGEBREAKS);
-    addFeature(OutputProcessorFeature.SPACING_SUPPORTED);
-    addFeature(OutputProcessorFeature.DIRECT_RICHTEXT_RENDERING);
+  public void initialize( final Configuration configuration ) {
+    super.initialize( configuration );
+    addFeature( OutputProcessorFeature.FAST_FONTRENDERING );
+    addFeature( OutputProcessorFeature.BACKGROUND_IMAGE );
+    addFeature( OutputProcessorFeature.PAGE_SECTIONS );
+    addFeature( OutputProcessorFeature.PAGEBREAKS );
+    addFeature( OutputProcessorFeature.SPACING_SUPPORTED );
+    addFeature( OutputProcessorFeature.DIRECT_RICHTEXT_RENDERING );
 
-    if ("true".equals(configuration.getConfigProperty
-        ("org.pentaho.reporting.engine.classic.core.modules.output.pageable.graphics.WatermarkPrinted")))
-    {
-      addFeature(OutputProcessorFeature.WATERMARK_SECTION);
+    if ( "true".equals( configuration.getConfigProperty
+      ( "org.pentaho.reporting.engine.classic.core.modules.output.pageable.graphics.WatermarkPrinted" ) ) ) {
+      addFeature( OutputProcessorFeature.WATERMARK_SECTION );
     }
-    final ExtendedConfiguration extendedConfig = new ExtendedConfigurationWrapper(configuration);
+    final ExtendedConfiguration extendedConfig = new ExtendedConfigurationWrapper( configuration );
     final double deviceResolution = extendedConfig.getIntProperty
-        ("org.pentaho.reporting.engine.classic.core.modules.output.pageable.graphics.DeviceResolution", 0);
-    if (deviceResolution > 0)
-    {
-      setNumericFeatureValue(OutputProcessorFeature.DEVICE_RESOLUTION, deviceResolution);
+      ( "org.pentaho.reporting.engine.classic.core.modules.output.pageable.graphics.DeviceResolution", 0 );
+    if ( deviceResolution > 0 ) {
+      setNumericFeatureValue( OutputProcessorFeature.DEVICE_RESOLUTION, deviceResolution );
     }
 
-    if ("true".equals(configuration.getConfigProperty(
-        "org.pentaho.reporting.engine.classic.core.modules.output.pageable.graphics.AssumeOverflowX")))
-    {
-      addFeature(OutputProcessorFeature.ASSUME_OVERFLOW_X);
+    if ( "true".equals( configuration.getConfigProperty(
+      "org.pentaho.reporting.engine.classic.core.modules.output.pageable.graphics.AssumeOverflowX" ) ) ) {
+      addFeature( OutputProcessorFeature.ASSUME_OVERFLOW_X );
     }
-    if ("true".equals(configuration.getConfigProperty(
-        "org.pentaho.reporting.engine.classic.core.modules.output.pageable.graphics.AssumeOverflowY")))
-    {
-      addFeature(OutputProcessorFeature.ASSUME_OVERFLOW_Y);
+    if ( "true".equals( configuration.getConfigProperty(
+      "org.pentaho.reporting.engine.classic.core.modules.output.pageable.graphics.AssumeOverflowY" ) ) ) {
+      addFeature( OutputProcessorFeature.ASSUME_OVERFLOW_Y );
     }
 
-    if (isFeatureSupported(OutputProcessorFeature.COMPLEX_TEXT))
-    {
-      addFeature(OutputProcessorFeature.STRICT_TEXT_PROCESSING);
+    if ( isFeatureSupported( OutputProcessorFeature.COMPLEX_TEXT ) ) {
+      addFeature( OutputProcessorFeature.STRICT_TEXT_PROCESSING );
     }
   }
 
-  public String getExportDescriptor()
-  {
+  public String getExportDescriptor() {
     return "pageable/X-AWT-Graphics";
   }
 }

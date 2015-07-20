@@ -26,13 +26,11 @@ import java.math.BigDecimal;
  * @author Thomas Morgner
  * @deprecated This can be done easier with a formula.
  */
-public class ColumnDifferenceExpression extends ColumnAggregationExpression
-{
+public class ColumnDifferenceExpression extends ColumnAggregationExpression {
   /**
    * Default Constructor.
    */
-  public ColumnDifferenceExpression()
-  {
+  public ColumnDifferenceExpression() {
   }
 
   /**
@@ -40,27 +38,21 @@ public class ColumnDifferenceExpression extends ColumnAggregationExpression
    *
    * @return the value of the function.
    */
-  public Object getValue()
-  {
+  public Object getValue() {
     final Object[] values = getFieldValues();
     BigDecimal computedResult = null;
-    for (int i = 0; i < values.length; i++)
-    {
-      final Object value = values[i];
-      if (value instanceof Number == false)
-      {
+    for ( int i = 0; i < values.length; i++ ) {
+      final Object value = values[ i ];
+      if ( value instanceof Number == false ) {
         continue;
       }
 
       final Number n = (Number) value;
-      final BigDecimal nval = new BigDecimal(n.toString());
-      if (computedResult == null)
-      {
+      final BigDecimal nval = new BigDecimal( n.toString() );
+      if ( computedResult == null ) {
         computedResult = nval;
-      }
-      else
-      {
-        computedResult = computedResult.subtract(nval);
+      } else {
+        computedResult = computedResult.subtract( nval );
       }
     }
 

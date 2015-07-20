@@ -37,113 +37,116 @@ import org.pentaho.reporting.engine.classic.core.testsupport.DebugReportRunner;
 import org.pentaho.reporting.engine.classic.core.testsupport.selector.MatchFactory;
 import org.pentaho.reporting.engine.classic.core.util.geom.StrictGeomUtility;
 
-public class Prd4760Test extends TestCase
-{
-  public Prd4760Test()
-  {
+public class Prd4760Test extends TestCase {
+  public Prd4760Test() {
   }
 
-  protected void setUp() throws Exception
-  {
+  protected void setUp() throws Exception {
     ClassicEngineBoot.getInstance().start();
   }
 
-  public void testReport() throws ReportProcessingException, ContentProcessingException
-  {
+  public void testReport() throws ReportProcessingException, ContentProcessingException {
     Band b = new Band();
-    b.setLayout(BandStyleKeys.LAYOUT_ROW);
-    b.addElement(TableTestUtil.createDataItem("Test"));
-    b.setVisible(false);
+    b.setLayout( BandStyleKeys.LAYOUT_ROW );
+    b.addElement( TableTestUtil.createDataItem( "Test" ) );
+    b.setVisible( false );
 
     MasterReport report = new MasterReport();
-    report.getReportConfiguration().setConfigProperty(ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY, "false");
+    report.getReportConfiguration()
+      .setConfigProperty( ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY, "false" );
     ReportHeader reportHeader = report.getReportHeader();
-    reportHeader.setLayout(BandStyleKeys.LAYOUT_ROW);
-    reportHeader.addElement(b);
-    reportHeader.getStyle().setStyleProperty(ElementStyleKeys.INVISIBLE_CONSUMES_SPACE, false);
+    reportHeader.setLayout( BandStyleKeys.LAYOUT_ROW );
+    reportHeader.addElement( b );
+    reportHeader.getStyle().setStyleProperty( ElementStyleKeys.INVISIBLE_CONSUMES_SPACE, false );
 
-    LogicalPageBox logicalPageBox = DebugReportRunner.layoutSingleBand(report, reportHeader);
+    LogicalPageBox logicalPageBox = DebugReportRunner.layoutSingleBand( report, reportHeader );
 
-    RenderNode[] elementsByNodeType = MatchFactory.findElementsByNodeType(logicalPageBox, LayoutNodeTypes.TYPE_NODE_TEXT);
-    Assert.assertEquals(0, elementsByNodeType.length);
+    RenderNode[] elementsByNodeType =
+      MatchFactory.findElementsByNodeType( logicalPageBox, LayoutNodeTypes.TYPE_NODE_TEXT );
+    Assert.assertEquals( 0, elementsByNodeType.length );
   }
 
-  public void testReportDefaults() throws ReportProcessingException, ContentProcessingException
-  {
+  public void testReportDefaults() throws ReportProcessingException, ContentProcessingException {
     Band b = new Band();
-    b.setLayout(BandStyleKeys.LAYOUT_ROW);
-    b.addElement(TableTestUtil.createDataItem("Test"));
-    b.setVisible(false);
+    b.setLayout( BandStyleKeys.LAYOUT_ROW );
+    b.addElement( TableTestUtil.createDataItem( "Test" ) );
+    b.setVisible( false );
 
     MasterReport report = new MasterReport();
-    report.getReportConfiguration().setConfigProperty(ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY, "false");
+    report.getReportConfiguration()
+      .setConfigProperty( ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY, "false" );
     ReportHeader reportHeader = report.getReportHeader();
-    reportHeader.setLayout(BandStyleKeys.LAYOUT_ROW);
-    reportHeader.addElement(b);
+    reportHeader.setLayout( BandStyleKeys.LAYOUT_ROW );
+    reportHeader.addElement( b );
 
-    LogicalPageBox logicalPageBox = DebugReportRunner.layoutSingleBand(report, reportHeader);
-    RenderNode[] elementsByNodeType = MatchFactory.findElementsByNodeType(logicalPageBox, LayoutNodeTypes.TYPE_NODE_TEXT);
-    Assert.assertEquals(1, elementsByNodeType.length);
+    LogicalPageBox logicalPageBox = DebugReportRunner.layoutSingleBand( report, reportHeader );
+    RenderNode[] elementsByNodeType =
+      MatchFactory.findElementsByNodeType( logicalPageBox, LayoutNodeTypes.TYPE_NODE_TEXT );
+    Assert.assertEquals( 1, elementsByNodeType.length );
   }
 
-  public void testSimpleReport() throws ReportProcessingException, ContentProcessingException
-  {
+  public void testSimpleReport() throws ReportProcessingException, ContentProcessingException {
     MasterReport report = new MasterReport();
-    report.getReportConfiguration().setConfigProperty(ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY, "false");
+    report.getReportConfiguration()
+      .setConfigProperty( ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY, "false" );
     ReportHeader reportHeader = report.getReportHeader();
-    reportHeader.setLayout(BandStyleKeys.LAYOUT_ROW);
-    reportHeader.addElement(TableTestUtil.createDataItem("Test"));
-    reportHeader.getStyle().setStyleProperty(ElementStyleKeys.INVISIBLE_CONSUMES_SPACE, false);
-    reportHeader.setVisible(false);
+    reportHeader.setLayout( BandStyleKeys.LAYOUT_ROW );
+    reportHeader.addElement( TableTestUtil.createDataItem( "Test" ) );
+    reportHeader.getStyle().setStyleProperty( ElementStyleKeys.INVISIBLE_CONSUMES_SPACE, false );
+    reportHeader.setVisible( false );
 
-    LogicalPageBox logicalPageBox = DebugReportRunner.layoutSingleBand(report, reportHeader);
-    RenderNode[] elementsByNodeType = MatchFactory.findElementsByNodeType(logicalPageBox, LayoutNodeTypes.TYPE_NODE_TEXT);
-    Assert.assertEquals(0, elementsByNodeType.length);
+    LogicalPageBox logicalPageBox = DebugReportRunner.layoutSingleBand( report, reportHeader );
+    RenderNode[] elementsByNodeType =
+      MatchFactory.findElementsByNodeType( logicalPageBox, LayoutNodeTypes.TYPE_NODE_TEXT );
+    Assert.assertEquals( 0, elementsByNodeType.length );
   }
 
-  public void testSimpleReport2() throws ReportProcessingException, ContentProcessingException
-  {
-    Element test = TableTestUtil.createDataItem("Test");
-    test.setVisible(false);
+  public void testSimpleReport2() throws ReportProcessingException, ContentProcessingException {
+    Element test = TableTestUtil.createDataItem( "Test" );
+    test.setVisible( false );
 
     MasterReport report = new MasterReport();
-    report.getReportConfiguration().setConfigProperty(ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY, "false");
+    report.getReportConfiguration()
+      .setConfigProperty( ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY, "false" );
     ReportHeader reportHeader = report.getReportHeader();
-    reportHeader.setLayout(BandStyleKeys.LAYOUT_ROW);
-    reportHeader.addElement(test);
-    reportHeader.getStyle().setStyleProperty(ElementStyleKeys.INVISIBLE_CONSUMES_SPACE, false);
-    reportHeader.setVisible(false);
+    reportHeader.setLayout( BandStyleKeys.LAYOUT_ROW );
+    reportHeader.addElement( test );
+    reportHeader.getStyle().setStyleProperty( ElementStyleKeys.INVISIBLE_CONSUMES_SPACE, false );
+    reportHeader.setVisible( false );
 
-    LogicalPageBox logicalPageBox = DebugReportRunner.layoutSingleBand(report, reportHeader);
-    RenderNode[] elementsByNodeType = MatchFactory.findElementsByNodeType(logicalPageBox, LayoutNodeTypes.TYPE_NODE_TEXT);
-    Assert.assertEquals(0, elementsByNodeType.length);
+    LogicalPageBox logicalPageBox = DebugReportRunner.layoutSingleBand( report, reportHeader );
+    RenderNode[] elementsByNodeType =
+      MatchFactory.findElementsByNodeType( logicalPageBox, LayoutNodeTypes.TYPE_NODE_TEXT );
+    Assert.assertEquals( 0, elementsByNodeType.length );
   }
 
-  public void testGoldenSample() throws Exception
-  {
-    MasterReport report = DebugReportRunner.parseGoldenSampleReport("Prd-4760.prpt");
-    report.getReportConfiguration().setConfigProperty(ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY, "false");
-    LogicalPageBox logicalPageBox = DebugReportRunner.layoutPage(report, 0);
-    RenderNode[] elementsByNodeType = MatchFactory.findElementsByNodeType(logicalPageBox, LayoutNodeTypes.TYPE_BOX_PARAGRAPH);
-    Assert.assertEquals(4, elementsByNodeType.length);
-    for (RenderNode renderNode : elementsByNodeType)
-    {
-      if (renderNode.getX() != 0 && renderNode.getX() != StrictGeomUtility.toInternalValue(100))
+  public void testGoldenSample() throws Exception {
+    MasterReport report = DebugReportRunner.parseGoldenSampleReport( "Prd-4760.prpt" );
+    report.getReportConfiguration()
+      .setConfigProperty( ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY, "false" );
+    LogicalPageBox logicalPageBox = DebugReportRunner.layoutPage( report, 0 );
+    RenderNode[] elementsByNodeType =
+      MatchFactory.findElementsByNodeType( logicalPageBox, LayoutNodeTypes.TYPE_BOX_PARAGRAPH );
+    Assert.assertEquals( 4, elementsByNodeType.length );
+    for ( RenderNode renderNode : elementsByNodeType ) {
+      if ( renderNode.getX() != 0 && renderNode.getX() != StrictGeomUtility.toInternalValue( 100 ) ) {
         Assert.fail();
+      }
     }
   }
 
-  public void testGoldenSampleComplex() throws Exception
-  {
-    MasterReport report = DebugReportRunner.parseGoldenSampleReport("Prd-4760.prpt");
-    report.getReportConfiguration().setConfigProperty(ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY, "true");
-    LogicalPageBox logicalPageBox = DebugReportRunner.layoutPage(report, 0);
-    RenderNode[] elementsByNodeType = MatchFactory.findElementsByNodeType(logicalPageBox, LayoutNodeTypes.TYPE_BOX_PARAGRAPH);
-    Assert.assertEquals(4, elementsByNodeType.length);
-    for (RenderNode renderNode : elementsByNodeType)
-    {
-      if (renderNode.getX() != 0 && renderNode.getX() != StrictGeomUtility.toInternalValue(100))
+  public void testGoldenSampleComplex() throws Exception {
+    MasterReport report = DebugReportRunner.parseGoldenSampleReport( "Prd-4760.prpt" );
+    report.getReportConfiguration()
+      .setConfigProperty( ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY, "true" );
+    LogicalPageBox logicalPageBox = DebugReportRunner.layoutPage( report, 0 );
+    RenderNode[] elementsByNodeType =
+      MatchFactory.findElementsByNodeType( logicalPageBox, LayoutNodeTypes.TYPE_BOX_PARAGRAPH );
+    Assert.assertEquals( 4, elementsByNodeType.length );
+    for ( RenderNode renderNode : elementsByNodeType ) {
+      if ( renderNode.getX() != 0 && renderNode.getX() != StrictGeomUtility.toInternalValue( 100 ) ) {
         Assert.fail();
+      }
     }
   }
 }

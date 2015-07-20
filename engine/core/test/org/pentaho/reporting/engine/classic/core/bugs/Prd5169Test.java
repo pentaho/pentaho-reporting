@@ -17,8 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.core.bugs;
 
-import java.net.URL;
-
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -26,31 +24,17 @@ import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
 import org.pentaho.reporting.engine.classic.core.RelationalGroup;
 import org.pentaho.reporting.engine.classic.core.TableDataFactory;
-import org.pentaho.reporting.engine.classic.core.filter.types.LegacyType;
 import org.pentaho.reporting.engine.classic.core.function.AbstractExpression;
-import org.pentaho.reporting.engine.classic.core.layout.model.LayoutNodeTypes;
-import org.pentaho.reporting.engine.classic.core.layout.model.LogicalPageBox;
-import org.pentaho.reporting.engine.classic.core.layout.model.RenderNode;
-import org.pentaho.reporting.engine.classic.core.metadata.ElementType;
-import org.pentaho.reporting.engine.classic.core.modules.output.pageable.graphics.PrintReportProcessor;
 import org.pentaho.reporting.engine.classic.core.parameters.DefaultParameterDefinition;
 import org.pentaho.reporting.engine.classic.core.parameters.PlainParameter;
 import org.pentaho.reporting.engine.classic.core.states.LayoutProcess;
-import org.pentaho.reporting.engine.classic.core.testsupport.DebugRenderer;
-import org.pentaho.reporting.engine.classic.core.testsupport.DebugReportProcessor;
 import org.pentaho.reporting.engine.classic.core.testsupport.DebugReportRunner;
-import org.pentaho.reporting.engine.classic.core.testsupport.RelationalReportBuilder;
-import org.pentaho.reporting.engine.classic.core.testsupport.selector.MatchFactory;
 import org.pentaho.reporting.engine.classic.core.util.TypedTableModel;
-import org.pentaho.reporting.libraries.resourceloader.Resource;
-import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 
-public class Prd5169Test
-{
+public class Prd5169Test {
 
   @Before
-  public void setUp() throws Exception
-  {
+  public void setUp() throws Exception {
     ClassicEngineBoot.getInstance().start();
   }
 
@@ -59,62 +43,57 @@ public class Prd5169Test
     final TypedTableModel model = createTestData();
 
     final MasterReport report = new MasterReport();
-    report.setQuery("default");
-    report.setDataFactory(new TableDataFactory("default", model));
+    report.setQuery( "default" );
+    report.setDataFactory( new TableDataFactory( "default", model ) );
 
     DefaultParameterDefinition mdef = new DefaultParameterDefinition();
-    mdef.addParameterDefinition(new PlainParameter("Rows", String.class));
-    report.setParameterDefinition(mdef);
-    report.getParameterValues().put("Rows", "ALL");
+    mdef.addParameterDefinition( new PlainParameter( "Rows", String.class ) );
+    report.setParameterDefinition( mdef );
+    report.getParameterValues().put( "Rows", "ALL" );
 
     final RelationalGroup group = new RelationalGroup();
-    group.addField("Rows");
-    report.setRootGroup(group);
-    report.addExpression(new ValidateExpression());
+    group.addField( "Rows" );
+    report.setRootGroup( group );
+    report.addExpression( new ValidateExpression() );
 
-    DebugReportRunner.execGraphics2D(report);
+    DebugReportRunner.execGraphics2D( report );
   }
 
 
-  private TypedTableModel createTestData()
-  {
-    final TypedTableModel model = new TypedTableModel(new String[]{"Rows", "Data"});
-    model.addRow("A1", 100);
-    model.addRow("A2", 2);
-    model.addRow("A3", 20);
-    model.addRow("A2", 8);
+  private TypedTableModel createTestData() {
+    final TypedTableModel model = new TypedTableModel( new String[] { "Rows", "Data" } );
+    model.addRow( "A1", 100 );
+    model.addRow( "A2", 2 );
+    model.addRow( "A3", 20 );
+    model.addRow( "A2", 8 );
     return model;
   }
 
 
-  private static class ValidateExpression extends AbstractExpression
-  {
+  private static class ValidateExpression extends AbstractExpression {
     private String[] validateData;
 
-    private ValidateExpression()
-    {
-      setName("Validate");
+    private ValidateExpression() {
+      setName( "Validate" );
       validateData = new String[]
-          {
-              "A1",
-              "A2",
-              "A3",
-              "A2"
-          };
+        {
+          "A1",
+          "A2",
+          "A3",
+          "A2"
+        };
     }
 
 
-    public Object getValue()
-    {
-      if (getRuntime().getProcessingContext().getProcessingLevel() == LayoutProcess.LEVEL_STRUCTURAL_PREPROCESSING)
-      {
+    public Object getValue() {
+      if ( getRuntime().getProcessingContext().getProcessingLevel() == LayoutProcess.LEVEL_STRUCTURAL_PREPROCESSING ) {
         return false;
       }
 
       final int currentRow = getRuntime().getCurrentRow();
 
-      final Object row = getDataRow().get("Rows");
-      Assert.assertEquals(validateData[currentRow], row);
+      final Object row = getDataRow().get( "Rows" );
+      Assert.assertEquals( validateData[ currentRow ], row );
       return currentRow;
     }
   }

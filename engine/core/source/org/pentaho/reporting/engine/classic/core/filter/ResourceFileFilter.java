@@ -17,13 +17,13 @@
 
 package org.pentaho.reporting.engine.classic.core.filter;
 
-import java.util.ResourceBundle;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.pentaho.reporting.engine.classic.core.ReportElement;
 import org.pentaho.reporting.engine.classic.core.ResourceBundleFactory;
 import org.pentaho.reporting.engine.classic.core.function.ExpressionRuntime;
+
+import java.util.ResourceBundle;
 
 /**
  * Lookup a key from a datasource using a ResourceBundle.
@@ -32,9 +32,8 @@ import org.pentaho.reporting.engine.classic.core.function.ExpressionRuntime;
  *
  * @author Thomas Morgner
  */
-public class ResourceFileFilter implements DataFilter
-{
-  private static final Log logger = LogFactory.getLog(ResourceFileFilter.class);
+public class ResourceFileFilter implements DataFilter {
+  private static final Log logger = LogFactory.getLog( ResourceFileFilter.class );
   /**
    * the used resource bundle.
    */
@@ -48,8 +47,7 @@ public class ResourceFileFilter implements DataFilter
   /**
    * Creates a new ResourceFileFilter.
    */
-  public ResourceFileFilter()
-  {
+  public ResourceFileFilter() {
   }
 
   /**
@@ -58,20 +56,18 @@ public class ResourceFileFilter implements DataFilter
    * @return the name of the resourcebundle
    * @see org.pentaho.reporting.engine.classic.core.ResourceBundleFactory#getResourceBundle(String)
    */
-  public String getResourceIdentifier()
-  {
+  public String getResourceIdentifier() {
     return resourceIdentifier;
   }
 
   /**
    * Defines the name of the used resource bundle. If undefined, all calls to {@link
-   * DataSource#getValue(ExpressionRuntime, org.pentaho.reporting.engine.classic.core.ReportElement)}
-   * will result in <code>null</code> values.
+   * DataSource#getValue(ExpressionRuntime, org.pentaho.reporting.engine.classic.core.ReportElement)} will result in
+   * <code>null</code> values.
    *
    * @param resourceIdentifier the resource bundle name
    */
-  public void setResourceIdentifier(final String resourceIdentifier)
-  {
+  public void setResourceIdentifier( final String resourceIdentifier ) {
     this.resourceIdentifier = resourceIdentifier;
   }
 
@@ -87,54 +83,42 @@ public class ResourceFileFilter implements DataFilter
    * @param element
    * @return the value or null, if the value could not be looked up.
    */
-  public Object getValue(final ExpressionRuntime runtime, final ReportElement element)
-  {
-    if (dataSource == null)
-    {
+  public Object getValue( final ExpressionRuntime runtime, final ReportElement element ) {
+    if ( dataSource == null ) {
       return null;
     }
-    if (runtime == null)
-    {
+    if ( runtime == null ) {
       return null;
     }
-    final Object value = dataSource.getValue(runtime, element);
-    if (value == null)
-    {
+    final Object value = dataSource.getValue( runtime, element );
+    if ( value == null ) {
       return null;
     }
-    final String svalue = String.valueOf(value);
+    final String svalue = String.valueOf( value );
 
-    try
-    {
+    try {
       final String resourceId;
-      if (resourceIdentifier != null)
-      {
+      if ( resourceIdentifier != null ) {
         resourceId = resourceIdentifier;
-      }
-      else
-      {
+      } else {
         resourceId = runtime.getConfiguration().getConfigProperty
-            (ResourceBundleFactory.DEFAULT_RESOURCE_BUNDLE_CONFIG_KEY);
+          ( ResourceBundleFactory.DEFAULT_RESOURCE_BUNDLE_CONFIG_KEY );
       }
 
-      if (resourceId == null)
-      {
+      if ( resourceId == null ) {
         return null;
       }
 
       final ResourceBundleFactory resourceBundleFactory =
-          runtime.getResourceBundleFactory();
+        runtime.getResourceBundleFactory();
       final ResourceBundle bundle =
-          resourceBundleFactory.getResourceBundle(resourceId);
-      if (bundle != null)
-      {
-        return bundle.getObject(svalue);
+        resourceBundleFactory.getResourceBundle( resourceId );
+      if ( bundle != null ) {
+        return bundle.getObject( svalue );
       }
-    }
-    catch (Exception e)
-    {
+    } catch ( Exception e ) {
       // on errors return null.
-      ResourceFileFilter.logger.warn("Failed to retrive the value for key " + svalue);
+      ResourceFileFilter.logger.warn( "Failed to retrive the value for key " + svalue );
     }
     return null;
   }
@@ -146,8 +130,7 @@ public class ResourceFileFilter implements DataFilter
    * @throws CloneNotSupportedException this should never happen.
    */
   public ResourceFileFilter clone()
-      throws CloneNotSupportedException
-  {
+    throws CloneNotSupportedException {
     final ResourceFileFilter filter = (ResourceFileFilter) super.clone();
     filter.dataSource = dataSource.clone();
     return filter;
@@ -158,8 +141,7 @@ public class ResourceFileFilter implements DataFilter
    *
    * @return The datasource.
    */
-  public DataSource getDataSource()
-  {
+  public DataSource getDataSource() {
     return dataSource;
   }
 
@@ -168,8 +150,7 @@ public class ResourceFileFilter implements DataFilter
    *
    * @param ds The data source.
    */
-  public void setDataSource(final DataSource ds)
-  {
+  public void setDataSource( final DataSource ds ) {
     this.dataSource = ds;
   }
 

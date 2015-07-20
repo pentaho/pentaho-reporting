@@ -23,11 +23,11 @@ import org.pentaho.reporting.engine.classic.core.ReportDefinition;
 import org.pentaho.reporting.engine.classic.core.ReportProcessingException;
 import org.pentaho.reporting.engine.classic.core.function.ExpressionRuntime;
 
-public interface FastExportTemplate
-{
-  public void write(Band band, ExpressionRuntime runtime) throws InvalidReportStateException;
-  public void initialize(ReportDefinition metaData,
-                         final ExpressionRuntime report, boolean pagination);
+public interface FastExportTemplate {
+  public void write( Band band, ExpressionRuntime runtime ) throws InvalidReportStateException;
+
+  public void initialize( ReportDefinition metaData,
+                          final ExpressionRuntime report, boolean pagination );
 
   void finishReport() throws ReportProcessingException;
 }

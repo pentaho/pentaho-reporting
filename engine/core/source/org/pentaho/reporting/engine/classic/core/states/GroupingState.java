@@ -17,12 +17,11 @@
 
 package org.pentaho.reporting.engine.classic.core.states;
 
-public interface GroupingState
-{
+public interface GroupingState {
   public int getCurrentGroup();
 
-  public int getGroupStartRow(final int group);
+  public int getGroupStartRow( final int group );
 
-  public int getGroupStartRow(final String group);
+  public int getGroupStartRow( final String group );
 
 }

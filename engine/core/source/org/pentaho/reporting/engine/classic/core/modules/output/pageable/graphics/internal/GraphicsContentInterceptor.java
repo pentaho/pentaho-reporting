@@ -23,9 +23,8 @@ import org.pentaho.reporting.engine.classic.core.modules.output.pageable.base.Pa
 import org.pentaho.reporting.engine.classic.core.modules.output.pageable.graphics.PageDrawable;
 
 
-public interface GraphicsContentInterceptor extends PageFlowSelector
-{
-  public void processLogicalPage(LogicalPageKey key, PageDrawable page);
+public interface GraphicsContentInterceptor extends PageFlowSelector {
+  public void processLogicalPage( LogicalPageKey key, PageDrawable page );
 
-  public void processPhysicalPage(PhysicalPageKey key, PageDrawable page);
+  public void processPhysicalPage( PhysicalPageKey key, PageDrawable page );
 }

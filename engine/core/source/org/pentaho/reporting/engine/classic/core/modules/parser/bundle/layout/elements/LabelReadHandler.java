@@ -21,10 +21,8 @@ import org.pentaho.reporting.engine.classic.core.filter.types.LabelType;
 import org.pentaho.reporting.libraries.xmlns.parser.ParseException;
 
 @Deprecated
-public class LabelReadHandler extends AbstractElementReadHandler
-{
-  public LabelReadHandler() throws ParseException
-  {
-    super(LabelType.INSTANCE);
+public class LabelReadHandler extends AbstractElementReadHandler {
+  public LabelReadHandler() throws ParseException {
+    super( LabelType.INSTANCE );
   }
 }

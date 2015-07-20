@@ -17,13 +17,13 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.misc.beanshell;
 
-import java.io.InputStream;
-
 import org.pentaho.reporting.engine.classic.core.metadata.ElementMetaDataParser;
 import org.pentaho.reporting.libraries.base.boot.AbstractModule;
 import org.pentaho.reporting.libraries.base.boot.ModuleInitializeException;
 import org.pentaho.reporting.libraries.base.boot.SubSystem;
 import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
+
+import java.io.InputStream;
 
 
 /**
@@ -31,16 +31,14 @@ import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
  *
  * @author Thomas Morgner
  */
-public class BeanShellModule extends AbstractModule
-{
+public class BeanShellModule extends AbstractModule {
   /**
    * DefaultConstructor. Loads the module specification.
    *
    * @throws ModuleInitializeException if an error occured.
    */
   public BeanShellModule()
-      throws ModuleInitializeException
-  {
+    throws ModuleInitializeException {
     loadModuleInfo();
   }
 
@@ -52,29 +50,24 @@ public class BeanShellModule extends AbstractModule
    * @param subSystem the subSystem.
    * @throws ModuleInitializeException if an error ocurred while initializing the module.
    */
-  public void initialize(final SubSystem subSystem)
-      throws ModuleInitializeException
-  {
-    final ClassLoader classLoader = ObjectUtilities.getClassLoader(getClass());
+  public void initialize( final SubSystem subSystem )
+    throws ModuleInitializeException {
+    final ClassLoader classLoader = ObjectUtilities.getClassLoader( getClass() );
     final InputStream in =
-        classLoader.getResourceAsStream(BSHExpression.BSHHEADERFILE);
-    if (in == null)
-    {
-      throw new ModuleInitializeException("Unable to locate BSHHeaderFile. " + //$NON-NLS-1$
-          "This file is required to execute the BeanShellExpressions."); //$NON-NLS-1$
+      classLoader.getResourceAsStream( BSHExpression.BSHHEADERFILE );
+    if ( in == null ) {
+      throw new ModuleInitializeException( "Unable to locate BSHHeaderFile. " + //$NON-NLS-1$
+        "This file is required to execute the BeanShellExpressions." ); //$NON-NLS-1$
     }
-    try
-    {
-      Class.forName("bsh.Interpreter", false, classLoader); //$NON-NLS-1$
-    }
-    catch (Exception e)
-    {
-      throw new ModuleInitializeException("Unable to load the bean shell interpreter class. " + //$NON-NLS-1$
-          "This class is required to execute the BeanShellExpressions."); //$NON-NLS-1$
+    try {
+      Class.forName( "bsh.Interpreter", false, classLoader ); //$NON-NLS-1$
+    } catch ( Exception e ) {
+      throw new ModuleInitializeException( "Unable to load the bean shell interpreter class. " + //$NON-NLS-1$
+        "This class is required to execute the BeanShellExpressions." ); //$NON-NLS-1$
     }
 
     ElementMetaDataParser.initializeOptionalExpressionsMetaData
-        ("org/pentaho/reporting/engine/classic/core/modules/misc/beanshell/meta-expressions.xml");
+      ( "org/pentaho/reporting/engine/classic/core/modules/misc/beanshell/meta-expressions.xml" );
 
   }
 }

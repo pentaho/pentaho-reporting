@@ -33,21 +33,20 @@ import java.util.TreeSet;
  *
  * @author Thomas Morgner
  */
-public class LevelList implements Cloneable
-{
+public class LevelList implements Cloneable {
   /**
    * A static object array of size zero.
    */
-  private static final Object[] EMPTY_OBJECT_ARRAY = new Object[0];
+  private static final Object[] EMPTY_OBJECT_ARRAY = new Object[ 0 ];
   /**
    * A static object array of size zero.
    */
-  private static final Integer[] EMPTY_INTEGER_ARRAY = new Integer[0];
+  private static final Integer[] EMPTY_INTEGER_ARRAY = new Integer[ 0 ];
 
   /**
    * Constant for level zero.
    */
-  private static final Integer ZERO = new Integer(0);
+  private static final Integer ZERO = new Integer( 0 );
 
   /**
    * A treeset to build the iterator.
@@ -67,13 +66,11 @@ public class LevelList implements Cloneable
   /**
    * A comparator for levels in descending order.
    */
-  private static final class DescendingComparator implements Comparator, Serializable
-  {
+  private static final class DescendingComparator implements Comparator, Serializable {
     /**
      * Default constructor.
      */
-    private DescendingComparator()
-    {
+    private DescendingComparator() {
     }
 
     /**
@@ -83,30 +80,26 @@ public class LevelList implements Cloneable
      * @param o1 the first object to be compared.
      * @param o2 the second object to be compared.
      * @return a negative integer, zero, or a positive integer as the first argument is less than, equal to, or greater
-     *         than the second.
+     * than the second.
      * @throws ClassCastException if the arguments' types prevent them from being compared by this Comparator.
      */
-    public int compare(final Object o1, final Object o2)
-    {
-      if ((o1 instanceof Comparable) == false)
-      {
-        throw new ClassCastException("Need comparable Elements");
+    public int compare( final Object o1, final Object o2 ) {
+      if ( ( o1 instanceof Comparable ) == false ) {
+        throw new ClassCastException( "Need comparable Elements" );
       }
-      if ((o2 instanceof Comparable) == false)
-      {
-        throw new ClassCastException("Need comparable Elements");
+      if ( ( o2 instanceof Comparable ) == false ) {
+        throw new ClassCastException( "Need comparable Elements" );
       }
       final Comparable c1 = (Comparable) o1;
       final Comparable c2 = (Comparable) o2;
-      return -1 * c1.compareTo(c2);
+      return -1 * c1.compareTo( c2 );
     }
   }
 
   /**
    * An list that caches all elements for a certain level.
    */
-  private static final class ElementLevelList
-  {
+  private static final class ElementLevelList {
     /**
      * The level list.
      */
@@ -118,24 +111,20 @@ public class LevelList implements Cloneable
      * @param list  the list (null not permitted).
      * @param level the level.
      */
-    private ElementLevelList(final LevelList list, final int level)
-    {
-      if (list == null)
-      {
+    private ElementLevelList( final LevelList list, final int level ) {
+      if ( list == null ) {
         throw new NullPointerException();
       }
 
       final Object[] rawElements = list.getRawElements();
       final Integer[] rawLevels = list.getRawLevels();
 
-      final ArrayList datalist = new ArrayList(rawElements.length);
-      for (int i = 0; i < rawElements.length; i++)
-      {
-        final Object iNext = rawElements[i];
-        final Integer iLevel = rawLevels[i];
-        if (iLevel.intValue() == level)
-        {
-          datalist.add(iNext);
+      final ArrayList datalist = new ArrayList( rawElements.length );
+      for ( int i = 0; i < rawElements.length; i++ ) {
+        final Object iNext = rawElements[ i ];
+        final Integer iLevel = rawLevels[ i ];
+        if ( iLevel.intValue() == level ) {
+          datalist.add( iNext );
         }
       }
       data = datalist.toArray();
@@ -146,8 +135,7 @@ public class LevelList implements Cloneable
      *
      * @return the data for this level as object array.
      */
-    protected Object[] getData()
-    {
+    protected Object[] getData() {
       return (Object[]) data.clone();
     }
 
@@ -157,20 +145,15 @@ public class LevelList implements Cloneable
      * @param target object array that should receive the contents
      * @return the data for this level as object array.
      */
-    protected Object[] getData(Object[] target)
-    {
-      if (target == null)
-      {
-        target = new Object[data.length];
+    protected Object[] getData( Object[] target ) {
+      if ( target == null ) {
+        target = new Object[ data.length ];
+      } else if ( target.length < data.length ) {
+        target = (Object[]) Array.newInstance( target.getClass().getComponentType(), data.length );
       }
-      else if (target.length < data.length)
-      {
-        target = (Object[]) Array.newInstance(target.getClass().getComponentType(), data.length);
-      }
-      System.arraycopy(data, 0, target, 0, data.length);
-      if (target.length > data.length)
-      {
-        target[data.length] = null;
+      System.arraycopy( data, 0, target, 0, data.length );
+      if ( target.length > data.length ) {
+        target[ data.length ] = null;
       }
       return target;
     }
@@ -180,8 +163,7 @@ public class LevelList implements Cloneable
      *
      * @return the size.
      */
-    protected int size()
-    {
+    protected int size() {
       return data.length;
     }
   }
@@ -199,8 +181,7 @@ public class LevelList implements Cloneable
   /**
    * Creates a new list (initially empty).
    */
-  public LevelList()
-  {
+  public LevelList() {
     this.elements = new ArrayList();
     this.levels = new ArrayList();
     this.iteratorCache = new HashMap();
@@ -211,8 +192,7 @@ public class LevelList implements Cloneable
    *
    * @return the element count.
    */
-  public int size()
-  {
+  public int size() {
     return elements.size();
   }
 
@@ -221,17 +201,13 @@ public class LevelList implements Cloneable
    *
    * @return an iterator.
    */
-  public Iterator getLevelsAscending()
-  {
-    if (iteratorSetAsc == null)
-    {
+  public Iterator getLevelsAscending() {
+    if ( iteratorSetAsc == null ) {
       iteratorSetAsc = new TreeSet();
-      final Integer[] ilevels = (Integer[]) levels.toArray(new Integer[levels.size()]);
-      for (int i = 0; i < ilevels.length; i++)
-      {
-        if (iteratorSetAsc.contains(ilevels[i]) == false)
-        {
-          iteratorSetAsc.add(ilevels[i]);
+      final Integer[] ilevels = (Integer[]) levels.toArray( new Integer[ levels.size() ] );
+      for ( int i = 0; i < ilevels.length; i++ ) {
+        if ( iteratorSetAsc.contains( ilevels[ i ] ) == false ) {
+          iteratorSetAsc.add( ilevels[ i ] );
         }
       }
     }
@@ -243,25 +219,20 @@ public class LevelList implements Cloneable
    *
    * @return the levels in descending order.
    */
-  public Integer[] getLevelsDescendingArray()
-  {
-    if (levels.isEmpty())
-    {
+  public Integer[] getLevelsDescendingArray() {
+    if ( levels.isEmpty() ) {
       return LevelList.EMPTY_INTEGER_ARRAY;
     }
-    if (iteratorSetDesc == null)
-    {
-      final Integer[] ilevels = (Integer[]) levels.toArray(new Integer[levels.size()]);
-      iteratorSetDesc = new TreeSet(new DescendingComparator());
-      for (int i = 0; i < ilevels.length; i++)
-      {
-        if (iteratorSetDesc.contains(ilevels[i]) == false)
-        {
-          iteratorSetDesc.add(ilevels[i]);
+    if ( iteratorSetDesc == null ) {
+      final Integer[] ilevels = (Integer[]) levels.toArray( new Integer[ levels.size() ] );
+      iteratorSetDesc = new TreeSet( new DescendingComparator() );
+      for ( int i = 0; i < ilevels.length; i++ ) {
+        if ( iteratorSetDesc.contains( ilevels[ i ] ) == false ) {
+          iteratorSetDesc.add( ilevels[ i ] );
         }
       }
     }
-    return (Integer[]) iteratorSetDesc.toArray(new Integer[iteratorSetDesc.size()]);
+    return (Integer[]) iteratorSetDesc.toArray( new Integer[ iteratorSetDesc.size() ] );
   }
 
   /**
@@ -269,17 +240,13 @@ public class LevelList implements Cloneable
    *
    * @return an iterator.
    */
-  public Iterator getLevelsDescending()
-  {
-    if (iteratorSetDesc == null)
-    {
-      iteratorSetDesc = new TreeSet(new DescendingComparator());
-      final Integer[] ilevels = (Integer[]) levels.toArray(new Integer[levels.size()]);
-      for (int i = 0; i < ilevels.length; i++)
-      {
-        if (iteratorSetDesc.contains(ilevels[i]) == false)
-        {
-          iteratorSetDesc.add(ilevels[i]);
+  public Iterator getLevelsDescending() {
+    if ( iteratorSetDesc == null ) {
+      iteratorSetDesc = new TreeSet( new DescendingComparator() );
+      final Integer[] ilevels = (Integer[]) levels.toArray( new Integer[ levels.size() ] );
+      for ( int i = 0; i < ilevels.length; i++ ) {
+        if ( iteratorSetDesc.contains( ilevels[ i ] ) == false ) {
+          iteratorSetDesc.add( ilevels[ i ] );
         }
       }
     }
@@ -291,8 +258,7 @@ public class LevelList implements Cloneable
    *
    * @return the array.
    */
-  public Object[] toArray()
-  {
+  public Object[] toArray() {
     return elements.toArray();
   }
 
@@ -303,22 +269,17 @@ public class LevelList implements Cloneable
    * @param target the target array that should receive the contentes
    * @return the data for the level as object array.
    */
-  public Object[] getElementArrayForLevel(final int level, final Object[] target)
-  {
+  public Object[] getElementArrayForLevel( final int level, final Object[] target ) {
     ElementLevelList it = (ElementLevelList)
-        iteratorCache.get(IntegerCache.getInteger(level));
-    if (it == null)
-    {
-      it = new ElementLevelList(this, level);
-      iteratorCache.put(IntegerCache.getInteger(level), it);
+      iteratorCache.get( IntegerCache.getInteger( level ) );
+    if ( it == null ) {
+      it = new ElementLevelList( this, level );
+      iteratorCache.put( IntegerCache.getInteger( level ), it );
     }
-    if (target == null)
-    {
+    if ( target == null ) {
       return it.getData();
-    }
-    else
-    {
-      return it.getData(target);
+    } else {
+      return it.getData( target );
     }
   }
 
@@ -328,9 +289,8 @@ public class LevelList implements Cloneable
    * @param level the level.
    * @return the data for the level as object array.
    */
-  public Object[] getElementArrayForLevel(final int level)
-  {
-    return getElementArrayForLevel(level, null);
+  public Object[] getElementArrayForLevel( final int level ) {
+    return getElementArrayForLevel( level, null );
   }
 
   /**
@@ -339,14 +299,12 @@ public class LevelList implements Cloneable
    * @param level the level that should be queried
    * @return the numer of elements in that level
    */
-  public int getElementCountForLevel(final int level)
-  {
+  public int getElementCountForLevel( final int level ) {
     ElementLevelList it = (ElementLevelList) iteratorCache.get
-        (IntegerCache.getInteger(level));
-    if (it == null)
-    {
-      it = new ElementLevelList(this, level);
-      iteratorCache.put(IntegerCache.getInteger(level), it);
+      ( IntegerCache.getInteger( level ) );
+    if ( it == null ) {
+      it = new ElementLevelList( this, level );
+      iteratorCache.put( IntegerCache.getInteger( level ), it );
     }
     return it.size();
   }
@@ -358,10 +316,9 @@ public class LevelList implements Cloneable
    * @return An iterator.
    * @deprecated use the array methods for best performance.
    */
-  protected Iterator getElementsForLevel(final int level)
-  {
-    final List list = Arrays.asList(getElementArrayForLevel(level));
-    return Collections.unmodifiableList(list).iterator();
+  protected Iterator getElementsForLevel( final int level ) {
+    final List list = Arrays.asList( getElementArrayForLevel( level ) );
+    return Collections.unmodifiableList( list ).iterator();
   }
 
 
@@ -371,9 +328,8 @@ public class LevelList implements Cloneable
    * @param index the index.
    * @return the element.
    */
-  public Object get(final int index)
-  {
-    return elements.get(index);
+  public Object get( final int index ) {
+    return elements.get( index );
   }
 
   /**
@@ -381,13 +337,12 @@ public class LevelList implements Cloneable
    *
    * @param o the element.
    */
-  public void add(final Object o)
-  {
-    elements.add(o);
-    levels.add(LevelList.ZERO);
+  public void add( final Object o ) {
+    elements.add( o );
+    levels.add( LevelList.ZERO );
     iteratorSetAsc = null;
     iteratorSetDesc = null;
-    iteratorCache.remove(LevelList.ZERO);
+    iteratorCache.remove( LevelList.ZERO );
   }
 
   /**
@@ -396,12 +351,11 @@ public class LevelList implements Cloneable
    * @param o     the element.
    * @param level the level.
    */
-  public void add(final Object o, final int level)
-  {
-    elements.add(o);
-    final Integer i = IntegerCache.getInteger(level);
-    levels.add(i);
-    iteratorCache.remove(i);
+  public void add( final Object o, final int level ) {
+    elements.add( o );
+    final Integer i = IntegerCache.getInteger( level );
+    levels.add( i );
+    iteratorCache.remove( i );
     iteratorSetAsc = null;
     iteratorSetDesc = null;
   }
@@ -412,9 +366,8 @@ public class LevelList implements Cloneable
    * @param index the element index.
    * @param level the level.
    */
-  public void setLevel(final int index, final int level)
-  {
-    levels.set(index, IntegerCache.getInteger(level));
+  public void setLevel( final int index, final int level ) {
+    levels.set( index, IntegerCache.getInteger( level ) );
   }
 
   /**
@@ -423,9 +376,8 @@ public class LevelList implements Cloneable
    * @param index the element index.
    * @return the level.
    */
-  public int getLevel(final int index)
-  {
-    return ((Integer) levels.get(index)).intValue();
+  public int getLevel( final int index ) {
+    return ( (Integer) levels.get( index ) ).intValue();
   }
 
   /**
@@ -434,9 +386,8 @@ public class LevelList implements Cloneable
    * @param o the element.
    * @return the index.
    */
-  public int indexOf(final Object o)
-  {
-    return elements.indexOf(o);
+  public int indexOf( final Object o ) {
+    return elements.indexOf( o );
   }
 
   /**
@@ -445,9 +396,8 @@ public class LevelList implements Cloneable
    * @param o the element.
    * @return the level.
    */
-  public int getLevel(final Object o)
-  {
-    return getLevel(indexOf(o));
+  public int getLevel( final Object o ) {
+    return getLevel( indexOf( o ) );
   }
 
   /**
@@ -456,9 +406,8 @@ public class LevelList implements Cloneable
    * @param o     the element.
    * @param level the level.
    */
-  public void setLevel(final Object o, final int level)
-  {
-    setLevel(indexOf(o), level);
+  public void setLevel( final Object o, final int level ) {
+    setLevel( indexOf( o ), level );
   }
 
   /**
@@ -468,8 +417,7 @@ public class LevelList implements Cloneable
    * @throws CloneNotSupportedException should never happen.
    */
   public Object clone()
-      throws CloneNotSupportedException
-  {
+    throws CloneNotSupportedException {
     final LevelList l = (LevelList) super.clone();
     l.elements = (ArrayList) elements.clone();
     l.levels = (ArrayList) levels.clone();
@@ -480,8 +428,7 @@ public class LevelList implements Cloneable
   /**
    * Clears the list.
    */
-  public void clear()
-  {
+  public void clear() {
     elements.clear();
     levels.clear();
     iteratorCache.clear();
@@ -494,13 +441,11 @@ public class LevelList implements Cloneable
    *
    * @return all elements as object array.
    */
-  protected Object[] getRawElements()
-  {
-    if (elements.isEmpty())
-    {
+  protected Object[] getRawElements() {
+    if ( elements.isEmpty() ) {
       return LevelList.EMPTY_OBJECT_ARRAY;
     }
-    return elements.toArray(new Object[elements.size()]);
+    return elements.toArray( new Object[ elements.size() ] );
   }
 
   /**
@@ -508,12 +453,10 @@ public class LevelList implements Cloneable
    *
    * @return all levels as Integer array.
    */
-  protected Integer[] getRawLevels()
-  {
-    if (levels.isEmpty())
-    {
+  protected Integer[] getRawLevels() {
+    if ( levels.isEmpty() ) {
       return LevelList.EMPTY_INTEGER_ARRAY;
     }
-    return (Integer[]) levels.toArray(new Integer[levels.size()]);
+    return (Integer[]) levels.toArray( new Integer[ levels.size() ] );
   }
 }

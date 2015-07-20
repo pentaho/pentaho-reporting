@@ -17,31 +17,28 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.misc.datafactory.sql;
 
-import java.sql.Connection;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.LinkedHashSet;
-import javax.swing.table.TableModel;
-
 import org.pentaho.reporting.engine.classic.core.DataFactoryContext;
 import org.pentaho.reporting.engine.classic.core.DataRow;
 import org.pentaho.reporting.engine.classic.core.ReportDataFactoryException;
 import org.pentaho.reporting.engine.classic.core.modules.misc.datafactory.DataFactoryScriptingSupport;
 
-public class SQLReportDataFactory extends SimpleSQLReportDataFactory
-{
+import javax.swing.table.TableModel;
+import java.sql.Connection;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.LinkedHashSet;
+
+public class SQLReportDataFactory extends SimpleSQLReportDataFactory {
   private DataFactoryScriptingSupport scriptingSupport;
 
-  public SQLReportDataFactory(final Connection connection)
-  {
-    super(connection);
+  public SQLReportDataFactory( final Connection connection ) {
+    super( connection );
     scriptingSupport = new DataFactoryScriptingSupport();
   }
 
 
-  public SQLReportDataFactory(final ConnectionProvider connectionProvider)
-  {
-    super(connectionProvider);
+  public SQLReportDataFactory( final ConnectionProvider connectionProvider ) {
+    super( connectionProvider );
     scriptingSupport = new DataFactoryScriptingSupport();
   }
 
@@ -52,89 +49,72 @@ public class SQLReportDataFactory extends SimpleSQLReportDataFactory
    * @param parameters the parameters.
    * @return true, if the query would be executable, false if the query is not recognized.
    */
-  public boolean isQueryExecutable(final String query, final DataRow parameters)
-  {
-    return scriptingSupport.containsQuery(query);
+  public boolean isQueryExecutable( final String query, final DataRow parameters ) {
+    return scriptingSupport.containsQuery( query );
   }
 
   /**
    * Sets a query that uses no scripting for customization.
    *
-   * @param name the logical name
+   * @param name        the logical name
    * @param queryString the SQL string that will be executed.
    */
-  public void setQuery(final String name, final String queryString)
-  {
-    if (queryString == null)
-    {
-      scriptingSupport.remove(name);
-    }
-    else
-    {
-      scriptingSupport.setQuery(name, queryString, null, null);
+  public void setQuery( final String name, final String queryString ) {
+    if ( queryString == null ) {
+      scriptingSupport.remove( name );
+    } else {
+      scriptingSupport.setQuery( name, queryString, null, null );
     }
   }
 
-  public void setQuery(final String name, final String queryString,
-                       final String queryScriptLanguage, final String queryScript)
-  {
-    if (name == null)
-    {
+  public void setQuery( final String name, final String queryString,
+                        final String queryScriptLanguage, final String queryScript ) {
+    if ( name == null ) {
       throw new NullPointerException();
     }
 
-    scriptingSupport.setQuery(name, queryString, queryScriptLanguage, queryScript);
+    scriptingSupport.setQuery( name, queryString, queryScriptLanguage, queryScript );
   }
 
-  public void remove(final String name)
-  {
-    scriptingSupport.remove(name);
+  public void remove( final String name ) {
+    scriptingSupport.remove( name );
   }
 
-  public String getGlobalScriptLanguage()
-  {
+  public String getGlobalScriptLanguage() {
     return scriptingSupport.getGlobalScriptLanguage();
   }
 
-  public void setGlobalScriptLanguage(final String scriptLanguage)
-  {
-    scriptingSupport.setGlobalScriptLanguage(scriptLanguage);
+  public void setGlobalScriptLanguage( final String scriptLanguage ) {
+    scriptingSupport.setGlobalScriptLanguage( scriptLanguage );
   }
 
-  public String getGlobalScript()
-  {
+  public String getGlobalScript() {
     return scriptingSupport.getGlobalScript();
   }
 
-  public void setGlobalScript(final String globalScript)
-  {
-    scriptingSupport.setGlobalScript(globalScript);
+  public void setGlobalScript( final String globalScript ) {
+    scriptingSupport.setGlobalScript( globalScript );
   }
 
-  public String getScriptingLanguage(final String name)
-  {
-    return scriptingSupport.getScriptingLanguage(name);
+  public String getScriptingLanguage( final String name ) {
+    return scriptingSupport.getScriptingLanguage( name );
   }
 
-  public String getScript(final String name)
-  {
-    return scriptingSupport.getScript(name);
+  public String getScript( final String name ) {
+    return scriptingSupport.getScript( name );
   }
 
-  public String getQuery(final String name)
-  {
-    return scriptingSupport.getQuery(name);
+  public String getQuery( final String name ) {
+    return scriptingSupport.getQuery( name );
   }
 
-  public String[] getQueryNames()
-  {
+  public String[] getQueryNames() {
     return scriptingSupport.getQueryNames();
   }
 
-  public void initialize(final DataFactoryContext dataFactoryContext) throws ReportDataFactoryException
-  {
-    super.initialize(dataFactoryContext);
-    scriptingSupport.initialize(this, dataFactoryContext);
+  public void initialize( final DataFactoryContext dataFactoryContext ) throws ReportDataFactoryException {
+    super.initialize( dataFactoryContext );
+    scriptingSupport.initialize( this, dataFactoryContext );
   }
 
   /**
@@ -147,58 +127,50 @@ public class SQLReportDataFactory extends SimpleSQLReportDataFactory
    * @param parameters
    * @return
    */
-  public synchronized TableModel queryData(final String query, final DataRow parameters)
-      throws ReportDataFactoryException
-  {
-    if (query == null)
-    {
-      throw new NullPointerException("Query is null."); //$NON-NLS-1$
+  public synchronized TableModel queryData( final String query, final DataRow parameters )
+    throws ReportDataFactoryException {
+    if ( query == null ) {
+      throw new NullPointerException( "Query is null." ); //$NON-NLS-1$
     }
-    final String realQuery = scriptingSupport.computeQuery(query, parameters);
-    if (realQuery == null)
-    {
-      throw new ReportDataFactoryException("Query '" + query + "' is not recognized."); //$NON-NLS-1$ //$NON-NLS-2$
+    final String realQuery = scriptingSupport.computeQuery( query, parameters );
+    if ( realQuery == null ) {
+      throw new ReportDataFactoryException( "Query '" + query + "' is not recognized." ); //$NON-NLS-1$ //$NON-NLS-2$
     }
     TableModel queryResult = super.queryData( realQuery, parameters );
     TableModel postProcessResult = scriptingSupport.postProcessResult( query, parameters, queryResult );
     return postProcessResult;
   }
 
-  public String[] getReferencedFields(final String query, final DataRow parameter) throws ReportDataFactoryException
-  {
-    final String[] additionalFields = scriptingSupport.computeAdditionalQueryFields(query, parameter);
-    if (additionalFields == null)
-    {
+  public String[] getReferencedFields( final String query, final DataRow parameter ) throws ReportDataFactoryException {
+    final String[] additionalFields = scriptingSupport.computeAdditionalQueryFields( query, parameter );
+    if ( additionalFields == null ) {
       return null;
     }
 
-    final LinkedHashSet<String> fields = new LinkedHashSet<String>(Arrays.asList(super.getReferencedFields(query, parameter)));
-    fields.addAll(Arrays.asList(additionalFields));
-    return fields.toArray(new String[fields.size()]);
+    final LinkedHashSet<String> fields =
+      new LinkedHashSet<String>( Arrays.asList( super.getReferencedFields( query, parameter ) ) );
+    fields.addAll( Arrays.asList( additionalFields ) );
+    return fields.toArray( new String[ fields.size() ] );
   }
 
-  public ArrayList<Object> getQueryHash(final String queryName, final DataRow parameter)
-  {
-    final ArrayList<Object> queryHash = super.getQueryHash(queryName, parameter);
-    queryHash.add(scriptingSupport.getScriptingLanguage(queryName));
-    queryHash.add(scriptingSupport.getScript(queryName));
+  public ArrayList<Object> getQueryHash( final String queryName, final DataRow parameter ) {
+    final ArrayList<Object> queryHash = super.getQueryHash( queryName, parameter );
+    queryHash.add( scriptingSupport.getScriptingLanguage( queryName ) );
+    queryHash.add( scriptingSupport.getScript( queryName ) );
     return queryHash;
   }
 
-  public SQLReportDataFactory clone()
-  {
+  public SQLReportDataFactory clone() {
     final SQLReportDataFactory dataFactory = (SQLReportDataFactory) super.clone();
     dataFactory.scriptingSupport = (DataFactoryScriptingSupport) scriptingSupport.clone();
     return dataFactory;
   }
 
-  protected String computedQuery(final String queryName, final DataRow parameters) throws ReportDataFactoryException
-  {
-    return scriptingSupport.computeQuery(queryName, parameters);
+  protected String computedQuery( final String queryName, final DataRow parameters ) throws ReportDataFactoryException {
+    return scriptingSupport.computeQuery( queryName, parameters );
   }
 
-  protected String translateQuery(final String query)
-  {
-    return scriptingSupport.getQuery(query);
+  protected String translateQuery( final String query ) {
+    return scriptingSupport.getQuery( query );
   }
 }

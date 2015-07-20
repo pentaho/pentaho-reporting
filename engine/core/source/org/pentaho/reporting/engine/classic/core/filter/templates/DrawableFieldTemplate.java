@@ -26,8 +26,7 @@ import org.pentaho.reporting.engine.classic.core.function.ExpressionRuntime;
  *
  * @author Thomas Morgner
  */
-public class DrawableFieldTemplate extends AbstractTemplate
-{
+public class DrawableFieldTemplate extends AbstractTemplate {
   /**
    * The data row reader.
    */
@@ -36,8 +35,7 @@ public class DrawableFieldTemplate extends AbstractTemplate
   /**
    * Creates a new image field template.
    */
-  public DrawableFieldTemplate()
-  {
+  public DrawableFieldTemplate() {
     dataRowDataSource = new DataRowDataSource();
   }
 
@@ -46,8 +44,7 @@ public class DrawableFieldTemplate extends AbstractTemplate
    *
    * @return The field name.
    */
-  public String getField()
-  {
+  public String getField() {
     return dataRowDataSource.getDataSourceColumnName();
   }
 
@@ -56,9 +53,8 @@ public class DrawableFieldTemplate extends AbstractTemplate
    *
    * @param field the field name.
    */
-  public void setField(final String field)
-  {
-    dataRowDataSource.setDataSourceColumnName(field);
+  public void setField( final String field ) {
+    dataRowDataSource.setDataSourceColumnName( field );
   }
 
   /**
@@ -66,8 +62,7 @@ public class DrawableFieldTemplate extends AbstractTemplate
    *
    * @return the formula.
    */
-  public String getFormula()
-  {
+  public String getFormula() {
     return dataRowDataSource.getFormula();
   }
 
@@ -76,9 +71,8 @@ public class DrawableFieldTemplate extends AbstractTemplate
    *
    * @param formula the formula for the data source.
    */
-  public void setFormula(final String formula)
-  {
-    dataRowDataSource.setFormula(formula);
+  public void setFormula( final String formula ) {
+    dataRowDataSource.setFormula( formula );
   }
 
 
@@ -90,9 +84,8 @@ public class DrawableFieldTemplate extends AbstractTemplate
    * @param element
    * @return the value.
    */
-  public Object getValue(final ExpressionRuntime runtime, final ReportElement element)
-  {
-    return dataRowDataSource.getValue(runtime, element);
+  public Object getValue( final ExpressionRuntime runtime, final ReportElement element ) {
+    return dataRowDataSource.getValue( runtime, element );
   }
 
   /**
@@ -102,8 +95,7 @@ public class DrawableFieldTemplate extends AbstractTemplate
    * @throws CloneNotSupportedException this should never happen.
    */
   public DrawableFieldTemplate clone()
-      throws CloneNotSupportedException
-  {
+    throws CloneNotSupportedException {
     final DrawableFieldTemplate template = (DrawableFieldTemplate) super.clone();
     template.dataRowDataSource = template.dataRowDataSource.clone();
     return template;
@@ -114,8 +106,7 @@ public class DrawableFieldTemplate extends AbstractTemplate
    *
    * @return the datarow data source.
    */
-  protected DataRowDataSource getDataRowDataSource()
-  {
+  protected DataRowDataSource getDataRowDataSource() {
     return dataRowDataSource;
   }
 }

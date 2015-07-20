@@ -21,28 +21,23 @@ import org.pentaho.reporting.engine.classic.core.AttributeNames;
 import org.pentaho.reporting.engine.classic.core.ReportElement;
 import org.pentaho.reporting.engine.classic.core.function.ExpressionRuntime;
 
-public class ContentFieldType extends ContentType
-{
+public class ContentFieldType extends ContentType {
   public static final ContentFieldType INSTANCE = new ContentFieldType();
 
-  public ContentFieldType()
-  {
-    super("content-field");
+  public ContentFieldType() {
+    super( "content-field" );
   }
 
-  protected ContentFieldType(final String id)
-  {
-    super(id);
+  protected ContentFieldType( final String id ) {
+    super( id );
   }
 
-  public Object getDesignValue(final ExpressionRuntime runtime, final ReportElement element)
-  {
-    final Object staticValue = ElementTypeUtils.queryStaticValue(element);
-    if (staticValue != null)
-    {
+  public Object getDesignValue( final ExpressionRuntime runtime, final ReportElement element ) {
+    final Object staticValue = ElementTypeUtils.queryStaticValue( element );
+    if ( staticValue != null ) {
       return staticValue;
     }
-    return ElementTypeUtils.queryFieldName(element);
+    return ElementTypeUtils.queryFieldName( element );
   }
 
   /**
@@ -53,27 +48,22 @@ public class ContentFieldType extends ContentType
    * @param element the element for which the data is computed.
    * @return the value.
    */
-  public Object getValue(final ExpressionRuntime runtime, final ReportElement element)
-  {
-    if (runtime == null)
-    {
-      throw new NullPointerException("Runtime must never be null.");
+  public Object getValue( final ExpressionRuntime runtime, final ReportElement element ) {
+    if ( runtime == null ) {
+      throw new NullPointerException( "Runtime must never be null." );
     }
-    if (element == null)
-    {
-      throw new NullPointerException("Element must never be null.");
+    if ( element == null ) {
+      throw new NullPointerException( "Element must never be null." );
     }
 
-    final Object value = ElementTypeUtils.queryFieldOrValue(runtime, element);
-    if (value != null)
-    {
-      final Object filteredValue = filter(runtime, element, value);
-      if (filteredValue != null)
-      {
+    final Object value = ElementTypeUtils.queryFieldOrValue( runtime, element );
+    if ( value != null ) {
+      final Object filteredValue = filter( runtime, element, value );
+      if ( filteredValue != null ) {
         return filteredValue;
       }
     }
-    final Object nullValue = element.getAttribute(AttributeNames.Core.NAMESPACE, AttributeNames.Core.NULL_VALUE);
-    return filter(runtime, element, nullValue);
+    final Object nullValue = element.getAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.NULL_VALUE );
+    return filter( runtime, element, nullValue );
   }
 }

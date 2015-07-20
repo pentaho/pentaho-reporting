@@ -17,22 +17,20 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.gui.commonswing.localization;
 
+import javax.swing.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.Locale;
-import javax.swing.JComponent;
 
 /**
  * Copies the locale from one central point (usually the dialog) to all listeners.
  *
  * @author Thomas Morgner
  */
-public class LocaleUpdateHandler implements PropertyChangeListener
-{
+public class LocaleUpdateHandler implements PropertyChangeListener {
   private JComponent localizedComponent;
 
-  public LocaleUpdateHandler(final JComponent localizedComponent)
-  {
+  public LocaleUpdateHandler( final JComponent localizedComponent ) {
     this.localizedComponent = localizedComponent;
   }
 
@@ -42,13 +40,11 @@ public class LocaleUpdateHandler implements PropertyChangeListener
    * @param evt A PropertyChangeEvent object describing the event source and the property that has changed.
    */
 
-  public void propertyChange(final PropertyChangeEvent evt)
-  {
+  public void propertyChange( final PropertyChangeEvent evt ) {
     final Object newValue = evt.getNewValue();
-    if (newValue instanceof Locale == false)
-    {
+    if ( newValue instanceof Locale == false ) {
       return;
     }
-    localizedComponent.setLocale((Locale) newValue);
+    localizedComponent.setLocale( (Locale) newValue );
   }
 }

@@ -17,32 +17,30 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.parser.bundle.writer;
 
-import java.io.BufferedOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
-
 import org.pentaho.reporting.engine.classic.core.MasterReport;
 import org.pentaho.reporting.engine.classic.core.wizard.DataSchemaDefinition;
 import org.pentaho.reporting.engine.classic.core.wizard.writer.StandaloneDataSchemaWriter;
 import org.pentaho.reporting.libraries.docbundle.WriteableDocumentBundle;
+
+import java.io.BufferedOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 
 /**
  * Todo: Document Me
  *
  * @author Thomas Morgner
  */
-public class DataSchemaWriter implements BundleWriterHandler
-{
-  public DataSchemaWriter()
-  {
+public class DataSchemaWriter implements BundleWriterHandler {
+  public DataSchemaWriter() {
   }
 
   /**
    * Returns a relatively high processing order indicating this BundleWriterHandler should be one of the last processed
+   *
    * @return the relative processing order for this BundleWriterHandler
    */
-  public int getProcessingOrder()
-  {
+  public int getProcessingOrder() {
     return 100000;
   }
 
@@ -57,27 +55,24 @@ public class DataSchemaWriter implements BundleWriterHandler
    * @throws IOException           if any error occured
    * @throws BundleWriterException if a bundle-management error occured.
    */
-  public String writeReport(final WriteableDocumentBundle bundle, final BundleWriterState state)
-      throws IOException, BundleWriterException
-  {
-    if (bundle == null)
-    {
+  public String writeReport( final WriteableDocumentBundle bundle, final BundleWriterState state )
+    throws IOException, BundleWriterException {
+    if ( bundle == null ) {
       throw new NullPointerException();
     }
-    if (state == null)
-    {
+    if ( state == null ) {
       throw new NullPointerException();
     }
 
-    final BundleWriterState contentState = new BundleWriterState(state, state.getReport(), "dataschema.xml");
+    final BundleWriterState contentState = new BundleWriterState( state, state.getReport(), "dataschema.xml" );
 
-    final OutputStream outputStream = new BufferedOutputStream(bundle.createEntry(contentState.getFileName(),
-        "text/xml"));
+    final OutputStream outputStream = new BufferedOutputStream( bundle.createEntry( contentState.getFileName(),
+      "text/xml" ) );
     final MasterReport report = state.getMasterReport();
     final DataSchemaDefinition definition = report.getDataSchemaDefinition();
 
     final StandaloneDataSchemaWriter dataSchemaWriter = new StandaloneDataSchemaWriter();
-    dataSchemaWriter.write(definition, outputStream, "UTF-8");
+    dataSchemaWriter.write( definition, outputStream, "UTF-8" );
     outputStream.close();
     return contentState.getFileName();
   }

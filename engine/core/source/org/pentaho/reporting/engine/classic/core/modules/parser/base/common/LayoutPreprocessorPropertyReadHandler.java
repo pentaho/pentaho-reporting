@@ -25,14 +25,12 @@ import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
 import org.pentaho.reporting.libraries.xmlns.parser.ParseException;
 import org.xml.sax.SAXException;
 
-public class LayoutPreprocessorPropertyReadHandler extends PropertyStringReadHandler
-{
+public class LayoutPreprocessorPropertyReadHandler extends PropertyStringReadHandler {
   private BeanUtility beanUtility;
   private String propertyName;
   private String propertyType;
 
-  public LayoutPreprocessorPropertyReadHandler(final BeanUtility expression)
-  {
+  public LayoutPreprocessorPropertyReadHandler( final BeanUtility expression ) {
     super();
     this.beanUtility = expression;
   }
@@ -44,15 +42,13 @@ public class LayoutPreprocessorPropertyReadHandler extends PropertyStringReadHan
    * @param attrs the attributes.
    * @throws SAXException if there is a parsing error.
    */
-  public void startParsing(final PropertyAttributes attrs)
-      throws SAXException
-  {
-    super.startParsing(attrs);
-    propertyType = CompatibilityMapperUtil.mapClassName(attrs.getValue(getUri(), "class"));
-    propertyName = attrs.getValue(getUri(), "name");
-    if (propertyName == null)
-    {
-      throw new ParseException("Required attribute 'name' is null.", getLocator());
+  public void startParsing( final PropertyAttributes attrs )
+    throws SAXException {
+    super.startParsing( attrs );
+    propertyType = CompatibilityMapperUtil.mapClassName( attrs.getValue( getUri(), "class" ) );
+    propertyName = attrs.getValue( getUri(), "name" );
+    if ( propertyName == null ) {
+      throw new ParseException( "Required attribute 'name' is null.", getLocator() );
     }
   }
 
@@ -62,37 +58,27 @@ public class LayoutPreprocessorPropertyReadHandler extends PropertyStringReadHan
    * @throws SAXException if there is a parsing error.
    */
   public void doneParsing()
-      throws SAXException
-  {
+    throws SAXException {
     super.doneParsing();
     final String result = getResult();
-    if (beanUtility == null)
-    {
-      throw new SAXException("No current beanUtility");
+    if ( beanUtility == null ) {
+      throw new SAXException( "No current beanUtility" );
     }
-    try
-    {
-      if (propertyType != null)
-      {
-        final ClassLoader cl = ObjectUtilities.getClassLoader(ExpressionPropertyReadHandler.class);
-        final Class c = Class.forName(propertyType, false, cl);
-        beanUtility.setPropertyAsString(propertyName, c, result);
-      }
-      else
-      {
+    try {
+      if ( propertyType != null ) {
+        final ClassLoader cl = ObjectUtilities.getClassLoader( ExpressionPropertyReadHandler.class );
+        final Class c = Class.forName( propertyType, false, cl );
+        beanUtility.setPropertyAsString( propertyName, c, result );
+      } else {
         beanUtility.setPropertyAsString
-            (propertyName, result);
+          ( propertyName, result );
       }
-    }
-    catch (BeanException e)
-    {
-      throw new ParseException("Unable to assign property '" + propertyName
-          + "' to the specified Layout-PreProcessor", e, getLocator());
-    }
-    catch (ClassNotFoundException e)
-    {
-      throw new ParseException("Unable to assign property '" + propertyName
-          + "' to expression Layout-PreProcessor", e, getLocator());
+    } catch ( BeanException e ) {
+      throw new ParseException( "Unable to assign property '" + propertyName
+        + "' to the specified Layout-PreProcessor", e, getLocator() );
+    } catch ( ClassNotFoundException e ) {
+      throw new ParseException( "Unable to assign property '" + propertyName
+        + "' to expression Layout-PreProcessor", e, getLocator() );
     }
   }
 
@@ -101,8 +87,7 @@ public class LayoutPreprocessorPropertyReadHandler extends PropertyStringReadHan
    *
    * @return the object.
    */
-  public Object getObject()
-  {
+  public Object getObject() {
     return null;
   }
 

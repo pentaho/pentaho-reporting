@@ -17,9 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.output.table.xls;
 
-import java.io.InputStream;
-import java.io.OutputStream;
-
 import org.pentaho.reporting.engine.classic.core.layout.model.LogicalPageBox;
 import org.pentaho.reporting.engine.classic.core.layout.output.ContentProcessingException;
 import org.pentaho.reporting.engine.classic.core.layout.output.DisplayAllFlowSelector;
@@ -35,113 +32,96 @@ import org.pentaho.reporting.engine.classic.core.modules.output.table.xls.helper
 import org.pentaho.reporting.libraries.base.config.Configuration;
 import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 
-public class FlowExcelOutputProcessor extends AbstractTableOutputProcessor
-{
+import java.io.InputStream;
+import java.io.OutputStream;
+
+public class FlowExcelOutputProcessor extends AbstractTableOutputProcessor {
   private OutputProcessorMetaData metaData;
   private FlowSelector flowSelector;
   private ExcelPrinter printer;
 
-  public FlowExcelOutputProcessor(final Configuration config,
-                                  final OutputStream outputStream,
-                                  final ResourceManager resourceManager)
-  {
-    if (config == null)
-    {
+  public FlowExcelOutputProcessor( final Configuration config,
+                                   final OutputStream outputStream,
+                                   final ResourceManager resourceManager ) {
+    if ( config == null ) {
       throw new NullPointerException();
     }
-    if (outputStream == null)
-    {
+    if ( outputStream == null ) {
       throw new NullPointerException();
     }
-    if (resourceManager == null)
-    {
+    if ( resourceManager == null ) {
       throw new NullPointerException();
     }
 
 
-    this.metaData = new ExcelOutputProcessorMetaData(ExcelOutputProcessorMetaData.PAGINATION_MANUAL);
+    this.metaData = new ExcelOutputProcessorMetaData( ExcelOutputProcessorMetaData.PAGINATION_MANUAL );
     this.flowSelector = new DisplayAllFlowSelector();
 
-    this.printer = new ExcelPrinter(outputStream, resourceManager);
+    this.printer = new ExcelPrinter( outputStream, resourceManager );
   }
 
-  public boolean isUseXlsxFormat()
-  {
+  public boolean isUseXlsxFormat() {
     return printer.isUseXlsxFormat();
   }
 
-  public void setUseXlsxFormat(final boolean useXlsxFormat)
-  {
-    printer.setUseXlsxFormat(useXlsxFormat);
+  public void setUseXlsxFormat( final boolean useXlsxFormat ) {
+    printer.setUseXlsxFormat( useXlsxFormat );
   }
 
-  public InputStream getTemplateInputStream()
-  {
+  public InputStream getTemplateInputStream() {
     return printer.getTemplateInputStream();
   }
 
-  public void setTemplateInputStream(final InputStream templateInputStream)
-  {
-    printer.setTemplateInputStream(templateInputStream);
+  public void setTemplateInputStream( final InputStream templateInputStream ) {
+    printer.setTemplateInputStream( templateInputStream );
   }
 
-  public OutputProcessorMetaData getMetaData()
-  {
+  public OutputProcessorMetaData getMetaData() {
     return metaData;
   }
 
-  public void setFlowSelector(final FlowSelector flowSelector)
-  {
+  public void setFlowSelector( final FlowSelector flowSelector ) {
     this.flowSelector = flowSelector;
   }
 
-  public FlowSelector getFlowSelector()
-  {
+  public FlowSelector getFlowSelector() {
     return flowSelector;
   }
 
-  protected void processTableContent(final LogicalPageKey logicalPageKey,
-                                     final LogicalPageBox logicalPage,
-                                     final TableContentProducer contentProducer) throws ContentProcessingException
-  {
-    if (!this.printer.isInitialized())
-    {
-      this.printer.init(metaData);
+  protected void processTableContent( final LogicalPageKey logicalPageKey,
+                                      final LogicalPageBox logicalPage,
+                                      final TableContentProducer contentProducer ) throws ContentProcessingException {
+    if ( !this.printer.isInitialized() ) {
+      this.printer.init( metaData );
     }
 
-    printer.print(logicalPageKey, logicalPage, contentProducer, false);
+    printer.print( logicalPageKey, logicalPage, contentProducer, false );
   }
 
-  protected void updateTableContent(final LogicalPageKey logicalPageKey,
-                                    final LogicalPageBox logicalPageBox,
-                                    final TableContentProducer tableContentProducer,
-                                    final boolean performOutput) throws ContentProcessingException
-  {
-    if (!this.printer.isInitialized())
-    {
-      this.printer.init(metaData);
+  protected void updateTableContent( final LogicalPageKey logicalPageKey,
+                                     final LogicalPageBox logicalPageBox,
+                                     final TableContentProducer tableContentProducer,
+                                     final boolean performOutput ) throws ContentProcessingException {
+    if ( !this.printer.isInitialized() ) {
+      this.printer.init( metaData );
     }
 
-    printer.print(logicalPageKey, logicalPageBox, tableContentProducer, true);
+    printer.print( logicalPageKey, logicalPageBox, tableContentProducer, true );
   }
 
-  protected void processingContentFinished()
-  {
-    if (isContentGeneratable() == false)
-    {
+  protected void processingContentFinished() {
+    if ( isContentGeneratable() == false ) {
       return;
     }
-    if (!this.printer.isInitialized())
-    {
-      this.printer.init(metaData);
+    if ( !this.printer.isInitialized() ) {
+      this.printer.init( metaData );
     }
 
     this.metaData.commit();
     this.printer.close();
   }
 
-  protected TableContentProducer createTableContentProducer(final SheetLayout layout)
-  {
-    return new ExcelTableContentProducer(layout, getMetaData());
+  protected TableContentProducer createTableContentProducer( final SheetLayout layout ) {
+    return new ExcelTableContentProducer( layout, getMetaData() );
   }
 }

@@ -22,16 +22,14 @@ package org.pentaho.reporting.engine.classic.core;
  *
  * @author Thomas Morgner
  */
-public class ReportDataFactoryException extends ReportProcessingException
-{
+public class ReportDataFactoryException extends ReportProcessingException {
   /**
    * Creates an exception.
    *
    * @param message the exception message.
    */
-  public ReportDataFactoryException(final String message)
-  {
-    super(message);
+  public ReportDataFactoryException( final String message ) {
+    super( message );
   }
 
   /**
@@ -40,28 +38,25 @@ public class ReportDataFactoryException extends ReportProcessingException
    * @param message the exception message.
    * @param ex      the parent exception.
    */
-  public ReportDataFactoryException(final String message, final Throwable ex)
-  {
-    super(message, ex);
+  public ReportDataFactoryException( final String message, final Throwable ex ) {
+    super( message, ex );
   }
-  
+
   /**
    * Creates an exception.
    *
-   * @param ex      the parent exception.
+   * @param ex the parent exception.
    */
-  public ReportDataFactoryException(final Throwable ex)
-  {
-    super(ex);
+  public ReportDataFactoryException( final Throwable ex ) {
+    super( ex );
   }
-  
+
   /**
    * Creates an exception.
    *
-   * @param ex      the parent exception.
+   * @param ex the parent exception.
    */
-  public ReportDataFactoryException(final Exception ex)
-  {
-    super(ex);
+  public ReportDataFactoryException( final Exception ex ) {
+    super( ex );
   }
 }

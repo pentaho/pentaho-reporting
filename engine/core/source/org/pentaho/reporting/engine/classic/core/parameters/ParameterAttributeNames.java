@@ -17,13 +17,11 @@
 
 package org.pentaho.reporting.engine.classic.core.parameters;
 
-public final class ParameterAttributeNames
-{
+public final class ParameterAttributeNames {
 
-  public static class Swing
-  {
+  public static class Swing {
     public static final String NAMESPACE =
-        "http://reporting.pentaho.org/namespaces/engine/parameter-attributes/swing";
+      "http://reporting.pentaho.org/namespaces/engine/parameter-attributes/swing";
 
     public static final String TOOLTIP = "tooltip";
     public static final String LABEL = "label";
@@ -32,15 +30,13 @@ public final class ParameterAttributeNames
      */
     public static final String RENDER_HINT = "render-hint"; // single-line, multi-line, rich-text
 
-    private Swing()
-    {
+    private Swing() {
     }
   }
 
-  public static class Html
-  {
+  public static class Html {
     public static final String NAMESPACE =
-        "http://reporting.pentaho.org/namespaces/engine/parameter-attributes/html";
+      "http://reporting.pentaho.org/namespaces/engine/parameter-attributes/html";
 
     public static final String EXTRA_RAW_CONTENT = "extra-raw-content";
     public static final String XML_ID = "xml-id";
@@ -57,15 +53,13 @@ public final class ParameterAttributeNames
     public static final String ONMOUSEMOVE = "onmousemove";
     public static final String ONMOUSEOVER = "onmouseover";
 
-    private Html()
-    {
+    private Html() {
     }
   }
 
-  public static class Core
-  {
+  public static class Core {
     public static final String NAMESPACE =
-        "http://reporting.pentaho.org/namespaces/engine/parameter-attributes/core";
+      "http://reporting.pentaho.org/namespaces/engine/parameter-attributes/core";
     public static final String LABEL = "label";
     public static final String HIDDEN = "hidden";
     public static final String LAYOUT = "parameter-layout";
@@ -81,10 +75,10 @@ public final class ParameterAttributeNames
     public static final String TYPE_TEXTBOX = "textbox";
     public static final String TYPE_DATEPICKER = "datepicker";
     public static final String TYPE_MULTILINE = "multi-line";
-    
+
     public static final String VISIBLE_ITEMS = "parameter-visible-items";
     public static final String DATA_FORMAT = "data-format";
-    
+
     public static final String POST_PROCESSOR_FORMULA = "post-processor-formula";
     public static final String DISPLAY_VALUE_FORMULA = "display-value-formula";
     public static final String DEFAULT_VALUE_FORMULA = "default-value-formula";
@@ -97,24 +91,22 @@ public final class ParameterAttributeNames
 
     public static final String ROLE = "role";
     public static final String ROLE_USER_PARAMETER = "user";
-    public static final String ROLE_SYSTEM_PARAMETER= "system";
+    public static final String ROLE_SYSTEM_PARAMETER = "system";
     public static final String ROLE_SCHEDULE_PARAMETER = "schedule";
     public static final String DEPRECATED = "deprecated";
     public static final String PREFERRED = "preferred";
-    
+
     /**
      * Either server, client or a fixed timezone text in the standard format "+0800"
      */
     public static final String TIMEZONE = "timezone";
 
-    private Core()
-    {
+    private Core() {
     }
 
   }
 
 
-  private ParameterAttributeNames()
-  {
+  private ParameterAttributeNames() {
   }
 }

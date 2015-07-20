@@ -22,15 +22,13 @@ package org.pentaho.reporting.engine.classic.core.modules.parser.ext.factory.bas
  *
  * @author Thomas Morgner.
  */
-public class ObjectFactoryException extends Exception
-{
+public class ObjectFactoryException extends Exception {
 
   /**
    * Constructs a new exception with <code>null</code> as its detail message. The cause is not initialized, and may
    * subsequently be initialized by a call to {@link #initCause}.
    */
-  public ObjectFactoryException()
-  {
+  public ObjectFactoryException() {
     super();
   }
 
@@ -41,9 +39,8 @@ public class ObjectFactoryException extends Exception
    * @param message the detail message. The detail message is saved for later retrieval by the {@link #getMessage()}
    *                method.
    */
-  public ObjectFactoryException(final String message)
-  {
-    super(message);
+  public ObjectFactoryException( final String message ) {
+    super( message );
   }
 
   /**
@@ -52,8 +49,7 @@ public class ObjectFactoryException extends Exception
    * @param message the message.
    * @param cause   the cause of the exception.
    */
-  public ObjectFactoryException(final String message, final Exception cause)
-  {
-    super(message, cause);
+  public ObjectFactoryException( final String message, final Exception cause ) {
+    super( message, cause );
   }
 }

@@ -22,30 +22,26 @@ import org.pentaho.reporting.engine.classic.core.Band;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.pentaho.reporting.engine.classic.core.ItemBand;
 
-public class FunctionUtilsTest extends TestCase
-{
-  public FunctionUtilsTest(final String s)
-  {
-    super(s);
+public class FunctionUtilsTest extends TestCase {
+  public FunctionUtilsTest( final String s ) {
+    super( s );
   }
 
-  protected void setUp() throws Exception
-  {
+  protected void setUp() throws Exception {
     ClassicEngineBoot.getInstance().start();
   }
 
-  public void testFindElement()
-  {
+  public void testFindElement() {
     final Band noLate = new Band();
-    noLate.setName("noLate");
+    noLate.setName( "noLate" );
 
     final Band landScape = new Band();
-    landScape.setName("landscape");
-    landScape.addElement(noLate);
+    landScape.setName( "landscape" );
+    landScape.addElement( noLate );
 
     final ItemBand band = new ItemBand();
-    band.addElement(landScape);
+    band.addElement( landScape );
 
-    assertEquals(noLate, FunctionUtilities.findElement(band, "noLate"));
+    assertEquals( noLate, FunctionUtilities.findElement( band, "noLate" ) );
   }
 }

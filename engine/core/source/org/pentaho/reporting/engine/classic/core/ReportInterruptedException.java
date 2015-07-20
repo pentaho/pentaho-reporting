@@ -23,17 +23,15 @@ package org.pentaho.reporting.engine.classic.core;
  *
  * @author Thomas Morgner
  */
-public class ReportInterruptedException extends ReportProcessingException
-{
+public class ReportInterruptedException extends ReportProcessingException {
   /**
    * Creates an exception.
    *
    * @param message the exception message.
    * @param ex      the parent exception.
    */
-  public ReportInterruptedException(final String message, final Exception ex)
-  {
-    super(message, ex);
+  public ReportInterruptedException( final String message, final Exception ex ) {
+    super( message, ex );
   }
 
   /**
@@ -41,8 +39,7 @@ public class ReportInterruptedException extends ReportProcessingException
    *
    * @param message the exception message.
    */
-  public ReportInterruptedException(final String message)
-  {
-    super(message);
+  public ReportInterruptedException( final String message ) {
+    super( message );
   }
 }

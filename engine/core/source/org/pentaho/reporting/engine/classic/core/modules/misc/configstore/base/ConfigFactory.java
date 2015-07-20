@@ -24,8 +24,7 @@ package org.pentaho.reporting.engine.classic.core.modules.misc.configstore.base;
  *
  * @author Thomas Morgner
  */
-public final class ConfigFactory
-{
+public final class ConfigFactory {
   /**
    * The selector configuration key that defines the active config storage implementation.
    */
@@ -49,13 +48,11 @@ public final class ConfigFactory
    *
    * @return the config factory
    */
-  public static synchronized ConfigFactory getInstance()
-  {
-    if (factory == null)
-    {
+  public static synchronized ConfigFactory getInstance() {
+    if ( factory == null ) {
       factory = new ConfigFactory();
-      factory.defineSystemStorage(new NullConfigStorage());
-      factory.defineUserStorage(new NullConfigStorage());
+      factory.defineSystemStorage( new NullConfigStorage() );
+      factory.defineUserStorage( new NullConfigStorage() );
     }
     return factory;
   }
@@ -63,8 +60,7 @@ public final class ConfigFactory
   /**
    * DefaultConstructor.
    */
-  private ConfigFactory()
-  {
+  private ConfigFactory() {
   }
 
   /**
@@ -73,10 +69,8 @@ public final class ConfigFactory
    *
    * @param storage the user settings storage implementation.
    */
-  public void defineUserStorage(final ConfigStorage storage)
-  {
-    if (storage == null)
-    {
+  public void defineUserStorage( final ConfigStorage storage ) {
+    if ( storage == null ) {
       throw new NullPointerException();
     }
     this.userStorage = storage;
@@ -88,10 +82,8 @@ public final class ConfigFactory
    *
    * @param storage the system settings storage implementation.
    */
-  public void defineSystemStorage(final ConfigStorage storage)
-  {
-    if (storage == null)
-    {
+  public void defineSystemStorage( final ConfigStorage storage ) {
+    if ( storage == null ) {
       throw new NullPointerException();
     }
     this.systemStorage = storage;
@@ -102,8 +94,7 @@ public final class ConfigFactory
    *
    * @return the user settingsstorage provider.
    */
-  public ConfigStorage getUserStorage()
-  {
+  public ConfigStorage getUserStorage() {
     return userStorage;
   }
 
@@ -112,8 +103,7 @@ public final class ConfigFactory
    *
    * @return the system settings storage provider.
    */
-  public ConfigStorage getSystemStorage()
-  {
+  public ConfigStorage getSystemStorage() {
     return systemStorage;
   }
 
@@ -124,13 +114,10 @@ public final class ConfigFactory
    * @param path the path that should be tested.
    * @return true, if the path is valid, false otherwise.
    */
-  public static boolean isValidPath(final String path)
-  {
+  public static boolean isValidPath( final String path ) {
     final char[] data = path.toCharArray();
-    for (int i = 0; i < data.length; i++)
-    {
-      if (Character.isJavaIdentifierPart(data[i]) == false)
-      {
+    for ( int i = 0; i < data.length; i++ ) {
+      if ( Character.isJavaIdentifierPart( data[ i ] ) == false ) {
         return false;
       }
     }
@@ -143,32 +130,24 @@ public final class ConfigFactory
    * @param path the path.
    * @return the translated path.
    */
-  public static String encodePath(final String path)
-  {
+  public static String encodePath( final String path ) {
     final char[] data = path.toCharArray();
-    final StringBuffer encoded = new StringBuffer(path.length());
-    for (int i = 0; i < data.length; i++)
-    {
-      if (data[i] == '$')
-      {
+    final StringBuffer encoded = new StringBuffer( path.length() );
+    for ( int i = 0; i < data.length; i++ ) {
+      if ( data[ i ] == '$' ) {
         // double quote
-        encoded.append('$');
-        encoded.append('$');
-      }
-      else if (Character.isJavaIdentifierPart(data[i]) == false)
-      {
+        encoded.append( '$' );
+        encoded.append( '$' );
+      } else if ( Character.isJavaIdentifierPart( data[ i ] ) == false ) {
         // padded hex string
-        encoded.append('$');
-        final String hex = Integer.toHexString(data[i]);
-        for (int x = hex.length(); x < 4; x++)
-        {
-          encoded.append('0');
+        encoded.append( '$' );
+        final String hex = Integer.toHexString( data[ i ] );
+        for ( int x = hex.length(); x < 4; x++ ) {
+          encoded.append( '0' );
         }
-        encoded.append(hex);
-      }
-      else
-      {
-        encoded.append(data[i]);
+        encoded.append( hex );
+      } else {
+        encoded.append( data[ i ] );
       }
     }
     return encoded.toString();

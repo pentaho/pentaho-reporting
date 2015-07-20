@@ -17,35 +17,29 @@
 
 package org.pentaho.reporting.engine.classic.core.states;
 
-import javax.swing.event.ChangeListener;
-
 import org.pentaho.reporting.libraries.base.util.LoggingStopWatch;
 import org.pentaho.reporting.libraries.base.util.PerformanceLoggingStopWatch;
 
-public class DefaultPerformanceMonitorContext implements PerformanceMonitorContext
-{
-  public PerformanceLoggingStopWatch createStopWatch(final String tag)
-  {
-    return new LoggingStopWatch(tag);
+import javax.swing.event.ChangeListener;
+
+public class DefaultPerformanceMonitorContext implements PerformanceMonitorContext {
+  public PerformanceLoggingStopWatch createStopWatch( final String tag ) {
+    return new LoggingStopWatch( tag );
   }
 
-  public PerformanceLoggingStopWatch createStopWatch(final String tag, final Object message)
-  {
-    return new LoggingStopWatch(tag, message);
+  public PerformanceLoggingStopWatch createStopWatch( final String tag, final Object message ) {
+    return new LoggingStopWatch( tag, message );
   }
 
-  public void addChangeListener(final ChangeListener listener)
-  {
-
-  }
-
-  public void removeChangeListener(final ChangeListener listener)
-  {
+  public void addChangeListener( final ChangeListener listener ) {
 
   }
 
-  public void close()
-  {
+  public void removeChangeListener( final ChangeListener listener ) {
+
+  }
+
+  public void close() {
 
   }
 }

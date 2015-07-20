@@ -17,12 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.core.function;
 
-import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.Locale;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.pentaho.reporting.engine.classic.core.DataRow;
@@ -30,6 +24,12 @@ import org.pentaho.reporting.engine.classic.core.ResourceBundleFactory;
 import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
 import org.pentaho.reporting.libraries.base.util.URLEncoder;
 import org.pentaho.reporting.libraries.formatting.FastMessageFormat;
+
+import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.Locale;
 
 /**
  * A TextFormatExpression uses a java.text.MessageFormat to concat and format one or more values evaluated from an
@@ -58,10 +58,9 @@ import org.pentaho.reporting.libraries.formatting.FastMessageFormat;
  * @author Thomas Morgner
  * @deprecated Use the MessageFormatExpression instead.
  */
-@SuppressWarnings("deprecation")
-public class TextFormatExpression extends AbstractExpression
-{
-  private static final Log logger = LogFactory.getLog(TextFormatExpression.class);
+@SuppressWarnings( "deprecation" )
+public class TextFormatExpression extends AbstractExpression {
+  private static final Log logger = LogFactory.getLog( TextFormatExpression.class );
   /**
    * An ordered list containing the fieldnames used in the expression.
    */
@@ -109,8 +108,7 @@ public class TextFormatExpression extends AbstractExpression
   /**
    * Default constructor, creates a new unnamed TextFormatExpression.
    */
-  public TextFormatExpression()
-  {
+  public TextFormatExpression() {
     fields = new ArrayList();
     encoding = "iso-8859-1";
   }
@@ -120,8 +118,7 @@ public class TextFormatExpression extends AbstractExpression
    *
    * @return the encoding.
    */
-  public String getEncoding()
-  {
+  public String getEncoding() {
     return encoding;
   }
 
@@ -130,10 +127,8 @@ public class TextFormatExpression extends AbstractExpression
    *
    * @param encoding the encoding.
    */
-  public void setEncoding(final String encoding)
-  {
-    if (encoding == null)
-    {
+  public void setEncoding( final String encoding ) {
+    if ( encoding == null ) {
       throw new NullPointerException();
     }
     this.encoding = encoding;
@@ -146,8 +141,7 @@ public class TextFormatExpression extends AbstractExpression
    * @param urlEncode true, if the values from the data-row should be URL encoded before they are passed to the
    *                  MessageFormat, false otherwise.
    */
-  public void setUrlEncodeValues(final boolean urlEncode)
-  {
+  public void setUrlEncodeValues( final boolean urlEncode ) {
     this.urlEncodeData = urlEncode;
   }
 
@@ -156,8 +150,7 @@ public class TextFormatExpression extends AbstractExpression
    *
    * @return true, if the values are encoded, false otherwise.
    */
-  public boolean isUrlEncodeValues()
-  {
+  public boolean isUrlEncodeValues() {
     return urlEncodeData;
   }
 
@@ -166,8 +159,7 @@ public class TextFormatExpression extends AbstractExpression
    *
    * @return true, if the formatted result will be encoded, false otherwise.
    */
-  public boolean isUrlEncodeResult()
-  {
+  public boolean isUrlEncodeResult() {
     return urlEncodeResult;
   }
 
@@ -176,8 +168,7 @@ public class TextFormatExpression extends AbstractExpression
    *
    * @param urlEncodeResult true, if the formatted result will be encoded, false otherwise.
    */
-  public void setUrlEncodeResult(final boolean urlEncodeResult)
-  {
+  public void setUrlEncodeResult( final boolean urlEncodeResult ) {
     this.urlEncodeResult = urlEncodeResult;
   }
 
@@ -187,56 +178,41 @@ public class TextFormatExpression extends AbstractExpression
    *
    * @return a string containing the pattern inclusive the formatted values from the datarow
    */
-  public Object getValue()
-  {
-    if (fields.isEmpty())
-    {
+  public Object getValue() {
+    if ( fields.isEmpty() ) {
       return getPattern();
     }
 
     final ResourceBundleFactory factory = getResourceBundleFactory();
-    if (messageFormat == null || ObjectUtilities.equal(locale, factory.getLocale()) == false)
-    {
-      messageFormat = new FastMessageFormat(getPattern(), factory.getLocale());
+    if ( messageFormat == null || ObjectUtilities.equal( locale, factory.getLocale() ) == false ) {
+      messageFormat = new FastMessageFormat( getPattern(), factory.getLocale() );
       this.locale = factory.getLocale();
     }
 
-    try
-    {
-      if (oldFieldValues == null || oldFieldValues.length != fields.size())
-      {
-        oldFieldValues = new Object[fields.size()];
-      }
-      else if (fieldValues != null && fieldValues.length == oldFieldValues.length)
-      {
-        System.arraycopy(fieldValues, 0, oldFieldValues, 0, fields.size());
+    try {
+      if ( oldFieldValues == null || oldFieldValues.length != fields.size() ) {
+        oldFieldValues = new Object[ fields.size() ];
+      } else if ( fieldValues != null && fieldValues.length == oldFieldValues.length ) {
+        System.arraycopy( fieldValues, 0, oldFieldValues, 0, fields.size() );
       }
 
-      fieldValues = getFieldValues(fieldValues);
+      fieldValues = getFieldValues( fieldValues );
       final String result;
-      if (cachedResult != null &&
-          Arrays.equals(oldFieldValues, fieldValues))
-      {
+      if ( cachedResult != null &&
+        Arrays.equals( oldFieldValues, fieldValues ) ) {
         result = cachedResult;
-      }
-      else
-      {
-        result = messageFormat.format(fieldValues);
+      } else {
+        result = messageFormat.format( fieldValues );
         cachedResult = result;
       }
 
-      if (isUrlEncodeResult())
-      {
-        return URLEncoder.encode(result, getEncoding());
-      }
-      else
-      {
+      if ( isUrlEncodeResult() ) {
+        return URLEncoder.encode( result, getEncoding() );
+      } else {
         return result;
       }
-    }
-    catch (UnsupportedEncodingException e)
-    {
-      TextFormatExpression.logger.debug("Unsupported Encoding: " + encoding);
+    } catch ( UnsupportedEncodingException e ) {
+      TextFormatExpression.logger.debug( "Unsupported Encoding: " + encoding );
       return null;
     }
   }
@@ -246,54 +222,37 @@ public class TextFormatExpression extends AbstractExpression
    *
    * @param retval an optional array that will receive the field values.
    * @return an Object-array containing all defined values from the datarow
-   * @throws java.io.UnsupportedEncodingException
-   *          if the character encoding is not recognized by the JDK.
+   * @throws java.io.UnsupportedEncodingException if the character encoding is not recognized by the JDK.
    */
-  protected Object[] getFieldValues(Object[] retval)
-      throws UnsupportedEncodingException
-  {
+  protected Object[] getFieldValues( Object[] retval )
+    throws UnsupportedEncodingException {
     final int size = fields.size();
-    if (retval == null || retval.length != size)
-    {
-      retval = new Object[size];
+    if ( retval == null || retval.length != size ) {
+      retval = new Object[ size ];
     }
 
     final DataRow dataRow = getDataRow();
-    for (int i = 0; i < size; i++)
-    {
-      final String field = (String) fields.get(i);
-      if (field == null)
-      {
-        retval[i] = null;
+    for ( int i = 0; i < size; i++ ) {
+      final String field = (String) fields.get( i );
+      if ( field == null ) {
+        retval[ i ] = null;
         continue;
       }
-      final Object fieldValue = dataRow.get(field);
-      if (isUrlEncodeValues())
-      {
-        if (fieldValue == null)
-        {
-          retval[i] = null;
+      final Object fieldValue = dataRow.get( field );
+      if ( isUrlEncodeValues() ) {
+        if ( fieldValue == null ) {
+          retval[ i ] = null;
+        } else if ( fieldValue instanceof Date ) {
+          retval[ i ] = fieldValue;
+        } else if ( fieldValue instanceof Number ) {
+          retval[ i ] = fieldValue;
+        } else if ( isUrlEncodeValues() ) {
+          retval[ i ] = URLEncoder.encode( String.valueOf( fieldValue ), encoding );
+        } else {
+          retval[ i ] = fieldValue;
         }
-        else if (fieldValue instanceof Date)
-        {
-          retval[i] = fieldValue;
-        }
-        else if (fieldValue instanceof Number)
-        {
-          retval[i] = fieldValue;
-        }
-        else if (isUrlEncodeValues())
-        {
-          retval[i] = URLEncoder.encode(String.valueOf(fieldValue), encoding);
-        }
-        else
-        {
-          retval[i] = fieldValue;
-        }
-      }
-      else
-      {
-        retval[i] = fieldValue;
+      } else {
+        retval[ i ] = fieldValue;
       }
     }
     return retval;
@@ -304,8 +263,7 @@ public class TextFormatExpression extends AbstractExpression
    *
    * @return the pattern.
    */
-  public String getPattern()
-  {
+  public String getPattern() {
     return pattern;
   }
 
@@ -315,10 +273,8 @@ public class TextFormatExpression extends AbstractExpression
    *
    * @param pattern the pattern string
    */
-  public void setPattern(final String pattern)
-  {
-    if (pattern == null)
-    {
+  public void setPattern( final String pattern ) {
+    if ( pattern == null ) {
       throw new NullPointerException();
     }
     this.messageFormat = null;
@@ -332,8 +288,7 @@ public class TextFormatExpression extends AbstractExpression
    *
    * @return a copy of this function.
    */
-  public Expression getInstance()
-  {
+  public Expression getInstance() {
     final TextFormatExpression tex = (TextFormatExpression) super.getInstance();
     tex.fields = (ArrayList) fields.clone();
     tex.fieldValues = null;
@@ -348,15 +303,11 @@ public class TextFormatExpression extends AbstractExpression
    * @param index the position in the list, where the field should be defined.
    * @param field the name of the field.
    */
-  public void setField(final int index, final String field)
-  {
-    if (fields.size() == index)
-    {
-      fields.add(field);
-    }
-    else
-    {
-      fields.set(index, field);
+  public void setField( final int index, final String field ) {
+    if ( fields.size() == index ) {
+      fields.add( field );
+    } else {
+      fields.set( index, field );
     }
     fieldValues = null;
     oldFieldValues = null;
@@ -369,9 +320,8 @@ public class TextFormatExpression extends AbstractExpression
    * @param index the position of the field name that should be queried.
    * @return the field name at the given position.
    */
-  public String getField(final int index)
-  {
-    return (String) fields.get(index);
+  public String getField( final int index ) {
+    return (String) fields.get( index );
   }
 
   /**
@@ -379,8 +329,7 @@ public class TextFormatExpression extends AbstractExpression
    *
    * @return the number of fields.
    */
-  public int getFieldCount()
-  {
+  public int getFieldCount() {
     return fields.size();
   }
 
@@ -389,9 +338,8 @@ public class TextFormatExpression extends AbstractExpression
    *
    * @return all the fields.
    */
-  public String[] getField()
-  {
-    return (String[]) fields.toArray(new String[fields.size()]);
+  public String[] getField() {
+    return (String[]) fields.toArray( new String[ fields.size() ] );
   }
 
   /**
@@ -399,10 +347,9 @@ public class TextFormatExpression extends AbstractExpression
    *
    * @param fields the new list of fields.
    */
-  public void setField(final String[] fields)
-  {
+  public void setField( final String[] fields ) {
     this.fields.clear();
-    this.fields.addAll(Arrays.asList(fields));
+    this.fields.addAll( Arrays.asList( fields ) );
     fieldValues = null;
     oldFieldValues = null;
     cachedResult = null;

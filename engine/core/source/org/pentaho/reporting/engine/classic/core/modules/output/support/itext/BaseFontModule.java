@@ -28,8 +28,7 @@ import org.pentaho.reporting.libraries.fonts.itext.ITextFontRegistry;
  *
  * @author Thomas Morgner
  */
-public class BaseFontModule extends AbstractModule
-{
+public class BaseFontModule extends AbstractModule {
   private static ITextFontRegistry fontRegistry;
 
   /**
@@ -38,15 +37,12 @@ public class BaseFontModule extends AbstractModule
    * @throws ModuleInitializeException if an error occured.
    */
   public BaseFontModule()
-      throws ModuleInitializeException
-  {
+    throws ModuleInitializeException {
     loadModuleInfo();
   }
 
-  public static synchronized ITextFontRegistry getFontRegistry()
-  {
-    if (fontRegistry == null)
-    {
+  public static synchronized ITextFontRegistry getFontRegistry() {
+    if ( fontRegistry == null ) {
       fontRegistry = new ITextFontRegistry();
       fontRegistry.initialize();
     }
@@ -60,18 +56,15 @@ public class BaseFontModule extends AbstractModule
    *
    * @throws ModuleInitializeException if an error occured.
    */
-  public void initialize(final SubSystem subSystem)
-      throws ModuleInitializeException
-  {
-    if (AbstractModule.isClassLoadable("com.lowagie.text.Document", BaseFontModule.class) == false)
-    {
-      throw new ModuleInitializeException("Unable to load iText classes. " +
-          "Check your classpath configuration.");
+  public void initialize( final SubSystem subSystem )
+    throws ModuleInitializeException {
+    if ( AbstractModule.isClassLoadable( "com.lowagie.text.Document", BaseFontModule.class ) == false ) {
+      throw new ModuleInitializeException( "Unable to load iText classes. " +
+        "Check your classpath configuration." );
     }
 
-    if ("onInit".equals(subSystem.getGlobalConfig().getConfigProperty
-        ("org.pentaho.reporting.engine.classic.core.modules.output.support.itext.AutoInit")))
-    {
+    if ( "onInit".equals( subSystem.getGlobalConfig().getConfigProperty
+      ( "org.pentaho.reporting.engine.classic.core.modules.output.support.itext.AutoInit" ) ) ) {
       BaseFontModule.getFontRegistry();
     }
   }

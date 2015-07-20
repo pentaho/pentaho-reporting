@@ -17,13 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.gui.rtf;
 
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.util.Locale;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
@@ -38,14 +31,20 @@ import org.pentaho.reporting.engine.classic.core.modules.output.table.rtf.Stream
 import org.pentaho.reporting.libraries.base.util.Messages;
 import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
 
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.util.Locale;
+
 /**
  * An export task implementation, which writes a given report into an Excel file.
  *
  * @author Thomas Morgner
  */
-public class RTFExportTask implements Runnable
-{
-  private static final Log logger = LogFactory.getLog(RTFExportTask.class);
+public class RTFExportTask implements Runnable {
+  private static final Log logger = LogFactory.getLog( RTFExportTask.class );
   private Messages messages;
 
   /**
@@ -69,33 +68,27 @@ public class RTFExportTask implements Runnable
    * @param report the report that should be exported.
    */
   public RTFExportTask
-      (final MasterReport report,
-       final ReportProgressDialog dialog,
-       final SwingGuiContext swingGuiContext) throws ReportProcessingException
-  {
-    if (report == null)
-    {
-      throw new ReportProcessingException("RtfExportTask(..): Report-Parameter cannot be null"); //$NON-NLS-1$
+  ( final MasterReport report,
+    final ReportProgressDialog dialog,
+    final SwingGuiContext swingGuiContext ) throws ReportProcessingException {
+    if ( report == null ) {
+      throw new ReportProcessingException( "RtfExportTask(..): Report-Parameter cannot be null" ); //$NON-NLS-1$
     }
 
-    if (swingGuiContext != null)
-    {
+    if ( swingGuiContext != null ) {
       this.statusListener = swingGuiContext.getStatusListener();
-      this.messages = new Messages(swingGuiContext.getLocale(), RTFExportPlugin.BASE_RESOURCE_CLASS,
-          ObjectUtilities.getClassLoader(RTFExportPlugin.class));
-    }
-    else
-    {
-      this.messages = new Messages(Locale.getDefault(), RTFExportPlugin.BASE_RESOURCE_CLASS,
-          ObjectUtilities.getClassLoader(RTFExportPlugin.class));
+      this.messages = new Messages( swingGuiContext.getLocale(), RTFExportPlugin.BASE_RESOURCE_CLASS,
+        ObjectUtilities.getClassLoader( RTFExportPlugin.class ) );
+    } else {
+      this.messages = new Messages( Locale.getDefault(), RTFExportPlugin.BASE_RESOURCE_CLASS,
+        ObjectUtilities.getClassLoader( RTFExportPlugin.class ) );
     }
 
     final String filename = report.getConfiguration().getConfigProperty
-        ("org.pentaho.reporting.engine.classic.core.modules.gui.rtf.FileName"); //$NON-NLS-1$
-    if (filename == null)
-    {
-      throw new ReportProcessingException(messages.getErrorString(
-          "RTFExportTask.RTFExportTask.ERROR_0001_NULL_FILENAME")); //$NON-NLS-1$
+      ( "org.pentaho.reporting.engine.classic.core.modules.gui.rtf.FileName" ); //$NON-NLS-1$
+    if ( filename == null ) {
+      throw new ReportProcessingException( messages.getErrorString(
+        "RTFExportTask.RTFExportTask.ERROR_0001_NULL_FILENAME" ) ); //$NON-NLS-1$
     }
     this.fileName = filename;
     this.progressDialog = dialog;
@@ -105,108 +98,80 @@ public class RTFExportTask implements Runnable
   /**
    * Exports the report into an Excel file.
    */
-  public void run()
-  {
+  public void run() {
     OutputStream out = null;
     File file = null;
-    try
-    {
-      file = new File(fileName).getCanonicalFile();
+    try {
+      file = new File( fileName ).getCanonicalFile();
       final File directory = file.getParentFile();
-      if (directory != null)
-      {
-        if (directory.exists() == false)
-        {
-          if (directory.mkdirs() == false)
-          {
-            RTFExportTask.logger.warn("Can't create directories. Hoping and praying now.."); //$NON-NLS-1$
+      if ( directory != null ) {
+        if ( directory.exists() == false ) {
+          if ( directory.mkdirs() == false ) {
+            RTFExportTask.logger.warn( "Can't create directories. Hoping and praying now.." ); //$NON-NLS-1$
           }
         }
       }
-      out = new BufferedOutputStream(new FileOutputStream(file));
+      out = new BufferedOutputStream( new FileOutputStream( file ) );
       final StreamRTFOutputProcessor target =
-          new StreamRTFOutputProcessor(report.getConfiguration(), out, report.getResourceManager());
-      final StreamReportProcessor proc = new StreamReportProcessor(report, target);
-      if (progressDialog != null)
-      {
-        progressDialog.setModal(false);
-        progressDialog.setVisible(true);
-        proc.addReportProgressListener(progressDialog);
+        new StreamRTFOutputProcessor( report.getConfiguration(), out, report.getResourceManager() );
+      final StreamReportProcessor proc = new StreamReportProcessor( report, target );
+      if ( progressDialog != null ) {
+        progressDialog.setModal( false );
+        progressDialog.setVisible( true );
+        proc.addReportProgressListener( progressDialog );
       }
       proc.processReport();
       out.close();
-      if (progressDialog != null)
-      {
-        proc.removeReportProgressListener(progressDialog);
+      if ( progressDialog != null ) {
+        proc.removeReportProgressListener( progressDialog );
       }
 
-      if (statusListener != null)
-      {
+      if ( statusListener != null ) {
         statusListener.setStatus
-            (StatusType.INFORMATION, messages.getString("RTFExportTask.USER_TASK_FINISHED"), null); //$NON-NLS-1$
+          ( StatusType.INFORMATION, messages.getString( "RTFExportTask.USER_TASK_FINISHED" ), null ); //$NON-NLS-1$
       }
 
-    }
-    catch (ReportInterruptedException re)
-    {
-      if (statusListener != null)
-      {
+    } catch ( ReportInterruptedException re ) {
+      if ( statusListener != null ) {
         statusListener.setStatus
-            (StatusType.WARNING, messages.getString("RTFExportTask.USER_TASK_ABORTED"), null); //$NON-NLS-1$
+          ( StatusType.WARNING, messages.getString( "RTFExportTask.USER_TASK_ABORTED" ), null ); //$NON-NLS-1$
       }
-      try
-      {
+      try {
         out.close();
         out = null;
-        if (file.delete() == false)
-        {
-          RTFExportTask.logger.warn("Unable to delete incomplete export:" + file); //$NON-NLS-1$
+        if ( file.delete() == false ) {
+          RTFExportTask.logger.warn( "Unable to delete incomplete export:" + file ); //$NON-NLS-1$
         }
-      }
-      catch (SecurityException se)
-      {
+      } catch ( SecurityException se ) {
         // ignore me
-      }
-      catch (IOException ioe)
-      {
+      } catch ( IOException ioe ) {
         // ignore me...
       }
-    }
-    catch (Exception re)
-    {
-      RTFExportTask.logger.error("RTF export failed", re); //$NON-NLS-1$
-      if (statusListener != null)
-      {
+    } catch ( Exception re ) {
+      RTFExportTask.logger.error( "RTF export failed", re ); //$NON-NLS-1$
+      if ( statusListener != null ) {
         statusListener.setStatus
-            (StatusType.WARNING, messages.getString("RTFExportTask.USER_TASK_FAILED"), re); //$NON-NLS-1$
+          ( StatusType.WARNING, messages.getString( "RTFExportTask.USER_TASK_FAILED" ), re ); //$NON-NLS-1$
       }
 
-    }
-    finally
-    {
-      try
-      {
-        if (out != null)
-        {
+    } finally {
+      try {
+        if ( out != null ) {
           out.close();
         }
-      }
-      catch (Exception e)
-      {
-        RTFExportTask.logger.error("Unable to close the output stream.", e); //$NON-NLS-1$
-        if (statusListener != null)
-        {
+      } catch ( Exception e ) {
+        RTFExportTask.logger.error( "Unable to close the output stream.", e ); //$NON-NLS-1$
+        if ( statusListener != null ) {
           statusListener.setStatus
-              (StatusType.WARNING, messages.getString("RTFExportTask.USER_TASK_FAILED"), e); //$NON-NLS-1$
+            ( StatusType.WARNING, messages.getString( "RTFExportTask.USER_TASK_FAILED" ), e ); //$NON-NLS-1$
         }
 
         // if there is already another error, this exception is
         // just a minor obstactle. Something big crashed before ...
       }
     }
-    if (progressDialog != null)
-    {
-      progressDialog.setVisible(false);
+    if ( progressDialog != null ) {
+      progressDialog.setVisible( false );
     }
   }
 }

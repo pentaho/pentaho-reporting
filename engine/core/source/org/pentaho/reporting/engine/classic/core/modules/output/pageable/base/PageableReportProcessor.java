@@ -23,12 +23,10 @@ import org.pentaho.reporting.engine.classic.core.function.OutputFunction;
 import org.pentaho.reporting.engine.classic.core.layout.output.AbstractReportProcessor;
 import org.pentaho.reporting.engine.classic.core.layout.output.DefaultOutputFunction;
 
-public class PageableReportProcessor extends AbstractReportProcessor
-{
-  public PageableReportProcessor(final MasterReport report,
-                                 final PageableOutputProcessor outputProcessor) throws ReportProcessingException
-  {
-    super(report, outputProcessor);
+public class PageableReportProcessor extends AbstractReportProcessor {
+  public PageableReportProcessor( final MasterReport report,
+                                  final PageableOutputProcessor outputProcessor ) throws ReportProcessingException {
+    super( report, outputProcessor );
   }
 
   /**
@@ -37,10 +35,9 @@ public class PageableReportProcessor extends AbstractReportProcessor
    *
    * @return the page layouter.
    */
-  protected OutputFunction createLayoutManager()
-  {
+  protected OutputFunction createLayoutManager() {
     final DefaultOutputFunction pageableOutputFunction = new DefaultOutputFunction();
-    pageableOutputFunction.setRenderer(new PageableRenderer(getOutputProcessor()));
+    pageableOutputFunction.setRenderer( new PageableRenderer( getOutputProcessor() ) );
     return pageableOutputFunction;
   }
 

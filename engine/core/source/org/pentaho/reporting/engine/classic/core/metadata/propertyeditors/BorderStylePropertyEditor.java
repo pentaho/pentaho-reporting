@@ -17,27 +17,23 @@
 
 package org.pentaho.reporting.engine.classic.core.metadata.propertyeditors;
 
-import java.awt.Component;
-import java.awt.Graphics;
-import java.awt.Rectangle;
-import java.beans.PropertyChangeListener;
-import java.beans.PropertyChangeSupport;
-import java.beans.PropertyEditor;
-
 import org.pentaho.reporting.engine.classic.core.style.BorderStyle;
 import org.pentaho.reporting.engine.classic.core.util.beans.BeanException;
 import org.pentaho.reporting.engine.classic.core.util.beans.BorderStyleValueConverter;
 import org.pentaho.reporting.libraries.base.util.StringUtils;
 
-public class BorderStylePropertyEditor implements PropertyEditor
-{
+import java.awt.*;
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
+import java.beans.PropertyEditor;
+
+public class BorderStylePropertyEditor implements PropertyEditor {
   private BorderStyleValueConverter valueConverter;
   private BorderStyle value;
   private PropertyChangeSupport propertyChangeSupport;
 
-  public BorderStylePropertyEditor()
-  {
-    propertyChangeSupport = new PropertyChangeSupport(this);
+  public BorderStylePropertyEditor() {
+    propertyChangeSupport = new PropertyChangeSupport( this );
     valueConverter = new BorderStyleValueConverter();
   }
 
@@ -48,29 +44,24 @@ public class BorderStylePropertyEditor implements PropertyEditor
    * @param value The new target object to be edited.  Note that this object should not be modified by the
    *              PropertyEditor, rather the PropertyEditor should create a new object to hold any modified value.
    */
-  public void setValue(final Object value)
-  {
+  public void setValue( final Object value ) {
     final Object oldValue = this.value;
-    if (value instanceof BorderStyle)
-    {
+    if ( value instanceof BorderStyle ) {
       this.value = (BorderStyle) value;
-    }
-    else
-    {
+    } else {
       this.value = null;
     }
-    propertyChangeSupport.firePropertyChange(null, oldValue, this.value);
+    propertyChangeSupport.firePropertyChange( null, oldValue, this.value );
   }
 
   /**
    * Gets the property value.
    *
    * @return The value of the property.  Primitive types such as "int" will be wrapped as the corresponding object type
-   *         such as "java.lang.Integer".
+   * such as "java.lang.Integer".
    */
 
-  public Object getValue()
-  {
+  public Object getValue() {
     return value;
   }
 
@@ -80,8 +71,7 @@ public class BorderStylePropertyEditor implements PropertyEditor
    * @return True if the class will honor the paintValue method.
    */
 
-  public boolean isPaintable()
-  {
+  public boolean isPaintable() {
     return false;
   }
 
@@ -97,8 +87,7 @@ public class BorderStylePropertyEditor implements PropertyEditor
    * @param gfx Graphics object to paint into.
    * @param box Rectangle within graphics object into which we should paint.
    */
-  public void paintValue(final Graphics gfx, final Rectangle box)
-  {
+  public void paintValue( final Graphics gfx, final Rectangle box ) {
 
   }
 
@@ -119,61 +108,47 @@ public class BorderStylePropertyEditor implements PropertyEditor
    * <code>javax.swing.Box.createRigidArea(new java.awt.Dimension(0, 5))</code> </ul>
    *
    * @return a fragment of Java code representing an initializer for the current value. It should not contain a
-   *         semi-colon ('<code>;</code>') to end the expression.
+   * semi-colon ('<code>;</code>') to end the expression.
    */
-  public String getJavaInitializationString()
-  {
+  public String getJavaInitializationString() {
 
-    if (BorderStyle.DASHED.equals(value))
-    {
+    if ( BorderStyle.DASHED.equals( value ) ) {
       return BorderStyle.class.getName() + ".DASHED";
     }
-    if (BorderStyle.DOT_DASH.equals(value))
-    {
+    if ( BorderStyle.DOT_DASH.equals( value ) ) {
       return BorderStyle.class.getName() + ".DOT_DASH";
     }
-    if (BorderStyle.DOT_DOT_DASH.equals(value))
-    {
+    if ( BorderStyle.DOT_DOT_DASH.equals( value ) ) {
       return BorderStyle.class.getName() + ".DOT_DOT_DASH";
     }
-    if (BorderStyle.DOTTED.equals(value))
-    {
+    if ( BorderStyle.DOTTED.equals( value ) ) {
       return BorderStyle.class.getName() + ".DOTTED";
     }
-    if (BorderStyle.DOUBLE.equals(value))
-    {
+    if ( BorderStyle.DOUBLE.equals( value ) ) {
       return BorderStyle.class.getName() + ".DOUBLE";
     }
-    if (BorderStyle.GROOVE.equals(value))
-    {
+    if ( BorderStyle.GROOVE.equals( value ) ) {
       return BorderStyle.class.getName() + ".GROOVE";
     }
-    if (BorderStyle.HIDDEN.equals(value))
-    {
+    if ( BorderStyle.HIDDEN.equals( value ) ) {
       return BorderStyle.class.getName() + ".HIDDEN";
     }
-    if (BorderStyle.INSET.equals(value))
-    {
+    if ( BorderStyle.INSET.equals( value ) ) {
       return BorderStyle.class.getName() + ".INSET";
     }
-    if (BorderStyle.NONE.equals(value))
-    {
+    if ( BorderStyle.NONE.equals( value ) ) {
       return BorderStyle.class.getName() + ".NONE";
     }
-    if (BorderStyle.OUTSET.equals(value))
-    {
+    if ( BorderStyle.OUTSET.equals( value ) ) {
       return BorderStyle.class.getName() + ".OUTSET";
     }
-    if (BorderStyle.RIDGE.equals(value))
-    {
+    if ( BorderStyle.RIDGE.equals( value ) ) {
       return BorderStyle.class.getName() + ".RIDGE";
     }
-    if (BorderStyle.SOLID.equals(value))
-    {
+    if ( BorderStyle.SOLID.equals( value ) ) {
       return BorderStyle.class.getName() + ".SOLID";
     }
-    if (BorderStyle.WAVE.equals(value))
-    {
+    if ( BorderStyle.WAVE.equals( value ) ) {
       return BorderStyle.class.getName() + ".WAVE";
     }
 
@@ -185,21 +160,16 @@ public class BorderStylePropertyEditor implements PropertyEditor
    * Gets the property value as text.
    *
    * @return The property value as a human editable string. <p>   Returns null if the value can't be expressed as an
-   *         editable string. <p>   If a non-null value is returned, then the PropertyEditor should be prepared to parse
-   *         that string back in setAsText().
+   * editable string. <p>   If a non-null value is returned, then the PropertyEditor should be prepared to parse that
+   * string back in setAsText().
    */
-  public String getAsText()
-  {
-    if (value == null)
-    {
+  public String getAsText() {
+    if ( value == null ) {
       return null;
     }
-    try
-    {
-      return valueConverter.toAttributeValue(value);
-    }
-    catch (BeanException e)
-    {
+    try {
+      return valueConverter.toAttributeValue( value );
+    } catch ( BeanException e ) {
       return null;
     }
   }
@@ -210,21 +180,16 @@ public class BorderStylePropertyEditor implements PropertyEditor
    *
    * @param text The string to be parsed.
    */
-  public void setAsText(final String text) throws IllegalArgumentException
-  {
-    if (StringUtils.isEmpty(text))
-    {
-      setValue(null);
+  public void setAsText( final String text ) throws IllegalArgumentException {
+    if ( StringUtils.isEmpty( text ) ) {
+      setValue( null );
       return;
     }
 
-    try
-    {
-      setValue(valueConverter.toPropertyValue(text));
-    }
-    catch (BeanException e)
-    {
-      throw new IllegalArgumentException("This is not a valid property-value");
+    try {
+      setValue( valueConverter.toPropertyValue( text ) );
+    } catch ( BeanException e ) {
+      throw new IllegalArgumentException( "This is not a valid property-value" );
     }
   }
 
@@ -236,22 +201,21 @@ public class BorderStylePropertyEditor implements PropertyEditor
    *
    * @return The tag values for this property.  May be null if this property cannot be represented as a tagged value.
    */
-  public String[] getTags()
-  {
-    return new String[]{
-        null,
-        BorderStyle.SOLID.toString(),
-        BorderStyle.DASHED.toString(),
-        BorderStyle.DOT_DASH.toString(),
-        BorderStyle.DOT_DOT_DASH.toString(),
-        BorderStyle.DOTTED.toString(),
-        BorderStyle.DOUBLE.toString(),
-        BorderStyle.HIDDEN.toString(),
-        BorderStyle.NONE.toString(),
-        BorderStyle.GROOVE.toString(),
-        BorderStyle.RIDGE.toString(),
-        BorderStyle.INSET.toString(),
-        BorderStyle.OUTSET.toString(),
+  public String[] getTags() {
+    return new String[] {
+      null,
+      BorderStyle.SOLID.toString(),
+      BorderStyle.DASHED.toString(),
+      BorderStyle.DOT_DASH.toString(),
+      BorderStyle.DOT_DOT_DASH.toString(),
+      BorderStyle.DOTTED.toString(),
+      BorderStyle.DOUBLE.toString(),
+      BorderStyle.HIDDEN.toString(),
+      BorderStyle.NONE.toString(),
+      BorderStyle.GROOVE.toString(),
+      BorderStyle.RIDGE.toString(),
+      BorderStyle.INSET.toString(),
+      BorderStyle.OUTSET.toString(),
     };
   }
 
@@ -264,11 +228,10 @@ public class BorderStylePropertyEditor implements PropertyEditor
    * it may put it in its own individual dialog, or ...
    *
    * @return A java.awt.Component that will allow a human to directly edit the current property value.  May be null if
-   *         this is not supported.
+   * this is not supported.
    */
 
-  public Component getCustomEditor()
-  {
+  public Component getCustomEditor() {
     return null;
   }
 
@@ -277,8 +240,7 @@ public class BorderStylePropertyEditor implements PropertyEditor
    *
    * @return True if the propertyEditor can provide a custom editor.
    */
-  public boolean supportsCustomEditor()
-  {
+  public boolean supportsCustomEditor() {
     return false;
   }
 
@@ -289,9 +251,8 @@ public class BorderStylePropertyEditor implements PropertyEditor
    *
    * @param listener An object to be invoked when a PropertyChange event is fired.
    */
-  public void addPropertyChangeListener(final PropertyChangeListener listener)
-  {
-    propertyChangeSupport.addPropertyChangeListener(listener);
+  public void addPropertyChangeListener( final PropertyChangeListener listener ) {
+    propertyChangeSupport.addPropertyChangeListener( listener );
   }
 
   /**
@@ -299,8 +260,7 @@ public class BorderStylePropertyEditor implements PropertyEditor
    *
    * @param listener The PropertyChange listener to be removed.
    */
-  public void removePropertyChangeListener(final PropertyChangeListener listener)
-  {
-    propertyChangeSupport.removePropertyChangeListener(listener);
+  public void removePropertyChangeListener( final PropertyChangeListener listener ) {
+    propertyChangeSupport.removePropertyChangeListener( listener );
   }
 }

@@ -22,12 +22,10 @@ import org.pentaho.reporting.engine.classic.core.elementfactory.EllipseElementFa
 import org.pentaho.reporting.engine.classic.core.modules.parser.base.PropertyAttributes;
 import org.xml.sax.SAXException;
 
-public class EllipseReadHandler extends AbstractShapeElementReadHandler
-{
+public class EllipseReadHandler extends AbstractShapeElementReadHandler {
   private EllipseElementFactory elementFactory;
 
-  public EllipseReadHandler()
-  {
+  public EllipseReadHandler() {
     elementFactory = new EllipseElementFactory();
   }
 
@@ -37,25 +35,21 @@ public class EllipseReadHandler extends AbstractShapeElementReadHandler
    * @param atts the attributes.
    * @throws SAXException if there is a parsing error.
    */
-  protected void startParsing(final PropertyAttributes atts)
-      throws SAXException
-  {
-    super.startParsing(atts);
-    if (elementFactory.getShouldDraw() == null)
-    {
-      elementFactory.setShouldDraw(Boolean.TRUE);
+  protected void startParsing( final PropertyAttributes atts )
+    throws SAXException {
+    super.startParsing( atts );
+    if ( elementFactory.getShouldDraw() == null ) {
+      elementFactory.setShouldDraw( Boolean.TRUE );
     }
-    if (elementFactory.getShouldFill() == null)
-    {
-      elementFactory.setShouldFill(Boolean.TRUE);
+    if ( elementFactory.getShouldFill() == null ) {
+      elementFactory.setShouldFill( Boolean.TRUE );
     }
-    elementFactory.setScale(Boolean.TRUE);
-    elementFactory.setDynamicHeight(Boolean.FALSE);
-    elementFactory.setKeepAspectRatio(Boolean.FALSE);
+    elementFactory.setScale( Boolean.TRUE );
+    elementFactory.setDynamicHeight( Boolean.FALSE );
+    elementFactory.setKeepAspectRatio( Boolean.FALSE );
   }
 
-  protected ElementFactory getElementFactory()
-  {
+  protected ElementFactory getElementFactory() {
     return elementFactory;
   }
 }

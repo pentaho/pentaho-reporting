@@ -19,54 +19,48 @@ package org.pentaho.reporting.engine.classic.core.layout.process.util;
 
 import org.pentaho.reporting.engine.classic.core.util.InstanceID;
 
-public class InitialPaginationShiftState implements PaginationShiftState
-{
+public class InitialPaginationShiftState implements PaginationShiftState {
   private long shift;
   private boolean breakSuspended;
 
-  public InitialPaginationShiftState()
-  {
+  public InitialPaginationShiftState() {
   }
 
-  public boolean isManualBreakSuspended()
-  {
+  public boolean isManualBreakSuspended() {
     return false;
   }
 
-  public void suspendManualBreaks()
-  {
+  public void suspendManualBreaks() {
     breakSuspended = true;
   }
 
-  public boolean isManualBreakSuspendedForChilds()
-  {
+  public boolean isManualBreakSuspendedForChilds() {
     return breakSuspended;
   }
 
-  public long getShiftForNextChild()
-  {
+  public long getShiftForNextChild() {
     return shift;
   }
 
-  public PaginationShiftState pop(InstanceID id)
-  {
+  public PaginationShiftState pop( InstanceID id ) {
     throw new UnsupportedOperationException();
   }
 
-  public void updateShiftFromChild(final long absoluteValue)
-  {
-    setShift(absoluteValue);
+  public void updateShiftFromChild( final long absoluteValue ) {
+    setShift( absoluteValue );
   }
 
-  public void increaseShift(final long value)
-  {
-    if (value < 0) throw new IllegalArgumentException();
+  public void increaseShift( final long value ) {
+    if ( value < 0 ) {
+      throw new IllegalArgumentException();
+    }
     this.shift += value;
   }
 
-  public void setShift(final long value)
-  {
-    if (value < shift) throw new IllegalArgumentException();
+  public void setShift( final long value ) {
+    if ( value < shift ) {
+      throw new IllegalArgumentException();
+    }
     this.shift = value;
   }
 }

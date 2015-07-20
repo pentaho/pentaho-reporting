@@ -17,32 +17,27 @@
 
 package org.pentaho.reporting.engine.classic.core.style.css.selector;
 
-import java.io.Serializable;
-
 import org.pentaho.reporting.engine.classic.core.style.css.namespaces.NamespaceCollection;
 import org.w3c.css.sac.SimpleSelector;
 
-public class CSSRootNodeSelector extends AbstractSelector implements SimpleSelector, Serializable
-{
-  public CSSRootNodeSelector()
-  {
+import java.io.Serializable;
+
+public class CSSRootNodeSelector extends AbstractSelector implements SimpleSelector, Serializable {
+  public CSSRootNodeSelector() {
   }
 
-  protected SelectorWeight createWeight()
-  {
-    return new SelectorWeight(0, 0, 0, 1);
+  protected SelectorWeight createWeight() {
+    return new SelectorWeight( 0, 0, 0, 1 );
   }
 
   /**
    * An integer indicating the type of <code>Selector</code>
    */
-  public short getSelectorType()
-  {
+  public short getSelectorType() {
     return SAC_ROOT_NODE_SELECTOR;
   }
 
-  public String print(final NamespaceCollection namespaces)
-  {
+  public String print( final NamespaceCollection namespaces ) {
     // todo: Not yet supported by parser
     return ":root";
   }

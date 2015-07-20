@@ -23,15 +23,12 @@ import org.pentaho.reporting.libraries.xmlns.parser.XmlReadHandler;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 
-public class PasswordPropertiesReadHandler extends PropertiesReadHandler
-{
-  public PasswordPropertiesReadHandler()
-  {
+public class PasswordPropertiesReadHandler extends PropertiesReadHandler {
+  public PasswordPropertiesReadHandler() {
   }
 
-  public PasswordPropertiesReadHandler(final String propertyTagName)
-  {
-    super(propertyTagName);
+  public PasswordPropertiesReadHandler( final String propertyTagName ) {
+    super( propertyTagName );
   }
 
   /**
@@ -42,28 +39,22 @@ public class PasswordPropertiesReadHandler extends PropertiesReadHandler
    * @return the handler or null, if the tagname is invalid.
    * @throws org.xml.sax.SAXException if there is a parsing error.
    */
-  protected XmlReadHandler getHandlerForChild(final String uri,
-                                              final String tagName,
-                                              final Attributes atts)
-      throws SAXException
-  {
-    if (isSameNamespace(uri) == false)
-    {
+  protected XmlReadHandler getHandlerForChild( final String uri,
+                                               final String tagName,
+                                               final Attributes atts )
+    throws SAXException {
+    if ( isSameNamespace( uri ) == false ) {
       return null;
     }
-    if (tagName.equals(getPropertyTagName()))
-    {
-      final String attrName = atts.getValue("name");
+    if ( tagName.equals( getPropertyTagName() ) ) {
+      final String attrName = atts.getValue( "name" );
       final PropertyReadHandler prh;
-      if (attrName != null && attrName.toLowerCase().contains("password"))
-      {
+      if ( attrName != null && attrName.toLowerCase().contains( "password" ) ) {
         prh = new PasswordPropertyReadHandler();
-      }
-      else
-      {
+      } else {
         prh = new PropertyReadHandler();
       }
-      getPropertyHandlers().add(prh);
+      getPropertyHandlers().add( prh );
       return prh;
     }
     return null;

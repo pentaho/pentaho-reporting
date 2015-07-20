@@ -17,20 +17,19 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.parser.extwriter;
 
+import org.pentaho.reporting.engine.classic.core.AbstractReportDefinition;
+import org.pentaho.reporting.libraries.xmlns.writer.XmlWriter;
+
 import java.io.IOException;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Modifier;
-
-import org.pentaho.reporting.engine.classic.core.AbstractReportDefinition;
-import org.pentaho.reporting.libraries.xmlns.writer.XmlWriter;
 
 /**
  * A base class for writer classes for the JFreeReport XML report files.
  *
  * @author Thomas Morgner
  */
-public abstract class AbstractXMLDefinitionWriter
-{
+public abstract class AbstractXMLDefinitionWriter {
   /**
    * the document element tag for the extended report format.
    */
@@ -149,7 +148,7 @@ public abstract class AbstractXMLDefinitionWriter
    */
   private final ReportWriterContext reportWriter;
   private final XmlWriter xmlWriter;
-  private static final Class[] EMPTY_PARAMETER = new Class[0];
+  private static final Class[] EMPTY_PARAMETER = new Class[ 0 ];
 
   /**
    * Creates a new writer.
@@ -157,9 +156,8 @@ public abstract class AbstractXMLDefinitionWriter
    * @param reportWriter the report writer.
    * @param xmlWriter
    */
-  protected AbstractXMLDefinitionWriter(final ReportWriterContext reportWriter,
-                                        final XmlWriter xmlWriter)
-  {
+  protected AbstractXMLDefinitionWriter( final ReportWriterContext reportWriter,
+                                         final XmlWriter xmlWriter ) {
     this.xmlWriter = xmlWriter;
     this.reportWriter = reportWriter;
   }
@@ -169,13 +167,11 @@ public abstract class AbstractXMLDefinitionWriter
    *
    * @return The report writer.
    */
-  protected ReportWriterContext getReportWriter()
-  {
+  protected ReportWriterContext getReportWriter() {
     return reportWriter;
   }
 
-  protected XmlWriter getXmlWriter()
-  {
+  protected XmlWriter getXmlWriter() {
     return xmlWriter;
   }
 
@@ -184,8 +180,7 @@ public abstract class AbstractXMLDefinitionWriter
    *
    * @return The report.
    */
-  protected AbstractReportDefinition getReport()
-  {
+  protected AbstractReportDefinition getReport() {
     return getReportWriter().getReport();
   }
 
@@ -198,22 +193,17 @@ public abstract class AbstractXMLDefinitionWriter
    * @throws ReportWriterException if the report serialisation failed.
    */
   public abstract void write()
-      throws IOException, ReportWriterException;
+    throws IOException, ReportWriterException;
 
 
-  protected static boolean hasPublicDefaultConstructor(final Class c)
-  {
-    try
-    {
-      final Constructor constructor = c.getConstructor(EMPTY_PARAMETER);
-      if (Modifier.isPublic(constructor.getModifiers()))
-      {
+  protected static boolean hasPublicDefaultConstructor( final Class c ) {
+    try {
+      final Constructor constructor = c.getConstructor( EMPTY_PARAMETER );
+      if ( Modifier.isPublic( constructor.getModifiers() ) ) {
         return true;
       }
       return false;
-    }
-    catch (NoSuchMethodException e)
-    {
+    } catch ( NoSuchMethodException e ) {
       return false;
     }
   }

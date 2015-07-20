@@ -22,16 +22,14 @@ package org.pentaho.reporting.engine.classic.core.modules.parser.ext.factory.bas
  *
  * @author Thomas Morgner
  */
-public class IntegerObjectDescription extends AbstractObjectDescription
-{
+public class IntegerObjectDescription extends AbstractObjectDescription {
 
   /**
    * Creates a new object description.
    */
-  public IntegerObjectDescription()
-  {
-    super(Integer.class);
-    setParameterDefinition("value", String.class);
+  public IntegerObjectDescription() {
+    super( Integer.class );
+    setParameterDefinition( "value", String.class );
   }
 
   /**
@@ -39,10 +37,9 @@ public class IntegerObjectDescription extends AbstractObjectDescription
    *
    * @return The object.
    */
-  public Object createObject()
-  {
-    final String o = (String) getParameter("value");
-    return Integer.valueOf(o.trim());
+  public Object createObject() {
+    final String o = (String) getParameter( "value" );
+    return Integer.valueOf( o.trim() );
   }
 
   /**
@@ -51,14 +48,12 @@ public class IntegerObjectDescription extends AbstractObjectDescription
    * @param o the object (should be an instance of <code>Integer</code>).
    * @throws ObjectFactoryException if the object is not an instance of <code>Integer</code>.
    */
-  public void setParameterFromObject(final Object o) throws ObjectFactoryException
-  {
-    if (!(o instanceof Integer))
-    {
-      throw new ObjectFactoryException("The given object is no java.lang.Integer.");
+  public void setParameterFromObject( final Object o ) throws ObjectFactoryException {
+    if ( !( o instanceof Integer ) ) {
+      throw new ObjectFactoryException( "The given object is no java.lang.Integer." );
     }
 
-    setParameter("value", String.valueOf(o));
+    setParameter( "value", String.valueOf( o ) );
   }
 
   /**
@@ -67,25 +62,20 @@ public class IntegerObjectDescription extends AbstractObjectDescription
    * @param o the object to test.
    * @return A boolean.
    */
-  public boolean equals(final Object o)
-  {
-    if (this == o)
-    {
+  public boolean equals( final Object o ) {
+    if ( this == o ) {
       return true;
     }
-    if (!(o instanceof AbstractObjectDescription))
-    {
+    if ( !( o instanceof AbstractObjectDescription ) ) {
       return false;
     }
 
     final AbstractObjectDescription abstractObjectDescription = (AbstractObjectDescription) o;
 
-    if (Integer.TYPE.equals(abstractObjectDescription.getObjectClass()))
-    {
+    if ( Integer.TYPE.equals( abstractObjectDescription.getObjectClass() ) ) {
       return true;
     }
-    if (Integer.class.equals(abstractObjectDescription.getObjectClass()))
-    {
+    if ( Integer.class.equals( abstractObjectDescription.getObjectClass() ) ) {
       return true;
     }
     return false;
@@ -96,8 +86,7 @@ public class IntegerObjectDescription extends AbstractObjectDescription
    *
    * @return A hash code.
    */
-  public int hashCode()
-  {
+  public int hashCode() {
     return getObjectClass().hashCode();
   }
 

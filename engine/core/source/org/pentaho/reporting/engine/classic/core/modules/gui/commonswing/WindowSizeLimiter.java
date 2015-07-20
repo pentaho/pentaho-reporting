@@ -17,8 +17,7 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.gui.commonswing;
 
-import java.awt.Component;
-import java.awt.Dimension;
+import java.awt.*;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 
@@ -28,8 +27,7 @@ import java.awt.event.ComponentEvent;
  *
  * @author Thomas Morgner
  */
-public class WindowSizeLimiter extends ComponentAdapter
-{
+public class WindowSizeLimiter extends ComponentAdapter {
   /**
    * The current source.
    */
@@ -38,8 +36,7 @@ public class WindowSizeLimiter extends ComponentAdapter
   /**
    * Default-Constructor.
    */
-  public WindowSizeLimiter()
-  {
+  public WindowSizeLimiter() {
 
   }
 
@@ -48,28 +45,23 @@ public class WindowSizeLimiter extends ComponentAdapter
    *
    * @param e the event.
    */
-  public void componentResized(final ComponentEvent e)
-  {
-    if (e.getSource() == currentSource)
-    {
+  public void componentResized( final ComponentEvent e ) {
+    if ( e.getSource() == currentSource ) {
       return;
     }
 
-    if (e.getSource() instanceof Component)
-    {
+    if ( e.getSource() instanceof Component ) {
       currentSource = e.getSource();
       final Component c = (Component) e.getSource();
       final Dimension d = c.getMaximumSize();
       final Dimension s = c.getSize();
-      if (s.width > d.width)
-      {
+      if ( s.width > d.width ) {
         s.width = d.width;
       }
-      if (s.height > d.height)
-      {
+      if ( s.height > d.height ) {
         s.height = d.height;
       }
-      c.setSize(s);
+      c.setSize( s );
       currentSource = null;
     }
 

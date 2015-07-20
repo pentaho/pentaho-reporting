@@ -27,28 +27,23 @@ import org.pentaho.reporting.libraries.docbundle.DocumentBundle;
  *
  * @author Thomas Morgner
  */
-public class BundleWriterState
-{
+public class BundleWriterState {
   private MasterReport masterReport;
   private DocumentBundle globalBundle;
   private BundleWriter bundleWriter;
   private AbstractReportDefinition report;
   private String bundleFileName;
 
-  public BundleWriterState(final MasterReport masterReport,
-                           final DocumentBundle globalBundle,
-                           final BundleWriter writer)
-  {
-    if (masterReport == null)
-    {
+  public BundleWriterState( final MasterReport masterReport,
+                            final DocumentBundle globalBundle,
+                            final BundleWriter writer ) {
+    if ( masterReport == null ) {
       throw new NullPointerException();
     }
-    if (globalBundle == null)
-    {
+    if ( globalBundle == null ) {
       throw new NullPointerException();
     }
-    if (writer == null)
-    {
+    if ( writer == null ) {
       throw new NullPointerException();
     }
 
@@ -59,26 +54,21 @@ public class BundleWriterState
     this.bundleFileName = "";
   }
 
-  public BundleWriterState(final BundleWriterState parent,
-                           final String bundleFileName)
-  {
-    this(parent, parent.getReport(), bundleFileName);
+  public BundleWriterState( final BundleWriterState parent,
+                            final String bundleFileName ) {
+    this( parent, parent.getReport(), bundleFileName );
   }
 
-  public BundleWriterState(final BundleWriterState parent,
-                           final AbstractReportDefinition report,
-                           final String bundleFileName)
-  {
-    if (report == null)
-    {
+  public BundleWriterState( final BundleWriterState parent,
+                            final AbstractReportDefinition report,
+                            final String bundleFileName ) {
+    if ( report == null ) {
       throw new NullPointerException();
     }
-    if (parent == null)
-    {
+    if ( parent == null ) {
       throw new NullPointerException();
     }
-    if (bundleFileName == null)
-    {
+    if ( bundleFileName == null ) {
       throw new NullPointerException();
     }
 
@@ -86,32 +76,27 @@ public class BundleWriterState
     this.globalBundle = parent.globalBundle;
     this.bundleWriter = parent.bundleWriter;
     this.report = report;
-    this.bundleFileName = IOUtils.getInstance().getAbsolutePath(bundleFileName, parent.getFileName());
+    this.bundleFileName = IOUtils.getInstance().getAbsolutePath( bundleFileName, parent.getFileName() );
   }
 
-  public MasterReport getMasterReport()
-  {
+  public MasterReport getMasterReport() {
     return masterReport;
   }
 
-  public DocumentBundle getGlobalBundle()
-  {
+  public DocumentBundle getGlobalBundle() {
     return globalBundle;
   }
 
   // Either subreport or jfreereport object
-  public AbstractReportDefinition getReport()
-  {
+  public AbstractReportDefinition getReport() {
     return report;
   }
 
-  public String getFileName()
-  {
+  public String getFileName() {
     return bundleFileName;
   }
 
-  public BundleWriter getBundleWriter()
-  {
+  public BundleWriter getBundleWriter() {
     return bundleWriter;
   }
 }

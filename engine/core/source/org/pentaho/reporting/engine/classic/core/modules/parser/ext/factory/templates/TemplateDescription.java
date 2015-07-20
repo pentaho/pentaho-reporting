@@ -25,8 +25,7 @@ import org.pentaho.reporting.engine.classic.core.modules.parser.ext.factory.base
  *
  * @author Thomas Morgner
  */
-public interface TemplateDescription extends ObjectDescription
-{
+public interface TemplateDescription extends ObjectDescription {
   /**
    * Creates a new template.
    *
@@ -46,5 +45,5 @@ public interface TemplateDescription extends ObjectDescription
    *
    * @param name the name.
    */
-  public void setName(String name);
+  public void setName( String name );
 }

@@ -17,48 +17,38 @@
 
 package org.pentaho.reporting.engine.classic.core;
 
-import java.net.URL;
-import java.security.CodeSource;
-import javax.xml.XMLConstants;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-
 import org.junit.Assert;
 import org.junit.Test;
 import org.pentaho.reporting.libraries.base.util.DebugLog;
 
-public class IvyTest
-{
+import javax.xml.XMLConstants;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import java.security.CodeSource;
+
+public class IvyTest {
   @Test
-  public void ivy_Is_Broken_And_Pulls_In_Old_XML_API_Jars()
-  {
-    try
-    {
+  public void ivy_Is_Broken_And_Pulls_In_Old_XML_API_Jars() {
+    try {
       // all implementation must support this method and this feature, according to the spec.
       // This code will fail with an AbstractMethodError if an old version of the XML-API is
       // on the classpath.
-      DocumentBuilderFactory.newInstance().setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
-    }
-    catch (ParserConfigurationException e)
-    {
+      DocumentBuilderFactory.newInstance().setFeature( XMLConstants.FEATURE_SECURE_PROCESSING, true );
+    } catch ( ParserConfigurationException e ) {
       // ignored, we are fishing for AbstractMethodError here.
     }
   }
 
   @Test
-  public void report_xml_apis_location()
-  {
+  public void report_xml_apis_location() {
     Class<?> aClass = DocumentBuilderFactory.newInstance().getClass();
     CodeSource cs = aClass.getProtectionDomain().getCodeSource();
-    String url = aClass.toString() + " - " + ((cs == null) ? "From Bootstrap": cs.getLocation());
-    try
-    {
+    String url = aClass.toString() + " - " + ( ( cs == null ) ? "From Bootstrap" : cs.getLocation() );
+    try {
       ivy_Is_Broken_And_Pulls_In_Old_XML_API_Jars();
-      DebugLog.log(url);
-    }
-    catch (Throwable t)
-    {
-      Assert.fail("Offending code found. in jar " + url);
+      DebugLog.log( url );
+    } catch ( Throwable t ) {
+      Assert.fail( "Offending code found. in jar " + url );
     }
   }
 }

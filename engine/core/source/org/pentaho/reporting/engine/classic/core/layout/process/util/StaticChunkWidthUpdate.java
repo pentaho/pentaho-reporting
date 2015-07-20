@@ -17,33 +17,27 @@
 
 package org.pentaho.reporting.engine.classic.core.layout.process.util;
 
-public abstract class StaticChunkWidthUpdate
-{
+public abstract class StaticChunkWidthUpdate {
   private StaticChunkWidthUpdate parent;
 
-  protected StaticChunkWidthUpdate()
-  {
+  protected StaticChunkWidthUpdate() {
   }
 
-  protected void reuse(final StaticChunkWidthUpdate parent)
-  {
+  protected void reuse( final StaticChunkWidthUpdate parent ) {
     this.parent = parent;
   }
 
-  public abstract void update(long minChunkWidth);
+  public abstract void update( long minChunkWidth );
 
-  public void finish()
-  {
+  public void finish() {
 
   }
 
-  public boolean isInline()
-  {
+  public boolean isInline() {
     return false;
   }
 
-  public StaticChunkWidthUpdate pop()
-  {
+  public StaticChunkWidthUpdate pop() {
     final StaticChunkWidthUpdate retval = parent;
     parent = null;
     return retval;

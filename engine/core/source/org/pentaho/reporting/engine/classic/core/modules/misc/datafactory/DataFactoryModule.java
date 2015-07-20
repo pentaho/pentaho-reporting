@@ -27,16 +27,14 @@ import org.pentaho.reporting.libraries.base.boot.SubSystem;
  *
  * @author Thomas Morgner
  */
-public class DataFactoryModule extends AbstractModule
-{
+public class DataFactoryModule extends AbstractModule {
   /**
    * DefaultConstructor. Loads the module specification.
    *
    * @throws ModuleInitializeException if an error occured.
    */
   public DataFactoryModule()
-      throws ModuleInitializeException
-  {
+    throws ModuleInitializeException {
     loadModuleInfo();
   }
 
@@ -48,10 +46,9 @@ public class DataFactoryModule extends AbstractModule
    * @param subSystem the subSystem.
    * @throws ModuleInitializeException if an error ocurred while initializing the module.
    */
-  public void initialize(final SubSystem subSystem)
-      throws ModuleInitializeException
-  {
+  public void initialize( final SubSystem subSystem )
+    throws ModuleInitializeException {
     ElementMetaDataParser.initializeOptionalDataFactoryMetaData(
-        "org/pentaho/reporting/engine/classic/core/modules/misc/datafactory/meta-datafactory.xml");
+      "org/pentaho/reporting/engine/classic/core/modules/misc/datafactory/meta-datafactory.xml" );
   }
 }

@@ -17,12 +17,12 @@
 
 package org.pentaho.reporting.engine.classic.core.metadata;
 
-import java.awt.Image;
+import org.pentaho.reporting.engine.classic.core.function.Expression;
+
+import java.awt.*;
 import java.beans.BeanInfo;
 import java.beans.IntrospectionException;
 import java.util.Locale;
-
-import org.pentaho.reporting.engine.classic.core.function.Expression;
 
 /**
  * Provides meta-data for functions. This is basically an extension to the classical bean-info class, with some
@@ -34,8 +34,7 @@ import org.pentaho.reporting.engine.classic.core.function.Expression;
  *
  * @author Thomas Morgner
  */
-public interface ExpressionMetaData extends MetaData
-{
+public interface ExpressionMetaData extends MetaData {
   /**
    * Checks whether the main purpose of the expression is to modify the layout of the report. This method returns true,
    * if the expression modifies one or more named elements.
@@ -54,8 +53,8 @@ public interface ExpressionMetaData extends MetaData
 
   public boolean isStatefull();
 
-  public Image getIcon(final Locale locale, int iconKind);
-  
+  public Image getIcon( final Locale locale, int iconKind );
+
   public Class getResultType();
 
   public Class getExpressionType();
@@ -66,7 +65,7 @@ public interface ExpressionMetaData extends MetaData
 
   public ExpressionPropertyMetaData[] getPropertyDescriptions();
 
-  public ExpressionPropertyMetaData getPropertyDescription(String name);
+  public ExpressionPropertyMetaData getPropertyDescription( String name );
 
   public Expression create();
 }

@@ -17,17 +17,19 @@
 
 package org.pentaho.reporting.engine.classic.core;
 
-import java.util.Locale;
-import java.util.TimeZone;
-
 import org.pentaho.reporting.libraries.resourceloader.ResourceKey;
 import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 
-public interface ExtendedResourceBundleFactory extends ResourceBundleFactory, Cloneable
-{
+import java.util.Locale;
+import java.util.TimeZone;
+
+public interface ExtendedResourceBundleFactory extends ResourceBundleFactory, Cloneable {
   public Object clone() throws CloneNotSupportedException;
-  public void setLocale(Locale locale);
-  public void setTimeZone(TimeZone timeZone);
-  public void setResourceLoader(final ResourceManager resourceManager,
-                                final ResourceKey contextKey);
+
+  public void setLocale( Locale locale );
+
+  public void setTimeZone( TimeZone timeZone );
+
+  public void setResourceLoader( final ResourceManager resourceManager,
+                                 final ResourceKey contextKey );
 }

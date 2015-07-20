@@ -17,55 +17,47 @@
 
 package org.pentaho.reporting.engine.classic.core.style;
 
+import org.pentaho.reporting.engine.classic.core.util.ObjectStreamResolveException;
+
 import java.io.ObjectStreamException;
 import java.io.Serializable;
-
-import org.pentaho.reporting.engine.classic.core.util.ObjectStreamResolveException;
 
 /**
  * Creation-Date: 30.10.2005, 19:37:35
  *
  * @author Thomas Morgner
  */
-public class BoxSizing implements Serializable
-{
-  public static final BoxSizing CONTENT_BOX = new BoxSizing("content-box");
-  public static final BoxSizing BORDER_BOX = new BoxSizing("border-box");
+public class BoxSizing implements Serializable {
+  public static final BoxSizing CONTENT_BOX = new BoxSizing( "content-box" );
+  public static final BoxSizing BORDER_BOX = new BoxSizing( "border-box" );
   private String type;
 
-  private BoxSizing(final String type)
-  {
+  private BoxSizing( final String type ) {
     this.type = type;
   }
 
-  public boolean equals(final Object o)
-  {
-    if (this == o)
-    {
+  public boolean equals( final Object o ) {
+    if ( this == o ) {
       return true;
     }
-    if (o == null || getClass() != o.getClass())
-    {
+    if ( o == null || getClass() != o.getClass() ) {
       return false;
     }
 
     final BoxSizing that = (BoxSizing) o;
 
-    if (type != null ? !type.equals(that.type) : that.type != null)
-    {
+    if ( type != null ? !type.equals( that.type ) : that.type != null ) {
       return false;
     }
 
     return true;
   }
 
-  public int hashCode()
-  {
-    return (type != null ? type.hashCode() : 0);
+  public int hashCode() {
+    return ( type != null ? type.hashCode() : 0 );
   }
 
-  public String toString()
-  {
+  public String toString() {
     return type;
   }
 
@@ -77,14 +69,11 @@ public class BoxSizing implements Serializable
    * @noinspection UNUSED_SYMBOL
    */
   protected Object readResolve()
-      throws ObjectStreamException
-  {
-    if (this.type.equals(BoxSizing.CONTENT_BOX.type))
-    {
+    throws ObjectStreamException {
+    if ( this.type.equals( BoxSizing.CONTENT_BOX.type ) ) {
       return BoxSizing.CONTENT_BOX;
     }
-    if (this.type.equals(BoxSizing.BORDER_BOX.type))
-    {
+    if ( this.type.equals( BoxSizing.BORDER_BOX.type ) ) {
       return BoxSizing.BORDER_BOX;
     }
     // unknown element alignment...

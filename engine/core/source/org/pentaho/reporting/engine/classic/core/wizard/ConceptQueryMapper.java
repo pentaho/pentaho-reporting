@@ -25,13 +25,12 @@ import java.io.Serializable;
  *
  * @author Thomas Morgner
  */
-public interface ConceptQueryMapper extends Serializable
-{
+public interface ConceptQueryMapper extends Serializable {
   /**
    * @param value   can be null.
    * @param type    can be null.
    * @param context never null.
    * @return
    */
-  public Object getValue(final Object value, final Class type, final DataAttributeContext context);
+  public Object getValue( final Object value, final Class type, final DataAttributeContext context );
 }

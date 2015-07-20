@@ -19,84 +19,67 @@ package org.pentaho.reporting.engine.classic.core.modules.output.table.html.help
 
 import java.util.Arrays;
 
-public class HtmlTextExtractorState
-{
+public class HtmlTextExtractorState {
   private static final StyleBuilder.StyleCarrier[] EMPTY =
-      new StyleBuilder.StyleCarrier[StyleBuilder.CSSKeys.values().length];
+    new StyleBuilder.StyleCarrier[ StyleBuilder.CSSKeys.values().length ];
   private StyleBuilder.StyleCarrier[] style;
   private boolean writtenTag;
   private HtmlTextExtractorState parent;
 
-  public HtmlTextExtractorState(HtmlTextExtractorState parent, final boolean writtenTag)
-  {
-    this(parent, writtenTag, null);
+  public HtmlTextExtractorState( HtmlTextExtractorState parent, final boolean writtenTag ) {
+    this( parent, writtenTag, null );
   }
-  
-  public HtmlTextExtractorState(HtmlTextExtractorState parent, final boolean writtenTag, final StyleBuilder.StyleCarrier[] style)
-  {
+
+  public HtmlTextExtractorState( HtmlTextExtractorState parent, final boolean writtenTag,
+                                 final StyleBuilder.StyleCarrier[] style ) {
     this.parent = parent;
     this.writtenTag = writtenTag;
-    if (style == null)
-    {
-      if (parent == null)
-      {
+    if ( style == null ) {
+      if ( parent == null ) {
         this.style = EMPTY.clone();
-      }
-      else
-      {
+      } else {
         this.style = parent.style;
       }
-    }
-    else
-    {
+    } else {
       this.style = style;
     }
   }
 
-  public HtmlTextExtractorState getParent()
-  {
+  public HtmlTextExtractorState getParent() {
     return parent;
   }
 
-  public StyleBuilder.StyleCarrier[] getStyle()
-  {
+  public StyleBuilder.StyleCarrier[] getStyle() {
     return style;
   }
 
-  public boolean isWrittenTag()
-  {
+  public boolean isWrittenTag() {
     return writtenTag;
   }
 
-  public boolean equals(final Object o)
-  {
-    if (this == o)
-    {
+  public boolean equals( final Object o ) {
+    if ( this == o ) {
       return true;
     }
-    if (o == null || getClass() != o.getClass())
-    {
+    if ( o == null || getClass() != o.getClass() ) {
       return false;
     }
 
     final HtmlTextExtractorState that = (HtmlTextExtractorState) o;
 
-    if (writtenTag != that.writtenTag)
-    {
+    if ( writtenTag != that.writtenTag ) {
       return false;
     }
-    if (!Arrays.equals(style, that.style))
-    {
+    if ( !Arrays.equals( style, that.style ) ) {
       return false;
     }
 
     return true;
   }
 
-  public int hashCode()
-  {
-    int result = style != null ? Arrays.hashCode(style) : 0;
-    result = 31 * result + (writtenTag ? 1 : 0);
+  public int hashCode() {
+    int result = style != null ? Arrays.hashCode( style ) : 0;
+    result = 31 * result + ( writtenTag ? 1 : 0 );
     return result;
   }
 }

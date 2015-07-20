@@ -17,9 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.output.fast;
 
-import java.io.IOException;
-import java.net.URL;
-
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -34,88 +31,84 @@ import org.pentaho.reporting.libraries.base.util.NullOutputStream;
 import org.pentaho.reporting.libraries.resourceloader.ResourceException;
 import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 
-public class ReportStructureValidatorTest
-{
+import java.io.IOException;
+import java.net.URL;
+
+public class ReportStructureValidatorTest {
   @Before
-  public void setUp() throws Exception
-  {
+  public void setUp() throws Exception {
     ClassicEngineBoot.getInstance().start();
   }
 
   @Test
-  public void testShallowInlineSubReportDetection()
-  {
+  public void testShallowInlineSubReportDetection() {
 
     SubReport srInner = new SubReport();
 
     SubReport sr = new SubReport();
-    sr.getReportHeader().addElement(srInner);
+    sr.getReportHeader().addElement( srInner );
 
     MasterReport report = new MasterReport();
-    report.getReportHeader().addElement(sr);
+    report.getReportHeader().addElement( sr );
 
     ReportStructureValidator v = new ReportStructureValidator();
-    Assert.assertFalse(v.isValidForFastProcessing(report));
+    Assert.assertFalse( v.isValidForFastProcessing( report ) );
   }
 
   @Test
-  public void testDeepInlineSubReportDetection()
-  {
+  public void testDeepInlineSubReportDetection() {
 
     SubReport srInner = new SubReport();
 
     SubReport sr = new SubReport();
-    sr.getReportHeader().addElement(srInner);
+    sr.getReportHeader().addElement( srInner );
 
     MasterReport report = new MasterReport();
-    report.getReportHeader().addSubReport(sr);
+    report.getReportHeader().addSubReport( sr );
 
     ReportStructureValidator v = new ReportStructureValidator();
-    Assert.assertFalse(v.isValidForFastProcessing(report));
+    Assert.assertFalse( v.isValidForFastProcessing( report ) );
   }
 
   @Test
-  public void testDeepSubBandInlineSubReportDetection()
-  {
+  public void testDeepSubBandInlineSubReportDetection() {
 
     SubReport srInner = new SubReport();
 
     Band band = new Band();
-    band.addElement(srInner);
+    band.addElement( srInner );
 
     SubReport sr = new SubReport();
-    sr.getReportHeader().addElement(band);
+    sr.getReportHeader().addElement( band );
 
     MasterReport report = new MasterReport();
-    report.getReportHeader().addSubReport(sr);
+    report.getReportHeader().addSubReport( sr );
 
     ReportStructureValidator v = new ReportStructureValidator();
-    Assert.assertFalse(v.isValidForFastProcessing(report));
+    Assert.assertFalse( v.isValidForFastProcessing( report ) );
   }
 
   @Test
-  public void testNoneInlineSubReportDetection()
-  {
+  public void testNoneInlineSubReportDetection() {
 
     SubReport srInner = new SubReport();
 
     SubReport sr = new SubReport();
-    sr.getReportHeader().addSubReport(srInner);
+    sr.getReportHeader().addSubReport( srInner );
 
     MasterReport report = new MasterReport();
-    report.getReportHeader().addSubReport(sr);
+    report.getReportHeader().addSubReport( sr );
 
     ReportStructureValidator v = new ReportStructureValidator();
-    Assert.assertTrue(v.isValidForFastProcessing(report));
+    Assert.assertTrue( v.isValidForFastProcessing( report ) );
   }
 
   @Test
-  public void testReport() throws ResourceException, ReportProcessingException, IOException
-  {
-    URL url = getClass().getResource("Prd-5129.prpt");
-    MasterReport report = (MasterReport) new ResourceManager().createDirectly(url, MasterReport.class).getResource();
+  public void testReport() throws ResourceException, ReportProcessingException, IOException {
+    URL url = getClass().getResource( "Prd-5129.prpt" );
+    MasterReport report = (MasterReport) new ResourceManager().createDirectly( url, MasterReport.class ).getResource();
     ReportStructureValidator v = new ReportStructureValidator();
-    Assert.assertTrue(v.isValidForFastProcessing(report));
-    FastExcelReportUtil.processXls(report, new NullOutputStream());
+    Assert.assertTrue( v.isValidForFastProcessing( report ) );
+    FastExcelReportUtil.processXls( report, new NullOutputStream() );
   }
 }

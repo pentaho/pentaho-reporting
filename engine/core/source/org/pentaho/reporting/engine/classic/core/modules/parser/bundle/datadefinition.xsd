@@ -60,25 +60,27 @@
     <xs:sequence>
       <xs:element type="plain-parameterType" name="plain-parameter" minOccurs="0" maxOccurs="unbounded">
         <xs:annotation>
-          <xs:documentation>Like in the platform, all parameters contribute to a commom pool. We define a similiar set of
-      capabilities as the existing secure-parameter component, to ease the transition between the two of them.
+          <xs:documentation>Like in the platform, all parameters contribute to a commom pool. We define a similiar set
+            of
+            capabilities as the existing secure-parameter component, to ease the transition between the two of them.
 
-      However, this version here is well-defined. :) (Once it is defined, of course)
+            However, this version here is well-defined. :) (Once it is defined, of course)
 
-      All possible inputs have to be declared here. During the resolve process, each parameter's
-      underlying implementation is queried to check whether the parameter-context already contains
-      all required information to process the report.
+            All possible inputs have to be declared here. During the resolve process, each parameter's
+            underlying implementation is queried to check whether the parameter-context already contains
+            all required information to process the report.
 
-      We have at least two parameter types:
+            We have at least two parameter types:
 
-      (1) Plain Value: Input fields.
-      (2) List Selection
-          (2a) Single-Value Selection
-          (2b) Multi-Value Selection
+            (1) Plain Value: Input fields.
+            (2) List Selection
+            (2a) Single-Value Selection
+            (2b) Multi-Value Selection
 
-      Lists are always fed from a query; the query-implementation can be a list of hard-coded values.
-      List-Data has two columns: Key and Presentation value. Simple lists can be created from a single
-      column which simply maps key and presentation value to the same column in the dataset.</xs:documentation>
+            Lists are always fed from a query; the query-implementation can be a list of hard-coded values.
+            List-Data has two columns: Key and Presentation value. Simple lists can be created from a single
+            column which simply maps key and presentation value to the same column in the dataset.
+          </xs:documentation>
         </xs:annotation>
       </xs:element>
 

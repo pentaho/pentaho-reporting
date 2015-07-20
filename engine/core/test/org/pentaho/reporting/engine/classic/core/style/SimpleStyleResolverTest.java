@@ -24,32 +24,27 @@ import org.pentaho.reporting.engine.classic.core.ItemBand;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
 import org.pentaho.reporting.engine.classic.core.style.resolver.SimpleStyleResolver;
 
-public class SimpleStyleResolverTest extends TestCase
-{
-  public SimpleStyleResolverTest()
-  {
+public class SimpleStyleResolverTest extends TestCase {
+  public SimpleStyleResolverTest() {
   }
 
-  public SimpleStyleResolverTest(final String name)
-  {
-    super(name);
+  public SimpleStyleResolverTest( final String name ) {
+    super( name );
   }
 
-  protected void setUp() throws Exception
-  {
+  protected void setUp() throws Exception {
     ClassicEngineBoot.getInstance().start();
   }
 
-  public void testStyleInheritance()
-  {
+  public void testStyleInheritance() {
     MasterReport report = new MasterReport();
     final ItemBand itemBand = report.getItemBand();
 
-    report.getStyle().setStyleProperty(TextStyleKeys.FONT, "Dudadu");
+    report.getStyle().setStyleProperty( TextStyleKeys.FONT, "Dudadu" );
 
     ResolverStyleSheet styleSheet = new ResolverStyleSheet();
-    new SimpleStyleResolver(true).resolve(itemBand, styleSheet);
-    Assert.assertEquals("Dudadu", styleSheet.getStyleProperty(TextStyleKeys.FONT));
+    new SimpleStyleResolver( true ).resolve( itemBand, styleSheet );
+    Assert.assertEquals( "Dudadu", styleSheet.getStyleProperty( TextStyleKeys.FONT ) );
 
   }
 }

@@ -17,12 +17,12 @@
 
 package org.pentaho.reporting.engine.classic.core.layout.model.table.columns;
 
-import java.util.ArrayList;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.pentaho.reporting.engine.classic.core.layout.model.Border;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderLength;
+
+import java.util.ArrayList;
 
 
 /**
@@ -30,39 +30,34 @@ import org.pentaho.reporting.engine.classic.core.layout.model.RenderLength;
  *
  * @author Thomas Morgner
  */
-public abstract class AbstractColumnModel implements TableColumnModel
-{
-  private static final Log logger = LogFactory.getLog(AbstractColumnModel.class);
+public abstract class AbstractColumnModel implements TableColumnModel {
+  private static final Log logger = LogFactory.getLog( AbstractColumnModel.class );
   private boolean validated;
 
   private ArrayList<TableColumnGroup> columnGroups;
   private TableColumn[] columns;
 
-  public AbstractColumnModel()
-  {
+  public AbstractColumnModel() {
     this.columns = null;
     this.columnGroups = new ArrayList<TableColumnGroup>();
   }
 
-  public void addColumnGroup(final TableColumnGroup column)
-  {
-    columnGroups.add(column);
+  public void addColumnGroup( final TableColumnGroup column ) {
+    columnGroups.add( column );
     column.freeze();
     validated = false;
   }
 
-  public void addAutoColumn()
-  {
+  public void addAutoColumn() {
     final TableColumnGroup autoGroup = new TableColumnGroup();
-    final TableColumn column = new TableColumn(Border.EMPTY_BORDER, RenderLength.AUTO, true);
-    autoGroup.addColumn(column);
+    final TableColumn column = new TableColumn( Border.EMPTY_BORDER, RenderLength.AUTO, true );
+    autoGroup.addColumn( column );
     autoGroup.freeze();
-    columnGroups.add(autoGroup);
+    columnGroups.add( autoGroup );
     validated = false;
   }
 
-  public boolean isIncrementalModeSupported()
-  {
+  public boolean isIncrementalModeSupported() {
     return true;
   }
 
@@ -71,92 +66,74 @@ public abstract class AbstractColumnModel implements TableColumnModel
    *
    * @return
    */
-  public int getColumnGroupCount()
-  {
+  public int getColumnGroupCount() {
     return columnGroups.size();
   }
 
-  public int getColumnCount()
-  {
+  public int getColumnCount() {
     buildColumns();
     return columns.length;
   }
 
-  private void buildColumns()
-  {
-    if (validated)
-    {
+  private void buildColumns() {
+    if ( validated ) {
       return;
     }
 
     final ArrayList<TableColumn> cols = new ArrayList<TableColumn>();
-    for (int i = 0; i < columnGroups.size(); i++)
-    {
-      final TableColumnGroup node = columnGroups.get(i);
+    for ( int i = 0; i < columnGroups.size(); i++ ) {
+      final TableColumnGroup node = columnGroups.get( i );
 
       final int count = node.getColumnCount();
-      for (int x = 0; x < count; x++)
-      {
-        final TableColumn column = node.getColumn(x);
-        cols.add(column);
+      for ( int x = 0; x < count; x++ ) {
+        final TableColumn column = node.getColumn( x );
+        cols.add( column );
       }
     }
 
-    columns = cols.toArray(new TableColumn[cols.size()]);
+    columns = cols.toArray( new TableColumn[ cols.size() ] );
     validated = true;
   }
 
-  public TableColumnGroup getColumnGroup(final int i)
-  {
-    return columnGroups.get(i);
+  public TableColumnGroup getColumnGroup( final int i ) {
+    return columnGroups.get( i );
   }
 
-  public TableColumn getColumn(final int i)
-  {
+  public TableColumn getColumn( final int i ) {
     buildColumns();
-    if (i >= columns.length)
-    {
-      throw new ArrayIndexOutOfBoundsException(i);
+    if ( i >= columns.length ) {
+      throw new ArrayIndexOutOfBoundsException( i );
     }
-    return columns[i];
+    return columns[ i ];
   }
 
-  public TableColumn[] getColumns()
-  {
+  public TableColumn[] getColumns() {
     buildColumns();
     return columns;
   }
 
-  public boolean isValidated()
-  {
+  public boolean isValidated() {
     return validated;
   }
 
-  public long getBorderSpacing()
-  {
+  public long getBorderSpacing() {
     return 0;
   }
 
-  public TableColumnGroup getGroupForIndex(final int idx)
-  {
+  public TableColumnGroup getGroupForIndex( final int idx ) {
     int offset = 0;
-    for (int j = 0; j < columnGroups.size(); j++)
-    {
-      final TableColumnGroup group = columnGroups.get(j);
-      if (offset + group.getColumnCount() <= idx)
-      {
+    for ( int j = 0; j < columnGroups.size(); j++ ) {
+      final TableColumnGroup group = columnGroups.get( j );
+      if ( offset + group.getColumnCount() <= idx ) {
         offset += group.getColumnCount();
-      }
-      else
-      {
+      } else {
         return group;
       }
     }
-    throw new IndexOutOfBoundsException("No such group");
+    throw new IndexOutOfBoundsException( "No such group" );
   }
 
-  public Object clone() throws CloneNotSupportedException
-  {
+  public Object clone() throws CloneNotSupportedException {
     final AbstractColumnModel cm = (AbstractColumnModel) super.clone();
     cm.columns = null;
     cm.validated = false;
@@ -164,36 +141,30 @@ public abstract class AbstractColumnModel implements TableColumnModel
     return cm;
   }
 
-  public void clear()
-  {
+  public void clear() {
     columnGroups.clear();
     validated = false;
     columns = null;
   }
 
-  public long getCellPosition(final int columnIndex)
-  {
+  public long getCellPosition( final int columnIndex ) {
     long pos = 0;
-    for (int i = 0; i < columnIndex; i++)
-    {
-      pos += getColumn(i).getEffectiveSize();
+    for ( int i = 0; i < columnIndex; i++ ) {
+      pos += getColumn( i ).getEffectiveSize();
     }
     return pos;
   }
 
-  public void updateCellSize(final int columnIndex, final int colSpan, final long cachedWidth)
-  {
-    logger.debug("Update cell-size: " + columnIndex + ": col-span=" + colSpan + "; width=" + cachedWidth);
-    getColumn(columnIndex).setCachedSize(colSpan, cachedWidth);
+  public void updateCellSize( final int columnIndex, final int colSpan, final long cachedWidth ) {
+    logger.debug( "Update cell-size: " + columnIndex + ": col-span=" + colSpan + "; width=" + cachedWidth );
+    getColumn( columnIndex ).setCachedSize( colSpan, cachedWidth );
   }
 
-  public RenderLength getDefinedWidth(final int columnIndex)
-  {
-    return getColumn(columnIndex).getDefinedWidth();
+  public RenderLength getDefinedWidth( final int columnIndex ) {
+    return getColumn( columnIndex ).getDefinedWidth();
   }
 
-  public long getEffectiveColumnSize(final int columnIndex)
-  {
-    return getColumn(columnIndex).getEffectiveSize();
+  public long getEffectiveColumnSize( final int columnIndex ) {
+    return getColumn( columnIndex ).getEffectiveSize();
   }
 }

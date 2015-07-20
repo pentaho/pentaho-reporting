@@ -17,26 +17,22 @@
 
 package org.pentaho.reporting.engine.classic.core.style.css.selector.conditions;
 
-public class OneOfAttributeCSSCondition extends AttributeCSSCondition
-{
-  public OneOfAttributeCSSCondition(final String name,
-                                    final String namespace,
-                                    final boolean specified,
-                                    final String value)
-  {
-    super(name, namespace, specified, value);
+public class OneOfAttributeCSSCondition extends AttributeCSSCondition {
+  public OneOfAttributeCSSCondition( final String name,
+                                     final String namespace,
+                                     final boolean specified,
+                                     final String value ) {
+    super( name, namespace, specified, value );
   }
 
   /**
    * An integer indicating the type of <code>Condition</code>.
    */
-  public short getConditionType()
-  {
+  public short getConditionType() {
     return SAC_ONE_OF_ATTRIBUTE_CONDITION;
   }
 
-  protected String getSelectorIndicator()
-  {
+  protected String getSelectorIndicator() {
     return "~=";
   }
 }

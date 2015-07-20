@@ -17,15 +17,14 @@
 
 package org.pentaho.reporting.engine.classic.core.style.resolver;
 
-import java.io.Serializable;
-
 import org.pentaho.reporting.engine.classic.core.ReportElement;
 import org.pentaho.reporting.engine.classic.core.style.ResolverStyleSheet;
 
-public interface StyleResolver extends Serializable, Cloneable
-{
-  public void resolve(final ReportElement element,
-                      final ResolverStyleSheet resolverTarget);
+import java.io.Serializable;
+
+public interface StyleResolver extends Serializable, Cloneable {
+  public void resolve( final ReportElement element,
+                       final ResolverStyleSheet resolverTarget );
 
   public StyleResolver clone();
 }

@@ -17,8 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.core.function;
 
-import java.net.URL;
-
 import junit.framework.TestCase;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -31,20 +29,19 @@ import org.pentaho.reporting.engine.classic.core.testsupport.DebugReportRunner;
 import org.pentaho.reporting.libraries.resourceloader.Resource;
 import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 
-public class TotalGroupCountTest extends TestCase
-{
-  private static final Log logger = LogFactory.getLog(TotalGroupCountTest.class);
+import java.net.URL;
+
+public class TotalGroupCountTest extends TestCase {
+  private static final Log logger = LogFactory.getLog( TotalGroupCountTest.class );
 
   private static class TotalGroupCountVerifyFunction
-      extends AbstractFunction
-  {
+    extends AbstractFunction {
     /**
      * Creates an unnamed function. Make sure the name of the function is set using {@link #setName} before the function
      * is added to the report's function collection.
      */
-    public TotalGroupCountVerifyFunction()
-    {
-      setName("verification");
+    public TotalGroupCountVerifyFunction() {
+      setName( "verification" );
     }
 
     /**
@@ -52,13 +49,11 @@ public class TotalGroupCountTest extends TestCase
      *
      * @param event the event.
      */
-    public void groupFinished(final ReportEvent event)
-    {
-      if (event.getLevel() >= 0)
-      {
+    public void groupFinished( final ReportEvent event ) {
+      if ( event.getLevel() >= 0 ) {
         return;
       }
-      assertEvent(event);
+      assertEvent( event );
     }
 
     /**
@@ -66,141 +61,128 @@ public class TotalGroupCountTest extends TestCase
      *
      * @param event the event.
      */
-    public void groupStarted(final ReportEvent event)
-    {
-      if (event.getLevel() >= 0)
-      {
+    public void groupStarted( final ReportEvent event ) {
+      if ( event.getLevel() >= 0 ) {
         return;
       }
-      assertEvent(event);
+      assertEvent( event );
     }
 
-    private void assertEvent(final ReportEvent event)
-    {
+    private void assertEvent( final ReportEvent event ) {
       // the number of continents in the report1
-      final Number n = (Number) event.getDataRow().get("continent-total-gc");
-      assertEquals("continent-total-gc", 6, n.intValue());
+      final Number n = (Number) event.getDataRow().get( "continent-total-gc" );
+      assertEquals( "continent-total-gc", 6, n.intValue() );
 
       // the number of continents in the report1
       // we also have the default group, so it should return the same as above
-      final Number n2 = (Number) event.getDataRow().get("total-gc");
-      assertEquals("total-gc", 7, n2.intValue());
+      final Number n2 = (Number) event.getDataRow().get( "total-gc" );
+      assertEquals( "total-gc", 7, n2.intValue() );
     }
 
-    public Object getValue()
-    {
+    public Object getValue() {
       return null;
     }
   }
 
-  public TotalGroupCountTest()
-  {
+  public TotalGroupCountTest() {
   }
 
-  public TotalGroupCountTest(final String s)
-  {
-    super(s);
+  public TotalGroupCountTest( final String s ) {
+    super( s );
   }
 
-  protected void setUp() throws Exception
-  {
+  protected void setUp() throws Exception {
     ClassicEngineBoot.getInstance().start();
   }
 
-  public void testGroupCount() throws Exception
-  {
-    final URL url = getClass().getResource("aggregate-function-test.xml");
-    assertNotNull(url);
+  public void testGroupCount() throws Exception {
+    final URL url = getClass().getResource( "aggregate-function-test.xml" );
+    assertNotNull( url );
     final ResourceManager resourceManager = new ResourceManager();
     resourceManager.registerDefaults();
-    final Resource directly = resourceManager.createDirectly(url, MasterReport.class);
+    final Resource directly = resourceManager.createDirectly( url, MasterReport.class );
     final MasterReport report = (MasterReport) directly.getResource();
-    report.setDataFactory(new TableDataFactory("default", new AggregateTestDataTableModel()));
-    final RelationalGroup g = report.getGroupByName("default");
-    if (g != null)
-    {
-      report.removeGroup(g);
+    report.setDataFactory( new TableDataFactory( "default", new AggregateTestDataTableModel() ) );
+    final RelationalGroup g = report.getGroupByName( "default" );
+    if ( g != null ) {
+      report.removeGroup( g );
     }
-    report.addExpression(new TotalGroupCountVerifyFunction());
+    report.addExpression( new TotalGroupCountVerifyFunction() );
 
     final TotalGroupCountFunction f = new TotalGroupCountFunction();
-    f.setName("continent-total-gc");
-    f.setGroup("Continent Group");
-    f.setDependencyLevel(1);
-    report.addExpression(f);
+    f.setName( "continent-total-gc" );
+    f.setGroup( "Continent Group" );
+    f.setDependencyLevel( 1 );
+    report.addExpression( f );
 
     final TotalGroupCountFunction f2 = new TotalGroupCountFunction();
-    f2.setName("total-gc");
-    f2.setDependencyLevel(1);
-    report.addExpression(f2);
+    f2.setName( "total-gc" );
+    f2.setDependencyLevel( 1 );
+    report.addExpression( f2 );
 
-    DebugReportRunner.execGraphics2D(report);
+    DebugReportRunner.execGraphics2D( report );
 
 
   }
 
 
-  public void testGroupCount2() throws Exception
-  {
-    final URL url = getClass().getResource("aggregate-function-test.xml");
-    assertNotNull(url);
+  public void testGroupCount2() throws Exception {
+    final URL url = getClass().getResource( "aggregate-function-test.xml" );
+    assertNotNull( url );
     final ResourceManager resourceManager = new ResourceManager();
     resourceManager.registerDefaults();
-    final Resource directly = resourceManager.createDirectly(url, MasterReport.class);
+    final Resource directly = resourceManager.createDirectly( url, MasterReport.class );
     final MasterReport report = (MasterReport) directly.getResource();
-    report.setDataFactory(new TableDataFactory("default", new AggregateTestDataTableModel()));
+    report.setDataFactory( new TableDataFactory( "default", new AggregateTestDataTableModel() ) );
 
-    final RelationalGroup g = report.getGroupByName("default");
-    if (g != null)
-    {
-      report.removeGroup(g);
+    final RelationalGroup g = report.getGroupByName( "default" );
+    if ( g != null ) {
+      report.removeGroup( g );
     }
-    report.addExpression(new TotalGroupCountVerifyFunction());
+    report.addExpression( new TotalGroupCountVerifyFunction() );
 
     final TotalGroupCountFunction f = new TotalGroupCountFunction();
-    f.setName("continent-total-gc");
-    f.setGroup("Continent Group");
-    f.setDependencyLevel(1);
-    report.addExpression(f);
+    f.setName( "continent-total-gc" );
+    f.setGroup( "Continent Group" );
+    f.setDependencyLevel( 1 );
+    report.addExpression( f );
 
     final TotalGroupCountFunction f2 = new TotalGroupCountFunction();
-    f2.setName("total-gc");
-    f2.setDependencyLevel(1);
-    report.addExpression(f2);
+    f2.setName( "total-gc" );
+    f2.setDependencyLevel( 1 );
+    report.addExpression( f2 );
 
-    DebugReportRunner.execGraphics2D(report);
+    DebugReportRunner.execGraphics2D( report );
   }
 
 
-  public void testGroupCount3() throws Exception
-  {
-    final URL url = getClass().getResource("aggregate-function-test.xml");
-    assertNotNull(url);
+  public void testGroupCount3() throws Exception {
+    final URL url = getClass().getResource( "aggregate-function-test.xml" );
+    assertNotNull( url );
     final ResourceManager resourceManager = new ResourceManager();
     resourceManager.registerDefaults();
-    final Resource directly = resourceManager.createDirectly(url, MasterReport.class);
+    final Resource directly = resourceManager.createDirectly( url, MasterReport.class );
     final MasterReport report = (MasterReport) directly.getResource();
-    report.setDataFactory(new TableDataFactory("default", new AggregateTestDataTableModel()));
+    report.setDataFactory( new TableDataFactory( "default", new AggregateTestDataTableModel() ) );
 
-    final RelationalGroup g = report.getGroupByName("default");
-    if (g != null)
-    {
-      report.removeGroup(g);
+    final RelationalGroup g = report.getGroupByName( "default" );
+    if ( g != null ) {
+      report.removeGroup( g );
     }
-    report.addExpression(new TotalGroupCountVerifyFunction());
+    report.addExpression( new TotalGroupCountVerifyFunction() );
 
     final TotalGroupCountFunction f = new TotalGroupCountFunction();
-    f.setName("continent-total-gc");
-    f.setGroup("Continent Group");
-    f.setDependencyLevel(1);
-    report.addExpression(f);
+    f.setName( "continent-total-gc" );
+    f.setGroup( "Continent Group" );
+    f.setDependencyLevel( 1 );
+    report.addExpression( f );
 
     final TotalGroupCountFunction f2 = new TotalGroupCountFunction();
-    f2.setName("total-gc");
-    f2.setDependencyLevel(1);
-    report.addExpression(f2);
+    f2.setName( "total-gc" );
+    f2.setDependencyLevel( 1 );
+    report.addExpression( f2 );
 
 
-    DebugReportRunner.execGraphics2D(report);
+    DebugReportRunner.execGraphics2D( report );
   }
 }

@@ -19,10 +19,8 @@ package org.pentaho.reporting.engine.classic.core.metadata.propertyeditors;
 
 import org.pentaho.reporting.engine.classic.core.style.TableLayout;
 
-public class TableLayoutPropertyEditor extends EnumPropertyEditor
-{
-  public TableLayoutPropertyEditor()
-  {
-    super(TableLayout.class, true);
+public class TableLayoutPropertyEditor extends EnumPropertyEditor {
+  public TableLayoutPropertyEditor() {
+    super( TableLayout.class, true );
   }
 }

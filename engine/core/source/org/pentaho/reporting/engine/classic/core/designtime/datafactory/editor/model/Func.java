@@ -17,7 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.core.designtime.datafactory.editor.model;
 
-interface Func<T>
-{
-  void run(T value);
+interface Func<T> {
+  void run( T value );
 }

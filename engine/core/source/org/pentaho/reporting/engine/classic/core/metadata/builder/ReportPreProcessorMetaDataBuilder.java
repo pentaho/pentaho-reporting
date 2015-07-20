@@ -17,96 +17,82 @@
 
 package org.pentaho.reporting.engine.classic.core.metadata.builder;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
-
 import org.pentaho.reporting.engine.classic.core.ReportPreProcessor;
 import org.pentaho.reporting.engine.classic.core.metadata.ReportPreProcessorPropertyMetaData;
 
-public class ReportPreProcessorMetaDataBuilder extends MetaDataBuilder<ReportPreProcessorMetaDataBuilder>
-{
+import java.util.LinkedHashMap;
+import java.util.Map;
+
+public class ReportPreProcessorMetaDataBuilder extends MetaDataBuilder<ReportPreProcessorMetaDataBuilder> {
   private Class<? extends ReportPreProcessor> impl;
   private LinkedHashMap<String, ReportPreProcessorPropertyMetaData> properties;
   private boolean autoProcess;
   private boolean designMode;
   private int priority;
 
-  public ReportPreProcessorMetaDataBuilder()
-  {
+  public ReportPreProcessorMetaDataBuilder() {
     properties = new LinkedHashMap<String, ReportPreProcessorPropertyMetaData>();
   }
 
-  public ReportPreProcessorMetaDataBuilder impl(final Class<? extends ReportPreProcessor> impl)
-  {
+  public ReportPreProcessorMetaDataBuilder impl( final Class<? extends ReportPreProcessor> impl ) {
     this.impl = impl;
     return self();
   }
 
-  public String getName()
-  {
-    if (impl == null) {
+  public String getName() {
+    if ( impl == null ) {
       return null;
     }
     return impl.getName();
   }
 
-  public ReportPreProcessorMetaDataBuilder properties(final Map<String, ReportPreProcessorPropertyMetaData> properties)
-  {
-    this.properties.putAll(properties);
+  public ReportPreProcessorMetaDataBuilder properties(
+    final Map<String, ReportPreProcessorPropertyMetaData> properties ) {
+    this.properties.putAll( properties );
     return self();
   }
 
-  public ReportPreProcessorMetaDataBuilder property(final ReportPreProcessorPropertyMetaData p)
-  {
-    this.properties.put(p.getName(), p);
+  public ReportPreProcessorMetaDataBuilder property( final ReportPreProcessorPropertyMetaData p ) {
+    this.properties.put( p.getName(), p );
     return self();
   }
 
-  public ReportPreProcessorMetaDataBuilder autoProcess(final boolean autoProcess)
-  {
+  public ReportPreProcessorMetaDataBuilder autoProcess( final boolean autoProcess ) {
     this.autoProcess = autoProcess;
     return self();
   }
 
-  public ReportPreProcessorMetaDataBuilder designMode(final boolean executeInDesignMode)
-  {
+  public ReportPreProcessorMetaDataBuilder designMode( final boolean executeInDesignMode ) {
     this.designMode = executeInDesignMode;
     return self();
   }
 
-  public ReportPreProcessorMetaDataBuilder priority(final int executionPriority)
-  {
+  public ReportPreProcessorMetaDataBuilder priority( final int executionPriority ) {
     this.priority = executionPriority;
     return self();
   }
 
-  public Class<? extends ReportPreProcessor> getImpl()
-  {
+  public Class<? extends ReportPreProcessor> getImpl() {
     return impl;
   }
 
-  public Map<String, ReportPreProcessorPropertyMetaData> getProperties()
-  {
+  public Map<String, ReportPreProcessorPropertyMetaData> getProperties() {
     return (Map<String, ReportPreProcessorPropertyMetaData>) properties.clone();
   }
 
-  public boolean isAutoProcess()
-  {
+  public boolean isAutoProcess() {
     return autoProcess;
   }
 
-  public boolean isDesignMode()
-  {
+  public boolean isDesignMode() {
     return designMode;
   }
 
-  public int getPriority()
-  {
+  public int getPriority() {
     return priority;
   }
 
-  protected ReportPreProcessorMetaDataBuilder self()
-  {
+  protected ReportPreProcessorMetaDataBuilder self() {
     return this;
   }
 }

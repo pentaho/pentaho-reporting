@@ -25,36 +25,29 @@ import org.pentaho.reporting.engine.classic.core.event.ReportEvent;
  *
  * @author Thomas Morgner
  */
-public class EndReportHandler implements AdvanceHandler
-{
+public class EndReportHandler implements AdvanceHandler {
   public static final AdvanceHandler HANDLER = new EndReportHandler();
 
-  public EndReportHandler()
-  {
+  public EndReportHandler() {
   }
 
-  public int getEventCode()
-  {
+  public int getEventCode() {
     return ReportEvent.REPORT_DONE | ProcessState.ARTIFICIAL_EVENT_CODE;
   }
 
-  public ProcessState advance(final ProcessState state) throws ReportProcessingException
-  {
-    throw new ReportProcessingException("Cannot advance beyond finish!");
+  public ProcessState advance( final ProcessState state ) throws ReportProcessingException {
+    throw new ReportProcessingException( "Cannot advance beyond finish!" );
   }
 
-  public ProcessState commit(final ProcessState state) throws ReportProcessingException
-  {
-    throw new ReportProcessingException("Cannot advance beyond finish!");
+  public ProcessState commit( final ProcessState state ) throws ReportProcessingException {
+    throw new ReportProcessingException( "Cannot advance beyond finish!" );
   }
 
-  public boolean isFinish()
-  {
+  public boolean isFinish() {
     return true;
   }
 
-  public boolean isRestoreHandler()
-  {
+  public boolean isRestoreHandler() {
     return false;
   }
 }

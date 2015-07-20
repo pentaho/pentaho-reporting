@@ -22,11 +22,9 @@ import org.pentaho.reporting.libraries.xmlns.parser.AbstractXmlFactoryModule;
 import org.pentaho.reporting.libraries.xmlns.parser.XmlDocumentInfo;
 import org.pentaho.reporting.libraries.xmlns.parser.XmlReadHandler;
 
-public class ReportProcessTaskMetaDataXmlFactoryModule extends AbstractXmlFactoryModule
-{
-  public ReportProcessTaskMetaDataXmlFactoryModule()
-  {
-    super(ClassicEngineBoot.METADATA_NAMESPACE, "meta-data");
+public class ReportProcessTaskMetaDataXmlFactoryModule extends AbstractXmlFactoryModule {
+  public ReportProcessTaskMetaDataXmlFactoryModule() {
+    super( ClassicEngineBoot.METADATA_NAMESPACE, "meta-data" );
   }
 
   /**
@@ -35,8 +33,7 @@ public class ReportProcessTaskMetaDataXmlFactoryModule extends AbstractXmlFactor
    * @param documentInfo the document information that has been extracted from the parser.
    * @return the root handler or null.
    */
-  public XmlReadHandler createReadHandler(final XmlDocumentInfo documentInfo)
-  {
+  public XmlReadHandler createReadHandler( final XmlDocumentInfo documentInfo ) {
     return new ReportProcessTaskMetaDataReadHandler();
   }
 }

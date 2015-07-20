@@ -17,8 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.parser.data.sql.writer;
 
-import java.io.IOException;
-
 import org.pentaho.reporting.engine.classic.core.modules.misc.datafactory.sql.ConnectionProvider;
 import org.pentaho.reporting.engine.classic.core.modules.misc.datafactory.sql.JndiConnectionProvider;
 import org.pentaho.reporting.engine.classic.core.modules.parser.base.PasswordEncryptionService;
@@ -29,55 +27,48 @@ import org.pentaho.reporting.libraries.docbundle.WriteableDocumentBundle;
 import org.pentaho.reporting.libraries.xmlns.writer.XmlWriter;
 import org.pentaho.reporting.libraries.xmlns.writer.XmlWriterSupport;
 
+import java.io.IOException;
+
 public class JndiConnectionProviderWriteHandler
-    implements ConnectionProviderWriteHandler
-{
-  public JndiConnectionProviderWriteHandler()
-  {
+  implements ConnectionProviderWriteHandler {
+  public JndiConnectionProviderWriteHandler() {
   }
 
-  public String writeReport(final WriteableDocumentBundle bundle,
-                            final BundleWriterState state,
-                            final XmlWriter xmlWriter,
-                            final ConnectionProvider connectionProvider) throws IOException, BundleWriterException
-  {
-    if (bundle == null)
-    {
+  public String writeReport( final WriteableDocumentBundle bundle,
+                             final BundleWriterState state,
+                             final XmlWriter xmlWriter,
+                             final ConnectionProvider connectionProvider ) throws IOException, BundleWriterException {
+    if ( bundle == null ) {
       throw new NullPointerException();
     }
-    if (state == null)
-    {
+    if ( state == null ) {
       throw new NullPointerException();
     }
-    if (xmlWriter == null)
-    {
+    if ( xmlWriter == null ) {
       throw new NullPointerException();
     }
-    if (connectionProvider == null)
-    {
+    if ( connectionProvider == null ) {
       throw new NullPointerException();
     }
 
 
     final JndiConnectionProvider driverProvider =
-        (JndiConnectionProvider) connectionProvider;
-    xmlWriter.writeTag(SQLDataFactoryModule.NAMESPACE, "jndi", XmlWriterSupport.OPEN);
+      (JndiConnectionProvider) connectionProvider;
+    xmlWriter.writeTag( SQLDataFactoryModule.NAMESPACE, "jndi", XmlWriterSupport.OPEN );
 
-    xmlWriter.writeTag(SQLDataFactoryModule.NAMESPACE, "path", XmlWriterSupport.OPEN);
-    xmlWriter.writeTextNormalized(driverProvider.getConnectionPath(), false);
+    xmlWriter.writeTag( SQLDataFactoryModule.NAMESPACE, "path", XmlWriterSupport.OPEN );
+    xmlWriter.writeTextNormalized( driverProvider.getConnectionPath(), false );
     xmlWriter.writeCloseTag();
 
-    if (driverProvider.getUsername() != null)
-    {
-      xmlWriter.writeTag(SQLDataFactoryModule.NAMESPACE, "username", XmlWriterSupport.OPEN);
-      xmlWriter.writeTextNormalized(driverProvider.getUsername(), false);
+    if ( driverProvider.getUsername() != null ) {
+      xmlWriter.writeTag( SQLDataFactoryModule.NAMESPACE, "username", XmlWriterSupport.OPEN );
+      xmlWriter.writeTextNormalized( driverProvider.getUsername(), false );
       xmlWriter.writeCloseTag();
 
-      if (driverProvider.getPassword() != null)
-      {
-        xmlWriter.writeTag(SQLDataFactoryModule.NAMESPACE, "password", XmlWriterSupport.OPEN);
+      if ( driverProvider.getPassword() != null ) {
+        xmlWriter.writeTag( SQLDataFactoryModule.NAMESPACE, "password", XmlWriterSupport.OPEN );
         xmlWriter.writeTextNormalized
-            (PasswordEncryptionService.getInstance().encrypt(driverProvider.getPassword()), false);
+          ( PasswordEncryptionService.getInstance().encrypt( driverProvider.getPassword() ), false );
         xmlWriter.writeCloseTag();
       }
     }

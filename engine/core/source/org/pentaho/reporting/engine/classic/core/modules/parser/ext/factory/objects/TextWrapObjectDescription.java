@@ -26,15 +26,13 @@ import org.pentaho.reporting.engine.classic.core.style.TextWrap;
  *
  * @author Thomas Morgner
  */
-public class TextWrapObjectDescription extends AbstractObjectDescription
-{
+public class TextWrapObjectDescription extends AbstractObjectDescription {
   /**
    * Creates a new object description.
    */
-  public TextWrapObjectDescription()
-  {
-    super(TextWrap.class);
-    setParameterDefinition("value", String.class);
+  public TextWrapObjectDescription() {
+    super( TextWrap.class );
+    setParameterDefinition( "value", String.class );
   }
 
   /**
@@ -42,19 +40,15 @@ public class TextWrapObjectDescription extends AbstractObjectDescription
    *
    * @return The object.
    */
-  public Object createObject()
-  {
-    final String o = (String) getParameter("value");
-    if (o == null)
-    {
+  public Object createObject() {
+    final String o = (String) getParameter( "value" );
+    if ( o == null ) {
       return null;
     }
-    if ("wrap".equalsIgnoreCase(o))
-    {
+    if ( "wrap".equalsIgnoreCase( o ) ) {
       return TextWrap.WRAP;
     }
-    if ("none".equalsIgnoreCase(o))
-    {
+    if ( "none".equalsIgnoreCase( o ) ) {
       return TextWrap.NONE;
     }
     return null;
@@ -64,23 +58,19 @@ public class TextWrapObjectDescription extends AbstractObjectDescription
    * Sets the parameters in the object description to match the specified object.
    *
    * @param o the object (an {@link org.pentaho.reporting.engine.classic.core.ElementAlignment} instance).
-   * @throws org.pentaho.reporting.engine.classic.core.modules.parser.ext.factory.base.ObjectFactoryException
-   *          if the object is not recognised.
+   * @throws org.pentaho.reporting.engine.classic.core.modules.parser.ext.factory.base.ObjectFactoryException if the
+   * object
+   *                                                                                                          is not
+   *                                                                                                          recognised.
    */
-  public void setParameterFromObject(final Object o)
-      throws ObjectFactoryException
-  {
-    if (o.equals(TextWrap.WRAP))
-    {
-      setParameter("value", "wrap");
-    }
-    else if (o.equals(TextWrap.NONE))
-    {
-      setParameter("value", "none");
-    }
-    else
-    {
-      throw new ObjectFactoryException("Invalid value specified for ElementAlignment");
+  public void setParameterFromObject( final Object o )
+    throws ObjectFactoryException {
+    if ( o.equals( TextWrap.WRAP ) ) {
+      setParameter( "value", "wrap" );
+    } else if ( o.equals( TextWrap.NONE ) ) {
+      setParameter( "value", "none" );
+    } else {
+      throw new ObjectFactoryException( "Invalid value specified for ElementAlignment" );
     }
   }
 

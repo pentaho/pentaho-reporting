@@ -17,9 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.core.filter.types;
 
-import java.util.Locale;
-import java.util.TimeZone;
-
 import org.pentaho.reporting.engine.classic.core.AttributeNames;
 import org.pentaho.reporting.engine.classic.core.ReportElement;
 import org.pentaho.reporting.engine.classic.core.ResourceBundleFactory;
@@ -27,23 +24,22 @@ import org.pentaho.reporting.engine.classic.core.filter.MessageFormatSupport;
 import org.pentaho.reporting.engine.classic.core.function.ExpressionRuntime;
 import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
 
-public class MessageType extends AbstractElementType
-{
+import java.util.Locale;
+import java.util.TimeZone;
+
+public class MessageType extends AbstractElementType {
   public static final MessageType INSTANCE = new MessageType();
 
-  public static class MessageTypeContext
-  {
-    public MessageTypeContext()
-    {
+  public static class MessageTypeContext {
+    public MessageTypeContext() {
       messageFormatFilter = new MessageFormatSupport();
     }
 
     public MessageFormatSupport messageFormatFilter;
   }
 
-  public MessageType()
-  {
-    super("message");
+  public MessageType() {
+    super( "message" );
   }
 
   /**
@@ -54,76 +50,61 @@ public class MessageType extends AbstractElementType
    * @param element the element from which to read attribute.
    * @return the value.
    */
-  public Object getValue(final ExpressionRuntime runtime, final ReportElement element)
-  {
-    if (runtime == null)
-    {
-      throw new NullPointerException("Runtime must never be null.");
+  public Object getValue( final ExpressionRuntime runtime, final ReportElement element ) {
+    if ( runtime == null ) {
+      throw new NullPointerException( "Runtime must never be null." );
     }
-    if (element == null)
-    {
-      throw new NullPointerException("Element must never be null.");
+    if ( element == null ) {
+      throw new NullPointerException( "Element must never be null." );
     }
 
-    final Object nullValue = element.getAttribute(AttributeNames.Core.NAMESPACE, AttributeNames.Core.NULL_VALUE);
-    final Object message = ElementTypeUtils.queryStaticValue(element);
-    if (message == null)
-    {
+    final Object nullValue = element.getAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.NULL_VALUE );
+    final Object message = ElementTypeUtils.queryStaticValue( element );
+    if ( message == null ) {
       return nullValue;
     }
-    
-    final MessageTypeContext context = element.getElementContext(MessageTypeContext.class);
+
+    final MessageTypeContext context = element.getElementContext( MessageTypeContext.class );
     final MessageFormatSupport messageFormatFilter = context.messageFormatFilter;
-    messageFormatFilter.setFormatString(String.valueOf(message));
+    messageFormatFilter.setFormatString( String.valueOf( message ) );
 
     final Object messageNullValue = element.getAttribute
-        (AttributeNames.Core.NAMESPACE, AttributeNames.Core.MESSAGE_NULL_VALUE);
-    if (messageNullValue != null)
-    {
-      messageFormatFilter.setNullString(String.valueOf(messageNullValue));
-    }
-    else if (nullValue != null)
-    {
-      messageFormatFilter.setNullString(String.valueOf(nullValue));
-    }
-    else
-    {
-      messageFormatFilter.setNullString(null);
+      ( AttributeNames.Core.NAMESPACE, AttributeNames.Core.MESSAGE_NULL_VALUE );
+    if ( messageNullValue != null ) {
+      messageFormatFilter.setNullString( String.valueOf( messageNullValue ) );
+    } else if ( nullValue != null ) {
+      messageFormatFilter.setNullString( String.valueOf( nullValue ) );
+    } else {
+      messageFormatFilter.setNullString( null );
     }
 
     final ResourceBundleFactory resourceBundleFactory = runtime.getResourceBundleFactory();
     final Locale newLocale = resourceBundleFactory.getLocale();
-    if (ObjectUtilities.equal(newLocale, messageFormatFilter.getLocale()) == false)
-    {
-      messageFormatFilter.setLocale(newLocale);
-    }
-    
-    final TimeZone newTimeZone = resourceBundleFactory.getTimeZone();
-    if (ObjectUtilities.equal(newTimeZone, messageFormatFilter.getTimeZone()) == false)
-    {
-      messageFormatFilter.setTimeZone(newTimeZone);
+    if ( ObjectUtilities.equal( newLocale, messageFormatFilter.getLocale() ) == false ) {
+      messageFormatFilter.setLocale( newLocale );
     }
 
-    final Object value = messageFormatFilter.performFormat(runtime.getDataRow());
-    if (value == null)
-    {
+    final TimeZone newTimeZone = resourceBundleFactory.getTimeZone();
+    if ( ObjectUtilities.equal( newTimeZone, messageFormatFilter.getTimeZone() ) == false ) {
+      messageFormatFilter.setTimeZone( newTimeZone );
+    }
+
+    final Object value = messageFormatFilter.performFormat( runtime.getDataRow() );
+    if ( value == null ) {
       return nullValue;
     }
-    return String.valueOf(value);
+    return String.valueOf( value );
   }
 
-  public Object getDesignValue(final ExpressionRuntime runtime, final ReportElement element)
-  {
-    final Object message = ElementTypeUtils.queryStaticValue(element);
-    if (message == null || String.valueOf(message).length() == 0)
-    {
+  public Object getDesignValue( final ExpressionRuntime runtime, final ReportElement element ) {
+    final Object message = ElementTypeUtils.queryStaticValue( element );
+    if ( message == null || String.valueOf( message ).length() == 0 ) {
       return element.getElementType().getMetaData().getName();
     }
     return message;
   }
 
-  public void configureDesignTimeDefaults(final ReportElement element, final Locale locale)
-  {
-    element.setAttribute(AttributeNames.Core.NAMESPACE, AttributeNames.Core.VALUE, "Message");
+  public void configureDesignTimeDefaults( final ReportElement element, final Locale locale ) {
+    element.setAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.VALUE, "Message" );
   }
 }

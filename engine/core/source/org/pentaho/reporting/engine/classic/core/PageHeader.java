@@ -32,19 +32,17 @@ import org.pentaho.reporting.engine.classic.core.style.RootLevelBandDefaultStyle
  *
  * @author David Gilbert
  */
-public class PageHeader extends Band implements RootLevelBand
-{
+public class PageHeader extends Band implements RootLevelBand {
   /**
    * A helper array to prevent unnecessary object creation.
    */
-  private static final SubReport[] EMPTY_SUB_REPORTS = new SubReport[0];
+  private static final SubReport[] EMPTY_SUB_REPORTS = new SubReport[ 0 ];
 
   /**
    * Constructs a page header.
    */
-  public PageHeader()
-  {
-    setElementType(new PageHeaderType());
+  public PageHeader() {
+    setElementType( new PageHeaderType() );
   }
 
   /**
@@ -53,11 +51,10 @@ public class PageHeader extends Band implements RootLevelBand
    * @param onFirstPage defines, whether the page header will be printed on the first page
    * @param onLastPage  defines, whether the page footer will be printed on the last page.
    */
-  public PageHeader(final boolean onFirstPage, final boolean onLastPage)
-  {
+  public PageHeader( final boolean onFirstPage, final boolean onLastPage ) {
     super();
-    setDisplayOnFirstPage(onFirstPage);
-    setDisplayOnLastPage(onLastPage);
+    setDisplayOnFirstPage( onFirstPage );
+    setDisplayOnLastPage( onLastPage );
   }
 
   /**
@@ -65,9 +62,8 @@ public class PageHeader extends Band implements RootLevelBand
    *
    * @return true or false.
    */
-  public boolean isDisplayOnFirstPage()
-  {
-    return getStyle().getBooleanStyleProperty(BandStyleKeys.DISPLAY_ON_FIRSTPAGE);
+  public boolean isDisplayOnFirstPage() {
+    return getStyle().getBooleanStyleProperty( BandStyleKeys.DISPLAY_ON_FIRSTPAGE );
   }
 
   /**
@@ -75,9 +71,8 @@ public class PageHeader extends Band implements RootLevelBand
    *
    * @param b a flag indicating whether or not the header is shown on the first page.
    */
-  public void setDisplayOnFirstPage(final boolean b)
-  {
-    getStyle().setBooleanStyleProperty(BandStyleKeys.DISPLAY_ON_FIRSTPAGE, b);
+  public void setDisplayOnFirstPage( final boolean b ) {
+    getStyle().setBooleanStyleProperty( BandStyleKeys.DISPLAY_ON_FIRSTPAGE, b );
     notifyNodePropertiesChanged();
   }
 
@@ -86,9 +81,8 @@ public class PageHeader extends Band implements RootLevelBand
    *
    * @return true or false.
    */
-  public boolean isDisplayOnLastPage()
-  {
-    return getStyle().getBooleanStyleProperty(BandStyleKeys.DISPLAY_ON_LASTPAGE);
+  public boolean isDisplayOnLastPage() {
+    return getStyle().getBooleanStyleProperty( BandStyleKeys.DISPLAY_ON_LASTPAGE );
   }
 
   /**
@@ -96,9 +90,8 @@ public class PageHeader extends Band implements RootLevelBand
    *
    * @param b a flag indicating whether or not the header is shown on the last page.
    */
-  public void setDisplayOnLastPage(final boolean b)
-  {
-    getStyle().setBooleanStyleProperty(BandStyleKeys.DISPLAY_ON_LASTPAGE, b);
+  public void setDisplayOnLastPage( final boolean b ) {
+    getStyle().setBooleanStyleProperty( BandStyleKeys.DISPLAY_ON_LASTPAGE, b );
     notifyNodePropertiesChanged();
   }
 
@@ -107,8 +100,7 @@ public class PageHeader extends Band implements RootLevelBand
    *
    * @return the subreport count.
    */
-  public final int getSubReportCount()
-  {
+  public final int getSubReportCount() {
     return 0;
   }
 
@@ -118,9 +110,8 @@ public class PageHeader extends Band implements RootLevelBand
    * @param index the index.
    * @return nothing, as an exception is thrown instead.
    */
-  public final SubReport getSubReport(final int index)
-  {
-    throw new IndexOutOfBoundsException("PageHeader cannot have subreports");
+  public final SubReport getSubReport( final int index ) {
+    throw new IndexOutOfBoundsException( "PageHeader cannot have subreports" );
   }
 
   /**
@@ -128,9 +119,8 @@ public class PageHeader extends Band implements RootLevelBand
    *
    * @return true or false.
    */
-  public boolean isSticky()
-  {
-    return getStyle().getBooleanStyleProperty(BandStyleKeys.STICKY, false);
+  public boolean isSticky() {
+    return getStyle().getBooleanStyleProperty( BandStyleKeys.STICKY, false );
   }
 
   /**
@@ -138,9 +128,8 @@ public class PageHeader extends Band implements RootLevelBand
    *
    * @param b a flag indicating whether or not the footer is shown on the first page.
    */
-  public void setSticky(final boolean b)
-  {
-    getStyle().setBooleanStyleProperty(BandStyleKeys.STICKY, b);
+  public void setSticky( final boolean b ) {
+    getStyle().setBooleanStyleProperty( BandStyleKeys.STICKY, b );
     notifyNodePropertiesChanged();
   }
 
@@ -149,13 +138,11 @@ public class PageHeader extends Band implements RootLevelBand
    *
    * @return the sub-reports as array.
    */
-  public SubReport[] getSubReports()
-  {
+  public SubReport[] getSubReports() {
     return PageHeader.EMPTY_SUB_REPORTS;
   }
 
-  public ElementStyleSheet getDefaultStyleSheet()
-  {
+  public ElementStyleSheet getDefaultStyleSheet() {
     return RootLevelBandDefaultStyleSheet.getRootLevelBandDefaultStyle();
   }
 }

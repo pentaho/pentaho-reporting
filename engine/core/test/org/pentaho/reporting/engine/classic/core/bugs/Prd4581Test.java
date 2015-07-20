@@ -17,10 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.core.bugs;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.net.URL;
-
 import junit.framework.TestCase;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.pentaho.reporting.engine.classic.core.modules.parser.bundle.writer.StyleDefinitionWriter;
@@ -31,60 +27,59 @@ import org.pentaho.reporting.libraries.resourceloader.Resource;
 import org.pentaho.reporting.libraries.resourceloader.ResourceException;
 import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 
-public class Prd4581Test extends TestCase
-{
-  public Prd4581Test()
-  {
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.net.URL;
+
+public class Prd4581Test extends TestCase {
+  public Prd4581Test() {
   }
 
-  public void setUp()
-  {
+  public void setUp() {
     ClassicEngineBoot.getInstance().start();
   }
 
-  public void testPrptStyleParsing() throws ResourceException
-  {
-    final URL resource = getClass().getResource("Prd-4581.prptstyle");
-    assertNotNull(resource);
+  public void testPrptStyleParsing() throws ResourceException {
+    final URL resource = getClass().getResource( "Prd-4581.prptstyle" );
+    assertNotNull( resource );
 
     final ResourceManager mgr = new ResourceManager();
     mgr.registerDefaults();
-    final Resource loaded = mgr.createDirectly(resource, ElementStyleDefinition.class);
+    final Resource loaded = mgr.createDirectly( resource, ElementStyleDefinition.class );
     final ElementStyleDefinition style = (ElementStyleDefinition) loaded.getResource();
-    assertEquals(1, style.getRuleCount());
-    final ElementStyleSheet rule = style.getRule(0);
-    assertNotNull(rule);
+    assertEquals( 1, style.getRuleCount() );
+    final ElementStyleSheet rule = style.getRule( 0 );
+    assertNotNull( rule );
 
-    assertEquals("Arial", rule.getStyleProperty(TextStyleKeys.FONT));
+    assertEquals( "Arial", rule.getStyleProperty( TextStyleKeys.FONT ) );
   }
 
-  public void testPrptStyleReParsing() throws ResourceException, IOException
-  {
-    final URL resource = getClass().getResource("Prd-4581.prptstyle");
-    assertNotNull(resource);
+  public void testPrptStyleReParsing() throws ResourceException, IOException {
+    final URL resource = getClass().getResource( "Prd-4581.prptstyle" );
+    assertNotNull( resource );
 
     final ResourceManager mgr = new ResourceManager();
     mgr.registerDefaults();
-    final Resource loaded = mgr.createDirectly(resource, ElementStyleDefinition.class);
+    final Resource loaded = mgr.createDirectly( resource, ElementStyleDefinition.class );
     final ElementStyleDefinition style = (ElementStyleDefinition) loaded.getResource();
-    assertEquals(1, style.getRuleCount());
-    final ElementStyleSheet rule = style.getRule(0);
-    assertNotNull(rule);
+    assertEquals( 1, style.getRuleCount() );
+    final ElementStyleSheet rule = style.getRule( 0 );
+    assertNotNull( rule );
 
-    rule.setStyleProperty(TextStyleKeys.ITALIC, Boolean.TRUE);
+    rule.setStyleProperty( TextStyleKeys.ITALIC, Boolean.TRUE );
 
     final ByteArrayOutputStream bout = new ByteArrayOutputStream();
 
     final StyleDefinitionWriter writer = new StyleDefinitionWriter();
-    writer.write(bout, style);
+    writer.write( bout, style );
 
-    Resource parsed = mgr.createDirectly(bout.toByteArray(), ElementStyleDefinition.class);
+    Resource parsed = mgr.createDirectly( bout.toByteArray(), ElementStyleDefinition.class );
     final ElementStyleDefinition parsedStyle = (ElementStyleDefinition) parsed.getResource();
 
-    assertEquals(1, parsedStyle.getRuleCount());
-    final ElementStyleSheet parsedRule = parsedStyle.getRule(0);
-    assertNotNull(parsedRule);
-    assertEquals(Boolean.TRUE, rule.getStyleProperty(TextStyleKeys.ITALIC));
+    assertEquals( 1, parsedStyle.getRuleCount() );
+    final ElementStyleSheet parsedRule = parsedStyle.getRule( 0 );
+    assertNotNull( parsedRule );
+    assertEquals( Boolean.TRUE, rule.getStyleProperty( TextStyleKeys.ITALIC ) );
   }
 
 }

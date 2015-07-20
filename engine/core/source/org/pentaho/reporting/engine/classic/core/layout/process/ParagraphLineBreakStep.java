@@ -34,12 +34,10 @@ import org.pentaho.reporting.engine.classic.core.layout.model.table.TableColumnG
 import org.pentaho.reporting.engine.classic.core.layout.model.table.TableRenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.table.TableRowRenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.table.TableSectionRenderBox;
-import org.pentaho.reporting.engine.classic.core.layout.output.OutputProcessorMetaData;
 import org.pentaho.reporting.engine.classic.core.layout.process.linebreak.EmptyLinebreaker;
 import org.pentaho.reporting.engine.classic.core.layout.process.linebreak.FullLinebreaker;
 import org.pentaho.reporting.engine.classic.core.layout.process.linebreak.ParagraphLinebreaker;
 import org.pentaho.reporting.engine.classic.core.layout.process.linebreak.SimpleLinebreaker;
-import org.pentaho.reporting.libraries.base.util.DebugLog;
 import org.pentaho.reporting.libraries.base.util.FastStack;
 
 /**
@@ -63,62 +61,50 @@ import org.pentaho.reporting.libraries.base.util.FastStack;
  *
  * @author Thomas Morgner
  */
-public final class ParagraphLineBreakStep extends IterateStructuralProcessStep
-{
+public final class ParagraphLineBreakStep extends IterateStructuralProcessStep {
   private static final EmptyLinebreaker LEAF_BREAK_STATE = new EmptyLinebreaker();
 
   private FastStack<ParagraphLinebreaker> paragraphNesting;
   private ParagraphLinebreaker breakState;
   private SimpleLinebreaker reusableSimpleLinebreaker;
 
-  public ParagraphLineBreakStep()
-  {
-    paragraphNesting = new FastStack<ParagraphLinebreaker>(50);
+  public ParagraphLineBreakStep() {
+    paragraphNesting = new FastStack<ParagraphLinebreaker>( 50 );
   }
 
-  public void compute(final LogicalPageBox root)
-  {
+  public void compute( final LogicalPageBox root ) {
     paragraphNesting.clear();
-    try
-    {
-      startProcessing(root);
-    }
-    finally
-    {
+    try {
+      startProcessing( root );
+    } finally {
       paragraphNesting.clear();
       breakState = null;
     }
   }
 
-  protected void processParagraphChilds(final ParagraphRenderBox box)
-  {
-    super.processParagraphChilds(box);
+  protected void processParagraphChilds( final ParagraphRenderBox box ) {
+    super.processParagraphChilds( box );
   }
 
-  protected void processRenderableContent(final RenderableReplacedContentBox box)
-  {
-    if (breakState != null)
-    {
-      breakState.addNode(box);
+  protected void processRenderableContent( final RenderableReplacedContentBox box ) {
+    if ( breakState != null ) {
+      breakState.addNode( box );
     }
   }
 
-  protected boolean startBlockBox(final BlockRenderBox box)
-  {
-    if (box.getNodeType() == LayoutNodeTypes.TYPE_BOX_PARAGRAPH)
-    {
+  protected boolean startBlockBox( final BlockRenderBox box ) {
+    if ( box.getNodeType() == LayoutNodeTypes.TYPE_BOX_PARAGRAPH ) {
       final ParagraphRenderBox paragraphBox = (ParagraphRenderBox) box;
       final long poolChangeTracker = paragraphBox.getPool().getChangeTracker();
       final boolean unchanged = poolChangeTracker == paragraphBox.getLineBoxAge();
 
-      if (unchanged || paragraphBox.getPool().getFirstChild() == null)
-      {
+      if ( unchanged || paragraphBox.getPool().getFirstChild() == null ) {
         // If the paragraph is unchanged (no new elements have been added to the pool) then we can take a
         // shortcut. The childs of this paragraph will also be unchanged (as any structural change would have increased
         // the change-tracker).
         //
         // We treat an empty paragraph (pool has no childs) as unchanged at any time.
-        paragraphNesting.push(ParagraphLineBreakStep.LEAF_BREAK_STATE);
+        paragraphNesting.push( ParagraphLineBreakStep.LEAF_BREAK_STATE );
         breakState = ParagraphLineBreakStep.LEAF_BREAK_STATE;
         return false;
       }
@@ -132,45 +118,35 @@ public final class ParagraphLineBreakStep extends IterateStructuralProcessStep
       // It is guaranteed, that if a child is changed, the parent is marked as changed as well.
       // So we have only two cases to deal with: (1) The child is unchanged (2) the child is changed.
 
-      if (breakState == null)
-      {
+      if ( breakState == null ) {
         final ParagraphPoolBox paragraphPoolBox = paragraphBox.getPool();
         final RenderNode firstChild = paragraphPoolBox.getFirstChild();
-        if (firstChild == null)
-        {
-          paragraphBox.setPoolSize(0);
-          paragraphBox.setLineBoxAge(paragraphPoolBox.getChangeTracker());
+        if ( firstChild == null ) {
+          paragraphBox.setPoolSize( 0 );
+          paragraphBox.setLineBoxAge( paragraphPoolBox.getChangeTracker() );
           breakState = ParagraphLineBreakStep.LEAF_BREAK_STATE;
           return false;
         }
-        if (firstChild == paragraphPoolBox.getLastChild())
-        {
-          if ((firstChild.getLayoutNodeType() & LayoutNodeTypes.MASK_BOX) != LayoutNodeTypes.MASK_BOX)
-          {
+        if ( firstChild == paragraphPoolBox.getLastChild() ) {
+          if ( ( firstChild.getLayoutNodeType() & LayoutNodeTypes.MASK_BOX ) != LayoutNodeTypes.MASK_BOX ) {
             // Optimize away: A single text-element or other content in a linebox. No need to dive deeper.
-            paragraphBox.setPoolSize(1);
-            paragraphBox.setLineBoxAge(paragraphPoolBox.getChangeTracker());
+            paragraphBox.setPoolSize( 1 );
+            paragraphBox.setLineBoxAge( paragraphPoolBox.getChangeTracker() );
             breakState = ParagraphLineBreakStep.LEAF_BREAK_STATE;
             return false;
           }
         }
-        if (paragraphBox.isComplexParagraph())
-        {
-          final ParagraphLinebreaker item = new FullLinebreaker(paragraphBox);
-          paragraphNesting.push(item);
+        if ( paragraphBox.isComplexParagraph() ) {
+          final ParagraphLinebreaker item = new FullLinebreaker( paragraphBox );
+          paragraphNesting.push( item );
           breakState = item;
-        }
-        else
-        {
-          if (reusableSimpleLinebreaker == null)
-          {
-            reusableSimpleLinebreaker = new SimpleLinebreaker(paragraphBox);
+        } else {
+          if ( reusableSimpleLinebreaker == null ) {
+            reusableSimpleLinebreaker = new SimpleLinebreaker( paragraphBox );
+          } else {
+            reusableSimpleLinebreaker.recycle( paragraphBox );
           }
-          else
-          {
-            reusableSimpleLinebreaker.recycle(paragraphBox);
-          }
-          paragraphNesting.push(reusableSimpleLinebreaker);
+          paragraphNesting.push( reusableSimpleLinebreaker );
           breakState = reusableSimpleLinebreaker;
         }
         return true;
@@ -179,59 +155,52 @@ public final class ParagraphLineBreakStep extends IterateStructuralProcessStep
       // The breakState indicates that there is a paragraph processing active at the moment. This means, the
       // paragraph-box we are dealing with right now is a nested box.
 
-      if (breakState.isWritable() == false)
-      {
+      if ( breakState.isWritable() == false ) {
         // OK, should not happen, but you never know. I'm good at hiding
         // bugs in the code ..
-        throw new IllegalStateException("A child cannot be dirty, if the parent is clean");
+        throw new IllegalStateException( "A child cannot be dirty, if the parent is clean" );
       }
 
       // The paragraph is somehow nested in an other paragraph.
-      // This cannot be handled by the simple implementation, as we will most likely start to deriveForAdvance childs sooner
+      // This cannot be handled by the simple implementation, as we will most likely start to deriveForAdvance childs
+      // sooner
       // or later
-      if (breakState instanceof FullLinebreaker == false)
-      {
+      if ( breakState instanceof FullLinebreaker == false ) {
         // convert it ..
         final FullLinebreaker fullBreaker = breakState.startComplexLayout();
         paragraphNesting.pop();
-        paragraphNesting.push(fullBreaker);
+        paragraphNesting.push( fullBreaker );
         breakState = fullBreaker;
       }
 
-      final ParagraphLinebreaker subFlow = breakState.startParagraphBox(paragraphBox);
-      paragraphNesting.push(subFlow);
+      final ParagraphLinebreaker subFlow = breakState.startParagraphBox( paragraphBox );
+      paragraphNesting.push( subFlow );
       breakState = subFlow;
       return true;
     }
 
     // some other block box ..
-    if (breakState == null)
-    {
-      if (box.isLinebreakCacheValid())
-      {
+    if ( breakState == null ) {
+      if ( box.isLinebreakCacheValid() ) {
         return false;
       }
       // Not nested in a paragraph, thats easy ..
       return true;
     }
 
-    if (breakState.isWritable() == false)
-    {
-      throw new IllegalStateException("This cannot be: There is an active break-state, but the box is not writable.");
+    if ( breakState.isWritable() == false ) {
+      throw new IllegalStateException( "This cannot be: There is an active break-state, but the box is not writable." );
     }
 
-    breakState.startBlockBox(box);
+    breakState.startBlockBox( box );
     return true;
   }
 
-  protected void finishBlockBox(final BlockRenderBox box)
-  {
-    box.setLinebreakAge(box.getChangeTracker());
+  protected void finishBlockBox( final BlockRenderBox box ) {
+    box.setLinebreakAge( box.getChangeTracker() );
 
-    if (box.getNodeType() == LayoutNodeTypes.TYPE_BOX_PARAGRAPH)
-    {
-      if (breakState == ParagraphLineBreakStep.LEAF_BREAK_STATE && paragraphNesting.isEmpty())
-      {
+    if ( box.getNodeType() == LayoutNodeTypes.TYPE_BOX_PARAGRAPH ) {
+      if ( breakState == ParagraphLineBreakStep.LEAF_BREAK_STATE && paragraphNesting.isEmpty() ) {
         // this is a non-nested simple paragraph; no need for clean up .. 
         breakState = null;
         return;
@@ -244,139 +213,111 @@ public final class ParagraphLineBreakStep extends IterateStructuralProcessStep
       // finally update the change tracker ..
       breakState.finish();
       paragraphNesting.pop();
-      if (paragraphNesting.isEmpty())
-      {
-        if (reusableSimpleLinebreaker != null)
-        {
+      if ( paragraphNesting.isEmpty() ) {
+        if ( reusableSimpleLinebreaker != null ) {
           reusableSimpleLinebreaker.dispose();
         }
         breakState = null;
-      }
-      else
-      {
+      } else {
         breakState = paragraphNesting.peek();
-        breakState.finishParagraphBox((ParagraphRenderBox) box);
+        breakState.finishParagraphBox( (ParagraphRenderBox) box );
       }
       return;
     }
 
-    if (breakState == null)
-    {
+    if ( breakState == null ) {
       return;
     }
 
-    if (breakState.isWritable() == false)
-    {
-      throw new IllegalStateException("A child cannot be dirty, if the parent is clean");
+    if ( breakState.isWritable() == false ) {
+      throw new IllegalStateException( "A child cannot be dirty, if the parent is clean" );
     }
 
-    breakState.finishBlockBox(box);
+    breakState.finishBlockBox( box );
   }
 
-  protected boolean startCanvasBox(final CanvasRenderBox box)
-  {
-    return startBox(box);
+  protected boolean startCanvasBox( final CanvasRenderBox box ) {
+    return startBox( box );
   }
 
-  protected void finishCanvasBox(final CanvasRenderBox box)
-  {
-    finishBox(box);
+  protected void finishCanvasBox( final CanvasRenderBox box ) {
+    finishBox( box );
   }
 
-  protected boolean startInlineBox(final InlineRenderBox box)
-  {
-    if (breakState == null || breakState.isWritable() == false)
-    {
-      if (box.isLinebreakCacheValid())
-      {
+  protected boolean startInlineBox( final InlineRenderBox box ) {
+    if ( breakState == null || breakState.isWritable() == false ) {
+      if ( box.isLinebreakCacheValid() ) {
         return false;
       }
       return true;
     }
 
-    breakState.startInlineBox(box);
+    breakState.startInlineBox( box );
     return true;
   }
 
-  protected void finishInlineBox(final InlineRenderBox box)
-  {
-    box.setLinebreakAge(box.getChangeTracker());
+  protected void finishInlineBox( final InlineRenderBox box ) {
+    box.setLinebreakAge( box.getChangeTracker() );
 
-    if (breakState == null || breakState.isWritable() == false)
-    {
+    if ( breakState == null || breakState.isWritable() == false ) {
       return;
     }
 
-    breakState.finishInlineBox(box);
-    if (breakState.isBreakRequested() && isEndOfLine(box) == false)
-    {
+    breakState.finishInlineBox( box );
+    if ( breakState.isBreakRequested() && isEndOfLine( box ) == false ) {
       performBreak();
     }
   }
 
-  protected boolean startRowBox(final RenderBox box)
-  {
-    return startBox(box);
+  protected boolean startRowBox( final RenderBox box ) {
+    return startBox( box );
   }
 
-  protected void finishRowBox(final RenderBox box)
-  {
-    finishBox(box);
+  protected void finishRowBox( final RenderBox box ) {
+    finishBox( box );
   }
 
-  protected boolean startTableRowBox(final TableRowRenderBox box)
-  {
-    return startBox(box);
+  protected boolean startTableRowBox( final TableRowRenderBox box ) {
+    return startBox( box );
   }
 
-  protected void finishTableRowBox(final TableRowRenderBox box)
-  {
-    finishBox(box);
+  protected void finishTableRowBox( final TableRowRenderBox box ) {
+    finishBox( box );
   }
 
-  protected boolean startTableSectionBox(final TableSectionRenderBox box)
-  {
-    return startBox(box);
+  protected boolean startTableSectionBox( final TableSectionRenderBox box ) {
+    return startBox( box );
   }
 
-  protected void finishTableSectionBox(final TableSectionRenderBox box)
-  {
-    finishBox(box);
+  protected void finishTableSectionBox( final TableSectionRenderBox box ) {
+    finishBox( box );
   }
 
-  protected boolean startAutoBox(final RenderBox box)
-  {
-    return startBox(box);
+  protected boolean startAutoBox( final RenderBox box ) {
+    return startBox( box );
   }
 
-  protected void finishAutoBox(final RenderBox box)
-  {
-    finishBox(box);
+  protected void finishAutoBox( final RenderBox box ) {
+    finishBox( box );
   }
 
-  private void finishBox(final RenderBox box)
-  {
-    box.setLinebreakAge(box.getChangeTracker());
+  private void finishBox( final RenderBox box ) {
+    box.setLinebreakAge( box.getChangeTracker() );
 
-    if (breakState == null)
-    {
+    if ( breakState == null ) {
       return;
     }
 
-    if (breakState.isWritable() == false)
-    {
-      throw new IllegalStateException("A child cannot be dirty, if the parent is clean");
+    if ( breakState.isWritable() == false ) {
+      throw new IllegalStateException( "A child cannot be dirty, if the parent is clean" );
     }
 
-    breakState.finishBlockBox(box);
+    breakState.finishBlockBox( box );
   }
 
-  private boolean startBox(final RenderBox box)
-  {
-    if (breakState == null)
-    {
-      if (box.isLinebreakCacheValid())
-      {
+  private boolean startBox( final RenderBox box ) {
+    if ( breakState == null ) {
+      if ( box.isLinebreakCacheValid() ) {
         return false;
       }
 
@@ -384,125 +325,101 @@ public final class ParagraphLineBreakStep extends IterateStructuralProcessStep
     }
 
     // some other block box .. suspend.
-    if (breakState.isWritable() == false)
-    {
-      throw new IllegalStateException("A child cannot be dirty, if the parent is clean");
+    if ( breakState.isWritable() == false ) {
+      throw new IllegalStateException( "A child cannot be dirty, if the parent is clean" );
     }
 
-    breakState.startBlockBox(box);
+    breakState.startBlockBox( box );
     return true;
   }
 
-  private void processText(final RenderableText text)
-  {
-    breakState.addNode(text);
-    if (text.isForceLinebreak() == false)
-    {
+  private void processText( final RenderableText text ) {
+    breakState.addNode( text );
+    if ( text.isForceLinebreak() == false ) {
       return;
     }
 
-    if (breakState.isBreakRequested())
-    {
+    if ( breakState.isBreakRequested() ) {
       performBreak();
     }
 
     // OK, someone requested a manual linebreak.
     // Fill a stack with the current context ..
     // Check if we are at the end of the line
-    if (text.getNext() == null)
-    {
+    if ( text.getNext() == null ) {
       // OK, if we are at the end of the line (for all contexts), so we
       // dont have to perform a break. The text will end anyway ..
-      if (isEndOfLine(text))
-      {
+      if ( isEndOfLine( text ) ) {
         return;
       }
 
       // as soon as we are no longer the last element - break!
       // According to the flow rules, that will happen in one of the next
       // finishInlineBox events ..
-      breakState.setBreakRequested(true);
+      breakState.setBreakRequested( true );
       return;
     }
 
     performBreak();
   }
 
-  private void processText(final RenderableComplexText text)
-  {
-    breakState.addNode(text);
-    if (text.isForceLinebreak() == false)
-    {
+  private void processText( final RenderableComplexText text ) {
+    breakState.addNode( text );
+    if ( text.isForceLinebreak() == false ) {
       return;
     }
 
-    if (breakState.isBreakRequested())
-    {
+    if ( breakState.isBreakRequested() ) {
       performBreak();
     }
 
     // OK, someone requested a manual linebreak.
     // Fill a stack with the current context ..
     // Check if we are at the end of the line
-    if (text.getNext() == null)
-    {
+    if ( text.getNext() == null ) {
       // OK, if we are at the end of the line (for all contexts), so we
       // dont have to perform a break. The text will end anyway ..
-      if (isEndOfLine(text))
-      {
+      if ( isEndOfLine( text ) ) {
         return;
       }
 
       // as soon as we are no longer the last element - break!
       // According to the flow rules, that will happen in one of the next
       // finishInlineBox events ..
-      breakState.setBreakRequested(true);
+      breakState.setBreakRequested( true );
       return;
     }
 
     performBreak();
   }
 
-  protected void processOtherNode(final RenderNode node)
-  {
-    if (breakState == null || breakState.isWritable() == false)
-    {
+  protected void processOtherNode( final RenderNode node ) {
+    if ( breakState == null || breakState.isWritable() == false ) {
       return;
     }
 
-    if (breakState.isSuspended())
-    {
-      breakState.addNode(node);
-    }
-    else if (node.getNodeType() == LayoutNodeTypes.TYPE_NODE_TEXT)
-    {
+    if ( breakState.isSuspended() ) {
+      breakState.addNode( node );
+    } else if ( node.getNodeType() == LayoutNodeTypes.TYPE_NODE_TEXT ) {
       final RenderableText text = (RenderableText) node;
-      processText(text);
-    }
-    else if (node.getNodeType() == LayoutNodeTypes.TYPE_NODE_COMPLEX_TEXT)
-    {
+      processText( text );
+    } else if ( node.getNodeType() == LayoutNodeTypes.TYPE_NODE_COMPLEX_TEXT ) {
       final RenderableComplexText text = (RenderableComplexText) node;
-      processText(text);
-    }
-    else
-    {
-      breakState.addNode(node);
+      processText( text );
+    } else {
+      breakState.addNode( node );
     }
 
   }
 
-  private boolean isEndOfLine(RenderNode node)
-  {
-    while (node != null)
-    {
+  private boolean isEndOfLine( RenderNode node ) {
+    while ( node != null ) {
       final int nodeType = node.getLayoutNodeType();
-      if ((nodeType & LayoutNodeTypes.MASK_BOX) == LayoutNodeTypes.MASK_BOX &&
-          (nodeType & LayoutNodeTypes.MASK_BOX_INLINE) != LayoutNodeTypes.MASK_BOX_INLINE)
-      {
+      if ( ( nodeType & LayoutNodeTypes.MASK_BOX ) == LayoutNodeTypes.MASK_BOX &&
+        ( nodeType & LayoutNodeTypes.MASK_BOX_INLINE ) != LayoutNodeTypes.MASK_BOX_INLINE ) {
         return true;
       }
-      if (node.getNext() != null)
-      {
+      if ( node.getNext() != null ) {
         return false;
       }
       node = node.getParent();
@@ -510,119 +427,96 @@ public final class ParagraphLineBreakStep extends IterateStructuralProcessStep
     return true;
   }
 
-  private void performBreak()
-  {
-    if (breakState instanceof FullLinebreaker == false)
-    {
+  private void performBreak() {
+    if ( breakState instanceof FullLinebreaker == false ) {
       final FullLinebreaker fullBreaker = breakState.startComplexLayout();
       paragraphNesting.pop();
-      paragraphNesting.push(fullBreaker);
+      paragraphNesting.push( fullBreaker );
       breakState = fullBreaker;
 
       fullBreaker.performBreak();
-    }
-    else
-    {
+    } else {
       final FullLinebreaker fullBreaker = (FullLinebreaker) breakState;
       fullBreaker.performBreak();
     }
   }
 
-  protected boolean startOtherBox(final RenderBox box)
-  {
-    if (breakState == null)
-    {
-      if (box.isLinebreakCacheValid())
-      {
+  protected boolean startOtherBox( final RenderBox box ) {
+    if ( breakState == null ) {
+      if ( box.isLinebreakCacheValid() ) {
         return false;
       }
 
       return true;
     }
 
-    if (breakState.isWritable() == false)
-    {
+    if ( breakState.isWritable() == false ) {
       return false;
     }
 
-    breakState.startBlockBox(box);
+    breakState.startBlockBox( box );
     return true;
   }
 
-  protected void finishOtherBox(final RenderBox box)
-  {
-    box.setLinebreakAge(box.getChangeTracker());
+  protected void finishOtherBox( final RenderBox box ) {
+    box.setLinebreakAge( box.getChangeTracker() );
 
-    if (breakState != null && breakState.isWritable())
-    {
-      breakState.finishBlockBox(box);
+    if ( breakState != null && breakState.isWritable() ) {
+      breakState.finishBlockBox( box );
     }
   }
 
-  protected boolean startTableCellBox(final TableCellRenderBox box)
-  {
-    if (breakState == null)
-    {
-      if (box.isLinebreakCacheValid())
-      {
+  protected boolean startTableCellBox( final TableCellRenderBox box ) {
+    if ( breakState == null ) {
+      if ( box.isLinebreakCacheValid() ) {
         return false;
       }
 
       return true;
     }
 
-    if (breakState.isWritable() == false)
-    {
+    if ( breakState.isWritable() == false ) {
       return false;
     }
 
-    breakState.startBlockBox(box);
+    breakState.startBlockBox( box );
     return true;
   }
 
-  protected void finishTableCellBox(final TableCellRenderBox box)
-  {
-    box.setLinebreakAge(box.getChangeTracker());
+  protected void finishTableCellBox( final TableCellRenderBox box ) {
+    box.setLinebreakAge( box.getChangeTracker() );
 
-    if (breakState != null && breakState.isWritable())
-    {
-      breakState.finishBlockBox(box);
+    if ( breakState != null && breakState.isWritable() ) {
+      breakState.finishBlockBox( box );
     }
   }
 
-  protected boolean startTableColumnGroupBox(final TableColumnGroupNode box)
-  {
+  protected boolean startTableColumnGroupBox( final TableColumnGroupNode box ) {
     return false;
   }
 
-  protected boolean startTableBox(final TableRenderBox box)
-  {
-    if (breakState == null)
-    {
-      if (box.isLinebreakCacheValid())
-      {
+  protected boolean startTableBox( final TableRenderBox box ) {
+    if ( breakState == null ) {
+      if ( box.isLinebreakCacheValid() ) {
         return false;
       }
 
       return true;
     }
 
-    if (breakState.isWritable() == false)
-    {
+    if ( breakState.isWritable() == false ) {
       return false;
     }
 
-    breakState.startBlockBox(box);
+    breakState.startBlockBox( box );
     return true;
   }
 
-  protected void finishTableBox(final TableRenderBox box)
-  {
-    box.setLinebreakAge(box.getChangeTracker());
+  protected void finishTableBox( final TableRenderBox box ) {
+    box.setLinebreakAge( box.getChangeTracker() );
 
-    if (breakState != null && breakState.isWritable())
-    {
-      breakState.finishBlockBox(box);
+    if ( breakState != null && breakState.isWritable() ) {
+      breakState.finishBlockBox( box );
     }
   }
 }

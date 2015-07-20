@@ -17,61 +17,51 @@
 
 package org.pentaho.reporting.engine.classic.core.metadata.builder;
 
+import org.pentaho.reporting.engine.classic.core.ReportProcessTask;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import org.pentaho.reporting.engine.classic.core.ReportProcessTask;
-
-public class ReportProcessTaskMetaDataBuilder extends MetaDataBuilder<ReportProcessTaskMetaDataBuilder>
-{
+public class ReportProcessTaskMetaDataBuilder extends MetaDataBuilder<ReportProcessTaskMetaDataBuilder> {
   private Class<? extends ReportProcessTask> implementation;
   private ArrayList<String> aliases;
 
-  public ReportProcessTaskMetaDataBuilder()
-  {
+  public ReportProcessTaskMetaDataBuilder() {
     aliases = new ArrayList<String>();
   }
 
-  public ReportProcessTaskMetaDataBuilder implementation(final Class<? extends ReportProcessTask> implementation)
-  {
+  public ReportProcessTaskMetaDataBuilder implementation( final Class<? extends ReportProcessTask> implementation ) {
     this.implementation = implementation;
     return self();
   }
 
-  public ReportProcessTaskMetaDataBuilder aliases(final Iterable<String> aliases)
-  {
-    for (final String alias : aliases)
-    {
-      this.aliases.add(alias);
+  public ReportProcessTaskMetaDataBuilder aliases( final Iterable<String> aliases ) {
+    for ( final String alias : aliases ) {
+      this.aliases.add( alias );
     }
     return self();
   }
 
-  public ReportProcessTaskMetaDataBuilder alias(final String alias)
-  {
-    this.aliases.add(alias);
+  public ReportProcessTaskMetaDataBuilder alias( final String alias ) {
+    this.aliases.add( alias );
     return self();
   }
 
-  public ReportProcessTaskMetaDataBuilder aliases(final ArrayList<String> aliases)
-  {
+  public ReportProcessTaskMetaDataBuilder aliases( final ArrayList<String> aliases ) {
     this.aliases = aliases;
     return self();
   }
 
-  public Class<? extends ReportProcessTask> getImplementation()
-  {
+  public Class<? extends ReportProcessTask> getImplementation() {
     return implementation;
   }
 
-  public List<String> getAliases()
-  {
-    return Collections.unmodifiableList((List < String >) aliases.clone());
+  public List<String> getAliases() {
+    return Collections.unmodifiableList( (List<String>) aliases.clone() );
   }
 
-  protected ReportProcessTaskMetaDataBuilder self()
-  {
+  protected ReportProcessTaskMetaDataBuilder self() {
     return this;
   }
 }

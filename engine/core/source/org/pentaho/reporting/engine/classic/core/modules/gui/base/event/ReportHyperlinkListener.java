@@ -24,7 +24,6 @@ import java.util.EventListener;
  *
  * @author Thomas Morgner
  */
-public interface ReportHyperlinkListener extends EventListener
-{
-  public void hyperlinkActivated(ReportHyperlinkEvent event);
+public interface ReportHyperlinkListener extends EventListener {
+  public void hyperlinkActivated( ReportHyperlinkEvent event );
 }

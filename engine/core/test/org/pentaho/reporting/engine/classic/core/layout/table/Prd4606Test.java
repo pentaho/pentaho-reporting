@@ -18,140 +18,127 @@ import org.pentaho.reporting.engine.classic.core.util.geom.StrictGeomUtility;
 import org.pentaho.reporting.libraries.base.util.DebugLog;
 import org.pentaho.reporting.libraries.base.util.StopWatch;
 
-public class Prd4606Test extends TestCase
-{
-  public Prd4606Test()
-  {
+public class Prd4606Test extends TestCase {
+  public Prd4606Test() {
   }
 
-  public void setUp()
-  {
+  public void setUp() {
     ClassicEngineBoot.getInstance().start();
   }
 
-  public void testValidTable() throws Exception
-  {
-    MasterReport report = DebugReportRunner.parseGoldenSampleReport("Prd-4606-0001.prpt");
+  public void testValidTable() throws Exception {
+    MasterReport report = DebugReportRunner.parseGoldenSampleReport( "Prd-4606-0001.prpt" );
     CompoundDataFactory dataFactory = (CompoundDataFactory) report.getDataFactory();
-    SequenceDataFactory sequenceDf = (SequenceDataFactory) dataFactory.getReference(0);
-    PerformanceTestSequence sequence = (PerformanceTestSequence) sequenceDf.getSequence("Query 1");
-    assertEquals(10, sequence.getParameter("limit"));
+    SequenceDataFactory sequenceDf = (SequenceDataFactory) dataFactory.getReference( 0 );
+    PerformanceTestSequence sequence = (PerformanceTestSequence) sequenceDf.getSequence( "Query 1" );
+    assertEquals( 10, sequence.getParameter( "limit" ) );
 
-    LogicalPageBox logicalPageBox = DebugReportRunner.layoutPage(report, 0);
+    LogicalPageBox logicalPageBox = DebugReportRunner.layoutPage( report, 0 );
 
-    RenderNode[] tables = MatchFactory.findElementsByNodeType(logicalPageBox, LayoutNodeTypes.TYPE_BOX_TABLE);
-    RenderNode[] tableRows = MatchFactory.findElementsByNodeType(logicalPageBox, LayoutNodeTypes.TYPE_BOX_TABLE_ROW);
+    RenderNode[] tables = MatchFactory.findElementsByNodeType( logicalPageBox, LayoutNodeTypes.TYPE_BOX_TABLE );
+    RenderNode[] tableRows = MatchFactory.findElementsByNodeType( logicalPageBox, LayoutNodeTypes.TYPE_BOX_TABLE_ROW );
 
-    assertEquals(1, tables.length);
-    assertEquals(StrictGeomUtility.toInternalValue(240), tables[0].getHeight());
-    TableRenderBox table = (TableRenderBox) tables[0];
-    assertEquals(1, table.getColumnModel().getColumnCount());
+    assertEquals( 1, tables.length );
+    assertEquals( StrictGeomUtility.toInternalValue( 240 ), tables[ 0 ].getHeight() );
+    TableRenderBox table = (TableRenderBox) tables[ 0 ];
+    assertEquals( 1, table.getColumnModel().getColumnCount() );
 
-    assertEquals(12, tableRows.length);
-    for (RenderNode tableRow : tableRows)
-    {
-      assertEquals(StrictGeomUtility.toInternalValue(20), tableRow.getHeight());
+    assertEquals( 12, tableRows.length );
+    for ( RenderNode tableRow : tableRows ) {
+      assertEquals( StrictGeomUtility.toInternalValue( 20 ), tableRow.getHeight() );
     }
   }
 
-  public void testInvalidTable() throws Exception
-  {
-    MasterReport report = DebugReportRunner.parseGoldenSampleReport("Prd-4606-0002.prpt");
-    LogicalPageBox logicalPageBox = DebugReportRunner.layoutPage(report, 0);
+  public void testInvalidTable() throws Exception {
+    MasterReport report = DebugReportRunner.parseGoldenSampleReport( "Prd-4606-0002.prpt" );
+    LogicalPageBox logicalPageBox = DebugReportRunner.layoutPage( report, 0 );
 
-    RenderNode[] tables = MatchFactory.findElementsByNodeType(logicalPageBox, LayoutNodeTypes.TYPE_BOX_TABLE);
-    RenderNode[] tableRows = MatchFactory.findElementsByNodeType(logicalPageBox, LayoutNodeTypes.TYPE_BOX_TABLE_ROW);
-    assertEquals(1, tables.length);
-    assertEquals(StrictGeomUtility.toInternalValue(240), tables[0].getHeight());
-    TableRenderBox table = (TableRenderBox) tables[0];
-    assertEquals(2, table.getColumnModel().getColumnCount());
+    RenderNode[] tables = MatchFactory.findElementsByNodeType( logicalPageBox, LayoutNodeTypes.TYPE_BOX_TABLE );
+    RenderNode[] tableRows = MatchFactory.findElementsByNodeType( logicalPageBox, LayoutNodeTypes.TYPE_BOX_TABLE_ROW );
+    assertEquals( 1, tables.length );
+    assertEquals( StrictGeomUtility.toInternalValue( 240 ), tables[ 0 ].getHeight() );
+    TableRenderBox table = (TableRenderBox) tables[ 0 ];
+    assertEquals( 2, table.getColumnModel().getColumnCount() );
 
-    assertEquals(12, tableRows.length);
-    for (RenderNode tableRow : tableRows)
-    {
-      assertEquals(StrictGeomUtility.toInternalValue(20), tableRow.getHeight());
+    assertEquals( 12, tableRows.length );
+    for ( RenderNode tableRow : tableRows ) {
+      assertEquals( StrictGeomUtility.toInternalValue( 20 ), tableRow.getHeight() );
     }
   }
 
-  public void testLargeValidTableInExcelMode() throws Exception
-  {
-    if (DebugReportRunner.isSkipLongRunTest())
-    {
+  public void testLargeValidTableInExcelMode() throws Exception {
+    if ( DebugReportRunner.isSkipLongRunTest() ) {
       return;
     }
 
     ClassicEngineBoot.getInstance().getEditableConfig().setConfigProperty
-        ("org.pentaho.reporting.engine.classic.core.layout.process.EnableCountBoxesStep", "true");
+      ( "org.pentaho.reporting.engine.classic.core.layout.process.EnableCountBoxesStep", "true" );
     ClassicEngineBoot.getInstance().getEditableConfig().setConfigProperty
-        ("org.pentaho.reporting.engine.classic.core.layout.ParanoidChecks", "false");
-    MasterReport report = DebugReportRunner.parseGoldenSampleReport("Prd-4606-0001.prpt");
+      ( "org.pentaho.reporting.engine.classic.core.layout.ParanoidChecks", "false" );
+    MasterReport report = DebugReportRunner.parseGoldenSampleReport( "Prd-4606-0001.prpt" );
     CompoundDataFactory dataFactory = (CompoundDataFactory) report.getDataFactory();
-    SequenceDataFactory sequenceDf = (SequenceDataFactory) dataFactory.getReference(0);
-    PerformanceTestSequence sequence = (PerformanceTestSequence) sequenceDf.getSequence("Query 1");
-    sequence.setParameter("limit", 20000);
+    SequenceDataFactory sequenceDf = (SequenceDataFactory) dataFactory.getReference( 0 );
+    PerformanceTestSequence sequence = (PerformanceTestSequence) sequenceDf.getSequence( "Query 1" );
+    sequence.setParameter( "limit", 20000 );
 
     StopWatch sw = StopWatch.startNew();
-    DebugReportRunner.createXmlFlow(report);
-    DebugLog.log(sw);
+    DebugReportRunner.createXmlFlow( report );
+    DebugLog.log( sw );
   }
 
-  public void testLargeValidTable() throws Exception
-  {
-    if (DebugReportRunner.isSkipLongRunTest())
-    {
+  public void testLargeValidTable() throws Exception {
+    if ( DebugReportRunner.isSkipLongRunTest() ) {
       return;
     }
 
     ClassicEngineBoot.getInstance().getEditableConfig().setConfigProperty
-        ("org.pentaho.reporting.engine.classic.core.layout.process.EnableCountBoxesStep", "true");
+      ( "org.pentaho.reporting.engine.classic.core.layout.process.EnableCountBoxesStep", "true" );
     ClassicEngineBoot.getInstance().getEditableConfig().setConfigProperty
-        ("org.pentaho.reporting.engine.classic.core.layout.ParanoidChecks", "false");
-    MasterReport report = DebugReportRunner.parseGoldenSampleReport("Prd-4606-0001.prpt");
+      ( "org.pentaho.reporting.engine.classic.core.layout.ParanoidChecks", "false" );
+    MasterReport report = DebugReportRunner.parseGoldenSampleReport( "Prd-4606-0001.prpt" );
     CompoundDataFactory dataFactory = (CompoundDataFactory) report.getDataFactory();
-    SequenceDataFactory sequenceDf = (SequenceDataFactory) dataFactory.getReference(0);
-    PerformanceTestSequence sequence = (PerformanceTestSequence) sequenceDf.getSequence("Query 1");
-    sequence.setParameter("limit", 20000);
+    SequenceDataFactory sequenceDf = (SequenceDataFactory) dataFactory.getReference( 0 );
+    PerformanceTestSequence sequence = (PerformanceTestSequence) sequenceDf.getSequence( "Query 1" );
+    sequence.setParameter( "limit", 20000 );
 
     // ModelPrinter.INSTANCE.print(DebugReportRunner.layoutPage(report, 0));
 
     StopWatch sw = StopWatch.startNew();
-    LogicalPageBox logicalPageBox = DebugReportRunner.layoutPage(report, 5);
+    LogicalPageBox logicalPageBox = DebugReportRunner.layoutPage( report, 5 );
     //ModelPrinter.INSTANCE.print(logicalPageBox);
-    DebugLog.log(sw);
+    DebugLog.log( sw );
 
-//    ModelPrinter.INSTANCE.print(logicalPageBox);
-    RenderNode[] tables = MatchFactory.findElementsByNodeType(logicalPageBox, LayoutNodeTypes.TYPE_BOX_TABLE);
-    RenderNode[] tableRows = MatchFactory.findElementsByNodeType(logicalPageBox, LayoutNodeTypes.TYPE_BOX_TABLE_ROW);
+    //    ModelPrinter.INSTANCE.print(logicalPageBox);
+    RenderNode[] tables = MatchFactory.findElementsByNodeType( logicalPageBox, LayoutNodeTypes.TYPE_BOX_TABLE );
+    RenderNode[] tableRows = MatchFactory.findElementsByNodeType( logicalPageBox, LayoutNodeTypes.TYPE_BOX_TABLE_ROW );
 
-    assertEquals(1, tables.length);
-//    assertEquals(StrictGeomUtility.toInternalValue(240), tables[0].getHeight());
-    TableRenderBox table = (TableRenderBox) tables[0];
-//    assertEquals(1, table.getColumnModel().getColumnCount());
+    assertEquals( 1, tables.length );
+    //    assertEquals(StrictGeomUtility.toInternalValue(240), tables[0].getHeight());
+    TableRenderBox table = (TableRenderBox) tables[ 0 ];
+    //    assertEquals(1, table.getColumnModel().getColumnCount());
 
-//    assertEquals(12, tableRows.length);
-    for (RenderNode tableRow : tableRows)
-    {
-      assertEquals(StrictGeomUtility.toInternalValue(20), tableRow.getHeight());
+    //    assertEquals(12, tableRows.length);
+    for ( RenderNode tableRow : tableRows ) {
+      assertEquals( StrictGeomUtility.toInternalValue( 20 ), tableRow.getHeight() );
     }
 
     // DebugReportRunner.showDialog(report);
 
   }
 
-  public void testPageSpanningAcrossPages() throws Exception
-  {
+  public void testPageSpanningAcrossPages() throws Exception {
     ClassicEngineBoot.getInstance().getEditableConfig().setConfigProperty
-        ("org.pentaho.reporting.engine.classic.core.layout.process.EnableCountBoxesStep", "false");
+      ( "org.pentaho.reporting.engine.classic.core.layout.process.EnableCountBoxesStep", "false" );
     ClassicEngineBoot.getInstance().getEditableConfig().setConfigProperty
-        ("org.pentaho.reporting.engine.classic.core.layout.ParanoidChecks", "false");
-    MasterReport report = DebugReportRunner.parseGoldenSampleReport("Prd-4606-0003.prpt");
-    report.setPageDefinition(new SimplePageDefinition(new PageSize(500, 100)));
+      ( "org.pentaho.reporting.engine.classic.core.layout.ParanoidChecks", "false" );
+    MasterReport report = DebugReportRunner.parseGoldenSampleReport( "Prd-4606-0003.prpt" );
+    report.setPageDefinition( new SimplePageDefinition( new PageSize( 500, 100 ) ) );
 
     CompoundDataFactory dataFactory = (CompoundDataFactory) report.getDataFactory();
-    SequenceDataFactory sequenceDf = (SequenceDataFactory) dataFactory.getReference(0);
-    PerformanceTestSequence sequence = (PerformanceTestSequence) sequenceDf.getSequence("Query 1");
-    sequence.setParameter("limit", 10);
+    SequenceDataFactory sequenceDf = (SequenceDataFactory) dataFactory.getReference( 0 );
+    PerformanceTestSequence sequence = (PerformanceTestSequence) sequenceDf.getSequence( "Query 1" );
+    sequence.setParameter( "limit", 10 );
 
-    LogicalPageBox logicalPageBox = DebugReportRunner.layoutPage(report, 1);
+    LogicalPageBox logicalPageBox = DebugReportRunner.layoutPage( report, 1 );
   }
 }

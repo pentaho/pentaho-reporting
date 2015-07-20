@@ -26,8 +26,7 @@ import org.pentaho.reporting.engine.classic.core.layout.output.OutputProcessorFe
 import org.pentaho.reporting.engine.classic.core.layout.output.OutputProcessorMetaData;
 import org.pentaho.reporting.engine.classic.core.layout.process.IterateSimpleStructureProcessStep;
 
-public class TableLayoutProducer extends IterateSimpleStructureProcessStep
-{
+public class TableLayoutProducer extends IterateSimpleStructureProcessStep {
   private SheetLayout layout;
   private long pageOffset;
   private boolean headerProcessed;
@@ -38,106 +37,88 @@ public class TableLayoutProducer extends IterateSimpleStructureProcessStep
   private boolean unalignedPagebands;
   private boolean processWatermark;
 
-  public TableLayoutProducer(final OutputProcessorMetaData metaData)
-  {
-    initialize(metaData);
-    this.layout = new SheetLayout(metaData);
+  public TableLayoutProducer( final OutputProcessorMetaData metaData ) {
+    initialize( metaData );
+    this.layout = new SheetLayout( metaData );
   }
 
-  private void initialize(final OutputProcessorMetaData metaData)
-  {
-    if (metaData == null)
-    {
+  private void initialize( final OutputProcessorMetaData metaData ) {
+    if ( metaData == null ) {
       throw new NullPointerException();
     }
-    this.processWatermark = metaData.isFeatureSupported(OutputProcessorFeature.WATERMARK_SECTION);
-    this.unalignedPagebands = metaData.isFeatureSupported(OutputProcessorFeature.UNALIGNED_PAGEBANDS);
+    this.processWatermark = metaData.isFeatureSupported( OutputProcessorFeature.WATERMARK_SECTION );
+    this.unalignedPagebands = metaData.isFeatureSupported( OutputProcessorFeature.UNALIGNED_PAGEBANDS );
   }
 
-  public TableLayoutProducer(final OutputProcessorMetaData metaData,
-                             final SheetLayout sheetLayout)
-  {
-    initialize(metaData);
+  public TableLayoutProducer( final OutputProcessorMetaData metaData,
+                              final SheetLayout sheetLayout ) {
+    initialize( metaData );
     this.layout = sheetLayout;
   }
 
-  public boolean isProcessWatermark()
-  {
+  public boolean isProcessWatermark() {
     return processWatermark;
   }
 
-  public void setProcessWatermark(final boolean processWatermark)
-  {
+  public void setProcessWatermark( final boolean processWatermark ) {
     this.processWatermark = processWatermark;
   }
 
-  public SheetLayout getLayout()
-  {
+  public SheetLayout getLayout() {
     return layout;
   }
 
-  public void update(final LogicalPageBox logicalPage,
-                     final boolean iterativeUpdate)
-  {
-    if (unalignedPagebands == false)
-    {
+  public void update( final LogicalPageBox logicalPage,
+                      final boolean iterativeUpdate ) {
+    if ( unalignedPagebands == false ) {
       // The page-header and footer area are aligned/shifted within the logical pagebox so that all areas
       // share a common coordinate system. This also implies, that the whole logical page is aligned content.
       pageOffset = 0;
       effectiveHeaderSize = 0;
       pageEndPosition = logicalPage.getPageEnd();
       //Log.debug ("Content Processing " + pageOffset + " -> " + pageEnd);
-      if (startBox(logicalPage))
-      {
-        if (headerProcessed == false)
-        {
-          if (processWatermark)
-          {
-            startProcessing(logicalPage.getWatermarkArea());
+      if ( startBox( logicalPage ) ) {
+        if ( headerProcessed == false ) {
+          if ( processWatermark ) {
+            startProcessing( logicalPage.getWatermarkArea() );
           }
           final BlockRenderBox headerArea = logicalPage.getHeaderArea();
-          startProcessing(headerArea);
+          startProcessing( headerArea );
           headerProcessed = true;
         }
 
-        processBoxChilds(logicalPage);
-        if (iterativeUpdate == false)
-        {
+        processBoxChilds( logicalPage );
+        if ( iterativeUpdate == false ) {
           final BlockRenderBox repeatFooterBox = logicalPage.getRepeatFooterArea();
-          startProcessing(repeatFooterBox);
+          startProcessing( repeatFooterBox );
 
           final BlockRenderBox pageFooterBox = logicalPage.getFooterArea();
-          startProcessing(pageFooterBox);
+          startProcessing( pageFooterBox );
         }
       }
-      finishBox(logicalPage);
-    }
-    else
-    {
+      finishBox( logicalPage );
+    } else {
       // The page-header and footer area are not aligned/shifted within the logical pagebox.
       // All areas have their own coordinate system starting at (0,0). We apply a manual shift here
       // so that we dont have to modify the nodes (which invalidates the cache, and therefore is ugly)
       effectiveHeaderSize = 0;
       pageOffset = logicalPage.getPageOffset();
-      pageEndPosition = (logicalPage.getPageEnd());
-      if (startBox(logicalPage))
-      {
-        if (headerProcessed == false)
-        {
+      pageEndPosition = ( logicalPage.getPageEnd() );
+      if ( startBox( logicalPage ) ) {
+        if ( headerProcessed == false ) {
           pageOffset = 0;
           contentOffset = 0;
           effectiveHeaderSize = 0;
 
-          if (processWatermark)
-          {
+          if ( processWatermark ) {
             final BlockRenderBox watermarkArea = logicalPage.getWatermarkArea();
             pageEndPosition = watermarkArea.getHeight();
-            startProcessing(watermarkArea);
+            startProcessing( watermarkArea );
           }
 
           final BlockRenderBox headerArea = logicalPage.getHeaderArea();
           pageEndPosition = headerArea.getHeight();
-          startProcessing(headerArea);
+          startProcessing( headerArea );
           contentOffset = headerArea.getHeight();
           headerProcessed = true;
         }
@@ -145,139 +126,118 @@ public class TableLayoutProducer extends IterateSimpleStructureProcessStep
         pageOffset = logicalPage.getPageOffset();
         pageEndPosition = logicalPage.getPageEnd();
         effectiveHeaderSize = contentOffset;
-        processBoxChilds(logicalPage);
+        processBoxChilds( logicalPage );
 
-        if (iterativeUpdate == false)
-        {
+        if ( iterativeUpdate == false ) {
           pageOffset = 0;
           final BlockRenderBox repeatFooterArea = logicalPage.getRepeatFooterArea();
-          final long repeatFooterOffset = contentOffset + (logicalPage.getPageEnd() - logicalPage.getPageOffset());
+          final long repeatFooterOffset = contentOffset + ( logicalPage.getPageEnd() - logicalPage.getPageOffset() );
           final long repeatFooterPageEnd = repeatFooterOffset + repeatFooterArea.getHeight();
           effectiveHeaderSize = repeatFooterOffset;
           pageEndPosition = repeatFooterPageEnd;
-          startProcessing(repeatFooterArea);
+          startProcessing( repeatFooterArea );
 
           final BlockRenderBox footerArea = logicalPage.getFooterArea();
           final long footerPageEnd = repeatFooterPageEnd + footerArea.getHeight();
           effectiveHeaderSize = repeatFooterPageEnd;
           pageEndPosition = footerPageEnd;
-          startProcessing(footerArea);
+          startProcessing( footerArea );
         }
       }
-      finishBox(logicalPage);
+      finishBox( logicalPage );
     }
 
     // try to remove as many nodes as you can ..
-    logicalPage.setProcessedTableOffset(logicalPage.getPageEnd());
+    logicalPage.setProcessedTableOffset( logicalPage.getPageEnd() );
   }
 
-  protected boolean startBox(final RenderBox box)
-  {
-    if (box.isVisible() == false)
-    {
+  protected boolean startBox( final RenderBox box ) {
+    if ( box.isVisible() == false ) {
       return false;
     }
 
-    if (box.getLayoutNodeType() == LayoutNodeTypes.TYPE_BOX_CONTENT)
-    {
-      processRenderableContent((RenderableReplacedContentBox) box);
+    if ( box.getLayoutNodeType() == LayoutNodeTypes.TYPE_BOX_CONTENT ) {
+      processRenderableContent( (RenderableReplacedContentBox) box );
       return false;
     }
 
-    return startBoxInternal(box);
+    return startBoxInternal( box );
   }
 
-  private boolean startBoxInternal(final RenderBox box)
-  {
+  private boolean startBoxInternal( final RenderBox box ) {
 
     final long height = box.getHeight();
-//
-//    DebugLog.log ("Processing Box " + pageOffset + " " + effectiveHeaderSize + " " + box.getY() + " " + height);
-//    DebugLog.log ("Processing Box " + box);
+    //
+    //    DebugLog.log ("Processing Box " + pageOffset + " " + effectiveHeaderSize + " " + box.getY() + " " + height);
+    //    DebugLog.log ("Processing Box " + box);
 
-    if (height > 0)
-    {
-      if ((box.getY() + height) <= pageOffset)
-      {
+    if ( height > 0 ) {
+      if ( ( box.getY() + height ) <= pageOffset ) {
         return false;
       }
-      if (box.getY() >= pageEndPosition)
-      {
+      if ( box.getY() >= pageEndPosition ) {
         return false;
       }
-    }
-    else
-    {
+    } else {
       // zero height boxes are always a bit tricky ..
-      if ((box.getY() + height) < pageOffset)
-      {
+      if ( ( box.getY() + height ) < pageOffset ) {
         return false;
       }
-      if (box.getY() > pageEndPosition)
-      {
+      if ( box.getY() > pageEndPosition ) {
         return false;
       }
     }
 
-    if (box.isOpen() == false &&
-        box.isFinishedTable() == false &&
-        box.isCommited())
-    {
-      if (layout.add(box, pageOffset, effectiveHeaderSize, pageEndPosition))
-      {
+    if ( box.isOpen() == false &&
+      box.isFinishedTable() == false &&
+      box.isCommited() ) {
+      if ( layout.add( box, pageOffset, effectiveHeaderSize, pageEndPosition ) ) {
         return false;
       }
-      box.setFinishedTable(true);
+      box.setFinishedTable( true );
       return true;
     }
 
     return true;
   }
 
-  protected void processRenderableContent(final RenderableReplacedContentBox box)
-  {
-    if (box.isOpen() == false &&
-        box.isFinishedTable() == false &&
-        box.isCommited())
-    {
-      startBoxInternal(box);
-      layout.addRenderableContent(box, pageOffset, effectiveHeaderSize, pageEndPosition);
+  protected void processRenderableContent( final RenderableReplacedContentBox box ) {
+    if ( box.isOpen() == false &&
+      box.isFinishedTable() == false &&
+      box.isCommited() ) {
+      startBoxInternal( box );
+      layout.addRenderableContent( box, pageOffset, effectiveHeaderSize, pageEndPosition );
     }
   }
 
-  protected void processBoxChilds(final RenderBox box)
-  {
-    if (box.getLayoutNodeType() == LayoutNodeTypes.TYPE_BOX_PARAGRAPH)
-    {
+  protected void processBoxChilds( final RenderBox box ) {
+    if ( box.getLayoutNodeType() == LayoutNodeTypes.TYPE_BOX_PARAGRAPH ) {
       // not needed. Keep this method empty so that the paragraph childs are *not* processed.
       return;
     }
-    super.processBoxChilds(box);
+    super.processBoxChilds( box );
   }
 
-  public void pageCompleted()
-  {
+  public void pageCompleted() {
     layout.pageCompleted();
     headerProcessed = false;
   }
 
   /**
-   * A designtime support method to compute a sheet layout for the given section. A new sheetlayout is created
-   * on each call.
+   * A designtime support method to compute a sheet layout for the given section. A new sheetlayout is created on each
+   * call.
    *
    * @param box the section that should be processed.
    * @return the computed sheet layout.
    */
-  public void computeDesigntimeConflicts(final RenderBox box)
-  {
+  public void computeDesigntimeConflicts( final RenderBox box ) {
     clear();
     pageEndPosition = box.getHeight();
 
-    startProcessing(box);
+    startProcessing( box );
   }
 
-  public void clear()
-  {
+  public void clear() {
     this.layout.clear();
 
     effectiveHeaderSize = 0;

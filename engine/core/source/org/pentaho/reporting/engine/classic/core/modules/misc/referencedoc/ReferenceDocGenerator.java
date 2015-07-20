@@ -25,13 +25,11 @@ import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
  *
  * @author Thomas Morgner.
  */
-public class ReferenceDocGenerator
-{
+public class ReferenceDocGenerator {
   /**
    * DefaultConstructor.
    */
-  protected ReferenceDocGenerator()
-  {
+  protected ReferenceDocGenerator() {
   }
 
   /**
@@ -39,11 +37,10 @@ public class ReferenceDocGenerator
    *
    * @param args command line arguments.
    */
-  public static void main(final String[] args)
-  {
+  public static void main( final String[] args ) {
     ClassicEngineBoot.getInstance().start();
-    StyleKeyReferenceGenerator.main(args);
-    ObjectReferenceGenerator.main(args);
-    DataSourceReferenceGenerator.main(args);
+    StyleKeyReferenceGenerator.main( args );
+    ObjectReferenceGenerator.main( args );
+    DataSourceReferenceGenerator.main( args );
   }
 }

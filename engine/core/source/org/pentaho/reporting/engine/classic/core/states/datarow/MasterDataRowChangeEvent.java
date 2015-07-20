@@ -17,8 +17,7 @@
 
 package org.pentaho.reporting.engine.classic.core.states.datarow;
 
-public final class MasterDataRowChangeEvent
-{
+public final class MasterDataRowChangeEvent {
   public static final int COLUMN_ADDED = 1;
   public static final int COLUMN_REMOVED = 2;
   public static final int COLUMN_UPDATED = 3;
@@ -28,20 +27,16 @@ public final class MasterDataRowChangeEvent
   private Object columnValue;
   private boolean optional;
 
-  public MasterDataRowChangeEvent()
-  {
+  public MasterDataRowChangeEvent() {
   }
 
-  public void reuse(final int type,
-                    final String columnName,
-                    final Object columnValue)
-  {
-    if (type < 1 || type > 3)
-    {
+  public void reuse( final int type,
+                     final String columnName,
+                     final Object columnValue ) {
+    if ( type < 1 || type > 3 ) {
       throw new IllegalArgumentException();
     }
-    if (columnName == null)
-    {
+    if ( columnName == null ) {
       throw new NullPointerException();
     }
     this.type = type;
@@ -49,53 +44,44 @@ public final class MasterDataRowChangeEvent
     this.columnValue = columnValue;
   }
 
-  public String getColumnName()
-  {
+  public String getColumnName() {
     return columnName;
   }
 
-  public Object getColumnValue()
-  {
+  public Object getColumnValue() {
     return columnValue;
   }
 
-  public int getType()
-  {
+  public int getType() {
     return type;
   }
 
-  public void setColumnName(final String columnName)
-  {
-    if (columnName == null)
-    {
+  public void setColumnName( final String columnName ) {
+    if ( columnName == null ) {
       throw new NullPointerException();
     }
     this.columnName = columnName;
   }
 
-  public void setColumnValue(final Object columnValue)
-  {
+  public void setColumnValue( final Object columnValue ) {
     this.columnValue = columnValue;
   }
 
-  public String toString()
-  {
+  public String toString() {
     final StringBuilder sb = new StringBuilder();
-    sb.append("MasterDataRowChangeEvent");
-    sb.append("{type=").append(type);
-    sb.append(", columnName='").append(columnName).append('\'');
-    sb.append(", columnValue=").append(columnValue);
-    sb.append('}');
+    sb.append( "MasterDataRowChangeEvent" );
+    sb.append( "{type=" ).append( type );
+    sb.append( ", columnName='" ).append( columnName ).append( '\'' );
+    sb.append( ", columnValue=" ).append( columnValue );
+    sb.append( '}' );
     return sb.toString();
   }
 
-  public boolean isOptional()
-  {
+  public boolean isOptional() {
     return optional;
   }
 
-  public void setOptional(final boolean optional)
-  {
+  public void setOptional( final boolean optional ) {
     this.optional = optional;
   }
 }

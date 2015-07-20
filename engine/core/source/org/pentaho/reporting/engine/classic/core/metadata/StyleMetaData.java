@@ -17,9 +17,9 @@
 
 package org.pentaho.reporting.engine.classic.core.metadata;
 
-import java.beans.PropertyEditor;
-
 import org.pentaho.reporting.engine.classic.core.style.StyleKey;
+
+import java.beans.PropertyEditor;
 
 /**
  * Information about the style-keys of an element. In general all elements can carry all style information, but some
@@ -27,8 +27,7 @@ import org.pentaho.reporting.engine.classic.core.style.StyleKey;
  *
  * @author Thomas Morgner
  */
-public interface StyleMetaData extends MetaData
-{
+public interface StyleMetaData extends MetaData {
   public StyleKey getStyleKey();
 
   public PropertyEditor getEditor();

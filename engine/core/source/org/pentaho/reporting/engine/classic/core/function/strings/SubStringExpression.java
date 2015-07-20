@@ -29,8 +29,7 @@ import org.pentaho.reporting.engine.classic.core.function.AbstractExpression;
  * @author Thomas Morgner
  * @deprecated Use a formula
  */
-public class SubStringExpression extends AbstractExpression
-{
+public class SubStringExpression extends AbstractExpression {
   /**
    * The field from where to read the string.
    */
@@ -51,8 +50,7 @@ public class SubStringExpression extends AbstractExpression
   /**
    * Default Constructor.
    */
-  public SubStringExpression()
-  {
+  public SubStringExpression() {
   }
 
   /**
@@ -60,8 +58,7 @@ public class SubStringExpression extends AbstractExpression
    *
    * @return the field.
    */
-  public String getField()
-  {
+  public String getField() {
     return field;
   }
 
@@ -70,8 +67,7 @@ public class SubStringExpression extends AbstractExpression
    *
    * @param field the field.
    */
-  public void setField(final String field)
-  {
+  public void setField( final String field ) {
     this.field = field;
   }
 
@@ -80,8 +76,7 @@ public class SubStringExpression extends AbstractExpression
    *
    * @return the ellipsis.
    */
-  public String getEllipsis()
-  {
+  public String getEllipsis() {
     return ellipsis;
   }
 
@@ -90,8 +85,7 @@ public class SubStringExpression extends AbstractExpression
    *
    * @param ellipsis the ellipsis.
    */
-  public void setEllipsis(final String ellipsis)
-  {
+  public void setEllipsis( final String ellipsis ) {
     this.ellipsis = ellipsis;
   }
 
@@ -100,8 +94,7 @@ public class SubStringExpression extends AbstractExpression
    *
    * @return the start position.
    */
-  public int getStart()
-  {
+  public int getStart() {
     return start;
   }
 
@@ -110,11 +103,9 @@ public class SubStringExpression extends AbstractExpression
    *
    * @param start the start position.
    */
-  public void setStart(final int start)
-  {
-    if (length < 0)
-    {
-      throw new IndexOutOfBoundsException("String start position cannot be negative.");
+  public void setStart( final int start ) {
+    if ( length < 0 ) {
+      throw new IndexOutOfBoundsException( "String start position cannot be negative." );
     }
     this.start = start;
   }
@@ -124,8 +115,7 @@ public class SubStringExpression extends AbstractExpression
    *
    * @return the length.
    */
-  public int getLength()
-  {
+  public int getLength() {
     return length;
   }
 
@@ -134,11 +124,9 @@ public class SubStringExpression extends AbstractExpression
    *
    * @param length the length.
    */
-  public void setLength(final int length)
-  {
-    if (length < 0)
-    {
-      throw new IndexOutOfBoundsException("String length cannot be negative.");
+  public void setLength( final int length ) {
+    if ( length < 0 ) {
+      throw new IndexOutOfBoundsException( "String length cannot be negative." );
     }
     this.length = length;
   }
@@ -148,29 +136,25 @@ public class SubStringExpression extends AbstractExpression
    *
    * @return the value of the function.
    */
-  public Object getValue()
-  {
-    final Object raw = getDataRow().get(getField());
-    if (raw == null)
-    {
+  public Object getValue() {
+    final Object raw = getDataRow().get( getField() );
+    if ( raw == null ) {
       return null;
     }
-    final String text = String.valueOf(raw);
+    final String text = String.valueOf( raw );
 
     // the text is not large enough to fit the start-bounds. Return nothing,
     // but indicate that there would have been some more content ...
-    if (start >= text.length())
-    {
-      return appendEllipsis(null);
+    if ( start >= text.length() ) {
+      return appendEllipsis( null );
     }
 
     // the text fully fits into the given range. No clipping needed ...
-    if ((start + length) > text.length())
-    {
-      return appendEllipsis(text.substring(start));
+    if ( ( start + length ) > text.length() ) {
+      return appendEllipsis( text.substring( start ) );
     }
 
-    return text.substring(start, start + length);
+    return text.substring( start, start + length );
   }
 
   /**
@@ -179,14 +163,11 @@ public class SubStringExpression extends AbstractExpression
    * @param value the computed value (without the ellipsis).
    * @return the computed value with the ellipsis.
    */
-  private String appendEllipsis(final String value)
-  {
-    if (ellipsis == null)
-    {
+  private String appendEllipsis( final String value ) {
+    if ( ellipsis == null ) {
       return value;
     }
-    if (value == null)
-    {
+    if ( value == null ) {
       return ellipsis;
     }
     return value + ellipsis;

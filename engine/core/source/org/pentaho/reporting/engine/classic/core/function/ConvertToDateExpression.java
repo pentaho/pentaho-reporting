@@ -17,6 +17,10 @@
 
 package org.pentaho.reporting.engine.classic.core.function;
 
+import org.pentaho.reporting.engine.classic.core.DataRow;
+import org.pentaho.reporting.engine.classic.core.ResourceBundleFactory;
+import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
+
 import java.text.DateFormat;
 import java.text.DateFormatSymbols;
 import java.text.ParseException;
@@ -25,10 +29,6 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
 
-import org.pentaho.reporting.engine.classic.core.DataRow;
-import org.pentaho.reporting.engine.classic.core.ResourceBundleFactory;
-import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
-
 /**
  * Parses a string into a date using the given date-format.
  *
@@ -36,8 +36,7 @@ import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
  * @see java.text.SimpleDateFormat
  * @deprecated use a formula function (ParseDate) instead.
  */
-public class ConvertToDateExpression extends AbstractExpression
-{
+public class ConvertToDateExpression extends AbstractExpression {
   /**
    * The name of the data-row column from where to read the string that should be parsed.
    */
@@ -66,8 +65,7 @@ public class ConvertToDateExpression extends AbstractExpression
   /**
    * Default Constructor.
    */
-  public ConvertToDateExpression()
-  {
+  public ConvertToDateExpression() {
   }
 
   /**
@@ -75,8 +73,7 @@ public class ConvertToDateExpression extends AbstractExpression
    *
    * @return the field name.
    */
-  public String getField()
-  {
+  public String getField() {
     return field;
   }
 
@@ -85,8 +82,7 @@ public class ConvertToDateExpression extends AbstractExpression
    *
    * @param field the name of the field.
    */
-  public void setField(final String field)
-  {
+  public void setField( final String field ) {
     this.field = field;
   }
 
@@ -96,8 +92,7 @@ public class ConvertToDateExpression extends AbstractExpression
    * @return the pattern string.
    * @see java.text.SimpleDateFormat
    */
-  public String getFormat()
-  {
+  public String getFormat() {
     return format;
   }
 
@@ -107,8 +102,7 @@ public class ConvertToDateExpression extends AbstractExpression
    * @param format the pattern string.
    * @see java.text.SimpleDateFormat
    */
-  public void setFormat(final String format)
-  {
+  public void setFormat( final String format ) {
     this.format = format;
     this.lastLocale = null;
     this.dateFormat = null;
@@ -119,8 +113,7 @@ public class ConvertToDateExpression extends AbstractExpression
    *
    * @return the locale.
    */
-  public Locale getLocale()
-  {
+  public Locale getLocale() {
     return locale;
   }
 
@@ -129,20 +122,17 @@ public class ConvertToDateExpression extends AbstractExpression
    *
    * @param locale the locale.
    */
-  public void setLocale(final Locale locale)
-  {
+  public void setLocale( final Locale locale ) {
     this.locale = locale;
     this.lastLocale = null;
     this.dateFormat = null;
   }
 
-  public TimeZone getTimeZone()
-  {
+  public TimeZone getTimeZone() {
     return timeZone;
   }
 
-  public void setTimeZone(final TimeZone timeZone)
-  {
+  public void setTimeZone( final TimeZone timeZone ) {
     this.timeZone = timeZone;
     this.lastTimeZone = null;
   }
@@ -153,66 +143,50 @@ public class ConvertToDateExpression extends AbstractExpression
    *
    * @return the value of the function.
    */
-  public Object getValue()
-  {
+  public Object getValue() {
     final DataRow dataRow = getDataRow();
     // get the row directly as a Number
-    final Object o = dataRow.get(field);
+    final Object o = dataRow.get( field );
     // check if that thing is a Number
-    if (o instanceof Date)
-    {
+    if ( o instanceof Date ) {
       return o;
     }
 
     // get a string and convert
-    try
-    {
+    try {
       Locale localeUsed = locale;
-      if (localeUsed == null)
-      {
+      if ( localeUsed == null ) {
         localeUsed = getResourceBundleFactory().getLocale();
       }
 
       final DateFormat format;
-      if (dateFormat == null || ObjectUtilities.equal(localeUsed, lastLocale) == false)
-      {
+      if ( dateFormat == null || ObjectUtilities.equal( localeUsed, lastLocale ) == false ) {
         final String formatString = getFormat();
-        if (formatString == null || formatString.length() == 0)
-        {
-          format = DateFormat.getDateInstance(DateFormat.DEFAULT, localeUsed);
+        if ( formatString == null || formatString.length() == 0 ) {
+          format = DateFormat.getDateInstance( DateFormat.DEFAULT, localeUsed );
           dateFormat = format;
           lastLocale = localeUsed;
-        }
-        else
-        {
-          final SimpleDateFormat sformat = new SimpleDateFormat(formatString);
-          if (locale != null)
-          {
-            sformat.setDateFormatSymbols(new DateFormatSymbols(locale));
-          }
-          else
-          {
+        } else {
+          final SimpleDateFormat sformat = new SimpleDateFormat( formatString );
+          if ( locale != null ) {
+            sformat.setDateFormatSymbols( new DateFormatSymbols( locale ) );
+          } else {
             final ResourceBundleFactory factory = getResourceBundleFactory();
-            sformat.setDateFormatSymbols(new DateFormatSymbols(factory.getLocale()));
+            sformat.setDateFormatSymbols( new DateFormatSymbols( factory.getLocale() ) );
           }
           format = sformat;
           dateFormat = sformat;
           lastLocale = localeUsed;
         }
-      }
-      else
-      {
+      } else {
         format = dateFormat;
       }
-      if (ObjectUtilities.equal(timeZone, lastTimeZone) == false)
-      {
+      if ( ObjectUtilities.equal( timeZone, lastTimeZone ) == false ) {
         lastTimeZone = timeZone;
-        format.setTimeZone(timeZone);
+        format.setTimeZone( timeZone );
       }
-      return format.parse(String.valueOf(o));
-    }
-    catch (ParseException e)
-    {
+      return format.parse( String.valueOf( o ) );
+    } catch ( ParseException e ) {
       return null;
     }
   }

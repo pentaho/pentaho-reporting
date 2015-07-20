@@ -19,31 +19,26 @@
  */
 package org.pentaho.reporting.engine.classic.core.modules.misc.connections;
 
-public class DuplicateDatasourceException extends DatasourceMgmtServiceException
-{
-  public DuplicateDatasourceException()
-  {
+public class DuplicateDatasourceException extends DatasourceMgmtServiceException {
+  public DuplicateDatasourceException() {
   }
 
-  public DuplicateDatasourceException(String msg)
-  {
-    super(msg);
+  public DuplicateDatasourceException( String msg ) {
+    super( msg );
   }
 
   /**
    * @param message
    * @param reas
    */
-  public DuplicateDatasourceException(String message, Throwable reas)
-  {
-    super(message, reas);
+  public DuplicateDatasourceException( String message, Throwable reas ) {
+    super( message, reas );
   }
 
   /**
    * @param reas
    */
-  public DuplicateDatasourceException(Throwable reas)
-  {
-    super(reas);
+  public DuplicateDatasourceException( Throwable reas ) {
+    super( reas );
   }
 }

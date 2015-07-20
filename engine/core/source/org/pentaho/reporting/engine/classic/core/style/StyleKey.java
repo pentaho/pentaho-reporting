@@ -17,18 +17,18 @@
 
 package org.pentaho.reporting.engine.classic.core.style;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
+import org.pentaho.reporting.libraries.base.config.Configuration;
+import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
+
 import java.io.ObjectStreamException;
 import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.util.HashMap;
 import java.util.Iterator;
-
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
-import org.pentaho.reporting.libraries.base.config.Configuration;
-import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
 
 /**
  * A style key represents a (key, class) pair.  Style keys are used to access style attributes defined in a
@@ -40,9 +40,8 @@ import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
  * @see BandStyleKeys
  * @see ElementStyleSheet
  */
-public final class StyleKey implements Serializable, Cloneable
-{
-  private static final Log logger = LogFactory.getLog(StyleKey.class);
+public final class StyleKey implements Serializable, Cloneable {
+  private static final Log logger = LogFactory.getLog( StyleKey.class );
 
   /**
    * Shared storage for the defined keys.
@@ -86,18 +85,15 @@ public final class StyleKey implements Serializable, Cloneable
    * @param trans       a flag indicating whether the style property should be saved. Transient properties are temporary
    *                    artifacts and should not be stored in report definitions.
    */
-  private StyleKey(final String name,
-                   final Class valueType,
-                   final boolean trans,
-                   final boolean inheritable)
-  {
-    if (name == null)
-    {
-      throw new NullPointerException("StyleKey.setName(...): null not permitted.");
+  private StyleKey( final String name,
+                    final Class valueType,
+                    final boolean trans,
+                    final boolean inheritable ) {
+    if ( name == null ) {
+      throw new NullPointerException( "StyleKey.setName(...): null not permitted." );
     }
-    if (valueType == null)
-    {
-      throw new NullPointerException("ValueType must not be null");
+    if ( valueType == null ) {
+      throw new NullPointerException( "ValueType must not be null" );
     }
     this.valueType = valueType;
     this.name = name;
@@ -111,8 +107,7 @@ public final class StyleKey implements Serializable, Cloneable
    *
    * @return the name.
    */
-  public String getName()
-  {
+  public String getName() {
     return name;
   }
 
@@ -121,8 +116,7 @@ public final class StyleKey implements Serializable, Cloneable
    *
    * @return the class.
    */
-  public Class getValueType()
-  {
+  public Class getValueType() {
     return valueType;
   }
 
@@ -134,9 +128,8 @@ public final class StyleKey implements Serializable, Cloneable
    * @param valueType the class.
    * @return the style key.
    */
-  public static StyleKey getStyleKey(final String name, final Class valueType)
-  {
-    return getStyleKey(name, valueType, false, true);
+  public static StyleKey getStyleKey( final String name, final Class valueType ) {
+    return getStyleKey( name, valueType, false, true );
   }
 
   /**
@@ -150,33 +143,28 @@ public final class StyleKey implements Serializable, Cloneable
    *                    artifacts and should not be stored in report definitions.
    * @return the style key.
    */
-  public static synchronized StyleKey getStyleKey(final String name,
-                                                  final Class valueType,
-                                                  final boolean trans,
-                                                  final boolean inheritable)
-  {
-    if (locked)
-    {
-      throw new IllegalStateException("StyleKeys have been locked after booting was completed.");
+  public static synchronized StyleKey getStyleKey( final String name,
+                                                   final Class valueType,
+                                                   final boolean trans,
+                                                   final boolean inheritable ) {
+    if ( locked ) {
+      throw new IllegalStateException( "StyleKeys have been locked after booting was completed." );
     }
-    if (definedKeys == null)
-    {
+    if ( definedKeys == null ) {
       definedKeys = new HashMap();
       definedKeySize = 0;
     }
-    StyleKey key = (StyleKey) definedKeys.get(name);
-    if (key == null)
-    {
-      key = new StyleKey(name, valueType, trans, inheritable);
-      definedKeys.put(name, key);
+    StyleKey key = (StyleKey) definedKeys.get( name );
+    if ( key == null ) {
+      key = new StyleKey( name, valueType, trans, inheritable );
+      definedKeys.put( name, key );
       definedKeySize = definedKeys.size();
       definedKeysArray = null;
     }
     return key;
   }
 
-  public static synchronized void lock()
-  {
+  public static synchronized void lock() {
     locked = true;
   }
 
@@ -186,15 +174,11 @@ public final class StyleKey implements Serializable, Cloneable
    * @param name the name.
    * @return the style key.
    */
-  public static synchronized StyleKey getStyleKey(final String name)
-  {
-    if (definedKeys == null)
-    {
+  public static synchronized StyleKey getStyleKey( final String name ) {
+    if ( definedKeys == null ) {
       return null;
-    }
-    else
-    {
-      return (StyleKey) definedKeys.get(name);
+    } else {
+      return (StyleKey) definedKeys.get( name );
     }
   }
 
@@ -204,25 +188,20 @@ public final class StyleKey implements Serializable, Cloneable
    * @param o the reference object with which to compare.
    * @return <code>true</code> if this object is the same as the obj argument; <code>false</code> otherwise.
    */
-  public boolean equals(final Object o)
-  {
-    if (this == o)
-    {
+  public boolean equals( final Object o ) {
+    if ( this == o ) {
       return true;
     }
-    if (!(o instanceof StyleKey))
-    {
+    if ( !( o instanceof StyleKey ) ) {
       return false;
     }
 
     final StyleKey key = (StyleKey) o;
 
-    if (!name.equals(key.name))
-    {
+    if ( !name.equals( key.name ) ) {
       return false;
     }
-    if (!valueType.equals(key.valueType))
-    {
+    if ( !valueType.equals( key.valueType ) ) {
       return false;
     }
 
@@ -236,8 +215,7 @@ public final class StyleKey implements Serializable, Cloneable
    *
    * @return a hash code value for this object.
    */
-  public int hashCode()
-  {
+  public int hashCode() {
     return identifier;
   }
 
@@ -248,21 +226,17 @@ public final class StyleKey implements Serializable, Cloneable
    * @throws ObjectStreamException if the element could not be resolved.
    */
   private Object readResolve()
-      throws ObjectStreamException
-  {
-    synchronized (StyleKey.class)
-    {
-      final StyleKey key = StyleKey.getStyleKey(name);
-      if (key != null)
-      {
+    throws ObjectStreamException {
+    synchronized( StyleKey.class ) {
+      final StyleKey key = StyleKey.getStyleKey( name );
+      if ( key != null ) {
         return key;
       }
-      return StyleKey.getStyleKey(name, valueType, trans, inheritable);
+      return StyleKey.getStyleKey( name, valueType, trans, inheritable );
     }
   }
 
-  public boolean isTransient()
-  {
+  public boolean isTransient() {
     return trans;
   }
 
@@ -271,68 +245,57 @@ public final class StyleKey implements Serializable, Cloneable
    *
    * @return a string representation of the object.
    */
-  public String toString()
-  {
-    final StringBuffer b = new StringBuffer(100);
-    b.append("StyleKey={name='");
-    b.append(getName());
-    b.append("', valueType='");
-    b.append(getValueType());
-    b.append("'}");
+  public String toString() {
+    final StringBuffer b = new StringBuffer( 100 );
+    b.append( "StyleKey={name='" );
+    b.append( getName() );
+    b.append( "', valueType='" );
+    b.append( getValueType() );
+    b.append( "'}" );
     return b.toString();
   }
 
   public Object clone()
-      throws CloneNotSupportedException
-  {
+    throws CloneNotSupportedException {
     return super.clone();
   }
 
-  public boolean isInheritable()
-  {
+  public boolean isInheritable() {
     return inheritable;
   }
 
-  public int getIdentifier()
-  {
+  public int getIdentifier() {
     return identifier;
   }
 
-  public static int getDefinedStyleKeyCount()
-  {
+  public static int getDefinedStyleKeyCount() {
     return definedKeySize;
   }
 
-  public static synchronized StyleKey[] getDefinedStyleKeys()
-  {
-    if (definedKeys == null)
-    {
-      throw new IllegalStateException("The engine has not been booted and the default keys have no been registered yet.");
+  public static synchronized StyleKey[] getDefinedStyleKeys() {
+    if ( definedKeys == null ) {
+      throw new IllegalStateException(
+        "The engine has not been booted and the default keys have no been registered yet." );
     }
-    if (definedKeysArray != null)
-    {
+    if ( definedKeysArray != null ) {
       assertNoNullEntries();
       return definedKeysArray.clone();
     }
 
-    final StyleKey[] keys = (StyleKey[]) definedKeys.values().toArray(new StyleKey[definedKeys.size()]);
+    final StyleKey[] keys = (StyleKey[]) definedKeys.values().toArray( new StyleKey[ definedKeys.size() ] );
     definedKeysArray = keys.clone();
-    for (int i = 0; i < keys.length; i++)
-    {
-      final StyleKey key = keys[i];
-      definedKeysArray[key.identifier] = key;
+    for ( int i = 0; i < keys.length; i++ ) {
+      final StyleKey key = keys[ i ];
+      definedKeysArray[ key.identifier ] = key;
     }
     assertNoNullEntries();
     return definedKeysArray.clone();
   }
 
-  public static void assertNoNullEntries()
-  {
-    for (int i = 0; i < definedKeysArray.length; i++)
-    {
-      final StyleKey styleKey = definedKeysArray[i];
-      if (styleKey == null)
-      {
+  public static void assertNoNullEntries() {
+    for ( int i = 0; i < definedKeysArray.length; i++ ) {
+      final StyleKey styleKey = definedKeysArray[ i ];
+      if ( styleKey == null ) {
         throw new NullPointerException();
       }
     }
@@ -342,67 +305,52 @@ public final class StyleKey implements Serializable, Cloneable
   /**
    * @noinspection ProhibitedExceptionCaught
    */
-  public static synchronized void registerDefaults()
-  {
+  public static synchronized void registerDefaults() {
     final Configuration config = ClassicEngineBoot.getInstance().getGlobalConfig();
-    final Iterator it = config.findPropertyKeys("org.pentaho.reporting.engine.classic.core.stylekeys.");
-    final ClassLoader classLoader = ObjectUtilities.getClassLoader(StyleKey.class);
+    final Iterator it = config.findPropertyKeys( "org.pentaho.reporting.engine.classic.core.stylekeys." );
+    final ClassLoader classLoader = ObjectUtilities.getClassLoader( StyleKey.class );
 
-    while (it.hasNext())
-    {
+    while ( it.hasNext() ) {
       final String key = (String) it.next();
-      final String keyClass = config.getConfigProperty(key);
-      try
-      {
-        final Class c = Class.forName(keyClass, false, classLoader);
-        registerClass(c);
-      }
-      catch (ClassNotFoundException e)
-      {
+      final String keyClass = config.getConfigProperty( key );
+      try {
+        final Class c = Class.forName( keyClass, false, classLoader );
+        registerClass( c );
+      } catch ( ClassNotFoundException e ) {
         // ignore that class
-        logger.warn("Unable to register keys from " + keyClass);
-      }
-      catch (NullPointerException e)
-      {
+        logger.warn( "Unable to register keys from " + keyClass );
+      } catch ( NullPointerException e ) {
         // ignore invalid values as well.
-        logger.warn("Unable to register keys from " + keyClass);
+        logger.warn( "Unable to register keys from " + keyClass );
       }
     }
 
   }
 
-  public static synchronized void registerClass(final Class c)
-  {
+  public static synchronized void registerClass( final Class c ) {
     // Log.debug ("Registering stylekeys from " + c);
-    try
-    {
+    try {
       final Field[] fields = c.getFields();
-      for (int i = 0; i < fields.length; i++)
-      {
-        final Field field = fields[i];
+      for ( int i = 0; i < fields.length; i++ ) {
+        final Field field = fields[ i ];
         final int modifiers = field.getModifiers();
-        if (Modifier.isPublic(modifiers) &&
-            Modifier.isStatic(modifiers))
-        {
-          if (Modifier.isFinal(modifiers) == false)
-          {
-            logger.warn("Invalid implementation: StyleKeys should be 'public static final': " + c);
+        if ( Modifier.isPublic( modifiers ) &&
+          Modifier.isStatic( modifiers ) ) {
+          if ( Modifier.isFinal( modifiers ) == false ) {
+            logger.warn( "Invalid implementation: StyleKeys should be 'public static final': " + c );
           }
-          if (field.getType().isAssignableFrom(StyleKey.class))
-          {
+          if ( field.getType().isAssignableFrom( StyleKey.class ) ) {
             //noinspection UnusedDeclaration
-            final StyleKey value = (StyleKey) field.get(null);
+            final StyleKey value = (StyleKey) field.get( null );
             // ignore the returned value, all we want is to trigger the key
             // creation
             // Log.debug ("Loaded key " + value);
           }
         }
       }
-    }
-    catch (IllegalAccessException e)
-    {
+    } catch ( IllegalAccessException e ) {
       // wont happen, we've checked it..
-      logger.warn("Unable to register keys from " + c.getName());
+      logger.warn( "Unable to register keys from " + c.getName() );
     }
   }
 

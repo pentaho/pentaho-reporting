@@ -7,8 +7,8 @@
   <xsd:element name="layout-output">
     <xsd:complexType mixed="true">
       <xsd:choice minOccurs="0" maxOccurs="unbounded">
-        <xsd:element name="logical-page" type="logicalPageType" />
-        <xsd:element name="physical-page" type="physicalPageType" />
+        <xsd:element name="logical-page" type="logicalPageType"/>
+        <xsd:element name="physical-page" type="physicalPageType"/>
       </xsd:choice>
     </xsd:complexType>
   </xsd:element>

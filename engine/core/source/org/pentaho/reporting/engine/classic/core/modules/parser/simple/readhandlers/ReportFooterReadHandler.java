@@ -25,13 +25,11 @@ import org.pentaho.reporting.engine.classic.core.style.BandStyleKeys;
 import org.pentaho.reporting.libraries.xmlns.common.ParserUtil;
 import org.xml.sax.SAXException;
 
-public class ReportFooterReadHandler extends RootLevelBandReadHandler
-{
-  private static final Log logger = LogFactory.getLog(ReportFooterReadHandler.class);
+public class ReportFooterReadHandler extends RootLevelBandReadHandler {
+  private static final Log logger = LogFactory.getLog( ReportFooterReadHandler.class );
 
-  public ReportFooterReadHandler(final Band band)
-  {
-    super(band);
+  public ReportFooterReadHandler( final Band band ) {
+    super( band );
   }
 
   /**
@@ -40,24 +38,21 @@ public class ReportFooterReadHandler extends RootLevelBandReadHandler
    * @param attr the attributes.
    * @throws org.xml.sax.SAXException if there is a parsing error.
    */
-  protected void startParsing(final PropertyAttributes attr)
-      throws SAXException
-  {
-    super.startParsing(attr);
-    handleOwnPageAttr(attr);
+  protected void startParsing( final PropertyAttributes attr )
+    throws SAXException {
+    super.startParsing( attr );
+    handleOwnPageAttr( attr );
   }
 
-  private void handleOwnPageAttr(final PropertyAttributes attr)
-      throws SAXException
-  {
-    final String ownPageAttr = attr.getValue(getUri(), "ownpage");
-    if (ownPageAttr != null)
-    {
-      ReportFooterReadHandler.logger.warn("The 'ownpage' attribute of the <report-footer> tag is deprecated. " +
-          "Use the 'pagebreak-before' attribute instead.");
-      final Boolean ownPage = ParserUtil.parseBoolean(ownPageAttr, getLocator());
+  private void handleOwnPageAttr( final PropertyAttributes attr )
+    throws SAXException {
+    final String ownPageAttr = attr.getValue( getUri(), "ownpage" );
+    if ( ownPageAttr != null ) {
+      ReportFooterReadHandler.logger.warn( "The 'ownpage' attribute of the <report-footer> tag is deprecated. " +
+        "Use the 'pagebreak-before' attribute instead." );
+      final Boolean ownPage = ParserUtil.parseBoolean( ownPageAttr, getLocator() );
       getBand().getStyle().setStyleProperty
-          (BandStyleKeys.PAGEBREAK_BEFORE, ownPage);
+        ( BandStyleKeys.PAGEBREAK_BEFORE, ownPage );
     }
   }
 

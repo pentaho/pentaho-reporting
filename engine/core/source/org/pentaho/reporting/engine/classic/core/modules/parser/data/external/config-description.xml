@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <config-description xmlns="http://jfreereport.sourceforge.net/namespaces/config-description">
-  <key name="org.pentaho.reporting.engine.classic.core.modules.parser.bundle.writer.data-factory-handler.org.pentaho.reporting.engine.classic.core.TableDataFactory" global="true" hidden="true">
+  <key
+      name="org.pentaho.reporting.engine.classic.core.modules.parser.bundle.writer.data-factory-handler.org.pentaho.reporting.engine.classic.core.TableDataFactory"
+      global="true" hidden="true">
     <description>A internal configuration that controls an XML-Generator. Do not edit.</description>
     <text/>
   </key>
-  <key name="org.pentaho.reporting.engine.classic.core.modules.parser.data-factory-prefix.built-in.external" global="true" hidden="true">
+  <key name="org.pentaho.reporting.engine.classic.core.modules.parser.data-factory-prefix.built-in.external"
+       global="true" hidden="true">
     <description>A internal configuration that controls an XML-Generator. Do not edit.</description>
     <text/>
   </key>
@@ -12,11 +15,15 @@
     <description>A module definition. Please do not edit this entry.</description>
     <text/>
   </key>
-  <key name="org.pentaho.reporting.libraries.resourceloader.factory.modules.org.pentaho.reporting.engine.classic.core.DataFactory.external" global="true" hidden="true">
+  <key
+      name="org.pentaho.reporting.libraries.resourceloader.factory.modules.org.pentaho.reporting.engine.classic.core.DataFactory.external"
+      global="true" hidden="true">
     <description>A internal configuration that controls an XML-Generator. Do not edit.</description>
     <text/>
   </key>
-  <key name="org.pentaho.reporting.engine.classic.core.modules.parser.bundle.writer.data-factory-handler.org.pentaho.reporting.engine.classic.core.ExternalDataFactory" global="true" hidden="true">
+  <key
+      name="org.pentaho.reporting.engine.classic.core.modules.parser.bundle.writer.data-factory-handler.org.pentaho.reporting.engine.classic.core.ExternalDataFactory"
+      global="true" hidden="true">
     <description>A internal configuration that controls an XML-Generator. Do not edit.</description>
     <text/>
   </key>

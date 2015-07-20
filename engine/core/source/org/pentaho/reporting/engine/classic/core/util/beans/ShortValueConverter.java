@@ -22,14 +22,12 @@ package org.pentaho.reporting.engine.classic.core.util.beans;
  *
  * @author Thomas Morgner
  */
-public class ShortValueConverter implements ValueConverter
-{
+public class ShortValueConverter implements ValueConverter {
 
   /**
    * Creates a new value converter.
    */
-  public ShortValueConverter()
-  {
+  public ShortValueConverter() {
     super();
   }
 
@@ -39,17 +37,14 @@ public class ShortValueConverter implements ValueConverter
    * @param o the attribute ({@link Integer} expected).
    * @return A string representing the {@link Integer} value.
    */
-  public String toAttributeValue(final Object o) throws BeanException
-  {
-    if (o == null)
-    {
+  public String toAttributeValue( final Object o ) throws BeanException {
+    if ( o == null ) {
       throw new NullPointerException();
     }
-    if (o instanceof Short)
-    {
+    if ( o instanceof Short ) {
       return o.toString();
     }
-    throw new BeanException("Failed to convert object of type " + o.getClass() + ": Not a short.");
+    throw new BeanException( "Failed to convert object of type " + o.getClass() + ": Not a short." );
   }
 
   /**
@@ -58,25 +53,19 @@ public class ShortValueConverter implements ValueConverter
    * @param s the string.
    * @return a {@link Integer}.
    */
-  public Object toPropertyValue(final String s) throws BeanException
-  {
-    if (s == null)
-    {
+  public Object toPropertyValue( final String s ) throws BeanException {
+    if ( s == null ) {
       throw new NullPointerException();
     }
     final String val = s.trim();
-    if (val.length() == 0)
-    {
-      throw BeanException.getInstance("Failed to convert empty string to number", null);
+    if ( val.length() == 0 ) {
+      throw BeanException.getInstance( "Failed to convert empty string to number", null );
     }
 
-    try
-    {
-      return new Short(val);
-    }
-    catch (NumberFormatException be)
-    {
-      throw BeanException.getInstance("Failed to parse number", be);
+    try {
+      return new Short( val );
+    } catch ( NumberFormatException be ) {
+      throw BeanException.getInstance( "Failed to parse number", be );
     }
   }
 }

@@ -19,24 +19,21 @@ package org.pentaho.reporting.engine.classic.core.designtime;
 
 import org.pentaho.reporting.engine.classic.core.DataFactory;
 
-public abstract class AbstractDataSourcePlugin implements DataSourcePlugin
-{
-  protected AbstractDataSourcePlugin()
-  {
+public abstract class AbstractDataSourcePlugin implements DataSourcePlugin {
+  protected AbstractDataSourcePlugin() {
   }
 
-  public DataFactory performEdit(final DesignTimeContext context,
-                                 final DataFactory input,
-                                 final String selectedQueryName, final DataFactoryChangeRecorder changeRecorder)
-  {
+  public DataFactory performEdit( final DesignTimeContext context,
+                                  final DataFactory input,
+                                  final String selectedQueryName, final DataFactoryChangeRecorder changeRecorder ) {
     return null;
   }
 
-  public boolean canHandle(final DataFactory dataFactory)
-  {
-    if (dataFactory == null) return false;
-    if (getMetaData().getName().equals(dataFactory.getClass().getName()))
-    {
+  public boolean canHandle( final DataFactory dataFactory ) {
+    if ( dataFactory == null ) {
+      return false;
+    }
+    if ( getMetaData().getName().equals( dataFactory.getClass().getName() ) ) {
       return true;
     }
     return false;

@@ -17,23 +17,22 @@
 
 package org.pentaho.reporting.engine.classic.core;
 
-import java.io.Serializable;
-
 import org.pentaho.reporting.engine.classic.core.states.datarow.DefaultFlowController;
 
-public interface ReportPreProcessor extends Cloneable, Serializable
-{
+import java.io.Serializable;
+
+public interface ReportPreProcessor extends Cloneable, Serializable {
   public ReportPreProcessor clone();
 
-  public MasterReport performPreDataProcessing(MasterReport definition,
-                                               DefaultFlowController flowController) throws ReportProcessingException;
+  public MasterReport performPreDataProcessing( MasterReport definition,
+                                                DefaultFlowController flowController ) throws ReportProcessingException;
 
-  public MasterReport performPreProcessing(MasterReport definition,
-                                           DefaultFlowController flowController) throws ReportProcessingException;
+  public MasterReport performPreProcessing( MasterReport definition,
+                                            DefaultFlowController flowController ) throws ReportProcessingException;
 
-  public SubReport performPreDataProcessing(SubReport definition,
-                                            DefaultFlowController flowController) throws ReportProcessingException;
+  public SubReport performPreDataProcessing( SubReport definition,
+                                             DefaultFlowController flowController ) throws ReportProcessingException;
 
-  public SubReport performPreProcessing(SubReport definition,
-                                        DefaultFlowController flowController) throws ReportProcessingException;
+  public SubReport performPreProcessing( SubReport definition,
+                                         DefaultFlowController flowController ) throws ReportProcessingException;
 }

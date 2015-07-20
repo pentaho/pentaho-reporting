@@ -24,8 +24,7 @@ import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
  *
  * @author Thomas Morgner
  */
-public class BeanException extends Exception
-{
+public class BeanException extends Exception {
   private static ThreadLocal localInstance = new ThreadLocal();
   private static volatile Boolean useCause;
   private String message;
@@ -33,8 +32,7 @@ public class BeanException extends Exception
   /**
    * DefaultConstructor.
    */
-  public BeanException()
-  {
+  public BeanException() {
   }
 
   /**
@@ -43,9 +41,8 @@ public class BeanException extends Exception
    * @param message the message text
    * @param ex      the parent exception
    */
-  public BeanException(final String message, final Throwable ex)
-  {
-    super(message, ex);
+  public BeanException( final String message, final Throwable ex ) {
+    super( message, ex );
     this.message = message;
   }
 
@@ -54,35 +51,29 @@ public class BeanException extends Exception
    *
    * @param message the message.
    */
-  public BeanException(final String message)
-  {
-    super(message);
+  public BeanException( final String message ) {
+    super( message );
     this.message = message;
   }
 
-  public String getMessage()
-  {
+  public String getMessage() {
     return message;
   }
 
-  public static BeanException getInstance(final String message, final Throwable cause)
-  {
-    if (useCause == null)
-    {
-      useCause = ("true".equals(ClassicEngineBoot.getInstance().getGlobalConfig().getConfigProperty
-          ("org.pentaho.reporting.engine.classic.core.util.beans.BeanExceptionWithDetailedCause")));
+  public static BeanException getInstance( final String message, final Throwable cause ) {
+    if ( useCause == null ) {
+      useCause = ( "true".equals( ClassicEngineBoot.getInstance().getGlobalConfig().getConfigProperty
+        ( "org.pentaho.reporting.engine.classic.core.util.beans.BeanExceptionWithDetailedCause" ) ) );
     }
 
-    if (Boolean.TRUE.equals(useCause))
-    {
-      return new BeanException(message, cause);
+    if ( Boolean.TRUE.equals( useCause ) ) {
+      return new BeanException( message, cause );
     }
 
     final BeanException o = (BeanException) localInstance.get();
-    if (o == null)
-    {
-      final BeanException retval = new BeanException(message);
-      localInstance.set(retval);
+    if ( o == null ) {
+      final BeanException retval = new BeanException( message );
+      localInstance.set( retval );
       return retval;
     }
 

@@ -17,9 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.output.table.html;
 
-import java.net.URL;
-import javax.swing.table.DefaultTableModel;
-
 import junit.framework.TestCase;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
@@ -28,34 +25,31 @@ import org.pentaho.reporting.engine.classic.core.testsupport.DebugReportRunner;
 import org.pentaho.reporting.libraries.resourceloader.Resource;
 import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 
-public class PageableHtmlOutputTest extends TestCase
-{
-  public PageableHtmlOutputTest()
-  {
+import javax.swing.table.DefaultTableModel;
+import java.net.URL;
+
+public class PageableHtmlOutputTest extends TestCase {
+  public PageableHtmlOutputTest() {
   }
 
-  public PageableHtmlOutputTest(final String s)
-  {
-    super(s);
+  public PageableHtmlOutputTest( final String s ) {
+    super( s );
   }
 
-  protected void setUp() throws Exception
-  {
+  protected void setUp() throws Exception {
     ClassicEngineBoot.getInstance().start();
   }
 
-  public void testPagination() throws Exception
-  {
-    if (DebugReportRunner.isSkipLongRunTest())
-    {
+  public void testPagination() throws Exception {
+    if ( DebugReportRunner.isSkipLongRunTest() ) {
       return;
     }
-    final URL target = PageableHtmlOutputTest.class.getResource("pageable-html-output-report.xml");
+    final URL target = PageableHtmlOutputTest.class.getResource( "pageable-html-output-report.xml" );
     final ResourceManager rm = new ResourceManager();
     rm.registerDefaults();
-    final Resource directly = rm.createDirectly(target, MasterReport.class);
+    final Resource directly = rm.createDirectly( target, MasterReport.class );
     final MasterReport report = (MasterReport) directly.getResource();
-    report.setDataFactory(new TableDataFactory("default", new DefaultTableModel(1, 1)));
-    DebugReportRunner.createPageableHTML(report);
+    report.setDataFactory( new TableDataFactory( "default", new DefaultTableModel( 1, 1 ) ) );
+    DebugReportRunner.createPageableHTML( report );
   }
 }

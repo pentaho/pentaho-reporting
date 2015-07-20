@@ -27,8 +27,7 @@ import org.pentaho.reporting.engine.classic.core.function.ExpressionRuntime;
  *
  * @author Thomas Morgner
  */
-public class LabelTemplate extends AbstractTemplate
-{
+public class LabelTemplate extends AbstractTemplate {
   /**
    * A static data source.
    */
@@ -42,11 +41,10 @@ public class LabelTemplate extends AbstractTemplate
   /**
    * Creates a new label template.
    */
-  public LabelTemplate()
-  {
+  public LabelTemplate() {
     staticDataSource = new StaticDataSource();
     stringFilter = new StringFilter();
-    stringFilter.setDataSource(staticDataSource);
+    stringFilter.setDataSource( staticDataSource );
   }
 
   /**
@@ -54,9 +52,8 @@ public class LabelTemplate extends AbstractTemplate
    *
    * @param content the text.
    */
-  public void setContent(final String content)
-  {
-    staticDataSource.setValue(content);
+  public void setContent( final String content ) {
+    staticDataSource.setValue( content );
   }
 
   /**
@@ -64,9 +61,8 @@ public class LabelTemplate extends AbstractTemplate
    *
    * @return The text.
    */
-  public String getContent()
-  {
-    return (String) (staticDataSource.getValue(null, null));
+  public String getContent() {
+    return (String) ( staticDataSource.getValue( null, null ) );
   }
 
   /**
@@ -74,8 +70,7 @@ public class LabelTemplate extends AbstractTemplate
    *
    * @return The string that represents <code>null</code>.
    */
-  public String getNullValue()
-  {
+  public String getNullValue() {
     return stringFilter.getNullValue();
   }
 
@@ -84,9 +79,8 @@ public class LabelTemplate extends AbstractTemplate
    *
    * @param nullValue the string.
    */
-  public void setNullValue(final String nullValue)
-  {
-    stringFilter.setNullValue(nullValue);
+  public void setNullValue( final String nullValue ) {
+    stringFilter.setNullValue( nullValue );
   }
 
   /**
@@ -97,9 +91,8 @@ public class LabelTemplate extends AbstractTemplate
    * @param element
    * @return the value.
    */
-  public Object getValue(final ExpressionRuntime runtime, final ReportElement element)
-  {
-    return stringFilter.getValue(runtime, element);
+  public Object getValue( final ExpressionRuntime runtime, final ReportElement element ) {
+    return stringFilter.getValue( runtime, element );
   }
 
   /**
@@ -109,8 +102,7 @@ public class LabelTemplate extends AbstractTemplate
    * @throws CloneNotSupportedException this should never happen.
    */
   public LabelTemplate clone()
-      throws CloneNotSupportedException
-  {
+    throws CloneNotSupportedException {
     final LabelTemplate template = (LabelTemplate) super.clone();
     template.stringFilter = stringFilter.clone();
     template.staticDataSource = (StaticDataSource) template.stringFilter.getDataSource();

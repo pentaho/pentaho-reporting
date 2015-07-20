@@ -28,9 +28,8 @@ import org.pentaho.reporting.engine.classic.core.parameters.ReportParameterDefin
  *
  * @author Thomas Morgner
  */
-public class DataDefinition
-{
-  private static final Expression[] EMPTY_EXPRESSIONS = new Expression[0];
+public class DataDefinition {
+  private static final Expression[] EMPTY_EXPRESSIONS = new Expression[ 0 ];
 
   private ReportParameterDefinition parameterDefinition;
   private DataFactory primaryDataFactory;
@@ -39,69 +38,57 @@ public class DataDefinition
   private int queryLimit;
   private int queryTimeout;
 
-  public DataDefinition(final ReportParameterDefinition parameterDefinition,
-                        final DataFactory primaryDataFactory,
-                        final String query,
-                        final int queryLimit,
-                        final int queryTimeout,
-                        final Expression[] expressions)
-  {
+  public DataDefinition( final ReportParameterDefinition parameterDefinition,
+                         final DataFactory primaryDataFactory,
+                         final String query,
+                         final int queryLimit,
+                         final int queryTimeout,
+                         final Expression[] expressions ) {
     this.parameterDefinition = parameterDefinition;
     this.primaryDataFactory = primaryDataFactory;
     this.query = query;
     this.queryLimit = queryLimit;
     this.queryTimeout = queryTimeout;
-    if (expressions != null)
-    {
+    if ( expressions != null ) {
       this.expressions = (Expression[]) expressions.clone();
     }
   }
 
 
-  public String getQuery()
-  {
+  public String getQuery() {
     return query;
   }
 
-  public int getQueryLimit()
-  {
+  public int getQueryLimit() {
     return queryLimit;
   }
 
-  public int getQueryTimeout()
-  {
+  public int getQueryTimeout() {
     return queryTimeout;
   }
 
-  public Expression[] getExpressions()
-  {
-    if (expressions == null)
-    {
+  public Expression[] getExpressions() {
+    if ( expressions == null ) {
       return EMPTY_EXPRESSIONS;
     }
 
-    final Expression[] targetExpressions = new Expression[expressions.length];
-    for (int i = 0; i < expressions.length; i++)
-    {
-      final Expression expression = expressions[i];
-      targetExpressions[i] = expression.getInstance();
+    final Expression[] targetExpressions = new Expression[ expressions.length ];
+    for ( int i = 0; i < expressions.length; i++ ) {
+      final Expression expression = expressions[ i ];
+      targetExpressions[ i ] = expression.getInstance();
     }
     return targetExpressions;
   }
 
-  public ReportParameterDefinition getParameterDefinition()
-  {
-    if (parameterDefinition != null)
-    {
+  public ReportParameterDefinition getParameterDefinition() {
+    if ( parameterDefinition != null ) {
       return (ReportParameterDefinition) parameterDefinition.clone();
     }
     return null;
   }
 
-  public DataFactory getDataFactory() throws ReportDataFactoryException
-  {
-    if (primaryDataFactory != null)
-    {
+  public DataFactory getDataFactory() throws ReportDataFactoryException {
+    if ( primaryDataFactory != null ) {
       return primaryDataFactory.derive();
     }
     return null;

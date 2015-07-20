@@ -17,10 +17,10 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.gui.common;
 
-import java.util.Locale;
-import javax.swing.Icon;
-
 import org.pentaho.reporting.libraries.base.config.Configuration;
+
+import javax.swing.*;
+import java.util.Locale;
 
 /**
  * An Icon-Theme is an extension point to replace the icons that are used by JFreeReport. Icons provided by the theme
@@ -28,11 +28,10 @@ import org.pentaho.reporting.libraries.base.config.Configuration;
  *
  * @author Thomas Morgner
  */
-public interface IconTheme
-{
-  public void initialize(Configuration configuration);
+public interface IconTheme {
+  public void initialize( Configuration configuration );
 
-  public Icon getSmallIcon(Locale locale, String id);
+  public Icon getSmallIcon( Locale locale, String id );
 
-  public Icon getLargeIcon(Locale locale, String id);
+  public Icon getLargeIcon( Locale locale, String id );
 }

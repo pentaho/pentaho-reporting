@@ -22,13 +22,11 @@ import org.apache.commons.logging.LogFactory;
 import org.pentaho.reporting.engine.classic.core.util.beans.BeanException;
 import org.pentaho.reporting.engine.classic.core.util.beans.ConverterRegistry;
 
-public class DefaultConceptQueryMapper implements ConceptQueryMapper
-{
+public class DefaultConceptQueryMapper implements ConceptQueryMapper {
   public static final ConceptQueryMapper INSTANCE = new DefaultConceptQueryMapper();
-  private static final Log logger = LogFactory.getLog(DefaultConceptQueryMapper.class);
+  private static final Log logger = LogFactory.getLog( DefaultConceptQueryMapper.class );
 
-  public DefaultConceptQueryMapper()
-  {
+  public DefaultConceptQueryMapper() {
   }
 
   /**
@@ -36,41 +34,30 @@ public class DefaultConceptQueryMapper implements ConceptQueryMapper
    * @param type
    * @return
    */
-  public Object getValue(final Object attribute, final Class type, final DataAttributeContext context)
-  {
-    if (context == null)
-    {
+  public Object getValue( final Object attribute, final Class type, final DataAttributeContext context ) {
+    if ( context == null ) {
       throw new NullPointerException();
     }
 
-    if (attribute == null)
-    {
+    if ( attribute == null ) {
       return null;
     }
-    if (type == null)
-    {
+    if ( type == null ) {
       return attribute;
     }
 
-    if (type.isInstance(attribute))
-    {
+    if ( type.isInstance( attribute ) ) {
       return attribute;
     }
-    if (attribute instanceof String)
-    {
-      try
-      {
-        final Object o = ConverterRegistry.toPropertyValue((String) attribute, type);
-        if (o != null)
-        {
+    if ( attribute instanceof String ) {
+      try {
+        final Object o = ConverterRegistry.toPropertyValue( (String) attribute, type );
+        if ( o != null ) {
           return o;
         }
-      }
-      catch (BeanException e)
-      {
-        if (logger.isDebugEnabled())
-        {
-          logger.debug("Failed to convert metadata property value " + attribute + " into " + type, e);
+      } catch ( BeanException e ) {
+        if ( logger.isDebugEnabled() ) {
+          logger.debug( "Failed to convert metadata property value " + attribute + " into " + type, e );
         }
         return null;
       }

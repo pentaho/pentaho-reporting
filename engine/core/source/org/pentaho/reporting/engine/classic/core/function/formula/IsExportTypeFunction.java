@@ -35,13 +35,11 @@ import org.pentaho.reporting.libraries.formula.typing.coretypes.LogicalType;
  *
  * @author Thomas Morgner
  */
-public class IsExportTypeFunction implements Function
-{
+public class IsExportTypeFunction implements Function {
   /**
    * Default Constructor. Does nothing.
    */
-  public IsExportTypeFunction()
-  {
+  public IsExportTypeFunction() {
   }
 
   /**
@@ -49,8 +47,7 @@ public class IsExportTypeFunction implements Function
    *
    * @return the constant string "ISEXPORTTYPE"
    */
-  public String getCanonicalName()
-  {
+  public String getCanonicalName() {
     return "ISEXPORTTYPE";
   }
 
@@ -62,26 +59,22 @@ public class IsExportTypeFunction implements Function
    * @return the computed result wrapped in a TypeValuePair.
    * @throws EvaluationException if an error occurs.
    */
-  public TypeValuePair evaluate(final FormulaContext context,
-                                final ParameterCallback parameters) throws EvaluationException
-  {
-    if (context instanceof ReportFormulaContext == false)
-    {
-      throw EvaluationException.getInstance(LibFormulaErrorValue.ERROR_UNEXPECTED_VALUE);
+  public TypeValuePair evaluate( final FormulaContext context,
+                                 final ParameterCallback parameters ) throws EvaluationException {
+    if ( context instanceof ReportFormulaContext == false ) {
+      throw EvaluationException.getInstance( LibFormulaErrorValue.ERROR_UNEXPECTED_VALUE );
     }
     final int parameterCount = parameters.getParameterCount();
-    if (parameterCount < 1)
-    {
-      throw EvaluationException.getInstance(LibFormulaErrorValue.ERROR_ARGUMENTS_VALUE);
+    if ( parameterCount < 1 ) {
+      throw EvaluationException.getInstance( LibFormulaErrorValue.ERROR_ARGUMENTS_VALUE );
     }
 
-    final Object value = parameters.getValue(0);
+    final Object value = parameters.getValue( 0 );
     final ReportFormulaContext rfc = (ReportFormulaContext) context;
-    if (value != null && rfc.getExportType().startsWith(String.valueOf(value)))
-    {
-      return new TypeValuePair(LogicalType.TYPE, Boolean.TRUE);
+    if ( value != null && rfc.getExportType().startsWith( String.valueOf( value ) ) ) {
+      return new TypeValuePair( LogicalType.TYPE, Boolean.TRUE );
     }
 
-    return new TypeValuePair(LogicalType.TYPE, Boolean.FALSE);
+    return new TypeValuePair( LogicalType.TYPE, Boolean.FALSE );
   }
 }

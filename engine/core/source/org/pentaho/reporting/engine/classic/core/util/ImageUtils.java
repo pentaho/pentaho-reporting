@@ -17,22 +17,19 @@
 
 package org.pentaho.reporting.engine.classic.core.util;
 
+import javax.swing.*;
 import java.awt.image.BufferedImage;
-import javax.swing.Icon;
-import javax.swing.ImageIcon;
 
 /**
  * Provides utility methods for image creation and manipluation.
  *
  * @author Thomas Morgner
  */
-public final class ImageUtils
-{
+public final class ImageUtils {
   /**
    * DefaultConstructor.
    */
-  private ImageUtils()
-  {
+  private ImageUtils() {
   }
 
   /**
@@ -42,9 +39,8 @@ public final class ImageUtils
    * @param height the height.
    * @return the created transparent image.
    */
-  public static BufferedImage createTransparentImage(final int width, final int height)
-  {
-    return new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+  public static BufferedImage createTransparentImage( final int width, final int height ) {
+    return new BufferedImage( width, height, BufferedImage.TYPE_INT_ARGB );
   }
 
   /**
@@ -54,8 +50,7 @@ public final class ImageUtils
    * @param height the height of the new icon
    * @return the created transparent icon.
    */
-  public static Icon createTransparentIcon(final int width, final int height)
-  {
-    return new ImageIcon(createTransparentImage(width, height));
+  public static Icon createTransparentIcon( final int width, final int height ) {
+    return new ImageIcon( createTransparentImage( width, height ) );
   }
 }

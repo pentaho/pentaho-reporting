@@ -27,8 +27,7 @@ import org.pentaho.reporting.libraries.base.boot.SubSystem;
  *
  * @author Thomas Morgner
  */
-public class PdfPageableModule extends AbstractModule
-{
+public class PdfPageableModule extends AbstractModule {
   /**
    * A constant for the encryption type (40 bit).
    */
@@ -52,8 +51,7 @@ public class PdfPageableModule extends AbstractModule
    * @throws ModuleInitializeException if an error occured.
    */
   public PdfPageableModule()
-      throws ModuleInitializeException
-  {
+    throws ModuleInitializeException {
     loadModuleInfo();
   }
 
@@ -65,10 +63,9 @@ public class PdfPageableModule extends AbstractModule
    * @param subSystem the subSystem.
    * @throws ModuleInitializeException if an error ocurred while initializing the module.
    */
-  public void initialize(final SubSystem subSystem)
-      throws ModuleInitializeException
-  {
+  public void initialize( final SubSystem subSystem )
+    throws ModuleInitializeException {
     ElementMetaDataParser.initializeOptionalReportProcessTaskMetaData
-        ("org/pentaho/reporting/engine/classic/core/modules/output/pageable/pdf/meta-report-process-tasks.xml");
+      ( "org/pentaho/reporting/engine/classic/core/modules/output/pageable/pdf/meta-report-process-tasks.xml" );
   }
 }

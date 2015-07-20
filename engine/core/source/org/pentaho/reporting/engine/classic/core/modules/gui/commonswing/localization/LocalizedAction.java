@@ -17,15 +17,14 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.gui.commonswing.localization;
 
+import javax.swing.*;
 import java.util.Locale;
-import javax.swing.Action;
 
 /**
  * Creation-Date: 30.11.2006, 13:09:37
  *
  * @author Thomas Morgner
  */
-public interface LocalizedAction extends Action
-{
-  public void update(Locale locale);
+public interface LocalizedAction extends Action {
+  public void update( Locale locale );
 }

@@ -17,18 +17,17 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.parser.ext.factory.elements;
 
+import org.pentaho.reporting.engine.classic.core.Element;
+
 import java.util.ArrayList;
 import java.util.Iterator;
-
-import org.pentaho.reporting.engine.classic.core.Element;
 
 /**
  * An element factory that encapsulates multiple element factories.
  *
  * @author Thomas Morgner
  */
-public class ElementFactoryCollector implements ElementFactory
-{
+public class ElementFactoryCollector implements ElementFactory {
   /**
    * Storage for the element factories.
    */
@@ -37,8 +36,7 @@ public class ElementFactoryCollector implements ElementFactory
   /**
    * Creates a new element factory.
    */
-  public ElementFactoryCollector()
-  {
+  public ElementFactoryCollector() {
     factories = new ArrayList();
   }
 
@@ -47,13 +45,11 @@ public class ElementFactoryCollector implements ElementFactory
    *
    * @param factory the factory.
    */
-  public void addFactory(final ElementFactory factory)
-  {
-    if (factory == null)
-    {
+  public void addFactory( final ElementFactory factory ) {
+    if ( factory == null ) {
       throw new NullPointerException();
     }
-    factories.add(factory);
+    factories.add( factory );
   }
 
   /**
@@ -61,8 +57,7 @@ public class ElementFactoryCollector implements ElementFactory
    *
    * @return The iterator.
    */
-  public Iterator getFactories()
-  {
+  public Iterator getFactories() {
     return factories.iterator();
   }
 
@@ -72,14 +67,11 @@ public class ElementFactoryCollector implements ElementFactory
    * @param type the content type.
    * @return The element.
    */
-  public Element getElementForType(final String type)
-  {
-    for (int i = 0; i < factories.size(); i++)
-    {
-      final ElementFactory fact = (ElementFactory) factories.get(i);
-      final Element element = fact.getElementForType(type);
-      if (element != null)
-      {
+  public Element getElementForType( final String type ) {
+    for ( int i = 0; i < factories.size(); i++ ) {
+      final ElementFactory fact = (ElementFactory) factories.get( i );
+      final Element element = fact.getElementForType( type );
+      if ( element != null ) {
         return element;
       }
     }
@@ -93,21 +85,17 @@ public class ElementFactoryCollector implements ElementFactory
    * @return true, if the object is equal, false otherwise.
    * @see java.lang.Object#equals(java.lang.Object)
    */
-  public boolean equals(final Object o)
-  {
-    if (this == o)
-    {
+  public boolean equals( final Object o ) {
+    if ( this == o ) {
       return true;
     }
-    if (!(o instanceof ElementFactoryCollector))
-    {
+    if ( !( o instanceof ElementFactoryCollector ) ) {
       return false;
     }
 
     final ElementFactoryCollector elementFactoryCollector = (ElementFactoryCollector) o;
 
-    if (!factories.equals(elementFactoryCollector.factories))
-    {
+    if ( !factories.equals( elementFactoryCollector.factories ) ) {
       return false;
     }
 
@@ -120,8 +108,7 @@ public class ElementFactoryCollector implements ElementFactory
    * @return the hashcode.
    * @see java.lang.Object#hashCode()
    */
-  public int hashCode()
-  {
+  public int hashCode() {
     return factories.hashCode();
   }
 }

@@ -25,13 +25,11 @@ import org.pentaho.reporting.engine.classic.core.function.ColumnAggregationExpre
  * @author Thomas Morgner
  * @deprecated use formulas instead
  */
-public class AndExpression extends ColumnAggregationExpression
-{
+public class AndExpression extends ColumnAggregationExpression {
   /**
    * Default Constructor.
    */
-  public AndExpression()
-  {
+  public AndExpression() {
   }
 
   /**
@@ -39,26 +37,21 @@ public class AndExpression extends ColumnAggregationExpression
    *
    * @return Boolean.TRUE or Boolean.FALSE
    */
-  public Object getValue()
-  {
+  public Object getValue() {
     final Object[] values = getFieldValues();
     final int length = values.length;
-    if (length == 0)
-    {
+    if ( length == 0 ) {
       return Boolean.FALSE;
     }
 
-    for (int i = 0; i < length; i++)
-    {
-      final Object value = values[i];
-      if (value instanceof Boolean == false)
-      {
+    for ( int i = 0; i < length; i++ ) {
+      final Object value = values[ i ];
+      if ( value instanceof Boolean == false ) {
         continue;
       }
 
       final Boolean n = (Boolean) value;
-      if (n.equals(Boolean.FALSE))
-      {
+      if ( n.equals( Boolean.FALSE ) ) {
         return Boolean.FALSE;
       }
     }

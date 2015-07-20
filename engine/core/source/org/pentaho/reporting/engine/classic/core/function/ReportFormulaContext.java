@@ -17,9 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.core.function;
 
-import java.util.Date;
-import javax.swing.table.TableModel;
-
 import org.pentaho.reporting.engine.classic.core.DataRow;
 import org.pentaho.reporting.engine.classic.core.wizard.DataSchema;
 import org.pentaho.reporting.libraries.base.config.Configuration;
@@ -33,6 +30,9 @@ import org.pentaho.reporting.libraries.formula.typing.Type;
 import org.pentaho.reporting.libraries.formula.typing.TypeRegistry;
 import org.pentaho.reporting.libraries.formula.typing.coretypes.AnyType;
 
+import javax.swing.table.TableModel;
+import java.util.Date;
+
 /**
  * The report formula context is a FormulaContext implementation that connects the formula evaluator with the current
  * data-row of the report process.
@@ -42,8 +42,7 @@ import org.pentaho.reporting.libraries.formula.typing.coretypes.AnyType;
  *
  * @author Thomas Morgner
  */
-public class ReportFormulaContext implements FormulaContext
-{
+public class ReportFormulaContext implements FormulaContext {
   /**
    * The formula context provided from the LibFormula implementation.
    */
@@ -61,27 +60,23 @@ public class ReportFormulaContext implements FormulaContext
    * @param backend the formula-context backend.
    * @param runtime the ExpressionRuntime
    */
-  public ReportFormulaContext(final FormulaContext backend,
-                              final ExpressionRuntime runtime)
-  {
-    if (runtime == null)
-    {
-      throw new NullPointerException("Runtime is null.");
+  public ReportFormulaContext( final FormulaContext backend,
+                               final ExpressionRuntime runtime ) {
+    if ( runtime == null ) {
+      throw new NullPointerException( "Runtime is null." );
     }
-    if (backend == null)
-    {
-      throw new NullPointerException("Backend-FormulaContext is null");
+    if ( backend == null ) {
+      throw new NullPointerException( "Backend-FormulaContext is null" );
     }
 
     this.runtime = runtime;
     this.backend = backend;
     this.typeRegistry = new DefaultTypeRegistry();
-    this.typeRegistry.initialize(this);
+    this.typeRegistry.initialize( this );
     this.processingContext = runtime.getProcessingContext();
   }
 
-  public DataSchema getDataSchema()
-  {
+  public DataSchema getDataSchema() {
     return runtime.getDataSchema();
   }
 
@@ -91,8 +86,7 @@ public class ReportFormulaContext implements FormulaContext
    *
    * @return the localization context.
    */
-  public LocalizationContext getLocalizationContext()
-  {
+  public LocalizationContext getLocalizationContext() {
     return backend.getLocalizationContext();
   }
 
@@ -101,8 +95,7 @@ public class ReportFormulaContext implements FormulaContext
    *
    * @return the local configuration.
    */
-  public Configuration getConfiguration()
-  {
+  public Configuration getConfiguration() {
     return backend.getConfiguration();
   }
 
@@ -111,8 +104,7 @@ public class ReportFormulaContext implements FormulaContext
    *
    * @return the function registry.
    */
-  public FunctionRegistry getFunctionRegistry()
-  {
+  public FunctionRegistry getFunctionRegistry() {
     return backend.getFunctionRegistry();
   }
 
@@ -122,8 +114,7 @@ public class ReportFormulaContext implements FormulaContext
    *
    * @return the function registry.
    */
-  public TypeRegistry getTypeRegistry()
-  {
+  public TypeRegistry getTypeRegistry() {
     return typeRegistry;
   }
 
@@ -132,8 +123,7 @@ public class ReportFormulaContext implements FormulaContext
    *
    * @return the operator registry.
    */
-  public OperatorFactory getOperatorFactory()
-  {
+  public OperatorFactory getOperatorFactory() {
     return backend.getOperatorFactory();
   }
 
@@ -145,9 +135,8 @@ public class ReportFormulaContext implements FormulaContext
    * @return true, if the reference has changed, false otherwise.
    * @throws EvaluationException if an error occurs.
    */
-  public boolean isReferenceDirty(final Object name) throws EvaluationException
-  {
-    return runtime.getDataRow().isChanged((String) name);
+  public boolean isReferenceDirty( final Object name ) throws EvaluationException {
+    return runtime.getDataRow().isChanged( (String) name );
   }
 
   /**
@@ -157,8 +146,7 @@ public class ReportFormulaContext implements FormulaContext
    * @param name the name that identifies the reference.
    * @return the resolved object.
    */
-  public Type resolveReferenceType(final Object name)
-  {
+  public Type resolveReferenceType( final Object name ) {
     return AnyType.TYPE;
   }
 
@@ -171,13 +159,11 @@ public class ReportFormulaContext implements FormulaContext
    * @return the type of the resolved object.
    * @throws EvaluationException if an error occurs.
    */
-  public Object resolveReference(final Object name) throws EvaluationException
-  {
-    if (name == null)
-    {
+  public Object resolveReference( final Object name ) throws EvaluationException {
+    if ( name == null ) {
       throw new NullPointerException();
     }
-    return runtime.getDataRow().get(String.valueOf(name));
+    return runtime.getDataRow().get( String.valueOf( name ) );
   }
 
   /**
@@ -185,16 +171,14 @@ public class ReportFormulaContext implements FormulaContext
    *
    * @return the current datarow.
    */
-  public DataRow getDataRow()
-  {
+  public DataRow getDataRow() {
     return runtime.getDataRow();
   }
 
   /**
    * Invalidates the formula context.
    */
-  public void close()
-  {
+  public void close() {
     this.runtime = null;
     this.processingContext = null;
   }
@@ -204,39 +188,30 @@ public class ReportFormulaContext implements FormulaContext
    *
    * @return the current export type.
    */
-  public String getExportType()
-  {
+  public String getExportType() {
     return processingContext.getExportDescriptor();
   }
 
-  public ProcessingContext getProcessingContext()
-  {
+  public ProcessingContext getProcessingContext() {
     return processingContext;
   }
 
-  public boolean isResultSetEmpty()
-  {
+  public boolean isResultSetEmpty() {
     final TableModel data = runtime.getData();
     return data == null || data.getRowCount() == 0 || data.getColumnCount() == 0;
   }
 
-  public ExpressionRuntime getRuntime()
-  {
+  public ExpressionRuntime getRuntime() {
     return runtime;
   }
 
-  public Date getCurrentDate()
-  {
-    try
-    {
-      final Object date = resolveReference("report.date");
-      if (date instanceof Date)
-      {
+  public Date getCurrentDate() {
+    try {
+      final Object date = resolveReference( "report.date" );
+      if ( date instanceof Date ) {
         return (Date) date;
       }
-    }
-    catch (EvaluationException e)
-    {
+    } catch ( EvaluationException e ) {
       // ignore
     }
     return new Date();

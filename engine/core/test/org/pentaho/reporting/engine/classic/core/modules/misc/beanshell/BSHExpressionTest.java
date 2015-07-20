@@ -17,32 +17,29 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.misc.beanshell;
 
-import javax.swing.table.DefaultTableModel;
-
 import junit.framework.TestCase;
 import org.pentaho.reporting.engine.classic.core.DataRow;
 import org.pentaho.reporting.engine.classic.core.layout.output.DefaultProcessingContext;
 import org.pentaho.reporting.engine.classic.core.states.DataRowConnector;
 import org.pentaho.reporting.engine.classic.core.testsupport.DebugExpressionRuntime;
 
-public class BSHExpressionTest extends TestCase
-{
-  public BSHExpressionTest(final String s)
-  {
-    super(s);
+import javax.swing.table.DefaultTableModel;
+
+public class BSHExpressionTest extends TestCase {
+  public BSHExpressionTest( final String s ) {
+    super( s );
   }
 
-  public void testCreate() throws Exception
-  {
-    assertTrue(DataRow.class.isAssignableFrom(DataRowConnector.class));
+  public void testCreate() throws Exception {
+    assertTrue( DataRow.class.isAssignableFrom( DataRowConnector.class ) );
     final BSHExpression ex = new BSHExpression();
-    ex.setExpression("");
+    ex.setExpression( "" );
 
     final DefaultProcessingContext processingContext = new DefaultProcessingContext();
 
-    ex.setRuntime(new DebugExpressionRuntime
-        (new DefaultTableModel(), 0, processingContext));
-    assertNull(ex.getValue());
+    ex.setRuntime( new DebugExpressionRuntime
+      ( new DefaultTableModel(), 0, processingContext ) );
+    assertNull( ex.getValue() );
     // must not crash
   }
 }

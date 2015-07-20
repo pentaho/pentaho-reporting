@@ -19,21 +19,18 @@ package org.pentaho.reporting.engine.classic.core.modules.parser.data.sql;
 
 import org.pentaho.reporting.engine.classic.core.modules.parser.base.DataFactoryReadHandlerFactory;
 import org.pentaho.reporting.engine.classic.core.modules.parser.base.DataFactoryXmlResourceFactory;
-import org.pentaho.reporting.engine.classic.core.modules.parser.data.compounddata.CompoundDataFactoryResourceXmlFactoryModule;
 import org.pentaho.reporting.libraries.base.boot.AbstractModule;
 import org.pentaho.reporting.libraries.base.boot.ModuleInitializeException;
 import org.pentaho.reporting.libraries.base.boot.SubSystem;
 
-public class SQLDataFactoryModule extends AbstractModule
-{
+public class SQLDataFactoryModule extends AbstractModule {
   public static final String NAMESPACE =
-      "http://jfreereport.sourceforge.net/namespaces/datasources/sql";
+    "http://jfreereport.sourceforge.net/namespaces/datasources/sql";
 
   public static final String CONNECTION_WRITER_PREFIX =
-      "org.pentaho.reporting.engine.classic.core.modules.parser.data.sql.writer.handler.sql-connection-provider.";
+    "org.pentaho.reporting.engine.classic.core.modules.parser.data.sql.writer.handler.sql-connection-provider.";
 
-  public SQLDataFactoryModule() throws ModuleInitializeException
-  {
+  public SQLDataFactoryModule() throws ModuleInitializeException {
     loadModuleInfo();
   }
 
@@ -45,14 +42,16 @@ public class SQLDataFactoryModule extends AbstractModule
    * @param subSystem the subSystem.
    * @throws ModuleInitializeException if an error ocurred while initializing the module.
    */
-  public void initialize(final SubSystem subSystem) throws ModuleInitializeException
-  {
-    DataFactoryXmlResourceFactory.register(DirectSQLResourceXmlFactoryModule.class);
-    DataFactoryXmlResourceFactory.register(SQLResourceXmlFactoryModule.class);
+  public void initialize( final SubSystem subSystem ) throws ModuleInitializeException {
+    DataFactoryXmlResourceFactory.register( DirectSQLResourceXmlFactoryModule.class );
+    DataFactoryXmlResourceFactory.register( SQLResourceXmlFactoryModule.class );
 
-    DataFactoryReadHandlerFactory.getInstance().setElementHandler(NAMESPACE, "sql-datasource", SQLDataSourceReadHandler.class);
-    DataFactoryReadHandlerFactory.getInstance().setElementHandler(NAMESPACE, "direct-sql-datasource", SQLDirectDataSourceReadHandler.class);
-    ConnectionReadHandlerFactory.getInstance().setElementHandler(NAMESPACE, "connection", DriverConnectionReadHandler.class);
-    ConnectionReadHandlerFactory.getInstance().setElementHandler(NAMESPACE, "jndi", JndiConnectionReadHandler.class);
+    DataFactoryReadHandlerFactory.getInstance()
+      .setElementHandler( NAMESPACE, "sql-datasource", SQLDataSourceReadHandler.class );
+    DataFactoryReadHandlerFactory.getInstance()
+      .setElementHandler( NAMESPACE, "direct-sql-datasource", SQLDirectDataSourceReadHandler.class );
+    ConnectionReadHandlerFactory.getInstance()
+      .setElementHandler( NAMESPACE, "connection", DriverConnectionReadHandler.class );
+    ConnectionReadHandlerFactory.getInstance().setElementHandler( NAMESPACE, "jndi", JndiConnectionReadHandler.class );
   }
 }

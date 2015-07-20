@@ -24,9 +24,13 @@
     </page-definition>
     <configuration>
       <property
-          name="org.pentaho.reporting.engine.classic.core.modules.output.pageable.pdf.PDFOutputTarget.default.Author">Darkwing Duck</property>
+          name="org.pentaho.reporting.engine.classic.core.modules.output.pageable.pdf.PDFOutputTarget.default.Author">
+        Darkwing Duck
+      </property>
       <property
-          name="org.pentaho.reporting.engine.classic.core.modules.output.pageable.pdf.PDFOutputTarget.default.Encoding">iso-8859-15</property>
+          name="org.pentaho.reporting.engine.classic.core.modules.output.pageable.pdf.PDFOutputTarget.default.Encoding">
+        iso-8859-15
+      </property>
     </configuration>
   </report-config>
 
@@ -76,9 +80,10 @@
           <basic-key name="trim-text-content">true</basic-key>
         </style>
         <template references="label">
-          <basic-object name="content">Note: An object which only defined a single property called 'value' is considered a primitive or basic value.
-When defining or using such objects, you can use the 'basic-key' or 'basic-object' tag in the Extended-XML.
-</basic-object>
+          <basic-object name="content">Note: An object which only defined a single property called 'value' is considered
+            a primitive or basic value.
+            When defining or using such objects, you can use the 'basic-key' or 'basic-object' tag in the Extended-XML.
+          </basic-object>
         </template>
       </element>
 

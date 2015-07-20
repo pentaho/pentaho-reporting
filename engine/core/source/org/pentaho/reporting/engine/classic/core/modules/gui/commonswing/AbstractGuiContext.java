@@ -17,11 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.gui.commonswing;
 
-import java.awt.Window;
-import java.beans.PropertyChangeListener;
-import java.beans.PropertyChangeSupport;
-import java.util.Locale;
-
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
 import org.pentaho.reporting.engine.classic.core.modules.gui.common.DefaultIconTheme;
@@ -30,12 +25,16 @@ import org.pentaho.reporting.engine.classic.core.modules.gui.common.StatusListen
 import org.pentaho.reporting.engine.classic.core.modules.gui.common.StatusType;
 import org.pentaho.reporting.libraries.base.config.Configuration;
 
-public abstract class AbstractGuiContext implements SwingGuiContext, StatusListener, ReportEventSource
-{
+import java.awt.*;
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
+import java.util.Locale;
+
+public abstract class AbstractGuiContext implements SwingGuiContext, StatusListener, ReportEventSource {
   public static final String STATUS_TYPE_PROPERTY = "statusType";
   public static final String STATUS_TEXT_PROPERTY = "statusText";
   public static final String ERROR_PROPERTY = "error";
-  
+
   private IconTheme iconTheme;
   private StatusType statusType;
   private String statusText;
@@ -46,22 +45,18 @@ public abstract class AbstractGuiContext implements SwingGuiContext, StatusListe
   private boolean paginated;
   private PropertyChangeSupport propertyChangeSupport;
 
-  protected AbstractGuiContext()
-  {
+  protected AbstractGuiContext() {
     this.iconTheme = new DefaultIconTheme();
-    this.propertyChangeSupport = new PropertyChangeSupport(this);
+    this.propertyChangeSupport = new PropertyChangeSupport( this );
   }
 
   public abstract Window getWindow();
 
-  public Locale getLocale()
-  {
+  public Locale getLocale() {
     final MasterReport report = getReportJob();
-    if (report != null)
-    {
+    if ( report != null ) {
       final Locale bundleLocale = report.getResourceBundleFactory().getLocale();
-      if (bundleLocale != null)
-      {
+      if ( bundleLocale != null ) {
         return bundleLocale;
       }
       return report.getReportEnvironment().getLocale();
@@ -69,135 +64,115 @@ public abstract class AbstractGuiContext implements SwingGuiContext, StatusListe
     return Locale.getDefault();
   }
 
-  public IconTheme getIconTheme()
-  {
+  public IconTheme getIconTheme() {
     return iconTheme;
   }
 
-  public Configuration getConfiguration()
-  {
+  public Configuration getConfiguration() {
     final MasterReport report = getReportJob();
-    if (report != null)
-    {
+    if ( report != null ) {
       return report.getConfiguration();
     }
     return ClassicEngineBoot.getInstance().getGlobalConfig();
   }
 
-  public StatusListener getStatusListener()
-  {
+  public StatusListener getStatusListener() {
     return this;
   }
 
-  public void setStatus(final StatusType type, final String text, final Throwable cause)
-  {
+  public void setStatus( final StatusType type, final String text, final Throwable cause ) {
     final StatusType oldStatusType = this.statusType;
     final String oldStatusText = this.statusText;
     final Throwable oldError = this.error;
     this.statusType = type;
     this.statusText = text;
     this.error = cause;
-    propertyChangeSupport.firePropertyChange(STATUS_TYPE_PROPERTY, oldStatusType, statusType);
-    propertyChangeSupport.firePropertyChange(STATUS_TEXT_PROPERTY, oldStatusText, statusText);
-    propertyChangeSupport.firePropertyChange(ERROR_PROPERTY, oldError, error);
+    propertyChangeSupport.firePropertyChange( STATUS_TYPE_PROPERTY, oldStatusType, statusType );
+    propertyChangeSupport.firePropertyChange( STATUS_TEXT_PROPERTY, oldStatusText, statusText );
+    propertyChangeSupport.firePropertyChange( ERROR_PROPERTY, oldError, error );
 
   }
 
-  public Throwable getError()
-  {
+  public Throwable getError() {
     return error;
   }
 
-  public StatusType getStatusType()
-  {
+  public StatusType getStatusType() {
     return statusType;
   }
 
-  public String getStatusText()
-  {
+  public String getStatusText() {
     return statusText;
   }
 
-  public ReportEventSource getEventSource()
-  {
+  public ReportEventSource getEventSource() {
     return this;
   }
 
-  public void setPageNumber(final int pageNumber)
-  {
+  public void setPageNumber( final int pageNumber ) {
     final int oldPageNumber = this.pageNumber;
     this.pageNumber = pageNumber;
 
-    propertyChangeSupport.firePropertyChange(ReportEventSource.PAGE_NUMBER_PROPERTY, oldPageNumber, numberOfPages);
+    propertyChangeSupport.firePropertyChange( ReportEventSource.PAGE_NUMBER_PROPERTY, oldPageNumber, numberOfPages );
   }
 
-  public int getPageNumber()
-  {
+  public int getPageNumber() {
     return pageNumber;
   }
 
-  public void setNumberOfPages(final int numberOfPages)
-  {
+  public void setNumberOfPages( final int numberOfPages ) {
     final int oldNumberOfPages = this.numberOfPages;
     this.numberOfPages = numberOfPages;
 
-    propertyChangeSupport.firePropertyChange(ReportEventSource.NUMBER_OF_PAGES_PROPERTY, oldNumberOfPages, numberOfPages);
+    propertyChangeSupport
+      .firePropertyChange( ReportEventSource.NUMBER_OF_PAGES_PROPERTY, oldNumberOfPages, numberOfPages );
   }
 
-  public int getNumberOfPages()
-  {
+  public int getNumberOfPages() {
     return numberOfPages;
   }
 
-  public void setPaginating(final boolean paginating)
-  {
+  public void setPaginating( final boolean paginating ) {
     final boolean oldPginating = this.paginating;
     this.paginating = paginating;
 
-    propertyChangeSupport.firePropertyChange(ReportEventSource.PAGINATING_PROPERTY, oldPginating, paginating);
+    propertyChangeSupport.firePropertyChange( ReportEventSource.PAGINATING_PROPERTY, oldPginating, paginating );
   }
 
-  public boolean isPaginating()
-  {
+  public boolean isPaginating() {
     return paginating;
   }
 
-  public void setPaginated(final boolean paginated)
-  {
+  public void setPaginated( final boolean paginated ) {
     final boolean oldPaginated = this.paginated;
     this.paginated = paginated;
-    propertyChangeSupport.firePropertyChange(ReportEventSource.PAGINATED_PROPERTY, oldPaginated, paginated);
+    propertyChangeSupport.firePropertyChange( ReportEventSource.PAGINATED_PROPERTY, oldPaginated, paginated );
   }
 
-  public boolean isPaginated()
-  {
+  public boolean isPaginated() {
     return paginated;
   }
 
   public abstract MasterReport getReportJob();
 
-  public void addPropertyChangeListener(final PropertyChangeListener propertyChangeListener)
-  {
-    propertyChangeSupport.addPropertyChangeListener(propertyChangeListener);
+  public void addPropertyChangeListener( final PropertyChangeListener propertyChangeListener ) {
+    propertyChangeSupport.addPropertyChangeListener( propertyChangeListener );
   }
 
-  public void addPropertyChangeListener(final String property, final PropertyChangeListener propertyChangeListener)
-  {
-    propertyChangeSupport.addPropertyChangeListener(property, propertyChangeListener);
+  public void addPropertyChangeListener( final String property, final PropertyChangeListener propertyChangeListener ) {
+    propertyChangeSupport.addPropertyChangeListener( property, propertyChangeListener );
   }
 
-  public void removePropertyChangeListener(final PropertyChangeListener propertyChangeListener)
-  {
-    propertyChangeSupport.removePropertyChangeListener(propertyChangeListener);
+  public void removePropertyChangeListener( final PropertyChangeListener propertyChangeListener ) {
+    propertyChangeSupport.removePropertyChangeListener( propertyChangeListener );
   }
 
-  public void removePropertyChangeListener(final String property, final PropertyChangeListener propertyChangeListener)
-  {
-    propertyChangeSupport.removePropertyChangeListener(property, propertyChangeListener);
+  public void removePropertyChangeListener( final String property,
+                                            final PropertyChangeListener propertyChangeListener ) {
+    propertyChangeSupport.removePropertyChangeListener( property, propertyChangeListener );
   }
 
-  protected void firePropertyChange(final String propertyName, final Object oldValue, final Object newValue)
-  {
-    propertyChangeSupport.firePropertyChange(propertyName, oldValue, newValue);
+  protected void firePropertyChange( final String propertyName, final Object oldValue, final Object newValue ) {
+    propertyChangeSupport.firePropertyChange( propertyName, oldValue, newValue );
   }
 }

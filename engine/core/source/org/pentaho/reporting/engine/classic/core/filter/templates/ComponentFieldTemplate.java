@@ -27,8 +27,7 @@ import org.pentaho.reporting.engine.classic.core.function.ExpressionRuntime;
  *
  * @author Thomas Morgner
  */
-public class ComponentFieldTemplate extends AbstractTemplate
-{
+public class ComponentFieldTemplate extends AbstractTemplate {
   /**
    * The data row reader.
    */
@@ -42,11 +41,10 @@ public class ComponentFieldTemplate extends AbstractTemplate
   /**
    * Creates a new image field template.
    */
-  public ComponentFieldTemplate()
-  {
+  public ComponentFieldTemplate() {
     dataRowDataSource = new DataRowDataSource();
     drawableFilter = new ComponentDrawableFilter();
-    drawableFilter.setDataSource(dataRowDataSource);
+    drawableFilter.setDataSource( dataRowDataSource );
   }
 
   /**
@@ -54,8 +52,7 @@ public class ComponentFieldTemplate extends AbstractTemplate
    *
    * @return The field name.
    */
-  public String getField()
-  {
+  public String getField() {
     return dataRowDataSource.getDataSourceColumnName();
   }
 
@@ -64,9 +61,8 @@ public class ComponentFieldTemplate extends AbstractTemplate
    *
    * @param field the field name.
    */
-  public void setField(final String field)
-  {
-    dataRowDataSource.setDataSourceColumnName(field);
+  public void setField( final String field ) {
+    dataRowDataSource.setDataSourceColumnName( field );
   }
 
   /**
@@ -74,8 +70,7 @@ public class ComponentFieldTemplate extends AbstractTemplate
    *
    * @return the formula.
    */
-  public String getFormula()
-  {
+  public String getFormula() {
     return dataRowDataSource.getFormula();
   }
 
@@ -84,9 +79,8 @@ public class ComponentFieldTemplate extends AbstractTemplate
    *
    * @param formula the formula for the data source.
    */
-  public void setFormula(final String formula)
-  {
-    dataRowDataSource.setFormula(formula);
+  public void setFormula( final String formula ) {
+    dataRowDataSource.setFormula( formula );
   }
 
 
@@ -98,9 +92,8 @@ public class ComponentFieldTemplate extends AbstractTemplate
    * @param element
    * @return the value.
    */
-  public Object getValue(final ExpressionRuntime runtime, final ReportElement element)
-  {
-    return drawableFilter.getValue(runtime, element);
+  public Object getValue( final ExpressionRuntime runtime, final ReportElement element ) {
+    return drawableFilter.getValue( runtime, element );
   }
 
   /**
@@ -110,8 +103,7 @@ public class ComponentFieldTemplate extends AbstractTemplate
    * @throws CloneNotSupportedException this should never happen.
    */
   public ComponentFieldTemplate clone()
-      throws CloneNotSupportedException
-  {
+    throws CloneNotSupportedException {
     final ComponentFieldTemplate template = (ComponentFieldTemplate) super.clone();
     template.drawableFilter = template.drawableFilter.clone();
     template.dataRowDataSource = (DataRowDataSource) template.drawableFilter.getDataSource();
@@ -123,8 +115,7 @@ public class ComponentFieldTemplate extends AbstractTemplate
    *
    * @return the datarow data source.
    */
-  protected DataRowDataSource getDataRowDataSource()
-  {
+  protected DataRowDataSource getDataRowDataSource() {
     return dataRowDataSource;
   }
 
@@ -133,8 +124,7 @@ public class ComponentFieldTemplate extends AbstractTemplate
    *
    * @return the drawable filter.
    */
-  protected ComponentDrawableFilter getDrawableFilter()
-  {
+  protected ComponentDrawableFilter getDrawableFilter() {
     return drawableFilter;
   }
 }

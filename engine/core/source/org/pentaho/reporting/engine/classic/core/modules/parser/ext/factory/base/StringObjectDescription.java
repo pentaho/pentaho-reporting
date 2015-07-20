@@ -22,16 +22,14 @@ package org.pentaho.reporting.engine.classic.core.modules.parser.ext.factory.bas
  *
  * @author Thomas Morgner
  */
-public class StringObjectDescription extends AbstractObjectDescription
-{
+public class StringObjectDescription extends AbstractObjectDescription {
 
   /**
    * Creates a new object description.
    */
-  public StringObjectDescription()
-  {
-    super(String.class);
-    setParameterDefinition("value", String.class);
+  public StringObjectDescription() {
+    super( String.class );
+    setParameterDefinition( "value", String.class );
   }
 
   /**
@@ -39,10 +37,9 @@ public class StringObjectDescription extends AbstractObjectDescription
    *
    * @return The object.
    */
-  public Object createObject()
-  {
-    final String o = (String) getParameter("value");
-    return String.valueOf(o);
+  public Object createObject() {
+    final String o = (String) getParameter( "value" );
+    return String.valueOf( o );
   }
 
   /**
@@ -51,13 +48,11 @@ public class StringObjectDescription extends AbstractObjectDescription
    * @param o the object (should be an instance of <code>String</code>).
    * @throws ObjectFactoryException if the object is not an instance of <code>String</code>.
    */
-  public void setParameterFromObject(final Object o) throws ObjectFactoryException
-  {
-    if (!(o instanceof String))
-    {
-      throw new ObjectFactoryException("The given object is no java.lang.String.");
+  public void setParameterFromObject( final Object o ) throws ObjectFactoryException {
+    if ( !( o instanceof String ) ) {
+      throw new ObjectFactoryException( "The given object is no java.lang.String." );
     }
 
-    setParameter("value", String.valueOf(o));
+    setParameter( "value", String.valueOf( o ) );
   }
 }

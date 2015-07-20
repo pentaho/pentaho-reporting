@@ -1,70 +1,58 @@
 package org.pentaho.reporting.engine.classic.core.modules.output.table.html;
 
-import java.awt.Color;
-
 import org.pentaho.reporting.engine.classic.core.layout.model.BorderEdge;
 
-public class HtmlRowBackgroundStruct
-{
+import java.awt.*;
+
+public class HtmlRowBackgroundStruct {
   private Color color;
   private BorderEdge topEdge;
   private BorderEdge bottomEdge;
   private boolean failed;
 
-  public HtmlRowBackgroundStruct()
-  {
+  public HtmlRowBackgroundStruct() {
   }
 
-  public void setColor(final Color color)
-  {
+  public void setColor( final Color color ) {
     this.color = color;
   }
 
-  public void setTopEdge(final BorderEdge topEdge)
-  {
+  public void setTopEdge( final BorderEdge topEdge ) {
     this.topEdge = topEdge;
   }
 
-  public void setBottomEdge(final BorderEdge bottomEdge)
-  {
+  public void setBottomEdge( final BorderEdge bottomEdge ) {
     this.bottomEdge = bottomEdge;
   }
 
-  public void setFailed(final boolean failed)
-  {
+  public void setFailed( final boolean failed ) {
     this.failed = failed;
   }
 
-  public Color getColor()
-  {
+  public Color getColor() {
     return color;
   }
 
-  public BorderEdge getTopEdge()
-  {
+  public BorderEdge getTopEdge() {
     return topEdge;
   }
 
-  public BorderEdge getBottomEdge()
-  {
+  public BorderEdge getBottomEdge() {
     return bottomEdge;
   }
 
-  public boolean isFailed()
-  {
+  public boolean isFailed() {
     return failed;
   }
 
-  public void set(Color color, BorderEdge topEdge, BorderEdge bottomEdge)
-  {
+  public void set( Color color, BorderEdge topEdge, BorderEdge bottomEdge ) {
     this.color = color;
     this.topEdge = topEdge;
     this.bottomEdge = bottomEdge;
     this.failed = false;
   }
 
-  public void fail()
-  {
+  public void fail() {
     this.color = null;
     this.topEdge = BorderEdge.EMPTY;
     this.bottomEdge = BorderEdge.EMPTY;

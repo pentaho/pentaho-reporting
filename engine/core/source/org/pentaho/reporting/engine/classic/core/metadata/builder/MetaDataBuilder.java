@@ -19,8 +19,7 @@ package org.pentaho.reporting.engine.classic.core.metadata.builder;
 
 import org.pentaho.reporting.engine.classic.core.metadata.MaturityLevel;
 
-public abstract class MetaDataBuilder<T extends MetaDataBuilder<T>> implements Cloneable
-{
+public abstract class MetaDataBuilder<T extends MetaDataBuilder<T>> implements Cloneable {
   private String name;
   private String bundleLocation;
   private String keyPrefix;
@@ -33,23 +32,23 @@ public abstract class MetaDataBuilder<T extends MetaDataBuilder<T>> implements C
 
   protected abstract T self();
 
-  public T name(final String name) {
+  public T name( final String name ) {
     this.name = name;
     return self();
   }
 
-  public T bundle(final String bundleLocation, final String keyPrefix) {
+  public T bundle( final String bundleLocation, final String keyPrefix ) {
     this.bundleLocation = bundleLocation;
     this.keyPrefix = keyPrefix;
     return self();
   }
 
-  public T maturity(final MaturityLevel m) {
+  public T maturity( final MaturityLevel m ) {
     this.maturityLevel = m;
     return self();
   }
 
-  public T since(final int comp) {
+  public T since( final int comp ) {
     this.compatibilityLevel = comp;
     return self();
   }
@@ -74,79 +73,67 @@ public abstract class MetaDataBuilder<T extends MetaDataBuilder<T>> implements C
     return self();
   }
 
-  public T expert(final boolean v) {
+  public T expert( final boolean v ) {
     this.expert = v;
     return self();
   }
 
-  public T preferred(final boolean v) {
+  public T preferred( final boolean v ) {
     this.preferred = v;
     return self();
   }
 
-  public T hidden(final boolean v) {
+  public T hidden( final boolean v ) {
     this.hidden = v;
     return self();
   }
 
-  public T deprecated(final boolean v) {
+  public T deprecated( final boolean v ) {
     this.deprecated = v;
     return self();
   }
 
-  public String getName()
-  {
+  public String getName() {
     return name;
   }
 
-  public String getBundleLocation()
-  {
+  public String getBundleLocation() {
     return bundleLocation;
   }
 
-  public String getKeyPrefix()
-  {
+  public String getKeyPrefix() {
     return keyPrefix;
   }
 
-  public boolean isExpert()
-  {
+  public boolean isExpert() {
     return expert;
   }
 
-  public boolean isPreferred()
-  {
+  public boolean isPreferred() {
     return preferred;
   }
 
-  public boolean isHidden()
-  {
+  public boolean isHidden() {
     return hidden;
   }
 
-  public boolean isDeprecated()
-  {
+  public boolean isDeprecated() {
     return deprecated;
   }
 
-  public MaturityLevel getMaturityLevel()
-  {
+  public MaturityLevel getMaturityLevel() {
     return maturityLevel;
   }
 
-  public int getCompatibilityLevel()
-  {
+  public int getCompatibilityLevel() {
     return compatibilityLevel;
   }
 
-  public T clone () {
-    try
-    {
+  public T clone() {
+    try {
       return (T) super.clone();
-    }
-    catch (CloneNotSupportedException e)
-    {
-      throw new IllegalStateException(e);
+    } catch ( CloneNotSupportedException e ) {
+      throw new IllegalStateException( e );
     }
   }
 }

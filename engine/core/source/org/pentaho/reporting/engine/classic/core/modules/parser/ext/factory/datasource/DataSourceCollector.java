@@ -17,21 +17,20 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.parser.ext.factory.datasource;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-
 import org.pentaho.reporting.engine.classic.core.modules.parser.ext.factory.base.ClassFactory;
 import org.pentaho.reporting.engine.classic.core.modules.parser.ext.factory.base.ObjectDescription;
 import org.pentaho.reporting.libraries.base.config.Configuration;
 import org.pentaho.reporting.libraries.serializer.ClassComparator;
+
+import java.util.ArrayList;
+import java.util.Iterator;
 
 /**
  * A {@link DataSourceFactory} created from a number of other factories.
  *
  * @author Thomas Morgner
  */
-public class DataSourceCollector implements DataSourceFactory
-{
+public class DataSourceCollector implements DataSourceFactory {
   /**
    * Storage for the factories.
    */
@@ -48,8 +47,7 @@ public class DataSourceCollector implements DataSourceFactory
   /**
    * Creates a new factory.
    */
-  public DataSourceCollector()
-  {
+  public DataSourceCollector() {
     factories = new ArrayList();
     comparator = new ClassComparator();
   }
@@ -59,16 +57,13 @@ public class DataSourceCollector implements DataSourceFactory
    *
    * @param factory the factory.
    */
-  public void addFactory(final DataSourceFactory factory)
-  {
-    if (factory == null)
-    {
+  public void addFactory( final DataSourceFactory factory ) {
+    if ( factory == null ) {
       throw new NullPointerException();
     }
-    factories.add(factory);
-    if (getConfig() != null)
-    {
-      factory.configure(getConfig());
+    factories.add( factory );
+    if ( getConfig() != null ) {
+      factory.configure( getConfig() );
     }
   }
 
@@ -77,8 +72,7 @@ public class DataSourceCollector implements DataSourceFactory
    *
    * @return The iterator.
    */
-  public Iterator getFactories()
-  {
+  public Iterator getFactories() {
     return factories.iterator();
   }
 
@@ -88,14 +82,11 @@ public class DataSourceCollector implements DataSourceFactory
    * @param name the data source name.
    * @return The description.
    */
-  public ObjectDescription getDataSourceDescription(final String name)
-  {
-    for (int i = 0; i < factories.size(); i++)
-    {
-      final DataSourceFactory fact = (DataSourceFactory) factories.get(i);
-      final ObjectDescription o = fact.getDataSourceDescription(name);
-      if (o != null)
-      {
+  public ObjectDescription getDataSourceDescription( final String name ) {
+    for ( int i = 0; i < factories.size(); i++ ) {
+      final DataSourceFactory fact = (DataSourceFactory) factories.get( i );
+      final ObjectDescription o = fact.getDataSourceDescription( name );
+      if ( o != null ) {
         return o.getInstance();
       }
     }
@@ -108,14 +99,11 @@ public class DataSourceCollector implements DataSourceFactory
    * @param od the object description.
    * @return The name.
    */
-  public String getDataSourceName(final ObjectDescription od)
-  {
-    for (int i = 0; i < factories.size(); i++)
-    {
-      final DataSourceFactory fact = (DataSourceFactory) factories.get(i);
-      final String o = fact.getDataSourceName(od);
-      if (o != null)
-      {
+  public String getDataSourceName( final ObjectDescription od ) {
+    for ( int i = 0; i < factories.size(); i++ ) {
+      final DataSourceFactory fact = (DataSourceFactory) factories.get( i );
+      final String o = fact.getDataSourceName( od );
+      if ( o != null ) {
         return o;
       }
     }
@@ -128,14 +116,11 @@ public class DataSourceCollector implements DataSourceFactory
    * @param c the class.
    * @return The description.
    */
-  public ObjectDescription getDescriptionForClass(final Class c)
-  {
-    for (int i = 0; i < factories.size(); i++)
-    {
-      final DataSourceFactory fact = (DataSourceFactory) factories.get(i);
-      final ObjectDescription o = fact.getDescriptionForClass(c);
-      if (o != null)
-      {
+  public ObjectDescription getDescriptionForClass( final Class c ) {
+    for ( int i = 0; i < factories.size(); i++ ) {
+      final DataSourceFactory fact = (DataSourceFactory) factories.get( i );
+      final ObjectDescription o = fact.getDescriptionForClass( c );
+      if ( o != null ) {
         return o.getInstance();
       }
     }
@@ -150,31 +135,23 @@ public class DataSourceCollector implements DataSourceFactory
    * @return The object description suitable to create instances of the given class d.
    */
   public ObjectDescription getSuperClassObjectDescription
-      (final Class d, ObjectDescription knownSuperClass)
-  {
-    for (int i = 0; i < factories.size(); i++)
-    {
-      final DataSourceFactory fact = (DataSourceFactory) factories.get(i);
-      final ObjectDescription od = fact.getSuperClassObjectDescription(d, knownSuperClass);
-      if (od == null)
-      {
+  ( final Class d, ObjectDescription knownSuperClass ) {
+    for ( int i = 0; i < factories.size(); i++ ) {
+      final DataSourceFactory fact = (DataSourceFactory) factories.get( i );
+      final ObjectDescription od = fact.getSuperClassObjectDescription( d, knownSuperClass );
+      if ( od == null ) {
         continue;
       }
-      if (knownSuperClass == null)
-      {
+      if ( knownSuperClass == null ) {
         knownSuperClass = od;
-      }
-      else
-      {
-        if (comparator.isComparable(knownSuperClass.getObjectClass(), od.getObjectClass())
-            && (comparator.compare(knownSuperClass.getObjectClass(), od.getObjectClass()) < 0))
-        {
+      } else {
+        if ( comparator.isComparable( knownSuperClass.getObjectClass(), od.getObjectClass() )
+          && ( comparator.compare( knownSuperClass.getObjectClass(), od.getObjectClass() ) < 0 ) ) {
           knownSuperClass = od;
         }
       }
     }
-    if (knownSuperClass != null)
-    {
+    if ( knownSuperClass != null ) {
       return knownSuperClass.getInstance();
     }
     return null;
@@ -185,16 +162,13 @@ public class DataSourceCollector implements DataSourceFactory
    *
    * @return The iterator.
    */
-  public Iterator getRegisteredClasses()
-  {
+  public Iterator getRegisteredClasses() {
     final ArrayList list = new ArrayList();
-    for (int i = 0; i < factories.size(); i++)
-    {
-      final ClassFactory f = (ClassFactory) factories.get(i);
+    for ( int i = 0; i < factories.size(); i++ ) {
+      final ClassFactory f = (ClassFactory) factories.get( i );
       final Iterator keys = f.getRegisteredClasses();
-      while (keys.hasNext())
-      {
-        list.add(keys.next());
+      while ( keys.hasNext() ) {
+        list.add( keys.next() );
       }
     }
     return list.iterator();
@@ -208,24 +182,20 @@ public class DataSourceCollector implements DataSourceFactory
    *
    * @param config the configuration, never null
    */
-  public void configure(final Configuration config)
-  {
-    if (config == null)
-    {
-      throw new NullPointerException("The given configuration is null");
+  public void configure( final Configuration config ) {
+    if ( config == null ) {
+      throw new NullPointerException( "The given configuration is null" );
     }
-    if (this.config != null)
-    {
+    if ( this.config != null ) {
       // already configured ... ignored
       return;
     }
 
     this.config = config;
     final Iterator it = factories.iterator();
-    while (it.hasNext())
-    {
+    while ( it.hasNext() ) {
       final DataSourceFactory od = (DataSourceFactory) it.next();
-      od.configure(config);
+      od.configure( config );
     }
 
   }
@@ -235,8 +205,7 @@ public class DataSourceCollector implements DataSourceFactory
    *
    * @return the configuration.
    */
-  public Configuration getConfig()
-  {
+  public Configuration getConfig() {
     return config;
   }
 
@@ -245,8 +214,7 @@ public class DataSourceCollector implements DataSourceFactory
    *
    * @return the registered names.
    */
-  public Iterator getRegisteredNames()
-  {
+  public Iterator getRegisteredNames() {
     return new ArrayList().iterator();
   }
 }

@@ -29,48 +29,41 @@ import org.pentaho.reporting.engine.classic.core.util.InstanceID;
  *
  * @author Thomas Morgner
  */
-public class NonDynamicReplacedContentStyleSheet extends AbstractStyleSheet
-{
+public class NonDynamicReplacedContentStyleSheet extends AbstractStyleSheet {
   private StyleSheet parent;
 
-  public NonDynamicReplacedContentStyleSheet(final StyleSheet parent)
-  {
+  public NonDynamicReplacedContentStyleSheet( final StyleSheet parent ) {
     this.parent = parent;
   }
 
-  public StyleSheet getParent()
-  {
+  public StyleSheet getParent() {
     return parent;
   }
 
-  public Object getStyleProperty(final StyleKey key, final Object defaultValue)
-  {
-    if (ElementStyleKeys.MAX_WIDTH.equals(key))
-    {
-      return parent.getStyleProperty(ElementStyleKeys.WIDTH, parent.getStyleProperty(ElementStyleKeys.MIN_WIDTH, defaultValue));
+  public Object getStyleProperty( final StyleKey key, final Object defaultValue ) {
+    if ( ElementStyleKeys.MAX_WIDTH.equals( key ) ) {
+      return parent.getStyleProperty( ElementStyleKeys.WIDTH,
+        parent.getStyleProperty( ElementStyleKeys.MIN_WIDTH, defaultValue ) );
     }
-    if (ElementStyleKeys.MAX_HEIGHT.equals(key))
-    {
-      return parent.getStyleProperty(ElementStyleKeys.HEIGHT, parent.getStyleProperty(ElementStyleKeys.MIN_HEIGHT, defaultValue));
+    if ( ElementStyleKeys.MAX_HEIGHT.equals( key ) ) {
+      return parent.getStyleProperty( ElementStyleKeys.HEIGHT,
+        parent.getStyleProperty( ElementStyleKeys.MIN_HEIGHT, defaultValue ) );
     }
-    return parent.getStyleProperty(key, defaultValue);
+    return parent.getStyleProperty( key, defaultValue );
   }
 
-  public Object[] toArray()
-  {
+  public Object[] toArray() {
     final Object[] objects = parent.toArray();
-    objects[ElementStyleKeys.MAX_WIDTH.getIdentifier()] = getStyleProperty(ElementStyleKeys.MAX_WIDTH);
-    objects[ElementStyleKeys.MAX_HEIGHT.getIdentifier()] = getStyleProperty(ElementStyleKeys.MAX_HEIGHT);
+    objects[ ElementStyleKeys.MAX_WIDTH.getIdentifier() ] = getStyleProperty( ElementStyleKeys.MAX_WIDTH );
+    objects[ ElementStyleKeys.MAX_HEIGHT.getIdentifier() ] = getStyleProperty( ElementStyleKeys.MAX_HEIGHT );
     return objects;
   }
 
-  public InstanceID getId()
-  {
+  public InstanceID getId() {
     return parent.getId();
   }
 
-  public long getChangeTracker()
-  {
+  public long getChangeTracker() {
     return parent.getChangeTracker();
   }
 }

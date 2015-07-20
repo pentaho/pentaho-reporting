@@ -17,8 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.core.function;
 
-import javax.swing.table.TableModel;
-
 import org.pentaho.reporting.engine.classic.core.DataFactory;
 import org.pentaho.reporting.engine.classic.core.DataRow;
 import org.pentaho.reporting.engine.classic.core.ReportEnvironment;
@@ -32,91 +30,75 @@ import org.pentaho.reporting.libraries.formula.FormulaContext;
 import org.pentaho.reporting.libraries.resourceloader.ResourceKey;
 import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 
-public class WrapperExpressionRuntime implements ExpressionRuntime
-{
-  private static class WrapperProcessingContext implements ProcessingContext
-  {
+import javax.swing.table.TableModel;
+
+public class WrapperExpressionRuntime implements ExpressionRuntime {
+  private static class WrapperProcessingContext implements ProcessingContext {
     private ProcessingContext context;
     private ExpressionRuntime runtime;
 
-    private WrapperProcessingContext(final ExpressionRuntime runtime)
-    {
+    private WrapperProcessingContext( final ExpressionRuntime runtime ) {
       this.context = runtime.getProcessingContext();
       this.runtime = runtime;
     }
 
-    public int getProgressLevel()
-    {
+    public int getProgressLevel() {
       return context.getProgressLevel();
     }
 
-    public int getProgressLevelCount()
-    {
+    public int getProgressLevelCount() {
       return context.getProgressLevelCount();
     }
 
-    public int getProcessingLevel()
-    {
+    public int getProcessingLevel() {
       return context.getProcessingLevel();
     }
 
-    public FormulaContext getFormulaContext()
-    {
-      return new ReportFormulaContext(context.getFormulaContext(), runtime);
+    public FormulaContext getFormulaContext() {
+      return new ReportFormulaContext( context.getFormulaContext(), runtime );
     }
 
-    public boolean isPrepareRun()
-    {
+    public boolean isPrepareRun() {
       return context.isPrepareRun();
     }
 
-    public String getExportDescriptor()
-    {
+    public String getExportDescriptor() {
       return context.getExportDescriptor();
     }
 
-    public OutputProcessorMetaData getOutputProcessorMetaData()
-    {
+    public OutputProcessorMetaData getOutputProcessorMetaData() {
       return context.getOutputProcessorMetaData();
     }
 
-    public ResourceBundleFactory getResourceBundleFactory()
-    {
+    public ResourceBundleFactory getResourceBundleFactory() {
       return context.getResourceBundleFactory();
     }
 
-    public ResourceKey getContentBase()
-    {
+    public ResourceKey getContentBase() {
       return context.getContentBase();
     }
 
-    public ResourceManager getResourceManager()
-    {
+    public ResourceManager getResourceManager() {
       return context.getResourceManager();
     }
 
-    public Configuration getConfiguration()
-    {
+    public Configuration getConfiguration() {
       return context.getConfiguration();
     }
 
-    public DocumentMetaData getDocumentMetaData()
-    {
+    public DocumentMetaData getDocumentMetaData() {
       return context.getDocumentMetaData();
     }
 
-    public ReportEnvironment getEnvironment()
-    {
+    public ReportEnvironment getEnvironment() {
       return context.getEnvironment();
     }
 
-    public long getReportProcessingStartTime()
-    {
+    public long getReportProcessingStartTime() {
       return context.getReportProcessingStartTime();
     }
 
-    public int getCompatibilityLevel()
-    {
+    public int getCompatibilityLevel() {
       return context.getCompatibilityLevel();
     }
   }
@@ -125,111 +107,89 @@ public class WrapperExpressionRuntime implements ExpressionRuntime
   private ExpressionRuntime runtime;
   private WrapperProcessingContext processingContext;
 
-  public WrapperExpressionRuntime()
-  {
+  public WrapperExpressionRuntime() {
   }
 
-  public WrapperExpressionRuntime(final DataRow overrideValues,
-                                  final ExpressionRuntime runtime)
-  {
-    update(overrideValues, runtime);
+  public WrapperExpressionRuntime( final DataRow overrideValues,
+                                   final ExpressionRuntime runtime ) {
+    update( overrideValues, runtime );
   }
 
-  public void update(final DataRow overrideValues,
-                     final ExpressionRuntime runtime)
-  {
-    if (runtime == null)
-    {
+  public void update( final DataRow overrideValues,
+                      final ExpressionRuntime runtime ) {
+    if ( runtime == null ) {
       this.dataRow = null;
       this.runtime = null;
       this.processingContext = null;
       return;
     }
 
-    if (overrideValues != null)
-    {
-      this.dataRow = new CompoundDataRow(overrideValues, runtime.getDataRow());
-    }
-    else
-    {
+    if ( overrideValues != null ) {
+      this.dataRow = new CompoundDataRow( overrideValues, runtime.getDataRow() );
+    } else {
       this.dataRow = runtime.getDataRow();
     }
-    this.processingContext = new WrapperProcessingContext(runtime);
+    this.processingContext = new WrapperProcessingContext( runtime );
     this.runtime = runtime;
   }
 
-  public DataRow getDataRow()
-  {
+  public DataRow getDataRow() {
     return dataRow;
   }
 
-  public DataSchema getDataSchema()
-  {
+  public DataSchema getDataSchema() {
     return runtime.getDataSchema();
   }
 
-  public Configuration getConfiguration()
-  {
+  public Configuration getConfiguration() {
     return runtime.getConfiguration();
   }
 
-  public ResourceBundleFactory getResourceBundleFactory()
-  {
+  public ResourceBundleFactory getResourceBundleFactory() {
     return runtime.getResourceBundleFactory();
   }
 
-  public TableModel getData()
-  {
+  public TableModel getData() {
     return runtime.getData();
   }
 
-  public int getCurrentRow()
-  {
+  public int getCurrentRow() {
     return runtime.getCurrentRow();
   }
 
-  public int getCurrentDataItem()
-  {
+  public int getCurrentDataItem() {
     return runtime.getCurrentDataItem();
   }
-  
-  public int getCurrentGroup()
-  {
+
+  public int getCurrentGroup() {
     return runtime.getCurrentGroup();
   }
 
-  public int getGroupStartRow(final String groupName)
-  {
-    return runtime.getGroupStartRow(groupName);
+  public int getGroupStartRow( final String groupName ) {
+    return runtime.getGroupStartRow( groupName );
   }
 
-  public int getGroupStartRow(final int groupIndex)
-  {
-    return runtime.getGroupStartRow(groupIndex);
+  public int getGroupStartRow( final int groupIndex ) {
+    return runtime.getGroupStartRow( groupIndex );
   }
 
-  public String getExportDescriptor()
-  {
+  public String getExportDescriptor() {
     return runtime.getExportDescriptor();
   }
 
-  public ProcessingContext getProcessingContext()
-  {
+  public ProcessingContext getProcessingContext() {
     return processingContext;
   }
 
-  public DataFactory getDataFactory()
-  {
+  public DataFactory getDataFactory() {
     return runtime.getDataFactory();
   }
 
-  public boolean isStructuralComplexReport()
-  {
+  public boolean isStructuralComplexReport() {
     return runtime.isStructuralComplexReport();
   }
 
-  public boolean isCrosstabActive()
-  {
+  public boolean isCrosstabActive() {
     return runtime.isCrosstabActive();
   }
 }

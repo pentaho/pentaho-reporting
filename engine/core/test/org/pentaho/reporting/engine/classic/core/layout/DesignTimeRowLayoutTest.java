@@ -35,94 +35,90 @@ import org.pentaho.reporting.engine.classic.core.testsupport.DebugReportRunner;
 import org.pentaho.reporting.engine.classic.core.testsupport.selector.MatchFactory;
 import org.pentaho.reporting.engine.classic.core.util.geom.StrictGeomUtility;
 
-public class DesignTimeRowLayoutTest
-{
-  public DesignTimeRowLayoutTest()
-  {
+public class DesignTimeRowLayoutTest {
+  public DesignTimeRowLayoutTest() {
   }
 
   @Before
-  public void setUp() throws Exception
-  {
+  public void setUp() throws Exception {
     ClassicEngineBoot.getInstance().start();
   }
 
   @Test
-  public void testRowLayoutAtDesignTimeInv() throws Exception
-  {
-    LogFactory.getLog("test").error("Test");
+  public void testRowLayoutAtDesignTimeInv() throws Exception {
+    LogFactory.getLog( "test" ).error( "Test" );
     MasterReport report = new MasterReport();
     ReportHeader reportHeader = report.getReportHeader();
-    reportHeader.setLayout(BandStyleKeys.LAYOUT_ROW);
-    reportHeader.getStyle().setStyleProperty(ElementStyleKeys.INVISIBLE_CONSUMES_SPACE, true);
-    reportHeader.addElement(createElement(true));
-    reportHeader.addElement(createElement(false));
-    reportHeader.addElement(createElement(true));
+    reportHeader.setLayout( BandStyleKeys.LAYOUT_ROW );
+    reportHeader.getStyle().setStyleProperty( ElementStyleKeys.INVISIBLE_CONSUMES_SPACE, true );
+    reportHeader.addElement( createElement( true ) );
+    reportHeader.addElement( createElement( false ) );
+    reportHeader.addElement( createElement( true ) );
 
-    LogicalPageBox logicalPageBox = DebugReportRunner.layoutSingleBandInDesignTime(report, reportHeader);
+    LogicalPageBox logicalPageBox = DebugReportRunner.layoutSingleBandInDesignTime( report, reportHeader );
 
-    RenderNode[] elementsByElementType = MatchFactory.findElementsByNodeType(logicalPageBox, LayoutNodeTypes.TYPE_BOX_PARAGRAPH);
-    Assert.assertEquals(3, elementsByElementType.length);
+    RenderNode[] elementsByElementType =
+      MatchFactory.findElementsByNodeType( logicalPageBox, LayoutNodeTypes.TYPE_BOX_PARAGRAPH );
+    Assert.assertEquals( 3, elementsByElementType.length );
 
-    Assert.assertEquals(0, elementsByElementType[0].getX());
-    Assert.assertEquals(StrictGeomUtility.toInternalValue(100), elementsByElementType[0].getWidth());
-    Assert.assertEquals(StrictGeomUtility.toInternalValue(100), elementsByElementType[1].getX());
-    Assert.assertEquals(StrictGeomUtility.toInternalValue(100), elementsByElementType[1].getWidth());
-    Assert.assertEquals(StrictGeomUtility.toInternalValue(200), elementsByElementType[2].getX());
-    Assert.assertEquals(StrictGeomUtility.toInternalValue(100), elementsByElementType[2].getWidth());
+    Assert.assertEquals( 0, elementsByElementType[ 0 ].getX() );
+    Assert.assertEquals( StrictGeomUtility.toInternalValue( 100 ), elementsByElementType[ 0 ].getWidth() );
+    Assert.assertEquals( StrictGeomUtility.toInternalValue( 100 ), elementsByElementType[ 1 ].getX() );
+    Assert.assertEquals( StrictGeomUtility.toInternalValue( 100 ), elementsByElementType[ 1 ].getWidth() );
+    Assert.assertEquals( StrictGeomUtility.toInternalValue( 200 ), elementsByElementType[ 2 ].getX() );
+    Assert.assertEquals( StrictGeomUtility.toInternalValue( 100 ), elementsByElementType[ 2 ].getWidth() );
   }
 
   @Test
-  public void testRowLayoutAtDesignTime() throws Exception
-  {
-    LogFactory.getLog("test").error("Test");
+  public void testRowLayoutAtDesignTime() throws Exception {
+    LogFactory.getLog( "test" ).error( "Test" );
     MasterReport report = new MasterReport();
     ReportHeader reportHeader = report.getReportHeader();
-    reportHeader.setLayout(BandStyleKeys.LAYOUT_ROW);
-    reportHeader.getStyle().setStyleProperty(ElementStyleKeys.INVISIBLE_CONSUMES_SPACE, false);
-    reportHeader.addElement(createElement(true));
-    reportHeader.addElement(createElement(false));
-    reportHeader.addElement(createElement(true));
+    reportHeader.setLayout( BandStyleKeys.LAYOUT_ROW );
+    reportHeader.getStyle().setStyleProperty( ElementStyleKeys.INVISIBLE_CONSUMES_SPACE, false );
+    reportHeader.addElement( createElement( true ) );
+    reportHeader.addElement( createElement( false ) );
+    reportHeader.addElement( createElement( true ) );
 
-    LogicalPageBox logicalPageBox = DebugReportRunner.layoutSingleBandInDesignTime(report, reportHeader);
+    LogicalPageBox logicalPageBox = DebugReportRunner.layoutSingleBandInDesignTime( report, reportHeader );
 
-    RenderNode[] elementsByElementType = MatchFactory.findElementsByNodeType(logicalPageBox, LayoutNodeTypes.TYPE_BOX_PARAGRAPH);
-    Assert.assertEquals(3, elementsByElementType.length);
+    RenderNode[] elementsByElementType =
+      MatchFactory.findElementsByNodeType( logicalPageBox, LayoutNodeTypes.TYPE_BOX_PARAGRAPH );
+    Assert.assertEquals( 3, elementsByElementType.length );
 
-    Assert.assertEquals(0, elementsByElementType[0].getX());
-    Assert.assertEquals(StrictGeomUtility.toInternalValue(100), elementsByElementType[0].getWidth());
-    Assert.assertEquals(StrictGeomUtility.toInternalValue(100), elementsByElementType[1].getX());
-    Assert.assertEquals(StrictGeomUtility.toInternalValue(100), elementsByElementType[1].getWidth());
-    Assert.assertEquals(StrictGeomUtility.toInternalValue(100), elementsByElementType[2].getX());
-    Assert.assertEquals(StrictGeomUtility.toInternalValue(100), elementsByElementType[2].getWidth());
+    Assert.assertEquals( 0, elementsByElementType[ 0 ].getX() );
+    Assert.assertEquals( StrictGeomUtility.toInternalValue( 100 ), elementsByElementType[ 0 ].getWidth() );
+    Assert.assertEquals( StrictGeomUtility.toInternalValue( 100 ), elementsByElementType[ 1 ].getX() );
+    Assert.assertEquals( StrictGeomUtility.toInternalValue( 100 ), elementsByElementType[ 1 ].getWidth() );
+    Assert.assertEquals( StrictGeomUtility.toInternalValue( 100 ), elementsByElementType[ 2 ].getX() );
+    Assert.assertEquals( StrictGeomUtility.toInternalValue( 100 ), elementsByElementType[ 2 ].getWidth() );
   }
 
   @Test
-  public void testRowLayoutAtRunTime() throws Exception
-  {
+  public void testRowLayoutAtRunTime() throws Exception {
     MasterReport report = new MasterReport();
     ReportHeader reportHeader = report.getReportHeader();
-    reportHeader.setLayout(BandStyleKeys.LAYOUT_ROW);
-    reportHeader.getStyle().setStyleProperty(ElementStyleKeys.INVISIBLE_CONSUMES_SPACE, false);
-    reportHeader.addElement(createElement(true));
-    reportHeader.addElement(createElement(false));
-    reportHeader.addElement(createElement(true));
+    reportHeader.setLayout( BandStyleKeys.LAYOUT_ROW );
+    reportHeader.getStyle().setStyleProperty( ElementStyleKeys.INVISIBLE_CONSUMES_SPACE, false );
+    reportHeader.addElement( createElement( true ) );
+    reportHeader.addElement( createElement( false ) );
+    reportHeader.addElement( createElement( true ) );
 
-    LogicalPageBox logicalPageBox = DebugReportRunner.layoutSingleBand(report, reportHeader);
+    LogicalPageBox logicalPageBox = DebugReportRunner.layoutSingleBand( report, reportHeader );
 
-    RenderNode[] elementsByElementType = MatchFactory.findElementsByNodeType(logicalPageBox, LayoutNodeTypes.TYPE_BOX_PARAGRAPH);
-    Assert.assertEquals(2, elementsByElementType.length);
+    RenderNode[] elementsByElementType =
+      MatchFactory.findElementsByNodeType( logicalPageBox, LayoutNodeTypes.TYPE_BOX_PARAGRAPH );
+    Assert.assertEquals( 2, elementsByElementType.length );
 
-    Assert.assertEquals(0, elementsByElementType[0].getX());
-    Assert.assertEquals(StrictGeomUtility.toInternalValue(100), elementsByElementType[0].getWidth());
-    Assert.assertEquals(StrictGeomUtility.toInternalValue(100), elementsByElementType[1].getX());
-    Assert.assertEquals(StrictGeomUtility.toInternalValue(100), elementsByElementType[1].getWidth());
+    Assert.assertEquals( 0, elementsByElementType[ 0 ].getX() );
+    Assert.assertEquals( StrictGeomUtility.toInternalValue( 100 ), elementsByElementType[ 0 ].getWidth() );
+    Assert.assertEquals( StrictGeomUtility.toInternalValue( 100 ), elementsByElementType[ 1 ].getX() );
+    Assert.assertEquals( StrictGeomUtility.toInternalValue( 100 ), elementsByElementType[ 1 ].getWidth() );
   }
 
-  private Element createElement(boolean visible)
-  {
-    Element element = TableTestUtil.createDataItem("Test");
-    element.setVisible(visible);
+  private Element createElement( boolean visible ) {
+    Element element = TableTestUtil.createDataItem( "Test" );
+    element.setVisible( visible );
     return element;
   }
 }

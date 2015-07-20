@@ -27,22 +27,18 @@ import org.pentaho.reporting.engine.classic.core.layout.process.layoutrules.Sequ
 import org.pentaho.reporting.engine.classic.core.layout.process.layoutrules.TextSequenceElement;
 import org.pentaho.reporting.engine.classic.core.util.InstanceID;
 
-public final class MinorAxisParagraphBreakState
-{
+public final class MinorAxisParagraphBreakState {
   private InstanceID suspendItem;
   private SequenceList elementSequence;
   private ParagraphRenderBox paragraph;
   private boolean containsContent;
 
-  public MinorAxisParagraphBreakState()
-  {
+  public MinorAxisParagraphBreakState() {
     this.elementSequence = new DefaultSequenceList();
   }
 
-  public void init(final ParagraphRenderBox paragraph)
-  {
-    if (paragraph == null)
-    {
+  public void init( final ParagraphRenderBox paragraph ) {
+    if ( paragraph == null ) {
       throw new NullPointerException();
     }
     this.paragraph = paragraph;
@@ -51,62 +47,54 @@ public final class MinorAxisParagraphBreakState
     this.containsContent = false;
   }
 
-  public void deinit()
-  {
+  public void deinit() {
     this.paragraph = null;
     this.elementSequence.clear();
     this.suspendItem = null;
     this.containsContent = false;
   }
 
-  public boolean isInsideParagraph()
-  {
+  public boolean isInsideParagraph() {
     return paragraph != null;
   }
 
-  public ParagraphRenderBox getParagraph()
-  {
+  public ParagraphRenderBox getParagraph() {
     return paragraph;
   }
-/*
-  public InstanceID getSuspendItem()
-  {
-    return suspendItem;
-  }
 
-  public void setSuspendItem(final InstanceID suspendItem)
-  {
-    this.suspendItem = suspendItem;
-  }
-*/
-  public void add(final InlineSequenceElement element, final RenderNode node)
-  {
-    elementSequence.add(element, node);
-    if (element instanceof TextSequenceElement ||
-        element instanceof InlineNodeSequenceElement ||
-        element instanceof ReplacedContentSequenceElement)
+  /*
+    public InstanceID getSuspendItem()
     {
+      return suspendItem;
+    }
+
+    public void setSuspendItem(final InstanceID suspendItem)
+    {
+      this.suspendItem = suspendItem;
+    }
+  */
+  public void add( final InlineSequenceElement element, final RenderNode node ) {
+    elementSequence.add( element, node );
+    if ( element instanceof TextSequenceElement ||
+      element instanceof InlineNodeSequenceElement ||
+      element instanceof ReplacedContentSequenceElement ) {
       containsContent = true;
     }
   }
 
-  public boolean isContainsContent()
-  {
+  public boolean isContainsContent() {
     return containsContent;
   }
 
-  public boolean isSuspended()
-  {
+  public boolean isSuspended() {
     return suspendItem != null;
   }
 
-  public SequenceList getSequence()
-  {
+  public SequenceList getSequence() {
     return elementSequence;
   }
 
-  public void clear()
-  {
+  public void clear() {
     elementSequence.clear();
     suspendItem = null;
     containsContent = false;

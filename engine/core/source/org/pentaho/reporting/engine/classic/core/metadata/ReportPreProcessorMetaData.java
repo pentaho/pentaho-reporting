@@ -17,13 +17,12 @@
 
 package org.pentaho.reporting.engine.classic.core.metadata;
 
+import org.pentaho.reporting.engine.classic.core.ReportPreProcessor;
+
 import java.beans.BeanInfo;
 import java.beans.IntrospectionException;
 
-import org.pentaho.reporting.engine.classic.core.ReportPreProcessor;
-
-public interface ReportPreProcessorMetaData extends MetaData
-{
+public interface ReportPreProcessorMetaData extends MetaData {
   public Class getPreProcessorType();
 
   public BeanInfo getBeanDescriptor() throws IntrospectionException;
@@ -32,7 +31,7 @@ public interface ReportPreProcessorMetaData extends MetaData
 
   public ReportPreProcessorPropertyMetaData[] getPropertyDescriptions();
 
-  public ReportPreProcessorPropertyMetaData getPropertyDescription(String name);
+  public ReportPreProcessorPropertyMetaData getPropertyDescription( String name );
 
   public boolean isAutoProcessor();
 

@@ -32,73 +32,60 @@ import org.pentaho.reporting.engine.classic.core.modules.output.table.html.helpe
  *
  * @author Thomas Morgner
  */
-public class FlowHtmlOutputProcessor extends AbstractTableOutputProcessor implements HtmlOutputProcessor
-{
+public class FlowHtmlOutputProcessor extends AbstractTableOutputProcessor implements HtmlOutputProcessor {
   private HtmlPrinter printer;
   private OutputProcessorMetaData metaData;
   private FlowSelector flowSelector;
 
-  public FlowHtmlOutputProcessor()
-  {
+  public FlowHtmlOutputProcessor() {
     this.flowSelector = new DisplayAllFlowSelector();
-    this.metaData = new HtmlOutputProcessorMetaData(HtmlOutputProcessorMetaData.PAGINATION_MANUAL);
+    this.metaData = new HtmlOutputProcessorMetaData( HtmlOutputProcessorMetaData.PAGINATION_MANUAL );
   }
 
-  public FlowSelector getFlowSelector()
-  {
+  public FlowSelector getFlowSelector() {
     return flowSelector;
   }
 
-  public void setFlowSelector(final FlowSelector flowSelector)
-  {
+  public void setFlowSelector( final FlowSelector flowSelector ) {
     this.flowSelector = flowSelector;
   }
 
-  public OutputProcessorMetaData getMetaData()
-  {
+  public OutputProcessorMetaData getMetaData() {
     return metaData;
   }
 
-  public HtmlPrinter getPrinter()
-  {
+  public HtmlPrinter getPrinter() {
     return printer;
   }
 
-  public void setPrinter(final HtmlPrinter printer)
-  {
+  public void setPrinter( final HtmlPrinter printer ) {
     this.printer = printer;
   }
 
-  protected void processTableContent(final LogicalPageKey logicalPageKey,
-                                     final LogicalPageBox logicalPage,
-                                     final TableContentProducer contentProducer)
-      throws ContentProcessingException
-  {
-    if (printer == null)
-    {
+  protected void processTableContent( final LogicalPageKey logicalPageKey,
+                                      final LogicalPageBox logicalPage,
+                                      final TableContentProducer contentProducer )
+    throws ContentProcessingException {
+    if ( printer == null ) {
       return;
     }
 
-    printer.print(logicalPageKey, logicalPage, contentProducer, metaData, false);
+    printer.print( logicalPageKey, logicalPage, contentProducer, metaData, false );
   }
 
-  protected void updateTableContent(final LogicalPageKey logicalPageKey,
-                                    final LogicalPageBox logicalPageBox,
-                                    final TableContentProducer tableContentProducer,
-                                    final boolean performOutput) throws ContentProcessingException
-  {
-    if (printer == null)
-    {
+  protected void updateTableContent( final LogicalPageKey logicalPageKey,
+                                     final LogicalPageBox logicalPageBox,
+                                     final TableContentProducer tableContentProducer,
+                                     final boolean performOutput ) throws ContentProcessingException {
+    if ( printer == null ) {
       return;
     }
 
-    printer.print(logicalPageKey, logicalPageBox, tableContentProducer, metaData, true);
+    printer.print( logicalPageKey, logicalPageBox, tableContentProducer, metaData, true );
   }
 
-  protected void processingContentFinished()
-  {
-    if (isContentGeneratable() == false)
-    {
+  protected void processingContentFinished() {
+    if ( isContentGeneratable() == false ) {
       return;
     }
 

@@ -17,14 +17,14 @@
 
 package org.pentaho.reporting.engine.classic.core.elementfactory;
 
-import java.awt.Color;
-import java.awt.geom.Rectangle2D;
-
 import org.pentaho.reporting.engine.classic.core.AttributeNames;
 import org.pentaho.reporting.engine.classic.core.Element;
 import org.pentaho.reporting.engine.classic.core.ElementAlignment;
 import org.pentaho.reporting.engine.classic.core.filter.types.LabelType;
 import org.pentaho.reporting.engine.classic.core.style.FontDefinition;
+
+import java.awt.*;
+import java.awt.geom.Rectangle2D;
 
 /**
  * A factory to define LabelElements. LabelElements are considered immutable and should not be modified once they are
@@ -32,8 +32,7 @@ import org.pentaho.reporting.engine.classic.core.style.FontDefinition;
  *
  * @author Thomas Morgner
  */
-public class LabelElementFactory extends TextElementFactory
-{
+public class LabelElementFactory extends TextElementFactory {
   /**
    * The label text.
    */
@@ -44,8 +43,7 @@ public class LabelElementFactory extends TextElementFactory
   /**
    * DefaultConstructor.
    */
-  public LabelElementFactory()
-  {
+  public LabelElementFactory() {
   }
 
   /**
@@ -53,8 +51,7 @@ public class LabelElementFactory extends TextElementFactory
    *
    * @return the text of the label.
    */
-  public String getText()
-  {
+  public String getText() {
     return text;
   }
 
@@ -63,18 +60,15 @@ public class LabelElementFactory extends TextElementFactory
    *
    * @param text the plain text of the label.
    */
-  public void setText(final String text)
-  {
+  public void setText( final String text ) {
     this.text = text;
   }
 
-  public String getExcelFormula()
-  {
+  public String getExcelFormula() {
     return excelFormula;
   }
 
-  public void setExcelFormula(final String excelFormula)
-  {
+  public void setExcelFormula( final String excelFormula ) {
     this.excelFormula = excelFormula;
   }
 
@@ -85,15 +79,14 @@ public class LabelElementFactory extends TextElementFactory
    * @throws IllegalStateException if the text is not defined.
    * @see org.pentaho.reporting.engine.classic.core.elementfactory.ElementFactory#createElement()
    */
-  public Element createElement()
-  {
+  public Element createElement() {
     final Element element = new Element();
-    element.setElementType(new LabelType());
-    applyElementName(element);
-    applyStyle(element.getStyle());
+    element.setElementType( new LabelType() );
+    applyElementName( element );
+    applyStyle( element.getStyle() );
 
-    element.setAttribute(AttributeNames.Core.NAMESPACE, AttributeNames.Core.VALUE, getText());
-    element.setAttribute(AttributeNames.Excel.NAMESPACE, AttributeNames.Excel.FIELD_FORMULA, getExcelFormula());
+    element.setAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.VALUE, getText() );
+    element.setAttribute( AttributeNames.Excel.NAMESPACE, AttributeNames.Excel.FIELD_FORMULA, getExcelFormula() );
     return element;
   }
 
@@ -111,14 +104,13 @@ public class LabelElementFactory extends TextElementFactory
    * @throws IllegalArgumentException if the given alignment is invalid
    * @deprecated Use a more fine-grained approach to define this element by using the element-factory directly.
    */
-  public static Element createLabelElement(final String name,
-                                           final Rectangle2D bounds,
-                                           final Color paint,
-                                           final ElementAlignment alignment,
-                                           final FontDefinition font,
-                                           final String labeltext)
-  {
-    return createLabelElement(name, bounds, paint, alignment, ElementAlignment.TOP, font, labeltext);
+  public static Element createLabelElement( final String name,
+                                            final Rectangle2D bounds,
+                                            final Color paint,
+                                            final ElementAlignment alignment,
+                                            final FontDefinition font,
+                                            final String labeltext ) {
+    return createLabelElement( name, bounds, paint, alignment, ElementAlignment.TOP, font, labeltext );
   }
 
   /**
@@ -136,36 +128,34 @@ public class LabelElementFactory extends TextElementFactory
    * @throws IllegalArgumentException if the given alignment is invalid.
    * @deprecated Use a more fine-grained approach to define this element by using the element-factory directly.
    */
-  public static Element createLabelElement(final String name,
-                                           final Rectangle2D bounds,
-                                           final Color paint,
-                                           final ElementAlignment alignment,
-                                           final ElementAlignment valign,
-                                           final FontDefinition font,
-                                           final String labeltext)
-  {
+  public static Element createLabelElement( final String name,
+                                            final Rectangle2D bounds,
+                                            final Color paint,
+                                            final ElementAlignment alignment,
+                                            final ElementAlignment valign,
+                                            final FontDefinition font,
+                                            final String labeltext ) {
     final LabelElementFactory factory = new LabelElementFactory();
-    factory.setX(new Float(bounds.getX()));
-    factory.setY(new Float(bounds.getY()));
-    factory.setMinimumWidth(new Float(bounds.getWidth()));
-    factory.setMinimumHeight(new Float(bounds.getHeight()));
-    factory.setName(name);
-    factory.setColor(paint);
-    factory.setHorizontalAlignment(alignment);
-    factory.setVerticalAlignment(valign);
+    factory.setX( new Float( bounds.getX() ) );
+    factory.setY( new Float( bounds.getY() ) );
+    factory.setMinimumWidth( new Float( bounds.getWidth() ) );
+    factory.setMinimumHeight( new Float( bounds.getHeight() ) );
+    factory.setName( name );
+    factory.setColor( paint );
+    factory.setHorizontalAlignment( alignment );
+    factory.setVerticalAlignment( valign );
 
-    if (font != null)
-    {
-      factory.setFontName(font.getFontName());
-      factory.setFontSize(new Integer(font.getFontSize()));
-      factory.setBold(ElementFactory.getBooleanValue(font.isBold()));
-      factory.setItalic(ElementFactory.getBooleanValue(font.isItalic()));
-      factory.setEncoding(font.getFontEncoding(null));
-      factory.setUnderline(ElementFactory.getBooleanValue(font.isUnderline()));
-      factory.setStrikethrough(ElementFactory.getBooleanValue(font.isStrikeThrough()));
-      factory.setEmbedFont(ElementFactory.getBooleanValue(font.isEmbeddedFont()));
+    if ( font != null ) {
+      factory.setFontName( font.getFontName() );
+      factory.setFontSize( new Integer( font.getFontSize() ) );
+      factory.setBold( ElementFactory.getBooleanValue( font.isBold() ) );
+      factory.setItalic( ElementFactory.getBooleanValue( font.isItalic() ) );
+      factory.setEncoding( font.getFontEncoding( null ) );
+      factory.setUnderline( ElementFactory.getBooleanValue( font.isUnderline() ) );
+      factory.setStrikethrough( ElementFactory.getBooleanValue( font.isStrikeThrough() ) );
+      factory.setEmbedFont( ElementFactory.getBooleanValue( font.isEmbeddedFont() ) );
     }
-    factory.setText(labeltext);
+    factory.setText( labeltext );
     return factory.createElement();
   }
 

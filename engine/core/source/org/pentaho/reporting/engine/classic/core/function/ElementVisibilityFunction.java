@@ -27,8 +27,7 @@ import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
  * @author Thomas Morgner
  * @deprecated add a style-expression for the visible style-key instead.
  */
-public class ElementVisibilityFunction extends AbstractElementFormatFunction
-{
+public class ElementVisibilityFunction extends AbstractElementFormatFunction {
   /**
    * The field name of the data-row column from where to read the boolean value.
    */
@@ -37,8 +36,7 @@ public class ElementVisibilityFunction extends AbstractElementFormatFunction
   /**
    * Default Constructor.
    */
-  public ElementVisibilityFunction()
-  {
+  public ElementVisibilityFunction() {
   }
 
   /**
@@ -46,8 +44,7 @@ public class ElementVisibilityFunction extends AbstractElementFormatFunction
    *
    * @return the field name.
    */
-  public String getField()
-  {
+  public String getField() {
     return field;
   }
 
@@ -56,8 +53,7 @@ public class ElementVisibilityFunction extends AbstractElementFormatFunction
    *
    * @param field the name of the field.
    */
-  public void setField(final String field)
-  {
+  public void setField( final String field ) {
     this.field = field;
   }
 
@@ -66,23 +62,17 @@ public class ElementVisibilityFunction extends AbstractElementFormatFunction
    *
    * @return Boolean.TRUE or Boolean.FALSE.
    */
-  public Object getValue()
-  {
-    if (isVisible())
-    {
+  public Object getValue() {
+    if ( isVisible() ) {
       return Boolean.TRUE;
-    }
-    else
-    {
+    } else {
       return Boolean.FALSE;
     }
   }
 
-  protected boolean evaluateElement(final ReportElement e)
-  {
-    if (ObjectUtilities.equal(e.getName(), getElement()))
-    {
-      e.getStyle().setStyleProperty(ElementStyleKeys.VISIBLE, isVisible());
+  protected boolean evaluateElement( final ReportElement e ) {
+    if ( ObjectUtilities.equal( e.getName(), getElement() ) ) {
+      e.getStyle().setStyleProperty( ElementStyleKeys.VISIBLE, isVisible() );
     }
     return true;
   }
@@ -92,8 +82,7 @@ public class ElementVisibilityFunction extends AbstractElementFormatFunction
    *
    * @return true, if the field contains the Boolean.TRUE object, false otherwise.
    */
-  protected boolean isVisible()
-  {
-    return Boolean.TRUE.equals(getDataRow().get(getField()));
+  protected boolean isVisible() {
+    return Boolean.TRUE.equals( getDataRow().get( getField() ) );
   }
 }

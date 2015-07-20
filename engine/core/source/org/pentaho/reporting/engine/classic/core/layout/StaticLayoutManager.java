@@ -20,19 +20,17 @@ package org.pentaho.reporting.engine.classic.core.layout;
 /**
  * An obsolete implementation class of the BandLayoutManager interface.
  * <p/>
- * A long time ago, this class had actual content. Today it is only used as placeholder so that the old
- * parsing code can continue to work properly. 
+ * A long time ago, this class had actual content. Today it is only used as placeholder so that the old parsing code can
+ * continue to work properly.
  *
  * @author Thomas Morgner
  * @deprecated This layout manager is no longer used.
  */
-public class StaticLayoutManager implements BandLayoutManager
-{
+public class StaticLayoutManager implements BandLayoutManager {
 
   /**
    * Creates a new layout manager.
    */
-  public StaticLayoutManager()
-  {
+  public StaticLayoutManager() {
   }
 }

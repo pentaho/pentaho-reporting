@@ -41,99 +41,88 @@ import org.pentaho.reporting.engine.classic.core.testsupport.DebugReportValidato
 import org.pentaho.reporting.engine.classic.core.util.TypedTableModel;
 import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
 
-public class Prd3133Test extends TestCase
-{
-  private class Prd3133ReportValidator implements DebugReportValidator
-  {
+public class Prd3133Test extends TestCase {
+  private class Prd3133ReportValidator implements DebugReportValidator {
     private boolean complexText;
 
-    private Prd3133ReportValidator(final boolean complexText)
-    {
+    private Prd3133ReportValidator( final boolean complexText ) {
       this.complexText = complexText;
     }
 
-    public void processPageContent(final LogicalPageKey logicalPageKey, final LogicalPageBox logicalPage)
-    {
+    public void processPageContent( final LogicalPageKey logicalPageKey, final LogicalPageBox logicalPage ) {
       final BlockRenderBox footerArea = logicalPage.getFooterArea();
-      final RenderNode p1 = getElementByName(footerArea, "P2");
-      assertNotNull(p1);
-      assertTrue(p1 instanceof ParagraphRenderBox);
+      final RenderNode p1 = getElementByName( footerArea, "P2" );
+      assertNotNull( p1 );
+      assertTrue( p1 instanceof ParagraphRenderBox );
       final ParagraphRenderBox p = (ParagraphRenderBox) p1;
       final RenderNode firstChild = p.getPool().getFirstChild();
-      if (complexText)
-      {
-        assertTrue(firstChild instanceof RenderableComplexText);
+      if ( complexText ) {
+        assertTrue( firstChild instanceof RenderableComplexText );
         final RenderableComplexText text = (RenderableComplexText) firstChild;
-        final int val = Integer.parseInt(text.getRawText());
-        assertTrue("Value " + val + " is either 15 or 10", val == 15 || val == 10);
-      }
-      else
-      {
-        assertTrue(firstChild instanceof RenderableText);
+        final int val = Integer.parseInt( text.getRawText() );
+        assertTrue( "Value " + val + " is either 15 or 10", val == 15 || val == 10 );
+      } else {
+        assertTrue( firstChild instanceof RenderableText );
         final RenderableText text = (RenderableText) firstChild;
-        final int val = Integer.parseInt(text.getRawText());
-        assertTrue("Value " + val + " is either 15 or 10", val == 15 || val == 10);
+        final int val = Integer.parseInt( text.getRawText() );
+        assertTrue( "Value " + val + " is either 15 or 10", val == 15 || val == 10 );
       }
     }
   }
 
-  public Prd3133Test()
-  {
+  public Prd3133Test() {
   }
 
-  public void setUp() throws Exception
-  {
+  public void setUp() throws Exception {
     ClassicEngineBoot.getInstance().start();
   }
 
-  public void testPageSum() throws Exception
-  {
+  public void testPageSum() throws Exception {
     final MasterReport report = createReport();
-    report.getReportConfiguration().setConfigProperty(ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY, "false");
+    report.getReportConfiguration()
+      .setConfigProperty( ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY, "false" );
 
     final DebugRenderer renderer = new DebugRenderer();
-    renderer.setValidator(new Prd3133ReportValidator(false));
-    final DebugReportProcessor reportProcessor = new DebugReportProcessor(report, renderer);
+    renderer.setValidator( new Prd3133ReportValidator( false ) );
+    final DebugReportProcessor reportProcessor = new DebugReportProcessor( report, renderer );
     reportProcessor.processReport();
   }
 
-  public void testPageSumComplex() throws Exception
-  {
+  public void testPageSumComplex() throws Exception {
     final MasterReport report = createReport();
-    report.getReportConfiguration().setConfigProperty(ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY, "true");
+    report.getReportConfiguration()
+      .setConfigProperty( ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY, "true" );
 
     final DebugRenderer renderer = new DebugRenderer();
-    renderer.setValidator(new Prd3133ReportValidator(true));
-    final DebugReportProcessor reportProcessor = new DebugReportProcessor(report, renderer);
+    renderer.setValidator( new Prd3133ReportValidator( true ) );
+    final DebugReportProcessor reportProcessor = new DebugReportProcessor( report, renderer );
     reportProcessor.processReport();
   }
 
 
-  private MasterReport createReport()
-  {
+  private MasterReport createReport() {
     final TypedTableModel model = new TypedTableModel();
-    model.addColumn("key", String.class);
-    model.addColumn("value", Integer.class);
-    for (int i = 0; i < 1000; i += 1)
-    {
-      model.addRow(new Object[]{"K1", Integer.valueOf(1)});
+    model.addColumn( "key", String.class );
+    model.addColumn( "value", Integer.class );
+    for ( int i = 0; i < 1000; i += 1 ) {
+      model.addRow( new Object[] { "K1", Integer.valueOf( 1 ) } );
     }
 
     final PageItemSumFunction itemSumFunction = new PageItemSumFunction();
-    itemSumFunction.setField("value");
-    itemSumFunction.setName("fn");
+    itemSumFunction.setField( "value" );
+    itemSumFunction.setName( "fn" );
 
     final MasterReport report = new MasterReport();
-    report.setQuery("test");
-    report.setDataFactory(new TableDataFactory(report.getQuery(), model));
-    report.addExpression(itemSumFunction);
+    report.setQuery( "test" );
+    report.setDataFactory( new TableDataFactory( report.getQuery(), model ) );
+    report.addExpression( itemSumFunction );
     final ItemBand itemBand = report.getItemBand();
-    itemBand.addElement(createNumberElement(0, "value", "I1"));
-    itemBand.addElement(createNumberElement(100, "fn", "I2"));
+    itemBand.addElement( createNumberElement( 0, "value", "I1" ) );
+    itemBand.addElement( createNumberElement( 100, "fn", "I2" ) );
 
     final PageFooter pageFooter = report.getPageFooter();
-    pageFooter.addElement(createNumberElement(0, "value", "P1"));
-    pageFooter.addElement(createNumberElement(100, "fn", "P2"));
+    pageFooter.addElement( createNumberElement( 0, "value", "P1" ) );
+    pageFooter.addElement( createNumberElement( 100, "fn", "P2" ) );
     return report;
   }
 
@@ -146,46 +135,40 @@ public class Prd3133Test extends TestCase
    * @throws NullPointerException     if bounds, name or function are null
    * @throws IllegalArgumentException if the given alignment is invalid
    */
-  public static Element createNumberElement(final int x,
-                                            final String field,
-                                            final String name)
-  {
+  public static Element createNumberElement( final int x,
+                                             final String field,
+                                             final String name ) {
 
     final NumberFieldElementFactory factory = new NumberFieldElementFactory();
-    factory.setX(new Float(x));
-    factory.setY(new Float(0));
-    factory.setMinimumWidth(new Float(100));
-    factory.setMinimumHeight(new Float(40));
-    factory.setName(name);
+    factory.setX( new Float( x ) );
+    factory.setY( new Float( 0 ) );
+    factory.setMinimumWidth( new Float( 100 ) );
+    factory.setMinimumHeight( new Float( 40 ) );
+    factory.setName( name );
 
-    factory.setFontName("Dialog");
-    factory.setFontSize(new Integer(12));
-    factory.setBold(false);
-    factory.setItalic(false);
-    factory.setUnderline(false);
-    factory.setStrikethrough(false);
-    factory.setEmbedFont(false);
-    factory.setFieldname(field);
+    factory.setFontName( "Dialog" );
+    factory.setFontSize( new Integer( 12 ) );
+    factory.setBold( false );
+    factory.setItalic( false );
+    factory.setUnderline( false );
+    factory.setStrikethrough( false );
+    factory.setEmbedFont( false );
+    factory.setFieldname( field );
     return factory.createElement();
   }
 
 
-  public RenderNode getElementByName(final RenderNode node, final String name)
-  {
-    if (ObjectUtilities.equal(node.getName(), name))
-    {
+  public RenderNode getElementByName( final RenderNode node, final String name ) {
+    if ( ObjectUtilities.equal( node.getName(), name ) ) {
       return node;
     }
 
-    if (node instanceof RenderBox)
-    {
+    if ( node instanceof RenderBox ) {
       final RenderBox box = (RenderBox) node;
       RenderNode child = box.getFirstChild();
-      while (child != null)
-      {
-        final RenderNode result = getElementByName(child, name);
-        if (result != null)
-        {
+      while ( child != null ) {
+        final RenderNode result = getElementByName( child, name );
+        if ( result != null ) {
           return result;
         }
         child = child.getNext();

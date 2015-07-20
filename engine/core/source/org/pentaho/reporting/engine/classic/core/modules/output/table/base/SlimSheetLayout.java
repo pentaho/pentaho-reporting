@@ -19,20 +19,20 @@ package org.pentaho.reporting.engine.classic.core.modules.output.table.base;
 
 import org.pentaho.reporting.engine.classic.core.util.geom.StrictBounds;
 
-public interface SlimSheetLayout
-{
-  long getCellWidth(int col);
+public interface SlimSheetLayout {
+  long getCellWidth( int col );
 
-  long getRowHeight(int row);
+  long getRowHeight( int row );
 
-  long getXPosition(int col);
-  long getYPosition(int row);
+  long getXPosition( int col );
 
-  TableRectangle getTableBounds(StrictBounds cb, TableRectangle rectangle);
+  long getYPosition( int row );
+
+  TableRectangle getTableBounds( StrictBounds cb, TableRectangle rectangle );
 
   int getColumnCount();
 
-  long getCellWidth(int startCell, int endCell);
+  long getCellWidth( int startCell, int endCell );
 
   long getMaxWidth();
 }

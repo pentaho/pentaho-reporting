@@ -24,18 +24,15 @@ import org.pentaho.reporting.libraries.xmlns.parser.XmlReadHandler;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 
-public class CrosstabRowSubGroupBodyReadHandler extends AbstractElementReadHandler
-{
+public class CrosstabRowSubGroupBodyReadHandler extends AbstractElementReadHandler {
   private CrosstabRowGroupReadHandler groupRowReadHandler;
 
   public CrosstabRowSubGroupBodyReadHandler()
-      throws ParseException
-  {
-    super(CrosstabRowGroupBodyType.INSTANCE);
+    throws ParseException {
+    super( CrosstabRowGroupBodyType.INSTANCE );
   }
 
-  public CrosstabRowGroupBody getElement()
-  {
+  public CrosstabRowGroupBody getElement() {
     return (CrosstabRowGroupBody) super.getElement();
   }
 
@@ -48,20 +45,17 @@ public class CrosstabRowSubGroupBodyReadHandler extends AbstractElementReadHandl
    * @return the handler or null, if the tagname is invalid.
    * @throws SAXException if there is a parsing error.
    */
-  protected XmlReadHandler getHandlerForChild(final String uri,
-                                              final String tagName,
-                                              final Attributes atts) throws SAXException
-  {
-    if (isSameNamespace(uri))
-    {
-      if ("crosstab-row-group".equals(tagName))
-      {
+  protected XmlReadHandler getHandlerForChild( final String uri,
+                                               final String tagName,
+                                               final Attributes atts ) throws SAXException {
+    if ( isSameNamespace( uri ) ) {
+      if ( "crosstab-row-group".equals( tagName ) ) {
         groupRowReadHandler = new CrosstabRowGroupReadHandler();
         return groupRowReadHandler;
       }
     }
 
-    return super.getHandlerForChild(uri, tagName, atts);
+    return super.getHandlerForChild( uri, tagName, atts );
   }
 
   /**
@@ -69,18 +63,14 @@ public class CrosstabRowSubGroupBodyReadHandler extends AbstractElementReadHandl
    *
    * @throws SAXException if there is a parsing error.
    */
-  protected void doneParsing() throws SAXException
-  {
+  protected void doneParsing() throws SAXException {
     super.doneParsing();
 
     final CrosstabRowGroupBody body = getElement();
-    if (groupRowReadHandler != null)
-    {
-      body.setGroup(groupRowReadHandler.getElement());
-    }
-    else
-    {
-      throw new ParseException("Either a 'crosstab-row-group' element must be present");
+    if ( groupRowReadHandler != null ) {
+      body.setGroup( groupRowReadHandler.getElement() );
+    } else {
+      throw new ParseException( "Either a 'crosstab-row-group' element must be present" );
     }
   }
 }

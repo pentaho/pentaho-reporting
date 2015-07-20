@@ -26,13 +26,11 @@ import org.xml.sax.SAXException;
  *
  * @author Thomas Morgner
  */
-public class SubReportParameterReadHandler extends AbstractXmlReadHandler
-{
+public class SubReportParameterReadHandler extends AbstractXmlReadHandler {
   private String masterName;
   private String detailName;
 
-  public SubReportParameterReadHandler()
-  {
+  public SubReportParameterReadHandler() {
   }
 
   /**
@@ -41,28 +39,23 @@ public class SubReportParameterReadHandler extends AbstractXmlReadHandler
    * @param attrs the attributes.
    * @throws SAXException if there is a parsing error.
    */
-  protected void startParsing(final Attributes attrs) throws SAXException
-  {
-    masterName = attrs.getValue(getUri(), "master-fieldname");
-    if (masterName == null)
-    {
-      throw new NullPointerException("Required parameter 'master-fieldname' is missing.");
+  protected void startParsing( final Attributes attrs ) throws SAXException {
+    masterName = attrs.getValue( getUri(), "master-fieldname" );
+    if ( masterName == null ) {
+      throw new NullPointerException( "Required parameter 'master-fieldname' is missing." );
     }
 
-    detailName = attrs.getValue(getUri(), "detail-fieldname");
-    if (detailName == null)
-    {
-      throw new NullPointerException("Required parameter 'detail-fieldname' is missing.");
+    detailName = attrs.getValue( getUri(), "detail-fieldname" );
+    if ( detailName == null ) {
+      throw new NullPointerException( "Required parameter 'detail-fieldname' is missing." );
     }
   }
 
-  public String getMasterName()
-  {
+  public String getMasterName() {
     return masterName;
   }
 
-  public String getDetailName()
-  {
+  public String getDetailName() {
     return detailName;
   }
 
@@ -72,8 +65,7 @@ public class SubReportParameterReadHandler extends AbstractXmlReadHandler
    * @return the object.
    * @throws SAXException if an parser error occured.
    */
-  public Object getObject() throws SAXException
-  {
+  public Object getObject() throws SAXException {
     return null;
   }
 }

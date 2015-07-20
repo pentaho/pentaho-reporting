@@ -17,39 +17,35 @@
 
 package org.pentaho.reporting.engine.classic.core.parameters;
 
-import javax.swing.table.TableModel;
-
 import org.pentaho.reporting.engine.classic.core.DataFactory;
-import org.pentaho.reporting.engine.classic.core.function.ExpressionRuntime;
-import org.pentaho.reporting.engine.classic.core.function.ProcessingContext;
-import org.pentaho.reporting.engine.classic.core.layout.output.GenericOutputProcessorMetaData;
-import org.pentaho.reporting.engine.classic.core.wizard.DefaultDataSchema;
-import org.pentaho.reporting.engine.classic.core.wizard.DataSchema;
 import org.pentaho.reporting.engine.classic.core.DataRow;
 import org.pentaho.reporting.engine.classic.core.ReportProcessingException;
 import org.pentaho.reporting.engine.classic.core.ResourceBundleFactory;
+import org.pentaho.reporting.engine.classic.core.function.ExpressionRuntime;
+import org.pentaho.reporting.engine.classic.core.function.ProcessingContext;
 import org.pentaho.reporting.engine.classic.core.layout.output.DefaultProcessingContext;
+import org.pentaho.reporting.engine.classic.core.layout.output.GenericOutputProcessorMetaData;
 import org.pentaho.reporting.engine.classic.core.states.datarow.EmptyTableModel;
+import org.pentaho.reporting.engine.classic.core.wizard.DataSchema;
+import org.pentaho.reporting.engine.classic.core.wizard.DefaultDataSchema;
 import org.pentaho.reporting.libraries.base.config.Configuration;
 
-public class ParameterExpressionRuntime implements ExpressionRuntime
-{
+import javax.swing.table.TableModel;
+
+public class ParameterExpressionRuntime implements ExpressionRuntime {
   private DefaultDataSchema dataSchema;
   private DataRow dataRow;
   private ProcessingContext processingContext;
   private TableModel model;
   private DataFactory dataFactory;
 
-  public ParameterExpressionRuntime(final ParameterContext parameterContext,
-                                    final DataRow dataRow)
-      throws ReportProcessingException
-  {
-    if (parameterContext == null)
-    {
+  public ParameterExpressionRuntime( final ParameterContext parameterContext,
+                                     final DataRow dataRow )
+    throws ReportProcessingException {
+    if ( parameterContext == null ) {
       throw new NullPointerException();
     }
-    if (dataRow == null)
-    {
+    if ( dataRow == null ) {
       throw new NullPointerException();
     }
 
@@ -58,17 +54,16 @@ public class ParameterExpressionRuntime implements ExpressionRuntime
     this.dataSchema = new DefaultDataSchema();
     this.dataRow = dataRow;
     this.processingContext = new DefaultProcessingContext
-        (new GenericOutputProcessorMetaData(),
-            parameterContext.getResourceBundleFactory(),
-            parameterContext.getConfiguration(),
-            parameterContext.getResourceManager(),
-            parameterContext.getContentBase(),
-            parameterContext.getDocumentMetaData(),
-            parameterContext.getReportEnvironment(), -1);
+      ( new GenericOutputProcessorMetaData(),
+        parameterContext.getResourceBundleFactory(),
+        parameterContext.getConfiguration(),
+        parameterContext.getResourceManager(),
+        parameterContext.getContentBase(),
+        parameterContext.getDocumentMetaData(),
+        parameterContext.getReportEnvironment(), -1 );
   }
 
-  public DataFactory getDataFactory()
-  {
+  public DataFactory getDataFactory() {
     return dataFactory;
   }
 
@@ -78,13 +73,11 @@ public class ParameterExpressionRuntime implements ExpressionRuntime
    *
    * @return the data-row.
    */
-  public DataRow getDataRow()
-  {
+  public DataRow getDataRow() {
     return dataRow;
   }
 
-  public DataSchema getDataSchema()
-  {
+  public DataSchema getDataSchema() {
     return dataSchema;
   }
 
@@ -93,8 +86,7 @@ public class ParameterExpressionRuntime implements ExpressionRuntime
    *
    * @return the report configuration.
    */
-  public Configuration getConfiguration()
-  {
+  public Configuration getConfiguration() {
     return getProcessingContext().getConfiguration();
   }
 
@@ -103,8 +95,7 @@ public class ParameterExpressionRuntime implements ExpressionRuntime
    *
    * @return the current resource-bundle factory.
    */
-  public ResourceBundleFactory getResourceBundleFactory()
-  {
+  public ResourceBundleFactory getResourceBundleFactory() {
     return getProcessingContext().getResourceBundleFactory();
   }
 
@@ -113,8 +104,7 @@ public class ParameterExpressionRuntime implements ExpressionRuntime
    *
    * @return the current tablemodel used in the report.
    */
-  public TableModel getData()
-  {
+  public TableModel getData() {
     return model;
   }
 
@@ -123,41 +113,35 @@ public class ParameterExpressionRuntime implements ExpressionRuntime
    *
    * @return the current row number.
    */
-  public int getCurrentRow()
-  {
+  public int getCurrentRow() {
     return -1;
   }
 
-  public int getCurrentDataItem()
-  {
+  public int getCurrentDataItem() {
     return -1;
   }
 
-  public int getCurrentGroup()
-  {
+  public int getCurrentGroup() {
     return -1;
   }
 
-  public int getGroupStartRow(final String groupName)
-  {
+  public int getGroupStartRow( final String groupName ) {
     return 0;
   }
 
-  public int getGroupStartRow(final int groupIndex)
-  {
+  public int getGroupStartRow( final int groupIndex ) {
     return 0;
   }
 
   /**
-   * Returns the current export descriptor as returned by the OutputProcessorMetaData object. The output descriptor is
-   * a simple string collections consisting of the following components: exportclass/type/subtype
+   * Returns the current export descriptor as returned by the OutputProcessorMetaData object. The output descriptor is a
+   * simple string collections consisting of the following components: exportclass/type/subtype
    * <p/>
    * For example, the PDF export would be: pageable/pdf and the StreamHTML export would return table/html/stream
    *
    * @return the export descriptor.
    */
-  public String getExportDescriptor()
-  {
+  public String getExportDescriptor() {
     return getProcessingContext().getExportDescriptor();
   }
 
@@ -166,18 +150,15 @@ public class ParameterExpressionRuntime implements ExpressionRuntime
    *
    * @return the processing context.
    */
-  public ProcessingContext getProcessingContext()
-  {
+  public ProcessingContext getProcessingContext() {
     return processingContext;
   }
 
-  public boolean isStructuralComplexReport()
-  {
+  public boolean isStructuralComplexReport() {
     return false;
   }
 
-  public boolean isCrosstabActive()
-  {
+  public boolean isCrosstabActive() {
     return false;
   }
 }

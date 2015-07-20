@@ -24,15 +24,13 @@ import org.pentaho.reporting.engine.classic.core.filter.templates.ImageFieldTemp
  *
  * @author Thomas Morgner
  */
-public class ImageFieldTemplateDescription extends AbstractTemplateDescription
-{
+public class ImageFieldTemplateDescription extends AbstractTemplateDescription {
   /**
    * Creates a new template description.
    *
    * @param name the name.
    */
-  public ImageFieldTemplateDescription(final String name)
-  {
-    super(name, ImageFieldTemplate.class, true);
+  public ImageFieldTemplateDescription( final String name ) {
+    super( name, ImageFieldTemplate.class, true );
   }
 }

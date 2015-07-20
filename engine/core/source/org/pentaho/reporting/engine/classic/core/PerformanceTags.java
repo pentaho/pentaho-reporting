@@ -17,8 +17,7 @@
 
 package org.pentaho.reporting.engine.classic.core;
 
-public final class PerformanceTags
-{
+public final class PerformanceTags {
   public static final String SUMMARY_PREFIX = "Summary.";
   public static final String DETAIL_PREFIX = "Detail.";
 
@@ -39,13 +38,11 @@ public final class PerformanceTags
   public static final String REPORT_PARAMETER = "pentaho.report.parameter";
   public static final String REPORT_PARAMETER_QUERY = "pentaho.report.parameter.query";
 
-  public static String getSummaryTag(String tag, String suffix)
-  {
-    return SUMMARY_PREFIX + tag + ((suffix == null) ? "" : suffix);
+  public static String getSummaryTag( String tag, String suffix ) {
+    return SUMMARY_PREFIX + tag + ( ( suffix == null ) ? "" : suffix );
   }
 
-  public static String getDetailTag(String tag, String suffix)
-  {
-    return DETAIL_PREFIX + tag + ((suffix == null) ? "" : suffix);
+  public static String getDetailTag( String tag, String suffix ) {
+    return DETAIL_PREFIX + tag + ( ( suffix == null ) ? "" : suffix );
   }
 }

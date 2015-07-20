@@ -17,13 +17,13 @@
 
 package org.pentaho.reporting.engine.classic.core.states.datarow;
 
-import java.util.Arrays;
-import java.util.HashSet;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.pentaho.reporting.engine.classic.core.DataRow;
 import org.pentaho.reporting.engine.classic.core.states.crosstab.CrosstabSpecification;
+
+import java.util.Arrays;
+import java.util.HashSet;
 
 /**
  * A datarow that acts as padding source. It overrides the columns from either report-data or expressions datarow with
@@ -40,9 +40,8 @@ import org.pentaho.reporting.engine.classic.core.states.crosstab.CrosstabSpecifi
  *
  * @author Thomas Morgner
  */
-public class PaddingController implements Cloneable
-{
-  private static final Log logger = LogFactory.getLog(PaddingController.class);
+public class PaddingController implements Cloneable {
+  private static final Log logger = LogFactory.getLog( PaddingController.class );
 
   private int currentCursorPosition;
   private CrosstabSpecification crosstabSpecification;
@@ -53,8 +52,7 @@ public class PaddingController implements Cloneable
   private HashSet<String> knownNames;
   private HashSet<String> knownRowNames;
 
-  public PaddingController(final PaddingController dataRow)
-  {
+  public PaddingController( final PaddingController dataRow ) {
     this.currentCursorPosition = dataRow.currentCursorPosition;
     this.crosstabSpecification = dataRow.crosstabSpecification;
     this.key = dataRow.key.clone();
@@ -65,25 +63,23 @@ public class PaddingController implements Cloneable
     this.knownRowNames = dataRow.knownRowNames;
   }
 
-  public PaddingController(final CrosstabSpecification crosstabSpecification)
-  {
-    if (crosstabSpecification == null)
-    {
+  public PaddingController( final CrosstabSpecification crosstabSpecification ) {
+    if ( crosstabSpecification == null ) {
       throw new NullPointerException();
     }
     this.crosstabSpecification = crosstabSpecification;
     this.columnNames = this.crosstabSpecification.getColumnDimensionNames();
     this.rowNames = this.crosstabSpecification.getRowDimensionNames();
-    this.key = new Object[columnNames.length];
-    this.rowKey = new Object[rowNames.length];
+    this.key = new Object[ columnNames.length ];
+    this.rowKey = new Object[ rowNames.length ];
     this.currentCursorPosition = 0;
 
     this.knownNames = new HashSet<String>();
-    this.knownNames.addAll(Arrays.asList(columnNames));
-    this.knownNames.addAll(Arrays.asList(rowNames));
+    this.knownNames.addAll( Arrays.asList( columnNames ) );
+    this.knownNames.addAll( Arrays.asList( rowNames ) );
 
     this.knownRowNames = new HashSet<String>();
-    this.knownRowNames.addAll(Arrays.asList(rowNames));
+    this.knownRowNames.addAll( Arrays.asList( rowNames ) );
   }
 
   /**
@@ -92,23 +88,20 @@ public class PaddingController implements Cloneable
    * @param globalView
    * @return the number of rows needed for the pre-padding or zero if no pre-padding is required.
    */
-  public int getPrePaddingRows(final DataRow globalView)
-  {
-    if (key.length == 0)
-    {
+  public int getPrePaddingRows( final DataRow globalView ) {
+    if ( key.length == 0 ) {
       return 0;
     }
 
-    for (int i = 0; i < key.length; i++)
-    {
-      key[i] = globalView.get(columnNames[i]);
+    for ( int i = 0; i < key.length; i++ ) {
+      key[ i ] = globalView.get( columnNames[ i ] );
     }
 
-    final int computedPosition = crosstabSpecification.indexOf(currentCursorPosition, key);
-    if (computedPosition < 0)
-    {
+    final int computedPosition = crosstabSpecification.indexOf( currentCursorPosition, key );
+    if ( computedPosition < 0 ) {
       // not found, so all remaining columns must be padded. This will be handled by the post padding.
-      // logger.debug("Pre: NF " + computedPosition + " CurrentPos: " + currentCursorPosition + " Key: " + printKey(key));
+      // logger.debug("Pre: NF " + computedPosition + " CurrentPos: " + currentCursorPosition + " Key: " + printKey
+      // (key));
       return 0;
     }
     //logger.debug("Pre:  F " + computedPosition + " CurrentPos: " + currentCursorPosition + " Key: " + printKey(key));
@@ -116,175 +109,140 @@ public class PaddingController implements Cloneable
     return computedPosition - currentCursorPosition;
   }
 
-  public int getCurrentCursorPosition()
-  {
+  public int getCurrentCursorPosition() {
     return currentCursorPosition;
   }
 
-  public int getCrosstabColumnCount()
-  {
+  public int getCrosstabColumnCount() {
     return crosstabSpecification.size();
   }
 
-  private String printKey(final Object[] data)
-  {
-    final StringBuffer s = new StringBuffer("{");
-    for (int i = 0; i < data.length; i++)
-    {
-      if (i > 0)
-      {
-        s.append(',');
+  private String printKey( final Object[] data ) {
+    final StringBuffer s = new StringBuffer( "{" );
+    for ( int i = 0; i < data.length; i++ ) {
+      if ( i > 0 ) {
+        s.append( ',' );
       }
-      s.append(data[i]);
+      s.append( data[ i ] );
     }
     return s + "}";
   }
 
-  public PaddingController advance()
-  {
-    final PaddingController dataRow = new PaddingController(this);
+  public PaddingController advance() {
+    final PaddingController dataRow = new PaddingController( this );
     dataRow.currentCursorPosition += 1;
     return dataRow;
   }
 
-  public void activate(final MasterDataRowChangeHandler dataRow)
-  {
-    if (key.length == 0)
-    {
+  public void activate( final MasterDataRowChangeHandler dataRow ) {
+    if ( key.length == 0 ) {
       return;
     }
 
-    if (currentCursorPosition >= crosstabSpecification.size())
-    {
+    if ( currentCursorPosition >= crosstabSpecification.size() ) {
       throw new IllegalStateException();
     }
 
-    final Object[] currentColumn = crosstabSpecification.getKeyAt(currentCursorPosition);
+    final Object[] currentColumn = crosstabSpecification.getKeyAt( currentCursorPosition );
     final MasterDataRowChangeEvent event = dataRow.getReusableEvent();
-    event.reuse(MasterDataRowChangeEvent.COLUMN_UPDATED, "", "");
-    for (int i = 0; i < columnNames.length; i++)
-    {
-      event.setColumnName(columnNames[i]);
-      event.setColumnValue(currentColumn[i]);
-      event.setOptional(true);
-      if (logger.isDebugEnabled())
-      {
-        logger.debug("Replacing Column-dimension value: " + columnNames[i] + " = " + currentColumn[i]);
+    event.reuse( MasterDataRowChangeEvent.COLUMN_UPDATED, "", "" );
+    for ( int i = 0; i < columnNames.length; i++ ) {
+      event.setColumnName( columnNames[ i ] );
+      event.setColumnValue( currentColumn[ i ] );
+      event.setOptional( true );
+      if ( logger.isDebugEnabled() ) {
+        logger.debug( "Replacing Column-dimension value: " + columnNames[ i ] + " = " + currentColumn[ i ] );
       }
-      dataRow.dataRowChanged(event);
+      dataRow.dataRowChanged( event );
     }
 
   }
 
-  public void refreshPaddedRow(final MasterDataRowChangeHandler dataRow,
-                               final ReportDataRow reportDataRow)
-  {
-    if (reportDataRow == null)
-    {
+  public void refreshPaddedRow( final MasterDataRowChangeHandler dataRow,
+                                final ReportDataRow reportDataRow ) {
+    if ( reportDataRow == null ) {
       return;
     }
 
     final MasterDataRowChangeEvent chEvent = dataRow.getReusableEvent();
-    chEvent.reuse(MasterDataRowChangeEvent.COLUMN_UPDATED, "", "");
+    chEvent.reuse( MasterDataRowChangeEvent.COLUMN_UPDATED, "", "" );
     final int columnCount = reportDataRow.getColumnCount();
-    for (int i = 0; i < columnCount; i++)
-    {
-      final String name = reportDataRow.getColumnName(i);
-      if (knownRowNames.contains(name))
-      {
-        chEvent.setColumnName(name);
-        chEvent.setColumnValue(reportDataRow.get(i));
-      }
-      else if (knownNames.contains(name))
-      {
+    for ( int i = 0; i < columnCount; i++ ) {
+      final String name = reportDataRow.getColumnName( i );
+      if ( knownRowNames.contains( name ) ) {
+        chEvent.setColumnName( name );
+        chEvent.setColumnValue( reportDataRow.get( i ) );
+      } else if ( knownNames.contains( name ) ) {
         // should have been handled in the activate run ..
         continue;
+      } else {
+        chEvent.setColumnName( name );
+        chEvent.setColumnValue( null );
       }
-      else
-      {
-        chEvent.setColumnName(name);
-        chEvent.setColumnValue(null);
+      if ( logger.isDebugEnabled() ) {
+        logger.debug( "Replacing padded value: " + name + " = " + chEvent.getColumnValue() );
       }
-      if (logger.isDebugEnabled())
-      {
-        logger.debug("Replacing padded value: " + name + " = " + chEvent.getColumnValue());
-      }
-      dataRow.dataRowChanged(chEvent);
+      dataRow.dataRowChanged( chEvent );
     }
   }
 
-  public void refreshRow(final MasterDataRowChangeHandler dataRow,
-                         final ReportDataRow reportDataRow)
-  {
-    if (reportDataRow == null)
-    {
+  public void refreshRow( final MasterDataRowChangeHandler dataRow,
+                          final ReportDataRow reportDataRow ) {
+    if ( reportDataRow == null ) {
       return;
     }
 
     final MasterDataRowChangeEvent chEvent = dataRow.getReusableEvent();
-    chEvent.reuse(MasterDataRowChangeEvent.COLUMN_UPDATED, "", "");
+    chEvent.reuse( MasterDataRowChangeEvent.COLUMN_UPDATED, "", "" );
     final int columnCount = reportDataRow.getColumnCount();
-    for (int i = 0; i < columnCount; i++)
-    {
-      final String name = reportDataRow.getColumnName(i);
-      if (knownRowNames.contains(name) == false && knownNames.contains(name))
-      {
+    for ( int i = 0; i < columnCount; i++ ) {
+      final String name = reportDataRow.getColumnName( i );
+      if ( knownRowNames.contains( name ) == false && knownNames.contains( name ) ) {
         // should have been handled in the activate run ..
         continue;
       }
 
-      chEvent.setColumnName(name);
-      chEvent.setColumnValue(reportDataRow.get(i));
-      if (logger.isDebugEnabled())
-      {
-        logger.debug("Refreshing value: " + name + " = " + chEvent.getColumnValue());
+      chEvent.setColumnName( name );
+      chEvent.setColumnValue( reportDataRow.get( i ) );
+      if ( logger.isDebugEnabled() ) {
+        logger.debug( "Refreshing value: " + name + " = " + chEvent.getColumnValue() );
       }
-      dataRow.dataRowChanged(chEvent);
+      dataRow.dataRowChanged( chEvent );
     }
   }
 
-  public PaddingController resetRowCursor()
-  {
+  public PaddingController resetRowCursor() {
     // logger.debug("################### Reset rowcounter");
 
-    final PaddingController dataRow = new PaddingController(this);
+    final PaddingController dataRow = new PaddingController( this );
     dataRow.currentCursorPosition = 0;
     return dataRow;
   }
 
-  public Object[] createRowKey(final FastGlobalView globalView)
-  {
-    final Object[] rowKey = new Object[rowNames.length];
-    for (int i = 0; i < rowKey.length; i++)
-    {
-      rowKey[i] = globalView.get(rowNames[i]);
+  public Object[] createRowKey( final FastGlobalView globalView ) {
+    final Object[] rowKey = new Object[ rowNames.length ];
+    for ( int i = 0; i < rowKey.length; i++ ) {
+      rowKey[ i ] = globalView.get( rowNames[ i ] );
     }
     return rowKey;
   }
 
-  public Object[] createColumnKey(final FastGlobalView globalView)
-  {
-    final Object[] colKey = new Object[columnNames.length];
-    for (int i = 0; i < colKey.length; i++)
-    {
-      colKey[i] = globalView.get(columnNames[i]);
+  public Object[] createColumnKey( final FastGlobalView globalView ) {
+    final Object[] colKey = new Object[ columnNames.length ];
+    for ( int i = 0; i < colKey.length; i++ ) {
+      colKey[ i ] = globalView.get( columnNames[ i ] );
     }
     return colKey;
   }
 
-  public CrosstabSpecification getCrosstabSpecification()
-  {
+  public CrosstabSpecification getCrosstabSpecification() {
     return crosstabSpecification;
   }
 
-  public PaddingController clone ()
-  {
-    try
-    {
+  public PaddingController clone() {
+    try {
       return (PaddingController) super.clone();
-    }
-    catch (CloneNotSupportedException e)
-    {
+    } catch ( CloneNotSupportedException e ) {
       throw new IllegalStateException();
     }
   }

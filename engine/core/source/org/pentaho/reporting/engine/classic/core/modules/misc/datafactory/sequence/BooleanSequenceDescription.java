@@ -17,11 +17,9 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.misc.datafactory.sequence;
 
-public class BooleanSequenceDescription extends AbstractSequenceDescription
-{
-  public BooleanSequenceDescription()
-  {
-    super("org.pentaho.reporting.engine.classic.core.modules.misc.datafactory.sequence.BooleanSequenceBundle",
-        BooleanSequence.class);
+public class BooleanSequenceDescription extends AbstractSequenceDescription {
+  public BooleanSequenceDescription() {
+    super( "org.pentaho.reporting.engine.classic.core.modules.misc.datafactory.sequence.BooleanSequenceBundle",
+      BooleanSequence.class );
   }
 }

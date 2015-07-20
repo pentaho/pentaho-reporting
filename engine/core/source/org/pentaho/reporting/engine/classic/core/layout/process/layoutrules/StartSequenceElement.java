@@ -28,12 +28,10 @@ import org.pentaho.reporting.engine.classic.core.layout.model.context.StaticBoxL
  *
  * @author Thomas Morgner
  */
-public class StartSequenceElement implements InlineSequenceElement
-{
+public class StartSequenceElement implements InlineSequenceElement {
   public static final InlineSequenceElement INSTANCE = new StartSequenceElement();
 
-  private StartSequenceElement()
-  {
+  private StartSequenceElement() {
   }
 
   /**
@@ -41,8 +39,7 @@ public class StartSequenceElement implements InlineSequenceElement
    *
    * @return
    */
-  public long getMinimumWidth(final RenderNode node)
-  {
+  public long getMinimumWidth( final RenderNode node ) {
     final InlineRenderBox box = (InlineRenderBox) node;
     final StaticBoxLayoutProperties blp = box.getStaticBoxLayoutProperties();
     final BoxDefinition bdef = box.getBoxDefinition();
@@ -55,25 +52,21 @@ public class StartSequenceElement implements InlineSequenceElement
    *
    * @return
    */
-  public long getMaximumWidth(final RenderNode node)
-  {
-    return getMinimumWidth(node);
+  public long getMaximumWidth( final RenderNode node ) {
+    return getMinimumWidth( node );
   }
 
 
-  public boolean isPreserveWhitespace(final RenderNode node)
-  {
+  public boolean isPreserveWhitespace( final RenderNode node ) {
     final InlineRenderBox box = (InlineRenderBox) node;
     return box.getStaticBoxLayoutProperties().isPreserveSpace();
   }
 
-  public int getClassification()
-  {
+  public int getClassification() {
     return START;
   }
 
-  public Classification getType()
-  {
+  public Classification getType() {
     return Classification.START;
   }
 }

@@ -17,21 +17,19 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.gui.base.parameters;
 
-import javax.swing.JCheckBox;
-
 import org.pentaho.reporting.engine.classic.core.modules.gui.base.ComponentListCellRenderer;
 import org.pentaho.reporting.engine.classic.core.parameters.ListParameter;
 import org.pentaho.reporting.engine.classic.core.parameters.ParameterContext;
 
-public class CheckBoxParameterComponent extends ListParameterComponent
-{
-  public CheckBoxParameterComponent(final ListParameter listParameter,
-                                    final ParameterUpdateContext updateContext,
-                                    final ParameterContext parameterContext)
-  {
-    super(listParameter, updateContext, parameterContext);
-    getList().setOpaque(false);
-    getList().setBorder(null);
-    getList().setCellRenderer(new ComponentListCellRenderer(JCheckBox.class));
+import javax.swing.*;
+
+public class CheckBoxParameterComponent extends ListParameterComponent {
+  public CheckBoxParameterComponent( final ListParameter listParameter,
+                                     final ParameterUpdateContext updateContext,
+                                     final ParameterContext parameterContext ) {
+    super( listParameter, updateContext, parameterContext );
+    getList().setOpaque( false );
+    getList().setBorder( null );
+    getList().setCellRenderer( new ComponentListCellRenderer( JCheckBox.class ) );
   }
 }

@@ -17,14 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.core.filter.types;
 
-import java.awt.Component;
-import java.awt.Image;
-import java.awt.Shape;
-import java.io.IOException;
-import java.net.URL;
-import java.util.Locale;
-import javax.swing.JFrame;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.pentaho.reporting.engine.classic.core.AttributeNames;
@@ -42,30 +34,32 @@ import org.pentaho.reporting.libraries.resourceloader.ResourceKey;
 import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 import org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper;
 
+import javax.swing.*;
+import java.awt.*;
+import java.io.IOException;
+import java.net.URL;
+import java.util.Locale;
+
 /**
  * @noinspection HardCodedStringLiteral
  */
-public class ContentType extends AbstractElementType
-{
-  public static class ContentTypeContext
-  {
-    public LFUMap<Object,Boolean> failureCache;
+public class ContentType extends AbstractElementType {
+  public static class ContentTypeContext {
+    public LFUMap<Object, Boolean> failureCache;
     public JFrame frame;
   }
 
   public static final ContentType INSTANCE = new ContentType();
 
-  private static final Class[] TARGETS = new Class[]{DrawableWrapper.class, Image.class};
-  private static final Log logger = LogFactory.getLog(ContentType.class);
+  private static final Class[] TARGETS = new Class[] { DrawableWrapper.class, Image.class };
+  private static final Log logger = LogFactory.getLog( ContentType.class );
 
-  public ContentType()
-  {
-    super("content");
+  public ContentType() {
+    super( "content" );
   }
 
-  protected ContentType(final String id)
-  {
-    super(id);
+  protected ContentType( final String id ) {
+    super( id );
   }
 
   /**
@@ -76,209 +70,162 @@ public class ContentType extends AbstractElementType
    * @param element the element for which the data is computed.
    * @return the value.
    */
-  public Object getValue(final ExpressionRuntime runtime, final ReportElement element)
-  {
-    if (runtime == null)
-    {
-      throw new NullPointerException("Runtime must never be null.");
+  public Object getValue( final ExpressionRuntime runtime, final ReportElement element ) {
+    if ( runtime == null ) {
+      throw new NullPointerException( "Runtime must never be null." );
     }
-    if (element == null)
-    {
-      throw new NullPointerException("Element must never be null.");
+    if ( element == null ) {
+      throw new NullPointerException( "Element must never be null." );
     }
 
     URL resource = null;
-    final Object value = ElementTypeUtils.queryStaticValue(element);
-    if (value != null)
-    {
-      final Object filteredValue = filter(runtime, element, value);
-      if (filteredValue != null)
-      {
+    final Object value = ElementTypeUtils.queryStaticValue( element );
+    if ( value != null ) {
+      final Object filteredValue = filter( runtime, element, value );
+      if ( filteredValue != null ) {
         return filteredValue;
-      }
-      else
-      {
+      } else {
         final boolean isBrokenImageEnabled = "true".equals
-            (runtime.getConfiguration().getConfigProperty("org.pentaho.reporting.engine.classic.core.EnableBrokenImage"));
-        if (isBrokenImageEnabled)
-        {
+          ( runtime.getConfiguration()
+            .getConfigProperty( "org.pentaho.reporting.engine.classic.core.EnableBrokenImage" ) );
+        if ( isBrokenImageEnabled ) {
           resource = ContentType.class.getResource
-              ("/org/pentaho/reporting/engine/classic/core/metadata/icons/image_broken_50.png");
+            ( "/org/pentaho/reporting/engine/classic/core/metadata/icons/image_broken_50.png" );
         }
       }
     }
 
-    final Object nullValue = element.getAttribute(AttributeNames.Core.NAMESPACE, AttributeNames.Core.NULL_VALUE);
-    if (nullValue != null)
-    {
-      final Object loadedNullValue = filter(runtime, element, nullValue);
-      if (loadedNullValue != null)
-      {
+    final Object nullValue = element.getAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.NULL_VALUE );
+    if ( nullValue != null ) {
+      final Object loadedNullValue = filter( runtime, element, nullValue );
+      if ( loadedNullValue != null ) {
         return loadedNullValue;
       }
     }
 
-    try
-    {
-      if (resource == null)
-      {
+    try {
+      if ( resource == null ) {
         resource = ContentType.class.getResource
-            ("/org/pentaho/reporting/engine/classic/core/metadata/icons/image_50.png");
+          ( "/org/pentaho/reporting/engine/classic/core/metadata/icons/image_50.png" );
       }
-      if (resource != null)
-      {
+      if ( resource != null ) {
         final ResourceManager resManager = runtime.getProcessingContext().getResourceManager();
-        final Resource loadedResource = resManager.createDirectly(resource, Image.class);
+        final Resource loadedResource = resManager.createDirectly( resource, Image.class );
         final Image image = (Image) loadedResource.getResource();
-        return new ReportDrawableImage(image);
+        return new ReportDrawableImage( image );
       }
-    }
-    catch (Exception e)
-    {
-      ContentType.logger.warn("Failed to load content." + e);
+    } catch ( Exception e ) {
+      ContentType.logger.warn( "Failed to load content." + e );
     }
     return value;
   }
 
-  public Object getDesignValue(final ExpressionRuntime runtime, final ReportElement element)
-  {
-    return getValue(runtime, element);
+  public Object getDesignValue( final ExpressionRuntime runtime, final ReportElement element ) {
+    return getValue( runtime, element );
   }
 
-  protected Object filter(final ExpressionRuntime runtime, final ReportElement element, final Object value)
-  {
-    if (value == null)
-    {
+  protected Object filter( final ExpressionRuntime runtime, final ReportElement element, final Object value ) {
+    if ( value == null ) {
       return null;
     }
 
-    if (value instanceof Image)
-    {
-      try
-      {
-        return new DefaultImageReference((Image) value);
-      }
-      catch (IOException e)
-      {
-        ContentType.logger.warn("Failed to load content using value " + value, e);
+    if ( value instanceof Image ) {
+      try {
+        return new DefaultImageReference( (Image) value );
+      } catch ( IOException e ) {
+        ContentType.logger.warn( "Failed to load content using value " + value, e );
       }
       return null;
     }
-    if (value instanceof Shape)
-    {
+    if ( value instanceof Shape ) {
       return value;
     }
-    if (value instanceof ImageContainer)
-    {
+    if ( value instanceof ImageContainer ) {
       return value;
     }
-    if (value instanceof Component)
-    {
+    if ( value instanceof Component ) {
       final Component c = (Component) value;
-      return new DrawableWrapper(createComponentDrawable(runtime, c, element));
+      return new DrawableWrapper( createComponentDrawable( runtime, c, element ) );
     }
-    if (value instanceof DrawableWrapper)
-    {
+    if ( value instanceof DrawableWrapper ) {
       return value;
     }
-    if (DrawableWrapper.isDrawable(value))
-    {
-      return new DrawableWrapper(value);
+    if ( DrawableWrapper.isDrawable( value ) ) {
+      return new DrawableWrapper( value );
     }
 
-    final ContentTypeContext context = element.getElementContext(ContentTypeContext.class);
-    if (context.failureCache != null)
-    {
-      final Object o = context.failureCache.get(value);
-      if (Boolean.TRUE.equals(o))
-      {
+    final ContentTypeContext context = element.getElementContext( ContentTypeContext.class );
+    if ( context.failureCache != null ) {
+      final Object o = context.failureCache.get( value );
+      if ( Boolean.TRUE.equals( o ) ) {
         return null;
       }
     }
-    try
-    {
+    try {
       final ResourceKey contentBase = runtime.getProcessingContext().getContentBase();
       final ResourceManager resManager = runtime.getProcessingContext().getResourceManager();
-      final Object contentBaseValue = element.getAttribute(AttributeNames.Core.NAMESPACE, AttributeNames.Core.CONTENT_BASE);
-      final ResourceKey key = resManager.createOrDeriveKey(contentBase, value, contentBaseValue);
-      if (key == null)
-      {
+      final Object contentBaseValue =
+        element.getAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.CONTENT_BASE );
+      final ResourceKey key = resManager.createOrDeriveKey( contentBase, value, contentBaseValue );
+      if ( key == null ) {
         return null;
       }
 
-      final Resource resource = resManager.create(key, contentBase, ContentType.TARGETS);
+      final Resource resource = resManager.create( key, contentBase, ContentType.TARGETS );
       final Object resourceContent = resource.getResource();
-      if (resourceContent instanceof DrawableWrapper)
-      {
+      if ( resourceContent instanceof DrawableWrapper ) {
+        return resourceContent;
+      } else if ( DrawableWrapper.isDrawable( resourceContent ) ) {
+        return new DrawableWrapper( resourceContent );
+      } else if ( resourceContent instanceof Image ) {
+        return new DefaultImageReference( resource );
+      } else {
         return resourceContent;
       }
-      else if (DrawableWrapper.isDrawable(resourceContent))
-      {
-        return new DrawableWrapper(resourceContent);
+    } catch ( Exception e ) {
+      if ( context.failureCache == null ) {
+        context.failureCache = new LFUMap<Object, Boolean>( 5 );
       }
-      else if (resourceContent instanceof Image)
-      {
-        return new DefaultImageReference(resource);
-      }
-      else
-      {
-        return resourceContent;
-      }
-    }
-    catch (Exception e)
-    {
-      if (context.failureCache == null)
-      {
-        context.failureCache = new LFUMap<Object,Boolean>(5);
-      }
-      context.failureCache.put(value, Boolean.TRUE);
-      ContentType.logger.warn("Failed to load content using value " + value, e);
+      context.failureCache.put( value, Boolean.TRUE );
+      ContentType.logger.warn( "Failed to load content using value " + value, e );
     }
     return null;
   }
 
-  protected final ComponentDrawable createComponentDrawable(final ExpressionRuntime runtime,
-                                                            final Component c,
-                                                            final ReportElement element)
-  {
+  protected final ComponentDrawable createComponentDrawable( final ExpressionRuntime runtime,
+                                                             final Component c,
+                                                             final ReportElement element ) {
     final Configuration config = runtime.getConfiguration();
     final ComponentDrawable cd;
-    final String drawMode = config.getConfigProperty("org.pentaho.reporting.engine.classic.core.ComponentDrawableMode",
-        "shared");
-    if ("private".equals(drawMode))
-    {
+    final String drawMode = config.getConfigProperty( "org.pentaho.reporting.engine.classic.core.ComponentDrawableMode",
+      "shared" );
+    if ( "private".equals( drawMode ) ) {
       cd = new ComponentDrawable();
-    }
-    else if ("synchronized".equals(drawMode))
-    {
+    } else if ( "synchronized".equals( drawMode ) ) {
       cd = new ComponentDrawable();
-      cd.setPaintSynchronized(true);
-    }
-    else
-    {
-      final ContentTypeContext context = element.getElementContext(ContentTypeContext.class);
-      if (context.frame == null)
-      {
+      cd.setPaintSynchronized( true );
+    } else {
+      final ContentTypeContext context = element.getElementContext( ContentTypeContext.class );
+      if ( context.frame == null ) {
         context.frame = new JFrame();
       }
-      cd = new ComponentDrawable(context.frame);
-      cd.setPaintSynchronized(true);
+      cd = new ComponentDrawable( context.frame );
+      cd.setPaintSynchronized( true );
     }
 
     final String allowOwnPeer = config.getConfigProperty(
-        "org.pentaho.reporting.engine.classic.core.AllowOwnPeerForComponentDrawable");
-    cd.setAllowOwnPeer("true".equals(allowOwnPeer));
-    cd.setComponent(c);
+      "org.pentaho.reporting.engine.classic.core.AllowOwnPeerForComponentDrawable" );
+    cd.setAllowOwnPeer( "true".equals( allowOwnPeer ) );
+    cd.setComponent( c );
     return cd;
   }
 
-  public void configureDesignTimeDefaults(final ReportElement element, final Locale locale)
-  {
-    element.getStyle().setStyleProperty(ElementStyleKeys.KEEP_ASPECT_RATIO, Boolean.TRUE);
-    element.getStyle().setStyleProperty(ElementStyleKeys.SCALE, Boolean.TRUE);
+  public void configureDesignTimeDefaults( final ReportElement element, final Locale locale ) {
+    element.getStyle().setStyleProperty( ElementStyleKeys.KEEP_ASPECT_RATIO, Boolean.TRUE );
+    element.getStyle().setStyleProperty( ElementStyleKeys.SCALE, Boolean.TRUE );
 
-    element.getStyle().setStyleProperty(ElementStyleKeys.MIN_WIDTH, 50f);
-    element.getStyle().setStyleProperty(ElementStyleKeys.MIN_HEIGHT, 50f);
+    element.getStyle().setStyleProperty( ElementStyleKeys.MIN_WIDTH, 50f );
+    element.getStyle().setStyleProperty( ElementStyleKeys.MIN_HEIGHT, 50f );
   }
 
 }

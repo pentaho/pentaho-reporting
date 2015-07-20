@@ -17,9 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.core.states.crosstab;
 
-import java.util.HashSet;
-import java.util.LinkedHashSet;
-
 import org.pentaho.reporting.engine.classic.core.AbstractReportDefinition;
 import org.pentaho.reporting.engine.classic.core.AttributeNames;
 import org.pentaho.reporting.engine.classic.core.CrosstabColumnGroup;
@@ -44,22 +41,22 @@ import org.pentaho.reporting.engine.classic.core.states.ReportState;
 import org.pentaho.reporting.engine.classic.core.states.ReportStateKey;
 import org.pentaho.reporting.libraries.base.util.FastStack;
 
+import java.util.HashSet;
+import java.util.LinkedHashSet;
+
 /**
  * Computes the column-axis values for all crosstabs in the current report.
  *
  * @author Thomas Morgner
  */
-public class CrosstabProcessorFunction extends AbstractFunction implements StructureFunction
-{
+public class CrosstabProcessorFunction extends AbstractFunction implements StructureFunction {
   private FastStack<CrosstabSpecification> processingStack;
   private CrosstabSpecification result;
 
-  public CrosstabProcessorFunction()
-  {
+  public CrosstabProcessorFunction() {
   }
 
-  public int getProcessingPriority()
-  {
+  public int getProcessingPriority() {
     return Short.MIN_VALUE;
   }
 
@@ -68,52 +65,41 @@ public class CrosstabProcessorFunction extends AbstractFunction implements Struc
    *
    * @param event the event.
    */
-  public void groupStarted(final ReportEvent event)
-  {
+  public void groupStarted( final ReportEvent event ) {
     final ReportState state = event.getState();
-    if (event.getLevel() == getDependencyLevel())
-    {
-      final Group group = event.getReport().getGroup(state.getCurrentGroupIndex());
-      if (group instanceof CrosstabGroup)
-      {
+    if ( event.getLevel() == getDependencyLevel() ) {
+      final Group group = event.getReport().getGroup( state.getCurrentGroupIndex() );
+      if ( group instanceof CrosstabGroup ) {
         final CrosstabGroup crosstabGroup = (CrosstabGroup) group;
         // yeay! we encountered a crosstab.
-        if (processingStack == null)
-        {
+        if ( processingStack == null ) {
           processingStack = new FastStack<CrosstabSpecification>();
         }
-        final String[] columnSet = computeColumns(crosstabGroup);
-        final String[] rowSet = computeRows(crosstabGroup);
+        final String[] columnSet = computeColumns( crosstabGroup );
+        final String[] rowSet = computeRows( crosstabGroup );
         final ReportStateKey processKey = state.getProcessKey();
 
         final CrosstabNormalizationMode normalizationMode = (CrosstabNormalizationMode)
-            group.getAttribute(AttributeNames.Crosstab.NAMESPACE, AttributeNames.Crosstab.NORMALIZATION_MODE);
-        if (CrosstabNormalizationMode.Insertation.equals(normalizationMode))
-        {
-          processingStack.push(new OrderedMergeCrosstabSpecification(processKey, columnSet, rowSet));
-        }
-        else
-        {
-          processingStack.push(new SortedMergeCrosstabSpecification(processKey, columnSet, rowSet));
+          group.getAttribute( AttributeNames.Crosstab.NAMESPACE, AttributeNames.Crosstab.NORMALIZATION_MODE );
+        if ( CrosstabNormalizationMode.Insertation.equals( normalizationMode ) ) {
+          processingStack.push( new OrderedMergeCrosstabSpecification( processKey, columnSet, rowSet ) );
+        } else {
+          processingStack.push( new SortedMergeCrosstabSpecification( processKey, columnSet, rowSet ) );
         }
         return;
       }
 
-      if (processingStack == null || processingStack.isEmpty())
-      {
+      if ( processingStack == null || processingStack.isEmpty() ) {
         return;
       }
 
       final CrosstabSpecification csstate = processingStack.peek();
-      if (csstate == null)
-      {
+      if ( csstate == null ) {
         return;
       }
 
-      if (group instanceof CrosstabRowGroup)
-      {
-        if (group.getBody() instanceof CrosstabColumnGroupBody)
-        {
+      if ( group instanceof CrosstabRowGroup ) {
+        if ( group.getBody() instanceof CrosstabColumnGroupBody ) {
           // fire this only for the inner-most row-group.
           csstate.startRow();
         }
@@ -126,34 +112,27 @@ public class CrosstabProcessorFunction extends AbstractFunction implements Struc
    *
    * @param event the event.
    */
-  public void groupFinished(final ReportEvent event)
-  {
-    if (processingStack == null || processingStack.isEmpty())
-    {
+  public void groupFinished( final ReportEvent event ) {
+    if ( processingStack == null || processingStack.isEmpty() ) {
       return;
     }
 
     final CrosstabSpecification csstate = processingStack.peek();
-    if (csstate == null)
-    {
+    if ( csstate == null ) {
       return;
     }
 
     final ReportState state = event.getState();
-    if (event.getLevel() == getDependencyLevel())
-    {
-      final Group group = event.getReport().getGroup(state.getCurrentGroupIndex());
-      if (group instanceof CrosstabGroup)
-      {
+    if ( event.getLevel() == getDependencyLevel() ) {
+      final Group group = event.getReport().getGroup( state.getCurrentGroupIndex() );
+      if ( group instanceof CrosstabGroup ) {
         csstate.endCrosstab();
         result = processingStack.pop();
         return;
       }
 
-      if (group instanceof CrosstabRowGroup)
-      {
-        if (group.getBody() instanceof CrosstabColumnGroupBody)
-        {
+      if ( group instanceof CrosstabRowGroup ) {
+        if ( group.getBody() instanceof CrosstabColumnGroupBody ) {
           // fire this only for the inner-most row-group.
           csstate.endRow();
         }
@@ -161,43 +140,36 @@ public class CrosstabProcessorFunction extends AbstractFunction implements Struc
     }
   }
 
-  private String[] computeColumns(final CrosstabGroup crosstabGroup)
-  {
+  private String[] computeColumns( final CrosstabGroup crosstabGroup ) {
     final HashSet<String> list = new HashSet<String>();
     GroupBody body = crosstabGroup.getBody();
-    while (body != null)
-    {
-      if (body instanceof SubGroupBody)
-      {
+    while ( body != null ) {
+      if ( body instanceof SubGroupBody ) {
         final SubGroupBody sgBody = (SubGroupBody) body;
         final Group g = sgBody.getGroup();
         body = g.getBody();
         continue;
       }
 
-      if (body instanceof CrosstabOtherGroupBody)
-      {
+      if ( body instanceof CrosstabOtherGroupBody ) {
         final CrosstabOtherGroupBody cogb = (CrosstabOtherGroupBody) body;
         final CrosstabOtherGroup otherGroup = cogb.getGroup();
         body = otherGroup.getBody();
         continue;
       }
 
-      if (body instanceof CrosstabRowGroupBody)
-      {
+      if ( body instanceof CrosstabRowGroupBody ) {
         final CrosstabRowGroupBody cogb = (CrosstabRowGroupBody) body;
         final CrosstabRowGroup otherGroup = cogb.getGroup();
         body = otherGroup.getBody();
         continue;
       }
 
-      if (body instanceof CrosstabColumnGroupBody)
-      {
+      if ( body instanceof CrosstabColumnGroupBody ) {
         final CrosstabColumnGroupBody cogb = (CrosstabColumnGroupBody) body;
         final CrosstabColumnGroup otherGroup = cogb.getGroup();
-        if (otherGroup.getField() != null)
-        {
-          list.add(otherGroup.getField());
+        if ( otherGroup.getField() != null ) {
+          list.add( otherGroup.getField() );
         }
         body = otherGroup.getBody();
         continue;
@@ -205,66 +177,54 @@ public class CrosstabProcessorFunction extends AbstractFunction implements Struc
 
       break;
     }
-    return list.toArray(new String[list.size()]);
+    return list.toArray( new String[ list.size() ] );
   }
 
-  private String[] computeRows(final CrosstabGroup crosstabGroup)
-  {
+  private String[] computeRows( final CrosstabGroup crosstabGroup ) {
     final LinkedHashSet<String> list = new LinkedHashSet<String>();
-    list.addAll(crosstabGroup.getPaddingFields());
-    collectRelationalFields(crosstabGroup.getParentSection(), list);
-    collectCrosstabFields(crosstabGroup, list);
-    return list.toArray(new String[list.size()]);
+    list.addAll( crosstabGroup.getPaddingFields() );
+    collectRelationalFields( crosstabGroup.getParentSection(), list );
+    collectCrosstabFields( crosstabGroup, list );
+    return list.toArray( new String[ list.size() ] );
   }
 
-  private void collectRelationalFields (Section section, final HashSet<String> list)
-  {
-    while (section != null)
-    {
-      if (section instanceof AbstractReportDefinition)
-      {
+  private void collectRelationalFields( Section section, final HashSet<String> list ) {
+    while ( section != null ) {
+      if ( section instanceof AbstractReportDefinition ) {
         return;
       }
-      if (section instanceof RelationalGroup)
-      {
+      if ( section instanceof RelationalGroup ) {
         final RelationalGroup group = (RelationalGroup) section;
-        list.addAll(group.getFields());
+        list.addAll( group.getFields() );
       }
       section = section.getParentSection();
     }
   }
 
-  private void collectCrosstabFields(final CrosstabGroup crosstabGroup, final HashSet<String> list)
-  {
+  private void collectCrosstabFields( final CrosstabGroup crosstabGroup, final HashSet<String> list ) {
     GroupBody body = crosstabGroup.getBody();
-    while (body != null)
-    {
-      if (body instanceof CrosstabOtherGroupBody)
-      {
+    while ( body != null ) {
+      if ( body instanceof CrosstabOtherGroupBody ) {
         final CrosstabOtherGroupBody cogb = (CrosstabOtherGroupBody) body;
         final CrosstabOtherGroup otherGroup = cogb.getGroup();
-        if (otherGroup.getField() != null)
-        {
-          list.add(otherGroup.getField());
+        if ( otherGroup.getField() != null ) {
+          list.add( otherGroup.getField() );
         }
         body = otherGroup.getBody();
         continue;
       }
 
-      if (body instanceof CrosstabRowGroupBody)
-      {
+      if ( body instanceof CrosstabRowGroupBody ) {
         final CrosstabRowGroupBody cogb = (CrosstabRowGroupBody) body;
         final CrosstabRowGroup otherGroup = cogb.getGroup();
-        if (otherGroup.getField() != null)
-        {
-          list.add(otherGroup.getField());
+        if ( otherGroup.getField() != null ) {
+          list.add( otherGroup.getField() );
         }
         body = otherGroup.getBody();
         continue;
       }
 
-      if (body instanceof CrosstabColumnGroupBody)
-      {
+      if ( body instanceof CrosstabColumnGroupBody ) {
         final CrosstabColumnGroupBody cogb = (CrosstabColumnGroupBody) body;
         final CrosstabColumnGroup otherGroup = cogb.getGroup();
         body = otherGroup.getBody();
@@ -280,21 +240,17 @@ public class CrosstabProcessorFunction extends AbstractFunction implements Struc
    *
    * @param event the event.
    */
-  public void itemsAdvanced(final ReportEvent event)
-  {
-    if (event.getLevel() == getDependencyLevel())
-    {
-      if (processingStack == null || processingStack.isEmpty())
-      {
+  public void itemsAdvanced( final ReportEvent event ) {
+    if ( event.getLevel() == getDependencyLevel() ) {
+      if ( processingStack == null || processingStack.isEmpty() ) {
         return;
       }
       final CrosstabSpecification state = processingStack.peek();
-      if (state == null)
-      {
+      if ( state == null ) {
         return;
       }
       // this may throw an InvalidReportStateException that ends the report processing.
-      state.add(getDataRow());
+      state.add( getDataRow() );
     }
   }
 
@@ -305,8 +261,7 @@ public class CrosstabProcessorFunction extends AbstractFunction implements Struc
    *
    * @return the value of the function.
    */
-  public Object getValue()
-  {
+  public Object getValue() {
     return result;
   }
 
@@ -315,8 +270,7 @@ public class CrosstabProcessorFunction extends AbstractFunction implements Struc
    *
    * @return the level.
    */
-  public int getDependencyLevel()
-  {
+  public int getDependencyLevel() {
     return LayoutProcess.LEVEL_STRUCTURAL_PREPROCESSING;
   }
 
@@ -328,11 +282,9 @@ public class CrosstabProcessorFunction extends AbstractFunction implements Struc
    * @return a clone of this expression.
    * @throws CloneNotSupportedException this should never happen.
    */
-  public Object clone() throws CloneNotSupportedException
-  {
+  public Object clone() throws CloneNotSupportedException {
     final CrosstabProcessorFunction cps = (CrosstabProcessorFunction) super.clone();
-    if (processingStack == null || processingStack.isEmpty())
-    {
+    if ( processingStack == null || processingStack.isEmpty() ) {
       return cps;
     }
     cps.processingStack = processingStack.clone();
@@ -345,8 +297,7 @@ public class CrosstabProcessorFunction extends AbstractFunction implements Struc
    *
    * @return a copy of this function.
    */
-  public Expression getInstance()
-  {
+  public Expression getInstance() {
     final CrosstabProcessorFunction cps = (CrosstabProcessorFunction) super.getInstance();
     cps.result = null;
     cps.processingStack = null;

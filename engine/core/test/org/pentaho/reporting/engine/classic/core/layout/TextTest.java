@@ -37,180 +37,168 @@ import org.pentaho.reporting.libraries.fonts.encoding.CodePointBuffer;
 import org.pentaho.reporting.libraries.fonts.encoding.manual.Utf16LE;
 import org.pentaho.reporting.libraries.fonts.text.GraphemeClusterProducer;
 
-public class TextTest extends TestCase
-{
-  public TextTest()
-  {
+public class TextTest extends TestCase {
+  public TextTest() {
   }
 
-  public TextTest(final String name)
-  {
-    super(name);
+  public TextTest( final String name ) {
+    super( name );
   }
 
-  protected void setUp() throws Exception
-  {
+  protected void setUp() throws Exception {
     ClassicEngineBoot.getInstance().start();
   }
 
-  public void testTextNewline()
-  {
+  public void testTextNewline() {
     final DefaultRenderableTextFactory textFactory = new DefaultRenderableTextFactory
-        (new HtmlOutputProcessorMetaData(
-            HtmlOutputProcessorMetaData.PAGINATION_NONE));
+      ( new HtmlOutputProcessorMetaData(
+        HtmlOutputProcessorMetaData.PAGINATION_NONE ) );
     textFactory.startText();
 
 
-    CodePointBuffer buffer = Utf16LE.getInstance().decodeString("Test\n\n\nTest", null); //$NON-NLS-1$
+    CodePointBuffer buffer = Utf16LE.getInstance().decodeString( "Test\n\n\nTest", null ); //$NON-NLS-1$
     final int[] data = buffer.getBuffer();
 
     final int length = buffer.getLength();
     final ElementDefaultStyleSheet defaultStyle = ElementDefaultStyleSheet.getDefaultStyle();
     final RenderNode[] renderNodes =
-        textFactory.createText(data, 0, length, new SimpleStyleSheet(defaultStyle), LegacyType.INSTANCE, new InstanceID(),
-            ReportAttributeMap.EMPTY_MAP);
+      textFactory
+        .createText( data, 0, length, new SimpleStyleSheet( defaultStyle ), LegacyType.INSTANCE, new InstanceID(),
+          ReportAttributeMap.EMPTY_MAP );
     final RenderNode[] finishNodes = textFactory.finishText();
 
-    assertNotNull(renderNodes);
-    assertEquals(renderNodes.length, 3);
-    assertTrue(renderNodes[0].getMinimumChunkWidth() > 0);
-    assertTrue(renderNodes[1].getMinimumChunkWidth() == 0);
-    assertTrue(renderNodes[2].getMinimumChunkWidth() == 0);
+    assertNotNull( renderNodes );
+    assertEquals( renderNodes.length, 3 );
+    assertTrue( renderNodes[ 0 ].getMinimumChunkWidth() > 0 );
+    assertTrue( renderNodes[ 1 ].getMinimumChunkWidth() == 0 );
+    assertTrue( renderNodes[ 2 ].getMinimumChunkWidth() == 0 );
 
-    assertNotNull(finishNodes);
-    assertEquals(finishNodes.length, 1);
-    assertTrue(finishNodes[0].getMinimumChunkWidth() > 0);
+    assertNotNull( finishNodes );
+    assertEquals( finishNodes.length, 1 );
+    assertTrue( finishNodes[ 0 ].getMinimumChunkWidth() > 0 );
   }
 
   //  // Broken ..
-  public void testTextRNewline()
-  {
+  public void testTextRNewline() {
     final DefaultRenderableTextFactory textFactory = new DefaultRenderableTextFactory
-        (new HtmlOutputProcessorMetaData(
-            HtmlOutputProcessorMetaData.PAGINATION_NONE));
+      ( new HtmlOutputProcessorMetaData(
+        HtmlOutputProcessorMetaData.PAGINATION_NONE ) );
     textFactory.startText();
 
-    CodePointBuffer buffer = Utf16LE.getInstance().decodeString("T\r\n\r\n\r\nT", null); //$NON-NLS-1$
+    CodePointBuffer buffer = Utf16LE.getInstance().decodeString( "T\r\n\r\n\r\nT", null ); //$NON-NLS-1$
     final int[] data = buffer.getBuffer();
 
     final int length = buffer.getLength();
     final ElementDefaultStyleSheet defaultStyle = ElementDefaultStyleSheet.getDefaultStyle();
     final RenderNode[] renderNodes =
-        textFactory.createText(data, 0, length, new SimpleStyleSheet(defaultStyle), LegacyType.INSTANCE, new InstanceID(),
-            ReportAttributeMap.EMPTY_MAP);
+      textFactory
+        .createText( data, 0, length, new SimpleStyleSheet( defaultStyle ), LegacyType.INSTANCE, new InstanceID(),
+          ReportAttributeMap.EMPTY_MAP );
     final RenderNode[] finishNodes = textFactory.finishText();
 
-    assertNotNull(renderNodes);
-    assertEquals(renderNodes.length, 3);
-    assertTrue(renderNodes[0].getMinimumChunkWidth() > 0);
-    assertTrue(renderNodes[1].getMinimumChunkWidth() == 0);
-    assertTrue(renderNodes[2].getMinimumChunkWidth() == 0);
+    assertNotNull( renderNodes );
+    assertEquals( renderNodes.length, 3 );
+    assertTrue( renderNodes[ 0 ].getMinimumChunkWidth() > 0 );
+    assertTrue( renderNodes[ 1 ].getMinimumChunkWidth() == 0 );
+    assertTrue( renderNodes[ 2 ].getMinimumChunkWidth() == 0 );
 
-    assertNotNull(finishNodes);
-    assertEquals(finishNodes.length, 1);
-    assertTrue(finishNodes[0].getMinimumChunkWidth() > 0);
+    assertNotNull( finishNodes );
+    assertEquals( finishNodes.length, 1 );
+    assertTrue( finishNodes[ 0 ].getMinimumChunkWidth() > 0 );
   }
 
-  public void testGraphemeClusterGenerationWindows()
-  {
-    CodePointBuffer buffer = Utf16LE.getInstance().decodeString("T\r\n\r\n\r\nT", null); //$NON-NLS-1$
+  public void testGraphemeClusterGenerationWindows() {
+    CodePointBuffer buffer = Utf16LE.getInstance().decodeString( "T\r\n\r\n\r\nT", null ); //$NON-NLS-1$
     final int[] data = buffer.getBuffer();
     final boolean[] result = new boolean[]
-        {
-            true, true, false, true, false, true, false, true
-        };
+      {
+        true, true, false, true, false, true, false, true
+      };
     GraphemeClusterProducer prod = new GraphemeClusterProducer();
 
-    for (int i = 0; i < buffer.getLength(); i++)
-    {
-      final int codepoint = data[i];
-      if (prod.createGraphemeCluster(codepoint) != result[i])
-      {
+    for ( int i = 0; i < buffer.getLength(); i++ ) {
+      final int codepoint = data[ i ];
+      if ( prod.createGraphemeCluster( codepoint ) != result[ i ] ) {
         TestCase.fail();
       }
     }
   }
 
-  public void testGraphemeClusterGenerationUnix()
-  {
-    CodePointBuffer buffer = Utf16LE.getInstance().decodeString("T\n\n\nT", null); //$NON-NLS-1$
+  public void testGraphemeClusterGenerationUnix() {
+    CodePointBuffer buffer = Utf16LE.getInstance().decodeString( "T\n\n\nT", null ); //$NON-NLS-1$
     final int[] data = buffer.getBuffer();
     final boolean[] result = new boolean[]
-        {
-            true, true, true, true, true
-        };
+      {
+        true, true, true, true, true
+      };
     GraphemeClusterProducer prod = new GraphemeClusterProducer();
 
-    for (int i = 0; i < buffer.getLength(); i++)
-    {
-      final int codepoint = data[i];
-      if (prod.createGraphemeCluster(codepoint) != result[i])
-      {
+    for ( int i = 0; i < buffer.getLength(); i++ ) {
+      final int codepoint = data[ i ];
+      if ( prod.createGraphemeCluster( codepoint ) != result[ i ] ) {
         TestCase.fail();
       }
     }
   }
 
-  public void testGraphemeClusterGenerationOldMac()
-  {
-    CodePointBuffer buffer = Utf16LE.getInstance().decodeString("T\r\r\rT", null); //$NON-NLS-1$
+  public void testGraphemeClusterGenerationOldMac() {
+    CodePointBuffer buffer = Utf16LE.getInstance().decodeString( "T\r\r\rT", null ); //$NON-NLS-1$
     final int[] data = buffer.getBuffer();
     final boolean[] result = new boolean[]
-        {
-            true, true, true, true, true
-        };
+      {
+        true, true, true, true, true
+      };
     GraphemeClusterProducer prod = new GraphemeClusterProducer();
 
-    for (int i = 0; i < buffer.getLength(); i++)
-    {
-      final int codepoint = data[i];
-      if (prod.createGraphemeCluster(codepoint) != result[i])
-      {
+    for ( int i = 0; i < buffer.getLength(); i++ ) {
+      final int codepoint = data[ i ];
+      if ( prod.createGraphemeCluster( codepoint ) != result[ i ] ) {
         TestCase.fail();
       }
     }
   }
 
 
-  public void testWhitespaceCollapse()
-  {
+  public void testWhitespaceCollapse() {
     final DefaultRenderableTextFactory textFactory = new DefaultRenderableTextFactory
-        (new HtmlOutputProcessorMetaData(
-            HtmlOutputProcessorMetaData.PAGINATION_NONE));
+      ( new HtmlOutputProcessorMetaData(
+        HtmlOutputProcessorMetaData.PAGINATION_NONE ) );
     textFactory.startText();
 
-    CodePointBuffer buffer = Utf16LE.getInstance().decodeString("T T T T", null); //$NON-NLS-1$
+    CodePointBuffer buffer = Utf16LE.getInstance().decodeString( "T T T T", null ); //$NON-NLS-1$
     final int[] data = buffer.getBuffer();
 
     final Element element = new Element();
     final int length = buffer.getLength();
-    element.getStyle().setStyleProperty(TextStyleKeys.WHITE_SPACE_COLLAPSE, WhitespaceCollapse.DISCARD);
+    element.getStyle().setStyleProperty( TextStyleKeys.WHITE_SPACE_COLLAPSE, WhitespaceCollapse.DISCARD );
     final RenderNode[] renderNodes =
-        textFactory.createText(data, 0, length, SimpleStyleResolver.resolveOneTime(element), LegacyType.INSTANCE, new InstanceID(),
-            ReportAttributeMap.EMPTY_MAP);
+      textFactory.createText( data, 0, length, SimpleStyleResolver.resolveOneTime( element ), LegacyType.INSTANCE,
+        new InstanceID(),
+        ReportAttributeMap.EMPTY_MAP );
     final RenderNode[] finishNodes = textFactory.finishText();
 
   }
 
-  public void testTextWithFirstSpetialSimbol() throws Exception
-  {
+  public void testTextWithFirstSpetialSimbol() throws Exception {
     final DefaultRenderableTextFactory textFactory = new DefaultRenderableTextFactory
-        (new HtmlOutputProcessorMetaData(
-            HtmlOutputProcessorMetaData.PAGINATION_NONE));
+      ( new HtmlOutputProcessorMetaData(
+        HtmlOutputProcessorMetaData.PAGINATION_NONE ) );
     textFactory.startText();
 
-    String sourceText = new String(new char[]{768, 768, 69, 114, 114, 111, 114}); // String sourceText = "?Error";
-    CodePointBuffer buffer = Utf16LE.getInstance().decodeString(sourceText, null);
+    String sourceText = new String( new char[] { 768, 768, 69, 114, 114, 111, 114 } ); // String sourceText = "?Error";
+    CodePointBuffer buffer = Utf16LE.getInstance().decodeString( sourceText, null );
     final int[] data = buffer.getBuffer();
 
-    textFactory.createText(data, 0, buffer.getLength(), new SimpleStyleSheet(ElementDefaultStyleSheet.getDefaultStyle()), TextFieldType.INSTANCE, new InstanceID(),
-        ReportAttributeMap.EMPTY_MAP);
+    textFactory
+      .createText( data, 0, buffer.getLength(), new SimpleStyleSheet( ElementDefaultStyleSheet.getDefaultStyle() ),
+        TextFieldType.INSTANCE, new InstanceID(),
+        ReportAttributeMap.EMPTY_MAP );
     final RenderNode[] finishNodes = textFactory.finishText();
 
-    assertNotNull(finishNodes);
-    assertEquals(finishNodes.length, 1);
-    assertTrue(finishNodes[0] instanceof RenderableText);
-    RenderableText textNode = (RenderableText) finishNodes[0];
-    assertEquals(textNode.getRawText(), Utf16LE.getInstance().encodeString(buffer));
+    assertNotNull( finishNodes );
+    assertEquals( finishNodes.length, 1 );
+    assertTrue( finishNodes[ 0 ] instanceof RenderableText );
+    RenderableText textNode = (RenderableText) finishNodes[ 0 ];
+    assertEquals( textNode.getRawText(), Utf16LE.getInstance().encodeString( buffer ) );
   }
 }

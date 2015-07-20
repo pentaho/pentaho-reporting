@@ -17,10 +17,11 @@
 
 package org.pentaho.reporting.engine.classic.core.layout.process.text;
 
-public interface ParagraphFontMetrics
-{
+public interface ParagraphFontMetrics {
   float getLineHeight();
+
   float getBaseline();
+
   float getAscent();
 
 }

@@ -29,30 +29,24 @@ import org.xml.sax.SAXException;
  *
  * @author Thomas Morgner
  */
-public class SourceChunkReadHandler extends BandReadHandler
-{
-  public SourceChunkReadHandler()
-  {
+public class SourceChunkReadHandler extends BandReadHandler {
+  public SourceChunkReadHandler() {
   }
 
-  protected XmlReadHandler getHandlerForChild(final String uri, final String tagName, final PropertyAttributes attrs)
-      throws SAXException
-  {
-    if (ObjectUtilities.equal(uri, getUri()) == false)
-    {
+  protected XmlReadHandler getHandlerForChild( final String uri, final String tagName, final PropertyAttributes attrs )
+    throws SAXException {
+    if ( ObjectUtilities.equal( uri, getUri() ) == false ) {
       return null;
     }
-    if ("band".equals(tagName))
-    {
-      return super.getHandlerForChild(uri, tagName, attrs);
+    if ( "band".equals( tagName ) ) {
+      return super.getHandlerForChild( uri, tagName, attrs );
     }
 
     return null;
   }
 
-  public Object getObject()
-  {
+  public Object getObject() {
     final Band band = (Band) super.getObject();
-    return new SourceChunk(band);
+    return new SourceChunk( band );
   }
 }

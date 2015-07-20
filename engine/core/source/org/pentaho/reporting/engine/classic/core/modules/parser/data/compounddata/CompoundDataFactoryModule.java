@@ -24,13 +24,12 @@ import org.pentaho.reporting.libraries.base.boot.AbstractModule;
 import org.pentaho.reporting.libraries.base.boot.ModuleInitializeException;
 import org.pentaho.reporting.libraries.base.boot.SubSystem;
 
-public class CompoundDataFactoryModule extends AbstractModule
-{
+public class CompoundDataFactoryModule extends AbstractModule {
   public static final String NAMESPACE = "http://reporting.pentaho.org/namespaces/datasources/compound/1.0";
-  public static final String TAG_DEF_PREFIX = "org.pentaho.reporting.engine.classic.core.modules.parser.data.compounddata.tag-def.";
+  public static final String TAG_DEF_PREFIX =
+    "org.pentaho.reporting.engine.classic.core.modules.parser.data.compounddata.tag-def.";
 
-  public CompoundDataFactoryModule() throws ModuleInitializeException
-  {
+  public CompoundDataFactoryModule() throws ModuleInitializeException {
     loadModuleInfo();
   }
 
@@ -42,11 +41,12 @@ public class CompoundDataFactoryModule extends AbstractModule
    * @param subSystem the subSystem.
    * @throws ModuleInitializeException if an error ocurred while initializing the module.
    */
-  public void initialize(final SubSystem subSystem) throws ModuleInitializeException
-  {
-    DataFactoryXmlResourceFactory.register(CompoundDataFactoryResourceXmlFactoryModule.class);
-    
-    DataFactoryReadHandlerFactory.getInstance().setElementHandler(NAMESPACE, "compound-datasource", CompoundDataFactoryReadHandler.class);
-    DataFactoryReadHandlerFactory.getInstance().setElementHandler(NAMESPACE, "data-factory", DataFactoryRefReadHandler.class);
+  public void initialize( final SubSystem subSystem ) throws ModuleInitializeException {
+    DataFactoryXmlResourceFactory.register( CompoundDataFactoryResourceXmlFactoryModule.class );
+
+    DataFactoryReadHandlerFactory.getInstance()
+      .setElementHandler( NAMESPACE, "compound-datasource", CompoundDataFactoryReadHandler.class );
+    DataFactoryReadHandlerFactory.getInstance()
+      .setElementHandler( NAMESPACE, "data-factory", DataFactoryRefReadHandler.class );
   }
 }

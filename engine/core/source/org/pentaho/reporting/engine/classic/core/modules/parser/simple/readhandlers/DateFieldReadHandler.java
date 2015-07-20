@@ -21,11 +21,9 @@ import org.pentaho.reporting.engine.classic.core.elementfactory.DateFieldElement
 import org.pentaho.reporting.engine.classic.core.modules.parser.base.PropertyAttributes;
 import org.xml.sax.SAXException;
 
-public class DateFieldReadHandler extends StringFieldReadHandler
-{
-  public DateFieldReadHandler()
-  {
-    super(new DateFieldElementFactory());
+public class DateFieldReadHandler extends StringFieldReadHandler {
+  public DateFieldReadHandler() {
+    super( new DateFieldElementFactory() );
   }
 
   /**
@@ -34,13 +32,12 @@ public class DateFieldReadHandler extends StringFieldReadHandler
    * @param atts the attributes.
    * @throws org.xml.sax.SAXException if there is a parsing error.
    */
-  protected void startParsing(final PropertyAttributes atts)
-      throws SAXException
-  {
-    super.startParsing(atts);
+  protected void startParsing( final PropertyAttributes atts )
+    throws SAXException {
+    super.startParsing( atts );
     final DateFieldElementFactory elementFactory =
-        (DateFieldElementFactory) getTextElementFactory();
-    elementFactory.setFormatString(atts.getValue(getUri(), "format"));
-    elementFactory.setExcelCellFormat(atts.getValue(getUri(), "excel-format"));
+      (DateFieldElementFactory) getTextElementFactory();
+    elementFactory.setFormatString( atts.getValue( getUri(), "format" ) );
+    elementFactory.setExcelCellFormat( atts.getValue( getUri(), "excel-format" ) );
   }
 }

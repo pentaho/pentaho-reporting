@@ -17,30 +17,28 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.parser.base.common;
 
-import java.beans.IntrospectionException;
-
 import org.pentaho.reporting.engine.classic.core.function.Expression;
 import org.pentaho.reporting.engine.classic.core.modules.parser.base.PropertyAttributes;
 import org.pentaho.reporting.engine.classic.core.util.beans.BeanUtility;
 import org.pentaho.reporting.libraries.xmlns.parser.XmlReadHandler;
 import org.xml.sax.SAXException;
 
-public class ExpressionPropertiesReadHandler extends AbstractPropertyXmlReadHandler
-{
+import java.beans.IntrospectionException;
+
+public class ExpressionPropertiesReadHandler extends AbstractPropertyXmlReadHandler {
   private BeanUtility beanUtility;
   private Expression expression;
 
   private String originalExpressionClass;
   private String expressionClass;
 
-  public ExpressionPropertiesReadHandler(final Expression expression,
-                                         final String originalExpressionClass,
-                                         final String expressionClass)
-      throws IntrospectionException
-  {
+  public ExpressionPropertiesReadHandler( final Expression expression,
+                                          final String originalExpressionClass,
+                                          final String expressionClass )
+    throws IntrospectionException {
     this.originalExpressionClass = originalExpressionClass;
     this.expressionClass = expressionClass;
-    this.beanUtility = new BeanUtility(expression);
+    this.beanUtility = new BeanUtility( expression );
     this.expression = expression;
   }
 
@@ -51,19 +49,16 @@ public class ExpressionPropertiesReadHandler extends AbstractPropertyXmlReadHand
    * @return the handler or null, if the tagname is invalid.
    * @throws org.xml.sax.SAXException if there is a parsing error.
    */
-  protected XmlReadHandler getHandlerForChild(final String uri,
-                                              final String tagName,
-                                              final PropertyAttributes attrs)
-      throws SAXException
-  {
-    if (isSameNamespace(uri) == false)
-    {
+  protected XmlReadHandler getHandlerForChild( final String uri,
+                                               final String tagName,
+                                               final PropertyAttributes attrs )
+    throws SAXException {
+    if ( isSameNamespace( uri ) == false ) {
       return null;
     }
-    if ("property".equals(tagName))
-    {
+    if ( "property".equals( tagName ) ) {
       return new ExpressionPropertyReadHandler
-          (beanUtility, originalExpressionClass, expressionClass, expression.getName());
+        ( beanUtility, originalExpressionClass, expressionClass, expression.getName() );
     }
     return null;
   }
@@ -73,8 +68,7 @@ public class ExpressionPropertiesReadHandler extends AbstractPropertyXmlReadHand
    *
    * @return the object.
    */
-  public Object getObject()
-  {
+  public Object getObject() {
     return this;
   }
 }

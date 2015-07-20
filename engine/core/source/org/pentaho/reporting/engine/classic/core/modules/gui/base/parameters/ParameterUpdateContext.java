@@ -20,13 +20,14 @@ package org.pentaho.reporting.engine.classic.core.modules.gui.base.parameters;
 import javax.swing.event.ChangeListener;
 
 
-public interface ParameterUpdateContext
-{
-  public void setParameterValue(final String name, final Object value);
-  public void setParameterValue(final String name, final Object value, final boolean autoUpdate);
+public interface ParameterUpdateContext {
+  public void setParameterValue( final String name, final Object value );
 
-  public Object getParameterValue(String name);
+  public void setParameterValue( final String name, final Object value, final boolean autoUpdate );
 
-  public void addChangeListener(ChangeListener changeListener);
-  public void removeChangeListener(ChangeListener changeListener);
+  public Object getParameterValue( String name );
+
+  public void addChangeListener( ChangeListener changeListener );
+
+  public void removeChangeListener( ChangeListener changeListener );
 }

@@ -19,10 +19,8 @@ package org.pentaho.reporting.engine.classic.core.metadata.propertyeditors;
 
 import org.pentaho.reporting.engine.classic.core.CrosstabNormalizationMode;
 
-public class CrosstabNormalizationModePropertyEditor extends EnumPropertyEditor
-{
-  public CrosstabNormalizationModePropertyEditor()
-  {
-    super(CrosstabNormalizationMode.class, true);
+public class CrosstabNormalizationModePropertyEditor extends EnumPropertyEditor {
+  public CrosstabNormalizationModePropertyEditor() {
+    super( CrosstabNormalizationMode.class, true );
   }
 }

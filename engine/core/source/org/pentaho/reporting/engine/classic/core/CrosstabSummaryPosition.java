@@ -17,7 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.core;
 
-public enum CrosstabSummaryPosition
-{
+public enum CrosstabSummaryPosition {
   Leading, Trailing
 }

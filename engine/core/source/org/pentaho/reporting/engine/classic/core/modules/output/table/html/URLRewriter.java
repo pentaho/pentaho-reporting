@@ -24,8 +24,7 @@ import org.pentaho.reporting.libraries.repository.ContentEntity;
  *
  * @author Thomas Morgner
  */
-public interface URLRewriter
-{
-  public String rewrite(ContentEntity sourceDocument, ContentEntity dataEntity)
-      throws URLRewriteException;
+public interface URLRewriter {
+  public String rewrite( ContentEntity sourceDocument, ContentEntity dataEntity )
+    throws URLRewriteException;
 }

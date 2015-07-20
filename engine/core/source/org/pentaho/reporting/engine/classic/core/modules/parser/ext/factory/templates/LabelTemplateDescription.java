@@ -24,15 +24,13 @@ import org.pentaho.reporting.engine.classic.core.filter.templates.LabelTemplate;
  *
  * @author Thomas Morgner.
  */
-public class LabelTemplateDescription extends AbstractTemplateDescription
-{
+public class LabelTemplateDescription extends AbstractTemplateDescription {
   /**
    * Creates a new template description.
    *
    * @param name the name.
    */
-  public LabelTemplateDescription(final String name)
-  {
-    super(name, LabelTemplate.class, true);
+  public LabelTemplateDescription( final String name ) {
+    super( name, LabelTemplate.class, true );
   }
 }

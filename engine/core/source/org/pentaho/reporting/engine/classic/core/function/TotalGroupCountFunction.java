@@ -17,13 +17,13 @@
 
 package org.pentaho.reporting.engine.classic.core.function;
 
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.util.HashMap;
-
 import org.pentaho.reporting.engine.classic.core.event.ReportEvent;
 import org.pentaho.reporting.engine.classic.core.states.ReportStateKey;
 import org.pentaho.reporting.engine.classic.core.util.IntegerCache;
+
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.util.HashMap;
 
 /**
  * A report function that counts the total of groups in a report. If a null-groupname is given, all groups are counted.
@@ -32,12 +32,11 @@ import org.pentaho.reporting.engine.classic.core.util.IntegerCache;
  *
  * @author Thomas Morgner
  */
-public class TotalGroupCountFunction extends GroupCountFunction
-{
+public class TotalGroupCountFunction extends GroupCountFunction {
   /**
    * A map of results, keyed by the process-key.
    */
-  private transient HashMap<ReportStateKey,Integer> results;
+  private transient HashMap<ReportStateKey, Integer> results;
   /**
    * The currently computed result.
    */
@@ -54,9 +53,8 @@ public class TotalGroupCountFunction extends GroupCountFunction
   /**
    * Default constructor.
    */
-  public TotalGroupCountFunction()
-  {
-    results = new HashMap<ReportStateKey,Integer>();
+  public TotalGroupCountFunction() {
+    results = new HashMap<ReportStateKey, Integer>();
   }
 
   /**
@@ -64,19 +62,15 @@ public class TotalGroupCountFunction extends GroupCountFunction
    *
    * @param event the event.
    */
-  public void reportInitialized(final ReportEvent event)
-  {
-    super.reportInitialized(event);
+  public void reportInitialized( final ReportEvent event ) {
+    super.reportInitialized( event );
     globalStateKey = event.getState().getProcessKey();
-    if (FunctionUtilities.isDefinedPrepareRunLevel(this, event))
-    {
+    if ( FunctionUtilities.isDefinedPrepareRunLevel( this, event ) ) {
       results.clear();
-      result = IntegerCache.getInteger(getCount());
-      results.put(globalStateKey, result);
-    }
-    else
-    {
-      result = results.get(globalStateKey);
+      result = IntegerCache.getInteger( getCount() );
+      results.put( globalStateKey, result );
+    } else {
+      result = results.get( globalStateKey );
     }
   }
 
@@ -85,37 +79,30 @@ public class TotalGroupCountFunction extends GroupCountFunction
    *
    * @param event the event.
    */
-  public void groupStarted(final ReportEvent event)
-  {
-    super.groupStarted(event);
+  public void groupStarted( final ReportEvent event ) {
+    super.groupStarted( event );
 
-    if (FunctionUtilities.isDefinedGroup(getParentGroup(), event))
-    {
+    if ( FunctionUtilities.isDefinedGroup( getParentGroup(), event ) ) {
       groupStateKey = event.getState().getProcessKey();
-      if (FunctionUtilities.isDefinedPrepareRunLevel(this, event))
-      {
-        result = IntegerCache.getInteger(getCount());
-        results.put(globalStateKey, result);
-        results.put(groupStateKey, result);
+      if ( FunctionUtilities.isDefinedPrepareRunLevel( this, event ) ) {
+        result = IntegerCache.getInteger( getCount() );
+        results.put( globalStateKey, result );
+        results.put( groupStateKey, result );
         return;
-      }
-      else
-      {
+      } else {
         // Activate the current group, which was filled in the prepare run.
-        result = results.get(groupStateKey);
+        result = results.get( groupStateKey );
       }
     }
 
     final String definedGroupName = getGroup();
-    if (definedGroupName == null ||
-        FunctionUtilities.isDefinedGroup(definedGroupName, event))
-    {
+    if ( definedGroupName == null ||
+      FunctionUtilities.isDefinedGroup( definedGroupName, event ) ) {
       // count all groups...
-      if (FunctionUtilities.isDefinedPrepareRunLevel(this, event))
-      {
-        result = IntegerCache.getInteger(getCount());
-        results.put(globalStateKey, result);
-        results.put(groupStateKey, result);
+      if ( FunctionUtilities.isDefinedPrepareRunLevel( this, event ) ) {
+        result = IntegerCache.getInteger( getCount() );
+        results.put( globalStateKey, result );
+        results.put( groupStateKey, result );
       }
     }
   }
@@ -125,8 +112,7 @@ public class TotalGroupCountFunction extends GroupCountFunction
    *
    * @return the computed value.
    */
-  public Object getValue()
-  {
+  public Object getValue() {
     return result;
   }
 
@@ -136,10 +122,9 @@ public class TotalGroupCountFunction extends GroupCountFunction
    *
    * @return a copy of this function.
    */
-  public Expression getInstance()
-  {
+  public Expression getInstance() {
     final TotalGroupCountFunction fn =
-        (TotalGroupCountFunction) super.getInstance();
+      (TotalGroupCountFunction) super.getInstance();
     fn.results = new HashMap<ReportStateKey, Integer>();
     return fn;
   }
@@ -151,9 +136,8 @@ public class TotalGroupCountFunction extends GroupCountFunction
    * @throws IOException            if an IO error occured.
    * @throws ClassNotFoundException if a required class could not be found.
    */
-  private void readObject(final ObjectInputStream in)
-      throws IOException, ClassNotFoundException
-  {
+  private void readObject( final ObjectInputStream in )
+    throws IOException, ClassNotFoundException {
     in.defaultReadObject();
     this.results = new HashMap<ReportStateKey, Integer>();
   }

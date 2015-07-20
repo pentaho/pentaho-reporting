@@ -17,28 +17,25 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.gui.commonswing;
 
-import java.util.Enumeration;
-import java.util.ResourceBundle;
-import javax.swing.UIDefaults;
-import javax.swing.UIManager;
-
 import org.pentaho.reporting.libraries.base.boot.AbstractModule;
 import org.pentaho.reporting.libraries.base.boot.ModuleInitializeException;
 import org.pentaho.reporting.libraries.base.boot.SubSystem;
+
+import javax.swing.*;
+import java.util.Enumeration;
+import java.util.ResourceBundle;
 
 /**
  * Creation-Date: 17.11.2006, 14:40:24
  *
  * @author Thomas Morgner
  */
-public class SwingCommonModule extends AbstractModule
-{
+public class SwingCommonModule extends AbstractModule {
   public static final String BUNDLE_NAME =
-      "org.pentaho.reporting.engine.classic.core.modules.gui.commonswing.messages.messages"; //$NON-NLS-1$
+    "org.pentaho.reporting.engine.classic.core.modules.gui.commonswing.messages.messages"; //$NON-NLS-1$
   public static final String LARGE_ICON_PROPERTY = "Icon24"; //$NON-NLS-1$
 
-  public SwingCommonModule() throws ModuleInitializeException
-  {
+  public SwingCommonModule() throws ModuleInitializeException {
     loadModuleInfo();
   }
 
@@ -50,23 +47,18 @@ public class SwingCommonModule extends AbstractModule
    * @param subSystem the subSystem.
    * @throws ModuleInitializeException if an error ocurred while initializing the module.
    */
-  public void initialize(final SubSystem subSystem) throws ModuleInitializeException
-  {
-    if (subSystem.getExtendedConfig().getBoolProperty(
-        "org.pentaho.reporting.engine.classic.core.modules.gui.base.SwingDialogTranslation")) //$NON-NLS-1$
+  public void initialize( final SubSystem subSystem ) throws ModuleInitializeException {
+    if ( subSystem.getExtendedConfig().getBoolProperty(
+      "org.pentaho.reporting.engine.classic.core.modules.gui.base.SwingDialogTranslation" ) ) //$NON-NLS-1$
     {
-      final ResourceBundle resources = ResourceBundle.getBundle(SwingCommonModule.BUNDLE_NAME);
+      final ResourceBundle resources = ResourceBundle.getBundle( SwingCommonModule.BUNDLE_NAME );
       final UIDefaults defaults = UIManager.getDefaults();
       final Enumeration en = resources.getKeys();
-      while (en.hasMoreElements())
-      {
-        try
-        {
+      while ( en.hasMoreElements() ) {
+        try {
           final String keyName = (String) en.nextElement();
-          defaults.put(keyName, resources.getObject(keyName));
-        }
-        catch (Exception e)
-        {
+          defaults.put( keyName, resources.getObject( keyName ) );
+        } catch ( Exception e ) {
           // Ignored; if it happens, we would not care that much ..
         }
       }

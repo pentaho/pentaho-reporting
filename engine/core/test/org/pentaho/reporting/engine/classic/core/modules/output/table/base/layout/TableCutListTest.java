@@ -21,43 +21,38 @@ import junit.framework.TestCase;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.pentaho.reporting.engine.classic.core.modules.output.table.base.TableCutList;
 
-public class TableCutListTest extends TestCase
-{
-  public TableCutListTest()
-  {
+public class TableCutListTest extends TestCase {
+  public TableCutListTest() {
   }
 
-  public TableCutListTest(final String s)
-  {
-    super(s);
+  public TableCutListTest( final String s ) {
+    super( s );
   }
 
-  protected void setUp() throws Exception
-  {
+  protected void setUp() throws Exception {
     ClassicEngineBoot.getInstance().start();
   }
 
-  public void testPlainAdd()
-  {
-    final TableCutList list = new TableCutList(10, true);
-    list.put(5000, Boolean.TRUE);
-    list.put(15000, Boolean.TRUE);
-    list.put(-85000, Boolean.TRUE);
-    list.put(-5000, Boolean.TRUE);
-    list.put(-15000, Boolean.TRUE);
-    list.put(-25000, Boolean.TRUE);
-    list.put(-35000, Boolean.TRUE);
-    list.put(-45000, Boolean.TRUE);
-    list.put(-55000, Boolean.TRUE);
-    list.put(-65000, Boolean.TRUE);
-    list.put(-75000, Boolean.TRUE);
-    list.put(25000, Boolean.TRUE);
-    list.put(35000, Boolean.TRUE);
+  public void testPlainAdd() {
+    final TableCutList list = new TableCutList( 10, true );
+    list.put( 5000, Boolean.TRUE );
+    list.put( 15000, Boolean.TRUE );
+    list.put( -85000, Boolean.TRUE );
+    list.put( -5000, Boolean.TRUE );
+    list.put( -15000, Boolean.TRUE );
+    list.put( -25000, Boolean.TRUE );
+    list.put( -35000, Boolean.TRUE );
+    list.put( -45000, Boolean.TRUE );
+    list.put( -55000, Boolean.TRUE );
+    list.put( -65000, Boolean.TRUE );
+    list.put( -75000, Boolean.TRUE );
+    list.put( 25000, Boolean.TRUE );
+    list.put( 35000, Boolean.TRUE );
 
-    list.get(-95000);
-    list.get(4900);
-    list.get(5000);
-    list.get(0);
-    list.get(25000);
+    list.get( -95000 );
+    list.get( 4900 );
+    list.get( 5000 );
+    list.get( 0 );
+    list.get( 25000 );
   }
 }

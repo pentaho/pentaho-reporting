@@ -17,6 +17,9 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.parser.ext.factory.base;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import java.beans.BeanInfo;
 import java.beans.IntrospectionException;
 import java.beans.Introspector;
@@ -29,19 +32,15 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
 /**
  * An object-description for a bean object. This object description is very dangerous, if the bean contains properties
  * with undefined types.
  *
  * @author Thomas Morgner
  */
-public class BeanObjectDescription extends AbstractObjectDescription
-{
+public class BeanObjectDescription extends AbstractObjectDescription {
 
-  private static final Log logger = LogFactory.getLog(BeanObjectDescription.class);
+  private static final Log logger = LogFactory.getLog( BeanObjectDescription.class );
   private HashSet ignoredParameters;
   /**
    * @noinspection InstanceVariableMayNotBeInitializedByReadObject
@@ -53,9 +52,8 @@ public class BeanObjectDescription extends AbstractObjectDescription
    *
    * @param className the class.
    */
-  public BeanObjectDescription(final Class className)
-  {
-    this(className, true);
+  public BeanObjectDescription( final Class className ) {
+    this( className, true );
   }
 
   /**
@@ -65,30 +63,24 @@ public class BeanObjectDescription extends AbstractObjectDescription
    * @param init      set to true, to autmaoticly initialise the object description. If set to false, the initialisation
    *                  is elsewhere.
    */
-  public BeanObjectDescription(final Class className, final boolean init)
-  {
-    super(className);
+  public BeanObjectDescription( final Class className, final boolean init ) {
+    super( className );
     // now create some method descriptions ..
     this.ignoredParameters = new HashSet();
-    readBeanDescription(className, init);
+    readBeanDescription( className, init );
   }
 
-  private boolean isValidMethod(final Method method, final int parCount)
-  {
-    if (method == null)
-    {
+  private boolean isValidMethod( final Method method, final int parCount ) {
+    if ( method == null ) {
       return false;
     }
-    if (!Modifier.isPublic(method.getModifiers()))
-    {
+    if ( !Modifier.isPublic( method.getModifiers() ) ) {
       return false;
     }
-    if (Modifier.isStatic(method.getModifiers()))
-    {
+    if ( Modifier.isStatic( method.getModifiers() ) ) {
       return false;
     }
-    if (method.getParameterTypes().length != parCount)
-    {
+    if ( method.getParameterTypes().length != parCount ) {
       return false;
     }
     return true;
@@ -99,39 +91,30 @@ public class BeanObjectDescription extends AbstractObjectDescription
    *
    * @return The object.
    */
-  public Object createObject()
-  {
-    try
-    {
+  public Object createObject() {
+    try {
       final Object o = getObjectClass().newInstance();
       // now add the various parameters ...
 
       final Iterator it = getParameterNames();
-      while (it.hasNext())
-      {
+      while ( it.hasNext() ) {
         final String name = (String) it.next();
 
-        if (isParameterIgnored(name))
-        {
+        if ( isParameterIgnored( name ) ) {
           continue;
         }
 
-        final Method method = findSetMethod(name);
-        final Object parameterValue = getParameter(name);
-        if (parameterValue == null)
-        {
+        final Method method = findSetMethod( name );
+        final Object parameterValue = getParameter( name );
+        if ( parameterValue == null ) {
           // Log.debug ("Parameter: " + name + " is null");
-        }
-        else
-        {
-          method.invoke(o, new Object[]{parameterValue});
+        } else {
+          method.invoke( o, new Object[] { parameterValue } );
         }
       }
       return o;
-    }
-    catch (Exception e)
-    {
-      BeanObjectDescription.logger.error("Unable to invoke bean method", e);
+    } catch ( Exception e ) {
+      BeanObjectDescription.logger.error( "Unable to invoke bean method", e );
     }
     return null;
   }
@@ -142,10 +125,9 @@ public class BeanObjectDescription extends AbstractObjectDescription
    * @param parameterName the parameter name.
    * @return The method.
    */
-  private Method findSetMethod(final String parameterName)
-  {
+  private Method findSetMethod( final String parameterName ) {
     final PropertyDescriptor descriptor
-        = (PropertyDescriptor) this.properties.get(parameterName);
+      = (PropertyDescriptor) this.properties.get( parameterName );
     return descriptor.getWriteMethod();
   }
 
@@ -155,10 +137,9 @@ public class BeanObjectDescription extends AbstractObjectDescription
    * @param parameterName the paramater name.
    * @return The method.
    */
-  private Method findGetMethod(final String parameterName)
-  {
+  private Method findGetMethod( final String parameterName ) {
     final PropertyDescriptor descriptor
-        = (PropertyDescriptor) this.properties.get(parameterName);
+      = (PropertyDescriptor) this.properties.get( parameterName );
     return descriptor.getReadMethod();
   }
 
@@ -168,42 +149,33 @@ public class BeanObjectDescription extends AbstractObjectDescription
    * @param o the object (<code>null</code> not allowed).
    * @throws ObjectFactoryException if there is a problem.
    */
-  public void setParameterFromObject(final Object o)
-      throws ObjectFactoryException
-  {
-    if (o == null)
-    {
-      throw new NullPointerException("Given object is null");
+  public void setParameterFromObject( final Object o )
+    throws ObjectFactoryException {
+    if ( o == null ) {
+      throw new NullPointerException( "Given object is null" );
     }
     final Class c = getObjectClass();
-    if (!c.isInstance(o))
-    {
-      throw new ObjectFactoryException("Object is no instance of " + c
-          + "(is " + o.getClass() + ')');
+    if ( !c.isInstance( o ) ) {
+      throw new ObjectFactoryException( "Object is no instance of " + c
+        + "(is " + o.getClass() + ')' );
     }
 
     final Iterator it = getParameterNames();
-    while (it.hasNext())
-    {
+    while ( it.hasNext() ) {
       final String propertyName = (String) it.next();
 
-      if (isParameterIgnored(propertyName))
-      {
+      if ( isParameterIgnored( propertyName ) ) {
         continue;
       }
 
-      try
-      {
-        final Method method = findGetMethod(propertyName);
-        final Object retval = method.invoke(o, (Object[]) null);
-        if (retval != null)
-        {
-          setParameter(propertyName, retval);
+      try {
+        final Method method = findGetMethod( propertyName );
+        final Object retval = method.invoke( o, (Object[]) null );
+        if ( retval != null ) {
+          setParameter( propertyName, retval );
         }
-      }
-      catch (Exception e)
-      {
-        BeanObjectDescription.logger.info("Exception on method invokation.", e);
+      } catch ( Exception e ) {
+        BeanObjectDescription.logger.info( "Exception on method invokation.", e );
       }
 
     }
@@ -214,9 +186,8 @@ public class BeanObjectDescription extends AbstractObjectDescription
    *
    * @param parameter the parameter.
    */
-  protected void ignoreParameter(final String parameter)
-  {
-    this.ignoredParameters.add(parameter);
+  protected void ignoreParameter( final String parameter ) {
+    this.ignoredParameters.add( parameter );
   }
 
   /**
@@ -225,47 +196,38 @@ public class BeanObjectDescription extends AbstractObjectDescription
    * @param parameter the parameter.
    * @return The flag.
    */
-  protected boolean isParameterIgnored(final String parameter)
-  {
-    return this.ignoredParameters.contains(parameter);
+  protected boolean isParameterIgnored( final String parameter ) {
+    return this.ignoredParameters.contains( parameter );
   }
 
-  private void readObject(final ObjectInputStream in)
-      throws IOException, ClassNotFoundException
-  {
+  private void readObject( final ObjectInputStream in )
+    throws IOException, ClassNotFoundException {
     in.defaultReadObject();
-    readBeanDescription(getObjectClass(), false);
+    readBeanDescription( getObjectClass(), false );
   }
 
-  private void readBeanDescription(final Class className, final boolean init)
-  {
-    try
-    {
+  private void readBeanDescription( final Class className, final boolean init ) {
+    try {
       this.properties = new HashMap();
 
-      final BeanInfo bi = Introspector.getBeanInfo(className);
+      final BeanInfo bi = Introspector.getBeanInfo( className );
       final PropertyDescriptor[] propertyDescriptors
-          = bi.getPropertyDescriptors();
-      for (int i = 0; i < propertyDescriptors.length; i++)
-      {
-        final PropertyDescriptor propertyDescriptor = propertyDescriptors[i];
+        = bi.getPropertyDescriptors();
+      for ( int i = 0; i < propertyDescriptors.length; i++ ) {
+        final PropertyDescriptor propertyDescriptor = propertyDescriptors[ i ];
         final Method readMethod = propertyDescriptor.getReadMethod();
         final Method writeMethod = propertyDescriptor.getWriteMethod();
-        if (isValidMethod(readMethod, 0) && isValidMethod(writeMethod, 1))
-        {
+        if ( isValidMethod( readMethod, 0 ) && isValidMethod( writeMethod, 1 ) ) {
           final String name = propertyDescriptor.getName();
-          this.properties.put(name, propertyDescriptor);
-          if (init)
-          {
-            super.setParameterDefinition(name,
-                propertyDescriptor.getPropertyType());
+          this.properties.put( name, propertyDescriptor );
+          if ( init ) {
+            super.setParameterDefinition( name,
+              propertyDescriptor.getPropertyType() );
           }
         }
       }
-    }
-    catch (IntrospectionException e)
-    {
-      BeanObjectDescription.logger.error("Unable to build bean description", e);
+    } catch ( IntrospectionException e ) {
+      BeanObjectDescription.logger.error( "Unable to build bean description", e );
     }
   }
 }

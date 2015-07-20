@@ -17,27 +17,25 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.output.table.xls;
 
+import org.pentaho.reporting.engine.classic.core.MasterReport;
+import org.pentaho.reporting.engine.classic.core.ReportProcessingException;
+import org.pentaho.reporting.engine.classic.core.modules.output.table.base.FlowReportProcessor;
+
 import java.io.BufferedOutputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-
-import org.pentaho.reporting.engine.classic.core.MasterReport;
-import org.pentaho.reporting.engine.classic.core.ReportProcessingException;
-import org.pentaho.reporting.engine.classic.core.modules.output.table.base.FlowReportProcessor;
 
 /**
  * Utility class to provide an easy to use default implementation of excel exports.
  *
  * @author Thomas Morgner
  */
-public final class ExcelReportUtil
-{
+public final class ExcelReportUtil {
   /**
    * DefaultConstructor.
    */
-  private ExcelReportUtil()
-  {
+  private ExcelReportUtil() {
   }
 
 
@@ -49,40 +47,30 @@ public final class ExcelReportUtil
    * @throws ReportProcessingException if the report processing failed.
    * @throws IOException               if there was an IOerror while processing the report.
    */
-  public static void createXLSX(final MasterReport report, final String filename)
-      throws IOException, ReportProcessingException
-  {
-    if (report == null)
-    {
+  public static void createXLSX( final MasterReport report, final String filename )
+    throws IOException, ReportProcessingException {
+    if ( report == null ) {
       throw new NullPointerException();
     }
-    if (filename == null)
-    {
+    if ( filename == null ) {
       throw new NullPointerException();
     }
 
-    OutputStream fout = new BufferedOutputStream(new FileOutputStream(filename));
-    try
-    {
+    OutputStream fout = new BufferedOutputStream( new FileOutputStream( filename ) );
+    try {
       final FlowExcelOutputProcessor target =
-          new FlowExcelOutputProcessor(report.getConfiguration(), fout, report.getResourceManager());
-      target.setUseXlsxFormat(true);
-      final FlowReportProcessor reportProcessor = new FlowReportProcessor(report, target);
+        new FlowExcelOutputProcessor( report.getConfiguration(), fout, report.getResourceManager() );
+      target.setUseXlsxFormat( true );
+      final FlowReportProcessor reportProcessor = new FlowReportProcessor( report, target );
       reportProcessor.processReport();
       reportProcessor.close();
       fout.close();
       fout = null;
-    }
-    finally
-    {
-      if (fout != null)
-      {
-        try
-        {
+    } finally {
+      if ( fout != null ) {
+        try {
           fout.close();
-        }
-        catch (Exception e)
-        {
+        } catch ( Exception e ) {
           // ignore
         }
       }
@@ -99,67 +87,54 @@ public final class ExcelReportUtil
    * @throws ReportProcessingException if the report processing failed.
    * @throws IOException               if there was an IOerror while processing the report.
    */
-  public static void createXLSX(final MasterReport report,
-                               final String filename,
-                               final boolean strict)
-      throws IOException, ReportProcessingException
-  {
-    if (report == null)
-    {
+  public static void createXLSX( final MasterReport report,
+                                 final String filename,
+                                 final boolean strict )
+    throws IOException, ReportProcessingException {
+    if ( report == null ) {
       throw new NullPointerException();
     }
-    if (filename == null)
-    {
+    if ( filename == null ) {
       throw new NullPointerException();
     }
 
     report.getReportConfiguration().setConfigProperty
-        ("org.pentaho.reporting.engine.classic.core.modules.output.table.base.StrictLayout", String.valueOf(strict));
+      ( "org.pentaho.reporting.engine.classic.core.modules.output.table.base.StrictLayout", String.valueOf( strict ) );
 
-    OutputStream fout = new BufferedOutputStream(new FileOutputStream(filename));
-    try
-    {
+    OutputStream fout = new BufferedOutputStream( new FileOutputStream( filename ) );
+    try {
       final FlowExcelOutputProcessor target =
-          new FlowExcelOutputProcessor(report.getConfiguration(), fout, report.getResourceManager());
-      target.setUseXlsxFormat(true);
-      final FlowReportProcessor reportProcessor = new FlowReportProcessor(report, target);
+        new FlowExcelOutputProcessor( report.getConfiguration(), fout, report.getResourceManager() );
+      target.setUseXlsxFormat( true );
+      final FlowReportProcessor reportProcessor = new FlowReportProcessor( report, target );
       reportProcessor.processReport();
       reportProcessor.close();
       fout.close();
       fout = null;
-    }
-    finally
-    {
-      if (fout != null)
-      {
-        try
-        {
+    } finally {
+      if ( fout != null ) {
+        try {
           fout.close();
-        }
-        catch (Exception e)
-        {
+        } catch ( Exception e ) {
           // ignore
         }
       }
     }
   }
 
-  public static void createXLSX(final MasterReport report, final OutputStream outputStream)
-      throws ReportProcessingException
-  {
-    if (report == null)
-    {
+  public static void createXLSX( final MasterReport report, final OutputStream outputStream )
+    throws ReportProcessingException {
+    if ( report == null ) {
       throw new NullPointerException();
     }
-    if (outputStream == null)
-    {
+    if ( outputStream == null ) {
       throw new NullPointerException();
     }
 
     final FlowExcelOutputProcessor target =
-        new FlowExcelOutputProcessor(report.getConfiguration(), outputStream, report.getResourceManager());
-    target.setUseXlsxFormat(true);
-    final FlowReportProcessor reportProcessor = new FlowReportProcessor(report, target);
+      new FlowExcelOutputProcessor( report.getConfiguration(), outputStream, report.getResourceManager() );
+    target.setUseXlsxFormat( true );
+    final FlowReportProcessor reportProcessor = new FlowReportProcessor( report, target );
     reportProcessor.processReport();
     reportProcessor.close();
   }
@@ -172,40 +147,30 @@ public final class ExcelReportUtil
    * @throws ReportProcessingException if the report processing failed.
    * @throws IOException               if there was an IOerror while processing the report.
    */
-  public static void createXLS(final MasterReport report, final String filename)
-      throws IOException, ReportProcessingException
-  {
-    if (report == null)
-    {
+  public static void createXLS( final MasterReport report, final String filename )
+    throws IOException, ReportProcessingException {
+    if ( report == null ) {
       throw new NullPointerException();
     }
-    if (filename == null)
-    {
+    if ( filename == null ) {
       throw new NullPointerException();
     }
 
-    OutputStream fout = new BufferedOutputStream(new FileOutputStream(filename));
-    try
-    {
+    OutputStream fout = new BufferedOutputStream( new FileOutputStream( filename ) );
+    try {
       final FlowExcelOutputProcessor target =
-          new FlowExcelOutputProcessor(report.getConfiguration(), fout, report.getResourceManager());
-      target.setUseXlsxFormat(false);
-      final FlowReportProcessor reportProcessor = new FlowReportProcessor(report, target);
+        new FlowExcelOutputProcessor( report.getConfiguration(), fout, report.getResourceManager() );
+      target.setUseXlsxFormat( false );
+      final FlowReportProcessor reportProcessor = new FlowReportProcessor( report, target );
       reportProcessor.processReport();
       reportProcessor.close();
       fout.close();
       fout = null;
-    }
-    finally
-    {
-      if (fout != null)
-      {
-        try
-        {
+    } finally {
+      if ( fout != null ) {
+        try {
           fout.close();
-        }
-        catch (Exception e)
-        {
+        } catch ( Exception e ) {
           // ignore
         }
       }
@@ -222,67 +187,54 @@ public final class ExcelReportUtil
    * @throws ReportProcessingException if the report processing failed.
    * @throws IOException               if there was an IOerror while processing the report.
    */
-  public static void createXLS(final MasterReport report,
-                               final String filename,
-                               final boolean strict)
-      throws IOException, ReportProcessingException
-  {
-    if (report == null)
-    {
+  public static void createXLS( final MasterReport report,
+                                final String filename,
+                                final boolean strict )
+    throws IOException, ReportProcessingException {
+    if ( report == null ) {
       throw new NullPointerException();
     }
-    if (filename == null)
-    {
+    if ( filename == null ) {
       throw new NullPointerException();
     }
 
     report.getReportConfiguration().setConfigProperty
-        ("org.pentaho.reporting.engine.classic.core.modules.output.table.base.StrictLayout", String.valueOf(strict));
+      ( "org.pentaho.reporting.engine.classic.core.modules.output.table.base.StrictLayout", String.valueOf( strict ) );
 
-    OutputStream fout = new BufferedOutputStream(new FileOutputStream(filename));
-    try
-    {
+    OutputStream fout = new BufferedOutputStream( new FileOutputStream( filename ) );
+    try {
       final FlowExcelOutputProcessor target =
-          new FlowExcelOutputProcessor(report.getConfiguration(), fout, report.getResourceManager());
-      target.setUseXlsxFormat(false);
-      final FlowReportProcessor reportProcessor = new FlowReportProcessor(report, target);
+        new FlowExcelOutputProcessor( report.getConfiguration(), fout, report.getResourceManager() );
+      target.setUseXlsxFormat( false );
+      final FlowReportProcessor reportProcessor = new FlowReportProcessor( report, target );
       reportProcessor.processReport();
       reportProcessor.close();
       fout.close();
       fout = null;
-    }
-    finally
-    {
-      if (fout != null)
-      {
-        try
-        {
+    } finally {
+      if ( fout != null ) {
+        try {
           fout.close();
-        }
-        catch (Exception e)
-        {
+        } catch ( Exception e ) {
           // ignore
         }
       }
     }
   }
 
-  public static void createXLS(final MasterReport report, final OutputStream outputStream)
-      throws ReportProcessingException
-  {
-    if (report == null)
-    {
+  public static void createXLS( final MasterReport report, final OutputStream outputStream )
+    throws ReportProcessingException {
+    if ( report == null ) {
       throw new NullPointerException();
     }
-    if (outputStream == null)
-    {
+    if ( outputStream == null ) {
       throw new NullPointerException();
     }
 
     final FlowExcelOutputProcessor target =
-        new FlowExcelOutputProcessor(report.getConfiguration(), outputStream, report.getResourceManager());
-    target.setUseXlsxFormat(false);
-    final FlowReportProcessor reportProcessor = new FlowReportProcessor(report, target);
+      new FlowExcelOutputProcessor( report.getConfiguration(), outputStream, report.getResourceManager() );
+    target.setUseXlsxFormat( false );
+    final FlowReportProcessor reportProcessor = new FlowReportProcessor( report, target );
     reportProcessor.processReport();
     reportProcessor.close();
   }

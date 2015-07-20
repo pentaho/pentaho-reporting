@@ -26,38 +26,32 @@ import javax.swing.table.AbstractTableModel;
  * @author Mimil
  * @see this.getColumnName()
  */
-public class CSVTableModel extends AbstractTableModel
-{
-  private static final Object[][] EMPTY_DATA = new Object[0][0];
-  private static final String[] EMPTY_NAMES = new String[0];
+public class CSVTableModel extends AbstractTableModel {
+  private static final Object[][] EMPTY_DATA = new Object[ 0 ][ 0 ];
+  private static final String[] EMPTY_NAMES = new String[ 0 ];
 
   private String[] columnNames;
   private int maxColumnCount;
   private Object[][] data;
 
-  public CSVTableModel()
-  {
+  public CSVTableModel() {
     this.columnNames = EMPTY_NAMES;
     this.data = EMPTY_DATA;
   }
 
-  public Object[][] getData()
-  {
+  public Object[][] getData() {
     return (Object[][]) data.clone();
   }
 
-  public void setData(final Object[][] data)
-  {
+  public void setData( final Object[][] data ) {
     this.data = (Object[][]) data.clone();
   }
 
-  public String[] getColumnNames()
-  {
+  public String[] getColumnNames() {
     return (String[]) columnNames.clone();
   }
 
-  public void setColumnNames(final String[] columnNames)
-  {
+  public void setColumnNames( final String[] columnNames ) {
     this.columnNames = (String[]) columnNames.clone();
   }
 
@@ -66,10 +60,8 @@ public class CSVTableModel extends AbstractTableModel
    *
    * @return the column count
    */
-  public int getColumnCount()
-  {
-    if (this.columnNames != null)
-    {
+  public int getColumnCount() {
+    if ( this.columnNames != null ) {
       return columnNames.length;
     }
 
@@ -81,8 +73,7 @@ public class CSVTableModel extends AbstractTableModel
    *
    * @return the row count
    */
-  public int getRowCount()
-  {
+  public int getRowCount() {
     return this.data.length;
   }
 
@@ -93,17 +84,13 @@ public class CSVTableModel extends AbstractTableModel
    * @param columnIndex column index
    * @return The requested Object
    */
-  public Object getValueAt(final int rowIndex, final int columnIndex)
-  {
-    final Object[] line = this.data[rowIndex];
+  public Object getValueAt( final int rowIndex, final int columnIndex ) {
+    final Object[] line = this.data[ rowIndex ];
 
-    if (line.length < columnIndex)
-    {
+    if ( line.length < columnIndex ) {
       return null;
-    }
-    else
-    {
-      return line[columnIndex];
+    } else {
+      return line[ columnIndex ];
     }
   }
 
@@ -112,16 +99,13 @@ public class CSVTableModel extends AbstractTableModel
    *
    * @param maxColumnCount
    */
-  public void setMaxColumnCount(final int maxColumnCount)
-  {
-    if (this.maxColumnCount < maxColumnCount)
-    {
+  public void setMaxColumnCount( final int maxColumnCount ) {
+    if ( this.maxColumnCount < maxColumnCount ) {
       this.maxColumnCount = maxColumnCount;
     }
   }
 
-  public int getMaxColumnCount()
-  {
+  public int getMaxColumnCount() {
     return maxColumnCount;
   }
 
@@ -131,20 +115,13 @@ public class CSVTableModel extends AbstractTableModel
    * @param column column index
    * @return the column name
    */
-  public String getColumnName(final int column)
-  {
-    if (this.columnNames != null)
-    {
-      return this.columnNames[column];
-    }
-    else
-    {
-      if (column >= this.maxColumnCount)
-      {
-        throw new IllegalArgumentException("Column (" + column + ") does not exist"); //$NON-NLS-1$ //$NON-NLS-2$
-      }
-      else
-      {
+  public String getColumnName( final int column ) {
+    if ( this.columnNames != null ) {
+      return this.columnNames[ column ];
+    } else {
+      if ( column >= this.maxColumnCount ) {
+        throw new IllegalArgumentException( "Column (" + column + ") does not exist" ); //$NON-NLS-1$ //$NON-NLS-2$
+      } else {
         return "COLUMN_" + column; //$NON-NLS-1$
       }
     }

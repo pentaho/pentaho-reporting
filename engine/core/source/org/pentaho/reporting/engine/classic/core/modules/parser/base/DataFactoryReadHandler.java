@@ -25,8 +25,7 @@ import org.pentaho.reporting.libraries.xmlns.parser.XmlReadHandler;
  *
  * @author Thomas Morgner
  */
-public interface DataFactoryReadHandler extends XmlReadHandler
-{
+public interface DataFactoryReadHandler extends XmlReadHandler {
   public DataFactory getDataFactory();
 
 }

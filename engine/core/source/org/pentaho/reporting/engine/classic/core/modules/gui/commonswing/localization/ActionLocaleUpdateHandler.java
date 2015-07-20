@@ -26,12 +26,10 @@ import java.util.Locale;
  *
  * @author Thomas Morgner
  */
-public class ActionLocaleUpdateHandler implements PropertyChangeListener
-{
+public class ActionLocaleUpdateHandler implements PropertyChangeListener {
   private LocalizedAction target;
 
-  public ActionLocaleUpdateHandler(final LocalizedAction target)
-  {
+  public ActionLocaleUpdateHandler( final LocalizedAction target ) {
     this.target = target;
   }
 
@@ -41,12 +39,10 @@ public class ActionLocaleUpdateHandler implements PropertyChangeListener
    * @param evt A PropertyChangeEvent object describing the event source and the property that has changed.
    */
 
-  public void propertyChange(final PropertyChangeEvent evt)
-  {
+  public void propertyChange( final PropertyChangeEvent evt ) {
     final Object newValue = evt.getNewValue();
-    if (newValue instanceof Locale)
-    {
-      target.update((Locale) newValue);
+    if ( newValue instanceof Locale ) {
+      target.update( (Locale) newValue );
     }
   }
 }

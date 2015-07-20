@@ -17,8 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.parser.ext.readhandlers;
 
-import java.util.ArrayList;
-
 import org.pentaho.reporting.engine.classic.core.AttributeNames;
 import org.pentaho.reporting.engine.classic.core.Element;
 import org.pentaho.reporting.engine.classic.core.filter.DataSource;
@@ -30,24 +28,22 @@ import org.pentaho.reporting.engine.classic.core.style.StyleKey;
 import org.pentaho.reporting.libraries.xmlns.parser.XmlReadHandler;
 import org.xml.sax.SAXException;
 
-public class ElementReadHandler extends AbstractPropertyXmlReadHandler
-{
+import java.util.ArrayList;
+
+public class ElementReadHandler extends AbstractPropertyXmlReadHandler {
   private ArrayList styleExpressionHandlers;
   private XmlReadHandler dataSourceHandler;
   private Element element;
 
-  public ElementReadHandler(final Element element)
-  {
-    if (element == null)
-    {
-      throw new NullPointerException("Element given must not be null.");
+  public ElementReadHandler( final Element element ) {
+    if ( element == null ) {
+      throw new NullPointerException( "Element given must not be null." );
     }
     this.element = element;
     this.styleExpressionHandlers = new ArrayList();
   }
 
-  protected Element getElement()
-  {
+  protected Element getElement() {
     return element;
   }
 
@@ -57,13 +53,11 @@ public class ElementReadHandler extends AbstractPropertyXmlReadHandler
    * @param attrs the attributes.
    * @throws org.xml.sax.SAXException if there is a parsing error.
    */
-  protected void startParsing(final PropertyAttributes attrs)
-      throws SAXException
-  {
-    final String name = attrs.getValue(getUri(), "name");
-    if (name != null)
-    {
-      element.setName(name);
+  protected void startParsing( final PropertyAttributes attrs )
+    throws SAXException {
+    final String name = attrs.getValue( getUri(), "name" );
+    if ( name != null ) {
+      element.setName( name );
     }
 
   }
@@ -76,34 +70,26 @@ public class ElementReadHandler extends AbstractPropertyXmlReadHandler
    * @return the handler or null, if the tagname is invalid.
    * @throws org.xml.sax.SAXException if there is a parsing error.
    */
-  protected XmlReadHandler getHandlerForChild(final String uri,
-                                              final String tagName,
-                                              final PropertyAttributes atts)
-      throws SAXException
-  {
-    if (isSameNamespace(uri) == false)
-    {
+  protected XmlReadHandler getHandlerForChild( final String uri,
+                                               final String tagName,
+                                               final PropertyAttributes atts )
+    throws SAXException {
+    if ( isSameNamespace( uri ) == false ) {
       return null;
     }
 
-    if ("style".equals(tagName))
-    {
-      return new StyleReadHandler(element.getStyle());
+    if ( "style".equals( tagName ) ) {
+      return new StyleReadHandler( element.getStyle() );
     }
-    if ("style-expression".equals(tagName))
-    {
+    if ( "style-expression".equals( tagName ) ) {
       final StyleExpressionHandler styleExpressionHandler = new StyleExpressionHandler();
-      styleExpressionHandlers.add(styleExpressionHandler);
+      styleExpressionHandlers.add( styleExpressionHandler );
       return styleExpressionHandler;
-    }
-    else if ("datasource".equals(tagName))
-    {
+    } else if ( "datasource".equals( tagName ) ) {
       dataSourceHandler = new DataSourceReadHandler();
       return dataSourceHandler;
-    }
-    else if ("template".equals(tagName))
-    {
-      dataSourceHandler = new TemplateReadHandler(false);
+    } else if ( "template".equals( tagName ) ) {
+      dataSourceHandler = new TemplateReadHandler( false );
       return dataSourceHandler;
     }
     return null;
@@ -115,26 +101,22 @@ public class ElementReadHandler extends AbstractPropertyXmlReadHandler
    * @throws org.xml.sax.SAXException if there is a parsing error.
    */
   protected void doneParsing()
-      throws SAXException
-  {
-    if (dataSourceHandler != null)
-    {
-      element.setDataSource((DataSource) dataSourceHandler.getObject());
+    throws SAXException {
+    if ( dataSourceHandler != null ) {
+      element.setDataSource( (DataSource) dataSourceHandler.getObject() );
     }
 
-    for (int i = 0; i < styleExpressionHandlers.size(); i++)
-    {
+    for ( int i = 0; i < styleExpressionHandlers.size(); i++ ) {
       final StyleExpressionHandler handler =
-          (StyleExpressionHandler) styleExpressionHandlers.get(i);
+        (StyleExpressionHandler) styleExpressionHandlers.get( i );
       final StyleKey key = handler.getKey();
-      if (handler.getKey() != null)
-      {
+      if ( handler.getKey() != null ) {
         final Expression expression = handler.getExpression();
-        element.setStyleExpression(key, expression);
+        element.setStyleExpression( key, expression );
       }
     }
 
-    element.setAttribute(AttributeNames.Core.NAMESPACE, AttributeNames.Core.SOURCE, getRootHandler().getSource());
+    element.setAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.SOURCE, getRootHandler().getSource() );
   }
 
   /**
@@ -142,8 +124,7 @@ public class ElementReadHandler extends AbstractPropertyXmlReadHandler
    *
    * @return the object.
    */
-  public Object getObject()
-  {
+  public Object getObject() {
     return element;
   }
 }

@@ -19,31 +19,26 @@ package org.pentaho.reporting.engine.classic.core.layout.process.text;
 
 import java.awt.font.TextLayout;
 
-public class LineBreakIteratorState
-{
+public class LineBreakIteratorState {
   private int start;
   private int end;
   private TextLayout textLayout;
 
-  LineBreakIteratorState(final TextLayout textLayout, final int start, final int end)
-  {
+  LineBreakIteratorState( final TextLayout textLayout, final int start, final int end ) {
     this.textLayout = textLayout;
     this.start = start;
     this.end = end;
   }
 
-  public int getStart()
-  {
+  public int getStart() {
     return start;
   }
 
-  public int getEnd()
-  {
+  public int getEnd() {
     return end;
   }
 
-  public TextLayout getTextLayout()
-  {
+  public TextLayout getTextLayout() {
     return textLayout;
   }
 }

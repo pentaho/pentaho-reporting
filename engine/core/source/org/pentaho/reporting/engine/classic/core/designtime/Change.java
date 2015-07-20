@@ -17,8 +17,8 @@
 
 package org.pentaho.reporting.engine.classic.core.designtime;
 
-public interface Change
-{
+public interface Change {
   public Object getOldValue();
+
   public Object getNewValue();
 }

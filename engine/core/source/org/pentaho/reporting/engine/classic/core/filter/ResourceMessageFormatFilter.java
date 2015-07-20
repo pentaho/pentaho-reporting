@@ -17,15 +17,15 @@
 
 package org.pentaho.reporting.engine.classic.core.filter;
 
-import java.util.MissingResourceException;
-import java.util.ResourceBundle;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.pentaho.reporting.engine.classic.core.ReportElement;
 import org.pentaho.reporting.engine.classic.core.ResourceBundleFactory;
 import org.pentaho.reporting.engine.classic.core.function.ExpressionRuntime;
 import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
+
+import java.util.MissingResourceException;
+import java.util.ResourceBundle;
 
 /**
  * A filter that formats values from the datarow using a message format object. The message format string is looked up
@@ -34,9 +34,8 @@ import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
  * @author Thomas Morgner
  * @since 2006-01-24
  */
-public class ResourceMessageFormatFilter implements DataSource
-{
-  private static final Log logger = LogFactory.getLog(ResourceMessageFormatFilter.class);
+public class ResourceMessageFormatFilter implements DataSource {
+  private static final Log logger = LogFactory.getLog( ResourceMessageFormatFilter.class );
   /**
    * The format key that has been applied to the message format. This variable is used to track changes to the original
    * format key and to update the message format if necessary.
@@ -62,8 +61,7 @@ public class ResourceMessageFormatFilter implements DataSource
   /**
    * Default constructor.
    */
-  public ResourceMessageFormatFilter()
-  {
+  public ResourceMessageFormatFilter() {
     messageFormatSupport = new MessageFormatSupport();
   }
 
@@ -75,58 +73,44 @@ public class ResourceMessageFormatFilter implements DataSource
    * @param element
    * @return the value.
    */
-  public Object getValue(final ExpressionRuntime runtime, final ReportElement element)
-  {
-    if (runtime == null)
-    {
+  public Object getValue( final ExpressionRuntime runtime, final ReportElement element ) {
+    if ( runtime == null ) {
       return null;
     }
     final String resourceId;
-    if (resourceIdentifier != null)
-    {
+    if ( resourceIdentifier != null ) {
       resourceId = resourceIdentifier;
-    }
-    else
-    {
+    } else {
       resourceId = runtime.getConfiguration().getConfigProperty
-          (ResourceBundleFactory.DEFAULT_RESOURCE_BUNDLE_CONFIG_KEY);
+        ( ResourceBundleFactory.DEFAULT_RESOURCE_BUNDLE_CONFIG_KEY );
     }
 
-    if (resourceId == null)
-    {
+    if ( resourceId == null ) {
       return null;
     }
 
-    try
-    {
+    try {
       final ResourceBundleFactory resourceBundleFactory = runtime.getResourceBundleFactory();
-      final ResourceBundle bundle = resourceBundleFactory.getResourceBundle(resourceId);
+      final ResourceBundle bundle = resourceBundleFactory.getResourceBundle( resourceId );
 
       // update the format string, if neccessary ...
-      if (ObjectUtilities.equal(formatKey, appliedFormatKey) == false)
-      {
-        final String newFormatString = bundle.getString(formatKey);
-        messageFormatSupport.setFormatString(newFormatString);
+      if ( ObjectUtilities.equal( formatKey, appliedFormatKey ) == false ) {
+        final String newFormatString = bundle.getString( formatKey );
+        messageFormatSupport.setFormatString( newFormatString );
         appliedFormatKey = formatKey;
       }
 
-      messageFormatSupport.setLocale(resourceBundleFactory.getLocale());
-      messageFormatSupport.setTimeZone(resourceBundleFactory.getTimeZone());
-      return messageFormatSupport.performFormat(runtime.getDataRow());
-    }
-    catch (MissingResourceException mre)
-    {
-      if (logger.isDebugEnabled())
-      {
-        logger.debug("Failed to format the value for resource-id " + resourceId + ", was '" + mre.getMessage() + "'");
+      messageFormatSupport.setLocale( resourceBundleFactory.getLocale() );
+      messageFormatSupport.setTimeZone( resourceBundleFactory.getTimeZone() );
+      return messageFormatSupport.performFormat( runtime.getDataRow() );
+    } catch ( MissingResourceException mre ) {
+      if ( logger.isDebugEnabled() ) {
+        logger.debug( "Failed to format the value for resource-id " + resourceId + ", was '" + mre.getMessage() + "'" );
       }
       return null;
-    }
-    catch (Exception e)
-    {
-      if (logger.isDebugEnabled())
-      {
-        logger.debug("Failed to format the value for resource-id " + resourceId, e);
+    } catch ( Exception e ) {
+      if ( logger.isDebugEnabled() ) {
+        logger.debug( "Failed to format the value for resource-id " + resourceId, e );
       }
       return null;
     }
@@ -139,19 +123,18 @@ public class ResourceMessageFormatFilter implements DataSource
    * @return the name of the resourcebundle
    * @see org.pentaho.reporting.engine.classic.core.ResourceBundleFactory#getResourceBundle(String)
    */
-  public String getResourceIdentifier()
-  {
+  public String getResourceIdentifier() {
     return resourceIdentifier;
   }
 
   /**
    * Defines the name of the used resource bundle. If undefined, all calls to {@link
-   * DataSource#getValue(ExpressionRuntime, org.pentaho.reporting.engine.classic.core.ReportElement)} will result in <code>null</code> values.
+   * DataSource#getValue(ExpressionRuntime, org.pentaho.reporting.engine.classic.core.ReportElement)} will result in
+   * <code>null</code> values.
    *
    * @param resourceIdentifier the resource bundle name
    */
-  public void setResourceIdentifier(final String resourceIdentifier)
-  {
+  public void setResourceIdentifier( final String resourceIdentifier ) {
     this.resourceIdentifier = resourceIdentifier;
   }
 
@@ -160,8 +143,7 @@ public class ResourceMessageFormatFilter implements DataSource
    *
    * @param format a resourcebundle key for the message format lookup.
    */
-  public void setFormatKey(final String format)
-  {
+  public void setFormatKey( final String format ) {
     this.formatKey = format;
   }
 
@@ -170,8 +152,7 @@ public class ResourceMessageFormatFilter implements DataSource
    *
    * @return the resource bundle key.
    */
-  public String getFormatKey()
-  {
+  public String getFormatKey() {
     return formatKey;
   }
 
@@ -181,8 +162,7 @@ public class ResourceMessageFormatFilter implements DataSource
    * @return the clone.
    * @throws CloneNotSupportedException this should never happen.
    */
-  public ResourceMessageFormatFilter clone() throws CloneNotSupportedException
-  {
+  public ResourceMessageFormatFilter clone() throws CloneNotSupportedException {
     final ResourceMessageFormatFilter mf = (ResourceMessageFormatFilter) super.clone();
     mf.messageFormatSupport = (MessageFormatSupport) messageFormatSupport.clone();
     return mf;
@@ -193,8 +173,7 @@ public class ResourceMessageFormatFilter implements DataSource
    *
    * @return the replacement text for null-values.
    */
-  public String getNullString()
-  {
+  public String getNullString() {
     return messageFormatSupport.getNullString();
   }
 
@@ -203,8 +182,7 @@ public class ResourceMessageFormatFilter implements DataSource
    *
    * @param nullString the replacement text for null-values.
    */
-  public void setNullString(final String nullString)
-  {
-    this.messageFormatSupport.setNullString(nullString);
+  public void setNullString( final String nullString ) {
+    this.messageFormatSupport.setNullString( nullString );
   }
 }

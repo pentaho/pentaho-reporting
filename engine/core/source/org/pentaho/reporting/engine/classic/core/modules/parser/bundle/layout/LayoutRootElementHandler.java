@@ -17,8 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.parser.bundle.layout;
 
-import java.util.ArrayList;
-
 import org.pentaho.reporting.engine.classic.core.AbstractReportDefinition;
 import org.pentaho.reporting.engine.classic.core.Element;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
@@ -38,8 +36,9 @@ import org.pentaho.reporting.libraries.xmlns.parser.XmlReadHandler;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 
-public class LayoutRootElementHandler extends AbstractElementReadHandler
-{
+import java.util.ArrayList;
+
+public class LayoutRootElementHandler extends AbstractElementReadHandler {
   private AbstractReportDefinition report;
   private LayoutProcessorReadHandler layoutProcessorHandler;
   private ArrayList<LayoutPreprocessorReadHandler> layoutPreprocessorHandlers;
@@ -48,8 +47,7 @@ public class LayoutRootElementHandler extends AbstractElementReadHandler
   private ReportFooterReadHandler reportFooterReadHandler;
   private CrosstabGroupReadHandler crosstabReadHandler;
 
-  public LayoutRootElementHandler()
-  {
+  public LayoutRootElementHandler() {
     layoutPreprocessorHandlers = new ArrayList<LayoutPreprocessorReadHandler>();
   }
 
@@ -59,31 +57,24 @@ public class LayoutRootElementHandler extends AbstractElementReadHandler
    * @param attrs the attributes.
    * @throws SAXException if there is a parsing error.
    */
-  protected void startParsing(final Attributes attrs) throws SAXException
-  {
+  protected void startParsing( final Attributes attrs ) throws SAXException {
     final RootXmlReadHandler rootHandler = getRootHandler();
-    final Object maybeReport = rootHandler.getHelperObject(ReportParserUtil.HELPER_OBJ_REPORT_NAME);
-    if (maybeReport instanceof SubReport)
-    {
+    final Object maybeReport = rootHandler.getHelperObject( ReportParserUtil.HELPER_OBJ_REPORT_NAME );
+    if ( maybeReport instanceof SubReport ) {
       report = (SubReport) maybeReport;
-    }
-    else if (maybeReport instanceof MasterReport)
-    {
+    } else if ( maybeReport instanceof MasterReport ) {
       report = (MasterReport) maybeReport;
-    }
-    else
-    {
-      throw new IllegalStateException("Layout.xml cannot be parsed on its own. It needs to have a report-instance.");
+    } else {
+      throw new IllegalStateException( "Layout.xml cannot be parsed on its own. It needs to have a report-instance." );
     }
 
-    initialize(report.getElementType());
-    super.startParsing(attrs);
+    initialize( report.getElementType() );
+    super.startParsing( attrs );
   }
 
 
   protected Element createElement()
-      throws ParseException
-  {
+    throws ParseException {
     // not a real create, more a cheating ..
     return report;
   }
@@ -97,62 +88,50 @@ public class LayoutRootElementHandler extends AbstractElementReadHandler
    * @return the handler or null, if the tagname is invalid.
    * @throws SAXException if there is a parsing error.
    */
-  protected XmlReadHandler getHandlerForChild(final String uri,
-                                              final String tagName,
-                                              final Attributes atts) throws SAXException
-  {
-    if (isSameNamespace(uri))
-    {
-      if ("layout-processors".equals(tagName))
-      {
+  protected XmlReadHandler getHandlerForChild( final String uri,
+                                               final String tagName,
+                                               final Attributes atts ) throws SAXException {
+    if ( isSameNamespace( uri ) ) {
+      if ( "layout-processors".equals( tagName ) ) {
         layoutProcessorHandler = new LayoutProcessorReadHandler();
         return layoutProcessorHandler;
       }
 
-      if ("preprocessor".equals(tagName))
-      {
+      if ( "preprocessor".equals( tagName ) ) {
         final LayoutPreprocessorReadHandler layoutPreprocessorHandler = new LayoutPreprocessorReadHandler();
-        layoutPreprocessorHandlers.add(layoutPreprocessorHandler);
+        layoutPreprocessorHandlers.add( layoutPreprocessorHandler );
         return layoutPreprocessorHandler;
       }
 
-      if ("report-header".equals(tagName))
-      {
-        if (reportHeaderReadHandler == null)
-        {
+      if ( "report-header".equals( tagName ) ) {
+        if ( reportHeaderReadHandler == null ) {
           reportHeaderReadHandler = new ReportHeaderReadHandler();
         }
         return reportHeaderReadHandler;
       }
 
-      if ("crosstab".equals(tagName))
-      {
-        if (crosstabReadHandler == null)
-        {
+      if ( "crosstab".equals( tagName ) ) {
+        if ( crosstabReadHandler == null ) {
           crosstabReadHandler = new CrosstabGroupReadHandler();
         }
         return crosstabReadHandler;
       }
-      if ("group".equals(tagName))
-      {
-        if (rootGroupReadHandler == null)
-        {
+      if ( "group".equals( tagName ) ) {
+        if ( rootGroupReadHandler == null ) {
           rootGroupReadHandler = new RelationalGroupReadHandler();
         }
         return rootGroupReadHandler;
       }
 
-      if ("report-footer".equals(tagName))
-      {
-        if (reportFooterReadHandler == null)
-        {
+      if ( "report-footer".equals( tagName ) ) {
+        if ( reportFooterReadHandler == null ) {
           reportFooterReadHandler = new ReportFooterReadHandler();
         }
         return reportFooterReadHandler;
       }
     }
 
-    return super.getHandlerForChild(uri, tagName, atts);
+    return super.getHandlerForChild( uri, tagName, atts );
   }
 
   /**
@@ -160,39 +139,30 @@ public class LayoutRootElementHandler extends AbstractElementReadHandler
    *
    * @throws SAXException if there is a parsing error.
    */
-  protected void doneParsing() throws SAXException
-  {
+  protected void doneParsing() throws SAXException {
     super.doneParsing();
-    if (layoutProcessorHandler != null)
-    {
+    if ( layoutProcessorHandler != null ) {
       final Expression[] expressions = layoutProcessorHandler.getExpressions();
-      for (int i = 0; i < expressions.length; i++)
-      {
-        final Expression expression = expressions[i];
-        report.addExpression(expression);
+      for ( int i = 0; i < expressions.length; i++ ) {
+        final Expression expression = expressions[ i ];
+        report.addExpression( expression );
       }
     }
 
-    for (int i = 0; i < layoutPreprocessorHandlers.size(); i++)
-    {
-      final LayoutPreprocessorReadHandler handler = layoutPreprocessorHandlers.get(i);
-      report.addPreProcessor(handler.getPreProcessor());
+    for ( int i = 0; i < layoutPreprocessorHandlers.size(); i++ ) {
+      final LayoutPreprocessorReadHandler handler = layoutPreprocessorHandlers.get( i );
+      report.addPreProcessor( handler.getPreProcessor() );
     }
-    if (reportHeaderReadHandler != null)
-    {
-      report.setReportHeader((ReportHeader) reportHeaderReadHandler.getElement());
+    if ( reportHeaderReadHandler != null ) {
+      report.setReportHeader( (ReportHeader) reportHeaderReadHandler.getElement() );
     }
-    if (rootGroupReadHandler != null)
-    {
-      report.setRootGroup(rootGroupReadHandler.getElement());
+    if ( rootGroupReadHandler != null ) {
+      report.setRootGroup( rootGroupReadHandler.getElement() );
+    } else if ( crosstabReadHandler != null ) {
+      report.setRootGroup( crosstabReadHandler.getElement() );
     }
-    else if (crosstabReadHandler != null)
-    {
-      report.setRootGroup(crosstabReadHandler.getElement());
-    }
-    if (reportFooterReadHandler != null)
-    {
-      report.setReportFooter((ReportFooter) reportFooterReadHandler.getElement());
+    if ( reportFooterReadHandler != null ) {
+      report.setReportFooter( (ReportFooter) reportFooterReadHandler.getElement() );
     }
   }
 }

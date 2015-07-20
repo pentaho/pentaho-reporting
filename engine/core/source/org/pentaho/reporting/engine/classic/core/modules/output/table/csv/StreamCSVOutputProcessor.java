@@ -17,8 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.output.table.csv;
 
-import java.io.OutputStream;
-
 import org.pentaho.reporting.engine.classic.core.ReportDefinition;
 import org.pentaho.reporting.engine.classic.core.function.ProcessingContext;
 import org.pentaho.reporting.engine.classic.core.layout.model.LogicalPageBox;
@@ -34,84 +32,73 @@ import org.pentaho.reporting.libraries.repository.ContentLocation;
 import org.pentaho.reporting.libraries.repository.DefaultNameGenerator;
 import org.pentaho.reporting.libraries.repository.stream.StreamRepository;
 
+import java.io.OutputStream;
+
 /**
  * Creation-Date: 09.05.2007, 14:36:28
  *
  * @author Thomas Morgner
  */
-public class StreamCSVOutputProcessor extends AbstractTableOutputProcessor
-{
+public class StreamCSVOutputProcessor extends AbstractTableOutputProcessor {
   private OutputProcessorMetaData metaData;
   private FlowSelector flowSelector;
   private CSVPrinter printer;
 
-  public StreamCSVOutputProcessor(final OutputStream outputStream)
-  {
-    if (outputStream == null)
-    {
+  public StreamCSVOutputProcessor( final OutputStream outputStream ) {
+    if ( outputStream == null ) {
       throw new NullPointerException();
     }
 
-    this.metaData = new CSVOutputProcessorMetaData(CSVOutputProcessorMetaData.PAGINATION_NONE);
+    this.metaData = new CSVOutputProcessorMetaData( CSVOutputProcessorMetaData.PAGINATION_NONE );
     this.flowSelector = new DisplayAllFlowSelector();
 
     this.printer = new CSVPrinter();
 
-    final ContentLocation root = new StreamRepository(outputStream).getRoot();
-    this.printer.setContentLocation(root);
-    this.printer.setContentNameGenerator(new DefaultNameGenerator(root));
+    final ContentLocation root = new StreamRepository( outputStream ).getRoot();
+    this.printer.setContentLocation( root );
+    this.printer.setContentNameGenerator( new DefaultNameGenerator( root ) );
   }
 
-  public void processingStarted(final ReportDefinition report, final ProcessingContext processingContext)
-  {
-    super.processingStarted(report, processingContext);
-    this.printer.initialize(processingContext.getConfiguration());
+  public void processingStarted( final ReportDefinition report, final ProcessingContext processingContext ) {
+    super.processingStarted( report, processingContext );
+    this.printer.initialize( processingContext.getConfiguration() );
   }
 
-  public OutputProcessorMetaData getMetaData()
-  {
+  public OutputProcessorMetaData getMetaData() {
     return metaData;
   }
 
-  protected FlowSelector getFlowSelector()
-  {
+  protected FlowSelector getFlowSelector() {
     return flowSelector;
   }
 
-  protected void processTableContent(final LogicalPageKey logicalPageKey,
-                                     final LogicalPageBox logicalPage,
-                                     final TableContentProducer contentProducer) throws ContentProcessingException
-  {
-    printer.print(logicalPage, contentProducer, metaData, false);
+  protected void processTableContent( final LogicalPageKey logicalPageKey,
+                                      final LogicalPageBox logicalPage,
+                                      final TableContentProducer contentProducer ) throws ContentProcessingException {
+    printer.print( logicalPage, contentProducer, metaData, false );
   }
 
-  protected void updateTableContent(final LogicalPageKey logicalPageKey,
-                                    final LogicalPageBox logicalPageBox,
-                                    final TableContentProducer tableContentProducer,
-                                    final boolean performOutput) throws ContentProcessingException
-  {
-    printer.print(logicalPageBox, tableContentProducer, metaData, true);
+  protected void updateTableContent( final LogicalPageKey logicalPageKey,
+                                     final LogicalPageBox logicalPageBox,
+                                     final TableContentProducer tableContentProducer,
+                                     final boolean performOutput ) throws ContentProcessingException {
+    printer.print( logicalPageBox, tableContentProducer, metaData, true );
   }
 
-  public String getEncoding()
-  {
+  public String getEncoding() {
     return printer.getEncoding();
   }
 
-  public void setEncoding(final String encoding)
-  {
-    if (encoding == null)
-    {
+  public void setEncoding( final String encoding ) {
+    if ( encoding == null ) {
       throw new NullPointerException();
     }
 
-    printer.setEncoding(encoding);
+    printer.setEncoding( encoding );
   }
 
-  protected void processingContentFinished()
-  {
-    if (isContentGeneratable() == false)
-    {
+  protected void processingContentFinished() {
+    if ( isContentGeneratable() == false ) {
       return;
     }
     this.metaData.commit();

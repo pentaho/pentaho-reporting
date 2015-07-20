@@ -28,12 +28,10 @@ import org.pentaho.reporting.engine.classic.core.layout.process.util.ReplacedCon
  *
  * @author Thomas Morgner
  */
-public class ReplacedContentSequenceElement implements InlineSequenceElement
-{
+public class ReplacedContentSequenceElement implements InlineSequenceElement {
   public static final InlineSequenceElement INSTANCE = new ReplacedContentSequenceElement();
 
-  private ReplacedContentSequenceElement()
-  {
+  private ReplacedContentSequenceElement() {
   }
 
   /**
@@ -41,10 +39,9 @@ public class ReplacedContentSequenceElement implements InlineSequenceElement
    *
    * @return
    */
-  public long getMinimumWidth(final RenderNode node)
-  {
+  public long getMinimumWidth( final RenderNode node ) {
     final RenderableReplacedContentBox rpc = (RenderableReplacedContentBox) node;
-    return ReplacedContentUtil.computeWidth(rpc);
+    return ReplacedContentUtil.computeWidth( rpc );
   }
 
   /**
@@ -53,25 +50,21 @@ public class ReplacedContentSequenceElement implements InlineSequenceElement
    *
    * @return
    */
-  public long getMaximumWidth(final RenderNode node)
-  {
+  public long getMaximumWidth( final RenderNode node ) {
     final RenderableReplacedContentBox rpc = (RenderableReplacedContentBox) node;
-    final long width = ReplacedContentUtil.computeWidth(rpc);
-    return Math.max(width, node.getMaximumBoxWidth());
+    final long width = ReplacedContentUtil.computeWidth( rpc );
+    return Math.max( width, node.getMaximumBoxWidth() );
   }
 
-  public boolean isPreserveWhitespace(final RenderNode node)
-  {
+  public boolean isPreserveWhitespace( final RenderNode node ) {
     return false;
   }
 
-  public int getClassification()
-  {
+  public int getClassification() {
     return CONTENT;
   }
 
-  public Classification getType()
-  {
+  public Classification getType() {
     return Classification.CONTENT;
   }
 }

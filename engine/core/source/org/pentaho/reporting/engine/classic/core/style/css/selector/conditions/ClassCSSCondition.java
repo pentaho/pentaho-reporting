@@ -19,21 +19,17 @@ package org.pentaho.reporting.engine.classic.core.style.css.selector.conditions;
 
 import org.pentaho.reporting.engine.classic.core.style.css.namespaces.NamespaceCollection;
 
-public class ClassCSSCondition extends AttributeCSSCondition
-{
-  public ClassCSSCondition(final String namespace,
-                           final String value)
-  {
-    super("class", namespace, true, value);
+public class ClassCSSCondition extends AttributeCSSCondition {
+  public ClassCSSCondition( final String namespace,
+                            final String value ) {
+    super( "class", namespace, true, value );
   }
 
-  public short getConditionType()
-  {
+  public short getConditionType() {
     return CSSCondition.SAC_CLASS_CONDITION;
   }
 
-  public String print(final NamespaceCollection namespaces)
-  {
+  public String print( final NamespaceCollection namespaces ) {
     return "." + getValue();
   }
 }

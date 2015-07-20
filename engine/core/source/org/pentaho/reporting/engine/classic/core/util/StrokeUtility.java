@@ -17,21 +17,19 @@
 
 package org.pentaho.reporting.engine.classic.core.util;
 
-import java.awt.BasicStroke;
-import java.awt.Stroke;
-import java.util.Arrays;
-
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.pentaho.reporting.engine.classic.core.style.BorderStyle;
 import org.pentaho.reporting.libraries.base.config.Configuration;
+
+import java.awt.*;
+import java.util.Arrays;
 
 /**
  * This class provides helper methods to work with Strokes and line-styles.
  *
  * @author Thomas Morgner
  */
-public class StrokeUtility
-{
+public class StrokeUtility {
   /**
    * A constant defining a stroke-type.
    */
@@ -60,8 +58,7 @@ public class StrokeUtility
   /**
    * Default Constructor. Private to prevent Object-creation.
    */
-  private StrokeUtility()
-  {
+  private StrokeUtility() {
   }
 
   /**
@@ -71,46 +68,41 @@ public class StrokeUtility
    * @param width the stroke's width.
    * @return the stroke, never null.
    */
-  public static Stroke createStroke(final int type, final float width)
-  {
+  public static Stroke createStroke( final int type, final float width ) {
     final Configuration repoConf = ClassicEngineBoot.getInstance().getGlobalConfig();
     final boolean useWidthForStrokes = "true".equals
-        (repoConf.getConfigProperty("org.pentaho.reporting.engine.classic.core.DynamicStrokeDashes"));
+      ( repoConf.getConfigProperty( "org.pentaho.reporting.engine.classic.core.DynamicStrokeDashes" ) );
 
     final float effectiveWidth;
-    if (useWidthForStrokes)
-    {
+    if ( useWidthForStrokes ) {
       effectiveWidth = width;
-    }
-    else
-    {
+    } else {
       effectiveWidth = 1;
     }
 
-    switch (type)
-    {
+    switch( type ) {
       case STROKE_DASHED:
-        return new BasicStroke(width, BasicStroke.CAP_SQUARE,
-            BasicStroke.JOIN_MITER,
-            10.0f, new float[]
-                {6 * effectiveWidth, 6 * effectiveWidth}, 0.0f);
+        return new BasicStroke( width, BasicStroke.CAP_SQUARE,
+          BasicStroke.JOIN_MITER,
+          10.0f, new float[]
+          { 6 * effectiveWidth, 6 * effectiveWidth }, 0.0f );
       case STROKE_DOTTED:
-        return new BasicStroke(width, BasicStroke.CAP_SQUARE,
-            BasicStroke.JOIN_MITER,
-            5.0f, new float[]{0.0f, 2 * effectiveWidth}, 0.0f);
+        return new BasicStroke( width, BasicStroke.CAP_SQUARE,
+          BasicStroke.JOIN_MITER,
+          5.0f, new float[] { 0.0f, 2 * effectiveWidth }, 0.0f );
       case STROKE_DOT_DASH:
-        return new BasicStroke(width, BasicStroke.CAP_SQUARE,
-            BasicStroke.JOIN_MITER,
-            10.0f, new float[]
-                {0, 2 * effectiveWidth, 6 * effectiveWidth, 2 * effectiveWidth}, 0.0f);
+        return new BasicStroke( width, BasicStroke.CAP_SQUARE,
+          BasicStroke.JOIN_MITER,
+          10.0f, new float[]
+          { 0, 2 * effectiveWidth, 6 * effectiveWidth, 2 * effectiveWidth }, 0.0f );
       case STROKE_DOT_DOT_DASH:
-        return new BasicStroke(width, BasicStroke.CAP_SQUARE,
-            BasicStroke.JOIN_MITER,
-            10.0f, new float[]{0, 2 * effectiveWidth,
-                0, 2 * effectiveWidth,
-                6 * effectiveWidth, 2 * effectiveWidth}, 0.0f);
+        return new BasicStroke( width, BasicStroke.CAP_SQUARE,
+          BasicStroke.JOIN_MITER,
+          10.0f, new float[] { 0, 2 * effectiveWidth,
+          0, 2 * effectiveWidth,
+          6 * effectiveWidth, 2 * effectiveWidth }, 0.0f );
       default:
-        return new BasicStroke(width);
+        return new BasicStroke( width );
     }
   }
 
@@ -120,10 +112,8 @@ public class StrokeUtility
    * @param s the stroke.
    * @return the stroke's width.
    */
-  public static float getStrokeWidth(final Stroke s)
-  {
-    if (s instanceof BasicStroke)
-    {
+  public static float getStrokeWidth( final Stroke s ) {
+    if ( s instanceof BasicStroke ) {
       final BasicStroke bs = (BasicStroke) s;
       return bs.getLineWidth();
     }
@@ -137,123 +127,100 @@ public class StrokeUtility
    * @param s the stroke.
    * @return the stroke's width.
    */
-  public static int getStrokeType(final Stroke s)
-  {
-    if (s instanceof BasicStroke == false)
-    {
+  public static int getStrokeType( final Stroke s ) {
+    if ( s instanceof BasicStroke == false ) {
       return STROKE_SOLID;
     }
     final BasicStroke bs = (BasicStroke) s;
-    if (bs.getLineWidth() <= 0)
-    {
+    if ( bs.getLineWidth() <= 0 ) {
       return STROKE_NONE;
     }
 
     final float[] dashes = bs.getDashArray();
-    if (dashes == null)
-    {
+    if ( dashes == null ) {
       return STROKE_SOLID;
     }
-    if (dashes.length < 2)
-    {
+    if ( dashes.length < 2 ) {
       return STROKE_SOLID;
     }
-    if (dashes.length == 3 || dashes.length == 5)
-    {
+    if ( dashes.length == 3 || dashes.length == 5 ) {
       return STROKE_SOLID;
     }
 
-    if (dashes.length == 2)
-    {
+    if ( dashes.length == 2 ) {
       // maybe dashed or dotted ...
-//      if (dashes[0] < 2 && dashes[1] < 2) {
-//        return STROKE_DOTTED;
-//      }
-      final float factor = dashes[0] / dashes[1];
-      if (factor > 0.9 && factor < 1.1)
-      {
+      //      if (dashes[0] < 2 && dashes[1] < 2) {
+      //        return STROKE_DOTTED;
+      //      }
+      final float factor = dashes[ 0 ] / dashes[ 1 ];
+      if ( factor > 0.9 && factor < 1.1 ) {
         return STROKE_DASHED;
-      }
-      else if (factor < 0.1)
-      {
+      } else if ( factor < 0.1 ) {
         return STROKE_DOTTED;
       }
 
       // else ... not recognized ...
       return STROKE_SOLID;
-    }
-    else if (dashes.length == 4)
-    {
+    } else if ( dashes.length == 4 ) {
       // maybe a dot-dashed stroke ...
       final float[] copyDashes = (float[]) dashes.clone();
-      Arrays.sort(copyDashes);
+      Arrays.sort( copyDashes );
 
       // the first value should be near zero ..
-      if (Math.abs(copyDashes[0] / bs.getLineWidth()) > 0.5)
-      {
+      if ( Math.abs( copyDashes[ 0 ] / bs.getLineWidth() ) > 0.5 ) {
         // not recognized ..
         return STROKE_SOLID;
       }
 
       // test that the first two values have the same size
-      final float factor1 = (2 * bs.getLineWidth()) / copyDashes[1];
-      final float factor2 = (2 * bs.getLineWidth()) / copyDashes[2];
-      final float factorBig = (2 * bs.getLineWidth()) / copyDashes[3];
+      final float factor1 = ( 2 * bs.getLineWidth() ) / copyDashes[ 1 ];
+      final float factor2 = ( 2 * bs.getLineWidth() ) / copyDashes[ 2 ];
+      final float factorBig = ( 2 * bs.getLineWidth() ) / copyDashes[ 3 ];
 
-      if ((factor1 < 0.9 || factor1 > 1.1) ||
-          (factor2 < 0.9 || factor2 > 1.1))
-      {
+      if ( ( factor1 < 0.9 || factor1 > 1.1 ) ||
+        ( factor2 < 0.9 || factor2 > 1.1 ) ) {
         // not recognized ...
         return STROKE_SOLID;
       }
 
-      if (factorBig < 0.4 || factorBig > 2.5)
-      {
+      if ( factorBig < 0.4 || factorBig > 2.5 ) {
         return STROKE_DOT_DASH;
       }
-      if (factorBig < 0.9 || factorBig > 1.1)
-      {
+      if ( factorBig < 0.9 || factorBig > 1.1 ) {
         return STROKE_DOTTED;
       }
       return STROKE_DASHED;
-    }
-    else if (dashes.length == 6)
-    {
+    } else if ( dashes.length == 6 ) {
       // maybe a dot-dashed stroke ...
       final float[] copyDashes = (float[]) dashes.clone();
-      Arrays.sort(copyDashes);
+      Arrays.sort( copyDashes );
       // test that the first three values have the same size
 
       // the first two values should be near zero ..
-      if (Math.abs(copyDashes[0] / bs.getLineWidth()) > 0.5)
-      {
+      if ( Math.abs( copyDashes[ 0 ] / bs.getLineWidth() ) > 0.5 ) {
         // not recognized ..
         return STROKE_SOLID;
       }
-      if (Math.abs(copyDashes[1] / bs.getLineWidth()) > 0.5)
-      {
+      if ( Math.abs( copyDashes[ 1 ] / bs.getLineWidth() ) > 0.5 ) {
         // not recognized ..
         return STROKE_SOLID;
       }
 
-      final float factor2 = (2 * bs.getLineWidth()) / copyDashes[2];
-      final float factor3 = (2 * bs.getLineWidth()) / copyDashes[3];
-      final float factor4 = (2 * bs.getLineWidth()) / copyDashes[4];
-      final float factorBig = (2 * bs.getLineWidth()) / copyDashes[5];
+      final float factor2 = ( 2 * bs.getLineWidth() ) / copyDashes[ 2 ];
+      final float factor3 = ( 2 * bs.getLineWidth() ) / copyDashes[ 3 ];
+      final float factor4 = ( 2 * bs.getLineWidth() ) / copyDashes[ 4 ];
+      final float factorBig = ( 2 * bs.getLineWidth() ) / copyDashes[ 5 ];
 
-      if ((factor2 < 0.9 || factor2 > 1.1) ||
-          (factor3 < 0.9 || factor3 > 1.1) ||
-          (factor4 < 0.9 || factor4 > 1.1))
-      {
+      if ( ( factor2 < 0.9 || factor2 > 1.1 ) ||
+        ( factor3 < 0.9 || factor3 > 1.1 ) ||
+        ( factor4 < 0.9 || factor4 > 1.1 ) ) {
         return STROKE_SOLID;
       }
 
-      if (factorBig < 0.4 || factorBig > 2.5)
-      {
+      if ( factorBig < 0.4 || factorBig > 2.5 ) {
         return STROKE_DOT_DOT_DASH;
       }
-      if ((factorBig < 0.9 || factorBig > 1.1))
-      {
+      if ( ( factorBig < 0.9 || factorBig > 1.1 ) ) {
         return STROKE_DOTTED;
       }
       return STROKE_DASHED;
@@ -263,11 +230,9 @@ public class StrokeUtility
   }
 
 
-  public static BorderStyle translateStrokeStyle(final Stroke s)
-  {
-    final int style = StrokeUtility.getStrokeType(s);
-    switch (style)
-    {
+  public static BorderStyle translateStrokeStyle( final Stroke s ) {
+    final int style = StrokeUtility.getStrokeType( s );
+    switch( style ) {
       case StrokeUtility.STROKE_NONE:
         return BorderStyle.NONE;
       case StrokeUtility.STROKE_DASHED:

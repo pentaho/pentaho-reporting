@@ -21,51 +21,43 @@ import org.pentaho.reporting.engine.classic.core.layout.output.OutputProcessorFe
 import org.pentaho.reporting.engine.classic.core.layout.output.OutputProcessorMetaData;
 import org.pentaho.reporting.engine.classic.core.states.datarow.DefaultFlowController;
 
-public abstract class AbstractReportPreProcessor implements ReportPreProcessor
-{
-  protected AbstractReportPreProcessor()
-  {
+public abstract class AbstractReportPreProcessor implements ReportPreProcessor {
+  protected AbstractReportPreProcessor() {
   }
 
-  protected boolean isDesignTime(final DefaultFlowController flowController)
-  {
+  protected boolean isDesignTime( final DefaultFlowController flowController ) {
     final OutputProcessorMetaData metaData = flowController.getReportContext().getOutputProcessorMetaData();
-    return metaData.isFeatureSupported(OutputProcessorFeature.DESIGNTIME) == false;
+    return metaData.isFeatureSupported( OutputProcessorFeature.DESIGNTIME ) == false;
   }
 
-  public AbstractReportPreProcessor clone()
-  {
-    try
-    {
+  public AbstractReportPreProcessor clone() {
+    try {
       return (AbstractReportPreProcessor) super.clone();
-    }
-    catch (CloneNotSupportedException e)
-    {
+    } catch ( CloneNotSupportedException e ) {
       throw new IllegalStateException();
     }
   }
 
-  public MasterReport performPreDataProcessing(final MasterReport definition,
-                                               final DefaultFlowController flowController) throws ReportProcessingException
-  {
+  public MasterReport performPreDataProcessing( final MasterReport definition,
+                                                final DefaultFlowController flowController )
+    throws ReportProcessingException {
     return definition;
   }
 
-  public MasterReport performPreProcessing(final MasterReport definition,
-                                           final DefaultFlowController flowController) throws ReportProcessingException
-  {
+  public MasterReport performPreProcessing( final MasterReport definition,
+                                            final DefaultFlowController flowController )
+    throws ReportProcessingException {
     return definition;
   }
 
-  public SubReport performPreDataProcessing(final SubReport definition,
-                                            final DefaultFlowController flowController) throws ReportProcessingException
-  {
+  public SubReport performPreDataProcessing( final SubReport definition,
+                                             final DefaultFlowController flowController )
+    throws ReportProcessingException {
     return definition;
   }
 
-  public SubReport performPreProcessing(final SubReport definition,
-                                        final DefaultFlowController flowController) throws ReportProcessingException
-  {
+  public SubReport performPreProcessing( final SubReport definition,
+                                         final DefaultFlowController flowController ) throws ReportProcessingException {
     return definition;
   }
 }

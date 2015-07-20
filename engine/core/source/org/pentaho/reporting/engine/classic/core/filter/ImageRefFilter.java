@@ -17,9 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.core.filter;
 
-import java.awt.Image;
-import java.io.IOException;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.pentaho.reporting.engine.classic.core.DefaultImageReference;
@@ -27,21 +24,22 @@ import org.pentaho.reporting.engine.classic.core.ImageContainer;
 import org.pentaho.reporting.engine.classic.core.ReportElement;
 import org.pentaho.reporting.engine.classic.core.function.ExpressionRuntime;
 
+import java.awt.*;
+import java.io.IOException;
+
 /**
  * A filter that converts an Image to an ImageReference. The DataSource is expected to contain an java.awt.Image, the
  * image is then wrapped into an ImageReference and this ImageReference is returned to the caller.
  *
  * @author Thomas Morgner
  */
-public class ImageRefFilter implements DataFilter
-{
-  private static final Log logger = LogFactory.getLog(ImageRefFilter.class);
+public class ImageRefFilter implements DataFilter {
+  private static final Log logger = LogFactory.getLog( ImageRefFilter.class );
 
   /**
    * Default constructor.
    */
-  public ImageRefFilter()
-  {
+  public ImageRefFilter() {
   }
 
   /**
@@ -54,8 +52,7 @@ public class ImageRefFilter implements DataFilter
    *
    * @return The data source.
    */
-  public DataSource getDataSource()
-  {
+  public DataSource getDataSource() {
     return dataSource;
   }
 
@@ -64,8 +61,7 @@ public class ImageRefFilter implements DataFilter
    *
    * @param dataSource The data source.
    */
-  public void setDataSource(final DataSource dataSource)
-  {
+  public void setDataSource( final DataSource dataSource ) {
     this.dataSource = dataSource;
   }
 
@@ -78,30 +74,23 @@ public class ImageRefFilter implements DataFilter
    * @param element
    * @return The value.
    */
-  public Object getValue(final ExpressionRuntime runtime, final ReportElement element)
-  {
+  public Object getValue( final ExpressionRuntime runtime, final ReportElement element ) {
     final DataSource ds = getDataSource();
-    if (ds == null)
-    {
+    if ( ds == null ) {
       return null;
     }
-    final Object o = ds.getValue(runtime, element);
-    if (o instanceof ImageContainer)
-    {
+    final Object o = ds.getValue( runtime, element );
+    if ( o instanceof ImageContainer ) {
       return o;
     }
-    if (o == null || (o instanceof Image) == false)
-    {
+    if ( o == null || ( o instanceof Image ) == false ) {
       return null;
     }
 
-    try
-    {
-      return new DefaultImageReference((Image) o);
-    }
-    catch (IOException e)
-    {
-      ImageRefFilter.logger.warn("Unable to fully load a given image.", e);
+    try {
+      return new DefaultImageReference( (Image) o );
+    } catch ( IOException e ) {
+      ImageRefFilter.logger.warn( "Unable to fully load a given image.", e );
       return null;
     }
   }
@@ -113,11 +102,9 @@ public class ImageRefFilter implements DataFilter
    * @throws CloneNotSupportedException this should never happen.
    */
   public ImageRefFilter clone()
-      throws CloneNotSupportedException
-  {
+    throws CloneNotSupportedException {
     final ImageRefFilter r = (ImageRefFilter) super.clone();
-    if (dataSource != null)
-    {
+    if ( dataSource != null ) {
       r.dataSource = dataSource.clone();
     }
     return r;

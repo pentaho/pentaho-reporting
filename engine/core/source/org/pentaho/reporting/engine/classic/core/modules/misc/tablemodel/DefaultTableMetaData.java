@@ -17,24 +17,21 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.misc.tablemodel;
 
-import java.util.ArrayList;
-
 import org.pentaho.reporting.engine.classic.core.wizard.DataAttributes;
+import org.pentaho.reporting.engine.classic.core.wizard.DefaultConceptQueryMapper;
 import org.pentaho.reporting.engine.classic.core.wizard.DefaultDataAttributes;
 import org.pentaho.reporting.engine.classic.core.wizard.EmptyDataAttributes;
-import org.pentaho.reporting.engine.classic.core.wizard.DefaultConceptQueryMapper;
 
-public class DefaultTableMetaData
-{
+import java.util.ArrayList;
+
+public class DefaultTableMetaData {
   private DefaultDataAttributes tableAttributes;
   private ArrayList<DefaultDataAttributes> columnAttributes;
 
-  public DefaultTableMetaData(final int colCount)
-  {
+  public DefaultTableMetaData( final int colCount ) {
     this.tableAttributes = new DefaultDataAttributes();
-    this.columnAttributes = new ArrayList<DefaultDataAttributes>(colCount);
-    for (int i = 0; i < colCount; i++)
-    {
+    this.columnAttributes = new ArrayList<DefaultDataAttributes>( colCount );
+    for ( int i = 0; i < colCount; i++ ) {
       addColumn();
     }
   }
@@ -44,9 +41,8 @@ public class DefaultTableMetaData
     addColumn();
   }
 
-  public void addColumn()
-  {
-    columnAttributes.add(new DefaultDataAttributes());
+  public void addColumn() {
+    columnAttributes.add( new DefaultDataAttributes() );
   }
 
   /**
@@ -60,20 +56,17 @@ public class DefaultTableMetaData
    * @param column the index of the column for which the meta-data is queried.
    * @return the meta-data object.
    */
-  public DataAttributes getCellDataAttribute(final int row,
-                                             final int column)
-  {
+  public DataAttributes getCellDataAttribute( final int row,
+                                              final int column ) {
     return EmptyDataAttributes.INSTANCE;
   }
 
-  public boolean isCellDataAttributesSupported()
-  {
+  public boolean isCellDataAttributesSupported() {
     return false;
   }
 
-  public DataAttributes getColumnAttribute(final int column)
-  {
-    return columnAttributes.get(column);
+  public DataAttributes getColumnAttribute( final int column ) {
+    return columnAttributes.get( column );
   }
 
   /**
@@ -82,23 +75,20 @@ public class DefaultTableMetaData
    *
    * @return
    */
-  public DataAttributes getTableAttribute()
-  {
+  public DataAttributes getTableAttribute() {
     return tableAttributes;
   }
 
-  public void setColumnAttribute(final int column,
-                                 final String metaAttributeDomain,
-                                 final String metaAttributeId,
-                                 final Object value)
-  {
-    final DefaultDataAttributes colAtts = columnAttributes.get(column);
-    colAtts.setMetaAttribute(metaAttributeDomain, metaAttributeId, DefaultConceptQueryMapper.INSTANCE, value);
+  public void setColumnAttribute( final int column,
+                                  final String metaAttributeDomain,
+                                  final String metaAttributeId,
+                                  final Object value ) {
+    final DefaultDataAttributes colAtts = columnAttributes.get( column );
+    colAtts.setMetaAttribute( metaAttributeDomain, metaAttributeId, DefaultConceptQueryMapper.INSTANCE, value );
   }
 
-  public void setTableAttribute(final String namespace, final String name, final Object value)
-  {
-    tableAttributes.setMetaAttribute(namespace, name, DefaultConceptQueryMapper.INSTANCE, value);
+  public void setTableAttribute( final String namespace, final String name, final Object value ) {
+    tableAttributes.setMetaAttribute( namespace, name, DefaultConceptQueryMapper.INSTANCE, value );
   }
 
 }

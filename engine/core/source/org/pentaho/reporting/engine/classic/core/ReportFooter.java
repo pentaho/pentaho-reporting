@@ -28,14 +28,12 @@ import org.pentaho.reporting.engine.classic.core.filter.types.bands.ReportFooter
  *
  * @author David Gilbert
  */
-public class ReportFooter extends AbstractRootLevelBand
-{
+public class ReportFooter extends AbstractRootLevelBand {
   /**
    * Constructs a report footer containing no elements.
    */
-  public ReportFooter()
-  {
-    setElementType(new ReportFooterType());
+  public ReportFooter() {
+    setElementType( new ReportFooterType() );
   }
 
 }

@@ -26,17 +26,14 @@ import org.pentaho.reporting.libraries.xmlns.parser.ParseException;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 
-public class DataFactoryReadHandler extends AbstractMetaDataReadHandler
-{
+public class DataFactoryReadHandler extends AbstractMetaDataReadHandler {
   private DataFactoryMetaDataBuilder builder;
 
-  public DataFactoryReadHandler()
-  {
+  public DataFactoryReadHandler() {
     builder = new DataFactoryMetaDataBuilder();
   }
 
-  public DataFactoryMetaDataBuilder getBuilder()
-  {
+  public DataFactoryMetaDataBuilder getBuilder() {
     return builder;
   }
 
@@ -46,42 +43,35 @@ public class DataFactoryReadHandler extends AbstractMetaDataReadHandler
    * @param attrs the attributes.
    * @throws SAXException if there is a parsing error.
    */
-  protected void startParsing(final Attributes attrs) throws SAXException
-  {
-    super.startParsing(attrs);
-    final String editable = attrs.getValue(getUri(), "editable"); // NON-NLS
-    getBuilder().editable(editable == null || "true".equals(editable));
-    getBuilder().freeformQuery("true".equals(attrs.getValue(getUri(), "freeform-query"))); // NON-NLS
-    getBuilder().formattingMetadataSource("true".equals(attrs.getValue(getUri(), "metadata-source"))); // NON-NLS
-    getBuilder().dataFactoryCore(parseDataFactoryCore(attrs));
-    getBuilder().bundle(getBundle(), parseKeyPrefix(attrs));
+  protected void startParsing( final Attributes attrs ) throws SAXException {
+    super.startParsing( attrs );
+    final String editable = attrs.getValue( getUri(), "editable" ); // NON-NLS
+    getBuilder().editable( editable == null || "true".equals( editable ) );
+    getBuilder().freeformQuery( "true".equals( attrs.getValue( getUri(), "freeform-query" ) ) ); // NON-NLS
+    getBuilder().formattingMetadataSource( "true".equals( attrs.getValue( getUri(), "metadata-source" ) ) ); // NON-NLS
+    getBuilder().dataFactoryCore( parseDataFactoryCore( attrs ) );
+    getBuilder().bundle( getBundle(), parseKeyPrefix( attrs ) );
   }
 
-  private String parseKeyPrefix(final Attributes attrs)
-  {
-    String keyPrefix = attrs.getValue(getUri(), "key-prefix"); // NON-NLS
-    if (keyPrefix == null)
-    {
+  private String parseKeyPrefix( final Attributes attrs ) {
+    String keyPrefix = attrs.getValue( getUri(), "key-prefix" ); // NON-NLS
+    if ( keyPrefix == null ) {
       keyPrefix = "";
     }
     return keyPrefix;
   }
 
-  private DataFactoryCore parseDataFactoryCore(final Attributes attrs) throws ParseException
-  {
-    final String metaDataCoreClass = attrs.getValue(getUri(), "impl"); // NON-NLS
-    if (metaDataCoreClass != null)
-    {
+  private DataFactoryCore parseDataFactoryCore( final Attributes attrs ) throws ParseException {
+    final String metaDataCoreClass = attrs.getValue( getUri(), "impl" ); // NON-NLS
+    if ( metaDataCoreClass != null ) {
       DataFactoryCore dataFactoryCore = ObjectUtilities.loadAndInstantiate
-          (metaDataCoreClass, DataFactoryReadHandler.class, DataFactoryCore.class);
-      if (dataFactoryCore == null)
-      {
-        throw new ParseException("Attribute 'impl' references a invalid DataFactoryPropertyCore implementation.", getLocator());
+        ( metaDataCoreClass, DataFactoryReadHandler.class, DataFactoryCore.class );
+      if ( dataFactoryCore == null ) {
+        throw new ParseException( "Attribute 'impl' references a invalid DataFactoryPropertyCore implementation.",
+          getLocator() );
       }
       return dataFactoryCore;
-    }
-    else
-    {
+    } else {
       return new DefaultDataFactoryCore();
     }
   }
@@ -91,8 +81,7 @@ public class DataFactoryReadHandler extends AbstractMetaDataReadHandler
    *
    * @throws SAXException if there is a parsing error.
    */
-  protected void doneParsing() throws SAXException
-  {
+  protected void doneParsing() throws SAXException {
   }
 
   /**
@@ -101,8 +90,7 @@ public class DataFactoryReadHandler extends AbstractMetaDataReadHandler
    * @return the object.
    * @throws SAXException if an parser error occured.
    */
-  public Object getObject() throws SAXException
-  {
-    return new DefaultDataFactoryMetaData(getBuilder());
+  public Object getObject() throws SAXException {
+    return new DefaultDataFactoryMetaData( getBuilder() );
   }
 }

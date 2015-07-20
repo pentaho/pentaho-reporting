@@ -24,17 +24,14 @@ import org.pentaho.reporting.engine.classic.core.Band;
  *
  * @author Thomas Morgner
  */
-public class SourceChunk
-{
+public class SourceChunk {
   private Band rootBand;
 
-  public SourceChunk(final Band band)
-  {
+  public SourceChunk( final Band band ) {
     this.rootBand = band;
   }
 
-  public Band getRootBand()
-  {
+  public Band getRootBand() {
     return rootBand;
   }
 }

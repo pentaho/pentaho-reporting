@@ -24,21 +24,19 @@ import java.awt.geom.RoundRectangle2D;
  *
  * @author Thomas Morgner
  */
-public class RoundRectangle2DObjectDescription extends AbstractObjectDescription
-{
+public class RoundRectangle2DObjectDescription extends AbstractObjectDescription {
 
   /**
    * Creates a new object description.
    */
-  public RoundRectangle2DObjectDescription()
-  {
-    super(RoundRectangle2D.class);
-    setParameterDefinition("width", Float.class);
-    setParameterDefinition("height", Float.class);
-    setParameterDefinition("x", Float.class);
-    setParameterDefinition("y", Float.class);
-    setParameterDefinition("arcWidth", Float.class);
-    setParameterDefinition("arcHeight", Float.class);
+  public RoundRectangle2DObjectDescription() {
+    super( RoundRectangle2D.class );
+    setParameterDefinition( "width", Float.class );
+    setParameterDefinition( "height", Float.class );
+    setParameterDefinition( "x", Float.class );
+    setParameterDefinition( "y", Float.class );
+    setParameterDefinition( "arcWidth", Float.class );
+    setParameterDefinition( "arcHeight", Float.class );
   }
 
   /**
@@ -46,16 +44,15 @@ public class RoundRectangle2DObjectDescription extends AbstractObjectDescription
    *
    * @return The object.
    */
-  public Object createObject()
-  {
+  public Object createObject() {
     final RoundRectangle2D rect = new RoundRectangle2D.Float();
-    final float w = getFloatParameter("width");
-    final float h = getFloatParameter("height");
-    final float x = getFloatParameter("x");
-    final float y = getFloatParameter("y");
-    final float aw = getFloatParameter("arcWidth");
-    final float ah = getFloatParameter("arcHeight");
-    rect.setRoundRect(x, y, w, h, aw, ah);
+    final float w = getFloatParameter( "width" );
+    final float h = getFloatParameter( "height" );
+    final float x = getFloatParameter( "x" );
+    final float y = getFloatParameter( "y" );
+    final float aw = getFloatParameter( "arcWidth" );
+    final float ah = getFloatParameter( "arcHeight" );
+    rect.setRoundRect( x, y, w, h, aw, ah );
 
     return rect;
   }
@@ -66,11 +63,9 @@ public class RoundRectangle2DObjectDescription extends AbstractObjectDescription
    * @param param the parameter name.
    * @return The float value.
    */
-  private float getFloatParameter(final String param)
-  {
-    final Float p = (Float) getParameter(param);
-    if (p == null)
-    {
+  private float getFloatParameter( final String param ) {
+    final Float p = (Float) getParameter( param );
+    if ( p == null ) {
       return 0;
     }
     return p.floatValue();
@@ -82,12 +77,10 @@ public class RoundRectangle2DObjectDescription extends AbstractObjectDescription
    * @param o the object (should be an instance of <code>Rectangle2D</code>).
    * @throws ObjectFactoryException if the object is not an instance of <code>Rectangle2D</code>.
    */
-  public void setParameterFromObject(final Object o)
-      throws ObjectFactoryException
-  {
-    if (!(o instanceof RoundRectangle2D))
-    {
-      throw new ObjectFactoryException("The given object is no java.awt.geom.Rectangle2D.");
+  public void setParameterFromObject( final Object o )
+    throws ObjectFactoryException {
+    if ( !( o instanceof RoundRectangle2D ) ) {
+      throw new ObjectFactoryException( "The given object is no java.awt.geom.Rectangle2D." );
     }
 
     final RoundRectangle2D rect = (RoundRectangle2D) o;
@@ -98,12 +91,12 @@ public class RoundRectangle2DObjectDescription extends AbstractObjectDescription
     final float aw = (float) rect.getArcWidth();
     final float ah = (float) rect.getArcHeight();
 
-    setParameter("x", new Float(x));
-    setParameter("y", new Float(y));
-    setParameter("width", new Float(w));
-    setParameter("height", new Float(h));
-    setParameter("arcWidth", new Float(aw));
-    setParameter("arcHeight", new Float(ah));
+    setParameter( "x", new Float( x ) );
+    setParameter( "y", new Float( y ) );
+    setParameter( "width", new Float( w ) );
+    setParameter( "height", new Float( h ) );
+    setParameter( "arcWidth", new Float( aw ) );
+    setParameter( "arcHeight", new Float( ah ) );
   }
 
 }

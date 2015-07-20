@@ -22,14 +22,12 @@ import org.pentaho.reporting.engine.classic.core.Element;
 import org.pentaho.reporting.engine.classic.core.style.BandStyleKeys;
 import org.pentaho.reporting.engine.classic.core.style.ElementStyleKeys;
 
-public class CrosstabTableCell extends Element
-{
-  public CrosstabTableCell(final int colSpan, final int rowSpan)
-  {
-    getStyle().setStyleProperty(BandStyleKeys.LAYOUT, BandStyleKeys.LAYOUT_TABLE_CELL);
-    getStyle().setStyleProperty(ElementStyleKeys.INVISIBLE_CONSUMES_SPACE, true);
-    setAttribute(AttributeNames.Table.NAMESPACE, AttributeNames.Table.COLSPAN, colSpan);
-    setAttribute(AttributeNames.Table.NAMESPACE, AttributeNames.Table.ROWSPAN, rowSpan);
+public class CrosstabTableCell extends Element {
+  public CrosstabTableCell( final int colSpan, final int rowSpan ) {
+    getStyle().setStyleProperty( BandStyleKeys.LAYOUT, BandStyleKeys.LAYOUT_TABLE_CELL );
+    getStyle().setStyleProperty( ElementStyleKeys.INVISIBLE_CONSUMES_SPACE, true );
+    setAttribute( AttributeNames.Table.NAMESPACE, AttributeNames.Table.COLSPAN, colSpan );
+    setAttribute( AttributeNames.Table.NAMESPACE, AttributeNames.Table.ROWSPAN, rowSpan );
   }
 
 

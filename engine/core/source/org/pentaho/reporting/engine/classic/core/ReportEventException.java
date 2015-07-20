@@ -27,8 +27,7 @@ import java.util.List;
  *
  * @author Thomas Morgner
  */
-public class ReportEventException extends ReportProcessingException
-{
+public class ReportEventException extends ReportProcessingException {
   /**
    * the collected child exceptions.
    */
@@ -40,14 +39,12 @@ public class ReportEventException extends ReportProcessingException
    * @param message         the exception message.
    * @param childExceptions the collected exceptions.
    */
-  public ReportEventException(final String message, final List childExceptions)
-  {
-    super(message);
-    if (childExceptions == null)
-    {
+  public ReportEventException( final String message, final List childExceptions ) {
+    super( message );
+    if ( childExceptions == null ) {
       throw new NullPointerException();
     }
-    this.childExceptions = Collections.unmodifiableList(childExceptions);
+    this.childExceptions = Collections.unmodifiableList( childExceptions );
   }
 
   /**
@@ -55,8 +52,7 @@ public class ReportEventException extends ReportProcessingException
    *
    * @return the collected child exceptions.
    */
-  public List getChildExceptions()
-  {
+  public List getChildExceptions() {
     return childExceptions;
   }
 
@@ -64,10 +60,9 @@ public class ReportEventException extends ReportProcessingException
    * Returns the errort message string of this throwable object.
    *
    * @return the error message string of this <code>Throwable</code> object if it was created with an error message
-   *         string; or <code>null</code> if it was created with no error message.
+   * string; or <code>null</code> if it was created with no error message.
    */
-  public String getMessage()
-  {
+  public String getMessage() {
     return super.getMessage() + ": " + childExceptions.size() + " exceptions occured.";
   }
 
@@ -76,21 +71,16 @@ public class ReportEventException extends ReportProcessingException
    *
    * @param writer the writer.
    */
-  public void printStackTrace(final PrintWriter writer)
-  {
-    super.printStackTrace(writer);
-    for (int i = 0; i < childExceptions.size(); i++)
-    {
-      writer.print("Exception #");
-      writer.println(i);
-      final Exception ex = (Exception) childExceptions.get(i);
-      if (ex != null)
-      {
-        ex.printStackTrace(writer);
-      }
-      else
-      {
-        writer.println("<not defined>");
+  public void printStackTrace( final PrintWriter writer ) {
+    super.printStackTrace( writer );
+    for ( int i = 0; i < childExceptions.size(); i++ ) {
+      writer.print( "Exception #" );
+      writer.println( i );
+      final Exception ex = (Exception) childExceptions.get( i );
+      if ( ex != null ) {
+        ex.printStackTrace( writer );
+      } else {
+        writer.println( "<not defined>" );
       }
     }
   }
@@ -100,21 +90,16 @@ public class ReportEventException extends ReportProcessingException
    *
    * @param stream the output stream.
    */
-  public void printStackTrace(final PrintStream stream)
-  {
-    super.printStackTrace(stream);
-    for (int i = 0; i < childExceptions.size(); i++)
-    {
-      stream.print("Exception #");
-      stream.println(i);
-      final Exception ex = (Exception) childExceptions.get(i);
-      if (ex != null)
-      {
-        ex.printStackTrace(stream);
-      }
-      else
-      {
-        stream.println("<not defined>");
+  public void printStackTrace( final PrintStream stream ) {
+    super.printStackTrace( stream );
+    for ( int i = 0; i < childExceptions.size(); i++ ) {
+      stream.print( "Exception #" );
+      stream.println( i );
+      final Exception ex = (Exception) childExceptions.get( i );
+      if ( ex != null ) {
+        ex.printStackTrace( stream );
+      } else {
+        stream.println( "<not defined>" );
       }
     }
   }

@@ -17,8 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.core.function;
 
-import java.net.URL;
-
 import junit.framework.TestCase;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
@@ -29,24 +27,23 @@ import org.pentaho.reporting.engine.classic.core.testsupport.DebugReportRunner;
 import org.pentaho.reporting.libraries.resourceloader.Resource;
 import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 
-public class TotalItemCountTest extends TestCase
-{
-  private static final int[] GROUPCOUNTS = new int[]{
-      2, 3, 1, 14, 2, 1
+import java.net.URL;
+
+public class TotalItemCountTest extends TestCase {
+  private static final int[] GROUPCOUNTS = new int[] {
+    2, 3, 1, 14, 2, 1
   };
 
   private static class TotalItemCountVerifyFunction
-      extends AbstractFunction
-  {
+    extends AbstractFunction {
     private int index;
 
     /**
      * Creates an unnamed function. Make sure the name of the function is set using {@link #setName} before the function
      * is added to the report's function collection.
      */
-    public TotalItemCountVerifyFunction()
-    {
-      setName("verification");
+    public TotalItemCountVerifyFunction() {
+      setName( "verification" );
     }
 
     /**
@@ -56,8 +53,7 @@ public class TotalItemCountTest extends TestCase
      *
      * @param event The event.
      */
-    public void reportInitialized(ReportEvent event)
-    {
+    public void reportInitialized( ReportEvent event ) {
       index = 0;
     }
 
@@ -66,13 +62,11 @@ public class TotalItemCountTest extends TestCase
      *
      * @param event the event.
      */
-    public void groupFinished(ReportEvent event)
-    {
-      if (event.getLevel() >= 0)
-      {
+    public void groupFinished( ReportEvent event ) {
+      if ( event.getLevel() >= 0 ) {
         return;
       }
-      assertCount(event);
+      assertCount( event );
       index += 1;
     }
 
@@ -81,106 +75,95 @@ public class TotalItemCountTest extends TestCase
      *
      * @param event the event.
      */
-    public void groupStarted(ReportEvent event)
-    {
-      if (event.getLevel() >= 0)
-      {
+    public void groupStarted( ReportEvent event ) {
+      if ( event.getLevel() >= 0 ) {
         return;
       }
-      assertCount(event);
+      assertCount( event );
     }
 
-    private void assertCount(ReportEvent event)
-    {
+    private void assertCount( ReportEvent event ) {
       // The itemcount function is only valid within the defined group.
-      if (FunctionUtilities.getCurrentGroup(event).getName().equals("Continent Group"))
-      {
+      if ( FunctionUtilities.getCurrentGroup( event ).getName().equals( "Continent Group" ) ) {
         // the number of continents in the report1
-        Number n = (Number) event.getDataRow().get("continent-total-gc");
-        assertEquals("continent-total-gc: " + index, GROUPCOUNTS[index], n.intValue());
+        Number n = (Number) event.getDataRow().get( "continent-total-gc" );
+        assertEquals( "continent-total-gc: " + index, GROUPCOUNTS[ index ], n.intValue() );
       }
 
       // the number of continents in the report1 + default group start
-      Number n2 = (Number) event.getDataRow().get("total-gc");
-      assertEquals("total-gc", 23, n2.intValue());
+      Number n2 = (Number) event.getDataRow().get( "total-gc" );
+      assertEquals( "total-gc", 23, n2.intValue() );
     }
 
-    public Object getValue()
-    {
+    public Object getValue() {
       return null;
     }
   }
 
-  public TotalItemCountTest()
-  {
+  public TotalItemCountTest() {
   }
 
-  public TotalItemCountTest(final String s)
-  {
-    super(s);
+  public TotalItemCountTest( final String s ) {
+    super( s );
   }
 
-  protected void setUp() throws Exception
-  {
+  protected void setUp() throws Exception {
     ClassicEngineBoot.getInstance().start();
   }
 
-  public void testGroupItemCount() throws Exception
-  {
-    final URL url = getClass().getResource("aggregate-function-test.xml");
-    assertNotNull(url);
+  public void testGroupItemCount() throws Exception {
+    final URL url = getClass().getResource( "aggregate-function-test.xml" );
+    assertNotNull( url );
     final ResourceManager resourceManager = new ResourceManager();
     resourceManager.registerDefaults();
-    final Resource directly = resourceManager.createDirectly(url, MasterReport.class);
+    final Resource directly = resourceManager.createDirectly( url, MasterReport.class );
     final MasterReport report = (MasterReport) directly.getResource();
-    report.addExpression(new EventMonitorFunction());
-    report.setDataFactory(new TableDataFactory("default", new AggregateTestDataTableModel()));
+    report.addExpression( new EventMonitorFunction() );
+    report.setDataFactory( new TableDataFactory( "default", new AggregateTestDataTableModel() ) );
 
-    report.addExpression(new TotalItemCountVerifyFunction());
-    final RelationalGroup g = report.getGroupByName("default");
-    if (g != null)
-    {
-      report.removeGroup(g);
+    report.addExpression( new TotalItemCountVerifyFunction() );
+    final RelationalGroup g = report.getGroupByName( "default" );
+    if ( g != null ) {
+      report.removeGroup( g );
     }
 
     final TotalItemCountFunction f = new TotalItemCountFunction();
-    f.setName("continent-total-gc");
-    f.setGroup("Continent Group");
-    f.setDependencyLevel(1);
-    report.addExpression(f);
+    f.setName( "continent-total-gc" );
+    f.setGroup( "Continent Group" );
+    f.setDependencyLevel( 1 );
+    report.addExpression( f );
 
     final TotalItemCountFunction f2 = new TotalItemCountFunction();
-    f2.setName("total-gc");
-    f2.setDependencyLevel(1);
-    report.addExpression(f2);
+    f2.setName( "total-gc" );
+    f2.setDependencyLevel( 1 );
+    report.addExpression( f2 );
 
-    DebugReportRunner.execGraphics2D(report);
+    DebugReportRunner.execGraphics2D( report );
   }
 
-  public void testSimplifiedRun() throws Exception
-  {
-    final MasterReport report =  new MasterReport();
-    report.addExpression(new EventMonitorFunction());
-    report.addExpression(new TotalItemCountVerifyFunction());
-    report.setDataFactory(new TableDataFactory("default", new AggregateTestDataTableModel()));
-    report.setQuery("default");
+  public void testSimplifiedRun() throws Exception {
+    final MasterReport report = new MasterReport();
+    report.addExpression( new EventMonitorFunction() );
+    report.addExpression( new TotalItemCountVerifyFunction() );
+    report.setDataFactory( new TableDataFactory( "default", new AggregateTestDataTableModel() ) );
+    report.setQuery( "default" );
     final RelationalGroup rootGroup = (RelationalGroup) report.getRootGroup();
     rootGroup.clearFields();
-    rootGroup.addField("Continent");
-    rootGroup.setName("Continent Group");
+    rootGroup.addField( "Continent" );
+    rootGroup.setName( "Continent Group" );
 
     final TotalItemCountFunction f = new TotalItemCountFunction();
-    f.setName("continent-total-gc");
-    f.setGroup("Continent Group");
-    f.setDependencyLevel(1);
-    report.addExpression(f);
+    f.setName( "continent-total-gc" );
+    f.setGroup( "Continent Group" );
+    f.setDependencyLevel( 1 );
+    report.addExpression( f );
 
     final TotalItemCountFunction f2 = new TotalItemCountFunction();
-    f2.setName("total-gc");
-    f2.setDependencyLevel(1);
-    report.addExpression(f2);
+    f2.setName( "total-gc" );
+    f2.setDependencyLevel( 1 );
+    report.addExpression( f2 );
 
-    DebugReportRunner.execGraphics2D(report);
+    DebugReportRunner.execGraphics2D( report );
   }
 
 }

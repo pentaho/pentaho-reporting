@@ -17,34 +17,26 @@
 
 package org.pentaho.reporting.engine.classic.core.designtime.datafactory;
 
-import java.awt.Component;
-import javax.swing.DefaultListCellRenderer;
-import javax.swing.JLabel;
-import javax.swing.JList;
-
 import org.pentaho.reporting.libraries.base.util.StringUtils;
 
-public class QueryNameListCellRenderer extends DefaultListCellRenderer
-{
-  public Component getListCellRendererComponent(final JList list,
-                                                final Object value,
-                                                final int index,
-                                                final boolean isSelected,
-                                                final boolean cellHasFocus)
-  {
-    final JLabel listCellRendererComponent = (JLabel) super.getListCellRendererComponent(list, value, index,
-        isSelected, cellHasFocus);
-    if (value != null)
-    {
+import javax.swing.*;
+import java.awt.*;
+
+public class QueryNameListCellRenderer extends DefaultListCellRenderer {
+  public Component getListCellRendererComponent( final JList list,
+                                                 final Object value,
+                                                 final int index,
+                                                 final boolean isSelected,
+                                                 final boolean cellHasFocus ) {
+    final JLabel listCellRendererComponent = (JLabel) super.getListCellRendererComponent( list, value, index,
+      isSelected, cellHasFocus );
+    if ( value != null ) {
       final DataSetQuery dataSetQuery = (DataSetQuery) value;
       final String queryName = dataSetQuery.getQueryName();
-      if (!StringUtils.isEmpty(queryName, false))
-      {
-        listCellRendererComponent.setText(queryName);
-      }
-      else
-      {
-        listCellRendererComponent.setText(" ");
+      if ( !StringUtils.isEmpty( queryName, false ) ) {
+        listCellRendererComponent.setText( queryName );
+      } else {
+        listCellRendererComponent.setText( " " );
       }
     }
     return listCellRendererComponent;

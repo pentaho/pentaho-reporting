@@ -26,15 +26,13 @@ import org.pentaho.reporting.engine.classic.core.style.VerticalTextAlign;
  *
  * @author Thomas Morgner
  */
-public class VerticalAlignmentObjectDescription extends AbstractObjectDescription
-{
+public class VerticalAlignmentObjectDescription extends AbstractObjectDescription {
   /**
    * Creates a new object description.
    */
-  public VerticalAlignmentObjectDescription()
-  {
-    super(VerticalTextAlign.class);
-    setParameterDefinition("value", String.class);
+  public VerticalAlignmentObjectDescription() {
+    super( VerticalTextAlign.class );
+    setParameterDefinition( "value", String.class );
   }
 
   /**
@@ -42,52 +40,40 @@ public class VerticalAlignmentObjectDescription extends AbstractObjectDescriptio
    *
    * @return The object.
    */
-  public Object createObject()
-  {
-    final String o = (String) getParameter("value");
-    if (o == null)
-    {
+  public Object createObject() {
+    final String o = (String) getParameter( "value" );
+    if ( o == null ) {
       return null;
     }
-    if ("use-script".equalsIgnoreCase(o))
-    {
+    if ( "use-script".equalsIgnoreCase( o ) ) {
       return VerticalTextAlign.USE_SCRIPT;
     }
-    if ("text-bottom".equalsIgnoreCase(o))
-    {
+    if ( "text-bottom".equalsIgnoreCase( o ) ) {
       return VerticalTextAlign.TEXT_BOTTOM;
     }
-    if ("bottom".equalsIgnoreCase(o))
-    {
+    if ( "bottom".equalsIgnoreCase( o ) ) {
       return VerticalTextAlign.BOTTOM;
     }
-    if ("text-top".equalsIgnoreCase(o))
-    {
+    if ( "text-top".equalsIgnoreCase( o ) ) {
       return VerticalTextAlign.TEXT_TOP;
     }
-    if ("top".equalsIgnoreCase(o))
-    {
+    if ( "top".equalsIgnoreCase( o ) ) {
       return VerticalTextAlign.TOP;
     }
-    if ("central".equalsIgnoreCase(o))
-    {
+    if ( "central".equalsIgnoreCase( o ) ) {
       return VerticalTextAlign.CENTRAL;
     }
-    if ("middle".equalsIgnoreCase(o))
-    {
+    if ( "middle".equalsIgnoreCase( o ) ) {
       return VerticalTextAlign.MIDDLE;
     }
 
-    if ("sub".equalsIgnoreCase(o))
-    {
+    if ( "sub".equalsIgnoreCase( o ) ) {
       return VerticalTextAlign.SUB;
     }
-    if ("super".equalsIgnoreCase(o))
-    {
+    if ( "super".equalsIgnoreCase( o ) ) {
       return VerticalTextAlign.SUPER;
     }
-    if ("baseline".equalsIgnoreCase(o))
-    {
+    if ( "baseline".equalsIgnoreCase( o ) ) {
       return VerticalTextAlign.BASELINE;
     }
     return null;
@@ -97,55 +83,35 @@ public class VerticalAlignmentObjectDescription extends AbstractObjectDescriptio
    * Sets the parameters in the object description to match the specified object.
    *
    * @param o the object (an {@link org.pentaho.reporting.engine.classic.core.ElementAlignment} instance).
-   * @throws org.pentaho.reporting.engine.classic.core.modules.parser.ext.factory.base.ObjectFactoryException
-   *          if the object is not recognised.
+   * @throws org.pentaho.reporting.engine.classic.core.modules.parser.ext.factory.base.ObjectFactoryException if the
+   * object
+   *                                                                                                          is not
+   *                                                                                                          recognised.
    */
-  public void setParameterFromObject(final Object o)
-      throws ObjectFactoryException
-  {
-    if (o.equals(VerticalTextAlign.BOTTOM))
-    {
-      setParameter("value", "bottom");
-    }
-    else if (o.equals(VerticalTextAlign.TEXT_BOTTOM))
-    {
-      setParameter("value", "text-bottom");
-    }
-    else if (o.equals(VerticalTextAlign.MIDDLE))
-    {
-      setParameter("value", "middle");
-    }
-    else if (o.equals(VerticalTextAlign.TEXT_TOP))
-    {
-      setParameter("value", "text-top");
-    }
-    else if (o.equals(VerticalTextAlign.TOP))
-    {
-      setParameter("value", "top");
-    }
-    else if (o.equals(VerticalTextAlign.CENTRAL))
-    {
-      setParameter("value", "central");
-    }
-    else if (o.equals(VerticalTextAlign.SUB))
-    {
-      setParameter("value", "sub");
-    }
-    else if (o.equals(VerticalTextAlign.SUPER))
-    {
-      setParameter("value", "super");
-    }
-    else if (o.equals(VerticalTextAlign.BASELINE))
-    {
-      setParameter("value", "baseline");
-    }
-    else if (o.equals(VerticalTextAlign.USE_SCRIPT))
-    {
-      setParameter("value", "use-script");
-    }
-    else
-    {
-      throw new ObjectFactoryException("Invalid value specified for ElementAlignment");
+  public void setParameterFromObject( final Object o )
+    throws ObjectFactoryException {
+    if ( o.equals( VerticalTextAlign.BOTTOM ) ) {
+      setParameter( "value", "bottom" );
+    } else if ( o.equals( VerticalTextAlign.TEXT_BOTTOM ) ) {
+      setParameter( "value", "text-bottom" );
+    } else if ( o.equals( VerticalTextAlign.MIDDLE ) ) {
+      setParameter( "value", "middle" );
+    } else if ( o.equals( VerticalTextAlign.TEXT_TOP ) ) {
+      setParameter( "value", "text-top" );
+    } else if ( o.equals( VerticalTextAlign.TOP ) ) {
+      setParameter( "value", "top" );
+    } else if ( o.equals( VerticalTextAlign.CENTRAL ) ) {
+      setParameter( "value", "central" );
+    } else if ( o.equals( VerticalTextAlign.SUB ) ) {
+      setParameter( "value", "sub" );
+    } else if ( o.equals( VerticalTextAlign.SUPER ) ) {
+      setParameter( "value", "super" );
+    } else if ( o.equals( VerticalTextAlign.BASELINE ) ) {
+      setParameter( "value", "baseline" );
+    } else if ( o.equals( VerticalTextAlign.USE_SCRIPT ) ) {
+      setParameter( "value", "use-script" );
+    } else {
+      throw new ObjectFactoryException( "Invalid value specified for ElementAlignment" );
     }
   }
 

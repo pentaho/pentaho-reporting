@@ -20,17 +20,14 @@ package org.pentaho.reporting.engine.classic.core.filter.types.bands;
 import org.pentaho.reporting.engine.classic.core.ReportElement;
 import org.pentaho.reporting.engine.classic.core.Watermark;
 
-public class WatermarkType extends AbstractSectionType
-{
+public class WatermarkType extends AbstractSectionType {
   public static final WatermarkType INSTANCE = new WatermarkType();
 
-  public WatermarkType()
-  {
-    super("watermark", false);
+  public WatermarkType() {
+    super( "watermark", false );
   }
 
-  public ReportElement create()
-  {
+  public ReportElement create() {
     return new Watermark();
   }
 }

@@ -17,9 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.parser.bundle.layout;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.pentaho.reporting.engine.classic.core.style.css.CSSParseException;
 import org.pentaho.reporting.engine.classic.core.style.css.StyleSheetParserUtil;
 import org.pentaho.reporting.engine.classic.core.style.css.namespaces.NamespaceCollection;
@@ -29,35 +26,31 @@ import org.pentaho.reporting.libraries.xmlns.parser.StringReadHandler;
 import org.w3c.css.sac.SelectorList;
 import org.xml.sax.SAXException;
 
-public class StyleSelectorReadHandler extends StringReadHandler
-{
+import java.util.ArrayList;
+import java.util.List;
+
+public class StyleSelectorReadHandler extends StringReadHandler {
   private ArrayList<CSSSelector> selector;
 
-  public StyleSelectorReadHandler()
-  {
+  public StyleSelectorReadHandler() {
     selector = new ArrayList<CSSSelector>();
   }
 
-  protected void doneParsing() throws SAXException
-  {
+  protected void doneParsing() throws SAXException {
     super.doneParsing();
-    try
-    {
+    try {
       final NamespaceCollection namespaceCollection = StyleSheetParserUtil.getInstance().getNamespaceCollection();
-      final SelectorList selectorList = StyleSheetParserUtil.getInstance().parseSelector(namespaceCollection, getResult());
-      for (int i = 0; i < selectorList.getLength(); i+= 1)
-      {
-        selector.add((CSSSelector) selectorList.item(i));
+      final SelectorList selectorList =
+        StyleSheetParserUtil.getInstance().parseSelector( namespaceCollection, getResult() );
+      for ( int i = 0; i < selectorList.getLength(); i += 1 ) {
+        selector.add( (CSSSelector) selectorList.item( i ) );
       }
-    }
-    catch (CSSParseException e)
-    {
-      throw new ParseException("Failed to parse selector", e, getLocator());
+    } catch ( CSSParseException e ) {
+      throw new ParseException( "Failed to parse selector", e, getLocator() );
     }
   }
 
-  public List<CSSSelector> getObject()
-  {
+  public List<CSSSelector> getObject() {
     return selector;
   }
 }

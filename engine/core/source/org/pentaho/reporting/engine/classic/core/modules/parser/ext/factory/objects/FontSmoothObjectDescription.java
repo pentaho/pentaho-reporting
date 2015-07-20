@@ -26,15 +26,13 @@ import org.pentaho.reporting.engine.classic.core.style.FontSmooth;
  *
  * @author Thomas Morgner
  */
-public class FontSmoothObjectDescription extends AbstractObjectDescription
-{
+public class FontSmoothObjectDescription extends AbstractObjectDescription {
   /**
    * Creates a new object description.
    */
-  public FontSmoothObjectDescription()
-  {
-    super(FontSmooth.class);
-    setParameterDefinition("value", String.class);
+  public FontSmoothObjectDescription() {
+    super( FontSmooth.class );
+    setParameterDefinition( "value", String.class );
   }
 
   /**
@@ -42,23 +40,18 @@ public class FontSmoothObjectDescription extends AbstractObjectDescription
    *
    * @return The object.
    */
-  public Object createObject()
-  {
-    final String o = (String) getParameter("value");
-    if (o == null)
-    {
+  public Object createObject() {
+    final String o = (String) getParameter( "value" );
+    if ( o == null ) {
       return null;
     }
-    if ("always".equalsIgnoreCase(o))
-    {
+    if ( "always".equalsIgnoreCase( o ) ) {
       return FontSmooth.ALWAYS;
     }
-    if ("never".equalsIgnoreCase(o))
-    {
+    if ( "never".equalsIgnoreCase( o ) ) {
       return FontSmooth.NEVER;
     }
-    if ("auto".equalsIgnoreCase(o))
-    {
+    if ( "auto".equalsIgnoreCase( o ) ) {
       return FontSmooth.AUTO;
     }
     return null;
@@ -68,27 +61,21 @@ public class FontSmoothObjectDescription extends AbstractObjectDescription
    * Sets the parameters in the object description to match the specified object.
    *
    * @param o the object (an {@link org.pentaho.reporting.engine.classic.core.ElementAlignment} instance).
-   * @throws org.pentaho.reporting.engine.classic.core.modules.parser.ext.factory.base.ObjectFactoryException
-   *          if the object is not recognised.
+   * @throws org.pentaho.reporting.engine.classic.core.modules.parser.ext.factory.base.ObjectFactoryException if the
+   * object
+   *                                                                                                          is not
+   *                                                                                                          recognised.
    */
-  public void setParameterFromObject(final Object o)
-      throws ObjectFactoryException
-  {
-    if (o.equals(FontSmooth.ALWAYS))
-    {
-      setParameter("value", "always");
-    }
-    else if (o.equals(FontSmooth.NEVER))
-    {
-      setParameter("value", "never");
-    }
-    else if (o.equals(FontSmooth.AUTO))
-    {
-      setParameter("value", "auto");
-    }
-    else
-    {
-      throw new ObjectFactoryException("Invalid value specified for FontSmooth");
+  public void setParameterFromObject( final Object o )
+    throws ObjectFactoryException {
+    if ( o.equals( FontSmooth.ALWAYS ) ) {
+      setParameter( "value", "always" );
+    } else if ( o.equals( FontSmooth.NEVER ) ) {
+      setParameter( "value", "never" );
+    } else if ( o.equals( FontSmooth.AUTO ) ) {
+      setParameter( "value", "auto" );
+    } else {
+      throw new ObjectFactoryException( "Invalid value specified for FontSmooth" );
     }
   }
 

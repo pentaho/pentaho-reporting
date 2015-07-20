@@ -27,8 +27,7 @@ import org.pentaho.reporting.libraries.base.boot.SubSystem;
  *
  * @author Thomas Morgner
  */
-public class RTFExportGUIModule extends AbstractModule
-{
+public class RTFExportGUIModule extends AbstractModule {
 
   /**
    * DefaultConstructor. Loads the module specification.
@@ -36,8 +35,7 @@ public class RTFExportGUIModule extends AbstractModule
    * @throws ModuleInitializeException if an error occured.
    */
   public RTFExportGUIModule()
-      throws ModuleInitializeException
-  {
+    throws ModuleInitializeException {
     loadModuleInfo();
   }
 
@@ -49,8 +47,7 @@ public class RTFExportGUIModule extends AbstractModule
    * @param subSystem the subSystem.
    * @throws ModuleInitializeException if an error ocurred while initializing the module.
    */
-  public void initialize(final SubSystem subSystem)
-      throws ModuleInitializeException
-  {
+  public void initialize( final SubSystem subSystem )
+    throws ModuleInitializeException {
   }
 }

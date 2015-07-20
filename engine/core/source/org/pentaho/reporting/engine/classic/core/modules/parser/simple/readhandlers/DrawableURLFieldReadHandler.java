@@ -23,12 +23,10 @@ import org.pentaho.reporting.engine.classic.core.modules.parser.base.PropertyAtt
 import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 import org.xml.sax.SAXException;
 
-public class DrawableURLFieldReadHandler extends AbstractElementReadHandler
-{
+public class DrawableURLFieldReadHandler extends AbstractElementReadHandler {
   private ContentFieldElementFactory elementFactory;
 
-  public DrawableURLFieldReadHandler()
-  {
+  public DrawableURLFieldReadHandler() {
     this.elementFactory = new ContentFieldElementFactory();
   }
 
@@ -38,23 +36,20 @@ public class DrawableURLFieldReadHandler extends AbstractElementReadHandler
    * @param atts the attributes.
    * @throws org.xml.sax.SAXException if there is a parsing error.
    */
-  protected void startParsing(final PropertyAttributes atts)
-      throws SAXException
-  {
-    super.startParsing(atts);
+  protected void startParsing( final PropertyAttributes atts )
+    throws SAXException {
+    super.startParsing( atts );
 
-    final String fieldName = atts.getValue(getUri(), "fieldname");
-    if (fieldName == null)
-    {
-      throw new SAXException("Required attribute 'fieldname' is missing.");
+    final String fieldName = atts.getValue( getUri(), "fieldname" );
+    if ( fieldName == null ) {
+      throw new SAXException( "Required attribute 'fieldname' is missing." );
     }
-    elementFactory.setFieldname(fieldName);
+    elementFactory.setFieldname( fieldName );
     final ResourceManager resourceManager = getRootHandler().getResourceManager();
-    elementFactory.setBaseURL(resourceManager.toURL(getRootHandler().getContext()));
+    elementFactory.setBaseURL( resourceManager.toURL( getRootHandler().getContext() ) );
   }
 
-  protected ElementFactory getElementFactory()
-  {
+  protected ElementFactory getElementFactory() {
     return elementFactory;
   }
 }

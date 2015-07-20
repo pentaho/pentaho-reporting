@@ -32,8 +32,7 @@ import org.pentaho.reporting.engine.classic.core.util.IntegerCache;
  *
  * @author Thomas Morgner
  */
-public class PageFunction extends AbstractFunction implements PageEventListener
-{
+public class PageFunction extends AbstractFunction implements PageEventListener {
   /**
    * The current page.
    */
@@ -69,8 +68,7 @@ public class PageFunction extends AbstractFunction implements PageEventListener
   /**
    * Constructs an unnamed function. <P> This constructor is intended for use by the SAX handler class only.
    */
-  public PageFunction()
-  {
+  public PageFunction() {
     this.startPage = 1;
     this.pageIncrement = 1;
     this.dependencyLevel = LayoutProcess.LEVEL_PAGINATE;
@@ -81,10 +79,9 @@ public class PageFunction extends AbstractFunction implements PageEventListener
    *
    * @param name the function name.
    */
-  public PageFunction(final String name)
-  {
+  public PageFunction( final String name ) {
     this();
-    setName(name);
+    setName( name );
   }
 
   /**
@@ -94,8 +91,7 @@ public class PageFunction extends AbstractFunction implements PageEventListener
    *
    * @return true.
    */
-  public boolean isDeepTraversing()
-  {
+  public boolean isDeepTraversing() {
     return true;
   }
 
@@ -104,8 +100,7 @@ public class PageFunction extends AbstractFunction implements PageEventListener
    *
    * @return the dependency level.
    */
-  public int getDependencyLevel()
-  {
+  public int getDependencyLevel() {
     return dependencyLevel;
   }
 
@@ -114,12 +109,10 @@ public class PageFunction extends AbstractFunction implements PageEventListener
    *
    * @param dependencyLevel the dependency level.
    */
-  public void setDependencyLevel(final int dependencyLevel)
-  {
-    if (dependencyLevel < LayoutProcess.LEVEL_PAGINATE)
-    {
+  public void setDependencyLevel( final int dependencyLevel ) {
+    if ( dependencyLevel < LayoutProcess.LEVEL_PAGINATE ) {
       throw new IllegalArgumentException(
-          "PageFunction.setDependencyLevel(...) : A dependency level lower than paginate is not allowed.");
+        "PageFunction.setDependencyLevel(...) : A dependency level lower than paginate is not allowed." );
     }
     this.dependencyLevel = dependencyLevel;
   }
@@ -129,8 +122,7 @@ public class PageFunction extends AbstractFunction implements PageEventListener
    *
    * @return the page increment.
    */
-  public int getPageIncrement()
-  {
+  public int getPageIncrement() {
     return pageIncrement;
   }
 
@@ -139,8 +131,7 @@ public class PageFunction extends AbstractFunction implements PageEventListener
    *
    * @param pageIncrement the page increment.
    */
-  public void setPageIncrement(final int pageIncrement)
-  {
+  public void setPageIncrement( final int pageIncrement ) {
     this.pageIncrement = pageIncrement;
   }
 
@@ -149,8 +140,7 @@ public class PageFunction extends AbstractFunction implements PageEventListener
    *
    * @return the group name.
    */
-  public String getGroup()
-  {
+  public String getGroup() {
     return group;
   }
 
@@ -159,8 +149,7 @@ public class PageFunction extends AbstractFunction implements PageEventListener
    *
    * @param group the group name.
    */
-  public void setGroup(final String group)
-  {
+  public void setGroup( final String group ) {
     this.group = group;
   }
 
@@ -169,8 +158,7 @@ public class PageFunction extends AbstractFunction implements PageEventListener
    *
    * @return the page number of the first page.
    */
-  public int getStartPage()
-  {
+  public int getStartPage() {
     return this.startPage;
   }
 
@@ -179,8 +167,7 @@ public class PageFunction extends AbstractFunction implements PageEventListener
    *
    * @param startPage the page number of the first page.
    */
-  public void setStartPage(final int startPage)
-  {
+  public void setStartPage( final int startPage ) {
     this.startPage = startPage;
   }
 
@@ -189,8 +176,7 @@ public class PageFunction extends AbstractFunction implements PageEventListener
    *
    * @return the current page.
    */
-  public int getPage()
-  {
+  public int getPage() {
     return page;
   }
 
@@ -199,8 +185,7 @@ public class PageFunction extends AbstractFunction implements PageEventListener
    *
    * @param page the page.
    */
-  protected void setPage(final int page)
-  {
+  protected void setPage( final int page ) {
     this.page = page;
   }
 
@@ -209,14 +194,12 @@ public class PageFunction extends AbstractFunction implements PageEventListener
    *
    * @param event the event.
    */
-  public void reportInitialized(final ReportEvent event)
-  {
-    if (event.isDeepTraversing())
-    {
+  public void reportInitialized( final ReportEvent event ) {
+    if ( event.isDeepTraversing() ) {
       return;
     }
     // Next event in list will be the first page-started event. Will set the page number again..
-    this.setPage(getStartPage());
+    this.setPage( getStartPage() );
     ignoreNextGroupStart = true;
     ignoreNextPageStart = false;
     // waitForNextGroupStart = false;
@@ -228,26 +211,21 @@ public class PageFunction extends AbstractFunction implements PageEventListener
    *
    * @param event the event.
    */
-  public void groupStarted(final ReportEvent event)
-  {
+  public void groupStarted( final ReportEvent event ) {
     // The defined group is only valid for the master-report.
-    if (event.isDeepTraversing())
-    {
+    if ( event.isDeepTraversing() ) {
       return;
     }
     // if we have no defined group, no need to do anything else.
-    if (getGroup() == null)
-    {
+    if ( getGroup() == null ) {
       return;
     }
 
 
-    if (FunctionUtilities.isDefinedGroup(getGroup(), event))
-    {
+    if ( FunctionUtilities.isDefinedGroup( getGroup(), event ) ) {
       //   waitForNextGroupStart = false;
 
-      if (ignoreNextGroupStart)
-      {
+      if ( ignoreNextGroupStart ) {
         // The report-header had been printed recently. Add it to the group's list of pages
         ignoreNextGroupStart = false;
         return;
@@ -256,7 +234,7 @@ public class PageFunction extends AbstractFunction implements PageEventListener
       ignoreNextPageStart = true;
       // Unconditionally reset the page counter. For groups not starting with a new page, the
       // behaviour of the function is undefined.
-      this.setPage(getStartPage());
+      this.setPage( getStartPage() );
     }
   }
 
@@ -266,30 +244,26 @@ public class PageFunction extends AbstractFunction implements PageEventListener
    *
    * @param event the event.
    */
-  public void pageStarted(final ReportEvent event)
-  {
-    if ((event.getType() & ReportEvent.REPORT_INITIALIZED) == ReportEvent.REPORT_INITIALIZED)
-    {
-      if (event.isDeepTraversing() == false)
-      {
-        this.setPage(getStartPage());
+  public void pageStarted( final ReportEvent event ) {
+    if ( ( event.getType() & ReportEvent.REPORT_INITIALIZED ) == ReportEvent.REPORT_INITIALIZED ) {
+      if ( event.isDeepTraversing() == false ) {
+        this.setPage( getStartPage() );
         return;
       }
     }
-    if (ignoreNextPageStart)
-    {
+    if ( ignoreNextPageStart ) {
       ignoreNextPageStart = false;
       return;
     }
-//    if (waitForNextGroupStart &&
-//        (event.getType() & ReportEvent.GROUP_STARTED) == ReportEvent.GROUP_STARTED)
-//    {
-//      this.setPage(getStartPage());
-//      this.waitForNextGroupStart = false;
-//      return;
-//    }
+    //    if (waitForNextGroupStart &&
+    //        (event.getType() & ReportEvent.GROUP_STARTED) == ReportEvent.GROUP_STARTED)
+    //    {
+    //      this.setPage(getStartPage());
+    //      this.waitForNextGroupStart = false;
+    //      return;
+    //    }
 
-    setPage(getPage() + getPageIncrement());
+    setPage( getPage() + getPageIncrement() );
   }
 
 
@@ -299,8 +273,7 @@ public class PageFunction extends AbstractFunction implements PageEventListener
    *
    * @return the flag.
    */
-  protected boolean isIgnoreNextPageStart()
-  {
+  protected boolean isIgnoreNextPageStart() {
     return ignoreNextPageStart;
   }
 
@@ -309,38 +282,36 @@ public class PageFunction extends AbstractFunction implements PageEventListener
    *
    * @param event The event.
    */
-  public void pageFinished(final ReportEvent event)
-  {
+  public void pageFinished( final ReportEvent event ) {
     // ignored ...
   }
-//
-//  public void groupFinished(final ReportEvent event)
-//  {
-//    // The defined group is only valid for the master-report.
-//    if (event.isDeepTraversing())
-//    {
-//      return;
-//    }
-//    // if we have no defined group, no need to do anything else.
-//    if (getGroup() == null)
-//    {
-//      return;
-//    }
-//
-////    if (FunctionUtilities.isDefinedGroup(getGroup(), event))
-////    {
-////      waitForNextGroupStart = true;
-////    }
-//  }
+  //
+  //  public void groupFinished(final ReportEvent event)
+  //  {
+  //    // The defined group is only valid for the master-report.
+  //    if (event.isDeepTraversing())
+  //    {
+  //      return;
+  //    }
+  //    // if we have no defined group, no need to do anything else.
+  //    if (getGroup() == null)
+  //    {
+  //      return;
+  //    }
+  //
+  ////    if (FunctionUtilities.isDefinedGroup(getGroup(), event))
+  ////    {
+  ////      waitForNextGroupStart = true;
+  ////    }
+  //  }
 
   /**
    * Returns the page number (function value).
    *
    * @return the page number.
    */
-  public Object getValue()
-  {
-    return IntegerCache.getInteger(getPage());
+  public Object getValue() {
+    return IntegerCache.getInteger( getPage() );
   }
 
   /**
@@ -349,8 +320,7 @@ public class PageFunction extends AbstractFunction implements PageEventListener
    *
    * @return the internal flag.
    */
-  protected boolean isIgnoreNextGroupStart()
-  {
+  protected boolean isIgnoreNextGroupStart() {
     return ignoreNextGroupStart;
   }
 
@@ -360,8 +330,7 @@ public class PageFunction extends AbstractFunction implements PageEventListener
    * @return true, if you care to know.
    * @deprecated No longer used.
    */
-  protected boolean isIgnorePageCancelEvents()
-  {
+  protected boolean isIgnorePageCancelEvents() {
     return true;
   }
 
@@ -371,7 +340,6 @@ public class PageFunction extends AbstractFunction implements PageEventListener
    * @param ignorePageCancelEvents ignored.
    * @deprecated No longer used.
    */
-  public void setIgnorePageCancelEvents(final boolean ignorePageCancelEvents)
-  {
+  public void setIgnorePageCancelEvents( final boolean ignorePageCancelEvents ) {
   }
 }

@@ -17,8 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.parser.bundle.data;
 
-import java.util.ArrayList;
-
 import org.pentaho.reporting.engine.classic.core.DataFactory;
 import org.pentaho.reporting.engine.classic.core.function.Expression;
 import org.pentaho.reporting.engine.classic.core.modules.parser.base.common.ExpressionReadHandler;
@@ -28,16 +26,16 @@ import org.pentaho.reporting.libraries.xmlns.parser.XmlReadHandler;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 
-public class DataDefinitionRootElementHandler extends AbstractXmlReadHandler
-{
+import java.util.ArrayList;
+
+public class DataDefinitionRootElementHandler extends AbstractXmlReadHandler {
   private MasterParameterDefinitionReadHandler parameterDefinitionHandler;
 
   private DataDefinition dataDefinition;
   private DataSourceElementHandler dataSourceElementHandler;
   private ArrayList<ExpressionReadHandler> expressionHandlers;
 
-  public DataDefinitionRootElementHandler()
-  {
+  public DataDefinitionRootElementHandler() {
     expressionHandlers = new ArrayList<ExpressionReadHandler>();
   }
 
@@ -50,30 +48,25 @@ public class DataDefinitionRootElementHandler extends AbstractXmlReadHandler
    * @return the handler or null, if the tagname is invalid.
    * @throws SAXException if there is a parsing error.
    */
-  protected XmlReadHandler getHandlerForChild(final String uri,
-                                              final String tagName,
-                                              final Attributes atts) throws SAXException
-  {
-    if (isSameNamespace(uri) == false)
-    {
+  protected XmlReadHandler getHandlerForChild( final String uri,
+                                               final String tagName,
+                                               final Attributes atts ) throws SAXException {
+    if ( isSameNamespace( uri ) == false ) {
       return null;
     }
 
-    if ("parameter-definition".equals(tagName))
-    {
+    if ( "parameter-definition".equals( tagName ) ) {
       parameterDefinitionHandler = new MasterParameterDefinitionReadHandler();
       return parameterDefinitionHandler;
     }
 
-    if ("expression".equals(tagName))
-    {
+    if ( "expression".equals( tagName ) ) {
       final ExpressionReadHandler readHandler = new ExpressionReadHandler();
-      expressionHandlers.add(readHandler);
+      expressionHandlers.add( readHandler );
       return readHandler;
     }
 
-    if ("data-source".equals(tagName))
-    {
+    if ( "data-source".equals( tagName ) ) {
       dataSourceElementHandler = new DataSourceElementHandler();
       return dataSourceElementHandler;
     }
@@ -86,21 +79,17 @@ public class DataDefinitionRootElementHandler extends AbstractXmlReadHandler
    *
    * @throws SAXException if there is a parsing error.
    */
-  protected void doneParsing() throws SAXException
-  {
+  protected void doneParsing() throws SAXException {
     final String primaryQuery;
     final int primaryQueryLimit;
     final int primaryQueryTimeout;
     final DataFactory primaryDataFactory;
-    if (dataSourceElementHandler == null)
-    {
+    if ( dataSourceElementHandler == null ) {
       primaryDataFactory = null;
       primaryQuery = null;
       primaryQueryLimit = 0;
       primaryQueryTimeout = 0;
-    }
-    else
-    {
+    } else {
       primaryDataFactory = dataSourceElementHandler.getDataFactory();
       primaryQuery = dataSourceElementHandler.getQuery();
       primaryQueryLimit = dataSourceElementHandler.getQueryLimit();
@@ -108,30 +97,25 @@ public class DataDefinitionRootElementHandler extends AbstractXmlReadHandler
     }
 
     final ReportParameterDefinition reportParameterDefinition;
-    if (parameterDefinitionHandler != null)
-    {
+    if ( parameterDefinitionHandler != null ) {
       reportParameterDefinition = (ReportParameterDefinition) parameterDefinitionHandler.getObject();
-    }
-    else
-    {
+    } else {
       reportParameterDefinition = null;
     }
 
     final ArrayList<Expression> expressionsList = new ArrayList<Expression>();
-    for (int i = 0; i < expressionHandlers.size(); i++)
-    {
-      final ExpressionReadHandler readHandler = expressionHandlers.get(i);
-      if (readHandler.getObject() != null)
-      {
-        expressionsList.add((Expression) readHandler.getObject());
+    for ( int i = 0; i < expressionHandlers.size(); i++ ) {
+      final ExpressionReadHandler readHandler = expressionHandlers.get( i );
+      if ( readHandler.getObject() != null ) {
+        expressionsList.add( (Expression) readHandler.getObject() );
       }
     }
-    final Expression[] expressions = expressionsList.toArray(new Expression[expressionHandlers.size()]);
+    final Expression[] expressions = expressionsList.toArray( new Expression[ expressionHandlers.size() ] );
 
 
     dataDefinition = new DataDefinition
-        (reportParameterDefinition, primaryDataFactory, primaryQuery, primaryQueryLimit,
-            primaryQueryTimeout, expressions);
+      ( reportParameterDefinition, primaryDataFactory, primaryQuery, primaryQueryLimit,
+        primaryQueryTimeout, expressions );
 
   }
 
@@ -141,8 +125,7 @@ public class DataDefinitionRootElementHandler extends AbstractXmlReadHandler
    * @return the object.
    * @throws SAXException if an parser error occured.
    */
-  public Object getObject() throws SAXException
-  {
+  public Object getObject() throws SAXException {
     return dataDefinition;
   }
 }

@@ -17,8 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.core.states;
 
-import javax.swing.table.DefaultTableModel;
-
 import junit.framework.TestCase;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
@@ -28,39 +26,36 @@ import org.pentaho.reporting.engine.classic.core.TableDataFactory;
 import org.pentaho.reporting.engine.classic.core.function.FormulaExpression;
 import org.pentaho.reporting.engine.classic.core.testsupport.DebugReportRunner;
 
-public class ValidateStateTest extends TestCase
-{
-  public ValidateStateTest()
-  {
+import javax.swing.table.DefaultTableModel;
+
+public class ValidateStateTest extends TestCase {
+  public ValidateStateTest() {
   }
 
-  public ValidateStateTest(final String name)
-  {
-    super(name);
+  public ValidateStateTest( final String name ) {
+    super( name );
   }
 
-  protected void setUp() throws Exception
-  {
+  protected void setUp() throws Exception {
     ClassicEngineBoot.getInstance().start();
   }
 
-  public void testExportParameter()
-  {
+  public void testExportParameter() {
     final FormulaExpression function = new FormulaExpression();
-    function.setName("out");
-    function.setFormula("=output // this formula does not even parse!");
-    
+    function.setName( "out" );
+    function.setFormula( "=output // this formula does not even parse!" );
+
     SubReport subReport = new SubReport();
-    subReport.addExportParameter("out", "out");
-    subReport.addExpression(function);
+    subReport.addExportParameter( "out", "out" );
+    subReport.addExpression( function );
 
     MasterReport report = new MasterReport();
-    report.setDataFactory(new TableDataFactory(report.getQuery(), new DefaultTableModel(2,2)));
+    report.setDataFactory( new TableDataFactory( report.getQuery(), new DefaultTableModel( 2, 2 ) ) );
     final RelationalGroup rootGroup = (RelationalGroup) report.getRootGroup();
-    rootGroup.getHeader().addSubReport((SubReport) subReport.derive());
-    report.getItemBand().addSubReport((SubReport) subReport.derive());
+    rootGroup.getHeader().addSubReport( (SubReport) subReport.derive() );
+    report.getItemBand().addSubReport( (SubReport) subReport.derive() );
 
-    DebugReportRunner.execGraphics2D(report);
+    DebugReportRunner.execGraphics2D( report );
 
   }
 }

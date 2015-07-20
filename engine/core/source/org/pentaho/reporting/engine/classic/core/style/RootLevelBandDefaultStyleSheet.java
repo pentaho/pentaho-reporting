@@ -17,8 +17,7 @@
 
 package org.pentaho.reporting.engine.classic.core.style;
 
-public class RootLevelBandDefaultStyleSheet extends BandDefaultStyleSheet
-{
+public class RootLevelBandDefaultStyleSheet extends BandDefaultStyleSheet {
   /**
    * A shared default style-sheet.
    */
@@ -27,12 +26,11 @@ public class RootLevelBandDefaultStyleSheet extends BandDefaultStyleSheet
   /**
    * Creates a new default style sheet.
    */
-  protected RootLevelBandDefaultStyleSheet()
-  {
-    setLocked(false);
-    setStyleProperty(ElementStyleKeys.WIDOW_ORPHAN_OPT_OUT, Boolean.FALSE);
-    setStyleProperty(ElementStyleKeys.AVOID_PAGEBREAK_INSIDE, Boolean.TRUE);
-    setLocked(true);
+  protected RootLevelBandDefaultStyleSheet() {
+    setLocked( false );
+    setStyleProperty( ElementStyleKeys.WIDOW_ORPHAN_OPT_OUT, Boolean.FALSE );
+    setStyleProperty( ElementStyleKeys.AVOID_PAGEBREAK_INSIDE, Boolean.TRUE );
+    setLocked( true );
   }
 
   /**
@@ -40,10 +38,8 @@ public class RootLevelBandDefaultStyleSheet extends BandDefaultStyleSheet
    *
    * @return the style-sheet.
    */
-  public static synchronized RootLevelBandDefaultStyleSheet getRootLevelBandDefaultStyle()
-  {
-    if (defaultStyle == null)
-    {
+  public static synchronized RootLevelBandDefaultStyleSheet getRootLevelBandDefaultStyle() {
+    if ( defaultStyle == null ) {
       defaultStyle = new RootLevelBandDefaultStyleSheet();
     }
     return defaultStyle;

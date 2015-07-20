@@ -22,8 +22,7 @@ package org.pentaho.reporting.engine.classic.core.layout.text;
  *
  * @author Thomas Morgner
  */
-public interface ExtendedBaselineInfo
-{
+public interface ExtendedBaselineInfo {
   public static final int BASELINE_COUNT = 10;
 
   public static final int BEFORE_EDGE = 0;
@@ -41,7 +40,7 @@ public interface ExtendedBaselineInfo
 
   public long[] getBaselines();
 
-  public long getBaseline(int baseline);
+  public long getBaseline( int baseline );
 
   public long getUnderlinePosition();
 

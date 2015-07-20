@@ -31,14 +31,12 @@ import java.text.NumberFormat;
  * @author Thomas Morgner
  * @see java.text.NumberFormat
  */
-public class NumberFormatParser extends FormatParser
-{
+public class NumberFormatParser extends FormatParser {
   /**
    * Default constructor. <P> Uses a general number format for the current locale.
    */
-  public NumberFormatParser()
-  {
-    setNumberFormat(NumberFormat.getInstance());
+  public NumberFormatParser() {
+    setNumberFormat( NumberFormat.getInstance() );
   }
 
   /**
@@ -46,9 +44,8 @@ public class NumberFormatParser extends FormatParser
    *
    * @param nf The number format.
    */
-  public void setNumberFormat(final NumberFormat nf)
-  {
-    super.setFormatter(nf);
+  public void setNumberFormat( final NumberFormat nf ) {
+    super.setFormatter( nf );
   }
 
   /**
@@ -56,8 +53,7 @@ public class NumberFormatParser extends FormatParser
    *
    * @return The number format.
    */
-  public NumberFormat getNumberFormat()
-  {
+  public NumberFormat getNumberFormat() {
     return (NumberFormat) getFormatter();
   }
 
@@ -66,10 +62,9 @@ public class NumberFormatParser extends FormatParser
    *
    * @param f The format.
    */
-  public void setFormatter(final Format f)
-  {
+  public void setFormatter( final Format f ) {
     final NumberFormat fm = (NumberFormat) f;
-    super.setFormatter(fm);
+    super.setFormatter( fm );
   }
 
   /**
@@ -77,9 +72,8 @@ public class NumberFormatParser extends FormatParser
    *
    * @param newValue The new value of the grouping flag.
    */
-  public void setGroupingUsed(final boolean newValue)
-  {
-    getNumberFormat().setGroupingUsed(newValue);
+  public void setGroupingUsed( final boolean newValue ) {
+    getNumberFormat().setGroupingUsed( newValue );
   }
 
   /**
@@ -87,8 +81,7 @@ public class NumberFormatParser extends FormatParser
    *
    * @return The grouping flag.
    */
-  public boolean isGroupingUsed()
-  {
+  public boolean isGroupingUsed() {
     return getNumberFormat().isGroupingUsed();
   }
 
@@ -97,9 +90,8 @@ public class NumberFormatParser extends FormatParser
    *
    * @param newValue The number of digits.
    */
-  public void setMaximumFractionDigits(final int newValue)
-  {
-    getNumberFormat().setMaximumFractionDigits(newValue);
+  public void setMaximumFractionDigits( final int newValue ) {
+    getNumberFormat().setMaximumFractionDigits( newValue );
   }
 
   /**
@@ -107,8 +99,7 @@ public class NumberFormatParser extends FormatParser
    *
    * @return The digits.
    */
-  public int getMaximumFractionDigits()
-  {
+  public int getMaximumFractionDigits() {
     return getNumberFormat().getMaximumFractionDigits();
   }
 
@@ -117,9 +108,8 @@ public class NumberFormatParser extends FormatParser
    *
    * @param newValue The number of digits.
    */
-  public void setMaximumIntegerDigits(final int newValue)
-  {
-    getNumberFormat().setMaximumFractionDigits(newValue);
+  public void setMaximumIntegerDigits( final int newValue ) {
+    getNumberFormat().setMaximumFractionDigits( newValue );
   }
 
   /**
@@ -127,8 +117,7 @@ public class NumberFormatParser extends FormatParser
    *
    * @return The digits.
    */
-  public int getMaximumIntegerDigits()
-  {
+  public int getMaximumIntegerDigits() {
     return getNumberFormat().getMaximumFractionDigits();
   }
 
@@ -137,9 +126,8 @@ public class NumberFormatParser extends FormatParser
    *
    * @param newValue The number of digits.
    */
-  public void setMinimumFractionDigits(final int newValue)
-  {
-    getNumberFormat().setMaximumFractionDigits(newValue);
+  public void setMinimumFractionDigits( final int newValue ) {
+    getNumberFormat().setMaximumFractionDigits( newValue );
   }
 
   /**
@@ -147,8 +135,7 @@ public class NumberFormatParser extends FormatParser
    *
    * @return The digits.
    */
-  public int getMinimumFractionDigits()
-  {
+  public int getMinimumFractionDigits() {
     return getNumberFormat().getMaximumFractionDigits();
   }
 
@@ -157,9 +144,8 @@ public class NumberFormatParser extends FormatParser
    *
    * @param newValue The number of digits.
    */
-  public void setMinimumIntegerDigits(final int newValue)
-  {
-    getNumberFormat().setMaximumFractionDigits(newValue);
+  public void setMinimumIntegerDigits( final int newValue ) {
+    getNumberFormat().setMaximumFractionDigits( newValue );
   }
 
   /**
@@ -167,8 +153,7 @@ public class NumberFormatParser extends FormatParser
    *
    * @return The digits.
    */
-  public int getMinimumIntegerDigits()
-  {
+  public int getMinimumIntegerDigits() {
     return getNumberFormat().getMaximumFractionDigits();
   }
 
@@ -179,8 +164,7 @@ public class NumberFormatParser extends FormatParser
    * @param o the value to parse.
    * @return true, if the given object is already an instance of number.
    */
-  protected boolean isValidOutput(final Object o)
-  {
+  protected boolean isValidOutput( final Object o ) {
     return o instanceof Number;
   }
 }

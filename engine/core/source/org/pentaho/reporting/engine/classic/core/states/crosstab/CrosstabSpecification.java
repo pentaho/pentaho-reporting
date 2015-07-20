@@ -17,28 +17,27 @@
 
 package org.pentaho.reporting.engine.classic.core.states.crosstab;
 
-import java.io.Serializable;
-
 import org.pentaho.reporting.engine.classic.core.DataRow;
 import org.pentaho.reporting.engine.classic.core.states.ReportStateKey;
 
-public interface CrosstabSpecification extends Serializable
-{
+import java.io.Serializable;
+
+public interface CrosstabSpecification extends Serializable {
   public ReportStateKey getKey();
 
   public void startRow();
 
   public void endRow();
 
-  public void add(final DataRow dataRow);
+  public void add( final DataRow dataRow );
 
   public String[] getColumnDimensionNames();
 
   public String[] getRowDimensionNames();
 
-  public Object[] getKeyAt(int column);
+  public Object[] getKeyAt( int column );
 
-  public int indexOf(final int startPosition, Object[] key);
+  public int indexOf( final int startPosition, Object[] key );
 
   /**
    * The number of columns encountered.

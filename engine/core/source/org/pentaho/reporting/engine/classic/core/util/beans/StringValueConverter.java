@@ -22,14 +22,12 @@ package org.pentaho.reporting.engine.classic.core.util.beans;
  *
  * @author Thomas Morgner
  */
-public class StringValueConverter implements ValueConverter
-{
+public class StringValueConverter implements ValueConverter {
 
   /**
    * Creates a new value converter.
    */
-  public StringValueConverter()
-  {
+  public StringValueConverter() {
     super();
   }
 
@@ -39,17 +37,14 @@ public class StringValueConverter implements ValueConverter
    * @param o the attribute ({@link Integer} expected).
    * @return A string representing the {@link Integer} value.
    */
-  public String toAttributeValue(final Object o) throws BeanException
-  {
-    if (o == null)
-    {
+  public String toAttributeValue( final Object o ) throws BeanException {
+    if ( o == null ) {
       throw new NullPointerException();
     }
-    if (o instanceof String)
-    {
+    if ( o instanceof String ) {
       return o.toString();
     }
-    throw new BeanException("Failed to convert object of type " + o.getClass() + ": Not a String.");
+    throw new BeanException( "Failed to convert object of type " + o.getClass() + ": Not a String." );
   }
 
   /**
@@ -58,10 +53,8 @@ public class StringValueConverter implements ValueConverter
    * @param s the string.
    * @return a {@link Integer}.
    */
-  public Object toPropertyValue(final String s)
-  {
-    if (s == null)
-    {
+  public Object toPropertyValue( final String s ) {
+    if ( s == null ) {
       throw new NullPointerException();
     }
     return s;

@@ -17,23 +17,20 @@
 
 package org.pentaho.reporting.engine.classic.core.sorting;
 
-import java.util.List;
-
 import org.pentaho.reporting.engine.classic.core.MetaTableModel;
 
-public class SortingTableModel extends IndexedMetaTableModel
-{
+import java.util.List;
+
+public class SortingTableModel extends IndexedMetaTableModel {
   private int[] index;
 
-  public SortingTableModel(final MetaTableModel backend,
-                           final List<SortConstraint> sortConstraints)
-  {
-    super(backend);
-    index = TableSorter.sort(backend, sortConstraints.toArray(new SortConstraint[sortConstraints.size()]));
+  public SortingTableModel( final MetaTableModel backend,
+                            final List<SortConstraint> sortConstraints ) {
+    super( backend );
+    index = TableSorter.sort( backend, sortConstraints.toArray( new SortConstraint[ sortConstraints.size() ] ) );
   }
 
-  protected int mapRow(final int row)
-  {
-    return index[row];
+  protected int mapRow( final int row ) {
+    return index[ row ];
   }
 }

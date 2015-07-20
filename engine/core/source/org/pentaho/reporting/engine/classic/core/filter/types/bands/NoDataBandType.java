@@ -21,17 +21,14 @@ import org.pentaho.reporting.engine.classic.core.NoDataBand;
 import org.pentaho.reporting.engine.classic.core.ReportElement;
 import org.pentaho.reporting.engine.classic.core.metadata.ElementType;
 
-public class NoDataBandType extends AbstractSectionType
-{
+public class NoDataBandType extends AbstractSectionType {
   public static final ElementType INSTANCE = new NoDataBandType();
 
-  public NoDataBandType()
-  {
-    super("no-data-band", false);
+  public NoDataBandType() {
+    super( "no-data-band", false );
   }
 
-  public ReportElement create()
-  {
+  public ReportElement create() {
     return new NoDataBand();
   }
 }

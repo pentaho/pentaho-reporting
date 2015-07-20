@@ -24,14 +24,12 @@ import org.pentaho.reporting.engine.classic.core.event.ReportEvent;
  *
  * @author Thomas Morgner
  */
-public class TriggerPageFooterFunction extends AbstractFunction implements LayoutProcessorFunction
-{
+public class TriggerPageFooterFunction extends AbstractFunction implements LayoutProcessorFunction {
   /**
    * Creates a new TriggerPageFooterFunction with no name. You have to define one using "setName" or the function will
    * not work.
    */
-  public TriggerPageFooterFunction()
-  {
+  public TriggerPageFooterFunction() {
   }
 
   /**
@@ -40,9 +38,8 @@ public class TriggerPageFooterFunction extends AbstractFunction implements Layou
    *
    * @param event The event.
    */
-  public void reportInitialized(final ReportEvent event)
-  {
-    event.getReport().getPageFooter().setVisible(false);
+  public void reportInitialized( final ReportEvent event ) {
+    event.getReport().getPageFooter().setVisible( false );
   }
 
   /**
@@ -51,9 +48,8 @@ public class TriggerPageFooterFunction extends AbstractFunction implements Layou
    *
    * @param event The event.
    */
-  public void reportDone(final ReportEvent event)
-  {
-    event.getReport().getPageFooter().setVisible(true);
+  public void reportDone( final ReportEvent event ) {
+    event.getReport().getPageFooter().setVisible( true );
   }
 
   /**
@@ -61,8 +57,7 @@ public class TriggerPageFooterFunction extends AbstractFunction implements Layou
    *
    * @return the value of the function.
    */
-  public Object getValue()
-  {
+  public Object getValue() {
     return null;
   }
 }

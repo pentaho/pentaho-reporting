@@ -17,31 +17,26 @@
 
 package org.pentaho.reporting.engine.classic.core;
 
-public class IncompatibleFeatureException extends InvalidReportStateException
-{
+public class IncompatibleFeatureException extends InvalidReportStateException {
   private int minimumVersionNeeded;
 
-  public IncompatibleFeatureException(final String message,
-                                      final Throwable ex,
-                                      final int minimumVersionNeeded)
-  {
-    super(message, ex);
+  public IncompatibleFeatureException( final String message,
+                                       final Throwable ex,
+                                       final int minimumVersionNeeded ) {
+    super( message, ex );
     this.minimumVersionNeeded = minimumVersionNeeded;
   }
 
-  public IncompatibleFeatureException(final String message, final int minimumVersionNeeded)
-  {
-    super(message);
+  public IncompatibleFeatureException( final String message, final int minimumVersionNeeded ) {
+    super( message );
     this.minimumVersionNeeded = minimumVersionNeeded;
   }
 
-  public IncompatibleFeatureException(final int minimumVersionNeeded)
-  {
+  public IncompatibleFeatureException( final int minimumVersionNeeded ) {
     this.minimumVersionNeeded = minimumVersionNeeded;
   }
 
-  public int getMinimumVersionNeeded()
-  {
+  public int getMinimumVersionNeeded() {
     return minimumVersionNeeded;
   }
 }

@@ -17,8 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.parser.data.inlinedata;
 
-import java.util.ArrayList;
-
 import org.pentaho.reporting.engine.classic.core.DataFactory;
 import org.pentaho.reporting.engine.classic.core.TableDataFactory;
 import org.pentaho.reporting.engine.classic.core.modules.parser.base.DataFactoryReadHandler;
@@ -27,19 +25,19 @@ import org.pentaho.reporting.libraries.xmlns.parser.XmlReadHandler;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 
+import java.util.ArrayList;
+
 /**
  * Creation-Date: 07.04.2006, 17:47:53
  *
  * @author Thomas Morgner
  */
 public class InlineDataSourceReadHandler extends AbstractXmlReadHandler
-    implements DataFactoryReadHandler
-{
+  implements DataFactoryReadHandler {
   private ArrayList queries;
   private DataFactory dataFactory;
 
-  public InlineDataSourceReadHandler()
-  {
+  public InlineDataSourceReadHandler() {
     queries = new ArrayList();
   }
 
@@ -51,20 +49,17 @@ public class InlineDataSourceReadHandler extends AbstractXmlReadHandler
    * @return the handler or null, if the tagname is invalid.
    * @throws SAXException if there is a parsing error.
    */
-  protected XmlReadHandler getHandlerForChild(final String uri,
-                                              final String tagName,
-                                              final Attributes atts)
-      throws SAXException
-  {
-    if (isSameNamespace(uri) == false)
-    {
+  protected XmlReadHandler getHandlerForChild( final String uri,
+                                               final String tagName,
+                                               final Attributes atts )
+    throws SAXException {
+    if ( isSameNamespace( uri ) == false ) {
       return null;
     }
 
-    if ("inline-table".equals(tagName))
-    {
+    if ( "inline-table".equals( tagName ) ) {
       final InlineTableReadHandler queryReadHandler = new InlineTableReadHandler();
-      queries.add(queryReadHandler);
+      queries.add( queryReadHandler );
       return queryReadHandler;
     }
     return null;
@@ -75,13 +70,11 @@ public class InlineDataSourceReadHandler extends AbstractXmlReadHandler
    *
    * @throws SAXException if there is a parsing error.
    */
-  protected void doneParsing() throws SAXException
-  {
+  protected void doneParsing() throws SAXException {
     final TableDataFactory srdf = new TableDataFactory();
-    for (int i = 0; i < queries.size(); i++)
-    {
-      final InlineTableReadHandler handler = (InlineTableReadHandler) queries.get(i);
-      srdf.addTable(handler.getName(), handler.getData());
+    for ( int i = 0; i < queries.size(); i++ ) {
+      final InlineTableReadHandler handler = (InlineTableReadHandler) queries.get( i );
+      srdf.addTable( handler.getName(), handler.getData() );
     }
 
     dataFactory = srdf;
@@ -93,13 +86,11 @@ public class InlineDataSourceReadHandler extends AbstractXmlReadHandler
    * @return the object.
    * @throws SAXException if there is a parsing error.
    */
-  public Object getObject() throws SAXException
-  {
+  public Object getObject() throws SAXException {
     return dataFactory;
   }
 
-  public DataFactory getDataFactory()
-  {
+  public DataFactory getDataFactory() {
     return dataFactory;
   }
 }

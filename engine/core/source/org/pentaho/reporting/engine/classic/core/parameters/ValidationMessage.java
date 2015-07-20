@@ -19,41 +19,33 @@ package org.pentaho.reporting.engine.classic.core.parameters;
 
 import java.io.Serializable;
 
-public class ValidationMessage implements Serializable
-{
-  private static final Object[] EMPTY_OBJECT = new Object[0];
+public class ValidationMessage implements Serializable {
+  private static final Object[] EMPTY_OBJECT = new Object[ 0 ];
 
   private String message;
   private Object[] parameters;
 
-  public ValidationMessage(final String message)
-  {
-    this(message, ValidationMessage.EMPTY_OBJECT);
+  public ValidationMessage( final String message ) {
+    this( message, ValidationMessage.EMPTY_OBJECT );
   }
 
-  public ValidationMessage(final String message, final Object arg)
-  {
-    this(message, new Object[]{arg});
+  public ValidationMessage( final String message, final Object arg ) {
+    this( message, new Object[] { arg } );
   }
 
-  public ValidationMessage(final String message, final Object arg, final Object arg1)
-  {
-    this(message, new Object[]{arg, arg1});
+  public ValidationMessage( final String message, final Object arg, final Object arg1 ) {
+    this( message, new Object[] { arg, arg1 } );
   }
 
-  public ValidationMessage(final String message, final Object arg, final Object arg1, final Object arg2)
-  {
-    this(message, new Object[]{arg, arg1, arg2});
+  public ValidationMessage( final String message, final Object arg, final Object arg1, final Object arg2 ) {
+    this( message, new Object[] { arg, arg1, arg2 } );
   }
 
-  public ValidationMessage(final String message, final Object[] parameters)
-  {
-    if (message == null)
-    {
+  public ValidationMessage( final String message, final Object[] parameters ) {
+    if ( message == null ) {
       throw new NullPointerException();
     }
-    if (parameters == null)
-    {
+    if ( parameters == null ) {
       throw new NullPointerException();
     }
 
@@ -61,13 +53,11 @@ public class ValidationMessage implements Serializable
     this.parameters = (Object[]) parameters.clone();
   }
 
-  public String getMessage()
-  {
+  public String getMessage() {
     return message;
   }
 
-  public Object[] getParameters()
-  {
+  public Object[] getParameters() {
     return (Object[]) parameters.clone();
   }
 }

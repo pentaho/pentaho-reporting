@@ -17,9 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.core.function;
 
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
-
 import org.pentaho.reporting.engine.classic.core.CompoundDataFactory;
 import org.pentaho.reporting.engine.classic.core.DataFactory;
 import org.pentaho.reporting.engine.classic.core.DataRow;
@@ -30,8 +27,10 @@ import org.pentaho.reporting.engine.classic.core.wizard.DataSchema;
 import org.pentaho.reporting.engine.classic.core.wizard.DefaultDataSchema;
 import org.pentaho.reporting.libraries.base.config.Configuration;
 
-public class GenericExpressionRuntime implements ExpressionRuntime
-{
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+
+public class GenericExpressionRuntime implements ExpressionRuntime {
   private DataRow dataRow;
   private Configuration configuration;
   private ResourceBundleFactory resourceBundleFactory;
@@ -41,33 +40,27 @@ public class GenericExpressionRuntime implements ExpressionRuntime
   private DataSchema dataSchema;
   private DataFactory dataFactory;
 
-  public GenericExpressionRuntime()
-  {
-    this (new DefaultTableModel(), 0, new DefaultProcessingContext());
+  public GenericExpressionRuntime() {
+    this( new DefaultTableModel(), 0, new DefaultProcessingContext() );
   }
 
-  public GenericExpressionRuntime(final TableModel data,
-                                final int currentRow,
-                                final ProcessingContext processingContext)
-  {
-    this (new StaticDataRow(), data, currentRow, processingContext);
+  public GenericExpressionRuntime( final TableModel data,
+                                   final int currentRow,
+                                   final ProcessingContext processingContext ) {
+    this( new StaticDataRow(), data, currentRow, processingContext );
   }
 
-  public GenericExpressionRuntime(final DataRow dataRow,
-                                  final TableModel data,
-                                  final int currentRow,
-                                  final ProcessingContext processingContext)
-  {
-    if (processingContext == null)
-    {
+  public GenericExpressionRuntime( final DataRow dataRow,
+                                   final TableModel data,
+                                   final int currentRow,
+                                   final ProcessingContext processingContext ) {
+    if ( processingContext == null ) {
       throw new NullPointerException();
     }
-    if (dataRow == null)
-    {
+    if ( dataRow == null ) {
       throw new NullPointerException();
     }
-    if (data == null)
-    {
+    if ( data == null ) {
       throw new NullPointerException();
     }
 
@@ -81,54 +74,46 @@ public class GenericExpressionRuntime implements ExpressionRuntime
     this.dataFactory = new CompoundDataFactory();
   }
 
-  public GenericExpressionRuntime(final ExpressionRuntime runtime)
-  {
-       this(new StaticDataRow(runtime.getDataRow()),runtime.getData(),runtime.getCurrentRow(),runtime.getProcessingContext());
+  public GenericExpressionRuntime( final ExpressionRuntime runtime ) {
+    this( new StaticDataRow( runtime.getDataRow() ), runtime.getData(), runtime.getCurrentRow(),
+      runtime.getProcessingContext() );
   }
 
-  public DataFactory getDataFactory()
-  {
+  public DataFactory getDataFactory() {
     return dataFactory;
   }
 
-  public DataSchema getDataSchema()
-  {
+  public DataSchema getDataSchema() {
     return dataSchema;
   }
 
-  public DataRow getDataRow()
-  {
+  public DataRow getDataRow() {
     return dataRow;
   }
 
-  public Configuration getConfiguration()
-  {
+  public Configuration getConfiguration() {
     return configuration;
   }
 
-  public ResourceBundleFactory getResourceBundleFactory()
-  {
+  public ResourceBundleFactory getResourceBundleFactory() {
     return resourceBundleFactory;
   }
 
   /**
    * Access to the tablemodel was granted using report properties, now direct.
    */
-  public TableModel getData()
-  {
+  public TableModel getData() {
     return data;
   }
 
   /**
    * Where are we in the current processing.
    */
-  public int getCurrentRow()
-  {
+  public int getCurrentRow() {
     return currentRow;
   }
 
-  public int getCurrentDataItem()
-  {
+  public int getCurrentDataItem() {
     return currentRow;
   }
 
@@ -140,38 +125,31 @@ public class GenericExpressionRuntime implements ExpressionRuntime
    *
    * @return the export descriptor.
    */
-  public String getExportDescriptor()
-  {
+  public String getExportDescriptor() {
     return processingContext.getExportDescriptor();
   }
 
-  public ProcessingContext getProcessingContext()
-  {
+  public ProcessingContext getProcessingContext() {
     return processingContext;
   }
 
-  public int getCurrentGroup()
-  {
+  public int getCurrentGroup() {
     return 0;
   }
 
-  public int getGroupStartRow(final String groupName)
-  {
+  public int getGroupStartRow( final String groupName ) {
     return 0;
   }
 
-  public int getGroupStartRow(final int groupIndex)
-  {
+  public int getGroupStartRow( final int groupIndex ) {
     return 0;
   }
 
-  public boolean isStructuralComplexReport()
-  {
+  public boolean isStructuralComplexReport() {
     return false;
   }
 
-  public boolean isCrosstabActive()
-  {
+  public boolean isCrosstabActive() {
     return false;
   }
 

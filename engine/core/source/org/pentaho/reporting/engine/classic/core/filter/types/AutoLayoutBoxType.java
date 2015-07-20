@@ -17,31 +17,28 @@
 
 package org.pentaho.reporting.engine.classic.core.filter.types;
 
-import java.util.Locale;
-
 import org.pentaho.reporting.engine.classic.core.Band;
 import org.pentaho.reporting.engine.classic.core.ReportElement;
 import org.pentaho.reporting.engine.classic.core.function.ExpressionRuntime;
 import org.pentaho.reporting.engine.classic.core.metadata.ElementType;
+
+import java.util.Locale;
 
 /**
  * A internal type that marks boxes that have been created for layouting purposes.
  *
  * @author Thomas Morgner
  */
-public class AutoLayoutBoxType extends AbstractElementType
-{
+public class AutoLayoutBoxType extends AbstractElementType {
   public static final ElementType INSTANCE = new AutoLayoutBoxType();
 
-  public AutoLayoutBoxType()
-  {
-    super("auto-layout-box");
+  public AutoLayoutBoxType() {
+    super( "auto-layout-box" );
   }
 
-  public ReportElement create()
-  {
+  public ReportElement create() {
     final Band element = new Band();
-    element.setElementType(INSTANCE);
+    element.setElementType( INSTANCE );
     return element;
   }
 
@@ -54,18 +51,15 @@ public class AutoLayoutBoxType extends AbstractElementType
    * @param element the element.
    * @return the value.
    */
-  public Object getValue(final ExpressionRuntime runtime, final ReportElement element)
-  {
+  public Object getValue( final ExpressionRuntime runtime, final ReportElement element ) {
     throw new UnsupportedOperationException();
   }
 
-  public Object getDesignValue(final ExpressionRuntime runtime, final ReportElement element)
-  {
+  public Object getDesignValue( final ExpressionRuntime runtime, final ReportElement element ) {
     throw new UnsupportedOperationException();
   }
 
-  public void configureDesignTimeDefaults(final ReportElement element, final Locale locale)
-  {
+  public void configureDesignTimeDefaults( final ReportElement element, final Locale locale ) {
     throw new UnsupportedOperationException();
   }
 }

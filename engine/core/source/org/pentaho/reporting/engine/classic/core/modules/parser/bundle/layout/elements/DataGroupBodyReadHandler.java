@@ -24,21 +24,18 @@ import org.pentaho.reporting.libraries.xmlns.parser.XmlReadHandler;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 
-public class DataGroupBodyReadHandler extends AbstractElementReadHandler
-{
+public class DataGroupBodyReadHandler extends AbstractElementReadHandler {
   private ItemBandReadHandler itemBandReadHandler;
   private NoDataBandReadHandler noDataBandReadHandler;
   private DetailsHeaderBandReadHandler detailsHeaderBandReadHandler;
   private DetailsFooterBandReadHandler detailsFooterBandReadHandler;
 
   public DataGroupBodyReadHandler()
-      throws ParseException
-  {
-    super(GroupDataBodyType.INSTANCE);
+    throws ParseException {
+    super( GroupDataBodyType.INSTANCE );
   }
 
-  public GroupDataBody getElement()
-  {
+  public GroupDataBody getElement() {
     return (GroupDataBody) super.getElement();
   }
 
@@ -51,48 +48,38 @@ public class DataGroupBodyReadHandler extends AbstractElementReadHandler
    * @return the handler or null, if the tagname is invalid.
    * @throws SAXException if there is a parsing error.
    */
-  protected XmlReadHandler getHandlerForChild(final String uri,
-                                              final String tagName,
-                                              final Attributes atts) throws SAXException
-  {
+  protected XmlReadHandler getHandlerForChild( final String uri,
+                                               final String tagName,
+                                               final Attributes atts ) throws SAXException {
 
-    if (isSameNamespace(uri))
-    {
-      if ("details".equals(tagName))
-      {
-        if (itemBandReadHandler == null)
-        {
+    if ( isSameNamespace( uri ) ) {
+      if ( "details".equals( tagName ) ) {
+        if ( itemBandReadHandler == null ) {
           itemBandReadHandler = new ItemBandReadHandler();
         }
         return itemBandReadHandler;
       }
-      if ("details-header".equals(tagName))
-      {
-        if (detailsHeaderBandReadHandler == null)
-        {
+      if ( "details-header".equals( tagName ) ) {
+        if ( detailsHeaderBandReadHandler == null ) {
           detailsHeaderBandReadHandler = new DetailsHeaderBandReadHandler();
         }
         return detailsHeaderBandReadHandler;
       }
-      if ("details-footer".equals(tagName))
-      {
-        if (detailsFooterBandReadHandler == null)
-        {
+      if ( "details-footer".equals( tagName ) ) {
+        if ( detailsFooterBandReadHandler == null ) {
           detailsFooterBandReadHandler = new DetailsFooterBandReadHandler();
         }
         return detailsFooterBandReadHandler;
       }
-      if ("no-data".equals(tagName))
-      {
-        if (noDataBandReadHandler == null)
-        {
+      if ( "no-data".equals( tagName ) ) {
+        if ( noDataBandReadHandler == null ) {
           noDataBandReadHandler = new NoDataBandReadHandler();
         }
         return noDataBandReadHandler;
       }
     }
 
-    return super.getHandlerForChild(uri, tagName, atts);
+    return super.getHandlerForChild( uri, tagName, atts );
   }
 
   /**
@@ -100,25 +87,20 @@ public class DataGroupBodyReadHandler extends AbstractElementReadHandler
    *
    * @throws SAXException if there is a parsing error.
    */
-  protected void doneParsing() throws SAXException
-  {
+  protected void doneParsing() throws SAXException {
     super.doneParsing();
     final GroupDataBody body = getElement();
-    if (noDataBandReadHandler != null)
-    {
-      body.setNoDataBand(noDataBandReadHandler.getElement());
+    if ( noDataBandReadHandler != null ) {
+      body.setNoDataBand( noDataBandReadHandler.getElement() );
     }
-    if (itemBandReadHandler != null)
-    {
-      body.setItemBand(itemBandReadHandler.getElement());
+    if ( itemBandReadHandler != null ) {
+      body.setItemBand( itemBandReadHandler.getElement() );
     }
-    if (detailsFooterBandReadHandler != null)
-    {
-      body.setDetailsFooter(detailsFooterBandReadHandler.getElement());
+    if ( detailsFooterBandReadHandler != null ) {
+      body.setDetailsFooter( detailsFooterBandReadHandler.getElement() );
     }
-    if (detailsHeaderBandReadHandler != null)
-    {
-      body.setDetailsHeader(detailsHeaderBandReadHandler.getElement());
+    if ( detailsHeaderBandReadHandler != null ) {
+      body.setDetailsHeader( detailsHeaderBandReadHandler.getElement() );
     }
   }
 }

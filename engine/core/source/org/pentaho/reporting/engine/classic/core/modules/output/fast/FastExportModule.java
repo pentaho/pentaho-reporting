@@ -22,17 +22,14 @@ import org.pentaho.reporting.libraries.base.boot.AbstractModule;
 import org.pentaho.reporting.libraries.base.boot.ModuleInitializeException;
 import org.pentaho.reporting.libraries.base.boot.SubSystem;
 
-public class FastExportModule extends AbstractModule
-{
-  public FastExportModule() throws ModuleInitializeException
-  {
+public class FastExportModule extends AbstractModule {
+  public FastExportModule() throws ModuleInitializeException {
     loadModuleInfo();
   }
 
-  public void initialize(final SubSystem subSystem) throws ModuleInitializeException
-  {
+  public void initialize( final SubSystem subSystem ) throws ModuleInitializeException {
     ElementMetaDataParser.initializeOptionalReportPreProcessorMetaData
-            ("org/pentaho/reporting/engine/classic/core/modules/output/fast/meta-report-preprocessors.xml");
+      ( "org/pentaho/reporting/engine/classic/core/modules/output/fast/meta-report-preprocessors.xml" );
 
   }
 }

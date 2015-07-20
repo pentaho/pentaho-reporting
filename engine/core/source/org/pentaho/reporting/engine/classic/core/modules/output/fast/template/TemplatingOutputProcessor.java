@@ -26,56 +26,47 @@ import org.pentaho.reporting.engine.classic.core.modules.output.table.base.Sheet
 import org.pentaho.reporting.engine.classic.core.modules.output.table.base.TableContentProducer;
 import org.pentaho.reporting.engine.classic.core.modules.output.table.base.TableLayoutProducer;
 
-public class TemplatingOutputProcessor extends AbstractOutputProcessor
-{
+public class TemplatingOutputProcessor extends AbstractOutputProcessor {
   private OutputProcessorMetaData metaData;
   private FastExportTemplateListener templateListener;
 
-  public TemplatingOutputProcessor(final OutputProcessorMetaData metaData,
-                                   final FastExportTemplateListener templateListener)
-  {
-    if (metaData == null)
-    {
+  public TemplatingOutputProcessor( final OutputProcessorMetaData metaData,
+                                    final FastExportTemplateListener templateListener ) {
+    if ( metaData == null ) {
       throw new NullPointerException();
     }
     this.templateListener = templateListener;
     this.metaData = metaData;
   }
 
-  public OutputProcessorMetaData getMetaData()
-  {
+  public OutputProcessorMetaData getMetaData() {
     return metaData;
   }
 
-  protected void processPageContent(final LogicalPageKey logicalPageKey, final LogicalPageBox logicalPage)
-  {
-    if (templateListener != null)
-    {
-      templateListener.produceTemplate(logicalPage);
+  protected void processPageContent( final LogicalPageKey logicalPageKey, final LogicalPageBox logicalPage ) {
+    if ( templateListener != null ) {
+      templateListener.produceTemplate( logicalPage );
     }
   }
 
-  protected void processPaginationContent(final LogicalPageKey logicalPageKey,
-                                          final LogicalPageBox logicalPage) throws ContentProcessingException
-  {
-    if (templateListener != null)
-    {
-      templateListener.produceTemplate(logicalPage);
+  protected void processPaginationContent( final LogicalPageKey logicalPageKey,
+                                           final LogicalPageBox logicalPage ) throws ContentProcessingException {
+    if ( templateListener != null ) {
+      templateListener.produceTemplate( logicalPage );
     }
   }
 
-  public static TableContentProducer produceTableLayout (final LogicalPageBox pageBox,
+  public static TableContentProducer produceTableLayout( final LogicalPageBox pageBox,
                                                          final SheetLayout layout,
-                                                         final OutputProcessorMetaData metaData)
-  {
+                                                         final OutputProcessorMetaData metaData ) {
     layout.clearVerticalInfo();
 
-    TableLayoutProducer currentLayout = new TableLayoutProducer(metaData, layout);
-    currentLayout.update(pageBox.derive(true), false);
+    TableLayoutProducer currentLayout = new TableLayoutProducer( metaData, layout );
+    currentLayout.update( pageBox.derive( true ), false );
     currentLayout.pageCompleted();
 
-    TableContentProducer contentProducer = new TableContentProducer(layout, metaData);
-    contentProducer.compute(pageBox, false);
+    TableContentProducer contentProducer = new TableContentProducer( layout, metaData );
+    contentProducer.compute( pageBox, false );
     return contentProducer;
   }
 }

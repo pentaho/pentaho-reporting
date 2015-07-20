@@ -31,14 +31,11 @@ import org.pentaho.reporting.engine.classic.core.layout.process.layoutrules.Text
  *
  * @author Thomas Morgner
  */
-public final class CenterAlignmentProcessor extends AbstractAlignmentProcessor
-{
-  public CenterAlignmentProcessor()
-  {
+public final class CenterAlignmentProcessor extends AbstractAlignmentProcessor {
+  public CenterAlignmentProcessor() {
   }
 
-  protected int handleElement(final int start, final int count)
-  {
+  protected int handleElement( final int start, final int count ) {
     final InlineSequenceElement[] sequenceElements = getSequenceElements();
     final RenderNode[] nodes = getNodes();
     final long[] elementDimensions = getElementDimensions();
@@ -52,180 +49,150 @@ public final class CenterAlignmentProcessor extends AbstractAlignmentProcessor
     long usedWidthToStart = 0;
     int contentIndex = start;
     InlineSequenceElement contentElement = null;
-    for (int i = 0; i < endIndex; i++)
-    {
-      final InlineSequenceElement element = sequenceElements[i];
-      final RenderNode node = nodes[i];
-      usedWidth += element.getMaximumWidth(node);
-      if (i < start)
-      {
-        usedWidthToStart += element.getMaximumWidth(node);
+    for ( int i = 0; i < endIndex; i++ ) {
+      final InlineSequenceElement element = sequenceElements[ i ];
+      final RenderNode node = nodes[ i ];
+      usedWidth += element.getMaximumWidth( node );
+      if ( i < start ) {
+        usedWidthToStart += element.getMaximumWidth( node );
       }
-      if (element instanceof StartSequenceElement ||
-          element instanceof EndSequenceElement)
-      {
+      if ( element instanceof StartSequenceElement ||
+        element instanceof EndSequenceElement ) {
         continue;
       }
       contentElement = element;
       contentIndex = i;
     }
 
-    final long nextPosition = (getStartOfLine() + usedWidth);
-    final long lastPageBreak = getPageBreak(getPagebreakCount() - 1);
-    if (nextPosition > lastPageBreak)
-    {
+    final long nextPosition = ( getStartOfLine() + usedWidth );
+    final long lastPageBreak = getPageBreak( getPagebreakCount() - 1 );
+    if ( nextPosition > lastPageBreak ) {
       // The contents we processed so far will not fit on the current line. That's dangerous.
       // We have to center align the content up to the start position.
-      performCenterAlignment(start, usedWidthToStart,
-          sequenceElements, nodes, elementDimensions, elementPositions);
+      performCenterAlignment( start, usedWidthToStart,
+        sequenceElements, nodes, elementDimensions, elementPositions );
 
       // we cross a pagebreak. Stop working on it - we bail out here.
 
-      if (contentElement instanceof TextSequenceElement)
-      {
+      if ( contentElement instanceof TextSequenceElement ) {
         // the element may be splittable. Test, and if so, give a hint to the
         // outside world ..
-        setSkipIndex(endIndex);
-        setBreakableIndex(contentIndex);
-        return (start);
+        setSkipIndex( endIndex );
+        setBreakableIndex( contentIndex );
+        return ( start );
       }
 
       // This is the first element and it still does not fit. How evil.
-      if (start == 0)
-      {
-        if (contentElement instanceof InlineBoxSequenceElement)
-        {
-          final RenderNode node = nodes[contentIndex];
-          if ((node.getNodeType() & LayoutNodeTypes.MASK_BOX) == LayoutNodeTypes.MASK_BOX)
-          {
+      if ( start == 0 ) {
+        if ( contentElement instanceof InlineBoxSequenceElement ) {
+          final RenderNode node = nodes[ contentIndex ];
+          if ( ( node.getNodeType() & LayoutNodeTypes.MASK_BOX ) == LayoutNodeTypes.MASK_BOX ) {
             // OK, limit the size of the box to the maximum line width and
             // revalidate it.
-            final long contentPosition = elementPositions[contentIndex];
+            final long contentPosition = elementPositions[ contentIndex ];
             final RenderBox box = (RenderBox) node;
-            final long maxWidth = (getEndOfLine() - contentPosition);
-            computeInlineBlock(box, contentPosition, maxWidth);
+            final long maxWidth = ( getEndOfLine() - contentPosition );
+            computeInlineBlock( box, contentPosition, maxWidth );
 
-            elementDimensions[endIndex - 1] = node.getCachedWidth();
+            elementDimensions[ endIndex - 1 ] = node.getCachedWidth();
           }
         }
-        setSkipIndex(endIndex);
+        setSkipIndex( endIndex );
       }
-      return (start);
+      return ( start );
     }
 
     // if we reached that method, then this means, that the elements may fit
     // into the available space. (Assuming that there is no inner pagebreak;
     // a thing we do not handle yet)
 
-    if (performCenterAlignment(endIndex, usedWidth,
-        sequenceElements, nodes, elementDimensions, elementPositions))
-    {
+    if ( performCenterAlignment( endIndex, usedWidth,
+      sequenceElements, nodes, elementDimensions, elementPositions ) ) {
       return endIndex;
     }
     return start;
   }
 
-  private boolean performCenterAlignment(final int endIndex,
-                                         final long usedWidth,
-                                         final InlineSequenceElement[] sequenceElements,
-                                         final RenderNode[] nodes,
-                                         final long[] elementDimensions,
-                                         final long[] elementPositions)
-  {
+  private boolean performCenterAlignment( final int endIndex,
+                                          final long usedWidth,
+                                          final InlineSequenceElement[] sequenceElements,
+                                          final RenderNode[] nodes,
+                                          final long[] elementDimensions,
+                                          final long[] elementPositions ) {
     final long startOfLine = getStartOfLine();
     final long totalWidth = getEndOfLine() - startOfLine;
-    final long emptySpace = Math.max(0, (totalWidth - usedWidth));
+    final long emptySpace = Math.max( 0, ( totalWidth - usedWidth ) );
     long position = startOfLine + emptySpace / 2;
     // first, make a very simple distribution of the text over all the space, and ignore the pagebreaks
-    for (int i = 0; i < endIndex; i++)
-    {
-      final RenderNode node = nodes[i];
-      final long elementWidth = sequenceElements[i].getMaximumWidth(node);
-      elementDimensions[i] = elementWidth;
-      elementPositions[i] = position;
+    for ( int i = 0; i < endIndex; i++ ) {
+      final RenderNode node = nodes[ i ];
+      final long elementWidth = sequenceElements[ i ].getMaximumWidth( node );
+      elementDimensions[ i ] = elementWidth;
+      elementPositions[ i ] = position;
 
       position += elementWidth;
     }
 
     // If this does not span over multiple pages, we are finished now.
     // in case the centered text is larger than the available space, we fall back to left-alignment later
-    if (getPagebreakCount() == 1)
-    {
+    if ( getPagebreakCount() == 1 ) {
       return true;
     }
 
     // Now search the element at the center-point.
     // Find the center-point of the element and the center point (and center element) of the elements.
     final long centerPoint = startOfLine + totalWidth / 2;
-    final int centerPageSegment = findStartOfPageSegmentForPosition(centerPoint);
-    final int centerPageSegmentNext = Math.min(getPagebreakCount() - 1, centerPageSegment + 1);
-    final long centerPageSegmentStart = getPageBreak(centerPageSegment);
+    final int centerPageSegment = findStartOfPageSegmentForPosition( centerPoint );
+    final int centerPageSegmentNext = Math.min( getPagebreakCount() - 1, centerPageSegment + 1 );
+    final long centerPageSegmentStart = getPageBreak( centerPageSegment );
 
     final int leftShiftEndIndex;
     final int rightShiftStartIndex;
-    if (centerPageSegmentStart == centerPoint)
-    {
+    if ( centerPageSegmentStart == centerPoint ) {
       // case 1: The center point sits directly on a pagebreak. This means, we shift the element touching the center
       // point to the left; and everything else is shifted to the right.
-      final int centerElement = findElementLeftOfPosition(centerPoint, endIndex);
-      final long centerElementPosition = elementPositions[centerElement];
-      final long centerElementEnd = centerElementPosition + elementDimensions[centerElement];
-      if ((centerPoint - centerElementPosition) > (centerElementEnd - centerPoint))
-      {
+      final int centerElement = findElementLeftOfPosition( centerPoint, endIndex );
+      final long centerElementPosition = elementPositions[ centerElement ];
+      final long centerElementEnd = centerElementPosition + elementDimensions[ centerElement ];
+      if ( ( centerPoint - centerElementPosition ) > ( centerElementEnd - centerPoint ) ) {
         leftShiftEndIndex = centerElement + 1;
         rightShiftStartIndex = centerElement + 1;
-      }
-      else
-      {
+      } else {
         leftShiftEndIndex = centerElement;
         rightShiftStartIndex = centerElement;
       }
-    }
-    else
-    {
+    } else {
       // the end-of-line is always included in the page-break-pos array.
       final int endOfLineSegment = getPagebreakCount() - 1;
       final int startOfLineSegment = 0;
-      if (centerPageSegment > startOfLineSegment)
-      {
-        final int leftElement = findElementLeftOfPosition(centerPageSegmentStart, endIndex);
-        final long elementPosition = elementPositions[leftElement];
-        final long elementEnd = elementPosition + elementDimensions[leftElement];
-        if (elementEnd < centerPageSegmentStart)
-        {
+      if ( centerPageSegment > startOfLineSegment ) {
+        final int leftElement = findElementLeftOfPosition( centerPageSegmentStart, endIndex );
+        final long elementPosition = elementPositions[ leftElement ];
+        final long elementEnd = elementPosition + elementDimensions[ leftElement ];
+        if ( elementEnd < centerPageSegmentStart ) {
           // if the element found fully fits on the left-hand area, include it in the shift to the left
           leftShiftEndIndex = leftElement + 1;
-        }
-        else
-        {
+        } else {
           // otherwise shift it to the right
           leftShiftEndIndex = leftElement;
         }
-      }
-      else
-      {
+      } else {
         leftShiftEndIndex = 0;
       }
-      if (centerPageSegment < endOfLineSegment)
-      {
+      if ( centerPageSegment < endOfLineSegment ) {
         // we also have some elements that need to be shifted to the right.
-        final long centerPageSegmentEnd = getPageBreak(centerPageSegmentNext);
-        final int rightElement = findElementLeftOfPosition(centerPageSegmentEnd, endIndex);
-        final long elementPosition = elementPositions[rightElement];
-        final long elementEnd = elementPosition + elementDimensions[rightElement];
-        if (elementEnd < centerPageSegmentEnd)
-        {
+        final long centerPageSegmentEnd = getPageBreak( centerPageSegmentNext );
+        final int rightElement = findElementLeftOfPosition( centerPageSegmentEnd, endIndex );
+        final long elementPosition = elementPositions[ rightElement ];
+        final long elementEnd = elementPosition + elementDimensions[ rightElement ];
+        if ( elementEnd < centerPageSegmentEnd ) {
           // if the element found fully fits on the left-hand area, include it in the shift to the left
           rightShiftStartIndex = rightElement + 1;
-        }
-        else
-        {
+        } else {
           // otherwise shift it to the right
           rightShiftStartIndex = rightElement;
         }
-      }
-      else
-      {
+      } else {
         rightShiftStartIndex = endIndex;
       }
     }
@@ -236,21 +203,18 @@ public final class CenterAlignmentProcessor extends AbstractAlignmentProcessor
     final long[] savedElementPos = (long[]) elementPositions.clone();
 
     // The center-element will be shifted to the right.
-    if (performShiftLeft(leftShiftEndIndex, centerPageSegment, savedElementPos) &&
-        performShiftRight(rightShiftStartIndex, endIndex, centerPageSegmentNext, savedElementPos))
-    {
-      System.arraycopy(savedElementPos, 0, elementPositions, 0, savedElementPos.length);
+    if ( performShiftLeft( leftShiftEndIndex, centerPageSegment, savedElementPos ) &&
+      performShiftRight( rightShiftStartIndex, endIndex, centerPageSegmentNext, savedElementPos ) ) {
+      System.arraycopy( savedElementPos, 0, elementPositions, 0, savedElementPos.length );
       return true;
     }
     return false;
   }
 
 
-  private boolean performShiftRight(final int firstElementIndex, final int lastElementIndex, int segment,
-                                    final long[] elementPositions)
-  {
-    if (firstElementIndex >= lastElementIndex)
-    {
+  private boolean performShiftRight( final int firstElementIndex, final int lastElementIndex, int segment,
+                                     final long[] elementPositions ) {
+    if ( firstElementIndex >= lastElementIndex ) {
       // nothing to do here ..
       return true;
     }
@@ -262,55 +226,48 @@ public final class CenterAlignmentProcessor extends AbstractAlignmentProcessor
     //int segment = findStartOfPageSegmentForPosition(centerPoint) + 1;
     final int pagebreakCount = getPagebreakCount();
     // prevent crash.
-    if (segment >= pagebreakCount)
-    {
+    if ( segment >= pagebreakCount ) {
       // Indicate that the element will not fit. More correct: the findStart.. method returned the
       // last segment of the page. There is no space to shift anything to the right ..
       return false;
     }
-    long segmentEnd = getPageBreak(segment);
-    long segmentStart = getStartOfSegment(segment);
+    long segmentEnd = getPageBreak( segment );
+    long segmentStart = getStartOfSegment( segment );
 
-    for (int i = firstElementIndex; i < lastElementIndex; i++)
-    {
-      final long elementWidth = elementDimensions[i];
+    for ( int i = firstElementIndex; i < lastElementIndex; i++ ) {
+      final long elementWidth = elementDimensions[ i ];
       long elementEnd = segmentStart + elementWidth;
-      if (elementEnd > endOfLine)
-      {
+      if ( elementEnd > endOfLine ) {
         // this element will not fit ..
         return false;
       }
 
       // make a while a if so that we shift the element only once. This results in a slightly better laoyout
-      if (((segment + 1) < pagebreakCount) && (elementEnd > segmentEnd))
-      {
+      if ( ( ( segment + 1 ) < pagebreakCount ) && ( elementEnd > segmentEnd ) ) {
         // as long as there are more segments where we could shift the element to and as long as the
         // element does not fit into the current segment
         // try the next segment ..
         segment += 1;
         segmentStart = segmentEnd;
-        segmentEnd = getPageBreak(segment);
+        segmentEnd = getPageBreak( segment );
         elementEnd = segmentStart + elementWidth;
       }
 
-      if (elementEnd > endOfLine)
-      {
+      if ( elementEnd > endOfLine ) {
         // the element will not fit into any of the remaining segments. So skip it.
         return false;
       }
 
-      elementPositions[i] = segmentStart;
+      elementPositions[ i ] = segmentStart;
       segmentStart = elementEnd;
     }
 
     return true;
   }
 
-  private boolean performShiftLeft(final int lastElementIndex, int segment,
-                                   final long[] elementPositions)
-  {
-    if (lastElementIndex == 0)
-    {
+  private boolean performShiftLeft( final int lastElementIndex, int segment,
+                                    final long[] elementPositions ) {
+    if ( lastElementIndex == 0 ) {
       // there is nothing to shift here ..
       return true;
     }
@@ -332,34 +289,30 @@ public final class CenterAlignmentProcessor extends AbstractAlignmentProcessor
     //
 
     //int segment = findStartOfPageSegmentForPosition(centerPoint);
-    long segmentEnd = getPageBreak(segment);
-    long segmentStart = getStartOfSegment(segment);
+    long segmentEnd = getPageBreak( segment );
+    long segmentStart = getStartOfSegment( segment );
 
-    for (int i = elementIdx; i >= 0; i--)
-    {
-      final long elementWidth = elementDimensions[i];
+    for ( int i = elementIdx; i >= 0; i-- ) {
+      final long elementWidth = elementDimensions[ i ];
       long elementStart = segmentEnd - elementWidth;
-      if (elementStart < startOfLine)
-      {
+      if ( elementStart < startOfLine ) {
         // this element will not fit. Skip it.
         return false;
       }
 
-      while (segment > 0 && elementStart < segmentStart)
-      {
+      while ( segment > 0 && elementStart < segmentStart ) {
         // the element will not fit into the current segment. Move it to the next segment.
         elementStart = segmentStart - elementWidth;
         segment -= 1;
-        segmentStart = getStartOfSegment(segment);
+        segmentStart = getStartOfSegment( segment );
       }
 
-      if (elementStart < segmentStart)
-      {
+      if ( elementStart < segmentStart ) {
         // the element will not fit into any of the remaining segments. So skip it.
         return false;
       }
 
-      elementPositions[i] = elementStart;
+      elementPositions[ i ] = elementStart;
       segmentEnd = elementStart;
     }
 
@@ -367,14 +320,12 @@ public final class CenterAlignmentProcessor extends AbstractAlignmentProcessor
     return true;
   }
 
-  private long getStartOfSegment(final int segment)
-  {
-    if (segment <= 0)
-    {
+  private long getStartOfSegment( final int segment ) {
+    if ( segment <= 0 ) {
       return getStartOfLine();
     }
 
-    return getPageBreak(segment - 1);
+    return getPageBreak( segment - 1 );
   }
 
   /**
@@ -384,21 +335,18 @@ public final class CenterAlignmentProcessor extends AbstractAlignmentProcessor
    * @param position the position in micro-points.
    * @return the number of the page segment.
    */
-  private int findStartOfPageSegmentForPosition(final long position)
-  {
+  private int findStartOfPageSegmentForPosition( final long position ) {
     final long[] breaks = getPageBreaks();
     final int elementSize = getPagebreakCount();
-    final int i = CenterAlignmentProcessor.binarySearch(breaks, position, elementSize);
-    if (i > -1)
-    {
+    final int i = CenterAlignmentProcessor.binarySearch( breaks, position, elementSize );
+    if ( i > -1 ) {
       return i;
     }
-    if (i == -1)
-    {
+    if ( i == -1 ) {
       return 0;
     }
 
-    return Math.min(-(i + 2), elementSize - 1);
+    return Math.min( -( i + 2 ), elementSize - 1 );
   }
 
   /**
@@ -409,47 +357,37 @@ public final class CenterAlignmentProcessor extends AbstractAlignmentProcessor
    * @param endIndex the maximum index on which to search in the element-positions list.
    * @return the index of the element closes to the given position.
    */
-  private int findElementLeftOfPosition(final long position, final int endIndex)
-  {
+  private int findElementLeftOfPosition( final long position, final int endIndex ) {
     final long[] elementPositions = getElementPositions();
-    final int i = CenterAlignmentProcessor.binarySearch(elementPositions, position, endIndex);
-    if (i > -1)
-    {
+    final int i = CenterAlignmentProcessor.binarySearch( elementPositions, position, endIndex );
+    if ( i > -1 ) {
       return i;
     }
-    if (i == -1)
-    {
+    if ( i == -1 ) {
       return 0;
     }
 
     // if greater than last break, return the last break ..
-    return Math.min(-(i + 2), endIndex - 1);
+    return Math.min( -( i + 2 ), endIndex - 1 );
   }
 
-  private static int binarySearch(final long[] array, final long key, final int end)
-  {
+  private static int binarySearch( final long[] array, final long key, final int end ) {
     int low = 0;
     int high = end - 1;
 
-    while (low <= high)
-    {
-      final int mid = (low + high) >>> 1;
-      final long midVal = array[mid];
+    while ( low <= high ) {
+      final int mid = ( low + high ) >>> 1;
+      final long midVal = array[ mid ];
 
-      if (midVal < key)
-      {
+      if ( midVal < key ) {
         low = mid + 1;
-      }
-      else if (midVal > key)
-      {
+      } else if ( midVal > key ) {
         high = mid - 1;
-      }
-      else
-      {
+      } else {
         return mid; // key found
       }
     }
-    return -(low + 1);  // key not found.
+    return -( low + 1 );  // key not found.
   }
 
 }

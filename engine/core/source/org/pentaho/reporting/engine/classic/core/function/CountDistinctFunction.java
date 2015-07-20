@@ -17,10 +17,10 @@
 
 package org.pentaho.reporting.engine.classic.core.function;
 
-import java.util.HashSet;
-
 import org.pentaho.reporting.engine.classic.core.event.ReportEvent;
 import org.pentaho.reporting.engine.classic.core.util.Sequence;
+
+import java.util.HashSet;
 
 /**
  * Counts the distinct occurrences of an certain value of an column. This functionality is similar to the SQL distinct()
@@ -28,8 +28,7 @@ import org.pentaho.reporting.engine.classic.core.util.Sequence;
  *
  * @author Thomas Morgner
  */
-public class CountDistinctFunction extends AbstractFunction implements FieldAggregationFunction
-{
+public class CountDistinctFunction extends AbstractFunction implements FieldAggregationFunction {
   /**
    * The collected values for the current group.
    */
@@ -52,18 +51,15 @@ public class CountDistinctFunction extends AbstractFunction implements FieldAggr
   /**
    * DefaultConstructor.
    */
-  public CountDistinctFunction()
-  {
+  public CountDistinctFunction() {
     values = new Sequence<HashSet<Object>>();
   }
 
-  public boolean isIgnoreNullValues()
-  {
+  public boolean isIgnoreNullValues() {
     return ignoreNullValues;
   }
 
-  public void setIgnoreNullValues(final boolean ignoreNullValues)
-  {
+  public void setIgnoreNullValues( final boolean ignoreNullValues ) {
     this.ignoreNullValues = ignoreNullValues;
   }
 
@@ -72,8 +68,7 @@ public class CountDistinctFunction extends AbstractFunction implements FieldAggr
    *
    * @return The group name.
    */
-  public String getGroup()
-  {
+  public String getGroup() {
     return group;
   }
 
@@ -83,8 +78,7 @@ public class CountDistinctFunction extends AbstractFunction implements FieldAggr
    *
    * @param name the group name (null permitted).
    */
-  public void setGroup(final String name)
-  {
+  public void setGroup( final String name ) {
     this.group = name;
   }
 
@@ -93,8 +87,7 @@ public class CountDistinctFunction extends AbstractFunction implements FieldAggr
    *
    * @return The field name.
    */
-  public String getField()
-  {
+  public String getField() {
     return field;
   }
 
@@ -103,8 +96,7 @@ public class CountDistinctFunction extends AbstractFunction implements FieldAggr
    *
    * @param field the field name.
    */
-  public void setField(final String field)
-  {
+  public void setField( final String field ) {
     this.field = field;
   }
 
@@ -114,13 +106,11 @@ public class CountDistinctFunction extends AbstractFunction implements FieldAggr
    *
    * @param event The event.
    */
-  public void reportInitialized(final ReportEvent event)
-  {
+  public void reportInitialized( final ReportEvent event ) {
     clear();
   }
 
-  private void clear()
-  {
+  private void clear() {
     values.clear();
     lastGroupSequenceNumber = 0;
   }
@@ -130,17 +120,14 @@ public class CountDistinctFunction extends AbstractFunction implements FieldAggr
    *
    * @param event the event.
    */
-  public void groupStarted(final ReportEvent event)
-  {
-    if (FunctionUtilities.isDefinedGroup(getGroup(), event))
-    {
+  public void groupStarted( final ReportEvent event ) {
+    if ( FunctionUtilities.isDefinedGroup( getGroup(), event ) ) {
       clear();
     }
 
-    if (FunctionUtilities.isDefinedGroup(getCrosstabFilterGroup(), event))
-    {
+    if ( FunctionUtilities.isDefinedGroup( getCrosstabFilterGroup(), event ) ) {
       final int groupIndex = event.getState().getCurrentGroupIndex();
-      this.lastGroupSequenceNumber = (int) event.getState().getCrosstabColumnSequenceCounter(groupIndex);
+      this.lastGroupSequenceNumber = (int) event.getState().getCrosstabColumnSequenceCounter( groupIndex );
     }
   }
 
@@ -149,26 +136,22 @@ public class CountDistinctFunction extends AbstractFunction implements FieldAggr
    *
    * @param event the event.
    */
-  public void itemsAdvanced(final ReportEvent event)
-  {
-    if (getField() == null)
-    {
+  public void itemsAdvanced( final ReportEvent event ) {
+    if ( getField() == null ) {
       return;
     }
 
-    final Object o = event.getDataRow().get(getField());
-    HashSet<Object> valueSet = this.values.get(lastGroupSequenceNumber);
-    if (valueSet == null)
-    {
+    final Object o = event.getDataRow().get( getField() );
+    HashSet<Object> valueSet = this.values.get( lastGroupSequenceNumber );
+    if ( valueSet == null ) {
       valueSet = new HashSet<Object>();
-      this.values.set(lastGroupSequenceNumber, valueSet);
+      this.values.set( lastGroupSequenceNumber, valueSet );
     }
-    if (ignoreNullValues && o == null)
-    {
+    if ( ignoreNullValues && o == null ) {
       return;
     }
-    
-    valueSet.add(o);
+
+    valueSet.add( o );
   }
 
   /**
@@ -176,22 +159,18 @@ public class CountDistinctFunction extends AbstractFunction implements FieldAggr
    *
    * @return the value of the function.
    */
-  public Object getValue()
-  {
-    final HashSet vals = values.get(lastGroupSequenceNumber);
-    if (vals != null)
-    {
+  public Object getValue() {
+    final HashSet vals = values.get( lastGroupSequenceNumber );
+    if ( vals != null ) {
       return vals.size();
     }
     return 0;
   }
 
-  public void summaryRowSelection(final ReportEvent event)
-  {
-    if (FunctionUtilities.isDefinedGroup(getCrosstabFilterGroup(), event))
-    {
+  public void summaryRowSelection( final ReportEvent event ) {
+    if ( FunctionUtilities.isDefinedGroup( getCrosstabFilterGroup(), event ) ) {
       final int groupIndex = event.getState().getCurrentGroupIndex();
-      this.lastGroupSequenceNumber = (int) event.getState().getCrosstabColumnSequenceCounter(groupIndex);
+      this.lastGroupSequenceNumber = (int) event.getState().getCrosstabColumnSequenceCounter( groupIndex );
     }
   }
 
@@ -201,8 +180,7 @@ public class CountDistinctFunction extends AbstractFunction implements FieldAggr
    *
    * @return a copy of this function.
    */
-  public Expression getInstance()
-  {
+  public Expression getInstance() {
     final CountDistinctFunction expression = (CountDistinctFunction) super.getInstance();
     expression.values = values.clone();
     expression.lastGroupSequenceNumber = 0;
@@ -217,20 +195,17 @@ public class CountDistinctFunction extends AbstractFunction implements FieldAggr
    * @return a clone of this expression.
    * @throws CloneNotSupportedException this should never happen.
    */
-  public Object clone() throws CloneNotSupportedException
-  {
+  public Object clone() throws CloneNotSupportedException {
     final CountDistinctFunction o = (CountDistinctFunction) super.clone();
     o.values = values.clone();
     return o;
   }
 
-  public String getCrosstabFilterGroup()
-  {
+  public String getCrosstabFilterGroup() {
     return crosstabFilterGroup;
   }
 
-  public void setCrosstabFilterGroup(final String crosstabFilterGroup)
-  {
+  public void setCrosstabFilterGroup( final String crosstabFilterGroup ) {
     this.crosstabFilterGroup = crosstabFilterGroup;
   }
 }

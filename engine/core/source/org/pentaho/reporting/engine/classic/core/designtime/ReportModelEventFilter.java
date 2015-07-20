@@ -19,7 +19,6 @@ package org.pentaho.reporting.engine.classic.core.designtime;
 
 import org.pentaho.reporting.engine.classic.core.event.ReportModelEvent;
 
-public interface ReportModelEventFilter
-{
-  public boolean isFilteredEvent (ReportModelEvent event);
+public interface ReportModelEventFilter {
+  public boolean isFilteredEvent( ReportModelEvent event );
 }

@@ -34,21 +34,20 @@ import org.pentaho.reporting.engine.classic.core.util.InstanceID;
  *
  * @author Thomas Morgner
  */
-public interface RenderableTextFactory
-{
+public interface RenderableTextFactory {
   /**
    * The text is given as CodePoints.
    *
    * @param text
    * @return
    */
-  public RenderNode[] createText(final int[] text,
-                                 final int offset,
-                                 final int length,
-                                 final StyleSheet layoutContext,
-                                 final ElementType elementType,
-                                 final InstanceID instanceId,
-                                 final ReportAttributeMap<Object> attributeMap);
+  public RenderNode[] createText( final int[] text,
+                                  final int offset,
+                                  final int length,
+                                  final StyleSheet layoutContext,
+                                  final ElementType elementType,
+                                  final InstanceID instanceId,
+                                  final ReportAttributeMap<Object> attributeMap );
 
   public RenderNode[] finishText();
 

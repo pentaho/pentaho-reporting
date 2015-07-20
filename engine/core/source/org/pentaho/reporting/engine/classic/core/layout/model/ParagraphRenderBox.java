@@ -34,19 +34,16 @@ import org.pentaho.reporting.engine.classic.core.util.InstanceID;
  *
  * @author Thomas Morgner
  */
-public final class ParagraphRenderBox extends BlockRenderBox
-{
-  private static class LineBoxRenderBox extends BlockRenderBox
-  {
-    protected LineBoxRenderBox(final StyleSheet styleSheet,
-                               final ReportStateKey stateKey)
-    {
-      super(styleSheet, new InstanceID(), BoxDefinition.EMPTY, AutoLayoutBoxType.INSTANCE, ReportAttributeMap.EMPTY_MAP,
-          stateKey);
+public final class ParagraphRenderBox extends BlockRenderBox {
+  private static class LineBoxRenderBox extends BlockRenderBox {
+    protected LineBoxRenderBox( final StyleSheet styleSheet,
+                                final ReportStateKey stateKey ) {
+      super( styleSheet, new InstanceID(), BoxDefinition.EMPTY, AutoLayoutBoxType.INSTANCE,
+        ReportAttributeMap.EMPTY_MAP,
+        stateKey );
     }
 
-    public boolean isAcceptInlineBoxes()
-    {
+    public boolean isAcceptInlineBoxes() {
       return true;
     }
   }
@@ -64,33 +61,32 @@ public final class ParagraphRenderBox extends BlockRenderBox
   private long firstLineIndent;
   private long cachedMaxChildX2;
 
-  public ParagraphRenderBox(final StyleSheet styleSheet,
-                            final InstanceID instanceID,
-                            final BoxDefinition boxDefinition,
-                            final ElementType elementType,
-                            final ReportAttributeMap attributeMap,
-                            final ReportStateKey stateKey)
-  {
-    super(styleSheet, instanceID, boxDefinition, elementType, attributeMap, stateKey);
+  public ParagraphRenderBox( final StyleSheet styleSheet,
+                             final InstanceID instanceID,
+                             final BoxDefinition boxDefinition,
+                             final ElementType elementType,
+                             final ReportAttributeMap attributeMap,
+                             final ReportStateKey stateKey ) {
+    super( styleSheet, instanceID, boxDefinition, elementType, attributeMap, stateKey );
 
-    pool = new ParagraphPoolBox(new ParagraphPoolboxStyleSheet(styleSheet), instanceID, stateKey);
-    pool.setParent(this);
+    pool = new ParagraphPoolBox( new ParagraphPoolboxStyleSheet( styleSheet ), instanceID, stateKey );
+    pool.setParent( this );
 
     // level 3 means: Add all lineboxes to the paragraph
     // This gets auto-generated ..
     this.textAlignment = (ElementAlignment)
-        styleSheet.getStyleProperty(ElementStyleKeys.ALIGNMENT, ElementAlignment.LEFT);
+      styleSheet.getStyleProperty( ElementStyleKeys.ALIGNMENT, ElementAlignment.LEFT );
     this.lastLineAlignment = textAlignment;
-    if (this.textAlignment == ElementAlignment.JUSTIFY)
-    {
+    if ( this.textAlignment == ElementAlignment.JUSTIFY ) {
       this.lastLineAlignment = ElementAlignment.LEFT;
     }
 
-    final double rawTextIndent = styleSheet.getDoubleStyleProperty(TextStyleKeys.TEXT_INDENT, 0);
-    final double rawFirstLineIndent = styleSheet.getDoubleStyleProperty(TextStyleKeys.FIRST_LINE_INDENT, rawTextIndent);
+    final double rawTextIndent = styleSheet.getDoubleStyleProperty( TextStyleKeys.TEXT_INDENT, 0 );
+    final double rawFirstLineIndent =
+      styleSheet.getDoubleStyleProperty( TextStyleKeys.FIRST_LINE_INDENT, rawTextIndent );
 
-    this.textIndent = RenderLength.resolveLength(0, Math.max (0,rawTextIndent));
-    this.firstLineIndent = RenderLength.resolveLength(0, Math.max(0, rawFirstLineIndent));
+    this.textIndent = RenderLength.resolveLength( 0, Math.max( 0, rawTextIndent ) );
+    this.firstLineIndent = RenderLength.resolveLength( 0, Math.max( 0, rawFirstLineIndent ) );
   }
 
   /**
@@ -99,125 +95,102 @@ public final class ParagraphRenderBox extends BlockRenderBox
    *
    * @return
    */
-  public RenderNode derive(final boolean deepDerive)
-  {
-    final ParagraphRenderBox box = (ParagraphRenderBox) super.derive(deepDerive);
-    box.pool = (ParagraphPoolBox) pool.derive(deepDerive);
-    box.pool.setParent(box);
+  public RenderNode derive( final boolean deepDerive ) {
+    final ParagraphRenderBox box = (ParagraphRenderBox) super.derive( deepDerive );
+    box.pool = (ParagraphPoolBox) pool.derive( deepDerive );
+    box.pool.setParent( box );
 
-    if (lineboxContainer != null)
-    {
-      box.lineboxContainer = (LineBoxRenderBox) lineboxContainer.derive(deepDerive);
-      box.lineboxContainer.setParent(box);
+    if ( lineboxContainer != null ) {
+      box.lineboxContainer = (LineBoxRenderBox) lineboxContainer.derive( deepDerive );
+      box.lineboxContainer.setParent( box );
     }
-    if (!deepDerive)
-    {
+    if ( !deepDerive ) {
       box.lineBoxAge = 0;
     }
     return box;
   }
 
-  public final void addChild(final RenderNode child)
-  {
-    pool.addChild(child);
+  public final void addChild( final RenderNode child ) {
+    pool.addChild( child );
   }
 
   /**
    * Removes all children.
    */
-  public final void clear()
-  {
+  public final void clear() {
     pool.clear();
-    if (lineboxContainer != null)
-    {
+    if ( lineboxContainer != null ) {
       lineboxContainer.clear();
     }
     super.clear();
     lineBoxAge = 0;
   }
 
-  public final void clearLayout()
-  {
+  public final void clearLayout() {
     super.clear();
     minorLayoutAge = 0;
   }
 
-  public boolean isAppendable()
-  {
+  public boolean isAppendable() {
     return pool.isAppendable();
   }
 
-  public boolean isEmpty()
-  {
+  public boolean isEmpty() {
     return pool.isEmpty();
   }
 
-  public boolean isDiscardable()
-  {
+  public boolean isDiscardable() {
     return pool.isDiscardable();
   }
 
-  public ElementAlignment getLastLineAlignment()
-  {
+  public ElementAlignment getLastLineAlignment() {
     return lastLineAlignment;
   }
 
-  public ElementAlignment getTextAlignment()
-  {
+  public ElementAlignment getTextAlignment() {
     return textAlignment;
   }
 
-  public RenderBox getLineboxContainer()
-  {
+  public RenderBox getLineboxContainer() {
     return lineboxContainer;
   }
 
-  public boolean isComplexParagraph()
-  {
+  public boolean isComplexParagraph() {
     return lineboxContainer != null;
   }
 
-  public RenderBox createLineboxContainer()
-  {
-    if (lineboxContainer == null)
-    {
-      this.lineboxContainer = new LineBoxRenderBox(pool.getStyleSheet(), getStateKey());
-      this.lineboxContainer.setParent(this);
+  public RenderBox createLineboxContainer() {
+    if ( lineboxContainer == null ) {
+      this.lineboxContainer = new LineBoxRenderBox( pool.getStyleSheet(), getStateKey() );
+      this.lineboxContainer.setParent( this );
     }
     return lineboxContainer;
   }
 
-  public RenderBox getEffectiveLineboxContainer()
-  {
-    if (lineboxContainer == null)
-    {
+  public RenderBox getEffectiveLineboxContainer() {
+    if ( lineboxContainer == null ) {
       return pool;
     }
     return lineboxContainer;
   }
 
-  public ParagraphPoolBox getPool()
-  {
+  public ParagraphPoolBox getPool() {
     return pool;
   }
 
-  public long getLineBoxAge()
-  {
+  public long getLineBoxAge() {
     return lineBoxAge;
   }
 
-  public void setLineBoxAge(final long lineBoxAge)
-  {
+  public void setLineBoxAge( final long lineBoxAge ) {
     this.lineBoxAge = lineBoxAge;
   }
 
-  public long getMinorLayoutAge()
-  {
+  public long getMinorLayoutAge() {
     return minorLayoutAge;
   }
 
-  public void updateMinorLayoutAge()
-  {
+  public void updateMinorLayoutAge() {
     this.minorLayoutAge = getEffectiveLineboxContainer().getChangeTracker();
     this.minorLayoutValidationX1 = getContentAreaX1();
     this.minorLayoutValidationX2 = getContentAreaX2();
@@ -228,108 +201,86 @@ public final class ParagraphRenderBox extends BlockRenderBox
    *
    * @return
    */
-  public InstanceID getInstanceId()
-  {
+  public InstanceID getInstanceId() {
     return pool.getInstanceId();
   }
 
-  public int getPoolSize()
-  {
+  public int getPoolSize() {
     return poolSize;
   }
 
-  public void setPoolSize(final int poolSize)
-  {
+  public void setPoolSize( final int poolSize ) {
     this.poolSize = poolSize;
   }
 
-  public void close()
-  {
+  public void close() {
     pool.close();
     super.close();
   }
 
-  public int getNodeType()
-  {
+  public int getNodeType() {
     return LayoutNodeTypes.TYPE_BOX_PARAGRAPH;
   }
 
-  protected void increaseContentReferenceCount(final int count, final RenderNode source)
-  {
-    if (source != pool)
-    {
+  protected void increaseContentReferenceCount( final int count, final RenderNode source ) {
+    if ( source != pool ) {
       return;
     }
-    super.increaseContentReferenceCount(count, source);
+    super.increaseContentReferenceCount( count, source );
   }
 
-  protected void increaseTableReferenceCount(final int count, final RenderNode source)
-  {
-    if (source != pool)
-    {
+  protected void increaseTableReferenceCount( final int count, final RenderNode source ) {
+    if ( source != pool ) {
       return;
     }
-    super.increaseTableReferenceCount(count, source);
+    super.increaseTableReferenceCount( count, source );
   }
 
-  protected void decreaseContentReferenceCount(final int count, final RenderNode source)
-  {
-    if (source != pool)
-    {
+  protected void decreaseContentReferenceCount( final int count, final RenderNode source ) {
+    if ( source != pool ) {
       return;
     }
-    super.decreaseContentReferenceCount(count, source);
+    super.decreaseContentReferenceCount( count, source );
   }
 
-  protected void decreaseTableReferenceCount(final int count, final RenderNode source)
-  {
-    if (source != pool)
-    {
+  protected void decreaseTableReferenceCount( final int count, final RenderNode source ) {
+    if ( source != pool ) {
       return;
     }
-    super.decreaseTableReferenceCount(count, source);
+    super.decreaseTableReferenceCount( count, source );
   }
 
-  protected void increaseDescendantCount(final int count, final RenderNode source)
-  {
-    if (source != pool)
-    {
+  protected void increaseDescendantCount( final int count, final RenderNode source ) {
+    if ( source != pool ) {
       return;
     }
-    super.increaseDescendantCount(count, source);
+    super.increaseDescendantCount( count, source );
   }
 
-  protected void decreaseDescendantCount(final int count, final RenderNode source)
-  {
-    if (source != pool)
-    {
+  protected void decreaseDescendantCount( final int count, final RenderNode source ) {
+    if ( source != pool ) {
       return;
     }
-    super.decreaseDescendantCount(count, source);
+    super.decreaseDescendantCount( count, source );
   }
 
-  public long getTextIndent()
-  {
+  public long getTextIndent() {
     return textIndent;
   }
 
-  public long getFirstLineIndent()
-  {
+  public long getFirstLineIndent() {
     return firstLineIndent;
   }
 
-  public boolean isAcceptInlineBoxes()
-  {
+  public boolean isAcceptInlineBoxes() {
     return true;
   }
 
-  public boolean isLineBoxUnchanged()
-  {
+  public boolean isLineBoxUnchanged() {
     final long lineBoxChangeTracker = getEffectiveLineboxContainer().getChangeTracker();
-    if (lineBoxChangeTracker == getMinorLayoutAge() &&
-        minorLayoutValidationX1 == getContentAreaX1() &&
-        minorLayoutValidationX2 == getContentAreaX2())
-    {
+    if ( lineBoxChangeTracker == getMinorLayoutAge() &&
+      minorLayoutValidationX1 == getContentAreaX1() &&
+      minorLayoutValidationX2 == getContentAreaX2() ) {
       // testing for both content-changes and positional changes due to subreports or other delayed content
       // inserting new data at an earlier point in the model.
       return true;
@@ -337,18 +288,15 @@ public final class ParagraphRenderBox extends BlockRenderBox
     return false;
   }
 
-  public long getCachedMaxChildX2()
-  {
+  public long getCachedMaxChildX2() {
     return cachedMaxChildX2;
   }
 
-  public void setCachedMaxChildX2(final long cachedMaxChildX2)
-  {
+  public void setCachedMaxChildX2( final long cachedMaxChildX2 ) {
     this.cachedMaxChildX2 = cachedMaxChildX2;
   }
 
-  public void setCachedWidth(final long cachedWidth)
-  {
-    super.setCachedWidth(cachedWidth);
+  public void setCachedWidth( final long cachedWidth ) {
+    super.setCachedWidth( cachedWidth );
   }
 }

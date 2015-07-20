@@ -27,8 +27,7 @@ import org.pentaho.reporting.libraries.base.util.FastStack;
  *
  * @author Thomas Morgner
  */
-public final class MajorAxisParagraphBreakState
-{
+public final class MajorAxisParagraphBreakState {
   private BoxAlignContext currentLine;
 
   private Object suspendItem;
@@ -37,15 +36,12 @@ public final class MajorAxisParagraphBreakState
 
   /**
    */
-  public MajorAxisParagraphBreakState()
-  {
-    this.contexts = new FastStack<BoxAlignContext>(50);
+  public MajorAxisParagraphBreakState() {
+    this.contexts = new FastStack<BoxAlignContext>( 50 );
   }
 
-  public void init(final ParagraphRenderBox paragraph)
-  {
-    if (paragraph == null)
-    {
+  public void init( final ParagraphRenderBox paragraph ) {
+    if ( paragraph == null ) {
       throw new NullPointerException();
     }
     this.paragraph = paragraph;
@@ -53,64 +49,51 @@ public final class MajorAxisParagraphBreakState
     this.suspendItem = null;
   }
 
-  public void deinit()
-  {
+  public void deinit() {
     this.paragraph = null;
     this.suspendItem = null;
     this.contexts.clear();
   }
 
-  public boolean isActive()
-  {
+  public boolean isActive() {
     return paragraph != null;
   }
 
-  public ParagraphRenderBox getParagraph()
-  {
+  public ParagraphRenderBox getParagraph() {
     return paragraph;
   }
 
-  public Object getSuspendItem()
-  {
+  public Object getSuspendItem() {
     return suspendItem;
   }
 
-  public void setSuspendItem(final Object suspendItem)
-  {
+  public void setSuspendItem( final Object suspendItem ) {
     this.suspendItem = suspendItem;
   }
 
-  public boolean isSuspended()
-  {
+  public boolean isSuspended() {
     return suspendItem != null;
   }
 
-  public BoxAlignContext getCurrentLine()
-  {
+  public BoxAlignContext getCurrentLine() {
     return currentLine;
   }
 
-  public void openContext(final RenderBox box)
-  {
-    final BoxAlignContext context = new BoxAlignContext(box);
-    if (currentLine != null)
-    {
-      currentLine.addChild(context);
+  public void openContext( final RenderBox box ) {
+    final BoxAlignContext context = new BoxAlignContext( box );
+    if ( currentLine != null ) {
+      currentLine.addChild( context );
     }
-    contexts.push(context);
+    contexts.push( context );
     currentLine = context;
   }
 
-  public BoxAlignContext closeContext()
-  {
+  public BoxAlignContext closeContext() {
     final BoxAlignContext context = contexts.pop();
     context.validate();
-    if (contexts.isEmpty())
-    {
+    if ( contexts.isEmpty() ) {
       currentLine = null;
-    }
-    else
-    {
+    } else {
       currentLine = contexts.peek();
     }
     return context;

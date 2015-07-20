@@ -17,15 +17,14 @@
 
 package org.pentaho.reporting.engine.classic.core.metadata;
 
-import java.beans.PropertyDescriptor;
-import java.beans.PropertyEditor;
-
 import org.pentaho.reporting.engine.classic.core.Element;
 import org.pentaho.reporting.engine.classic.core.function.Expression;
 import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 
-public interface ReportPreProcessorPropertyMetaData extends MetaData
-{
+import java.beans.PropertyDescriptor;
+import java.beans.PropertyEditor;
+
+public interface ReportPreProcessorPropertyMetaData extends MetaData {
   public Class getPropertyType();
 
   /**
@@ -42,18 +41,18 @@ public interface ReportPreProcessorPropertyMetaData extends MetaData
 
   public PropertyEditor getEditor();
 
-  public String[] getReferencedFields(Expression expression, Object attributeValue);
+  public String[] getReferencedFields( Expression expression, Object attributeValue );
 
-  public String[] getReferencedGroups(Expression expression, Object attributeValue);
+  public String[] getReferencedGroups( Expression expression, Object attributeValue );
 
-  public String[] getReferencedElements(Expression expression, Object attributeValue);
+  public String[] getReferencedElements( Expression expression, Object attributeValue );
 
   public String[] getExtraCalculationFields();
 
-  public ResourceReference[] getReferencedResources(Expression expression,
-                                                    Object attributeValue,
-                                                    Element reportElement,
-                                                    ResourceManager resourceManager);
+  public ResourceReference[] getReferencedResources( Expression expression,
+                                                     Object attributeValue,
+                                                     Element reportElement,
+                                                     ResourceManager resourceManager );
 
   public boolean isComputed();
 

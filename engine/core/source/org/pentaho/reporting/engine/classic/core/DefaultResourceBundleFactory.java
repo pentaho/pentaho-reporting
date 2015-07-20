@@ -28,8 +28,7 @@ import java.util.TimeZone;
  *
  * @author Thomas Morgner
  */
-public class DefaultResourceBundleFactory implements ResourceBundleFactory
-{
+public class DefaultResourceBundleFactory implements ResourceBundleFactory {
   /**
    * The locale used by this factory.
    */
@@ -42,9 +41,8 @@ public class DefaultResourceBundleFactory implements ResourceBundleFactory
   /**
    * Creates a new DefaultResourceBundleFactory using the system's default locale as factory locale.
    */
-  public DefaultResourceBundleFactory()
-  {
-    this(Locale.getDefault());
+  public DefaultResourceBundleFactory() {
+    this( Locale.getDefault() );
   }
 
   /**
@@ -53,27 +51,22 @@ public class DefaultResourceBundleFactory implements ResourceBundleFactory
    * @param locale the Locale instance that should be used when creating ResourceBundles.
    * @throws NullPointerException if the given Locale is null.
    */
-  public DefaultResourceBundleFactory(final Locale locale)
-  {
-    this(locale, TimeZone.getDefault());
+  public DefaultResourceBundleFactory( final Locale locale ) {
+    this( locale, TimeZone.getDefault() );
   }
 
-  public DefaultResourceBundleFactory(final Locale locale, final TimeZone timeZone)
-  {
-    if (locale == null)
-    {
-      throw new NullPointerException("Locale must not be null");
+  public DefaultResourceBundleFactory( final Locale locale, final TimeZone timeZone ) {
+    if ( locale == null ) {
+      throw new NullPointerException( "Locale must not be null" );
     }
-    if (timeZone == null)
-    {
-      throw new NullPointerException("TimeZone must not be null");
+    if ( timeZone == null ) {
+      throw new NullPointerException( "TimeZone must not be null" );
     }
     this.locale = locale;
     this.timeZone = timeZone;
   }
 
-  public TimeZone getTimeZone()
-  {
+  public TimeZone getTimeZone() {
     return timeZone;
   }
 
@@ -82,8 +75,7 @@ public class DefaultResourceBundleFactory implements ResourceBundleFactory
    *
    * @return the locale.
    */
-  public Locale getLocale()
-  {
+  public Locale getLocale() {
     return locale;
   }
 
@@ -93,11 +85,9 @@ public class DefaultResourceBundleFactory implements ResourceBundleFactory
    * @param locale the new locale (never null).
    * @throws NullPointerException if the given locale is null.
    */
-  public void setLocale(final Locale locale)
-  {
-    if (locale == null)
-    {
-      throw new NullPointerException("Locale must not be null");
+  public void setLocale( final Locale locale ) {
+    if ( locale == null ) {
+      throw new NullPointerException( "Locale must not be null" );
     }
     this.locale = locale;
   }
@@ -107,13 +97,11 @@ public class DefaultResourceBundleFactory implements ResourceBundleFactory
    *
    * @param key the name of the resourcebundle, never null.
    * @return the created resource bundle
-   * @throws NullPointerException if <code>key</code> is <code>null</code>
-   * @throws java.util.MissingResourceException
-   *                              if no resource bundle for the specified base name can be found
-   * @see ResourceBundle#getBundle(String,Locale)
+   * @throws NullPointerException               if <code>key</code> is <code>null</code>
+   * @throws java.util.MissingResourceException if no resource bundle for the specified base name can be found
+   * @see ResourceBundle#getBundle(String, Locale)
    */
-  public ResourceBundle getResourceBundle(final String key)
-  {
-    return ResourceBundle.getBundle(key, locale);
+  public ResourceBundle getResourceBundle( final String key ) {
+    return ResourceBundle.getBundle( key, locale );
   }
 }

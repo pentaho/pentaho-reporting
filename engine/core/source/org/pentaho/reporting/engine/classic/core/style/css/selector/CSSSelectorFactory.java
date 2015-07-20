@@ -17,8 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.core.style.css.selector;
 
-import java.io.Serializable;
-
 import org.w3c.css.sac.CSSException;
 import org.w3c.css.sac.CharacterDataSelector;
 import org.w3c.css.sac.Condition;
@@ -32,10 +30,10 @@ import org.w3c.css.sac.SelectorFactory;
 import org.w3c.css.sac.SiblingSelector;
 import org.w3c.css.sac.SimpleSelector;
 
-public class CSSSelectorFactory implements SelectorFactory, Serializable
-{
-  public CSSSelectorFactory()
-  {
+import java.io.Serializable;
+
+public class CSSSelectorFactory implements SelectorFactory, Serializable {
+  public CSSSelectorFactory() {
   }
 
   /**
@@ -46,11 +44,10 @@ public class CSSSelectorFactory implements SelectorFactory, Serializable
    * @return the conditional selector.
    * @throws CSSException If this selector is not supported.
    */
-  public ConditionalSelector createConditionalSelector(final SimpleSelector selector,
-                                                       final Condition condition)
-      throws CSSException
-  {
-    return new CSSConditionalSelector(selector, condition);
+  public ConditionalSelector createConditionalSelector( final SimpleSelector selector,
+                                                        final Condition condition )
+    throws CSSException {
+    return new CSSConditionalSelector( selector, condition );
   }
 
   /**
@@ -59,8 +56,7 @@ public class CSSSelectorFactory implements SelectorFactory, Serializable
    * @return the any node selector.
    * @throws CSSException If this selector is not supported.
    */
-  public SimpleSelector createAnyNodeSelector() throws CSSException
-  {
+  public SimpleSelector createAnyNodeSelector() throws CSSException {
     return new CSSAnyNodeSelector();
   }
 
@@ -70,8 +66,7 @@ public class CSSSelectorFactory implements SelectorFactory, Serializable
    * @return the root node selector.
    * @throws CSSException If this selector is not supported.
    */
-  public SimpleSelector createRootNodeSelector() throws CSSException
-  {
+  public SimpleSelector createRootNodeSelector() throws CSSException {
     // this one might come in handy from time to time.
     return new CSSRootNodeSelector();
   }
@@ -83,29 +78,26 @@ public class CSSSelectorFactory implements SelectorFactory, Serializable
    * @return the negative selector.
    * @throws CSSException If this selector is not supported.
    */
-  public NegativeSelector createNegativeSelector(final SimpleSelector selector)
-      throws CSSException
-  {
-    return new CSSNegativeSelector(selector);
+  public NegativeSelector createNegativeSelector( final SimpleSelector selector )
+    throws CSSException {
+    return new CSSNegativeSelector( selector );
   }
 
   /**
    * Creates an element selector.
    *
-   * @param namespaceURI the <a href="http://www.w3.org/TR/REC-xml-names/#dt-NSName">namespace
-   *                     URI</a> of the element selector.
-   * @param tagName      the <a href="http://www.w3.org/TR/REC-xml-names/#NT-LocalPart">local
-   *                     part</a> of the element name. <code>NULL</code> if this
-   *                     element selector can match any element.</p>
+   * @param namespaceURI the <a href="http://www.w3.org/TR/REC-xml-names/#dt-NSName">namespace URI</a> of the element
+   *                     selector.
+   * @param tagName      the <a href="http://www.w3.org/TR/REC-xml-names/#NT-LocalPart">local part</a> of the element
+   *                     name. <code>NULL</code> if this element selector can match any element.</p>
    * @return the element selector
    * @throws CSSException If this selector is not supported.
    */
-  public ElementSelector createElementSelector(final String namespaceURI,
-                                               final String tagName)
-      throws CSSException
-  {
+  public ElementSelector createElementSelector( final String namespaceURI,
+                                                final String tagName )
+    throws CSSException {
     return new CSSElementSelector
-        (Selector.SAC_ELEMENT_NODE_SELECTOR, namespaceURI, tagName);
+      ( Selector.SAC_ELEMENT_NODE_SELECTOR, namespaceURI, tagName );
   }
 
   /**
@@ -115,12 +107,11 @@ public class CSSSelectorFactory implements SelectorFactory, Serializable
    * @return the text node selector
    * @throws CSSException If this selector is not supported.
    */
-  public CharacterDataSelector createTextNodeSelector(final String data)
-      throws CSSException
-  {
+  public CharacterDataSelector createTextNodeSelector( final String data )
+    throws CSSException {
     // I assume that this is the same thing as the CDATA selector.
     // we do not use DOM anyway. so we either have text, or have no text.
-    return new CSSCharacterDataSelector(data);
+    return new CSSCharacterDataSelector( data );
   }
 
   /**
@@ -130,10 +121,9 @@ public class CSSSelectorFactory implements SelectorFactory, Serializable
    * @return the cdata section node selector
    * @throws CSSException If this selector is not supported.
    */
-  public CharacterDataSelector createCDataSectionSelector(final String data)
-      throws CSSException
-  {
-    return new CSSCharacterDataSelector(data);
+  public CharacterDataSelector createCDataSectionSelector( final String data )
+    throws CSSException {
+    return new CSSCharacterDataSelector( data );
   }
 
   /**
@@ -145,11 +135,10 @@ public class CSSSelectorFactory implements SelectorFactory, Serializable
    * @throws CSSException If this selector is not supported.
    */
   public ProcessingInstructionSelector createProcessingInstructionSelector(
-      final String target,
-      final String data) throws CSSException
-  {
+    final String target,
+    final String data ) throws CSSException {
     throw new CSSException
-        ("LibLayout does not support ProcessingInstructions.");
+      ( "LibLayout does not support ProcessingInstructions." );
   }
 
   /**
@@ -159,27 +148,25 @@ public class CSSSelectorFactory implements SelectorFactory, Serializable
    * @return the comment node selector
    * @throws CSSException If this selector is not supported.
    */
-  public CharacterDataSelector createCommentSelector(final String data)
-      throws CSSException
-  {
+  public CharacterDataSelector createCommentSelector( final String data )
+    throws CSSException {
     throw new CSSException
-        ("LibLayout does not support CommenSelectors.");
+      ( "LibLayout does not support CommenSelectors." );
   }
 
   /**
    * Creates a pseudo element selector.
    *
-   * @param pseudoName the pseudo element name. <code>NULL</code> if this
-   *                   element selector can match any pseudo element.</p>
+   * @param pseudoName the pseudo element name. <code>NULL</code> if this element selector can match any pseudo
+   *                   element.</p>
    * @return the element selector
    * @throws CSSException If this selector is not supported.
    */
-  public ElementSelector createPseudoElementSelector(final String namespaceURI,
-                                                     final String pseudoName)
-      throws CSSException
-  {
+  public ElementSelector createPseudoElementSelector( final String namespaceURI,
+                                                      final String pseudoName )
+    throws CSSException {
     return new CSSElementSelector
-        (Selector.SAC_PSEUDO_ELEMENT_SELECTOR, namespaceURI, pseudoName);
+      ( Selector.SAC_PSEUDO_ELEMENT_SELECTOR, namespaceURI, pseudoName );
   }
 
   /**
@@ -190,11 +177,10 @@ public class CSSSelectorFactory implements SelectorFactory, Serializable
    * @return the combinator selector.
    * @throws CSSException If this selector is not supported.
    */
-  public DescendantSelector createDescendantSelector(final Selector parent,
-                                                     final SimpleSelector descendant)
-      throws CSSException
-  {
-    return new CSSDescendantSelector(descendant, parent, false);
+  public DescendantSelector createDescendantSelector( final Selector parent,
+                                                      final SimpleSelector descendant )
+    throws CSSException {
+    return new CSSDescendantSelector( descendant, parent, false );
   }
 
   /**
@@ -205,27 +191,25 @@ public class CSSSelectorFactory implements SelectorFactory, Serializable
    * @return the combinator selector.
    * @throws CSSException If this selector is not supported.
    */
-  public DescendantSelector createChildSelector(final Selector parent,
-                                                final SimpleSelector child)
-      throws CSSException
-  {
-    return new CSSDescendantSelector(child, parent, true);
+  public DescendantSelector createChildSelector( final Selector parent,
+                                                 final SimpleSelector child )
+    throws CSSException {
+    return new CSSDescendantSelector( child, parent, true );
   }
 
   /**
    * Creates a sibling selector.
    *
-   * @param nodeType the type of nodes in the siblings list.
-   * @param child    the child selector
+   * @param nodeType       the type of nodes in the siblings list.
+   * @param child          the child selector
    * @param directAdjacent the direct adjacent selector
    * @return the sibling selector with nodeType equals to org.w3c.dom.Node.ELEMENT_NODE
    * @throws CSSException If this selector is not supported.
    */
-  public SiblingSelector createDirectAdjacentSelector(final short nodeType,
-                                                      final Selector child,
-                                                      final SimpleSelector directAdjacent)
-      throws CSSException
-  {
-    return new CSSSilblingSelector(nodeType, child, directAdjacent);
+  public SiblingSelector createDirectAdjacentSelector( final short nodeType,
+                                                       final Selector child,
+                                                       final SimpleSelector directAdjacent )
+    throws CSSException {
+    return new CSSSilblingSelector( nodeType, child, directAdjacent );
   }
 }

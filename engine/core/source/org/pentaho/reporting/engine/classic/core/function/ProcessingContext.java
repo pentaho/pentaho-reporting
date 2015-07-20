@@ -32,8 +32,7 @@ import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
  *
  * @author Thomas Morgner
  */
-public interface ProcessingContext
-{
+public interface ProcessingContext {
   /**
    * Returns the current progress level. The number itself has no meaning and is only used to measure the progress of
    * the report processing.

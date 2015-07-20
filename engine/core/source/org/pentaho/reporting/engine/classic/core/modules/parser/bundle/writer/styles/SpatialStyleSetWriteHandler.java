@@ -17,20 +17,17 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.parser.bundle.writer.styles;
 
-import java.io.IOException;
-
 import org.pentaho.reporting.engine.classic.core.modules.parser.bundle.writer.StyleWriterUtility;
 import org.pentaho.reporting.engine.classic.core.style.ElementStyleSheet;
 import org.pentaho.reporting.libraries.xmlns.writer.XmlWriter;
 
-public class SpatialStyleSetWriteHandler implements BundleStyleSetWriteHandler
-{
-  public SpatialStyleSetWriteHandler()
-  {
+import java.io.IOException;
+
+public class SpatialStyleSetWriteHandler implements BundleStyleSetWriteHandler {
+  public SpatialStyleSetWriteHandler() {
   }
 
-  public void writeStyle(final XmlWriter writer, final ElementStyleSheet style) throws IOException
-  {
-    StyleWriterUtility.writeSpatialStyles(writer, style);
+  public void writeStyle( final XmlWriter writer, final ElementStyleSheet style ) throws IOException {
+    StyleWriterUtility.writeSpatialStyles( writer, style );
   }
 }

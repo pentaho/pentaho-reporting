@@ -22,8 +22,7 @@ package org.pentaho.reporting.engine.classic.core.util.beans;
  *
  * @author Thomas Morgner
  */
-public interface ValueConverter
-{
+public interface ValueConverter {
   /**
    * Converts an object to an attribute value.
    *
@@ -31,7 +30,7 @@ public interface ValueConverter
    * @return the attribute value.
    * @throws BeanException if there was an error during the conversion.
    */
-  public String toAttributeValue(Object o) throws BeanException;
+  public String toAttributeValue( Object o ) throws BeanException;
 
   /**
    * Converts a string to a property value.
@@ -40,5 +39,5 @@ public interface ValueConverter
    * @return a property value.
    * @throws BeanException if there was an error during the conversion.
    */
-  public Object toPropertyValue(String s) throws BeanException;
+  public Object toPropertyValue( String s ) throws BeanException;
 }

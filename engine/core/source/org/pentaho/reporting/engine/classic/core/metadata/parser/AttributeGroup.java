@@ -22,32 +22,26 @@ package org.pentaho.reporting.engine.classic.core.metadata.parser;
  *
  * @author Thomas Morgner
  */
-public class AttributeGroup
-{
+public class AttributeGroup {
   private String name;
   private AttributeDefinition[] metaData;
 
-  public AttributeGroup(final String name, final AttributeDefinition[] metaData)
-  {
-    if (name == null)
-    {
+  public AttributeGroup( final String name, final AttributeDefinition[] metaData ) {
+    if ( name == null ) {
       throw new NullPointerException();
     }
-    if (metaData == null)
-    {
+    if ( metaData == null ) {
       throw new NullPointerException();
     }
     this.name = name;
     this.metaData = metaData.clone();
   }
 
-  public String getName()
-  {
+  public String getName() {
     return name;
   }
 
-  public AttributeDefinition[] getMetaData()
-  {
+  public AttributeDefinition[] getMetaData() {
     return (AttributeDefinition[]) metaData.clone();
   }
 }

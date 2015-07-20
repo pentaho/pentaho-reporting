@@ -17,15 +17,14 @@
 
 package org.pentaho.reporting.engine.classic.core.filter;
 
+import org.pentaho.reporting.engine.classic.core.ReportElement;
+import org.pentaho.reporting.engine.classic.core.function.ExpressionRuntime;
+import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
+
 import java.text.DateFormat;
 import java.text.Format;
 import java.util.Date;
 import java.util.TimeZone;
-
-import org.pentaho.reporting.engine.classic.core.Element;
-import org.pentaho.reporting.engine.classic.core.ReportElement;
-import org.pentaho.reporting.engine.classic.core.function.ExpressionRuntime;
-import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
 
 /**
  * Parses a String into a java.util.Date. The string is read from the given datasource and then parsed by the dateformat
@@ -33,16 +32,14 @@ import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
  *
  * @author Thomas Morgner
  */
-public class DateFormatParser extends FormatParser
-{
+public class DateFormatParser extends FormatParser {
   private TimeZone timeZone;
 
   /**
    * Creates a new 'date format parser'.
    */
-  public DateFormatParser()
-  {
-    setDateFormat(DateFormat.getInstance());
+  public DateFormatParser() {
+    setDateFormat( DateFormat.getInstance() );
   }
 
   /**
@@ -51,8 +48,7 @@ public class DateFormatParser extends FormatParser
    * @return the formatter.
    * @throws NullPointerException if the given format is null
    */
-  public DateFormat getDateFormat()
-  {
+  public DateFormat getDateFormat() {
     return (DateFormat) getFormatter();
   }
 
@@ -62,9 +58,8 @@ public class DateFormatParser extends FormatParser
    * @param format The format.
    * @throws NullPointerException if the given format is null
    */
-  public void setDateFormat(final DateFormat format)
-  {
-    super.setFormatter(format);
+  public void setDateFormat( final DateFormat format ) {
+    super.setFormatter( format );
   }
 
   /**
@@ -74,21 +69,18 @@ public class DateFormatParser extends FormatParser
    * @throws NullPointerException if the given format is null
    * @throws ClassCastException   if an invalid formater is set.
    */
-  public void setFormatter(final Format format)
-  {
+  public void setFormatter( final Format format ) {
     final DateFormat dfmt = (DateFormat) format;
-    super.setFormatter(dfmt);
+    super.setFormatter( dfmt );
   }
 
-  public Object getValue(final ExpressionRuntime runtime, final ReportElement element)
-  {
+  public Object getValue( final ExpressionRuntime runtime, final ReportElement element ) {
     final TimeZone timeZone = runtime.getResourceBundleFactory().getTimeZone();
-    if (ObjectUtilities.equal(timeZone, this.timeZone) == false)
-    {
+    if ( ObjectUtilities.equal( timeZone, this.timeZone ) == false ) {
       this.timeZone = timeZone;
-      getDateFormat().setTimeZone(timeZone);
+      getDateFormat().setTimeZone( timeZone );
     }
-    return super.getValue(runtime, element);
+    return super.getValue( runtime, element );
   }
 
   /**
@@ -100,10 +92,9 @@ public class DateFormatParser extends FormatParser
    * @param nullvalue the nullvalue returned when parsing failed.
    * @throws ClassCastException if the value is no date or not null.
    */
-  public void setNullValue(final Object nullvalue)
-  {
+  public void setNullValue( final Object nullvalue ) {
     final Date dt = (Date) nullvalue;
-    super.setNullValue(dt);
+    super.setNullValue( dt );
   }
 
   /**
@@ -113,8 +104,7 @@ public class DateFormatParser extends FormatParser
    * @param o the value.
    * @return true, if the given value is already an instance of date.
    */
-  protected boolean isValidOutput(final Object o)
-  {
+  protected boolean isValidOutput( final Object o ) {
     return o instanceof Date;
   }
 }

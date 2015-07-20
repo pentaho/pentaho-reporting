@@ -21,10 +21,8 @@ import org.pentaho.reporting.engine.classic.core.filter.types.HorizontalLineType
 import org.pentaho.reporting.libraries.xmlns.parser.ParseException;
 
 @Deprecated
-public class HorizontalLineReadHandler extends AbstractElementReadHandler
-{
-  public HorizontalLineReadHandler() throws ParseException
-  {
-    super(HorizontalLineType.INSTANCE);
+public class HorizontalLineReadHandler extends AbstractElementReadHandler {
+  public HorizontalLineReadHandler() throws ParseException {
+    super( HorizontalLineType.INSTANCE );
   }
 }

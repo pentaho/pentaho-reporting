@@ -21,17 +21,14 @@ import org.pentaho.reporting.engine.classic.core.CrosstabGroup;
 import org.pentaho.reporting.engine.classic.core.ReportElement;
 import org.pentaho.reporting.engine.classic.core.metadata.ElementType;
 
-public class CrosstabGroupType extends AbstractSectionType
-{
+public class CrosstabGroupType extends AbstractSectionType {
   public static final ElementType INSTANCE = new CrosstabGroupType();
 
-  public CrosstabGroupType()
-  {
-    super("crosstab", true);
+  public CrosstabGroupType() {
+    super( "crosstab", true );
   }
 
-  public ReportElement create()
-  {
+  public ReportElement create() {
     return new CrosstabGroup();
   }
 

@@ -38,10 +38,9 @@ import org.pentaho.reporting.engine.classic.core.layout.process.WidowStep;
 import org.pentaho.reporting.engine.classic.core.layout.process.util.PaginationResult;
 import org.pentaho.reporting.engine.classic.core.states.PerformanceMonitorContext;
 
-@SuppressWarnings("HardCodedStringLiteral")
-public class PageableRenderer extends AbstractRenderer
-{
-  private static final Log logger = LogFactory.getLog(PageableRenderer.class);
+@SuppressWarnings( "HardCodedStringLiteral" )
+public class PageableRenderer extends AbstractRenderer {
+  private static final Log logger = LogFactory.getLog( PageableRenderer.class );
   private PaginationStep paginationStep;
   private OrphanStep orphanStep;
   private WidowStep widowStep;
@@ -52,9 +51,8 @@ public class PageableRenderer extends AbstractRenderer
   private CountBoxesStep countBoxesStep;
   private boolean widowsEnabled;
 
-  public PageableRenderer(final OutputProcessor outputProcessor)
-  {
-    super(outputProcessor);
+  public PageableRenderer( final OutputProcessor outputProcessor ) {
+    super( outputProcessor );
     this.paginationStep = new PaginationStep();
     this.fillPhysicalPagesStep = new FillPhysicalPagesStep();
     this.cleanPaginatedBoxesStep = new CleanPaginatedBoxesStep();
@@ -64,106 +62,91 @@ public class PageableRenderer extends AbstractRenderer
     initialize();
   }
 
-  public void startReport(final ReportDefinition report,
-                          final ProcessingContext processingContext,
-                          final PerformanceMonitorContext performanceMonitorContext)
-  {
-    super.startReport(report, processingContext, performanceMonitorContext);
+  public void startReport( final ReportDefinition report,
+                           final ProcessingContext processingContext,
+                           final PerformanceMonitorContext performanceMonitorContext ) {
+    super.startReport( report, processingContext, performanceMonitorContext );
     pageCount = 0;
-    widowsEnabled = !ClassicEngineBoot.isEnforceCompatibilityFor(processingContext.getCompatibilityLevel(), 3, 8);
+    widowsEnabled = !ClassicEngineBoot.isEnforceCompatibilityFor( processingContext.getCompatibilityLevel(), 3, 8 );
   }
 
-  protected void debugPrint(final LogicalPageBox pageBox)
-  {
-//    printConditional(5, pageBox);
-//    printConditional(18, pageBox);
+  protected void debugPrint( final LogicalPageBox pageBox ) {
+    //    printConditional(5, pageBox);
+    //    printConditional(18, pageBox);
   }
 
-  protected void printConditional(final int page, final LogicalPageBox pageBox)
-  {
-    if (logger.isDebugEnabled() == false)
-    {
+  protected void printConditional( final int page, final LogicalPageBox pageBox ) {
+    if ( logger.isDebugEnabled() == false ) {
       return;
     }
 
-    logger.debug("Printing a page: " + pageCount);
-    if (pageCount == page)
-    {
+    logger.debug( "Printing a page: " + pageCount );
+    if ( pageCount == page ) {
       // leave the debug-code in until all of these cases are solved.
-      logger.debug("1: **** Start Printing Page: " + pageCount);
+      logger.debug( "1: **** Start Printing Page: " + pageCount );
       //  ModelPrinter.INSTANCE.print(clone);
-      ModelPrinter.INSTANCE.print(pageBox);
-      logger.debug("1: **** Stop  Printing Page: " + pageCount);
+      ModelPrinter.INSTANCE.print( pageBox );
+      logger.debug( "1: **** Stop  Printing Page: " + pageCount );
     }
 
   }
 
-  protected boolean preparePagination(final LogicalPageBox pageBox)
-  {
-    if (widowsEnabled == false)
-    {
+  protected boolean preparePagination( final LogicalPageBox pageBox ) {
+    if ( widowsEnabled == false ) {
       return true;
     }
-    if (isWidowOrphanDefinitionsEncountered() == false)
-    {
+    if ( isWidowOrphanDefinitionsEncountered() == false ) {
       return true;
     }
 
-    if (orphanStep.processOrphanAnnotation(pageBox))
-    {
-//      logger.info("Orphans unlayoutable.");
+    if ( orphanStep.processOrphanAnnotation( pageBox ) ) {
+      //      logger.info("Orphans unlayoutable.");
       return false;
     }
-    if (widowStep.processWidowAnnotation(pageBox))
-    {
-//      logger.info("Widows unlayoutable.");
+    if ( widowStep.processWidowAnnotation( pageBox ) ) {
+      //      logger.info("Widows unlayoutable.");
       return false;
     }
     return true;
   }
 
-  protected boolean isPageFinished()
-  {
+  protected boolean isPageFinished() {
     final LogicalPageBox pageBox = getPageBox();
-//    final long sizeBeforePagination = pageBox.getHeight();
-//    final LogicalPageBox clone = (LogicalPageBox) pageBox.derive(true);
-    final PaginationResult pageBreak = paginationStep.performPagebreak(pageBox);
-    if (pageBreak.isOverflow() || pageBox.isOpen() == false)
-    {
-      if (logger.isDebugEnabled())
-      {
-        logger.debug("Detected pagebreak : " + pageBreak.getLastVisibleState());
+    //    final long sizeBeforePagination = pageBox.getHeight();
+    //    final LogicalPageBox clone = (LogicalPageBox) pageBox.derive(true);
+    final PaginationResult pageBreak = paginationStep.performPagebreak( pageBox );
+    if ( pageBreak.isOverflow() || pageBox.isOpen() == false ) {
+      if ( logger.isDebugEnabled() ) {
+        logger.debug( "Detected pagebreak : " + pageBreak.getLastVisibleState() );
       }
-      setLastStateKey(pageBreak.getLastVisibleState());
+      setLastStateKey( pageBreak.getLastVisibleState() );
       return true;
     }
     return false;
   }
 
-  protected boolean performPagination(final LayoutPagebreakHandler layoutPagebreakHandler,
-                                      final boolean performOutput)
-      throws ContentProcessingException
-  {
+  protected boolean performPagination( final LayoutPagebreakHandler layoutPagebreakHandler,
+                                       final boolean performOutput )
+    throws ContentProcessingException {
     // next: perform pagination.
     final LogicalPageBox pageBox = getPageBox();
 
     //    final long sizeBeforePagination = pageBox.getHeight();
-//    final LogicalPageBox clone = (LogicalPageBox) pageBox.derive(true);
-    final PaginationResult pageBreak = paginationStep.performPagebreak(pageBox);
-    if (pageBox.isOpen() && pageBreak.isOverflow() == false)
-    {
+    //    final LogicalPageBox clone = (LogicalPageBox) pageBox.derive(true);
+    final PaginationResult pageBreak = paginationStep.performPagebreak( pageBox );
+    if ( pageBox.isOpen() && pageBreak.isOverflow() == false ) {
       return false;
     }
 
-    setLastStateKey(pageBreak.getLastVisibleState());
-    setPagebreaks(getPagebreaks() + 1);
-    pageBox.setAllVerticalBreaks(pageBreak.getAllBreaks());
+    setLastStateKey( pageBreak.getLastVisibleState() );
+    setPagebreaks( getPagebreaks() + 1 );
+    pageBox.setAllVerticalBreaks( pageBreak.getAllBreaks() );
 
     pageCount += 1;
 
-//      DebugLog.log("1: **** Start Printing Page: " + pageCount);
-    debugPrint(pageBox);
-//      DebugLog.log("PaginationResult: " + pageBreak);
+    //      DebugLog.log("1: **** Start Printing Page: " + pageCount);
+    debugPrint( pageBox );
+    //      DebugLog.log("PaginationResult: " + pageBreak);
 
     // A new page has been started. Recover the page-grid, then restart
     // everything from scratch. (We have to recompute, as the pages may
@@ -172,30 +155,27 @@ public class PageableRenderer extends AbstractRenderer
     final long nextOffset = pageBreak.getLastPosition();
     final long pageOffset = pageBox.getPageOffset();
 
-    if (logger.isDebugEnabled())
-    {
-      logger.debug("PageableRenderer: pageOffset=" + pageOffset + "; nextOffset=" + nextOffset);
+    if ( logger.isDebugEnabled() ) {
+      logger.debug( "PageableRenderer: pageOffset=" + pageOffset + "; nextOffset=" + nextOffset );
     }
 
-    if (performOutput)
-    {
-      if (outputProcessor.isNeedAlignedPage())
-      {
-        final LogicalPageBox box = fillPhysicalPagesStep.compute(pageBox, pageOffset, nextOffset);
-        outputProcessor.processContent(box);
-        // DebugLog.log("Processing contents for Page " + pageCount + " Page-Offset: " + pageOffset + " -> " + nextOffset);
+    if ( performOutput ) {
+      if ( outputProcessor.isNeedAlignedPage() ) {
+        final LogicalPageBox box = fillPhysicalPagesStep.compute( pageBox, pageOffset, nextOffset );
+        outputProcessor.processContent( box );
+        // DebugLog.log("Processing contents for Page " + pageCount + " Page-Offset: " + pageOffset + " -> " +
+        // nextOffset);
+      } else {
+        // DebugLog.log("Processing fast contents for Page " + pageCount + " Page-Offset: " + pageOffset + " -> " +
+        // nextOffset);
+        outputProcessor.processContent( pageBox );
       }
-      else
-      {
-        // DebugLog.log("Processing fast contents for Page " + pageCount + " Page-Offset: " + pageOffset + " -> " + nextOffset);
-        outputProcessor.processContent(pageBox);
-      }
-    }
-    else
-    {
-      // todo: When recomputing the contents, we have to update the page cursor or the whole excercise is next to useless ..
-      // DebugLog.log("Recomputing contents for Page " + pageCount + " Page-Offset: " + pageOffset + " -> " + nextOffset);
-      outputProcessor.processRecomputedContent(pageBox);
+    } else {
+      // todo: When recomputing the contents, we have to update the page cursor or the whole excercise is next to
+      // useless ..
+      // DebugLog.log("Recomputing contents for Page " + pageCount + " Page-Offset: " + pageOffset + " -> " +
+      // nextOffset);
+      outputProcessor.processRecomputedContent( pageBox );
     }
 
     // Now fire the pagebreak. This goes through all layers and informs all
@@ -204,19 +184,16 @@ public class PageableRenderer extends AbstractRenderer
     // expensive operations. However, it updates the 'isPagebreakEncountered'
     // flag, which will be active until the input-feed received a new event.
     //      Log.debug ("PageTime " + (currentPageAge - lastPageAge));
-    final boolean repeat = pageBox.isOpen() || (pageBox.getHeight() > nextOffset);
-    if (repeat)
-    {
-      pageBox.setPageOffset(nextOffset);
-      countBoxesStep.process(pageBox);
-      cleanPaginatedBoxesStep.compute(pageBox);
+    final boolean repeat = pageBox.isOpen() || ( pageBox.getHeight() > nextOffset );
+    if ( repeat ) {
+      pageBox.setPageOffset( nextOffset );
+      countBoxesStep.process( pageBox );
+      cleanPaginatedBoxesStep.compute( pageBox );
       // todo PRD-4606
-      pageBox.resetCacheState(true);
+      pageBox.resetCacheState( true );
 
-      if (pageBreak.isNextPageContainsContent())
-      {
-        if (layoutPagebreakHandler != null)
-        {
+      if ( pageBreak.isNextPageContainsContent() ) {
+        if ( layoutPagebreakHandler != null ) {
           layoutPagebreakHandler.pageStarted();
         }
         return true;
@@ -225,69 +202,57 @@ public class PageableRenderer extends AbstractRenderer
       // empty. (We already tested it.)
       pageStartPending = true;
       return false;
-    }
-    else
-    {
-      pageBox.setPageOffset(nextOffset);
+    } else {
+      pageBox.setPageOffset( nextOffset );
       outputProcessor.processingFinished();
       return false;
     }
   }
 
-  public boolean clearPendingPageStart(final LayoutPagebreakHandler layoutPagebreakHandler)
-  {
-    if (pageStartPending == false)
-    {
+  public boolean clearPendingPageStart( final LayoutPagebreakHandler layoutPagebreakHandler ) {
+    if ( pageStartPending == false ) {
       return false;
     }
 
-    if (layoutPagebreakHandler != null)
-    {
+    if ( layoutPagebreakHandler != null ) {
       layoutPagebreakHandler.pageStarted();
     }
     pageStartPending = false;
     return true;
   }
 
-  public int getPageCount()
-  {
+  public int getPageCount() {
     return pageCount;
   }
 
-  public boolean isCurrentPageEmpty()
-  {
+  public boolean isCurrentPageEmpty() {
     // todo: Invent a test that checks whether the page is currently empty.
     final LogicalPageBox logicalPageBox = getPageBox();
-    if (logicalPageBox == null)
-    {
-      throw new IllegalStateException("LogicalPageBox being null? You messed it up again!");
+    if ( logicalPageBox == null ) {
+      throw new IllegalStateException( "LogicalPageBox being null? You messed it up again!" );
     }
 
     final PageBreakPositionList breakPositionList = logicalPageBox.getAllVerticalBreaks();
     final long masterBreak = breakPositionList.getLastMasterBreak();
-    final boolean nextPageContainsContent = (logicalPageBox.getHeight() > masterBreak);
+    final boolean nextPageContainsContent = ( logicalPageBox.getHeight() > masterBreak );
     return nextPageContainsContent == false;
   }
 
-  public boolean isPageStartPending()
-  {
+  public boolean isPageStartPending() {
     return pageStartPending;
   }
 
-  public boolean isPendingPageHack()
-  {
+  public boolean isPendingPageHack() {
     return true;
   }
 
-  protected void initializeRendererOnStartReport(final ProcessingContext processingContext)
-  {
-    super.initializeRendererOnStartReport(processingContext);
-    paginationStep.initializePerformanceMonitoring(getPerformanceMonitorContext());
-    fillPhysicalPagesStep.initializePerformanceMonitoring(getPerformanceMonitorContext());
+  protected void initializeRendererOnStartReport( final ProcessingContext processingContext ) {
+    super.initializeRendererOnStartReport( processingContext );
+    paginationStep.initializePerformanceMonitoring( getPerformanceMonitorContext() );
+    fillPhysicalPagesStep.initializePerformanceMonitoring( getPerformanceMonitorContext() );
   }
 
-  protected void close()
-  {
+  protected void close() {
     super.close();
     paginationStep.close();
     fillPhysicalPagesStep.close();

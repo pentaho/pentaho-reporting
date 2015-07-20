@@ -23,17 +23,15 @@ import org.pentaho.reporting.libraries.base.util.MemoryByteArrayOutputStream;
 import org.pentaho.reporting.libraries.resourceloader.Resource;
 import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 
-public class ReportWritingUtil
-{
-  public static MasterReport saveAndLoad(MasterReport report)
-      throws Exception
-  {
+public class ReportWritingUtil {
+  public static MasterReport saveAndLoad( MasterReport report )
+    throws Exception {
     final MemoryByteArrayOutputStream bout = new MemoryByteArrayOutputStream();
-    BundleWriter.writeReportToZipStream(report, bout);
+    BundleWriter.writeReportToZipStream( report, bout );
     final ResourceManager mgr = new ResourceManager();
     mgr.registerDefaults();
 
-    final Resource resource = mgr.createDirectly(bout.toByteArray(), MasterReport.class);
+    final Resource resource = mgr.createDirectly( bout.toByteArray(), MasterReport.class );
     return (MasterReport) resource.getResource();
   }
 }

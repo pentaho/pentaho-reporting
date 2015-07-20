@@ -17,9 +17,8 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.gui.commonswing;
 
+import javax.swing.*;
 import java.beans.PropertyChangeListener;
-import javax.swing.Icon;
-import javax.swing.KeyStroke;
 
 /**
  * The Action-Plugin interface defines the common properties for the Control and Export-Plugins. Implementing just this
@@ -27,8 +26,7 @@ import javax.swing.KeyStroke;
  *
  * @author Thomas Morgner
  */
-public interface ActionPlugin
-{
+public interface ActionPlugin {
   /**
    * Returns the display name for the export action.
    *
@@ -94,11 +92,11 @@ public interface ActionPlugin
 
   public boolean isEnabled();
 
-  public void addPropertyChangeListener(PropertyChangeListener l);
+  public void addPropertyChangeListener( PropertyChangeListener l );
 
-  public void addPropertyChangeListener(String property, PropertyChangeListener l);
+  public void addPropertyChangeListener( String property, PropertyChangeListener l );
 
-  public void removePropertyChangeListener(PropertyChangeListener l);
+  public void removePropertyChangeListener( PropertyChangeListener l );
 
   /**
    * A sort key used to enforce a certain order within the actions.
@@ -113,7 +111,7 @@ public interface ActionPlugin
 
   public int getRolePreference();
 
-  public boolean initialize(final SwingGuiContext context);
+  public boolean initialize( final SwingGuiContext context );
 
-  public void deinitialize(SwingGuiContext swingGuiContext);
+  public void deinitialize( SwingGuiContext swingGuiContext );
 }

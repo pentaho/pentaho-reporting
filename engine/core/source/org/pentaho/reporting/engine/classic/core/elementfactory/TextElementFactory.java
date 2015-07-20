@@ -30,8 +30,7 @@ import org.pentaho.reporting.engine.classic.core.style.WhitespaceCollapse;
  *
  * @author Thomas Morgner
  */
-public abstract class TextElementFactory extends ElementFactory
-{
+public abstract class TextElementFactory extends ElementFactory {
   /**
    * The name of the font used to print the text.
    */
@@ -124,8 +123,7 @@ public abstract class TextElementFactory extends ElementFactory
   /**
    * Default Constructor.
    */
-  protected TextElementFactory()
-  {
+  protected TextElementFactory() {
   }
 
   /**
@@ -133,8 +131,7 @@ public abstract class TextElementFactory extends ElementFactory
    *
    * @return the vertical text alignment property or null, if the property is not defined.
    */
-  public VerticalTextAlign getVerticalTextAlignment()
-  {
+  public VerticalTextAlign getVerticalTextAlignment() {
     return verticalTextAlignment;
   }
 
@@ -143,8 +140,7 @@ public abstract class TextElementFactory extends ElementFactory
    *
    * @param verticalTextAlignment the vertical text alignment property or null, if the property should not be defined.
    */
-  public void setVerticalTextAlignment(final VerticalTextAlign verticalTextAlignment)
-  {
+  public void setVerticalTextAlignment( final VerticalTextAlign verticalTextAlignment ) {
     this.verticalTextAlignment = verticalTextAlignment;
   }
 
@@ -154,8 +150,7 @@ public abstract class TextElementFactory extends ElementFactory
    * @return the defined text-wrap property.
    * @see TextWrap
    */
-  public TextWrap getWrap()
-  {
+  public TextWrap getWrap() {
     return wrap;
   }
 
@@ -165,8 +160,7 @@ public abstract class TextElementFactory extends ElementFactory
    * @param wrap the defined text-wrap property.
    * @see TextWrap
    */
-  public void setWrap(final TextWrap wrap)
-  {
+  public void setWrap( final TextWrap wrap ) {
     this.wrap = wrap;
   }
 
@@ -176,8 +170,7 @@ public abstract class TextElementFactory extends ElementFactory
    * @return the white space collapse constant or null, if undefined.
    * @see WhitespaceCollapse
    */
-  public WhitespaceCollapse getWhitespaceCollapse()
-  {
+  public WhitespaceCollapse getWhitespaceCollapse() {
     return whitespaceCollapse;
   }
 
@@ -187,8 +180,7 @@ public abstract class TextElementFactory extends ElementFactory
    * @param whitespaceCollapse the white space collapse constant or null, if undefined.
    * @see WhitespaceCollapse
    */
-  public void setWhitespaceCollapse(final WhitespaceCollapse whitespaceCollapse)
-  {
+  public void setWhitespaceCollapse( final WhitespaceCollapse whitespaceCollapse ) {
     this.whitespaceCollapse = whitespaceCollapse;
   }
 
@@ -198,8 +190,7 @@ public abstract class TextElementFactory extends ElementFactory
    *
    * @return the maximum letter spacing or null, if undefined.
    */
-  public Float getMaximumLetterSpacing()
-  {
+  public Float getMaximumLetterSpacing() {
     return maximumLetterSpacing;
   }
 
@@ -209,8 +200,7 @@ public abstract class TextElementFactory extends ElementFactory
    *
    * @param maximumLetterSpacing the maximum letter spacing.
    */
-  public void setMaximumLetterSpacing(final Float maximumLetterSpacing)
-  {
+  public void setMaximumLetterSpacing( final Float maximumLetterSpacing ) {
     this.maximumLetterSpacing = maximumLetterSpacing;
   }
 
@@ -220,8 +210,7 @@ public abstract class TextElementFactory extends ElementFactory
    *
    * @return the minimum letter spacing or null, if undefined.
    */
-  public Float getMinimumLetterSpacing()
-  {
+  public Float getMinimumLetterSpacing() {
     return minimumLetterSpacing;
   }
 
@@ -231,8 +220,7 @@ public abstract class TextElementFactory extends ElementFactory
    *
    * @param minimumLetterSpacing the minimum letter spacing or null, if undefined.
    */
-  public void setMinimumLetterSpacing(final Float minimumLetterSpacing)
-  {
+  public void setMinimumLetterSpacing( final Float minimumLetterSpacing ) {
     this.minimumLetterSpacing = minimumLetterSpacing;
   }
 
@@ -242,8 +230,7 @@ public abstract class TextElementFactory extends ElementFactory
    *
    * @return the optimum letter spacing or null, if undefined.
    */
-  public Float getOptimumLetterSpacing()
-  {
+  public Float getOptimumLetterSpacing() {
     return optimumLetterSpacing;
   }
 
@@ -253,8 +240,7 @@ public abstract class TextElementFactory extends ElementFactory
    *
    * @param optimumLetterSpacing the optimum letter spacing or null, if undefined.
    */
-  public void setOptimumLetterSpacing(final Float optimumLetterSpacing)
-  {
+  public void setOptimumLetterSpacing( final Float optimumLetterSpacing ) {
     this.optimumLetterSpacing = optimumLetterSpacing;
   }
 
@@ -263,8 +249,7 @@ public abstract class TextElementFactory extends ElementFactory
    *
    * @return the font embedding flag.
    */
-  public Boolean getEmbedFont()
-  {
+  public Boolean getEmbedFont() {
     return embedFont;
   }
 
@@ -273,8 +258,7 @@ public abstract class TextElementFactory extends ElementFactory
    *
    * @param embedFont embedds the font if possible.
    */
-  public void setEmbedFont(final Boolean embedFont)
-  {
+  public void setEmbedFont( final Boolean embedFont ) {
     this.embedFont = embedFont;
   }
 
@@ -283,8 +267,7 @@ public abstract class TextElementFactory extends ElementFactory
    *
    * @return the font name.
    */
-  public String getFontName()
-  {
+  public String getFontName() {
     return fontName;
   }
 
@@ -293,8 +276,7 @@ public abstract class TextElementFactory extends ElementFactory
    *
    * @param fontName the name of the font.
    */
-  public void setFontName(final String fontName)
-  {
+  public void setFontName( final String fontName ) {
     this.fontName = fontName;
   }
 
@@ -304,8 +286,7 @@ public abstract class TextElementFactory extends ElementFactory
    *
    * @return the bold-flag.
    */
-  public Boolean getBold()
-  {
+  public Boolean getBold() {
     return bold;
   }
 
@@ -315,8 +296,7 @@ public abstract class TextElementFactory extends ElementFactory
    *
    * @param bold the bold-flag.
    */
-  public void setBold(final Boolean bold)
-  {
+  public void setBold( final Boolean bold ) {
     this.bold = bold;
   }
 
@@ -326,8 +306,7 @@ public abstract class TextElementFactory extends ElementFactory
    *
    * @return the italic-flag.
    */
-  public Boolean getItalic()
-  {
+  public Boolean getItalic() {
     return italic;
   }
 
@@ -337,8 +316,7 @@ public abstract class TextElementFactory extends ElementFactory
    *
    * @param italic the italic-flag.
    */
-  public void setItalic(final Boolean italic)
-  {
+  public void setItalic( final Boolean italic ) {
     this.italic = italic;
   }
 
@@ -348,8 +326,7 @@ public abstract class TextElementFactory extends ElementFactory
    *
    * @return the underline-flag.
    */
-  public Boolean getUnderline()
-  {
+  public Boolean getUnderline() {
     return underline;
   }
 
@@ -359,8 +336,7 @@ public abstract class TextElementFactory extends ElementFactory
    *
    * @param underline the underline-flag.
    */
-  public void setUnderline(final Boolean underline)
-  {
+  public void setUnderline( final Boolean underline ) {
     this.underline = underline;
   }
 
@@ -370,8 +346,7 @@ public abstract class TextElementFactory extends ElementFactory
    *
    * @return the strike-through-flag.
    */
-  public Boolean getStrikethrough()
-  {
+  public Boolean getStrikethrough() {
     return strikethrough;
   }
 
@@ -381,8 +356,7 @@ public abstract class TextElementFactory extends ElementFactory
    *
    * @param strikethrough the strikethrough-flag.
    */
-  public void setStrikethrough(final Boolean strikethrough)
-  {
+  public void setStrikethrough( final Boolean strikethrough ) {
     this.strikethrough = strikethrough;
   }
 
@@ -391,8 +365,7 @@ public abstract class TextElementFactory extends ElementFactory
    *
    * @return the font size.
    */
-  public Integer getFontSize()
-  {
+  public Integer getFontSize() {
     return fontSize;
   }
 
@@ -401,8 +374,7 @@ public abstract class TextElementFactory extends ElementFactory
    *
    * @param fontSize the font size.
    */
-  public void setFontSize(final Integer fontSize)
-  {
+  public void setFontSize( final Integer fontSize ) {
     this.fontSize = fontSize;
   }
 
@@ -412,8 +384,7 @@ public abstract class TextElementFactory extends ElementFactory
    *
    * @return the line height.
    */
-  public Float getLineHeight()
-  {
+  public Float getLineHeight() {
     return lineHeight;
   }
 
@@ -423,8 +394,7 @@ public abstract class TextElementFactory extends ElementFactory
    *
    * @param lineHeight the line height.
    */
-  public void setLineHeight(final Float lineHeight)
-  {
+  public void setLineHeight( final Float lineHeight ) {
     this.lineHeight = lineHeight;
   }
 
@@ -434,8 +404,7 @@ public abstract class TextElementFactory extends ElementFactory
    *
    * @return the font encoding.
    */
-  public String getEncoding()
-  {
+  public String getEncoding() {
     return encoding;
   }
 
@@ -445,8 +414,7 @@ public abstract class TextElementFactory extends ElementFactory
    *
    * @param encoding the font encoding.
    */
-  public void setEncoding(final String encoding)
-  {
+  public void setEncoding( final String encoding ) {
     this.encoding = encoding;
   }
 
@@ -456,8 +424,7 @@ public abstract class TextElementFactory extends ElementFactory
    *
    * @return the reserved literal.
    */
-  public String getReservedLiteral()
-  {
+  public String getReservedLiteral() {
     return reservedLiteral;
   }
 
@@ -467,8 +434,7 @@ public abstract class TextElementFactory extends ElementFactory
    *
    * @param reservedLiteral the reserved literal.
    */
-  public void setReservedLiteral(final String reservedLiteral)
-  {
+  public void setReservedLiteral( final String reservedLiteral ) {
     this.reservedLiteral = reservedLiteral;
   }
 
@@ -476,10 +442,9 @@ public abstract class TextElementFactory extends ElementFactory
    * Returns, whether the text lines should be trimmed.
    *
    * @return Boolean.TRUE, if the text should be trimmed, Boolean.FALSE if the text should never be trimmed or null, if
-   *         the default should be applied.
+   * the default should be applied.
    */
-  public Boolean getTrimTextContent()
-  {
+  public Boolean getTrimTextContent() {
     return trimTextContent;
   }
 
@@ -489,8 +454,7 @@ public abstract class TextElementFactory extends ElementFactory
    * @param trimTextContent Boolean.TRUE, if the text should be trimmed, Boolean.FALSE if the text should never be
    *                        trimmed or null, if the default should be applied.
    */
-  public void setTrimTextContent(final Boolean trimTextContent)
-  {
+  public void setTrimTextContent( final Boolean trimTextContent ) {
     this.trimTextContent = trimTextContent;
   }
 
@@ -499,8 +463,7 @@ public abstract class TextElementFactory extends ElementFactory
    *
    * @return the wrap text flag.
    */
-  public Boolean getWrapText()
-  {
+  public Boolean getWrapText() {
     return wrapText;
   }
 
@@ -509,8 +472,7 @@ public abstract class TextElementFactory extends ElementFactory
    *
    * @param wrapText the wrap text flag.
    */
-  public void setWrapText(final Boolean wrapText)
-  {
+  public void setWrapText( final Boolean wrapText ) {
     this.wrapText = wrapText;
   }
 
@@ -520,81 +482,62 @@ public abstract class TextElementFactory extends ElementFactory
    *
    * @param style the stlyesheet.
    */
-  protected void applyStyle(final ElementStyleSheet style)
-  {
-    super.applyStyle(style);
-    if (bold != null)
-    {
-      style.setStyleProperty(TextStyleKeys.BOLD, getBold());
+  protected void applyStyle( final ElementStyleSheet style ) {
+    super.applyStyle( style );
+    if ( bold != null ) {
+      style.setStyleProperty( TextStyleKeys.BOLD, getBold() );
     }
-    if (embedFont != null)
-    {
-      style.setStyleProperty(TextStyleKeys.EMBEDDED_FONT, getEmbedFont());
+    if ( embedFont != null ) {
+      style.setStyleProperty( TextStyleKeys.EMBEDDED_FONT, getEmbedFont() );
     }
-    if (fontName != null)
-    {
-      style.setStyleProperty(TextStyleKeys.FONT, getFontName());
+    if ( fontName != null ) {
+      style.setStyleProperty( TextStyleKeys.FONT, getFontName() );
     }
-    if (encoding != null)
-    {
-      style.setStyleProperty(TextStyleKeys.FONTENCODING, getEncoding());
+    if ( encoding != null ) {
+      style.setStyleProperty( TextStyleKeys.FONTENCODING, getEncoding() );
     }
-    if (fontSize != null)
-    {
-      style.setStyleProperty(TextStyleKeys.FONTSIZE, getFontSize());
+    if ( fontSize != null ) {
+      style.setStyleProperty( TextStyleKeys.FONTSIZE, getFontSize() );
     }
-    if (italic != null)
-    {
-      style.setStyleProperty(TextStyleKeys.ITALIC, getItalic());
+    if ( italic != null ) {
+      style.setStyleProperty( TextStyleKeys.ITALIC, getItalic() );
     }
-    if (lineHeight != null)
-    {
-      style.setStyleProperty(TextStyleKeys.LINEHEIGHT, getLineHeight());
+    if ( lineHeight != null ) {
+      style.setStyleProperty( TextStyleKeys.LINEHEIGHT, getLineHeight() );
     }
-    if (strikethrough != null)
-    {
-      style.setStyleProperty(TextStyleKeys.STRIKETHROUGH, getStrikethrough());
+    if ( strikethrough != null ) {
+      style.setStyleProperty( TextStyleKeys.STRIKETHROUGH, getStrikethrough() );
     }
-    if (underline != null)
-    {
-      style.setStyleProperty(TextStyleKeys.UNDERLINED, getUnderline());
+    if ( underline != null ) {
+      style.setStyleProperty( TextStyleKeys.UNDERLINED, getUnderline() );
     }
-    if (reservedLiteral != null)
-    {
-      style.setStyleProperty(TextStyleKeys.RESERVED_LITERAL, getReservedLiteral());
+    if ( reservedLiteral != null ) {
+      style.setStyleProperty( TextStyleKeys.RESERVED_LITERAL, getReservedLiteral() );
     }
-    if (trimTextContent != null)
-    {
-      style.setStyleProperty(TextStyleKeys.TRIM_TEXT_CONTENT, getTrimTextContent());
+    if ( trimTextContent != null ) {
+      style.setStyleProperty( TextStyleKeys.TRIM_TEXT_CONTENT, getTrimTextContent() );
     }
 
-    if (wrap != null)
-    {
-      style.setStyleProperty(TextStyleKeys.TEXT_WRAP, getWrap());
+    if ( wrap != null ) {
+      style.setStyleProperty( TextStyleKeys.TEXT_WRAP, getWrap() );
     }
-    if (maximumLetterSpacing != null)
-    {
-      style.setStyleProperty(TextStyleKeys.X_MAX_LETTER_SPACING, getMaximumLetterSpacing());
+    if ( maximumLetterSpacing != null ) {
+      style.setStyleProperty( TextStyleKeys.X_MAX_LETTER_SPACING, getMaximumLetterSpacing() );
     }
-    if (minimumLetterSpacing != null)
-    {
-      style.setStyleProperty(TextStyleKeys.X_MIN_LETTER_SPACING, getMinimumLetterSpacing());
+    if ( minimumLetterSpacing != null ) {
+      style.setStyleProperty( TextStyleKeys.X_MIN_LETTER_SPACING, getMinimumLetterSpacing() );
     }
-    if (optimumLetterSpacing != null)
-    {
-      style.setStyleProperty(TextStyleKeys.X_OPTIMUM_LETTER_SPACING, getOptimumLetterSpacing());
+    if ( optimumLetterSpacing != null ) {
+      style.setStyleProperty( TextStyleKeys.X_OPTIMUM_LETTER_SPACING, getOptimumLetterSpacing() );
     }
-    if (verticalTextAlignment != null)
-    {
-      style.setStyleProperty(TextStyleKeys.VERTICAL_TEXT_ALIGNMENT, getVerticalTextAlignment());
+    if ( verticalTextAlignment != null ) {
+      style.setStyleProperty( TextStyleKeys.VERTICAL_TEXT_ALIGNMENT, getVerticalTextAlignment() );
     }
-    if (whitespaceCollapse != null)
-    {
-      style.setStyleProperty(TextStyleKeys.WHITE_SPACE_COLLAPSE, getWhitespaceCollapse());
+    if ( whitespaceCollapse != null ) {
+      style.setStyleProperty( TextStyleKeys.WHITE_SPACE_COLLAPSE, getWhitespaceCollapse() );
     }
-    if (wrapText != null)
-    {
-      style.setStyleProperty(ElementStyleKeys.EXCEL_WRAP_TEXT, getWrapText());
+    if ( wrapText != null ) {
+      style.setStyleProperty( ElementStyleKeys.EXCEL_WRAP_TEXT, getWrapText() );
     }
   }
 }

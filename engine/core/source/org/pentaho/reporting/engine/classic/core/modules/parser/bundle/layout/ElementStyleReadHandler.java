@@ -24,14 +24,11 @@ import org.pentaho.reporting.libraries.xmlns.parser.XmlReadHandler;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 
-public class ElementStyleReadHandler extends AbstractXmlReadHandler
-{
+public class ElementStyleReadHandler extends AbstractXmlReadHandler {
   private ElementStyleSheet styleSheet;
 
-  public ElementStyleReadHandler(final ElementStyleSheet styleSheet)
-  {
-    if (styleSheet == null)
-    {
+  public ElementStyleReadHandler( final ElementStyleSheet styleSheet ) {
+    if ( styleSheet == null ) {
       throw new NullPointerException();
     }
     this.styleSheet = styleSheet;
@@ -46,12 +43,11 @@ public class ElementStyleReadHandler extends AbstractXmlReadHandler
    * @return the handler or null, if the tagname is invalid.
    * @throws SAXException if there is a parsing error.
    */
-  protected XmlReadHandler getHandlerForChild(final String uri,
-                                              final String tagName,
-                                              final Attributes atts) throws SAXException
-  {
-    final StyleReadHandler readHandler = BundleStyleRegistry.getInstance().getReadHandler(uri, tagName, getLocator());
-    readHandler.setStyleSheet(styleSheet);
+  protected XmlReadHandler getHandlerForChild( final String uri,
+                                               final String tagName,
+                                               final Attributes atts ) throws SAXException {
+    final StyleReadHandler readHandler = BundleStyleRegistry.getInstance().getReadHandler( uri, tagName, getLocator() );
+    readHandler.setStyleSheet( styleSheet );
     return readHandler;
   }
 
@@ -61,8 +57,7 @@ public class ElementStyleReadHandler extends AbstractXmlReadHandler
    * @return the object.
    * @throws SAXException if an parser error occured.
    */
-  public Object getObject() throws SAXException
-  {
+  public Object getObject() throws SAXException {
     return styleSheet;
   }
 }

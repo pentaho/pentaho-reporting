@@ -17,9 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.core.filter.templates;
 
-import java.text.SimpleDateFormat;
-
-import org.pentaho.reporting.engine.classic.core.Element;
 import org.pentaho.reporting.engine.classic.core.ReportElement;
 import org.pentaho.reporting.engine.classic.core.filter.DataRowDataSource;
 import org.pentaho.reporting.engine.classic.core.filter.FormatSpecification;
@@ -28,14 +25,15 @@ import org.pentaho.reporting.engine.classic.core.filter.SimpleDateFormatFilter;
 import org.pentaho.reporting.engine.classic.core.filter.StringFilter;
 import org.pentaho.reporting.engine.classic.core.function.ExpressionRuntime;
 
+import java.text.SimpleDateFormat;
+
 /**
  * A date field template.
  *
  * @author Thomas Morgner
  */
 public class DateFieldTemplate extends AbstractTemplate
-    implements RawDataSource
-{
+  implements RawDataSource {
   /**
    * The date format filter.
    */
@@ -54,13 +52,12 @@ public class DateFieldTemplate extends AbstractTemplate
   /**
    * Creates a new date field template.
    */
-  public DateFieldTemplate()
-  {
+  public DateFieldTemplate() {
     dataRowDataSource = new DataRowDataSource();
     dateFilter = new SimpleDateFormatFilter();
-    dateFilter.setDataSource(dataRowDataSource);
+    dateFilter.setDataSource( dataRowDataSource );
     stringFilter = new StringFilter();
-    stringFilter.setDataSource(dateFilter);
+    stringFilter.setDataSource( dateFilter );
   }
 
   /**
@@ -68,8 +65,7 @@ public class DateFieldTemplate extends AbstractTemplate
    *
    * @return The date format string.
    */
-  public String getFormat()
-  {
+  public String getFormat() {
     return getDateFilter().getFormatString();
   }
 
@@ -78,9 +74,8 @@ public class DateFieldTemplate extends AbstractTemplate
    *
    * @param format the format string.
    */
-  public void setFormat(final String format)
-  {
-    getDateFilter().setFormatString(format);
+  public void setFormat( final String format ) {
+    getDateFilter().setFormatString( format );
   }
 
   /**
@@ -88,8 +83,7 @@ public class DateFieldTemplate extends AbstractTemplate
    *
    * @return The field name.
    */
-  public String getField()
-  {
+  public String getField() {
     return getDataRowDataSource().getDataSourceColumnName();
   }
 
@@ -98,9 +92,8 @@ public class DateFieldTemplate extends AbstractTemplate
    *
    * @param field the field name.
    */
-  public void setField(final String field)
-  {
-    getDataRowDataSource().setDataSourceColumnName(field);
+  public void setField( final String field ) {
+    getDataRowDataSource().setDataSourceColumnName( field );
   }
 
   /**
@@ -108,8 +101,7 @@ public class DateFieldTemplate extends AbstractTemplate
    *
    * @return the formula.
    */
-  public String getFormula()
-  {
+  public String getFormula() {
     return dataRowDataSource.getFormula();
   }
 
@@ -118,9 +110,8 @@ public class DateFieldTemplate extends AbstractTemplate
    *
    * @param formula the formula for the data source.
    */
-  public void setFormula(final String formula)
-  {
-    dataRowDataSource.setFormula(formula);
+  public void setFormula( final String formula ) {
+    dataRowDataSource.setFormula( formula );
   }
 
   /**
@@ -128,8 +119,7 @@ public class DateFieldTemplate extends AbstractTemplate
    *
    * @return A string.
    */
-  public String getNullValue()
-  {
+  public String getNullValue() {
     return getStringFilter().getNullValue();
   }
 
@@ -138,9 +128,8 @@ public class DateFieldTemplate extends AbstractTemplate
    *
    * @param nullValue the string that represents <code>null</code> values.
    */
-  public void setNullValue(final String nullValue)
-  {
-    getStringFilter().setNullValue(nullValue);
+  public void setNullValue( final String nullValue ) {
+    getStringFilter().setNullValue( nullValue );
   }
 
   /**
@@ -148,8 +137,7 @@ public class DateFieldTemplate extends AbstractTemplate
    *
    * @return The date formatter.
    */
-  public SimpleDateFormat getDateFormat()
-  {
+  public SimpleDateFormat getDateFormat() {
     return (SimpleDateFormat) getDateFilter().getFormatter();
   }
 
@@ -158,9 +146,8 @@ public class DateFieldTemplate extends AbstractTemplate
    *
    * @param dateFormat the date formatter.
    */
-  public void setDateFormat(final SimpleDateFormat dateFormat)
-  {
-    getDateFilter().setFormatter(dateFormat);
+  public void setDateFormat( final SimpleDateFormat dateFormat ) {
+    getDateFilter().setFormatter( dateFormat );
   }
 
   /**
@@ -171,9 +158,8 @@ public class DateFieldTemplate extends AbstractTemplate
    * @param element
    * @return the value.
    */
-  public Object getValue(final ExpressionRuntime runtime, final ReportElement element)
-  {
-    return getStringFilter().getValue(runtime, element);
+  public Object getValue( final ExpressionRuntime runtime, final ReportElement element ) {
+    return getStringFilter().getValue( runtime, element );
   }
 
   /**
@@ -183,8 +169,7 @@ public class DateFieldTemplate extends AbstractTemplate
    * @throws CloneNotSupportedException this should never happen.
    */
   public DateFieldTemplate clone()
-      throws CloneNotSupportedException
-  {
+    throws CloneNotSupportedException {
     final DateFieldTemplate template = (DateFieldTemplate) super.clone();
     template.stringFilter = stringFilter.clone();
     template.dateFilter = (SimpleDateFormatFilter) template.stringFilter.getDataSource();
@@ -197,8 +182,7 @@ public class DateFieldTemplate extends AbstractTemplate
    *
    * @return The date filter.
    */
-  protected SimpleDateFormatFilter getDateFilter()
-  {
+  protected SimpleDateFormatFilter getDateFilter() {
     return dateFilter;
   }
 
@@ -207,8 +191,7 @@ public class DateFieldTemplate extends AbstractTemplate
    *
    * @return The data-row datasource.
    */
-  protected DataRowDataSource getDataRowDataSource()
-  {
+  protected DataRowDataSource getDataRowDataSource() {
     return dataRowDataSource;
   }
 
@@ -217,20 +200,17 @@ public class DateFieldTemplate extends AbstractTemplate
    *
    * @return The string filter.
    */
-  protected StringFilter getStringFilter()
-  {
+  protected StringFilter getStringFilter() {
     return stringFilter;
   }
 
-  public Object getRawValue(final ExpressionRuntime runtime, final ReportElement element)
-  {
-    return dateFilter.getRawValue(runtime, element);
+  public Object getRawValue( final ExpressionRuntime runtime, final ReportElement element ) {
+    return dateFilter.getRawValue( runtime, element );
   }
 
-  public FormatSpecification getFormatString(final ExpressionRuntime runtime,
-                                             final ReportElement element,
-                                             final FormatSpecification formatSpecification)
-  {
-    return dateFilter.getFormatString(runtime, element, formatSpecification);
+  public FormatSpecification getFormatString( final ExpressionRuntime runtime,
+                                              final ReportElement element,
+                                              final FormatSpecification formatSpecification ) {
+    return dateFilter.getFormatString( runtime, element, formatSpecification );
   }
 }
