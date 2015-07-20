@@ -21,8 +21,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 
-public class EncodingUtilities
-{
+public class EncodingUtilities {
   /**
    * The encoding name.
    */
@@ -40,33 +39,29 @@ public class EncodingUtilities
    */
   private byte[] encodingHeader;
 
-  public EncodingUtilities(final String codepage)
-      throws UnsupportedEncodingException
-  {
-    if (codepage == null)
-    {
+  public EncodingUtilities( final String codepage )
+    throws UnsupportedEncodingException {
+    if ( codepage == null ) {
       throw new NullPointerException();
     }
 
     this.encoding = codepage;
 
-    encodingHeader = " ".getBytes(codepage);
-    final byte[] spacesWithHeader = "  ".getBytes(codepage);
+    encodingHeader = " ".getBytes( codepage );
+    final byte[] spacesWithHeader = "  ".getBytes( codepage );
     final int spaceCharLength = spacesWithHeader.length - encodingHeader.length;
-    space = new byte[spaceCharLength];
-    header = new byte[encodingHeader.length - spaceCharLength];
+    space = new byte[ spaceCharLength ];
+    header = new byte[ encodingHeader.length - spaceCharLength ];
 
-    System.arraycopy(spacesWithHeader, encodingHeader.length, space, 0, spaceCharLength);
-    System.arraycopy(encodingHeader, 0, header, 0, header.length);
+    System.arraycopy( spacesWithHeader, encodingHeader.length, space, 0, spaceCharLength );
+    System.arraycopy( encodingHeader, 0, header, 0, header.length );
   }
 
-  public byte[] getSpace()
-  {
+  public byte[] getSpace() {
     return space;
   }
 
-  public byte[] getHeader()
-  {
+  public byte[] getHeader() {
     return header;
   }
 
@@ -76,18 +71,16 @@ public class EncodingUtilities
    * @param textString the text that should be written.
    * @throws java.io.IOException if an error occures.
    */
-  public void writeEncodedText(final char[] textString, final OutputStream out)
-      throws IOException
-  {
-    if (textString == null)
-    {
+  public void writeEncodedText( final char[] textString, final OutputStream out )
+    throws IOException {
+    if ( textString == null ) {
       throw new NullPointerException();
     }
 
-    final StringBuffer buffer = new StringBuffer(" ");
-    buffer.append(textString);
-    final byte[] text = buffer.toString().getBytes(encoding);
-    out.write(text, encodingHeader.length, text.length - encodingHeader.length);
+    final StringBuffer buffer = new StringBuffer( " " );
+    buffer.append( textString );
+    final byte[] text = buffer.toString().getBytes( encoding );
+    out.write( text, encodingHeader.length, text.length - encodingHeader.length );
   }
 
 
@@ -97,27 +90,23 @@ public class EncodingUtilities
    * @param textString the text that should be written.
    * @throws java.io.IOException if an error occures.
    */
-  public void writeEncodedText(final String textString, final OutputStream out)
-      throws IOException
-  {
-    if (textString == null)
-    {
+  public void writeEncodedText( final String textString, final OutputStream out )
+    throws IOException {
+    if ( textString == null ) {
       throw new NullPointerException();
     }
 
-    final StringBuffer buffer = new StringBuffer(" ");
-    buffer.append(textString);
-    final byte[] text = buffer.toString().getBytes(encoding);
-    out.write(text, encodingHeader.length, text.length - encodingHeader.length);
+    final StringBuffer buffer = new StringBuffer( " " );
+    buffer.append( textString );
+    final byte[] text = buffer.toString().getBytes( encoding );
+    out.write( text, encodingHeader.length, text.length - encodingHeader.length );
   }
 
-  public String getEncoding()
-  {
+  public String getEncoding() {
     return encoding;
   }
 
-  public byte[] getEncodingHeader()
-  {
+  public byte[] getEncodingHeader() {
     return header;
   }
 }

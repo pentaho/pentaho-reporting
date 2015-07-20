@@ -17,27 +17,25 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.misc.referencedoc;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Iterator;
-import javax.swing.table.AbstractTableModel;
-
 import org.pentaho.reporting.engine.classic.core.modules.parser.ext.factory.stylekey.StyleKeyFactory;
 import org.pentaho.reporting.engine.classic.core.modules.parser.ext.factory.stylekey.StyleKeyFactoryCollector;
 import org.pentaho.reporting.engine.classic.core.style.StyleKey;
+
+import javax.swing.table.AbstractTableModel;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Iterator;
 
 /**
  * A table model for the style key reference generator.
  *
  * @author Thomas Morgner
  */
-public class StyleKeyReferenceTableModel extends AbstractTableModel
-{
+public class StyleKeyReferenceTableModel extends AbstractTableModel {
   /**
    * Represents a row in the table model.
    */
-  private static class StylekeyDescriptionRow
-  {
+  private static class StylekeyDescriptionRow {
     /**
      * The factory.
      */
@@ -54,8 +52,7 @@ public class StyleKeyReferenceTableModel extends AbstractTableModel
      * @param keyFactory the factory.
      * @param key        the key.
      */
-    private StylekeyDescriptionRow(final StyleKeyFactory keyFactory, final StyleKey key)
-    {
+    private StylekeyDescriptionRow( final StyleKeyFactory keyFactory, final StyleKey key ) {
       this.keyFactory = keyFactory;
       this.key = key;
     }
@@ -65,8 +62,7 @@ public class StyleKeyReferenceTableModel extends AbstractTableModel
      *
      * @return The factory.
      */
-    public StyleKeyFactory getKeyFactory()
-    {
+    public StyleKeyFactory getKeyFactory() {
       return keyFactory;
     }
 
@@ -75,8 +71,7 @@ public class StyleKeyReferenceTableModel extends AbstractTableModel
      *
      * @return The key.
      */
-    public StyleKey getKey()
-    {
+    public StyleKey getKey() {
       return key;
     }
   }
@@ -85,13 +80,13 @@ public class StyleKeyReferenceTableModel extends AbstractTableModel
    * The column names.
    */
   private static final String[] COLUMN_NAMES =
-      {
-          "stylekey-factory", //$NON-NLS-1$
-          "key-name", //$NON-NLS-1$
-          "key-class", //$NON-NLS-1$
-          "inherit", //$NON-NLS-1$
-          "transient" //$NON-NLS-1$
-      };
+    {
+      "stylekey-factory", //$NON-NLS-1$
+      "key-name", //$NON-NLS-1$
+      "key-class", //$NON-NLS-1$
+      "inherit", //$NON-NLS-1$
+      "transient" //$NON-NLS-1$
+    };
 
   /**
    * Storage for the rows.
@@ -103,10 +98,9 @@ public class StyleKeyReferenceTableModel extends AbstractTableModel
    *
    * @param cf the factory collection.
    */
-  public StyleKeyReferenceTableModel(final StyleKeyFactoryCollector cf)
-  {
+  public StyleKeyReferenceTableModel( final StyleKeyFactoryCollector cf ) {
     rows = new ArrayList();
-    addStyleKeyFactoryCollector(cf);
+    addStyleKeyFactoryCollector( cf );
   }
 
   /**
@@ -114,19 +108,14 @@ public class StyleKeyReferenceTableModel extends AbstractTableModel
    *
    * @param cf the factory.
    */
-  private void addStyleKeyFactoryCollector(final StyleKeyFactoryCollector cf)
-  {
+  private void addStyleKeyFactoryCollector( final StyleKeyFactoryCollector cf ) {
     final Iterator it = cf.getFactories();
-    while (it.hasNext())
-    {
+    while ( it.hasNext() ) {
       final StyleKeyFactory cfact = (StyleKeyFactory) it.next();
-      if (cfact instanceof StyleKeyFactoryCollector)
-      {
-        addStyleKeyFactoryCollector((StyleKeyFactoryCollector) cfact);
-      }
-      else
-      {
-        addStyleKeyFactory(cfact);
+      if ( cfact instanceof StyleKeyFactoryCollector ) {
+        addStyleKeyFactoryCollector( (StyleKeyFactoryCollector) cfact );
+      } else {
+        addStyleKeyFactory( cfact );
       }
     }
   }
@@ -136,25 +125,22 @@ public class StyleKeyReferenceTableModel extends AbstractTableModel
    *
    * @param cf the factory.
    */
-  private void addStyleKeyFactory(final StyleKeyFactory cf)
-  {
+  private void addStyleKeyFactory( final StyleKeyFactory cf ) {
     Iterator it = cf.getRegisteredKeys();
     final ArrayList factories = new ArrayList();
 
-    while (it.hasNext())
-    {
+    while ( it.hasNext() ) {
       final String c = (String) it.next();
-      factories.add(c);
+      factories.add( c );
     }
 
-    Collections.sort(factories);
+    Collections.sort( factories );
     it = factories.iterator();
 
-    while (it.hasNext())
-    {
+    while ( it.hasNext() ) {
       final String keyName = (String) it.next();
-      final StyleKey key = cf.getStyleKey(keyName);
-      rows.add(new StylekeyDescriptionRow(cf, key));
+      final StyleKey key = cf.getStyleKey( keyName );
+      rows.add( new StylekeyDescriptionRow( cf, key ) );
     }
   }
 
@@ -165,8 +151,7 @@ public class StyleKeyReferenceTableModel extends AbstractTableModel
    * @return the number of rows in the model
    * @see #getColumnCount
    */
-  public int getRowCount()
-  {
+  public int getRowCount() {
     return rows.size();
   }
 
@@ -177,8 +162,7 @@ public class StyleKeyReferenceTableModel extends AbstractTableModel
    * @return the number of columns in the model
    * @see #getRowCount
    */
-  public int getColumnCount()
-  {
+  public int getColumnCount() {
     return StyleKeyReferenceTableModel.COLUMN_NAMES.length;
   }
 
@@ -188,9 +172,8 @@ public class StyleKeyReferenceTableModel extends AbstractTableModel
    * @param column the column being queried
    * @return a string containing the default name of <code>column</code>
    */
-  public String getColumnName(final int column)
-  {
-    return StyleKeyReferenceTableModel.COLUMN_NAMES[column];
+  public String getColumnName( final int column ) {
+    return StyleKeyReferenceTableModel.COLUMN_NAMES[ column ];
   }
 
   /**
@@ -199,10 +182,8 @@ public class StyleKeyReferenceTableModel extends AbstractTableModel
    * @param columnIndex the column being queried
    * @return the Object.class
    */
-  public Class getColumnClass(final int columnIndex)
-  {
-    if (columnIndex < 3)
-    {
+  public Class getColumnClass( final int columnIndex ) {
+    if ( columnIndex < 3 ) {
       return String.class;
     }
 
@@ -216,21 +197,19 @@ public class StyleKeyReferenceTableModel extends AbstractTableModel
    * @param columnIndex the column whose value is to be queried
    * @return the value Object at the specified cell
    */
-  public Object getValueAt(final int rowIndex, final int columnIndex)
-  {
-    final StylekeyDescriptionRow or = (StylekeyDescriptionRow) rows.get(rowIndex);
-    switch (columnIndex)
-    {
+  public Object getValueAt( final int rowIndex, final int columnIndex ) {
+    final StylekeyDescriptionRow or = (StylekeyDescriptionRow) rows.get( rowIndex );
+    switch( columnIndex ) {
       case 0:
-        return String.valueOf(or.getKeyFactory().getClass().getName());
+        return String.valueOf( or.getKeyFactory().getClass().getName() );
       case 1:
-        return String.valueOf(or.getKey().getName());
+        return String.valueOf( or.getKey().getName() );
       case 2:
-        return String.valueOf(or.getKey().getValueType().getName());
+        return String.valueOf( or.getKey().getValueType().getName() );
       case 3:
-        return (or.getKey().isInheritable()) ? Boolean.TRUE : Boolean.FALSE;
+        return ( or.getKey().isInheritable() ) ? Boolean.TRUE : Boolean.FALSE;
       case 4:
-        return (or.getKey().isTransient()) ? Boolean.TRUE : Boolean.FALSE;
+        return ( or.getKey().isTransient() ) ? Boolean.TRUE : Boolean.FALSE;
       default:
         return null;
     }

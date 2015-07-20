@@ -18,43 +18,37 @@
 package org.pentaho.reporting.engine.classic.core.layout.model.table.cells;
 
 /**
- * A data-cell holds a reference to a TableCellRenderBox. It contains data
- * and is usually found in the upper left corner of an cell.
- *
+ * A data-cell holds a reference to a TableCellRenderBox. It contains data and is usually found in the upper left corner
+ * of an cell.
  *
  * @author Thomas Morgner
  */
-public class DataCell extends TableCell
-{
+public class DataCell extends TableCell {
   // The instance-id of the cell ..
   private Object cellRenderBox;
 
-  public DataCell(final int rowSpan,
-                  final int colSpan,
-                  final Object cellRenderBox)
-  {
-    super(rowSpan, colSpan);
+  public DataCell( final int rowSpan,
+                   final int colSpan,
+                   final Object cellRenderBox ) {
+    super( rowSpan, colSpan );
 
-    if (cellRenderBox == null)
-    {
+    if ( cellRenderBox == null ) {
       throw new NullPointerException();
     }
 
     this.cellRenderBox = cellRenderBox;
   }
 
-  public Object getCellRenderBox()
-  {
+  public Object getCellRenderBox() {
     return cellRenderBox;
   }
 
 
-  public String toString()
-  {
+  public String toString() {
     return "DataCell{" +
-            "rowSpan=" + getRowSpan() +
-            ", colSpan=" + getColSpan() +
-            ", cellRenderBox=" + cellRenderBox +
-            '}';
+      "rowSpan=" + getRowSpan() +
+      ", colSpan=" + getColSpan() +
+      ", cellRenderBox=" + cellRenderBox +
+      '}';
   }
 }

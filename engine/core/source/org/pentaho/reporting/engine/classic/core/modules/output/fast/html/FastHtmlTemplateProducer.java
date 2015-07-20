@@ -17,8 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.output.fast.html;
 
-import java.util.HashMap;
-
 import org.pentaho.reporting.engine.classic.core.InvalidReportStateException;
 import org.pentaho.reporting.engine.classic.core.layout.model.LayoutNodeTypes;
 import org.pentaho.reporting.engine.classic.core.layout.model.LogicalPageBox;
@@ -44,8 +42,9 @@ import org.pentaho.reporting.engine.classic.core.modules.output.table.base.Table
 import org.pentaho.reporting.engine.classic.core.modules.output.table.base.TableRectangle;
 import org.pentaho.reporting.engine.classic.core.util.InstanceID;
 
-public class FastHtmlTemplateProducer implements FastExportTemplateProducer
-{
+import java.util.HashMap;
+
+public class FastHtmlTemplateProducer implements FastExportTemplateProducer {
   private final OutputProcessorMetaData metaData;
   private final SheetLayout sheetLayout;
   private final FastHtmlPrinter htmlPrinter;
@@ -53,27 +52,25 @@ public class FastHtmlTemplateProducer implements FastExportTemplateProducer
   private FastGridLayout gridLayout;
   private Recorder recorder;
 
-  public FastHtmlTemplateProducer(final OutputProcessorMetaData metaData,
-                                  final SheetLayout sheetLayout,
-                                  final FastHtmlPrinter htmlPrinter)
-  {
+  public FastHtmlTemplateProducer( final OutputProcessorMetaData metaData,
+                                   final SheetLayout sheetLayout,
+                                   final FastHtmlPrinter htmlPrinter ) {
     this.metaData = metaData;
     this.sheetLayout = sheetLayout;
     this.htmlPrinter = htmlPrinter;
     this.recorder = new Recorder();
     this.cellBackgroundProducer = new CellBackgroundProducer
-            (metaData.isFeatureSupported(AbstractTableOutputProcessor.TREAT_ELLIPSE_AS_RECTANGLE),
-                metaData.isFeatureSupported(OutputProcessorFeature.UNALIGNED_PAGEBANDS));
+      ( metaData.isFeatureSupported( AbstractTableOutputProcessor.TREAT_ELLIPSE_AS_RECTANGLE ),
+        metaData.isFeatureSupported( OutputProcessorFeature.UNALIGNED_PAGEBANDS ) );
   }
 
-  public FormattedDataBuilder createDataBuilder()
-  {
-    return new FastHtmlFormattedDataBuilder(gridLayout, htmlPrinter, recorder.getRecordedBounds());
+  public FormattedDataBuilder createDataBuilder() {
+    return new FastHtmlFormattedDataBuilder( gridLayout, htmlPrinter, recorder.getRecordedBounds() );
   }
 
-  public void produceTemplate(final LogicalPageBox pageBox)
-  {
-    TableContentProducer contentProducer = TemplatingOutputProcessor.produceTableLayout(pageBox, sheetLayout, metaData);
+  public void produceTemplate( final LogicalPageBox pageBox ) {
+    TableContentProducer contentProducer =
+      TemplatingOutputProcessor.produceTableLayout( pageBox, sheetLayout, metaData );
     final SheetLayout sheetLayout = contentProducer.getSheetLayout();
     final int columnCount = contentProducer.getColumnCount();
     final int startRow = contentProducer.getFinishedRows();
@@ -82,112 +79,90 @@ public class FastHtmlTemplateProducer implements FastExportTemplateProducer
 
     gridLayout = new FastGridLayout();
 
-    for (int row = startRow; row < finishRow; row++)
-    {
-      gridLayout.addRow(row - startRow, sheetLayout.getRowHeight(row));
+    for ( int row = startRow; row < finishRow; row++ ) {
+      gridLayout.addRow( row - startRow, sheetLayout.getRowHeight( row ) );
 
-      for (short col = 0; col < columnCount; col++)
-      {
-        final CellMarker.SectionType sectionType = contentProducer.getSectionType(row, col);
-        final RenderBox content = contentProducer.getContent(row, col);
-        if (content == null)
-        {
-          final RenderBox backgroundBox = contentProducer.getBackground(row, col);
+      for ( short col = 0; col < columnCount; col++ ) {
+        final CellMarker.SectionType sectionType = contentProducer.getSectionType( row, col );
+        final RenderBox content = contentProducer.getContent( row, col );
+        if ( content == null ) {
+          final RenderBox backgroundBox = contentProducer.getBackground( row, col );
           final CellBackground background;
-          if (backgroundBox != null)
-          {
+          if ( backgroundBox != null ) {
             background = cellBackgroundProducer.getBackgroundForBox
-                (pageBox, sheetLayout, col, row, 1, 1, true, sectionType, backgroundBox);
+              ( pageBox, sheetLayout, col, row, 1, 1, true, sectionType, backgroundBox );
+          } else {
+            background = cellBackgroundProducer.getBackgroundAt( pageBox, sheetLayout, col, row, true, sectionType );
           }
-          else
-          {
-            background = cellBackgroundProducer.getBackgroundAt(pageBox, sheetLayout, col, row, true, sectionType);
-          }
-          if (background != null)
-          {
-            gridLayout.addBackground(new CellLayoutInfo(col, row, background));
-          }
-          else
-          {
-            gridLayout.addBackground(new CellLayoutInfo(col, row, null));
+          if ( background != null ) {
+            gridLayout.addBackground( new CellLayoutInfo( col, row, background ) );
+          } else {
+            gridLayout.addBackground( new CellLayoutInfo( col, row, null ) );
           }
           continue;
         }
 
-        if (content.isCommited() == false)
-        {
-          throw new InvalidReportStateException("Uncommited content encountered");
+        if ( content.isCommited() == false ) {
+          throw new InvalidReportStateException( "Uncommited content encountered" );
         }
 
-        final long contentOffset = contentProducer.getContentOffset(row, col);
+        final long contentOffset = contentProducer.getContentOffset( row, col );
         final TableRectangle rect = sheetLayout.getTableBounds
-            (content.getX(), content.getY() + contentOffset,
-                content.getWidth(), content.getHeight(), null);
-        if (rect.isOrigin(col, row) == false)
-        {
+          ( content.getX(), content.getY() + contentOffset,
+            content.getWidth(), content.getHeight(), null );
+        if ( rect.isOrigin( col, row ) == false ) {
           // A spanned cell ..
           continue;
         }
 
-        final CellBackground bg = cellBackgroundProducer.getBackgroundForBox(pageBox, sheetLayout,
-            rect.getX1(), rect.getY1(), rect.getColumnSpan(), rect.getRowSpan(), false, sectionType, content);
+        final CellBackground bg = cellBackgroundProducer.getBackgroundForBox( pageBox, sheetLayout,
+          rect.getX1(), rect.getY1(), rect.getColumnSpan(), rect.getRowSpan(), false, sectionType, content );
 
-        recordInlineImageDimensions(content);
+        recordInlineImageDimensions( content );
 
-        gridLayout.addContent(content.getInstanceId(), new CellLayoutInfo(rect, bg));
-        content.setFinishedTable(true);
+        gridLayout.addContent( content.getInstanceId(), new CellLayoutInfo( rect, bg ) );
+        content.setFinishedTable( true );
       }
     }
   }
 
-  private void recordInlineImageDimensions(final RenderBox content)
-  {
-    recorder.process(content);
+  private void recordInlineImageDimensions( final RenderBox content ) {
+    recorder.process( content );
   }
 
-  private static class Recorder extends IterateSimpleStructureProcessStep
-  {
+  private static class Recorder extends IterateSimpleStructureProcessStep {
     private HashMap<InstanceID, FastHtmlImageBounds> recordedBounds;
 
-    private Recorder()
-    {
+    private Recorder() {
       recordedBounds = new HashMap<InstanceID, FastHtmlImageBounds>();
     }
 
-    private HashMap<InstanceID, FastHtmlImageBounds> getRecordedBounds()
-    {
+    private HashMap<InstanceID, FastHtmlImageBounds> getRecordedBounds() {
       return recordedBounds;
     }
 
-    public void process(RenderNode box)
-    {
-      super.startProcessing(box);
+    public void process( RenderNode box ) {
+      super.startProcessing( box );
     }
 
-    protected boolean startBox(final RenderBox node)
-    {
-      if (node.getNodeType() == LayoutNodeTypes.TYPE_BOX_CONTENT)
-      {
+    protected boolean startBox( final RenderBox node ) {
+      if ( node.getNodeType() == LayoutNodeTypes.TYPE_BOX_CONTENT ) {
         RenderableReplacedContentBox box = (RenderableReplacedContentBox) node;
-        final FastHtmlImageBounds cb = new FastHtmlImageBounds(node.getWidth(), node.getHeight(),
-            box.getContent().getContentWidth(), box.getContent().getContentHeight());
-        recordedBounds.put(node.getInstanceId(), cb);
+        final FastHtmlImageBounds cb = new FastHtmlImageBounds( node.getWidth(), node.getHeight(),
+          box.getContent().getContentWidth(), box.getContent().getContentHeight() );
+        recordedBounds.put( node.getInstanceId(), cb );
         return false;
       }
       return true;
     }
 
-    protected void processOtherNode(final RenderNode node)
-    {
-      if (node instanceof RenderableComplexText)
-      {
+    protected void processOtherNode( final RenderNode node ) {
+      if ( node instanceof RenderableComplexText ) {
         RenderableComplexText text = (RenderableComplexText) node;
-        for (RichTextSpec.StyledChunk c: text.getRichText().getStyleChunks())
-        {
-          if (c.getOriginatingTextNode() instanceof RenderableReplacedContentBox)
-          {
+        for ( RichTextSpec.StyledChunk c : text.getRichText().getStyleChunks() ) {
+          if ( c.getOriginatingTextNode() instanceof RenderableReplacedContentBox ) {
             RenderBox box = (RenderBox) c.getOriginatingTextNode();
-            startBox(box);
+            startBox( box );
           }
         }
       }

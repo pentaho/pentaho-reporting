@@ -17,19 +17,14 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.gui.base;
 
-import java.awt.BorderLayout;
+import javax.swing.*;
+import java.awt.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import javax.swing.JComponent;
-import javax.swing.JMenu;
-import javax.swing.JPanel;
 
-public class DefaultReportController extends JPanel implements ReportController
-{
-  private class EnabledUpdateHandler implements PropertyChangeListener
-  {
-    protected EnabledUpdateHandler()
-    {
+public class DefaultReportController extends JPanel implements ReportController {
+  private class EnabledUpdateHandler implements PropertyChangeListener {
+    protected EnabledUpdateHandler() {
     }
 
     /**
@@ -38,25 +33,22 @@ public class DefaultReportController extends JPanel implements ReportController
      * @param evt A PropertyChangeEvent object describing the event source and the property that has changed.
      */
 
-    public void propertyChange(final PropertyChangeEvent evt)
-    {
-      if (PreviewPane.PAGINATING_PROPERTY.equals(evt.getPropertyName()) == false)
-      {
+    public void propertyChange( final PropertyChangeEvent evt ) {
+      if ( PreviewPane.PAGINATING_PROPERTY.equals( evt.getPropertyName() ) == false ) {
         return;
       }
-      DefaultReportController.this.setEnabled(Boolean.FALSE.equals(evt.getNewValue()));
+      DefaultReportController.this.setEnabled( Boolean.FALSE.equals( evt.getNewValue() ) );
     }
   }
 
-  private static final JMenu[] EMPTY_MENU = new JMenu[0];
+  private static final JMenu[] EMPTY_MENU = new JMenu[ 0 ];
   private EnabledUpdateHandler enabledUpdateHandler;
 
 
   /**
    * Creates a new <code>JPanel</code> with a double buffer and a flow layout.
    */
-  public DefaultReportController()
-  {
+  public DefaultReportController() {
     enabledUpdateHandler = new EnabledUpdateHandler();
   }
 
@@ -69,8 +61,7 @@ public class DefaultReportController extends JPanel implements ReportController
    *
    * @return the controler component.
    */
-  public JComponent getControlPanel()
-  {
+  public JComponent getControlPanel() {
     return this;
   }
 
@@ -79,8 +70,7 @@ public class DefaultReportController extends JPanel implements ReportController
    *
    * @return an empty array.
    */
-  public JMenu[] getMenus()
-  {
+  public JMenu[] getMenus() {
     return DefaultReportController.EMPTY_MENU;
   }
 
@@ -90,8 +80,7 @@ public class DefaultReportController extends JPanel implements ReportController
    *
    * @return the location;
    */
-  public String getControllerLocation()
-  {
+  public String getControllerLocation() {
     return BorderLayout.NORTH;
   }
 
@@ -100,15 +89,13 @@ public class DefaultReportController extends JPanel implements ReportController
    *
    * @return true, if this is a inne component.
    */
-  public boolean isInnerComponent()
-  {
+  public boolean isInnerComponent() {
     return false;
   }
 
-  public void initialize(final PreviewPane pane)
-  {
-    pane.addPropertyChangeListener(PreviewPane.PAGINATING_PROPERTY, enabledUpdateHandler);
-    setEnabled(pane.isPaginating() == false);
+  public void initialize( final PreviewPane pane ) {
+    pane.addPropertyChangeListener( PreviewPane.PAGINATING_PROPERTY, enabledUpdateHandler );
+    setEnabled( pane.isPaginating() == false );
   }
 
   /**
@@ -116,9 +103,8 @@ public class DefaultReportController extends JPanel implements ReportController
    *
    * @param pane
    */
-  public void deinitialize(final PreviewPane pane)
-  {
-    pane.removePropertyChangeListener(PreviewPane.PAGINATED_PROPERTY, enabledUpdateHandler);
-    setEnabled(false);
+  public void deinitialize( final PreviewPane pane ) {
+    pane.removePropertyChangeListener( PreviewPane.PAGINATED_PROPERTY, enabledUpdateHandler );
+    setEnabled( false );
   }
 }

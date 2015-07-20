@@ -28,21 +28,17 @@ import org.pentaho.reporting.libraries.base.util.LinkedMap;
  * @author Thomas Morgner
  * @deprecated Use the DesignTimeDataSchemaModel instead.
  */
-public class DefaultDataSchemaModel extends DesignTimeDataSchemaModel
-{
-  public DefaultDataSchemaModel(final AbstractReportDefinition report)
-  {
-    super(report);
+public class DefaultDataSchemaModel extends DesignTimeDataSchemaModel {
+  public DefaultDataSchemaModel( final AbstractReportDefinition report ) {
+    super( report );
   }
 
-  public DefaultDataSchemaModel(final MasterReport masterReportElement, final AbstractReportDefinition report)
-  {
-    super(masterReportElement, report);
+  public DefaultDataSchemaModel( final MasterReport masterReportElement, final AbstractReportDefinition report ) {
+    super( masterReportElement, report );
   }
 
-  public static LinkedMap computeParameterValueSet(final MasterReport report)
-  {
-    return DesignTimeDataSchemaModel.computeParameterValueSet(report);
+  public static LinkedMap computeParameterValueSet( final MasterReport report ) {
+    return DesignTimeDataSchemaModel.computeParameterValueSet( report );
   }
 
 }

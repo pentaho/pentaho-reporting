@@ -17,8 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.core.bugs;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
@@ -30,50 +28,50 @@ import org.pentaho.reporting.engine.classic.core.parameters.ReportParameterDefin
 import org.pentaho.reporting.engine.classic.core.parameters.StaticListParameter;
 import org.pentaho.reporting.engine.classic.core.testsupport.ReportWritingUtil;
 
-public class Prd4579Test
-{
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
+public class Prd4579Test {
   @Before
-  public void setUp() throws Exception
-  {
+  public void setUp() throws Exception {
     ClassicEngineBoot.getInstance().start();
   }
 
   @Test
-  public void testParameterLoadSave() throws Exception
-  {
-    DefaultListParameter param = new DefaultListParameter("dummy-query", "", "", "parameter", false, false, String.class);
+  public void testParameterLoadSave() throws Exception {
+    DefaultListParameter param =
+      new DefaultListParameter( "dummy-query", "", "", "parameter", false, false, String.class );
     DefaultParameterDefinition pdef = new DefaultParameterDefinition();
-    pdef.addParameterDefinition(param);
+    pdef.addParameterDefinition( param );
 
     MasterReport report = new MasterReport();
-    report.setParameterDefinition(pdef);
-    MasterReport result = ReportWritingUtil.saveAndLoad(report);
+    report.setParameterDefinition( pdef );
+    MasterReport result = ReportWritingUtil.saveAndLoad( report );
     ReportParameterDefinition parameterDefinition = result.getParameterDefinition();
-    assertEquals(1, parameterDefinition.getParameterCount());
+    assertEquals( 1, parameterDefinition.getParameterCount() );
 
-    ParameterDefinitionEntry resultParam = parameterDefinition.getParameterDefinition(0);
-    assertTrue(resultParam instanceof DefaultListParameter);
+    ParameterDefinitionEntry resultParam = parameterDefinition.getParameterDefinition( 0 );
+    assertTrue( resultParam instanceof DefaultListParameter );
     DefaultListParameter lp = (DefaultListParameter) resultParam;
-    assertEquals("", lp.getKeyColumn());
-    assertEquals("", lp.getTextColumn());
-    assertEquals("dummy-query", lp.getQueryName());
+    assertEquals( "", lp.getKeyColumn() );
+    assertEquals( "", lp.getTextColumn() );
+    assertEquals( "dummy-query", lp.getQueryName() );
   }
 
   @Test
-  public void testStaticLoadSave() throws Exception
-  {
-    StaticListParameter param = new StaticListParameter("parameter", false, false, String.class);
+  public void testStaticLoadSave() throws Exception {
+    StaticListParameter param = new StaticListParameter( "parameter", false, false, String.class );
     DefaultParameterDefinition pdef = new DefaultParameterDefinition();
-    pdef.addParameterDefinition(param);
+    pdef.addParameterDefinition( param );
 
     MasterReport report = new MasterReport();
-    report.setParameterDefinition(pdef);
-    MasterReport result = ReportWritingUtil.saveAndLoad(report);
+    report.setParameterDefinition( pdef );
+    MasterReport result = ReportWritingUtil.saveAndLoad( report );
     ReportParameterDefinition parameterDefinition = result.getParameterDefinition();
-    assertEquals(1, parameterDefinition.getParameterCount());
+    assertEquals( 1, parameterDefinition.getParameterCount() );
 
-    ParameterDefinitionEntry resultParam = parameterDefinition.getParameterDefinition(0);
-    assertTrue(resultParam instanceof StaticListParameter);
+    ParameterDefinitionEntry resultParam = parameterDefinition.getParameterDefinition( 0 );
+    assertTrue( resultParam instanceof StaticListParameter );
   }
 
 }

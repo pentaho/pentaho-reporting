@@ -17,22 +17,20 @@
 
 package org.pentaho.reporting.engine.classic.core;
 
+import org.pentaho.reporting.libraries.base.config.Configuration;
+
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import org.pentaho.reporting.libraries.base.config.Configuration;
-
-public class DefaultReportEnvironmentMapping implements ReportEnvironmentMapping
-{
+public class DefaultReportEnvironmentMapping implements ReportEnvironmentMapping {
   public static final ReportEnvironmentMapping INSTANCE = new DefaultReportEnvironmentMapping();
 
   private static final String ENV_MAPPING_KEY_PREFIX = "org.pentaho.reporting.engine.classic.core.env-mapping.";
-  private Map<String,String> cachedEnvironmentMapping;
+  private Map<String, String> cachedEnvironmentMapping;
 
-  public DefaultReportEnvironmentMapping()
-  {
+  public DefaultReportEnvironmentMapping() {
     preComputeEnvironmentMapping();
   }
 
@@ -41,26 +39,22 @@ public class DefaultReportEnvironmentMapping implements ReportEnvironmentMapping
    *
    * @return the mapping from environment names to data-row column names.
    */
-  public Map<String,String> createEnvironmentMapping()
-  {
+  public Map<String, String> createEnvironmentMapping() {
     return cachedEnvironmentMapping;
   }
 
-  private void preComputeEnvironmentMapping()
-  {
-    if (cachedEnvironmentMapping == null)
-    {
+  private void preComputeEnvironmentMapping() {
+    if ( cachedEnvironmentMapping == null ) {
       final Configuration configuration = ClassicEngineBoot.getInstance().getGlobalConfig();
-      final Iterator propertyKeys = configuration.findPropertyKeys(ENV_MAPPING_KEY_PREFIX);
-      final LinkedHashMap<String,String> names = new LinkedHashMap<String,String>();
-      while (propertyKeys.hasNext())
-      {
+      final Iterator propertyKeys = configuration.findPropertyKeys( ENV_MAPPING_KEY_PREFIX );
+      final LinkedHashMap<String, String> names = new LinkedHashMap<String, String>();
+      while ( propertyKeys.hasNext() ) {
         final String key = (String) propertyKeys.next();
-        final String value = configuration.getConfigProperty(key);
-        final String shortKey = key.substring(ENV_MAPPING_KEY_PREFIX.length());
-        names.put(shortKey, value);
+        final String value = configuration.getConfigProperty( key );
+        final String shortKey = key.substring( ENV_MAPPING_KEY_PREFIX.length() );
+        names.put( shortKey, value );
       }
-      cachedEnvironmentMapping = Collections.unmodifiableMap(names);
+      cachedEnvironmentMapping = Collections.unmodifiableMap( names );
     }
   }
 }

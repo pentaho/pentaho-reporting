@@ -32,23 +32,19 @@ import org.pentaho.reporting.libraries.xmlns.parser.AbstractXmlReadHandler;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 
-public class TextStyleReadHandler extends AbstractXmlReadHandler implements StyleReadHandler
-{
-  private static final Log logger = LogFactory.getLog(TextStyleReadHandler.class);
+public class TextStyleReadHandler extends AbstractXmlReadHandler implements StyleReadHandler {
+  private static final Log logger = LogFactory.getLog( TextStyleReadHandler.class );
   private ElementStyleSheet styleSheet;
 
-  public TextStyleReadHandler()
-  {
+  public TextStyleReadHandler() {
   }
 
 
-  public ElementStyleSheet getStyleSheet()
-  {
+  public ElementStyleSheet getStyleSheet() {
     return styleSheet;
   }
 
-  public void setStyleSheet(final ElementStyleSheet styleSheet)
-  {
+  public void setStyleSheet( final ElementStyleSheet styleSheet ) {
     this.styleSheet = styleSheet;
   }
 
@@ -60,241 +56,193 @@ public class TextStyleReadHandler extends AbstractXmlReadHandler implements Styl
    * @param attrs the attributes.
    * @throws SAXException if there is a parsing error.
    */
-  protected void startParsing(final Attributes attrs) throws SAXException
-  {
-    final String wordSpacing = attrs.getValue(getUri(), "word-spacing");
-    if (wordSpacing != null)
-    {
-      styleSheet.setStyleProperty(TextStyleKeys.WORD_SPACING, ReportParserUtil.parseFloat(wordSpacing, getLocator()));
+  protected void startParsing( final Attributes attrs ) throws SAXException {
+    final String wordSpacing = attrs.getValue( getUri(), "word-spacing" );
+    if ( wordSpacing != null ) {
+      styleSheet
+        .setStyleProperty( TextStyleKeys.WORD_SPACING, ReportParserUtil.parseFloat( wordSpacing, getLocator() ) );
     }
-    final String minLetterSpacing = attrs.getValue(getUri(), "min-letter-spacing");
-    if (minLetterSpacing != null)
-    {
-      styleSheet.setStyleProperty(TextStyleKeys.X_MIN_LETTER_SPACING, ReportParserUtil.parseFloat(minLetterSpacing,
-          getLocator()));
+    final String minLetterSpacing = attrs.getValue( getUri(), "min-letter-spacing" );
+    if ( minLetterSpacing != null ) {
+      styleSheet.setStyleProperty( TextStyleKeys.X_MIN_LETTER_SPACING, ReportParserUtil.parseFloat( minLetterSpacing,
+        getLocator() ) );
     }
-    final String maxLetterSpacing = attrs.getValue(getUri(), "max-letter-spacing");
-    if (maxLetterSpacing != null)
-    {
-      styleSheet.setStyleProperty(TextStyleKeys.X_MAX_LETTER_SPACING, ReportParserUtil.parseFloat(maxLetterSpacing,
-          getLocator()));
+    final String maxLetterSpacing = attrs.getValue( getUri(), "max-letter-spacing" );
+    if ( maxLetterSpacing != null ) {
+      styleSheet.setStyleProperty( TextStyleKeys.X_MAX_LETTER_SPACING, ReportParserUtil.parseFloat( maxLetterSpacing,
+        getLocator() ) );
     }
-    final String optimumLetterSpacing = attrs.getValue(getUri(), "optimum-letter-spacing");
-    if (optimumLetterSpacing != null)
-    {
-      styleSheet.setStyleProperty(TextStyleKeys.X_OPTIMUM_LETTER_SPACING, ReportParserUtil.parseFloat(
-          optimumLetterSpacing, getLocator()));
+    final String optimumLetterSpacing = attrs.getValue( getUri(), "optimum-letter-spacing" );
+    if ( optimumLetterSpacing != null ) {
+      styleSheet.setStyleProperty( TextStyleKeys.X_OPTIMUM_LETTER_SPACING, ReportParserUtil.parseFloat(
+        optimumLetterSpacing, getLocator() ) );
     }
-    final String reservedLiteral = attrs.getValue(getUri(), "ellipsis");
-    if ("UTF-8".equals(reservedLiteral))
-    {
-      logger.info("Auto-corrected invalid ellipsis text [PRD-3315]");
-      styleSheet.setStyleProperty(TextStyleKeys.RESERVED_LITERAL, null);
+    final String reservedLiteral = attrs.getValue( getUri(), "ellipsis" );
+    if ( "UTF-8".equals( reservedLiteral ) ) {
+      logger.info( "Auto-corrected invalid ellipsis text [PRD-3315]" );
+      styleSheet.setStyleProperty( TextStyleKeys.RESERVED_LITERAL, null );
+    } else if ( reservedLiteral != null ) {
+      styleSheet.setStyleProperty( TextStyleKeys.RESERVED_LITERAL, reservedLiteral );
     }
-    else if (reservedLiteral != null)
-    {
-      styleSheet.setStyleProperty(TextStyleKeys.RESERVED_LITERAL, reservedLiteral);
+    final String fontName = attrs.getValue( getUri(), "font-face" );
+    if ( fontName != null ) {
+      styleSheet.setStyleProperty( TextStyleKeys.FONT, fontName );
     }
-    final String fontName = attrs.getValue(getUri(), "font-face");
-    if (fontName != null)
-    {
-      styleSheet.setStyleProperty(TextStyleKeys.FONT, fontName);
+    final String fontEncoding = attrs.getValue( getUri(), "encoding" );
+    if ( fontEncoding != null ) {
+      styleSheet.setStyleProperty( TextStyleKeys.FONTENCODING, fontEncoding );
     }
-    final String fontEncoding = attrs.getValue(getUri(), "encoding");
-    if (fontEncoding != null)
-    {
-      styleSheet.setStyleProperty(TextStyleKeys.FONTENCODING, fontEncoding);
+    final String fontSize = attrs.getValue( getUri(), "font-size" );
+    if ( fontSize != null ) {
+      styleSheet.setStyleProperty( TextStyleKeys.FONTSIZE, ReportParserUtil.parseInteger( fontSize, getLocator() ) );
     }
-    final String fontSize = attrs.getValue(getUri(), "font-size");
-    if (fontSize != null)
-    {
-      styleSheet.setStyleProperty(TextStyleKeys.FONTSIZE, ReportParserUtil.parseInteger(fontSize, getLocator()));
+    final String lineHeight = attrs.getValue( getUri(), "line-height" );
+    if ( lineHeight != null ) {
+      styleSheet.setStyleProperty( TextStyleKeys.LINEHEIGHT, ReportParserUtil.parseFloat( lineHeight, getLocator() ) );
     }
-    final String lineHeight = attrs.getValue(getUri(), "line-height");
-    if (lineHeight != null)
-    {
-      styleSheet.setStyleProperty(TextStyleKeys.LINEHEIGHT, ReportParserUtil.parseFloat(lineHeight, getLocator()));
+    final String fontBold = attrs.getValue( getUri(), "bold" );
+    if ( fontBold != null ) {
+      styleSheet.setBooleanStyleProperty( TextStyleKeys.BOLD, "true".equals( fontBold ) );
     }
-    final String fontBold = attrs.getValue(getUri(), "bold");
-    if (fontBold != null)
-    {
-      styleSheet.setBooleanStyleProperty(TextStyleKeys.BOLD, "true".equals(fontBold));
+    final String fontEmbedded = attrs.getValue( getUri(), "embedded" );
+    if ( fontEmbedded != null ) {
+      styleSheet.setBooleanStyleProperty( TextStyleKeys.EMBEDDED_FONT, "true".equals( fontEmbedded ) );
     }
-    final String fontEmbedded = attrs.getValue(getUri(), "embedded");
-    if (fontEmbedded != null)
-    {
-      styleSheet.setBooleanStyleProperty(TextStyleKeys.EMBEDDED_FONT, "true".equals(fontEmbedded));
+    final String fontItalics = attrs.getValue( getUri(), "italic" );
+    if ( fontItalics != null ) {
+      styleSheet.setBooleanStyleProperty( TextStyleKeys.ITALIC, "true".equals( fontItalics ) );
     }
-    final String fontItalics = attrs.getValue(getUri(), "italic");
-    if (fontItalics != null)
-    {
-      styleSheet.setBooleanStyleProperty(TextStyleKeys.ITALIC, "true".equals(fontItalics));
+    final String fontUnderline = attrs.getValue( getUri(), "underline" );
+    if ( fontUnderline != null ) {
+      styleSheet.setBooleanStyleProperty( TextStyleKeys.UNDERLINED, "true".equals( fontUnderline ) );
     }
-    final String fontUnderline = attrs.getValue(getUri(), "underline");
-    if (fontUnderline != null)
-    {
-      styleSheet.setBooleanStyleProperty(TextStyleKeys.UNDERLINED, "true".equals(fontUnderline));
+    final String fontStrikethrough = attrs.getValue( getUri(), "strikethrough" );
+    if ( fontStrikethrough != null ) {
+      styleSheet.setBooleanStyleProperty( TextStyleKeys.STRIKETHROUGH, "true".equals( fontStrikethrough ) );
     }
-    final String fontStrikethrough = attrs.getValue(getUri(), "strikethrough");
-    if (fontStrikethrough != null)
-    {
-      styleSheet.setBooleanStyleProperty(TextStyleKeys.STRIKETHROUGH, "true".equals(fontStrikethrough));
+    final String trimTextContent = attrs.getValue( getUri(), "trim-text-content" );
+    if ( trimTextContent != null ) {
+      styleSheet.setBooleanStyleProperty( TextStyleKeys.TRIM_TEXT_CONTENT, "true".equals( trimTextContent ) );
     }
-    final String trimTextContent = attrs.getValue(getUri(), "trim-text-content");
-    if (trimTextContent != null)
-    {
-      styleSheet.setBooleanStyleProperty(TextStyleKeys.TRIM_TEXT_CONTENT, "true".equals(trimTextContent));
-    }
-    final String excelTextWrap = attrs.getValue(getUri(), "excel-text-wrapping");
-    if (excelTextWrap != null)
-    {
-      styleSheet.setBooleanStyleProperty(ElementStyleKeys.EXCEL_WRAP_TEXT, "true".equals(excelTextWrap));
+    final String excelTextWrap = attrs.getValue( getUri(), "excel-text-wrapping" );
+    if ( excelTextWrap != null ) {
+      styleSheet.setBooleanStyleProperty( ElementStyleKeys.EXCEL_WRAP_TEXT, "true".equals( excelTextWrap ) );
     }
 
-    final String wsCollapse = attrs.getValue(getUri(), "whitespace-collapse");
-    if (wsCollapse != null)
-    {
-      styleSheet.setStyleProperty(TextStyleKeys.WHITE_SPACE_COLLAPSE, parseWhitespaceCollapse(wsCollapse));
+    final String wsCollapse = attrs.getValue( getUri(), "whitespace-collapse" );
+    if ( wsCollapse != null ) {
+      styleSheet.setStyleProperty( TextStyleKeys.WHITE_SPACE_COLLAPSE, parseWhitespaceCollapse( wsCollapse ) );
     }
 
-    final String textWrap = attrs.getValue(getUri(), "text-wrap");
-    if (textWrap != null)
-    {
-      styleSheet.setStyleProperty(TextStyleKeys.TEXT_WRAP, parseTextWrap(textWrap));
+    final String textWrap = attrs.getValue( getUri(), "text-wrap" );
+    if ( textWrap != null ) {
+      styleSheet.setStyleProperty( TextStyleKeys.TEXT_WRAP, parseTextWrap( textWrap ) );
     }
 
-    final String textDirection = attrs.getValue(getUri(), "direction");
-    if (textDirection != null)
-    {
-      styleSheet.setStyleProperty(TextStyleKeys.DIRECTION, parseTextDirection(textDirection));
+    final String textDirection = attrs.getValue( getUri(), "direction" );
+    if ( textDirection != null ) {
+      styleSheet.setStyleProperty( TextStyleKeys.DIRECTION, parseTextDirection( textDirection ) );
     }
 
-    final String fontSmooth = attrs.getValue(getUri(), "font-smooth");
-    if (fontSmooth != null)
-    {
-      styleSheet.setStyleProperty(TextStyleKeys.FONT_SMOOTH, parseFontSmooth(fontSmooth));
+    final String fontSmooth = attrs.getValue( getUri(), "font-smooth" );
+    if ( fontSmooth != null ) {
+      styleSheet.setStyleProperty( TextStyleKeys.FONT_SMOOTH, parseFontSmooth( fontSmooth ) );
     }
 
-    final String verticalTextAlignment = attrs.getValue(getUri(), "vertical-text-alignment");
-    if (verticalTextAlignment != null)
-    {
-      styleSheet.setStyleProperty(TextStyleKeys.VERTICAL_TEXT_ALIGNMENT, parseVerticalTextAlign(verticalTextAlignment));
+    final String verticalTextAlignment = attrs.getValue( getUri(), "vertical-text-alignment" );
+    if ( verticalTextAlignment != null ) {
+      styleSheet
+        .setStyleProperty( TextStyleKeys.VERTICAL_TEXT_ALIGNMENT, parseVerticalTextAlign( verticalTextAlignment ) );
     }
 
-    final String firstLineIndent = attrs.getValue(getUri(), "first-line-indent");
-    if (firstLineIndent != null)
-    {
-      styleSheet.setStyleProperty(TextStyleKeys.FIRST_LINE_INDENT, ReportParserUtil.parseFloat(firstLineIndent, getLocator()));
+    final String firstLineIndent = attrs.getValue( getUri(), "first-line-indent" );
+    if ( firstLineIndent != null ) {
+      styleSheet.setStyleProperty( TextStyleKeys.FIRST_LINE_INDENT,
+        ReportParserUtil.parseFloat( firstLineIndent, getLocator() ) );
     }
-    
-    final String textIndent = attrs.getValue(getUri(), "text-indent");
-    if (textIndent != null)
-    {
-      styleSheet.setStyleProperty(TextStyleKeys.TEXT_INDENT, ReportParserUtil.parseFloat(textIndent, getLocator()));
+
+    final String textIndent = attrs.getValue( getUri(), "text-indent" );
+    if ( textIndent != null ) {
+      styleSheet.setStyleProperty( TextStyleKeys.TEXT_INDENT, ReportParserUtil.parseFloat( textIndent, getLocator() ) );
     }
   }
 
 
-  private WhitespaceCollapse parseWhitespaceCollapse(final String attr)
-  {
-    if (WhitespaceCollapse.DISCARD.toString().equalsIgnoreCase(attr))
-    {
+  private WhitespaceCollapse parseWhitespaceCollapse( final String attr ) {
+    if ( WhitespaceCollapse.DISCARD.toString().equalsIgnoreCase( attr ) ) {
       return WhitespaceCollapse.DISCARD;
     }
-    if (WhitespaceCollapse.COLLAPSE.toString().equalsIgnoreCase(attr))
-    {
+    if ( WhitespaceCollapse.COLLAPSE.toString().equalsIgnoreCase( attr ) ) {
       return WhitespaceCollapse.COLLAPSE;
     }
-    if (WhitespaceCollapse.PRESERVE.toString().equalsIgnoreCase(attr))
-    {
+    if ( WhitespaceCollapse.PRESERVE.toString().equalsIgnoreCase( attr ) ) {
       return WhitespaceCollapse.PRESERVE;
     }
-    if (WhitespaceCollapse.PRESERVE_BREAKS.toString().equalsIgnoreCase(attr))
-    {
+    if ( WhitespaceCollapse.PRESERVE_BREAKS.toString().equalsIgnoreCase( attr ) ) {
       return WhitespaceCollapse.PRESERVE_BREAKS;
     }
     return null;
   }
 
-  private VerticalTextAlign parseVerticalTextAlign(final String attr)
-  {
-    if (VerticalTextAlign.USE_SCRIPT.toString().equalsIgnoreCase(attr))
-    {
+  private VerticalTextAlign parseVerticalTextAlign( final String attr ) {
+    if ( VerticalTextAlign.USE_SCRIPT.toString().equalsIgnoreCase( attr ) ) {
       return VerticalTextAlign.USE_SCRIPT;
     }
-    if (VerticalTextAlign.TEXT_BOTTOM.toString().equalsIgnoreCase(attr))
-    {
+    if ( VerticalTextAlign.TEXT_BOTTOM.toString().equalsIgnoreCase( attr ) ) {
       return VerticalTextAlign.TEXT_BOTTOM;
     }
-    if (VerticalTextAlign.BOTTOM.toString().equalsIgnoreCase(attr))
-    {
+    if ( VerticalTextAlign.BOTTOM.toString().equalsIgnoreCase( attr ) ) {
       return VerticalTextAlign.BOTTOM;
     }
-    if (VerticalTextAlign.TEXT_TOP.toString().equalsIgnoreCase(attr))
-    {
+    if ( VerticalTextAlign.TEXT_TOP.toString().equalsIgnoreCase( attr ) ) {
       return VerticalTextAlign.TEXT_TOP;
     }
-    if (VerticalTextAlign.TOP.toString().equalsIgnoreCase(attr))
-    {
+    if ( VerticalTextAlign.TOP.toString().equalsIgnoreCase( attr ) ) {
       return VerticalTextAlign.TOP;
     }
-    if (VerticalTextAlign.CENTRAL.toString().equalsIgnoreCase(attr))
-    {
+    if ( VerticalTextAlign.CENTRAL.toString().equalsIgnoreCase( attr ) ) {
       return VerticalTextAlign.CENTRAL;
     }
-    if (VerticalTextAlign.MIDDLE.toString().equalsIgnoreCase(attr))
-    {
+    if ( VerticalTextAlign.MIDDLE.toString().equalsIgnoreCase( attr ) ) {
       return VerticalTextAlign.MIDDLE;
     }
-    if (VerticalTextAlign.SUB.toString().equalsIgnoreCase(attr))
-    {
+    if ( VerticalTextAlign.SUB.toString().equalsIgnoreCase( attr ) ) {
       return VerticalTextAlign.SUB;
     }
-    if (VerticalTextAlign.SUPER.toString().equalsIgnoreCase(attr))
-    {
+    if ( VerticalTextAlign.SUPER.toString().equalsIgnoreCase( attr ) ) {
       return VerticalTextAlign.SUPER;
     }
-    if (VerticalTextAlign.BASELINE.toString().equalsIgnoreCase(attr))
-    {
+    if ( VerticalTextAlign.BASELINE.toString().equalsIgnoreCase( attr ) ) {
       return VerticalTextAlign.BASELINE;
     }
     return null;
   }
 
-  private FontSmooth parseFontSmooth(final String attr)
-  {
-    if (FontSmooth.ALWAYS.toString().equalsIgnoreCase(attr))
-    {
+  private FontSmooth parseFontSmooth( final String attr ) {
+    if ( FontSmooth.ALWAYS.toString().equalsIgnoreCase( attr ) ) {
       return FontSmooth.ALWAYS;
     }
-    if (FontSmooth.NEVER.toString().equalsIgnoreCase(attr))
-    {
+    if ( FontSmooth.NEVER.toString().equalsIgnoreCase( attr ) ) {
       return FontSmooth.NEVER;
     }
     return FontSmooth.AUTO;
   }
 
-  private TextWrap parseTextWrap(final String attr)
-  {
-    if (TextWrap.WRAP.toString().equalsIgnoreCase(attr))
-    {
+  private TextWrap parseTextWrap( final String attr ) {
+    if ( TextWrap.WRAP.toString().equalsIgnoreCase( attr ) ) {
       return TextWrap.WRAP;
     }
-    if (TextWrap.NONE.toString().equalsIgnoreCase(attr))
-    {
+    if ( TextWrap.NONE.toString().equalsIgnoreCase( attr ) ) {
       return TextWrap.NONE;
     }
     return TextWrap.WRAP;
   }
 
-  private TextDirection parseTextDirection(final String o)
-  {
-    if (TextDirection.LTR.toString().equalsIgnoreCase(o))
-    {
+  private TextDirection parseTextDirection( final String o ) {
+    if ( TextDirection.LTR.toString().equalsIgnoreCase( o ) ) {
       return TextDirection.LTR;
     }
-    if (TextDirection.RTL.toString().equalsIgnoreCase(o))
-    {
+    if ( TextDirection.RTL.toString().equalsIgnoreCase( o ) ) {
       return TextDirection.RTL;
     }
     return TextDirection.LTR;
@@ -306,8 +254,7 @@ public class TextStyleReadHandler extends AbstractXmlReadHandler implements Styl
    * @return the object.
    * @throws SAXException if an parser error occured.
    */
-  public Object getObject() throws SAXException
-  {
+  public Object getObject() throws SAXException {
     return styleSheet;
   }
 }

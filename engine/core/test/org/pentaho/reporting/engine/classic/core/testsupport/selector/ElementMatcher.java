@@ -17,62 +17,52 @@
 
 package org.pentaho.reporting.engine.classic.core.testsupport.selector;
 
-import java.util.ArrayList;
-
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderNode;
 
-public class ElementMatcher implements NodeMatcher
-{
+import java.util.ArrayList;
+
+public class ElementMatcher implements NodeMatcher {
   private String name;
   private ArrayList<NodeMatcher> attributeMatchers;
 
-  public ElementMatcher(final Class name)
-  {
-    this(name.getSimpleName());
+  public ElementMatcher( final Class name ) {
+    this( name.getSimpleName() );
   }
 
-  public ElementMatcher(final String name)
-  {
+  public ElementMatcher( final String name ) {
     this.attributeMatchers = new ArrayList<NodeMatcher>();
     this.name = name;
   }
 
-  public void add (final NodeMatcher matchers)
-  {
-    attributeMatchers.add(matchers);
+  public void add( final NodeMatcher matchers ) {
+    attributeMatchers.add( matchers );
   }
 
-  public boolean matches(final RenderNode node)
-  {
-    if (node == null)
-    {
+  public boolean matches( final RenderNode node ) {
+    if ( node == null ) {
       throw new NullPointerException();
     }
-    if (node.getClass().getSimpleName().equals(name))
-    {
-      return matchAttributes(node);
+    if ( node.getClass().getSimpleName().equals( name ) ) {
+      return matchAttributes( node );
     }
     return false;
   }
 
-  protected boolean matchAttributes(final RenderNode node)
-  {
-    for (int i = 0; i < attributeMatchers.size(); i++)
-    {
-      final NodeMatcher matcher = attributeMatchers.get(i);
-      if (matcher.matches(node) == false)
+  protected boolean matchAttributes( final RenderNode node ) {
+    for ( int i = 0; i < attributeMatchers.size(); i++ ) {
+      final NodeMatcher matcher = attributeMatchers.get( i );
+      if ( matcher.matches( node ) == false ) {
         return false;
+      }
     }
     return true;
   }
 
-  public String toString()
-  {
+  public String toString() {
     final StringBuilder stringBuilder = new StringBuilder();
-    stringBuilder.append("ElementMatcher(");
-    stringBuilder.append(name);
-    if (attributeMatchers.isEmpty() == false)
-    {
+    stringBuilder.append( "ElementMatcher(" );
+    stringBuilder.append( name );
+    if ( attributeMatchers.isEmpty() == false ) {
       /*
       stringBuilder.append("; Condition(");
       for (int i = 0; i < attributeMatchers.size(); i++)
@@ -87,7 +77,7 @@ public class ElementMatcher implements NodeMatcher
       stringBuilder.append(")");
       */
     }
-    stringBuilder.append(")");
+    stringBuilder.append( ")" );
     return stringBuilder.toString();
   }
 }

@@ -20,7 +20,6 @@ package org.pentaho.reporting.engine.classic.core.modules.output.table.html.help
 import org.pentaho.reporting.engine.classic.core.modules.output.table.html.URLRewriteException;
 import org.pentaho.reporting.libraries.repository.ContentItem;
 
-public interface ContentUrlReWriteService
-{
-  public String rewriteContentDataItem (ContentItem item) throws URLRewriteException;
+public interface ContentUrlReWriteService {
+  public String rewriteContentDataItem( ContentItem item ) throws URLRewriteException;
 }

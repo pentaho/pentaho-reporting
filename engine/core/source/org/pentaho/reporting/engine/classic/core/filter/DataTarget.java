@@ -25,8 +25,7 @@ import java.io.Serializable;
  *
  * @author Thomas Morgner
  */
-public interface DataTarget extends Serializable, Cloneable
-{
+public interface DataTarget extends Serializable, Cloneable {
   /**
    * Returns the assigned DataSource for this Target.
    *
@@ -39,7 +38,7 @@ public interface DataTarget extends Serializable, Cloneable
    *
    * @param ds The data source.
    */
-  public void setDataSource(DataSource ds);
+  public void setDataSource( DataSource ds );
 
   /**
    * Clones this datatarget.
@@ -48,5 +47,5 @@ public interface DataTarget extends Serializable, Cloneable
    * @throws CloneNotSupportedException this should never happen.
    */
   public Object clone()
-      throws CloneNotSupportedException;
+    throws CloneNotSupportedException;
 }

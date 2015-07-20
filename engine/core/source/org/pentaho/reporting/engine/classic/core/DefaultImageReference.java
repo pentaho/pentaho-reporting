@@ -17,17 +17,16 @@
 
 package org.pentaho.reporting.engine.classic.core;
 
-import java.awt.Image;
-import java.io.IOException;
-import java.io.Serializable;
-import java.net.URL;
-
 import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
 import org.pentaho.reporting.libraries.base.util.WaitingImageObserver;
 import org.pentaho.reporting.libraries.resourceloader.Resource;
 import org.pentaho.reporting.libraries.resourceloader.ResourceException;
 import org.pentaho.reporting.libraries.resourceloader.ResourceKey;
-import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
+
+import java.awt.*;
+import java.io.IOException;
+import java.io.Serializable;
+import java.net.URL;
 
 /**
  * An DefaultImageReference encapsulates the source of an image together with a <code>java.awt.Image</code>. The source
@@ -42,8 +41,7 @@ import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
  * @author Thomas Morgner
  */
 public class DefaultImageReference
-    implements Serializable, URLImageContainer, LocalImageContainer
-{
+  implements Serializable, URLImageContainer, LocalImageContainer {
   /**
    * A unique identifier for long term persistance.
    */
@@ -88,52 +86,44 @@ public class DefaultImageReference
    * @throws NullPointerException if the image is null.
    * @throws java.io.IOException  if an IOError occured while loading the image.
    */
-  public DefaultImageReference(final Image img)
-      throws IOException
-  {
-    if (img == null)
-    {
+  public DefaultImageReference( final Image img )
+    throws IOException {
+    if ( img == null ) {
       throw new NullPointerException();
     }
     this.image = img;
-    final WaitingImageObserver obs = new WaitingImageObserver(image);
+    final WaitingImageObserver obs = new WaitingImageObserver( image );
     obs.waitImageLoaded();
-    if (obs.isError())
-    {
-      throw new IOException("Failed to load the image. ImageObserver signaled an error.");
+    if ( obs.isError() ) {
+      throw new IOException( "Failed to load the image. ImageObserver signaled an error." );
     }
-    this.width = image.getWidth(null);
-    this.height = image.getHeight(null);
+    this.width = image.getWidth( null );
+    this.height = image.getHeight( null );
   }
 
-  public DefaultImageReference(final Resource imageResource)
-      throws ResourceException
-  {
-    if (imageResource == null)
-    {
+  public DefaultImageReference( final Resource imageResource )
+    throws ResourceException {
+    if ( imageResource == null ) {
       throw new NullPointerException();
     }
     final Object o = imageResource.getResource();
-    if (o instanceof Image == false)
-    {
-      throw new ResourceException("ImageResource does not contain a java.awt.Image object.");
+    if ( o instanceof Image == false ) {
+      throw new ResourceException( "ImageResource does not contain a java.awt.Image object." );
     }
     final ResourceKey resKey = imageResource.getSource();
     final Object identifier = resKey.getIdentifier();
-    if (identifier instanceof URL)
-    {
+    if ( identifier instanceof URL ) {
       this.url = (URL) identifier;
     }
     this.resourceKey = resKey;
     this.image = (Image) o;
-    final WaitingImageObserver obs = new WaitingImageObserver(image);
+    final WaitingImageObserver obs = new WaitingImageObserver( image );
     obs.waitImageLoaded();
-    if (obs.isError())
-    {
-      throw new ResourceException("Failed to load the image. ImageObserver signaled an error.");
+    if ( obs.isError() ) {
+      throw new ResourceException( "Failed to load the image. ImageObserver signaled an error." );
     }
-    this.width = image.getWidth(null);
-    this.height = image.getHeight(null);
+    this.width = image.getWidth( null );
+    this.height = image.getHeight( null );
   }
 
 
@@ -144,8 +134,7 @@ public class DefaultImageReference
    * @param w the width of the unscaled image.
    * @param h the height of the unscaled image.
    */
-  public DefaultImageReference(final int w, final int h)
-  {
+  public DefaultImageReference( final int w, final int h ) {
     this.width = w;
     this.height = h;
   }
@@ -155,11 +144,9 @@ public class DefaultImageReference
    *
    * @param parent the parent.
    */
-  public DefaultImageReference(final DefaultImageReference parent)
-  {
-    if (parent == null)
-    {
-      throw new NullPointerException("The given parent must not be null.");
+  public DefaultImageReference( final DefaultImageReference parent ) {
+    if ( parent == null ) {
+      throw new NullPointerException( "The given parent must not be null." );
     }
     this.width = parent.width;
     this.height = parent.height;
@@ -173,8 +160,7 @@ public class DefaultImageReference
    *
    * @return The current image instance, or null, if no image has been assigned.
    */
-  public Image getImage()
-  {
+  public Image getImage() {
     return image;
   }
 
@@ -183,8 +169,7 @@ public class DefaultImageReference
    *
    * @return The URL from where the image has been loaded, or null, if the source URL is not known.
    */
-  public URL getSourceURL()
-  {
+  public URL getSourceURL() {
     return url;
   }
 
@@ -193,10 +178,8 @@ public class DefaultImageReference
    *
    * @return a String representing the assigned URL.
    */
-  public String getSourceURLString()
-  {
-    if (url == null)
-    {
+  public String getSourceURLString() {
+    if ( url == null ) {
       return null;
     }
     return url.toExternalForm();
@@ -207,31 +190,29 @@ public class DefaultImageReference
    *
    * @return The string.
    */
-  public String toString()
-  {
-    final StringBuffer buf = new StringBuffer(100);
+  public String toString() {
+    final StringBuffer buf = new StringBuffer( 100 );
 
-    buf.append("ImageReference={ URL=");
-    buf.append(getSourceURL());
-    buf.append(", key=");
-    buf.append(getResourceKey());
-    buf.append(", image=");
-    buf.append(getImage());
-    buf.append(", width=");
-    buf.append(getImageWidth());
-    buf.append(", height=");
-    buf.append(getImageHeight());
-    buf.append(", scaleX=");
-    buf.append(getScaleX());
-    buf.append(", scaleY=");
-    buf.append(getScaleY());
-    buf.append('}');
+    buf.append( "ImageReference={ URL=" );
+    buf.append( getSourceURL() );
+    buf.append( ", key=" );
+    buf.append( getResourceKey() );
+    buf.append( ", image=" );
+    buf.append( getImage() );
+    buf.append( ", width=" );
+    buf.append( getImageWidth() );
+    buf.append( ", height=" );
+    buf.append( getImageHeight() );
+    buf.append( ", scaleX=" );
+    buf.append( getScaleX() );
+    buf.append( ", scaleY=" );
+    buf.append( getScaleY() );
+    buf.append( '}' );
 
     return buf.toString();
   }
 
-  public ResourceKey getResourceKey()
-  {
+  public ResourceKey getResourceKey() {
     return resourceKey;
   }
 
@@ -241,35 +222,27 @@ public class DefaultImageReference
    * @param obj the object to test.
    * @return true if the specified object is equal to this one.
    */
-  public boolean equals(final Object obj)
-  {
-    if (obj == null)
-    {
+  public boolean equals( final Object obj ) {
+    if ( obj == null ) {
       return false;
     }
-    if (obj instanceof DefaultImageReference == false)
-    {
+    if ( obj instanceof DefaultImageReference == false ) {
       return false;
     }
     final DefaultImageReference ref = (DefaultImageReference) obj;
-    if (ObjectUtilities.equal(String.valueOf(url), String.valueOf(ref.url)) == false)
-    {
+    if ( ObjectUtilities.equal( String.valueOf( url ), String.valueOf( ref.url ) ) == false ) {
       return false;
     }
-    if (width != ref.width)
-    {
+    if ( width != ref.width ) {
       return false;
     }
-    if (height != ref.height)
-    {
+    if ( height != ref.height ) {
       return false;
     }
-    if (scaleX != ref.scaleX)
-    {
+    if ( scaleX != ref.scaleX ) {
       return false;
     }
-    if (scaleY != ref.scaleY)
-    {
+    if ( scaleY != ref.scaleY ) {
       return false;
     }
     return true;
@@ -280,14 +253,13 @@ public class DefaultImageReference
    *
    * @return the hashcode
    */
-  public int hashCode()
-  {
+  public int hashCode() {
     int result = width;
     result = 29 * result + height;
-    result = 29 * result + Float.floatToIntBits(scaleX);
-    result = 29 * result + Float.floatToIntBits(scaleY);
-    result = 29 * result + (image != null ? image.hashCode() : 0);
-    result = 29 * result + (url != null ? url.toString().hashCode() : 0);
+    result = 29 * result + Float.floatToIntBits( scaleX );
+    result = 29 * result + Float.floatToIntBits( scaleY );
+    result = 29 * result + ( image != null ? image.hashCode() : 0 );
+    result = 29 * result + ( url != null ? url.toString().hashCode() : 0 );
     return result;
   }
 
@@ -298,8 +270,7 @@ public class DefaultImageReference
    * @throws CloneNotSupportedException this should never be thrown.
    */
   public Object clone()
-      throws CloneNotSupportedException
-  {
+    throws CloneNotSupportedException {
     return super.clone();
   }
 
@@ -308,8 +279,7 @@ public class DefaultImageReference
    *
    * @return the image width.
    */
-  public int getImageWidth()
-  {
+  public int getImageWidth() {
     return width;
   }
 
@@ -318,8 +288,7 @@ public class DefaultImageReference
    *
    * @return the image height.
    */
-  public int getImageHeight()
-  {
+  public int getImageHeight() {
     return height;
   }
 
@@ -329,8 +298,7 @@ public class DefaultImageReference
    *
    * @return true, if it is loadable, false otherwise.
    */
-  public boolean isLoadable()
-  {
+  public boolean isLoadable() {
     return getResourceKey() != null;
   }
 
@@ -339,13 +307,11 @@ public class DefaultImageReference
    *
    * @return the image identifier.
    */
-  public Object getIdentity()
-  {
-    if (url == null)
-    {
+  public Object getIdentity() {
+    if ( url == null ) {
       return null;
     }
-    return String.valueOf(url);
+    return String.valueOf( url );
   }
 
   /**
@@ -354,10 +320,8 @@ public class DefaultImageReference
    *
    * @return the name.
    */
-  public String getName()
-  {
-    if (url != null)
-    {
+  public String getName() {
+    if ( url != null ) {
       return url.toExternalForm();
     }
     return null;
@@ -369,8 +333,7 @@ public class DefaultImageReference
    *
    * @return true, if that image contains contains identity information, false otherwise.
    */
-  public boolean isIdentifiable()
-  {
+  public boolean isIdentifiable() {
     return url != null;
   }
 
@@ -379,8 +342,7 @@ public class DefaultImageReference
    *
    * @return the scale factor.
    */
-  public float getScaleX()
-  {
+  public float getScaleX() {
     return scaleX;
   }
 
@@ -389,8 +351,7 @@ public class DefaultImageReference
    *
    * @return the scale factor.
    */
-  public float getScaleY()
-  {
+  public float getScaleY() {
     return scaleY;
   }
 
@@ -403,8 +364,7 @@ public class DefaultImageReference
    * @param sx the scale factor.
    * @param sy the scale factor.
    */
-  public void setScale(final float sx, final float sy)
-  {
+  public void setScale( final float sx, final float sy ) {
     this.scaleX = sx;
     this.scaleY = sy;
   }

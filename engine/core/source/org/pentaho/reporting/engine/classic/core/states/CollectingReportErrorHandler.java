@@ -24,41 +24,32 @@ import java.util.ArrayList;
  *
  * @author Thomas Morgner
  */
-public class CollectingReportErrorHandler implements ReportProcessingErrorHandler
-{
+public class CollectingReportErrorHandler implements ReportProcessingErrorHandler {
   private ArrayList errorList;
 
-  public CollectingReportErrorHandler()
-  {
+  public CollectingReportErrorHandler() {
   }
 
-  public void handleError(final Exception exception)
-  {
-    if (errorList == null)
-    {
+  public void handleError( final Exception exception ) {
+    if ( errorList == null ) {
       errorList = new ArrayList();
     }
-    errorList.add(exception);
+    errorList.add( exception );
   }
 
-  public boolean isErrorOccured()
-  {
-    if (errorList == null)
-    {
+  public boolean isErrorOccured() {
+    if ( errorList == null ) {
       return false;
     }
     return errorList.isEmpty() == false;
   }
 
-  public Exception[] getErrors()
-  {
-    return (Exception[]) errorList.toArray(new Exception[errorList.size()]);
+  public Exception[] getErrors() {
+    return (Exception[]) errorList.toArray( new Exception[ errorList.size() ] );
   }
 
-  public void clearErrors()
-  {
-    if (errorList == null)
-    {
+  public void clearErrors() {
+    if ( errorList == null ) {
       return;
     }
     errorList.clear();

@@ -34,14 +34,11 @@ import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
  *
  * @author Thomas Morgner
  */
-public class PrintExportTask implements Runnable
-{
-  private static class OnDemandShowProgressListener implements ReportProgressListener
-  {
+public class PrintExportTask implements Runnable {
+  private static class OnDemandShowProgressListener implements ReportProgressListener {
     private ReportProgressDialog dialog;
 
-    private OnDemandShowProgressListener(final ReportProgressDialog dialog)
-    {
+    private OnDemandShowProgressListener( final ReportProgressDialog dialog ) {
       this.dialog = dialog;
     }
 
@@ -50,12 +47,10 @@ public class PrintExportTask implements Runnable
      *
      * @param event the start event.
      */
-    public void reportProcessingStarted(final ReportProgressEvent event)
-    {
-      if (dialog != null)
-      {
-        dialog.setVisibleInEDT(true);
-        dialog.reportProcessingStarted(event);
+    public void reportProcessingStarted( final ReportProgressEvent event ) {
+      if ( dialog != null ) {
+        dialog.setVisibleInEDT( true );
+        dialog.reportProcessingStarted( event );
       }
     }
 
@@ -64,11 +59,9 @@ public class PrintExportTask implements Runnable
      *
      * @param event the update event.
      */
-    public void reportProcessingUpdate(final ReportProgressEvent event)
-    {
-      if (dialog != null)
-      {
-        dialog.reportProcessingUpdate(event);
+    public void reportProcessingUpdate( final ReportProgressEvent event ) {
+      if ( dialog != null ) {
+        dialog.reportProcessingUpdate( event );
       }
     }
 
@@ -77,33 +70,29 @@ public class PrintExportTask implements Runnable
      *
      * @param event the finish event.
      */
-    public void reportProcessingFinished(final ReportProgressEvent event)
-    {
-      if (dialog != null)
-      {
-        dialog.reportProcessingFinished(event);
-        dialog.setVisibleInEDT(false);
+    public void reportProcessingFinished( final ReportProgressEvent event ) {
+      if ( dialog != null ) {
+        dialog.reportProcessingFinished( event );
+        dialog.setVisibleInEDT( false );
       }
     }
   }
 
-  private static final Log logger = LogFactory.getLog(PrintExportTask.class);
+  private static final Log logger = LogFactory.getLog( PrintExportTask.class );
   private Messages messages;
   private MasterReport job;
   private ReportProgressDialog progressListener;
   private StatusListener statusListener;
 
-  public PrintExportTask(final MasterReport job,
-                         final ReportProgressDialog progressListener,
-                         final SwingGuiContext swingGuiContext)
-  {
+  public PrintExportTask( final MasterReport job,
+                          final ReportProgressDialog progressListener,
+                          final SwingGuiContext swingGuiContext ) {
     this.job = job;
     this.progressListener = progressListener;
-    if (swingGuiContext != null)
-    {
+    if ( swingGuiContext != null ) {
       this.statusListener = swingGuiContext.getStatusListener();
-      this.messages = new Messages(swingGuiContext.getLocale(), PrintingPlugin.BASE_RESOURCE_CLASS,
-          ObjectUtilities.getClassLoader(PrintingPlugin.class));
+      this.messages = new Messages( swingGuiContext.getLocale(), PrintingPlugin.BASE_RESOURCE_CLASS,
+        ObjectUtilities.getClassLoader( PrintingPlugin.class ) );
     }
   }
 
@@ -115,26 +104,18 @@ public class PrintExportTask implements Runnable
    *
    * @see Thread#run()
    */
-  public void run()
-  {
-    try
-    {
-      PrintUtil.print(job, new OnDemandShowProgressListener(progressListener));
-    }
-    catch (Exception e)
-    {
-      if (statusListener != null)
-      {
+  public void run() {
+    try {
+      PrintUtil.print( job, new OnDemandShowProgressListener( progressListener ) );
+    } catch ( Exception e ) {
+      if ( statusListener != null ) {
         statusListener.setStatus
-            (StatusType.ERROR, messages.getString("PrintExportTask.USER_EXPORT_FAILED"), e); //$NON-NLS-1$
+          ( StatusType.ERROR, messages.getString( "PrintExportTask.USER_EXPORT_FAILED" ), e ); //$NON-NLS-1$
       }
-      PrintExportTask.logger.error("Printing Failed", e); //$NON-NLS-1$
-    }
-    finally
-    {
-      if (progressListener != null)
-      {
-        progressListener.setVisible(false);
+      PrintExportTask.logger.error( "Printing Failed", e ); //$NON-NLS-1$
+    } finally {
+      if ( progressListener != null ) {
+        progressListener.setVisible( false );
       }
     }
   }

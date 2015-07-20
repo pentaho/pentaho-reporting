@@ -23,25 +23,22 @@ import org.pentaho.reporting.engine.classic.core.ReportProcessingException;
 import org.pentaho.reporting.engine.classic.core.SubReport;
 import org.pentaho.reporting.engine.classic.core.states.datarow.DefaultFlowController;
 
-public class ReportDynamicStyleAnalyzerPreProcessor extends AbstractReportPreProcessor
-{
-  public ReportDynamicStyleAnalyzerPreProcessor()
-  {
+public class ReportDynamicStyleAnalyzerPreProcessor extends AbstractReportPreProcessor {
+  public ReportDynamicStyleAnalyzerPreProcessor() {
   }
 
-  public MasterReport performPreProcessing(final MasterReport definition,
-                                           final DefaultFlowController flowController) throws ReportProcessingException
-  {
+  public MasterReport performPreProcessing( final MasterReport definition,
+                                            final DefaultFlowController flowController )
+    throws ReportProcessingException {
     DynamicReportStyleAnalyzer analyzer = new DynamicReportStyleAnalyzer();
-    analyzer.compute(definition);
+    analyzer.compute( definition );
     return definition;
   }
 
-  public SubReport performPreProcessing(final SubReport definition,
-                                        final DefaultFlowController flowController) throws ReportProcessingException
-  {
+  public SubReport performPreProcessing( final SubReport definition,
+                                         final DefaultFlowController flowController ) throws ReportProcessingException {
     DynamicReportStyleAnalyzer analyzer = new DynamicReportStyleAnalyzer();
-    analyzer.compute(definition);
+    analyzer.compute( definition );
     return definition;
   }
 }

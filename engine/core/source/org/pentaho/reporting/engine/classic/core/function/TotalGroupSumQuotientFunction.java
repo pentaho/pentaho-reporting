@@ -17,9 +17,9 @@
 
 package org.pentaho.reporting.engine.classic.core.function;
 
-import java.math.BigDecimal;
-
 import org.pentaho.reporting.engine.classic.core.event.ReportEvent;
+
+import java.math.BigDecimal;
 
 /**
  * A report function that calculates the quotient of two summed fields (columns) from the report's data row. This
@@ -39,8 +39,7 @@ import org.pentaho.reporting.engine.classic.core.event.ReportEvent;
  *
  * @author Thomas Morgner
  */
-public class TotalGroupSumQuotientFunction extends AbstractFunction
-{
+public class TotalGroupSumQuotientFunction extends AbstractFunction {
   /**
    * Internal function to compute the dividend.
    */
@@ -63,8 +62,7 @@ public class TotalGroupSumQuotientFunction extends AbstractFunction
    * <p/>
    * Initially the function has no name...be sure to assign one before using the function.
    */
-  public TotalGroupSumQuotientFunction()
-  {
+  public TotalGroupSumQuotientFunction() {
     scale = 14;
     roundingMode = BigDecimal.ROUND_HALF_UP;
     dividendFunction = new TotalGroupSumFunction();
@@ -76,10 +74,9 @@ public class TotalGroupSumQuotientFunction extends AbstractFunction
    *
    * @param event the event.
    */
-  public void reportInitialized(final ReportEvent event)
-  {
-    dividendFunction.reportInitialized(event);
-    divisorFunction.reportInitialized(event);
+  public void reportInitialized( final ReportEvent event ) {
+    dividendFunction.reportInitialized( event );
+    divisorFunction.reportInitialized( event );
   }
 
   /**
@@ -87,10 +84,9 @@ public class TotalGroupSumQuotientFunction extends AbstractFunction
    *
    * @param event the event.
    */
-  public void groupStarted(final ReportEvent event)
-  {
-    dividendFunction.groupStarted(event);
-    divisorFunction.groupStarted(event);
+  public void groupStarted( final ReportEvent event ) {
+    dividendFunction.groupStarted( event );
+    divisorFunction.groupStarted( event );
   }
 
 
@@ -99,10 +95,9 @@ public class TotalGroupSumQuotientFunction extends AbstractFunction
    *
    * @param event the event.
    */
-  public void itemsAdvanced(final ReportEvent event)
-  {
-    dividendFunction.itemsAdvanced(event);
-    divisorFunction.itemsAdvanced(event);
+  public void itemsAdvanced( final ReportEvent event ) {
+    dividendFunction.itemsAdvanced( event );
+    divisorFunction.itemsAdvanced( event );
   }
 
   /**
@@ -110,8 +105,7 @@ public class TotalGroupSumQuotientFunction extends AbstractFunction
    *
    * @return the group name.
    */
-  public String getGroup()
-  {
+  public String getGroup() {
     return divisorFunction.getGroup();
   }
 
@@ -120,10 +114,9 @@ public class TotalGroupSumQuotientFunction extends AbstractFunction
    *
    * @param group the group name.
    */
-  public void setGroup(final String group)
-  {
-    this.divisorFunction.setGroup(group);
-    this.dividendFunction.setGroup(group);
+  public void setGroup( final String group ) {
+    this.divisorFunction.setGroup( group );
+    this.dividendFunction.setGroup( group );
   }
 
   /**
@@ -132,15 +125,13 @@ public class TotalGroupSumQuotientFunction extends AbstractFunction
    *
    * @return The value of the function.
    */
-  public Object getValue()
-  {
+  public Object getValue() {
     final BigDecimal dividend = (BigDecimal) dividendFunction.getValue();
     final BigDecimal divisor = (BigDecimal) divisorFunction.getValue();
-    if (divisor == null || dividend == null || divisor.doubleValue() == 0)
-    {
+    if ( divisor == null || dividend == null || divisor.doubleValue() == 0 ) {
       return null;
     }
-    return dividend.divide(divisor, scale, roundingMode);
+    return dividend.divide( divisor, scale, roundingMode );
   }
 
   /**
@@ -149,8 +140,7 @@ public class TotalGroupSumQuotientFunction extends AbstractFunction
    *
    * @return The field name.
    */
-  public String getDividend()
-  {
+  public String getDividend() {
     return this.dividendFunction.getField();
   }
 
@@ -160,8 +150,7 @@ public class TotalGroupSumQuotientFunction extends AbstractFunction
    *
    * @return The field name.
    */
-  public String getDivisor()
-  {
+  public String getDivisor() {
     return this.divisorFunction.getField();
   }
 
@@ -171,9 +160,8 @@ public class TotalGroupSumQuotientFunction extends AbstractFunction
    *
    * @param dividend the field name (null not permitted).
    */
-  public void setDividend(final String dividend)
-  {
-    this.dividendFunction.setField(dividend);
+  public void setDividend( final String dividend ) {
+    this.dividendFunction.setField( dividend );
   }
 
   /**
@@ -182,19 +170,17 @@ public class TotalGroupSumQuotientFunction extends AbstractFunction
    *
    * @param divisor the field name (null not permitted).
    */
-  public void setDivisor(final String divisor)
-  {
-    this.divisorFunction.setField(divisor);
+  public void setDivisor( final String divisor ) {
+    this.divisorFunction.setField( divisor );
   }
 
   /**
    * Returns the defined rounding mode. This influences the precision of the divide-operation.
    *
    * @return the rounding mode.
-   * @see java.math.BigDecimal#divide(java.math.BigDecimal,int)
+   * @see java.math.BigDecimal#divide(java.math.BigDecimal, int)
    */
-  public int getRoundingMode()
-  {
+  public int getRoundingMode() {
     return roundingMode;
   }
 
@@ -202,10 +188,9 @@ public class TotalGroupSumQuotientFunction extends AbstractFunction
    * Defines the rounding mode. This influences the precision of the divide-operation.
    *
    * @param roundingMode the rounding mode.
-   * @see java.math.BigDecimal#divide(java.math.BigDecimal,int)
+   * @see java.math.BigDecimal#divide(java.math.BigDecimal, int)
    */
-  public void setRoundingMode(final int roundingMode)
-  {
+  public void setRoundingMode( final int roundingMode ) {
     this.roundingMode = roundingMode;
   }
 
@@ -214,8 +199,7 @@ public class TotalGroupSumQuotientFunction extends AbstractFunction
    *
    * @return the scale.
    */
-  public int getScale()
-  {
+  public int getScale() {
     return scale;
   }
 
@@ -224,8 +208,7 @@ public class TotalGroupSumQuotientFunction extends AbstractFunction
    *
    * @param scale the scale.
    */
-  public void setScale(final int scale)
-  {
+  public void setScale( final int scale ) {
     this.scale = scale;
   }
 
@@ -235,11 +218,10 @@ public class TotalGroupSumQuotientFunction extends AbstractFunction
    * @param level the dependency level.
    * @see Expression#getDependencyLevel()
    */
-  public void setDependencyLevel(final int level)
-  {
-    super.setDependencyLevel(level);
-    dividendFunction.setDependencyLevel(level);
-    divisorFunction.setDependencyLevel(level);
+  public void setDependencyLevel( final int level ) {
+    super.setDependencyLevel( level );
+    dividendFunction.setDependencyLevel( level );
+    divisorFunction.setDependencyLevel( level );
   }
 
   /**
@@ -249,29 +231,25 @@ public class TotalGroupSumQuotientFunction extends AbstractFunction
    *
    * @param runtime the runtime information for the expression
    */
-  public void setRuntime(final ExpressionRuntime runtime)
-  {
-    super.setRuntime(runtime);
-    dividendFunction.setRuntime(runtime);
-    divisorFunction.setRuntime(runtime);
+  public void setRuntime( final ExpressionRuntime runtime ) {
+    super.setRuntime( runtime );
+    dividendFunction.setRuntime( runtime );
+    divisorFunction.setRuntime( runtime );
   }
 
-  public String getCrosstabFilterGroup()
-  {
+  public String getCrosstabFilterGroup() {
     return dividendFunction.getCrosstabFilterGroup();
   }
 
-  public void setCrosstabFilterGroup(final String crosstabFilterGroup)
-  {
-    divisorFunction.setCrosstabFilterGroup(crosstabFilterGroup);
-    dividendFunction.setCrosstabFilterGroup(crosstabFilterGroup);
+  public void setCrosstabFilterGroup( final String crosstabFilterGroup ) {
+    divisorFunction.setCrosstabFilterGroup( crosstabFilterGroup );
+    dividendFunction.setCrosstabFilterGroup( crosstabFilterGroup );
   }
 
-  public Object clone() throws CloneNotSupportedException
-  {
+  public Object clone() throws CloneNotSupportedException {
     final TotalGroupSumQuotientFunction fn = (TotalGroupSumQuotientFunction) super.clone();
     fn.dividendFunction = (TotalGroupSumFunction) dividendFunction.clone();
-    fn.divisorFunction= (TotalGroupSumFunction) divisorFunction.clone();
+    fn.divisorFunction = (TotalGroupSumFunction) divisorFunction.clone();
     return fn;
   }
 }

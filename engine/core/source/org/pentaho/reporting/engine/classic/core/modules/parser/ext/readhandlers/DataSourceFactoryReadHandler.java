@@ -26,10 +26,8 @@ import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
 import org.pentaho.reporting.libraries.xmlns.parser.ParseException;
 import org.xml.sax.SAXException;
 
-public class DataSourceFactoryReadHandler extends AbstractPropertyXmlReadHandler
-{
-  public DataSourceFactoryReadHandler()
-  {
+public class DataSourceFactoryReadHandler extends AbstractPropertyXmlReadHandler {
+  public DataSourceFactoryReadHandler() {
   }
 
   /**
@@ -38,25 +36,22 @@ public class DataSourceFactoryReadHandler extends AbstractPropertyXmlReadHandler
    * @param attrs the attributes.
    * @throws org.xml.sax.SAXException if there is a parsing error.
    */
-  protected void startParsing(final PropertyAttributes attrs)
-      throws SAXException
-  {
-    final String className = CompatibilityMapperUtil.mapClassName(attrs.getValue(getUri(), "class"));
-    if (className == null)
-    {
-      throw new ParseException("Attribute 'class' is missing.",
-          getRootHandler().getDocumentLocator());
+  protected void startParsing( final PropertyAttributes attrs )
+    throws SAXException {
+    final String className = CompatibilityMapperUtil.mapClassName( attrs.getValue( getUri(), "class" ) );
+    if ( className == null ) {
+      throw new ParseException( "Attribute 'class' is missing.",
+        getRootHandler().getDocumentLocator() );
     }
     final DataSourceCollector fc =
-        (DataSourceCollector) getRootHandler().getHelperObject
-            (ReportDefinitionReadHandler.DATASOURCE_FACTORY_KEY);
+      (DataSourceCollector) getRootHandler().getHelperObject
+        ( ReportDefinitionReadHandler.DATASOURCE_FACTORY_KEY );
 
     final DataSourceFactory factory = (DataSourceFactory)
-        ObjectUtilities.loadAndInstantiate(className, getClass(), DataSourceFactory.class);
-    if (factory != null)
-    {
-      factory.configure(getRootHandler().getParserConfiguration());
-      fc.addFactory(factory);
+      ObjectUtilities.loadAndInstantiate( className, getClass(), DataSourceFactory.class );
+    if ( factory != null ) {
+      factory.configure( getRootHandler().getParserConfiguration() );
+      fc.addFactory( factory );
     }
   }
 
@@ -65,8 +60,7 @@ public class DataSourceFactoryReadHandler extends AbstractPropertyXmlReadHandler
    *
    * @return the object.
    */
-  public Object getObject()
-  {
+  public Object getObject() {
     return null;
   }
 

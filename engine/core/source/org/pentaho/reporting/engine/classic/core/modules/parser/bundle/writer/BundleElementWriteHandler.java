@@ -17,19 +17,18 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.parser.bundle.writer;
 
-import java.io.IOException;
-
 import org.pentaho.reporting.engine.classic.core.Element;
 import org.pentaho.reporting.libraries.docbundle.WriteableDocumentBundle;
 import org.pentaho.reporting.libraries.xmlns.writer.XmlWriter;
+
+import java.io.IOException;
 
 /**
  * Todo: Document Me
  *
  * @author Thomas Morgner
  */
-public interface BundleElementWriteHandler
-{
+public interface BundleElementWriteHandler {
   /**
    * Writes a single element as XML structure.
    *
@@ -40,9 +39,9 @@ public interface BundleElementWriteHandler
    * @throws IOException           if an IO error occured.
    * @throws BundleWriterException if an Bundle writer.
    */
-  public void writeElement(final WriteableDocumentBundle bundle,
-                           final BundleWriterState state,
-                           final XmlWriter xmlWriter,
-                           final Element element)
-      throws IOException, BundleWriterException;
+  public void writeElement( final WriteableDocumentBundle bundle,
+                            final BundleWriterState state,
+                            final XmlWriter xmlWriter,
+                            final Element element )
+    throws IOException, BundleWriterException;
 }

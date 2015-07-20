@@ -17,13 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.parser.base;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Iterator;
-import java.util.List;
-
 import org.pentaho.reporting.engine.classic.core.AbstractReportDefinition;
 import org.pentaho.reporting.engine.classic.core.DetailsFooter;
 import org.pentaho.reporting.engine.classic.core.DetailsHeader;
@@ -36,6 +29,13 @@ import org.pentaho.reporting.engine.classic.core.RelationalGroup;
 import org.pentaho.reporting.engine.classic.core.SubGroupBody;
 import org.pentaho.reporting.engine.classic.core.filter.types.bands.GroupDataBodyType;
 import org.pentaho.reporting.libraries.xmlns.parser.ParseException;
+
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * The group list is used to store groups in a ordered way. The less specific groups are guaranteed to be listed before
@@ -56,8 +56,7 @@ import org.pentaho.reporting.libraries.xmlns.parser.ParseException;
  * @author Thomas Morgner
  * @deprecated The group-list is a legacy class and should not be used outside the legacy handling.
  */
-public class GroupList implements Cloneable, Serializable
-{
+public class GroupList implements Cloneable, Serializable {
   /**
    * A unique identifier for long term persistance.
    */
@@ -81,8 +80,7 @@ public class GroupList implements Cloneable, Serializable
   /**
    * Constructs a new group list, with only a default group inside.
    */
-  public GroupList()
-  {
+  public GroupList() {
     backend = new ArrayList();
     createDefaultGroup();
   }
@@ -90,10 +88,9 @@ public class GroupList implements Cloneable, Serializable
   /**
    * Creates a default group. The default group has no fields defined and spans all fields of the report.
    */
-  private void createDefaultGroup()
-  {
+  private void createDefaultGroup() {
     final RelationalGroup defaultGroup = new RelationalGroup();
-    add(defaultGroup);
+    add( defaultGroup );
   }
 
   /**
@@ -102,10 +99,9 @@ public class GroupList implements Cloneable, Serializable
    *
    * @param list groups to add to the list.
    */
-  protected GroupList(final GroupList list)
-  {
+  protected GroupList( final GroupList list ) {
     backend = new ArrayList();
-    backend.addAll(list.backend);
+    backend.addAll( list.backend );
   }
 
   /**
@@ -114,13 +110,11 @@ public class GroupList implements Cloneable, Serializable
    * @param i the position index (zero-based).
    * @return the report group.
    */
-  public Group get(final int i)
-  {
-    if (cache == null)
-    {
-      cache = (RelationalGroup[]) backend.toArray(new RelationalGroup[backend.size()]);
+  public Group get( final int i ) {
+    if ( cache == null ) {
+      cache = (RelationalGroup[]) backend.toArray( new RelationalGroup[ backend.size() ] );
     }
-    return cache[i];
+    return cache[ i ];
   }
 
   /**
@@ -130,16 +124,13 @@ public class GroupList implements Cloneable, Serializable
    * @return a boolean indicating whether or not the object was removed.
    * @throws NullPointerException if the given group object is null.
    */
-  public boolean remove(final RelationalGroup o)
-  {
-    if (o == null)
-    {
+  public boolean remove( final RelationalGroup o ) {
+    if ( o == null ) {
       throw new NullPointerException();
     }
     cache = null;
-    final int idxOf = backend.indexOf(o);
-    if (idxOf == -1)
-    {
+    final int idxOf = backend.indexOf( o );
+    if ( idxOf == -1 ) {
       // the object was not in the list ...
       return false;
     }
@@ -147,10 +138,9 @@ public class GroupList implements Cloneable, Serializable
     // it might as well be a group that looks like the one we have in the list
     // so be sure that you modify the one, that was removed, and not the one given
     // to us.
-    backend.remove(idxOf);
+    backend.remove( idxOf );
 
-    if (backend.isEmpty())
-    {
+    if ( backend.isEmpty() ) {
       createDefaultGroup();
     }
     return true;
@@ -159,8 +149,7 @@ public class GroupList implements Cloneable, Serializable
   /**
    * Clears the list.
    */
-  public void clear()
-  {
+  public void clear() {
     backend.clear();
     createDefaultGroup();
     cache = null;
@@ -171,36 +160,31 @@ public class GroupList implements Cloneable, Serializable
    *
    * @param o the group object.
    */
-  public void add(final RelationalGroup o)
-  {
-    if (o == null)
-    {
-      throw new NullPointerException("Try to add null");
+  public void add( final RelationalGroup o ) {
+    if ( o == null ) {
+      throw new NullPointerException( "Try to add null" );
     }
     cache = null;
-    final int idxOf = backend.indexOf(o);
-    if (idxOf != -1)
-    {
+    final int idxOf = backend.indexOf( o );
+    if ( idxOf != -1 ) {
       // it might as well be a group that looks like the one we have in the list
       // so be sure that you modify the one, that was removed, and not the one given
       // to us.
-      backend.remove(idxOf);
+      backend.remove( idxOf );
     }
 
     // this is a linear search to find the correct insertation point ..
-    for (int i = 0; i < backend.size(); i++)
-    {
-      final RelationalGroup compareGroup = (RelationalGroup) backend.get(i);
+    for ( int i = 0; i < backend.size(); i++ ) {
+      final RelationalGroup compareGroup = (RelationalGroup) backend.get( i );
       // if the current group at index i is greater than the new group
-      if (compareGroups(compareGroup, o) > 0)
-      {
+      if ( compareGroups( compareGroup, o ) > 0 ) {
         // then insert the new one before the current group ..
-        backend.add(i, o);
+        backend.add( i, o );
         return;
       }
     }
     // finally, if this group is the smallest group ...
-    backend.add(o);
+    backend.add( o );
   }
 
   /**
@@ -211,12 +195,10 @@ public class GroupList implements Cloneable, Serializable
    * @throws NullPointerException if the given collection is null.
    * @throws ClassCastException   if the collection does not contain groups.
    */
-  public void addAll(final Collection c)
-  {
+  public void addAll( final Collection c ) {
     final Iterator it = c.iterator();
-    while (it.hasNext())
-    {
-      add((RelationalGroup) it.next());
+    while ( it.hasNext() ) {
+      add( (RelationalGroup) it.next() );
     }
   }
 
@@ -228,20 +210,18 @@ public class GroupList implements Cloneable, Serializable
    * @see Cloneable
    */
   public Object clone()
-      throws CloneNotSupportedException
-  {
+    throws CloneNotSupportedException {
     final GroupList l = (GroupList) super.clone();
     final Group[] groups = getGroupCache();
 
     l.backend = (ArrayList) backend.clone();
     l.backend.clear();
     final int length = groups.length;
-    l.cache = new RelationalGroup[length];
-    for (int i = 0; i < length; i++)
-    {
-      final RelationalGroup group = (RelationalGroup) groups[i].clone();
-      l.backend.add(group);
-      l.cache[i] = group;
+    l.cache = new RelationalGroup[ length ];
+    for ( int i = 0; i < length; i++ ) {
+      final RelationalGroup group = (RelationalGroup) groups[ i ].clone();
+      l.backend.add( group );
+      l.cache[ i ] = group;
     }
     return l;
   }
@@ -251,9 +231,8 @@ public class GroupList implements Cloneable, Serializable
    *
    * @return An iterator over all groups of the list.
    */
-  public Iterator iterator()
-  {
-    return Collections.unmodifiableList(backend).iterator();
+  public Iterator iterator() {
+    return Collections.unmodifiableList( backend ).iterator();
   }
 
   /**
@@ -261,8 +240,7 @@ public class GroupList implements Cloneable, Serializable
    *
    * @return The number of groups in the list.
    */
-  public int size()
-  {
+  public int size() {
     return backend.size();
   }
 
@@ -271,12 +249,11 @@ public class GroupList implements Cloneable, Serializable
    *
    * @return A string.
    */
-  public String toString()
-  {
+  public String toString() {
     final StringBuffer b = new StringBuffer();
-    b.append("GroupList={backend='");
-    b.append(backend);
-    b.append("'} ");
+    b.append( "GroupList={backend='" );
+    b.append( backend );
+    b.append( "'} " );
     return b.toString();
   }
 
@@ -285,11 +262,9 @@ public class GroupList implements Cloneable, Serializable
    *
    * @return the groups of this list as array.
    */
-  protected RelationalGroup[] getGroupCache()
-  {
-    if (cache == null)
-    {
-      cache = (RelationalGroup[]) backend.toArray(new RelationalGroup[backend.size()]);
+  protected RelationalGroup[] getGroupCache() {
+    if ( cache == null ) {
+      cache = (RelationalGroup[]) backend.toArray( new RelationalGroup[ backend.size() ] );
     }
     return cache;
   }
@@ -300,21 +275,17 @@ public class GroupList implements Cloneable, Serializable
    * @param name the name of the group.
    * @return the group or null if not found.
    */
-  public Group getGroupByName(final String name)
-  {
-    if (name == null)
-    {
+  public Group getGroupByName( final String name ) {
+    if ( name == null ) {
       // Groups cannot have a null-name
       return null;
     }
 
     final Group[] cache = getGroupCache();
     final int length = cache.length;
-    for (int i = 0; i < length; i++)
-    {
-      if (name.equals(cache[i].getName()))
-      {
-        return cache[i];
+    for ( int i = 0; i < length; i++ ) {
+      if ( name.equals( cache[ i ].getName() ) ) {
+        return cache[ i ];
       }
     }
     return null;
@@ -326,40 +297,33 @@ public class GroupList implements Cloneable, Serializable
    *
    * @return the constructed group.
    */
-  public Group constructRootGroup()
-  {
+  public Group constructRootGroup() {
     final RelationalGroup[] cache = getGroupCache();
-    if (cache.length == 0)
-    {
+    if ( cache.length == 0 ) {
       return new RelationalGroup();
     }
 
     GroupDataBody dataBody = null;
 
-    final Group rootGroup = cache[0];
+    final Group rootGroup = cache[ 0 ];
     Group currentGroup = rootGroup;
-    for (int i = 1; i < cache.length; i++)
-    {
-      final Group g = cache[i];
+    for ( int i = 1; i < cache.length; i++ ) {
+      final Group g = cache[ i ];
 
       final GroupBody body = currentGroup.getBody();
-      if (body instanceof SubGroupBody)
-      {
+      if ( body instanceof SubGroupBody ) {
         final SubGroupBody sbody = (SubGroupBody) body;
-        sbody.setGroup(g);
-      }
-      else
-      {
+        sbody.setGroup( g );
+      } else {
         dataBody = (GroupDataBody) currentGroup.getBody();
-        currentGroup.setBody(new SubGroupBody(g));
+        currentGroup.setBody( new SubGroupBody( g ) );
       }
 
       currentGroup = g;
     }
 
-    if (dataBody != null)
-    {
-      currentGroup.setBody(dataBody);
+    if ( dataBody != null ) {
+      currentGroup.setBody( dataBody );
     }
 
     return rootGroup;
@@ -376,54 +340,47 @@ public class GroupList implements Cloneable, Serializable
    * @param g2 the second group.
    * @return an integer indicating the relative ordering of the two groups.
    */
-  private int compareGroups(final RelationalGroup g1, final RelationalGroup g2)
-  {
+  private int compareGroups( final RelationalGroup g1, final RelationalGroup g2 ) {
     final List fieldsGroup1 = g1.getFields();
     final List fieldsGroup2 = g2.getFields();
     /** Remove all element, which are in both lists, they are equal */
-    if (fieldsGroup1.size() == fieldsGroup2.size())
-    {
+    if ( fieldsGroup1.size() == fieldsGroup2.size() ) {
       // both lists contain the same elements.
-      if (fieldsGroup1.containsAll(fieldsGroup2))
-      {
+      if ( fieldsGroup1.containsAll( fieldsGroup2 ) ) {
         return 0;
-      }
-      else
-      {
+      } else {
         // groups with the same number of -, but different fields, are not compareable.
         throw new IllegalArgumentException
-            ("These groups are not comparable, as they don't have any subgroup relation. " +
-                " Groups of the same GroupList must have a subgroup relation. The designated " +
-                " child group must contain all fields of the direct parent plus at least one " +
-                " new field.");
+          ( "These groups are not comparable, as they don't have any subgroup relation. " +
+            " Groups of the same GroupList must have a subgroup relation. The designated " +
+            " child group must contain all fields of the direct parent plus at least one " +
+            " new field." );
       }
     }
 
-    if (fieldsGroup1.containsAll(fieldsGroup2))
-    {
+    if ( fieldsGroup1.containsAll( fieldsGroup2 ) ) {
       // c2 contains all elements of c1, so c1 is subgroup of c2
       return 1;
     }
-    if (fieldsGroup2.containsAll(fieldsGroup1))
-    {
+    if ( fieldsGroup2.containsAll( fieldsGroup1 ) ) {
       // c1 contains all elements of c2, so c2 is subgroup of c1
       return -1;
     }
     // not compareable, invalid groups
     // return 0;
     throw new IllegalArgumentException
-        ("These groups are not comparable, as they don't have any subgroup relation. " +
-            " Groups of the same GroupList must have a subgroup relation. The designated " +
-            " child group must contain all fields of the direct parent plus at least one " +
-            " new field.");
+      ( "These groups are not comparable, as they don't have any subgroup relation. " +
+        " Groups of the same GroupList must have a subgroup relation. The designated " +
+        " child group must contain all fields of the direct parent plus at least one " +
+        " new field." );
   }
 
-  public void installIntoReport(final AbstractReportDefinition report) throws ParseException
-  {
-    final GroupDataBody originalGroupDataBody = (GroupDataBody) report.getChildElementByType(GroupDataBodyType.INSTANCE);
-    if (originalGroupDataBody == null)
-    {
-      throw new ParseException("The report is not a relational report, cannot install relational detail sections here");
+  public void installIntoReport( final AbstractReportDefinition report ) throws ParseException {
+    final GroupDataBody originalGroupDataBody =
+      (GroupDataBody) report.getChildElementByType( GroupDataBodyType.INSTANCE );
+    if ( originalGroupDataBody == null ) {
+      throw new ParseException(
+        "The report is not a relational report, cannot install relational detail sections here" );
     }
 
     final ItemBand ib = originalGroupDataBody.getItemBand();
@@ -432,21 +389,20 @@ public class GroupList implements Cloneable, Serializable
     final DetailsFooter detailsFooter = originalGroupDataBody.getDetailsFooter();
 
     final Group newRootGroup = constructRootGroup();
-    if (report.getRootGroup() == newRootGroup)
-    {
+    if ( report.getRootGroup() == newRootGroup ) {
       return;
     }
 
-    report.setRootGroup(newRootGroup);
-    final GroupDataBody groupDataBody = (GroupDataBody) newRootGroup.getChildElementByType(GroupDataBodyType.INSTANCE);
-    if (groupDataBody == null)
-    {
+    report.setRootGroup( newRootGroup );
+    final GroupDataBody groupDataBody =
+      (GroupDataBody) newRootGroup.getChildElementByType( GroupDataBodyType.INSTANCE );
+    if ( groupDataBody == null ) {
       return;
     }
 
-    groupDataBody.setDetailsFooter(detailsFooter);
-    groupDataBody.setDetailsHeader(detailsHeader);
-    groupDataBody.setItemBand(ib);
-    groupDataBody.setNoDataBand(nd);
+    groupDataBody.setDetailsFooter( detailsFooter );
+    groupDataBody.setDetailsHeader( detailsHeader );
+    groupDataBody.setItemBand( ib );
+    groupDataBody.setNoDataBand( nd );
   }
 }

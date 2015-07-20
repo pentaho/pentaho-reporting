@@ -10,34 +10,30 @@ import org.pentaho.reporting.engine.classic.core.layout.table.TableTestUtil;
 import org.pentaho.reporting.engine.classic.core.testsupport.DebugReportRunner;
 import org.pentaho.reporting.engine.classic.core.testsupport.selector.MatchFactory;
 
-public class Prd4738Test extends TestCase
-{
-  public Prd4738Test()
-  {
+public class Prd4738Test extends TestCase {
+  public Prd4738Test() {
   }
 
-  protected void setUp() throws Exception
-  {
+  protected void setUp() throws Exception {
     ClassicEngineBoot.getInstance().start();
   }
 
-  public void testBug() throws Exception
-  {
+  public void testBug() throws Exception {
     final MasterReport report = new MasterReport();
-    report.getReportHeader().setLayout("row");
-    report.getReportHeader().addElement(TableTestUtil.createDataItem("Test1"));
-    report.getReportHeader().addElement(TableTestUtil.createDataItem("Test2"));
+    report.getReportHeader().setLayout( "row" );
+    report.getReportHeader().addElement( TableTestUtil.createDataItem( "Test1" ) );
+    report.getReportHeader().addElement( TableTestUtil.createDataItem( "Test2" ) );
     report.getReportConfiguration().setConfigProperty
-        ("org.pentaho.reporting.engine.classic.core.modules.output.table.xml.AssumeOverflowX", "true");
+      ( "org.pentaho.reporting.engine.classic.core.modules.output.table.xml.AssumeOverflowX", "true" );
     report.getReportConfiguration().setConfigProperty
-        ("org.pentaho.reporting.engine.classic.core.modules.output.table.xls.AssumeOverflowX", "true");
-    final LogicalPageBox box = DebugReportRunner.layoutTablePage(report, 0);
+      ( "org.pentaho.reporting.engine.classic.core.modules.output.table.xls.AssumeOverflowX", "true" );
+    final LogicalPageBox box = DebugReportRunner.layoutTablePage( report, 0 );
 
-    final RenderNode[] elementsByNodeType = MatchFactory.findElementsByNodeType(box, LayoutNodeTypes.TYPE_BOX_PARAGRAPH);
-    for (int i = 0; i < elementsByNodeType.length; i++)
-    {
-      RenderNode renderNode = elementsByNodeType[i];
-      assertEquals(10000000, renderNode.getWidth());
+    final RenderNode[] elementsByNodeType =
+      MatchFactory.findElementsByNodeType( box, LayoutNodeTypes.TYPE_BOX_PARAGRAPH );
+    for ( int i = 0; i < elementsByNodeType.length; i++ ) {
+      RenderNode renderNode = elementsByNodeType[ i ];
+      assertEquals( 10000000, renderNode.getWidth() );
     }
   }
 }

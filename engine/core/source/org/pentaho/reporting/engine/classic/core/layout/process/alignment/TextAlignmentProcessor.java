@@ -27,17 +27,16 @@ import org.pentaho.reporting.engine.classic.core.layout.process.layoutrules.Sequ
  *
  * @author Thomas Morgner
  */
-public interface TextAlignmentProcessor
-{
-  public void initialize(OutputProcessorMetaData metaData,
-                         SequenceList sequence,
-                         long start,
-                         long end,
-                         PageGrid breaks,
-                         boolean overflowX);
+public interface TextAlignmentProcessor {
+  public void initialize( OutputProcessorMetaData metaData,
+                          SequenceList sequence,
+                          long start,
+                          long end,
+                          PageGrid breaks,
+                          boolean overflowX );
 
-  public void updateLineSize(final long start, final long end);
-  
+  public void updateLineSize( final long start, final long end );
+
   public void deinitialize();
 
   public boolean hasNext();

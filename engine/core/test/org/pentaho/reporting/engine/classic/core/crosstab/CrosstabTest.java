@@ -17,8 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.core.crosstab;
 
-import javax.swing.table.DefaultTableModel;
-
 import junit.framework.TestCase;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.pentaho.reporting.engine.classic.core.CrosstabGroup;
@@ -27,38 +25,33 @@ import org.pentaho.reporting.engine.classic.core.TableDataFactory;
 import org.pentaho.reporting.engine.classic.core.layout.model.LogicalPageBox;
 import org.pentaho.reporting.engine.classic.core.testsupport.DebugReportRunner;
 
-public class CrosstabTest extends TestCase
-{
-  public CrosstabTest()
-  {
+import javax.swing.table.DefaultTableModel;
+
+public class CrosstabTest extends TestCase {
+  public CrosstabTest() {
   }
 
-  public CrosstabTest(final String s)
-  {
-    super(s);
+  public CrosstabTest( final String s ) {
+    super( s );
   }
 
-  protected void setUp() throws Exception
-  {
+  protected void setUp() throws Exception {
     ClassicEngineBoot.getInstance().start();
   }
 
-  public void testEmptyCrosstab() throws Exception
-  {
+  public void testEmptyCrosstab() throws Exception {
     final MasterReport report = new MasterReport();
-    report.setRootGroup(new CrosstabGroup());
-    report.setQuery("default");
-    report.setDataFactory(new TableDataFactory("default", new DefaultTableModel(1, 1)));
-    DebugReportRunner.executeAll(report);
+    report.setRootGroup( new CrosstabGroup() );
+    report.setQuery( "default" );
+    report.setDataFactory( new TableDataFactory( "default", new DefaultTableModel( 1, 1 ) ) );
+    DebugReportRunner.executeAll( report );
   }
 
-  public void testBreaking1() throws Exception
-  {
-    if (DebugReportRunner.isSkipLongRunTest())
-    {
+  public void testBreaking1() throws Exception {
+    if ( DebugReportRunner.isSkipLongRunTest() ) {
       return;
     }
-    final MasterReport report = DebugReportRunner.parseGoldenSampleReport("Prd-3857-002.prpt");
-    final LogicalPageBox logicalPageBox = DebugReportRunner.layoutPage(report, 0);
+    final MasterReport report = DebugReportRunner.parseGoldenSampleReport( "Prd-3857-002.prpt" );
+    final LogicalPageBox logicalPageBox = DebugReportRunner.layoutPage( report, 0 );
   }
 }

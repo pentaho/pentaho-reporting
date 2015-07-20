@@ -24,18 +24,15 @@ import org.pentaho.reporting.engine.classic.core.layout.model.RenderBox;
  *
  * @author Thomas Morgner
  */
-public class ContentMarker implements CellMarker
-{
+public class ContentMarker implements CellMarker {
   private RenderBox content;
   private long effectiveShift;
   private SectionType sectionType;
 
-  public ContentMarker(final RenderBox content,
-                       final long effectiveShift,
-                       final SectionType sectionType)
-  {
-    if (content == null)
-    {
+  public ContentMarker( final RenderBox content,
+                        final long effectiveShift,
+                        final SectionType sectionType ) {
+    if ( content == null ) {
       throw new NullPointerException();
     }
     this.effectiveShift = effectiveShift;
@@ -44,38 +41,31 @@ public class ContentMarker implements CellMarker
   }
 
 
-  public long getContentOffset()
-  {
+  public long getContentOffset() {
     return effectiveShift;
   }
 
-  public RenderBox getContent()
-  {
+  public RenderBox getContent() {
     return content;
   }
 
-  public boolean isCommited()
-  {
+  public boolean isCommited() {
     return content.isCommited();
   }
 
-  public boolean isFinished()
-  {
+  public boolean isFinished() {
     return content.isFinishedTable();
   }
 
-  public SectionType getSectionType()
-  {
+  public SectionType getSectionType() {
     return sectionType;
   }
 
-  public String toString()
-  {
+  public String toString() {
     return content.toString();
   }
 
-  public int getSectionDepth()
-  {
+  public int getSectionDepth() {
     return Integer.MAX_VALUE;
   }
 }

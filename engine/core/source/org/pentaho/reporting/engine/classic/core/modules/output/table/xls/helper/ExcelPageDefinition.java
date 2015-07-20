@@ -24,8 +24,7 @@ import org.pentaho.reporting.engine.classic.core.util.PageSize;
  *
  * @author Thomas Morgner
  */
-public final class ExcelPageDefinition
-{
+public final class ExcelPageDefinition {
   /**
    * The excel internal page format code referring to that page size.
    */
@@ -46,17 +45,15 @@ public final class ExcelPageDefinition
    * @param width          the width of the page.
    * @param height         the height of the page.
    */
-  public ExcelPageDefinition(final short pageFormatCode, final int width,
-                             final int height)
-  {
+  public ExcelPageDefinition( final short pageFormatCode, final int width,
+                              final int height ) {
     this.pageFormatCode = pageFormatCode;
     this.width = width;
     this.height = height;
   }
 
-  public ExcelPageDefinition(final short pageFormatCode, final PageSize pageSize)
-  {
-    this(pageFormatCode, (int) pageSize.getWidth(), (int) pageSize.getHeight());
+  public ExcelPageDefinition( final short pageFormatCode, final PageSize pageSize ) {
+    this( pageFormatCode, (int) pageSize.getWidth(), (int) pageSize.getHeight() );
   }
 
   /**
@@ -64,8 +61,7 @@ public final class ExcelPageDefinition
    *
    * @return the page format code as defined in the Excel File format.
    */
-  public short getPageFormatCode()
-  {
+  public short getPageFormatCode() {
     return pageFormatCode;
   }
 
@@ -74,8 +70,7 @@ public final class ExcelPageDefinition
    *
    * @return the page width;
    */
-  public int getWidth()
-  {
+  public int getWidth() {
     return width;
   }
 
@@ -84,8 +79,7 @@ public final class ExcelPageDefinition
    *
    * @return the page height;
    */
-  public int getHeight()
-  {
+  public int getHeight() {
     return height;
   }
 }

@@ -62,10 +62,9 @@ import org.pentaho.reporting.engine.classic.core.style.StyleSheet;
 import org.pentaho.reporting.engine.classic.core.util.InstanceID;
 import org.pentaho.reporting.libraries.resourceloader.ResourceKey;
 
-public class DefaultRenderNodeFactory implements RenderNodeFactory
-{
+public class DefaultRenderNodeFactory implements RenderNodeFactory {
   public static final String LAYOUT_PARAGRAPH_LINEBOX = "::paragraph-linebox";
-  private static StyleSheet SECTION_DEFAULT_STYLE = new SimpleStyleSheet(new UseMinChunkWidthStyleSheet(true));
+  private static StyleSheet SECTION_DEFAULT_STYLE = new SimpleStyleSheet( new UseMinChunkWidthStyleSheet( true ) );
 
   private SimpleStyleSheet bandWithoutKeepTogetherStyle;
   private BoxDefinitionFactory boxDefinitionFactory;
@@ -74,283 +73,243 @@ public class DefaultRenderNodeFactory implements RenderNodeFactory
   private boolean strictCompatibilityMode;
   private OutputProcessorMetaData metaData;
 
-  public DefaultRenderNodeFactory()
-  {
+  public DefaultRenderNodeFactory() {
     this.boxDefinitionFactory = new BoxDefinitionFactory();
-    this.bandWithoutKeepTogetherStyle = new SimpleStyleSheet(new SectionKeepTogetherStyleSheet(false));
+    this.bandWithoutKeepTogetherStyle = new SimpleStyleSheet( new SectionKeepTogetherStyleSheet( false ) );
   }
 
-  public void initialize(final OutputProcessorMetaData metaData)
-  {
+  public void initialize( final OutputProcessorMetaData metaData ) {
     this.metaData = metaData;
-    this.bandCache = new DefaultStyleCache("rnf");
+    this.bandCache = new DefaultStyleCache( "rnf" );
 
-    final boolean paddingsDisabled = metaData.isFeatureSupported(OutputProcessorFeature.DISABLE_PADDING);
-    if (paddingsDisabled)
-    {
-      this.bandCache = new NonPaddingStyleCache(bandCache);
+    final boolean paddingsDisabled = metaData.isFeatureSupported( OutputProcessorFeature.DISABLE_PADDING );
+    if ( paddingsDisabled ) {
+      this.bandCache = new NonPaddingStyleCache( bandCache );
     }
 
-    this.strictCompatibilityMode = metaData.isFeatureSupported(OutputProcessorFeature.STRICT_COMPATIBILITY);
+    this.strictCompatibilityMode = metaData.isFeatureSupported( OutputProcessorFeature.STRICT_COMPATIBILITY );
   }
 
-  public LogicalPageBox createPage(final ReportDefinition report, final StyleSheet style)
-  {
-    if (report == null)
-    {
+  public LogicalPageBox createPage( final ReportDefinition report, final StyleSheet style ) {
+    if ( report == null ) {
       throw new NullPointerException();
     }
-    final SimpleStyleSheet reportStyle = bandCache.getStyleSheet(style);
-    final BoxDefinition boxDefinition = boxDefinitionFactory.getBoxDefinition(reportStyle);
-    return new LogicalPageBox(report, reportStyle, boxDefinition);
+    final SimpleStyleSheet reportStyle = bandCache.getStyleSheet( style );
+    final BoxDefinition boxDefinition = boxDefinitionFactory.getBoxDefinition( reportStyle );
+    return new LogicalPageBox( report, reportStyle, boxDefinition );
   }
 
-  public RenderBox produceSectionBox(final String layoutType, final ReportStateKey stateKey)
-  {
-    if (strictCompatibilityMode)
-    {
+  public RenderBox produceSectionBox( final String layoutType, final ReportStateKey stateKey ) {
+    if ( strictCompatibilityMode ) {
       final BoxDefinition boxDefinition = BoxDefinition.EMPTY;
-      return new SectionRenderBox(bandWithoutKeepTogetherStyle, new InstanceID(), boxDefinition, AutoLayoutBoxType.INSTANCE,
-          ReportAttributeMap.emptyMap(), stateKey);
+      return new SectionRenderBox( bandWithoutKeepTogetherStyle, new InstanceID(), boxDefinition,
+        AutoLayoutBoxType.INSTANCE,
+        ReportAttributeMap.emptyMap(), stateKey );
     }
 
-    final RenderBox renderBox = createBox(layoutType, stateKey,
-        SECTION_DEFAULT_STYLE, AutoLayoutBoxType.INSTANCE, ReportAttributeMap.emptyMap(), new InstanceID());
-    renderBox.getStaticBoxLayoutProperties().setPlaceholderBox(StaticBoxLayoutProperties.PlaceholderType.SECTION);
-    renderBox.getStaticBoxLayoutProperties().setSectionContext(true);
+    final RenderBox renderBox = createBox( layoutType, stateKey,
+      SECTION_DEFAULT_STYLE, AutoLayoutBoxType.INSTANCE, ReportAttributeMap.emptyMap(), new InstanceID() );
+    renderBox.getStaticBoxLayoutProperties().setPlaceholderBox( StaticBoxLayoutProperties.PlaceholderType.SECTION );
+    renderBox.getStaticBoxLayoutProperties().setSectionContext( true );
     return renderBox;
   }
 
-  public RenderBox produceRenderBox(final ReportElement band,
-                                    final StyleSheet style,
-                                    final String layoutType,
-                                    final ReportStateKey stateKey)
-  {
+  public RenderBox produceRenderBox( final ReportElement band,
+                                     final StyleSheet style,
+                                     final String layoutType,
+                                     final ReportStateKey stateKey ) {
     final ElementType elementType = band.getElementType();
 
     final RenderBox box = createBox
-        (layoutType, stateKey, style, elementType, band.getAttributes(), band.getObjectID());
+      ( layoutType, stateKey, style, elementType, band.getAttributes(), band.getObjectID() );
 
     // for the sake of debugging ..
     final String name = band.getName();
-    if (name != null &&
-        name.length() != 0 && name.startsWith(Band.ANONYMOUS_BAND_PREFIX) == false)
-    {
-      box.setName(name);
+    if ( name != null &&
+      name.length() != 0 && name.startsWith( Band.ANONYMOUS_BAND_PREFIX ) == false ) {
+      box.setName( name );
     }
     return box;
   }
 
-  private RenderBox createBox(final String layoutType,
-                              final ReportStateKey stateKey,
-                              final StyleSheet elementStyleSheet,
-                              final ElementType elementType,
-                              final ReportAttributeMap attributes,
-                              final InstanceID objectID)
-  {
-    if (BandStyleKeys.LAYOUT_AUTO.equals(layoutType))
-    {
-      final SimpleStyleSheet styleSheet = bandCache.getStyleSheet(elementStyleSheet);
-      return new AutoRenderBox(objectID, stateKey, styleSheet, attributes, elementType);
+  private RenderBox createBox( final String layoutType,
+                               final ReportStateKey stateKey,
+                               final StyleSheet elementStyleSheet,
+                               final ElementType elementType,
+                               final ReportAttributeMap attributes,
+                               final InstanceID objectID ) {
+    if ( BandStyleKeys.LAYOUT_AUTO.equals( layoutType ) ) {
+      final SimpleStyleSheet styleSheet = bandCache.getStyleSheet( elementStyleSheet );
+      return new AutoRenderBox( objectID, stateKey, styleSheet, attributes, elementType );
     }
-    if (BandStyleKeys.LAYOUT_BLOCK.equals(layoutType))
-    {
-      final SimpleStyleSheet styleSheet = bandCache.getStyleSheet(elementStyleSheet);
-      final BoxDefinition boxDefinition = boxDefinitionFactory.getBoxDefinition(styleSheet);
-      return new BlockRenderBox(styleSheet, objectID, boxDefinition, elementType, attributes, stateKey);
+    if ( BandStyleKeys.LAYOUT_BLOCK.equals( layoutType ) ) {
+      final SimpleStyleSheet styleSheet = bandCache.getStyleSheet( elementStyleSheet );
+      final BoxDefinition boxDefinition = boxDefinitionFactory.getBoxDefinition( styleSheet );
+      return new BlockRenderBox( styleSheet, objectID, boxDefinition, elementType, attributes, stateKey );
     }
-    if (LAYOUT_PARAGRAPH_LINEBOX.equals(layoutType))
-    {
+    if ( LAYOUT_PARAGRAPH_LINEBOX.equals( layoutType ) ) {
       // The non-inheritable styles will be applied to the auto-generated paragraph box. The inlinebox itself
       // only receives the inheritable styles so that it can inherit it to its next child ..
-      final SimpleStyleSheet styleSheet = bandCache.getStyleSheet(new ParagraphPoolboxStyleSheet(elementStyleSheet));
-      final BoxDefinition boxDefinition = boxDefinitionFactory.getBoxDefinition(styleSheet);
-      return new InlineRenderBox(styleSheet, objectID, boxDefinition, elementType, attributes, stateKey);
+      final SimpleStyleSheet styleSheet =
+        bandCache.getStyleSheet( new ParagraphPoolboxStyleSheet( elementStyleSheet ) );
+      final BoxDefinition boxDefinition = boxDefinitionFactory.getBoxDefinition( styleSheet );
+      return new InlineRenderBox( styleSheet, objectID, boxDefinition, elementType, attributes, stateKey );
+    } else if ( BandStyleKeys.LAYOUT_INLINE.equals( layoutType ) ) {
+      final SimpleStyleSheet styleSheet = bandCache.getStyleSheet( elementStyleSheet );
+      final BoxDefinition boxDefinition = boxDefinitionFactory.getBoxDefinition( styleSheet );
+      return new InlineRenderBox( styleSheet, objectID, boxDefinition, elementType, attributes, stateKey );
     }
-    else if (BandStyleKeys.LAYOUT_INLINE.equals(layoutType))
-    {
-      final SimpleStyleSheet styleSheet = bandCache.getStyleSheet(elementStyleSheet);
-      final BoxDefinition boxDefinition = boxDefinitionFactory.getBoxDefinition(styleSheet);
-      return new InlineRenderBox(styleSheet, objectID, boxDefinition, elementType, attributes, stateKey);
+    if ( BandStyleKeys.LAYOUT_ROW.equals( layoutType ) ) {
+      final SimpleStyleSheet styleSheet = bandCache.getStyleSheet( elementStyleSheet );
+      final BoxDefinition boxDefinition = boxDefinitionFactory.getBoxDefinition( styleSheet );
+      return new RowRenderBox( styleSheet, objectID, boxDefinition, elementType, attributes, stateKey );
     }
-    if (BandStyleKeys.LAYOUT_ROW.equals(layoutType))
-    {
-      final SimpleStyleSheet styleSheet = bandCache.getStyleSheet(elementStyleSheet);
-      final BoxDefinition boxDefinition = boxDefinitionFactory.getBoxDefinition(styleSheet);
-      return new RowRenderBox(styleSheet, objectID, boxDefinition, elementType, attributes, stateKey);
-    }
-    if (BandStyleKeys.LAYOUT_TABLE.equals(layoutType))
-    {
-      if (strictCompatibilityMode)
-      {
-        throw new IncompatibleFeatureException("A report with a legacy mode of pre-4.0 cannot handle table layouts. " +
-            "Migrate your report to version 4.0 or higher.",
-            ClassicEngineBoot.computeVersionId(4, 0, 0));
+    if ( BandStyleKeys.LAYOUT_TABLE.equals( layoutType ) ) {
+      if ( strictCompatibilityMode ) {
+        throw new IncompatibleFeatureException( "A report with a legacy mode of pre-4.0 cannot handle table layouts. " +
+          "Migrate your report to version 4.0 or higher.",
+          ClassicEngineBoot.computeVersionId( 4, 0, 0 ) );
       }
-      final SimpleStyleSheet styleSheet = bandCache.getStyleSheet(elementStyleSheet);
-      final BoxDefinition boxDefinition = boxDefinitionFactory.getBoxDefinition(styleSheet);
-      return new TableRenderBox(styleSheet, objectID, boxDefinition, elementType, attributes, stateKey);
+      final SimpleStyleSheet styleSheet = bandCache.getStyleSheet( elementStyleSheet );
+      final BoxDefinition boxDefinition = boxDefinitionFactory.getBoxDefinition( styleSheet );
+      return new TableRenderBox( styleSheet, objectID, boxDefinition, elementType, attributes, stateKey );
     }
-    if (BandStyleKeys.LAYOUT_TABLE_BODY.equals(layoutType) ||
-        BandStyleKeys.LAYOUT_TABLE_HEADER.equals(layoutType) ||
-        BandStyleKeys.LAYOUT_TABLE_FOOTER.equals(layoutType))
-    {
-      final SimpleStyleSheet styleSheet = bandCache.getStyleSheet(elementStyleSheet);
-      final BoxDefinition boxDefinition = boxDefinitionFactory.getBoxDefinition(styleSheet);
-      return new TableSectionRenderBox(styleSheet, objectID, boxDefinition, elementType, attributes, stateKey);
+    if ( BandStyleKeys.LAYOUT_TABLE_BODY.equals( layoutType ) ||
+      BandStyleKeys.LAYOUT_TABLE_HEADER.equals( layoutType ) ||
+      BandStyleKeys.LAYOUT_TABLE_FOOTER.equals( layoutType ) ) {
+      final SimpleStyleSheet styleSheet = bandCache.getStyleSheet( elementStyleSheet );
+      final BoxDefinition boxDefinition = boxDefinitionFactory.getBoxDefinition( styleSheet );
+      return new TableSectionRenderBox( styleSheet, objectID, boxDefinition, elementType, attributes, stateKey );
     }
-    if (BandStyleKeys.LAYOUT_TABLE_ROW.equals(layoutType))
-    {
-      final SimpleStyleSheet styleSheet = bandCache.getStyleSheet(elementStyleSheet);
-      final BoxDefinition boxDefinition = boxDefinitionFactory.getBoxDefinition(styleSheet);
-      return new TableRowRenderBox(styleSheet, objectID, boxDefinition, elementType, attributes, stateKey);
+    if ( BandStyleKeys.LAYOUT_TABLE_ROW.equals( layoutType ) ) {
+      final SimpleStyleSheet styleSheet = bandCache.getStyleSheet( elementStyleSheet );
+      final BoxDefinition boxDefinition = boxDefinitionFactory.getBoxDefinition( styleSheet );
+      return new TableRowRenderBox( styleSheet, objectID, boxDefinition, elementType, attributes, stateKey );
     }
-    if (BandStyleKeys.LAYOUT_TABLE_CELL.equals(layoutType))
-    {
-      final SimpleStyleSheet styleSheet = bandCache.getStyleSheet(elementStyleSheet);
-      final BoxDefinition boxDefinition = boxDefinitionFactory.getBoxDefinition(styleSheet);
-      return new TableCellRenderBox(styleSheet, objectID, boxDefinition, elementType, attributes, stateKey);
+    if ( BandStyleKeys.LAYOUT_TABLE_CELL.equals( layoutType ) ) {
+      final SimpleStyleSheet styleSheet = bandCache.getStyleSheet( elementStyleSheet );
+      final BoxDefinition boxDefinition = boxDefinitionFactory.getBoxDefinition( styleSheet );
+      return new TableCellRenderBox( styleSheet, objectID, boxDefinition, elementType, attributes, stateKey );
     }
-    if (BandStyleKeys.LAYOUT_TABLE_COL.equals(layoutType))
-    {
-      final SimpleStyleSheet styleSheet = bandCache.getStyleSheet(elementStyleSheet);
-      final BoxDefinition boxDefinition = boxDefinitionFactory.getBoxDefinition(styleSheet);
-      return new TableColumnNode(styleSheet, objectID, boxDefinition, elementType, attributes, stateKey);
+    if ( BandStyleKeys.LAYOUT_TABLE_COL.equals( layoutType ) ) {
+      final SimpleStyleSheet styleSheet = bandCache.getStyleSheet( elementStyleSheet );
+      final BoxDefinition boxDefinition = boxDefinitionFactory.getBoxDefinition( styleSheet );
+      return new TableColumnNode( styleSheet, objectID, boxDefinition, elementType, attributes, stateKey );
     }
-    if (BandStyleKeys.LAYOUT_TABLE_COL_GROUP.equals(layoutType))
-    {
-      final SimpleStyleSheet styleSheet = bandCache.getStyleSheet(elementStyleSheet);
-      return new TableColumnGroupNode(styleSheet, attributes);
+    if ( BandStyleKeys.LAYOUT_TABLE_COL_GROUP.equals( layoutType ) ) {
+      final SimpleStyleSheet styleSheet = bandCache.getStyleSheet( elementStyleSheet );
+      return new TableColumnGroupNode( styleSheet, attributes );
     }
 
     // assume 'Canvas' by default ..
-    final SimpleStyleSheet styleSheet = bandCache.getStyleSheet(elementStyleSheet);
-    final BoxDefinition boxDefinition = boxDefinitionFactory.getBoxDefinition(styleSheet);
-    return new CanvasRenderBox(styleSheet, objectID, boxDefinition, elementType,
-        attributes, stateKey);
+    final SimpleStyleSheet styleSheet = bandCache.getStyleSheet( elementStyleSheet );
+    final BoxDefinition boxDefinition = boxDefinitionFactory.getBoxDefinition( styleSheet );
+    return new CanvasRenderBox( styleSheet, objectID, boxDefinition, elementType,
+      attributes, stateKey );
   }
 
   @Deprecated
-  public RenderBox createAutoParagraph(final ReportStateKey stateKey)
-  {
-    return new ParagraphRenderBox(SimpleStyleSheet.EMPTY_STYLE, new InstanceID(),
-        BoxDefinition.EMPTY, AutoLayoutBoxType.INSTANCE, ReportAttributeMap.EMPTY_MAP, stateKey);
+  public RenderBox createAutoParagraph( final ReportStateKey stateKey ) {
+    return new ParagraphRenderBox( SimpleStyleSheet.EMPTY_STYLE, new InstanceID(),
+      BoxDefinition.EMPTY, AutoLayoutBoxType.INSTANCE, ReportAttributeMap.EMPTY_MAP, stateKey );
   }
 
-  public RenderBox createAutoParagraph(final ReportElement band,
-                                       final StyleSheet bandStyle,
-                                       final ReportStateKey stateKey)
-  {
-    final SimpleStyleSheet styleSheet = bandCache.getStyleSheet(bandStyle);
-    final BoxDefinition boxDefinition = boxDefinitionFactory.getBoxDefinition(styleSheet);
+  public RenderBox createAutoParagraph( final ReportElement band,
+                                        final StyleSheet bandStyle,
+                                        final ReportStateKey stateKey ) {
+    final SimpleStyleSheet styleSheet = bandCache.getStyleSheet( bandStyle );
+    final BoxDefinition boxDefinition = boxDefinitionFactory.getBoxDefinition( styleSheet );
 
     final ParagraphRenderBox paragraphBox = new ParagraphRenderBox
-        (styleSheet, band.getObjectID(), boxDefinition, band.getElementType(), band.getAttributes(), stateKey);
-    paragraphBox.setName(band.getName());
+      ( styleSheet, band.getObjectID(), boxDefinition, band.getElementType(), band.getAttributes(), stateKey );
+    paragraphBox.setName( band.getName() );
     return paragraphBox;
   }
 
-  public RenderBox produceSubReportPlaceholder(final ReportElement report,
-                                               final StyleSheet style,
-                                               final ReportStateKey stateKey)
-  {
+  public RenderBox produceSubReportPlaceholder( final ReportElement report,
+                                                final StyleSheet style,
+                                                final ReportStateKey stateKey ) {
     String layout;
-    if (metaData.isFeatureSupported(OutputProcessorFeature.STRICT_COMPATIBILITY)) {
+    if ( metaData.isFeatureSupported( OutputProcessorFeature.STRICT_COMPATIBILITY ) ) {
       layout = BandStyleKeys.LAYOUT_BLOCK;
-    }
-    else {
-      layout = (String) style.getStyleProperty(BandStyleKeys.LAYOUT, BandStyleKeys.LAYOUT_BLOCK);
+    } else {
+      layout = (String) style.getStyleProperty( BandStyleKeys.LAYOUT, BandStyleKeys.LAYOUT_BLOCK );
       // Todo: PRD-5172: Filter out inline subreports
-      if (BandStyleKeys.LAYOUT_INLINE.equals(layout)) {
+      if ( BandStyleKeys.LAYOUT_INLINE.equals( layout ) ) {
         layout = BandStyleKeys.LAYOUT_BLOCK;
       }
     }
 
     final RenderBox box =
-        createBox(layout, stateKey, style, report.getElementType(), report.getAttributes(), report.getObjectID());
-    box.getStaticBoxLayoutProperties().setPlaceholderBox(StaticBoxLayoutProperties.PlaceholderType.COMPLEX);
+      createBox( layout, stateKey, style, report.getElementType(), report.getAttributes(), report.getObjectID() );
+    box.getStaticBoxLayoutProperties().setPlaceholderBox( StaticBoxLayoutProperties.PlaceholderType.COMPLEX );
     box.markAsContentRefHolder();
     // for the sake of debugging ..
     final String name = report.getName();
-    if (name != null && name.startsWith(Band.ANONYMOUS_BAND_PREFIX) == false)
-    {
-      box.setName(name);
+    if ( name != null && name.startsWith( Band.ANONYMOUS_BAND_PREFIX ) == false ) {
+      box.setName( name );
     }
     return box;
   }
 
-  public BoxDefinition getBoxDefinition(final StyleSheet style)
-  {
-    return boxDefinitionFactory.getBoxDefinition(style);
+  public BoxDefinition getBoxDefinition( final StyleSheet style ) {
+    return boxDefinitionFactory.getBoxDefinition( style );
   }
 
-  public Object clone()
-  {
-    try
-    {
+  public Object clone() {
+    try {
       return super.clone();
-    }
-    catch (CloneNotSupportedException e)
-    {
-      throw new IllegalStateException(e);
+    } catch ( CloneNotSupportedException e ) {
+      throw new IllegalStateException( e );
     }
   }
 
-  public StyleSheet createAutoGeneratedSectionStyleSheet(final StyleSheet style)
-  {
+  public StyleSheet createAutoGeneratedSectionStyleSheet( final StyleSheet style ) {
     return bandWithoutKeepTogetherStyle;
   }
 
-  public RenderBox createPageBreakIndicatorBox(final ReportStateKey stateKey,
-                                               final long range)
-  {
-    if (this.manualBreakBoxStyle == null)
-    {
+  public RenderBox createPageBreakIndicatorBox( final ReportStateKey stateKey,
+                                                final long range ) {
+    if ( this.manualBreakBoxStyle == null ) {
       final ManualBreakIndicatorStyleSheet mbis = new ManualBreakIndicatorStyleSheet();
-      this.manualBreakBoxStyle = new SimpleStyleSheet(mbis);
+      this.manualBreakBoxStyle = new SimpleStyleSheet( mbis );
     }
 
     final RenderBox sectionBox = new BreakMarkerRenderBox
-        (manualBreakBoxStyle, new InstanceID(), BoxDefinition.EMPTY, AutoLayoutBoxType.INSTANCE,
-            ReportAttributeMap.EMPTY_MAP, stateKey, range);
-    sectionBox.setName("pagebreak");
+      ( manualBreakBoxStyle, new InstanceID(), BoxDefinition.EMPTY, AutoLayoutBoxType.INSTANCE,
+        ReportAttributeMap.EMPTY_MAP, stateKey, range );
+    sectionBox.setName( "pagebreak" );
     sectionBox.close();
     return sectionBox;
   }
 
-  public StyleSheet createStyle(final StyleSheet style)
-  {
-    return bandCache.getStyleSheet(style);
+  public StyleSheet createStyle( final StyleSheet style ) {
+    return bandCache.getStyleSheet( style );
   }
 
-  public void close()
-  {
+  public void close() {
     bandCache.printPerformanceStats();
   }
 
-  public RenderableReplacedContentBox createReplacedContent(final ReportElement element,
-                                                            final StyleSheet style,
-                                                            final Object value,
-                                                            final Object rawValue,
-                                                            final ReportStateKey stateKey)
-  {
+  public RenderableReplacedContentBox createReplacedContent( final ReportElement element,
+                                                             final StyleSheet style,
+                                                             final Object value,
+                                                             final Object rawValue,
+                                                             final ReportStateKey stateKey ) {
     final ResourceKey rawKey;
-    if (rawValue instanceof ResourceKey)
-    {
+    if ( rawValue instanceof ResourceKey ) {
       rawKey = (ResourceKey) rawValue;
-    }
-    else
-    {
+    } else {
       rawKey = null;
     }
 
-    final SimpleStyleSheet elementStyle = bandCache.getStyleSheet(style);
-    final RenderableReplacedContent content = new RenderableReplacedContent(elementStyle, value, rawKey, metaData);
-    final BoxDefinition boxDefinition = getBoxDefinition(elementStyle);
+    final SimpleStyleSheet elementStyle = bandCache.getStyleSheet( style );
+    final RenderableReplacedContent content = new RenderableReplacedContent( elementStyle, value, rawKey, metaData );
+    final BoxDefinition boxDefinition = getBoxDefinition( elementStyle );
     final RenderableReplacedContentBox child =
-        new RenderableReplacedContentBox(elementStyle, element.getObjectID(), boxDefinition,
-            element.getElementType(), element.getAttributes(), stateKey, content);
-    child.setName(element.getName());
+      new RenderableReplacedContentBox( elementStyle, element.getObjectID(), boxDefinition,
+        element.getElementType(), element.getAttributes(), stateKey, content );
+    child.setName( element.getName() );
     return child;
   }
 }

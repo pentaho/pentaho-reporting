@@ -36,10 +36,8 @@ import org.pentaho.reporting.engine.classic.core.modules.parser.ext.readhandlers
 import org.pentaho.reporting.libraries.xmlns.parser.RootXmlReadHandler;
 import org.xml.sax.SAXException;
 
-public class LegacyDataSourceReadHandler extends DataSourceReadHandler
-{
-  public LegacyDataSourceReadHandler()
-  {
+public class LegacyDataSourceReadHandler extends DataSourceReadHandler {
+  public LegacyDataSourceReadHandler() {
   }
 
   /**
@@ -48,45 +46,43 @@ public class LegacyDataSourceReadHandler extends DataSourceReadHandler
    * @param rootHandler the root handler.
    * @param tagName     the tag name.
    */
-  public void init(final RootXmlReadHandler rootHandler, final String uri, final String tagName) throws SAXException
-  {
+  public void init( final RootXmlReadHandler rootHandler, final String uri, final String tagName ) throws SAXException {
     // Perform legacy initialization..
-    if (rootHandler.getHelperObject(ReportDefinitionReadHandler.ELEMENT_FACTORY_KEY) == null ||
-        rootHandler.getHelperObject(ReportDefinitionReadHandler.STYLE_FACTORY_KEY) == null ||
-        rootHandler.getHelperObject(ReportDefinitionReadHandler.CLASS_FACTORY_KEY) == null ||
-        rootHandler.getHelperObject(ReportDefinitionReadHandler.DATASOURCE_FACTORY_KEY) == null ||
-        rootHandler.getHelperObject(ReportDefinitionReadHandler.TEMPLATE_FACTORY_KEY) == null)
-    {
+    if ( rootHandler.getHelperObject( ReportDefinitionReadHandler.ELEMENT_FACTORY_KEY ) == null ||
+      rootHandler.getHelperObject( ReportDefinitionReadHandler.STYLE_FACTORY_KEY ) == null ||
+      rootHandler.getHelperObject( ReportDefinitionReadHandler.CLASS_FACTORY_KEY ) == null ||
+      rootHandler.getHelperObject( ReportDefinitionReadHandler.DATASOURCE_FACTORY_KEY ) == null ||
+      rootHandler.getHelperObject( ReportDefinitionReadHandler.TEMPLATE_FACTORY_KEY ) == null ) {
       final ElementFactoryCollector elementFactory = new ElementFactoryCollector();
-      elementFactory.addFactory(new DefaultElementFactory());
+      elementFactory.addFactory( new DefaultElementFactory() );
 
       final StyleKeyFactoryCollector styleKeyFactory = new StyleKeyFactoryCollector();
-      styleKeyFactory.addFactory(new DefaultStyleKeyFactory());
-      styleKeyFactory.addFactory(new PageableLayoutStyleKeyFactory());
+      styleKeyFactory.addFactory( new DefaultStyleKeyFactory() );
+      styleKeyFactory.addFactory( new PageableLayoutStyleKeyFactory() );
 
       final ClassFactoryCollector classFactory = new ClassFactoryCollector();
-      classFactory.addFactory(new URLClassFactory());
-      classFactory.addFactory(new DefaultClassFactory());
-      classFactory.addFactory(new BandLayoutClassFactory());
-      classFactory.addFactory(new ArrayClassFactory());
+      classFactory.addFactory( new URLClassFactory() );
+      classFactory.addFactory( new DefaultClassFactory() );
+      classFactory.addFactory( new BandLayoutClassFactory() );
+      classFactory.addFactory( new ArrayClassFactory() );
 
       final DataSourceCollector dataSourceFactory = new DataSourceCollector();
-      dataSourceFactory.addFactory(new DefaultDataSourceFactory());
+      dataSourceFactory.addFactory( new DefaultDataSourceFactory() );
 
       final TemplateCollector templateFactory = new TemplateCollector();
-      templateFactory.addTemplateCollection(new DefaultTemplateCollection());
+      templateFactory.addTemplateCollection( new DefaultTemplateCollection() );
 
-      classFactory.configure(rootHandler.getParserConfiguration());
-      dataSourceFactory.configure(rootHandler.getParserConfiguration());
-      templateFactory.configure(rootHandler.getParserConfiguration());
+      classFactory.configure( rootHandler.getParserConfiguration() );
+      dataSourceFactory.configure( rootHandler.getParserConfiguration() );
+      templateFactory.configure( rootHandler.getParserConfiguration() );
 
-      rootHandler.setHelperObject(ReportDefinitionReadHandler.ELEMENT_FACTORY_KEY, elementFactory);
-      rootHandler.setHelperObject(ReportDefinitionReadHandler.STYLE_FACTORY_KEY, styleKeyFactory);
-      rootHandler.setHelperObject(ReportDefinitionReadHandler.CLASS_FACTORY_KEY, classFactory);
-      rootHandler.setHelperObject(ReportDefinitionReadHandler.DATASOURCE_FACTORY_KEY, dataSourceFactory);
-      rootHandler.setHelperObject(ReportDefinitionReadHandler.TEMPLATE_FACTORY_KEY, templateFactory);
+      rootHandler.setHelperObject( ReportDefinitionReadHandler.ELEMENT_FACTORY_KEY, elementFactory );
+      rootHandler.setHelperObject( ReportDefinitionReadHandler.STYLE_FACTORY_KEY, styleKeyFactory );
+      rootHandler.setHelperObject( ReportDefinitionReadHandler.CLASS_FACTORY_KEY, classFactory );
+      rootHandler.setHelperObject( ReportDefinitionReadHandler.DATASOURCE_FACTORY_KEY, dataSourceFactory );
+      rootHandler.setHelperObject( ReportDefinitionReadHandler.TEMPLATE_FACTORY_KEY, templateFactory );
     }
 
-    super.init(rootHandler, uri, tagName);
+    super.init( rootHandler, uri, tagName );
   }
 }

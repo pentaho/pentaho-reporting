@@ -28,12 +28,10 @@ import org.pentaho.reporting.engine.classic.core.layout.model.context.StaticBoxL
  *
  * @author Thomas Morgner
  */
-public class InlineBoxSequenceElement extends InlineNodeSequenceElement
-{
+public class InlineBoxSequenceElement extends InlineNodeSequenceElement {
   public static final InlineSequenceElement INSTANCE = new InlineBoxSequenceElement();
 
-  private InlineBoxSequenceElement()
-  {
+  private InlineBoxSequenceElement() {
   }
 
   /**
@@ -41,22 +39,19 @@ public class InlineBoxSequenceElement extends InlineNodeSequenceElement
    *
    * @return
    */
-  public long getMinimumWidth(final RenderNode node)
-  {
+  public long getMinimumWidth( final RenderNode node ) {
     final RenderBox box = (RenderBox) node;
     final StaticBoxLayoutProperties blp = box.getStaticBoxLayoutProperties();
     return box.getMinimumChunkWidth() + blp.getMarginLeft() + blp.getMarginRight();
   }
 
-  public long getMaximumWidth(final RenderNode node)
-  {
+  public long getMaximumWidth( final RenderNode node ) {
     final RenderBox box = (RenderBox) node;
     final StaticBoxLayoutProperties blp = box.getStaticBoxLayoutProperties();
     return box.getMaximumBoxWidth() + blp.getMarginLeft() + blp.getMarginRight();
   }
 
-  public boolean isPreserveWhitespace(final RenderNode node)
-  {
+  public boolean isPreserveWhitespace( final RenderNode node ) {
     final RenderBox box = (RenderBox) node;
     final StaticBoxLayoutProperties blp = box.getStaticBoxLayoutProperties();
     return blp.isPreserveSpace();

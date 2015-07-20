@@ -17,8 +17,7 @@
 
 package org.pentaho.reporting.engine.classic.core.layout.process.util;
 
-public class PageableBreakContext
-{
+public class PageableBreakContext {
   private long shift;
   // this initialShift is used only for debugging purposes ..
   private long initialShift;
@@ -26,93 +25,76 @@ public class PageableBreakContext
   private long heightExtension;
   private boolean breakSuspended;
 
-  public PageableBreakContext()
-  {
+  public PageableBreakContext() {
   }
 
-  public void updateFromParent(final PageableBreakContext parent,
-                               final boolean useInitialShift)
-  {
-    if (useInitialShift)
-    {
+  public void updateFromParent( final PageableBreakContext parent,
+                                final boolean useInitialShift ) {
+    if ( useInitialShift ) {
       this.shift = parent.appliedShift;
       this.appliedShift = parent.appliedShift;
       this.initialShift = parent.appliedShift;
-    }
-    else
-    {
+    } else {
       this.shift = parent.shift;
       this.appliedShift = parent.shift;
       this.initialShift = parent.shift;
     }
-    
+
     this.heightExtension = 0;
     this.breakSuspended = parent.breakSuspended;
   }
 
-  public long getShift()
-  {
+  public long getShift() {
     return shift;
   }
 
-  public void setShift(final long shift)
-  {
-    if (this.shift > shift)
-    {
-      throw new IllegalStateException("Cannot undo previous shifting");
+  public void setShift( final long shift ) {
+    if ( this.shift > shift ) {
+      throw new IllegalStateException( "Cannot undo previous shifting" );
     }
 
     this.shift = shift;
   }
 
-  public long getAppliedShift()
-  {
+  public long getAppliedShift() {
     return appliedShift;
   }
 
-  public void setAppliedShift(final long appliedShift)
-  {
+  public void setAppliedShift( final long appliedShift ) {
     this.appliedShift = appliedShift;
   }
 
-  public long getInitialShift()
-  {
+  public long getInitialShift() {
     return initialShift;
   }
 
-  public boolean isBreakSuspended()
-  {
+  public boolean isBreakSuspended() {
     return breakSuspended;
   }
 
-  public void suspendBreaks()
-  {
+  public void suspendBreaks() {
     breakSuspended = true;
   }
 
-  public String toString()
-  {
+  public String toString() {
     final StringBuilder sb = new StringBuilder();
-    sb.append("PageableBreakContext");
-    sb.append("{shift=").append(shift);
-    sb.append(", initialShift=").append(initialShift);
-    sb.append(", breakSuspended=").append(breakSuspended);
-    sb.append('}');
+    sb.append( "PageableBreakContext" );
+    sb.append( "{shift=" ).append( shift );
+    sb.append( ", initialShift=" ).append( initialShift );
+    sb.append( ", breakSuspended=" ).append( breakSuspended );
+    sb.append( '}' );
     return sb.toString();
   }
 
-  public long getHeightExtension()
-  {
+  public long getHeightExtension() {
     return heightExtension;
   }
 
-  public void setHeightExtension(final long heightExtension)
-  {
+  public void setHeightExtension( final long heightExtension ) {
     this.heightExtension = heightExtension;
   }
 
-  public void reset()
-  {
+  public void reset() {
     breakSuspended = false;
     heightExtension = 0;
     shift = 0;
@@ -120,8 +102,7 @@ public class PageableBreakContext
     initialShift = 0;
   }
 
-  public void commitShift()
-  {
+  public void commitShift() {
     shift = appliedShift + heightExtension;
   }
 }

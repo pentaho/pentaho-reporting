@@ -26,15 +26,13 @@ import org.pentaho.reporting.engine.classic.core.style.WhitespaceCollapse;
  *
  * @author Thomas Morgner
  */
-public class WhitespaceCollapseObjectDescription extends AbstractObjectDescription
-{
+public class WhitespaceCollapseObjectDescription extends AbstractObjectDescription {
   /**
    * Creates a new object description.
    */
-  public WhitespaceCollapseObjectDescription()
-  {
-    super(WhitespaceCollapse.class);
-    setParameterDefinition("value", String.class);
+  public WhitespaceCollapseObjectDescription() {
+    super( WhitespaceCollapse.class );
+    setParameterDefinition( "value", String.class );
   }
 
   /**
@@ -42,27 +40,21 @@ public class WhitespaceCollapseObjectDescription extends AbstractObjectDescripti
    *
    * @return The object.
    */
-  public Object createObject()
-  {
-    final String o = (String) getParameter("value");
-    if (o == null)
-    {
+  public Object createObject() {
+    final String o = (String) getParameter( "value" );
+    if ( o == null ) {
       return null;
     }
-    if ("discard".equalsIgnoreCase(o))
-    {
+    if ( "discard".equalsIgnoreCase( o ) ) {
       return WhitespaceCollapse.DISCARD;
     }
-    if ("none".equalsIgnoreCase(o))
-    {
+    if ( "none".equalsIgnoreCase( o ) ) {
       return WhitespaceCollapse.COLLAPSE;
     }
-    if ("preserve".equalsIgnoreCase(o))
-    {
+    if ( "preserve".equalsIgnoreCase( o ) ) {
       return WhitespaceCollapse.PRESERVE;
     }
-    if ("preserve-breaks".equalsIgnoreCase(o))
-    {
+    if ( "preserve-breaks".equalsIgnoreCase( o ) ) {
       return WhitespaceCollapse.PRESERVE_BREAKS;
     }
 
@@ -73,31 +65,23 @@ public class WhitespaceCollapseObjectDescription extends AbstractObjectDescripti
    * Sets the parameters in the object description to match the specified object.
    *
    * @param o the object (an {@link org.pentaho.reporting.engine.classic.core.ElementAlignment} instance).
-   * @throws org.pentaho.reporting.engine.classic.core.modules.parser.ext.factory.base.ObjectFactoryException
-   *          if the object is not recognised.
+   * @throws org.pentaho.reporting.engine.classic.core.modules.parser.ext.factory.base.ObjectFactoryException if the
+   * object
+   *                                                                                                          is not
+   *                                                                                                          recognised.
    */
-  public void setParameterFromObject(final Object o)
-      throws ObjectFactoryException
-  {
-    if (o.equals(WhitespaceCollapse.DISCARD))
-    {
-      setParameter("value", "discard");
-    }
-    else if (o.equals(WhitespaceCollapse.COLLAPSE))
-    {
-      setParameter("value", "collapse");
-    }
-    else if (o.equals(WhitespaceCollapse.PRESERVE))
-    {
-      setParameter("value", "preserve");
-    }
-    else if (o.equals(WhitespaceCollapse.PRESERVE_BREAKS))
-    {
-      setParameter("value", "preserve-breaks");
-    }
-    else
-    {
-      throw new ObjectFactoryException("Invalid value specified for WhitespaceCollapse");
+  public void setParameterFromObject( final Object o )
+    throws ObjectFactoryException {
+    if ( o.equals( WhitespaceCollapse.DISCARD ) ) {
+      setParameter( "value", "discard" );
+    } else if ( o.equals( WhitespaceCollapse.COLLAPSE ) ) {
+      setParameter( "value", "collapse" );
+    } else if ( o.equals( WhitespaceCollapse.PRESERVE ) ) {
+      setParameter( "value", "preserve" );
+    } else if ( o.equals( WhitespaceCollapse.PRESERVE_BREAKS ) ) {
+      setParameter( "value", "preserve-breaks" );
+    } else {
+      throw new ObjectFactoryException( "Invalid value specified for WhitespaceCollapse" );
     }
   }
 

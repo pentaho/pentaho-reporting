@@ -17,11 +17,11 @@
 
 package org.pentaho.reporting.engine.classic.core.util.beans;
 
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-
 import org.pentaho.reporting.libraries.base.util.CSVQuoter;
 import org.pentaho.reporting.libraries.base.util.CSVTokenizer;
+
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 
 
 /**
@@ -29,8 +29,7 @@ import org.pentaho.reporting.libraries.base.util.CSVTokenizer;
  *
  * @author Thomas Morgner
  */
-public class ArrayValueConverter implements ValueConverter
-{
+public class ArrayValueConverter implements ValueConverter {
   /**
    * The converter for the array elements.
    */
@@ -46,16 +45,13 @@ public class ArrayValueConverter implements ValueConverter
    * @param arrayClass       the array type
    * @param elementConverter the value converter for the array elements.
    */
-  public ArrayValueConverter(final Class arrayClass,
-                             final ValueConverter elementConverter)
-  {
-    if (elementConverter == null)
-    {
-      throw new NullPointerException("elementConverter must not be null");
+  public ArrayValueConverter( final Class arrayClass,
+                              final ValueConverter elementConverter ) {
+    if ( elementConverter == null ) {
+      throw new NullPointerException( "elementConverter must not be null" );
     }
-    if (arrayClass == null)
-    {
-      throw new NullPointerException("arrayClass must not be null");
+    if ( arrayClass == null ) {
+      throw new NullPointerException( "arrayClass must not be null" );
     }
     this.elementType = arrayClass;
     this.elementConverter = elementConverter;
@@ -68,37 +64,28 @@ public class ArrayValueConverter implements ValueConverter
    * @return the attribute value.
    * @throws BeanException if there was an error during the conversion.
    */
-  public String toAttributeValue(final Object o) throws BeanException
-  {
-    if (o == null)
-    {
-      throw new NullPointerException("Value must not be null");
+  public String toAttributeValue( final Object o ) throws BeanException {
+    if ( o == null ) {
+      throw new NullPointerException( "Value must not be null" );
     }
-    if (o.getClass().isArray() == false)
-    {
-      throw new BeanException("Value must be a array");
+    if ( o.getClass().isArray() == false ) {
+      throw new BeanException( "Value must be a array" );
     }
-    
-    final int size = Array.getLength(o);
-    final StringBuilder buffer = new StringBuilder(size * 25);
-    final CSVQuoter quoter = new CSVQuoter(',', '"');
-    for (int i = 0; i < size; i++)
-    {
-      if (i != 0)
-      {
-        buffer.append(',');
+
+    final int size = Array.getLength( o );
+    final StringBuilder buffer = new StringBuilder( size * 25 );
+    final CSVQuoter quoter = new CSVQuoter( ',', '"' );
+    for ( int i = 0; i < size; i++ ) {
+      if ( i != 0 ) {
+        buffer.append( ',' );
       }
-      final Object o1 = Array.get(o, i);
-      if (o1 != null)
-      {
-        final String original = elementConverter.toAttributeValue(o1);
-        if (original.length() == 0)
-        {
-          buffer.append("\"\"");
-        }
-        else
-        {
-          buffer.append(quoter.doQuoting(original));
+      final Object o1 = Array.get( o, i );
+      if ( o1 != null ) {
+        final String original = elementConverter.toAttributeValue( o1 );
+        if ( original.length() == 0 ) {
+          buffer.append( "\"\"" );
+        } else {
+          buffer.append( quoter.doQuoting( original ) );
         }
       }
     }
@@ -112,33 +99,26 @@ public class ArrayValueConverter implements ValueConverter
    * @return a property value.
    * @throws BeanException if there was an error during the conversion.
    */
-  public Object toPropertyValue(final String s) throws BeanException
-  {
-    if (s == null)
-    {
+  public Object toPropertyValue( final String s ) throws BeanException {
+    if ( s == null ) {
       throw new NullPointerException();
     }
 
-    final CSVTokenizer tokenizer = new CSVTokenizer(s, false);
+    final CSVTokenizer tokenizer = new CSVTokenizer( s, false );
     final ArrayList<Object> elements = new ArrayList<Object>();
-    while (tokenizer.hasMoreTokens())
-    {
+    while ( tokenizer.hasMoreTokens() ) {
       final String token = tokenizer.nextToken();
-      if (token == null || token.length() == 0)
-      {
-        elements.add(null);
-      }
-      else
-      {
-        elements.add(elementConverter.toPropertyValue(token));
+      if ( token == null || token.length() == 0 ) {
+        elements.add( null );
+      } else {
+        elements.add( elementConverter.toPropertyValue( token ) );
       }
     }
 
-    final Object retval = Array.newInstance(elementType, elements.size());
-    for (int i = 0; i < elements.size(); i++)
-    {
-      final Object o = elements.get(i);
-      Array.set(retval, i, o);
+    final Object retval = Array.newInstance( elementType, elements.size() );
+    for ( int i = 0; i < elements.size(); i++ ) {
+      final Object o = elements.get( i );
+      Array.set( retval, i, o );
     }
     return retval;
   }

@@ -25,39 +25,32 @@ import org.pentaho.reporting.libraries.formula.typing.coretypes.AnyType;
 import org.pentaho.reporting.libraries.formula.typing.coretypes.NumberType;
 import org.pentaho.reporting.libraries.formula.typing.coretypes.TextType;
 
-public class SingleValueQueryFunctionDescription extends AbstractFunctionDescription
-{
-  public SingleValueQueryFunctionDescription()
-  {
-    super("SINGLEVALUEQUERY", "org.pentaho.reporting.engine.classic.core.function.formula.SingleValueQuery-Function");
+public class SingleValueQueryFunctionDescription extends AbstractFunctionDescription {
+  public SingleValueQueryFunctionDescription() {
+    super( "SINGLEVALUEQUERY", "org.pentaho.reporting.engine.classic.core.function.formula.SingleValueQuery-Function" );
   }
 
-  public Type getValueType()
-  {
+  public Type getValueType() {
     return AnyType.TYPE;
   }
 
-  public FunctionCategory getCategory()
-  {
+  public FunctionCategory getCategory() {
     return UserDefinedFunctionCategory.CATEGORY;
   }
 
-  public int getParameterCount()
-  {
+  public int getParameterCount() {
     return 3;
   }
 
   /**
-   * Returns the parameter type at the given position using the function
-   * metadata. The first parameter is at the position 0;
+   * Returns the parameter type at the given position using the function metadata. The first parameter is at the
+   * position 0;
    *
    * @param position The parameter index.
    * @return The parameter type.
    */
-  public Type getParameterType(final int position)
-  {
-    switch (position)
-    {
+  public Type getParameterType( final int position ) {
+    switch( position ) {
       case 0:
         return TextType.TYPE;
       case 1:
@@ -69,14 +62,12 @@ public class SingleValueQueryFunctionDescription extends AbstractFunctionDescrip
   }
 
   /**
-   * Defines, whether the parameter at the given position is mandatory. A
-   * mandatory parameter must be filled in, while optional parameters need
-   * not to be filled in.
+   * Defines, whether the parameter at the given position is mandatory. A mandatory parameter must be filled in, while
+   * optional parameters need not to be filled in.
    *
    * @return
    */
-  public boolean isParameterMandatory(final int position)
-  {
+  public boolean isParameterMandatory( final int position ) {
     return position == 0;
   }
 }

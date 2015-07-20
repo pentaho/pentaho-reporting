@@ -17,30 +17,26 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.output.fast.csv;
 
-import java.io.IOException;
-import java.io.OutputStream;
-
 import org.pentaho.reporting.engine.classic.core.MasterReport;
 import org.pentaho.reporting.engine.classic.core.ReportProcessingException;
 import org.pentaho.reporting.engine.classic.core.modules.output.fast.validator.ReportStructureValidator;
 import org.pentaho.reporting.engine.classic.core.modules.output.table.csv.CSVReportUtil;
 
-public class FastCsvReportUtil
-{
-  private FastCsvReportUtil()
-  {
+import java.io.IOException;
+import java.io.OutputStream;
+
+public class FastCsvReportUtil {
+  private FastCsvReportUtil() {
   }
 
-  public static void process(MasterReport report, OutputStream out) throws ReportProcessingException, IOException
-  {
+  public static void process( MasterReport report, OutputStream out ) throws ReportProcessingException, IOException {
     ReportStructureValidator validator = new ReportStructureValidator();
-    if (validator.isValidForFastProcessing(report) == false)
-    {
-      CSVReportUtil.createCSV(report, out, null);
+    if ( validator.isValidForFastProcessing( report ) == false ) {
+      CSVReportUtil.createCSV( report, out, null );
       return;
     }
 
-    final FastCsvExportProcessor reportProcessor = new FastCsvExportProcessor(report, out);
+    final FastCsvExportProcessor reportProcessor = new FastCsvExportProcessor( report, out );
     reportProcessor.processReport();
     reportProcessor.close();
     out.flush();

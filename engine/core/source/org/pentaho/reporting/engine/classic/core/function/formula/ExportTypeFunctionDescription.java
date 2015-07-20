@@ -23,14 +23,12 @@ import org.pentaho.reporting.libraries.formula.function.information.InformationF
 import org.pentaho.reporting.libraries.formula.typing.Type;
 import org.pentaho.reporting.libraries.formula.typing.coretypes.TextType;
 
-public class ExportTypeFunctionDescription extends AbstractFunctionDescription
-{
+public class ExportTypeFunctionDescription extends AbstractFunctionDescription {
   /**
    * Default Constructor.
    */
-  public ExportTypeFunctionDescription()
-  {
-    super("EXPORTTYPE", "org.pentaho.reporting.engine.classic.core.function.formula.ExportType-Function");
+  public ExportTypeFunctionDescription() {
+    super( "EXPORTTYPE", "org.pentaho.reporting.engine.classic.core.function.formula.ExportType-Function" );
   }
 
   /**
@@ -38,8 +36,7 @@ public class ExportTypeFunctionDescription extends AbstractFunctionDescription
    *
    * @return LogicalType.TYPE
    */
-  public Type getValueType()
-  {
+  public Type getValueType() {
     return TextType.TYPE;
   }
 
@@ -48,8 +45,7 @@ public class ExportTypeFunctionDescription extends AbstractFunctionDescription
    *
    * @return 1.
    */
-  public int getParameterCount()
-  {
+  public int getParameterCount() {
     return 0;
   }
 
@@ -59,8 +55,7 @@ public class ExportTypeFunctionDescription extends AbstractFunctionDescription
    * @param position the parameter index.
    * @return always TextType.TYPE.
    */
-  public Type getParameterType(final int position)
-  {
+  public Type getParameterType( final int position ) {
     return TextType.TYPE;
   }
 
@@ -71,8 +66,7 @@ public class ExportTypeFunctionDescription extends AbstractFunctionDescription
    * @param position the position of the parameter.
    * @return true, as all parameters are mandatory.
    */
-  public boolean isParameterMandatory(final int position)
-  {
+  public boolean isParameterMandatory( final int position ) {
     return false;
   }
 
@@ -81,8 +75,7 @@ public class ExportTypeFunctionDescription extends AbstractFunctionDescription
    *
    * @return InformationFunctionCategory.CATEGORY.
    */
-  public FunctionCategory getCategory()
-  {
+  public FunctionCategory getCategory() {
     return InformationFunctionCategory.CATEGORY;
   }
 }

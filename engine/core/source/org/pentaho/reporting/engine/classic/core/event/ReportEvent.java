@@ -17,11 +17,11 @@
 
 package org.pentaho.reporting.engine.classic.core.event;
 
-import java.util.EventObject;
-
 import org.pentaho.reporting.engine.classic.core.DataRow;
 import org.pentaho.reporting.engine.classic.core.ReportDefinition;
 import org.pentaho.reporting.engine.classic.core.states.ReportState;
+
+import java.util.EventObject;
 
 /**
  * Represents a report event.
@@ -30,8 +30,7 @@ import org.pentaho.reporting.engine.classic.core.states.ReportState;
  *
  * @author Thomas Morgner
  */
-public class ReportEvent extends EventObject
-{
+public class ReportEvent extends EventObject {
   /**
    * The event type constant, that the report initialize event is invoked.
    */
@@ -78,18 +77,17 @@ public class ReportEvent extends EventObject
   public static final int PAGE_FINISHED = 0x400;
 
   /**
-   * This event is fired when a summary row is going to be printed. This is a crosstab only event,
-   * and happens after the group-finished event. Crosstab-aware functions must now select the
-   * result for the given group.
+   * This event is fired when a summary row is going to be printed. This is a crosstab only event, and happens after the
+   * group-finished event. Crosstab-aware functions must now select the result for the given group.
    */
   public static final int SUMMARY_ROW = 0x800;
   public static final int SUMMARY_ROW_START = 0x1800;
   public static final int SUMMARY_ROW_END = 0x2800;
 
   /**
-   * This is a layout-helper event. It is only passed down to layouter functions.
-   * This event is fired before a group-finished event is fired and helps the layouter to close the group-body
-   * so that keep-together and widows can compute their state properly.
+   * This is a layout-helper event. It is only passed down to layouter functions. This event is fired before a
+   * group-finished event is fired and helps the layouter to close the group-body so that keep-together and widows can
+   * compute their state properly.
    */
   public static final int GROUP_BODY_FINISHED = 0x8000;
 
@@ -108,9 +106,9 @@ public class ReportEvent extends EventObject
    * A flag that marks the given event as a deep-traversing event. This flag is an indicator, that the event did not
    * originate in this report, so it propably came from a parent or child report.
    */
-  public static final int DEEP_TRAVERSING_EVENT   = 0x4000000;
+  public static final int DEEP_TRAVERSING_EVENT = 0x4000000;
   public static final int NO_PARENT_PASSING_EVENT = 0x8000000;
-  public static final int ARTIFICIAL_EVENT_CODE  = 0x80000000;
+  public static final int ARTIFICIAL_EVENT_CODE = 0x80000000;
 
 
   /**
@@ -130,16 +128,13 @@ public class ReportEvent extends EventObject
    * @param state the current state of the processed report (<code>null</code> not permmitted).
    * @param type  the event type for this event object.
    */
-  public ReportEvent(final ReportState state, final int type)
-  {
-    super(state);
-    if (state == null)
-    {
-      throw new NullPointerException("ReportEvent(ReportState) : null not permitted.");
+  public ReportEvent( final ReportState state, final int type ) {
+    super( state );
+    if ( state == null ) {
+      throw new NullPointerException( "ReportEvent(ReportState) : null not permitted." );
     }
-    if (type <= 0)
-    {
-      throw new IllegalArgumentException("This is not a valid EventType: " + type);
+    if ( type <= 0 ) {
+      throw new IllegalArgumentException( "This is not a valid EventType: " + type );
     }
     this.type = type;
     this.originatingState = state;
@@ -152,12 +147,10 @@ public class ReportEvent extends EventObject
    * @param originatingState the original state that generated the event.
    * @param type             the event type for this event object.
    */
-  public ReportEvent(final ReportState state, final ReportState originatingState, final int type)
-  {
-    this(state, type);
-    if (originatingState == null)
-    {
-      throw new NullPointerException("Originating state can never be null.");
+  public ReportEvent( final ReportState state, final ReportState originatingState, final int type ) {
+    this( state, type );
+    if ( originatingState == null ) {
+      throw new NullPointerException( "Originating state can never be null." );
     }
     this.originatingState = originatingState;
   }
@@ -167,8 +160,7 @@ public class ReportEvent extends EventObject
    *
    * @return the event type.
    */
-  public int getType()
-  {
+  public int getType() {
     return type;
   }
 
@@ -177,8 +169,7 @@ public class ReportEvent extends EventObject
    *
    * @return the state (never <code>null</code>).
    */
-  public ReportState getState()
-  {
+  public ReportState getState() {
     return (ReportState) getSource();
   }
 
@@ -189,8 +180,7 @@ public class ReportEvent extends EventObject
    *
    * @return the originating state.
    */
-  public ReportState getOriginatingState()
-  {
+  public ReportState getOriginatingState() {
     return originatingState;
   }
 
@@ -200,21 +190,20 @@ public class ReportEvent extends EventObject
    *
    * @return the report.
    */
-  public ReportDefinition getReport()
-  {
+  public ReportDefinition getReport() {
     return getState().getReport();
   }
 
   /**
    * Returns the currently assigned dataRow for this event.
    * <p/>
-   * The {@link DataRow} is used to access the fields of the {@link org.pentaho.reporting.engine.classic.core.filter.DataSource}
+   * The {@link DataRow} is used to access the fields of the {@link org.pentaho.reporting.engine.classic.core.filter
+   * .DataSource}
    * and other functions and expressions within the current row of the report.
    *
    * @return the data row.
    */
-  public DataRow getDataRow()
-  {
+  public DataRow getDataRow() {
     return getState().getDataRow();
   }
 
@@ -223,8 +212,7 @@ public class ReportEvent extends EventObject
    *
    * @return the function level.
    */
-  public int getLevel()
-  {
+  public int getLevel() {
     return getState().getLevel();
   }
 
@@ -234,120 +222,93 @@ public class ReportEvent extends EventObject
    *
    * @return true, if this is a deep-traversing element, false otherwise.
    */
-  public boolean isDeepTraversing()
-  {
-    return (type & ReportEvent.DEEP_TRAVERSING_EVENT) ==
-        ReportEvent.DEEP_TRAVERSING_EVENT;
+  public boolean isDeepTraversing() {
+    return ( type & ReportEvent.DEEP_TRAVERSING_EVENT ) ==
+      ReportEvent.DEEP_TRAVERSING_EVENT;
   }
 
-  /** @noinspection HardCodedStringLiteral*/
-  public static String translateStateCode(final int code)
-  {
+  /**
+   * @noinspection HardCodedStringLiteral
+   */
+  public static String translateStateCode( final int code ) {
     final StringBuffer b = new StringBuffer();
-    if ((code & REPORT_INITIALIZED) == REPORT_INITIALIZED)
-    {
-      b.append("Report-Init");
-    }
-    else
-    if ((code & PAGE_STARTED) == PAGE_STARTED)
-    {
-      b.append("Page-Start");
+    if ( ( code & REPORT_INITIALIZED ) == REPORT_INITIALIZED ) {
+      b.append( "Report-Init" );
+    } else if ( ( code & PAGE_STARTED ) == PAGE_STARTED ) {
+      b.append( "Page-Start" );
       final int i = code & ~PAGE_STARTED;
-      if (i != 0)
-      {
-        b.append("[");
-        b.append(translateStateCode(i));
-        b.append("]");
-      }
-     }
-    if ((code & REPORT_STARTED) == REPORT_STARTED)
-    {
-      b.append("Report-Start");
-    }
-    if ((code & GROUP_STARTED) == GROUP_STARTED)
-    {
-      b.append("Group-Start");
-    }
-    if ((code & ITEMS_STARTED) == ITEMS_STARTED)
-    {
-      b.append("Items-Start");
-    }
-    if ((code & ITEMS_ADVANCED) == ITEMS_ADVANCED)
-    {
-      b.append("Items-Advanced");
-    }
-    if ((code & ITEMS_FINISHED) == ITEMS_FINISHED)
-    {
-      b.append("Items-Finished");
-    }
-    if ((code & GROUP_BODY_FINISHED) == GROUP_BODY_FINISHED)
-    {
-      b.append("Group-Body-Finished");
-    }
-    if ((code & GROUP_FINISHED) == GROUP_FINISHED)
-    {
-      b.append("Group-Finished");
-    }
-    if ((code & REPORT_FINISHED) == REPORT_FINISHED)
-    {
-      b.append("Report-Finished");
-    }
-    if ((code & REPORT_DONE) == REPORT_DONE)
-    {
-      b.append("Report-Done");
-    }
-    if ((code & PAGE_FINISHED) == PAGE_FINISHED)
-    {
-      b.append("Page-Finished");
-    }
-    if ((code & SUMMARY_ROW) == SUMMARY_ROW)
-    {
-      b.append("Summary Row");
-      if ((code & SUMMARY_ROW_START) == SUMMARY_ROW_START)
-      {
-        b.append(" [Start]");
-      }
-      if ((code & SUMMARY_ROW_END) == SUMMARY_ROW_END)
-      {
-        b.append(" [End]");
+      if ( i != 0 ) {
+        b.append( "[" );
+        b.append( translateStateCode( i ) );
+        b.append( "]" );
       }
     }
-    if ((code & CROSSTABBING) == CROSSTABBING)
-    {
-      b.append(" Crosstab");
-      if ((code & CROSSTABBING_TABLE) == CROSSTABBING_TABLE)
-      {
-        b.append(":Table");
+    if ( ( code & REPORT_STARTED ) == REPORT_STARTED ) {
+      b.append( "Report-Start" );
+    }
+    if ( ( code & GROUP_STARTED ) == GROUP_STARTED ) {
+      b.append( "Group-Start" );
+    }
+    if ( ( code & ITEMS_STARTED ) == ITEMS_STARTED ) {
+      b.append( "Items-Start" );
+    }
+    if ( ( code & ITEMS_ADVANCED ) == ITEMS_ADVANCED ) {
+      b.append( "Items-Advanced" );
+    }
+    if ( ( code & ITEMS_FINISHED ) == ITEMS_FINISHED ) {
+      b.append( "Items-Finished" );
+    }
+    if ( ( code & GROUP_BODY_FINISHED ) == GROUP_BODY_FINISHED ) {
+      b.append( "Group-Body-Finished" );
+    }
+    if ( ( code & GROUP_FINISHED ) == GROUP_FINISHED ) {
+      b.append( "Group-Finished" );
+    }
+    if ( ( code & REPORT_FINISHED ) == REPORT_FINISHED ) {
+      b.append( "Report-Finished" );
+    }
+    if ( ( code & REPORT_DONE ) == REPORT_DONE ) {
+      b.append( "Report-Done" );
+    }
+    if ( ( code & PAGE_FINISHED ) == PAGE_FINISHED ) {
+      b.append( "Page-Finished" );
+    }
+    if ( ( code & SUMMARY_ROW ) == SUMMARY_ROW ) {
+      b.append( "Summary Row" );
+      if ( ( code & SUMMARY_ROW_START ) == SUMMARY_ROW_START ) {
+        b.append( " [Start]" );
       }
-      if ((code & CROSSTABBING_OTHER) == CROSSTABBING_OTHER)
-      {
-        b.append(":Other");
-      }
-      if ((code & CROSSTABBING_ROW) == CROSSTABBING_ROW)
-      {
-        b.append(":Row");
-      }
-      if ((code & CROSSTABBING_COL) == CROSSTABBING_COL)
-      {
-        b.append(":Col");
+      if ( ( code & SUMMARY_ROW_END ) == SUMMARY_ROW_END ) {
+        b.append( " [End]" );
       }
     }
-    if ((code & (DEEP_TRAVERSING_EVENT | NO_PARENT_PASSING_EVENT | ARTIFICIAL_EVENT_CODE)) != 0)
-    {
-      b.append(" (");
-      if ((code & DEEP_TRAVERSING_EVENT) == DEEP_TRAVERSING_EVENT)
-      {
-        b.append(" DeepTraverse");
+    if ( ( code & CROSSTABBING ) == CROSSTABBING ) {
+      b.append( " Crosstab" );
+      if ( ( code & CROSSTABBING_TABLE ) == CROSSTABBING_TABLE ) {
+        b.append( ":Table" );
       }
-      if ((code & NO_PARENT_PASSING_EVENT) == NO_PARENT_PASSING_EVENT)
-      {
-        b.append(" NoParent");
+      if ( ( code & CROSSTABBING_OTHER ) == CROSSTABBING_OTHER ) {
+        b.append( ":Other" );
       }
-      if ((code & ARTIFICIAL_EVENT_CODE) == ARTIFICIAL_EVENT_CODE)
-      {
-        b.append(" Artificial");
+      if ( ( code & CROSSTABBING_ROW ) == CROSSTABBING_ROW ) {
+        b.append( ":Row" );
       }
-      b.append(" )");
+      if ( ( code & CROSSTABBING_COL ) == CROSSTABBING_COL ) {
+        b.append( ":Col" );
+      }
+    }
+    if ( ( code & ( DEEP_TRAVERSING_EVENT | NO_PARENT_PASSING_EVENT | ARTIFICIAL_EVENT_CODE ) ) != 0 ) {
+      b.append( " (" );
+      if ( ( code & DEEP_TRAVERSING_EVENT ) == DEEP_TRAVERSING_EVENT ) {
+        b.append( " DeepTraverse" );
+      }
+      if ( ( code & NO_PARENT_PASSING_EVENT ) == NO_PARENT_PASSING_EVENT ) {
+        b.append( " NoParent" );
+      }
+      if ( ( code & ARTIFICIAL_EVENT_CODE ) == ARTIFICIAL_EVENT_CODE ) {
+        b.append( " Artificial" );
+      }
+      b.append( " )" );
     }
     return b.toString();
   }

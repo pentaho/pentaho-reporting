@@ -22,14 +22,11 @@ package org.pentaho.reporting.engine.classic.core.layout.output;
  *
  * @author Thomas Morgner
  */
-public class DisplayAllFlowSelector implements FlowSelector
-{
-  public DisplayAllFlowSelector()
-  {
+public class DisplayAllFlowSelector implements FlowSelector {
+  public DisplayAllFlowSelector() {
   }
 
-  public boolean isLogicalPageAccepted(final LogicalPageKey key)
-  {
+  public boolean isLogicalPageAccepted( final LogicalPageKey key ) {
     return true;
   }
 }

@@ -19,186 +19,155 @@ package org.pentaho.reporting.engine.classic.core;
 
 import org.pentaho.reporting.engine.classic.core.filter.types.bands.GroupDataBodyType;
 
-public class GroupDataBody extends GroupBody
-{
+public class GroupDataBody extends GroupBody {
   private DetailsHeader detailsHeader;
   private NoDataBand noDataBand;
   private ItemBand itemBand;
   private DetailsFooter detailsFooter;
 
-  public GroupDataBody()
-  {
-    setElementType(new GroupDataBodyType());
+  public GroupDataBody() {
+    setElementType( new GroupDataBodyType() );
     this.noDataBand = new NoDataBand();
     this.itemBand = new ItemBand();
     this.detailsHeader = new DetailsHeader();
     this.detailsFooter = new DetailsFooter();
-    registerAsChild(noDataBand);
-    registerAsChild(itemBand);
-    registerAsChild(detailsHeader);
-    registerAsChild(detailsFooter);
+    registerAsChild( noDataBand );
+    registerAsChild( itemBand );
+    registerAsChild( detailsHeader );
+    registerAsChild( detailsFooter );
   }
 
-  public Group getGroup()
-  {
+  public Group getGroup() {
     return null;
   }
 
-  public NoDataBand getNoDataBand()
-  {
+  public NoDataBand getNoDataBand() {
     return noDataBand;
   }
 
-  public void setNoDataBand(final NoDataBand noDataBand)
-  {
-    if (noDataBand == null)
-    {
-      throw new NullPointerException("The noDataBand must not be null");
+  public void setNoDataBand( final NoDataBand noDataBand ) {
+    if ( noDataBand == null ) {
+      throw new NullPointerException( "The noDataBand must not be null" );
     }
-    validateLooping(noDataBand);
-    if (unregisterParent(noDataBand))
-    {
+    validateLooping( noDataBand );
+    if ( unregisterParent( noDataBand ) ) {
       return;
     }
     final NoDataBand oldElement = this.noDataBand;
-    this.noDataBand.setParent(null);
+    this.noDataBand.setParent( null );
     this.noDataBand = noDataBand;
-    this.noDataBand.setParent(this);
+    this.noDataBand.setParent( this );
 
-    notifyNodeChildRemoved(oldElement);
-    notifyNodeChildAdded(this.noDataBand);
+    notifyNodeChildRemoved( oldElement );
+    notifyNodeChildAdded( this.noDataBand );
   }
 
-  public ItemBand getItemBand()
-  {
+  public ItemBand getItemBand() {
     return itemBand;
   }
 
-  public void setItemBand(final ItemBand itemBand)
-  {
-    if (itemBand == null)
-    {
-      throw new NullPointerException("The itemBand must not be null");
+  public void setItemBand( final ItemBand itemBand ) {
+    if ( itemBand == null ) {
+      throw new NullPointerException( "The itemBand must not be null" );
     }
-    validateLooping(itemBand);
-    if (unregisterParent(itemBand))
-    {
+    validateLooping( itemBand );
+    if ( unregisterParent( itemBand ) ) {
       return;
     }
     final ItemBand oldElement = this.itemBand;
-    this.itemBand.setParent(null);
+    this.itemBand.setParent( null );
     this.itemBand = itemBand;
-    this.itemBand.setParent(this);
+    this.itemBand.setParent( this );
 
-    notifyNodeChildRemoved(oldElement);
-    notifyNodeChildAdded(this.itemBand);
+    notifyNodeChildRemoved( oldElement );
+    notifyNodeChildAdded( this.itemBand );
   }
 
-  public DetailsHeader getDetailsHeader()
-  {
+  public DetailsHeader getDetailsHeader() {
     return detailsHeader;
   }
 
-  public void setDetailsHeader(final DetailsHeader detailsHeader)
-  {
-    if (detailsHeader == null)
-    {
-      throw new NullPointerException("The detailsHeader must not be null");
+  public void setDetailsHeader( final DetailsHeader detailsHeader ) {
+    if ( detailsHeader == null ) {
+      throw new NullPointerException( "The detailsHeader must not be null" );
     }
-    validateLooping(detailsHeader);
-    if (unregisterParent(detailsHeader))
-    {
+    validateLooping( detailsHeader );
+    if ( unregisterParent( detailsHeader ) ) {
       return;
     }
     final DetailsHeader oldElement = this.detailsHeader;
-    this.detailsHeader.setParent(null);
+    this.detailsHeader.setParent( null );
     this.detailsHeader = detailsHeader;
-    this.detailsHeader.setParent(this);
+    this.detailsHeader.setParent( this );
 
-    notifyNodeChildRemoved(oldElement);
-    notifyNodeChildAdded(this.detailsHeader);
+    notifyNodeChildRemoved( oldElement );
+    notifyNodeChildAdded( this.detailsHeader );
   }
 
-  public DetailsFooter getDetailsFooter()
-  {
+  public DetailsFooter getDetailsFooter() {
     return detailsFooter;
   }
 
-  public void setDetailsFooter(final DetailsFooter detailsFooter)
-  {
-    if (detailsFooter == null)
-    {
-      throw new NullPointerException("The detailsFooter must not be null");
+  public void setDetailsFooter( final DetailsFooter detailsFooter ) {
+    if ( detailsFooter == null ) {
+      throw new NullPointerException( "The detailsFooter must not be null" );
     }
-    validateLooping(detailsFooter);
-    if (unregisterParent(detailsFooter))
-    {
+    validateLooping( detailsFooter );
+    if ( unregisterParent( detailsFooter ) ) {
       return;
     }
 
     final DetailsFooter oldElement = this.detailsFooter;
-    this.detailsFooter.setParent(null);
+    this.detailsFooter.setParent( null );
     this.detailsFooter = detailsFooter;
-    this.detailsFooter.setParent(this);
+    this.detailsFooter.setParent( this );
 
-    notifyNodeChildRemoved(oldElement);
-    notifyNodeChildAdded(this.detailsFooter);
+    notifyNodeChildRemoved( oldElement );
+    notifyNodeChildAdded( this.detailsFooter );
   }
 
-  protected void removeElement(final Element element)
-  {
-    if (element == null)
-    {
+  protected void removeElement( final Element element ) {
+    if ( element == null ) {
       throw new NullPointerException();
     }
 
-    if (element == itemBand)
-    {
-      this.itemBand.setParent(null);
+    if ( element == itemBand ) {
+      this.itemBand.setParent( null );
       this.itemBand = new ItemBand();
-      this.itemBand.setParent(this);
+      this.itemBand.setParent( this );
 
-      notifyNodeChildRemoved(element);
-      notifyNodeChildAdded(this.itemBand);
-    }
-    else if (element == noDataBand)
-    {
-      this.noDataBand.setParent(null);
+      notifyNodeChildRemoved( element );
+      notifyNodeChildAdded( this.itemBand );
+    } else if ( element == noDataBand ) {
+      this.noDataBand.setParent( null );
       this.noDataBand = new NoDataBand();
-      this.noDataBand.setParent(this);
+      this.noDataBand.setParent( this );
 
-      notifyNodeChildRemoved(element);
-      notifyNodeChildAdded(this.noDataBand);
-    }
-    else if (element == detailsHeader)
-    {
-      this.detailsHeader.setParent(null);
+      notifyNodeChildRemoved( element );
+      notifyNodeChildAdded( this.noDataBand );
+    } else if ( element == detailsHeader ) {
+      this.detailsHeader.setParent( null );
       this.detailsHeader = new DetailsHeader();
-      this.detailsHeader.setParent(this);
+      this.detailsHeader.setParent( this );
 
-      notifyNodeChildRemoved(element);
-      notifyNodeChildAdded(this.detailsHeader);
-    }
-    else if (element == detailsFooter)
-    {
-      this.detailsFooter.setParent(null);
+      notifyNodeChildRemoved( element );
+      notifyNodeChildAdded( this.detailsHeader );
+    } else if ( element == detailsFooter ) {
+      this.detailsFooter.setParent( null );
       this.detailsFooter = new DetailsFooter();
-      this.detailsFooter.setParent(this);
+      this.detailsFooter.setParent( this );
 
-      notifyNodeChildRemoved(element);
-      notifyNodeChildAdded(this.detailsFooter);
+      notifyNodeChildRemoved( element );
+      notifyNodeChildAdded( this.detailsFooter );
     }
   }
 
-  public int getElementCount()
-  {
+  public int getElementCount() {
     return 4;
   }
 
-  public Element getElement(final int index)
-  {
-    switch (index)
-    {
+  public Element getElement( final int index ) {
+    switch( index ) {
       case 0:
         return detailsHeader;
       case 1:
@@ -212,21 +181,19 @@ public class GroupDataBody extends GroupBody
     }
   }
 
-  public void setElementAt(final int position, final Element element)
-  {
-    switch (position)
-    {
+  public void setElementAt( final int position, final Element element ) {
+    switch( position ) {
       case 0:
-        setDetailsHeader((DetailsHeader) element);
+        setDetailsHeader( (DetailsHeader) element );
         break;
       case 1:
-        setItemBand((ItemBand) element);
+        setItemBand( (ItemBand) element );
         break;
       case 2:
-        setNoDataBand((NoDataBand) element);
+        setNoDataBand( (NoDataBand) element );
         break;
       case 3:
-        setDetailsFooter((DetailsFooter) element);
+        setDetailsFooter( (DetailsFooter) element );
         break;
       default:
         throw new IndexOutOfBoundsException();
@@ -239,33 +206,31 @@ public class GroupDataBody extends GroupBody
    *
    * @return a clone of this Element.
    */
-  public GroupDataBody clone()
-  {
+  public GroupDataBody clone() {
     final GroupDataBody dataBody = (GroupDataBody) super.clone();
     dataBody.itemBand = (ItemBand) itemBand.clone();
     dataBody.noDataBand = (NoDataBand) noDataBand.clone();
     dataBody.detailsHeader = (DetailsHeader) detailsHeader.clone();
     dataBody.detailsFooter = (DetailsFooter) detailsFooter.clone();
 
-    dataBody.registerAsChild(dataBody.itemBand);
-    dataBody.registerAsChild(dataBody.noDataBand);
-    dataBody.registerAsChild(dataBody.detailsHeader);
-    dataBody.registerAsChild(dataBody.detailsFooter);
+    dataBody.registerAsChild( dataBody.itemBand );
+    dataBody.registerAsChild( dataBody.noDataBand );
+    dataBody.registerAsChild( dataBody.detailsHeader );
+    dataBody.registerAsChild( dataBody.detailsFooter );
     return dataBody;
   }
 
-  public GroupDataBody derive(final boolean preserveElementInstanceIds)
-  {
-    final GroupDataBody dataBody = (GroupDataBody) super.derive(preserveElementInstanceIds);
-    dataBody.itemBand = (ItemBand) itemBand.derive(preserveElementInstanceIds);
-    dataBody.noDataBand = (NoDataBand) noDataBand.derive(preserveElementInstanceIds);
-    dataBody.detailsHeader = (DetailsHeader) detailsHeader.derive(preserveElementInstanceIds);
-    dataBody.detailsFooter = (DetailsFooter) detailsFooter.derive(preserveElementInstanceIds);
+  public GroupDataBody derive( final boolean preserveElementInstanceIds ) {
+    final GroupDataBody dataBody = (GroupDataBody) super.derive( preserveElementInstanceIds );
+    dataBody.itemBand = (ItemBand) itemBand.derive( preserveElementInstanceIds );
+    dataBody.noDataBand = (NoDataBand) noDataBand.derive( preserveElementInstanceIds );
+    dataBody.detailsHeader = (DetailsHeader) detailsHeader.derive( preserveElementInstanceIds );
+    dataBody.detailsFooter = (DetailsFooter) detailsFooter.derive( preserveElementInstanceIds );
 
-    dataBody.registerAsChild(dataBody.itemBand);
-    dataBody.registerAsChild(dataBody.noDataBand);
-    dataBody.registerAsChild(dataBody.detailsHeader);
-    dataBody.registerAsChild(dataBody.detailsFooter);
+    dataBody.registerAsChild( dataBody.itemBand );
+    dataBody.registerAsChild( dataBody.noDataBand );
+    dataBody.registerAsChild( dataBody.detailsHeader );
+    dataBody.registerAsChild( dataBody.detailsFooter );
     return dataBody;
   }
 }

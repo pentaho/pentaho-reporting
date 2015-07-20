@@ -22,8 +22,7 @@ package org.pentaho.reporting.engine.classic.core.filter.templates;
  *
  * @author Thomas Morgner
  */
-public abstract class AbstractTemplate implements Template
-{
+public abstract class AbstractTemplate implements Template {
   /**
    * The template name.
    */
@@ -32,8 +31,7 @@ public abstract class AbstractTemplate implements Template
   /**
    * Creates a new template.
    */
-  protected AbstractTemplate()
-  {
+  protected AbstractTemplate() {
   }
 
   /**
@@ -41,10 +39,8 @@ public abstract class AbstractTemplate implements Template
    *
    * @param name the name (<code>null</code> not permitted).
    */
-  public void setName(final String name)
-  {
-    if (name == null)
-    {
+  public void setName( final String name ) {
+    if ( name == null ) {
       throw new NullPointerException();
     }
     this.name = name;
@@ -55,8 +51,7 @@ public abstract class AbstractTemplate implements Template
    *
    * @return The name.
    */
-  public String getName()
-  {
+  public String getName() {
     return name;
   }
 
@@ -67,8 +62,7 @@ public abstract class AbstractTemplate implements Template
    * @throws CloneNotSupportedException this should never happen.
    */
   public AbstractTemplate clone()
-      throws CloneNotSupportedException
-  {
+    throws CloneNotSupportedException {
     return (AbstractTemplate) super.clone();
   }
 
@@ -77,15 +71,11 @@ public abstract class AbstractTemplate implements Template
    *
    * @return A clone.
    */
-  public Template getInstance()
-  {
-    try
-    {
+  public Template getInstance() {
+    try {
       return clone();
-    }
-    catch (CloneNotSupportedException cne)
-    {
-      throw new IllegalStateException("Clone not supported");
+    } catch ( CloneNotSupportedException cne ) {
+      throw new IllegalStateException( "Clone not supported" );
     }
   }
 

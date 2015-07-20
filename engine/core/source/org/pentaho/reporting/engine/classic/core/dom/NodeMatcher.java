@@ -19,7 +19,6 @@ package org.pentaho.reporting.engine.classic.core.dom;
 
 import org.pentaho.reporting.engine.classic.core.ReportElement;
 
-public interface NodeMatcher
-{
-  public boolean matches(MatcherContext context, ReportElement node);
+public interface NodeMatcher {
+  public boolean matches( MatcherContext context, ReportElement node );
 }

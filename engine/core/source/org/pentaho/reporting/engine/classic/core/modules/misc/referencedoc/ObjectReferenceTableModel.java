@@ -17,16 +17,16 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.misc.referencedoc;
 
+import org.pentaho.reporting.engine.classic.core.modules.parser.ext.factory.base.ClassFactory;
+import org.pentaho.reporting.engine.classic.core.modules.parser.ext.factory.base.ClassFactoryCollector;
+import org.pentaho.reporting.engine.classic.core.modules.parser.ext.factory.base.ObjectDescription;
+
+import javax.swing.table.AbstractTableModel;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
-import javax.swing.table.AbstractTableModel;
-
-import org.pentaho.reporting.engine.classic.core.modules.parser.ext.factory.base.ClassFactory;
-import org.pentaho.reporting.engine.classic.core.modules.parser.ext.factory.base.ClassFactoryCollector;
-import org.pentaho.reporting.engine.classic.core.modules.parser.ext.factory.base.ObjectDescription;
 
 
 /**
@@ -34,13 +34,11 @@ import org.pentaho.reporting.engine.classic.core.modules.parser.ext.factory.base
  *
  * @author Thomas Morgner.
  */
-public class ObjectReferenceTableModel extends AbstractTableModel
-{
+public class ObjectReferenceTableModel extends AbstractTableModel {
   /**
    * Used to represent each row in the table model.
    */
-  private static class ObjectDescriptionRow
-  {
+  private static class ObjectDescriptionRow {
     /**
      * The class factory.
      */
@@ -69,9 +67,8 @@ public class ObjectReferenceTableModel extends AbstractTableModel
      * @param paramName    the parameter name.
      * @param paramType    the parameter type.
      */
-    private ObjectDescriptionRow(final ClassFactory classFactory, final Class object,
-                                 final String paramName, final Class paramType)
-    {
+    private ObjectDescriptionRow( final ClassFactory classFactory, final Class object,
+                                  final String paramName, final Class paramType ) {
       this.classFactory = classFactory;
       this.object = object;
       this.paramName = paramName;
@@ -83,8 +80,7 @@ public class ObjectReferenceTableModel extends AbstractTableModel
      *
      * @return The class factory.
      */
-    public ClassFactory getClassFactory()
-    {
+    public ClassFactory getClassFactory() {
       return classFactory;
     }
 
@@ -93,8 +89,7 @@ public class ObjectReferenceTableModel extends AbstractTableModel
      *
      * @return The class.
      */
-    public Class getObject()
-    {
+    public Class getObject() {
       return object;
     }
 
@@ -103,8 +98,7 @@ public class ObjectReferenceTableModel extends AbstractTableModel
      *
      * @return the parameter name.
      */
-    public String getParamName()
-    {
+    public String getParamName() {
       return paramName;
     }
 
@@ -113,8 +107,7 @@ public class ObjectReferenceTableModel extends AbstractTableModel
      *
      * @return the parameter type.
      */
-    public Class getParamType()
-    {
+    public Class getParamType() {
       return paramType;
     }
   }
@@ -122,13 +115,11 @@ public class ObjectReferenceTableModel extends AbstractTableModel
   /**
    * A class name comparator.
    */
-  private static class ClassNameComparator implements Comparator, Serializable
-  {
+  private static class ClassNameComparator implements Comparator, Serializable {
     /**
      * Default-Constructor.
      */
-    private ClassNameComparator()
-    {
+    private ClassNameComparator() {
     }
 
     /**
@@ -138,14 +129,13 @@ public class ObjectReferenceTableModel extends AbstractTableModel
      * @param o1 the first object to be compared.
      * @param o2 the second object to be compared.
      * @return a negative integer, zero, or a positive integer as the first argument is less than, equal to, or greater
-     *         than the second.
+     * than the second.
      * @throws ClassCastException if the arguments' types prevent them from being compared by this Comparator.
      */
-    public int compare(final Object o1, final Object o2)
-    {
+    public int compare( final Object o1, final Object o2 ) {
       final Class c1 = (Class) o1;
       final Class c2 = (Class) o2;
-      return c1.getName().compareTo(c2.getName());
+      return c1.getName().compareTo( c2.getName() );
     }
   }
 
@@ -153,12 +143,12 @@ public class ObjectReferenceTableModel extends AbstractTableModel
    * The table model column names.
    */
   private static final String[] COLUMN_NAMES =
-      {
-          "object-factory", //$NON-NLS-1$
-          "object-class", //$NON-NLS-1$
-          "parameter-name", //$NON-NLS-1$
-          "parameter-class" //$NON-NLS-1$
-      };
+    {
+      "object-factory", //$NON-NLS-1$
+      "object-class", //$NON-NLS-1$
+      "parameter-name", //$NON-NLS-1$
+      "parameter-class" //$NON-NLS-1$
+    };
 
   /**
    * Storage for the rows.
@@ -170,10 +160,9 @@ public class ObjectReferenceTableModel extends AbstractTableModel
    *
    * @param cf the class factories.
    */
-  public ObjectReferenceTableModel(final ClassFactoryCollector cf)
-  {
+  public ObjectReferenceTableModel( final ClassFactoryCollector cf ) {
     rows = new ArrayList();
-    addClassFactoryCollector(cf);
+    addClassFactoryCollector( cf );
   }
 
   /**
@@ -181,19 +170,14 @@ public class ObjectReferenceTableModel extends AbstractTableModel
    *
    * @param cf the class factory collector.
    */
-  private void addClassFactoryCollector(final ClassFactoryCollector cf)
-  {
+  private void addClassFactoryCollector( final ClassFactoryCollector cf ) {
     final Iterator it = cf.getFactories();
-    while (it.hasNext())
-    {
+    while ( it.hasNext() ) {
       final ClassFactory cfact = (ClassFactory) it.next();
-      if (cfact instanceof ClassFactoryCollector)
-      {
-        addClassFactoryCollector((ClassFactoryCollector) cfact);
-      }
-      else
-      {
-        addClassFactory(cfact);
+      if ( cfact instanceof ClassFactoryCollector ) {
+        addClassFactoryCollector( (ClassFactoryCollector) cfact );
+      } else {
+        addClassFactory( cfact );
       }
     }
   }
@@ -203,37 +187,32 @@ public class ObjectReferenceTableModel extends AbstractTableModel
    *
    * @param cf the class factory.
    */
-  private void addClassFactory(final ClassFactory cf)
-  {
+  private void addClassFactory( final ClassFactory cf ) {
     Iterator it = cf.getRegisteredClasses();
     final ArrayList factories = new ArrayList();
 
-    while (it.hasNext())
-    {
+    while ( it.hasNext() ) {
       final Class c = (Class) it.next();
-      factories.add(c);
+      factories.add( c );
     }
 
-    Collections.sort(factories, new ClassNameComparator());
+    Collections.sort( factories, new ClassNameComparator() );
     it = factories.iterator();
 
-    while (it.hasNext())
-    {
+    while ( it.hasNext() ) {
       final Class c = (Class) it.next();
-      final ObjectDescription od = cf.getDescriptionForClass(c);
+      final ObjectDescription od = cf.getDescriptionForClass( c );
       Iterator itNames = od.getParameterNames();
       final ArrayList nameList = new ArrayList();
-      while (itNames.hasNext())
-      {
-        nameList.add(itNames.next());
+      while ( itNames.hasNext() ) {
+        nameList.add( itNames.next() );
       }
       // sort the parameter names
-      Collections.sort(nameList);
+      Collections.sort( nameList );
       itNames = nameList.iterator();
-      while (itNames.hasNext())
-      {
+      while ( itNames.hasNext() ) {
         final String name = (String) itNames.next();
-        rows.add(new ObjectDescriptionRow(cf, c, name, od.getParameterDefinition(name)));
+        rows.add( new ObjectDescriptionRow( cf, c, name, od.getParameterDefinition( name ) ) );
       }
     }
   }
@@ -245,8 +224,7 @@ public class ObjectReferenceTableModel extends AbstractTableModel
    * @return the number of rows in the model
    * @see #getColumnCount
    */
-  public int getRowCount()
-  {
+  public int getRowCount() {
     return rows.size();
   }
 
@@ -257,8 +235,7 @@ public class ObjectReferenceTableModel extends AbstractTableModel
    * @return the number of columns in the model
    * @see #getRowCount
    */
-  public int getColumnCount()
-  {
+  public int getColumnCount() {
     return ObjectReferenceTableModel.COLUMN_NAMES.length;
   }
 
@@ -268,9 +245,8 @@ public class ObjectReferenceTableModel extends AbstractTableModel
    * @param column the column being queried
    * @return a string containing the default name of <code>column</code>
    */
-  public String getColumnName(final int column)
-  {
-    return ObjectReferenceTableModel.COLUMN_NAMES[column];
+  public String getColumnName( final int column ) {
+    return ObjectReferenceTableModel.COLUMN_NAMES[ column ];
   }
 
   /**
@@ -279,8 +255,7 @@ public class ObjectReferenceTableModel extends AbstractTableModel
    * @param columnIndex the column being queried
    * @return the Object.class
    */
-  public Class getColumnClass(final int columnIndex)
-  {
+  public Class getColumnClass( final int columnIndex ) {
     return String.class;
   }
 
@@ -291,19 +266,17 @@ public class ObjectReferenceTableModel extends AbstractTableModel
    * @param columnIndex the column whose value is to be queried
    * @return the value Object at the specified cell
    */
-  public Object getValueAt(final int rowIndex, final int columnIndex)
-  {
-    final ObjectDescriptionRow or = (ObjectDescriptionRow) rows.get(rowIndex);
-    switch (columnIndex)
-    {
+  public Object getValueAt( final int rowIndex, final int columnIndex ) {
+    final ObjectDescriptionRow or = (ObjectDescriptionRow) rows.get( rowIndex );
+    switch( columnIndex ) {
       case 0:
-        return String.valueOf(or.getClassFactory().getClass().getName());
+        return String.valueOf( or.getClassFactory().getClass().getName() );
       case 1:
-        return String.valueOf(or.getObject().getName());
+        return String.valueOf( or.getObject().getName() );
       case 2:
-        return String.valueOf(or.getParamName());
+        return String.valueOf( or.getParamName() );
       case 3:
-        return String.valueOf(or.getParamType().getName());
+        return String.valueOf( or.getParamType().getName() );
       default:
         return null;
     }

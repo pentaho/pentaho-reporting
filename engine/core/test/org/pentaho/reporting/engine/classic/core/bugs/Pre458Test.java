@@ -17,42 +17,37 @@
 
 package org.pentaho.reporting.engine.classic.core.bugs;
 
-import java.net.URL;
-
 import junit.framework.TestCase;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
 import org.pentaho.reporting.engine.classic.core.testsupport.DebugReportRunner;
-import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 import org.pentaho.reporting.libraries.resourceloader.Resource;
+import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 
-public class Pre458Test extends TestCase
-{
-  public Pre458Test()
-  {
+import java.net.URL;
+
+public class Pre458Test extends TestCase {
+  public Pre458Test() {
   }
 
-  public Pre458Test(final String s)
-  {
-    super(s);
+  public Pre458Test( final String s ) {
+    super( s );
   }
 
-  protected void setUp() throws Exception
-  {
+  protected void setUp() throws Exception {
     ClassicEngineBoot.getInstance().start();
   }
 
 
-  public void testWatermarkCrash() throws Exception
-  {
-    final URL url = getClass().getResource("Pre-458.xml");
-    assertNotNull(url);
+  public void testWatermarkCrash() throws Exception {
+    final URL url = getClass().getResource( "Pre-458.xml" );
+    assertNotNull( url );
     final ResourceManager resourceManager = new ResourceManager();
     resourceManager.registerDefaults();
-    final Resource directly = resourceManager.createDirectly(url, MasterReport.class);
+    final Resource directly = resourceManager.createDirectly( url, MasterReport.class );
     final MasterReport resource = (MasterReport) directly.getResource();
 
-    DebugReportRunner.executeAll(resource);
+    DebugReportRunner.executeAll( resource );
   }
 
 }

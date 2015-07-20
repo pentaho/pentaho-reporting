@@ -27,8 +27,7 @@ import org.pentaho.reporting.engine.classic.core.function.ExpressionRuntime;
  *
  * @author Thomas Morgner.
  */
-public class ShapeFieldTemplate extends AbstractTemplate
-{
+public class ShapeFieldTemplate extends AbstractTemplate {
   /**
    * The data row reader.
    */
@@ -42,11 +41,10 @@ public class ShapeFieldTemplate extends AbstractTemplate
   /**
    * Creates a new shape field template.
    */
-  public ShapeFieldTemplate()
-  {
+  public ShapeFieldTemplate() {
     dataRowDataSource = new DataRowDataSource();
     shapeFilter = new ShapeFilter();
-    shapeFilter.setDataSource(dataRowDataSource);
+    shapeFilter.setDataSource( dataRowDataSource );
   }
 
   /**
@@ -54,8 +52,7 @@ public class ShapeFieldTemplate extends AbstractTemplate
    *
    * @return The field name.
    */
-  public String getField()
-  {
+  public String getField() {
     return dataRowDataSource.getDataSourceColumnName();
   }
 
@@ -64,9 +61,8 @@ public class ShapeFieldTemplate extends AbstractTemplate
    *
    * @param field the field name.
    */
-  public void setField(final String field)
-  {
-    dataRowDataSource.setDataSourceColumnName(field);
+  public void setField( final String field ) {
+    dataRowDataSource.setDataSourceColumnName( field );
   }
 
   /**
@@ -74,8 +70,7 @@ public class ShapeFieldTemplate extends AbstractTemplate
    *
    * @return the formula.
    */
-  public String getFormula()
-  {
+  public String getFormula() {
     return dataRowDataSource.getFormula();
   }
 
@@ -84,9 +79,8 @@ public class ShapeFieldTemplate extends AbstractTemplate
    *
    * @param formula the formula for the data source.
    */
-  public void setFormula(final String formula)
-  {
-    dataRowDataSource.setFormula(formula);
+  public void setFormula( final String formula ) {
+    dataRowDataSource.setFormula( formula );
   }
 
 
@@ -98,9 +92,8 @@ public class ShapeFieldTemplate extends AbstractTemplate
    * @param element
    * @return the value.
    */
-  public Object getValue(final ExpressionRuntime runtime, final ReportElement element)
-  {
-    return shapeFilter.getValue(runtime, element);
+  public Object getValue( final ExpressionRuntime runtime, final ReportElement element ) {
+    return shapeFilter.getValue( runtime, element );
   }
 
   /**
@@ -110,8 +103,7 @@ public class ShapeFieldTemplate extends AbstractTemplate
    * @throws CloneNotSupportedException this should never happen.
    */
   public ShapeFieldTemplate clone()
-      throws CloneNotSupportedException
-  {
+    throws CloneNotSupportedException {
     final ShapeFieldTemplate template = (ShapeFieldTemplate) super.clone();
     template.shapeFilter = shapeFilter.clone();
     template.dataRowDataSource = (DataRowDataSource) template.shapeFilter.getDataSource();
@@ -123,8 +115,7 @@ public class ShapeFieldTemplate extends AbstractTemplate
    *
    * @return the datarow data source.
    */
-  protected DataRowDataSource getDataRowDataSource()
-  {
+  protected DataRowDataSource getDataRowDataSource() {
     return dataRowDataSource;
   }
 }

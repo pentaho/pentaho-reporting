@@ -17,8 +17,7 @@
 
 package org.pentaho.reporting.engine.classic.core.wizard;
 
-public interface DataSchemaModel
-{
+public interface DataSchemaModel {
   public boolean isValid();
 
   public DataSchema getDataSchema();

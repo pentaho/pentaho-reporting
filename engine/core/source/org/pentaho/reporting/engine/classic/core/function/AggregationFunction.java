@@ -17,13 +17,12 @@
 
 package org.pentaho.reporting.engine.classic.core.function;
 
-public interface AggregationFunction extends Function
-{
+public interface AggregationFunction extends Function {
   public String getGroup();
 
-  public void setGroup(final String groupName);
+  public void setGroup( final String groupName );
 
   public String getCrosstabFilterGroup();
-  
-  public void setCrosstabFilterGroup(final String groupName);
+
+  public void setCrosstabFilterGroup( final String groupName );
 }

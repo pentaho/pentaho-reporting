@@ -17,15 +17,13 @@
 
 package org.pentaho.reporting.engine.classic.core.metadata;
 
-import java.awt.Image;
-import java.util.Locale;
-
 import org.pentaho.reporting.engine.classic.core.style.StyleKey;
 
-public interface ElementMetaData extends MetaData
-{
-  public enum TypeClassification
-  {
+import java.awt.*;
+import java.util.Locale;
+
+public interface ElementMetaData extends MetaData {
+  public enum TypeClassification {
     DATA, HEADER, RELATIONAL_HEADER, FOOTER, RELATIONAL_FOOTER, SECTION, SUBREPORT, CONTROL
   }
 
@@ -36,15 +34,15 @@ public interface ElementMetaData extends MetaData
    * @return the image or null, if there is no icon.
    * @see java.beans.BeanInfo#getIcon(int) for the general semantics
    */
-  public Image getIcon(final Locale locale, int iconKind);
+  public Image getIcon( final Locale locale, int iconKind );
 
   public AttributeMetaData[] getAttributeDescriptions();
 
   public StyleMetaData[] getStyleDescriptions();
 
-  public AttributeMetaData getAttributeDescription(String namespace, String name);
+  public AttributeMetaData getAttributeDescription( String namespace, String name );
 
-  public StyleMetaData getStyleDescription(StyleKey name);
+  public StyleMetaData getStyleDescription( StyleKey name );
 
   public ElementType create() throws InstantiationException;
 
@@ -57,6 +55,7 @@ public interface ElementMetaData extends MetaData
   public boolean isContainerElement();
 
   public Class<?> getContentType();
+
   public Class<? extends ElementType> getElementType();
 
   public TypeClassification getReportElementType();

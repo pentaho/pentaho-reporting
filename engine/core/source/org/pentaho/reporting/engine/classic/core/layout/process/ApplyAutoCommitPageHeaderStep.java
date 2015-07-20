@@ -27,50 +27,40 @@ import org.pentaho.reporting.engine.classic.core.layout.model.RenderBox;
  *
  * @author Thomas Morgner
  */
-public final class ApplyAutoCommitPageHeaderStep extends IterateSimpleStructureProcessStep
-{
+public final class ApplyAutoCommitPageHeaderStep extends IterateSimpleStructureProcessStep {
   private ApplyAutoCommitStep autoCommitStep;
   private boolean hasCommitableContent;
 
-  public ApplyAutoCommitPageHeaderStep()
-  {
+  public ApplyAutoCommitPageHeaderStep() {
     autoCommitStep = new ApplyAutoCommitStep();
   }
 
-  public boolean compute(final LogicalPageBox pageBox)
-  {
+  public boolean compute( final LogicalPageBox pageBox ) {
     hasCommitableContent = false;
-    processBoxChilds(pageBox);
-    if (hasCommitableContent)
-    {
-      autoCommitStep.compute(pageBox.getWatermarkArea());
-      autoCommitStep.compute(pageBox.getHeaderArea());
+    processBoxChilds( pageBox );
+    if ( hasCommitableContent ) {
+      autoCommitStep.compute( pageBox.getWatermarkArea() );
+      autoCommitStep.compute( pageBox.getHeaderArea() );
       return true;
-    }
-    else
-    {
+    } else {
       return false;
     }
   }
 
-  public void commitAll(final LogicalPageBox pageBox)
-  {
-    processBoxChilds(pageBox);
-    autoCommitStep.compute(pageBox.getWatermarkArea());
-    autoCommitStep.compute(pageBox.getHeaderArea());
-    autoCommitStep.compute(pageBox.getFooterArea());
-    autoCommitStep.compute(pageBox.getRepeatFooterArea());
+  public void commitAll( final LogicalPageBox pageBox ) {
+    processBoxChilds( pageBox );
+    autoCommitStep.compute( pageBox.getWatermarkArea() );
+    autoCommitStep.compute( pageBox.getHeaderArea() );
+    autoCommitStep.compute( pageBox.getFooterArea() );
+    autoCommitStep.compute( pageBox.getRepeatFooterArea() );
   }
 
-  protected void processParagraphChilds(final ParagraphRenderBox box)
-  {
-    processBoxChilds(box);
+  protected void processParagraphChilds( final ParagraphRenderBox box ) {
+    processBoxChilds( box );
   }
 
-  protected boolean startBox(final RenderBox box)
-  {
-    if (hasCommitableContent == true || box.isCommited())
-    {
+  protected boolean startBox( final RenderBox box ) {
+    if ( hasCommitableContent == true || box.isCommited() ) {
       hasCommitableContent = true;
       return false;
     }

@@ -17,51 +17,45 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.gui.common;
 
-import java.util.Locale;
-
-import org.pentaho.reporting.libraries.base.config.Configuration;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
+import org.pentaho.reporting.libraries.base.config.Configuration;
+
+import java.util.Locale;
 
 /**
  * Creation-Date: 16.11.2006, 17:05:27
  *
  * @author Thomas Morgner
  */
-public class DefaultGuiContext implements GuiContext
-{
+public class DefaultGuiContext implements GuiContext {
   private Locale locale;
   private IconTheme iconTheme;
   private Configuration configuration;
 
-  public DefaultGuiContext()
-  {
+  public DefaultGuiContext() {
     this.configuration = ClassicEngineBoot.getInstance().getGlobalConfig();
     this.locale = Locale.getDefault();
     this.iconTheme = new DefaultIconTheme();
-    this.iconTheme.initialize(configuration);
+    this.iconTheme.initialize( configuration );
   }
 
-  public DefaultGuiContext(final Locale locale,
-                           final IconTheme iconTheme,
-                           final Configuration configuration)
-  {
+  public DefaultGuiContext( final Locale locale,
+                            final IconTheme iconTheme,
+                            final Configuration configuration ) {
     this.locale = locale;
     this.iconTheme = iconTheme;
     this.configuration = configuration;
   }
 
-  public Locale getLocale()
-  {
+  public Locale getLocale() {
     return locale;
   }
 
-  public IconTheme getIconTheme()
-  {
+  public IconTheme getIconTheme() {
     return iconTheme;
   }
 
-  public Configuration getConfiguration()
-  {
+  public Configuration getConfiguration() {
     return configuration;
   }
 }

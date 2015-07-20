@@ -17,24 +17,23 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.misc.datafactory.sequence;
 
-import java.io.Serializable;
-import javax.swing.table.TableModel;
-
 import org.pentaho.reporting.engine.classic.core.DataFactoryContext;
 import org.pentaho.reporting.engine.classic.core.DataRow;
 import org.pentaho.reporting.engine.classic.core.ReportDataFactoryException;
 
-public interface Sequence extends Cloneable, Serializable
-{
+import javax.swing.table.TableModel;
+import java.io.Serializable;
+
+public interface Sequence extends Cloneable, Serializable {
   public SequenceDescription getSequenceDescription();
 
-  public Object getParameter(String name);
+  public Object getParameter( String name );
 
-  public void setParameter(String name, Object value);
+  public void setParameter( String name, Object value );
 
-  public TableModel produce(final DataRow parameters,
-                            final DataFactoryContext dataFactoryContext)
-      throws ReportDataFactoryException;
+  public TableModel produce( final DataRow parameters,
+                             final DataFactoryContext dataFactoryContext )
+    throws ReportDataFactoryException;
 
   public Object clone();
 }

@@ -17,17 +17,17 @@
 
 package org.pentaho.reporting.engine.classic.core;
 
-import java.awt.Insets;
+import org.pentaho.reporting.engine.classic.core.util.PageFormatFactory;
+import org.pentaho.reporting.engine.classic.core.util.PageSize;
+import org.pentaho.reporting.libraries.serializer.SerializerHelper;
+
+import java.awt.*;
 import java.awt.geom.Rectangle2D;
 import java.awt.print.PageFormat;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.Arrays;
-
-import org.pentaho.reporting.engine.classic.core.util.PageFormatFactory;
-import org.pentaho.reporting.engine.classic.core.util.PageSize;
-import org.pentaho.reporting.libraries.serializer.SerializerHelper;
 
 /**
  * A simple page definition defines a logical page, for which all physical pages have the same size.
@@ -36,8 +36,7 @@ import org.pentaho.reporting.libraries.serializer.SerializerHelper;
  *
  * @author Thomas Morgner
  */
-public class SimplePageDefinition implements PageDefinition
-{
+public class SimplePageDefinition implements PageDefinition {
   /**
    * The page format.
    */
@@ -62,37 +61,31 @@ public class SimplePageDefinition implements PageDefinition
    * @param x      the number of physical pages in a row.
    * @param y      the number of physical pages in a column.
    */
-  public SimplePageDefinition(final PageFormat format,
-                              final int x, final int y)
-  {
-    if (format == null)
-    {
-      throw new NullPointerException("Format must not be null");
+  public SimplePageDefinition( final PageFormat format,
+                               final int x, final int y ) {
+    if ( format == null ) {
+      throw new NullPointerException( "Format must not be null" );
     }
-    if (x < 1)
-    {
-      throw new IllegalArgumentException("PageCount must be greater or equal to 1");
+    if ( x < 1 ) {
+      throw new IllegalArgumentException( "PageCount must be greater or equal to 1" );
     }
-    if (y < 1)
-    {
-      throw new IllegalArgumentException("PageCount must be greater or equal to 1");
+    if ( y < 1 ) {
+      throw new IllegalArgumentException( "PageCount must be greater or equal to 1" );
     }
     this.format = (PageFormat) format.clone();
     this.pageCountHorizontal = x;
     this.pageCountVertical = y;
-    this.pagePositions = new Rectangle2D[pageCountHorizontal * pageCountVertical];
+    this.pagePositions = new Rectangle2D[ pageCountHorizontal * pageCountVertical ];
 
     final float width = (float) format.getImageableWidth();
     final float height = (float) format.getImageableHeight();
     float pageStartY = 0;
-    for (int vert = 0; vert < pageCountVertical; vert++)
-    {
+    for ( int vert = 0; vert < pageCountVertical; vert++ ) {
       float pageStartX = 0;
-      for (int hor = 0; hor < pageCountHorizontal; hor++)
-      {
+      for ( int hor = 0; hor < pageCountHorizontal; hor++ ) {
         final Rectangle2D rect =
-            new Rectangle2D.Float(pageStartX, pageStartY, width, height);
-        pagePositions[vert * pageCountHorizontal + hor] = rect;
+          new Rectangle2D.Float( pageStartX, pageStartY, width, height );
+        pagePositions[ vert * pageCountHorizontal + hor ] = rect;
         pageStartX += width;
       }
       pageStartY += height;
@@ -104,26 +97,23 @@ public class SimplePageDefinition implements PageDefinition
    *
    * @param format the pageformat.
    */
-  public SimplePageDefinition(final PageFormat format)
-  {
-    this(format, 1, 1);
+  public SimplePageDefinition( final PageFormat format ) {
+    this( format, 1, 1 );
   }
 
 
-  /** 
+  /**
    * Creates a 1x1 page defintion. The physical page size is equal to the logical page size.
    */
-  public SimplePageDefinition(final PageSize papersize, final int orientation, final Insets margins)
-  {
-    this(PageFormatFactory.create(papersize, orientation, margins), 1, 1);
+  public SimplePageDefinition( final PageSize papersize, final int orientation, final Insets margins ) {
+    this( PageFormatFactory.create( papersize, orientation, margins ), 1, 1 );
   }
 
   /**
    * Creates a 1x1 page defintion. The physical page size is equal to the logical page size.
    */
-  public SimplePageDefinition(final PageSize papersize)
-  {
-    this(PageFormatFactory.create(papersize, PageFormat.PORTRAIT, new Insets(0,0,0,0)), 1, 1);
+  public SimplePageDefinition( final PageSize papersize ) {
+    this( PageFormatFactory.create( papersize, PageFormat.PORTRAIT, new Insets( 0, 0, 0, 0 ) ), 1, 1 );
   }
 
 
@@ -132,8 +122,7 @@ public class SimplePageDefinition implements PageDefinition
    *
    * @return the number of pages.
    */
-  public int getPageCount()
-  {
+  public int getPageCount() {
     return pageCountHorizontal * pageCountVertical;
   }
 
@@ -143,11 +132,9 @@ public class SimplePageDefinition implements PageDefinition
    * @param pos the position in the page grid.
    * @return a clone of the pageformat at the specified positon.
    */
-  public PageFormat getPageFormat(final int pos)
-  {
-    if (pos < 0 || pos > getPageCount())
-    {
-      throw new IndexOutOfBoundsException("Index is invalid");
+  public PageFormat getPageFormat( final int pos ) {
+    if ( pos < 0 || pos > getPageCount() ) {
+      throw new IndexOutOfBoundsException( "Index is invalid" );
     }
     return (PageFormat) format.clone();
   }
@@ -158,13 +145,11 @@ public class SimplePageDefinition implements PageDefinition
    * @param index the positon.
    * @return the printable area for the page.
    */
-  public Rectangle2D getPagePosition(final int index)
-  {
-    if (index < 0 || index > getPageCount())
-    {
-      throw new IndexOutOfBoundsException("Index is invalid");
+  public Rectangle2D getPagePosition( final int index ) {
+    if ( index < 0 || index > getPageCount() ) {
+      throw new IndexOutOfBoundsException( "Index is invalid" );
     }
-    return pagePositions[index].getBounds2D();
+    return pagePositions[ index ].getBounds2D();
   }
 
   /**
@@ -172,13 +157,11 @@ public class SimplePageDefinition implements PageDefinition
    *
    * @return the page positions.
    */
-  public Rectangle2D[] getPagePositions()
-  {
+  public Rectangle2D[] getPagePositions() {
     final int length = pagePositions.length;
-    final Rectangle2D[] rects = new Rectangle2D[length];
-    for (int i = 0; i < length; i++)
-    {
-      rects[i] = pagePositions[i].getBounds2D();
+    final Rectangle2D[] rects = new Rectangle2D[ length ];
+    for ( int i = 0; i < length; i++ ) {
+      rects[ i ] = pagePositions[ i ].getBounds2D();
     }
     return rects;
   }
@@ -188,9 +171,8 @@ public class SimplePageDefinition implements PageDefinition
    *
    * @return the height of the page.
    */
-  public float getHeight()
-  {
-    return (float) (format.getImageableHeight() * pageCountVertical);
+  public float getHeight() {
+    return (float) ( format.getImageableHeight() * pageCountVertical );
   }
 
   /**
@@ -198,9 +180,8 @@ public class SimplePageDefinition implements PageDefinition
    *
    * @return the width of the page.
    */
-  public float getWidth()
-  {
-    return (float) (format.getImageableWidth() * pageCountHorizontal);
+  public float getWidth() {
+    return (float) ( format.getImageableWidth() * pageCountHorizontal );
   }
 
   /**
@@ -209,17 +190,15 @@ public class SimplePageDefinition implements PageDefinition
    * @param out the objectoutput stream
    * @throws java.io.IOException if errors occur
    */
-  private void writeObject(final ObjectOutputStream out)
-      throws IOException
-  {
+  private void writeObject( final ObjectOutputStream out )
+    throws IOException {
     out.defaultWriteObject();
     final SerializerHelper instance = SerializerHelper.getInstance();
-    instance.writeObject(format, out);
+    instance.writeObject( format, out );
     final int length = pagePositions.length;
-    out.writeInt(length);
-    for (int i = 0; i < length; i++)
-    {
-      instance.writeObject(pagePositions[i], out);
+    out.writeInt( length );
+    for ( int i = 0; i < length; i++ ) {
+      instance.writeObject( pagePositions[ i ], out );
     }
   }
 
@@ -230,17 +209,15 @@ public class SimplePageDefinition implements PageDefinition
    * @throws java.io.IOException    if there is an IO problem.
    * @throws ClassNotFoundException if there is a class problem.
    */
-  private void readObject(final ObjectInputStream in)
-      throws IOException, ClassNotFoundException
-  {
+  private void readObject( final ObjectInputStream in )
+    throws IOException, ClassNotFoundException {
     in.defaultReadObject();
     final SerializerHelper instance = SerializerHelper.getInstance();
-    format = (PageFormat) instance.readObject(in);
+    format = (PageFormat) instance.readObject( in );
     final int length = in.readInt();
-    pagePositions = new Rectangle2D[length];
-    for (int i = 0; i < length; i++)
-    {
-      pagePositions[i] = (Rectangle2D) instance.readObject(in);
+    pagePositions = new Rectangle2D[ length ];
+    for ( int i = 0; i < length; i++ ) {
+      pagePositions[ i ] = (Rectangle2D) instance.readObject( in );
     }
   }
 
@@ -251,8 +228,7 @@ public class SimplePageDefinition implements PageDefinition
    * @throws CloneNotSupportedException
    */
   public Object clone()
-      throws CloneNotSupportedException
-  {
+    throws CloneNotSupportedException {
     final SimplePageDefinition pdef = (SimplePageDefinition) super.clone();
     pdef.format = (PageFormat) format.clone();
     return pdef;
@@ -264,33 +240,26 @@ public class SimplePageDefinition implements PageDefinition
    * @param obj the other object.
    * @return true, if that object is the same as this object, false otherwise.
    */
-  public boolean equals(final Object obj)
-  {
-    if (this == obj)
-    {
+  public boolean equals( final Object obj ) {
+    if ( this == obj ) {
       return true;
     }
-    if (!(obj instanceof SimplePageDefinition))
-    {
+    if ( !( obj instanceof SimplePageDefinition ) ) {
       return false;
     }
 
     final SimplePageDefinition simplePageDefinition = (SimplePageDefinition) obj;
 
-    if (pageCountHorizontal != simplePageDefinition.pageCountHorizontal)
-    {
+    if ( pageCountHorizontal != simplePageDefinition.pageCountHorizontal ) {
       return false;
     }
-    if (pageCountVertical != simplePageDefinition.pageCountVertical)
-    {
+    if ( pageCountVertical != simplePageDefinition.pageCountVertical ) {
       return false;
     }
-    if (!PageFormatFactory.isEqual(format, simplePageDefinition.format))
-    {
+    if ( !PageFormatFactory.isEqual( format, simplePageDefinition.format ) ) {
       return false;
     }
-    if (!Arrays.equals(pagePositions, simplePageDefinition.pagePositions))
-    {
+    if ( !Arrays.equals( pagePositions, simplePageDefinition.pagePositions ) ) {
       return false;
     }
 
@@ -302,8 +271,7 @@ public class SimplePageDefinition implements PageDefinition
    *
    * @return the horizontal page count.
    */
-  public int getPageCountHorizontal()
-  {
+  public int getPageCountHorizontal() {
     return pageCountHorizontal;
   }
 
@@ -312,8 +280,7 @@ public class SimplePageDefinition implements PageDefinition
    *
    * @return the vertical page count.
    */
-  public int getPageCountVertical()
-  {
+  public int getPageCountVertical() {
     return pageCountVertical;
   }
 
@@ -322,28 +289,26 @@ public class SimplePageDefinition implements PageDefinition
    *
    * @return the hashcode.
    */
-  public int hashCode()
-  {
+  public int hashCode() {
     int result = format.hashCode();
     result = 29 * result + pageCountHorizontal;
     result = 29 * result + pageCountVertical;
     return result;
   }
 
-  public PageFormat getPageFormat()
-  {
+  public PageFormat getPageFormat() {
     return format;
   }
 
-  public String toString()
-  {
+  public String toString() {
     final StringBuilder sb = new StringBuilder();
-    sb.append("SimplePageDefinition");
-    sb.append("{format=").append(PageFormatFactory.printPageFormat(format));
-    sb.append(", pagePositions=").append(pagePositions == null ? "null" : Arrays.asList(pagePositions).toString());
-    sb.append(", pageCountHorizontal=").append(pageCountHorizontal);
-    sb.append(", pageCountVertical=").append(pageCountVertical);
-    sb.append('}');
+    sb.append( "SimplePageDefinition" );
+    sb.append( "{format=" ).append( PageFormatFactory.printPageFormat( format ) );
+    sb.append( ", pagePositions=" )
+      .append( pagePositions == null ? "null" : Arrays.asList( pagePositions ).toString() );
+    sb.append( ", pageCountHorizontal=" ).append( pageCountHorizontal );
+    sb.append( ", pageCountVertical=" ).append( pageCountVertical );
+    sb.append( '}' );
     return sb.toString();
   }
 }

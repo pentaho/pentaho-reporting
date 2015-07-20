@@ -27,74 +27,59 @@ import org.pentaho.reporting.engine.classic.core.layout.model.RenderNode;
  *
  * @author Thomas Morgner
  */
-public final class BoxShifter
-{
-  private BoxShifter()
-  {
+public final class BoxShifter {
+  private BoxShifter() {
   }
 
 
-  public static void shiftBox(final RenderNode box, final long amount)
-  {
-    if (amount == 0)
-    {
+  public static void shiftBox( final RenderNode box, final long amount ) {
+    if ( amount == 0 ) {
       return;
     }
-    if (amount < 0)
-    {
-      throw new IllegalArgumentException("Cannot shift upwards: " + amount);
+    if ( amount < 0 ) {
+      throw new IllegalArgumentException( "Cannot shift upwards: " + amount );
     }
 
-    box.shift(amount);
-    if ((box.getNodeType() & LayoutNodeTypes.MASK_BOX) == LayoutNodeTypes.MASK_BOX)
-    {
-      shiftBoxInternal((RenderBox) box, amount);
+    box.shift( amount );
+    if ( ( box.getNodeType() & LayoutNodeTypes.MASK_BOX ) == LayoutNodeTypes.MASK_BOX ) {
+      shiftBoxInternal( (RenderBox) box, amount );
     }
   }
 
-  public static void shiftBoxUnchecked(final RenderNode box, final long amount)
-  {
-    if (amount == 0)
-    {
+  public static void shiftBoxUnchecked( final RenderNode box, final long amount ) {
+    if ( amount == 0 ) {
       return;
     }
 
-    box.shift(amount);
-    if ((box.getNodeType() & LayoutNodeTypes.MASK_BOX) == LayoutNodeTypes.MASK_BOX)
-    {
-      shiftBoxInternal((RenderBox) box, amount);
+    box.shift( amount );
+    if ( ( box.getNodeType() & LayoutNodeTypes.MASK_BOX ) == LayoutNodeTypes.MASK_BOX ) {
+      shiftBoxInternal( (RenderBox) box, amount );
     }
   }
 
-  private static void shiftBoxInternal(final RenderBox box, final long amount)
-  {
+  private static void shiftBoxInternal( final RenderBox box, final long amount ) {
     RenderNode node = box.getFirstChild();
-    while (node != null)
-    {
-      node.shift(amount);
-      if ((node.getNodeType() & LayoutNodeTypes.MASK_BOX) == LayoutNodeTypes.MASK_BOX)
-      {
-        shiftBoxInternal((RenderBox) node, amount);
+    while ( node != null ) {
+      node.shift( amount );
+      if ( ( node.getNodeType() & LayoutNodeTypes.MASK_BOX ) == LayoutNodeTypes.MASK_BOX ) {
+        shiftBoxInternal( (RenderBox) node, amount );
       }
       node = node.getNext();
     }
   }
 
   @Deprecated()
-  public static boolean extendHeight(final RenderBox parent, final RenderNode child, final long amountDelta)
-  {
-    if (amountDelta < 0)
-    {
-      throw new IllegalArgumentException("Cannot shrink elements: " + parent + " + " + amountDelta);
+  public static boolean extendHeight( final RenderBox parent, final RenderNode child, final long amountDelta ) {
+    if ( amountDelta < 0 ) {
+      throw new IllegalArgumentException( "Cannot shrink elements: " + parent + " + " + amountDelta );
     }
-    if (parent == null || amountDelta == 0)
-    {
+    if ( parent == null || amountDelta == 0 ) {
       return false;
     }
-    parent.extendHeight(child, amountDelta);
+    parent.extendHeight( child, amountDelta );
     // todo: PRD-4606
     parent.markApplyStateDirty();
-//    parent.resetCacheState(true);
+    //    parent.resetCacheState(true);
     return true;
   }
 }

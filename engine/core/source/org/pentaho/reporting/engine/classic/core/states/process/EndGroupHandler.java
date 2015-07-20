@@ -27,43 +27,36 @@ import org.pentaho.reporting.engine.classic.core.event.ReportEvent;
  *
  * @author Thomas Morgner
  */
-public class EndGroupHandler implements AdvanceHandler
-{
+public class EndGroupHandler implements AdvanceHandler {
   public static final AdvanceHandler HANDLER = new EndGroupHandler();
 
-  public EndGroupHandler()
-  {
+  public EndGroupHandler() {
   }
 
-  public ProcessState advance(final ProcessState state) throws ReportProcessingException
-  {
+  public ProcessState advance( final ProcessState state ) throws ReportProcessingException {
     final ProcessState next = state.deriveForAdvance();
     next.fireReportEvent();
-    final RelationalGroup group = (RelationalGroup) next.getReport().getGroup(next.getCurrentGroupIndex());
-    return InlineSubreportProcessor.processInline(next, group.getFooter());
+    final RelationalGroup group = (RelationalGroup) next.getReport().getGroup( next.getCurrentGroupIndex() );
+    return InlineSubreportProcessor.processInline( next, group.getFooter() );
   }
 
-  public ProcessState commit(final ProcessState next) throws ReportProcessingException
-  {
-    next.setAdvanceHandler(JoinEndGroupHandler.HANDLER);
+  public ProcessState commit( final ProcessState next ) throws ReportProcessingException {
+    next.setAdvanceHandler( JoinEndGroupHandler.HANDLER );
 
-    final RelationalGroup group = (RelationalGroup) next.getReport().getGroup(next.getCurrentGroupIndex());
+    final RelationalGroup group = (RelationalGroup) next.getReport().getGroup( next.getCurrentGroupIndex() );
     final RootLevelBand rootLevelBand = group.getFooter();
-    return InlineSubreportProcessor.processBandedSubReports(next, rootLevelBand);
+    return InlineSubreportProcessor.processBandedSubReports( next, rootLevelBand );
   }
 
-  public int getEventCode()
-  {
+  public int getEventCode() {
     return ReportEvent.GROUP_FINISHED;
   }
 
-  public boolean isFinish()
-  {
+  public boolean isFinish() {
     return false;
   }
 
-  public boolean isRestoreHandler()
-  {
+  public boolean isRestoreHandler() {
     return false;
   }
 }

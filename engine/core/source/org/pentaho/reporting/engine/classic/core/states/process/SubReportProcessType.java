@@ -17,20 +17,17 @@
 
 package org.pentaho.reporting.engine.classic.core.states.process;
 
-public class SubReportProcessType
-{
-  public static final SubReportProcessType INLINE = new SubReportProcessType("inline");
-  public static final SubReportProcessType BANDED = new SubReportProcessType("banded");
+public class SubReportProcessType {
+  public static final SubReportProcessType INLINE = new SubReportProcessType( "inline" );
+  public static final SubReportProcessType BANDED = new SubReportProcessType( "banded" );
 
   private String name;
 
-  private SubReportProcessType(final String name)
-  {
+  private SubReportProcessType( final String name ) {
     this.name = name;
   }
 
-  public String toString()
-  {
+  public String toString() {
     return name;
   }
 }

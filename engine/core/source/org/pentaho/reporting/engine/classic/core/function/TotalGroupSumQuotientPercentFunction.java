@@ -41,18 +41,16 @@ import java.math.BigDecimal;
  *
  * @author Thomas Morgner
  */
-public class TotalGroupSumQuotientPercentFunction extends TotalGroupSumQuotientFunction
-{
+public class TotalGroupSumQuotientPercentFunction extends TotalGroupSumQuotientFunction {
   /**
    * An internal constant.
    */
-  private static final BigDecimal ONE_HUNDRED = new BigDecimal(100);
+  private static final BigDecimal ONE_HUNDRED = new BigDecimal( 100 );
 
   /**
    * Default Constructor.
    */
-  public TotalGroupSumQuotientPercentFunction()
-  {
+  public TotalGroupSumQuotientPercentFunction() {
   }
 
   /**
@@ -60,18 +58,15 @@ public class TotalGroupSumQuotientPercentFunction extends TotalGroupSumQuotientF
    *
    * @return the computed percentage scaled to 100.
    */
-  public Object getValue()
-  {
+  public Object getValue() {
     final Number value = (Number) super.getValue();
-    if (value == null)
-    {
+    if ( value == null ) {
       return null;
     }
-    if (value instanceof BigDecimal)
-    {
-      return TotalGroupSumQuotientPercentFunction.ONE_HUNDRED.multiply((BigDecimal) value);
+    if ( value instanceof BigDecimal ) {
+      return TotalGroupSumQuotientPercentFunction.ONE_HUNDRED.multiply( (BigDecimal) value );
     }
 
-    return TotalGroupSumQuotientPercentFunction.ONE_HUNDRED.multiply(new BigDecimal(String.valueOf(value)));
+    return TotalGroupSumQuotientPercentFunction.ONE_HUNDRED.multiply( new BigDecimal( String.valueOf( value ) ) );
   }
 }

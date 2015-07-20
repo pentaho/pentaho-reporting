@@ -24,8 +24,7 @@ import java.io.Serializable;
  *
  * @author Thomas Morgner
  */
-public class ParameterMapping implements Serializable
-{
+public class ParameterMapping implements Serializable {
   /**
    * A serialization helper.
    */
@@ -48,19 +47,14 @@ public class ParameterMapping implements Serializable
    * @param name  the name.
    * @param alias the alias (can be null).
    */
-  public ParameterMapping(final String name, final String alias)
-  {
-    if (name == null)
-    {
+  public ParameterMapping( final String name, final String alias ) {
+    if ( name == null ) {
       throw new NullPointerException();
     }
     this.name = name;
-    if (alias == null)
-    {
+    if ( alias == null ) {
       this.alias = name;
-    }
-    else
-    {
+    } else {
       this.alias = alias;
     }
   }
@@ -70,8 +64,7 @@ public class ParameterMapping implements Serializable
    *
    * @return the source name.
    */
-  public String getName()
-  {
+  public String getName() {
     return name;
   }
 
@@ -80,8 +73,7 @@ public class ParameterMapping implements Serializable
    *
    * @return the alias name.
    */
-  public String getAlias()
-  {
+  public String getAlias() {
     return alias;
   }
 }

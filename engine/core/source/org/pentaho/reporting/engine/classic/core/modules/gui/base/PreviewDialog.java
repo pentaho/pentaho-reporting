@@ -17,21 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.gui.base;
 
-import java.awt.BorderLayout;
-import java.awt.Dialog;
-import java.awt.Frame;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-import javax.swing.BoxLayout;
-import javax.swing.JComponent;
-import javax.swing.JDialog;
-import javax.swing.JLabel;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JPanel;
-
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
 import org.pentaho.reporting.engine.classic.core.modules.gui.common.IconTheme;
@@ -45,17 +30,21 @@ import org.pentaho.reporting.libraries.base.util.Messages;
 import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
 import org.pentaho.reporting.libraries.designtime.swing.LibSwingUtil;
 
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+
 /**
  * Creation-Date: 11.11.2006, 19:35:16
  *
  * @author Thomas Morgner
  */
-public class PreviewDialog extends JDialog
-{
-  private class PreviewPanePropertyChangeHandler implements PropertyChangeListener
-  {
-    protected PreviewPanePropertyChangeHandler()
-    {
+public class PreviewDialog extends JDialog {
+  private class PreviewPanePropertyChangeHandler implements PropertyChangeListener {
+    protected PreviewPanePropertyChangeHandler() {
     }
 
     /**
@@ -64,127 +53,105 @@ public class PreviewDialog extends JDialog
      * @param evt A PropertyChangeEvent object describing the event source and the property that has changed.
      */
 
-    public void propertyChange(final PropertyChangeEvent evt)
-    {
+    public void propertyChange( final PropertyChangeEvent evt ) {
       final String propertyName = evt.getPropertyName();
       final PreviewPane previewPane = getPreviewPane();
       final JStatusBar statusBar = getStatusBar();
-      if (PreviewPane.MENU_PROPERTY.equals(propertyName))
-      {
+      if ( PreviewPane.MENU_PROPERTY.equals( propertyName ) ) {
         // Update the menu
         final JMenu[] menus = previewPane.getMenu();
-        updateMenu(menus);
+        updateMenu( menus );
         return;
       }
 
-      if (PreviewPane.TITLE_PROPERTY.equals(propertyName))
-      {
-        setTitle(previewPane.getTitle());
+      if ( PreviewPane.TITLE_PROPERTY.equals( propertyName ) ) {
+        setTitle( previewPane.getTitle() );
         return;
       }
 
-      if (PreviewPane.STATUS_TEXT_PROPERTY.equals(propertyName)
-          || PreviewPane.STATUS_TYPE_PROPERTY.equals(propertyName))
-      {
-        statusBar.setStatus(previewPane.getStatusType(), previewPane.getStatusText());
+      if ( PreviewPane.STATUS_TEXT_PROPERTY.equals( propertyName )
+        || PreviewPane.STATUS_TYPE_PROPERTY.equals( propertyName ) ) {
+        statusBar.setStatus( previewPane.getStatusType(), previewPane.getStatusText() );
         return;
       }
 
-      if (PreviewPane.ICON_THEME_PROPERTY.equals(propertyName))
-      {
-        statusBar.setIconTheme(previewPane.getIconTheme());
+      if ( PreviewPane.ICON_THEME_PROPERTY.equals( propertyName ) ) {
+        statusBar.setIconTheme( previewPane.getIconTheme() );
         return;
       }
 
-      if (PreviewPane.PAGINATING_PROPERTY.equals(propertyName))
-      {
-        if (Boolean.TRUE.equals(evt.getNewValue()))
-        {
-          pageLabel.setVisible(false);
-          statusBar.setStatus(StatusType.INFORMATION, messages.getString(
-              "PreviewDialog.USER_PAGINATING")); //$NON-NLS-1$
-          if (progressBar != null)
-          {
-            previewPane.addReportProgressListener(progressBar);
-            progressBar.setOnlyPagination(true);
-            progressBar.setVisible(true);
+      if ( PreviewPane.PAGINATING_PROPERTY.equals( propertyName ) ) {
+        if ( Boolean.TRUE.equals( evt.getNewValue() ) ) {
+          pageLabel.setVisible( false );
+          statusBar.setStatus( StatusType.INFORMATION, messages.getString(
+            "PreviewDialog.USER_PAGINATING" ) ); //$NON-NLS-1$
+          if ( progressBar != null ) {
+            previewPane.addReportProgressListener( progressBar );
+            progressBar.setOnlyPagination( true );
+            progressBar.setVisible( true );
             progressBar.revalidate();
           }
-          if (progressDialog != null)
-          {
-            previewPane.addReportProgressListener(progressDialog);
-            LibSwingUtil.centerDialogInParent(progressDialog);
-            progressDialog.setOnlyPagination(true);
-            progressDialog.setVisible(true);
+          if ( progressDialog != null ) {
+            previewPane.addReportProgressListener( progressDialog );
+            LibSwingUtil.centerDialogInParent( progressDialog );
+            progressDialog.setOnlyPagination( true );
+            progressDialog.setVisible( true );
           }
-        }
-        else
-        {
-          pageLabel.setVisible(true);
-          statusBar.setStatus(StatusType.NONE, ""); //$NON-NLS-1$
-          if (progressBar != null)
-          {
-            progressBar.setOnlyPagination(false);
-            progressBar.setVisible(false);
-            previewPane.removeReportProgressListener(progressBar);
+        } else {
+          pageLabel.setVisible( true );
+          statusBar.setStatus( StatusType.NONE, "" ); //$NON-NLS-1$
+          if ( progressBar != null ) {
+            progressBar.setOnlyPagination( false );
+            progressBar.setVisible( false );
+            previewPane.removeReportProgressListener( progressBar );
             progressBar.revalidate();
           }
-          if (progressDialog != null)
-          {
-            previewPane.removeReportProgressListener(progressDialog);
-            progressDialog.setOnlyPagination(false);
-            progressDialog.setVisible(false);
+          if ( progressDialog != null ) {
+            previewPane.removeReportProgressListener( progressDialog );
+            progressDialog.setOnlyPagination( false );
+            progressDialog.setVisible( false );
           }
         }
         return;
       }
 
-      if (PreviewPane.PAGE_NUMBER_PROPERTY.equals(propertyName)
-          || PreviewPane.NUMBER_OF_PAGES_PROPERTY.equals(propertyName))
-      {
-        pageLabel.setText(previewPane.getPageNumber() + "/" + previewPane.getNumberOfPages()); //$NON-NLS-1$
+      if ( PreviewPane.PAGE_NUMBER_PROPERTY.equals( propertyName )
+        || PreviewPane.NUMBER_OF_PAGES_PROPERTY.equals( propertyName ) ) {
+        pageLabel.setText( previewPane.getPageNumber() + "/" + previewPane.getNumberOfPages() ); //$NON-NLS-1$
         return;
       }
 
-      if (PreviewPane.CLOSED_PROPERTY.equals(propertyName))
-      {
-        if (previewPane.isClosed())
-        {
-          setVisible(false);
+      if ( PreviewPane.CLOSED_PROPERTY.equals( propertyName ) ) {
+        if ( previewPane.isClosed() ) {
+          setVisible( false );
           dispose();
-        }
-        else
-        {
-          setVisible(true);
+        } else {
+          setVisible( true );
         }
       }
     }
   }
 
 
-  private static class TriggerPaginationListener extends ComponentAdapter
-  {
+  private static class TriggerPaginationListener extends ComponentAdapter {
     private PreviewPane pane;
 
-    private TriggerPaginationListener(final PreviewPane pane)
-    {
+    private TriggerPaginationListener( final PreviewPane pane ) {
       this.pane = pane;
     }
 
     /**
      * Invoked when the component has been made visible.
      */
-    public void componentShown(final ComponentEvent e)
-    {
-      if (pane.isDeferredRepagination())
-      {
+    public void componentShown( final ComponentEvent e ) {
+      if ( pane.isDeferredRepagination() ) {
         pane.startPagination();
-//        DebugLog.log("Def-pagination");
+        //        DebugLog.log("Def-pagination");
       }
-//      else
-//      {
-//        DebugLog.log("No def-pagination");
-//      }
+      //      else
+      //      {
+      //        DebugLog.log("No def-pagination");
+      //      }
     }
   }
 
@@ -206,8 +173,7 @@ public class PreviewDialog extends JDialog
    * @see java.awt.GraphicsEnvironment#isHeadless
    * @see javax.swing.JComponent#getDefaultLocale
    */
-  public PreviewDialog()
-  {
+  public PreviewDialog() {
     init();
   }
 
@@ -223,9 +189,8 @@ public class PreviewDialog extends JDialog
    * @see java.awt.GraphicsEnvironment#isHeadless
    * @see javax.swing.JComponent#getDefaultLocale
    */
-  public PreviewDialog(final Frame owner)
-  {
-    super(owner);
+  public PreviewDialog( final Frame owner ) {
+    super( owner );
     init();
   }
 
@@ -242,9 +207,8 @@ public class PreviewDialog extends JDialog
    * @see java.awt.GraphicsEnvironment#isHeadless
    * @see javax.swing.JComponent#getDefaultLocale
    */
-  public PreviewDialog(final Frame owner, final boolean modal)
-  {
-    super(owner, modal);
+  public PreviewDialog( final Frame owner, final boolean modal ) {
+    super( owner, modal );
     init();
   }
 
@@ -259,9 +223,8 @@ public class PreviewDialog extends JDialog
    * @see java.awt.GraphicsEnvironment#isHeadless
    * @see javax.swing.JComponent#getDefaultLocale
    */
-  public PreviewDialog(final Dialog owner)
-  {
-    super(owner);
+  public PreviewDialog( final Dialog owner ) {
+    super( owner );
     init();
   }
 
@@ -277,9 +240,8 @@ public class PreviewDialog extends JDialog
    * @see java.awt.GraphicsEnvironment#isHeadless
    * @see javax.swing.JComponent#getDefaultLocale
    */
-  public PreviewDialog(final Dialog owner, final boolean modal)
-  {
-    super(owner, modal);
+  public PreviewDialog( final Dialog owner, final boolean modal ) {
+    super( owner, modal );
     init();
   }
 
@@ -294,10 +256,9 @@ public class PreviewDialog extends JDialog
    * @see java.awt.GraphicsEnvironment#isHeadless
    * @see javax.swing.JComponent#getDefaultLocale
    */
-  public PreviewDialog(final MasterReport report)
-  {
+  public PreviewDialog( final MasterReport report ) {
     init();
-    setReportJob(report);
+    setReportJob( report );
   }
 
   /**
@@ -312,11 +273,10 @@ public class PreviewDialog extends JDialog
    * @see java.awt.GraphicsEnvironment#isHeadless
    * @see javax.swing.JComponent#getDefaultLocale
    */
-  public PreviewDialog(final MasterReport report, final Frame owner)
-  {
-    super(owner);
+  public PreviewDialog( final MasterReport report, final Frame owner ) {
+    super( owner );
     init();
-    setReportJob(report);
+    setReportJob( report );
   }
 
   /**
@@ -332,11 +292,10 @@ public class PreviewDialog extends JDialog
    * @see java.awt.GraphicsEnvironment#isHeadless
    * @see javax.swing.JComponent#getDefaultLocale
    */
-  public PreviewDialog(final MasterReport report, final Frame owner, final boolean modal)
-  {
-    super(owner, modal);
+  public PreviewDialog( final MasterReport report, final Frame owner, final boolean modal ) {
+    super( owner, modal );
     init();
-    setReportJob(report);
+    setReportJob( report );
   }
 
   /**
@@ -350,11 +309,10 @@ public class PreviewDialog extends JDialog
    * @see java.awt.GraphicsEnvironment#isHeadless
    * @see javax.swing.JComponent#getDefaultLocale
    */
-  public PreviewDialog(final MasterReport report, final Dialog owner)
-  {
-    super(owner);
+  public PreviewDialog( final MasterReport report, final Dialog owner ) {
+    super( owner );
     init();
-    setReportJob(report);
+    setReportJob( report );
   }
 
   /**
@@ -369,171 +327,141 @@ public class PreviewDialog extends JDialog
    * @see java.awt.GraphicsEnvironment#isHeadless
    * @see javax.swing.JComponent#getDefaultLocale
    */
-  public PreviewDialog(final MasterReport report, final Dialog owner, final boolean modal)
-  {
-    super(owner, modal);
+  public PreviewDialog( final MasterReport report, final Dialog owner, final boolean modal ) {
+    super( owner, modal );
     init();
-    setReportJob(report);
+    setReportJob( report );
   }
 
-  protected void init()
-  {
-    setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+  protected void init() {
+    setDefaultCloseOperation( JDialog.DISPOSE_ON_CLOSE );
 
-    addComponentListener(new RequestFocusHandler());
-    messages = new Messages(getLocale(), SwingPreviewModule.BUNDLE_NAME,
-          ObjectUtilities.getClassLoader(SwingPreviewModule.class));
+    addComponentListener( new RequestFocusHandler() );
+    messages = new Messages( getLocale(), SwingPreviewModule.BUNDLE_NAME,
+      ObjectUtilities.getClassLoader( SwingPreviewModule.class ) );
 
     previewPane = new PreviewPane();
-    previewPane.setDeferredRepagination(true);
-    addComponentListener(new TriggerPaginationListener(previewPane));
+    previewPane.setDeferredRepagination( true );
+    addComponentListener( new TriggerPaginationListener( previewPane ) );
 
-    statusBar = new JStatusBar(previewPane.getIconTheme());
+    statusBar = new JStatusBar( previewPane.getIconTheme() );
 
     pageLabel = new JLabel();
 
     final Configuration configuration = ClassicEngineBoot.getInstance().getGlobalConfig();
-    final boolean progressBarEnabled = "true".equals(configuration //$NON-NLS-1$
-        .getConfigProperty(
-        "org.pentaho.reporting.engine.classic.core.modules.gui.base.ProgressBarEnabled")); //$NON-NLS-1$
-    final boolean progressDialogEnabled = "true".equals(configuration //$NON-NLS-1$
-        .getConfigProperty(
-        "org.pentaho.reporting.engine.classic.core.modules.gui.base.ProgressDialogEnabled")); //$NON-NLS-1$
+    final boolean progressBarEnabled = "true".equals( configuration //$NON-NLS-1$
+      .getConfigProperty(
+        "org.pentaho.reporting.engine.classic.core.modules.gui.base.ProgressBarEnabled" ) ); //$NON-NLS-1$
+    final boolean progressDialogEnabled = "true".equals( configuration //$NON-NLS-1$
+      .getConfigProperty(
+        "org.pentaho.reporting.engine.classic.core.modules.gui.base.ProgressDialogEnabled" ) ); //$NON-NLS-1$
 
-    if (progressBarEnabled)
-    {
+    if ( progressBarEnabled ) {
       progressBar = new ReportProgressBar();
-      progressBar.setVisible(false);
-      previewPane.addReportProgressListener(progressBar);
-      previewPane.addPropertyChangeListener(new PreviewPanePropertyChangeHandler());
-    }
-    else
-    {
+      progressBar.setVisible( false );
+      previewPane.addReportProgressListener( progressBar );
+      previewPane.addPropertyChangeListener( new PreviewPanePropertyChangeHandler() );
+    } else {
       progressBar = null;
     }
 
-    if (progressDialogEnabled)
-    {
-      progressDialog = new ReportProgressDialog(this);
+    if ( progressDialogEnabled ) {
+      progressDialog = new ReportProgressDialog( this );
       final MasterReport reportJob = previewPane.getReportJob();
-      if (reportJob == null || reportJob.getTitle() == null)
-      {
-        progressDialog.setTitle(messages.getString("ProgressDialog.EMPTY_TITLE"));
-        progressDialog.setMessage(messages.getString("ProgressDialog.EMPTY_TITLE"));
-      }
-      else
-      {
-        progressDialog.setTitle(messages.getString("ProgressDialog.TITLE", reportJob.getTitle()));
-        progressDialog.setMessage(messages.getString("ProgressDialog.TITLE", reportJob.getTitle()));
+      if ( reportJob == null || reportJob.getTitle() == null ) {
+        progressDialog.setTitle( messages.getString( "ProgressDialog.EMPTY_TITLE" ) );
+        progressDialog.setMessage( messages.getString( "ProgressDialog.EMPTY_TITLE" ) );
+      } else {
+        progressDialog.setTitle( messages.getString( "ProgressDialog.TITLE", reportJob.getTitle() ) );
+        progressDialog.setMessage( messages.getString( "ProgressDialog.TITLE", reportJob.getTitle() ) );
       }
       progressDialog.pack();
-    }
-    else
-    {
+    } else {
       progressDialog = null;
     }
 
     final JComponent extensionArea = statusBar.getExtensionArea();
-    extensionArea.setLayout(new BoxLayout(extensionArea, BoxLayout.X_AXIS));
-    if (progressBar != null)
-    {
-      extensionArea.add(progressBar);
+    extensionArea.setLayout( new BoxLayout( extensionArea, BoxLayout.X_AXIS ) );
+    if ( progressBar != null ) {
+      extensionArea.add( progressBar );
     }
-    extensionArea.add(pageLabel);
+    extensionArea.add( pageLabel );
 
     final JComponent contentPane = new JPanel();
-    contentPane.setLayout(new BorderLayout());
-    contentPane.add(previewPane, BorderLayout.CENTER);
-    contentPane.add(statusBar, BorderLayout.SOUTH);
-    setContentPane(contentPane);
+    contentPane.setLayout( new BorderLayout() );
+    contentPane.add( previewPane, BorderLayout.CENTER );
+    contentPane.add( statusBar, BorderLayout.SOUTH );
+    setContentPane( contentPane );
 
-    updateMenu(previewPane.getMenu());
-    setTitle(previewPane.getTitle());
-    statusBar.setIconTheme(previewPane.getIconTheme());
-    statusBar.setStatus(previewPane.getStatusType(), previewPane.getStatusText());
+    updateMenu( previewPane.getMenu() );
+    setTitle( previewPane.getTitle() );
+    statusBar.setIconTheme( previewPane.getIconTheme() );
+    statusBar.setStatus( previewPane.getStatusType(), previewPane.getStatusText() );
   }
 
-  private void updateMenu(final JMenu[] menus)
-  {
-    if (menus != null && menus.length > 0)
-    {
+  private void updateMenu( final JMenu[] menus ) {
+    if ( menus != null && menus.length > 0 ) {
       final JMenuBar menuBar = new JMenuBar();
-      for (int i = 0; i < menus.length; i++)
-      {
-        final JMenu menu = menus[i];
-        menuBar.add(menu);
+      for ( int i = 0; i < menus.length; i++ ) {
+        final JMenu menu = menus[ i ];
+        menuBar.add( menu );
       }
-      setJMenuBar(menuBar);
-    }
-    else
-    {
-      setJMenuBar(null);
+      setJMenuBar( menuBar );
+    } else {
+      setJMenuBar( null );
     }
   }
 
-  public ReportController getReportController()
-  {
+  public ReportController getReportController() {
     return previewPane.getReportController();
   }
 
-  public void setReportController(final ReportController reportController)
-  {
-    previewPane.setReportController(reportController);
+  public void setReportController( final ReportController reportController ) {
+    previewPane.setReportController( reportController );
   }
 
-  public IconTheme getIconTheme()
-  {
+  public IconTheme getIconTheme() {
     return previewPane.getIconTheme();
   }
 
-  public void setIconTheme(final IconTheme theme)
-  {
-    previewPane.setIconTheme(theme);
+  public void setIconTheme( final IconTheme theme ) {
+    previewPane.setIconTheme( theme );
   }
 
-  public MasterReport getReportJob()
-  {
+  public MasterReport getReportJob() {
     return previewPane.getReportJob();
   }
 
-  public void setReportJob(final MasterReport reportJob)
-  {
-    previewPane.setReportJob(reportJob);
+  public void setReportJob( final MasterReport reportJob ) {
+    previewPane.setReportJob( reportJob );
   }
 
-  public void dispose()
-  {
+  public void dispose() {
     super.dispose();
-    previewPane.setClosed(true);
+    previewPane.setClosed( true );
   }
 
-  public PreviewPane getPreviewPane()
-  {
+  public PreviewPane getPreviewPane() {
     return previewPane;
   }
 
-  public JStatusBar getStatusBar()
-  {
+  public JStatusBar getStatusBar() {
     return statusBar;
   }
 
-  public boolean isToolbarFloatable()
-  {
+  public boolean isToolbarFloatable() {
     return previewPane.isToolbarFloatable();
   }
 
-  public void setToolbarFloatable(final boolean toolbarFloatable)
-  {
-    previewPane.setToolbarFloatable(toolbarFloatable);
+  public void setToolbarFloatable( final boolean toolbarFloatable ) {
+    previewPane.setToolbarFloatable( toolbarFloatable );
   }
 
-  public double getZoom()
-  {
+  public double getZoom() {
     return previewPane.getZoom();
   }
 
-  public void setZoom(final double zoom)
-  {
-    previewPane.setZoom(zoom);
+  public void setZoom( final double zoom ) {
+    previewPane.setZoom( zoom );
   }
 }

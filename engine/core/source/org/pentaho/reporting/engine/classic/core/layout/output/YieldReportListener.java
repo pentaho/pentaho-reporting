@@ -27,56 +27,45 @@ import org.pentaho.reporting.engine.classic.core.event.ReportProgressListener;
  *
  * @author Thomas Morgner
  */
-public class YieldReportListener implements ReportProgressListener
-{
+public class YieldReportListener implements ReportProgressListener {
   private int rate;
 
   private transient int lastCall;
 
   private transient int lastPage;
 
-  public YieldReportListener()
-  {
+  public YieldReportListener() {
     rate = 50;
   }
 
-  public YieldReportListener(final int rate)
-  {
+  public YieldReportListener( final int rate ) {
     this.rate = rate;
   }
 
-  public int getRate()
-  {
+  public int getRate() {
     return rate;
   }
 
-  public void setRate(final int rate)
-  {
+  public void setRate( final int rate ) {
     this.rate = rate;
   }
 
-  public void reportProcessingStarted(final ReportProgressEvent event)
-  {
+  public void reportProcessingStarted( final ReportProgressEvent event ) {
 
   }
 
-  public void reportProcessingFinished(final ReportProgressEvent event)
-  {
+  public void reportProcessingFinished( final ReportProgressEvent event ) {
 
   }
 
-  public void reportProcessingUpdate(final ReportProgressEvent event)
-  {
+  public void reportProcessingUpdate( final ReportProgressEvent event ) {
     final int currentRow = event.getRow();
     final int thisCall = currentRow % rate;
     final int page = event.getPage();
 
-    if (page != lastPage)
-    {
+    if ( page != lastPage ) {
       Thread.yield();
-    }
-    else if (thisCall != lastCall)
-    {
+    } else if ( thisCall != lastCall ) {
       Thread.yield();
     }
     lastCall = thisCall;

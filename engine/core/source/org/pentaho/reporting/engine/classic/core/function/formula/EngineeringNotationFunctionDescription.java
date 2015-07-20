@@ -29,45 +29,38 @@ import org.pentaho.reporting.libraries.formula.typing.coretypes.TextType;
  * Function that pick a number and outputs it's engineering representation
  * <p/>
  * <p/>
- * Date: 23.07.2009
- * Time: 19:57:42
+ * Date: 23.07.2009 Time: 19:57:42
  *
  * @author Pedro Alves.
  */
-public class EngineeringNotationFunctionDescription extends AbstractFunctionDescription
-{
+public class EngineeringNotationFunctionDescription extends AbstractFunctionDescription {
 
-  public EngineeringNotationFunctionDescription()
-  {
-    super("ENGINEERINGNOTATION", "org.pentaho.reporting.engine.classic.core.function.formula.EngineeringNotation-Function");
+  public EngineeringNotationFunctionDescription() {
+    super( "ENGINEERINGNOTATION",
+      "org.pentaho.reporting.engine.classic.core.function.formula.EngineeringNotation-Function" );
   }
 
-  public Type getValueType()
-  {
+  public Type getValueType() {
     return TextType.TYPE;
   }
 
-  public FunctionCategory getCategory()
-  {
+  public FunctionCategory getCategory() {
     return UserDefinedFunctionCategory.CATEGORY;
   }
 
-  public int getParameterCount()
-  {
+  public int getParameterCount() {
     return 3;
   }
 
   /**
-   * Returns the parameter type at the given position using the function
-   * metadata. The first parameter is at the position 0;
+   * Returns the parameter type at the given position using the function metadata. The first parameter is at the
+   * position 0;
    *
    * @param position The parameter index.
    * @return The parameter type.
    */
-  public Type getParameterType(final int position)
-  {
-    switch (position)
-    {
+  public Type getParameterType( final int position ) {
+    switch( position ) {
       case 0:
         return NumberType.GENERIC_NUMBER;
 
@@ -82,20 +75,15 @@ public class EngineeringNotationFunctionDescription extends AbstractFunctionDesc
   }
 
   /**
-   * Defines, whether the parameter at the given position is mandatory. A
-   * mandatory parameter must be filled in, while optional parameters need
-   * not to be filled in.
+   * Defines, whether the parameter at the given position is mandatory. A mandatory parameter must be filled in, while
+   * optional parameters need not to be filled in.
    *
    * @return
    */
-  public boolean isParameterMandatory(final int position)
-  {
-    if (position == 2)
-    {
+  public boolean isParameterMandatory( final int position ) {
+    if ( position == 2 ) {
       return false;
-    }
-    else
-    {
+    } else {
       return true;
     }
   }

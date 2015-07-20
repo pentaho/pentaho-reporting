@@ -24,90 +24,74 @@ import org.pentaho.reporting.engine.classic.core.filter.types.bands.SubGroupBody
  *
  * @author Thomas Morgner
  */
-public class SubGroupBody extends GroupBody
-{
+public class SubGroupBody extends GroupBody {
   private Group group;
 
-  public SubGroupBody()
-  {
-    setElementType(new SubGroupBodyType());
+  public SubGroupBody() {
+    setElementType( new SubGroupBodyType() );
     group = new RelationalGroup();
-    registerAsChild(group);
+    registerAsChild( group );
   }
 
-  public SubGroupBody(final Group group)
-  {
+  public SubGroupBody( final Group group ) {
     this();
-    setGroup(group);
+    setGroup( group );
   }
 
-  public Group getGroup()
-  {
+  public Group getGroup() {
     return group;
   }
 
-  public void setGroup(final Group group)
-  {
-    if (group == null)
-    {
-      throw new NullPointerException("The group must not be null");
+  public void setGroup( final Group group ) {
+    if ( group == null ) {
+      throw new NullPointerException( "The group must not be null" );
     }
-    if (group instanceof RelationalGroup == false &&
-        group instanceof CrosstabGroup == false)
-    {
-      throw new NullPointerException("The group must be one of relational-group or crosstab.");
+    if ( group instanceof RelationalGroup == false &&
+      group instanceof CrosstabGroup == false ) {
+      throw new NullPointerException( "The group must be one of relational-group or crosstab." );
     }
-    validateLooping(group);
-    if (unregisterParent(group))
-    {
+    validateLooping( group );
+    if ( unregisterParent( group ) ) {
       return;
     }
     final Group oldGroup = this.group;
-    this.group.setParent(null);
+    this.group.setParent( null );
     this.group = group;
-    this.group.setParent(this);
+    this.group.setParent( this );
 
-    notifyNodeChildRemoved(oldGroup);
-    notifyNodeChildAdded(this.group);
+    notifyNodeChildRemoved( oldGroup );
+    notifyNodeChildAdded( this.group );
   }
 
-  protected void removeElement(final Element element)
-  {
-    if (element == null)
-    {
+  protected void removeElement( final Element element ) {
+    if ( element == null ) {
       throw new NullPointerException();
     }
 
-    if (element == group)
-    {
-      this.group.setParent(null);
+    if ( element == group ) {
+      this.group.setParent( null );
       this.group = new RelationalGroup();
-      this.group.setParent(this);
+      this.group.setParent( this );
 
-      notifyNodeChildRemoved(element);
-      notifyNodeChildAdded(this.group);
+      notifyNodeChildRemoved( element );
+      notifyNodeChildAdded( this.group );
     }
   }
 
-  public void setElementAt(final int position, final Element element)
-  {
-    if (position != 0)
-    {
+  public void setElementAt( final int position, final Element element ) {
+    if ( position != 0 ) {
       throw new IndexOutOfBoundsException();
     }
-    setGroup((Group) element);
+    setGroup( (Group) element );
   }
 
 
-  public int getElementCount()
-  {
+  public int getElementCount() {
     return 1;
   }
 
-  public Element getElement(final int index)
-  {
-    if (index == 0)
-    {
+  public Element getElement( final int index ) {
+    if ( index == 0 ) {
       return group;
     }
     throw new IndexOutOfBoundsException();
@@ -119,11 +103,10 @@ public class SubGroupBody extends GroupBody
    *
    * @return a clone of this Element.
    */
-  public SubGroupBody clone()
-  {
+  public SubGroupBody clone() {
     final SubGroupBody o = (SubGroupBody) super.clone();
     o.group = (Group) group.clone();
-    o.registerAsChild(o.group);
+    o.registerAsChild( o.group );
     return o;
   }
 
@@ -132,11 +115,10 @@ public class SubGroupBody extends GroupBody
    *
    * @return the clone.
    */
-  public SubGroupBody derive(final boolean preserveElementInstanceIds)
-  {
-    final SubGroupBody o = (SubGroupBody) super.derive(preserveElementInstanceIds);
-    o.group = (Group) group.derive(preserveElementInstanceIds);
-    o.registerAsChild(o.group);
+  public SubGroupBody derive( final boolean preserveElementInstanceIds ) {
+    final SubGroupBody o = (SubGroupBody) super.derive( preserveElementInstanceIds );
+    o.group = (Group) group.derive( preserveElementInstanceIds );
+    o.registerAsChild( o.group );
     return o;
   }
 

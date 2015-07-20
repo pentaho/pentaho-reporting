@@ -28,8 +28,7 @@ import org.pentaho.reporting.engine.classic.core.function.ExpressionRuntime;
  * @author Thomas Morgner
  * @see org.pentaho.reporting.engine.classic.core.filter.MessageFormatSupport
  */
-public class MessageFieldTemplate extends AbstractTemplate
-{
+public class MessageFieldTemplate extends AbstractTemplate {
   /**
    * A string filter.
    */
@@ -43,11 +42,10 @@ public class MessageFieldTemplate extends AbstractTemplate
   /**
    * Creates a new string field template.
    */
-  public MessageFieldTemplate()
-  {
+  public MessageFieldTemplate() {
     messageFormatFilter = new MessageFormatFilter();
     stringFilter = new StringFilter();
-    stringFilter.setDataSource(messageFormatFilter);
+    stringFilter.setDataSource( messageFormatFilter );
   }
 
   /**
@@ -56,8 +54,7 @@ public class MessageFieldTemplate extends AbstractTemplate
    *
    * @return the format string.
    */
-  public String getFormat()
-  {
+  public String getFormat() {
     return messageFormatFilter.getFormatString();
   }
 
@@ -67,9 +64,8 @@ public class MessageFieldTemplate extends AbstractTemplate
    *
    * @param format the new format string.
    */
-  public void setFormat(final String format)
-  {
-    this.messageFormatFilter.setFormatString(format);
+  public void setFormat( final String format ) {
+    this.messageFormatFilter.setFormatString( format );
   }
 
   /**
@@ -77,8 +73,7 @@ public class MessageFieldTemplate extends AbstractTemplate
    *
    * @return A value to represent <code>null</code>.
    */
-  public String getNullValue()
-  {
+  public String getNullValue() {
     return stringFilter.getNullValue();
   }
 
@@ -87,10 +82,9 @@ public class MessageFieldTemplate extends AbstractTemplate
    *
    * @param nullValue the value that represents <code>null</code>.
    */
-  public void setNullValue(final String nullValue)
-  {
-    messageFormatFilter.setNullString(nullValue);
-    stringFilter.setNullValue(nullValue);
+  public void setNullValue( final String nullValue ) {
+    messageFormatFilter.setNullString( nullValue );
+    stringFilter.setNullValue( nullValue );
   }
 
   /**
@@ -101,9 +95,8 @@ public class MessageFieldTemplate extends AbstractTemplate
    * @param element
    * @return the value.
    */
-  public Object getValue(final ExpressionRuntime runtime, final ReportElement element)
-  {
-    return stringFilter.getValue(runtime, element);
+  public Object getValue( final ExpressionRuntime runtime, final ReportElement element ) {
+    return stringFilter.getValue( runtime, element );
   }
 
   /**
@@ -113,8 +106,7 @@ public class MessageFieldTemplate extends AbstractTemplate
    * @throws CloneNotSupportedException this should never happen.
    */
   public MessageFieldTemplate clone()
-      throws CloneNotSupportedException
-  {
+    throws CloneNotSupportedException {
     final MessageFieldTemplate template = (MessageFieldTemplate) super.clone();
     template.stringFilter = stringFilter.clone();
     template.messageFormatFilter = (MessageFormatFilter) template.stringFilter.getDataSource();

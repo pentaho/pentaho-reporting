@@ -29,51 +29,40 @@ import org.pentaho.reporting.libraries.resourceloader.Resource;
 import org.pentaho.reporting.libraries.resourceloader.ResourceException;
 import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 
-public class LocalFontRegistry implements FontRegistry
-{
+public class LocalFontRegistry implements FontRegistry {
   private static FontCache secondLevelCache;
   private FontMetricsCollection fontMetricsCollection;
 
-  protected static synchronized FontCache internalGetSecondLevelCache()
-  {
-    if (secondLevelCache == null)
-    {
+  protected static synchronized FontCache internalGetSecondLevelCache() {
+    if ( secondLevelCache == null ) {
       secondLevelCache = LibFontBoot.getInstance().createDefaultCache();
     }
     return secondLevelCache;
   }
 
-  public LocalFontRegistry()
-  {
+  public LocalFontRegistry() {
   }
 
-  public LocalFontMetricsBase getFontMetricsBase(final FontIdentifier identifier)
-  {
-    if ((identifier instanceof LocalFontRecord) == false)
-    {
+  public LocalFontMetricsBase getFontMetricsBase( final FontIdentifier identifier ) {
+    if ( ( identifier instanceof LocalFontRecord ) == false ) {
       throw new IllegalStateException();
     }
     final LocalFontRecord record = (LocalFontRecord) identifier;
-    return fontMetricsCollection.getMetrics(record.getOriginatingFile());
+    return fontMetricsCollection.getMetrics( record.getOriginatingFile() );
   }
 
-  public void initialize()
-  {
-    try
-    {
+  public void initialize() {
+    try {
       final ResourceManager resourceManager = new ResourceManager();
       resourceManager.registerDefaults();
-      final Resource resource = resourceManager.createDirectly("res://fonts.xml", FontMetricsCollection.class);
+      final Resource resource = resourceManager.createDirectly( "res://fonts.xml", FontMetricsCollection.class );
       this.fontMetricsCollection = (FontMetricsCollection) resource.getResource();
-    }
-    catch (ResourceException e)
-    {
-      throw new IllegalStateException(e);
+    } catch ( ResourceException e ) {
+      throw new IllegalStateException( e );
     }
   }
 
-  public FontCache getSecondLevelCache()
-  {
+  public FontCache getSecondLevelCache() {
     return internalGetSecondLevelCache();
   }
 
@@ -83,38 +72,31 @@ public class LocalFontRegistry implements FontRegistry
    * @param name
    * @return the font family or null, if there is no such family.
    */
-  public FontFamily getFontFamily(final String name)
-  {
-    final LocalFontFamily fontFamily = fontMetricsCollection.getFontFamily(name);
-    if (fontFamily != null)
-    {
+  public FontFamily getFontFamily( final String name ) {
+    final LocalFontFamily fontFamily = fontMetricsCollection.getFontFamily( name );
+    if ( fontFamily != null ) {
       return fontFamily;
     }
     final String fallbackName = fontMetricsCollection.getFallbackName();
-    if (fallbackName != null && fallbackName.equals(name) == false)
-    {
-      return getFontFamily(fallbackName);
+    if ( fallbackName != null && fallbackName.equals( name ) == false ) {
+      return getFontFamily( fallbackName );
     }
     return null;
   }
 
-  public String[] getRegisteredFamilies()
-  {
+  public String[] getRegisteredFamilies() {
     return fontMetricsCollection.getFontFamilies();
   }
 
-  public String[] getAllRegisteredFamilies()
-  {
+  public String[] getAllRegisteredFamilies() {
     return fontMetricsCollection.getFontFamilies();
   }
 
-  public FontMetricsFactory createMetricsFactory()
-  {
-    return new LocalFontMetricsFactory(this);
+  public FontMetricsFactory createMetricsFactory() {
+    return new LocalFontMetricsFactory( this );
   }
 
-  public static void main(String[] args)
-  {
+  public static void main( String[] args ) {
     ClassicEngineBoot.getInstance().start();
     LocalFontRegistry registry = new LocalFontRegistry();
     registry.initialize();

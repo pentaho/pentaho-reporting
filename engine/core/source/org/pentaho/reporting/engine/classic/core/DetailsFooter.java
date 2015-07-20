@@ -32,20 +32,18 @@ import org.pentaho.reporting.engine.classic.core.style.RootLevelBandDefaultStyle
  *
  * @author Thomas Morgner
  */
-public class DetailsFooter extends Band implements RootLevelBand
-{
+public class DetailsFooter extends Band implements RootLevelBand {
   /**
    * A helper array to prevent unnecessary object creation.
    */
-  private static final SubReport[] EMPTY_SUB_REPORTS = new SubReport[0];
+  private static final SubReport[] EMPTY_SUB_REPORTS = new SubReport[ 0 ];
 
   /**
    * Constructs a new band (initially empty).
    */
-  public DetailsFooter()
-  {
-    setElementType(new DetailsFooterType());
-    getStyle().setStyleProperty(ElementStyleKeys.AVOID_PAGEBREAK_INSIDE, Boolean.TRUE);
+  public DetailsFooter() {
+    setElementType( new DetailsFooterType() );
+    getStyle().setStyleProperty( ElementStyleKeys.AVOID_PAGEBREAK_INSIDE, Boolean.TRUE );
   }
 
   /**
@@ -53,8 +51,7 @@ public class DetailsFooter extends Band implements RootLevelBand
    *
    * @return the subreport count.
    */
-  public final int getSubReportCount()
-  {
+  public final int getSubReportCount() {
     return 0;
   }
 
@@ -64,9 +61,8 @@ public class DetailsFooter extends Band implements RootLevelBand
    * @param index the index.
    * @return nothing, as an exception is thrown instead.
    */
-  public final SubReport getSubReport(final int index)
-  {
-    throw new IndexOutOfBoundsException("DetailsFooter cannot have subreports");
+  public final SubReport getSubReport( final int index ) {
+    throw new IndexOutOfBoundsException( "DetailsFooter cannot have subreports" );
   }
 
   /**
@@ -74,8 +70,7 @@ public class DetailsFooter extends Band implements RootLevelBand
    *
    * @return the sub-reports as array.
    */
-  public SubReport[] getSubReports()
-  {
+  public SubReport[] getSubReports() {
     return DetailsFooter.EMPTY_SUB_REPORTS;
   }
 
@@ -84,9 +79,8 @@ public class DetailsFooter extends Band implements RootLevelBand
    *
    * @return true, if the header will be repeated, false otherwise
    */
-  public boolean isRepeat()
-  {
-    return getStyle().getBooleanStyleProperty(BandStyleKeys.REPEAT_HEADER);
+  public boolean isRepeat() {
+    return getStyle().getBooleanStyleProperty( BandStyleKeys.REPEAT_HEADER );
   }
 
   /**
@@ -94,9 +88,8 @@ public class DetailsFooter extends Band implements RootLevelBand
    *
    * @param repeat true, if the header will be repeated, false otherwise
    */
-  public void setRepeat(final boolean repeat)
-  {
-    getStyle().setBooleanStyleProperty(BandStyleKeys.REPEAT_HEADER, repeat);
+  public void setRepeat( final boolean repeat ) {
+    getStyle().setBooleanStyleProperty( BandStyleKeys.REPEAT_HEADER, repeat );
     notifyNodePropertiesChanged();
   }
 
@@ -105,9 +98,8 @@ public class DetailsFooter extends Band implements RootLevelBand
    *
    * @return true or false.
    */
-  public boolean isSticky()
-  {
-    return getStyle().getBooleanStyleProperty(BandStyleKeys.STICKY, false);
+  public boolean isSticky() {
+    return getStyle().getBooleanStyleProperty( BandStyleKeys.STICKY, false );
   }
 
   /**
@@ -115,14 +107,12 @@ public class DetailsFooter extends Band implements RootLevelBand
    *
    * @param b a flag indicating whether or not the footer is shown on the first page.
    */
-  public void setSticky(final boolean b)
-  {
-    getStyle().setBooleanStyleProperty(BandStyleKeys.STICKY, b);
+  public void setSticky( final boolean b ) {
+    getStyle().setBooleanStyleProperty( BandStyleKeys.STICKY, b );
     notifyNodePropertiesChanged();
   }
 
-  public ElementStyleSheet getDefaultStyleSheet()
-  {
+  public ElementStyleSheet getDefaultStyleSheet() {
     return RootLevelBandDefaultStyleSheet.getRootLevelBandDefaultStyle();
   }
 }

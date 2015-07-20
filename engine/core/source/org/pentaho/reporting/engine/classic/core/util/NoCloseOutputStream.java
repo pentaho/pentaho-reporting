@@ -27,19 +27,16 @@ import java.io.OutputStream;
  *
  * @author Thomas Morgner
  */
-public class NoCloseOutputStream extends FilterOutputStream
-{
+public class NoCloseOutputStream extends FilterOutputStream {
   /**
    * Create a new NoCloseOutputStream with the given output stream a parent.
    *
    * @param out the parent stream
    */
-  public NoCloseOutputStream(final OutputStream out)
-  {
-    super(out);
-    if (out == null)
-    {
-      throw new NullPointerException("Given Output Stream is null!");
+  public NoCloseOutputStream( final OutputStream out ) {
+    super( out );
+    if ( out == null ) {
+      throw new NullPointerException( "Given Output Stream is null!" );
     }
   }
 
@@ -54,8 +51,7 @@ public class NoCloseOutputStream extends FilterOutputStream
    * @see FilterOutputStream#out
    */
   public void close()
-      throws IOException
-  {
+    throws IOException {
     flush();
     // do not close the parent stream ... !
   }

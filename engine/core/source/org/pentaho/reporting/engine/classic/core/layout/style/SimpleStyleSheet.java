@@ -28,10 +28,9 @@ import org.pentaho.reporting.engine.classic.core.util.InstanceID;
  *
  * @author Thomas Morgner
  */
-public final class SimpleStyleSheet extends AbstractStyleSheet
-{
+public final class SimpleStyleSheet extends AbstractStyleSheet {
   public static final StyleSheet EMPTY_STYLE =
-      new SimpleStyleSheet(BandDefaultStyleSheet.getBandDefaultStyle());
+    new SimpleStyleSheet( BandDefaultStyleSheet.getBandDefaultStyle() );
 
   private Object[] properties;
   private InstanceID parentId;
@@ -40,16 +39,13 @@ public final class SimpleStyleSheet extends AbstractStyleSheet
   private long modificationCount;
   private InstanceID instanceId;
 
-  public SimpleStyleSheet(final StyleSheet parent)
-  {
-    this(new InstanceID(), parent);
+  public SimpleStyleSheet( final StyleSheet parent ) {
+    this( new InstanceID(), parent );
   }
 
-  public SimpleStyleSheet(final InstanceID id,
-                          final StyleSheet parent)
-  {
-    if (parent == null)
-    {
+  public SimpleStyleSheet( final InstanceID id,
+                           final StyleSheet parent ) {
+    if ( parent == null ) {
       throw new NullPointerException();
     }
     this.instanceId = id;
@@ -69,47 +65,38 @@ public final class SimpleStyleSheet extends AbstractStyleSheet
    * @param defaultValue the default value (<code>null</code> permitted).
    * @return the value.
    */
-  public Object getStyleProperty(final StyleKey key, final Object defaultValue)
-  {
+  public Object getStyleProperty( final StyleKey key, final Object defaultValue ) {
     final int identifier = key.identifier;
-    if (properties.length > identifier)
-    {
-      final Object property = properties[identifier];
-      if (property != null)
-      {
+    if ( properties.length > identifier ) {
+      final Object property = properties[ identifier ];
+      if ( property != null ) {
         return property;
       }
     }
     return defaultValue;
   }
 
-  public Object[] toArray()
-  {
+  public Object[] toArray() {
     return properties.clone();
   }
 
-  public long getChangeTracker()
-  {
+  public long getChangeTracker() {
     return changeTracker;
   }
 
-  public InstanceID getParentId()
-  {
+  public InstanceID getParentId() {
     return parentId;
   }
 
-  public InstanceID getId()
-  {
+  public InstanceID getId() {
     return instanceId;
   }
 
-  public long getModificationCount()
-  {
+  public long getModificationCount() {
     return modificationCount;
   }
 
-  public long getChangeTrackerHash()
-  {
+  public long getChangeTrackerHash() {
     return changeTrackerHash;
   }
 }

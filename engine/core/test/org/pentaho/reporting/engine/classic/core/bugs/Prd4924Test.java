@@ -17,7 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.core.bugs;
 
-import static org.junit.Assert.assertNotNull;
 import org.junit.Before;
 import org.junit.Test;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
@@ -25,40 +24,34 @@ import org.pentaho.reporting.engine.classic.core.metadata.ReportPreProcessorMeta
 import org.pentaho.reporting.engine.classic.core.metadata.ReportPreProcessorPropertyMetaData;
 import org.pentaho.reporting.engine.classic.core.metadata.ReportPreProcessorRegistry;
 
-public class Prd4924Test
-{
+import static org.junit.Assert.assertNotNull;
+
+public class Prd4924Test {
   @Before
-  public void setUp() throws Exception
-  {
+  public void setUp() throws Exception {
     ClassicEngineBoot.getInstance().start();
   }
 
   @Test
-  public void testGetPropertyType()
-  {
+  public void testGetPropertyType() {
     ReportPreProcessorMetaData[] metas =
-        ReportPreProcessorRegistry.getInstance().getAllReportPreProcessorMetaDatas();
-    for (ReportPreProcessorMetaData meta : metas)
-    {
+      ReportPreProcessorRegistry.getInstance().getAllReportPreProcessorMetaDatas();
+    for ( ReportPreProcessorMetaData meta : metas ) {
       ReportPreProcessorPropertyMetaData[] propertyDescriptions = meta.getPropertyDescriptions();
-      for (ReportPreProcessorPropertyMetaData propertyDescription : propertyDescriptions)
-      {
-        assertNotNull(propertyDescription.getPropertyType());
+      for ( ReportPreProcessorPropertyMetaData propertyDescription : propertyDescriptions ) {
+        assertNotNull( propertyDescription.getPropertyType() );
       }
     }
   }
 
   @Test
-  public void testGetBeanDescriptor()
-  {
+  public void testGetBeanDescriptor() {
     ReportPreProcessorMetaData[] metas =
-        ReportPreProcessorRegistry.getInstance().getAllReportPreProcessorMetaDatas();
-    for (ReportPreProcessorMetaData meta : metas)
-    {
+      ReportPreProcessorRegistry.getInstance().getAllReportPreProcessorMetaDatas();
+    for ( ReportPreProcessorMetaData meta : metas ) {
       ReportPreProcessorPropertyMetaData[] propertyDescriptions = meta.getPropertyDescriptions();
-      for (ReportPreProcessorPropertyMetaData propertyDescription : propertyDescriptions)
-      {
-        assertNotNull(propertyDescription.getBeanDescriptor());
+      for ( ReportPreProcessorPropertyMetaData propertyDescription : propertyDescriptions ) {
+        assertNotNull( propertyDescription.getBeanDescriptor() );
       }
     }
   }

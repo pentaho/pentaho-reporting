@@ -30,14 +30,12 @@ import org.pentaho.reporting.libraries.formula.typing.coretypes.TextType;
  *
  * @author Thomas Morgner
  */
-public class ParameterTextFunctionDescription extends AbstractFunctionDescription
-{
+public class ParameterTextFunctionDescription extends AbstractFunctionDescription {
   /**
    * Default Constructor.
    */
-  public ParameterTextFunctionDescription()
-  {
-    super("PARAMETERTEXT", "org.pentaho.reporting.engine.classic.core.function.formula.ParameterText-Function");
+  public ParameterTextFunctionDescription() {
+    super( "PARAMETERTEXT", "org.pentaho.reporting.engine.classic.core.function.formula.ParameterText-Function" );
   }
 
   /**
@@ -45,8 +43,7 @@ public class ParameterTextFunctionDescription extends AbstractFunctionDescriptio
    *
    * @return LogicalType.TYPE
    */
-  public Type getValueType()
-  {
+  public Type getValueType() {
     return TextType.TYPE;
   }
 
@@ -55,8 +52,7 @@ public class ParameterTextFunctionDescription extends AbstractFunctionDescriptio
    *
    * @return 1.
    */
-  public int getParameterCount()
-  {
+  public int getParameterCount() {
     return 3;
   }
 
@@ -66,14 +62,11 @@ public class ParameterTextFunctionDescription extends AbstractFunctionDescriptio
    * @param position the parameter index.
    * @return always TextType.TYPE.
    */
-  public Type getParameterType(final int position)
-  {
-    if (position == 1)
-    {
+  public Type getParameterType( final int position ) {
+    if ( position == 1 ) {
       return LogicalType.TYPE;
     }
-    if (position == 2)
-    {
+    if ( position == 2 ) {
       return TextType.TYPE;
     }
     return AnyType.TYPE;
@@ -86,8 +79,7 @@ public class ParameterTextFunctionDescription extends AbstractFunctionDescriptio
    * @param position the position of the parameter.
    * @return true, as all parameters are mandatory.
    */
-  public boolean isParameterMandatory(final int position)
-  {
+  public boolean isParameterMandatory( final int position ) {
     return position == 0;
   }
 
@@ -96,8 +88,7 @@ public class ParameterTextFunctionDescription extends AbstractFunctionDescriptio
    *
    * @return InformationFunctionCategory.CATEGORY.
    */
-  public FunctionCategory getCategory()
-  {
+  public FunctionCategory getCategory() {
     return UserDefinedFunctionCategory.CATEGORY;
   }
 }

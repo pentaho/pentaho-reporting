@@ -19,30 +19,25 @@ package org.pentaho.reporting.engine.classic.core.testsupport.selector;
 
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderNode;
 
-public class ChildMatcher implements NodeMatcher
-{
+public class ChildMatcher implements NodeMatcher {
   private NodeMatcher childMatcher;
 
-  public ChildMatcher(final NodeMatcher childMatcher)
-  {
+  public ChildMatcher( final NodeMatcher childMatcher ) {
     this.childMatcher = childMatcher;
   }
 
-  public boolean matches(final RenderNode node)
-  {
-    if (node.getParent() == null)
-    {
+  public boolean matches( final RenderNode node ) {
+    if ( node.getParent() == null ) {
       return false;
     }
-    return childMatcher.matches(node.getParent());
+    return childMatcher.matches( node.getParent() );
   }
 
-  public String toString()
-  {
+  public String toString() {
     final StringBuilder b = new StringBuilder();
-    b.append("ChildMatcher(");
-    b.append(childMatcher);
-    b.append(")");
+    b.append( "ChildMatcher(" );
+    b.append( childMatcher );
+    b.append( ")" );
     return b.toString();
   }
 }

@@ -17,8 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.misc.survey.writer;
 
-import java.io.IOException;
-
 import org.pentaho.reporting.engine.classic.core.Element;
 import org.pentaho.reporting.engine.classic.core.modules.misc.survey.SurveyModule;
 import org.pentaho.reporting.engine.classic.core.modules.parser.bundle.writer.BundleWriterException;
@@ -28,11 +26,11 @@ import org.pentaho.reporting.libraries.docbundle.WriteableDocumentBundle;
 import org.pentaho.reporting.libraries.xmlns.common.AttributeList;
 import org.pentaho.reporting.libraries.xmlns.writer.XmlWriter;
 
+import java.io.IOException;
+
 @Deprecated
-public class SurveyScaleWriteHandler extends AbstractElementWriteHandler
-{
-  public SurveyScaleWriteHandler()
-  {
+public class SurveyScaleWriteHandler extends AbstractElementWriteHandler {
+  public SurveyScaleWriteHandler() {
   }
 
   /**
@@ -45,19 +43,17 @@ public class SurveyScaleWriteHandler extends AbstractElementWriteHandler
    * @throws IOException           if an IO error occured.
    * @throws BundleWriterException if an Bundle writer.
    */
-  public void writeElement(final WriteableDocumentBundle bundle,
-                           final BundleWriterState state,
-                           final XmlWriter xmlWriter,
-                           final Element element)
-      throws IOException, BundleWriterException
-  {
-    final AttributeList attList = createMainAttributes(element, xmlWriter);
-    if (xmlWriter.isNamespaceDefined(SurveyModule.NAMESPACE) == false)
-    {
-      attList.addNamespaceDeclaration("surveyscale", SurveyModule.NAMESPACE);
+  public void writeElement( final WriteableDocumentBundle bundle,
+                            final BundleWriterState state,
+                            final XmlWriter xmlWriter,
+                            final Element element )
+    throws IOException, BundleWriterException {
+    final AttributeList attList = createMainAttributes( element, xmlWriter );
+    if ( xmlWriter.isNamespaceDefined( SurveyModule.NAMESPACE ) == false ) {
+      attList.addNamespaceDeclaration( "surveyscale", SurveyModule.NAMESPACE );
     }
-    xmlWriter.writeTag(SurveyModule.NAMESPACE, "survey-scale", attList, XmlWriter.OPEN);
-    writeElementBody(bundle, state, element, xmlWriter);
+    xmlWriter.writeTag( SurveyModule.NAMESPACE, "survey-scale", attList, XmlWriter.OPEN );
+    writeElementBody( bundle, state, element, xmlWriter );
     xmlWriter.writeCloseTag();
   }
 

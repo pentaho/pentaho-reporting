@@ -29,81 +29,65 @@ import org.pentaho.reporting.engine.classic.core.states.crosstab.CrosstabSpecifi
 import org.pentaho.reporting.engine.classic.core.states.crosstab.DummyCrosstabSpecification;
 import org.pentaho.reporting.engine.classic.core.states.datarow.DefaultFlowController;
 
-public class BeginCrosstabHandler implements AdvanceHandler
-{
+public class BeginCrosstabHandler implements AdvanceHandler {
   public static final BeginCrosstabHandler HANDLER = new BeginCrosstabHandler();
 
-  private BeginCrosstabHandler()
-  {
+  private BeginCrosstabHandler() {
   }
 
-  public ProcessState advance(final ProcessState state) throws ReportProcessingException
-  {
+  public ProcessState advance( final ProcessState state ) throws ReportProcessingException {
     final ProcessState next = state.deriveForAdvance();
     next.enterGroup();
 
-    final CrosstabSpecification cs = findCrosstabSpecification(next);
-    final DefaultFlowController controller = next.getFlowController().startCrosstabMode(cs);
-    next.setFlowController(controller);
+    final CrosstabSpecification cs = findCrosstabSpecification( next );
+    final DefaultFlowController controller = next.getFlowController().startCrosstabMode( cs );
+    next.setFlowController( controller );
 
     next.fireReportEvent();
     next.enterPresentationGroup();
     return next;
   }
 
-  private CrosstabSpecification findCrosstabSpecification(final ProcessState next)
-      throws ReportProcessingException
-  {
+  private CrosstabSpecification findCrosstabSpecification( final ProcessState next )
+    throws ReportProcessingException {
     final StructureFunction[] functions = next.getLayoutProcess().getCollectionFunctions();
-    for (int i = 0; i < functions.length; i++)
-    {
-      final StructureFunction function = functions[i];
-      if (function instanceof CrosstabProcessorFunction)
-      {
+    for ( int i = 0; i < functions.length; i++ ) {
+      final StructureFunction function = functions[ i ];
+      if ( function instanceof CrosstabProcessorFunction ) {
         final CrosstabSpecification cs = (CrosstabSpecification) function.getValue();
-        if (cs == null)
-        {
-          return new DummyCrosstabSpecification(next.getProcessKey());
+        if ( cs == null ) {
+          return new DummyCrosstabSpecification( next.getProcessKey() );
         }
         return cs;
       }
     }
-    throw new ReportProcessingException("Failed to locate crosstab-spec, cannot continue.");
+    throw new ReportProcessingException( "Failed to locate crosstab-spec, cannot continue." );
   }
 
-  public ProcessState commit(final ProcessState next) throws ReportProcessingException
-  {
-    final CrosstabGroup group = (CrosstabGroup) next.getReport().getGroup(next.getCurrentGroupIndex());
+  public ProcessState commit( final ProcessState next ) throws ReportProcessingException {
+    final CrosstabGroup group = (CrosstabGroup) next.getReport().getGroup( next.getCurrentGroupIndex() );
 
     final GroupBody body = group.getBody();
-    if (body instanceof CrosstabRowGroupBody)
-    {
-      next.setAdvanceHandler(BeginCrosstabRowAxisHandler.HANDLER);
-    }
-    else if (body instanceof CrosstabOtherGroupBody)
-    {
-      next.setAdvanceHandler(BeginCrosstabOtherAxisHandler.HANDLER);
-    }
-    else
-    {
-      throw new IllegalStateException("This report is totally messed up!");
+    if ( body instanceof CrosstabRowGroupBody ) {
+      next.setAdvanceHandler( BeginCrosstabRowAxisHandler.HANDLER );
+    } else if ( body instanceof CrosstabOtherGroupBody ) {
+      next.setAdvanceHandler( BeginCrosstabOtherAxisHandler.HANDLER );
+    } else {
+      throw new IllegalStateException( "This report is totally messed up!" );
     }
 
     return next;
   }
 
-  public boolean isFinish()
-  {
+  public boolean isFinish() {
     return false;
   }
 
-  public int getEventCode()
-  {
+  public int getEventCode() {
     return ReportEvent.CROSSTABBING_TABLE | ReportEvent.GROUP_STARTED;
   }
 
-  public boolean isRestoreHandler()
-  {
+  public boolean isRestoreHandler() {
     return false;
   }
 }

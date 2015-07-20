@@ -30,8 +30,7 @@ import org.pentaho.reporting.engine.classic.core.function.ExpressionRuntime;
  *
  * @author Thomas Morgner
  */
-public class StringFilter implements DataFilter, RawDataSource
-{
+public class StringFilter implements DataFilter, RawDataSource {
   /**
    * The data source for this filter.
    */
@@ -45,8 +44,7 @@ public class StringFilter implements DataFilter, RawDataSource
   /**
    * Default constructor.
    */
-  public StringFilter()
-  {
+  public StringFilter() {
   }
 
   /**
@@ -54,8 +52,7 @@ public class StringFilter implements DataFilter, RawDataSource
    *
    * @param nullvalue the null value.
    */
-  public void setNullValue(final String nullvalue)
-  {
+  public void setNullValue( final String nullvalue ) {
     this.nullvalue = nullvalue;
   }
 
@@ -64,8 +61,7 @@ public class StringFilter implements DataFilter, RawDataSource
    *
    * @return the string.
    */
-  public String getNullValue()
-  {
+  public String getNullValue() {
     return nullvalue;
   }
 
@@ -78,22 +74,18 @@ public class StringFilter implements DataFilter, RawDataSource
    * @param element
    * @return the string.
    */
-  public Object getValue(final ExpressionRuntime runtime, final ReportElement element)
-  {
+  public Object getValue( final ExpressionRuntime runtime, final ReportElement element ) {
     final DataSource ds = getDataSource();
-    if (ds == null)
-    {
+    if ( ds == null ) {
       return getNullValue();
     }
-    final Object o = ds.getValue(runtime, element);
-    if (o == null)
-    {
+    final Object o = ds.getValue( runtime, element );
+    if ( o == null ) {
       return getNullValue();
     }
     // String is final, so it is safe to do this ...
-    final String retval = ElementTypeUtils.toString(o);
-    if (retval == null)
-    {
+    final String retval = ElementTypeUtils.toString( o );
+    if ( retval == null ) {
       return getNullValue();
     }
     return retval;
@@ -104,8 +96,7 @@ public class StringFilter implements DataFilter, RawDataSource
    *
    * @return the data source.
    */
-  public DataSource getDataSource()
-  {
+  public DataSource getDataSource() {
     return source;
   }
 
@@ -114,10 +105,8 @@ public class StringFilter implements DataFilter, RawDataSource
    *
    * @param ds the data source.
    */
-  public void setDataSource(final DataSource ds)
-  {
-    if (ds == null)
-    {
+  public void setDataSource( final DataSource ds ) {
+    if ( ds == null ) {
       throw new NullPointerException();
     }
     source = ds;
@@ -130,40 +119,33 @@ public class StringFilter implements DataFilter, RawDataSource
    * @throws CloneNotSupportedException this should never happen.
    */
   public StringFilter clone()
-      throws CloneNotSupportedException
-  {
+    throws CloneNotSupportedException {
     final StringFilter f = (StringFilter) super.clone();
-    if (source != null)
-    {
+    if ( source != null ) {
       f.source = source.clone();
     }
     return f;
   }
 
-  public Object getRawValue(final ExpressionRuntime runtime, final ReportElement element)
-  {
-    if (source instanceof RawDataSource)
-    {
+  public Object getRawValue( final ExpressionRuntime runtime, final ReportElement element ) {
+    if ( source instanceof RawDataSource ) {
       final RawDataSource rawDataSource = (RawDataSource) source;
-      return rawDataSource.getRawValue(runtime, element);
+      return rawDataSource.getRawValue( runtime, element );
     }
-    return source.getValue(runtime, element);
+    return source.getValue( runtime, element );
   }
 
-  public FormatSpecification getFormatString(final ExpressionRuntime runtime,
-                                             final ReportElement element,
-                                             FormatSpecification formatSpecification)
-  {
-    if (source instanceof RawDataSource)
-    {
+  public FormatSpecification getFormatString( final ExpressionRuntime runtime,
+                                              final ReportElement element,
+                                              FormatSpecification formatSpecification ) {
+    if ( source instanceof RawDataSource ) {
       final RawDataSource rds = (RawDataSource) source;
-      return rds.getFormatString(runtime, element, formatSpecification);
+      return rds.getFormatString( runtime, element, formatSpecification );
     }
-    if (formatSpecification == null)
-    {
+    if ( formatSpecification == null ) {
       formatSpecification = new FormatSpecification();
     }
-    formatSpecification.redefine(FormatSpecification.TYPE_UNDEFINED, null);
+    formatSpecification.redefine( FormatSpecification.TYPE_UNDEFINED, null );
     return formatSpecification;
   }
 }

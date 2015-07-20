@@ -30,12 +30,10 @@ import org.pentaho.reporting.engine.classic.core.layout.output.OutputProcessor;
  *
  * @author Thomas Morgner
  */
-public class FlowReportProcessor extends AbstractReportProcessor
-{
-  public FlowReportProcessor(final MasterReport report, final OutputProcessor outputProcessor)
-      throws ReportProcessingException
-  {
-    super(report, outputProcessor);
+public class FlowReportProcessor extends AbstractReportProcessor {
+  public FlowReportProcessor( final MasterReport report, final OutputProcessor outputProcessor )
+    throws ReportProcessingException {
+    super( report, outputProcessor );
   }
 
 
@@ -45,10 +43,9 @@ public class FlowReportProcessor extends AbstractReportProcessor
    *
    * @return the page layouter.
    */
-  protected OutputFunction createLayoutManager()
-  {
+  protected OutputFunction createLayoutManager() {
     final DefaultOutputFunction outputFunction = new DefaultOutputFunction();
-    outputFunction.setRenderer(new FlowRenderer(getOutputProcessor()));
+    outputFunction.setRenderer( new FlowRenderer( getOutputProcessor() ) );
     return outputFunction;
   }
 }

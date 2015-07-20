@@ -35,98 +35,81 @@ import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
  *
  * @author Thomas Morgner
  */
-public class GraphicsOutputProcessor extends AbstractPageableOutputProcessor
-{
+public class GraphicsOutputProcessor extends AbstractPageableOutputProcessor {
   private OutputProcessorMetaData metaData;
   private GraphicsContentInterceptor interceptor;
   private ResourceManager resourceManager;
 
-  public GraphicsOutputProcessor(final Configuration configuration)
-  {
-    if (configuration == null)
-    {
+  public GraphicsOutputProcessor( final Configuration configuration ) {
+    if ( configuration == null ) {
       throw new NullPointerException();
     }
-    final DefaultFontStorage fontStorage = new DefaultFontStorage(new AWTFontRegistry());
-    metaData = new GraphicsOutputProcessorMetaData(fontStorage);
+    final DefaultFontStorage fontStorage = new DefaultFontStorage( new AWTFontRegistry() );
+    metaData = new GraphicsOutputProcessorMetaData( fontStorage );
     resourceManager = new ResourceManager();
   }
 
-  public GraphicsOutputProcessor(final Configuration configuration,
-                                 final ResourceManager resourceManager)
-  {
-    if (configuration == null)
-    {
+  public GraphicsOutputProcessor( final Configuration configuration,
+                                  final ResourceManager resourceManager ) {
+    if ( configuration == null ) {
       throw new NullPointerException();
     }
-    if (resourceManager == null)
-    {
+    if ( resourceManager == null ) {
       throw new NullPointerException();
     }
-    final DefaultFontStorage fontStorage = new DefaultFontStorage(new AWTFontRegistry());
-    metaData = new GraphicsOutputProcessorMetaData(fontStorage);
+    final DefaultFontStorage fontStorage = new DefaultFontStorage( new AWTFontRegistry() );
+    metaData = new GraphicsOutputProcessorMetaData( fontStorage );
     this.resourceManager = resourceManager;
   }
 
-  public GraphicsOutputProcessor(final OutputProcessorMetaData metaData,
-                                 final ResourceManager resourceManager)
-  {
-    if (resourceManager == null)
-    {
+  public GraphicsOutputProcessor( final OutputProcessorMetaData metaData,
+                                  final ResourceManager resourceManager ) {
+    if ( resourceManager == null ) {
       throw new NullPointerException();
     }
     this.metaData = metaData;
     this.resourceManager = resourceManager;
   }
 
-  public OutputProcessorMetaData getMetaData()
-  {
+  public OutputProcessorMetaData getMetaData() {
     return metaData;
   }
 
-  public GraphicsContentInterceptor getInterceptor()
-  {
+  public GraphicsContentInterceptor getInterceptor() {
     return interceptor;
   }
 
-  public void setInterceptor(final GraphicsContentInterceptor interceptor)
-  {
+  public void setInterceptor( final GraphicsContentInterceptor interceptor ) {
     this.interceptor = interceptor;
   }
 
 
-  protected final PageFlowSelector getFlowSelector()
-  {
+  protected final PageFlowSelector getFlowSelector() {
     return getInterceptor();
   }
 
-  protected void processPhysicalPage(final PageGrid pageGrid,
-                                     final LogicalPageBox logicalPage,
-                                     final int row,
-                                     final int col,
-                                     final PhysicalPageKey pageKey)
-  {
-    final PhysicalPageBox page = pageGrid.getPage(row, col);
-    if (page != null)
-    {
+  protected void processPhysicalPage( final PageGrid pageGrid,
+                                      final LogicalPageBox logicalPage,
+                                      final int row,
+                                      final int col,
+                                      final PhysicalPageKey pageKey ) {
+    final PhysicalPageBox page = pageGrid.getPage( row, col );
+    if ( page != null ) {
       final LogicalPageDrawable drawable = new LogicalPageDrawable();
-      drawable.init(logicalPage, metaData, resourceManager);
-      final PhysicalPageDrawable pageDrawable = new PhysicalPageDrawable(drawable, page);
-      interceptor.processPhysicalPage(pageKey, pageDrawable);
+      drawable.init( logicalPage, metaData, resourceManager );
+      final PhysicalPageDrawable pageDrawable = new PhysicalPageDrawable( drawable, page );
+      interceptor.processPhysicalPage( pageKey, pageDrawable );
     }
   }
 
-  protected void processLogicalPage(final LogicalPageKey key, final LogicalPageBox logicalPage)
-  {
+  protected void processLogicalPage( final LogicalPageKey key, final LogicalPageBox logicalPage ) {
     final LogicalPageDrawable drawable = new LogicalPageDrawable();
-    drawable.init(logicalPage, metaData, resourceManager);
-    interceptor.processLogicalPage(key, drawable);
+    drawable.init( logicalPage, metaData, resourceManager );
+    interceptor.processLogicalPage( key, drawable );
   }
 
-  protected void processingContentFinished()
-  {
-    if (isContentGeneratable() == false)
-    {
+  protected void processingContentFinished() {
+    if ( isContentGeneratable() == false ) {
       return;
     }
 

@@ -24,22 +24,18 @@ import org.pentaho.reporting.engine.classic.core.function.ExpressionRuntime;
 import org.pentaho.reporting.engine.classic.core.metadata.ElementMetaData;
 import org.pentaho.reporting.engine.classic.core.metadata.ElementType;
 
-public class ResourceMessageType extends AbstractElementType
-{
+public class ResourceMessageType extends AbstractElementType {
   private transient ElementMetaData elementType;
 
   public static final ElementType INSTANCE = new ResourceMessageType();
 
-  public ResourceMessageType()
-  {
-    super("resource-message");
+  public ResourceMessageType() {
+    super( "resource-message" );
   }
 
-  public Object getDesignValue(final ExpressionRuntime runtime, final ReportElement element)
-  {
-    final Object resourceMessageRaw = ElementTypeUtils.queryStaticValue(element);
-    if (resourceMessageRaw == null)
-    {
+  public Object getDesignValue( final ExpressionRuntime runtime, final ReportElement element ) {
+    final Object resourceMessageRaw = ElementTypeUtils.queryStaticValue( element );
+    if ( resourceMessageRaw == null ) {
       return "<null>";
     }
     return resourceMessageRaw.toString();
@@ -53,56 +49,46 @@ public class ResourceMessageType extends AbstractElementType
    * @param element the element from which to read attribute.
    * @return the value.
    */
-  public Object getValue(final ExpressionRuntime runtime, final ReportElement element)
-  {
-    if (runtime == null)
-    {
-      throw new NullPointerException("Runtime must never be null.");
+  public Object getValue( final ExpressionRuntime runtime, final ReportElement element ) {
+    if ( runtime == null ) {
+      throw new NullPointerException( "Runtime must never be null." );
     }
-    if (element == null)
-    {
-      throw new NullPointerException("Element must never be null.");
+    if ( element == null ) {
+      throw new NullPointerException( "Element must never be null." );
     }
 
     final Object nullValue = element.getAttribute
-        (AttributeNames.Core.NAMESPACE, AttributeNames.Core.NULL_VALUE);
-    final Object message = ElementTypeUtils.queryStaticValue(element);
-    if (message == null)
-    {
+      ( AttributeNames.Core.NAMESPACE, AttributeNames.Core.NULL_VALUE );
+    final Object message = ElementTypeUtils.queryStaticValue( element );
+    if ( message == null ) {
       return nullValue;
     }
 
     final Object resourceId = element.getAttribute
-        (AttributeNames.Core.NAMESPACE, AttributeNames.Core.RESOURCE_IDENTIFIER);
-    if (resourceId == null)
-    {
+      ( AttributeNames.Core.NAMESPACE, AttributeNames.Core.RESOURCE_IDENTIFIER );
+    if ( resourceId == null ) {
       return nullValue;
     }
 
-    final ResourceMessageFormatFilter messageFormatFilter = element.getElementContext(ResourceMessageFormatFilter.class);
-    messageFormatFilter.setFormatKey(String.valueOf(message));
-    messageFormatFilter.setResourceIdentifier(String.valueOf(resourceId));
+    final ResourceMessageFormatFilter messageFormatFilter =
+      element.getElementContext( ResourceMessageFormatFilter.class );
+    messageFormatFilter.setFormatKey( String.valueOf( message ) );
+    messageFormatFilter.setResourceIdentifier( String.valueOf( resourceId ) );
 
     final Object messageNullValue = element.getAttribute
-        (AttributeNames.Core.NAMESPACE, AttributeNames.Core.MESSAGE_NULL_VALUE);
-    if (messageNullValue != null)
-    {
-      messageFormatFilter.setNullString(String.valueOf(messageNullValue));
-    }
-    else if (nullValue != null)
-    {
-      messageFormatFilter.setNullString(String.valueOf(nullValue));
-    }
-    else
-    {
-      messageFormatFilter.setNullString(null);
+      ( AttributeNames.Core.NAMESPACE, AttributeNames.Core.MESSAGE_NULL_VALUE );
+    if ( messageNullValue != null ) {
+      messageFormatFilter.setNullString( String.valueOf( messageNullValue ) );
+    } else if ( nullValue != null ) {
+      messageFormatFilter.setNullString( String.valueOf( nullValue ) );
+    } else {
+      messageFormatFilter.setNullString( null );
     }
 
-    final Object value = messageFormatFilter.getValue(runtime, element);
-    if (value == null)
-    {
+    final Object value = messageFormatFilter.getValue( runtime, element );
+    if ( value == null ) {
       return nullValue;
     }
-    return String.valueOf(value);
+    return String.valueOf( value );
   }
 }

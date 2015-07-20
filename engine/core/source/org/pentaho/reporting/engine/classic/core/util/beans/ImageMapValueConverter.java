@@ -22,10 +22,8 @@ import org.pentaho.reporting.engine.classic.core.imagemap.parser.ImageMapParser;
 import org.pentaho.reporting.engine.classic.core.imagemap.parser.ImageMapWriter;
 import org.pentaho.reporting.libraries.resourceloader.ResourceException;
 
-public class ImageMapValueConverter implements ValueConverter
-{
-  public ImageMapValueConverter()
-  {
+public class ImageMapValueConverter implements ValueConverter {
+  public ImageMapValueConverter() {
   }
 
   /**
@@ -33,20 +31,17 @@ public class ImageMapValueConverter implements ValueConverter
    *
    * @param o the object.
    * @return the attribute value.
-   * @throws org.pentaho.reporting.engine.classic.core.util.beans.BeanException
-   *          if there was an error during the conversion.
+   * @throws org.pentaho.reporting.engine.classic.core.util.beans.BeanException if there was an error during the
+   *                                                                            conversion.
    */
-  public String toAttributeValue(final Object o) throws BeanException
-  {
-    if (o == null)
-    {
+  public String toAttributeValue( final Object o ) throws BeanException {
+    if ( o == null ) {
       throw new NullPointerException();
     }
-    if ((o instanceof ImageMap) == false)
-    {
-      throw new BeanException("Failed to convert object of type " + o.getClass() + ": Not a ImageMap.");
+    if ( ( o instanceof ImageMap ) == false ) {
+      throw new BeanException( "Failed to convert object of type " + o.getClass() + ": Not a ImageMap." );
     }
-    return ImageMapWriter.writeImageMapAsString((ImageMap) o);
+    return ImageMapWriter.writeImageMapAsString( (ImageMap) o );
   }
 
   /**
@@ -54,23 +49,18 @@ public class ImageMapValueConverter implements ValueConverter
    *
    * @param s the string.
    * @return a property value.
-   * @throws org.pentaho.reporting.engine.classic.core.util.beans.BeanException
-   *          if there was an error during the conversion.
+   * @throws org.pentaho.reporting.engine.classic.core.util.beans.BeanException if there was an error during the
+   *                                                                            conversion.
    */
-  public Object toPropertyValue(final String s) throws BeanException
-  {
-    if (s == null)
-    {
+  public Object toPropertyValue( final String s ) throws BeanException {
+    if ( s == null ) {
       throw new NullPointerException();
     }
-    try
-    {
+    try {
       final ImageMapParser parser = new ImageMapParser();
-      return parser.parseFromString(s);
-    }
-    catch (ResourceException ioe)
-    {
-      throw new BeanException("Failed to parse image map.", ioe);
+      return parser.parseFromString( s );
+    } catch ( ResourceException ioe ) {
+      throw new BeanException( "Failed to parse image map.", ioe );
     }
   }
 }

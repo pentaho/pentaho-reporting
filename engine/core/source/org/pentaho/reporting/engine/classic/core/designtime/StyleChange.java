@@ -21,34 +21,29 @@ import org.pentaho.reporting.engine.classic.core.style.StyleKey;
 
 /**
  * Simple bean-like class for holding all the information about an attribute change.
-*
-* @author Thomas Morgner.
-*/
-public class StyleChange implements Change
-{
+ *
+ * @author Thomas Morgner.
+ */
+public class StyleChange implements Change {
   private StyleKey styleKey;
   private Object oldValue;
   private Object newValue;
 
-  public StyleChange(final StyleKey styleKey, final Object oldValue, final Object newValue)
-  {
+  public StyleChange( final StyleKey styleKey, final Object oldValue, final Object newValue ) {
     this.styleKey = styleKey;
     this.oldValue = oldValue;
     this.newValue = newValue;
   }
 
-  public StyleKey getStyleKey()
-  {
+  public StyleKey getStyleKey() {
     return styleKey;
   }
 
-  public Object getOldValue()
-  {
+  public Object getOldValue() {
     return oldValue;
   }
 
-  public Object getNewValue()
-  {
+  public Object getNewValue() {
     return newValue;
   }
 }

@@ -17,10 +17,10 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.gui.commonswing;
 
-import java.awt.Window;
-
 import org.pentaho.reporting.engine.classic.core.modules.gui.common.GuiContext;
 import org.pentaho.reporting.engine.classic.core.modules.gui.common.StatusListener;
+
+import java.awt.*;
 
 /**
  * Extends the common GUI-Context by a way to get access to the calling window. This is a neccessary evil to support
@@ -29,8 +29,7 @@ import org.pentaho.reporting.engine.classic.core.modules.gui.common.StatusListen
  *
  * @author Thomas Morgner
  */
-public interface SwingGuiContext extends GuiContext
-{
+public interface SwingGuiContext extends GuiContext {
   /**
    * Returns the calling window.
    *

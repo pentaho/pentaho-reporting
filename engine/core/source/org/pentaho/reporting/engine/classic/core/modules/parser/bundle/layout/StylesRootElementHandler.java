@@ -41,8 +41,7 @@ import org.xml.sax.SAXException;
  *
  * @author Thomas Morgner
  */
-public class StylesRootElementHandler extends AbstractXmlReadHandler
-{
+public class StylesRootElementHandler extends AbstractXmlReadHandler {
   private PageFooterReadHandler pageFooterReadHandler;
   private PageHeaderReadHandler pageHeaderReadHandler;
   private WatermarkReadHandler watermarkReadHandler;
@@ -50,8 +49,7 @@ public class StylesRootElementHandler extends AbstractXmlReadHandler
   private AbstractReportDefinition report;
   private StyleDefinitionReadHandler styleDefinitionReadHandler;
 
-  public StylesRootElementHandler()
-  {
+  public StylesRootElementHandler() {
   }
 
   /**
@@ -60,30 +58,21 @@ public class StylesRootElementHandler extends AbstractXmlReadHandler
    * @param attrs the attributes.
    * @throws SAXException if there is a parsing error.
    */
-  protected void startParsing(final Attributes attrs) throws SAXException
-  {
+  protected void startParsing( final Attributes attrs ) throws SAXException {
     final Object maybeReport = getRootHandler().getHelperObject
-        (ReportParserUtil.HELPER_OBJ_REPORT_NAME);
-    if (maybeReport instanceof SubReport)
-    {
+      ( ReportParserUtil.HELPER_OBJ_REPORT_NAME );
+    if ( maybeReport instanceof SubReport ) {
       report = (SubReport) maybeReport;
-    }
-    else if (maybeReport instanceof MasterReport)
-    {
+    } else if ( maybeReport instanceof MasterReport ) {
       report = (MasterReport) maybeReport;
-    }
-    else
-    {
-      if (ReportParserUtil.INCLUDE_PARSING_VALUE.equals(getRootHandler().getHelperObject
-          (ReportParserUtil.INCLUDE_PARSING_KEY)))
-      {
+    } else {
+      if ( ReportParserUtil.INCLUDE_PARSING_VALUE.equals( getRootHandler().getHelperObject
+        ( ReportParserUtil.INCLUDE_PARSING_KEY ) ) ) {
         report = new SubReport();
-      }
-      else
-      {
+      } else {
         report = new MasterReport();
       }
-      getRootHandler().setHelperObject(ReportParserUtil.HELPER_OBJ_REPORT_NAME, report);
+      getRootHandler().setHelperObject( ReportParserUtil.HELPER_OBJ_REPORT_NAME, report );
     }
   }
 
@@ -96,57 +85,44 @@ public class StylesRootElementHandler extends AbstractXmlReadHandler
    * @return the handler or null, if the tagname is invalid.
    * @throws SAXException if there is a parsing error.
    */
-  protected XmlReadHandler getHandlerForChild(final String uri,
-                                              final String tagName,
-                                              final Attributes atts) throws SAXException
-  {
-    if (BundleNamespaces.STYLE.equals(uri))
-    {
-      if ("page-definition".equals(tagName))
-      {
+  protected XmlReadHandler getHandlerForChild( final String uri,
+                                               final String tagName,
+                                               final Attributes atts ) throws SAXException {
+    if ( BundleNamespaces.STYLE.equals( uri ) ) {
+      if ( "page-definition".equals( tagName ) ) {
         return new PageDefinitionReadHandler();
       }
 
-      if ("style-rule".equals(tagName))
-      {
+      if ( "style-rule".equals( tagName ) ) {
         return new IgnoreAnyChildReadHandler();
       }
-      if ("style-definition".equals(tagName))
-      {
+      if ( "style-definition".equals( tagName ) ) {
         styleDefinitionReadHandler = new StyleDefinitionReadHandler();
         return styleDefinitionReadHandler;
       }
     }
-    if (BundleNamespaces.LAYOUT.equals(uri))
-    {
-      if ("layout-processors".equals(tagName))
-      {
+    if ( BundleNamespaces.LAYOUT.equals( uri ) ) {
+      if ( "layout-processors".equals( tagName ) ) {
         layoutProcessorHandler = new LayoutProcessorReadHandler();
         return layoutProcessorHandler;
       }
 
-      if ("watermark".equals(tagName))
-      {
-        if (watermarkReadHandler == null)
-        {
+      if ( "watermark".equals( tagName ) ) {
+        if ( watermarkReadHandler == null ) {
           watermarkReadHandler = new WatermarkReadHandler();
         }
         return watermarkReadHandler;
       }
 
-      if ("page-header".equals(tagName))
-      {
-        if (pageHeaderReadHandler == null)
-        {
+      if ( "page-header".equals( tagName ) ) {
+        if ( pageHeaderReadHandler == null ) {
           pageHeaderReadHandler = new PageHeaderReadHandler();
         }
         return pageHeaderReadHandler;
       }
 
-      if ("page-footer".equals(tagName))
-      {
-        if (pageFooterReadHandler == null)
-        {
+      if ( "page-footer".equals( tagName ) ) {
+        if ( pageFooterReadHandler == null ) {
           pageFooterReadHandler = new PageFooterReadHandler();
         }
         return pageFooterReadHandler;
@@ -160,38 +136,30 @@ public class StylesRootElementHandler extends AbstractXmlReadHandler
    *
    * @throws SAXException if there is a parsing error.
    */
-  protected void doneParsing() throws SAXException
-  {
+  protected void doneParsing() throws SAXException {
     super.doneParsing();    //To change body of overridden methods use File | Settings | File Templates.
-    if (pageHeaderReadHandler != null)
-    {
-      report.setPageHeader((PageHeader) pageHeaderReadHandler.getElement());
+    if ( pageHeaderReadHandler != null ) {
+      report.setPageHeader( (PageHeader) pageHeaderReadHandler.getElement() );
     }
-    if (watermarkReadHandler != null)
-    {
-      report.setWatermark((Watermark) watermarkReadHandler.getElement());
+    if ( watermarkReadHandler != null ) {
+      report.setWatermark( (Watermark) watermarkReadHandler.getElement() );
     }
-    if (pageFooterReadHandler != null)
-    {
-      report.setPageFooter((PageFooter) pageFooterReadHandler.getElement());
+    if ( pageFooterReadHandler != null ) {
+      report.setPageFooter( (PageFooter) pageFooterReadHandler.getElement() );
     }
 
-    if (layoutProcessorHandler != null)
-    {
+    if ( layoutProcessorHandler != null ) {
       final Expression[] expressions = layoutProcessorHandler.getExpressions();
-      for (int i = 0; i < expressions.length; i++)
-      {
-        final Expression expression = expressions[i];
-        report.addExpression(expression);
+      for ( int i = 0; i < expressions.length; i++ ) {
+        final Expression expression = expressions[ i ];
+        report.addExpression( expression );
       }
     }
-    if (styleDefinitionReadHandler != null)
-    {
+    if ( styleDefinitionReadHandler != null ) {
       final ElementStyleDefinition styleDefinition = styleDefinitionReadHandler.getObject();
-      if (report instanceof MasterReport && styleDefinition != null)
-      {
+      if ( report instanceof MasterReport && styleDefinition != null ) {
         final MasterReport master = (MasterReport) report;
-        master.setStyleDefinition(styleDefinition);
+        master.setStyleDefinition( styleDefinition );
       }
     }
   }
@@ -202,8 +170,7 @@ public class StylesRootElementHandler extends AbstractXmlReadHandler
    * @return the object.
    * @throws SAXException if an parser error occured.
    */
-  public Object getObject() throws SAXException
-  {
+  public Object getObject() throws SAXException {
     return report;
   }
 }

@@ -29,67 +29,54 @@ import org.pentaho.reporting.engine.classic.core.modules.parser.ext.factory.temp
  *
  * @author Thomas Morgner
  */
-public class ReportWriterContext
-{
+public class ReportWriterContext {
   private ReportWriterContext parent;
   private AbstractReportDefinition reportDefinition;
 
-  protected ReportWriterContext(final AbstractReportDefinition reportDefinition)
-  {
-    if (reportDefinition == null)
-    {
-      throw new NullPointerException("Report is null");
+  protected ReportWriterContext( final AbstractReportDefinition reportDefinition ) {
+    if ( reportDefinition == null ) {
+      throw new NullPointerException( "Report is null" );
     }
     this.reportDefinition = reportDefinition;
   }
 
-  public ReportWriterContext(final AbstractReportDefinition reportDefinition,
-                             final ReportWriterContext parent)
-  {
-    if (reportDefinition == null)
-    {
-      throw new NullPointerException("Report is null");
+  public ReportWriterContext( final AbstractReportDefinition reportDefinition,
+                              final ReportWriterContext parent ) {
+    if ( reportDefinition == null ) {
+      throw new NullPointerException( "Report is null" );
     }
-    if (parent == null)
-    {
-      throw new NullPointerException("Parent is null");
+    if ( parent == null ) {
+      throw new NullPointerException( "Parent is null" );
     }
     this.reportDefinition = reportDefinition;
     this.parent = parent;
   }
 
-  public AbstractReportDefinition getReport()
-  {
+  public AbstractReportDefinition getReport() {
     return reportDefinition;
   }
 
-  public ClassFactoryCollector getClassFactoryCollector()
-  {
+  public ClassFactoryCollector getClassFactoryCollector() {
     return parent.getClassFactoryCollector();
   }
 
-  public ElementFactoryCollector getElementFactoryCollector()
-  {
+  public ElementFactoryCollector getElementFactoryCollector() {
     return parent.getElementFactoryCollector();
   }
 
-  public StyleKeyFactoryCollector getStyleKeyFactoryCollector()
-  {
+  public StyleKeyFactoryCollector getStyleKeyFactoryCollector() {
     return parent.getStyleKeyFactoryCollector();
   }
 
-  public TemplateCollector getTemplateCollector()
-  {
+  public TemplateCollector getTemplateCollector() {
     return parent.getTemplateCollector();
   }
 
-  public DataSourceCollector getDataSourceCollector()
-  {
+  public DataSourceCollector getDataSourceCollector() {
     return parent.getDataSourceCollector();
   }
 
-  public boolean hasParent()
-  {
+  public boolean hasParent() {
     return parent != null;
   }
 }

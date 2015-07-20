@@ -17,9 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.output.table.rtf.helper;
 
-import java.awt.Color;
-import java.io.IOException;
-
 import com.lowagie.text.Chunk;
 import com.lowagie.text.DocumentException;
 import com.lowagie.text.Element;
@@ -51,15 +48,16 @@ import org.pentaho.reporting.libraries.base.util.FastStack;
 import org.pentaho.reporting.libraries.fonts.itext.BaseFontFontMetrics;
 import org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper;
 
+import java.awt.*;
+import java.io.IOException;
+
 /**
  * Todo: On Block-Level elements, apply the block-level styles like text-alignment and vertical-alignment.
  *
  * @author Thomas Morgner
  */
-public class RTFTextExtractor extends DefaultTextExtractor
-{
-  private static class StyleContext
-  {
+public class RTFTextExtractor extends DefaultTextExtractor {
+  private static class StyleContext {
     private TextElementArray target;
     private RTFOutputProcessorMetaData metaData;
     private String fontName;
@@ -71,165 +69,136 @@ public class RTFTextExtractor extends DefaultTextExtractor
     private Color textColor;
     private Color backgroundColor;
 
-    protected StyleContext(final TextElementArray target,
-                           final StyleSheet styleSheet,
-                           final RTFOutputProcessorMetaData metaData)
-    {
+    protected StyleContext( final TextElementArray target,
+                            final StyleSheet styleSheet,
+                            final RTFOutputProcessorMetaData metaData ) {
       this.target = target;
       this.metaData = metaData;
-      this.fontName = (String) styleSheet.getStyleProperty(TextStyleKeys.FONT);
-      this.fontSize = styleSheet.getDoubleStyleProperty(TextStyleKeys.FONTSIZE, 0);
-      this.bold = styleSheet.getBooleanStyleProperty(TextStyleKeys.BOLD);
-      this.italic = styleSheet.getBooleanStyleProperty(TextStyleKeys.ITALIC);
-      this.underline = styleSheet.getBooleanStyleProperty(TextStyleKeys.UNDERLINED);
-      this.strikethrough = styleSheet.getBooleanStyleProperty(TextStyleKeys.STRIKETHROUGH);
-      this.textColor = (Color) styleSheet.getStyleProperty(ElementStyleKeys.PAINT);
-      this.backgroundColor = (Color) styleSheet.getStyleProperty(ElementStyleKeys.BACKGROUND_COLOR);
+      this.fontName = (String) styleSheet.getStyleProperty( TextStyleKeys.FONT );
+      this.fontSize = styleSheet.getDoubleStyleProperty( TextStyleKeys.FONTSIZE, 0 );
+      this.bold = styleSheet.getBooleanStyleProperty( TextStyleKeys.BOLD );
+      this.italic = styleSheet.getBooleanStyleProperty( TextStyleKeys.ITALIC );
+      this.underline = styleSheet.getBooleanStyleProperty( TextStyleKeys.UNDERLINED );
+      this.strikethrough = styleSheet.getBooleanStyleProperty( TextStyleKeys.STRIKETHROUGH );
+      this.textColor = (Color) styleSheet.getStyleProperty( ElementStyleKeys.PAINT );
+      this.backgroundColor = (Color) styleSheet.getStyleProperty( ElementStyleKeys.BACKGROUND_COLOR );
     }
 
-    public TextElementArray getTarget()
-    {
+    public TextElementArray getTarget() {
       return target;
     }
 
-    public String getFontName()
-    {
+    public String getFontName() {
       return fontName;
     }
 
-    public double getFontSize()
-    {
+    public double getFontSize() {
       return fontSize;
     }
 
-    public boolean isBold()
-    {
+    public boolean isBold() {
       return bold;
     }
 
-    public boolean isItalic()
-    {
+    public boolean isItalic() {
       return italic;
     }
 
-    public boolean isUnderline()
-    {
+    public boolean isUnderline() {
       return underline;
     }
 
-    public boolean isStrikethrough()
-    {
+    public boolean isStrikethrough() {
       return strikethrough;
     }
 
-    public Color getTextColor()
-    {
+    public Color getTextColor() {
       return textColor;
     }
 
-    public Color getBackgroundColor()
-    {
+    public Color getBackgroundColor() {
       return backgroundColor;
     }
 
-    public void add(final Element element)
-    {
-      target.add(element);
+    public void add( final Element element ) {
+      target.add( element );
     }
 
-    public boolean equals(final Object o)
-    {
-      if (this == o)
-      {
+    public boolean equals( final Object o ) {
+      if ( this == o ) {
         return true;
       }
-      if (o == null || getClass() != o.getClass())
-      {
+      if ( o == null || getClass() != o.getClass() ) {
         return false;
       }
 
       final StyleContext that = (StyleContext) o;
 
-      if (bold != that.bold)
-      {
+      if ( bold != that.bold ) {
         return false;
       }
-      if (that.fontSize != fontSize)
-      {
+      if ( that.fontSize != fontSize ) {
         return false;
       }
-      if (italic != that.italic)
-      {
+      if ( italic != that.italic ) {
         return false;
       }
-      if (strikethrough != that.strikethrough)
-      {
+      if ( strikethrough != that.strikethrough ) {
         return false;
       }
-      if (underline != that.underline)
-      {
+      if ( underline != that.underline ) {
         return false;
       }
-      if (backgroundColor != null ? !backgroundColor.equals(that.backgroundColor) : that.backgroundColor != null)
-      {
+      if ( backgroundColor != null ? !backgroundColor.equals( that.backgroundColor ) : that.backgroundColor != null ) {
         return false;
       }
-      if (fontName != null ? !fontName.equals(that.fontName) : that.fontName != null)
-      {
+      if ( fontName != null ? !fontName.equals( that.fontName ) : that.fontName != null ) {
         return false;
       }
-      if (textColor != null ? !textColor.equals(that.textColor) : that.textColor != null)
-      {
+      if ( textColor != null ? !textColor.equals( that.textColor ) : that.textColor != null ) {
         return false;
       }
 
       return true;
     }
 
-    public int hashCode()
-    {
-      int result = (fontName != null ? fontName.hashCode() : 0);
-      final long temp = fontSize != +0.0d ? Double.doubleToLongBits(fontSize) : 0L;
-      result = 29 * result + (int) (temp ^ (temp >>> 32));
-      result = 29 * result + (bold ? 1 : 0);
-      result = 29 * result + (italic ? 1 : 0);
-      result = 29 * result + (underline ? 1 : 0);
-      result = 29 * result + (strikethrough ? 1 : 0);
-      result = 29 * result + (textColor != null ? textColor.hashCode() : 0);
-      result = 29 * result + (backgroundColor != null ? backgroundColor.hashCode() : 0);
+    public int hashCode() {
+      int result = ( fontName != null ? fontName.hashCode() : 0 );
+      final long temp = fontSize != +0.0d ? Double.doubleToLongBits( fontSize ) : 0L;
+      result = 29 * result + (int) ( temp ^ ( temp >>> 32 ) );
+      result = 29 * result + ( bold ? 1 : 0 );
+      result = 29 * result + ( italic ? 1 : 0 );
+      result = 29 * result + ( underline ? 1 : 0 );
+      result = 29 * result + ( strikethrough ? 1 : 0 );
+      result = 29 * result + ( textColor != null ? textColor.hashCode() : 0 );
+      result = 29 * result + ( backgroundColor != null ? backgroundColor.hashCode() : 0 );
       return result;
     }
 
-    public void add(final String text)
-    {
+    public void add( final String text ) {
       int style = Font.NORMAL;
-      if (bold)
-      {
+      if ( bold ) {
         style |= Font.BOLD;
       }
-      if (italic)
-      {
+      if ( italic ) {
         style |= Font.ITALIC;
       }
-      if (strikethrough)
-      {
+      if ( strikethrough ) {
         style |= Font.STRIKETHRU;
       }
-      if (underline)
-      {
+      if ( underline ) {
         style |= Font.UNDERLINE;
       }
 
       final BaseFontFontMetrics fontMetrics = metaData.getBaseFontFontMetrics
-          (fontName, fontSize, bold, italic, "utf-8", false, false);
+        ( fontName, fontSize, bold, italic, "utf-8", false, false );
       final BaseFont baseFont = fontMetrics.getBaseFont();
-      final Font font = new Font(baseFont, (float) fontSize, style, textColor);
-      final Chunk c = new Chunk(text, font);
-      if (backgroundColor != null)
-      {
-        c.setBackground(backgroundColor);
+      final Font font = new Font( baseFont, (float) fontSize, style, textColor );
+      final Chunk c = new Chunk( text, font );
+      if ( backgroundColor != null ) {
+        c.setBackground( backgroundColor );
       }
-      target.add(c);
+      target.add( c );
     }
   }
 
@@ -238,248 +207,203 @@ public class RTFTextExtractor extends DefaultTextExtractor
   private RTFOutputProcessorMetaData metaData;
   private boolean handleImages;
 
-  public RTFTextExtractor(final RTFOutputProcessorMetaData metaData)
-  {
-    super(metaData);
+  public RTFTextExtractor( final RTFOutputProcessorMetaData metaData ) {
+    super( metaData );
     this.metaData = metaData;
-    this.handleImages = metaData.isFeatureSupported(RTFOutputProcessorMetaData.IMAGES_ENABLED);
-    context = new FastStack<StyleContext>(50);
+    this.handleImages = metaData.isFeatureSupported( RTFOutputProcessorMetaData.IMAGES_ENABLED );
+    context = new FastStack<StyleContext>( 50 );
   }
 
 
-  private StyleContext getCurrentContext()
-  {
+  private StyleContext getCurrentContext() {
     return context.peek();
   }
 
-  public void compute(final RenderBox box,
-                      final TextElementArray cell,
-                      final RTFImageCache imageCache)
-  {
+  public void compute( final RenderBox box,
+                       final TextElementArray cell,
+                       final RTFImageCache imageCache ) {
     this.context.clear();
-    this.context.push(new StyleContext(cell, box.getStyleSheet(), metaData));
+    this.context.push( new StyleContext( cell, box.getStyleSheet(), metaData ) );
     this.imageCache = imageCache;
-    super.compute(box);
+    super.compute( box );
   }
 
-  protected boolean startInlineBox(final InlineRenderBox box)
-  {
-    if (box.getStaticBoxLayoutProperties().isVisible() == false)
-    {
+  protected boolean startInlineBox( final InlineRenderBox box ) {
+    if ( box.getStaticBoxLayoutProperties().isVisible() == false ) {
       return false;
     }
 
     // Compare the text style ..
     final StyleContext currentContext = getCurrentContext();
-    final StyleContext boxContext = new StyleContext(currentContext.getTarget(), box.getStyleSheet(), metaData);
-    if (currentContext.equals(boxContext) == false)
-    {
-      if (getTextLength() > 0)
-      {
+    final StyleContext boxContext = new StyleContext( currentContext.getTarget(), box.getStyleSheet(), metaData );
+    if ( currentContext.equals( boxContext ) == false ) {
+      if ( getTextLength() > 0 ) {
         final String text = getText();
-        currentContext.add(text);
+        currentContext.add( text );
         clearText();
       }
       this.context.pop();
-      this.context.push(boxContext);
+      this.context.push( boxContext );
     }
     return true;
   }
 
-  protected void finishInlineBox(final InlineRenderBox box)
-  {
+  protected void finishInlineBox( final InlineRenderBox box ) {
     final StyleContext currentContext = getCurrentContext();
-    if (getTextLength() > 0)
-    {
+    if ( getTextLength() > 0 ) {
       final String text = getText();
-      currentContext.add(text);
+      currentContext.add( text );
       clearText();
     }
   }
 
-  protected void processOtherNode(final RenderNode node)
-  {
+  protected void processOtherNode( final RenderNode node ) {
     final StrictBounds paragraphBounds = getParagraphBounds();
-    if (isTextLineOverflow() && node.isNodeVisible(paragraphBounds, isOverflowX(), isOverflowY()) == false)
-    {
+    if ( isTextLineOverflow() && node.isNodeVisible( paragraphBounds, isOverflowX(), isOverflowY() ) == false ) {
       return;
     }
 
-    super.processOtherNode(node);
-    if (node.getNodeType() == LayoutNodeTypes.TYPE_NODE_TEXT)
-    {
-      if (node.isVirtualNode())
-      {
+    super.processOtherNode( node );
+    if ( node.getNodeType() == LayoutNodeTypes.TYPE_NODE_TEXT ) {
+      if ( node.isVirtualNode() ) {
         return;
       }
 
-      if ((node.getX() + node.getWidth()) > (paragraphBounds.getX() + paragraphBounds.getWidth()))
-      {
+      if ( ( node.getX() + node.getWidth() ) > ( paragraphBounds.getX() + paragraphBounds.getWidth() ) ) {
         // This node will only be partially visible. The end-of-line marker will not apply.
         return;
       }
       final RenderableText text = (RenderableText) node;
-      if (text.isForceLinebreak())
-      {
+      if ( text.isForceLinebreak() ) {
         final StyleContext currentContext = getCurrentContext();
-        if (getTextLength() > 0)
-        {
-          currentContext.add(getText());
+        if ( getTextLength() > 0 ) {
+          currentContext.add( getText() );
           clearText();
         }
         context.pop();
         final StyleContext cellContext = getCurrentContext();
-        cellContext.add(currentContext.getTarget());
+        cellContext.add( currentContext.getTarget() );
 
-        context.push(new StyleContext(new Paragraph(), text.getStyleSheet(), metaData));
+        context.push( new StyleContext( new Paragraph(), text.getStyleSheet(), metaData ) );
       }
-    }
-    else if (node.getNodeType() == LayoutNodeTypes.TYPE_NODE_COMPLEX_TEXT)
-    {
+    } else if ( node.getNodeType() == LayoutNodeTypes.TYPE_NODE_COMPLEX_TEXT ) {
       // todo: check if special text processing is required for RenderableComplexText nodes
-//      return;
-      if (node.isVirtualNode())
-      {
+      //      return;
+      if ( node.isVirtualNode() ) {
         return;
       }
 
-      if ((node.getX() + node.getWidth()) > (paragraphBounds.getX() + paragraphBounds.getWidth()))
-      {
+      if ( ( node.getX() + node.getWidth() ) > ( paragraphBounds.getX() + paragraphBounds.getWidth() ) ) {
         // This node will only be partially visible. The end-of-line marker will not apply.
         return;
       }
       final RenderableComplexText text = (RenderableComplexText) node;
-      if (text.isForceLinebreak())
-      {
+      if ( text.isForceLinebreak() ) {
         final StyleContext currentContext = getCurrentContext();
-        if (getTextLength() > 0)
-        {
-          currentContext.add(getText());
+        if ( getTextLength() > 0 ) {
+          currentContext.add( getText() );
           clearText();
         }
         context.pop();
         final StyleContext cellContext = getCurrentContext();
-        cellContext.add(currentContext.getTarget());
+        cellContext.add( currentContext.getTarget() );
 
-        context.push(new StyleContext(new Paragraph(), text.getStyleSheet(), metaData));
+        context.push( new StyleContext( new Paragraph(), text.getStyleSheet(), metaData ) );
       }
     }
   }
 
-  protected void processRenderableContent(final RenderableReplacedContentBox node)
-  {
-    float targetWidth = (float) StrictGeomUtility.toExternalValue(node.getWidth());
-    float targetHeight = (float) StrictGeomUtility.toExternalValue(node.getHeight());
+  protected void processRenderableContent( final RenderableReplacedContentBox node ) {
+    float targetWidth = (float) StrictGeomUtility.toExternalValue( node.getWidth() );
+    float targetHeight = (float) StrictGeomUtility.toExternalValue( node.getHeight() );
 
-    try
-    {
+    try {
       final RenderableReplacedContent rpc = node.getContent();
       final Object rawObject = rpc.getRawObject();
-      if (rawObject instanceof ImageContainer)
-      {
-        final Image image = imageCache.getImage((ImageContainer) rawObject);
-        if (image == null)
-        {
+      if ( rawObject instanceof ImageContainer ) {
+        final Image image = imageCache.getImage( (ImageContainer) rawObject );
+        if ( image == null ) {
           return;
         }
         final StyleContext currentContext = getCurrentContext();
-        if (getTextLength() > 0)
-        {
-          currentContext.add(getText());
+        if ( getTextLength() > 0 ) {
+          currentContext.add( getText() );
           clearText();
         }
 
-        image.scaleToFit(targetWidth, targetHeight);
-        currentContext.add(image);
-      }
-      else if (rawObject instanceof DrawableWrapper)
-      {
+        image.scaleToFit( targetWidth, targetHeight );
+        currentContext.add( image );
+      } else if ( rawObject instanceof DrawableWrapper ) {
         final StrictBounds rect = new StrictBounds
-            (node.getX(), node.getY(), node.getWidth(), node.getHeight());
+          ( node.getX(), node.getY(), node.getWidth(), node.getHeight() );
         final ImageContainer ic =
-            RenderUtility.createImageFromDrawable((DrawableWrapper) rawObject, rect, node, metaData);
-        if (ic == null)
-        {
+          RenderUtility.createImageFromDrawable( (DrawableWrapper) rawObject, rect, node, metaData );
+        if ( ic == null ) {
           return;
         }
-        final Image image = imageCache.getImage(ic);
-        if (image == null)
-        {
+        final Image image = imageCache.getImage( ic );
+        if ( image == null ) {
           return;
         }
 
         final StyleContext currentContext = getCurrentContext();
-        if (getTextLength() > 0)
-        {
-          currentContext.add(getText());
+        if ( getTextLength() > 0 ) {
+          currentContext.add( getText() );
           clearText();
         }
-        image.scaleToFit(targetWidth, targetHeight);
-        currentContext.add(image);
+        image.scaleToFit( targetWidth, targetHeight );
+        currentContext.add( image );
       }
-    }
-    catch (DocumentException ioe)
-    {
-      throw new InvalidReportStateException("Failed to extract text", ioe);
-    }
-    catch (IOException e)
-    {
+    } catch ( DocumentException ioe ) {
+      throw new InvalidReportStateException( "Failed to extract text", ioe );
+    } catch ( IOException e ) {
       // double ignore ..
-      throw new InvalidReportStateException("Failed to extract text", e);
+      throw new InvalidReportStateException( "Failed to extract text", e );
     }
 
   }
 
-  protected void processParagraphChilds(final ParagraphRenderBox box)
-  {
-    context.push(new StyleContext(new Paragraph(), box.getStyleSheet(), metaData));
+  protected void processParagraphChilds( final ParagraphRenderBox box ) {
+    context.push( new StyleContext( new Paragraph(), box.getStyleSheet(), metaData ) );
     clearText();
 
-    super.processParagraphChilds(box);
+    super.processParagraphChilds( box );
 
     final StyleContext currentContext = getCurrentContext();
-    if (getTextLength() > 0)
-    {
-      currentContext.add(getText());
+    if ( getTextLength() > 0 ) {
+      currentContext.add( getText() );
       clearText();
     }
     context.pop();
-    getCurrentContext().add(currentContext.getTarget());
+    getCurrentContext().add( currentContext.getTarget() );
   }
 
-  protected void drawComplexText(final RenderableComplexText renderableComplexText)
-  {
-    if (renderableComplexText.getRawText().length() == 0)
-    {
+  protected void drawComplexText( final RenderableComplexText renderableComplexText ) {
+    if ( renderableComplexText.getRawText().length() == 0 ) {
       // This text is empty.
       return;
     }
-    if (renderableComplexText.isNodeVisible(getParagraphBounds(), isOverflowX(), isOverflowY()) == false)
-    {
+    if ( renderableComplexText.isNodeVisible( getParagraphBounds(), isOverflowX(), isOverflowY() ) == false ) {
       return;
     }
 
     // check if we have to process inline text elements
-    if (renderableComplexText.getRichText().getStyleChunks().size() > 1)
-    {
+    if ( renderableComplexText.getRichText().getStyleChunks().size() > 1 ) {
       // iterate through all inline elements
-      for (final RichTextSpec.StyledChunk styledChunk : renderableComplexText.getRichText().getStyleChunks())
-      {
+      for ( final RichTextSpec.StyledChunk styledChunk : renderableComplexText.getRichText().getStyleChunks() ) {
         // Add style for current styled chunk
-        final StyleContext boxContext = new StyleContext(getCurrentContext().getTarget(), styledChunk.getStyleSheet(), metaData);
-        if (styledChunk.getText().length() > 0)
-        {
+        final StyleContext boxContext =
+          new StyleContext( getCurrentContext().getTarget(), styledChunk.getStyleSheet(), metaData );
+        if ( styledChunk.getText().length() > 0 ) {
           final String text = styledChunk.getText();
-          boxContext.add(text);
+          boxContext.add( text );
           clearText();
         }
         context.pop();
-        context.push(boxContext);
+        context.push( boxContext );
       }
-    }
-    else
-    {
-      super.drawComplexText(renderableComplexText);
+    } else {
+      super.drawComplexText( renderableComplexText );
     }
   }
 

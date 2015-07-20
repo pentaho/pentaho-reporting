@@ -26,8 +26,7 @@ import javax.swing.text.PlainDocument;
  *
  * @author Thomas Morgner
  */
-public class LengthLimitingDocument extends PlainDocument
-{
+public class LengthLimitingDocument extends PlainDocument {
 
   /**
    * The maximum length.
@@ -37,9 +36,8 @@ public class LengthLimitingDocument extends PlainDocument
   /**
    * Creates a new LengthLimitingDocument, with no limitation.
    */
-  public LengthLimitingDocument()
-  {
-    this(-1);
+  public LengthLimitingDocument() {
+    this( -1 );
   }
 
   /**
@@ -48,8 +46,7 @@ public class LengthLimitingDocument extends PlainDocument
    *
    * @param maxlen the maximum number of elements in this document
    */
-  public LengthLimitingDocument(final int maxlen)
-  {
+  public LengthLimitingDocument( final int maxlen ) {
     super();
     this.maxlen = maxlen;
   }
@@ -59,8 +56,7 @@ public class LengthLimitingDocument extends PlainDocument
    *
    * @param maxlen the maximum number of characters in this document.
    */
-  public void setMaxLength(final int maxlen)
-  {
+  public void setMaxLength( final int maxlen ) {
     this.maxlen = maxlen;
   }
 
@@ -69,8 +65,7 @@ public class LengthLimitingDocument extends PlainDocument
    *
    * @return the maximum number of characters
    */
-  public int getMaxLength()
-  {
+  public int getMaxLength() {
     return this.maxlen;
   }
 
@@ -81,26 +76,22 @@ public class LengthLimitingDocument extends PlainDocument
    * @param offs the offset, where the string should be inserted into the document
    * @param str  the string that should be inserted
    * @param a    the attribute set assigned for the document
-   * @throws javax.swing.text.BadLocationException
-   *          if the offset is not correct
+   * @throws javax.swing.text.BadLocationException if the offset is not correct
    */
-  public void insertString(final int offs, final String str, final AttributeSet a)
-      throws BadLocationException
-  {
-    if (str == null)
-    {
+  public void insertString( final int offs, final String str, final AttributeSet a )
+    throws BadLocationException {
+    if ( str == null ) {
       return;
     }
 
-    if (this.maxlen < 0)
-    {
-      super.insertString(offs, str, a);
+    if ( this.maxlen < 0 ) {
+      super.insertString( offs, str, a );
     }
 
     final char[] numeric = str.toCharArray();
     final StringBuffer b = new StringBuffer();
-    b.append(numeric, 0, Math.min(this.maxlen, numeric.length));
-    super.insertString(offs, b.toString(), a);
+    b.append( numeric, 0, Math.min( this.maxlen, numeric.length ) );
+    super.insertString( offs, b.toString(), a );
   }
 
 }

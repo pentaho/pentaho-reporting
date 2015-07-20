@@ -26,53 +26,45 @@ import org.pentaho.reporting.engine.classic.core.states.ReportStateKey;
 import org.pentaho.reporting.engine.classic.core.style.StyleSheet;
 import org.pentaho.reporting.engine.classic.core.util.InstanceID;
 
-public class RenderableReplacedContentBox extends RenderBox
-{
+public class RenderableReplacedContentBox extends RenderBox {
   private RenderableReplacedContent content;
 
-  public RenderableReplacedContentBox(final RenderableReplacedContent content)
-  {
-    super(RenderNode.VERTICAL_AXIS, RenderNode.HORIZONTAL_AXIS,
-        SimpleStyleSheet.EMPTY_STYLE, new InstanceID(), BoxDefinition.EMPTY,
-        AutoLayoutBoxType.INSTANCE, ReportAttributeMap.EMPTY_MAP, null);
-    if (content == null)
-    {
+  public RenderableReplacedContentBox( final RenderableReplacedContent content ) {
+    super( RenderNode.VERTICAL_AXIS, RenderNode.HORIZONTAL_AXIS,
+      SimpleStyleSheet.EMPTY_STYLE, new InstanceID(), BoxDefinition.EMPTY,
+      AutoLayoutBoxType.INSTANCE, ReportAttributeMap.EMPTY_MAP, null );
+    if ( content == null ) {
       throw new NullPointerException();
     }
     this.content = content;
     close();
   }
 
-  public RenderableReplacedContentBox(final StyleSheet styleSheet,
-                                      final InstanceID instanceId,
-                                      final BoxDefinition boxDefinition,
-                                      final ElementType elementType,
-                                      final ReportAttributeMap attributes,
-                                      final ReportStateKey stateKey,
-                                      final RenderableReplacedContent content)
-  {
-    super(RenderNode.VERTICAL_AXIS, RenderNode.HORIZONTAL_AXIS, styleSheet, instanceId, boxDefinition, elementType,
-        attributes, stateKey);
-    if (content == null)
-    {
+  public RenderableReplacedContentBox( final StyleSheet styleSheet,
+                                       final InstanceID instanceId,
+                                       final BoxDefinition boxDefinition,
+                                       final ElementType elementType,
+                                       final ReportAttributeMap attributes,
+                                       final ReportStateKey stateKey,
+                                       final RenderableReplacedContent content ) {
+    super( RenderNode.VERTICAL_AXIS, RenderNode.HORIZONTAL_AXIS, styleSheet, instanceId, boxDefinition, elementType,
+      attributes, stateKey );
+    if ( content == null ) {
       throw new NullPointerException();
     }
     this.content = content;
     close();
   }
 
-  public RenderableReplacedContent getContent()
-  {
+  public RenderableReplacedContent getContent() {
     return content;
   }
 
-  public boolean isEmpty()
-  {
+  public boolean isEmpty() {
     return false;
   }
 
-  public int getNodeType()
-  {
+  public int getNodeType() {
     return LayoutNodeTypes.TYPE_BOX_CONTENT;
   }
 }

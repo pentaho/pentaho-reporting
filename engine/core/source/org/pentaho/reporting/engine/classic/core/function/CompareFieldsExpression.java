@@ -23,9 +23,8 @@ package org.pentaho.reporting.engine.classic.core.function;
  * @author Thomas Morgner
  * @deprecated Use a formula instead.
  */
-@SuppressWarnings("deprecation")
-public class CompareFieldsExpression extends AbstractCompareExpression
-{
+@SuppressWarnings( "deprecation" )
+public class CompareFieldsExpression extends AbstractCompareExpression {
   /**
    * The name of the data-row column that holds the second value.
    */
@@ -34,8 +33,7 @@ public class CompareFieldsExpression extends AbstractCompareExpression
   /**
    * Default Constructor.
    */
-  public CompareFieldsExpression()
-  {
+  public CompareFieldsExpression() {
   }
 
   /**
@@ -43,8 +41,7 @@ public class CompareFieldsExpression extends AbstractCompareExpression
    *
    * @return the name of the other field.
    */
-  public String getOtherField()
-  {
+  public String getOtherField() {
     return otherField;
   }
 
@@ -53,8 +50,7 @@ public class CompareFieldsExpression extends AbstractCompareExpression
    *
    * @param otherField the name of the other field.
    */
-  public void setOtherField(final String otherField)
-  {
+  public void setOtherField( final String otherField ) {
     this.otherField = otherField;
   }
 
@@ -64,11 +60,9 @@ public class CompareFieldsExpression extends AbstractCompareExpression
    *
    * @return the value of the other field.
    */
-  protected Comparable getComparable()
-  {
-    final Object o = getDataRow().get(getOtherField());
-    if (o instanceof Comparable)
-    {
+  protected Comparable getComparable() {
+    final Object o = getDataRow().get( getOtherField() );
+    if ( o instanceof Comparable ) {
       return (Comparable) o;
     }
     return null;

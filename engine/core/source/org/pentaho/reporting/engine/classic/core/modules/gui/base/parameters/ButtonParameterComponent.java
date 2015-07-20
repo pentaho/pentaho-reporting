@@ -17,21 +17,19 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.gui.base.parameters;
 
-import javax.swing.JToggleButton;
-
 import org.pentaho.reporting.engine.classic.core.modules.gui.base.ComponentListCellRenderer;
 import org.pentaho.reporting.engine.classic.core.parameters.ListParameter;
 import org.pentaho.reporting.engine.classic.core.parameters.ParameterContext;
 
-public class ButtonParameterComponent extends ListParameterComponent
-{
-  public ButtonParameterComponent(final ListParameter listParameter,
-                                  final ParameterUpdateContext updateContext,
-                                  final ParameterContext parameterContext)
-  {
-    super(listParameter, updateContext, parameterContext);
-    getList().setOpaque(false);
-    getList().setBorder(null);
-    getList().setCellRenderer(new ComponentListCellRenderer(JToggleButton.class));
+import javax.swing.*;
+
+public class ButtonParameterComponent extends ListParameterComponent {
+  public ButtonParameterComponent( final ListParameter listParameter,
+                                   final ParameterUpdateContext updateContext,
+                                   final ParameterContext parameterContext ) {
+    super( listParameter, updateContext, parameterContext );
+    getList().setOpaque( false );
+    getList().setBorder( null );
+    getList().setCellRenderer( new ComponentListCellRenderer( JToggleButton.class ) );
   }
 }

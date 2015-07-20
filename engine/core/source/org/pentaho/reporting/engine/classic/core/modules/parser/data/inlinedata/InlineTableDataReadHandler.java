@@ -32,16 +32,13 @@ import org.xml.sax.SAXException;
  *
  * @author Thomas Morgner
  */
-public class InlineTableDataReadHandler extends StringReadHandler
-{
+public class InlineTableDataReadHandler extends StringReadHandler {
   private Class type;
   private boolean nullValue;
   private Object value;
 
-  public InlineTableDataReadHandler(final Class type)
-  {
-    if (type == null)
-    {
+  public InlineTableDataReadHandler( final Class type ) {
+    if ( type == null ) {
       throw new NullPointerException();
     }
     this.type = type;
@@ -53,27 +50,21 @@ public class InlineTableDataReadHandler extends StringReadHandler
    * @param attrs the attributes.
    * @throws SAXException if there is a parsing error.
    */
-  protected void startParsing(final Attributes attrs) throws SAXException
-  {
-    super.startParsing(attrs);
-    if ("true".equals(attrs.getValue(getUri(), "null")))
-    {
+  protected void startParsing( final Attributes attrs ) throws SAXException {
+    super.startParsing( attrs );
+    if ( "true".equals( attrs.getValue( getUri(), "null" ) ) ) {
       nullValue = true;
     }
 
     // redefine the declared type. Do not care whether the type will be compatible with the global one,
     // this is the user's problem.
-    final String type = attrs.getValue(getUri(), "type");
-    if (type != null)
-    {
-      try
-      {
-        final ClassLoader loader = ObjectUtilities.getClassLoader(AbstractXmlReadHandler.class);
-        this.type = Class.forName(CompatibilityMapperUtil.mapClassName(type), false, loader);
-      }
-      catch (ClassNotFoundException e)
-      {
-        throw new ParseException("Required attribute 'type' is not valid.", getLocator());
+    final String type = attrs.getValue( getUri(), "type" );
+    if ( type != null ) {
+      try {
+        final ClassLoader loader = ObjectUtilities.getClassLoader( AbstractXmlReadHandler.class );
+        this.type = Class.forName( CompatibilityMapperUtil.mapClassName( type ), false, loader );
+      } catch ( ClassNotFoundException e ) {
+        throw new ParseException( "Required attribute 'type' is not valid.", getLocator() );
       }
     }
 
@@ -84,29 +75,21 @@ public class InlineTableDataReadHandler extends StringReadHandler
    *
    * @throws SAXException if there is a parsing error.
    */
-  protected void doneParsing() throws SAXException
-  {
+  protected void doneParsing() throws SAXException {
     super.doneParsing();
-    if (nullValue)
-    {
+    if ( nullValue ) {
       value = null;
       return;
     }
 
-    try
-    {
-      value = ConverterRegistry.toPropertyValue(getResult(), type);
-    }
-    catch (BeanException e)
-    {
-      try
-      {
-        value = ConverterRegistry.toPropertyValue(getResult().trim(), type);
-      }
-      catch (BeanException ex)
-      {
-        throw new ParseException("Unable to convert value '" + getResult() +
-            "' into a object of type '" + type + "'.", ex, getLocator());
+    try {
+      value = ConverterRegistry.toPropertyValue( getResult(), type );
+    } catch ( BeanException e ) {
+      try {
+        value = ConverterRegistry.toPropertyValue( getResult().trim(), type );
+      } catch ( BeanException ex ) {
+        throw new ParseException( "Unable to convert value '" + getResult() +
+          "' into a object of type '" + type + "'.", ex, getLocator() );
       }
     }
   }
@@ -116,8 +99,7 @@ public class InlineTableDataReadHandler extends StringReadHandler
    *
    * @return the object.
    */
-  public Object getObject()
-  {
+  public Object getObject() {
     return value;
   }
 }

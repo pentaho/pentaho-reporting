@@ -19,17 +19,14 @@ package org.pentaho.reporting.engine.classic.core.style.css;
 
 import org.pentaho.reporting.engine.classic.core.style.ElementStyleSheet;
 
-public class CSSCounterRule extends ElementStyleSheet
-{
+public class CSSCounterRule extends ElementStyleSheet {
   private String name;
 
-  public CSSCounterRule(final String name)
-  {
+  public CSSCounterRule( final String name ) {
     this.name = name;
   }
 
-  public String getName()
-  {
+  public String getName() {
     return name;
   }
 }

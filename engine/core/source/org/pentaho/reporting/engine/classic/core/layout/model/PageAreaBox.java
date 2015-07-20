@@ -17,40 +17,32 @@
 
 package org.pentaho.reporting.engine.classic.core.layout.model;
 
-public class PageAreaBox extends BlockRenderBox
-{
+public class PageAreaBox extends BlockRenderBox {
   private LogicalPageBox logicalPage;
 
-  public PageAreaBox()
-  {
+  public PageAreaBox() {
   }
 
-  public void setLogicalPage(final LogicalPageBox logicalPage)
-  {
+  public void setLogicalPage( final LogicalPageBox logicalPage ) {
     this.logicalPage = logicalPage;
   }
 
-  public LogicalPageBox getLogicalPage()
-  {
+  public LogicalPageBox getLogicalPage() {
     return logicalPage;
   }
 
-  protected void updateChangeTracker()
-  {
+  protected void updateChangeTracker() {
     super.updateChangeTracker();
-    if (logicalPage != null)
-    {
+    if ( logicalPage != null ) {
       logicalPage.updateChangeTracker();
     }
 
-    if (isParanoidModelChecks() && getCacheState() == RenderNode.CACHE_CLEAN)
-    {
+    if ( isParanoidModelChecks() && getCacheState() == RenderNode.CACHE_CLEAN ) {
       throw new IllegalStateException();
     }
   }
 
-  public int getNodeType()
-  {
+  public int getNodeType() {
     return LayoutNodeTypes.TYPE_BOX_PAGEAREA;
   }
 }

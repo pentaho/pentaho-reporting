@@ -30,34 +30,30 @@ import org.xml.sax.SAXException;
  *
  * @author Thomas Morgner
  */
-public class RoundRectangleElementReadHandler extends AbstractElementReadHandler
-{
+public class RoundRectangleElementReadHandler extends AbstractElementReadHandler {
   private RectangleElementFactory factory;
 
-  public RoundRectangleElementReadHandler()
-  {
+  public RoundRectangleElementReadHandler() {
     factory = new RectangleElementFactory();
   }
 
-  protected ElementFactory getElementFactory()
-  {
+  protected ElementFactory getElementFactory() {
     return factory;
   }
 
-  protected void startParsing(final PropertyAttributes atts) throws SAXException
-  {
-    super.startParsing(atts);
+  protected void startParsing( final PropertyAttributes atts ) throws SAXException {
+    super.startParsing( atts );
 
-    final float arcWidth = ParserUtil.parseFloat(atts.getValue(getUri(), "arc-width"), "No arc-width given.");
-    final float arcHeight = ParserUtil.parseFloat(atts.getValue(getUri(), "arc-height"), "No arc-height given.");
+    final float arcWidth = ParserUtil.parseFloat( atts.getValue( getUri(), "arc-width" ), "No arc-width given." );
+    final float arcHeight = ParserUtil.parseFloat( atts.getValue( getUri(), "arc-height" ), "No arc-height given." );
 
-    factory.setName(atts.getValue(getUri(), "id"));
-    factory.setArcHeight(new Float(arcHeight));
-    factory.setArcWidth(new Float(arcWidth));
-    factory.setScale(Boolean.TRUE);
-    factory.setKeepAspectRatio(Boolean.FALSE);
-    factory.setShouldFill(ParserUtil.parseBoolean(atts.getValue(getUri(), "fill"), getLocator()));
-    factory.setShouldDraw(ParserUtil.parseBoolean(atts.getValue(getUri(), "draw"), getLocator()));
-    factory.setStroke(ReportParserUtil.parseStroke(atts.getValue(getUri(), "stroke"), 1));
+    factory.setName( atts.getValue( getUri(), "id" ) );
+    factory.setArcHeight( new Float( arcHeight ) );
+    factory.setArcWidth( new Float( arcWidth ) );
+    factory.setScale( Boolean.TRUE );
+    factory.setKeepAspectRatio( Boolean.FALSE );
+    factory.setShouldFill( ParserUtil.parseBoolean( atts.getValue( getUri(), "fill" ), getLocator() ) );
+    factory.setShouldDraw( ParserUtil.parseBoolean( atts.getValue( getUri(), "draw" ), getLocator() ) );
+    factory.setStroke( ReportParserUtil.parseStroke( atts.getValue( getUri(), "stroke" ), 1 ) );
   }
 }

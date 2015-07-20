@@ -22,14 +22,12 @@ package org.pentaho.reporting.engine.classic.core.util.beans;
  *
  * @author Thomas Morgner
  */
-public class ByteValueConverter implements ValueConverter
-{
+public class ByteValueConverter implements ValueConverter {
 
   /**
    * Creates a new value converter.
    */
-  public ByteValueConverter()
-  {
+  public ByteValueConverter() {
   }
 
   /**
@@ -38,17 +36,14 @@ public class ByteValueConverter implements ValueConverter
    * @param o the attribute ({@link Byte} expected).
    * @return A string representing the {@link Byte} value.
    */
-  public String toAttributeValue(final Object o) throws BeanException
-  {
-    if (o == null)
-    {
+  public String toAttributeValue( final Object o ) throws BeanException {
+    if ( o == null ) {
       throw new NullPointerException();
     }
-    if (o instanceof Byte)
-    {
+    if ( o instanceof Byte ) {
       return o.toString();
     }
-    throw new BeanException("Failed to convert unknown object: " + o);
+    throw new BeanException( "Failed to convert unknown object: " + o );
   }
 
   /**
@@ -57,25 +52,19 @@ public class ByteValueConverter implements ValueConverter
    * @param s the string.
    * @return a {@link Byte}.
    */
-  public Object toPropertyValue(final String s) throws BeanException
-  {
-    if (s == null)
-    {
+  public Object toPropertyValue( final String s ) throws BeanException {
+    if ( s == null ) {
       throw new NullPointerException();
     }
     final String val = s.trim();
-    if (val.length() == 0)
-    {
-      throw BeanException.getInstance("Failed to convert empty string to number", null);
+    if ( val.length() == 0 ) {
+      throw BeanException.getInstance( "Failed to convert empty string to number", null );
     }
 
-    try
-    {
-      return new Byte(val);
-    }
-    catch (NumberFormatException be)
-    {
-      throw BeanException.getInstance("Failed to parse number", be);
+    try {
+      return new Byte( val );
+    } catch ( NumberFormatException be ) {
+      throw BeanException.getInstance( "Failed to parse number", be );
     }
   }
 }

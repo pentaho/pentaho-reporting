@@ -30,8 +30,7 @@ import java.math.BigDecimal;
  * @author Thomas Morgner
  * @deprecated the same can be achived with a formula "AVG([column1], [column2], [column3])"
  */
-public class ColumnAverageExpression extends ColumnAggregationExpression
-{
+public class ColumnAverageExpression extends ColumnAggregationExpression {
   /**
    * A flag defining whether non-numeric and null-values should be ignored.
    */
@@ -54,8 +53,7 @@ public class ColumnAverageExpression extends ColumnAggregationExpression
   /**
    * Default Constructor.
    */
-  public ColumnAverageExpression()
-  {
+  public ColumnAverageExpression() {
     this.returnInfinity = true; // for backward compatiblity.
     scale = 14;
     roundingMode = BigDecimal.ROUND_HALF_UP;
@@ -65,10 +63,9 @@ public class ColumnAverageExpression extends ColumnAggregationExpression
    * Returns the defined rounding mode. This influences the precision of the divide-operation.
    *
    * @return the rounding mode.
-   * @see java.math.BigDecimal#divide(java.math.BigDecimal,int)
+   * @see java.math.BigDecimal#divide(java.math.BigDecimal, int)
    */
-  public int getRoundingMode()
-  {
+  public int getRoundingMode() {
     return roundingMode;
   }
 
@@ -76,10 +73,9 @@ public class ColumnAverageExpression extends ColumnAggregationExpression
    * Defines the rounding mode. This influences the precision of the divide-operation.
    *
    * @param roundingMode the rounding mode.
-   * @see java.math.BigDecimal#divide(java.math.BigDecimal,int)
+   * @see java.math.BigDecimal#divide(java.math.BigDecimal, int)
    */
-  public void setRoundingMode(final int roundingMode)
-  {
+  public void setRoundingMode( final int roundingMode ) {
     this.roundingMode = roundingMode;
   }
 
@@ -88,8 +84,7 @@ public class ColumnAverageExpression extends ColumnAggregationExpression
    *
    * @return the scale.
    */
-  public int getScale()
-  {
+  public int getScale() {
     return scale;
   }
 
@@ -98,8 +93,7 @@ public class ColumnAverageExpression extends ColumnAggregationExpression
    *
    * @param scale the scale.
    */
-  public void setScale(final int scale)
-  {
+  public void setScale( final int scale ) {
     this.scale = scale;
   }
 
@@ -110,8 +104,7 @@ public class ColumnAverageExpression extends ColumnAggregationExpression
    *
    * @return true, if infinity is returned, false otherwise.
    */
-  public boolean isReturnInfinity()
-  {
+  public boolean isReturnInfinity() {
     return returnInfinity;
   }
 
@@ -121,8 +114,7 @@ public class ColumnAverageExpression extends ColumnAggregationExpression
    *
    * @param returnInfinity true, if infinity is returned, false otherwise.
    */
-  public void setReturnInfinity(final boolean returnInfinity)
-  {
+  public void setReturnInfinity( final boolean returnInfinity ) {
     this.returnInfinity = returnInfinity;
   }
 
@@ -131,8 +123,7 @@ public class ColumnAverageExpression extends ColumnAggregationExpression
    *
    * @return true, if the invalid fields will be ignored, false if they count as valid zero-value fields.
    */
-  public boolean isOnlyValidFields()
-  {
+  public boolean isOnlyValidFields() {
     return onlyValidFields;
   }
 
@@ -142,8 +133,7 @@ public class ColumnAverageExpression extends ColumnAggregationExpression
    * @param onlyValidFields true, if the invalid fields will be ignored, false if they count as valid zero-value
    *                        fields.
    */
-  public void setOnlyValidFields(final boolean onlyValidFields)
-  {
+  public void setOnlyValidFields( final boolean onlyValidFields ) {
     this.onlyValidFields = onlyValidFields;
   }
 
@@ -154,60 +144,46 @@ public class ColumnAverageExpression extends ColumnAggregationExpression
    *
    * @return the value of the function.
    */
-  public Object getValue()
-  {
+  public Object getValue() {
     final Object[] values = getFieldValues();
-    BigDecimal computedResult = new BigDecimal(0);
+    BigDecimal computedResult = new BigDecimal( 0 );
     int count = 0;
-    for (int i = 0; i < values.length; i++)
-    {
-      final Object value = values[i];
-      if (value instanceof Number == false)
-      {
+    for ( int i = 0; i < values.length; i++ ) {
+      final Object value = values[ i ];
+      if ( value instanceof Number == false ) {
         continue;
       }
 
       final Number n = (Number) value;
-      final BigDecimal nval = new BigDecimal(n.toString());
-      computedResult = computedResult.add(nval);
+      final BigDecimal nval = new BigDecimal( n.toString() );
+      computedResult = computedResult.add( nval );
       count += 1;
     }
 
-    if (onlyValidFields)
-    {
-      if (count == 0)
-      {
-        if (returnInfinity == false)
-        {
+    if ( onlyValidFields ) {
+      if ( count == 0 ) {
+        if ( returnInfinity == false ) {
           return null;
         }
-        if (computedResult.signum() == -1)
-        {
-          return new Double(Double.NEGATIVE_INFINITY);
-        }
-        else
-        {
-          return new Double(Double.POSITIVE_INFINITY);
+        if ( computedResult.signum() == -1 ) {
+          return new Double( Double.NEGATIVE_INFINITY );
+        } else {
+          return new Double( Double.POSITIVE_INFINITY );
         }
       }
-      return computedResult.divide(new BigDecimal(count), scale, roundingMode);
+      return computedResult.divide( new BigDecimal( count ), scale, roundingMode );
     }
 
-    if (values.length == 0)
-    {
-      if (returnInfinity == false)
-      {
+    if ( values.length == 0 ) {
+      if ( returnInfinity == false ) {
         return null;
       }
-      if (computedResult.signum() == -1)
-      {
-        return new Double(Double.NEGATIVE_INFINITY);
-      }
-      else
-      {
-        return new Double(Double.POSITIVE_INFINITY);
+      if ( computedResult.signum() == -1 ) {
+        return new Double( Double.NEGATIVE_INFINITY );
+      } else {
+        return new Double( Double.POSITIVE_INFINITY );
       }
     }
-    return computedResult.divide(new BigDecimal(values.length), scale, roundingMode);
+    return computedResult.divide( new BigDecimal( values.length ), scale, roundingMode );
   }
 }

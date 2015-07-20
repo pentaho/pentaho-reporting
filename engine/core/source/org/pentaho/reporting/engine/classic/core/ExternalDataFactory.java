@@ -24,42 +24,34 @@ import javax.swing.table.TableModel;
  *
  * @author Thomas Morgner
  */
-public class ExternalDataFactory extends AbstractDataFactory
-{
-  private static final String[] EMPTY_NAMES = new String[0];
+public class ExternalDataFactory extends AbstractDataFactory {
+  private static final String[] EMPTY_NAMES = new String[ 0 ];
 
-  public ExternalDataFactory()
-  {
+  public ExternalDataFactory() {
   }
 
-  public TableModel queryData(final String query, final DataRow parameters) throws ReportDataFactoryException
-  {
-    final Object o = parameters.get(query);
-    if (o instanceof TableModel)
-    {
+  public TableModel queryData( final String query, final DataRow parameters ) throws ReportDataFactoryException {
+    final Object o = parameters.get( query );
+    if ( o instanceof TableModel ) {
       return (TableModel) o;
     }
-    throw new ReportDataFactoryException("The parameter given was no valid datasource: " + query);
+    throw new ReportDataFactoryException( "The parameter given was no valid datasource: " + query );
   }
 
-  public DataFactory derive()
-  {
+  public DataFactory derive() {
     return this;
   }
 
-  public void close()
-  {
+  public void close() {
 
   }
 
-  public boolean isQueryExecutable(final String query, final DataRow parameters)
-  {
-    final Object o = parameters.get(query);
+  public boolean isQueryExecutable( final String query, final DataRow parameters ) {
+    final Object o = parameters.get( query );
     return o instanceof TableModel;
   }
 
-  public String[] getQueryNames()
-  {
+  public String[] getQueryNames() {
     return EMPTY_NAMES;
   }
 }

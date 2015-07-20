@@ -7,11 +7,11 @@
 
   <xs:simpleType name="maturityLevelAttr">
     <xs:restriction base="xs:string">
-      <xs:enumeration value="Development" />
-      <xs:enumeration value="Snapshot" />
-      <xs:enumeration value="Community" />
-      <xs:enumeration value="Limited" />
-      <xs:enumeration value="Production" />
+      <xs:enumeration value="Development"/>
+      <xs:enumeration value="Snapshot"/>
+      <xs:enumeration value="Community"/>
+      <xs:enumeration value="Limited"/>
+      <xs:enumeration value="Production"/>
     </xs:restriction>
   </xs:simpleType>
 
@@ -57,7 +57,7 @@
     <xs:attribute type="xs:string" name="name" use="required"/>
     <xs:attribute type="xs:string" name="bundle-name" use="optional"/>
   </xs:complexType>
-  
+
   <xs:complexType name="elementType">
     <xs:sequence>
       <xs:element type="attribute-group-refType" name="attribute-group-ref" maxOccurs="unbounded" minOccurs="0"/>

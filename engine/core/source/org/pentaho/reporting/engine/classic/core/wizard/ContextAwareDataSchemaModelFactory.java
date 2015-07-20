@@ -19,7 +19,6 @@ package org.pentaho.reporting.engine.classic.core.wizard;
 
 import org.pentaho.reporting.engine.classic.core.AbstractReportDefinition;
 
-public interface ContextAwareDataSchemaModelFactory
-{
-  public ContextAwareDataSchemaModel create(AbstractReportDefinition report);
+public interface ContextAwareDataSchemaModelFactory {
+  public ContextAwareDataSchemaModel create( AbstractReportDefinition report );
 }

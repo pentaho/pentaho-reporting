@@ -22,33 +22,28 @@ package org.pentaho.reporting.engine.classic.core.layout.model.table.cells;
  *
  * @author Thomas Morgner
  */
-public class PlaceHolderCell extends TableCell
-{
+public class PlaceHolderCell extends TableCell {
   private DataCell sourceCell;
 
-  public PlaceHolderCell(final DataCell sourceCell,
-                         final int rowSpan,
-                         final int colSpan)
-  {
-    super(rowSpan, colSpan);
-    if (sourceCell == null)
-    {
+  public PlaceHolderCell( final DataCell sourceCell,
+                          final int rowSpan,
+                          final int colSpan ) {
+    super( rowSpan, colSpan );
+    if ( sourceCell == null ) {
       throw new NullPointerException();
     }
     this.sourceCell = sourceCell;
   }
 
-  public DataCell getSourceCell()
-  {
+  public DataCell getSourceCell() {
     return sourceCell;
   }
 
-  public String toString()
-  {
+  public String toString() {
     return "PlaceHolderCell{" +
-            "rowSpan=" + getRowSpan() +
-            ", colSpan=" + getColSpan() +
-            ", sourceCell=" + sourceCell +
-            '}';
+      "rowSpan=" + getRowSpan() +
+      ", colSpan=" + getColSpan() +
+      ", sourceCell=" + sourceCell +
+      '}';
   }
 }

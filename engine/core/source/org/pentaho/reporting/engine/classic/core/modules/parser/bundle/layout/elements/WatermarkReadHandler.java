@@ -20,11 +20,9 @@ package org.pentaho.reporting.engine.classic.core.modules.parser.bundle.layout.e
 import org.pentaho.reporting.engine.classic.core.filter.types.bands.WatermarkType;
 import org.pentaho.reporting.libraries.xmlns.parser.ParseException;
 
-public class WatermarkReadHandler extends BandReadHandler
-{
+public class WatermarkReadHandler extends BandReadHandler {
   public WatermarkReadHandler()
-      throws ParseException
-  {
-    super(WatermarkType.INSTANCE);
+    throws ParseException {
+    super( WatermarkType.INSTANCE );
   }
 }

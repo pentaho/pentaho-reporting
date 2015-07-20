@@ -17,12 +17,12 @@
 
 package org.pentaho.reporting.engine.classic.core.wizard;
 
-public interface DataAttributeReference
-{
+public interface DataAttributeReference {
   public String getDomain();
 
   public String getName();
 
-  public Object resolve(final DataAttributes attributes, final DataAttributeContext context);
-  public ConceptQueryMapper resolveMapper (final DataAttributes attributes);
+  public Object resolve( final DataAttributes attributes, final DataAttributeContext context );
+
+  public ConceptQueryMapper resolveMapper( final DataAttributes attributes );
 }

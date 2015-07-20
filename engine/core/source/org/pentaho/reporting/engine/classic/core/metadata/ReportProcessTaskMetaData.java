@@ -19,8 +19,7 @@ package org.pentaho.reporting.engine.classic.core.metadata;
 
 import org.pentaho.reporting.engine.classic.core.ReportProcessTask;
 
-public interface ReportProcessTaskMetaData extends MetaData
-{
+public interface ReportProcessTaskMetaData extends MetaData {
   public String[] getAlias();
 
   public ReportProcessTask create();

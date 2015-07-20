@@ -17,11 +17,11 @@
 
 package org.pentaho.reporting.engine.classic.core.function.strings;
 
-import java.util.ResourceBundle;
-
 import org.pentaho.reporting.engine.classic.core.ResourceBundleFactory;
 import org.pentaho.reporting.engine.classic.core.function.AbstractExpression;
 import org.pentaho.reporting.engine.classic.core.function.ExpressionUtilities;
+
+import java.util.ResourceBundle;
 
 /**
  * Performs a resource-bundle lookup using the value read from the defined field as key in the resource-bundle. This
@@ -29,8 +29,7 @@ import org.pentaho.reporting.engine.classic.core.function.ExpressionUtilities;
  *
  * @author Thomas Morgner
  */
-public class ResourceBundleLookupExpression extends AbstractExpression
-{
+public class ResourceBundleLookupExpression extends AbstractExpression {
   /**
    * The field from where to read the key value.
    */
@@ -44,8 +43,7 @@ public class ResourceBundleLookupExpression extends AbstractExpression
   /**
    * Default Constructor.
    */
-  public ResourceBundleLookupExpression()
-  {
+  public ResourceBundleLookupExpression() {
   }
 
   /**
@@ -53,8 +51,7 @@ public class ResourceBundleLookupExpression extends AbstractExpression
    *
    * @return the field.
    */
-  public String getField()
-  {
+  public String getField() {
     return field;
   }
 
@@ -63,8 +60,7 @@ public class ResourceBundleLookupExpression extends AbstractExpression
    *
    * @param field the field.
    */
-  public void setField(final String field)
-  {
+  public void setField( final String field ) {
     this.field = field;
   }
 
@@ -73,8 +69,7 @@ public class ResourceBundleLookupExpression extends AbstractExpression
    *
    * @return the resource-bundle identifier.
    */
-  public String getResourceIdentifier()
-  {
+  public String getResourceIdentifier() {
     return resourceIdentifier;
   }
 
@@ -83,8 +78,7 @@ public class ResourceBundleLookupExpression extends AbstractExpression
    *
    * @param resourceIdentifier the resource-bundle identifier.
    */
-  public void setResourceIdentifier(final String resourceIdentifier)
-  {
+  public void setResourceIdentifier( final String resourceIdentifier ) {
     this.resourceIdentifier = resourceIdentifier;
   }
 
@@ -94,24 +88,19 @@ public class ResourceBundleLookupExpression extends AbstractExpression
    *
    * @return the value.
    */
-  public Object getValue()
-  {
-    final Object key = getDataRow().get(getField());
-    if (key == null)
-    {
+  public Object getValue() {
+    final Object key = getDataRow().get( getField() );
+    if ( key == null ) {
       return null;
     }
 
     final ResourceBundleFactory resourceBundleFactory = getResourceBundleFactory();
     final ResourceBundle bundle;
-    if (resourceIdentifier == null)
-    {
-      bundle = ExpressionUtilities.getDefaultResourceBundle(this);
+    if ( resourceIdentifier == null ) {
+      bundle = ExpressionUtilities.getDefaultResourceBundle( this );
+    } else {
+      bundle = resourceBundleFactory.getResourceBundle( resourceIdentifier );
     }
-    else
-    {
-      bundle = resourceBundleFactory.getResourceBundle(resourceIdentifier);
-    }
-    return bundle.getObject(String.valueOf(key));
+    return bundle.getObject( String.valueOf( key ) );
   }
 }

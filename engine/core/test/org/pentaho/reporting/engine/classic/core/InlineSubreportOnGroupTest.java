@@ -20,28 +20,23 @@ package org.pentaho.reporting.engine.classic.core;
 import junit.framework.TestCase;
 import org.pentaho.reporting.engine.classic.core.testsupport.DebugReportRunner;
 
-public class InlineSubreportOnGroupTest extends TestCase
-{
-  public InlineSubreportOnGroupTest()
-  {
+public class InlineSubreportOnGroupTest extends TestCase {
+  public InlineSubreportOnGroupTest() {
   }
 
-  public InlineSubreportOnGroupTest(final String s)
-  {
-    super(s);
+  public InlineSubreportOnGroupTest( final String s ) {
+    super( s );
   }
 
-  protected void setUp() throws Exception
-  {
+  protected void setUp() throws Exception {
     ClassicEngineBoot.getInstance().start();
   }
 
-  public void testRun() throws Exception
-  {
+  public void testRun() throws Exception {
     MasterReport report = new MasterReport();
-    report.getRelationalGroup(0).getHeader().addElement(new SubReport());
+    report.getRelationalGroup( 0 ).getHeader().addElement( new SubReport() );
 
-    DebugReportRunner.executeAll(report);
+    DebugReportRunner.executeAll( report );
 
   }
 }

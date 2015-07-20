@@ -55,10 +55,9 @@ import org.pentaho.reporting.libraries.base.boot.SubSystem;
  *
  * @author Thomas Morgner
  */
-public class SimpleParserModule extends AbstractModule
-{
+public class SimpleParserModule extends AbstractModule {
   public static final String NAMESPACE =
-      "http://jfreereport.sourceforge.net/namespaces/reports/legacy/simple";
+    "http://jfreereport.sourceforge.net/namespaces/reports/legacy/simple";
 
   /**
    * Loads the module information from the module.properties file.
@@ -66,8 +65,7 @@ public class SimpleParserModule extends AbstractModule
    * @throws ModuleInitializeException if loading the specifications failed.
    */
   public SimpleParserModule()
-      throws ModuleInitializeException
-  {
+    throws ModuleInitializeException {
     loadModuleInfo();
   }
 
@@ -77,41 +75,42 @@ public class SimpleParserModule extends AbstractModule
    * @param subSystem the subsystem which this module belongs to.
    * @throws ModuleInitializeException if initialisation fails.
    */
-  public void initialize(final SubSystem subSystem)
-      throws ModuleInitializeException
-  {
+  public void initialize( final SubSystem subSystem )
+    throws ModuleInitializeException {
     final ReportElementReadHandlerFactory factory = ReportElementReadHandlerFactory.getInstance();
-    factory.setDefaultNamespace(NAMESPACE);
-    factory.setElementHandler("string-field", StringFieldReadHandler.class);
-    factory.setElementHandler("anchor-field", AnchorFieldReadHandler.class);
-    factory.setElementHandler("band", BandReadHandler.class);
-    factory.setElementHandler("component-field", ComponentFieldReadHandler.class);
-    factory.setElementHandler("date-field", DateFieldReadHandler.class);
-    factory.setElementHandler("drawable-field", DrawableFieldReadHandler.class);
-    factory.setElementHandler("drawable-url-field", DrawableURLFieldReadHandler.class);
-    factory.setElementHandler("drawableref", DrawableRefReadHandler.class);
-    factory.setElementHandler("ellipse", EllipseReadHandler.class);
-    factory.setElementHandler("image-field", ImageFieldReadHandler.class);
-    factory.setElementHandler("imageref", ImageRefReadHandler.class);
-    factory.setElementHandler("imageurl-field", ImageURLFieldReadHandler.class);
-    factory.setElementHandler("label", LabelReadHandler.class);
-    factory.setElementHandler("line", LineReadHandler.class);
-    factory.setElementHandler("message-field", MessageFieldReadHandler.class);
-    factory.setElementHandler("number-field", NumberFieldReadHandler.class);
-    factory.setElementHandler("rectangle", RectangleReadHandler.class);
-    factory.setElementHandler("resource-field", ResourceFieldReadHandler.class);
-    factory.setElementHandler("resource-label", ResourceLabelReadHandler.class);
-    factory.setElementHandler("resource-message", ResourceMessageReadHandler.class);
-    factory.setElementHandler("round-rectangle", RoundRectangleReadHandler.class);
-    factory.setElementHandler("shape-field", ShapeFieldReadHandler.class);
-    factory.setElementHandler("string-field", StringFieldReadHandler.class);
+    factory.setDefaultNamespace( NAMESPACE );
+    factory.setElementHandler( "string-field", StringFieldReadHandler.class );
+    factory.setElementHandler( "anchor-field", AnchorFieldReadHandler.class );
+    factory.setElementHandler( "band", BandReadHandler.class );
+    factory.setElementHandler( "component-field", ComponentFieldReadHandler.class );
+    factory.setElementHandler( "date-field", DateFieldReadHandler.class );
+    factory.setElementHandler( "drawable-field", DrawableFieldReadHandler.class );
+    factory.setElementHandler( "drawable-url-field", DrawableURLFieldReadHandler.class );
+    factory.setElementHandler( "drawableref", DrawableRefReadHandler.class );
+    factory.setElementHandler( "ellipse", EllipseReadHandler.class );
+    factory.setElementHandler( "image-field", ImageFieldReadHandler.class );
+    factory.setElementHandler( "imageref", ImageRefReadHandler.class );
+    factory.setElementHandler( "imageurl-field", ImageURLFieldReadHandler.class );
+    factory.setElementHandler( "label", LabelReadHandler.class );
+    factory.setElementHandler( "line", LineReadHandler.class );
+    factory.setElementHandler( "message-field", MessageFieldReadHandler.class );
+    factory.setElementHandler( "number-field", NumberFieldReadHandler.class );
+    factory.setElementHandler( "rectangle", RectangleReadHandler.class );
+    factory.setElementHandler( "resource-field", ResourceFieldReadHandler.class );
+    factory.setElementHandler( "resource-label", ResourceLabelReadHandler.class );
+    factory.setElementHandler( "resource-message", ResourceMessageReadHandler.class );
+    factory.setElementHandler( "round-rectangle", RoundRectangleReadHandler.class );
+    factory.setElementHandler( "shape-field", ShapeFieldReadHandler.class );
+    factory.setElementHandler( "string-field", StringFieldReadHandler.class );
 
-    MasterReportXmlResourceFactory.register(SimpleReportXmlFactoryModule.class);
-    SubReportXmlResourceFactory.register(SimpleSubReportXmlFactoryModule.class);
+    MasterReportXmlResourceFactory.register( SimpleReportXmlFactoryModule.class );
+    SubReportXmlResourceFactory.register( SimpleSubReportXmlFactoryModule.class );
 
-    SubReportReadHandlerFactory.getInstance().setElementHandler(NAMESPACE, "sub-report", SimpleSubReportReadHandler.class);
-    DataFactoryReadHandlerFactory.getInstance().setElementHandler(NAMESPACE, "data-factory", DataFactoryRefReadHandler.class);
+    SubReportReadHandlerFactory.getInstance()
+      .setElementHandler( NAMESPACE, "sub-report", SimpleSubReportReadHandler.class );
+    DataFactoryReadHandlerFactory.getInstance()
+      .setElementHandler( NAMESPACE, "data-factory", DataFactoryRefReadHandler.class );
 
-    performExternalInitialize(SimpleParserModuleInit.class.getName(), SimpleParserModule.class);
+    performExternalInitialize( SimpleParserModuleInit.class.getName(), SimpleParserModule.class );
   }
 }

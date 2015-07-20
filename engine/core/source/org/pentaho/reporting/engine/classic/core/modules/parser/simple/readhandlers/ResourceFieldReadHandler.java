@@ -22,17 +22,14 @@ import org.pentaho.reporting.engine.classic.core.elementfactory.TextFieldElement
 import org.pentaho.reporting.engine.classic.core.modules.parser.base.PropertyAttributes;
 import org.xml.sax.SAXException;
 
-public class ResourceFieldReadHandler extends StringFieldReadHandler
-{
-  public ResourceFieldReadHandler()
-  {
-    super(new ResourceFieldElementFactory());
+public class ResourceFieldReadHandler extends StringFieldReadHandler {
+  public ResourceFieldReadHandler() {
+    super( new ResourceFieldElementFactory() );
   }
 
   protected ResourceFieldReadHandler(
-      final TextFieldElementFactory textFieldElementFactory)
-  {
-    super(textFieldElementFactory);
+    final TextFieldElementFactory textFieldElementFactory ) {
+    super( textFieldElementFactory );
   }
 
   /**
@@ -41,12 +38,11 @@ public class ResourceFieldReadHandler extends StringFieldReadHandler
    * @param atts the attributes.
    * @throws org.xml.sax.SAXException if there is a parsing error.
    */
-  protected void startParsing(final PropertyAttributes atts)
-      throws SAXException
-  {
-    super.startParsing(atts);
+  protected void startParsing( final PropertyAttributes atts )
+    throws SAXException {
+    super.startParsing( atts );
     final ResourceFieldElementFactory elementFactory =
-        (ResourceFieldElementFactory) getElementFactory();
-    elementFactory.setResourceBase(atts.getValue(getUri(), "resource-base"));
+      (ResourceFieldElementFactory) getElementFactory();
+    elementFactory.setResourceBase( atts.getValue( getUri(), "resource-base" ) );
   }
 }

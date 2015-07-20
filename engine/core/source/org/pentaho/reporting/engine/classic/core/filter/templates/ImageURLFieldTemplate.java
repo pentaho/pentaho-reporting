@@ -17,21 +17,20 @@
 
 package org.pentaho.reporting.engine.classic.core.filter.templates;
 
-import java.net.URL;
-
 import org.pentaho.reporting.engine.classic.core.ReportElement;
 import org.pentaho.reporting.engine.classic.core.filter.DataRowDataSource;
 import org.pentaho.reporting.engine.classic.core.filter.ImageLoadFilter;
 import org.pentaho.reporting.engine.classic.core.filter.URLFilter;
 import org.pentaho.reporting.engine.classic.core.function.ExpressionRuntime;
 
+import java.net.URL;
+
 /**
  * An image URL field template, which reads the image from an URL supplied from a column in the DataRow.
  *
  * @author Thomas Morgner
  */
-public class ImageURLFieldTemplate extends AbstractTemplate
-{
+public class ImageURLFieldTemplate extends AbstractTemplate {
   /**
    * An image load filter.
    */
@@ -50,13 +49,12 @@ public class ImageURLFieldTemplate extends AbstractTemplate
   /**
    * Creates a new template.
    */
-  public ImageURLFieldTemplate()
-  {
+  public ImageURLFieldTemplate() {
     dataRowDataSource = new DataRowDataSource();
     urlFilter = new URLFilter();
-    urlFilter.setDataSource(dataRowDataSource);
+    urlFilter.setDataSource( dataRowDataSource );
     imageLoadFilter = new ImageLoadFilter();
-    imageLoadFilter.setDataSource(urlFilter);
+    imageLoadFilter.setDataSource( urlFilter );
   }
 
   /**
@@ -64,8 +62,7 @@ public class ImageURLFieldTemplate extends AbstractTemplate
    *
    * @return The field name.
    */
-  public String getField()
-  {
+  public String getField() {
     return dataRowDataSource.getDataSourceColumnName();
   }
 
@@ -74,9 +71,8 @@ public class ImageURLFieldTemplate extends AbstractTemplate
    *
    * @param field the field name.
    */
-  public void setField(final String field)
-  {
-    dataRowDataSource.setDataSourceColumnName(field);
+  public void setField( final String field ) {
+    dataRowDataSource.setDataSourceColumnName( field );
   }
 
   /**
@@ -84,8 +80,7 @@ public class ImageURLFieldTemplate extends AbstractTemplate
    *
    * @return the formula.
    */
-  public String getFormula()
-  {
+  public String getFormula() {
     return dataRowDataSource.getFormula();
   }
 
@@ -94,9 +89,8 @@ public class ImageURLFieldTemplate extends AbstractTemplate
    *
    * @param formula the formula for the data source.
    */
-  public void setFormula(final String formula)
-  {
-    dataRowDataSource.setFormula(formula);
+  public void setFormula( final String formula ) {
+    dataRowDataSource.setFormula( formula );
   }
 
 
@@ -105,8 +99,7 @@ public class ImageURLFieldTemplate extends AbstractTemplate
    *
    * @return The base URL.
    */
-  public URL getBaseURL()
-  {
+  public URL getBaseURL() {
     return urlFilter.getBaseURL();
   }
 
@@ -115,9 +108,8 @@ public class ImageURLFieldTemplate extends AbstractTemplate
    *
    * @param baseURL the base URL.
    */
-  public void setBaseURL(final URL baseURL)
-  {
-    urlFilter.setBaseURL(baseURL);
+  public void setBaseURL( final URL baseURL ) {
+    urlFilter.setBaseURL( baseURL );
   }
 
   /**
@@ -128,9 +120,8 @@ public class ImageURLFieldTemplate extends AbstractTemplate
    * @param element
    * @return the value.
    */
-  public Object getValue(final ExpressionRuntime runtime, final ReportElement element)
-  {
-    return imageLoadFilter.getValue(runtime, element);
+  public Object getValue( final ExpressionRuntime runtime, final ReportElement element ) {
+    return imageLoadFilter.getValue( runtime, element );
   }
 
   /**
@@ -140,8 +131,7 @@ public class ImageURLFieldTemplate extends AbstractTemplate
    * @throws CloneNotSupportedException this should never happen.
    */
   public ImageURLFieldTemplate clone()
-      throws CloneNotSupportedException
-  {
+    throws CloneNotSupportedException {
     final ImageURLFieldTemplate template = (ImageURLFieldTemplate) super.clone();
     template.imageLoadFilter = imageLoadFilter.clone();
     template.urlFilter = (URLFilter) template.imageLoadFilter.getDataSource();
@@ -154,8 +144,7 @@ public class ImageURLFieldTemplate extends AbstractTemplate
    *
    * @return the datarow data source.
    */
-  protected DataRowDataSource getDataRowDataSource()
-  {
+  protected DataRowDataSource getDataRowDataSource() {
     return dataRowDataSource;
   }
 }

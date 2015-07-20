@@ -25,8 +25,7 @@ import java.io.Serializable;
  *
  * @author Thomas Morgner
  */
-public class StrictPoint implements Serializable, Cloneable
-{
+public class StrictPoint implements Serializable, Cloneable {
   /**
    * The x-Coordinate.
    */
@@ -43,8 +42,7 @@ public class StrictPoint implements Serializable, Cloneable
   /**
    * DefaultConstructor.
    */
-  public StrictPoint()
-  {
+  public StrictPoint() {
   }
 
   /**
@@ -53,8 +51,7 @@ public class StrictPoint implements Serializable, Cloneable
    * @param x the x-coordinate
    * @param y the y-coordinate
    */
-  public StrictPoint(final long x, final long y)
-  {
+  public StrictPoint( final long x, final long y ) {
     this.x = x;
     this.y = y;
   }
@@ -64,8 +61,7 @@ public class StrictPoint implements Serializable, Cloneable
    *
    * @return the X coordinate of this <code>StrictPoint</code>.
    */
-  public long getX()
-  {
+  public long getX() {
     return x;
   }
 
@@ -74,8 +70,7 @@ public class StrictPoint implements Serializable, Cloneable
    *
    * @return the Y coordinate of this <code>StrictPoint</code>.
    */
-  public long getY()
-  {
+  public long getY() {
     return y;
   }
 
@@ -85,10 +80,8 @@ public class StrictPoint implements Serializable, Cloneable
    * @param x the coordinates of this <code>StrictPoint</code>
    * @param y the coordinates of this <code>StrictPoint</code>
    */
-  public void setLocation(final long x, final long y)
-  {
-    if (locked)
-    {
+  public void setLocation( final long x, final long y ) {
+    if ( locked ) {
       throw new IllegalStateException();
     }
 
@@ -101,8 +94,7 @@ public class StrictPoint implements Serializable, Cloneable
    *
    * @return true, if the point is locked and therefore immutable, false otherwise.
    */
-  public boolean isLocked()
-  {
+  public boolean isLocked() {
     return locked;
   }
 
@@ -112,10 +104,8 @@ public class StrictPoint implements Serializable, Cloneable
    *
    * @return a locked copy.
    */
-  public StrictPoint getLockedInstance()
-  {
-    if (locked)
-    {
+  public StrictPoint getLockedInstance() {
+    if ( locked ) {
       return this;
     }
 
@@ -129,8 +119,7 @@ public class StrictPoint implements Serializable, Cloneable
    *
    * @return an unlocked copy.
    */
-  public StrictPoint getUnlockedInstance()
-  {
+  public StrictPoint getUnlockedInstance() {
     final StrictPoint retval = (StrictPoint) clone();
     retval.locked = false;
     return retval;
@@ -141,15 +130,11 @@ public class StrictPoint implements Serializable, Cloneable
    *
    * @return the cloned instance.
    */
-  public Object clone()
-  {
-    try
-    {
+  public Object clone() {
+    try {
       return super.clone();
-    }
-    catch (CloneNotSupportedException e)
-    {
-      throw new InternalError("Clone must always be supported.");
+    } catch ( CloneNotSupportedException e ) {
+      throw new InternalError( "Clone must always be supported." );
     }
   }
 
@@ -159,12 +144,11 @@ public class StrictPoint implements Serializable, Cloneable
    *
    * @return the string representing this object.
    */
-  public String toString()
-  {
+  public String toString() {
     return "org.pentaho.reporting.engine.classic.core.util.geom.StrictPoint{" +
-        "x=" + x +
-        ", y=" + y +
-        '}';
+      "x=" + x +
+      ", y=" + y +
+      '}';
   }
 
   /**
@@ -173,25 +157,20 @@ public class StrictPoint implements Serializable, Cloneable
    * @param o the other object.
    * @return true, if the other object is equal to this object, false otherwise.
    */
-  public boolean equals(final Object o)
-  {
-    if (this == o)
-    {
+  public boolean equals( final Object o ) {
+    if ( this == o ) {
       return true;
     }
-    if (o == null || getClass() != o.getClass())
-    {
+    if ( o == null || getClass() != o.getClass() ) {
       return false;
     }
 
     final StrictPoint that = (StrictPoint) o;
 
-    if (x != that.x)
-    {
+    if ( x != that.x ) {
       return false;
     }
-    if (y != that.y)
-    {
+    if ( y != that.y ) {
       return false;
     }
 
@@ -203,10 +182,9 @@ public class StrictPoint implements Serializable, Cloneable
    *
    * @return the computed hashcode.
    */
-  public int hashCode()
-  {
-    int result = (int) (x ^ (x >>> 32));
-    result = 29 * result + (int) (y ^ (y >>> 32));
+  public int hashCode() {
+    int result = (int) ( x ^ ( x >>> 32 ) );
+    result = 29 * result + (int) ( y ^ ( y >>> 32 ) );
     return result;
   }
 }

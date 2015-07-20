@@ -28,8 +28,7 @@ import org.pentaho.reporting.engine.classic.core.function.ExpressionRuntime;
  * @author Thomas Morgner
  * @deprecated the Anchor-Field has been deprecated. Use the style-key "anchor" instead.
  */
-public class AnchorFieldTemplate extends AbstractTemplate
-{
+public class AnchorFieldTemplate extends AbstractTemplate {
   /**
    * The data-row data source.
    */
@@ -43,11 +42,10 @@ public class AnchorFieldTemplate extends AbstractTemplate
   /**
    * Creates a new string field template.
    */
-  public AnchorFieldTemplate()
-  {
+  public AnchorFieldTemplate() {
     dataRowDataSource = new DataRowDataSource();
     anchorFilter = new AnchorFilter();
-    anchorFilter.setDataSource(dataRowDataSource);
+    anchorFilter.setDataSource( dataRowDataSource );
   }
 
   /**
@@ -55,8 +53,7 @@ public class AnchorFieldTemplate extends AbstractTemplate
    *
    * @return The field name.
    */
-  public String getField()
-  {
+  public String getField() {
     return dataRowDataSource.getDataSourceColumnName();
   }
 
@@ -65,9 +62,8 @@ public class AnchorFieldTemplate extends AbstractTemplate
    *
    * @param field the field name.
    */
-  public void setField(final String field)
-  {
-    dataRowDataSource.setDataSourceColumnName(field);
+  public void setField( final String field ) {
+    dataRowDataSource.setDataSourceColumnName( field );
   }
 
   /**
@@ -75,8 +71,7 @@ public class AnchorFieldTemplate extends AbstractTemplate
    *
    * @return the formula.
    */
-  public String getFormula()
-  {
+  public String getFormula() {
     return dataRowDataSource.getFormula();
   }
 
@@ -85,9 +80,8 @@ public class AnchorFieldTemplate extends AbstractTemplate
    *
    * @param formula the formula for the data source.
    */
-  public void setFormula(final String formula)
-  {
-    dataRowDataSource.setFormula(formula);
+  public void setFormula( final String formula ) {
+    dataRowDataSource.setFormula( formula );
   }
 
   /**
@@ -98,9 +92,8 @@ public class AnchorFieldTemplate extends AbstractTemplate
    * @param element
    * @return the value.
    */
-  public Object getValue(final ExpressionRuntime runtime, final ReportElement element)
-  {
-    return anchorFilter.getValue(runtime, element);
+  public Object getValue( final ExpressionRuntime runtime, final ReportElement element ) {
+    return anchorFilter.getValue( runtime, element );
   }
 
   /**
@@ -110,8 +103,7 @@ public class AnchorFieldTemplate extends AbstractTemplate
    * @throws CloneNotSupportedException this should never happen.
    */
   public AnchorFieldTemplate clone()
-      throws CloneNotSupportedException
-  {
+    throws CloneNotSupportedException {
     final AnchorFieldTemplate template = (AnchorFieldTemplate) super.clone();
     template.anchorFilter = anchorFilter.clone();
     template.dataRowDataSource = (DataRowDataSource) template.anchorFilter.getDataSource();
@@ -123,8 +115,7 @@ public class AnchorFieldTemplate extends AbstractTemplate
    *
    * @return the datarow data source.
    */
-  protected DataRowDataSource getDataRowDataSource()
-  {
+  protected DataRowDataSource getDataRowDataSource() {
     return dataRowDataSource;
   }
 }

@@ -25,15 +25,13 @@ import org.pentaho.reporting.libraries.xmlns.parser.ParseException;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 
-public class DataSourceElementHandler extends AbstractXmlReadHandler
-{
+public class DataSourceElementHandler extends AbstractXmlReadHandler {
   private DataFactory dataFactory;
   private String query;
   private int queryLimit;
   private int queryTimeout;
 
-  public DataSourceElementHandler()
-  {
+  public DataSourceElementHandler() {
   }
 
   /**
@@ -42,60 +40,45 @@ public class DataSourceElementHandler extends AbstractXmlReadHandler
    * @param attrs the attributes.
    * @throws SAXException if there is a parsing error.
    */
-  protected void startParsing(final Attributes attrs) throws SAXException
-  {
-    query = attrs.getValue(getUri(), "report-query");
-    final String queryLimitText = attrs.getValue(getUri(), "limit");
-    if (queryLimitText == null)
-    {
+  protected void startParsing( final Attributes attrs ) throws SAXException {
+    query = attrs.getValue( getUri(), "report-query" );
+    final String queryLimitText = attrs.getValue( getUri(), "limit" );
+    if ( queryLimitText == null ) {
       queryLimit = 0;
-    }
-    else
-    {
-      queryLimit = ParserUtil.parseInt(queryLimitText, 0);
+    } else {
+      queryLimit = ParserUtil.parseInt( queryLimitText, 0 );
     }
 
-    final String queryTimeoutText = attrs.getValue(getUri(), "timeout");
-    if (queryTimeoutText == null)
-    {
+    final String queryTimeoutText = attrs.getValue( getUri(), "timeout" );
+    if ( queryTimeoutText == null ) {
       queryTimeout = 0;
-    }
-    else
-    {
-      queryTimeout = ParserUtil.parseInt(queryTimeoutText, 0);
+    } else {
+      queryTimeout = ParserUtil.parseInt( queryTimeoutText, 0 );
     }
 
-    final String href = attrs.getValue(getUri(), "ref");
-    if (href != null)
-    {
-      try
-      {
-        dataFactory = (DataFactory) this.performExternalParsing(href, DataFactory.class);
-      }
-      catch (ResourceLoadingException e)
-      {
-        throw new ParseException("Failed to load data-source definition: " + href, e, getLocator());
+    final String href = attrs.getValue( getUri(), "ref" );
+    if ( href != null ) {
+      try {
+        dataFactory = (DataFactory) this.performExternalParsing( href, DataFactory.class );
+      } catch ( ResourceLoadingException e ) {
+        throw new ParseException( "Failed to load data-source definition: " + href, e, getLocator() );
       }
     }
   }
 
-  public DataFactory getDataFactory()
-  {
+  public DataFactory getDataFactory() {
     return dataFactory;
   }
 
-  public String getQuery()
-  {
+  public String getQuery() {
     return query;
   }
 
-  public int getQueryLimit()
-  {
+  public int getQueryLimit() {
     return queryLimit;
   }
 
-  public int getQueryTimeout()
-  {
+  public int getQueryTimeout() {
     return queryTimeout;
   }
 
@@ -105,8 +88,7 @@ public class DataSourceElementHandler extends AbstractXmlReadHandler
    * @return the object.
    * @throws SAXException if an parser error occured.
    */
-  public Object getObject() throws SAXException
-  {
+  public Object getObject() throws SAXException {
     return null;
   }
 }

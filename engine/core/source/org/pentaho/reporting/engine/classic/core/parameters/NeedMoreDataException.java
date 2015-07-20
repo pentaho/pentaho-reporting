@@ -22,13 +22,11 @@ package org.pentaho.reporting.engine.classic.core.parameters;
  *
  * @author Thomas Morgner
  */
-public class NeedMoreDataException extends Exception
-{
+public class NeedMoreDataException extends Exception {
   /**
    * Creates a StackableRuntimeException with no message and no parent.
    */
-  public NeedMoreDataException()
-  {
+  public NeedMoreDataException() {
   }
 
   /**
@@ -37,9 +35,8 @@ public class NeedMoreDataException extends Exception
    * @param message the exception message.
    * @param ex      the parent exception.
    */
-  public NeedMoreDataException(final String message, final Exception ex)
-  {
-    super(message, ex);
+  public NeedMoreDataException( final String message, final Exception ex ) {
+    super( message, ex );
   }
 
   /**
@@ -47,8 +44,7 @@ public class NeedMoreDataException extends Exception
    *
    * @param message the exception message.
    */
-  public NeedMoreDataException(final String message)
-  {
-    super(message);
+  public NeedMoreDataException( final String message ) {
+    super( message );
   }
 }

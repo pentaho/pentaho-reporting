@@ -29,44 +29,36 @@ import org.pentaho.reporting.engine.classic.core.util.InstanceID;
  *
  * @author Thomas Morgner
  */
-public final class ParagraphPoolBox extends InlineRenderBox
-{
+public final class ParagraphPoolBox extends InlineRenderBox {
   // This class makes sure that the lineheight is shared across all clones.
-  private static class LineHeightWrapper
-  {
+  private static class LineHeightWrapper {
     private long lineHeight;
 
-    public long getLineHeight()
-    {
+    public long getLineHeight() {
       return lineHeight;
     }
 
-    public void setLineHeight(final long lineHeight)
-    {
+    public void setLineHeight( final long lineHeight ) {
       this.lineHeight = lineHeight;
     }
   }
 
   private LineHeightWrapper lineHeightWrapper;
 
-  public ParagraphPoolBox(final StyleSheet style, final InstanceID instanceID, final ReportStateKey stateKey)
-  {
-    super(style, instanceID, BoxDefinition.EMPTY, AutoLayoutBoxType.INSTANCE, ReportAttributeMap.EMPTY_MAP, stateKey);
+  public ParagraphPoolBox( final StyleSheet style, final InstanceID instanceID, final ReportStateKey stateKey ) {
+    super( style, instanceID, BoxDefinition.EMPTY, AutoLayoutBoxType.INSTANCE, ReportAttributeMap.EMPTY_MAP, stateKey );
     lineHeightWrapper = new LineHeightWrapper();
   }
 
-  public long getLineHeight()
-  {
+  public long getLineHeight() {
     return lineHeightWrapper.getLineHeight();
   }
 
-  public void setLineHeight(final long lineHeight)
-  {
-    lineHeightWrapper.setLineHeight(lineHeight);
+  public void setLineHeight( final long lineHeight ) {
+    lineHeightWrapper.setLineHeight( lineHeight );
   }
 
-  public int getNodeType()
-  {
+  public int getNodeType() {
     return LayoutNodeTypes.TYPE_BOX_LINEBOX;
   }
 }

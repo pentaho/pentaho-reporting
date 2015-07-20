@@ -22,9 +22,8 @@ package org.pentaho.reporting.engine.classic.core.style;
  *
  * @author Thomas Morgner
  */
-public final class ReportSectionDefaultStyleSheet extends ElementDefaultStyleSheet
-{
-  public static final long PHYSICAL_LIMIT = (long) StrictMath.pow(2, 52);
+public final class ReportSectionDefaultStyleSheet extends ElementDefaultStyleSheet {
+  public static final long PHYSICAL_LIMIT = (long) StrictMath.pow( 2, 52 );
 
   /**
    * A shared default style-sheet.
@@ -34,19 +33,18 @@ public final class ReportSectionDefaultStyleSheet extends ElementDefaultStyleShe
   /**
    * Creates a new default style sheet.
    */
-  protected ReportSectionDefaultStyleSheet()
-  {
-    setLocked(false);
-    setStyleProperty(ElementStyleKeys.MIN_HEIGHT, new Float(0));
-    setStyleProperty(ElementStyleKeys.MIN_WIDTH, new Float(0));
-    setStyleProperty(ElementStyleKeys.MAX_HEIGHT, new Float(ReportSectionDefaultStyleSheet.PHYSICAL_LIMIT));
-    setStyleProperty(ElementStyleKeys.MAX_WIDTH, new Float(ReportSectionDefaultStyleSheet.PHYSICAL_LIMIT));
-    setStyleProperty(BandStyleKeys.PAGEBREAK_AFTER, Boolean.FALSE);
-    setStyleProperty(BandStyleKeys.PAGEBREAK_BEFORE, Boolean.FALSE);
-    setStyleProperty(BandStyleKeys.DISPLAY_ON_FIRSTPAGE, Boolean.TRUE);
-    setStyleProperty(BandStyleKeys.DISPLAY_ON_LASTPAGE, Boolean.TRUE);
-    setStyleProperty(BandStyleKeys.STICKY, Boolean.FALSE);
-    setLocked(true);
+  protected ReportSectionDefaultStyleSheet() {
+    setLocked( false );
+    setStyleProperty( ElementStyleKeys.MIN_HEIGHT, new Float( 0 ) );
+    setStyleProperty( ElementStyleKeys.MIN_WIDTH, new Float( 0 ) );
+    setStyleProperty( ElementStyleKeys.MAX_HEIGHT, new Float( ReportSectionDefaultStyleSheet.PHYSICAL_LIMIT ) );
+    setStyleProperty( ElementStyleKeys.MAX_WIDTH, new Float( ReportSectionDefaultStyleSheet.PHYSICAL_LIMIT ) );
+    setStyleProperty( BandStyleKeys.PAGEBREAK_AFTER, Boolean.FALSE );
+    setStyleProperty( BandStyleKeys.PAGEBREAK_BEFORE, Boolean.FALSE );
+    setStyleProperty( BandStyleKeys.DISPLAY_ON_FIRSTPAGE, Boolean.TRUE );
+    setStyleProperty( BandStyleKeys.DISPLAY_ON_LASTPAGE, Boolean.TRUE );
+    setStyleProperty( BandStyleKeys.STICKY, Boolean.FALSE );
+    setLocked( true );
   }
 
   /**
@@ -54,10 +52,8 @@ public final class ReportSectionDefaultStyleSheet extends ElementDefaultStyleShe
    *
    * @return the style-sheet.
    */
-  public static synchronized ReportSectionDefaultStyleSheet getSectionDefault()
-  {
-    if (defaultStyle == null)
-    {
+  public static synchronized ReportSectionDefaultStyleSheet getSectionDefault() {
+    if ( defaultStyle == null ) {
       defaultStyle = new ReportSectionDefaultStyleSheet();
     }
     return defaultStyle;

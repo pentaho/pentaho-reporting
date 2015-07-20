@@ -30,8 +30,7 @@ import org.pentaho.reporting.engine.classic.core.function.ExpressionRuntime;
  *
  * @author Thomas Morgner
  */
-public interface RawDataSource extends DataSource
-{
+public interface RawDataSource extends DataSource {
   /**
    * Returns the unformated raw value. Whether that raw value is useable for the export is beyond the scope of this API
    * definition, but providing access to {@link Number} or {@link java.util.Date} objects is a good idea.
@@ -41,11 +40,12 @@ public interface RawDataSource extends DataSource
    * @param element
    * @return the raw data.
    */
-  public Object getRawValue(ExpressionRuntime runtime, final ReportElement element);
+  public Object getRawValue( ExpressionRuntime runtime, final ReportElement element );
 
   /**
    * Returns information about the formatstring that was used to transform a raw-value into a formatted text. Not all
-   * elements will make use of a format-string. These elements will return {@link org.pentaho.reporting.engine.classic.core.filter.FormatSpecification#TYPE_UNDEFINED}
+   * elements will make use of a format-string. These elements will return {@link org.pentaho.reporting.engine
+   * .classic.core.filter.FormatSpecification#TYPE_UNDEFINED}
    * in that case.
    *
    * @param runtime             the Expression runtime used to possibly compute the raw-value.
@@ -53,7 +53,7 @@ public interface RawDataSource extends DataSource
    * @param formatSpecification the format specification (can be null). @return a filled format specififcation. If the
    *                            <code>formatSpecification</code> parameter was not null, this given instance is reused.
    */
-  public FormatSpecification getFormatString(ExpressionRuntime runtime,
-                                             final ReportElement element,
-                                             FormatSpecification formatSpecification);
+  public FormatSpecification getFormatString( ExpressionRuntime runtime,
+                                              final ReportElement element,
+                                              FormatSpecification formatSpecification );
 }

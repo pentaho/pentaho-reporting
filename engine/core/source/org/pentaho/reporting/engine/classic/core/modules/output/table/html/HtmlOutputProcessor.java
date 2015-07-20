@@ -24,10 +24,9 @@ import org.pentaho.reporting.engine.classic.core.layout.output.OutputProcessor;
  *
  * @author Thomas Morgner
  */
-public interface HtmlOutputProcessor extends OutputProcessor
-{
+public interface HtmlOutputProcessor extends OutputProcessor {
   public HtmlPrinter getPrinter();
 
-  public void setPrinter(HtmlPrinter printer);
+  public void setPrinter( HtmlPrinter printer );
 
 }

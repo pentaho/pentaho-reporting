@@ -17,8 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.core.filter.types;
 
-import java.util.ResourceBundle;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.pentaho.reporting.engine.classic.core.AttributeNames;
@@ -26,25 +24,23 @@ import org.pentaho.reporting.engine.classic.core.ReportElement;
 import org.pentaho.reporting.engine.classic.core.ResourceBundleFactory;
 import org.pentaho.reporting.engine.classic.core.function.ExpressionRuntime;
 
-public class ResourceFieldType extends AbstractElementType
-{
-  public static final ResourceFieldType INSTANCE = new ResourceFieldType();
-  private static final Log logger = LogFactory.getLog(ResourceFieldType.class);
+import java.util.ResourceBundle;
 
-  public ResourceFieldType()
-  {
-    super("resource-field");
+public class ResourceFieldType extends AbstractElementType {
+  public static final ResourceFieldType INSTANCE = new ResourceFieldType();
+  private static final Log logger = LogFactory.getLog( ResourceFieldType.class );
+
+  public ResourceFieldType() {
+    super( "resource-field" );
   }
 
-  public Object getDesignValue(final ExpressionRuntime runtime, final ReportElement element)
-  {
+  public Object getDesignValue( final ExpressionRuntime runtime, final ReportElement element ) {
 
-    final Object resourceKeyRaw = ElementTypeUtils.queryFieldName(element);
-    if (resourceKeyRaw == null)
-    {
+    final Object resourceKeyRaw = ElementTypeUtils.queryFieldName( element );
+    if ( resourceKeyRaw == null ) {
       return "<null>";
     }
-    
+
     return resourceKeyRaw.toString();
   }
 
@@ -56,47 +52,38 @@ public class ResourceFieldType extends AbstractElementType
    * @param element the element from which to read attribute.
    * @return the value.
    */
-  public Object getValue(final ExpressionRuntime runtime, final ReportElement element)
-  {
-    if (runtime == null)
-    {
-      throw new NullPointerException("Runtime must never be null.");
+  public Object getValue( final ExpressionRuntime runtime, final ReportElement element ) {
+    if ( runtime == null ) {
+      throw new NullPointerException( "Runtime must never be null." );
     }
-    if (element == null)
-    {
-      throw new NullPointerException("Element must never be null.");
+    if ( element == null ) {
+      throw new NullPointerException( "Element must never be null." );
     }
 
-    final Object resourceKeyRaw = ElementTypeUtils.queryFieldOrValue(runtime, element);
-    if (resourceKeyRaw == null)
-    {
-      return element.getAttribute(AttributeNames.Core.NAMESPACE, AttributeNames.Core.NULL_VALUE);
+    final Object resourceKeyRaw = ElementTypeUtils.queryFieldOrValue( runtime, element );
+    if ( resourceKeyRaw == null ) {
+      return element.getAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.NULL_VALUE );
     }
 
 
-    final String resourceKey = String.valueOf(resourceKeyRaw);
-    final String resourceId = ElementTypeUtils.queryResourceId(runtime, element);
-    if (resourceId == null)
-    {
-      return element.getAttribute(AttributeNames.Core.NAMESPACE, AttributeNames.Core.NULL_VALUE);
+    final String resourceKey = String.valueOf( resourceKeyRaw );
+    final String resourceId = ElementTypeUtils.queryResourceId( runtime, element );
+    if ( resourceId == null ) {
+      return element.getAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.NULL_VALUE );
     }
 
-    try
-    {
+    try {
       final ResourceBundleFactory resourceBundleFactory = runtime.getResourceBundleFactory();
-      final ResourceBundle bundle = resourceBundleFactory.getResourceBundle(resourceId);
-      if (bundle != null)
-      {
-        return bundle.getString(resourceKey);
+      final ResourceBundle bundle = resourceBundleFactory.getResourceBundle( resourceId );
+      if ( bundle != null ) {
+        return bundle.getString( resourceKey );
       }
-    }
-    catch (Exception e)
-    {
+    } catch ( Exception e ) {
       // on errors return null.
-      ResourceFieldType.logger.warn("Failed to retrieve a value for key " + resourceId);
+      ResourceFieldType.logger.warn( "Failed to retrieve a value for key " + resourceId );
     }
 
-    return element.getAttribute(AttributeNames.Core.NAMESPACE, AttributeNames.Core.NULL_VALUE);
+    return element.getAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.NULL_VALUE );
 
   }
 }

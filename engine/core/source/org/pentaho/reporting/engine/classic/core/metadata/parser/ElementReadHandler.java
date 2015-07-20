@@ -17,8 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.core.metadata.parser;
 
-import java.util.ArrayList;
-
 import org.pentaho.reporting.engine.classic.core.metadata.AttributeMetaData;
 import org.pentaho.reporting.engine.classic.core.metadata.DefaultElementMetaData;
 import org.pentaho.reporting.engine.classic.core.metadata.ElementMetaData;
@@ -31,19 +29,19 @@ import org.pentaho.reporting.libraries.xmlns.parser.XmlReadHandler;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 
+import java.util.ArrayList;
+
 /**
  * @noinspection HardCodedStringLiteral
  */
-public class ElementReadHandler extends AbstractMetaDataReadHandler
-{
+public class ElementReadHandler extends AbstractMetaDataReadHandler {
   private ElementMetaDataBuilder builder;
 
   private ArrayList<StyleReadHandler> styleHandlers;
   private ArrayList<AttributeReadHandler> attributeHandlers;
   private GlobalMetaDefinition globalMetaDefinition;
 
-  public ElementReadHandler(final GlobalMetaDefinition globalMetaDefinition)
-  {
+  public ElementReadHandler( final GlobalMetaDefinition globalMetaDefinition ) {
     this.globalMetaDefinition = globalMetaDefinition;
 
     this.attributeHandlers = new ArrayList<AttributeReadHandler>();
@@ -52,8 +50,7 @@ public class ElementReadHandler extends AbstractMetaDataReadHandler
     this.builder = new ElementMetaDataBuilder();
   }
 
-  public ElementMetaDataBuilder getBuilder()
-  {
+  public ElementMetaDataBuilder getBuilder() {
     return builder;
   }
 
@@ -63,91 +60,64 @@ public class ElementReadHandler extends AbstractMetaDataReadHandler
    * @param attrs the attributes.
    * @throws SAXException if there is a parsing error.
    */
-  protected void startParsing(final Attributes attrs) throws SAXException
-  {
-    super.startParsing(attrs);
-    getBuilder().namespace(attrs.getValue(getUri(), "namespace")); // NON-NLS
-    getBuilder().typeClassification(parseTypeClassification(attrs));
-    getBuilder().elementType(parseElementType(attrs));
-    getBuilder().contentType(parseContentType(attrs));
-    getBuilder().bundle(getBundle(), "element.");
+  protected void startParsing( final Attributes attrs ) throws SAXException {
+    super.startParsing( attrs );
+    getBuilder().namespace( attrs.getValue( getUri(), "namespace" ) ); // NON-NLS
+    getBuilder().typeClassification( parseTypeClassification( attrs ) );
+    getBuilder().elementType( parseElementType( attrs ) );
+    getBuilder().contentType( parseContentType( attrs ) );
+    getBuilder().bundle( getBundle(), "element." );
   }
 
-  private Class<?> parseContentType(final Attributes attrs) throws ParseException
-  {
-    final String contentType = attrs.getValue(getUri(), "content-type");
-    if (contentType == null)
-    {
+  private Class<?> parseContentType( final Attributes attrs ) throws ParseException {
+    final String contentType = attrs.getValue( getUri(), "content-type" );
+    if ( contentType == null ) {
       return Object.class;
-    }
-    else
-    {
-      Class<?> aClass = ObjectUtilities.loadAndValidate(contentType, ElementReadHandler.class, Object.class);
-      if (aClass == null)
-      {
+    } else {
+      Class<?> aClass = ObjectUtilities.loadAndValidate( contentType, ElementReadHandler.class, Object.class );
+      if ( aClass == null ) {
         return Object.class;
       }
       return aClass;
     }
   }
 
-  private Class<? extends ElementType> parseElementType(final Attributes attrs) throws ParseException
-  {
-    final String elementTypeText = attrs.getValue(getUri(), "implementation");
-    if (elementTypeText == null)
-    {
-      throw new ParseException("Attribute 'implementation' is undefined", getLocator());
+  private Class<? extends ElementType> parseElementType( final Attributes attrs ) throws ParseException {
+    final String elementTypeText = attrs.getValue( getUri(), "implementation" );
+    if ( elementTypeText == null ) {
+      throw new ParseException( "Attribute 'implementation' is undefined", getLocator() );
     }
-    Class<? extends ElementType> c = ObjectUtilities.loadAndValidate(elementTypeText, ElementReadHandler.class, ElementType.class);
-    if (c == null)
-    {
-      throw new ParseException("Attribute 'implementation' is not valid", getLocator());
+    Class<? extends ElementType> c =
+      ObjectUtilities.loadAndValidate( elementTypeText, ElementReadHandler.class, ElementType.class );
+    if ( c == null ) {
+      throw new ParseException( "Attribute 'implementation' is not valid", getLocator() );
     }
     return c;
   }
 
-  private ElementMetaData.TypeClassification parseTypeClassification(final Attributes attrs)
-  {
-    final String eType = attrs.getValue(getUri(), "type-classification");
-    if ("section".equals(eType))
-    {
+  private ElementMetaData.TypeClassification parseTypeClassification( final Attributes attrs ) {
+    final String eType = attrs.getValue( getUri(), "type-classification" );
+    if ( "section".equals( eType ) ) {
       return ElementMetaData.TypeClassification.SECTION;
-    }
-    else if ("data".equals(eType))
-    {
+    } else if ( "data".equals( eType ) ) {
       return ElementMetaData.TypeClassification.DATA;
-    }
-    else if ("control".equals(eType))
-    {
+    } else if ( "control".equals( eType ) ) {
       return ElementMetaData.TypeClassification.CONTROL;
-    }
-    else if ("footer".equals(eType))
-    {
+    } else if ( "footer".equals( eType ) ) {
       return ElementMetaData.TypeClassification.FOOTER;
-    }
-    else if ("group-footer".equals(eType))
-    {
+    } else if ( "group-footer".equals( eType ) ) {
       return ElementMetaData.TypeClassification.RELATIONAL_FOOTER;
-    }
-    else if ("header".equals(eType))
-    {
+    } else if ( "header".equals( eType ) ) {
       return ElementMetaData.TypeClassification.HEADER;
-    }
-    else if ("group-header".equals(eType))
-    {
+    } else if ( "group-header".equals( eType ) ) {
       return ElementMetaData.TypeClassification.RELATIONAL_HEADER;
-    }
-    else if ("subreport".equals(eType))
-    {
+    } else if ( "subreport".equals( eType ) ) {
       return ElementMetaData.TypeClassification.SUBREPORT;
     }
 
-    if ("true".equals(attrs.getValue(getUri(), "container")))
-    {
+    if ( "true".equals( attrs.getValue( getUri(), "container" ) ) ) {
       return ElementMetaData.TypeClassification.SECTION;
-    }
-    else
-    {
+    } else {
       return ElementMetaData.TypeClassification.DATA;
     }
   }
@@ -161,35 +131,26 @@ public class ElementReadHandler extends AbstractMetaDataReadHandler
    * @return the handler or null, if the tagname is invalid.
    * @throws SAXException if there is a parsing error.
    */
-  protected XmlReadHandler getHandlerForChild(final String uri,
-                                              final String tagName,
-                                              final Attributes atts) throws SAXException
-  {
-    if (getUri().equals(uri) == false)
-    {
+  protected XmlReadHandler getHandlerForChild( final String uri,
+                                               final String tagName,
+                                               final Attributes atts ) throws SAXException {
+    if ( getUri().equals( uri ) == false ) {
       return null;
     }
 
 
-    if ("attribute-group-ref".equals(tagName))
-    {
-      return new AttributeGroupRefReadHandler(getBuilder().attributesRef(), globalMetaDefinition);
-    }
-    else if ("style-group-ref".equals(tagName))
-    {
-      return new StyleGroupRefReadHandler(getBuilder().stylesRef(), globalMetaDefinition, getBundle());
-    }
-    else if ("attribute".equals(tagName))
-    {
+    if ( "attribute-group-ref".equals( tagName ) ) {
+      return new AttributeGroupRefReadHandler( getBuilder().attributesRef(), globalMetaDefinition );
+    } else if ( "style-group-ref".equals( tagName ) ) {
+      return new StyleGroupRefReadHandler( getBuilder().stylesRef(), globalMetaDefinition, getBundle() );
+    } else if ( "attribute".equals( tagName ) ) {
       final String prefix = "element." + getBuilder().getName() + ".";
-      final AttributeReadHandler readHandler = new AttributeReadHandler(getBundle(), prefix);
-      attributeHandlers.add(readHandler);
+      final AttributeReadHandler readHandler = new AttributeReadHandler( getBundle(), prefix );
+      attributeHandlers.add( readHandler );
       return readHandler;
-    }
-    else if ("style".equals(tagName))
-    {
-      final StyleReadHandler readHandler = new StyleReadHandler(getBundle());
-      styleHandlers.add(readHandler);
+    } else if ( "style".equals( tagName ) ) {
+      final StyleReadHandler readHandler = new StyleReadHandler( getBundle() );
+      styleHandlers.add( readHandler );
       return readHandler;
     }
 
@@ -201,20 +162,17 @@ public class ElementReadHandler extends AbstractMetaDataReadHandler
    *
    * @throws SAXException if there is a parsing error.
    */
-  protected void doneParsing() throws SAXException
-  {
-    for (int i = 0; i < attributeHandlers.size(); i++)
-    {
-      final AttributeReadHandler handler = attributeHandlers.get(i);
+  protected void doneParsing() throws SAXException {
+    for ( int i = 0; i < attributeHandlers.size(); i++ ) {
+      final AttributeReadHandler handler = attributeHandlers.get( i );
       AttributeMetaData metaData = handler.getMetaData();
-      getBuilder().attribute(metaData);
+      getBuilder().attribute( metaData );
     }
 
-    for (int i = 0; i < styleHandlers.size(); i++)
-    {
-      final StyleReadHandler handler = styleHandlers.get(i);
+    for ( int i = 0; i < styleHandlers.size(); i++ ) {
+      final StyleReadHandler handler = styleHandlers.get( i );
       StyleMetaData metaData = handler.getMetaData();
-      getBuilder().style(metaData);
+      getBuilder().style( metaData );
     }
   }
 
@@ -224,8 +182,7 @@ public class ElementReadHandler extends AbstractMetaDataReadHandler
    * @return the object.
    * @throws SAXException if an parser error occured.
    */
-  public Object getObject() throws SAXException
-  {
-    return new DefaultElementMetaData(getBuilder());
+  public Object getObject() throws SAXException {
+    return new DefaultElementMetaData( getBuilder() );
   }
 }

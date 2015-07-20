@@ -20,13 +20,12 @@ package org.pentaho.reporting.engine.classic.core.layout;
 /**
  * Legacy Class - Do not use! An interface that defines the methods to be supported by a band layout manager.
  * <p/>
- * This is a legacy class and it exists only for backward compatibility purposes, so that old complex-xml reports
- * can still be parsed.
+ * This is a legacy class and it exists only for backward compatibility purposes, so that old complex-xml reports can
+ * still be parsed.
  *
  * @author Thomas Morgner
  * @deprecated This class is no longer used.
  */
-public interface BandLayoutManager
-{
+public interface BandLayoutManager {
 
 }

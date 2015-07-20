@@ -21,10 +21,8 @@ import org.pentaho.reporting.engine.classic.core.filter.types.DateFieldType;
 import org.pentaho.reporting.libraries.xmlns.parser.ParseException;
 
 @Deprecated
-public class DateFieldReadHandler extends AbstractElementReadHandler
-{
-  public DateFieldReadHandler() throws ParseException
-  {
-    super(DateFieldType.INSTANCE);
+public class DateFieldReadHandler extends AbstractElementReadHandler {
+  public DateFieldReadHandler() throws ParseException {
+    super( DateFieldType.INSTANCE );
   }
 }

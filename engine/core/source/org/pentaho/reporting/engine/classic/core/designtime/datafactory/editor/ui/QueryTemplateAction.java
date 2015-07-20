@@ -17,45 +17,38 @@
 
 package org.pentaho.reporting.engine.classic.core.designtime.datafactory.editor.ui;
 
-import java.awt.Component;
-
 import org.pentaho.reporting.engine.classic.core.designtime.datafactory.editor.model.Query;
 import org.pentaho.reporting.engine.classic.core.designtime.datafactory.editor.model.QueryDialogModel;
 
-public class QueryTemplateAction<T> extends ScriptTemplateAction
-{
+import java.awt.*;
+
+public class QueryTemplateAction<T> extends ScriptTemplateAction {
   private Component parentComponent;
   private QueryDialogModel<T> dialogModel;
 
-  public QueryTemplateAction(final Component parentComponent,
-                      final QueryDialogModel<T> dialogModel)
-  {
-    super(false);
+  public QueryTemplateAction( final Component parentComponent,
+                              final QueryDialogModel<T> dialogModel ) {
+    super( false );
     this.parentComponent = parentComponent;
     this.dialogModel = dialogModel;
   }
 
-  protected Component getParentComponent()
-  {
+  protected Component getParentComponent() {
     return parentComponent;
   }
 
-  protected void setText(final String text)
-  {
+  protected void setText( final String text ) {
     Query<T> selectedQuery = dialogModel.getSelectedQuery();
-    if (selectedQuery == null)
-    {
+    if ( selectedQuery == null ) {
       throw new IllegalStateException();
     }
 
-    dialogModel.updateSelectedQuery(selectedQuery.updateQueryScript(selectedQuery.getQueryLanguage(), text));
+    dialogModel.updateSelectedQuery( selectedQuery.updateQueryScript( selectedQuery.getQueryLanguage(), text ) );
   }
 
-  protected String getText()
-  {
+  protected String getText() {
     Query<T> selectedQuery = dialogModel.getSelectedQuery();
-    if (selectedQuery == null)
-    {
+    if ( selectedQuery == null ) {
       throw new IllegalStateException();
     }
     return selectedQuery.getQueryScript();

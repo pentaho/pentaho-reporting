@@ -17,8 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.core.function;
 
-import java.net.URL;
-
 import junit.framework.TestCase;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -31,31 +29,30 @@ import org.pentaho.reporting.engine.classic.core.testsupport.DebugReportRunner;
 import org.pentaho.reporting.libraries.resourceloader.Resource;
 import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 
-public class TotalGroupSumTest extends TestCase
-{
-  private static final Log logger = LogFactory.getLog(TotalGroupSumTest.class);
+import java.net.URL;
+
+public class TotalGroupSumTest extends TestCase {
+  private static final Log logger = LogFactory.getLog( TotalGroupSumTest.class );
 
   private static final int[] SUMS = {
-      69698070,
-      1340100000,
-      18751000,
-      343344776,
-      304357300,
-      165715400
+    69698070,
+    1340100000,
+    18751000,
+    343344776,
+    304357300,
+    165715400
   };
 
   private static class TotalGroupCountVerifyFunction
-      extends AbstractFunction
-  {
+    extends AbstractFunction {
     private int index;
 
     /**
      * Creates an unnamed function. Make sure the name of the function is set using {@link #setName} before the function
      * is added to the report's function collection.
      */
-    public TotalGroupCountVerifyFunction()
-    {
-      setName("verification");
+    public TotalGroupCountVerifyFunction() {
+      setName( "verification" );
     }
 
     /**
@@ -65,8 +62,7 @@ public class TotalGroupSumTest extends TestCase
      *
      * @param event The event.
      */
-    public void reportInitialized(final ReportEvent event)
-    {
+    public void reportInitialized( final ReportEvent event ) {
       index = 0;
     }
 
@@ -75,13 +71,11 @@ public class TotalGroupSumTest extends TestCase
      *
      * @param event the event.
      */
-    public void groupFinished(final ReportEvent event)
-    {
-      if (event.getLevel() >= 0)
-      {
+    public void groupFinished( final ReportEvent event ) {
+      if ( event.getLevel() >= 0 ) {
         return;
       }
-      assertSum(event);
+      assertSum( event );
       index += 1;
     }
 
@@ -90,80 +84,70 @@ public class TotalGroupSumTest extends TestCase
      *
      * @param event the event.
      */
-    public void groupStarted(final ReportEvent event)
-    {
-      if (event.getLevel() >= 0)
-      {
+    public void groupStarted( final ReportEvent event ) {
+      if ( event.getLevel() >= 0 ) {
         return;
       }
-      assertSum(event);
+      assertSum( event );
     }
 
-    private void assertSum(final ReportEvent event)
-    {
+    private void assertSum( final ReportEvent event ) {
       // the number of continents in the report1
-      if ("Continent Group".equals(FunctionUtilities.getCurrentGroup(event).getName()))
-      {
-        final Number n = (Number) event.getDataRow().get("continent-total-gc");
-        assertEquals("continent-total-gc", SUMS[index], n.intValue());
+      if ( "Continent Group".equals( FunctionUtilities.getCurrentGroup( event ).getName() ) ) {
+        final Number n = (Number) event.getDataRow().get( "continent-total-gc" );
+        assertEquals( "continent-total-gc", SUMS[ index ], n.intValue() );
       }
-//      // the number of continents in the report1 + default group start
-//      Number n2 = (Number) event.getDataRow().get("total-gc");
-//      assertEquals("total-gc", 7, n2.intValue());
+      //      // the number of continents in the report1 + default group start
+      //      Number n2 = (Number) event.getDataRow().get("total-gc");
+      //      assertEquals("total-gc", 7, n2.intValue());
     }
 
-    public Object getValue()
-    {
+    public Object getValue() {
       return null;
     }
   }
 
-  public TotalGroupSumTest()
-  {
+  public TotalGroupSumTest() {
   }
 
-  public TotalGroupSumTest(final String s)
-  {
-    super(s);
+  public TotalGroupSumTest( final String s ) {
+    super( s );
   }
 
-  protected void setUp() throws Exception
-  {
+  protected void setUp() throws Exception {
     ClassicEngineBoot.getInstance().start();
   }
 
-  public void testGroupSumTest() throws Exception
-  {
-    final URL url = getClass().getResource("aggregate-function-test.xml");
-    assertNotNull(url);
+  public void testGroupSumTest() throws Exception {
+    final URL url = getClass().getResource( "aggregate-function-test.xml" );
+    assertNotNull( url );
     final ResourceManager resourceManager = new ResourceManager();
     resourceManager.registerDefaults();
-    final Resource directly = resourceManager.createDirectly(url, MasterReport.class);
+    final Resource directly = resourceManager.createDirectly( url, MasterReport.class );
     final MasterReport report = (MasterReport) directly.getResource();
-    report.setDataFactory(new TableDataFactory("default", new AggregateTestDataTableModel()));
+    report.setDataFactory( new TableDataFactory( "default", new AggregateTestDataTableModel() ) );
 
-    report.addExpression(new TotalGroupCountVerifyFunction());
+    report.addExpression( new TotalGroupCountVerifyFunction() );
     // make sure that there is no default group ...
-    final RelationalGroup g = report.getGroupByName("default");
-    if (g != null)
-    {
-      report.removeGroup(g);
+    final RelationalGroup g = report.getGroupByName( "default" );
+    if ( g != null ) {
+      report.removeGroup( g );
     }
 
     final TotalGroupSumFunction f = new TotalGroupSumFunction();
-    f.setName("continent-total-gc");
-    f.setGroup("Continent Group");
-    f.setField("Population");
-    f.setDependencyLevel(1);
-    report.addExpression(f);
+    f.setName( "continent-total-gc" );
+    f.setGroup( "Continent Group" );
+    f.setField( "Population" );
+    f.setDependencyLevel( 1 );
+    report.addExpression( f );
 
     final TotalGroupSumFunction f2 = new TotalGroupSumFunction();
-    f2.setName("total-gc");
-    f2.setField("Population");
-    f2.setDependencyLevel(1);
-    report.addExpression(f2);
+    f2.setName( "total-gc" );
+    f2.setField( "Population" );
+    f2.setDependencyLevel( 1 );
+    report.addExpression( f2 );
 
-    DebugReportRunner.execGraphics2D(report);
+    DebugReportRunner.execGraphics2D( report );
 
 
   }

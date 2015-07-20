@@ -30,68 +30,52 @@ import org.pentaho.reporting.engine.classic.core.parameters.ReportParameterDefin
 import org.pentaho.reporting.engine.classic.core.style.StyleKey;
 import org.pentaho.reporting.engine.classic.core.util.AbstractStructureVisitor;
 
-public class CompatibilityUpdater extends AbstractStructureVisitor
-{
+public class CompatibilityUpdater extends AbstractStructureVisitor {
   private CompatibilityConverter[] converters;
   private CompatibilityConverter currentConverter;
   private int version;
 
-  public CompatibilityUpdater()
-  {
+  public CompatibilityUpdater() {
     converters = CompatibilityConverterRegistry.getInstance().getConverters();
   }
 
-  public void performUpdate(final MasterReport report)
-  {
+  public void performUpdate( final MasterReport report ) {
     final Integer versionRaw = report.getCompatibilityLevel();
-    if (versionRaw == null)
-    {
+    if ( versionRaw == null ) {
       version = -1;
-    }
-    else
-    {
+    } else {
       version = versionRaw.intValue();
     }
-    if (version == -1)
-    {
+    if ( version == -1 ) {
       return;
     }
-    performUpdateInternal(report);
-    report.setCompatibilityLevel(null);
+    performUpdateInternal( report );
+    report.setCompatibilityLevel( null );
   }
 
-  public void performUpdate(final SubReport report)
-  {
+  public void performUpdate( final SubReport report ) {
     final ReportDefinition reportDefinition = report.getMasterReport();
-    if (reportDefinition == null)
-    {
+    if ( reportDefinition == null ) {
       return;
     }
 
     final MasterReport masterReport = (MasterReport) reportDefinition;
     final Integer versionRaw = masterReport.getCompatibilityLevel();
-    if (versionRaw == null)
-    {
+    if ( versionRaw == null ) {
       version = -1;
-    }
-    else
-    {
+    } else {
       version = versionRaw.intValue();
     }
-    if (version == -1)
-    {
+    if ( version == -1 ) {
       return;
     }
-    performUpdateInternal(report);
+    performUpdateInternal( report );
   }
 
-  protected void performUpdateInternal (final AbstractReportDefinition report)
-  {
-    for (int i = 0; i < converters.length; i++)
-    {
-      final CompatibilityConverter converter = converters[i];
-      if (converter.getTargetVersion() < version)
-      {
+  protected void performUpdateInternal( final AbstractReportDefinition report ) {
+    for ( int i = 0; i < converters.length; i++ ) {
+      final CompatibilityConverter converter = converters[ i ];
+      if ( converter.getTargetVersion() < version ) {
         // this converter is for an older version
         // the report should already be up to date for this release.
         continue;
@@ -100,46 +84,41 @@ public class CompatibilityUpdater extends AbstractStructureVisitor
       // set the current converter and convert the complete report to the
       // converter's level. 
       currentConverter = converter;
-      super.inspect(report);
+      super.inspect( report );
     }
   }
 
-  protected void inspectElement(final ReportElement element)
-  {
-    currentConverter.inspectElement(element);
+  protected void inspectElement( final ReportElement element ) {
+    currentConverter.inspectElement( element );
   }
 
-  protected void inspectAttributeExpression(final ReportElement element,
-                                            final String attributeNamespace,
-                                            final String attributeName,
-                                            final Expression expression,
-                                            final ExpressionMetaData expressionMetaData)
-  {
-    currentConverter.inspectAttributeExpression(element, attributeNamespace, attributeName, expression, expressionMetaData);
+  protected void inspectAttributeExpression( final ReportElement element,
+                                             final String attributeNamespace,
+                                             final String attributeName,
+                                             final Expression expression,
+                                             final ExpressionMetaData expressionMetaData ) {
+    currentConverter
+      .inspectAttributeExpression( element, attributeNamespace, attributeName, expression, expressionMetaData );
   }
 
-  protected void inspectStyleExpression(final ReportElement element,
-                                        final StyleKey styleKey,
-                                        final Expression expression,
-                                        final ExpressionMetaData expressionMetaData)
-  {
-    currentConverter.inspectStyleExpression(element, styleKey, expression, expressionMetaData);
+  protected void inspectStyleExpression( final ReportElement element,
+                                         final StyleKey styleKey,
+                                         final Expression expression,
+                                         final ExpressionMetaData expressionMetaData ) {
+    currentConverter.inspectStyleExpression( element, styleKey, expression, expressionMetaData );
   }
 
-  protected void inspectExpression(final AbstractReportDefinition report, final Expression expression)
-  {
-    currentConverter.inspectExpression(report, expression);
+  protected void inspectExpression( final AbstractReportDefinition report, final Expression expression ) {
+    currentConverter.inspectExpression( report, expression );
   }
 
-  protected void inspectParameter(final AbstractReportDefinition report,
-                                  final ReportParameterDefinition definition,
-                                  final ParameterDefinitionEntry parameter)
-  {
-    currentConverter.inspectParameter(report, definition, parameter);
+  protected void inspectParameter( final AbstractReportDefinition report,
+                                   final ReportParameterDefinition definition,
+                                   final ParameterDefinitionEntry parameter ) {
+    currentConverter.inspectParameter( report, definition, parameter );
   }
 
-  protected void inspectDataSource(final AbstractReportDefinition report, final DataFactory dataFactory)
-  {
-    currentConverter.inspectDataSource(report, dataFactory);
+  protected void inspectDataSource( final AbstractReportDefinition report, final DataFactory dataFactory ) {
+    currentConverter.inspectDataSource( report, dataFactory );
   }
 }

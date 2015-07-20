@@ -17,15 +17,15 @@
 
 package org.pentaho.reporting.engine.classic.core.elementfactory;
 
-import java.awt.Color;
-import java.awt.geom.Rectangle2D;
-import java.text.MessageFormat;
-
 import org.pentaho.reporting.engine.classic.core.AttributeNames;
 import org.pentaho.reporting.engine.classic.core.Element;
 import org.pentaho.reporting.engine.classic.core.ElementAlignment;
 import org.pentaho.reporting.engine.classic.core.filter.types.MessageType;
 import org.pentaho.reporting.engine.classic.core.style.FontDefinition;
+
+import java.awt.*;
+import java.awt.geom.Rectangle2D;
+import java.text.MessageFormat;
 
 /**
  * The message format factory can be used to create formatted text elements using the format defined for {@link
@@ -36,8 +36,7 @@ import org.pentaho.reporting.engine.classic.core.style.FontDefinition;
  *
  * @author J&ouml;rg Schaible
  */
-public class MessageFieldElementFactory extends TextElementFactory
-{
+public class MessageFieldElementFactory extends TextElementFactory {
   /**
    * The message format instance used to format the text element.
    */
@@ -52,8 +51,7 @@ public class MessageFieldElementFactory extends TextElementFactory
   /**
    * Creates a new message field element factory.
    */
-  public MessageFieldElementFactory()
-  {
+  public MessageFieldElementFactory() {
   }
 
   /**
@@ -61,8 +59,7 @@ public class MessageFieldElementFactory extends TextElementFactory
    *
    * @return the formatstring of the number format instance.
    */
-  public String getFormatString()
-  {
+  public String getFormatString() {
     return formatString;
   }
 
@@ -72,8 +69,7 @@ public class MessageFieldElementFactory extends TextElementFactory
    *
    * @param formatString the formatstring of the message format instance.
    */
-  public void setFormatString(final String formatString)
-  {
+  public void setFormatString( final String formatString ) {
     this.formatString = formatString;
   }
 
@@ -82,8 +78,7 @@ public class MessageFieldElementFactory extends TextElementFactory
    *
    * @return the null string.
    */
-  public String getNullString()
-  {
+  public String getNullString() {
     return nullString;
   }
 
@@ -93,18 +88,15 @@ public class MessageFieldElementFactory extends TextElementFactory
    *
    * @param nullString the null string.
    */
-  public void setNullString(final String nullString)
-  {
+  public void setNullString( final String nullString ) {
     this.nullString = nullString;
   }
 
-  public String getMessageNullString()
-  {
+  public String getMessageNullString() {
     return messageNullString;
   }
 
-  public void setMessageNullString(final String messageNullString)
-  {
+  public void setMessageNullString( final String messageNullString ) {
     this.messageNullString = messageNullString;
   }
 
@@ -115,16 +107,16 @@ public class MessageFieldElementFactory extends TextElementFactory
    * @return the generated numberic text element
    * @see org.pentaho.reporting.engine.classic.core.elementfactory.ElementFactory#createElement()
    */
-  public Element createElement()
-  {
+  public Element createElement() {
     final Element element = new Element();
-    applyElementName(element);
-    applyStyle(element.getStyle());
+    applyElementName( element );
+    applyStyle( element.getStyle() );
 
-    element.setElementType(new MessageType());
-    element.setAttribute(AttributeNames.Core.NAMESPACE, AttributeNames.Core.NULL_VALUE, getNullString());
-    element.setAttribute(AttributeNames.Core.NAMESPACE, AttributeNames.Core.MESSAGE_NULL_VALUE, getMessageNullString());
-    element.setAttribute(AttributeNames.Core.NAMESPACE, AttributeNames.Core.VALUE, getFormatString());
+    element.setElementType( new MessageType() );
+    element.setAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.NULL_VALUE, getNullString() );
+    element
+      .setAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.MESSAGE_NULL_VALUE, getMessageNullString() );
+    element.setAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.VALUE, getFormatString() );
     return element;
   }
 
@@ -144,16 +136,15 @@ public class MessageFieldElementFactory extends TextElementFactory
    * @throws IllegalArgumentException if the given alignment is invalid
    * @deprecated Use a more fine-grained approach to define this element by using the element-factory directly.
    */
-  public static Element createMessageElement(final String name,
-                                             final Rectangle2D bounds,
-                                             final Color paint,
-                                             final ElementAlignment alignment,
-                                             final FontDefinition font,
-                                             final String nullString,
-                                             final String format)
-  {
-    return createMessageElement(name, bounds, paint, alignment,
-        ElementAlignment.TOP, font, nullString, format);
+  public static Element createMessageElement( final String name,
+                                              final Rectangle2D bounds,
+                                              final Color paint,
+                                              final ElementAlignment alignment,
+                                              final FontDefinition font,
+                                              final String nullString,
+                                              final String format ) {
+    return createMessageElement( name, bounds, paint, alignment,
+      ElementAlignment.TOP, font, nullString, format );
   }
 
   /**
@@ -172,39 +163,37 @@ public class MessageFieldElementFactory extends TextElementFactory
    * @throws IllegalArgumentException if the given alignment is invalid
    * @deprecated Use a more fine-grained approach to define this element by using the element-factory directly.
    */
-  public static Element createMessageElement(final String name,
-                                             final Rectangle2D bounds,
-                                             final Color color,
-                                             final ElementAlignment alignment,
-                                             final ElementAlignment valign,
-                                             final FontDefinition font,
-                                             final String nullString,
-                                             final String formatString)
-  {
+  public static Element createMessageElement( final String name,
+                                              final Rectangle2D bounds,
+                                              final Color color,
+                                              final ElementAlignment alignment,
+                                              final ElementAlignment valign,
+                                              final FontDefinition font,
+                                              final String nullString,
+                                              final String formatString ) {
 
     final MessageFieldElementFactory factory = new MessageFieldElementFactory();
-    factory.setX(new Float(bounds.getX()));
-    factory.setY(new Float(bounds.getY()));
-    factory.setMinimumWidth(new Float(bounds.getWidth()));
-    factory.setMinimumHeight(new Float(bounds.getHeight()));
-    factory.setName(name);
-    factory.setColor(color);
-    factory.setHorizontalAlignment(alignment);
-    factory.setVerticalAlignment(valign);
+    factory.setX( new Float( bounds.getX() ) );
+    factory.setY( new Float( bounds.getY() ) );
+    factory.setMinimumWidth( new Float( bounds.getWidth() ) );
+    factory.setMinimumHeight( new Float( bounds.getHeight() ) );
+    factory.setName( name );
+    factory.setColor( color );
+    factory.setHorizontalAlignment( alignment );
+    factory.setVerticalAlignment( valign );
 
-    if (font != null)
-    {
-      factory.setFontName(font.getFontName());
-      factory.setFontSize(new Integer(font.getFontSize()));
-      factory.setBold(ElementFactory.getBooleanValue(font.isBold()));
-      factory.setItalic(ElementFactory.getBooleanValue(font.isItalic()));
-      factory.setEncoding(font.getFontEncoding(null));
-      factory.setUnderline(ElementFactory.getBooleanValue(font.isUnderline()));
-      factory.setStrikethrough(ElementFactory.getBooleanValue(font.isStrikeThrough()));
-      factory.setEmbedFont(ElementFactory.getBooleanValue(font.isEmbeddedFont()));
+    if ( font != null ) {
+      factory.setFontName( font.getFontName() );
+      factory.setFontSize( new Integer( font.getFontSize() ) );
+      factory.setBold( ElementFactory.getBooleanValue( font.isBold() ) );
+      factory.setItalic( ElementFactory.getBooleanValue( font.isItalic() ) );
+      factory.setEncoding( font.getFontEncoding( null ) );
+      factory.setUnderline( ElementFactory.getBooleanValue( font.isUnderline() ) );
+      factory.setStrikethrough( ElementFactory.getBooleanValue( font.isStrikeThrough() ) );
+      factory.setEmbedFont( ElementFactory.getBooleanValue( font.isEmbeddedFont() ) );
     }
-    factory.setNullString(nullString);
-    factory.setFormatString(formatString);
+    factory.setNullString( nullString );
+    factory.setFormatString( formatString );
     return factory.createElement();
   }
 }

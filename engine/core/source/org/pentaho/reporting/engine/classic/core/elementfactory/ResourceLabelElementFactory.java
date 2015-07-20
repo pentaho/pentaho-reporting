@@ -17,14 +17,14 @@
 
 package org.pentaho.reporting.engine.classic.core.elementfactory;
 
-import java.awt.Color;
-import java.awt.geom.Rectangle2D;
-
 import org.pentaho.reporting.engine.classic.core.AttributeNames;
 import org.pentaho.reporting.engine.classic.core.Element;
 import org.pentaho.reporting.engine.classic.core.ElementAlignment;
 import org.pentaho.reporting.engine.classic.core.filter.types.ResourceLabelType;
 import org.pentaho.reporting.engine.classic.core.style.FontDefinition;
+
+import java.awt.*;
+import java.awt.geom.Rectangle2D;
 
 /**
  * A factory to define translateable LabelElements. LabelElements are considered immutable and should not be modified
@@ -33,8 +33,7 @@ import org.pentaho.reporting.engine.classic.core.style.FontDefinition;
  *
  * @author Thomas Morgner
  */
-public class ResourceLabelElementFactory extends TextElementFactory
-{
+public class ResourceLabelElementFactory extends TextElementFactory {
   /**
    * The resource base from which to read the translations.
    */
@@ -52,8 +51,7 @@ public class ResourceLabelElementFactory extends TextElementFactory
   /**
    * DefaultConstructor.
    */
-  public ResourceLabelElementFactory()
-  {
+  public ResourceLabelElementFactory() {
   }
 
   /**
@@ -61,8 +59,7 @@ public class ResourceLabelElementFactory extends TextElementFactory
    *
    * @return the resource bundle name of the element.
    */
-  public String getResourceBase()
-  {
+  public String getResourceBase() {
     return resourceBase;
   }
 
@@ -71,8 +68,7 @@ public class ResourceLabelElementFactory extends TextElementFactory
    *
    * @param resourceBase the resource bundle name of the element.
    */
-  public void setResourceBase(final String resourceBase)
-  {
+  public void setResourceBase( final String resourceBase ) {
     this.resourceBase = resourceBase;
   }
 
@@ -81,8 +77,7 @@ public class ResourceLabelElementFactory extends TextElementFactory
    *
    * @return the null string.
    */
-  public String getNullString()
-  {
+  public String getNullString() {
     return nullString;
   }
 
@@ -92,8 +87,7 @@ public class ResourceLabelElementFactory extends TextElementFactory
    *
    * @param nullString the null string.
    */
-  public void setNullString(final String nullString)
-  {
+  public void setNullString( final String nullString ) {
     this.nullString = nullString;
   }
 
@@ -102,8 +96,7 @@ public class ResourceLabelElementFactory extends TextElementFactory
    *
    * @return the label resource bundle key.
    */
-  public String getResourceKey()
-  {
+  public String getResourceKey() {
     return resourceKey;
   }
 
@@ -112,8 +105,7 @@ public class ResourceLabelElementFactory extends TextElementFactory
    *
    * @param resourceKey the resource bundle key.
    */
-  public void setResourceKey(final String resourceKey)
-  {
+  public void setResourceKey( final String resourceKey ) {
     this.resourceKey = resourceKey;
   }
 
@@ -125,20 +117,18 @@ public class ResourceLabelElementFactory extends TextElementFactory
    * @throws IllegalStateException if the resource key is not defined.
    * @see org.pentaho.reporting.engine.classic.core.elementfactory.ElementFactory#createElement()
    */
-  public Element createElement()
-  {
-    if (getResourceKey() == null)
-    {
-      throw new IllegalStateException("ResourceKey is not set.");
+  public Element createElement() {
+    if ( getResourceKey() == null ) {
+      throw new IllegalStateException( "ResourceKey is not set." );
     }
 
     final Element element = new Element();
-    applyElementName(element);
-    applyStyle(element.getStyle());
-    element.setElementType(new ResourceLabelType());
-    element.setAttribute(AttributeNames.Core.NAMESPACE, AttributeNames.Core.RESOURCE_IDENTIFIER, getResourceBase());
-    element.setAttribute(AttributeNames.Core.NAMESPACE, AttributeNames.Core.VALUE, getResourceKey());
-    element.setAttribute(AttributeNames.Core.NAMESPACE, AttributeNames.Core.NULL_VALUE, getNullString());
+    applyElementName( element );
+    applyStyle( element.getStyle() );
+    element.setElementType( new ResourceLabelType() );
+    element.setAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.RESOURCE_IDENTIFIER, getResourceBase() );
+    element.setAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.VALUE, getResourceKey() );
+    element.setAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.NULL_VALUE, getNullString() );
     return element;
   }
 
@@ -158,40 +148,38 @@ public class ResourceLabelElementFactory extends TextElementFactory
    * @return the created ResourceElement
    * @deprecated Use a more fine-grained approach to define this element by using the element-factory directly.
    */
-  public static Element createResourceLabel(final String name,
-                                            final Rectangle2D bounds,
-                                            final Color paint,
-                                            final ElementAlignment alignment,
-                                            final ElementAlignment valign,
-                                            final FontDefinition font,
-                                            final String nullValue,
-                                            final String resourceBase,
-                                            final String resourceKey)
-  {
+  public static Element createResourceLabel( final String name,
+                                             final Rectangle2D bounds,
+                                             final Color paint,
+                                             final ElementAlignment alignment,
+                                             final ElementAlignment valign,
+                                             final FontDefinition font,
+                                             final String nullValue,
+                                             final String resourceBase,
+                                             final String resourceKey ) {
     final ResourceLabelElementFactory factory = new ResourceLabelElementFactory();
-    factory.setX(new Float(bounds.getX()));
-    factory.setY(new Float(bounds.getY()));
-    factory.setMinimumWidth(new Float(bounds.getWidth()));
-    factory.setMinimumHeight(new Float(bounds.getHeight()));
-    factory.setName(name);
-    factory.setColor(paint);
-    factory.setHorizontalAlignment(alignment);
-    factory.setVerticalAlignment(valign);
+    factory.setX( new Float( bounds.getX() ) );
+    factory.setY( new Float( bounds.getY() ) );
+    factory.setMinimumWidth( new Float( bounds.getWidth() ) );
+    factory.setMinimumHeight( new Float( bounds.getHeight() ) );
+    factory.setName( name );
+    factory.setColor( paint );
+    factory.setHorizontalAlignment( alignment );
+    factory.setVerticalAlignment( valign );
 
-    if (font != null)
-    {
-      factory.setFontName(font.getFontName());
-      factory.setFontSize(new Integer(font.getFontSize()));
-      factory.setBold(ElementFactory.getBooleanValue(font.isBold()));
-      factory.setItalic(ElementFactory.getBooleanValue(font.isItalic()));
-      factory.setEncoding(font.getFontEncoding(null));
-      factory.setUnderline(ElementFactory.getBooleanValue(font.isUnderline()));
-      factory.setStrikethrough(ElementFactory.getBooleanValue(font.isStrikeThrough()));
-      factory.setEmbedFont(ElementFactory.getBooleanValue(font.isEmbeddedFont()));
+    if ( font != null ) {
+      factory.setFontName( font.getFontName() );
+      factory.setFontSize( new Integer( font.getFontSize() ) );
+      factory.setBold( ElementFactory.getBooleanValue( font.isBold() ) );
+      factory.setItalic( ElementFactory.getBooleanValue( font.isItalic() ) );
+      factory.setEncoding( font.getFontEncoding( null ) );
+      factory.setUnderline( ElementFactory.getBooleanValue( font.isUnderline() ) );
+      factory.setStrikethrough( ElementFactory.getBooleanValue( font.isStrikeThrough() ) );
+      factory.setEmbedFont( ElementFactory.getBooleanValue( font.isEmbeddedFont() ) );
     }
-    factory.setNullString(nullValue);
-    factory.setResourceBase(resourceBase);
-    factory.setResourceKey(resourceKey);
+    factory.setNullString( nullValue );
+    factory.setResourceBase( resourceBase );
+    factory.setResourceKey( resourceKey );
     return factory.createElement();
   }
 

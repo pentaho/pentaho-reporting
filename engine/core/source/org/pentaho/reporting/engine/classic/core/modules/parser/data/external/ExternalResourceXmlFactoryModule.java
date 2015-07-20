@@ -24,46 +24,34 @@ import org.pentaho.reporting.libraries.xmlns.parser.XmlReadHandler;
 /**
  * Todo: Document me!
  * <p/>
- * Date: 07.05.2009
- * Time: 11:56:51
+ * Date: 07.05.2009 Time: 11:56:51
  *
  * @author Thomas Morgner.
  */
-public class ExternalResourceXmlFactoryModule implements XmlFactoryModule
-{
-  public ExternalResourceXmlFactoryModule()
-  {
+public class ExternalResourceXmlFactoryModule implements XmlFactoryModule {
+  public ExternalResourceXmlFactoryModule() {
   }
 
-  public int getDocumentSupport(final XmlDocumentInfo documentInfo)
-  {
+  public int getDocumentSupport( final XmlDocumentInfo documentInfo ) {
     final String rootNamespace = documentInfo.getRootElementNameSpace();
-    if (rootNamespace != null && rootNamespace.length() > 0)
-    {
-      if (ExternalDataFactoryModule.NAMESPACE.equals(rootNamespace) == false)
-      {
+    if ( rootNamespace != null && rootNamespace.length() > 0 ) {
+      if ( ExternalDataFactoryModule.NAMESPACE.equals( rootNamespace ) == false ) {
         return XmlFactoryModule.NOT_RECOGNIZED;
-      }
-      else if ("external-datasource".equals(documentInfo.getRootElement()))
-      {
+      } else if ( "external-datasource".equals( documentInfo.getRootElement() ) ) {
         return XmlFactoryModule.RECOGNIZED_BY_NAMESPACE;
       }
-    }
-    else if ("external-datasource".equals(documentInfo.getRootElement()))
-    {
+    } else if ( "external-datasource".equals( documentInfo.getRootElement() ) ) {
       return XmlFactoryModule.RECOGNIZED_BY_TAGNAME;
     }
 
     return XmlFactoryModule.NOT_RECOGNIZED;
   }
 
-  public String getDefaultNamespace(final XmlDocumentInfo documentInfo)
-  {
+  public String getDefaultNamespace( final XmlDocumentInfo documentInfo ) {
     return ExternalDataFactoryModule.NAMESPACE;
   }
 
-  public XmlReadHandler createReadHandler(final XmlDocumentInfo documentInfo)
-  {
+  public XmlReadHandler createReadHandler( final XmlDocumentInfo documentInfo ) {
     return new ExternalDataSourceReadHandler();
   }
 }

@@ -17,11 +17,11 @@
 
 package org.pentaho.reporting.engine.classic.core.filter;
 
-import java.text.Format;
-import java.text.NumberFormat;
-
 import org.pentaho.reporting.engine.classic.core.ReportElement;
 import org.pentaho.reporting.engine.classic.core.function.ExpressionRuntime;
+
+import java.text.Format;
+import java.text.NumberFormat;
 
 /**
  * A filter that formats the numeric value from a data source to a string representation.
@@ -34,14 +34,12 @@ import org.pentaho.reporting.engine.classic.core.function.ExpressionRuntime;
  * @author Thomas Morgner
  * @see java.text.NumberFormat
  */
-public class NumberFormatFilter extends FormatFilter
-{
+public class NumberFormatFilter extends FormatFilter {
   /**
    * Default constructor. <P> Uses a general number format for the current locale.
    */
-  public NumberFormatFilter()
-  {
-    setNumberFormat(NumberFormat.getInstance());
+  public NumberFormatFilter() {
+    setNumberFormat( NumberFormat.getInstance() );
   }
 
   /**
@@ -49,9 +47,8 @@ public class NumberFormatFilter extends FormatFilter
    *
    * @param nf The number format.
    */
-  public void setNumberFormat(final NumberFormat nf)
-  {
-    setFormatter(nf);
+  public void setNumberFormat( final NumberFormat nf ) {
+    setFormatter( nf );
   }
 
   /**
@@ -59,8 +56,7 @@ public class NumberFormatFilter extends FormatFilter
    *
    * @return The number format.
    */
-  public NumberFormat getNumberFormat()
-  {
+  public NumberFormat getNumberFormat() {
     return (NumberFormat) getFormatter();
   }
 
@@ -69,10 +65,9 @@ public class NumberFormatFilter extends FormatFilter
    *
    * @param f The format.
    */
-  public void setFormatter(final Format f)
-  {
+  public void setFormatter( final Format f ) {
     final NumberFormat fm = (NumberFormat) f;
-    super.setFormatter(fm);
+    super.setFormatter( fm );
   }
 
   /**
@@ -80,9 +75,8 @@ public class NumberFormatFilter extends FormatFilter
    *
    * @param newValue The new value of the grouping flag.
    */
-  public void setGroupingUsed(final boolean newValue)
-  {
-    getNumberFormat().setGroupingUsed(newValue);
+  public void setGroupingUsed( final boolean newValue ) {
+    getNumberFormat().setGroupingUsed( newValue );
     invalidateCache();
   }
 
@@ -91,8 +85,7 @@ public class NumberFormatFilter extends FormatFilter
    *
    * @return The grouping flag.
    */
-  public boolean isGroupingUsed()
-  {
+  public boolean isGroupingUsed() {
     return getNumberFormat().isGroupingUsed();
   }
 
@@ -101,9 +94,8 @@ public class NumberFormatFilter extends FormatFilter
    *
    * @param newValue The number of digits.
    */
-  public void setMaximumFractionDigits(final int newValue)
-  {
-    getNumberFormat().setMaximumFractionDigits(newValue);
+  public void setMaximumFractionDigits( final int newValue ) {
+    getNumberFormat().setMaximumFractionDigits( newValue );
     invalidateCache();
   }
 
@@ -112,8 +104,7 @@ public class NumberFormatFilter extends FormatFilter
    *
    * @return The digits.
    */
-  public int getMaximumFractionDigits()
-  {
+  public int getMaximumFractionDigits() {
     return getNumberFormat().getMaximumFractionDigits();
   }
 
@@ -122,9 +113,8 @@ public class NumberFormatFilter extends FormatFilter
    *
    * @param newValue The number of digits.
    */
-  public void setMaximumIntegerDigits(final int newValue)
-  {
-    getNumberFormat().setMaximumFractionDigits(newValue);
+  public void setMaximumIntegerDigits( final int newValue ) {
+    getNumberFormat().setMaximumFractionDigits( newValue );
     invalidateCache();
   }
 
@@ -133,8 +123,7 @@ public class NumberFormatFilter extends FormatFilter
    *
    * @return The digits.
    */
-  public int getMaximumIntegerDigits()
-  {
+  public int getMaximumIntegerDigits() {
     return getNumberFormat().getMaximumFractionDigits();
   }
 
@@ -143,9 +132,8 @@ public class NumberFormatFilter extends FormatFilter
    *
    * @param newValue The number of digits.
    */
-  public void setMinimumFractionDigits(final int newValue)
-  {
-    getNumberFormat().setMaximumFractionDigits(newValue);
+  public void setMinimumFractionDigits( final int newValue ) {
+    getNumberFormat().setMaximumFractionDigits( newValue );
     invalidateCache();
   }
 
@@ -154,8 +142,7 @@ public class NumberFormatFilter extends FormatFilter
    *
    * @return The digits.
    */
-  public int getMinimumFractionDigits()
-  {
+  public int getMinimumFractionDigits() {
     return getNumberFormat().getMaximumFractionDigits();
   }
 
@@ -164,9 +151,8 @@ public class NumberFormatFilter extends FormatFilter
    *
    * @param newValue The number of digits.
    */
-  public void setMinimumIntegerDigits(final int newValue)
-  {
-    getNumberFormat().setMaximumFractionDigits(newValue);
+  public void setMinimumIntegerDigits( final int newValue ) {
+    getNumberFormat().setMaximumFractionDigits( newValue );
     invalidateCache();
   }
 
@@ -175,27 +161,23 @@ public class NumberFormatFilter extends FormatFilter
    *
    * @return The digits.
    */
-  public int getMinimumIntegerDigits()
-  {
+  public int getMinimumIntegerDigits() {
     return getNumberFormat().getMaximumFractionDigits();
   }
 
 
-  public FormatSpecification getFormatString(final ExpressionRuntime runtime,
-                                             final ReportElement element,
-                                             FormatSpecification formatSpecification)
-  {
+  public FormatSpecification getFormatString( final ExpressionRuntime runtime,
+                                              final ReportElement element,
+                                              FormatSpecification formatSpecification ) {
     final DataSource source = getDataSource();
-    if (source instanceof RawDataSource)
-    {
+    if ( source instanceof RawDataSource ) {
       final RawDataSource rds = (RawDataSource) source;
-      return rds.getFormatString(runtime, element, formatSpecification);
+      return rds.getFormatString( runtime, element, formatSpecification );
     }
-    if (formatSpecification == null)
-    {
+    if ( formatSpecification == null ) {
       formatSpecification = new FormatSpecification();
     }
-    formatSpecification.redefine(FormatSpecification.TYPE_UNDEFINED, null);
+    formatSpecification.redefine( FormatSpecification.TYPE_UNDEFINED, null );
     return formatSpecification;
   }
 

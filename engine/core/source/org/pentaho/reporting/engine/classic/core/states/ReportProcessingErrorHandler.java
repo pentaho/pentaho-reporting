@@ -22,9 +22,8 @@ package org.pentaho.reporting.engine.classic.core.states;
  *
  * @author Thomas Morgner
  */
-public interface ReportProcessingErrorHandler
-{
-  public void handleError(Exception exception);
+public interface ReportProcessingErrorHandler {
+  public void handleError( Exception exception );
 
   public boolean isErrorOccured();
 

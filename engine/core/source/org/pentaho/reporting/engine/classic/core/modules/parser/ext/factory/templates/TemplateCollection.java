@@ -17,20 +17,19 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.parser.ext.factory.templates;
 
+import org.pentaho.reporting.engine.classic.core.filter.templates.Template;
+import org.pentaho.reporting.libraries.base.config.Configuration;
+
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Iterator;
-
-import org.pentaho.reporting.engine.classic.core.filter.templates.Template;
-import org.pentaho.reporting.libraries.base.config.Configuration;
 
 /**
  * A template collection.
  *
  * @author Thomas Morgner
  */
-public class TemplateCollection implements Serializable
-{
+public class TemplateCollection implements Serializable {
   /**
    * Storage for the templates.
    */
@@ -44,8 +43,7 @@ public class TemplateCollection implements Serializable
   /**
    * Creates a new collection.
    */
-  public TemplateCollection()
-  {
+  public TemplateCollection() {
     templates = new HashMap();
   }
 
@@ -54,16 +52,13 @@ public class TemplateCollection implements Serializable
    *
    * @param template the template.
    */
-  public void addTemplate(final TemplateDescription template)
-  {
-    if (template == null)
-    {
+  public void addTemplate( final TemplateDescription template ) {
+    if ( template == null ) {
       throw new NullPointerException();
     }
-    templates.put(template.getName(), template);
-    if (getConfig() != null)
-    {
-      template.configure(getConfig());
+    templates.put( template.getName(), template );
+    if ( getConfig() != null ) {
+      template.configure( getConfig() );
     }
   }
 
@@ -73,11 +68,9 @@ public class TemplateCollection implements Serializable
    * @param name the template name.
    * @return The template description.
    */
-  public TemplateDescription getTemplate(final String name)
-  {
-    final TemplateDescription td = (TemplateDescription) templates.get(name);
-    if (td != null)
-    {
+  public TemplateDescription getTemplate( final String name ) {
+    final TemplateDescription td = (TemplateDescription) templates.get( name );
+    if ( td != null ) {
       return (TemplateDescription) td.getInstance();
     }
     return null;
@@ -89,18 +82,14 @@ public class TemplateCollection implements Serializable
    * @param template the template.
    * @return The description.
    */
-  public TemplateDescription getDescription(final Template template)
-  {
-    if (template == null)
-    {
-      throw new NullPointerException("Template given must not be null.");
+  public TemplateDescription getDescription( final Template template ) {
+    if ( template == null ) {
+      throw new NullPointerException( "Template given must not be null." );
     }
     final Iterator values = templates.values().iterator();
-    while (values.hasNext())
-    {
+    while ( values.hasNext() ) {
       final TemplateDescription td = (TemplateDescription) values.next();
-      if (td.getObjectClass().equals(template.getClass()))
-      {
+      if ( td.getObjectClass().equals( template.getClass() ) ) {
         return (TemplateDescription) td.getInstance();
       }
     }
@@ -116,24 +105,20 @@ public class TemplateCollection implements Serializable
    *
    * @param config the configuration, never null
    */
-  public void configure(final Configuration config)
-  {
-    if (config == null)
-    {
-      throw new NullPointerException("The given configuration is null");
+  public void configure( final Configuration config ) {
+    if ( config == null ) {
+      throw new NullPointerException( "The given configuration is null" );
     }
-    if (this.config != null)
-    {
+    if ( this.config != null ) {
       // already configured ... ignored
       return;
     }
 
     this.config = config;
     final Iterator it = templates.values().iterator();
-    while (it.hasNext())
-    {
+    while ( it.hasNext() ) {
       final TemplateDescription od = (TemplateDescription) it.next();
-      od.configure(config);
+      od.configure( config );
     }
 
   }
@@ -143,8 +128,7 @@ public class TemplateCollection implements Serializable
    *
    * @return the configuration.
    */
-  public Configuration getConfig()
-  {
+  public Configuration getConfig() {
     return config;
   }
 
@@ -155,21 +139,17 @@ public class TemplateCollection implements Serializable
    * @return true, if the object is equal, false otherwise.
    * @see java.lang.Object#equals(java.lang.Object)
    */
-  public boolean equals(final Object o)
-  {
-    if (this == o)
-    {
+  public boolean equals( final Object o ) {
+    if ( this == o ) {
       return true;
     }
-    if (!(o instanceof TemplateCollection))
-    {
+    if ( !( o instanceof TemplateCollection ) ) {
       return false;
     }
 
     final TemplateCollection templateCollection = (TemplateCollection) o;
 
-    if (!templates.equals(templateCollection.templates))
-    {
+    if ( !templates.equals( templateCollection.templates ) ) {
       return false;
     }
 
@@ -182,8 +162,7 @@ public class TemplateCollection implements Serializable
    * @return the hashcode.
    * @see java.lang.Object#hashCode()
    */
-  public int hashCode()
-  {
+  public int hashCode() {
     return templates.hashCode();
   }
 
@@ -192,8 +171,7 @@ public class TemplateCollection implements Serializable
    *
    * @return the template names.
    */
-  public String[] getNames()
-  {
-    return (String[]) templates.keySet().toArray(new String[templates.size()]);
+  public String[] getNames() {
+    return (String[]) templates.keySet().toArray( new String[ templates.size() ] );
   }
 }

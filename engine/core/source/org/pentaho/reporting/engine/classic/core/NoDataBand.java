@@ -25,14 +25,12 @@ import org.pentaho.reporting.engine.classic.core.filter.types.bands.NoDataBandTy
  *
  * @author Thomas Morgner
  */
-public class NoDataBand extends AbstractRootLevelBand
-{
+public class NoDataBand extends AbstractRootLevelBand {
   /**
    * Constructs a new band.
    */
-  public NoDataBand()
-  {
-    setElementType(new NoDataBandType());
+  public NoDataBand() {
+    setElementType( new NoDataBandType() );
   }
 
   /**
@@ -41,8 +39,7 @@ public class NoDataBand extends AbstractRootLevelBand
    * @param pagebreakAfter  defines, whether a pagebreak should be done after that band was printed.
    * @param pagebreakBefore defines, whether a pagebreak should be done before that band gets printed.
    */
-  public NoDataBand(final boolean pagebreakBefore, final boolean pagebreakAfter)
-  {
-    super(pagebreakBefore, pagebreakAfter);
+  public NoDataBand( final boolean pagebreakBefore, final boolean pagebreakAfter ) {
+    super( pagebreakBefore, pagebreakAfter );
   }
 }

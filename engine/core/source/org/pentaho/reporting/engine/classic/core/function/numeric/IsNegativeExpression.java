@@ -25,8 +25,7 @@ import org.pentaho.reporting.engine.classic.core.function.AbstractExpression;
  * @author Thomas Morgner
  * @deprecated This can be replaced by a formula.
  */
-public class IsNegativeExpression extends AbstractExpression
-{
+public class IsNegativeExpression extends AbstractExpression {
   /**
    * The field name.
    */
@@ -35,8 +34,7 @@ public class IsNegativeExpression extends AbstractExpression
   /**
    * Default constructor.
    */
-  public IsNegativeExpression()
-  {
+  public IsNegativeExpression() {
   }
 
   /**
@@ -45,16 +43,13 @@ public class IsNegativeExpression extends AbstractExpression
    *
    * @return the value of the function.
    */
-  public Object getValue()
-  {
-    final Object o = getDataRow().get(getField());
-    if (o instanceof Number == false)
-    {
+  public Object getValue() {
+    final Object o = getDataRow().get( getField() );
+    if ( o instanceof Number == false ) {
       return Boolean.FALSE;
     }
     final Number n = (Number) o;
-    if (n.doubleValue() < 0)
-    {
+    if ( n.doubleValue() < 0 ) {
       return Boolean.TRUE;
     }
     return Boolean.FALSE;
@@ -65,8 +60,7 @@ public class IsNegativeExpression extends AbstractExpression
    *
    * @return the field.
    */
-  public String getField()
-  {
+  public String getField() {
     return field;
   }
 
@@ -75,8 +69,7 @@ public class IsNegativeExpression extends AbstractExpression
    *
    * @param field the field.
    */
-  public void setField(final String field)
-  {
+  public void setField( final String field ) {
     this.field = field;
   }
 }

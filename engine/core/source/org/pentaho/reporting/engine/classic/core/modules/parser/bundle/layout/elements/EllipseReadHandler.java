@@ -21,10 +21,8 @@ import org.pentaho.reporting.engine.classic.core.filter.types.EllipseType;
 import org.pentaho.reporting.libraries.xmlns.parser.ParseException;
 
 @Deprecated
-public class EllipseReadHandler extends AbstractElementReadHandler
-{
-  public EllipseReadHandler() throws ParseException
-  {
-    super(EllipseType.INSTANCE);
+public class EllipseReadHandler extends AbstractElementReadHandler {
+  public EllipseReadHandler() throws ParseException {
+    super( EllipseType.INSTANCE );
   }
 }

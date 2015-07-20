@@ -28,9 +28,8 @@ import org.pentaho.reporting.engine.classic.core.style.FontDefinition;
  *
  * @author Thomas Morgner
  */
-public class FontDefinitionObjectDescription extends AbstractObjectDescription
-{
-  private static final Log logger = LogFactory.getLog(FontDefinitionObjectDescription.class);
+public class FontDefinitionObjectDescription extends AbstractObjectDescription {
+  private static final Log logger = LogFactory.getLog( FontDefinitionObjectDescription.class );
   /**
    * The font encoding parameter name.
    */
@@ -74,17 +73,16 @@ public class FontDefinitionObjectDescription extends AbstractObjectDescription
   /**
    * Creates a new object description.
    */
-  public FontDefinitionObjectDescription()
-  {
-    super(FontDefinition.class);
-    setParameterDefinition(FontDefinitionObjectDescription.FONT_ENCODING, String.class);
-    setParameterDefinition(FontDefinitionObjectDescription.FONT_NAME, String.class);
-    setParameterDefinition(FontDefinitionObjectDescription.FONT_SIZE, Integer.class);
-    setParameterDefinition(FontDefinitionObjectDescription.BOLD, Boolean.class);
-    setParameterDefinition(FontDefinitionObjectDescription.EMBEDDED_FONT, Boolean.class);
-    setParameterDefinition(FontDefinitionObjectDescription.ITALIC, Boolean.class);
-    setParameterDefinition(FontDefinitionObjectDescription.STRIKETHROUGH, Boolean.class);
-    setParameterDefinition(FontDefinitionObjectDescription.UNDERLINE, Boolean.class);
+  public FontDefinitionObjectDescription() {
+    super( FontDefinition.class );
+    setParameterDefinition( FontDefinitionObjectDescription.FONT_ENCODING, String.class );
+    setParameterDefinition( FontDefinitionObjectDescription.FONT_NAME, String.class );
+    setParameterDefinition( FontDefinitionObjectDescription.FONT_SIZE, Integer.class );
+    setParameterDefinition( FontDefinitionObjectDescription.BOLD, Boolean.class );
+    setParameterDefinition( FontDefinitionObjectDescription.EMBEDDED_FONT, Boolean.class );
+    setParameterDefinition( FontDefinitionObjectDescription.ITALIC, Boolean.class );
+    setParameterDefinition( FontDefinitionObjectDescription.STRIKETHROUGH, Boolean.class );
+    setParameterDefinition( FontDefinitionObjectDescription.UNDERLINE, Boolean.class );
   }
 
   /**
@@ -93,11 +91,9 @@ public class FontDefinitionObjectDescription extends AbstractObjectDescription
    * @param name the parameter name.
    * @return A boolean.
    */
-  private boolean getBooleanParameter(final String name)
-  {
-    final Boolean bool = (Boolean) getParameter(name);
-    if (bool == null)
-    {
+  private boolean getBooleanParameter( final String name ) {
+    final Boolean bool = (Boolean) getParameter( name );
+    if ( bool == null ) {
       return false;
     }
     return bool.booleanValue();
@@ -110,13 +106,11 @@ public class FontDefinitionObjectDescription extends AbstractObjectDescription
    * @return The parameter value.
    * @throws ObjectFactoryException if there is a problem while reading the properties of the given object.
    */
-  private int getIntegerParameter(final String name)
-      throws ObjectFactoryException
-  {
-    final Integer i = (Integer) getParameter(name);
-    if (i == null)
-    {
-      throw new ObjectFactoryException("Parameter " + name + " is not set");
+  private int getIntegerParameter( final String name )
+    throws ObjectFactoryException {
+    final Integer i = (Integer) getParameter( name );
+    if ( i == null ) {
+      throw new ObjectFactoryException( "Parameter " + name + " is not set" );
     }
     return i.intValue();
   }
@@ -126,24 +120,20 @@ public class FontDefinitionObjectDescription extends AbstractObjectDescription
    *
    * @return The object.
    */
-  public Object createObject()
-  {
-    try
-    {
-      final String fontEncoding = (String) getParameter(FontDefinitionObjectDescription.FONT_ENCODING);
-      final String fontName = (String) getParameter(FontDefinitionObjectDescription.FONT_NAME);
-      final int fontSize = getIntegerParameter(FontDefinitionObjectDescription.FONT_SIZE);
-      final boolean bold = getBooleanParameter(FontDefinitionObjectDescription.BOLD);
-      final boolean embedded = getBooleanParameter(FontDefinitionObjectDescription.EMBEDDED_FONT);
-      final boolean italic = getBooleanParameter(FontDefinitionObjectDescription.ITALIC);
-      final boolean strike = getBooleanParameter(FontDefinitionObjectDescription.STRIKETHROUGH);
-      final boolean underline = getBooleanParameter(FontDefinitionObjectDescription.UNDERLINE);
-      return new FontDefinition(fontName, fontSize, bold, italic, underline, strike,
-          fontEncoding, embedded);
-    }
-    catch (Exception e)
-    {
-      FontDefinitionObjectDescription.logger.info("Failed to create FontDefinition: ", e);
+  public Object createObject() {
+    try {
+      final String fontEncoding = (String) getParameter( FontDefinitionObjectDescription.FONT_ENCODING );
+      final String fontName = (String) getParameter( FontDefinitionObjectDescription.FONT_NAME );
+      final int fontSize = getIntegerParameter( FontDefinitionObjectDescription.FONT_SIZE );
+      final boolean bold = getBooleanParameter( FontDefinitionObjectDescription.BOLD );
+      final boolean embedded = getBooleanParameter( FontDefinitionObjectDescription.EMBEDDED_FONT );
+      final boolean italic = getBooleanParameter( FontDefinitionObjectDescription.ITALIC );
+      final boolean strike = getBooleanParameter( FontDefinitionObjectDescription.STRIKETHROUGH );
+      final boolean underline = getBooleanParameter( FontDefinitionObjectDescription.UNDERLINE );
+      return new FontDefinition( fontName, fontSize, bold, italic, underline, strike,
+        fontEncoding, embedded );
+    } catch ( Exception e ) {
+      FontDefinitionObjectDescription.logger.info( "Failed to create FontDefinition: ", e );
       return null;
     }
   }
@@ -154,23 +144,21 @@ public class FontDefinitionObjectDescription extends AbstractObjectDescription
    * @param o the object (should be an instance of <code>FontDefinition</code>).
    * @throws ObjectFactoryException if the object is not an instance of <code>Float</code>.
    */
-  public void setParameterFromObject(final Object o)
-      throws ObjectFactoryException
-  {
-    if ((o instanceof FontDefinition) == false)
-    {
-      throw new ObjectFactoryException("The given object is no FontDefinition.");
+  public void setParameterFromObject( final Object o )
+    throws ObjectFactoryException {
+    if ( ( o instanceof FontDefinition ) == false ) {
+      throw new ObjectFactoryException( "The given object is no FontDefinition." );
     }
 
     final FontDefinition fdef = (FontDefinition) o;
-    setParameter(FontDefinitionObjectDescription.FONT_ENCODING, fdef.getFontEncoding(null));
-    setParameter(FontDefinitionObjectDescription.FONT_NAME, fdef.getFontName());
-    setParameter(FontDefinitionObjectDescription.FONT_SIZE, new Integer(fdef.getFontSize()));
-    setParameter(FontDefinitionObjectDescription.BOLD, getBoolean(fdef.isBold()));
-    setParameter(FontDefinitionObjectDescription.EMBEDDED_FONT, getBoolean(fdef.isEmbeddedFont()));
-    setParameter(FontDefinitionObjectDescription.ITALIC, getBoolean(fdef.isItalic()));
-    setParameter(FontDefinitionObjectDescription.STRIKETHROUGH, getBoolean(fdef.isStrikeThrough()));
-    setParameter(FontDefinitionObjectDescription.UNDERLINE, getBoolean(fdef.isUnderline()));
+    setParameter( FontDefinitionObjectDescription.FONT_ENCODING, fdef.getFontEncoding( null ) );
+    setParameter( FontDefinitionObjectDescription.FONT_NAME, fdef.getFontName() );
+    setParameter( FontDefinitionObjectDescription.FONT_SIZE, new Integer( fdef.getFontSize() ) );
+    setParameter( FontDefinitionObjectDescription.BOLD, getBoolean( fdef.isBold() ) );
+    setParameter( FontDefinitionObjectDescription.EMBEDDED_FONT, getBoolean( fdef.isEmbeddedFont() ) );
+    setParameter( FontDefinitionObjectDescription.ITALIC, getBoolean( fdef.isItalic() ) );
+    setParameter( FontDefinitionObjectDescription.STRIKETHROUGH, getBoolean( fdef.isStrikeThrough() ) );
+    setParameter( FontDefinitionObjectDescription.UNDERLINE, getBoolean( fdef.isUnderline() ) );
   }
 
   /**
@@ -179,10 +167,8 @@ public class FontDefinitionObjectDescription extends AbstractObjectDescription
    * @param bool the primitive boolean.
    * @return the Boolean object.
    */
-  private Boolean getBoolean(final boolean bool)
-  {
-    if (bool == true)
-    {
+  private Boolean getBoolean( final boolean bool ) {
+    if ( bool == true ) {
       return Boolean.TRUE;
     }
     return Boolean.FALSE;

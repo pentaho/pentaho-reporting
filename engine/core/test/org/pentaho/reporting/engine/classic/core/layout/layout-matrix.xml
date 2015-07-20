@@ -63,7 +63,6 @@
     </band>
 
 
-
     <band name="test-rb" layout="row">
       <band name="canvas-rb" layout="block">
         <label name="label-rb" x="0" y="0" width="100" height="10">Label4</label>
@@ -112,6 +111,6 @@
         <label name="label-ir" x="0" y="0" width="100" height="10">Label4</label>
       </band>
     </band>
-   
+
   </reportheader>
 </report>

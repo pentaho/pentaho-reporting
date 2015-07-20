@@ -37,81 +37,67 @@ import org.pentaho.reporting.libraries.repository.NameGenerator;
  *
  * @author Thomas Morgner
  */
-public class FlowCSVOutputProcessor extends AbstractTableOutputProcessor
-{
+public class FlowCSVOutputProcessor extends AbstractTableOutputProcessor {
   private OutputProcessorMetaData metaData;
   private FlowSelector flowSelector;
   private CSVPrinter printer;
 
-  public FlowCSVOutputProcessor(final Configuration config)
-  {
-    if (config == null)
-    {
+  public FlowCSVOutputProcessor( final Configuration config ) {
+    if ( config == null ) {
       throw new NullPointerException();
     }
 
-    this.metaData = new CSVOutputProcessorMetaData(CSVOutputProcessorMetaData.PAGINATION_MANUAL);
+    this.metaData = new CSVOutputProcessorMetaData( CSVOutputProcessorMetaData.PAGINATION_MANUAL );
     this.flowSelector = new DisplayAllFlowSelector();
     this.printer = new CSVPrinter();
   }
 
-  public void processingStarted(final ReportDefinition report, final ProcessingContext processingContext)
-  {
-    super.processingStarted(report, processingContext);
-    this.printer.initialize(processingContext.getConfiguration());
+  public void processingStarted( final ReportDefinition report, final ProcessingContext processingContext ) {
+    super.processingStarted( report, processingContext );
+    this.printer.initialize( processingContext.getConfiguration() );
   }
 
-  public String getEncoding()
-  {
+  public String getEncoding() {
     return printer.getEncoding();
   }
 
-  public void setEncoding(final String encoding)
-  {
-    if (encoding == null)
-    {
+  public void setEncoding( final String encoding ) {
+    if ( encoding == null ) {
       throw new NullPointerException();
     }
 
-    printer.setEncoding(encoding);
+    printer.setEncoding( encoding );
   }
 
 
-  public OutputProcessorMetaData getMetaData()
-  {
+  public OutputProcessorMetaData getMetaData() {
     return metaData;
   }
 
-  public void setFlowSelector(final FlowSelector flowSelector)
-  {
+  public void setFlowSelector( final FlowSelector flowSelector ) {
     this.flowSelector = flowSelector;
   }
 
-  public FlowSelector getFlowSelector()
-  {
+  public FlowSelector getFlowSelector() {
     return flowSelector;
   }
 
-  protected void processTableContent(final LogicalPageKey logicalPageKey,
-                                     final LogicalPageBox logicalPage,
-                                     final TableContentProducer contentProducer) throws ContentProcessingException
-  {
-    printer.print(logicalPage, contentProducer, metaData, false);
+  protected void processTableContent( final LogicalPageKey logicalPageKey,
+                                      final LogicalPageBox logicalPage,
+                                      final TableContentProducer contentProducer ) throws ContentProcessingException {
+    printer.print( logicalPage, contentProducer, metaData, false );
   }
 
-  protected void updateTableContent(final LogicalPageKey logicalPageKey,
-                                    final LogicalPageBox logicalPageBox,
-                                    final TableContentProducer tableContentProducer,
-                                    final boolean performOutput) throws ContentProcessingException
-  {
-    printer.print(logicalPageBox, tableContentProducer, metaData, true);
+  protected void updateTableContent( final LogicalPageKey logicalPageKey,
+                                     final LogicalPageBox logicalPageBox,
+                                     final TableContentProducer tableContentProducer,
+                                     final boolean performOutput ) throws ContentProcessingException {
+    printer.print( logicalPageBox, tableContentProducer, metaData, true );
   }
 
 
-  protected void processingContentFinished()
-  {
-    if (isContentGeneratable() == false)
-    {
+  protected void processingContentFinished() {
+    if ( isContentGeneratable() == false ) {
       return;
     }
 
@@ -119,24 +105,20 @@ public class FlowCSVOutputProcessor extends AbstractTableOutputProcessor
     this.metaData.commit();
   }
 
-  public ContentLocation getContentLocation()
-  {
+  public ContentLocation getContentLocation() {
     return printer.getContentLocation();
   }
 
-  public void setContentLocation(final ContentLocation contentLocation)
-  {
-    printer.setContentLocation(contentLocation);
+  public void setContentLocation( final ContentLocation contentLocation ) {
+    printer.setContentLocation( contentLocation );
   }
 
-  public NameGenerator getContentNameGenerator()
-  {
+  public NameGenerator getContentNameGenerator() {
     return printer.getContentNameGenerator();
   }
 
-  public void setContentNameGenerator(final NameGenerator contentNameGenerator)
-  {
-    printer.setContentNameGenerator(contentNameGenerator);
+  public void setContentNameGenerator( final NameGenerator contentNameGenerator ) {
+    printer.setContentNameGenerator( contentNameGenerator );
   }
 
 

@@ -17,20 +17,19 @@
 
 package org.pentaho.reporting.engine.classic.core.filter;
 
-import java.io.IOException;
-import java.io.ObjectOutputStream;
-
 import org.pentaho.reporting.engine.classic.core.ReportElement;
 import org.pentaho.reporting.engine.classic.core.function.ExpressionRuntime;
 import org.pentaho.reporting.libraries.serializer.SerializerHelper;
+
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 
 /**
  * A data source that returns a constant value.  An example is a label on a report.
  *
  * @author Thomas Morgner
  */
-public class StaticDataSource implements DataSource
-{
+public class StaticDataSource implements DataSource {
   /**
    * The value.
    */
@@ -39,8 +38,7 @@ public class StaticDataSource implements DataSource
   /**
    * Default constructor.
    */
-  public StaticDataSource()
-  {
+  public StaticDataSource() {
   }
 
   /**
@@ -48,9 +46,8 @@ public class StaticDataSource implements DataSource
    *
    * @param o The value.
    */
-  public StaticDataSource(final Object o)
-  {
-    setValue(o);
+  public StaticDataSource( final Object o ) {
+    setValue( o );
   }
 
   /**
@@ -58,8 +55,7 @@ public class StaticDataSource implements DataSource
    *
    * @param o The value.
    */
-  public void setValue(final Object o)
-  {
+  public void setValue( final Object o ) {
     this.value = o;
   }
 
@@ -68,8 +64,7 @@ public class StaticDataSource implements DataSource
    *
    * @return the value.
    */
-  public Object getValue()
-  {
+  public Object getValue() {
     return value;
   }
 
@@ -81,8 +76,7 @@ public class StaticDataSource implements DataSource
    * @param element
    * @return The value.
    */
-  public Object getValue(final ExpressionRuntime runtime, final ReportElement element)
-  {
+  public Object getValue( final ExpressionRuntime runtime, final ReportElement element ) {
     return value;
   }
 
@@ -93,8 +87,7 @@ public class StaticDataSource implements DataSource
    * @throws CloneNotSupportedException this should never happen.
    */
   public StaticDataSource clone()
-      throws CloneNotSupportedException
-  {
+    throws CloneNotSupportedException {
     return (StaticDataSource) super.clone();
   }
 
@@ -104,11 +97,10 @@ public class StaticDataSource implements DataSource
    * @param out the output stream where to write the object.
    * @throws IOException if errors occur while writing the stream.
    */
-  private void writeObject(final ObjectOutputStream out)
-      throws IOException
-  {
+  private void writeObject( final ObjectOutputStream out )
+    throws IOException {
     out.defaultWriteObject();
-    SerializerHelper.getInstance().writeObject(value, out);
+    SerializerHelper.getInstance().writeObject( value, out );
   }
 
   /**
@@ -118,10 +110,9 @@ public class StaticDataSource implements DataSource
    * @throws IOException            when reading the stream fails.
    * @throws ClassNotFoundException if a class definition for a serialized object could not be found.
    */
-  private void readObject(final java.io.ObjectInputStream in)
-      throws IOException, ClassNotFoundException
-  {
+  private void readObject( final java.io.ObjectInputStream in )
+    throws IOException, ClassNotFoundException {
     in.defaultReadObject();
-    value = SerializerHelper.getInstance().readObject(in);
+    value = SerializerHelper.getInstance().readObject( in );
   }
 }

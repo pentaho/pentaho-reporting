@@ -17,49 +17,41 @@
 
 package org.pentaho.reporting.engine.classic.core.states;
 
-import javax.swing.table.TableModel;
-
 import org.pentaho.reporting.engine.classic.core.AbstractDataFactory;
 import org.pentaho.reporting.engine.classic.core.DataFactory;
 import org.pentaho.reporting.engine.classic.core.DataRow;
 import org.pentaho.reporting.engine.classic.core.ReportDataFactoryException;
 import org.pentaho.reporting.engine.classic.core.util.TypedTableModel;
 
-public class DesignTimeDataFactory extends AbstractDataFactory
-{
-  public DesignTimeDataFactory()
-  {
+import javax.swing.table.TableModel;
+
+public class DesignTimeDataFactory extends AbstractDataFactory {
+  public DesignTimeDataFactory() {
   }
 
-  public TableModel queryData(final String query, final DataRow parameters) throws ReportDataFactoryException
-  {
+  public TableModel queryData( final String query, final DataRow parameters ) throws ReportDataFactoryException {
     final TypedTableModel tableModel = new TypedTableModel();
     tableModel.addRow();
     return tableModel;
   }
 
-  public DataFactory derive()
-  {
+  public DataFactory derive() {
     return clone();
   }
 
-  public DataFactory clone()
-  {
+  public DataFactory clone() {
     return super.clone();
   }
 
-  public void close()
-  {
+  public void close() {
 
   }
 
-  public boolean isQueryExecutable(final String query, final DataRow parameters)
-  {
+  public boolean isQueryExecutable( final String query, final DataRow parameters ) {
     return true;
   }
 
-  public String[] getQueryNames()
-  {
-    return new String[0];
+  public String[] getQueryNames() {
+    return new String[ 0 ];
   }
 }

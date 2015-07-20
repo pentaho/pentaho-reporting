@@ -25,15 +25,13 @@ import org.pentaho.reporting.engine.classic.core.filter.templates.VerticalLineTe
  *
  * @author Thomas Morgner
  */
-public class VerticalLineTemplateDescription extends AbstractTemplateDescription
-{
+public class VerticalLineTemplateDescription extends AbstractTemplateDescription {
   /**
    * Creates a new template description.
    *
    * @param name the name.
    */
-  public VerticalLineTemplateDescription(final String name)
-  {
-    super(name, VerticalLineTemplate.class, true);
+  public VerticalLineTemplateDescription( final String name ) {
+    super( name, VerticalLineTemplate.class, true );
   }
 }

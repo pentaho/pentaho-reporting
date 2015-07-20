@@ -41,42 +41,34 @@ import org.pentaho.reporting.engine.classic.core.util.LongList;
  *
  * @author Thomas Morgner
  */
-public class LeftAlignmentProcessor extends AbstractAlignmentProcessor
-{
+public class LeftAlignmentProcessor extends AbstractAlignmentProcessor {
   private long position;
   private int pageSegment;
 
-  public LeftAlignmentProcessor()
-  {
+  public LeftAlignmentProcessor() {
   }
 
-  public int getPageSegment()
-  {
+  public int getPageSegment() {
     return pageSegment;
   }
 
-  public void setPageSegment(final int pageSegment)
-  {
+  public void setPageSegment( final int pageSegment ) {
     this.pageSegment = pageSegment;
   }
 
-  private long getPosition()
-  {
+  private long getPosition() {
     return position;
   }
 
-  private void setPosition(final long position)
-  {
+  private void setPosition( final long position ) {
     this.position = position;
   }
 
-  private void addPosition(final long width)
-  {
+  private void addPosition( final long width ) {
     this.position += width;
   }
 
-  public RenderBox next()
-  {
+  public RenderBox next() {
     position = getStartOfLine();
     pageSegment = 0;
 
@@ -88,8 +80,7 @@ public class LeftAlignmentProcessor extends AbstractAlignmentProcessor
     return retval;
   }
 
-  public void performLastLineAlignment()
-  {
+  public void performLastLineAlignment() {
     position = getStartOfLine();
     pageSegment = 0;
 
@@ -106,8 +97,7 @@ public class LeftAlignmentProcessor extends AbstractAlignmentProcessor
    * @param count the number of elements in the sequence
    * @return the index of the last element that will fit on the current line.
    */
-  protected int handleElement(final int start, final int count)
-  {
+  protected int handleElement( final int start, final int count ) {
     final InlineSequenceElement[] sequenceElements = getSequenceElements();
     final RenderNode[] nodes = getNodes();
     final long[] elementDimensions = getElementDimensions();
@@ -119,98 +109,87 @@ public class LeftAlignmentProcessor extends AbstractAlignmentProcessor
     // In the given range, there should be only one content element.
     InlineSequenceElement contentElement = null;
     int contentIndex = start;
-    for (int i = start; i < endIndex; i++)
-    {
-      final InlineSequenceElement element = sequenceElements[i];
-      final RenderNode node = nodes[i];
-      if (element instanceof StartSequenceElement ||
-          element instanceof EndSequenceElement)
-      {
-        width += element.getMaximumWidth(node);
+    for ( int i = start; i < endIndex; i++ ) {
+      final InlineSequenceElement element = sequenceElements[ i ];
+      final RenderNode node = nodes[ i ];
+      if ( element instanceof StartSequenceElement ||
+        element instanceof EndSequenceElement ) {
+        width += element.getMaximumWidth( node );
         continue;
       }
 
-      width += element.getMaximumWidth(node);
+      width += element.getMaximumWidth( node );
       contentElement = element;
       contentIndex = i;
     }
 
     final long nextPosition = getPosition() + width;
-    final long lastPageBreak = getPageBreak(getPagebreakCount() - 1);
+    final long lastPageBreak = getPageBreak( getPagebreakCount() - 1 );
     // Do we cross a page boundary?
-    if (nextPosition > lastPageBreak)
-    {
+    if ( nextPosition > lastPageBreak ) {
       // On outer break: Stop processing
 
       // Dont write through to the stored position; but prepare if
       // we have to fallback ..
       long position = getPosition();
-      for (int i = start; i < endIndex; i++)
-      {
-        final InlineSequenceElement element = sequenceElements[i];
-        final RenderNode node = nodes[i];
-        elementPositions[i] = position;
-        final long elementWidth = element.getMaximumWidth(node);
-        elementDimensions[i] = elementWidth;
+      for ( int i = start; i < endIndex; i++ ) {
+        final InlineSequenceElement element = sequenceElements[ i ];
+        final RenderNode node = nodes[ i ];
+        elementPositions[ i ] = position;
+        final long elementWidth = element.getMaximumWidth( node );
+        elementDimensions[ i ] = elementWidth;
         position += elementWidth;
       }
 
       // we cross a pagebreak. Stop working on it - we bail out here.
 
-      if (contentElement instanceof TextSequenceElement)
-      {
+      if ( contentElement instanceof TextSequenceElement ) {
         // the element may be splittable. Test, and if so, give a hint to the
         // outside world ..
-        setSkipIndex(endIndex);
-        setBreakableIndex(contentIndex);
-        return (start);
+        setSkipIndex( endIndex );
+        setBreakableIndex( contentIndex );
+        return ( start );
       }
 
       // This is the first element and it still does not fit. How evil.
-      if (start == 0)
-      {
-        if (contentElement instanceof InlineBoxSequenceElement)
-        {
-          final RenderNode node = nodes[contentIndex];
-          if ((node.getNodeType() & LayoutNodeTypes.MASK_BOX) == LayoutNodeTypes.MASK_BOX)
-          {
+      if ( start == 0 ) {
+        if ( contentElement instanceof InlineBoxSequenceElement ) {
+          final RenderNode node = nodes[ contentIndex ];
+          if ( ( node.getNodeType() & LayoutNodeTypes.MASK_BOX ) == LayoutNodeTypes.MASK_BOX ) {
             // OK, limit the size of the box to the maximum line width and
             // revalidate it.
-            final long contentPosition = elementPositions[contentIndex];
+            final long contentPosition = elementPositions[ contentIndex ];
             final RenderBox box = (RenderBox) node;
-            final long maxWidth = (getEndOfLine() - contentPosition);
-            computeInlineBlock(box, contentPosition, maxWidth);
+            final long maxWidth = ( getEndOfLine() - contentPosition );
+            computeInlineBlock( box, contentPosition, maxWidth );
 
-            elementDimensions[endIndex - 1] = node.getCachedWidth();
+            elementDimensions[ endIndex - 1 ] = node.getCachedWidth();
           }
         }
-        setSkipIndex(endIndex);
+        setSkipIndex( endIndex );
       }
-      return (start);
+      return ( start );
     }
 
-    final long innerPagebreak = getPageBreak(getPageSegment());
-    if (nextPosition > innerPagebreak)
-    {
+    final long innerPagebreak = getPageBreak( getPageSegment() );
+    if ( nextPosition > innerPagebreak ) {
       // It is an inner pagebreak and the current element would not fit into the remaining space.
       // Move the element to the next page segment (but only if the start is not on
-      setPosition(innerPagebreak);
-      setPageSegment(getPageSegment() + 1);
+      setPosition( innerPagebreak );
+      setPageSegment( getPageSegment() + 1 );
     }
 
 
     // No, it is an ordinary advance ..
     // Check, whether we hit an item-sequence element
-    if (contentElement instanceof InlineBoxSequenceElement == false)
-    {
-      for (int i = start; i < endIndex; i++)
-      {
-        final RenderNode node = nodes[i];
-        final InlineSequenceElement element = sequenceElements[i];
-        elementPositions[i] = getPosition();
-        final long elementWidth = element.getMaximumWidth(node);
-        elementDimensions[i] = elementWidth;
-        addPosition(elementWidth);
+    if ( contentElement instanceof InlineBoxSequenceElement == false ) {
+      for ( int i = start; i < endIndex; i++ ) {
+        final RenderNode node = nodes[ i ];
+        final InlineSequenceElement element = sequenceElements[ i ];
+        elementPositions[ i ] = getPosition();
+        final long elementWidth = element.getMaximumWidth( node );
+        elementDimensions[ i ] = elementWidth;
+        addPosition( elementWidth );
       }
       return endIndex;
     }
@@ -220,36 +199,31 @@ public class LeftAlignmentProcessor extends AbstractAlignmentProcessor
     // This is a bit more complicated. So we encountered an inline-block
     // element here. That means, the element will try to occuppy its
     // maximum-content-width.
-//    Log.debug("Advance block at index " + contentIndex);
-//    final long ceWidth = contentElement.getMinimumWidth();
-//    final long extraSpace = contentElement.getMaximumWidth();
-//    Log.debug("Advance block: Min " + ceWidth);
-//    Log.debug("Advance block: Max " + extraSpace);
+    //    Log.debug("Advance block at index " + contentIndex);
+    //    final long ceWidth = contentElement.getMinimumWidth();
+    //    final long extraSpace = contentElement.getMaximumWidth();
+    //    Log.debug("Advance block: Min " + ceWidth);
+    //    Log.debug("Advance block: Max " + extraSpace);
 
-    final RenderNode contentNode = nodes[contentIndex];
-    final long itemElementWidth = contentElement.getMaximumWidth(contentNode);
+    final RenderNode contentNode = nodes[ contentIndex ];
+    final long itemElementWidth = contentElement.getMaximumWidth( contentNode );
 
-    if ((contentNode.getNodeType() & LayoutNodeTypes.MASK_BOX) == LayoutNodeTypes.MASK_BOX)
-    {
+    if ( ( contentNode.getNodeType() & LayoutNodeTypes.MASK_BOX ) == LayoutNodeTypes.MASK_BOX ) {
       final RenderBox box = (RenderBox) contentNode;
-      computeInlineBlock(box, getPosition(), itemElementWidth);
-    }
-    else
-    {
-      contentNode.setCachedX(getPosition());
-      contentNode.setCachedWidth(itemElementWidth);
+      computeInlineBlock( box, getPosition(), itemElementWidth );
+    } else {
+      contentNode.setCachedX( getPosition() );
+      contentNode.setCachedWidth( itemElementWidth );
     }
 
     final long preferredEndingPos = getPosition() + itemElementWidth;
-    if (preferredEndingPos > getEndOfLine())
-    {
+    if ( preferredEndingPos > getEndOfLine() ) {
       // We would eat the whole space up to the end of the line and more
       // So lets move that element to the next line instead...
 
       // But: We could easily end in an endless loop here. So check whether
       // the element is the first in the line
-      if (start == 0)
-      {
+      if ( start == 0 ) {
         // As it is guaranteed, that each chunk contains at least one item,
         // checking for start == 0 is safe enough ..
         return endIndex;
@@ -258,64 +232,57 @@ public class LeftAlignmentProcessor extends AbstractAlignmentProcessor
       return start;
     }
 
-    for (int i = start; i < contentIndex; i++)
-    {
-      final InlineSequenceElement element = sequenceElements[i];
-      final RenderNode node = nodes[contentIndex];
-      final long elementWidth = element.getMaximumWidth(node);
-      elementPositions[i] = getPosition();
-      elementDimensions[i] = elementWidth;
-      addPosition(elementWidth);
+    for ( int i = start; i < contentIndex; i++ ) {
+      final InlineSequenceElement element = sequenceElements[ i ];
+      final RenderNode node = nodes[ contentIndex ];
+      final long elementWidth = element.getMaximumWidth( node );
+      elementPositions[ i ] = getPosition();
+      elementDimensions[ i ] = elementWidth;
+      addPosition( elementWidth );
     }
 
-    elementPositions[contentIndex] = getPosition();
-    elementDimensions[contentIndex] = itemElementWidth;
-    setPosition(preferredEndingPos);
+    elementPositions[ contentIndex ] = getPosition();
+    elementDimensions[ contentIndex ] = itemElementWidth;
+    setPosition( preferredEndingPos );
 
-    for (int i = contentIndex + 1; i < endIndex; i++)
-    {
-      final InlineSequenceElement element = sequenceElements[i];
-      final RenderNode node = nodes[contentIndex];
-      final long elementWidth = element.getMaximumWidth(node);
-      elementPositions[i] = getPosition();
-      elementDimensions[i] = elementWidth;
-      addPosition(elementWidth);
+    for ( int i = contentIndex + 1; i < endIndex; i++ ) {
+      final InlineSequenceElement element = sequenceElements[ i ];
+      final RenderNode node = nodes[ contentIndex ];
+      final long elementWidth = element.getMaximumWidth( node );
+      elementPositions[ i ] = getPosition();
+      elementDimensions[ i ] = elementWidth;
+      addPosition( elementWidth );
     }
 
     return endIndex;
   }
 
-  public void performSkipAlignment(final int endIndex)
-  {
+  public void performSkipAlignment( final int endIndex ) {
     // this is a NO-OP method, as the skip-alignment is simply a left-alignment ...
   }
 
 
-  protected void updateBreaksForLastLineAlignment()
-  {
+  protected void updateBreaksForLastLineAlignment() {
     final long[] horizontalBreaks = getPageGrid().getHorizontalBreaks();
     final int breakCount = horizontalBreaks.length;
-    final LongList pageLongList = new LongList(breakCount);
+    final LongList pageLongList = new LongList( breakCount );
     final long endOfLine = getEndOfLine();
     final long startOfLine = getStartOfLine();
-    for (int i = 0; i < breakCount; i++)
-    {
-      final long pos = horizontalBreaks[i];
-      if (pos <= startOfLine)
-      {
+    for ( int i = 0; i < breakCount; i++ ) {
+      final long pos = horizontalBreaks[ i ];
+      if ( pos <= startOfLine ) {
         // skip ..
         continue;
       }
-      if (pos >= endOfLine)
-      {
+      if ( pos >= endOfLine ) {
         break;
       }
-      pageLongList.add(pos);
+      pageLongList.add( pos );
     }
     //pageLongList.add(endOfLine);
-    pageLongList.add(Long.MAX_VALUE);
+    pageLongList.add( Long.MAX_VALUE );
 
     final long[] pagebreaks = getPageBreaks();
-    updatePageBreaks(pageLongList.toArray(pagebreaks), pageLongList.size());
+    updatePageBreaks( pageLongList.toArray( pagebreaks ), pageLongList.size() );
   }
 }

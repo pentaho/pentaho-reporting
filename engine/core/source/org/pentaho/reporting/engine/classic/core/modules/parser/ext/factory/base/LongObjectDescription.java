@@ -22,16 +22,14 @@ package org.pentaho.reporting.engine.classic.core.modules.parser.ext.factory.bas
  *
  * @author Thomas Morgner
  */
-public class LongObjectDescription extends AbstractObjectDescription
-{
+public class LongObjectDescription extends AbstractObjectDescription {
 
   /**
    * Creates a new object description.
    */
-  public LongObjectDescription()
-  {
-    super(Long.class);
-    setParameterDefinition("value", String.class);
+  public LongObjectDescription() {
+    super( Long.class );
+    setParameterDefinition( "value", String.class );
   }
 
   /**
@@ -39,10 +37,9 @@ public class LongObjectDescription extends AbstractObjectDescription
    *
    * @return The object.
    */
-  public Object createObject()
-  {
-    final String o = (String) getParameter("value");
-    return Long.valueOf(o.trim());
+  public Object createObject() {
+    final String o = (String) getParameter( "value" );
+    return Long.valueOf( o.trim() );
   }
 
   /**
@@ -51,14 +48,12 @@ public class LongObjectDescription extends AbstractObjectDescription
    * @param o the object (should be an instance of <code>Long</code>).
    * @throws ObjectFactoryException if the object is not an instance of <code>Long</code>.
    */
-  public void setParameterFromObject(final Object o) throws ObjectFactoryException
-  {
-    if (!(o instanceof Long))
-    {
-      throw new ObjectFactoryException("The given object is no java.lang.Long.");
+  public void setParameterFromObject( final Object o ) throws ObjectFactoryException {
+    if ( !( o instanceof Long ) ) {
+      throw new ObjectFactoryException( "The given object is no java.lang.Long." );
     }
 
-    setParameter("value", String.valueOf(o));
+    setParameter( "value", String.valueOf( o ) );
   }
 
   /**
@@ -67,25 +62,20 @@ public class LongObjectDescription extends AbstractObjectDescription
    * @param o the object to test.
    * @return A boolean.
    */
-  public boolean equals(final Object o)
-  {
-    if (this == o)
-    {
+  public boolean equals( final Object o ) {
+    if ( this == o ) {
       return true;
     }
-    if (!(o instanceof AbstractObjectDescription))
-    {
+    if ( !( o instanceof AbstractObjectDescription ) ) {
       return false;
     }
 
     final AbstractObjectDescription abstractObjectDescription = (AbstractObjectDescription) o;
 
-    if (Long.TYPE.equals(abstractObjectDescription.getObjectClass()))
-    {
+    if ( Long.TYPE.equals( abstractObjectDescription.getObjectClass() ) ) {
       return true;
     }
-    if (Long.class.equals(abstractObjectDescription.getObjectClass()))
-    {
+    if ( Long.class.equals( abstractObjectDescription.getObjectClass() ) ) {
       return true;
     }
     return false;
@@ -96,8 +86,7 @@ public class LongObjectDescription extends AbstractObjectDescription
    *
    * @return A hash code.
    */
-  public int hashCode()
-  {
+  public int hashCode() {
     return getObjectClass().hashCode();
   }
 

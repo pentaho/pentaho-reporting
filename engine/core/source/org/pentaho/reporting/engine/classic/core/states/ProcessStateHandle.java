@@ -17,7 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.core.states;
 
-public interface ProcessStateHandle
-{
+public interface ProcessStateHandle {
   public void close();
 }

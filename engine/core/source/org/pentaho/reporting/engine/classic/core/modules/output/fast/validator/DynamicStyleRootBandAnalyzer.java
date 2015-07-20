@@ -17,8 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.output.fast.validator;
 
-import java.util.HashMap;
-
 import org.pentaho.reporting.engine.classic.core.AttributeNames;
 import org.pentaho.reporting.engine.classic.core.ReportElement;
 import org.pentaho.reporting.engine.classic.core.Section;
@@ -30,61 +28,55 @@ import org.pentaho.reporting.engine.classic.core.util.AbstractStructureVisitor;
 import org.pentaho.reporting.engine.classic.core.util.InstanceID;
 import org.pentaho.reporting.libraries.base.util.HashNMap;
 
-public class DynamicStyleRootBandAnalyzer extends AbstractStructureVisitor
-{
+import java.util.HashMap;
+
+public class DynamicStyleRootBandAnalyzer extends AbstractStructureVisitor {
   private HashNMap<InstanceID, StyleKey> dynamicTemplateInfo;
   private HashNMap<String, StyleKey> styleByElementName;
   private HashNMap<InstanceID, StyleKey> styleById;
 
-  public DynamicStyleRootBandAnalyzer(final HashNMap<String, StyleKey> styleByElementName,
-                                      final HashNMap<InstanceID, StyleKey> styleById)
-  {
+  public DynamicStyleRootBandAnalyzer( final HashNMap<String, StyleKey> styleByElementName,
+                                       final HashNMap<InstanceID, StyleKey> styleById ) {
     this.styleByElementName = styleByElementName;
     this.styleById = styleById;
     this.dynamicTemplateInfo = new HashNMap<InstanceID, StyleKey>();
   }
 
-  public void compute(Section rootLevelBand)
-  {
+  public void compute( Section rootLevelBand ) {
     this.dynamicTemplateInfo.clear();
-    inspectElement(rootLevelBand);
-    traverseSection(rootLevelBand);
+    inspectElement( rootLevelBand );
+    traverseSection( rootLevelBand );
 
     HashMap<InstanceID, StyleKey[]> stash = buildStash();
     rootLevelBand.setAttribute
-        (AttributeNames.Internal.NAMESPACE, AttributeNames.Internal.FAST_EXPORT_DYNAMIC_STASH, stash);
+      ( AttributeNames.Internal.NAMESPACE, AttributeNames.Internal.FAST_EXPORT_DYNAMIC_STASH, stash );
   }
 
-  private HashMap<InstanceID, StyleKey[]> buildStash()
-  {
+  private HashMap<InstanceID, StyleKey[]> buildStash() {
     HashMap<InstanceID, StyleKey[]> stash = new HashMap<InstanceID, StyleKey[]>();
 
-    for (InstanceID id : this.dynamicTemplateInfo.keySet())
-    {
-      int valueCount = this.dynamicTemplateInfo.getValueCount(id);
-      StyleKey[] styleKeys = this.dynamicTemplateInfo.toArray(id, new StyleKey[valueCount]);
-      stash.put(id, styleKeys);
+    for ( InstanceID id : this.dynamicTemplateInfo.keySet() ) {
+      int valueCount = this.dynamicTemplateInfo.getValueCount( id );
+      StyleKey[] styleKeys = this.dynamicTemplateInfo.toArray( id, new StyleKey[ valueCount ] );
+      stash.put( id, styleKeys );
     }
     return stash;
   }
 
 
-  protected void traverseSection(final Section section)
-  {
-    traverseSectionWithoutSubReports(section);
+  protected void traverseSection( final Section section ) {
+    traverseSectionWithoutSubReports( section );
   }
 
-  protected void inspectElement(final ReportElement element)
-  {
-    dynamicTemplateInfo.add(element.getObjectID(), ElementStyleKeys.VISIBLE);
-    traverseStyleExpressions(element);
+  protected void inspectElement( final ReportElement element ) {
+    dynamicTemplateInfo.add( element.getObjectID(), ElementStyleKeys.VISIBLE );
+    traverseStyleExpressions( element );
   }
 
-  protected void inspectStyleExpression(final ReportElement element,
-                                        final StyleKey styleKey,
-                                        final Expression expression,
-                                        final ExpressionMetaData expressionMetaData)
-  {
-    dynamicTemplateInfo.add(element.getObjectID(), styleKey);
+  protected void inspectStyleExpression( final ReportElement element,
+                                         final StyleKey styleKey,
+                                         final Expression expression,
+                                         final ExpressionMetaData expressionMetaData ) {
+    dynamicTemplateInfo.add( element.getObjectID(), styleKey );
   }
 }

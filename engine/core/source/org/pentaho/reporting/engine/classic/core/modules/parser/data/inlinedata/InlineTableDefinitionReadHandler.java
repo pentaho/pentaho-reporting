@@ -17,26 +17,24 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.parser.data.inlinedata;
 
-import java.util.ArrayList;
-
 import org.pentaho.reporting.libraries.xmlns.parser.AbstractXmlReadHandler;
 import org.pentaho.reporting.libraries.xmlns.parser.XmlReadHandler;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
+
+import java.util.ArrayList;
 
 /**
  * Todo: Document Me
  *
  * @author Thomas Morgner
  */
-public class InlineTableDefinitionReadHandler extends AbstractXmlReadHandler
-{
+public class InlineTableDefinitionReadHandler extends AbstractXmlReadHandler {
   private ArrayList rowDefinitions;
   private String[] names;
   private Class[] types;
 
-  public InlineTableDefinitionReadHandler()
-  {
+  public InlineTableDefinitionReadHandler() {
     rowDefinitions = new ArrayList();
   }
 
@@ -49,19 +47,16 @@ public class InlineTableDefinitionReadHandler extends AbstractXmlReadHandler
    * @return the handler or null, if the tagname is invalid.
    * @throws SAXException if there is a parsing error.
    */
-  protected XmlReadHandler getHandlerForChild(final String uri,
-                                              final String tagName,
-                                              final Attributes atts) throws SAXException
-  {
-    if (isSameNamespace(uri) == false)
-    {
+  protected XmlReadHandler getHandlerForChild( final String uri,
+                                               final String tagName,
+                                               final Attributes atts ) throws SAXException {
+    if ( isSameNamespace( uri ) == false ) {
       return null;
     }
 
-    if ("column".equals(tagName))
-    {
+    if ( "column".equals( tagName ) ) {
       final InlineTableColumnReadHandler crh = new InlineTableColumnReadHandler();
-      rowDefinitions.add(crh);
+      rowDefinitions.add( crh );
       return crh;
     }
     return null;
@@ -72,27 +67,23 @@ public class InlineTableDefinitionReadHandler extends AbstractXmlReadHandler
    *
    * @throws SAXException if there is a parsing error.
    */
-  protected void doneParsing() throws SAXException
-  {
+  protected void doneParsing() throws SAXException {
     final int size = rowDefinitions.size();
-    names = new String[size];
-    types = new Class[size];
+    names = new String[ size ];
+    types = new Class[ size ];
 
-    for (int i = 0; i < rowDefinitions.size(); i++)
-    {
-      final InlineTableColumnReadHandler handler = (InlineTableColumnReadHandler) rowDefinitions.get(i);
-      names[i] = handler.getName();
-      types[i] = handler.getType();
+    for ( int i = 0; i < rowDefinitions.size(); i++ ) {
+      final InlineTableColumnReadHandler handler = (InlineTableColumnReadHandler) rowDefinitions.get( i );
+      names[ i ] = handler.getName();
+      types[ i ] = handler.getType();
     }
   }
 
-  public String[] getNames()
-  {
+  public String[] getNames() {
     return names;
   }
 
-  public Class[] getTypes()
-  {
+  public Class[] getTypes() {
     return types;
   }
 
@@ -102,8 +93,7 @@ public class InlineTableDefinitionReadHandler extends AbstractXmlReadHandler
    * @return the object.
    * @throws SAXException if an parser error occured.
    */
-  public Object getObject() throws SAXException
-  {
+  public Object getObject() throws SAXException {
     return null;
   }
 }

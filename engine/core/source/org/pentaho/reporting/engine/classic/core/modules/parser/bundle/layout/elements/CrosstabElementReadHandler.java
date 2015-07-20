@@ -27,10 +27,8 @@ import org.pentaho.reporting.libraries.xmlns.parser.ParseException;
  *
  * @author Sulaiman Karmali
  */
-public class CrosstabElementReadHandler extends SubReportReadHandler
-{
-  public CrosstabElementReadHandler() throws ParseException
-  {
-    super(CrosstabElementType.INSTANCE, CrosstabElement.class);
+public class CrosstabElementReadHandler extends SubReportReadHandler {
+  public CrosstabElementReadHandler() throws ParseException {
+    super( CrosstabElementType.INSTANCE, CrosstabElement.class );
   }
 }

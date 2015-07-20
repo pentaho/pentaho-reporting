@@ -32,44 +32,41 @@ import org.pentaho.reporting.engine.classic.core.states.PerformanceMonitorContex
 import org.pentaho.reporting.engine.classic.core.states.ReportStateKey;
 import org.pentaho.reporting.engine.classic.core.util.InstanceID;
 
-public interface Renderer extends Cloneable
-{
-  public static enum LayoutResult
-  {
+public interface Renderer extends Cloneable {
+  public static enum LayoutResult {
     LAYOUT_UNVALIDATABLE, LAYOUT_NO_PAGEBREAK, LAYOUT_PAGEBREAK
   }
 
-  public static enum SectionType
-  {
+  public static enum SectionType {
     NORMALFLOW, HEADER, FOOTER, REPEAT_FOOTER, WATERMARK
   }
-  
+
   public OutputProcessor getOutputProcessor();
 
   public LayoutModelBuilder getNormalFlowLayoutModelBuilder();
 
-  public void startReport(final ReportDefinition pageDefinition,
-                          final ProcessingContext processingContext,
-                          final PerformanceMonitorContext performanceMonitorContext);
+  public void startReport( final ReportDefinition pageDefinition,
+                           final ProcessingContext processingContext,
+                           final PerformanceMonitorContext performanceMonitorContext );
 
-  public void startSubReport(final ReportDefinition report, final InstanceID insertationPoint);
+  public void startSubReport( final ReportDefinition report, final InstanceID insertationPoint );
 
-  public void startGroup(final Group group, final Integer predictedStateCount);
+  public void startGroup( final Group group, final Integer predictedStateCount );
 
-  public void startGroupBody(final GroupBody groupBody, final Integer predictedStateCount);
+  public void startGroupBody( final GroupBody groupBody, final Integer predictedStateCount );
 
-  public void startSection(SectionType type);
+  public void startSection( SectionType type );
 
   public InlineSubreportMarker[] endSection();
 
   public void addProgressBox()
-      throws ReportProcessingException;
+    throws ReportProcessingException;
 
   public void addEmptyRootLevelBand()
-      throws ReportProcessingException;
+    throws ReportProcessingException;
 
-  public void add(Band band, ExpressionRuntime runtime)
-      throws ReportProcessingException;
+  public void add( Band band, ExpressionRuntime runtime )
+    throws ReportProcessingException;
 
   public void endGroupBody();
 
@@ -80,13 +77,13 @@ public interface Renderer extends Cloneable
   public void endReport();
 
   public LayoutResult validatePages()
-      throws ContentProcessingException;
+    throws ContentProcessingException;
 
-  public boolean processPage(final LayoutPagebreakHandler handler,
-                             final Object commitMarker,
-                             final boolean performOutput) throws ContentProcessingException;
+  public boolean processPage( final LayoutPagebreakHandler handler,
+                              final Object commitMarker,
+                              final boolean performOutput ) throws ContentProcessingException;
 
-  public void processIncrementalUpdate(final boolean performOutput) throws ContentProcessingException;
+  public void processIncrementalUpdate( final boolean performOutput ) throws ContentProcessingException;
 
   public int getPagebreaks();
 
@@ -98,7 +95,7 @@ public interface Renderer extends Cloneable
 
   public void addPagebreak();
 
-  public boolean clearPendingPageStart(final LayoutPagebreakHandler layoutPagebreakHandler);
+  public boolean clearPendingPageStart( final LayoutPagebreakHandler layoutPagebreakHandler );
 
   public boolean isPageStartPending();
 
@@ -116,7 +113,7 @@ public interface Renderer extends Cloneable
 
   public void rollback();
 
-  public void setStateKey(ReportStateKey stateKey);
+  public void setStateKey( ReportStateKey stateKey );
 
   public void applyAutoCommit();
 

@@ -17,61 +17,51 @@
 
 package org.pentaho.reporting.engine.classic.core.states;
 
-import java.io.Serializable;
-import java.util.HashMap;
-
 import org.pentaho.reporting.engine.classic.core.ReportProcessingException;
 import org.pentaho.reporting.engine.classic.core.SubReport;
 
-public class SubReportStorage implements Serializable
-{
+import java.io.Serializable;
+import java.util.HashMap;
+
+public class SubReportStorage implements Serializable {
   private HashMap<FunctionStorageKey, SubReport> storage;
 
-  public SubReportStorage()
-  {
+  public SubReportStorage() {
     storage = new HashMap<FunctionStorageKey, SubReport>();
   }
 
-  public void store(final FunctionStorageKey key,
-                    final SubReport subReport)
-      throws ReportProcessingException
-  {
-    if (key == null)
-    {
+  public void store( final FunctionStorageKey key,
+                     final SubReport subReport )
+    throws ReportProcessingException {
+    if ( key == null ) {
       throw new NullPointerException();
     }
-    if (subReport == null)
-    {
+    if ( subReport == null ) {
       throw new NullPointerException();
     }
 
     // derive would regenerate instance-IDs, which is not advisable.
-    storage.put(key, subReport);
+    storage.put( key, subReport );
   }
 
-  public SubReport restore(final FunctionStorageKey key)
-      throws ReportProcessingException
-  {
-    if (key == null)
-    {
+  public SubReport restore( final FunctionStorageKey key )
+    throws ReportProcessingException {
+    if ( key == null ) {
       throw new NullPointerException();
     }
 
-    final SubReport subReport = storage.get(key);
-    if (subReport == null)
-    {
+    final SubReport subReport = storage.get( key );
+    if ( subReport == null ) {
       return null;
     }
 
     return subReport;
   }
 
-  public boolean contains(final FunctionStorageKey key)
-  {
-    if (key == null)
-    {
+  public boolean contains( final FunctionStorageKey key ) {
+    if ( key == null ) {
       throw new NullPointerException();
     }
-    return storage.containsKey(key);
+    return storage.containsKey( key );
   }
 }

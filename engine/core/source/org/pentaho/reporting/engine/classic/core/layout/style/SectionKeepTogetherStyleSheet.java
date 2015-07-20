@@ -29,53 +29,42 @@ import org.pentaho.reporting.engine.classic.core.util.InstanceID;
  *
  * @author Thomas Morgner
  */
-public class SectionKeepTogetherStyleSheet extends AbstractStyleSheet
-{
+public class SectionKeepTogetherStyleSheet extends AbstractStyleSheet {
   private StyleSheet parent;
   private Boolean avoidPagebreak;
 
-  public SectionKeepTogetherStyleSheet(final boolean avoidPagebreak)
-  {
+  public SectionKeepTogetherStyleSheet( final boolean avoidPagebreak ) {
     this.parent = BandDefaultStyleSheet.getBandDefaultStyle();
-    if (avoidPagebreak)
-    {
+    if ( avoidPagebreak ) {
       this.avoidPagebreak = Boolean.TRUE;
-    }
-    else
-    {
+    } else {
       this.avoidPagebreak = Boolean.FALSE;
     }
 
   }
 
-  public StyleSheet getParent()
-  {
+  public StyleSheet getParent() {
     return parent;
   }
 
-  public InstanceID getId()
-  {
+  public InstanceID getId() {
     return parent.getId();
   }
 
-  public long getChangeTracker()
-  {
+  public long getChangeTracker() {
     return parent.getChangeTracker();
   }
 
-  public Object getStyleProperty(final StyleKey key, final Object defaultValue)
-  {
-    if (ElementStyleKeys.AVOID_PAGEBREAK_INSIDE.equals(key))
-    {
+  public Object getStyleProperty( final StyleKey key, final Object defaultValue ) {
+    if ( ElementStyleKeys.AVOID_PAGEBREAK_INSIDE.equals( key ) ) {
       return avoidPagebreak;
     }
-    return parent.getStyleProperty(key, defaultValue);
+    return parent.getStyleProperty( key, defaultValue );
   }
 
-  public Object[] toArray()
-  {
+  public Object[] toArray() {
     final Object[] objects = parent.toArray();
-    objects[ElementStyleKeys.AVOID_PAGEBREAK_INSIDE.getIdentifier()] = avoidPagebreak;
+    objects[ ElementStyleKeys.AVOID_PAGEBREAK_INSIDE.getIdentifier() ] = avoidPagebreak;
     return objects;
   }
 }

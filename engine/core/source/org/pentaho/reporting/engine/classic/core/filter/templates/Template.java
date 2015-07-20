@@ -24,14 +24,13 @@ import org.pentaho.reporting.engine.classic.core.filter.DataSource;
  *
  * @author Thomas Morgner
  */
-public interface Template extends DataSource
-{
+public interface Template extends DataSource {
   /**
    * Sets the name of this template.
    *
    * @param name the name.
    */
-  public void setName(String name);
+  public void setName( String name );
 
   /**
    * Returns the template name.

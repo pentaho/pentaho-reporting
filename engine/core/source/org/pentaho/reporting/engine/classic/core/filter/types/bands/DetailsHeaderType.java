@@ -21,17 +21,14 @@ import org.pentaho.reporting.engine.classic.core.DetailsHeader;
 import org.pentaho.reporting.engine.classic.core.ReportElement;
 import org.pentaho.reporting.engine.classic.core.metadata.ElementType;
 
-public class DetailsHeaderType extends AbstractSectionType
-{
+public class DetailsHeaderType extends AbstractSectionType {
   public static ElementType INSTANCE = new DetailsHeaderType();
 
-  public DetailsHeaderType()
-  {
-    super("details-header", false);
+  public DetailsHeaderType() {
+    super( "details-header", false );
   }
 
-  public ReportElement create()
-  {
+  public ReportElement create() {
     return new DetailsHeader();
   }
 }

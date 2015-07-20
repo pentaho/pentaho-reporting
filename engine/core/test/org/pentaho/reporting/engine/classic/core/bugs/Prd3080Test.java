@@ -17,8 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.core.bugs;
 
-import java.io.File;
-
 import junit.framework.TestCase;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
@@ -31,40 +29,36 @@ import org.pentaho.reporting.engine.classic.core.util.geom.StrictGeomUtility;
 import org.pentaho.reporting.libraries.resourceloader.Resource;
 import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 
-public class Prd3080Test extends TestCase
-{
-  public Prd3080Test()
-  {
+import java.io.File;
+
+public class Prd3080Test extends TestCase {
+  public Prd3080Test() {
   }
 
-  public Prd3080Test(final String name)
-  {
-    super(name);
+  public Prd3080Test( final String name ) {
+    super( name );
   }
 
-  protected void setUp() throws Exception
-  {
+  protected void setUp() throws Exception {
     ClassicEngineBoot.getInstance().start();
   }
 
-  public void testPrd3080() throws Exception
-  {
-    final File file = GoldenSampleGenerator.locateGoldenSampleReport("Prd-3080.prpt");
-    assertNotNull(file);
+  public void testPrd3080() throws Exception {
+    final File file = GoldenSampleGenerator.locateGoldenSampleReport( "Prd-3080.prpt" );
+    assertNotNull( file );
 
     final ResourceManager resourceManager = new ResourceManager();
     resourceManager.registerDefaults();
-    final Resource directly = resourceManager.createDirectly(file, MasterReport.class);
+    final Resource directly = resourceManager.createDirectly( file, MasterReport.class );
     final MasterReport report = (MasterReport) directly.getResource();
 
-    LogicalPageBox logicalPageBox = DebugReportRunner.layoutPage(report, 0);
+    LogicalPageBox logicalPageBox = DebugReportRunner.layoutPage( report, 0 );
 
-    final RenderNode[] nodes = MatchFactory.matchAll(logicalPageBox, "RowRenderBox");
-    for (int i = 0; i < nodes.length; i++)
-    {
-      final RenderNode node = nodes[i];
-      assertEquals(0, node.getX());
-      assertEquals(StrictGeomUtility.toInternalValue(559), node.getWidth());
+    final RenderNode[] nodes = MatchFactory.matchAll( logicalPageBox, "RowRenderBox" );
+    for ( int i = 0; i < nodes.length; i++ ) {
+      final RenderNode node = nodes[ i ];
+      assertEquals( 0, node.getX() );
+      assertEquals( StrictGeomUtility.toInternalValue( 559 ), node.getWidth() );
     }
   }
 }

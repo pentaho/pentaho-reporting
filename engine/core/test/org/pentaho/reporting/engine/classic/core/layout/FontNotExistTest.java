@@ -17,8 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.core.layout;
 
-import java.net.URL;
-
 import junit.framework.TestCase;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
@@ -26,38 +24,35 @@ import org.pentaho.reporting.engine.classic.core.testsupport.DebugReportRunner;
 import org.pentaho.reporting.libraries.resourceloader.Resource;
 import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 
+import java.net.URL;
+
 /**
  * Ensures that invalid fonts do not cause hard crashes. The default font mapping should jump in and rescue the day.
  *
  * @author Thomas Morgner
  */
-public class FontNotExistTest extends TestCase
-{
-  public FontNotExistTest()
-  {
+public class FontNotExistTest extends TestCase {
+  public FontNotExistTest() {
   }
 
-  public FontNotExistTest(final String s)
-  {
-    super(s);
+  public FontNotExistTest( final String s ) {
+    super( s );
   }
 
-  protected void setUp() throws Exception
-  {
+  protected void setUp() throws Exception {
     ClassicEngineBoot.getInstance().start();
   }
 
-  public void testFontDoesNotCrash() throws Exception
-  {
-    final URL url = getClass().getResource("font-not-exist.xml");
-    assertNotNull(url);
+  public void testFontDoesNotCrash() throws Exception {
+    final URL url = getClass().getResource( "font-not-exist.xml" );
+    assertNotNull( url );
     final ResourceManager resourceManager = new ResourceManager();
     resourceManager.registerDefaults();
-    final Resource directly = resourceManager.createDirectly(url, MasterReport.class);
+    final Resource directly = resourceManager.createDirectly( url, MasterReport.class );
     final MasterReport resource = (MasterReport) directly.getResource();
 
-    DebugReportRunner.createCSV(resource);
-//    DebugReportRunner.executeAll(resource);
+    DebugReportRunner.createCSV( resource );
+    //    DebugReportRunner.executeAll(resource);
 
   }
 }

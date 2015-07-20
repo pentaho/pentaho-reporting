@@ -31,8 +31,7 @@ import org.pentaho.reporting.engine.classic.core.event.ReportEvent;
  *
  * @author David Gilbert
  */
-public class GroupCountFunction extends AbstractFunction
-{
+public class GroupCountFunction extends AbstractFunction {
   /**
    * The name of the group that should be counted. This can be set to null to compute the count for all sub-groups of
    * the parent-group.
@@ -51,8 +50,7 @@ public class GroupCountFunction extends AbstractFunction
   /**
    * Default constructor.
    */
-  public GroupCountFunction()
-  {
+  public GroupCountFunction() {
   }
 
   /**
@@ -62,10 +60,9 @@ public class GroupCountFunction extends AbstractFunction
    * @param group The group name.
    * @throws NullPointerException if the given name is null
    */
-  public GroupCountFunction(final String name, final String group)
-  {
-    setName(name);
-    setGroup(group);
+  public GroupCountFunction( final String name, final String group ) {
+    setName( name );
+    setGroup( group );
   }
 
   /**
@@ -73,8 +70,7 @@ public class GroupCountFunction extends AbstractFunction
    *
    * @return the name of the group or null, if all groups are counted
    */
-  public String getParentGroup()
-  {
+  public String getParentGroup() {
     return parentGroup;
   }
 
@@ -83,8 +79,7 @@ public class GroupCountFunction extends AbstractFunction
    *
    * @param group the name of the group to be counted.
    */
-  public void setParentGroup(final String group)
-  {
+  public void setParentGroup( final String group ) {
     this.parentGroup = group;
   }
 
@@ -93,8 +88,7 @@ public class GroupCountFunction extends AbstractFunction
    *
    * @return the name of the group or null, if all groups are counted
    */
-  public String getGroup()
-  {
+  public String getGroup() {
     return group;
   }
 
@@ -103,8 +97,7 @@ public class GroupCountFunction extends AbstractFunction
    *
    * @param group the name of the group to be counted.
    */
-  public void setGroup(final String group)
-  {
+  public void setGroup( final String group ) {
     this.group = group;
   }
 
@@ -113,9 +106,8 @@ public class GroupCountFunction extends AbstractFunction
    *
    * @param event the current report event received.
    */
-  public void reportInitialized(final ReportEvent event)
-  {
-    setCount(0);
+  public void reportInitialized( final ReportEvent event ) {
+    setCount( 0 );
   }
 
   /**
@@ -124,23 +116,18 @@ public class GroupCountFunction extends AbstractFunction
    *
    * @param event the current report event received.
    */
-  public void groupStarted(final ReportEvent event)
-  {
-    final Group group = FunctionUtilities.getCurrentGroup(event);
+  public void groupStarted( final ReportEvent event ) {
+    final Group group = FunctionUtilities.getCurrentGroup( event );
 
-    if (group.matches(getParentGroup()))
-    {
-      setCount(0);
+    if ( group.matches( getParentGroup() ) ) {
+      setCount( 0 );
     }
 
-    if (getGroup() == null)
-    {
+    if ( getGroup() == null ) {
       // count all groups...
-      setCount(getCount() + 1);
-    }
-    else if (group.matches(getGroup()))
-    {
-      setCount(getCount() + 1);
+      setCount( getCount() + 1 );
+    } else if ( group.matches( getGroup() ) ) {
+      setCount( getCount() + 1 );
     }
   }
 
@@ -149,8 +136,7 @@ public class GroupCountFunction extends AbstractFunction
    *
    * @return the curernt group count.
    */
-  protected int getCount()
-  {
+  protected int getCount() {
     return count;
   }
 
@@ -159,8 +145,7 @@ public class GroupCountFunction extends AbstractFunction
    *
    * @param count the curernt group count.
    */
-  protected void setCount(final int count)
-  {
+  protected void setCount( final int count ) {
     this.count = count;
   }
 
@@ -169,8 +154,7 @@ public class GroupCountFunction extends AbstractFunction
    *
    * @return the number of groups processed as java.lang.Integer.
    */
-  public Object getValue()
-  {
+  public Object getValue() {
     return getCount();
   }
 }

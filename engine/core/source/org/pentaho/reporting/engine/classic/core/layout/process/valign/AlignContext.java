@@ -33,52 +33,44 @@ import org.pentaho.reporting.engine.classic.core.layout.model.RenderNode;
  *
  * @author Thomas Morgner
  */
-public abstract class AlignContext
-{
+public abstract class AlignContext {
   private int dominantBaseline;
   private RenderNode node;
   private AlignContext next;
 
-  protected AlignContext(final RenderNode node)
-  {
+  protected AlignContext( final RenderNode node ) {
     this.node = node;
   }
 
-  public boolean isSimpleNode()
-  {
+  public boolean isSimpleNode() {
     return false;
   }
 
-  public RenderNode getNode()
-  {
+  public RenderNode getNode() {
     return node;
   }
 
-  public AlignContext getNext()
-  {
+  public AlignContext getNext() {
     return next;
   }
 
-  public void setNext(final AlignContext next)
-  {
+  public void setNext( final AlignContext next ) {
     this.next = next;
   }
 
-  public abstract void shift(final long delta);
+  public abstract void shift( final long delta );
 
   public abstract long getAfterEdge();
 
   public abstract long getBeforeEdge();
 
-  public void setDominantBaseline(final int dominantBaseline)
-  {
+  public void setDominantBaseline( final int dominantBaseline ) {
     this.dominantBaseline = dominantBaseline;
   }
 
-  public int getDominantBaseline()
-  {
+  public int getDominantBaseline() {
     return dominantBaseline;
   }
 
-  public abstract long getBaselineDistance(int baseline);
+  public abstract long getBaselineDistance( int baseline );
 }

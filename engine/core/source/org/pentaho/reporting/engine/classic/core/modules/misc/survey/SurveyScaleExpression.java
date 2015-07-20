@@ -17,21 +17,17 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.misc.survey;
 
-import java.awt.BasicStroke;
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.Paint;
-import java.awt.Shape;
+import org.pentaho.reporting.engine.classic.core.DataRow;
+import org.pentaho.reporting.engine.classic.core.filter.types.ContentFieldType;
+import org.pentaho.reporting.engine.classic.core.function.AbstractExpression;
+import org.pentaho.reporting.libraries.serializer.SerializerHelper;
+
+import java.awt.*;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
-
-import org.pentaho.reporting.engine.classic.core.DataRow;
-import org.pentaho.reporting.engine.classic.core.filter.types.ContentFieldType;
-import org.pentaho.reporting.engine.classic.core.function.AbstractExpression;
-import org.pentaho.reporting.libraries.serializer.SerializerHelper;
 
 /**
  * An expression that takes values from one or more fields in the current row of the report, builds a {@link
@@ -39,10 +35,10 @@ import org.pentaho.reporting.libraries.serializer.SerializerHelper;
  * used by the expression are defined using properties named '0', '1', ... 'N', which need to be specified after the
  * expression is created. These fields should contain {@link Number} instances.The {@link SurveyScale} class implements
  * the Drawable interface, so it can be displayed using a {@link ContentFieldType}.
+ *
  * @noinspection UnusedDeclaration
  */
-public class SurveyScaleExpression extends AbstractExpression
-{
+public class SurveyScaleExpression extends AbstractExpression {
   /**
    * The lowest value on the scale.
    */
@@ -106,17 +102,16 @@ public class SurveyScaleExpression extends AbstractExpression
   private boolean autoConfigure;
   private double upperMargin;
   private double lowerMargin;
-  
+
   private ArrayList<Boolean> fillShapes;
   private boolean drawTickMarks;
   private boolean drawScaleValues;
   private ArrayList<SurveyScaleShapeType> shapes;
   private SurveyScaleShapeType defaultShape;
   private transient BasicStroke outlineStroke;
-  
-  public SurveyScaleExpression()
-  {
-    this(0, 1);
+
+  public SurveyScaleExpression() {
+    this( 0, 1 );
   }
 
   /**
@@ -125,9 +120,8 @@ public class SurveyScaleExpression extends AbstractExpression
    * @param lowest  the lowest value on the response scale.
    * @param highest the highest value on the response scale.
    */
-  public SurveyScaleExpression(final int lowest, final int highest)
-  {
-    this(lowest, highest, null, null, null);
+  public SurveyScaleExpression( final int lowest, final int highest ) {
+    this( lowest, highest, null, null, null );
   }
 
   /**
@@ -142,12 +136,11 @@ public class SurveyScaleExpression extends AbstractExpression
    * @param shape            a shape that will be used to override the shape displayed for the first series
    *                         (<code>null</code> permitted).
    */
-  public SurveyScaleExpression(final int lowest,
-                               final int highest,
-                               final String lowerBoundsField,
-                               final String upperBoundsField,
-                               final Shape shape)
-  {
+  public SurveyScaleExpression( final int lowest,
+                                final int highest,
+                                final String lowerBoundsField,
+                                final String upperBoundsField,
+                                final Shape shape ) {
     this.fillShapes = new ArrayList<Boolean>();
     this.shapes = new ArrayList<SurveyScaleShapeType>();
     this.lowest = lowest;
@@ -163,112 +156,88 @@ public class SurveyScaleExpression extends AbstractExpression
     this.upperMargin = 0.1;
     this.lowerMargin = 0.1;
     this.defaultShape = SurveyScaleShapeType.DownTriangle;
-    this.outlineStroke = new BasicStroke(0.5f);
+    this.outlineStroke = new BasicStroke( 0.5f );
     this.fillPaint = Color.BLACK;
   }
 
-  public SurveyScaleShapeType getDefaultShape()
-  {
+  public SurveyScaleShapeType getDefaultShape() {
     return defaultShape;
   }
 
-  public void setDefaultShape(final SurveyScaleShapeType defaultShape)
-  {
+  public void setDefaultShape( final SurveyScaleShapeType defaultShape ) {
     this.defaultShape = defaultShape;
   }
 
-  public void setFillShapes(final int index, final boolean fill)
-  {
-    if (fillShapes.size() == index)
-    {
-      fillShapes.add(fill);
-    }
-    else
-    {
-      fillShapes.set(index, fill);
+  public void setFillShapes( final int index, final boolean fill ) {
+    if ( fillShapes.size() == index ) {
+      fillShapes.add( fill );
+    } else {
+      fillShapes.set( index, fill );
     }
   }
 
-  public boolean getFillShapes(final int index)
-  {
-    return fillShapes.get(index);
+  public boolean getFillShapes( final int index ) {
+    return fillShapes.get( index );
   }
 
-  public int getFillShapesCount()
-  {
+  public int getFillShapesCount() {
     return fillShapes.size();
   }
 
-  public boolean[] getFillShapes()
-  {
-    final boolean[] retval = new boolean[fillShapes.size()];
-    for (int i = 0; i < retval.length; i++)
-    {
-      retval[i] = Boolean.TRUE.equals(fillShapes.get(i));
+  public boolean[] getFillShapes() {
+    final boolean[] retval = new boolean[ fillShapes.size() ];
+    for ( int i = 0; i < retval.length; i++ ) {
+      retval[ i ] = Boolean.TRUE.equals( fillShapes.get( i ) );
 
     }
     return retval;
   }
 
-  public void setFillShapes(final boolean[] fields)
-  {
+  public void setFillShapes( final boolean[] fields ) {
     this.fillShapes.clear();
-    for (int i = 0; i < fields.length; i++)
-    {
-      this.fillShapes.add(fields[i]);
+    for ( int i = 0; i < fields.length; i++ ) {
+      this.fillShapes.add( fields[ i ] );
 
     }
   }
 
-  public void setShapes(final int index, final SurveyScaleShapeType fill)
-  {
-    if (shapes.size() == index)
-    {
-      shapes.add(fill);
-    }
-    else
-    {
-      shapes.set(index, fill);
+  public void setShapes( final int index, final SurveyScaleShapeType fill ) {
+    if ( shapes.size() == index ) {
+      shapes.add( fill );
+    } else {
+      shapes.set( index, fill );
     }
   }
 
-  public SurveyScaleShapeType getShapes(final int index)
-  {
-    return shapes.get(index);
+  public SurveyScaleShapeType getShapes( final int index ) {
+    return shapes.get( index );
   }
 
-  public int getShapesCount()
-  {
+  public int getShapesCount() {
     return shapes.size();
   }
 
-  public SurveyScaleShapeType[] getShapes()
-  {
-    final SurveyScaleShapeType[] retval = new SurveyScaleShapeType[shapes.size()];
-    for (int i = 0; i < retval.length; i++)
-    {
-      retval[i] = shapes.get(i);
+  public SurveyScaleShapeType[] getShapes() {
+    final SurveyScaleShapeType[] retval = new SurveyScaleShapeType[ shapes.size() ];
+    for ( int i = 0; i < retval.length; i++ ) {
+      retval[ i ] = shapes.get( i );
     }
     return retval;
   }
 
-  public void setShapes(final SurveyScaleShapeType[] fields)
-  {
+  public void setShapes( final SurveyScaleShapeType[] fields ) {
     this.shapes.clear();
-    for (int i = 0; i < fields.length; i++)
-    {
-      this.shapes.add(fields[i]);
+    for ( int i = 0; i < fields.length; i++ ) {
+      this.shapes.add( fields[ i ] );
 
     }
   }
 
-  public boolean isAutoConfigure()
-  {
+  public boolean isAutoConfigure() {
     return autoConfigure;
   }
 
-  public void setAutoConfigure(final boolean autoConfigure)
-  {
+  public void setAutoConfigure( final boolean autoConfigure ) {
     this.autoConfigure = autoConfigure;
   }
 
@@ -277,8 +246,7 @@ public class SurveyScaleExpression extends AbstractExpression
    *
    * @return A string (possibly <code>null</code>).
    */
-  public String getRangeLowerBoundField()
-  {
+  public String getRangeLowerBoundField() {
     return this.rangeLowerBoundField;
   }
 
@@ -288,8 +256,7 @@ public class SurveyScaleExpression extends AbstractExpression
    *
    * @param field the field name (<code>null</code> permitted).
    */
-  public void setRangeLowerBoundField(final String field)
-  {
+  public void setRangeLowerBoundField( final String field ) {
     this.rangeLowerBoundField = field;
   }
 
@@ -298,8 +265,7 @@ public class SurveyScaleExpression extends AbstractExpression
    *
    * @return A string (possibly <code>null</code>).
    */
-  public String getRangeUpperBoundField()
-  {
+  public String getRangeUpperBoundField() {
     return this.rangeUpperBoundField;
   }
 
@@ -309,8 +275,7 @@ public class SurveyScaleExpression extends AbstractExpression
    *
    * @param field the field name (<code>null</code> permitted).
    */
-  public void setRangeUpperBoundField(final String field)
-  {
+  public void setRangeUpperBoundField( final String field ) {
     this.rangeUpperBoundField = field;
   }
 
@@ -319,8 +284,7 @@ public class SurveyScaleExpression extends AbstractExpression
    *
    * @return The override shape (possibly <code>null</code>).
    */
-  public Shape getOverrideShape()
-  {
+  public Shape getOverrideShape() {
     return this.overrideShape;
   }
 
@@ -330,13 +294,11 @@ public class SurveyScaleExpression extends AbstractExpression
    *
    * @param shape the shape (<code>null</code> permitted).
    */
-  public void setOverrideShape(final Shape shape)
-  {
+  public void setOverrideShape( final Shape shape ) {
     this.overrideShape = shape;
   }
 
-  public boolean isOverrideShapeFilled()
-  {
+  public boolean isOverrideShapeFilled() {
     return overrideShapeFilled;
   }
 
@@ -345,128 +307,103 @@ public class SurveyScaleExpression extends AbstractExpression
    *
    * @param b the flag.
    */
-  public void setOverrideShapeFilled(final boolean b)
-  {
+  public void setOverrideShapeFilled( final boolean b ) {
     this.overrideShapeFilled = b;
   }
 
-  public int getLowest()
-  {
+  public int getLowest() {
     return lowest;
   }
 
-  public void setLowest(final int lowest)
-  {
+  public void setLowest( final int lowest ) {
     this.lowest = lowest;
   }
 
-  public int getHighest()
-  {
+  public int getHighest() {
     return highest;
   }
 
-  public void setHighest(final int highest)
-  {
+  public void setHighest( final int highest ) {
     this.highest = highest;
   }
 
-  public Font getScaleValueFont()
-  {
+  public Font getScaleValueFont() {
     return scaleValueFont;
   }
 
-  public void setScaleValueFont(final Font scaleValueFont)
-  {
+  public void setScaleValueFont( final Font scaleValueFont ) {
     this.scaleValueFont = scaleValueFont;
   }
 
-  public Color getScaleValuePaint()
-  {
+  public Color getScaleValuePaint() {
     return scaleValuePaint;
   }
 
-  public void setScaleValuePaint(final Color scaleValuePaint)
-  {
+  public void setScaleValuePaint( final Color scaleValuePaint ) {
     this.scaleValuePaint = scaleValuePaint;
   }
 
-  public Color getRangeColor()
-  {
+  public Color getRangeColor() {
     return rangeColor;
   }
 
-  public void setRangeColor(final Color rangeColor)
-  {
+  public void setRangeColor( final Color rangeColor ) {
     this.rangeColor = rangeColor;
   }
 
-  public Color getFillPaint()
-  {
+  public Color getFillPaint() {
     return fillPaint;
   }
 
-  public void setFillPaint(final Color fillPaint)
-  {
+  public void setFillPaint( final Color fillPaint ) {
     this.fillPaint = fillPaint;
   }
 
-  public Color getTickMarkPaint()
-  {
+  public Color getTickMarkPaint() {
     return tickMarkPaint;
   }
 
-  public void setTickMarkPaint(final Color tickMarkPaint)
-  {
+  public void setTickMarkPaint( final Color tickMarkPaint ) {
     this.tickMarkPaint = tickMarkPaint;
   }
 
-  public double getUpperMargin()
-  {
+  public double getUpperMargin() {
     return upperMargin;
   }
 
-  public void setUpperMargin(final double upperMargin)
-  {
+  public void setUpperMargin( final double upperMargin ) {
     this.upperMargin = upperMargin;
   }
 
-  public double getLowerMargin()
-  {
+  public double getLowerMargin() {
     return lowerMargin;
   }
 
-  public void setLowerMargin(final double lowerMargin)
-  {
+  public void setLowerMargin( final double lowerMargin ) {
     this.lowerMargin = lowerMargin;
   }
 
-  public boolean isDrawTickMarks()
-  {
+  public boolean isDrawTickMarks() {
     return drawTickMarks;
   }
 
-  public void setDrawTickMarks(final boolean drawTickMarks)
-  {
+  public void setDrawTickMarks( final boolean drawTickMarks ) {
     this.drawTickMarks = drawTickMarks;
   }
 
-  public boolean isDrawScaleValues()
-  {
+  public boolean isDrawScaleValues() {
     return drawScaleValues;
   }
 
-  public void setDrawScaleValues(final boolean drawScaleValues)
-  {
+  public void setDrawScaleValues( final boolean drawScaleValues ) {
     this.drawScaleValues = drawScaleValues;
   }
 
-  public BasicStroke getOutlineStroke()
-  {
+  public BasicStroke getOutlineStroke() {
     return outlineStroke;
   }
 
-  public void setOutlineStroke(final BasicStroke outlineStroke)
-  {
+  public void setOutlineStroke( final BasicStroke outlineStroke ) {
     this.outlineStroke = outlineStroke;
   }
 
@@ -475,47 +412,41 @@ public class SurveyScaleExpression extends AbstractExpression
    *
    * @return a {@link SurveyScale} instance.
    */
-  public Object getValue()
-  {
+  public Object getValue() {
     final SurveyScale result =
-        new SurveyScale(this.lowest, this.highest, collectValues());
+      new SurveyScale( this.lowest, this.highest, collectValues() );
 
-    if (this.rangeLowerBoundField != null && this.rangeUpperBoundField != null)
-    {
+    if ( this.rangeLowerBoundField != null && this.rangeUpperBoundField != null ) {
       final DataRow dataRow = getDataRow();
-      final Object b0 = dataRow.get(this.rangeLowerBoundField);
-      final Object b1 = dataRow.get(this.rangeUpperBoundField);
-      if (b0 instanceof Number)
-      {
-        result.setRangeLowerBound((Number) b0);
+      final Object b0 = dataRow.get( this.rangeLowerBoundField );
+      final Object b1 = dataRow.get( this.rangeUpperBoundField );
+      if ( b0 instanceof Number ) {
+        result.setRangeLowerBound( (Number) b0 );
       }
-      if (b1 instanceof Number)
-      {
-        result.setRangeUpperBound((Number) b1);
+      if ( b1 instanceof Number ) {
+        result.setRangeUpperBound( (Number) b1 );
       }
     }
-    result.setRangePaint(this.rangeColor);
-    result.setTickMarkPaint(this.tickMarkPaint);
-    result.setFillPaint(this.fillPaint);
-    result.setScaleValueFont(this.scaleValueFont);
-    result.setScaleValuePaint(this.scaleValuePaint);
-    result.setUpperMargin(this.upperMargin);
-    result.setLowerMargin(this.lowerMargin);
-    result.setDrawScaleValues(this.drawScaleValues);
-    result.setDrawTickMarks(this.drawTickMarks);
-    result.setDefaultShape(this.defaultShape);
-    if (this.overrideShape != null)
-    {
-      result.setShape(0, this.overrideShape);
-      result.setShapeFilled(0, this.overrideShapeFilled);
+    result.setRangePaint( this.rangeColor );
+    result.setTickMarkPaint( this.tickMarkPaint );
+    result.setFillPaint( this.fillPaint );
+    result.setScaleValueFont( this.scaleValueFont );
+    result.setScaleValuePaint( this.scaleValuePaint );
+    result.setUpperMargin( this.upperMargin );
+    result.setLowerMargin( this.lowerMargin );
+    result.setDrawScaleValues( this.drawScaleValues );
+    result.setDrawTickMarks( this.drawTickMarks );
+    result.setDefaultShape( this.defaultShape );
+    if ( this.overrideShape != null ) {
+      result.setShape( 0, this.overrideShape );
+      result.setShapeFilled( 0, this.overrideShapeFilled );
     }
-    
-    for (int i = 0; i < fillShapes.size(); i++)
-    {
-      final Boolean fill = fillShapes.get(i);
-      result.setShapeFilled(i, Boolean.TRUE.equals(fill));
+
+    for ( int i = 0; i < fillShapes.size(); i++ ) {
+      final Boolean fill = fillShapes.get( i );
+      result.setShapeFilled( i, Boolean.TRUE.equals( fill ) );
     }
-    
+
     return result;
   }
 
@@ -524,13 +455,11 @@ public class SurveyScaleExpression extends AbstractExpression
    *
    * @return an Objectarray containing all defined values from the datarow
    */
-  private Number[] collectValues()
-  {
-    final Number[] retval = new Number[this.fieldList.size()];
-    for (int i = 0; i < this.fieldList.size(); i++)
-    {
-      final String field = this.fieldList.get(i);
-      retval[i] = (Number) getDataRow().get(field);
+  private Number[] collectValues() {
+    final Number[] retval = new Number[ this.fieldList.size() ];
+    for ( int i = 0; i < this.fieldList.size(); i++ ) {
+      final String field = this.fieldList.get( i );
+      retval[ i ] = (Number) getDataRow().get( field );
     }
     return retval;
   }
@@ -542,8 +471,7 @@ public class SurveyScaleExpression extends AbstractExpression
    * @throws CloneNotSupportedException this should never happen.
    */
   public Object clone()
-      throws CloneNotSupportedException
-  {
+    throws CloneNotSupportedException {
     final SurveyScaleExpression fva = (SurveyScaleExpression) super.clone();
     fva.fieldList = (ArrayList<String>) this.fieldList.clone();
     fva.fillShapes = (ArrayList<Boolean>) this.fillShapes.clone();
@@ -551,66 +479,53 @@ public class SurveyScaleExpression extends AbstractExpression
     return fva;
   }
 
-  public String[] getField()
-  {
-    return fieldList.toArray(new String[fieldList.size()]);
+  public String[] getField() {
+    return fieldList.toArray( new String[ fieldList.size() ] );
   }
 
-  public void setField(final String[] fields)
-  {
+  public void setField( final String[] fields ) {
     this.fieldList.clear();
-    this.fieldList.addAll(Arrays.asList(fields));
+    this.fieldList.addAll( Arrays.asList( fields ) );
   }
 
-  public String getField(final int idx)
-  {
-    return this.fieldList.get(idx);
+  public String getField( final int idx ) {
+    return this.fieldList.get( idx );
   }
 
-  public void setField(final int index, final String field)
-  {
-    if (fieldList.size() == index)
-    {
-      fieldList.add(field);
-    }
-    else
-    {
-      fieldList.set(index, field);
+  public void setField( final int index, final String field ) {
+    if ( fieldList.size() == index ) {
+      fieldList.add( field );
+    } else {
+      fieldList.set( index, field );
     }
   }
 
   @Deprecated
-  public Paint getRangePaint()
-  {
+  public Paint getRangePaint() {
     return rangeColor;
   }
 
   @Deprecated
-  public void setRangePaint(final Paint rangePaint)
-  {
-    if (rangePaint == null)
-    {
+  public void setRangePaint( final Paint rangePaint ) {
+    if ( rangePaint == null ) {
       throw new NullPointerException();
     }
-    if (rangePaint instanceof Color)
-    {
+    if ( rangePaint instanceof Color ) {
       this.rangeColor = (Color) rangePaint;
     }
   }
 
-  private void writeObject(final ObjectOutputStream out)
-      throws IOException
-  {
+  private void writeObject( final ObjectOutputStream out )
+    throws IOException {
     out.defaultWriteObject();
     final SerializerHelper helper = SerializerHelper.getInstance();
-    helper.writeObject(outlineStroke, out);
+    helper.writeObject( outlineStroke, out );
   }
 
-  private void readObject(final ObjectInputStream in)
-      throws IOException, ClassNotFoundException
-  {
+  private void readObject( final ObjectInputStream in )
+    throws IOException, ClassNotFoundException {
     in.defaultReadObject();
     final SerializerHelper helper = SerializerHelper.getInstance();
-    outlineStroke = (BasicStroke) helper.readObject(in);
+    outlineStroke = (BasicStroke) helper.readObject( in );
   }
 }

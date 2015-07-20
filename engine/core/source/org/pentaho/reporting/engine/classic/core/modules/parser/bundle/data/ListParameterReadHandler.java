@@ -27,9 +27,8 @@ import org.xml.sax.Attributes;
 import org.xml.sax.Locator;
 import org.xml.sax.SAXException;
 
-public class ListParameterReadHandler extends AbstractParameterReadHandler
-{
-  private static final Log logger = LogFactory.getLog(ListParameterReadHandler.class);
+public class ListParameterReadHandler extends AbstractParameterReadHandler {
+  private static final Log logger = LogFactory.getLog( ListParameterReadHandler.class );
 
   private String query;
   private String keyColumnName;
@@ -38,58 +37,49 @@ public class ListParameterReadHandler extends AbstractParameterReadHandler
   private boolean strictValueCheck;
   private boolean allowMultiSelection;
 
-  public ListParameterReadHandler()
-  {
+  public ListParameterReadHandler() {
   }
 
-  protected void startParsing(final Attributes attrs) throws SAXException
-  {
-    super.startParsing(attrs);
+  protected void startParsing( final Attributes attrs ) throws SAXException {
+    super.startParsing( attrs );
 
-    query = attrs.getValue(getUri(), "query");
-    keyColumnName = attrs.getValue(getUri(), "key-column");
+    query = attrs.getValue( getUri(), "query" );
+    keyColumnName = attrs.getValue( getUri(), "key-column" );
 
-    if (query != null && keyColumnName == null)
-    {
+    if ( query != null && keyColumnName == null ) {
       Locator locator = getLocator();
-      logger.warn(String.format("Required parameter 'key-column' is missing for parameter '%s'. [%d:%d]",
-          getName(), locator.getLineNumber(), locator.getColumnNumber()));
+      logger.warn( String.format( "Required parameter 'key-column' is missing for parameter '%s'. [%d:%d]",
+        getName(), locator.getLineNumber(), locator.getColumnNumber() ) );
       keyColumnName = "";
     }
 
-    valueColumnName = attrs.getValue(getUri(), "value-column");
-    if (valueColumnName == null)
-    {
+    valueColumnName = attrs.getValue( getUri(), "value-column" );
+    if ( valueColumnName == null ) {
       valueColumnName = keyColumnName;
     }
 
-    strictValueCheck = "true".equals(attrs.getValue(getUri(), "strict-values"));
-    allowMultiSelection = "true".equals(attrs.getValue(getUri(), "allow-multi-selection"));
+    strictValueCheck = "true".equals( attrs.getValue( getUri(), "strict-values" ) );
+    allowMultiSelection = "true".equals( attrs.getValue( getUri(), "allow-multi-selection" ) );
   }
 
   /**
-   * Sets result to a DefaultListParameter if associated with a query,
-   * StaticListParameter otherwise.
+   * Sets result to a DefaultListParameter if associated with a query, StaticListParameter otherwise.
    */
-  protected void doneParsing()
-  {
+  protected void doneParsing() {
     final AbstractParameter result;
-    if (query != null)
-    {
-     result = new DefaultListParameter
-        (query, keyColumnName, valueColumnName, getName(),
-            allowMultiSelection, strictValueCheck, getType());
-    }
-    else
-    {
-     result = new StaticListParameter
-         (getName(), allowMultiSelection , strictValueCheck, getType());
+    if ( query != null ) {
+      result = new DefaultListParameter
+        ( query, keyColumnName, valueColumnName, getName(),
+          allowMultiSelection, strictValueCheck, getType() );
+    } else {
+      result = new StaticListParameter
+        ( getName(), allowMultiSelection, strictValueCheck, getType() );
     }
 
-    result.setMandatory(isMandatory());
-    result.setDefaultValue(getDefaultValue());
-    applyAttributes(result);
-    this.result = (ListParameter)result;
+    result.setMandatory( isMandatory() );
+    result.setDefaultValue( getDefaultValue() );
+    applyAttributes( result );
+    this.result = (ListParameter) result;
   }
 
   /**
@@ -98,8 +88,7 @@ public class ListParameterReadHandler extends AbstractParameterReadHandler
    * @return the object.
    * @throws org.xml.sax.SAXException if an parser error occured.
    */
-  public Object getObject() throws SAXException
-  {
+  public Object getObject() throws SAXException {
     return result;
   }
 }

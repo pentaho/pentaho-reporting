@@ -17,11 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.core.layout.process.text;
 
-import java.awt.font.FontRenderContext;
-import java.awt.font.TextLayout;
-import java.text.AttributedCharacterIterator;
-import java.util.ArrayList;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.pentaho.reporting.engine.classic.core.layout.model.LayoutNodeTypes;
@@ -44,218 +39,194 @@ import org.pentaho.reporting.engine.classic.core.util.geom.StrictGeomUtility;
 import org.pentaho.reporting.libraries.base.util.ArgumentNullException;
 import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 
-public class ComplexTextMinorAxisLayoutStep extends IterateSimpleStructureProcessStep
-    implements TextMinorAxisLayoutStep
-{
+import java.awt.font.FontRenderContext;
+import java.awt.font.TextLayout;
+import java.text.AttributedCharacterIterator;
+import java.util.ArrayList;
 
-  private static final Log logger = LogFactory.getLog(ComplexTextMinorAxisLayoutStep.class);
+public class ComplexTextMinorAxisLayoutStep extends IterateSimpleStructureProcessStep
+  implements TextMinorAxisLayoutStep {
+
+  private static final Log logger = LogFactory.getLog( ComplexTextMinorAxisLayoutStep.class );
   private final boolean strictCompatibility;
   private final OutputProcessorMetaData metaData;
   private final ResourceManager resourceManager;
 
   private MinorAxisNodeContext nodeContext;
 
-  public ComplexTextMinorAxisLayoutStep(final OutputProcessorMetaData metaData,
-                                        final ResourceManager resourceManager)
-  {
+  public ComplexTextMinorAxisLayoutStep( final OutputProcessorMetaData metaData,
+                                         final ResourceManager resourceManager ) {
     this.resourceManager = resourceManager;
-    ArgumentNullException.validate("metaData", metaData);
+    ArgumentNullException.validate( "metaData", metaData );
 
     this.metaData = metaData;
-    this.strictCompatibility = getMetaData().isFeatureSupported(OutputProcessorFeature.STRICT_COMPATIBILITY);
+    this.strictCompatibility = getMetaData().isFeatureSupported( OutputProcessorFeature.STRICT_COMPATIBILITY );
   }
 
-  public void process(final ParagraphRenderBox box, final MinorAxisNodeContext nodeContext, final PageGrid pageGrid)
-  {
+  public void process( final ParagraphRenderBox box, final MinorAxisNodeContext nodeContext, final PageGrid pageGrid ) {
     this.nodeContext = nodeContext;
-    processParagraphChildsComplex(box);
+    processParagraphChildsComplex( box );
   }
 
-  public MinorAxisNodeContext getNodeContext()
-  {
+  public MinorAxisNodeContext getNodeContext() {
     return nodeContext;
   }
 
-  public OutputProcessorMetaData getMetaData()
-  {
+  public OutputProcessorMetaData getMetaData() {
     return metaData;
   }
 
-  protected void processParagraphChildsComplex(final ParagraphRenderBox box)
-  {
+  protected void processParagraphChildsComplex( final ParagraphRenderBox box ) {
     // Clear the paragraph to throw away previously layouted nodes. This leaves the
     // paragraph's pool (where your original text is stored) untouched.
     box.clearLayout();
 
-    if (box.isComplexParagraph())
-    {
+    if ( box.isComplexParagraph() ) {
       final RenderBox lineBoxContainer = box.getLineboxContainer();
       final StyleSheet layoutContext = box.getStyleSheet();
 
       RenderNode paragraphContainer = lineBoxContainer.getFirstChild();
-      while (paragraphContainer != null)
-      {
-        if (paragraphContainer.getNodeType() != LayoutNodeTypes.TYPE_BOX_LINEBOX)
-        {
-          throw new IllegalStateException("Expected ParagraphPoolBox elements.");
+      while ( paragraphContainer != null ) {
+        if ( paragraphContainer.getNodeType() != LayoutNodeTypes.TYPE_BOX_LINEBOX ) {
+          throw new IllegalStateException( "Expected ParagraphPoolBox elements." );
         }
 
         final ParagraphPoolBox paragraph = (ParagraphPoolBox) paragraphContainer;
-        addGeneratedComplexTextLines(box, paragraph, layoutContext);
+        addGeneratedComplexTextLines( box, paragraph, layoutContext );
 
         paragraphContainer = paragraphContainer.getNext();
       }
-    }
-    else
-    {
+    } else {
       final ParagraphPoolBox lineBoxContainer = (ParagraphPoolBox) box.getEffectiveLineboxContainer();
       final StyleSheet layoutContext = box.getStyleSheet();
 
-      addGeneratedComplexTextLines(box, lineBoxContainer, layoutContext);
+      addGeneratedComplexTextLines( box, lineBoxContainer, layoutContext );
     }
   }
 
-  private FontRenderContext createFontRenderContext(final StyleSheet layoutContext)
-  {
-    final boolean antiAliasing = RenderUtility.isFontSmooth(layoutContext, getMetaData());
-    return new FontRenderContext(null, antiAliasing, true);
+  private FontRenderContext createFontRenderContext( final StyleSheet layoutContext ) {
+    final boolean antiAliasing = RenderUtility.isFontSmooth( layoutContext, getMetaData() );
+    return new FontRenderContext( null, antiAliasing, true );
   }
 
-  private void addGeneratedComplexTextLines(final ParagraphRenderBox box,
-                                            final ParagraphPoolBox lineBoxContainer,
-                                            final StyleSheet layoutContext)
-  {
-    updateNodeContextWidth(box);
+  private void addGeneratedComplexTextLines( final ParagraphRenderBox box,
+                                             final ParagraphPoolBox lineBoxContainer,
+                                             final StyleSheet layoutContext ) {
+    updateNodeContextWidth( box );
 
     // Determine if anti-aliasing is required or not
-    if (TextWrap.NONE.equals(box.getStyleSheet().getStyleProperty(TextStyleKeys.TEXT_WRAP)))
-    {
-      addCompleteLine(box, lineBoxContainer, layoutContext);
+    if ( TextWrap.NONE.equals( box.getStyleSheet().getStyleProperty( TextStyleKeys.TEXT_WRAP ) ) ) {
+      addCompleteLine( box, lineBoxContainer, layoutContext );
       return;
     }
 
     // Create a LineBreakMeasurer to break down that string into lines.
-    final RichTextSpec richText = RichTextSpecProducer.compute(lineBoxContainer, metaData, resourceManager);
-    final LineBreakIterator lineIterator = createLineBreakIterator(box, layoutContext, richText);
+    final RichTextSpec richText = RichTextSpecProducer.compute( lineBoxContainer, metaData, resourceManager );
+    final LineBreakIterator lineIterator = createLineBreakIterator( box, layoutContext, richText );
 
     ArrayList<RenderableComplexText> lines = new ArrayList<RenderableComplexText>();
     ParagraphFontMetricsImpl metrics = new ParagraphFontMetricsImpl();
-    while (lineIterator.hasNext())
-    {
+    while ( lineIterator.hasNext() ) {
       final LineBreakIteratorState state = lineIterator.next();
 
-      final RenderableComplexText text = richText.create(lineBoxContainer, state.getStart(), state.getEnd());
-      text.setTextLayout(state.getTextLayout());
-      metrics.update(state.getTextLayout());
+      final RenderableComplexText text = richText.create( lineBoxContainer, state.getStart(), state.getEnd() );
+      text.setTextLayout( state.getTextLayout() );
+      metrics.update( state.getTextLayout() );
       // and finally add the line to the paragraph
-      lines.add(text);
+      lines.add( text );
     }
 
     final double height = metrics.getLineHeight();
-    for (RenderableComplexText text : lines)
-    {
-      final RenderBox line = generateLine(box, lineBoxContainer, text, height, metrics);
-      box.addGeneratedChild(line);
+    for ( RenderableComplexText text : lines ) {
+      final RenderBox line = generateLine( box, lineBoxContainer, text, height, metrics );
+      box.addGeneratedChild( line );
     }
   }
 
-  private LineBreakIterator createLineBreakIterator(final ParagraphRenderBox box,
-                                                    final StyleSheet layoutContext,
-                                                    final RichTextSpec richText)
-  {
+  private LineBreakIterator createLineBreakIterator( final ParagraphRenderBox box,
+                                                     final StyleSheet layoutContext,
+                                                     final RichTextSpec richText ) {
     final AttributedCharacterIterator ci = richText.createAttributedCharacterIterator();
-    final FontRenderContext fontRenderContext = createFontRenderContext(layoutContext);
+    final FontRenderContext fontRenderContext = createFontRenderContext( layoutContext );
     final boolean breakOnWordBoundary = strictCompatibility ||
-        layoutContext.getBooleanStyleProperty(TextStyleKeys.WORDBREAK);
+      layoutContext.getBooleanStyleProperty( TextStyleKeys.WORDBREAK );
 
-    if (breakOnWordBoundary)
-    {
-      return new WordBreakingLineIterator(box, fontRenderContext, ci, richText.getText());
-    }
-    else
-    {
-      return new LineBreakIterator(box, fontRenderContext, ci);
+    if ( breakOnWordBoundary ) {
+      return new WordBreakingLineIterator( box, fontRenderContext, ci, richText.getText() );
+    } else {
+      return new LineBreakIterator( box, fontRenderContext, ci );
     }
   }
 
-  private void addCompleteLine(final ParagraphRenderBox box,
-                               final ParagraphPoolBox lineBoxContainer,
-                               final StyleSheet layoutContext)
-  {
-    RichTextSpec richText = RichTextSpecProducer.compute(lineBoxContainer, metaData, resourceManager);
+  private void addCompleteLine( final ParagraphRenderBox box,
+                                final ParagraphPoolBox lineBoxContainer,
+                                final StyleSheet layoutContext ) {
+    RichTextSpec richText = RichTextSpecProducer.compute( lineBoxContainer, metaData, resourceManager );
 
-    final FontRenderContext fontRenderContext = createFontRenderContext(layoutContext);
-    final TextLayout textLayout = new TextLayout(richText.createAttributedCharacterIterator(), fontRenderContext);
+    final FontRenderContext fontRenderContext = createFontRenderContext( layoutContext );
+    final TextLayout textLayout = new TextLayout( richText.createAttributedCharacterIterator(), fontRenderContext );
     double height = textLayout.getAscent() + textLayout.getDescent() + textLayout.getLeading();
 
-    final RenderableComplexText text = richText.create(lineBoxContainer);
-    text.setTextLayout(textLayout);
+    final RenderableComplexText text = richText.create( lineBoxContainer );
+    text.setTextLayout( textLayout );
     ParagraphFontMetricsImpl metrics = new ParagraphFontMetricsImpl();
-    metrics.update(textLayout);
-    final RenderBox line = generateLine(box, lineBoxContainer, text, height, metrics);
+    metrics.update( textLayout );
+    final RenderBox line = generateLine( box, lineBoxContainer, text, height, metrics );
     // and finally add the line to the paragraph
-    getNodeContext().updateX2(line.getCachedX2());
-    box.addGeneratedChild(line);
+    getNodeContext().updateX2( line.getCachedX2() );
+    box.addGeneratedChild( line );
   }
 
-  private RenderBox generateLine(final ParagraphRenderBox paragraph,
-                                 final ParagraphPoolBox lineBoxContainer,
-                                 final RenderableComplexText text,
-                                 final double height,
-                                 final ParagraphFontMetricsImpl metrics)
-  {
+  private RenderBox generateLine( final ParagraphRenderBox paragraph,
+                                  final ParagraphPoolBox lineBoxContainer,
+                                  final RenderableComplexText text,
+                                  final double height,
+                                  final ParagraphFontMetricsImpl metrics ) {
     //derive a new RenderableComplexText object representing the line, that holds on to the TextLayout class.
     TextLayout textLayout = text.getTextLayout();
 
     // Store the height and width, so that the other parts of the layouter have access to the information
-//        text.setCachedHeight();
-    text.setCachedHeight(Math.max(StrictGeomUtility.toInternalValue(height), lineBoxContainer.getLineHeight()));
-    text.setCachedWidth(StrictGeomUtility.toInternalValue(textLayout.getAdvance()));
-    text.setParagraphFontMetrics(metrics);
+    //        text.setCachedHeight();
+    text.setCachedHeight( Math.max( StrictGeomUtility.toInternalValue( height ), lineBoxContainer.getLineHeight() ) );
+    text.setCachedWidth( StrictGeomUtility.toInternalValue( textLayout.getAdvance() ) );
+    text.setParagraphFontMetrics( metrics );
 
 
     MinorAxisNodeContext nodeContext = getNodeContext();
-    final long alignmentX = RenderUtility.computeHorizontalAlignment(paragraph.getTextAlignment(),
-        nodeContext.getContentAreaWidth(), StrictGeomUtility.toInternalValue(textLayout.getAdvance()));
-    text.setCachedX(alignmentX + nodeContext.getX());
+    final long alignmentX = RenderUtility.computeHorizontalAlignment( paragraph.getTextAlignment(),
+      nodeContext.getContentAreaWidth(), StrictGeomUtility.toInternalValue( textLayout.getAdvance() ) );
+    text.setCachedX( alignmentX + nodeContext.getX() );
 
     // Create a shallow copy of the paragraph-pool to act as a line container.
-    final RenderBox line = (RenderBox) paragraph.getPool().deriveFrozen(false);
-    line.addGeneratedChild(text);
+    final RenderBox line = (RenderBox) paragraph.getPool().deriveFrozen( false );
+    line.addGeneratedChild( text );
 
-    // Align the line inside the paragraph. (Adjust the cachedX position depending on whether the line is left, centred or right aligned)
-    line.setCachedX(alignmentX + nodeContext.getX());
-    line.setCachedWidth(nodeContext.getContentAreaWidth());
+    // Align the line inside the paragraph. (Adjust the cachedX position depending on whether the line is left,
+    // centred or right aligned)
+    line.setCachedX( alignmentX + nodeContext.getX() );
+    line.setCachedWidth( nodeContext.getContentAreaWidth() );
     return line;
   }
 
-  private void updateNodeContextWidth(final ParagraphRenderBox paragraph)
-  {
+  private void updateNodeContextWidth( final ParagraphRenderBox paragraph ) {
     MinorAxisNodeContext nodeContext = getNodeContext();
     final long lineEnd;
     final boolean overflowX = paragraph.getStaticBoxLayoutProperties().isOverflowX();
-    if (overflowX)
-    {
+    if ( overflowX ) {
       lineEnd = nodeContext.getX1() + AbstractMinorAxisLayoutStep.OVERFLOW_DUMMY_WIDTH;
-    }
-    else
-    {
+    } else {
       lineEnd = nodeContext.getX2();
     }
 
     long firstLineIndent = 0; // todo
-    long lineStart = Math.min(lineEnd, nodeContext.getX1() + firstLineIndent);
-    if (lineEnd - lineStart <= 0)
-    {
+    long lineStart = Math.min( lineEnd, nodeContext.getX1() + firstLineIndent );
+    if ( lineEnd - lineStart <= 0 ) {
       final long minimumChunkWidth = paragraph.getPool().getMinimumChunkWidth();
-      nodeContext.updateX2(lineStart + minimumChunkWidth);
-      logger.warn("Auto-Corrected zero-width first-line on paragraph - " + paragraph.getName());
-    }
-    else
-    {
-      if (overflowX == false)
-      {
-        nodeContext.updateX2(lineEnd);
+      nodeContext.updateX2( lineStart + minimumChunkWidth );
+      logger.warn( "Auto-Corrected zero-width first-line on paragraph - " + paragraph.getName() );
+    } else {
+      if ( overflowX == false ) {
+        nodeContext.updateX2( lineEnd );
       }
     }
   }

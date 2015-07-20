@@ -17,30 +17,23 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.parser.base;
 
-public class PlainTextPasswordEncryptionServiceProvider implements PasswordEncryptionServiceProvider
-{
-  public PlainTextPasswordEncryptionServiceProvider()
-  {
+public class PlainTextPasswordEncryptionServiceProvider implements PasswordEncryptionServiceProvider {
+  public PlainTextPasswordEncryptionServiceProvider() {
   }
 
-  public String getPrefix()
-  {
+  public String getPrefix() {
     return "plain";
   }
 
-  public String encrypt(final String rawPassword)
-  {
+  public String encrypt( final String rawPassword ) {
     return rawPassword;
   }
 
-  public String decrypt(final String encryptedPassword)
-  {
-    if (encryptedPassword == null)
-    {
+  public String decrypt( final String encryptedPassword ) {
+    if ( encryptedPassword == null ) {
       return null;
     }
-    if ("".equals(encryptedPassword))
-    {
+    if ( "".equals( encryptedPassword ) ) {
       return "";
     }
     return encryptedPassword;

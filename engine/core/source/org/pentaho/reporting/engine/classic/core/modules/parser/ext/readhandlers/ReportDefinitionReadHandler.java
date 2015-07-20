@@ -17,8 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.parser.ext.readhandlers;
 
-import java.util.HashMap;
-
 import org.pentaho.reporting.engine.classic.core.AttributeNames;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
@@ -37,8 +35,9 @@ import org.pentaho.reporting.libraries.xmlns.parser.RootXmlReadHandler;
 import org.pentaho.reporting.libraries.xmlns.parser.XmlReadHandler;
 import org.xml.sax.SAXException;
 
-public class ReportDefinitionReadHandler extends AbstractPropertyXmlReadHandler
-{
+import java.util.HashMap;
+
+public class ReportDefinitionReadHandler extends AbstractPropertyXmlReadHandler {
   public static final String ELEMENT_FACTORY_KEY = "::element-factory";
   public static final String STYLE_FACTORY_KEY = "::stylekey-factory";
   public static final String CLASS_FACTORY_KEY = "::class-factory";
@@ -47,8 +46,7 @@ public class ReportDefinitionReadHandler extends AbstractPropertyXmlReadHandler
 
   private MasterReport report;
 
-  public ReportDefinitionReadHandler()
-  {
+  public ReportDefinitionReadHandler() {
   }
 
   /**
@@ -57,10 +55,9 @@ public class ReportDefinitionReadHandler extends AbstractPropertyXmlReadHandler
    * @param rootHandler the root handler.
    * @param tagName     the tag name.
    */
-  public void init(final RootXmlReadHandler rootHandler, final String uri, final String tagName) throws SAXException
-  {
-    super.init(rootHandler, uri, tagName);
-    rootHandler.setHelperObject("property-expansion", Boolean.TRUE);
+  public void init( final RootXmlReadHandler rootHandler, final String uri, final String tagName ) throws SAXException {
+    super.init( rootHandler, uri, tagName );
+    rootHandler.setHelperObject( "property-expansion", Boolean.TRUE );
   }
 
 
@@ -70,36 +67,29 @@ public class ReportDefinitionReadHandler extends AbstractPropertyXmlReadHandler
    * @param attrs the attributes.
    * @throws org.xml.sax.SAXException if there is a parsing error.
    */
-  protected void startParsing(final PropertyAttributes attrs)
-      throws SAXException
-  {
+  protected void startParsing( final PropertyAttributes attrs )
+    throws SAXException {
     RootXmlReadHandler rootHandler = getRootHandler();
     final Object maybeReport = rootHandler.getHelperObject
-        (ReportParserUtil.HELPER_OBJ_REPORT_NAME);
+      ( ReportParserUtil.HELPER_OBJ_REPORT_NAME );
     final MasterReport report;
-    if (maybeReport instanceof MasterReport == false)
-    {
+    if ( maybeReport instanceof MasterReport == false ) {
       // replace it ..
       report = new MasterReport();
-      report.setAttribute(AttributeNames.Core.NAMESPACE, AttributeNames.Core.SOURCE, rootHandler.getSource());
-    }
-    else
-    {
+      report.setAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.SOURCE, rootHandler.getSource() );
+    } else {
       report = (MasterReport) maybeReport;
     }
 
-    if (ReportParserUtil.isIncluded(rootHandler) == false)
-    {
-      final String query = attrs.getValue(getUri(), "query");
-      if (query != null)
-      {
-        report.setQuery(query);
+    if ( ReportParserUtil.isIncluded( rootHandler ) == false ) {
+      final String query = attrs.getValue( getUri(), "query" );
+      if ( query != null ) {
+        report.setQuery( query );
       }
 
-      final String value = attrs.getValue(getUri(), "name");
-      if (value != null)
-      {
-        report.setName(value);
+      final String value = attrs.getValue( getUri(), "name" );
+      if ( value != null ) {
+        report.setName( value );
       }
     }
     final ElementFactoryCollector elementFactory = new ElementFactoryCollector();
@@ -108,23 +98,23 @@ public class ReportDefinitionReadHandler extends AbstractPropertyXmlReadHandler
     final DataSourceCollector dataSourceFactory = new DataSourceCollector();
     final TemplateCollector templateFactory = new TemplateCollector();
 
-    classFactory.configure(rootHandler.getParserConfiguration());
-    dataSourceFactory.configure(rootHandler.getParserConfiguration());
-    templateFactory.configure(rootHandler.getParserConfiguration());
+    classFactory.configure( rootHandler.getParserConfiguration() );
+    dataSourceFactory.configure( rootHandler.getParserConfiguration() );
+    templateFactory.configure( rootHandler.getParserConfiguration() );
 
-    if (rootHandler.getHelperObject(ReportParserUtil.HELPER_OBJ_LEGACY_STYLES) instanceof HashMap == false)
-    {
-      rootHandler.setHelperObject(ReportParserUtil.HELPER_OBJ_LEGACY_STYLES, new HashMap<String, ElementStyleSheet>());
+    if ( rootHandler.getHelperObject( ReportParserUtil.HELPER_OBJ_LEGACY_STYLES ) instanceof HashMap == false ) {
+      rootHandler
+        .setHelperObject( ReportParserUtil.HELPER_OBJ_LEGACY_STYLES, new HashMap<String, ElementStyleSheet>() );
     }
-    rootHandler.setHelperObject(ReportParserUtil.HELPER_OBJ_REPORT_NAME, report);
-    rootHandler.setHelperObject(ReportDefinitionReadHandler.ELEMENT_FACTORY_KEY, elementFactory);
-    rootHandler.setHelperObject(ReportDefinitionReadHandler.STYLE_FACTORY_KEY, styleKeyFactory);
-    rootHandler.setHelperObject(ReportDefinitionReadHandler.CLASS_FACTORY_KEY, classFactory);
-    rootHandler.setHelperObject(ReportDefinitionReadHandler.DATASOURCE_FACTORY_KEY, dataSourceFactory);
-    rootHandler.setHelperObject(ReportDefinitionReadHandler.TEMPLATE_FACTORY_KEY, templateFactory);
+    rootHandler.setHelperObject( ReportParserUtil.HELPER_OBJ_REPORT_NAME, report );
+    rootHandler.setHelperObject( ReportDefinitionReadHandler.ELEMENT_FACTORY_KEY, elementFactory );
+    rootHandler.setHelperObject( ReportDefinitionReadHandler.STYLE_FACTORY_KEY, styleKeyFactory );
+    rootHandler.setHelperObject( ReportDefinitionReadHandler.CLASS_FACTORY_KEY, classFactory );
+    rootHandler.setHelperObject( ReportDefinitionReadHandler.DATASOURCE_FACTORY_KEY, dataSourceFactory );
+    rootHandler.setHelperObject( ReportDefinitionReadHandler.TEMPLATE_FACTORY_KEY, templateFactory );
 
-    report.setAttribute(AttributeNames.Internal.NAMESPACE, AttributeNames.Internal.FILEFORMAT, "extended-xml");
-    report.setCompatibilityLevel(ClassicEngineBoot.computeVersionId(3, 8, 0));
+    report.setAttribute( AttributeNames.Internal.NAMESPACE, AttributeNames.Internal.FILEFORMAT, "extended-xml" );
+    report.setCompatibilityLevel( ClassicEngineBoot.computeVersionId( 3, 8, 0 ) );
     this.report = report;
   }
 
@@ -136,42 +126,27 @@ public class ReportDefinitionReadHandler extends AbstractPropertyXmlReadHandler
    * @return the handler or null, if the tagname is invalid.
    * @throws org.xml.sax.SAXException if there is a parsing error.
    */
-  protected XmlReadHandler getHandlerForChild(final String uri,
-                                              final String tagName,
-                                              final PropertyAttributes atts)
-      throws SAXException
-  {
-    if (isSameNamespace(uri) == false)
-    {
+  protected XmlReadHandler getHandlerForChild( final String uri,
+                                               final String tagName,
+                                               final PropertyAttributes atts )
+    throws SAXException {
+    if ( isSameNamespace( uri ) == false ) {
       return null;
     }
 
-    if ("parser-config".equals(tagName))
-    {
+    if ( "parser-config".equals( tagName ) ) {
       return new ParserConfigReadHandler();
-    }
-    else if ("report-config".equals(tagName))
-    {
+    } else if ( "report-config".equals( tagName ) ) {
       return new ReportConfigReadHandler();
-    }
-    else if ("styles".equals(tagName))
-    {
+    } else if ( "styles".equals( tagName ) ) {
       return new StylesReadHandler();
-    }
-    else if ("templates".equals(tagName))
-    {
+    } else if ( "templates".equals( tagName ) ) {
       return new TemplatesReadHandler();
-    }
-    else if ("report-description".equals(tagName))
-    {
+    } else if ( "report-description".equals( tagName ) ) {
       return new ReportDescriptionReadHandler();
-    }
-    else if ("functions".equals(tagName))
-    {
-      return new FunctionsReadHandler(report);
-    }
-    else if ("include".equals(tagName))
-    {
+    } else if ( "functions".equals( tagName ) ) {
+      return new FunctionsReadHandler( report );
+    } else if ( "include".equals( tagName ) ) {
       return new IncludeReadHandler();
     }
     return null;
@@ -182,8 +157,7 @@ public class ReportDefinitionReadHandler extends AbstractPropertyXmlReadHandler
    *
    * @return the object.
    */
-  public Object getObject()
-  {
-    return getRootHandler().getHelperObject(ReportParserUtil.HELPER_OBJ_REPORT_NAME);
+  public Object getObject() {
+    return getRootHandler().getHelperObject( ReportParserUtil.HELPER_OBJ_REPORT_NAME );
   }
 }

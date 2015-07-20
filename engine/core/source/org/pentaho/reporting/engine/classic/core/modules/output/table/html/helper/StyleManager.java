@@ -17,18 +17,17 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.output.table.html.helper;
 
+import org.pentaho.reporting.libraries.xmlns.common.AttributeList;
+
 import java.io.IOException;
 import java.io.Writer;
-
-import org.pentaho.reporting.libraries.xmlns.common.AttributeList;
 
 /**
  * This class manages all existing styles. There are two implementations, an inline-manager and a style-sheet manager.
  *
  * @author Thomas Morgner
  */
-public interface StyleManager
-{
+public interface StyleManager {
   /**
    * Updates the given attribute-List according to the current style rules.
    *
@@ -36,7 +35,7 @@ public interface StyleManager
    * @param attributeList
    * @return the modified attribute list.
    */
-  public AttributeList updateStyle(StyleBuilder styleBuilder, AttributeList attributeList);
+  public AttributeList updateStyle( StyleBuilder styleBuilder, AttributeList attributeList );
 
   /**
    * Returns the global stylesheet, or null, if no global stylesheet was built.
@@ -46,5 +45,5 @@ public interface StyleManager
    */
   public String getGlobalStyleSheet();
 
-  public void write(Writer writer) throws IOException;
+  public void write( Writer writer ) throws IOException;
 }

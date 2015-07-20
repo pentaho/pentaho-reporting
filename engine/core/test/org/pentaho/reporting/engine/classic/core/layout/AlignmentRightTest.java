@@ -17,8 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.core.layout;
 
-import java.net.URL;
-
 import junit.framework.TestCase;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
@@ -31,80 +29,69 @@ import org.pentaho.reporting.engine.classic.core.testsupport.DebugReportRunner;
 import org.pentaho.reporting.libraries.resourceloader.Resource;
 import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 
+import java.net.URL;
+
 
 /**
  * Creation-Date: 14.04.2007, 15:18:02
  *
  * @author Thomas Morgner
  */
-public class AlignmentRightTest extends TestCase
-{
-  public AlignmentRightTest()
-  {
+public class AlignmentRightTest extends TestCase {
+  public AlignmentRightTest() {
   }
 
-  public AlignmentRightTest(final String s)
-  {
-    super(s);
+  public AlignmentRightTest( final String s ) {
+    super( s );
   }
 
-  protected void setUp() throws Exception
-  {
+  protected void setUp() throws Exception {
     ClassicEngineBoot.getInstance().start();
   }
 
-  public void testAlignmentCenter() throws Exception
-  {
-    final URL target = AlignmentRightTest.class.getResource("alignment-right.xml");
+  public void testAlignmentCenter() throws Exception {
+    final URL target = AlignmentRightTest.class.getResource( "alignment-right.xml" );
     final ResourceManager rm = new ResourceManager();
     rm.registerDefaults();
-    final Resource directly = rm.createDirectly(target, MasterReport.class);
+    final Resource directly = rm.createDirectly( target, MasterReport.class );
     final MasterReport report = (MasterReport) directly.getResource();
 
-    final LogicalPageBox logicalPageBox = DebugReportRunner.layoutSingleBand(report, report.getItemBand(), false, false);
+    final LogicalPageBox logicalPageBox =
+      DebugReportRunner.layoutSingleBand( report, report.getItemBand(), false, false );
     // simple test, we assert that all paragraph-poolboxes are on either 485000 or 400000
     // and that only two lines exist for each
-    new ValidateRunner().startValidation(logicalPageBox);
+    new ValidateRunner().startValidation( logicalPageBox );
   }
 
-  private static class ValidateRunner extends IterateStructuralProcessStep
-  {
+  private static class ValidateRunner extends IterateStructuralProcessStep {
     private int count;
 
-    protected void processParagraphChilds(final ParagraphRenderBox box)
-    {
+    protected void processParagraphChilds( final ParagraphRenderBox box ) {
       count = 0;
-      processBoxChilds(box);
-      TestCase.assertEquals("Line-Count", 1, count);
+      processBoxChilds( box );
+      TestCase.assertEquals( "Line-Count", 1, count );
     }
 
-    protected boolean startInlineBox(final InlineRenderBox box)
-    {
-      if (box instanceof ParagraphPoolBox)
-      {
+    protected boolean startInlineBox( final InlineRenderBox box ) {
+      if ( box instanceof ParagraphPoolBox ) {
         count += 1;
         final long x = box.getX();
-        if ("A".equals(box.getName()))
-        {
-          if (x < 400000 || x > 485000)
-          {
-            TestCase.fail("X position is wrong: " + x);
+        if ( "A".equals( box.getName() ) ) {
+          if ( x < 400000 || x > 485000 ) {
+            TestCase.fail( "X position is wrong: " + x );
           }
         }
-        if ("B".equals(box.getName()))
-        {
-          if (x < 485000 || x > 560000)
-          {
-            TestCase.fail("X position is wrong: " + x);
+        if ( "B".equals( box.getName() ) ) {
+          if ( x < 485000 || x > 560000 ) {
+            TestCase.fail( "X position is wrong: " + x );
           }
         }
       }
-      return super.startInlineBox(box);
+      return super.startInlineBox( box );
     }
 
-    public void startValidation(final LogicalPageBox logicalPageBox)
-    {
-      startProcessing(logicalPageBox);
+    public void startValidation( final LogicalPageBox logicalPageBox ) {
+      startProcessing( logicalPageBox );
     }
   }
 }

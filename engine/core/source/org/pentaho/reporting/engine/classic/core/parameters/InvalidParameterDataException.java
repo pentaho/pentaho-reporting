@@ -22,13 +22,11 @@ package org.pentaho.reporting.engine.classic.core.parameters;
  *
  * @author Thomas Morgner
  */
-public class InvalidParameterDataException extends Exception
-{
+public class InvalidParameterDataException extends Exception {
   /**
    * Creates a StackableRuntimeException with no message and no parent.
    */
-  public InvalidParameterDataException()
-  {
+  public InvalidParameterDataException() {
   }
 
   /**
@@ -37,9 +35,8 @@ public class InvalidParameterDataException extends Exception
    * @param message the exception message.
    * @param ex      the parent exception.
    */
-  public InvalidParameterDataException(final String message, final Exception ex)
-  {
-    super(message, ex);
+  public InvalidParameterDataException( final String message, final Exception ex ) {
+    super( message, ex );
   }
 
   /**
@@ -47,8 +44,7 @@ public class InvalidParameterDataException extends Exception
    *
    * @param message the exception message.
    */
-  public InvalidParameterDataException(final String message)
-  {
-    super(message);
+  public InvalidParameterDataException( final String message ) {
+    super( message );
   }
 }

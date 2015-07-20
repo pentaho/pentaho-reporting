@@ -17,19 +17,12 @@
 
 package org.pentaho.reporting.engine.classic.core.util;
 
-import java.awt.Component;
-import java.awt.Dimension;
-import java.awt.Graphics2D;
-import java.awt.Window;
-import java.awt.geom.Rectangle2D;
-import javax.swing.JComponent;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.RepaintManager;
-import javax.swing.SwingUtilities;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.geom.Rectangle2D;
 
 
 /**
@@ -37,15 +30,13 @@ import org.apache.commons.logging.LogFactory;
  *
  * @author Thomas Morgner
  */
-public class ComponentDrawable
-{
-  private static final Log logger = LogFactory.getLog(ComponentDrawable.class);
+public class ComponentDrawable {
+  private static final Log logger = LogFactory.getLog( ComponentDrawable.class );
 
   /**
    * A runnable that executes the drawing operation on the event-dispatcher thread.
    */
-  private class PainterRunnable implements Runnable
-  {
+  private class PainterRunnable implements Runnable {
     /**
      * The draw-area as defined by the drawable.
      */
@@ -58,8 +49,7 @@ public class ComponentDrawable
     /**
      * Default constructor.
      */
-    protected PainterRunnable()
-    {
+    protected PainterRunnable() {
     }
 
     /**
@@ -67,8 +57,7 @@ public class ComponentDrawable
      *
      * @return the graphics.
      */
-    public Graphics2D getGraphics()
-    {
+    public Graphics2D getGraphics() {
       return graphics;
     }
 
@@ -77,8 +66,7 @@ public class ComponentDrawable
      *
      * @param graphics the graphics.
      */
-    public void setGraphics(final Graphics2D graphics)
-    {
+    public void setGraphics( final Graphics2D graphics ) {
       this.graphics = graphics;
     }
 
@@ -87,8 +75,7 @@ public class ComponentDrawable
      *
      * @return the graphics.
      */
-    public Rectangle2D getArea()
-    {
+    public Rectangle2D getArea() {
       return area;
     }
 
@@ -97,46 +84,35 @@ public class ComponentDrawable
      *
      * @param area the graphics.
      */
-    public void setArea(final Rectangle2D area)
-    {
+    public void setArea( final Rectangle2D area ) {
       this.area = area;
     }
 
     /**
      * Draws the drawable.
      */
-    public void run()
-    {
-      try
-      {
+    public void run() {
+      try {
         final Component component = getComponent();
-        if (component instanceof Window)
-        {
+        if ( component instanceof Window ) {
           final Window w = (Window) component;
           w.validate();
-        }
-        else if (isOwnPeerConnected())
-        {
-          final Window w = ComponentDrawable.getWindowAncestor(component);
-          if (w != null)
-          {
+        } else if ( isOwnPeerConnected() ) {
+          final Window w = ComponentDrawable.getWindowAncestor( component );
+          if ( w != null ) {
             w.validate();
           }
-        }
-        else
-        {
+        } else {
           peerSupply.pack();
-          contentPane.add(component);
+          contentPane.add( component );
         }
 
         component.setBounds
-            ((int) area.getX(), (int) area.getY(),
-                (int) area.getWidth(), (int) area.getHeight());
+          ( (int) area.getX(), (int) area.getY(),
+            (int) area.getWidth(), (int) area.getHeight() );
         component.validate();
-        component.paint(graphics);
-      }
-      finally
-      {
+        component.paint( graphics );
+      } finally {
         cleanUp();
       }
     }
@@ -146,8 +122,7 @@ public class ComponentDrawable
    * A runnable that queries the preferred size. As this may involve font-computations, this has to be done on the
    * EventDispatcher thread.
    */
-  private class PreferredSizeRunnable implements Runnable
-  {
+  private class PreferredSizeRunnable implements Runnable {
     /**
      * The return value.
      */
@@ -156,8 +131,7 @@ public class ComponentDrawable
     /**
      * Default Constructor.
      */
-    protected PreferredSizeRunnable()
-    {
+    protected PreferredSizeRunnable() {
     }
 
     /**
@@ -165,40 +139,30 @@ public class ComponentDrawable
      *
      * @return the preferred size.
      */
-    public Dimension getRetval()
-    {
+    public Dimension getRetval() {
       return retval;
     }
 
     /**
      * Computes the preferred size on the EventDispatcherThread.
      */
-    public void run()
-    {
+    public void run() {
       retval = null;
-      try
-      {
+      try {
         final Component component = getComponent();
-        if (component instanceof Window == false && isOwnPeerConnected() == false)
-        {
+        if ( component instanceof Window == false && isOwnPeerConnected() == false ) {
           peerSupply.pack();
-          contentPane.add(component);
+          contentPane.add( component );
           contentPane.validate();
           component.validate();
-        }
-        else if (isOwnPeerConnected())
-        {
+        } else if ( isOwnPeerConnected() ) {
           retval = component.getSize();
           return;
-        }
-        else
-        {
+        } else {
           component.validate();
         }
         retval = component.getPreferredSize();
-      }
-      finally
-      {
+      } finally {
         cleanUp();
       }
     }
@@ -208,8 +172,7 @@ public class ComponentDrawable
    * A runnable that queries the defined size. As this may involve font-computations, this has to be done on the
    * EventDispatcher thread.
    */
-  private class DefinedSizeRunnable implements Runnable
-  {
+  private class DefinedSizeRunnable implements Runnable {
     /**
      * The return value.
      */
@@ -218,8 +181,7 @@ public class ComponentDrawable
     /**
      * Default Constructor.
      */
-    protected DefinedSizeRunnable()
-    {
+    protected DefinedSizeRunnable() {
     }
 
     /**
@@ -227,29 +189,23 @@ public class ComponentDrawable
      *
      * @return the declared size.
      */
-    public Dimension getRetval()
-    {
+    public Dimension getRetval() {
       return retval;
     }
 
     /**
      * Computes the declared size on the EventDispatcherThread.
      */
-    public void run()
-    {
+    public void run() {
       retval = null;
-      try
-      {
+      try {
         final Component component = getComponent();
-        if (component instanceof Window == false && isOwnPeerConnected() == false)
-        {
+        if ( component instanceof Window == false && isOwnPeerConnected() == false ) {
           peerSupply.pack();
-          contentPane.add(component);
+          contentPane.add( component );
         }
         retval = component.getSize();
-      }
-      finally
-      {
+      } finally {
         cleanUp();
       }
     }
@@ -295,9 +251,8 @@ public class ComponentDrawable
   /**
    * Default Constructor.
    */
-  public ComponentDrawable()
-  {
-    this(new JFrame());
+  public ComponentDrawable() {
+    this( new JFrame() );
   }
 
   /**
@@ -305,16 +260,14 @@ public class ComponentDrawable
    *
    * @param peerSupply the frame that should be used as peer-source.
    */
-  public ComponentDrawable(final JFrame peerSupply)
-  {
-    if (peerSupply == null)
-    {
+  public ComponentDrawable( final JFrame peerSupply ) {
+    if ( peerSupply == null ) {
       throw new NullPointerException();
     }
     this.peerSupply = peerSupply;
     this.contentPane = new JPanel();
-    this.contentPane.setLayout(null);
-    peerSupply.setContentPane(contentPane);
+    this.contentPane.setLayout( null );
+    peerSupply.setContentPane( contentPane );
     this.runnable = new PainterRunnable();
     this.preferredSizeRunnable = new PreferredSizeRunnable();
     this.sizeRunnable = new DefinedSizeRunnable();
@@ -325,8 +278,7 @@ public class ComponentDrawable
    *
    * @return true, if foreign peers are allowed, false otherwise.
    */
-  public boolean isAllowOwnPeer()
-  {
+  public boolean isAllowOwnPeer() {
     return allowOwnPeer;
   }
 
@@ -335,8 +287,7 @@ public class ComponentDrawable
    *
    * @param allowOwnPeer true, if components can provide their own peers, false otherwise.
    */
-  public void setAllowOwnPeer(final boolean allowOwnPeer)
-  {
+  public void setAllowOwnPeer( final boolean allowOwnPeer ) {
     this.allowOwnPeer = allowOwnPeer;
   }
 
@@ -345,10 +296,9 @@ public class ComponentDrawable
    * weird things can happen if AWT functionality is executed on user threads.
    *
    * @return true, if all operations will be done on the AWT-EventDispatcher thread, false if they should be done in the
-   *         local thread.
+   * local thread.
    */
-  public boolean isPaintSynchronized()
-  {
+  public boolean isPaintSynchronized() {
     return paintSynchronized;
   }
 
@@ -359,8 +309,7 @@ public class ComponentDrawable
    * @param paintSynchronized true, if all operations will be done on the AWT-EventDispatcher thread, false if they
    *                          should be done in the local thread.
    */
-  public void setPaintSynchronized(final boolean paintSynchronized)
-  {
+  public void setPaintSynchronized( final boolean paintSynchronized ) {
     this.paintSynchronized = paintSynchronized;
   }
 
@@ -368,17 +317,15 @@ public class ComponentDrawable
    * A helper method that performs some cleanup and disconnects the component from the AWT and the Swing-Framework to
    * avoid memory-leaks.
    */
-  protected final void cleanUp()
-  {
-    if (component instanceof JComponent && isOwnPeerConnected() == false)
-    {
+  protected final void cleanUp() {
+    if ( component instanceof JComponent && isOwnPeerConnected() == false ) {
       final JComponent jc = (JComponent) component;
-      RepaintManager.currentManager(jc).removeInvalidComponent(jc);
-      RepaintManager.currentManager(jc).markCompletelyClean(jc);
+      RepaintManager.currentManager( jc ).removeInvalidComponent( jc );
+      RepaintManager.currentManager( jc ).markCompletelyClean( jc );
     }
     contentPane.removeAll();
-    RepaintManager.currentManager(contentPane).removeInvalidComponent(contentPane);
-    RepaintManager.currentManager(contentPane).markCompletelyClean(contentPane);
+    RepaintManager.currentManager( contentPane ).removeInvalidComponent( contentPane );
+    RepaintManager.currentManager( contentPane ).markCompletelyClean( contentPane );
     peerSupply.dispose();
   }
 
@@ -387,8 +334,7 @@ public class ComponentDrawable
    *
    * @return the component.
    */
-  public Component getComponent()
-  {
+  public Component getComponent() {
     return component;
   }
 
@@ -397,10 +343,9 @@ public class ComponentDrawable
    *
    * @param component the component.
    */
-  public void setComponent(final Component component)
-  {
+  public void setComponent( final Component component ) {
     this.component = component;
-    prepareComponent(component);
+    prepareComponent( component );
   }
 
   /**
@@ -411,28 +356,22 @@ public class ComponentDrawable
    *
    * @return the preferred size.
    */
-  public Dimension getPreferredSize()
-  {
-    if (component == null)
-    {
-      return new Dimension(0, 0);
+  public Dimension getPreferredSize() {
+    if ( component == null ) {
+      return new Dimension( 0, 0 );
     }
-    if (SwingUtilities.isEventDispatchThread() || paintSynchronized == false)
-    {
+    if ( SwingUtilities.isEventDispatchThread() || paintSynchronized == false ) {
       preferredSizeRunnable.run();
       return preferredSizeRunnable.getRetval();
     }
 
-    try
-    {
-      SwingUtilities.invokeAndWait(preferredSizeRunnable);
+    try {
+      SwingUtilities.invokeAndWait( preferredSizeRunnable );
       return preferredSizeRunnable.getRetval();
+    } catch ( Exception e ) {
+      ComponentDrawable.logger.warn( "Failed to compute the preferred size." );
     }
-    catch (Exception e)
-    {
-      ComponentDrawable.logger.warn("Failed to compute the preferred size.");
-    }
-    return new Dimension(0, 0);
+    return new Dimension( 0, 0 );
   }
 
   /**
@@ -443,28 +382,22 @@ public class ComponentDrawable
    *
    * @return the preferred size.
    */
-  public Dimension getSize()
-  {
-    if (component == null)
-    {
-      return new Dimension(0, 0);
+  public Dimension getSize() {
+    if ( component == null ) {
+      return new Dimension( 0, 0 );
     }
-    if (SwingUtilities.isEventDispatchThread() || paintSynchronized == false)
-    {
+    if ( SwingUtilities.isEventDispatchThread() || paintSynchronized == false ) {
       sizeRunnable.run();
       return sizeRunnable.getRetval();
     }
 
-    try
-    {
-      SwingUtilities.invokeAndWait(sizeRunnable);
+    try {
+      SwingUtilities.invokeAndWait( sizeRunnable );
       return sizeRunnable.getRetval();
+    } catch ( Exception e ) {
+      ComponentDrawable.logger.warn( "Failed to compute the defined size." );
     }
-    catch (Exception e)
-    {
-      ComponentDrawable.logger.warn("Failed to compute the defined size.");
-    }
-    return new Dimension(0, 0);
+    return new Dimension( 0, 0 );
   }
 
   /**
@@ -472,14 +405,12 @@ public class ComponentDrawable
    *
    * @return true, if the component has an own peer, false otherwise.
    */
-  protected final boolean isOwnPeerConnected()
-  {
-    if (allowOwnPeer == false)
-    {
+  protected final boolean isOwnPeerConnected() {
+    if ( allowOwnPeer == false ) {
       return false;
     }
-    final Window windowAncestor = ComponentDrawable.getWindowAncestor(component);
-    return (windowAncestor != null && windowAncestor != peerSupply);
+    final Window windowAncestor = ComponentDrawable.getWindowAncestor( component );
+    return ( windowAncestor != null && windowAncestor != peerSupply );
   }
 
   /**
@@ -488,13 +419,10 @@ public class ComponentDrawable
    * @param component the component for which the Window should be returned.
    * @return the AWT-Window that is the (possibly indirect) parent of this component.
    */
-  protected static Window getWindowAncestor(final Component component)
-  {
+  protected static Window getWindowAncestor( final Component component ) {
     Component parent = component.getParent();
-    while (parent != null)
-    {
-      if (parent instanceof Window)
-      {
+    while ( parent != null ) {
+      if ( parent instanceof Window ) {
         return (Window) parent;
       }
       parent = parent.getParent();
@@ -507,8 +435,7 @@ public class ComponentDrawable
    *
    * @param preserveAspectRatio true, if the aspect ratio should be preserved, false otherwise.
    */
-  public void setPreserveAspectRatio(final boolean preserveAspectRatio)
-  {
+  public void setPreserveAspectRatio( final boolean preserveAspectRatio ) {
     this.preserveAspectRatio = preserveAspectRatio;
   }
 
@@ -517,8 +444,7 @@ public class ComponentDrawable
    *
    * @return true, if an aspect ratio is preserved, false otherwise.
    */
-  public boolean isPreserveAspectRatio()
-  {
+  public boolean isPreserveAspectRatio() {
     return preserveAspectRatio;
   }
 
@@ -528,29 +454,21 @@ public class ComponentDrawable
    * @param g2   the graphics device.
    * @param area the area inside which the object should be drawn.
    */
-  public void draw(final Graphics2D g2, final Rectangle2D area)
-  {
-    if (component == null)
-    {
+  public void draw( final Graphics2D g2, final Rectangle2D area ) {
+    if ( component == null ) {
       return;
     }
 
-    runnable.setArea(area);
-    runnable.setGraphics(g2);
+    runnable.setArea( area );
+    runnable.setGraphics( g2 );
 
-    if (SwingUtilities.isEventDispatchThread() || paintSynchronized == false)
-    {
+    if ( SwingUtilities.isEventDispatchThread() || paintSynchronized == false ) {
       runnable.run();
-    }
-    else
-    {
-      try
-      {
-        SwingUtilities.invokeAndWait(runnable);
-      }
-      catch (Exception e)
-      {
-        ComponentDrawable.logger.warn("Failed to redraw the component.");
+    } else {
+      try {
+        SwingUtilities.invokeAndWait( runnable );
+      } catch ( Exception e ) {
+        ComponentDrawable.logger.warn( "Failed to redraw the component." );
       }
     }
   }
@@ -561,17 +479,14 @@ public class ComponentDrawable
    *
    * @param c the component that should be prepared.
    */
-  private void prepareComponent(final Component c)
-  {
-    if (c instanceof JComponent)
-    {
+  private void prepareComponent( final Component c ) {
+    if ( c instanceof JComponent ) {
       final JComponent jc = (JComponent) c;
-      jc.setDoubleBuffered(false);
+      jc.setDoubleBuffered( false );
       final Component[] childs = jc.getComponents();
-      for (int i = 0; i < childs.length; i++)
-      {
-        final Component child = childs[i];
-        prepareComponent(child);
+      for ( int i = 0; i < childs.length; i++ ) {
+        final Component child = childs[ i ];
+        prepareComponent( child );
       }
     }
   }

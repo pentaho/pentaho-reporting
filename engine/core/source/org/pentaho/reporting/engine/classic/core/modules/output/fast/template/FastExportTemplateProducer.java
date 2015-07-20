@@ -17,8 +17,7 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.output.fast.template;
 
-public interface FastExportTemplateProducer extends FastExportTemplateListener
-{
+public interface FastExportTemplateProducer extends FastExportTemplateListener {
   public FormattedDataBuilder createDataBuilder();
 
 }

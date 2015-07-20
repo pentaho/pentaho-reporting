@@ -17,20 +17,18 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.gui.base.internal;
 
+import org.pentaho.reporting.engine.classic.core.modules.gui.commonswing.ActionPlugin;
+
 import java.io.Serializable;
 import java.util.Comparator;
-
-import org.pentaho.reporting.engine.classic.core.modules.gui.commonswing.ActionPlugin;
 
 /**
  * Creation-Date: 17.05.2007, 20:14:23
  *
  * @author Thomas Morgner
  */
-public class ActionPluginComparator implements Comparator<ActionPlugin>, Serializable
-{
-  public ActionPluginComparator()
-  {
+public class ActionPluginComparator implements Comparator<ActionPlugin>, Serializable {
+  public ActionPluginComparator() {
   }
 
 
@@ -55,20 +53,16 @@ public class ActionPluginComparator implements Comparator<ActionPlugin>, Seriali
    * @param ap1 the first object to be compared.
    * @param ap2 the second object to be compared.
    * @return a negative integer, zero, or a positive integer as the first argument is less than, equal to, or greater
-   *         than the second.
+   * than the second.
    * @throws ClassCastException if the arguments' types prevent them from being compared by this Comparator.
    */
-  public int compare(final ActionPlugin ap1, final ActionPlugin ap2)
-  {
+  public int compare( final ActionPlugin ap1, final ActionPlugin ap2 ) {
     final int to1 = ap1.getToolbarOrder();
     final int to2 = ap2.getToolbarOrder();
 
-    if (to1 < to2)
-    {
+    if ( to1 < to2 ) {
       return -1;
-    }
-    else if (to1 > to2)
-    {
+    } else if ( to1 > to2 ) {
       return +1;
     }
     return 0;

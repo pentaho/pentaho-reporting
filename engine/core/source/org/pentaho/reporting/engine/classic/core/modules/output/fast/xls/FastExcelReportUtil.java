@@ -17,45 +17,41 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.output.fast.xls;
 
-import java.io.IOException;
-import java.io.OutputStream;
-
 import org.pentaho.reporting.engine.classic.core.MasterReport;
 import org.pentaho.reporting.engine.classic.core.ReportProcessingException;
 import org.pentaho.reporting.engine.classic.core.modules.output.fast.validator.ReportStructureValidator;
 import org.pentaho.reporting.engine.classic.core.modules.output.table.xls.ExcelReportUtil;
 
-public class FastExcelReportUtil
-{
-  private FastExcelReportUtil()
-  {
+import java.io.IOException;
+import java.io.OutputStream;
+
+public class FastExcelReportUtil {
+  private FastExcelReportUtil() {
   }
 
-  public static void processXls(final MasterReport report, final OutputStream out) throws ReportProcessingException, IOException
-  {
+  public static void processXls( final MasterReport report, final OutputStream out )
+    throws ReportProcessingException, IOException {
     ReportStructureValidator validator = new ReportStructureValidator();
-    if (validator.isValidForFastProcessing(report) == false)
-    {
-      ExcelReportUtil.createXLS(report, out);
+    if ( validator.isValidForFastProcessing( report ) == false ) {
+      ExcelReportUtil.createXLS( report, out );
       return;
     }
 
-    final FastExcelExportProcessor reportProcessor = new FastExcelExportProcessor(report, out, false);
+    final FastExcelExportProcessor reportProcessor = new FastExcelExportProcessor( report, out, false );
     reportProcessor.processReport();
     reportProcessor.close();
     out.flush();
   }
 
-  public static void processXlsx(final MasterReport report, final OutputStream out) throws ReportProcessingException, IOException
-  {
+  public static void processXlsx( final MasterReport report, final OutputStream out )
+    throws ReportProcessingException, IOException {
     ReportStructureValidator validator = new ReportStructureValidator();
-    if (validator.isValidForFastProcessing(report) == false)
-    {
-      ExcelReportUtil.createXLSX(report, out);
+    if ( validator.isValidForFastProcessing( report ) == false ) {
+      ExcelReportUtil.createXLSX( report, out );
       return;
     }
 
-    final FastExcelExportProcessor reportProcessor = new FastExcelExportProcessor(report, out, true);
+    final FastExcelExportProcessor reportProcessor = new FastExcelExportProcessor( report, out, true );
     reportProcessor.processReport();
     reportProcessor.close();
     out.flush();

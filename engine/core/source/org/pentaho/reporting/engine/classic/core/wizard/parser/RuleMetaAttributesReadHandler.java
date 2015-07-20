@@ -17,18 +17,16 @@
 
 package org.pentaho.reporting.engine.classic.core.wizard.parser;
 
-import org.pentaho.reporting.engine.classic.core.wizard.DefaultDataAttributes;
 import org.pentaho.reporting.engine.classic.core.wizard.DefaultConceptQueryMapper;
+import org.pentaho.reporting.engine.classic.core.wizard.DefaultDataAttributes;
 import org.pentaho.reporting.libraries.xmlns.parser.AbstractXmlReadHandler;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 
-public class RuleMetaAttributesReadHandler extends AbstractXmlReadHandler
-{
+public class RuleMetaAttributesReadHandler extends AbstractXmlReadHandler {
   private DefaultDataAttributes dataAttributes;
 
-  public RuleMetaAttributesReadHandler()
-  {
+  public RuleMetaAttributesReadHandler() {
     this.dataAttributes = new DefaultDataAttributes();
   }
 
@@ -38,15 +36,13 @@ public class RuleMetaAttributesReadHandler extends AbstractXmlReadHandler
    * @param attrs the attributes.
    * @throws SAXException if there is a parsing error.
    */
-  protected void startParsing(final Attributes attrs) throws SAXException
-  {
+  protected void startParsing( final Attributes attrs ) throws SAXException {
     final int length = attrs.getLength();
-    for (int i = 0; i < length; i++)
-    {
-      final String name = attrs.getLocalName(i);
-      final String namespace = attrs.getURI(i);
-      final String attributeValue = attrs.getValue(i);
-      dataAttributes.setMetaAttribute(namespace, name, DefaultConceptQueryMapper.INSTANCE, attributeValue);
+    for ( int i = 0; i < length; i++ ) {
+      final String name = attrs.getLocalName( i );
+      final String namespace = attrs.getURI( i );
+      final String attributeValue = attrs.getValue( i );
+      dataAttributes.setMetaAttribute( namespace, name, DefaultConceptQueryMapper.INSTANCE, attributeValue );
     }
   }
 
@@ -56,8 +52,7 @@ public class RuleMetaAttributesReadHandler extends AbstractXmlReadHandler
    * @return the object.
    * @throws SAXException if an parser error occured.
    */
-  public Object getObject() throws SAXException
-  {
+  public Object getObject() throws SAXException {
     return dataAttributes;
   }
 }

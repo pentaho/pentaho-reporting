@@ -19,10 +19,8 @@ package org.pentaho.reporting.engine.classic.core.modules.misc.connections;
 
 import java.io.File;
 
-public class InMemoryDataSourceMgmtService extends FileDataSourceMgmtService
-{
-  public InMemoryDataSourceMgmtService()
-  {
+public class InMemoryDataSourceMgmtService extends FileDataSourceMgmtService {
+  public InMemoryDataSourceMgmtService() {
   }
 
   /**
@@ -30,8 +28,7 @@ public class InMemoryDataSourceMgmtService extends FileDataSourceMgmtService
    *
    * @return
    */
-  protected File createTargetFile()
-  {
+  protected File createTargetFile() {
     return null;
   }
 }

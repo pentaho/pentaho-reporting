@@ -17,15 +17,16 @@
 
 package org.pentaho.reporting.engine.classic.core.states.datarow;
 
-import java.util.Iterator;
-
 import org.pentaho.reporting.engine.classic.core.function.Expression;
 import org.pentaho.reporting.engine.classic.core.function.Function;
 
-public interface LevelStorage
-{
+import java.util.Iterator;
+
+public interface LevelStorage {
   public int getLevelNumber();
+
   public Iterator<Function> getFunctions();
+
   public Iterator<Function> getPageFunctions();
 
   public Iterator<Expression> getActiveExpressions();

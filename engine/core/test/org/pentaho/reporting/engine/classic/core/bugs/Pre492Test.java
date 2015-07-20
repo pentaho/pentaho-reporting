@@ -17,10 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.core.bugs;
 
-import java.io.IOException;
-import java.net.URL;
-import java.util.List;
-
 import junit.framework.Assert;
 import junit.framework.TestCase;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
@@ -50,126 +46,117 @@ import org.pentaho.reporting.libraries.repository.zipwriter.ZipRepository;
 import org.pentaho.reporting.libraries.resourceloader.Resource;
 import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 
-public class Pre492Test extends TestCase
-{
-  private static class DebugFlowOutputProcessor extends FlowHtmlOutputProcessor
-  {
-    private DebugFlowOutputProcessor()
-    {
+import java.io.IOException;
+import java.net.URL;
+import java.util.List;
+
+public class Pre492Test extends TestCase {
+  private static class DebugFlowOutputProcessor extends FlowHtmlOutputProcessor {
+    private DebugFlowOutputProcessor() {
     }
 
-    protected TableContentProducer createTableContentProducer(final SheetLayout layout)
-    {
-      return new TestTableContentProducer(layout, getMetaData());
+    protected TableContentProducer createTableContentProducer( final SheetLayout layout ) {
+      return new TestTableContentProducer( layout, getMetaData() );
     }
   }
 
-  private static class TestTableContentProducer extends TableContentProducer
-  {
-    private TestTableContentProducer(final SheetLayout sheetLayout, final OutputProcessorMetaData metaData)
-    {
-      super(sheetLayout, metaData);
+  private static class TestTableContentProducer extends TableContentProducer {
+    private TestTableContentProducer( final SheetLayout sheetLayout, final OutputProcessorMetaData metaData ) {
+      super( sheetLayout, metaData );
     }
 
-    protected void handleContentConflict(final RenderBox box)
-    {
+    protected void handleContentConflict( final RenderBox box ) {
       Assert.fail();
     }
   }
 
-  public Pre492Test()
-  {
+  public Pre492Test() {
   }
 
-  public Pre492Test(final String s)
-  {
-    super(s);
+  public Pre492Test( final String s ) {
+    super( s );
   }
 
-  protected void setUp() throws Exception
-  {
+  protected void setUp() throws Exception {
     ClassicEngineBoot.getInstance().start();
   }
 
-  public void testRun() throws Exception
-  {
-    final URL url = getClass().getResource("Pre-492.prpt");
-    assertNotNull(url);
+  public void testRun() throws Exception {
+    final URL url = getClass().getResource( "Pre-492.prpt" );
+    assertNotNull( url );
     final ResourceManager resourceManager = new ResourceManager();
     resourceManager.registerDefaults();
-    final Resource directly = resourceManager.createDirectly(url, MasterReport.class);
+    final Resource directly = resourceManager.createDirectly( url, MasterReport.class );
     final MasterReport report = (MasterReport) directly.getResource();
 
 
-    try
-    {
-      final ZipRepository zipRepository = new ZipRepository(new NullOutputStream());
+    try {
+      final ZipRepository zipRepository = new ZipRepository( new NullOutputStream() );
       final ContentLocation root = zipRepository.getRoot();
       final ContentLocation data = RepositoryUtilities.createLocation
-          (zipRepository, RepositoryUtilities.splitPath("data", "/"));
+        ( zipRepository, RepositoryUtilities.splitPath( "data", "/" ) );
 
       final DebugFlowOutputProcessor outputProcessor = new DebugFlowOutputProcessor();
 
-      final HtmlPrinter printer = new AllItemsHtmlPrinter(report.getResourceManager());
-      printer.setContentWriter(root, new DefaultNameGenerator(root, "report"));
-      printer.setDataWriter(data, new DefaultNameGenerator(data, "content"));
-      printer.setUrlRewriter(new SingleRepositoryURLRewriter());
-      outputProcessor.setPrinter(printer);
+      final HtmlPrinter printer = new AllItemsHtmlPrinter( report.getResourceManager() );
+      printer.setContentWriter( root, new DefaultNameGenerator( root, "report" ) );
+      printer.setDataWriter( data, new DefaultNameGenerator( data, "content" ) );
+      printer.setUrlRewriter( new SingleRepositoryURLRewriter() );
+      outputProcessor.setPrinter( printer );
 
-      final FlowReportProcessor sp = new FlowReportProcessor(report, outputProcessor);
+      final FlowReportProcessor sp = new FlowReportProcessor( report, outputProcessor );
       sp.processReport();
       sp.close();
       zipRepository.close();
-    }
-    catch (IOException ioe)
-    {
+    } catch ( IOException ioe ) {
       throw ioe;
-    }
-    catch (ReportProcessingException re)
-    {
+    } catch ( ReportProcessingException re ) {
       throw re;
-    }
-    catch (Exception re)
-    {
-      throw new ReportProcessingException("Failed to process the report", re);
+    } catch ( Exception re ) {
+      throw new ReportProcessingException( "Failed to process the report", re );
     }
   }
 
-  public void testPagebreakHonoredOnFirstPage() throws Exception
-  {
-    final MasterReport masterReport = DebugReportRunner.parseGoldenSampleReport("Pre-492.prpt");
-    masterReport.getReportConfiguration().setConfigProperty(ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY, "true");
-    List<LogicalPageBox> logicalPageBoxes = DebugReportRunner.layoutPages(masterReport, 0, 1);
-    final LogicalPageBox page0 = logicalPageBoxes.get(0);
-//    ModelPrinter.INSTANCE.print(page0);
+  public void testPagebreakHonoredOnFirstPage() throws Exception {
+    final MasterReport masterReport = DebugReportRunner.parseGoldenSampleReport( "Pre-492.prpt" );
+    masterReport.getReportConfiguration()
+      .setConfigProperty( ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY, "true" );
+    List<LogicalPageBox> logicalPageBoxes = DebugReportRunner.layoutPages( masterReport, 0, 1 );
+    final LogicalPageBox page0 = logicalPageBoxes.get( 0 );
+    //    ModelPrinter.INSTANCE.print(page0);
 
-    final RenderNode[] elementsByElementType = MatchFactory.findElementsByElementType(page0.getContentArea(), AutoLayoutBoxType.INSTANCE);
-    assertEquals(28, elementsByElementType.length);
-    assertEquals(StrictGeomUtility.toInternalValue(199), elementsByElementType[27].getY());
+    final RenderNode[] elementsByElementType =
+      MatchFactory.findElementsByElementType( page0.getContentArea(), AutoLayoutBoxType.INSTANCE );
+    assertEquals( 28, elementsByElementType.length );
+    assertEquals( StrictGeomUtility.toInternalValue( 199 ), elementsByElementType[ 27 ].getY() );
 
-    final LogicalPageBox page1 = logicalPageBoxes.get(1);
-    final RenderNode[] elementsPage1 = MatchFactory.findElementsByElementType(page1.getContentArea(), AutoLayoutBoxType.INSTANCE);
-    assertEquals(31, elementsPage1.length);
-    assertEquals(StrictGeomUtility.toInternalValue(211), elementsPage1[30].getY());
+    final LogicalPageBox page1 = logicalPageBoxes.get( 1 );
+    final RenderNode[] elementsPage1 =
+      MatchFactory.findElementsByElementType( page1.getContentArea(), AutoLayoutBoxType.INSTANCE );
+    assertEquals( 31, elementsPage1.length );
+    assertEquals( StrictGeomUtility.toInternalValue( 211 ), elementsPage1[ 30 ].getY() );
     //  ModelPrinter.INSTANCE.print(page1);
   }
 
-  public void testPagebreakHonoredOnFirstPageSimple() throws Exception
-  {
-    final MasterReport masterReport = DebugReportRunner.parseGoldenSampleReport("Pre-492.prpt");
-    masterReport.getReportConfiguration().setConfigProperty(ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY, "false");
-    List<LogicalPageBox> logicalPageBoxes = DebugReportRunner.layoutPages(masterReport, 0, 1);
-    final LogicalPageBox page0 = logicalPageBoxes.get(0);
-//    ModelPrinter.INSTANCE.print(page0);
+  public void testPagebreakHonoredOnFirstPageSimple() throws Exception {
+    final MasterReport masterReport = DebugReportRunner.parseGoldenSampleReport( "Pre-492.prpt" );
+    masterReport.getReportConfiguration()
+      .setConfigProperty( ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY, "false" );
+    List<LogicalPageBox> logicalPageBoxes = DebugReportRunner.layoutPages( masterReport, 0, 1 );
+    final LogicalPageBox page0 = logicalPageBoxes.get( 0 );
+    //    ModelPrinter.INSTANCE.print(page0);
 
-    final RenderNode[] elementsByElementType = MatchFactory.findElementsByElementType(page0.getContentArea(), AutoLayoutBoxType.INSTANCE);
-    assertEquals(31, elementsByElementType.length);
-    assertEquals(StrictGeomUtility.toInternalValue(199), elementsByElementType[elementsByElementType.length - 1].getY());
+    final RenderNode[] elementsByElementType =
+      MatchFactory.findElementsByElementType( page0.getContentArea(), AutoLayoutBoxType.INSTANCE );
+    assertEquals( 31, elementsByElementType.length );
+    assertEquals( StrictGeomUtility.toInternalValue( 199 ),
+      elementsByElementType[ elementsByElementType.length - 1 ].getY() );
 
-    final LogicalPageBox page1 = logicalPageBoxes.get(1);
-    final RenderNode[] elementsPage1 = MatchFactory.findElementsByElementType(page1.getContentArea(), AutoLayoutBoxType.INSTANCE);
-    assertEquals(34, elementsPage1.length);
-    assertEquals(StrictGeomUtility.toInternalValue(211), elementsPage1[elementsPage1.length - 1].getY());
+    final LogicalPageBox page1 = logicalPageBoxes.get( 1 );
+    final RenderNode[] elementsPage1 =
+      MatchFactory.findElementsByElementType( page1.getContentArea(), AutoLayoutBoxType.INSTANCE );
+    assertEquals( 34, elementsPage1.length );
+    assertEquals( StrictGeomUtility.toInternalValue( 211 ), elementsPage1[ elementsPage1.length - 1 ].getY() );
     //  ModelPrinter.INSTANCE.print(page1);
   }
 }

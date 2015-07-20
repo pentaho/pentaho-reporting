@@ -17,8 +17,7 @@
 
 package org.pentaho.reporting.engine.classic.core.states;
 
-public interface GroupSizeRecorder extends Cloneable
-{
+public interface GroupSizeRecorder extends Cloneable {
   Object clone();
 
   void enterGroup();

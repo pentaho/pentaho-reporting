@@ -17,39 +17,33 @@
 
 package org.pentaho.reporting.engine.classic.core;
 
-import java.util.Arrays;
-
 import junit.framework.TestCase;
 import org.pentaho.reporting.engine.classic.core.metadata.ReportProcessTaskRegistry;
 import org.pentaho.reporting.engine.classic.core.modules.output.table.xls.ExcelTableModule;
 
-public class ValidateProcessTasksTest extends TestCase
-{
-  public ValidateProcessTasksTest()
-  {
+import java.util.Arrays;
+
+public class ValidateProcessTasksTest extends TestCase {
+  public ValidateProcessTasksTest() {
   }
 
-  public ValidateProcessTasksTest(final String name)
-  {
-    super(name);
+  public ValidateProcessTasksTest( final String name ) {
+    super( name );
   }
 
-  protected void setUp() throws Exception
-  {
+  protected void setUp() throws Exception {
     ClassicEngineBoot.getInstance().start();
   }
 
-  public void testBoot()
-  {
+  public void testBoot() {
     final String[] exportTypes = ReportProcessTaskRegistry.getInstance().getExportTypes();
-    Arrays.sort(exportTypes);
-    for (int i = 0; i < exportTypes.length; i++)
-    {
-      final String exportType = exportTypes[i];
-      System.out.println(exportType);
+    Arrays.sort( exportTypes );
+    for ( int i = 0; i < exportTypes.length; i++ ) {
+      final String exportType = exportTypes[ i ];
+      System.out.println( exportType );
     }
-    
-    assertEquals(20, exportTypes.length);
-    ReportProcessTaskRegistry.getInstance().createProcessTask(ExcelTableModule.EXCEL_FLOW_EXPORT_TYPE);
+
+    assertEquals( 20, exportTypes.length );
+    ReportProcessTaskRegistry.getInstance().createProcessTask( ExcelTableModule.EXCEL_FLOW_EXPORT_TYPE );
   }
 }

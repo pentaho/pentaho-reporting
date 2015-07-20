@@ -24,16 +24,14 @@ import org.pentaho.reporting.engine.classic.core.filter.templates.NumberFieldTem
  *
  * @author Thomas Morgner
  */
-public class NumberFieldTemplateDescription extends AbstractTemplateDescription
-{
+public class NumberFieldTemplateDescription extends AbstractTemplateDescription {
   /**
    * Creates a new template description.
    *
    * @param name the name.
    */
-  public NumberFieldTemplateDescription(final String name)
-  {
-    super(name, NumberFieldTemplate.class, true);
+  public NumberFieldTemplateDescription( final String name ) {
+    super( name, NumberFieldTemplate.class, true );
   }
 
 }

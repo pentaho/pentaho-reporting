@@ -17,6 +17,10 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.misc.tablemodel;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
+
 import java.net.URL;
 import java.sql.Blob;
 import java.sql.Clob;
@@ -31,23 +35,16 @@ import java.sql.Time;
 import java.sql.Timestamp;
 import java.sql.Types;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
-
 /**
  * @author $Author$
  * @version $Id$
  */
-public class TypeMapper
-{
-  private static final Log logger = LogFactory.getLog(TypeMapper.class);
+public class TypeMapper {
+  private static final Log logger = LogFactory.getLog( TypeMapper.class );
   private static final Class byteArrayClass = byte[].class;
 
-  private static Class mapSQLType(final int t)
-  {
-    switch (t)
-    {
+  private static Class mapSQLType( final int t ) {
+    switch( t ) {
       case Types.ARRAY:
         return Object[].class;
       case Types.BIGINT:
@@ -123,62 +120,46 @@ public class TypeMapper
     }
   }
 
-  public static Class[] mapTypes(final ResultSetMetaData rsmd)
-  {
+  public static Class[] mapTypes( final ResultSetMetaData rsmd ) {
     final Class[] types;
-    try
-    {
-      types = new Class[rsmd.getColumnCount()];
-    }
-    catch (SQLException sqle)
-    {
+    try {
+      types = new Class[ rsmd.getColumnCount() ];
+    } catch ( SQLException sqle ) {
       // indicate that we do not have knowledge about any types .. 
       return null;
     }
 
-    final ClassLoader cl = ObjectUtilities.getClassLoader(TypeMapper.class);
+    final ClassLoader cl = ObjectUtilities.getClassLoader( TypeMapper.class );
     final int typeLength = types.length;
-    for (int i = 0; i < typeLength; i++)
-    {
-      try
-      {
-        try
-        {
-          final String tn = rsmd.getColumnClassName(i + 1);
-          if (tn == null)
-          {
-            final int colType = rsmd.getColumnType(i + 1);
-            types[i] = mapSQLType(colType);
+    for ( int i = 0; i < typeLength; i++ ) {
+      try {
+        try {
+          final String tn = rsmd.getColumnClassName( i + 1 );
+          if ( tn == null ) {
+            final int colType = rsmd.getColumnType( i + 1 );
+            types[ i ] = mapSQLType( colType );
+          } else {
+            types[ i ] = Class.forName( tn, false, cl );
           }
-          else
-          {
-            types[i] = Class.forName(tn, false, cl);
-          }
-        }
-        catch (final Exception oops)
-        {
+        } catch ( final Exception oops ) {
           // ignore exception
-          final int colType = rsmd.getColumnType(i + 1);
-          types[i] = mapSQLType(colType);
+          final int colType = rsmd.getColumnType( i + 1 );
+          types[ i ] = mapSQLType( colType );
         }
-      }
-      catch (Exception e)
-      {
+      } catch ( Exception e ) {
         // still ignore the exception
-        types[i] = Object.class;
+        types[ i ] = Object.class;
       }
-      
-      if (types[i] == null)
-      {
-        logger.error("JDBC Driver returned <null> as column type. This driver violates the JDBC specifications.");
-        types[i] = Object.class;
+
+      if ( types[ i ] == null ) {
+        logger.error( "JDBC Driver returned <null> as column type. This driver violates the JDBC specifications." );
+        types[ i ] = Object.class;
       }
     }
 
     return types;
   }
 
-  private TypeMapper()
-  {
+  private TypeMapper() {
   }
 }

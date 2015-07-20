@@ -21,14 +21,12 @@ import org.pentaho.reporting.engine.classic.core.util.beans.BeanPropertyLookupPa
 import org.pentaho.reporting.libraries.xmlns.parser.RootXmlReadHandler;
 import org.xml.sax.Attributes;
 
-public class PropertyAttributes extends BeanPropertyLookupParser implements Attributes
-{
+public class PropertyAttributes extends BeanPropertyLookupParser implements Attributes {
   private Attributes backend;
   private RootXmlReadHandler rootXmlReadHandler;
 
-  public PropertyAttributes(final RootXmlReadHandler rootXmlReadHandler,
-                            final Attributes backend)
-  {
+  public PropertyAttributes( final RootXmlReadHandler rootXmlReadHandler,
+                             final Attributes backend ) {
     this.rootXmlReadHandler = rootXmlReadHandler;
     this.backend = backend;
   }
@@ -39,9 +37,8 @@ public class PropertyAttributes extends BeanPropertyLookupParser implements Attr
    * @param qName The qualified (prefixed) name.
    * @return The index of the attribute, or -1 if it does not appear in the list.
    */
-  public int getIndex(final String qName)
-  {
-    return backend.getIndex(qName);
+  public int getIndex( final String qName ) {
+    return backend.getIndex( qName );
   }
 
   /**
@@ -51,9 +48,8 @@ public class PropertyAttributes extends BeanPropertyLookupParser implements Attr
    * @param localName The attribute's local name.
    * @return The index of the attribute, or -1 if it does not appear in the list.
    */
-  public int getIndex(final String uri, final String localName)
-  {
-    return backend.getIndex(uri, localName);
+  public int getIndex( final String uri, final String localName ) {
+    return backend.getIndex( uri, localName );
   }
 
   /**
@@ -67,8 +63,7 @@ public class PropertyAttributes extends BeanPropertyLookupParser implements Attr
    * @see #getType(int)
    * @see #getValue(int)
    */
-  public int getLength()
-  {
+  public int getLength() {
     return backend.getLength();
   }
 
@@ -77,25 +72,22 @@ public class PropertyAttributes extends BeanPropertyLookupParser implements Attr
    *
    * @param index The attribute index (zero-based).
    * @return The local name, or the empty string if Namespace processing is not being performed, or null if the index is
-   *         out of range.
+   * out of range.
    * @see #getLength
    */
-  public String getLocalName(final int index)
-  {
-    return backend.getLocalName(index);
+  public String getLocalName( final int index ) {
+    return backend.getLocalName( index );
   }
 
   /**
    * Look up an attribute's XML 1.0 qualified name by index.
    *
    * @param index The attribute index (zero-based).
-   * @return The XML 1.0 qualified name, or the empty string if none is available, or null if the index is out of
-   *         range.
+   * @return The XML 1.0 qualified name, or the empty string if none is available, or null if the index is out of range.
    * @see #getLength
    */
-  public String getQName(final int index)
-  {
-    return backend.getQName(index);
+  public String getQName( final int index ) {
+    return backend.getQName( index );
   }
 
   /**
@@ -110,9 +102,8 @@ public class PropertyAttributes extends BeanPropertyLookupParser implements Attr
    * @return The attribute's type as a string, or null if the index is out of range.
    * @see #getLength
    */
-  public String getType(final int index)
-  {
-    return backend.getType(index);
+  public String getType( final int index ) {
+    return backend.getType( index );
   }
 
   /**
@@ -121,11 +112,10 @@ public class PropertyAttributes extends BeanPropertyLookupParser implements Attr
    *
    * @param qName The XML 1.0 qualified name.
    * @return The attribute type as a string, or null if the attribute is not in the list or if qualified names are not
-   *         available.
+   * available.
    */
-  public String getType(final String qName)
-  {
-    return backend.getType(qName);
+  public String getType( final String qName ) {
+    return backend.getType( qName );
   }
 
   /**
@@ -135,11 +125,10 @@ public class PropertyAttributes extends BeanPropertyLookupParser implements Attr
    * @param uri       The Namespace URI, or the empty String if the name has no Namespace URI.
    * @param localName The local name of the attribute.
    * @return The attribute type as a string, or null if the attribute is not in the list or if Namespace processing is
-   *         not being performed.
+   * not being performed.
    */
-  public String getType(final String uri, final String localName)
-  {
-    return backend.getType(uri, localName);
+  public String getType( final String uri, final String localName ) {
+    return backend.getType( uri, localName );
   }
 
   /**
@@ -149,9 +138,8 @@ public class PropertyAttributes extends BeanPropertyLookupParser implements Attr
    * @return The Namespace URI, or the empty string if none is available, or null if the index is out of range.
    * @see #getLength
    */
-  public String getURI(final int index)
-  {
-    return backend.getURI(index);
+  public String getURI( final int index ) {
+    return backend.getURI( index );
   }
 
   /**
@@ -162,9 +150,8 @@ public class PropertyAttributes extends BeanPropertyLookupParser implements Attr
    * @return The attribute's value as a string, or null if the index is out of range.
    * @see #getLength
    */
-  public String getValue(final int index)
-  {
-    return translateAndLookup(backend.getValue(index));
+  public String getValue( final int index ) {
+    return translateAndLookup( backend.getValue( index ) );
   }
 
   /**
@@ -173,11 +160,10 @@ public class PropertyAttributes extends BeanPropertyLookupParser implements Attr
    *
    * @param qName The XML 1.0 qualified name.
    * @return The attribute value as a string, or null if the attribute is not in the list or if qualified names are not
-   *         available.
+   * available.
    */
-  public String getValue(final String qName)
-  {
-    return translateAndLookup(backend.getValue(qName));
+  public String getValue( final String qName ) {
+    return translateAndLookup( backend.getValue( qName ) );
   }
 
   /**
@@ -188,22 +174,18 @@ public class PropertyAttributes extends BeanPropertyLookupParser implements Attr
    * @param localName The local name of the attribute.
    * @return The attribute value as a string, or null if the attribute is not in the list.
    */
-  public String getValue(final String uri, final String localName)
-  {
-    if (Boolean.TRUE.equals(getRootXmlReadHandler().getHelperObject("property-expansion")))
-    {
-      return translateAndLookup(backend.getValue(uri, localName));
+  public String getValue( final String uri, final String localName ) {
+    if ( Boolean.TRUE.equals( getRootXmlReadHandler().getHelperObject( "property-expansion" ) ) ) {
+      return translateAndLookup( backend.getValue( uri, localName ) );
     }
-    return backend.getValue(uri, localName);
+    return backend.getValue( uri, localName );
   }
 
-  protected RootXmlReadHandler getRootXmlReadHandler()
-  {
+  protected RootXmlReadHandler getRootXmlReadHandler() {
     return rootXmlReadHandler;
   }
 
-  protected Object performInitialLookup(final String name)
-  {
-    return rootXmlReadHandler.getHelperObject(name);
+  protected Object performInitialLookup( final String name ) {
+    return rootXmlReadHandler.getHelperObject( name );
   }
 }

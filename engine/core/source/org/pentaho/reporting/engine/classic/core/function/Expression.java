@@ -17,11 +17,11 @@
 
 package org.pentaho.reporting.engine.classic.core.function;
 
-import java.io.Serializable;
-
 import org.pentaho.reporting.engine.classic.core.DataRow;
 import org.pentaho.reporting.engine.classic.core.ResourceBundleFactory;
 import org.pentaho.reporting.libraries.base.config.Configuration;
+
+import java.io.Serializable;
 
 /**
  * An expression is a lightweight function that does not maintain a state. Expressions are used to calculate values
@@ -30,8 +30,7 @@ import org.pentaho.reporting.libraries.base.config.Configuration;
  *
  * @author Thomas Morgner
  */
-public interface Expression extends Cloneable, Serializable
-{
+public interface Expression extends Cloneable, Serializable {
   /**
    * Returns the name of the expression.
    * <p/>
@@ -44,13 +43,12 @@ public interface Expression extends Cloneable, Serializable
   /**
    * Sets the name of the expression.
    * <p/>
-   * The name must not be null and must be unique within the expressions of the report, if you intend to
-   * use this as a global expression. Expressions for style-expressions or attribute-expressions can work
-   * without a name.
+   * The name must not be null and must be unique within the expressions of the report, if you intend to use this as a
+   * global expression. Expressions for style-expressions or attribute-expressions can work without a name.
    *
    * @param name the name.
    */
-  public void setName(String name);
+  public void setName( String name );
 
   /**
    * Return the current expression value.
@@ -88,7 +86,7 @@ public interface Expression extends Cloneable, Serializable
    * @throws CloneNotSupportedException this should never happen.
    */
   public Object clone()
-      throws CloneNotSupportedException;
+    throws CloneNotSupportedException;
 
   /**
    * The dependency level defines the level of execution for this function. Higher dependency functions are executed
@@ -108,7 +106,7 @@ public interface Expression extends Cloneable, Serializable
    *
    * @param level the level.
    */
-  public void setDependencyLevel(int level);
+  public void setDependencyLevel( int level );
 
   /**
    * Return a new instance of this expression. The copy is initialized and uses the same parameters as the original, but
@@ -139,7 +137,7 @@ public interface Expression extends Cloneable, Serializable
    *
    * @param runtime the runtime information for the expression
    */
-  public void setRuntime(ExpressionRuntime runtime);
+  public void setRuntime( ExpressionRuntime runtime );
 
   /**
    * Retrieves the runtime instance.

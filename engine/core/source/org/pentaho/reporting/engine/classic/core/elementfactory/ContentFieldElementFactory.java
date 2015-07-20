@@ -17,12 +17,12 @@
 
 package org.pentaho.reporting.engine.classic.core.elementfactory;
 
-import java.net.URL;
-
 import org.pentaho.reporting.engine.classic.core.AttributeNames;
 import org.pentaho.reporting.engine.classic.core.Element;
 import org.pentaho.reporting.engine.classic.core.filter.types.ContentFieldType;
 import org.pentaho.reporting.engine.classic.core.function.FormulaExpression;
+
+import java.net.URL;
 
 /**
  * The drawable field element factory can be used to create elements that display <code>Drawable</code> elements.
@@ -33,8 +33,7 @@ import org.pentaho.reporting.engine.classic.core.function.FormulaExpression;
  *
  * @author Thomas Morgner
  */
-public class ContentFieldElementFactory extends AbstractContentElementFactory
-{
+public class ContentFieldElementFactory extends AbstractContentElementFactory {
   /**
    * The fieldname of the datarow from where to read the element data.
    */
@@ -53,8 +52,7 @@ public class ContentFieldElementFactory extends AbstractContentElementFactory
   /**
    * DefaultConstructor.
    */
-  public ContentFieldElementFactory()
-  {
+  public ContentFieldElementFactory() {
   }
 
   /**
@@ -62,8 +60,7 @@ public class ContentFieldElementFactory extends AbstractContentElementFactory
    *
    * @return the field name.
    */
-  public String getFieldname()
-  {
+  public String getFieldname() {
     return fieldname;
   }
 
@@ -73,8 +70,7 @@ public class ContentFieldElementFactory extends AbstractContentElementFactory
    *
    * @param fieldname the field name.
    */
-  public void setFieldname(final String fieldname)
-  {
+  public void setFieldname( final String fieldname ) {
     this.fieldname = fieldname;
   }
 
@@ -85,8 +81,7 @@ public class ContentFieldElementFactory extends AbstractContentElementFactory
    *
    * @return the formula as string.
    */
-  public String getFormula()
-  {
+  public String getFormula() {
     return formula;
   }
 
@@ -95,8 +90,7 @@ public class ContentFieldElementFactory extends AbstractContentElementFactory
    *
    * @return the base url.
    */
-  public URL getBaseURL()
-  {
+  public URL getBaseURL() {
     return baseURL;
   }
 
@@ -105,8 +99,7 @@ public class ContentFieldElementFactory extends AbstractContentElementFactory
    *
    * @param baseURL the base URL.
    */
-  public void setBaseURL(final URL baseURL)
-  {
+  public void setBaseURL( final URL baseURL ) {
     this.baseURL = baseURL;
   }
 
@@ -116,18 +109,15 @@ public class ContentFieldElementFactory extends AbstractContentElementFactory
    *
    * @param formula the formula as a string.
    */
-  public void setFormula(final String formula)
-  {
+  public void setFormula( final String formula ) {
     this.formula = formula;
   }
 
-  public Object getNullValue()
-  {
+  public Object getNullValue() {
     return nullValue;
   }
 
-  public void setNullValue(final Object nullValue)
-  {
+  public void setNullValue( final Object nullValue ) {
     this.nullValue = nullValue;
   }
 
@@ -138,30 +128,25 @@ public class ContentFieldElementFactory extends AbstractContentElementFactory
    * @throws IllegalStateException if the field name is not set.
    * @see ElementFactory#createElement()
    */
-  public Element createElement()
-  {
+  public Element createElement() {
     final Element element = new Element();
-    applyElementName(element);
-    applyStyle(element.getStyle());
+    applyElementName( element );
+    applyStyle( element.getStyle() );
 
-    element.setElementType(new ContentFieldType());
-    if (getFieldname() != null)
-    {
-      element.setAttribute(AttributeNames.Core.NAMESPACE, AttributeNames.Core.FIELD, getFieldname());
+    element.setElementType( new ContentFieldType() );
+    if ( getFieldname() != null ) {
+      element.setAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.FIELD, getFieldname() );
     }
-    if (getFormula() != null)
-    {
+    if ( getFormula() != null ) {
       final FormulaExpression formulaExpression = new FormulaExpression();
-      formulaExpression.setFormula(getFormula());
-      element.setAttributeExpression(AttributeNames.Core.NAMESPACE, AttributeNames.Core.VALUE, formulaExpression);
+      formulaExpression.setFormula( getFormula() );
+      element.setAttributeExpression( AttributeNames.Core.NAMESPACE, AttributeNames.Core.VALUE, formulaExpression );
     }
-    if (getNullValue() != null)
-    {
-      element.setAttribute(AttributeNames.Core.NAMESPACE, AttributeNames.Core.NULL_VALUE, getNullValue());
+    if ( getNullValue() != null ) {
+      element.setAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.NULL_VALUE, getNullValue() );
     }
-    if (getBaseURL() != null)
-    {
-      element.setAttribute(AttributeNames.Core.NAMESPACE, AttributeNames.Core.CONTENT_BASE, getBaseURL());
+    if ( getBaseURL() != null ) {
+      element.setAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.CONTENT_BASE, getBaseURL() );
     }
     return element;
   }

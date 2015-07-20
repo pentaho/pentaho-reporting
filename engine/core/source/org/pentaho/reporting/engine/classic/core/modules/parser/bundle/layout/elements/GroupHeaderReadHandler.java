@@ -21,16 +21,13 @@ import org.pentaho.reporting.engine.classic.core.GroupHeader;
 import org.pentaho.reporting.engine.classic.core.filter.types.bands.GroupHeaderType;
 import org.pentaho.reporting.libraries.xmlns.parser.ParseException;
 
-public class GroupHeaderReadHandler extends AbstractRootLevelBandReadHandler
-{
+public class GroupHeaderReadHandler extends AbstractRootLevelBandReadHandler {
   public GroupHeaderReadHandler()
-      throws ParseException
-  {
-    super(GroupHeaderType.INSTANCE);
+    throws ParseException {
+    super( GroupHeaderType.INSTANCE );
   }
 
-  public GroupHeader getElement()
-  {
+  public GroupHeader getElement() {
     return (GroupHeader) super.getElement();
   }
 }

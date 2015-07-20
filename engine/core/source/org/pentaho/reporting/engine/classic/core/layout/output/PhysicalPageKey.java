@@ -25,17 +25,14 @@ import java.io.Serializable;
  *
  * @author Thomas Morgner
  */
-public final class PhysicalPageKey implements Serializable
-{
+public final class PhysicalPageKey implements Serializable {
   private LogicalPageKey logicalPage;
   private int x;
   private int y;
 
-  public PhysicalPageKey(final LogicalPageKey logicalPage,
-                         final int x, final int y)
-  {
-    if (logicalPage == null)
-    {
+  public PhysicalPageKey( final LogicalPageKey logicalPage,
+                          final int x, final int y ) {
+    if ( logicalPage == null ) {
       throw new NullPointerException();
     }
     this.x = x;
@@ -43,58 +40,47 @@ public final class PhysicalPageKey implements Serializable
     this.logicalPage = logicalPage;
   }
 
-  public LogicalPageKey getLogicalPage()
-  {
+  public LogicalPageKey getLogicalPage() {
     return logicalPage;
   }
 
-  public int getX()
-  {
+  public int getX() {
     return x;
   }
 
-  public int getY()
-  {
+  public int getY() {
     return y;
   }
 
-  public int getSequentialPageNumber()
-  {
+  public int getSequentialPageNumber() {
     final int logPosition = logicalPage.getPosition();
     return logPosition * logicalPage.getWidth() * logicalPage.getHeight() + x + y * logicalPage.getWidth();
   }
 
-  public boolean equals(final Object o)
-  {
-    if (this == o)
-    {
+  public boolean equals( final Object o ) {
+    if ( this == o ) {
       return true;
     }
-    if (o == null || getClass() != o.getClass())
-    {
+    if ( o == null || getClass() != o.getClass() ) {
       return false;
     }
 
     final PhysicalPageKey that = (PhysicalPageKey) o;
 
-    if (x != that.x)
-    {
+    if ( x != that.x ) {
       return false;
     }
-    if (y != that.y)
-    {
+    if ( y != that.y ) {
       return false;
     }
-    if (!logicalPage.equals(that.logicalPage))
-    {
+    if ( !logicalPage.equals( that.logicalPage ) ) {
       return false;
     }
 
     return true;
   }
 
-  public int hashCode()
-  {
+  public int hashCode() {
     int result = logicalPage.hashCode();
     result = 29 * result + x;
     result = 29 * result + y;

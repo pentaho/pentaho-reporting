@@ -17,41 +17,34 @@
 
 package org.pentaho.reporting.engine.classic.core.wizard;
 
-import java.util.Locale;
-
 import org.pentaho.reporting.engine.classic.core.layout.output.GenericOutputProcessorMetaData;
 import org.pentaho.reporting.engine.classic.core.layout.output.OutputProcessorMetaData;
 
-public class DefaultDataAttributeContext implements DataAttributeContext
-{
+import java.util.Locale;
+
+public class DefaultDataAttributeContext implements DataAttributeContext {
   private OutputProcessorMetaData outputProcessorMetaData;
   private Locale locale;
 
-  public DefaultDataAttributeContext()
-  {
+  public DefaultDataAttributeContext() {
     this.outputProcessorMetaData = new GenericOutputProcessorMetaData();
     this.locale = Locale.getDefault();
   }
 
-  public DefaultDataAttributeContext(final Locale locale)
-  {
-    if (locale == null)
-    {
+  public DefaultDataAttributeContext( final Locale locale ) {
+    if ( locale == null ) {
       throw new NullPointerException();
     }
     this.outputProcessorMetaData = new GenericOutputProcessorMetaData();
     this.locale = locale;
   }
 
-  public DefaultDataAttributeContext(final OutputProcessorMetaData outputProcessorMetaData,
-                                     final Locale locale)
-  {
-    if (outputProcessorMetaData == null)
-    {
+  public DefaultDataAttributeContext( final OutputProcessorMetaData outputProcessorMetaData,
+                                      final Locale locale ) {
+    if ( outputProcessorMetaData == null ) {
       throw new NullPointerException();
     }
-    if (locale == null)
-    {
+    if ( locale == null ) {
       throw new NullPointerException();
     }
 
@@ -59,13 +52,11 @@ public class DefaultDataAttributeContext implements DataAttributeContext
     this.locale = locale;
   }
 
-  public Locale getLocale()
-  {
+  public Locale getLocale() {
     return locale;
   }
 
-  public OutputProcessorMetaData getOutputProcessorMetaData()
-  {
+  public OutputProcessorMetaData getOutputProcessorMetaData() {
     return outputProcessorMetaData;
   }
 }

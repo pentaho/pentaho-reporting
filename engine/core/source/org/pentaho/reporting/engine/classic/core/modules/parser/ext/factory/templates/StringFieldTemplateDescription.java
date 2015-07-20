@@ -24,15 +24,13 @@ import org.pentaho.reporting.engine.classic.core.filter.templates.StringFieldTem
  *
  * @author Thomas Morgner
  */
-public class StringFieldTemplateDescription extends AbstractTemplateDescription
-{
+public class StringFieldTemplateDescription extends AbstractTemplateDescription {
   /**
    * Creates a new template description.
    *
    * @param name the name.
    */
-  public StringFieldTemplateDescription(final String name)
-  {
-    super(name, StringFieldTemplate.class, true);
+  public StringFieldTemplateDescription( final String name ) {
+    super( name, StringFieldTemplate.class, true );
   }
 }

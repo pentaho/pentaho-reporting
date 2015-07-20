@@ -17,11 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.core.bugs;
 
-import java.io.ByteArrayOutputStream;
-import java.net.URL;
-
-import javax.naming.spi.NamingManager;
-
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -41,69 +36,66 @@ import org.pentaho.reporting.engine.classic.core.testsupport.DebugJndiContextFac
 import org.pentaho.reporting.engine.classic.core.testsupport.DebugReportRunner;
 import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 
-public class Prd5295Test
-{
+import javax.naming.spi.NamingManager;
+import java.io.ByteArrayOutputStream;
+import java.net.URL;
+
+public class Prd5295Test {
   @Before
-  public void setUp() throws Exception
-  {
+  public void setUp() throws Exception {
     ClassicEngineBoot.getInstance().start();
-    if (NamingManager.hasInitialContextFactoryBuilder() == false)
-    {
-      NamingManager.setInitialContextFactoryBuilder(new DebugJndiContextFactoryBuilder());
+    if ( NamingManager.hasInitialContextFactoryBuilder() == false ) {
+      NamingManager.setInitialContextFactoryBuilder( new DebugJndiContextFactoryBuilder() );
     }
   }
 
   @Test
-  public void testHtml() throws Exception
-  {
-    URL resource = getClass().getResource("Prd-5295.prpt");
+  public void testHtml() throws Exception {
+    URL resource = getClass().getResource( "Prd-5295.prpt" );
     ResourceManager mgr = new ResourceManager();
-    MasterReport report = (MasterReport) mgr.createDirectly(resource, MasterReport.class).getResource();
+    MasterReport report = (MasterReport) mgr.createDirectly( resource, MasterReport.class ).getResource();
 
     ByteArrayOutputStream boutFast = new ByteArrayOutputStream();
     ByteArrayOutputStream boutSlow = new ByteArrayOutputStream();
-    FastHtmlReportUtil.processStreamHtml(report, boutFast);
-    HtmlReportUtil.createStreamHTML(report, boutSlow);
-    String htmlFast = boutFast.toString("UTF-8");
-    String htmlSlow = boutSlow.toString("UTF-8");
-    Assert.assertEquals(htmlSlow, htmlFast);
+    FastHtmlReportUtil.processStreamHtml( report, boutFast );
+    HtmlReportUtil.createStreamHTML( report, boutSlow );
+    String htmlFast = boutFast.toString( "UTF-8" );
+    String htmlSlow = boutSlow.toString( "UTF-8" );
+    Assert.assertEquals( htmlSlow, htmlFast );
   }
 
   @Test
-  public void testInvalidTemplateOnSubReport() throws Exception
-  {
-    URL resource = getClass().getResource("Prd-5295.prpt");
+  public void testInvalidTemplateOnSubReport() throws Exception {
+    URL resource = getClass().getResource( "Prd-5295.prpt" );
     ResourceManager mgr = new ResourceManager();
-    MasterReport report = (MasterReport) mgr.createDirectly(resource, MasterReport.class).getResource();
+    MasterReport report = (MasterReport) mgr.createDirectly( resource, MasterReport.class ).getResource();
 
     ExtractLogicalPageTemplateListener tlp = new ExtractLogicalPageTemplateListener();
     GenericExpressionRuntime runtime = new GenericExpressionRuntime();
-    runtime.getProcessingContext().getOutputProcessorMetaData().initialize(ClassicEngineBoot.getInstance().getGlobalConfig());
+    runtime.getProcessingContext().getOutputProcessorMetaData()
+      .initialize( ClassicEngineBoot.getInstance().getGlobalConfig() );
     final OutputProcessor op = new TemplatingOutputProcessor
-        (runtime.getProcessingContext().getOutputProcessorMetaData(), tlp);
+      ( runtime.getProcessingContext().getOutputProcessorMetaData(), tlp );
 
-    GroupHeader band = report.getRelationalGroup(0).getHeader();
-    SubReport sr = band.getSubReport(0);
+    GroupHeader band = report.getRelationalGroup( 0 ).getHeader();
+    SubReport sr = band.getSubReport( 0 );
 
-    DebugReportRunner.resolveStyle(sr);
-    DebugReportRunner.resolveStyle(sr.getPageHeader());
-    FastSheetLayoutProducer.performLayout(sr.getPageHeader(), runtime, op);
+    DebugReportRunner.resolveStyle( sr );
+    DebugReportRunner.resolveStyle( sr.getPageHeader() );
+    FastSheetLayoutProducer.performLayout( sr.getPageHeader(), runtime, op );
 
     LogicalPageBox pageBox = tlp.getPageBox();
-    Assert.assertEquals(0, pageBox.getHeight());
+    Assert.assertEquals( 0, pageBox.getHeight() );
   }
 
-  private class ExtractLogicalPageTemplateListener implements FastExportTemplateListener
-  {
+  private class ExtractLogicalPageTemplateListener implements FastExportTemplateListener {
     private LogicalPageBox pageBox;
 
-    public void produceTemplate(final LogicalPageBox pageBox)
-    {
+    public void produceTemplate( final LogicalPageBox pageBox ) {
       this.pageBox = pageBox;
     }
 
-    public LogicalPageBox getPageBox()
-    {
+    public LogicalPageBox getPageBox() {
       return pageBox;
     }
   }

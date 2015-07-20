@@ -17,8 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.parser.extwriter.staticdata;
 
-import java.io.IOException;
-
 import org.pentaho.reporting.engine.classic.core.DataFactory;
 import org.pentaho.reporting.engine.classic.core.modules.parser.data.staticdata.StaticDataFactoryModule;
 import org.pentaho.reporting.engine.classic.core.modules.parser.extwriter.DataFactoryWriteHandler;
@@ -28,15 +26,15 @@ import org.pentaho.reporting.libraries.xmlns.common.AttributeList;
 import org.pentaho.reporting.libraries.xmlns.writer.XmlWriter;
 import org.pentaho.reporting.libraries.xmlns.writer.XmlWriterSupport;
 
+import java.io.IOException;
+
 /**
  * Creation-Date: Jan 18, 2007, 6:41:57 PM
  *
  * @author Thomas Morgner
  */
-public class DirectStaticDataFactoryWriterHandler implements DataFactoryWriteHandler
-{
-  public DirectStaticDataFactoryWriterHandler()
-  {
+public class DirectStaticDataFactoryWriterHandler implements DataFactoryWriteHandler {
+  public DirectStaticDataFactoryWriterHandler() {
   }
 
   /**
@@ -48,31 +46,27 @@ public class DirectStaticDataFactoryWriterHandler implements DataFactoryWriteHan
    * @throws IOException           if any error occured
    * @throws ReportWriterException if the data factory cannot be written.
    */
-  public void write(final ReportWriterContext reportWriter,
-                    final XmlWriter xmlWriter,
-                    final DataFactory dataFactory)
-      throws IOException, ReportWriterException
-  {
-    if (reportWriter == null)
-    {
+  public void write( final ReportWriterContext reportWriter,
+                     final XmlWriter xmlWriter,
+                     final DataFactory dataFactory )
+    throws IOException, ReportWriterException {
+    if ( reportWriter == null ) {
       throw new NullPointerException();
     }
-    if (dataFactory == null)
-    {
+    if ( dataFactory == null ) {
       throw new NullPointerException();
     }
-    if (xmlWriter == null)
-    {
+    if ( xmlWriter == null ) {
       throw new NullPointerException();
     }
 
 
     final AttributeList rootAttrs = new AttributeList();
-    if (xmlWriter.isNamespaceDefined(StaticDataFactoryModule.NAMESPACE) == false)
-    {
-      rootAttrs.addNamespaceDeclaration("data", StaticDataFactoryModule.NAMESPACE);
+    if ( xmlWriter.isNamespaceDefined( StaticDataFactoryModule.NAMESPACE ) == false ) {
+      rootAttrs.addNamespaceDeclaration( "data", StaticDataFactoryModule.NAMESPACE );
     }
-    xmlWriter.writeTag(StaticDataFactoryModule.NAMESPACE, "direct-static-datasource", rootAttrs, XmlWriterSupport.OPEN);
+    xmlWriter
+      .writeTag( StaticDataFactoryModule.NAMESPACE, "direct-static-datasource", rootAttrs, XmlWriterSupport.OPEN );
 
     xmlWriter.writeCloseTag();
   }

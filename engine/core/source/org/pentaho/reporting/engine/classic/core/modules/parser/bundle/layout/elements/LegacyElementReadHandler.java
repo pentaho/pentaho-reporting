@@ -25,14 +25,12 @@ import org.pentaho.reporting.libraries.xmlns.parser.XmlReadHandler;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 
-public class LegacyElementReadHandler extends AbstractElementReadHandler
-{
+public class LegacyElementReadHandler extends AbstractElementReadHandler {
   private LegacyDataSourceReadHandler dataSourceReadHandler;
   private LegacyTemplateReadHandler templateReadHandler;
 
-  public LegacyElementReadHandler() throws ParseException
-  {
-    super(LegacyType.INSTANCE);
+  public LegacyElementReadHandler() throws ParseException {
+    super( LegacyType.INSTANCE );
   }
 
   /**
@@ -44,25 +42,20 @@ public class LegacyElementReadHandler extends AbstractElementReadHandler
    * @return the handler or null, if the tagname is invalid.
    * @throws SAXException if there is a parsing error.
    */
-  protected XmlReadHandler getHandlerForChild(final String uri,
-                                              final String tagName,
-                                              final Attributes atts) throws SAXException
-  {
-    if (ExtParserModule.NAMESPACE.equals(uri))
-    {
-      if ("template".equals(tagName))
-      {
+  protected XmlReadHandler getHandlerForChild( final String uri,
+                                               final String tagName,
+                                               final Attributes atts ) throws SAXException {
+    if ( ExtParserModule.NAMESPACE.equals( uri ) ) {
+      if ( "template".equals( tagName ) ) {
         templateReadHandler = new LegacyTemplateReadHandler();
         return templateReadHandler;
-      }
-      else if ("datasource".equals(tagName))
-      {
+      } else if ( "datasource".equals( tagName ) ) {
         dataSourceReadHandler = new LegacyDataSourceReadHandler();
         return dataSourceReadHandler;
       }
     }
 
-    return super.getHandlerForChild(uri, tagName, atts);
+    return super.getHandlerForChild( uri, tagName, atts );
   }
 
   /**
@@ -70,17 +63,13 @@ public class LegacyElementReadHandler extends AbstractElementReadHandler
    *
    * @throws SAXException if there is a parsing error.
    */
-  @SuppressWarnings("deprecation")
-  protected void doneParsing() throws SAXException
-  {
+  @SuppressWarnings( "deprecation" )
+  protected void doneParsing() throws SAXException {
     super.doneParsing();
-    if (dataSourceReadHandler != null)
-    {
-      getElement().setDataSource((DataSource) dataSourceReadHandler.getObject());
-    }
-    else if (templateReadHandler != null)
-    {
-      getElement().setDataSource((DataSource) templateReadHandler.getObject());
+    if ( dataSourceReadHandler != null ) {
+      getElement().setDataSource( (DataSource) dataSourceReadHandler.getObject() );
+    } else if ( templateReadHandler != null ) {
+      getElement().setDataSource( (DataSource) templateReadHandler.getObject() );
     }
 
   }

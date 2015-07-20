@@ -17,6 +17,9 @@
 
 package org.pentaho.reporting.engine.classic.core;
 
+import org.pentaho.reporting.engine.classic.core.util.PageFormatFactory;
+import org.pentaho.reporting.libraries.serializer.SerializerHelper;
+
 import java.awt.geom.Rectangle2D;
 import java.awt.print.PageFormat;
 import java.io.IOException;
@@ -25,9 +28,6 @@ import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import org.pentaho.reporting.engine.classic.core.util.PageFormatFactory;
-import org.pentaho.reporting.libraries.serializer.SerializerHelper;
-
 /**
  * A page definition, that consists of one or many pages. The pages are allowed to overlapp or to leave areas of the
  * page uncovered.
@@ -35,8 +35,7 @@ import org.pentaho.reporting.libraries.serializer.SerializerHelper;
  * @author Thomas Morgner
  * @see PageDefinition
  */
-public class CustomPageDefinition implements PageDefinition
-{
+public class CustomPageDefinition implements PageDefinition {
   /**
    * The page bounds, the imageable area on the global virtual page.
    */
@@ -57,8 +56,7 @@ public class CustomPageDefinition implements PageDefinition
   /**
    * Creates a new (initialy empty and therefore invalid) page definition.
    */
-  public CustomPageDefinition()
-  {
+  public CustomPageDefinition() {
     pageBoundsList = new ArrayList();
     pageFormatList = new ArrayList();
   }
@@ -70,18 +68,16 @@ public class CustomPageDefinition implements PageDefinition
    * @param x      the x-position to where the imageable-x of the pageformat is mapped.
    * @param y      the y-position to where the imageable-y of the pageformat is mapped.
    */
-  public void addPageFormat(final PageFormat format, final float x, final float y)
-  {
-    if (format == null)
-    {
-      throw new NullPointerException("The given pageformat must not be null.");
+  public void addPageFormat( final PageFormat format, final float x, final float y ) {
+    if ( format == null ) {
+      throw new NullPointerException( "The given pageformat must not be null." );
     }
-    width = Math.max(width, (float) (format.getImageableWidth() + x));
-    height = Math.max(height, (float) (format.getImageableHeight() + y));
+    width = Math.max( width, (float) ( format.getImageableWidth() + x ) );
+    height = Math.max( height, (float) ( format.getImageableHeight() + y ) );
     final Rectangle2D bounds = new Rectangle2D.Double
-        (x, y, format.getImageableWidth(), format.getImageableHeight());
-    pageBoundsList.add(bounds);
-    pageFormatList.add(format.clone());
+      ( x, y, format.getImageableWidth(), format.getImageableHeight() );
+    pageBoundsList.add( bounds );
+    pageFormatList.add( format.clone() );
   }
 
   /**
@@ -89,8 +85,7 @@ public class CustomPageDefinition implements PageDefinition
    *
    * @return the number of physical pages.
    */
-  public int getPageCount()
-  {
+  public int getPageCount() {
     return pageBoundsList.size();
   }
 
@@ -101,9 +96,8 @@ public class CustomPageDefinition implements PageDefinition
    * @param pos the position of the pageformat within the page
    * @return the given pageformat.
    */
-  public PageFormat getPageFormat(final int pos)
-  {
-    final PageFormat fmt = (PageFormat) pageFormatList.get(pos);
+  public PageFormat getPageFormat( final int pos ) {
+    final PageFormat fmt = (PageFormat) pageFormatList.get( pos );
     return (PageFormat) fmt.clone();
   }
 
@@ -114,9 +108,8 @@ public class CustomPageDefinition implements PageDefinition
    * @param index the index of the page.
    * @return the position of the page (within the global page).
    */
-  public Rectangle2D getPagePosition(final int index)
-  {
-    final Rectangle2D rec = (Rectangle2D) pageBoundsList.get(index);
+  public Rectangle2D getPagePosition( final int index ) {
+    final Rectangle2D rec = (Rectangle2D) pageBoundsList.get( index );
     return rec.getBounds2D();
   }
 
@@ -126,13 +119,11 @@ public class CustomPageDefinition implements PageDefinition
    * @return the collected page positions
    * @see PageDefinition#getPagePosition(int)
    */
-  public Rectangle2D[] getPagePositions()
-  {
-    final Rectangle2D[] rects = new Rectangle2D[pageBoundsList.size()];
-    for (int i = 0; i < pageBoundsList.size(); i++)
-    {
-      final Rectangle2D rec = (Rectangle2D) pageBoundsList.get(i);
-      rects[i] = rec.getBounds2D();
+  public Rectangle2D[] getPagePositions() {
+    final Rectangle2D[] rects = new Rectangle2D[ pageBoundsList.size() ];
+    for ( int i = 0; i < pageBoundsList.size(); i++ ) {
+      final Rectangle2D rec = (Rectangle2D) pageBoundsList.get( i );
+      rects[ i ] = rec.getBounds2D();
     }
     return rects;
   }
@@ -142,8 +133,7 @@ public class CustomPageDefinition implements PageDefinition
    *
    * @return the total width of the page definition.
    */
-  public float getWidth()
-  {
+  public float getWidth() {
     return width;
   }
 
@@ -152,8 +142,7 @@ public class CustomPageDefinition implements PageDefinition
    *
    * @return the total height of the page definition.
    */
-  public float getHeight()
-  {
+  public float getHeight() {
     return height;
   }
 
@@ -164,8 +153,7 @@ public class CustomPageDefinition implements PageDefinition
    * @throws CloneNotSupportedException if an error occured.
    */
   public Object clone()
-      throws CloneNotSupportedException
-  {
+    throws CloneNotSupportedException {
     final CustomPageDefinition def = (CustomPageDefinition) super.clone();
     def.pageBoundsList = (ArrayList) pageBoundsList.clone();
     def.pageFormatList = (ArrayList) pageFormatList.clone();
@@ -179,23 +167,20 @@ public class CustomPageDefinition implements PageDefinition
    * @param out the objectoutput stream
    * @throws java.io.IOException if errors occur
    */
-  private void writeObject(final ObjectOutputStream out)
-      throws IOException
-  {
+  private void writeObject( final ObjectOutputStream out )
+    throws IOException {
     out.defaultWriteObject();
     final SerializerHelper instance = SerializerHelper.getInstance();
     final Iterator pageBoundsIterator = pageBoundsList.iterator();
-    while (pageBoundsIterator.hasNext())
-    {
-      instance.writeObject(pageBoundsIterator.next(), out);
+    while ( pageBoundsIterator.hasNext() ) {
+      instance.writeObject( pageBoundsIterator.next(), out );
     }
-    instance.writeObject(null, out);
+    instance.writeObject( null, out );
     final Iterator pageFormatIterator = pageFormatList.iterator();
-    while (pageFormatIterator.hasNext())
-    {
-      instance.writeObject(pageFormatIterator.next(), out);
+    while ( pageFormatIterator.hasNext() ) {
+      instance.writeObject( pageFormatIterator.next(), out );
     }
-    instance.writeObject(null, out);
+    instance.writeObject( null, out );
   }
 
   /**
@@ -205,28 +190,25 @@ public class CustomPageDefinition implements PageDefinition
    * @throws java.io.IOException    if there is an IO problem.
    * @throws ClassNotFoundException if there is a class problem.
    */
-  private void readObject(final ObjectInputStream in)
-      throws IOException, ClassNotFoundException
-  {
+  private void readObject( final ObjectInputStream in )
+    throws IOException, ClassNotFoundException {
     in.defaultReadObject();
     final SerializerHelper instance = SerializerHelper.getInstance();
     pageBoundsList = new ArrayList();
     pageFormatList = new ArrayList();
 
-    Object o = instance.readObject(in);
-    while (o != null)
-    {
+    Object o = instance.readObject( in );
+    while ( o != null ) {
       final Rectangle2D rect = (Rectangle2D) o;
-      pageBoundsList.add(rect);
-      o = instance.readObject(in);
+      pageBoundsList.add( rect );
+      o = instance.readObject( in );
     }
 
-    o = instance.readObject(in);
-    while (o != null)
-    {
+    o = instance.readObject( in );
+    while ( o != null ) {
       final PageFormat format = (PageFormat) o;
-      pageFormatList.add(format);
-      o = instance.readObject(in);
+      pageFormatList.add( format );
+      o = instance.readObject( in );
     }
   }
 
@@ -236,43 +218,34 @@ public class CustomPageDefinition implements PageDefinition
    * @param obj the other object.
    * @return true, if the other object is equal, false otherwise.
    */
-  public boolean equals(final Object obj)
-  {
-    if (this == obj)
-    {
+  public boolean equals( final Object obj ) {
+    if ( this == obj ) {
       return true;
     }
-    if (!(obj instanceof CustomPageDefinition))
-    {
+    if ( !( obj instanceof CustomPageDefinition ) ) {
       return false;
     }
 
     final CustomPageDefinition customPageDefinition = (CustomPageDefinition) obj;
 
-    if (height != customPageDefinition.height)
-    {
+    if ( height != customPageDefinition.height ) {
       return false;
     }
-    if (width != customPageDefinition.width)
-    {
+    if ( width != customPageDefinition.width ) {
       return false;
     }
-    if (!pageBoundsList.equals(customPageDefinition.pageBoundsList))
-    {
+    if ( !pageBoundsList.equals( customPageDefinition.pageBoundsList ) ) {
       return false;
     }
 
-    if (pageFormatList.size() != customPageDefinition.pageFormatList.size())
-    {
+    if ( pageFormatList.size() != customPageDefinition.pageFormatList.size() ) {
       return false;
     }
 
-    for (int i = 0; i < pageFormatList.size(); i++)
-    {
-      final PageFormat pf = (PageFormat) pageFormatList.get(i);
-      final PageFormat cpf = (PageFormat) customPageDefinition.pageFormatList.get(i);
-      if (PageFormatFactory.isEqual(pf, cpf) == false)
-      {
+    for ( int i = 0; i < pageFormatList.size(); i++ ) {
+      final PageFormat pf = (PageFormat) pageFormatList.get( i );
+      final PageFormat cpf = (PageFormat) customPageDefinition.pageFormatList.get( i );
+      if ( PageFormatFactory.isEqual( pf, cpf ) == false ) {
         return false;
       }
     }
@@ -285,12 +258,11 @@ public class CustomPageDefinition implements PageDefinition
    *
    * @return the hashcode.
    */
-  public int hashCode()
-  {
+  public int hashCode() {
     int result = pageBoundsList.hashCode();
     result = 29 * result + pageFormatList.hashCode();
-    result = 29 * result + width == 0.0f ? 0 : Float.floatToIntBits(width);
-    result = 29 * result + height == 0.0f ? 0 : Float.floatToIntBits(height);
+    result = 29 * result + width == 0.0f ? 0 : Float.floatToIntBits( width );
+    result = 29 * result + height == 0.0f ? 0 : Float.floatToIntBits( height );
     return result;
   }
 }

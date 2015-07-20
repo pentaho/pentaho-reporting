@@ -36,75 +36,69 @@ import org.pentaho.reporting.engine.classic.core.testsupport.selector.MatchFacto
 import org.pentaho.reporting.engine.classic.core.testsupport.selector.NodeMatcher;
 import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
 
-public class WeavingTableTest extends TestCase
-{
-  public WeavingTableTest()
-  {
+public class WeavingTableTest extends TestCase {
+  public WeavingTableTest() {
   }
 
-  public WeavingTableTest(final String name)
-  {
-    super(name);
+  public WeavingTableTest( final String name ) {
+    super( name );
   }
 
-  public void setUp() throws Exception
-  {
+  public void setUp() throws Exception {
     ClassicEngineBoot.getInstance().start();
   }
 
-  public void testSimpleTable() throws ReportProcessingException, ContentProcessingException
-  {
-    System.out.println(ObjectUtilities.getResource("simplelog.properties", getClass()));
+  public void testSimpleTable() throws ReportProcessingException, ContentProcessingException {
+    System.out.println( ObjectUtilities.getResource( "simplelog.properties", getClass() ) );
 
-    final Element label = TableTestUtil.createDataItem("Cell");
+    final Element label = TableTestUtil.createDataItem( "Cell" );
 
     final Band tableCell = new Band();
-    tableCell.getStyle().setStyleProperty(BandStyleKeys.LAYOUT, BandStyleKeys.LAYOUT_TABLE_CELL);
-    tableCell.getStyle().setStyleProperty(ElementStyleKeys.MIN_WIDTH, -100f);
-    tableCell.getStyle().setStyleProperty(ElementStyleKeys.MIN_HEIGHT, 200f);
-    tableCell.addElement(label);
+    tableCell.getStyle().setStyleProperty( BandStyleKeys.LAYOUT, BandStyleKeys.LAYOUT_TABLE_CELL );
+    tableCell.getStyle().setStyleProperty( ElementStyleKeys.MIN_WIDTH, -100f );
+    tableCell.getStyle().setStyleProperty( ElementStyleKeys.MIN_HEIGHT, 200f );
+    tableCell.addElement( label );
 
-    final Band autoRow = TableTestUtil.createAutoBox(tableCell);
-    autoRow.setName("AutoRow");
-    final Band tableRow = TableTestUtil.createRow(autoRow);
+    final Band autoRow = TableTestUtil.createAutoBox( tableCell );
+    autoRow.setName( "AutoRow" );
+    final Band tableRow = TableTestUtil.createRow( autoRow );
 
     final Band tableBody = new Band();
-    tableBody.getStyle().setStyleProperty(BandStyleKeys.LAYOUT, BandStyleKeys.LAYOUT_TABLE_BODY);
-    tableBody.getStyle().setStyleProperty(ElementStyleKeys.MIN_WIDTH, -100f);
-    tableBody.getStyle().setStyleProperty(ElementStyleKeys.MIN_HEIGHT, 200f);
-    final Band autoBody = TableTestUtil.createAutoBox(tableRow);
-    autoBody.setName("AutoBody");
-    tableBody.addElement(autoBody);
+    tableBody.getStyle().setStyleProperty( BandStyleKeys.LAYOUT, BandStyleKeys.LAYOUT_TABLE_BODY );
+    tableBody.getStyle().setStyleProperty( ElementStyleKeys.MIN_WIDTH, -100f );
+    tableBody.getStyle().setStyleProperty( ElementStyleKeys.MIN_HEIGHT, 200f );
+    final Band autoBody = TableTestUtil.createAutoBox( tableRow );
+    autoBody.setName( "AutoBody" );
+    tableBody.addElement( autoBody );
 
     final Band table = new Band();
-    table.getStyle().setStyleProperty(BandStyleKeys.LAYOUT, BandStyleKeys.LAYOUT_TABLE);
-    table.getStyle().setStyleProperty(ElementStyleKeys.MIN_WIDTH, -100f);
-    table.getStyle().setStyleProperty(ElementStyleKeys.MIN_HEIGHT, 200f);
-    final Band autoTable = TableTestUtil.createAutoBox(tableBody);
-    autoTable.setName("AutoTable");
-    table.addElement(autoTable);
+    table.getStyle().setStyleProperty( BandStyleKeys.LAYOUT, BandStyleKeys.LAYOUT_TABLE );
+    table.getStyle().setStyleProperty( ElementStyleKeys.MIN_WIDTH, -100f );
+    table.getStyle().setStyleProperty( ElementStyleKeys.MIN_HEIGHT, 200f );
+    final Band autoTable = TableTestUtil.createAutoBox( tableBody );
+    autoTable.setName( "AutoTable" );
+    table.addElement( autoTable );
 
     final MasterReport report = new MasterReport();
-    report.setStrictLegacyMode(false);
+    report.setStrictLegacyMode( false );
     final ReportHeader band = report.getReportHeader();
-    band.addElement(table);
+    band.addElement( table );
 
-    final LogicalPageBox logicalPageBox = DebugReportRunner.layoutSingleBand(report, band, false, false);
+    final LogicalPageBox logicalPageBox = DebugReportRunner.layoutSingleBand( report, band, false, false );
     //ModelPrinter.INSTANCE.print(logicalPageBox);
 
-    final NodeMatcher matcher = new ChildMatcher(new ElementMatcher("TableCellRenderBox"));
-    final RenderNode[] all = MatchFactory.matchAll(logicalPageBox, matcher);
+    final NodeMatcher matcher = new ChildMatcher( new ElementMatcher( "TableCellRenderBox" ) );
+    final RenderNode[] all = MatchFactory.matchAll( logicalPageBox, matcher );
 
 
     // assert that the direct childs of a table-cell-render-box have the same width as the table-cell render box
-    
-    assertEquals(1, all.length);
-    for (final RenderNode renderNode : all)
-    {
-      assertEquals(0l, renderNode.getX());
-      assertEquals(46800000l, renderNode.getWidth());
-      assertEquals(20000000l, renderNode.getHeight());
-      assertEquals(0l, renderNode.getY());
+
+    assertEquals( 1, all.length );
+    for ( final RenderNode renderNode : all ) {
+      assertEquals( 0l, renderNode.getX() );
+      assertEquals( 46800000l, renderNode.getWidth() );
+      assertEquals( 20000000l, renderNode.getHeight() );
+      assertEquals( 0l, renderNode.getY() );
     }
   }
 }

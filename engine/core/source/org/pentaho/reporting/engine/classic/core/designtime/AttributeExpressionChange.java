@@ -21,51 +21,44 @@ import org.pentaho.reporting.engine.classic.core.function.Expression;
 
 /**
  * Simple bean-like class for holding all the information about an attribute change.
-*
-* @author Thomas Morgner.
-*/
-public class AttributeExpressionChange implements Change
-{
+ *
+ * @author Thomas Morgner.
+ */
+public class AttributeExpressionChange implements Change {
   private String namespace;
   private String name;
   private Expression oldValue;
   private Expression newValue;
 
-  public AttributeExpressionChange(final String namespace, final String name, final Expression oldValue, final Expression newValue)
-  {
+  public AttributeExpressionChange( final String namespace, final String name, final Expression oldValue,
+                                    final Expression newValue ) {
     this.namespace = namespace;
     this.name = name;
     this.oldValue = oldValue;
     this.newValue = newValue;
   }
 
-  public String getNamespace()
-  {
+  public String getNamespace() {
     return namespace;
   }
 
-  public String getName()
-  {
+  public String getName() {
     return name;
   }
 
-  public Object getOldValue()
-  {
+  public Object getOldValue() {
     return oldValue;
   }
 
-  public Expression getOldExpression()
-  {
+  public Expression getOldExpression() {
     return oldValue;
   }
 
-  public Object getNewValue()
-  {
+  public Object getNewValue() {
     return newValue;
   }
 
-  public Expression getNewExpression()
-  {
+  public Expression getNewExpression() {
     return newValue;
   }
 

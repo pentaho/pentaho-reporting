@@ -17,8 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.output.csv;
 
-import java.io.Writer;
-
 import org.pentaho.reporting.engine.classic.core.ClassicEngineCoreModule;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
 import org.pentaho.reporting.engine.classic.core.ReportProcessingException;
@@ -32,6 +30,8 @@ import org.pentaho.reporting.engine.classic.core.layout.output.LogicalPageKey;
 import org.pentaho.reporting.engine.classic.core.layout.output.OutputProcessorMetaData;
 import org.pentaho.reporting.libraries.base.config.Configuration;
 
+import java.io.Writer;
+
 /**
  * The <code>CSVProcessor</code> coordinates the writing process for the raw CSV output.
  * <p/>
@@ -39,25 +39,20 @@ import org.pentaho.reporting.libraries.base.config.Configuration;
  *
  * @author Thomas Morgner
  */
-public class CSVProcessor extends AbstractReportProcessor
-{
-  private static class CSVDataOutputProcessor extends AbstractOutputProcessor
-  {
+public class CSVProcessor extends AbstractReportProcessor {
+  private static class CSVDataOutputProcessor extends AbstractOutputProcessor {
     private OutputProcessorMetaData metaData;
 
-    private CSVDataOutputProcessor()
-    {
-      metaData = new GenericOutputProcessorMetaData(EXPORT_DESCRIPTOR);
+    private CSVDataOutputProcessor() {
+      metaData = new GenericOutputProcessorMetaData( EXPORT_DESCRIPTOR );
     }
 
-    protected void processPageContent(final LogicalPageKey logicalPageKey,
-                                      final LogicalPageBox logicalPage) throws ContentProcessingException
-    {
+    protected void processPageContent( final LogicalPageKey logicalPageKey,
+                                       final LogicalPageBox logicalPage ) throws ContentProcessingException {
 
     }
 
-    public OutputProcessorMetaData getMetaData()
-    {
+    public OutputProcessorMetaData getMetaData() {
       return metaData;
     }
   }
@@ -66,25 +61,25 @@ public class CSVProcessor extends AbstractReportProcessor
   protected static final int MIN_ROWS_PER_EVENT = 200;
 
   public static final String CSV_SEPARATOR =
-      "org.pentaho.reporting.engine.classic.core.modules.output.csv.Separator";
+    "org.pentaho.reporting.engine.classic.core.modules.output.csv.Separator";
 
   public static final String CSV_ENCODING
-      = "org.pentaho.reporting.engine.classic.core.modules.output.csv.Encoding";
+    = "org.pentaho.reporting.engine.classic.core.modules.output.csv.Encoding";
   public static final String CSV_DATAROWNAME
-      = "org.pentaho.reporting.engine.classic.core.modules.output.csv.WriteDatarowNames";
+    = "org.pentaho.reporting.engine.classic.core.modules.output.csv.WriteDatarowNames";
 
   public static final String CSV_WRITE_STATECOLUMNS
-      = "org.pentaho.reporting.engine.classic.core.modules.output.csv.WriteStateColumns";
+    = "org.pentaho.reporting.engine.classic.core.modules.output.csv.WriteStateColumns";
   public static final String CSV_ENABLE_REPORTHEADER
-      = "org.pentaho.reporting.engine.classic.core.modules.output.csv.EnableReportHeader";
+    = "org.pentaho.reporting.engine.classic.core.modules.output.csv.EnableReportHeader";
   public static final String CSV_ENABLE_REPORTFOOTER
-      = "org.pentaho.reporting.engine.classic.core.modules.output.csv.EnableReportFooter";
+    = "org.pentaho.reporting.engine.classic.core.modules.output.csv.EnableReportFooter";
   public static final String CSV_ENABLE_GROUPHEADERS
-      = "org.pentaho.reporting.engine.classic.core.modules.output.csv.EnableGroupHeaders";
+    = "org.pentaho.reporting.engine.classic.core.modules.output.csv.EnableGroupHeaders";
   public static final String CSV_ENABLE_GROUPFOOTERS
-      = "org.pentaho.reporting.engine.classic.core.modules.output.csv.EnableGroupFooters";
+    = "org.pentaho.reporting.engine.classic.core.modules.output.csv.EnableGroupFooters";
   public static final String CSV_ENABLE_ITEMBANDS
-      = "org.pentaho.reporting.engine.classic.core.modules.output.csv.EnableItembands";
+    = "org.pentaho.reporting.engine.classic.core.modules.output.csv.EnableItembands";
 
   /**
    * The character stream writer to be used by the {@link CSVWriter} function.
@@ -103,10 +98,9 @@ public class CSVProcessor extends AbstractReportProcessor
    * @param report the report to be processed.
    * @throws ReportProcessingException if the report initialisation failed.
    */
-  public CSVProcessor(final MasterReport report)
-      throws ReportProcessingException
-  {
-    this(report, report.getReportConfiguration().getConfigProperty(CSVProcessor.CSV_SEPARATOR, ","));
+  public CSVProcessor( final MasterReport report )
+    throws ReportProcessingException {
+    this( report, report.getReportConfiguration().getConfigProperty( CSVProcessor.CSV_SEPARATOR, "," ) );
   }
 
   /**
@@ -118,11 +112,10 @@ public class CSVProcessor extends AbstractReportProcessor
    * @param separator the separator string to mark column boundaries.
    * @throws ReportProcessingException if the report initialisation failed.
    */
-  public CSVProcessor(final MasterReport report, final String separator)
-      throws ReportProcessingException
-  {
-    this(report, separator,
-        CSVProcessor.queryBoolConfig(report.getReportConfiguration(), CSVProcessor.CSV_DATAROWNAME));
+  public CSVProcessor( final MasterReport report, final String separator )
+    throws ReportProcessingException {
+    this( report, separator,
+      CSVProcessor.queryBoolConfig( report.getReportConfiguration(), CSVProcessor.CSV_DATAROWNAME ) );
   }
 
   /**
@@ -135,20 +128,18 @@ public class CSVProcessor extends AbstractReportProcessor
    * @param writeDataRowNames controls whether or not the data row names are output.
    * @throws ReportProcessingException if the report initialisation failed.
    */
-  public CSVProcessor(final MasterReport report,
-                      final String separator,
-                      final boolean writeDataRowNames)
-      throws ReportProcessingException
-  {
-    super(report, new CSVDataOutputProcessor());
+  public CSVProcessor( final MasterReport report,
+                       final String separator,
+                       final boolean writeDataRowNames )
+    throws ReportProcessingException {
+    super( report, new CSVDataOutputProcessor() );
     this.separator = separator;
     this.writeDataRowNames = writeDataRowNames;
   }
 
-  private static boolean queryBoolConfig(final Configuration config,
-                                         final String name)
-  {
-    return "true".equals(config.getConfigProperty(name, "false"));
+  private static boolean queryBoolConfig( final Configuration config,
+                                          final String name ) {
+    return "true".equals( config.getConfigProperty( name, "false" ) );
   }
 
   /**
@@ -156,8 +147,7 @@ public class CSVProcessor extends AbstractReportProcessor
    *
    * @return the writer
    */
-  public Writer getWriter()
-  {
+  public Writer getWriter() {
     return writer;
   }
 
@@ -166,25 +156,23 @@ public class CSVProcessor extends AbstractReportProcessor
    *
    * @param writer the writer.
    */
-  public void setWriter(final Writer writer)
-  {
+  public void setWriter( final Writer writer ) {
     this.writer = writer;
   }
 
-  protected OutputFunction createLayoutManager()
-  {
+  protected OutputFunction createLayoutManager() {
     final CSVWriter lm = new CSVWriter();
-    lm.setSeparator(separator);
-    lm.setWriteDataRowNames(writeDataRowNames);
-    lm.setWriter(getWriter());
+    lm.setSeparator( separator );
+    lm.setWriteDataRowNames( writeDataRowNames );
+    lm.setWriter( getWriter() );
 
     final Configuration config = getReport().getReportConfiguration();
-    lm.setWriteStateColumns(CSVProcessor.queryBoolConfig(config, CSVProcessor.CSV_WRITE_STATECOLUMNS));
-    lm.setEnableReportHeader(CSVProcessor.queryBoolConfig(config, CSVProcessor.CSV_ENABLE_REPORTHEADER));
-    lm.setEnableReportFooter(CSVProcessor.queryBoolConfig(config, CSVProcessor.CSV_ENABLE_REPORTFOOTER));
-    lm.setEnableGroupHeader(CSVProcessor.queryBoolConfig(config, CSVProcessor.CSV_ENABLE_GROUPHEADERS));
-    lm.setEnableGroupFooter(CSVProcessor.queryBoolConfig(config, CSVProcessor.CSV_ENABLE_GROUPFOOTERS));
-    lm.setEnableItemband(CSVProcessor.queryBoolConfig(config, CSVProcessor.CSV_ENABLE_ITEMBANDS));
+    lm.setWriteStateColumns( CSVProcessor.queryBoolConfig( config, CSVProcessor.CSV_WRITE_STATECOLUMNS ) );
+    lm.setEnableReportHeader( CSVProcessor.queryBoolConfig( config, CSVProcessor.CSV_ENABLE_REPORTHEADER ) );
+    lm.setEnableReportFooter( CSVProcessor.queryBoolConfig( config, CSVProcessor.CSV_ENABLE_REPORTFOOTER ) );
+    lm.setEnableGroupHeader( CSVProcessor.queryBoolConfig( config, CSVProcessor.CSV_ENABLE_GROUPHEADERS ) );
+    lm.setEnableGroupFooter( CSVProcessor.queryBoolConfig( config, CSVProcessor.CSV_ENABLE_GROUPFOOTERS ) );
+    lm.setEnableItemband( CSVProcessor.queryBoolConfig( config, CSVProcessor.CSV_ENABLE_ITEMBANDS ) );
 
     return lm;
   }
@@ -196,9 +184,8 @@ public class CSVProcessor extends AbstractReportProcessor
    * @return if strict error handling is enabled.
    * @deprecated No longer needed.
    */
-  protected static boolean isStrictErrorHandling(final Configuration config)
-  {
-    final String strictError = config.getConfigProperty(ClassicEngineCoreModule.STRICT_ERROR_HANDLING_KEY);
-    return "true".equals(strictError);
+  protected static boolean isStrictErrorHandling( final Configuration config ) {
+    final String strictError = config.getConfigProperty( ClassicEngineCoreModule.STRICT_ERROR_HANDLING_KEY );
+    return "true".equals( strictError );
   }
 }

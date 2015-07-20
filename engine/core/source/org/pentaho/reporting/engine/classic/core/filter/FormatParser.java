@@ -17,11 +17,11 @@
 
 package org.pentaho.reporting.engine.classic.core.filter;
 
-import java.text.Format;
-import java.text.ParseException;
-
 import org.pentaho.reporting.engine.classic.core.ReportElement;
 import org.pentaho.reporting.engine.classic.core.function.ExpressionRuntime;
+
+import java.text.Format;
+import java.text.ParseException;
 
 /**
  * A format parser tries to parse a string into an object. If the value returned by the datasource is no string, a
@@ -33,8 +33,7 @@ import org.pentaho.reporting.engine.classic.core.function.ExpressionRuntime;
  *
  * @author Thomas Morgner
  */
-public class FormatParser implements DataFilter
-{
+public class FormatParser implements DataFilter {
   /**
    * The format used to create the string representation of the data.
    */
@@ -53,8 +52,7 @@ public class FormatParser implements DataFilter
   /**
    * DefaultConstructor.
    */
-  public FormatParser()
-  {
+  public FormatParser() {
   }
 
   /**
@@ -63,10 +61,8 @@ public class FormatParser implements DataFilter
    * @param format The format.
    * @throws NullPointerException if the given format is null
    */
-  public void setFormatter(final Format format)
-  {
-    if (format == null)
-    {
+  public void setFormatter( final Format format ) {
+    if ( format == null ) {
       throw new NullPointerException();
     }
     this.format = format;
@@ -77,8 +73,7 @@ public class FormatParser implements DataFilter
    *
    * @return The format.
    */
-  public Format getFormatter()
-  {
+  public Format getFormatter() {
     return this.format;
   }
 
@@ -96,37 +91,29 @@ public class FormatParser implements DataFilter
    * @param element
    * @return The formatted value.
    */
-  public Object getValue(final ExpressionRuntime runtime, final ReportElement element)
-  {
+  public Object getValue( final ExpressionRuntime runtime, final ReportElement element ) {
     final Format f = getFormatter();
-    if (f == null)
-    {
+    if ( f == null ) {
       return getNullValue();
     }
 
     final DataSource ds = getDataSource();
-    if (ds == null)
-    {
+    if ( ds == null ) {
       return getNullValue();
     }
 
-    final Object o = ds.getValue(runtime, element);
-    if (o == null)
-    {
+    final Object o = ds.getValue( runtime, element );
+    if ( o == null ) {
       return getNullValue();
     }
 
-    if (isValidOutput(o))
-    {
+    if ( isValidOutput( o ) ) {
       return o;
     }
 
-    try
-    {
-      return f.parseObject(String.valueOf(o));
-    }
-    catch (ParseException e)
-    {
+    try {
+      return f.parseObject( String.valueOf( o ) );
+    } catch ( ParseException e ) {
       return null;
     }
   }
@@ -138,8 +125,7 @@ public class FormatParser implements DataFilter
    * @param o the object to parse.
    * @return false as this class does not know anything about the format of input or result objects.
    */
-  protected boolean isValidOutput(final Object o)
-  {
+  protected boolean isValidOutput( final Object o ) {
     return false;
   }
 
@@ -148,8 +134,7 @@ public class FormatParser implements DataFilter
    *
    * @return The data source.
    */
-  public DataSource getDataSource()
-  {
+  public DataSource getDataSource() {
     return datasource;
   }
 
@@ -158,10 +143,8 @@ public class FormatParser implements DataFilter
    *
    * @param ds The data source.
    */
-  public void setDataSource(final DataSource ds)
-  {
-    if (ds == null)
-    {
+  public void setDataSource( final DataSource ds ) {
+    if ( ds == null ) {
       throw new NullPointerException();
     }
     this.datasource = ds;
@@ -173,8 +156,7 @@ public class FormatParser implements DataFilter
    *
    * @param nullvalue The value returned when the parsing failed.
    */
-  public void setNullValue(final Object nullvalue)
-  {
+  public void setNullValue( final Object nullvalue ) {
     this.nullvalue = nullvalue;
   }
 
@@ -184,8 +166,7 @@ public class FormatParser implements DataFilter
    *
    * @return The value returned when the parsing failed.
    */
-  public Object getNullValue()
-  {
+  public Object getNullValue() {
     return nullvalue;
   }
 
@@ -196,15 +177,12 @@ public class FormatParser implements DataFilter
    * @throws CloneNotSupportedException this should never happen.
    */
   public FormatParser clone()
-      throws CloneNotSupportedException
-  {
+    throws CloneNotSupportedException {
     final FormatParser p = (FormatParser) super.clone();
-    if (datasource != null)
-    {
+    if ( datasource != null ) {
       p.datasource = datasource.clone();
     }
-    if (format != null)
-    {
+    if ( format != null ) {
       p.format = (Format) format.clone();
     }
     return p;

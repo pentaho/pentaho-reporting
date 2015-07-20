@@ -22,8 +22,7 @@ import org.pentaho.reporting.libraries.formula.FormulaContext;
 import org.pentaho.reporting.libraries.resourceloader.ResourceKey;
 import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 
-public interface DataFactoryContext
-{
+public interface DataFactoryContext {
   Configuration getConfiguration();
 
   ResourceManager getResourceManager();

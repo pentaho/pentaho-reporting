@@ -26,10 +26,8 @@ import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
 import org.pentaho.reporting.libraries.xmlns.parser.ParseException;
 import org.xml.sax.SAXException;
 
-public class ElementFactoryReadHandler extends AbstractPropertyXmlReadHandler
-{
-  public ElementFactoryReadHandler()
-  {
+public class ElementFactoryReadHandler extends AbstractPropertyXmlReadHandler {
+  public ElementFactoryReadHandler() {
   }
 
   /**
@@ -38,22 +36,20 @@ public class ElementFactoryReadHandler extends AbstractPropertyXmlReadHandler
    * @param attrs the attributes.
    * @throws org.xml.sax.SAXException if there is a parsing error.
    */
-  protected void startParsing(final PropertyAttributes attrs)
-      throws SAXException
-  {
-    final String className = CompatibilityMapperUtil.mapClassName(attrs.getValue(getUri(), "class"));
-    if (className == null)
-    {
-      throw new ParseException("Attribute 'class' is missing.",
-          getRootHandler().getDocumentLocator());
+  protected void startParsing( final PropertyAttributes attrs )
+    throws SAXException {
+    final String className = CompatibilityMapperUtil.mapClassName( attrs.getValue( getUri(), "class" ) );
+    if ( className == null ) {
+      throw new ParseException( "Attribute 'class' is missing.",
+        getRootHandler().getDocumentLocator() );
     }
     final ElementFactoryCollector fc =
-        (ElementFactoryCollector) getRootHandler().getHelperObject
-            (ReportDefinitionReadHandler.ELEMENT_FACTORY_KEY);
+      (ElementFactoryCollector) getRootHandler().getHelperObject
+        ( ReportDefinitionReadHandler.ELEMENT_FACTORY_KEY );
 
     final ElementFactory factory = (ElementFactory)
-        ObjectUtilities.loadAndInstantiate(className, getClass(), ElementFactory.class);
-    fc.addFactory(factory);
+      ObjectUtilities.loadAndInstantiate( className, getClass(), ElementFactory.class );
+    fc.addFactory( factory );
   }
 
   /**
@@ -61,8 +57,7 @@ public class ElementFactoryReadHandler extends AbstractPropertyXmlReadHandler
    *
    * @return the object.
    */
-  public Object getObject()
-  {
+  public Object getObject() {
     return null;
   }
 }

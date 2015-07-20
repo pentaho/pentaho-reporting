@@ -29,31 +29,24 @@ import org.pentaho.reporting.engine.classic.core.util.InstanceID;
 import org.pentaho.reporting.engine.classic.core.util.geom.StrictBounds;
 import org.pentaho.reporting.libraries.base.config.Configuration;
 
-public abstract class RenderNode implements Cloneable
-{
-  public enum CacheState
-  {
+public abstract class RenderNode implements Cloneable {
+  public enum CacheState {
     CLEAN, DIRTY, DEEP_DIRTY
   }
 
   private static final boolean paranoidModelChecks;
 
-  static
-  {
+  static {
     final Configuration configuration = ClassicEngineBoot.getInstance().getGlobalConfig();
-    if ("true".equals(configuration.getConfigProperty
-        ("org.pentaho.reporting.engine.classic.core.layout.ParanoidChecks")))
-    {
+    if ( "true".equals( configuration.getConfigProperty
+      ( "org.pentaho.reporting.engine.classic.core.layout.ParanoidChecks" ) ) ) {
       paranoidModelChecks = true;
-    }
-    else
-    {
+    } else {
       paranoidModelChecks = false;
     }
   }
 
-  public static boolean isParanoidModelChecks()
-  {
+  public static boolean isParanoidModelChecks() {
     return paranoidModelChecks;
   }
 
@@ -100,20 +93,17 @@ public abstract class RenderNode implements Cloneable
 
   private long cachedAge;
 
-  protected RenderNode(final int majorAxis,
-                       final int minorAxis,
-                       final StyleSheet styleSheet,
-                       final InstanceID instanceID,
-                       final ElementType elementType,
-                       final ReportAttributeMap<Object> attributes)
-  {
-    this(new NodeLayoutProperties(majorAxis, minorAxis, styleSheet, attributes, instanceID, elementType));
+  protected RenderNode( final int majorAxis,
+                        final int minorAxis,
+                        final StyleSheet styleSheet,
+                        final InstanceID instanceID,
+                        final ElementType elementType,
+                        final ReportAttributeMap<Object> attributes ) {
+    this( new NodeLayoutProperties( majorAxis, minorAxis, styleSheet, attributes, instanceID, elementType ) );
   }
 
-  protected RenderNode(final NodeLayoutProperties nodeLayoutProperties)
-  {
-    if (nodeLayoutProperties == null)
-    {
+  protected RenderNode( final NodeLayoutProperties nodeLayoutProperties ) {
+    if ( nodeLayoutProperties == null ) {
       throw new NullPointerException();
     }
 
@@ -121,21 +111,17 @@ public abstract class RenderNode implements Cloneable
     this.cacheState = RenderNode.CACHE_DIRTY;
   }
 
-  protected void reinit(final StyleSheet styleSheet,
-                        final ElementType elementType,
-                        final ReportAttributeMap<Object> attributes,
-                        final InstanceID instanceId)
-  {
-    if (attributes == null)
-    {
+  protected void reinit( final StyleSheet styleSheet,
+                         final ElementType elementType,
+                         final ReportAttributeMap<Object> attributes,
+                         final InstanceID instanceId ) {
+    if ( attributes == null ) {
       throw new NullPointerException();
     }
-    if (instanceId == null)
-    {
+    if ( instanceId == null ) {
       throw new NullPointerException();
     }
-    if (elementType == null)
-    {
+    if ( elementType == null ) {
       throw new NullPointerException();
     }
     this.flags = 0;
@@ -154,116 +140,95 @@ public abstract class RenderNode implements Cloneable
 
     this.cacheState = RenderNode.CACHE_DIRTY;
     this.nodeLayoutProperties = new NodeLayoutProperties
-        (this.nodeLayoutProperties.getMajorAxis(), this.nodeLayoutProperties.getMinorAxis(),
-            styleSheet, attributes, instanceId, elementType);
+      ( this.nodeLayoutProperties.getMajorAxis(), this.nodeLayoutProperties.getMinorAxis(),
+        styleSheet, attributes, instanceId, elementType );
   }
 
-  public ElementType getElementType()
-  {
+  public ElementType getElementType() {
     return nodeLayoutProperties.getElementType();
   }
 
-  public ReportAttributeMap<Object> getAttributes()
-  {
+  public ReportAttributeMap<Object> getAttributes() {
     return nodeLayoutProperties.getAttributes();
   }
 
   /**
    * The content-ref-count counts inline-subreports.
    */
-  public int getContentRefCount()
-  {
+  public int getContentRefCount() {
     return 0;
   }
 
-  public int getTableRefCount()
-  {
+  public int getTableRefCount() {
     return 0;
   }
 
-  public int getDescendantCount()
-  {
+  public int getDescendantCount() {
     return 1;
   }
 
-  public boolean isSizeSpecifiesBorderBox()
-  {
+  public boolean isSizeSpecifiesBorderBox() {
     return true;
   }
 
   public abstract int getNodeType();
 
-  public int getLayoutNodeType()
-  {
+  public int getLayoutNodeType() {
     return getNodeType();
   }
 
-  public int getMinorAxis()
-  {
+  public int getMinorAxis() {
     return this.nodeLayoutProperties.getMinorAxis();
   }
 
-  public int getMajorAxis()
-  {
+  public int getMajorAxis() {
     return this.nodeLayoutProperties.getMajorAxis();
   }
 
-  public final NodeLayoutProperties getNodeLayoutProperties()
-  {
+  public final NodeLayoutProperties getNodeLayoutProperties() {
     return nodeLayoutProperties;
   }
 
-  public final long getX()
-  {
+  public final long getX() {
     return x;
   }
 
-  public final void setX(final long x)
-  {
+  public final void setX( final long x ) {
     this.x = x;
     //this.updateChangeTracker();
   }
 
-  public final long getY()
-  {
+  public final long getY() {
     return y;
   }
 
-  public void shift(final long amount)
-  {
+  public void shift( final long amount ) {
     this.y += amount;
   }
 
-  public void setY(final long y)
-  {
+  public void setY( final long y ) {
     this.y = y;
   }
 
-  protected final void updateCacheState(final CacheState state)
-  {
-    switch (state)
-    {
+  protected final void updateCacheState( final CacheState state ) {
+    switch( state ) {
       case CLEAN:
         break;
       case DIRTY:
-        if (cacheState == RenderNode.CACHE_CLEAN)
-        {
+        if ( cacheState == RenderNode.CACHE_CLEAN ) {
           this.cacheState = RenderNode.CACHE_DIRTY;
           final RenderBox parent = getParent();
-          if (parent != null)
-          {
-            parent.updateCacheState(RenderNode.CACHE_DIRTY);
+          if ( parent != null ) {
+            parent.updateCacheState( RenderNode.CACHE_DIRTY );
           }
         }
         // if cache-state either dirty or deep-dirty, no need to update.
         break;
       case DEEP_DIRTY:
-        if (cacheState == RenderNode.CACHE_CLEAN)
-        {
+        if ( cacheState == RenderNode.CACHE_CLEAN ) {
           final RenderBox parent = getParent();
-          if (parent != null)
-          {
-            parent.updateCacheState(RenderNode.CACHE_DEEP_DIRTY);
+          if ( parent != null ) {
+            parent.updateCacheState( RenderNode.CACHE_DEEP_DIRTY );
           }
         }
         this.cacheState = RenderNode.CACHE_DEEP_DIRTY;
@@ -273,102 +238,80 @@ public abstract class RenderNode implements Cloneable
     }
   }
 
-  public final long getWidth()
-  {
+  public final long getWidth() {
     return width;
   }
 
-  public final void setWidth(final long width)
-  {
-    if (width < 0)
-    {
-      throw new IndexOutOfBoundsException("Width cannot be negative");
+  public final void setWidth( final long width ) {
+    if ( width < 0 ) {
+      throw new IndexOutOfBoundsException( "Width cannot be negative" );
     }
 
     this.width = width;
-    this.updateCacheState(RenderNode.CACHE_DIRTY);
+    this.updateCacheState( RenderNode.CACHE_DIRTY );
     //this.updateChangeTracker();
   }
 
-  public final long getHeight()
-  {
+  public final long getHeight() {
     return height;
   }
 
-  public void setHeight(final long height)
-  {
-    if (height < 0)
-    {
-      throw new IndexOutOfBoundsException("Height cannot be negative");
+  public void setHeight( final long height ) {
+    if ( height < 0 ) {
+      throw new IndexOutOfBoundsException( "Height cannot be negative" );
     }
     this.height = height;
-  //  this.updateCacheState(RenderNode.CACHE_DIRTY);
+    //  this.updateCacheState(RenderNode.CACHE_DIRTY);
   }
 
-  public final StyleSheet getStyleSheet()
-  {
+  public final StyleSheet getStyleSheet() {
     return nodeLayoutProperties.getStyleSheet();
   }
 
-  public InstanceID getInstanceId()
-  {
+  public InstanceID getInstanceId() {
     return nodeLayoutProperties.getInstanceId();
   }
 
-  protected void updateChangeTracker()
-  {
+  protected void updateChangeTracker() {
     changeTracker += 1;
-    if (cacheState == RenderNode.CACHE_CLEAN)
-    {
+    if ( cacheState == RenderNode.CACHE_CLEAN ) {
       cacheState = RenderNode.CACHE_DIRTY;
     }
     final RenderBox parent = getParent();
-    if (parent != null)
-    {
+    if ( parent != null ) {
       parent.updateChangeTracker();
     }
   }
 
-  public final long getChangeTracker()
-  {
+  public final long getChangeTracker() {
     return changeTracker;
   }
 
-  public final RenderBox getParent()
-  {
+  public final RenderBox getParent() {
     return parentNode;
   }
 
-  public RenderBox getLayoutParent()
-  {
-    if (parentNode != null)
-    {
-      if (parentNode.getNodeType() == LayoutNodeTypes.TYPE_BOX_AUTOLAYOUT)
-      {
+  public RenderBox getLayoutParent() {
+    if ( parentNode != null ) {
+      if ( parentNode.getNodeType() == LayoutNodeTypes.TYPE_BOX_AUTOLAYOUT ) {
         return parentNode.getLayoutParent();
       }
     }
     return parentNode;
   }
 
-  protected final void setParent(final RenderBox parent)
-  {
-    if (isParanoidModelChecks())
-    {
+  protected final void setParent( final RenderBox parent ) {
+    if ( isParanoidModelChecks() ) {
       final RenderNode prev = getPrev();
-      if (parent != null && prev == parent)
-      {
-        throw new IllegalStateException("Assertation failed: Cannot have a parent that is the same as a silbling.");
+      if ( parent != null && prev == parent ) {
+        throw new IllegalStateException( "Assertation failed: Cannot have a parent that is the same as a silbling." );
       }
-      if (parent == null)
-      {
+      if ( parent == null ) {
         final RenderNode next = getNext();
-        if (next != null)
-        {
+        if ( next != null ) {
           throw new NullPointerException();
         }
-        if (prev != null)
-        {
+        if ( prev != null ) {
           throw new NullPointerException();
         }
       }
@@ -377,75 +320,58 @@ public abstract class RenderNode implements Cloneable
     this.parentNode = parent;
   }
 
-  public final RenderNode getPrev()
-  {
+  public final RenderNode getPrev() {
     return prevNode;
   }
 
-  protected final void setPrevUnchecked(final RenderNode prev)
-  {
+  protected final void setPrevUnchecked( final RenderNode prev ) {
     this.prevNode = prev;
   }
 
-  protected final void setPrev(final RenderNode prev)
-  {
+  protected final void setPrev( final RenderNode prev ) {
     this.prevNode = prev;
-    if (isParanoidModelChecks() && prev != null)
-    {
+    if ( isParanoidModelChecks() && prev != null ) {
       final RenderBox parent = getParent();
-      if (prev == parent)
-      {
+      if ( prev == parent ) {
         throw new IllegalStateException();
       }
 
-      if (parent != null)
-      {
-        if (parent.getFirstChild() == this)
-        {
-          throw new NullPointerException("Cannot have a prev node if the parent has me as first child.");
+      if ( parent != null ) {
+        if ( parent.getFirstChild() == this ) {
+          throw new NullPointerException( "Cannot have a prev node if the parent has me as first child." );
         }
       }
     }
   }
 
-  public final RenderNode getNext()
-  {
+  public final RenderNode getNext() {
     return nextNode;
   }
 
-  protected final void setNextUnchecked(final RenderNode next)
-  {
+  protected final void setNextUnchecked( final RenderNode next ) {
     this.nextNode = next;
   }
 
-  protected final void setNext(final RenderNode next)
-  {
+  protected final void setNext( final RenderNode next ) {
     this.nextNode = next;
-    if (isParanoidModelChecks() && next != null)
-    {
+    if ( isParanoidModelChecks() && next != null ) {
       final RenderBox parent = getParent();
-      if (next == parent)
-      {
+      if ( next == parent ) {
         throw new IllegalStateException();
       }
 
-      if (parent != null)
-      {
-        if (parent.getLastChild() == this)
-        {
-          throw new NullPointerException("Cannot have a next-node, if the parent has me as last child.");
+      if ( parent != null ) {
+        if ( parent.getLastChild() == this ) {
+          throw new NullPointerException( "Cannot have a next-node, if the parent has me as last child." );
         }
       }
     }
   }
 
-  public LogicalPageBox getLogicalPage()
-  {
+  public LogicalPageBox getLogicalPage() {
     RenderNode parent = this;
-    while (parent != null)
-    {
-      if (parent.getNodeType() == LayoutNodeTypes.TYPE_BOX_LOGICALPAGE)
-      {
+    while ( parent != null ) {
+      if ( parent.getNodeType() == LayoutNodeTypes.TYPE_BOX_LOGICALPAGE ) {
         return (LogicalPageBox) parent;
       }
 
@@ -461,16 +387,12 @@ public abstract class RenderNode implements Cloneable
    * @return
    * @noinspection CloneDoesntDeclareCloneNotSupportedException
    */
-  public Object clone()
-  {
-    try
-    {
+  public Object clone() {
+    try {
       return super.clone();
-    }
-    catch (final CloneNotSupportedException e)
-    {
+    } catch ( final CloneNotSupportedException e ) {
       // ignored ..
-      throw new IllegalStateException("Clone failed for some reason.");
+      throw new IllegalStateException( "Clone failed for some reason." );
     }
   }
 
@@ -481,14 +403,12 @@ public abstract class RenderNode implements Cloneable
    * @param deep
    * @return
    */
-  public RenderNode derive(final boolean deep)
-  {
+  public RenderNode derive( final boolean deep ) {
     final RenderNode node = (RenderNode) clone();
     node.parentNode = null;
     node.nextNode = null;
     node.prevNode = null;
-    if (deep)
-    {
+    if ( deep ) {
       node.cachedAge = this.changeTracker;
       node.validateModelAge = -1;
       // todo PRD-4606
@@ -497,8 +417,7 @@ public abstract class RenderNode implements Cloneable
     return node;
   }
 
-  public RenderNode deriveFrozen(final boolean deep)
-  {
+  public RenderNode deriveFrozen( final boolean deep ) {
     final RenderNode node = (RenderNode) clone();
     node.parentNode = null;
     node.nextNode = null;
@@ -507,32 +426,26 @@ public abstract class RenderNode implements Cloneable
     return node;
   }
 
-  public boolean isFrozen()
-  {
-    return isFlag(FLAG_FROZEN);
+  public boolean isFrozen() {
+    return isFlag( FLAG_FROZEN );
   }
 
-  public RenderNode findNodeById(final InstanceID instanceId)
-  {
-    if (instanceId == getInstanceId())
-    {
+  public RenderNode findNodeById( final InstanceID instanceId ) {
+    if ( instanceId == getInstanceId() ) {
       return this;
     }
     return null;
   }
 
-  public boolean isOpen()
-  {
+  public boolean isOpen() {
     return false;
   }
 
-  public boolean isEmpty()
-  {
+  public boolean isEmpty() {
     return false;
   }
 
-  public boolean isDiscardable()
-  {
+  public boolean isDiscardable() {
     return false;
   }
 
@@ -544,107 +457,89 @@ public abstract class RenderNode implements Cloneable
    *
    * @return
    */
-  public boolean isIgnorableForRendering()
-  {
+  public boolean isIgnorableForRendering() {
     return isEmpty();
   }
 
-  public void freeze()
-  {
-    setFlag(FLAG_FROZEN, true);
+  public void freeze() {
+    setFlag( FLAG_FROZEN, true );
   }
 
-  public long getMaximumBoxWidth()
-  {
+  public long getMaximumBoxWidth() {
     return maximumBoxWidth;
   }
 
-  public void setMaximumBoxWidth(final long maximumBoxWidth)
-  {
+  public void setMaximumBoxWidth( final long maximumBoxWidth ) {
     this.maximumBoxWidth = maximumBoxWidth;
   }
 
-  public long getMinimumChunkWidth()
-  {
+  public long getMinimumChunkWidth() {
     return minimumChunkWidth;
   }
 
-  protected void setMinimumChunkWidth(final long minimumChunkWidth)
-  {
-    if (minimumChunkWidth < 0)
-    {
+  protected void setMinimumChunkWidth( final long minimumChunkWidth ) {
+    if ( minimumChunkWidth < 0 ) {
       throw new IllegalArgumentException();
     }
     this.minimumChunkWidth = minimumChunkWidth;
   }
 
-  public long getEffectiveMarginTop()
-  {
+  public long getEffectiveMarginTop() {
     return 0;
   }
 
-  public long getEffectiveMarginBottom()
-  {
+  public long getEffectiveMarginBottom() {
     return 0;
   }
 
-  public VerticalTextAlign getVerticalTextAlignment()
-  {
+  public VerticalTextAlign getVerticalTextAlignment() {
     return nodeLayoutProperties.getVerticalTextAlign();
   }
-//
-//  /**
-//   * The sticky-Marker contains the original Y of this node.
-//   * @return
-//   */
-//  public long getStickyMarker()
-//  {
-//    return stickyMarker;
-//  }
-//
-//  public void setStickyMarker(final long stickyMarker)
-//  {
-//    this.stickyMarker = stickyMarker;
-//  }
+  //
+  //  /**
+  //   * The sticky-Marker contains the original Y of this node.
+  //   * @return
+  //   */
+  //  public long getStickyMarker()
+  //  {
+  //    return stickyMarker;
+  //  }
+  //
+  //  public void setStickyMarker(final long stickyMarker)
+  //  {
+  //    this.stickyMarker = stickyMarker;
+  //  }
 
-  public String getName()
-  {
+  public String getName() {
     return null;
   }
 
-  public boolean isBreakAfter()
-  {
+  public boolean isBreakAfter() {
     return false;
   }
 
-  public long getValidateModelAge()
-  {
+  public long getValidateModelAge() {
     return validateModelAge;
   }
 
-  protected void resetValidateModelResult()
-  {
+  protected void resetValidateModelResult() {
     this.validateModelAge = -1;
   }
 
-  public void setValidateModelResult(final ValidationResult result)
-  {
+  public void setValidateModelResult( final ValidationResult result ) {
     this.validateModelAge = changeTracker;
     this.validateModelResult = result;
   }
 
-  public ValidationResult isValidateModelResult()
-  {
+  public ValidationResult isValidateModelResult() {
     return validateModelResult;
   }
 
-  public long getLinebreakAge()
-  {
+  public long getLinebreakAge() {
     return linebreakAge;
   }
 
-  public void setLinebreakAge(final long linebreakAge)
-  {
+  public void setLinebreakAge( final long linebreakAge ) {
     this.linebreakAge = linebreakAge;
   }
 
@@ -657,8 +552,7 @@ public abstract class RenderNode implements Cloneable
    *
    * @return the cached x position
    */
-  public final long getCachedX()
-  {
+  public final long getCachedX() {
     return cachedX;
   }
 
@@ -671,8 +565,7 @@ public abstract class RenderNode implements Cloneable
    *
    * @param cachedX the cached x position
    */
-  public void setCachedX(final long cachedX)
-  {
+  public void setCachedX( final long cachedX ) {
     this.cachedX = cachedX;
   }
 
@@ -685,13 +578,11 @@ public abstract class RenderNode implements Cloneable
    *
    * @return the cached y position
    */
-  public final long getCachedY()
-  {
+  public final long getCachedY() {
     return cachedY;
   }
 
-  public final long getCachedY2()
-  {
+  public final long getCachedY2() {
     return cachedY + cachedHeight;
   }
 
@@ -704,51 +595,41 @@ public abstract class RenderNode implements Cloneable
    *
    * @param cachedY the cached y position
    */
-  public void setCachedY(final long cachedY)
-  {
+  public void setCachedY( final long cachedY ) {
     this.cachedY = cachedY;
   }
 
-  public void shiftCached(final long amount)
-  {
+  public void shiftCached( final long amount ) {
     this.cachedY += amount;
   }
 
-  public final long getCachedWidth()
-  {
+  public final long getCachedWidth() {
     return cachedWidth;
   }
 
-  public final long getCachedX2()
-  {
+  public final long getCachedX2() {
     return cachedX + cachedWidth;
   }
 
-  public void setCachedWidth(final long cachedWidth)
-  {
-    if (cachedWidth < 0)
-    {
-      throw new IndexOutOfBoundsException("'cached width' cannot be negative.");
+  public void setCachedWidth( final long cachedWidth ) {
+    if ( cachedWidth < 0 ) {
+      throw new IndexOutOfBoundsException( "'cached width' cannot be negative." );
     }
     this.cachedWidth = cachedWidth;
   }
 
-  public final long getCachedHeight()
-  {
+  public final long getCachedHeight() {
     return cachedHeight;
   }
 
-  public void setCachedHeight(final long cachedHeight)
-  {
-    if (cachedHeight < 0)
-    {
-      throw new IndexOutOfBoundsException("'cached height' cannot be negative, was " + cachedHeight);
+  public void setCachedHeight( final long cachedHeight ) {
+    if ( cachedHeight < 0 ) {
+      throw new IndexOutOfBoundsException( "'cached height' cannot be negative, was " + cachedHeight );
     }
     this.cachedHeight = cachedHeight;
   }
 
-  public void apply()
-  {
+  public void apply() {
     this.x = this.cachedX;
     this.y = this.cachedY;
     this.width = this.cachedWidth;
@@ -758,30 +639,24 @@ public abstract class RenderNode implements Cloneable
     this.applyState = CacheState.CLEAN;
 
     final RenderBox parent = getParent();
-    if (parent != null)
-    {
-      parent.addOverflowArea(x + getOverflowAreaWidth() - parent.getX(),
-          y + getOverflowAreaHeight() - parent.getY());
+    if ( parent != null ) {
+      parent.addOverflowArea( x + getOverflowAreaWidth() - parent.getX(),
+        y + getOverflowAreaHeight() - parent.getY() );
     }
   }
 
-  public final boolean isLinebreakCacheValid()
-  {
-    if (linebreakAge != changeTracker)
-    {
+  public final boolean isLinebreakCacheValid() {
+    if ( linebreakAge != changeTracker ) {
       return false;
     }
     return true;
   }
 
-  public final boolean isValidateModelCacheValid()
-  {
-    if (validateModelAge != changeTracker)
-    {
+  public final boolean isValidateModelCacheValid() {
+    if ( validateModelAge != changeTracker ) {
       return false;
     }
-    if (validateModelResult == ValidationResult.UNKNOWN)
-    {
+    if ( validateModelResult == ValidationResult.UNKNOWN ) {
       return false;
     }
     return true;
@@ -793,85 +668,69 @@ public abstract class RenderNode implements Cloneable
    *
    * @return
    */
-  public boolean isFinishedPaginate()
-  {
-    return isFlag(FLAG_FINISHED_PAGINATE);
+  public boolean isFinishedPaginate() {
+    return isFlag( FLAG_FINISHED_PAGINATE );
   }
 
-  public void setFinishedPaginate(final boolean finished)
-  {
-    if (isFinishedPaginate() == true && finished == false)
-    {
-      throw new IllegalStateException("Cannot undo a finished-marker");
+  public void setFinishedPaginate( final boolean finished ) {
+    if ( isFinishedPaginate() == true && finished == false ) {
+      throw new IllegalStateException( "Cannot undo a finished-marker" );
     }
-    setFlag(FLAG_FINISHED_PAGINATE, finished);
+    setFlag( FLAG_FINISHED_PAGINATE, finished );
   }
 
-  public boolean isFinishedTable()
-  {
-    return isFlag(FLAG_FINISHED_TABLE);
+  public boolean isFinishedTable() {
+    return isFlag( FLAG_FINISHED_TABLE );
   }
 
-  public void setFinishedTable(final boolean finished)
-  {
-    if (isFinishedTable() == true && finished == false)
-    {
-      throw new IllegalStateException("Cannot undo a finished-marker");
+  public void setFinishedTable( final boolean finished ) {
+    if ( isFinishedTable() == true && finished == false ) {
+      throw new IllegalStateException( "Cannot undo a finished-marker" );
     }
-    setFlag(FLAG_FINISHED_TABLE, finished);
+    setFlag( FLAG_FINISHED_TABLE, finished );
   }
 
-  public boolean isDeepFinishedTable()
-  {
+  public boolean isDeepFinishedTable() {
     return isFinishedTable();
   }
 
-  public CacheState getCacheState()
-  {
+  public CacheState getCacheState() {
     return cacheState;
   }
 
-  public ReportStateKey getStateKey()
-  {
+  public ReportStateKey getStateKey() {
     return null;
   }
 
-  public boolean isBoxOverflowX()
-  {
+  public boolean isBoxOverflowX() {
     return false;
   }
 
-  public boolean isBoxOverflowY()
-  {
+  public boolean isBoxOverflowY() {
     return false;
   }
 
-  public final boolean isNodeVisible(final StrictBounds drawArea, final boolean overflowX, final boolean overflowY)
-  {
+  public final boolean isNodeVisible( final StrictBounds drawArea, final boolean overflowX, final boolean overflowY ) {
     final long drawAreaX0 = drawArea.getX();
     final long drawAreaY0 = drawArea.getY();
-    return isNodeVisible(drawAreaX0, drawAreaY0, drawArea.getWidth(), drawArea.getHeight(), overflowX, overflowY);
+    return isNodeVisible( drawAreaX0, drawAreaY0, drawArea.getWidth(), drawArea.getHeight(), overflowX, overflowY );
   }
 
-  public final boolean isNodeVisible(final StrictBounds drawArea)
-  {
+  public final boolean isNodeVisible( final StrictBounds drawArea ) {
     final long drawAreaX0 = drawArea.getX();
     final long drawAreaY0 = drawArea.getY();
-    return isNodeVisible(drawAreaX0, drawAreaY0, drawArea.getWidth(), drawArea.getHeight());
+    return isNodeVisible( drawAreaX0, drawAreaY0, drawArea.getWidth(), drawArea.getHeight() );
   }
 
-  public final boolean isNodeVisible(final long drawAreaX0, final long drawAreaY0,
-                                     final long drawAreaWidth, final long drawAreaHeight)
-  {
-    return isNodeVisible(drawAreaX0, drawAreaY0, drawAreaWidth, drawAreaHeight, isBoxOverflowX(), isBoxOverflowY());
+  public final boolean isNodeVisible( final long drawAreaX0, final long drawAreaY0,
+                                      final long drawAreaWidth, final long drawAreaHeight ) {
+    return isNodeVisible( drawAreaX0, drawAreaY0, drawAreaWidth, drawAreaHeight, isBoxOverflowX(), isBoxOverflowY() );
   }
 
-  public final boolean isNodeVisible(final long drawAreaX0, final long drawAreaY0,
-                                     final long drawAreaWidth, final long drawAreaHeight,
-                                     final boolean overflowX, final boolean overflowY)
-  {
-    if (getStyleSheet().getBooleanStyleProperty(ElementStyleKeys.VISIBLE) == false)
-    {
+  public final boolean isNodeVisible( final long drawAreaX0, final long drawAreaY0,
+                                      final long drawAreaWidth, final long drawAreaHeight,
+                                      final boolean overflowX, final boolean overflowY ) {
+    if ( getStyleSheet().getBooleanStyleProperty( ElementStyleKeys.VISIBLE ) == false ) {
       return false;
     }
 
@@ -881,113 +740,85 @@ public abstract class RenderNode implements Cloneable
     final long x2 = x + width;
     final long y2 = y + height;
 
-    if (width == 0)
-    {
-      if (x2 < drawAreaX0)
-      {
+    if ( width == 0 ) {
+      if ( x2 < drawAreaX0 ) {
         return false;
       }
-      if (x > drawAreaX1)
-      {
+      if ( x > drawAreaX1 ) {
         return false;
       }
-    }
-    else if (overflowX == false)
-    {
-      if (x2 <= drawAreaX0)
-      {
+    } else if ( overflowX == false ) {
+      if ( x2 <= drawAreaX0 ) {
         return false;
       }
-      if (x >= drawAreaX1)
-      {
+      if ( x >= drawAreaX1 ) {
         return false;
       }
     }
-    if (height == 0)
-    {
-      if (y2 < drawAreaY0)
-      {
+    if ( height == 0 ) {
+      if ( y2 < drawAreaY0 ) {
         return false;
       }
-      if (y > drawAreaY1)
-      {
+      if ( y > drawAreaY1 ) {
         return false;
       }
-    }
-    else if (overflowY == false)
-    {
-      if (y2 <= drawAreaY0)
-      {
+    } else if ( overflowY == false ) {
+      if ( y2 <= drawAreaY0 ) {
         return false;
       }
-      if (y >= drawAreaY1)
-      {
+      if ( y >= drawAreaY1 ) {
         return false;
       }
     }
     return true;
   }
 
-  public boolean isVirtualNode()
-  {
-    return isFlag(FLAG_VIRTUAL_NODE);
+  public boolean isVirtualNode() {
+    return isFlag( FLAG_VIRTUAL_NODE );
   }
 
-  public void setVirtualNode(final boolean virtualNode)
-  {
-    setFlag(FLAG_VIRTUAL_NODE, virtualNode);
+  public void setVirtualNode( final boolean virtualNode ) {
+    setFlag( FLAG_VIRTUAL_NODE, virtualNode );
   }
 
-  protected void setFlag(final int flag, final boolean value)
-  {
-    if (value)
-    {
+  protected void setFlag( final int flag, final boolean value ) {
+    if ( value ) {
       flags = flags | flag;
-    }
-    else
-    {
-      flags = flags & (~flag);
+    } else {
+      flags = flags & ( ~flag );
     }
   }
 
-  protected boolean isFlag(final int flag)
-  {
-    return (flags & flag) != 0;
+  protected boolean isFlag( final int flag ) {
+    return ( flags & flag ) != 0;
   }
 
-  public final boolean isBoxVisible(final StrictBounds drawArea)
-  {
-    return isBoxVisible(drawArea.getX(), drawArea.getY(), drawArea.getWidth(), drawArea.getHeight());
+  public final boolean isBoxVisible( final StrictBounds drawArea ) {
+    return isBoxVisible( drawArea.getX(), drawArea.getY(), drawArea.getWidth(), drawArea.getHeight() );
   }
 
-  public final boolean isBoxVisible(final long x, final long y, final long width, final long height)
-  {
-    if (isNodeVisible(x, y, width, height) == false)
-    {
+  public final boolean isBoxVisible( final long x, final long y, final long width, final long height ) {
+    if ( isNodeVisible( x, y, width, height ) == false ) {
       return false;
     }
 
     final RenderBox parent = getParent();
-    if (parent == null)
-    {
+    if ( parent == null ) {
       return true;
     }
 
     final StyleSheet styleSheet = getStyleSheet();
-    if (styleSheet.getStyleProperty(ElementStyleKeys.ANCHOR_NAME) != null)
-    {
+    if ( styleSheet.getStyleProperty( ElementStyleKeys.ANCHOR_NAME ) != null ) {
       return true;
     }
 
 
-    if (parent.getNodeType() != LayoutNodeTypes.TYPE_BOX_AUTOLAYOUT &&
-        parent.getStaticBoxLayoutProperties().isOverflowX() == false)
-    {
+    if ( parent.getNodeType() != LayoutNodeTypes.TYPE_BOX_AUTOLAYOUT &&
+      parent.getStaticBoxLayoutProperties().isOverflowX() == false ) {
       final long parentX1 = parent.getX();
       final long parentX2 = parentX1 + parent.getWidth();
 
-      if (getWidth() == 0)
-      {
+      if ( getWidth() == 0 ) {
         // could be a line ..
         return true;
       }
@@ -995,34 +826,29 @@ public abstract class RenderNode implements Cloneable
       final long boxX1 = getX();
       final long boxX2 = boxX1 + getWidth();
 
-      if (boxX2 <= parentX1)
-      {
+      if ( boxX2 <= parentX1 ) {
         return false;
       }
-      if (boxX1 >= parentX2)
-      {
+      if ( boxX1 >= parentX2 ) {
         return false;
       }
     }
 
     final int layoutNodeType = getLayoutNodeType();
-    if (layoutNodeType == LayoutNodeTypes.TYPE_BOX_TABLE_CELL ||
-        layoutNodeType == LayoutNodeTypes.TYPE_BOX_TABLE_ROW)
-    {
+    if ( layoutNodeType == LayoutNodeTypes.TYPE_BOX_TABLE_CELL ||
+      layoutNodeType == LayoutNodeTypes.TYPE_BOX_TABLE_ROW ) {
       // we cannot perform an overflow test for table-rows or table-cells based on the parent node.
       // With col and row-spanning, this can be non-deterministic.
       return true;
     }
 
-    if (parent.getNodeType() != LayoutNodeTypes.TYPE_BOX_AUTOLAYOUT &&
-        parent.getStaticBoxLayoutProperties().isOverflowY() == false)
-    {
+    if ( parent.getNodeType() != LayoutNodeTypes.TYPE_BOX_AUTOLAYOUT &&
+      parent.getStaticBoxLayoutProperties().isOverflowY() == false ) {
       // Compute whether the box is at least partially contained in the parent's bounding box.
       final long parentY1 = parent.getY();
       final long parentY2 = parentY1 + parent.getHeight();
 
-      if (getHeight() == 0)
-      {
+      if ( getHeight() == 0 ) {
         // could be a line ..
         return true;
       }
@@ -1030,134 +856,108 @@ public abstract class RenderNode implements Cloneable
       final long boxY1 = getY();
       final long boxY2 = boxY1 + getHeight();
 
-      if (boxY2 <= parentY1)
-      {
+      if ( boxY2 <= parentY1 ) {
         return false;
       }
-      if (boxY1 >= parentY2)
-      {
+      if ( boxY1 >= parentY2 ) {
         return false;
       }
     }
     return true;
   }
 
-  public long getOverflowAreaHeight()
-  {
+  public long getOverflowAreaHeight() {
     return getHeight();
   }
 
-  public long getOverflowAreaWidth()
-  {
+  public long getOverflowAreaWidth() {
     return getWidth();
   }
 
-  public long getEffectiveMinimumChunkSize()
-  {
+  public long getEffectiveMinimumChunkSize() {
     return minimumChunkWidth;
   }
 
-  public int getChildCount()
-  {
+  public int getChildCount() {
     return 0;
   }
 
-  public boolean isWidowBox()
-  {
-    return isFlag(FLAG_WIDOW_BOX);
+  public boolean isWidowBox() {
+    return isFlag( FLAG_WIDOW_BOX );
   }
 
-  public void setWidowBox(final boolean widowBox)
-  {
-    setFlag(FLAG_WIDOW_BOX, widowBox);
+  public void setWidowBox( final boolean widowBox ) {
+    setFlag( FLAG_WIDOW_BOX, widowBox );
   }
 
-  public boolean isOrphanLeaf()
-  {
+  public boolean isOrphanLeaf() {
     return false;
   }
 
-  public RenderBox.RestrictFinishClearOut getRestrictFinishedClearOut()
-  {
+  public RenderBox.RestrictFinishClearOut getRestrictFinishedClearOut() {
     return RenderBox.RestrictFinishClearOut.UNRESTRICTED;
   }
 
-  public long getCachedAge()
-  {
+  public long getCachedAge() {
     return cachedAge;
   }
 
-  public boolean isCacheValid()
-  {
-    if (cachedAge != changeTracker)
-    {
+  public boolean isCacheValid() {
+    if ( cachedAge != changeTracker ) {
       return false;
     }
 
-    if (this.cacheState != CACHE_CLEAN)
-    {
+    if ( this.cacheState != CACHE_CLEAN ) {
       return false;
     }
 
     return true;
   }
 
-  protected final void setCachedAge(final long cachedAge)
-  {
+  protected final void setCachedAge( final long cachedAge ) {
     this.cachedAge = cachedAge;
   }
 
-  public final long getY2()
-  {
+  public final long getY2() {
     return y + height;
   }
 
-  public boolean isVisible()
-  {
+  public boolean isVisible() {
     return nodeLayoutProperties.isVisible();
   }
 
-  public boolean isContainsReservedContent()
-  {
+  public boolean isContainsReservedContent() {
     return false;
   }
 
-  public void markApplyStateDirty()
-  {
-    if (applyState != CacheState.CLEAN)
-    {
+  public void markApplyStateDirty() {
+    if ( applyState != CacheState.CLEAN ) {
       return;
     }
     applyState = CACHE_DIRTY;
     RenderBox parent = getParent();
-    if (parent != null)
-    {
+    if ( parent != null ) {
       parent.markApplyStateDirty();
     }
   }
 
-  public CacheState getApplyState()
-  {
+  public CacheState getApplyState() {
     return applyState;
   }
 
-  public int getRowIndex()
-  {
+  public int getRowIndex() {
     return 0;
   }
 
-  public boolean isRenderBox()
-  {
+  public boolean isRenderBox() {
     return false;
   }
 
-  public int getWidowLeafCount()
-  {
+  public int getWidowLeafCount() {
     return 0;
   }
 
-  public int getOrphanLeafCount()
-  {
+  public int getOrphanLeafCount() {
     return 0;
   }
 }

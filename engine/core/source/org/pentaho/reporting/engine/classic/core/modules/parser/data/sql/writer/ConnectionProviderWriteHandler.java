@@ -17,19 +17,18 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.parser.data.sql.writer;
 
-import java.io.IOException;
-
 import org.pentaho.reporting.engine.classic.core.modules.misc.datafactory.sql.ConnectionProvider;
 import org.pentaho.reporting.engine.classic.core.modules.parser.bundle.writer.BundleWriterException;
 import org.pentaho.reporting.engine.classic.core.modules.parser.bundle.writer.BundleWriterState;
 import org.pentaho.reporting.libraries.docbundle.WriteableDocumentBundle;
 import org.pentaho.reporting.libraries.xmlns.writer.XmlWriter;
 
-public interface ConnectionProviderWriteHandler
-{
-  public String writeReport(final WriteableDocumentBundle bundle,
-                            final BundleWriterState state,
-                            final XmlWriter xmlWriter,
-                            final ConnectionProvider connectionProvider)
-      throws IOException, BundleWriterException;
+import java.io.IOException;
+
+public interface ConnectionProviderWriteHandler {
+  public String writeReport( final WriteableDocumentBundle bundle,
+                             final BundleWriterState state,
+                             final XmlWriter xmlWriter,
+                             final ConnectionProvider connectionProvider )
+    throws IOException, BundleWriterException;
 }

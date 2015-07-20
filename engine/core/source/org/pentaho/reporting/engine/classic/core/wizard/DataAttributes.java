@@ -19,11 +19,10 @@ package org.pentaho.reporting.engine.classic.core.wizard;
 
 import java.io.Serializable;
 
-public interface DataAttributes extends Serializable, Cloneable
-{
+public interface DataAttributes extends Serializable, Cloneable {
   public String[] getMetaAttributeDomains();
 
-  public String[] getMetaAttributeNames(String domainName);
+  public String[] getMetaAttributeNames( String domainName );
 
   /**
    * @param domain  never null.
@@ -32,10 +31,10 @@ public interface DataAttributes extends Serializable, Cloneable
    * @param context never null.
    * @return
    */
-  public Object getMetaAttribute(String domain,
-                                 String name,
-                                 Class type,
-                                 DataAttributeContext context);
+  public Object getMetaAttribute( String domain,
+                                  String name,
+                                  Class type,
+                                  DataAttributeContext context );
 
   /**
    * @param domain       never null.
@@ -45,14 +44,14 @@ public interface DataAttributes extends Serializable, Cloneable
    * @param defaultValue can be null
    * @return
    */
-  public Object getMetaAttribute(String domain,
-                                 String name,
-                                 Class type,
-                                 DataAttributeContext context,
-                                 Object defaultValue);
+  public Object getMetaAttribute( String domain,
+                                  String name,
+                                  Class type,
+                                  DataAttributeContext context,
+                                  Object defaultValue );
 
-  public ConceptQueryMapper getMetaAttributeMapper(String domain,
-                                                   String name);
-  
+  public ConceptQueryMapper getMetaAttributeMapper( String domain,
+                                                    String name );
+
   public Object clone() throws CloneNotSupportedException;
 }

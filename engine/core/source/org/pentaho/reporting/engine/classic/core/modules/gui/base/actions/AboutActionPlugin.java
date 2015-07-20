@@ -17,13 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.gui.base.actions;
 
-import java.awt.Dialog;
-import java.awt.Frame;
-import java.awt.Window;
-import java.util.Locale;
-import javax.swing.Icon;
-import javax.swing.KeyStroke;
-
 import org.pentaho.reporting.engine.classic.core.ClassicEngineInfo;
 import org.pentaho.reporting.engine.classic.core.modules.gui.base.PreviewPane;
 import org.pentaho.reporting.engine.classic.core.modules.gui.base.SwingPreviewModule;
@@ -34,31 +27,31 @@ import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
 import org.pentaho.reporting.libraries.base.util.ResourceBundleSupport;
 import org.pentaho.reporting.libraries.designtime.swing.LibSwingUtil;
 
+import javax.swing.*;
+import java.awt.*;
+import java.util.Locale;
+
 /**
  * Creation-Date: 16.11.2006, 16:34:55
  *
  * @author Thomas Morgner
  */
 public class AboutActionPlugin extends AbstractActionPlugin
-    implements ControlActionPlugin
-{
+  implements ControlActionPlugin {
   private ResourceBundleSupport resources;
   private AboutDialog aboutFrame;
 
-  public AboutActionPlugin()
-  {
+  public AboutActionPlugin() {
   }
 
-  public boolean initialize(final SwingGuiContext context)
-  {
-    super.initialize(context);
-    resources = new ResourceBundleSupport(context.getLocale(),
-        SwingPreviewModule.BUNDLE_NAME, ObjectUtilities.getClassLoader(SwingPreviewModule.class));
+  public boolean initialize( final SwingGuiContext context ) {
+    super.initialize( context );
+    resources = new ResourceBundleSupport( context.getLocale(),
+      SwingPreviewModule.BUNDLE_NAME, ObjectUtilities.getClassLoader( SwingPreviewModule.class ) );
     return true;
   }
 
-  protected String getConfigurationPrefix()
-  {
+  protected String getConfigurationPrefix() {
     return "org.pentaho.reporting.engine.classic.core.modules.gui.base.about."; //$NON-NLS-1$
   }
 
@@ -67,9 +60,8 @@ public class AboutActionPlugin extends AbstractActionPlugin
    *
    * @return The display name.
    */
-  public String getDisplayName()
-  {
-    return resources.getString("action.about.name"); //$NON-NLS-1$
+  public String getDisplayName() {
+    return resources.getString( "action.about.name" ); //$NON-NLS-1$
   }
 
   /**
@@ -77,9 +69,8 @@ public class AboutActionPlugin extends AbstractActionPlugin
    *
    * @return The short description.
    */
-  public String getShortDescription()
-  {
-    return resources.getString("action.about.description"); //$NON-NLS-1$
+  public String getShortDescription() {
+    return resources.getString( "action.about.description" ); //$NON-NLS-1$
   }
 
   /**
@@ -87,10 +78,9 @@ public class AboutActionPlugin extends AbstractActionPlugin
    *
    * @return The icon.
    */
-  public Icon getSmallIcon()
-  {
+  public Icon getSmallIcon() {
     final Locale locale = getContext().getLocale();
-    return getIconTheme().getSmallIcon(locale, "action.about.small-icon"); //$NON-NLS-1$
+    return getIconTheme().getSmallIcon( locale, "action.about.small-icon" ); //$NON-NLS-1$
   }
 
   /**
@@ -98,10 +88,9 @@ public class AboutActionPlugin extends AbstractActionPlugin
    *
    * @return The icon.
    */
-  public Icon getLargeIcon()
-  {
+  public Icon getLargeIcon() {
     final Locale locale = getContext().getLocale();
-    return getIconTheme().getLargeIcon(locale, "action.about.icon"); //$NON-NLS-1$
+    return getIconTheme().getLargeIcon( locale, "action.about.icon" ); //$NON-NLS-1$
   }
 
   /**
@@ -109,8 +98,7 @@ public class AboutActionPlugin extends AbstractActionPlugin
    *
    * @return The accelerator key.
    */
-  public KeyStroke getAcceleratorKey()
-  {
+  public KeyStroke getAcceleratorKey() {
     return null;
   }
 
@@ -119,38 +107,30 @@ public class AboutActionPlugin extends AbstractActionPlugin
    *
    * @return The code.
    */
-  public Integer getMnemonicKey()
-  {
-    return resources.getOptionalMnemonic("action.about.mnemonic"); //$NON-NLS-1$
+  public Integer getMnemonicKey() {
+    return resources.getOptionalMnemonic( "action.about.mnemonic" ); //$NON-NLS-1$
   }
 
-  public boolean configure(final PreviewPane reportPane)
-  {
-    if (aboutFrame == null)
-    {
+  public boolean configure( final PreviewPane reportPane ) {
+    if ( aboutFrame == null ) {
       final String title = getDisplayName();
       // look where we have been added ...
-      final Window w = LibSwingUtil.getWindowAncestor(reportPane);
-      if (w instanceof Frame)
-      {
+      final Window w = LibSwingUtil.getWindowAncestor( reportPane );
+      if ( w instanceof Frame ) {
         aboutFrame = new AboutDialog
-            ((Frame) w, title, ClassicEngineInfo.getInstance());
-      }
-      else if (w instanceof Dialog)
-      {
+          ( (Frame) w, title, ClassicEngineInfo.getInstance() );
+      } else if ( w instanceof Dialog ) {
         aboutFrame = new AboutDialog
-            ((Dialog) w, title, ClassicEngineInfo.getInstance());
-      }
-      else
-      {
+          ( (Dialog) w, title, ClassicEngineInfo.getInstance() );
+      } else {
         aboutFrame = new AboutDialog
-            (title, ClassicEngineInfo.getInstance());
+          ( title, ClassicEngineInfo.getInstance() );
       }
       aboutFrame.pack();
-      LibSwingUtil.centerFrameOnScreen(aboutFrame);
+      LibSwingUtil.centerFrameOnScreen( aboutFrame );
     }
 
-    aboutFrame.setVisible(true);
+    aboutFrame.setVisible( true );
     aboutFrame.requestFocus();
     return true;
   }

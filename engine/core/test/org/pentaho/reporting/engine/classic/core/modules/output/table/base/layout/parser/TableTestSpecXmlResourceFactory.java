@@ -22,24 +22,19 @@ import org.pentaho.reporting.engine.classic.core.modules.output.table.base.layou
 import org.pentaho.reporting.libraries.base.config.Configuration;
 import org.pentaho.reporting.libraries.xmlns.parser.AbstractXmlResourceFactory;
 
-public class TableTestSpecXmlResourceFactory extends AbstractXmlResourceFactory
-{
-  public TableTestSpecXmlResourceFactory()
-  {
-    registerModule(new TableTestSpecXmlFactoryModule());
+public class TableTestSpecXmlResourceFactory extends AbstractXmlResourceFactory {
+  public TableTestSpecXmlResourceFactory() {
+    registerModule( new TableTestSpecXmlFactoryModule() );
   }
 
-  public void initializeDefaults()
-  {
+  public void initializeDefaults() {
   }
 
-  protected Configuration getConfiguration()
-  {
+  protected Configuration getConfiguration() {
     return ClassicEngineBoot.getInstance().getGlobalConfig();
   }
 
-  public Class getFactoryType()
-  {
+  public Class getFactoryType() {
     return ValidationSequence.class;
   }
 }

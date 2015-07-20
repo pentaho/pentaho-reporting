@@ -22,7 +22,6 @@ package org.pentaho.reporting.engine.classic.core.modules.gui.common;
  *
  * @author Thomas Morgner
  */
-public interface StatusListener
-{
-  public void setStatus(final StatusType type, final String text, final Throwable cause);
+public interface StatusListener {
+  public void setStatus( final StatusType type, final String text, final Throwable cause );
 }

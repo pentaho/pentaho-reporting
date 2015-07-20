@@ -17,8 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.output.pageable.plaintext;
 
-import java.io.OutputStream;
-
 import org.pentaho.reporting.engine.classic.core.AbstractReportProcessTask;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
 import org.pentaho.reporting.engine.classic.core.ReportProcessingException;
@@ -31,77 +29,64 @@ import org.pentaho.reporting.libraries.repository.ContentLocation;
 import org.pentaho.reporting.libraries.repository.NameGenerator;
 import org.pentaho.reporting.libraries.xmlns.common.ParserUtil;
 
-public class PlainTextReportProcessTask extends AbstractReportProcessTask
-{
-  public PlainTextReportProcessTask()
-  {
+import java.io.OutputStream;
+
+public class PlainTextReportProcessTask extends AbstractReportProcessTask {
+  public PlainTextReportProcessTask() {
   }
 
   /**
    * @noinspection ThrowableInstanceNeverThrown
    */
-  public void run()
-  {
-    if (isValid() == false)
-    {
-      setError(new ReportProcessingException("Error: The task is not configured properly."));
+  public void run() {
+    if ( isValid() == false ) {
+      setError( new ReportProcessingException( "Error: The task is not configured properly." ) );
       return;
     }
 
-    setError(null);
-    try
-    {
+    setError( null );
+    try {
       final MasterReport masterReport = getReport();
       final Configuration configuration = masterReport.getConfiguration();
 
       final ContentLocation contentLocation = getBodyContentLocation();
       final NameGenerator nameGenerator = getBodyNameGenerator();
       final ContentItem contentItem =
-          contentLocation.createItem(nameGenerator.generateName(null, "text/plain"));
+        contentLocation.createItem( nameGenerator.generateName( null, "text/plain" ) );
       final OutputStream outputStream = contentItem.getOutputStream();
 
-      try
-      {
+      try {
         final String cpiText = configuration.getConfigProperty
-            ("org.pentaho.reporting.engine.classic.core.modules.output.pageable.plaintext.CharsPerInch");
+          ( "org.pentaho.reporting.engine.classic.core.modules.output.pageable.plaintext.CharsPerInch" );
         final String lpiText = configuration.getConfigProperty
-            ("org.pentaho.reporting.engine.classic.core.modules.output.pageable.plaintext.LinesPerInch");
+          ( "org.pentaho.reporting.engine.classic.core.modules.output.pageable.plaintext.LinesPerInch" );
 
         final TextFilePrinterDriver driver = new TextFilePrinterDriver
-            (outputStream, ParserUtil.parseInt(cpiText, 10), ParserUtil.parseInt(lpiText, 6));
+          ( outputStream, ParserUtil.parseInt( cpiText, 10 ), ParserUtil.parseInt( lpiText, 6 ) );
 
         final PageableTextOutputProcessor outputProcessor =
-            new PageableTextOutputProcessor(driver, configuration);
+          new PageableTextOutputProcessor( driver, configuration );
         final PageableReportProcessor streamReportProcessor =
-            new PageableReportProcessor(masterReport, outputProcessor);
-        try
-        {
+          new PageableReportProcessor( masterReport, outputProcessor );
+        try {
           final ReportProgressListener[] progressListeners = getReportProgressListeners();
-          for (int i = 0; i < progressListeners.length; i++)
-          {
-            final ReportProgressListener listener = progressListeners[i];
-            streamReportProcessor.addReportProgressListener(listener);
+          for ( int i = 0; i < progressListeners.length; i++ ) {
+            final ReportProgressListener listener = progressListeners[ i ];
+            streamReportProcessor.addReportProgressListener( listener );
           }
           streamReportProcessor.processReport();
-        }
-        finally
-        {
+        } finally {
           streamReportProcessor.close();
         }
-      }
-      finally
-      {
+      } finally {
         outputStream.close();
       }
-    }
-    catch (Throwable e)
-    {
-      setError(e);
+    } catch ( Throwable e ) {
+      setError( e );
     }
   }
 
-  public String getReportMimeType()
-  {
+  public String getReportMimeType() {
     return "text/plain";
   }
 }

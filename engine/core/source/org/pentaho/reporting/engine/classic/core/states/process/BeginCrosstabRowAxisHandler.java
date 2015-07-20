@@ -24,16 +24,13 @@ import org.pentaho.reporting.engine.classic.core.GroupBody;
 import org.pentaho.reporting.engine.classic.core.ReportProcessingException;
 import org.pentaho.reporting.engine.classic.core.event.ReportEvent;
 
-public class BeginCrosstabRowAxisHandler implements AdvanceHandler
-{
+public class BeginCrosstabRowAxisHandler implements AdvanceHandler {
   public static final AdvanceHandler HANDLER = new BeginCrosstabRowAxisHandler();
 
-  private BeginCrosstabRowAxisHandler()
-  {
+  private BeginCrosstabRowAxisHandler() {
   }
 
-  public ProcessState advance(final ProcessState state) throws ReportProcessingException
-  {
+  public ProcessState advance( final ProcessState state ) throws ReportProcessingException {
     final ProcessState next = state.deriveForAdvance();
     next.enterGroup();
     next.crosstabResetColumnIndices();
@@ -42,41 +39,32 @@ public class BeginCrosstabRowAxisHandler implements AdvanceHandler
     return next;
   }
 
-  public ProcessState commit(ProcessState next) throws ReportProcessingException
-  {
-    final Group group = next.getReport().getGroup(next.getCurrentGroupIndex());
+  public ProcessState commit( ProcessState next ) throws ReportProcessingException {
+    final Group group = next.getReport().getGroup( next.getCurrentGroupIndex() );
 
     final GroupBody body = group.getBody();
-    if (body instanceof CrosstabRowGroupBody)
-    {
-      next.setAdvanceHandler(BeginCrosstabRowAxisHandler.HANDLER);
-    }
-    else if (body instanceof CrosstabColumnGroupBody)
-    {
+    if ( body instanceof CrosstabRowGroupBody ) {
+      next.setAdvanceHandler( BeginCrosstabRowAxisHandler.HANDLER );
+    } else if ( body instanceof CrosstabColumnGroupBody ) {
       next = next.recordCrosstabRowState();
-      next.setAdvanceHandler(BeginCrosstabColumnAxisHandler.HANDLER);
-    }
-    else
-    {
-      throw new IllegalStateException("This report is totally messed up!");
+      next.setAdvanceHandler( BeginCrosstabColumnAxisHandler.HANDLER );
+    } else {
+      throw new IllegalStateException( "This report is totally messed up!" );
     }
 
     return next;
 
   }
 
-  public boolean isFinish()
-  {
+  public boolean isFinish() {
     return false;
   }
 
-  public int getEventCode()
-  {
+  public int getEventCode() {
     return ReportEvent.CROSSTABBING_ROW | ReportEvent.GROUP_STARTED;
   }
 
-  public boolean isRestoreHandler()
-  {
+  public boolean isRestoreHandler() {
     return false;
   }
 }

@@ -25,49 +25,38 @@ import org.pentaho.reporting.engine.classic.core.function.AbstractExpression;
 import org.pentaho.reporting.engine.classic.core.testsupport.DebugReportRunner;
 import org.pentaho.reporting.libraries.resourceloader.ResourceException;
 
-public class Prd3912Test
-{
-  private static class ValidateExpression extends AbstractExpression
-  {
-    private ValidateExpression()
-    {
-      setName("Validate");
+public class Prd3912Test {
+  private static class ValidateExpression extends AbstractExpression {
+    private ValidateExpression() {
+      setName( "Validate" );
     }
 
-    public Object getValue()
-    {
-      try
-      {
+    public Object getValue() {
+      try {
 
-      for (String col : getDataRow().getColumnNames())
-      {
-        if ("Validate".equals(col))
-        {
-          // we cannot self-validate a result that we are currently computing.
-          break;
+        for ( String col : getDataRow().getColumnNames() ) {
+          if ( "Validate".equals( col ) ) {
+            // we cannot self-validate a result that we are currently computing.
+            break;
+          }
+          getDataRow().isChanged( col );
         }
-        getDataRow().isChanged(col);
-      }
-      return true;
-      }
-      catch (Exception e)
-      {
+        return true;
+      } catch ( Exception e ) {
         throw new AssertionError();
       }
     }
   }
 
   @Before
-  public void setUp() throws Exception
-  {
+  public void setUp() throws Exception {
     ClassicEngineBoot.getInstance().start();
   }
 
   @Test
-  public void testReport() throws ResourceException
-  {
-    MasterReport report = DebugReportRunner.parseGoldenSampleReport("Prd-3912.prpt");
-    report.addExpression(new ValidateExpression());
-    DebugReportRunner.execGraphics2D(report);
+  public void testReport() throws ResourceException {
+    MasterReport report = DebugReportRunner.parseGoldenSampleReport( "Prd-3912.prpt" );
+    report.addExpression( new ValidateExpression() );
+    DebugReportRunner.execGraphics2D( report );
   }
 }

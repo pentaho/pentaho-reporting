@@ -22,24 +22,19 @@ package org.pentaho.reporting.engine.classic.core;
  *
  * @author Thomas Morgner
  */
-public class AttributeNames
-{
-  private AttributeNames()
-  {
+public class AttributeNames {
+  private AttributeNames() {
   }
 
-  public static class Xml
-  {
+  public static class Xml {
     public static final String NAMESPACE = "http://www.w3.org/XML/1998/namespace";
     public static final String ID = "id";
 
-    private Xml()
-    {
+    private Xml() {
     }
   }
 
-  public static class Designtime
-  {
+  public static class Designtime {
     public static final String NAMESPACE = "http://reporting.pentaho.org/namespaces/report-designer/2.0";
 
     public static final String VERTICAL_GUIDE_LINES_ATTRIBUTE = "VerticalGuideLines";
@@ -47,10 +42,9 @@ public class AttributeNames
     public static final String HIDE_IN_LAYOUT_GUI_ATTRIBUTE = "hideInLayoutGUI";
   }
 
-  public static class Crosstab
-  {
+  public static class Crosstab {
     public static final String NAMESPACE =
-        "http://reporting.pentaho.org/namespaces/engine/attributes/crosstab";
+      "http://reporting.pentaho.org/namespaces/engine/attributes/crosstab";
     public static final String DETAIL_MODE = "detail-mode";
     public static final String COLUMN_FIELD = "column-field";
     public static final String ROW_FIELD = "row-field";
@@ -66,15 +60,13 @@ public class AttributeNames
     public static final String HEADER_STYLE = "header-style"; // spanned, repeat
     public static final String PADDING_FIELDS = "padding-fields";
 
-    private Crosstab()
-    {
+    private Crosstab() {
     }
   }
 
-  public static class Html
-  {
+  public static class Html {
     public static final String NAMESPACE =
-        "http://reporting.pentaho.org/namespaces/engine/attributes/html";
+      "http://reporting.pentaho.org/namespaces/engine/attributes/html";
 
     public static final String ONKEYUP = "onkeyup";
     public static final String ONKEYDOWN = "onkeydown";
@@ -100,26 +92,22 @@ public class AttributeNames
     public static final String TITLE = "title";
     public static final String ALT = "alt";
 
-    private Html()
-    {
+    private Html() {
     }
   }
 
-  public static class Pdf
-  {
+  public static class Pdf {
     public static final String NAMESPACE =
-        "http://reporting.pentaho.org/namespaces/engine/attributes/pdf";
+      "http://reporting.pentaho.org/namespaces/engine/attributes/pdf";
     public static final String SCRIPT_ACTION = "scriptAction";
 
-    private Pdf()
-    {
+    private Pdf() {
     }
   }
 
-  public static class Excel
-  {
+  public static class Excel {
     public static final String NAMESPACE =
-        "http://reporting.pentaho.org/namespaces/engine/attributes/excel";
+      "http://reporting.pentaho.org/namespaces/engine/attributes/excel";
     public static final String PAGE_HEADER_CENTER = "page-header-center";
     public static final String PAGE_FOOTER_CENTER = "page-footer-center";
     public static final String PAGE_HEADER_LEFT = "page-header-left";
@@ -130,27 +118,23 @@ public class AttributeNames
     public static final String FREEZING_LEFT_POSITION = "freezing-left-position";
     public static final String FREEZING_TOP_POSITION = "freezing-top-position";
 
-    private Excel()
-    {
+    private Excel() {
     }
   }
 
-  public static class Swing
-  {
+  public static class Swing {
     public static final String NAMESPACE =
-        "http://reporting.pentaho.org/namespaces/engine/attributes/swing";
+      "http://reporting.pentaho.org/namespaces/engine/attributes/swing";
     public static final String ACTION = "action";
     public static final String TOOLTIP = "tooltip";
 
-    private Swing()
-    {
+    private Swing() {
     }
   }
 
-  public static class Internal
-  {
+  public static class Internal {
     public static final String NAMESPACE =
-        "http://reporting.pentaho.org/namespaces/engine/attributes/internal";
+      "http://reporting.pentaho.org/namespaces/engine/attributes/internal";
 
     public static final String EXCEL_CELL_FORMAT_AUTOCOMPUTE = "excel-cellformat-auto-compute";
     public static final String QUERY = "query";
@@ -170,28 +154,24 @@ public class AttributeNames
     public static final String FAST_EXPORT_ELEMENT_STASH = "fast-export-element-style-stash";
     public static final String COMPUTED_SORT_CONSTRAINTS = "computed-sort-constraints";
 
-    private Internal()
-    {
+    private Internal() {
     }
   }
 
-  public static class Table
-  {
+  public static class Table {
     public static final String NAMESPACE =
-        "http://reporting.pentaho.org/namespaces/engine/attributes/table";
+      "http://reporting.pentaho.org/namespaces/engine/attributes/table";
 
     public static final String COLSPAN = "colspan";
     public static final String ROWSPAN = "rowspan";
 
-    private Table()
-    {
+    private Table() {
     }
   }
 
-  public static class Core
-  {
+  public static class Core {
     public static final String NAMESPACE =
-        "http://reporting.pentaho.org/namespaces/engine/attributes/core";
+      "http://reporting.pentaho.org/namespaces/engine/attributes/core";
 
     public static final String RESOURCE_IDENTIFIER = "resource-identifier";
     public static final String NULL_VALUE = "null-value";
@@ -216,7 +196,7 @@ public class AttributeNames
 
     public static final String LOCK_PREFERRED_OUTPUT_TYPE = "lock-preferred-output-type";
     public static final String PREFERRED_OUTPUT_TYPE = "preferred-output-type";
-    
+
     public static final String BUNDLE = "bundle";
     public static final String TARGET_TYPE = "target-type";
     public static final String RICH_TEXT_TYPE = "rich-text-type";
@@ -239,16 +219,14 @@ public class AttributeNames
     public static final String SORT_ORDER = "sort-order";
     public static final String WATERMARK_PRINTED_ON_TOP = "printed-on-top";
 
-    private Core()
-    {
+    private Core() {
     }
 
   }
 
-  public static class Wizard
-  {
+  public static class Wizard {
     public static final String NAMESPACE =
-        "http://reporting.pentaho.org/namespaces/engine/attributes/wizard";
+      "http://reporting.pentaho.org/namespaces/engine/attributes/wizard";
 
     /**
      * Adds structural information that this field/element is a label for a field. The content of the attribute denotes
@@ -295,18 +273,15 @@ public class AttributeNames
     public static final String PRESERVE_USER_STYLING = "preserve-user-styling";
 
 
-    private Wizard()
-    {
+    private Wizard() {
     }
   }
 
-  public static class Pentaho
-  {
+  public static class Pentaho {
     public static final String NAMESPACE =
-        "http://reporting.pentaho.org/namespaces/engine/attributes/pentaho";
+      "http://reporting.pentaho.org/namespaces/engine/attributes/pentaho";
 
-    private Pentaho()
-    {
+    private Pentaho() {
     }
 
     public static final String VISIBLE = "visible";

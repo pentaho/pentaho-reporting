@@ -35,8 +35,7 @@ import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
  *
  * @author Thomas Morgner
  */
-public class ItemHideFunction extends AbstractFunction implements PageEventListener, LayoutProcessorFunction
-{
+public class ItemHideFunction extends AbstractFunction implements PageEventListener, LayoutProcessorFunction {
   /**
    * The last object. This is part of the internal state and therefore not serialized.
    */
@@ -74,8 +73,7 @@ public class ItemHideFunction extends AbstractFunction implements PageEventListe
    * Constructs an unnamed function. <P> Make sure to set the function name before it is used, or function
    * initialisation will fail.
    */
-  public ItemHideFunction()
-  {
+  public ItemHideFunction() {
   }
 
   /**
@@ -83,10 +81,9 @@ public class ItemHideFunction extends AbstractFunction implements PageEventListe
    *
    * @param name The function name.
    */
-  public ItemHideFunction(final String name)
-  {
+  public ItemHideFunction( final String name ) {
     this();
-    setName(name);
+    setName( name );
   }
 
   /**
@@ -94,8 +91,7 @@ public class ItemHideFunction extends AbstractFunction implements PageEventListe
    *
    * @return false, if group breaks reset the visiblity, true otherwise.
    */
-  public boolean isIgnoreGroupBreaks()
-  {
+  public boolean isIgnoreGroupBreaks() {
     return ignoreGroupBreaks;
   }
 
@@ -104,8 +100,7 @@ public class ItemHideFunction extends AbstractFunction implements PageEventListe
    *
    * @param ignoreGroupBreaks false, if group breaks reset the visiblity, true otherwise.
    */
-  public void setIgnoreGroupBreaks(final boolean ignoreGroupBreaks)
-  {
+  public void setIgnoreGroupBreaks( final boolean ignoreGroupBreaks ) {
     this.ignoreGroupBreaks = ignoreGroupBreaks;
   }
 
@@ -114,8 +109,7 @@ public class ItemHideFunction extends AbstractFunction implements PageEventListe
    *
    * @return false, if page breaks reset the visiblity, true otherwise.
    */
-  public boolean isIgnorePageBreaks()
-  {
+  public boolean isIgnorePageBreaks() {
     return ignorePageBreaks;
   }
 
@@ -124,8 +118,7 @@ public class ItemHideFunction extends AbstractFunction implements PageEventListe
    *
    * @param ignorePageBreaks false, if page breaks reset the visiblity, true otherwise.
    */
-  public void setIgnorePageBreaks(final boolean ignorePageBreaks)
-  {
+  public void setIgnorePageBreaks( final boolean ignorePageBreaks ) {
     this.ignorePageBreaks = ignorePageBreaks;
   }
 
@@ -134,8 +127,7 @@ public class ItemHideFunction extends AbstractFunction implements PageEventListe
    *
    * @return The element name.
    */
-  public String getElement()
-  {
+  public String getElement() {
     return element;
   }
 
@@ -144,8 +136,7 @@ public class ItemHideFunction extends AbstractFunction implements PageEventListe
    *
    * @param name the element name (must not be null).
    */
-  public void setElement(final String name)
-  {
+  public void setElement( final String name ) {
     this.element = name;
   }
 
@@ -154,8 +145,7 @@ public class ItemHideFunction extends AbstractFunction implements PageEventListe
    *
    * @return The field name.
    */
-  public String getField()
-  {
+  public String getField() {
     return field;
   }
 
@@ -164,8 +154,7 @@ public class ItemHideFunction extends AbstractFunction implements PageEventListe
    *
    * @param field the field name.
    */
-  public void setField(final String field)
-  {
+  public void setField( final String field ) {
     this.field = field;
   }
 
@@ -176,23 +165,19 @@ public class ItemHideFunction extends AbstractFunction implements PageEventListe
    *
    * @param event Information about the event.
    */
-  public void itemsAdvanced(final ReportEvent event)
-  {
-    final Object fieldValue = event.getDataRow().get(getField());
+  public void itemsAdvanced( final ReportEvent event ) {
+    final Object fieldValue = event.getDataRow().get( getField() );
 
     // is visible when last and current object are not equal
     // first element in group is always visible
-    if (firstInGroup == true)
-    {
+    if ( firstInGroup == true ) {
       visible = true;
       firstInGroup = false;
-    }
-    else
-    {
-      visible = (ObjectUtilities.equal(lastObject, fieldValue) == false);
+    } else {
+      visible = ( ObjectUtilities.equal( lastObject, fieldValue ) == false );
     }
     lastObject = fieldValue;
-    applyVisible(event);
+    applyVisible( event );
   }
 
 
@@ -201,10 +186,8 @@ public class ItemHideFunction extends AbstractFunction implements PageEventListe
    *
    * @param event the report event.
    */
-  public void itemsStarted(final ReportEvent event)
-  {
-    if (ignoreGroupBreaks == false)
-    {
+  public void itemsStarted( final ReportEvent event ) {
+    if ( ignoreGroupBreaks == false ) {
       lastObject = null;
       firstInGroup = true;
     }
@@ -215,10 +198,8 @@ public class ItemHideFunction extends AbstractFunction implements PageEventListe
    *
    * @return The function value.
    */
-  public Object getValue()
-  {
-    if (visible)
-    {
+  public Object getValue() {
+    if ( visible ) {
       return Boolean.TRUE;
     }
     return Boolean.FALSE;
@@ -229,8 +210,7 @@ public class ItemHideFunction extends AbstractFunction implements PageEventListe
    *
    * @param event The event.
    */
-  public void pageFinished(final ReportEvent event)
-  {
+  public void pageFinished( final ReportEvent event ) {
   }
 
   /**
@@ -238,14 +218,12 @@ public class ItemHideFunction extends AbstractFunction implements PageEventListe
    *
    * @param event The event.
    */
-  public void pageStarted(final ReportEvent event)
-  {
-    if (ignorePageBreaks)
-    {
+  public void pageStarted( final ReportEvent event ) {
+    if ( ignorePageBreaks ) {
       return;
     }
 
-    final Object fieldValue = event.getDataRow().get(getField());
+    final Object fieldValue = event.getDataRow().get( getField() );
 
     // is visible when last and current object are not equal
     // first element in group is always visible
@@ -254,22 +232,19 @@ public class ItemHideFunction extends AbstractFunction implements PageEventListe
     firstInGroup = true;
     lastObject = fieldValue;
 
-    applyVisible(event);
+    applyVisible( event );
   }
 
-  private void applyVisible(final ReportEvent event)
-  {
+  private void applyVisible( final ReportEvent event ) {
     final ItemBand itemBand = event.getReport().getItemBand();
-    if (itemBand == null)
-    {
+    if ( itemBand == null ) {
       return;
     }
 
-    final Element[] elements = FunctionUtilities.findAllElements(itemBand, getElement());
-    for (int i = 0; i < elements.length; i++)
-    {
-      final Element e = elements[i];
-      e.setVisible(visible);
+    final Element[] elements = FunctionUtilities.findAllElements( itemBand, getElement() );
+    for ( int i = 0; i < elements.length; i++ ) {
+      final Element e = elements[ i ];
+      e.setVisible( visible );
     }
   }
 
@@ -279,8 +254,7 @@ public class ItemHideFunction extends AbstractFunction implements PageEventListe
    *
    * @return a copy of this function.
    */
-  public Expression getInstance()
-  {
+  public Expression getInstance() {
     final ItemHideFunction ih = (ItemHideFunction) super.getInstance();
     ih.lastObject = null;
     return ih;
@@ -291,8 +265,7 @@ public class ItemHideFunction extends AbstractFunction implements PageEventListe
    *
    * @param event the event.
    */
-  public void reportInitialized(final ReportEvent event)
-  {
+  public void reportInitialized( final ReportEvent event ) {
     lastObject = null;
     firstInGroup = true;
   }

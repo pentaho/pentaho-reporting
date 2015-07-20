@@ -20,17 +20,14 @@ package org.pentaho.reporting.engine.classic.core.filter.types.bands;
 import org.pentaho.reporting.engine.classic.core.CrosstabCell;
 import org.pentaho.reporting.engine.classic.core.ReportElement;
 
-public class CrosstabCellType extends AbstractSectionType
-{
+public class CrosstabCellType extends AbstractSectionType {
   public static final CrosstabCellType INSTANCE = new CrosstabCellType();
-  
-  public CrosstabCellType()
-  {
-    super("crosstab-cell", true);
+
+  public CrosstabCellType() {
+    super( "crosstab-cell", true );
   }
 
-  public ReportElement create()
-  {
+  public ReportElement create() {
     return new CrosstabCell();
   }
 }

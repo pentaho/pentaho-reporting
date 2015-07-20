@@ -17,11 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.core.designtime.datafactory;
 
-import java.util.LinkedHashSet;
-import java.util.List;
-import javax.script.ScriptEngineFactory;
-import javax.script.ScriptEngineManager;
-
 import org.pentaho.reporting.engine.classic.core.AbstractReportDefinition;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.pentaho.reporting.engine.classic.core.CompoundDataFactory;
@@ -38,8 +33,12 @@ import org.pentaho.reporting.libraries.base.config.Configuration;
 import org.pentaho.reporting.libraries.resourceloader.ResourceKey;
 import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 
-public class DataFactoryEditorSupport
-{
+import javax.script.ScriptEngineFactory;
+import javax.script.ScriptEngineManager;
+import java.util.LinkedHashSet;
+import java.util.List;
+
+public class DataFactoryEditorSupport {
   public static final String SYNTAX_STYLE_NONE = "text/plain";
   public static final String SYNTAX_STYLE_ASSEMBLER_X86 = "text/asm";
   public static final String SYNTAX_STYLE_C = "text/c";
@@ -66,54 +65,46 @@ public class DataFactoryEditorSupport
   public static final String SYNTAX_STYLE_WINDOWS_BATCH = "text/bat";
   public static final String SYNTAX_STYLE_XML = "text/xml";
 
-  public static ScriptEngineFactory[] getScriptEngineLanguages()
-  {
+  public static ScriptEngineFactory[] getScriptEngineLanguages() {
     final LinkedHashSet<ScriptEngineFactory> langSet = new LinkedHashSet<ScriptEngineFactory>();
-    langSet.add(null);
+    langSet.add( null );
     final List<ScriptEngineFactory> engineFactories = new ScriptEngineManager().getEngineFactories();
-    for (final ScriptEngineFactory engineFactory : engineFactories)
-    {
-      langSet.add(engineFactory);
+    for ( final ScriptEngineFactory engineFactory : engineFactories ) {
+      langSet.add( engineFactory );
     }
-    return langSet.toArray(new ScriptEngineFactory[langSet.size()]);
+    return langSet.toArray( new ScriptEngineFactory[ langSet.size() ] );
   }
 
-  public static String mapLanguageToSyntaxHighlighting(final ScriptEngineFactory script)
-  {
-    if (script == null)
-    {
+  public static String mapLanguageToSyntaxHighlighting( final ScriptEngineFactory script ) {
+    if ( script == null ) {
       return SYNTAX_STYLE_NONE;
     }
 
     final String language = script.getLanguageName();
-    if ("ECMAScript".equalsIgnoreCase(language) ||
-        "js".equalsIgnoreCase(language) ||
-        "rhino".equalsIgnoreCase(language) ||
-        "javascript".equalsIgnoreCase(language))
-    {
+    if ( "ECMAScript".equalsIgnoreCase( language ) ||
+      "js".equalsIgnoreCase( language ) ||
+      "rhino".equalsIgnoreCase( language ) ||
+      "javascript".equalsIgnoreCase( language ) ) {
       return SYNTAX_STYLE_JAVASCRIPT;
     }
-    if ("groovy".equalsIgnoreCase(language))
-    {
+    if ( "groovy".equalsIgnoreCase( language ) ) {
       return SYNTAX_STYLE_GROOVY;
     }
     return SYNTAX_STYLE_NONE;
   }
 
-  public static void configureDataFactoryForPreview(final DataFactory dataFactory,
-                                                    final DesignTimeContext context)
-      throws ReportProcessingException
-  {
-    configureDataFactoryForPreview(dataFactory, context, new DataFactory[0]);
+  public static void configureDataFactoryForPreview( final DataFactory dataFactory,
+                                                     final DesignTimeContext context )
+    throws ReportProcessingException {
+    configureDataFactoryForPreview( dataFactory, context, new DataFactory[ 0 ] );
   }
 
-  public static void configureDataFactoryForPreview(final DataFactory dataFactory,
-                                                    final DesignTimeContext context,
-                                                    final DataFactory[] additionalDataFactories)
-      throws ReportProcessingException
-  {
+  public static void configureDataFactoryForPreview( final DataFactory dataFactory,
+                                                     final DesignTimeContext context,
+                                                     final DataFactory[] additionalDataFactories )
+    throws ReportProcessingException {
     final AbstractReportDefinition report = context.getReport();
-    final MasterReport masterReport = DesignTimeUtil.getMasterReport(report);
+    final MasterReport masterReport = DesignTimeUtil.getMasterReport( report );
     final Configuration configuration;
     final ResourceKey contentBase;
     final ReportEnvironment reportEnvironment;
@@ -121,17 +112,14 @@ public class DataFactoryEditorSupport
     final ResourceManager resourceManager;
     final ResourceBundleFactory resourceBundleFactory;
 
-    if (masterReport == null)
-    {
+    if ( masterReport == null ) {
       contentBase = null;
       configuration = ClassicEngineBoot.getInstance().getGlobalConfig();
-      reportEnvironment = new DefaultReportEnvironment(configuration);
+      reportEnvironment = new DefaultReportEnvironment( configuration );
       reportDataFactory = null;
       resourceManager = new ResourceManager();
       resourceBundleFactory = new LibLoaderResourceBundleFactory();
-    }
-    else
-    {
+    } else {
       contentBase = masterReport.getContentBase();
       configuration = masterReport.getConfiguration();
       reportEnvironment = masterReport.getReportEnvironment();
@@ -141,20 +129,18 @@ public class DataFactoryEditorSupport
     }
 
     final CompoundDataFactory compoundDataFactory = new CompoundDataFactory();
-    compoundDataFactory.add(dataFactory);
-    for (int i = 0; i < additionalDataFactories.length; i++)
-    {
-      compoundDataFactory.add(additionalDataFactories[i]);
+    compoundDataFactory.add( dataFactory );
+    for ( int i = 0; i < additionalDataFactories.length; i++ ) {
+      compoundDataFactory.add( additionalDataFactories[ i ] );
     }
-    if (reportDataFactory != null)
-    {
-      compoundDataFactory.add(reportDataFactory);
+    if ( reportDataFactory != null ) {
+      compoundDataFactory.add( reportDataFactory );
     }
 
-    final DesignTimeDataFactoryContext dataFactoryContext = new DesignTimeDataFactoryContext(configuration,
-        resourceManager, contentBase, MasterReport.computeAndInitResourceBundleFactory
-        (resourceBundleFactory, reportEnvironment), compoundDataFactory);
-    dataFactory.initialize(dataFactoryContext);
-    compoundDataFactory.initialize(dataFactoryContext);
+    final DesignTimeDataFactoryContext dataFactoryContext = new DesignTimeDataFactoryContext( configuration,
+      resourceManager, contentBase, MasterReport.computeAndInitResourceBundleFactory
+      ( resourceBundleFactory, reportEnvironment ), compoundDataFactory );
+    dataFactory.initialize( dataFactoryContext );
+    compoundDataFactory.initialize( dataFactoryContext );
   }
 }

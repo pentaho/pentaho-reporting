@@ -27,55 +27,43 @@ import org.pentaho.reporting.engine.classic.core.layout.richtext.RichTextConvert
 import org.pentaho.reporting.engine.classic.core.style.ElementStyleKeys;
 import org.pentaho.reporting.engine.classic.core.util.AbstractStructureVisitor;
 
-public abstract class AbstractFormattedDataBuilder extends AbstractStructureVisitor implements FormattedDataBuilder
-{
+public abstract class AbstractFormattedDataBuilder extends AbstractStructureVisitor implements FormattedDataBuilder {
   private ExpressionRuntime runtime;
 
-  public AbstractFormattedDataBuilder()
-  {
+  public AbstractFormattedDataBuilder() {
   }
 
-  protected void traverseSection(final Section section)
-  {
-    traverseSectionWithoutSubReports(section);
+  protected void traverseSection( final Section section ) {
+    traverseSectionWithoutSubReports( section );
   }
 
-  protected void compute(Band band, ExpressionRuntime runtime)
-  {
-    if (band.getComputedStyle().getBooleanStyleProperty(ElementStyleKeys.VISIBLE) == false)
-    {
+  protected void compute( Band band, ExpressionRuntime runtime ) {
+    if ( band.getComputedStyle().getBooleanStyleProperty( ElementStyleKeys.VISIBLE ) == false ) {
       return;
     }
 
-    try
-    {
+    try {
       this.runtime = runtime;
-      inspectElement(band);
-      traverseSection(band);
-    }
-    finally
-    {
+      inspectElement( band );
+      traverseSection( band );
+    } finally {
       this.runtime = null;
     }
   }
 
-  public ExpressionRuntime getRuntime()
-  {
+  public ExpressionRuntime getRuntime() {
     return runtime;
   }
 
-  public static Object filterRichText(final ReportElement element,
-                                  final Object initialValue)
-  {
+  public static Object filterRichText( final ReportElement element,
+                                       final Object initialValue ) {
     final Object richTextType =
-        element.getAttribute(AttributeNames.Core.NAMESPACE, AttributeNames.Core.RICH_TEXT_TYPE);
-    if (richTextType != null)
-    {
+      element.getAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.RICH_TEXT_TYPE );
+    if ( richTextType != null ) {
       final RichTextConverterRegistry registry = RichTextConverterRegistry.getRegistry();
-      final RichTextConverter converter = registry.getConverter(String.valueOf(richTextType));
-      if (converter != null)
-      {
-        return converter.convert(element, initialValue);
+      final RichTextConverter converter = registry.getConverter( String.valueOf( richTextType ) );
+      if ( converter != null ) {
+        return converter.convert( element, initialValue );
       }
     }
     return initialValue;

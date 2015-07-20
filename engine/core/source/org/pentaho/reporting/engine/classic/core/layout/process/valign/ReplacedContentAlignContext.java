@@ -27,44 +27,36 @@ import org.pentaho.reporting.engine.classic.core.layout.text.ExtendedBaselineInf
  *
  * @author Thomas Morgner
  */
-public final class ReplacedContentAlignContext extends AlignContext
-{
+public final class ReplacedContentAlignContext extends AlignContext {
   private long shift;
   private long height;
 
-  public ReplacedContentAlignContext(final RenderableReplacedContentBox node,
-                                     final long parentHeight)
-  {
-    super(node);
-    this.height = ReplacedContentUtil.computeHeight(node, parentHeight, node.getCachedWidth());
+  public ReplacedContentAlignContext( final RenderableReplacedContentBox node,
+                                      final long parentHeight ) {
+    super( node );
+    this.height = ReplacedContentUtil.computeHeight( node, parentHeight, node.getCachedWidth() );
   }
 
-  public long getBaselineDistance(final int baseline)
-  {
-    if (baseline == ExtendedBaselineInfo.BEFORE_EDGE)
-    {
+  public long getBaselineDistance( final int baseline ) {
+    if ( baseline == ExtendedBaselineInfo.BEFORE_EDGE ) {
       return 0;
     }
-    if (baseline == ExtendedBaselineInfo.TEXT_BEFORE_EDGE)
-    {
+    if ( baseline == ExtendedBaselineInfo.TEXT_BEFORE_EDGE ) {
       return 0;
     }
     // oh that's soooo primitive ..
     return height;
   }
 
-  public void shift(final long delta)
-  {
+  public void shift( final long delta ) {
     this.shift += delta;
   }
 
-  public long getAfterEdge()
-  {
+  public long getAfterEdge() {
     return shift + height;
   }
 
-  public long getBeforeEdge()
-  {
+  public long getBeforeEdge() {
     return shift;
   }
 }

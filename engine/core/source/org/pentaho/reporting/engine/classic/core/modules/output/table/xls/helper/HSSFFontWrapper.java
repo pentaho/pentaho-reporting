@@ -27,10 +27,10 @@ import org.pentaho.reporting.engine.classic.core.style.TextStyleKeys;
  *
  * @author Heiko Evermann
  */
-public final class HSSFFontWrapper
-{
+public final class HSSFFontWrapper {
   /**
    * scale between Excel and awt. With this value it looks fine.
+   *
    * @deprecated No longer used, will be removed in 6.0
    */
   public static final int FONT_FACTOR = 20;
@@ -75,20 +75,18 @@ public final class HSSFFontWrapper
    */
   private int hashCode;
 
-  public HSSFFontWrapper(final StyleSheet contentStyle,
-                         final short colorIndex)
-  {
-    if (colorIndex < 0)
-    {
-      throw new IllegalArgumentException("Negative color index is not allowed");
+  public HSSFFontWrapper( final StyleSheet contentStyle,
+                          final short colorIndex ) {
+    if ( colorIndex < 0 ) {
+      throw new IllegalArgumentException( "Negative color index is not allowed" );
     }
 
-    this.fontName = normalizeFontName((String) contentStyle.getStyleProperty(TextStyleKeys.FONT));
-    this.fontHeight = contentStyle.getIntStyleProperty(TextStyleKeys.FONTSIZE, 0);
-    this.bold = contentStyle.getBooleanStyleProperty(TextStyleKeys.BOLD);
-    this.italic = contentStyle.getBooleanStyleProperty(TextStyleKeys.ITALIC);
-    this.underline = contentStyle.getBooleanStyleProperty(TextStyleKeys.UNDERLINED);
-    this.strikethrough = contentStyle.getBooleanStyleProperty(TextStyleKeys.STRIKETHROUGH);
+    this.fontName = normalizeFontName( (String) contentStyle.getStyleProperty( TextStyleKeys.FONT ) );
+    this.fontHeight = contentStyle.getIntStyleProperty( TextStyleKeys.FONTSIZE, 0 );
+    this.bold = contentStyle.getBooleanStyleProperty( TextStyleKeys.BOLD );
+    this.italic = contentStyle.getBooleanStyleProperty( TextStyleKeys.ITALIC );
+    this.underline = contentStyle.getBooleanStyleProperty( TextStyleKeys.UNDERLINED );
+    this.strikethrough = contentStyle.getBooleanStyleProperty( TextStyleKeys.STRIKETHROUGH );
     this.colorIndex = colorIndex;
   }
 
@@ -103,24 +101,21 @@ public final class HSSFFontWrapper
    * @param strikethrough a font style flag.
    * @param colorIndex    the foreground color.
    */
-  public HSSFFontWrapper(final String fontName,
-                         final short fontSize,
-                         final boolean bold,
-                         final boolean italic,
-                         final boolean underline,
-                         final boolean strikethrough,
-                         final short colorIndex)
-  {
-    if (fontName == null)
-    {
-      throw new NullPointerException("FontDefinition is null");
+  public HSSFFontWrapper( final String fontName,
+                          final short fontSize,
+                          final boolean bold,
+                          final boolean italic,
+                          final boolean underline,
+                          final boolean strikethrough,
+                          final short colorIndex ) {
+    if ( fontName == null ) {
+      throw new NullPointerException( "FontDefinition is null" );
     }
-    if (colorIndex < 0)
-    {
-      throw new IllegalArgumentException("Negative color index is not allowed");
+    if ( colorIndex < 0 ) {
+      throw new IllegalArgumentException( "Negative color index is not allowed" );
     }
 
-    this.fontName = normalizeFontName(fontName);
+    this.fontName = normalizeFontName( fontName );
     this.fontHeight = fontSize;
     this.bold = bold;
     this.italic = italic;
@@ -129,23 +124,15 @@ public final class HSSFFontWrapper
     this.colorIndex = colorIndex;
   }
 
-  private String normalizeFontName(final String fontName)
-  {
-    if ("SansSerif".equalsIgnoreCase(fontName) ||
-        "Dialog".equalsIgnoreCase(fontName))
-    {
+  private String normalizeFontName( final String fontName ) {
+    if ( "SansSerif".equalsIgnoreCase( fontName ) ||
+      "Dialog".equalsIgnoreCase( fontName ) ) {
       return "Arial";
-    }
-    else if ("Monospace".equalsIgnoreCase(fontName))
-    {
+    } else if ( "Monospace".equalsIgnoreCase( fontName ) ) {
       return "Courier New";
-    }
-    else if ("Serif".equalsIgnoreCase(fontName))
-    {
+    } else if ( "Serif".equalsIgnoreCase( fontName ) ) {
       return "Times New Roman";
-    }
-    else
-    {
+    } else {
       return fontName;
     }
   }
@@ -155,22 +142,19 @@ public final class HSSFFontWrapper
    *
    * @param font the font.
    */
-  public HSSFFontWrapper(final Font font)
-  {
-    if (font == null)
-    {
-      throw new NullPointerException("Font is null");
+  public HSSFFontWrapper( final Font font ) {
+    if ( font == null ) {
+      throw new NullPointerException( "Font is null" );
     }
-    if (font.getColor() < 0)
-    {
-      throw new IllegalArgumentException("Negative color index is not allowed");
+    if ( font.getColor() < 0 ) {
+      throw new IllegalArgumentException( "Negative color index is not allowed" );
     }
 
-    fontName = normalizeFontName(font.getFontName());
+    fontName = normalizeFontName( font.getFontName() );
     fontHeight = font.getFontHeightInPoints();
-    bold = (font.getBoldweight() == HSSFFont.BOLDWEIGHT_BOLD);
+    bold = ( font.getBoldweight() == HSSFFont.BOLDWEIGHT_BOLD );
     italic = font.getItalic();
-    underline = (font.getUnderline() != HSSFFont.U_NONE);
+    underline = ( font.getUnderline() != HSSFFont.U_NONE );
     strikethrough = font.getStrikeout();
     colorIndex = font.getColor();
   }
@@ -181,45 +165,35 @@ public final class HSSFFontWrapper
    * @param o the compared object.
    * @return true, if the font wrapper contains the same font definition, false otherwise.
    */
-  public boolean equals(final Object o)
-  {
-    if (this == o)
-    {
+  public boolean equals( final Object o ) {
+    if ( this == o ) {
       return true;
     }
-    if (!(o instanceof HSSFFontWrapper))
-    {
+    if ( !( o instanceof HSSFFontWrapper ) ) {
       return false;
     }
 
     final HSSFFontWrapper wrapper = (HSSFFontWrapper) o;
 
-    if (bold != wrapper.bold)
-    {
+    if ( bold != wrapper.bold ) {
       return false;
     }
-    if (underline != wrapper.underline)
-    {
+    if ( underline != wrapper.underline ) {
       return false;
     }
-    if (strikethrough != wrapper.strikethrough)
-    {
+    if ( strikethrough != wrapper.strikethrough ) {
       return false;
     }
-    if (colorIndex != wrapper.colorIndex)
-    {
+    if ( colorIndex != wrapper.colorIndex ) {
       return false;
     }
-    if (fontHeight != wrapper.fontHeight)
-    {
+    if ( fontHeight != wrapper.fontHeight ) {
       return false;
     }
-    if (italic != wrapper.italic)
-    {
+    if ( italic != wrapper.italic ) {
       return false;
     }
-    if (!fontName.equals(wrapper.fontName))
-    {
+    if ( !fontName.equals( wrapper.fontName ) ) {
       return false;
     }
 
@@ -232,74 +206,63 @@ public final class HSSFFontWrapper
    *
    * @return the hash code.
    */
-  public int hashCode()
-  {
-    if (hashCode == 0)
-    {
+  public int hashCode() {
+    if ( hashCode == 0 ) {
       int result = fontName.hashCode();
       result = 29 * result + colorIndex;
       result = 29 * result + fontHeight;
-      result = 29 * result + (bold ? 1 : 0);
-      result = 29 * result + (italic ? 1 : 0);
-      result = 29 * result + (underline ? 1 : 0);
-      result = 29 * result + (strikethrough ? 1 : 0);
+      result = 29 * result + ( bold ? 1 : 0 );
+      result = 29 * result + ( italic ? 1 : 0 );
+      result = 29 * result + ( underline ? 1 : 0 );
+      result = 29 * result + ( strikethrough ? 1 : 0 );
       hashCode = result;
     }
     return hashCode;
   }
 
   @Override
-  public String toString()
-  {
+  public String toString() {
     return "HSSFFontWrapper{" +
-        "fontName='" + fontName + '\'' +
-        ", colorIndex=" + colorIndex +
-        ", fontHeight=" + fontHeight +
-        ", bold=" + bold +
-        ", italic=" + italic +
-        ", underline=" + underline +
-        ", strikethrough=" + strikethrough +
-        ", hashCode=" + hashCode +
-        '}';
+      "fontName='" + fontName + '\'' +
+      ", colorIndex=" + colorIndex +
+      ", fontHeight=" + fontHeight +
+      ", bold=" + bold +
+      ", italic=" + italic +
+      ", underline=" + underline +
+      ", strikethrough=" + strikethrough +
+      ", hashCode=" + hashCode +
+      '}';
   }
 
-  public boolean isBold()
-  {
+  public boolean isBold() {
     return bold;
   }
 
-  public short getColorIndex()
-  {
+  public short getColorIndex() {
     return colorIndex;
   }
 
-  public int getFontHeight()
-  {
+  public int getFontHeight() {
     return fontHeight;
   }
 
-  public String getFontName()
-  {
+  public String getFontName() {
     return fontName;
   }
 
-  public int getHashCode()
-  {
+  public int getHashCode() {
     return hashCode;
   }
 
-  public boolean isItalic()
-  {
+  public boolean isItalic() {
     return italic;
   }
 
-  public boolean isStrikethrough()
-  {
+  public boolean isStrikethrough() {
     return strikethrough;
   }
 
-  public boolean isUnderline()
-  {
+  public boolean isUnderline() {
     return underline;
   }
 }

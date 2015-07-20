@@ -17,10 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.output.pageable.plaintext;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.net.URL;
-
 import junit.framework.TestCase;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
@@ -39,70 +35,67 @@ import org.pentaho.reporting.libraries.base.util.MemoryStringWriter;
 import org.pentaho.reporting.libraries.resourceloader.Resource;
 import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 
-public class PlainTextExportTest extends TestCase
-{
-  public PlainTextExportTest()
-  {
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.net.URL;
+
+public class PlainTextExportTest extends TestCase {
+  public PlainTextExportTest() {
   }
 
-  public PlainTextExportTest(final String s)
-  {
-    super(s);
+  public PlainTextExportTest( final String s ) {
+    super( s );
   }
 
-  protected void setUp() throws Exception
-  {
+  protected void setUp() throws Exception {
     ClassicEngineBoot.getInstance().start();
   }
 
-  private String exportReport(final MasterReport template, final String encoding) throws Exception
-  {
+  private String exportReport( final MasterReport template, final String encoding ) throws Exception {
     final MasterReport report = (MasterReport) template.clone();
     report.getReportConfiguration().setConfigProperty
-        ("org.pentaho.reporting.engine.classic.core.modules.output.pageable.plaintext.Encoding", encoding);
+      ( "org.pentaho.reporting.engine.classic.core.modules.output.pageable.plaintext.Encoding", encoding );
     final ByteArrayOutputStream bo = new ByteArrayOutputStream();
-    PlainTextReportUtil.createPlainText(report, bo, 15, 10);
+    PlainTextReportUtil.createPlainText( report, bo, 15, 10 );
     final byte[] data = bo.toByteArray();
-    return new String(data, encoding);
+    return new String( data, encoding );
   }
 
   public void testExport()
-      throws Exception
-  {
-    final URL url = getClass().getResource("plain-text-export.xml");
-    assertNotNull(url);
+    throws Exception {
+    final URL url = getClass().getResource( "plain-text-export.xml" );
+    assertNotNull( url );
     final ResourceManager resourceManager = new ResourceManager();
     resourceManager.registerDefaults();
-    final Resource directly = resourceManager.createDirectly(url, MasterReport.class);
+    final Resource directly = resourceManager.createDirectly( url, MasterReport.class );
     final MasterReport report = (MasterReport) directly.getResource();
 
-    assertNotNull(report);
-    final String rdefBeforeFirst = writeReport(report);
-    final String utf16 = exportReport(report, "UTF-16");
-    final String rdefAfterFirst = writeReport(report);
-    assertEquals(rdefBeforeFirst, rdefAfterFirst);
-    final String utf8 = exportReport(report, "UTF-8");
-    assertEquals(utf8, utf16);
+    assertNotNull( report );
+    final String rdefBeforeFirst = writeReport( report );
+    final String utf16 = exportReport( report, "UTF-16" );
+    final String rdefAfterFirst = writeReport( report );
+    assertEquals( rdefBeforeFirst, rdefAfterFirst );
+    final String utf8 = exportReport( report, "UTF-8" );
+    assertEquals( utf8, utf16 );
   }
 
-  private String writeReport(final MasterReport report) throws IOException, ReportWriterException
-  {
+  private String writeReport( final MasterReport report ) throws IOException, ReportWriterException {
     final MemoryStringWriter oWriter = new MemoryStringWriter();
     final ReportWriter rc = new ReportWriter
-        (report, "UTF-16", ReportWriter.createDefaultConfiguration(report));
+      ( report, "UTF-16", ReportWriter.createDefaultConfiguration( report ) );
 
-    rc.addClassFactoryFactory(new URLClassFactory());
-    rc.addClassFactoryFactory(new DefaultClassFactory());
-    rc.addClassFactoryFactory(new BandLayoutClassFactory());
-    rc.addClassFactoryFactory(new ArrayClassFactory());
+    rc.addClassFactoryFactory( new URLClassFactory() );
+    rc.addClassFactoryFactory( new DefaultClassFactory() );
+    rc.addClassFactoryFactory( new BandLayoutClassFactory() );
+    rc.addClassFactoryFactory( new ArrayClassFactory() );
 
-    rc.addStyleKeyFactory(new DefaultStyleKeyFactory());
-    rc.addStyleKeyFactory(new PageableLayoutStyleKeyFactory());
-    rc.addTemplateCollection(new DefaultTemplateCollection());
-    rc.addElementFactory(new DefaultElementFactory());
-    rc.addDataSourceFactory(new DefaultDataSourceFactory());
+    rc.addStyleKeyFactory( new DefaultStyleKeyFactory() );
+    rc.addStyleKeyFactory( new PageableLayoutStyleKeyFactory() );
+    rc.addTemplateCollection( new DefaultTemplateCollection() );
+    rc.addElementFactory( new DefaultElementFactory() );
+    rc.addDataSourceFactory( new DefaultDataSourceFactory() );
 
-    rc.write(oWriter);
+    rc.write( oWriter );
     oWriter.close();
     return oWriter.toString();
 

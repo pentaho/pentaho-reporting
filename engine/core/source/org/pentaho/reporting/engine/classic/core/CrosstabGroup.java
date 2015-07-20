@@ -17,13 +17,13 @@
 
 package org.pentaho.reporting.engine.classic.core;
 
+import org.pentaho.reporting.engine.classic.core.filter.types.bands.CrosstabGroupType;
+import org.pentaho.reporting.engine.classic.core.sorting.SortConstraint;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-
-import org.pentaho.reporting.engine.classic.core.filter.types.bands.CrosstabGroupType;
-import org.pentaho.reporting.engine.classic.core.sorting.SortConstraint;
 
 /**
  * A crosstab group represents the page, row, column and detail sections of a cube. The other axises are handled as
@@ -35,51 +35,45 @@ import org.pentaho.reporting.engine.classic.core.sorting.SortConstraint;
  *
  * @author Thomas Morgner
  */
-public class CrosstabGroup extends Group
-{
-  private static final String[] EMPTY_FIELDS = new String[0];
-  
+public class CrosstabGroup extends Group {
+  private static final String[] EMPTY_FIELDS = new String[ 0 ];
+
   private GroupHeader header;
   private GroupFooter footer;
   private NoDataBand noDataBand;
-  
-  public CrosstabGroup()
-  {
+
+  public CrosstabGroup() {
     init();
   }
 
-  public CrosstabGroup(final GroupBody body)
-  {
-    super(body);
-    validateBody(body);
+  public CrosstabGroup( final GroupBody body ) {
+    super( body );
+    validateBody( body );
     init();
   }
 
-  public CrosstabGroup(final CrosstabRowGroupBody body)
-  {
-    super(body);
-
-    init();
-  }
-
-  public CrosstabGroup(final CrosstabOtherGroupBody body)
-  {
-    super(body);
+  public CrosstabGroup( final CrosstabRowGroupBody body ) {
+    super( body );
 
     init();
   }
 
-  private void init()
-  {
-    setElementType(new CrosstabGroupType());
+  public CrosstabGroup( final CrosstabOtherGroupBody body ) {
+    super( body );
+
+    init();
+  }
+
+  private void init() {
+    setElementType( new CrosstabGroupType() );
 
     this.footer = new GroupFooter();
     this.header = new GroupHeader();
     this.noDataBand = new NoDataBand();
 
-    registerAsChild(footer);
-    registerAsChild(header);
-    registerAsChild(noDataBand);
+    registerAsChild( footer );
+    registerAsChild( header );
+    registerAsChild( noDataBand );
   }
 
 
@@ -89,8 +83,7 @@ public class CrosstabGroup extends Group
    *
    * @return the group header.
    */
-  public GroupHeader getHeader()
-  {
+  public GroupHeader getHeader() {
     return header;
   }
 
@@ -100,25 +93,22 @@ public class CrosstabGroup extends Group
    * @param header the header (null not permitted).
    * @throws NullPointerException if the given header is null
    */
-  public void setHeader(final GroupHeader header)
-  {
-    if (header == null)
-    {
-      throw new NullPointerException("Header must not be null");
+  public void setHeader( final GroupHeader header ) {
+    if ( header == null ) {
+      throw new NullPointerException( "Header must not be null" );
     }
-    validateLooping(header);
-    if (unregisterParent(header))
-    {
+    validateLooping( header );
+    if ( unregisterParent( header ) ) {
       return;
     }
 
     final Element element = this.header;
-    this.header.setParent(null);
+    this.header.setParent( null );
     this.header = header;
-    this.header.setParent(this);
+    this.header.setParent( this );
 
-    notifyNodeChildRemoved(element);
-    notifyNodeChildAdded(this.header);
+    notifyNodeChildRemoved( element );
+    notifyNodeChildAdded( this.header );
   }
 
   /**
@@ -126,8 +116,7 @@ public class CrosstabGroup extends Group
    *
    * @return the footer.
    */
-  public GroupFooter getFooter()
-  {
+  public GroupFooter getFooter() {
     return footer;
   }
 
@@ -137,74 +126,62 @@ public class CrosstabGroup extends Group
    * @param footer the footer (null not permitted).
    * @throws NullPointerException if the given footer is null.
    */
-  public void setFooter(final GroupFooter footer)
-  {
-    if (footer == null)
-    {
-      throw new NullPointerException("The footer must not be null");
+  public void setFooter( final GroupFooter footer ) {
+    if ( footer == null ) {
+      throw new NullPointerException( "The footer must not be null" );
     }
-    validateLooping(footer);
-    if (unregisterParent(footer))
-    {
+    validateLooping( footer );
+    if ( unregisterParent( footer ) ) {
       return;
     }
 
     final Element element = this.footer;
-    this.footer.setParent(null);
+    this.footer.setParent( null );
     this.footer = footer;
-    this.footer.setParent(this);
+    this.footer.setParent( this );
 
-    notifyNodeChildRemoved(element);
-    notifyNodeChildAdded(this.footer);
+    notifyNodeChildRemoved( element );
+    notifyNodeChildAdded( this.footer );
   }
 
-  public NoDataBand getNoDataBand()
-  {
+  public NoDataBand getNoDataBand() {
     return noDataBand;
   }
 
-  public void setNoDataBand(final NoDataBand noDataBand)
-  {
-    if (noDataBand == null)
-    {
-      throw new NullPointerException("The noDataBand must not be null");
+  public void setNoDataBand( final NoDataBand noDataBand ) {
+    if ( noDataBand == null ) {
+      throw new NullPointerException( "The noDataBand must not be null" );
     }
-    validateLooping(noDataBand);
-    if (unregisterParent(noDataBand))
-    {
+    validateLooping( noDataBand );
+    if ( unregisterParent( noDataBand ) ) {
       return;
     }
     final NoDataBand oldElement = this.noDataBand;
-    this.noDataBand.setParent(null);
+    this.noDataBand.setParent( null );
     this.noDataBand = noDataBand;
-    this.noDataBand.setParent(this);
+    this.noDataBand.setParent( this );
 
-    notifyNodeChildRemoved(oldElement);
-    notifyNodeChildAdded(this.noDataBand);
+    notifyNodeChildRemoved( oldElement );
+    notifyNodeChildAdded( this.noDataBand );
   }
 
-  protected GroupBody createDefaultBody()
-  {
+  protected GroupBody createDefaultBody() {
     return new CrosstabRowGroupBody();
   }
 
-  public boolean isGroupChange(final DataRow dataRow)
-  {
+  public boolean isGroupChange( final DataRow dataRow ) {
     // always false. We do only return if one of the parent groups claims that there is a group change.
     return false;
   }
 
-  public void setBody(final GroupBody body)
-  {
-    validateBody(body);
-    super.setBody(body);
+  public void setBody( final GroupBody body ) {
+    validateBody( body );
+    super.setBody( body );
   }
 
-  private void validateBody(final GroupBody body)
-  {
-    if (body instanceof CrosstabRowGroupBody == false &&
-        body instanceof CrosstabOtherGroupBody == false)
-    {
+  private void validateBody( final GroupBody body ) {
+    if ( body instanceof CrosstabRowGroupBody == false &&
+      body instanceof CrosstabOtherGroupBody == false ) {
       throw new IllegalArgumentException();
     }
   }
@@ -214,84 +191,70 @@ public class CrosstabGroup extends Group
    *
    * @return a clone of this element.
    */
-  public CrosstabGroup clone()
-  {
+  public CrosstabGroup clone() {
     final CrosstabGroup g = (CrosstabGroup) super.clone();
     g.footer = (GroupFooter) footer.clone();
     g.header = (GroupHeader) header.clone();
     g.noDataBand = (NoDataBand) noDataBand.clone();
 
-    g.registerAsChild(g.footer);
-    g.registerAsChild(g.header);
-    g.registerAsChild(g.noDataBand);
+    g.registerAsChild( g.footer );
+    g.registerAsChild( g.header );
+    g.registerAsChild( g.noDataBand );
     return g;
   }
 
-  public CrosstabGroup derive(final boolean preserveElementInstanceIds)
-  {
-    final CrosstabGroup g = (CrosstabGroup) super.derive(preserveElementInstanceIds);
-    g.footer = (GroupFooter) footer.derive(preserveElementInstanceIds);
-    g.header = (GroupHeader) header.derive(preserveElementInstanceIds);
-    g.noDataBand = (NoDataBand) noDataBand.derive(preserveElementInstanceIds);
+  public CrosstabGroup derive( final boolean preserveElementInstanceIds ) {
+    final CrosstabGroup g = (CrosstabGroup) super.derive( preserveElementInstanceIds );
+    g.footer = (GroupFooter) footer.derive( preserveElementInstanceIds );
+    g.header = (GroupHeader) header.derive( preserveElementInstanceIds );
+    g.noDataBand = (NoDataBand) noDataBand.derive( preserveElementInstanceIds );
 
-    g.registerAsChild(g.footer);
-    g.registerAsChild(g.header);
-    g.registerAsChild(g.noDataBand);
+    g.registerAsChild( g.footer );
+    g.registerAsChild( g.header );
+    g.registerAsChild( g.noDataBand );
     return g;
   }
 
 
-  protected void removeElement(final Element element)
-  {
-    if (element == null)
-    {
+  protected void removeElement( final Element element ) {
+    if ( element == null ) {
       throw new NullPointerException();
     }
 
-    if (footer == element)
-    {
-      this.footer.setParent(null);
+    if ( footer == element ) {
+      this.footer.setParent( null );
       this.footer = new GroupFooter();
-      this.footer.setParent(this);
+      this.footer.setParent( this );
 
-      notifyNodeChildRemoved(element);
-      notifyNodeChildAdded(this.footer);
+      notifyNodeChildRemoved( element );
+      notifyNodeChildAdded( this.footer );
 
-    }
-    else if (header == element)
-    {
-      this.header.setParent(null);
+    } else if ( header == element ) {
+      this.header.setParent( null );
       this.header = new GroupHeader();
-      this.header.setParent(this);
+      this.header.setParent( this );
 
-      notifyNodeChildRemoved(element);
-      notifyNodeChildAdded(this.header);
-    }
-    else if (noDataBand == element)
-    {
-      this.noDataBand.setParent(null);
+      notifyNodeChildRemoved( element );
+      notifyNodeChildAdded( this.header );
+    } else if ( noDataBand == element ) {
+      this.noDataBand.setParent( null );
       this.noDataBand = new NoDataBand();
-      this.noDataBand.setParent(this);
+      this.noDataBand.setParent( this );
 
-      notifyNodeChildRemoved(element);
-      notifyNodeChildAdded(this.noDataBand);
-    }
-    else
-    {
-      super.removeElement(element);
+      notifyNodeChildRemoved( element );
+      notifyNodeChildAdded( this.noDataBand );
+    } else {
+      super.removeElement( element );
     }
     // Else: Ignore the request, none of my childs.
   }
 
-  public int getElementCount()
-  {
+  public int getElementCount() {
     return 4;
   }
 
-  public Element getElement(final int index)
-  {
-    switch (index)
-    {
+  public Element getElement( final int index ) {
+    switch( index ) {
       case 0:
         return header;
       case 1:
@@ -305,55 +268,49 @@ public class CrosstabGroup extends Group
     }
   }
 
-  public void setElementAt(final int index, final Element element)
-  {
-    switch (index)
-    {
+  public void setElementAt( final int index, final Element element ) {
+    switch( index ) {
       case 0:
-        setHeader((GroupHeader) element);
+        setHeader( (GroupHeader) element );
         break;
       case 1:
-        setNoDataBand((NoDataBand) element);
+        setNoDataBand( (NoDataBand) element );
         break;
       case 2:
-        setBody((GroupBody) element);
+        setBody( (GroupBody) element );
         break;
       case 3:
-        setFooter((GroupFooter) element);
+        setFooter( (GroupFooter) element );
         break;
       default:
         throw new IndexOutOfBoundsException();
     }
   }
 
-  public void setDetailsMode(final CrosstabDetailMode mode)
-  {
-    setAttribute(AttributeNames.Crosstab.NAMESPACE, AttributeNames.Crosstab.DETAIL_MODE, mode);
+  public void setDetailsMode( final CrosstabDetailMode mode ) {
+    setAttribute( AttributeNames.Crosstab.NAMESPACE, AttributeNames.Crosstab.DETAIL_MODE, mode );
   }
 
-  public CrosstabDetailMode getDetailsMode()
-  {
-    return (CrosstabDetailMode) getAttribute(AttributeNames.Crosstab.NAMESPACE, AttributeNames.Crosstab.DETAIL_MODE);
+  public CrosstabDetailMode getDetailsMode() {
+    return (CrosstabDetailMode) getAttribute( AttributeNames.Crosstab.NAMESPACE, AttributeNames.Crosstab.DETAIL_MODE );
   }
 
-  public Boolean getPrintDetailsHeader()
-  {
-    return (Boolean) getAttribute(AttributeNames.Crosstab.NAMESPACE, AttributeNames.Crosstab.PRINT_DETAIL_HEADER);
+  public Boolean getPrintDetailsHeader() {
+    return (Boolean) getAttribute( AttributeNames.Crosstab.NAMESPACE, AttributeNames.Crosstab.PRINT_DETAIL_HEADER );
   }
 
-  public void setPrintDetailsHeader(final Boolean printDetailsHeader)
-  {
-    setAttribute(AttributeNames.Crosstab.NAMESPACE, AttributeNames.Crosstab.PRINT_DETAIL_HEADER, printDetailsHeader);
+  public void setPrintDetailsHeader( final Boolean printDetailsHeader ) {
+    setAttribute( AttributeNames.Crosstab.NAMESPACE, AttributeNames.Crosstab.PRINT_DETAIL_HEADER, printDetailsHeader );
   }
 
-  public Boolean getPrintColumnTitleHeader()
-  {
-    return (Boolean) getAttribute(AttributeNames.Crosstab.NAMESPACE, AttributeNames.Crosstab.PRINT_COLUMN_TITLE_HEADER);
+  public Boolean getPrintColumnTitleHeader() {
+    return (Boolean) getAttribute( AttributeNames.Crosstab.NAMESPACE,
+      AttributeNames.Crosstab.PRINT_COLUMN_TITLE_HEADER );
   }
 
-  public void setPrintColumnTitleHeader(final Boolean printColumnTitleHeader)
-  {
-    setAttribute(AttributeNames.Crosstab.NAMESPACE, AttributeNames.Crosstab.PRINT_COLUMN_TITLE_HEADER, printColumnTitleHeader);
+  public void setPrintColumnTitleHeader( final Boolean printColumnTitleHeader ) {
+    setAttribute( AttributeNames.Crosstab.NAMESPACE, AttributeNames.Crosstab.PRINT_COLUMN_TITLE_HEADER,
+      printColumnTitleHeader );
   }
 
   /**
@@ -363,19 +320,16 @@ public class CrosstabGroup extends Group
    * @param c the list containing strings.
    * @throws NullPointerException if the given list is null or the list contains null-values.
    */
-  public void setPaddingFields(final List<String> c)
-  {
-    if (c == null)
-    {
+  public void setPaddingFields( final List<String> c ) {
+    if ( c == null ) {
       throw new NullPointerException();
     }
-    final String[] fields = c.toArray(new String[c.size()]);
-    setPaddingFieldsArray(fields);
+    final String[] fields = c.toArray( new String[ c.size() ] );
+    setPaddingFieldsArray( fields );
   }
 
-  public void clearPaddingFields()
-  {
-    setAttribute(AttributeNames.Crosstab.NAMESPACE, AttributeNames.Crosstab.PADDING_FIELDS, EMPTY_FIELDS);
+  public void clearPaddingFields() {
+    setAttribute( AttributeNames.Crosstab.NAMESPACE, AttributeNames.Crosstab.PADDING_FIELDS, EMPTY_FIELDS );
   }
 
   /**
@@ -384,16 +338,14 @@ public class CrosstabGroup extends Group
    * @param name the field name (null not permitted).
    * @throws NullPointerException if the name is null
    */
-  public void addPaddingField(final String name)
-  {
-    if (name == null)
-    {
-      throw new NullPointerException("Group.addField(...): name is null.");
+  public void addPaddingField( final String name ) {
+    if ( name == null ) {
+      throw new NullPointerException( "Group.addField(...): name is null." );
     }
-    final ArrayList<String> fieldsList = new ArrayList<String>(getPaddingFields());
-    fieldsList.add(name);
-    Collections.sort(fieldsList);
-    setPaddingFieldsArray(fieldsList.toArray(new String[fieldsList.size()]));
+    final ArrayList<String> fieldsList = new ArrayList<String>( getPaddingFields() );
+    fieldsList.add( name );
+    Collections.sort( fieldsList );
+    setPaddingFieldsArray( fieldsList.toArray( new String[ fieldsList.size() ] ) );
   }
 
   /**
@@ -401,18 +353,15 @@ public class CrosstabGroup extends Group
    *
    * @return a list (unmodifiable) of fields for the group.
    */
-  public List<String> getPaddingFields()
-  {
-    return Collections.unmodifiableList(Arrays.asList(getPaddingFieldsArray()));
+  public List<String> getPaddingFields() {
+    return Collections.unmodifiableList( Arrays.asList( getPaddingFieldsArray() ) );
   }
 
-  public void setPaddingFieldsArray(final String[] fields)
-  {
-    if (fields == null)
-    {
+  public void setPaddingFieldsArray( final String[] fields ) {
+    if ( fields == null ) {
       throw new NullPointerException();
     }
-    setAttribute(AttributeNames.Crosstab.NAMESPACE, AttributeNames.Crosstab.PADDING_FIELDS, fields.clone());
+    setAttribute( AttributeNames.Crosstab.NAMESPACE, AttributeNames.Crosstab.PADDING_FIELDS, fields.clone() );
   }
 
   /**
@@ -420,19 +369,16 @@ public class CrosstabGroup extends Group
    *
    * @return the fields as string array.
    */
-  public String[] getPaddingFieldsArray()
-  {
-    final Object o = getAttribute(AttributeNames.Crosstab.NAMESPACE, AttributeNames.Crosstab.PADDING_FIELDS);
-    if (o instanceof String[])
-    {
+  public String[] getPaddingFieldsArray() {
+    final Object o = getAttribute( AttributeNames.Crosstab.NAMESPACE, AttributeNames.Crosstab.PADDING_FIELDS );
+    if ( o instanceof String[] ) {
       final String[] fields = (String[]) o;
       return fields.clone();
     }
     return EMPTY_FIELDS;
   }
 
-  public List<SortConstraint> getSortingConstraint()
-  {
-    return mapFields(getPaddingFields());
+  public List<SortConstraint> getSortingConstraint() {
+    return mapFields( getPaddingFields() );
   }
 }

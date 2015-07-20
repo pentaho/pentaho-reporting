@@ -29,8 +29,7 @@ import java.math.BigDecimal;
  * @author Thomas Morgner
  * @deprecated This can be better handled in a formula.
  */
-public abstract class AbstractCompareExpression extends AbstractExpression
-{
+public abstract class AbstractCompareExpression extends AbstractExpression {
   /**
    * A constant for an equals comparison.
    */
@@ -68,8 +67,7 @@ public abstract class AbstractCompareExpression extends AbstractExpression
   /**
    * The default constructor.
    */
-  protected AbstractCompareExpression()
-  {
+  protected AbstractCompareExpression() {
   }
 
   /**
@@ -78,49 +76,36 @@ public abstract class AbstractCompareExpression extends AbstractExpression
    *
    * @return Boolean.TRUE or Boolean.FALSE.
    */
-  public Object getValue()
-  {
-    final Object o = getDataRow().get(getField());
-    if (o instanceof Comparable == false)
-    {
+  public Object getValue() {
+    final Object o = getDataRow().get( getField() );
+    if ( o instanceof Comparable == false ) {
       return Boolean.FALSE;
     }
 
-    try
-    {
+    try {
       final Comparable c = (Comparable) o;
       final Comparable comparable = getComparable();
-      if (comparable == null)
-      {
+      if ( comparable == null ) {
         return Boolean.FALSE;
       }
 
       int result;
-      try
-      {
+      try {
         // Comparing the easy way: Both values are the same type ..
-        result = c.compareTo(comparable);
+        result = c.compareTo( comparable );
         // this results in a class-cast exception if they are not the same type.
-      }
-      catch (Exception e)
-      {
-        try
-        {
+      } catch ( Exception e ) {
+        try {
           // invert it ..
           // Comparing the easy way: Both values are the same type ..
-          result = -comparable.compareTo(c);
+          result = -comparable.compareTo( c );
           // this results in a class-cast exception if they are not the same type.
-        }
-        catch (Exception e2)
-        {
-          if (c instanceof Number && comparable instanceof Number)
-          {
-            final BigDecimal bd1 = new BigDecimal(String.valueOf(c));
-            final BigDecimal bd2 = new BigDecimal(String.valueOf(comparable));
-            result = bd1.compareTo(bd2);
-          }
-          else
-          {
+        } catch ( Exception e2 ) {
+          if ( c instanceof Number && comparable instanceof Number ) {
+            final BigDecimal bd1 = new BigDecimal( String.valueOf( c ) );
+            final BigDecimal bd2 = new BigDecimal( String.valueOf( comparable ) );
+            result = bd1.compareTo( bd2 );
+          } else {
             // not comparable ..
             return Boolean.FALSE;
           }
@@ -128,57 +113,43 @@ public abstract class AbstractCompareExpression extends AbstractExpression
       }
 
       final String method = getCompareMethod();
-      if (AbstractCompareExpression.EQUAL.equals(method))
-      {
-        if (result == 0)
-        {
+      if ( AbstractCompareExpression.EQUAL.equals( method ) ) {
+        if ( result == 0 ) {
           return Boolean.TRUE;
         }
         return Boolean.FALSE;
       }
-      if (AbstractCompareExpression.NOT_EQUAL.equals(method))
-      {
-        if (result != 0)
-        {
+      if ( AbstractCompareExpression.NOT_EQUAL.equals( method ) ) {
+        if ( result != 0 ) {
           return Boolean.TRUE;
         }
         return Boolean.FALSE;
       }
-      if (AbstractCompareExpression.LOWER.equals(method))
-      {
-        if (result < 0)
-        {
+      if ( AbstractCompareExpression.LOWER.equals( method ) ) {
+        if ( result < 0 ) {
           return Boolean.TRUE;
         }
         return Boolean.FALSE;
       }
-      if (AbstractCompareExpression.LOWER_EQUAL.equals(method))
-      {
-        if (result <= 0)
-        {
+      if ( AbstractCompareExpression.LOWER_EQUAL.equals( method ) ) {
+        if ( result <= 0 ) {
           return Boolean.TRUE;
         }
         return Boolean.FALSE;
       }
-      if (AbstractCompareExpression.GREATER.equals(method))
-      {
-        if (result > 0)
-        {
+      if ( AbstractCompareExpression.GREATER.equals( method ) ) {
+        if ( result > 0 ) {
           return Boolean.TRUE;
         }
         return Boolean.FALSE;
       }
-      if (AbstractCompareExpression.GREATER_EQUAL.equals(method))
-      {
-        if (result >= 0)
-        {
+      if ( AbstractCompareExpression.GREATER_EQUAL.equals( method ) ) {
+        if ( result >= 0 ) {
           return Boolean.TRUE;
         }
         return Boolean.FALSE;
       }
-    }
-    catch (Exception e)
-    {
+    } catch ( Exception e ) {
       // ignore ...
     }
     return Boolean.FALSE;
@@ -189,8 +160,7 @@ public abstract class AbstractCompareExpression extends AbstractExpression
    *
    * @return the field name.
    */
-  public String getField()
-  {
+  public String getField() {
     return field;
   }
 
@@ -199,8 +169,7 @@ public abstract class AbstractCompareExpression extends AbstractExpression
    *
    * @param field the field name.
    */
-  public void setField(final String field)
-  {
+  public void setField( final String field ) {
     this.field = field;
   }
 
@@ -210,8 +179,7 @@ public abstract class AbstractCompareExpression extends AbstractExpression
    *
    * @return the compare method.
    */
-  public String getCompareMethod()
-  {
+  public String getCompareMethod() {
     return compareMethod;
   }
 
@@ -221,8 +189,7 @@ public abstract class AbstractCompareExpression extends AbstractExpression
    *
    * @param compareMethod the compare method.
    */
-  public void setCompareMethod(final String compareMethod)
-  {
+  public void setCompareMethod( final String compareMethod ) {
     this.compareMethod = compareMethod;
   }
 

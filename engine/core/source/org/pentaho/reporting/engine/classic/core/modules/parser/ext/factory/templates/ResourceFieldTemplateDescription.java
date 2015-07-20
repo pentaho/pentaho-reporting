@@ -24,15 +24,13 @@ import org.pentaho.reporting.engine.classic.core.filter.templates.ResourceFieldT
  *
  * @author Thomas Morgner
  */
-public class ResourceFieldTemplateDescription extends AbstractTemplateDescription
-{
+public class ResourceFieldTemplateDescription extends AbstractTemplateDescription {
   /**
    * Creates a new template description.
    *
    * @param name the name.
    */
-  public ResourceFieldTemplateDescription(final String name)
-  {
-    super(name, ResourceFieldTemplate.class, true);
+  public ResourceFieldTemplateDescription( final String name ) {
+    super( name, ResourceFieldTemplate.class, true );
   }
 }

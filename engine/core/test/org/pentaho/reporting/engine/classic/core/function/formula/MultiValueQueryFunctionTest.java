@@ -17,11 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.core.function.formula;
 
-import java.lang.reflect.Array;
-import java.net.URL;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
-
 import junit.framework.TestCase;
 import org.junit.Assert;
 import org.pentaho.reporting.engine.classic.core.AttributeNames;
@@ -37,135 +32,120 @@ import org.pentaho.reporting.libraries.formula.DefaultFormulaContext;
 import org.pentaho.reporting.libraries.formula.Formula;
 import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 
-public class MultiValueQueryFunctionTest extends TestCase
-{
-  public MultiValueQueryFunctionTest()
-  {
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+import java.lang.reflect.Array;
+import java.net.URL;
+
+public class MultiValueQueryFunctionTest extends TestCase {
+  public MultiValueQueryFunctionTest() {
   }
 
-  public void setUp() throws Exception
-  {
+  public void setUp() throws Exception {
     ClassicEngineBoot.getInstance().start();
   }
 
-  public void testErrorHandlingGood() throws Exception
-  {
-    final URL url = getClass().getResource("Prd-3985.prpt");
+  public void testErrorHandlingGood() throws Exception {
+    final URL url = getClass().getResource( "Prd-3985.prpt" );
     final ResourceManager mgr = new ResourceManager();
-    final MasterReport report = (MasterReport) mgr.createDirectly(url, MasterReport.class).getResource();
+    final MasterReport report = (MasterReport) mgr.createDirectly( url, MasterReport.class ).getResource();
     report.getReportConfiguration().setConfigProperty
-        ("org.pentaho.reporting.engine.classic.core.FailOnAttributeExpressionErrors", "true");
+      ( "org.pentaho.reporting.engine.classic.core.FailOnAttributeExpressionErrors", "true" );
 
     final FormulaExpression function = new FormulaExpression();
-    function.setName("Test");
-    function.setFormula("=MULTIVALUEQUERY(\"Good\")");
+    function.setName( "Test" );
+    function.setFormula( "=MULTIVALUEQUERY(\"Good\")" );
 
     report.getReportHeader().setAttributeExpression
-        (AttributeNames.Core.NAMESPACE, AttributeNames.Core.NAME, function);
+      ( AttributeNames.Core.NAMESPACE, AttributeNames.Core.NAME, function );
 
-    try
-    {
-      DebugReportRunner.createPDF(report);
-    }
-    catch (Exception e)
-    {
+    try {
+      DebugReportRunner.createPDF( report );
+    } catch ( Exception e ) {
       Assert.fail();
     }
 
   }
 
-  public void testErrorHandlingBad() throws Exception
-  {
-    final URL url = getClass().getResource("Prd-3985.prpt");
+  public void testErrorHandlingBad() throws Exception {
+    final URL url = getClass().getResource( "Prd-3985.prpt" );
     final ResourceManager mgr = new ResourceManager();
-    final MasterReport report = (MasterReport) mgr.createDirectly(url, MasterReport.class).getResource();
+    final MasterReport report = (MasterReport) mgr.createDirectly( url, MasterReport.class ).getResource();
     report.getReportConfiguration().setConfigProperty
-        ("org.pentaho.reporting.engine.classic.core.FailOnAttributeExpressionErrors", "true");
+      ( "org.pentaho.reporting.engine.classic.core.FailOnAttributeExpressionErrors", "true" );
 
     final FormulaExpression function = new FormulaExpression();
-    function.setName("Test");
-    function.setFormula("=MULTIVALUEQUERY(\"Bad\")");
+    function.setName( "Test" );
+    function.setFormula( "=MULTIVALUEQUERY(\"Bad\")" );
 
     report.getReportHeader().setAttributeExpression
-        (AttributeNames.Core.NAMESPACE, AttributeNames.Core.NAME, function);
+      ( AttributeNames.Core.NAMESPACE, AttributeNames.Core.NAME, function );
 
-    try
-    {
-      DebugReportRunner.createPDF(report);
+    try {
+      DebugReportRunner.createPDF( report );
       Assert.fail();
-    }
-    catch (Exception e)
-    {
+    } catch ( Exception e ) {
       // ignored
     }
   }
 
-  public void testLimit() throws Exception
-  {
-    final TableModel table = new DefaultTableModel(new Object[]{"Column"}, 100);
+  public void testLimit() throws Exception {
+    final TableModel table = new DefaultTableModel( new Object[] { "Column" }, 100 );
 
     final TableDataFactory tdf = new TableDataFactory();
-    tdf.addTable("query", table);
+    tdf.addTable( "query", table );
 
-    DebugExpressionRuntime rt = new DebugExpressionRuntime()
-    {
-      public DataFactory getDataFactory()
-      {
+    DebugExpressionRuntime rt = new DebugExpressionRuntime() {
+      public DataFactory getDataFactory() {
         return tdf;
       }
     };
-    ReportFormulaContext fc = new ReportFormulaContext(new DefaultFormulaContext(), rt);
-    final Formula f = new Formula("MULTIVALUEQUERY(\"query\"; \"Column\"; 0; 5)");
-    f.initialize(fc);
+    ReportFormulaContext fc = new ReportFormulaContext( new DefaultFormulaContext(), rt );
+    final Formula f = new Formula( "MULTIVALUEQUERY(\"query\"; \"Column\"; 0; 5)" );
+    f.initialize( fc );
     final Object v = f.evaluate();
-    Assert.assertNotNull(v);
-    Assert.assertTrue(v.getClass().isArray());
-    Assert.assertEquals(5, Array.getLength(v));
+    Assert.assertNotNull( v );
+    Assert.assertTrue( v.getClass().isArray() );
+    Assert.assertEquals( 5, Array.getLength( v ) );
   }
 
-  public void testLargerLimit() throws Exception
-  {
-    final TableModel table = new DefaultTableModel(new Object[]{"Column"}, 100);
+  public void testLargerLimit() throws Exception {
+    final TableModel table = new DefaultTableModel( new Object[] { "Column" }, 100 );
 
     final TableDataFactory tdf = new TableDataFactory();
-    tdf.addTable("query", table);
+    tdf.addTable( "query", table );
 
-    DebugExpressionRuntime rt = new DebugExpressionRuntime()
-    {
-      public DataFactory getDataFactory()
-      {
+    DebugExpressionRuntime rt = new DebugExpressionRuntime() {
+      public DataFactory getDataFactory() {
         return tdf;
       }
     };
-    ReportFormulaContext fc = new ReportFormulaContext(new DefaultFormulaContext(), rt);
-    final Formula f = new Formula("MULTIVALUEQUERY(\"query\"; \"Column\"; 0; 500)");
-    f.initialize(fc);
+    ReportFormulaContext fc = new ReportFormulaContext( new DefaultFormulaContext(), rt );
+    final Formula f = new Formula( "MULTIVALUEQUERY(\"query\"; \"Column\"; 0; 500)" );
+    f.initialize( fc );
     final Object v = f.evaluate();
-    Assert.assertNotNull(v);
-    Assert.assertTrue(v.getClass().isArray());
-    Assert.assertEquals(100, Array.getLength(v));
+    Assert.assertNotNull( v );
+    Assert.assertTrue( v.getClass().isArray() );
+    Assert.assertEquals( 100, Array.getLength( v ) );
   }
 
-  public void testUnlimitedQuery() throws Exception
-  {
-    final TableModel table = new DefaultTableModel(new Object[]{"Column"}, 100);
+  public void testUnlimitedQuery() throws Exception {
+    final TableModel table = new DefaultTableModel( new Object[] { "Column" }, 100 );
 
     final TableDataFactory tdf = new TableDataFactory();
-    tdf.addTable("query", table);
+    tdf.addTable( "query", table );
 
-    DebugExpressionRuntime rt = new DebugExpressionRuntime()
-    {
-      public DataFactory getDataFactory()
-      {
+    DebugExpressionRuntime rt = new DebugExpressionRuntime() {
+      public DataFactory getDataFactory() {
         return tdf;
       }
     };
-    ReportFormulaContext fc = new ReportFormulaContext(new DefaultFormulaContext(), rt);
-    final Formula f = new Formula("MULTIVALUEQUERY(\"query\"; \"Column\")");
-    f.initialize(fc);
+    ReportFormulaContext fc = new ReportFormulaContext( new DefaultFormulaContext(), rt );
+    final Formula f = new Formula( "MULTIVALUEQUERY(\"query\"; \"Column\")" );
+    f.initialize( fc );
     final Object v = f.evaluate();
-    Assert.assertNotNull(v);
-    Assert.assertTrue(v.getClass().isArray());
-    Assert.assertEquals(100, Array.getLength(v));
+    Assert.assertNotNull( v );
+    Assert.assertTrue( v.getClass().isArray() );
+    Assert.assertEquals( 100, Array.getLength( v ) );
   }
 }

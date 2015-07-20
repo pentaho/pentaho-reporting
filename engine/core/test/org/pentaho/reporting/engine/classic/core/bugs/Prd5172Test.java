@@ -26,41 +26,36 @@ import org.pentaho.reporting.engine.classic.core.layout.model.LogicalPageBox;
 import org.pentaho.reporting.engine.classic.core.style.BandStyleKeys;
 import org.pentaho.reporting.engine.classic.core.testsupport.DebugReportRunner;
 
-public class Prd5172Test
-{
+public class Prd5172Test {
   @Before
-  public void setUp() throws Exception
-  {
+  public void setUp() throws Exception {
     ClassicEngineBoot.getInstance().start();
   }
 
   @Test
-  public void testBandedSubReportIsInline() throws Exception
-  {
+  public void testBandedSubReportIsInline() throws Exception {
     SubReport subReport = new SubReport();
-    subReport.getStyle().setStyleProperty(BandStyleKeys.LAYOUT, BandStyleKeys.LAYOUT_INLINE);
+    subReport.getStyle().setStyleProperty( BandStyleKeys.LAYOUT, BandStyleKeys.LAYOUT_INLINE );
 
     MasterReport report = new MasterReport();
-    report.getReportHeader().addSubReport(subReport);
-    LogicalPageBox logicalPageBox = DebugReportRunner.layoutPage(report, 0);
+    report.getReportHeader().addSubReport( subReport );
+    LogicalPageBox logicalPageBox = DebugReportRunner.layoutPage( report, 0 );
   }
 
   @Test
-  public void testInlineSubReportIsInline() throws Exception
-  {
+  public void testInlineSubReportIsInline() throws Exception {
     SubReport subReport = new SubReport();
-    subReport.getStyle().setStyleProperty(BandStyleKeys.LAYOUT, BandStyleKeys.LAYOUT_INLINE);
+    subReport.getStyle().setStyleProperty( BandStyleKeys.LAYOUT, BandStyleKeys.LAYOUT_INLINE );
 
     MasterReport report = new MasterReport();
-    report.getReportHeader().addElement(subReport);
-    LogicalPageBox logicalPageBox = DebugReportRunner.layoutPage(report, 0);
+    report.getReportHeader().addElement( subReport );
+    LogicalPageBox logicalPageBox = DebugReportRunner.layoutPage( report, 0 );
   }
 
   @Test
-  public void testMasterReportInline() throws Exception
-  {
+  public void testMasterReportInline() throws Exception {
     MasterReport report = new MasterReport();
-    report.getStyle().setStyleProperty(BandStyleKeys.LAYOUT, BandStyleKeys.LAYOUT_INLINE);
-    LogicalPageBox logicalPageBox = DebugReportRunner.layoutPage(report, 0);
+    report.getStyle().setStyleProperty( BandStyleKeys.LAYOUT, BandStyleKeys.LAYOUT_INLINE );
+    LogicalPageBox logicalPageBox = DebugReportRunner.layoutPage( report, 0 );
   }
 }

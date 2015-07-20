@@ -19,10 +19,9 @@ package org.pentaho.reporting.engine.classic.core;
 
 import javax.swing.table.TableModel;
 
-public interface DataFactoryDesignTimeSupport extends DataFactory
-{
+public interface DataFactoryDesignTimeSupport extends DataFactory {
   public static final String DESIGN_TIME = "::org.pentaho.reporting::design-time";
 
-  public TableModel queryDesignTimeStructure(String query, DataRow parameter)
+  public TableModel queryDesignTimeStructure( String query, DataRow parameter )
     throws ReportDataFactoryException;
 }

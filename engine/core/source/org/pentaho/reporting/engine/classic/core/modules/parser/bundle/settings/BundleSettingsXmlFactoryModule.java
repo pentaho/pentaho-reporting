@@ -27,10 +27,8 @@ import org.pentaho.reporting.libraries.xmlns.parser.XmlReadHandler;
  *
  * @author Thomas Morgner
  */
-public class BundleSettingsXmlFactoryModule implements XmlFactoryModule
-{
-  public BundleSettingsXmlFactoryModule()
-  {
+public class BundleSettingsXmlFactoryModule implements XmlFactoryModule {
+  public BundleSettingsXmlFactoryModule() {
   }
 
   /**
@@ -40,22 +38,15 @@ public class BundleSettingsXmlFactoryModule implements XmlFactoryModule
    * @param documentInfo the document information collection.
    * @return an integer value indicating how good the document matches the factories requirements.
    */
-  public int getDocumentSupport(final XmlDocumentInfo documentInfo)
-  {
+  public int getDocumentSupport( final XmlDocumentInfo documentInfo ) {
     final String rootNamespace = documentInfo.getRootElementNameSpace();
-    if (rootNamespace != null && rootNamespace.length() > 0)
-    {
-      if (BundleNamespaces.SETTINGS.equals(rootNamespace) == false)
-      {
+    if ( rootNamespace != null && rootNamespace.length() > 0 ) {
+      if ( BundleNamespaces.SETTINGS.equals( rootNamespace ) == false ) {
         return XmlFactoryModule.NOT_RECOGNIZED;
-      }
-      else if ("settings".equals(documentInfo.getRootElement()))
-      {
+      } else if ( "settings".equals( documentInfo.getRootElement() ) ) {
         return XmlFactoryModule.RECOGNIZED_BY_NAMESPACE;
       }
-    }
-    else if ("settings".equals(documentInfo.getRootElement()))
-    {
+    } else if ( "settings".equals( documentInfo.getRootElement() ) ) {
       return XmlFactoryModule.RECOGNIZED_BY_TAGNAME;
     }
 
@@ -68,8 +59,7 @@ public class BundleSettingsXmlFactoryModule implements XmlFactoryModule
    * @param documentInfo the document information that has been extracted from the parser.
    * @return the root handler or null.
    */
-  public XmlReadHandler createReadHandler(final XmlDocumentInfo documentInfo)
-  {
+  public XmlReadHandler createReadHandler( final XmlDocumentInfo documentInfo ) {
     return new SettingsRootElementHandler();
   }
 
@@ -79,8 +69,7 @@ public class BundleSettingsXmlFactoryModule implements XmlFactoryModule
    * @param documentInfo the document information.
    * @return the default namespace uri for the document.
    */
-  public String getDefaultNamespace(final XmlDocumentInfo documentInfo)
-  {
+  public String getDefaultNamespace( final XmlDocumentInfo documentInfo ) {
     return BundleNamespaces.SETTINGS;
   }
 }

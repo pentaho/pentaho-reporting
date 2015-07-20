@@ -17,35 +17,30 @@
 
 package org.pentaho.reporting.engine.classic.core.designtime.datafactory.editor.ui;
 
-import java.awt.Component;
-
 import org.pentaho.reporting.engine.classic.core.designtime.datafactory.editor.model.QueryDialogModel;
 
-public class GlobalTemplateAction<T> extends ScriptTemplateAction
-{
+import java.awt.*;
+
+public class GlobalTemplateAction<T> extends ScriptTemplateAction {
   private final Component parentComponent;
   private final QueryDialogModel<T> dialogModel;
 
-  public GlobalTemplateAction(final Component parentComponent,
-                       final QueryDialogModel<T> dialogModel)
-  {
-    super(true);
+  public GlobalTemplateAction( final Component parentComponent,
+                               final QueryDialogModel<T> dialogModel ) {
+    super( true );
     this.parentComponent = parentComponent;
     this.dialogModel = dialogModel;
   }
 
-  protected Component getParentComponent()
-  {
+  protected Component getParentComponent() {
     return parentComponent;
   }
 
-  protected String getText()
-  {
+  protected String getText() {
     return dialogModel.getGlobalScript();
   }
 
-  protected void setText(final String text)
-  {
-    dialogModel.setGlobalScripting(dialogModel.getGlobalScriptLanguage(), text);
+  protected void setText( final String text ) {
+    dialogModel.setGlobalScripting( dialogModel.getGlobalScriptLanguage(), text );
   }
 }

@@ -22,13 +22,11 @@ package org.pentaho.reporting.engine.classic.core.layout.output;
  *
  * @author Thomas Morgner
  */
-public class ContentProcessingException extends Exception
-{
+public class ContentProcessingException extends Exception {
   /**
    * Creates a StackableRuntimeException with no message and no parent.
    */
-  public ContentProcessingException()
-  {
+  public ContentProcessingException() {
   }
 
   /**
@@ -37,9 +35,8 @@ public class ContentProcessingException extends Exception
    * @param message the exception message.
    * @param ex      the parent exception.
    */
-  public ContentProcessingException(final String message, final Exception ex)
-  {
-    super(message, ex);
+  public ContentProcessingException( final String message, final Exception ex ) {
+    super( message, ex );
   }
 
   /**
@@ -47,13 +44,11 @@ public class ContentProcessingException extends Exception
    *
    * @param message the exception message.
    */
-  public ContentProcessingException(final String message)
-  {
-    super(message);
+  public ContentProcessingException( final String message ) {
+    super( message );
   }
 
-  public ContentProcessingException(final Throwable cause)
-  {
-    super(cause);
+  public ContentProcessingException( final Throwable cause ) {
+    super( cause );
   }
 }

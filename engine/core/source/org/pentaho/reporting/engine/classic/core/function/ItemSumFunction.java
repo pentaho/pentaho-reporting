@@ -17,10 +17,10 @@
 
 package org.pentaho.reporting.engine.classic.core.function;
 
-import java.math.BigDecimal;
-
 import org.pentaho.reporting.engine.classic.core.event.ReportEvent;
 import org.pentaho.reporting.engine.classic.core.util.Sequence;
+
+import java.math.BigDecimal;
 
 /**
  * A report function that calculates the sum of one field (column) from the data-row. This function produces a running
@@ -37,12 +37,11 @@ import org.pentaho.reporting.engine.classic.core.util.Sequence;
  *
  * @author Thomas Morgner
  */
-public class ItemSumFunction extends AbstractFunction implements FieldAggregationFunction
-{
+public class ItemSumFunction extends AbstractFunction implements FieldAggregationFunction {
   /**
    * A useful constant representing zero.
    */
-  protected static final BigDecimal ZERO = new BigDecimal(0.0);
+  protected static final BigDecimal ZERO = new BigDecimal( 0.0 );
 
   /**
    * The item sum.
@@ -65,8 +64,7 @@ public class ItemSumFunction extends AbstractFunction implements FieldAggregatio
   /**
    * Constructs an unnamed function. Make sure to set a Name or function initialisation will fail.
    */
-  public ItemSumFunction()
-  {
+  public ItemSumFunction() {
     sum = new Sequence<BigDecimal>();
   }
 
@@ -75,10 +73,9 @@ public class ItemSumFunction extends AbstractFunction implements FieldAggregatio
    *
    * @param name The function name.
    */
-  public ItemSumFunction(final String name)
-  {
+  public ItemSumFunction( final String name ) {
     this();
-    setName(name);
+    setName( name );
   }
 
   /**
@@ -86,13 +83,11 @@ public class ItemSumFunction extends AbstractFunction implements FieldAggregatio
    *
    * @param event Information about the event.
    */
-  public void reportInitialized(final ReportEvent event)
-  {
+  public void reportInitialized( final ReportEvent event ) {
     clear();
   }
 
-  protected void clear()
-  {
+  protected void clear() {
     this.lastGroupSequenceNumber = 0;
     this.sum.clear();
   }
@@ -103,17 +98,14 @@ public class ItemSumFunction extends AbstractFunction implements FieldAggregatio
    *
    * @param event Information about the event.
    */
-  public void groupStarted(final ReportEvent event)
-  {
-    if (FunctionUtilities.isDefinedGroup(getGroup(), event))
-    {
+  public void groupStarted( final ReportEvent event ) {
+    if ( FunctionUtilities.isDefinedGroup( getGroup(), event ) ) {
       clear();
     }
 
-    if (FunctionUtilities.isDefinedGroup(getCrosstabFilterGroup(), event))
-    {
+    if ( FunctionUtilities.isDefinedGroup( getCrosstabFilterGroup(), event ) ) {
       final int groupIndex = event.getState().getCurrentGroupIndex();
-      this.lastGroupSequenceNumber = (int) event.getState().getCrosstabColumnSequenceCounter(groupIndex);
+      this.lastGroupSequenceNumber = (int) event.getState().getCrosstabColumnSequenceCounter( groupIndex );
     }
   }
 
@@ -122,8 +114,7 @@ public class ItemSumFunction extends AbstractFunction implements FieldAggregatio
    *
    * @return The group name.
    */
-  public String getGroup()
-  {
+  public String getGroup() {
     return group;
   }
 
@@ -133,8 +124,7 @@ public class ItemSumFunction extends AbstractFunction implements FieldAggregatio
    *
    * @param name the group name (null permitted).
    */
-  public void setGroup(final String name)
-  {
+  public void setGroup( final String name ) {
     this.group = name;
   }
 
@@ -143,8 +133,7 @@ public class ItemSumFunction extends AbstractFunction implements FieldAggregatio
    *
    * @return The field name.
    */
-  public String getField()
-  {
+  public String getField() {
     return field;
   }
 
@@ -153,8 +142,7 @@ public class ItemSumFunction extends AbstractFunction implements FieldAggregatio
    *
    * @param field the field name.
    */
-  public void setField(final String field)
-  {
+  public void setField( final String field ) {
     this.field = field;
   }
 
@@ -165,28 +153,22 @@ public class ItemSumFunction extends AbstractFunction implements FieldAggregatio
    *
    * @param event Information about the event.
    */
-  public void itemsAdvanced(final ReportEvent event)
-  {
-    final Object fieldValue = getDataRow().get(getField());
-    if (fieldValue == null)
-    {
+  public void itemsAdvanced( final ReportEvent event ) {
+    final Object fieldValue = getDataRow().get( getField() );
+    if ( fieldValue == null ) {
       return;
     }
-    if (fieldValue instanceof Number == false)
-    {
+    if ( fieldValue instanceof Number == false ) {
       return;
     }
 
     final Number numerValue = (Number) fieldValue;
-    final BigDecimal number = ExpressionUtilities.convertToBigDecimal(numerValue);
-    final BigDecimal oldValue = sum.get(lastGroupSequenceNumber);
-    if (oldValue == null)
-    {
-      sum.set(lastGroupSequenceNumber, number);
-    }
-    else
-    {
-      sum.set(lastGroupSequenceNumber, oldValue.add(number));
+    final BigDecimal number = ExpressionUtilities.convertToBigDecimal( numerValue );
+    final BigDecimal oldValue = sum.get( lastGroupSequenceNumber );
+    if ( oldValue == null ) {
+      sum.set( lastGroupSequenceNumber, number );
+    } else {
+      sum.set( lastGroupSequenceNumber, oldValue.add( number ) );
     }
   }
 
@@ -195,22 +177,18 @@ public class ItemSumFunction extends AbstractFunction implements FieldAggregatio
    *
    * @return The function value.
    */
-  public Object getValue()
-  {
-    final BigDecimal value = sum.get(lastGroupSequenceNumber);
-    if (value == null)
-    {
+  public Object getValue() {
+    final BigDecimal value = sum.get( lastGroupSequenceNumber );
+    if ( value == null ) {
       return ZERO;
     }
     return value;
   }
 
-  public void summaryRowSelection(final ReportEvent event)
-  {
-    if (FunctionUtilities.isDefinedGroup(getCrosstabFilterGroup(), event))
-    {
+  public void summaryRowSelection( final ReportEvent event ) {
+    if ( FunctionUtilities.isDefinedGroup( getCrosstabFilterGroup(), event ) ) {
       final int groupIndex = event.getState().getCurrentGroupIndex();
-      this.lastGroupSequenceNumber = (int) event.getState().getCrosstabColumnSequenceCounter(groupIndex);
+      this.lastGroupSequenceNumber = (int) event.getState().getCrosstabColumnSequenceCounter( groupIndex );
     }
   }
 
@@ -220,35 +198,28 @@ public class ItemSumFunction extends AbstractFunction implements FieldAggregatio
    *
    * @return a copy of this function.
    */
-  public Expression getInstance()
-  {
+  public Expression getInstance() {
     final ItemSumFunction function = (ItemSumFunction) super.getInstance();
     function.sum = sum.clone();
     function.lastGroupSequenceNumber = 0;
     return function;
   }
 
-  public Object clone()
-  {
-    try
-    {
+  public Object clone() {
+    try {
       final ItemSumFunction clone = (ItemSumFunction) super.clone();
       clone.sum = sum.clone();
       return clone;
-    }
-    catch (CloneNotSupportedException e)
-    {
+    } catch ( CloneNotSupportedException e ) {
       throw new IllegalStateException();
     }
   }
 
-  public String getCrosstabFilterGroup()
-  {
+  public String getCrosstabFilterGroup() {
     return crosstabFilterGroup;
   }
 
-  public void setCrosstabFilterGroup(final String crosstabFilterGroup)
-  {
+  public void setCrosstabFilterGroup( final String crosstabFilterGroup ) {
     this.crosstabFilterGroup = crosstabFilterGroup;
   }
 }

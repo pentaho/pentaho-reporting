@@ -17,8 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.core.parameter;
 
-import javax.swing.table.DefaultTableModel;
-
 import junit.framework.TestCase;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
@@ -30,45 +28,42 @@ import org.pentaho.reporting.engine.classic.core.parameters.DefaultParameterDefi
 import org.pentaho.reporting.engine.classic.core.parameters.DefaultReportParameterValidator;
 import org.pentaho.reporting.engine.classic.core.parameters.ValidationResult;
 
-public class DefaultReportParameterValidatorTest extends TestCase
-{
-  public DefaultReportParameterValidatorTest()
-  {
+import javax.swing.table.DefaultTableModel;
+
+public class DefaultReportParameterValidatorTest extends TestCase {
+  public DefaultReportParameterValidatorTest() {
   }
 
-  public DefaultReportParameterValidatorTest(final String name)
-  {
-    super(name);
+  public DefaultReportParameterValidatorTest( final String name ) {
+    super( name );
   }
 
-  protected void setUp() throws Exception
-  {
+  protected void setUp() throws Exception {
     ClassicEngineBoot.getInstance().start();
   }
 
-  public void testSelectDefault() throws ReportProcessingException
-  {
-    final DefaultTableModel tableModel = new DefaultTableModel(new String[]{"key", "value"}, 1);
-    tableModel.setValueAt("key-entry", 0, 0);
-    tableModel.setValueAt("value-entry", 0, 1);
+  public void testSelectDefault() throws ReportProcessingException {
+    final DefaultTableModel tableModel = new DefaultTableModel( new String[] { "key", "value" }, 1 );
+    tableModel.setValueAt( "key-entry", 0, 0 );
+    tableModel.setValueAt( "value-entry", 0, 1 );
 
     final DefaultListParameter listParameter =
-        new DefaultListParameter("test", "key", "value", "name", false, true, String.class);
-    listParameter.setParameterAutoSelectFirstValue(true);
-    listParameter.setMandatory(true);
+      new DefaultListParameter( "test", "key", "value", "name", false, true, String.class );
+    listParameter.setParameterAutoSelectFirstValue( true );
+    listParameter.setMandatory( true );
 
     final DefaultParameterDefinition definition = new DefaultParameterDefinition();
-    definition.addParameterDefinition(listParameter);
+    definition.addParameterDefinition( listParameter );
 
     final MasterReport report = new MasterReport();
-    report.setParameterDefinition(definition);
-    report.setDataFactory(new TableDataFactory("test", tableModel));
+    report.setParameterDefinition( definition );
+    report.setDataFactory( new TableDataFactory( "test", tableModel ) );
 
-    final DefaultParameterContext paramContext = new DefaultParameterContext(report);
+    final DefaultParameterContext paramContext = new DefaultParameterContext( report );
 
     final DefaultReportParameterValidator validator = new DefaultReportParameterValidator();
-    final ValidationResult result = validator.validate(new ValidationResult(), definition, paramContext);
-    assertTrue(result.isEmpty());
-    
+    final ValidationResult result = validator.validate( new ValidationResult(), definition, paramContext );
+    assertTrue( result.isEmpty() );
+
   }
 }

@@ -25,13 +25,11 @@ import org.pentaho.reporting.engine.classic.core.event.ReportEvent;
  *
  * @author Thomas Morgner
  */
-public class PageItemCountFunction extends ItemCountFunction implements PageEventListener
-{
+public class PageItemCountFunction extends ItemCountFunction implements PageEventListener {
   /**
    * Default Constructor.
    */
-  public PageItemCountFunction()
-  {
+  public PageItemCountFunction() {
   }
 
   /**
@@ -39,8 +37,7 @@ public class PageItemCountFunction extends ItemCountFunction implements PageEven
    *
    * @param event the report event.
    */
-  public void pageStarted(final ReportEvent event)
-  {
+  public void pageStarted( final ReportEvent event ) {
     clear();
   }
 
@@ -49,7 +46,6 @@ public class PageItemCountFunction extends ItemCountFunction implements PageEven
    *
    * @param event the report event.
    */
-  public void pageFinished(final ReportEvent event)
-  {
+  public void pageFinished( final ReportEvent event ) {
   }
 }

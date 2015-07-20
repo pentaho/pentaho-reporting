@@ -17,10 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.core.layout.output;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.pentaho.reporting.engine.classic.core.ReportDefinition;
@@ -30,9 +26,12 @@ import org.pentaho.reporting.engine.classic.core.layout.model.PageGrid;
 import org.pentaho.reporting.libraries.base.util.MemoryUsageMessage;
 import org.pentaho.reporting.libraries.formatting.FastMessageFormat;
 
-public abstract class AbstractOutputProcessor implements OutputProcessor
-{
-  private static final Log logger = LogFactory.getLog(AbstractOutputProcessor.class);
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+public abstract class AbstractOutputProcessor implements OutputProcessor {
+  private static final Log logger = LogFactory.getLog( AbstractOutputProcessor.class );
 
   protected static final int PROCESSING_PAGES = 0;
   protected static final int PROCESSING_CONTENT = 2;
@@ -42,35 +41,29 @@ public abstract class AbstractOutputProcessor implements OutputProcessor
   private int pageCursor;
   private long startTime;
 
-  protected AbstractOutputProcessor()
-  {
+  protected AbstractOutputProcessor() {
     logicalPages = new ArrayList<LogicalPageKey>();
   }
 
-  public void processingStarted(final ReportDefinition report, final ProcessingContext processingContext)
-  {
+  public void processingStarted( final ReportDefinition report, final ProcessingContext processingContext ) {
     startTime = processingContext.getReportProcessingStartTime();
-    logPerformance("Time to Pagination");
+    logPerformance( "Time to Pagination" );
   }
 
-  protected long getStartTime()
-  {
+  protected long getStartTime() {
     return startTime;
   }
 
-  public final int getLogicalPageCount()
-  {
+  public final int getLogicalPageCount() {
     return logicalPages.size();
   }
 
-  public final LogicalPageKey getLogicalPage(final int page)
-  {
-    if (isPaginationFinished() == false)
-    {
+  public final LogicalPageKey getLogicalPage( final int page ) {
+    if ( isPaginationFinished() == false ) {
       throw new IllegalStateException();
     }
 
-    return logicalPages.get(page);
+    return logicalPages.get( page );
   }
 
 
@@ -79,8 +72,7 @@ public abstract class AbstractOutputProcessor implements OutputProcessor
    *
    * @return
    */
-  public final boolean isPaginationFinished()
-  {
+  public final boolean isPaginationFinished() {
     return processingState == AbstractOutputProcessor.PROCESSING_CONTENT;
   }
 
@@ -88,61 +80,51 @@ public abstract class AbstractOutputProcessor implements OutputProcessor
    * Notifies the output processor, that the processing has been finished and that the input-feed received the last
    * event.
    */
-  public final void processingFinished()
-  {
-    if (processingState == AbstractOutputProcessor.PROCESSING_PAGES)
-    {
+  public final void processingFinished() {
+    if ( processingState == AbstractOutputProcessor.PROCESSING_PAGES ) {
       // the pagination is complete. So, now we can produce real content.
       processingPagesFinished();
-      logPerformance("Pagination finished");
+      logPerformance( "Pagination finished" );
       processingState = AbstractOutputProcessor.PROCESSING_CONTENT;
-    }
-    else
-    {
+    } else {
       processingContentFinished();
-      logPerformance("Content Processing finished");
+      logPerformance( "Content Processing finished" );
     }
     pageCursor = 0;
   }
 
-  private void logPerformance(final String message)
-  {
+  private void logPerformance( final String message ) {
     final long time = System.currentTimeMillis();
     final double deltaTime = time - getStartTime();
 
-    final double rowsPerSec = (getPageCursor() * 1000.0 / deltaTime);
-    if (logger.isDebugEnabled())
-    {
+    final double rowsPerSec = ( getPageCursor() * 1000.0 / deltaTime );
+    if ( logger.isDebugEnabled() ) {
       final FastMessageFormat messageFormat =
-          new FastMessageFormat("{0} - Pages: {1} - Time: {2,number,0.000}sec - Throughput: ({3,number,0.000} rows/sec) ");
-      logger.debug(new MemoryUsageMessage(messageFormat.format(
-          new Object[]{message, getPageCursor(), deltaTime / 1000.0, rowsPerSec})));
+        new FastMessageFormat(
+          "{0} - Pages: {1} - Time: {2,number,0.000}sec - Throughput: ({3,number,0.000} rows/sec) " );
+      logger.debug( new MemoryUsageMessage( messageFormat.format(
+        new Object[] { message, getPageCursor(), deltaTime / 1000.0, rowsPerSec } ) ) );
     }
   }
 
-  protected void processingContentFinished()
-  {
+  protected void processingContentFinished() {
 
   }
 
-  protected void processingPagesFinished()
-  {
-    logicalPages = Collections.unmodifiableList(logicalPages);
+  protected void processingPagesFinished() {
+    logicalPages = Collections.unmodifiableList( logicalPages );
   }
 
-  protected LogicalPageKey createLogicalPage(final int width,
-                                             final int height)
-  {
-    return new LogicalPageKey(logicalPages.size(), width, height);
+  protected LogicalPageKey createLogicalPage( final int width,
+                                              final int height ) {
+    return new LogicalPageKey( logicalPages.size(), width, height );
   }
 
-  public final int getPageCursor()
-  {
+  public final int getPageCursor() {
     return pageCursor;
   }
 
-  public final void setPageCursor(final int pageCursor)
-  {
+  public final void setPageCursor( final int pageCursor ) {
     this.pageCursor = pageCursor;
   }
 
@@ -152,21 +134,17 @@ public abstract class AbstractOutputProcessor implements OutputProcessor
    *
    * @return
    */
-  protected boolean isContentGeneratable()
-  {
+  protected boolean isContentGeneratable() {
     return processingState == AbstractOutputProcessor.PROCESSING_CONTENT;
   }
 
-  public void processRecomputedContent(final LogicalPageBox pageBox) throws ContentProcessingException
-  {
-    setPageCursor(pageCursor + 1);
+  public void processRecomputedContent( final LogicalPageBox pageBox ) throws ContentProcessingException {
+    setPageCursor( pageCursor + 1 );
   }
 
-  public final void processContent(final LogicalPageBox logicalPage)
-      throws ContentProcessingException
-  {
-    if (isContentGeneratable() == false)
-    {
+  public final void processContent( final LogicalPageBox logicalPage )
+    throws ContentProcessingException {
+    if ( isContentGeneratable() == false ) {
       // This is the pagination stage ..
 
       // This is just an assertation ...
@@ -175,47 +153,42 @@ public abstract class AbstractOutputProcessor implements OutputProcessor
       final int rowCount = pageGrid.getRowCount();
       final int colCount = pageGrid.getColumnCount();
 
-      final LogicalPageKey key = createLogicalPage(colCount, rowCount);
-      logicalPages.add(key);
+      final LogicalPageKey key = createLogicalPage( colCount, rowCount );
+      logicalPages.add( key );
       final int pageCursor = getPageCursor();
-      if (key.getPosition() != pageCursor)
-      {
+      if ( key.getPosition() != pageCursor ) {
         throw new IllegalStateException(
-            "Expected position " + pageCursor + " is not the key's position " + key.getPosition());
+          "Expected position " + pageCursor + " is not the key's position " + key.getPosition() );
       }
 
-      processPaginationContent(key, logicalPage);
-      setPageCursor(pageCursor + 1);
+      processPaginationContent( key, logicalPage );
+      setPageCursor( pageCursor + 1 );
 
-    }
-    else // if (isContentGeneratable())
+    } else // if (isContentGeneratable())
     {
       // This is the content generation stage ..
 
       final int pageCursor = getPageCursor();
-      final LogicalPageKey logicalPageKey = getLogicalPage(pageCursor);
-      processPageContent(logicalPageKey, logicalPage);
-      setPageCursor(pageCursor + 1);
+      final LogicalPageKey logicalPageKey = getLogicalPage( pageCursor );
+      processPageContent( logicalPageKey, logicalPage );
+      setPageCursor( pageCursor + 1 );
     }
   }
 
-  public boolean isNeedAlignedPage()
-  {
+  public boolean isNeedAlignedPage() {
     return isContentGeneratable();
   }
 
-  protected void processPaginationContent(final LogicalPageKey logicalPageKey,
-                                          final LogicalPageBox logicalPage)
-      throws ContentProcessingException
-  {
+  protected void processPaginationContent( final LogicalPageKey logicalPageKey,
+                                           final LogicalPageBox logicalPage )
+    throws ContentProcessingException {
   }
 
-  protected abstract void processPageContent(final LogicalPageKey logicalPageKey,
-                                             final LogicalPageBox logicalPage)
-      throws ContentProcessingException;
+  protected abstract void processPageContent( final LogicalPageKey logicalPageKey,
+                                              final LogicalPageBox logicalPage )
+    throws ContentProcessingException;
 
-  public int getPhysicalPageCount()
-  {
+  public int getPhysicalPageCount() {
     // By default, we assume a one-to-one mapping between logical and physical pages. Only the pageable target
     // will implement a different mapping ..
     return getLogicalPageCount();

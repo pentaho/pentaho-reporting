@@ -27,8 +27,7 @@ import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
  * @author Thomas Morgner
  * @deprecated Filter the values by using a plain formula.
  */
-public class ConditionalItemSumFunction extends ItemSumFunction
-{
+public class ConditionalItemSumFunction extends ItemSumFunction {
   /**
    * The name of the data-row column from where to read the comparison value for the condition.
    */
@@ -41,8 +40,7 @@ public class ConditionalItemSumFunction extends ItemSumFunction
   /**
    * Default Constructor.
    */
-  public ConditionalItemSumFunction()
-  {
+  public ConditionalItemSumFunction() {
   }
 
   /**
@@ -50,8 +48,7 @@ public class ConditionalItemSumFunction extends ItemSumFunction
    *
    * @return a field name.
    */
-  public String getConditionField()
-  {
+  public String getConditionField() {
     return conditionField;
   }
 
@@ -60,8 +57,7 @@ public class ConditionalItemSumFunction extends ItemSumFunction
    *
    * @param conditionField a field name.
    */
-  public void setConditionField(final String conditionField)
-  {
+  public void setConditionField( final String conditionField ) {
     this.conditionField = conditionField;
   }
 
@@ -70,8 +66,7 @@ public class ConditionalItemSumFunction extends ItemSumFunction
    *
    * @return the static value.
    */
-  public Object getConditionValue()
-  {
+  public Object getConditionValue() {
     return conditionValue;
   }
 
@@ -80,8 +75,7 @@ public class ConditionalItemSumFunction extends ItemSumFunction
    *
    * @param conditionValue the static value.
    */
-  public void setConditionValue(final Object conditionValue)
-  {
+  public void setConditionValue( final Object conditionValue ) {
     this.conditionValue = conditionValue;
   }
 
@@ -90,20 +84,17 @@ public class ConditionalItemSumFunction extends ItemSumFunction
    *
    * @param event Information about the event.
    */
-  public void itemsAdvanced(final ReportEvent event)
-  {
-    if (getConditionField() == null)
-    {
+  public void itemsAdvanced( final ReportEvent event ) {
+    if ( getConditionField() == null ) {
       return;
     }
 
-    final Object currentValue = getDataRow().get(getConditionField());
+    final Object currentValue = getDataRow().get( getConditionField() );
     // ObjectUtils-equal does not crash if both values are 'null'.
     // You could use the ordinary equals as well, but thats more code to write
-    if (ObjectUtilities.equal(currentValue, getConditionValue()))
-    {
+    if ( ObjectUtilities.equal( currentValue, getConditionValue() ) ) {
       // this does the addition of the values.
-      super.itemsAdvanced(event);
+      super.itemsAdvanced( event );
     }
   }
 }

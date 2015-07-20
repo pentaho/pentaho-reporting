@@ -20,50 +20,42 @@ package org.pentaho.reporting.engine.classic.core.layout.process.util;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.process.MinorAxisLayoutStepUtil;
 
-public class StaticHorizontalChunkWidthUpdate extends StaticChunkWidthUpdate
-{
+public class StaticHorizontalChunkWidthUpdate extends StaticChunkWidthUpdate {
   private RenderBox box;
   private long chunkWidth;
   private long minimumBorderBoxWidth;
   private StackedObjectPool<StaticHorizontalChunkWidthUpdate> pool;
 
-  StaticHorizontalChunkWidthUpdate(final StackedObjectPool<StaticHorizontalChunkWidthUpdate> pool)
-  {
-    if (pool == null)
-    {
+  StaticHorizontalChunkWidthUpdate( final StackedObjectPool<StaticHorizontalChunkWidthUpdate> pool ) {
+    if ( pool == null ) {
       throw new NullPointerException();
     }
     this.pool = pool;
   }
 
-  void reuse(final StaticChunkWidthUpdate parent, final RenderBox box)
-  {
-    reuse(parent);
+  void reuse( final StaticChunkWidthUpdate parent, final RenderBox box ) {
+    reuse( parent );
     this.box = box;
     this.chunkWidth = 0;
-    this.minimumBorderBoxWidth = MinorAxisLayoutStepUtil.resolveNodeWidthForMinChunkCalculation(box);
+    this.minimumBorderBoxWidth = MinorAxisLayoutStepUtil.resolveNodeWidthForMinChunkCalculation( box );
   }
 
-  public void update(final long minChunkWidth)
-  {
+  public void update( final long minChunkWidth ) {
     chunkWidth += minChunkWidth;
   }
 
-  public void finish()
-  {
-    final long chunkWidthAndInsets = Math.max(minimumBorderBoxWidth, chunkWidth + box.getInsets());
-    if (box.getMinimumChunkWidth() < chunkWidthAndInsets)
-    {
-      box.setMinimumChunkWidth(chunkWidthAndInsets);
+  public void finish() {
+    final long chunkWidthAndInsets = Math.max( minimumBorderBoxWidth, chunkWidth + box.getInsets() );
+    if ( box.getMinimumChunkWidth() < chunkWidthAndInsets ) {
+      box.setMinimumChunkWidth( chunkWidthAndInsets );
     }
   }
 
-  public StaticChunkWidthUpdate pop()
-  {
+  public StaticChunkWidthUpdate pop() {
     this.box = null;
     this.chunkWidth = 0;
     this.minimumBorderBoxWidth = 0;
-    this.pool.free(this);
+    this.pool.free( this );
     return super.pop();
   }
 }

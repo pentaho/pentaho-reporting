@@ -29,14 +29,12 @@ import org.pentaho.reporting.libraries.formula.typing.coretypes.TextType;
  *
  * @author Thomas Morgner
  */
-public class MetaDataFunctionDescription extends AbstractFunctionDescription
-{
+public class MetaDataFunctionDescription extends AbstractFunctionDescription {
   /**
    * Default Constructor.
    */
-  public MetaDataFunctionDescription()
-  {
-    super("METADATA", "org.pentaho.reporting.engine.classic.core.function.formula.MetaData-Function");
+  public MetaDataFunctionDescription() {
+    super( "METADATA", "org.pentaho.reporting.engine.classic.core.function.formula.MetaData-Function" );
   }
 
   /**
@@ -44,8 +42,7 @@ public class MetaDataFunctionDescription extends AbstractFunctionDescription
    *
    * @return LogicalType.TYPE
    */
-  public Type getValueType()
-  {
+  public Type getValueType() {
     return AnyType.TYPE;
   }
 
@@ -54,8 +51,7 @@ public class MetaDataFunctionDescription extends AbstractFunctionDescription
    *
    * @return 1.
    */
-  public int getParameterCount()
-  {
+  public int getParameterCount() {
     return 4;
   }
 
@@ -65,8 +61,7 @@ public class MetaDataFunctionDescription extends AbstractFunctionDescription
    * @param position the parameter index.
    * @return always TextType.TYPE.
    */
-  public Type getParameterType(final int position)
-  {
+  public Type getParameterType( final int position ) {
     return TextType.TYPE;
   }
 
@@ -77,10 +72,8 @@ public class MetaDataFunctionDescription extends AbstractFunctionDescription
    * @param position the position of the parameter.
    * @return true, as all parameters are mandatory.
    */
-  public boolean isParameterMandatory(final int position)
-  {
-    if (position == 3)
-    {
+  public boolean isParameterMandatory( final int position ) {
+    if ( position == 3 ) {
       return false;
     }
     return true;
@@ -91,8 +84,7 @@ public class MetaDataFunctionDescription extends AbstractFunctionDescription
    *
    * @return InformationFunctionCategory.CATEGORY.
    */
-  public FunctionCategory getCategory()
-  {
+  public FunctionCategory getCategory() {
     return InformationFunctionCategory.CATEGORY;
   }
 }

@@ -21,22 +21,18 @@ import org.pentaho.reporting.engine.classic.core.SubReport;
 import org.pentaho.reporting.engine.classic.core.states.process.SubReportProcessType;
 import org.pentaho.reporting.engine.classic.core.util.InstanceID;
 
-public class InlineSubreportMarker
-{
+public class InlineSubreportMarker {
   private SubReport subreport;
   private InstanceID insertationPointId;
   private SubReportProcessType processType;
 
-  public InlineSubreportMarker(final SubReport subreport,
-                               final InstanceID insertationPointId,
-                               final SubReportProcessType processType)
-  {
-    if (subreport == null)
-    {
+  public InlineSubreportMarker( final SubReport subreport,
+                                final InstanceID insertationPointId,
+                                final SubReportProcessType processType ) {
+    if ( subreport == null ) {
       throw new NullPointerException();
     }
-    if (processType == null)
-    {
+    if ( processType == null ) {
       throw new NullPointerException();
     }
     this.subreport = subreport;
@@ -44,18 +40,15 @@ public class InlineSubreportMarker
     this.processType = processType;
   }
 
-  public SubReport getSubreport()
-  {
+  public SubReport getSubreport() {
     return subreport;
   }
 
-  public InstanceID getInsertationPointId()
-  {
+  public InstanceID getInsertationPointId() {
     return insertationPointId;
   }
 
-  public SubReportProcessType getProcessType()
-  {
+  public SubReportProcessType getProcessType() {
     return processType;
   }
 }

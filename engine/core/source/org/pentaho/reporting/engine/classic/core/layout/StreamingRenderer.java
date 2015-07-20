@@ -40,9 +40,8 @@ import org.pentaho.reporting.engine.classic.core.states.PerformanceMonitorContex
  *
  * @author Thomas Morgner
  */
-public class StreamingRenderer extends AbstractRenderer
-{
-  private static final Log logger = LogFactory.getLog(StreamingRenderer.class);
+public class StreamingRenderer extends AbstractRenderer {
+  private static final Log logger = LogFactory.getLog( StreamingRenderer.class );
 
   private CountBoxesStep countBoxesStep;
   private CleanFlowBoxesStep cleanBoxesStep;
@@ -51,9 +50,8 @@ public class StreamingRenderer extends AbstractRenderer
   private int floodPrevention;
   private int pageCount;
 
-  public StreamingRenderer(final OutputProcessor outputProcessor)
-  {
-    super(outputProcessor);
+  public StreamingRenderer( final OutputProcessor outputProcessor ) {
+    super( outputProcessor );
     this.countBoxesStep = new CountBoxesStep();
     this.cleanBoxesStep = new CleanFlowBoxesStep();
     this.applyAutoCommitPageHeaderStep = new ApplyAutoCommitPageHeaderStep();
@@ -62,73 +60,63 @@ public class StreamingRenderer extends AbstractRenderer
     initialize();
   }
 
-  protected boolean isPageFinished()
-  {
-    if (getPageBox().isOpen())
-    {
+  protected boolean isPageFinished() {
+    if ( getPageBox().isOpen() ) {
       return false;
     }
     return true;
   }
 
-  public void startReport(final ReportDefinition report,
-                          final ProcessingContext processingContext,
-                          final PerformanceMonitorContext performanceMonitorContext)
-  {
+  public void startReport( final ReportDefinition report,
+                           final ProcessingContext processingContext,
+                           final PerformanceMonitorContext performanceMonitorContext ) {
     pageCount = 0;
-    super.startReport(report, processingContext, performanceMonitorContext);
+    super.startReport( report, processingContext, performanceMonitorContext );
   }
 
-  public void processIncrementalUpdate(final boolean performOutput) throws ContentProcessingException
-  {
+  public void processIncrementalUpdate( final boolean performOutput ) throws ContentProcessingException {
 
-    if (isDirty() == false)
-    {
-//      Log.debug ("Not dirty, no update needed.");
+    if ( isDirty() == false ) {
+      //      Log.debug ("Not dirty, no update needed.");
       return;
     }
     clearDirty();
 
     floodPrevention += 1;
-    if (floodPrevention < 50) // this is a magic number ..
+    if ( floodPrevention < 50 ) // this is a magic number ..
     {
       return;
     }
     floodPrevention = 0;
 
     final OutputProcessor outputProcessor = getOutputProcessor();
-    if (outputProcessor instanceof IterativeOutputProcessor == false ||
-        outputProcessor.getMetaData().isFeatureSupported(OutputProcessorFeature.ITERATIVE_RENDERING) == false)
-    {
-//      logger.debug ("No incremental system.");
+    if ( outputProcessor instanceof IterativeOutputProcessor == false ||
+      outputProcessor.getMetaData().isFeatureSupported( OutputProcessorFeature.ITERATIVE_RENDERING ) == false ) {
+      //      logger.debug ("No incremental system.");
       return;
     }
 
-//    logger.debug("Computing Incremental update.");
+    //    logger.debug("Computing Incremental update.");
 
     final LogicalPageBox pageBox = getPageBox();
-    pageBox.setPageOffset(0);
-    pageBox.setPageEnd(pageBox.getHeight());
+    pageBox.setPageOffset( 0 );
+    pageBox.setPageEnd( pageBox.getHeight() );
     // shiftBox(pageBox, true);
 
-    if (pageBox.isOpen())
-    {
+    if ( pageBox.isOpen() ) {
       final IterativeOutputProcessor io = (IterativeOutputProcessor) outputProcessor;
-      if (applyAutoCommitPageHeaderStep.compute(pageBox))
-      {
-//        logger.debug("Applying Incremental update.");
-        io.processIterativeContent(pageBox, performOutput);
-        countBoxesStep.process(pageBox);
-        cleanBoxesStep.compute(pageBox);
+      if ( applyAutoCommitPageHeaderStep.compute( pageBox ) ) {
+        //        logger.debug("Applying Incremental update.");
+        io.processIterativeContent( pageBox, performOutput );
+        countBoxesStep.process( pageBox );
+        cleanBoxesStep.compute( pageBox );
       }
     }
   }
 
-  protected boolean performPagination(final LayoutPagebreakHandler handler,
-                                      final boolean performOutput) throws ContentProcessingException
-  {
-    if (performOutput == false)
-    {
+  protected boolean performPagination( final LayoutPagebreakHandler handler,
+                                       final boolean performOutput ) throws ContentProcessingException {
+    if ( performOutput == false ) {
       return false;
     }
 
@@ -136,11 +124,10 @@ public class StreamingRenderer extends AbstractRenderer
     final LogicalPageBox pageBox = getPageBox();
 
     // This is fixed: The streaming renderers always use the whole page area ..
-    pageBox.setPageOffset(0);
-    pageBox.setPageEnd(pageBox.getHeight());
+    pageBox.setPageOffset( 0 );
+    pageBox.setPageEnd( pageBox.getHeight() );
 
-    if (pageBox.isOpen())
-    {
+    if ( pageBox.isOpen() ) {
       // Not finished and the output target is non-iterative, so we have to wait until everything is done..
       return false;
     }
@@ -149,58 +136,51 @@ public class StreamingRenderer extends AbstractRenderer
     // Recover the page-grid, then restart everything from scratch.
     // (We have to recompute, as the pages may be different now, due to changed margins or page definitions)
     final long nextOffset = pageBox.computePageEnd();
-    pageBox.setPageEnd(nextOffset);
+    pageBox.setPageEnd( nextOffset );
     final long pageOffset = pageBox.getPageOffset();
 
-    applyAutoCommitPageHeaderStep.commitAll(pageBox);
-    if (outputProcessor.isNeedAlignedPage())
-    {
-      final LogicalPageBox box = fillPhysicalPagesStep.compute(pageBox, pageOffset, nextOffset);
-      logger.debug("Processing contents for stream. Page-Offset: " + pageOffset + " -> " + nextOffset);
+    applyAutoCommitPageHeaderStep.commitAll( pageBox );
+    if ( outputProcessor.isNeedAlignedPage() ) {
+      final LogicalPageBox box = fillPhysicalPagesStep.compute( pageBox, pageOffset, nextOffset );
+      logger.debug( "Processing contents for stream. Page-Offset: " + pageOffset + " -> " + nextOffset );
 
-      outputProcessor.processContent(box);
-    }
-    else
-    {
-      logger.debug("Processing fast contents for stream. Page-Offset: " + pageOffset + " -> " + nextOffset);
-      outputProcessor.processContent(pageBox);
+      outputProcessor.processContent( box );
+    } else {
+      logger.debug( "Processing fast contents for stream. Page-Offset: " + pageOffset + " -> " + nextOffset );
+      outputProcessor.processContent( pageBox );
     }
 
-    countBoxesStep.process(pageBox);
-    cleanBoxesStep.compute(pageBox);
-    debugPrint(pageBox);
+    countBoxesStep.process( pageBox );
+    cleanBoxesStep.compute( pageBox );
+    debugPrint( pageBox );
     outputProcessor.processingFinished();
 
     pageCount = 1;
-    setPagebreaks(1);
+    setPagebreaks( 1 );
     return false;
   }
 
-  public int getPageCount()
-  {
+  public int getPageCount() {
     return pageCount;
   }
 
-  protected void debugPrint(final LogicalPageBox pageBox)
-  {
-//    Log.debug("**** Start Printing Page: " + 1);
-//    ModelPrinter.print(pageBox);
-//    Log.debug("**** Done  Printing Page: " + 1);
+  protected void debugPrint( final LogicalPageBox pageBox ) {
+    //    Log.debug("**** Start Printing Page: " + 1);
+    //    ModelPrinter.print(pageBox);
+    //    Log.debug("**** Done  Printing Page: " + 1);
   }
 
-  public void createRollbackInformation()
-  {
+  public void createRollbackInformation() {
     throw new UnsupportedOperationException(
-        "Streaming-Renderer do not implement the createRollbackInformation-method.");
+      "Streaming-Renderer do not implement the createRollbackInformation-method." );
   }
 
-  public void applyRollbackInformation()
-  {
-    throw new UnsupportedOperationException("Streaming-Renderer do not implement the applyRollbackInformation method.");
+  public void applyRollbackInformation() {
+    throw new UnsupportedOperationException(
+      "Streaming-Renderer do not implement the applyRollbackInformation method." );
   }
 
-  public void rollback()
-  {
-    throw new UnsupportedOperationException("Streaming-Renderer do not implement the rollback method.");
+  public void rollback() {
+    throw new UnsupportedOperationException( "Streaming-Renderer do not implement the rollback method." );
   }
 }

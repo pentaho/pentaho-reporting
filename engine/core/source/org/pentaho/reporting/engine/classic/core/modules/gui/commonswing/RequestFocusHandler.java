@@ -17,24 +17,21 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.gui.commonswing;
 
+import javax.swing.*;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
-import javax.swing.FocusManager;
 
 /**
  * Creation-Date: 30.11.2007, 12:58:54
  *
  * @author Thomas Morgner
  */
-public class RequestFocusHandler extends ComponentAdapter
-{
+public class RequestFocusHandler extends ComponentAdapter {
 
-  public RequestFocusHandler()
-  {
+  public RequestFocusHandler() {
   }
 
-  public void componentShown(final ComponentEvent e)
-  {
-    FocusManager.getCurrentManager().focusNextComponent(e.getComponent());
+  public void componentShown( final ComponentEvent e ) {
+    FocusManager.getCurrentManager().focusNextComponent( e.getComponent() );
   }
 }

@@ -19,8 +19,7 @@ package org.pentaho.reporting.engine.classic.core.metadata;
 
 import java.util.Locale;
 
-public interface MetaData
-{
+public interface MetaData {
   public static final String VALUEROLE_FORMULA = "Formula";
   public static final String VALUEROLE_VALUE = "Value";
   public static final String VALUEROLE_RESOURCE = "Resource";
@@ -37,19 +36,19 @@ public interface MetaData
 
   public String getName();
 
-  public String getDisplayName(Locale locale);
+  public String getDisplayName( Locale locale );
 
-  public String getMetaAttribute(String attributeName, Locale locale);
+  public String getMetaAttribute( String attributeName, Locale locale );
 
-  public String getGrouping(Locale locale);
+  public String getGrouping( Locale locale );
 
-  public int getGroupingOrdinal(Locale locale);
+  public int getGroupingOrdinal( Locale locale );
 
-  public int getItemOrdinal(Locale locale);
+  public int getItemOrdinal( Locale locale );
 
-  public String getDeprecationMessage(Locale locale);
+  public String getDeprecationMessage( Locale locale );
 
-  public String getDescription(Locale locale);
+  public String getDescription( Locale locale );
 
   public boolean isDeprecated();
 

@@ -19,56 +19,45 @@ package org.pentaho.reporting.engine.classic.core.modules.output.table.base;
 
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderBox;
 
-public class FinishedMarker implements CellMarker
-{
+public class FinishedMarker implements CellMarker {
   public static final FinishedMarker INSTANCE = new FinishedMarker();
   private String text;
 
-  private FinishedMarker()
-  {
+  private FinishedMarker() {
   }
 
-  public FinishedMarker(final String text)
-  {
+  public FinishedMarker( final String text ) {
     this.text = "FinishedMarker: " + text;
   }
 
-  public boolean isFinished()
-  {
+  public boolean isFinished() {
     return true;
   }
 
-  public RenderBox getContent()
-  {
+  public RenderBox getContent() {
     return null;
   }
 
-  public boolean isCommited()
-  {
+  public boolean isCommited() {
     return true;
   }
 
-  public long getContentOffset()
-  {
+  public long getContentOffset() {
     return 0;
   }
 
-  public SectionType getSectionType()
-  {
+  public SectionType getSectionType() {
     return SectionType.TYPE_INVALID;
   }
 
-  public String toString()
-  {
-    if (text == null)
-    {
+  public String toString() {
+    if ( text == null ) {
       return super.toString();
     }
     return text;
   }
 
-  public int getSectionDepth()
-  {
+  public int getSectionDepth() {
     return Integer.MAX_VALUE;
   }
 }

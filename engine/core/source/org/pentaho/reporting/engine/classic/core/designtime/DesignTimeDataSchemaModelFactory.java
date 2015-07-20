@@ -23,34 +23,27 @@ import org.pentaho.reporting.engine.classic.core.Section;
 import org.pentaho.reporting.engine.classic.core.wizard.ContextAwareDataSchemaModel;
 import org.pentaho.reporting.engine.classic.core.wizard.ContextAwareDataSchemaModelFactory;
 
-public class DesignTimeDataSchemaModelFactory implements ContextAwareDataSchemaModelFactory
-{
-  public DesignTimeDataSchemaModelFactory()
-  {
+public class DesignTimeDataSchemaModelFactory implements ContextAwareDataSchemaModelFactory {
+  public DesignTimeDataSchemaModelFactory() {
   }
 
-  private static MasterReport findMasterReport(final AbstractReportDefinition def)
-  {
+  private static MasterReport findMasterReport( final AbstractReportDefinition def ) {
     AbstractReportDefinition loopDef = def;
-    while (loopDef instanceof MasterReport == false)
-    {
+    while ( loopDef instanceof MasterReport == false ) {
       final Section parentSection = def.getParentSection();
-      if (parentSection == null)
-      {
+      if ( parentSection == null ) {
         break;
       }
       loopDef = (AbstractReportDefinition) parentSection.getReportDefinition();
     }
 
-    if (loopDef instanceof MasterReport)
-    {
+    if ( loopDef instanceof MasterReport ) {
       return (MasterReport) def;
     }
     return new MasterReport();
   }
 
-  public ContextAwareDataSchemaModel create(final AbstractReportDefinition report)
-  {
-    return new DesignTimeDataSchemaModel(findMasterReport(report), report);
+  public ContextAwareDataSchemaModel create( final AbstractReportDefinition report ) {
+    return new DesignTimeDataSchemaModel( findMasterReport( report ), report );
   }
 }

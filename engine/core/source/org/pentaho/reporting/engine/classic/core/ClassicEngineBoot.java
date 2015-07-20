@@ -17,9 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.core;
 
-import java.util.Enumeration;
-import java.util.StringTokenizer;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.pentaho.reporting.engine.classic.core.style.StyleKey;
@@ -34,6 +31,9 @@ import org.pentaho.reporting.libraries.base.util.CSVTokenizer;
 import org.pentaho.reporting.libraries.base.versioning.ProjectInformation;
 import org.pentaho.reporting.libraries.xmlns.common.ParserUtil;
 
+import java.util.Enumeration;
+import java.util.StringTokenizer;
+
 /**
  * An utility class to safely boot and initialize the Pentaho-Reporting library. This class should be called before
  * using the Pentaho-Reporting classes, to make sure that all subsystems are initialized correctly and in the correct
@@ -43,7 +43,8 @@ import org.pentaho.reporting.libraries.xmlns.common.ParserUtil;
  * the system has not be initialized by booting this class, anything can happen and the results of all functionality of
  * this reporting engine will be undefined.
  * <p/>
- * Additional modules can be specified by defining the system property <code>"org.pentaho.reporting.engine.classic.core.boot.Modules"</code>.
+ * Additional modules can be specified by defining the system property <code>"org.pentaho.reporting.engine.classic
+ * .core.boot.Modules"</code>.
  * The property expects a comma-separated list of {@link org.pentaho.reporting.libraries.base.boot.Module}
  * implementations.
  * <p/>
@@ -52,27 +53,25 @@ import org.pentaho.reporting.libraries.xmlns.common.ParserUtil;
  *
  * @author Thomas Morgner
  */
-public class ClassicEngineBoot extends AbstractBoot
-{
-  public static final int VERSION_TRUNK = ClassicEngineBoot.computeVersionId(999, 999, 999);
-  public static final int VERSION_3_8 = ClassicEngineBoot.computeVersionId(3, 8, 0);
-  public static final int VERSION_3_9 = ClassicEngineBoot.computeVersionId(3, 9, 0);
-  public static final int VERSION_4_0 = ClassicEngineBoot.computeVersionId(4, 0, 0);
+public class ClassicEngineBoot extends AbstractBoot {
+  public static final int VERSION_TRUNK = ClassicEngineBoot.computeVersionId( 999, 999, 999 );
+  public static final int VERSION_3_8 = ClassicEngineBoot.computeVersionId( 3, 8, 0 );
+  public static final int VERSION_3_9 = ClassicEngineBoot.computeVersionId( 3, 9, 0 );
+  public static final int VERSION_4_0 = ClassicEngineBoot.computeVersionId( 4, 0, 0 );
 
   public static final String INDEX_COLUMN_PREFIX = "::column::";
   public static final String METADATA_NAMESPACE =
-      "http://reporting.pentaho.org/namespaces/engine/classic/metadata/1.0";
+    "http://reporting.pentaho.org/namespaces/engine/classic/metadata/1.0";
   public static final String DATASCHEMA_NAMESPACE =
-      "http://reporting.pentaho.org/namespaces/engine/classic/dataschema/1.0";
+    "http://reporting.pentaho.org/namespaces/engine/classic/dataschema/1.0";
   public static final String BUNDLE_TYPE = "application/vnd.pentaho.reporting.classic";
 
-  private static final Log logger = LogFactory.getLog(ClassicEngineBoot.class);
+  private static final Log logger = LogFactory.getLog( ClassicEngineBoot.class );
 
   /**
    * A wrappper around the user supplied global configuration.
    */
-  private static class UserConfigWrapper extends HierarchicalConfiguration
-  {
+  private static class UserConfigWrapper extends HierarchicalConfiguration {
     /**
      * The wrapped configuration.
      */
@@ -81,9 +80,8 @@ public class ClassicEngineBoot extends AbstractBoot
     /**
      * Default constructor.
      */
-    protected UserConfigWrapper()
-    {
-      this(null);
+    protected UserConfigWrapper() {
+      this( null );
     }
 
     /**
@@ -91,8 +89,7 @@ public class ClassicEngineBoot extends AbstractBoot
      *
      * @param config the user-provided configuration that should be wrapped.
      */
-    protected UserConfigWrapper(final Configuration config)
-    {
+    protected UserConfigWrapper( final Configuration config ) {
       this.wrappedConfiguration = config;
     }
 
@@ -102,8 +99,7 @@ public class ClassicEngineBoot extends AbstractBoot
      *
      * @param wrappedConfiguration the wrapped configuration.
      */
-    public void setWrappedConfiguration(final Configuration wrappedConfiguration)
-    {
+    public void setWrappedConfiguration( final Configuration wrappedConfiguration ) {
       this.wrappedConfiguration = wrappedConfiguration;
     }
 
@@ -112,8 +108,7 @@ public class ClassicEngineBoot extends AbstractBoot
      *
      * @return the user configuration.
      */
-    public Configuration getWrappedConfiguration()
-    {
+    public Configuration getWrappedConfiguration() {
       return wrappedConfiguration;
     }
 
@@ -123,19 +118,16 @@ public class ClassicEngineBoot extends AbstractBoot
      * @param key the property key.
      * @return the property value.
      */
-    public String getConfigProperty(final String key)
-    {
-      if (wrappedConfiguration == null)
-      {
-        return getParentConfig().getConfigProperty(key);
+    public String getConfigProperty( final String key ) {
+      if ( wrappedConfiguration == null ) {
+        return getParentConfig().getConfigProperty( key );
       }
 
-      final String retval = wrappedConfiguration.getConfigProperty(key);
-      if (retval != null)
-      {
+      final String retval = wrappedConfiguration.getConfigProperty( key );
+      if ( retval != null ) {
         return retval;
       }
-      return getParentConfig().getConfigProperty(key);
+      return getParentConfig().getConfigProperty( key );
     }
 
     /**
@@ -149,19 +141,16 @@ public class ClassicEngineBoot extends AbstractBoot
      * @param defaultValue the default value.
      * @return the property value.
      */
-    public String getConfigProperty(final String key, final String defaultValue)
-    {
-      if (wrappedConfiguration == null)
-      {
-        return getParentConfig().getConfigProperty(key, defaultValue);
+    public String getConfigProperty( final String key, final String defaultValue ) {
+      if ( wrappedConfiguration == null ) {
+        return getParentConfig().getConfigProperty( key, defaultValue );
       }
 
-      final String retval = wrappedConfiguration.getConfigProperty(key, null);
-      if (retval != null)
-      {
+      final String retval = wrappedConfiguration.getConfigProperty( key, null );
+      if ( retval != null ) {
         return retval;
       }
-      return getParentConfig().getConfigProperty(key, defaultValue);
+      return getParentConfig().getConfigProperty( key, defaultValue );
     }
 
     /**
@@ -170,13 +159,11 @@ public class ClassicEngineBoot extends AbstractBoot
      * @param key   the property key.
      * @param value the property value.
      */
-    public void setConfigProperty(final String key, final String value)
-    {
-      if (wrappedConfiguration instanceof ModifiableConfiguration)
-      {
+    public void setConfigProperty( final String key, final String value ) {
+      if ( wrappedConfiguration instanceof ModifiableConfiguration ) {
         final ModifiableConfiguration modConfiguration =
-            (ModifiableConfiguration) wrappedConfiguration;
-        modConfiguration.setConfigProperty(key, value);
+          (ModifiableConfiguration) wrappedConfiguration;
+        modConfiguration.setConfigProperty( key, value );
       }
     }
 
@@ -186,12 +173,10 @@ public class ClassicEngineBoot extends AbstractBoot
      *
      * @return all defined configuration properties for the report.
      */
-    public Enumeration<String> getConfigProperties()
-    {
-      if (wrappedConfiguration instanceof ModifiableConfiguration)
-      {
+    public Enumeration<String> getConfigProperties() {
+      if ( wrappedConfiguration instanceof ModifiableConfiguration ) {
         final ModifiableConfiguration modConfiguration =
-            (ModifiableConfiguration) wrappedConfiguration;
+          (ModifiableConfiguration) wrappedConfiguration;
         return modConfiguration.getConfigProperties();
       }
       return super.getConfigProperties();
@@ -211,13 +196,12 @@ public class ClassicEngineBoot extends AbstractBoot
    * Holds a possibly empty reference to a user-supplied Configuration implementation.
    */
   private static final UserConfigWrapper configWrapper =
-      new UserConfigWrapper();
+    new UserConfigWrapper();
 
   /**
    * Creates a new instance.
    */
-  private ClassicEngineBoot()
-  {
+  private ClassicEngineBoot() {
     projectInfo = ClassicEngineInfo.getInstance();
   }
 
@@ -226,10 +210,8 @@ public class ClassicEngineBoot extends AbstractBoot
    *
    * @return the boot instance.
    */
-  public static synchronized ClassicEngineBoot getInstance()
-  {
-    if (instance == null)
-    {
+  public static synchronized ClassicEngineBoot getInstance() {
+    if ( instance == null ) {
       instance = new ClassicEngineBoot();
     }
     return instance;
@@ -243,8 +225,7 @@ public class ClassicEngineBoot extends AbstractBoot
    *
    * @return the global config as modifiable configuration.
    */
-  public ModifiableConfiguration getEditableConfig()
-  {
+  public ModifiableConfiguration getEditableConfig() {
     return (ModifiableConfiguration) getGlobalConfig();
   }
 
@@ -253,8 +234,7 @@ public class ClassicEngineBoot extends AbstractBoot
    *
    * @return The project info.
    */
-  protected ProjectInformation getProjectInfo()
-  {
+  protected ProjectInformation getProjectInfo() {
     return projectInfo;
   }
 
@@ -263,48 +243,46 @@ public class ClassicEngineBoot extends AbstractBoot
    *
    * @return The configuration.
    */
-  protected Configuration loadConfiguration()
-  {
+  protected Configuration loadConfiguration() {
     final HierarchicalConfiguration globalConfig = createDefaultHierarchicalConfiguration
-        ("/org/pentaho/reporting/engine/classic/core/classic-engine.properties",
-            "/classic-engine.properties", false, ClassicEngineBoot.class);
+      ( "/org/pentaho/reporting/engine/classic/core/classic-engine.properties",
+        "/classic-engine.properties", false, ClassicEngineBoot.class );
 
-    globalConfig.insertConfiguration(ClassicEngineBoot.configWrapper);
+    globalConfig.insertConfiguration( ClassicEngineBoot.configWrapper );
 
     final SystemPropertyConfiguration systemConfig = new SystemPropertyConfiguration();
-    globalConfig.insertConfiguration(systemConfig);
+    globalConfig.insertConfiguration( systemConfig );
     return globalConfig;
   }
 
   /**
    * Performs the actual boot process.
    */
-  protected void performBoot()
-  {
-    if (ClassicEngineBoot.isStrictFP() == false)
-    {
-      ClassicEngineBoot.logger.warn("The used VM seems to use a non-strict floating point arithmetics"); // NON-NLS
-      ClassicEngineBoot.logger.warn("Layouts computed with this Java Virtual Maschine may be invalid."); // NON-NLS
-      ClassicEngineBoot.logger.warn("JFreeReport and the library 'iText' depend on the strict floating point rules"); // NON-NLS
-      ClassicEngineBoot.logger.warn("of Java1.1 as implemented by the Sun Virtual Maschines."); // NON-NLS
-      ClassicEngineBoot.logger.warn("If you are using the BEA JRockit VM, start the Java VM with the option"); // NON-NLS
-      ClassicEngineBoot.logger.warn("'-Xstrictfp' to restore the default behaviour."); // NON-NLS
+  protected void performBoot() {
+    if ( ClassicEngineBoot.isStrictFP() == false ) {
+      ClassicEngineBoot.logger.warn( "The used VM seems to use a non-strict floating point arithmetics" ); // NON-NLS
+      ClassicEngineBoot.logger.warn( "Layouts computed with this Java Virtual Maschine may be invalid." ); // NON-NLS
+      ClassicEngineBoot.logger
+        .warn( "JFreeReport and the library 'iText' depend on the strict floating point rules" ); // NON-NLS
+      ClassicEngineBoot.logger.warn( "of Java1.1 as implemented by the Sun Virtual Maschines." ); // NON-NLS
+      ClassicEngineBoot.logger
+        .warn( "If you are using the BEA JRockit VM, start the Java VM with the option" ); // NON-NLS
+      ClassicEngineBoot.logger.warn( "'-Xstrictfp' to restore the default behaviour." ); // NON-NLS
     }
 
     final PackageManager mgr = getPackageManager();
 
-    mgr.addModule(ClassicEngineCoreModule.class.getName());
-    mgr.load("org.pentaho.reporting.engine.classic.core.modules."); // NON-NLS
-    mgr.load("org.pentaho.reporting.engine.classic.extensions.modules."); // NON-NLS
-    mgr.load("org.pentaho.reporting.engine.classic.extensions.datasources."); // NON-NLS
-    mgr.load("org.pentaho.reporting.engine.classic.core.userdefined.modules."); // NON-NLS
+    mgr.addModule( ClassicEngineCoreModule.class.getName() );
+    mgr.load( "org.pentaho.reporting.engine.classic.core.modules." ); // NON-NLS
+    mgr.load( "org.pentaho.reporting.engine.classic.extensions.modules." ); // NON-NLS
+    mgr.load( "org.pentaho.reporting.engine.classic.extensions.datasources." ); // NON-NLS
+    mgr.load( "org.pentaho.reporting.engine.classic.core.userdefined.modules." ); // NON-NLS
 
     bootAdditionalModules();
     mgr.initializeModules();
 
-    if (mgr.isModuleAvailable(ClassicEngineCoreModule.class.getName()) == false)
-    {
-      throw new IllegalStateException("Booting the report-engine failed.");
+    if ( mgr.isModuleAvailable( ClassicEngineCoreModule.class.getName() ) == false ) {
+      throw new IllegalStateException( "Booting the report-engine failed." );
     }
 
     StyleKey.lock();
@@ -314,32 +292,26 @@ public class ClassicEngineBoot extends AbstractBoot
    * Boots modules, which have been spcified in the "org.pentaho.reporting.engine.classic.core.boot.Modules"
    * configuration parameter.
    */
-  private void bootAdditionalModules()
-  {
-    try
-    {
+  private void bootAdditionalModules() {
+    try {
       final String bootModules =
-          getGlobalConfig().getConfigProperty
-              ("org.pentaho.reporting.engine.classic.core.boot.Modules"); // NON-NLS
-      if (bootModules != null)
-      {
-        final CSVTokenizer csvToken = new CSVTokenizer(bootModules, ",");
-        while (csvToken.hasMoreTokens())
-        {
+        getGlobalConfig().getConfigProperty
+          ( "org.pentaho.reporting.engine.classic.core.boot.Modules" ); // NON-NLS
+      if ( bootModules != null ) {
+        final CSVTokenizer csvToken = new CSVTokenizer( bootModules, "," );
+        while ( csvToken.hasMoreTokens() ) {
           final String token = csvToken.nextToken();
-          getPackageManager().load(token);
+          getPackageManager().load( token );
         }
       }
-    }
-    catch (SecurityException se)
-    {
+    } catch ( SecurityException se ) {
       // we'll ignore any Security exception ..
-      ClassicEngineBoot.logger.info("Security settings forbid to check the system properties for extension modules."); // NON-NLS
-    }
-    catch (Exception se)
-    {
-      ClassicEngineBoot.logger.error("An error occured while checking the system properties for extension modules.", // NON-NLS
-          se);
+      ClassicEngineBoot.logger
+        .info( "Security settings forbid to check the system properties for extension modules." ); // NON-NLS
+    } catch ( Exception se ) {
+      ClassicEngineBoot.logger
+        .error( "An error occured while checking the system properties for extension modules.", // NON-NLS
+          se );
     }
   }
 
@@ -358,12 +330,11 @@ public class ClassicEngineBoot extends AbstractBoot
    *
    * @return true, if the VM uses strict floating points by default, false otherwise.
    */
-  private static boolean isStrictFP()
-  {
+  private static boolean isStrictFP() {
     final double d = 8.0e+307;
     final double result1 = 4.0 * d * 0.5;
     final double result2 = 2.0 * d;
-    return (result1 != result2 && (result1 == Double.POSITIVE_INFINITY));
+    return ( result1 != result2 && ( result1 == Double.POSITIVE_INFINITY ) );
   }
 
 
@@ -372,8 +343,7 @@ public class ClassicEngineBoot extends AbstractBoot
    *
    * @return the user configuration, if any.
    */
-  public static Configuration getUserConfig()
-  {
+  public static Configuration getUserConfig() {
     return configWrapper.getWrappedConfiguration();
   }
 
@@ -382,9 +352,8 @@ public class ClassicEngineBoot extends AbstractBoot
    *
    * @param config the user configuration.
    */
-  public static void setUserConfig(final Configuration config)
-  {
-    configWrapper.setWrappedConfiguration(config);
+  public static void setUserConfig( final Configuration config ) {
+    configWrapper.setWrappedConfiguration( config );
   }
 
   /**
@@ -394,125 +363,102 @@ public class ClassicEngineBoot extends AbstractBoot
    * @param moduleClass the class-name of the module that should be tested.
    * @return true, if the module is available and has been initialized correctly, false otherwise.
    */
-  public boolean isModuleAvailable(final String moduleClass)
-  {
+  public boolean isModuleAvailable( final String moduleClass ) {
     return getPackageManager().isModuleAvailable
-        (new DefaultModuleInfo(moduleClass, null, null, null));
+      ( new DefaultModuleInfo( moduleClass, null, null, null ) );
   }
 
-  public enum VersionValidity
-  {
+  public enum VersionValidity {
     VALID, INVALID_RELEASE, INVALID_PATCH
   }
 
-  public static int parseVersionId(final String text)
-  {
-    final StringTokenizer strtok = new StringTokenizer(text, ".");
-    if (strtok.countTokens() == 3)
-    {
-      final int major = ParserUtil.parseInt(strtok.nextToken(), -1);
-      final int minor = ParserUtil.parseInt(strtok.nextToken(), -1);
-      final int patch = ParserUtil.parseInt(strtok.nextToken(), -1);
-      if (major == -1 || minor == -1 || patch == -1)
-      {
+  public static int parseVersionId( final String text ) {
+    final StringTokenizer strtok = new StringTokenizer( text, "." );
+    if ( strtok.countTokens() == 3 ) {
+      final int major = ParserUtil.parseInt( strtok.nextToken(), -1 );
+      final int minor = ParserUtil.parseInt( strtok.nextToken(), -1 );
+      final int patch = ParserUtil.parseInt( strtok.nextToken(), -1 );
+      if ( major == -1 || minor == -1 || patch == -1 ) {
         return -1;
+      } else {
+        return ( ClassicEngineBoot.computeVersionId( major, minor, patch ) );
       }
-      else
-      {
-        return (ClassicEngineBoot.computeVersionId(major, minor, patch));
-      }
-    }
-    else
-    {
+    } else {
       return -1;
     }
   }
 
-  public static String printVersion(final int versionId)
-  {
-    if (versionId <= 0 || versionId > 999000000)
-    {
+  public static String printVersion( final int versionId ) {
+    if ( versionId <= 0 || versionId > 999000000 ) {
       return "TRUNK";
     }
 
     final int patch = versionId % 1000;
-    final int minor = (versionId / 1000) % 1000;
-    final int major = (versionId / 1000000);
-    return String.format("%d.%d.%d", major, minor, patch);
+    final int minor = ( versionId / 1000 ) % 1000;
+    final int major = ( versionId / 1000000 );
+    return String.format( "%d.%d.%d", major, minor, patch );
   }
 
-  public static int computeCurrentVersionId()
-  {
-    final int releaseMajor = ParserUtil.parseInt(ClassicEngineInfo.getInstance().getReleaseMajor(), 999);
-    final int releaseMinor = ParserUtil.parseInt(ClassicEngineInfo.getInstance().getReleaseMinor(), 999);
-    final int releasePatch = ParserUtil.parseInt(ClassicEngineInfo.getInstance().getReleaseMilestone(), 999);
-    final int version = computeVersionId(releaseMajor, releaseMinor, releasePatch);
-    if (version == 0)
-    {
+  public static int computeCurrentVersionId() {
+    final int releaseMajor = ParserUtil.parseInt( ClassicEngineInfo.getInstance().getReleaseMajor(), 999 );
+    final int releaseMinor = ParserUtil.parseInt( ClassicEngineInfo.getInstance().getReleaseMinor(), 999 );
+    final int releasePatch = ParserUtil.parseInt( ClassicEngineInfo.getInstance().getReleaseMilestone(), 999 );
+    final int version = computeVersionId( releaseMajor, releaseMinor, releasePatch );
+    if ( version == 0 ) {
       return VERSION_TRUNK;
     }
     return version;
   }
 
-  public static int computeVersionId(final int prptVersionMajorRaw,
-                                     final int prptVersionMinorRaw,
-                                     final int prptVersionPatchRaw)
-  {
+  public static int computeVersionId( final int prptVersionMajorRaw,
+                                      final int prptVersionMinorRaw,
+                                      final int prptVersionPatchRaw ) {
     return prptVersionMajorRaw * 1000000 + prptVersionMinorRaw * 1000 + prptVersionPatchRaw;
   }
 
-  public static VersionValidity isValidVersion(final int prptVersionMajorRaw,
-                                               final int prptVersionMinorRaw,
-                                               final int prptVersionPatchRaw)
-  {
-    return getInstance().isValidVersion(prptVersionMajorRaw, prptVersionMinorRaw, prptVersionPatchRaw,
-        ClassicEngineInfo.getInstance());
+  public static VersionValidity isValidVersion( final int prptVersionMajorRaw,
+                                                final int prptVersionMinorRaw,
+                                                final int prptVersionPatchRaw ) {
+    return getInstance().isValidVersion( prptVersionMajorRaw, prptVersionMinorRaw, prptVersionPatchRaw,
+      ClassicEngineInfo.getInstance() );
   }
 
-  protected VersionValidity isValidVersion(final int prptVersionMajorRaw,
-                                           final int prptVersionMinorRaw,
-                                           final int prptVersionPatchRaw,
-                                           final ProjectInformation info)
-  {
-    final int releaseMajor = ParserUtil.parseInt(info.getReleaseMajor(), 999);
-    final int releaseMinor = ParserUtil.parseInt(info.getReleaseMinor(), 999);
-    final int releasePatch = ParserUtil.parseInt(info.getReleaseMilestone(), 999);
-    if (computeVersionId(prptVersionMajorRaw, prptVersionMinorRaw, prptVersionPatchRaw) == VERSION_TRUNK)
-    {
+  protected VersionValidity isValidVersion( final int prptVersionMajorRaw,
+                                            final int prptVersionMinorRaw,
+                                            final int prptVersionPatchRaw,
+                                            final ProjectInformation info ) {
+    final int releaseMajor = ParserUtil.parseInt( info.getReleaseMajor(), 999 );
+    final int releaseMinor = ParserUtil.parseInt( info.getReleaseMinor(), 999 );
+    final int releasePatch = ParserUtil.parseInt( info.getReleaseMilestone(), 999 );
+    if ( computeVersionId( prptVersionMajorRaw, prptVersionMinorRaw, prptVersionPatchRaw ) == VERSION_TRUNK ) {
       return VersionValidity.VALID;
     }
 
-    if ((prptVersionMajorRaw * 1000 + prptVersionMinorRaw) > (releaseMajor * 1000 + releaseMinor))
-    {
+    if ( ( prptVersionMajorRaw * 1000 + prptVersionMinorRaw ) > ( releaseMajor * 1000 + releaseMinor ) ) {
       return VersionValidity.INVALID_RELEASE;
     }
 
-    if ((prptVersionMajorRaw * 1000 + prptVersionMinorRaw) == (releaseMajor * 1000 + releaseMinor))
-    {
-      if (prptVersionPatchRaw > releasePatch)
-      {
+    if ( ( prptVersionMajorRaw * 1000 + prptVersionMinorRaw ) == ( releaseMajor * 1000 + releaseMinor ) ) {
+      if ( prptVersionPatchRaw > releasePatch ) {
         return VersionValidity.INVALID_PATCH;
       }
     }
     return VersionValidity.VALID;
   }
 
-  public static boolean isEnforceCompatibilityFor(final int level,
-                                                  final int prptVersionMajorRaw,
-                                                  final int prptVersionMinorRaw)
-  {
-    return isEnforceCompatibilityFor(level, prptVersionMajorRaw, prptVersionMinorRaw, 999);
+  public static boolean isEnforceCompatibilityFor( final int level,
+                                                   final int prptVersionMajorRaw,
+                                                   final int prptVersionMinorRaw ) {
+    return isEnforceCompatibilityFor( level, prptVersionMajorRaw, prptVersionMinorRaw, 999 );
   }
 
-  public static boolean isEnforceCompatibilityFor(final int level,
-                                                  final int prptVersionMajorRaw,
-                                                  final int prptVersionMinorRaw,
-                                                  final int prptVersionPatchRaw)
-  {
-    if (level == -1)
-    {
+  public static boolean isEnforceCompatibilityFor( final int level,
+                                                   final int prptVersionMajorRaw,
+                                                   final int prptVersionMinorRaw,
+                                                   final int prptVersionPatchRaw ) {
+    if ( level == -1 ) {
       return false;
     }
-    return level <= computeVersionId(prptVersionMajorRaw, prptVersionMinorRaw, prptVersionPatchRaw);
+    return level <= computeVersionId( prptVersionMajorRaw, prptVersionMinorRaw, prptVersionPatchRaw );
   }
 }

@@ -26,41 +26,30 @@ import org.pentaho.reporting.libraries.xmlns.parser.XmlReadHandler;
  *
  * @author Thomas Morgner
  */
-public class SQLResourceXmlFactoryModule implements XmlFactoryModule
-{
-  public SQLResourceXmlFactoryModule()
-  {
+public class SQLResourceXmlFactoryModule implements XmlFactoryModule {
+  public SQLResourceXmlFactoryModule() {
   }
 
-  public int getDocumentSupport(final XmlDocumentInfo documentInfo)
-  {
+  public int getDocumentSupport( final XmlDocumentInfo documentInfo ) {
     final String rootNamespace = documentInfo.getRootElementNameSpace();
-    if (rootNamespace != null && rootNamespace.length() > 0)
-    {
-      if (SQLDataFactoryModule.NAMESPACE.equals(rootNamespace) == false)
-      {
+    if ( rootNamespace != null && rootNamespace.length() > 0 ) {
+      if ( SQLDataFactoryModule.NAMESPACE.equals( rootNamespace ) == false ) {
         return XmlFactoryModule.NOT_RECOGNIZED;
-      }
-      else if ("sql-datasource".equals(documentInfo.getRootElement()))
-      {
+      } else if ( "sql-datasource".equals( documentInfo.getRootElement() ) ) {
         return XmlFactoryModule.RECOGNIZED_BY_NAMESPACE;
       }
-    }
-    else if ("sql-datasource".equals(documentInfo.getRootElement()))
-    {
+    } else if ( "sql-datasource".equals( documentInfo.getRootElement() ) ) {
       return XmlFactoryModule.RECOGNIZED_BY_TAGNAME;
     }
 
     return XmlFactoryModule.NOT_RECOGNIZED;
   }
 
-  public String getDefaultNamespace(final XmlDocumentInfo documentInfo)
-  {
+  public String getDefaultNamespace( final XmlDocumentInfo documentInfo ) {
     return SQLDataFactoryModule.NAMESPACE;
   }
 
-  public XmlReadHandler createReadHandler(final XmlDocumentInfo documentInfo)
-  {
+  public XmlReadHandler createReadHandler( final XmlDocumentInfo documentInfo ) {
     return new SQLDataSourceReadHandler();
   }
 }

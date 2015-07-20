@@ -17,9 +17,7 @@
 
 package org.pentaho.reporting.engine.classic.core.function;
 
-import org.pentaho.reporting.engine.classic.core.Element;
 import org.pentaho.reporting.engine.classic.core.ReportElement;
-import org.pentaho.reporting.engine.classic.core.Section;
 import org.pentaho.reporting.engine.classic.core.style.ElementStyleKeys;
 import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
 
@@ -29,10 +27,9 @@ import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
  *
  * @author Thomas Morgner
  * @deprecated add style expressions to the 'href-target' and 'href-window' instead. It is much easier and less
- *             confusing.
+ * confusing.
  */
-public class CreateHyperLinksFunction extends AbstractElementFormatFunction
-{
+public class CreateHyperLinksFunction extends AbstractElementFormatFunction {
   /**
    * The field name from where to read the hyper-link target.
    */
@@ -49,8 +46,7 @@ public class CreateHyperLinksFunction extends AbstractElementFormatFunction
   /**
    * Default Constructor.
    */
-  public CreateHyperLinksFunction()
-  {
+  public CreateHyperLinksFunction() {
   }
 
   /**
@@ -58,8 +54,7 @@ public class CreateHyperLinksFunction extends AbstractElementFormatFunction
    *
    * @return the name of the field.
    */
-  public String getField()
-  {
+  public String getField() {
     return field;
   }
 
@@ -68,8 +63,7 @@ public class CreateHyperLinksFunction extends AbstractElementFormatFunction
    *
    * @param field a field name.
    */
-  public void setField(final String field)
-  {
+  public void setField( final String field ) {
     this.field = field;
   }
 
@@ -79,8 +73,7 @@ public class CreateHyperLinksFunction extends AbstractElementFormatFunction
    *
    * @return the target window string.
    */
-  public String getTarget()
-  {
+  public String getTarget() {
     return target;
   }
 
@@ -90,8 +83,7 @@ public class CreateHyperLinksFunction extends AbstractElementFormatFunction
    *
    * @param target the target window string.
    */
-  public void setTarget(final String target)
-  {
+  public void setTarget( final String target ) {
     this.target = target;
   }
 
@@ -100,8 +92,7 @@ public class CreateHyperLinksFunction extends AbstractElementFormatFunction
    *
    * @return the fieldname from where to read the target window string.
    */
-  public String getWindowField()
-  {
+  public String getWindowField() {
     return windowField;
   }
 
@@ -110,50 +101,38 @@ public class CreateHyperLinksFunction extends AbstractElementFormatFunction
    *
    * @param windowField the fieldname from where to read the target window string.
    */
-  public void setWindowField(final String windowField)
-  {
+  public void setWindowField( final String windowField ) {
     this.windowField = windowField;
   }
 
-  protected boolean evaluateElement(final ReportElement e)
-  {
-    if (ObjectUtilities.equal(e.getName(), getElement()))
-    {
+  protected boolean evaluateElement( final ReportElement e ) {
+    if ( ObjectUtilities.equal( e.getName(), getElement() ) ) {
       String hrefLinkTarget = null;
-      final Object targetRaw = getDataRow().get(getField());
-      if (targetRaw != null)
-      {
-        hrefLinkTarget = String.valueOf(targetRaw);
+      final Object targetRaw = getDataRow().get( getField() );
+      if ( targetRaw != null ) {
+        hrefLinkTarget = String.valueOf( targetRaw );
       }
 
-      if (hrefLinkTarget == null)
-      {
+      if ( hrefLinkTarget == null ) {
         return false;
       }
 
       final String windowField = getWindowField();
       final String window;
-      if (windowField != null)
-      {
-        final Object windowRaw = getDataRow().get(windowField);
-        if (windowRaw != null)
-        {
-          window = String.valueOf(windowRaw);
-        }
-        else
-        {
+      if ( windowField != null ) {
+        final Object windowRaw = getDataRow().get( windowField );
+        if ( windowRaw != null ) {
+          window = String.valueOf( windowRaw );
+        } else {
           window = null;
         }
-      }
-      else
-      {
+      } else {
         window = getTarget();
       }
 
-      e.getStyle().setStyleProperty(ElementStyleKeys.HREF_TARGET, hrefLinkTarget);
-      if (window != null)
-      {
-        e.getStyle().setStyleProperty(ElementStyleKeys.HREF_WINDOW, window);
+      e.getStyle().setStyleProperty( ElementStyleKeys.HREF_TARGET, hrefLinkTarget );
+      if ( window != null ) {
+        e.getStyle().setStyleProperty( ElementStyleKeys.HREF_WINDOW, window );
       }
       return true;
     }

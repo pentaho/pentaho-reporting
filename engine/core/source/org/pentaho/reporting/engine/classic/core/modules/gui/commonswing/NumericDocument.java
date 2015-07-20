@@ -26,53 +26,43 @@ import javax.swing.text.PlainDocument;
  *
  * @author Thomas Morgner
  */
-public class NumericDocument extends PlainDocument
-{
+public class NumericDocument extends PlainDocument {
   private StringBuffer buffer;
 
-  public NumericDocument()
-  {
+  public NumericDocument() {
     this.buffer = new StringBuffer();
   }
 
-  public void insertString(final int offs, final String str, final AttributeSet a) throws BadLocationException
-  {
-    buffer.delete(0, buffer.length());
+  public void insertString( final int offs, final String str, final AttributeSet a ) throws BadLocationException {
+    buffer.delete( 0, buffer.length() );
     final char[] chars = str.toCharArray();
-    for (int i = 0; i < chars.length; i++)
-    {
-      final char aChar = chars[i];
-      if (Character.isDigit(aChar))
-      {
-        buffer.append(aChar);
+    for ( int i = 0; i < chars.length; i++ ) {
+      final char aChar = chars[ i ];
+      if ( Character.isDigit( aChar ) ) {
+        buffer.append( aChar );
       }
     }
-    if (buffer.length() > 0)
-    {
-      super.insertString(offs, buffer.toString(), a);
+    if ( buffer.length() > 0 ) {
+      super.insertString( offs, buffer.toString(), a );
     }
   }
 
 
-  public void replace(final int offset, final int length, final String text, final AttributeSet attrs)
-      throws BadLocationException
-  {
-    buffer.delete(0, buffer.length());
+  public void replace( final int offset, final int length, final String text, final AttributeSet attrs )
+    throws BadLocationException {
+    buffer.delete( 0, buffer.length() );
     final char[] chars = text.toCharArray();
-    for (int i = 0; i < chars.length; i++)
-    {
-      final char aChar = chars[i];
-      if (Character.isDigit(aChar))
-      {
-        buffer.append(aChar);
+    for ( int i = 0; i < chars.length; i++ ) {
+      final char aChar = chars[ i ];
+      if ( Character.isDigit( aChar ) ) {
+        buffer.append( aChar );
       }
     }
-    if (buffer.length() > 0)
-    {
+    if ( buffer.length() > 0 ) {
       // for JDK 1.2 compatiblity we cannot do this as a single operation, as the replace method did
       // not exist until JDK 1.4
-      super.remove(offset, length);
-      super.insertString(offset, buffer.toString(), attrs);
+      super.remove( offset, length );
+      super.insertString( offset, buffer.toString(), attrs );
     }
   }
 }

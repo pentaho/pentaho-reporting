@@ -25,7 +25,6 @@ import org.pentaho.reporting.engine.classic.core.modules.parser.base.ReportEleme
  *
  * @author Thomas Morgner
  */
-public interface ElementReadHandler extends ReportElementReadHandler
-{
+public interface ElementReadHandler extends ReportElementReadHandler {
   public Element getElement();
 }

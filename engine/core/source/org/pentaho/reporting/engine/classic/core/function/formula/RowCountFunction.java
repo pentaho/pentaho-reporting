@@ -17,8 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.core.function.formula;
 
-import java.math.BigDecimal;
-
 import org.pentaho.reporting.engine.classic.core.function.ReportFormulaContext;
 import org.pentaho.reporting.libraries.formula.EvaluationException;
 import org.pentaho.reporting.libraries.formula.FormulaContext;
@@ -28,38 +26,33 @@ import org.pentaho.reporting.libraries.formula.function.ParameterCallback;
 import org.pentaho.reporting.libraries.formula.lvalues.TypeValuePair;
 import org.pentaho.reporting.libraries.formula.typing.coretypes.NumberType;
 
-public class RowCountFunction implements Function
-{
-  public RowCountFunction()
-  {
+import java.math.BigDecimal;
+
+public class RowCountFunction implements Function {
+  public RowCountFunction() {
   }
 
-  public String getCanonicalName()
-  {
+  public String getCanonicalName() {
     return "ROWCOUNT";
   }
 
-  public TypeValuePair evaluate(final FormulaContext context,
-                                final ParameterCallback parameters) throws EvaluationException
-  {
+  public TypeValuePair evaluate( final FormulaContext context,
+                                 final ParameterCallback parameters ) throws EvaluationException {
     final int parameterCount = parameters.getParameterCount();
-    if (parameterCount > 1)
-    {
-      throw EvaluationException.getInstance(LibFormulaErrorValue.ERROR_ARGUMENTS_VALUE);
+    if ( parameterCount > 1 ) {
+      throw EvaluationException.getInstance( LibFormulaErrorValue.ERROR_ARGUMENTS_VALUE );
     }
     final ReportFormulaContext rfc = (ReportFormulaContext) context;
     final int groupStart;
-    if (parameterCount == 0)
-    {
-      groupStart = rfc.getRuntime().getGroupStartRow(-1);
-    }
-    else
-    {
-      final String groupName = context.getTypeRegistry().convertToText(parameters.getType(0), parameters.getValue(0));
-      groupStart = rfc.getRuntime().getGroupStartRow(groupName);
+    if ( parameterCount == 0 ) {
+      groupStart = rfc.getRuntime().getGroupStartRow( -1 );
+    } else {
+      final String groupName =
+        context.getTypeRegistry().convertToText( parameters.getType( 0 ), parameters.getValue( 0 ) );
+      groupStart = rfc.getRuntime().getGroupStartRow( groupName );
     }
     final int row = rfc.getRuntime().getCurrentRow();
     //noinspection UnpredictableBigDecimalConstructorCall
-    return new TypeValuePair(NumberType.GENERIC_NUMBER, new BigDecimal((double) (row - groupStart)));
+    return new TypeValuePair( NumberType.GENERIC_NUMBER, new BigDecimal( (double) ( row - groupStart ) ) );
   }
 }

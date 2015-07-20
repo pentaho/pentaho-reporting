@@ -17,15 +17,15 @@
 
 package org.pentaho.reporting.engine.classic.core.function;
 
+import org.pentaho.reporting.engine.classic.core.event.ReportEvent;
+import org.pentaho.reporting.engine.classic.core.states.ReportStateKey;
+import org.pentaho.reporting.engine.classic.core.util.Sequence;
+
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
-
-import org.pentaho.reporting.engine.classic.core.event.ReportEvent;
-import org.pentaho.reporting.engine.classic.core.states.ReportStateKey;
-import org.pentaho.reporting.engine.classic.core.util.Sequence;
 
 /**
  * A report function that calculates the sum of one field (column) from the Data-Row. This function produces a global
@@ -44,12 +44,11 @@ import org.pentaho.reporting.engine.classic.core.util.Sequence;
  *
  * @author Thomas Morgner
  */
-public class TotalGroupSumFunction extends AbstractFunction implements FieldAggregationFunction
-{
+public class TotalGroupSumFunction extends AbstractFunction implements FieldAggregationFunction {
   /**
    * A useful constant representing zero.
    */
-  protected static final BigDecimal ZERO = new BigDecimal(0.0);
+  protected static final BigDecimal ZERO = new BigDecimal( 0.0 );
   /**
    * A map of results, keyed by the process-key.
    */
@@ -86,8 +85,7 @@ public class TotalGroupSumFunction extends AbstractFunction implements FieldAggr
    * Constructs a new function. <P> Initially the function has no name...be sure to assign one before using the
    * function.
    */
-  public TotalGroupSumFunction()
-  {
+  public TotalGroupSumFunction() {
     results = new HashMap<ReportStateKey, Sequence<BigDecimal>>();
   }
 
@@ -96,60 +94,49 @@ public class TotalGroupSumFunction extends AbstractFunction implements FieldAggr
    *
    * @param event the event.
    */
-  public void reportInitialized(final ReportEvent event)
-  {
+  public void reportInitialized( final ReportEvent event ) {
     globalStateKey = event.getState().getProcessKey();
-    if (isPrepareRunLevel(event))
-    {
+    if ( isPrepareRunLevel( event ) ) {
       result = new Sequence<BigDecimal>();
       results.clear();
-      results.put(globalStateKey, result);
+      results.put( globalStateKey, result );
       lastGroupSequenceNumber = 0;
-    }
-    else
-    {
-      result = results.get(globalStateKey);
+    } else {
+      result = results.get( globalStateKey );
       lastGroupSequenceNumber = 0;
     }
   }
 
-  protected boolean isPrepareRunLevel(final ReportEvent event)
-  {
-    return FunctionUtilities.isDefinedPrepareRunLevel(this, event);
+  protected boolean isPrepareRunLevel( final ReportEvent event ) {
+    return FunctionUtilities.isDefinedPrepareRunLevel( this, event );
   }
+
   /**
    * Receives notification that a group has started.
    *
    * @param event the event.
    */
-  public void groupStarted(final ReportEvent event)
-  {
-    if (FunctionUtilities.isDefinedGroup(getGroup(), event))
-    {
+  public void groupStarted( final ReportEvent event ) {
+    if ( FunctionUtilities.isDefinedGroup( getGroup(), event ) ) {
       currentGroupKey = event.getState().getProcessKey();
-      if (isPrepareRunLevel(event))
-      {
+      if ( isPrepareRunLevel( event ) ) {
         clear();
 
-        results.put(globalStateKey, result);
-        results.put(currentGroupKey, result);
-      }
-      else
-      {
+        results.put( globalStateKey, result );
+        results.put( currentGroupKey, result );
+      } else {
         // Activate the current group, which was filled in the prepare run.
-        result = results.get(currentGroupKey);
+        result = results.get( currentGroupKey );
       }
     }
 
-    if (FunctionUtilities.isDefinedGroup(getCrosstabFilterGroup(), event))
-    {
+    if ( FunctionUtilities.isDefinedGroup( getCrosstabFilterGroup(), event ) ) {
       final int groupIndex = event.getState().getCurrentGroupIndex();
-      this.lastGroupSequenceNumber = (int) event.getState().getCrosstabColumnSequenceCounter(groupIndex);
+      this.lastGroupSequenceNumber = (int) event.getState().getCrosstabColumnSequenceCounter( groupIndex );
     }
   }
 
-  protected void clear()
-  {
+  protected void clear() {
     result = new Sequence<BigDecimal>();
     lastGroupSequenceNumber = 0;
   }
@@ -159,67 +146,54 @@ public class TotalGroupSumFunction extends AbstractFunction implements FieldAggr
    *
    * @param event the event.
    */
-  public void itemsAdvanced(final ReportEvent event)
-  {
-   if (field == null)
-    {
-      return;
-    }
-  
-    if (isPrepareRunLevel(event) == false)
-    {
+  public void itemsAdvanced( final ReportEvent event ) {
+    if ( field == null ) {
       return;
     }
 
-    final BigDecimal value = ExpressionUtilities.convertToBigDecimal(event.getDataRow().get(getField()));
-    if (value == null)
-    {
+    if ( isPrepareRunLevel( event ) == false ) {
       return;
     }
 
-    final BigDecimal oldValue = result.get(lastGroupSequenceNumber);
-    if (oldValue == null)
-    {
-      result.set(lastGroupSequenceNumber, value);
+    final BigDecimal value = ExpressionUtilities.convertToBigDecimal( event.getDataRow().get( getField() ) );
+    if ( value == null ) {
+      return;
     }
-    else
-    {
-      result.set(lastGroupSequenceNumber, oldValue.add(value));
+
+    final BigDecimal oldValue = result.get( lastGroupSequenceNumber );
+    if ( oldValue == null ) {
+      result.set( lastGroupSequenceNumber, value );
+    } else {
+      result.set( lastGroupSequenceNumber, oldValue.add( value ) );
     }
   }
 
-  public Object clone() throws CloneNotSupportedException
-    {
-      final TotalGroupSumFunction o = (TotalGroupSumFunction) super.clone();
-      o.results = (HashMap<ReportStateKey, Sequence<BigDecimal>>) results.clone();
+  public Object clone() throws CloneNotSupportedException {
+    final TotalGroupSumFunction o = (TotalGroupSumFunction) super.clone();
+    o.results = (HashMap<ReportStateKey, Sequence<BigDecimal>>) results.clone();
 
-      // Clone saved group results.
-      // The currently active result needs to be handled
-      // separately from this loop, since the globalStateKey
-      // and currentGroupKey both need to be mapped to it.
-      for (final Map.Entry<ReportStateKey, Sequence<BigDecimal>> entry : results.entrySet())
-      {
-        if (entry.getKey() != globalStateKey && entry.getKey() != currentGroupKey)
-        {
-          o.results.put(entry.getKey(), entry.getValue().clone());
-        }
+    // Clone saved group results.
+    // The currently active result needs to be handled
+    // separately from this loop, since the globalStateKey
+    // and currentGroupKey both need to be mapped to it.
+    for ( final Map.Entry<ReportStateKey, Sequence<BigDecimal>> entry : results.entrySet() ) {
+      if ( entry.getKey() != globalStateKey && entry.getKey() != currentGroupKey ) {
+        o.results.put( entry.getKey(), entry.getValue().clone() );
       }
-
-      if (result != null)
-      {
-        o.result = result.clone();
-        o.results.put(globalStateKey, o.result);
-        o.results.put(currentGroupKey, o.result);
-      }
-      return o;
     }
 
-  public void summaryRowSelection(final ReportEvent event)
-  {
-    if (FunctionUtilities.isDefinedGroup(getCrosstabFilterGroup(), event))
-    {
+    if ( result != null ) {
+      o.result = result.clone();
+      o.results.put( globalStateKey, o.result );
+      o.results.put( currentGroupKey, o.result );
+    }
+    return o;
+  }
+
+  public void summaryRowSelection( final ReportEvent event ) {
+    if ( FunctionUtilities.isDefinedGroup( getCrosstabFilterGroup(), event ) ) {
       final int groupIndex = event.getState().getCurrentGroupIndex();
-      this.lastGroupSequenceNumber = (int) event.getState().getCrosstabColumnSequenceCounter(groupIndex);
+      this.lastGroupSequenceNumber = (int) event.getState().getCrosstabColumnSequenceCounter( groupIndex );
     }
   }
 
@@ -228,8 +202,7 @@ public class TotalGroupSumFunction extends AbstractFunction implements FieldAggr
    *
    * @return the group name.
    */
-  public String getGroup()
-  {
+  public String getGroup() {
     return group;
   }
 
@@ -238,8 +211,7 @@ public class TotalGroupSumFunction extends AbstractFunction implements FieldAggr
    *
    * @param group the group name.
    */
-  public void setGroup(final String group)
-  {
+  public void setGroup( final String group ) {
     this.group = group;
   }
 
@@ -249,16 +221,13 @@ public class TotalGroupSumFunction extends AbstractFunction implements FieldAggr
    *
    * @return The value of the function.
    */
-  public Object getValue()
-  {
-    if (result == null)
-    {
+  public Object getValue() {
+    if ( result == null ) {
       return ZERO;
     }
-    
-    final BigDecimal value = result.get(lastGroupSequenceNumber);
-    if (value == null)
-    {
+
+    final BigDecimal value = result.get( lastGroupSequenceNumber );
+    if ( value == null ) {
       return ZERO;
     }
     return value;
@@ -269,8 +238,7 @@ public class TotalGroupSumFunction extends AbstractFunction implements FieldAggr
    *
    * @return The field name.
    */
-  public String getField()
-  {
+  public String getField() {
     return field;
   }
 
@@ -279,8 +247,7 @@ public class TotalGroupSumFunction extends AbstractFunction implements FieldAggr
    *
    * @param field the field name.
    */
-  public void setField(final String field)
-  {
+  public void setField( final String field ) {
     this.field = field;
   }
 
@@ -290,8 +257,7 @@ public class TotalGroupSumFunction extends AbstractFunction implements FieldAggr
    *
    * @return a copy of this function.
    */
-  public Expression getInstance()
-  {
+  public Expression getInstance() {
     final TotalGroupSumFunction function = (TotalGroupSumFunction) super.getInstance();
     function.result = null;
     function.results = new HashMap<ReportStateKey, Sequence<BigDecimal>>();
@@ -305,21 +271,18 @@ public class TotalGroupSumFunction extends AbstractFunction implements FieldAggr
    * @throws IOException            if an IO error occured.
    * @throws ClassNotFoundException if a required class could not be found.
    */
-  private void readObject(final ObjectInputStream in)
-      throws IOException, ClassNotFoundException
-  {
+  private void readObject( final ObjectInputStream in )
+    throws IOException, ClassNotFoundException {
     in.defaultReadObject();
     this.results = new HashMap<ReportStateKey, Sequence<BigDecimal>>();
     this.result = null;
   }
 
-  public String getCrosstabFilterGroup()
-  {
+  public String getCrosstabFilterGroup() {
     return crosstabFilterGroup;
   }
 
-  public void setCrosstabFilterGroup(final String crosstabFilterGroup)
-  {
+  public void setCrosstabFilterGroup( final String crosstabFilterGroup ) {
     this.crosstabFilterGroup = crosstabFilterGroup;
   }
 }

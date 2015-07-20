@@ -17,23 +17,22 @@
 
 package org.pentaho.reporting.engine.classic.core.function;
 
-import java.io.IOException;
-import java.io.ObjectInputStream;
-
 import org.pentaho.reporting.engine.classic.core.event.PageEventListener;
 import org.pentaho.reporting.engine.classic.core.event.ReportEvent;
 import org.pentaho.reporting.engine.classic.core.states.LayoutProcess;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
+
 /**
- * Calculates the sum of a field for an entire page.  The function will also reset by group if the
- * optional <code>group</code> parameter is specified.  If the specified group spans a page break,
- * the sum will be reset with the new page and sum only the items for the group from the subsequent page.
+ * Calculates the sum of a field for an entire page.  The function will also reset by group if the optional
+ * <code>group</code> parameter is specified.  If the specified group spans a page break, the sum will be reset with the
+ * new page and sum only the items for the group from the subsequent page.
  *
  * @author Thomas Morgner
  */
 public class TotalPageSumFunction extends TotalGroupSumFunction
-    implements PageEventListener
-{
+  implements PageEventListener {
   /**
    * holds the collection of values associated with pages and groups
    */
@@ -41,33 +40,28 @@ public class TotalPageSumFunction extends TotalGroupSumFunction
 
   private int pageIndex = 0;
 
-/**
+  /**
    * Default Constructor.
    */
-  public TotalPageSumFunction()
-  {
+  public TotalPageSumFunction() {
     values = new PageGroupValues();
   }
 
-  protected boolean isPrepareRunLevel(final ReportEvent event)
-  {
-    if (event.getState().isPrepareRun() && event.getState().getLevel() == LayoutProcess.LEVEL_PAGINATE)
-    {
+  protected boolean isPrepareRunLevel( final ReportEvent event ) {
+    if ( event.getState().isPrepareRun() && event.getState().getLevel() == LayoutProcess.LEVEL_PAGINATE ) {
       return true;
     }
     return false;
   }
 
   /**
-   * If this is the group associated with the function, store away
-   * the final value
+   * If this is the group associated with the function, store away the final value
+   *
    * @param event the event.
    */
-  public void groupFinished(final ReportEvent event)
-  {
-    if (FunctionUtilities.isDefinedGroup(getGroup(), event))
-    {
-      storeValue(event);
+  public void groupFinished( final ReportEvent event ) {
+    if ( FunctionUtilities.isDefinedGroup( getGroup(), event ) ) {
+      storeValue( event );
     }
   }
 
@@ -76,35 +70,28 @@ public class TotalPageSumFunction extends TotalGroupSumFunction
    *
    * @param event the report event.
    */
-  public void pageStarted(final ReportEvent event)
-  {
+  public void pageStarted( final ReportEvent event ) {
     pageIndex++;
     clear();
   }
 
   /**
-   * Handles the pageFinishedEvent.
-   * Stores the current page value and clears the counter.
-   * pageFinished can be hit multiple times for a single
-   * page, but the stored value should be consistent.
+   * Handles the pageFinishedEvent. Stores the current page value and clears the counter. pageFinished can be hit
+   * multiple times for a single page, but the stored value should be consistent.
    *
    * @param event the report event.
    */
-  public void pageFinished(final ReportEvent event)
-  {
-    storeValue(event);
+  public void pageFinished( final ReportEvent event ) {
+    storeValue( event );
   }
 
-  public Object getValue()
-  {
-    return values.get(pageIndex, currentGroupKey);
+  public Object getValue() {
+    return values.get( pageIndex, currentGroupKey );
   }
 
-  private void storeValue(final ReportEvent event)
-  {
-    if (isPrepareRunLevel(event))
-    {
-      values.put(pageIndex, currentGroupKey, super.getValue());
+  private void storeValue( final ReportEvent event ) {
+    if ( isPrepareRunLevel( event ) ) {
+      values.put( pageIndex, currentGroupKey, super.getValue() );
     }
   }
 
@@ -114,8 +101,7 @@ public class TotalPageSumFunction extends TotalGroupSumFunction
    *
    * @return a copy of this function.
    */
-  public Expression getInstance()
-  {
+  public Expression getInstance() {
     final TotalPageSumFunction function = (TotalPageSumFunction) super.getInstance();
     function.values = new PageGroupValues();
     return function;
@@ -128,9 +114,8 @@ public class TotalPageSumFunction extends TotalGroupSumFunction
    * @throws java.io.IOException    if an IO error occured.
    * @throws ClassNotFoundException if a required class could not be found.
    */
-  private void readObject(final ObjectInputStream in)
-      throws IOException, ClassNotFoundException
-  {
+  private void readObject( final ObjectInputStream in )
+    throws IOException, ClassNotFoundException {
     in.defaultReadObject();
     values = new PageGroupValues();
   }

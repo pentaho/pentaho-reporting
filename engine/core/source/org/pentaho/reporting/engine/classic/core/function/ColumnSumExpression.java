@@ -26,13 +26,11 @@ import java.math.BigDecimal;
  * @author Thomas Morgner
  * @deprecated Use a formula
  */
-public class ColumnSumExpression extends ColumnAggregationExpression
-{
+public class ColumnSumExpression extends ColumnAggregationExpression {
   /**
    * Default Constructor.
    */
-  public ColumnSumExpression()
-  {
+  public ColumnSumExpression() {
   }
 
   /**
@@ -40,21 +38,18 @@ public class ColumnSumExpression extends ColumnAggregationExpression
    *
    * @return the value of the function.
    */
-  public Object getValue()
-  {
+  public Object getValue() {
     final Object[] values = getFieldValues();
-    BigDecimal computedResult = new BigDecimal(0);
-    for (int i = 0; i < values.length; i++)
-    {
-      final Object value = values[i];
-      if (value instanceof Number == false)
-      {
+    BigDecimal computedResult = new BigDecimal( 0 );
+    for ( int i = 0; i < values.length; i++ ) {
+      final Object value = values[ i ];
+      if ( value instanceof Number == false ) {
         continue;
       }
 
       final Number n = (Number) value;
-      final BigDecimal nval = new BigDecimal(n.toString());
-      computedResult = computedResult.add(nval);
+      final BigDecimal nval = new BigDecimal( n.toString() );
+      computedResult = computedResult.add( nval );
     }
 
     return computedResult;

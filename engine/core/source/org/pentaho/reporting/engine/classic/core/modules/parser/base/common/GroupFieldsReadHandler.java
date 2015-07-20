@@ -17,20 +17,18 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.parser.base.common;
 
-import java.util.ArrayList;
-
 import org.pentaho.reporting.engine.classic.core.RelationalGroup;
 import org.pentaho.reporting.engine.classic.core.modules.parser.base.PropertyAttributes;
 import org.pentaho.reporting.libraries.xmlns.parser.XmlReadHandler;
 import org.xml.sax.SAXException;
 
-public class GroupFieldsReadHandler extends AbstractPropertyXmlReadHandler
-{
+import java.util.ArrayList;
+
+public class GroupFieldsReadHandler extends AbstractPropertyXmlReadHandler {
   private RelationalGroup group;
   private ArrayList fieldHandlers;
 
-  public GroupFieldsReadHandler(final RelationalGroup group)
-  {
+  public GroupFieldsReadHandler( final RelationalGroup group ) {
     this.group = group;
     this.fieldHandlers = new ArrayList();
   }
@@ -43,20 +41,17 @@ public class GroupFieldsReadHandler extends AbstractPropertyXmlReadHandler
    * @return the handler or null, if the tagname is invalid.
    * @throws org.xml.sax.SAXException if there is a parsing error.
    */
-  protected XmlReadHandler getHandlerForChild(final String uri,
-                                              final String tagName,
-                                              final PropertyAttributes atts)
-      throws SAXException
-  {
-    if (isSameNamespace(uri) == false)
-    {
+  protected XmlReadHandler getHandlerForChild( final String uri,
+                                               final String tagName,
+                                               final PropertyAttributes atts )
+    throws SAXException {
+    if ( isSameNamespace( uri ) == false ) {
       return null;
     }
 
-    if ("field".equals(tagName))
-    {
+    if ( "field".equals( tagName ) ) {
       final GroupFieldReadHandler readHandler = new GroupFieldReadHandler();
-      fieldHandlers.add(readHandler);
+      fieldHandlers.add( readHandler );
       return readHandler;
     }
     return null;
@@ -67,13 +62,11 @@ public class GroupFieldsReadHandler extends AbstractPropertyXmlReadHandler
    *
    * @throws org.xml.sax.SAXException if there is a parsing error.
    */
-  protected void doneParsing() throws SAXException
-  {
-    for (int i = 0; i < fieldHandlers.size(); i++)
-    {
+  protected void doneParsing() throws SAXException {
+    for ( int i = 0; i < fieldHandlers.size(); i++ ) {
       final GroupFieldReadHandler readHandler =
-          (GroupFieldReadHandler) fieldHandlers.get(i);
-      group.addField((String) readHandler.getObject());
+        (GroupFieldReadHandler) fieldHandlers.get( i );
+      group.addField( (String) readHandler.getObject() );
     }
   }
 
@@ -82,8 +75,7 @@ public class GroupFieldsReadHandler extends AbstractPropertyXmlReadHandler
    *
    * @return the object.
    */
-  public Object getObject()
-  {
+  public Object getObject() {
     return group;
   }
 }

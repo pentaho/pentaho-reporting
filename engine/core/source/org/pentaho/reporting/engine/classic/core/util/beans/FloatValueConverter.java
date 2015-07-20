@@ -22,14 +22,12 @@ package org.pentaho.reporting.engine.classic.core.util.beans;
  *
  * @author Thomas Morgner
  */
-public class FloatValueConverter implements ValueConverter
-{
+public class FloatValueConverter implements ValueConverter {
 
   /**
    * Creates a new value converter.
    */
-  public FloatValueConverter()
-  {
+  public FloatValueConverter() {
   }
 
   /**
@@ -38,17 +36,14 @@ public class FloatValueConverter implements ValueConverter
    * @param o the attribute ({@link Float} expected).
    * @return A string representing the {@link Float} value.
    */
-  public String toAttributeValue(final Object o) throws BeanException
-  {
-    if (o == null)
-    {
+  public String toAttributeValue( final Object o ) throws BeanException {
+    if ( o == null ) {
       throw new NullPointerException();
     }
-    if (o instanceof Float)
-    {
+    if ( o instanceof Float ) {
       return o.toString();
     }
-    throw new BeanException("Failed to convert object of type " + o.getClass() + ": Not a float.");
+    throw new BeanException( "Failed to convert object of type " + o.getClass() + ": Not a float." );
   }
 
   /**
@@ -57,25 +52,19 @@ public class FloatValueConverter implements ValueConverter
    * @param s the string.
    * @return a {@link Float}.
    */
-  public Object toPropertyValue(final String s) throws BeanException
-  {
-    if (s == null)
-    {
+  public Object toPropertyValue( final String s ) throws BeanException {
+    if ( s == null ) {
       throw new NullPointerException();
     }
     final String val = s.trim();
-    if (val.length() == 0)
-    {
-      throw BeanException.getInstance("Failed to convert empty string to number", null);
+    if ( val.length() == 0 ) {
+      throw BeanException.getInstance( "Failed to convert empty string to number", null );
     }
 
-    try
-    {
-      return new Float(val);
-    }
-    catch (NumberFormatException be)
-    {
-      throw BeanException.getInstance("Failed to parse number", be);
+    try {
+      return new Float( val );
+    } catch ( NumberFormatException be ) {
+      throw BeanException.getInstance( "Failed to parse number", be );
     }
 
   }

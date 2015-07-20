@@ -17,8 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.output.table.rtf.itext;
 
-import java.util.ArrayList;
-
 import com.lowagie.text.Anchor;
 import com.lowagie.text.Annotation;
 import com.lowagie.text.Chapter;
@@ -52,75 +50,61 @@ import com.lowagie.text.rtf.text.RtfPhrase;
 import com.lowagie.text.rtf.text.RtfSection;
 import com.lowagie.text.rtf.text.RtfTab;
 
-public class PatchRtfDocument extends RtfDocument
-{
-  private static class PatchRtfMapper extends RtfMapper
-  {
+import java.util.ArrayList;
+
+public class PatchRtfDocument extends RtfDocument {
+  private static class PatchRtfMapper extends RtfMapper {
     private RtfDocument rtfDoc;
 
-    private PatchRtfMapper(final RtfDocument doc)
-    {
-      super(doc);
+    private PatchRtfMapper( final RtfDocument doc ) {
+      super( doc );
       this.rtfDoc = doc;
     }
 
-    public RtfBasicElement[] mapElement(Element element) throws DocumentException
-    {
+    public RtfBasicElement[] mapElement( Element element ) throws DocumentException {
       ArrayList<RtfBasicElement> rtfElements = new ArrayList<RtfBasicElement>();
-      if (element instanceof RtfBasicElement)
-      {
+      if ( element instanceof RtfBasicElement ) {
         RtfBasicElement rtfElement = (RtfBasicElement) element;
-        rtfElement.setRtfDocument(rtfDoc);
-        return new RtfBasicElement[]{rtfElement};
+        rtfElement.setRtfDocument( rtfDoc );
+        return new RtfBasicElement[] { rtfElement };
       }
-      switch (element.type())
-      {
+      switch( element.type() ) {
         case Element.CHUNK:
           Chunk chunk = (Chunk) element;
-          if (chunk.hasAttributes())
-          {
-            if (chunk.getAttributes().containsKey(Chunk.IMAGE))
-            {
-              rtfElements.add(new RtfImage(rtfDoc, chunk.getImage()));
+          if ( chunk.hasAttributes() ) {
+            if ( chunk.getAttributes().containsKey( Chunk.IMAGE ) ) {
+              rtfElements.add( new RtfImage( rtfDoc, chunk.getImage() ) );
+            } else if ( chunk.getAttributes().containsKey( Chunk.NEWPAGE ) ) {
+              rtfElements.add( new RtfNewPage( rtfDoc ) );
+            } else if ( chunk.getAttributes().containsKey( Chunk.TAB ) ) {
+              Float tabPos = (Float) ( (Object[]) chunk.getAttributes().get( Chunk.TAB ) )[ 1 ];
+              RtfTab tab = new RtfTab( tabPos.floatValue(), RtfTab.TAB_LEFT_ALIGN );
+              tab.setRtfDocument( rtfDoc );
+              rtfElements.add( tab );
+              rtfElements.add( new RtfChunk( rtfDoc, new Chunk( "\t" ) ) );
+            } else {
+              rtfElements.add( new RtfChunk( rtfDoc, (Chunk) element ) );
             }
-            else if (chunk.getAttributes().containsKey(Chunk.NEWPAGE))
-            {
-              rtfElements.add(new RtfNewPage(rtfDoc));
-            }
-            else if (chunk.getAttributes().containsKey(Chunk.TAB))
-            {
-              Float tabPos = (Float) ((Object[]) chunk.getAttributes().get(Chunk.TAB))[1];
-              RtfTab tab = new RtfTab(tabPos.floatValue(), RtfTab.TAB_LEFT_ALIGN);
-              tab.setRtfDocument(rtfDoc);
-              rtfElements.add(tab);
-              rtfElements.add(new RtfChunk(rtfDoc, new Chunk("\t")));
-            }
-            else
-            {
-              rtfElements.add(new RtfChunk(rtfDoc, (Chunk) element));
-            }
-          }
-          else
-          {
-            rtfElements.add(new RtfChunk(rtfDoc, (Chunk) element));
+          } else {
+            rtfElements.add( new RtfChunk( rtfDoc, (Chunk) element ) );
           }
           break;
         case Element.PHRASE:
-          rtfElements.add(new RtfPhrase(rtfDoc, (Phrase) element));
+          rtfElements.add( new RtfPhrase( rtfDoc, (Phrase) element ) );
           break;
         case Element.PARAGRAPH:
-          rtfElements.add(new RtfParagraph(rtfDoc, (Paragraph) element));
+          rtfElements.add( new RtfParagraph( rtfDoc, (Paragraph) element ) );
           break;
         case Element.ANCHOR:
-          rtfElements.add(new RtfAnchor(rtfDoc, (Anchor) element));
+          rtfElements.add( new RtfAnchor( rtfDoc, (Anchor) element ) );
           break;
         case Element.ANNOTATION:
-          rtfElements.add(new RtfAnnotation(rtfDoc, (Annotation) element));
+          rtfElements.add( new RtfAnnotation( rtfDoc, (Annotation) element ) );
           break;
         case Element.IMGRAW:
         case Element.IMGTEMPLATE:
         case Element.JPEG:
-          rtfElements.add(new RtfImage(rtfDoc, (Image) element));
+          rtfElements.add( new RtfImage( rtfDoc, (Image) element ) );
           break;
         case Element.AUTHOR:
         case Element.SUBJECT:
@@ -128,56 +112,48 @@ public class PatchRtfDocument extends RtfDocument
         case Element.TITLE:
         case Element.PRODUCER:
         case Element.CREATIONDATE:
-          rtfElements.add(new RtfInfoElement(rtfDoc, (Meta) element));
+          rtfElements.add( new RtfInfoElement( rtfDoc, (Meta) element ) );
           break;
         case Element.LIST:
-          rtfElements.add(new RtfList(rtfDoc, (List) element));  // TODO: Testing
+          rtfElements.add( new RtfList( rtfDoc, (List) element ) );  // TODO: Testing
           break;
         case Element.LISTITEM:
-          rtfElements.add(new RtfListItem(rtfDoc, (ListItem) element));  // TODO: Testing
+          rtfElements.add( new RtfListItem( rtfDoc, (ListItem) element ) );  // TODO: Testing
           break;
         case Element.SECTION:
-          rtfElements.add(new RtfSection(rtfDoc, (Section) element));
+          rtfElements.add( new RtfSection( rtfDoc, (Section) element ) );
           break;
         case Element.CHAPTER:
-          rtfElements.add(new RtfChapter(rtfDoc, (Chapter) element));
+          rtfElements.add( new RtfChapter( rtfDoc, (Chapter) element ) );
           break;
         case Element.TABLE:
-          if (element instanceof Table)
-          {
-            rtfElements.add(new PatchRtfTable(rtfDoc, (Table) element));
-          }
-          else
-          {
-            rtfElements.add(new PatchRtfTable(rtfDoc, ((SimpleTable) element).createTable()));
+          if ( element instanceof Table ) {
+            rtfElements.add( new PatchRtfTable( rtfDoc, (Table) element ) );
+          } else {
+            rtfElements.add( new PatchRtfTable( rtfDoc, ( (SimpleTable) element ).createTable() ) );
           }
           break;
         case Element.PTABLE:
-          if (element instanceof PdfPTable)
-          {
-            rtfElements.add(new PatchRtfTable(rtfDoc, (PdfPTable) element));
-          }
-          else
-          {
-            rtfElements.add(new PatchRtfTable(rtfDoc, ((SimpleTable) element).createTable()));
+          if ( element instanceof PdfPTable ) {
+            rtfElements.add( new PatchRtfTable( rtfDoc, (PdfPTable) element ) );
+          } else {
+            rtfElements.add( new PatchRtfTable( rtfDoc, ( (SimpleTable) element ).createTable() ) );
           }
           break;
       }
 
-      return rtfElements.toArray(new RtfBasicElement[rtfElements.size()]);
+      return rtfElements.toArray( new RtfBasicElement[ rtfElements.size() ] );
     }
   }
 
 
   private RtfMapper mapper;
 
-  public PatchRtfDocument()
-  {
-    this.mapper = new PatchRtfMapper(this);
+  public PatchRtfDocument() {
+    this.mapper = new PatchRtfMapper( this );
   }
 
-  public RtfMapper getMapper()
-  {
+  public RtfMapper getMapper() {
     return mapper;
   }
 }

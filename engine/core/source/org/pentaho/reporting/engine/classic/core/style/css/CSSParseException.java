@@ -17,24 +17,19 @@
 
 package org.pentaho.reporting.engine.classic.core.style.css;
 
-public class CSSParseException extends Exception
-{
-  public CSSParseException()
-  {
+public class CSSParseException extends Exception {
+  public CSSParseException() {
   }
 
-  public CSSParseException(final String message)
-  {
-    super(message);
+  public CSSParseException( final String message ) {
+    super( message );
   }
 
-  public CSSParseException(final String message, final Throwable cause)
-  {
-    super(message, cause);
+  public CSSParseException( final String message, final Throwable cause ) {
+    super( message, cause );
   }
 
-  public CSSParseException(final Throwable cause)
-  {
-    super(cause);
+  public CSSParseException( final Throwable cause ) {
+    super( cause );
   }
 }

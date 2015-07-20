@@ -17,13 +17,13 @@
 
 package org.pentaho.reporting.engine.classic.core.function;
 
-import javax.swing.table.TableModel;
-
 import org.pentaho.reporting.engine.classic.core.DataFactory;
 import org.pentaho.reporting.engine.classic.core.DataRow;
 import org.pentaho.reporting.engine.classic.core.ResourceBundleFactory;
 import org.pentaho.reporting.engine.classic.core.wizard.DataSchema;
 import org.pentaho.reporting.libraries.base.config.Configuration;
+
+import javax.swing.table.TableModel;
 
 /**
  * The expression runtime encapsulates all properties of the current report processing run that might be needed to
@@ -32,8 +32,7 @@ import org.pentaho.reporting.libraries.base.config.Configuration;
  *
  * @author Thomas Morgner
  */
-public interface ExpressionRuntime
-{
+public interface ExpressionRuntime {
   /**
    * Returns the current data-row. The datarow can be used to access the computed values of all expressions and
    * functions and the current row in the tablemodel.
@@ -68,8 +67,8 @@ public interface ExpressionRuntime
   public TableModel getData();
 
   /**
-   * Returns the number of the row in padded datasource that is currently being processed. This is equal to
-   * the current report state's currentRow number.
+   * Returns the number of the row in padded datasource that is currently being processed. This is equal to the current
+   * report state's currentRow number.
    *
    * @return the current row number.
    */
@@ -77,16 +76,16 @@ public interface ExpressionRuntime
 
   /**
    * Returns the row number of the raw datasource that is currently accessed.
-   * 
+   *
    * @return the raw access row number.
    */
   public int getCurrentDataItem();
 
   public int getCurrentGroup();
 
-  public int getGroupStartRow(String groupName);
+  public int getGroupStartRow( String groupName );
 
-  public int getGroupStartRow(int groupIndex);
+  public int getGroupStartRow( int groupIndex );
 
   /**
    * Returns the current export descriptor as returned by the OutputProcessorMetaData object. The output descriptor is a
@@ -107,13 +106,14 @@ public interface ExpressionRuntime
 
   /**
    * A flag indicating that this report contains crosstabs.
-   * 
+   *
    * @return
    */
   public boolean isStructuralComplexReport();
 
   /**
    * A flag indicating that a crosstab is actively processed.
+   *
    * @return
    */
   public boolean isCrosstabActive();

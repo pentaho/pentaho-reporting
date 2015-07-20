@@ -20,39 +20,32 @@ package org.pentaho.reporting.engine.classic.core.states.process;
 import org.pentaho.reporting.engine.classic.core.ReportProcessingException;
 import org.pentaho.reporting.engine.classic.core.event.ReportEvent;
 
-public class PrintSummaryRowFireEventReportHandler implements AdvanceHandler
-{
+public class PrintSummaryRowFireEventReportHandler implements AdvanceHandler {
   public static final PrintSummaryRowFireEventReportHandler HANDLER = new PrintSummaryRowFireEventReportHandler();
 
-  public PrintSummaryRowFireEventReportHandler()
-  {
+  public PrintSummaryRowFireEventReportHandler() {
   }
 
-  public ProcessState advance(final ProcessState state) throws ReportProcessingException
-  {
+  public ProcessState advance( final ProcessState state ) throws ReportProcessingException {
     final ProcessState next = state.deriveForAdvance();
     next.fireReportEvent();
     return next;
   }
 
-  public ProcessState commit(final ProcessState state) throws ReportProcessingException
-  {
-    state.setAdvanceHandler(PrintSummaryBeginCrosstabColumnAxisHandler.HANDLER);
+  public ProcessState commit( final ProcessState state ) throws ReportProcessingException {
+    state.setAdvanceHandler( PrintSummaryBeginCrosstabColumnAxisHandler.HANDLER );
     return state;
   }
 
-  public boolean isFinish()
-  {
+  public boolean isFinish() {
     return false;
   }
 
-  public int getEventCode()
-  {
+  public int getEventCode() {
     return ReportEvent.CROSSTABBING | ReportEvent.SUMMARY_ROW_START;
   }
 
-  public boolean isRestoreHandler()
-  {
+  public boolean isRestoreHandler() {
     return false;
   }
 }

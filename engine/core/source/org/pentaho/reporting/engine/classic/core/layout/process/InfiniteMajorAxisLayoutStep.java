@@ -55,33 +55,26 @@ import org.pentaho.reporting.engine.classic.core.layout.process.valign.VerticalA
  * @author Thomas Morgner
  * @noinspection PointlessArithmeticExpression, ConstantConditions
  */
-public final class InfiniteMajorAxisLayoutStep extends AbstractMajorAxisLayoutStep
-{
+public final class InfiniteMajorAxisLayoutStep extends AbstractMajorAxisLayoutStep {
   private MajorAxisParagraphBreakState breakState;
   private VerticalAlignmentProcessor processor;
   private boolean complexText;
 
-  public InfiniteMajorAxisLayoutStep()
-  {
-    super(false);
+  public InfiniteMajorAxisLayoutStep() {
+    super( false );
     this.breakState = new MajorAxisParagraphBreakState();
     this.processor = new VerticalAlignmentProcessor();
   }
 
-  public void initialize(OutputProcessorMetaData metaData)
-  {
-    complexText = metaData.isFeatureSupported(OutputProcessorFeature.COMPLEX_TEXT);
+  public void initialize( OutputProcessorMetaData metaData ) {
+    complexText = metaData.isFeatureSupported( OutputProcessorFeature.COMPLEX_TEXT );
   }
 
-  public void compute(final LogicalPageBox pageBox)
-  {
+  public void compute( final LogicalPageBox pageBox ) {
     this.breakState.deinit();
-    try
-    {
-      super.compute(pageBox);
-    }
-    finally
-    {
+    try {
+      super.compute( pageBox );
+    } finally {
       this.breakState.deinit();
     }
   }
@@ -91,48 +84,39 @@ public final class InfiniteMajorAxisLayoutStep extends AbstractMajorAxisLayoutSt
    *
    * @param box the box.
    */
-  public void continueComputation(final RenderBox box)
-  {
+  public void continueComputation( final RenderBox box ) {
     // This is most-likely wrong, but as we do not support inline-block elements yet, we can ignore this for now.
-    if (box.getCachedWidth() == 0)
-    {
-      throw new IllegalStateException("Box must be layouted a bit ..");
+    if ( box.getCachedWidth() == 0 ) {
+      throw new IllegalStateException( "Box must be layouted a bit .." );
     }
 
     this.breakState.deinit();
-    try
-    {
-      super.continueComputation(box);
-    }
-    finally
-    {
+    try {
+      super.continueComputation( box );
+    } finally {
       this.breakState.deinit();
     }
   }
 
 
-  protected boolean startBlockLevelBox(final RenderBox box)
-  {
-    if (checkCacheValid(box))
-    {
+  protected boolean startBlockLevelBox( final RenderBox box ) {
+    if ( checkCacheValid( box ) ) {
       return false;
     }
 
-    performStartTable(box);
+    performStartTable( box );
     // Compute the block-position of the box. The box is positioned relative to the previous sibling or
     // relative to the parent.
-    box.setCachedY(computeVerticalBlockPosition(box));
+    box.setCachedY( computeVerticalBlockPosition( box ) );
 
-    if (breakState.isActive())
-    {
-      if (complexText) {
+    if ( breakState.isActive() ) {
+      if ( complexText ) {
         return true;
       }
 
       // No breakstate and not being suspended? Why this?
-      if (breakState.isSuspended() == false)
-      {
-        throw new IllegalStateException("This cannot be.");
+      if ( breakState.isSuspended() == false ) {
+        throw new IllegalStateException( "This cannot be." );
       }
 
       // this way or another - we are suspended now. So there is no need to look
@@ -144,126 +128,97 @@ public final class InfiniteMajorAxisLayoutStep extends AbstractMajorAxisLayoutSt
     }
 
     final int layoutNodeType = box.getLayoutNodeType();
-    if (layoutNodeType == LayoutNodeTypes.TYPE_BOX_PARAGRAPH)
-    {
+    if ( layoutNodeType == LayoutNodeTypes.TYPE_BOX_PARAGRAPH ) {
       final ParagraphRenderBox paragraphBox = (ParagraphRenderBox) box;
       // We cant cache that ... the shift operations later would misbehave
       // One way around would be to at least store the layouted offsets
       // (which should be immutable as long as the line did not change its
       // contents) and to reapply them on each run. This is cheaper than
       // having to compute the whole v-align for the whole line.
-      breakState.init(paragraphBox);
-    }
-    else if (layoutNodeType == LayoutNodeTypes.TYPE_BOX_CONTENT)
-    {
+      breakState.init( paragraphBox );
+    } else if ( layoutNodeType == LayoutNodeTypes.TYPE_BOX_CONTENT ) {
       final RenderableReplacedContentBox contentBox = (RenderableReplacedContentBox) box;
-      contentBox.setCachedHeight(ReplacedContentUtil.computeHeight
-          (contentBox, 0, contentBox.getCachedWidth()));
+      contentBox.setCachedHeight( ReplacedContentUtil.computeHeight
+        ( contentBox, 0, contentBox.getCachedWidth() ) );
 
-    }
-    else if (layoutNodeType == LayoutNodeTypes.TYPE_BOX_WATERMARK)
-    {
+    } else if ( layoutNodeType == LayoutNodeTypes.TYPE_BOX_WATERMARK ) {
       final WatermarkAreaBox watermarkAreaBox = (WatermarkAreaBox) box;
-      box.setCachedHeight(watermarkAreaBox.getLogicalPage().getPageHeight());
+      box.setCachedHeight( watermarkAreaBox.getLogicalPage().getPageHeight() );
     }
     return true;
   }
 
-  protected void processBlockLevelNode(final RenderNode node)
-  {
+  protected void processBlockLevelNode( final RenderNode node ) {
     // This could be anything, text, or an image.
-    node.setCachedY(computeVerticalBlockPosition(node));
+    node.setCachedY( computeVerticalBlockPosition( node ) );
 
-    if (node.getNodeType() == LayoutNodeTypes.TYPE_NODE_FINISHEDNODE)
-    {
+    if ( node.getNodeType() == LayoutNodeTypes.TYPE_NODE_FINISHEDNODE ) {
       final FinishedRenderNode fnode = (FinishedRenderNode) node;
-      node.setCachedHeight(fnode.getLayoutedHeight());
+      node.setCachedHeight( fnode.getLayoutedHeight() );
     }
   }
 
-  protected void finishBlockLevelBox(final RenderBox box)
-  {
-    if (checkCacheValid(box))
-    {
+  protected void finishBlockLevelBox( final RenderBox box ) {
+    if ( checkCacheValid( box ) ) {
       return;
     }
 
-    performFinishTable(box);
+    performFinishTable( box );
 
     final int nodeType = box.getNodeType();
-    if (nodeType == LayoutNodeTypes.TYPE_BOX_WATERMARK)
-    {
+    if ( nodeType == LayoutNodeTypes.TYPE_BOX_WATERMARK ) {
       final WatermarkAreaBox watermarkAreaBox = (WatermarkAreaBox) box;
-      box.setCachedHeight(watermarkAreaBox.getLogicalPage().getPageHeight());
-    }
-    else
-    {
+      box.setCachedHeight( watermarkAreaBox.getLogicalPage().getPageHeight() );
+    } else {
       final int layoutNodeType = box.getLayoutNodeType();
-      final RenderBox watermark = isWatermark(box);
-      if (watermark != null)
-      {
+      final RenderBox watermark = isWatermark( box );
+      if ( watermark != null ) {
         final WatermarkAreaBox watermarkAreaBox = (WatermarkAreaBox) watermark;
-        box.setCachedHeight(watermarkAreaBox.getLogicalPage().getPageHeight());
-      }
-      else if ((layoutNodeType & LayoutNodeTypes.MASK_BOX_BLOCK) == LayoutNodeTypes.MASK_BOX_BLOCK)
-      {
-        box.setCachedHeight(computeBlockHeightAndAlign(box));
-      }
-      else if ((layoutNodeType & LayoutNodeTypes.MASK_BOX_ROW) == LayoutNodeTypes.MASK_BOX_ROW)
-      {
-        box.setCachedHeight(computeRowHeight(box, 0));
-      }
-      else
-      {
-        box.setCachedHeight(computeCanvasHeight(box));
+        box.setCachedHeight( watermarkAreaBox.getLogicalPage().getPageHeight() );
+      } else if ( ( layoutNodeType & LayoutNodeTypes.MASK_BOX_BLOCK ) == LayoutNodeTypes.MASK_BOX_BLOCK ) {
+        box.setCachedHeight( computeBlockHeightAndAlign( box ) );
+      } else if ( ( layoutNodeType & LayoutNodeTypes.MASK_BOX_ROW ) == LayoutNodeTypes.MASK_BOX_ROW ) {
+        box.setCachedHeight( computeRowHeight( box, 0 ) );
+      } else {
+        box.setCachedHeight( computeCanvasHeight( box ) );
       }
     }
 
-    if (breakState.isActive())
-    {
+    if ( breakState.isActive() ) {
       final Object suspender = breakState.getSuspendItem();
-      if (box.getInstanceId() == suspender)
-      {
-        breakState.setSuspendItem(null);
+      if ( box.getInstanceId() == suspender ) {
+        breakState.setSuspendItem( null );
         return;
       }
-      if (suspender != null)
-      {
+      if ( suspender != null ) {
         return;
       }
 
-      if (nodeType == LayoutNodeTypes.TYPE_BOX_PARAGRAPH)
-      {
+      if ( nodeType == LayoutNodeTypes.TYPE_BOX_PARAGRAPH ) {
         breakState.deinit();
       }
     }
   }
 
-  private RenderBox isWatermark(final RenderBox box)
-  {
+  private RenderBox isWatermark( final RenderBox box ) {
     final RenderBox parent = box.getParent();
-    if (parent == null)
-    {
+    if ( parent == null ) {
       return null;
     }
-    if (parent.getNodeType() == LayoutNodeTypes.TYPE_BOX_WATERMARK)
-    {
+    if ( parent.getNodeType() == LayoutNodeTypes.TYPE_BOX_WATERMARK ) {
       return parent;
     }
     final RenderBox parent2 = parent.getParent();
-    if (parent2 == null)
-    {
+    if ( parent2 == null ) {
       return null;
     }
-    if (parent2.getNodeType() == LayoutNodeTypes.TYPE_BOX_WATERMARK)
-    {
+    if ( parent2.getNodeType() == LayoutNodeTypes.TYPE_BOX_WATERMARK ) {
       return parent2;
     }
     return null;
   }
 
-  public static long computeVerticalBlockPosition(final RenderNode node)
-  {
+  public static long computeVerticalBlockPosition( final RenderNode node ) {
     // we have no margins yet ..
     final long marginTop = 0;
 
@@ -272,55 +227,42 @@ public final class InfiniteMajorAxisLayoutStep extends AbstractMajorAxisLayoutSt
 
     // A table row is something special. Although it is a block box,
     // it layouts its children from left to right
-    if (parent != null)
-    {
+    if ( parent != null ) {
       final RenderNode prev = node.getPrev();
-      if (prev != null)
-      {
-        if (prev.isVisible())
-        {
+      if ( prev != null ) {
+        if ( prev.isVisible() ) {
           // we have a silbling. Position yourself directly below your silbling ..
-          return (marginTop + prev.getCachedY() + prev.getCachedHeight());
+          return ( marginTop + prev.getCachedY() + prev.getCachedHeight() );
+        } else {
+          return ( marginTop + prev.getCachedY() );
         }
-        else
-        {
-          return (marginTop + prev.getCachedY());
-        }
-      }
-      else
-      {
+      } else {
         final StaticBoxLayoutProperties blp = parent.getStaticBoxLayoutProperties();
         final BoxDefinition bdef = parent.getBoxDefinition();
-        final long insetTop = (blp.getBorderTop() + bdef.getPaddingTop());
+        final long insetTop = ( blp.getBorderTop() + bdef.getPaddingTop() );
 
-        return (marginTop + insetTop + parent.getCachedY());
+        return ( marginTop + insetTop + parent.getCachedY() );
       }
-    }
-    else
-    {
+    } else {
       // there's no parent ..
-      return (marginTop);
+      return ( marginTop );
     }
   }
 
-  private long computeBlockHeightAndAlign(final RenderBox box)
-  {
-    return computeBlockHeightAndAlign(box, box.getBoxDefinition(), 0, true);
+  private long computeBlockHeightAndAlign( final RenderBox box ) {
+    return computeBlockHeightAndAlign( box, box.getBoxDefinition(), 0, true );
   }
 
-  private static long computeTableHeightAndAlign(final RenderBox box)
-  {
-    return computeBlockHeightAndAlign(box, BoxDefinition.EMPTY, 0, true);
+  private static long computeTableHeightAndAlign( final RenderBox box ) {
+    return computeBlockHeightAndAlign( box, BoxDefinition.EMPTY, 0, true );
   }
 
-  public static long computeBlockHeightAndAlign(final RenderBox box,
-                                                final BoxDefinition boxDefinition,
-                                                final long resolveSize,
-                                                final boolean alignChilds)
-  {
-    if (resolveSize < 0)
-    {
-      throw new IllegalArgumentException("ResovleSize cannot be negative");
+  public static long computeBlockHeightAndAlign( final RenderBox box,
+                                                 final BoxDefinition boxDefinition,
+                                                 final long resolveSize,
+                                                 final boolean alignChilds ) {
+    if ( resolveSize < 0 ) {
+      throw new IllegalArgumentException( "ResovleSize cannot be negative" );
     }
 
     // Check the height. Set the height.
@@ -332,29 +274,24 @@ public final class InfiniteMajorAxisLayoutStep extends AbstractMajorAxisLayoutSt
     final long childY2;
     final long childY1;
     final RenderNode lastChildNode = box.getLastChild();
-    if (lastChildNode != null)
-    {
+    if ( lastChildNode != null ) {
       childY1 = box.getFirstChild().getCachedY();
-      if (lastChildNode.isVisible())
-      {
-        childY2 = lastChildNode.getCachedY() + lastChildNode.getCachedHeight() + lastChildNode.getEffectiveMarginBottom();
-      }
-      else
-      {
+      if ( lastChildNode.isVisible() ) {
+        childY2 =
+          lastChildNode.getCachedY() + lastChildNode.getCachedHeight() + lastChildNode.getEffectiveMarginBottom();
+      } else {
         childY2 = lastChildNode.getCachedY();
       }
-      usedHeight = (childY2 - childY1);
-    }
-    else
-    {
+      usedHeight = ( childY2 - childY1 );
+    } else {
       usedHeight = 0;
       childY2 = 0;
       childY1 = 0;
     }
 
     //final long blockContextWidth = box.getStaticBoxLayoutProperties().getBlockContextWidth();
-    final long rminH = minimumHeight.resolve(resolveSize, 0);
-    final long rmaxH = maximumHeight.resolve(resolveSize, InfiniteMajorAxisLayoutStep.MAX_AUTO);
+    final long rminH = minimumHeight.resolve( resolveSize, 0 );
+    final long rmaxH = maximumHeight.resolve( resolveSize, InfiniteMajorAxisLayoutStep.MAX_AUTO );
 
     final StaticBoxLayoutProperties blp = box.getStaticBoxLayoutProperties();
     final long insetBottom = blp.getBorderBottom() + boxDefinition.getPaddingBottom();
@@ -362,50 +299,41 @@ public final class InfiniteMajorAxisLayoutStep extends AbstractMajorAxisLayoutSt
 
     // computed height is always the height of the content-box, excluding any paddings and borders
     final long computedContentHeight;
-    if (boxDefinition.isSizeSpecifiesBorderBox())
-    {
-      final long rprefH = preferredHeight.resolve(resolveSize, usedHeight + insetTop + insetBottom);
-      final long specifiedHeight = ProcessUtility.computeLength(rminH, rmaxH, rprefH);
+    if ( boxDefinition.isSizeSpecifiesBorderBox() ) {
+      final long rprefH = preferredHeight.resolve( resolveSize, usedHeight + insetTop + insetBottom );
+      final long specifiedHeight = ProcessUtility.computeLength( rminH, rmaxH, rprefH );
       computedContentHeight = specifiedHeight - insetTop - insetBottom;
-    }
-    else
-    {
-      final long rprefH = preferredHeight.resolve(resolveSize, usedHeight);
-      computedContentHeight = ProcessUtility.computeLength(rminH, rmaxH, rprefH);
+    } else {
+      final long rprefH = preferredHeight.resolve( resolveSize, usedHeight );
+      computedContentHeight = ProcessUtility.computeLength( rminH, rmaxH, rprefH );
     }
 
-    if (alignChilds && lastChildNode != null)
-    {
+    if ( alignChilds && lastChildNode != null ) {
       // grab the node's y2
-      if (computedContentHeight > usedHeight)
-      {
+      if ( computedContentHeight > usedHeight ) {
         // we have extra space to distribute. So lets shift some boxes.
         final ElementAlignment valign = box.getNodeLayoutProperties().getVerticalAlignment();
-        if (ElementAlignment.BOTTOM.equals(valign))
-        {
-          final long boxBottom = (box.getCachedY() + computedContentHeight - insetBottom);
+        if ( ElementAlignment.BOTTOM.equals( valign ) ) {
+          final long boxBottom = ( box.getCachedY() + computedContentHeight - insetBottom );
           final long delta = boxBottom - childY2;
-          CacheBoxShifter.shiftBoxChilds(box, delta);
-        }
-        else if (ElementAlignment.MIDDLE.equals(valign))
-        {
+          CacheBoxShifter.shiftBoxChilds( box, delta );
+        } else if ( ElementAlignment.MIDDLE.equals( valign ) ) {
           final long extraHeight = computedContentHeight - usedHeight;
-          final long boxTop = box.getCachedY() + insetTop + (extraHeight / 2);
+          final long boxTop = box.getCachedY() + insetTop + ( extraHeight / 2 );
           final long delta = boxTop - childY1;
-          CacheBoxShifter.shiftBoxChilds(box, delta);
+          CacheBoxShifter.shiftBoxChilds( box, delta );
         }
       }
     }
 
-    final long retval = Math.max(0, computedContentHeight + insetTop + insetBottom);
+    final long retval = Math.max( 0, computedContentHeight + insetTop + insetBottom );
     // For the water-mark area, this computation is different. The Watermark-area uses the known height of
     // the parent (=the page size)
-    if (box.getNodeType() == LayoutNodeTypes.TYPE_BOX_WATERMARK)
-    {
+    if ( box.getNodeType() == LayoutNodeTypes.TYPE_BOX_WATERMARK ) {
       final WatermarkAreaBox watermarkAreaBox = (WatermarkAreaBox) box;
       final LogicalPageBox lpb = watermarkAreaBox.getLogicalPage();
       // set the page-height as watermark size.
-      return Math.max(retval, Math.max(0, lpb.getPageHeight() - insetTop - insetBottom));
+      return Math.max( retval, Math.max( 0, lpb.getPageHeight() - insetTop - insetBottom ) );
     }
     return retval;
   }
@@ -417,12 +345,10 @@ public final class InfiniteMajorAxisLayoutStep extends AbstractMajorAxisLayoutSt
    * @param resolveSize the current height that makes 100%
    * @return the row's height.
    */
-  private long computeRowHeight(final RenderBox box, final long resolveSize)
-  {
+  private long computeRowHeight( final RenderBox box, final long resolveSize ) {
     // For the water-mark area, this computation is different. The Watermark-area uses the known height of
     // the parent (=the page size)
-    if (box.getNodeType() == LayoutNodeTypes.TYPE_BOX_WATERMARK)
-    {
+    if ( box.getNodeType() == LayoutNodeTypes.TYPE_BOX_WATERMARK ) {
       final WatermarkAreaBox watermarkAreaBox = (WatermarkAreaBox) box;
       final LogicalPageBox lpb = watermarkAreaBox.getLogicalPage();
       // set the page-height as watermark size.
@@ -442,63 +368,51 @@ public final class InfiniteMajorAxisLayoutStep extends AbstractMajorAxisLayoutSt
     // usedHeight already contains the insetsTop ..
     final long usedHeight;
     RenderNode child = box.getFirstChild();
-    if (child != null)
-    {
+    if ( child != null ) {
       long maxChildY2 = 0;
-      while (child != null)
-      {
-        if (child.isVisible())
-        {
+      while ( child != null ) {
+        if ( child.isVisible() ) {
           final long childY2 = child.getCachedY() + child.getCachedHeight() + child.getEffectiveMarginBottom();
-          maxChildY2 = Math.max(childY2, maxChildY2);
+          maxChildY2 = Math.max( childY2, maxChildY2 );
         }
         child = child.getNext();
       }
-      usedHeight = (maxChildY2 - box.getCachedY());
-    }
-    else
-    {
+      usedHeight = ( maxChildY2 - box.getCachedY() );
+    } else {
       usedHeight = insetTop;
     }
 
-    final long rminH = minimumHeight.resolve(resolveSize, 0);
-    final long rmaxH = maximumHeight.resolve(resolveSize, InfiniteMajorAxisLayoutStep.MAX_AUTO);
+    final long rminH = minimumHeight.resolve( resolveSize, 0 );
+    final long rmaxH = maximumHeight.resolve( resolveSize, InfiniteMajorAxisLayoutStep.MAX_AUTO );
 
     final long computedHeight; // always the height of the content box
-    if (boxDefinition.isSizeSpecifiesBorderBox())
-    {
-      final long rprefH = preferredHeight.resolve(resolveSize, usedHeight + insetBottom);
-      final long specifiedHeight = ProcessUtility.computeLength(rminH, rmaxH, rprefH);
-      computedHeight = Math.max(0, specifiedHeight - insetTop - insetBottom);
+    if ( boxDefinition.isSizeSpecifiesBorderBox() ) {
+      final long rprefH = preferredHeight.resolve( resolveSize, usedHeight + insetBottom );
+      final long specifiedHeight = ProcessUtility.computeLength( rminH, rmaxH, rprefH );
+      computedHeight = Math.max( 0, specifiedHeight - insetTop - insetBottom );
+    } else {
+      final long rprefH = preferredHeight.resolve( resolveSize, usedHeight - insetTop );
+      computedHeight = Math.max( 0, ProcessUtility.computeLength( rminH, rmaxH, rprefH ) );
     }
-    else
-    {
-      final long rprefH = preferredHeight.resolve(resolveSize, usedHeight - insetTop);
-      computedHeight = Math.max(0, ProcessUtility.computeLength(rminH, rmaxH, rprefH));
-    }
-    return Math.max(0, computedHeight + insetTop + insetBottom);
+    return Math.max( 0, computedHeight + insetTop + insetBottom );
   }
 
-  protected void processParagraphChilds(final ParagraphRenderBox box)
-  {
-    if(complexText) {
-      processBoxChilds(box);
-    }
-    else {
+  protected void processParagraphChilds( final ParagraphRenderBox box ) {
+    if ( complexText ) {
+      processBoxChilds( box );
+    } else {
       // Process the direct childs of the paragraph
       // Each direct child represents a line ..
 
       RenderNode node = box.getFirstChild();
-      while (node != null)
-      {
+      while ( node != null ) {
         // all childs of the linebox container must be inline boxes. They
         // represent the lines in the paragraph. Any other element here is
         // a error that must be reported
         final ParagraphPoolBox inlineRenderBox = (ParagraphPoolBox) node;
-        if (startLine(inlineRenderBox))
-        {
-          processBoxChilds(inlineRenderBox);
-          finishLine(inlineRenderBox);
+        if ( startLine( inlineRenderBox ) ) {
+          processBoxChilds( inlineRenderBox );
+          finishLine( inlineRenderBox );
         }
 
         node = node.getNext();
@@ -506,28 +420,23 @@ public final class InfiniteMajorAxisLayoutStep extends AbstractMajorAxisLayoutSt
     }
   }
 
-  private boolean startLine(final ParagraphPoolBox box)
-  {
-    box.setCachedY(computeVerticalBlockPosition(box));
+  private boolean startLine( final ParagraphPoolBox box ) {
+    box.setCachedY( computeVerticalBlockPosition( box ) );
 
-    if (breakState.isActive() == false)
-    {
+    if ( breakState.isActive() == false ) {
       return false;
     }
 
-    if (breakState.isSuspended())
-    {
+    if ( breakState.isSuspended() ) {
       return false;
     }
 
-    breakState.openContext(box);
+    breakState.openContext( box );
     return true;
   }
 
-  private void finishLine(final ParagraphPoolBox inlineRenderBox)
-  {
-    if (breakState.isActive() == false || breakState.isSuspended())
-    {
+  private void finishLine( final ParagraphPoolBox inlineRenderBox ) {
+    if ( breakState.isActive() == false || breakState.isSuspended() ) {
       return;
     }
 
@@ -539,67 +448,56 @@ public final class InfiniteMajorAxisLayoutStep extends AbstractMajorAxisLayoutSt
 
     final StaticBoxLayoutProperties blp = inlineRenderBox.getStaticBoxLayoutProperties();
     final BoxDefinition bdef = inlineRenderBox.getBoxDefinition();
-    final long insetTop = (blp.getBorderTop() + bdef.getPaddingTop());
+    final long insetTop = ( blp.getBorderTop() + bdef.getPaddingTop() );
 
     final long contentAreaY1 = inlineRenderBox.getCachedY() + insetTop;
     final long lineHeight = inlineRenderBox.getLineHeight();
-    processor.align(boxAlignContext, contentAreaY1, lineHeight);
+    processor.align( boxAlignContext, contentAreaY1, lineHeight );
   }
 
 
-  protected boolean startInlineLevelBox(final RenderBox box)
-  {
-    if (checkCacheValid(box))
-    {
+  protected boolean startInlineLevelBox( final RenderBox box ) {
+    if ( checkCacheValid( box ) ) {
       return false;
     }
 
-    box.setCachedY(computeVerticalInlinePosition(box));
-    computeBaselineInfo(box);
+    box.setCachedY( computeVerticalInlinePosition( box ) );
+    computeBaselineInfo( box );
 
-    if (breakState == null)
-    {
+    if ( breakState == null ) {
       // ignore .. should not happen anyway ..
       return true;
     }
 
-    if (breakState.isSuspended())
-    {
+    if ( breakState.isSuspended() ) {
       return false;
     }
 
     final int nodeType = box.getLayoutNodeType();
-    if ((nodeType & LayoutNodeTypes.MASK_BOX_INLINE) == LayoutNodeTypes.MASK_BOX_INLINE)
-    {
-      breakState.openContext(box);
+    if ( ( nodeType & LayoutNodeTypes.MASK_BOX_INLINE ) == LayoutNodeTypes.MASK_BOX_INLINE ) {
+      breakState.openContext( box );
       return true;
-    }
-    else if (nodeType == LayoutNodeTypes.TYPE_BOX_CONTENT)
-    {
-      breakState.getCurrentLine().addChild(new ReplacedContentAlignContext((RenderableReplacedContentBox) box, 0));
+    } else if ( nodeType == LayoutNodeTypes.TYPE_BOX_CONTENT ) {
+      breakState.getCurrentLine().addChild( new ReplacedContentAlignContext( (RenderableReplacedContentBox) box, 0 ) );
       return false;
     }
 
-    breakState.getCurrentLine().addChild(new InlineBlockAlignContext(box));
-    breakState.setSuspendItem(box.getInstanceId());
+    breakState.getCurrentLine().addChild( new InlineBlockAlignContext( box ) );
+    breakState.setSuspendItem( box.getInstanceId() );
     return false;
   }
 
-  private void computeBaselineInfo(final RenderBox box)
-  {
-    if (box.getBaselineInfo() == null)
-    {
+  private void computeBaselineInfo( final RenderBox box ) {
+    if ( box.getBaselineInfo() == null ) {
       return;
     }
 
     RenderNode node = box.getFirstChild();
-    while (node != null)
-    {
-      if (node.getNodeType() == LayoutNodeTypes.TYPE_NODE_TEXT)
-      {
+    while ( node != null ) {
+      if ( node.getNodeType() == LayoutNodeTypes.TYPE_NODE_TEXT ) {
         // grab the baseline info from there ...
         final RenderableText text = (RenderableText) node;
-        box.setBaselineInfo(text.getBaselineInfo());
+        box.setBaselineInfo( text.getBaselineInfo() );
         break;
       }
 
@@ -608,85 +506,70 @@ public final class InfiniteMajorAxisLayoutStep extends AbstractMajorAxisLayoutSt
 
     // If we have no baseline info here, ask the parent. If that one has none
     // either, then we cant do anything about it.
-    if (box.getBaselineInfo() == null)
-    {
-      box.setBaselineInfo(box.getStaticBoxLayoutProperties().getNominalBaselineInfo());
+    if ( box.getBaselineInfo() == null ) {
+      box.setBaselineInfo( box.getStaticBoxLayoutProperties().getNominalBaselineInfo() );
     }
   }
 
-  protected void processInlineLevelNode(final RenderNode node)
-  {
+  protected void processInlineLevelNode( final RenderNode node ) {
     // compute the intial position.
-    node.setCachedY(computeVerticalInlinePosition(node));
+    node.setCachedY( computeVerticalInlinePosition( node ) );
     // the height and the real position will be computed during the vertical-alignment computation. 
 
-    if (breakState.isActive() == false || breakState.isSuspended())
-    {
+    if ( breakState.isActive() == false || breakState.isSuspended() ) {
       return;
     }
 
-    if(complexText) {
+    if ( complexText ) {
       return;
     }
 
-    if (node.getNodeType() == LayoutNodeTypes.TYPE_NODE_TEXT)
-    {
-      breakState.getCurrentLine().addChild(new TextElementAlignContext((RenderableText) node));
-    }
-    else
-    {
-      breakState.getCurrentLine().addChild(new NodeAlignContext(node));
+    if ( node.getNodeType() == LayoutNodeTypes.TYPE_NODE_TEXT ) {
+      breakState.getCurrentLine().addChild( new TextElementAlignContext( (RenderableText) node ) );
+    } else {
+      breakState.getCurrentLine().addChild( new NodeAlignContext( node ) );
     }
   }
 
 
-  protected void finishInlineLevelBox(final RenderBox box)
-  {
+  protected void finishInlineLevelBox( final RenderBox box ) {
     // todo Arabic text
 
-    if (checkCacheValid(box))
-    {
+    if ( checkCacheValid( box ) ) {
       return;
     }
 
     // The height of an inline-level box will be computed when the vertical-alignemnt is done.
 
-    if (breakState.isActive() == false)
-    {
+    if ( breakState.isActive() == false ) {
       return;
     }
 
     final int nodeType = box.getLayoutNodeType();
-    if ((nodeType & LayoutNodeTypes.MASK_BOX_INLINE) == LayoutNodeTypes.MASK_BOX_INLINE)
-    {
+    if ( ( nodeType & LayoutNodeTypes.MASK_BOX_INLINE ) == LayoutNodeTypes.MASK_BOX_INLINE ) {
       breakState.closeContext();
       return;
     }
 
     final Object suspender = breakState.getSuspendItem();
-    if (box.getInstanceId() == suspender)
-    {
-      breakState.setSuspendItem(null);
+    if ( box.getInstanceId() == suspender ) {
+      breakState.setSuspendItem( null );
       return;
     }
 
-    if (suspender != null)
-    {
+    if ( suspender != null ) {
       return;
     }
 
-    if (nodeType == LayoutNodeTypes.TYPE_BOX_PARAGRAPH)
-    {
-      throw new IllegalStateException("This cannot be; Why is there a paragraph inside a inline context");
+    if ( nodeType == LayoutNodeTypes.TYPE_BOX_PARAGRAPH ) {
+      throw new IllegalStateException( "This cannot be; Why is there a paragraph inside a inline context" );
     }
   }
 
-  private long computeVerticalInlinePosition(final RenderNode node)
-  {
+  private long computeVerticalInlinePosition( final RenderNode node ) {
     final RenderBox parent = node.getParent();
 
-    if (parent != null)
-    {
+    if ( parent != null ) {
       // the computed position of an inline-element must be the same as the position of the parent element.
       // A inline-box always has an other inline-box as parent (the paragraph-pool-box is the only exception;
       // and this one is handled elsewhere).
@@ -694,55 +577,46 @@ public final class InfiniteMajorAxisLayoutStep extends AbstractMajorAxisLayoutSt
       // Top and bottom margins are not applied to inline-elements.
       final StaticBoxLayoutProperties blp = parent.getStaticBoxLayoutProperties();
       final BoxDefinition bdef = parent.getBoxDefinition();
-      final long insetTop = (blp.getBorderTop() + bdef.getPaddingTop());
+      final long insetTop = ( blp.getBorderTop() + bdef.getPaddingTop() );
 
-      return (insetTop + parent.getCachedY());
-    }
-    else
-    {
+      return ( insetTop + parent.getCachedY() );
+    } else {
       // there's no parent .. Should not happen, shouldn't it?
-      return (0);
+      return ( 0 );
     }
   }
 
 
-  protected boolean startCanvasLevelBox(final RenderBox box)
-  {
-    if (checkCacheValid(box))
-    {
+  protected boolean startCanvasLevelBox( final RenderBox box ) {
+    if ( checkCacheValid( box ) ) {
       return false;
     }
 
-    performStartTable(box);
+    performStartTable( box );
 
-    box.setCachedY(computeVerticalCanvasPosition(box));
+    box.setCachedY( computeVerticalCanvasPosition( box ) );
 
-    if (breakState.isActive() == false)
-    {
+    if ( breakState.isActive() == false ) {
       final int nodeType = box.getNodeType();
-      if (nodeType == LayoutNodeTypes.TYPE_BOX_PARAGRAPH)
-      {
+      if ( nodeType == LayoutNodeTypes.TYPE_BOX_PARAGRAPH ) {
         final ParagraphRenderBox paragraphBox = (ParagraphRenderBox) box;
         // We cant cache that ... the shift operations later would misbehave
         // One way around would be to at least store the layouted offsets
         // (which should be immutable as long as the line did not change its
         // contents) and to reapply them on each run. This is cheaper than
         // having to compute the whole v-align for the whole line.
-        breakState.init(paragraphBox);
-      }
-      else if (nodeType == LayoutNodeTypes.TYPE_BOX_CONTENT)
-      {
+        breakState.init( paragraphBox );
+      } else if ( nodeType == LayoutNodeTypes.TYPE_BOX_CONTENT ) {
         final RenderableReplacedContentBox rpc = (RenderableReplacedContentBox) box;
-        final long computedHeight = ReplacedContentUtil.computeHeight(rpc, 0, box.getCachedWidth());
-        box.setCachedHeight(computedHeight);
+        final long computedHeight = ReplacedContentUtil.computeHeight( rpc, 0, box.getCachedWidth() );
+        box.setCachedHeight( computedHeight );
       }
       return true;
     }
 
     // No breakstate and not being suspended? Why this?
-    if (breakState.isSuspended() == false)
-    {
-      throw new IllegalStateException("This cannot be: No breakstate and not being suspended? Why this?");
+    if ( breakState.isSuspended() == false ) {
+      throw new IllegalStateException( "This cannot be: No breakstate and not being suspended? Why this?" );
     }
 
     // this way or another - we are suspended now. So there is no need to look
@@ -750,18 +624,14 @@ public final class InfiniteMajorAxisLayoutStep extends AbstractMajorAxisLayoutSt
     return false;
   }
 
-  protected void processCanvasLevelNode(final RenderNode node)
-  {
-    node.setCachedY(computeVerticalCanvasPosition(node));
+  protected void processCanvasLevelNode( final RenderNode node ) {
+    node.setCachedY( computeVerticalCanvasPosition( node ) );
 
-    if (node.getNodeType() == LayoutNodeTypes.TYPE_NODE_FINISHEDNODE)
-    {
+    if ( node.getNodeType() == LayoutNodeTypes.TYPE_NODE_FINISHEDNODE ) {
       final FinishedRenderNode fnode = (FinishedRenderNode) node;
-      node.setCachedHeight(fnode.getLayoutedHeight());
-    }
-    else
-    {
-      node.setCachedHeight(0);
+      node.setCachedHeight( fnode.getLayoutedHeight() );
+    } else {
+      node.setCachedHeight( 0 );
     }
   }
 
@@ -777,94 +647,70 @@ public final class InfiniteMajorAxisLayoutStep extends AbstractMajorAxisLayoutSt
    *
    * @param box the box.
    */
-  protected void finishCanvasLevelBox(final RenderBox box)
-  {
-    if (checkCacheValid(box))
-    {
+  protected void finishCanvasLevelBox( final RenderBox box ) {
+    if ( checkCacheValid( box ) ) {
       return;
     }
 
-    performFinishTable(box);
+    performFinishTable( box );
 
     final int layoutNodeType = box.getLayoutNodeType();
-    if ((layoutNodeType & LayoutNodeTypes.MASK_BOX_BLOCK) == LayoutNodeTypes.MASK_BOX_BLOCK)
-    {
-      box.setCachedHeight(computeBlockHeightAndAlign(box));
-    }
-    else if ((layoutNodeType & LayoutNodeTypes.MASK_BOX_ROW) == LayoutNodeTypes.MASK_BOX_ROW)
-    {
-      box.setCachedHeight(computeRowHeight(box, 0));
-    }
-    else if (layoutNodeType == LayoutNodeTypes.TYPE_BOX_CONTENT)
-    {
+    if ( ( layoutNodeType & LayoutNodeTypes.MASK_BOX_BLOCK ) == LayoutNodeTypes.MASK_BOX_BLOCK ) {
+      box.setCachedHeight( computeBlockHeightAndAlign( box ) );
+    } else if ( ( layoutNodeType & LayoutNodeTypes.MASK_BOX_ROW ) == LayoutNodeTypes.MASK_BOX_ROW ) {
+      box.setCachedHeight( computeRowHeight( box, 0 ) );
+    } else if ( layoutNodeType == LayoutNodeTypes.TYPE_BOX_CONTENT ) {
       // ignored ...
-    }
-    else
-    {
-      box.setCachedHeight(computeCanvasHeight(box));
+    } else {
+      box.setCachedHeight( computeCanvasHeight( box ) );
     }
 
-    if (breakState.isActive())
-    {
+    if ( breakState.isActive() ) {
       final Object suspender = breakState.getSuspendItem();
-      if (box.getInstanceId() == suspender)
-      {
-        breakState.setSuspendItem(null);
+      if ( box.getInstanceId() == suspender ) {
+        breakState.setSuspendItem( null );
         return;
       }
-      if (suspender != null)
-      {
+      if ( suspender != null ) {
         return;
       }
 
-      if (layoutNodeType == LayoutNodeTypes.TYPE_BOX_PARAGRAPH)
-      {
+      if ( layoutNodeType == LayoutNodeTypes.TYPE_BOX_PARAGRAPH ) {
         breakState.deinit();
       }
     }
   }
 
-  private long computeVerticalCanvasPosition(final RenderNode node)
-  {
+  private long computeVerticalCanvasPosition( final RenderNode node ) {
     final RenderBox parent = node.getParent();
     final long parentPosition;
-    if (parent == null)
-    {
+    if ( parent == null ) {
       parentPosition = 0;
-    }
-    else
-    {
+    } else {
       final StaticBoxLayoutProperties blp = parent.getStaticBoxLayoutProperties();
       final BoxDefinition bdef = parent.getBoxDefinition();
-      final long insetsTop = (blp.getBorderTop() + bdef.getPaddingTop());
+      final long insetsTop = ( blp.getBorderTop() + bdef.getPaddingTop() );
       parentPosition = parent.getCachedY() + insetsTop;
     }
 
     final double posY = node.getNodeLayoutProperties().getPosY();
-    if (node.isSizeSpecifiesBorderBox())
-    {
-      return (parentPosition + RenderLength.resolveLength(0, posY));
-    }
-    else
-    {
+    if ( node.isSizeSpecifiesBorderBox() ) {
+      return ( parentPosition + RenderLength.resolveLength( 0, posY ) );
+    } else {
       final long insetsTop;
-      if ((node.getLayoutNodeType() & LayoutNodeTypes.MASK_BOX) == LayoutNodeTypes.MASK_BOX)
-      {
+      if ( ( node.getLayoutNodeType() & LayoutNodeTypes.MASK_BOX ) == LayoutNodeTypes.MASK_BOX ) {
         final RenderBox box = (RenderBox) node;
         final StaticBoxLayoutProperties blp = box.getStaticBoxLayoutProperties();
         final BoxDefinition bdef = box.getBoxDefinition();
-        insetsTop = (blp.getBorderTop() + bdef.getPaddingTop());
-      }
-      else
-      {
+        insetsTop = ( blp.getBorderTop() + bdef.getPaddingTop() );
+      } else {
         insetsTop = 0;
       }
-      return (parentPosition + RenderLength.resolveLength(0, posY) - insetsTop);
+      return ( parentPosition + RenderLength.resolveLength( 0, posY ) - insetsTop );
     }
   }
 
-  private static long computeCanvasHeight(final RenderBox box)
-  {
+  private static long computeCanvasHeight( final RenderBox box ) {
     final StaticBoxLayoutProperties blp = box.getStaticBoxLayoutProperties();
     final BoxDefinition bdef = box.getBoxDefinition();
 
@@ -873,31 +719,26 @@ public final class InfiniteMajorAxisLayoutStep extends AbstractMajorAxisLayoutSt
     final RenderLength preferredHeight = boxDefinition.getPreferredHeight();
     final RenderLength maxHeight = boxDefinition.getMaximumHeight();
 
-    final long insetsTop = (blp.getBorderTop() + bdef.getPaddingTop());
+    final long insetsTop = ( blp.getBorderTop() + bdef.getPaddingTop() );
     final long insetsBottom = blp.getBorderBottom() + bdef.getPaddingBottom();
     final long insets = insetsTop + insetsBottom;
 
     // find the maximum of the used height (for all childs) and the specified min-height.
-    final long minHeightResolved = minHeight.resolve(0);
+    final long minHeightResolved = minHeight.resolve( 0 );
     long consumedHeight;
-    if (box.isSizeSpecifiesBorderBox())
-    {
-      consumedHeight = Math.max(minHeightResolved, insets) - insetsBottom;
-    }
-    else
-    {
+    if ( box.isSizeSpecifiesBorderBox() ) {
+      consumedHeight = Math.max( minHeightResolved, insets ) - insetsBottom;
+    } else {
       consumedHeight = minHeightResolved + insetsTop;
     }
 
     final long boxY = box.getCachedY();
 
     RenderNode node = box.getFirstChild();
-    while (node != null)
-    {
-      final long childY2 = (node.getCachedY() + node.getCachedHeight());
+    while ( node != null ) {
+      final long childY2 = ( node.getCachedY() + node.getCachedHeight() );
       final long childLocalY2 = childY2 - boxY;
-      if (childLocalY2 > consumedHeight)
-      {
+      if ( childLocalY2 > consumedHeight ) {
         consumedHeight = childLocalY2;
       }
       node = node.getNext();
@@ -909,68 +750,51 @@ public final class InfiniteMajorAxisLayoutStep extends AbstractMajorAxisLayoutSt
     // However, depending on the box-sizing property, we may have to resolve them against the
     // content-edge instead.
 
-    final long maxHeightResolved = maxHeight.resolve(0, InfiniteMajorAxisLayoutStep.MAX_AUTO);
-    if (box.isSizeSpecifiesBorderBox())
-    {
+    final long maxHeightResolved = maxHeight.resolve( 0, InfiniteMajorAxisLayoutStep.MAX_AUTO );
+    if ( box.isSizeSpecifiesBorderBox() ) {
       final long prefHeightResolved;
-      if (RenderLength.AUTO.equals(preferredHeight))
-      {
+      if ( RenderLength.AUTO.equals( preferredHeight ) ) {
         prefHeightResolved = consumedHeight;
-      }
-      else if (preferredHeight.isPercentage() == false)
-      {
-        prefHeightResolved = preferredHeight.resolve(0);
-      }
-      else
-      {
+      } else if ( preferredHeight.isPercentage() == false ) {
+        prefHeightResolved = preferredHeight.resolve( 0 );
+      } else {
         prefHeightResolved = consumedHeight;
       }
 
-      final long height = ProcessUtility.computeLength(minHeightResolved, maxHeightResolved, prefHeightResolved);
-      return (height);
-    }
-    else
-    {
-      consumedHeight = Math.max(0, consumedHeight - insets);
+      final long height = ProcessUtility.computeLength( minHeightResolved, maxHeightResolved, prefHeightResolved );
+      return ( height );
+    } else {
+      consumedHeight = Math.max( 0, consumedHeight - insets );
       final long prefHeightResolved;
-      if (RenderLength.AUTO.equals(preferredHeight))
-      {
+      if ( RenderLength.AUTO.equals( preferredHeight ) ) {
         prefHeightResolved = consumedHeight;
-      }
-      else if (preferredHeight.isPercentage() == false)
-      {
-        prefHeightResolved = preferredHeight.resolve(0);
-      }
-      else
-      {
+      } else if ( preferredHeight.isPercentage() == false ) {
+        prefHeightResolved = preferredHeight.resolve( 0 );
+      } else {
         prefHeightResolved = consumedHeight;
       }
 
-      final long height = ProcessUtility.computeLength(minHeightResolved, maxHeightResolved,
-          prefHeightResolved);
-      return (height + insets);
+      final long height = ProcessUtility.computeLength( minHeightResolved, maxHeightResolved,
+        prefHeightResolved );
+      return ( height + insets );
     }
   }
 
-  protected boolean startRowLevelBox(final RenderBox box)
-  {
-    if (checkCacheValid(box))
-    {
+  protected boolean startRowLevelBox( final RenderBox box ) {
+    if ( checkCacheValid( box ) ) {
       return false;
     }
 
-    performStartTable(box);
+    performStartTable( box );
 
     // Compute the block-position of the box. The box is positioned relative to the previous sibling or
     // relative to the parent.
-    box.setCachedY(computeVerticalRowPosition(box));
+    box.setCachedY( computeVerticalRowPosition( box ) );
 
-    if (breakState.isActive())
-    {
+    if ( breakState.isActive() ) {
       // No breakstate and not being suspended? Why this?
-      if (breakState.isSuspended() == false)
-      {
-        throw new IllegalStateException("This cannot be.");
+      if ( breakState.isSuspended() == false ) {
+        throw new IllegalStateException( "This cannot be." );
       }
 
       // this way or another - we are suspended now. So there is no need to look
@@ -982,95 +806,73 @@ public final class InfiniteMajorAxisLayoutStep extends AbstractMajorAxisLayoutSt
     }
 
     final int layoutNodeType = box.getLayoutNodeType();
-    if (layoutNodeType == LayoutNodeTypes.TYPE_BOX_PARAGRAPH)
-    {
+    if ( layoutNodeType == LayoutNodeTypes.TYPE_BOX_PARAGRAPH ) {
       final ParagraphRenderBox paragraphBox = (ParagraphRenderBox) box;
       // We cant cache that ... the shift operations later would misbehave
       // One way around would be to at least store the layouted offsets
       // (which should be immutable as long as the line did not change its
       // contents) and to reapply them on each run. This is cheaper than
       // having to compute the whole v-align for the whole line.
-      breakState.init(paragraphBox);
-    }
-    else if (layoutNodeType == LayoutNodeTypes.TYPE_BOX_CONTENT)
-    {
+      breakState.init( paragraphBox );
+    } else if ( layoutNodeType == LayoutNodeTypes.TYPE_BOX_CONTENT ) {
       final RenderableReplacedContentBox rpc = (RenderableReplacedContentBox) box;
-      box.setCachedHeight(ReplacedContentUtil.computeHeight(rpc, 0, box.getCachedWidth()));
+      box.setCachedHeight( ReplacedContentUtil.computeHeight( rpc, 0, box.getCachedWidth() ) );
     }
 
 
     return true;
   }
 
-  protected void processRowLevelNode(final RenderNode node)
-  {
-    node.setCachedY(computeVerticalRowPosition(node));
+  protected void processRowLevelNode( final RenderNode node ) {
+    node.setCachedY( computeVerticalRowPosition( node ) );
 
     final int nodeType = node.getLayoutNodeType();
-    if (nodeType == LayoutNodeTypes.TYPE_NODE_FINISHEDNODE)
-    {
+    if ( nodeType == LayoutNodeTypes.TYPE_NODE_FINISHEDNODE ) {
       final FinishedRenderNode fnode = (FinishedRenderNode) node;
-      node.setCachedHeight(fnode.getLayoutedHeight());
-    }
-    else if ((nodeType & LayoutNodeTypes.MASK_BOX_INLINE) == LayoutNodeTypes.MASK_BOX_INLINE)
-    {
-      throw new IllegalStateException("A Inline-Box must be contained in a paragraph.");
+      node.setCachedHeight( fnode.getLayoutedHeight() );
+    } else if ( ( nodeType & LayoutNodeTypes.MASK_BOX_INLINE ) == LayoutNodeTypes.MASK_BOX_INLINE ) {
+      throw new IllegalStateException( "A Inline-Box must be contained in a paragraph." );
     }
   }
 
-  protected void finishRowLevelBox(final RenderBox box)
-  {
-    if (checkCacheValid(box))
-    {
+  protected void finishRowLevelBox( final RenderBox box ) {
+    if ( checkCacheValid( box ) ) {
       return;
     }
 
-    performFinishTable(box);
+    performFinishTable( box );
 
     final int layoutNodeType = box.getLayoutNodeType();
-    if ((layoutNodeType & LayoutNodeTypes.MASK_BOX_BLOCK) == LayoutNodeTypes.MASK_BOX_BLOCK)
-    {
-      box.setCachedHeight(computeBlockHeightAndAlign(box));
-    }
-    else if ((layoutNodeType & LayoutNodeTypes.MASK_BOX_ROW) == LayoutNodeTypes.MASK_BOX_ROW)
-    {
-      box.setCachedHeight(computeRowHeight(box, 0));
-    }
-    else if (layoutNodeType == LayoutNodeTypes.TYPE_BOX_CONTENT)
-    {
+    if ( ( layoutNodeType & LayoutNodeTypes.MASK_BOX_BLOCK ) == LayoutNodeTypes.MASK_BOX_BLOCK ) {
+      box.setCachedHeight( computeBlockHeightAndAlign( box ) );
+    } else if ( ( layoutNodeType & LayoutNodeTypes.MASK_BOX_ROW ) == LayoutNodeTypes.MASK_BOX_ROW ) {
+      box.setCachedHeight( computeRowHeight( box, 0 ) );
+    } else if ( layoutNodeType == LayoutNodeTypes.TYPE_BOX_CONTENT ) {
       // ignored ..
-    }
-    else
-    {
-      box.setCachedHeight(computeCanvasHeight(box));
+    } else {
+      box.setCachedHeight( computeCanvasHeight( box ) );
     }
 
-    if (breakState.isActive())
-    {
+    if ( breakState.isActive() ) {
       final Object suspender = breakState.getSuspendItem();
-      if (box.getInstanceId() == suspender)
-      {
-        breakState.setSuspendItem(null);
+      if ( box.getInstanceId() == suspender ) {
+        breakState.setSuspendItem( null );
         return;
       }
-      if (suspender != null)
-      {
+      if ( suspender != null ) {
         return;
       }
 
-      if (layoutNodeType == LayoutNodeTypes.TYPE_BOX_PARAGRAPH)
-      {
+      if ( layoutNodeType == LayoutNodeTypes.TYPE_BOX_PARAGRAPH ) {
         breakState.deinit();
       }
     }
   }
 
-  private long computeVerticalRowPosition(final RenderNode node)
-  {
+  private long computeVerticalRowPosition( final RenderNode node ) {
     final RenderBox parent = node.getParent();
 
-    if (parent != null)
-    {
+    if ( parent != null ) {
       // the computed position of an inline-element must be the same as the position of the parent element.
       // A inline-box always has an other inline-box as parent (the paragraph-pool-box is the only exception;
       // and this one is handled elsewhere).
@@ -1078,105 +880,84 @@ public final class InfiniteMajorAxisLayoutStep extends AbstractMajorAxisLayoutSt
       // Top and bottom margins are not applied to inline-elements.
       final StaticBoxLayoutProperties blp = parent.getStaticBoxLayoutProperties();
       final BoxDefinition bdef = parent.getBoxDefinition();
-      final long insetTop = (blp.getBorderTop() + bdef.getPaddingTop());
+      final long insetTop = ( blp.getBorderTop() + bdef.getPaddingTop() );
 
-      return (insetTop + parent.getCachedY());
-    }
-    else
-    {
+      return ( insetTop + parent.getCachedY() );
+    } else {
       // there's no parent .. Should not happen, shouldn't it?
-      return (0);
+      return ( 0 );
     }
   }
 
-  protected boolean startTableCellLevelBox(final RenderBox box)
-  {
+  protected boolean startTableCellLevelBox( final RenderBox box ) {
     // table cells behave like block-level cells most of the time.
-    return startBlockLevelBox(box);
+    return startBlockLevelBox( box );
   }
 
-  protected void finishTableCellLevelBox(final RenderBox box)
-  {
+  protected void finishTableCellLevelBox( final RenderBox box ) {
     // table cells behave like block-level cells most of the time.
-    finishBlockLevelBox(box);
+    finishBlockLevelBox( box );
   }
 
-  protected boolean startTableRowLevelBox(final RenderBox box)
-  {
-    box.setCachedY(computeVerticalRowPosition(box));
-    if (box.getNodeType() == LayoutNodeTypes.TYPE_BOX_TABLE_CELL)
-    {
-      getTableRowHeightStep().startTableCell((TableCellRenderBox) box);
-    }
-    else
-    {
-      final long blockHeight = computeTableHeightAndAlign(box);
-      box.setCachedHeight(blockHeight);
+  protected boolean startTableRowLevelBox( final RenderBox box ) {
+    box.setCachedY( computeVerticalRowPosition( box ) );
+    if ( box.getNodeType() == LayoutNodeTypes.TYPE_BOX_TABLE_CELL ) {
+      getTableRowHeightStep().startTableCell( (TableCellRenderBox) box );
+    } else {
+      final long blockHeight = computeTableHeightAndAlign( box );
+      box.setCachedHeight( blockHeight );
     }
 
-    markAllChildsDirty(box);
+    markAllChildsDirty( box );
     return true;
   }
 
-  protected void finishTableRowLevelBox(final RenderBox box)
-  {
-    clearAllChildsDirtyMarker(box);
-    if (box.getNodeType() == LayoutNodeTypes.TYPE_BOX_TABLE_CELL)
-    {
-      final long blockHeight = computeTableHeightAndAlign(box);
-      getTableRowHeightStep().finishTableCell((TableCellRenderBox) box, blockHeight);
-    }
-    else
-    {
-      final long blockHeight = computeTableHeightAndAlign(box);
-      box.setCachedHeight(blockHeight);
+  protected void finishTableRowLevelBox( final RenderBox box ) {
+    clearAllChildsDirtyMarker( box );
+    if ( box.getNodeType() == LayoutNodeTypes.TYPE_BOX_TABLE_CELL ) {
+      final long blockHeight = computeTableHeightAndAlign( box );
+      getTableRowHeightStep().finishTableCell( (TableCellRenderBox) box, blockHeight );
+    } else {
+      final long blockHeight = computeTableHeightAndAlign( box );
+      box.setCachedHeight( blockHeight );
     }
   }
 
-  protected boolean startTableLevelBox(final RenderBox box)
-  {
-    box.setCachedY(computeVerticalBlockPosition(box));
+  protected boolean startTableLevelBox( final RenderBox box ) {
+    box.setCachedY( computeVerticalBlockPosition( box ) );
 
-    if (box instanceof TableSectionRenderBox)
-    {
-      getTableRowHeightStep().startTableSection((TableSectionRenderBox) box);
+    if ( box instanceof TableSectionRenderBox ) {
+      getTableRowHeightStep().startTableSection( (TableSectionRenderBox) box );
     }
     return true;
   }
 
-  protected void processTableLevelNode(final RenderNode node)
-  {
-    processBlockLevelNode(node);
+  protected void processTableLevelNode( final RenderNode node ) {
+    processBlockLevelNode( node );
   }
 
-  protected void finishTableLevelBox(final RenderBox box)
-  {
-    box.setCachedHeight(computeTableHeightAndAlign(box));
+  protected void finishTableLevelBox( final RenderBox box ) {
+    box.setCachedHeight( computeTableHeightAndAlign( box ) );
 
-    if (box instanceof TableSectionRenderBox)
-    {
-      getTableRowHeightStep().finishTableSection((TableSectionRenderBox) box);
+    if ( box instanceof TableSectionRenderBox ) {
+      getTableRowHeightStep().finishTableSection( (TableSectionRenderBox) box );
     }
   }
 
-  protected boolean startTableSectionLevelBox(final RenderBox box)
-  {
-    if (box instanceof TableRowRenderBox)
-    {
-      getTableRowHeightStep().startTableRow((TableRowRenderBox) box);
+  protected boolean startTableSectionLevelBox( final RenderBox box ) {
+    if ( box instanceof TableRowRenderBox ) {
+      getTableRowHeightStep().startTableRow( (TableRowRenderBox) box );
     }
 
-    box.setCachedY(computeVerticalBlockPosition(box));
+    box.setCachedY( computeVerticalBlockPosition( box ) );
     return true;
   }
 
-  protected void processTableSectionLevelNode(final RenderNode node)
-  {
-    processBlockLevelNode(node);
+  protected void processTableSectionLevelNode( final RenderNode node ) {
+    processBlockLevelNode( node );
   }
 
-  protected void finishTableSectionLevelBox(final RenderBox box)
-  {
-    box.setCachedHeight(0);
+  protected void finishTableSectionLevelBox( final RenderBox box ) {
+    box.setCachedHeight( 0 );
   }
 }

@@ -17,13 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.core.bugs;
 
-import java.util.Date;
-import java.util.ListResourceBundle;
-import java.util.Locale;
-import java.util.ResourceBundle;
-import java.util.TimeZone;
-import javax.swing.table.DefaultTableModel;
-
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -40,80 +33,79 @@ import org.pentaho.reporting.engine.classic.core.filter.types.MessageType;
 import org.pentaho.reporting.engine.classic.core.function.ExpressionRuntime;
 import org.pentaho.reporting.engine.classic.core.function.ProcessingContext;
 import org.pentaho.reporting.engine.classic.core.testsupport.DebugExpressionRuntime;
-import org.pentaho.reporting.engine.classic.core.util.ReportParameterValues;
 
-public class Prd5262Test
-{
+import javax.swing.table.DefaultTableModel;
+import java.util.Date;
+import java.util.ListResourceBundle;
+import java.util.Locale;
+import java.util.ResourceBundle;
+import java.util.TimeZone;
+
+public class Prd5262Test {
   private ExpressionRuntime runtime;
 
 
   @Before
-  public void setUp() throws Exception
-  {
+  public void setUp() throws Exception {
     ClassicEngineBoot.getInstance().start();
 
     runtime = createRuntime();
   }
 
-  protected ExpressionRuntime createRuntime() throws ReportProcessingException
-  {
-    ResourceBundle b = new ListResourceBundle()
-    {
-      protected Object[][] getContents()
-      {
+  protected ExpressionRuntime createRuntime() throws ReportProcessingException {
+    ResourceBundle b = new ListResourceBundle() {
+      protected Object[][] getContents() {
         return new Object[][] {
-            { "format" , "$(date,date,yyyy-MM-dd'T'HH:mm:ss,SSSZZZ)" }
+          { "format", "$(date,date,yyyy-MM-dd'T'HH:mm:ss,SSSZZZ)" }
         };
       }
     };
 
-    ResourceBundleFactory f = Mockito.mock(ResourceBundleFactory.class);
-    Mockito.when(f.getLocale()).thenReturn(Locale.US);
-    Mockito.when(f.getTimeZone()).thenReturn(TimeZone.getTimeZone("PST"));
-    Mockito.when(f.getResourceBundle("test")).thenReturn(b);
+    ResourceBundleFactory f = Mockito.mock( ResourceBundleFactory.class );
+    Mockito.when( f.getLocale() ).thenReturn( Locale.US );
+    Mockito.when( f.getTimeZone() ).thenReturn( TimeZone.getTimeZone( "PST" ) );
+    Mockito.when( f.getResourceBundle( "test" ) ).thenReturn( b );
 
-    ProcessingContext pc = Mockito.mock(ProcessingContext.class);
-    Mockito.when(pc.getResourceBundleFactory()).thenReturn(f);
+    ProcessingContext pc = Mockito.mock( ProcessingContext.class );
+    Mockito.when( pc.getResourceBundleFactory() ).thenReturn( f );
 
-    DataRow r = Mockito.mock(DataRow.class);
-    Mockito.when(r.get("number")).thenReturn(new Double(123456.78901));
-    Mockito.when(r.get("date")).thenReturn(new Date(1234567890123l));
+    DataRow r = Mockito.mock( DataRow.class );
+    Mockito.when( r.get( "number" ) ).thenReturn( new Double( 123456.78901 ) );
+    Mockito.when( r.get( "date" ) ).thenReturn( new Date( 1234567890123l ) );
 
-    return new DebugExpressionRuntime(r, new DefaultTableModel(), 0, pc);
+    return new DebugExpressionRuntime( r, new DefaultTableModel(), 0, pc );
   }
 
 
   @Test
-  public void testMessageFieldsAcceptLocaleAndTimeZone() throws Exception
-  {
+  public void testMessageFieldsAcceptLocaleAndTimeZone() throws Exception {
     Element element = new Element();
-    element.setAttribute(AttributeNames.Core.NAMESPACE, AttributeNames.Core.VALUE,
-        "$(date,date,yyyy-MM-dd'T'HH:mm:ss,SSSZZZ)");
+    element.setAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.VALUE,
+      "$(date,date,yyyy-MM-dd'T'HH:mm:ss,SSSZZZ)" );
 
     MessageType t = new MessageType();
-    Assert.assertEquals("2009-02-13T15:31:30,123-0800", t.getValue(runtime, element));
+    Assert.assertEquals( "2009-02-13T15:31:30,123-0800", t.getValue( runtime, element ) );
   }
 
   @Test
-  public void testDateFieldsAcceptLocaleAndTimeZone() throws Exception
-  {
+  public void testDateFieldsAcceptLocaleAndTimeZone() throws Exception {
     Element element = new Element();
-    element.setAttribute(AttributeNames.Core.NAMESPACE, AttributeNames.Core.FIELD, "date");
-    element.setAttribute(AttributeNames.Core.NAMESPACE, AttributeNames.Core.FORMAT_STRING, "yyyy-MM-dd'T'HH:mm:ss,SSSZZZ");
+    element.setAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.FIELD, "date" );
+    element
+      .setAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.FORMAT_STRING, "yyyy-MM-dd'T'HH:mm:ss,SSSZZZ" );
 
     DateFieldType t = new DateFieldType();
-    Assert.assertEquals("2009-02-13T15:31:30,123-0800", t.getValue(runtime, element));
+    Assert.assertEquals( "2009-02-13T15:31:30,123-0800", t.getValue( runtime, element ) );
   }
 
 
   @Test
-  public void testResourceMessageFormatFilterAcceptLocaleAndTimeZone() throws Exception
-  {
+  public void testResourceMessageFormatFilterAcceptLocaleAndTimeZone() throws Exception {
     ResourceMessageFormatFilter t = new ResourceMessageFormatFilter();
-    t.setResourceIdentifier("test");
-    t.setFormatKey("format");
+    t.setResourceIdentifier( "test" );
+    t.setFormatKey( "format" );
 
-    Assert.assertEquals("2009-02-13T15:31:30,123-0800", t.getValue(runtime, new Element()));
+    Assert.assertEquals( "2009-02-13T15:31:30,123-0800", t.getValue( runtime, new Element() ) );
   }
 
 

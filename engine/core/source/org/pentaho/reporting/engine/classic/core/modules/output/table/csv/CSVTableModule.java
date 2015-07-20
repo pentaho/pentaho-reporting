@@ -27,14 +27,14 @@ import org.pentaho.reporting.libraries.base.boot.SubSystem;
  *
  * @author Thomas Morgner
  */
-public class CSVTableModule extends AbstractModule
-{
+public class CSVTableModule extends AbstractModule {
   /**
    * The default value for the separator string (",").
    */
   public static final String SEPARATOR_DEFAULT = ",";
 
-  public static final String STRICT_LAYOUT = "org.pentaho.reporting.engine.classic.core.modules.output.table.csv.StrictLayout";
+  public static final String STRICT_LAYOUT =
+    "org.pentaho.reporting.engine.classic.core.modules.output.table.csv.StrictLayout";
   public static final String ENCODING = "org.pentaho.reporting.engine.classic.core.modules.output.table.csv.Encoding";
   public static final String SEPARATOR = "org.pentaho.reporting.engine.classic.core.modules.output.table.csv.Separator";
   public static final String TABLE_CSV_STREAM_EXPORT_TYPE = "table/csv;page-mode=stream";
@@ -46,8 +46,7 @@ public class CSVTableModule extends AbstractModule
    * @throws ModuleInitializeException if an error occured.
    */
   public CSVTableModule()
-      throws ModuleInitializeException
-  {
+    throws ModuleInitializeException {
     loadModuleInfo();
   }
 
@@ -59,10 +58,9 @@ public class CSVTableModule extends AbstractModule
    * @param subSystem the subSystem.
    * @throws ModuleInitializeException if an error ocurred while initializing the module.
    */
-  public void initialize(final SubSystem subSystem)
-      throws ModuleInitializeException
-  {
+  public void initialize( final SubSystem subSystem )
+    throws ModuleInitializeException {
     ElementMetaDataParser.initializeOptionalReportProcessTaskMetaData
-        ("org/pentaho/reporting/engine/classic/core/modules/output/table/csv/meta-report-process-tasks.xml");
+      ( "org/pentaho/reporting/engine/classic/core/modules/output/table/csv/meta-report-process-tasks.xml" );
   }
 }

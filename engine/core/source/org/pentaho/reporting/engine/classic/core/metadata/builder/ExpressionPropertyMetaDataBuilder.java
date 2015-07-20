@@ -17,15 +17,14 @@
 
 package org.pentaho.reporting.engine.classic.core.metadata.builder;
 
-import java.beans.PropertyEditor;
-
 import org.pentaho.reporting.engine.classic.core.function.Expression;
 import org.pentaho.reporting.engine.classic.core.metadata.DefaultExpressionPropertyCore;
 import org.pentaho.reporting.engine.classic.core.metadata.ExpressionPropertyCore;
 import org.pentaho.reporting.engine.classic.core.metadata.propertyeditors.SharedPropertyDescriptorProxy;
 
-public class ExpressionPropertyMetaDataBuilder extends MetaDataBuilder<ExpressionPropertyMetaDataBuilder>
-{
+import java.beans.PropertyEditor;
+
+public class ExpressionPropertyMetaDataBuilder extends MetaDataBuilder<ExpressionPropertyMetaDataBuilder> {
   private boolean mandatory;
   private boolean computed;
   private String valueRole;
@@ -34,91 +33,75 @@ public class ExpressionPropertyMetaDataBuilder extends MetaDataBuilder<Expressio
   private SharedPropertyDescriptorProxy descriptor;
   private Class<? extends Expression> expression;
 
-  public ExpressionPropertyMetaDataBuilder()
-  {
+  public ExpressionPropertyMetaDataBuilder() {
     this.core = new DefaultExpressionPropertyCore();
   }
 
-  protected ExpressionPropertyMetaDataBuilder self()
-  {
+  protected ExpressionPropertyMetaDataBuilder self() {
     return this;
   }
 
-  public ExpressionPropertyMetaDataBuilder descriptor(SharedPropertyDescriptorProxy descriptor)
-  {
+  public ExpressionPropertyMetaDataBuilder descriptor( SharedPropertyDescriptorProxy descriptor ) {
     this.descriptor = descriptor;
     return self();
   }
 
-  public ExpressionPropertyMetaDataBuilder descriptorFromParent(Class<? extends Expression> expression)
-  {
+  public ExpressionPropertyMetaDataBuilder descriptorFromParent( Class<? extends Expression> expression ) {
     this.expression = expression;
     return self();
   }
 
-  public ExpressionPropertyMetaDataBuilder mandatory(final boolean mandatory)
-  {
+  public ExpressionPropertyMetaDataBuilder mandatory( final boolean mandatory ) {
     this.mandatory = mandatory;
     return self();
   }
 
-  public ExpressionPropertyMetaDataBuilder computed(final boolean computed)
-  {
+  public ExpressionPropertyMetaDataBuilder computed( final boolean computed ) {
     this.computed = computed;
     return self();
   }
 
-  public ExpressionPropertyMetaDataBuilder valueRole(final String valueRole)
-  {
+  public ExpressionPropertyMetaDataBuilder valueRole( final String valueRole ) {
     this.valueRole = valueRole;
     return self();
   }
 
-  public ExpressionPropertyMetaDataBuilder editor(final Class<? extends PropertyEditor> propertyEditorClass)
-  {
+  public ExpressionPropertyMetaDataBuilder editor( final Class<? extends PropertyEditor> propertyEditorClass ) {
     this.editor = propertyEditorClass;
     return self();
   }
 
-  public ExpressionPropertyMetaDataBuilder core(final ExpressionPropertyCore expressionPropertyCore)
-  {
+  public ExpressionPropertyMetaDataBuilder core( final ExpressionPropertyCore expressionPropertyCore ) {
     this.core = expressionPropertyCore;
     return self();
   }
 
-  public boolean isMandatory()
-  {
+  public boolean isMandatory() {
     return mandatory;
   }
 
-  public boolean isComputed()
-  {
+  public boolean isComputed() {
     return computed;
   }
 
-  public String getValueRole()
-  {
+  public String getValueRole() {
     return valueRole;
   }
 
-  public Class<? extends PropertyEditor> getEditor()
-  {
+  public Class<? extends PropertyEditor> getEditor() {
     return editor;
   }
 
-  public ExpressionPropertyCore getCore()
-  {
+  public ExpressionPropertyCore getCore() {
     return core;
   }
 
-  public SharedPropertyDescriptorProxy getDescriptor()
-  {
-    if (descriptor != null)
-    {
+  public SharedPropertyDescriptorProxy getDescriptor() {
+    if ( descriptor != null ) {
       return descriptor;
     }
-    if (expression != null && getName() != null) {
-      return new SharedPropertyDescriptorProxy(expression, getName());
+    if ( expression != null && getName() != null ) {
+      return new SharedPropertyDescriptorProxy( expression, getName() );
     }
     return null;
   }

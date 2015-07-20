@@ -22,14 +22,12 @@ package org.pentaho.reporting.engine.classic.core.util.beans;
  *
  * @author Thomas Morgner
  */
-public class DoubleValueConverter implements ValueConverter
-{
+public class DoubleValueConverter implements ValueConverter {
 
   /**
    * Creates a new value converter.
    */
-  public DoubleValueConverter()
-  {
+  public DoubleValueConverter() {
   }
 
   /**
@@ -38,17 +36,14 @@ public class DoubleValueConverter implements ValueConverter
    * @param o the attribute ({@link Double} expected).
    * @return A string representing the {@link Double} value.
    */
-  public String toAttributeValue(final Object o) throws BeanException
-  {
-    if (o == null)
-    {
+  public String toAttributeValue( final Object o ) throws BeanException {
+    if ( o == null ) {
       throw new NullPointerException();
     }
-    if (o instanceof Double)
-    {
+    if ( o instanceof Double ) {
       return o.toString();
     }
-    throw new BeanException("Failed to convert object of type " + o.getClass() + ": Not a Double.");
+    throw new BeanException( "Failed to convert object of type " + o.getClass() + ": Not a Double." );
   }
 
   /**
@@ -57,25 +52,19 @@ public class DoubleValueConverter implements ValueConverter
    * @param s the string.
    * @return a {@link Double}.
    */
-  public Object toPropertyValue(final String s) throws BeanException
-  {
-    if (s == null)
-    {
+  public Object toPropertyValue( final String s ) throws BeanException {
+    if ( s == null ) {
       throw new NullPointerException();
     }
     final String val = s.trim();
-    if (val.length() == 0)
-    {
-      throw BeanException.getInstance("Failed to convert empty string to number", null);
+    if ( val.length() == 0 ) {
+      throw BeanException.getInstance( "Failed to convert empty string to number", null );
     }
 
-    try
-    {
-      return new Double(val);
-    }
-    catch (NumberFormatException be)
-    {
-      throw BeanException.getInstance("Failed to parse number", be);
+    try {
+      return new Double( val );
+    } catch ( NumberFormatException be ) {
+      throw BeanException.getInstance( "Failed to parse number", be );
     }
   }
 }

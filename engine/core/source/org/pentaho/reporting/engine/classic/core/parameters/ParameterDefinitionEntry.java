@@ -17,9 +17,9 @@
 
 package org.pentaho.reporting.engine.classic.core.parameters;
 
-import java.io.Serializable;
-
 import org.pentaho.reporting.engine.classic.core.ReportDataFactoryException;
+
+import java.io.Serializable;
 
 /**
  * Contains the definition of a single parameter, along with means to validate the parameter on the server side and
@@ -27,8 +27,7 @@ import org.pentaho.reporting.engine.classic.core.ReportDataFactoryException;
  *
  * @author Thomas Morgner
  */
-public interface ParameterDefinitionEntry extends Serializable, Cloneable
-{
+public interface ParameterDefinitionEntry extends Serializable, Cloneable {
   /**
    * The internal parameter name. This will be the name of the data-row field by which the parameter's value can be
    * accessed.
@@ -45,11 +44,12 @@ public interface ParameterDefinitionEntry extends Serializable, Cloneable
    * @param parameterContext the context from where to aquire the locale for the label.
    * @return the label.
    */
-  public String getParameterAttribute(final String domain, final String name, final ParameterContext parameterContext);
+  public String getParameterAttribute( final String domain, final String name,
+                                       final ParameterContext parameterContext );
 
   public String[] getParameterAttributeNamespaces();
 
-  public String[] getParameterAttributeNames(final String domainName);
+  public String[] getParameterAttributeNames( final String domainName );
 
   /**
    * Provides a hint to the parameter validator, whether this value needs to have a selected value.
@@ -66,7 +66,7 @@ public interface ParameterDefinitionEntry extends Serializable, Cloneable
    */
   public Class getValueType();
 
-  public Object getDefaultValue(final ParameterContext context) throws ReportDataFactoryException;
+  public Object getDefaultValue( final ParameterContext context ) throws ReportDataFactoryException;
 
   public Object clone() throws CloneNotSupportedException;
 }

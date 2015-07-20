@@ -17,13 +17,12 @@
 
 package org.pentaho.reporting.engine.classic.core.states;
 
+import org.pentaho.reporting.engine.classic.core.ReportProcessingException;
 import org.pentaho.reporting.engine.classic.core.event.ReportEvent;
 import org.pentaho.reporting.engine.classic.core.function.OutputFunction;
 import org.pentaho.reporting.engine.classic.core.function.StructureFunction;
-import org.pentaho.reporting.engine.classic.core.ReportProcessingException;
 
-public interface LayoutProcess extends Cloneable
-{
+public interface LayoutProcess extends Cloneable {
   public static final int LEVEL_STRUCTURAL_PREPROCESSING = Integer.MAX_VALUE;
   public static final int LEVEL_PAGINATE = -2;
   public static final int LEVEL_COLLECT = -1;
@@ -43,12 +42,11 @@ public interface LayoutProcess extends Cloneable
   public Object clone();
 
   /**
-   * This function must be implemented in a re-entrant way. Report events can cause nested report events
-   * to be fired.
-   * 
+   * This function must be implemented in a re-entrant way. Report events can cause nested report events to be fired.
+   *
    * @param originalEvent
    */
-  public void fireReportEvent(ReportEvent originalEvent);
+  public void fireReportEvent( ReportEvent originalEvent );
 
-  public void restart(final ReportState state) throws ReportProcessingException;
+  public void restart( final ReportState state ) throws ReportProcessingException;
 }

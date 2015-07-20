@@ -26,47 +26,38 @@ import org.pentaho.reporting.engine.classic.core.modules.output.pageable.graphic
  *
  * @author Thomas Morgner
  */
-public class QueryLogicalPageInterceptor implements GraphicsContentInterceptor
-{
+public class QueryLogicalPageInterceptor implements GraphicsContentInterceptor {
   private PageDrawable drawable;
   private LogicalPageKey pageKey;
 
-  public QueryLogicalPageInterceptor(final LogicalPageKey pageKey)
-  {
-    if (pageKey == null)
-    {
+  public QueryLogicalPageInterceptor( final LogicalPageKey pageKey ) {
+    if ( pageKey == null ) {
       throw new NullPointerException();
     }
 
     this.pageKey = pageKey;
   }
 
-  public boolean isLogicalPageAccepted(final LogicalPageKey key)
-  {
-    return pageKey.equals(key);
+  public boolean isLogicalPageAccepted( final LogicalPageKey key ) {
+    return pageKey.equals( key );
   }
 
-  public void processLogicalPage(final LogicalPageKey key, final PageDrawable page)
-  {
+  public void processLogicalPage( final LogicalPageKey key, final PageDrawable page ) {
     this.drawable = page;
   }
 
-  public boolean isPhysicalPageAccepted(final PhysicalPageKey key)
-  {
+  public boolean isPhysicalPageAccepted( final PhysicalPageKey key ) {
     return false;
   }
 
-  public void processPhysicalPage(final PhysicalPageKey key, final PageDrawable page)
-  {
+  public void processPhysicalPage( final PhysicalPageKey key, final PageDrawable page ) {
   }
 
-  public boolean isMoreContentNeeded()
-  {
+  public boolean isMoreContentNeeded() {
     return drawable == null;
   }
 
-  public PageDrawable getDrawable()
-  {
+  public PageDrawable getDrawable() {
     return drawable;
   }
 }

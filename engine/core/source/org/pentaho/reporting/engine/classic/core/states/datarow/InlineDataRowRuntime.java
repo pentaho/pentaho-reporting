@@ -17,8 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.core.states.datarow;
 
-import javax.swing.table.TableModel;
-
 import org.pentaho.reporting.engine.classic.core.DataFactory;
 import org.pentaho.reporting.engine.classic.core.DataRow;
 import org.pentaho.reporting.engine.classic.core.ResourceBundleFactory;
@@ -28,7 +26,8 @@ import org.pentaho.reporting.engine.classic.core.states.GroupingState;
 import org.pentaho.reporting.engine.classic.core.states.ReportState;
 import org.pentaho.reporting.engine.classic.core.wizard.DataSchema;
 import org.pentaho.reporting.libraries.base.config.Configuration;
-import org.pentaho.reporting.libraries.base.util.DebugLog;
+
+import javax.swing.table.TableModel;
 
 /**
  * This is a internal class that provides a expression-runtime for internal purposes. This class can change without
@@ -37,56 +36,46 @@ import org.pentaho.reporting.libraries.base.util.DebugLog;
  *
  * @author Thomas Morgner
  */
-public class InlineDataRowRuntime implements ExpressionRuntime
-{
+public class InlineDataRowRuntime implements ExpressionRuntime {
   private ReportState state;
   private GroupingState groupingState;
 
-  public InlineDataRowRuntime()
-  {
+  public InlineDataRowRuntime() {
   }
 
-  public ReportState getState()
-  {
+  public ReportState getState() {
     return state;
   }
 
-  public void setState(final ReportState state)
-  {
+  public void setState( final ReportState state ) {
     this.state = state;
     this.groupingState = null;
   }
 
-  public DataSchema getDataSchema()
-  {
+  public DataSchema getDataSchema() {
     return state.getFlowController().getDataSchema();
   }
 
-  public DataRow getDataRow()
-  {
+  public DataRow getDataRow() {
     return state.getDataRow();
   }
 
-  public Configuration getConfiguration()
-  {
+  public Configuration getConfiguration() {
     return getProcessingContext().getConfiguration();
   }
 
-  public ResourceBundleFactory getResourceBundleFactory()
-  {
+  public ResourceBundleFactory getResourceBundleFactory() {
     return state.getResourceBundleFactory();
   }
 
-  public DataFactory getDataFactory()
-  {
+  public DataFactory getDataFactory() {
     return state.getFlowController().getDataFactory();
   }
 
   /**
    * Access to the tablemodel was granted using report properties, now direct.
    */
-  public TableModel getData()
-  {
+  public TableModel getData() {
     final DefaultFlowController flowController = state.getFlowController();
     final MasterDataRow masterRow = flowController.getMasterRow();
     return masterRow.getReportData();
@@ -95,13 +84,11 @@ public class InlineDataRowRuntime implements ExpressionRuntime
   /**
    * Where are we in the current processing.
    */
-  public int getCurrentRow()
-  {
+  public int getCurrentRow() {
     return state.getCurrentRow();
   }
 
-  public int getCurrentDataItem()
-  {
+  public int getCurrentDataItem() {
     return state.getCurrentDataItem();
   }
 
@@ -113,50 +100,40 @@ public class InlineDataRowRuntime implements ExpressionRuntime
    *
    * @return the export descriptor.
    */
-  public String getExportDescriptor()
-  {
+  public String getExportDescriptor() {
     return getProcessingContext().getExportDescriptor();
   }
 
-  public ProcessingContext getProcessingContext()
-  {
+  public ProcessingContext getProcessingContext() {
     return state.getFlowController().getReportContext();
   }
 
-  public int getCurrentGroup()
-  {
-    if (groupingState == null)
-    {
+  public int getCurrentGroup() {
+    if ( groupingState == null ) {
       groupingState = state.createGroupingState();
     }
     return groupingState.getCurrentGroup();
   }
 
-  public int getGroupStartRow(final String groupName)
-  {
-    if (groupingState == null)
-    {
+  public int getGroupStartRow( final String groupName ) {
+    if ( groupingState == null ) {
       groupingState = state.createGroupingState();
     }
-    return groupingState.getGroupStartRow(groupName);
+    return groupingState.getGroupStartRow( groupName );
   }
 
-  public int getGroupStartRow(final int groupIndex)
-  {
-    if (groupingState == null)
-    {
+  public int getGroupStartRow( final int groupIndex ) {
+    if ( groupingState == null ) {
       groupingState = state.createGroupingState();
     }
-    return groupingState.getGroupStartRow(groupIndex);
+    return groupingState.getGroupStartRow( groupIndex );
   }
 
-  public boolean isStructuralComplexReport()
-  {
+  public boolean isStructuralComplexReport() {
     return state.isStructuralPreprocessingNeeded();
   }
 
-  public boolean isCrosstabActive()
-  {
+  public boolean isCrosstabActive() {
     return state.isCrosstabActive();
   }
 }

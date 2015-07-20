@@ -24,53 +24,44 @@ import org.pentaho.reporting.engine.classic.core.style.StyleKey;
 import org.pentaho.reporting.engine.classic.core.style.StyleSheet;
 import org.pentaho.reporting.engine.classic.core.util.InstanceID;
 
-public class SubReportStyleSheet extends AbstractStyleSheet
-{
+public class SubReportStyleSheet extends AbstractStyleSheet {
   private StyleSheet parent;
   private Boolean pagebreakBefore;
   private Boolean pagebreakAfter;
 
-  public SubReportStyleSheet(final boolean pagebeakBefore,
-                             final boolean pagebreakAfter)
-  {
+  public SubReportStyleSheet( final boolean pagebeakBefore,
+                              final boolean pagebreakAfter ) {
     this.parent = ElementDefaultStyleSheet.getDefaultStyle();
     this.pagebreakAfter = pagebreakAfter;
     this.pagebreakBefore = pagebeakBefore;
   }
 
-  public StyleSheet getParent()
-  {
+  public StyleSheet getParent() {
     return parent;
   }
 
-  public InstanceID getId()
-  {
+  public InstanceID getId() {
     return parent.getId();
   }
 
-  public long getChangeTracker()
-  {
+  public long getChangeTracker() {
     return parent.getChangeTracker();
   }
 
-  public Object getStyleProperty(final StyleKey key, final Object defaultValue)
-  {
-    if (BandStyleKeys.PAGEBREAK_AFTER.equals(key))
-    {
+  public Object getStyleProperty( final StyleKey key, final Object defaultValue ) {
+    if ( BandStyleKeys.PAGEBREAK_AFTER.equals( key ) ) {
       return pagebreakAfter;
     }
-    if (BandStyleKeys.PAGEBREAK_BEFORE.equals(key))
-    {
+    if ( BandStyleKeys.PAGEBREAK_BEFORE.equals( key ) ) {
       return pagebreakBefore;
     }
-    return parent.getStyleProperty(key, defaultValue);
+    return parent.getStyleProperty( key, defaultValue );
   }
 
-  public Object[] toArray()
-  {
+  public Object[] toArray() {
     final Object[] objects = parent.toArray();
-    objects[BandStyleKeys.PAGEBREAK_AFTER.getIdentifier()] = pagebreakAfter;
-    objects[BandStyleKeys.PAGEBREAK_BEFORE.getIdentifier()] = pagebreakBefore;
+    objects[ BandStyleKeys.PAGEBREAK_AFTER.getIdentifier() ] = pagebreakAfter;
+    objects[ BandStyleKeys.PAGEBREAK_BEFORE.getIdentifier() ] = pagebreakBefore;
     return objects;
   }
 }

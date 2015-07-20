@@ -17,13 +17,11 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.parser.bundle.writer;
 
-public class BundleWriterException extends Exception
-{
+public class BundleWriterException extends Exception {
   /**
    * Creates a StackableRuntimeException with no message and no parent.
    */
-  public BundleWriterException()
-  {
+  public BundleWriterException() {
   }
 
   /**
@@ -32,9 +30,8 @@ public class BundleWriterException extends Exception
    * @param message the exception message.
    * @param ex      the parent exception.
    */
-  public BundleWriterException(final String message, final Exception ex)
-  {
-    super(message, ex);
+  public BundleWriterException( final String message, final Exception ex ) {
+    super( message, ex );
   }
 
   /**
@@ -42,8 +39,7 @@ public class BundleWriterException extends Exception
    *
    * @param message the exception message.
    */
-  public BundleWriterException(final String message)
-  {
-    super(message);
+  public BundleWriterException( final String message ) {
+    super( message );
   }
 }

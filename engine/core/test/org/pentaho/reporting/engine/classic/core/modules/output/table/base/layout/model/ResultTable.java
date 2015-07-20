@@ -35,83 +35,66 @@ import org.pentaho.reporting.libraries.base.util.ObjectTable;
  *
  * @author Thomas Morgner
  */
-public class ResultTable extends ObjectTable
-{
-  private static final Log logger = LogFactory.getLog(ResultTable.class);
+public class ResultTable extends ObjectTable {
+  private static final Log logger = LogFactory.getLog( ResultTable.class );
   private String name;
   private CellBackgroundProducer cellBackgroundProducer;
 
-  public ResultTable()
-  {
-    this.cellBackgroundProducer = new CellBackgroundProducer(true, true);
+  public ResultTable() {
+    this.cellBackgroundProducer = new CellBackgroundProducer( true, true );
   }
 
-  public String getName()
-  {
+  public String getName() {
     return name;
   }
 
-  public void setName(final String name)
-  {
+  public void setName( final String name ) {
     this.name = name;
   }
 
-  public void setResultCell(final int row, final int column, final ResultCell object)
-  {
-    super.setObject(row, column, object);
+  public void setResultCell( final int row, final int column, final ResultCell object ) {
+    super.setObject( row, column, object );
   }
 
-  public ResultCell getResultCell(final int row, final int column)
-  {
-    return (ResultCell) super.getObject(row, column);
+  public ResultCell getResultCell( final int row, final int column ) {
+    return (ResultCell) super.getObject( row, column );
   }
 
-  public void validate(final LogicalPageBox logicalPageBox, final SheetLayout sheetLayout,
-                       final TableContentProducer tableContentProducer)
-  {
-    Assert.assertEquals("RowCount", getRowCount(), sheetLayout.getRowCount());
-    Assert.assertEquals("ColCount", getColumnCount(), sheetLayout.getColumnCount());
+  public void validate( final LogicalPageBox logicalPageBox, final SheetLayout sheetLayout,
+                        final TableContentProducer tableContentProducer ) {
+    Assert.assertEquals( "RowCount", getRowCount(), sheetLayout.getRowCount() );
+    Assert.assertEquals( "ColCount", getColumnCount(), sheetLayout.getColumnCount() );
     int row = 0;
     int col = 0;
-    try
-    {
-      for (row = 0; row < getRowCount(); row++)
-      {
-        for (col = 0; col < getColumnCount(); col++)
-        {
-          final ResultCell resultCell = getResultCell(row, col);
-          final CellMarker.SectionType sectionType = tableContentProducer.getSectionType(row, col);
+    try {
+      for ( row = 0; row < getRowCount(); row++ ) {
+        for ( col = 0; col < getColumnCount(); col++ ) {
+          final ResultCell resultCell = getResultCell( row, col );
+          final CellMarker.SectionType sectionType = tableContentProducer.getSectionType( row, col );
           final CellBackground backgroundAt =
-              cellBackgroundProducer.getBackgroundAt(logicalPageBox, sheetLayout, col, row, true, sectionType);
-          if (resultCell == null)
-          {
-            assertEmptyBackground(backgroundAt);
-          }
-          else
-          {
-            resultCell.assertValidity(backgroundAt);
+            cellBackgroundProducer.getBackgroundAt( logicalPageBox, sheetLayout, col, row, true, sectionType );
+          if ( resultCell == null ) {
+            assertEmptyBackground( backgroundAt );
+          } else {
+            resultCell.assertValidity( backgroundAt );
           }
         }
       }
-    }
-    catch (AssertionFailedError afe)
-    {
-      logger.error("Assertation failure at row " + row + ", column " + col);
+    } catch ( AssertionFailedError afe ) {
+      logger.error( "Assertation failure at row " + row + ", column " + col );
       throw afe;
     }
   }
 
-  private void assertEmptyBackground(final CellBackground background)
-  {
-    if (background == null)
-    {
+  private void assertEmptyBackground( final CellBackground background ) {
+    if ( background == null ) {
       return;
     }
-    Assert.assertEquals(background.getAnchors().length, 0);
-    Assert.assertEquals(BorderEdge.EMPTY, background.getBottom());
-    Assert.assertEquals(BorderEdge.EMPTY, background.getTop());
-    Assert.assertEquals(BorderEdge.EMPTY, background.getLeft());
-    Assert.assertEquals(BorderEdge.EMPTY, background.getRight());
-    Assert.assertNull(background.getBackgroundColor());
+    Assert.assertEquals( background.getAnchors().length, 0 );
+    Assert.assertEquals( BorderEdge.EMPTY, background.getBottom() );
+    Assert.assertEquals( BorderEdge.EMPTY, background.getTop() );
+    Assert.assertEquals( BorderEdge.EMPTY, background.getLeft() );
+    Assert.assertEquals( BorderEdge.EMPTY, background.getRight() );
+    Assert.assertNull( background.getBackgroundColor() );
   }
 }

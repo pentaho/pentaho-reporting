@@ -17,8 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.core.layout.output;
 
-import java.io.File;
-
 import org.pentaho.reporting.engine.classic.core.CachingReportEnvironment;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.pentaho.reporting.engine.classic.core.DefaultReportEnvironment;
@@ -37,8 +35,9 @@ import org.pentaho.reporting.libraries.resourceloader.ResourceKey;
 import org.pentaho.reporting.libraries.resourceloader.ResourceKeyCreationException;
 import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 
-public class DefaultProcessingContext implements ProcessingContext
-{
+import java.io.File;
+
+public class DefaultProcessingContext implements ProcessingContext {
   private FormulaContext formulaContext;
   private boolean prepareRun;
   private int processingLevel;
@@ -55,48 +54,42 @@ public class DefaultProcessingContext implements ProcessingContext
   private int compatibilityLevel;
 
   /**
-   * This constructor exists for test-case use only. If you use this to process a real report, most of the settings
-   * of the report will be ignored and your export will not work as expected.
+   * This constructor exists for test-case use only. If you use this to process a real report, most of the settings of
+   * the report will be ignored and your export will not work as expected.
    */
-  public DefaultProcessingContext()
-  {
+  public DefaultProcessingContext() {
     outputProcessorMetaData = new GenericOutputProcessorMetaData();
     resourceBundleFactory = new DefaultResourceBundleFactory();
     configuration = ClassicEngineBoot.getInstance().getGlobalConfig();
     resourceManager = new ResourceManager();
-    reportEnvironment = new CachingReportEnvironment(new DefaultReportEnvironment(configuration));
-    try
-    {
-      this.contentBase = resourceManager.createKey(new File("."));
-    }
-    catch (ResourceKeyCreationException rkce)
-    {
+    reportEnvironment = new CachingReportEnvironment( new DefaultReportEnvironment( configuration ) );
+    try {
+      this.contentBase = resourceManager.createKey( new File( "." ) );
+    } catch ( ResourceKeyCreationException rkce ) {
       this.contentBase = null;
     }
     formulaContext = DefaultFormulaContextFactory.INSTANCE.create
-        (resourceBundleFactory.getLocale(), resourceBundleFactory.getTimeZone());
+      ( resourceBundleFactory.getLocale(), resourceBundleFactory.getTimeZone() );
     metaData = new MemoryDocumentMetaData();
     compatibilityLevel = -1;
   }
 
-  public DefaultProcessingContext(final MasterReport report) throws ReportProcessingException
-  {
-    this(report, new GenericOutputProcessorMetaData());
+  public DefaultProcessingContext( final MasterReport report ) throws ReportProcessingException {
+    this( report, new GenericOutputProcessorMetaData() );
   }
 
-  public DefaultProcessingContext(final MasterReport report, final OutputProcessorMetaData metaData) throws ReportProcessingException
-  {
-    this(metaData,
-        report.getResourceBundleFactory(),
-        report.getConfiguration(),
-        report.getResourceManager(),
-        report.getContentBase(),
-        report.getBundle().getMetaData(),
-        report.getReportEnvironment(), -1);
+  public DefaultProcessingContext( final MasterReport report, final OutputProcessorMetaData metaData )
+    throws ReportProcessingException {
+    this( metaData,
+      report.getResourceBundleFactory(),
+      report.getConfiguration(),
+      report.getResourceManager(),
+      report.getContentBase(),
+      report.getBundle().getMetaData(),
+      report.getReportEnvironment(), -1 );
 
     final Integer comLev = report.getCompatibilityLevel();
-    if (comLev != null)
-    {
+    if ( comLev != null ) {
       compatibilityLevel = comLev;
     }
   }
@@ -109,137 +102,111 @@ public class DefaultProcessingContext implements ProcessingContext
    * @param contentBase             the content base, from where to load additional resources. (Can be null).
    * @param metaData
    */
-  public DefaultProcessingContext(final OutputProcessorMetaData outputProcessorMetaData,
-                                  final ResourceBundleFactory resourceBundleFactory,
-                                  final Configuration configuration,
-                                  final ResourceManager resourceManager,
-                                  final ResourceKey contentBase,
-                                  final DocumentMetaData metaData,
-                                  final ReportEnvironment environment,
-                                  final int compatibilityLevel) throws ReportProcessingException
-  {
-    if (environment == null)
-    {
+  public DefaultProcessingContext( final OutputProcessorMetaData outputProcessorMetaData,
+                                   final ResourceBundleFactory resourceBundleFactory,
+                                   final Configuration configuration,
+                                   final ResourceManager resourceManager,
+                                   final ResourceKey contentBase,
+                                   final DocumentMetaData metaData,
+                                   final ReportEnvironment environment,
+                                   final int compatibilityLevel ) throws ReportProcessingException {
+    if ( environment == null ) {
       throw new NullPointerException();
     }
-    if (configuration == null)
-    {
+    if ( configuration == null ) {
       throw new NullPointerException();
     }
-    if (outputProcessorMetaData == null)
-    {
+    if ( outputProcessorMetaData == null ) {
       throw new NullPointerException();
     }
-    if (resourceBundleFactory == null)
-    {
+    if ( resourceBundleFactory == null ) {
       throw new NullPointerException();
     }
-    if (resourceManager == null)
-    {
+    if ( resourceManager == null ) {
       throw new NullPointerException();
     }
 
     this.contentBase = contentBase;
     this.resourceManager = resourceManager;
     this.outputProcessorMetaData = outputProcessorMetaData;
-    this.resourceBundleFactory = MasterReport.computeAndInitResourceBundleFactory(resourceBundleFactory, environment);
+    this.resourceBundleFactory = MasterReport.computeAndInitResourceBundleFactory( resourceBundleFactory, environment );
     this.formulaContext = DefaultFormulaContextFactory.INSTANCE.create
-        (resourceBundleFactory.getLocale(), resourceBundleFactory.getTimeZone());
+      ( resourceBundleFactory.getLocale(), resourceBundleFactory.getTimeZone() );
     this.configuration = configuration;
-    if (metaData == null)
-    {
+    if ( metaData == null ) {
       this.metaData = new MemoryDocumentMetaData();
-    }
-    else
-    {
+    } else {
       this.metaData = metaData;
     }
-    this.reportEnvironment = new CachingReportEnvironment(environment);
+    this.reportEnvironment = new CachingReportEnvironment( environment );
     this.startTime = System.currentTimeMillis();
     this.compatibilityLevel = compatibilityLevel;
   }
 
-  public ResourceManager getResourceManager()
-  {
+  public ResourceManager getResourceManager() {
     return resourceManager;
   }
 
-  public ResourceKey getContentBase()
-  {
+  public ResourceKey getContentBase() {
     return contentBase;
   }
 
-  public int getProgressLevel()
-  {
+  public int getProgressLevel() {
     return progressLevel;
   }
 
-  public void setProgressLevel(final int progressLevel)
-  {
+  public void setProgressLevel( final int progressLevel ) {
     this.progressLevel = progressLevel;
   }
 
-  public int getProgressLevelCount()
-  {
+  public int getProgressLevelCount() {
     return progressLevelCount;
   }
 
-  public void setProgressLevelCount(final int progressLevelCount)
-  {
+  public void setProgressLevelCount( final int progressLevelCount ) {
     this.progressLevelCount = progressLevelCount;
   }
 
-  public void setProcessingLevel(final int processingLevel)
-  {
+  public void setProcessingLevel( final int processingLevel ) {
     this.processingLevel = processingLevel;
   }
 
-  public int getProcessingLevel()
-  {
+  public int getProcessingLevel() {
     return processingLevel;
   }
 
-  public FormulaContext getFormulaContext()
-  {
+  public FormulaContext getFormulaContext() {
     return formulaContext;
   }
 
-  public void setPrepareRun(final boolean prepareRun)
-  {
+  public void setPrepareRun( final boolean prepareRun ) {
     this.prepareRun = prepareRun;
   }
 
-  public boolean isPrepareRun()
-  {
+  public boolean isPrepareRun() {
     return prepareRun;
   }
 
-  public String getExportDescriptor()
-  {
+  public String getExportDescriptor() {
     return outputProcessorMetaData.getExportDescriptor();
   }
 
-  public OutputProcessorMetaData getOutputProcessorMetaData()
-  {
+  public OutputProcessorMetaData getOutputProcessorMetaData() {
     return outputProcessorMetaData;
   }
 
-  protected void setOutputProcessorMetaData(final OutputProcessorMetaData outputProcessorMetaData)
-  {
-    if (outputProcessorMetaData == null)
-    {
+  protected void setOutputProcessorMetaData( final OutputProcessorMetaData outputProcessorMetaData ) {
+    if ( outputProcessorMetaData == null ) {
       throw new NullPointerException();
     }
     this.outputProcessorMetaData = outputProcessorMetaData;
   }
 
-  public ResourceBundleFactory getResourceBundleFactory()
-  {
+  public ResourceBundleFactory getResourceBundleFactory() {
     return resourceBundleFactory;
   }
 
-  public Configuration getConfiguration()
-  {
+  public Configuration getConfiguration() {
     return configuration;
   }
 
@@ -248,23 +215,19 @@ public class DefaultProcessingContext implements ProcessingContext
    *
    * @return the document meta-data.
    */
-  public DocumentMetaData getDocumentMetaData()
-  {
+  public DocumentMetaData getDocumentMetaData() {
     return metaData;
   }
 
-  public ReportEnvironment getEnvironment()
-  {
+  public ReportEnvironment getEnvironment() {
     return reportEnvironment;
   }
 
-  public long getReportProcessingStartTime()
-  {
+  public long getReportProcessingStartTime() {
     return startTime;
   }
 
-  public int getCompatibilityLevel()
-  {
+  public int getCompatibilityLevel() {
     return compatibilityLevel;
   }
 }

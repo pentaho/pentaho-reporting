@@ -17,10 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.parser.bundle;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.math.BigDecimal;
-
 import junit.framework.TestCase;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.pentaho.reporting.engine.classic.core.DataFactory;
@@ -39,80 +35,76 @@ import org.pentaho.reporting.libraries.resourceloader.Resource;
 import org.pentaho.reporting.libraries.resourceloader.ResourceException;
 import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 
-public class SequenceDataSourceWriteTest extends TestCase
-{
-  public SequenceDataSourceWriteTest()
-  {
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.math.BigDecimal;
+
+public class SequenceDataSourceWriteTest extends TestCase {
+  public SequenceDataSourceWriteTest() {
   }
 
-  public SequenceDataSourceWriteTest(final String name)
-  {
-    super(name);
+  public SequenceDataSourceWriteTest( final String name ) {
+    super( name );
   }
 
-  protected void setUp() throws Exception
-  {
+  protected void setUp() throws Exception {
     ClassicEngineBoot.getInstance().start();
   }
 
-  public void testWriteAndLoad() throws IOException, ContentIOException, BundleWriterException, ResourceException
-  {
+  public void testWriteAndLoad() throws IOException, ContentIOException, BundleWriterException, ResourceException {
 
     final NumberSequence numberSequence = new NumberSequence();
-    numberSequence.setParameter("limit", 1234);
-    numberSequence.setParameter("step", new BigDecimal("1.2"));
-    numberSequence.setParameter("start", new BigDecimal("4.5"));
-    numberSequence.setParameter("ascending", Boolean.FALSE);
+    numberSequence.setParameter( "limit", 1234 );
+    numberSequence.setParameter( "step", new BigDecimal( "1.2" ) );
+    numberSequence.setParameter( "start", new BigDecimal( "4.5" ) );
+    numberSequence.setParameter( "ascending", Boolean.FALSE );
 
     final PrinterNamesSequence printerSequence = new PrinterNamesSequence();
 
     final PerformanceTestSequence performanceSequence = new PerformanceTestSequence();
-    performanceSequence.setParameter("limit", 4567);
-    performanceSequence.setParameter("seed", 1234l);
+    performanceSequence.setParameter( "limit", 4567 );
+    performanceSequence.setParameter( "seed", 1234l );
 
     final PerformanceTestSequence performanceSequence2 = new PerformanceTestSequence();
 
     final SequenceDataFactory sdf = new SequenceDataFactory();
-    sdf.addSequence("one", numberSequence);
-    sdf.addSequence("two", printerSequence);
-    sdf.addSequence("three", performanceSequence);
-    sdf.addSequence("four", performanceSequence2);
+    sdf.addSequence( "one", numberSequence );
+    sdf.addSequence( "two", printerSequence );
+    sdf.addSequence( "three", performanceSequence );
+    sdf.addSequence( "four", performanceSequence2 );
 
     final MasterReport report = new MasterReport();
-    report.setDataFactory(sdf);
+    report.setDataFactory( sdf );
 
     final ByteArrayOutputStream reportDefOutputStream = new ByteArrayOutputStream();
-    BundleWriter.writeReportToZipStream(report, reportDefOutputStream);
+    BundleWriter.writeReportToZipStream( report, reportDefOutputStream );
 
     final byte[] reportDefBits = reportDefOutputStream.toByteArray();
     final ResourceManager mgr = new ResourceManager();
     mgr.registerDefaults();
-    final Resource directly = mgr.createDirectly(reportDefBits, MasterReport.class);
+    final Resource directly = mgr.createDirectly( reportDefBits, MasterReport.class );
     final MasterReport report2 = (MasterReport) directly.getResource();
 
     final DataFactory dataFactory = report2.getDataFactory();
-    assertTrue(dataFactory instanceof SequenceDataFactory);
+    assertTrue( dataFactory instanceof SequenceDataFactory );
     final SequenceDataFactory fac2 = (SequenceDataFactory) dataFactory;
 
     final String[] queryNames = fac2.getQueryNames();
-    assertTrue(ObjectUtilities.equalArray(queryNames, sdf.getQueryNames()));
-    for (int i = 0; i < queryNames.length; i++)
-    {
-      final String queryName = queryNames[i];
-      assertEqual(sdf.getSequence(queryName), fac2.getSequence(queryName));
+    assertTrue( ObjectUtilities.equalArray( queryNames, sdf.getQueryNames() ) );
+    for ( int i = 0; i < queryNames.length; i++ ) {
+      final String queryName = queryNames[ i ];
+      assertEqual( sdf.getSequence( queryName ), fac2.getSequence( queryName ) );
     }
   }
 
-  private void assertEqual (final Sequence s1, final Sequence s2)
-  {
-    assertEquals(s1.getClass(), s2.getClass());
+  private void assertEqual( final Sequence s1, final Sequence s2 ) {
+    assertEquals( s1.getClass(), s2.getClass() );
 
     final SequenceDescription sd = s1.getSequenceDescription();
     final int pc = sd.getParameterCount();
-    for (int i = 0; i < pc; i++)
-    {
-      final String name = sd.getParameterName(i);
-      assertEquals("Failed at " + name, s1.getParameter(name), s2.getParameter(name));
+    for ( int i = 0; i < pc; i++ ) {
+      final String name = sd.getParameterName( i );
+      assertEquals( "Failed at " + name, s1.getParameter( name ), s2.getParameter( name ) );
     }
   }
 }

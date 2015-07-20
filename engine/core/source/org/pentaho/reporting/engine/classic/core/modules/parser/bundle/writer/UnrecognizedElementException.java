@@ -22,13 +22,11 @@ package org.pentaho.reporting.engine.classic.core.modules.parser.bundle.writer;
  *
  * @author Thomas Morgner
  */
-public class UnrecognizedElementException extends BundleWriterException
-{
+public class UnrecognizedElementException extends BundleWriterException {
   /**
    * Creates a StackableRuntimeException with no message and no parent.
    */
-  public UnrecognizedElementException()
-  {
+  public UnrecognizedElementException() {
   }
 
   /**
@@ -37,9 +35,8 @@ public class UnrecognizedElementException extends BundleWriterException
    * @param message the exception message.
    * @param ex      the parent exception.
    */
-  public UnrecognizedElementException(final String message, final Exception ex)
-  {
-    super(message, ex);
+  public UnrecognizedElementException( final String message, final Exception ex ) {
+    super( message, ex );
   }
 
   /**
@@ -47,8 +44,7 @@ public class UnrecognizedElementException extends BundleWriterException
    *
    * @param message the exception message.
    */
-  public UnrecognizedElementException(final String message)
-  {
-    super(message);
+  public UnrecognizedElementException( final String message ) {
+    super( message );
   }
 }

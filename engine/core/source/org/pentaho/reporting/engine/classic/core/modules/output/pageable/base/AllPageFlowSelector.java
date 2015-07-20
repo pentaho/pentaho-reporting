@@ -26,27 +26,22 @@ import org.pentaho.reporting.engine.classic.core.layout.output.PhysicalPageKey;
  *
  * @author Thomas Morgner
  */
-public class AllPageFlowSelector implements PageFlowSelector
-{
+public class AllPageFlowSelector implements PageFlowSelector {
   private boolean logicalPages;
 
-  public AllPageFlowSelector(final boolean logicalPages)
-  {
+  public AllPageFlowSelector( final boolean logicalPages ) {
     this.logicalPages = logicalPages;
   }
 
-  public AllPageFlowSelector()
-  {
-    this(false);
+  public AllPageFlowSelector() {
+    this( false );
   }
 
-  public boolean isPhysicalPageAccepted(final PhysicalPageKey key)
-  {
+  public boolean isPhysicalPageAccepted( final PhysicalPageKey key ) {
     return logicalPages == false;
   }
 
-  public boolean isLogicalPageAccepted(final LogicalPageKey key)
-  {
+  public boolean isLogicalPageAccepted( final LogicalPageKey key ) {
     return logicalPages;
   }
 }

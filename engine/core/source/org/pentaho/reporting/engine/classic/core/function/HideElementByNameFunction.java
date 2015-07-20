@@ -28,8 +28,7 @@ import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
  * @author Thomas Morgner
  * @deprecated Use a formula
  */
-public class HideElementByNameFunction extends AbstractElementFormatFunction
-{
+public class HideElementByNameFunction extends AbstractElementFormatFunction {
   /**
    * The name of the data-row column that is checked for null-values.
    */
@@ -38,8 +37,7 @@ public class HideElementByNameFunction extends AbstractElementFormatFunction
   /**
    * Default Constructor.
    */
-  public HideElementByNameFunction()
-  {
+  public HideElementByNameFunction() {
   }
 
   /**
@@ -47,8 +45,7 @@ public class HideElementByNameFunction extends AbstractElementFormatFunction
    *
    * @return The field name.
    */
-  public String getField()
-  {
+  public String getField() {
     return field;
   }
 
@@ -57,17 +54,14 @@ public class HideElementByNameFunction extends AbstractElementFormatFunction
    *
    * @param field the field name.
    */
-  public void setField(final String field)
-  {
+  public void setField( final String field ) {
     this.field = field;
   }
 
-  protected boolean evaluateElement(final ReportElement e)
-  {
-    if (ObjectUtilities.equal(e.getName(), getElement()))
-    {
-      final boolean visible = ObjectUtilities.equal(getElement(), getDataRow().get(getField()));
-      e.getStyle().setStyleProperty(ElementStyleKeys.VISIBLE, visible);
+  protected boolean evaluateElement( final ReportElement e ) {
+    if ( ObjectUtilities.equal( e.getName(), getElement() ) ) {
+      final boolean visible = ObjectUtilities.equal( getElement(), getDataRow().get( getField() ) );
+      e.getStyle().setStyleProperty( ElementStyleKeys.VISIBLE, visible );
       return true;
     }
     return false;

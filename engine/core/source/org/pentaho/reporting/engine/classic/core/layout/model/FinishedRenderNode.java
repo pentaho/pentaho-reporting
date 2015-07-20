@@ -28,8 +28,7 @@ import org.pentaho.reporting.engine.classic.core.states.ReportStateKey;
  *
  * @author Thomas Morgner
  */
-public final class FinishedRenderNode extends RenderNode
-{
+public final class FinishedRenderNode extends RenderNode {
   private long layoutedX;
   private long layoutedY;
   private long layoutedWidth;
@@ -41,39 +40,35 @@ public final class FinishedRenderNode extends RenderNode
   private final int orphanLeafCount;
   private final int widowLeafCount;
 
-  public FinishedRenderNode(final long layoutedX,
-                            final long layoutedY,
-                            final long layoutedWidth,
-                            final long layoutedHeight,
-                            final long marginsTop,
-                            final long marginsBottom,
-                            final boolean breakAfter,
-                            final int orphanLeafCount,
-                            final int widowLeafCount)
-  {
-    this(layoutedX, layoutedY, layoutedWidth, layoutedHeight,
-        marginsTop, marginsBottom, breakAfter, orphanLeafCount, widowLeafCount, null);
+  public FinishedRenderNode( final long layoutedX,
+                             final long layoutedY,
+                             final long layoutedWidth,
+                             final long layoutedHeight,
+                             final long marginsTop,
+                             final long marginsBottom,
+                             final boolean breakAfter,
+                             final int orphanLeafCount,
+                             final int widowLeafCount ) {
+    this( layoutedX, layoutedY, layoutedWidth, layoutedHeight,
+      marginsTop, marginsBottom, breakAfter, orphanLeafCount, widowLeafCount, null );
   }
 
-  public FinishedRenderNode(final long layoutedX,
-                            final long layoutedY,
-                            final long layoutedWidth,
-                            final long layoutedHeight,
-                            final long marginsTop,
-                            final long marginsBottom,
-                            final boolean breakAfter,
-                            final int orphanLeafCount,
-                            final int widowLeafCount,
-                            final ReportStateKey stateKey)
-  {
-    super(NodeLayoutProperties.GENERIC_PROPERTIES);
-    if (layoutedWidth < 0)
-    {
-      throw new IllegalStateException("Layouted Width is less than zero: " + layoutedWidth);
+  public FinishedRenderNode( final long layoutedX,
+                             final long layoutedY,
+                             final long layoutedWidth,
+                             final long layoutedHeight,
+                             final long marginsTop,
+                             final long marginsBottom,
+                             final boolean breakAfter,
+                             final int orphanLeafCount,
+                             final int widowLeafCount,
+                             final ReportStateKey stateKey ) {
+    super( NodeLayoutProperties.GENERIC_PROPERTIES );
+    if ( layoutedWidth < 0 ) {
+      throw new IllegalStateException( "Layouted Width is less than zero: " + layoutedWidth );
     }
-    if (layoutedHeight < 0)
-    {
-      throw new IllegalStateException("Layouted Height is less than zero: " + layoutedHeight);
+    if ( layoutedHeight < 0 ) {
+      throw new IllegalStateException( "Layouted Height is less than zero: " + layoutedHeight );
     }
 
     this.stateKey = stateKey;
@@ -88,43 +83,37 @@ public final class FinishedRenderNode extends RenderNode
     this.orphanLeafCount = orphanLeafCount;
     this.widowLeafCount = widowLeafCount;
 
-    setFinishedPaginate(true);
-    setFinishedTable(true);
-    setMinimumChunkWidth(layoutedWidth);
-    setMaximumBoxWidth(layoutedWidth);
-    setX(layoutedX);
-    setY(layoutedY);
-    setWidth(layoutedWidth);
-    setHeight(layoutedHeight);
+    setFinishedPaginate( true );
+    setFinishedTable( true );
+    setMinimumChunkWidth( layoutedWidth );
+    setMaximumBoxWidth( layoutedWidth );
+    setX( layoutedX );
+    setY( layoutedY );
+    setWidth( layoutedWidth );
+    setHeight( layoutedHeight );
   }
 
-  public int getNodeType()
-  {
+  public int getNodeType() {
     return LayoutNodeTypes.TYPE_NODE_FINISHEDNODE;
   }
 
-  public boolean isBreakAfter()
-  {
+  public boolean isBreakAfter() {
     return breakAfter;
   }
 
-  public long getLayoutedWidth()
-  {
+  public long getLayoutedWidth() {
     return layoutedWidth;
   }
 
-  public long getLayoutedHeight()
-  {
+  public long getLayoutedHeight() {
     return layoutedHeight;
   }
 
-  public long getMarginsTop()
-  {
+  public long getMarginsTop() {
     return marginsTop;
   }
 
-  public long getMarginsBottom()
-  {
+  public long getMarginsBottom() {
     return marginsBottom;
   }
 
@@ -136,43 +125,35 @@ public final class FinishedRenderNode extends RenderNode
    *
    * @return
    */
-  public boolean isIgnorableForRendering()
-  {
+  public boolean isIgnorableForRendering() {
     // Finished rows affect the margins ..
     return false;
   }
 
-  public ReportStateKey getStateKey()
-  {
+  public ReportStateKey getStateKey() {
     return stateKey;
   }
 
-  public int getOrphanLeafCount()
-  {
+  public int getOrphanLeafCount() {
     return orphanLeafCount;
   }
 
-  public int getWidowLeafCount()
-  {
+  public int getWidowLeafCount() {
     return widowLeafCount;
   }
 
-  public boolean isOrphanLeaf()
-  {
+  public boolean isOrphanLeaf() {
     return widowLeafCount > 0 || orphanLeafCount > 0;
   }
 
-  public RenderBox.RestrictFinishClearOut getRestrictFinishedClearOut()
-  {
-    if (isOrphanLeaf())
-    {
+  public RenderBox.RestrictFinishClearOut getRestrictFinishedClearOut() {
+    if ( isOrphanLeaf() ) {
       return RenderBox.RestrictFinishClearOut.LEAF;
     }
     return RenderBox.RestrictFinishClearOut.UNRESTRICTED;
   }
 
-  public long getLayoutedY()
-  {
+  public long getLayoutedY() {
     return layoutedY;
   }
 

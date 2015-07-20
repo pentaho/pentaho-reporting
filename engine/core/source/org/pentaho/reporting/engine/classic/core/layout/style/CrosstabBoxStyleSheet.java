@@ -24,43 +24,35 @@ import org.pentaho.reporting.engine.classic.core.style.StyleKey;
 import org.pentaho.reporting.engine.classic.core.style.StyleSheet;
 import org.pentaho.reporting.engine.classic.core.util.InstanceID;
 
-public class CrosstabBoxStyleSheet extends AbstractStyleSheet
-{
+public class CrosstabBoxStyleSheet extends AbstractStyleSheet {
   private StyleSheet parent;
 
-  public CrosstabBoxStyleSheet()
-  {
+  public CrosstabBoxStyleSheet() {
     this.parent = BandDefaultStyleSheet.getBandDefaultStyle();
   }
 
-  public StyleSheet getParent()
-  {
+  public StyleSheet getParent() {
     return parent;
   }
 
-  public InstanceID getId()
-  {
+  public InstanceID getId() {
     return parent.getId();
   }
 
-  public long getChangeTracker()
-  {
+  public long getChangeTracker() {
     return parent.getChangeTracker();
   }
 
-  public Object getStyleProperty(final StyleKey key, final Object defaultValue)
-  {
-    if (ElementStyleKeys.USE_MIN_CHUNKWIDTH.equals(key))
-    {
+  public Object getStyleProperty( final StyleKey key, final Object defaultValue ) {
+    if ( ElementStyleKeys.USE_MIN_CHUNKWIDTH.equals( key ) ) {
       return Boolean.TRUE;
     }
-    return parent.getStyleProperty(key, defaultValue);
+    return parent.getStyleProperty( key, defaultValue );
   }
 
-  public Object[] toArray()
-  {
+  public Object[] toArray() {
     final Object[] objects = parent.toArray();
-    objects[ElementStyleKeys.USE_MIN_CHUNKWIDTH.getIdentifier()] = Boolean.TRUE;
+    objects[ ElementStyleKeys.USE_MIN_CHUNKWIDTH.getIdentifier() ] = Boolean.TRUE;
     return objects;
   }
 }

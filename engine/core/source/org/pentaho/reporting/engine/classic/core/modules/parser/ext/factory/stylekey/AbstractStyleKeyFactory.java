@@ -17,37 +17,35 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.parser.ext.factory.stylekey;
 
-import java.lang.reflect.Field;
-import java.lang.reflect.Modifier;
-import java.util.HashMap;
-import java.util.Iterator;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.pentaho.reporting.engine.classic.core.modules.parser.ext.factory.base.ClassFactory;
 import org.pentaho.reporting.engine.classic.core.modules.parser.ext.factory.base.ObjectDescription;
 import org.pentaho.reporting.engine.classic.core.style.StyleKey;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
+import java.util.HashMap;
+import java.util.Iterator;
+
 /**
  * An abstract class for implementing the {@link StyleKeyFactory} interface.
  *
  * @author Thomas Morgner.
  */
-public abstract class AbstractStyleKeyFactory implements StyleKeyFactory
-{
-  private static final Log logger = LogFactory.getLog(AbstractStyleKeyFactory.class);
+public abstract class AbstractStyleKeyFactory implements StyleKeyFactory {
+  private static final Log logger = LogFactory.getLog( AbstractStyleKeyFactory.class );
 
   /**
    * Storage for the keys.
    */
-  private final HashMap<String,StyleKey> knownKeys;
+  private final HashMap<String, StyleKey> knownKeys;
 
   /**
    * Creates a new factory.
    */
-  protected AbstractStyleKeyFactory()
-  {
-    knownKeys = new HashMap<String,StyleKey>();
+  protected AbstractStyleKeyFactory() {
+    knownKeys = new HashMap<String, StyleKey>();
   }
 
   /**
@@ -55,9 +53,8 @@ public abstract class AbstractStyleKeyFactory implements StyleKeyFactory
    *
    * @param key the key.
    */
-  public void addKey(final StyleKey key)
-  {
-    knownKeys.put(key.getName(), key);
+  public void addKey( final StyleKey key ) {
+    knownKeys.put( key.getName(), key );
   }
 
   /**
@@ -66,9 +63,8 @@ public abstract class AbstractStyleKeyFactory implements StyleKeyFactory
    * @param name the name.
    * @return The key.
    */
-  public StyleKey getStyleKey(final String name)
-  {
-    return knownKeys.get(name);
+  public StyleKey getStyleKey( final String name ) {
+    return knownKeys.get( name );
   }
 
   /**
@@ -80,35 +76,29 @@ public abstract class AbstractStyleKeyFactory implements StyleKeyFactory
    * @param fc    the class factory used to create the basic object.
    * @return The object.
    */
-  public Object createBasicObject(final StyleKey k, final String value,
-                                  final Class c, final ClassFactory fc)
-  {
-    if (k == null)
-    {
+  public Object createBasicObject( final StyleKey k, final String value,
+                                   final Class c, final ClassFactory fc ) {
+    if ( k == null ) {
       // no such key registered ...
       return null;
     }
 
-    if (c == null)
-    {
+    if ( c == null ) {
       throw new NullPointerException();
     }
 
-    if (fc == null)
-    {
-      throw new NullPointerException("Class " + getClass());
+    if ( fc == null ) {
+      throw new NullPointerException( "Class " + getClass() );
     }
 
-    ObjectDescription od = fc.getDescriptionForClass(c);
-    if (od == null)
-    {
-      od = fc.getSuperClassObjectDescription(c, null);
-      if (od == null)
-      {
+    ObjectDescription od = fc.getDescriptionForClass( c );
+    if ( od == null ) {
+      od = fc.getSuperClassObjectDescription( c, null );
+      if ( od == null ) {
         return null;
       }
     }
-    od.setParameter("value", value);
+    od.setParameter( "value", value );
     return od.createObject();
   }
 
@@ -118,27 +108,20 @@ public abstract class AbstractStyleKeyFactory implements StyleKeyFactory
    * @param c the class from where to load the stylekeys.
    * @throws SecurityException if the current security settings deny class access.
    */
-  protected void loadFromClass(final Class c)
-  {
+  protected void loadFromClass( final Class c ) {
     final Field[] fields = c.getFields();
-    for (int i = 0; i < fields.length; i++)
-    {
-      final Field f = fields[i];
-      if (StyleKey.class.isAssignableFrom(f.getType()) == false)
-      {
+    for ( int i = 0; i < fields.length; i++ ) {
+      final Field f = fields[ i ];
+      if ( StyleKey.class.isAssignableFrom( f.getType() ) == false ) {
         // is no instance of stylekey...
         continue;
       }
 
-      if (Modifier.isPublic(f.getModifiers()) && Modifier.isStatic(f.getModifiers()))
-      {
-        try
-        {
-          addKey((StyleKey) f.get(null));
-        }
-        catch (IllegalAccessException ex)
-        {
-          AbstractStyleKeyFactory.logger.warn("Unexpected Exception while loading stylekeys", ex);
+      if ( Modifier.isPublic( f.getModifiers() ) && Modifier.isStatic( f.getModifiers() ) ) {
+        try {
+          addKey( (StyleKey) f.get( null ) );
+        } catch ( IllegalAccessException ex ) {
+          AbstractStyleKeyFactory.logger.warn( "Unexpected Exception while loading stylekeys", ex );
         }
       }
     }
@@ -149,8 +132,7 @@ public abstract class AbstractStyleKeyFactory implements StyleKeyFactory
    *
    * @return The iterator.
    */
-  public Iterator getRegisteredKeys()
-  {
+  public Iterator getRegisteredKeys() {
     return knownKeys.keySet().iterator();
   }
 
@@ -161,21 +143,17 @@ public abstract class AbstractStyleKeyFactory implements StyleKeyFactory
    * @return true, if the object is equal, false otherwise.
    * @see java.lang.Object#equals(java.lang.Object)
    */
-  public boolean equals(final Object o)
-  {
-    if (this == o)
-    {
+  public boolean equals( final Object o ) {
+    if ( this == o ) {
       return true;
     }
-    if (!(o instanceof AbstractStyleKeyFactory))
-    {
+    if ( !( o instanceof AbstractStyleKeyFactory ) ) {
       return false;
     }
 
     final AbstractStyleKeyFactory abstractStyleKeyFactory = (AbstractStyleKeyFactory) o;
 
-    if (!knownKeys.equals(abstractStyleKeyFactory.knownKeys))
-    {
+    if ( !knownKeys.equals( abstractStyleKeyFactory.knownKeys ) ) {
       return false;
     }
 
@@ -188,8 +166,7 @@ public abstract class AbstractStyleKeyFactory implements StyleKeyFactory
    * @return the hashcode.
    * @see java.lang.Object#hashCode()
    */
-  public int hashCode()
-  {
+  public int hashCode() {
     return knownKeys.hashCode();
   }
 }

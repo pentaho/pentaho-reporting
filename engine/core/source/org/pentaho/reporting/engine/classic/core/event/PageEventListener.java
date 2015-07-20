@@ -32,20 +32,19 @@ import java.util.EventListener;
  *
  * @author Thomas Morgner
  */
-public interface PageEventListener extends EventListener
-{
+public interface PageEventListener extends EventListener {
 
   /**
    * Receives notification that a new page is being started.
    *
    * @param event The event.
    */
-  public void pageStarted(ReportEvent event);
+  public void pageStarted( ReportEvent event );
 
   /**
    * Receives notification that a page is completed.
    *
    * @param event The event.
    */
-  public void pageFinished(ReportEvent event);
+  public void pageFinished( ReportEvent event );
 }

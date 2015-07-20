@@ -19,35 +19,29 @@ package org.pentaho.reporting.engine.classic.core.layout.process.text;
 
 import java.awt.font.TextLayout;
 
-public class ParagraphFontMetricsImpl implements ParagraphFontMetrics
-{
+public class ParagraphFontMetricsImpl implements ParagraphFontMetrics {
   private float ascent = 0;
   private float descent = 0;
   private float leading = 0;
 
-  public ParagraphFontMetricsImpl()
-  {
+  public ParagraphFontMetricsImpl() {
   }
 
-  public void update(TextLayout textLayout)
-  {
-    ascent = Math.max(ascent, textLayout.getAscent());
-    descent = Math.max(descent, textLayout.getDescent());
-    leading = Math.max(leading, textLayout.getLeading());
+  public void update( TextLayout textLayout ) {
+    ascent = Math.max( ascent, textLayout.getAscent() );
+    descent = Math.max( descent, textLayout.getDescent() );
+    leading = Math.max( leading, textLayout.getLeading() );
   }
 
-  public float getLineHeight()
-  {
+  public float getLineHeight() {
     return ascent + descent + leading;
   }
 
-  public float getBaseline()
-  {
+  public float getBaseline() {
     return ascent + leading;
   }
 
-  public float getAscent()
-  {
+  public float getAscent() {
     return ascent;
   }
 }

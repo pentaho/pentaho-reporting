@@ -20,80 +20,63 @@ package org.pentaho.reporting.engine.classic.core.layout.process.util;
 import org.pentaho.reporting.engine.classic.core.layout.model.ParagraphRenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderBox;
 
-public class StaticChunkWidthUpdatePool
-{
-  private static class HorizontalPool extends StackedObjectPool<StaticHorizontalChunkWidthUpdate>
-  {
-    private HorizontalPool()
-    {
+public class StaticChunkWidthUpdatePool {
+  private static class HorizontalPool extends StackedObjectPool<StaticHorizontalChunkWidthUpdate> {
+    private HorizontalPool() {
     }
 
-    public StaticHorizontalChunkWidthUpdate create()
-    {
-      return new StaticHorizontalChunkWidthUpdate(this);
+    public StaticHorizontalChunkWidthUpdate create() {
+      return new StaticHorizontalChunkWidthUpdate( this );
     }
 
-    public StaticHorizontalChunkWidthUpdate get(final StaticChunkWidthUpdate parent, final RenderBox box)
-    {
+    public StaticHorizontalChunkWidthUpdate get( final StaticChunkWidthUpdate parent, final RenderBox box ) {
       final StaticHorizontalChunkWidthUpdate chunkWidthUpdate = super.get();
-      chunkWidthUpdate.reuse(parent, box);
+      chunkWidthUpdate.reuse( parent, box );
       return chunkWidthUpdate;
     }
   }
 
-  private static class VerticalPool extends StackedObjectPool<StaticVerticalChunkWidthUpdate>
-  {
-    private VerticalPool()
-    {
+  private static class VerticalPool extends StackedObjectPool<StaticVerticalChunkWidthUpdate> {
+    private VerticalPool() {
     }
 
-    public StaticVerticalChunkWidthUpdate create()
-    {
-      return new StaticVerticalChunkWidthUpdate(this);
+    public StaticVerticalChunkWidthUpdate create() {
+      return new StaticVerticalChunkWidthUpdate( this );
     }
 
-    public StaticVerticalChunkWidthUpdate get(final StaticChunkWidthUpdate parent, final RenderBox box)
-    {
+    public StaticVerticalChunkWidthUpdate get( final StaticChunkWidthUpdate parent, final RenderBox box ) {
       final StaticVerticalChunkWidthUpdate chunkWidthUpdate = super.get();
-      chunkWidthUpdate.reuse(parent, box);
+      chunkWidthUpdate.reuse( parent, box );
       return chunkWidthUpdate;
     }
   }
 
-  private static class InlinePool extends StackedObjectPool<StaticInlineBoxChunkWidthUpdate>
-  {
-    private InlinePool()
-    {
+  private static class InlinePool extends StackedObjectPool<StaticInlineBoxChunkWidthUpdate> {
+    private InlinePool() {
     }
 
-    public StaticInlineBoxChunkWidthUpdate create()
-    {
-      return new StaticInlineBoxChunkWidthUpdate(this);
+    public StaticInlineBoxChunkWidthUpdate create() {
+      return new StaticInlineBoxChunkWidthUpdate( this );
     }
 
-    public StaticInlineBoxChunkWidthUpdate get(final StaticChunkWidthUpdate parent, final RenderBox box)
-    {
+    public StaticInlineBoxChunkWidthUpdate get( final StaticChunkWidthUpdate parent, final RenderBox box ) {
       final StaticInlineBoxChunkWidthUpdate chunkWidthUpdate = super.get();
-      chunkWidthUpdate.reuse(parent, box);
+      chunkWidthUpdate.reuse( parent, box );
       return chunkWidthUpdate;
     }
   }
 
-  private static class ParagraphPool extends StackedObjectPool<StaticParagraphChunkWidthUpdate>
-  {
-    private ParagraphPool()
-    {
+  private static class ParagraphPool extends StackedObjectPool<StaticParagraphChunkWidthUpdate> {
+    private ParagraphPool() {
     }
 
-    public StaticParagraphChunkWidthUpdate create()
-    {
-      return new StaticParagraphChunkWidthUpdate(this);
+    public StaticParagraphChunkWidthUpdate create() {
+      return new StaticParagraphChunkWidthUpdate( this );
     }
 
-    public StaticParagraphChunkWidthUpdate get(final StaticChunkWidthUpdate parent, final ParagraphRenderBox box)
-    {
+    public StaticParagraphChunkWidthUpdate get( final StaticChunkWidthUpdate parent, final ParagraphRenderBox box ) {
       final StaticParagraphChunkWidthUpdate chunkWidthUpdate = super.get();
-      chunkWidthUpdate.reuse(parent, box);
+      chunkWidthUpdate.reuse( parent, box );
       return chunkWidthUpdate;
     }
   }
@@ -103,31 +86,26 @@ public class StaticChunkWidthUpdatePool
   private InlinePool inlinePool;
   private ParagraphPool paragraphPool;
 
-  public StaticChunkWidthUpdatePool()
-  {
+  public StaticChunkWidthUpdatePool() {
     horizontalPool = new HorizontalPool();
     verticalPool = new VerticalPool();
     inlinePool = new InlinePool();
     paragraphPool = new ParagraphPool();
   }
 
-  public StaticChunkWidthUpdate createHorizontal(final StaticChunkWidthUpdate parent, final RenderBox box)
-  {
-    return horizontalPool.get(parent, box);
+  public StaticChunkWidthUpdate createHorizontal( final StaticChunkWidthUpdate parent, final RenderBox box ) {
+    return horizontalPool.get( parent, box );
   }
 
-  public StaticChunkWidthUpdate createVertical(final StaticChunkWidthUpdate parent, final RenderBox box)
-  {
-    return verticalPool.get(parent, box);
+  public StaticChunkWidthUpdate createVertical( final StaticChunkWidthUpdate parent, final RenderBox box ) {
+    return verticalPool.get( parent, box );
   }
 
-  public StaticChunkWidthUpdate createInline(final StaticChunkWidthUpdate parent, final RenderBox box)
-  {
-    return inlinePool.get(parent, box);
+  public StaticChunkWidthUpdate createInline( final StaticChunkWidthUpdate parent, final RenderBox box ) {
+    return inlinePool.get( parent, box );
   }
 
-  public StaticChunkWidthUpdate createParagraph(final StaticChunkWidthUpdate parent, final ParagraphRenderBox box)
-  {
-    return paragraphPool.get(parent, box);
+  public StaticChunkWidthUpdate createParagraph( final StaticChunkWidthUpdate parent, final ParagraphRenderBox box ) {
+    return paragraphPool.get( parent, box );
   }
 }

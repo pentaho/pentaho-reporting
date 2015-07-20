@@ -17,8 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.core.filter.types;
 
-import java.util.Locale;
-
 import org.pentaho.reporting.engine.classic.core.AttributeNames;
 import org.pentaho.reporting.engine.classic.core.MetaAttributeNames;
 import org.pentaho.reporting.engine.classic.core.ReportElement;
@@ -27,13 +25,13 @@ import org.pentaho.reporting.engine.classic.core.metadata.ElementType;
 import org.pentaho.reporting.engine.classic.core.wizard.DataAttributes;
 import org.pentaho.reporting.engine.classic.core.wizard.DefaultDataAttributeContext;
 
-public class LabelType extends AbstractElementType
-{
+import java.util.Locale;
+
+public class LabelType extends AbstractElementType {
   public static final ElementType INSTANCE = new LabelType();
 
-  public LabelType()
-  {
-    super("label");
+  public LabelType() {
+    super( "label" );
   }
 
   /**
@@ -44,61 +42,50 @@ public class LabelType extends AbstractElementType
    * @param element
    * @return the value.
    */
-  public Object getValue(final ExpressionRuntime runtime, final ReportElement element)
-  {
-    if (runtime == null)
-    {
-      throw new NullPointerException("Runtime must never be null.");
+  public Object getValue( final ExpressionRuntime runtime, final ReportElement element ) {
+    if ( runtime == null ) {
+      throw new NullPointerException( "Runtime must never be null." );
     }
-    if (element == null)
-    {
-      throw new NullPointerException("Element must never be null.");
+    if ( element == null ) {
+      throw new NullPointerException( "Element must never be null." );
     }
 
-    final Object retval = ElementTypeUtils.queryStaticValue(element);
-    if (retval == null)
-    {
-      return element.getAttribute(AttributeNames.Core.NAMESPACE, AttributeNames.Core.NULL_VALUE);
+    final Object retval = ElementTypeUtils.queryStaticValue( element );
+    if ( retval == null ) {
+      return element.getAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.NULL_VALUE );
     }
-    return String.valueOf(retval);
+    return String.valueOf( retval );
   }
 
-  public Object getDesignValue(final ExpressionRuntime runtime, final ReportElement element)
-  {
-    if (Boolean.TRUE.equals(element.getAttribute
-        (AttributeNames.Wizard.NAMESPACE, AttributeNames.Wizard.ALLOW_METADATA_ATTRIBUTES)))
-    {
+  public Object getDesignValue( final ExpressionRuntime runtime, final ReportElement element ) {
+    if ( Boolean.TRUE.equals( element.getAttribute
+      ( AttributeNames.Wizard.NAMESPACE, AttributeNames.Wizard.ALLOW_METADATA_ATTRIBUTES ) ) ) {
       final Object labelFor = element.getAttribute
-          (AttributeNames.Wizard.NAMESPACE, AttributeNames.Wizard.LABEL_FOR);
-      if (labelFor instanceof String)
-      {
+        ( AttributeNames.Wizard.NAMESPACE, AttributeNames.Wizard.LABEL_FOR );
+      if ( labelFor instanceof String ) {
         final String labelForText = (String) labelFor;
-        final DataAttributes attributes = runtime.getDataSchema().getAttributes(labelForText);
-        if (attributes != null)
-        {
+        final DataAttributes attributes = runtime.getDataSchema().getAttributes( labelForText );
+        if ( attributes != null ) {
           final DefaultDataAttributeContext context = new DefaultDataAttributeContext
-              (runtime.getProcessingContext().getOutputProcessorMetaData(),
-                  runtime.getResourceBundleFactory().getLocale());
+            ( runtime.getProcessingContext().getOutputProcessorMetaData(),
+              runtime.getResourceBundleFactory().getLocale() );
           final Object o = attributes.getMetaAttribute
-              (MetaAttributeNames.Formatting.NAMESPACE, MetaAttributeNames.Formatting.LABEL, String.class, context);
-          if (o != null)
-          {
+            ( MetaAttributeNames.Formatting.NAMESPACE, MetaAttributeNames.Formatting.LABEL, String.class, context );
+          if ( o != null ) {
             return o;
           }
         }
       }
     }
-    
-    final Object retval = ElementTypeUtils.queryStaticValue(element);
-    if (retval == null)
-    {
+
+    final Object retval = ElementTypeUtils.queryStaticValue( element );
+    if ( retval == null ) {
       return "Label";
     }
-    return String.valueOf(retval);
+    return String.valueOf( retval );
   }
 
-  public void configureDesignTimeDefaults(final ReportElement element, final Locale locale)
-  {
-    element.setAttribute(AttributeNames.Core.NAMESPACE, AttributeNames.Core.VALUE, "Label");
+  public void configureDesignTimeDefaults( final ReportElement element, final Locale locale ) {
+    element.setAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.VALUE, "Label" );
   }
 }

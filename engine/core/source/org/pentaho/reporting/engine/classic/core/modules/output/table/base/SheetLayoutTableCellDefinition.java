@@ -17,8 +17,7 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.output.table.base;
 
-public class SheetLayoutTableCellDefinition
-{
+public class SheetLayoutTableCellDefinition {
   protected static final int LINE_HINT_NONE = 0;
   protected static final int LINE_HINT_VERTICAL = 1;
   protected static final int LINE_HINT_HORIZONTAL = 2;
@@ -26,24 +25,20 @@ public class SheetLayoutTableCellDefinition
   private int lineType; // 0 none, 1 horizontal, 2 vertical
   private long coordinate;
 
-  public SheetLayoutTableCellDefinition()
-  {
+  public SheetLayoutTableCellDefinition() {
     this.lineType = LINE_HINT_NONE;
   }
 
-  public SheetLayoutTableCellDefinition(final int lineType, final long coordinate)
-  {
+  public SheetLayoutTableCellDefinition( final int lineType, final long coordinate ) {
     this.lineType = lineType;
     this.coordinate = coordinate;
   }
 
-  public int getLineType()
-  {
+  public int getLineType() {
     return lineType;
   }
 
-  public long getCoordinate()
-  {
+  public long getCoordinate() {
     return coordinate;
   }
 }

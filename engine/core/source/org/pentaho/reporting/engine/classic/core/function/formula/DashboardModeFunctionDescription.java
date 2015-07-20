@@ -24,14 +24,12 @@ import org.pentaho.reporting.libraries.formula.typing.Type;
 import org.pentaho.reporting.libraries.formula.typing.coretypes.LogicalType;
 import org.pentaho.reporting.libraries.formula.typing.coretypes.TextType;
 
-public class DashboardModeFunctionDescription extends AbstractFunctionDescription
-{
+public class DashboardModeFunctionDescription extends AbstractFunctionDescription {
   /**
    * Default Constructor.
    */
-  public DashboardModeFunctionDescription()
-  {
-    super("DASHBOARDMODE", "org.pentaho.reporting.engine.classic.core.function.formula.DashboardMode-Function");
+  public DashboardModeFunctionDescription() {
+    super( "DASHBOARDMODE", "org.pentaho.reporting.engine.classic.core.function.formula.DashboardMode-Function" );
   }
 
   /**
@@ -39,8 +37,7 @@ public class DashboardModeFunctionDescription extends AbstractFunctionDescriptio
    *
    * @return LogicalType.TYPE
    */
-  public Type getValueType()
-  {
+  public Type getValueType() {
     return LogicalType.TYPE;
   }
 
@@ -49,8 +46,7 @@ public class DashboardModeFunctionDescription extends AbstractFunctionDescriptio
    *
    * @return 1.
    */
-  public int getParameterCount()
-  {
+  public int getParameterCount() {
     return 0;
   }
 
@@ -60,8 +56,7 @@ public class DashboardModeFunctionDescription extends AbstractFunctionDescriptio
    * @param position the parameter index.
    * @return always TextType.TYPE.
    */
-  public Type getParameterType(final int position)
-  {
+  public Type getParameterType( final int position ) {
     return TextType.TYPE;
   }
 
@@ -72,8 +67,7 @@ public class DashboardModeFunctionDescription extends AbstractFunctionDescriptio
    * @param position the position of the parameter.
    * @return true, as all parameters are mandatory.
    */
-  public boolean isParameterMandatory(final int position)
-  {
+  public boolean isParameterMandatory( final int position ) {
     return false;
   }
 
@@ -82,8 +76,7 @@ public class DashboardModeFunctionDescription extends AbstractFunctionDescriptio
    *
    * @return InformationFunctionCategory.CATEGORY.
    */
-  public FunctionCategory getCategory()
-  {
+  public FunctionCategory getCategory() {
     return InformationFunctionCategory.CATEGORY;
   }
 }

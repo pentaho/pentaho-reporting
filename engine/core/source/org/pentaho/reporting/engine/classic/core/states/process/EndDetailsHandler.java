@@ -25,40 +25,33 @@ import org.pentaho.reporting.engine.classic.core.event.ReportEvent;
  *
  * @author Thomas Morgner
  */
-public class EndDetailsHandler implements AdvanceHandler
-{
+public class EndDetailsHandler implements AdvanceHandler {
   public static final AdvanceHandler HANDLER = new EndDetailsHandler();
 
-  private EndDetailsHandler()
-  {
+  private EndDetailsHandler() {
   }
 
-  public ProcessState advance(final ProcessState state) throws ReportProcessingException
-  {
+  public ProcessState advance( final ProcessState state ) throws ReportProcessingException {
     final ProcessState next = state.deriveForAdvance();
-    next.setInItemGroup(false);
+    next.setInItemGroup( false );
     next.fireReportEvent();
     return next;
   }
 
-  public ProcessState commit(final ProcessState state) throws ReportProcessingException
-  {
-    state.setAdvanceHandler(EndGroupBodyHandler.HANDLER);
+  public ProcessState commit( final ProcessState state ) throws ReportProcessingException {
+    state.setAdvanceHandler( EndGroupBodyHandler.HANDLER );
     return state;
   }
 
-  public int getEventCode()
-  {
+  public int getEventCode() {
     return ReportEvent.ITEMS_FINISHED;
   }
 
-  public boolean isFinish()
-  {
+  public boolean isFinish() {
     return false;
   }
 
-  public boolean isRestoreHandler()
-  {
+  public boolean isRestoreHandler() {
     return false;
   }
 }

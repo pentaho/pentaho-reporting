@@ -22,33 +22,27 @@ package org.pentaho.reporting.engine.classic.core.states;
  *
  * @author Thomas Morgner
  */
-public class IgnoreEverythingReportErrorHandler implements ReportProcessingErrorHandler
-{
+public class IgnoreEverythingReportErrorHandler implements ReportProcessingErrorHandler {
   public static final ReportProcessingErrorHandler INSTANCE = new IgnoreEverythingReportErrorHandler();
 
-  private static final Exception[] EMPTY_EXCEPTION = new Exception[0];
+  private static final Exception[] EMPTY_EXCEPTION = new Exception[ 0 ];
 
-  private IgnoreEverythingReportErrorHandler()
-  {
+  private IgnoreEverythingReportErrorHandler() {
   }
 
-  public void handleError(final Exception exception)
-  {
+  public void handleError( final Exception exception ) {
 
   }
 
-  public boolean isErrorOccured()
-  {
+  public boolean isErrorOccured() {
     return false;
   }
 
-  public Exception[] getErrors()
-  {
+  public Exception[] getErrors() {
     return IgnoreEverythingReportErrorHandler.EMPTY_EXCEPTION;
   }
 
-  public void clearErrors()
-  {
+  public void clearErrors() {
 
   }
 }

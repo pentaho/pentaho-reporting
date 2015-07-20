@@ -22,10 +22,9 @@ import org.pentaho.reporting.engine.classic.core.parameters.ParameterContext;
 import org.pentaho.reporting.engine.classic.core.parameters.ParameterDefinitionEntry;
 
 
-public interface ParameterComponentFactory
-{
-  public ParameterComponent create(final ParameterDefinitionEntry entry,
-                                   final ParameterContext parameterContext,
-                                   final ParameterUpdateContext updateContext)
-      throws ReportDataFactoryException;
+public interface ParameterComponentFactory {
+  public ParameterComponent create( final ParameterDefinitionEntry entry,
+                                    final ParameterContext parameterContext,
+                                    final ParameterUpdateContext updateContext )
+    throws ReportDataFactoryException;
 }

@@ -29,19 +29,17 @@ import org.pentaho.reporting.engine.classic.core.style.ElementStyleSheet;
  *
  * @author Thomas Morgner
  */
-public class CrosstabTitleHeader extends Band implements RootLevelBand
-{
+public class CrosstabTitleHeader extends Band implements RootLevelBand {
   /**
    * A helper array to prevent unnecessary object creation.
    */
-  private static final SubReport[] EMPTY_SUB_REPORTS = new SubReport[0];
+  private static final SubReport[] EMPTY_SUB_REPORTS = new SubReport[ 0 ];
 
   /**
    * Constructs a new band (initially empty).
    */
-  public CrosstabTitleHeader()
-  {
-    setElementType(new CrosstabTitleHeaderType());
+  public CrosstabTitleHeader() {
+    setElementType( new CrosstabTitleHeaderType() );
   }
 
   /**
@@ -49,8 +47,7 @@ public class CrosstabTitleHeader extends Band implements RootLevelBand
    *
    * @return the subreport count.
    */
-  public final int getSubReportCount()
-  {
+  public final int getSubReportCount() {
     return 0;
   }
 
@@ -60,9 +57,8 @@ public class CrosstabTitleHeader extends Band implements RootLevelBand
    * @param index the index.
    * @return nothing, as an exception is thrown instead.
    */
-  public final SubReport getSubReport(final int index)
-  {
-    throw new IndexOutOfBoundsException("DetailsHeader cannot have subreports");
+  public final SubReport getSubReport( final int index ) {
+    throw new IndexOutOfBoundsException( "DetailsHeader cannot have subreports" );
   }
 
   /**
@@ -70,13 +66,11 @@ public class CrosstabTitleHeader extends Band implements RootLevelBand
    *
    * @return the sub-reports as array.
    */
-  public SubReport[] getSubReports()
-  {
+  public SubReport[] getSubReports() {
     return CrosstabTitleHeader.EMPTY_SUB_REPORTS;
   }
 
-  public ElementStyleSheet getDefaultStyleSheet()
-  {
+  public ElementStyleSheet getDefaultStyleSheet() {
     return BandDefaultStyleSheet.getBandDefaultStyle();
   }
 

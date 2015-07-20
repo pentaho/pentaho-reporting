@@ -17,11 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.gui.xls;
 
-import java.util.Locale;
-import javax.swing.Icon;
-import javax.swing.KeyStroke;
-import javax.swing.WindowConstants;
-
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
 import org.pentaho.reporting.engine.classic.core.modules.gui.common.StatusType;
@@ -32,13 +27,15 @@ import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
 import org.pentaho.reporting.libraries.base.util.ResourceBundleSupport;
 import org.pentaho.reporting.libraries.designtime.swing.LibSwingUtil;
 
+import javax.swing.*;
+import java.util.Locale;
+
 /**
  * Encapsulates the ExcelExportDialog into a separate plugin.
  *
  * @author Thomas Morgner
  */
-public class ExcelExportPlugin extends AbstractExportActionPlugin
-{
+public class ExcelExportPlugin extends AbstractExportActionPlugin {
   /**
    * Localised resources.
    */
@@ -48,33 +45,28 @@ public class ExcelExportPlugin extends AbstractExportActionPlugin
    * The base resource class.
    */
   public static final String BASE_RESOURCE_CLASS =
-      "org.pentaho.reporting.engine.classic.core.modules.gui.xls.messages.messages"; //$NON-NLS-1$
+    "org.pentaho.reporting.engine.classic.core.modules.gui.xls.messages.messages"; //$NON-NLS-1$
 
   /**
    * DefaultConstructor.
    */
-  public ExcelExportPlugin()
-  {
-    resources = new ResourceBundleSupport(Locale.getDefault(), ExcelExportPlugin.BASE_RESOURCE_CLASS,
-        ObjectUtilities.getClassLoader(ExcelExportPlugin.class));
+  public ExcelExportPlugin() {
+    resources = new ResourceBundleSupport( Locale.getDefault(), ExcelExportPlugin.BASE_RESOURCE_CLASS,
+      ObjectUtilities.getClassLoader( ExcelExportPlugin.class ) );
   }
 
-  public boolean initialize(final SwingGuiContext context)
-  {
-    if (super.initialize(context) == false)
-    {
+  public boolean initialize( final SwingGuiContext context ) {
+    if ( super.initialize( context ) == false ) {
       return false;
     }
-    if (ClassicEngineBoot.getInstance().isModuleAvailable(ExcelExportGUIModule.class.getName()) == false)
-    {
+    if ( ClassicEngineBoot.getInstance().isModuleAvailable( ExcelExportGUIModule.class.getName() ) == false ) {
       return false;
     }
     return true;
   }
 
 
-  protected String getConfigurationPrefix()
-  {
+  protected String getConfigurationPrefix() {
     return "org.pentaho.reporting.engine.classic.core.modules.gui.xls.export.xls."; //$NON-NLS-1$
   }
 
@@ -83,13 +75,12 @@ public class ExcelExportPlugin extends AbstractExportActionPlugin
    *
    * @return the progress monitor dialog.
    */
-  protected ReportProgressDialog createProgressDialog()
-  {
+  protected ReportProgressDialog createProgressDialog() {
     final ReportProgressDialog progressDialog = super.createProgressDialog();
-    progressDialog.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
-    progressDialog.setMessage(resources.getString("excel-export.progressdialog.message")); //$NON-NLS-1$
+    progressDialog.setDefaultCloseOperation( WindowConstants.DO_NOTHING_ON_CLOSE );
+    progressDialog.setMessage( resources.getString( "excel-export.progressdialog.message" ) ); //$NON-NLS-1$
     progressDialog.pack();
-    LibSwingUtil.positionFrameRandomly(progressDialog);
+    LibSwingUtil.positionFrameRandomly( progressDialog );
     return progressDialog;
   }
 
@@ -99,47 +90,36 @@ public class ExcelExportPlugin extends AbstractExportActionPlugin
    * @param report the report being processed.
    * @return true or false.
    */
-  public boolean performExport(final MasterReport report)
-  {
+  public boolean performExport( final MasterReport report ) {
     final boolean result = performShowExportDialog
-        (report, "org.pentaho.reporting.engine.classic.core.modules.gui.xls.Dialog"); //$NON-NLS-1$
-    if (result == false)
-    {
+      ( report, "org.pentaho.reporting.engine.classic.core.modules.gui.xls.Dialog" ); //$NON-NLS-1$
+    if ( result == false ) {
       // user canceled the dialog ...
       return false;
     }
 
     final ReportProgressDialog progressDialog;
-    if (isProgressDialogEnabled(report,
-        "org.pentaho.reporting.engine.classic.core.modules.gui.xls.ProgressDialogEnabled"))
-    {
+    if ( isProgressDialogEnabled( report,
+      "org.pentaho.reporting.engine.classic.core.modules.gui.xls.ProgressDialogEnabled" ) ) {
       progressDialog = createProgressDialog();
-      if (report.getTitle() == null)
-      {
-        progressDialog.setTitle(getResources().getString("ProgressDialog.EMPTY_TITLE"));
+      if ( report.getTitle() == null ) {
+        progressDialog.setTitle( getResources().getString( "ProgressDialog.EMPTY_TITLE" ) );
+      } else {
+        progressDialog.setTitle( getResources().formatMessage( "ProgressDialog.TITLE", report.getTitle() ) );
       }
-      else
-      {
-        progressDialog.setTitle(getResources().formatMessage("ProgressDialog.TITLE", report.getTitle()));
-      }
-    }
-    else
-    {
+    } else {
       progressDialog = null;
     }
 
-    try
-    {
+    try {
       final ExcelExportTask task =
-          new ExcelExportTask(report, progressDialog, getContext());
-      final Thread worker = new Thread(task);
+        new ExcelExportTask( report, progressDialog, getContext() );
+      final Thread worker = new Thread( task );
       worker.start();
       return true;
-    }
-    catch (Exception e)
-    {
+    } catch ( Exception e ) {
       getContext().getStatusListener().setStatus
-          (StatusType.ERROR, resources.getString("ExcelExportPlugin.USER_FAILED"), e); //$NON-NLS-1$
+        ( StatusType.ERROR, resources.getString( "ExcelExportPlugin.USER_FAILED" ), e ); //$NON-NLS-1$
       return false;
     }
   }
@@ -149,9 +129,8 @@ public class ExcelExportPlugin extends AbstractExportActionPlugin
    *
    * @return The description.
    */
-  public String getShortDescription()
-  {
-    return resources.getString("action.export-to-excel.description"); //$NON-NLS-1$
+  public String getShortDescription() {
+    return resources.getString( "action.export-to-excel.description" ); //$NON-NLS-1$
   }
 
   /**
@@ -159,10 +138,9 @@ public class ExcelExportPlugin extends AbstractExportActionPlugin
    *
    * @return The icon.
    */
-  public Icon getSmallIcon()
-  {
+  public Icon getSmallIcon() {
     final Locale locale = getContext().getLocale();
-    return getIconTheme().getSmallIcon(locale, "action.export-to-excel.small-icon"); //$NON-NLS-1$
+    return getIconTheme().getSmallIcon( locale, "action.export-to-excel.small-icon" ); //$NON-NLS-1$
   }
 
   /**
@@ -170,10 +148,9 @@ public class ExcelExportPlugin extends AbstractExportActionPlugin
    *
    * @return The icon.
    */
-  public Icon getLargeIcon()
-  {
+  public Icon getLargeIcon() {
     final Locale locale = getContext().getLocale();
-    return getIconTheme().getLargeIcon(locale, "action.export-to-excel.icon"); //$NON-NLS-1$
+    return getIconTheme().getLargeIcon( locale, "action.export-to-excel.icon" ); //$NON-NLS-1$
   }
 
   /**
@@ -181,9 +158,8 @@ public class ExcelExportPlugin extends AbstractExportActionPlugin
    *
    * @return The key stroke.
    */
-  public KeyStroke getAcceleratorKey()
-  {
-    return resources.getOptionalKeyStroke("action.export-to-excel.accelerator"); //$NON-NLS-1$
+  public KeyStroke getAcceleratorKey() {
+    return resources.getOptionalKeyStroke( "action.export-to-excel.accelerator" ); //$NON-NLS-1$
   }
 
   /**
@@ -191,9 +167,8 @@ public class ExcelExportPlugin extends AbstractExportActionPlugin
    *
    * @return The key code.
    */
-  public Integer getMnemonicKey()
-  {
-    return resources.getOptionalMnemonic("action.export-to-excel.mnemonic"); //$NON-NLS-1$
+  public Integer getMnemonicKey() {
+    return resources.getOptionalMnemonic( "action.export-to-excel.mnemonic" ); //$NON-NLS-1$
   }
 
   /**
@@ -201,9 +176,8 @@ public class ExcelExportPlugin extends AbstractExportActionPlugin
    *
    * @return The display name.
    */
-  public String getDisplayName()
-  {
-    return resources.getString("action.export-to-excel.name"); //$NON-NLS-1$
+  public String getDisplayName() {
+    return resources.getString( "action.export-to-excel.name" ); //$NON-NLS-1$
   }
 
   /**
@@ -211,8 +185,7 @@ public class ExcelExportPlugin extends AbstractExportActionPlugin
    *
    * @return the resourcebundle for the localisation.
    */
-  protected ResourceBundleSupport getResources()
-  {
+  protected ResourceBundleSupport getResources() {
     return resources;
   }
 }

@@ -16,7 +16,7 @@
     <property name="field" mandatory="false" preferred="false" value-role="Field" expert="false" hidden="false"/>
     <property name="name" mandatory="true" preferred="true" value-role="Name" expert="false" hidden="false"/>
   </expression>
-  
+
   <expression class="org.pentaho.reporting.engine.classic.core.function.bool.AndExpression"
               bundle-name="org.pentaho.reporting.engine.classic.core.function.bool.AndExpressionBundle"
               result="java.lang.Boolean" expert="false" hidden="false" preferred="false" deprecated="true">

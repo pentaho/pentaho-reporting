@@ -17,9 +17,8 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.output.pageable.plaintext.driver;
 
-public interface FontMapper
-{
-  public byte getPrinterFont(String fontName);
+public interface FontMapper {
+  public byte getPrinterFont( String fontName );
 
   public byte getDefaultFont();
 }

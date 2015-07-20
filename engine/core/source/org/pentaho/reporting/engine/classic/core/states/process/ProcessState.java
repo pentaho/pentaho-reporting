@@ -17,15 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.core.states.process;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.List;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
-import javax.swing.event.EventListenerList;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.pentaho.reporting.engine.classic.core.AbstractReportDefinition;
@@ -65,11 +56,11 @@ import org.pentaho.reporting.engine.classic.core.function.sys.WizardItemHideFunc
 import org.pentaho.reporting.engine.classic.core.layout.InlineSubreportMarker;
 import org.pentaho.reporting.engine.classic.core.layout.output.OutputProcessorFeature;
 import org.pentaho.reporting.engine.classic.core.layout.output.OutputProcessorMetaData;
-import org.pentaho.reporting.engine.classic.core.sorting.SortConstraint;
 import org.pentaho.reporting.engine.classic.core.parameters.DefaultParameterContext;
 import org.pentaho.reporting.engine.classic.core.parameters.ReportParameterDefinition;
 import org.pentaho.reporting.engine.classic.core.parameters.ReportParameterValidator;
 import org.pentaho.reporting.engine.classic.core.parameters.ValidationResult;
+import org.pentaho.reporting.engine.classic.core.sorting.SortConstraint;
 import org.pentaho.reporting.engine.classic.core.sorting.SortingDataFactory;
 import org.pentaho.reporting.engine.classic.core.states.DataFactoryManager;
 import org.pentaho.reporting.engine.classic.core.states.DefaultGroupSizeRecorder;
@@ -114,72 +105,69 @@ import org.pentaho.reporting.libraries.base.util.ArgumentNullException;
 import org.pentaho.reporting.libraries.base.util.FastStack;
 import org.pentaho.reporting.libraries.base.util.PerformanceLoggingStopWatch;
 
-@SuppressWarnings("HardCodedStringLiteral")
-public class ProcessState implements ReportState
-{
-  private static class InternalProcessHandle implements ProcessStateHandle
-  {
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+import javax.swing.event.EventListenerList;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.List;
+
+@SuppressWarnings( "HardCodedStringLiteral" )
+public class ProcessState implements ReportState {
+  private static class InternalProcessHandle implements ProcessStateHandle {
     private PerformanceMonitorContext monitorContext;
     private DataFactoryManager manager;
 
-    private InternalProcessHandle(final DataFactoryManager manager,
-                                  final PerformanceMonitorContext monitorContext)
-    {
+    private InternalProcessHandle( final DataFactoryManager manager,
+                                   final PerformanceMonitorContext monitorContext ) {
       this.manager = manager;
       this.monitorContext = monitorContext;
     }
 
-    public void close()
-    {
+    public void close() {
       // close the data-factory manager ...
       monitorContext.close();
       manager.close();
     }
   }
 
-  private static class InternalPerformanceMonitorContext implements PerformanceMonitorContext
-  {
+  private static class InternalPerformanceMonitorContext implements PerformanceMonitorContext {
     private PerformanceMonitorContext parent;
     private EventListenerList listeners;
 
-    private InternalPerformanceMonitorContext(final PerformanceMonitorContext parent)
-    {
+    private InternalPerformanceMonitorContext( final PerformanceMonitorContext parent ) {
       this.parent = parent;
       this.listeners = new EventListenerList();
     }
 
-    public PerformanceLoggingStopWatch createStopWatch(final String tag)
-    {
-      return parent.createStopWatch(tag);
+    public PerformanceLoggingStopWatch createStopWatch( final String tag ) {
+      return parent.createStopWatch( tag );
     }
 
-    public PerformanceLoggingStopWatch createStopWatch(final String tag, final Object message)
-    {
-      return parent.createStopWatch(tag, message);
+    public PerformanceLoggingStopWatch createStopWatch( final String tag, final Object message ) {
+      return parent.createStopWatch( tag, message );
     }
 
-    public void addChangeListener(final ChangeListener listener)
-    {
-      listeners.add(ChangeListener.class, listener);
+    public void addChangeListener( final ChangeListener listener ) {
+      listeners.add( ChangeListener.class, listener );
     }
 
-    public void removeChangeListener(final ChangeListener listener)
-    {
-      listeners.remove(ChangeListener.class, listener);
+    public void removeChangeListener( final ChangeListener listener ) {
+      listeners.remove( ChangeListener.class, listener );
     }
 
-    public void close()
-    {
-      ChangeEvent event = new ChangeEvent(this);
-      for (final ChangeListener changeListener : listeners.getListeners(ChangeListener.class))
-      {
-        changeListener.stateChanged(event);
+    public void close() {
+      ChangeEvent event = new ChangeEvent( this );
+      for ( final ChangeListener changeListener : listeners.getListeners( ChangeListener.class ) ) {
+        changeListener.stateChanged( event );
       }
     }
   }
 
   public static final int ARTIFICIAL_EVENT_CODE = ReportEvent.ARTIFICIAL_EVENT_CODE;
-  private static final Log logger = LogFactory.getLog(ProcessState.class);
+  private static final Log logger = LogFactory.getLog( ProcessState.class );
 
   private int currentGroupIndex;
   private int currentPresentationGroupIndex;
@@ -218,60 +206,51 @@ public class ProcessState implements ReportState
   private boolean designtime;
   private PerformanceMonitorContext performanceMonitorContext;
 
-  public ProcessState()
-  {
+  public ProcessState() {
 
   }
 
-  public void initializeForMasterReport(final MasterReport report,
-                                        final ProcessingContext processingContext,
-                                        final OutputFunction outputFunction)
-      throws ReportProcessingException
-  {
-    ArgumentNullException.validate("report", report);
-    ArgumentNullException.validate("processingContext", processingContext);
-    ArgumentNullException.validate("outputFunction", outputFunction);
+  public void initializeForMasterReport( final MasterReport report,
+                                         final ProcessingContext processingContext,
+                                         final OutputFunction outputFunction )
+    throws ReportProcessingException {
+    ArgumentNullException.validate( "report", report );
+    ArgumentNullException.validate( "processingContext", processingContext );
+    ArgumentNullException.validate( "outputFunction", outputFunction );
 
     final ReportParameterDefinition parameters = report.getParameterDefinition();
-    final DefaultParameterContext parameterContext = new DefaultParameterContext(report);
+    final DefaultParameterContext parameterContext = new DefaultParameterContext( report );
 
     // pre-init the output-processor-metadata.
-    initializeProcessingContext(processingContext, report);
+    initializeProcessingContext( processingContext, report );
 
     this.designtime =
-        processingContext.getOutputProcessorMetaData().isFeatureSupported(OutputProcessorFeature.DESIGNTIME);
+      processingContext.getOutputProcessorMetaData().isFeatureSupported( OutputProcessorFeature.DESIGNTIME );
     final ReportParameterValues parameterValues;
-    if (designtime == false)
-    {
-      try
-      {
+    if ( designtime == false ) {
+      try {
         final ReportParameterValidator reportParameterValidator = parameters.getValidator();
         final ValidationResult validationResult =
-            reportParameterValidator.validate(new ValidationResult(), parameters, parameterContext);
-        if (validationResult.isEmpty() == false)
-        {
+          reportParameterValidator.validate( new ValidationResult(), parameters, parameterContext );
+        if ( validationResult.isEmpty() == false ) {
           throw new ReportParameterValidationException
-              ("The parameters provided for this report are not valid.", validationResult);
+            ( "The parameters provided for this report are not valid.", validationResult );
         }
         parameterValues = validationResult.getParameterValues();
-      }
-      finally
-      {
+      } finally {
         parameterContext.close();
       }
-    }
-    else
-    {
+    } else {
       parameterValues = new ReportParameterValues();
     }
 
     final PerformanceMonitorContext rawPerformanceMonitorContext =
-        ClassicEngineBoot.getInstance().getObjectFactory().get(PerformanceMonitorContext.class);
-    this.performanceMonitorContext = new InternalPerformanceMonitorContext(rawPerformanceMonitorContext);
-    final InitialLayoutProcess layoutProcess = new InitialLayoutProcess(outputFunction, performanceMonitorContext);
+      ClassicEngineBoot.getInstance().getObjectFactory().get( PerformanceMonitorContext.class );
+    this.performanceMonitorContext = new InternalPerformanceMonitorContext( rawPerformanceMonitorContext );
+    final InitialLayoutProcess layoutProcess = new InitialLayoutProcess( outputFunction, performanceMonitorContext );
 
-    this.reportInstancesShareConnection = "true".equals(processingContext.getConfiguration().getConfigProperty
-        ("org.pentaho.reporting.engine.classic.core.ReportInstancesShareConnections"));
+    this.reportInstancesShareConnection = "true".equals( processingContext.getConfiguration().getConfigProperty
+      ( "org.pentaho.reporting.engine.classic.core.ReportInstancesShareConnections" ) );
     this.processLevels = new HashSet<Integer>();
     this.groupStarts = new FastStack<GroupStartRecord>();
     this.errorHandler = IgnoreEverythingReportErrorHandler.INSTANCE;
@@ -283,162 +262,152 @@ public class ProcessState implements ReportState
     this.structureFunctionStorage = new FunctionStorage();
     this.sequenceCounter = 0;
     this.processKey = new ReportStateKey
-        (null, ReportState.BEFORE_FIRST_ROW, 0, ReportState.BEFORE_FIRST_GROUP, -1, sequenceCounter, false, false);
+      ( null, ReportState.BEFORE_FIRST_ROW, 0, ReportState.BEFORE_FIRST_GROUP, -1, sequenceCounter, false, false );
     this.dataFactoryManager = new DataFactoryManager();
     this.subReportStorage = new SubReportStorage();
-    this.processHandle = new InternalProcessHandle(dataFactoryManager, performanceMonitorContext);
-    this.crosstabColumnSequenceCounter = new LongSequence(10, -1);
-    this.groupSequenceCounter = new LongSequence(10, -1);
-    this.groupSequenceCounter.set(0, -1);
+    this.processHandle = new InternalProcessHandle( dataFactoryManager, performanceMonitorContext );
+    this.crosstabColumnSequenceCounter = new LongSequence( 10, -1 );
+    this.groupSequenceCounter = new LongSequence( 10, -1 );
+    this.groupSequenceCounter.set( 0, -1 );
 
     final DefaultFlowController startFlowController =
-        new DefaultFlowController(processingContext, report.getDataSchemaDefinition(),
-            StateUtilities.computeParameterValueSet(report, parameterValues), performanceMonitorContext);
+      new DefaultFlowController( processingContext, report.getDataSchemaDefinition(),
+        StateUtilities.computeParameterValueSet( report, parameterValues ), performanceMonitorContext );
 
-    final MasterReportProcessPreprocessor processPreprocessor = new MasterReportProcessPreprocessor(startFlowController);
-    final MasterReport processedReport = processPreprocessor.invokePreDataProcessing(report);
+    final MasterReportProcessPreprocessor processPreprocessor =
+      new MasterReportProcessPreprocessor( startFlowController );
+    final MasterReport processedReport = processPreprocessor.invokePreDataProcessing( report );
     final DefaultFlowController flowController = processPreprocessor.getFlowController();
 
     final Object dataCacheEnabledRaw =
-        processedReport.getAttribute(AttributeNames.Core.NAMESPACE, AttributeNames.Core.DATA_CACHE);
-    final boolean dataCacheEnabled = designtime == false && Boolean.FALSE.equals(dataCacheEnabledRaw) == false;
+      processedReport.getAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.DATA_CACHE );
+    final boolean dataCacheEnabled = designtime == false && Boolean.FALSE.equals( dataCacheEnabledRaw ) == false;
 
     final DataFactory sortingDataFactory =
-        new SortingDataFactory(lookupDataFactory(processedReport), performanceMonitorContext);
-    final CachingDataFactory dataFactory = new CachingDataFactory(sortingDataFactory, dataCacheEnabled);
-    dataFactory.initialize(new ProcessingDataFactoryContext(processingContext, dataFactory));
+      new SortingDataFactory( lookupDataFactory( processedReport ), performanceMonitorContext );
+    final CachingDataFactory dataFactory = new CachingDataFactory( sortingDataFactory, dataCacheEnabled );
+    dataFactory.initialize( new ProcessingDataFactoryContext( processingContext, dataFactory ) );
 
-    final FunctionStorageKey functionStorageKey = FunctionStorageKey.createKey(null, processedReport);
-    this.dataFactoryManager.store(functionStorageKey, dataFactory, true);
+    final FunctionStorageKey functionStorageKey = FunctionStorageKey.createKey( null, processedReport );
+    this.dataFactoryManager.store( functionStorageKey, dataFactory, true );
     // eval query, query-limit and query-timeout
     this.flowController = flowController;
-    final Integer queryLimitDefault = IntegerCache.getInteger(processedReport.getQueryLimit());
-    final Integer queryTimeoutDefault = IntegerCache.getInteger(processedReport.getQueryTimeout());
+    final Integer queryLimitDefault = IntegerCache.getInteger( processedReport.getQueryLimit() );
+    final Integer queryTimeoutDefault = IntegerCache.getInteger( processedReport.getQueryTimeout() );
 
     final String queryDefined = designtime ? "design-time-query" : processedReport.getQuery();
-    final Object queryRaw = evaluateExpression(processedReport.getAttributeExpression(AttributeNames.Internal.NAMESPACE,
-        AttributeNames.Internal.QUERY), queryDefined);
-    final Object queryLimitRaw = evaluateExpression(processedReport.getAttributeExpression(AttributeNames.Internal.NAMESPACE,
-        AttributeNames.Internal.QUERY_LIMIT), queryLimitDefault);
-    final Object queryTimeoutRaw = evaluateExpression(processedReport.getAttributeExpression(AttributeNames.Internal.NAMESPACE,
-        AttributeNames.Internal.QUERY_TIMEOUT), queryTimeoutDefault);
-    final List<SortConstraint> sortOrder = lookupSortOrder(processedReport);
+    final Object queryRaw =
+      evaluateExpression( processedReport.getAttributeExpression( AttributeNames.Internal.NAMESPACE,
+        AttributeNames.Internal.QUERY ), queryDefined );
+    final Object queryLimitRaw =
+      evaluateExpression( processedReport.getAttributeExpression( AttributeNames.Internal.NAMESPACE,
+        AttributeNames.Internal.QUERY_LIMIT ), queryLimitDefault );
+    final Object queryTimeoutRaw =
+      evaluateExpression( processedReport.getAttributeExpression( AttributeNames.Internal.NAMESPACE,
+        AttributeNames.Internal.QUERY_TIMEOUT ), queryTimeoutDefault );
+    final List<SortConstraint> sortOrder = lookupSortOrder( processedReport );
 
-    this.query = (String) ConverterRegistry.convert(queryRaw, String.class, processedReport.getQuery());
-    this.queryLimit = (Integer) ConverterRegistry.convert(queryLimitRaw, Integer.class, queryLimitDefault);
-    this.queryTimeout = (Integer) ConverterRegistry.convert(queryTimeoutRaw, Integer.class, queryTimeoutDefault);
+    this.query = (String) ConverterRegistry.convert( queryRaw, String.class, processedReport.getQuery() );
+    this.queryLimit = (Integer) ConverterRegistry.convert( queryLimitRaw, Integer.class, queryLimitDefault );
+    this.queryTimeout = (Integer) ConverterRegistry.convert( queryTimeoutRaw, Integer.class, queryTimeoutDefault );
 
     DefaultFlowController postQueryFlowController = flowController.performQuery
-        (dataFactory, query, queryLimit.intValue(), queryTimeout.intValue(),
-            processingContext.getResourceBundleFactory(), sortOrder);
+      ( dataFactory, query, queryLimit.intValue(), queryTimeout.intValue(),
+        processingContext.getResourceBundleFactory(), sortOrder );
 
-    final MasterReportProcessPreprocessor postProcessor = new MasterReportProcessPreprocessor(postQueryFlowController);
-    final MasterReport fullReport = postProcessor.invokePreProcessing(processedReport);
+    final MasterReportProcessPreprocessor postProcessor =
+      new MasterReportProcessPreprocessor( postQueryFlowController );
+    final MasterReport fullReport = postProcessor.invokePreProcessing( processedReport );
     postQueryFlowController = postProcessor.getFlowController();
 
-    if (isStructureRunNeeded(processedReport) == false)
-    {
+    if ( isStructureRunNeeded( processedReport ) == false ) {
       // Perform a static analysis on whether there is an External-element or Inline-Subreports or Crosstabs
       // if none, return unchanged
       this.structuralPreprocessingNeeded = false;
-    }
-    else
-    {
+    } else {
       // otherwise process the report one time to walk through all eligible states. Record all subreports,
       // and then compute the runlevels based on what we have in the caches.
       this.structuralPreprocessingNeeded = true;
-      this.processLevels.add(LayoutProcess.LEVEL_STRUCTURAL_PREPROCESSING);
+      this.processLevels.add( LayoutProcess.LEVEL_STRUCTURAL_PREPROCESSING );
       postQueryFlowController.requireStructuralProcessing();
     }
 
     final Expression[] expressions;
-    if (designtime)
-    {
-      expressions = new Expression[0];
-    }
-    else
-    {
+    if ( designtime ) {
+      expressions = new Expression[ 0 ];
+    } else {
       expressions = fullReport.getExpressions().getExpressions();
     }
 
-    this.flowController = postQueryFlowController.activateExpressions(expressions, false);
-    this.report = new ReportDefinitionImpl(fullReport, fullReport.getPageDefinition());
-    this.layoutProcess = new SubLayoutProcess(layoutProcess,
-        computeStructureFunctions(fullReport.getStructureFunctions(),
-            getFlowController().getReportContext().getOutputProcessorMetaData()), fullReport.getObjectID());
+    this.flowController = postQueryFlowController.activateExpressions( expressions, false );
+    this.report = new ReportDefinitionImpl( fullReport, fullReport.getPageDefinition() );
+    this.layoutProcess = new SubLayoutProcess( layoutProcess,
+      computeStructureFunctions( fullReport.getStructureFunctions(),
+        getFlowController().getReportContext().getOutputProcessorMetaData() ), fullReport.getObjectID() );
 
-    if (StateUtilities.computeLevels(this.flowController, this.layoutProcess, processLevels))
-    {
+    if ( StateUtilities.computeLevels( this.flowController, this.layoutProcess, processLevels ) ) {
       this.recorder = new DefaultGroupSizeRecorder();
-    }
-    else
-    {
+    } else {
       this.recorder = new EmptyGroupSizeRecorder();
     }
     this.processKey = createKey();
   }
 
-  private List<SortConstraint> lookupSortOrder(final ReportDefinition report)
-  {
+  private List<SortConstraint> lookupSortOrder( final ReportDefinition report ) {
     Object attribute = report.getAttribute
-        (AttributeNames.Internal.NAMESPACE, AttributeNames.Internal.COMPUTED_SORT_CONSTRAINTS);
-    if (attribute instanceof List<?>) {
+      ( AttributeNames.Internal.NAMESPACE, AttributeNames.Internal.COMPUTED_SORT_CONSTRAINTS );
+    if ( attribute instanceof List<?> ) {
       return (List<SortConstraint>) attribute;
     }
     return Collections.emptyList();
   }
 
-  private void initializeProcessingContext(final ProcessingContext processingContext, final MasterReport report)
-  {
-    Configuration configuration = wrapForCompatibility(processingContext);
-    processingContext.getOutputProcessorMetaData().initialize(mapStaticMetaData(configuration, report));
+  private void initializeProcessingContext( final ProcessingContext processingContext, final MasterReport report ) {
+    Configuration configuration = wrapForCompatibility( processingContext );
+    processingContext.getOutputProcessorMetaData().initialize( mapStaticMetaData( configuration, report ) );
   }
 
-  private Configuration mapStaticMetaData(final Configuration configuration, final MasterReport report)
-  {
-    HierarchicalConfiguration hc = new HierarchicalConfiguration(configuration);
+  private Configuration mapStaticMetaData( final Configuration configuration, final MasterReport report ) {
+    HierarchicalConfiguration hc = new HierarchicalConfiguration( configuration );
 
-    setConfigurationIfDefined(hc,
-        "org.pentaho.reporting.engine.classic.core.layout.fontrenderer.ComplexTextLayout",
-        report.getAttribute(AttributeNames.Core.NAMESPACE, AttributeNames.Core.COMPLEX_TEXT));
-    setConfigurationIfDefined(hc,
-        "org.pentaho.reporting.engine.classic.core.WatermarkPrintedOnTopOfContent",
-        report.getWatermark().getAttribute(AttributeNames.Core.NAMESPACE, AttributeNames.Core.WATERMARK_PRINTED_ON_TOP));
+    setConfigurationIfDefined( hc,
+      "org.pentaho.reporting.engine.classic.core.layout.fontrenderer.ComplexTextLayout",
+      report.getAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.COMPLEX_TEXT ) );
+    setConfigurationIfDefined( hc,
+      "org.pentaho.reporting.engine.classic.core.WatermarkPrintedOnTopOfContent",
+      report.getWatermark()
+        .getAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.WATERMARK_PRINTED_ON_TOP ) );
 
     return hc;
   }
 
-  private void setConfigurationIfDefined(final ModifiableConfiguration config, final String configKey, final Object value)
-  {
-    if (value == null)
-    {
+  private void setConfigurationIfDefined( final ModifiableConfiguration config, final String configKey,
+                                          final Object value ) {
+    if ( value == null ) {
       return;
     }
-    try
-    {
-      String valueText = ConverterRegistry.toAttributeValue(value);
-      config.setConfigProperty(configKey, valueText);
-    }
-    catch (final BeanException e)
-    {
-      logger.info(String.format("Ignoring invalid attribute-value override for configuration '%s' with value '%s'", configKey, value));
+    try {
+      String valueText = ConverterRegistry.toAttributeValue( value );
+      config.setConfigProperty( configKey, valueText );
+    } catch ( final BeanException e ) {
+      logger.info( String
+        .format( "Ignoring invalid attribute-value override for configuration '%s' with value '%s'", configKey,
+          value ) );
     }
   }
 
-  private Configuration wrapForCompatibility(final ProcessingContext processingContext)
-  {
+  private Configuration wrapForCompatibility( final ProcessingContext processingContext ) {
     final int compatibilityLevel = processingContext.getCompatibilityLevel();
-    if (compatibilityLevel < 0)
-    {
+    if ( compatibilityLevel < 0 ) {
       return processingContext.getConfiguration();
     }
 
-    if (compatibilityLevel < ClassicEngineBoot.computeVersionId(3, 999, 999))
-    {
+    if ( compatibilityLevel < ClassicEngineBoot.computeVersionId( 3, 999, 999 ) ) {
       // enable strict compatibility mode for reports older than 4.0.
-      final HierarchicalConfiguration config = new HierarchicalConfiguration(processingContext.getConfiguration());
-      config.setConfigProperty("org.pentaho.reporting.engine.classic.core.legacy.WrapProgressMarkerInSection", "true");
-      config.setConfigProperty("org.pentaho.reporting.engine.classic.core.legacy.StrictCompatibility", "true");
+      final HierarchicalConfiguration config = new HierarchicalConfiguration( processingContext.getConfiguration() );
+      config
+        .setConfigProperty( "org.pentaho.reporting.engine.classic.core.legacy.WrapProgressMarkerInSection", "true" );
+      config.setConfigProperty( "org.pentaho.reporting.engine.classic.core.legacy.StrictCompatibility", "true" );
       return config;
     }
 
@@ -446,39 +415,33 @@ public class ProcessState implements ReportState
     return processingContext.getConfiguration();
   }
 
-  private boolean isDesigntime()
-  {
+  private boolean isDesigntime() {
     return designtime;
   }
 
-  private boolean isReportsShareConnections(final ReportDefinition report)
-  {
+  private boolean isReportsShareConnections( final ReportDefinition report ) {
     final Object attribute = report.getAttribute
-        (AttributeNames.Internal.NAMESPACE, AttributeNames.Internal.SHARED_CONNECTIONS);
-    if (Boolean.TRUE.equals(attribute))
-    {
+      ( AttributeNames.Internal.NAMESPACE, AttributeNames.Internal.SHARED_CONNECTIONS );
+    if ( Boolean.TRUE.equals( attribute ) ) {
       return true;
     }
-    if (Boolean.FALSE.equals(attribute))
-    {
+    if ( Boolean.FALSE.equals( attribute ) ) {
       return false;
     }
     return reportInstancesShareConnection;
   }
 
-  public void initializeForSubreport(final InlineSubreportMarker[] subReports,
-                                     final int subReportIndex,
-                                     final ProcessState parentState) throws ReportProcessingException
-  {
-    if (parentState == null)
-    {
+  public void initializeForSubreport( final InlineSubreportMarker[] subReports,
+                                      final int subReportIndex,
+                                      final ProcessState parentState ) throws ReportProcessingException {
+    if ( parentState == null ) {
       throw new NullPointerException();
     }
 
     this.designtime = parentState.designtime;
-    this.crosstabColumnSequenceCounter = new LongSequence(10, -1);
-    this.groupSequenceCounter = new LongSequence(10, -1);
-    this.groupSequenceCounter.set(0, -1);
+    this.crosstabColumnSequenceCounter = new LongSequence( 10, -1 );
+    this.groupSequenceCounter = new LongSequence( 10, -1 );
+    this.groupSequenceCounter.set( 0, -1 );
     this.recorder = (GroupSizeRecorder) parentState.recorder.clone();
     this.recorder.reset();
     this.performanceMonitorContext = parentState.performanceMonitorContext;
@@ -499,76 +462,66 @@ public class ProcessState implements ReportState
     this.processLevels = parentState.processLevels;
     this.sequenceCounter = parentState.getSequenceCounter() + 1;
 
-    this.currentSubReportMarker = subReports[subReportIndex];
+    this.currentSubReportMarker = subReports[ subReportIndex ];
     this.inlineProcess =
-        parentState.isInlineProcess() || currentSubReportMarker.getProcessType() == SubReportProcessType.INLINE;
+      parentState.isInlineProcess() || currentSubReportMarker.getProcessType() == SubReportProcessType.INLINE;
 
     final SubReport subreportFromMarker = currentSubReportMarker.getSubreport();
     final FunctionStorageKey functionStorageKey = FunctionStorageKey.createKey
-        (parentSubReportState.getProcessKey(), subreportFromMarker);
+      ( parentSubReportState.getProcessKey(), subreportFromMarker );
     final boolean needPreProcessing;
     final SubReport initialSubReport;
-    if (subReportStorage.contains(functionStorageKey))
-    {
-      initialSubReport = subReportStorage.restore(functionStorageKey);
-      initialSubReport.reconnectParent(subreportFromMarker.getParentSection());
-      applyCurrentStyleAndAttributes(subreportFromMarker, initialSubReport);
+    if ( subReportStorage.contains( functionStorageKey ) ) {
+      initialSubReport = subReportStorage.restore( functionStorageKey );
+      initialSubReport.reconnectParent( subreportFromMarker.getParentSection() );
+      applyCurrentStyleAndAttributes( subreportFromMarker, initialSubReport );
       needPreProcessing = false;
-    }
-    else
-    {
-      initialSubReport = subreportFromMarker.derive(true);
-      initialSubReport.reconnectParent(subreportFromMarker.getParentSection());
+    } else {
+      initialSubReport = subreportFromMarker.derive( true );
+      initialSubReport.reconnectParent( subreportFromMarker.getParentSection() );
       needPreProcessing = true;
     }
 
     final DefaultFlowController parentStateFlowController = parentState.getFlowController();
     final ResourceBundleFactory resourceBundleFactory = parentState.getResourceBundleFactory();
 
-    if (isSubReportInvisible(initialSubReport, parentStateFlowController))
-    {
+    if ( isSubReportInvisible( initialSubReport, parentStateFlowController ) ) {
       // make it a minimum effort report, but still enter the loop.
       final ReportDefinition parentReport = parentState.getReport();
-      final SubReport dummyReport = new SubReport(functionStorageKey.getReportId());
-      this.report = new ReportDefinitionImpl(dummyReport, parentReport.getPageDefinition(), subreportFromMarker.getParentSection());
+      final SubReport dummyReport = new SubReport( functionStorageKey.getReportId() );
+      this.report = new ReportDefinitionImpl( dummyReport, parentReport.getPageDefinition(),
+        subreportFromMarker.getParentSection() );
       this.flowController = parentStateFlowController.derive();
       this.advanceHandler = EndSubReportHandler.HANDLER;
       this.layoutProcess = new SubLayoutProcess
-          (parentState.layoutProcess, computeStructureFunctions(initialSubReport.getStructureFunctions(),
-              flowController.getReportContext().getOutputProcessorMetaData()), this.report.getObjectID());
-    }
-    else
-    {
-      DataFactory dataFactory = dataFactoryManager.restore(functionStorageKey, isReportsShareConnections(initialSubReport));
+        ( parentState.layoutProcess, computeStructureFunctions( initialSubReport.getStructureFunctions(),
+          flowController.getReportContext().getOutputProcessorMetaData() ), this.report.getObjectID() );
+    } else {
+      DataFactory dataFactory =
+        dataFactoryManager.restore( functionStorageKey, isReportsShareConnections( initialSubReport ) );
 
       final DefaultFlowController postPreProcessingFlowController;
       final SubReport preDataSubReport;
-      if (dataFactory == null)
-      {
-        final SubReportProcessPreprocessor preprocessor = new SubReportProcessPreprocessor(parentStateFlowController);
-        preDataSubReport = preprocessor.invokePreDataProcessing(initialSubReport);
+      if ( dataFactory == null ) {
+        final SubReportProcessPreprocessor preprocessor = new SubReportProcessPreprocessor( parentStateFlowController );
+        preDataSubReport = preprocessor.invokePreDataProcessing( initialSubReport );
         postPreProcessingFlowController = preprocessor.getFlowController();
 
-        final DataFactory subreportDf = lookupDataFactory(preDataSubReport);
-        final boolean dataCacheEnabled = isCacheEnabled(preDataSubReport);
-        if (subreportDf == null)
-        {
+        final DataFactory subreportDf = lookupDataFactory( preDataSubReport );
+        final boolean dataCacheEnabled = isCacheEnabled( preDataSubReport );
+        if ( subreportDf == null ) {
           // subreport does not define a own factory, we reuse the parent's data-factory in the master-row.
           dataFactory = new EmptyDataFactory();
-        }
-        else
-        {
+        } else {
           // subreport comes with an own factory, so open the gates ..
-          final DataFactory sortingDataFactory = new SortingDataFactory(subreportDf, performanceMonitorContext);
-          final CachingDataFactory cdataFactory = new CachingDataFactory(sortingDataFactory, dataCacheEnabled);
+          final DataFactory sortingDataFactory = new SortingDataFactory( subreportDf, performanceMonitorContext );
+          final CachingDataFactory cdataFactory = new CachingDataFactory( sortingDataFactory, dataCacheEnabled );
           final ProcessingContext context = postPreProcessingFlowController.getReportContext();
-          cdataFactory.initialize(new ProcessingDataFactoryContext(context, cdataFactory));
-          dataFactoryManager.store(functionStorageKey, cdataFactory, isReportsShareConnections(preDataSubReport));
+          cdataFactory.initialize( new ProcessingDataFactoryContext( context, cdataFactory ) );
+          dataFactoryManager.store( functionStorageKey, cdataFactory, isReportsShareConnections( preDataSubReport ) );
           dataFactory = cdataFactory;
         }
-      }
-      else
-      {
+      } else {
         preDataSubReport = initialSubReport;
         postPreProcessingFlowController = parentStateFlowController;
       }
@@ -579,169 +532,146 @@ public class ProcessState implements ReportState
 
       // eval query, query-limit and query-timeout
       this.flowController = postPreProcessingFlowController.performInitSubreport
-          (dataFactory, inputMappings, resourceBundleFactory);
-      final Integer queryLimitDefault = IntegerCache.getInteger(preDataSubReport.getQueryLimit());
-      final Integer queryTimeoutDefault = IntegerCache.getInteger(preDataSubReport.getQueryTimeout());
+        ( dataFactory, inputMappings, resourceBundleFactory );
+      final Integer queryLimitDefault = IntegerCache.getInteger( preDataSubReport.getQueryLimit() );
+      final Integer queryTimeoutDefault = IntegerCache.getInteger( preDataSubReport.getQueryTimeout() );
 
-      final Object queryRaw = evaluateExpression(preDataSubReport.getAttributeExpression(AttributeNames.Internal.NAMESPACE,
-          AttributeNames.Internal.QUERY), preDataSubReport.getQuery());
-      final Object queryLimitRaw = evaluateExpression(preDataSubReport.getAttributeExpression(AttributeNames.Internal.NAMESPACE,
-          AttributeNames.Internal.QUERY_LIMIT), queryLimitDefault);
-      final Object queryTimeoutRaw = evaluateExpression(preDataSubReport.getAttributeExpression(AttributeNames.Internal.NAMESPACE,
-          AttributeNames.Internal.QUERY_TIMEOUT), queryTimeoutDefault);
+      final Object queryRaw =
+        evaluateExpression( preDataSubReport.getAttributeExpression( AttributeNames.Internal.NAMESPACE,
+          AttributeNames.Internal.QUERY ), preDataSubReport.getQuery() );
+      final Object queryLimitRaw =
+        evaluateExpression( preDataSubReport.getAttributeExpression( AttributeNames.Internal.NAMESPACE,
+          AttributeNames.Internal.QUERY_LIMIT ), queryLimitDefault );
+      final Object queryTimeoutRaw =
+        evaluateExpression( preDataSubReport.getAttributeExpression( AttributeNames.Internal.NAMESPACE,
+          AttributeNames.Internal.QUERY_TIMEOUT ), queryTimeoutDefault );
       final String queryDefined = designtime ? "design-time-query" : preDataSubReport.getQuery();
-      this.query = (String) ConverterRegistry.convert(queryRaw, String.class, queryDefined);
-      this.queryLimit = (Integer) ConverterRegistry.convert(queryLimitRaw, Integer.class, queryLimitDefault);
-      this.queryTimeout = (Integer) ConverterRegistry.convert(queryTimeoutRaw, Integer.class, queryTimeoutDefault);
-      final List<SortConstraint> sortOrder = lookupSortOrder(preDataSubReport);
+      this.query = (String) ConverterRegistry.convert( queryRaw, String.class, queryDefined );
+      this.queryLimit = (Integer) ConverterRegistry.convert( queryLimitRaw, Integer.class, queryLimitDefault );
+      this.queryTimeout = (Integer) ConverterRegistry.convert( queryTimeoutRaw, Integer.class, queryTimeoutDefault );
+      final List<SortConstraint> sortOrder = lookupSortOrder( preDataSubReport );
 
 
       DefaultFlowController postQueryFlowController = flowController.performSubReportQuery
-          (query, queryLimit.intValue(), queryTimeout.intValue(), exportMappings, sortOrder);
+        ( query, queryLimit.intValue(), queryTimeout.intValue(), exportMappings, sortOrder );
       final ProxyDataSchemaDefinition schemaDefinition =
-          new ProxyDataSchemaDefinition(preDataSubReport.getDataSchemaDefinition(),
-              postQueryFlowController.getMasterRow().getDataSchemaDefinition());
-      postQueryFlowController = postQueryFlowController.updateDataSchema(schemaDefinition);
+        new ProxyDataSchemaDefinition( preDataSubReport.getDataSchemaDefinition(),
+          postQueryFlowController.getMasterRow().getDataSchemaDefinition() );
+      postQueryFlowController = postQueryFlowController.updateDataSchema( schemaDefinition );
 
       SubReport fullReport = preDataSubReport;
       DefaultFlowController fullFlowController = postQueryFlowController;
-      if (needPreProcessing)
-      {
-        final SubReportProcessPreprocessor preprocessor = new SubReportProcessPreprocessor(postQueryFlowController);
-        fullReport = preprocessor.invokePreProcessing(preDataSubReport);
+      if ( needPreProcessing ) {
+        final SubReportProcessPreprocessor preprocessor = new SubReportProcessPreprocessor( postQueryFlowController );
+        fullReport = preprocessor.invokePreProcessing( preDataSubReport );
         fullFlowController = preprocessor.getFlowController();
-        subReportStorage.store(functionStorageKey, fullReport);
+        subReportStorage.store( functionStorageKey, fullReport );
       }
 
-      this.report = new ReportDefinitionImpl(fullReport, fullReport.getPageDefinition(), subreportFromMarker.getParentSection());
+      this.report =
+        new ReportDefinitionImpl( fullReport, fullReport.getPageDefinition(), subreportFromMarker.getParentSection() );
 
 
-      final Expression[] structureFunctions = getStructureFunctionStorage().restore(functionStorageKey);
-      if (structureFunctions != null)
-      {
-        final StructureFunction[] functions = new StructureFunction[structureFunctions.length];
+      final Expression[] structureFunctions = getStructureFunctionStorage().restore( functionStorageKey );
+      if ( structureFunctions != null ) {
+        final StructureFunction[] functions = new StructureFunction[ structureFunctions.length ];
         //noinspection SuspiciousSystemArraycopy
-        System.arraycopy(structureFunctions, 0, functions, 0, structureFunctions.length);
-        this.layoutProcess = new SubLayoutProcess(parentState.layoutProcess, functions, this.report.getObjectID());
-      }
-      else
-      {
-        final StructureFunction[] functions = computeStructureFunctions(fullReport.getStructureFunctions(),
-            fullFlowController.getReportContext().getOutputProcessorMetaData());
-        this.layoutProcess = new SubLayoutProcess(parentState.layoutProcess, functions, this.report.getObjectID());
+        System.arraycopy( structureFunctions, 0, functions, 0, structureFunctions.length );
+        this.layoutProcess = new SubLayoutProcess( parentState.layoutProcess, functions, this.report.getObjectID() );
+      } else {
+        final StructureFunction[] functions = computeStructureFunctions( fullReport.getStructureFunctions(),
+          fullFlowController.getReportContext().getOutputProcessorMetaData() );
+        this.layoutProcess = new SubLayoutProcess( parentState.layoutProcess, functions, this.report.getObjectID() );
       }
 
       boolean preserve = true;
-      Expression[] expressions = getFunctionStorage().restore(functionStorageKey);
-      if (expressions == null)
-      {
+      Expression[] expressions = getFunctionStorage().restore( functionStorageKey );
+      if ( expressions == null ) {
         // ok, it seems we have entered a new subreport ..
         // we use the expressions from the report itself ..
-        if (designtime)
-        {
-          expressions = new Expression[0];
-        }
-        else
-        {
+        if ( designtime ) {
+          expressions = new Expression[ 0 ];
+        } else {
           expressions = fullReport.getExpressions().getExpressions();
         }
         preserve = false;
       }
 
-      this.flowController = fullFlowController.activateExpressions(expressions, preserve);
+      this.flowController = fullFlowController.activateExpressions( expressions, preserve );
       this.flowController = this.flowController.refreshDataRow();
 
       // now a bunch of paranoid assertions, just in case I missed something.
-      if (this.report.getParentSection() == null)
-      {
+      if ( this.report.getParentSection() == null ) {
         throw new InvalidReportStateException();
       }
-      if (this.report.getParentSection().getReportDefinition() != this.parentSubReportState.getReport())
-      {
+      if ( this.report.getParentSection().getReportDefinition() != this.parentSubReportState.getReport() ) {
         throw new InvalidReportStateException();
       }
       final int processingLevel = flowController.getReportContext().getProcessingLevel();
-      if (processingLevel == LayoutProcess.LEVEL_PAGINATE)
-      {
-        if (this.parentSubReportState.isInItemGroup())
-        {
-          if (this.parentSubReportState.getReport().getDetailsFooter().getComputedStyle() == null)
-          {
+      if ( processingLevel == LayoutProcess.LEVEL_PAGINATE ) {
+        if ( this.parentSubReportState.isInItemGroup() ) {
+          if ( this.parentSubReportState.getReport().getDetailsFooter().getComputedStyle() == null ) {
             throw new InvalidReportStateException();
           }
         }
       }
     }
 
-    StateUtilities.computeLevels(this.flowController, this.layoutProcess, processLevels);
+    StateUtilities.computeLevels( this.flowController, this.layoutProcess, processLevels );
     this.processKey = createKey();
   }
 
-  private DataFactory lookupDataFactory(final AbstractReportDefinition report)
-  {
-    if (designtime)
-    {
+  private DataFactory lookupDataFactory( final AbstractReportDefinition report ) {
+    if ( designtime ) {
       return new DesignTimeDataFactory();
     }
     return report.getDataFactory();
   }
 
-  private void applyCurrentStyleAndAttributes(final SubReport subreportFromMarker, final SubReport report)
-  {
+  private void applyCurrentStyleAndAttributes( final SubReport subreportFromMarker, final SubReport report ) {
     // derive would regenerate instance-IDs, which is not advisable.
-    report.getStyle().copyFrom(subreportFromMarker.getStyle());
-    report.copyAttributes(subreportFromMarker.getAttributes());
+    report.getStyle().copyFrom( subreportFromMarker.getStyle() );
+    report.copyAttributes( subreportFromMarker.getAttributes() );
   }
 
-  private boolean isSubReportInvisible(final SubReport report,
-                                       final DefaultFlowController flowController)
-  {
+  private boolean isSubReportInvisible( final SubReport report,
+                                        final DefaultFlowController flowController ) {
     final int processingLevel = flowController.getReportContext().getProcessingLevel();
-    if (processingLevel != LayoutProcess.LEVEL_PAGINATE)
-    {
+    if ( processingLevel != LayoutProcess.LEVEL_PAGINATE ) {
       // outside 
       return false;
     }
 
-    if (designtime)
-    {
+    if ( designtime ) {
       return false;
     }
 
-    if (flowController.getReportContext().getOutputProcessorMetaData().isFeatureSupported(OutputProcessorFeature.DESIGNTIME))
-    {
-      final Object attribute = report.getAttribute(AttributeNames.Designtime.NAMESPACE,
-          AttributeNames.Designtime.HIDE_IN_LAYOUT_GUI_ATTRIBUTE);
-      if (Boolean.TRUE.equals(attribute))
-      {
+    if ( flowController.getReportContext().getOutputProcessorMetaData()
+      .isFeatureSupported( OutputProcessorFeature.DESIGNTIME ) ) {
+      final Object attribute = report.getAttribute( AttributeNames.Designtime.NAMESPACE,
+        AttributeNames.Designtime.HIDE_IN_LAYOUT_GUI_ATTRIBUTE );
+      if ( Boolean.TRUE.equals( attribute ) ) {
         return true;
       }
       return false;
-    }
-    else
-    {
+    } else {
       final StyleSheet computedStyle = report.getComputedStyle();
-      if (computedStyle.getBooleanStyleProperty(ElementStyleKeys.VISIBLE))
-      {
+      if ( computedStyle.getBooleanStyleProperty( ElementStyleKeys.VISIBLE ) ) {
         return false;
       }
       return true;
     }
   }
 
-  private static boolean isCacheEnabled(ReportDefinition reportDefinition)
-  {
-    while (reportDefinition != null)
-    {
+  private static boolean isCacheEnabled( ReportDefinition reportDefinition ) {
+    while ( reportDefinition != null ) {
       final Object dataCacheEnabledRaw =
-          reportDefinition.getAttribute(AttributeNames.Core.NAMESPACE, AttributeNames.Core.DATA_CACHE);
-      if (Boolean.FALSE.equals(dataCacheEnabledRaw))
-      {
+        reportDefinition.getAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.DATA_CACHE );
+      if ( Boolean.FALSE.equals( dataCacheEnabledRaw ) ) {
         return false;
       }
       final Section parentSection = reportDefinition.getParentSection();
-      if (parentSection == null)
-      {
+      if ( parentSection == null ) {
         break;
       }
       reportDefinition = parentSection.getReportDefinition();
@@ -750,208 +680,172 @@ public class ProcessState implements ReportState
   }
 
 
-  private Object evaluateExpression(final Expression expression, final Object defaultValue)
-  {
-    if (expression == null)
-    {
+  private Object evaluateExpression( final Expression expression, final Object defaultValue ) {
+    if ( expression == null ) {
       return defaultValue;
     }
-    if (designtime)
-    {
+    if ( designtime ) {
       return defaultValue;
     }
 
     final Expression evalExpression = expression.getInstance();
 
     final InlineDataRowRuntime runtime = new InlineDataRowRuntime();
-    runtime.setState(this);
+    runtime.setState( this );
     final ExpressionRuntime oldRuntime = evalExpression.getRuntime();
-    try
-    {
-      evalExpression.setRuntime(runtime);
+    try {
+      evalExpression.setRuntime( runtime );
       return evalExpression.getValue();
-    }
-    catch (final Exception e)
-    {
-      logger.debug("Failed to evaluate expression " + expression, e);
+    } catch ( final Exception e ) {
+      logger.debug( "Failed to evaluate expression " + expression, e );
       return defaultValue;
-    }
-    finally
-    {
-      evalExpression.setRuntime(oldRuntime);
+    } finally {
+      evalExpression.setRuntime( oldRuntime );
     }
   }
 
-  public int[] getRequiredRuntimeLevels()
-  {
-    processLevels.add(IntegerCache.getInteger(LayoutProcess.LEVEL_PAGINATE));
+  public int[] getRequiredRuntimeLevels() {
+    processLevels.add( IntegerCache.getInteger( LayoutProcess.LEVEL_PAGINATE ) );
 
-    final int[] retval = new int[processLevels.size()];
-    final Integer[] levels = processLevels.toArray(new Integer[processLevels.size()]);
-    Arrays.sort(levels, new StateUtilities.DescendingComparator<Integer>());
-    for (int i = 0; i < levels.length; i++)
-    {
-      final Integer level = levels[i];
-      retval[i] = level.intValue();
+    final int[] retval = new int[ processLevels.size() ];
+    final Integer[] levels = processLevels.toArray( new Integer[ processLevels.size() ] );
+    Arrays.sort( levels, new StateUtilities.DescendingComparator<Integer>() );
+    for ( int i = 0; i < levels.length; i++ ) {
+      final Integer level = levels[ i ];
+      retval[ i ] = level.intValue();
     }
 
     return retval;
   }
 
-  private StructureFunction[] computeStructureFunctions(final StructureFunction[] fromReport,
-                                                        final OutputProcessorMetaData metaData)
-  {
-    final ArrayList<StructureFunction> e = new ArrayList<StructureFunction>(Arrays.asList(fromReport));
-    if (structuralPreprocessingNeeded)
-    {
-      e.add(new CrosstabProcessorFunction());
+  private StructureFunction[] computeStructureFunctions( final StructureFunction[] fromReport,
+                                                         final OutputProcessorMetaData metaData ) {
+    final ArrayList<StructureFunction> e = new ArrayList<StructureFunction>( Arrays.asList( fromReport ) );
+    if ( structuralPreprocessingNeeded ) {
+      e.add( new CrosstabProcessorFunction() );
     }
-    if (isDesigntime() == false)
-    {
-      e.add(new AttributeExpressionsEvaluator());
-      e.add(new SheetNameFunction());
-      e.add(new StyleExpressionsEvaluator());
-      e.add(new CellFormatFunction());
-      e.add(new WizardItemHideFunction());
+    if ( isDesigntime() == false ) {
+      e.add( new AttributeExpressionsEvaluator() );
+      e.add( new SheetNameFunction() );
+      e.add( new StyleExpressionsEvaluator() );
+      e.add( new CellFormatFunction() );
+      e.add( new WizardItemHideFunction() );
     }
 
-    e.add(new MetaDataStyleEvaluator());
-    e.add(new StyleResolvingEvaluator());
+    e.add( new MetaDataStyleEvaluator() );
+    e.add( new StyleResolvingEvaluator() );
 
-    Collections.sort(e, new StructureFunctionComparator());
-    return e.toArray(new StructureFunction[e.size()]);
+    Collections.sort( e, new StructureFunctionComparator() );
+    return e.toArray( new StructureFunction[ e.size() ] );
   }
 
-  public boolean isSubReportExecutable()
-  {
+  public boolean isSubReportExecutable() {
     final Expression expression =
-        getReport().getAttributeExpression(AttributeNames.Core.NAMESPACE, AttributeNames.Core.SUBREPORT_ACTIVE);
-    if (expression != null)
-    {
+      getReport().getAttributeExpression( AttributeNames.Core.NAMESPACE, AttributeNames.Core.SUBREPORT_ACTIVE );
+    if ( expression != null ) {
       // the master-report state will only be non-null for subreports.
       final InlineDataRowRuntime dataRowRuntime = new InlineDataRowRuntime();
-      dataRowRuntime.setState(this);
-      expression.setRuntime(dataRowRuntime);
-      try
-      {
+      dataRowRuntime.setState( this );
+      expression.setRuntime( dataRowRuntime );
+      try {
         final Object value = expression.getValue();
         // the expression has to explicitly return false as a value to disable the report processing of
         // subreports. Just returning null or a non-boolean value is not enough. This is a safety measure
         // so that if in doubt we print more data than to little.
-        if (Boolean.FALSE.equals(value))
-        {
+        if ( Boolean.FALSE.equals( value ) ) {
           return false;
         }
-        if ("false".equals(String.valueOf(value)))
-        {
+        if ( "false".equals( String.valueOf( value ) ) ) {
           return false;
         }
         return true;
-      }
-      finally
-      {
-        expression.setRuntime(null);
+      } finally {
+        expression.setRuntime( null );
       }
     }
     return true;
   }
 
-  public ProcessState returnFromSubReport(final LayoutProcess layoutProcess) throws ReportProcessingException
-  {
+  public ProcessState returnFromSubReport( final LayoutProcess layoutProcess ) throws ReportProcessingException {
     final ProcessState state = deriveForAdvance();
     state.layoutProcess = (LayoutProcess) layoutProcess.clone();
     return state;
   }
 
-  public ProcessState restart() throws ReportProcessingException
-  {
-    if (getParentState() != null)
-    {
-      throw new IllegalStateException("Cannot reset a state that is a subreport state");
+  public ProcessState restart() throws ReportProcessingException {
+    if ( getParentState() != null ) {
+      throw new IllegalStateException( "Cannot reset a state that is a subreport state" );
     }
 
     final ProcessState state = this.deriveForStorage();
     state.crosstabColumnSequenceCounter.clear();
     state.groupSequenceCounter.clear();
-    state.groupSequenceCounter.set(0, -1);
+    state.groupSequenceCounter.set( 0, -1 );
     state.recorder.reset();
     state.currentSubReport = -1;
     state.currentGroupIndex = ReportState.BEFORE_FIRST_GROUP;
     state.currentPresentationGroupIndex = ReportState.BEFORE_FIRST_GROUP;
-    if (state.groupStarts.isEmpty() == false)
-    {
+    if ( state.groupStarts.isEmpty() == false ) {
       throw new IllegalStateException();
     }
-    state.setAdvanceHandler(BeginReportHandler.HANDLER);
+    state.setAdvanceHandler( BeginReportHandler.HANDLER );
 
     final ReportStateKey parentStateKey;
     final ReportState parentState = this.getParentSubReportState();
-    if (parentState == null)
-    {
+    if ( parentState == null ) {
       parentStateKey = null;
-    }
-    else
-    {
+    } else {
       parentStateKey = parentState.getProcessKey();
     }
 
     final CachingDataFactory dataFactory = state.dataFactoryManager.restore
-        (FunctionStorageKey.createKey(parentStateKey, state.getReport()), isReportsShareConnections(report));
-    if (dataFactory == null)
-    {
-      throw new ReportProcessingException("No data factory on restart()? Somewhere we went wrong.");
+      ( FunctionStorageKey.createKey( parentStateKey, state.getReport() ), isReportsShareConnections( report ) );
+    if ( dataFactory == null ) {
+      throw new ReportProcessingException( "No data factory on restart()? Somewhere we went wrong." );
     }
 
     final DefaultFlowController fc = state.getFlowController();
     final DefaultFlowController cfc = fc.restart();
     final DefaultFlowController qfc = cfc.performQuery
-        (dataFactory, query, queryLimit.intValue(), queryTimeout.intValue(),
-            fc.getMasterRow().getResourceBundleFactory(), lookupSortOrder(state.report));
+      ( dataFactory, query, queryLimit.intValue(), queryTimeout.intValue(),
+        fc.getMasterRow().getResourceBundleFactory(), lookupSortOrder( state.report ) );
     final Expression[] expressions = getFunctionStorage().restore
-        (FunctionStorageKey.createKey(null, state.getReport()));
-    final DefaultFlowController efc = qfc.activateExpressions(expressions, true);
-    state.setFlowController(efc);
+      ( FunctionStorageKey.createKey( null, state.getReport() ) );
+    final DefaultFlowController efc = qfc.activateExpressions( expressions, true );
+    state.setFlowController( efc );
     state.sequenceCounter += 1;
     state.processKey = state.createKey();
     return state;
   }
 
-  public ReportProcessingErrorHandler getErrorHandler()
-  {
+  public ReportProcessingErrorHandler getErrorHandler() {
     return errorHandler;
   }
 
-  public void setErrorHandler(final ReportProcessingErrorHandler errorHandler)
-  {
+  public void setErrorHandler( final ReportProcessingErrorHandler errorHandler ) {
     this.errorHandler = errorHandler;
   }
 
-  public void setSequenceCounter(final int sequenceCounter)
-  {
+  public void setSequenceCounter( final int sequenceCounter ) {
     this.sequenceCounter = sequenceCounter;
     this.processKey = this.createKey();
   }
 
-  public int getSequenceCounter()
-  {
+  public int getSequenceCounter() {
     return sequenceCounter;
   }
 
-  public InlineSubreportMarker getCurrentSubReportMarker()
-  {
+  public InlineSubreportMarker getCurrentSubReportMarker() {
     return currentSubReportMarker;
   }
 
-  public boolean isInlineProcess()
-  {
+  public boolean isInlineProcess() {
     return inlineProcess;
   }
 
-  public SubReportProcessType getSubreportProcessingType()
-  {
+  public SubReportProcessType getSubreportProcessingType() {
     InlineSubreportMarker cm = getCurrentSubReportMarker();
-    if (cm == null)
-    {
+    if ( cm == null ) {
       return SubReportProcessType.BANDED;
     }
     return cm.getProcessType();
@@ -963,55 +857,42 @@ public class ProcessState implements ReportState
    *
    * @return the derived state.
    */
-  public ProcessState deriveForPagebreak()
-  {
-    try
-    {
+  public ProcessState deriveForPagebreak() {
+    try {
       final ProcessState processState = clone();
       processState.flowController = flowController.derive();
       processState.report = report.clone();
       processState.layoutProcess = layoutProcess.deriveForPagebreak();
       return processState;
-    }
-    catch (final CloneNotSupportedException e)
-    {
-      throw new IllegalStateException("Clone failed but I dont know why ..");
+    } catch ( final CloneNotSupportedException e ) {
+      throw new IllegalStateException( "Clone failed but I dont know why .." );
     }
   }
 
-  public ProcessState deriveForAdvance()
-  {
-    try
-    {
+  public ProcessState deriveForAdvance() {
+    try {
       final ProcessState processState = clone();
       processState.sequenceCounter += 1;
       processState.processKey = processState.createKey();
       return processState;
-    }
-    catch (final CloneNotSupportedException e)
-    {
-      throw new IllegalStateException("Clone failed but I dont know why ..");
+    } catch ( final CloneNotSupportedException e ) {
+      throw new IllegalStateException( "Clone failed but I dont know why .." );
     }
   }
 
-  public ProcessState deriveForStorage()
-  {
-    try
-    {
+  public ProcessState deriveForStorage() {
+    try {
       final ProcessState result = clone();
       result.flowController = flowController.derive();
       result.report = report.clone();
       result.layoutProcess = layoutProcess.deriveForStorage();
       return result;
-    }
-    catch (final CloneNotSupportedException e)
-    {
-      throw new IllegalStateException("Clone failed but I dont know why ..");
+    } catch ( final CloneNotSupportedException e ) {
+      throw new IllegalStateException( "Clone failed but I dont know why .." );
     }
   }
 
-  public ProcessState clone() throws CloneNotSupportedException
-  {
+  public ProcessState clone() throws CloneNotSupportedException {
     final ProcessState result = (ProcessState) super.clone();
     result.groupSequenceCounter = (LongSequence) groupSequenceCounter.clone();
     result.crosstabColumnSequenceCounter = (LongSequence) crosstabColumnSequenceCounter.clone();
@@ -1021,115 +902,95 @@ public class ProcessState implements ReportState
     return result;
   }
 
-  public AdvanceHandler getAdvanceHandler()
-  {
+  public AdvanceHandler getAdvanceHandler() {
     return advanceHandler;
   }
 
-  private ReportStateKey createKey()
-  {
+  private ReportStateKey createKey() {
     final ProcessState parent = (ProcessState) getParentState();
-    if (parent != null)
-    {
-      return new ReportStateKey(parent.createKey(),
-          getCurrentRow(), getEventCode(),
-          getCurrentGroupIndex(), getCurrentSubReport(),
-          sequenceCounter, advanceHandler.isRestoreHandler(),
-          isInlineProcess());
+    if ( parent != null ) {
+      return new ReportStateKey( parent.createKey(),
+        getCurrentRow(), getEventCode(),
+        getCurrentGroupIndex(), getCurrentSubReport(),
+        sequenceCounter, advanceHandler.isRestoreHandler(),
+        isInlineProcess() );
     }
 
-    return new ReportStateKey(null, getCurrentRow(),
-        getEventCode(), getCurrentGroupIndex(), getCurrentSubReport(),
-        sequenceCounter, advanceHandler.isRestoreHandler(), false);
+    return new ReportStateKey( null, getCurrentRow(),
+      getEventCode(), getCurrentGroupIndex(), getCurrentSubReport(),
+      sequenceCounter, advanceHandler.isRestoreHandler(), false );
   }
 
-  public void setAdvanceHandler(final AdvanceHandler advanceHandler)
-  {
-    if (advanceHandler == null)
-    {
+  public void setAdvanceHandler( final AdvanceHandler advanceHandler ) {
+    if ( advanceHandler == null ) {
       throw new NullPointerException();
     }
     this.advanceHandler = advanceHandler;
     this.processKey = null;
   }
 
-  public final ProcessState advance() throws ReportProcessingException
-  {
-    return advanceHandler.advance(this);
+  public final ProcessState advance() throws ReportProcessingException {
+    return advanceHandler.advance( this );
   }
 
-  public final ProcessState commit() throws ReportProcessingException
-  {
-    final ProcessState commit = advanceHandler.commit(this);
+  public final ProcessState commit() throws ReportProcessingException {
+    final ProcessState commit = advanceHandler.commit( this );
     commit.processKey = commit.createKey();
     return commit;
   }
 
-  public int getCurrentRow()
-  {
+  public int getCurrentRow() {
     return this.flowController.getMasterRow().getCursor();
   }
 
-  public int getCurrentDataItem()
-  {
+  public int getCurrentDataItem() {
     return this.flowController.getMasterRow().getRawDataCursor();
   }
 
-  public int getProgressLevel()
-  {
+  public int getProgressLevel() {
     return flowController.getReportContext().getProgressLevel();
   }
 
-  public int getProgressLevelCount()
-  {
+  public int getProgressLevelCount() {
     return flowController.getReportContext().getProgressLevelCount();
   }
 
-  public boolean isPrepareRun()
-  {
+  public boolean isPrepareRun() {
     return flowController.getReportContext().isPrepareRun();
   }
 
-  public int getLevel()
-  {
+  public int getLevel() {
     return flowController.getReportContext().getProcessingLevel();
   }
 
-  public boolean isFinish()
-  {
+  public boolean isFinish() {
     return advanceHandler.isFinish();
   }
 
-  public int getEventCode()
-  {
+  public int getEventCode() {
     return advanceHandler.getEventCode();
   }
 
-  public int getCurrentGroupIndex()
-  {
+  public int getCurrentGroupIndex() {
     return currentGroupIndex;
   }
 
-  public void enterGroup()
-  {
+  public void enterGroup() {
     recorder.enterGroup();
     currentGroupIndex += 1;
-    final Group group = report.getGroup(currentGroupIndex);
-    groupStarts.push(new GroupStartRecord(getCurrentRow(), group.getName(), group.getGeneratedName()));
-    groupSequenceCounter.increment(currentGroupIndex);
-    groupSequenceCounter.set(currentGroupIndex + 1, 0);
+    final Group group = report.getGroup( currentGroupIndex );
+    groupStarts.push( new GroupStartRecord( getCurrentRow(), group.getName(), group.getGeneratedName() ) );
+    groupSequenceCounter.increment( currentGroupIndex );
+    groupSequenceCounter.set( currentGroupIndex + 1, 0 );
 
-    if (groupStarts.size() != currentGroupIndex + 1)
-    {
+    if ( groupStarts.size() != currentGroupIndex + 1 ) {
       throw new IllegalStateException();
     }
   }
 
-  public void leaveGroup()
-  {
+  public void leaveGroup() {
     recorder.leaveGroup();
-    if (groupStarts.size() != currentGroupIndex + 1)
-    {
+    if ( groupStarts.size() != currentGroupIndex + 1 ) {
       throw new IllegalStateException();
     }
 
@@ -1137,95 +998,76 @@ public class ProcessState implements ReportState
     groupStarts.pop();
   }
 
-  public int getPresentationGroupIndex()
-  {
+  public int getPresentationGroupIndex() {
     return currentPresentationGroupIndex;
   }
 
-  public void enterPresentationGroup()
-  {
+  public void enterPresentationGroup() {
     currentPresentationGroupIndex += 1;
   }
 
-  public void leavePresentationGroup()
-  {
+  public void leavePresentationGroup() {
     currentPresentationGroupIndex -= 1;
   }
 
-  public ReportDefinition getReport()
-  {
+  public ReportDefinition getReport() {
     return report;
   }
 
-  public int getCurrentSubReport()
-  {
+  public int getCurrentSubReport() {
     return currentSubReport;
   }
 
-  public ReportState getParentState()
-  {
-    if (suspendedState != null)
-    {
+  public ReportState getParentState() {
+    if ( suspendedState != null ) {
       return suspendedState;
     }
-    if (parentSubReportState != null)
-    {
+    if ( parentSubReportState != null ) {
       return parentSubReportState;
     }
     return null;
   }
 
-  public ReportState getParentSubReportState()
-  {
+  public ReportState getParentSubReportState() {
     return parentSubReportState;
   }
 
-  public FunctionStorage getStructureFunctionStorage()
-  {
+  public FunctionStorage getStructureFunctionStorage() {
     return structureFunctionStorage;
   }
 
-  public FunctionStorage getFunctionStorage()
-  {
+  public FunctionStorage getFunctionStorage() {
     return functionStorage;
   }
 
-  public DefaultFlowController getFlowController()
-  {
+  public DefaultFlowController getFlowController() {
     return flowController;
   }
 
-  public void setFlowController(final DefaultFlowController flowController)
-  {
-    if (flowController == null)
-    {
+  public void setFlowController( final DefaultFlowController flowController ) {
+    if ( flowController == null ) {
       throw new NullPointerException();
     }
     this.flowController = flowController;
     this.processKey = null;
   }
 
-  public LayoutProcess getLayoutProcess()
-  {
+  public LayoutProcess getLayoutProcess() {
     return layoutProcess;
   }
 
-  public ReportStateKey getProcessKey()
-  {
-    if (processKey == null)
-    {
+  public ReportStateKey getProcessKey() {
+    if ( processKey == null ) {
       processKey = createKey();
     }
     return processKey;
   }
 
-  public DataRow getDataRow()
-  {
+  public DataRow getDataRow() {
     return flowController.getMasterRow().getGlobalView();
   }
 
-  public int getNumberOfRows()
-  {
+  public int getNumberOfRows() {
     final MasterDataRow masterRow = flowController.getMasterRow();
     return masterRow.getRowCount();
   }
@@ -1235,36 +1077,32 @@ public class ProcessState implements ReportState
    *
    * @param baseEvent the type of the base event which caused the page start to be triggered.
    */
-  public void firePageStartedEvent(final int baseEvent)
-  {
-    final ReportEvent event = new ReportEvent(this, ReportEvent.PAGE_STARTED | baseEvent);
-    flowController = flowController.fireReportEvent(event);
-    layoutProcess.fireReportEvent(event);
+  public void firePageStartedEvent( final int baseEvent ) {
+    final ReportEvent event = new ReportEvent( this, ReportEvent.PAGE_STARTED | baseEvent );
+    flowController = flowController.fireReportEvent( event );
+    layoutProcess.fireReportEvent( event );
   }
 
   /**
    * Fires a '<code>page-finished</code>' event.  The <code>pageFinished(...)</code> method is called for every report
    * function.
    */
-  public void firePageFinishedEvent(final boolean noParentPassing)
-  {
-    final int eventCode = ReportEvent.PAGE_FINISHED | (noParentPassing ? ReportEvent.NO_PARENT_PASSING_EVENT : 0);
-    final ReportEvent event = new ReportEvent(this, eventCode);
-    flowController = flowController.fireReportEvent(event);
-    layoutProcess.fireReportEvent(event);
+  public void firePageFinishedEvent( final boolean noParentPassing ) {
+    final int eventCode = ReportEvent.PAGE_FINISHED | ( noParentPassing ? ReportEvent.NO_PARENT_PASSING_EVENT : 0 );
+    final ReportEvent event = new ReportEvent( this, eventCode );
+    flowController = flowController.fireReportEvent( event );
+    layoutProcess.fireReportEvent( event );
   }
 
-  protected void fireReportEvent()
-  {
+  protected void fireReportEvent() {
     final int eventCode = advanceHandler.getEventCode();
-    if ((eventCode & ProcessState.ARTIFICIAL_EVENT_CODE) == ProcessState.ARTIFICIAL_EVENT_CODE)
-    {
-      throw new IllegalStateException("Cannot fire artificial events.");
+    if ( ( eventCode & ProcessState.ARTIFICIAL_EVENT_CODE ) == ProcessState.ARTIFICIAL_EVENT_CODE ) {
+      throw new IllegalStateException( "Cannot fire artificial events." );
     }
 
-    final ReportEvent event = new ReportEvent(this, eventCode);
-    flowController = flowController.fireReportEvent(event);
-    layoutProcess.fireReportEvent(event);
+    final ReportEvent event = new ReportEvent( this, eventCode );
+    flowController = flowController.fireReportEvent( event );
+    layoutProcess.fireReportEvent( event );
   }
 
   /**
@@ -1276,129 +1114,97 @@ public class ProcessState implements ReportState
    * @param nextDataRow    the next data row, or null, if this is the last datarow.
    * @return A flag indicating whether or not the current item is the last in its group.
    */
-  public static boolean isLastItemInGroup(final Group rootGroup,
-                                          final MasterDataRow currentDataRow,
-                                          final MasterDataRow nextDataRow)
-  {
+  public static boolean isLastItemInGroup( final Group rootGroup,
+                                           final MasterDataRow currentDataRow,
+                                           final MasterDataRow nextDataRow ) {
     // return true if this is the last row in the model.
-    if (currentDataRow.isAdvanceable() == false || nextDataRow == null)
-    {
+    if ( currentDataRow.isAdvanceable() == false || nextDataRow == null ) {
       return true;
     }
 
     final DataRow nextView = nextDataRow.getGlobalView();
     Group g = rootGroup;
-    while (g != null)
-    {
-      if (g.isGroupChange(nextView))
-      {
+    while ( g != null ) {
+      if ( g.isGroupChange( nextView ) ) {
         return true;
       }
 
       // groups are never directly nested into each other. They always have a group-body between each group instance. 
       final Section parentSection = g.getParentSection();
-      if (parentSection == null)
-      {
+      if ( parentSection == null ) {
         return false;
       }
 
       final Section maybeGroup = parentSection.getParentSection();
-      if (maybeGroup instanceof Group)
-      {
+      if ( maybeGroup instanceof Group ) {
         g = (Group) maybeGroup;
-      }
-      else
-      {
+      } else {
         g = null;
       }
     }
     return false;
   }
 
-  public boolean isSubReportEvent()
-  {
+  public boolean isSubReportEvent() {
     return getParentSubReportState() != null;
   }
 
-  public InlineSubreportMarker[] getSubReports()
-  {
+  public InlineSubreportMarker[] getSubReports() {
     return subReports.clone();
   }
 
-  public ProcessStateHandle getProcessHandle()
-  {
+  public ProcessStateHandle getProcessHandle() {
     return processHandle;
   }
 
-  public void setInItemGroup(final boolean inItemGroup)
-  {
-    if (inItemGroup)
-    {
+  public void setInItemGroup( final boolean inItemGroup ) {
+    if ( inItemGroup ) {
       recorder.enterItems();
-    }
-    else
-    {
+    } else {
       recorder.leaveItems();
     }
     this.inItemGroup = inItemGroup;
   }
 
-  public boolean isInItemGroup()
-  {
+  public boolean isInItemGroup() {
     return inItemGroup;
   }
 
-  public ResourceBundleFactory getResourceBundleFactory()
-  {
+  public ResourceBundleFactory getResourceBundleFactory() {
     return flowController.getMasterRow().getResourceBundleFactory();
   }
 
-  public boolean isArtifcialState()
-  {
-    return (advanceHandler.getEventCode() & ReportEvent.ARTIFICIAL_EVENT_CODE) != 0;
+  public boolean isArtifcialState() {
+    return ( advanceHandler.getEventCode() & ReportEvent.ARTIFICIAL_EVENT_CODE ) != 0;
   }
 
-  public GroupingState createGroupingState()
-  {
-    return new DefaultGroupingState(currentGroupIndex, groupStarts.clone());
+  public GroupingState createGroupingState() {
+    return new DefaultGroupingState( currentGroupIndex, groupStarts.clone() );
   }
 
-  private boolean isStructureRunNeeded(final Section section)
-  {
+  private boolean isStructureRunNeeded( final Section section ) {
     final int count = section.getElementCount();
-    for (int i = 0; i < count; i++)
-    {
-      final ReportElement element = section.getElement(i);
-      final Object type = element.getAttribute(AttributeNames.Core.NAMESPACE, AttributeNames.Core.ELEMENT_TYPE);
-      if (type instanceof ExternalElementType)
-      {
+    for ( int i = 0; i < count; i++ ) {
+      final ReportElement element = section.getElement( i );
+      final Object type = element.getAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.ELEMENT_TYPE );
+      if ( type instanceof ExternalElementType ) {
         return true;
       }
 
-      if (element instanceof CrosstabGroup)
-      {
+      if ( element instanceof CrosstabGroup ) {
         return true;
-      }
-      else if (element instanceof SubReport)
-      {
+      } else if ( element instanceof SubReport ) {
         return true;
-      }
-      else if (element instanceof RootLevelBand)
-      {
+      } else if ( element instanceof RootLevelBand ) {
         final RootLevelBand band = (RootLevelBand) element;
-        if (band.getSubReportCount() > 0)
-        {
+        if ( band.getSubReportCount() > 0 ) {
           return true;
         }
-        if (isStructureRunNeeded((Section) element))
-        {
+        if ( isStructureRunNeeded( (Section) element ) ) {
           return true;
         }
-      }
-      else if (element instanceof Section)
-      {
-        if (isStructureRunNeeded((Section) element))
-        {
+      } else if ( element instanceof Section ) {
+        if ( isStructureRunNeeded( (Section) element ) ) {
           return true;
         }
       }
@@ -1406,43 +1212,37 @@ public class ProcessState implements ReportState
     return false;
   }
 
-  public boolean isStructuralPreprocessingNeeded()
-  {
+  public boolean isStructuralPreprocessingNeeded() {
     return structuralPreprocessingNeeded;
   }
 
-  public void advanceCursor()
-  {
+  public void advanceCursor() {
     recorder.advanceItems();
   }
 
-  public Integer getPredictedStateCount()
-  {
+  public Integer getPredictedStateCount() {
     return recorder.getPredictedStateCount();
   }
 
-  public boolean isCrosstabActive()
-  {
+  public boolean isCrosstabActive() {
     return flowController.isCrosstabActive();
   }
 
-  public String toString()
-  {
+  public String toString() {
     final StringBuilder b = new StringBuilder();
-    b.append("ProcessState={");
-    b.append("runLevel=").append(getLevel());
-    b.append(", key=").append(getProcessKey());
-    b.append("}");
+    b.append( "ProcessState={" );
+    b.append( "runLevel=" ).append( getLevel() );
+    b.append( ", key=" ).append( getProcessKey() );
+    b.append( "}" );
     return b.toString();
   }
 
-  public ProcessState recordCrosstabRowState()
-  {
+  public ProcessState recordCrosstabRowState() {
     // record the flow controller and all expressions for a later temporary rollback.
     final ProcessState next = deriveForAdvance();
     next.flowController = flowController.recordCrosstabRowState();
     next.crosstabColumnSequenceCounter.clear();
-    next.crosstabColumnSequenceCounter.fill(-1);
+    next.crosstabColumnSequenceCounter.fill( -1 );
     return next;
   }
 
@@ -1451,71 +1251,60 @@ public class ProcessState implements ReportState
    *
    * @return
    */
-  public ProcessState replayStoredCrosstabRowState()
-  {
+  public ProcessState replayStoredCrosstabRowState() {
     final ProcessState next = deriveForAdvance();
     next.replayStoredCrosstabGroup = currentGroupIndex + 1;
     next.suspendedState = this;
     next.flowController = flowController.replayStoredCrosstabRowState();
     next.processKey = next.createKey();
-//    DebugLog.log("ProcessState:replay " + processKey);
+    //    DebugLog.log("ProcessState:replay " + processKey);
     return next;
   }
 
-  public int getReplayStoredCrosstabGroup()
-  {
+  public int getReplayStoredCrosstabGroup() {
     return replayStoredCrosstabGroup;
   }
 
-  public AdvanceHandler getPostSummaryRowAdvanceHandler()
-  {
+  public AdvanceHandler getPostSummaryRowAdvanceHandler() {
     return postSummaryRowAdvanceHandler;
   }
 
-  public void setPostSummaryRowAdvanceHandler(final AdvanceHandler postSummaryRowAdvanceHandler)
-  {
+  public void setPostSummaryRowAdvanceHandler( final AdvanceHandler postSummaryRowAdvanceHandler ) {
     this.postSummaryRowAdvanceHandler = postSummaryRowAdvanceHandler;
   }
 
-  public ProcessState finishReplayingStoredCrosstabRowState() throws ReportProcessingException
-  {
+  public ProcessState finishReplayingStoredCrosstabRowState() throws ReportProcessingException {
     final ProcessState next = this.suspendedState.deriveForAdvance();
     next.layoutProcess = (LayoutProcess) this.layoutProcess.clone();
     next.flowController = flowController.derive();
     next.advanceHandler = this.advanceHandler;
     next.flowController.getMasterRow().validateReplayFinished();
-//    DebugLog.log("ProcessState:finish-replay " + processKey);
+    //    DebugLog.log("ProcessState:finish-replay " + processKey);
     return next;
   }
 
-  public void clearStoredCrosstabRowState()
-  {
+  public void clearStoredCrosstabRowState() {
     this.flowController = flowController.clearRecordedCrosstabRowState();
   }
 
-  public long getGroupSequenceCounter(final int groupIndex)
-  {
-    return groupSequenceCounter.get(groupIndex);
+  public long getGroupSequenceCounter( final int groupIndex ) {
+    return groupSequenceCounter.get( groupIndex );
   }
 
-  public long getCrosstabColumnSequenceCounter(final int groupIndex)
-  {
-    return crosstabColumnSequenceCounter.get(groupIndex);
+  public long getCrosstabColumnSequenceCounter( final int groupIndex ) {
+    return crosstabColumnSequenceCounter.get( groupIndex );
   }
 
-  public void crosstabResetColumnIndices()
-  {
+  public void crosstabResetColumnIndices() {
     crosstabColumnSequenceCounter.clear();
-    crosstabColumnSequenceCounter.fill(-1);
+    crosstabColumnSequenceCounter.fill( -1 );
   }
 
-  public void crosstabIncrementColumnCounter()
-  {
-    crosstabColumnSequenceCounter.increment(currentGroupIndex);
+  public void crosstabIncrementColumnCounter() {
+    crosstabColumnSequenceCounter.increment( currentGroupIndex );
   }
 
-  public PerformanceMonitorContext getPerformanceMonitorContext()
-  {
+  public PerformanceMonitorContext getPerformanceMonitorContext() {
     return performanceMonitorContext;
   }
 }

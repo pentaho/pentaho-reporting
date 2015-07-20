@@ -21,27 +21,22 @@ import org.pentaho.reporting.engine.classic.core.metadata.AttributeMetaData;
 import org.pentaho.reporting.engine.classic.core.metadata.DefaultAttributeMetaData;
 import org.pentaho.reporting.engine.classic.core.metadata.builder.AttributeMetaDataBuilder;
 
-public class AttributeDefinition
-{
+public class AttributeDefinition {
   private AttributeMetaDataBuilder builder;
 
-  public AttributeDefinition(final AttributeMetaDataBuilder builder)
-  {
+  public AttributeDefinition( final AttributeMetaDataBuilder builder ) {
     this.builder = builder.clone();
   }
 
-  public String getNamespace()
-  {
+  public String getNamespace() {
     return builder.getNamespace();
   }
 
-  public String getName()
-  {
+  public String getName() {
     return builder.getName();
   }
 
-  public AttributeMetaData build()
-  {
-    return new DefaultAttributeMetaData(builder);
+  public AttributeMetaData build() {
+    return new DefaultAttributeMetaData( builder );
   }
 }

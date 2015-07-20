@@ -29,52 +29,41 @@ import org.pentaho.reporting.engine.classic.core.util.InstanceID;
  *
  * @author Thomas Morgner
  */
-public class UseMinChunkWidthStyleSheet extends AbstractStyleSheet
-{
+public class UseMinChunkWidthStyleSheet extends AbstractStyleSheet {
   private StyleSheet parent;
   private Boolean useMinChunkWidth;
 
-  public UseMinChunkWidthStyleSheet(final boolean useMinChunkWidth)
-  {
+  public UseMinChunkWidthStyleSheet( final boolean useMinChunkWidth ) {
     this.parent = BandDefaultStyleSheet.getBandDefaultStyle();
-    if (useMinChunkWidth)
-    {
+    if ( useMinChunkWidth ) {
       this.useMinChunkWidth = Boolean.TRUE;
-    }
-    else
-    {
+    } else {
       this.useMinChunkWidth = Boolean.FALSE;
     }
   }
 
-  public StyleSheet getParent()
-  {
+  public StyleSheet getParent() {
     return parent;
   }
 
-  public InstanceID getId()
-  {
+  public InstanceID getId() {
     return parent.getId();
   }
 
-  public long getChangeTracker()
-  {
+  public long getChangeTracker() {
     return parent.getChangeTracker();
   }
 
-  public Object getStyleProperty(final StyleKey key, final Object defaultValue)
-  {
-    if (ElementStyleKeys.USE_MIN_CHUNKWIDTH.equals(key))
-    {
+  public Object getStyleProperty( final StyleKey key, final Object defaultValue ) {
+    if ( ElementStyleKeys.USE_MIN_CHUNKWIDTH.equals( key ) ) {
       return useMinChunkWidth;
     }
-    return parent.getStyleProperty(key, defaultValue);
+    return parent.getStyleProperty( key, defaultValue );
   }
 
-  public Object[] toArray()
-  {
+  public Object[] toArray() {
     final Object[] objects = parent.toArray();
-    objects[ElementStyleKeys.USE_MIN_CHUNKWIDTH.getIdentifier()] = useMinChunkWidth;
+    objects[ ElementStyleKeys.USE_MIN_CHUNKWIDTH.getIdentifier() ] = useMinChunkWidth;
     return objects;
   }
 }

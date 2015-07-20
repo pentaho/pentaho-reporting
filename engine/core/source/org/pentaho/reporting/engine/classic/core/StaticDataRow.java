@@ -17,12 +17,12 @@
 
 package org.pentaho.reporting.engine.classic.core;
 
+import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
+
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
-
-import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
 
 /**
  * This is a static datarow holding a value for each name in the datarow. This datarow does not hold dataflags and thus
@@ -32,22 +32,18 @@ import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
  *
  * @author Thomas Morgner
  */
-public class StaticDataRow implements DataRow
-{
-  private static final String[] EMPTY_NAMES = new String[0];
+public class StaticDataRow implements DataRow {
+  private static final String[] EMPTY_NAMES = new String[ 0 ];
   private String[] names;
   private Map<String, Object> values;
 
-  public StaticDataRow()
-  {
+  public StaticDataRow() {
     values = Collections.emptyMap();
     names = StaticDataRow.EMPTY_NAMES;
   }
 
-  protected StaticDataRow(final StaticDataRow dataRow)
-  {
-    if (dataRow == null)
-    {
+  protected StaticDataRow( final StaticDataRow dataRow ) {
+    if ( dataRow == null ) {
       throw new NullPointerException();
     }
 
@@ -55,101 +51,82 @@ public class StaticDataRow implements DataRow
     this.values = dataRow.values;
   }
 
-  public StaticDataRow(final DataRow dataRow)
-  {
-    if (dataRow == null)
-    {
+  public StaticDataRow( final DataRow dataRow ) {
+    if ( dataRow == null ) {
       throw new NullPointerException();
     }
 
-    synchronized (dataRow)
-    {
+    synchronized( dataRow ) {
       final String[] columnNames = dataRow.getColumnNames();
       final int columnCount = columnNames.length;
       this.names = columnNames.clone();
       final HashMap<String, Object> values = new HashMap<String, Object>();
-      for (int i = 0; i < columnCount; i++)
-      {
-        final String name = columnNames[i];
-        values.put(name, dataRow.get(name));
+      for ( int i = 0; i < columnCount; i++ ) {
+        final String name = columnNames[ i ];
+        values.put( name, dataRow.get( name ) );
       }
-      this.values = Collections.unmodifiableMap(values);
+      this.values = Collections.unmodifiableMap( values );
     }
   }
 
-  public StaticDataRow(final String[] names, final Object[] values)
-  {
-    setData(names, values);
+  public StaticDataRow( final String[] names, final Object[] values ) {
+    setData( names, values );
   }
 
-  public StaticDataRow(final Map<String, Object> parameterValues)
-  {
-    final String[] names = parameterValues.keySet().toArray(new String[parameterValues.size()]);
-    setData(names, parameterValues.values().toArray());
+  public StaticDataRow( final Map<String, Object> parameterValues ) {
+    final String[] names = parameterValues.keySet().toArray( new String[ parameterValues.size() ] );
+    setData( names, parameterValues.values().toArray() );
   }
 
-  public String[] getColumnNames()
-  {
-    if (names == null)
-    {
+  public String[] getColumnNames() {
+    if ( names == null ) {
       return StaticDataRow.EMPTY_NAMES;
     }
     return names.clone();
   }
 
-  protected void setData(final String[] names, final Object[] values)
-  {
-    if (names == null)
-    {
+  protected void setData( final String[] names, final Object[] values ) {
+    if ( names == null ) {
       throw new NullPointerException();
     }
-    if (values == null)
-    {
+    if ( values == null ) {
       throw new NullPointerException();
     }
-    if (names.length == values.length)
-    {
+    if ( names.length == values.length ) {
       this.names = names.clone();
       final int length = names.length;
       final HashMap<String, Object> valueMap = new HashMap<String, Object>();
-      for (int i = 0; i < length; i++)
-      {
-        final String name = names[i];
-        valueMap.put(name, values[i]);
+      for ( int i = 0; i < length; i++ ) {
+        final String name = names[ i ];
+        valueMap.put( name, values[ i ] );
       }
-      this.values = Collections.unmodifiableMap(valueMap);
-    }
-    else
-    {
-      final int length = Math.min(names.length, values.length);
-      this.names = new String[length];
-      System.arraycopy(names, 0, this.names, 0, length);
+      this.values = Collections.unmodifiableMap( valueMap );
+    } else {
+      final int length = Math.min( names.length, values.length );
+      this.names = new String[ length ];
+      System.arraycopy( names, 0, this.names, 0, length );
       final HashMap<String, Object> valueMap = new HashMap<String, Object>();
-      for (int i = 0; i < length; i++)
-      {
-        final String name = names[i];
-        valueMap.put(name, values[i]);
+      for ( int i = 0; i < length; i++ ) {
+        final String name = names[ i ];
+        valueMap.put( name, values[ i ] );
       }
-      this.values = Collections.unmodifiableMap(valueMap);
+      this.values = Collections.unmodifiableMap( valueMap );
 
     }
   }
 
-  protected void updateData(final Object[] values)
-  {
-    if (values.length != this.values.size())
-    {
-      throw new IllegalArgumentException("You should preserve the number of columns.");
+  protected void updateData( final Object[] values ) {
+    if ( values.length != this.values.size() ) {
+      throw new IllegalArgumentException( "You should preserve the number of columns." );
     }
 
     final HashMap<String, Object> valueMap = new HashMap<String, Object>();
-    final int length = Math.min(names.length, values.length);
-    for (int i = 0; i < length; i++)
-    {
-      final String name = names[i];
-      valueMap.put(name, values[i]);
+    final int length = Math.min( names.length, values.length );
+    for ( int i = 0; i < length; i++ ) {
+      final String name = names[ i ];
+      valueMap.put( name, values[ i ] );
     }
-    this.values = Collections.unmodifiableMap(valueMap);
+    this.values = Collections.unmodifiableMap( valueMap );
   }
 
   /**
@@ -162,111 +139,84 @@ public class StaticDataRow implements DataRow
    * @return the value.
    * @throws IllegalStateException if the datarow detected a deadlock.
    */
-  public Object get(final String col)
-  {
-    return values.get(col);
+  public Object get( final String col ) {
+    return values.get( col );
   }
 
-  public boolean isChanged(final String name)
-  {
+  public boolean isChanged( final String name ) {
     return false;
   }
 
-  public boolean equals(final Object o)
-  {
-    if (this == o)
-    {
+  public boolean equals( final Object o ) {
+    if ( this == o ) {
       return true;
     }
-    if (!(o instanceof StaticDataRow))
-    {
+    if ( !( o instanceof StaticDataRow ) ) {
       return false;
     }
 
     final StaticDataRow that = (StaticDataRow) o;
 
-    if (!Arrays.equals(names, that.names))
-    {
+    if ( !Arrays.equals( names, that.names ) ) {
       return false;
     }
-    if (!equalsMap(that.values))
-    {
+    if ( !equalsMap( that.values ) ) {
       return false;
     }
 
     return true;
   }
 
-  public int hashCode()
-  {
+  public int hashCode() {
     int result = hashCodeMap();
-    for (int i = 0; i < names.length; i++)
-    {
-      final String name = names[i];
-      if (name != null)
-      {
+    for ( int i = 0; i < names.length; i++ ) {
+      final String name = names[ i ];
+      if ( name != null ) {
         result = 31 * result + name.hashCode();
-      }
-      else
-      {
+      } else {
         result = 31 * result;
       }
     }
     return result;
   }
 
-  private boolean equalsMap(final Map otherValues)
-  {
-    if (otherValues.size() != values.size())
-    {
+  private boolean equalsMap( final Map otherValues ) {
+    if ( otherValues.size() != values.size() ) {
       return false;
     }
-    for (int i = 0; i < names.length; i++)
-    {
-      final String key = names[i];
-      final Object value = values.get(key);
-      final Object otherValue = otherValues.get(key);
+    for ( int i = 0; i < names.length; i++ ) {
+      final String key = names[ i ];
+      final Object value = values.get( key );
+      final Object otherValue = otherValues.get( key );
 
-      if (value == null && otherValue == null)
-      {
+      if ( value == null && otherValue == null ) {
         continue;
       }
 
-      if (value instanceof Object[] && otherValue instanceof Object[])
-      {
-        if (ObjectUtilities.equalArray((Object[]) value, (Object[]) otherValue) == false)
-        {
+      if ( value instanceof Object[] && otherValue instanceof Object[] ) {
+        if ( ObjectUtilities.equalArray( (Object[]) value, (Object[]) otherValue ) == false ) {
           return false;
         }
-      }
-      else if (ObjectUtilities.equal(value, otherValue) == false)
-      {
+      } else if ( ObjectUtilities.equal( value, otherValue ) == false ) {
         return false;
       }
     }
     return true;
   }
 
-  private int hashCodeMap()
-  {
+  private int hashCodeMap() {
     int hashCode = values.size();
 
-    for (int i = 0; i < names.length; i++)
-    {
-      final String key = names[i];
-      final Object value = values.get(key);
+    for ( int i = 0; i < names.length; i++ ) {
+      final String key = names[ i ];
+      final Object value = values.get( key );
 
-      hashCode = 31 * hashCode + (key != null ? key.hashCode() : 0);
-      if (value == null)
-      {
+      hashCode = 31 * hashCode + ( key != null ? key.hashCode() : 0 );
+      if ( value == null ) {
         hashCode = 31 * hashCode;
-      }
-      else if (value instanceof Object[])
-      {
-        hashCode = 31 * hashCode + ObjectUtilities.hashCode((Object[]) value);
-      }
-      else
-      {
+      } else if ( value instanceof Object[] ) {
+        hashCode = 31 * hashCode + ObjectUtilities.hashCode( (Object[]) value );
+      } else {
         hashCode = 31 * hashCode + value.hashCode();
       }
     }

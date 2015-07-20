@@ -17,8 +17,7 @@
 
 package org.pentaho.reporting.engine.classic.core.wizard;
 
-public interface ContextAwareDataSchemaModel extends DataSchemaModel
-{
+public interface ContextAwareDataSchemaModel extends DataSchemaModel {
   public DataAttributeContext getDataAttributeContext();
 
   Throwable getDataFactoryException();

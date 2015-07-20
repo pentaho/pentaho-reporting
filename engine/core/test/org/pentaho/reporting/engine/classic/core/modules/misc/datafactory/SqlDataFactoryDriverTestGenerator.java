@@ -17,13 +17,11 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.misc.datafactory;
 
-public class SqlDataFactoryDriverTestGenerator
-{
-  public static void main(String[] args) throws Exception
-  {
+public class SqlDataFactoryDriverTestGenerator {
+  public static void main( String[] args ) throws Exception {
     final SqlDataFactoryDriverTest test = new SqlDataFactoryDriverTest();
     test.setUp();
-    test.runGenerate(SqlDataFactoryDriverTest.QUERIES_AND_RESULTS);
+    test.runGenerate( SqlDataFactoryDriverTest.QUERIES_AND_RESULTS );
   }
 
 }

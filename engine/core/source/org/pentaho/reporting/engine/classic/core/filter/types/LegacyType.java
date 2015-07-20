@@ -24,13 +24,11 @@ import org.pentaho.reporting.engine.classic.core.filter.FormatSpecification;
 import org.pentaho.reporting.engine.classic.core.filter.RawDataSource;
 import org.pentaho.reporting.engine.classic.core.function.ExpressionRuntime;
 
-public class LegacyType extends AbstractElementType implements RawDataSource
-{
+public class LegacyType extends AbstractElementType implements RawDataSource {
   public static final LegacyType INSTANCE = new LegacyType();
 
-  public LegacyType()
-  {
-    super("legacy-element");
+  public LegacyType() {
+    super( "legacy-element" );
   }
 
   /**
@@ -41,21 +39,17 @@ public class LegacyType extends AbstractElementType implements RawDataSource
    * @param element the element.
    * @return the value.
    */
-  public Object getValue(final ExpressionRuntime runtime, final ReportElement element)
-  {
-    if (runtime == null)
-    {
-      throw new NullPointerException("Runtime must never be null.");
+  public Object getValue( final ExpressionRuntime runtime, final ReportElement element ) {
+    if ( runtime == null ) {
+      throw new NullPointerException( "Runtime must never be null." );
     }
-    if (element == null)
-    {
-      throw new NullPointerException("Element must never be null.");
+    if ( element == null ) {
+      throw new NullPointerException( "Element must never be null." );
     }
 
-    if (element instanceof Element)
-    {
+    if ( element instanceof Element ) {
       final Element e = (Element) element;
-      return e.getDataSource().getValue(runtime, element);
+      return e.getDataSource().getValue( runtime, element );
     }
     return null;
   }
@@ -69,25 +63,23 @@ public class LegacyType extends AbstractElementType implements RawDataSource
    * @param element
    * @return the raw data.
    */
-  public Object getRawValue(final ExpressionRuntime runtime, final ReportElement element)
-  {
-    if (!(element instanceof Element))
-    {
+  public Object getRawValue( final ExpressionRuntime runtime, final ReportElement element ) {
+    if ( !( element instanceof Element ) ) {
       return null;
     }
     final Element e = (Element) element;
     final DataSource source = e.getDataSource();
-    if (source instanceof RawDataSource)
-    {
+    if ( source instanceof RawDataSource ) {
       final RawDataSource rds = (RawDataSource) source;
-      return rds.getRawValue(runtime, element);
+      return rds.getRawValue( runtime, element );
     }
-    return e.getDataSource().getValue(runtime, element);
+    return e.getDataSource().getValue( runtime, element );
   }
 
   /**
    * Returns information about the formatstring that was used to transform a raw-value into a formatted text. Not all
-   * elements will make use of a format-string. These elements will return {@link org.pentaho.reporting.engine.classic.core.filter.FormatSpecification#TYPE_UNDEFINED}
+   * elements will make use of a format-string. These elements will return {@link org.pentaho.reporting.engine
+   * .classic.core.filter.FormatSpecification#TYPE_UNDEFINED}
    * in that case.
    *
    * @param runtime             the Expression runtime used to possibly compute the raw-value.
@@ -95,32 +87,27 @@ public class LegacyType extends AbstractElementType implements RawDataSource
    * @param formatSpecification the format specification (can be null). @return a filled format specififcation. If the
    *                            <code>formatSpecification</code> parameter was not null, this given instance is reused.
    */
-  public FormatSpecification getFormatString(final ExpressionRuntime runtime,
-                                             final ReportElement element,
-                                             FormatSpecification formatSpecification)
-  {
-    if (!(element instanceof Element))
-    {
+  public FormatSpecification getFormatString( final ExpressionRuntime runtime,
+                                              final ReportElement element,
+                                              FormatSpecification formatSpecification ) {
+    if ( !( element instanceof Element ) ) {
       return null;
     }
     final Element e = (Element) element;
     final DataSource source = e.getDataSource();
-    if (source instanceof RawDataSource)
-    {
+    if ( source instanceof RawDataSource ) {
       final RawDataSource rds = (RawDataSource) source;
-      return rds.getFormatString(runtime, element, formatSpecification);
+      return rds.getFormatString( runtime, element, formatSpecification );
     }
 
-    if (formatSpecification == null)
-    {
+    if ( formatSpecification == null ) {
       formatSpecification = new FormatSpecification();
     }
-    formatSpecification.redefine(FormatSpecification.TYPE_UNDEFINED, null);
+    formatSpecification.redefine( FormatSpecification.TYPE_UNDEFINED, null );
     return formatSpecification;
   }
 
-  public Object getDesignValue(final ExpressionRuntime runtime, final ReportElement element)
-  {
+  public Object getDesignValue( final ExpressionRuntime runtime, final ReportElement element ) {
     return "legacy-element";
   }
 }

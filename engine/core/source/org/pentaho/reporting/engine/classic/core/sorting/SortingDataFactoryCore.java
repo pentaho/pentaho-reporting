@@ -17,34 +17,30 @@
 
 package org.pentaho.reporting.engine.classic.core.sorting;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-
 import org.pentaho.reporting.engine.classic.core.CompoundDataFactoryCore;
 import org.pentaho.reporting.engine.classic.core.DataFactory;
 import org.pentaho.reporting.engine.classic.core.DataRow;
 import org.pentaho.reporting.engine.classic.core.metadata.DataFactoryMetaData;
 
-public class SortingDataFactoryCore extends CompoundDataFactoryCore
-{
-  public SortingDataFactoryCore()
-  {
+import java.util.ArrayList;
+import java.util.Arrays;
+
+public class SortingDataFactoryCore extends CompoundDataFactoryCore {
+  public SortingDataFactoryCore() {
   }
 
-  public String[] getReferencedFields(final DataFactoryMetaData metaData,
-                                      final DataFactory element,
-                                      final String query,
-                                      final DataRow parameter)
-  {
-    String[] referencedFields = super.getReferencedFields(metaData, element, query, parameter);
-    if (referencedFields == null)
-    {
+  public String[] getReferencedFields( final DataFactoryMetaData metaData,
+                                       final DataFactory element,
+                                       final String query,
+                                       final DataRow parameter ) {
+    String[] referencedFields = super.getReferencedFields( metaData, element, query, parameter );
+    if ( referencedFields == null ) {
       return null;
     }
 
     ArrayList<String> fields = new ArrayList<String>();
-    fields.addAll(Arrays.asList(referencedFields));
-    fields.add(DataFactory.QUERY_SORT);
-    return fields.toArray(new String[fields.size()]);
+    fields.addAll( Arrays.asList( referencedFields ) );
+    fields.add( DataFactory.QUERY_SORT );
+    return fields.toArray( new String[ fields.size() ] );
   }
 }

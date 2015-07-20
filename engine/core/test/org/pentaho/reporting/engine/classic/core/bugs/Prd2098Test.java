@@ -17,9 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.core.bugs;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-
 import junit.framework.TestCase;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
@@ -31,41 +28,38 @@ import org.pentaho.reporting.engine.classic.core.modules.output.table.xls.ExcelR
 import org.pentaho.reporting.engine.classic.core.testsupport.DebugReportRunner;
 import org.pentaho.reporting.engine.classic.core.testsupport.selector.MatchFactory;
 
-public class Prd2098Test extends TestCase
-{
-  public Prd2098Test()
-  {
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+
+public class Prd2098Test extends TestCase {
+  public Prd2098Test() {
   }
 
-  protected void setUp() throws Exception
-  {
+  protected void setUp() throws Exception {
     ClassicEngineBoot.getInstance().start();
   }
 
-  public void testReportInExcel() throws Exception
-  {
-    final MasterReport report = DebugReportRunner.parseGoldenSampleReport("Prd-2098.prpt");
+  public void testReportInExcel() throws Exception {
+    final MasterReport report = DebugReportRunner.parseGoldenSampleReport( "Prd-2098.prpt" );
     final ByteArrayOutputStream bout = new ByteArrayOutputStream();
-    ExcelReportUtil.createXLS(report, bout);
+    ExcelReportUtil.createXLS( report, bout );
 
-    final HSSFWorkbook wb = new HSSFWorkbook(new ByteArrayInputStream(bout.toByteArray()));
-    assertNull(wb.getSheetAt(2).getRow(2));
+    final HSSFWorkbook wb = new HSSFWorkbook( new ByteArrayInputStream( bout.toByteArray() ) );
+    assertNull( wb.getSheetAt( 2 ).getRow( 2 ) );
     // this row would exist to have a height if the bug is there.
   }
 
-  public void testGoldenSampleReport() throws Exception
-  {
-    final MasterReport report = DebugReportRunner.parseGoldenSampleReport("Prd-2098.prpt");
-    LogicalPageBox logicalPageBox = DebugReportRunner.layoutPage(report, 1);
+  public void testGoldenSampleReport() throws Exception {
+    final MasterReport report = DebugReportRunner.parseGoldenSampleReport( "Prd-2098.prpt" );
+    LogicalPageBox logicalPageBox = DebugReportRunner.layoutPage( report, 1 );
 
     RenderNode[] elementsByNodeType =
-        MatchFactory.findElementsByNodeType(logicalPageBox, LayoutNodeTypes.TYPE_BOX_PROGRESS_MARKER);
-    assertEquals(3, elementsByNodeType.length);
+      MatchFactory.findElementsByNodeType( logicalPageBox, LayoutNodeTypes.TYPE_BOX_PROGRESS_MARKER );
+    assertEquals( 3, elementsByNodeType.length );
   }
 
-  public void testRunGoldenSample() throws Exception
-  {
-    final MasterReport report = DebugReportRunner.parseGoldenSampleReport("Prd-2098.prpt");
-    DebugReportRunner.createXmlFlow(report);
+  public void testRunGoldenSample() throws Exception {
+    final MasterReport report = DebugReportRunner.parseGoldenSampleReport( "Prd-2098.prpt" );
+    DebugReportRunner.createXmlFlow( report );
   }
 }

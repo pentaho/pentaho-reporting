@@ -17,9 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.core.layout;
 
-import java.awt.print.PageFormat;
-import java.net.URL;
-
 import junit.framework.TestCase;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
@@ -36,92 +33,79 @@ import org.pentaho.reporting.engine.classic.core.testsupport.DebugReportRunner;
 import org.pentaho.reporting.libraries.resourceloader.Resource;
 import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 
-public class WatermarkSizeTest extends TestCase
-{
-  public WatermarkSizeTest()
-  {
+import java.awt.print.PageFormat;
+import java.net.URL;
+
+public class WatermarkSizeTest extends TestCase {
+  public WatermarkSizeTest() {
   }
 
-  public WatermarkSizeTest(final String s)
-  {
-    super(s);
+  public WatermarkSizeTest( final String s ) {
+    super( s );
   }
 
-  protected void setUp() throws Exception
-  {
+  protected void setUp() throws Exception {
     ClassicEngineBoot.getInstance().start();
   }
 
-  public void testNestedRows() throws Exception
-  {
+  public void testNestedRows() throws Exception {
     final MasterReport basereport = new MasterReport();
-    basereport.setPageDefinition(new SimplePageDefinition(new PageFormat()));
+    basereport.setPageDefinition( new SimplePageDefinition( new PageFormat() ) );
 
-    final URL target = LayoutTest.class.getResource("watermark-size.xml");
+    final URL target = LayoutTest.class.getResource( "watermark-size.xml" );
     final ResourceManager rm = new ResourceManager();
     rm.registerDefaults();
-    final Resource directly = rm.createDirectly(target, MasterReport.class);
+    final Resource directly = rm.createDirectly( target, MasterReport.class );
     final MasterReport report = (MasterReport) directly.getResource();
 
     final LogicalPageBox logicalPageBox = DebugReportRunner.layoutSingleBand
-        (basereport, report.getWatermark(), true, false);
+      ( basereport, report.getWatermark(), true, false );
     // simple test, we assert that all paragraph-poolboxes are on either 485000 or 400000
     // and that only two lines exist for each
-    new ValidateRunner().startValidation(logicalPageBox);
+    new ValidateRunner().startValidation( logicalPageBox );
   }
 
-  private static class ValidateRunner extends IterateStructuralProcessStep
-  {
-    protected void processRenderableContent(final RenderableReplacedContentBox box)
-    {
+  private static class ValidateRunner extends IterateStructuralProcessStep {
+    protected void processRenderableContent( final RenderableReplacedContentBox box ) {
 
     }
 
-    protected boolean startBox(final RenderBox box)
-    {
+    protected boolean startBox( final RenderBox box ) {
       final String name = box.getName();
-      if (name == null)
-      {
+      if ( name == null ) {
         return true;
       }
-      if (box instanceof ParagraphRenderBox)
-      {
-        assertNotNull("Have at only one child", box.getFirstChild());
-        assertNotNull("Have at only one child", box.getLastChild());
-        assertSame("Have at only one child", box.getFirstChild(), box.getLastChild());
+      if ( box instanceof ParagraphRenderBox ) {
+        assertNotNull( "Have at only one child", box.getFirstChild() );
+        assertNotNull( "Have at only one child", box.getLastChild() );
+        assertSame( "Have at only one child", box.getFirstChild(), box.getLastChild() );
       }
 
       return true;
     }
 
-    protected boolean startCanvasBox(final CanvasRenderBox box)
-    {
-      return startBox(box);
+    protected boolean startCanvasBox( final CanvasRenderBox box ) {
+      return startBox( box );
     }
 
-    protected boolean startBlockBox(final BlockRenderBox box)
-    {
-      return startBox(box);
+    protected boolean startBlockBox( final BlockRenderBox box ) {
+      return startBox( box );
     }
 
-    protected boolean startInlineBox(final InlineRenderBox box)
-    {
-      return startBox(box);
+    protected boolean startInlineBox( final InlineRenderBox box ) {
+      return startBox( box );
     }
 
-    protected boolean startRowBox(final RenderBox box)
-    {
-      return startBox(box);
+    protected boolean startRowBox( final RenderBox box ) {
+      return startBox( box );
     }
 
-    protected void processParagraphChilds(final ParagraphRenderBox box)
-    {
-      processBoxChilds(box);
+    protected void processParagraphChilds( final ParagraphRenderBox box ) {
+      processBoxChilds( box );
     }
 
-    public void startValidation(final LogicalPageBox logicalPageBox)
-    {
-      startProcessing(logicalPageBox);
+    public void startValidation( final LogicalPageBox logicalPageBox ) {
+      startProcessing( logicalPageBox );
     }
   }
 

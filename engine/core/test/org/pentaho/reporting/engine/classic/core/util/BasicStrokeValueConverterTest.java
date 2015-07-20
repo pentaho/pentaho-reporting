@@ -17,28 +17,24 @@
 
 package org.pentaho.reporting.engine.classic.core.util;
 
-import java.awt.BasicStroke;
-
 import junit.framework.TestCase;
 import org.pentaho.reporting.engine.classic.core.util.beans.BasicStrokeValueConverter;
 import org.pentaho.reporting.engine.classic.core.util.beans.BeanException;
 
-public class BasicStrokeValueConverterTest extends TestCase
-{
-  public BasicStrokeValueConverterTest()
-  {
+import java.awt.*;
+
+public class BasicStrokeValueConverterTest extends TestCase {
+  public BasicStrokeValueConverterTest() {
   }
 
-  public BasicStrokeValueConverterTest(final String name)
-  {
-    super(name);
+  public BasicStrokeValueConverterTest( final String name ) {
+    super( name );
   }
 
-  public void testParse() throws BeanException
-  {
+  public void testParse() throws BeanException {
     final BasicStroke b = new BasicStroke();
     BasicStrokeValueConverter c = new BasicStrokeValueConverter();
-    final BasicStroke b2 = (BasicStroke) c.toPropertyValue(c.toAttributeValue(b));
-    assertEquals(b, b2);
+    final BasicStroke b2 = (BasicStroke) c.toPropertyValue( c.toAttributeValue( b ) );
+    assertEquals( b, b2 );
   }
 }

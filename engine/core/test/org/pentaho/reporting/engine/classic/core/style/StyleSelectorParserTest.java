@@ -24,41 +24,35 @@ import org.pentaho.reporting.engine.classic.core.style.css.namespaces.NamespaceC
 import org.pentaho.reporting.engine.classic.core.style.css.selector.CSSSelector;
 import org.w3c.css.sac.SelectorList;
 
-public class StyleSelectorParserTest extends TestCase
-{
-  public StyleSelectorParserTest()
-  {
+public class StyleSelectorParserTest extends TestCase {
+  public StyleSelectorParserTest() {
   }
 
-  public StyleSelectorParserTest(final String name)
-  {
-    super(name);
+  public StyleSelectorParserTest( final String name ) {
+    super( name );
   }
 
-  protected void setUp() throws Exception
-  {
+  protected void setUp() throws Exception {
     ClassicEngineBoot.getInstance().start();
   }
 
-  public void testParsing() throws Exception
-  {
+  public void testParsing() throws Exception {
     final NamespaceCollection namespaceCollection = StyleSheetParserUtil.getInstance().getNamespaceCollection();
-    final SelectorList selectorList = StyleSheetParserUtil.getInstance().parseSelector(namespaceCollection, "h1.test[x-lang=\"fr'\\\"\"]");
-    for (int i = 0; i < selectorList.getLength(); i+= 1)
-    {
-      CSSSelector item = (CSSSelector) selectorList.item(i);
-      System.out.println (item.print(namespaceCollection));
+    final SelectorList selectorList =
+      StyleSheetParserUtil.getInstance().parseSelector( namespaceCollection, "h1.test[x-lang=\"fr'\\\"\"]" );
+    for ( int i = 0; i < selectorList.getLength(); i += 1 ) {
+      CSSSelector item = (CSSSelector) selectorList.item( i );
+      System.out.println( item.print( namespaceCollection ) );
     }
   }
 
-  public void testParsingClass() throws Exception
-  {
+  public void testParsingClass() throws Exception {
     final NamespaceCollection namespaceCollection = StyleSheetParserUtil.getInstance().getNamespaceCollection();
-    final SelectorList selectorList = StyleSheetParserUtil.getInstance().parseSelector(namespaceCollection, ".\\aa  test");
-    for (int i = 0; i < selectorList.getLength(); i+= 1)
-    {
-      CSSSelector item = (CSSSelector) selectorList.item(i);
-      System.out.println (item.print(namespaceCollection));
+    final SelectorList selectorList =
+      StyleSheetParserUtil.getInstance().parseSelector( namespaceCollection, ".\\aa  test" );
+    for ( int i = 0; i < selectorList.getLength(); i += 1 ) {
+      CSSSelector item = (CSSSelector) selectorList.item( i );
+      System.out.println( item.print( namespaceCollection ) );
     }
   }
 

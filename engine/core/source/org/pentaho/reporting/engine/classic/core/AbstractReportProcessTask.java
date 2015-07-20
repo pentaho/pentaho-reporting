@@ -17,27 +17,25 @@
 
 package org.pentaho.reporting.engine.classic.core;
 
-import javax.swing.event.EventListenerList;
-
 import org.pentaho.reporting.engine.classic.core.event.ReportProgressListener;
 import org.pentaho.reporting.libraries.repository.ContentLocation;
 import org.pentaho.reporting.libraries.repository.NameGenerator;
+
+import javax.swing.event.EventListenerList;
 
 /**
  * A base class for common report process task implementations.
  *
  * @author Thomas Morgner
  */
-public abstract class AbstractReportProcessTask implements ReportProcessTask
-{
+public abstract class AbstractReportProcessTask implements ReportProcessTask {
   private EventListenerList listeners;
   private ContentLocation bodyContentLocation;
   private MasterReport report;
   private Throwable error;
   private NameGenerator bodyNameGenerator;
 
-  protected AbstractReportProcessTask()
-  {
+  protected AbstractReportProcessTask() {
     this.listeners = new EventListenerList();
   }
 
@@ -46,8 +44,7 @@ public abstract class AbstractReportProcessTask implements ReportProcessTask
    *
    * @return the content location where the generated document of the report will be stored.
    */
-  public ContentLocation getBodyContentLocation()
-  {
+  public ContentLocation getBodyContentLocation() {
     return bodyContentLocation;
   }
 
@@ -56,8 +53,7 @@ public abstract class AbstractReportProcessTask implements ReportProcessTask
    *
    * @param bodyContentLocation the content location for the report document.
    */
-  public void setBodyContentLocation(final ContentLocation bodyContentLocation)
-  {
+  public void setBodyContentLocation( final ContentLocation bodyContentLocation ) {
     this.bodyContentLocation = bodyContentLocation;
   }
 
@@ -66,19 +62,17 @@ public abstract class AbstractReportProcessTask implements ReportProcessTask
    *
    * @return the name generator.
    */
-  public NameGenerator getBodyNameGenerator()
-  {
+  public NameGenerator getBodyNameGenerator() {
     return bodyNameGenerator;
   }
 
   /**
-   * Defines the body name generator, that generates name sequences in case the target name is already taken.
-   * The given namegenerator should return the first-choice document name as first generated name.
+   * Defines the body name generator, that generates name sequences in case the target name is already taken. The given
+   * namegenerator should return the first-choice document name as first generated name.
    *
    * @param bodyNameGenerator the name generator.
    */
-  public void setBodyNameGenerator(final NameGenerator bodyNameGenerator)
-  {
+  public void setBodyNameGenerator( final NameGenerator bodyNameGenerator ) {
     this.bodyNameGenerator = bodyNameGenerator;
   }
 
@@ -87,19 +81,17 @@ public abstract class AbstractReportProcessTask implements ReportProcessTask
    *
    * @return the report.
    */
-  public MasterReport getReport()
-  {
+  public MasterReport getReport() {
     return report;
   }
 
   /**
-   * Defines the report that will be executed in this task. It is assumed that the report is fully
-   * parametrized. Report processing will fail if the report requires parameters that are not given.
+   * Defines the report that will be executed in this task. It is assumed that the report is fully parametrized. Report
+   * processing will fail if the report requires parameters that are not given.
    *
    * @param report the report.
    */
-  public void setReport(final MasterReport report)
-  {
+  public void setReport( final MasterReport report ) {
     this.report = report;
   }
 
@@ -108,9 +100,8 @@ public abstract class AbstractReportProcessTask implements ReportProcessTask
    *
    * @param listener the listener.
    */
-  public void addReportProgressListener(final ReportProgressListener listener)
-  {
-    listeners.add(ReportProgressListener.class, listener);
+  public void addReportProgressListener( final ReportProgressListener listener ) {
+    listeners.add( ReportProgressListener.class, listener );
   }
 
   /**
@@ -118,9 +109,8 @@ public abstract class AbstractReportProcessTask implements ReportProcessTask
    *
    * @param listener the listener.
    */
-  public void removeReportProgressListener(final ReportProgressListener listener)
-  {
-    listeners.remove(ReportProgressListener.class, listener);
+  public void removeReportProgressListener( final ReportProgressListener listener ) {
+    listeners.remove( ReportProgressListener.class, listener );
   }
 
   /**
@@ -128,9 +118,8 @@ public abstract class AbstractReportProcessTask implements ReportProcessTask
    *
    * @return all registered listeners.
    */
-  protected ReportProgressListener[] getReportProgressListeners()
-  {
-    return listeners.getListeners(ReportProgressListener.class);
+  protected ReportProgressListener[] getReportProgressListeners() {
+    return listeners.getListeners( ReportProgressListener.class );
   }
 
   /**
@@ -138,8 +127,7 @@ public abstract class AbstractReportProcessTask implements ReportProcessTask
    *
    * @return the error that caused a failure, or <code>null</code> if there was no error.
    */
-  public Throwable getError()
-  {
+  public Throwable getError() {
     return error;
   }
 
@@ -148,19 +136,16 @@ public abstract class AbstractReportProcessTask implements ReportProcessTask
    *
    * @param error the error.
    */
-  protected void setError(final Throwable error)
-  {
+  protected void setError( final Throwable error ) {
     this.error = error;
   }
 
   /**
-   * Checks whether the task was aborted. Tasks can be aborted by signaling "interrupt()" to the
-   * executing thread.
+   * Checks whether the task was aborted. Tasks can be aborted by signaling "interrupt()" to the executing thread.
    *
    * @return true, if the task was aborted, false otherwise.
    */
-  public boolean isTaskAborted()
-  {
+  public boolean isTaskAborted() {
     return this.error instanceof InterruptedException;
   }
 
@@ -169,8 +154,7 @@ public abstract class AbstractReportProcessTask implements ReportProcessTask
    *
    * @return true, if the report was exported successfully, false otherwise.
    */
-  public boolean isTaskSuccessful()
-  {
+  public boolean isTaskSuccessful() {
     return this.error == null;
   }
 
@@ -179,8 +163,7 @@ public abstract class AbstractReportProcessTask implements ReportProcessTask
    *
    * @return true, if the task is valid and can be started, false otherwise.
    */
-  public boolean isValid()
-  {
+  public boolean isValid() {
     return this.report != null && this.bodyContentLocation != null && this.bodyNameGenerator != null;
   }
 }

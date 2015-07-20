@@ -20,17 +20,14 @@ package org.pentaho.reporting.engine.classic.core.filter.types.bands;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
 import org.pentaho.reporting.engine.classic.core.ReportElement;
 
-public class MasterReportType extends AbstractSectionType
-{
+public class MasterReportType extends AbstractSectionType {
   public static final MasterReportType INSTANCE = new MasterReportType();
 
-  public MasterReportType()
-  {
-    super("master-report", true);
+  public MasterReportType() {
+    super( "master-report", true );
   }
 
-  public ReportElement create()
-  {
+  public ReportElement create() {
     return new MasterReport();
   }
 }

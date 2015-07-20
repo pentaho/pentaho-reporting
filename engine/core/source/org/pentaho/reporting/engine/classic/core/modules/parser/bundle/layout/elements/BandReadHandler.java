@@ -17,8 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.parser.bundle.layout.elements;
 
-import java.util.ArrayList;
-
 import org.pentaho.reporting.engine.classic.core.Band;
 import org.pentaho.reporting.engine.classic.core.filter.types.bands.BandType;
 import org.pentaho.reporting.engine.classic.core.metadata.ElementType;
@@ -29,29 +27,26 @@ import org.pentaho.reporting.libraries.xmlns.parser.XmlReadHandler;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 
-public class BandReadHandler extends AbstractElementReadHandler
-{
+import java.util.ArrayList;
+
+public class BandReadHandler extends AbstractElementReadHandler {
   private ArrayList<ElementReadHandler> elementHandlers;
 
-  protected BandReadHandler(final ElementType elementType)
-      throws ParseException
-  {
-    this(elementType, true);
+  protected BandReadHandler( final ElementType elementType )
+    throws ParseException {
+    this( elementType, true );
   }
 
-  protected BandReadHandler(final ElementType elementType,
-                            final boolean autoCreate) throws ParseException
-  {
+  protected BandReadHandler( final ElementType elementType,
+                             final boolean autoCreate ) throws ParseException {
     elementHandlers = new ArrayList<ElementReadHandler>();
-    if (autoCreate)
-    {
-      initialize(elementType);
+    if ( autoCreate ) {
+      initialize( elementType );
     }
   }
 
-  public BandReadHandler() throws ParseException
-  {
-    this(BandType.INSTANCE);
+  public BandReadHandler() throws ParseException {
+    this( BandType.INSTANCE );
   }
 
   /**
@@ -63,19 +58,17 @@ public class BandReadHandler extends AbstractElementReadHandler
    * @return the handler or null, if the tagname is invalid.
    * @throws SAXException if there is a parsing error.
    */
-  protected XmlReadHandler getHandlerForChild(final String uri,
-                                              final String tagName,
-                                              final Attributes atts) throws SAXException
-  {
+  protected XmlReadHandler getHandlerForChild( final String uri,
+                                               final String tagName,
+                                               final Attributes atts ) throws SAXException {
 
-    final ElementReadHandler handler = BundleElementRegistry.getInstance().getReadHandler(uri, tagName, getLocator());
-    if (handler != null)
-    {
-      elementHandlers.add(handler);
+    final ElementReadHandler handler = BundleElementRegistry.getInstance().getReadHandler( uri, tagName, getLocator() );
+    if ( handler != null ) {
+      elementHandlers.add( handler );
       return handler;
     }
 
-    return super.getHandlerForChild(uri, tagName, atts);
+    return super.getHandlerForChild( uri, tagName, atts );
   }
 
   /**
@@ -83,20 +76,17 @@ public class BandReadHandler extends AbstractElementReadHandler
    *
    * @throws SAXException if there is a parsing error.
    */
-  protected void doneParsing() throws SAXException
-  {
+  protected void doneParsing() throws SAXException {
     super.doneParsing();
 
     final Band band = getElement();
-    for (int i = 0; i < elementHandlers.size(); i++)
-    {
-      final ElementReadHandler readHandler = elementHandlers.get(i);
-      band.addElement(readHandler.getElement());
+    for ( int i = 0; i < elementHandlers.size(); i++ ) {
+      final ElementReadHandler readHandler = elementHandlers.get( i );
+      band.addElement( readHandler.getElement() );
     }
   }
 
-  public Band getElement()
-  {
+  public Band getElement() {
     return (Band) super.getElement();
   }
 }

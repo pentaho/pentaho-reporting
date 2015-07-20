@@ -17,10 +17,10 @@
 
 package org.pentaho.reporting.engine.classic.core.util.geom;
 
+import org.pentaho.reporting.libraries.base.util.FloatDimension;
+
 import java.awt.geom.Dimension2D;
 import java.awt.geom.Rectangle2D;
-
-import org.pentaho.reporting.libraries.base.util.FloatDimension;
 
 /**
  * This class is the heart of the alternative geometrics toolkit. It performs the neccessary conversions from and to the
@@ -28,9 +28,8 @@ import org.pentaho.reporting.libraries.base.util.FloatDimension;
  *
  * @author Thomas Morgner
  */
-public strictfp class StrictGeomUtility
-{
-  public static final long MAX_AUTO = StrictGeomUtility.toInternalValue(0x80000000000L);
+public strictfp class StrictGeomUtility {
+  public static final long MAX_AUTO = StrictGeomUtility.toInternalValue( 0x80000000000L );
   /**
    * This is the correction factor used to convert points into 'Micro-Points'.
    */
@@ -39,8 +38,7 @@ public strictfp class StrictGeomUtility
   /**
    * Hidden, non usable constructor.
    */
-  private StrictGeomUtility()
-  {
+  private StrictGeomUtility() {
   }
 
   /**
@@ -50,10 +48,9 @@ public strictfp class StrictGeomUtility
    * @param h the height in points (1/72th inch).
    * @return the created dimension object.
    */
-  public static StrictDimension createDimension(final double w, final double h)
-  {
-    return new StrictDimension(toInternalValue(w),
-        toInternalValue(h));
+  public static StrictDimension createDimension( final double w, final double h ) {
+    return new StrictDimension( toInternalValue( w ),
+      toInternalValue( h ) );
   }
 
   /**
@@ -63,10 +60,9 @@ public strictfp class StrictGeomUtility
    * @param y the y coordinate in points (1/72th inch).
    * @return the created point object.
    */
-  public static StrictPoint createPoint(final double x, final double y)
-  {
-    return new StrictPoint(toInternalValue(x),
-        toInternalValue(y));
+  public static StrictPoint createPoint( final double x, final double y ) {
+    return new StrictPoint( toInternalValue( x ),
+      toInternalValue( y ) );
   }
 
   /**
@@ -78,13 +74,12 @@ public strictfp class StrictGeomUtility
    * @param height the height in points (1/72th inch).
    * @return the created dimension object.
    */
-  public static StrictBounds createBounds(final double x, final double y,
-                                          final double width, final double height)
-  {
-    return new StrictBounds(toInternalValue(x),
-        toInternalValue(y),
-        toInternalValue(width),
-        toInternalValue(height));
+  public static StrictBounds createBounds( final double x, final double y,
+                                           final double width, final double height ) {
+    return new StrictBounds( toInternalValue( x ),
+      toInternalValue( y ),
+      toInternalValue( width ),
+      toInternalValue( height ) );
   }
 
   /**
@@ -95,10 +90,9 @@ public strictfp class StrictGeomUtility
    * @return the created dimension object.
    */
   public static Dimension2D createAWTDimension
-      (final long width, final long height)
-  {
+  ( final long width, final long height ) {
     return new FloatDimension
-        ((float) (width / CORRECTION_FACTOR), (float) (height / CORRECTION_FACTOR));
+      ( (float) ( width / CORRECTION_FACTOR ), (float) ( height / CORRECTION_FACTOR ) );
   }
 
   /**
@@ -111,28 +105,25 @@ public strictfp class StrictGeomUtility
    * @return the created dimension object.
    */
   public static Rectangle2D createAWTRectangle
-      (final long x, final long y, final long width, final long height)
-  {
+  ( final long x, final long y, final long width, final long height ) {
     return new Rectangle2D.Double
-        (x / CORRECTION_FACTOR, y / CORRECTION_FACTOR,
-            width / CORRECTION_FACTOR, height / CORRECTION_FACTOR);
+      ( x / CORRECTION_FACTOR, y / CORRECTION_FACTOR,
+        width / CORRECTION_FACTOR, height / CORRECTION_FACTOR );
   }
 
-  public static Rectangle2D createAWTRectangle(final StrictBounds bounds)
-  {
-    return createAWTRectangle(bounds.getX(), bounds.getY(), bounds.getWidth(), bounds.getHeight());
+  public static Rectangle2D createAWTRectangle( final StrictBounds bounds ) {
+    return createAWTRectangle( bounds.getX(), bounds.getY(), bounds.getWidth(), bounds.getHeight() );
   }
-  
+
   /**
    * Converts the given AWT value into a strict value.
    *
    * @param value the AWT point value.
    * @return the internal micro point value.
    */
-  public static long toInternalValue(final double value)
-  {
-    final long rounded = StrictMath.round(value * 10000f);
-    return StrictMath.round(rounded * CORRECTION_FACTOR / 10000.0);
+  public static long toInternalValue( final double value ) {
+    final long rounded = StrictMath.round( value * 10000f );
+    return StrictMath.round( rounded * CORRECTION_FACTOR / 10000.0 );
   }
 
   /**
@@ -141,29 +132,24 @@ public strictfp class StrictGeomUtility
    * @param value the micro point point value.
    * @return the AWT point value.
    */
-  public static double toExternalValue(final long value)
-  {
-    return (value / CORRECTION_FACTOR);
+  public static double toExternalValue( final long value ) {
+    return ( value / CORRECTION_FACTOR );
   }
 
-  public static double toFontMetricsValue(final long value)
-  {
-    return (value * 1000l / CORRECTION_FACTOR );
+  public static double toFontMetricsValue( final long value ) {
+    return ( value * 1000l / CORRECTION_FACTOR );
   }
 
-  public static long fromFontMetricsValue (final long value)
-  {
+  public static long fromFontMetricsValue( final long value ) {
     final double rawValue = value / 1000.0;
-    return toInternalValue(rawValue);
+    return toInternalValue( rawValue );
   }
 
-  public static long multiply(final long x, final long y)
-  {
-    if (x < y)
-    {
-      return (long) (x * (y / CORRECTION_FACTOR));
+  public static long multiply( final long x, final long y ) {
+    if ( x < y ) {
+      return (long) ( x * ( y / CORRECTION_FACTOR ) );
     }
 
-    return (long) (y * (x / CORRECTION_FACTOR));
+    return (long) ( y * ( x / CORRECTION_FACTOR ) );
   }
 }

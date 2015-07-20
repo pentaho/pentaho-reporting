@@ -17,53 +17,42 @@
 
 package org.pentaho.reporting.engine.classic.core.function;
 
+import org.pentaho.reporting.engine.classic.core.states.ReportStateKey;
+
 import java.util.HashMap;
 import java.util.Map;
 
-import org.pentaho.reporting.engine.classic.core.states.ReportStateKey;
-
 /**
- * Convenience class to manage getting and putting values stored
- * by page and group.
- *
+ * Convenience class to manage getting and putting values stored by page and group.
+ * <p/>
  * <p>Used by <code>TotalPageItemCountFunction</code>.</p>
  *
  * @author Matt Campbell
  */
-class PageGroupValues
-{
+class PageGroupValues {
   private Map<Integer, Map<ReportStateKey, Object>> pagedResults;
 
-  PageGroupValues()
-  {
+  PageGroupValues() {
     pagedResults = new HashMap<Integer, Map<ReportStateKey, Object>>();
   }
 
-  public Object get(final int page, final ReportStateKey group)
-  {
-    if (pagedResults.containsKey(page) &&
-        pagedResults.get(page).containsKey(group))
-    {
-      return pagedResults.get(page).get(group);
-    }
-    else
-    {
+  public Object get( final int page, final ReportStateKey group ) {
+    if ( pagedResults.containsKey( page ) &&
+      pagedResults.get( page ).containsKey( group ) ) {
+      return pagedResults.get( page ).get( group );
+    } else {
       return 0;
     }
   }
 
-  public void put(final int page, final ReportStateKey group, final Object value)
-  {
+  public void put( final int page, final ReportStateKey group, final Object value ) {
     final Map<ReportStateKey, Object> map;
-    if (pagedResults.containsKey(page))
-    {
-      map = pagedResults.get(page);
-    }
-    else
-    {
+    if ( pagedResults.containsKey( page ) ) {
+      map = pagedResults.get( page );
+    } else {
       map = new HashMap<ReportStateKey, Object>();
-      pagedResults.put(page, map);
+      pagedResults.put( page, map );
     }
-    map.put(group, value);
+    map.put( group, value );
   }
 }

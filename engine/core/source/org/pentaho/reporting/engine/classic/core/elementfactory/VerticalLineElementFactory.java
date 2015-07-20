@@ -29,13 +29,11 @@ import org.pentaho.reporting.engine.classic.core.filter.types.VerticalLineType;
  *
  * @author Thomas Morgner
  */
-public class VerticalLineElementFactory extends AbstractContentElementFactory
-{
+public class VerticalLineElementFactory extends AbstractContentElementFactory {
   /**
    * DefaultConstructor.
    */
-  public VerticalLineElementFactory()
-  {
+  public VerticalLineElementFactory() {
   }
 
   /**
@@ -45,13 +43,12 @@ public class VerticalLineElementFactory extends AbstractContentElementFactory
    * @throws IllegalStateException if the field name is not set.
    * @see ElementFactory#createElement()
    */
-  public Element createElement()
-  {
+  public Element createElement() {
     final Element element = new Element();
-    applyElementName(element);
-    applyStyle(element.getStyle());
+    applyElementName( element );
+    applyStyle( element.getStyle() );
 
-    element.setElementType(new VerticalLineType());
+    element.setElementType( new VerticalLineType() );
     return element;
   }
 }

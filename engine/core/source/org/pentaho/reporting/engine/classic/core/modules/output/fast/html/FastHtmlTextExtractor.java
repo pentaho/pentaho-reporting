@@ -17,10 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.output.fast.html;
 
-import java.awt.Shape;
-import java.io.IOException;
-import java.util.HashMap;
-
 import org.pentaho.reporting.engine.classic.core.AttributeNames;
 import org.pentaho.reporting.engine.classic.core.ImageContainer;
 import org.pentaho.reporting.engine.classic.core.ReportAttributeMap;
@@ -48,8 +44,11 @@ import org.pentaho.reporting.libraries.xmlns.writer.CharacterEntityParser;
 import org.pentaho.reporting.libraries.xmlns.writer.HtmlCharacterEntities;
 import org.pentaho.reporting.libraries.xmlns.writer.XmlWriter;
 
-public class FastHtmlTextExtractor extends FastTextExtractor
-{
+import java.awt.*;
+import java.io.IOException;
+import java.util.HashMap;
+
+public class FastHtmlTextExtractor extends FastTextExtractor {
   private final CharacterEntityParser characterEntityParser;
   private final XmlWriter xmlWriter;
   private final StyleBuilder styleBuilder;
@@ -59,155 +58,122 @@ public class FastHtmlTextExtractor extends FastTextExtractor
   private boolean result;
   private HtmlTextExtractorState processStack;
 
-  public FastHtmlTextExtractor(final OutputProcessorMetaData metaData,
-                               final XmlWriter xmlWriter,
-                               final HtmlContentGenerator contentGenerator,
-                               final HtmlTagHelper tagHelper)
-  {
+  public FastHtmlTextExtractor( final OutputProcessorMetaData metaData,
+                                final XmlWriter xmlWriter,
+                                final HtmlContentGenerator contentGenerator,
+                                final HtmlTagHelper tagHelper ) {
     this.characterEntityParser = HtmlCharacterEntities.getEntityParser();
     this.xmlWriter = xmlWriter;
     this.styleBuilder = tagHelper.getStyleBuilder();
-    this.textExtractorHelper = new HtmlTextExtractorHelper(tagHelper, xmlWriter, metaData, contentGenerator);
+    this.textExtractorHelper = new HtmlTextExtractorHelper( tagHelper, xmlWriter, metaData, contentGenerator );
     this.boxDefinitionFactory = new BoxDefinitionFactory();
   }
 
-  public boolean performOutput(final ReportElement content,
-                               final StyleBuilder.StyleCarrier[] cellStyle,
-                               final HashMap<InstanceID, FastHtmlImageBounds> recordedBounds,
-                               final ExpressionRuntime runtime) throws IOException, ContentProcessingException
-  {
+  public boolean performOutput( final ReportElement content,
+                                final StyleBuilder.StyleCarrier[] cellStyle,
+                                final HashMap<InstanceID, FastHtmlImageBounds> recordedBounds,
+                                final ExpressionRuntime runtime ) throws IOException, ContentProcessingException {
     this.recordedBounds = recordedBounds;
     styleBuilder.clear();
     clearText();
-    setRawResult(null);
+    setRawResult( null );
     result = false;
-    processStack = new HtmlTextExtractorState(null, false, cellStyle);
-    textExtractorHelper.setFirstElement(content.getObjectID(), processStack);
+    processStack = new HtmlTextExtractorState( null, false, cellStyle );
+    textExtractorHelper.setFirstElement( content.getObjectID(), processStack );
 
-    try
-    {
-      setRuntime(runtime);
-      processInitialBox(content);
-    }
-    finally
-    {
-      setRuntime(null);
+    try {
+      setRuntime( runtime );
+      processInitialBox( content );
+    } finally {
+      setRuntime( null );
       processStack = null;
     }
     return result;
   }
 
   /**
-   * Prints a paragraph cell. This is a special entry point used by the processContent method and is never
-   * called from elsewhere. This method assumes that the attributes of the paragraph have been processed as
-   * part of the table-cell processing.
+   * Prints a paragraph cell. This is a special entry point used by the processContent method and is never called from
+   * elsewhere. This method assumes that the attributes of the paragraph have been processed as part of the table-cell
+   * processing.
    *
    * @param box the paragraph box
    * @throws java.io.IOException if an IO error occured.
    */
-  private void processInitialBox(final ReportElement box) throws IOException, ContentProcessingException
-  {
-    if (box.getComputedStyle().getBooleanStyleProperty(ElementStyleKeys.VISIBLE) == false)
-    {
+  private void processInitialBox( final ReportElement box ) throws IOException, ContentProcessingException {
+    if ( box.getComputedStyle().getBooleanStyleProperty( ElementStyleKeys.VISIBLE ) == false ) {
       return;
     }
 
     final StyleSheet styleSheet = box.getComputedStyle();
-    final String target = (String) styleSheet.getStyleProperty(ElementStyleKeys.HREF_TARGET);
-    if (target != null)
-    {
-      textExtractorHelper.handleLinkOnElement(styleSheet, target);
-      processStack = new HtmlTextExtractorState(processStack, true);
-    }
-    else
-    {
-      processStack = new HtmlTextExtractorState(processStack, false);
+    final String target = (String) styleSheet.getStyleProperty( ElementStyleKeys.HREF_TARGET );
+    if ( target != null ) {
+      textExtractorHelper.handleLinkOnElement( styleSheet, target );
+      processStack = new HtmlTextExtractorState( processStack, true );
+    } else {
+      processStack = new HtmlTextExtractorState( processStack, false );
     }
 
-    if (Boolean.TRUE.equals
-        (box.getAttributes().getAttribute(AttributeNames.Html.NAMESPACE, AttributeNames.Html.SUPPRESS_CONTENT)) == false)
-    {
-      if (box instanceof Section)
-      {
-        traverseSection((Section) box);
-      }
-      else
-      {
-        inspectElement(box, true);
+    if ( Boolean.TRUE.equals
+      ( box.getAttributes().getAttribute( AttributeNames.Html.NAMESPACE, AttributeNames.Html.SUPPRESS_CONTENT ) )
+      == false ) {
+      if ( box instanceof Section ) {
+        traverseSection( (Section) box );
+      } else {
+        inspectElement( box, true );
       }
     }
 
-    if (processStack.isWrittenTag())
-    {
+    if ( processStack.isWrittenTag() ) {
       xmlWriter.writeCloseTag();
     }
     processStack = processStack.getParent();
   }
 
-  protected boolean inspectStartSection(final ReportElement box, final boolean inlineSection)
-  {
-    BoxDefinition boxDefinition = boxDefinitionFactory.getBoxDefinition(box.getComputedStyle());
-    if (inlineSection == false)
-    {
+  protected boolean inspectStartSection( final ReportElement box, final boolean inlineSection ) {
+    BoxDefinition boxDefinition = boxDefinitionFactory.getBoxDefinition( box.getComputedStyle() );
+    if ( inlineSection == false ) {
       return textExtractorHelper.startBox
-          (box.getObjectID(), box.getAttributes(), box.getComputedStyle(), boxDefinition, true);
-    }
-    else
-    {
+        ( box.getObjectID(), box.getAttributes(), box.getComputedStyle(), boxDefinition, true );
+    } else {
       return textExtractorHelper.startInlineBox
-          (box.getObjectID(), box.getAttributes(), box.getComputedStyle(), boxDefinition);
+        ( box.getObjectID(), box.getAttributes(), box.getComputedStyle(), boxDefinition );
     }
   }
 
-  protected void inspectEndSection(final ReportElement section, final boolean inlineSection)
-  {
-    textExtractorHelper.finishBox(section.getObjectID(), section.getAttributes());
+  protected void inspectEndSection( final ReportElement section, final boolean inlineSection ) {
+    textExtractorHelper.finishBox( section.getObjectID(), section.getAttributes() );
   }
 
   @Override
-  protected void handleValueContent(final ReportElement element,
-                                    final Object value,
-                                    final boolean inlineSection) throws ContentProcessingException
-  {
-    super.handleValueContent(element, value, inlineSection);
+  protected void handleValueContent( final ReportElement element,
+                                     final Object value,
+                                     final boolean inlineSection ) throws ContentProcessingException {
+    super.handleValueContent( element, value, inlineSection );
 
-    if (value instanceof Shape)
-    {
-      handleShape(element, (Shape) value);
-    }
-    else if (value instanceof ImageContainer || value instanceof DrawableWrapper)
-    {
-      handleImage(element, value);
-    }
-    else
-    {
-      handleText(element, String.valueOf(value));
+    if ( value instanceof Shape ) {
+      handleShape( element, (Shape) value );
+    } else if ( value instanceof ImageContainer || value instanceof DrawableWrapper ) {
+      handleImage( element, value );
+    } else {
+      handleText( element, String.valueOf( value ) );
     }
   }
 
-  private void handleText(final ReportElement element, final String text) throws ContentProcessingException
-  {
-    try
-    {
-      xmlWriter.writeText(characterEntityParser.encodeEntities(text));
-      if (text.trim().length() > 0)
-      {
+  private void handleText( final ReportElement element, final String text ) throws ContentProcessingException {
+    try {
+      xmlWriter.writeText( characterEntityParser.encodeEntities( text ) );
+      if ( text.trim().length() > 0 ) {
         result = true;
       }
-    }
-    catch (IOException e)
-    {
-      throw new ContentProcessingException(e);
+    } catch ( IOException e ) {
+      throw new ContentProcessingException( e );
     }
   }
 
-  protected void handleImage(final ReportElement element, Object rawObject) throws ContentProcessingException
-  {
-    try
-    {
-      FastHtmlImageBounds cb = recordedBounds.get(element.getObjectID());
-      if (cb == null)
-      {
+  protected void handleImage( final ReportElement element, Object rawObject ) throws ContentProcessingException {
+    try {
+      FastHtmlImageBounds cb = recordedBounds.get( element.getObjectID() );
+      if ( cb == null ) {
         return;
       }
 
@@ -215,26 +181,20 @@ public class FastHtmlTextExtractor extends FastTextExtractor
       SimpleStyleSheet computedStyle = element.getComputedStyle();
       long width = cb.getWidth();
       long height = cb.getHeight();
-      if (textExtractorHelper.processRenderableReplacedContent
-          (attributes, computedStyle, width, height, cb.getContentWidth(), cb.getContentHeight(), rawObject))
-      {
+      if ( textExtractorHelper.processRenderableReplacedContent
+        ( attributes, computedStyle, width, height, cb.getContentWidth(), cb.getContentHeight(), rawObject ) ) {
         result = true;
       }
-    }
-    catch (ContentIOException e)
-    {
-      throw new ContentProcessingException(e);
-    }
-    catch (IOException e)
-    {
-      throw new ContentProcessingException(e);
+    } catch ( ContentIOException e ) {
+      throw new ContentProcessingException( e );
+    } catch ( IOException e ) {
+      throw new ContentProcessingException( e );
     }
   }
 
-  protected void handleShape(final ReportElement element, Shape image) throws ContentProcessingException
-  {
-    boolean keepAr = element.getComputedStyle().getBooleanStyleProperty(ElementStyleKeys.KEEP_ASPECT_RATIO);
-    handleImage(element, new ShapeDrawable(image, keepAr));
+  protected void handleShape( final ReportElement element, Shape image ) throws ContentProcessingException {
+    boolean keepAr = element.getComputedStyle().getBooleanStyleProperty( ElementStyleKeys.KEEP_ASPECT_RATIO );
+    handleImage( element, new ShapeDrawable( image, keepAr ) );
   }
 
 

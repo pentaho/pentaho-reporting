@@ -19,25 +19,20 @@ package org.pentaho.reporting.engine.classic.core.dom;
 
 import org.pentaho.reporting.engine.classic.core.ReportElement;
 
-public class OrMatcher implements NodeMatcher
-{
+public class OrMatcher implements NodeMatcher {
   private NodeMatcher[] conditions;
 
-  public OrMatcher(final NodeMatcher... conditions)
-  {
+  public OrMatcher( final NodeMatcher... conditions ) {
     this.conditions = conditions;
   }
 
-  public boolean matches(final MatcherContext context, final ReportElement node)
-  {
+  public boolean matches( final MatcherContext context, final ReportElement node ) {
     boolean result = false;
-    
-    for (int i = 0; i < conditions.length; i++)
-    {
-      final NodeMatcher condition = conditions[i];
-      final boolean subresult = condition.matches(context, node);
-      if (subresult)
-      {
+
+    for ( int i = 0; i < conditions.length; i++ ) {
+      final NodeMatcher condition = conditions[ i ];
+      final boolean subresult = condition.matches( context, node );
+      if ( subresult ) {
         result = true;
       }
     }
@@ -45,17 +40,14 @@ public class OrMatcher implements NodeMatcher
   }
 
 
-  public String toString()
-  {
+  public String toString() {
     final StringBuilder b = new StringBuilder();
-    for (int i = 0; i < conditions.length; i++)
-    {
-      final NodeMatcher condition = conditions[i];
-      if (i != 0)
-      {
-        b.append(",\n");
+    for ( int i = 0; i < conditions.length; i++ ) {
+      final NodeMatcher condition = conditions[ i ];
+      if ( i != 0 ) {
+        b.append( ",\n" );
       }
-      b.append(condition);
+      b.append( condition );
     }
     return b.toString();
   }

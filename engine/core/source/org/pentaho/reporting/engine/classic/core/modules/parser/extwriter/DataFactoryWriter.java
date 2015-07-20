@@ -17,8 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.parser.extwriter;
 
-import java.io.IOException;
-
 import org.pentaho.reporting.engine.classic.core.AbstractReportDefinition;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.pentaho.reporting.engine.classic.core.DataFactory;
@@ -30,19 +28,19 @@ import org.pentaho.reporting.libraries.xmlns.common.AttributeList;
 import org.pentaho.reporting.libraries.xmlns.writer.XmlWriter;
 import org.pentaho.reporting.libraries.xmlns.writer.XmlWriterSupport;
 
+import java.io.IOException;
+
 /**
  * Creation-Date: Jan 18, 2007, 6:39:15 PM
  *
  * @author Thomas Morgner
  */
-public class DataFactoryWriter extends AbstractXMLDefinitionWriter
-{
+public class DataFactoryWriter extends AbstractXMLDefinitionWriter {
   private static final String PREFIX =
-      "org.pentaho.reporting.engine.classic.core.modules.parser.extwriter.handler.datafactories.";
+    "org.pentaho.reporting.engine.classic.core.modules.parser.extwriter.handler.datafactories.";
 
-  public DataFactoryWriter(final ReportWriterContext reportWriter, final XmlWriter xmlWriter)
-  {
-    super(reportWriter, xmlWriter);
+  public DataFactoryWriter( final ReportWriterContext reportWriter, final XmlWriter xmlWriter ) {
+    super( reportWriter, xmlWriter );
   }
 
   /**
@@ -53,11 +51,9 @@ public class DataFactoryWriter extends AbstractXMLDefinitionWriter
    * @throws java.io.IOException   if there is an I/O problem.
    * @throws ReportWriterException if the report serialisation failed.
    */
-  public void write() throws IOException, ReportWriterException
-  {
+  public void write() throws IOException, ReportWriterException {
     final AbstractReportDefinition reportDef = getReport();
-    if (reportDef instanceof MasterReport == false)
-    {
+    if ( reportDef instanceof MasterReport == false ) {
       // subreports have no data-factory at all.
       return;
     }
@@ -66,50 +62,43 @@ public class DataFactoryWriter extends AbstractXMLDefinitionWriter
     final MasterReport report = (MasterReport) getReport();
     final DataFactory dataFactory = report.getDataFactory();
 
-    final DataFactoryWriteHandler handler = DataFactoryWriter.lookupWriteHandler(dataFactory);
-    if (handler != null)
-    {
-      handler.write(getReportWriter(), getXmlWriter(), dataFactory);
+    final DataFactoryWriteHandler handler = DataFactoryWriter.lookupWriteHandler( dataFactory );
+    if ( handler != null ) {
+      handler.write( getReportWriter(), getXmlWriter(), dataFactory );
       return;
     }
 
     // then fall back to the default ..
-    DataFactoryWriter.writeDefaultDataFactory(dataFactory, getXmlWriter());
+    DataFactoryWriter.writeDefaultDataFactory( dataFactory, getXmlWriter() );
   }
 
-  public static DataFactoryWriteHandler lookupWriteHandler(final DataFactory dataFactory)
-  {
+  public static DataFactoryWriteHandler lookupWriteHandler( final DataFactory dataFactory ) {
     final String configKey = PREFIX + dataFactory.getClass().getName();
     final Configuration globalConfig = ClassicEngineBoot.getInstance().getGlobalConfig();
-    final String value = globalConfig.getConfigProperty(configKey);
-    if (value != null)
-    {
+    final String value = globalConfig.getConfigProperty( configKey );
+    if ( value != null ) {
       return (DataFactoryWriteHandler) ObjectUtilities.loadAndInstantiate
-          (value, DataFactoryWriter.class, DataFactoryWriteHandler.class);
+        ( value, DataFactoryWriter.class, DataFactoryWriteHandler.class );
     }
     return null;
   }
 
-  public static void writeDefaultDataFactory(final DataFactory dataFactory,
-                                             final XmlWriter writer) throws IOException
-  {
+  public static void writeDefaultDataFactory( final DataFactory dataFactory,
+                                              final XmlWriter writer ) throws IOException {
     String dataFactoryClass = null;
-    if (dataFactory != null)
-    {
-      if (hasPublicDefaultConstructor(dataFactory.getClass()))
-      {
+    if ( dataFactory != null ) {
+      if ( hasPublicDefaultConstructor( dataFactory.getClass() ) ) {
         dataFactoryClass = dataFactory.getClass().getName();
       }
     }
 
-    if (dataFactoryClass == null)
-    {
+    if ( dataFactoryClass == null ) {
       return;
     }
 
     final AttributeList attr = new AttributeList();
-    attr.setAttribute(ExtParserModule.NAMESPACE, "type", dataFactoryClass);
-    writer.writeTag(ExtParserModule.NAMESPACE, "data-factory", attr, XmlWriterSupport.CLOSE);
+    attr.setAttribute( ExtParserModule.NAMESPACE, "type", dataFactoryClass );
+    writer.writeTag( ExtParserModule.NAMESPACE, "data-factory", attr, XmlWriterSupport.CLOSE );
   }
 
 }

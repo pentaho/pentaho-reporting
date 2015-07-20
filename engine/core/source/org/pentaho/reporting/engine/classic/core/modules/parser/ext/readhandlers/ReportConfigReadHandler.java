@@ -29,12 +29,10 @@ import org.pentaho.reporting.engine.classic.core.modules.parser.base.common.Conf
 import org.pentaho.reporting.libraries.xmlns.parser.XmlReadHandler;
 import org.xml.sax.SAXException;
 
-public class ReportConfigReadHandler extends AbstractPropertyXmlReadHandler
-{
+public class ReportConfigReadHandler extends AbstractPropertyXmlReadHandler {
   private DataFactoryReadHandler dataFactoryReadHandler;
 
-  public ReportConfigReadHandler()
-  {
+  public ReportConfigReadHandler() {
   }
 
   /**
@@ -45,40 +43,31 @@ public class ReportConfigReadHandler extends AbstractPropertyXmlReadHandler
    * @return the handler or null, if the tagname is invalid.
    * @throws org.xml.sax.SAXException if there is a parsing error.
    */
-  protected XmlReadHandler getHandlerForChild(final String uri,
-                                              final String tagName,
-                                              final PropertyAttributes atts)
-      throws SAXException
-  {
+  protected XmlReadHandler getHandlerForChild( final String uri,
+                                               final String tagName,
+                                               final PropertyAttributes atts )
+    throws SAXException {
     final DataFactoryReadHandlerFactory factory = DataFactoryReadHandlerFactory.getInstance();
-    final DataFactoryReadHandler handler = (DataFactoryReadHandler) factory.getHandler(uri, tagName);
-    if (handler != null)
-    {
+    final DataFactoryReadHandler handler = (DataFactoryReadHandler) factory.getHandler( uri, tagName );
+    if ( handler != null ) {
       dataFactoryReadHandler = handler;
       return handler;
     }
 
-    if (isSameNamespace(uri) == false)
-    {
+    if ( isSameNamespace( uri ) == false ) {
       return null;
     }
 
     final AbstractReportDefinition report = (AbstractReportDefinition)
-        getRootHandler().getHelperObject(ReportParserUtil.HELPER_OBJ_REPORT_NAME);
-    if (report instanceof MasterReport)
-    {
+      getRootHandler().getHelperObject( ReportParserUtil.HELPER_OBJ_REPORT_NAME );
+    if ( report instanceof MasterReport ) {
       final MasterReport masterReport = (MasterReport) report;
-      if ("page-definition".equals(tagName))
-      {
+      if ( "page-definition".equals( tagName ) ) {
         return new PageDefinitionReadHandler();
-      }
-      else if ("simple-page-definition".equals(tagName))
-      {
+      } else if ( "simple-page-definition".equals( tagName ) ) {
         return new SimplePageDefinitionReadHandler();
-      }
-      else if ("configuration".equals(tagName))
-      {
-        return new ConfigurationReadHandler(masterReport.getReportConfiguration());
+      } else if ( "configuration".equals( tagName ) ) {
+        return new ConfigurationReadHandler( masterReport.getReportConfiguration() );
       }
     }
 
@@ -90,25 +79,21 @@ public class ReportConfigReadHandler extends AbstractPropertyXmlReadHandler
    *
    * @throws org.xml.sax.SAXException if there is a parsing error.
    */
-  protected void doneParsing() throws SAXException
-  {
-    if (dataFactoryReadHandler == null)
-    {
+  protected void doneParsing() throws SAXException {
+    if ( dataFactoryReadHandler == null ) {
       return;
     }
 
     final Object maybeReport =
-        getRootHandler().getHelperObject(ReportParserUtil.HELPER_OBJ_REPORT_NAME);
-    if (maybeReport instanceof MasterReport == false)
-    {
+      getRootHandler().getHelperObject( ReportParserUtil.HELPER_OBJ_REPORT_NAME );
+    if ( maybeReport instanceof MasterReport == false ) {
       return;
     }
 
     final MasterReport report = (MasterReport) maybeReport;
     final DataFactory dataFactory = dataFactoryReadHandler.getDataFactory();
-    if (dataFactory != null)
-    {
-      report.setDataFactory(dataFactory);
+    if ( dataFactory != null ) {
+      report.setDataFactory( dataFactory );
     }
   }
 
@@ -117,8 +102,7 @@ public class ReportConfigReadHandler extends AbstractPropertyXmlReadHandler
    *
    * @return the object.
    */
-  public Object getObject()
-  {
+  public Object getObject() {
     return null;
   }
 }

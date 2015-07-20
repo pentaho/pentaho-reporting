@@ -19,11 +19,10 @@ package org.pentaho.reporting.engine.classic.core.parameters;
 
 import org.pentaho.reporting.engine.classic.core.ReportDataFactoryException;
 
-public interface ListParameter extends ParameterDefinitionEntry
-{
+public interface ListParameter extends ParameterDefinitionEntry {
   public boolean isStrictValueCheck();
 
   public boolean isAllowMultiSelection();
 
-  public ParameterValues getValues(final ParameterContext context) throws ReportDataFactoryException;
+  public ParameterValues getValues( final ParameterContext context ) throws ReportDataFactoryException;
 }

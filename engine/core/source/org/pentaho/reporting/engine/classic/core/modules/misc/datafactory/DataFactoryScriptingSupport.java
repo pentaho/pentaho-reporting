@@ -17,27 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.misc.datafactory;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.Serializable;
-import java.io.UnsupportedEncodingException;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-import javax.script.Bindings;
-import javax.script.Invocable;
-import javax.script.ScriptContext;
-import javax.script.ScriptEngine;
-import javax.script.ScriptEngineManager;
-import javax.script.ScriptException;
-import javax.script.SimpleScriptContext;
-import javax.swing.table.TableModel;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
@@ -56,373 +35,314 @@ import org.pentaho.reporting.libraries.resourceloader.ResourceKey;
 import org.pentaho.reporting.libraries.resourceloader.ResourceLoadingException;
 import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 
-public final class DataFactoryScriptingSupport implements Cloneable, Serializable
-{
-  private static class QueryCarrier implements Serializable
-  {
+import javax.script.Bindings;
+import javax.script.Invocable;
+import javax.script.ScriptContext;
+import javax.script.ScriptEngine;
+import javax.script.ScriptEngineManager;
+import javax.script.ScriptException;
+import javax.script.SimpleScriptContext;
+import javax.swing.table.TableModel;
+import java.io.File;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.Serializable;
+import java.io.UnsupportedEncodingException;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+
+public final class DataFactoryScriptingSupport implements Cloneable, Serializable {
+  private static class QueryCarrier implements Serializable {
     private String query;
     private String scriptingLanguage;
     private String script;
 
-    private QueryCarrier(final String query,
-                         final String scriptingLanguage,
-                         final String script)
-    {
+    private QueryCarrier( final String query,
+                          final String scriptingLanguage,
+                          final String script ) {
       this.query = query;
       this.scriptingLanguage = scriptingLanguage;
       this.script = script;
     }
 
-    public String getQuery()
-    {
+    public String getQuery() {
       return query;
     }
 
-    public String getScriptingLanguage()
-    {
+    public String getScriptingLanguage() {
       return scriptingLanguage;
     }
 
-    public String getScript()
-    {
+    public String getScript() {
       return script;
     }
   }
 
-  public static class ScriptHelper
-  {
+  public static class ScriptHelper {
     private ScriptContext context;
     private String defaultScriptLanguage;
     private ResourceManager resourceManager;
     private ResourceKey contextKey;
 
-    public ScriptHelper(final ScriptContext context,
-                        final String defaultScriptLanguage,
-                        final ResourceManager resourceManager,
-                        final ResourceKey contextKey)
-    {
+    public ScriptHelper( final ScriptContext context,
+                         final String defaultScriptLanguage,
+                         final ResourceManager resourceManager,
+                         final ResourceKey contextKey ) {
       this.context = context;
       this.defaultScriptLanguage = defaultScriptLanguage;
       this.resourceManager = resourceManager;
       this.contextKey = contextKey;
     }
 
-    public Object eval(final String script) throws ScriptException
-    {
-      return eval(script, defaultScriptLanguage);
+    public Object eval( final String script ) throws ScriptException {
+      return eval( script, defaultScriptLanguage );
     }
 
-    public Object eval(final String script, final String scriptLanguage) throws ScriptException
-    {
-      final ScriptEngine scriptEngine = new ScriptEngineManager().getEngineByName(scriptLanguage);
-      if (scriptEngine == null)
-      {
-        throw new ScriptException(String.format
-            ("DataFactoryScriptingSupport: Failed to locate scripting engine for language '%s'.", scriptLanguage));
+    public Object eval( final String script, final String scriptLanguage ) throws ScriptException {
+      final ScriptEngine scriptEngine = new ScriptEngineManager().getEngineByName( scriptLanguage );
+      if ( scriptEngine == null ) {
+        throw new ScriptException( String.format
+          ( "DataFactoryScriptingSupport: Failed to locate scripting engine for language '%s'.", scriptLanguage ) );
       }
 
-      scriptEngine.setContext(context);
-      return scriptEngine.eval(script);
+      scriptEngine.setContext( context );
+      return scriptEngine.eval( script );
     }
 
-    public Object evalFile(final String file) throws ScriptException
-    {
-      return evalFile(file, defaultScriptLanguage);
+    public Object evalFile( final String file ) throws ScriptException {
+      return evalFile( file, defaultScriptLanguage );
     }
 
-    public Object evalFile(final String file, final String language) throws ScriptException
-    {
-      return evalFile(file, language, EncodingRegistry.getPlatformDefaultEncoding());
+    public Object evalFile( final String file, final String language ) throws ScriptException {
+      return evalFile( file, language, EncodingRegistry.getPlatformDefaultEncoding() );
     }
 
-    public Object evalFile(final String file,
-                           final String defaultScriptLanguage,
-                           final String encoding) throws ScriptException
-    {
-      final ResourceKey resourceKey = createKeyFromString(resourceManager, contextKey, file);
-      if (resourceKey == null)
-      {
-        throw new ScriptException("Unable to load script");
+    public Object evalFile( final String file,
+                            final String defaultScriptLanguage,
+                            final String encoding ) throws ScriptException {
+      final ResourceKey resourceKey = createKeyFromString( resourceManager, contextKey, file );
+      if ( resourceKey == null ) {
+        throw new ScriptException( "Unable to load script" );
       }
-      try
-      {
-        final ResourceData loadedResource = resourceManager.load(resourceKey);
-        final byte[] resource = loadedResource.getResource(resourceManager);
-        return eval(new String(resource, encoding), defaultScriptLanguage);
-      }
-      catch (ResourceLoadingException e)
-      {
-        throw new ScriptException(e);
-      }
-      catch (UnsupportedEncodingException e)
-      {
-        throw new ScriptException(e);
+      try {
+        final ResourceData loadedResource = resourceManager.load( resourceKey );
+        final byte[] resource = loadedResource.getResource( resourceManager );
+        return eval( new String( resource, encoding ), defaultScriptLanguage );
+      } catch ( ResourceLoadingException e ) {
+        throw new ScriptException( e );
+      } catch ( UnsupportedEncodingException e ) {
+        throw new ScriptException( e );
       }
     }
 
-    private ResourceKey createKeyFromString(final ResourceManager resourceManager,
-                                            final ResourceKey contextKey,
-                                            final String file)
-    {
+    private ResourceKey createKeyFromString( final ResourceManager resourceManager,
+                                             final ResourceKey contextKey,
+                                             final String file ) {
 
-      try
-      {
-        if (contextKey != null)
-        {
-          return resourceManager.deriveKey(contextKey, file);
+      try {
+        if ( contextKey != null ) {
+          return resourceManager.deriveKey( contextKey, file );
         }
-      }
-      catch (ResourceException re)
-      {
+      } catch ( ResourceException re ) {
         // failed to load from context
-        logger.debug("Failed to load datasource as derived path: ", re);
+        logger.debug( "Failed to load datasource as derived path: ", re );
       }
 
-      try
-      {
-        return resourceManager.createKey(new URL(file));
-      }
-      catch (ResourceException re)
-      {
-        logger.debug("Failed to load datasource as URL: ", re);
-      }
-      catch (MalformedURLException e)
-      {
+      try {
+        return resourceManager.createKey( new URL( file ) );
+      } catch ( ResourceException re ) {
+        logger.debug( "Failed to load datasource as URL: ", re );
+      } catch ( MalformedURLException e ) {
         //
       }
 
-      try
-      {
-        return resourceManager.createKey(new File(file));
-      }
-      catch (ResourceException re)
-      {
+      try {
+        return resourceManager.createKey( new File( file ) );
+      } catch ( ResourceException re ) {
         // failed to load from context
-        logger.debug("Failed to load datasource as file: ", re);
+        logger.debug( "Failed to load datasource as file: ", re );
       }
 
       return null;
     }
   }
 
-  private static class QueryScriptContext
-  {
+  private static class QueryScriptContext {
     private Invocable invocableEngine;
     private ScriptEngine scriptEngine;
     private ScriptContext context;
 
-    private QueryScriptContext()
-    {
+    private QueryScriptContext() {
     }
 
-    public void init(final String queryName,
-                     final String scriptLanguage,
-                     final String script,
-                     final ScriptContext globalContext,
-                     final ResourceManager resourceManager,
-                     final ResourceKey contextKey,
-                     final DataFactory dataFactory,
-                     final Configuration configuration,
-                     final ResourceBundleFactory resourceBundleFactory)
-        throws ReportDataFactoryException
-    {
+    public void init( final String queryName,
+                      final String scriptLanguage,
+                      final String script,
+                      final ScriptContext globalContext,
+                      final ResourceManager resourceManager,
+                      final ResourceKey contextKey,
+                      final DataFactory dataFactory,
+                      final Configuration configuration,
+                      final ResourceBundleFactory resourceBundleFactory )
+      throws ReportDataFactoryException {
 
       this.context = new SimpleScriptContext();
 
-      if (globalContext != null)
-      {
-        final Bindings bindings = globalContext.getBindings(ScriptContext.ENGINE_SCOPE);
-        this.context.getBindings(ScriptContext.ENGINE_SCOPE).putAll(bindings);
-      }
-      else
-      {
-        context.setAttribute("dataFactory", dataFactory, ScriptContext.ENGINE_SCOPE);
-        context.setAttribute("configuration", configuration, ScriptContext.ENGINE_SCOPE);
-        context.setAttribute("resourceManager", resourceManager, ScriptContext.ENGINE_SCOPE);
-        context.setAttribute("contextKey", contextKey, ScriptContext.ENGINE_SCOPE);
-        context.setAttribute("resourceBundleFactory", resourceBundleFactory, ScriptContext.ENGINE_SCOPE);
+      if ( globalContext != null ) {
+        final Bindings bindings = globalContext.getBindings( ScriptContext.ENGINE_SCOPE );
+        this.context.getBindings( ScriptContext.ENGINE_SCOPE ).putAll( bindings );
+      } else {
+        context.setAttribute( "dataFactory", dataFactory, ScriptContext.ENGINE_SCOPE );
+        context.setAttribute( "configuration", configuration, ScriptContext.ENGINE_SCOPE );
+        context.setAttribute( "resourceManager", resourceManager, ScriptContext.ENGINE_SCOPE );
+        context.setAttribute( "contextKey", contextKey, ScriptContext.ENGINE_SCOPE );
+        context.setAttribute( "resourceBundleFactory", resourceBundleFactory, ScriptContext.ENGINE_SCOPE );
       }
 
-      this.context.setAttribute("scriptHelper",
-          new ScriptHelper(this.context, scriptLanguage, resourceManager, contextKey), ScriptContext.ENGINE_SCOPE);
+      this.context.setAttribute( "scriptHelper",
+        new ScriptHelper( this.context, scriptLanguage, resourceManager, contextKey ), ScriptContext.ENGINE_SCOPE );
 
-      this.scriptEngine = new ScriptEngineManager().getEngineByName(scriptLanguage);
-      if (scriptEngine instanceof Invocable == false)
-      {
-        throw new ReportDataFactoryException(String.format("Query script language '%s' is not usable.", scriptLanguage));
+      this.scriptEngine = new ScriptEngineManager().getEngineByName( scriptLanguage );
+      if ( scriptEngine instanceof Invocable == false ) {
+        throw new ReportDataFactoryException(
+          String.format( "Query script language '%s' is not usable.", scriptLanguage ) );
       }
       this.invocableEngine = (Invocable) scriptEngine;
-      this.scriptEngine.setContext(this.context);
-      try
-      {
-        this.scriptEngine.eval(script);
-      }
-      catch (ScriptException e)
-      {
+      this.scriptEngine.setContext( this.context );
+      try {
+        this.scriptEngine.eval( script );
+      } catch ( ScriptException e ) {
         throw new ReportDataFactoryException
-            ("DataFactoryScriptingSupport: Failed to initialize local query script: " + queryName, e);
+          ( "DataFactoryScriptingSupport: Failed to initialize local query script: " + queryName, e );
       }
 
-      try
-      {
-        this.invocableEngine.invokeFunction("initQuery");
-      }
-      catch (ScriptException e)
-      {
+      try {
+        this.invocableEngine.invokeFunction( "initQuery" );
+      } catch ( ScriptException e ) {
         throw new ReportDataFactoryException
-            ("DataFactoryScriptingSupport: Failed to invoke local init method: " + queryName, e);
-      }
-      catch (NoSuchMethodException e)
-      {
+          ( "DataFactoryScriptingSupport: Failed to invoke local init method: " + queryName, e );
+      } catch ( NoSuchMethodException e ) {
         // ignored ..
-        logger.debug("Global script does not contain an 'init' function");
+        logger.debug( "Global script does not contain an 'init' function" );
       }
     }
 
-    public String computeQuery(final String query,
-                               final String queryName,
-                               final DataRow parameter) throws ReportDataFactoryException
-    {
-      if (invocableEngine == null)
-      {
+    public String computeQuery( final String query,
+                                final String queryName,
+                                final DataRow parameter ) throws ReportDataFactoryException {
+      if ( invocableEngine == null ) {
         return query;
       }
 
-      try
-      {
-        final Object computeQuery = this.invocableEngine.invokeFunction("computeQuery", query, queryName, parameter);
-        final Object translated = convert(computeQuery);
-        if (translated == null)
-        {
-          throw new ReportDataFactoryException("DataFactoryScriptingSupport: computeQuery method did not return a valid query.");
+      try {
+        final Object computeQuery = this.invocableEngine.invokeFunction( "computeQuery", query, queryName, parameter );
+        final Object translated = convert( computeQuery );
+        if ( translated == null ) {
+          throw new ReportDataFactoryException(
+            "DataFactoryScriptingSupport: computeQuery method did not return a valid query." );
         }
-        return String.valueOf(translated);
-      }
-      catch (ScriptException e)
-      {
-        throw new ReportDataFactoryException("DataFactoryScriptingSupport: Failed to invoke computeQuery method.", e);
-      }
-      catch (NoSuchMethodException e)
-      {
+        return String.valueOf( translated );
+      } catch ( ScriptException e ) {
+        throw new ReportDataFactoryException( "DataFactoryScriptingSupport: Failed to invoke computeQuery method.", e );
+      } catch ( NoSuchMethodException e ) {
         // ignored ..
-        logger.debug("Query script does not contain an 'computeQuery' function");
+        logger.debug( "Query script does not contain an 'computeQuery' function" );
         return query;
       }
     }
 
-    public TableModel postProcessResult(final String query,
-                                        final String queryName,
-                                        final DataRow parameter,
-                                        final TableModel dataSet) throws ReportDataFactoryException
-    {
-      if (invocableEngine == null)
-      {
+    public TableModel postProcessResult( final String query,
+                                         final String queryName,
+                                         final DataRow parameter,
+                                         final TableModel dataSet ) throws ReportDataFactoryException {
+      if ( invocableEngine == null ) {
         return dataSet;
       }
 
-      try
-      {
+      try {
         final Object computeQuery =
-            this.invocableEngine.invokeFunction("postProcessResult", query, queryName, parameter, dataSet);
-        final Object translated = convert(computeQuery);
-        if (translated instanceof TableModel == false)
-        {
-          throw new ReportDataFactoryException("DataFactoryScriptingSupport: postProcessResult method did not return a valid query.");
+          this.invocableEngine.invokeFunction( "postProcessResult", query, queryName, parameter, dataSet );
+        final Object translated = convert( computeQuery );
+        if ( translated instanceof TableModel == false ) {
+          throw new ReportDataFactoryException(
+            "DataFactoryScriptingSupport: postProcessResult method did not return a valid query." );
         }
         return (TableModel) translated;
-      }
-      catch (ScriptException e)
-      {
-        throw new ReportDataFactoryException("DataFactoryScriptingSupport: Failed to invoke postProcessResult method.", e);
-      }
-      catch (NoSuchMethodException e)
-      {
+      } catch ( ScriptException e ) {
+        throw new ReportDataFactoryException( "DataFactoryScriptingSupport: Failed to invoke postProcessResult method.",
+          e );
+      } catch ( NoSuchMethodException e ) {
         // ignored ..
-        logger.debug("Query script does not contain an 'postProcessResult' function");
+        logger.debug( "Query script does not contain an 'postProcessResult' function" );
         return dataSet;
       }
     }
 
-    public void shutdown() throws ReportDataFactoryException
-    {
-      if (invocableEngine == null)
-      {
+    public void shutdown() throws ReportDataFactoryException {
+      if ( invocableEngine == null ) {
         return;
       }
 
-      try
-      {
-        invocableEngine.invokeFunction("shutdownQuery");
-      }
-      catch (ScriptException e)
-      {
-        throw new ReportDataFactoryException("DataFactoryScriptingSupport: Failed to invoke query shutdown method.", e);
-      }
-      catch (NoSuchMethodException e)
-      {
+      try {
+        invocableEngine.invokeFunction( "shutdownQuery" );
+      } catch ( ScriptException e ) {
+        throw new ReportDataFactoryException( "DataFactoryScriptingSupport: Failed to invoke query shutdown method.",
+          e );
+      } catch ( NoSuchMethodException e ) {
         // ignored ..
-        logger.debug("Global script does not contain an 'shutdownQuery' function");
+        logger.debug( "Global script does not contain an 'shutdownQuery' function" );
       }
     }
 
-    public String[] computeAdditionalQueryFields(final String query, final String queryName)
-        throws ReportDataFactoryException
-    {
-      if (invocableEngine == null)
-      {
-        return new String[0];
+    public String[] computeAdditionalQueryFields( final String query, final String queryName )
+      throws ReportDataFactoryException {
+      if ( invocableEngine == null ) {
+        return new String[ 0 ];
       }
 
-      try
-      {
-        final Object computeQuery = this.invocableEngine.invokeFunction("computeQueryFields", query, queryName);
-        final Object translated = convert(computeQuery);
-        if (translated == null)
-        {
+      try {
+        final Object computeQuery = this.invocableEngine.invokeFunction( "computeQueryFields", query, queryName );
+        final Object translated = convert( computeQuery );
+        if ( translated == null ) {
           return null;
         }
 
         final Object[] rawArray;
-        if (translated instanceof Object[])
-        {
+        if ( translated instanceof Object[] ) {
           rawArray = (Object[]) translated;
-        }
-        else if (translated instanceof Collection)
-        {
+        } else if ( translated instanceof Collection ) {
           final Collection c = (Collection) translated;
           rawArray = c.toArray();
-        }
-        else
-        {
-          rawArray = new Object[]{translated};
+        } else {
+          rawArray = new Object[] { translated };
         }
 
         final ArrayList<String> retval = new ArrayList<String>();
-        for (int i = 0; i < rawArray.length; i++)
-        {
-          final Object o = rawArray[i];
-          if (o != null)
-          {
-            retval.add(String.valueOf(o));
+        for ( int i = 0; i < rawArray.length; i++ ) {
+          final Object o = rawArray[ i ];
+          if ( o != null ) {
+            retval.add( String.valueOf( o ) );
           }
         }
-        return retval.toArray(new String[retval.size()]);
-      }
-      catch (ScriptException e)
-      {
-        throw new ReportDataFactoryException("DataFactoryScriptingSupport: Failed to invoke computeQueryFields method.", e);
-      }
-      catch (NoSuchMethodException e)
-      {
+        return retval.toArray( new String[ retval.size() ] );
+      } catch ( ScriptException e ) {
+        throw new ReportDataFactoryException(
+          "DataFactoryScriptingSupport: Failed to invoke computeQueryFields method.", e );
+      } catch ( NoSuchMethodException e ) {
         // ignored ..
-        logger.debug("Query script does not contain an 'computeQueryFields' function");
+        logger.debug( "Query script does not contain an 'computeQueryFields' function" );
         return null;
       }
     }
   }
 
   private static ArrayList<ScriptValueConverter> converters;
-  private static final Log logger = LogFactory.getLog(DataFactoryScriptingSupport.class);
+  private static final Log logger = LogFactory.getLog( DataFactoryScriptingSupport.class );
 
   private String globalScriptLanguage;
   private String globalScript;
@@ -438,16 +358,13 @@ public final class DataFactoryScriptingSupport implements Cloneable, Serializabl
   private transient boolean initialized;
   private transient DataFactoryContext dataFactoryContext;
 
-  public DataFactoryScriptingSupport()
-  {
+  public DataFactoryScriptingSupport() {
     queryMappings = new HashMap<String, QueryCarrier>();
     contextsByQuery = new HashMap<String, QueryScriptContext>();
   }
 
-  public Object clone()
-  {
-    try
-    {
+  public Object clone() {
+    try {
       final DataFactoryScriptingSupport clone = (DataFactoryScriptingSupport) super.clone();
       clone.queryMappings = (HashMap<String, QueryCarrier>) queryMappings.clone();
       clone.globalScriptContext = null;
@@ -460,96 +377,77 @@ public final class DataFactoryScriptingSupport implements Cloneable, Serializabl
       clone.contextKey = null;
       clone.initialized = false;
       return clone;
-    }
-    catch (CloneNotSupportedException e)
-    {
+    } catch ( CloneNotSupportedException e ) {
       throw new IllegalStateException();
     }
   }
 
-  public void setQuery(final String name,
-                       final String query,
-                       final String scriptLanguage,
-                       final String script)
-  {
-    this.queryMappings.put(name, new QueryCarrier(query, scriptLanguage, script));
+  public void setQuery( final String name,
+                        final String query,
+                        final String scriptLanguage,
+                        final String script ) {
+    this.queryMappings.put( name, new QueryCarrier( query, scriptLanguage, script ) );
   }
 
-  public String getScriptingLanguage(final String name)
-  {
-    final QueryCarrier queryCarrier = queryMappings.get(name);
-    if (queryCarrier == null)
-    {
+  public String getScriptingLanguage( final String name ) {
+    final QueryCarrier queryCarrier = queryMappings.get( name );
+    if ( queryCarrier == null ) {
       return null;
     }
     return queryCarrier.getScriptingLanguage();
   }
 
-  protected String computeScriptingLanguage(final String name)
-  {
-    final QueryCarrier queryCarrier = queryMappings.get(name);
-    if (queryCarrier == null)
-    {
+  protected String computeScriptingLanguage( final String name ) {
+    final QueryCarrier queryCarrier = queryMappings.get( name );
+    if ( queryCarrier == null ) {
       return null;
     }
     final String scriptingLanguage = queryCarrier.getScriptingLanguage();
-    if (scriptingLanguage == null)
-    {
+    if ( scriptingLanguage == null ) {
       return this.globalScriptLanguage;
     }
     return scriptingLanguage;
   }
 
-  public String getScript(final String name)
-  {
-    final QueryCarrier queryCarrier = queryMappings.get(name);
-    if (queryCarrier == null)
-    {
+  public String getScript( final String name ) {
+    final QueryCarrier queryCarrier = queryMappings.get( name );
+    if ( queryCarrier == null ) {
       return null;
     }
     return queryCarrier.getScript();
   }
 
-  public String getQuery(final String name)
-  {
-    final QueryCarrier queryCarrier = queryMappings.get(name);
-    if (queryCarrier == null)
-    {
+  public String getQuery( final String name ) {
+    final QueryCarrier queryCarrier = queryMappings.get( name );
+    if ( queryCarrier == null ) {
       return null;
     }
     return queryCarrier.getQuery();
   }
 
-  public String[] getQueryNames()
-  {
-    return queryMappings.keySet().toArray(new String[queryMappings.size()]);
+  public String[] getQueryNames() {
+    return queryMappings.keySet().toArray( new String[ queryMappings.size() ] );
   }
 
-  public String getGlobalScript()
-  {
+  public String getGlobalScript() {
     return globalScript;
   }
 
-  public void setGlobalScript(final String globalScript)
-  {
+  public void setGlobalScript( final String globalScript ) {
     this.globalScript = globalScript;
   }
 
-  public String getGlobalScriptLanguage()
-  {
+  public String getGlobalScriptLanguage() {
     return globalScriptLanguage;
   }
 
-  public void setGlobalScriptLanguage(final String globalScriptLanguage)
-  {
+  public void setGlobalScriptLanguage( final String globalScriptLanguage ) {
     this.globalScriptLanguage = globalScriptLanguage;
   }
 
-  public void initialize(final DataFactory dataFactory,
-                         final DataFactoryContext dataFactoryContext) throws ReportDataFactoryException
-  {
-    if (globalScriptContext != null)
-    {
+  public void initialize( final DataFactory dataFactory,
+                          final DataFactoryContext dataFactoryContext ) throws ReportDataFactoryException {
+    if ( globalScriptContext != null ) {
       return;
     }
 
@@ -561,172 +459,140 @@ public final class DataFactoryScriptingSupport implements Cloneable, Serializabl
     this.dataFactoryContext = dataFactoryContext;
 
     globalScriptContext = new SimpleScriptContext();
-    globalScriptContext.setAttribute("dataFactory", dataFactory, ScriptContext.ENGINE_SCOPE);
-    globalScriptContext.setAttribute("configuration", configuration, ScriptContext.ENGINE_SCOPE);
-    globalScriptContext.setAttribute("resourceManager", resourceManager, ScriptContext.ENGINE_SCOPE);
-    globalScriptContext.setAttribute("contextKey", contextKey, ScriptContext.ENGINE_SCOPE);
-    globalScriptContext.setAttribute("resourceBundleFactory", resourceBundleFactory, ScriptContext.ENGINE_SCOPE);
+    globalScriptContext.setAttribute( "dataFactory", dataFactory, ScriptContext.ENGINE_SCOPE );
+    globalScriptContext.setAttribute( "configuration", configuration, ScriptContext.ENGINE_SCOPE );
+    globalScriptContext.setAttribute( "resourceManager", resourceManager, ScriptContext.ENGINE_SCOPE );
+    globalScriptContext.setAttribute( "contextKey", contextKey, ScriptContext.ENGINE_SCOPE );
+    globalScriptContext.setAttribute( "resourceBundleFactory", resourceBundleFactory, ScriptContext.ENGINE_SCOPE );
 
-    if (StringUtils.isEmpty(globalScriptLanguage))
-    {
+    if ( StringUtils.isEmpty( globalScriptLanguage ) ) {
       return;
     }
 
-    globalScriptContext.setAttribute("scriptHelper",
-        new ScriptHelper(globalScriptContext, globalScriptLanguage, resourceManager, contextKey), ScriptContext.ENGINE_SCOPE);
+    globalScriptContext.setAttribute( "scriptHelper",
+      new ScriptHelper( globalScriptContext, globalScriptLanguage, resourceManager, contextKey ),
+      ScriptContext.ENGINE_SCOPE );
 
 
-    final ScriptEngine maybeInvocableEngine = new ScriptEngineManager().getEngineByName(globalScriptLanguage);
-    if (maybeInvocableEngine == null)
-    {
-      throw new ReportDataFactoryException(String.format
-          ("DataFactoryScriptingSupport: Failed to locate scripting engine for language '%s'.", globalScriptLanguage));
+    final ScriptEngine maybeInvocableEngine = new ScriptEngineManager().getEngineByName( globalScriptLanguage );
+    if ( maybeInvocableEngine == null ) {
+      throw new ReportDataFactoryException( String.format
+        ( "DataFactoryScriptingSupport: Failed to locate scripting engine for language '%s'.", globalScriptLanguage ) );
     }
-    if (maybeInvocableEngine instanceof Invocable == false)
-    {
+    if ( maybeInvocableEngine instanceof Invocable == false ) {
       return;
     }
     this.globalScriptEngine = (Invocable) maybeInvocableEngine;
 
 
-    maybeInvocableEngine.setContext(globalScriptContext);
-    try
-    {
-      maybeInvocableEngine.eval(globalScript);
-    }
-    catch (ScriptException e)
-    {
-      throw new ReportDataFactoryException("DataFactoryScriptingSupport: Failed to execute datafactory init script.", e);
+    maybeInvocableEngine.setContext( globalScriptContext );
+    try {
+      maybeInvocableEngine.eval( globalScript );
+    } catch ( ScriptException e ) {
+      throw new ReportDataFactoryException( "DataFactoryScriptingSupport: Failed to execute datafactory init script.",
+        e );
     }
   }
 
-  protected void callGlobalInitialize(final DataRow parameter) throws ReportDataFactoryException
-  {
-    if (initialized)
-    {
+  protected void callGlobalInitialize( final DataRow parameter ) throws ReportDataFactoryException {
+    if ( initialized ) {
       return;
     }
 
-    try
-    {
+    try {
       initialized = true;
-      if (globalScriptEngine != null)
-      {
-        this.globalScriptEngine.invokeFunction("init", parameter);
+      if ( globalScriptEngine != null ) {
+        this.globalScriptEngine.invokeFunction( "init", parameter );
       }
-    }
-    catch (ScriptException e)
-    {
-      throw new ReportDataFactoryException("DataFactoryScriptingSupport: Failed to invoke global init method.", e);
-    }
-    catch (NoSuchMethodException e)
-    {
+    } catch ( ScriptException e ) {
+      throw new ReportDataFactoryException( "DataFactoryScriptingSupport: Failed to invoke global init method.", e );
+    } catch ( NoSuchMethodException e ) {
       // ignored ..
-      logger.debug("Global script does not contain an 'init' function");
+      logger.debug( "Global script does not contain an 'init' function" );
     }
   }
 
-  public String computeQuery(final String queryName, final DataRow parameter)
-      throws ReportDataFactoryException
-  {
-    callGlobalInitialize(parameter);
+  public String computeQuery( final String queryName, final DataRow parameter )
+    throws ReportDataFactoryException {
+    callGlobalInitialize( parameter );
 
-    final String queryScriptLanguage = computeScriptingLanguage(queryName);
-    final String queryScript = getScript(queryName);
-    if (StringUtils.isEmpty(queryScriptLanguage) || StringUtils.isEmpty(queryScript))
-    {
-      return getQuery(queryName);
+    final String queryScriptLanguage = computeScriptingLanguage( queryName );
+    final String queryScript = getScript( queryName );
+    if ( StringUtils.isEmpty( queryScriptLanguage ) || StringUtils.isEmpty( queryScript ) ) {
+      return getQuery( queryName );
     }
 
-    QueryScriptContext queryScriptContext = contextsByQuery.get(queryName);
-    if (queryScriptContext == null)
-    {
+    QueryScriptContext queryScriptContext = contextsByQuery.get( queryName );
+    if ( queryScriptContext == null ) {
       queryScriptContext = new QueryScriptContext();
-      queryScriptContext.init(queryName, queryScriptLanguage, queryScript,
-          globalScriptContext, resourceManager, contextKey, dataFactory, configuration, resourceBundleFactory);
-      contextsByQuery.put(queryName, queryScriptContext);
+      queryScriptContext.init( queryName, queryScriptLanguage, queryScript,
+        globalScriptContext, resourceManager, contextKey, dataFactory, configuration, resourceBundleFactory );
+      contextsByQuery.put( queryName, queryScriptContext );
     }
 
-    return queryScriptContext.computeQuery(getQuery(queryName), queryName, parameter);
+    return queryScriptContext.computeQuery( getQuery( queryName ), queryName, parameter );
   }
 
-  public TableModel postProcessResult(final String queryName, final DataRow parameter, final TableModel result)
-      throws ReportDataFactoryException
-  {
-    callGlobalInitialize(parameter);
+  public TableModel postProcessResult( final String queryName, final DataRow parameter, final TableModel result )
+    throws ReportDataFactoryException {
+    callGlobalInitialize( parameter );
 
-    final String queryScriptLanguage = computeScriptingLanguage(queryName);
-    final String queryScript = getScript(queryName);
-    if (StringUtils.isEmpty(queryScriptLanguage) || StringUtils.isEmpty(queryScript))
-    {
+    final String queryScriptLanguage = computeScriptingLanguage( queryName );
+    final String queryScript = getScript( queryName );
+    if ( StringUtils.isEmpty( queryScriptLanguage ) || StringUtils.isEmpty( queryScript ) ) {
       return result;
     }
 
-    QueryScriptContext queryScriptContext = contextsByQuery.get(queryName);
-    if (queryScriptContext == null)
-    {
+    QueryScriptContext queryScriptContext = contextsByQuery.get( queryName );
+    if ( queryScriptContext == null ) {
       queryScriptContext = new QueryScriptContext();
-      queryScriptContext.init(queryName, queryScriptLanguage, queryScript,
-          globalScriptContext, resourceManager, contextKey, dataFactory, configuration, resourceBundleFactory);
-      contextsByQuery.put(queryName, queryScriptContext);
+      queryScriptContext.init( queryName, queryScriptLanguage, queryScript,
+        globalScriptContext, resourceManager, contextKey, dataFactory, configuration, resourceBundleFactory );
+      contextsByQuery.put( queryName, queryScriptContext );
     }
 
-    return queryScriptContext.postProcessResult(getQuery(queryName), queryName, parameter, result);
+    return queryScriptContext.postProcessResult( getQuery( queryName ), queryName, parameter, result );
   }
 
-  public String[] computeAdditionalQueryFields(final String queryName, final DataRow parameter)
-      throws ReportDataFactoryException
-  {
-    callGlobalInitialize(parameter);
+  public String[] computeAdditionalQueryFields( final String queryName, final DataRow parameter )
+    throws ReportDataFactoryException {
+    callGlobalInitialize( parameter );
 
-    final String queryScriptLanguage = computeScriptingLanguage(queryName);
-    final String queryScript = getScript(queryName);
-    if (StringUtils.isEmpty(queryScriptLanguage) || StringUtils.isEmpty(queryScript))
-    {
-      return new String[0];
+    final String queryScriptLanguage = computeScriptingLanguage( queryName );
+    final String queryScript = getScript( queryName );
+    if ( StringUtils.isEmpty( queryScriptLanguage ) || StringUtils.isEmpty( queryScript ) ) {
+      return new String[ 0 ];
     }
 
-    QueryScriptContext queryScriptContext = contextsByQuery.get(queryName);
-    if (queryScriptContext == null)
-    {
+    QueryScriptContext queryScriptContext = contextsByQuery.get( queryName );
+    if ( queryScriptContext == null ) {
       queryScriptContext = new QueryScriptContext();
-      queryScriptContext.init(queryName, queryScriptLanguage, queryScript,
-          globalScriptContext, resourceManager, contextKey, dataFactory, configuration, resourceBundleFactory);
-      contextsByQuery.put(queryName, queryScriptContext);
+      queryScriptContext.init( queryName, queryScriptLanguage, queryScript,
+        globalScriptContext, resourceManager, contextKey, dataFactory, configuration, resourceBundleFactory );
+      contextsByQuery.put( queryName, queryScriptContext );
     }
 
-    return queryScriptContext.computeAdditionalQueryFields(getQuery(queryName), queryName);
+    return queryScriptContext.computeAdditionalQueryFields( getQuery( queryName ), queryName );
   }
 
-  public void shutdown()
-  {
-    for (final Map.Entry<String, QueryScriptContext> entry : contextsByQuery.entrySet())
-    {
-      try
-      {
+  public void shutdown() {
+    for ( final Map.Entry<String, QueryScriptContext> entry : contextsByQuery.entrySet() ) {
+      try {
         final QueryScriptContext context = entry.getValue();
         context.shutdown();
-      }
-      catch (ReportDataFactoryException se)
-      {
-        logger.warn("Failed to shut down query script context: " + entry.getKey());
+      } catch ( ReportDataFactoryException se ) {
+        logger.warn( "Failed to shut down query script context: " + entry.getKey() );
       }
     }
 
-    if (globalScriptEngine != null)
-    {
-      try
-      {
-        globalScriptEngine.invokeFunction("shutdown");
-      }
-      catch (ScriptException e)
-      {
-        logger.warn("DataFactoryScriptingSupport: Failed to invoke global shutdown method.", e);
-      }
-      catch (NoSuchMethodException e)
-      {
+    if ( globalScriptEngine != null ) {
+      try {
+        globalScriptEngine.invokeFunction( "shutdown" );
+      } catch ( ScriptException e ) {
+        logger.warn( "DataFactoryScriptingSupport: Failed to invoke global shutdown method.", e );
+      } catch ( NoSuchMethodException e ) {
         // ignored ..
-        logger.debug("Global script does not contain an 'shutdown' function");
+        logger.debug( "Global script does not contain an 'shutdown' function" );
       }
     }
 
@@ -739,63 +605,51 @@ public final class DataFactoryScriptingSupport implements Cloneable, Serializabl
     initialized = false;
   }
 
-  public static Object convert(final Object object)
-  {
-    if (object == null)
-    {
+  public static Object convert( final Object object ) {
+    if ( object == null ) {
       return null;
     }
-    synchronized (DataFactoryScriptingSupport.class)
-    {
-      if (converters == null)
-      {
+    synchronized( DataFactoryScriptingSupport.class ) {
+      if ( converters == null ) {
         converters = new ArrayList<ScriptValueConverter>();
         final Configuration globalConfig = ClassicEngineBoot.getInstance().getGlobalConfig();
         final Iterator propertyKeys = globalConfig.findPropertyKeys
-            ("org.pentaho.reporting.engine.classic.core.modules.misc.datafactory.script-value-converters.");
-        while (propertyKeys.hasNext())
-        {
+          ( "org.pentaho.reporting.engine.classic.core.modules.misc.datafactory.script-value-converters." );
+        while ( propertyKeys.hasNext() ) {
           final String key = (String) propertyKeys.next();
-          final String impl = globalConfig.getConfigProperty(key);
+          final String impl = globalConfig.getConfigProperty( key );
           final ScriptValueConverter converter = (ScriptValueConverter) ObjectUtilities.loadAndInstantiate
-              (impl, ScriptValueConverter.class, ScriptValueConverter.class);
-          if (converter != null)
-          {
-            converters.add(converter);
+            ( impl, ScriptValueConverter.class, ScriptValueConverter.class );
+          if ( converter != null ) {
+            converters.add( converter );
           }
         }
       }
     }
 
-    if (converters.isEmpty())
-    {
+    if ( converters.isEmpty() ) {
       return object;
     }
 
-    for (final ScriptValueConverter converter : converters)
-    {
-      final Object convert = converter.convert(object);
-      if (convert != null)
-      {
+    for ( final ScriptValueConverter converter : converters ) {
+      final Object convert = converter.convert( object );
+      if ( convert != null ) {
         return convert;
       }
     }
     return object;
   }
 
-  public boolean containsQuery(final String query)
-  {
-    return queryMappings.containsKey(query);
+  public boolean containsQuery( final String query ) {
+    return queryMappings.containsKey( query );
   }
 
-  public void remove(final String name)
-  {
-    queryMappings.remove(name);
+  public void remove( final String name ) {
+    queryMappings.remove( name );
   }
 
-  private void readObject(final ObjectInputStream stream)
-      throws IOException, ClassNotFoundException
-  {
+  private void readObject( final ObjectInputStream stream )
+    throws IOException, ClassNotFoundException {
     stream.defaultReadObject();
     contextsByQuery = new HashMap<String, QueryScriptContext>();
   }

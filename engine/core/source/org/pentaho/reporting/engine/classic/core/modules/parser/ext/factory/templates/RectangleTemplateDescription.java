@@ -24,15 +24,13 @@ import org.pentaho.reporting.engine.classic.core.filter.templates.RectangleTempl
  *
  * @author Thomas Morgner
  */
-public class RectangleTemplateDescription extends AbstractTemplateDescription
-{
+public class RectangleTemplateDescription extends AbstractTemplateDescription {
   /**
    * Creates a new template description.
    *
    * @param name the name.
    */
-  public RectangleTemplateDescription(final String name)
-  {
-    super(name, RectangleTemplate.class, true);
+  public RectangleTemplateDescription( final String name ) {
+    super( name, RectangleTemplate.class, true );
   }
 }

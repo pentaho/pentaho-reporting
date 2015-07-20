@@ -34,7 +34,8 @@
     <property name="field" mandatory="false" preferred="false" value-role="Field" expert="false" hidden="false"/>
     <property name="group" mandatory="false" preferred="false" value-role="Group" expert="false" hidden="false"/>
     <property name="name" mandatory="true" preferred="true" value-role="Name" expert="false" hidden="false"/>
-    <property name="crosstabFilterGroup" mandatory="false" preferred="false" value-role="Group" expert="false" hidden="false"/>
+    <property name="crosstabFilterGroup" mandatory="false" preferred="false" value-role="Group" expert="false"
+              hidden="false"/>
   </expression>
 
   <expression class="org.pentaho.reporting.engine.classic.core.function.EventMonitorFunction"
@@ -46,7 +47,7 @@
               hidden="false"/>
     <property name="name" mandatory="true" preferred="true" value-role="Name" expert="false" hidden="false"/>
   </expression>
-  
+
   <expression class="org.pentaho.reporting.engine.classic.core.function.TriggerPageFooterFunction"
               bundle-name="org.pentaho.reporting.engine.classic.core.function.TriggerPageFooterFunctionBundle"
               result="java.lang.Object" expert="false" hidden="false" preferred="false">
@@ -62,7 +63,8 @@
               hidden="false"/>
     <property name="field" mandatory="false" preferred="false" value-role="Field" expert="false" hidden="false"/>
     <property name="group" mandatory="false" preferred="false" value-role="Group" expert="false" hidden="false"/>
-    <property name="crosstabFilterGroup" mandatory="false" preferred="false" value-role="Group" expert="false" hidden="false"/>
+    <property name="crosstabFilterGroup" mandatory="false" preferred="false" value-role="Group" expert="false"
+              hidden="false"/>
     <property name="name" mandatory="true" preferred="true" value-role="Name" expert="false" hidden="false"/>
   </expression>
 
@@ -97,7 +99,8 @@
               hidden="false"/>
     <property name="field" mandatory="false" preferred="false" value-role="Field" expert="false" hidden="false"/>
     <property name="group" mandatory="false" preferred="false" value-role="Group" expert="false" hidden="false"/>
-    <property name="crosstabFilterGroup" mandatory="false" preferred="false" value-role="Group" expert="false" hidden="false"/>
+    <property name="crosstabFilterGroup" mandatory="false" preferred="false" value-role="Group" expert="false"
+              hidden="false"/>
     <property name="name" mandatory="true" preferred="true" value-role="Name" expert="false" hidden="false"/>
   </expression>
 
@@ -108,7 +111,8 @@
               hidden="false"/>
     <property name="field" mandatory="false" preferred="false" value-role="Field" expert="false" hidden="false"/>
     <property name="group" mandatory="false" preferred="false" value-role="Group" expert="false" hidden="false"/>
-    <property name="crosstabFilterGroup" mandatory="false" preferred="false" value-role="Group" expert="false" hidden="false"/>
+    <property name="crosstabFilterGroup" mandatory="false" preferred="false" value-role="Group" expert="false"
+              hidden="false"/>
     <property name="name" mandatory="true" preferred="true" value-role="Name" expert="false" hidden="false"/>
   </expression>
 
@@ -119,7 +123,8 @@
               hidden="false"/>
     <property name="field" mandatory="false" preferred="false" value-role="Field" expert="false" hidden="false"/>
     <property name="group" mandatory="false" preferred="false" value-role="Group" expert="false" hidden="false"/>
-    <property name="crosstabFilterGroup" mandatory="false" preferred="false" value-role="Group" expert="false" hidden="false"/>
+    <property name="crosstabFilterGroup" mandatory="false" preferred="false" value-role="Group" expert="false"
+              hidden="false"/>
     <property name="name" mandatory="true" preferred="true" value-role="Name" expert="false" hidden="false"/>
   </expression>
 
@@ -144,7 +149,8 @@
               hidden="false"/>
     <property name="element" mandatory="false" preferred="false" value-role="ElementName" expert="false"
               hidden="false"/>
-    <property name="ignoreCrosstabMode" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
+    <property name="ignoreCrosstabMode" mandatory="false" preferred="false" value-role="Value" expert="false"
+              hidden="false"/>
     <property name="initialState" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
     <property name="invisibleBackground" mandatory="false" preferred="false" value-role="Value" expert="false"
               hidden="false"/>
@@ -174,7 +180,8 @@
     <property name="dependencyLevel" mandatory="false" preferred="false" value-role="Value" expert="true"
               hidden="false"/>
     <property name="group" mandatory="false" preferred="false" value-role="Group" expert="false" hidden="false"/>
-    <property name="crosstabFilterGroup" mandatory="false" preferred="false" value-role="Group" expert="false" hidden="false"/>
+    <property name="crosstabFilterGroup" mandatory="false" preferred="false" value-role="Group" expert="false"
+              hidden="false"/>
     <property name="name" mandatory="true" preferred="true" value-role="Name" expert="false" hidden="false"/>
   </expression>
 
@@ -185,7 +192,8 @@
               hidden="false"/>
     <property name="field" mandatory="false" preferred="false" value-role="Field" expert="false" hidden="false"/>
     <property name="group" mandatory="false" preferred="false" value-role="Group" expert="false" hidden="false"/>
-    <property name="crosstabFilterGroup" mandatory="false" preferred="false" value-role="Group" expert="false" hidden="false"/>
+    <property name="crosstabFilterGroup" mandatory="false" preferred="false" value-role="Group" expert="false"
+              hidden="false"/>
     <property name="name" mandatory="true" preferred="true" value-role="Name" expert="false" hidden="false"/>
     <property name="roundingMode" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
     <property name="scale" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
@@ -216,7 +224,8 @@
     <property name="name" mandatory="true" preferred="true" value-role="Name" expert="false" hidden="false"/>
     <property name="roundingMode" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
     <property name="scale" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
-    <property name="crosstabFilterGroup" mandatory="false" preferred="false" value-role="Group" expert="false" hidden="false"/>
+    <property name="crosstabFilterGroup" mandatory="false" preferred="false" value-role="Group" expert="false"
+              hidden="false"/>
   </expression>
 
   <expression class="org.pentaho.reporting.engine.classic.core.function.TotalGroupSumQuotientFunction"
@@ -230,7 +239,8 @@
     <property name="name" mandatory="true" preferred="true" value-role="Name" expert="false" hidden="false"/>
     <property name="roundingMode" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
     <property name="scale" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
-    <property name="crosstabFilterGroup" mandatory="false" preferred="false" value-role="Group" expert="false" hidden="false"/>
+    <property name="crosstabFilterGroup" mandatory="false" preferred="false" value-role="Group" expert="false"
+              hidden="false"/>
   </expression>
 
   <expression class="org.pentaho.reporting.engine.classic.core.function.ColumnAverageExpression"
@@ -255,7 +265,8 @@
               hidden="false"/>
     <property name="field" mandatory="false" preferred="false" value-role="Field" expert="false" hidden="false"/>
     <property name="group" mandatory="false" preferred="false" value-role="Group" expert="false" hidden="false"/>
-    <property name="crosstabFilterGroup" mandatory="false" preferred="false" value-role="Group" expert="false" hidden="false"/>
+    <property name="crosstabFilterGroup" mandatory="false" preferred="false" value-role="Group" expert="false"
+              hidden="false"/>
     <property name="name" mandatory="true" preferred="true" value-role="Name" expert="false" hidden="false"/>
   </expression>
 
@@ -277,7 +288,8 @@
               hidden="false"/>
     <property name="group" mandatory="false" preferred="false" value-role="Group" expert="false" hidden="false"/>
     <property name="name" mandatory="true" preferred="true" value-role="Name" expert="false" hidden="false"/>
-    <property name="crosstabFilterGroup" mandatory="false" preferred="false" value-role="Group" expert="false" hidden="false"/>
+    <property name="crosstabFilterGroup" mandatory="false" preferred="false" value-role="Group" expert="false"
+              hidden="false"/>
   </expression>
 
   <expression class="org.pentaho.reporting.engine.classic.core.function.PageItemSumFunction"
@@ -287,7 +299,8 @@
               hidden="false"/>
     <property name="field" mandatory="false" preferred="false" value-role="Field" expert="false" hidden="false"/>
     <property name="group" mandatory="false" preferred="false" value-role="Group" expert="false" hidden="false"/>
-    <property name="crosstabFilterGroup" mandatory="false" preferred="false" value-role="Group" expert="false" hidden="false"/>
+    <property name="crosstabFilterGroup" mandatory="false" preferred="false" value-role="Group" expert="false"
+              hidden="false"/>
     <property name="name" mandatory="true" preferred="true" value-role="Name" expert="false" hidden="false"/>
   </expression>
 
@@ -298,7 +311,8 @@
               hidden="false"/>
     <property name="field" mandatory="false" preferred="false" value-role="Field" expert="false" hidden="false"/>
     <property name="group" mandatory="false" preferred="false" value-role="Group" expert="false" hidden="false"/>
-    <property name="crosstabFilterGroup" mandatory="false" preferred="false" value-role="Group" expert="false" hidden="false"/>
+    <property name="crosstabFilterGroup" mandatory="false" preferred="false" value-role="Group" expert="false"
+              hidden="false"/>
     <property name="name" mandatory="true" preferred="true" value-role="Name" expert="false" hidden="false"/>
   </expression>
 
@@ -328,7 +342,8 @@
     <property name="dependencyLevel" mandatory="false" preferred="false" value-role="Value" expert="true"
               hidden="false"/>
     <property name="group" mandatory="false" preferred="false" value-role="Group" expert="false" hidden="false"/>
-    <property name="crosstabFilterGroup" mandatory="false" preferred="false" value-role="Group" expert="false" hidden="false"/>
+    <property name="crosstabFilterGroup" mandatory="false" preferred="false" value-role="Group" expert="false"
+              hidden="false"/>
     <property name="name" mandatory="true" preferred="true" value-role="Name" expert="false" hidden="false"/>
   </expression>
 
@@ -339,7 +354,8 @@
               hidden="false"/>
     <property name="field" mandatory="true" preferred="true" value-role="Value" expert="false" hidden="false"/>
     <property name="group" mandatory="false" preferred="false" value-role="Group" expert="false" hidden="false"/>
-    <property name="crosstabFilterGroup" mandatory="false" preferred="false" value-role="Group" expert="false" hidden="false"/>
+    <property name="crosstabFilterGroup" mandatory="false" preferred="false" value-role="Group" expert="false"
+              hidden="false"/>
     <property name="name" mandatory="true" preferred="true" value-role="Name" expert="false" hidden="false"/>
     <property name="ignoreNullValues" mandatory="false" preferred="false" expert="false" hidden="false"/>
   </expression>
@@ -352,16 +368,19 @@
     <property name="field" mandatory="true" preferred="true" value-role="Field" expert="false" hidden="false"/>
     <property name="group" mandatory="false" preferred="false" value-role="Group" expert="false" hidden="false"/>
     <property name="name" mandatory="true" preferred="true" value-role="Name" expert="false" hidden="false"/>
-    <property name="crosstabFilterGroup" mandatory="false" preferred="false" value-role="Group" expert="false" hidden="false"/>
+    <property name="crosstabFilterGroup" mandatory="false" preferred="false" value-role="Group" expert="false"
+              hidden="false"/>
   </expression>
 
   <expression class="org.pentaho.reporting.engine.classic.core.function.TotalPageItemCountFunction"
               bundle-name="org.pentaho.reporting.engine.classic.core.function.TotalPageItemCountFunctionBundle"
               result="java.lang.Number" expert="false" hidden="false" preferred="false">
-    <property name="dependencyLevel" mandatory="false" preferred="false" value-role="Value" expert="true" hidden="false"/>
+    <property name="dependencyLevel" mandatory="false" preferred="false" value-role="Value" expert="true"
+              hidden="false"/>
     <property name="group" mandatory="false" preferred="false" value-role="Group" expert="false" hidden="false"/>
     <property name="name" mandatory="true" preferred="true" value-role="Name" expert="false" hidden="false"/>
-    <property name="crosstabFilterGroup" mandatory="false" preferred="false" value-role="Group" expert="false" hidden="false"/>
+    <property name="crosstabFilterGroup" mandatory="false" preferred="false" value-role="Group" expert="false"
+              hidden="false"/>
   </expression>
 
 </meta-data>

@@ -17,9 +17,9 @@
 
 package org.pentaho.reporting.engine.classic.core.states;
 
-import java.util.Arrays;
-
 import org.pentaho.reporting.engine.classic.core.DataRow;
+
+import java.util.Arrays;
 
 /**
  * This data-row wrapper supports the full interface as it was defined in version 0.8.9. This class makes sure that
@@ -28,100 +28,79 @@ import org.pentaho.reporting.engine.classic.core.DataRow;
  *
  * @author Thomas Morgner
  */
-public final class LegacyDataRowWrapper implements DataRow
-{
+public final class LegacyDataRowWrapper implements DataRow {
   private DataRow parent;
 
-  public LegacyDataRowWrapper()
-  {
+  public LegacyDataRowWrapper() {
   }
 
-  public DataRow getParent()
-  {
+  public DataRow getParent() {
     return parent;
   }
 
-  public void setParent(final DataRow parent)
-  {
+  public void setParent( final DataRow parent ) {
     this.parent = parent;
   }
 
-  public Object get(final int col)
-  {
-    if (parent == null)
-    {
+  public Object get( final int col ) {
+    if ( parent == null ) {
       return null;
     }
-    final String name = getColumnName(col);
-    if (name == null)
-    {
+    final String name = getColumnName( col );
+    if ( name == null ) {
       return null;
     }
-    return parent.get(name);
+    return parent.get( name );
   }
 
-  public Object get(final String col)
-  {
-    if (parent == null)
-    {
+  public Object get( final String col ) {
+    if ( parent == null ) {
       return null;
     }
-    return parent.get(col);
+    return parent.get( col );
   }
 
-  public String getColumnName(final int col)
-  {
-    if (parent == null)
-    {
+  public String getColumnName( final int col ) {
+    if ( parent == null ) {
       return null;
     }
     final String[] columnNames = parent.getColumnNames();
-    return columnNames[col];
+    return columnNames[ col ];
   }
 
-  public int findColumn(final String name)
-  {
-    if (parent == null)
-    {
+  public int findColumn( final String name ) {
+    if ( parent == null ) {
       return -1;
     }
-    return Arrays.asList(parent.getColumnNames()).indexOf(name);
+    return Arrays.asList( parent.getColumnNames() ).indexOf( name );
   }
 
-  public int getColumnCount()
-  {
-    if (parent == null)
-    {
+  public int getColumnCount() {
+    if ( parent == null ) {
       return 0;
     }
     return parent.getColumnNames().length;
   }
 
-  public boolean isChanged(final String name)
-  {
-    if (parent == null)
-    {
+  public boolean isChanged( final String name ) {
+    if ( parent == null ) {
       return false;
     }
-    return parent.isChanged(name);
+    return parent.isChanged( name );
   }
 
-  public boolean isChanged(final int index)
-  {
-    if (parent == null)
-    {
+  public boolean isChanged( final int index ) {
+    if ( parent == null ) {
       return false;
     }
-    final String name = getColumnName(index);
-    if (name == null)
-    {
+    final String name = getColumnName( index );
+    if ( name == null ) {
       return false;
     }
-    return parent.isChanged(name);
+    return parent.isChanged( name );
   }
 
-  public String[] getColumnNames()
-  {
+  public String[] getColumnNames() {
     return parent.getColumnNames();
   }
 }

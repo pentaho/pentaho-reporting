@@ -17,6 +17,10 @@
 
 package org.pentaho.reporting.engine.classic.core.metadata;
 
+import org.pentaho.reporting.engine.classic.core.function.Expression;
+import org.pentaho.reporting.engine.classic.core.function.Function;
+import org.pentaho.reporting.engine.classic.core.metadata.builder.ExpressionMetaDataBuilder;
+
 import java.beans.BeanInfo;
 import java.beans.IntrospectionException;
 import java.io.IOException;
@@ -25,12 +29,7 @@ import java.io.ObjectOutputStream;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.pentaho.reporting.engine.classic.core.function.Expression;
-import org.pentaho.reporting.engine.classic.core.function.Function;
-import org.pentaho.reporting.engine.classic.core.metadata.builder.ExpressionMetaDataBuilder;
-
-public class DefaultExpressionMetaData extends AbstractMetaData implements ExpressionMetaData
-{
+public class DefaultExpressionMetaData extends AbstractMetaData implements ExpressionMetaData {
   public static final int NO_LAYOUT_PROCESSOR = 0;
   public static final int ELEMENT_LAYOUT_PROCESSOR = 1;
   public static final int GLOBAL_LAYOUT_PROCESSOR = 2;
@@ -44,110 +43,91 @@ public class DefaultExpressionMetaData extends AbstractMetaData implements Expre
   private transient String[] propertyKeys;
   private transient ExpressionPropertyMetaData[] propertyMetaData;
 
-  public DefaultExpressionMetaData(final String bundleLocation,
-                                   final boolean expert,
-                                   final boolean preferred,
-                                   final boolean hidden,
-                                   final boolean deprecated,
-                                   final Class<? extends Expression> expressionType,
-                                   final Class<?> resultType,
-                                   final Map<String, ExpressionPropertyMetaData> attributes,
-                                   final SharedBeanInfo beanInfo,
-                                   final int layoutProcessorMode,
-                                   final MaturityLevel maturityLevel,
-                                   final int compatibilityLevel)
-  {
-    super(expressionType.getName(), bundleLocation, "",
-        expert, preferred, hidden, deprecated, maturityLevel, compatibilityLevel);
-    if (resultType == null)
-    {
+  public DefaultExpressionMetaData( final String bundleLocation,
+                                    final boolean expert,
+                                    final boolean preferred,
+                                    final boolean hidden,
+                                    final boolean deprecated,
+                                    final Class<? extends Expression> expressionType,
+                                    final Class<?> resultType,
+                                    final Map<String, ExpressionPropertyMetaData> attributes,
+                                    final SharedBeanInfo beanInfo,
+                                    final int layoutProcessorMode,
+                                    final MaturityLevel maturityLevel,
+                                    final int compatibilityLevel ) {
+    super( expressionType.getName(), bundleLocation, "",
+      expert, preferred, hidden, deprecated, maturityLevel, compatibilityLevel );
+    if ( resultType == null ) {
       throw new NullPointerException();
     }
-    if (attributes == null)
-    {
+    if ( attributes == null ) {
       throw new NullPointerException();
     }
-    if (beanInfo == null)
-    {
+    if ( beanInfo == null ) {
       throw new NullPointerException();
     }
 
     this.expressionType = expressionType;
     this.layoutProcessorMode = layoutProcessorMode;
     this.resultType = resultType;
-    this.properties = new HashMap<String, ExpressionPropertyMetaData>(attributes);
+    this.properties = new HashMap<String, ExpressionPropertyMetaData>( attributes );
     this.beanInfo = beanInfo;
   }
 
-  public DefaultExpressionMetaData(final ExpressionMetaDataBuilder builder)
-  {
-    super(builder);
+  public DefaultExpressionMetaData( final ExpressionMetaDataBuilder builder ) {
+    super( builder );
     this.expressionType = builder.getImpl();
     this.layoutProcessorMode = builder.getLayoutComputation();
     this.resultType = builder.getResultType();
     this.properties = builder.getProperties();
 
-    this.beanInfo = new SharedBeanInfo(expressionType);
+    this.beanInfo = new SharedBeanInfo( expressionType );
   }
 
-  protected String computePrefix(final String keyPrefix, final String name)
-  {
+  protected String computePrefix( final String keyPrefix, final String name ) {
     return "";
   }
 
-  public boolean isStatefull()
-  {
-    return Function.class.isAssignableFrom(getExpressionType());
+  public boolean isStatefull() {
+    return Function.class.isAssignableFrom( getExpressionType() );
   }
 
-  public Class getResultType()
-  {
+  public Class getResultType() {
     return resultType;
   }
 
-  public Class getExpressionType()
-  {
+  public Class getExpressionType() {
     return expressionType;
   }
 
-  public ExpressionPropertyMetaData getPropertyDescription(final String name)
-  {
-    return properties.get(name);
+  public ExpressionPropertyMetaData getPropertyDescription( final String name ) {
+    return properties.get( name );
   }
 
-  public Expression create()
-  {
-    try
-    {
+  public Expression create() {
+    try {
       return expressionType.newInstance();
-    }
-    catch (Exception e)
-    {
-      throw new IllegalStateException(e);
+    } catch ( Exception e ) {
+      throw new IllegalStateException( e );
     }
   }
 
-  public String[] getPropertyNames()
-  {
-    if (propertyKeys == null)
-    {
-      propertyKeys = properties.keySet().toArray(new String[properties.size()]);
+  public String[] getPropertyNames() {
+    if ( propertyKeys == null ) {
+      propertyKeys = properties.keySet().toArray( new String[ properties.size() ] );
     }
     return propertyKeys;
   }
 
-  public ExpressionPropertyMetaData[] getPropertyDescriptions()
-  {
-    if (propertyMetaData == null)
-    {
+  public ExpressionPropertyMetaData[] getPropertyDescriptions() {
+    if ( propertyMetaData == null ) {
       propertyMetaData = properties.values().toArray
-          (new ExpressionPropertyMetaData[properties.size()]);
+        ( new ExpressionPropertyMetaData[ properties.size() ] );
     }
     return propertyMetaData;
   }
 
-  public BeanInfo getBeanDescriptor() throws IntrospectionException
-  {
+  public BeanInfo getBeanDescriptor() throws IntrospectionException {
     return beanInfo.getBeanInfo();
   }
 
@@ -157,8 +137,7 @@ public class DefaultExpressionMetaData extends AbstractMetaData implements Expre
    *
    * @return true, if this is a layout-processor that modifies named elements.
    */
-  public boolean isElementLayoutProcessor()
-  {
+  public boolean isElementLayoutProcessor() {
     return layoutProcessorMode == DefaultExpressionMetaData.ELEMENT_LAYOUT_PROCESSOR;
   }
 
@@ -168,49 +147,41 @@ public class DefaultExpressionMetaData extends AbstractMetaData implements Expre
    *
    * @return true, if this is a layout-processor that modifies the global layout.
    */
-  public boolean isGlobalLayoutProcessor()
-  {
+  public boolean isGlobalLayoutProcessor() {
     return layoutProcessorMode == DefaultExpressionMetaData.GLOBAL_LAYOUT_PROCESSOR;
   }
 
-  public boolean equals(final Object o)
-  {
-    if (this == o)
-    {
+  public boolean equals( final Object o ) {
+    if ( this == o ) {
       return true;
     }
-    if (o == null || getClass() != o.getClass())
-    {
+    if ( o == null || getClass() != o.getClass() ) {
       return false;
     }
 
     final DefaultExpressionMetaData that = (DefaultExpressionMetaData) o;
 
-    if (!expressionType.equals(that.expressionType))
-    {
+    if ( !expressionType.equals( that.expressionType ) ) {
       return false;
     }
 
     return true;
   }
 
-  public int hashCode()
-  {
+  public int hashCode() {
     return expressionType.hashCode();
   }
 
-  private void writeObject(ObjectOutputStream out)
-      throws IOException
-  {
+  private void writeObject( ObjectOutputStream out )
+    throws IOException {
     out.defaultWriteObject();
-    out.writeObject(beanInfo.getBeanClass());
+    out.writeObject( beanInfo.getBeanClass() );
   }
 
-  private void readObject(ObjectInputStream in)
-      throws IOException, ClassNotFoundException
-  {
+  private void readObject( ObjectInputStream in )
+    throws IOException, ClassNotFoundException {
     in.defaultReadObject();
     final Class c = (Class) in.readObject();
-    beanInfo = new SharedBeanInfo(c);
+    beanInfo = new SharedBeanInfo( c );
   }
 }

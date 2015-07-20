@@ -17,253 +17,228 @@
 
 package org.pentaho.reporting.engine.classic.core;
 
-import java.awt.Color;
+import junit.framework.TestCase;
+import org.pentaho.reporting.engine.classic.core.elementfactory.TextFieldElementFactory;
+import org.pentaho.reporting.engine.classic.core.testsupport.DebugReportRunner;
+import org.pentaho.reporting.libraries.base.util.FloatDimension;
+
+import java.awt.*;
 import java.awt.geom.Point2D;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
-import junit.framework.TestCase;
-import org.pentaho.reporting.engine.classic.core.elementfactory.TextFieldElementFactory;
-import org.pentaho.reporting.engine.classic.core.testsupport.DebugReportRunner;
-import org.pentaho.reporting.libraries.base.util.FloatDimension;
-
-public class BandTest extends TestCase
-{
-  public BandTest(final String s)
-  {
-    super(s);
+public class BandTest extends TestCase {
+  public BandTest( final String s ) {
+    super( s );
   }
 
-  protected void setUp() throws Exception
-  {
+  protected void setUp() throws Exception {
     ClassicEngineBoot.getInstance().start();
   }
 
-  public void testBandCreate()
-  {
+  public void testBandCreate() {
     final Band b = new Band();
-    assertNotNull(b.getDataSource());
-    assertNotNull(b.getStyle());
-    assertNotNull(b.getName());
-    assertTrue(b.isVisible());
-    assertNull(b.getParent());
-    assertNotNull(b.getElementArray());
-    assertTrue(b.getElementCount() == 0);
-//    assertNotNull(b.getElements());
+    assertNotNull( b.getDataSource() );
+    assertNotNull( b.getStyle() );
+    assertNotNull( b.getName() );
+    assertTrue( b.isVisible() );
+    assertNull( b.getParent() );
+    assertNotNull( b.getElementArray() );
+    assertTrue( b.getElementCount() == 0 );
+    //    assertNotNull(b.getElements());
   }
 
-  public void testBandMethods()
-  {
+  public void testBandMethods() {
     final Band b = new Band();
-    assertTrue(b.isVisible());
-    b.setVisible(false);
-    assertTrue(b.isVisible() == false);
-    b.setVisible(true);
-    assertTrue(b.isVisible());
+    assertTrue( b.isVisible() );
+    b.setVisible( false );
+    assertTrue( b.isVisible() == false );
+    b.setVisible( true );
+    assertTrue( b.isVisible() );
 
-    try
-    {
-      b.setDataSource(null);
+    try {
+      b.setDataSource( null );
       fail();
-    }
-    catch (NullPointerException npe)
-    {
+    } catch ( NullPointerException npe ) {
       // expected, ignored
     }
 
     b.toString();
   }
 
-  public void testAddElement()
-  {
+  public void testAddElement() {
     final Band b = new Band();
-    assertTrue(b.getElementCount() == 0);
-    b.addElement(0, new Element());
-    assertTrue(b.getElementCount() == 1);
-    b.addElement(new Element());
-    assertTrue(b.getElementCount() == 2);
-    b.addElement(0, new Element());
-    assertTrue(b.getElementCount() == 3);
-    b.addElement(2, new Element());
-    assertTrue(b.getElementCount() == 4);
-    try
-    {
-      b.addElement(5, new Element());
+    assertTrue( b.getElementCount() == 0 );
+    b.addElement( 0, new Element() );
+    assertTrue( b.getElementCount() == 1 );
+    b.addElement( new Element() );
+    assertTrue( b.getElementCount() == 2 );
+    b.addElement( 0, new Element() );
+    assertTrue( b.getElementCount() == 3 );
+    b.addElement( 2, new Element() );
+    assertTrue( b.getElementCount() == 4 );
+    try {
+      b.addElement( 5, new Element() );
       fail();
-    }
-    catch (IllegalArgumentException iob)
-    {
+    } catch ( IllegalArgumentException iob ) {
       // expected, ignored
     }
-    try
-    {
-      b.addElement(null);
+    try {
+      b.addElement( null );
       fail();
-    }
-    catch (NullPointerException npe)
-    {
+    } catch ( NullPointerException npe ) {
       // expected, ignored
     }
-    try
-    {
-      b.addElement(b);
+    try {
+      b.addElement( b );
       fail();
-    }
-    catch (IllegalArgumentException ia)
-    {
+    } catch ( IllegalArgumentException ia ) {
       // expected, ignored
     }
 
-    try
-    {
+    try {
       final Band b1 = new Band();
       final Band b2 = new Band();
       final Band b3 = new Band();
-      b1.addElement(b2);
-      b2.addElement(b3);
-      b3.addElement(b1);
+      b1.addElement( b2 );
+      b2.addElement( b3 );
+      b3.addElement( b1 );
       fail();
-    }
-    catch (IllegalArgumentException ia)
-    {
+    } catch ( IllegalArgumentException ia ) {
       // expected, ignored
     }
 
   }
 
-  public void testRemoveElement()
-  {
+  public void testRemoveElement() {
     final MasterReport report = new MasterReport();
-    report.setName("A Very Simple Report");
+    report.setName( "A Very Simple Report" );
 
 
     TextFieldElementFactory factory = new TextFieldElementFactory();
-    factory.setName("T1");
-    factory.setAbsolutePosition(new Point2D.Float(0, 0));
-    factory.setMinimumSize(new FloatDimension(150, 20));
-    factory.setColor(Color.black);
-    factory.setHorizontalAlignment(ElementAlignment.LEFT);
-    factory.setVerticalAlignment(ElementAlignment.MIDDLE);
-    factory.setNullString("-");
-    factory.setFieldname("Column1");
+    factory.setName( "T1" );
+    factory.setAbsolutePosition( new Point2D.Float( 0, 0 ) );
+    factory.setMinimumSize( new FloatDimension( 150, 20 ) );
+    factory.setColor( Color.black );
+    factory.setHorizontalAlignment( ElementAlignment.LEFT );
+    factory.setVerticalAlignment( ElementAlignment.MIDDLE );
+    factory.setNullString( "-" );
+    factory.setFieldname( "Column1" );
 
     final Element element1 = factory.createElement();
-    report.getItemBand().addElement(element1);
+    report.getItemBand().addElement( element1 );
 
     factory = new TextFieldElementFactory();
-    factory.setName("T2");
-    factory.setAbsolutePosition(new Point2D.Float(200, 0));
-    factory.setMinimumSize(new FloatDimension(150, 20));
-    factory.setColor(Color.black);
-    factory.setHorizontalAlignment(ElementAlignment.LEFT);
-    factory.setVerticalAlignment(ElementAlignment.MIDDLE);
-    factory.setNullString("-");
-    factory.setFieldname("Column2");
+    factory.setName( "T2" );
+    factory.setAbsolutePosition( new Point2D.Float( 200, 0 ) );
+    factory.setMinimumSize( new FloatDimension( 150, 20 ) );
+    factory.setColor( Color.black );
+    factory.setHorizontalAlignment( ElementAlignment.LEFT );
+    factory.setVerticalAlignment( ElementAlignment.MIDDLE );
+    factory.setNullString( "-" );
+    factory.setFieldname( "Column2" );
 
     final Element element2 = factory.createElement();
-    report.getItemBand().addElement(element2);
+    report.getItemBand().addElement( element2 );
 
     //report.getStyleSheetCollection().debug();
 
-    report.getItemBand().removeElement(element1);
-    report.getItemBand().removeElement(element2);
+    report.getItemBand().removeElement( element1 );
+    report.getItemBand().removeElement( element2 );
 
     //report.getStyleSheetCollection().debug();
 
   }
 
-  public void testSerialize() throws Exception
-  {
+  public void testSerialize() throws Exception {
     final Band e = new Band();
     final ByteArrayOutputStream bo = new ByteArrayOutputStream();
-    final ObjectOutputStream out = new ObjectOutputStream(bo);
-    out.writeObject(e);
+    final ObjectOutputStream out = new ObjectOutputStream( bo );
+    out.writeObject( e );
 
-    final ObjectInputStream oin = new ObjectInputStream(new ByteArrayInputStream(bo.toByteArray()));
+    final ObjectInputStream oin = new ObjectInputStream( new ByteArrayInputStream( bo.toByteArray() ) );
     final Element e2 = (Element) oin.readObject();
-    assertNotNull(e2); // cannot assert equals, as this is not implemented.
+    assertNotNull( e2 ); // cannot assert equals, as this is not implemented.
   }
 
-  public void testRemoveBandElement()
-  {
+  public void testRemoveBandElement() {
     final MasterReport report = new MasterReport();
-    report.setName("A Very Simple Report");
+    report.setName( "A Very Simple Report" );
 
 
     TextFieldElementFactory factory = new TextFieldElementFactory();
-    factory.setName("T1");
-    factory.setAbsolutePosition(new Point2D.Float(0, 0));
-    factory.setMinimumSize(new FloatDimension(150, 20));
-    factory.setColor(Color.black);
-    factory.setHorizontalAlignment(ElementAlignment.LEFT);
-    factory.setVerticalAlignment(ElementAlignment.MIDDLE);
-    factory.setNullString("-");
-    factory.setFieldname("Column1");
+    factory.setName( "T1" );
+    factory.setAbsolutePosition( new Point2D.Float( 0, 0 ) );
+    factory.setMinimumSize( new FloatDimension( 150, 20 ) );
+    factory.setColor( Color.black );
+    factory.setHorizontalAlignment( ElementAlignment.LEFT );
+    factory.setVerticalAlignment( ElementAlignment.MIDDLE );
+    factory.setNullString( "-" );
+    factory.setFieldname( "Column1" );
 
     final Element element1 = factory.createElement();
-    report.getItemBand().addElement(element1);
+    report.getItemBand().addElement( element1 );
 
     factory = new TextFieldElementFactory();
-    factory.setName("T2");
-    factory.setAbsolutePosition(new Point2D.Float(200, 0));
-    factory.setMinimumSize(new FloatDimension(150, 20));
-    factory.setColor(Color.black);
-    factory.setHorizontalAlignment(ElementAlignment.LEFT);
-    factory.setVerticalAlignment(ElementAlignment.MIDDLE);
-    factory.setNullString("-");
-    factory.setFieldname("Column2");
+    factory.setName( "T2" );
+    factory.setAbsolutePosition( new Point2D.Float( 200, 0 ) );
+    factory.setMinimumSize( new FloatDimension( 150, 20 ) );
+    factory.setColor( Color.black );
+    factory.setHorizontalAlignment( ElementAlignment.LEFT );
+    factory.setVerticalAlignment( ElementAlignment.MIDDLE );
+    factory.setNullString( "-" );
+    factory.setFieldname( "Column2" );
 
     final Element element2 = factory.createElement();
-    report.getItemBand().addElement(element2);
+    report.getItemBand().addElement( element2 );
 
     //report.getStyleSheetCollection().debug();
 
-    report.getItemBand().removeElement(element1);
+    report.getItemBand().removeElement( element1 );
     //report.getStyleSheetCollection().debug();
-    DebugReportRunner.execGraphics2D(report);
+    DebugReportRunner.execGraphics2D( report );
   }
 
-  public void testRemoveElementComplete()
-  {
+  public void testRemoveElementComplete() {
     final MasterReport report = new MasterReport();
-    report.setName("A Very Simple Report");
+    report.setName( "A Very Simple Report" );
 
 
     TextFieldElementFactory factory = new TextFieldElementFactory();
-    factory.setName("T1");
-    factory.setAbsolutePosition(new Point2D.Float(0, 0));
-    factory.setMinimumSize(new FloatDimension(150, 20));
-    factory.setColor(Color.black);
-    factory.setHorizontalAlignment(ElementAlignment.LEFT);
-    factory.setVerticalAlignment(ElementAlignment.MIDDLE);
-    factory.setNullString("-");
-    factory.setFieldname("Column1");
+    factory.setName( "T1" );
+    factory.setAbsolutePosition( new Point2D.Float( 0, 0 ) );
+    factory.setMinimumSize( new FloatDimension( 150, 20 ) );
+    factory.setColor( Color.black );
+    factory.setHorizontalAlignment( ElementAlignment.LEFT );
+    factory.setVerticalAlignment( ElementAlignment.MIDDLE );
+    factory.setNullString( "-" );
+    factory.setFieldname( "Column1" );
 
     final Element element1 = factory.createElement();
-    report.getItemBand().addElement(element1);
+    report.getItemBand().addElement( element1 );
 
     factory = new TextFieldElementFactory();
-    factory.setName("T2");
-    factory.setAbsolutePosition(new Point2D.Float(200, 0));
-    factory.setMinimumSize(new FloatDimension(150, 20));
-    factory.setColor(Color.black);
-    factory.setHorizontalAlignment(ElementAlignment.LEFT);
-    factory.setVerticalAlignment(ElementAlignment.MIDDLE);
-    factory.setNullString("-");
-    factory.setFieldname("Column2");
+    factory.setName( "T2" );
+    factory.setAbsolutePosition( new Point2D.Float( 200, 0 ) );
+    factory.setMinimumSize( new FloatDimension( 150, 20 ) );
+    factory.setColor( Color.black );
+    factory.setHorizontalAlignment( ElementAlignment.LEFT );
+    factory.setVerticalAlignment( ElementAlignment.MIDDLE );
+    factory.setNullString( "-" );
+    factory.setFieldname( "Column2" );
 
     final Element element2 = factory.createElement();
-    report.getItemBand().addElement(element2);
+    report.getItemBand().addElement( element2 );
 
     //report.getStyleSheetCollection().debug();
 
-    report.getItemBand().removeElement(element1);
-    report.getItemBand().removeElement(element2);
+    report.getItemBand().removeElement( element1 );
+    report.getItemBand().removeElement( element2 );
 
     //report.getStyleSheetCollection().debug();
-    DebugReportRunner.execGraphics2D(report);
+    DebugReportRunner.execGraphics2D( report );
 
   }
 

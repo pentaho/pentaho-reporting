@@ -25,13 +25,11 @@ import org.pentaho.reporting.engine.classic.core.function.ExpressionRuntime;
  *
  * @author Thomas Morgner
  */
-public final class EmptyDataSource implements DataSource
-{
+public final class EmptyDataSource implements DataSource {
   /**
    * Default-Constructor.
    */
-  public EmptyDataSource()
-  {
+  public EmptyDataSource() {
   }
 
   /**
@@ -42,8 +40,7 @@ public final class EmptyDataSource implements DataSource
    * @param element
    * @return always null.
    */
-  public Object getValue(final ExpressionRuntime runtime, final ReportElement element)
-  {
+  public Object getValue( final ExpressionRuntime runtime, final ReportElement element ) {
     return null;
   }
 
@@ -53,8 +50,7 @@ public final class EmptyDataSource implements DataSource
    * @return a clone.
    * @noinspection CloneDoesntCallSuperClone
    */
-  public EmptyDataSource clone()
-  {
+  public EmptyDataSource clone() {
     return this;
   }
 

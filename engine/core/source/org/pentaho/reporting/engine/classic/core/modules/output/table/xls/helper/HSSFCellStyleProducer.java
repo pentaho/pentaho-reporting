@@ -17,9 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.output.table.xls.helper;
 
-import java.awt.Color;
-import java.util.HashMap;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.poi.hssf.usermodel.HSSFCellStyle;
@@ -43,18 +40,19 @@ import org.pentaho.reporting.engine.classic.core.style.TextWrap;
 import org.pentaho.reporting.engine.classic.core.util.InstanceID;
 import org.pentaho.reporting.engine.classic.core.util.geom.StrictGeomUtility;
 
+import java.awt.*;
+import java.util.HashMap;
+
 /**
  * The cellstyle producer converts the JFreeReport content into excel cell styles. This class is able to use the POI 2.0
  * features to build data cells.
  *
  * @author Thomas Morgner
  */
-public class HSSFCellStyleProducer implements CellStyleProducer
-{
-  private static final Log logger = LogFactory.getLog(HSSFCellStyleProducer.class);
+public class HSSFCellStyleProducer implements CellStyleProducer {
+  private static final Log logger = LogFactory.getLog( HSSFCellStyleProducer.class );
 
-  private static class HSSFCellStyleKey
-  {
+  private static class HSSFCellStyleKey {
     /**
      * The cell background color.
      */
@@ -136,19 +134,16 @@ public class HSSFCellStyleProducer implements CellStyleProducer
      * @param background   can be null
      * @param contentStyle can be null
      */
-    protected HSSFCellStyleKey(final CellBackground background,
-                               final StyleSheet contentStyle,
-                               final DataFormat dataFormat,
-                               final ExcelFontFactory fontFactory,
-                               final ExcelColorProducer colorProducer,
-                               final ExcelColorProducer fontColorProducer)
-    {
-      if (dataFormat == null)
-      {
+    protected HSSFCellStyleKey( final CellBackground background,
+                                final StyleSheet contentStyle,
+                                final DataFormat dataFormat,
+                                final ExcelFontFactory fontFactory,
+                                final ExcelColorProducer colorProducer,
+                                final ExcelColorProducer fontColorProducer ) {
+      if ( dataFormat == null ) {
         throw new NullPointerException();
       }
-      if (fontFactory == null)
-      {
+      if ( fontFactory == null ) {
         throw new NullPointerException();
       }
 
@@ -159,81 +154,74 @@ public class HSSFCellStyleProducer implements CellStyleProducer
       this.colorRight = HSSFColor.AUTOMATIC.index;
       this.colorTop = HSSFColor.AUTOMATIC.index;
 
-      if (background != null)
-      {
-        if (background.getBackgroundColor() != null)
-        {
-          this.color = colorProducer.getNearestColor(background.getBackgroundColor());
+      if ( background != null ) {
+        if ( background.getBackgroundColor() != null ) {
+          this.color = colorProducer.getNearestColor( background.getBackgroundColor() );
           this.xColor = background.getBackgroundColor();
         }
         final BorderEdge bottom = background.getBottom();
-        this.colorBottom = colorProducer.getNearestColor(bottom.getColor());
+        this.colorBottom = colorProducer.getNearestColor( bottom.getColor() );
         this.xColorBottom = bottom.getColor();
-        this.borderStrokeBottom = HSSFCellStyleProducer.translateStroke(bottom.getBorderStyle(), bottom.getWidth());
+        this.borderStrokeBottom = HSSFCellStyleProducer.translateStroke( bottom.getBorderStyle(), bottom.getWidth() );
 
         final BorderEdge left = background.getLeft();
-        this.colorLeft = colorProducer.getNearestColor(left.getColor());
+        this.colorLeft = colorProducer.getNearestColor( left.getColor() );
         this.xColorLeft = left.getColor();
-        this.borderStrokeLeft = HSSFCellStyleProducer.translateStroke(left.getBorderStyle(), left.getWidth());
+        this.borderStrokeLeft = HSSFCellStyleProducer.translateStroke( left.getBorderStyle(), left.getWidth() );
 
         final BorderEdge top = background.getTop();
-        this.colorTop = colorProducer.getNearestColor(top.getColor());
+        this.colorTop = colorProducer.getNearestColor( top.getColor() );
         this.xColorTop = top.getColor();
-        this.borderStrokeTop = HSSFCellStyleProducer.translateStroke(top.getBorderStyle(), top.getWidth());
+        this.borderStrokeTop = HSSFCellStyleProducer.translateStroke( top.getBorderStyle(), top.getWidth() );
 
         final BorderEdge right = background.getRight();
-        this.colorRight = colorProducer.getNearestColor(right.getColor());
+        this.colorRight = colorProducer.getNearestColor( right.getColor() );
         this.xColorRight = right.getColor();
-        this.borderStrokeRight = HSSFCellStyleProducer.translateStroke(right.getBorderStyle(), right.getWidth());
+        this.borderStrokeRight = HSSFCellStyleProducer.translateStroke( right.getBorderStyle(), right.getWidth() );
       }
 
-      if (contentStyle != null)
-      {
-        final Color textColor = (Color) contentStyle.getStyleProperty(ElementStyleKeys.PAINT);
+      if ( contentStyle != null ) {
+        final Color textColor = (Color) contentStyle.getStyleProperty( ElementStyleKeys.PAINT );
         final HSSFFontWrapper wrapper = new HSSFFontWrapper
-            (contentStyle, fontColorProducer.getNearestColor(textColor));
-        final Font excelFont = fontFactory.getExcelFont(wrapper);
+          ( contentStyle, fontColorProducer.getNearestColor( textColor ) );
+        final Font excelFont = fontFactory.getExcelFont( wrapper );
         this.font = excelFont.getIndex();
 
         final ElementAlignment horizontal =
-            (ElementAlignment) contentStyle.getStyleProperty(ElementStyleKeys.ALIGNMENT);
-        this.horizontalAlignment = HSSFCellStyleProducer.convertAlignment(horizontal);
+          (ElementAlignment) contentStyle.getStyleProperty( ElementStyleKeys.ALIGNMENT );
+        this.horizontalAlignment = HSSFCellStyleProducer.convertAlignment( horizontal );
         final ElementAlignment vertical =
-            (ElementAlignment) contentStyle.getStyleProperty(ElementStyleKeys.VALIGNMENT);
-        this.verticalAlignment = HSSFCellStyleProducer.convertAlignment(vertical);
+          (ElementAlignment) contentStyle.getStyleProperty( ElementStyleKeys.VALIGNMENT );
+        this.verticalAlignment = HSSFCellStyleProducer.convertAlignment( vertical );
         final String dataStyle =
-            (String) contentStyle.getStyleProperty(ElementStyleKeys.EXCEL_DATA_FORMAT_STRING);
-        if (dataStyle != null)
-        {
-          this.dataStyle = dataFormat.getFormat(dataStyle);
+          (String) contentStyle.getStyleProperty( ElementStyleKeys.EXCEL_DATA_FORMAT_STRING );
+        if ( dataStyle != null ) {
+          this.dataStyle = dataFormat.getFormat( dataStyle );
         }
-        this.wrapText = isWrapText(contentStyle);
+        this.wrapText = isWrapText( contentStyle );
       }
     }
 
-    private boolean isWrapText(final StyleSheet styleSheet)
-    {
-      final Object excelWrap = styleSheet.getStyleProperty(ElementStyleKeys.EXCEL_WRAP_TEXT);
-      if (excelWrap != null)
-      {
-        return Boolean.TRUE.equals(excelWrap);
+    private boolean isWrapText( final StyleSheet styleSheet ) {
+      final Object excelWrap = styleSheet.getStyleProperty( ElementStyleKeys.EXCEL_WRAP_TEXT );
+      if ( excelWrap != null ) {
+        return Boolean.TRUE.equals( excelWrap );
       }
-      return TextWrap.WRAP.equals(styleSheet.getStyleProperty(TextStyleKeys.TEXT_WRAP, TextWrap.WRAP));
+      return TextWrap.WRAP.equals( styleSheet.getStyleProperty( TextStyleKeys.TEXT_WRAP, TextWrap.WRAP ) );
     }
 
-    protected HSSFCellStyleKey(final XSSFCellStyle style)
-    {
+    protected HSSFCellStyleKey( final XSSFCellStyle style ) {
       this.color = style.getFillForegroundColor();
       this.colorTop = style.getTopBorderColor();
       this.colorLeft = style.getLeftBorderColor();
       this.colorBottom = style.getBottomBorderColor();
       this.colorRight = style.getRightBorderColor();
 
-      this.xColor = createColor(style.getFillBackgroundXSSFColor());
-      this.xColorTop = createColor(style.getTopBorderXSSFColor());
-      this.xColorLeft = createColor(style.getLeftBorderXSSFColor());
-      this.xColorBottom = createColor(style.getBottomBorderXSSFColor());
-      this.xColorRight = createColor(style.getRightBorderXSSFColor());
+      this.xColor = createColor( style.getFillBackgroundXSSFColor() );
+      this.xColorTop = createColor( style.getTopBorderXSSFColor() );
+      this.xColorLeft = createColor( style.getLeftBorderXSSFColor() );
+      this.xColorBottom = createColor( style.getBottomBorderXSSFColor() );
+      this.xColorRight = createColor( style.getRightBorderXSSFColor() );
 
       this.borderStrokeTop = style.getBorderTop();
       this.borderStrokeLeft = style.getBorderLeft();
@@ -247,18 +235,15 @@ public class HSSFCellStyleProducer implements CellStyleProducer
       this.wrapText = style.getWrapText();
     }
 
-    private static Color createColor(final XSSFColor color)
-    {
-      if (color == null)
-      {
+    private static Color createColor( final XSSFColor color ) {
+      if ( color == null ) {
         return null;
       }
       final byte[] rgb = color.getRgb();
-      return new Color(0xFF & rgb[0], 0xFF & rgb[1], 0xFF & rgb[2]);
+      return new Color( 0xFF & rgb[ 0 ], 0xFF & rgb[ 1 ], 0xFF & rgb[ 2 ] );
     }
 
-    protected HSSFCellStyleKey(final CellStyle style)
-    {
+    protected HSSFCellStyleKey( final CellStyle style ) {
       this.color = style.getFillForegroundColor();
       this.colorTop = style.getTopBorderColor();
       this.colorLeft = style.getLeftBorderColor();
@@ -276,151 +261,108 @@ public class HSSFCellStyleProducer implements CellStyleProducer
       this.wrapText = style.getWrapText();
     }
 
-    public boolean equals(final Object o)
-    {
-      if (this == o)
-      {
+    public boolean equals( final Object o ) {
+      if ( this == o ) {
         return true;
       }
-      if (o == null || getClass() != o.getClass())
-      {
+      if ( o == null || getClass() != o.getClass() ) {
         return false;
       }
 
       final HSSFCellStyleKey that = (HSSFCellStyleKey) o;
 
-      if (borderStrokeBottom != that.borderStrokeBottom)
-      {
+      if ( borderStrokeBottom != that.borderStrokeBottom ) {
         return false;
       }
-      if (borderStrokeLeft != that.borderStrokeLeft)
-      {
+      if ( borderStrokeLeft != that.borderStrokeLeft ) {
         return false;
       }
-      if (borderStrokeRight != that.borderStrokeRight)
-      {
+      if ( borderStrokeRight != that.borderStrokeRight ) {
         return false;
       }
-      if (borderStrokeTop != that.borderStrokeTop)
-      {
+      if ( borderStrokeTop != that.borderStrokeTop ) {
         return false;
       }
-      if (color != that.color)
-      {
+      if ( color != that.color ) {
         return false;
       }
-      if (colorBottom != that.colorBottom)
-      {
+      if ( colorBottom != that.colorBottom ) {
         return false;
       }
-      if (colorLeft != that.colorLeft)
-      {
+      if ( colorLeft != that.colorLeft ) {
         return false;
       }
-      if (colorRight != that.colorRight)
-      {
+      if ( colorRight != that.colorRight ) {
         return false;
       }
-      if (colorTop != that.colorTop)
-      {
+      if ( colorTop != that.colorTop ) {
         return false;
       }
-      if (dataStyle != that.dataStyle)
-      {
+      if ( dataStyle != that.dataStyle ) {
         return false;
       }
-      if (font != that.font)
-      {
+      if ( font != that.font ) {
         return false;
       }
-      if (horizontalAlignment != that.horizontalAlignment)
-      {
+      if ( horizontalAlignment != that.horizontalAlignment ) {
         return false;
       }
-      if (verticalAlignment != that.verticalAlignment)
-      {
+      if ( verticalAlignment != that.verticalAlignment ) {
         return false;
       }
-      if (wrapText != that.wrapText)
-      {
+      if ( wrapText != that.wrapText ) {
         return false;
       }
-      if (xColor == null)
-      {
-        if (that.xColor != null)
-        {
+      if ( xColor == null ) {
+        if ( that.xColor != null ) {
           return false;
         }
-      }
-      else
-      {
-        if (xColor.equals(that.xColor) == false)
-        {
+      } else {
+        if ( xColor.equals( that.xColor ) == false ) {
           return false;
         }
       }
 
-      if (xColorRight == null)
-      {
-        if (that.xColorRight != null)
-        {
+      if ( xColorRight == null ) {
+        if ( that.xColorRight != null ) {
+          return false;
+        }
+      } else {
+        if ( xColorRight.equals( that.xColorRight ) == false ) {
           return false;
         }
       }
-      else
-      {
-        if (xColorRight.equals(that.xColorRight) == false)
-        {
+      if ( xColorLeft == null ) {
+        if ( that.xColorLeft != null ) {
+          return false;
+        }
+      } else {
+        if ( xColorLeft.equals( that.xColorLeft ) == false ) {
           return false;
         }
       }
-      if (xColorLeft == null)
-      {
-        if (that.xColorLeft != null)
-        {
+      if ( xColorTop == null ) {
+        if ( that.xColorTop != null ) {
+          return false;
+        }
+      } else {
+        if ( xColorTop.equals( that.xColorTop ) == false ) {
           return false;
         }
       }
-      else
-      {
-        if (xColorLeft.equals(that.xColorLeft) == false)
-        {
+      if ( xColorBottom == null ) {
+        if ( that.xColorBottom != null ) {
           return false;
         }
-      }
-      if (xColorTop == null)
-      {
-        if (that.xColorTop != null)
-        {
-          return false;
-        }
-      }
-      else
-      {
-        if (xColorTop.equals(that.xColorTop) == false)
-        {
-          return false;
-        }
-      }
-      if (xColorBottom == null)
-      {
-        if (that.xColorBottom != null)
-        {
-          return false;
-        }
-      }
-      else
-      {
-        return xColorBottom.equals(that.xColorBottom);
+      } else {
+        return xColorBottom.equals( that.xColorBottom );
       }
 
       return true;
     }
 
-    public int hashCode()
-    {
-      if (hashCode == null)
-      {
+    public int hashCode() {
+      if ( hashCode == null ) {
         int result = (int) color;
         result = 29 * result + (int) borderStrokeTop;
         result = 29 * result + (int) borderStrokeBottom;
@@ -430,113 +372,94 @@ public class HSSFCellStyleProducer implements CellStyleProducer
         result = 29 * result + (int) colorLeft;
         result = 29 * result + (int) colorBottom;
         result = 29 * result + (int) colorRight;
-        result = 29 * result + (wrapText ? 1 : 0);
+        result = 29 * result + ( wrapText ? 1 : 0 );
         result = 29 * result + (int) horizontalAlignment;
         result = 29 * result + (int) verticalAlignment;
         result = 29 * result + (int) font;
         result = 29 * result + (int) dataStyle;
-        result = 29 * result + ((xColor == null) ? 0 : xColor.hashCode());
-        result = 29 * result + ((xColorTop == null) ? 0 : xColorTop.hashCode());
-        result = 29 * result + ((xColorLeft == null) ? 0 : xColorLeft.hashCode());
-        result = 29 * result + ((xColorBottom == null) ? 0 : xColorBottom.hashCode());
-        result = 29 * result + ((xColorRight == null) ? 0 : xColorRight.hashCode());
+        result = 29 * result + ( ( xColor == null ) ? 0 : xColor.hashCode() );
+        result = 29 * result + ( ( xColorTop == null ) ? 0 : xColorTop.hashCode() );
+        result = 29 * result + ( ( xColorLeft == null ) ? 0 : xColorLeft.hashCode() );
+        result = 29 * result + ( ( xColorBottom == null ) ? 0 : xColorBottom.hashCode() );
+        result = 29 * result + ( ( xColorRight == null ) ? 0 : xColorRight.hashCode() );
         hashCode = result;
       }
       return hashCode;
     }
 
-    public short getColor()
-    {
+    public short getColor() {
       return color;
     }
 
-    public short getBorderStrokeTop()
-    {
+    public short getBorderStrokeTop() {
       return borderStrokeTop;
     }
 
-    public short getBorderStrokeBottom()
-    {
+    public short getBorderStrokeBottom() {
       return borderStrokeBottom;
     }
 
-    public short getBorderStrokeLeft()
-    {
+    public short getBorderStrokeLeft() {
       return borderStrokeLeft;
     }
 
-    public short getBorderStrokeRight()
-    {
+    public short getBorderStrokeRight() {
       return borderStrokeRight;
     }
 
-    public short getColorTop()
-    {
+    public short getColorTop() {
       return colorTop;
     }
 
-    public short getColorLeft()
-    {
+    public short getColorLeft() {
       return colorLeft;
     }
 
-    public short getColorBottom()
-    {
+    public short getColorBottom() {
       return colorBottom;
     }
 
-    public short getColorRight()
-    {
+    public short getColorRight() {
       return colorRight;
     }
 
-    public Color getExtendedColor()
-    {
+    public Color getExtendedColor() {
       return xColor;
     }
 
-    public Color getExtendedColorTop()
-    {
+    public Color getExtendedColorTop() {
       return xColorTop;
     }
 
-    public Color getExtendedColorLeft()
-    {
+    public Color getExtendedColorLeft() {
       return xColorLeft;
     }
 
-    public Color getExtendedColorBottom()
-    {
+    public Color getExtendedColorBottom() {
       return xColorBottom;
     }
 
-    public Color getExtendedColorRight()
-    {
+    public Color getExtendedColorRight() {
       return xColorRight;
     }
 
-    public boolean isWrapText()
-    {
+    public boolean isWrapText() {
       return wrapText;
     }
 
-    public short getHorizontalAlignment()
-    {
+    public short getHorizontalAlignment() {
       return horizontalAlignment;
     }
 
-    public short getVerticalAlignment()
-    {
+    public short getVerticalAlignment() {
       return verticalAlignment;
     }
 
-    public short getFont()
-    {
+    public short getFont() {
       return font;
     }
 
-    public short getDataStyle()
-    {
+    public short getDataStyle() {
       return dataStyle;
     }
   }
@@ -571,45 +494,37 @@ public class HSSFCellStyleProducer implements CellStyleProducer
    *
    * @param workbook the workbook for which the styles should be created.
    */
-  public HSSFCellStyleProducer(final Workbook workbook,
-                               final boolean hardLimit,
-                               final ExcelColorProducer colorProducer,
-                               final ExcelColorProducer fontColorProducer)
-  {
+  public HSSFCellStyleProducer( final Workbook workbook,
+                                final boolean hardLimit,
+                                final ExcelColorProducer colorProducer,
+                                final ExcelColorProducer fontColorProducer ) {
     this.fontColorProducer = fontColorProducer;
-    if (workbook == null)
-    {
+    if ( workbook == null ) {
       throw new NullPointerException();
     }
-    if (colorProducer == null)
-    {
+    if ( colorProducer == null ) {
       throw new NullPointerException();
     }
     this.colorProducer = colorProducer;
     this.styleCache = new HashMap<HSSFCellStyleKey, CellStyle>();
     this.workbook = workbook;
-    this.fontFactory = new ExcelFontFactory(workbook, fontColorProducer);
+    this.fontFactory = new ExcelFontFactory( workbook, fontColorProducer );
     this.dataFormat = workbook.createDataFormat();
     this.hardLimit = hardLimit;
 
-    if (workbook instanceof XSSFWorkbook)
-    {
+    if ( workbook instanceof XSSFWorkbook ) {
       final XSSFWorkbook xssfWorkbook = (XSSFWorkbook) workbook;
       final short predefinedStyles = workbook.getNumCellStyles();
-      for (short i = 0; i < predefinedStyles; i++)
-      {
-        final XSSFCellStyle cellStyleAt = xssfWorkbook.getCellStyleAt(i);
-        this.styleCache.put(new HSSFCellStyleKey(cellStyleAt), cellStyleAt);
+      for ( short i = 0; i < predefinedStyles; i++ ) {
+        final XSSFCellStyle cellStyleAt = xssfWorkbook.getCellStyleAt( i );
+        this.styleCache.put( new HSSFCellStyleKey( cellStyleAt ), cellStyleAt );
       }
-    }
-    else
-    {
+    } else {
       // Read in the styles ...
       final short predefinedStyles = workbook.getNumCellStyles();
-      for (short i = 0; i < predefinedStyles; i++)
-      {
-        final CellStyle cellStyleAt = workbook.getCellStyleAt(i);
-        this.styleCache.put(new HSSFCellStyleKey(cellStyleAt), cellStyleAt);
+      for ( short i = 0; i < predefinedStyles; i++ ) {
+        final CellStyle cellStyleAt = workbook.getCellStyleAt( i );
+        this.styleCache.put( new HSSFCellStyleKey( cellStyleAt ), cellStyleAt );
       }
     }
   }
@@ -622,119 +537,97 @@ public class HSSFCellStyleProducer implements CellStyleProducer
    * @param bg      the optional background style for the table cell.
    * @return the generated or cached HSSFCellStyle.
    */
-  public CellStyle createCellStyle(final InstanceID id,
-                                   final StyleSheet element,
-                                   final CellBackground bg)
-  {
+  public CellStyle createCellStyle( final InstanceID id,
+                                    final StyleSheet element,
+                                    final CellBackground bg ) {
     // check, whether that style is already created
     final HSSFCellStyleKey styleKey = new HSSFCellStyleKey
-        (bg, element, dataFormat, fontFactory, colorProducer, fontColorProducer);
-    if (styleCache.containsKey(styleKey))
-    {
-      return styleCache.get(styleKey);
+      ( bg, element, dataFormat, fontFactory, colorProducer, fontColorProducer );
+    if ( styleCache.containsKey( styleKey ) ) {
+      return styleCache.get( styleKey );
     }
 
-    if ((styleCache.size()) > 4000)
-    {
-      if (warningDone == false)
-      {
-        HSSFCellStyleProducer.logger.warn("HSSFCellStyleProducer has reached the limit of 4000 created styles.");
+    if ( ( styleCache.size() ) > 4000 ) {
+      if ( warningDone == false ) {
+        HSSFCellStyleProducer.logger.warn( "HSSFCellStyleProducer has reached the limit of 4000 created styles." );
         warningDone = true;
       }
-      if (hardLimit)
-      {
+      if ( hardLimit ) {
         HSSFCellStyleProducer.logger.warn(
-            "HSSFCellStyleProducer will not create more styles. New cells will not have any style.");
+          "HSSFCellStyleProducer will not create more styles. New cells will not have any style." );
         return null;
       }
     }
 
     final CellStyle hssfCellStyle = workbook.createCellStyle();
-    if (element != null)
-    {
-      hssfCellStyle.setAlignment(styleKey.getHorizontalAlignment());
-      hssfCellStyle.setVerticalAlignment(styleKey.getVerticalAlignment());
-      hssfCellStyle.setFont(workbook.getFontAt(styleKey.getFont()));
-      hssfCellStyle.setWrapText(styleKey.isWrapText());
-      if (styleKey.getDataStyle() >= 0)
-      {
-        hssfCellStyle.setDataFormat(styleKey.getDataStyle());
+    if ( element != null ) {
+      hssfCellStyle.setAlignment( styleKey.getHorizontalAlignment() );
+      hssfCellStyle.setVerticalAlignment( styleKey.getVerticalAlignment() );
+      hssfCellStyle.setFont( workbook.getFontAt( styleKey.getFont() ) );
+      hssfCellStyle.setWrapText( styleKey.isWrapText() );
+      if ( styleKey.getDataStyle() >= 0 ) {
+        hssfCellStyle.setDataFormat( styleKey.getDataStyle() );
       }
     }
-    if (bg != null)
-    {
-      if (hssfCellStyle instanceof XSSFCellStyle)
-      {
+    if ( bg != null ) {
+      if ( hssfCellStyle instanceof XSSFCellStyle ) {
         final XSSFCellStyle xssfCellStyle = (XSSFCellStyle) hssfCellStyle;
-        if (BorderStyle.NONE.equals(bg.getBottom().getBorderStyle()) == false)
-        {
-          hssfCellStyle.setBorderBottom(styleKey.getBorderStrokeBottom());
-          xssfCellStyle.setBorderColor(XSSFCellBorder.BorderSide.BOTTOM,
-              createXSSFColor(styleKey.getExtendedColorBottom()));
+        if ( BorderStyle.NONE.equals( bg.getBottom().getBorderStyle() ) == false ) {
+          hssfCellStyle.setBorderBottom( styleKey.getBorderStrokeBottom() );
+          xssfCellStyle.setBorderColor( XSSFCellBorder.BorderSide.BOTTOM,
+            createXSSFColor( styleKey.getExtendedColorBottom() ) );
         }
-        if (BorderStyle.NONE.equals(bg.getTop().getBorderStyle()) == false)
-        {
-          hssfCellStyle.setBorderTop(styleKey.getBorderStrokeTop());
-          xssfCellStyle.setBorderColor(XSSFCellBorder.BorderSide.TOP,
-              createXSSFColor(styleKey.getExtendedColorTop()));
+        if ( BorderStyle.NONE.equals( bg.getTop().getBorderStyle() ) == false ) {
+          hssfCellStyle.setBorderTop( styleKey.getBorderStrokeTop() );
+          xssfCellStyle.setBorderColor( XSSFCellBorder.BorderSide.TOP,
+            createXSSFColor( styleKey.getExtendedColorTop() ) );
         }
-        if (BorderStyle.NONE.equals(bg.getLeft().getBorderStyle()) == false)
-        {
-          hssfCellStyle.setBorderLeft(styleKey.getBorderStrokeLeft());
-          xssfCellStyle.setBorderColor(XSSFCellBorder.BorderSide.LEFT,
-              createXSSFColor(styleKey.getExtendedColorLeft()));
+        if ( BorderStyle.NONE.equals( bg.getLeft().getBorderStyle() ) == false ) {
+          hssfCellStyle.setBorderLeft( styleKey.getBorderStrokeLeft() );
+          xssfCellStyle.setBorderColor( XSSFCellBorder.BorderSide.LEFT,
+            createXSSFColor( styleKey.getExtendedColorLeft() ) );
         }
-        if (BorderStyle.NONE.equals(bg.getRight().getBorderStyle()) == false)
-        {
-          hssfCellStyle.setBorderRight(styleKey.getBorderStrokeRight());
-          xssfCellStyle.setBorderColor(XSSFCellBorder.BorderSide.RIGHT,
-              createXSSFColor(styleKey.getExtendedColorRight()));
+        if ( BorderStyle.NONE.equals( bg.getRight().getBorderStyle() ) == false ) {
+          hssfCellStyle.setBorderRight( styleKey.getBorderStrokeRight() );
+          xssfCellStyle.setBorderColor( XSSFCellBorder.BorderSide.RIGHT,
+            createXSSFColor( styleKey.getExtendedColorRight() ) );
         }
-        if (bg.getBackgroundColor() != null)
-        {
-          xssfCellStyle.setFillForegroundColor(createXSSFColor(styleKey.getExtendedColor()));
-          hssfCellStyle.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
+        if ( bg.getBackgroundColor() != null ) {
+          xssfCellStyle.setFillForegroundColor( createXSSFColor( styleKey.getExtendedColor() ) );
+          hssfCellStyle.setFillPattern( HSSFCellStyle.SOLID_FOREGROUND );
         }
-      }
-      else
-      {
-        if (BorderStyle.NONE.equals(bg.getBottom().getBorderStyle()) == false)
-        {
-          hssfCellStyle.setBorderBottom(styleKey.getBorderStrokeBottom());
-          hssfCellStyle.setBottomBorderColor(styleKey.getColorBottom());
+      } else {
+        if ( BorderStyle.NONE.equals( bg.getBottom().getBorderStyle() ) == false ) {
+          hssfCellStyle.setBorderBottom( styleKey.getBorderStrokeBottom() );
+          hssfCellStyle.setBottomBorderColor( styleKey.getColorBottom() );
         }
-        if (BorderStyle.NONE.equals(bg.getTop().getBorderStyle()) == false)
-        {
-          hssfCellStyle.setBorderTop(styleKey.getBorderStrokeTop());
-          hssfCellStyle.setTopBorderColor(styleKey.getColorTop());
+        if ( BorderStyle.NONE.equals( bg.getTop().getBorderStyle() ) == false ) {
+          hssfCellStyle.setBorderTop( styleKey.getBorderStrokeTop() );
+          hssfCellStyle.setTopBorderColor( styleKey.getColorTop() );
         }
-        if (BorderStyle.NONE.equals(bg.getLeft().getBorderStyle()) == false)
-        {
-          hssfCellStyle.setBorderLeft(styleKey.getBorderStrokeLeft());
-          hssfCellStyle.setLeftBorderColor(styleKey.getColorLeft());
+        if ( BorderStyle.NONE.equals( bg.getLeft().getBorderStyle() ) == false ) {
+          hssfCellStyle.setBorderLeft( styleKey.getBorderStrokeLeft() );
+          hssfCellStyle.setLeftBorderColor( styleKey.getColorLeft() );
         }
-        if (BorderStyle.NONE.equals(bg.getRight().getBorderStyle()) == false)
-        {
-          hssfCellStyle.setBorderRight(styleKey.getBorderStrokeRight());
-          hssfCellStyle.setRightBorderColor(styleKey.getColorRight());
+        if ( BorderStyle.NONE.equals( bg.getRight().getBorderStyle() ) == false ) {
+          hssfCellStyle.setBorderRight( styleKey.getBorderStrokeRight() );
+          hssfCellStyle.setRightBorderColor( styleKey.getColorRight() );
         }
-        if (bg.getBackgroundColor() != null)
-        {
-          hssfCellStyle.setFillForegroundColor(styleKey.getColor());
-          hssfCellStyle.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
+        if ( bg.getBackgroundColor() != null ) {
+          hssfCellStyle.setFillForegroundColor( styleKey.getColor() );
+          hssfCellStyle.setFillPattern( HSSFCellStyle.SOLID_FOREGROUND );
         }
       }
     }
 
 
-    styleCache.put(styleKey, hssfCellStyle);
+    styleCache.put( styleKey, hssfCellStyle );
     return hssfCellStyle;
   }
 
-  private XSSFColor createXSSFColor(final Color clr)
-  {
-    byte[] rgb = {(byte) 255, (byte) clr.getRed(), (byte) clr.getGreen(), (byte) clr.getBlue()};
-    return new XSSFColor(rgb);
+  private XSSFColor createXSSFColor( final Color clr ) {
+    byte[] rgb = { (byte) 255, (byte) clr.getRed(), (byte) clr.getGreen(), (byte) clr.getBlue() };
+    return new XSSFColor( rgb );
   }
 
   /**
@@ -744,38 +637,30 @@ public class HSSFCellStyleProducer implements CellStyleProducer
    * @return the HSSFCellStyle-Alignment.
    * @throws IllegalArgumentException if an Unknown JFreeReport alignment is given.
    */
-  protected static short convertAlignment(final ElementAlignment e)
-  {
-    if (ElementAlignment.LEFT.equals(e))
-    {
+  protected static short convertAlignment( final ElementAlignment e ) {
+    if ( ElementAlignment.LEFT.equals( e ) ) {
       return HSSFCellStyle.ALIGN_LEFT;
     }
-    if (ElementAlignment.RIGHT.equals(e))
-    {
+    if ( ElementAlignment.RIGHT.equals( e ) ) {
       return HSSFCellStyle.ALIGN_RIGHT;
     }
-    if (ElementAlignment.JUSTIFY.equals(e))
-    {
+    if ( ElementAlignment.JUSTIFY.equals( e ) ) {
       return HSSFCellStyle.ALIGN_JUSTIFY;
     }
-    if (ElementAlignment.CENTER.equals(e))
-    {
+    if ( ElementAlignment.CENTER.equals( e ) ) {
       return HSSFCellStyle.ALIGN_CENTER;
     }
-    if (ElementAlignment.TOP.equals(e))
-    {
+    if ( ElementAlignment.TOP.equals( e ) ) {
       return HSSFCellStyle.VERTICAL_TOP;
     }
-    if (ElementAlignment.BOTTOM.equals(e))
-    {
+    if ( ElementAlignment.BOTTOM.equals( e ) ) {
       return HSSFCellStyle.VERTICAL_BOTTOM;
     }
-    if (ElementAlignment.MIDDLE.equals(e))
-    {
+    if ( ElementAlignment.MIDDLE.equals( e ) ) {
       return HSSFCellStyle.VERTICAL_CENTER;
     }
 
-    throw new IllegalArgumentException("Invalid alignment");
+    throw new IllegalArgumentException( "Invalid alignment" );
   }
 
   /**
@@ -784,83 +669,58 @@ public class HSSFCellStyleProducer implements CellStyleProducer
    * @param widthRaw the AWT-Stroke-Width.
    * @return the translated excel border width.
    */
-  protected static short translateStroke(final BorderStyle borderStyle, final long widthRaw)
-  {
-    final double width = StrictGeomUtility.toExternalValue(widthRaw);
-    if (BorderStyle.NONE.equals(borderStyle))
-    {
+  protected static short translateStroke( final BorderStyle borderStyle, final long widthRaw ) {
+    final double width = StrictGeomUtility.toExternalValue( widthRaw );
+    if ( BorderStyle.NONE.equals( borderStyle ) ) {
       return HSSFCellStyle.BORDER_NONE;
     }
-    if (BorderStyle.DASHED.equals(borderStyle))
-    {
-      if (width <= 1.5)
-      {
+    if ( BorderStyle.DASHED.equals( borderStyle ) ) {
+      if ( width <= 1.5 ) {
         return HSSFCellStyle.BORDER_DASHED;
-      }
-      else
-      {
+      } else {
         return HSSFCellStyle.BORDER_MEDIUM_DASHED;
       }
     }
-    if (BorderStyle.DOT_DOT_DASH.equals(borderStyle))
-    {
-      if (width <= 1.5)
-      {
+    if ( BorderStyle.DOT_DOT_DASH.equals( borderStyle ) ) {
+      if ( width <= 1.5 ) {
         return HSSFCellStyle.BORDER_DASH_DOT_DOT;
-      }
-      else
-      {
+      } else {
         return HSSFCellStyle.BORDER_MEDIUM_DASH_DOT_DOT;
       }
     }
-    if (BorderStyle.DOT_DASH.equals(borderStyle))
-    {
-      if (width <= 1.5)
-      {
+    if ( BorderStyle.DOT_DASH.equals( borderStyle ) ) {
+      if ( width <= 1.5 ) {
         return HSSFCellStyle.BORDER_DASH_DOT;
-      }
-      else
-      {
+      } else {
         return HSSFCellStyle.BORDER_MEDIUM_DASH_DOT;
       }
     }
-    if (BorderStyle.DOTTED.equals(borderStyle))
-    {
+    if ( BorderStyle.DOTTED.equals( borderStyle ) ) {
       return HSSFCellStyle.BORDER_DOTTED;
     }
-    if (BorderStyle.DOUBLE.equals(borderStyle))
-    {
+    if ( BorderStyle.DOUBLE.equals( borderStyle ) ) {
       return HSSFCellStyle.BORDER_DOUBLE;
     }
 
-    if (width == 0)
-    {
+    if ( width == 0 ) {
       return HSSFCellStyle.BORDER_NONE;
-    }
-    else if (width <= 0.5)
-    {
+    } else if ( width <= 0.5 ) {
       return HSSFCellStyle.BORDER_HAIR;
-    }
-    else if (width <= 1)
-    {
+    } else if ( width <= 1 ) {
       return HSSFCellStyle.BORDER_THIN;
-    }
-    else if (width <= 1.5)
-    {
+    } else if ( width <= 1.5 ) {
       return HSSFCellStyle.BORDER_MEDIUM;
     }
-//    else if (width <= 2)
-//    {
-//      return HSSFCellStyle.BORDER_DOUBLE;
-//    }
-    else
-    {
+    //    else if (width <= 2)
+    //    {
+    //      return HSSFCellStyle.BORDER_DOUBLE;
+    //    }
+    else {
       return HSSFCellStyle.BORDER_THICK;
     }
   }
 
-  public ExcelFontFactory getFontFactory()
-  {
+  public ExcelFontFactory getFontFactory() {
     return fontFactory;
   }
 }

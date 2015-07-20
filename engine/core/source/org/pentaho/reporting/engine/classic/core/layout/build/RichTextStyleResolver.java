@@ -24,38 +24,32 @@ import org.pentaho.reporting.engine.classic.core.style.ResolverStyleSheet;
 import org.pentaho.reporting.engine.classic.core.style.resolver.SimpleStyleResolver;
 import org.pentaho.reporting.engine.classic.core.util.AbstractStructureVisitor;
 
-public class RichTextStyleResolver extends AbstractStructureVisitor
-{
+public class RichTextStyleResolver extends AbstractStructureVisitor {
   private SimpleStyleResolver simpleStyleResolver;
   private ResolverStyleSheet resolveStyleSheet;
 
-  public RichTextStyleResolver()
-  {
+  public RichTextStyleResolver() {
     this.simpleStyleResolver = new SimpleStyleResolver();
     this.resolveStyleSheet = new ResolverStyleSheet();
   }
 
-  protected void traverseSection(final Section section)
-  {
-    traverseSectionWithoutSubReports(section);
+  protected void traverseSection( final Section section ) {
+    traverseSectionWithoutSubReports( section );
   }
 
-  public void resolve(final Section section)
-  {
-    inspectElement(section);
-    traverseSection(section);
+  public void resolve( final Section section ) {
+    inspectElement( section );
+    traverseSection( section );
   }
 
-  protected void inspectElement(final ReportElement element)
-  {
-    simpleStyleResolver.resolve(element, resolveStyleSheet);
-    element.setComputedStyle(new SimpleStyleSheet(resolveStyleSheet));
+  protected void inspectElement( final ReportElement element ) {
+    simpleStyleResolver.resolve( element, resolveStyleSheet );
+    element.setComputedStyle( new SimpleStyleSheet( resolveStyleSheet ) );
   }
 
-  public static void resolveStyle(final Section section)
-  {
+  public static void resolveStyle( final Section section ) {
     final RichTextStyleResolver richTextStyleResolver = new RichTextStyleResolver();
-    richTextStyleResolver.resolve(section);
+    richTextStyleResolver.resolve( section );
   }
 
 

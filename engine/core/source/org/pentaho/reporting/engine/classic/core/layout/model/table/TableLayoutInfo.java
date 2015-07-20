@@ -20,55 +20,45 @@ package org.pentaho.reporting.engine.classic.core.layout.model.table;
 
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderLength;
 
-public class TableLayoutInfo
-{
+public class TableLayoutInfo {
   private RenderLength rowSpacing;
 
   private boolean displayEmptyCells;
   private boolean collapsingBorderModel;
   private boolean autoLayout;
 
-  public TableLayoutInfo()
-  {
+  public TableLayoutInfo() {
   }
 
-  public RenderLength getRowSpacing()
-  {
+  public RenderLength getRowSpacing() {
     return rowSpacing;
   }
 
-  public void setRowSpacing(final RenderLength rowSpacing)
-  {
+  public void setRowSpacing( final RenderLength rowSpacing ) {
     this.rowSpacing = rowSpacing;
   }
 
-  public boolean isDisplayEmptyCells()
-  {
+  public boolean isDisplayEmptyCells() {
     return displayEmptyCells;
   }
 
-  public void setDisplayEmptyCells(final boolean displayEmptyCells)
-  {
+  public void setDisplayEmptyCells( final boolean displayEmptyCells ) {
     this.displayEmptyCells = displayEmptyCells;
   }
 
-  public boolean isCollapsingBorderModel()
-  {
+  public boolean isCollapsingBorderModel() {
     return collapsingBorderModel;
   }
 
-  public void setCollapsingBorderModel(final boolean collapsingBorderModel)
-  {
+  public void setCollapsingBorderModel( final boolean collapsingBorderModel ) {
     this.collapsingBorderModel = collapsingBorderModel;
   }
 
-  public boolean isAutoLayout()
-  {
+  public boolean isAutoLayout() {
     return autoLayout;
   }
 
-  public void setAutoLayout(final boolean autoLayout)
-  {
+  public void setAutoLayout( final boolean autoLayout ) {
     this.autoLayout = autoLayout;
   }
 }

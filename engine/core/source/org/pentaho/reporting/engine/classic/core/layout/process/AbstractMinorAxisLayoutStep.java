@@ -38,9 +38,8 @@ import org.pentaho.reporting.engine.classic.core.layout.process.util.MinorAxisNo
 import org.pentaho.reporting.engine.classic.core.layout.process.util.MinorAxisTableContext;
 import org.pentaho.reporting.engine.classic.core.util.geom.StrictGeomUtility;
 
-public abstract class AbstractMinorAxisLayoutStep extends IterateVisualProcessStep
-{
-  public static final long OVERFLOW_DUMMY_WIDTH = StrictGeomUtility.toInternalValue(20000);
+public abstract class AbstractMinorAxisLayoutStep extends IterateVisualProcessStep {
+  public static final long OVERFLOW_DUMMY_WIDTH = StrictGeomUtility.toInternalValue( 20000 );
 
   private OutputProcessorMetaData metaData;
   private boolean strictLegacyMode;
@@ -52,55 +51,44 @@ public abstract class AbstractMinorAxisLayoutStep extends IterateVisualProcessSt
   private TextAlignmentProcessor justifyProcessor;
   private MinorAxisTableContext tableContext;
 
-  protected AbstractMinorAxisLayoutStep()
-  {
+  protected AbstractMinorAxisLayoutStep() {
   }
 
-  public void initialize(final OutputProcessorMetaData metaData)
-  {
+  public void initialize( final OutputProcessorMetaData metaData ) {
     this.metaData = metaData;
-    this.strictLegacyMode = metaData.isFeatureSupported(OutputProcessorFeature.STRICT_COMPATIBILITY);
+    this.strictLegacyMode = metaData.isFeatureSupported( OutputProcessorFeature.STRICT_COMPATIBILITY );
   }
 
-  protected OutputProcessorMetaData getMetaData()
-  {
+  protected OutputProcessorMetaData getMetaData() {
     return metaData;
   }
 
-  protected boolean isStrictLegacyMode()
-  {
+  protected boolean isStrictLegacyMode() {
     return strictLegacyMode;
   }
 
-  protected PageGrid getPageGrid()
-  {
+  protected PageGrid getPageGrid() {
     return pageGrid;
   }
 
-  protected boolean checkCacheValid(final RenderNode node)
-  {
+  protected boolean checkCacheValid( final RenderNode node ) {
     final RenderNode.CacheState cacheState = node.getCacheState();
-    if (cacheState == RenderNode.CacheState.CLEAN)
-    {
+    if ( cacheState == RenderNode.CacheState.CLEAN ) {
       return true;
     }
     return false;
   }
 
-  public void compute(final LogicalPageBox root)
-  {
+  public void compute( final LogicalPageBox root ) {
     getEventWatch().start();
     getSummaryWatch().start();
-    try
-    {
+    try {
       pageGrid = root.getPageGrid();
-      startProcessing(root);
-    }
-    finally
-    {
+      startProcessing( root );
+    } finally {
       pageGrid = null;
       getEventWatch().stop();
-      getSummaryWatch().stop(true);
+      getSummaryWatch().stop( true );
     }
   }
 
@@ -112,93 +100,73 @@ public abstract class AbstractMinorAxisLayoutStep extends IterateVisualProcessSt
    * @param alignment
    * @return
    */
-  protected TextAlignmentProcessor create(final ElementAlignment alignment)
-  {
-    if (ElementAlignment.CENTER.equals(alignment))
-    {
-      if (centerProcessor == null)
-      {
+  protected TextAlignmentProcessor create( final ElementAlignment alignment ) {
+    if ( ElementAlignment.CENTER.equals( alignment ) ) {
+      if ( centerProcessor == null ) {
         centerProcessor = new CenterAlignmentProcessor();
       }
       return centerProcessor;
-    }
-    else if (ElementAlignment.RIGHT.equals(alignment))
-    {
-      if (rightProcessor == null)
-      {
+    } else if ( ElementAlignment.RIGHT.equals( alignment ) ) {
+      if ( rightProcessor == null ) {
         rightProcessor = new RightAlignmentProcessor();
       }
       return rightProcessor;
-    }
-    else if (ElementAlignment.JUSTIFY.equals(alignment))
-    {
-      if (justifyProcessor == null)
-      {
+    } else if ( ElementAlignment.JUSTIFY.equals( alignment ) ) {
+      if ( justifyProcessor == null ) {
         justifyProcessor = new JustifyAlignmentProcessor();
       }
       return justifyProcessor;
     }
 
-    if (leftProcessor == null)
-    {
+    if ( leftProcessor == null ) {
       leftProcessor = new LeftAlignmentProcessor();
     }
     return leftProcessor;
   }
 
 
-  protected void startTableContext(final RenderBox box)
-  {
-    if (box.getNodeType() == LayoutNodeTypes.TYPE_BOX_TABLE)
-    {
-      if (isStrictLegacyMode())
-      {
-        throw new InvalidReportStateException("A report with a legacy mode of pre-4.0 cannot handle table layouts. " +
-            "Migrate your report to at least version 4.0.");
+  protected void startTableContext( final RenderBox box ) {
+    if ( box.getNodeType() == LayoutNodeTypes.TYPE_BOX_TABLE ) {
+      if ( isStrictLegacyMode() ) {
+        throw new InvalidReportStateException( "A report with a legacy mode of pre-4.0 cannot handle table layouts. " +
+          "Migrate your report to at least version 4.0." );
       }
-      tableContext = new MinorAxisTableContext((TableRenderBox) box, tableContext);
+      tableContext = new MinorAxisTableContext( (TableRenderBox) box, tableContext );
     }
   }
 
-  protected boolean finishTableContext(final RenderBox box)
-  {
-    if (box.getNodeType() != LayoutNodeTypes.TYPE_BOX_TABLE)
-    {
+  protected boolean finishTableContext( final RenderBox box ) {
+    if ( box.getNodeType() != LayoutNodeTypes.TYPE_BOX_TABLE ) {
       return false;
     }
 
     final TableColumnModel columnModel = tableContext.getTable().getColumnModel();
-    if (tableContext.isStructureValidated() == false)
-    {
-      columnModel.validateSizes((TableRenderBox) box);
-      tableContext.setStructureValidated(true);
+    if ( tableContext.isStructureValidated() == false ) {
+      columnModel.validateSizes( (TableRenderBox) box );
+      tableContext.setStructureValidated( true );
     }
-    box.setCachedWidth(columnModel.getCachedSize());
+    box.setCachedWidth( columnModel.getCachedSize() );
     tableContext = tableContext.pop();
     return true;
   }
 
-  public MinorAxisTableContext getTableContext()
-  {
+  public MinorAxisTableContext getTableContext() {
     return tableContext;
   }
 
-  protected long computeCellWidth(final TableCellRenderBox tableCellRenderBox)
-  {
+  protected long computeCellWidth( final TableCellRenderBox tableCellRenderBox ) {
     final MinorAxisTableContext tableContext = getTableContext();
     final int columnIndex = tableCellRenderBox.getColumnIndex();
     final TableColumnModel columnModel = tableContext.getColumnModel();
 
     final int colSpan = tableCellRenderBox.getColSpan();
-    if (colSpan <= 0)
-    {
-      throw new InvalidReportStateException("A cell cannot have a col-span of zero or less");
+    if ( colSpan <= 0 ) {
+      throw new InvalidReportStateException( "A cell cannot have a col-span of zero or less" );
     }
 
     long cellSizeFromModel = 0;
-    for (int i = 0; i < colSpan; i++)
-    {
-      cellSizeFromModel += columnModel.getEffectiveColumnSize(columnIndex + i);
+    for ( int i = 0; i < colSpan; i++ ) {
+      cellSizeFromModel += columnModel.getEffectiveColumnSize( columnIndex + i );
       cellSizeFromModel += columnModel.getBorderSpacing();
     }
     cellSizeFromModel -= columnModel.getBorderSpacing();
@@ -206,8 +174,7 @@ public abstract class AbstractMinorAxisLayoutStep extends IterateVisualProcessSt
   }
 
 
-  protected boolean startTableColLevelBox(final RenderBox box)
-  {
+  protected boolean startTableColLevelBox( final RenderBox box ) {
     return false;
   }
 }

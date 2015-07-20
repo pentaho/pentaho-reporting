@@ -17,77 +17,64 @@
 
 package org.pentaho.reporting.engine.classic.core.layout.model.table;
 
-import java.util.ArrayList;
-
 import org.pentaho.reporting.engine.classic.core.layout.model.table.cells.RemovedCell;
 import org.pentaho.reporting.engine.classic.core.layout.model.table.cells.TableCell;
+
+import java.util.ArrayList;
 
 /**
  * Creation-Date: 10.09.2006, 20:01:18
  *
  * @author Thomas Morgner
  */
-public class TableRowInfoStructure implements Cloneable
-{
+public class TableRowInfoStructure implements Cloneable {
   private ArrayList<TableCell> cells;
   private boolean validationDone;
   private int rowNumber;
 
-  public TableRowInfoStructure()
-  {
+  public TableRowInfoStructure() {
     cells = new ArrayList<TableCell>();
   }
 
-  public void addCell(final TableCell cell)
-  {
-    if (cell == null)
-    {
+  public void addCell( final TableCell cell ) {
+    if ( cell == null ) {
       throw new NullPointerException();
     }
-    cells.add(cell);
+    cells.add( cell );
   }
 
-  public int getCellCount()
-  {
+  public int getCellCount() {
     return cells.size();
   }
 
-  public TableCell getCellAt(final int col)
-  {
-    return cells.get(col);
+  public TableCell getCellAt( final int col ) {
+    return cells.get( col );
   }
 
-  public boolean isValidationDone()
-  {
+  public boolean isValidationDone() {
     return validationDone;
   }
 
-  public void setValidationDone(final boolean validationDone)
-  {
+  public void setValidationDone( final boolean validationDone ) {
     this.validationDone = validationDone;
   }
 
-  public int getRowNumber()
-  {
+  public int getRowNumber() {
     return rowNumber;
   }
 
-  public void setRowNumber(final int rowNumber)
-  {
+  public void setRowNumber( final int rowNumber ) {
     this.rowNumber = rowNumber;
   }
 
-  public void replaceCell(final int pos, final RemovedCell cell)
-  {
-    if (cell == null)
-    {
+  public void replaceCell( final int pos, final RemovedCell cell ) {
+    if ( cell == null ) {
       throw new NullPointerException();
     }
-    this.cells.set(pos, cell);
+    this.cells.set( pos, cell );
   }
 
-  public Object clone () throws CloneNotSupportedException
-  {
+  public Object clone() throws CloneNotSupportedException {
     final TableRowInfoStructure o = (TableRowInfoStructure) super.clone();
     o.cells = (ArrayList<TableCell>) cells.clone();
     return o;

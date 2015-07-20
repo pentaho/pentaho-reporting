@@ -28,66 +28,54 @@ import org.pentaho.reporting.libraries.docbundle.DocumentMetaData;
 import org.pentaho.reporting.libraries.resourceloader.ResourceKey;
 import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 
-public class ParameterContextWrapper implements ParameterContext
-{
+public class ParameterContextWrapper implements ParameterContext {
   private DataRow parameters;
   private ParameterContext backend;
 
-  public ParameterContextWrapper(final ParameterContext backend,
-                                  final DataRow parameters)
-  {
+  public ParameterContextWrapper( final ParameterContext backend,
+                                  final DataRow parameters ) {
     this.backend = backend;
     this.parameters = parameters;
   }
 
-  public DocumentMetaData getDocumentMetaData()
-  {
+  public DocumentMetaData getDocumentMetaData() {
     return backend.getDocumentMetaData();
   }
 
-  public ReportEnvironment getReportEnvironment()
-  {
+  public ReportEnvironment getReportEnvironment() {
     return backend.getReportEnvironment();
   }
 
-  public DataRow getParameterData()
-  {
+  public DataRow getParameterData() {
     return parameters;
   }
 
-  public DataFactory getDataFactory()
-  {
+  public DataFactory getDataFactory() {
     return backend.getDataFactory();
   }
 
-  public ResourceBundleFactory getResourceBundleFactory()
-  {
+  public ResourceBundleFactory getResourceBundleFactory() {
     return backend.getResourceBundleFactory();
   }
 
-  public ResourceKey getContentBase()
-  {
+  public ResourceKey getContentBase() {
     return backend.getContentBase();
   }
 
-  public ResourceManager getResourceManager()
-  {
+  public ResourceManager getResourceManager() {
     return backend.getResourceManager();
   }
 
-  public Configuration getConfiguration()
-  {
+  public Configuration getConfiguration() {
     return backend.getConfiguration();
   }
 
   public void close()
-      throws ReportDataFactoryException
-  {
+    throws ReportDataFactoryException {
     backend.close();
   }
 
-  public PerformanceMonitorContext getPerformanceMonitorContext()
-  {
+  public PerformanceMonitorContext getPerformanceMonitorContext() {
     return backend.getPerformanceMonitorContext();
   }
 }

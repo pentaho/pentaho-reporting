@@ -21,7 +21,8 @@ import java.util.Date;
 
 /**
  * Prunes a date in a calendar-unware way. This method can be used to zero the milli-seconds or seconds and so on from a
- * date-object. For more complex operations, the {@link org.pentaho.reporting.engine.classic.core.function.date.VariableDateExpression}
+ * date-object. For more complex operations, the {@link org.pentaho.reporting.engine.classic.core.function.date
+ * .VariableDateExpression}
  * should be used instead.
  * <p/>
  * This expression simply executes a integer division followed by a integer multiplication on the milliseconds since
@@ -30,8 +31,7 @@ import java.util.Date;
  * @author Martin Schmid
  * @deprecated The VariableDateExpression is much better suited for this purpose.
  */
-public class DateCutExpression extends AbstractExpression
-{
+public class DateCutExpression extends AbstractExpression {
   /**
    * The name of the data-row field from where to read the date that should be modified.
    */
@@ -44,8 +44,7 @@ public class DateCutExpression extends AbstractExpression
   /**
    * Default Constructor. The factor defaults to 1000.
    */
-  public DateCutExpression()
-  {
+  public DateCutExpression() {
     factor = 1000;
   }
 
@@ -54,8 +53,7 @@ public class DateCutExpression extends AbstractExpression
    *
    * @return a field name.
    */
-  public String getField()
-  {
+  public String getField() {
     return field;
   }
 
@@ -64,8 +62,7 @@ public class DateCutExpression extends AbstractExpression
    *
    * @param field a field name.
    */
-  public void setField(final String field)
-  {
+  public void setField( final String field ) {
     this.field = field;
   }
 
@@ -74,8 +71,7 @@ public class DateCutExpression extends AbstractExpression
    *
    * @return a factor.
    */
-  public long getFactor()
-  {
+  public long getFactor() {
     return factor;
   }
 
@@ -84,8 +80,7 @@ public class DateCutExpression extends AbstractExpression
    *
    * @param factor a factor.
    */
-  public void setFactor(final long factor)
-  {
+  public void setFactor( final long factor ) {
     this.factor = factor;
   }
 
@@ -94,18 +89,15 @@ public class DateCutExpression extends AbstractExpression
    *
    * @return the value of the function.
    */
-  public Object getValue()
-  {
-    final Object date = getDataRow().get(getField());
-    if (date instanceof Date == false)
-    {
+  public Object getValue() {
+    final Object date = getDataRow().get( getField() );
+    if ( date instanceof Date == false ) {
       return null;
     }
-    if (factor == 0 || factor == 1)
-    {
+    if ( factor == 0 || factor == 1 ) {
       return date;
     }
     final Date d = (Date) date;
-    return new Date((d.getTime() / factor) * factor);
+    return new Date( ( d.getTime() / factor ) * factor );
   }
 }

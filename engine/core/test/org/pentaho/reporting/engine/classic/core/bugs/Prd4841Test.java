@@ -24,19 +24,16 @@ import org.pentaho.reporting.engine.classic.core.MasterReport;
 import org.pentaho.reporting.engine.classic.core.layout.model.LogicalPageBox;
 import org.pentaho.reporting.engine.classic.core.testsupport.DebugReportRunner;
 
-public class Prd4841Test
-{
+public class Prd4841Test {
   @Before
-  public void setUp() throws Exception
-  {
+  public void setUp() throws Exception {
     ClassicEngineBoot.getInstance().start();
   }
 
   @Test
-  public void testGoldenSample() throws Exception
-  {
-    MasterReport report = DebugReportRunner.parseGoldenSampleReport("Prd-4841.prpt");
-    LogicalPageBox page = DebugReportRunner.layoutPage(report, 0);
+  public void testGoldenSample() throws Exception {
+    MasterReport report = DebugReportRunner.parseGoldenSampleReport( "Prd-4841.prpt" );
+    LogicalPageBox page = DebugReportRunner.layoutPage( report, 0 );
     // This test should not throw an exception
   }
 }

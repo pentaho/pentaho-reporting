@@ -28,88 +28,74 @@ import org.pentaho.reporting.engine.classic.core.layout.output.OutputProcessorFe
 import org.pentaho.reporting.engine.classic.core.layout.output.OutputProcessorMetaData;
 import org.pentaho.reporting.engine.classic.core.util.InstanceID;
 
-public class RepeatedFooterLayoutModelBuilder extends LayoutModelBuilderWrapper
-{
-  private static final Log logger = LogFactory.getLog(RepeatedFooterLayoutModelBuilder.class);
+public class RepeatedFooterLayoutModelBuilder extends LayoutModelBuilderWrapper {
+  private static final Log logger = LogFactory.getLog( RepeatedFooterLayoutModelBuilder.class );
 
   private RenderBox parentBox;
   private int inBoxDepth;
   private OutputProcessorMetaData metaData;
 
-  public RepeatedFooterLayoutModelBuilder(final LayoutModelBuilder backend)
-  {
-    super(backend);
-    backend.setLimitedSubReports(true);
+  public RepeatedFooterLayoutModelBuilder( final LayoutModelBuilder backend ) {
+    super( backend );
+    backend.setLimitedSubReports( true );
   }
 
-  public void initialize(final ProcessingContext metaData,
-                         final RenderBox parentBox,
-                         final RenderNodeFactory renderNodeFactory)
-  {
+  public void initialize( final ProcessingContext metaData,
+                          final RenderBox parentBox,
+                          final RenderNodeFactory renderNodeFactory ) {
     this.parentBox = parentBox;
-    getParent().initialize(metaData, parentBox, renderNodeFactory);
+    getParent().initialize( metaData, parentBox, renderNodeFactory );
     this.metaData = metaData.getOutputProcessorMetaData();
   }
 
-  public void setLimitedSubReports(final boolean limitedSubReports)
-  {
+  public void setLimitedSubReports( final boolean limitedSubReports ) {
 
   }
 
 
-  public InstanceID startBox(final ReportElement element)
-  {
-    InstanceID instanceID = getParent().startBox(element);
+  public InstanceID startBox( final ReportElement element ) {
+    InstanceID instanceID = getParent().startBox( element );
     inBoxDepth += 1;
     return instanceID;
   }
 
-  public void startSection(final ReportElement element, final int sectionSize)
-  {
-    throw new UnsupportedOperationException("Global sections cannot be started for page headers");
+  public void startSection( final ReportElement element, final int sectionSize ) {
+    throw new UnsupportedOperationException( "Global sections cannot be started for page headers" );
   }
 
-  public InlineSubreportMarker processSubReport(final SubReport element)
-  {
+  public InlineSubreportMarker processSubReport( final SubReport element ) {
     return null;
   }
 
-  public boolean finishBox()
-  {
+  public boolean finishBox() {
     inBoxDepth -= 1;
     return super.finishBox();
   }
 
-  public void endSubFlow()
-  {
-    throw new UnsupportedOperationException("SubReport sections cannot be started for page headers");
+  public void endSubFlow() {
+    throw new UnsupportedOperationException( "SubReport sections cannot be started for page headers" );
   }
 
-  public void addProgressMarkerBox()
-  {
-    if (inBoxDepth != 0)
-    {
+  public void addProgressMarkerBox() {
+    if ( inBoxDepth != 0 ) {
       throw new IllegalStateException();
     }
     super.addProgressMarkerBox();
   }
 
-  public void addManualPageBreakBox(final long range)
-  {
-    throw new UnsupportedOperationException("PageBreak sections cannot be started for page headers");
+  public void addManualPageBreakBox( final long range ) {
+    throw new UnsupportedOperationException( "PageBreak sections cannot be started for page headers" );
   }
 
-  public LayoutModelBuilder deriveForStorage(final RenderBox clonedContent)
-  {
-    final RepeatedFooterLayoutModelBuilder clone = (RepeatedFooterLayoutModelBuilder) super.deriveForStorage(clonedContent);
+  public LayoutModelBuilder deriveForStorage( final RenderBox clonedContent ) {
+    final RepeatedFooterLayoutModelBuilder clone =
+      (RepeatedFooterLayoutModelBuilder) super.deriveForStorage( clonedContent );
     clone.parentBox = clonedContent;
     return clone;
   }
 
-  public void startSection()
-  {
-    if (inBoxDepth != 0)
-    {
+  public void startSection() {
+    if ( inBoxDepth != 0 ) {
       throw new IllegalStateException();
     }
 
@@ -117,37 +103,30 @@ public class RepeatedFooterLayoutModelBuilder extends LayoutModelBuilderWrapper
     super.startSection();
   }
 
-  public void endSection()
-  {
-    if (inBoxDepth != 0)
-    {
+  public void endSection() {
+    if ( inBoxDepth != 0 ) {
       throw new IllegalStateException();
     }
 
-    if (metaData.isFeatureSupported(OutputProcessorFeature.STRICT_COMPATIBILITY))
-    {
+    if ( metaData.isFeatureSupported( OutputProcessorFeature.STRICT_COMPATIBILITY ) ) {
       super.legacyFlagNotEmpty();
     }
     super.endSection();
   }
 
-  public InstanceID createSubflowPlaceholder(final ReportElement element)
-  {
-    throw new UnsupportedOperationException("SubReport sections cannot be started for page headers");
+  public InstanceID createSubflowPlaceholder( final ReportElement element ) {
+    throw new UnsupportedOperationException( "SubReport sections cannot be started for page headers" );
   }
 
-  public void startSubFlow(final InstanceID insertationPoint)
-  {
-    throw new UnsupportedOperationException("SubReport sections cannot be started for page headers");
+  public void startSubFlow( final InstanceID insertationPoint ) {
+    throw new UnsupportedOperationException( "SubReport sections cannot be started for page headers" );
   }
 
-  public void startSubFlow(final ReportElement element)
-  {
-    throw new UnsupportedOperationException("SubReport sections cannot be started for page headers");
+  public void startSubFlow( final ReportElement element ) {
+    throw new UnsupportedOperationException( "SubReport sections cannot be started for page headers" );
   }
 
-  public void suspendSubFlow()
-  {
-    throw new UnsupportedOperationException("SubReport sections cannot be started for page headers");
+  public void suspendSubFlow() {
+    throw new UnsupportedOperationException( "SubReport sections cannot be started for page headers" );
   }
 }

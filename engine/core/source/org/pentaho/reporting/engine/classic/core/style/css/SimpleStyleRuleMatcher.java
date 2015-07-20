@@ -17,11 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.core.style.css;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
-import java.util.StringTokenizer;
-
 import org.pentaho.reporting.engine.classic.core.AttributeNames;
 import org.pentaho.reporting.engine.classic.core.Element;
 import org.pentaho.reporting.engine.classic.core.ReportElement;
@@ -51,28 +46,29 @@ import org.w3c.css.sac.Selector;
 import org.w3c.css.sac.SiblingSelector;
 import org.w3c.css.sac.SimpleSelector;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
+import java.util.StringTokenizer;
+
 /**
- * A stateless implementation of the style rule matching. This implementation is
- * stateless within the current layout process.
+ * A stateless implementation of the style rule matching. This implementation is stateless within the current layout
+ * process.
  *
  * @author Thomas Morgner
  */
-public class SimpleStyleRuleMatcher implements StyleRuleMatcher
-{
+public class SimpleStyleRuleMatcher implements StyleRuleMatcher {
   private ResourceManager resourceManager;
   private ElementStyleRule[] activeStyleRules;
   private ElementStyleRule[] activePseudoStyleRules;
   private NamespaceCollection namespaces;
   private DocumentContext context;
 
-  public SimpleStyleRuleMatcher()
-  {
+  public SimpleStyleRuleMatcher() {
   }
 
-  public void initialize(final DocumentContext layoutProcess)
-  {
-    if (layoutProcess == null)
-    {
+  public void initialize( final DocumentContext layoutProcess ) {
+    if ( layoutProcess == null ) {
       throw new NullPointerException();
     }
     this.context = layoutProcess;
@@ -84,154 +80,124 @@ public class SimpleStyleRuleMatcher implements StyleRuleMatcher
 
     namespaces = dc.getNamespaces();
 
-    if (dc.getStyleResource() != null)
-    {
-      handleLinkNode(dc.getStyleResource(), styleRules, counterRules);
+    if ( dc.getStyleResource() != null ) {
+      handleLinkNode( dc.getStyleResource(), styleRules, counterRules );
     }
-    if (dc.getStyleDefinition() != null)
-    {
-      handleStyleNode(dc.getStyleDefinition(), styleRules, counterRules);
+    if ( dc.getStyleDefinition() != null ) {
+      handleStyleNode( dc.getStyleDefinition(), styleRules, counterRules );
     }
 
-    activeStyleRules = styleRules.toArray(new ElementStyleRule[styleRules.size()]);
+    activeStyleRules = styleRules.toArray( new ElementStyleRule[ styleRules.size() ] );
 
     styleRules.clear();
-    for (int i = 0; i < activeStyleRules.length; i++)
-    {
-      final ElementStyleRule activeStyleRule = activeStyleRules[i];
-      if (isPseudoElementRule(activeStyleRule) == false)
-      {
+    for ( int i = 0; i < activeStyleRules.length; i++ ) {
+      final ElementStyleRule activeStyleRule = activeStyleRules[ i ];
+      if ( isPseudoElementRule( activeStyleRule ) == false ) {
         continue;
       }
-      styleRules.add(activeStyleRule);
+      styleRules.add( activeStyleRule );
     }
-    activePseudoStyleRules = styleRules.toArray(new ElementStyleRule[styleRules.size()]);
+    activePseudoStyleRules = styleRules.toArray( new ElementStyleRule[ styleRules.size() ] );
 
   }
 
-  private void handleLinkNode(final Object styleResource,
-                              final ArrayList<ElementStyleRule> styleRules,
-                              final ArrayList<CSSCounterRule> counterRules)
-  {
+  private void handleLinkNode( final Object styleResource,
+                               final ArrayList<ElementStyleRule> styleRules,
+                               final ArrayList<CSSCounterRule> counterRules ) {
     // do some external parsing
     // (Same as the <link> element of HTML)
-    try
-    {
+    try {
       final String href = (String) styleResource;
       final ResourceKey baseKey = context.getContextKey();
 
       final ResourceKey derivedKey;
-      if (baseKey == null)
-      {
-        derivedKey = resourceManager.createKey(href);
-      }
-      else
-      {
-        derivedKey = resourceManager.deriveKey(baseKey, String.valueOf(href));
+      if ( baseKey == null ) {
+        derivedKey = resourceManager.createKey( href );
+      } else {
+        derivedKey = resourceManager.deriveKey( baseKey, String.valueOf( href ) );
       }
 
-      final ElementStyleDefinition styleSheet = parseStyleSheet(derivedKey, null);
-      if (styleSheet == null)
-      {
+      final ElementStyleDefinition styleSheet = parseStyleSheet( derivedKey, null );
+      if ( styleSheet == null ) {
         return;
       }
-      addStyleRules(styleSheet, styleRules);
-      addCounterRules(styleSheet, counterRules);
-    }
-    catch (ResourceKeyCreationException e)
-    {
+      addStyleRules( styleSheet, styleRules );
+      addCounterRules( styleSheet, counterRules );
+    } catch ( ResourceKeyCreationException e ) {
       e.printStackTrace();
     }
   }
 
 
-  private void handleStyleNode(final ElementStyleDefinition node,
-                               final ArrayList<ElementStyleRule> styleRules,
-                               final ArrayList<CSSCounterRule> counterRules)
-  {
-    addStyleRules(node, styleRules);
-    addCounterRules(node, counterRules);
+  private void handleStyleNode( final ElementStyleDefinition node,
+                                final ArrayList<ElementStyleRule> styleRules,
+                                final ArrayList<CSSCounterRule> counterRules ) {
+    addStyleRules( node, styleRules );
+    addCounterRules( node, counterRules );
   }
 
 
-  private void addCounterRules(final ElementStyleDefinition styleSheet,
-                               final ArrayList<CSSCounterRule> rules)
-  {
+  private void addCounterRules( final ElementStyleDefinition styleSheet,
+                                final ArrayList<CSSCounterRule> rules ) {
     final int sc = styleSheet.getStyleSheetCount();
-    for (int i = 0; i < sc; i++)
-    {
-      addCounterRules(styleSheet.getStyleSheet(i), rules);
+    for ( int i = 0; i < sc; i++ ) {
+      addCounterRules( styleSheet.getStyleSheet( i ), rules );
     }
 
     final int rc = styleSheet.getRuleCount();
-    for (int i = 0; i < rc; i++)
-    {
-      final ElementStyleSheet rule = styleSheet.getRule(i);
-      if (rule instanceof CSSCounterRule)
-      {
+    for ( int i = 0; i < rc; i++ ) {
+      final ElementStyleSheet rule = styleSheet.getRule( i );
+      if ( rule instanceof CSSCounterRule ) {
         final CSSCounterRule drule = (CSSCounterRule) rule;
-        rules.add(drule);
+        rules.add( drule );
       }
     }
   }
 
-  private void addStyleRules(final ElementStyleDefinition styleSheet,
-                             final ArrayList<ElementStyleRule> activeStyleRules)
-  {
+  private void addStyleRules( final ElementStyleDefinition styleSheet,
+                              final ArrayList<ElementStyleRule> activeStyleRules ) {
     final int sc = styleSheet.getStyleSheetCount();
-    for (int i = 0; i < sc; i++)
-    {
-      addStyleRules(styleSheet.getStyleSheet(i), activeStyleRules);
+    for ( int i = 0; i < sc; i++ ) {
+      addStyleRules( styleSheet.getStyleSheet( i ), activeStyleRules );
     }
 
     final int rc = styleSheet.getRuleCount();
-    for (int i = 0; i < rc; i++)
-    {
-      final ElementStyleSheet rule = styleSheet.getRule(i);
-      if (rule instanceof ElementStyleRule)
-      {
+    for ( int i = 0; i < rc; i++ ) {
+      final ElementStyleSheet rule = styleSheet.getRule( i );
+      if ( rule instanceof ElementStyleRule ) {
         final ElementStyleRule drule = (ElementStyleRule) rule;
-        activeStyleRules.add(drule);
+        activeStyleRules.add( drule );
       }
     }
   }
 
-  private ElementStyleDefinition parseStyleSheet(final ResourceKey key,
-                                                 final ResourceKey context)
-  {
-    try
-    {
+  private ElementStyleDefinition parseStyleSheet( final ResourceKey key,
+                                                  final ResourceKey context ) {
+    try {
       final Resource resource = resourceManager.create
-          (key, context, ElementStyleDefinition.class);
+        ( key, context, ElementStyleDefinition.class );
       return (ElementStyleDefinition) resource.getResource();
-    }
-    catch (ResourceException e)
-    {
+    } catch ( ResourceException e ) {
       // Log.info("Unable to parse StyleSheet: " + e.getLocalizedMessage());
     }
     return null;
   }
 
-  private boolean isPseudoElementRule(final ElementStyleRule rule)
-  {
+  private boolean isPseudoElementRule( final ElementStyleRule rule ) {
     final List<CSSSelector> selectorList = rule.getSelectorList();
-    for (int i = 0; i < selectorList.size(); i += 1)
-    {
-      final CSSSelector selector = selectorList.get(i);
-      if (selector == null)
-      {
+    for ( int i = 0; i < selectorList.size(); i += 1 ) {
+      final CSSSelector selector = selectorList.get( i );
+      if ( selector == null ) {
         continue;
       }
 
-      if (selector.getSelectorType() != Selector.SAC_CONDITIONAL_SELECTOR)
-      {
+      if ( selector.getSelectorType() != Selector.SAC_CONDITIONAL_SELECTOR ) {
         continue;
       }
 
       final ConditionalSelector cs = (ConditionalSelector) selector;
       final Condition condition = cs.getCondition();
-      if (condition.getConditionType() != Condition.SAC_PSEUDO_CLASS_CONDITION)
-      {
+      if ( condition.getConditionType() != Condition.SAC_PSEUDO_CLASS_CONDITION ) {
         continue;
       }
       return true;
@@ -239,17 +205,13 @@ public class SimpleStyleRuleMatcher implements StyleRuleMatcher
     return false;
   }
 
-  public boolean isMatchingPseudoElement(final ReportElement element, final String pseudo)
-  {
-    for (int i = 0; i < activePseudoStyleRules.length; i++)
-    {
-      final ElementStyleRule activeStyleRule = activePseudoStyleRules[i];
+  public boolean isMatchingPseudoElement( final ReportElement element, final String pseudo ) {
+    for ( int i = 0; i < activePseudoStyleRules.length; i++ ) {
+      final ElementStyleRule activeStyleRule = activePseudoStyleRules[ i ];
       final List<CSSSelector> selectorList = activeStyleRule.getSelectorList();
-      for (int x = 0; x < selectorList.size(); x += 1)
-      {
-        final CSSSelector selector = selectorList.get(x);
-        if (selector instanceof ConditionalSelector == false)
-        {
+      for ( int x = 0; x < selectorList.size(); x += 1 ) {
+        final CSSSelector selector = selectorList.get( x );
+        if ( selector instanceof ConditionalSelector == false ) {
           continue;
         }
 
@@ -257,14 +219,12 @@ public class SimpleStyleRuleMatcher implements StyleRuleMatcher
         final Condition condition = cs.getCondition();
 
         final AttributeCondition ac = (AttributeCondition) condition;
-        if (ObjectUtilities.equal(ac.getValue(), pseudo) == false)
-        {
+        if ( ObjectUtilities.equal( ac.getValue(), pseudo ) == false ) {
           continue;
         }
 
         final SimpleSelector simpleSelector = cs.getSimpleSelector();
-        if (isMatch(element, simpleSelector))
-        {
+        if ( isMatch( element, simpleSelector ) ) {
           return true;
         }
       }
@@ -277,8 +237,7 @@ public class SimpleStyleRuleMatcher implements StyleRuleMatcher
    *
    * @return this instance, as this implementation is stateless
    */
-  public StyleRuleMatcher deriveInstance()
-  {
+  public StyleRuleMatcher deriveInstance() {
     return this;
   }
 
@@ -289,125 +248,98 @@ public class SimpleStyleRuleMatcher implements StyleRuleMatcher
    * @param element
    * @return
    */
-  public MatcherResult[] getMatchingRules(final ReportElement element)
-  {
+  public MatcherResult[] getMatchingRules( final ReportElement element ) {
     final ArrayList<MatcherResult> retvals = new ArrayList<MatcherResult>();
-    for (int i = 0; i < activeStyleRules.length; i++)
-    {
-      final ElementStyleRule activeStyleRule = activeStyleRules[i];
+    for ( int i = 0; i < activeStyleRules.length; i++ ) {
+      final ElementStyleRule activeStyleRule = activeStyleRules[ i ];
       final List<CSSSelector> selectorList = activeStyleRule.getSelectorList();
       SelectorWeight weight = null;
 
-      for (int x = 0; x < selectorList.size(); x += 1)
-      {
-        final CSSSelector selector = selectorList.get(x);
-        if (selector == null)
-        {
+      for ( int x = 0; x < selectorList.size(); x += 1 ) {
+        final CSSSelector selector = selectorList.get( x );
+        if ( selector == null ) {
           continue;
         }
 
-        if (isMatch(element, selector))
-        {
-          if (weight == null)
-          {
+        if ( isMatch( element, selector ) ) {
+          if ( weight == null ) {
             weight = selector.getWeight();
-          }
-          else
-          {
-            if (weight.compareTo(selector.getWeight()) < 0)
-            {
+          } else {
+            if ( weight.compareTo( selector.getWeight() ) < 0 ) {
               weight = selector.getWeight();
             }
           }
         }
       }
-      if (weight != null)
-      {
-        retvals.add(new MatcherResult(weight, activeStyleRule));
+      if ( weight != null ) {
+        retvals.add( new MatcherResult( weight, activeStyleRule ) );
       }
     }
 
-//    Log.debug ("Got " + retvals.size() + " matching rules for " +
-//            layoutContext.getTagName() + ":" +
-//            layoutContext.getPseudoElement());
+    //    Log.debug ("Got " + retvals.size() + " matching rules for " +
+    //            layoutContext.getTagName() + ":" +
+    //            layoutContext.getPseudoElement());
 
-    return retvals.toArray(new MatcherResult[retvals.size()]);
+    return retvals.toArray( new MatcherResult[ retvals.size() ] );
   }
 
-  private boolean isMatch(final ReportElement node,
-                          final Selector selector)
-  {
+  private boolean isMatch( final ReportElement node,
+                           final Selector selector ) {
     final short selectorType = selector.getSelectorType();
-    switch (selectorType)
-    {
+    switch( selectorType ) {
       case Selector.SAC_ANY_NODE_SELECTOR:
         return true;
       case Selector.SAC_ROOT_NODE_SELECTOR:
         return node.getParentSection() == null;
-      case Selector.SAC_NEGATIVE_SELECTOR:
-      {
+      case Selector.SAC_NEGATIVE_SELECTOR: {
         final NegativeSelector negativeSelector = (NegativeSelector) selector;
-        return isMatch(node, negativeSelector) == false;
+        return isMatch( node, negativeSelector ) == false;
       }
-      case Selector.SAC_DIRECT_ADJACENT_SELECTOR:
-      {
+      case Selector.SAC_DIRECT_ADJACENT_SELECTOR: {
         final SiblingSelector silbSelect = (SiblingSelector) selector;
-        return isSilblingMatch(node, silbSelect);
+        return isSilblingMatch( node, silbSelect );
       }
-      case Selector.SAC_PSEUDO_ELEMENT_SELECTOR:
-      {
+      case Selector.SAC_PSEUDO_ELEMENT_SELECTOR: {
         return false;
       }
-      case Selector.SAC_ELEMENT_NODE_SELECTOR:
-      {
+      case Selector.SAC_ELEMENT_NODE_SELECTOR: {
         final ElementSelector es = (ElementSelector) selector;
         final String localName = es.getLocalName();
-        if (localName != null)
-        {
-          if (localName.equals(getTagName(node)) == false)
-          {
+        if ( localName != null ) {
+          if ( localName.equals( getTagName( node ) ) == false ) {
             return false;
           }
         }
         final String namespaceURI = es.getNamespaceURI();
-        if (namespaceURI != null)
-        {
-          final String namespace = getNamespace(node);
-          if (namespaceURI.equals(namespace) == false)
-          {
+        if ( namespaceURI != null ) {
+          final String namespace = getNamespace( node );
+          if ( namespaceURI.equals( namespace ) == false ) {
             return false;
           }
         }
         return true;
       }
-      case Selector.SAC_CHILD_SELECTOR:
-      {
+      case Selector.SAC_CHILD_SELECTOR: {
         final DescendantSelector ds = (DescendantSelector) selector;
-        if (isMatch(node, ds.getSimpleSelector()) == false)
-        {
+        if ( isMatch( node, ds.getSimpleSelector() ) == false ) {
           return false;
         }
         final ReportElement parent = node.getParentSection();
-        return (isMatch(parent, ds.getAncestorSelector()));
+        return ( isMatch( parent, ds.getAncestorSelector() ) );
       }
-      case Selector.SAC_DESCENDANT_SELECTOR:
-      {
+      case Selector.SAC_DESCENDANT_SELECTOR: {
         final DescendantSelector ds = (DescendantSelector) selector;
-        if (isMatch(node, ds.getSimpleSelector()) == false)
-        {
+        if ( isMatch( node, ds.getSimpleSelector() ) == false ) {
           return false;
         }
-        return (isDescendantMatch(node, ds.getAncestorSelector()));
+        return ( isDescendantMatch( node, ds.getAncestorSelector() ) );
       }
-      case Selector.SAC_CONDITIONAL_SELECTOR:
-      {
+      case Selector.SAC_CONDITIONAL_SELECTOR: {
         final ConditionalSelector cs = (ConditionalSelector) selector;
-        if (evaluateCondition(node, cs.getCondition()) == false)
-        {
+        if ( evaluateCondition( node, cs.getCondition() ) == false ) {
           return false;
         }
-        if (isMatch(node, cs.getSimpleSelector()) == false)
-        {
+        if ( isMatch( node, cs.getSimpleSelector() ) == false ) {
           return false;
         }
         return true;
@@ -417,114 +349,89 @@ public class SimpleStyleRuleMatcher implements StyleRuleMatcher
     }
   }
 
-  private boolean evaluateCondition(final ReportElement node,
-                                    final Condition condition)
-  {
-    switch (condition.getConditionType())
-    {
-      case Condition.SAC_AND_CONDITION:
-      {
+  private boolean evaluateCondition( final ReportElement node,
+                                     final Condition condition ) {
+    switch( condition.getConditionType() ) {
+      case Condition.SAC_AND_CONDITION: {
         final CombinatorCondition cc = (CombinatorCondition) condition;
-        return (evaluateCondition(node, cc.getFirstCondition()) &&
-            evaluateCondition(node, cc.getSecondCondition()));
+        return ( evaluateCondition( node, cc.getFirstCondition() ) &&
+          evaluateCondition( node, cc.getSecondCondition() ) );
       }
-      case Condition.SAC_OR_CONDITION:
-      {
+      case Condition.SAC_OR_CONDITION: {
         final CombinatorCondition cc = (CombinatorCondition) condition;
-        return (evaluateCondition(node, cc.getFirstCondition()) ||
-            evaluateCondition(node, cc.getSecondCondition()));
+        return ( evaluateCondition( node, cc.getFirstCondition() ) ||
+          evaluateCondition( node, cc.getSecondCondition() ) );
       }
-      case Condition.SAC_ATTRIBUTE_CONDITION:
-      {
+      case Condition.SAC_ATTRIBUTE_CONDITION: {
         final AttributeCondition ac = (AttributeCondition) condition;
-        final Object attr = queryAttribute(node, ac);
+        final Object attr = queryAttribute( node, ac );
 
-        if (ac.getValue() == null)
-        {
+        if ( ac.getValue() == null ) {
           // dont care what's inside, as long as there is a value ..
           return attr != null;
-        }
-        else
-        {
-          return ObjectUtilities.equal(attr, ac.getValue());
+        } else {
+          return ObjectUtilities.equal( attr, ac.getValue() );
         }
       }
-      case Condition.SAC_CLASS_CONDITION:
-      {
+      case Condition.SAC_CLASS_CONDITION: {
         final AttributeCondition ac = (AttributeCondition) condition;
-        String namespace = getNamespace(node);
-        if (namespace == null)
-        {
+        String namespace = getNamespace( node );
+        if ( namespace == null ) {
           namespace = namespaces.getDefaultNamespaceURI();
         }
-        if (namespace == null)
-        {
+        if ( namespace == null ) {
           return false;
         }
-        final NamespaceDefinition ndef = namespaces.getDefinition(namespace);
-        if (ndef == null)
-        {
+        final NamespaceDefinition ndef = namespaces.getDefinition( namespace );
+        if ( ndef == null ) {
           return false;
         }
-        final String[] classAttribute = ndef.getClassAttribute(getTagName(node));
-        for (int i = 0; i < classAttribute.length; i++)
-        {
-          final String attr = classAttribute[i];
-          final String htmlAttr = (String) node.getAttribute(namespace, attr);
-          if (isOneOfAttributes(htmlAttr, ac.getValue()))
-          {
+        final String[] classAttribute = ndef.getClassAttribute( getTagName( node ) );
+        for ( int i = 0; i < classAttribute.length; i++ ) {
+          final String attr = classAttribute[ i ];
+          final String htmlAttr = (String) node.getAttribute( namespace, attr );
+          if ( isOneOfAttributes( htmlAttr, ac.getValue() ) ) {
             return true;
           }
         }
         return false;
       }
-      case Condition.SAC_ID_CONDITION:
-      {
+      case Condition.SAC_ID_CONDITION: {
         final AttributeCondition ac = (AttributeCondition) condition;
-        final Object id = node.getAttribute(AttributeNames.Xml.NAMESPACE, AttributeNames.Xml.ID);
-        return ObjectUtilities.equal(ac.getValue(), id);
+        final Object id = node.getAttribute( AttributeNames.Xml.NAMESPACE, AttributeNames.Xml.ID );
+        return ObjectUtilities.equal( ac.getValue(), id );
       }
-      case Condition.SAC_LANG_CONDITION:
-      {
+      case Condition.SAC_LANG_CONDITION: {
         final AttributeCondition ac = (AttributeCondition) condition;
-        final Locale locale = getLanguage(node);
+        final Locale locale = getLanguage( node );
         final String lang = locale.getLanguage();
-        return isBeginHyphenAttribute(lang, ac.getValue());
+        return isBeginHyphenAttribute( lang, ac.getValue() );
       }
-      case Condition.SAC_NEGATIVE_CONDITION:
-      {
+      case Condition.SAC_NEGATIVE_CONDITION: {
         final NegativeCondition nc = (NegativeCondition) condition;
-        return evaluateCondition(node, nc.getCondition()) == false;
+        return evaluateCondition( node, nc.getCondition() ) == false;
       }
-      case Condition.SAC_ONE_OF_ATTRIBUTE_CONDITION:
-      {
+      case Condition.SAC_ONE_OF_ATTRIBUTE_CONDITION: {
         final AttributeCondition ac = (AttributeCondition) condition;
-        final Object o = queryAttribute(node, ac);
-        if (o == null)
-        {
+        final Object o = queryAttribute( node, ac );
+        if ( o == null ) {
           return false;
         }
-        
-        try
-        {
-          final String attr = ConverterRegistry.toAttributeValue(o);
-          return isOneOfAttributes(attr, ac.getValue());
-        }
-        catch (BeanException e)
-        {
+
+        try {
+          final String attr = ConverterRegistry.toAttributeValue( o );
+          return isOneOfAttributes( attr, ac.getValue() );
+        } catch ( BeanException e ) {
           return false;
         }
       }
-      case Condition.SAC_PSEUDO_CLASS_CONDITION:
-      {
+      case Condition.SAC_PSEUDO_CLASS_CONDITION: {
         final AttributeCondition ac = (AttributeCondition) condition;
-        final String pseudoClass = getPseudoElement(node);
-        if (pseudoClass == null)
-        {
+        final String pseudoClass = getPseudoElement( node );
+        if ( pseudoClass == null ) {
           return false;
         }
-        if (pseudoClass.equals(ac.getValue()))
-        {
+        if ( pseudoClass.equals( ac.getValue() ) ) {
           return true;
         }
         return false;
@@ -533,95 +440,75 @@ public class SimpleStyleRuleMatcher implements StyleRuleMatcher
       case Condition.SAC_ONLY_TYPE_CONDITION:
       case Condition.SAC_POSITIONAL_CONDITION:
       case Condition.SAC_CONTENT_CONDITION:
-      default:
-      {
+      default: {
         // any of these conditionals are not yet implemented. They are defined as part of the CSS standard.
         return false;
       }
     }
   }
 
-  private Object queryAttribute(final ReportElement node, final AttributeCondition ac)
-  {
+  private Object queryAttribute( final ReportElement node, final AttributeCondition ac ) {
     final String namespaceURI = ac.getNamespaceURI();
     final Object attr;
-    if (namespaceURI == null)
-    {
-      attr = node.getFirstAttribute(ac.getLocalName());
-    }
-    else
-    {
-      attr = node.getAttribute(namespaceURI, ac.getLocalName());
+    if ( namespaceURI == null ) {
+      attr = node.getFirstAttribute( ac.getLocalName() );
+    } else {
+      attr = node.getAttribute( namespaceURI, ac.getLocalName() );
     }
     return attr;
   }
 
-  private String getPseudoElement(final ReportElement node)
-  {
+  private String getPseudoElement( final ReportElement node ) {
     // at the moment we do not support pseudo-elements.
     return null;
   }
 
-  private String getNamespace(final ReportElement node)
-  {
+  private String getNamespace( final ReportElement node ) {
     return AttributeNames.Core.NAMESPACE;
   }
 
-  private String getTagName(final ReportElement node)
-  {
+  private String getTagName( final ReportElement node ) {
     return node.getElementType().getMetaData().getName();
   }
 
-  private Locale getLanguage(final ReportElement node)
-  {
+  private Locale getLanguage( final ReportElement node ) {
     return null;
   }
 
-  private boolean isOneOfAttributes(final String attrValue, final String value)
-  {
-    if (attrValue == null)
-    {
+  private boolean isOneOfAttributes( final String attrValue, final String value ) {
+    if ( attrValue == null ) {
       return false;
     }
-    if (attrValue.equals(value))
-    {
+    if ( attrValue.equals( value ) ) {
       return true;
     }
 
-    final StringTokenizer strTok = new StringTokenizer(attrValue);
-    while (strTok.hasMoreTokens())
-    {
+    final StringTokenizer strTok = new StringTokenizer( attrValue );
+    while ( strTok.hasMoreTokens() ) {
       final String token = strTok.nextToken();
-      if (token.equals(value))
-      {
+      if ( token.equals( value ) ) {
         return true;
       }
     }
     return false;
   }
 
-  private boolean isBeginHyphenAttribute(final String attrValue, final String value)
-  {
-    if (attrValue == null)
-    {
+  private boolean isBeginHyphenAttribute( final String attrValue, final String value ) {
+    if ( attrValue == null ) {
       return false;
     }
-    if (value == null)
-    {
+    if ( value == null ) {
       return false;
     }
-    return (attrValue.startsWith(value));
+    return ( attrValue.startsWith( value ) );
 
   }
 
-  private boolean isDescendantMatch(final ReportElement node,
-                                    final Selector selector)
-  {
+  private boolean isDescendantMatch( final ReportElement node,
+                                     final Selector selector ) {
     ReportElement parent = node.getParentSection();
-    while (parent != null)
-    {
-      if (isMatch(parent, selector))
-      {
+    while ( parent != null ) {
+      if ( isMatch( parent, selector ) ) {
         return true;
       }
       parent = parent.getParentSection();
@@ -629,42 +516,32 @@ public class SimpleStyleRuleMatcher implements StyleRuleMatcher
     return false;
   }
 
-  private boolean isSilblingMatch(final ReportElement node,
-                                  final SiblingSelector select)
-  {
-    ReportElement pred = getPreviousReportElement(node);
-    while (pred != null)
-    {
-      if (isMatch(pred, select))
-      {
+  private boolean isSilblingMatch( final ReportElement node,
+                                   final SiblingSelector select ) {
+    ReportElement pred = getPreviousReportElement( node );
+    while ( pred != null ) {
+      if ( isMatch( pred, select ) ) {
         return true;
       }
-      pred = getPreviousReportElement(pred);
+      pred = getPreviousReportElement( pred );
     }
     return false;
   }
 
-  private ReportElement getPreviousReportElement(final ReportElement e)
-  {
+  private ReportElement getPreviousReportElement( final ReportElement e ) {
     final Section parentSection = e.getParentSection();
-    if (parentSection == null)
-    {
+    if ( parentSection == null ) {
       return null;
     }
 
     final int count = parentSection.getElementCount();
-    for (int i = 0; i < count; i += 1)
-    {
-      final Element element = parentSection.getElement(i);
-      if (e == element)
-      {
-        if (i == 0)
-        {
+    for ( int i = 0; i < count; i += 1 ) {
+      final Element element = parentSection.getElement( i );
+      if ( e == element ) {
+        if ( i == 0 ) {
           return null;
-        }
-        else
-        {
-          return parentSection.getElement(i - 1);
+        } else {
+          return parentSection.getElement( i - 1 );
         }
       }
     }

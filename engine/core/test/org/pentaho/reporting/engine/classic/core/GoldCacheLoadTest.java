@@ -17,16 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.core;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.TimeUnit;
-
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertFalse;
-import static junit.framework.Assert.assertNotNull;
-import static junit.framework.Assert.assertTrue;
 import net.sf.ehcache.CacheManager;
 import org.junit.Before;
 import org.junit.Test;
@@ -34,80 +24,84 @@ import org.pentaho.reporting.engine.classic.core.testsupport.gold.GoldTestBase;
 import org.pentaho.reporting.libraries.base.config.Configuration;
 import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 
-public class GoldCacheLoadTest extends GoldTestBase
-{
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
+
+import static junit.framework.Assert.*;
+
+public class GoldCacheLoadTest extends GoldTestBase {
   private CacheManager cacheManager;
   private ExecutorService threadPool;
   private int maxThreads;
   private static HashMap<Long, MasterReport> masterReportList = new HashMap<Long, MasterReport>();
 
-  public GoldCacheLoadTest()
-  {
+  public GoldCacheLoadTest() {
   }
 
   @Before
-  public void setupThreadPoolAndDisableCache()
-  {
+  public void setupThreadPoolAndDisableCache() {
     maxThreads = 2;
-    threadPool = Executors.newFixedThreadPool(maxThreads);
+    threadPool = Executors.newFixedThreadPool( maxThreads );
 
     cacheManager = CacheManager.getInstance();
-    if (cacheManager.cacheExists("libloader-bundles") == true)
-    {
+    if ( cacheManager.cacheExists( "libloader-bundles" ) == true ) {
       // Note: EHCacheProvider will dynamically create these
       // caches if they don't exist.
       cacheManager.clearAll();
       cacheManager.removalAll();
 
-      assertFalse(cacheManager.cacheExists("libloader-bundles"));
-      assertFalse(cacheManager.cacheExists("libloader-data"));
-      assertFalse(cacheManager.cacheExists("libloader-factory"));
-      assertFalse(cacheManager.cacheExists("report-dataset-cache"));
+      assertFalse( cacheManager.cacheExists( "libloader-bundles" ) );
+      assertFalse( cacheManager.cacheExists( "libloader-data" ) );
+      assertFalse( cacheManager.cacheExists( "libloader-factory" ) );
+      assertFalse( cacheManager.cacheExists( "report-dataset-cache" ) );
     }
   }
 
-  protected MasterReport postProcess(final MasterReport report) throws Exception
-  {
+  protected MasterReport postProcess( final MasterReport report ) throws Exception {
     final Object dataCacheEnabledRaw =
-            report.getAttribute(AttributeNames.Core.NAMESPACE, AttributeNames.Core.DATA_CACHE);
-    assertFalse(Boolean.FALSE.equals(dataCacheEnabledRaw));
+      report.getAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.DATA_CACHE );
+    assertFalse( Boolean.FALSE.equals( dataCacheEnabledRaw ) );
 
-    masterReportList.put(new Long(Thread.currentThread().getId()), report);
+    masterReportList.put( new Long( Thread.currentThread().getId() ), report );
 
     return report;
   }
 
-  private void validateMasterReport(final MasterReport report)
-  {
-    assertNotNull(report);
+  private void validateMasterReport( final MasterReport report ) {
+    assertNotNull( report );
 
     // Validate Cache
     ResourceManager resourceManager = report.getResourceManager();
 
     // TODO - validate that the cache is provisioned correctly (especially diskPersistence)
-//    resourceManager.getBundleCache().
+    //    resourceManager.getBundleCache().
 
 
-    String [] queryNames = report.getDataFactory().getQueryNames();
-    assertNotNull(queryNames);
-    assertEquals(2, queryNames.length);
-    assertEquals("TerritoryList", queryNames[0]);
-    assertEquals("Query 1", queryNames[1]);
+    String[] queryNames = report.getDataFactory().getQueryNames();
+    assertNotNull( queryNames );
+    assertEquals( 2, queryNames.length );
+    assertEquals( "TerritoryList", queryNames[ 0 ] );
+    assertEquals( "Query 1", queryNames[ 1 ] );
 
     PageDefinition pageDefinition = report.getPageDefinition();
-    assertNotNull(pageDefinition);
+    assertNotNull( pageDefinition );
 
     // TODO - this was causing failures - not sure why
-//    assertEquals(576.0, pageDefinition.getHeight());
-//    assertEquals(734.0, pageDefinition.getWidth());
-    assertEquals(1, pageDefinition.getPageCount());
+    //    assertEquals(576.0, pageDefinition.getHeight());
+    //    assertEquals(734.0, pageDefinition.getWidth());
+    assertEquals( 1, pageDefinition.getPageCount() );
 
     Configuration configuration = report.getConfiguration();
-    String configDate = configuration.getConfigProperty("org.pentaho.reporting.engine.classic.core.environment.::internal::report.date");
-    assertEquals("2011-04-07T15:00:00.000+0000", configDate);
+    String configDate = configuration
+      .getConfigProperty( "org.pentaho.reporting.engine.classic.core.environment.::internal::report.date" );
+    assertEquals( "2011-04-07T15:00:00.000+0000", configDate );
 
     // TODO - add more tests to validate against a corrupt report
-    // Validate Data Factory: query name, query, connection path (from ConnectionProvider) = 'SampleData', data factory size = 1,
+    // Validate Data Factory: query name, query, connection path (from ConnectionProvider) = 'SampleData', data
+    // factory size = 1,
     // query mappings = 2 (TerritoryList, Query 1
     // ResourceManager (no data, bundle or factory cache)
     // Report Configuration (config = report.date 2011-04-07T15:00:00.000+0000)
@@ -119,39 +113,31 @@ public class GoldCacheLoadTest extends GoldTestBase
   }
 
   @Test
-  public void testExecuteReports() throws Exception
-  {
+  public void testExecuteReports() throws Exception {
     final ArrayList<Exception> exceptions = new ArrayList<Exception>();
-    for (int numThread = 0; numThread < maxThreads; numThread++)
-    {
-      threadPool.submit(new Runnable()
-      {
+    for ( int numThread = 0; numThread < maxThreads; numThread++ ) {
+      threadPool.submit( new Runnable() {
         @Override
-        public void run()
-        {
-          try
-          {
+        public void run() {
+          try {
             GoldCacheLoadTest cacheLoadTest = new GoldCacheLoadTest();
             cacheLoadTest.setUp();
-            cacheLoadTest.runSingleGoldReport("Prd-3159.prpt", ReportProcessingMode.current);
-            final MasterReport report = masterReportList.get(new Long(Thread.currentThread().getId()));
-            validateMasterReport(report);
-          }
-          catch (Exception ex)
-          {
-            exceptions.add(ex);
-            System.out.println("Exception caught: " + ex.toString());
+            cacheLoadTest.runSingleGoldReport( "Prd-3159.prpt", ReportProcessingMode.current );
+            final MasterReport report = masterReportList.get( new Long( Thread.currentThread().getId() ) );
+            validateMasterReport( report );
+          } catch ( Exception ex ) {
+            exceptions.add( ex );
+            System.out.println( "Exception caught: " + ex.toString() );
           }
         }
-      });
+      } );
     }
 
     threadPool.shutdown();
-    while (threadPool.isTerminated() == false)
-    {
-      threadPool.awaitTermination(5, TimeUnit.MINUTES);
+    while ( threadPool.isTerminated() == false ) {
+      threadPool.awaitTermination( 5, TimeUnit.MINUTES );
     }
 
-    assertTrue(exceptions.isEmpty());
+    assertTrue( exceptions.isEmpty() );
   }
 }

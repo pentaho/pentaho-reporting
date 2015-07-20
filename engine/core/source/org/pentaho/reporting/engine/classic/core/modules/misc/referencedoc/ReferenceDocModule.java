@@ -26,16 +26,14 @@ import org.pentaho.reporting.libraries.base.boot.SubSystem;
  *
  * @author Thomas Morgner
  */
-public class ReferenceDocModule extends AbstractModule
-{
+public class ReferenceDocModule extends AbstractModule {
   /**
    * DefaultConstructor. Loads the module specification.
    *
    * @throws ModuleInitializeException if an error occured.
    */
   public ReferenceDocModule()
-      throws ModuleInitializeException
-  {
+    throws ModuleInitializeException {
     loadModuleInfo();
   }
 
@@ -46,7 +44,6 @@ public class ReferenceDocModule extends AbstractModule
    *
    * @param subSystem the subSystem.
    */
-  public void initialize(final SubSystem subSystem)
-  {
+  public void initialize( final SubSystem subSystem ) {
   }
 }

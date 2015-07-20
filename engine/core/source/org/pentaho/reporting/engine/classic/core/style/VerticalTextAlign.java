@@ -17,43 +17,41 @@
 
 package org.pentaho.reporting.engine.classic.core.style;
 
+import org.pentaho.reporting.engine.classic.core.util.ObjectStreamResolveException;
+
 import java.io.ObjectStreamException;
 import java.io.Serializable;
-
-import org.pentaho.reporting.engine.classic.core.util.ObjectStreamResolveException;
 
 /**
  * Creation-Date: 24.11.2005, 17:08:01
  *
  * @author Thomas Morgner
  */
-public class VerticalTextAlign implements Serializable
-{
+public class VerticalTextAlign implements Serializable {
   public static final VerticalTextAlign USE_SCRIPT =
-      new VerticalTextAlign("use-script");
+    new VerticalTextAlign( "use-script" );
   public static final VerticalTextAlign BASELINE =
-      new VerticalTextAlign("baseline");
+    new VerticalTextAlign( "baseline" );
   public static final VerticalTextAlign SUB =
-      new VerticalTextAlign("sub");
+    new VerticalTextAlign( "sub" );
   public static final VerticalTextAlign SUPER =
-      new VerticalTextAlign("super");
+    new VerticalTextAlign( "super" );
 
   public static final VerticalTextAlign TOP =
-      new VerticalTextAlign("top");
+    new VerticalTextAlign( "top" );
   public static final VerticalTextAlign TEXT_TOP =
-      new VerticalTextAlign("text-top");
+    new VerticalTextAlign( "text-top" );
   public static final VerticalTextAlign CENTRAL =
-      new VerticalTextAlign("central");
+    new VerticalTextAlign( "central" );
   public static final VerticalTextAlign MIDDLE =
-      new VerticalTextAlign("middle");
+    new VerticalTextAlign( "middle" );
   public static final VerticalTextAlign BOTTOM =
-      new VerticalTextAlign("bottom");
+    new VerticalTextAlign( "bottom" );
   public static final VerticalTextAlign TEXT_BOTTOM =
-      new VerticalTextAlign("text-bottom");
+    new VerticalTextAlign( "text-bottom" );
   private String id;
 
-  private VerticalTextAlign(final String id)
-  {
+  private VerticalTextAlign( final String id ) {
     this.id = id;
   }
 
@@ -64,121 +62,96 @@ public class VerticalTextAlign implements Serializable
    * @throws java.io.ObjectStreamException if the element could not be resolved.
    */
   protected Object readResolve()
-      throws ObjectStreamException
-  {
-    if (this.id.equals(VerticalTextAlign.USE_SCRIPT.id))
-    {
+    throws ObjectStreamException {
+    if ( this.id.equals( VerticalTextAlign.USE_SCRIPT.id ) ) {
       return VerticalTextAlign.USE_SCRIPT;
     }
-    if (this.id.equals(VerticalTextAlign.BASELINE.id))
-    {
+    if ( this.id.equals( VerticalTextAlign.BASELINE.id ) ) {
       return VerticalTextAlign.BASELINE;
     }
-    if (this.id.equals(VerticalTextAlign.SUPER.id))
-    {
+    if ( this.id.equals( VerticalTextAlign.SUPER.id ) ) {
       return VerticalTextAlign.SUPER;
     }
-    if (this.id.equals(VerticalTextAlign.SUB.id))
-    {
+    if ( this.id.equals( VerticalTextAlign.SUB.id ) ) {
       return VerticalTextAlign.SUB;
     }
-    if (this.id.equals(VerticalTextAlign.TOP.id))
-    {
+    if ( this.id.equals( VerticalTextAlign.TOP.id ) ) {
       return VerticalTextAlign.TOP;
     }
-    if (this.id.equals(VerticalTextAlign.TEXT_TOP.id))
-    {
+    if ( this.id.equals( VerticalTextAlign.TEXT_TOP.id ) ) {
       return VerticalTextAlign.TEXT_TOP;
     }
-    if (this.id.equals(VerticalTextAlign.BOTTOM.id))
-    {
+    if ( this.id.equals( VerticalTextAlign.BOTTOM.id ) ) {
       return VerticalTextAlign.BOTTOM;
     }
-    if (this.id.equals(VerticalTextAlign.TEXT_BOTTOM.id))
-    {
+    if ( this.id.equals( VerticalTextAlign.TEXT_BOTTOM.id ) ) {
       return VerticalTextAlign.TEXT_BOTTOM;
     }
-    if (this.id.equals(VerticalTextAlign.CENTRAL.id))
-    {
+    if ( this.id.equals( VerticalTextAlign.CENTRAL.id ) ) {
       return VerticalTextAlign.CENTRAL;
     }
-    if (this.id.equals(VerticalTextAlign.MIDDLE.id))
-    {
+    if ( this.id.equals( VerticalTextAlign.MIDDLE.id ) ) {
       return VerticalTextAlign.MIDDLE;
     }
     // unknown element alignment...
     throw new ObjectStreamResolveException();
   }
 
-  public static VerticalTextAlign valueOf(String id)
-  {
-    if (id == null) return null;
-    if (id.equals(VerticalTextAlign.USE_SCRIPT.id))
-    {
+  public static VerticalTextAlign valueOf( String id ) {
+    if ( id == null ) {
+      return null;
+    }
+    if ( id.equals( VerticalTextAlign.USE_SCRIPT.id ) ) {
       return VerticalTextAlign.USE_SCRIPT;
     }
-    if (id.equals(VerticalTextAlign.BASELINE.id))
-    {
+    if ( id.equals( VerticalTextAlign.BASELINE.id ) ) {
       return VerticalTextAlign.BASELINE;
     }
-    if (id.equals(VerticalTextAlign.SUPER.id))
-    {
+    if ( id.equals( VerticalTextAlign.SUPER.id ) ) {
       return VerticalTextAlign.SUPER;
     }
-    if (id.equals(VerticalTextAlign.SUB.id))
-    {
+    if ( id.equals( VerticalTextAlign.SUB.id ) ) {
       return VerticalTextAlign.SUB;
     }
-    if (id.equals(VerticalTextAlign.TOP.id))
-    {
+    if ( id.equals( VerticalTextAlign.TOP.id ) ) {
       return VerticalTextAlign.TOP;
     }
-    if (id.equals(VerticalTextAlign.TEXT_TOP.id))
-    {
+    if ( id.equals( VerticalTextAlign.TEXT_TOP.id ) ) {
       return VerticalTextAlign.TEXT_TOP;
     }
-    if (id.equals(VerticalTextAlign.BOTTOM.id))
-    {
+    if ( id.equals( VerticalTextAlign.BOTTOM.id ) ) {
       return VerticalTextAlign.BOTTOM;
     }
-    if (id.equals(VerticalTextAlign.TEXT_BOTTOM.id))
-    {
+    if ( id.equals( VerticalTextAlign.TEXT_BOTTOM.id ) ) {
       return VerticalTextAlign.TEXT_BOTTOM;
     }
-    if (id.equals(VerticalTextAlign.CENTRAL.id))
-    {
+    if ( id.equals( VerticalTextAlign.CENTRAL.id ) ) {
       return VerticalTextAlign.CENTRAL;
     }
-    if (id.equals(VerticalTextAlign.MIDDLE.id))
-    {
+    if ( id.equals( VerticalTextAlign.MIDDLE.id ) ) {
       return VerticalTextAlign.MIDDLE;
     }
     return null;
   }
 
-  public boolean equals(final Object o)
-  {
-    if (this == o)
-    {
+  public boolean equals( final Object o ) {
+    if ( this == o ) {
       return true;
     }
-    if (o == null || getClass() != o.getClass())
-    {
+    if ( o == null || getClass() != o.getClass() ) {
       return false;
     }
 
     final VerticalTextAlign that = (VerticalTextAlign) o;
 
-    if (!id.equals(that.id))
-    {
+    if ( !id.equals( that.id ) ) {
       return false;
     }
 
     return true;
   }
 
-  public int hashCode()
-  {
+  public int hashCode() {
     return id.hashCode();
   }
 
@@ -197,8 +170,7 @@ public class VerticalTextAlign implements Serializable
    *
    * @return a string representation of the object.
    */
-  public String toString()
-  {
+  public String toString() {
     return id;
   }
 }

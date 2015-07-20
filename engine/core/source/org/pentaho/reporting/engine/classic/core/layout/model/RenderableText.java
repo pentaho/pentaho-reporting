@@ -52,16 +52,14 @@ import org.pentaho.reporting.libraries.fonts.tools.FontStrictGeomUtility;
  *
  * @author Thomas Morgner
  */
-public final class RenderableText extends RenderNode
-{
+public final class RenderableText extends RenderNode {
   private static long conversionFactor;
 
-  static
-  {
-    final long value = StrictGeomUtility.toInternalValue(1);
-    conversionFactor = value / FontStrictGeomUtility.toInternalValue(1);
+  static {
+    final long value = StrictGeomUtility.toInternalValue( 1 );
+    conversionFactor = value / FontStrictGeomUtility.toInternalValue( 1 );
   }
-  
+
   private GlyphList glyphs;
   private int offset;
   private int length;
@@ -73,37 +71,32 @@ public final class RenderableText extends RenderNode
   private ExtendedBaselineInfo baselineInfo;
   private boolean normalTextSpacing;
 
-  public RenderableText(final StyleSheet layoutContext,
-                        final ElementType elementType,
-                        final InstanceID instanceID,
-                        final ReportAttributeMap<Object> attributes,
-                        final ExtendedBaselineInfo baselineInfo,
-                        final GlyphList glyphs,
-                        final int offset,
-                        final int length,
-                        final int script,
-                        final boolean forceLinebreak)
-  {
-    super(new NodeLayoutProperties(layoutContext, attributes, instanceID, elementType));
-    initialize(glyphs, offset, length, baselineInfo, script, forceLinebreak);
+  public RenderableText( final StyleSheet layoutContext,
+                         final ElementType elementType,
+                         final InstanceID instanceID,
+                         final ReportAttributeMap<Object> attributes,
+                         final ExtendedBaselineInfo baselineInfo,
+                         final GlyphList glyphs,
+                         final int offset,
+                         final int length,
+                         final int script,
+                         final boolean forceLinebreak ) {
+    super( new NodeLayoutProperties( layoutContext, attributes, instanceID, elementType ) );
+    initialize( glyphs, offset, length, baselineInfo, script, forceLinebreak );
   }
 
-  protected void initialize(final GlyphList glyphs,
-                            final int offset,
-                            final int length,
-                            final ExtendedBaselineInfo baselineInfo,
-                            final int script, final boolean forceLinebreak)
-  {
-    if (glyphs == null)
-    {
+  protected void initialize( final GlyphList glyphs,
+                             final int offset,
+                             final int length,
+                             final ExtendedBaselineInfo baselineInfo,
+                             final int script, final boolean forceLinebreak ) {
+    if ( glyphs == null ) {
       throw new NullPointerException();
     }
-    if (forceLinebreak == false && length == 0)
-    {
-      throw new IllegalArgumentException("Do not create zero-length renderable text!");
+    if ( forceLinebreak == false && length == 0 ) {
+      throw new IllegalArgumentException( "Do not create zero-length renderable text!" );
     }
-    if (glyphs.getSize() < (offset + length))
-    {
+    if ( glyphs.getSize() < ( offset + length ) ) {
       throw new IllegalArgumentException();
     }
 
@@ -118,8 +111,8 @@ public final class RenderableText extends RenderNode
     normalTextSpacing = true;
     long wordMinChunkWidth = 0;
 
-//    long heightAbove = 0;
-//    long heightBelow = 0;
+    //    long heightAbove = 0;
+    //    long heightBelow = 0;
     long minimumChunkWidth = 0;
 
     long realCharTotal = 0;
@@ -127,43 +120,38 @@ public final class RenderableText extends RenderNode
     long spacerMax = 0;
     long spacerOpt = 0;
 
-    final int lastPos = Math.min(glyphs.getSize(), offset + length);
-    for (int i = offset; i < lastPos; i++)
-    {
-      final Glyph glyph = glyphs.getGlyph(i);
+    final int lastPos = Math.min( glyphs.getSize(), offset + length );
+    for ( int i = offset; i < lastPos; i++ ) {
+      final Glyph glyph = glyphs.getGlyph( i );
       //      heightAbove = Math.max(glyph.getBaseLine(), heightAbove);
       //      heightBelow = Math.max(glyph.getHeight() - glyph.getBaseLine(), heightBelow);
       final int kerning = glyph.getKerning();
       final int width = glyph.getWidth();
-      final long realCharSpace = convert(width - kerning);
+      final long realCharSpace = convert( width - kerning );
       realCharTotal += realCharSpace;
       wordMinChunkWidth += realCharSpace;
-      if (i != (lastPos - 1))
-      {
+      if ( i != ( lastPos - 1 ) ) {
         final Spacing spacing = glyph.getSpacing();
         spacerMax += spacing.getMaximum();
         spacerMin += spacing.getMinimum();
         spacerOpt += spacing.getOptimum();
-        if (normalTextSpacing == true &&
-            Spacing.EMPTY_SPACING.equals(spacing) == false)
-        {
+        if ( normalTextSpacing == true &&
+          Spacing.EMPTY_SPACING.equals( spacing ) == false ) {
           normalTextSpacing = false;
         }
 
         wordMinChunkWidth += spacing.getMinimum();
       }
 
-      if (glyph.getBreakWeight() > BreakOpportunityProducer.BREAK_CHAR)
-      {
-        minimumChunkWidth = Math.max(minimumChunkWidth, wordMinChunkWidth);
+      if ( glyph.getBreakWeight() > BreakOpportunityProducer.BREAK_CHAR ) {
+        minimumChunkWidth = Math.max( minimumChunkWidth, wordMinChunkWidth );
         wordMinChunkWidth = 0;
 
         // Paranoid sanity checks: The word- and linebreaks should have been
         // replaced by other definitions in the text factory.
-        if (glyph.getBreakWeight() == BreakOpportunityProducer.BREAK_LINE)
-        {
-          throw new IllegalStateException("A renderable text cannot and must " +
-              "not contain linebreaks.");
+        if ( glyph.getBreakWeight() == BreakOpportunityProducer.BREAK_LINE ) {
+          throw new IllegalStateException( "A renderable text cannot and must " +
+            "not contain linebreaks." );
         }
       }
     }
@@ -172,59 +160,49 @@ public final class RenderableText extends RenderNode
     final long wordPrefWidth = spacerOpt + realCharTotal;
     final long wordMaxWidth = spacerMax + realCharTotal;
 
-    minimumChunkWidth = Math.max(minimumChunkWidth, wordMinChunkWidth);
+    minimumChunkWidth = Math.max( minimumChunkWidth, wordMinChunkWidth );
     minimumWidth = wordMinWidth;
     preferredWidth = wordPrefWidth;
 
-    setMaximumBoxWidth(wordMaxWidth);
-    setMinimumChunkWidth(minimumChunkWidth);
+    setMaximumBoxWidth( wordMaxWidth );
+    setMinimumChunkWidth( minimumChunkWidth );
   }
 
-  public int getNodeType()
-  {
+  public int getNodeType() {
     return LayoutNodeTypes.TYPE_NODE_TEXT;
   }
 
-  public boolean isNormalTextSpacing()
-  {
+  public boolean isNormalTextSpacing() {
     return normalTextSpacing;
   }
 
-  public boolean isForceLinebreak()
-  {
+  public boolean isForceLinebreak() {
     return forceLinebreak;
   }
 
-  public GlyphList getGlyphs()
-  {
+  public GlyphList getGlyphs() {
     return glyphs;
   }
 
-  public int getOffset()
-  {
+  public int getOffset() {
     return offset;
   }
 
-  public int getLength()
-  {
+  public int getLength() {
     return length;
   }
 
-  public String getRawText()
-  {
+  public String getRawText() {
     final GlyphList gs = getGlyphs();
-    return gs.getText(offset, length, new CodePointBuffer(length));
+    return gs.getText( offset, length, new CodePointBuffer( length ) );
   }
 
-  public boolean isEmpty()
-  {
+  public boolean isEmpty() {
     return length == 0 && forceLinebreak == false;
   }
 
-  public boolean isDiscardable()
-  {
-    if (forceLinebreak)
-    {
+  public boolean isDiscardable() {
+    if ( forceLinebreak ) {
       return false;
     }
 
@@ -236,42 +214,34 @@ public final class RenderableText extends RenderNode
    *
    * @return
    */
-  public ExtendedBaselineInfo getBaselineInfo()
-  {
+  public ExtendedBaselineInfo getBaselineInfo() {
     return baselineInfo;
   }
 
-  public int getScript()
-  {
+  public int getScript() {
     return script;
   }
 
-  public long getMinimumWidth()
-  {
+  public long getMinimumWidth() {
     return minimumWidth;
   }
 
-  public long getPreferredWidth()
-  {
+  public long getPreferredWidth() {
     return preferredWidth;
   }
 
-  public String toString()
-  {
+  public String toString() {
     return "RenderableText={glyphs=" + glyphs + "'}";
   }
 
-  public static long convert (final long fontMetricsValue)
-  {
+  public static long convert( final long fontMetricsValue ) {
     return fontMetricsValue * conversionFactor;
   }
 
-  public int computeMaximumTextSize(final long contentX2)
-  {
+  public int computeMaximumTextSize( final long contentX2 ) {
     final int length = getLength();
     final long x = getX();
-    if (contentX2 >= (x + getWidth()))
-    {
+    if ( contentX2 >= ( x + getWidth() ) ) {
       return length;
     }
 
@@ -280,17 +250,14 @@ public final class RenderableText extends RenderNode
     final int offset = getOffset();
     final int maxPos = offset + length;
 
-    for (int i = offset; i < maxPos; i++)
-    {
-      final Glyph g = gs.getGlyph(i);
-      runningPos += RenderableText.convert(g.getWidth());
-      if (i != offset)
-      {
+    for ( int i = offset; i < maxPos; i++ ) {
+      final Glyph g = gs.getGlyph( i );
+      runningPos += RenderableText.convert( g.getWidth() );
+      if ( i != offset ) {
         runningPos += g.getSpacing().getMinimum();
       }
-      if (runningPos > contentX2)
-      {
-        return Math.max(0, i - offset);
+      if ( runningPos > contentX2 ) {
+        return Math.max( 0, i - offset );
       }
     }
     return length;

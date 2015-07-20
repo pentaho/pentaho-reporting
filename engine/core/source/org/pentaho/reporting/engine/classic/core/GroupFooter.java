@@ -29,14 +29,12 @@ import org.pentaho.reporting.engine.classic.core.style.BandStyleKeys;
  *
  * @author David Gilbert
  */
-public class GroupFooter extends AbstractRootLevelBand
-{
+public class GroupFooter extends AbstractRootLevelBand {
   /**
    * Constructs a group footer band, containing no elements.
    */
-  public GroupFooter()
-  {
-    setElementType(new GroupFooterType());
+  public GroupFooter() {
+    setElementType( new GroupFooterType() );
   }
 
   /**
@@ -44,9 +42,8 @@ public class GroupFooter extends AbstractRootLevelBand
    *
    * @return true, if the header will be repeated, false otherwise
    */
-  public boolean isRepeat()
-  {
-    return getStyle().getBooleanStyleProperty(BandStyleKeys.REPEAT_HEADER);
+  public boolean isRepeat() {
+    return getStyle().getBooleanStyleProperty( BandStyleKeys.REPEAT_HEADER );
   }
 
   /**
@@ -54,9 +51,8 @@ public class GroupFooter extends AbstractRootLevelBand
    *
    * @param repeat true, if the header will be repeated, false otherwise
    */
-  public void setRepeat(final boolean repeat)
-  {
-    getStyle().setBooleanStyleProperty(BandStyleKeys.REPEAT_HEADER, repeat);
+  public void setRepeat( final boolean repeat ) {
+    getStyle().setBooleanStyleProperty( BandStyleKeys.REPEAT_HEADER, repeat );
     notifyNodePropertiesChanged();
   }
 
@@ -65,9 +61,8 @@ public class GroupFooter extends AbstractRootLevelBand
    *
    * @return true or false.
    */
-  public boolean isSticky()
-  {
-    return getStyle().getBooleanStyleProperty(BandStyleKeys.STICKY, false);
+  public boolean isSticky() {
+    return getStyle().getBooleanStyleProperty( BandStyleKeys.STICKY, false );
   }
 
   /**
@@ -75,9 +70,8 @@ public class GroupFooter extends AbstractRootLevelBand
    *
    * @param b a flag indicating whether or not the footer is shown on the first page.
    */
-  public void setSticky(final boolean b)
-  {
-    getStyle().setBooleanStyleProperty(BandStyleKeys.STICKY, b);
+  public void setSticky( final boolean b ) {
+    getStyle().setBooleanStyleProperty( BandStyleKeys.STICKY, b );
     notifyNodePropertiesChanged();
   }
 

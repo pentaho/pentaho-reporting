@@ -24,10 +24,8 @@ import java.util.TimeZone;
  *
  * @author Thomas Morgner
  */
-public class TimeZoneValueConverter implements ValueConverter
-{
-  public TimeZoneValueConverter()
-  {
+public class TimeZoneValueConverter implements ValueConverter {
+  public TimeZoneValueConverter() {
   }
 
   /**
@@ -37,15 +35,12 @@ public class TimeZoneValueConverter implements ValueConverter
    * @return the attribute value.
    * @throws BeanException if there was an error during the conversion.
    */
-  public String toAttributeValue(final Object o) throws BeanException
-  {
-    if (o == null)
-    {
+  public String toAttributeValue( final Object o ) throws BeanException {
+    if ( o == null ) {
       throw new NullPointerException();
     }
-    if (o instanceof TimeZone == false)
-    {
-      throw new BeanException("Failed to convert object of type " + o.getClass() + ": Not a timezone.");
+    if ( o instanceof TimeZone == false ) {
+      throw new BeanException( "Failed to convert object of type " + o.getClass() + ": Not a timezone." );
     }
     final TimeZone tz = (TimeZone) o;
     return tz.getID();
@@ -58,12 +53,10 @@ public class TimeZoneValueConverter implements ValueConverter
    * @return a property value.
    * @throws BeanException if there was an error during the conversion.
    */
-  public Object toPropertyValue(final String s) throws BeanException
-  {
-    if (s == null)
-    {
+  public Object toPropertyValue( final String s ) throws BeanException {
+    if ( s == null ) {
       throw new NullPointerException();
     }
-    return TimeZone.getTimeZone(s);
+    return TimeZone.getTimeZone( s );
   }
 }

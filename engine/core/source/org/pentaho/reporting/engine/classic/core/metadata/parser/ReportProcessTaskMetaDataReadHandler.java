@@ -17,21 +17,19 @@
 
 package org.pentaho.reporting.engine.classic.core.metadata.parser;
 
-import java.util.ArrayList;
-
 import org.pentaho.reporting.engine.classic.core.metadata.ReportProcessTaskMetaData;
 import org.pentaho.reporting.libraries.xmlns.parser.AbstractXmlReadHandler;
 import org.pentaho.reporting.libraries.xmlns.parser.XmlReadHandler;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 
-public class ReportProcessTaskMetaDataReadHandler extends AbstractXmlReadHandler
-{
+import java.util.ArrayList;
+
+public class ReportProcessTaskMetaDataReadHandler extends AbstractXmlReadHandler {
   private ArrayList<ReportProcessTaskReadHandler> elements;
   private ReportProcessTaskMetaDataCollection typeCollection;
 
-  public ReportProcessTaskMetaDataReadHandler()
-  {
+  public ReportProcessTaskMetaDataReadHandler() {
     elements = new ArrayList<ReportProcessTaskReadHandler>();
   }
 
@@ -44,18 +42,16 @@ public class ReportProcessTaskMetaDataReadHandler extends AbstractXmlReadHandler
    * @return the handler or null, if the tagname is invalid.
    * @throws org.xml.sax.SAXException if there is a parsing error.
    */
-  protected XmlReadHandler getHandlerForChild(final String uri,
-                                              final String tagName,
-                                              final Attributes atts) throws SAXException
-  {
-    if (getUri().equals(uri) == false)
-    {
+  protected XmlReadHandler getHandlerForChild( final String uri,
+                                               final String tagName,
+                                               final Attributes atts ) throws SAXException {
+    if ( getUri().equals( uri ) == false ) {
       return null;
     }
-    if ("process-task".equals(tagName)) // NON-NLS
+    if ( "process-task".equals( tagName ) ) // NON-NLS
     {
       final ReportProcessTaskReadHandler readHandler = new ReportProcessTaskReadHandler();
-      elements.add(readHandler);
+      elements.add( readHandler );
       return readHandler;
     }
     return null;
@@ -66,16 +62,14 @@ public class ReportProcessTaskMetaDataReadHandler extends AbstractXmlReadHandler
    *
    * @throws org.xml.sax.SAXException if there is a parsing error.
    */
-  protected void doneParsing() throws SAXException
-  {
-    final ReportProcessTaskMetaData[] result = new ReportProcessTaskMetaData[elements.size()];
-    for (int i = 0; i < elements.size(); i++)
-    {
-      final ReportProcessTaskReadHandler handler = elements.get(i);
-      result[i] = handler.getObject();
+  protected void doneParsing() throws SAXException {
+    final ReportProcessTaskMetaData[] result = new ReportProcessTaskMetaData[ elements.size() ];
+    for ( int i = 0; i < elements.size(); i++ ) {
+      final ReportProcessTaskReadHandler handler = elements.get( i );
+      result[ i ] = handler.getObject();
     }
 
-    typeCollection = new ReportProcessTaskMetaDataCollection(result);
+    typeCollection = new ReportProcessTaskMetaDataCollection( result );
   }
 
   /**
@@ -84,8 +78,7 @@ public class ReportProcessTaskMetaDataReadHandler extends AbstractXmlReadHandler
    * @return the object.
    * @throws org.xml.sax.SAXException if an parser error occured.
    */
-  public ReportProcessTaskMetaDataCollection getObject() throws SAXException
-  {
+  public ReportProcessTaskMetaDataCollection getObject() throws SAXException {
     return typeCollection;
   }
 }

@@ -1,14 +1,13 @@
 package org.pentaho.reporting.engine.classic.core.modules.misc.connections;
 
-import java.util.List;
-
 import org.pentaho.database.model.IDatabaseConnection;
+
+import java.util.List;
 
 /**
  * A design-time interface.
  */
-public interface DataSourceMgmtService
-{
+public interface DataSourceMgmtService {
   /**
    * Creates a JDBC datasource in a given repository and return an id
    *
@@ -17,7 +16,8 @@ public interface DataSourceMgmtService
    * @throws DuplicateDatasourceException
    * @throws DatasourceMgmtServiceException
    */
-  public String createDatasource(IDatabaseConnection databaseConnection) throws DuplicateDatasourceException, DatasourceMgmtServiceException;
+  public String createDatasource( IDatabaseConnection databaseConnection )
+    throws DuplicateDatasourceException, DatasourceMgmtServiceException;
 
   /**
    * Permanently deletes a JDBC datasource from a repository by id
@@ -26,7 +26,7 @@ public interface DataSourceMgmtService
    * @throws NonExistingDatasourceException
    * @throws DatasourceMgmtServiceException
    */
-  public void deleteDatasourceById(String id) throws NonExistingDatasourceException, DatasourceMgmtServiceException;
+  public void deleteDatasourceById( String id ) throws NonExistingDatasourceException, DatasourceMgmtServiceException;
 
   /**
    * Retrieves a JDBC datasource form the repository by name
@@ -35,7 +35,7 @@ public interface DataSourceMgmtService
    * @return IDatabaseConnection
    * @throws DatasourceMgmtServiceException
    */
-  public IDatabaseConnection getDatasourceByName(String name) throws DatasourceMgmtServiceException;
+  public IDatabaseConnection getDatasourceByName( String name ) throws DatasourceMgmtServiceException;
 
   /**
    * Retrieves a JDBC datasource form the repository by id
@@ -44,7 +44,7 @@ public interface DataSourceMgmtService
    * @return IDatabaseConnection
    * @throws DatasourceMgmtServiceException
    */
-  public IDatabaseConnection getDatasourceById(String id) throws DatasourceMgmtServiceException;
+  public IDatabaseConnection getDatasourceById( String id ) throws DatasourceMgmtServiceException;
 
   /**
    * Retrieves all JDBC datasources from the repository
@@ -71,7 +71,7 @@ public interface DataSourceMgmtService
    * @throws NonExistingDatasourceException
    * @throws DatasourceMgmtServiceException
    */
-  public String updateDatasourceById(String id,
-                                     IDatabaseConnection databaseConnection)
-      throws NonExistingDatasourceException, DatasourceMgmtServiceException;
+  public String updateDatasourceById( String id,
+                                      IDatabaseConnection databaseConnection )
+    throws NonExistingDatasourceException, DatasourceMgmtServiceException;
 }

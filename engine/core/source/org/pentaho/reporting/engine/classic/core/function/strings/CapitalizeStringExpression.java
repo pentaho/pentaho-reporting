@@ -25,8 +25,7 @@ import org.pentaho.reporting.engine.classic.core.function.AbstractExpression;
  * @author Thomas Morgner
  * @deprecated Use a formula instead.
  */
-public class CapitalizeStringExpression extends AbstractExpression
-{
+public class CapitalizeStringExpression extends AbstractExpression {
   /**
    * The field name from where to read the string that should be capitalized.
    */
@@ -39,8 +38,7 @@ public class CapitalizeStringExpression extends AbstractExpression
   /**
    * Default constructor.
    */
-  public CapitalizeStringExpression()
-  {
+  public CapitalizeStringExpression() {
   }
 
   /**
@@ -48,8 +46,7 @@ public class CapitalizeStringExpression extends AbstractExpression
    *
    * @return true, if the first word should be capitalized, false if all words should be capitalized.
    */
-  public boolean isFirstWordOnly()
-  {
+  public boolean isFirstWordOnly() {
     return firstWordOnly;
   }
 
@@ -58,8 +55,7 @@ public class CapitalizeStringExpression extends AbstractExpression
    *
    * @param firstWordOnly true, if the first word should be capitalized, false if all words should be capitalized.
    */
-  public void setFirstWordOnly(final boolean firstWordOnly)
-  {
+  public void setFirstWordOnly( final boolean firstWordOnly ) {
     this.firstWordOnly = firstWordOnly;
   }
 
@@ -68,8 +64,7 @@ public class CapitalizeStringExpression extends AbstractExpression
    *
    * @return the field.
    */
-  public String getField()
-  {
+  public String getField() {
     return field;
   }
 
@@ -78,8 +73,7 @@ public class CapitalizeStringExpression extends AbstractExpression
    *
    * @param field the field.
    */
-  public void setField(final String field)
-  {
+  public void setField( final String field ) {
     this.field = field;
   }
 
@@ -88,41 +82,33 @@ public class CapitalizeStringExpression extends AbstractExpression
    *
    * @return the value of the function.
    */
-  public Object getValue()
-  {
-    final Object raw = getDataRow().get(getField());
-    if (raw == null)
-    {
+  public Object getValue() {
+    final Object raw = getDataRow().get( getField() );
+    if ( raw == null ) {
       return null;
     }
-    final String text = String.valueOf(raw);
+    final String text = String.valueOf( raw );
     final char[] textArray = text.toCharArray();
 
     boolean startOfWord = true;
 
     final int textLength = textArray.length;
-    for (int i = 0; i < textLength; i++)
-    {
-      final char c = textArray[i];
+    for ( int i = 0; i < textLength; i++ ) {
+      final char c = textArray[ i ];
       // we ignore the punctutation chars or any other possible extra chars
       // for now. Words start at whitespaces ...
-      if (Character.isWhitespace(c))
-      {
+      if ( Character.isWhitespace( c ) ) {
         startOfWord = true;
-      }
-      else
-      {
-        if (startOfWord == true)
-        {
-          textArray[i] = Character.toTitleCase(c);
+      } else {
+        if ( startOfWord == true ) {
+          textArray[ i ] = Character.toTitleCase( c );
         }
-        if (firstWordOnly)
-        {
+        if ( firstWordOnly ) {
           break;
         }
         startOfWord = false;
       }
     }
-    return new String(textArray);
+    return new String( textArray );
   }
 }

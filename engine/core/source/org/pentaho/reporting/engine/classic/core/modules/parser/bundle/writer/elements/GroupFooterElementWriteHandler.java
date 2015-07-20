@@ -17,8 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.parser.bundle.writer.elements;
 
-import java.io.IOException;
-
 import org.pentaho.reporting.engine.classic.core.Band;
 import org.pentaho.reporting.engine.classic.core.Element;
 import org.pentaho.reporting.engine.classic.core.RootLevelBand;
@@ -30,15 +28,15 @@ import org.pentaho.reporting.libraries.xmlns.common.AttributeList;
 import org.pentaho.reporting.libraries.xmlns.writer.XmlWriter;
 import org.pentaho.reporting.libraries.xmlns.writer.XmlWriterSupport;
 
+import java.io.IOException;
+
 /**
  * Todo: Document Me
  *
  * @author Thomas Morgner
  */
-public class GroupFooterElementWriteHandler extends AbstractElementWriteHandler
-{
-  public GroupFooterElementWriteHandler()
-  {
+public class GroupFooterElementWriteHandler extends AbstractElementWriteHandler {
+  public GroupFooterElementWriteHandler() {
   }
 
   /**
@@ -51,36 +49,31 @@ public class GroupFooterElementWriteHandler extends AbstractElementWriteHandler
    * @throws IOException           if an IO error occured.
    * @throws BundleWriterException if an Bundle writer.
    */
-  public void writeElement(final WriteableDocumentBundle bundle,
-                           final BundleWriterState state,
-                           final XmlWriter xmlWriter,
-                           final Element element)
-      throws IOException, BundleWriterException
-  {
-    if (bundle == null)
-    {
+  public void writeElement( final WriteableDocumentBundle bundle,
+                            final BundleWriterState state,
+                            final XmlWriter xmlWriter,
+                            final Element element )
+    throws IOException, BundleWriterException {
+    if ( bundle == null ) {
       throw new NullPointerException();
     }
-    if (state == null)
-    {
+    if ( state == null ) {
       throw new NullPointerException();
     }
-    if (xmlWriter == null)
-    {
+    if ( xmlWriter == null ) {
       throw new NullPointerException();
     }
-    if (element == null)
-    {
+    if ( element == null ) {
       throw new NullPointerException();
     }
 
-    final AttributeList attList = createMainAttributes(element, xmlWriter);
-    xmlWriter.writeTag(BundleNamespaces.LAYOUT, "group-footer", XmlWriterSupport.OPEN);
-    xmlWriter.writeTag(BundleNamespaces.LAYOUT, "root-level-content", attList, XmlWriterSupport.OPEN);
-    writeElementBody(bundle, state, element, xmlWriter);
-    writeChildElements(bundle, state, xmlWriter, (Band) element);
+    final AttributeList attList = createMainAttributes( element, xmlWriter );
+    xmlWriter.writeTag( BundleNamespaces.LAYOUT, "group-footer", XmlWriterSupport.OPEN );
+    xmlWriter.writeTag( BundleNamespaces.LAYOUT, "root-level-content", attList, XmlWriterSupport.OPEN );
+    writeElementBody( bundle, state, element, xmlWriter );
+    writeChildElements( bundle, state, xmlWriter, (Band) element );
     xmlWriter.writeCloseTag();
-    writeRootSubReports(bundle, state, xmlWriter, (RootLevelBand) element);
+    writeRootSubReports( bundle, state, xmlWriter, (RootLevelBand) element );
     xmlWriter.writeCloseTag();
 
   }

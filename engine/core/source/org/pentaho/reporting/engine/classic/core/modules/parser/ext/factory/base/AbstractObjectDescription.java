@@ -17,12 +17,12 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.parser.ext.factory.base;
 
+import org.pentaho.reporting.libraries.base.config.Configuration;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
-
-import org.pentaho.reporting.libraries.base.config.Configuration;
 
 /**
  * An abstract base class for object descriptions.
@@ -30,8 +30,7 @@ import org.pentaho.reporting.libraries.base.config.Configuration;
  * @author Thomas Morgner.
  */
 public abstract class AbstractObjectDescription
-    implements ObjectDescription, Cloneable
-{
+  implements ObjectDescription, Cloneable {
 
   /**
    * The class.
@@ -58,15 +57,13 @@ public abstract class AbstractObjectDescription
    *
    * @param className the class.
    */
-  protected AbstractObjectDescription(final Class className)
-  {
+  protected AbstractObjectDescription( final Class className ) {
     this.className = className;
     this.parameters = new HashMap();
     this.parameterDefs = new HashMap();
   }
 
-  public Object clone() throws CloneNotSupportedException
-  {
+  public Object clone() throws CloneNotSupportedException {
     final AbstractObjectDescription od = (AbstractObjectDescription) super.clone();
     od.parameterDefs = (HashMap) parameterDefs.clone();
     od.parameters = (HashMap) parameters.clone();
@@ -79,9 +76,8 @@ public abstract class AbstractObjectDescription
    * @param name the parameter definition.
    * @return The class.
    */
-  public Class getParameterDefinition(final String name)
-  {
-    return (Class) this.parameterDefs.get(name);
+  public Class getParameterDefinition( final String name ) {
+    return (Class) this.parameterDefs.get( name );
   }
 
   /**
@@ -90,15 +86,11 @@ public abstract class AbstractObjectDescription
    * @param name the parameter name.
    * @param obj  the parameter class.
    */
-  public void setParameterDefinition(final String name, final Class obj)
-  {
-    if (obj == null)
-    {
-      this.parameterDefs.remove(name);
-    }
-    else
-    {
-      this.parameterDefs.put(name, obj);
+  public void setParameterDefinition( final String name, final Class obj ) {
+    if ( obj == null ) {
+      this.parameterDefs.remove( name );
+    } else {
+      this.parameterDefs.put( name, obj );
     }
   }
 
@@ -108,45 +100,35 @@ public abstract class AbstractObjectDescription
    * @param obj the class.
    * @return The class.
    */
-  public static Class convertPrimitiveClass(final Class obj)
-  {
-    if (!obj.isPrimitive())
-    {
+  public static Class convertPrimitiveClass( final Class obj ) {
+    if ( !obj.isPrimitive() ) {
       return obj;
     }
-    if (obj == Boolean.TYPE)
-    {
+    if ( obj == Boolean.TYPE ) {
       return Boolean.class;
     }
-    if (obj == Byte.TYPE)
-    {
+    if ( obj == Byte.TYPE ) {
       return Byte.class;
     }
-    if (obj == Character.TYPE)
-    {
+    if ( obj == Character.TYPE ) {
       return Character.class;
     }
-    if (obj == Short.TYPE)
-    {
+    if ( obj == Short.TYPE ) {
       return Short.class;
     }
-    if (obj == Integer.TYPE)
-    {
+    if ( obj == Integer.TYPE ) {
       return Integer.class;
     }
-    if (obj == Long.TYPE)
-    {
+    if ( obj == Long.TYPE ) {
       return Long.class;
     }
-    if (obj == Float.TYPE)
-    {
+    if ( obj == Float.TYPE ) {
       return Float.class;
     }
-    if (obj == Double.TYPE)
-    {
+    if ( obj == Double.TYPE ) {
       return Double.class;
     }
-    throw new IllegalArgumentException("Class 'void' is not allowed here");
+    throw new IllegalArgumentException( "Class 'void' is not allowed here" );
   }
 
   /**
@@ -155,28 +137,24 @@ public abstract class AbstractObjectDescription
    * @param name  the name.
    * @param value the value.
    */
-  public void setParameter(final String name, final Object value)
-  {
-    if (getParameterDefinition(name) == null)
-    {
-      throw new IllegalArgumentException("No such Parameter defined: " + name
-          + " in class " + getObjectClass());
+  public void setParameter( final String name, final Object value ) {
+    if ( getParameterDefinition( name ) == null ) {
+      throw new IllegalArgumentException( "No such Parameter defined: " + name
+        + " in class " + getObjectClass() );
     }
-    if (value == null)
-    {
-      parameters.remove(name);
+    if ( value == null ) {
+      parameters.remove( name );
       return;
     }
 
     final Class parameterClass = AbstractObjectDescription.convertPrimitiveClass
-        (getParameterDefinition(name));
-    if (!parameterClass.isAssignableFrom(value.getClass()))
-    {
-      throw new ClassCastException("In Object " + getObjectClass()
-          + ": Value is not assignable: " + value.getClass()
-          + " is not assignable from " + parameterClass);
+      ( getParameterDefinition( name ) );
+    if ( !parameterClass.isAssignableFrom( value.getClass() ) ) {
+      throw new ClassCastException( "In Object " + getObjectClass()
+        + ": Value is not assignable: " + value.getClass()
+        + " is not assignable from " + parameterClass );
     }
-    this.parameters.put(name, value);
+    this.parameters.put( name, value );
   }
 
   /**
@@ -184,10 +162,9 @@ public abstract class AbstractObjectDescription
    *
    * @return The iterator.
    */
-  public synchronized Iterator getParameterNames()
-  {
-    final ArrayList parameterNames = new ArrayList(this.parameterDefs.keySet());
-    Collections.sort(parameterNames);
+  public synchronized Iterator getParameterNames() {
+    final ArrayList parameterNames = new ArrayList( this.parameterDefs.keySet() );
+    Collections.sort( parameterNames );
     return parameterNames.iterator();
   }
 
@@ -196,9 +173,8 @@ public abstract class AbstractObjectDescription
    *
    * @return The iterator.
    */
-  protected Iterator getDefinedParameterNames()
-  {
-    final ArrayList parameterNames = new ArrayList(this.parameters.keySet());
+  protected Iterator getDefinedParameterNames() {
+    final ArrayList parameterNames = new ArrayList( this.parameters.keySet() );
     return parameterNames.iterator();
   }
 
@@ -208,9 +184,8 @@ public abstract class AbstractObjectDescription
    * @param name the parameter name.
    * @return The parameter value.
    */
-  public Object getParameter(final String name)
-  {
-    return this.parameters.get(name);
+  public Object getParameter( final String name ) {
+    return this.parameters.get( name );
   }
 
   /**
@@ -218,8 +193,7 @@ public abstract class AbstractObjectDescription
    *
    * @return The class.
    */
-  public Class getObjectClass()
-  {
+  public Class getObjectClass() {
     return this.className;
   }
 
@@ -234,17 +208,13 @@ public abstract class AbstractObjectDescription
    *
    * @return A cloned instance.
    */
-  public ObjectDescription getInstance()
-  {
-    try
-    {
+  public ObjectDescription getInstance() {
+    try {
       final AbstractObjectDescription c = (AbstractObjectDescription) super.clone();
       c.parameters = (HashMap) this.parameters.clone();
       return c;
-    }
-    catch (Exception e)
-    {
-      throw new IllegalStateException("Should not happen: Error on clone");
+    } catch ( Exception e ) {
+      throw new IllegalStateException( "Should not happen: Error on clone" );
     }
   }
 
@@ -260,18 +230,14 @@ public abstract class AbstractObjectDescription
    *
    * @return A cloned instance.
    */
-  public ObjectDescription getUnconfiguredInstance()
-  {
-    try
-    {
+  public ObjectDescription getUnconfiguredInstance() {
+    try {
       final AbstractObjectDescription c = (AbstractObjectDescription) super.clone();
       c.parameters = (HashMap) this.parameters.clone();
       c.config = null;
       return c;
-    }
-    catch (Exception e)
-    {
-      throw new IllegalStateException("Should not happen: Error on clone");
+    } catch ( Exception e ) {
+      throw new IllegalStateException( "Should not happen: Error on clone" );
     }
   }
 
@@ -283,11 +249,9 @@ public abstract class AbstractObjectDescription
    *
    * @param config the configuration, never null
    */
-  public void configure(final Configuration config)
-  {
-    if (config == null)
-    {
-      throw new NullPointerException("The given configuration is null");
+  public void configure( final Configuration config ) {
+    if ( config == null ) {
+      throw new NullPointerException( "The given configuration is null" );
     }
     this.config = config;
   }
@@ -297,8 +261,7 @@ public abstract class AbstractObjectDescription
    *
    * @return the configuration or null, if not yet set.
    */
-  public Configuration getConfig()
-  {
+  public Configuration getConfig() {
     return this.config;
   }
 
@@ -308,21 +271,17 @@ public abstract class AbstractObjectDescription
    * @param o the object to test.
    * @return A boolean.
    */
-  public boolean equals(final Object o)
-  {
-    if (this == o)
-    {
+  public boolean equals( final Object o ) {
+    if ( this == o ) {
       return true;
     }
-    if (!(o instanceof AbstractObjectDescription))
-    {
+    if ( !( o instanceof AbstractObjectDescription ) ) {
       return false;
     }
 
     final AbstractObjectDescription abstractObjectDescription = (AbstractObjectDescription) o;
 
-    if (!this.className.equals(abstractObjectDescription.className))
-    {
+    if ( !this.className.equals( abstractObjectDescription.className ) ) {
       return false;
     }
 
@@ -334,8 +293,7 @@ public abstract class AbstractObjectDescription
    *
    * @return The hash code.
    */
-  public int hashCode()
-  {
+  public int hashCode() {
     return this.className.hashCode();
   }
 }

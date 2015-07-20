@@ -17,18 +17,15 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.output.table.xls.helper;
 
-import java.awt.Color;
-
 import org.apache.poi.xssf.usermodel.XSSFColor;
 
-public class XSSFExcelColorProducer implements ExcelColorProducer
-{
-  public XSSFExcelColorProducer()
-  {
+import java.awt.*;
+
+public class XSSFExcelColorProducer implements ExcelColorProducer {
+  public XSSFExcelColorProducer() {
   }
 
-  public short getNearestColor(final Color awtColor)
-  {
+  public short getNearestColor( final Color awtColor ) {
     XSSFColor color = new XSSFColor( awtColor );
     return color.getIndexed();
   }

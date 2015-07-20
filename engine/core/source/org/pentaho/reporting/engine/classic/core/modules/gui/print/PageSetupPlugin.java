@@ -17,17 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.gui.print;
 
-import java.awt.Dialog;
-import java.awt.Frame;
-import java.awt.Window;
-import java.awt.print.PageFormat;
-import java.awt.print.PrinterJob;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-import java.util.Locale;
-import javax.swing.Icon;
-import javax.swing.KeyStroke;
-
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
 import org.pentaho.reporting.engine.classic.core.PageDefinition;
@@ -42,22 +31,26 @@ import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
 import org.pentaho.reporting.libraries.base.util.ResourceBundleSupport;
 import org.pentaho.reporting.libraries.designtime.swing.LibSwingUtil;
 
+import javax.swing.*;
+import java.awt.*;
+import java.awt.print.PageFormat;
+import java.awt.print.PrinterJob;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.util.Locale;
+
 /**
  * An export control plugin that handles the setup of page format objects for the report.
  *
  * @author Thomas Morgner
  */
-public class PageSetupPlugin extends AbstractActionPlugin implements ControlActionPlugin
-{
-  private class ReportJobListener implements PropertyChangeListener
-  {
-    protected ReportJobListener()
-    {
+public class PageSetupPlugin extends AbstractActionPlugin implements ControlActionPlugin {
+  private class ReportJobListener implements PropertyChangeListener {
+    protected ReportJobListener() {
     }
 
-    public void propertyChange(final PropertyChangeEvent evt)
-    {
-      setEnabled(eventSource.getReportJob() != null);
+    public void propertyChange( final PropertyChangeEvent evt ) {
+      setEnabled( eventSource.getReportJob() != null );
     }
   }
 
@@ -72,34 +65,30 @@ public class PageSetupPlugin extends AbstractActionPlugin implements ControlActi
   /**
    * Default Constructor.
    */
-  public PageSetupPlugin()
-  {
-    resources = new ResourceBundleSupport(Locale.getDefault(), PrintingPlugin.BASE_RESOURCE_CLASS,
-          ObjectUtilities.getClassLoader(PrintingPlugin.class));
+  public PageSetupPlugin() {
+    resources = new ResourceBundleSupport( Locale.getDefault(), PrintingPlugin.BASE_RESOURCE_CLASS,
+      ObjectUtilities.getClassLoader( PrintingPlugin.class ) );
     reportJobListener = new ReportJobListener();
   }
 
-  public boolean initialize(final SwingGuiContext context)
-  {
-    if (super.initialize(context) == false)
-    {
+  public boolean initialize( final SwingGuiContext context ) {
+    if ( super.initialize( context ) == false ) {
       return false;
     }
     eventSource = context.getEventSource();
-    eventSource.addPropertyChangeListener("reportJob", reportJobListener); //$NON-NLS-1$
-    setEnabled(eventSource.getReportJob() != null);
+    eventSource.addPropertyChangeListener( "reportJob", reportJobListener ); //$NON-NLS-1$
+    setEnabled( eventSource.getReportJob() != null );
 
-    if (ClassicEngineBoot.getInstance().isModuleAvailable(AWTPrintingGUIModule.class.getName()) == false)
-    {
+    if ( ClassicEngineBoot.getInstance().isModuleAvailable( AWTPrintingGUIModule.class.getName() ) == false ) {
       return false;
     }
     return true;
   }
 
-  public void deinitialize(final SwingGuiContext swingGuiContext)
-  {
-    super.deinitialize(swingGuiContext);
-    swingGuiContext.getEventSource().removePropertyChangeListener(ReportEventSource.REPORT_JOB_PROPERTY, reportJobListener);
+  public void deinitialize( final SwingGuiContext swingGuiContext ) {
+    super.deinitialize( swingGuiContext );
+    swingGuiContext.getEventSource()
+      .removePropertyChangeListener( ReportEventSource.REPORT_JOB_PROPERTY, reportJobListener );
   }
 
   /**
@@ -107,9 +96,8 @@ public class PageSetupPlugin extends AbstractActionPlugin implements ControlActi
    *
    * @return The display name.
    */
-  public String getDisplayName()
-  {
-    return (resources.getString("action.page-setup.name")); //$NON-NLS-1$
+  public String getDisplayName() {
+    return ( resources.getString( "action.page-setup.name" ) ); //$NON-NLS-1$
   }
 
   /**
@@ -117,9 +105,8 @@ public class PageSetupPlugin extends AbstractActionPlugin implements ControlActi
    *
    * @return The short description.
    */
-  public String getShortDescription()
-  {
-    return (resources.getString("action.page-setup.description")); //$NON-NLS-1$
+  public String getShortDescription() {
+    return ( resources.getString( "action.page-setup.description" ) ); //$NON-NLS-1$
   }
 
   /**
@@ -127,10 +114,9 @@ public class PageSetupPlugin extends AbstractActionPlugin implements ControlActi
    *
    * @return The icon.
    */
-  public Icon getSmallIcon()
-  {
+  public Icon getSmallIcon() {
     final Locale locale = getContext().getLocale();
-    return getIconTheme().getSmallIcon(locale, "action.page-setup.small-icon"); //$NON-NLS-1$
+    return getIconTheme().getSmallIcon( locale, "action.page-setup.small-icon" ); //$NON-NLS-1$
   }
 
   /**
@@ -138,10 +124,9 @@ public class PageSetupPlugin extends AbstractActionPlugin implements ControlActi
    *
    * @return The icon.
    */
-  public Icon getLargeIcon()
-  {
+  public Icon getLargeIcon() {
     final Locale locale = getContext().getLocale();
-    return getIconTheme().getLargeIcon(locale, "action.page-setup.icon"); //$NON-NLS-1$
+    return getIconTheme().getLargeIcon( locale, "action.page-setup.icon" ); //$NON-NLS-1$
   }
 
   /**
@@ -149,8 +134,7 @@ public class PageSetupPlugin extends AbstractActionPlugin implements ControlActi
    *
    * @return The accelerator key.
    */
-  public KeyStroke getAcceleratorKey()
-  {
+  public KeyStroke getAcceleratorKey() {
     return null;
   }
 
@@ -159,9 +143,8 @@ public class PageSetupPlugin extends AbstractActionPlugin implements ControlActi
    *
    * @return The code.
    */
-  public Integer getMnemonicKey()
-  {
-    return resources.getOptionalMnemonic("action.page-setup.mnemonic"); //$NON-NLS-1$
+  public Integer getMnemonicKey() {
+    return resources.getOptionalMnemonic( "action.page-setup.mnemonic" ); //$NON-NLS-1$
   }
 
 
@@ -170,71 +153,55 @@ public class PageSetupPlugin extends AbstractActionPlugin implements ControlActi
    *
    * @return the resourcebundle for the localisation.
    */
-  protected ResourceBundleSupport getResources()
-  {
+  protected ResourceBundleSupport getResources() {
     return resources;
   }
 
-  protected String getConfigurationPrefix()
-  {
+  protected String getConfigurationPrefix() {
     return "org.pentaho.reporting.engine.classic.core.modules.gui.print.page-setup."; //$NON-NLS-1$
   }
 
-  public boolean configure(final PreviewPane pane)
-  {
+  public boolean configure( final PreviewPane pane ) {
     final MasterReport report = pane.getReportJob();
 
-    if ("true".equals(ClassicEngineBoot.getInstance().getGlobalConfig().getConfigProperty
-        ("org.pentaho.reporting.engine.classic.core.modules.gui.print.UseAlternatePageSetupDialog")))
-    {
+    if ( "true".equals( ClassicEngineBoot.getInstance().getGlobalConfig().getConfigProperty
+      ( "org.pentaho.reporting.engine.classic.core.modules.gui.print.UseAlternatePageSetupDialog" ) ) ) {
       final PageSetupDialog dialog;
       final Window proxy = getContext().getWindow();
-      if (proxy instanceof Frame)
-      {
-        dialog = new PageSetupDialog(getContext(), (Frame) proxy);
-      }
-      else if (proxy instanceof Dialog)
-      {
-        dialog = new PageSetupDialog(getContext(), (Dialog) proxy);
-      }
-      else
-      {
-        dialog = new PageSetupDialog(getContext());
+      if ( proxy instanceof Frame ) {
+        dialog = new PageSetupDialog( getContext(), (Frame) proxy );
+      } else if ( proxy instanceof Dialog ) {
+        dialog = new PageSetupDialog( getContext(), (Dialog) proxy );
+      } else {
+        dialog = new PageSetupDialog( getContext() );
       }
       dialog.pack();
-      LibSwingUtil.centerDialogInParent(dialog);
-      final PageDefinition definition = dialog.performSetup(report.getPageDefinition());
-      if (dialog.isConfirmed() == false)
-      {
+      LibSwingUtil.centerDialogInParent( dialog );
+      final PageDefinition definition = dialog.performSetup( report.getPageDefinition() );
+      if ( dialog.isConfirmed() == false ) {
         return false;
       }
-      report.setPageDefinition(definition);
-      pane.setReportJob(report);
+      report.setPageDefinition( definition );
+      pane.setReportJob( report );
       return true;
-    }
-    else
-    {
+    } else {
 
       final PrinterJob pj = PrinterJob.getPrinterJob();
-      final PageFormat original = report.getPageDefinition().getPageFormat(0);
-      final PageFormat pf = pj.validatePage(pj.pageDialog(original));
-      if (PageFormatFactory.isEqual(pf, original))
-      {
+      final PageFormat original = report.getPageDefinition().getPageFormat( 0 );
+      final PageFormat pf = pj.validatePage( pj.pageDialog( original ) );
+      if ( PageFormatFactory.isEqual( pf, original ) ) {
         return false;
       }
 
       final PageDefinition pageDefinition = report.getPageDefinition();
-      if (pageDefinition instanceof SimplePageDefinition)
-      {
+      if ( pageDefinition instanceof SimplePageDefinition ) {
         final SimplePageDefinition spd = (SimplePageDefinition) pageDefinition;
-        report.setPageDefinition(new SimplePageDefinition
-            (pf, spd.getPageCountHorizontal(), spd.getPageCountVertical()));
+        report.setPageDefinition( new SimplePageDefinition
+          ( pf, spd.getPageCountHorizontal(), spd.getPageCountVertical() ) );
+      } else {
+        report.setPageDefinition( new SimplePageDefinition( pf ) );
       }
-      else
-      {
-        report.setPageDefinition(new SimplePageDefinition(pf));
-      }
-      pane.setReportJob(report);
+      pane.setReportJob( report );
       return true;
     }
   }

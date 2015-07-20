@@ -20,17 +20,14 @@ package org.pentaho.reporting.engine.classic.core.filter.types.bands;
 import org.pentaho.reporting.engine.classic.core.RelationalGroup;
 import org.pentaho.reporting.engine.classic.core.ReportElement;
 
-public class RelationalGroupType extends AbstractSectionType
-{
+public class RelationalGroupType extends AbstractSectionType {
   public static final RelationalGroupType INSTANCE = new RelationalGroupType();
 
-  public RelationalGroupType()
-  {
-    super("relational-group", true);
+  public RelationalGroupType() {
+    super( "relational-group", true );
   }
 
-  public ReportElement create()
-  {
+  public ReportElement create() {
     return new RelationalGroup();
   }
 }

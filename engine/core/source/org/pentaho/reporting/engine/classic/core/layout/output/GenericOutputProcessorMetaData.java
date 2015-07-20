@@ -22,19 +22,15 @@ package org.pentaho.reporting.engine.classic.core.layout.output;
  *
  * @author Thomas Morgner
  */
-public final class GenericOutputProcessorMetaData extends AbstractOutputProcessorMetaData
-{
+public final class GenericOutputProcessorMetaData extends AbstractOutputProcessorMetaData {
   private String exportDescriptor;
 
-  public GenericOutputProcessorMetaData()
-  {
-    this("none/none");
+  public GenericOutputProcessorMetaData() {
+    this( "none/none" );
   }
 
-  public GenericOutputProcessorMetaData(final String exportDescriptor)
-  {
-    if (exportDescriptor == null)
-    {
+  public GenericOutputProcessorMetaData( final String exportDescriptor ) {
+    if ( exportDescriptor == null ) {
       throw new NullPointerException();
     }
     this.exportDescriptor = exportDescriptor;
@@ -47,8 +43,7 @@ public final class GenericOutputProcessorMetaData extends AbstractOutputProcesso
    *
    * @return the export descriptor.
    */
-  public String getExportDescriptor()
-  {
+  public String getExportDescriptor() {
     return exportDescriptor;
   }
 }

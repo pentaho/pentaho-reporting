@@ -25,33 +25,28 @@ import org.w3c.css.sac.LangCondition;
  *
  * @author Thomas Morgner
  */
-public class LangCSSCondition implements LangCondition, CSSCondition
-{
+public class LangCSSCondition implements LangCondition, CSSCondition {
   private String lang;
 
-  public LangCSSCondition(final String value)
-  {
+  public LangCSSCondition( final String value ) {
     this.lang = value;
   }
 
   /**
    * An integer indicating the type of <code>Condition</code>.
    */
-  public short getConditionType()
-  {
+  public short getConditionType() {
     return SAC_LANG_CONDITION;
   }
 
   /**
    * Returns the language
    */
-  public String getLang()
-  {
+  public String getLang() {
     return lang;
   }
 
-  public String print(final NamespaceCollection namespaces)
-  {
+  public String print( final NamespaceCollection namespaces ) {
     return ":lang(" + lang + ")";
   }
 }

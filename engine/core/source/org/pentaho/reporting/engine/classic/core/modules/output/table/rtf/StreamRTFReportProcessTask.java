@@ -17,8 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.output.table.rtf;
 
-import java.io.OutputStream;
-
 import org.pentaho.reporting.engine.classic.core.AbstractReportProcessTask;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
 import org.pentaho.reporting.engine.classic.core.ReportProcessingException;
@@ -29,69 +27,56 @@ import org.pentaho.reporting.libraries.repository.ContentItem;
 import org.pentaho.reporting.libraries.repository.ContentLocation;
 import org.pentaho.reporting.libraries.repository.NameGenerator;
 
-public class StreamRTFReportProcessTask extends AbstractReportProcessTask
-{
-  public StreamRTFReportProcessTask()
-  {
+import java.io.OutputStream;
+
+public class StreamRTFReportProcessTask extends AbstractReportProcessTask {
+  public StreamRTFReportProcessTask() {
   }
 
   /**
    * @noinspection ThrowableInstanceNeverThrown
    */
-  public void run()
-  {
-    if (isValid() == false)
-    {
-      setError(new ReportProcessingException("Error: The task is not configured properly."));
+  public void run() {
+    if ( isValid() == false ) {
+      setError( new ReportProcessingException( "Error: The task is not configured properly." ) );
       return;
     }
 
-    setError(null);
-    try
-    {
+    setError( null );
+    try {
       final MasterReport masterReport = getReport();
       final Configuration configuration = masterReport.getConfiguration();
 
       final ContentLocation contentLocation = getBodyContentLocation();
       final NameGenerator nameGenerator = getBodyNameGenerator();
       final ContentItem contentItem =
-          contentLocation.createItem(nameGenerator.generateName(null, "application/rtf"));
+        contentLocation.createItem( nameGenerator.generateName( null, "application/rtf" ) );
       final OutputStream outputStream = contentItem.getOutputStream();
 
-      try
-      {
+      try {
         final StreamRTFOutputProcessor outputProcessor =
-            new StreamRTFOutputProcessor(configuration, outputStream, masterReport.getResourceManager());
+          new StreamRTFOutputProcessor( configuration, outputStream, masterReport.getResourceManager() );
         final StreamReportProcessor streamReportProcessor =
-            new StreamReportProcessor(masterReport, outputProcessor);
-        try
-        {
+          new StreamReportProcessor( masterReport, outputProcessor );
+        try {
           final ReportProgressListener[] progressListeners = getReportProgressListeners();
-          for (int i = 0; i < progressListeners.length; i++)
-          {
-            final ReportProgressListener listener = progressListeners[i];
-            streamReportProcessor.addReportProgressListener(listener);
+          for ( int i = 0; i < progressListeners.length; i++ ) {
+            final ReportProgressListener listener = progressListeners[ i ];
+            streamReportProcessor.addReportProgressListener( listener );
           }
           streamReportProcessor.processReport();
-        }
-        finally
-        {
+        } finally {
           streamReportProcessor.close();
         }
-      }
-      finally
-      {
+      } finally {
         outputStream.close();
       }
-    }
-    catch (Throwable e)
-    {
-      setError(e);
+    } catch ( Throwable e ) {
+      setError( e );
     }
   }
 
-  public String getReportMimeType()
-  {
+  public String getReportMimeType() {
     return "application/rtf";
   }
 }

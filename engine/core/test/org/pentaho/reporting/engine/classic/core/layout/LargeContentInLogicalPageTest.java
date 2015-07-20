@@ -17,8 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.core.layout;
 
-import java.awt.geom.Point2D;
-
 import junit.framework.TestCase;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.pentaho.reporting.engine.classic.core.Element;
@@ -30,48 +28,44 @@ import org.pentaho.reporting.engine.classic.core.testsupport.DebugReportRunner;
 import org.pentaho.reporting.engine.classic.core.util.geom.StrictGeomUtility;
 import org.pentaho.reporting.libraries.base.util.FloatDimension;
 
-public class LargeContentInLogicalPageTest extends TestCase
-{
-  public LargeContentInLogicalPageTest()
-  {
+import java.awt.geom.Point2D;
+
+public class LargeContentInLogicalPageTest extends TestCase {
+  public LargeContentInLogicalPageTest() {
   }
 
-  public LargeContentInLogicalPageTest(final String name)
-  {
-    super(name);
+  public LargeContentInLogicalPageTest( final String name ) {
+    super( name );
   }
 
-  protected void setUp() throws Exception
-  {
+  protected void setUp() throws Exception {
     ClassicEngineBoot.getInstance().start();
   }
 
-  private Element createLabel()
-  {
+  private Element createLabel() {
     final LabelElementFactory labelFactory = new LabelElementFactory();
-    labelFactory.setText("Large label");
-    labelFactory.setFontName("SansSerif");
-    labelFactory.setFontSize(new Integer(10));
-    labelFactory.setBold(Boolean.TRUE);
-    labelFactory.setAbsolutePosition(new Point2D.Double(0, 0.0));
-    labelFactory.setMinimumSize(new FloatDimension(4000, 10.0f));
-    labelFactory.setHorizontalAlignment(ElementAlignment.LEFT);
+    labelFactory.setText( "Large label" );
+    labelFactory.setFontName( "SansSerif" );
+    labelFactory.setFontSize( new Integer( 10 ) );
+    labelFactory.setBold( Boolean.TRUE );
+    labelFactory.setAbsolutePosition( new Point2D.Double( 0, 0.0 ) );
+    labelFactory.setMinimumSize( new FloatDimension( 4000, 10.0f ) );
+    labelFactory.setHorizontalAlignment( ElementAlignment.LEFT );
     return labelFactory.createElement();
   }
 
   /**
-   * If a large element consumes more space as the parent, the parent must expand.
-   * Only valid for reports with compatibility level >= 4.0
-   * 
+   * If a large element consumes more space as the parent, the parent must expand. Only valid for reports with
+   * compatibility level >= 4.0
+   *
    * @throws Exception
    */
-  public void testTrunk () throws Exception
-  {
+  public void testTrunk() throws Exception {
     MasterReport report = new MasterReport();
-    report.getNoDataBand().addElement(createLabel());
+    report.getNoDataBand().addElement( createLabel() );
 
-    final LogicalPageBox logicalPageBox = DebugReportRunner.layoutPage(report, 0);
+    final LogicalPageBox logicalPageBox = DebugReportRunner.layoutPage( report, 0 );
     //ModelPrinter.INSTANCE.print(logicalPageBox);
-    assertEquals(StrictGeomUtility.toInternalValue(4000), logicalPageBox.getWidth());
+    assertEquals( StrictGeomUtility.toInternalValue( 4000 ), logicalPageBox.getWidth() );
   }
 }

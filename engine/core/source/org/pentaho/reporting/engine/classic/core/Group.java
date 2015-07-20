@@ -17,12 +17,12 @@
 
 package org.pentaho.reporting.engine.classic.core;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.pentaho.reporting.engine.classic.core.sorting.SortConstraint;
 import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
 import org.pentaho.reporting.libraries.base.util.StringUtils;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A report group.  Reports can contain any number of (nested) groups. The order of the fields is not important. If the
@@ -42,57 +42,49 @@ import org.pentaho.reporting.libraries.base.util.StringUtils;
  * @author David Gilbert
  * @author Thomas Morgner
  */
-public abstract class Group extends Section
-{
+public abstract class Group extends Section {
   private GroupBody body;
   private transient String generatedName;
 
   /**
    * Constructs a group with no fields, and an empty header and footer.
    */
-  protected Group()
-  {
+  protected Group() {
     this.body = createDefaultBody();
 
-    registerAsChild(body);
+    registerAsChild( body );
   }
 
-  protected Group(final GroupBody body)
-  {
-    if (body == null)
-    {
+  protected Group( final GroupBody body ) {
+    if ( body == null ) {
       throw new NullPointerException();
     }
 
     this.body = body;
 
-    registerAsChild(body);
+    registerAsChild( body );
   }
 
-  public GroupBody getBody()
-  {
+  public GroupBody getBody() {
     return body;
   }
 
-  public void setBody(final GroupBody body)
-  {
-    if (body == null)
-    {
-      throw new NullPointerException("The body must not be null");
+  public void setBody( final GroupBody body ) {
+    if ( body == null ) {
+      throw new NullPointerException( "The body must not be null" );
     }
-    validateLooping(body);
-    if (unregisterParent(body))
-    {
+    validateLooping( body );
+    if ( unregisterParent( body ) ) {
       return;
     }
 
     final Element element = this.body;
-    this.body.setParent(null);
+    this.body.setParent( null );
     this.body = body;
-    this.body.setParent(this);
+    this.body.setParent( this );
 
-    notifyNodeChildRemoved(element);
-    notifyNodeChildAdded(this.body);
+    notifyNodeChildRemoved( element );
+    notifyNodeChildAdded( this.body );
   }
 
   /**
@@ -100,57 +92,49 @@ public abstract class Group extends Section
    *
    * @return a clone of this element.
    */
-  public Group clone()
-  {
+  public Group clone() {
     final Group g = (Group) super.clone();
     g.body = (GroupBody) body.clone();
 
-    g.registerAsChild(g.body);
+    g.registerAsChild( g.body );
     return g;
   }
 
-  public Group derive(final boolean preserveElementInstanceIds)
-  {
-    final Group g = (Group) super.derive(preserveElementInstanceIds);
-    g.body = (GroupBody) body.derive(preserveElementInstanceIds);
+  public Group derive( final boolean preserveElementInstanceIds ) {
+    final Group g = (Group) super.derive( preserveElementInstanceIds );
+    g.body = (GroupBody) body.derive( preserveElementInstanceIds );
 
-    g.registerAsChild(g.body);
+    g.registerAsChild( g.body );
     return g;
   }
 
-  public abstract boolean isGroupChange(final DataRow dataRow);
+  public abstract boolean isGroupChange( final DataRow dataRow );
 
-  protected void removeElement(final Element element)
-  {
-    if (element == null)
-    {
+  protected void removeElement( final Element element ) {
+    if ( element == null ) {
       throw new NullPointerException();
     }
 
-    if (body == element)
-    {
-      this.body.setParent(null);
+    if ( body == element ) {
+      this.body.setParent( null );
       this.body = createDefaultBody();
-      this.body.setParent(this);
+      this.body.setParent( this );
 
-      notifyNodeChildRemoved(element);
-      notifyNodeChildAdded(this.body);
+      notifyNodeChildRemoved( element );
+      notifyNodeChildAdded( this.body );
     }
     // Else: Ignore the request, none of my childs.
   }
 
   protected abstract GroupBody createDefaultBody();
 
-  protected void notifyElement()
-  {
+  protected void notifyElement() {
     this.generatedName = null;
   }
 
-  public String getGeneratedName()
-  {
+  public String getGeneratedName() {
     final String generatedName = this.generatedName;
-    if (generatedName != null)
-    {
+    if ( generatedName != null ) {
       return generatedName;
     }
 
@@ -159,37 +143,28 @@ public abstract class Group extends Section
     return name;
   }
 
-  public String getName()
-  {
+  public String getName() {
     final String name = super.getName();
-    if (StringUtils.isEmpty(name))
-    {
+    if ( StringUtils.isEmpty( name ) ) {
       return getGeneratedName();
-    }
-    else
-    {
+    } else {
       return name;
     }
   }
 
-  public boolean matches(final String name)
-  {
-    if (ObjectUtilities.equal(name, getName()))
-    {
+  public boolean matches( final String name ) {
+    if ( ObjectUtilities.equal( name, getName() ) ) {
       return true;
     }
 
-    return ObjectUtilities.equal(name, getGeneratedName());
+    return ObjectUtilities.equal( name, getGeneratedName() );
   }
 
-  private String generatedName()
-  {
+  private String generatedName() {
     int parentGroupCounter = 0;
     Section parent = getParentSection();
-    while (parent != null && parent instanceof ReportDefinition == false)
-    {
-      if (parent instanceof Group)
-      {
+    while ( parent != null && parent instanceof ReportDefinition == false ) {
+      if ( parent instanceof Group ) {
         parentGroupCounter += 1;
       }
       parent = parent.getParentSection();
@@ -200,32 +175,26 @@ public abstract class Group extends Section
 
   public abstract List<SortConstraint> getSortingConstraint();
 
-  protected List<SortConstraint> mapFields(List<String> fields)
-  {
+  protected List<SortConstraint> mapFields( List<String> fields ) {
     boolean ascending = isAscendingSortOrder();
-    final ArrayList<SortConstraint> c = new ArrayList<SortConstraint>(fields.size());
-    for (final String field : fields)
-    {
-      if (!StringUtils.isEmpty(field))
-      {
-        c.add(new SortConstraint(field, ascending));
+    final ArrayList<SortConstraint> c = new ArrayList<SortConstraint>( fields.size() );
+    for ( final String field : fields ) {
+      if ( !StringUtils.isEmpty( field ) ) {
+        c.add( new SortConstraint( field, ascending ) );
       }
     }
     return c;
   }
 
-  public boolean isAscendingSortOrder()
-  {
-    Object attribute = getAttribute(AttributeNames.Core.NAMESPACE, AttributeNames.Core.SORT_ORDER);
-    if (Boolean.FALSE.equals(attribute))
-    {
+  public boolean isAscendingSortOrder() {
+    Object attribute = getAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.SORT_ORDER );
+    if ( Boolean.FALSE.equals( attribute ) ) {
       return false;
     }
     return true;
   }
 
-  public void setAscendingSortOrder(final Boolean order)
-  {
-    setAttribute(AttributeNames.Core.NAMESPACE, AttributeNames.Core.SORT_ORDER, order);
+  public void setAscendingSortOrder( final Boolean order ) {
+    setAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.SORT_ORDER, order );
   }
 }

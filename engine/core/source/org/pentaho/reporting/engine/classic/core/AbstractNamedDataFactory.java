@@ -17,61 +17,53 @@
 
 package org.pentaho.reporting.engine.classic.core;
 
-import java.util.LinkedHashMap;
 import javax.swing.table.TableModel;
+import java.util.LinkedHashMap;
 
-public abstract class AbstractNamedDataFactory<T> extends AbstractDataFactory
-{
+public abstract class AbstractNamedDataFactory<T> extends AbstractDataFactory {
   private LinkedHashMap<String, T> queries;
 
-  public AbstractNamedDataFactory()
-  {
+  public AbstractNamedDataFactory() {
     queries = new LinkedHashMap<String, T>();
   }
 
-  protected T mapQuery(final String query) throws ReportDataFactoryException
-  {
-    T t = queries.get(query);
-    if (t == null)
-    {
-      throw new ReportDataFactoryException("No such Query");
+  protected T mapQuery( final String query ) throws ReportDataFactoryException {
+    T t = queries.get( query );
+    if ( t == null ) {
+      throw new ReportDataFactoryException( "No such Query" );
     }
     return t;
   }
 
-  public final TableModel queryData(final String query, final DataRow parameters) throws ReportDataFactoryException
-  {
-    return queryDataInternal(mapQuery(query), parameters);
+  public final TableModel queryData( final String query, final DataRow parameters ) throws ReportDataFactoryException {
+    return queryDataInternal( mapQuery( query ), parameters );
   }
 
-  protected abstract TableModel queryDataInternal(final T query,
-                                                  final DataRow parameters) throws ReportDataFactoryException;
+  protected abstract TableModel queryDataInternal( final T query,
+                                                   final DataRow parameters ) throws ReportDataFactoryException;
 
-  public boolean isQueryExecutable(final String query, final DataRow parameters)
-  {
-    return queries.containsKey(query);
+  public boolean isQueryExecutable( final String query, final DataRow parameters ) {
+    return queries.containsKey( query );
   }
 
-  public String[] getQueryNames()
-  {
-    return queries.keySet().toArray(new String[queries.size()]);
+  public String[] getQueryNames() {
+    return queries.keySet().toArray( new String[ queries.size() ] );
   }
 
-  public final String[] getReferencedFields(final String query, final DataRow dataRow) throws ReportDataFactoryException
-  {
-    final T queryObject = mapQuery(query);
-    return getReferencedFieldsInternal(queryObject, dataRow);
+  public final String[] getReferencedFields( final String query, final DataRow dataRow )
+    throws ReportDataFactoryException {
+    final T queryObject = mapQuery( query );
+    return getReferencedFieldsInternal( queryObject, dataRow );
   }
 
-  protected abstract String[] getReferencedFieldsInternal(T query, DataRow dataRow)
-      throws ReportDataFactoryException;
+  protected abstract String[] getReferencedFieldsInternal( T query, DataRow dataRow )
+    throws ReportDataFactoryException;
 
-  public final Object getQueryHash(final String query, final DataRow dataRow) throws ReportDataFactoryException
-  {
-    final T queryObject = mapQuery(query);
-    return getQueryHashInternal(queryObject, dataRow);
+  public final Object getQueryHash( final String query, final DataRow dataRow ) throws ReportDataFactoryException {
+    final T queryObject = mapQuery( query );
+    return getQueryHashInternal( queryObject, dataRow );
   }
 
-  protected abstract Object getQueryHashInternal(final T queryObject, final DataRow dataRow)
-      throws ReportDataFactoryException;
+  protected abstract Object getQueryHashInternal( final T queryObject, final DataRow dataRow )
+    throws ReportDataFactoryException;
 }

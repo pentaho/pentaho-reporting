@@ -17,11 +17,11 @@
 
 package org.pentaho.reporting.engine.classic.core.elementfactory;
 
-import java.net.URL;
-
 import org.pentaho.reporting.engine.classic.core.AttributeNames;
 import org.pentaho.reporting.engine.classic.core.Element;
 import org.pentaho.reporting.engine.classic.core.filter.types.ContentType;
+
+import java.net.URL;
 
 /**
  * The drawable field element factory can be used to create elements that display <code>Drawable</code> elements.
@@ -32,8 +32,7 @@ import org.pentaho.reporting.engine.classic.core.filter.types.ContentType;
  *
  * @author Thomas Morgner
  */
-public class ContentElementFactory extends AbstractContentElementFactory
-{
+public class ContentElementFactory extends AbstractContentElementFactory {
   /**
    * The static value.
    */
@@ -48,8 +47,7 @@ public class ContentElementFactory extends AbstractContentElementFactory
   /**
    * DefaultConstructor.
    */
-  public ContentElementFactory()
-  {
+  public ContentElementFactory() {
   }
 
   /**
@@ -57,8 +55,7 @@ public class ContentElementFactory extends AbstractContentElementFactory
    *
    * @return the base url.
    */
-  public URL getBaseURL()
-  {
+  public URL getBaseURL() {
     return baseURL;
   }
 
@@ -67,18 +64,15 @@ public class ContentElementFactory extends AbstractContentElementFactory
    *
    * @param baseURL the base URL.
    */
-  public void setBaseURL(final URL baseURL)
-  {
+  public void setBaseURL( final URL baseURL ) {
     this.baseURL = baseURL;
   }
 
-  public Object getContent()
-  {
+  public Object getContent() {
     return content;
   }
 
-  public void setContent(final Object content)
-  {
+  public void setContent( final Object content ) {
     this.content = content;
   }
 
@@ -89,20 +83,17 @@ public class ContentElementFactory extends AbstractContentElementFactory
    * @throws IllegalStateException if the field name is not set.
    * @see ElementFactory#createElement()
    */
-  public Element createElement()
-  {
+  public Element createElement() {
     final Element element = new Element();
-    applyElementName(element);
-    applyStyle(element.getStyle());
+    applyElementName( element );
+    applyStyle( element.getStyle() );
 
-    element.setElementType(new ContentType());
-    if (content != null)
-    {
-      element.setAttribute(AttributeNames.Core.NAMESPACE, AttributeNames.Core.VALUE, content);
+    element.setElementType( new ContentType() );
+    if ( content != null ) {
+      element.setAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.VALUE, content );
     }
-    if (baseURL != null)
-    {
-      element.setAttribute(AttributeNames.Core.NAMESPACE, AttributeNames.Core.CONTENT_BASE, baseURL);
+    if ( baseURL != null ) {
+      element.setAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.CONTENT_BASE, baseURL );
     }
     return element;
   }

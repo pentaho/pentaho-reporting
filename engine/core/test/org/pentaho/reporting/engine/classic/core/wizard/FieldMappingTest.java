@@ -25,36 +25,32 @@ import org.pentaho.reporting.engine.classic.core.designtime.DefaultDesignTimeCon
 import org.pentaho.reporting.engine.classic.core.parameters.DefaultParameterDefinition;
 import org.pentaho.reporting.engine.classic.core.parameters.PlainParameter;
 
-public class FieldMappingTest extends TestCase
-{
-  public FieldMappingTest()
-  {
+public class FieldMappingTest extends TestCase {
+  public FieldMappingTest() {
   }
 
-  public FieldMappingTest(final String name)
-  {
-    super(name);
+  public FieldMappingTest( final String name ) {
+    super( name );
   }
 
-  protected void setUp() throws Exception
-  {
+  protected void setUp() throws Exception {
     ClassicEngineBoot.getInstance().start();
   }
 
-  public void testParameterMapping()
-  {
-    final PlainParameter parameter = new PlainParameter("P", Number.class);
+  public void testParameterMapping() {
+    final PlainParameter parameter = new PlainParameter( "P", Number.class );
     final DefaultParameterDefinition defaultParameterDefinition = new DefaultParameterDefinition();
-    defaultParameterDefinition.addParameterDefinition(parameter);
-    
-    final MasterReport report = new MasterReport();
-    report.setParameterDefinition(defaultParameterDefinition);
+    defaultParameterDefinition.addParameterDefinition( parameter );
 
-    final DefaultDesignTimeContext context = new DefaultDesignTimeContext(report);
+    final MasterReport report = new MasterReport();
+    report.setParameterDefinition( defaultParameterDefinition );
+
+    final DefaultDesignTimeContext context = new DefaultDesignTimeContext( report );
     final DataSchema dataSchema = context.getDataSchemaModel().getDataSchema();
-    final DataAttributes attributes = dataSchema.getAttributes("P");
+    final DataAttributes attributes = dataSchema.getAttributes( "P" );
     final Object o = attributes.getMetaAttribute
-        (MetaAttributeNames.Core.NAMESPACE, MetaAttributeNames.Core.TYPE, Class.class, new DefaultDataAttributeContext());
-    assertEquals("Number.class expected", Number.class, o);
+      ( MetaAttributeNames.Core.NAMESPACE, MetaAttributeNames.Core.TYPE, Class.class,
+        new DefaultDataAttributeContext() );
+    assertEquals( "Number.class expected", Number.class, o );
   }
 }

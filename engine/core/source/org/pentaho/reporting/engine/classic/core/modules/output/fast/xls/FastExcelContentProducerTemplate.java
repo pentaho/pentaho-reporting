@@ -17,9 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.output.fast.xls;
 
-import java.io.IOException;
-import java.io.OutputStream;
-
 import org.pentaho.reporting.engine.classic.core.Band;
 import org.pentaho.reporting.engine.classic.core.ReportDefinition;
 import org.pentaho.reporting.engine.classic.core.ReportProcessingException;
@@ -30,53 +27,47 @@ import org.pentaho.reporting.engine.classic.core.modules.output.fast.template.Fa
 import org.pentaho.reporting.engine.classic.core.modules.output.fast.template.FormattedDataBuilder;
 import org.pentaho.reporting.engine.classic.core.modules.output.table.base.SheetLayout;
 
-public class FastExcelContentProducerTemplate extends AbstractContentProducerTemplate
-{
+import java.io.IOException;
+import java.io.OutputStream;
+
+public class FastExcelContentProducerTemplate extends AbstractContentProducerTemplate {
   private final OutputStream outputStream;
   private final boolean useXlsx;
   private FastExcelPrinter excelPrinter;
 
-  public FastExcelContentProducerTemplate(final SheetLayout sheetLayout,
-                                          final OutputStream outputStream,
-                                          final boolean useXlsx)
-  {
-    super(sheetLayout);
+  public FastExcelContentProducerTemplate( final SheetLayout sheetLayout,
+                                           final OutputStream outputStream,
+                                           final boolean useXlsx ) {
+    super( sheetLayout );
     this.outputStream = outputStream;
     this.useXlsx = useXlsx;
   }
 
-  public void initialize(final ReportDefinition report,
-                         final ExpressionRuntime runtime,
-                         final boolean pagination)
-  {
-    super.initialize(report, runtime, pagination);
-    this.excelPrinter = new FastExcelPrinter(getSharedSheetLayout());
-    this.excelPrinter.setUseXlsxFormat(useXlsx);
-    this.excelPrinter.init(getMetaData(), runtime.getProcessingContext().getResourceManager(), report);
+  public void initialize( final ReportDefinition report,
+                          final ExpressionRuntime runtime,
+                          final boolean pagination ) {
+    super.initialize( report, runtime, pagination );
+    this.excelPrinter = new FastExcelPrinter( getSharedSheetLayout() );
+    this.excelPrinter.setUseXlsxFormat( useXlsx );
+    this.excelPrinter.init( getMetaData(), runtime.getProcessingContext().getResourceManager(), report );
   }
 
-  protected void writeContent(final Band band,
-                              final ExpressionRuntime runtime,
-                              final FormattedDataBuilder messageFormatSupport)
-      throws IOException, ReportProcessingException, ContentProcessingException
-  {
-    messageFormatSupport.compute(band, runtime, outputStream);
+  protected void writeContent( final Band band,
+                               final ExpressionRuntime runtime,
+                               final FormattedDataBuilder messageFormatSupport )
+    throws IOException, ReportProcessingException, ContentProcessingException {
+    messageFormatSupport.compute( band, runtime, outputStream );
   }
 
-  public void finishReport() throws ReportProcessingException
-  {
-    try
-    {
-      this.excelPrinter.closeWorkbook(outputStream);
-    }
-    catch (IOException e)
-    {
-      throw new ReportProcessingException("Failed to close report", e);
+  public void finishReport() throws ReportProcessingException {
+    try {
+      this.excelPrinter.closeWorkbook( outputStream );
+    } catch ( IOException e ) {
+      throw new ReportProcessingException( "Failed to close report", e );
     }
   }
 
-  protected FastExportTemplateProducer createTemplateProducer()
-  {
-    return new FastExcelTemplateProducer(getMetaData(), getSharedSheetLayout(), excelPrinter);
+  protected FastExportTemplateProducer createTemplateProducer() {
+    return new FastExcelTemplateProducer( getMetaData(), getSharedSheetLayout(), excelPrinter );
   }
 }

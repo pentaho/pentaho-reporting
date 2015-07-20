@@ -28,8 +28,7 @@ import java.util.TimeZone;
  *
  * @author Thomas Morgner
  */
-public interface ReportEnvironment extends Serializable, Cloneable
-{
+public interface ReportEnvironment extends Serializable, Cloneable {
   /**
    * Returns a environment property. These properties are usually defined by the outside world, but default values can
    * be specified inside the report-definition.
@@ -37,7 +36,7 @@ public interface ReportEnvironment extends Serializable, Cloneable
    * @param key
    * @return
    */
-  public Object getEnvironmentProperty(String key);
+  public Object getEnvironmentProperty( String key );
 
   /**
    * Returns the text encoding that should be used to encode URLs.

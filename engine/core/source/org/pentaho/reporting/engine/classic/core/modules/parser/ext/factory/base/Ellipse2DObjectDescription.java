@@ -24,19 +24,17 @@ import java.awt.geom.Ellipse2D;
  *
  * @author Thomas Morgner
  */
-public class Ellipse2DObjectDescription extends AbstractObjectDescription
-{
+public class Ellipse2DObjectDescription extends AbstractObjectDescription {
 
   /**
    * Creates a new object description.
    */
-  public Ellipse2DObjectDescription()
-  {
-    super(Ellipse2D.class);
-    setParameterDefinition("width", Float.class);
-    setParameterDefinition("height", Float.class);
-    setParameterDefinition("x", Float.class);
-    setParameterDefinition("y", Float.class);
+  public Ellipse2DObjectDescription() {
+    super( Ellipse2D.class );
+    setParameterDefinition( "width", Float.class );
+    setParameterDefinition( "height", Float.class );
+    setParameterDefinition( "x", Float.class );
+    setParameterDefinition( "y", Float.class );
   }
 
   /**
@@ -44,15 +42,14 @@ public class Ellipse2DObjectDescription extends AbstractObjectDescription
    *
    * @return The object.
    */
-  public Object createObject()
-  {
+  public Object createObject() {
     final Ellipse2D rect = new Ellipse2D.Float();
 
-    final float w = getFloatParameter("width");
-    final float h = getFloatParameter("height");
-    final float x = getFloatParameter("x");
-    final float y = getFloatParameter("y");
-    rect.setFrame(x, y, w, h);
+    final float w = getFloatParameter( "width" );
+    final float h = getFloatParameter( "height" );
+    final float x = getFloatParameter( "x" );
+    final float y = getFloatParameter( "y" );
+    rect.setFrame( x, y, w, h );
 
     return rect;
   }
@@ -63,11 +60,9 @@ public class Ellipse2DObjectDescription extends AbstractObjectDescription
    * @param param the parameter name.
    * @return The float value.
    */
-  private float getFloatParameter(final String param)
-  {
-    final Float p = (Float) getParameter(param);
-    if (p == null)
-    {
+  private float getFloatParameter( final String param ) {
+    final Float p = (Float) getParameter( param );
+    if ( p == null ) {
       return 0;
     }
     return p.floatValue();
@@ -79,12 +74,10 @@ public class Ellipse2DObjectDescription extends AbstractObjectDescription
    * @param o the object (should be an instance of <code>Rectangle2D</code>).
    * @throws ObjectFactoryException if the object is not an instance of <code>Rectangle2D</code>.
    */
-  public void setParameterFromObject(final Object o)
-      throws ObjectFactoryException
-  {
-    if (!(o instanceof Ellipse2D))
-    {
-      throw new ObjectFactoryException("The given object is no java.awt.geom.Rectangle2D.");
+  public void setParameterFromObject( final Object o )
+    throws ObjectFactoryException {
+    if ( !( o instanceof Ellipse2D ) ) {
+      throw new ObjectFactoryException( "The given object is no java.awt.geom.Rectangle2D." );
     }
 
     final Ellipse2D rect = (Ellipse2D) o;
@@ -93,10 +86,10 @@ public class Ellipse2DObjectDescription extends AbstractObjectDescription
     final float w = (float) rect.getWidth();
     final float h = (float) rect.getHeight();
 
-    setParameter("x", new Float(x));
-    setParameter("y", new Float(y));
-    setParameter("width", new Float(w));
-    setParameter("height", new Float(h));
+    setParameter( "x", new Float( x ) );
+    setParameter( "y", new Float( y ) );
+    setParameter( "width", new Float( w ) );
+    setParameter( "height", new Float( h ) );
   }
 
 }

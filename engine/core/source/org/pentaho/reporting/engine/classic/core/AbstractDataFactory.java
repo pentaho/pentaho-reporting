@@ -17,21 +17,19 @@
 
 package org.pentaho.reporting.engine.classic.core;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Locale;
-
-import javax.swing.table.TableModel;
-
 import org.pentaho.reporting.engine.classic.core.metadata.DataFactoryMetaData;
 import org.pentaho.reporting.engine.classic.core.metadata.DataFactoryRegistry;
 import org.pentaho.reporting.libraries.base.config.Configuration;
 import org.pentaho.reporting.libraries.resourceloader.ResourceKey;
 import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 
-public abstract class AbstractDataFactory implements DataFactoryDesignTimeSupport, Cloneable, DataFactoryMetaProvider
-{
+import javax.swing.table.TableModel;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Locale;
+
+public abstract class AbstractDataFactory implements DataFactoryDesignTimeSupport, Cloneable, DataFactoryMetaProvider {
   private transient Configuration configuration;
   private transient ResourceManager resourceManager;
   private transient ResourceKey contextKey;
@@ -39,42 +37,34 @@ public abstract class AbstractDataFactory implements DataFactoryDesignTimeSuppor
   private transient DataFactoryContext dataFactoryContext;
   private transient Locale locale;
 
-  public AbstractDataFactory()
-  {
+  public AbstractDataFactory() {
     locale = Locale.getDefault();
   }
 
-  public void cancelRunningQuery()
-  {
+  public void cancelRunningQuery() {
 
   }
 
-  protected int calculateQueryLimit(final DataRow parameters)
-  {
-    final Object queryLimit = parameters.get(DataFactory.QUERY_LIMIT);
-    if (queryLimit instanceof Number)
-    {
+  protected int calculateQueryLimit( final DataRow parameters ) {
+    final Object queryLimit = parameters.get( DataFactory.QUERY_LIMIT );
+    if ( queryLimit instanceof Number ) {
       final Number i = (Number) queryLimit;
       return i.intValue();
     }
     return -1;
   }
 
-  protected int calculateQueryTimeOut(final DataRow parameters)
-  {
-    final Object queryTimeOut = parameters.get(DataFactory.QUERY_TIMEOUT);
-    if (queryTimeOut instanceof Number)
-    {
+  protected int calculateQueryTimeOut( final DataRow parameters ) {
+    final Object queryTimeOut = parameters.get( DataFactory.QUERY_TIMEOUT );
+    if ( queryTimeOut instanceof Number ) {
       final Number i = (Number) queryTimeOut;
       return i.intValue();
     }
     return -1;
   }
 
-  public void initialize(final DataFactoryContext dataFactoryContext) throws ReportDataFactoryException
-  {
-    if (dataFactoryContext == null)
-    {
+  public void initialize( final DataFactoryContext dataFactoryContext ) throws ReportDataFactoryException {
+    if ( dataFactoryContext == null ) {
       throw new NullPointerException();
     }
     this.dataFactoryContext = dataFactoryContext;
@@ -83,136 +73,112 @@ public abstract class AbstractDataFactory implements DataFactoryDesignTimeSuppor
     this.resourceManager = dataFactoryContext.getResourceManager();
     this.contextKey = dataFactoryContext.getContextKey();
     this.locale = resourceBundleFactory.getLocale();
-    if (locale == null)
-    {
+    if ( locale == null ) {
       locale = Locale.getDefault();
     }
   }
 
-  public TableModel queryDesignTimeStructure(final String query,
-                                             final DataRow parameter) throws ReportDataFactoryException
-  {
-    return queryData(query, new DataRowWrapper(parameter));
+  public TableModel queryDesignTimeStructure( final String query,
+                                              final DataRow parameter ) throws ReportDataFactoryException {
+    return queryData( query, new DataRowWrapper( parameter ) );
   }
 
-  public Locale getLocale()
-  {
+  public Locale getLocale() {
     return locale;
   }
 
-  public DataFactoryContext getDataFactoryContext()
-  {
+  public DataFactoryContext getDataFactoryContext() {
     return dataFactoryContext;
   }
 
-  public Configuration getConfiguration()
-  {
+  public Configuration getConfiguration() {
     return configuration;
   }
 
-  public ResourceManager getResourceManager()
-  {
-    if (resourceManager == null)
-    {
+  public ResourceManager getResourceManager() {
+    if ( resourceManager == null ) {
       resourceManager = new ResourceManager();
     }
     return resourceManager;
   }
 
-  public ResourceKey getContextKey()
-  {
+  public ResourceKey getContextKey() {
     return contextKey;
   }
 
-  public ResourceBundleFactory getResourceBundleFactory()
-  {
+  public ResourceBundleFactory getResourceBundleFactory() {
     return resourceBundleFactory;
   }
 
-  public DataFactory clone()
-  {
-    try
-    {
+  public DataFactory clone() {
+    try {
       return (DataFactory) super.clone();
-    }
-    catch (final CloneNotSupportedException e)
-    {
-      throw new IllegalStateException(e);
+    } catch ( final CloneNotSupportedException e ) {
+      throw new IllegalStateException( e );
     }
   }
 
-  public DataFactory derive()
-  {
+  public DataFactory derive() {
     return clone();
   }
-  
-  public DataFactoryMetaData getMetaData()
-  {
-    return DataFactoryRegistry.getInstance().getMetaData(getClass().getName());
+
+  public DataFactoryMetaData getMetaData() {
+    return DataFactoryRegistry.getInstance().getMetaData( getClass().getName() );
   }
 
-  public String getDisplayConnectionName()
-  {
+  public String getDisplayConnectionName() {
     return null;
   }
 
-  public Object getQueryHash(final String query, final DataRow dataRow) throws ReportDataFactoryException
-  {
+  public Object getQueryHash( final String query, final DataRow dataRow ) throws ReportDataFactoryException {
     return null;
   }
 
-  public String[] getReferencedFields(final String query, final DataRow dataRow) throws ReportDataFactoryException
-  {
+  public String[] getReferencedFields( final String query, final DataRow dataRow ) throws ReportDataFactoryException {
     return null;
   }
 
-  protected static class DataRowWrapper implements DataRow
-  {
+  protected static class DataRowWrapper implements DataRow {
     private DataRow parent;
     private String[] columnNames;
 
-    public DataRowWrapper(final DataRow parent)
-    {
+    public DataRowWrapper( final DataRow parent ) {
       this.parent = parent;
       this.columnNames = computeEffectiveColumnNameSet();
     }
 
-    private String[] computeEffectiveColumnNameSet()
-    {
-      List<String> c = Arrays.asList(parent.getColumnNames());
-      ArrayList<String> retval = new ArrayList<String>(c);
-      if (!retval.contains(DataFactory.QUERY_LIMIT)) {
-        retval.add(DataFactory.QUERY_LIMIT);
+    private String[] computeEffectiveColumnNameSet() {
+      List<String> c = Arrays.asList( parent.getColumnNames() );
+      ArrayList<String> retval = new ArrayList<String>( c );
+      if ( !retval.contains( DataFactory.QUERY_LIMIT ) ) {
+        retval.add( DataFactory.QUERY_LIMIT );
       }
-      retval.add(DataFactoryDesignTimeSupport.DESIGN_TIME);
-      return retval.toArray(new String[retval.size()]);
+      retval.add( DataFactoryDesignTimeSupport.DESIGN_TIME );
+      return retval.toArray( new String[ retval.size() ] );
     }
 
-    public Object get(final String name)
-    {
-      if (DESIGN_TIME.equals(name)) {
+    public Object get( final String name ) {
+      if ( DESIGN_TIME.equals( name ) ) {
         return true;
       }
-      if (QUERY_LIMIT.equals(name)) {
+      if ( QUERY_LIMIT.equals( name ) ) {
         return 1;
       }
-      return parent.get(name);
+      return parent.get( name );
     }
 
-    public String[] getColumnNames()
-    {
+    public String[] getColumnNames() {
       return columnNames.clone();
     }
 
-    public boolean isChanged(final String name)
-    {
-      if (DESIGN_TIME.equals(name)) {
+    public boolean isChanged( final String name ) {
+      if ( DESIGN_TIME.equals( name ) ) {
         return false;
       }
-      if (QUERY_LIMIT.equals(name)) {
+      if ( QUERY_LIMIT.equals( name ) ) {
         return false;
       }
-      return parent.isChanged(name);
+      return parent.isChanged( name );
     }
   }
 }

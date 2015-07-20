@@ -19,15 +19,12 @@ package org.pentaho.reporting.engine.classic.core.dom;
 
 import org.pentaho.reporting.engine.classic.core.ReportElement;
 
-public class AnyNodeMatcher extends ElementMatcher
-{
-  public AnyNodeMatcher()
-  {
-    super("*");
+public class AnyNodeMatcher extends ElementMatcher {
+  public AnyNodeMatcher() {
+    super( "*" );
   }
 
-  public boolean matches(final MatcherContext context, final ReportElement node)
-  {
-    return matchAttributes(context, node);
+  public boolean matches( final MatcherContext context, final ReportElement node ) {
+    return matchAttributes( context, node );
   }
 }

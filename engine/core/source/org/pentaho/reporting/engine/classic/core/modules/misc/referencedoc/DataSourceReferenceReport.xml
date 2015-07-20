@@ -23,9 +23,13 @@
     </page-definition>
     <configuration>
       <property
-          name="org.pentaho.reporting.engine.classic.core.modules.output.pageable.pdf.PDFOutputTarget.default.Author">JFreeReport</property>
+          name="org.pentaho.reporting.engine.classic.core.modules.output.pageable.pdf.PDFOutputTarget.default.Author">
+        JFreeReport
+      </property>
       <property
-          name="org.pentaho.reporting.engine.classic.core.modules.output.pageable.pdf.PDFOutputTarget.default.Encoding">iso-8859-15</property>
+          name="org.pentaho.reporting.engine.classic.core.modules.output.pageable.pdf.PDFOutputTarget.default.Encoding">
+        iso-8859-15
+      </property>
     </configuration>
   </report-config>
 

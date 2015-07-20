@@ -17,13 +17,13 @@
 
 package org.pentaho.reporting.engine.classic.core.filter;
 
+import org.pentaho.reporting.engine.classic.core.ReportElement;
+import org.pentaho.reporting.engine.classic.core.function.ExpressionRuntime;
+
 import java.text.DateFormatSymbols;
 import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.util.Locale;
-
-import org.pentaho.reporting.engine.classic.core.ReportElement;
-import org.pentaho.reporting.engine.classic.core.function.ExpressionRuntime;
 
 /**
  * Parses a String into a java.util.Date. The string is read from the given datasource and then parsed by the dateformat
@@ -37,8 +37,7 @@ import org.pentaho.reporting.engine.classic.core.function.ExpressionRuntime;
  * @author Thomas Morgner
  * @see java.text.SimpleDateFormat
  */
-public class SimpleDateFormatParser extends DateFormatParser
-{
+public class SimpleDateFormatParser extends DateFormatParser {
   /**
    * The last locale used to convert numbers.
    */
@@ -51,9 +50,8 @@ public class SimpleDateFormatParser extends DateFormatParser
   /**
    * DefaultConstructor.
    */
-  public SimpleDateFormatParser()
-  {
-    setFormatter(new SimpleDateFormat());
+  public SimpleDateFormatParser() {
+    setFormatter( new SimpleDateFormat() );
   }
 
 
@@ -62,8 +60,7 @@ public class SimpleDateFormatParser extends DateFormatParser
    *
    * @return The date format object.
    */
-  public SimpleDateFormat getSimpleDateFormat()
-  {
+  public SimpleDateFormat getSimpleDateFormat() {
     return (SimpleDateFormat) getFormatter();
   }
 
@@ -73,9 +70,8 @@ public class SimpleDateFormatParser extends DateFormatParser
    * @param format The format.
    * @throws NullPointerException if the format given is null
    */
-  public void setSimpleDateFormat(final SimpleDateFormat format)
-  {
-    super.setFormatter(format);
+  public void setSimpleDateFormat( final SimpleDateFormat format ) {
+    super.setFormatter( format );
   }
 
   /**
@@ -85,10 +81,9 @@ public class SimpleDateFormatParser extends DateFormatParser
    * @throws NullPointerException if the format given is null
    * @throws ClassCastException   if the format given is no DateFormat
    */
-  public void setFormatter(final Format format)
-  {
+  public void setFormatter( final Format format ) {
     final SimpleDateFormat sdfmt = (SimpleDateFormat) format;
-    super.setFormatter(sdfmt);
+    super.setFormatter( sdfmt );
   }
 
   /**
@@ -98,8 +93,7 @@ public class SimpleDateFormatParser extends DateFormatParser
    * @return the formatstring used for this DateFormat.
    * @see java.text.SimpleDateFormat
    */
-  public String getFormatString()
-  {
+  public String getFormatString() {
     return getSimpleDateFormat().toPattern();
   }
 
@@ -109,9 +103,8 @@ public class SimpleDateFormatParser extends DateFormatParser
    * @param format the formatString
    * @throws IllegalArgumentException if the string is invalid
    */
-  public void setFormatString(final String format)
-  {
-    getSimpleDateFormat().applyPattern(format);
+  public void setFormatString( final String format ) {
+    getSimpleDateFormat().applyPattern( format );
   }
 
   /**
@@ -121,8 +114,7 @@ public class SimpleDateFormatParser extends DateFormatParser
    * @return the localized format string.
    * @see java.text.SimpleDateFormat
    */
-  public String getLocalizedFormatString()
-  {
+  public String getLocalizedFormatString() {
     return getSimpleDateFormat().toLocalizedPattern();
   }
 
@@ -133,9 +125,8 @@ public class SimpleDateFormatParser extends DateFormatParser
    * @param format the formatString
    * @throws IllegalArgumentException if the string is invalid
    */
-  public void setLocalizedFormatString(final String format)
-  {
-    getSimpleDateFormat().applyLocalizedPattern(format);
+  public void setLocalizedFormatString( final String format ) {
+    getSimpleDateFormat().applyLocalizedPattern( format );
   }
 
 
@@ -145,8 +136,7 @@ public class SimpleDateFormatParser extends DateFormatParser
    *
    * @return true, if the locale should not update the DateSymbols, false otherwise.
    */
-  public boolean isKeepState()
-  {
+  public boolean isKeepState() {
     return keepState;
   }
 
@@ -156,8 +146,7 @@ public class SimpleDateFormatParser extends DateFormatParser
    *
    * @param keepState set to true, if the locale should not update the DateSymbols, false otherwise.
    */
-  public void setKeepState(final boolean keepState)
-  {
+  public void setKeepState( final boolean keepState ) {
     this.keepState = keepState;
   }
 
@@ -173,17 +162,14 @@ public class SimpleDateFormatParser extends DateFormatParser
    * @param element
    * @return The formatted value.
    */
-  public Object getValue(final ExpressionRuntime runtime, final ReportElement element)
-  {
-    if (keepState == false && runtime != null)
-    {
+  public Object getValue( final ExpressionRuntime runtime, final ReportElement element ) {
+    if ( keepState == false && runtime != null ) {
       final Locale locale = runtime.getResourceBundleFactory().getLocale();
-      if (locale != null && locale.equals(lastLocale) == false)
-      {
+      if ( locale != null && locale.equals( lastLocale ) == false ) {
         lastLocale = locale;
-        getSimpleDateFormat().setDateFormatSymbols(new DateFormatSymbols(locale));
+        getSimpleDateFormat().setDateFormatSymbols( new DateFormatSymbols( locale ) );
       }
     }
-    return super.getValue(runtime, element);
+    return super.getValue( runtime, element );
   }
 }

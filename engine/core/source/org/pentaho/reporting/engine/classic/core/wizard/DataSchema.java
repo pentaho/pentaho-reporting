@@ -25,11 +25,10 @@ import java.io.Serializable;
  *
  * @author Thomas Morgner
  */
-public interface DataSchema extends Serializable, Cloneable
-{
+public interface DataSchema extends Serializable, Cloneable {
   public DataAttributes getTableAttributes();
 
-  public DataAttributes getAttributes(final String name);
+  public DataAttributes getAttributes( final String name );
 
   public Object clone() throws CloneNotSupportedException;
 

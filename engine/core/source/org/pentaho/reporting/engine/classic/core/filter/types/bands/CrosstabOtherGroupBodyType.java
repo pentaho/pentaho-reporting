@@ -20,17 +20,14 @@ package org.pentaho.reporting.engine.classic.core.filter.types.bands;
 import org.pentaho.reporting.engine.classic.core.CrosstabOtherGroupBody;
 import org.pentaho.reporting.engine.classic.core.ReportElement;
 
-public class CrosstabOtherGroupBodyType extends AbstractSectionType
-{
+public class CrosstabOtherGroupBodyType extends AbstractSectionType {
   public static final CrosstabOtherGroupBodyType INSTANCE = new CrosstabOtherGroupBodyType();
 
-  public CrosstabOtherGroupBodyType()
-  {
-    super("crosstab-other-group-body", true);
+  public CrosstabOtherGroupBodyType() {
+    super( "crosstab-other-group-body", true );
   }
 
-  public ReportElement create()
-  {
+  public ReportElement create() {
     return new CrosstabOtherGroupBody();
   }
 }

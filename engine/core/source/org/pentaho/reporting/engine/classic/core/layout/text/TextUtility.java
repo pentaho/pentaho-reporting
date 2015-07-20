@@ -25,16 +25,12 @@ import org.pentaho.reporting.libraries.fonts.registry.FontMetrics;
  *
  * @author Thomas Morgner
  */
-public class TextUtility
-{
-  private TextUtility()
-  {
+public class TextUtility {
+  private TextUtility() {
   }
 
-  private static int translateBaselines(final int baseline)
-  {
-    switch (baseline)
-    {
+  private static int translateBaselines( final int baseline ) {
+    switch( baseline ) {
       case BaselineInfo.HANGING:
         return ExtendedBaselineInfo.HANGING;
       case BaselineInfo.ALPHABETIC:
@@ -48,26 +44,24 @@ public class TextUtility
       case BaselineInfo.MIDDLE:
         return ExtendedBaselineInfo.MIDDLE;
       default:
-        throw new IllegalArgumentException("Invalid baseline");
+        throw new IllegalArgumentException( "Invalid baseline" );
     }
   }
 
-  public static ExtendedBaselineInfo createBaselineInfo(final int codepoint,
-                                                        final FontMetrics fontMetrics,
-                                                        final BaselineInfo reusableBaselineInfo)
-  {
-    if (fontMetrics == null)
-    {
-      throw new NullPointerException("FontMetrics cannot be null");
+  public static ExtendedBaselineInfo createBaselineInfo( final int codepoint,
+                                                         final FontMetrics fontMetrics,
+                                                         final BaselineInfo reusableBaselineInfo ) {
+    if ( fontMetrics == null ) {
+      throw new NullPointerException( "FontMetrics cannot be null" );
     }
 
-    final BaselineInfo baselineInfo = fontMetrics.getBaselines(codepoint, reusableBaselineInfo);
-    final int dominantBaseline = TextUtility.translateBaselines(baselineInfo.getDominantBaseline());
+    final BaselineInfo baselineInfo = fontMetrics.getBaselines( codepoint, reusableBaselineInfo );
+    final int dominantBaseline = TextUtility.translateBaselines( baselineInfo.getDominantBaseline() );
     final long underlinePosition = fontMetrics.getUnderlinePosition();
     final long strikeThroughPosition = fontMetrics.getStrikeThroughPosition();
     return new DefaultExtendedBaselineInfo
-        (dominantBaseline, baselineInfo, 0, 0, fontMetrics.getMaxHeight(),
-            fontMetrics.getMaxHeight(), underlinePosition, strikeThroughPosition);
+      ( dominantBaseline, baselineInfo, 0, 0, fontMetrics.getMaxHeight(),
+        fontMetrics.getMaxHeight(), underlinePosition, strikeThroughPosition );
   }
 
 }

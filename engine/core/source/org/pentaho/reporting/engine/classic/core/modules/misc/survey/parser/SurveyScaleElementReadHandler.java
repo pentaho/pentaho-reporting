@@ -28,11 +28,9 @@ import org.pentaho.reporting.libraries.xmlns.parser.ParseException;
  * @author Thomas Morgner
  */
 @Deprecated
-public class SurveyScaleElementReadHandler extends AbstractElementReadHandler
-{
+public class SurveyScaleElementReadHandler extends AbstractElementReadHandler {
   public SurveyScaleElementReadHandler()
-      throws ParseException
-  {
-    super(new SurveyScaleType());
+    throws ParseException {
+    super( new SurveyScaleType() );
   }
 }

@@ -24,26 +24,22 @@ import org.pentaho.reporting.engine.classic.core.modules.parser.base.common.Prop
 import org.pentaho.reporting.libraries.xmlns.parser.RootXmlReadHandler;
 import org.xml.sax.SAXException;
 
-public class LabelReadHandler extends AbstractTextElementReadHandler
-{
+public class LabelReadHandler extends AbstractTextElementReadHandler {
   private LabelElementFactory labelElementFactory;
   private PropertyStringReadHandler stringReadHandler;
 
-  public LabelReadHandler()
-  {
+  public LabelReadHandler() {
     labelElementFactory = new LabelElementFactory();
     stringReadHandler = new PropertyStringReadHandler();
   }
 
-  public void init(final RootXmlReadHandler rootHandler, final String uri, final String tagName) throws SAXException
-  {
-    super.init(rootHandler, uri, tagName);
-    stringReadHandler.init(rootHandler, uri, tagName);
+  public void init( final RootXmlReadHandler rootHandler, final String uri, final String tagName ) throws SAXException {
+    super.init( rootHandler, uri, tagName );
+    stringReadHandler.init( rootHandler, uri, tagName );
   }
 
-  public void characters(final char[] ch, final int start, final int length) throws SAXException
-  {
-    stringReadHandler.characters(ch, start, length);
+  public void characters( final char[] ch, final int start, final int length ) throws SAXException {
+    stringReadHandler.characters( ch, start, length );
   }
 
   /**
@@ -52,11 +48,10 @@ public class LabelReadHandler extends AbstractTextElementReadHandler
    * @param atts the attributes.
    * @throws org.xml.sax.SAXException if there is a parsing error.
    */
-  protected void startParsing(final PropertyAttributes atts)
-      throws SAXException
-  {
-    super.startParsing(atts);
-    stringReadHandler.startParsing(atts);
+  protected void startParsing( final PropertyAttributes atts )
+    throws SAXException {
+    super.startParsing( atts );
+    stringReadHandler.startParsing( atts );
   }
 
   /**
@@ -65,16 +60,14 @@ public class LabelReadHandler extends AbstractTextElementReadHandler
    * @throws org.xml.sax.SAXException if there is a parsing error.
    */
   protected void doneParsing()
-      throws SAXException
-  {
+    throws SAXException {
     stringReadHandler.doneParsing();
     final String text = stringReadHandler.getResult();
-    labelElementFactory.setText(text);
+    labelElementFactory.setText( text );
     super.doneParsing();
   }
 
-  protected TextElementFactory getTextElementFactory()
-  {
+  protected TextElementFactory getTextElementFactory() {
     return labelElementFactory;
   }
 }

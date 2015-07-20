@@ -17,11 +17,9 @@
 
 package org.pentaho.reporting.engine.classic.core.layout.output;
 
-import org.pentaho.reporting.engine.classic.core.Group;
 import org.pentaho.reporting.engine.classic.core.event.ReportEvent;
 
-public interface GroupOutputHandlerFactory
-{
-  public GroupOutputHandler getOutputHandler(ReportEvent event, int beginOfRow);
+public interface GroupOutputHandlerFactory {
+  public GroupOutputHandler getOutputHandler( ReportEvent event, int beginOfRow );
 
 }

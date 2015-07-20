@@ -17,28 +17,24 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.gui.base.event;
 
+import org.pentaho.reporting.engine.classic.core.layout.model.RenderNode;
+
 import java.awt.event.MouseEvent;
 import java.util.EventObject;
 
-import org.pentaho.reporting.engine.classic.core.layout.model.RenderNode;
-
-public class ReportMouseEvent extends EventObject
-{
+public class ReportMouseEvent extends EventObject {
   private MouseEvent event;
 
-  public ReportMouseEvent(final RenderNode source, final MouseEvent event)
-  {
-    super(source);
+  public ReportMouseEvent( final RenderNode source, final MouseEvent event ) {
+    super( source );
     this.event = event;
   }
 
-  public RenderNode getSourceNode()
-  {
+  public RenderNode getSourceNode() {
     return (RenderNode) getSource();
   }
 
-  public MouseEvent getSourceEvent()
-  {
+  public MouseEvent getSourceEvent() {
     return event;
   }
 }

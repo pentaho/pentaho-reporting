@@ -30,12 +30,10 @@ import org.xml.sax.SAXException;
  *
  * @author Thomas Morgner
  */
-public class SettingsRootElementHandler extends AbstractXmlReadHandler
-{
+public class SettingsRootElementHandler extends AbstractXmlReadHandler {
   private ModifiableConfiguration configuration;
 
-  public SettingsRootElementHandler()
-  {
+  public SettingsRootElementHandler() {
     this.configuration = new DefaultConfiguration();
   }
 
@@ -48,22 +46,18 @@ public class SettingsRootElementHandler extends AbstractXmlReadHandler
    * @return the handler or null, if the tagname is invalid.
    * @throws SAXException if there is a parsing error.
    */
-  protected XmlReadHandler getHandlerForChild(final String uri, final String tagName, final Attributes atts)
-      throws SAXException
-  {
-    if (isSameNamespace(uri) == false)
-    {
+  protected XmlReadHandler getHandlerForChild( final String uri, final String tagName, final Attributes atts )
+    throws SAXException {
+    if ( isSameNamespace( uri ) == false ) {
       return null;
     }
 
-    if ("configuration".equals(tagName))
-    {
-      return new ConfigurationReadHandler(configuration);
+    if ( "configuration".equals( tagName ) ) {
+      return new ConfigurationReadHandler( configuration );
     }
 
 
-    if ("runtime".equals(tagName))
-    {
+    if ( "runtime".equals( tagName ) ) {
       // todo: In later versions, check the declared runtime so that we can be sure that all elements are found
       return new IgnoreAnyChildReadHandler();
     }
@@ -76,8 +70,7 @@ public class SettingsRootElementHandler extends AbstractXmlReadHandler
    * @return the object.
    * @throws SAXException if an parser error occured.
    */
-  public Object getObject() throws SAXException
-  {
-    return new BundleSettings(configuration);
+  public Object getObject() throws SAXException {
+    return new BundleSettings( configuration );
   }
 }

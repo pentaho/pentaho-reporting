@@ -23,10 +23,8 @@ import org.pentaho.reporting.engine.classic.core.modules.parser.base.common.Pars
 import org.pentaho.reporting.libraries.xmlns.parser.XmlReadHandler;
 import org.xml.sax.SAXException;
 
-public class ParserConfigReadHandler extends AbstractPropertyXmlReadHandler
-{
-  public ParserConfigReadHandler()
-  {
+public class ParserConfigReadHandler extends AbstractPropertyXmlReadHandler {
+  public ParserConfigReadHandler() {
   }
 
   /**
@@ -37,38 +35,25 @@ public class ParserConfigReadHandler extends AbstractPropertyXmlReadHandler
    * @return the handler or null, if the tagname is invalid.
    * @throws org.xml.sax.SAXException if there is a parsing error.
    */
-  protected XmlReadHandler getHandlerForChild(final String uri,
-                                              final String tagName,
-                                              final PropertyAttributes atts)
-      throws SAXException
-  {
-    if (isSameNamespace(uri) == false)
-    {
+  protected XmlReadHandler getHandlerForChild( final String uri,
+                                               final String tagName,
+                                               final PropertyAttributes atts )
+    throws SAXException {
+    if ( isSameNamespace( uri ) == false ) {
       return null;
     }
 
-    if ("element-factory".equals(tagName))
-    {
+    if ( "element-factory".equals( tagName ) ) {
       return new ElementFactoryReadHandler();
-    }
-    else if ("stylekey-factory".equals(tagName))
-    {
+    } else if ( "stylekey-factory".equals( tagName ) ) {
       return new StyleKeyFactoryReadHandler();
-    }
-    else if ("template-factory".equals(tagName))
-    {
+    } else if ( "template-factory".equals( tagName ) ) {
       return new TemplatesFactoryReadHandler();
-    }
-    else if ("object-factory".equals(tagName))
-    {
+    } else if ( "object-factory".equals( tagName ) ) {
       return new ClassFactoryReadHandler();
-    }
-    else if ("datasource-factory".equals(tagName))
-    {
+    } else if ( "datasource-factory".equals( tagName ) ) {
       return new DataSourceFactoryReadHandler();
-    }
-    else if ("parser-properties".equals(tagName))
-    {
+    } else if ( "parser-properties".equals( tagName ) ) {
       return new ParserConfigurationReadHandler();
     }
 
@@ -80,8 +65,7 @@ public class ParserConfigReadHandler extends AbstractPropertyXmlReadHandler
    *
    * @return the object.
    */
-  public Object getObject()
-  {
+  public Object getObject() {
     return null;
   }
 

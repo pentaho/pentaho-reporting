@@ -19,85 +19,70 @@ package org.pentaho.reporting.engine.classic.core;
 
 import org.pentaho.reporting.engine.classic.core.filter.types.bands.CrosstabOtherGroupBodyType;
 
-public class CrosstabOtherGroupBody extends GroupBody
-{
+public class CrosstabOtherGroupBody extends GroupBody {
   private CrosstabOtherGroup group;
 
-  public CrosstabOtherGroupBody()
-  {
-    setElementType(new CrosstabOtherGroupBodyType());
+  public CrosstabOtherGroupBody() {
+    setElementType( new CrosstabOtherGroupBodyType() );
     group = new CrosstabOtherGroup();
-    registerAsChild(group);
+    registerAsChild( group );
   }
 
-  public CrosstabOtherGroupBody(final CrosstabOtherGroup group)
-  {
+  public CrosstabOtherGroupBody( final CrosstabOtherGroup group ) {
     this();
-    setGroup(group);
+    setGroup( group );
   }
 
-  public CrosstabOtherGroup getGroup()
-  {
+  public CrosstabOtherGroup getGroup() {
     return group;
   }
 
-  public void setGroup(final CrosstabOtherGroup group)
-  {
-    if (group == null)
-    {
-      throw new NullPointerException("The group must not be null");
+  public void setGroup( final CrosstabOtherGroup group ) {
+    if ( group == null ) {
+      throw new NullPointerException( "The group must not be null" );
     }
-    validateLooping(group);
-    if (unregisterParent(group))
-    {
+    validateLooping( group );
+    if ( unregisterParent( group ) ) {
       return;
     }
     final Group oldGroup = this.group;
-    this.group.setParent(null);
+    this.group.setParent( null );
     this.group = group;
-    this.group.setParent(this);
+    this.group.setParent( this );
 
-    notifyNodeChildRemoved(oldGroup);
-    notifyNodeChildAdded(this.group);
+    notifyNodeChildRemoved( oldGroup );
+    notifyNodeChildAdded( this.group );
   }
 
-  protected void removeElement(final Element element)
-  {
-    if (element == null)
-    {
+  protected void removeElement( final Element element ) {
+    if ( element == null ) {
       throw new NullPointerException();
     }
 
-    if (element == group)
-    {
-      this.group.setParent(null);
+    if ( element == group ) {
+      this.group.setParent( null );
       this.group = new CrosstabOtherGroup();
-      this.group.setParent(this);
+      this.group.setParent( this );
 
-      notifyNodeChildRemoved(element);
-      notifyNodeChildAdded(this.group);
+      notifyNodeChildRemoved( element );
+      notifyNodeChildAdded( this.group );
     }
   }
 
-  public void setElementAt(final int position, final Element element)
-  {
-    if (position != 0)
-    {
+  public void setElementAt( final int position, final Element element ) {
+    if ( position != 0 ) {
       throw new IndexOutOfBoundsException();
     }
-    setGroup((CrosstabOtherGroup) element);
+    setGroup( (CrosstabOtherGroup) element );
   }
 
 
-  public int getElementCount()
-  {
+  public int getElementCount() {
     return 1;
   }
 
-  public Element getElement(final int index)
-  {
-    if (index == 0)
-    {
+  public Element getElement( final int index ) {
+    if ( index == 0 ) {
       return group;
     }
     throw new IndexOutOfBoundsException();
@@ -109,11 +94,10 @@ public class CrosstabOtherGroupBody extends GroupBody
    *
    * @return a clone of this Element.
    */
-  public CrosstabOtherGroupBody clone()
-  {
+  public CrosstabOtherGroupBody clone() {
     final CrosstabOtherGroupBody o = (CrosstabOtherGroupBody) super.clone();
     o.group = (CrosstabOtherGroup) group.clone();
-    o.registerAsChild(o.group);
+    o.registerAsChild( o.group );
     return o;
   }
 
@@ -122,11 +106,10 @@ public class CrosstabOtherGroupBody extends GroupBody
    *
    * @return the clone.
    */
-  public CrosstabOtherGroupBody derive(final boolean preserveElementInstanceIds)
-  {
-    final CrosstabOtherGroupBody o = (CrosstabOtherGroupBody) super.derive(preserveElementInstanceIds);
-    o.group = (CrosstabOtherGroup) group.derive(preserveElementInstanceIds);
-    o.registerAsChild(o.group);
+  public CrosstabOtherGroupBody derive( final boolean preserveElementInstanceIds ) {
+    final CrosstabOtherGroupBody o = (CrosstabOtherGroupBody) super.derive( preserveElementInstanceIds );
+    o.group = (CrosstabOtherGroup) group.derive( preserveElementInstanceIds );
+    o.registerAsChild( o.group );
     return o;
   }
 

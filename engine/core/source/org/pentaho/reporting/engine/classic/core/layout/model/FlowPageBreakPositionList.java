@@ -17,14 +17,11 @@
 
 package org.pentaho.reporting.engine.classic.core.layout.model;
 
-public final class FlowPageBreakPositionList extends PageBreakPositionList
-{
-  public FlowPageBreakPositionList()
-  {
+public final class FlowPageBreakPositionList extends PageBreakPositionList {
+  public FlowPageBreakPositionList() {
   }
 
-  protected long getPageHeaderHeight(final long position)
-  {
+  protected long getPageHeaderHeight( final long position ) {
     return 0;
   }
 }

@@ -26,21 +26,17 @@ import org.pentaho.reporting.libraries.xmlns.parser.ParseException;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 
-public class AttributeGroupRefReadHandler extends AbstractXmlReadHandler
-{
-  private static final Log logger = LogFactory.getLog(AttributeGroupRefReadHandler.class);
+public class AttributeGroupRefReadHandler extends AbstractXmlReadHandler {
+  private static final Log logger = LogFactory.getLog( AttributeGroupRefReadHandler.class );
   private AttributeMap<AttributeMetaData> attributes;
   private GlobalMetaDefinition attributeGroups;
 
-  public AttributeGroupRefReadHandler(final AttributeMap<AttributeMetaData> attributes,
-                                      final GlobalMetaDefinition attributeGroups)
-  {
-    if (attributes == null)
-    {
+  public AttributeGroupRefReadHandler( final AttributeMap<AttributeMetaData> attributes,
+                                       final GlobalMetaDefinition attributeGroups ) {
+    if ( attributes == null ) {
       throw new NullPointerException();
     }
-    if (attributeGroups == null)
-    {
+    if ( attributeGroups == null ) {
       throw new NullPointerException();
     }
 
@@ -54,28 +50,23 @@ public class AttributeGroupRefReadHandler extends AbstractXmlReadHandler
    * @param attrs the attributes.
    * @throws SAXException if there is a parsing error.
    */
-  protected void startParsing(final Attributes attrs) throws SAXException
-  {
-    final String name = attrs.getValue(getUri(), "ref");
-    if (name == null)
-    {
-      throw new ParseException("Attribute 'ref' is undefined", getLocator());
+  protected void startParsing( final Attributes attrs ) throws SAXException {
+    final String name = attrs.getValue( getUri(), "ref" );
+    if ( name == null ) {
+      throw new ParseException( "Attribute 'ref' is undefined", getLocator() );
     }
-    final AttributeGroup group = attributeGroups.getAttributeGroup(name);
-    if (group == null)
-    {
-      logger.debug("There is no attribute-group '" + name + "' defined. Skipping. " + getLocator());
+    final AttributeGroup group = attributeGroups.getAttributeGroup( name );
+    if ( group == null ) {
+      logger.debug( "There is no attribute-group '" + name + "' defined. Skipping. " + getLocator() );
       return;
     }
 
     final AttributeDefinition[] data = group.getMetaData();
-    for (int i = 0; i < data.length; i++)
-    {
-      final AttributeDefinition handler = data[i];
+    for ( int i = 0; i < data.length; i++ ) {
+      final AttributeDefinition handler = data[ i ];
       final AttributeMetaData metaData = handler.build();
-      if (metaData != null)
-      {
-        attributes.setAttribute(metaData.getNameSpace(), metaData.getName(), metaData);
+      if ( metaData != null ) {
+        attributes.setAttribute( metaData.getNameSpace(), metaData.getName(), metaData );
       }
     }
   }
@@ -86,8 +77,7 @@ public class AttributeGroupRefReadHandler extends AbstractXmlReadHandler
    * @return the object.
    * @throws SAXException if an parser error occured.
    */
-  public Object getObject() throws SAXException
-  {
+  public Object getObject() throws SAXException {
     return null;
   }
 }

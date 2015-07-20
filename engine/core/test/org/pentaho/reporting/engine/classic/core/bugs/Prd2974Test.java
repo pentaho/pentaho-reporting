@@ -17,8 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.core.bugs;
 
-import java.net.URL;
-
 import junit.framework.TestCase;
 import org.pentaho.reporting.engine.classic.core.AttributeNames;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
@@ -39,190 +37,174 @@ import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
 import org.pentaho.reporting.libraries.resourceloader.Resource;
 import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 
-public class Prd2974Test extends TestCase
-{
-  private static class FooterTextMatcher implements NodeMatcher
-  {
+import java.net.URL;
+
+public class Prd2974Test extends TestCase {
+  private static class FooterTextMatcher implements NodeMatcher {
     private String text;
 
-    private FooterTextMatcher(final String text)
-    {
+    private FooterTextMatcher( final String text ) {
       this.text = text;
     }
 
-    public boolean matches(final RenderNode node)
-    {
-      if (!(node instanceof ParagraphRenderBox))
-      {
+    public boolean matches( final RenderNode node ) {
+      if ( !( node instanceof ParagraphRenderBox ) ) {
         return false;
       }
-      if (!(node.getParent() instanceof CanvasRenderBox))
-      {
+      if ( !( node.getParent() instanceof CanvasRenderBox ) ) {
         return false;
       }
       RenderBox parent = node.getParent().getParent();
-      if (parent instanceof SectionRenderBox == false)
-      {
+      if ( parent instanceof SectionRenderBox == false ) {
         return false;
       }
       ParagraphRenderBox para = (ParagraphRenderBox) node;
-      Object attribute = para.getAttributes().getAttribute(AttributeNames.Core.NAMESPACE, AttributeNames.Core.VALUE);
-      if (ObjectUtilities.equal(text, attribute))
-      {
+      Object attribute = para.getAttributes().getAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.VALUE );
+      if ( ObjectUtilities.equal( text, attribute ) ) {
         return true;
       }
       return false;
     }
   }
 
-  public Prd2974Test()
-  {
+  public Prd2974Test() {
   }
 
-  public Prd2974Test(final String name)
-  {
-    super(name);
+  public Prd2974Test( final String name ) {
+    super( name );
   }
 
-  protected void setUp() throws Exception
-  {
+  protected void setUp() throws Exception {
     ClassicEngineBoot.getInstance().start();
   }
 
-  public void testRunStickySub() throws Exception
-  {
-    final URL url = getClass().getResource("Prd-2974-2.prpt");
-    assertNotNull(url);
+  public void testRunStickySub() throws Exception {
+    final URL url = getClass().getResource( "Prd-2974-2.prpt" );
+    assertNotNull( url );
     final ResourceManager resourceManager = new ResourceManager();
     resourceManager.registerDefaults();
-    final Resource directly = resourceManager.createDirectly(url, MasterReport.class);
+    final Resource directly = resourceManager.createDirectly( url, MasterReport.class );
     final MasterReport report = (MasterReport) directly.getResource();
-    report.getPageFooter().setSticky(false);
-    report.getPageFooter().addElement(createLabel());
-    report.getPageFooter().setName("Master-Footer");
-    report.getReportHeader().getSubReport(0).getPageFooter().setName("Subreport-Footer");
-    report.getReportHeader().getSubReport(0).getPageFooter().setSticky(true);
-    report.getReportHeader().getSubReport(0).getReportHeader().addElement(createLabel("ReportHeader-label"));
+    report.getPageFooter().setSticky( false );
+    report.getPageFooter().addElement( createLabel() );
+    report.getPageFooter().setName( "Master-Footer" );
+    report.getReportHeader().getSubReport( 0 ).getPageFooter().setName( "Subreport-Footer" );
+    report.getReportHeader().getSubReport( 0 ).getPageFooter().setSticky( true );
+    report.getReportHeader().getSubReport( 0 ).getReportHeader().addElement( createLabel( "ReportHeader-label" ) );
 
     report.getReportConfiguration().setConfigProperty
-        ("org.pentaho.reporting.engine.classic.core.modules.output.pageable.xml.Encoding", "UTF-8");
+      ( "org.pentaho.reporting.engine.classic.core.modules.output.pageable.xml.Encoding", "UTF-8" );
 
-    LogicalPageBox logicalPageBox = DebugReportRunner.layoutPage(report, 0);
-    assertNotNull(MatchFactory.match(logicalPageBox.getFooterArea(), new FooterTextMatcher("Label")));
-    assertNotNull(MatchFactory.match(logicalPageBox.getFooterArea(), new FooterTextMatcher("XASDAS")));
+    LogicalPageBox logicalPageBox = DebugReportRunner.layoutPage( report, 0 );
+    assertNotNull( MatchFactory.match( logicalPageBox.getFooterArea(), new FooterTextMatcher( "Label" ) ) );
+    assertNotNull( MatchFactory.match( logicalPageBox.getFooterArea(), new FooterTextMatcher( "XASDAS" ) ) );
   }
 
 
-  public void testRunStickyEverything() throws Exception
-  {
-    final URL url = getClass().getResource("Prd-2974-2.prpt");
-    assertNotNull(url);
+  public void testRunStickyEverything() throws Exception {
+    final URL url = getClass().getResource( "Prd-2974-2.prpt" );
+    assertNotNull( url );
     final ResourceManager resourceManager = new ResourceManager();
     resourceManager.registerDefaults();
-    final Resource directly = resourceManager.createDirectly(url, MasterReport.class);
+    final Resource directly = resourceManager.createDirectly( url, MasterReport.class );
     final MasterReport report = (MasterReport) directly.getResource();
-    report.getPageFooter().setSticky(true);
-    report.getPageFooter().addElement(createLabel());
-    report.getPageFooter().setName("Master-Footer");
-    report.getReportHeader().getSubReport(0).getPageFooter().setName("Subreport-Footer");
-    report.getReportHeader().getSubReport(0).getPageFooter().setSticky(true);
-    report.getReportHeader().getSubReport(0).getReportHeader().addElement(createLabel("ReportHeader-label"));
+    report.getPageFooter().setSticky( true );
+    report.getPageFooter().addElement( createLabel() );
+    report.getPageFooter().setName( "Master-Footer" );
+    report.getReportHeader().getSubReport( 0 ).getPageFooter().setName( "Subreport-Footer" );
+    report.getReportHeader().getSubReport( 0 ).getPageFooter().setSticky( true );
+    report.getReportHeader().getSubReport( 0 ).getReportHeader().addElement( createLabel( "ReportHeader-label" ) );
 
     report.getReportConfiguration().setConfigProperty
-        ("org.pentaho.reporting.engine.classic.core.modules.output.pageable.xml.Encoding", "UTF-8");
+      ( "org.pentaho.reporting.engine.classic.core.modules.output.pageable.xml.Encoding", "UTF-8" );
 
-    LogicalPageBox logicalPageBox = DebugReportRunner.layoutPage(report, 0);
-    assertNotNull(MatchFactory.match(logicalPageBox.getFooterArea(), new FooterTextMatcher("Label")));
-    assertNotNull(MatchFactory.match(logicalPageBox.getFooterArea(), new FooterTextMatcher("XASDAS")));
+    LogicalPageBox logicalPageBox = DebugReportRunner.layoutPage( report, 0 );
+    assertNotNull( MatchFactory.match( logicalPageBox.getFooterArea(), new FooterTextMatcher( "Label" ) ) );
+    assertNotNull( MatchFactory.match( logicalPageBox.getFooterArea(), new FooterTextMatcher( "XASDAS" ) ) );
   }
 
 
-  public void testRunNonStickyEverything() throws Exception
-  {
-    final URL url = getClass().getResource("Prd-2974-2.prpt");
-    assertNotNull(url);
+  public void testRunNonStickyEverything() throws Exception {
+    final URL url = getClass().getResource( "Prd-2974-2.prpt" );
+    assertNotNull( url );
     final ResourceManager resourceManager = new ResourceManager();
     resourceManager.registerDefaults();
-    final Resource directly = resourceManager.createDirectly(url, MasterReport.class);
+    final Resource directly = resourceManager.createDirectly( url, MasterReport.class );
     final MasterReport report = (MasterReport) directly.getResource();
-    report.getPageFooter().setSticky(false);
-    report.getPageFooter().addElement(createLabel());
-    report.getPageFooter().setName("Master-Footer");
-    report.getReportHeader().getSubReport(0).getPageFooter().setName("Subreport-Footer");
-    report.getReportHeader().getSubReport(0).getPageFooter().setSticky(false);
-    report.getReportHeader().getSubReport(0).getReportHeader().addElement(createLabel("ReportHeader-label"));
+    report.getPageFooter().setSticky( false );
+    report.getPageFooter().addElement( createLabel() );
+    report.getPageFooter().setName( "Master-Footer" );
+    report.getReportHeader().getSubReport( 0 ).getPageFooter().setName( "Subreport-Footer" );
+    report.getReportHeader().getSubReport( 0 ).getPageFooter().setSticky( false );
+    report.getReportHeader().getSubReport( 0 ).getReportHeader().addElement( createLabel( "ReportHeader-label" ) );
 
     report.getReportConfiguration().setConfigProperty
-        ("org.pentaho.reporting.engine.classic.core.modules.output.pageable.xml.Encoding", "UTF-8");
+      ( "org.pentaho.reporting.engine.classic.core.modules.output.pageable.xml.Encoding", "UTF-8" );
 
-    LogicalPageBox logicalPageBox = DebugReportRunner.layoutPage(report, 0);
-    assertNull(MatchFactory.match(logicalPageBox.getFooterArea(), new FooterTextMatcher("Label")));
-    assertNotNull(MatchFactory.match(logicalPageBox.getFooterArea(), new FooterTextMatcher("XASDAS")));
+    LogicalPageBox logicalPageBox = DebugReportRunner.layoutPage( report, 0 );
+    assertNull( MatchFactory.match( logicalPageBox.getFooterArea(), new FooterTextMatcher( "Label" ) ) );
+    assertNotNull( MatchFactory.match( logicalPageBox.getFooterArea(), new FooterTextMatcher( "XASDAS" ) ) );
   }
 
-  public void testRunStickyMasterFooter() throws Exception
-  {
-    final URL url = getClass().getResource("Prd-2974-2.prpt");
-    assertNotNull(url);
+  public void testRunStickyMasterFooter() throws Exception {
+    final URL url = getClass().getResource( "Prd-2974-2.prpt" );
+    assertNotNull( url );
     final ResourceManager resourceManager = new ResourceManager();
     resourceManager.registerDefaults();
-    final Resource directly = resourceManager.createDirectly(url, MasterReport.class);
+    final Resource directly = resourceManager.createDirectly( url, MasterReport.class );
     final MasterReport report = (MasterReport) directly.getResource();
-    report.getPageFooter().setSticky(true);
-    report.getPageFooter().addElement(createLabel());
-    report.getPageFooter().setName("Master-Footer");
-    report.getReportHeader().getSubReport(0).getPageFooter().setName("Subreport-Footer");
-    report.getReportHeader().getSubReport(0).getPageFooter().setSticky(false);
-    report.getReportHeader().getSubReport(0).getReportHeader().addElement(createLabel("ReportHeader-label"));
+    report.getPageFooter().setSticky( true );
+    report.getPageFooter().addElement( createLabel() );
+    report.getPageFooter().setName( "Master-Footer" );
+    report.getReportHeader().getSubReport( 0 ).getPageFooter().setName( "Subreport-Footer" );
+    report.getReportHeader().getSubReport( 0 ).getPageFooter().setSticky( false );
+    report.getReportHeader().getSubReport( 0 ).getReportHeader().addElement( createLabel( "ReportHeader-label" ) );
     report.getReportConfiguration().setConfigProperty
-        ("org.pentaho.reporting.engine.classic.core.modules.output.pageable.xml.Encoding", "UTF-8");
+      ( "org.pentaho.reporting.engine.classic.core.modules.output.pageable.xml.Encoding", "UTF-8" );
 
-    LogicalPageBox logicalPageBox = DebugReportRunner.layoutPage(report, 0);
+    LogicalPageBox logicalPageBox = DebugReportRunner.layoutPage( report, 0 );
 
-    assertNull(MatchFactory.match(logicalPageBox.getFooterArea(), new FooterTextMatcher("Label")));
-    assertNotNull(MatchFactory.match(logicalPageBox.getFooterArea(), new FooterTextMatcher("XASDAS")));
+    assertNull( MatchFactory.match( logicalPageBox.getFooterArea(), new FooterTextMatcher( "Label" ) ) );
+    assertNotNull( MatchFactory.match( logicalPageBox.getFooterArea(), new FooterTextMatcher( "XASDAS" ) ) );
   }
 
-  private Element createLabel()
-  {
-    return createLabel("XASDAS");
+  private Element createLabel() {
+    return createLabel( "XASDAS" );
   }
 
-  private Element createLabel(final String text)
-  {
+  private Element createLabel( final String text ) {
     final Element element = new Element();
-    element.setElementType(LabelType.INSTANCE);
-    element.getStyle().setStyleProperty(ElementStyleKeys.MIN_HEIGHT, new Float(20));
-    element.getStyle().setStyleProperty(ElementStyleKeys.MIN_WIDTH, new Float(200));
-    element.setAttribute(AttributeNames.Core.NAMESPACE, AttributeNames.Core.VALUE, text);
+    element.setElementType( LabelType.INSTANCE );
+    element.getStyle().setStyleProperty( ElementStyleKeys.MIN_HEIGHT, new Float( 20 ) );
+    element.getStyle().setStyleProperty( ElementStyleKeys.MIN_WIDTH, new Float( 200 ) );
+    element.setAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.VALUE, text );
     return element;
   }
 
-  public void testTwoPageReport() throws Exception
-  {
-    final URL url = getClass().getResource("Prd-2974-2.prpt");
-    assertNotNull(url);
+  public void testTwoPageReport() throws Exception {
+    final URL url = getClass().getResource( "Prd-2974-2.prpt" );
+    assertNotNull( url );
     final ResourceManager resourceManager = new ResourceManager();
     resourceManager.registerDefaults();
-    final Resource directly = resourceManager.createDirectly(url, MasterReport.class);
+    final Resource directly = resourceManager.createDirectly( url, MasterReport.class );
     final MasterReport report = (MasterReport) directly.getResource();
-    report.getPageFooter().setSticky(false);
-    report.getPageFooter().addElement(createLabel("PageFooter-Label"));
-    report.getPageFooter().setName("Master-Footer");
-    report.getReportHeader().getSubReport(0).getPageFooter().setName("Subreport-Footer");
-    report.getReportHeader().getSubReport(0).getPageFooter().setSticky(true);
-    report.getReportHeader().getSubReport(0).getReportHeader().addElement(createLabel("ReportHeader-label"));
+    report.getPageFooter().setSticky( false );
+    report.getPageFooter().addElement( createLabel( "PageFooter-Label" ) );
+    report.getPageFooter().setName( "Master-Footer" );
+    report.getReportHeader().getSubReport( 0 ).getPageFooter().setName( "Subreport-Footer" );
+    report.getReportHeader().getSubReport( 0 ).getPageFooter().setSticky( true );
+    report.getReportHeader().getSubReport( 0 ).getReportHeader().addElement( createLabel( "ReportHeader-label" ) );
 
-    report.getReportFooter().addElement(createLabel("ReportFooter-label"));
-    report.getReportFooter().setPagebreakBeforePrint(true);
+    report.getReportFooter().addElement( createLabel( "ReportFooter-label" ) );
+    report.getReportFooter().setPagebreakBeforePrint( true );
 
     report.getReportConfiguration().setConfigProperty
-        ("org.pentaho.reporting.engine.classic.core.modules.output.pageable.xml.Encoding", "UTF-8");
+      ( "org.pentaho.reporting.engine.classic.core.modules.output.pageable.xml.Encoding", "UTF-8" );
 
 
-    LogicalPageBox logicalPageBox = DebugReportRunner.layoutPage(report, 0);
-    assertNotNull(MatchFactory.match(logicalPageBox.getFooterArea(), new FooterTextMatcher("Label")));
-    assertNull(MatchFactory.match(logicalPageBox.getFooterArea(), new FooterTextMatcher("PageFooter-Label")));
+    LogicalPageBox logicalPageBox = DebugReportRunner.layoutPage( report, 0 );
+    assertNotNull( MatchFactory.match( logicalPageBox.getFooterArea(), new FooterTextMatcher( "Label" ) ) );
+    assertNull( MatchFactory.match( logicalPageBox.getFooterArea(), new FooterTextMatcher( "PageFooter-Label" ) ) );
     // TESTBUG: this is not a true structural test at all.
   }
 

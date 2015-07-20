@@ -18,22 +18,21 @@
 package org.pentaho.reporting.engine.classic.core;
 
 public class ReportDataFactoryQueryTimeoutException extends ReportDataFactoryException {
-  
+
   /**
    * A report data factory exception is thrown whenever querying a datasource failed for timeout exception
-   *
    */
   public ReportDataFactoryQueryTimeoutException() {
-    super("Statement cancelled due to timeout or client request");
+    super( "Statement cancelled due to timeout or client request" );
   }
- 
-  
+
+
   public ReportDataFactoryQueryTimeoutException( String message ) {
     super( message );
   }
 
   /**
-   * 
+   *
    */
   private static final long serialVersionUID = -3461480070128356838L;
 

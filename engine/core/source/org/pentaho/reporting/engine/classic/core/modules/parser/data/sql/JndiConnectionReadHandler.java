@@ -32,15 +32,13 @@ import org.xml.sax.SAXException;
  * @author Thomas Morgner
  */
 public class JndiConnectionReadHandler extends AbstractXmlReadHandler
-    implements ConnectionReadHandler
-{
+  implements ConnectionReadHandler {
   private StringReadHandler pathReadHandler;
   private StringReadHandler usernameReadHandler;
   private StringReadHandler passwordReadHandler;
   private JndiConnectionProvider connectionProvider;
 
-  public JndiConnectionReadHandler()
-  {
+  public JndiConnectionReadHandler() {
   }
 
   /**
@@ -51,27 +49,22 @@ public class JndiConnectionReadHandler extends AbstractXmlReadHandler
    * @return the handler or null, if the tagname is invalid.
    * @throws SAXException if there is a parsing error.
    */
-  protected XmlReadHandler getHandlerForChild(final String uri,
-                                              final String tagName,
-                                              final Attributes atts)
-      throws SAXException
-  {
-    if (isSameNamespace(uri) == false)
-    {
+  protected XmlReadHandler getHandlerForChild( final String uri,
+                                               final String tagName,
+                                               final Attributes atts )
+    throws SAXException {
+    if ( isSameNamespace( uri ) == false ) {
       return null;
     }
-    if ("path".equals(tagName))
-    {
+    if ( "path".equals( tagName ) ) {
       pathReadHandler = new StringReadHandler();
       return pathReadHandler;
     }
-    if ("username".equals(tagName))
-    {
+    if ( "username".equals( tagName ) ) {
       usernameReadHandler = new StringReadHandler();
       return usernameReadHandler;
     }
-    if ("password".equals(tagName))
-    {
+    if ( "password".equals( tagName ) ) {
       passwordReadHandler = new PasswordReadHandler();
       return passwordReadHandler;
     }
@@ -83,20 +76,16 @@ public class JndiConnectionReadHandler extends AbstractXmlReadHandler
    *
    * @throws SAXException if there is a parsing error.
    */
-  protected void doneParsing() throws SAXException
-  {
+  protected void doneParsing() throws SAXException {
     final JndiConnectionProvider provider = new JndiConnectionProvider();
-    if (pathReadHandler != null)
-    {
-      provider.setConnectionPath(pathReadHandler.getResult());
+    if ( pathReadHandler != null ) {
+      provider.setConnectionPath( pathReadHandler.getResult() );
     }
-    if (usernameReadHandler != null)
-    {
-      provider.setUsername(usernameReadHandler.getResult());
+    if ( usernameReadHandler != null ) {
+      provider.setUsername( usernameReadHandler.getResult() );
     }
-    if (passwordReadHandler != null)
-    {
-      provider.setPassword(passwordReadHandler.getResult());
+    if ( passwordReadHandler != null ) {
+      provider.setPassword( passwordReadHandler.getResult() );
     }
     this.connectionProvider = provider;
   }
@@ -107,13 +96,11 @@ public class JndiConnectionReadHandler extends AbstractXmlReadHandler
    * @return the object.
    * @throws SAXException if there is a parsing error.
    */
-  public Object getObject() throws SAXException
-  {
+  public Object getObject() throws SAXException {
     return connectionProvider;
   }
 
-  public ConnectionProvider getProvider()
-  {
+  public ConnectionProvider getProvider() {
     return connectionProvider;
   }
 }

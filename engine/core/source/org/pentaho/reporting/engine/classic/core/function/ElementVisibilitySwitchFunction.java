@@ -41,8 +41,7 @@ import org.pentaho.reporting.engine.classic.core.style.ElementStyleKeys;
  * @deprecated Use the RowBandingFunction to modify the band's background color directly.
  */
 public class ElementVisibilitySwitchFunction extends AbstractFunction
-    implements PageEventListener, LayoutProcessorFunction
-{
+  implements PageEventListener, LayoutProcessorFunction {
   /**
    * The computed visibility value.
    */
@@ -81,8 +80,7 @@ public class ElementVisibilitySwitchFunction extends AbstractFunction
   /**
    * Default constructor.
    */
-  public ElementVisibilitySwitchFunction()
-  {
+  public ElementVisibilitySwitchFunction() {
     numberOfElements = 1;
     resetOnGroupStart = true;
     resetOnPageStart = true;
@@ -93,21 +91,16 @@ public class ElementVisibilitySwitchFunction extends AbstractFunction
    *
    * @param event the event.
    */
-  public void pageStarted(final ReportEvent event)
-  {
-    if (resetOnPageStart)
-    {
+  public void pageStarted( final ReportEvent event ) {
+    if ( resetOnPageStart ) {
       //pagebreak = false;
-      if (newPageState == null)
-      {
+      if ( newPageState == null ) {
         trigger = getInitialState();
-      }
-      else
-      {
+      } else {
         trigger = newPageState.booleanValue();
       }
       count = 0;
-      triggerVisibleState(event);
+      triggerVisibleState( event );
     }
   }
 
@@ -116,8 +109,7 @@ public class ElementVisibilitySwitchFunction extends AbstractFunction
    *
    * @param event The event.
    */
-  public void pageFinished(final ReportEvent event)
-  {
+  public void pageFinished( final ReportEvent event ) {
   }
 
   /**
@@ -126,8 +118,7 @@ public class ElementVisibilitySwitchFunction extends AbstractFunction
    *
    * @param event The event.
    */
-  public void reportInitialized(final ReportEvent event)
-  {
+  public void reportInitialized( final ReportEvent event ) {
     //pagebreak = false;
     trigger = !getInitialState();
     count = 0;
@@ -139,10 +130,8 @@ public class ElementVisibilitySwitchFunction extends AbstractFunction
    *
    * @param event Information about the event.
    */
-  public void itemsStarted(final ReportEvent event)
-  {
-    if (resetOnGroupStart)
-    {
+  public void itemsStarted( final ReportEvent event ) {
+    if ( resetOnGroupStart ) {
       // pagebreak = false;
       trigger = !getInitialState();
       count = 0;
@@ -155,9 +144,8 @@ public class ElementVisibilitySwitchFunction extends AbstractFunction
    *
    * @param event the report event.
    */
-  public void itemsAdvanced(final ReportEvent event)
-  {
-    triggerVisibleState(event);
+  public void itemsAdvanced( final ReportEvent event ) {
+    triggerVisibleState( event );
   }
 
   /**
@@ -166,26 +154,21 @@ public class ElementVisibilitySwitchFunction extends AbstractFunction
    *
    * @param event the current report event.
    */
-  private void triggerVisibleState(final ReportEvent event)
-  {
-    if ((count % numberOfElements) == 0)
-    {
-      trigger = (!trigger);
+  private void triggerVisibleState( final ReportEvent event ) {
+    if ( ( count % numberOfElements ) == 0 ) {
+      trigger = ( !trigger );
     }
     count += 1;
-    if (element == null)
-    {
+    if ( element == null ) {
       return;
     }
 
-    final ReportElement[] childs = event.getReport().getChildElementsByType(ItemBandType.INSTANCE);
-    for (int i = 0; i < childs.length; i++)
-    {
-      final ReportElement child = childs[i];
-      final ReportElement[] elements = child.getChildElementsByName(getElement());
-      for (int x = 0; x < elements.length; x++)
-      {
-        elements[x].getStyle().setStyleProperty(ElementStyleKeys.VISIBLE, trigger);
+    final ReportElement[] childs = event.getReport().getChildElementsByType( ItemBandType.INSTANCE );
+    for ( int i = 0; i < childs.length; i++ ) {
+      final ReportElement child = childs[ i ];
+      final ReportElement[] elements = child.getChildElementsByName( getElement() );
+      for ( int x = 0; x < elements.length; x++ ) {
+        elements[ x ].getStyle().setStyleProperty( ElementStyleKeys.VISIBLE, trigger );
       }
     }
   }
@@ -195,8 +178,7 @@ public class ElementVisibilitySwitchFunction extends AbstractFunction
    *
    * @return a row count.
    */
-  public int getNumberOfElements()
-  {
+  public int getNumberOfElements() {
     return numberOfElements;
   }
 
@@ -205,8 +187,7 @@ public class ElementVisibilitySwitchFunction extends AbstractFunction
    *
    * @param numberOfElements a row count.
    */
-  public void setNumberOfElements(final int numberOfElements)
-  {
+  public void setNumberOfElements( final int numberOfElements ) {
     this.numberOfElements = numberOfElements;
   }
 
@@ -216,8 +197,7 @@ public class ElementVisibilitySwitchFunction extends AbstractFunction
    * @return the initial value for the trigger.
    * @deprecated use getInitialState instead.
    */
-  public boolean getInitialTriggerValue()
-  {
+  public boolean getInitialTriggerValue() {
     return initialState;
   }
 
@@ -226,8 +206,7 @@ public class ElementVisibilitySwitchFunction extends AbstractFunction
    *
    * @return the initial value for the trigger.
    */
-  public boolean getInitialState()
-  {
+  public boolean getInitialState() {
     return initialState;
   }
 
@@ -236,8 +215,7 @@ public class ElementVisibilitySwitchFunction extends AbstractFunction
    *
    * @param initialState the initial value for the trigger.
    */
-  public void setInitialState(final boolean initialState)
-  {
+  public void setInitialState( final boolean initialState ) {
     this.initialState = initialState;
   }
 
@@ -246,10 +224,10 @@ public class ElementVisibilitySwitchFunction extends AbstractFunction
    * possible to define multiple elements with the same name to apply the modification to all of these elements.
    *
    * @param name The element name.
-   * @see org.pentaho.reporting.engine.classic.core.function.FunctionUtilities#findAllElements(org.pentaho.reporting.engine.classic.core.Band,String)
+   * @see org.pentaho.reporting.engine.classic.core.function.FunctionUtilities#findAllElements(org.pentaho.reporting
+   * .engine.classic.core.Band, String)
    */
-  public void setElement(final String name)
-  {
+  public void setElement( final String name ) {
     this.element = name;
   }
 
@@ -259,8 +237,7 @@ public class ElementVisibilitySwitchFunction extends AbstractFunction
    * @return The element name.
    * @see #setElement(String)
    */
-  public String getElement()
-  {
+  public String getElement() {
     return element;
   }
 
@@ -270,8 +247,7 @@ public class ElementVisibilitySwitchFunction extends AbstractFunction
    *
    * @return the state on new pages.
    */
-  public Boolean getNewPageState()
-  {
+  public Boolean getNewPageState() {
     return newPageState;
   }
 
@@ -281,8 +257,7 @@ public class ElementVisibilitySwitchFunction extends AbstractFunction
    *
    * @param newPageState the state on new pages or null to use the initialState.
    */
-  public void setNewPageState(final Boolean newPageState)
-  {
+  public void setNewPageState( final Boolean newPageState ) {
     this.newPageState = newPageState;
   }
 
@@ -291,14 +266,10 @@ public class ElementVisibilitySwitchFunction extends AbstractFunction
    *
    * @return the visibility of the element, either Boolean.TRUE or Boolean.FALSE.
    */
-  public Object getValue()
-  {
-    if (trigger)
-    {
+  public Object getValue() {
+    if ( trigger ) {
       return Boolean.TRUE;
-    }
-    else
-    {
+    } else {
       return Boolean.FALSE;
     }
   }

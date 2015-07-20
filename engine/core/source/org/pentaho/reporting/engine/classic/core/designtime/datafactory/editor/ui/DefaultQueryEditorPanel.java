@@ -17,8 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.core.designtime.datafactory.editor.ui;
 
-import javax.swing.JComponent;
-
 import org.fife.ui.rsyntaxtextarea.RSyntaxTextArea;
 import org.fife.ui.rsyntaxtextarea.SyntaxConstants;
 import org.fife.ui.rtextarea.RTextScrollPane;
@@ -27,81 +25,67 @@ import org.pentaho.reporting.engine.classic.core.designtime.datafactory.editor.m
 import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
 import org.pentaho.reporting.libraries.base.util.StringUtils;
 
-public class DefaultQueryEditorPanel extends QueryEditorPanel<String>
-{
-  private class QueryDocumentListener extends TextFieldBinding
-  {
-    protected void performUpdate()
-    {
+import javax.swing.*;
+
+public class DefaultQueryEditorPanel extends QueryEditorPanel<String> {
+  private class QueryDocumentListener extends TextFieldBinding {
+    protected void performUpdate() {
       QueryDialogModel<String> dialogModel = getDialogModel();
       final Query<String> selectedQuery = dialogModel.getSelectedQuery();
-      if (selectedQuery == null)
-      {
+      if ( selectedQuery == null ) {
         return;
       }
 
       String text = queryTextArea.getText();
-      if (StringUtils.isEmpty(text))
-      {
+      if ( StringUtils.isEmpty( text ) ) {
         text = null;
       }
-      if (ObjectUtilities.equal(text, selectedQuery.getQueryScript()))
-      {
+      if ( ObjectUtilities.equal( text, selectedQuery.getQueryScript() ) ) {
         return;
       }
 
-      dialogModel.updateSelectedQuery(selectedQuery.updateQuery(text));
+      dialogModel.updateSelectedQuery( selectedQuery.updateQuery( text ) );
     }
   }
 
   private RSyntaxTextArea queryTextArea;
 
-  public DefaultQueryEditorPanel(final QueryDialogModel<String> dialogModel)
-  {
-    super(dialogModel);
+  public DefaultQueryEditorPanel( final QueryDialogModel<String> dialogModel ) {
+    super( dialogModel );
   }
 
-  public RSyntaxTextArea getQueryTextArea()
-  {
+  public RSyntaxTextArea getQueryTextArea() {
     return queryTextArea;
   }
 
-  public String getSyntaxEditingStyle()
-  {
+  public String getSyntaxEditingStyle() {
     return getQueryTextArea().getSyntaxEditingStyle();
   }
 
-  public void setSyntaxEditingStyle(final String editingStyle)
-  {
-    getQueryTextArea().setSyntaxEditingStyle(editingStyle);
+  public void setSyntaxEditingStyle( final String editingStyle ) {
+    getQueryTextArea().setSyntaxEditingStyle( editingStyle );
   }
 
-  protected void initialize()
-  {
+  protected void initialize() {
     queryTextArea = new RSyntaxTextArea();
-    queryTextArea.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_SQL);
-    queryTextArea.setEnabled(false);
-    queryTextArea.getDocument().addDocumentListener(new QueryDocumentListener());
+    queryTextArea.setSyntaxEditingStyle( SyntaxConstants.SYNTAX_STYLE_SQL );
+    queryTextArea.setEnabled( false );
+    queryTextArea.getDocument().addDocumentListener( new QueryDocumentListener() );
   }
 
-  protected void updateSelectedQueryFromModel()
-  {
+  protected void updateSelectedQueryFromModel() {
     QueryDialogModel<String> dialogModel = getDialogModel();
     Query<String> selectedQuery = dialogModel.getSelectedQuery();
-    if (selectedQuery == null)
-    {
-      queryTextArea.setEnabled(false);
-      queryTextArea.setText(null);
-    }
-    else
-    {
-      queryTextArea.setEnabled(true);
-      queryTextArea.setText(selectedQuery.getQuery());
+    if ( selectedQuery == null ) {
+      queryTextArea.setEnabled( false );
+      queryTextArea.setText( null );
+    } else {
+      queryTextArea.setEnabled( true );
+      queryTextArea.setText( selectedQuery.getQuery() );
     }
   }
 
-  protected JComponent getQueryEditor()
-  {
-    return new RTextScrollPane(500, 300, queryTextArea, true);
+  protected JComponent getQueryEditor() {
+    return new RTextScrollPane( 500, 300, queryTextArea, true );
   }
 }

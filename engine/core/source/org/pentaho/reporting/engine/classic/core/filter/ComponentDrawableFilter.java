@@ -17,22 +17,21 @@
 
 package org.pentaho.reporting.engine.classic.core.filter;
 
-import java.awt.Component;
-import javax.swing.JFrame;
-
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.pentaho.reporting.engine.classic.core.ReportElement;
 import org.pentaho.reporting.engine.classic.core.function.ExpressionRuntime;
 import org.pentaho.reporting.engine.classic.core.util.ComponentDrawable;
 import org.pentaho.reporting.libraries.base.config.Configuration;
 
+import javax.swing.*;
+import java.awt.*;
+
 /**
  * A filter that wraps AWT- and Swing-components into a Drawable implementation.
  *
  * @author Thomas Morgner
  */
-public class ComponentDrawableFilter implements DataFilter
-{
+public class ComponentDrawableFilter implements DataFilter {
   /**
    * The datasource from where to read the urls.
    */
@@ -45,8 +44,7 @@ public class ComponentDrawableFilter implements DataFilter
   /**
    * Default constructor.
    */
-  public ComponentDrawableFilter()
-  {
+  public ComponentDrawableFilter() {
   }
 
   /**
@@ -57,62 +55,50 @@ public class ComponentDrawableFilter implements DataFilter
    * @param element
    * @return the value.
    */
-  public Object getValue(final ExpressionRuntime runtime, final ReportElement element)
-  {
-    if (ComponentDrawableFilter.isHeadless())
-    {
+  public Object getValue( final ExpressionRuntime runtime, final ReportElement element ) {
+    if ( ComponentDrawableFilter.isHeadless() ) {
       return null;
     }
 
-    if (runtime == null)
-    {
+    if ( runtime == null ) {
       return null;
     }
 
     final DataSource ds = getDataSource();
-    if (ds == null)
-    {
+    if ( ds == null ) {
       return null;
     }
-    final Object o = ds.getValue(runtime, element);
-    if (o == null)
-    {
+    final Object o = ds.getValue( runtime, element );
+    if ( o == null ) {
       return null;
     }
 
-    if (o instanceof Component == false)
-    {
+    if ( o instanceof Component == false ) {
       return null;
     }
 
 
     final Configuration config = runtime.getConfiguration();
     final ComponentDrawable cd;
-    final String drawMode = config.getConfigProperty("org.pentaho.reporting.engine.classic.core.ComponentDrawableMode",
-        "shared");
-    if ("private".equals(drawMode))
-    {
+    final String drawMode = config.getConfigProperty( "org.pentaho.reporting.engine.classic.core.ComponentDrawableMode",
+      "shared" );
+    if ( "private".equals( drawMode ) ) {
       cd = new ComponentDrawable();
-    }
-    else if ("synchronized".equals(drawMode))
-    {
+    } else if ( "synchronized".equals( drawMode ) ) {
       cd = new ComponentDrawable();
-      cd.setPaintSynchronized(true);
-    }
-    else
-    {
-      if (frame == null)
-      {
+      cd.setPaintSynchronized( true );
+    } else {
+      if ( frame == null ) {
         frame = new JFrame();
       }
-      cd = new ComponentDrawable(frame);
-      cd.setPaintSynchronized(true);
+      cd = new ComponentDrawable( frame );
+      cd.setPaintSynchronized( true );
     }
 
     final String allowOwnPeer = config.getConfigProperty(
-        "org.pentaho.reporting.engine.classic.core.AllowOwnPeerForComponentDrawable");
-    cd.setAllowOwnPeer("true".equals(allowOwnPeer));
-    cd.setComponent((Component) o);
+      "org.pentaho.reporting.engine.classic.core.AllowOwnPeerForComponentDrawable" );
+    cd.setAllowOwnPeer( "true".equals( allowOwnPeer ) );
+    cd.setComponent( (Component) o );
     return cd;
   }
 
@@ -122,10 +108,9 @@ public class ComponentDrawableFilter implements DataFilter
    *
    * @return true, if the system is headless, false otherwise.
    */
-  protected static boolean isHeadless()
-  {
+  protected static boolean isHeadless() {
     final Configuration config = ClassicEngineBoot.getInstance().getGlobalConfig();
-    return "true".equals(config.getConfigProperty("java.awt.headless", "false"));
+    return "true".equals( config.getConfigProperty( "java.awt.headless", "false" ) );
   }
 
   /**
@@ -134,11 +119,9 @@ public class ComponentDrawableFilter implements DataFilter
    * @return the clone.
    * @throws CloneNotSupportedException if an error occured.
    */
-  public ComponentDrawableFilter clone() throws CloneNotSupportedException
-  {
+  public ComponentDrawableFilter clone() throws CloneNotSupportedException {
     final ComponentDrawableFilter il = (ComponentDrawableFilter) super.clone();
-    if (source != null)
-    {
+    if ( source != null ) {
       il.source = source.clone();
     }
     return il;
@@ -149,8 +132,7 @@ public class ComponentDrawableFilter implements DataFilter
    *
    * @return The datasource.
    */
-  public DataSource getDataSource()
-  {
+  public DataSource getDataSource() {
     return source;
   }
 
@@ -159,8 +141,7 @@ public class ComponentDrawableFilter implements DataFilter
    *
    * @param ds The data source.
    */
-  public void setDataSource(final DataSource ds)
-  {
+  public void setDataSource( final DataSource ds ) {
     this.source = ds;
   }
 

@@ -17,17 +17,16 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.gui.common;
 
-import java.util.Locale;
-
 import org.pentaho.reporting.libraries.base.config.Configuration;
+
+import java.util.Locale;
 
 /**
  * Creation-Date: 16.11.2006, 17:06:38
  *
  * @author Thomas Morgner
  */
-public interface GuiContext
-{
+public interface GuiContext {
   public Locale getLocale();
 
   public IconTheme getIconTheme();

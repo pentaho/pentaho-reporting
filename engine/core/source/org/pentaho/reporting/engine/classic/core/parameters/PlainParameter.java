@@ -22,16 +22,13 @@ package org.pentaho.reporting.engine.classic.core.parameters;
  *
  * @author Thomas Morgner
  */
-public class PlainParameter extends AbstractParameter
-{
-  public PlainParameter(final String name)
-  {
-    super(name);
+public class PlainParameter extends AbstractParameter {
+  public PlainParameter( final String name ) {
+    super( name );
   }
 
-  public PlainParameter(final String name, final Class valueType)
-  {
-    super(name, valueType);
+  public PlainParameter( final String name, final Class valueType ) {
+    super( name, valueType );
   }
 
 

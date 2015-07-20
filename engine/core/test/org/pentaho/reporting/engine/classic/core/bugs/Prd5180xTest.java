@@ -28,22 +28,20 @@ import org.pentaho.reporting.engine.classic.core.layout.model.RenderNode;
 import org.pentaho.reporting.engine.classic.core.testsupport.DebugReportRunner;
 import org.pentaho.reporting.engine.classic.core.testsupport.selector.MatchFactory;
 
-public class Prd5180xTest
-{
+public class Prd5180xTest {
   @Before
-  public void setUp() throws Exception
-  {
+  public void setUp() throws Exception {
     ClassicEngineBoot.getInstance().start();
   }
 
   @Test
-  public void testReport() throws Exception
-  {
-    MasterReport report = DebugReportRunner.parseGoldenSampleReport("Prd-5180-simple.prpt");
-    LogicalPageBox logicalPageBox = DebugReportRunner.layoutPage(report, 2);
-    RenderNode[] elementsByNodeType = MatchFactory.findElementsByNodeType(logicalPageBox, LayoutNodeTypes.TYPE_NODE_FINISHEDNODE);
+  public void testReport() throws Exception {
+    MasterReport report = DebugReportRunner.parseGoldenSampleReport( "Prd-5180-simple.prpt" );
+    LogicalPageBox logicalPageBox = DebugReportRunner.layoutPage( report, 2 );
+    RenderNode[] elementsByNodeType =
+      MatchFactory.findElementsByNodeType( logicalPageBox, LayoutNodeTypes.TYPE_NODE_FINISHEDNODE );
 
     // Buggy report bleeds finished render nodes due to illegal shifting of content.
-    Assert.assertEquals(0, elementsByNodeType.length);
+    Assert.assertEquals( 0, elementsByNodeType.length );
   }
 }

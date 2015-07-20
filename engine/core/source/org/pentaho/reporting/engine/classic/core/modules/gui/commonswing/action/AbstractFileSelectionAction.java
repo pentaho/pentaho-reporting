@@ -17,21 +17,19 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.gui.commonswing.action;
 
-import java.awt.Component;
-import java.io.File;
-import javax.swing.AbstractAction;
-import javax.swing.JFileChooser;
-
 import org.pentaho.reporting.libraries.base.util.FilesystemFilter;
 import org.pentaho.reporting.libraries.base.util.StringUtils;
+
+import javax.swing.*;
+import java.awt.*;
+import java.io.File;
 
 /**
  * A base class for all file operations. This implementation provides all methods to let the user select a file.
  *
  * @author Thomas Morgner
  */
-public abstract class AbstractFileSelectionAction extends AbstractAction
-{
+public abstract class AbstractFileSelectionAction extends AbstractAction {
   /**
    * The FileChooser that is used to perform the selection.
    */
@@ -46,8 +44,7 @@ public abstract class AbstractFileSelectionAction extends AbstractAction
    *
    * @param parent the parent
    */
-  protected AbstractFileSelectionAction(final Component parent)
-  {
+  protected AbstractFileSelectionAction( final Component parent ) {
     this.parent = parent;
   }
 
@@ -70,9 +67,8 @@ public abstract class AbstractFileSelectionAction extends AbstractAction
    *
    * @return the working directory.
    */
-  protected File getCurrentDirectory()
-  {
-    return new File(".");
+  protected File getCurrentDirectory() {
+    return new File( "." );
   }
 
   /**
@@ -84,27 +80,23 @@ public abstract class AbstractFileSelectionAction extends AbstractAction
    *                        should be used.
    * @return the selected and approved file or null, if the user canceled the operation
    */
-  protected File performSelectFile(final File selectedFile,
-                                   final int dialogType,
-                                   final boolean appendExtension)
-  {
-    if (this.fileChooser == null)
-    {
+  protected File performSelectFile( final File selectedFile,
+                                    final int dialogType,
+                                    final boolean appendExtension ) {
+    if ( this.fileChooser == null ) {
       this.fileChooser = createFileChooser();
     }
 
-    this.fileChooser.setSelectedFile(selectedFile);
-    this.fileChooser.setDialogType(dialogType);
-    final int option = this.fileChooser.showDialog(this.parent, null);
-    if (option == JFileChooser.APPROVE_OPTION)
-    {
+    this.fileChooser.setSelectedFile( selectedFile );
+    this.fileChooser.setDialogType( dialogType );
+    final int option = this.fileChooser.showDialog( this.parent, null );
+    if ( option == JFileChooser.APPROVE_OPTION ) {
       final File selFile = this.fileChooser.getSelectedFile();
       String selFileName = selFile.getAbsolutePath();
-      if (StringUtils.endsWithIgnoreCase(selFileName, getFileExtension()) == false)
-      {
+      if ( StringUtils.endsWithIgnoreCase( selFileName, getFileExtension() ) == false ) {
         selFileName = selFileName + getFileExtension();
       }
-      return new File(selFileName);
+      return new File( selFileName );
     }
     return null;
   }
@@ -114,12 +106,11 @@ public abstract class AbstractFileSelectionAction extends AbstractAction
    *
    * @return the initialized file chooser.
    */
-  protected JFileChooser createFileChooser()
-  {
+  protected JFileChooser createFileChooser() {
     final JFileChooser fc = new JFileChooser();
-    fc.addChoosableFileFilter(new FilesystemFilter(getFileExtension(), getFileDescription()));
-    fc.setMultiSelectionEnabled(false);
-    fc.setCurrentDirectory(getCurrentDirectory());
+    fc.addChoosableFileFilter( new FilesystemFilter( getFileExtension(), getFileDescription() ) );
+    fc.setMultiSelectionEnabled( false );
+    fc.setCurrentDirectory( getCurrentDirectory() );
     return fc;
   }
 

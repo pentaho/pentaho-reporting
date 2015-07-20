@@ -20,11 +20,9 @@ package org.pentaho.reporting.engine.classic.core.modules.parser.bundle.layout.e
 import org.pentaho.reporting.engine.classic.core.filter.types.bands.PageHeaderType;
 import org.pentaho.reporting.libraries.xmlns.parser.ParseException;
 
-public class PageHeaderReadHandler extends BandReadHandler
-{
+public class PageHeaderReadHandler extends BandReadHandler {
   public PageHeaderReadHandler()
-      throws ParseException
-  {
-    super(PageHeaderType.INSTANCE);
+    throws ParseException {
+    super( PageHeaderType.INSTANCE );
   }
 }

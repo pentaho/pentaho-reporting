@@ -22,14 +22,11 @@ package org.pentaho.reporting.engine.classic.core.layout.model;
  *
  * @author Thomas Morgner
  */
-public final class WatermarkAreaBox extends PageAreaBox
-{
-  public WatermarkAreaBox()
-  {
+public final class WatermarkAreaBox extends PageAreaBox {
+  public WatermarkAreaBox() {
   }
 
-  public int getNodeType()
-  {
+  public int getNodeType() {
     return LayoutNodeTypes.TYPE_BOX_WATERMARK;
   }
 }

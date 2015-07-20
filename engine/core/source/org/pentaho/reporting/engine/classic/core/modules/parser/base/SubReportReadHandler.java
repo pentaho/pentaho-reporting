@@ -25,9 +25,8 @@ import org.pentaho.reporting.libraries.xmlns.parser.XmlReadHandler;
  *
  * @author Thomas Morgner
  */
-public interface SubReportReadHandler extends XmlReadHandler
-{
+public interface SubReportReadHandler extends XmlReadHandler {
   public SubReport getSubReport();
 
-  public void setDisableRootTagWarning(final boolean disableWarning);
+  public void setDisableRootTagWarning( final boolean disableWarning );
 }

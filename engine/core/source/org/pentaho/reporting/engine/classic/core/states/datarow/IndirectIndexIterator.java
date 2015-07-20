@@ -17,25 +17,21 @@
 
 package org.pentaho.reporting.engine.classic.core.states.datarow;
 
-import java.util.Iterator;
-
 import org.pentaho.reporting.engine.classic.core.function.Expression;
 
-class IndirectIndexIterator<T extends Expression> implements Iterator<T>
-{
+import java.util.Iterator;
+
+class IndirectIndexIterator<T extends Expression> implements Iterator<T> {
   private int[] indices;
   private Expression[] expressions;
   private int index;
 
-  IndirectIndexIterator(final int[] indices,
-                        final Expression[] expressions)
-  {
-    if (indices == null)
-    {
+  IndirectIndexIterator( final int[] indices,
+                         final Expression[] expressions ) {
+    if ( indices == null ) {
       throw new IllegalStateException();
     }
-    if (expressions == null)
-    {
+    if ( expressions == null ) {
       throw new IllegalStateException();
     }
 
@@ -44,21 +40,18 @@ class IndirectIndexIterator<T extends Expression> implements Iterator<T>
     this.index = 0;
   }
 
-  public boolean hasNext()
-  {
+  public boolean hasNext() {
     return index < indices.length;
   }
 
-  public T next()
-  {
-    final int indexForExpression = indices[index];
-    final T value = (T) expressions[indexForExpression];
+  public T next() {
+    final int indexForExpression = indices[ index ];
+    final T value = (T) expressions[ indexForExpression ];
     index += 1;
     return value;
   }
 
-  public void remove()
-  {
+  public void remove() {
     throw new UnsupportedOperationException();
   }
 }

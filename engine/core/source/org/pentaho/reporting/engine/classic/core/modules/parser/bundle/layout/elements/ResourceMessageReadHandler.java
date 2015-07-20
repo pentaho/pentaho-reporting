@@ -21,10 +21,8 @@ import org.pentaho.reporting.engine.classic.core.filter.types.ResourceMessageTyp
 import org.pentaho.reporting.libraries.xmlns.parser.ParseException;
 
 @Deprecated
-public class ResourceMessageReadHandler extends AbstractElementReadHandler
-{
-  public ResourceMessageReadHandler() throws ParseException
-  {
-    super(ResourceMessageType.INSTANCE);
+public class ResourceMessageReadHandler extends AbstractElementReadHandler {
+  public ResourceMessageReadHandler() throws ParseException {
+    super( ResourceMessageType.INSTANCE );
   }
 }

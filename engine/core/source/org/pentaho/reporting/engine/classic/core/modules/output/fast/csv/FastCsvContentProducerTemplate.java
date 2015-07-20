@@ -17,9 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.output.fast.csv;
 
-import java.io.IOException;
-import java.io.OutputStream;
-
 import org.pentaho.reporting.engine.classic.core.Band;
 import org.pentaho.reporting.engine.classic.core.ReportProcessingException;
 import org.pentaho.reporting.engine.classic.core.function.ExpressionRuntime;
@@ -29,31 +26,30 @@ import org.pentaho.reporting.engine.classic.core.modules.output.fast.template.Fa
 import org.pentaho.reporting.engine.classic.core.modules.output.fast.template.FormattedDataBuilder;
 import org.pentaho.reporting.engine.classic.core.modules.output.table.base.SheetLayout;
 
-public class FastCsvContentProducerTemplate extends AbstractContentProducerTemplate
-{
+import java.io.IOException;
+import java.io.OutputStream;
+
+public class FastCsvContentProducerTemplate extends AbstractContentProducerTemplate {
   private final OutputStream outputStream;
   private String encoding;
 
-  public FastCsvContentProducerTemplate(final SheetLayout sharedSheetLayout,
-                                        final OutputStream outputStream,
-                                        final String encoding)
-  {
-    super(sharedSheetLayout);
+  public FastCsvContentProducerTemplate( final SheetLayout sharedSheetLayout,
+                                         final OutputStream outputStream,
+                                         final String encoding ) {
+    super( sharedSheetLayout );
     this.outputStream = outputStream;
     this.encoding = encoding;
   }
 
-  protected void writeContent(final Band band,
-                            final ExpressionRuntime runtime,
-                            final FormattedDataBuilder messageFormatSupport)
-      throws IOException, ReportProcessingException, ContentProcessingException
-  {
-    messageFormatSupport.compute(band, runtime, outputStream);
+  protected void writeContent( final Band band,
+                               final ExpressionRuntime runtime,
+                               final FormattedDataBuilder messageFormatSupport )
+    throws IOException, ReportProcessingException, ContentProcessingException {
+    messageFormatSupport.compute( band, runtime, outputStream );
   }
 
-  protected FastExportTemplateProducer createTemplateProducer()
-  {
-    return new CsvTemplateProducer(getMetaData(), getSharedSheetLayout(), encoding);
+  protected FastExportTemplateProducer createTemplateProducer() {
+    return new CsvTemplateProducer( getMetaData(), getSharedSheetLayout(), encoding );
   }
 
 }

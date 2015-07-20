@@ -29,92 +29,72 @@ import org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableW
  *
  * @author Thomas Morgner
  */
-public class CSVOutputProcessorMetaData extends AbstractOutputProcessorMetaData
-{
+public class CSVOutputProcessorMetaData extends AbstractOutputProcessorMetaData {
   public static final int PAGINATION_NONE = 0;
   public static final int PAGINATION_MANUAL = 1;
   public static final int PAGINATION_FULL = 2;
   private int paginationMode;
 
-  public CSVOutputProcessorMetaData(final int paginationMode)
-  {
+  public CSVOutputProcessorMetaData( final int paginationMode ) {
     this.paginationMode = paginationMode;
   }
 
-  public void initialize(final Configuration configuration)
-  {
-    super.initialize(configuration);
+  public void initialize( final Configuration configuration ) {
+    super.initialize( configuration );
 
     final String localStrict = configuration.getConfigProperty
-        ("org.pentaho.reporting.engine.classic.core.modules.output.table.csv.StrictLayout");
-    if (localStrict != null)
-    {
-      if ("true".equals(localStrict))
-      {
-        addFeature(AbstractTableOutputProcessor.STRICT_LAYOUT);
+      ( "org.pentaho.reporting.engine.classic.core.modules.output.table.csv.StrictLayout" );
+    if ( localStrict != null ) {
+      if ( "true".equals( localStrict ) ) {
+        addFeature( AbstractTableOutputProcessor.STRICT_LAYOUT );
       }
-    }
-    else
-    {
+    } else {
       final String globalStrict = configuration.getConfigProperty(
-          "org.pentaho.reporting.engine.classic.core.modules.output.table.base.StrictLayout");
-      if ("true".equals(globalStrict))
-      {
-        addFeature(AbstractTableOutputProcessor.STRICT_LAYOUT);
+        "org.pentaho.reporting.engine.classic.core.modules.output.table.base.StrictLayout" );
+      if ( "true".equals( globalStrict ) ) {
+        addFeature( AbstractTableOutputProcessor.STRICT_LAYOUT );
       }
     }
 
-    if ("true".equals(configuration.getConfigProperty(
-        "org.pentaho.reporting.engine.classic.core.modules.output.table.base.UsePageBands")))
-    {
-      addFeature(OutputProcessorFeature.PAGE_SECTIONS);
+    if ( "true".equals( configuration.getConfigProperty(
+      "org.pentaho.reporting.engine.classic.core.modules.output.table.base.UsePageBands" ) ) ) {
+      addFeature( OutputProcessorFeature.PAGE_SECTIONS );
     }
-    if ("true".equals(configuration.getConfigProperty(
-        "org.pentaho.reporting.engine.classic.core.modules.output.table.csv.UsePageBands")))
-    {
-      addFeature(OutputProcessorFeature.PAGE_SECTIONS);
+    if ( "true".equals( configuration.getConfigProperty(
+      "org.pentaho.reporting.engine.classic.core.modules.output.table.csv.UsePageBands" ) ) ) {
+      addFeature( OutputProcessorFeature.PAGE_SECTIONS );
     }
 
-    if (paginationMode == CSVOutputProcessorMetaData.PAGINATION_FULL)
-    {
-      addFeature(OutputProcessorFeature.PAGEBREAKS);
-    }
-    else if (paginationMode == CSVOutputProcessorMetaData.PAGINATION_MANUAL)
-    {
-      addFeature(OutputProcessorFeature.PAGEBREAKS);
-      addFeature(OutputProcessorFeature.ITERATIVE_RENDERING);
-      addFeature(OutputProcessorFeature.UNALIGNED_PAGEBANDS);
-    }
-    else
-    {
-      addFeature(OutputProcessorFeature.ITERATIVE_RENDERING);
-      addFeature(OutputProcessorFeature.UNALIGNED_PAGEBANDS);
+    if ( paginationMode == CSVOutputProcessorMetaData.PAGINATION_FULL ) {
+      addFeature( OutputProcessorFeature.PAGEBREAKS );
+    } else if ( paginationMode == CSVOutputProcessorMetaData.PAGINATION_MANUAL ) {
+      addFeature( OutputProcessorFeature.PAGEBREAKS );
+      addFeature( OutputProcessorFeature.ITERATIVE_RENDERING );
+      addFeature( OutputProcessorFeature.UNALIGNED_PAGEBANDS );
+    } else {
+      addFeature( OutputProcessorFeature.ITERATIVE_RENDERING );
+      addFeature( OutputProcessorFeature.UNALIGNED_PAGEBANDS );
     }
 
-    if ("true".equals(configuration.getConfigProperty(
-        "org.pentaho.reporting.engine.classic.core.modules.output.table.csv.AssumeOverflowX")))
-    {
-      addFeature(OutputProcessorFeature.ASSUME_OVERFLOW_X);
+    if ( "true".equals( configuration.getConfigProperty(
+      "org.pentaho.reporting.engine.classic.core.modules.output.table.csv.AssumeOverflowX" ) ) ) {
+      addFeature( OutputProcessorFeature.ASSUME_OVERFLOW_X );
     }
-    if ("true".equals(configuration.getConfigProperty(
-        "org.pentaho.reporting.engine.classic.core.modules.output.table.csv.AssumeOverflowY")))
-    {
-      addFeature(OutputProcessorFeature.ASSUME_OVERFLOW_Y);
+    if ( "true".equals( configuration.getConfigProperty(
+      "org.pentaho.reporting.engine.classic.core.modules.output.table.csv.AssumeOverflowY" ) ) ) {
+      addFeature( OutputProcessorFeature.ASSUME_OVERFLOW_Y );
     }
   }
 
-  public boolean isContentSupported(final Object content)
-  {
-    if (content instanceof ImageContainer)
-    {
+  public boolean isContentSupported( final Object content ) {
+    if ( content instanceof ImageContainer ) {
       return false;
     }
-    if (content instanceof DrawableWrapper)
-    {
+    if ( content instanceof DrawableWrapper ) {
       return false;
     }
     // we accept shapes, although they are not printable as they are regularily used for layouting ..
-    return super.isContentSupported(content);
+    return super.isContentSupported( content );
   }
 
   /**
@@ -124,8 +104,7 @@ public class CSVOutputProcessorMetaData extends AbstractOutputProcessorMetaData
    *
    * @return the export descriptor.
    */
-  public String getExportDescriptor()
-  {
+  public String getExportDescriptor() {
     return "table/csv";
   }
 }

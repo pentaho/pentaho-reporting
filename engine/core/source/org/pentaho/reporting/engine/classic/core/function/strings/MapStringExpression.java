@@ -17,11 +17,11 @@
 
 package org.pentaho.reporting.engine.classic.core.function.strings;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-
 import org.pentaho.reporting.engine.classic.core.function.AbstractExpression;
 import org.pentaho.reporting.engine.classic.core.function.Expression;
+
+import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * Maps a string read from a column into an other string. The possible mappings are given as (key, text) pairs. If the
@@ -31,8 +31,7 @@ import org.pentaho.reporting.engine.classic.core.function.Expression;
  *
  * @author Thomas Morgner
  */
-public class MapStringExpression extends AbstractExpression
-{
+public class MapStringExpression extends AbstractExpression {
   /**
    * The field from where to read the key value.
    */
@@ -61,8 +60,7 @@ public class MapStringExpression extends AbstractExpression
   /**
    * Default Constructor.
    */
-  public MapStringExpression()
-  {
+  public MapStringExpression() {
     keys = new ArrayList();
     values = new ArrayList();
   }
@@ -73,8 +71,7 @@ public class MapStringExpression extends AbstractExpression
    *
    * @return the field name.
    */
-  public String getField()
-  {
+  public String getField() {
     return field;
   }
 
@@ -83,8 +80,7 @@ public class MapStringExpression extends AbstractExpression
    *
    * @param field the field name.
    */
-  public void setField(final String field)
-  {
+  public void setField( final String field ) {
     this.field = field;
   }
 
@@ -93,8 +89,7 @@ public class MapStringExpression extends AbstractExpression
    *
    * @return the null-value.
    */
-  public String getNullValue()
-  {
+  public String getNullValue() {
     return nullValue;
   }
 
@@ -103,8 +98,7 @@ public class MapStringExpression extends AbstractExpression
    *
    * @param nullValue the null-value.
    */
-  public void setNullValue(final String nullValue)
-  {
+  public void setNullValue( final String nullValue ) {
     this.nullValue = nullValue;
   }
 
@@ -113,8 +107,7 @@ public class MapStringExpression extends AbstractExpression
    *
    * @return the fallback value.
    */
-  public String getFallbackValue()
-  {
+  public String getFallbackValue() {
     return fallbackValue;
   }
 
@@ -123,8 +116,7 @@ public class MapStringExpression extends AbstractExpression
    *
    * @param fallbackValue the fallback value.
    */
-  public void setFallbackValue(final String fallbackValue)
-  {
+  public void setFallbackValue( final String fallbackValue ) {
     this.fallbackValue = fallbackValue;
   }
 
@@ -135,15 +127,11 @@ public class MapStringExpression extends AbstractExpression
    * @param index the index position of the key in the list.
    * @param key   the key value.
    */
-  public void setKey(final int index, final String key)
-  {
-    if (keys.size() == index)
-    {
-      keys.add(key);
-    }
-    else
-    {
-      keys.set(index, key);
+  public void setKey( final int index, final String key ) {
+    if ( keys.size() == index ) {
+      keys.add( key );
+    } else {
+      keys.set( index, key );
     }
   }
 
@@ -153,9 +141,8 @@ public class MapStringExpression extends AbstractExpression
    * @param index the index position of the key in the list.
    * @return the key value.
    */
-  public String getKey(final int index)
-  {
-    return (String) keys.get(index);
+  public String getKey( final int index ) {
+    return (String) keys.get( index );
   }
 
   /**
@@ -163,8 +150,7 @@ public class MapStringExpression extends AbstractExpression
    *
    * @return the number of keys.
    */
-  public int getKeyCount()
-  {
+  public int getKeyCount() {
     return keys.size();
   }
 
@@ -173,9 +159,8 @@ public class MapStringExpression extends AbstractExpression
    *
    * @return all defined keys.
    */
-  public String[] getKey()
-  {
-    return (String[]) keys.toArray(new String[keys.size()]);
+  public String[] getKey() {
+    return (String[]) keys.toArray( new String[ keys.size() ] );
   }
 
   /**
@@ -183,10 +168,9 @@ public class MapStringExpression extends AbstractExpression
    *
    * @param keys all defined keys.
    */
-  public void setKey(final String[] keys)
-  {
+  public void setKey( final String[] keys ) {
     this.keys.clear();
-    this.keys.addAll(Arrays.asList(keys));
+    this.keys.addAll( Arrays.asList( keys ) );
   }
 
   /**
@@ -196,15 +180,11 @@ public class MapStringExpression extends AbstractExpression
    * @param index the index of the entry.
    * @param value the text that is returned if the key is selected.
    */
-  public void setText(final int index, final String value)
-  {
-    if (values.size() == index)
-    {
-      values.add(value);
-    }
-    else
-    {
-      values.set(index, value);
+  public void setText( final int index, final String value ) {
+    if ( values.size() == index ) {
+      values.add( value );
+    } else {
+      values.set( index, value );
     }
   }
 
@@ -215,9 +195,8 @@ public class MapStringExpression extends AbstractExpression
    * @param index the index of the entry.
    * @return the text that is returned if the key is selected.
    */
-  public String getText(final int index)
-  {
-    return (String) values.get(index);
+  public String getText( final int index ) {
+    return (String) values.get( index );
   }
 
   /**
@@ -225,8 +204,7 @@ public class MapStringExpression extends AbstractExpression
    *
    * @return the number of texts defined.
    */
-  public int getTextCount()
-  {
+  public int getTextCount() {
     return values.size();
   }
 
@@ -235,9 +213,8 @@ public class MapStringExpression extends AbstractExpression
    *
    * @return all texts.
    */
-  public String[] getText()
-  {
-    return (String[]) values.toArray(new String[values.size()]);
+  public String[] getText() {
+    return (String[]) values.toArray( new String[ values.size() ] );
   }
 
   /**
@@ -245,10 +222,9 @@ public class MapStringExpression extends AbstractExpression
    *
    * @param texts the new text-values.
    */
-  public void setText(final String[] texts)
-  {
+  public void setText( final String[] texts ) {
     this.values.clear();
-    this.values.addAll(Arrays.asList(texts));
+    this.values.addAll( Arrays.asList( texts ) );
   }
 
   /**
@@ -256,8 +232,7 @@ public class MapStringExpression extends AbstractExpression
    *
    * @return true, if the key comparison is case-insensitive, false otherwise.
    */
-  public boolean isIgnoreCase()
-  {
+  public boolean isIgnoreCase() {
     return ignoreCase;
   }
 
@@ -266,8 +241,7 @@ public class MapStringExpression extends AbstractExpression
    *
    * @param ignoreCase true, if the key comparison is case-insensitive, false otherwise.
    */
-  public void setIgnoreCase(final boolean ignoreCase)
-  {
+  public void setIgnoreCase( final boolean ignoreCase ) {
     this.ignoreCase = ignoreCase;
   }
 
@@ -277,8 +251,7 @@ public class MapStringExpression extends AbstractExpression
    *
    * @return a copy of this function.
    */
-  public Expression getInstance()
-  {
+  public Expression getInstance() {
     final MapStringExpression co = (MapStringExpression) super.getInstance();
     co.values = (ArrayList) values.clone();
     co.keys = (ArrayList) keys.clone();
@@ -290,36 +263,27 @@ public class MapStringExpression extends AbstractExpression
    *
    * @return the value of the function.
    */
-  public Object getValue()
-  {
-    final Object raw = getDataRow().get(getField());
-    if (raw == null)
-    {
+  public Object getValue() {
+    final Object raw = getDataRow().get( getField() );
+    if ( raw == null ) {
       return getNullValue();
     }
-    final String text = String.valueOf(raw);
-    final int length = Math.min(keys.size(), values.size());
-    for (int i = 0; i < length; i++)
-    {
-      final String key = (String) keys.get(i);
-      if (isIgnoreCase())
-      {
-        if (text.equalsIgnoreCase(key))
-        {
-          return values.get(i);
+    final String text = String.valueOf( raw );
+    final int length = Math.min( keys.size(), values.size() );
+    for ( int i = 0; i < length; i++ ) {
+      final String key = (String) keys.get( i );
+      if ( isIgnoreCase() ) {
+        if ( text.equalsIgnoreCase( key ) ) {
+          return values.get( i );
         }
-      }
-      else
-      {
-        if (text.equals(key))
-        {
-          return values.get(i);
+      } else {
+        if ( text.equals( key ) ) {
+          return values.get( i );
         }
       }
     }
     final String fallbackValue = getFallbackValue();
-    if (fallbackValue != null)
-    {
+    if ( fallbackValue != null ) {
       return fallbackValue;
     }
     return raw;

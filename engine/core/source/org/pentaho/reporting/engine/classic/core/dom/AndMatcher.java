@@ -19,40 +19,34 @@ package org.pentaho.reporting.engine.classic.core.dom;
 
 import org.pentaho.reporting.engine.classic.core.ReportElement;
 
-public class AndMatcher implements NodeMatcher
-{
+public class AndMatcher implements NodeMatcher {
   private NodeMatcher left;
   private NodeMatcher right;
 
-  public AndMatcher(final NodeMatcher left, final NodeMatcher right)
-  {
+  public AndMatcher( final NodeMatcher left, final NodeMatcher right ) {
     this.left = left;
     this.right = right;
   }
 
-  public boolean matches(final MatcherContext context, final ReportElement node)
-  {
-    if (left.matches(context, node) == false)
-    {
+  public boolean matches( final MatcherContext context, final ReportElement node ) {
+    if ( left.matches( context, node ) == false ) {
       return false;
     }
 
-    if (right.matches(context, node) == false)
-    {
+    if ( right.matches( context, node ) == false ) {
       return false;
     }
 
     return true;
   }
 
-  public String toString()
-  {
+  public String toString() {
     final StringBuilder b = new StringBuilder();
-    b.append("AndMatcher(");
-    b.append(left);
-    b.append(";");
-    b.append(right);
-    b.append(")");
+    b.append( "AndMatcher(" );
+    b.append( left );
+    b.append( ";" );
+    b.append( right );
+    b.append( ")" );
     return b.toString();
   }
 }

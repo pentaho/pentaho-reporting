@@ -17,8 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.core.bugs;
 
-import java.net.URL;
-
 import junit.framework.TestCase;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
@@ -31,22 +29,20 @@ import org.pentaho.reporting.engine.classic.core.testsupport.DebugReportRunner;
 import org.pentaho.reporting.libraries.resourceloader.Resource;
 import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 
+import java.net.URL;
+
 /**
- * As we fire a page-finished event whenever we are about to paginate a page, this test is no
- * longer very sane. It still validates that the report-init event is fired before any of the
- * page events.
- *
- * We have to fire page-finished before each layout calculation to update the page-footer contents
- * to the latest data version.
+ * As we fire a page-finished event whenever we are about to paginate a page, this test is no longer very sane. It still
+ * validates that the report-init event is fired before any of the page events.
+ * <p/>
+ * We have to fire page-finished before each layout calculation to update the page-footer contents to the latest data
+ * version.
  */
-public class Prd2054Test extends TestCase
-{
-  private static class ValidateEventOrderFunction extends AbstractFunction implements PageEventListener
-  {
+public class Prd2054Test extends TestCase {
+  private static class ValidateEventOrderFunction extends AbstractFunction implements PageEventListener {
     private boolean pageOpen;
 
-    private ValidateEventOrderFunction()
-    {
+    private ValidateEventOrderFunction() {
     }
 
     /**
@@ -54,8 +50,7 @@ public class Prd2054Test extends TestCase
      *
      * @param event The event.
      */
-    public void pageStarted(final ReportEvent event)
-    {
+    public void pageStarted( final ReportEvent event ) {
       pageOpen = true;
     }
 
@@ -64,9 +59,8 @@ public class Prd2054Test extends TestCase
      *
      * @param event The event.
      */
-    public void pageFinished(final ReportEvent event)
-    {
-//      pageOpen = false;
+    public void pageFinished( final ReportEvent event ) {
+      //      pageOpen = false;
     }
 
     /**
@@ -76,8 +70,7 @@ public class Prd2054Test extends TestCase
      *
      * @return the value of the function.
      */
-    public Object getValue()
-    {
+    public Object getValue() {
       return pageOpen;
     }
 
@@ -87,9 +80,8 @@ public class Prd2054Test extends TestCase
      *
      * @param event The event.
      */
-    public void reportInitialized(final ReportEvent event)
-    {
-      assertFalse(pageOpen);
+    public void reportInitialized( final ReportEvent event ) {
+      assertFalse( pageOpen );
     }
 
     /**
@@ -97,9 +89,8 @@ public class Prd2054Test extends TestCase
      *
      * @param event the event.
      */
-    public void reportStarted(final ReportEvent event)
-    {
-      assertTrue(pageOpen);
+    public void reportStarted( final ReportEvent event ) {
+      assertTrue( pageOpen );
     }
 
     /**
@@ -107,9 +98,8 @@ public class Prd2054Test extends TestCase
      *
      * @param event the event.
      */
-    public void reportFinished(final ReportEvent event)
-    {
-      assertTrue(pageOpen);
+    public void reportFinished( final ReportEvent event ) {
+      assertTrue( pageOpen );
     }
 
     /**
@@ -117,9 +107,8 @@ public class Prd2054Test extends TestCase
      *
      * @param event the event.
      */
-    public void groupStarted(final ReportEvent event)
-    {
-      assertTrue(pageOpen);
+    public void groupStarted( final ReportEvent event ) {
+      assertTrue( pageOpen );
     }
 
     /**
@@ -127,9 +116,8 @@ public class Prd2054Test extends TestCase
      *
      * @param event the event.
      */
-    public void groupFinished(final ReportEvent event)
-    {
-      assertTrue(pageOpen);
+    public void groupFinished( final ReportEvent event ) {
+      assertTrue( pageOpen );
     }
 
     /**
@@ -137,9 +125,8 @@ public class Prd2054Test extends TestCase
      *
      * @param event the event.
      */
-    public void itemsAdvanced(final ReportEvent event)
-    {
-      assertTrue(pageOpen);
+    public void itemsAdvanced( final ReportEvent event ) {
+      assertTrue( pageOpen );
     }
 
     /**
@@ -148,9 +135,8 @@ public class Prd2054Test extends TestCase
      *
      * @param event The event.
      */
-    public void itemsStarted(final ReportEvent event)
-    {
-      assertTrue(pageOpen);
+    public void itemsStarted( final ReportEvent event ) {
+      assertTrue( pageOpen );
     }
 
     /**
@@ -159,20 +145,18 @@ public class Prd2054Test extends TestCase
      *
      * @param event The event.
      */
-    public void itemsFinished(final ReportEvent event)
-    {
-      assertTrue(pageOpen);
+    public void itemsFinished( final ReportEvent event ) {
+      assertTrue( pageOpen );
     }
 
     /**
-     * Receives notification that report generation has completed, the report footer was printed, no more output is done.
-     * This is a helper event to shut down the output service.
+     * Receives notification that report generation has completed, the report footer was printed, no more output is
+     * done. This is a helper event to shut down the output service.
      *
      * @param event The event.
      */
-    public void reportDone(final ReportEvent event)
-    {
-      assertTrue(pageOpen);
+    public void reportDone( final ReportEvent event ) {
+      assertTrue( pageOpen );
     }
 
     /**
@@ -180,41 +164,35 @@ public class Prd2054Test extends TestCase
      *
      * @return the level.
      */
-    public int getDependencyLevel()
-    {
+    public int getDependencyLevel() {
       return LayoutProcess.LEVEL_PAGINATE;
     }
   }
 
-  public Prd2054Test()
-  {
+  public Prd2054Test() {
   }
 
-  public Prd2054Test(final String name)
-  {
-    super(name);
+  public Prd2054Test( final String name ) {
+    super( name );
   }
 
-  protected void setUp() throws Exception
-  {
+  protected void setUp() throws Exception {
     ClassicEngineBoot.getInstance().start();
   }
 
   /**
-   *
    * @throws Exception
    */
-  public void testRunSample() throws Exception
-  {
-    final URL url = getClass().getResource("Prd-2054.prpt");
-    assertNotNull(url);
+  public void testRunSample() throws Exception {
+    final URL url = getClass().getResource( "Prd-2054.prpt" );
+    assertNotNull( url );
     final ResourceManager resourceManager = new ResourceManager();
     resourceManager.registerDefaults();
-    final Resource directly = resourceManager.createDirectly(url, MasterReport.class);
+    final Resource directly = resourceManager.createDirectly( url, MasterReport.class );
     final MasterReport report = (MasterReport) directly.getResource();
-    report.addExpression(new EventMonitorFunction());
-    report.addExpression(new ValidateEventOrderFunction());
+    report.addExpression( new EventMonitorFunction() );
+    report.addExpression( new ValidateEventOrderFunction() );
 
-    DebugReportRunner.createPDF(report);
+    DebugReportRunner.createPDF( report );
   }
 }

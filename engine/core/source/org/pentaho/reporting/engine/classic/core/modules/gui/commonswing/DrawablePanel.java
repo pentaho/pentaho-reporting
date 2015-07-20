@@ -17,51 +17,39 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.gui.commonswing;
 
-import java.awt.Dimension;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.geom.Rectangle2D;
-import javax.swing.JPanel;
-
 import org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.geom.Rectangle2D;
 
 /**
  * A component, that accepts a drawable and which draws that drawable.
  *
  * @author Thomas Morgner
  */
-public class DrawablePanel extends JPanel
-{
+public class DrawablePanel extends JPanel {
   private DrawableWrapper drawable;
 
-  public DrawablePanel()
-  {
-    setOpaque(false);
+  public DrawablePanel() {
+    setOpaque( false );
   }
 
-  public DrawableWrapper getDrawable()
-  {
+  public DrawableWrapper getDrawable() {
     return drawable;
   }
 
-  public void setDrawableAsRawObject(final Object o)
-  {
-    if (o == null)
-    {
-      setDrawable(null);
-    }
-    else if (o instanceof DrawableWrapper)
-    {
-      setDrawable((DrawableWrapper) o);
-    }
-    else
-    {
-      setDrawable(new DrawableWrapper(o));
+  public void setDrawableAsRawObject( final Object o ) {
+    if ( o == null ) {
+      setDrawable( null );
+    } else if ( o instanceof DrawableWrapper ) {
+      setDrawable( (DrawableWrapper) o );
+    } else {
+      setDrawable( new DrawableWrapper( o ) );
     }
   }
 
-  public void setDrawable(final DrawableWrapper drawable)
-  {
+  public void setDrawable( final DrawableWrapper drawable ) {
     this.drawable = drawable;
     revalidate();
     repaint();
@@ -76,11 +64,9 @@ public class DrawablePanel extends JPanel
    * @see #setPreferredSize
    * @see javax.swing.plaf.ComponentUI
    */
-  public Dimension getPreferredSize()
-  {
-    if (drawable == null)
-    {
-      return new Dimension(0, 0);
+  public Dimension getPreferredSize() {
+    if ( drawable == null ) {
+      return new Dimension( 0, 0 );
     }
     return drawable.getPreferredSize();
   }
@@ -94,11 +80,9 @@ public class DrawablePanel extends JPanel
    * @see #setMinimumSize
    * @see javax.swing.plaf.ComponentUI
    */
-  public Dimension getMinimumSize()
-  {
-    if (drawable == null)
-    {
-      return new Dimension(0, 0);
+  public Dimension getMinimumSize() {
+    if ( drawable == null ) {
+      return new Dimension( 0, 0 );
     }
     return drawable.getPreferredSize();
   }
@@ -115,10 +99,8 @@ public class DrawablePanel extends JPanel
    * @return true if this component is completely opaque
    * @see #setOpaque
    */
-  public boolean isOpaque()
-  {
-    if (drawable == null)
-    {
+  public boolean isOpaque() {
+    if ( drawable == null ) {
       return false;
     }
     return super.isOpaque();
@@ -143,18 +125,16 @@ public class DrawablePanel extends JPanel
    * @see #paint
    * @see javax.swing.plaf.ComponentUI
    */
-  protected void paintComponent(final Graphics g)
-  {
-    super.paintComponent(g);
-    if (drawable == null)
-    {
+  protected void paintComponent( final Graphics g ) {
+    super.paintComponent( g );
+    if ( drawable == null ) {
       return;
     }
 
     final Graphics2D g2 = (Graphics2D) g.create
-        (0, 0, getWidth(), getHeight());
+      ( 0, 0, getWidth(), getHeight() );
 
-    drawable.draw(g2, new Rectangle2D.Double(0, 0, getWidth(), getHeight()));
+    drawable.draw( g2, new Rectangle2D.Double( 0, 0, getWidth(), getHeight() ) );
     g2.dispose();
   }
 }

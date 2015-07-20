@@ -22,13 +22,11 @@ package org.pentaho.reporting.engine.classic.core.function;
  *
  * @author Thomas Morgner
  */
-public class FunctionProcessingException extends RuntimeException
-{
+public class FunctionProcessingException extends RuntimeException {
   /**
    * Default constructor.
    */
-  public FunctionProcessingException()
-  {
+  public FunctionProcessingException() {
   }
 
   /**
@@ -37,9 +35,8 @@ public class FunctionProcessingException extends RuntimeException
    * @param message the exception message.
    * @param ex      the parent exception.
    */
-  public FunctionProcessingException(final String message, final Exception ex)
-  {
-    super(message, ex);
+  public FunctionProcessingException( final String message, final Exception ex ) {
+    super( message, ex );
   }
 
   /**
@@ -47,8 +44,7 @@ public class FunctionProcessingException extends RuntimeException
    *
    * @param message the exception message.
    */
-  public FunctionProcessingException(final String message)
-  {
-    super(message);
+  public FunctionProcessingException( final String message ) {
+    super( message );
   }
 }

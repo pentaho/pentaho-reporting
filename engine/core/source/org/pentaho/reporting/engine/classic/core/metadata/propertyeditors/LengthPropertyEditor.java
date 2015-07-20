@@ -17,21 +17,17 @@
 
 package org.pentaho.reporting.engine.classic.core.metadata.propertyeditors;
 
-import java.awt.Component;
-import java.awt.Graphics;
-import java.awt.Rectangle;
+import java.awt.*;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.beans.PropertyEditor;
 
-public class LengthPropertyEditor implements PropertyEditor
-{
+public class LengthPropertyEditor implements PropertyEditor {
   private PropertyChangeSupport propertyChangeSupport;
   private Float value;
 
-  public LengthPropertyEditor()
-  {
-    this.propertyChangeSupport = new PropertyChangeSupport(this);
+  public LengthPropertyEditor() {
+    this.propertyChangeSupport = new PropertyChangeSupport( this );
   }
 
 
@@ -42,30 +38,25 @@ public class LengthPropertyEditor implements PropertyEditor
    * @param value The new target object to be edited.  Note that this object should not be modified by the
    *              PropertyEditor, rather the PropertyEditor should create a new object to hold any modified value.
    */
-  public void setValue(final Object value)
-  {
+  public void setValue( final Object value ) {
     final Object oldValue = this.value;
-    if (value instanceof Float == false)
-    {
+    if ( value instanceof Float == false ) {
       this.value = null;
-    }
-    else
-    {
+    } else {
       this.value = (Float) value;
     }
 
-    propertyChangeSupport.firePropertyChange(null, oldValue, this.value);
+    propertyChangeSupport.firePropertyChange( null, oldValue, this.value );
   }
 
   /**
    * Gets the property value.
    *
    * @return The value of the property.  Primitive types such as "int" will be wrapped as the corresponding object type
-   *         such as "java.lang.Integer".
+   * such as "java.lang.Integer".
    */
 
-  public Object getValue()
-  {
+  public Object getValue() {
     return value;
   }
 
@@ -75,8 +66,7 @@ public class LengthPropertyEditor implements PropertyEditor
    * @return True if the class will honor the paintValue method.
    */
 
-  public boolean isPaintable()
-  {
+  public boolean isPaintable() {
     return false;
   }
 
@@ -92,8 +82,7 @@ public class LengthPropertyEditor implements PropertyEditor
    * @param gfx Graphics object to paint into.
    * @param box Rectangle within graphics object into which we should paint.
    */
-  public void paintValue(final Graphics gfx, final Rectangle box)
-  {
+  public void paintValue( final Graphics gfx, final Rectangle box ) {
 
   }
 
@@ -114,10 +103,9 @@ public class LengthPropertyEditor implements PropertyEditor
    * <code>javax.swing.Box.createRigidArea(new java.awt.Dimension(0, 5))</code> </ul>
    *
    * @return a fragment of Java code representing an initializer for the current value. It should not contain a
-   *         semi-colon ('<code>;</code>') to end the expression.
+   * semi-colon ('<code>;</code>') to end the expression.
    */
-  public String getJavaInitializationString()
-  {
+  public String getJavaInitializationString() {
     return null;
   }
 
@@ -125,23 +113,19 @@ public class LengthPropertyEditor implements PropertyEditor
    * Gets the property value as text.
    *
    * @return The property value as a human editable string. <p>   Returns null if the value can't be expressed as an
-   *         editable string. <p>   If a non-null value is returned, then the PropertyEditor should be prepared to parse
-   *         that string back in setAsText().
+   * editable string. <p>   If a non-null value is returned, then the PropertyEditor should be prepared to parse that
+   * string back in setAsText().
    */
-  public String getAsText()
-  {
-    if (value == null)
-    {
+  public String getAsText() {
+    if ( value == null ) {
       return null;
     }
-    if (value.longValue() == Long.MAX_VALUE ||
-        value.longValue() == Long.MIN_VALUE)
-    {
+    if ( value.longValue() == Long.MAX_VALUE ||
+      value.longValue() == Long.MIN_VALUE ) {
       return "auto";
     }
 
-    if (value.floatValue() < 0)
-    {
+    if ( value.floatValue() < 0 ) {
       return -value.floatValue() + "%";
     }
     return value.toString();
@@ -153,40 +137,30 @@ public class LengthPropertyEditor implements PropertyEditor
    *
    * @param text The string to be parsed.
    */
-  public void setAsText(final String text) throws IllegalArgumentException
-  {
-    setValue(parseRelativeFloat(text));
+  public void setAsText( final String text ) throws IllegalArgumentException {
+    setValue( parseRelativeFloat( text ) );
   }
 
 
-  public static Float parseRelativeFloat(final String value)
-  {
-    if (value == null)
-    {
+  public static Float parseRelativeFloat( final String value ) {
+    if ( value == null ) {
       return null;
     }
-    if ("auto".equalsIgnoreCase(value))
-    {
-      return new Float(Long.MIN_VALUE);
+    if ( "auto".equalsIgnoreCase( value ) ) {
+      return new Float( Long.MIN_VALUE );
     }
 
-    try
-    {
+    try {
       final String tvalue = value.trim();
-      if (tvalue.length() > 0 && tvalue.charAt(tvalue.length() - 1) == '%')
-      {
-        final String number = tvalue.substring(0, tvalue.length() - 1);
-        final float f = Float.parseFloat(number.trim());
-        return new Float(-f);
+      if ( tvalue.length() > 0 && tvalue.charAt( tvalue.length() - 1 ) == '%' ) {
+        final String number = tvalue.substring( 0, tvalue.length() - 1 );
+        final float f = Float.parseFloat( number.trim() );
+        return new Float( -f );
+      } else {
+        final float f = Float.parseFloat( tvalue );
+        return new Float( f );
       }
-      else
-      {
-        final float f = Float.parseFloat(tvalue);
-        return new Float(f);
-      }
-    }
-    catch (NumberFormatException nfe)
-    {
+    } catch ( NumberFormatException nfe ) {
       return null;
     }
   }
@@ -199,8 +173,7 @@ public class LengthPropertyEditor implements PropertyEditor
    *
    * @return The tag values for this property.  May be null if this property cannot be represented as a tagged value.
    */
-  public String[] getTags()
-  {
+  public String[] getTags() {
     return null;
   }
 
@@ -213,11 +186,10 @@ public class LengthPropertyEditor implements PropertyEditor
    * it may put it in its own individual dialog, or ...
    *
    * @return A java.awt.Component that will allow a human to directly edit the current property value.  May be null if
-   *         this is not supported.
+   * this is not supported.
    */
 
-  public Component getCustomEditor()
-  {
+  public Component getCustomEditor() {
     return null;
   }
 
@@ -226,8 +198,7 @@ public class LengthPropertyEditor implements PropertyEditor
    *
    * @return True if the propertyEditor can provide a custom editor.
    */
-  public boolean supportsCustomEditor()
-  {
+  public boolean supportsCustomEditor() {
     return false;
   }
 
@@ -238,9 +209,8 @@ public class LengthPropertyEditor implements PropertyEditor
    *
    * @param listener An object to be invoked when a PropertyChange event is fired.
    */
-  public void addPropertyChangeListener(final PropertyChangeListener listener)
-  {
-    propertyChangeSupport.addPropertyChangeListener(listener);
+  public void addPropertyChangeListener( final PropertyChangeListener listener ) {
+    propertyChangeSupport.addPropertyChangeListener( listener );
   }
 
   /**
@@ -248,8 +218,7 @@ public class LengthPropertyEditor implements PropertyEditor
    *
    * @param listener The PropertyChange listener to be removed.
    */
-  public void removePropertyChangeListener(final PropertyChangeListener listener)
-  {
-    propertyChangeSupport.removePropertyChangeListener(listener);
+  public void removePropertyChangeListener( final PropertyChangeListener listener ) {
+    propertyChangeSupport.removePropertyChangeListener( listener );
   }
 }

@@ -17,36 +17,31 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.parser.data.external;
 
-import org.pentaho.reporting.libraries.xmlns.parser.AbstractXmlReadHandler;
-import org.pentaho.reporting.engine.classic.core.modules.parser.base.DataFactoryReadHandler;
 import org.pentaho.reporting.engine.classic.core.DataFactory;
 import org.pentaho.reporting.engine.classic.core.ExternalDataFactory;
+import org.pentaho.reporting.engine.classic.core.modules.parser.base.DataFactoryReadHandler;
+import org.pentaho.reporting.libraries.xmlns.parser.AbstractXmlReadHandler;
 import org.xml.sax.SAXException;
 
 public class ExternalDataSourceReadHandler extends AbstractXmlReadHandler
-    implements DataFactoryReadHandler
-{
+  implements DataFactoryReadHandler {
   private ExternalDataFactory externalDataFactory;
 
-  public ExternalDataSourceReadHandler()
-  {
+  public ExternalDataSourceReadHandler() {
     externalDataFactory = new ExternalDataFactory();
   }
 
   /**
-   * Returns the object for this element or null, if this element does
-   * not create an object.
+   * Returns the object for this element or null, if this element does not create an object.
    *
    * @return the object.
    * @throws org.xml.sax.SAXException if an parser error occured.
    */
-  public Object getObject() throws SAXException
-  {
+  public Object getObject() throws SAXException {
     return getDataFactory();
   }
 
-  public DataFactory getDataFactory()
-  {
+  public DataFactory getDataFactory() {
     return externalDataFactory;
   }
 }

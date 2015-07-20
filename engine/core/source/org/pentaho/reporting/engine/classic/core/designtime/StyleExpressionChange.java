@@ -17,49 +17,42 @@
 
 package org.pentaho.reporting.engine.classic.core.designtime;
 
-import org.pentaho.reporting.engine.classic.core.style.StyleKey;
 import org.pentaho.reporting.engine.classic.core.function.Expression;
+import org.pentaho.reporting.engine.classic.core.style.StyleKey;
 
 /**
  * Simple bean-like class for holding all the information about an attribute change.
-*
-* @author Thomas Morgner.
-*/
-public class StyleExpressionChange implements Change
-{
+ *
+ * @author Thomas Morgner.
+ */
+public class StyleExpressionChange implements Change {
   private StyleKey styleKey;
   private Expression oldValue;
   private Expression newValue;
 
-  public StyleExpressionChange(final StyleKey styleKey, final Expression oldValue, final Expression newValue)
-  {
+  public StyleExpressionChange( final StyleKey styleKey, final Expression oldValue, final Expression newValue ) {
     this.styleKey = styleKey;
     this.oldValue = oldValue;
     this.newValue = newValue;
   }
 
-  public StyleKey getStyleKey()
-  {
+  public StyleKey getStyleKey() {
     return styleKey;
   }
 
-  public Object getOldValue()
-  {
+  public Object getOldValue() {
     return oldValue;
   }
 
-  public Expression getOldExpression()
-  {
+  public Expression getOldExpression() {
     return oldValue;
   }
 
-  public Object getNewValue()
-  {
+  public Object getNewValue() {
     return newValue;
   }
 
-  public Expression getNewExpression()
-  {
+  public Expression getNewExpression() {
     return newValue;
   }
 }

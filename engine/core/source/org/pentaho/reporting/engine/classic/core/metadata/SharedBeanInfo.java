@@ -23,52 +23,41 @@ import java.beans.Introspector;
 import java.beans.PropertyDescriptor;
 import java.util.HashMap;
 
-public class SharedBeanInfo
-{
+public class SharedBeanInfo {
   private Class beanClass;
   private BeanInfo beanInfo;
-  private HashMap<String,PropertyDescriptor> propertyDescriptors;
+  private HashMap<String, PropertyDescriptor> propertyDescriptors;
 
-  public SharedBeanInfo(final Class beanClass)
-  {
+  public SharedBeanInfo( final Class beanClass ) {
     this.beanClass = beanClass;
   }
 
-  public Class getBeanClass()
-  {
+  public Class getBeanClass() {
     return beanClass;
   }
 
-  public BeanInfo getBeanInfo()
-  {
-    if (beanInfo == null)
-    {
+  public BeanInfo getBeanInfo() {
+    if ( beanInfo == null ) {
       this.propertyDescriptors = new HashMap<String, PropertyDescriptor>();
-      try
-      {
-        beanInfo = Introspector.getBeanInfo(beanClass);
+      try {
+        beanInfo = Introspector.getBeanInfo( beanClass );
         final PropertyDescriptor[] descriptors = beanInfo.getPropertyDescriptors();
-        for (int i = 0; i < descriptors.length; i++)
-        {
-          final PropertyDescriptor descriptor = descriptors[i];
-          propertyDescriptors.put(descriptor.getName(), descriptor);
+        for ( int i = 0; i < descriptors.length; i++ ) {
+          final PropertyDescriptor descriptor = descriptors[ i ];
+          propertyDescriptors.put( descriptor.getName(), descriptor );
         }
-      }
-      catch (IntrospectionException e)
-      {
-        throw new IllegalStateException("Cannot introspect specified " + beanClass);
+      } catch ( IntrospectionException e ) {
+        throw new IllegalStateException( "Cannot introspect specified " + beanClass );
       }
     }
     return beanInfo;
   }
 
-  public PropertyDescriptor getPropertyDescriptor(final String name)
-  {
-    if (beanInfo == null)
-    {
+  public PropertyDescriptor getPropertyDescriptor( final String name ) {
+    if ( beanInfo == null ) {
       // initialize propery map ..
       getBeanInfo();
     }
-    return propertyDescriptors.get(name);
+    return propertyDescriptors.get( name );
   }
 }

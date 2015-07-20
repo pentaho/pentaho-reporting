@@ -17,20 +17,19 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.output.pageable.plaintext.driver;
 
+import org.pentaho.reporting.engine.classic.core.modules.output.pageable.plaintext.helper.EncodingUtilities;
+import org.pentaho.reporting.engine.classic.core.util.PageFormatFactory;
+
 import java.awt.print.Paper;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 
-import org.pentaho.reporting.engine.classic.core.modules.output.pageable.plaintext.helper.EncodingUtilities;
-import org.pentaho.reporting.engine.classic.core.util.PageFormatFactory;
-
 /**
  * This printer driver will ignore all TextChunk encodings, as it makes no sense to have more than one encoding type in
  * a plain text file.
  */
-public class TextFilePrinterDriver implements PrinterDriver
-{
+public class TextFilePrinterDriver implements PrinterDriver {
   private OutputStream out;
   private char[] endOfLine;
   private char[] endOfPage;
@@ -42,34 +41,29 @@ public class TextFilePrinterDriver implements PrinterDriver
 
   private int borderLeft;
 
-  public TextFilePrinterDriver(final OutputStream out,
-                               final float charsPerInch,
-                               final float linesPerInch)
-  {
-    this(out, charsPerInch, linesPerInch, false);
+  public TextFilePrinterDriver( final OutputStream out,
+                                final float charsPerInch,
+                                final float linesPerInch ) {
+    this( out, charsPerInch, linesPerInch, false );
   }
 
-  public TextFilePrinterDriver(final OutputStream out,
-                               final float charsPerInch,
-                               final float linesPerInch,
-                               final boolean unixEndOfLine)
-  {
+  public TextFilePrinterDriver( final OutputStream out,
+                                final float charsPerInch,
+                                final float linesPerInch,
+                                final boolean unixEndOfLine ) {
     this.out = out;
     this.charsPerInch = charsPerInch;
     this.linesPerInch = linesPerInch;
-    if (unixEndOfLine == false)
-    {
-      this.endOfLine = new char[]{PrinterDriverCommands.CARRIAGE_RETURN,
-          PrinterDriverCommands.LINE_FEED};
-      this.endOfPage = new char[]{PrinterDriverCommands.CARRIAGE_RETURN,
-          PrinterDriverCommands.LINE_FEED,
-          PrinterDriverCommands.FORM_FEED};
-    }
-    else
-    {
-      this.endOfLine = new char[]{PrinterDriverCommands.LINE_FEED};
-      this.endOfPage = new char[]{PrinterDriverCommands.LINE_FEED,
-          PrinterDriverCommands.FORM_FEED};
+    if ( unixEndOfLine == false ) {
+      this.endOfLine = new char[] { PrinterDriverCommands.CARRIAGE_RETURN,
+        PrinterDriverCommands.LINE_FEED };
+      this.endOfPage = new char[] { PrinterDriverCommands.CARRIAGE_RETURN,
+        PrinterDriverCommands.LINE_FEED,
+        PrinterDriverCommands.FORM_FEED };
+    } else {
+      this.endOfLine = new char[] { PrinterDriverCommands.LINE_FEED };
+      this.endOfPage = new char[] { PrinterDriverCommands.LINE_FEED,
+        PrinterDriverCommands.FORM_FEED };
     }
     this.firstPage = true;
   }
@@ -80,10 +74,9 @@ public class TextFilePrinterDriver implements PrinterDriver
    * @param overflow
    * @throws java.io.IOException if an IOError occures.
    */
-  public void endLine(final boolean overflow)
-      throws IOException
-  {
-    getEncodingUtilities(defaultEncoding).writeEncodedText(endOfLine, out);
+  public void endLine( final boolean overflow )
+    throws IOException {
+    getEncodingUtilities( defaultEncoding ).writeEncodedText( endOfLine, out );
   }
 
   /**
@@ -92,10 +85,9 @@ public class TextFilePrinterDriver implements PrinterDriver
    * @param overflow
    * @throws java.io.IOException if there was an IOError while writing the command
    */
-  public void endPage(final boolean overflow)
-      throws IOException
-  {
-    getEncodingUtilities(defaultEncoding).writeEncodedText(endOfPage, out);
+  public void endPage( final boolean overflow )
+    throws IOException {
+    getEncodingUtilities( defaultEncoding ).writeEncodedText( endOfPage, out );
   }
 
   /**
@@ -104,8 +96,7 @@ public class TextFilePrinterDriver implements PrinterDriver
    * @throws java.io.IOException if an IOError occured.
    */
   public void flush()
-      throws IOException
-  {
+    throws IOException {
     out.flush();
   }
 
@@ -114,8 +105,7 @@ public class TextFilePrinterDriver implements PrinterDriver
    *
    * @return the default character width in CPI.
    */
-  public float getCharactersPerInch()
-  {
+  public float getCharactersPerInch() {
     return charsPerInch;
   }
 
@@ -124,8 +114,7 @@ public class TextFilePrinterDriver implements PrinterDriver
    *
    * @return the default line height.
    */
-  public float getLinesPerInch()
-  {
+  public float getLinesPerInch() {
     return linesPerInch;
   }
 
@@ -136,11 +125,10 @@ public class TextFilePrinterDriver implements PrinterDriver
    * @param chunk the chunk that should be written
    * @throws java.io.IOException if an IO error occured.
    */
-  public void printChunk(final PlaintextDataChunk chunk)
-      throws IOException
-  {
-    final String text = chunk.getText().substring(0, chunk.getWidth());
-    getEncodingUtilities(defaultEncoding).writeEncodedText(text, out);
+  public void printChunk( final PlaintextDataChunk chunk )
+    throws IOException {
+    final String text = chunk.getText().substring( 0, chunk.getWidth() );
+    getEncodingUtilities( defaultEncoding ).writeEncodedText( text, out );
   }
 
   /**
@@ -148,13 +136,11 @@ public class TextFilePrinterDriver implements PrinterDriver
    *
    * @throws java.io.IOException if an IOError occured.
    */
-  public void printEmptyChunk(final int count)
-      throws IOException
-  {
-    final EncodingUtilities encodingUtilities = getEncodingUtilities(defaultEncoding);
-    for (int i = 0; i < count; i++)
-    {
-      out.write(encodingUtilities.getSpace());
+  public void printEmptyChunk( final int count )
+    throws IOException {
+    final EncodingUtilities encodingUtilities = getEncodingUtilities( defaultEncoding );
+    for ( int i = 0; i < count; i++ ) {
+      out.write( encodingUtilities.getSpace() );
     }
   }
 
@@ -163,10 +149,9 @@ public class TextFilePrinterDriver implements PrinterDriver
    *
    * @param raw the content that should be printed.
    */
-  public void printRaw(final byte[] raw)
-      throws IOException
-  {
-    out.write(raw);
+  public void printRaw( final byte[] raw )
+    throws IOException {
+    out.write( raw );
   }
 
   /**
@@ -175,9 +160,8 @@ public class TextFilePrinterDriver implements PrinterDriver
    * @throws java.io.IOException if an IOError occures.
    */
   public void startLine()
-      throws IOException
-  {
-    printEmptyChunk(borderLeft);
+    throws IOException {
+    printEmptyChunk( borderLeft );
   }
 
   /**
@@ -185,68 +169,57 @@ public class TextFilePrinterDriver implements PrinterDriver
    *
    * @throws java.io.IOException if there was an IOError while writing the command
    */
-  public void startPage(final Paper paper, final String encoding)
-      throws IOException
-  {
+  public void startPage( final Paper paper, final String encoding )
+    throws IOException {
     this.defaultEncoding = encoding;
 
-    if (firstPage)
-    {
-      final EncodingUtilities encodingUtilities = getEncodingUtilities(encoding);
-      out.write(encodingUtilities.getEncodingHeader());
+    if ( firstPage ) {
+      final EncodingUtilities encodingUtilities = getEncodingUtilities( encoding );
+      out.write( encodingUtilities.getEncodingHeader() );
       firstPage = false;
     }
 
     final PageFormatFactory fact = PageFormatFactory.getInstance();
     final float charWidthPoints = 72.0f / getCharactersPerInch();
-    borderLeft = (int) (fact.getLeftBorder(paper) / charWidthPoints);
+    borderLeft = (int) ( fact.getLeftBorder( paper ) / charWidthPoints );
 
     final float lineHeightPoints = 72.0f / getLinesPerInch();
-    final int borderTop = (int) (fact.getTopBorder(paper) / lineHeightPoints);
+    final int borderTop = (int) ( fact.getTopBorder( paper ) / lineHeightPoints );
 
-    for (int i = 0; i < borderTop; i++)
-    {
+    for ( int i = 0; i < borderTop; i++ ) {
       startLine();
-      endLine(false);
+      endLine( false );
     }
   }
 
-  protected EncodingUtilities getEncodingUtilities(final String encoding)
-      throws UnsupportedEncodingException
-  {
-    if (encodingUtilities != null &&
-        encodingUtilities.getEncoding().equals(encoding))
-    {
+  protected EncodingUtilities getEncodingUtilities( final String encoding )
+    throws UnsupportedEncodingException {
+    if ( encodingUtilities != null &&
+      encodingUtilities.getEncoding().equals( encoding ) ) {
       return encodingUtilities;
     }
 
-    encodingUtilities = new EncodingUtilities(encoding);
+    encodingUtilities = new EncodingUtilities( encoding );
     return encodingUtilities;
   }
 
-  public char[] getEndOfLine()
-  {
+  public char[] getEndOfLine() {
     return endOfLine;
   }
 
-  public void setEndOfLine(final char[] endOfLine)
-  {
-    if (endOfLine == null)
-    {
+  public void setEndOfLine( final char[] endOfLine ) {
+    if ( endOfLine == null ) {
       throw new NullPointerException();
     }
     this.endOfLine = (char[]) endOfLine.clone();
   }
 
-  public char[] getEndOfPage()
-  {
+  public char[] getEndOfPage() {
     return endOfPage;
   }
 
-  public void setEndOfPage(final char[] endOfPage)
-  {
-    if (endOfPage == null)
-    {
+  public void setEndOfPage( final char[] endOfPage ) {
+    if ( endOfPage == null ) {
       throw new NullPointerException();
     }
     this.endOfPage = (char[]) endOfPage.clone();

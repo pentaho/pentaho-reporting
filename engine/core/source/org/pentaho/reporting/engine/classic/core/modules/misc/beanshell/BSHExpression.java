@@ -17,13 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.misc.beanshell;
 
-import java.io.BufferedInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.ObjectInputStream;
-import java.io.Reader;
-
 import bsh.EvalError;
 import bsh.Interpreter;
 import org.apache.commons.logging.Log;
@@ -31,6 +24,13 @@ import org.apache.commons.logging.LogFactory;
 import org.pentaho.reporting.engine.classic.core.function.AbstractExpression;
 import org.pentaho.reporting.engine.classic.core.function.Expression;
 import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
+
+import java.io.BufferedInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.ObjectInputStream;
+import java.io.Reader;
 
 /**
  * An expression that uses the BeanShell scripting framework to perform a scripted calculation. The expression itself is
@@ -48,7 +48,8 @@ import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
  * <p/>
  * An example in the XML format: (from report1.xml)
  * <p/>
- * <pre><expression name="expression" class="org.pentaho.reporting.engine.classic.core.modules.misc.beanshell.BSHExpression">
+ * <pre><expression name="expression" class="org.pentaho.reporting.engine.classic.core.modules.misc.beanshell
+ * .BSHExpression">
  * <properties>
  * <property name="expression">
  * // you may import packages and classes or use the fully qualified name of the class
@@ -75,14 +76,13 @@ import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
  *
  * @author Thomas Morgner
  */
-public class BSHExpression extends AbstractExpression
-{
-  private static final Log logger = LogFactory.getLog(BSHExpression.class);
+public class BSHExpression extends AbstractExpression {
+  private static final Log logger = LogFactory.getLog( BSHExpression.class );
   /**
    * The headerfile with the default initialisations.
    */
   public static final String BSHHEADERFILE =
-      "org/pentaho/reporting/engine/classic/core/modules/misc/beanshell/BSHExpressionHeader.txt"; //$NON-NLS-1$
+    "org/pentaho/reporting/engine/classic/core/modules/misc/beanshell/BSHExpressionHeader.txt"; //$NON-NLS-1$
 
   /**
    * The beanshell-interpreter used to evaluate the expression.
@@ -95,8 +95,7 @@ public class BSHExpression extends AbstractExpression
   /**
    * default constructor, create a new BeanShellExpression.
    */
-  public BSHExpression()
-  {
+  public BSHExpression() {
   }
 
   /**
@@ -104,17 +103,13 @@ public class BSHExpression extends AbstractExpression
    *
    * @return the interpreter or null, if there was no way to create the interpreter.
    */
-  protected Interpreter createInterpreter()
-  {
-    try
-    {
+  protected Interpreter createInterpreter() {
+    try {
       final Interpreter interpreter = new Interpreter();
-      initializeInterpreter(interpreter);
+      initializeInterpreter( interpreter );
       return interpreter;
-    }
-    catch (Throwable e)
-    {
-      logger.warn("Unable to initialize the expression", e); //$NON-NLS-1$
+    } catch ( Throwable e ) {
+      logger.warn( "Unable to initialize the expression", e ); //$NON-NLS-1$
       return null;
     }
   }
@@ -126,19 +121,15 @@ public class BSHExpression extends AbstractExpression
    * @throws EvalError   if an BeanShell-Error occured.
    * @throws IOException if the beanshell file could not be read.
    */
-  protected void initializeInterpreter(final Interpreter interpreter)
-      throws EvalError, IOException
-  {
+  protected void initializeInterpreter( final Interpreter interpreter )
+    throws EvalError, IOException {
     final InputStream in = ObjectUtilities.getResourceRelativeAsStream
-        ("BSHExpressionHeader.txt", BSHExpression.class); //$NON-NLS-1$
+      ( "BSHExpressionHeader.txt", BSHExpression.class ); //$NON-NLS-1$
     // read the header, creates a skeleton
-    final Reader r = new InputStreamReader(new BufferedInputStream(in));
-    try
-    {
-      interpreter.eval(r);
-    }
-    finally
-    {
+    final Reader r = new InputStreamReader( new BufferedInputStream( in ) );
+    try {
+      interpreter.eval( r );
+    } finally {
       r.close();
     }
 
@@ -147,9 +138,8 @@ public class BSHExpression extends AbstractExpression
     //
     // Object getValue ()
     //
-    if (getExpression() != null)
-    {
-      interpreter.eval(expression);
+    if ( getExpression() != null ) {
+      interpreter.eval( expression );
     }
   }
 
@@ -163,51 +153,36 @@ public class BSHExpression extends AbstractExpression
    *
    * @return the evaluated value or null.
    */
-  public Object getValue()
-  {
-    if (invalid)
-    {
+  public Object getValue() {
+    if ( invalid ) {
       return null;
     }
-    if (interpreter == null)
-    {
+    if ( interpreter == null ) {
       interpreter = createInterpreter();
-      if (interpreter == null)
-      {
+      if ( interpreter == null ) {
         invalid = true;
         return null;
       }
     }
-    try
-    {
-      interpreter.set("runtime", getRuntime()); //$NON-NLS-1$
-      interpreter.set("dataRow", getDataRow()); //$NON-NLS-1$
-      return interpreter.eval("getValue ();"); //$NON-NLS-1$
-    }
-    catch (Exception e)
-    {
-      if (logger.isWarnEnabled())
-      {
-        logger.warn("Evaluation error: " + //$NON-NLS-1$
-            e.getClass() + " - " + e.getMessage()); //$NON-NLS-1$
-      }
-      else if (logger.isDebugEnabled())
-      {
-        logger.debug("Evaluation error: " + //$NON-NLS-1$
-            e.getClass() + " - " + e.getMessage(), e); //$NON-NLS-1$
+    try {
+      interpreter.set( "runtime", getRuntime() ); //$NON-NLS-1$
+      interpreter.set( "dataRow", getDataRow() ); //$NON-NLS-1$
+      return interpreter.eval( "getValue ();" ); //$NON-NLS-1$
+    } catch ( Exception e ) {
+      if ( logger.isWarnEnabled() ) {
+        logger.warn( "Evaluation error: " + //$NON-NLS-1$
+          e.getClass() + " - " + e.getMessage() ); //$NON-NLS-1$
+      } else if ( logger.isDebugEnabled() ) {
+        logger.debug( "Evaluation error: " + //$NON-NLS-1$
+          e.getClass() + " - " + e.getMessage(), e ); //$NON-NLS-1$
       }
 
       return null;
-    }
-    finally
-    {
-      try
-      {
-        interpreter.set("runtime", null); //$NON-NLS-1$
-        interpreter.set("dataRow", null); //$NON-NLS-1$
-      }
-      catch (EvalError er)
-      {
+    } finally {
+      try {
+        interpreter.set( "runtime", null ); //$NON-NLS-1$
+        interpreter.set( "dataRow", null ); //$NON-NLS-1$
+      } catch ( EvalError er ) {
         // ignored ..
       }
     }
@@ -219,8 +194,7 @@ public class BSHExpression extends AbstractExpression
    *
    * @return a copy of this function.
    */
-  public Expression getInstance()
-  {
+  public Expression getInstance() {
     final BSHExpression ex = (BSHExpression) super.getInstance();
     ex.interpreter = null;
     return ex;
@@ -233,9 +207,8 @@ public class BSHExpression extends AbstractExpression
    * @throws IOException            if there is an I/O error.
    * @throws ClassNotFoundException if a serialized class is not defined on this system.
    */
-  private void readObject(final ObjectInputStream in)
-      throws IOException, ClassNotFoundException
-  {
+  private void readObject( final ObjectInputStream in )
+    throws IOException, ClassNotFoundException {
     in.defaultReadObject();
   }
 
@@ -244,8 +217,7 @@ public class BSHExpression extends AbstractExpression
    *
    * @return the script.
    */
-  public String getExpression()
-  {
+  public String getExpression() {
     return expression;
   }
 
@@ -255,8 +227,7 @@ public class BSHExpression extends AbstractExpression
    *
    * @param expression the script.
    */
-  public void setExpression(final String expression)
-  {
+  public void setExpression( final String expression ) {
     this.expression = expression;
     this.invalid = false;
     this.interpreter = null;

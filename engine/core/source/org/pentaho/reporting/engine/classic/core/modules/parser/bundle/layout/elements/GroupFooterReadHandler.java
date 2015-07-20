@@ -21,16 +21,13 @@ import org.pentaho.reporting.engine.classic.core.GroupFooter;
 import org.pentaho.reporting.engine.classic.core.filter.types.bands.GroupFooterType;
 import org.pentaho.reporting.libraries.xmlns.parser.ParseException;
 
-public class GroupFooterReadHandler extends AbstractRootLevelBandReadHandler
-{
+public class GroupFooterReadHandler extends AbstractRootLevelBandReadHandler {
   public GroupFooterReadHandler()
-      throws ParseException
-  {
-    super(GroupFooterType.INSTANCE);
+    throws ParseException {
+    super( GroupFooterType.INSTANCE );
   }
 
-  public GroupFooter getElement()
-  {
+  public GroupFooter getElement() {
     return (GroupFooter) super.getElement();
   }
 }

@@ -22,11 +22,10 @@ package org.pentaho.reporting.engine.classic.core.layout.model;
  *
  * @author Thomas Morgner
  */
-public final class Border implements Cloneable
-{
+public final class Border implements Cloneable {
   public static final Border EMPTY_BORDER =
-      new Border(BorderEdge.EMPTY, BorderEdge.EMPTY, BorderEdge.EMPTY, BorderEdge.EMPTY, BorderEdge.EMPTY,
-          BorderCorner.EMPTY, BorderCorner.EMPTY, BorderCorner.EMPTY, BorderCorner.EMPTY);
+    new Border( BorderEdge.EMPTY, BorderEdge.EMPTY, BorderEdge.EMPTY, BorderEdge.EMPTY, BorderEdge.EMPTY,
+      BorderCorner.EMPTY, BorderCorner.EMPTY, BorderCorner.EMPTY, BorderCorner.EMPTY );
 
 
   private BorderEdge top;
@@ -42,16 +41,15 @@ public final class Border implements Cloneable
   private Boolean empty;
   private Boolean sameForAllSides;
 
-  public Border(final BorderEdge top,
-                final BorderEdge left,
-                final BorderEdge bottom,
-                final BorderEdge right,
-                final BorderEdge splittingEdge,
-                final BorderCorner topLeft,
-                final BorderCorner topRight,
-                final BorderCorner bottomLeft,
-                final BorderCorner bottomRight)
-  {
+  public Border( final BorderEdge top,
+                 final BorderEdge left,
+                 final BorderEdge bottom,
+                 final BorderEdge right,
+                 final BorderEdge splittingEdge,
+                 final BorderCorner topLeft,
+                 final BorderCorner topRight,
+                 final BorderCorner bottomLeft,
+                 final BorderCorner bottomRight ) {
     this.top = top;
     this.left = left;
     this.bottom = bottom;
@@ -63,206 +61,161 @@ public final class Border implements Cloneable
     this.bottomRight = bottomRight;
   }
 
-  public BorderEdge getTop()
-  {
+  public BorderEdge getTop() {
     return top;
   }
 
-  public BorderEdge getLeft()
-  {
+  public BorderEdge getLeft() {
     return left;
   }
 
-  public BorderEdge getBottom()
-  {
+  public BorderEdge getBottom() {
     return bottom;
   }
 
-  public BorderEdge getRight()
-  {
+  public BorderEdge getRight() {
     return right;
   }
 
-  public BorderEdge getSplittingEdge()
-  {
+  public BorderEdge getSplittingEdge() {
     return splittingEdge;
   }
 
-  public BorderCorner getTopLeft()
-  {
+  public BorderCorner getTopLeft() {
     return topLeft;
   }
 
-  public BorderCorner getTopRight()
-  {
+  public BorderCorner getTopRight() {
     return topRight;
   }
 
-  public BorderCorner getBottomLeft()
-  {
+  public BorderCorner getBottomLeft() {
     return bottomLeft;
   }
 
-  public BorderCorner getBottomRight()
-  {
+  public BorderCorner getBottomRight() {
     return bottomRight;
   }
 
-  public Border[] splitVertically(Border[] borders)
-  {
-    if (borders == null || borders.length < 2)
-    {
-      borders = new Border[2];
+  public Border[] splitVertically( Border[] borders ) {
+    if ( borders == null || borders.length < 2 ) {
+      borders = new Border[ 2 ];
     }
     final Boolean empty;
-    if (this.empty != null && Boolean.TRUE.equals(this.empty))
-    {
-      if (splittingEdge.isEmpty())
-      {
+    if ( this.empty != null && Boolean.TRUE.equals( this.empty ) ) {
+      if ( splittingEdge.isEmpty() ) {
         empty = Boolean.TRUE;
-      }
-      else
-      {
+      } else {
         empty = Boolean.FALSE;
       }
-    }
-    else
-    {
+    } else {
       empty = null;
     }
 
-    borders[0] = (Border) clone();
-    borders[0].empty = empty;
-    borders[0].right = borders[0].splittingEdge;
-    borders[0].topRight = BorderCorner.EMPTY;
-    borders[0].bottomRight = BorderCorner.EMPTY;
+    borders[ 0 ] = (Border) clone();
+    borders[ 0 ].empty = empty;
+    borders[ 0 ].right = borders[ 0 ].splittingEdge;
+    borders[ 0 ].topRight = BorderCorner.EMPTY;
+    borders[ 0 ].bottomRight = BorderCorner.EMPTY;
 
-    borders[1] = (Border) clone();
-    borders[1].empty = empty;
-    borders[1].left = borders[1].splittingEdge;
-    borders[1].topLeft = BorderCorner.EMPTY;
-    borders[1].bottomLeft = BorderCorner.EMPTY;
+    borders[ 1 ] = (Border) clone();
+    borders[ 1 ].empty = empty;
+    borders[ 1 ].left = borders[ 1 ].splittingEdge;
+    borders[ 1 ].topLeft = BorderCorner.EMPTY;
+    borders[ 1 ].bottomLeft = BorderCorner.EMPTY;
     return borders;
   }
 
-  public Border[] splitHorizontally(Border[] borders)
-  {
-    if (borders == null || borders.length < 2)
-    {
-      borders = new Border[2];
+  public Border[] splitHorizontally( Border[] borders ) {
+    if ( borders == null || borders.length < 2 ) {
+      borders = new Border[ 2 ];
     }
     final Boolean empty;
-    if (this.empty != null && Boolean.TRUE.equals(this.empty))
-    {
-      if (splittingEdge.isEmpty())
-      {
+    if ( this.empty != null && Boolean.TRUE.equals( this.empty ) ) {
+      if ( splittingEdge.isEmpty() ) {
         empty = Boolean.TRUE;
-      }
-      else
-      {
+      } else {
         empty = Boolean.FALSE;
       }
-    }
-    else
-    {
+    } else {
       empty = null;
     }
 
-    borders[0] = (Border) clone();
-    borders[0].empty = empty;
-    borders[0].sameForAllSides = null;
-    borders[0].bottom = borders[0].splittingEdge;
-    borders[0].bottomLeft = BorderCorner.EMPTY;
-    borders[0].bottomRight = BorderCorner.EMPTY;
+    borders[ 0 ] = (Border) clone();
+    borders[ 0 ].empty = empty;
+    borders[ 0 ].sameForAllSides = null;
+    borders[ 0 ].bottom = borders[ 0 ].splittingEdge;
+    borders[ 0 ].bottomLeft = BorderCorner.EMPTY;
+    borders[ 0 ].bottomRight = BorderCorner.EMPTY;
 
-    borders[1] = (Border) clone();
-    borders[1].empty = empty;
-    borders[1].top = borders[1].splittingEdge;
-    borders[1].topLeft = BorderCorner.EMPTY;
-    borders[1].topRight = BorderCorner.EMPTY;
+    borders[ 1 ] = (Border) clone();
+    borders[ 1 ].empty = empty;
+    borders[ 1 ].top = borders[ 1 ].splittingEdge;
+    borders[ 1 ].topLeft = BorderCorner.EMPTY;
+    borders[ 1 ].topRight = BorderCorner.EMPTY;
     return borders;
   }
 
-  public Object clone()
-  {
-    try
-    {
+  public Object clone() {
+    try {
       return super.clone();
-    }
-    catch (CloneNotSupportedException e)
-    {
-      throw new IllegalStateException("Borders not supporting clone is evil!");
+    } catch ( CloneNotSupportedException e ) {
+      throw new IllegalStateException( "Borders not supporting clone is evil!" );
     }
   }
 
-  public boolean isSameForAllSides()
-  {
-    if (isEmpty())
-    {
+  public boolean isSameForAllSides() {
+    if ( isEmpty() ) {
       return true;
     }
-    if (sameForAllSides == null)
-    {
+    if ( sameForAllSides == null ) {
       sameForAllSides = computeSameForAllSides();
     }
     return sameForAllSides.booleanValue();
   }
 
-  private Boolean computeSameForAllSides()
-  {
+  private Boolean computeSameForAllSides() {
     final BorderEdge borderEdge = top;
-    if (borderEdge.equals(bottom) == false)
-    {
+    if ( borderEdge.equals( bottom ) == false ) {
       return Boolean.FALSE;
     }
-    if (borderEdge.equals(left) == false)
-    {
+    if ( borderEdge.equals( left ) == false ) {
       return Boolean.FALSE;
     }
-    if (borderEdge.equals(right) == false)
-    {
+    if ( borderEdge.equals( right ) == false ) {
       return Boolean.FALSE;
     }
     final BorderCorner corner = topLeft;
-    if (corner.equals(topRight) == false)
-    {
+    if ( corner.equals( topRight ) == false ) {
       return Boolean.FALSE;
     }
-    if (corner.equals(bottomLeft) == false)
-    {
+    if ( corner.equals( bottomLeft ) == false ) {
       return Boolean.FALSE;
     }
-    if (corner.equals(bottomRight) == false)
-    {
+    if ( corner.equals( bottomRight ) == false ) {
       return Boolean.FALSE;
     }
     return Boolean.TRUE;
   }
 
-  public boolean isEmpty()
-  {
-    if (empty != null)
-    {
+  public boolean isEmpty() {
+    if ( empty != null ) {
       return empty.booleanValue();
     }
 
-    if (top.getWidth() != 0)
-    {
+    if ( top.getWidth() != 0 ) {
       empty = Boolean.FALSE;
       return false;
     }
-    if (left.getWidth() != 0)
-    {
+    if ( left.getWidth() != 0 ) {
       empty = Boolean.FALSE;
       return false;
     }
-    if (bottom.getWidth() != 0)
-    {
+    if ( bottom.getWidth() != 0 ) {
       empty = Boolean.FALSE;
       return false;
     }
-    if (right.getWidth() != 0)
-    {
+    if ( right.getWidth() != 0 ) {
       empty = Boolean.FALSE;
       return false;
     }
@@ -272,19 +225,18 @@ public final class Border implements Cloneable
   }
 
 
-  public String toString()
-  {
+  public String toString() {
     return "Border{" +
-        "top=" + top +
-        ", left=" + left +
-        ", bottom=" + bottom +
-        ", right=" + right +
-        ", splittingEdge=" + splittingEdge +
-        ", topLeft=" + topLeft +
-        ", topRight=" + topRight +
-        ", bottomLeft=" + bottomLeft +
-        ", bottomRight=" + bottomRight +
-        ", empty=" + empty +
-        '}';
+      "top=" + top +
+      ", left=" + left +
+      ", bottom=" + bottom +
+      ", right=" + right +
+      ", splittingEdge=" + splittingEdge +
+      ", topLeft=" + topLeft +
+      ", topRight=" + topRight +
+      ", bottomLeft=" + bottomLeft +
+      ", bottomRight=" + bottomRight +
+      ", empty=" + empty +
+      '}';
   }
 }

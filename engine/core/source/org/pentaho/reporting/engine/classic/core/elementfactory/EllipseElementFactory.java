@@ -29,13 +29,11 @@ import org.pentaho.reporting.engine.classic.core.filter.types.EllipseType;
  *
  * @author Thomas Morgner
  */
-public class EllipseElementFactory extends AbstractContentElementFactory
-{
+public class EllipseElementFactory extends AbstractContentElementFactory {
   /**
    * DefaultConstructor.
    */
-  public EllipseElementFactory()
-  {
+  public EllipseElementFactory() {
   }
 
   /**
@@ -45,13 +43,12 @@ public class EllipseElementFactory extends AbstractContentElementFactory
    * @throws IllegalStateException if the field name is not set.
    * @see ElementFactory#createElement()
    */
-  public Element createElement()
-  {
+  public Element createElement() {
     final Element element = new Element();
-    applyElementName(element);
-    applyStyle(element.getStyle());
+    applyElementName( element );
+    applyStyle( element.getStyle() );
 
-    element.setElementType(new EllipseType());
+    element.setElementType( new EllipseType() );
     return element;
   }
 }

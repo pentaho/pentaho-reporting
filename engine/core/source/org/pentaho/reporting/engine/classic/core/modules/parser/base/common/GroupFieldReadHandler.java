@@ -17,9 +17,7 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.parser.base.common;
 
-public class GroupFieldReadHandler extends PropertyStringReadHandler
-{
-  public GroupFieldReadHandler()
-  {
+public class GroupFieldReadHandler extends PropertyStringReadHandler {
+  public GroupFieldReadHandler() {
   }
 }

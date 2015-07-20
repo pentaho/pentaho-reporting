@@ -26,37 +26,33 @@ import org.pentaho.reporting.engine.classic.core.metadata.DefaultAttributeMetaDa
 import org.pentaho.reporting.engine.classic.core.metadata.ElementMetaData;
 import org.pentaho.reporting.engine.classic.core.metadata.ElementTypeRegistry;
 
-public class AttributeMetaRegistryTest extends TestCase
-{
+public class AttributeMetaRegistryTest extends TestCase {
 
   public static final String BUNDLE_LOCATION = "org.pentaho.reporting.engine.classic.core.meta.attributemetadatatest";
 
-  public AttributeMetaRegistryTest()
-  {
+  public AttributeMetaRegistryTest() {
   }
 
-  public void setUp()
-  {
+  public void setUp() {
     ClassicEngineBoot.getInstance().start();
   }
 
-  public void testRegisterAttribute ()
-  {
+  public void testRegisterAttribute() {
     final ElementMetaData metaData =
-        ElementTypeRegistry.getInstance().getElementType(LabelType.INSTANCE.getMetaData().getName());
-    final AttributeMetaData attrMeta = metaData.getAttributeDescription("namespace", "Name");
-    assertNull(attrMeta);
+      ElementTypeRegistry.getInstance().getElementType( LabelType.INSTANCE.getMetaData().getName() );
+    final AttributeMetaData attrMeta = metaData.getAttributeDescription( "namespace", "Name" );
+    assertNull( attrMeta );
 
     final AttributeRegistry attributeRegistry =
-        ElementTypeRegistry.getInstance().getAttributeRegistry(LabelType.INSTANCE);
+      ElementTypeRegistry.getInstance().getAttributeRegistry( LabelType.INSTANCE );
 
     final DefaultAttributeMetaData m = new DefaultAttributeMetaData
-        ("namespace", "Name", BUNDLE_LOCATION, "prefix",
-            String.class, false, ClassicEngineBoot.computeCurrentVersionId());
-    attributeRegistry.putAttributeDescription(m);
+      ( "namespace", "Name", BUNDLE_LOCATION, "prefix",
+        String.class, false, ClassicEngineBoot.computeCurrentVersionId() );
+    attributeRegistry.putAttributeDescription( m );
 
-    final AttributeMetaData attributeDescription = metaData.getAttributeDescription("namespace", "Name");
-    assertEquals("prefix", attributeDescription.getKeyPrefix());
-    assertEquals(BUNDLE_LOCATION, attributeDescription.getBundleLocation());
+    final AttributeMetaData attributeDescription = metaData.getAttributeDescription( "namespace", "Name" );
+    assertEquals( "prefix", attributeDescription.getKeyPrefix() );
+    assertEquals( BUNDLE_LOCATION, attributeDescription.getBundleLocation() );
   }
 }

@@ -26,26 +26,21 @@ import org.pentaho.reporting.libraries.formula.function.ParameterCallback;
 import org.pentaho.reporting.libraries.formula.lvalues.TypeValuePair;
 import org.pentaho.reporting.libraries.formula.typing.coretypes.TextType;
 
-public class ExportTypeFunction implements Function
-{
-  public ExportTypeFunction()
-  {
+public class ExportTypeFunction implements Function {
+  public ExportTypeFunction() {
 
   }
 
-  public String getCanonicalName()
-  {
+  public String getCanonicalName() {
     return "EXPORTTYPE";
   }
 
-  public TypeValuePair evaluate(final FormulaContext context,
-                                final ParameterCallback parameters) throws EvaluationException
-  {
-    if (context instanceof ReportFormulaContext == false)
-    {
-      throw EvaluationException.getInstance(LibFormulaErrorValue.ERROR_UNEXPECTED_VALUE);
+  public TypeValuePair evaluate( final FormulaContext context,
+                                 final ParameterCallback parameters ) throws EvaluationException {
+    if ( context instanceof ReportFormulaContext == false ) {
+      throw EvaluationException.getInstance( LibFormulaErrorValue.ERROR_UNEXPECTED_VALUE );
     }
     final ReportFormulaContext rfc = (ReportFormulaContext) context;
-    return new TypeValuePair(TextType.TYPE, rfc.getExportType());
+    return new TypeValuePair( TextType.TYPE, rfc.getExportType() );
   }
 }

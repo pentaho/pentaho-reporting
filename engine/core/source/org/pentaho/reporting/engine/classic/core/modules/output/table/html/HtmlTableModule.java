@@ -28,9 +28,9 @@ import org.pentaho.reporting.libraries.base.boot.SubSystem;
  *
  * @author Thomas Morgner
  */
-public class HtmlTableModule extends AbstractModule
-{
-  public static final String USE_TABLE_LAYOUT_FIXED = "org.pentaho.reporting.engine.classic.core.modules.output.table.html.UseTableLayoutFixed";
+public class HtmlTableModule extends AbstractModule {
+  public static final String USE_TABLE_LAYOUT_FIXED =
+    "org.pentaho.reporting.engine.classic.core.modules.output.table.html.UseTableLayoutFixed";
   /**
    * the fileencoding for the main html file.
    */
@@ -43,51 +43,60 @@ public class HtmlTableModule extends AbstractModule
   /**
    * The property key to define whether to build a html body fragment.
    */
-  public static final String BODY_FRAGMENT = "org.pentaho.reporting.engine.classic.core.modules.output.table.html.BodyFragment";
+  public static final String BODY_FRAGMENT =
+    "org.pentaho.reporting.engine.classic.core.modules.output.table.html.BodyFragment";
 
   /**
    * Key for allowing raw link targets (must contain the value "true" to be considered <code>true</code>
    */
-  public static final String EMPTY_CELLS_USE_CSS = "org.pentaho.reporting.engine.classic.core.modules.output.table.html.EmptyCellsUseCSS";
+  public static final String EMPTY_CELLS_USE_CSS =
+    "org.pentaho.reporting.engine.classic.core.modules.output.table.html.EmptyCellsUseCSS";
 
   /**
    * Key for specifying whether common borders of all cells are replicated on the table-row elements. This prevents some
    * layouting errors in Mozilla.
    */
-  public static final String TABLE_ROW_BORDER_DEFINITION = "org.pentaho.reporting.engine.classic.core.modules.output.table.html.TableRowBorderDefinition";
+  public static final String TABLE_ROW_BORDER_DEFINITION =
+    "org.pentaho.reporting.engine.classic.core.modules.output.table.html.TableRowBorderDefinition";
 
   /**
    * Key for specifying whether columns widths should be given in percentages instead of absolute widths. This way, the
    * generated HTML page will consume all space that is available.
    */
-  public static final String PROPORTIONAL_COLUMN_WIDTHS = "org.pentaho.reporting.engine.classic.core.modules.output.table.html.ProportionalColumnWidths";
+  public static final String PROPORTIONAL_COLUMN_WIDTHS =
+    "org.pentaho.reporting.engine.classic.core.modules.output.table.html.ProportionalColumnWidths";
 
   /**
    * Key for forcing a copy of external images (must contain the value "true" to be considered <code>true</code>
    */
-  public static final String COPY_EXTERNAL_IMAGES = "org.pentaho.reporting.engine.classic.core.modules.output.table.html.CopyExternalImages";
+  public static final String COPY_EXTERNAL_IMAGES =
+    "org.pentaho.reporting.engine.classic.core.modules.output.table.html.CopyExternalImages";
 
   /**
    * Key for specifying that style information should be inlined instead of externalized (must contain the value "true"
    * to be considered <code>true</code>
    */
-  public static final String INLINE_STYLE = "org.pentaho.reporting.engine.classic.core.modules.output.table.html.InlineStyles";
+  public static final String INLINE_STYLE =
+    "org.pentaho.reporting.engine.classic.core.modules.output.table.html.InlineStyles";
 
   /**
    * Key for specifying that style information should be externalized instead of inline (must contain the value "true"
    * to be considered <code>true</code>
    */
-  public static final String EXTERNALIZE_STYLE = "org.pentaho.reporting.engine.classic.core.modules.output.table.html.ExternalStyle";
+  public static final String EXTERNALIZE_STYLE =
+    "org.pentaho.reporting.engine.classic.core.modules.output.table.html.ExternalStyle";
 
   /**
    * Key for forcing buffer writing (must contain the value "true" to be considered <code>true</code>
    */
-  public static final String FORCE_BUFFER_WRITING = "org.pentaho.reporting.engine.classic.core.modules.output.table.html.ForceBufferedWriting";
+  public static final String FORCE_BUFFER_WRITING =
+    "org.pentaho.reporting.engine.classic.core.modules.output.table.html.ForceBufferedWriting";
 
   /**
    * Key for allowing raw link targets (must contain the value "true" to be considered <code>true</code>
    */
-  public static final String ALLOW_RAW_LINK_TARGETS = "org.pentaho.reporting.engine.classic.core.modules.output.table.html.AllowRawLinkTargets";
+  public static final String ALLOW_RAW_LINK_TARGETS =
+    "org.pentaho.reporting.engine.classic.core.modules.output.table.html.AllowRawLinkTargets";
 
   /**
    * Key for specifying the HTML TITLE
@@ -118,12 +127,10 @@ public class HtmlTableModule extends AbstractModule
   /**
    * DefaultConstructor. Loads the module specification.
    *
-   * @throws org.pentaho.reporting.libraries.base.boot.ModuleInitializeException
-   *          if an error occured.
+   * @throws org.pentaho.reporting.libraries.base.boot.ModuleInitializeException if an error occured.
    */
   public HtmlTableModule()
-      throws ModuleInitializeException
-  {
+    throws ModuleInitializeException {
     loadModuleInfo();
   }
 
@@ -135,10 +142,9 @@ public class HtmlTableModule extends AbstractModule
    * @param subSystem the subSystem.
    * @throws ModuleInitializeException if an error ocurred while initializing the module.
    */
-  public void initialize(final SubSystem subSystem)
-      throws ModuleInitializeException
-  {
+  public void initialize( final SubSystem subSystem )
+    throws ModuleInitializeException {
     ElementMetaDataParser.initializeOptionalReportProcessTaskMetaData
-        ("org/pentaho/reporting/engine/classic/core/modules/output/table/html/meta-report-process-tasks.xml");
+      ( "org/pentaho/reporting/engine/classic/core/modules/output/table/html/meta-report-process-tasks.xml" );
   }
 }

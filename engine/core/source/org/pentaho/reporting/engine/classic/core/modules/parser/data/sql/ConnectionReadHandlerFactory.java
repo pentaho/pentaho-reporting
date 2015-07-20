@@ -25,28 +25,23 @@ import org.pentaho.reporting.libraries.xmlns.parser.AbstractReadHandlerFactory;
  *
  * @author Thomas Morgner
  */
-public class ConnectionReadHandlerFactory extends AbstractReadHandlerFactory<ConnectionReadHandler>
-{
+public class ConnectionReadHandlerFactory extends AbstractReadHandlerFactory<ConnectionReadHandler> {
   private static final String PREFIX_SELECTOR =
-      "org.pentaho.reporting.engine.classic.core.modules.parser.data.sql.connection-factory-prefix.";
+    "org.pentaho.reporting.engine.classic.core.modules.parser.data.sql.connection-factory-prefix.";
 
   private static ConnectionReadHandlerFactory readHandlerFactory;
 
-  public ConnectionReadHandlerFactory()
-  {
+  public ConnectionReadHandlerFactory() {
   }
 
-  protected Class<ConnectionReadHandler> getTargetClass()
-  {
+  protected Class<ConnectionReadHandler> getTargetClass() {
     return ConnectionReadHandler.class;
   }
 
-  public static synchronized ConnectionReadHandlerFactory getInstance()
-  {
-    if (readHandlerFactory == null)
-    {
+  public static synchronized ConnectionReadHandlerFactory getInstance() {
+    if ( readHandlerFactory == null ) {
       readHandlerFactory = new ConnectionReadHandlerFactory();
-      readHandlerFactory.configureGlobal(ClassicEngineBoot.getInstance().getGlobalConfig(), PREFIX_SELECTOR);
+      readHandlerFactory.configureGlobal( ClassicEngineBoot.getInstance().getGlobalConfig(), PREFIX_SELECTOR );
     }
     return readHandlerFactory;
   }

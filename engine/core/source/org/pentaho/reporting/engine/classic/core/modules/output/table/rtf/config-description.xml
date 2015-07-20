@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <config-description xmlns="http://jfreereport.sourceforge.net/namespaces/config-description">
 
-  <key name="org.pentaho.reporting.engine.classic.core.modules.output.table.rtf.EnableImages" global="false" hidden="false">
+  <key name="org.pentaho.reporting.engine.classic.core.modules.output.table.rtf.EnableImages" global="false"
+       hidden="false">
     <description>Defines, whether the RTF-Export should try to contain images.
-Currently, this is not a safe method, you might easily encounter OutOfMemoryExceptions, so use that option with care.</description>
+      Currently, this is not a safe method, you might easily encounter OutOfMemoryExceptions, so use that option with
+      care.
+    </description>
     <enum>
       <text>true</text>
       <text>false</text>
@@ -13,33 +16,48 @@ Currently, this is not a safe method, you might easily encounter OutOfMemoryExce
     <description>A module definition. Please do not edit this entry.</description>
     <class instanceof="org.pentaho.reporting.libraries.base.boot.Module"/>
   </key>
-  <key name="org.pentaho.reporting.engine.classic.core.modules.output.table.rtf.ShapeAsContent" global="false" hidden="false">
-    <description>Defines whether shapes shall be exported as images to the RTF document. Regardless of this setting, certain shapes will be treated as background and border definitions.</description>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.output.table.rtf.ShapeAsContent" global="false"
+       hidden="false">
+    <description>Defines whether shapes shall be exported as images to the RTF document. Regardless of this setting,
+      certain shapes will be treated as background and border definitions.
+    </description>
     <enum>
       <text>true</text>
       <text>false</text>
     </enum>
   </key>
-  <key name="org.pentaho.reporting.engine.classic.core.modules.output.table.rtf.StrictLayout" global="false" hidden="false">
-    <description>Defines whether a stricter, but more accurate layout algorithm should be applied. Setting this property to false will greatly reduce the table complexity.</description>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.output.table.rtf.StrictLayout" global="false"
+       hidden="false">
+    <description>Defines whether a stricter, but more accurate layout algorithm should be applied. Setting this property
+      to false will greatly reduce the table complexity.
+    </description>
     <enum>
       <text>true</text>
       <text>false</text>
     </enum>
   </key>
-  <key name="org.pentaho.reporting.engine.classic.core.modules.output.table.rtf.DeviceResolution" global="false" hidden="false">
-    <description>Adjusts the resolution of the images embedded in the RTF document. By default we use 96 DPI, which is the common default among all browsers.</description>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.output.table.rtf.DeviceResolution" global="false"
+       hidden="false">
+    <description>Adjusts the resolution of the images embedded in the RTF document. By default we use 96 DPI, which is
+      the common default among all browsers.
+    </description>
     <text/>
   </key>
-  <key name="org.pentaho.reporting.engine.classic.core.modules.output.table.rtf.TreatEllipseAsRectangle" global="false" hidden="false">
-    <description>Defines whether ellipse-shapes are treated as if they are ordinary rectangles, so that they end up as background for a cell.</description>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.output.table.rtf.TreatEllipseAsRectangle" global="false"
+       hidden="false">
+    <description>Defines whether ellipse-shapes are treated as if they are ordinary rectangles, so that they end up as
+      background for a cell.
+    </description>
     <enum>
       <text>true</text>
       <text>false</text>
     </enum>
   </key>
-  <key name="org.pentaho.reporting.engine.classic.core.modules.output.table.rtf.UsePageBands" global="false" hidden="false">
-    <description>Defines, whether the table-export should export the page-bands (page-header, page-footer, and repeating group-header and -footer).</description>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.output.table.rtf.UsePageBands" global="false"
+       hidden="false">
+    <description>Defines, whether the table-export should export the page-bands (page-header, page-footer, and repeating
+      group-header and -footer).
+    </description>
     <enum>
       <text>true</text>
       <text>false</text>

@@ -17,8 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.core.layout;
 
-import java.io.File;
-
 import junit.framework.TestCase;
 import org.pentaho.reporting.engine.classic.core.AttributeNames;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
@@ -33,50 +31,46 @@ import org.pentaho.reporting.engine.classic.core.testsupport.gold.GoldTestBase;
 import org.pentaho.reporting.libraries.resourceloader.Resource;
 import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 
-public class ExtraFooterTest extends TestCase
-{
-  public ExtraFooterTest()
-  {
+import java.io.File;
+
+public class ExtraFooterTest extends TestCase {
+  public ExtraFooterTest() {
   }
 
-  protected void setUp() throws Exception
-  {
+  protected void setUp() throws Exception {
     ClassicEngineBoot.getInstance().start();
   }
 
-  public void testExtraFooterOn38() throws Exception
-  {
-    final File file = GoldTestBase.locateGoldenSampleReport("Prd-2974-2.prpt");
+  public void testExtraFooterOn38() throws Exception {
+    final File file = GoldTestBase.locateGoldenSampleReport( "Prd-2974-2.prpt" );
     final ResourceManager mgr = new ResourceManager();
     mgr.registerDefaults();
-    final Resource directly = mgr.createDirectly(file, MasterReport.class);
+    final Resource directly = mgr.createDirectly( file, MasterReport.class );
     final MasterReport report = (MasterReport) directly.getResource();
 
-    final LogicalPageBox logicalPageBox = DebugReportRunner.layoutPage(report, 0);
-//    ModelPrinter.print(logicalPageBox);
+    final LogicalPageBox logicalPageBox = DebugReportRunner.layoutPage( report, 0 );
+    //    ModelPrinter.print(logicalPageBox);
     SectionRenderBox srb = (SectionRenderBox) logicalPageBox.getFooterArea().getFirstChild();
-    assertTrue(srb.getFirstChild() instanceof ProgressMarkerRenderBox);
+    assertTrue( srb.getFirstChild() instanceof ProgressMarkerRenderBox );
   }
 
-  public void testExtraFooterOnMigration() throws Exception
-  {
-    final File file = GoldTestBase.locateGoldenSampleReport("Prd-2974-2.prpt");
+  public void testExtraFooterOnMigration() throws Exception {
+    final File file = GoldTestBase.locateGoldenSampleReport( "Prd-2974-2.prpt" );
     final ResourceManager mgr = new ResourceManager();
     mgr.registerDefaults();
-    final Resource directly = mgr.createDirectly(file, MasterReport.class);
-    final MasterReport report = tuneForMigrationMode((MasterReport) directly.getResource());
+    final Resource directly = mgr.createDirectly( file, MasterReport.class );
+    final MasterReport report = tuneForMigrationMode( (MasterReport) directly.getResource() );
 
-    final LogicalPageBox logicalPageBox = DebugReportRunner.layoutPage(report, 0);
-//    ModelPrinter.print(logicalPageBox);
+    final LogicalPageBox logicalPageBox = DebugReportRunner.layoutPage( report, 0 );
+    //    ModelPrinter.print(logicalPageBox);
     final RenderBox srb = (RenderBox) logicalPageBox.getFooterArea().getFirstChild();
-    assertTrue(srb.getFirstChild() instanceof ProgressMarkerRenderBox);
+    assertTrue( srb.getFirstChild() instanceof ProgressMarkerRenderBox );
   }
 
-  protected MasterReport tuneForMigrationMode(final MasterReport report)
-  {
+  protected MasterReport tuneForMigrationMode( final MasterReport report ) {
     final CompatibilityUpdater updater = new CompatibilityUpdater();
-    updater.performUpdate(report);
-    report.setAttribute(AttributeNames.Internal.NAMESPACE, AttributeNames.Internal.COMAPTIBILITY_LEVEL, null);
+    updater.performUpdate( report );
+    report.setAttribute( AttributeNames.Internal.NAMESPACE, AttributeNames.Internal.COMAPTIBILITY_LEVEL, null );
     return report;
   }
 

@@ -28,51 +28,41 @@ import org.pentaho.reporting.engine.classic.core.states.datarow.DefaultFlowContr
  *
  * @author Thomas Morgner
  */
-public class JoinDetailsHandler implements AdvanceHandler
-{
+public class JoinDetailsHandler implements AdvanceHandler {
   public static final AdvanceHandler HANDLER = new JoinDetailsHandler();
 
-  private JoinDetailsHandler()
-  {
+  private JoinDetailsHandler() {
   }
 
-  public int getEventCode()
-  {
+  public int getEventCode() {
     return ReportEvent.ITEMS_ADVANCED | ProcessState.ARTIFICIAL_EVENT_CODE;
   }
 
-  public ProcessState advance(final ProcessState state) throws ReportProcessingException
-  {
+  public ProcessState advance( final ProcessState state ) throws ReportProcessingException {
     return state.deriveForAdvance();
   }
 
-  public ProcessState commit(final ProcessState next) throws ReportProcessingException
-  {
-    final Group group = next.getReport().getGroup(next.getCurrentGroupIndex());
+  public ProcessState commit( final ProcessState next ) throws ReportProcessingException {
+    final Group group = next.getReport().getGroup( next.getCurrentGroupIndex() );
 
     next.advanceCursor();
     final DefaultFlowController fc = next.getFlowController().performAdvance();
     final DefaultFlowController cfc = fc.performCommit();
-    if (ProcessState.isLastItemInGroup(group, fc.getMasterRow(), cfc.getMasterRow()))
-    {
-      next.setFlowController(fc);
-      next.setAdvanceHandler(EndDetailsHandler.HANDLER);
-    }
-    else
-    {
-      next.setFlowController(cfc);
-      next.setAdvanceHandler(ProcessDetailsHandler.HANDLER);
+    if ( ProcessState.isLastItemInGroup( group, fc.getMasterRow(), cfc.getMasterRow() ) ) {
+      next.setFlowController( fc );
+      next.setAdvanceHandler( EndDetailsHandler.HANDLER );
+    } else {
+      next.setFlowController( cfc );
+      next.setAdvanceHandler( ProcessDetailsHandler.HANDLER );
     }
     return next;
   }
 
-  public boolean isFinish()
-  {
+  public boolean isFinish() {
     return false;
   }
 
-  public boolean isRestoreHandler()
-  {
+  public boolean isRestoreHandler() {
     return false;
   }
 }

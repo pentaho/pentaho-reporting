@@ -26,13 +26,11 @@ import org.pentaho.reporting.libraries.base.boot.SubSystem;
  *
  * @author Thomas Morgner
  */
-public class GuiCommonModule extends AbstractModule
-{
+public class GuiCommonModule extends AbstractModule {
   public static final String BUNDLE_NAME =
-      "org.pentaho.reporting.engine.classic.core.modules.gui.common.messages.messages"; //$NON-NLS-1$
+    "org.pentaho.reporting.engine.classic.core.modules.gui.common.messages.messages"; //$NON-NLS-1$
 
-  public GuiCommonModule() throws ModuleInitializeException
-  {
+  public GuiCommonModule() throws ModuleInitializeException {
     loadModuleInfo();
   }
 
@@ -44,8 +42,7 @@ public class GuiCommonModule extends AbstractModule
    * @param subSystem the subSystem.
    * @throws ModuleInitializeException if an error ocurred while initializing the module.
    */
-  public void initialize(final SubSystem subSystem) throws ModuleInitializeException
-  {
+  public void initialize( final SubSystem subSystem ) throws ModuleInitializeException {
 
   }
 }

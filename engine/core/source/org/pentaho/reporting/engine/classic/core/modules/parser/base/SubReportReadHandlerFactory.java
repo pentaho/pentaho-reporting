@@ -25,30 +25,25 @@ import org.pentaho.reporting.libraries.xmlns.parser.AbstractReadHandlerFactory;
  *
  * @author Thomas Morgner
  */
-public class SubReportReadHandlerFactory extends AbstractReadHandlerFactory<SubReportReadHandler>
-{
+public class SubReportReadHandlerFactory extends AbstractReadHandlerFactory<SubReportReadHandler> {
   private static final String PREFIX_SELECTOR =
-      "org.pentaho.reporting.engine.classic.core.modules.parser.sub-report-factory-prefix.";
+    "org.pentaho.reporting.engine.classic.core.modules.parser.sub-report-factory-prefix.";
 
   private static SubReportReadHandlerFactory readHandlerFactory;
 
-  public static synchronized SubReportReadHandlerFactory getInstance()
-  {
-    if (readHandlerFactory == null)
-    {
+  public static synchronized SubReportReadHandlerFactory getInstance() {
+    if ( readHandlerFactory == null ) {
       readHandlerFactory = new SubReportReadHandlerFactory();
-      readHandlerFactory.configureGlobal(ClassicEngineBoot.getInstance().getGlobalConfig(), PREFIX_SELECTOR);
+      readHandlerFactory.configureGlobal( ClassicEngineBoot.getInstance().getGlobalConfig(), PREFIX_SELECTOR );
     }
     return readHandlerFactory;
   }
 
 
-  private SubReportReadHandlerFactory()
-  {
+  private SubReportReadHandlerFactory() {
   }
 
-  protected Class<SubReportReadHandler> getTargetClass()
-  {
+  protected Class<SubReportReadHandler> getTargetClass() {
     return SubReportReadHandler.class;
   }
 }

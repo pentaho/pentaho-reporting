@@ -21,76 +21,62 @@ import org.pentaho.reporting.engine.classic.core.modules.output.table.html.URLRe
 import org.pentaho.reporting.libraries.repository.ContentLocation;
 import org.pentaho.reporting.libraries.repository.NameGenerator;
 
-public class FastHtmlContentItems
-{
+public class FastHtmlContentItems {
   private ContentLocation dataLocation;
   private NameGenerator dataNameGenerator;
   private ContentLocation contentLocation;
   private NameGenerator contentNameGenerator;
   private URLRewriter urlRewriter;
 
-  public FastHtmlContentItems()
-  {
+  public FastHtmlContentItems() {
   }
 
-  public ContentLocation getDataLocation()
-  {
+  public ContentLocation getDataLocation() {
     return dataLocation;
   }
 
-  public void setDataLocation(final ContentLocation dataLocation)
-  {
+  public void setDataLocation( final ContentLocation dataLocation ) {
     this.dataLocation = dataLocation;
   }
 
-  public NameGenerator getDataNameGenerator()
-  {
+  public NameGenerator getDataNameGenerator() {
     return dataNameGenerator;
   }
 
-  public void setDataNameGenerator(final NameGenerator dataNameGenerator)
-  {
+  public void setDataNameGenerator( final NameGenerator dataNameGenerator ) {
     this.dataNameGenerator = dataNameGenerator;
   }
 
-  public ContentLocation getContentLocation()
-  {
+  public ContentLocation getContentLocation() {
     return contentLocation;
   }
 
-  public void setContentLocation(final ContentLocation contentLocation)
-  {
+  public void setContentLocation( final ContentLocation contentLocation ) {
     this.contentLocation = contentLocation;
   }
 
-  public NameGenerator getContentNameGenerator()
-  {
+  public NameGenerator getContentNameGenerator() {
     return contentNameGenerator;
   }
 
-  public void setContentNameGenerator(final NameGenerator contentNameGenerator)
-  {
+  public void setContentNameGenerator( final NameGenerator contentNameGenerator ) {
     this.contentNameGenerator = contentNameGenerator;
   }
 
-  public URLRewriter getUrlRewriter()
-  {
+  public URLRewriter getUrlRewriter() {
     return urlRewriter;
   }
 
-  public void setUrlRewriter(final URLRewriter urlRewriter)
-  {
+  public void setUrlRewriter( final URLRewriter urlRewriter ) {
     this.urlRewriter = urlRewriter;
   }
 
-  public void setContentWriter(final ContentLocation targetRoot, final NameGenerator nameGenerator)
-  {
+  public void setContentWriter( final ContentLocation targetRoot, final NameGenerator nameGenerator ) {
     this.contentLocation = targetRoot;
     this.contentNameGenerator = nameGenerator;
   }
 
-  public void setDataWriter(final ContentLocation targetRoot, final NameGenerator nameGenerator)
-  {
+  public void setDataWriter( final ContentLocation targetRoot, final NameGenerator nameGenerator ) {
     this.dataLocation = targetRoot;
     this.dataNameGenerator = nameGenerator;
   }

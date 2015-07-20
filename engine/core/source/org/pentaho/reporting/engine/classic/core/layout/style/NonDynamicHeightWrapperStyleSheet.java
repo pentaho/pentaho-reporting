@@ -30,48 +30,39 @@ import org.pentaho.reporting.engine.classic.core.util.InstanceID;
  *
  * @author Thomas Morgner
  */
-public class NonDynamicHeightWrapperStyleSheet extends AbstractStyleSheet
-{
+public class NonDynamicHeightWrapperStyleSheet extends AbstractStyleSheet {
   private StyleSheet parent;
 
-  public NonDynamicHeightWrapperStyleSheet(final StyleSheet parent)
-  {
+  public NonDynamicHeightWrapperStyleSheet( final StyleSheet parent ) {
     this.parent = parent;
   }
 
-  public StyleSheet getParent()
-  {
+  public StyleSheet getParent() {
     return parent;
   }
 
-  public Object getStyleProperty(final StyleKey key, final Object defaultValue)
-  {
-    if (ElementStyleKeys.MAX_WIDTH.equals(key))
-    {
-      return parent.getStyleProperty(ElementStyleKeys.MIN_WIDTH, defaultValue);
+  public Object getStyleProperty( final StyleKey key, final Object defaultValue ) {
+    if ( ElementStyleKeys.MAX_WIDTH.equals( key ) ) {
+      return parent.getStyleProperty( ElementStyleKeys.MIN_WIDTH, defaultValue );
     }
-    if (ElementStyleKeys.MAX_HEIGHT.equals(key))
-    {
-      return parent.getStyleProperty(ElementStyleKeys.MIN_HEIGHT, defaultValue);
+    if ( ElementStyleKeys.MAX_HEIGHT.equals( key ) ) {
+      return parent.getStyleProperty( ElementStyleKeys.MIN_HEIGHT, defaultValue );
     }
-    return parent.getStyleProperty(key, defaultValue);
+    return parent.getStyleProperty( key, defaultValue );
   }
 
-  public Object[] toArray()
-  {
+  public Object[] toArray() {
     final Object[] objects = parent.toArray();
-    objects[ElementStyleKeys.MAX_WIDTH.getIdentifier()] = objects[ElementStyleKeys.MIN_WIDTH.getIdentifier()];
-    objects[ElementStyleKeys.MAX_HEIGHT.getIdentifier()] = objects[ElementStyleKeys.MIN_HEIGHT.getIdentifier()];
+    objects[ ElementStyleKeys.MAX_WIDTH.getIdentifier() ] = objects[ ElementStyleKeys.MIN_WIDTH.getIdentifier() ];
+    objects[ ElementStyleKeys.MAX_HEIGHT.getIdentifier() ] = objects[ ElementStyleKeys.MIN_HEIGHT.getIdentifier() ];
     return objects;
   }
 
-  public InstanceID getId()
-  {
+  public InstanceID getId() {
     return parent.getId();
   }
 
-  public long getChangeTracker()
-  {
+  public long getChangeTracker() {
     return parent.getChangeTracker();
   }
 }

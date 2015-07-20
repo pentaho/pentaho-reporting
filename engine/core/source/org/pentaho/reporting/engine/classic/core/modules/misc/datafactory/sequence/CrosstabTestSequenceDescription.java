@@ -17,11 +17,9 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.misc.datafactory.sequence;
 
-public class CrosstabTestSequenceDescription extends AbstractSequenceDescription
-{
-  public CrosstabTestSequenceDescription()
-  {
-    super("org.pentaho.reporting.engine.classic.core.modules.misc.datafactory.sequence.CrosstabTestSequenceBundle",
-        CrosstabTestSequence.class);
+public class CrosstabTestSequenceDescription extends AbstractSequenceDescription {
+  public CrosstabTestSequenceDescription() {
+    super( "org.pentaho.reporting.engine.classic.core.modules.misc.datafactory.sequence.CrosstabTestSequenceBundle",
+      CrosstabTestSequence.class );
   }
 }

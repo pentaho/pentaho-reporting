@@ -17,9 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.parser.ext.readhandlers;
 
-import java.awt.print.PageFormat;
-import java.awt.print.Paper;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
@@ -32,9 +29,11 @@ import org.pentaho.reporting.libraries.xmlns.parser.ParseException;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 
-public class PageReadHandler extends AbstractPropertyXmlReadHandler
-{
-  private static final Log logger = LogFactory.getLog(PageReadHandler.class);
+import java.awt.print.PageFormat;
+import java.awt.print.Paper;
+
+public class PageReadHandler extends AbstractPropertyXmlReadHandler {
+  private static final Log logger = LogFactory.getLog( PageReadHandler.class );
 
   /**
    * Literal text for an XML attribute.
@@ -95,22 +94,18 @@ public class PageReadHandler extends AbstractPropertyXmlReadHandler
   private float y;
   private PageFormat pageFormat;
 
-  public PageReadHandler()
-  {
+  public PageReadHandler() {
   }
 
-  public PageFormat getPageFormat()
-  {
+  public PageFormat getPageFormat() {
     return pageFormat;
   }
 
-  public float getY()
-  {
+  public float getY() {
     return y;
   }
 
-  public float getX()
-  {
+  public float getX() {
     return x;
   }
 
@@ -120,12 +115,11 @@ public class PageReadHandler extends AbstractPropertyXmlReadHandler
    * @param attrs the attributes.
    * @throws org.xml.sax.SAXException if there is a parsing error.
    */
-  protected void startParsing(final PropertyAttributes attrs)
-      throws SAXException
-  {
-    handlePageFormat(attrs);
-    x = ParserUtil.parseFloat(attrs.getValue(getUri(), "x"), 0);
-    y = ParserUtil.parseFloat(attrs.getValue(getUri(), "y"), 0);
+  protected void startParsing( final PropertyAttributes attrs )
+    throws SAXException {
+    handlePageFormat( attrs );
+    x = ParserUtil.parseFloat( attrs.getValue( getUri(), "x" ), 0 );
+    y = ParserUtil.parseFloat( attrs.getValue( getUri(), "y" ), 0 );
   }
 
 
@@ -136,50 +130,50 @@ public class PageReadHandler extends AbstractPropertyXmlReadHandler
    * @throws SAXException if a parser error occurs or the validation failed.
    * @noinspection SuspiciousNameCombination
    */
-  private void handlePageFormat(final Attributes atts)
-      throws SAXException
-  {
+  private void handlePageFormat( final Attributes atts )
+    throws SAXException {
     final MasterReport report = (MasterReport)
-        getRootHandler().getHelperObject(ReportParserUtil.HELPER_OBJ_REPORT_NAME);
+      getRootHandler().getHelperObject( ReportParserUtil.HELPER_OBJ_REPORT_NAME );
 
     // grab the default page definition ...
-    PageFormat format = report.getPageDefinition().getPageFormat(0);
+    PageFormat format = report.getPageDefinition().getPageFormat( 0 );
     float defTopMargin = (float) format.getImageableY();
-    float defBottomMargin = (float) (format.getHeight() - format.getImageableHeight()
-        - format.getImageableY());
+    float defBottomMargin = (float) ( format.getHeight() - format.getImageableHeight()
+      - format.getImageableY() );
     float defLeftMargin = (float) format.getImageableX();
-    float defRightMargin = (float) (format.getWidth() - format.getImageableWidth()
-        - format.getImageableX());
+    float defRightMargin = (float) ( format.getWidth() - format.getImageableWidth()
+      - format.getImageableX() );
 
-    format = createPageFormat(format, atts);
+    format = createPageFormat( format, atts );
 
-    defTopMargin = ParserUtil.parseFloat(atts.getValue(getUri(), PageReadHandler.TOPMARGIN_ATT), defTopMargin);
-    defBottomMargin = ParserUtil.parseFloat(atts.getValue(getUri(), PageReadHandler.BOTTOMMARGIN_ATT), defBottomMargin);
-    defLeftMargin = ParserUtil.parseFloat(atts.getValue(getUri(), PageReadHandler.LEFTMARGIN_ATT), defLeftMargin);
-    defRightMargin = ParserUtil.parseFloat(atts.getValue(getUri(), PageReadHandler.RIGHTMARGIN_ATT), defRightMargin);
+    defTopMargin = ParserUtil.parseFloat( atts.getValue( getUri(), PageReadHandler.TOPMARGIN_ATT ), defTopMargin );
+    defBottomMargin =
+      ParserUtil.parseFloat( atts.getValue( getUri(), PageReadHandler.BOTTOMMARGIN_ATT ), defBottomMargin );
+    defLeftMargin = ParserUtil.parseFloat( atts.getValue( getUri(), PageReadHandler.LEFTMARGIN_ATT ), defLeftMargin );
+    defRightMargin =
+      ParserUtil.parseFloat( atts.getValue( getUri(), PageReadHandler.RIGHTMARGIN_ATT ), defRightMargin );
 
     final Paper p = format.getPaper();
-    switch (format.getOrientation())
-    {
+    switch( format.getOrientation() ) {
       case PageFormat.PORTRAIT:
-        PageFormatFactory.getInstance().setBorders(p, defTopMargin, defLeftMargin,
-            defBottomMargin, defRightMargin);
+        PageFormatFactory.getInstance().setBorders( p, defTopMargin, defLeftMargin,
+          defBottomMargin, defRightMargin );
         break;
       case PageFormat.LANDSCAPE:
         // right, top, left, bottom
-        PageFormatFactory.getInstance().setBorders(p, defRightMargin, defTopMargin,
-            defLeftMargin, defBottomMargin);
+        PageFormatFactory.getInstance().setBorders( p, defRightMargin, defTopMargin,
+          defLeftMargin, defBottomMargin );
         break;
       case PageFormat.REVERSE_LANDSCAPE:
-        PageFormatFactory.getInstance().setBorders(p, defLeftMargin, defBottomMargin,
-            defRightMargin, defTopMargin);
+        PageFormatFactory.getInstance().setBorders( p, defLeftMargin, defBottomMargin,
+          defRightMargin, defTopMargin );
         break;
       default:
         // will not happen..
-        throw new IllegalArgumentException("Unexpected paper orientation.");
+        throw new IllegalArgumentException( "Unexpected paper orientation." );
     }
 
-    format.setPaper(p);
+    format.setPaper( p );
     pageFormat = format;
   }
 
@@ -194,64 +188,50 @@ public class PageReadHandler extends AbstractPropertyXmlReadHandler
    * @return the page format.
    * @throws SAXException if there is an error parsing the report.
    */
-  private PageFormat createPageFormat(final PageFormat format, final Attributes atts)
-      throws SAXException
-  {
-    final String pageformatName = atts.getValue(getUri(), PageReadHandler.PAGEFORMAT_ATT);
+  private PageFormat createPageFormat( final PageFormat format, final Attributes atts )
+    throws SAXException {
+    final String pageformatName = atts.getValue( getUri(), PageReadHandler.PAGEFORMAT_ATT );
 
     final int orientationVal;
-    final String orientation = atts.getValue(getUri(), PageReadHandler.ORIENTATION_ATT);
-    if (orientation == null)
-    {
+    final String orientation = atts.getValue( getUri(), PageReadHandler.ORIENTATION_ATT );
+    if ( orientation == null ) {
       orientationVal = PageFormat.PORTRAIT;
-    }
-    else if (orientation.equals(PageReadHandler.ORIENTATION_LANDSCAPE_VAL))
-    {
+    } else if ( orientation.equals( PageReadHandler.ORIENTATION_LANDSCAPE_VAL ) ) {
       orientationVal = PageFormat.LANDSCAPE;
-    }
-    else if (orientation.equals(PageReadHandler.ORIENTATION_REVERSE_LANDSCAPE_VAL))
-    {
+    } else if ( orientation.equals( PageReadHandler.ORIENTATION_REVERSE_LANDSCAPE_VAL ) ) {
       orientationVal = PageFormat.REVERSE_LANDSCAPE;
-    }
-    else if (orientation.equals(PageReadHandler.ORIENTATION_PORTRAIT_VAL))
-    {
+    } else if ( orientation.equals( PageReadHandler.ORIENTATION_PORTRAIT_VAL ) ) {
       orientationVal = PageFormat.PORTRAIT;
+    } else {
+      throw new ParseException( "Orientation value in REPORT-Tag is invalid.",
+        getRootHandler().getDocumentLocator() );
     }
-    else
-    {
-      throw new ParseException("Orientation value in REPORT-Tag is invalid.",
-          getRootHandler().getDocumentLocator());
-    }
-    if (pageformatName != null)
-    {
-      final Paper p = PageFormatFactory.getInstance().createPaper(pageformatName);
-      if (p == null)
-      {
-        PageReadHandler.logger.warn("Unable to create the requested Paper. " + pageformatName);
+    if ( pageformatName != null ) {
+      final Paper p = PageFormatFactory.getInstance().createPaper( pageformatName );
+      if ( p == null ) {
+        PageReadHandler.logger.warn( "Unable to create the requested Paper. " + pageformatName );
         return format;
       }
-      return PageFormatFactory.getInstance().createPageFormat(p, orientationVal);
+      return PageFormatFactory.getInstance().createPageFormat( p, orientationVal );
     }
 
-    if (atts.getValue(getUri(), PageReadHandler.WIDTH_ATT) != null && atts.getValue(getUri(),
-        PageReadHandler.HEIGHT_ATT) != null)
-    {
-      final int[] pageformatData = new int[2];
-      pageformatData[0] = ParserUtil.parseInt(atts.getValue(getUri(), PageReadHandler.WIDTH_ATT), "No Width set",
-          getLocator());
-      pageformatData[1] = ParserUtil.parseInt(atts.getValue(getUri(), PageReadHandler.HEIGHT_ATT), "No Height set",
-          getLocator());
-      final Paper p = PageFormatFactory.getInstance().createPaper(pageformatData);
-      if (p == null)
-      {
-        PageReadHandler.logger.warn("Unable to create the requested Paper. Paper={" + pageformatData[0] + ", "
-            + pageformatData[1] + '}');
+    if ( atts.getValue( getUri(), PageReadHandler.WIDTH_ATT ) != null && atts.getValue( getUri(),
+      PageReadHandler.HEIGHT_ATT ) != null ) {
+      final int[] pageformatData = new int[ 2 ];
+      pageformatData[ 0 ] = ParserUtil.parseInt( atts.getValue( getUri(), PageReadHandler.WIDTH_ATT ), "No Width set",
+        getLocator() );
+      pageformatData[ 1 ] = ParserUtil.parseInt( atts.getValue( getUri(), PageReadHandler.HEIGHT_ATT ), "No Height set",
+        getLocator() );
+      final Paper p = PageFormatFactory.getInstance().createPaper( pageformatData );
+      if ( p == null ) {
+        PageReadHandler.logger.warn( "Unable to create the requested Paper. Paper={" + pageformatData[ 0 ] + ", "
+          + pageformatData[ 1 ] + '}' );
         return format;
       }
-      return PageFormatFactory.getInstance().createPageFormat(p, orientationVal);
+      return PageFormatFactory.getInstance().createPageFormat( p, orientationVal );
     }
 
-    PageReadHandler.logger.info("Insufficient Data to create a pageformat: Returned default.");
+    PageReadHandler.logger.info( "Insufficient Data to create a pageformat: Returned default." );
     return format;
   }
 
@@ -260,8 +240,7 @@ public class PageReadHandler extends AbstractPropertyXmlReadHandler
    *
    * @return the object.
    */
-  public Object getObject()
-  {
+  public Object getObject() {
     return null;
   }
 }

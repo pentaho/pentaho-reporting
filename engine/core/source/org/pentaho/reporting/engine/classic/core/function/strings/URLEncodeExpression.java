@@ -17,10 +17,10 @@
 
 package org.pentaho.reporting.engine.classic.core.function.strings;
 
-import java.io.UnsupportedEncodingException;
-
 import org.pentaho.reporting.engine.classic.core.function.AbstractExpression;
 import org.pentaho.reporting.libraries.base.util.URLEncoder;
+
+import java.io.UnsupportedEncodingException;
 
 /**
  * Performs an URL encoding on the value read from the given field. As the URL-encoding schema is a binary encoding, a
@@ -29,8 +29,7 @@ import org.pentaho.reporting.libraries.base.util.URLEncoder;
  * @author Thomas Morgner
  * @deprecated This can be replaced by a formula.
  */
-public class URLEncodeExpression extends AbstractExpression
-{
+public class URLEncodeExpression extends AbstractExpression {
   /**
    * The field name from where to read the string that should be URL-encoded.
    */
@@ -43,8 +42,7 @@ public class URLEncodeExpression extends AbstractExpression
   /**
    * Default Constructor.
    */
-  public URLEncodeExpression()
-  {
+  public URLEncodeExpression() {
     encoding = "UTF-8";
   }
 
@@ -53,8 +51,7 @@ public class URLEncodeExpression extends AbstractExpression
    *
    * @return the field.
    */
-  public String getField()
-  {
+  public String getField() {
     return field;
   }
 
@@ -63,8 +60,7 @@ public class URLEncodeExpression extends AbstractExpression
    *
    * @param field the field.
    */
-  public void setField(final String field)
-  {
+  public void setField( final String field ) {
     this.field = field;
   }
 
@@ -73,8 +69,7 @@ public class URLEncodeExpression extends AbstractExpression
    *
    * @return the encoding.
    */
-  public String getEncoding()
-  {
+  public String getEncoding() {
     return encoding;
   }
 
@@ -83,10 +78,8 @@ public class URLEncodeExpression extends AbstractExpression
    *
    * @param encoding the encoding.
    */
-  public void setEncoding(final String encoding)
-  {
-    if (encoding == null)
-    {
+  public void setEncoding( final String encoding ) {
+    if ( encoding == null ) {
       throw new NullPointerException();
     }
     this.encoding = encoding;
@@ -97,24 +90,18 @@ public class URLEncodeExpression extends AbstractExpression
    *
    * @return the value of the function.
    */
-  public Object getValue()
-  {
-    if (field == null)
-    {
+  public Object getValue() {
+    if ( field == null ) {
       return null;
     }
 
-    final Object value = getDataRow().get(getField());
-    if (value == null)
-    {
+    final Object value = getDataRow().get( getField() );
+    if ( value == null ) {
       return null;
     }
-    try
-    {
-      return URLEncoder.encode(String.valueOf(value), encoding);
-    }
-    catch (UnsupportedEncodingException e)
-    {
+    try {
+      return URLEncoder.encode( String.valueOf( value ), encoding );
+    } catch ( UnsupportedEncodingException e ) {
       return null;
     }
   }

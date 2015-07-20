@@ -21,16 +21,13 @@ import org.pentaho.reporting.engine.classic.core.NoDataBand;
 import org.pentaho.reporting.engine.classic.core.filter.types.bands.NoDataBandType;
 import org.pentaho.reporting.libraries.xmlns.parser.ParseException;
 
-public class NoDataBandReadHandler extends AbstractRootLevelBandReadHandler
-{
+public class NoDataBandReadHandler extends AbstractRootLevelBandReadHandler {
   public NoDataBandReadHandler()
-      throws ParseException
-  {
-    super(NoDataBandType.INSTANCE);
+    throws ParseException {
+    super( NoDataBandType.INSTANCE );
   }
 
-  public NoDataBand getElement()
-  {
+  public NoDataBand getElement() {
     return (NoDataBand) super.getElement();
   }
 }

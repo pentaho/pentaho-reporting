@@ -17,31 +17,30 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.output.table.html;
 
-import java.io.IOException;
-
 import org.pentaho.reporting.engine.classic.core.ImageContainer;
 import org.pentaho.reporting.libraries.repository.ContentIOException;
 import org.pentaho.reporting.libraries.resourceloader.ResourceKey;
 import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 
-public interface HtmlContentGenerator
-{
+import java.io.IOException;
+
+public interface HtmlContentGenerator {
   public ResourceManager getResourceManager();
 
-  public void registerFailure(final ResourceKey source);
+  public void registerFailure( final ResourceKey source );
 
-  public void registerContent(final ResourceKey source, final String name);
+  public void registerContent( final ResourceKey source, final String name );
 
-  public boolean isRegistered(final ResourceKey source);
+  public boolean isRegistered( final ResourceKey source );
 
-  public String getRegisteredName(final ResourceKey source);
+  public String getRegisteredName( final ResourceKey source );
 
-  public void setCopyExternalImages(final boolean copyExternalImages);
+  public void setCopyExternalImages( final boolean copyExternalImages );
 
-  public String writeRaw(final ResourceKey source) throws ContentIOException, IOException;
+  public String writeRaw( final ResourceKey source ) throws ContentIOException, IOException;
 
-  public String writeImage(final ImageContainer imageContainer,
-                           final String encoderType,
-                           final float quality,
-                           final boolean alpha) throws ContentIOException, IOException;
+  public String writeImage( final ImageContainer imageContainer,
+                            final String encoderType,
+                            final float quality,
+                            final boolean alpha ) throws ContentIOException, IOException;
 }

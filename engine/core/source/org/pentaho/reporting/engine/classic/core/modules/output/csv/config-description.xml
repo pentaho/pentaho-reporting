@@ -1,35 +1,46 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <config-description xmlns="http://jfreereport.sourceforge.net/namespaces/config-description">
-  <key name="org.pentaho.reporting.engine.classic.core.modules.output.csv.EnableGroupFooters" global="false" hidden="false">
-    <description>Defines, whether the CSV data export should export the data-row whenever a group has been finished.</description>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.output.csv.EnableGroupFooters" global="false"
+       hidden="false">
+    <description>Defines, whether the CSV data export should export the data-row whenever a group has been finished.
+    </description>
     <enum>
       <text>true</text>
       <text>false</text>
     </enum>
   </key>
-  <key name="org.pentaho.reporting.engine.classic.core.modules.output.csv.EnableGroupHeaders" global="false" hidden="false">
-    <description>Defines, whether the CSV data export should export the data-row whenever a group has been started.</description>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.output.csv.EnableGroupHeaders" global="false"
+       hidden="false">
+    <description>Defines, whether the CSV data export should export the data-row whenever a group has been started.
+    </description>
     <enum>
       <text>true</text>
       <text>false</text>
     </enum>
   </key>
-  <key name="org.pentaho.reporting.engine.classic.core.modules.output.csv.EnableItembands" global="false" hidden="false">
-    <description>Defines, whether the CSV data export should export the data-row whenever a item is printed.</description>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.output.csv.EnableItembands" global="false"
+       hidden="false">
+    <description>Defines, whether the CSV data export should export the data-row whenever a item is printed.
+    </description>
     <enum>
       <text>true</text>
       <text>false</text>
     </enum>
   </key>
-  <key name="org.pentaho.reporting.engine.classic.core.modules.output.csv.EnableReportFooter" global="false" hidden="false">
-    <description>Defines, whether the CSV data export should export the data-row whenever the report has been finished.</description>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.output.csv.EnableReportFooter" global="false"
+       hidden="false">
+    <description>Defines, whether the CSV data export should export the data-row whenever the report has been
+      finished.
+    </description>
     <enum>
       <text>true</text>
       <text>false</text>
     </enum>
   </key>
-  <key name="org.pentaho.reporting.engine.classic.core.modules.output.csv.EnableReportHeader" global="false" hidden="false">
-    <description>Defines, whether the CSV data export should export the data-row whenever the report has been started.</description>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.output.csv.EnableReportHeader" global="false"
+       hidden="false">
+    <description>Defines, whether the CSV data export should export the data-row whenever the report has been started.
+    </description>
     <enum>
       <text>true</text>
       <text>false</text>
@@ -43,15 +54,19 @@
     <description>Defines the column separator, defaults to comma.</description>
     <text/>
   </key>
-  <key name="org.pentaho.reporting.engine.classic.core.modules.output.csv.WriteDatarowNames" global="false" hidden="false">
+  <key name="org.pentaho.reporting.engine.classic.core.modules.output.csv.WriteDatarowNames" global="false"
+       hidden="false">
     <description>Defines whether to write the column names of the datarow into the first row.</description>
     <enum>
       <text>true</text>
       <text>false</text>
     </enum>
   </key>
-  <key name="org.pentaho.reporting.engine.classic.core.modules.output.csv.WriteStateColumns" global="false" hidden="false">
-    <description>Defines, whether output will contain some state information columns in addition to the defined data columns. The state columns help to identify the various band types later.</description>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.output.csv.WriteStateColumns" global="false"
+       hidden="false">
+    <description>Defines, whether output will contain some state information columns in addition to the defined data
+      columns. The state columns help to identify the various band types later.
+    </description>
     <enum>
       <text>true</text>
       <text>false</text>

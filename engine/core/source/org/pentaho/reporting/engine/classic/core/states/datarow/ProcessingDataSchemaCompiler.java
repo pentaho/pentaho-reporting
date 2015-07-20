@@ -17,8 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.core.states.datarow;
 
-import javax.swing.table.TableModel;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.pentaho.reporting.engine.classic.core.MetaAttributeNames;
@@ -39,45 +37,39 @@ import org.pentaho.reporting.engine.classic.core.wizard.EmptyDataAttributes;
 import org.pentaho.reporting.engine.classic.core.wizard.MetaSelectorRule;
 import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 
-public class ProcessingDataSchemaCompiler extends DataSchemaCompiler
-{
-  private static final Log logger = LogFactory.getLog(ProcessingDataSchemaCompiler.class);
+import javax.swing.table.TableModel;
+
+public class ProcessingDataSchemaCompiler extends DataSchemaCompiler {
+  private static final Log logger = LogFactory.getLog( ProcessingDataSchemaCompiler.class );
   private ResourceManager resourceManager;
   private DataSchemaDefinition globalDefaults;
 
-  public ProcessingDataSchemaCompiler(final DataSchemaDefinition reportSchemaDefinition,
-                                      final DataAttributeContext context,
-                                      final ResourceManager resourceManager,
-                                      final DataSchemaDefinition globalDefaults)
-  {
-    super(reportSchemaDefinition, context, resourceManager);
+  public ProcessingDataSchemaCompiler( final DataSchemaDefinition reportSchemaDefinition,
+                                       final DataAttributeContext context,
+                                       final ResourceManager resourceManager,
+                                       final DataSchemaDefinition globalDefaults ) {
+    super( reportSchemaDefinition, context, resourceManager );
     this.resourceManager = resourceManager;
     this.globalDefaults = globalDefaults;
   }
 
-  protected DataSchemaDefinition parseGlobalDefaults(final ResourceManager resourceManager)
-  {
-    if (globalDefaults == null)
-    {
-      globalDefaults = super.parseGlobalDefaults(resourceManager);
+  protected DataSchemaDefinition parseGlobalDefaults( final ResourceManager resourceManager ) {
+    if ( globalDefaults == null ) {
+      globalDefaults = super.parseGlobalDefaults( resourceManager );
     }
     return globalDefaults;
   }
 
-  public DataSchemaDefinition getGlobalDefaults()
-  {
+  public DataSchemaDefinition getGlobalDefaults() {
     return globalDefaults;
   }
 
-  public DataSchema compile(final MasterDataRow masterRow,
-                            final ReportEnvironment reportEnvironment) throws ReportDataFactoryException
-  {
-    if (masterRow == null)
-    {
+  public DataSchema compile( final MasterDataRow masterRow,
+                             final ReportEnvironment reportEnvironment ) throws ReportDataFactoryException {
+    if ( masterRow == null ) {
       throw new NullPointerException();
     }
-    if (isInitialized() == false)
-    {
+    if ( isInitialized() == false ) {
       init();
     }
 
@@ -93,115 +85,97 @@ public class ProcessingDataSchemaCompiler extends DataSchemaCompiler
 
     final DefaultDataSchema defaultDataSchema = new DefaultDataSchema();
 
-    if (parameters != null)
-    {
+    if ( parameters != null ) {
       final MasterDataRow parentRow = masterRow.getParentDataRow();
-      if (parentRow == null)
-      {
-        processParameters(parameters, null, reportEnvironment,
-            globalAttributes, indirectRules, directRules, defaultDataSchema);
-      }
-      else
-      {
+      if ( parentRow == null ) {
+        processParameters( parameters, null, reportEnvironment,
+          globalAttributes, indirectRules, directRules, defaultDataSchema );
+      } else {
         // import the parameters that have been computed already ..
         final String[] parameterNames = parameters.getParentNames();
         final String[] innerNames = parameters.getColumnNames();
-        for (int i = 0; i < parameterNames.length; i++)
-        {
-          final String name = parameterNames[i];
-          final DataAttributes attributes = parentRow.getDataSchema().getAttributes(name);
-          defaultDataSchema.setAttributes(innerNames[i], attributes);
+        for ( int i = 0; i < parameterNames.length; i++ ) {
+          final String name = parameterNames[ i ];
+          final DataAttributes attributes = parentRow.getDataSchema().getAttributes( name );
+          defaultDataSchema.setAttributes( innerNames[ i ], attributes );
         }
       }
     }
 
     // expressions
     final Expression[] expressions = expressionsRow.getExpressions();
-    for (int i = 0; i < expressions.length; i++)
-    {
-      final Expression expression = expressions[i];
+    for ( int i = 0; i < expressions.length; i++ ) {
+      final Expression expression = expressions[ i ];
       final String name = expression.getName();
-      if (name == null)
-      {
+      if ( name == null ) {
         continue;
       }
       final DefaultDataAttributes computedParameterDataAttributes = new DefaultDataAttributes();
-      computedParameterDataAttributes.merge(globalAttributes, context);
-      computedParameterDataAttributes.merge(new ExpressionsDataAttributes(expression), context);
+      computedParameterDataAttributes.merge( globalAttributes, context );
+      computedParameterDataAttributes.merge( new ExpressionsDataAttributes( expression ), context );
 
-      applyRules(indirectRules, directRules, computedParameterDataAttributes);
-      defaultDataSchema.setAttributes(name, computedParameterDataAttributes);
+      applyRules( indirectRules, directRules, computedParameterDataAttributes );
+      defaultDataSchema.setAttributes( name, computedParameterDataAttributes );
     }
 
     // massdata
-    if (massDataRow != null)
-    {
+    if ( massDataRow != null ) {
       final GenericDataAttributes parameterDataAttributes = getTableDataAttributes();
       final TableModel data = massDataRow.getReportData();
-      if (data instanceof MetaTableModel == false)
-      {
+      if ( data instanceof MetaTableModel == false ) {
         final int count = data.getColumnCount();
-        for (int i = 0; i < count; i++)
-        {
-          final String colName = data.getColumnName(i);
+        for ( int i = 0; i < count; i++ ) {
+          final String colName = data.getColumnName( i );
           parameterDataAttributes.setup
-              (colName, data.getColumnClass(i), MetaAttributeNames.Core.SOURCE_VALUE_TABLE, colName, globalAttributes);
+            ( colName, data.getColumnClass( i ), MetaAttributeNames.Core.SOURCE_VALUE_TABLE, colName,
+              globalAttributes );
 
           final DefaultDataAttributes computedParameterDataAttributes = new DefaultDataAttributes();
-          computedParameterDataAttributes.merge(parameterDataAttributes, context);
-          applyRules(indirectRules, directRules, computedParameterDataAttributes);
-          defaultDataSchema.setAttributes(colName, computedParameterDataAttributes);
+          computedParameterDataAttributes.merge( parameterDataAttributes, context );
+          applyRules( indirectRules, directRules, computedParameterDataAttributes );
+          defaultDataSchema.setAttributes( colName, computedParameterDataAttributes );
         }
-      }
-      else
-      {
+      } else {
         final MetaTableModel mt = (MetaTableModel) data;
 
         final DefaultDataAttributes tableGlobalAttributes = new DefaultDataAttributes();
-        tableGlobalAttributes.merge(globalAttributes, context);
-        tableGlobalAttributes.merge(mt.getTableAttributes(), context);
-        try
-        {
-          defaultDataSchema.setTableAttributes(tableGlobalAttributes);
-        }
-        catch (CloneNotSupportedException e)
-        {
-          logger.warn("Unable to copy global data-attributes", e);
+        tableGlobalAttributes.merge( globalAttributes, context );
+        tableGlobalAttributes.merge( mt.getTableAttributes(), context );
+        try {
+          defaultDataSchema.setTableAttributes( tableGlobalAttributes );
+        } catch ( CloneNotSupportedException e ) {
+          logger.warn( "Unable to copy global data-attributes", e );
         }
 
         final int count = data.getColumnCount();
-        for (int i = 0; i < count; i++)
-        {
-          final String colName = data.getColumnName(i);
+        for ( int i = 0; i < count; i++ ) {
+          final String colName = data.getColumnName( i );
           final DefaultDataAttributes computedParameterDataAttributes = new DefaultDataAttributes();
-          computedParameterDataAttributes.merge(tableGlobalAttributes, context);
-          computedParameterDataAttributes.merge(mt.getColumnAttributes(i), context);
+          computedParameterDataAttributes.merge( tableGlobalAttributes, context );
+          computedParameterDataAttributes.merge( mt.getColumnAttributes( i ), context );
 
-          parameterDataAttributes.setup(colName, data.getColumnClass(i),
-              MetaAttributeNames.Core.SOURCE_VALUE_TABLE, null, EmptyDataAttributes.INSTANCE);
-          computedParameterDataAttributes.merge(parameterDataAttributes, context);
+          parameterDataAttributes.setup( colName, data.getColumnClass( i ),
+            MetaAttributeNames.Core.SOURCE_VALUE_TABLE, null, EmptyDataAttributes.INSTANCE );
+          computedParameterDataAttributes.merge( parameterDataAttributes, context );
 
-          applyRules(indirectRules, directRules, computedParameterDataAttributes);
-          defaultDataSchema.setAttributes(colName, computedParameterDataAttributes);
+          applyRules( indirectRules, directRules, computedParameterDataAttributes );
+          defaultDataSchema.setAttributes( colName, computedParameterDataAttributes );
         }
       }
     }
 
     // imported values ...
-    if (importedDataRow != null)
-    {
+    if ( importedDataRow != null ) {
       final String[] columnNames = importedDataRow.getColumnNames();
-      for (int i = 0; i < columnNames.length; i++)
-      {
-        final String columnName = columnNames[i];
-        defaultDataSchema.setAttributes(columnName, importedDataRow.getAttributes(columnName));
+      for ( int i = 0; i < columnNames.length; i++ ) {
+        final String columnName = columnNames[ i ];
+        defaultDataSchema.setAttributes( columnName, importedDataRow.getAttributes( columnName ) );
       }
     }
     return defaultDataSchema;
   }
 
-  public ResourceManager getResourceManager()
-  {
+  public ResourceManager getResourceManager() {
     return resourceManager;
   }
 }

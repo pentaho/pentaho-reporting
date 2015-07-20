@@ -33,87 +33,80 @@ import org.pentaho.reporting.engine.classic.core.testsupport.selector.ElementMat
 import org.pentaho.reporting.engine.classic.core.testsupport.selector.MatchFactory;
 import org.pentaho.reporting.engine.classic.core.util.geom.StrictGeomUtility;
 
-public class TableCellTest extends TestCase
-{
-  public TableCellTest()
-  {
+public class TableCellTest extends TestCase {
+  public TableCellTest() {
   }
 
-  public TableCellTest(final String name)
-  {
-    super(name);
+  public TableCellTest( final String name ) {
+    super( name );
   }
 
-  public void setUp() throws Exception
-  {
+  public void setUp() throws Exception {
     ClassicEngineBoot.getInstance().start();
   }
 
-  public void testSimpleTable() throws ReportProcessingException, ContentProcessingException
-  {
+  public void testSimpleTable() throws ReportProcessingException, ContentProcessingException {
     final Band table = new Band();
-    table.getStyle().setStyleProperty(BandStyleKeys.LAYOUT, BandStyleKeys.LAYOUT_TABLE);
-    table.getStyle().setStyleProperty(BandStyleKeys.TABLE_LAYOUT, TableLayout.fixed);
+    table.getStyle().setStyleProperty( BandStyleKeys.LAYOUT, BandStyleKeys.LAYOUT_TABLE );
+    table.getStyle().setStyleProperty( BandStyleKeys.TABLE_LAYOUT, TableLayout.fixed );
 
     final Band tableBody = new Band();
-    tableBody.getStyle().setStyleProperty(BandStyleKeys.LAYOUT, BandStyleKeys.LAYOUT_TABLE_BODY);
-    table.addElement(tableBody);
+    tableBody.getStyle().setStyleProperty( BandStyleKeys.LAYOUT, BandStyleKeys.LAYOUT_TABLE_BODY );
+    table.addElement( tableBody );
 
     final Band row = new Band();
-    row.getStyle().setStyleProperty(BandStyleKeys.LAYOUT, BandStyleKeys.LAYOUT_TABLE_ROW);
-    row.setName("r-0");
-    final Band cell = TableTestUtil.createCell(1, 1);
-    cell.setName("dr-0-0");
-    cell.addElement(TableTestUtil.createDataItem("Data-0-0"));
-    cell.addElement(TableTestUtil.createDataItem("Data-0-1"));
-    cell.addElement(TableTestUtil.createDataItem("Data-0-2"));
-    cell.addElement(TableTestUtil.createDataItem("Data-0-3"));
+    row.getStyle().setStyleProperty( BandStyleKeys.LAYOUT, BandStyleKeys.LAYOUT_TABLE_ROW );
+    row.setName( "r-0" );
+    final Band cell = TableTestUtil.createCell( 1, 1 );
+    cell.setName( "dr-0-0" );
+    cell.addElement( TableTestUtil.createDataItem( "Data-0-0" ) );
+    cell.addElement( TableTestUtil.createDataItem( "Data-0-1" ) );
+    cell.addElement( TableTestUtil.createDataItem( "Data-0-2" ) );
+    cell.addElement( TableTestUtil.createDataItem( "Data-0-3" ) );
 
-    row.addElement(cell);
-    tableBody.addElement(row);
+    row.addElement( cell );
+    tableBody.addElement( row );
 
     MasterReport report = new MasterReport();
-    report.getReportHeader().addElement(table);
+    report.getReportHeader().addElement( table );
 
-    final LogicalPageBox logicalPageBox = DebugReportRunner.layoutSingleBand(report, report.getReportHeader());
-    final RenderNode[] all = MatchFactory.matchAll(logicalPageBox, new ElementMatcher(ParagraphRenderBox.class));
+    final LogicalPageBox logicalPageBox = DebugReportRunner.layoutSingleBand( report, report.getReportHeader() );
+    final RenderNode[] all = MatchFactory.matchAll( logicalPageBox, new ElementMatcher( ParagraphRenderBox.class ) );
     long positionY = 0;
-    for (int i = 0; i < all.length; i += 1)
-    {
-      final RenderNode node = all[i];
+    for ( int i = 0; i < all.length; i += 1 ) {
+      final RenderNode node = all[ i ];
 
-      assertEquals(positionY, node.getY());
+      assertEquals( positionY, node.getY() );
       positionY += node.getHeight();
     }
   }
 
-  public void testTableCellHeight() throws ReportProcessingException, ContentProcessingException
-  {
+  public void testTableCellHeight() throws ReportProcessingException, ContentProcessingException {
     final Band table = new Band();
-    table.getStyle().setStyleProperty(BandStyleKeys.LAYOUT, BandStyleKeys.LAYOUT_TABLE);
-    table.getStyle().setStyleProperty(BandStyleKeys.TABLE_LAYOUT, TableLayout.fixed);
+    table.getStyle().setStyleProperty( BandStyleKeys.LAYOUT, BandStyleKeys.LAYOUT_TABLE );
+    table.getStyle().setStyleProperty( BandStyleKeys.TABLE_LAYOUT, TableLayout.fixed );
 
     final Band tableBody = new Band();
-    tableBody.getStyle().setStyleProperty(BandStyleKeys.LAYOUT, BandStyleKeys.LAYOUT_TABLE_BODY);
-    table.addElement(tableBody);
+    tableBody.getStyle().setStyleProperty( BandStyleKeys.LAYOUT, BandStyleKeys.LAYOUT_TABLE_BODY );
+    table.addElement( tableBody );
 
     final Band row = new Band();
-    row.getStyle().setStyleProperty(BandStyleKeys.LAYOUT, BandStyleKeys.LAYOUT_TABLE_ROW);
-    row.setName("r-0");
+    row.getStyle().setStyleProperty( BandStyleKeys.LAYOUT, BandStyleKeys.LAYOUT_TABLE_ROW );
+    row.setName( "r-0" );
 
-    final Band cell = TableTestUtil.createCell(1, 1);
-    cell.setName("dr-0-0");
-    cell.addElement(TableTestUtil.createDataItem("Data-0-0", 150, -100));
+    final Band cell = TableTestUtil.createCell( 1, 1 );
+    cell.setName( "dr-0-0" );
+    cell.addElement( TableTestUtil.createDataItem( "Data-0-0", 150, -100 ) );
 
-    row.addElement(cell);
-    tableBody.addElement(row);
+    row.addElement( cell );
+    tableBody.addElement( row );
 
     MasterReport report = new MasterReport();
-    report.getReportHeader().addElement(table);
+    report.getReportHeader().addElement( table );
 
-    final LogicalPageBox logicalPageBox = DebugReportRunner.layoutSingleBand(report, report.getReportHeader());
+    final LogicalPageBox logicalPageBox = DebugReportRunner.layoutSingleBand( report, report.getReportHeader() );
     //ModelPrinter.INSTANCE.print(logicalPageBox);
-    final RenderNode[] all = MatchFactory.matchAll(logicalPageBox, new ElementMatcher(ParagraphRenderBox.class));
-    assertEquals(StrictGeomUtility.toInternalValue(20), all[0].getHeight());
+    final RenderNode[] all = MatchFactory.matchAll( logicalPageBox, new ElementMatcher( ParagraphRenderBox.class ) );
+    assertEquals( StrictGeomUtility.toInternalValue( 20 ), all[ 0 ].getHeight() );
   }
 }

@@ -26,10 +26,9 @@ import org.pentaho.reporting.engine.classic.core.layout.model.RenderNode;
  *
  * @author Thomas Morgner
  */
-public final class BoxDefinition
-{
+public final class BoxDefinition {
   public static final BoxDefinition EMPTY = new BoxDefinition().lock();
-  public static final RenderLength DEFAULT_PREFERRED_WIDTH = RenderLength.createFromRaw(-100);
+  public static final RenderLength DEFAULT_PREFERRED_WIDTH = RenderLength.createFromRaw( -100 );
 
   private Boolean empty;
   private long paddingTop;
@@ -51,8 +50,7 @@ public final class BoxDefinition
   private boolean locked;
   private boolean sizeSpecifiesBorderBox;
 
-  public BoxDefinition()
-  {
+  public BoxDefinition() {
     border = Border.EMPTY_BORDER;
     preferredWidth = RenderLength.AUTO;
     preferredHeight = RenderLength.AUTO;
@@ -68,29 +66,24 @@ public final class BoxDefinition
     sizeSpecifiesBorderBox = true;
   }
 
-  public void setSizeSpecifiesBorderBox(final boolean sizeSpecifiesBorderBox)
-  {
+  public void setSizeSpecifiesBorderBox( final boolean sizeSpecifiesBorderBox ) {
     this.sizeSpecifiesBorderBox = sizeSpecifiesBorderBox;
   }
 
-  public boolean isSizeSpecifiesBorderBox()
-  {
+  public boolean isSizeSpecifiesBorderBox() {
     return sizeSpecifiesBorderBox;
   }
 
-  public boolean isLocked()
-  {
+  public boolean isLocked() {
     return locked;
   }
 
-  public BoxDefinition lock()
-  {
+  public BoxDefinition lock() {
     locked = true;
     return this;
   }
 
-  public BoxDefinition derive()
-  {
+  public BoxDefinition derive() {
     final BoxDefinition retval = new BoxDefinition();
     retval.border = border;
     retval.preferredWidth = preferredWidth;
@@ -109,20 +102,16 @@ public final class BoxDefinition
     return retval;
   }
 
-  public RenderLength getFixedPosition()
-  {
+  public RenderLength getFixedPosition() {
     return fixedPosition;
   }
 
-  public void setFixedPosition(final RenderLength fixedPosition)
-  {
-    if (locked)
-    {
+  public void setFixedPosition( final RenderLength fixedPosition ) {
+    if ( locked ) {
       throw new IllegalStateException();
     }
 
-    if (fixedPosition == null)
-    {
+    if ( fixedPosition == null ) {
       throw new NullPointerException();
     }
 
@@ -130,20 +119,16 @@ public final class BoxDefinition
     this.empty = null;
   }
 
-  public Border getBorder()
-  {
+  public Border getBorder() {
     return border;
   }
 
-  public void setBorder(final Border border)
-  {
-    if (locked)
-    {
+  public void setBorder( final Border border ) {
+    if ( locked ) {
       throw new IllegalStateException();
     }
 
-    if (border == null)
-    {
+    if ( border == null ) {
       throw new NullPointerException();
     }
 
@@ -151,15 +136,12 @@ public final class BoxDefinition
     this.empty = null;
   }
 
-  public long getPaddingTop()
-  {
+  public long getPaddingTop() {
     return paddingTop;
   }
 
-  public void setPaddingTop(final long paddingTop)
-  {
-    if (locked)
-    {
+  public void setPaddingTop( final long paddingTop ) {
+    if ( locked ) {
       throw new IllegalStateException();
     }
 
@@ -167,15 +149,12 @@ public final class BoxDefinition
     this.empty = null;
   }
 
-  public long getPaddingLeft()
-  {
+  public long getPaddingLeft() {
     return paddingLeft;
   }
 
-  public void setPaddingLeft(final long paddingLeft)
-  {
-    if (locked)
-    {
+  public void setPaddingLeft( final long paddingLeft ) {
+    if ( locked ) {
       throw new IllegalStateException();
     }
 
@@ -183,15 +162,12 @@ public final class BoxDefinition
     this.empty = null;
   }
 
-  public long getPaddingBottom()
-  {
+  public long getPaddingBottom() {
     return paddingBottom;
   }
 
-  public void setPaddingBottom(final long paddingBottom)
-  {
-    if (locked)
-    {
+  public void setPaddingBottom( final long paddingBottom ) {
+    if ( locked ) {
       throw new IllegalStateException();
     }
 
@@ -199,146 +175,115 @@ public final class BoxDefinition
     this.empty = null;
   }
 
-  public long getPaddingRight()
-  {
+  public long getPaddingRight() {
     return paddingRight;
   }
 
-  public void setPaddingRight(final long paddingRight)
-  {
-    if (locked)
-    {
+  public void setPaddingRight( final long paddingRight ) {
+    if ( locked ) {
       throw new IllegalStateException();
     }
     this.paddingRight = paddingRight;
     this.empty = null;
   }
 
-  public RenderLength getPreferredHeight()
-  {
+  public RenderLength getPreferredHeight() {
     return preferredHeight;
   }
 
-  public void setPreferredHeight(final RenderLength preferredHeight)
-  {
-    if (locked)
-    {
+  public void setPreferredHeight( final RenderLength preferredHeight ) {
+    if ( locked ) {
       throw new IllegalStateException();
     }
-    if (preferredHeight == null)
-    {
+    if ( preferredHeight == null ) {
       throw new NullPointerException();
     }
 
     this.preferredHeight = preferredHeight;
   }
 
-  public RenderLength getPreferredWidth()
-  {
+  public RenderLength getPreferredWidth() {
     return preferredWidth;
   }
 
-  public void setPreferredWidth(final RenderLength preferredWidth)
-  {
-    if (locked)
-    {
+  public void setPreferredWidth( final RenderLength preferredWidth ) {
+    if ( locked ) {
       throw new IllegalStateException();
     }
-    if (preferredWidth == null)
-    {
+    if ( preferredWidth == null ) {
       throw new NullPointerException();
     }
 
     this.preferredWidth = preferredWidth;
   }
 
-  public RenderLength getMinimumHeight()
-  {
+  public RenderLength getMinimumHeight() {
     return minimumHeight;
   }
 
-  public void setMinimumHeight(final RenderLength minimumHeight)
-  {
-    if (locked)
-    {
+  public void setMinimumHeight( final RenderLength minimumHeight ) {
+    if ( locked ) {
       throw new IllegalStateException();
     }
-    if (minimumHeight == null)
-    {
+    if ( minimumHeight == null ) {
       throw new NullPointerException();
     }
     this.minimumHeight = minimumHeight;
   }
 
-  public RenderLength getMinimumWidth()
-  {
+  public RenderLength getMinimumWidth() {
     return minimumWidth;
   }
 
-  public void setMinimumWidth(final RenderLength minimumWidth)
-  {
-    if (locked)
-    {
+  public void setMinimumWidth( final RenderLength minimumWidth ) {
+    if ( locked ) {
       throw new IllegalStateException();
     }
-    if (minimumWidth == null)
-    {
+    if ( minimumWidth == null ) {
       throw new NullPointerException();
     }
     this.minimumWidth = minimumWidth;
   }
 
-  public RenderLength getMaximumHeight()
-  {
+  public RenderLength getMaximumHeight() {
     return maximumHeight;
   }
 
-  public void setMaximumHeight(final RenderLength maximumHeight)
-  {
-    if (locked)
-    {
+  public void setMaximumHeight( final RenderLength maximumHeight ) {
+    if ( locked ) {
       throw new IllegalStateException();
     }
-    if (maximumHeight == null)
-    {
+    if ( maximumHeight == null ) {
       throw new NullPointerException();
     }
 
     this.maximumHeight = maximumHeight;
   }
 
-  public RenderLength getMaximumWidth()
-  {
+  public RenderLength getMaximumWidth() {
     return maximumWidth;
   }
 
-  public void setMaximumWidth(final RenderLength maximumWidth)
-  {
-    if (locked)
-    {
+  public void setMaximumWidth( final RenderLength maximumWidth ) {
+    if ( locked ) {
       throw new IllegalStateException();
     }
-    if (maximumWidth == null)
-    {
+    if ( maximumWidth == null ) {
       throw new NullPointerException();
     }
 
     this.maximumWidth = maximumWidth;
   }
 
-  public RenderLength getMarginTop()
-  {
+  public RenderLength getMarginTop() {
     return marginTop;
   }
 
-  public void setMarginTop(final RenderLength marginTop)
-  {
-    if (locked)
-    {
+  public void setMarginTop( final RenderLength marginTop ) {
+    if ( locked ) {
       throw new IllegalStateException();
     }
-    if (marginTop == null)
-    {
+    if ( marginTop == null ) {
       throw new NullPointerException();
     }
 
@@ -346,19 +291,15 @@ public final class BoxDefinition
     this.empty = null;
   }
 
-  public RenderLength getMarginBottom()
-  {
+  public RenderLength getMarginBottom() {
     return marginBottom;
   }
 
-  public void setMarginBottom(final RenderLength marginBottom)
-  {
-    if (locked)
-    {
+  public void setMarginBottom( final RenderLength marginBottom ) {
+    if ( locked ) {
       throw new IllegalStateException();
     }
-    if (marginBottom == null)
-    {
+    if ( marginBottom == null ) {
       throw new NullPointerException();
     }
 
@@ -366,80 +307,64 @@ public final class BoxDefinition
     this.empty = null;
   }
 
-  public RenderLength getMarginLeft()
-  {
+  public RenderLength getMarginLeft() {
     return marginLeft;
   }
 
-  public void setMarginLeft(final RenderLength marginLeft)
-  {
-    if (locked)
-    {
+  public void setMarginLeft( final RenderLength marginLeft ) {
+    if ( locked ) {
       throw new IllegalStateException();
     }
-    if (marginLeft == null)
-    {
+    if ( marginLeft == null ) {
       throw new NullPointerException();
     }
     this.marginLeft = marginLeft;
     this.empty = null;
   }
 
-  public RenderLength getMarginRight()
-  {
+  public RenderLength getMarginRight() {
     return marginRight;
   }
 
-  public void setMarginRight(final RenderLength marginRight)
-  {
-    if (locked)
-    {
+  public void setMarginRight( final RenderLength marginRight ) {
+    if ( locked ) {
       throw new IllegalStateException();
     }
-    if (marginRight == null)
-    {
+    if ( marginRight == null ) {
       throw new NullPointerException();
     }
     this.marginRight = marginRight;
     this.empty = null;
   }
 
-  public boolean isEmpty()
-  {
-    if (empty != null)
-    {
+  public boolean isEmpty() {
+    if ( empty != null ) {
       return empty.booleanValue();
     }
 
-    if (paddingTop != 0)
-    {
+    if ( paddingTop != 0 ) {
       empty = Boolean.FALSE;
       return false;
     }
-    if (paddingLeft != 0)
-    {
+    if ( paddingLeft != 0 ) {
       empty = Boolean.FALSE;
       return false;
     }
-    if (paddingBottom != 0)
-    {
+    if ( paddingBottom != 0 ) {
       empty = Boolean.FALSE;
       return false;
     }
-    if (paddingRight != 0)
-    {
+    if ( paddingRight != 0 ) {
       empty = Boolean.FALSE;
       return false;
     }
 
-    if (fixedPosition != null && RenderLength.AUTO.equals(fixedPosition) == false)
-    {
+    if ( fixedPosition != null && RenderLength.AUTO.equals( fixedPosition ) == false ) {
       empty = Boolean.FALSE;
       return false;
     }
 
-    if (border.isEmpty() == false)
-    {
+    if ( border.isEmpty() == false ) {
       empty = Boolean.FALSE;
       return false;
     }
@@ -456,18 +381,15 @@ public final class BoxDefinition
    * @param axis the axis on which to split the box.
    * @return the two new box definitions, never null.
    */
-  public BoxDefinition[] split(final int axis)
-  {
-    if (axis == RenderNode.HORIZONTAL_AXIS)
-    {
+  public BoxDefinition[] split( final int axis ) {
+    if ( axis == RenderNode.HORIZONTAL_AXIS ) {
       return splitVertically();
     }
     return splitHorizontally();
   }
 
-  private BoxDefinition[] splitVertically()
-  {
-    final Border[] borders = border.splitVertically(null);
+  private BoxDefinition[] splitVertically() {
+    final Border[] borders = border.splitVertically( null );
     final BoxDefinition first = new BoxDefinition();
     first.marginTop = marginTop;
     first.marginLeft = marginLeft;
@@ -477,7 +399,7 @@ public final class BoxDefinition
     first.paddingTop = paddingTop;
     first.paddingLeft = paddingLeft;
     first.paddingRight = 0;
-    first.border = borders[0];
+    first.border = borders[ 0 ];
     first.preferredHeight = preferredHeight;
     first.preferredWidth = preferredWidth;
     first.minimumHeight = minimumHeight;
@@ -495,7 +417,7 @@ public final class BoxDefinition
     second.paddingTop = paddingTop;
     second.paddingLeft = 0;
     second.paddingRight = paddingRight;
-    second.border = borders[1];
+    second.border = borders[ 1 ];
     second.preferredHeight = preferredHeight;
     second.preferredWidth = preferredWidth;
     second.minimumHeight = minimumHeight;
@@ -504,15 +426,14 @@ public final class BoxDefinition
     second.maximumWidth = maximumWidth;
     second.fixedPosition = RenderLength.AUTO;
 
-    final BoxDefinition[] boxes = new BoxDefinition[2];
-    boxes[0] = first;
-    boxes[1] = second;
+    final BoxDefinition[] boxes = new BoxDefinition[ 2 ];
+    boxes[ 0 ] = first;
+    boxes[ 1 ] = second;
     return boxes;
   }
 
-  private BoxDefinition[] splitHorizontally()
-  {
-    final Border[] borders = border.splitHorizontally(null);
+  private BoxDefinition[] splitHorizontally() {
+    final Border[] borders = border.splitHorizontally( null );
 
     final BoxDefinition first = new BoxDefinition();
     first.marginTop = marginTop;
@@ -523,7 +444,7 @@ public final class BoxDefinition
     first.paddingTop = paddingTop;
     first.paddingLeft = paddingLeft;
     first.paddingRight = paddingRight;
-    first.border = borders[0];
+    first.border = borders[ 0 ];
     first.preferredHeight = preferredHeight;
     first.preferredWidth = preferredWidth;
     first.minimumHeight = minimumHeight;
@@ -541,7 +462,7 @@ public final class BoxDefinition
     second.paddingTop = 0;
     second.paddingLeft = paddingLeft;
     second.paddingRight = paddingRight;
-    second.border = borders[1];
+    second.border = borders[ 1 ];
     second.preferredHeight = preferredHeight;
     second.preferredWidth = preferredWidth;
     second.minimumHeight = minimumHeight;
@@ -550,31 +471,30 @@ public final class BoxDefinition
     second.maximumWidth = maximumWidth;
     second.fixedPosition = fixedPosition;
 
-    final BoxDefinition[] boxes = new BoxDefinition[2];
-    boxes[0] = first;
-    boxes[1] = second;
+    final BoxDefinition[] boxes = new BoxDefinition[ 2 ];
+    boxes[ 0 ] = first;
+    boxes[ 1 ] = second;
     return boxes;
   }
 
 
-  public String toString()
-  {
+  public String toString() {
     return "BoxDefinition{" +
-        "minimumHeight=" + minimumHeight +
-        ", minimumWidth=" + minimumWidth +
-        ", preferredHeight=" + preferredHeight +
-        ", preferredWidth=" + preferredWidth +
-        ", maximumHeight=" + maximumHeight +
-        ", maximumWidth=" + maximumWidth +
-        ", marginTop=" + marginTop +
-        ", marginBottom=" + marginBottom +
-        ", marginLeft=" + marginLeft +
-        ", marginRight=" + marginRight +
-        ", paddingTop=" + paddingTop +
-        ", paddingLeft=" + paddingLeft +
-        ", paddingBottom=" + paddingBottom +
-        ", paddingRight=" + paddingRight +
-        ", border=" + border +
-        '}';
+      "minimumHeight=" + minimumHeight +
+      ", minimumWidth=" + minimumWidth +
+      ", preferredHeight=" + preferredHeight +
+      ", preferredWidth=" + preferredWidth +
+      ", maximumHeight=" + maximumHeight +
+      ", maximumWidth=" + maximumWidth +
+      ", marginTop=" + marginTop +
+      ", marginBottom=" + marginBottom +
+      ", marginLeft=" + marginLeft +
+      ", marginRight=" + marginRight +
+      ", paddingTop=" + paddingTop +
+      ", paddingLeft=" + paddingLeft +
+      ", paddingBottom=" + paddingBottom +
+      ", paddingRight=" + paddingRight +
+      ", border=" + border +
+      '}';
   }
 }

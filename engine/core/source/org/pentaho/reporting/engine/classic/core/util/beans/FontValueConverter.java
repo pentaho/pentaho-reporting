@@ -17,12 +17,10 @@
 
 package org.pentaho.reporting.engine.classic.core.util.beans;
 
-import java.awt.Font;
+import java.awt.*;
 
-public class FontValueConverter implements ValueConverter
-{
-  public FontValueConverter()
-  {
+public class FontValueConverter implements ValueConverter {
+  public FontValueConverter() {
   }
 
   /**
@@ -32,40 +30,32 @@ public class FontValueConverter implements ValueConverter
    * @return the attribute value.
    * @throws BeanException if there was an error during the conversion.
    */
-  public String toAttributeValue(final Object o) throws BeanException
-  {
-    if (o == null)
-    {
+  public String toAttributeValue( final Object o ) throws BeanException {
+    if ( o == null ) {
       throw new NullPointerException();
     }
-    if (o instanceof Font == false)
-    {
-      throw new BeanException("Failed to convert object of type " + o.getClass() + ": Not a Font.");
+    if ( o instanceof Font == false ) {
+      throw new BeanException( "Failed to convert object of type " + o.getClass() + ": Not a Font." );
     }
     final Font font = (Font) o;
     final int fontSize = font.getSize();
     final String fontName = font.getName();
     final int fontStyle = font.getStyle();
 
-    return fontName + '-' + styleToString(fontStyle) + '-' + fontSize;
+    return fontName + '-' + styleToString( fontStyle ) + '-' + fontSize;
   }
 
-  private static String styleToString(final int style)
-  {
-    if (style == 0)
-    {
+  private static String styleToString( final int style ) {
+    if ( style == 0 ) {
       return "plain";
     }
-    if (style == Font.BOLD)
-    {
+    if ( style == Font.BOLD ) {
       return "bold";
     }
-    if (style == Font.ITALIC)
-    {
+    if ( style == Font.ITALIC ) {
       return "italic";
     }
-    if (style == (Font.BOLD | Font.ITALIC))
-    {
+    if ( style == ( Font.BOLD | Font.ITALIC ) ) {
       return "bolditalic";
     }
     return "plain";
@@ -78,12 +68,10 @@ public class FontValueConverter implements ValueConverter
    * @return a property value.
    * @throws BeanException if there was an error during the conversion.
    */
-  public Object toPropertyValue(final String s) throws BeanException
-  {
-    if (s == null)
-    {
+  public Object toPropertyValue( final String s ) throws BeanException {
+    if ( s == null ) {
       throw new NullPointerException();
     }
-    return Font.decode(s);
+    return Font.decode( s );
   }
 }

@@ -26,57 +26,47 @@ import org.pentaho.reporting.engine.classic.core.event.ReportEvent;
  *
  * @author Thomas Morgner
  */
-public class ProcessDetailsHandler implements AdvanceHandler
-{
+public class ProcessDetailsHandler implements AdvanceHandler {
   public static final AdvanceHandler HANDLER = new ProcessDetailsHandler();
 
-  private ProcessDetailsHandler()
-  {
+  private ProcessDetailsHandler() {
   }
 
-  public int getEventCode()
-  {
+  public int getEventCode() {
     return ReportEvent.ITEMS_ADVANCED;
   }
 
-  public ProcessState advance(final ProcessState state) throws ReportProcessingException
-  {
+  public ProcessState advance( final ProcessState state ) throws ReportProcessingException {
     final ProcessState next = state.deriveForAdvance();
     next.fireReportEvent();
 
     final ItemBand childs = next.getReport().getItemBand();
-    if (childs != null)
-    {
-      return InlineSubreportProcessor.processInline(next, childs);
+    if ( childs != null ) {
+      return InlineSubreportProcessor.processInline( next, childs );
     }
     return next;
   }
 
 
-  public ProcessState commit(final ProcessState next) throws ReportProcessingException
-  {
+  public ProcessState commit( final ProcessState next ) throws ReportProcessingException {
     final ItemBand childs = next.getReport().getItemBand();
-    if (childs == null)
-    {
-      return JoinDetailsHandler.HANDLER.commit(next);
+    if ( childs == null ) {
+      return JoinDetailsHandler.HANDLER.commit( next );
     }
 
-    if (InlineSubreportProcessor.hasSubReports(next, childs))
-    {
-      next.setAdvanceHandler(JoinDetailsHandler.HANDLER);
-      return InlineSubreportProcessor.processBandedSubReports(next, childs);
+    if ( InlineSubreportProcessor.hasSubReports( next, childs ) ) {
+      next.setAdvanceHandler( JoinDetailsHandler.HANDLER );
+      return InlineSubreportProcessor.processBandedSubReports( next, childs );
     }
 
-    return JoinDetailsHandler.HANDLER.commit(next);
+    return JoinDetailsHandler.HANDLER.commit( next );
   }
 
-  public boolean isFinish()
-  {
+  public boolean isFinish() {
     return false;
   }
 
-  public boolean isRestoreHandler()
-  {
+  public boolean isRestoreHandler() {
     return false;
   }
 }

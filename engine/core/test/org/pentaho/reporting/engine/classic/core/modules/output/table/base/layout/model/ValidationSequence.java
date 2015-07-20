@@ -24,49 +24,40 @@ import java.util.ArrayList;
  *
  * @author Thomas Morgner
  */
-public class ValidationSequence
-{
+public class ValidationSequence {
   private ArrayList list;
   private int pageWidth;
   private boolean strict;
 
-  public ValidationSequence()
-  {
+  public ValidationSequence() {
     list = new ArrayList();
   }
 
-  public void addSourceChunk(final SourceChunk sourceChunk)
-  {
-    list.add(sourceChunk);
+  public void addSourceChunk( final SourceChunk sourceChunk ) {
+    list.add( sourceChunk );
   }
 
-  public void addResultTable(final ResultTable resultTable)
-  {
-    list.add(resultTable);
+  public void addResultTable( final ResultTable resultTable ) {
+    list.add( resultTable );
   }
 
-  public int getPageWidth()
-  {
+  public int getPageWidth() {
     return pageWidth;
   }
 
-  public void setPageWidth(final int pageWidth)
-  {
+  public void setPageWidth( final int pageWidth ) {
     this.pageWidth = pageWidth;
   }
 
-  public ArrayList getContents()
-  {
+  public ArrayList getContents() {
     return list;
   }
 
-  public boolean isStrict()
-  {
+  public boolean isStrict() {
     return strict;
   }
 
-  public void setStrict(final boolean strict)
-  {
+  public void setStrict( final boolean strict ) {
     this.strict = strict;
   }
 }

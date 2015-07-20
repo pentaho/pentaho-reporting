@@ -33,8 +33,7 @@ import org.pentaho.reporting.engine.classic.core.style.ElementStyleSheet;
  *
  * @author Thomas Morgner
  */
-public class CellFormatFunction extends AbstractElementFormatFunction implements StructureFunction
-{
+public class CellFormatFunction extends AbstractElementFormatFunction implements StructureFunction {
   /**
    * A reusable format-specification object.
    */
@@ -43,53 +42,43 @@ public class CellFormatFunction extends AbstractElementFormatFunction implements
   /**
    * Default Constructor.
    */
-  public CellFormatFunction()
-  {
+  public CellFormatFunction() {
   }
 
-  public int getProcessingPriority()
-  {
+  public int getProcessingPriority() {
     return 30000;
   }
 
-  protected boolean isExecutable()
-  {
-    return getRuntime().getExportDescriptor().startsWith("table/excel");
+  protected boolean isExecutable() {
+    return getRuntime().getExportDescriptor().startsWith( "table/excel" );
   }
 
-  protected boolean evaluateElement(final ReportElement e)
-  {
+  protected boolean evaluateElement( final ReportElement e ) {
     final DataSource source = e.getElementType();
-    if (source instanceof RawDataSource)
-    {
+    if ( source instanceof RawDataSource ) {
       final ElementStyleSheet style = e.getStyle();
       final String oldFormat = (String)
-          style.getStyleProperty(ElementStyleKeys.EXCEL_DATA_FORMAT_STRING);
-      if (oldFormat != null && oldFormat.length() > 0)
-      {
+        style.getStyleProperty( ElementStyleKeys.EXCEL_DATA_FORMAT_STRING );
+      if ( oldFormat != null && oldFormat.length() > 0 ) {
         final Object attribute = e.getAttribute
-            (AttributeNames.Internal.NAMESPACE, AttributeNames.Internal.EXCEL_CELL_FORMAT_AUTOCOMPUTE);
-        if (Boolean.TRUE.equals(attribute) == false)
-        {
+          ( AttributeNames.Internal.NAMESPACE, AttributeNames.Internal.EXCEL_CELL_FORMAT_AUTOCOMPUTE );
+        if ( Boolean.TRUE.equals( attribute ) == false ) {
           return false;
         }
       }
       final RawDataSource rds = (RawDataSource) source;
-      if (formatSpecification != null)
-      {
-        formatSpecification.redefine(FormatSpecification.TYPE_UNDEFINED, null);
+      if ( formatSpecification != null ) {
+        formatSpecification.redefine( FormatSpecification.TYPE_UNDEFINED, null );
       }
-      formatSpecification = rds.getFormatString(getRuntime(), e, formatSpecification);
-      if (formatSpecification != null)
-      {
-        if (formatSpecification.getType() == FormatSpecification.TYPE_DATE_FORMAT ||
-            formatSpecification.getType() == FormatSpecification.TYPE_DECIMAL_FORMAT)
-        {
+      formatSpecification = rds.getFormatString( getRuntime(), e, formatSpecification );
+      if ( formatSpecification != null ) {
+        if ( formatSpecification.getType() == FormatSpecification.TYPE_DATE_FORMAT ||
+          formatSpecification.getType() == FormatSpecification.TYPE_DECIMAL_FORMAT ) {
           style.setStyleProperty
-              (ElementStyleKeys.EXCEL_DATA_FORMAT_STRING, formatSpecification.getFormatString());
+            ( ElementStyleKeys.EXCEL_DATA_FORMAT_STRING, formatSpecification.getFormatString() );
           e.setAttribute
-              (AttributeNames.Internal.NAMESPACE, AttributeNames.Internal.EXCEL_CELL_FORMAT_AUTOCOMPUTE,
-                  Boolean.TRUE);
+            ( AttributeNames.Internal.NAMESPACE, AttributeNames.Internal.EXCEL_CELL_FORMAT_AUTOCOMPUTE,
+              Boolean.TRUE );
           return true;
         }
       }
@@ -97,8 +86,7 @@ public class CellFormatFunction extends AbstractElementFormatFunction implements
     return false;
   }
 
-  public CellFormatFunction getInstance()
-  {
+  public CellFormatFunction getInstance() {
     final CellFormatFunction instance = (CellFormatFunction) super.getInstance();
     instance.formatSpecification = null;
     return instance;

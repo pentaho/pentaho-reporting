@@ -31,16 +31,13 @@ import org.pentaho.reporting.engine.classic.core.layout.output.OutputProcessorFe
  *
  * @author Thomas Morgner
  */
-public class StreamReportProcessor extends AbstractReportProcessor
-{
-  public StreamReportProcessor(final MasterReport report, final OutputProcessor outputProcessor)
-      throws ReportProcessingException
-  {
-    super(report, outputProcessor);
-    if (outputProcessor.getMetaData().isFeatureSupported(OutputProcessorFeature.PAGEBREAKS))
-    {
+public class StreamReportProcessor extends AbstractReportProcessor {
+  public StreamReportProcessor( final MasterReport report, final OutputProcessor outputProcessor )
+    throws ReportProcessingException {
+    super( report, outputProcessor );
+    if ( outputProcessor.getMetaData().isFeatureSupported( OutputProcessorFeature.PAGEBREAKS ) ) {
       throw new ReportProcessingException
-          ("Streaming report processors cannot be used in conjunction with pageable-outputs");
+        ( "Streaming report processors cannot be used in conjunction with pageable-outputs" );
     }
   }
 
@@ -51,10 +48,9 @@ public class StreamReportProcessor extends AbstractReportProcessor
    * @return the page layouter.
    * @throws ReportProcessingException if there is a processing error.
    */
-  protected OutputFunction createLayoutManager()
-  {
+  protected OutputFunction createLayoutManager() {
     final DefaultOutputFunction outputFunction = new DefaultOutputFunction();
-    outputFunction.setRenderer(new StreamingRenderer(getOutputProcessor()));
+    outputFunction.setRenderer( new StreamingRenderer( getOutputProcessor() ) );
     return outputFunction;
   }
 }

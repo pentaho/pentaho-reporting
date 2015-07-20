@@ -25,37 +25,30 @@ import org.pentaho.reporting.engine.classic.core.layout.model.RenderNode;
  *
  * @author Thomas Morgner
  */
-public final class NodeAlignContext extends AlignContext
-{
+public final class NodeAlignContext extends AlignContext {
   private long shift;
 
-  public NodeAlignContext(final RenderNode node)
-  {
-    super(node);
+  public NodeAlignContext( final RenderNode node ) {
+    super( node );
   }
 
-  public boolean isSimpleNode()
-  {
+  public boolean isSimpleNode() {
     return true;
   }
 
-  public long getBaselineDistance(final int baseline)
-  {
+  public long getBaselineDistance( final int baseline ) {
     return 0;
   }
 
-  public void shift(final long delta)
-  {
+  public void shift( final long delta ) {
     this.shift += delta;
   }
 
-  public long getAfterEdge()
-  {
+  public long getAfterEdge() {
     return shift;
   }
 
-  public long getBeforeEdge()
-  {
+  public long getBeforeEdge() {
     return shift;
   }
 }

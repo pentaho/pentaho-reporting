@@ -26,14 +26,13 @@ import org.pentaho.reporting.libraries.base.boot.SubSystem;
  *
  * @author Thomas Morgner
  */
-public class HtmlExportGUIModule extends AbstractModule
-{
+public class HtmlExportGUIModule extends AbstractModule {
 
   /**
    * The base resource class.
    */
   public static final String BASE_RESOURCE_CLASS =
-      "org.pentaho.reporting.engine.classic.core.modules.gui.html.messages.messages"; //$NON-NLS-1$
+    "org.pentaho.reporting.engine.classic.core.modules.gui.html.messages.messages"; //$NON-NLS-1$
 
   /**
    * DefaultConstructor. Loads the module specification.
@@ -41,8 +40,7 @@ public class HtmlExportGUIModule extends AbstractModule
    * @throws ModuleInitializeException if an error occured.
    */
   public HtmlExportGUIModule()
-      throws ModuleInitializeException
-  {
+    throws ModuleInitializeException {
     loadModuleInfo();
   }
 
@@ -54,8 +52,7 @@ public class HtmlExportGUIModule extends AbstractModule
    * @param subSystem the subSystem.
    * @throws ModuleInitializeException if an error ocurred while initializing the module.
    */
-  public void initialize(final SubSystem subSystem)
-      throws ModuleInitializeException
-  {
+  public void initialize( final SubSystem subSystem )
+    throws ModuleInitializeException {
   }
 }

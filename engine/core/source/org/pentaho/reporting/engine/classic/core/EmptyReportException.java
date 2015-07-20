@@ -22,17 +22,15 @@ package org.pentaho.reporting.engine.classic.core;
  *
  * @author Thomas Morgner.
  */
-public class EmptyReportException extends ReportProcessingException
-{
+public class EmptyReportException extends ReportProcessingException {
   /**
    * Creates an EmptyReportException.
    *
    * @param message the exception message.
    * @param ex      the parent exception.
    */
-  public EmptyReportException(final String message, final Exception ex)
-  {
-    super(message, ex);
+  public EmptyReportException( final String message, final Exception ex ) {
+    super( message, ex );
   }
 
   /**
@@ -40,8 +38,7 @@ public class EmptyReportException extends ReportProcessingException
    *
    * @param message the exception message.
    */
-  public EmptyReportException(final String message)
-  {
-    super(message);
+  public EmptyReportException( final String message ) {
+    super( message );
   }
 }

@@ -4,7 +4,8 @@
     name="Page-Counting" pageformat="A4" topmargin="25" leftmargin="25" bottommargin="25" rightmargin="25">
   <configuration>
     <property
-        name="org.pentaho.reporting.engine.classic.core.modules.output.pageable.pdf.Encoding">Identity-H</property>
+        name="org.pentaho.reporting.engine.classic.core.modules.output.pageable.pdf.Encoding">Identity-H
+    </property>
     <property name="org.pentaho.reporting.engine.classic.core.modules.output.pageable.pdf.EmbedFonts">true</property>
   </configuration>
 

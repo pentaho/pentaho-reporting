@@ -33,7 +33,6 @@ import org.pentaho.reporting.engine.classic.core.layout.model.table.TableRenderB
 import org.pentaho.reporting.engine.classic.core.layout.model.table.TableRowRenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.table.TableSectionRenderBox;
 import org.pentaho.reporting.engine.classic.core.util.InstanceID;
-import org.pentaho.reporting.libraries.base.util.DebugLog;
 
 
 /**
@@ -41,26 +40,21 @@ import org.pentaho.reporting.libraries.base.util.DebugLog;
  *
  * @author Thomas Morgner
  */
-public class CleanPaginatedBoxesStep extends IterateStructuralProcessStep
-{
-  private static class TableSectionContext
-  {
+public class CleanPaginatedBoxesStep extends IterateStructuralProcessStep {
+  private static class TableSectionContext {
     private TableSectionContext context;
     private int safeRows;
     private int expectedNextRowNumber;
 
-    private TableSectionContext(final TableSectionContext context)
-    {
+    private TableSectionContext( final TableSectionContext context ) {
       this.context = context;
     }
 
-    public TableSectionContext pop()
-    {
+    public TableSectionContext pop() {
       return context;
     }
 
-    public boolean isProcessingUnsafe()
-    {
+    public boolean isProcessingUnsafe() {
       // Are there any rows that could be removed? If not, take a short cut, and skip the body ..
       return safeRows <= expectedNextRowNumber;
     }
@@ -72,127 +66,105 @@ public class CleanPaginatedBoxesStep extends IterateStructuralProcessStep
   private InstanceID shiftNode;
   private TableSectionContext tableSectionContext;
 
-  public CleanPaginatedBoxesStep()
-  {
+  public CleanPaginatedBoxesStep() {
   }
 
-  public long getPageOffset()
-  {
+  public long getPageOffset() {
     return pageOffset;
   }
 
-  public void setPageOffset(final long pageOffset)
-  {
+  public void setPageOffset( final long pageOffset ) {
     this.pageOffset = pageOffset;
   }
 
-  protected long compute(final LogicalPageBox pageBox, final long pageOffset)
-  {
+  protected long compute( final LogicalPageBox pageBox, final long pageOffset ) {
     this.shiftOffset = 0;
     this.pageOffset = pageOffset;
-    if (startBlockBox(pageBox))
-    {
+    if ( startBlockBox( pageBox ) ) {
       // not processing the header and footer area: they are 'out-of-context' bands
-      processBoxChilds(pageBox);
+      processBoxChilds( pageBox );
     }
-    finishBlockBox(pageBox);
+    finishBlockBox( pageBox );
     //Log.debug ("ShiftOffset after clean: " + shiftOffset);
     return shiftOffset;
   }
 
-  public long compute(final LogicalPageBox pageBox)
-  {
-    return compute(pageBox, pageBox.getPageOffset());
+  public long compute( final LogicalPageBox pageBox ) {
+    return compute( pageBox, pageBox.getPageOffset() );
   }
 
-  public InstanceID getShiftNode()
-  {
+  public InstanceID getShiftNode() {
     return shiftNode;
   }
 
-  protected void processParagraphChilds(final ParagraphRenderBox box)
-  {
+  protected void processParagraphChilds( final ParagraphRenderBox box ) {
     // we do not process the paragraph lines. This should have been done
     // in the startblock thing and they get re-added anyway as long as the
     // paragraph is active.
   }
 
-  public boolean startCanvasBox(final CanvasRenderBox box)
-  {
+  public boolean startCanvasBox( final CanvasRenderBox box ) {
     return false;
   }
 
-  protected boolean startRowBox(final RenderBox box)
-  {
+  protected boolean startRowBox( final RenderBox box ) {
     return true;
   }
 
-  protected boolean startBlockBox(final BlockRenderBox box)
-  {
-    return startBlockStyleBox(box);
+  protected boolean startBlockBox( final BlockRenderBox box ) {
+    return startBlockStyleBox( box );
   }
 
-  protected boolean startTableColumnGroupBox(final TableColumnGroupNode box)
-  {
+  protected boolean startTableColumnGroupBox( final TableColumnGroupNode box ) {
     // never remove table-column declarations. They are lightweight anyway ..
     return false;
   }
 
-  protected boolean startTableRowBox(final TableRowRenderBox box)
-  {
+  protected boolean startTableRowBox( final TableRowRenderBox box ) {
     tableSectionContext.expectedNextRowNumber = box.getRowIndex() + 1;
     // we dont remove cells from table-rows. If a table-row is finished, we may be able to remove the whole
     // row. However, we can remove contents from table-cells if needed.
     return true;
   }
 
-  protected boolean startTableBox(final TableRenderBox box)
-  {
+  protected boolean startTableBox( final TableRenderBox box ) {
     return true;
   }
 
-  protected boolean startTableCellBox(final TableCellRenderBox box)
-  {
-    return startBlockBox(box);
+  protected boolean startTableCellBox( final TableCellRenderBox box ) {
+    return startBlockBox( box );
   }
 
-  protected boolean startTableSectionBox(final TableSectionRenderBox box)
-  {
-    tableSectionContext = new TableSectionContext(tableSectionContext);
+  protected boolean startTableSectionBox( final TableSectionRenderBox box ) {
+    tableSectionContext = new TableSectionContext( tableSectionContext );
 
-    if (box.getDisplayRole() == TableSectionRenderBox.Role.BODY)
-    {
+    if ( box.getDisplayRole() == TableSectionRenderBox.Role.BODY ) {
       CleanTableRowsPreparationStep preparationStep = new CleanTableRowsPreparationStep();
-      tableSectionContext.safeRows = preparationStep.process(box, pageOffset);
+      tableSectionContext.safeRows = preparationStep.process( box, pageOffset );
       tableSectionContext.expectedNextRowNumber = preparationStep.getFirstRowEncountered();
 
-      if (tableSectionContext.isProcessingUnsafe())
-      {
+      if ( tableSectionContext.isProcessingUnsafe() ) {
         return false;
       }
-      return startTableSectionStyleBox(box);
+      return startTableSectionStyleBox( box );
     }
 
     return false;
   }
 
-  protected void finishTableSectionBox(final TableSectionRenderBox box)
-  {
+  protected void finishTableSectionBox( final TableSectionRenderBox box ) {
     tableSectionContext = tableSectionContext.pop();
   }
 
-  private boolean startBlockStyleBox(final RenderBox box)
-  {
+  private boolean startBlockStyleBox( final RenderBox box ) {
     final int nodeType = box.getLayoutNodeType();
-    if (nodeType == LayoutNodeTypes.TYPE_BOX_PARAGRAPH)
-    {
+    if ( nodeType == LayoutNodeTypes.TYPE_BOX_PARAGRAPH ) {
       return false;
     }
 
-    boolean boxOutsideVisibleRange = (box.getY() + box.getOverflowAreaHeight()) <= pageOffset;
-    final boolean safeForRemove = (box.getParentWidowContexts() == 0) && boxOutsideVisibleRange;
-    if (safeForRemove || box.getRestrictFinishedClearOut() == RenderBox.RestrictFinishClearOut.UNRESTRICTED)
-    {
+    boolean boxOutsideVisibleRange = ( box.getY() + box.getOverflowAreaHeight() ) <= pageOffset;
+    final boolean safeForRemove = ( box.getParentWidowContexts() == 0 ) && boxOutsideVisibleRange;
+    if ( safeForRemove || box.getRestrictFinishedClearOut() == RenderBox.RestrictFinishClearOut.UNRESTRICTED ) {
       // Next, search the last node that is fully invisible. We collapse all
       // invisible node into one big box for efficiency reasons. They wont be
       // visible anyway and thus the result will be the same as if they were
@@ -203,10 +175,8 @@ public class CleanPaginatedBoxesStep extends IterateStructuralProcessStep
       int orphanLeafCount = 0;
       int widowLeafCount = 0;
 
-      while (currentNode != null && currentNode.isOpen() == false && checkFinishedForNode(currentNode))
-      {
-        if ((currentNode.getY() + currentNode.getOverflowAreaHeight()) > pageOffset)
-        {
+      while ( currentNode != null && currentNode.isOpen() == false && checkFinishedForNode( currentNode ) ) {
+        if ( ( currentNode.getY() + currentNode.getOverflowAreaHeight() ) > pageOffset ) {
           // we cant handle that. This node will be visible. So the current last
           // node is the one we can shrink ..
           break;
@@ -218,23 +188,18 @@ public class CleanPaginatedBoxesStep extends IterateStructuralProcessStep
         currentNode = currentNode.getNext();
       }
 
-      if (lastToRemove != null)
-      {
-        removeFinishedNodes(box, firstNode, lastToRemove, orphanLeafCount, widowLeafCount);
+      if ( lastToRemove != null ) {
+        removeFinishedNodes( box, firstNode, lastToRemove, orphanLeafCount, widowLeafCount );
       }
-    }
-    else
-    {
+    } else {
       // any kind of restricted element: We can only remove one element at a time and only if the
       // element is a orphan-leaf element. A orphan-leaf has no children that take part in the
       // widow/orphan constraint calculation and removing the leaf does not alter the result of the
       // calculation of the OrphanStep.
 
       RenderNode currentNode = box.getFirstChild();
-      while (currentNode != null && currentNode.isOpen() == false && checkFinishedForNode(currentNode))
-      {
-        if ((currentNode.getY() + currentNode.getOverflowAreaHeight()) > pageOffset)
-        {
+      while ( currentNode != null && currentNode.isOpen() == false && checkFinishedForNode( currentNode ) ) {
+        if ( ( currentNode.getY() + currentNode.getOverflowAreaHeight() ) > pageOffset ) {
           // we cant handle that. This node will be visible. So the current last
           // node is the one we can shrink ..
           break;
@@ -242,10 +207,9 @@ public class CleanPaginatedBoxesStep extends IterateStructuralProcessStep
 
         final RenderNode nodeForRemoval = currentNode;
         currentNode = currentNode.getNext();
-        if (isSafeForRemoval(nodeForRemoval))
-        {
-          removeFinishedNodes(box, nodeForRemoval, nodeForRemoval,
-                        nodeForRemoval.getOrphanLeafCount(), nodeForRemoval.getWidowLeafCount());
+        if ( isSafeForRemoval( nodeForRemoval ) ) {
+          removeFinishedNodes( box, nodeForRemoval, nodeForRemoval,
+            nodeForRemoval.getOrphanLeafCount(), nodeForRemoval.getWidowLeafCount() );
         }
       }
 
@@ -253,18 +217,15 @@ public class CleanPaginatedBoxesStep extends IterateStructuralProcessStep
     return true;
   }
 
-  private boolean startTableSectionStyleBox(final RenderBox box)
-  {
+  private boolean startTableSectionStyleBox( final RenderBox box ) {
     final int nodeType = box.getLayoutNodeType();
-    if (nodeType == LayoutNodeTypes.TYPE_BOX_PARAGRAPH)
-    {
+    if ( nodeType == LayoutNodeTypes.TYPE_BOX_PARAGRAPH ) {
       return false;
     }
 
-    boolean boxOutsideVisibleRange = (box.getY() + box.getOverflowAreaHeight()) <= pageOffset;
-    final boolean safeForRemove = (box.getParentWidowContexts() == 0) && boxOutsideVisibleRange;
-    if (safeForRemove || box.getRestrictFinishedClearOut() == RenderBox.RestrictFinishClearOut.UNRESTRICTED)
-    {
+    boolean boxOutsideVisibleRange = ( box.getY() + box.getOverflowAreaHeight() ) <= pageOffset;
+    final boolean safeForRemove = ( box.getParentWidowContexts() == 0 ) && boxOutsideVisibleRange;
+    if ( safeForRemove || box.getRestrictFinishedClearOut() == RenderBox.RestrictFinishClearOut.UNRESTRICTED ) {
       // Next, search the last node that is fully invisible. We collapse all
       // invisible node into one big box for efficiency reasons. They wont be
       // visible anyway and thus the result will be the same as if they were
@@ -274,17 +235,14 @@ public class CleanPaginatedBoxesStep extends IterateStructuralProcessStep
       RenderNode lastToRemove = null;
       int orphanLeafCount = 0;
       int widowLeafCount = 0;
-      while (currentNode != null && currentNode.isOpen() == false && checkFinishedForNode(currentNode))
-      {
-        if ((currentNode.getY() + currentNode.getOverflowAreaHeight()) > pageOffset)
-        {
+      while ( currentNode != null && currentNode.isOpen() == false && checkFinishedForNode( currentNode ) ) {
+        if ( ( currentNode.getY() + currentNode.getOverflowAreaHeight() ) > pageOffset ) {
           // we cant handle that. This node will be visible. So the current last
           // node is the one we can shrink ..
           break;
         }
 
-        if (currentNode.getRowIndex() >= tableSectionContext.safeRows)
-        {
+        if ( currentNode.getRowIndex() >= tableSectionContext.safeRows ) {
           break;
         }
 
@@ -294,38 +252,31 @@ public class CleanPaginatedBoxesStep extends IterateStructuralProcessStep
         currentNode = currentNode.getNext();
       }
 
-      if (lastToRemove != null)
-      {
-        removeFinishedNodes(box, firstNode, lastToRemove, orphanLeafCount, widowLeafCount);
+      if ( lastToRemove != null ) {
+        removeFinishedNodes( box, firstNode, lastToRemove, orphanLeafCount, widowLeafCount );
       }
-    }
-    else
-    {
+    } else {
       // any kind of restricted element: We can only remove one element at a time and only if the
       // element is a orphan-leaf element. A orphan-leaf has no children that take part in the
       // widow/orphan constraint calculation and removing the leaf does not alter the result of the
       // calculation of the OrphanStep.
 
       RenderNode currentNode = box.getFirstChild();
-      while (currentNode != null && currentNode.isOpen() == false && checkFinishedForNode(currentNode))
-      {
-        if ((currentNode.getY() + currentNode.getOverflowAreaHeight()) > pageOffset)
-        {
+      while ( currentNode != null && currentNode.isOpen() == false && checkFinishedForNode( currentNode ) ) {
+        if ( ( currentNode.getY() + currentNode.getOverflowAreaHeight() ) > pageOffset ) {
           // we cant handle that. This node will be visible. So the current last
           // node is the one we can shrink ..
           break;
         }
-        if (currentNode.getRowIndex() >= tableSectionContext.safeRows)
-        {
+        if ( currentNode.getRowIndex() >= tableSectionContext.safeRows ) {
           break;
         }
 
         final RenderNode nodeForRemoval = currentNode;
         currentNode = currentNode.getNext();
-        if (isSafeForRemoval(nodeForRemoval))
-        {
-          removeFinishedNodes(box, nodeForRemoval, nodeForRemoval,
-              nodeForRemoval.getOrphanLeafCount(), nodeForRemoval.getWidowLeafCount());
+        if ( isSafeForRemoval( nodeForRemoval ) ) {
+          removeFinishedNodes( box, nodeForRemoval, nodeForRemoval,
+            nodeForRemoval.getOrphanLeafCount(), nodeForRemoval.getWidowLeafCount() );
         }
       }
 
@@ -333,34 +284,26 @@ public class CleanPaginatedBoxesStep extends IterateStructuralProcessStep
     return true;
   }
 
-  protected boolean checkFinishedForNode(final RenderNode currentNode)
-  {
+  protected boolean checkFinishedForNode( final RenderNode currentNode ) {
     return currentNode.isFinishedPaginate();
   }
 
-  private boolean isSafeForRemoval(final RenderNode node)
-  {
-    if (node.isOrphanLeaf())
-    {
+  private boolean isSafeForRemoval( final RenderNode node ) {
+    if ( node.isOrphanLeaf() ) {
       return true;
     }
-    if (node.getRestrictFinishedClearOut() == RenderBox.RestrictFinishClearOut.UNRESTRICTED)
-    {
+    if ( node.getRestrictFinishedClearOut() == RenderBox.RestrictFinishClearOut.UNRESTRICTED ) {
       return true;
     }
 
-    if ((node.getNodeType() & LayoutNodeTypes.MASK_BOX) == LayoutNodeTypes.MASK_BOX)
-    {
+    if ( ( node.getNodeType() & LayoutNodeTypes.MASK_BOX ) == LayoutNodeTypes.MASK_BOX ) {
       final RenderBox box = (RenderBox) node;
       final RenderNode child = box.getFirstChild();
-      if (child != null && child == box.getLastChild())
-      {
-        if (child.isOrphanLeaf())
-        {
+      if ( child != null && child == box.getLastChild() ) {
+        if ( child.isOrphanLeaf() ) {
           return true;
         }
-        if (child.getRestrictFinishedClearOut() == RenderBox.RestrictFinishClearOut.UNRESTRICTED)
-        {
+        if ( child.getRestrictFinishedClearOut() == RenderBox.RestrictFinishClearOut.UNRESTRICTED ) {
           return true;
         }
       }
@@ -368,21 +311,17 @@ public class CleanPaginatedBoxesStep extends IterateStructuralProcessStep
     return false;
   }
 
-  private void removeFinishedNodes(final RenderBox box,
-                                   final RenderNode firstNode,
-                                   final RenderNode last,
-                                   final int orphanLeafCount,
-                                   final int widowLeafCount)
-  {
-    if (last.isOpen())
-    {
-      throw new IllegalStateException("The last node is still open. We should not have come that far.");
+  private void removeFinishedNodes( final RenderBox box,
+                                    final RenderNode firstNode,
+                                    final RenderNode last,
+                                    final int orphanLeafCount,
+                                    final int widowLeafCount ) {
+    if ( last.isOpen() ) {
+      throw new IllegalStateException( "The last node is still open. We should not have come that far." );
     }
 
-    if (last == firstNode)
-    {
-      if (last.getNodeType() == LayoutNodeTypes.TYPE_NODE_FINISHEDNODE)
-      {
+    if ( last == firstNode ) {
+      if ( last.getNodeType() == LayoutNodeTypes.TYPE_NODE_FINISHEDNODE ) {
         // In this case, we can skip the replace-action below ..
         return;
       }
@@ -392,131 +331,106 @@ public class CleanPaginatedBoxesStep extends IterateStructuralProcessStep
     // node and last.
     final long width = box.getContentAreaX2() - box.getContentAreaX1();
     final long lastY2;
-    if (last.getNext() == null)
-    {
+    if ( last.getNext() == null ) {
       lastY2 = last.getY() + last.getHeight();
-    }
-    else
-    {
+    } else {
       // in case the next box had been shifted
       lastY2 = last.getNext().getY();
     }
 
     final long startOfBox;
     final RenderNode prev = firstNode.getPrev();
-    if (prev == null)
-    {
+    if ( prev == null ) {
       final StaticBoxLayoutProperties sblp = box.getStaticBoxLayoutProperties();
       final long insetsTop = sblp.getBorderTop() + box.getBoxDefinition().getPaddingTop();
       startOfBox = box.getY() + insetsTop;
-    }
-    else
-    {
+    } else {
       startOfBox = prev.getY() + prev.getHeight();
     }
     final long height = lastY2 - startOfBox;
 
-    if (startOfBox + height > pageOffset)
-    {
-      throw new IllegalStateException("This finished node will intrude into the visible area.");
+    if ( startOfBox + height > pageOffset ) {
+      throw new IllegalStateException( "This finished node will intrude into the visible area." );
     }
 
     // make sure that the finished-box inherits the margins ..
     final long marginsTop = firstNode.getEffectiveMarginTop();
     final long marginsBottom = last.getEffectiveMarginBottom();
-    final boolean breakAfter = isBreakAfter(last);
+    final boolean breakAfter = isBreakAfter( last );
 
     RenderNode removeNode = firstNode;
-    while (removeNode != last)
-    {
+    while ( removeNode != last ) {
       final RenderNode next = removeNode.getNext();
-      if (removeNode.isOpen())
-      {
-        throw new IllegalStateException("A node is still open. We should not have come that far.");
+      if ( removeNode.isOpen() ) {
+        throw new IllegalStateException( "A node is still open. We should not have come that far." );
       }
-      box.remove(removeNode);
+      box.remove( removeNode );
       removeNode = next;
     }
 
     final FinishedRenderNode replacement = new FinishedRenderNode
-        (box.getContentAreaX1(), startOfBox, width, height, marginsTop, marginsBottom,
-            breakAfter, orphanLeafCount, widowLeafCount);
+      ( box.getContentAreaX1(), startOfBox, width, height, marginsTop, marginsBottom,
+        breakAfter, orphanLeafCount, widowLeafCount );
 
-    box.replaceChild(last, replacement);
-    if (replacement.getParent() != box)
-    {
-//      return true;
-      throw new IllegalStateException("The replacement did not work.");
+    box.replaceChild( last, replacement );
+    if ( replacement.getParent() != box ) {
+      //      return true;
+      throw new IllegalStateException( "The replacement did not work." );
     }
 
     final long cachedY2;
-    if (last.getNext() == null)
-    {
+    if ( last.getNext() == null ) {
       cachedY2 = last.getCachedY() + last.getCachedHeight();
-    }
-    else
-    {
+    } else {
       cachedY2 = last.getNext().getCachedY();
     }
 
     final long newShift = lastY2 - cachedY2;
-    if (newShift > shiftOffset)
-    {
+    if ( newShift > shiftOffset ) {
       shiftOffset = newShift;
       shiftNode = box.getInstanceId();
     }
   }
 
-  private boolean isBreakAfter(final RenderNode node)
-  {
-    if (node.isBreakAfter())
-    {
+  private boolean isBreakAfter( final RenderNode node ) {
+    if ( node.isBreakAfter() ) {
       return true;
     }
 
-    if ((node.getLayoutNodeType() & LayoutNodeTypes.MASK_BOX_BLOCK) == LayoutNodeTypes.MASK_BOX_BLOCK)
-    {
+    if ( ( node.getLayoutNodeType() & LayoutNodeTypes.MASK_BOX_BLOCK ) == LayoutNodeTypes.MASK_BOX_BLOCK ) {
       final RenderBox box = (RenderBox) node;
       final RenderNode lastChild = box.getLastChild();
-      if (lastChild != null)
-      {
-        return isBreakAfter(lastChild);
+      if ( lastChild != null ) {
+        return isBreakAfter( lastChild );
       }
     }
     return false;
   }
 
-  protected boolean startInlineBox(final InlineRenderBox box)
-  {
+  protected boolean startInlineBox( final InlineRenderBox box ) {
     return false;
   }
 
-  protected boolean startAutoBox(final RenderBox box)
-  {
-    if (box.getLayoutNodeType() == LayoutNodeTypes.TYPE_BOX_TABLE_SECTION)
-    {
-      if (box.isContainsReservedContent())
-      {
+  protected boolean startAutoBox( final RenderBox box ) {
+    if ( box.getLayoutNodeType() == LayoutNodeTypes.TYPE_BOX_TABLE_SECTION ) {
+      if ( box.isContainsReservedContent() ) {
         // never clear out anything from reserved header or footer boxes. Never!
         return false;
       }
 
-      if (tableSectionContext.isProcessingUnsafe())
-      {
+      if ( tableSectionContext.isProcessingUnsafe() ) {
         return false;
       }
 
-      return startTableSectionStyleBox(box);
+      return startTableSectionStyleBox( box );
     }
 
-    if (box.getLayoutNodeType() == LayoutNodeTypes.TYPE_BOX_TABLE)
-    {
+    if ( box.getLayoutNodeType() == LayoutNodeTypes.TYPE_BOX_TABLE ) {
       return true;
     }
 
-    if ((box.getLayoutNodeType() & LayoutNodeTypes.MASK_BOX_BLOCK) == LayoutNodeTypes.MASK_BOX_BLOCK)
-    {
-      return startBlockStyleBox(box);
+    if ( ( box.getLayoutNodeType() & LayoutNodeTypes.MASK_BOX_BLOCK ) == LayoutNodeTypes.MASK_BOX_BLOCK ) {
+      return startBlockStyleBox( box );
     }
     return true;
   }

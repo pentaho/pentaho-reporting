@@ -36,7 +36,8 @@
           name="reportheader">
       <band name="test-01" height="70" width="555">
         <label width="555" height="70" padding-top="10" padding-left="10" padding-right="10"
-               name="rect">Test</label>
+               name="rect">Test
+        </label>
       </band>
     </band>
 
@@ -46,7 +47,8 @@
           name="reportheader" layout="block">
       <band name="test-01" height="70" width="555" layout="block">
         <label width="555" height="70" padding-top="10" padding-left="10" padding-right="10"
-               name="rect">Test</label>
+               name="rect">Test
+        </label>
       </band>
     </band>
 

@@ -17,8 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.core.designtime.compat;
 
-import java.util.Locale;
-
 import org.pentaho.reporting.engine.classic.core.AbstractReportDefinition;
 import org.pentaho.reporting.engine.classic.core.DataFactory;
 import org.pentaho.reporting.engine.classic.core.ReportElement;
@@ -28,30 +26,31 @@ import org.pentaho.reporting.engine.classic.core.parameters.ParameterDefinitionE
 import org.pentaho.reporting.engine.classic.core.parameters.ReportParameterDefinition;
 import org.pentaho.reporting.engine.classic.core.style.StyleKey;
 
-public interface CompatibilityConverter
-{
+import java.util.Locale;
+
+public interface CompatibilityConverter {
   int getTargetVersion();
 
-  String getUpgradeDescription (Locale locale);
+  String getUpgradeDescription( Locale locale );
 
-  void inspectElement(final ReportElement element);
+  void inspectElement( final ReportElement element );
 
-  void inspectAttributeExpression(final ReportElement element,
-                                  final String attributeNamespace,
-                                  final String attributeName,
-                                  final Expression expression,
-                                  final ExpressionMetaData expressionMetaData);
+  void inspectAttributeExpression( final ReportElement element,
+                                   final String attributeNamespace,
+                                   final String attributeName,
+                                   final Expression expression,
+                                   final ExpressionMetaData expressionMetaData );
 
-  void inspectStyleExpression(final ReportElement element,
-                              final StyleKey styleKey,
-                              final Expression expression,
-                              final ExpressionMetaData expressionMetaData);
+  void inspectStyleExpression( final ReportElement element,
+                               final StyleKey styleKey,
+                               final Expression expression,
+                               final ExpressionMetaData expressionMetaData );
 
-  void inspectExpression(final AbstractReportDefinition report, final Expression expression);
+  void inspectExpression( final AbstractReportDefinition report, final Expression expression );
 
-  void inspectParameter(final AbstractReportDefinition report,
-                        final ReportParameterDefinition definition,
-                        final ParameterDefinitionEntry parameter);
+  void inspectParameter( final AbstractReportDefinition report,
+                         final ReportParameterDefinition definition,
+                         final ParameterDefinitionEntry parameter );
 
-  void inspectDataSource(final AbstractReportDefinition report, final DataFactory dataFactory);
+  void inspectDataSource( final AbstractReportDefinition report, final DataFactory dataFactory );
 }

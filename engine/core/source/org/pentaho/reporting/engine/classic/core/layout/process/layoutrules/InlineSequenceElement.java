@@ -29,10 +29,8 @@ import org.pentaho.reporting.engine.classic.core.layout.model.RenderNode;
  *
  * @author Thomas Morgner
  */
-public interface InlineSequenceElement
-{
-  public enum Classification
-  {
+public interface InlineSequenceElement {
+  public enum Classification {
     START, CONTENT, END;
   }
 
@@ -45,7 +43,7 @@ public interface InlineSequenceElement
    *
    * @return
    */
-  public long getMinimumWidth(final RenderNode node);
+  public long getMinimumWidth( final RenderNode node );
 
   /**
    * The maximum width an element wants to take. This returns the preferred size; even if offered more space, an element
@@ -53,10 +51,11 @@ public interface InlineSequenceElement
    *
    * @return
    */
-  public long getMaximumWidth(final RenderNode node);
+  public long getMaximumWidth( final RenderNode node );
 
-  public boolean isPreserveWhitespace(final RenderNode node);
+  public boolean isPreserveWhitespace( final RenderNode node );
 
   public int getClassification();
+
   public Classification getType();
 }

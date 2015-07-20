@@ -27,30 +27,26 @@ import org.pentaho.reporting.libraries.formula.function.ParameterCallback;
 import org.pentaho.reporting.libraries.formula.lvalues.TypeValuePair;
 import org.pentaho.reporting.libraries.formula.typing.coretypes.AnyType;
 
-public class EnvFunction implements Function
-{
-  public EnvFunction()
-  {
+public class EnvFunction implements Function {
+  public EnvFunction() {
   }
 
-  public String getCanonicalName()
-  {
+  public String getCanonicalName() {
     return "ENV";
   }
 
-  public TypeValuePair evaluate(final FormulaContext context,
-                                final ParameterCallback parameters) throws EvaluationException
-  {
+  public TypeValuePair evaluate( final FormulaContext context,
+                                 final ParameterCallback parameters ) throws EvaluationException {
     final int parameterCount = parameters.getParameterCount();
-    if (parameterCount != 1)
-    {
-      throw EvaluationException.getInstance(LibFormulaErrorValue.ERROR_ARGUMENTS_VALUE);
+    if ( parameterCount != 1 ) {
+      throw EvaluationException.getInstance( LibFormulaErrorValue.ERROR_ARGUMENTS_VALUE );
     }
 
-    final String fieldName = context.getTypeRegistry().convertToText(parameters.getType(0), parameters.getValue(0));
+    final String fieldName =
+      context.getTypeRegistry().convertToText( parameters.getType( 0 ), parameters.getValue( 0 ) );
 
     final ReportFormulaContext rfc = (ReportFormulaContext) context;
     final ReportEnvironment reportEnvironment = rfc.getProcessingContext().getEnvironment();
-    return new TypeValuePair(AnyType.TYPE, reportEnvironment.getEnvironmentProperty(fieldName));
+    return new TypeValuePair( AnyType.TYPE, reportEnvironment.getEnvironmentProperty( fieldName ) );
   }
 }

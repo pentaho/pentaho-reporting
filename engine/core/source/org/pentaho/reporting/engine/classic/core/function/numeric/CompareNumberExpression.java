@@ -25,9 +25,8 @@ import org.pentaho.reporting.engine.classic.core.function.AbstractCompareExpress
  * @author Thomas Morgner
  * @deprecated like all compare functions, using the formula support is easier.
  */
-@SuppressWarnings("deprecation")
-public class CompareNumberExpression extends AbstractCompareExpression
-{
+@SuppressWarnings( "deprecation" )
+public class CompareNumberExpression extends AbstractCompareExpression {
   /**
    * The number to which the field's value get compared.
    */
@@ -36,9 +35,8 @@ public class CompareNumberExpression extends AbstractCompareExpression
   /**
    * Default constructor.
    */
-  public CompareNumberExpression()
-  {
-    number = new Double(0);
+  public CompareNumberExpression() {
+    number = new Double( 0 );
   }
 
   /**
@@ -46,8 +44,7 @@ public class CompareNumberExpression extends AbstractCompareExpression
    *
    * @return the static value.
    */
-  protected Comparable getComparable()
-  {
+  protected Comparable getComparable() {
     return number;
   }
 
@@ -56,8 +53,7 @@ public class CompareNumberExpression extends AbstractCompareExpression
    *
    * @return the static number.
    */
-  public double getNumber()
-  {
+  public double getNumber() {
     return number.doubleValue();
   }
 
@@ -66,8 +62,7 @@ public class CompareNumberExpression extends AbstractCompareExpression
    *
    * @param number the static number.
    */
-  public void setNumber(final double number)
-  {
-    this.number = new Double(number);
+  public void setNumber( final double number ) {
+    this.number = new Double( number );
   }
 }

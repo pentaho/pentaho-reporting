@@ -29,40 +29,33 @@ import org.pentaho.reporting.engine.classic.core.layout.output.OutputProcessorMe
 import org.pentaho.reporting.engine.classic.core.modules.output.fast.FastExportOutputFunction;
 import org.pentaho.reporting.engine.classic.core.modules.output.table.html.helper.HtmlOutputProcessorMetaData;
 
-public class FastHtmlExportProcessor extends AbstractReportProcessor
-{
-  private static class HtmlDataOutputProcessor extends AbstractOutputProcessor
-  {
+public class FastHtmlExportProcessor extends AbstractReportProcessor {
+  private static class HtmlDataOutputProcessor extends AbstractOutputProcessor {
     private OutputProcessorMetaData metaData;
 
-    private HtmlDataOutputProcessor()
-    {
-      metaData = new HtmlOutputProcessorMetaData(HtmlOutputProcessorMetaData.PAGINATION_NONE);
+    private HtmlDataOutputProcessor() {
+      metaData = new HtmlOutputProcessorMetaData( HtmlOutputProcessorMetaData.PAGINATION_NONE );
     }
 
-    protected void processPageContent(final LogicalPageKey logicalPageKey,
-                                      final LogicalPageBox logicalPage) throws ContentProcessingException
-    {
+    protected void processPageContent( final LogicalPageKey logicalPageKey,
+                                       final LogicalPageBox logicalPage ) throws ContentProcessingException {
       // not used ..
     }
 
-    public OutputProcessorMetaData getMetaData()
-    {
+    public OutputProcessorMetaData getMetaData() {
       return metaData;
     }
   }
 
   private FastHtmlContentItems contentItems;
 
-  public FastHtmlExportProcessor(final MasterReport report,
-                                 final FastHtmlContentItems contentItems) throws ReportProcessingException
-  {
-    super(report, new HtmlDataOutputProcessor());
+  public FastHtmlExportProcessor( final MasterReport report,
+                                  final FastHtmlContentItems contentItems ) throws ReportProcessingException {
+    super( report, new HtmlDataOutputProcessor() );
     this.contentItems = contentItems;
   }
 
-  protected OutputFunction createLayoutManager()
-  {
-    return new FastExportOutputFunction(new FastHtmlExportTemplate(contentItems));
+  protected OutputFunction createLayoutManager() {
+    return new FastExportOutputFunction( new FastHtmlExportTemplate( contentItems ) );
   }
 }

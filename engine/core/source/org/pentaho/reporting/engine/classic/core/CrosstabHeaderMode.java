@@ -17,7 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.core;
 
-public enum CrosstabHeaderMode
-{
+public enum CrosstabHeaderMode {
   Spanned, Repeating
 }

@@ -27,8 +27,7 @@ import org.pentaho.reporting.engine.classic.core.event.ReportEvent;
  *
  * @author Thomas Morgner
  */
-public class ReportStateKey
-{
+public class ReportStateKey {
   private ReportStateKey parent;
   private int cursor;
   private int stateCode;
@@ -42,19 +41,17 @@ public class ReportStateKey
   // purpose of finding visual content to mark page-break positions.
   private boolean inlineSubReportState;
 
-  public ReportStateKey()
-  {
+  public ReportStateKey() {
   }
 
-  public ReportStateKey(final ReportStateKey parent,
-                        final int cursor,
-                        final int stateCode,
-                        final int groupLevel,
-                        final int subreport,
-                        final int sequenceCounter,
-                        final boolean restoreState,
-                        final boolean inlineSubReportState)
-  {
+  public ReportStateKey( final ReportStateKey parent,
+                         final int cursor,
+                         final int stateCode,
+                         final int groupLevel,
+                         final int subreport,
+                         final int sequenceCounter,
+                         final boolean restoreState,
+                         final boolean inlineSubReportState ) {
     this.parent = parent;
     this.cursor = cursor;
     this.stateCode = stateCode;
@@ -66,116 +63,97 @@ public class ReportStateKey
   }
 
   /**
-   * This is just a debugging help to identify repeated runs of the same report sequence. It is not used
-   * to compare equality of these keys.
-   * 
+   * This is just a debugging help to identify repeated runs of the same report sequence. It is not used to compare
+   * equality of these keys.
+   *
    * @return
    */
-  public int getSequenceCounter()
-  {
+  public int getSequenceCounter() {
     return sequenceCounter;
   }
 
-  public ReportStateKey getParent()
-  {
+  public ReportStateKey getParent() {
     return parent;
   }
 
-  public int getCursor()
-  {
+  public int getCursor() {
     return cursor;
   }
 
-  public int getStateCode()
-  {
+  public int getStateCode() {
     return stateCode;
   }
 
-  public int getGroupLevel()
-  {
+  public int getGroupLevel() {
     return groupLevel;
   }
 
-  public int getSubreport()
-  {
+  public int getSubreport() {
     return subreport;
   }
 
-  public boolean equals(final Object o)
-  {
-    if (this == o)
-    {
+  public boolean equals( final Object o ) {
+    if ( this == o ) {
       return true;
     }
-    if (o == null || getClass() != o.getClass())
-    {
+    if ( o == null || getClass() != o.getClass() ) {
       return false;
     }
 
     final ReportStateKey that = (ReportStateKey) o;
 
-    if (restoreState != that.restoreState)
-    {
+    if ( restoreState != that.restoreState ) {
       return false;
     }
-    if (cursor != that.cursor)
-    {
+    if ( cursor != that.cursor ) {
       return false;
     }
-    if (groupLevel != that.groupLevel)
-    {
+    if ( groupLevel != that.groupLevel ) {
       return false;
     }
-    if (stateCode != that.stateCode)
-    {
+    if ( stateCode != that.stateCode ) {
       return false;
     }
-    if (subreport != that.subreport)
-    {
+    if ( subreport != that.subreport ) {
       return false;
     }
-    if (parent != null ? !parent.equals(that.parent) : that.parent != null)
-    {
+    if ( parent != null ? !parent.equals( that.parent ) : that.parent != null ) {
       return false;
     }
     return true;
   }
 
-  public int hashCode()
-  {
-    if (hashCode == null)
-    {
-      int result = (parent != null ? parent.hashCode() : 0);
+  public int hashCode() {
+    if ( hashCode == null ) {
+      int result = ( parent != null ? parent.hashCode() : 0 );
       result = 29 * result + cursor;
       result = 29 * result + stateCode;
       result = 29 * result + groupLevel;
       result = 29 * result + subreport;
-      result = 29 * result + (restoreState ? 1 : 0);
-      result = 29 * result + (inlineSubReportState ? 1 : 0);
+      result = 29 * result + ( restoreState ? 1 : 0 );
+      result = 29 * result + ( inlineSubReportState ? 1 : 0 );
       //noinspection UnnecessaryBoxing
-      hashCode = Integer.valueOf(result);
+      hashCode = Integer.valueOf( result );
       return result;
     }
     return hashCode.intValue();
   }
 
-  public boolean isInlineSubReportState()
-  {
+  public boolean isInlineSubReportState() {
     return inlineSubReportState;
   }
 
-  public String toString()
-  {
+  public String toString() {
     return "ReportStateKey{" +
-        "sc=" + sequenceCounter +
-        ", cursor=" + cursor +
-        ", groupLevel=" + groupLevel +
-        ", subreport=" + subreport +
-        ", stateCode=" + ReportEvent.translateStateCode(stateCode) +
-        ", restoreState=" + restoreState +
-        ", inlineSubReport=" + inlineSubReportState +
-        ", stateCodeRaw=0x" + Integer.toHexString(stateCode) +
-        ", parent=" + parent +
-        '}';
+      "sc=" + sequenceCounter +
+      ", cursor=" + cursor +
+      ", groupLevel=" + groupLevel +
+      ", subreport=" + subreport +
+      ", stateCode=" + ReportEvent.translateStateCode( stateCode ) +
+      ", restoreState=" + restoreState +
+      ", inlineSubReport=" + inlineSubReportState +
+      ", stateCodeRaw=0x" + Integer.toHexString( stateCode ) +
+      ", parent=" + parent +
+      '}';
   }
 }

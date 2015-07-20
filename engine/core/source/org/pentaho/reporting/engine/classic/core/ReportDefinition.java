@@ -23,8 +23,7 @@ package org.pentaho.reporting.engine.classic.core;
  *
  * @author Thomas Morgner.
  */
-public interface ReportDefinition extends ReportElement
-{
+public interface ReportDefinition extends ReportElement {
   /**
    * Returns the query name that should be used when processing the report.
    *
@@ -93,7 +92,7 @@ public interface ReportDefinition extends ReportElement
   public ItemBand getItemBand();
 
   public CrosstabCellBody getCrosstabCellBody();
-  
+
   /**
    * Returns the watermark band.
    *
@@ -123,7 +122,7 @@ public interface ReportDefinition extends ReportElement
    * @throws IllegalArgumentException  if the count is negative.
    * @throws IndexOutOfBoundsException if the count is greater than the number of defined groups.
    */
-  public Group getGroup(int count);
+  public Group getGroup( int count );
 
   /**
    * Returns the page definition assigned to the report definition. The page definition defines the report area and how

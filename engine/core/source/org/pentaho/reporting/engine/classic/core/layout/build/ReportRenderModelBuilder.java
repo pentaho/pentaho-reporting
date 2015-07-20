@@ -17,8 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.core.layout.build;
 
-import java.util.ArrayList;
-
 import org.pentaho.reporting.engine.classic.core.Band;
 import org.pentaho.reporting.engine.classic.core.Group;
 import org.pentaho.reporting.engine.classic.core.GroupBody;
@@ -35,9 +33,10 @@ import org.pentaho.reporting.engine.classic.core.states.ReportStateKey;
 import org.pentaho.reporting.engine.classic.core.style.StyleSheet;
 import org.pentaho.reporting.engine.classic.core.util.InstanceID;
 
-public class ReportRenderModelBuilder implements RenderModelBuilder, Cloneable
-{
-  private static final InlineSubreportMarker[] EMPTY_SUBREPORT_MARKERS = new InlineSubreportMarker[0];
+import java.util.ArrayList;
+
+public class ReportRenderModelBuilder implements RenderModelBuilder, Cloneable {
+  private static final InlineSubreportMarker[] EMPTY_SUBREPORT_MARKERS = new InlineSubreportMarker[ 0 ];
   private LayoutModelBuilder normalFlow;
   private LayoutModelBuilder header;
   private LayoutModelBuilder footer;
@@ -53,232 +52,196 @@ public class ReportRenderModelBuilder implements RenderModelBuilder, Cloneable
   private LayoutBuilderStrategy layoutBuilderStrategy;
   private RenderComponentFactory componentFactory;
 
-  public ReportRenderModelBuilder(final RenderComponentFactory componentFactory)
-  {
+  public ReportRenderModelBuilder( final RenderComponentFactory componentFactory ) {
     this.componentFactory = componentFactory;
     this.layoutBuilderStrategy = componentFactory.createLayoutBuilderStrategy();
     this.collectedSubReportMarker = new ArrayList<InlineSubreportMarker>();
   }
 
-  public void startReport(final ReportDefinition report, final ProcessingContext processingContext)
-  {
+  public void startReport( final ReportDefinition report, final ProcessingContext processingContext ) {
     final OutputProcessorMetaData outputProcessorMetaData = processingContext.getOutputProcessorMetaData();
 
     renderNodeFactory = componentFactory.createRenderNodeFactory();
-    renderNodeFactory.initialize(outputProcessorMetaData);
+    renderNodeFactory.initialize( outputProcessorMetaData );
 
     this.processingContext = processingContext;
 
     final StyleSheet resolverStyle = report.getComputedStyle();
-    this.pageBox = renderNodeFactory.createPage(report, resolverStyle);
+    this.pageBox = renderNodeFactory.createPage( report, resolverStyle );
 
-    normalFlow = createNormalBuilder(processingContext);
+    normalFlow = createNormalBuilder( processingContext );
 
-    header = createHeaderBuilder(processingContext);
-    footer = createFooterBuilder(processingContext);
-    repeatedFooter = createRepeatedFooterBuilder(processingContext);
-    watermark = createWatermarkBuilder(processingContext);
+    header = createHeaderBuilder( processingContext );
+    footer = createFooterBuilder( processingContext );
+    repeatedFooter = createRepeatedFooterBuilder( processingContext );
+    watermark = createWatermarkBuilder( processingContext );
   }
 
-  protected LayoutModelBuilder createNormalBuilder(final ProcessingContext processingContext)
-  {
-    LayoutModelBuilder normalFlow = componentFactory.createLayoutModelBuilder("Section-0");
-    normalFlow.initialize(processingContext, this.pageBox.getContentArea(), renderNodeFactory);
-    normalFlow.updateState(stateKey);
+  protected LayoutModelBuilder createNormalBuilder( final ProcessingContext processingContext ) {
+    LayoutModelBuilder normalFlow = componentFactory.createLayoutModelBuilder( "Section-0" );
+    normalFlow.initialize( processingContext, this.pageBox.getContentArea(), renderNodeFactory );
+    normalFlow.updateState( stateKey );
     return normalFlow;
   }
 
-  protected LayoutModelBuilder createHeaderBuilder(final ProcessingContext processingContext)
-  {
-    HeaderLayoutModelBuilder header = new HeaderLayoutModelBuilder(componentFactory.createLayoutModelBuilder("Header-1"));
-    header.initialize(processingContext, this.pageBox.getHeaderArea(), renderNodeFactory);
-    header.updateState(stateKey);
+  protected LayoutModelBuilder createHeaderBuilder( final ProcessingContext processingContext ) {
+    HeaderLayoutModelBuilder header =
+      new HeaderLayoutModelBuilder( componentFactory.createLayoutModelBuilder( "Header-1" ) );
+    header.initialize( processingContext, this.pageBox.getHeaderArea(), renderNodeFactory );
+    header.updateState( stateKey );
     return header;
   }
 
-  protected LayoutModelBuilder createFooterBuilder(final ProcessingContext processingContext)
-  {
-    FooterLayoutModelBuilder footer = new FooterLayoutModelBuilder(componentFactory.createLayoutModelBuilder("Footer-2"));
-    footer.initialize(processingContext, this.pageBox.getFooterArea(), renderNodeFactory);
-    footer.updateState(stateKey);
+  protected LayoutModelBuilder createFooterBuilder( final ProcessingContext processingContext ) {
+    FooterLayoutModelBuilder footer =
+      new FooterLayoutModelBuilder( componentFactory.createLayoutModelBuilder( "Footer-2" ) );
+    footer.initialize( processingContext, this.pageBox.getFooterArea(), renderNodeFactory );
+    footer.updateState( stateKey );
     return footer;
   }
 
-  protected LayoutModelBuilder createRepeatedFooterBuilder(final ProcessingContext processingContext)
-  {
-    RepeatedFooterLayoutModelBuilder repeatedFooter = new RepeatedFooterLayoutModelBuilder(componentFactory.createLayoutModelBuilder("Repeat-Footer-3"));
-    repeatedFooter.initialize(processingContext, this.pageBox.getRepeatFooterArea(), renderNodeFactory);
-    repeatedFooter.updateState(stateKey);
+  protected LayoutModelBuilder createRepeatedFooterBuilder( final ProcessingContext processingContext ) {
+    RepeatedFooterLayoutModelBuilder repeatedFooter =
+      new RepeatedFooterLayoutModelBuilder( componentFactory.createLayoutModelBuilder( "Repeat-Footer-3" ) );
+    repeatedFooter.initialize( processingContext, this.pageBox.getRepeatFooterArea(), renderNodeFactory );
+    repeatedFooter.updateState( stateKey );
     return repeatedFooter;
   }
 
-  protected LayoutModelBuilder createWatermarkBuilder(final ProcessingContext processingContext)
-  {
-    WatermarkLayoutModelBuilder watermark = new WatermarkLayoutModelBuilder(componentFactory.createLayoutModelBuilder("Watermark-Section"));
-    watermark.initialize(processingContext, this.pageBox.getWatermarkArea(), renderNodeFactory);
-    watermark.updateState(stateKey);
+  protected LayoutModelBuilder createWatermarkBuilder( final ProcessingContext processingContext ) {
+    WatermarkLayoutModelBuilder watermark =
+      new WatermarkLayoutModelBuilder( componentFactory.createLayoutModelBuilder( "Watermark-Section" ) );
+    watermark.initialize( processingContext, this.pageBox.getWatermarkArea(), renderNodeFactory );
+    watermark.updateState( stateKey );
     return watermark;
   }
 
-  protected RenderNodeFactory getRenderNodeFactory()
-  {
+  protected RenderNodeFactory getRenderNodeFactory() {
     return renderNodeFactory;
   }
 
-  public ReportStateKey getStateKey()
-  {
+  public ReportStateKey getStateKey() {
     return stateKey;
   }
 
-  protected RenderComponentFactory getComponentFactory()
-  {
+  protected RenderComponentFactory getComponentFactory() {
     return componentFactory;
   }
 
-  public void updateStateKey(final ReportStateKey stateKey)
-  {
+  public void updateStateKey( final ReportStateKey stateKey ) {
     this.stateKey = stateKey;
-    if (normalFlow != null)
-    {
-      normalFlow.updateState(stateKey);
+    if ( normalFlow != null ) {
+      normalFlow.updateState( stateKey );
     }
-    if (header != null)
-    {
-      header.updateState(stateKey);
+    if ( header != null ) {
+      header.updateState( stateKey );
     }
-    if (footer != null)
-    {
-      footer.updateState(stateKey);
+    if ( footer != null ) {
+      footer.updateState( stateKey );
     }
-    if (repeatedFooter != null)
-    {
-      repeatedFooter.updateState(stateKey);
+    if ( repeatedFooter != null ) {
+      repeatedFooter.updateState( stateKey );
     }
-    if (watermark != null)
-    {
-      watermark.updateState(stateKey);
+    if ( watermark != null ) {
+      watermark.updateState( stateKey );
     }
   }
 
-  public void startSubReport(final ReportDefinition report, final InstanceID insertationPoint)
-  {
-    if (insertationPoint == null)
-    {
-      normalFlow.startSubFlow(report);
-    }
-    else
-    {
-      normalFlow.startSubFlow(insertationPoint);
+  public void startSubReport( final ReportDefinition report, final InstanceID insertationPoint ) {
+    if ( insertationPoint == null ) {
+      normalFlow.startSubFlow( report );
+    } else {
+      normalFlow.startSubFlow( insertationPoint );
     }
   }
 
-  public void startGroup(final Group group, final Integer predictedStateCount)
-  {
+  public void startGroup( final Group group, final Integer predictedStateCount ) {
     final int count;
-    if (predictedStateCount == null)
-    {
+    if ( predictedStateCount == null ) {
       count = 0;
-    }
-    else
-    {
+    } else {
       count = predictedStateCount;
     }
-    normalFlow.startSection(group, count);
+    normalFlow.startSection( group, count );
   }
 
-  public void startGroupBody(final GroupBody groupBody, final Integer predictedStateCount)
-  {
+  public void startGroupBody( final GroupBody groupBody, final Integer predictedStateCount ) {
     final int count;
-    if (predictedStateCount == null)
-    {
+    if ( predictedStateCount == null ) {
       count = 0;
-    }
-    else
-    {
+    } else {
       count = predictedStateCount;
     }
-    normalFlow.startSection(groupBody, count);
+    normalFlow.startSection( groupBody, count );
   }
 
-  public void startSection(final Renderer.SectionType type)
-  {
+  public void startSection( final Renderer.SectionType type ) {
     this.activeSection = type;
     this.collectedSubReportMarker.clear();
     getLayoutModelBuilder().startSection();
   }
 
-  public void addProgressBox() throws ReportProcessingException
-  {
+  public void addProgressBox() throws ReportProcessingException {
     normalFlow.addProgressMarkerBox();
   }
 
-  public void addEmptyRootLevelBand() throws ReportProcessingException
-  {
+  public void addEmptyRootLevelBand() throws ReportProcessingException {
     getLayoutModelBuilder().addProgressMarkerBox();
   }
 
-  public void addPageBreak()
-  {
-    if (getPageBox() == null)
-    {
+  public void addPageBreak() {
+    if ( getPageBox() == null ) {
       throw new IllegalStateException();
     }
 
-    normalFlow.addManualPageBreakBox(getPageBox().getPageOffset());
+    normalFlow.addManualPageBreakBox( getPageBox().getPageOffset() );
   }
 
-  public void add(final ExpressionRuntime runtime,
-                  final Band band) throws ReportProcessingException
-  {
+  public void add( final ExpressionRuntime runtime,
+                   final Band band ) throws ReportProcessingException {
     final LayoutBuilderStrategy builderStrategy = getLayoutBuilderStrategy();
     LayoutModelBuilder layoutModelBuilder = getLayoutModelBuilder();
-    builderStrategy.add(runtime, layoutModelBuilder, band, collectedSubReportMarker);
+    builderStrategy.add( runtime, layoutModelBuilder, band, collectedSubReportMarker );
   }
 
-  public void addToNormalFlow(final ExpressionRuntime runtime,
-                              final Band band) throws ReportProcessingException
-  {
+  public void addToNormalFlow( final ExpressionRuntime runtime,
+                               final Band band ) throws ReportProcessingException {
     final LayoutBuilderStrategy builderStrategy = getLayoutBuilderStrategy();
-    builderStrategy.add(runtime, normalFlow, band, collectedSubReportMarker);
+    builderStrategy.add( runtime, normalFlow, band, collectedSubReportMarker );
   }
 
-  protected LayoutBuilderStrategy getLayoutBuilderStrategy()
-  {
+  protected LayoutBuilderStrategy getLayoutBuilderStrategy() {
     return layoutBuilderStrategy;
   }
 
-  public SectionResult endSection()
-  {
+  public SectionResult endSection() {
     final boolean empty = getLayoutModelBuilder().isEmpty();
     getLayoutModelBuilder().endSection();
     final InlineSubreportMarker[] markers;
-    if (collectedSubReportMarker.isEmpty())
-    markers = EMPTY_SUBREPORT_MARKERS;
-      else
-    markers = collectedSubReportMarker.toArray
-        (new InlineSubreportMarker[collectedSubReportMarker.size()]);
+    if ( collectedSubReportMarker.isEmpty() ) {
+      markers = EMPTY_SUBREPORT_MARKERS;
+    } else {
+      markers = collectedSubReportMarker.toArray
+        ( new InlineSubreportMarker[ collectedSubReportMarker.size() ] );
+    }
 
     activeSection = Renderer.SectionType.NORMALFLOW;
-    return new SectionResult(markers, empty);
+    return new SectionResult( markers, empty );
   }
 
-  public void endGroupBody()
-  {
+  public void endGroupBody() {
     normalFlow.endSection();
   }
 
-  public void endGroup()
-  {
+  public void endGroup() {
     normalFlow.endSection();
   }
 
-  public void endSubReport()
-  {
+  public void endSubReport() {
     normalFlow.endSubFlow();
   }
 
-  public void endReport()
-  {
+  public void endReport() {
     getPageBox().getContentArea().close();
     getPageBox().close();
 
@@ -290,15 +253,12 @@ public class ReportRenderModelBuilder implements RenderModelBuilder, Cloneable
     renderNodeFactory.close();
   }
 
-  public LayoutModelBuilder getNormalFlowLayoutModelBuilder()
-  {
+  public LayoutModelBuilder getNormalFlowLayoutModelBuilder() {
     return normalFlow;
   }
 
-  private LayoutModelBuilder getLayoutModelBuilder()
-  {
-    switch (activeSection)
-    {
+  private LayoutModelBuilder getLayoutModelBuilder() {
+    switch( activeSection ) {
       case NORMALFLOW:
         return normalFlow;
       case HEADER:
@@ -314,45 +274,36 @@ public class ReportRenderModelBuilder implements RenderModelBuilder, Cloneable
     }
   }
 
-  public ReportRenderModelBuilder clone()
-  {
-    try
-    {
+  public ReportRenderModelBuilder clone() {
+    try {
       final ReportRenderModelBuilder builder = (ReportRenderModelBuilder) super.clone();
       builder.collectedSubReportMarker = (ArrayList<InlineSubreportMarker>) collectedSubReportMarker.clone();
       return builder;
-    }
-    catch (CloneNotSupportedException e)
-    {
-      throw new IllegalStateException(e);
+    } catch ( CloneNotSupportedException e ) {
+      throw new IllegalStateException( e );
     }
   }
 
-  public LogicalPageBox getPageBox()
-  {
+  public LogicalPageBox getPageBox() {
     return pageBox;
   }
 
-  public RenderModelBuilder deriveForStorage()
-  {
+  public RenderModelBuilder deriveForStorage() {
     final ReportRenderModelBuilder clone = clone();
-    if (pageBox != null)
-    {
-      clone.pageBox = (LogicalPageBox) clone.pageBox.derive(true);
-      clone.normalFlow = clone.normalFlow.deriveForStorage(clone.pageBox.getContentArea());
-      clone.header = clone.header.deriveForStorage(clone.pageBox.getHeaderArea());
-      clone.footer = clone.footer.deriveForStorage(clone.pageBox.getFooterArea());
-      clone.repeatedFooter = clone.repeatedFooter.deriveForStorage(clone.pageBox.getRepeatFooterArea());
-      clone.watermark = clone.watermark.deriveForStorage(clone.pageBox.getWatermarkArea());
+    if ( pageBox != null ) {
+      clone.pageBox = (LogicalPageBox) clone.pageBox.derive( true );
+      clone.normalFlow = clone.normalFlow.deriveForStorage( clone.pageBox.getContentArea() );
+      clone.header = clone.header.deriveForStorage( clone.pageBox.getHeaderArea() );
+      clone.footer = clone.footer.deriveForStorage( clone.pageBox.getFooterArea() );
+      clone.repeatedFooter = clone.repeatedFooter.deriveForStorage( clone.pageBox.getRepeatFooterArea() );
+      clone.watermark = clone.watermark.deriveForStorage( clone.pageBox.getWatermarkArea() );
     }
     return clone;
   }
 
-  public RenderModelBuilder deriveForPageBreak()
-  {
+  public RenderModelBuilder deriveForPageBreak() {
     final ReportRenderModelBuilder clone = clone();
-    if (pageBox != null)
-    {
+    if ( pageBox != null ) {
       clone.normalFlow = clone.normalFlow.deriveForPageBreak();
       clone.header = clone.header.deriveForPageBreak();
       clone.footer = clone.footer.deriveForPageBreak();
@@ -362,23 +313,19 @@ public class ReportRenderModelBuilder implements RenderModelBuilder, Cloneable
     return clone;
   }
 
-  public void performParanoidModelCheck()
-  {
-    if (pageBox == null)
-    {
+  public void performParanoidModelCheck() {
+    if ( pageBox == null ) {
       return;
     }
-    normalFlow.performParanoidModelCheck(pageBox.getContentArea());
-    header.performParanoidModelCheck(pageBox.getHeaderArea());
-    footer.performParanoidModelCheck(pageBox.getFooterArea());
-    repeatedFooter.performParanoidModelCheck(pageBox.getRepeatFooterArea());
-    watermark.performParanoidModelCheck(pageBox.getWatermarkArea());
+    normalFlow.performParanoidModelCheck( pageBox.getContentArea() );
+    header.performParanoidModelCheck( pageBox.getHeaderArea() );
+    footer.performParanoidModelCheck( pageBox.getFooterArea() );
+    repeatedFooter.performParanoidModelCheck( pageBox.getRepeatFooterArea() );
+    watermark.performParanoidModelCheck( pageBox.getWatermarkArea() );
   }
 
-  public void validateAfterCommit()
-  {
-    if (pageBox == null)
-    {
+  public void validateAfterCommit() {
+    if ( pageBox == null ) {
       return;
     }
     normalFlow.validateAfterCommit();
@@ -388,15 +335,14 @@ public class ReportRenderModelBuilder implements RenderModelBuilder, Cloneable
     watermark.validateAfterCommit();
   }
 
-  public void restoreStateAfterRollback()
-  {
-    header.initialize(processingContext, pageBox.getHeaderArea(), renderNodeFactory);
+  public void restoreStateAfterRollback() {
+    header.initialize( processingContext, pageBox.getHeaderArea(), renderNodeFactory );
     header.restoreStateAfterRollback();
-    footer.initialize(processingContext, pageBox.getFooterArea(), renderNodeFactory);
+    footer.initialize( processingContext, pageBox.getFooterArea(), renderNodeFactory );
     footer.restoreStateAfterRollback();
-    repeatedFooter.initialize(processingContext, pageBox.getRepeatFooterArea(), renderNodeFactory);
+    repeatedFooter.initialize( processingContext, pageBox.getRepeatFooterArea(), renderNodeFactory );
     repeatedFooter.restoreStateAfterRollback();
-    watermark.initialize(processingContext, pageBox.getWatermarkArea(), renderNodeFactory);
+    watermark.initialize( processingContext, pageBox.getWatermarkArea(), renderNodeFactory );
     watermark.restoreStateAfterRollback();
 
     normalFlow.restoreStateAfterRollback();

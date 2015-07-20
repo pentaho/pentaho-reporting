@@ -17,8 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.core.layout.output.crosstab;
 
-import java.util.ArrayList;
-
 import org.pentaho.reporting.engine.classic.core.AttributeNames;
 import org.pentaho.reporting.engine.classic.core.CrosstabColumnGroup;
 import org.pentaho.reporting.engine.classic.core.CrosstabColumnGroupBody;
@@ -35,8 +33,9 @@ import org.pentaho.reporting.engine.classic.core.style.BandStyleKeys;
 import org.pentaho.reporting.engine.classic.core.style.TableLayout;
 import org.pentaho.reporting.engine.classic.core.util.InstanceID;
 
-public class RenderedCrosstabLayout implements Cloneable
-{
+import java.util.ArrayList;
+
+public class RenderedCrosstabLayout implements Cloneable {
   private boolean crosstabTableOpen;
   private boolean crosstabRowOpen;
   private boolean processingCrosstabHeader;
@@ -65,199 +64,162 @@ public class RenderedCrosstabLayout implements Cloneable
   private CrosstabDetailMode detailMode;
   private TableLayout tableLayout;
 
-  public RenderedCrosstabLayout()
-  {
+  public RenderedCrosstabLayout() {
     firstRowGroupIndex = -1;
     firstColGroupIndex = -1;
   }
 
-  public int getFirstRowGroupIndex()
-  {
+  public int getFirstRowGroupIndex() {
     return firstRowGroupIndex;
   }
 
-  public void setFirstRowGroupIndex(final int firstRowGroupIndex)
-  {
+  public void setFirstRowGroupIndex( final int firstRowGroupIndex ) {
     this.firstRowGroupIndex = firstRowGroupIndex;
   }
 
-  public boolean isGenerateMeasureHeaders()
-  {
+  public boolean isGenerateMeasureHeaders() {
     return generateMeasureHeaders;
   }
 
-  public boolean isGenerateColumnTitleHeaders()
-  {
+  public boolean isGenerateColumnTitleHeaders() {
     return generateColumnTitleHeaders;
   }
 
-  public boolean isDetailsRendered()
-  {
+  public boolean isDetailsRendered() {
     return detailsRendered;
   }
 
-  public void setDetailsRendered(final boolean detailsRendered)
-  {
+  public void setDetailsRendered( final boolean detailsRendered ) {
     this.detailsRendered = detailsRendered;
   }
 
-  public boolean isCrosstabRowOpen()
-  {
+  public boolean isCrosstabRowOpen() {
     return crosstabRowOpen;
   }
 
-  public void setCrosstabRowOpen(final boolean crosstabRowOpen)
-  {
+  public void setCrosstabRowOpen( final boolean crosstabRowOpen ) {
     this.crosstabRowOpen = crosstabRowOpen;
   }
 
-  public boolean isCrosstabTableOpen()
-  {
+  public boolean isCrosstabTableOpen() {
     return crosstabTableOpen;
   }
 
-  public boolean isCrosstabHeaderOpen()
-  {
+  public boolean isCrosstabHeaderOpen() {
     return crosstabHeaderOpen;
   }
 
-  public void setCrosstabHeaderOpen(final boolean crosstabHeaderOpen)
-  {
+  public void setCrosstabHeaderOpen( final boolean crosstabHeaderOpen ) {
     this.crosstabHeaderOpen = crosstabHeaderOpen;
   }
 
-  public void setCrosstabTableOpen(final boolean crosstabTableOpen)
-  {
+  public void setCrosstabTableOpen( final boolean crosstabTableOpen ) {
     this.crosstabTableOpen = crosstabTableOpen;
   }
 
-  public boolean isProcessingCrosstabHeader()
-  {
+  public boolean isProcessingCrosstabHeader() {
     return processingCrosstabHeader;
   }
 
-  public void setProcessingCrosstabHeader(final boolean processingCrosstabHeader)
-  {
+  public void setProcessingCrosstabHeader( final boolean processingCrosstabHeader ) {
     this.processingCrosstabHeader = processingCrosstabHeader;
   }
 
-  public CrosstabSpecification getCrosstabSpecification()
-  {
+  public CrosstabSpecification getCrosstabSpecification() {
     return crosstabSpecification;
   }
 
-  public int getColumnGroups()
-  {
+  public int getColumnGroups() {
     return columnGroups;
   }
 
-  public int getRowGroups()
-  {
+  public int getRowGroups() {
     return rowGroups;
   }
 
-  public int getOtherGroups()
-  {
+  public int getOtherGroups() {
     return otherGroups;
   }
 
-  public String[] getSortedKeys()
-  {
+  public String[] getSortedKeys() {
     return sortedKeys;
   }
 
-  public int getCrosstabGroupIndex()
-  {
+  public int getCrosstabGroupIndex() {
     return crosstabGroupIndex;
   }
 
-  public Object clone()
-  {
-    try
-    {
+  public Object clone() {
+    try {
       final RenderedCrosstabLayout layout = (RenderedCrosstabLayout) super.clone();
-      if (columnHeaderSubflows != null)
-      {
+      if ( columnHeaderSubflows != null ) {
         layout.columnHeaderSubflows = columnHeaderSubflows.clone();
       }
-      if (rowHeaders != null)
-      {
+      if ( rowHeaders != null ) {
         layout.rowHeaders = rowHeaders.clone();
       }
-      if (columnHeaders != null)
-      {
+      if ( columnHeaders != null ) {
         layout.columnHeaders = columnHeaders.clone();
       }
-      if (columnTitleHeaders != null)
-      {
+      if ( columnTitleHeaders != null ) {
         layout.columnTitleHeaders = columnTitleHeaders.clone();
       }
       return layout;
-    }
-    catch (CloneNotSupportedException cne)
-    {
-      throw new IllegalStateException(cne);
+    } catch ( CloneNotSupportedException cne ) {
+      throw new IllegalStateException( cne );
     }
   }
 
-  public RenderedCrosstabLayout derive()
-  {
+  public RenderedCrosstabLayout derive() {
     return (RenderedCrosstabLayout) clone();
   }
 
-  public void initialize(final CrosstabSpecification crosstabSpecification,
-                         final CrosstabGroup group,
-                         final int crosstabGroupIndex)
-  {
+  public void initialize( final CrosstabSpecification crosstabSpecification,
+                          final CrosstabGroup group,
+                          final int crosstabGroupIndex ) {
     this.crosstabSpecification = crosstabSpecification;
     this.crosstabGroupIndex = crosstabGroupIndex;
-    computeGroupCounts(group);
+    computeGroupCounts( group );
 
     CrosstabDetailMode detailMode = group.getDetailsMode();
-    if (detailMode == null)
-    {
+    if ( detailMode == null ) {
       detailMode = CrosstabDetailMode.last;
     }
     this.detailMode = detailMode;
-    this.generateMeasureHeaders = !(Boolean.FALSE.equals
-        (group.getAttribute(AttributeNames.Crosstab.NAMESPACE, AttributeNames.Crosstab.PRINT_DETAIL_HEADER)));
-    this.generateColumnTitleHeaders = !(Boolean.FALSE.equals
-        (group.getAttribute(AttributeNames.Crosstab.NAMESPACE, AttributeNames.Crosstab.PRINT_COLUMN_TITLE_HEADER)));
-    this.tableLayout = (TableLayout) group.getStyle().getStyleProperty(BandStyleKeys.TABLE_LAYOUT, TableLayout.fixed);
+    this.generateMeasureHeaders = !( Boolean.FALSE.equals
+      ( group.getAttribute( AttributeNames.Crosstab.NAMESPACE, AttributeNames.Crosstab.PRINT_DETAIL_HEADER ) ) );
+    this.generateColumnTitleHeaders = !( Boolean.FALSE.equals
+      ( group.getAttribute( AttributeNames.Crosstab.NAMESPACE, AttributeNames.Crosstab.PRINT_COLUMN_TITLE_HEADER ) ) );
+    this.tableLayout = (TableLayout) group.getStyle().getStyleProperty( BandStyleKeys.TABLE_LAYOUT, TableLayout.fixed );
   }
 
-  private void computeGroupCounts(final CrosstabGroup crosstabGroup)
-  {
+  private void computeGroupCounts( final CrosstabGroup crosstabGroup ) {
     final ArrayList<String> list = new ArrayList<String>();
     GroupBody body = crosstabGroup.getBody();
-    while (body != null)
-    {
-      if (body instanceof CrosstabOtherGroupBody)
-      {
+    while ( body != null ) {
+      if ( body instanceof CrosstabOtherGroupBody ) {
         otherGroups += 1;
         final CrosstabOtherGroupBody cogb = (CrosstabOtherGroupBody) body;
         final CrosstabOtherGroup otherGroup = cogb.getGroup();
-        list.add(otherGroup.getField());
+        list.add( otherGroup.getField() );
         body = otherGroup.getBody();
         continue;
       }
 
-      if (body instanceof CrosstabRowGroupBody)
-      {
+      if ( body instanceof CrosstabRowGroupBody ) {
         rowGroups += 1;
         final CrosstabRowGroupBody cogb = (CrosstabRowGroupBody) body;
         final CrosstabRowGroup otherGroup = cogb.getGroup();
-        list.add(otherGroup.getField());
+        list.add( otherGroup.getField() );
         body = otherGroup.getBody();
         continue;
       }
 
-      if (body instanceof CrosstabColumnGroupBody)
-      {
+      if ( body instanceof CrosstabColumnGroupBody ) {
         columnGroups += 1;
         final CrosstabColumnGroupBody cogb = (CrosstabColumnGroupBody) body;
         final CrosstabColumnGroup otherGroup = cogb.getGroup();
-        list.add(otherGroup.getField());
+        list.add( otherGroup.getField() );
         body = otherGroup.getBody();
         continue;
       }
@@ -265,159 +227,128 @@ public class RenderedCrosstabLayout implements Cloneable
       break;
     }
 
-    rowHeaders = new InstanceID[rowGroups];
-    columnHeaders = new InstanceID[columnGroups];
-    columnTitleHeaders = new InstanceID[columnGroups];
-    sortedKeys = list.toArray(new String[list.size()]);
+    rowHeaders = new InstanceID[ rowGroups ];
+    columnHeaders = new InstanceID[ columnGroups ];
+    columnTitleHeaders = new InstanceID[ columnGroups ];
+    sortedKeys = list.toArray( new String[ list.size() ] );
   }
 
-  public void setColumnHeaderRowIds(final InstanceID[] columnHeaders)
-  {
-    if (columnHeaders == null)
-    {
+  public void setColumnHeaderRowIds( final InstanceID[] columnHeaders ) {
+    if ( columnHeaders == null ) {
       throw new NullPointerException();
     }
-    if (columnHeaders.length < 1)
-    {
+    if ( columnHeaders.length < 1 ) {
       throw new IllegalStateException();
     }
     this.columnHeaderSubflows = columnHeaders;
   }
 
-  public InstanceID[] getColumnHeaderSubFlows()
-  {
+  public InstanceID[] getColumnHeaderSubFlows() {
     return columnHeaderSubflows;
   }
 
-  public InstanceID getRowTitleHeaderId()
-  {
-    if (columnHeaderSubflows == null)
-    {
+  public InstanceID getRowTitleHeaderId() {
+    if ( columnHeaderSubflows == null ) {
       throw new IllegalStateException();
     }
-    return columnHeaderSubflows[columnHeaderSubflows.length - 1];
+    return columnHeaderSubflows[ columnHeaderSubflows.length - 1 ];
   }
 
-  public InstanceID getColumnTitleHeaderSubflowId(final int gidx)
-  {
-    if (generateColumnTitleHeaders == false)
-    {
+  public InstanceID getColumnTitleHeaderSubflowId( final int gidx ) {
+    if ( generateColumnTitleHeaders == false ) {
       throw new InvalidReportStateException();
     }
     final int offset = gidx - crosstabGroupIndex - otherGroups - rowGroups - 1;
-    return columnHeaderSubflows[offset * 2];
+    return columnHeaderSubflows[ offset * 2 ];
   }
 
-  public InstanceID getColumnHeaderSubflowId(final int gidx)
-  {
+  public InstanceID getColumnHeaderSubflowId( final int gidx ) {
     final int offset = gidx - crosstabGroupIndex - otherGroups - rowGroups - 1;
-    if (generateColumnTitleHeaders)
-    {
-      return columnHeaderSubflows[offset * 2 + 1];
-    }
-    else
-    {
-      return columnHeaderSubflows[offset];
+    if ( generateColumnTitleHeaders ) {
+      return columnHeaderSubflows[ offset * 2 + 1 ];
+    } else {
+      return columnHeaderSubflows[ offset ];
     }
   }
 
-  public InstanceID getMeasureHeaderSubflowId ()
-  {
-    if (generateMeasureHeaders == false)
-    {
+  public InstanceID getMeasureHeaderSubflowId() {
+    if ( generateMeasureHeaders == false ) {
       throw new InvalidReportStateException();
     }
-    return columnHeaderSubflows[columnHeaderSubflows.length - 1];
+    return columnHeaderSubflows[ columnHeaderSubflows.length - 1 ];
   }
 
-  public void setRowHeader(final int index, final InstanceID instanceId)
-  {
-    rowHeaders[index] = instanceId;
+  public void setRowHeader( final int index, final InstanceID instanceId ) {
+    rowHeaders[ index ] = instanceId;
   }
 
-  public InstanceID getRowHeader(final int index)
-  {
-    return rowHeaders[index];
+  public InstanceID getRowHeader( final int index ) {
+    return rowHeaders[ index ];
   }
 
-  public void setColumnHeaderCellId(final int index, final InstanceID instanceId)
-  {
-    columnHeaders[index] = instanceId;
+  public void setColumnHeaderCellId( final int index, final InstanceID instanceId ) {
+    columnHeaders[ index ] = instanceId;
   }
 
-  public InstanceID getColumnHeaderCellId(final int index)
-  {
-    return columnHeaders[index];
+  public InstanceID getColumnHeaderCellId( final int index ) {
+    return columnHeaders[ index ];
   }
 
-  public void setColumnTitleHeaderCellId(final int index, final InstanceID instanceId)
-  {
-    columnTitleHeaders[index] = instanceId;
+  public void setColumnTitleHeaderCellId( final int index, final InstanceID instanceId ) {
+    columnTitleHeaders[ index ] = instanceId;
   }
 
-  public InstanceID getColumnTitleHeaderCellId(final int index)
-  {
-    return columnTitleHeaders[index];
+  public InstanceID getColumnTitleHeaderCellId( final int index ) {
+    return columnTitleHeaders[ index ];
   }
 
-  public int getFirstColGroupIndex()
-  {
+  public int getFirstColGroupIndex() {
     return firstColGroupIndex;
   }
 
-  public void setFirstColGroupIndex(final int firstColGroupIndex)
-  {
+  public void setFirstColGroupIndex( final int firstColGroupIndex ) {
     this.firstColGroupIndex = firstColGroupIndex;
   }
 
-  public CrosstabDetailMode getDetailMode()
-  {
+  public CrosstabDetailMode getDetailMode() {
     return detailMode;
   }
 
-  public void startSummaryRowProcessing(final boolean summaryRowPrintable,
-                                        final int summaryRowGroupIndex,
-                                        final String summaryRowField)
-  {
+  public void startSummaryRowProcessing( final boolean summaryRowPrintable,
+                                         final int summaryRowGroupIndex,
+                                         final String summaryRowField ) {
     this.summaryRowPrintable = summaryRowPrintable;
     this.summaryRowGroupIndex = summaryRowGroupIndex;
     this.summaryRowField = summaryRowField;
   }
 
-  public void endSummaryRowProcessing()
-  {
+  public void endSummaryRowProcessing() {
     this.summaryRowPrintable = false;
     this.summaryRowGroupIndex = -1;
     this.summaryRowField = null;
   }
 
-  public String getSummaryRowField()
-  {
+  public String getSummaryRowField() {
     return summaryRowField;
   }
 
-  public int getSummaryRowGroupIndex()
-  {
+  public int getSummaryRowGroupIndex() {
     return summaryRowGroupIndex;
   }
 
-  public boolean isSummaryRowPrintable()
-  {
+  public boolean isSummaryRowPrintable() {
     return summaryRowPrintable;
   }
 
-  public TableLayout getTableLayout()
-  {
+  public TableLayout getTableLayout() {
     return tableLayout;
   }
 
-  public InstanceID getCrosstabId()
-  {
+  public InstanceID getCrosstabId() {
     return crosstabId;
   }
 
-  public void setCrosstabId(final InstanceID crosstabId)
-  {
+  public void setCrosstabId( final InstanceID crosstabId ) {
     this.crosstabId = crosstabId;
   }
 }

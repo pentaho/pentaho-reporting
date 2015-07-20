@@ -26,12 +26,10 @@ import org.pentaho.reporting.engine.classic.core.layout.model.RenderNode;
  *
  * @author Thomas Morgner
  */
-public class InlineNodeSequenceElement implements InlineSequenceElement
-{
+public class InlineNodeSequenceElement implements InlineSequenceElement {
   public static final InlineSequenceElement INSTANCE = new InlineNodeSequenceElement();
 
-  protected InlineNodeSequenceElement()
-  {
+  protected InlineNodeSequenceElement() {
   }
 
   /**
@@ -39,8 +37,7 @@ public class InlineNodeSequenceElement implements InlineSequenceElement
    *
    * @return
    */
-  public long getMinimumWidth(final RenderNode node)
-  {
+  public long getMinimumWidth( final RenderNode node ) {
     return node.getMinimumChunkWidth();
   }
 
@@ -50,23 +47,19 @@ public class InlineNodeSequenceElement implements InlineSequenceElement
    *
    * @return
    */
-  public long getMaximumWidth(final RenderNode node)
-  {
+  public long getMaximumWidth( final RenderNode node ) {
     return node.getMaximumBoxWidth();
   }
 
-  public boolean isPreserveWhitespace(final RenderNode node)
-  {
+  public boolean isPreserveWhitespace( final RenderNode node ) {
     return false;
   }
 
-  public int getClassification()
-  {
+  public int getClassification() {
     return CONTENT;
   }
 
-  public Classification getType()
-  {
+  public Classification getType() {
     return Classification.CONTENT;
   }
 }

@@ -28,30 +28,29 @@ import org.pentaho.reporting.libraries.base.boot.SubSystem;
  *
  * @author Thomas Morgner
  */
-public class AWTPrintingGUIModule extends AbstractModule
-{
-//  /**
-//   * The printing export plugin preference key.
-//   */
-//  public static final String PRINT_ORDER_KEY =
-//          "org.pentaho.reporting.engine.classic.core.modules.gui.print.Order";
-//  /**
-//   * The printing export plugin enable key.
-//   */
-//  public static final String PRINT_ENABLE_KEY =
-//          "org.pentaho.reporting.engine.classic.core.modules.gui.print.Enable";
-//  /**
-//   * The pagesetup export plugin preference key.
-//   */
-//  private static final String PAGESETUP_ORDER_KEY =
-//          "org.pentaho.reporting.engine.classic.core.modules.gui.print.pagesetup.Order";
-//  /**
-//   * The pagesetup export plugin enable key.
-//   */
-//  private static final String PAGESETUP_ENABLE_KEY =
-//          "org.pentaho.reporting.engine.classic.core.modules.gui.print.pagesetup.Enable";
-//  public static final String PRINT_SERVICE_KEY =
-//          "org.pentaho.reporting.engine.classic.core.modules.gui.print.PrintService";
+public class AWTPrintingGUIModule extends AbstractModule {
+  //  /**
+  //   * The printing export plugin preference key.
+  //   */
+  //  public static final String PRINT_ORDER_KEY =
+  //          "org.pentaho.reporting.engine.classic.core.modules.gui.print.Order";
+  //  /**
+  //   * The printing export plugin enable key.
+  //   */
+  //  public static final String PRINT_ENABLE_KEY =
+  //          "org.pentaho.reporting.engine.classic.core.modules.gui.print.Enable";
+  //  /**
+  //   * The pagesetup export plugin preference key.
+  //   */
+  //  private static final String PAGESETUP_ORDER_KEY =
+  //          "org.pentaho.reporting.engine.classic.core.modules.gui.print.pagesetup.Order";
+  //  /**
+  //   * The pagesetup export plugin enable key.
+  //   */
+  //  private static final String PAGESETUP_ENABLE_KEY =
+  //          "org.pentaho.reporting.engine.classic.core.modules.gui.print.pagesetup.Enable";
+  //  public static final String PRINT_SERVICE_KEY =
+  //          "org.pentaho.reporting.engine.classic.core.modules.gui.print.PrintService";
 
   /**
    * DefaultConstructor. Loads the module specification.
@@ -59,8 +58,7 @@ public class AWTPrintingGUIModule extends AbstractModule
    * @throws ModuleInitializeException if an error occured.
    */
   public AWTPrintingGUIModule()
-      throws ModuleInitializeException
-  {
+    throws ModuleInitializeException {
     loadModuleInfo();
   }
 
@@ -72,8 +70,7 @@ public class AWTPrintingGUIModule extends AbstractModule
    * @param subSystem the subSystem.
    * @throws ModuleInitializeException if an error ocurred while initializing the module.
    */
-  public void initialize(final SubSystem subSystem)
-      throws ModuleInitializeException
-  {
+  public void initialize( final SubSystem subSystem )
+    throws ModuleInitializeException {
   }
 }

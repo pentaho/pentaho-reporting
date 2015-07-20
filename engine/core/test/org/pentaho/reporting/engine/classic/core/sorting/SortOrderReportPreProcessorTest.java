@@ -17,8 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.core.sorting;
 
-import java.util.List;
-
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -33,69 +31,66 @@ import org.pentaho.reporting.engine.classic.core.testsupport.RelationalReportBui
 import org.pentaho.reporting.engine.classic.core.testsupport.base.PreProcessorTestBase;
 import org.pentaho.reporting.engine.classic.core.wizard.ContextAwareDataSchemaModel;
 
-public class SortOrderReportPreProcessorTest extends PreProcessorTestBase
-{
+import java.util.List;
+
+public class SortOrderReportPreProcessorTest extends PreProcessorTestBase {
   @Before
-  public void setUp() throws Exception
-  {
+  public void setUp() throws Exception {
     ClassicEngineBoot.getInstance().start();
   }
 
-  protected ReportPreProcessor create()
-  {
+  protected ReportPreProcessor create() {
     return new SortOrderReportPreProcessor();
   }
 
   @Test
-  public void testSortOrderCalculationRelational() throws ReportProcessingException
-  {
-    DesignTimeDataSchemaModel model = new DesignTimeDataSchemaModel(new MasterReport());
-    RelationalReportBuilder builder = new RelationalReportBuilder(model);
-    builder.addGroup("Group-A");
-    builder.addGroup("Group-B");
-    builder.addGroup("Group-C");
+  public void testSortOrderCalculationRelational() throws ReportProcessingException {
+    DesignTimeDataSchemaModel model = new DesignTimeDataSchemaModel( new MasterReport() );
+    RelationalReportBuilder builder = new RelationalReportBuilder( model );
+    builder.addGroup( "Group-A" );
+    builder.addGroup( "Group-B" );
+    builder.addGroup( "Group-C" );
 
     MasterReport report = builder.createReport();
-    report.setAutoSort(Boolean.TRUE);
+    report.setAutoSort( Boolean.TRUE );
     ReportPreProcessor reportPreProcessor = create();
-    MasterReport materialized = materializePreData(report, reportPreProcessor);
+    MasterReport materialized = materializePreData( report, reportPreProcessor );
     Object attribute = materialized.getAttribute
-        (AttributeNames.Internal.NAMESPACE, AttributeNames.Internal.COMPUTED_SORT_CONSTRAINTS);
-    Assert.assertTrue(attribute instanceof List);
+      ( AttributeNames.Internal.NAMESPACE, AttributeNames.Internal.COMPUTED_SORT_CONSTRAINTS );
+    Assert.assertTrue( attribute instanceof List );
     List<SortConstraint> sc = (List<SortConstraint>) attribute;
-    Assert.assertEquals(3, sc.size());
-    Assert.assertEquals(new SortConstraint("Group-A", true), sc.get(0));
-    Assert.assertEquals(new SortConstraint("Group-B", true), sc.get(1));
-    Assert.assertEquals(new SortConstraint("Group-C", true), sc.get(2));
+    Assert.assertEquals( 3, sc.size() );
+    Assert.assertEquals( new SortConstraint( "Group-A", true ), sc.get( 0 ) );
+    Assert.assertEquals( new SortConstraint( "Group-B", true ), sc.get( 1 ) );
+    Assert.assertEquals( new SortConstraint( "Group-C", true ), sc.get( 2 ) );
   }
 
   @Test
-  public void testSortOrderCalculationCrosstab() throws ReportProcessingException
-  {
-    ContextAwareDataSchemaModel model = new DesignTimeDataSchemaModel(new MasterReport());
-    CrosstabBuilder builder = new CrosstabBuilder(model);
-    builder.addDetails("Details", null);
-    builder.addRowDimension("Row-A");
-    builder.addRowDimension("Row-B");
-    builder.addOtherDimension("Other-A");
-    builder.addOtherDimension("Other-B");
-    builder.addColumnDimension("Col-A");
-    builder.addColumnDimension("Col-B");
+  public void testSortOrderCalculationCrosstab() throws ReportProcessingException {
+    ContextAwareDataSchemaModel model = new DesignTimeDataSchemaModel( new MasterReport() );
+    CrosstabBuilder builder = new CrosstabBuilder( model );
+    builder.addDetails( "Details", null );
+    builder.addRowDimension( "Row-A" );
+    builder.addRowDimension( "Row-B" );
+    builder.addOtherDimension( "Other-A" );
+    builder.addOtherDimension( "Other-B" );
+    builder.addColumnDimension( "Col-A" );
+    builder.addColumnDimension( "Col-B" );
 
     MasterReport report = builder.createReport();
-    report.setAutoSort(Boolean.TRUE);
+    report.setAutoSort( Boolean.TRUE );
     ReportPreProcessor reportPreProcessor = create();
-    MasterReport materialized = materializePreData(report, reportPreProcessor);
+    MasterReport materialized = materializePreData( report, reportPreProcessor );
     Object attribute = materialized.getAttribute
-        (AttributeNames.Internal.NAMESPACE, AttributeNames.Internal.COMPUTED_SORT_CONSTRAINTS);
-    Assert.assertTrue(attribute instanceof List);
+      ( AttributeNames.Internal.NAMESPACE, AttributeNames.Internal.COMPUTED_SORT_CONSTRAINTS );
+    Assert.assertTrue( attribute instanceof List );
     List<SortConstraint> sc = (List<SortConstraint>) attribute;
-    Assert.assertEquals(6, sc.size());
-    Assert.assertEquals(new SortConstraint("Other-A", true), sc.get(0));
-    Assert.assertEquals(new SortConstraint("Other-B", true), sc.get(1));
-    Assert.assertEquals(new SortConstraint("Row-A", true), sc.get(2));
-    Assert.assertEquals(new SortConstraint("Row-B", true), sc.get(3));
-    Assert.assertEquals(new SortConstraint("Col-A", true), sc.get(4));
-    Assert.assertEquals(new SortConstraint("Col-B", true), sc.get(5));
+    Assert.assertEquals( 6, sc.size() );
+    Assert.assertEquals( new SortConstraint( "Other-A", true ), sc.get( 0 ) );
+    Assert.assertEquals( new SortConstraint( "Other-B", true ), sc.get( 1 ) );
+    Assert.assertEquals( new SortConstraint( "Row-A", true ), sc.get( 2 ) );
+    Assert.assertEquals( new SortConstraint( "Row-B", true ), sc.get( 3 ) );
+    Assert.assertEquals( new SortConstraint( "Col-A", true ), sc.get( 4 ) );
+    Assert.assertEquals( new SortConstraint( "Col-B", true ), sc.get( 5 ) );
   }
 }

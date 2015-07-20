@@ -26,41 +26,34 @@ import org.pentaho.reporting.engine.classic.core.layout.text.ExtendedBaselineInf
  *
  * @author Thomas Morgner
  */
-public final class TextElementAlignContext extends AlignContext
-{
+public final class TextElementAlignContext extends AlignContext {
   private long[] baselines;
   private long baselineShift;
 
-  public TextElementAlignContext(final RenderableText text)
-  {
-    super(text);
+  public TextElementAlignContext( final RenderableText text ) {
+    super( text );
     final ExtendedBaselineInfo baselineInfo = text.getBaselineInfo();
     this.baselines = baselineInfo.getBaselines();
-    setDominantBaseline(baselineInfo.getDominantBaseline());
+    setDominantBaseline( baselineInfo.getDominantBaseline() );
   }
 
-  public boolean isSimpleNode()
-  {
+  public boolean isSimpleNode() {
     return true;
   }
 
-  public long getBaselineDistance(final int baseline)
-  {
-    return (baselines[baseline] - baselines[getDominantBaseline()]) + baselineShift;
+  public long getBaselineDistance( final int baseline ) {
+    return ( baselines[ baseline ] - baselines[ getDominantBaseline() ] ) + baselineShift;
   }
 
-  public void shift(final long delta)
-  {
+  public void shift( final long delta ) {
     baselineShift += delta;
   }
 
-  public long getAfterEdge()
-  {
-    return this.baselines[ExtendedBaselineInfo.AFTER_EDGE] + baselineShift;
+  public long getAfterEdge() {
+    return this.baselines[ ExtendedBaselineInfo.AFTER_EDGE ] + baselineShift;
   }
 
-  public long getBeforeEdge()
-  {
-    return this.baselines[ExtendedBaselineInfo.BEFORE_EDGE] + baselineShift;
+  public long getBeforeEdge() {
+    return this.baselines[ ExtendedBaselineInfo.BEFORE_EDGE ] + baselineShift;
   }
 }

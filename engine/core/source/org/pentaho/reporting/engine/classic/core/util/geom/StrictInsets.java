@@ -22,107 +22,88 @@ package org.pentaho.reporting.engine.classic.core.util.geom;
  *
  * @author Thomas Morgner
  */
-public class StrictInsets implements Cloneable
-{
+public class StrictInsets implements Cloneable {
   private long top;
   private long bottom;
   private long left;
   private long right;
 
-  public StrictInsets()
-  {
+  public StrictInsets() {
   }
 
-  public StrictInsets(final long top,
-                      final long left,
-                      final long bottom,
-                      final long right)
-  {
+  public StrictInsets( final long top,
+                       final long left,
+                       final long bottom,
+                       final long right ) {
     this.top = top;
     this.left = left;
     this.bottom = bottom;
     this.right = right;
   }
 
-  public long getTop()
-  {
+  public long getTop() {
     return top;
   }
 
-  public void setTop(final long top)
-  {
+  public void setTop( final long top ) {
     this.top = top;
   }
 
-  public long getBottom()
-  {
+  public long getBottom() {
     return bottom;
   }
 
-  public void setBottom(final long bottom)
-  {
+  public void setBottom( final long bottom ) {
     this.bottom = bottom;
   }
 
-  public long getLeft()
-  {
+  public long getLeft() {
     return left;
   }
 
-  public void setLeft(final long left)
-  {
+  public void setLeft( final long left ) {
     this.left = left;
   }
 
-  public long getRight()
-  {
+  public long getRight() {
     return right;
   }
 
-  public void setRight(final long right)
-  {
+  public void setRight( final long right ) {
     this.right = right;
   }
 
-  public boolean equals(final Object o)
-  {
-    if (this == o)
-    {
+  public boolean equals( final Object o ) {
+    if ( this == o ) {
       return true;
     }
-    if (o == null || getClass() != o.getClass())
-    {
+    if ( o == null || getClass() != o.getClass() ) {
       return false;
     }
 
     final StrictInsets that = (StrictInsets) o;
 
-    if (bottom != that.bottom)
-    {
+    if ( bottom != that.bottom ) {
       return false;
     }
-    if (left != that.left)
-    {
+    if ( left != that.left ) {
       return false;
     }
-    if (right != that.right)
-    {
+    if ( right != that.right ) {
       return false;
     }
-    if (top != that.top)
-    {
+    if ( top != that.top ) {
       return false;
     }
 
     return true;
   }
 
-  public int hashCode()
-  {
-    int result = (int) (top ^ (top >>> 32));
-    result = 29 * result + (int) (bottom ^ (bottom >>> 32));
-    result = 29 * result + (int) (left ^ (left >>> 32));
-    result = 29 * result + (int) (right ^ (right >>> 32));
+  public int hashCode() {
+    int result = (int) ( top ^ ( top >>> 32 ) );
+    result = 29 * result + (int) ( bottom ^ ( bottom >>> 32 ) );
+    result = 29 * result + (int) ( left ^ ( left >>> 32 ) );
+    result = 29 * result + (int) ( right ^ ( right >>> 32 ) );
     return result;
   }
 
@@ -141,19 +122,18 @@ public class StrictInsets implements Cloneable
    *
    * @return a string representation of the object.
    */
-  public String toString()
-  {
-    final StringBuffer b = new StringBuffer(100);
-    b.append(getClass().getName());
-    b.append("={top=");
-    b.append(top);
-    b.append(", left=");
-    b.append(left);
-    b.append(", bottom=");
-    b.append(bottom);
-    b.append(", right=");
-    b.append(right);
-    b.append('}');
+  public String toString() {
+    final StringBuffer b = new StringBuffer( 100 );
+    b.append( getClass().getName() );
+    b.append( "={top=" );
+    b.append( top );
+    b.append( ", left=" );
+    b.append( left );
+    b.append( ", bottom=" );
+    b.append( bottom );
+    b.append( ", right=" );
+    b.append( right );
+    b.append( '}' );
     return b.toString();
   }
 
@@ -163,15 +143,11 @@ public class StrictInsets implements Cloneable
    *
    * @return the cloned instance.
    */
-  public Object clone()
-  {
-    try
-    {
+  public Object clone() {
+    try {
       return super.clone();
-    }
-    catch (CloneNotSupportedException e)
-    {
-      throw new InternalError("Clone must always be supported.");
+    } catch ( CloneNotSupportedException e ) {
+      throw new InternalError( "Clone must always be supported." );
     }
   }
 

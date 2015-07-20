@@ -17,29 +17,25 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.gui.base.event;
 
-import java.util.EventObject;
-
 import org.pentaho.reporting.engine.classic.core.AttributeNames;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderNode;
 
-public class ReportActionEvent extends EventObject
-{
+import java.util.EventObject;
+
+public class ReportActionEvent extends EventObject {
   private RenderNode node;
 
-  public ReportActionEvent(final Object source,
-                           final RenderNode node)
-  {
-    super(source);
+  public ReportActionEvent( final Object source,
+                            final RenderNode node ) {
+    super( source );
     this.node = node;
   }
 
-  public RenderNode getNode()
-  {
+  public RenderNode getNode() {
     return node;
   }
 
-  public Object getActionParameter()
-  {
-    return node.getAttributes().getAttribute(AttributeNames.Swing.NAMESPACE, AttributeNames.Swing.ACTION);
+  public Object getActionParameter() {
+    return node.getAttributes().getAttribute( AttributeNames.Swing.NAMESPACE, AttributeNames.Swing.ACTION );
   }
 }

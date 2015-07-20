@@ -17,37 +17,32 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.gui.base.actions;
 
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-
 import org.pentaho.reporting.engine.classic.core.modules.gui.base.PreviewPane;
 import org.pentaho.reporting.engine.classic.core.modules.gui.commonswing.AbstractActionPlugin;
+
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 
 /**
  * Creation-Date: 15.08.2007, 16:12:34
  *
  * @author Thomas Morgner
  */
-public class PaginatedUpdateListener implements PropertyChangeListener
-{
+public class PaginatedUpdateListener implements PropertyChangeListener {
   private AbstractActionPlugin actionPlugin;
 
-  public PaginatedUpdateListener(final AbstractActionPlugin actionPlugin)
-  {
-    if (actionPlugin == null)
-    {
+  public PaginatedUpdateListener( final AbstractActionPlugin actionPlugin ) {
+    if ( actionPlugin == null ) {
       throw new NullPointerException();
     }
     this.actionPlugin = actionPlugin;
   }
 
-  public void propertyChange(final PropertyChangeEvent evt)
-  {
-    if (PreviewPane.PAGINATED_PROPERTY.equals(evt.getPropertyName()) == false)
-    {
+  public void propertyChange( final PropertyChangeEvent evt ) {
+    if ( PreviewPane.PAGINATED_PROPERTY.equals( evt.getPropertyName() ) == false ) {
       return;
     }
 
-    actionPlugin.setEnabled(Boolean.TRUE.equals(evt.getNewValue()));
+    actionPlugin.setEnabled( Boolean.TRUE.equals( evt.getNewValue() ) );
   }
 }

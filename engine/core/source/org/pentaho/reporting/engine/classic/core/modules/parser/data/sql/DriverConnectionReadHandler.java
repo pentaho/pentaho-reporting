@@ -17,10 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.parser.data.sql;
 
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Properties;
-
 import org.pentaho.reporting.engine.classic.core.modules.misc.datafactory.sql.ConnectionProvider;
 import org.pentaho.reporting.engine.classic.core.modules.misc.datafactory.sql.DriverConnectionProvider;
 import org.pentaho.reporting.engine.classic.core.modules.parser.base.common.PasswordPropertiesReadHandler;
@@ -31,21 +27,23 @@ import org.pentaho.reporting.libraries.xmlns.parser.XmlReadHandler;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Properties;
+
 /**
  * Creation-Date: 07.04.2006, 18:09:25
  *
  * @author Thomas Morgner
  */
 public class DriverConnectionReadHandler extends AbstractXmlReadHandler
-    implements ConnectionReadHandler
-{
+  implements ConnectionReadHandler {
   private StringReadHandler driverReadHandler;
   private StringReadHandler urlReadHandler;
   private PropertiesReadHandler propertiesReadHandler;
   private DriverConnectionProvider driverConnectionProvider;
 
-  public DriverConnectionReadHandler()
-  {
+  public DriverConnectionReadHandler() {
   }
 
   /**
@@ -56,27 +54,22 @@ public class DriverConnectionReadHandler extends AbstractXmlReadHandler
    * @return the handler or null, if the tagname is invalid.
    * @throws SAXException if there is a parsing error.
    */
-  protected XmlReadHandler getHandlerForChild(final String uri,
-                                              final String tagName,
-                                              final Attributes atts)
-      throws SAXException
-  {
-    if (isSameNamespace(uri) == false)
-    {
+  protected XmlReadHandler getHandlerForChild( final String uri,
+                                               final String tagName,
+                                               final Attributes atts )
+    throws SAXException {
+    if ( isSameNamespace( uri ) == false ) {
       return null;
     }
-    if ("driver".equals(tagName))
-    {
+    if ( "driver".equals( tagName ) ) {
       driverReadHandler = new StringReadHandler();
       return driverReadHandler;
     }
-    if ("url".equals(tagName))
-    {
+    if ( "url".equals( tagName ) ) {
       urlReadHandler = new StringReadHandler();
       return urlReadHandler;
     }
-    if ("properties".equals(tagName))
-    {
+    if ( "properties".equals( tagName ) ) {
       propertiesReadHandler = new PasswordPropertiesReadHandler();
       return propertiesReadHandler;
     }
@@ -88,25 +81,20 @@ public class DriverConnectionReadHandler extends AbstractXmlReadHandler
    *
    * @throws SAXException if there is a parsing error.
    */
-  protected void doneParsing() throws SAXException
-  {
+  protected void doneParsing() throws SAXException {
     final DriverConnectionProvider provider = new DriverConnectionProvider();
-    if (driverReadHandler != null)
-    {
-      provider.setDriver(driverReadHandler.getResult());
+    if ( driverReadHandler != null ) {
+      provider.setDriver( driverReadHandler.getResult() );
     }
-    if (urlReadHandler != null)
-    {
-      provider.setUrl(urlReadHandler.getResult());
+    if ( urlReadHandler != null ) {
+      provider.setUrl( urlReadHandler.getResult() );
     }
-    if (propertiesReadHandler != null)
-    {
+    if ( propertiesReadHandler != null ) {
       final Properties p = (Properties) propertiesReadHandler.getObject();
       final Iterator it = p.entrySet().iterator();
-      while (it.hasNext())
-      {
+      while ( it.hasNext() ) {
         final Map.Entry entry = (Map.Entry) it.next();
-        provider.setProperty((String) entry.getKey(), (String) entry.getValue());
+        provider.setProperty( (String) entry.getKey(), (String) entry.getValue() );
       }
     }
     driverConnectionProvider = provider;
@@ -118,13 +106,11 @@ public class DriverConnectionReadHandler extends AbstractXmlReadHandler
    * @return the object.
    * @throws SAXException if there is a parsing error.
    */
-  public Object getObject() throws SAXException
-  {
+  public Object getObject() throws SAXException {
     return driverConnectionProvider;
   }
 
-  public ConnectionProvider getProvider()
-  {
+  public ConnectionProvider getProvider() {
     return driverConnectionProvider;
   }
 }

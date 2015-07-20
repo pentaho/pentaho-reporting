@@ -17,11 +17,11 @@
 
 package org.pentaho.reporting.engine.classic.core.function.strings;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-
 import org.pentaho.reporting.engine.classic.core.function.AbstractExpression;
 import org.pentaho.reporting.engine.classic.core.function.Expression;
+
+import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * Returns the value read from a mapped field. The field's value is used as a key to the field-mapping. The expression
@@ -31,8 +31,7 @@ import org.pentaho.reporting.engine.classic.core.function.Expression;
  *
  * @author Thomas Morgner
  */
-public class MapIndirectExpression extends AbstractExpression
-{
+public class MapIndirectExpression extends AbstractExpression {
   /**
    * The field from where to read the key value.
    */
@@ -61,8 +60,7 @@ public class MapIndirectExpression extends AbstractExpression
   /**
    * Default Constructor.
    */
-  public MapIndirectExpression()
-  {
+  public MapIndirectExpression() {
     keys = new ArrayList();
     forwards = new ArrayList();
   }
@@ -72,8 +70,7 @@ public class MapIndirectExpression extends AbstractExpression
    *
    * @return the field name.
    */
-  public String getField()
-  {
+  public String getField() {
     return field;
   }
 
@@ -82,8 +79,7 @@ public class MapIndirectExpression extends AbstractExpression
    *
    * @param field the field name.
    */
-  public void setField(final String field)
-  {
+  public void setField( final String field ) {
     this.field = field;
   }
 
@@ -92,8 +88,7 @@ public class MapIndirectExpression extends AbstractExpression
    *
    * @return the null-value.
    */
-  public String getNullValue()
-  {
+  public String getNullValue() {
     return nullValue;
   }
 
@@ -102,8 +97,7 @@ public class MapIndirectExpression extends AbstractExpression
    *
    * @param nullValue the null-value.
    */
-  public void setNullValue(final String nullValue)
-  {
+  public void setNullValue( final String nullValue ) {
     this.nullValue = nullValue;
   }
 
@@ -112,8 +106,7 @@ public class MapIndirectExpression extends AbstractExpression
    *
    * @return the fallback forward field name.
    */
-  public String getFallbackForward()
-  {
+  public String getFallbackForward() {
     return fallbackForward;
   }
 
@@ -122,8 +115,7 @@ public class MapIndirectExpression extends AbstractExpression
    *
    * @param fallbackForward the fallback forward field name.
    */
-  public void setFallbackForward(final String fallbackForward)
-  {
+  public void setFallbackForward( final String fallbackForward ) {
     this.fallbackForward = fallbackForward;
   }
 
@@ -134,15 +126,11 @@ public class MapIndirectExpression extends AbstractExpression
    * @param index the index position of the key in the list.
    * @param key   the key value.
    */
-  public void setKey(final int index, final String key)
-  {
-    if (keys.size() == index)
-    {
-      keys.add(key);
-    }
-    else
-    {
-      keys.set(index, key);
+  public void setKey( final int index, final String key ) {
+    if ( keys.size() == index ) {
+      keys.add( key );
+    } else {
+      keys.set( index, key );
     }
   }
 
@@ -152,9 +140,8 @@ public class MapIndirectExpression extends AbstractExpression
    * @param index the index position of the key in the list.
    * @return the key value.
    */
-  public String getKey(final int index)
-  {
-    return (String) keys.get(index);
+  public String getKey( final int index ) {
+    return (String) keys.get( index );
   }
 
   /**
@@ -162,8 +149,7 @@ public class MapIndirectExpression extends AbstractExpression
    *
    * @return the number of keys.
    */
-  public int getKeyCount()
-  {
+  public int getKeyCount() {
     return keys.size();
   }
 
@@ -172,9 +158,8 @@ public class MapIndirectExpression extends AbstractExpression
    *
    * @return all defined keys.
    */
-  public String[] getKey()
-  {
-    return (String[]) keys.toArray(new String[keys.size()]);
+  public String[] getKey() {
+    return (String[]) keys.toArray( new String[ keys.size() ] );
   }
 
   /**
@@ -182,10 +167,9 @@ public class MapIndirectExpression extends AbstractExpression
    *
    * @param keys all defined keys.
    */
-  public void setKey(final String[] keys)
-  {
+  public void setKey( final String[] keys ) {
     this.keys.clear();
-    this.keys.addAll(Arrays.asList(keys));
+    this.keys.addAll( Arrays.asList( keys ) );
   }
 
   /**
@@ -195,15 +179,11 @@ public class MapIndirectExpression extends AbstractExpression
    * @param index the index of the entry.
    * @param value the name of the datarow-column that is read if the key is selected.
    */
-  public void setForward(final int index, final String value)
-  {
-    if (forwards.size() == index)
-    {
-      forwards.add(value);
-    }
-    else
-    {
-      forwards.set(index, value);
+  public void setForward( final int index, final String value ) {
+    if ( forwards.size() == index ) {
+      forwards.add( value );
+    } else {
+      forwards.set( index, value );
     }
   }
 
@@ -214,9 +194,8 @@ public class MapIndirectExpression extends AbstractExpression
    * @param index the index of the entry.
    * @return the name of the datarow-column that is read if the key is selected.
    */
-  public String getForward(final int index)
-  {
-    return (String) forwards.get(index);
+  public String getForward( final int index ) {
+    return (String) forwards.get( index );
   }
 
   /**
@@ -224,8 +203,7 @@ public class MapIndirectExpression extends AbstractExpression
    *
    * @return the number of forward definitions.
    */
-  public int getForwardCount()
-  {
+  public int getForwardCount() {
     return forwards.size();
   }
 
@@ -234,9 +212,8 @@ public class MapIndirectExpression extends AbstractExpression
    *
    * @return all forward-definitions.
    */
-  public String[] getForward()
-  {
-    return (String[]) forwards.toArray(new String[forwards.size()]);
+  public String[] getForward() {
+    return (String[]) forwards.toArray( new String[ forwards.size() ] );
   }
 
   /**
@@ -245,10 +222,9 @@ public class MapIndirectExpression extends AbstractExpression
    *
    * @param forwards the forward-name array.
    */
-  public void setForward(final String[] forwards)
-  {
+  public void setForward( final String[] forwards ) {
     this.forwards.clear();
-    this.forwards.addAll(Arrays.asList(forwards));
+    this.forwards.addAll( Arrays.asList( forwards ) );
   }
 
   /**
@@ -256,8 +232,7 @@ public class MapIndirectExpression extends AbstractExpression
    *
    * @return true, if the key comparison is case-insensitive, false otherwise.
    */
-  public boolean isIgnoreCase()
-  {
+  public boolean isIgnoreCase() {
     return ignoreCase;
   }
 
@@ -266,8 +241,7 @@ public class MapIndirectExpression extends AbstractExpression
    *
    * @param ignoreCase true, if the key comparison is case-insensitive, false otherwise.
    */
-  public void setIgnoreCase(final boolean ignoreCase)
-  {
+  public void setIgnoreCase( final boolean ignoreCase ) {
     this.ignoreCase = ignoreCase;
   }
 
@@ -278,8 +252,7 @@ public class MapIndirectExpression extends AbstractExpression
    *
    * @return a copy of this function.
    */
-  public Expression getInstance()
-  {
+  public Expression getInstance() {
     final MapIndirectExpression co = (MapIndirectExpression) super.getInstance();
     co.forwards = (ArrayList) forwards.clone();
     co.keys = (ArrayList) keys.clone();
@@ -292,39 +265,30 @@ public class MapIndirectExpression extends AbstractExpression
    *
    * @return the value of the function.
    */
-  public Object getValue()
-  {
-    final Object raw = getDataRow().get(getField());
-    if (raw == null)
-    {
+  public Object getValue() {
+    final Object raw = getDataRow().get( getField() );
+    if ( raw == null ) {
       return getNullValue();
     }
-    final String text = String.valueOf(raw);
-    final int length = Math.min(keys.size(), forwards.size());
-    for (int i = 0; i < length; i++)
-    {
-      final String key = (String) keys.get(i);
-      if (isIgnoreCase())
-      {
-        if (text.equalsIgnoreCase(key))
-        {
-          final String target = (String) forwards.get(i);
-          return getDataRow().get(target);
+    final String text = String.valueOf( raw );
+    final int length = Math.min( keys.size(), forwards.size() );
+    for ( int i = 0; i < length; i++ ) {
+      final String key = (String) keys.get( i );
+      if ( isIgnoreCase() ) {
+        if ( text.equalsIgnoreCase( key ) ) {
+          final String target = (String) forwards.get( i );
+          return getDataRow().get( target );
         }
-      }
-      else
-      {
-        if (text.equals(key))
-        {
-          final String target = (String) forwards.get(i);
-          return getDataRow().get(target);
+      } else {
+        if ( text.equals( key ) ) {
+          final String target = (String) forwards.get( i );
+          return getDataRow().get( target );
         }
       }
     }
     final String fallbackValue = getFallbackForward();
-    if (fallbackValue != null)
-    {
-      return getDataRow().get(fallbackValue);
+    if ( fallbackValue != null ) {
+      return getDataRow().get( fallbackValue );
     }
     return raw;
   }

@@ -19,10 +19,8 @@ package org.pentaho.reporting.engine.classic.core.metadata.propertyeditors;
 
 import org.pentaho.reporting.engine.classic.core.CrosstabHeaderMode;
 
-public class CrosstabHeaderModePropertyEditor extends EnumPropertyEditor
-{
-  public CrosstabHeaderModePropertyEditor()
-  {
-    super(CrosstabHeaderMode.class, true);
+public class CrosstabHeaderModePropertyEditor extends EnumPropertyEditor {
+  public CrosstabHeaderModePropertyEditor() {
+    super( CrosstabHeaderMode.class, true );
   }
 }

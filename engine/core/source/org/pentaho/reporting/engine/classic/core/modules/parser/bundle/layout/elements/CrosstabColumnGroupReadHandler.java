@@ -17,8 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.parser.bundle.layout.elements;
 
-import java.util.Arrays;
-
 import org.pentaho.reporting.engine.classic.core.CrosstabCell;
 import org.pentaho.reporting.engine.classic.core.CrosstabCellBody;
 import org.pentaho.reporting.engine.classic.core.CrosstabColumnGroup;
@@ -34,8 +32,9 @@ import org.pentaho.reporting.libraries.xmlns.parser.XmlReadHandler;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 
-public class CrosstabColumnGroupReadHandler extends AbstractElementReadHandler
-{
+import java.util.Arrays;
+
+public class CrosstabColumnGroupReadHandler extends AbstractElementReadHandler {
   private CrosstabHeaderBandReadHandler headerReadHandler;
   private CrosstabSummaryHeaderBandReadHandler summaryHeaderBandReadHandler;
   private CrosstabTitleHeaderBandReadHandler titleHeaderBandReadHandler;
@@ -47,9 +46,8 @@ public class CrosstabColumnGroupReadHandler extends AbstractElementReadHandler
   private StringReadHandler fieldReadHandler;
 
   public CrosstabColumnGroupReadHandler()
-      throws ParseException
-  {
-    super(CrosstabColumnGroupType.INSTANCE);
+    throws ParseException {
+    super( CrosstabColumnGroupType.INSTANCE );
   }
 
   /**
@@ -61,75 +59,59 @@ public class CrosstabColumnGroupReadHandler extends AbstractElementReadHandler
    * @return the handler or null, if the tagname is invalid.
    * @throws SAXException if there is a parsing error.
    */
-  protected XmlReadHandler getHandlerForChild(final String uri,
-                                              final String tagName,
-                                              final Attributes atts) throws SAXException
-  {
-    if (BundleNamespaces.LAYOUT.equals(uri))
-    {
-      if ("crosstab-header".equals(tagName))
-      {
-        if (headerReadHandler == null)
-        {
+  protected XmlReadHandler getHandlerForChild( final String uri,
+                                               final String tagName,
+                                               final Attributes atts ) throws SAXException {
+    if ( BundleNamespaces.LAYOUT.equals( uri ) ) {
+      if ( "crosstab-header".equals( tagName ) ) {
+        if ( headerReadHandler == null ) {
           headerReadHandler = new CrosstabHeaderBandReadHandler();
         }
         return headerReadHandler;
       }
-      if ("group-header".equals(tagName))
-      {
-        if (legacyHeaderReadHandler == null)
-        {
+      if ( "group-header".equals( tagName ) ) {
+        if ( legacyHeaderReadHandler == null ) {
           legacyHeaderReadHandler = new GroupHeaderReadHandler();
         }
         return legacyHeaderReadHandler;
       }
-      if ("field".equals(tagName))
-      {
-        if (fieldReadHandler == null)
-        {
+      if ( "field".equals( tagName ) ) {
+        if ( fieldReadHandler == null ) {
           fieldReadHandler = new StringReadHandler();
         }
         return fieldReadHandler;
       }
-      if ("crosstab-title-header".equals(tagName))
-      {
-        if (titleHeaderBandReadHandler == null)
-        {
+      if ( "crosstab-title-header".equals( tagName ) ) {
+        if ( titleHeaderBandReadHandler == null ) {
           titleHeaderBandReadHandler = new CrosstabTitleHeaderBandReadHandler();
         }
         return titleHeaderBandReadHandler;
       }
-      if ("crosstab-summary-header".equals(tagName))
-      {
-        if (summaryHeaderBandReadHandler == null)
-        {
+      if ( "crosstab-summary-header".equals( tagName ) ) {
+        if ( summaryHeaderBandReadHandler == null ) {
           summaryHeaderBandReadHandler = new CrosstabSummaryHeaderBandReadHandler();
         }
         return summaryHeaderBandReadHandler;
       }
-      if ("crosstab-column-group-body".equals(tagName))
-      {
+      if ( "crosstab-column-group-body".equals( tagName ) ) {
         columnSubGroupBodyReadHandler = new CrosstabColumnSubGroupBodyReadHandler();
         return columnSubGroupBodyReadHandler;
       }
-      if ("data-body".equals(tagName))
-      {
+      if ( "data-body".equals( tagName ) ) {
         groupBodyReadHandler = new DataGroupBodyReadHandler();
         return groupBodyReadHandler;
       }
-      if ("crosstab-cell-body".equals(tagName))
-      {
+      if ( "crosstab-cell-body".equals( tagName ) ) {
         cellBodyReadHandler = new CrosstabCellBodyReadHandler();
         return cellBodyReadHandler;
       }
-      if ("crosstab-title-footer".equals(tagName) ||
-          "crosstab-summary-footer".equals(tagName) ||
-          "group-footer".equals(tagName))
-      {
+      if ( "crosstab-title-footer".equals( tagName ) ||
+        "crosstab-summary-footer".equals( tagName ) ||
+        "group-footer".equals( tagName ) ) {
         return new IgnoreAnyChildReadHandler();
       }
     }
-    return super.getHandlerForChild(uri, tagName, atts);
+    return super.getHandlerForChild( uri, tagName, atts );
   }
 
   /**
@@ -137,58 +119,45 @@ public class CrosstabColumnGroupReadHandler extends AbstractElementReadHandler
    *
    * @throws SAXException if there is a parsing error.
    */
-  protected void doneParsing() throws SAXException
-  {
+  protected void doneParsing() throws SAXException {
     super.doneParsing();
 
     final CrosstabColumnGroup group = getElement();
-    if (fieldReadHandler != null)
-    {
-      group.setField(fieldReadHandler.getResult());
+    if ( fieldReadHandler != null ) {
+      group.setField( fieldReadHandler.getResult() );
     }
-    if (headerReadHandler != null)
-    {
-      group.setHeader(headerReadHandler.getElement());
-    }
-    else if (legacyHeaderReadHandler != null)
-    {
+    if ( headerReadHandler != null ) {
+      group.setHeader( headerReadHandler.getElement() );
+    } else if ( legacyHeaderReadHandler != null ) {
       final CrosstabHeader header = new CrosstabHeader();
-      legacyHeaderReadHandler.getElement().copyInto(header);
-      header.addElements(Arrays.asList(legacyHeaderReadHandler.getElement().getElementArray()));
-      group.setHeader(header);
+      legacyHeaderReadHandler.getElement().copyInto( header );
+      header.addElements( Arrays.asList( legacyHeaderReadHandler.getElement().getElementArray() ) );
+      group.setHeader( header );
     }
-    if (summaryHeaderBandReadHandler != null)
-    {
-      group.setSummaryHeader(summaryHeaderBandReadHandler.getElement());
+    if ( summaryHeaderBandReadHandler != null ) {
+      group.setSummaryHeader( summaryHeaderBandReadHandler.getElement() );
     }
-    if (titleHeaderBandReadHandler != null)
-    {
-      group.setTitleHeader(titleHeaderBandReadHandler.getElement());
+    if ( titleHeaderBandReadHandler != null ) {
+      group.setTitleHeader( titleHeaderBandReadHandler.getElement() );
     }
-    if (columnSubGroupBodyReadHandler != null)
-    {
-      group.setBody(columnSubGroupBodyReadHandler.getElement());
-    }
-    else if (cellBodyReadHandler != null)
-    {
-      group.setBody(cellBodyReadHandler.getElement());
-    }
-    else
-    {
+    if ( columnSubGroupBodyReadHandler != null ) {
+      group.setBody( columnSubGroupBodyReadHandler.getElement() );
+    } else if ( cellBodyReadHandler != null ) {
+      group.setBody( cellBodyReadHandler.getElement() );
+    } else {
       final GroupDataBody element = groupBodyReadHandler.getElement();
       final ItemBand itemBand = element.getItemBand();
       final CrosstabCell cell = new CrosstabCell();
-      itemBand.copyInto(cell);
-      cell.addElements(Arrays.asList(itemBand.getElementArray()));
+      itemBand.copyInto( cell );
+      cell.addElements( Arrays.asList( itemBand.getElementArray() ) );
 
       final CrosstabCellBody body = new CrosstabCellBody();
-      body.addElement(cell);
-      group.setBody(body);
+      body.addElement( cell );
+      group.setBody( body );
     }
   }
 
-  public CrosstabColumnGroup getElement()
-  {
+  public CrosstabColumnGroup getElement() {
     return (CrosstabColumnGroup) super.getElement();
   }
 }

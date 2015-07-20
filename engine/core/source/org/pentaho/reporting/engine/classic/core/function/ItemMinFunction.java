@@ -36,9 +36,8 @@ import org.pentaho.reporting.engine.classic.core.util.Sequence;
  *
  * @author Thomas Morgner
  */
-public class ItemMinFunction extends AbstractFunction implements FieldAggregationFunction
-{
-  private static final Log logger = LogFactory.getLog(ItemMinFunction.class);
+public class ItemMinFunction extends AbstractFunction implements FieldAggregationFunction {
+  private static final Log logger = LogFactory.getLog( ItemMinFunction.class );
 
   /**
    * The minimum value.
@@ -60,8 +59,7 @@ public class ItemMinFunction extends AbstractFunction implements FieldAggregatio
   /**
    * Constructs an unnamed function. Make sure to set a Name or function initialisation will fail.
    */
-  public ItemMinFunction()
-  {
+  public ItemMinFunction() {
     min = new Sequence<Comparable>();
   }
 
@@ -70,10 +68,9 @@ public class ItemMinFunction extends AbstractFunction implements FieldAggregatio
    *
    * @param name The function name.
    */
-  public ItemMinFunction(final String name)
-  {
+  public ItemMinFunction( final String name ) {
     this();
-    setName(name);
+    setName( name );
   }
 
   /**
@@ -81,13 +78,11 @@ public class ItemMinFunction extends AbstractFunction implements FieldAggregatio
    *
    * @param event Information about the event.
    */
-  public void reportInitialized(final ReportEvent event)
-  {
+  public void reportInitialized( final ReportEvent event ) {
     clear();
   }
 
-  protected void clear()
-  {
+  protected void clear() {
     this.lastGroupSequenceNumber = 0;
     this.min.clear();
   }
@@ -98,17 +93,14 @@ public class ItemMinFunction extends AbstractFunction implements FieldAggregatio
    *
    * @param event Information about the event.
    */
-  public void groupStarted(final ReportEvent event)
-  {
-    if (FunctionUtilities.isDefinedGroup(getGroup(), event))
-    {
+  public void groupStarted( final ReportEvent event ) {
+    if ( FunctionUtilities.isDefinedGroup( getGroup(), event ) ) {
       clear();
     }
 
-    if (FunctionUtilities.isDefinedGroup(getCrosstabFilterGroup(), event))
-    {
+    if ( FunctionUtilities.isDefinedGroup( getCrosstabFilterGroup(), event ) ) {
       final int groupIndex = event.getState().getCurrentGroupIndex();
-      this.lastGroupSequenceNumber = (int) event.getState().getCrosstabColumnSequenceCounter(groupIndex);
+      this.lastGroupSequenceNumber = (int) event.getState().getCrosstabColumnSequenceCounter( groupIndex );
     }
   }
 
@@ -117,8 +109,7 @@ public class ItemMinFunction extends AbstractFunction implements FieldAggregatio
    *
    * @return The group name.
    */
-  public String getGroup()
-  {
+  public String getGroup() {
     return group;
   }
 
@@ -128,8 +119,7 @@ public class ItemMinFunction extends AbstractFunction implements FieldAggregatio
    *
    * @param name the group name (null permitted).
    */
-  public void setGroup(final String name)
-  {
+  public void setGroup( final String name ) {
     this.group = name;
   }
 
@@ -138,8 +128,7 @@ public class ItemMinFunction extends AbstractFunction implements FieldAggregatio
    *
    * @return The field name.
    */
-  public String getField()
-  {
+  public String getField() {
     return field;
   }
 
@@ -148,8 +137,7 @@ public class ItemMinFunction extends AbstractFunction implements FieldAggregatio
    *
    * @param field the field name.
    */
-  public void setField(final String field)
-  {
+  public void setField( final String field ) {
     this.field = field;
   }
 
@@ -159,40 +147,31 @@ public class ItemMinFunction extends AbstractFunction implements FieldAggregatio
    *
    * @param event Information about the event.
    */
-  public void itemsAdvanced(final ReportEvent event)
-  {
-    if (field == null)
-    {
+  public void itemsAdvanced( final ReportEvent event ) {
+    if ( field == null ) {
       return;
     }
 
-    final Object fieldValue = event.getDataRow().get(getField());
-    if (fieldValue instanceof Comparable == false)
-    {
+    final Object fieldValue = event.getDataRow().get( getField() );
+    if ( fieldValue instanceof Comparable == false ) {
       return;
     }
-    try
-    {
+    try {
       final Comparable compare = (Comparable) fieldValue;
 
-      final Comparable oldValue = min.get(lastGroupSequenceNumber);
-      if (oldValue == null || oldValue.compareTo(compare) > 0)
-      {
-        min.set(lastGroupSequenceNumber, compare);
+      final Comparable oldValue = min.get( lastGroupSequenceNumber );
+      if ( oldValue == null || oldValue.compareTo( compare ) > 0 ) {
+        min.set( lastGroupSequenceNumber, compare );
       }
-    }
-    catch (Exception e)
-    {
-      ItemMinFunction.logger.error("ItemMinFunction.advanceItems(): problem adding number.");
+    } catch ( Exception e ) {
+      ItemMinFunction.logger.error( "ItemMinFunction.advanceItems(): problem adding number." );
     }
   }
 
-  public void summaryRowSelection(final ReportEvent event)
-  {
-    if (FunctionUtilities.isDefinedGroup(getCrosstabFilterGroup(), event))
-    {
+  public void summaryRowSelection( final ReportEvent event ) {
+    if ( FunctionUtilities.isDefinedGroup( getCrosstabFilterGroup(), event ) ) {
       final int groupIndex = event.getState().getCurrentGroupIndex();
-      this.lastGroupSequenceNumber = (int) event.getState().getCrosstabColumnSequenceCounter(groupIndex);
+      this.lastGroupSequenceNumber = (int) event.getState().getCrosstabColumnSequenceCounter( groupIndex );
     }
   }
 
@@ -201,9 +180,8 @@ public class ItemMinFunction extends AbstractFunction implements FieldAggregatio
    *
    * @return The function value.
    */
-  public Object getValue()
-  {
-    return min.get(lastGroupSequenceNumber);
+  public Object getValue() {
+    return min.get( lastGroupSequenceNumber );
   }
 
 
@@ -213,35 +191,28 @@ public class ItemMinFunction extends AbstractFunction implements FieldAggregatio
    *
    * @return a copy of this function.
    */
-  public Expression getInstance()
-  {
+  public Expression getInstance() {
     final ItemMinFunction function = (ItemMinFunction) super.getInstance();
     function.min = min.clone();
     function.lastGroupSequenceNumber = 0;
     return function;
   }
 
-  public Object clone()
-  {
-    try
-    {
+  public Object clone() {
+    try {
       final ItemMinFunction function = (ItemMinFunction) super.clone();
       function.min = min.clone();
       return function;
-    }
-    catch (CloneNotSupportedException e)
-    {
+    } catch ( CloneNotSupportedException e ) {
       throw new IllegalStateException();
     }
   }
 
-  public String getCrosstabFilterGroup()
-  {
+  public String getCrosstabFilterGroup() {
     return crosstabFilterGroup;
   }
 
-  public void setCrosstabFilterGroup(final String crosstabFilterGroup)
-  {
+  public void setCrosstabFilterGroup( final String crosstabFilterGroup ) {
     this.crosstabFilterGroup = crosstabFilterGroup;
   }
 

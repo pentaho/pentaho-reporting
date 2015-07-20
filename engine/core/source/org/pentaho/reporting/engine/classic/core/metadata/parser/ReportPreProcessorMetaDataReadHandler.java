@@ -17,21 +17,19 @@
 
 package org.pentaho.reporting.engine.classic.core.metadata.parser;
 
-import java.util.ArrayList;
-
 import org.pentaho.reporting.engine.classic.core.metadata.ReportPreProcessorMetaData;
 import org.pentaho.reporting.libraries.xmlns.parser.AbstractXmlReadHandler;
 import org.pentaho.reporting.libraries.xmlns.parser.XmlReadHandler;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 
-public class ReportPreProcessorMetaDataReadHandler extends AbstractXmlReadHandler
-{
+import java.util.ArrayList;
+
+public class ReportPreProcessorMetaDataReadHandler extends AbstractXmlReadHandler {
   private ArrayList<ReportPreProcessorReadHandler> elements;
   private ReportPreProcessorMetaDataCollection typeCollection;
 
-  public ReportPreProcessorMetaDataReadHandler()
-  {
+  public ReportPreProcessorMetaDataReadHandler() {
     elements = new ArrayList<ReportPreProcessorReadHandler>();
   }
 
@@ -44,18 +42,16 @@ public class ReportPreProcessorMetaDataReadHandler extends AbstractXmlReadHandle
    * @return the handler or null, if the tagname is invalid.
    * @throws org.xml.sax.SAXException if there is a parsing error.
    */
-  protected XmlReadHandler getHandlerForChild(final String uri,
-                                              final String tagName,
-                                              final Attributes atts) throws SAXException
-  {
-    if (getUri().equals(uri) == false)
-    {
+  protected XmlReadHandler getHandlerForChild( final String uri,
+                                               final String tagName,
+                                               final Attributes atts ) throws SAXException {
+    if ( getUri().equals( uri ) == false ) {
       return null;
     }
-    if ("pre-processor".equals(tagName)) // NON-NLS
+    if ( "pre-processor".equals( tagName ) ) // NON-NLS
     {
       final ReportPreProcessorReadHandler readHandler = new ReportPreProcessorReadHandler();
-      elements.add(readHandler);
+      elements.add( readHandler );
       return readHandler;
     }
     return null;
@@ -66,16 +62,14 @@ public class ReportPreProcessorMetaDataReadHandler extends AbstractXmlReadHandle
    *
    * @throws org.xml.sax.SAXException if there is a parsing error.
    */
-  protected void doneParsing() throws SAXException
-  {
-    final ReportPreProcessorMetaData[] result = new ReportPreProcessorMetaData[elements.size()];
-    for (int i = 0; i < elements.size(); i++)
-    {
-      final ReportPreProcessorReadHandler handler = elements.get(i);
-      result[i] = (ReportPreProcessorMetaData) handler.getObject();
+  protected void doneParsing() throws SAXException {
+    final ReportPreProcessorMetaData[] result = new ReportPreProcessorMetaData[ elements.size() ];
+    for ( int i = 0; i < elements.size(); i++ ) {
+      final ReportPreProcessorReadHandler handler = elements.get( i );
+      result[ i ] = (ReportPreProcessorMetaData) handler.getObject();
     }
 
-    typeCollection = new ReportPreProcessorMetaDataCollection(result);
+    typeCollection = new ReportPreProcessorMetaDataCollection( result );
   }
 
   /**
@@ -84,8 +78,7 @@ public class ReportPreProcessorMetaDataReadHandler extends AbstractXmlReadHandle
    * @return the object.
    * @throws org.xml.sax.SAXException if an parser error occured.
    */
-  public Object getObject() throws SAXException
-  {
+  public Object getObject() throws SAXException {
     return typeCollection;
   }
 }

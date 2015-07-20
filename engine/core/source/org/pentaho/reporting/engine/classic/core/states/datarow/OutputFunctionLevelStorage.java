@@ -17,42 +17,35 @@
 
 package org.pentaho.reporting.engine.classic.core.states.datarow;
 
-import java.util.Iterator;
-
 import org.pentaho.reporting.engine.classic.core.function.Expression;
 import org.pentaho.reporting.engine.classic.core.function.Function;
 import org.pentaho.reporting.libraries.base.util.EmptyIterator;
 
-public class OutputFunctionLevelStorage implements LevelStorage
-{
-  private class GenericIterator<T> implements Iterator<T>
-  {
+import java.util.Iterator;
+
+public class OutputFunctionLevelStorage implements LevelStorage {
+  private class GenericIterator<T> implements Iterator<T> {
     private boolean hasNextElement;
     private T element;
 
-    private GenericIterator(T element)
-    {
+    private GenericIterator( T element ) {
       this.hasNextElement = true;
       this.element = element;
     }
 
-    public boolean hasNext()
-    {
+    public boolean hasNext() {
       return hasNextElement;
     }
 
-    public T next()
-    {
-      if (hasNextElement == false)
-      {
+    public T next() {
+      if ( hasNextElement == false ) {
         throw new IllegalStateException();
       }
       hasNextElement = false;
       return element;
     }
 
-    public void remove()
-    {
+    public void remove() {
       throw new UnsupportedOperationException();
     }
   }
@@ -61,11 +54,9 @@ public class OutputFunctionLevelStorage implements LevelStorage
   private final int level;
   private final boolean pageListener;
 
-  public OutputFunctionLevelStorage(final int level,
-                                    final Function outputFunction, final boolean pageListener)
-  {
-    if (outputFunction == null)
-    {
+  public OutputFunctionLevelStorage( final int level,
+                                     final Function outputFunction, final boolean pageListener ) {
+    if ( outputFunction == null ) {
       throw new NullPointerException();
     }
     this.level = level;
@@ -73,30 +64,23 @@ public class OutputFunctionLevelStorage implements LevelStorage
     this.outputFunction = outputFunction;
   }
 
-  public int getLevelNumber()
-  {
+  public int getLevelNumber() {
     return level;
   }
 
-  public Iterator<Function> getFunctions()
-  {
-    return new GenericIterator<Function>(outputFunction);
+  public Iterator<Function> getFunctions() {
+    return new GenericIterator<Function>( outputFunction );
   }
 
-  public Iterator<Function> getPageFunctions()
-  {
-    if (pageListener)
-    {
-      return new GenericIterator<Function>(outputFunction);
-    }
-    else
-    {
+  public Iterator<Function> getPageFunctions() {
+    if ( pageListener ) {
+      return new GenericIterator<Function>( outputFunction );
+    } else {
       return EmptyIterator.emptyIterator();
     }
   }
 
-  public Iterator<Expression> getActiveExpressions()
-  {
-    return new GenericIterator<Expression>(outputFunction);
+  public Iterator<Expression> getActiveExpressions() {
+    return new GenericIterator<Expression>( outputFunction );
   }
 }

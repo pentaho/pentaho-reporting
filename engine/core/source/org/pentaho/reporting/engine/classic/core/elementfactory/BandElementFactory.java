@@ -26,8 +26,7 @@ import org.pentaho.reporting.engine.classic.core.Element;
  *
  * @author Thomas Morgner
  */
-public class BandElementFactory extends TextElementFactory
-{
+public class BandElementFactory extends TextElementFactory {
   /**
    * The band that is being configured.
    */
@@ -36,9 +35,8 @@ public class BandElementFactory extends TextElementFactory
   /**
    * Default Constructor that constructs generic bands.
    */
-  public BandElementFactory()
-  {
-    this(new Band());
+  public BandElementFactory() {
+    this( new Band() );
   }
 
   /**
@@ -46,10 +44,8 @@ public class BandElementFactory extends TextElementFactory
    *
    * @param band the band that is being configured. Cannot be null.
    */
-  public BandElementFactory(final Band band)
-  {
-    if (band == null)
-    {
+  public BandElementFactory( final Band band ) {
+    if ( band == null ) {
       throw new NullPointerException();
     }
     this.band = band;
@@ -60,10 +56,9 @@ public class BandElementFactory extends TextElementFactory
    *
    * @return the band.
    */
-  public Element createElement()
-  {
-    applyElementName(band);
-    applyStyle(band.getStyle());
+  public Element createElement() {
+    applyElementName( band );
+    applyStyle( band.getStyle() );
     return band;
   }
 }

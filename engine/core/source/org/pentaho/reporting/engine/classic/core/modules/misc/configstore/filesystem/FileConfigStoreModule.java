@@ -27,16 +27,14 @@ import org.pentaho.reporting.libraries.base.boot.SubSystem;
  *
  * @author Thomas Morgner
  */
-public class FileConfigStoreModule extends AbstractModule
-{
+public class FileConfigStoreModule extends AbstractModule {
   /**
    * DefaultConstructor. Loads the module specification.
    *
    * @throws ModuleInitializeException if an error occured.
    */
   public FileConfigStoreModule()
-      throws ModuleInitializeException
-  {
+    throws ModuleInitializeException {
     loadModuleInfo();
   }
 
@@ -48,14 +46,12 @@ public class FileConfigStoreModule extends AbstractModule
    * @param subSystem the subSystem.
    * @throws ModuleInitializeException if an error ocurred while initializing the module.
    */
-  public void initialize(final SubSystem subSystem)
-      throws ModuleInitializeException
-  {
+  public void initialize( final SubSystem subSystem )
+    throws ModuleInitializeException {
     final String value = subSystem.getGlobalConfig().getConfigProperty
-        ("org.pentaho.reporting.engine.classic.core.ConfigStore", "<not defined>"); //$NON-NLS-1$ //$NON-NLS-2$
-    if (value.equals(FileConfigStorage.class.getName()))
-    {
-      performExternalInitialize(FileConfigStoreModuleInitializer.class.getName(), FileConfigStoreModule.class);
+      ( "org.pentaho.reporting.engine.classic.core.ConfigStore", "<not defined>" ); //$NON-NLS-1$ //$NON-NLS-2$
+    if ( value.equals( FileConfigStorage.class.getName() ) ) {
+      performExternalInitialize( FileConfigStoreModuleInitializer.class.getName(), FileConfigStoreModule.class );
     }
   }
 }

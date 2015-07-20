@@ -25,20 +25,17 @@ import org.pentaho.reporting.engine.classic.core.states.ReportStateKey;
  *
  * @author Thomas Morgner
  */
-public final class PaginationResult
-{
+public final class PaginationResult {
   private PageBreakPositionList allBreaks;
   private boolean overflow;
   private boolean nextPageContainsContent;
   private ReportStateKey lastVisibleState;
 
-  public PaginationResult(final PageBreakPositionList allBreaks,
-                          final boolean overflow,
-                          final boolean nextPageContainsContent,
-                          final ReportStateKey lastVisibleState)
-  {
-    if (allBreaks == null)
-    {
+  public PaginationResult( final PageBreakPositionList allBreaks,
+                           final boolean overflow,
+                           final boolean nextPageContainsContent,
+                           final ReportStateKey lastVisibleState ) {
+    if ( allBreaks == null ) {
       throw new NullPointerException();
     }
     this.nextPageContainsContent = nextPageContainsContent;
@@ -47,67 +44,55 @@ public final class PaginationResult
     this.lastVisibleState = lastVisibleState;
   }
 
-  public boolean isNextPageContainsContent()
-  {
+  public boolean isNextPageContainsContent() {
     return nextPageContainsContent;
   }
 
-  public ReportStateKey getLastVisibleState()
-  {
+  public ReportStateKey getLastVisibleState() {
     return lastVisibleState;
   }
 
-  public PageBreakPositionList getAllBreaks()
-  {
+  public PageBreakPositionList getAllBreaks() {
     return allBreaks;
   }
 
-  public boolean isOverflow()
-  {
+  public boolean isOverflow() {
     return overflow;
   }
 
-  public long getLastPosition()
-  {
+  public long getLastPosition() {
     return allBreaks.getLastMasterBreak();
   }
 
-  public String toString()
-  {
+  public String toString() {
     final StringBuilder sb = new StringBuilder();
-    sb.append("PaginationResult");
-    sb.append("{lastVisibleState=").append(lastVisibleState);
-    sb.append(", nextPageContainsContent=").append(nextPageContainsContent);
-    sb.append(", overflow=").append(overflow);
-    sb.append(", lastPosition=").append(getLastPosition());
-    sb.append(", allBreaks=").append(allBreaks);
-    sb.append('}');
+    sb.append( "PaginationResult" );
+    sb.append( "{lastVisibleState=" ).append( lastVisibleState );
+    sb.append( ", nextPageContainsContent=" ).append( nextPageContainsContent );
+    sb.append( ", overflow=" ).append( overflow );
+    sb.append( ", lastPosition=" ).append( getLastPosition() );
+    sb.append( ", allBreaks=" ).append( allBreaks );
+    sb.append( '}' );
     return sb.toString();
   }
 
-  public boolean equals(final Object o)
-  {
-    if (this == o)
-    {
+  public boolean equals( final Object o ) {
+    if ( this == o ) {
       return true;
     }
-    if (o == null || getClass() != o.getClass())
-    {
+    if ( o == null || getClass() != o.getClass() ) {
       return false;
     }
 
     final PaginationResult that = (PaginationResult) o;
 
-    if (nextPageContainsContent != that.nextPageContainsContent)
-    {
+    if ( nextPageContainsContent != that.nextPageContainsContent ) {
       return false;
     }
-    if (overflow != that.overflow)
-    {
+    if ( overflow != that.overflow ) {
       return false;
     }
-    if (!allBreaks.equals(that.allBreaks))
-    {
+    if ( !allBreaks.equals( that.allBreaks ) ) {
       return false;
     }
     /*
@@ -119,12 +104,11 @@ public final class PaginationResult
     return true;
   }
 
-  public int hashCode()
-  {
+  public int hashCode() {
     int result = allBreaks.hashCode();
-    result = 31 * result + (overflow ? 1 : 0);
-    result = 31 * result + (nextPageContainsContent ? 1 : 0);
-   // result = 31 * result + (lastVisibleState != null ? lastVisibleState.hashCode() : 0);
+    result = 31 * result + ( overflow ? 1 : 0 );
+    result = 31 * result + ( nextPageContainsContent ? 1 : 0 );
+    // result = 31 * result + (lastVisibleState != null ? lastVisibleState.hashCode() : 0);
     return result;
   }
 }

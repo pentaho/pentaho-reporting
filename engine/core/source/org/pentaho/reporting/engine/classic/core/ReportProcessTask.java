@@ -22,21 +22,19 @@ import org.pentaho.reporting.libraries.repository.ContentLocation;
 import org.pentaho.reporting.libraries.repository.NameGenerator;
 
 /**
- * A report task is a generic way to create documents of a certain type from a report object. A
- * task encapsulates all implementation details necessary to perform a generic export. All reports
- * are expected to be written to a repository implementation, which can be a filesystem or any
- * other document storage facility. 
+ * A report task is a generic way to create documents of a certain type from a report object. A task encapsulates all
+ * implementation details necessary to perform a generic export. All reports are expected to be written to a repository
+ * implementation, which can be a filesystem or any other document storage facility.
  *
  * @author Thomas Morgner
  */
-public interface ReportProcessTask extends Runnable
-{
+public interface ReportProcessTask extends Runnable {
   /**
    * Defines the content location (and implicitly the repository) for the generated report document.
    *
    * @param body the content location for the report document.
    */
-  public void setBodyContentLocation(final ContentLocation body);
+  public void setBodyContentLocation( final ContentLocation body );
 
   /**
    * Returns the content location for the generated document.
@@ -46,12 +44,12 @@ public interface ReportProcessTask extends Runnable
   public ContentLocation getBodyContentLocation();
 
   /**
-   * Defines the body name generator, that generates name sequences in case the target name is already taken.
-   * The given namegenerator should return the first-choice document name as first generated name.
+   * Defines the body name generator, that generates name sequences in case the target name is already taken. The given
+   * namegenerator should return the first-choice document name as first generated name.
    *
    * @param nameGenerator the name generator.
    */
-  public void setBodyNameGenerator(final NameGenerator nameGenerator);
+  public void setBodyNameGenerator( final NameGenerator nameGenerator );
 
   /**
    * Returns the name generator for the report document.
@@ -61,12 +59,12 @@ public interface ReportProcessTask extends Runnable
   public NameGenerator getBodyNameGenerator();
 
   /**
-   * Defines the report that will be executed in this task. It is assumed that the report is fully
-   * parametrized. Report processing will fail if the report requires parameters that are not given.
+   * Defines the report that will be executed in this task. It is assumed that the report is fully parametrized. Report
+   * processing will fail if the report requires parameters that are not given.
    *
    * @param report the report.
    */
-  public void setReport(MasterReport report);
+  public void setReport( MasterReport report );
 
   /**
    * Returns the report that will be executed in this task.
@@ -80,14 +78,14 @@ public interface ReportProcessTask extends Runnable
    *
    * @param listener the listener.
    */
-  public void addReportProgressListener(ReportProgressListener listener);
+  public void addReportProgressListener( ReportProgressListener listener );
 
   /**
    * Removes the given report progress listener from the list of listeners.
    *
    * @param listener the listener.
    */
-  public void removeReportProgressListener(ReportProgressListener listener);
+  public void removeReportProgressListener( ReportProgressListener listener );
 
   /**
    * Returns the export tasks document mime type.
@@ -104,8 +102,7 @@ public interface ReportProcessTask extends Runnable
   public Throwable getError();
 
   /**
-   * Checks whether the task was aborted. Tasks can be aborted by signaling "interrupt()" to the
-   * executing thread.
+   * Checks whether the task was aborted. Tasks can be aborted by signaling "interrupt()" to the executing thread.
    *
    * @return true, if the task was aborted, false otherwise.
    */

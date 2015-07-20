@@ -24,13 +24,11 @@ package org.pentaho.reporting.engine.classic.core.function;
  * @author Thomas Morgner
  * @deprecated Use a formula
  */
-public class ColumnMaximumExpression extends ColumnAggregationExpression
-{
+public class ColumnMaximumExpression extends ColumnAggregationExpression {
   /**
    * Default Constructor.
    */
-  public ColumnMaximumExpression()
-  {
+  public ColumnMaximumExpression() {
   }
 
   /**
@@ -38,25 +36,19 @@ public class ColumnMaximumExpression extends ColumnAggregationExpression
    *
    * @return the maximum value computed by the function.
    */
-  public Object getValue()
-  {
+  public Object getValue() {
     final Object[] values = getFieldValues();
     Comparable computedResult = null;
-    for (int i = 0; i < values.length; i++)
-    {
-      final Object value = values[i];
-      if (value instanceof Comparable == false)
-      {
+    for ( int i = 0; i < values.length; i++ ) {
+      final Object value = values[ i ];
+      if ( value instanceof Comparable == false ) {
         continue;
       }
 
       final Comparable n = (Comparable) value;
-      if (computedResult == null)
-      {
+      if ( computedResult == null ) {
         computedResult = n;
-      }
-      else if (computedResult.compareTo(n) > 0)
-      {
+      } else if ( computedResult.compareTo( n ) > 0 ) {
         computedResult = n;
       }
     }

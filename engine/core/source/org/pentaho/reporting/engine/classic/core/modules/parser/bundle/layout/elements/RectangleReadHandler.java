@@ -21,10 +21,8 @@ import org.pentaho.reporting.engine.classic.core.filter.types.RectangleType;
 import org.pentaho.reporting.libraries.xmlns.parser.ParseException;
 
 @Deprecated
-public class RectangleReadHandler extends AbstractElementReadHandler
-{
-  public RectangleReadHandler() throws ParseException
-  {
-    super(RectangleType.INSTANCE);
+public class RectangleReadHandler extends AbstractElementReadHandler {
+  public RectangleReadHandler() throws ParseException {
+    super( RectangleType.INSTANCE );
   }
 }

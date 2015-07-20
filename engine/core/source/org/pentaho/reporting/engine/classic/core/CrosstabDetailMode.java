@@ -17,7 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.core;
 
-public enum CrosstabDetailMode
-{
+public enum CrosstabDetailMode {
   first, last, all
 }

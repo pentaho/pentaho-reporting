@@ -24,47 +24,35 @@ import org.pentaho.reporting.engine.classic.core.style.FontSmooth;
  *
  * @author Thomas Morgner
  */
-public class FontSmoothValueConverter implements ValueConverter
-{
-  public FontSmoothValueConverter()
-  {
+public class FontSmoothValueConverter implements ValueConverter {
+  public FontSmoothValueConverter() {
   }
 
-  public String toAttributeValue(final Object o) throws BeanException
-  {
-    if (o == null)
-    {
+  public String toAttributeValue( final Object o ) throws BeanException {
+    if ( o == null ) {
       throw new NullPointerException();
     }
-    if (o instanceof FontSmooth)
-    {
-      return String.valueOf(o);
-    }
-    else
-    {
-      throw new BeanException("Invalid value specified for FontSmooth");
+    if ( o instanceof FontSmooth ) {
+      return String.valueOf( o );
+    } else {
+      throw new BeanException( "Invalid value specified for FontSmooth" );
     }
 
   }
 
-  public Object toPropertyValue(final String o) throws BeanException
-  {
-    if (o == null)
-    {
+  public Object toPropertyValue( final String o ) throws BeanException {
+    if ( o == null ) {
       throw new NullPointerException();
     }
-    if (FontSmooth.ALWAYS.toString().equalsIgnoreCase(o))
-    {
+    if ( FontSmooth.ALWAYS.toString().equalsIgnoreCase( o ) ) {
       return FontSmooth.ALWAYS;
     }
-    if (FontSmooth.NEVER.toString().equalsIgnoreCase(o))
-    {
+    if ( FontSmooth.NEVER.toString().equalsIgnoreCase( o ) ) {
       return FontSmooth.NEVER;
     }
-    if (FontSmooth.AUTO.toString().equalsIgnoreCase(o))
-    {
+    if ( FontSmooth.AUTO.toString().equalsIgnoreCase( o ) ) {
       return FontSmooth.AUTO;
     }
-    throw new BeanException("Invalid value specified for FontSmooth");
+    throw new BeanException( "Invalid value specified for FontSmooth" );
   }
 }

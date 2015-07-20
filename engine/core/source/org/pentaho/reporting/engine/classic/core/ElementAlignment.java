@@ -17,48 +17,47 @@
 
 package org.pentaho.reporting.engine.classic.core;
 
+import org.pentaho.reporting.engine.classic.core.util.ObjectStreamResolveException;
+
 import java.io.ObjectStreamException;
 import java.io.Serializable;
-
-import org.pentaho.reporting.engine.classic.core.util.ObjectStreamResolveException;
 
 /**
  * Represents the alignment of an element.
  *
  * @author Thomas Morgner
  */
-public final class ElementAlignment implements Serializable
-{
+public final class ElementAlignment implements Serializable {
   /**
    * A constant for left alignment.
    */
-  public static final ElementAlignment LEFT = new ElementAlignment("LEFT");
+  public static final ElementAlignment LEFT = new ElementAlignment( "LEFT" );
 
   /**
    * A constant for center alignment (horizontal).
    */
-  public static final ElementAlignment CENTER = new ElementAlignment("CENTER");
+  public static final ElementAlignment CENTER = new ElementAlignment( "CENTER" );
 
   /**
    * A constant for right alignment.
    */
-  public static final ElementAlignment RIGHT = new ElementAlignment("RIGHT");
-  public static final ElementAlignment JUSTIFY = new ElementAlignment("JUSTIFY");
+  public static final ElementAlignment RIGHT = new ElementAlignment( "RIGHT" );
+  public static final ElementAlignment JUSTIFY = new ElementAlignment( "JUSTIFY" );
 
   /**
    * A constant for top alignment.
    */
-  public static final ElementAlignment TOP = new ElementAlignment("TOP");
+  public static final ElementAlignment TOP = new ElementAlignment( "TOP" );
 
   /**
    * A constant for middle alignment (vertical).
    */
-  public static final ElementAlignment MIDDLE = new ElementAlignment("MIDDLE");
+  public static final ElementAlignment MIDDLE = new ElementAlignment( "MIDDLE" );
 
   /**
    * A constant for bottom alignment.
    */
-  public static final ElementAlignment BOTTOM = new ElementAlignment("BOTTOM");
+  public static final ElementAlignment BOTTOM = new ElementAlignment( "BOTTOM" );
 
   /**
    * The alignment name.
@@ -75,8 +74,7 @@ public final class ElementAlignment implements Serializable
    *
    * @param name the alignment name.
    */
-  private ElementAlignment(final String name)
-  {
+  private ElementAlignment( final String name ) {
     myName = name;
     hashCode = myName.hashCode();
   }
@@ -86,33 +84,27 @@ public final class ElementAlignment implements Serializable
    *
    * @return the alignment name.
    */
-  public String toString()
-  {
+  public String toString() {
     return myName;
   }
 
-  public boolean equals(final Object o)
-  {
-    if (this == o)
-    {
+  public boolean equals( final Object o ) {
+    if ( this == o ) {
       return true;
     }
-    if (!(o instanceof ElementAlignment))
-    {
+    if ( !( o instanceof ElementAlignment ) ) {
       return false;
     }
 
     final ElementAlignment alignment = (ElementAlignment) o;
-    if (!myName.equals(alignment.myName))
-    {
+    if ( !myName.equals( alignment.myName ) ) {
       return false;
     }
 
     return true;
   }
 
-  public int hashCode()
-  {
+  public int hashCode() {
     return hashCode;
   }
 
@@ -123,34 +115,26 @@ public final class ElementAlignment implements Serializable
    * @throws ObjectStreamException if the element could not be resolved.
    */
   private Object readResolve()
-      throws ObjectStreamException
-  {
-    if (this.myName.equals(ElementAlignment.LEFT.myName))
-    {
+    throws ObjectStreamException {
+    if ( this.myName.equals( ElementAlignment.LEFT.myName ) ) {
       return ElementAlignment.LEFT;
     }
-    if (this.myName.equals(ElementAlignment.RIGHT.myName))
-    {
+    if ( this.myName.equals( ElementAlignment.RIGHT.myName ) ) {
       return ElementAlignment.RIGHT;
     }
-    if (this.myName.equals(ElementAlignment.CENTER.myName))
-    {
+    if ( this.myName.equals( ElementAlignment.CENTER.myName ) ) {
       return ElementAlignment.CENTER;
     }
-    if (this.myName.equals(ElementAlignment.TOP.myName))
-    {
+    if ( this.myName.equals( ElementAlignment.TOP.myName ) ) {
       return ElementAlignment.TOP;
     }
-    if (this.myName.equals(ElementAlignment.BOTTOM.myName))
-    {
+    if ( this.myName.equals( ElementAlignment.BOTTOM.myName ) ) {
       return ElementAlignment.BOTTOM;
     }
-    if (this.myName.equals(ElementAlignment.MIDDLE.myName))
-    {
+    if ( this.myName.equals( ElementAlignment.MIDDLE.myName ) ) {
       return ElementAlignment.MIDDLE;
     }
-    if (this.myName.equals(ElementAlignment.JUSTIFY.myName))
-    {
+    if ( this.myName.equals( ElementAlignment.JUSTIFY.myName ) ) {
       return ElementAlignment.JUSTIFY;
     }
     // unknown element alignment...

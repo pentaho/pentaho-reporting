@@ -23,12 +23,10 @@ import org.pentaho.reporting.engine.classic.core.modules.parser.base.PropertyAtt
 import org.pentaho.reporting.libraries.xmlns.parser.ParseException;
 import org.xml.sax.SAXException;
 
-public class ComponentFieldReadHandler extends AbstractElementReadHandler
-{
+public class ComponentFieldReadHandler extends AbstractElementReadHandler {
   private ContentFieldElementFactory elementFactory;
 
-  public ComponentFieldReadHandler()
-  {
+  public ComponentFieldReadHandler() {
     this.elementFactory = new ContentFieldElementFactory();
   }
 
@@ -38,30 +36,24 @@ public class ComponentFieldReadHandler extends AbstractElementReadHandler
    * @param atts the attributes.
    * @throws SAXException if there is a parsing error.
    */
-  protected void startParsing(final PropertyAttributes atts)
-      throws SAXException
-  {
-    super.startParsing(atts);
+  protected void startParsing( final PropertyAttributes atts )
+    throws SAXException {
+    super.startParsing( atts );
 
-    final String fieldName = atts.getValue(getUri(), "fieldname");
-    if (fieldName != null)
-    {
-      elementFactory.setFieldname(fieldName);
-    }
-    else
-    {
-      final String formula = atts.getValue(getUri(), "formula");
-      if (formula == null)
-      {
+    final String fieldName = atts.getValue( getUri(), "fieldname" );
+    if ( fieldName != null ) {
+      elementFactory.setFieldname( fieldName );
+    } else {
+      final String formula = atts.getValue( getUri(), "formula" );
+      if ( formula == null ) {
         throw new ParseException
-            ("Either 'fieldname' or 'formula' attribute must be given.", getLocator());
+          ( "Either 'fieldname' or 'formula' attribute must be given.", getLocator() );
       }
-      elementFactory.setFormula(formula);
+      elementFactory.setFormula( formula );
     }
   }
 
-  protected ElementFactory getElementFactory()
-  {
+  protected ElementFactory getElementFactory() {
     return elementFactory;
   }
 }

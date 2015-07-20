@@ -22,8 +22,7 @@ package org.pentaho.reporting.engine.classic.core.style;
  *
  * @author Thomas Morgner
  */
-public interface StyleChangeListener
-{
+public interface StyleChangeListener {
   /**
    * Receives notification that a style has changed.
    *
@@ -31,7 +30,7 @@ public interface StyleChangeListener
    * @param key    the style key.
    * @param value  the value.
    */
-  public void styleChanged(ElementStyleSheet source, StyleKey key, Object value);
+  public void styleChanged( ElementStyleSheet source, StyleKey key, Object value );
 
   /**
    * Receives notification that a style has been removed.
@@ -39,5 +38,5 @@ public interface StyleChangeListener
    * @param source the source of the change.
    * @param key    the style key.
    */
-  public void styleRemoved(ElementStyleSheet source, StyleKey key);
+  public void styleRemoved( ElementStyleSheet source, StyleKey key );
 }

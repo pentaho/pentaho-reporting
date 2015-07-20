@@ -22,23 +22,21 @@ import org.pentaho.reporting.libraries.repository.ContentLocation;
 import org.pentaho.reporting.libraries.repository.NameGenerator;
 
 /**
- * A export task that generates multiple streams, like the HTML-output does. The report document itself will go
- * into the <code>bodyLocation</code>, while any additional files generated during the export go into the
- * bulk location. Be aware that if the export generates multiple report-documents (ie. multiple HTML files) then
- * they all go into the body-location, while any image or stylesheet goes into the bulk location.
- * </p>
- * If no bulk location is given, then no extra files shall be generated.
+ * A export task that generates multiple streams, like the HTML-output does. The report document itself will go into the
+ * <code>bodyLocation</code>, while any additional files generated during the export go into the bulk location. Be aware
+ * that if the export generates multiple report-documents (ie. multiple HTML files) then they all go into the
+ * body-location, while any image or stylesheet goes into the bulk location. </p> If no bulk location is given, then no
+ * extra files shall be generated.
  *
  * @author Thomas Morgner
  */
-public interface MultiStreamReportProcessTask extends ReportProcessTask
-{
+public interface MultiStreamReportProcessTask extends ReportProcessTask {
   /**
    * Defines the bulk location, where additional content can be stored.
    *
    * @param bulkLocation the bulk location.
    */
-  public void setBulkLocation(final ContentLocation bulkLocation);
+  public void setBulkLocation( final ContentLocation bulkLocation );
 
   /**
    * Returns the defined bulk location for the export.
@@ -48,12 +46,12 @@ public interface MultiStreamReportProcessTask extends ReportProcessTask
   public ContentLocation getBulkLocation();
 
   /**
-   * Defines the bulk file name generator that is used to generate unique names for the exported files. If a
-   * bulk location is given, this property must not be null.
+   * Defines the bulk file name generator that is used to generate unique names for the exported files. If a bulk
+   * location is given, this property must not be null.
    *
    * @param bulkNameGenerator the name generator.
    */
-  public void setBulkNameGenerator(final NameGenerator bulkNameGenerator);
+  public void setBulkNameGenerator( final NameGenerator bulkNameGenerator );
 
   /**
    * Returns the name generator for bulk content.
@@ -67,7 +65,7 @@ public interface MultiStreamReportProcessTask extends ReportProcessTask
    *
    * @param urlRewriter the URL rewriter used in the export.
    */
-  public void setUrlRewriter(final URLRewriter urlRewriter);
+  public void setUrlRewriter( final URLRewriter urlRewriter );
 
   /**
    * Returns the URL rewriter used during the export.

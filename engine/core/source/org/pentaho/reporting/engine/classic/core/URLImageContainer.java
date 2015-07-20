@@ -17,9 +17,9 @@
 
 package org.pentaho.reporting.engine.classic.core;
 
-import java.net.URL;
-
 import org.pentaho.reporting.libraries.resourceloader.ResourceKey;
+
+import java.net.URL;
 
 /**
  * An image container, that references a remote image. The image is not required to be loadable as long as this
@@ -29,8 +29,7 @@ import org.pentaho.reporting.libraries.resourceloader.ResourceKey;
  *
  * @author Thomas Morgner
  */
-public interface URLImageContainer extends ImageContainer
-{
+public interface URLImageContainer extends ImageContainer {
   /**
    * Returns the resourcekey that was used to load the image.
    *

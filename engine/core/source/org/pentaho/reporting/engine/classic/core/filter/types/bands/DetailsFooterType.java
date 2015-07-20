@@ -21,17 +21,14 @@ import org.pentaho.reporting.engine.classic.core.DetailsFooter;
 import org.pentaho.reporting.engine.classic.core.ReportElement;
 import org.pentaho.reporting.engine.classic.core.metadata.ElementType;
 
-public class DetailsFooterType extends AbstractSectionType
-{
+public class DetailsFooterType extends AbstractSectionType {
   public static final ElementType INSTANCE = new DetailsFooterType();
 
-  public DetailsFooterType()
-  {
-    super("details-footer", false);
+  public DetailsFooterType() {
+    super( "details-footer", false );
   }
 
-  public ReportElement create()
-  {
+  public ReportElement create() {
     return new DetailsFooter();
   }
 }

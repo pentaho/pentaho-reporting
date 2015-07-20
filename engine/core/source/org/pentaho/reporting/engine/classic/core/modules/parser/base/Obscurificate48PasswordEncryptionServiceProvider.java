@@ -19,34 +19,27 @@ package org.pentaho.reporting.engine.classic.core.modules.parser.base;
 
 import org.pentaho.reporting.libraries.base.util.PasswordObscurification48;
 
-public class Obscurificate48PasswordEncryptionServiceProvider implements PasswordEncryptionServiceProvider
-{
+public class Obscurificate48PasswordEncryptionServiceProvider implements PasswordEncryptionServiceProvider {
   public static final String SERVICE_TAG = "encrypted";
 
-  public Obscurificate48PasswordEncryptionServiceProvider()
-  {
+  public Obscurificate48PasswordEncryptionServiceProvider() {
   }
 
-  public String getPrefix()
-  {
+  public String getPrefix() {
     return SERVICE_TAG;
   }
 
-  public String encrypt(final String rawPassword)
-  {
+  public String encrypt( final String rawPassword ) {
     throw new UnsupportedOperationException();
   }
 
-  public String decrypt(final String encryptedPassword)
-  {
-    if (encryptedPassword == null)
-    {
+  public String decrypt( final String encryptedPassword ) {
+    if ( encryptedPassword == null ) {
       return null;
     }
-    if ("".equals(encryptedPassword))
-    {
+    if ( "".equals( encryptedPassword ) ) {
       return "";
     }
-    return PasswordObscurification48.decryptPassword(encryptedPassword);
+    return PasswordObscurification48.decryptPassword( encryptedPassword );
   }
 }

@@ -22,18 +22,14 @@ package org.pentaho.reporting.engine.classic.core.style.css.selector;
  *
  * @author Thomas Morgner
  */
-public abstract class AbstractSelector implements CSSSelector
-{
+public abstract class AbstractSelector implements CSSSelector {
   private SelectorWeight weight;
 
-  public AbstractSelector()
-  {
+  public AbstractSelector() {
   }
 
-  public SelectorWeight getWeight()
-  {
-    if (weight == null)
-    {
+  public SelectorWeight getWeight() {
+    if ( weight == null ) {
       weight = createWeight();
     }
     return weight;

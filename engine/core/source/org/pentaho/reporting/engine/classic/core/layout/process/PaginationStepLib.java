@@ -36,77 +36,66 @@ import org.pentaho.reporting.engine.classic.core.style.ElementStyleKeys;
 /**
  * A helper class that contains generic methods that would distract me from the actual pagination logic.
  */
-public final class PaginationStepLib
-{
-  private static final Log logger = LogFactory.getLog(PaginationStepLib.class);
+public final class PaginationStepLib {
+  private static final Log logger = LogFactory.getLog( PaginationStepLib.class );
 
-  private PaginationStepLib()
-  {
+  private PaginationStepLib() {
   }
 
-  public static void configureBreakUtility(final PageBreakPositionList breakUtility,
-                                           final LogicalPageBox pageBox,
-                                           final long[] allCurrentBreaks,
-                                           final long reservedHeight,
-                                           final long lastBreakLocal)
-  {
+  public static void configureBreakUtility( final PageBreakPositionList breakUtility,
+                                            final LogicalPageBox pageBox,
+                                            final long[] allCurrentBreaks,
+                                            final long reservedHeight,
+                                            final long lastBreakLocal ) {
     final PageBreakPositionList allPreviousBreak = pageBox.getAllVerticalBreaks();
-    breakUtility.copyFrom(allPreviousBreak);
+    breakUtility.copyFrom( allPreviousBreak );
 
     final long pageOffset = pageBox.getPageOffset();
     final long headerHeight = pageBox.getHeaderArea().getHeight();
     // Then add all new breaks (but take the header and footer-size into account) ..
-    if (allCurrentBreaks.length == 1)
+    if ( allCurrentBreaks.length == 1 ) {
+      breakUtility.addMajorBreak( pageOffset, headerHeight );
+      breakUtility.addMajorBreak( ( lastBreakLocal - reservedHeight ) + pageOffset, headerHeight );
+    } else // more than one physical page; therefore header and footer are each on a separate canvas ..
     {
-      breakUtility.addMajorBreak(pageOffset, headerHeight);
-      breakUtility.addMajorBreak((lastBreakLocal - reservedHeight) + pageOffset, headerHeight);
-    }
-    else // more than one physical page; therefore header and footer are each on a separate canvas ..
-    {
-      breakUtility.addMajorBreak(pageOffset, headerHeight);
+      breakUtility.addMajorBreak( pageOffset, headerHeight );
       final int breakCount = allCurrentBreaks.length - 1;
-      for (int i = 1; i < breakCount; i++)
-      {
-        final long aBreak = allCurrentBreaks[i];
-        breakUtility.addMinorBreak(pageOffset + (aBreak - headerHeight));
+      for ( int i = 1; i < breakCount; i++ ) {
+        final long aBreak = allCurrentBreaks[ i ];
+        breakUtility.addMinorBreak( pageOffset + ( aBreak - headerHeight ) );
       }
-      breakUtility.addMajorBreak(pageOffset + (lastBreakLocal - reservedHeight), headerHeight);
+      breakUtility.addMajorBreak( pageOffset + ( lastBreakLocal - reservedHeight ), headerHeight );
     }
   }
 
-  public static void assertProgress(final LogicalPageBox pageBox)
-  {
+  public static void assertProgress( final LogicalPageBox pageBox ) {
     final RenderNode lastChild = pageBox.getLastChild();
-    if (lastChild != null)
-    {
+    if ( lastChild != null ) {
       final long lastChildY2 = lastChild.getY() + lastChild.getHeight();
-      if (lastChildY2 < pageBox.getHeight())
-      {
+      if ( lastChildY2 < pageBox.getHeight() ) {
         //ModelPrinter.print(pageBox);
         throw new IllegalStateException
-            ("Assertation failed: Pagination did not proceed: " + lastChildY2 + " < " + pageBox.getHeight());
+          ( "Assertation failed: Pagination did not proceed: " + lastChildY2 + " < " + pageBox.getHeight() );
       }
     }
   }
 
-  public static long restrictPageAreaHeights(final LogicalPageBox pageBox,
-                                             final long[] allCurrentBreaks)
-  {
+  public static long restrictPageAreaHeights( final LogicalPageBox pageBox,
+                                              final long[] allCurrentBreaks ) {
     final BlockRenderBox headerArea = pageBox.getHeaderArea();
-    final long headerHeight = Math.min(headerArea.getHeight(), allCurrentBreaks[0]);
-    headerArea.setHeight(headerHeight);
+    final long headerHeight = Math.min( headerArea.getHeight(), allCurrentBreaks[ 0 ] );
+    headerArea.setHeight( headerHeight );
 
     final BlockRenderBox footerArea = pageBox.getFooterArea();
     final BlockRenderBox repeatFooterArea = pageBox.getRepeatFooterArea();
-    if (allCurrentBreaks.length > 1)
-    {
-      final long lastBreakLocal = allCurrentBreaks[allCurrentBreaks.length - 1];
-      final long lastPageHeight = lastBreakLocal - allCurrentBreaks[allCurrentBreaks.length - 2];
-      final long footerHeight = Math.min(footerArea.getHeight(), lastPageHeight);
-      footerArea.setHeight(footerHeight);
+    if ( allCurrentBreaks.length > 1 ) {
+      final long lastBreakLocal = allCurrentBreaks[ allCurrentBreaks.length - 1 ];
+      final long lastPageHeight = lastBreakLocal - allCurrentBreaks[ allCurrentBreaks.length - 2 ];
+      final long footerHeight = Math.min( footerArea.getHeight(), lastPageHeight );
+      footerArea.setHeight( footerHeight );
 
-      final long repeatFooterHeight = Math.min(repeatFooterArea.getHeight(), lastPageHeight);
-      repeatFooterArea.setHeight(repeatFooterHeight);
+      final long repeatFooterHeight = Math.min( repeatFooterArea.getHeight(), lastPageHeight );
+      repeatFooterArea.setHeight( repeatFooterHeight );
     }
 
     final long footerHeight = footerArea.getHeight();
@@ -115,61 +104,47 @@ public final class PaginationStepLib
     return headerHeight + repeatFooterHeight + footerHeight;
   }
 
-  public static void assertBlockPosition(final RenderBox box, final long shift)
-  {
-    if (box.getLayoutNodeType() == LayoutNodeTypes.TYPE_BOX_TABLE_SECTION)
-    {
+  public static void assertBlockPosition( final RenderBox box, final long shift ) {
+    if ( box.getLayoutNodeType() == LayoutNodeTypes.TYPE_BOX_TABLE_SECTION ) {
       // no point in testing table-sections, as the header will be an out-of-order band.
       return;
     }
 
     final boolean error;
     final long expectedYPos;
-    if (box.getPrev() != null)
-    {
+    if ( box.getPrev() != null ) {
       error = true;
       expectedYPos = box.getPrev().getY() + box.getPrev().getHeight();
-    }
-    else
-    {
-      if (box.getParent() != null)
-      {
+    } else {
+      if ( box.getParent() != null ) {
         error = false;
         expectedYPos = box.getParent().getY();
-        final Object parentVAlignment = box.getParent().getStyleSheet().getStyleProperty(ElementStyleKeys.VALIGNMENT);
-        if (parentVAlignment != null &&
-            ElementAlignment.TOP.equals(parentVAlignment) == false)
-        {
+        final Object parentVAlignment = box.getParent().getStyleSheet().getStyleProperty( ElementStyleKeys.VALIGNMENT );
+        if ( parentVAlignment != null &&
+          ElementAlignment.TOP.equals( parentVAlignment ) == false ) {
           return;
         }
-      }
-      else
-      {
+      } else {
         error = true;
         expectedYPos = 0;
       }
     }
 
     final long realY = box.getY() + shift;
-    if (realY != expectedYPos)
-    {
+    if ( realY != expectedYPos ) {
       final long additionalShift = expectedYPos - realY;
       final long realShift = shift + additionalShift;
-      if (error)
-      {
-        ModelPrinter.INSTANCE.print(box);
-        ModelPrinter.INSTANCE.print(ModelPrinter.getRoot(box));
-        throw new InvalidReportStateException(String.format("Assert: Shift is not as expected: " +
+      if ( error ) {
+        ModelPrinter.INSTANCE.print( box );
+        ModelPrinter.INSTANCE.print( ModelPrinter.getRoot( box ) );
+        throw new InvalidReportStateException( String.format( "Assert: Shift is not as expected: " +
             "realY=%d != expectation=%d; Shift=%d; AdditionalShift=%d; RealShift=%d",
-            realY, expectedYPos, shift, additionalShift, realShift));
-      }
-      else
-      {
-        if (logger.isDebugEnabled())
-        {
-          logger.debug(String.format("Assert: Shift is not as expected: realY=%d != expectation=%d; Shift=%d; " +
+          realY, expectedYPos, shift, additionalShift, realShift ) );
+      } else {
+        if ( logger.isDebugEnabled() ) {
+          logger.debug( String.format( "Assert: Shift is not as expected: realY=%d != expectation=%d; Shift=%d; " +
               "AdditionalShift=%d; RealShift=%d (False positive if block box has valign != TOP",
-              realY, expectedYPos, shift, additionalShift, realShift));
+            realY, expectedYPos, shift, additionalShift, realShift ) );
         }
       }
     }
@@ -181,103 +156,88 @@ public final class PaginationStepLib
    * @param box the box for which the height is computed
    * @return the height in micro-points.
    */
-  public static long computeNonBreakableBoxHeight(final RenderBox box,
-                                                  final PaginationShiftState shiftState,
-                                                  final BasePaginationTableState tableState)
-  {
+  public static long computeNonBreakableBoxHeight( final RenderBox box,
+                                                   final PaginationShiftState shiftState,
+                                                   final BasePaginationTableState tableState ) {
     // must return the reserved space starting from box's y position.
-    final long widowSize = getWidowConstraint(box, shiftState, tableState);
+    final long widowSize = getWidowConstraint( box, shiftState, tableState );
 
     final StaticBoxLayoutProperties sblp = box.getStaticBoxLayoutProperties();
-    if (sblp.isAvoidPagebreakInside() &&
-        box.getRestrictFinishedClearOut() != RenderBox.RestrictFinishClearOut.RESTRICTED)
-    {
-      return Math.max(widowSize, box.getHeight());
+    if ( sblp.isAvoidPagebreakInside() &&
+      box.getRestrictFinishedClearOut() != RenderBox.RestrictFinishClearOut.RESTRICTED ) {
+      return Math.max( widowSize, box.getHeight() );
     }
 
     final int nodeType = box.getLayoutNodeType();
-    if ((nodeType & LayoutNodeTypes.MASK_BOX_BLOCK) != LayoutNodeTypes.MASK_BOX_BLOCK)
-    {
+    if ( ( nodeType & LayoutNodeTypes.MASK_BOX_BLOCK ) != LayoutNodeTypes.MASK_BOX_BLOCK ) {
       // Canvas, row or inline boxes have no notion of lines, and therefore they cannot have orphans and widows.
       return widowSize;
     }
 
-    if (isOrphanConstraintNeeded(box, shiftState, tableState) == false)
-    {
+    if ( isOrphanConstraintNeeded( box, shiftState, tableState ) == false ) {
       return widowSize;
     }
 
     final long orphanHeight = box.getOrphanConstraintSize();
-    if (widowSize + orphanHeight > box.getHeight())
-    {
+    if ( widowSize + orphanHeight > box.getHeight() ) {
       // if the widows and orphan areas overlap, then the box becomes non-breakable.
-      return Math.max(widowSize, box.getHeight());
+      return Math.max( widowSize, box.getHeight() );
     }
 
-    return Math.max(orphanHeight, widowSize);
+    return Math.max( orphanHeight, widowSize );
   }
 
   /**
    * Widow constraint evaluation is skipped if
    * <p/>
-   * (a) the box has a widow/orphan-parent defining that sits on the current page's page-offset and
-   * (b) this parent's orphan-restricted pagebreak-exclusion zone includes this box.
+   * (a) the box has a widow/orphan-parent defining that sits on the current page's page-offset and (b) this parent's
+   * orphan-restricted pagebreak-exclusion zone includes this box.
    *
    * @param box
    * @param shiftState
    * @param tableState
    * @return
    */
-  private static boolean isOrphanConstraintNeeded(final RenderBox box,
-                                                  final PaginationShiftState shiftState,
-                                                  final BasePaginationTableState tableState)
-  {
+  private static boolean isOrphanConstraintNeeded( final RenderBox box,
+                                                   final PaginationShiftState shiftState,
+                                                   final BasePaginationTableState tableState ) {
     final long boxY = box.getY() + shiftState.getShiftForNextChild();
-    final long pageOffset = tableState.getPageOffset(boxY);
-    if (pageOffset == boxY)
-    {
+    final long pageOffset = tableState.getPageOffset( boxY );
+    if ( pageOffset == boxY ) {
       // no need to set a widow constraint, we are not shifting anyway ..
       return false;
     }
-    if (box.getRestrictFinishedClearOut() != RenderBox.RestrictFinishClearOut.RESTRICTED)
-    {
+    if ( box.getRestrictFinishedClearOut() != RenderBox.RestrictFinishClearOut.RESTRICTED ) {
       return false;
     }
 
-    if (isBoxInsideParentOrphanZoneOnThisPage(box, pageOffset, boxY))
-    {
+    if ( isBoxInsideParentOrphanZoneOnThisPage( box, pageOffset, boxY ) ) {
       return false;
     }
     return true;
   }
 
-  private static boolean isBoxInsideParentOrphanZoneOnThisPage(final RenderBox box,
-                                                               final long pageOffset,
-                                                               final long boxYShifted)
-  {
+  private static boolean isBoxInsideParentOrphanZoneOnThisPage( final RenderBox box,
+                                                                final long pageOffset,
+                                                                final long boxYShifted ) {
     RenderBox parent = box.getParent();
-    while (parent != null)
-    {
-      if (parent.getRestrictFinishedClearOut() == RenderBox.RestrictFinishClearOut.UNRESTRICTED)
-      {
+    while ( parent != null ) {
+      if ( parent.getRestrictFinishedClearOut() == RenderBox.RestrictFinishClearOut.UNRESTRICTED ) {
         break;
       }
 
-      if (parent.getY() < pageOffset)
-      {
+      if ( parent.getY() < pageOffset ) {
         // once the parent is sitting on the previous page, we no longer need to ask it ..
         break;
       }
 
-      if (parent.getOrphanConstraintSize() == 0)
-      {
+      if ( parent.getOrphanConstraintSize() == 0 ) {
         parent = parent.getParent();
         continue;
       }
 
       final long constraintBoundary = parent.getY() + parent.getOrphanConstraintSize();
-      if (constraintBoundary > boxYShifted)
-      {
+      if ( constraintBoundary > boxYShifted ) {
         // this parent is not relevant.
         return true;
       }
@@ -288,12 +248,10 @@ public final class PaginationStepLib
   }
 
 
-  public static long getWidowConstraint(final RenderBox box,
+  public static long getWidowConstraint( final RenderBox box,
                                          final PaginationShiftState shiftState,
-                                         final BasePaginationTableState tableState)
-  {
-    if (box.isWidowBox() == false)
-    {
+                                         final BasePaginationTableState tableState ) {
+    if ( box.isWidowBox() == false ) {
       return 0;
     }
 
@@ -302,38 +260,30 @@ public final class PaginationStepLib
     RenderBox parent = box.getParent();
 
     final long pageOffset = tableState.getPageOffset();
-    if (pageOffset == boxY)
-    {
+    if ( pageOffset == boxY ) {
       // no need to set a widow constraint, we are not shifting anyway ..
       return 0;
     }
 
-    while (parent != null)
-    {
-      if (parent.getRestrictFinishedClearOut() == RenderBox.RestrictFinishClearOut.UNRESTRICTED)
-      {
+    while ( parent != null ) {
+      if ( parent.getRestrictFinishedClearOut() == RenderBox.RestrictFinishClearOut.UNRESTRICTED ) {
         break;
       }
 
-      if (parent.getWidowConstraintSize() == 0)
-      {
+      if ( parent.getWidowConstraintSize() == 0 ) {
         parent = parent.getParent();
         continue;
       }
 
       final long y2 = parent.getY2();
       final long constraintBoundary;
-      if (parent.getY() < pageOffset)
-      {
-        constraintBoundary = y2 - Math.max(0, parent.getWidowConstraintSize());
+      if ( parent.getY() < pageOffset ) {
+        constraintBoundary = y2 - Math.max( 0, parent.getWidowConstraintSize() );
+      } else {
+        constraintBoundary = y2 - Math.max( 0, parent.getWidowConstraintSizeWithKeepTogether() );
       }
-      else
-      {
-        constraintBoundary = y2 - Math.max(0, parent.getWidowConstraintSizeWithKeepTogether());
-      }
-      if (constraintBoundary == boxY)
-      {
-        retval = Math.max(retval, y2 - boxY);
+      if ( constraintBoundary == boxY ) {
+        retval = Math.max( retval, y2 - boxY );
       }
 
       parent = parent.getParent();

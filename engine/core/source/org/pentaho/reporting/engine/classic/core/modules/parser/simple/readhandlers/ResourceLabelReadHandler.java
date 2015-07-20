@@ -24,31 +24,27 @@ import org.pentaho.reporting.engine.classic.core.modules.parser.base.common.Prop
 import org.pentaho.reporting.libraries.xmlns.parser.RootXmlReadHandler;
 import org.xml.sax.SAXException;
 
-public class ResourceLabelReadHandler extends AbstractTextElementReadHandler
-{
+public class ResourceLabelReadHandler extends AbstractTextElementReadHandler {
   private PropertyStringReadHandler stringReadHandler;
   private ResourceLabelElementFactory elementFactory;
 
-  public ResourceLabelReadHandler()
-  {
+  public ResourceLabelReadHandler() {
     elementFactory = new ResourceLabelElementFactory();
     stringReadHandler = new PropertyStringReadHandler();
   }
 
-  protected TextElementFactory getTextElementFactory()
-  {
+  protected TextElementFactory getTextElementFactory() {
     return elementFactory;
   }
 
-  public void init(final RootXmlReadHandler rootXmlReadHandler, final String namespace, final String tag) throws SAXException
-  {
-    super.init(rootXmlReadHandler, namespace, tag);
-    stringReadHandler.init(rootXmlReadHandler, namespace, tag);
+  public void init( final RootXmlReadHandler rootXmlReadHandler, final String namespace, final String tag )
+    throws SAXException {
+    super.init( rootXmlReadHandler, namespace, tag );
+    stringReadHandler.init( rootXmlReadHandler, namespace, tag );
   }
 
-  public void characters(final char[] ch, final int start, final int length) throws SAXException
-  {
-    stringReadHandler.characters(ch, start, length);
+  public void characters( final char[] ch, final int start, final int length ) throws SAXException {
+    stringReadHandler.characters( ch, start, length );
   }
 
   /**
@@ -57,14 +53,13 @@ public class ResourceLabelReadHandler extends AbstractTextElementReadHandler
    * @param atts the attributes.
    * @throws org.xml.sax.SAXException if there is a parsing error.
    */
-  protected void startParsing(final PropertyAttributes atts)
-      throws SAXException
-  {
-    super.startParsing(atts);
-    elementFactory.setResourceKey(atts.getValue(getUri(), "resource-key"));
-    elementFactory.setResourceBase(atts.getValue(getUri(), "resource-base"));
-    elementFactory.setNullString(atts.getValue(getUri(), "nullstring"));
-    stringReadHandler.startParsing(atts);
+  protected void startParsing( final PropertyAttributes atts )
+    throws SAXException {
+    super.startParsing( atts );
+    elementFactory.setResourceKey( atts.getValue( getUri(), "resource-key" ) );
+    elementFactory.setResourceBase( atts.getValue( getUri(), "resource-base" ) );
+    elementFactory.setNullString( atts.getValue( getUri(), "nullstring" ) );
+    stringReadHandler.startParsing( atts );
   }
 
 
@@ -74,13 +69,11 @@ public class ResourceLabelReadHandler extends AbstractTextElementReadHandler
    * @throws org.xml.sax.SAXException if there is a parsing error.
    */
   protected void doneParsing()
-      throws SAXException
-  {
+    throws SAXException {
     stringReadHandler.doneParsing();
     final String key = stringReadHandler.getResult();
-    if (key.trim().length() > 0)
-    {
-      elementFactory.setResourceKey(key);
+    if ( key.trim().length() > 0 ) {
+      elementFactory.setResourceKey( key );
     }
     super.doneParsing();
   }

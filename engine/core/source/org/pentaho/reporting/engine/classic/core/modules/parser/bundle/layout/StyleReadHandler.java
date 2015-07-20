@@ -20,7 +20,6 @@ package org.pentaho.reporting.engine.classic.core.modules.parser.bundle.layout;
 import org.pentaho.reporting.engine.classic.core.style.ElementStyleSheet;
 import org.pentaho.reporting.libraries.xmlns.parser.XmlReadHandler;
 
-public interface StyleReadHandler extends XmlReadHandler
-{
-  public void setStyleSheet(ElementStyleSheet styleSheet);
+public interface StyleReadHandler extends XmlReadHandler {
+  public void setStyleSheet( ElementStyleSheet styleSheet );
 }

@@ -45,9 +45,8 @@ import org.pentaho.reporting.engine.classic.core.states.PerformanceMonitorContex
  *
  * @author Thomas Morgner
  */
-public class FlowRenderer extends AbstractRenderer
-{
-  private static Log logger = LogFactory.getLog(FlowRenderer.class);
+public class FlowRenderer extends AbstractRenderer {
+  private static Log logger = LogFactory.getLog( FlowRenderer.class );
 
   private FlowPaginationStep paginationStep;
   private FillFlowPagesStep fillPhysicalPagesStep;
@@ -58,9 +57,8 @@ public class FlowRenderer extends AbstractRenderer
   private int floodPrevention;
   private CountBoxesStep countBoxesStep;
 
-  public FlowRenderer(final OutputProcessor outputProcessor)
-  {
-    super(outputProcessor);
+  public FlowRenderer( final OutputProcessor outputProcessor ) {
+    super( outputProcessor );
     this.paginationStep = new FlowPaginationStep();
     this.fillPhysicalPagesStep = new FillFlowPagesStep();
     this.cleanFlowBoxesStep = new CleanFlowBoxesStep();
@@ -70,127 +68,113 @@ public class FlowRenderer extends AbstractRenderer
     initialize();
   }
 
-  protected boolean isPageFinished()
-  {
+  protected boolean isPageFinished() {
     final LogicalPageBox pageBox = getPageBox();
-//    final long sizeBeforePagination = pageBox.getHeight();
+    //    final long sizeBeforePagination = pageBox.getHeight();
     //final LogicalPageBox clone = (LogicalPageBox) pageBox.deriveForAdvance(true);
-    final PaginationResult pageBreak = paginationStep.performPagebreak(pageBox);
-    if (pageBreak.isOverflow() || pageBox.isOpen() == false)
-    {
-      setLastStateKey(pageBreak.getLastVisibleState());
+    final PaginationResult pageBreak = paginationStep.performPagebreak( pageBox );
+    if ( pageBreak.isOverflow() || pageBox.isOpen() == false ) {
+      setLastStateKey( pageBreak.getLastVisibleState() );
       return true;
     }
     return false;
   }
 
-  public void startReport(final ReportDefinition report,
-                          final ProcessingContext processingContext,
-                          final PerformanceMonitorContext performanceMonitorContext)
-  {
+  public void startReport( final ReportDefinition report,
+                           final ProcessingContext processingContext,
+                           final PerformanceMonitorContext performanceMonitorContext ) {
     flowCount = 0;
-    super.startReport(report, processingContext, performanceMonitorContext);
+    super.startReport( report, processingContext, performanceMonitorContext );
   }
 
-  protected void debugPrint(final LogicalPageBox pageBox)
-  {
+  protected void debugPrint( final LogicalPageBox pageBox ) {
   }
 
 
-  public void processIncrementalUpdate(final boolean performOutput) throws ContentProcessingException
-  {
-    if (isDirty() == false)
-    {
-      logger.debug ("Not dirty, no update needed.");
+  public void processIncrementalUpdate( final boolean performOutput ) throws ContentProcessingException {
+    if ( isDirty() == false ) {
+      logger.debug( "Not dirty, no update needed." );
       return;
     }
     clearDirty();
 
     floodPrevention += 1;
-    if (floodPrevention < 5) // this is a magic number ..
+    if ( floodPrevention < 5 ) // this is a magic number ..
     {
       return;
     }
     floodPrevention = 0;
 
     final OutputProcessor outputProcessor = getOutputProcessor();
-    if (outputProcessor instanceof IterativeOutputProcessor == false ||
-        outputProcessor.getMetaData().isFeatureSupported(OutputProcessorFeature.ITERATIVE_RENDERING) == false)
-    {
-      logger.debug("No incremental system.");
+    if ( outputProcessor instanceof IterativeOutputProcessor == false ||
+      outputProcessor.getMetaData().isFeatureSupported( OutputProcessorFeature.ITERATIVE_RENDERING ) == false ) {
+      logger.debug( "No incremental system." );
       return;
     }
 
     final LogicalPageBox pageBox = getPageBox();
-    pageBox.setPageEnd(pageBox.getHeight());
+    pageBox.setPageEnd( pageBox.getHeight() );
 
-    if (pageBox.isOpen())
-    {
+    if ( pageBox.isOpen() ) {
       final IterativeOutputProcessor io = (IterativeOutputProcessor) outputProcessor;
-      if (applyAutoCommitPageHeaderStep.compute(pageBox))
-      {
-        io.processIterativeContent(pageBox, performOutput);
-        countBoxesStep.process(pageBox);
-        cleanFlowBoxesStep.compute(pageBox);
+      if ( applyAutoCommitPageHeaderStep.compute( pageBox ) ) {
+        io.processIterativeContent( pageBox, performOutput );
+        countBoxesStep.process( pageBox );
+        cleanFlowBoxesStep.compute( pageBox );
 
-   //     ModelPrinter.INSTANCE.print(pageBox);
+        //     ModelPrinter.INSTANCE.print(pageBox);
 
-        logger.debug("Computing Incremental update: offset=" + pageBox.getPageOffset() +
-            ", horizon=" + pageBox.getProcessedTableOffset() + ", pageEnd=" + pageBox.getPageEnd());
+        logger.debug( "Computing Incremental update: offset=" + pageBox.getPageOffset() +
+          ", horizon=" + pageBox.getProcessedTableOffset() + ", pageEnd=" + pageBox.getPageEnd() );
 
       }
     }
   }
 
-  protected boolean performPagination(final LayoutPagebreakHandler layoutPagebreakHandler,
-                                      final boolean performOutput)
-      throws ContentProcessingException
-  {
+  protected boolean performPagination( final LayoutPagebreakHandler layoutPagebreakHandler,
+                                       final boolean performOutput )
+    throws ContentProcessingException {
     final OutputProcessor outputProcessor = getOutputProcessor();
     // next: perform pagination.
     final LogicalPageBox pageBox = getPageBox();
-//    final long sizeBeforePagination = pageBox.getHeight();
+    //    final long sizeBeforePagination = pageBox.getHeight();
     //final LogicalPageBox clone = (LogicalPageBox) pageBox.deriveForAdvance(true);
-    final PaginationResult pageBreak = paginationStep.performPagebreak(pageBox);
-    if (pageBreak.isOverflow() == false && pageBox.isOpen())
-    {
+    final PaginationResult pageBreak = paginationStep.performPagebreak( pageBox );
+    if ( pageBreak.isOverflow() == false && pageBox.isOpen() ) {
       return false;
     }
 
-    setLastStateKey(pageBreak.getLastVisibleState());
-//      final long sizeAfterPagination = pageBox.getHeight();
-    setPagebreaks(getPagebreaks() + 1);
-    pageBox.setAllVerticalBreaks(pageBreak.getAllBreaks());
+    setLastStateKey( pageBreak.getLastVisibleState() );
+    //      final long sizeAfterPagination = pageBox.getHeight();
+    setPagebreaks( getPagebreaks() + 1 );
+    pageBox.setAllVerticalBreaks( pageBreak.getAllBreaks() );
 
     flowCount += 1;
-    debugPrint(pageBox);
+    debugPrint( pageBox );
 
     // A new page has been started. Recover the page-grid, then restart
     // everything from scratch. (We have to recompute, as the pages may
     // be different now, due to changed margins or page definitions)
     final long nextOffset = pageBox.computePageEnd();
-    pageBox.setPageEnd(nextOffset);
+    pageBox.setPageEnd( nextOffset );
     final long pageOffset = pageBox.getPageOffset();
 
-    if (performOutput)
-    {
-      if (outputProcessor.isNeedAlignedPage())
-      {
-        final LogicalPageBox box = fillPhysicalPagesStep.compute(pageBox, pageOffset, nextOffset);
-        logger.debug("Processing contents for Page " + flowCount + " Page-Offset: " + pageOffset + " -> " + nextOffset);
+    if ( performOutput ) {
+      if ( outputProcessor.isNeedAlignedPage() ) {
+        final LogicalPageBox box = fillPhysicalPagesStep.compute( pageBox, pageOffset, nextOffset );
+        logger
+          .debug( "Processing contents for Page " + flowCount + " Page-Offset: " + pageOffset + " -> " + nextOffset );
 
-        outputProcessor.processContent(box);
+        outputProcessor.processContent( box );
+      } else {
+        logger.debug(
+          "Processing fast contents for Page " + flowCount + " Page-Offset: " + pageOffset + " -> " + nextOffset );
+        outputProcessor.processContent( pageBox );
       }
-      else
-      {
-        logger.debug("Processing fast contents for Page " + flowCount + " Page-Offset: " + pageOffset + " -> " + nextOffset);
-        outputProcessor.processContent(pageBox);
-      }
-    }
-    else
-    {
-      logger.debug("Recomputing contents for Page " + flowCount + " Page-Offset: " + pageOffset + " -> " + nextOffset);
-      outputProcessor.processRecomputedContent(pageBox);
+    } else {
+      logger
+        .debug( "Recomputing contents for Page " + flowCount + " Page-Offset: " + pageOffset + " -> " + nextOffset );
+      outputProcessor.processRecomputedContent( pageBox );
     }
 
     // Now fire the pagebreak. This goes through all layers and informs all
@@ -201,23 +185,20 @@ public class FlowRenderer extends AbstractRenderer
     //      Log.debug("PageTime " + (currentPageAge - lastPageAge));
 
     final boolean repeat = pageBox.isOpen() || pageBreak.isOverflow();
-    if (repeat)
-    {
+    if ( repeat ) {
       // pageBox.setAllVerticalBreaks(pageBreak.getAllBreaks());
       // First clean all boxes that have been marked as finished. This reduces the overall complexity of the
       // pagebox and improves performance on huge reports.
-      countBoxesStep.process(pageBox);
-      cleanFlowBoxesStep.compute(pageBox);
+      countBoxesStep.process( pageBox );
+      cleanFlowBoxesStep.compute( pageBox );
 
       //cleanPaginatedBoxesStep.compute(pageBox);
-      pageBox.setPageOffset(nextOffset);
+      pageBox.setPageOffset( nextOffset );
       // todo PRD-4606
-      pageBox.resetCacheState(true);
+      pageBox.resetCacheState( true );
 
-      if (pageBreak.isNextPageContainsContent())
-      {
-        if (layoutPagebreakHandler != null)
-        {
+      if ( pageBreak.isNextPageContainsContent() ) {
+        if ( layoutPagebreakHandler != null ) {
           layoutPagebreakHandler.pageStarted();
         }
         return true;
@@ -226,60 +207,50 @@ public class FlowRenderer extends AbstractRenderer
       // empty. (We already tested it.)
       pageStartPending = true;
       return false;
-    }
-    else
-    {
+    } else {
       outputProcessor.processingFinished();
-      pageBox.setPageOffset(nextOffset);
-// todo PRD-4606
-//      pageBox.resetCacheState(true);
+      pageBox.setPageOffset( nextOffset );
+      // todo PRD-4606
+      //      pageBox.resetCacheState(true);
       return false;
     }
   }
 
-  public int getPageCount()
-  {
+  public int getPageCount() {
     return flowCount;
   }
 
-  public boolean isCurrentPageEmpty()
-  {
+  public boolean isCurrentPageEmpty() {
     final LogicalPageBox logicalPageBox = getPageBox();
     final PageBreakPositionList breakPositionList = logicalPageBox.getAllVerticalBreaks();
     final long masterBreak = breakPositionList.getLastMasterBreak();
-    final boolean nextPageContainsContent = (logicalPageBox.getHeight() > masterBreak);
+    final boolean nextPageContainsContent = ( logicalPageBox.getHeight() > masterBreak );
     return nextPageContainsContent == false;
   }
 
-  public boolean clearPendingPageStart(final LayoutPagebreakHandler layoutPagebreakHandler)
-  {
-    if (pageStartPending == false)
-    {
+  public boolean clearPendingPageStart( final LayoutPagebreakHandler layoutPagebreakHandler ) {
+    if ( pageStartPending == false ) {
       return false;
     }
 
-    if (layoutPagebreakHandler != null)
-    {
+    if ( layoutPagebreakHandler != null ) {
       layoutPagebreakHandler.pageStarted();
     }
     pageStartPending = false;
     return true;
   }
 
-  public boolean isPageStartPending()
-  {
+  public boolean isPageStartPending() {
     return pageStartPending;
   }
 
-  protected void initializeRendererOnStartReport(final ProcessingContext processingContext)
-  {
-    super.initializeRendererOnStartReport(processingContext);
-    paginationStep.initializePerformanceMonitoring(getPerformanceMonitorContext());
-    fillPhysicalPagesStep.initializePerformanceMonitoring(getPerformanceMonitorContext());
+  protected void initializeRendererOnStartReport( final ProcessingContext processingContext ) {
+    super.initializeRendererOnStartReport( processingContext );
+    paginationStep.initializePerformanceMonitoring( getPerformanceMonitorContext() );
+    fillPhysicalPagesStep.initializePerformanceMonitoring( getPerformanceMonitorContext() );
   }
 
-  protected void close()
-  {
+  protected void close() {
     super.close();
     paginationStep.close();
     fillPhysicalPagesStep.close();

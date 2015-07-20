@@ -19,59 +19,48 @@ package org.pentaho.reporting.engine.classic.core.layout.process.util;
 
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderBox;
 
-public class StaticInlineBoxChunkWidthUpdate extends StaticChunkWidthUpdate
-{
+public class StaticInlineBoxChunkWidthUpdate extends StaticChunkWidthUpdate {
   private RenderBox box;
   private long chunkWidth;
   private StackedObjectPool<StaticInlineBoxChunkWidthUpdate> pool;
 
-  StaticInlineBoxChunkWidthUpdate(final StackedObjectPool<StaticInlineBoxChunkWidthUpdate> pool)
-  {
-    if (pool == null)
-    {
+  StaticInlineBoxChunkWidthUpdate( final StackedObjectPool<StaticInlineBoxChunkWidthUpdate> pool ) {
+    if ( pool == null ) {
       throw new NullPointerException();
     }
     this.pool = pool;
   }
 
-  public StaticInlineBoxChunkWidthUpdate()
-  {
+  public StaticInlineBoxChunkWidthUpdate() {
   }
 
-  void reuse(final StaticChunkWidthUpdate parent, final RenderBox box)
-  {
-    reuse(parent);
+  void reuse( final StaticChunkWidthUpdate parent, final RenderBox box ) {
+    reuse( parent );
     this.box = box;
     this.chunkWidth = 0;
   }
 
-  public void update(final long minChunkWidth)
-  {
-    if (chunkWidth < minChunkWidth)
-    {
+  public void update( final long minChunkWidth ) {
+    if ( chunkWidth < minChunkWidth ) {
       chunkWidth = minChunkWidth;
     }
   }
 
-  public void finish()
-  {
+  public void finish() {
     final long chunkWidthAndInsets = chunkWidth + box.getInsets();
-    if (box.getMinimumChunkWidth() < chunkWidthAndInsets)
-    {
-      box.setMinimumChunkWidth(chunkWidthAndInsets);
+    if ( box.getMinimumChunkWidth() < chunkWidthAndInsets ) {
+      box.setMinimumChunkWidth( chunkWidthAndInsets );
     }
   }
 
-  public boolean isInline()
-  {
+  public boolean isInline() {
     return true;
   }
 
-  public StaticChunkWidthUpdate pop()
-  {
+  public StaticChunkWidthUpdate pop() {
     box = null;
     chunkWidth = 0;
-    pool.free(this);
+    pool.free( this );
     return super.pop();
   }
 }

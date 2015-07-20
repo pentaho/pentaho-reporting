@@ -26,10 +26,8 @@ import org.xml.sax.SAXException;
  *
  * @author Thomas Morgner
  */
-public class ConfigReadHandler extends AbstractXmlReadHandler
-{
-  public ConfigReadHandler()
-  {
+public class ConfigReadHandler extends AbstractXmlReadHandler {
+  public ConfigReadHandler() {
   }
 
   /**
@@ -38,9 +36,8 @@ public class ConfigReadHandler extends AbstractXmlReadHandler
    * @param attrs the attributes.
    * @throws SAXException if there is a parsing error.
    */
-  protected void startParsing(final Attributes attrs) throws SAXException
-  {
-    super.startParsing(attrs);
+  protected void startParsing( final Attributes attrs ) throws SAXException {
+    super.startParsing( attrs );
   }
 
   /**
@@ -49,8 +46,7 @@ public class ConfigReadHandler extends AbstractXmlReadHandler
    * @return the object.
    * @throws SAXException if there is a parsing error.
    */
-  public Object getObject() throws SAXException
-  {
+  public Object getObject() throws SAXException {
     return null;
   }
 }

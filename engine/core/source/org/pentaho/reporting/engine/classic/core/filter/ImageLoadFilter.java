@@ -17,14 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.core.filter;
 
-import java.awt.Image;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.net.URL;
-import java.sql.Blob;
-import java.util.HashSet;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.pentaho.reporting.engine.classic.core.DefaultImageReference;
@@ -35,6 +27,14 @@ import org.pentaho.reporting.libraries.base.util.IOUtils;
 import org.pentaho.reporting.libraries.resourceloader.Resource;
 import org.pentaho.reporting.libraries.resourceloader.ResourceException;
 import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
+
+import java.awt.*;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.net.URL;
+import java.sql.Blob;
+import java.util.HashSet;
 
 /**
  * The image load filter is used to load images during the report generation process. This filter expects its datasource
@@ -53,9 +53,8 @@ import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
  *
  * @author Thomas Morgner
  */
-public class ImageLoadFilter implements DataFilter
-{
-  private static final Log logger = LogFactory.getLog(ImageLoadFilter.class);
+public class ImageLoadFilter implements DataFilter {
+  private static final Log logger = LogFactory.getLog( ImageLoadFilter.class );
   /**
    * The cache for failed images. This prevents unneccessary retries on known-to-be-buggy URLs.
    */
@@ -68,9 +67,8 @@ public class ImageLoadFilter implements DataFilter
   /**
    * creates a new ImageLoadFilter with a cache size of 10.
    */
-  public ImageLoadFilter()
-  {
-    this(10);
+  public ImageLoadFilter() {
+    this( 10 );
   }
 
   /**
@@ -78,9 +76,8 @@ public class ImageLoadFilter implements DataFilter
    *
    * @param cacheSize the cache size.
    */
-  public ImageLoadFilter(final int cacheSize)
-  {
-    failureCache = new HashSet<String>(cacheSize);
+  public ImageLoadFilter( final int cacheSize ) {
+    failureCache = new HashSet<String>( cacheSize );
   }
 
   /**
@@ -93,102 +90,69 @@ public class ImageLoadFilter implements DataFilter
    * @param element
    * @return the current value for this filter.
    */
-  public Object getValue(final ExpressionRuntime runtime, final ReportElement element)
-  {
+  public Object getValue( final ExpressionRuntime runtime, final ReportElement element ) {
     final DataSource ds = getDataSource();
-    if (ds == null)
-    {
+    if ( ds == null ) {
       return null;
     }
-    final Object o = ds.getValue(runtime, element);
-    if (o == null)
-    {
+    final Object o = ds.getValue( runtime, element );
+    if ( o == null ) {
       return null;
     }
-    if (o instanceof byte[])
-    {
-      try
-      {
+    if ( o instanceof byte[] ) {
+      try {
         final ResourceManager resManager = runtime.getProcessingContext().getResourceManager();
-        final Resource resource = resManager.createDirectly(o, Image.class);
-        return new DefaultImageReference(resource);
-      }
-      catch (ResourceException e)
-      {
-        if (ImageLoadFilter.logger.isDebugEnabled())
-        {
-          ImageLoadFilter.logger.debug("Error while loading the image from a blob", e);
-        }
-        else if (ImageLoadFilter.logger.isWarnEnabled())
-        {
-          ImageLoadFilter.logger.warn("Error while loading the image from a blob: " + e.getMessage());
+        final Resource resource = resManager.createDirectly( o, Image.class );
+        return new DefaultImageReference( resource );
+      } catch ( ResourceException e ) {
+        if ( ImageLoadFilter.logger.isDebugEnabled() ) {
+          ImageLoadFilter.logger.debug( "Error while loading the image from a blob", e );
+        } else if ( ImageLoadFilter.logger.isWarnEnabled() ) {
+          ImageLoadFilter.logger.warn( "Error while loading the image from a blob: " + e.getMessage() );
         }
         return null;
       }
-    }
-    else if (o instanceof Blob)
-    {
-      try
-      {
+    } else if ( o instanceof Blob ) {
+      try {
         final Blob b = (Blob) o;
-        final byte[] data = IOUtils.getInstance().readBlob(b);
+        final byte[] data = IOUtils.getInstance().readBlob( b );
         final ResourceManager resManager = runtime.getProcessingContext().getResourceManager();
-        final Resource resource = resManager.createDirectly(data, Image.class);
-        return new DefaultImageReference(resource);
-      }
-      catch (Exception e)
-      {
-        if (ImageLoadFilter.logger.isDebugEnabled())
-        {
-          ImageLoadFilter.logger.debug("Error while loading the image from a blob", e);
-        }
-        else if (ImageLoadFilter.logger.isWarnEnabled())
-        {
-          ImageLoadFilter.logger.warn("Error while loading the image from a blob: " + e.getMessage());
+        final Resource resource = resManager.createDirectly( data, Image.class );
+        return new DefaultImageReference( resource );
+      } catch ( Exception e ) {
+        if ( ImageLoadFilter.logger.isDebugEnabled() ) {
+          ImageLoadFilter.logger.debug( "Error while loading the image from a blob", e );
+        } else if ( ImageLoadFilter.logger.isWarnEnabled() ) {
+          ImageLoadFilter.logger.warn( "Error while loading the image from a blob: " + e.getMessage() );
         }
         return null;
       }
-    }
-    else if (o instanceof URL)
-    {
+    } else if ( o instanceof URL ) {
       // a valid url is found, lookup the url in the cache, maybe the image is loaded and
       // still there.
       final URL url = (URL) o;
-      final String urlText = String.valueOf(url);
-      if (failureCache.contains(urlText))
-      {
+      final String urlText = String.valueOf( url );
+      if ( failureCache.contains( urlText ) ) {
         return null;
       }
-      try
-      {
+      try {
         final ResourceManager resManager = runtime.getProcessingContext().getResourceManager();
-        final Resource resource = resManager.createDirectly(url, Image.class);
-        return new DefaultImageReference(resource);
-      }
-      catch (ResourceException e)
-      {
-        if (ImageLoadFilter.logger.isDebugEnabled())
-        {
-          ImageLoadFilter.logger.debug("Error while loading the image from " + url, e);
+        final Resource resource = resManager.createDirectly( url, Image.class );
+        return new DefaultImageReference( resource );
+      } catch ( ResourceException e ) {
+        if ( ImageLoadFilter.logger.isDebugEnabled() ) {
+          ImageLoadFilter.logger.debug( "Error while loading the image from " + url, e );
+        } else if ( ImageLoadFilter.logger.isWarnEnabled() ) {
+          ImageLoadFilter.logger.warn( "Error while loading the image from " + url + ": " + e.getMessage() );
         }
-        else if (ImageLoadFilter.logger.isWarnEnabled())
-        {
-          ImageLoadFilter.logger.warn("Error while loading the image from " + url + ": " + e.getMessage());
-        }
-        failureCache.add(urlText);
+        failureCache.add( urlText );
         return null;
       }
-    }
-    else if (o instanceof Image)
-    {
+    } else if ( o instanceof Image ) {
       return o;
-    }
-    else if (o instanceof ImageContainer)
-    {
+    } else if ( o instanceof ImageContainer ) {
       return o;
-    }
-    else
-    {
+    } else {
       // invalid data or not recognized
       return null;
     }
@@ -199,8 +163,7 @@ public class ImageLoadFilter implements DataFilter
    *
    * @return The data source.
    */
-  public DataSource getDataSource()
-  {
+  public DataSource getDataSource() {
     return source;
   }
 
@@ -209,10 +172,8 @@ public class ImageLoadFilter implements DataFilter
    *
    * @param ds The data source.
    */
-  public void setDataSource(final DataSource ds)
-  {
-    if (ds == null)
-    {
+  public void setDataSource( final DataSource ds ) {
+    if ( ds == null ) {
       throw new NullPointerException();
     }
 
@@ -226,11 +187,9 @@ public class ImageLoadFilter implements DataFilter
    * @throws CloneNotSupportedException this should never happen.
    */
   public ImageLoadFilter clone()
-      throws CloneNotSupportedException
-  {
+    throws CloneNotSupportedException {
     final ImageLoadFilter il = (ImageLoadFilter) super.clone();
-    if (source != null)
-    {
+    if ( source != null ) {
       il.source = source.clone();
     }
     return il;
@@ -242,9 +201,8 @@ public class ImageLoadFilter implements DataFilter
    * @param out the serialization output stream.
    * @throws IOException if an IO error occured.
    */
-  private void writeObject(final ObjectOutputStream out)
-      throws IOException
-  {
+  private void writeObject( final ObjectOutputStream out )
+    throws IOException {
     out.defaultWriteObject();
   }
 
@@ -255,9 +213,8 @@ public class ImageLoadFilter implements DataFilter
    * @throws IOException            if an IOError occurs.
    * @throws ClassNotFoundException if a dependent class cannot be found.
    */
-  private void readObject(final ObjectInputStream in)
-      throws IOException, ClassNotFoundException
-  {
+  private void readObject( final ObjectInputStream in )
+    throws IOException, ClassNotFoundException {
     in.defaultReadObject();
     failureCache = new HashSet<String>();
   }

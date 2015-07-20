@@ -17,26 +17,24 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.parser.ext.factory.base;
 
-import java.awt.geom.Dimension2D;
-
 import org.pentaho.reporting.libraries.base.util.FloatDimension;
+
+import java.awt.geom.Dimension2D;
 
 /**
  * An object-description for a <code>Dimension2D</code> object.
  *
  * @author Thomas Morgner
  */
-public class Dimension2DObjectDescription extends AbstractObjectDescription
-{
+public class Dimension2DObjectDescription extends AbstractObjectDescription {
 
   /**
    * Creates a new object description.
    */
-  public Dimension2DObjectDescription()
-  {
-    super(Dimension2D.class);
-    setParameterDefinition("width", Float.class);
-    setParameterDefinition("height", Float.class);
+  public Dimension2DObjectDescription() {
+    super( Dimension2D.class );
+    setParameterDefinition( "width", Float.class );
+    setParameterDefinition( "height", Float.class );
   }
 
   /**
@@ -44,13 +42,12 @@ public class Dimension2DObjectDescription extends AbstractObjectDescription
    *
    * @return The object.
    */
-  public Object createObject()
-  {
+  public Object createObject() {
     final Dimension2D dim = new FloatDimension();
 
-    final float width = getFloatParameter("width");
-    final float height = getFloatParameter("height");
-    dim.setSize(width, height);
+    final float width = getFloatParameter( "width" );
+    final float height = getFloatParameter( "height" );
+    dim.setSize( width, height );
     return dim;
   }
 
@@ -60,11 +57,9 @@ public class Dimension2DObjectDescription extends AbstractObjectDescription
    * @param param the parameter name.
    * @return The float value.
    */
-  private float getFloatParameter(final String param)
-  {
-    final Float p = (Float) getParameter(param);
-    if (p == null)
-    {
+  private float getFloatParameter( final String param ) {
+    final Float p = (Float) getParameter( param );
+    if ( p == null ) {
       return 0;
     }
     return p.floatValue();
@@ -77,18 +72,16 @@ public class Dimension2DObjectDescription extends AbstractObjectDescription
    * @param o the object (should be an instance of <code>Dimension2D</code>).
    * @throws ObjectFactoryException if the object is not an instance of <code>Point2D</code>.
    */
-  public void setParameterFromObject(final Object o) throws ObjectFactoryException
-  {
-    if (!(o instanceof Dimension2D))
-    {
-      throw new ObjectFactoryException("The given object is no java.awt.geom.Dimension2D.");
+  public void setParameterFromObject( final Object o ) throws ObjectFactoryException {
+    if ( !( o instanceof Dimension2D ) ) {
+      throw new ObjectFactoryException( "The given object is no java.awt.geom.Dimension2D." );
     }
 
     final Dimension2D dim = (Dimension2D) o;
     final float width = (float) dim.getWidth();
     final float height = (float) dim.getHeight();
 
-    setParameter("width", new Float(width));
-    setParameter("height", new Float(height));
+    setParameter( "width", new Float( width ) );
+    setParameter( "height", new Float( height ) );
   }
 }

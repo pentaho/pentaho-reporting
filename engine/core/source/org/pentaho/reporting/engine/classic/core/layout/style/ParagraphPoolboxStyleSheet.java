@@ -24,64 +24,50 @@ import org.pentaho.reporting.engine.classic.core.style.StyleKey;
 import org.pentaho.reporting.engine.classic.core.style.StyleSheet;
 import org.pentaho.reporting.engine.classic.core.util.InstanceID;
 
-public class ParagraphPoolboxStyleSheet extends AbstractStyleSheet
-{
+public class ParagraphPoolboxStyleSheet extends AbstractStyleSheet {
   private StyleSheet parentStyleSheet;
   private StyleSheet defaultStyleSheet;
 
-  public ParagraphPoolboxStyleSheet(final StyleSheet parentStyleSheet)
-  {
-    if (parentStyleSheet == null)
-    {
+  public ParagraphPoolboxStyleSheet( final StyleSheet parentStyleSheet ) {
+    if ( parentStyleSheet == null ) {
       throw new NullPointerException();
     }
     this.parentStyleSheet = parentStyleSheet;
     this.defaultStyleSheet = ElementDefaultStyleSheet.getDefaultStyle();
   }
 
-  public Object getStyleProperty(final StyleKey key, final Object defaultValue)
-  {
-    if (ElementStyleKeys.AVOID_PAGEBREAK_INSIDE.equals(key))
-    {
+  public Object getStyleProperty( final StyleKey key, final Object defaultValue ) {
+    if ( ElementStyleKeys.AVOID_PAGEBREAK_INSIDE.equals( key ) ) {
       return Boolean.TRUE;
     }
 
-    if (key.isInheritable())
-    {
-      return parentStyleSheet.getStyleProperty(key, defaultValue);
+    if ( key.isInheritable() ) {
+      return parentStyleSheet.getStyleProperty( key, defaultValue );
     }
-    return defaultStyleSheet.getStyleProperty(key, defaultValue);
+    return defaultStyleSheet.getStyleProperty( key, defaultValue );
   }
 
-  public StyleSheet getParent()
-  {
+  public StyleSheet getParent() {
     return parentStyleSheet;
   }
 
-  public InstanceID getId()
-  {
+  public InstanceID getId() {
     return parentStyleSheet.getId();
   }
 
-  public long getChangeTracker()
-  {
+  public long getChangeTracker() {
     return parentStyleSheet.getChangeTracker();
   }
 
-  public Object[] toArray()
-  {
+  public Object[] toArray() {
     final Object[] objects = defaultStyleSheet.toArray();
     final StyleKey[] keys = StyleKey.getDefinedStyleKeys();
-    for (int i = 0; i < keys.length; i++)
-    {
-      final StyleKey key = keys[i];
-      if (ElementStyleKeys.AVOID_PAGEBREAK_INSIDE.equals(key))
-      {
-        objects[i] = Boolean.TRUE;
-      }
-      else if (key.isInheritable())
-      {
-        objects[i] = parentStyleSheet.getStyleProperty(key, null);
+    for ( int i = 0; i < keys.length; i++ ) {
+      final StyleKey key = keys[ i ];
+      if ( ElementStyleKeys.AVOID_PAGEBREAK_INSIDE.equals( key ) ) {
+        objects[ i ] = Boolean.TRUE;
+      } else if ( key.isInheritable() ) {
+        objects[ i ] = parentStyleSheet.getStyleProperty( key, null );
       }
     }
     return objects;

@@ -33,99 +33,92 @@ import org.pentaho.reporting.engine.classic.core.testsupport.selector.Descendant
 import org.pentaho.reporting.engine.classic.core.testsupport.selector.ElementMatcher;
 import org.pentaho.reporting.engine.classic.core.testsupport.selector.MatchFactory;
 
-public class IncompleteTableTest extends TestCase
-{
-  public IncompleteTableTest()
-  {
+public class IncompleteTableTest extends TestCase {
+  public IncompleteTableTest() {
   }
 
-  public IncompleteTableTest(final String name)
-  {
-    super(name);
+  public IncompleteTableTest( final String name ) {
+    super( name );
   }
 
-  public void setUp() throws Exception
-  {
+  public void setUp() throws Exception {
     ClassicEngineBoot.getInstance().start();
   }
 
-  public void testMissingTableCell() throws ReportProcessingException, ContentProcessingException
-  {
+  public void testMissingTableCell() throws ReportProcessingException, ContentProcessingException {
 
     final Band tableRow = TableTestUtil.createRow();
 
     final Band tableBody = new Band();
-    tableBody.getStyle().setStyleProperty(BandStyleKeys.LAYOUT, BandStyleKeys.LAYOUT_TABLE_BODY);
-    tableBody.getStyle().setStyleProperty(ElementStyleKeys.MIN_WIDTH, -100f);
-    tableBody.getStyle().setStyleProperty(ElementStyleKeys.MIN_HEIGHT, 200f);
-    tableBody.addElement(TableTestUtil.createAutoBox(tableRow));
+    tableBody.getStyle().setStyleProperty( BandStyleKeys.LAYOUT, BandStyleKeys.LAYOUT_TABLE_BODY );
+    tableBody.getStyle().setStyleProperty( ElementStyleKeys.MIN_WIDTH, -100f );
+    tableBody.getStyle().setStyleProperty( ElementStyleKeys.MIN_HEIGHT, 200f );
+    tableBody.addElement( TableTestUtil.createAutoBox( tableRow ) );
 
     final Band table = new Band();
-    table.getStyle().setStyleProperty(BandStyleKeys.LAYOUT, BandStyleKeys.LAYOUT_TABLE);
-    table.getStyle().setStyleProperty(ElementStyleKeys.MIN_WIDTH, -100f);
-    table.getStyle().setStyleProperty(ElementStyleKeys.MIN_HEIGHT, 200f);
-    table.addElement(TableTestUtil.createAutoBox(tableBody));
+    table.getStyle().setStyleProperty( BandStyleKeys.LAYOUT, BandStyleKeys.LAYOUT_TABLE );
+    table.getStyle().setStyleProperty( ElementStyleKeys.MIN_WIDTH, -100f );
+    table.getStyle().setStyleProperty( ElementStyleKeys.MIN_HEIGHT, 200f );
+    table.addElement( TableTestUtil.createAutoBox( tableBody ) );
 
     final MasterReport report = new MasterReport();
     final ReportHeader band = report.getReportHeader();
-    band.addElement(table);
+    band.addElement( table );
 
-    final LogicalPageBox logicalPageBox = DebugReportRunner.layoutSingleBand(report, band, false, false);
+    final LogicalPageBox logicalPageBox = DebugReportRunner.layoutSingleBand( report, band, false, false );
     //ModelPrinter.print(logicalPageBox);
 
     final DescendantMatcher matcher = new DescendantMatcher
-        (new ElementMatcher("TableCellRenderBox"));
-    final RenderNode[] all = MatchFactory.matchAll(logicalPageBox, matcher);
+      ( new ElementMatcher( "TableCellRenderBox" ) );
+    final RenderNode[] all = MatchFactory.matchAll( logicalPageBox, matcher );
 
-    assertEquals(0, all.length);
+    assertEquals( 0, all.length );
   }
 
 
-  public void testMissingTableRow() throws ReportProcessingException, ContentProcessingException
-  {
+  public void testMissingTableRow() throws ReportProcessingException, ContentProcessingException {
     final Band tableBody = new Band();
-    tableBody.getStyle().setStyleProperty(BandStyleKeys.LAYOUT, BandStyleKeys.LAYOUT_TABLE_BODY);
-    tableBody.getStyle().setStyleProperty(ElementStyleKeys.MIN_WIDTH, -100f);
-    tableBody.getStyle().setStyleProperty(ElementStyleKeys.MIN_HEIGHT, 200f);
+    tableBody.getStyle().setStyleProperty( BandStyleKeys.LAYOUT, BandStyleKeys.LAYOUT_TABLE_BODY );
+    tableBody.getStyle().setStyleProperty( ElementStyleKeys.MIN_WIDTH, -100f );
+    tableBody.getStyle().setStyleProperty( ElementStyleKeys.MIN_HEIGHT, 200f );
 
     final Band table = new Band();
-    table.getStyle().setStyleProperty(BandStyleKeys.LAYOUT, BandStyleKeys.LAYOUT_TABLE);
-    table.getStyle().setStyleProperty(ElementStyleKeys.MIN_WIDTH, -100f);
-    table.getStyle().setStyleProperty(ElementStyleKeys.MIN_HEIGHT, 200f);
-    table.addElement(TableTestUtil.createAutoBox(tableBody));
+    table.getStyle().setStyleProperty( BandStyleKeys.LAYOUT, BandStyleKeys.LAYOUT_TABLE );
+    table.getStyle().setStyleProperty( ElementStyleKeys.MIN_WIDTH, -100f );
+    table.getStyle().setStyleProperty( ElementStyleKeys.MIN_HEIGHT, 200f );
+    table.addElement( TableTestUtil.createAutoBox( tableBody ) );
 
     final MasterReport report = new MasterReport();
     final ReportHeader band = report.getReportHeader();
-    band.addElement(table);
+    band.addElement( table );
 
-    final LogicalPageBox logicalPageBox = DebugReportRunner.layoutSingleBand(report, band, false, false);
+    final LogicalPageBox logicalPageBox = DebugReportRunner.layoutSingleBand( report, band, false, false );
     //ModelPrinter.print(logicalPageBox);
 
     final DescendantMatcher matcher = new DescendantMatcher
-        (new ElementMatcher("TableCellRenderBox"));
-    final RenderNode[] all = MatchFactory.matchAll(logicalPageBox, matcher);
+      ( new ElementMatcher( "TableCellRenderBox" ) );
+    final RenderNode[] all = MatchFactory.matchAll( logicalPageBox, matcher );
 
-    assertEquals(0, all.length);
+    assertEquals( 0, all.length );
   }
 
-  public void testMissingTableBody() throws ReportProcessingException, ContentProcessingException
-  {
+  public void testMissingTableBody() throws ReportProcessingException, ContentProcessingException {
     final Band table = new Band();
-    table.getStyle().setStyleProperty(BandStyleKeys.LAYOUT, BandStyleKeys.LAYOUT_TABLE);
-    table.getStyle().setStyleProperty(ElementStyleKeys.MIN_WIDTH, -100f);
-    table.getStyle().setStyleProperty(ElementStyleKeys.MIN_HEIGHT, 200f);
+    table.getStyle().setStyleProperty( BandStyleKeys.LAYOUT, BandStyleKeys.LAYOUT_TABLE );
+    table.getStyle().setStyleProperty( ElementStyleKeys.MIN_WIDTH, -100f );
+    table.getStyle().setStyleProperty( ElementStyleKeys.MIN_HEIGHT, 200f );
 
     final MasterReport report = new MasterReport();
     final ReportHeader band = report.getReportHeader();
-    band.addElement(table);
+    band.addElement( table );
 
-    final LogicalPageBox logicalPageBox = DebugReportRunner.layoutSingleBand(report, band, false, false);
+    final LogicalPageBox logicalPageBox = DebugReportRunner.layoutSingleBand( report, band, false, false );
     //ModelPrinter.print(logicalPageBox);
 
     final DescendantMatcher matcher = new DescendantMatcher
-        (new ElementMatcher("TableCellRenderBox"));
-    final RenderNode[] all = MatchFactory.matchAll(logicalPageBox, matcher);
+      ( new ElementMatcher( "TableCellRenderBox" ) );
+    final RenderNode[] all = MatchFactory.matchAll( logicalPageBox, matcher );
 
-    assertEquals(0, all.length);
+    assertEquals( 0, all.length );
   }
 }

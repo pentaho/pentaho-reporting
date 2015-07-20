@@ -34,9 +34,8 @@ import org.pentaho.reporting.libraries.formula.LibFormulaErrorValue;
  *
  * @author Thomas Morgner
  */
-public final class FormulaFunction extends AbstractFunction
-{
-  private static final Log logger = LogFactory.getLog(FormulaFunction.class);
+public final class FormulaFunction extends AbstractFunction {
+  private static final Log logger = LogFactory.getLog( FormulaFunction.class );
   /**
    * A cached version of the compiled formula.
    */
@@ -80,17 +79,14 @@ public final class FormulaFunction extends AbstractFunction
   /**
    * Default Constructor.
    */
-  public FormulaFunction()
-  {
+  public FormulaFunction() {
   }
 
-  public Boolean getFailOnError()
-  {
+  public Boolean getFailOnError() {
     return failOnError;
   }
 
-  public void setFailOnError(final Boolean failOnError)
-  {
+  public void setFailOnError( final Boolean failOnError ) {
     this.failOnError = failOnError;
   }
 
@@ -99,8 +95,7 @@ public final class FormulaFunction extends AbstractFunction
    *
    * @return the formula context.
    */
-  private FormulaContext getFormulaContext()
-  {
+  private FormulaContext getFormulaContext() {
     final ProcessingContext globalContext = getRuntime().getProcessingContext();
     return globalContext.getFormulaContext();
   }
@@ -110,8 +105,7 @@ public final class FormulaFunction extends AbstractFunction
    *
    * @return the formula as text.
    */
-  public String getInitial()
-  {
+  public String getInitial() {
     return initial;
   }
 
@@ -120,8 +114,7 @@ public final class FormulaFunction extends AbstractFunction
    *
    * @return the initial formula expression.
    */
-  public String getInitialExpression()
-  {
+  public String getInitialExpression() {
     return initialExpression;
   }
 
@@ -131,8 +124,7 @@ public final class FormulaFunction extends AbstractFunction
    *
    * @return the namespace of the formula.
    */
-  public String getInitialNamespace()
-  {
+  public String getInitialNamespace() {
     return initialNamespace;
   }
 
@@ -142,41 +134,30 @@ public final class FormulaFunction extends AbstractFunction
    *
    * @param initial the initial formula as text.
    */
-  public void setInitial(String initial)
-  {
+  public void setInitial( String initial ) {
     this.initial = initial;
-    if (initial == null)
-    {
+    if ( initial == null ) {
       initialNamespace = null;
       initialExpression = null;
-    }
-    else
-    {
-      if (initial.endsWith(";"))
-      {
-        logger.warn("A initial-formula with a trailing semicolon is not valid. Auto-correcting the initial-formula.");
-        initial = initial.substring(0, initial.length() - 1);
+    } else {
+      if ( initial.endsWith( ";" ) ) {
+        logger.warn( "A initial-formula with a trailing semicolon is not valid. Auto-correcting the initial-formula." );
+        initial = initial.substring( 0, initial.length() - 1 );
       }
 
-      final int separator = initial.indexOf(':');
-      if (separator <= 0 || ((separator + 1) == initial.length()))
-      {
-        if (initial.length() > 0 && initial.charAt(0) == '=')
-        {
+      final int separator = initial.indexOf( ':' );
+      if ( separator <= 0 || ( ( separator + 1 ) == initial.length() ) ) {
+        if ( initial.length() > 0 && initial.charAt( 0 ) == '=' ) {
           initialNamespace = "report";
-          initialExpression = initial.substring(1);
-        }
-        else
-        {
+          initialExpression = initial.substring( 1 );
+        } else {
           // error: invalid formula.
           initialNamespace = null;
           initialExpression = null;
         }
-      }
-      else
-      {
-        initialNamespace = initial.substring(0, separator);
-        initialExpression = initial.substring(separator + 1);
+      } else {
+        initialNamespace = initial.substring( 0, separator );
+        initialExpression = initial.substring( separator + 1 );
       }
     }
   }
@@ -186,8 +167,7 @@ public final class FormulaFunction extends AbstractFunction
    *
    * @param event the report event.
    */
-  public void reportInitialized(final ReportEvent event)
-  {
+  public void reportInitialized( final ReportEvent event ) {
     initialized = false;
   }
 
@@ -196,8 +176,7 @@ public final class FormulaFunction extends AbstractFunction
    *
    * @return the formula as text.
    */
-  public String getFormula()
-  {
+  public String getFormula() {
     return formula;
   }
 
@@ -207,8 +186,7 @@ public final class FormulaFunction extends AbstractFunction
    *
    * @return the namespace of the formula.
    */
-  public String getFormulaNamespace()
-  {
+  public String getFormulaNamespace() {
     return formulaNamespace;
   }
 
@@ -217,8 +195,7 @@ public final class FormulaFunction extends AbstractFunction
    *
    * @return the formula expression.
    */
-  public String getFormulaExpression()
-  {
+  public String getFormulaExpression() {
     return formulaExpression;
   }
 
@@ -227,35 +204,25 @@ public final class FormulaFunction extends AbstractFunction
    *
    * @param formula the formula as text.
    */
-  public void setFormula(final String formula)
-  {
+  public void setFormula( final String formula ) {
     this.formula = formula;
-    if (formula == null)
-    {
+    if ( formula == null ) {
       formulaNamespace = null;
       formulaExpression = null;
-    }
-    else
-    {
-      final int separator = formula.indexOf(':');
-      if (separator <= 0 || ((separator + 1) == formula.length()))
-      {
-        if (formula.length() > 0 && formula.charAt(0) == '=')
-        {
+    } else {
+      final int separator = formula.indexOf( ':' );
+      if ( separator <= 0 || ( ( separator + 1 ) == formula.length() ) ) {
+        if ( formula.length() > 0 && formula.charAt( 0 ) == '=' ) {
           formulaNamespace = "report";
-          formulaExpression = formula.substring(1);
-        }
-        else
-        {
+          formulaExpression = formula.substring( 1 );
+        } else {
           // error: invalid formula.
           formulaNamespace = null;
           formulaExpression = null;
         }
-      }
-      else
-      {
-        formulaNamespace = formula.substring(0, separator);
-        formulaExpression = formula.substring(separator + 1);
+      } else {
+        formulaNamespace = formula.substring( 0, separator );
+        formulaExpression = formula.substring( separator + 1 );
       }
     }
     this.compiledFormula = null;
@@ -268,60 +235,45 @@ public final class FormulaFunction extends AbstractFunction
    *
    * @return the computed value or null, if an error occured.
    */
-  private Object computeInitialValue()
-  {
-    try
-    {
-      if (initial != null)
-      {
+  private Object computeInitialValue() {
+    try {
+      if ( initial != null ) {
         final ExpressionRuntime expressionRuntime = getRuntime();
-        final Formula initFormula = new Formula(initialExpression);
+        final Formula initFormula = new Formula( initialExpression );
         final ReportFormulaContext context = new ReportFormulaContext
-            (getFormulaContext(), expressionRuntime);
-        try
-        {
-          initFormula.initialize(context);
+          ( getFormulaContext(), expressionRuntime );
+        try {
+          initFormula.initialize( context );
           final Object evaluate = initFormula.evaluate();
-          if (Boolean.TRUE.equals(failOnError))
-          {
-            if (evaluate instanceof ErrorValue)
-            {
-              throw new InvalidReportStateException(String.format
-                  ("Failed to evaluate formula-expression with error %s",// NON-NLS
-                      evaluate));
+          if ( Boolean.TRUE.equals( failOnError ) ) {
+            if ( evaluate instanceof ErrorValue ) {
+              throw new InvalidReportStateException( String.format
+                ( "Failed to evaluate formula-expression with error %s",// NON-NLS
+                  evaluate ) );
             }
           }
           return evaluate;
-        }
-        finally
-        {
+        } finally {
           context.close();
         }
       }
 
       // if the code above did not trigger, compute a regular thing ..
       return computeRegularValue();
-    }
-    catch (Exception e)
-    {
-      if (FormulaFunction.logger.isDebugEnabled())
-      {
+    } catch ( Exception e ) {
+      if ( FormulaFunction.logger.isDebugEnabled() ) {
         final Configuration config = getReportConfiguration();
-        if ("true".equals(config.getConfigProperty(
-            "org.pentaho.reporting.engine.classic.core.function.LogFormulaFailureCause")))
-        {
-          FormulaFunction.logger.debug("Failed to compute the initial value [" + formulaExpression + ']', e);
-        }
-        else
-        {
-          FormulaFunction.logger.debug("Failed to compute the initial value [" + formulaExpression + ']');
+        if ( "true".equals( config.getConfigProperty(
+          "org.pentaho.reporting.engine.classic.core.function.LogFormulaFailureCause" ) ) ) {
+          FormulaFunction.logger.debug( "Failed to compute the initial value [" + formulaExpression + ']', e );
+        } else {
+          FormulaFunction.logger.debug( "Failed to compute the initial value [" + formulaExpression + ']' );
         }
       }
-      if (Boolean.TRUE.equals(failOnError))
-      {
-        throw new InvalidReportStateException(String.format
-            ("Failed to evaluate formula-function with error %s",// NON-NLS
-                e.getMessage()), e);
+      if ( Boolean.TRUE.equals( failOnError ) ) {
+        throw new InvalidReportStateException( String.format
+          ( "Failed to evaluate formula-function with error %s",// NON-NLS
+            e.getMessage() ), e );
       }
       return LibFormulaErrorValue.ERROR_UNEXPECTED_VALUE;
     }
@@ -332,69 +284,52 @@ public final class FormulaFunction extends AbstractFunction
    *
    * @return the computed value or null, if an error occured.
    */
-  private Object computeRegularValue()
-  {
-    if (formulaError != null)
-    {
-      if (Boolean.TRUE.equals(failOnError))
-      {
-        throw new InvalidReportStateException(String.format
-            ("Previously failed to evaluate formula-expression with error %s",// NON-NLS
-                formulaError));
+  private Object computeRegularValue() {
+    if ( formulaError != null ) {
+      if ( Boolean.TRUE.equals( failOnError ) ) {
+        throw new InvalidReportStateException( String.format
+          ( "Previously failed to evaluate formula-expression with error %s",// NON-NLS
+            formulaError ) );
       }
       return LibFormulaErrorValue.ERROR_UNEXPECTED_VALUE;
     }
 
-    try
-    {
-      if (compiledFormula == null)
-      {
-        compiledFormula = new Formula(formulaExpression);
+    try {
+      if ( compiledFormula == null ) {
+        compiledFormula = new Formula( formulaExpression );
       }
       final ExpressionRuntime expressionRuntime = getRuntime();
       final ReportFormulaContext context =
-          new ReportFormulaContext(getFormulaContext(), expressionRuntime);
-      try
-      {
-        compiledFormula.initialize(context);
+        new ReportFormulaContext( getFormulaContext(), expressionRuntime );
+      try {
+        compiledFormula.initialize( context );
         final Object evaluate = compiledFormula.evaluate();
-        if (Boolean.TRUE.equals(failOnError))
-        {
-          if (evaluate instanceof ErrorValue)
-          {
-            throw new InvalidReportStateException(String.format
-                ("Failed to evaluate formula-expression with error %s",// NON-NLS
-                    evaluate));
+        if ( Boolean.TRUE.equals( failOnError ) ) {
+          if ( evaluate instanceof ErrorValue ) {
+            throw new InvalidReportStateException( String.format
+              ( "Failed to evaluate formula-expression with error %s",// NON-NLS
+                evaluate ) );
           }
         }
         return evaluate;
-      }
-      finally
-      {
+      } finally {
         context.close();
       }
-    }
-    catch (Exception e)
-    {
+    } catch ( Exception e ) {
       formulaError = e;
-      if (FormulaFunction.logger.isDebugEnabled())
-      {
+      if ( FormulaFunction.logger.isDebugEnabled() ) {
         final Configuration config = getReportConfiguration();
-        if ("true".equals(config.getConfigProperty(
-            "org.pentaho.reporting.engine.classic.core.function.LogFormulaFailureCause")))
-        {
-          FormulaFunction.logger.debug("Failed to compute the regular value [" + formulaExpression + ']', e);
-        }
-        else
-        {
-          FormulaFunction.logger.debug("Failed to compute the regular value [" + formulaExpression + ']');
+        if ( "true".equals( config.getConfigProperty(
+          "org.pentaho.reporting.engine.classic.core.function.LogFormulaFailureCause" ) ) ) {
+          FormulaFunction.logger.debug( "Failed to compute the regular value [" + formulaExpression + ']', e );
+        } else {
+          FormulaFunction.logger.debug( "Failed to compute the regular value [" + formulaExpression + ']' );
         }
       }
-      if (Boolean.TRUE.equals(failOnError))
-      {
-        throw new InvalidReportStateException(String.format
-            ("Failed to evaluate formula-function with error %s",// NON-NLS
-                e.getMessage()), e);
+      if ( Boolean.TRUE.equals( failOnError ) ) {
+        throw new InvalidReportStateException( String.format
+          ( "Failed to evaluate formula-function with error %s",// NON-NLS
+            e.getMessage() ), e );
       }
       return LibFormulaErrorValue.ERROR_UNEXPECTED_VALUE;
     }
@@ -406,19 +341,14 @@ public final class FormulaFunction extends AbstractFunction
    *
    * @return the value of the function.
    */
-  public Object getValue()
-  {
-    try
-    {
-      if (initialized == false)
-      {
+  public Object getValue() {
+    try {
+      if ( initialized == false ) {
         initialized = true;
         return computeInitialValue();
       }
       return computeRegularValue();
-    }
-    catch (final InvalidReportStateException e)
-    {
+    } catch ( final InvalidReportStateException e ) {
       throw e;
     }
   }
@@ -431,11 +361,9 @@ public final class FormulaFunction extends AbstractFunction
    * @return A clone of this expression.
    * @throws CloneNotSupportedException this should never happen.
    */
-  public Object clone() throws CloneNotSupportedException
-  {
+  public Object clone() throws CloneNotSupportedException {
     final FormulaFunction o = (FormulaFunction) super.clone();
-    if (compiledFormula != null)
-    {
+    if ( compiledFormula != null ) {
       o.compiledFormula = (Formula) compiledFormula.clone();
     }
     return o;
@@ -447,8 +375,7 @@ public final class FormulaFunction extends AbstractFunction
    *
    * @return a copy of this function.
    */
-  public Expression getInstance()
-  {
+  public Expression getInstance() {
     final FormulaFunction instance = (FormulaFunction) super.getInstance();
     instance.compiledFormula = null;
     instance.formulaError = null;

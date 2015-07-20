@@ -24,7 +24,6 @@ import java.util.Locale;
  *
  * @author Thomas Morgner
  */
-public interface LocalizedComponent
-{
-  public void updateLocale(Locale locale);
+public interface LocalizedComponent {
+  public void updateLocale( Locale locale );
 }

@@ -17,9 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.parser.bundle.layout;
 
-import java.util.ArrayList;
-import java.util.Map;
-
 import org.pentaho.reporting.engine.classic.core.Element;
 import org.pentaho.reporting.engine.classic.core.SubReport;
 import org.pentaho.reporting.engine.classic.core.filter.types.bands.SubReportType;
@@ -34,26 +31,25 @@ import org.pentaho.reporting.libraries.xmlns.parser.XmlReadHandler;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 
-public class SubReportReadHandler extends AbstractElementReadHandler
-{
+import java.util.ArrayList;
+import java.util.Map;
+
+public class SubReportReadHandler extends AbstractElementReadHandler {
   private SubReport report;
   private ArrayList<SubReportParameterReadHandler> outputParameters;
   private ArrayList<SubReportParameterReadHandler> inputParameters;
   private ElementType elementType;
   private Class targetClass;
 
-  public SubReportReadHandler()
-  {
-    this(SubReportType.INSTANCE, SubReport.class);
+  public SubReportReadHandler() {
+    this( SubReportType.INSTANCE, SubReport.class );
   }
 
-  public SubReportReadHandler(final ElementType elementType, final Class targetClass)
-  {
-    if (elementType == null)
-    {
+  public SubReportReadHandler( final ElementType elementType, final Class targetClass ) {
+    if ( elementType == null ) {
       throw new IllegalStateException();
     }
-    
+
     this.targetClass = targetClass;
     this.elementType = elementType;
     this.outputParameters = new ArrayList<SubReportParameterReadHandler>();
@@ -66,40 +62,31 @@ public class SubReportReadHandler extends AbstractElementReadHandler
    * @param attrs the attributes.
    * @throws org.xml.sax.SAXException if there is a parsing error.
    */
-  protected void startParsing(final Attributes attrs) throws SAXException
-  {
-    final String file = attrs.getValue(getUri(), "href");
-    if (file != null)
-    {
+  protected void startParsing( final Attributes attrs ) throws SAXException {
+    final String file = attrs.getValue( getUri(), "href" );
+    if ( file != null ) {
       final Map parameters = deriveParseParameters();
-      parameters.put(new FactoryParameterKey(ReportParserUtil.HELPER_OBJ_REPORT_NAME), null);
-      parameters.put(new FactoryParameterKey
-          (ReportParserUtil.INCLUDE_PARSING_KEY), ReportParserUtil.INCLUDE_PARSING_VALUE);
-      try
-      {
-        report = (SubReport) performExternalParsing(file, targetClass, parameters);
+      parameters.put( new FactoryParameterKey( ReportParserUtil.HELPER_OBJ_REPORT_NAME ), null );
+      parameters.put( new FactoryParameterKey
+        ( ReportParserUtil.INCLUDE_PARSING_KEY ), ReportParserUtil.INCLUDE_PARSING_VALUE );
+      try {
+        report = (SubReport) performExternalParsing( file, targetClass, parameters );
+      } catch ( ResourceLoadingException e ) {
+        throw new ParseException( "The specified subreport was not found or could not be loaded.", e );
       }
-      catch (ResourceLoadingException e)
-      {
-        throw new ParseException("The specified subreport was not found or could not be loaded.", e);
-      }
-    }
-    else
-    {
-      throw new ParseException("Required attribute 'href' is missing.", getLocator());
+    } else {
+      throw new ParseException( "Required attribute 'href' is missing.", getLocator() );
     }
 
-    initialize(elementType);
-    super.startParsing(attrs);
-    
+    initialize( elementType );
+    super.startParsing( attrs );
+
     // clear the href, this is used only for internal purposes ...
-    report.setAttribute(getUri(), "href", null);
+    report.setAttribute( getUri(), "href", null );
   }
 
-  protected Element createElement() throws ParseException
-  {
-    if (report == null)
-    {
+  protected Element createElement() throws ParseException {
+    if ( report == null ) {
       throw new IllegalStateException();
     }
     return report;
@@ -114,30 +101,25 @@ public class SubReportReadHandler extends AbstractElementReadHandler
    * @return the handler or null, if the tagname is invalid.
    * @throws SAXException if there is a parsing error.
    */
-  protected XmlReadHandler getHandlerForChild(final String uri,
-                                              final String tagName,
-                                              final Attributes atts) throws SAXException
-  {
-    if (BundleNamespaces.LAYOUT.equals(uri))
-    {
-      if ("output-parameter".equals(tagName))
-      {
+  protected XmlReadHandler getHandlerForChild( final String uri,
+                                               final String tagName,
+                                               final Attributes atts ) throws SAXException {
+    if ( BundleNamespaces.LAYOUT.equals( uri ) ) {
+      if ( "output-parameter".equals( tagName ) ) {
         final SubReportParameterReadHandler parameterReadHandler = new SubReportParameterReadHandler();
-        outputParameters.add(parameterReadHandler);
+        outputParameters.add( parameterReadHandler );
         return parameterReadHandler;
       }
-      if ("input-parameter".equals(tagName))
-      {
+      if ( "input-parameter".equals( tagName ) ) {
         final SubReportParameterReadHandler parameterReadHandler = new SubReportParameterReadHandler();
-        inputParameters.add(parameterReadHandler);
+        inputParameters.add( parameterReadHandler );
         return parameterReadHandler;
       }
     }
-    return super.getHandlerForChild(uri, tagName, atts);
+    return super.getHandlerForChild( uri, tagName, atts );
   }
 
-  public Element getElement()
-  {
+  public Element getElement() {
     return report;
   }
 
@@ -146,19 +128,16 @@ public class SubReportReadHandler extends AbstractElementReadHandler
    *
    * @throws SAXException if there is a parsing error.
    */
-  protected void doneParsing() throws SAXException
-  {
+  protected void doneParsing() throws SAXException {
     super.doneParsing();
-    for (int i = 0; i < inputParameters.size(); i++)
-    {
-      final SubReportParameterReadHandler handler = inputParameters.get(i);
-      report.addInputParameter(handler.getMasterName(), handler.getDetailName());
+    for ( int i = 0; i < inputParameters.size(); i++ ) {
+      final SubReportParameterReadHandler handler = inputParameters.get( i );
+      report.addInputParameter( handler.getMasterName(), handler.getDetailName() );
     }
 
-    for (int i = 0; i < outputParameters.size(); i++)
-    {
-      final SubReportParameterReadHandler handler = outputParameters.get(i);
-      report.addExportParameter(handler.getMasterName(), handler.getDetailName());
+    for ( int i = 0; i < outputParameters.size(); i++ ) {
+      final SubReportParameterReadHandler handler = outputParameters.get( i );
+      report.addExportParameter( handler.getMasterName(), handler.getDetailName() );
     }
   }
 }

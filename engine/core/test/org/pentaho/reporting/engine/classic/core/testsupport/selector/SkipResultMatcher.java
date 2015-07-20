@@ -19,17 +19,14 @@ package org.pentaho.reporting.engine.classic.core.testsupport.selector;
 
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderNode;
 
-public class SkipResultMatcher implements NodeMatcher
-{
+public class SkipResultMatcher implements NodeMatcher {
   private NodeMatcher matcher;
 
-  public SkipResultMatcher(final NodeMatcher matcher)
-  {
+  public SkipResultMatcher( final NodeMatcher matcher ) {
     this.matcher = matcher;
   }
 
-  public boolean matches(final RenderNode node)
-  {
-    return matcher.matches(node);
+  public boolean matches( final RenderNode node ) {
+    return matcher.matches( node );
   }
 }

@@ -17,25 +17,22 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.parser.ext;
 
-import java.awt.geom.Line2D;
-
 import junit.framework.TestCase;
 import org.pentaho.reporting.engine.classic.core.modules.parser.ext.factory.base.ObjectDescription;
 import org.pentaho.reporting.engine.classic.core.modules.parser.ext.factory.objects.DefaultClassFactory;
 
-public class ObjectFactoryTest extends TestCase
-{
-  public ObjectFactoryTest(final String s)
-  {
-    super(s);
+import java.awt.geom.Line2D;
+
+public class ObjectFactoryTest extends TestCase {
+  public ObjectFactoryTest( final String s ) {
+    super( s );
   }
 
-  public void testObjectQuery()
-  {
+  public void testObjectQuery() {
     final DefaultClassFactory fact = new DefaultClassFactory();
-    final ObjectDescription line2DDescr = fact.getDescriptionForClass(Line2D.class);
-    assertNotNull(line2DDescr);
-    final ObjectDescription od = fact.getSuperClassObjectDescription(Line2D.Float.class, null);
-    assertEquals(line2DDescr.getClass(), od.getClass());
+    final ObjectDescription line2DDescr = fact.getDescriptionForClass( Line2D.class );
+    assertNotNull( line2DDescr );
+    final ObjectDescription od = fact.getSuperClassObjectDescription( Line2D.Float.class, null );
+    assertEquals( line2DDescr.getClass(), od.getClass() );
   }
 }

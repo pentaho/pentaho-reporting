@@ -28,35 +28,27 @@ import org.pentaho.reporting.engine.classic.core.layout.model.RenderBox;
  *
  * @author Thomas Morgner
  */
-public final class ApplyAutoCommitStep extends IterateSimpleStructureProcessStep
-{
-  public ApplyAutoCommitStep()
-  {
+public final class ApplyAutoCommitStep extends IterateSimpleStructureProcessStep {
+  public ApplyAutoCommitStep() {
   }
 
-  public void compute(final BlockRenderBox pageBox)
-  {
-    startProcessing(pageBox);
+  public void compute( final BlockRenderBox pageBox ) {
+    startProcessing( pageBox );
   }
 
-  public void compute(final LogicalPageBox pageBox)
-  {
-    startProcessing(pageBox);
+  public void compute( final LogicalPageBox pageBox ) {
+    startProcessing( pageBox );
   }
 
-  protected boolean startBox(final RenderBox box)
-  {
-    if (box.isCommited())
-    {
+  protected boolean startBox( final RenderBox box ) {
+    if ( box.isCommited() ) {
       return false;
     }
 
-    if (box.isOpen())
-    {
+    if ( box.isOpen() ) {
       return true;
     }
-    if (box.getContentRefCount() != 0)
-    {
+    if ( box.getContentRefCount() != 0 ) {
       return true;
     }
 

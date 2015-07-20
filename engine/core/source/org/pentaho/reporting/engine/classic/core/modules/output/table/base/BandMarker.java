@@ -19,64 +19,54 @@ package org.pentaho.reporting.engine.classic.core.modules.output.table.base;
 
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderBox;
 
-public class BandMarker implements CellMarker
-{
+public class BandMarker implements CellMarker {
   private RenderBox bandBox;
   private SectionType sectionType;
   private int sectionDepth;
 
-  public BandMarker(final RenderBox bandBox,
+  public BandMarker( final RenderBox bandBox,
                      final SectionType sectionType,
-                     final int sectionDepth)
-  {
+                     final int sectionDepth ) {
     this.bandBox = bandBox;
     this.sectionType = sectionType;
     this.sectionDepth = sectionDepth;
   }
 
-  public RenderBox getBandBox()
-  {
+  public RenderBox getBandBox() {
     return bandBox;
   }
 
-  public long getContentOffset()
-  {
+  public long getContentOffset() {
     return 0;
   }
 
-  public boolean isFinished()
-  {
+  public boolean isFinished() {
     return true;
   }
 
-  public boolean isCommited()
-  {
+  public boolean isCommited() {
     return true;
   }
 
-  public RenderBox getContent()
-  {
+  public RenderBox getContent() {
     return null;
   }
 
-  public SectionType getSectionType()
-  {
+  public SectionType getSectionType() {
     return sectionType;
   }
 
-  public int getSectionDepth()
-  {
+  public int getSectionDepth() {
     return sectionDepth;
   }
 
-  public String toString()
-  {
+  public String toString() {
     final StringBuilder sb = new StringBuilder();
-    sb.append("BandMarker");
-    sb.append("{bandBox=").append(bandBox);
-    sb.append(", sectionType=").append(sectionType);
-    sb.append(", sectionDepth=").append(sectionDepth);
-    sb.append('}');
+    sb.append( "BandMarker" );
+    sb.append( "{bandBox=" ).append( bandBox );
+    sb.append( ", sectionType=" ).append( sectionType );
+    sb.append( ", sectionDepth=" ).append( sectionDepth );
+    sb.append( '}' );
     return sb.toString();
   }
 }

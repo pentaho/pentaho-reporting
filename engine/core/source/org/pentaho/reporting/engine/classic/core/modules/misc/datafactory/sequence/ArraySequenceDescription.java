@@ -17,12 +17,10 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.misc.datafactory.sequence;
 
-public class ArraySequenceDescription extends AbstractSequenceDescription
-{
-  public ArraySequenceDescription()
-  {
-    super("org.pentaho.reporting.engine.classic.core.modules.misc.datafactory.sequence.ArraySequenceBundle",
-        ArraySequence.class);
+public class ArraySequenceDescription extends AbstractSequenceDescription {
+  public ArraySequenceDescription() {
+    super( "org.pentaho.reporting.engine.classic.core.modules.misc.datafactory.sequence.ArraySequenceBundle",
+      ArraySequence.class );
   }
 
 

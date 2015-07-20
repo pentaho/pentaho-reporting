@@ -17,9 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.core.filter.templates;
 
-import java.text.DecimalFormat;
-
-import org.pentaho.reporting.engine.classic.core.Element;
 import org.pentaho.reporting.engine.classic.core.ReportElement;
 import org.pentaho.reporting.engine.classic.core.filter.DataRowDataSource;
 import org.pentaho.reporting.engine.classic.core.filter.DecimalFormatFilter;
@@ -28,14 +25,15 @@ import org.pentaho.reporting.engine.classic.core.filter.RawDataSource;
 import org.pentaho.reporting.engine.classic.core.filter.StringFilter;
 import org.pentaho.reporting.engine.classic.core.function.ExpressionRuntime;
 
+import java.text.DecimalFormat;
+
 /**
  * A number field template.
  *
  * @author Thomas Morgner
  */
 public class NumberFieldTemplate extends AbstractTemplate
-    implements RawDataSource
-{
+  implements RawDataSource {
   /**
    * A decimal format filter.
    */
@@ -54,13 +52,12 @@ public class NumberFieldTemplate extends AbstractTemplate
   /**
    * Creates a new number field template.
    */
-  public NumberFieldTemplate()
-  {
+  public NumberFieldTemplate() {
     dataRowDataSource = new DataRowDataSource();
     decimalFormatFilter = new DecimalFormatFilter();
-    decimalFormatFilter.setDataSource(dataRowDataSource);
+    decimalFormatFilter.setDataSource( dataRowDataSource );
     stringFilter = new StringFilter();
-    stringFilter.setDataSource(decimalFormatFilter);
+    stringFilter.setDataSource( decimalFormatFilter );
   }
 
   /**
@@ -68,8 +65,7 @@ public class NumberFieldTemplate extends AbstractTemplate
    *
    * @return The number formatter.
    */
-  public DecimalFormat getDecimalFormat()
-  {
+  public DecimalFormat getDecimalFormat() {
     return (DecimalFormat) decimalFormatFilter.getFormatter();
   }
 
@@ -78,9 +74,8 @@ public class NumberFieldTemplate extends AbstractTemplate
    *
    * @param decimalFormat the number formatter.
    */
-  public void setDecimalFormat(final DecimalFormat decimalFormat)
-  {
-    decimalFormatFilter.setFormatter(decimalFormat);
+  public void setDecimalFormat( final DecimalFormat decimalFormat ) {
+    decimalFormatFilter.setFormatter( decimalFormat );
   }
 
   /**
@@ -88,8 +83,7 @@ public class NumberFieldTemplate extends AbstractTemplate
    *
    * @return The format string.
    */
-  public String getFormat()
-  {
+  public String getFormat() {
     return decimalFormatFilter.getFormatString();
   }
 
@@ -98,9 +92,8 @@ public class NumberFieldTemplate extends AbstractTemplate
    *
    * @param format the format string.
    */
-  public void setFormat(final String format)
-  {
-    decimalFormatFilter.setFormatString(format);
+  public void setFormat( final String format ) {
+    decimalFormatFilter.setFormatString( format );
   }
 
   /**
@@ -108,8 +101,7 @@ public class NumberFieldTemplate extends AbstractTemplate
    *
    * @return The field name.
    */
-  public String getField()
-  {
+  public String getField() {
     return dataRowDataSource.getDataSourceColumnName();
   }
 
@@ -118,9 +110,8 @@ public class NumberFieldTemplate extends AbstractTemplate
    *
    * @param field the field name.
    */
-  public void setField(final String field)
-  {
-    dataRowDataSource.setDataSourceColumnName(field);
+  public void setField( final String field ) {
+    dataRowDataSource.setDataSourceColumnName( field );
   }
 
   /**
@@ -128,8 +119,7 @@ public class NumberFieldTemplate extends AbstractTemplate
    *
    * @return the formula.
    */
-  public String getFormula()
-  {
+  public String getFormula() {
     return dataRowDataSource.getFormula();
   }
 
@@ -138,9 +128,8 @@ public class NumberFieldTemplate extends AbstractTemplate
    *
    * @param formula the formula for the data source.
    */
-  public void setFormula(final String formula)
-  {
-    dataRowDataSource.setFormula(formula);
+  public void setFormula( final String formula ) {
+    dataRowDataSource.setFormula( formula );
   }
 
   /**
@@ -148,8 +137,7 @@ public class NumberFieldTemplate extends AbstractTemplate
    *
    * @return A string.
    */
-  public String getNullValue()
-  {
+  public String getNullValue() {
     return stringFilter.getNullValue();
   }
 
@@ -158,9 +146,8 @@ public class NumberFieldTemplate extends AbstractTemplate
    *
    * @param nullValue the string that represents a <code>null</code> value.
    */
-  public void setNullValue(final String nullValue)
-  {
-    stringFilter.setNullValue(nullValue);
+  public void setNullValue( final String nullValue ) {
+    stringFilter.setNullValue( nullValue );
   }
 
   /**
@@ -171,9 +158,8 @@ public class NumberFieldTemplate extends AbstractTemplate
    * @param element
    * @return the value.
    */
-  public Object getValue(final ExpressionRuntime runtime, final ReportElement element)
-  {
-    return stringFilter.getValue(runtime, element);
+  public Object getValue( final ExpressionRuntime runtime, final ReportElement element ) {
+    return stringFilter.getValue( runtime, element );
   }
 
   /**
@@ -183,8 +169,7 @@ public class NumberFieldTemplate extends AbstractTemplate
    * @throws CloneNotSupportedException this should never happen.
    */
   public NumberFieldTemplate clone()
-      throws CloneNotSupportedException
-  {
+    throws CloneNotSupportedException {
     final NumberFieldTemplate template = (NumberFieldTemplate) super.clone();
     template.stringFilter = stringFilter.clone();
     template.decimalFormatFilter = (DecimalFormatFilter) template.stringFilter.getDataSource();
@@ -197,20 +182,17 @@ public class NumberFieldTemplate extends AbstractTemplate
    *
    * @return the datarow data source.
    */
-  protected DataRowDataSource getDataRowDataSource()
-  {
+  protected DataRowDataSource getDataRowDataSource() {
     return dataRowDataSource;
   }
 
-  public Object getRawValue(final ExpressionRuntime runtime, final ReportElement element)
-  {
-    return decimalFormatFilter.getRawValue(runtime, element);
+  public Object getRawValue( final ExpressionRuntime runtime, final ReportElement element ) {
+    return decimalFormatFilter.getRawValue( runtime, element );
   }
 
-  public FormatSpecification getFormatString(final ExpressionRuntime runtime,
-                                             final ReportElement element,
-                                             final FormatSpecification formatSpecification)
-  {
-    return decimalFormatFilter.getFormatString(runtime, element, formatSpecification);
+  public FormatSpecification getFormatString( final ExpressionRuntime runtime,
+                                              final ReportElement element,
+                                              final FormatSpecification formatSpecification ) {
+    return decimalFormatFilter.getFormatString( runtime, element, formatSpecification );
   }
 }

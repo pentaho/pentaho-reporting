@@ -17,10 +17,10 @@
 
 package org.pentaho.reporting.engine.classic.core.filter.templates;
 
-import java.awt.geom.Ellipse2D;
-
 import org.pentaho.reporting.engine.classic.core.ReportElement;
 import org.pentaho.reporting.engine.classic.core.function.ExpressionRuntime;
+
+import java.awt.geom.Ellipse2D;
 
 /**
  * A template to create rectangle elements. The rectangle always has the width and the height of 100 points.
@@ -30,13 +30,11 @@ import org.pentaho.reporting.engine.classic.core.function.ExpressionRuntime;
  *
  * @author Thomas Morgner
  */
-public class EllipseTemplate extends AbstractTemplate
-{
+public class EllipseTemplate extends AbstractTemplate {
   /**
    * Default Constructor.
    */
-  public EllipseTemplate()
-  {
+  public EllipseTemplate() {
   }
 
   /**
@@ -47,8 +45,7 @@ public class EllipseTemplate extends AbstractTemplate
    * @param element
    * @return a rectangle with a width and height of 100.
    */
-  public Object getValue(final ExpressionRuntime runtime, final ReportElement element)
-  {
-    return new Ellipse2D.Float(0, 0, 100, 100);
+  public Object getValue( final ExpressionRuntime runtime, final ReportElement element ) {
+    return new Ellipse2D.Float( 0, 0, 100, 100 );
   }
 }

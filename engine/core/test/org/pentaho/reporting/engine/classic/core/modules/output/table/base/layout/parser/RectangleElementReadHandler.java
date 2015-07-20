@@ -30,28 +30,24 @@ import org.xml.sax.SAXException;
  *
  * @author Thomas Morgner
  */
-public class RectangleElementReadHandler extends AbstractElementReadHandler
-{
+public class RectangleElementReadHandler extends AbstractElementReadHandler {
   private RectangleElementFactory factory;
 
-  public RectangleElementReadHandler()
-  {
+  public RectangleElementReadHandler() {
     factory = new RectangleElementFactory();
   }
 
-  protected ElementFactory getElementFactory()
-  {
+  protected ElementFactory getElementFactory() {
     return factory;
   }
 
-  protected void startParsing(final PropertyAttributes atts) throws SAXException
-  {
-    super.startParsing(atts);
-    factory.setName(atts.getValue(getUri(), "name"));
-    factory.setScale(Boolean.TRUE);
-    factory.setKeepAspectRatio(Boolean.FALSE);
-    factory.setShouldFill(ParserUtil.parseBoolean(atts.getValue(getUri(), "fill"), getLocator()));
-    factory.setShouldDraw(ParserUtil.parseBoolean(atts.getValue(getUri(), "draw"), getLocator()));
-    factory.setStroke(ReportParserUtil.parseStroke(atts.getValue(getUri(), "stroke"), 1));
+  protected void startParsing( final PropertyAttributes atts ) throws SAXException {
+    super.startParsing( atts );
+    factory.setName( atts.getValue( getUri(), "name" ) );
+    factory.setScale( Boolean.TRUE );
+    factory.setKeepAspectRatio( Boolean.FALSE );
+    factory.setShouldFill( ParserUtil.parseBoolean( atts.getValue( getUri(), "fill" ), getLocator() ) );
+    factory.setShouldDraw( ParserUtil.parseBoolean( atts.getValue( getUri(), "draw" ), getLocator() ) );
+    factory.setStroke( ReportParserUtil.parseStroke( atts.getValue( getUri(), "stroke" ), 1 ) );
   }
 }

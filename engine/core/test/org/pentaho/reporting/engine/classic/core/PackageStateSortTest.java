@@ -17,8 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.core;
 
-import java.util.ArrayList;
-
 import junit.framework.TestCase;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -28,51 +26,45 @@ import org.pentaho.reporting.libraries.base.boot.Module;
 import org.pentaho.reporting.libraries.base.boot.PackageSorter;
 import org.pentaho.reporting.libraries.base.boot.PackageState;
 
-public class PackageStateSortTest extends TestCase
-{
-  private static final Log logger = LogFactory.getLog(PackageStateSortTest.class);
+import java.util.ArrayList;
 
-  public PackageStateSortTest(final String s)
-  {
-    super(s);
+public class PackageStateSortTest extends TestCase {
+  private static final Log logger = LogFactory.getLog( PackageStateSortTest.class );
+
+  public PackageStateSortTest( final String s ) {
+    super( s );
   }
 
-  protected void setUp() throws Exception
-  {
+  protected void setUp() throws Exception {
     ClassicEngineBoot.getInstance().start();
   }
 
-  public void testAll() throws Exception
-  {
+  public void testAll() throws Exception {
     final ArrayList states = new ArrayList();
     final Module[] mods = ClassicEngineBoot.getInstance().getPackageManager().getAllModules();
     int swingPreviewPos = 0;
     int fileConfigPos = 0;
 
-    for (int i = 0; i < mods.length; i++)
-    {
-      states.add(new PackageState(mods[i]));
+    for ( int i = 0; i < mods.length; i++ ) {
+      states.add( new PackageState( mods[ i ] ) );
     }
 
-    PackageSorter.sort(states);
+    PackageSorter.sort( states );
 
-    for (int i = 0; i < states.size(); i++)
-    {
-      final PackageState state = (PackageState) states.get(i);
+    for ( int i = 0; i < states.size(); i++ ) {
+      final PackageState state = (PackageState) states.get( i );
 
-      if (state.getModule().getClass().equals(SwingPreviewModule.class))
-      {
-        logger.debug("SwingPreviewModule: " + i);
+      if ( state.getModule().getClass().equals( SwingPreviewModule.class ) ) {
+        logger.debug( "SwingPreviewModule: " + i );
         swingPreviewPos = i;
       }
-      if (state.getModule().getClass().equals(FileConfigStoreModule.class))
-      {
-        logger.debug("File: " + i);
+      if ( state.getModule().getClass().equals( FileConfigStoreModule.class ) ) {
+        logger.debug( "File: " + i );
         fileConfigPos = i;
       }
     }
 
-    assertTrue(fileConfigPos < swingPreviewPos);
+    assertTrue( fileConfigPos < swingPreviewPos );
   }
 
 }

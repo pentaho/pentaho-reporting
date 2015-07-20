@@ -30,40 +30,35 @@ import org.pentaho.reporting.engine.classic.core.util.InstanceID;
  *
  * @author Thomas Morgner
  */
-public final class BreakMarkerRenderBox extends BlockRenderBox
-{
+public final class BreakMarkerRenderBox extends BlockRenderBox {
   private long validityRange;
 
-  public BreakMarkerRenderBox(final StyleSheet styleSheet,
-                              final InstanceID instanceID,
-                              final BoxDefinition boxDefinition,
-                              final ElementType elementType,
-                              final ReportAttributeMap attributeMap,
-                              final ReportStateKey stateKey,
-                              final long validityRange)
-  {
-    super(styleSheet, instanceID, boxDefinition, elementType, attributeMap, stateKey);
+  public BreakMarkerRenderBox( final StyleSheet styleSheet,
+                               final InstanceID instanceID,
+                               final BoxDefinition boxDefinition,
+                               final ElementType elementType,
+                               final ReportAttributeMap attributeMap,
+                               final ReportStateKey stateKey,
+                               final long validityRange ) {
+    super( styleSheet, instanceID, boxDefinition, elementType, attributeMap, stateKey );
     this.validityRange = validityRange;
   }
 
   /**
-   * The page-offset of the page where this break-marker is valid. Note that the page-offset denotes the
-   * start of the page, not the end.
+   * The page-offset of the page where this break-marker is valid. Note that the page-offset denotes the start of the
+   * page, not the end.
    *
    * @return the validity of this break marker.
    */
-  public long getValidityRange()
-  {
+  public long getValidityRange() {
     return validityRange;
   }
 
-  public boolean isIgnorableForRendering()
-  {
+  public boolean isIgnorableForRendering() {
     return false;
   }
 
-  public int getNodeType()
-  {
+  public int getNodeType() {
     return LayoutNodeTypes.TYPE_BOX_BREAKMARK;
   }
 

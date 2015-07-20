@@ -20,8 +20,7 @@ package org.pentaho.reporting.engine.classic.core.layout.process.util;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderBox;
 import org.pentaho.reporting.engine.classic.core.util.InstanceID;
 
-public class BlockLevelPaginationShiftState implements PaginationShiftState
-{
+public class BlockLevelPaginationShiftState implements PaginationShiftState {
   private PaginationShiftState parent;
   private long shift;
   private long initialShift;
@@ -29,16 +28,13 @@ public class BlockLevelPaginationShiftState implements PaginationShiftState
   private StackedObjectPool<BlockLevelPaginationShiftState> pool;
   private RenderBox box;
 
-  public BlockLevelPaginationShiftState()
-  {
+  public BlockLevelPaginationShiftState() {
   }
 
-  public void reuse(final StackedObjectPool<BlockLevelPaginationShiftState> pool,
-                    final PaginationShiftState parent,
-                    final RenderBox box)
-  {
-    if (parent == null)
-    {
+  public void reuse( final StackedObjectPool<BlockLevelPaginationShiftState> pool,
+                     final PaginationShiftState parent,
+                     final RenderBox box ) {
+    if ( parent == null ) {
       throw new NullPointerException();
     }
     this.pool = pool;
@@ -49,76 +45,62 @@ public class BlockLevelPaginationShiftState implements PaginationShiftState
     this.box = box;
   }
 
-  public void suspendManualBreaks()
-  {
+  public void suspendManualBreaks() {
     breakSuspended = true;
   }
 
-  public boolean isManualBreakSuspended()
-  {
+  public boolean isManualBreakSuspended() {
     return parent.isManualBreakSuspendedForChilds();
   }
 
-  public boolean isManualBreakSuspendedForChilds()
-  {
+  public boolean isManualBreakSuspendedForChilds() {
     return breakSuspended;
   }
 
-  public void updateShiftFromChild(final long absoluteValue)
-  {
-    setShift(absoluteValue);
+  public void updateShiftFromChild( final long absoluteValue ) {
+    setShift( absoluteValue );
   }
 
-  public void increaseShift(final long value)
-  {
-    if (value < 0)
-    {
+  public void increaseShift( final long value ) {
+    if ( value < 0 ) {
       throw new IllegalStateException();
     }
     this.shift += value;
   }
 
-  public long getShiftForNextChild()
-  {
+  public long getShiftForNextChild() {
     return shift;
   }
 
-  public void setShift(final long value)
-  {
-    if (value < shift)
-    {
-      throw new IllegalStateException("Cannot shift backwards");
+  public void setShift( final long value ) {
+    if ( value < shift ) {
+      throw new IllegalStateException( "Cannot shift backwards" );
     }
 
     this.shift = value;
   }
 
-  public PaginationShiftState pop(InstanceID id)
-  {
-    if (box != null && id != box.getInstanceId())
-    {
+  public PaginationShiftState pop( InstanceID id ) {
+    if ( box != null && id != box.getInstanceId() ) {
       throw new IllegalStateException();
     }
 
     long effectiveShift = this.shift;
-    if (box != null) {
+    if ( box != null ) {
 
-      if (box.getParent() != null)
-      {
+      if ( box.getParent() != null ) {
         final long shiftRaw = shift - initialShift;
-        effectiveShift = box.getParent().extendHeight(box, shiftRaw) + initialShift;
-        if (effectiveShift != initialShift)
-        {
+        effectiveShift = box.getParent().extendHeight( box, shiftRaw ) + initialShift;
+        if ( effectiveShift != initialShift ) {
           box.getParent().markApplyStateDirty();
         }
       }
     }
 
-    parent.updateShiftFromChild(effectiveShift);
+    parent.updateShiftFromChild( effectiveShift );
 
-    if (this.pool != null)
-    {
-      this.pool.free(this);
+    if ( this.pool != null ) {
+      this.pool.free( this );
       this.pool = null;
     }
 

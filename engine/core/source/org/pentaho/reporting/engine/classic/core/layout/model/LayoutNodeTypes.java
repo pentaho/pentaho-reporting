@@ -28,10 +28,8 @@ package org.pentaho.reporting.engine.classic.core.layout.model;
  *
  * @author Thomas Morgner
  */
-public final class LayoutNodeTypes
-{
-  private LayoutNodeTypes()
-  {
+public final class LayoutNodeTypes {
+  private LayoutNodeTypes() {
   }
 
   // Bit 0: 1 = Not a box
@@ -56,28 +54,28 @@ public final class LayoutNodeTypes
 
   public static final int MASK_BASIC_BOX_TYPE = 0xFF0FE;
 
-  public static final int TYPE_BOX_BLOCK              = 0x0012;
-  public static final int TYPE_BOX_PARAGRAPH          = 0x0112;
-  public static final int TYPE_BOX_BREAKMARK          = 0x0212;
-  public static final int TYPE_BOX_LOGICALPAGE        = 0x0412;
+  public static final int TYPE_BOX_BLOCK = 0x0012;
+  public static final int TYPE_BOX_PARAGRAPH = 0x0112;
+  public static final int TYPE_BOX_BREAKMARK = 0x0212;
+  public static final int TYPE_BOX_LOGICALPAGE = 0x0412;
   public static final int TYPE_BOX_PROGRESS_MARKER = 0x1000012;
-  public static final int TYPE_BOX_PAGEAREA          = 0x10812;
-  public static final int TYPE_BOX_WATERMARK         = 0x20812;
-  public static final int TYPE_BOX_SECTION           = 0x11012;
+  public static final int TYPE_BOX_PAGEAREA = 0x10812;
+  public static final int TYPE_BOX_WATERMARK = 0x20812;
+  public static final int TYPE_BOX_SECTION = 0x11012;
 
-  public static final int TYPE_BOX_CANVAS             = 0x0022;
-  public static final int TYPE_BOX_INLINE             = 0x0042;
-  public static final int TYPE_BOX_LINEBOX            = 0x0142;
-  
-  public static final int TYPE_BOX_ROWBOX             = 0x0082;
-  public static final int TYPE_BOX_CONTENT            = 0x0102;
+  public static final int TYPE_BOX_CANVAS = 0x0022;
+  public static final int TYPE_BOX_INLINE = 0x0042;
+  public static final int TYPE_BOX_LINEBOX = 0x0142;
 
-  public static final int TYPE_BOX_TABLE             = 0x41002;
-  public static final int TYPE_BOX_TABLE_SECTION     = 0x42002;
-  public static final int TYPE_BOX_TABLE_ROW         = 0x44002;
-  public static final int TYPE_BOX_TABLE_CELL        = 0x48002;
-  public static final int TYPE_BOX_TABLE_COL_GROUP   = 0x50002;
-  public static final int TYPE_BOX_TABLE_COL         = 0x60002;
+  public static final int TYPE_BOX_ROWBOX = 0x0082;
+  public static final int TYPE_BOX_CONTENT = 0x0102;
+
+  public static final int TYPE_BOX_TABLE = 0x41002;
+  public static final int TYPE_BOX_TABLE_SECTION = 0x42002;
+  public static final int TYPE_BOX_TABLE_ROW = 0x44002;
+  public static final int TYPE_BOX_TABLE_CELL = 0x48002;
+  public static final int TYPE_BOX_TABLE_COL_GROUP = 0x50002;
+  public static final int TYPE_BOX_TABLE_COL = 0x60002;
 
 
   public static final int TYPE_BOX_INLINE_PROGRESS_MARKER = 0x1000042;

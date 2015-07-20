@@ -19,7 +19,6 @@ package org.pentaho.reporting.engine.classic.core.modules.parser.data.staticdata
 
 import org.pentaho.reporting.engine.classic.core.modules.parser.base.DataFactoryReadHandlerFactory;
 import org.pentaho.reporting.engine.classic.core.modules.parser.base.DataFactoryXmlResourceFactory;
-import org.pentaho.reporting.engine.classic.core.modules.parser.data.compounddata.CompoundDataFactoryResourceXmlFactoryModule;
 import org.pentaho.reporting.libraries.base.boot.AbstractModule;
 import org.pentaho.reporting.libraries.base.boot.ModuleInitializeException;
 import org.pentaho.reporting.libraries.base.boot.SubSystem;
@@ -29,14 +28,13 @@ import org.pentaho.reporting.libraries.base.boot.SubSystem;
  *
  * @author Thomas Morgner
  */
-public class StaticDataFactoryModule extends AbstractModule
-{
+public class StaticDataFactoryModule extends AbstractModule {
   public static final String NAMESPACE =
-      "http://jfreereport.sourceforge.net/namespaces/datasources/static";
-  public static final String TAG_DEF_PREFIX = "org.pentaho.reporting.engine.classic.core.modules.parser.data.staticdata.tag-def.";
+    "http://jfreereport.sourceforge.net/namespaces/datasources/static";
+  public static final String TAG_DEF_PREFIX =
+    "org.pentaho.reporting.engine.classic.core.modules.parser.data.staticdata.tag-def.";
 
-  public StaticDataFactoryModule() throws ModuleInitializeException
-  {
+  public StaticDataFactoryModule() throws ModuleInitializeException {
     loadModuleInfo();
   }
 
@@ -48,13 +46,14 @@ public class StaticDataFactoryModule extends AbstractModule
    * @param subSystem the subSystem.
    * @throws ModuleInitializeException if an error ocurred while initializing the module.
    */
-  public void initialize(final SubSystem subSystem) throws ModuleInitializeException
-  {
-    DataFactoryXmlResourceFactory.register(DirectStaticDataResourceXmlFactoryModule.class);
-    DataFactoryXmlResourceFactory.register(StaticDataResourceXmlFactoryModule.class);
+  public void initialize( final SubSystem subSystem ) throws ModuleInitializeException {
+    DataFactoryXmlResourceFactory.register( DirectStaticDataResourceXmlFactoryModule.class );
+    DataFactoryXmlResourceFactory.register( StaticDataResourceXmlFactoryModule.class );
 
-    DataFactoryReadHandlerFactory.getInstance().setElementHandler(NAMESPACE, "static-datasource", StaticDataSourceReadHandler.class);
-    DataFactoryReadHandlerFactory.getInstance().setElementHandler(NAMESPACE, "direct-static-datasource", DirectStaticDataSourceReadHandler.class);
+    DataFactoryReadHandlerFactory.getInstance()
+      .setElementHandler( NAMESPACE, "static-datasource", StaticDataSourceReadHandler.class );
+    DataFactoryReadHandlerFactory.getInstance()
+      .setElementHandler( NAMESPACE, "direct-static-datasource", DirectStaticDataSourceReadHandler.class );
 
   }
 }

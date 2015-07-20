@@ -17,10 +17,9 @@
 
 package org.pentaho.reporting.engine.classic.core.function;
 
-public interface FieldAggregationFunction extends AggregationFunction
-{
+public interface FieldAggregationFunction extends AggregationFunction {
   public String getField();
 
-  public void setField(final String field);
+  public void setField( final String field );
 
 }

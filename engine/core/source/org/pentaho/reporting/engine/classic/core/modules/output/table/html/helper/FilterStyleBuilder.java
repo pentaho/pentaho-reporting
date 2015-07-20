@@ -17,131 +17,106 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.output.table.html.helper;
 
-import java.io.IOException;
-import java.io.Writer;
-import java.text.NumberFormat;
-
 import org.pentaho.reporting.engine.classic.core.layout.model.BorderCorner;
 import org.pentaho.reporting.engine.classic.core.layout.model.BorderEdge;
 import org.pentaho.reporting.engine.classic.core.modules.output.table.html.util.HtmlEncoderUtil;
 import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
 
-public class FilterStyleBuilder implements StyleBuilder
-{
+import java.io.IOException;
+import java.io.Writer;
+import java.text.NumberFormat;
+
+public class FilterStyleBuilder implements StyleBuilder {
   private StyleBuilder builder;
   private StyleCarrier[] parentStyle;
 
-  public FilterStyleBuilder(final StyleBuilder builder,
-                            final StyleCarrier[] parentStyle)
-  {
+  public FilterStyleBuilder( final StyleBuilder builder,
+                             final StyleCarrier[] parentStyle ) {
     this.builder = builder;
     this.parentStyle = parentStyle;
   }
 
-  public void clear()
-  {
+  public void clear() {
     builder.clear();
   }
 
-  private boolean isFiltered(final CSSKeys key, final StyleCarrier value)
-  {
-    if (parentStyle == null)
-    {
+  private boolean isFiltered( final CSSKeys key, final StyleCarrier value ) {
+    if ( parentStyle == null ) {
       return false;
     }
-    if (key.isInherit() == false)
-    {
+    if ( key.isInherit() == false ) {
       return false;
     }
-    if (ObjectUtilities.equal(parentStyle[key.ordinal()], value))
-    {
+    if ( ObjectUtilities.equal( parentStyle[ key.ordinal() ], value ) ) {
       return true;
     }
     return false;
   }
 
-  public void append(final CSSKeys key, final String value)
-  {
-    if (isFiltered(key, new StyleCarrier(key, HtmlEncoderUtil.encodeCSS(value), null)))
-    {
+  public void append( final CSSKeys key, final String value ) {
+    if ( isFiltered( key, new StyleCarrier( key, HtmlEncoderUtil.encodeCSS( value ), null ) ) ) {
       return;
     }
-    builder.append(key, value);
+    builder.append( key, value );
   }
 
-  public void appendRaw(final CSSKeys key, final String value)
-  {
-    if (isFiltered(key, new StyleCarrier(key, value, null)))
-    {
+  public void appendRaw( final CSSKeys key, final String value ) {
+    if ( isFiltered( key, new StyleCarrier( key, value, null ) ) ) {
       return;
     }
-    builder.appendRaw(key, value);
+    builder.appendRaw( key, value );
   }
 
-  public void append(final CSSKeys key, final String value, final String unit)
-  {
-    if (isFiltered(key, new StyleCarrier(key, HtmlEncoderUtil.encodeCSS(value), unit)))
-    {
+  public void append( final CSSKeys key, final String value, final String unit ) {
+    if ( isFiltered( key, new StyleCarrier( key, HtmlEncoderUtil.encodeCSS( value ), unit ) ) ) {
       return;
     }
-    builder.append(key, value, unit);
+    builder.append( key, value, unit );
   }
 
-  public void append(final CSSKeys key, final String value, final boolean replace)
-  {
-    if (isFiltered(key, new StyleCarrier(key, HtmlEncoderUtil.encodeCSS(value), null)))
-    {
+  public void append( final CSSKeys key, final String value, final boolean replace ) {
+    if ( isFiltered( key, new StyleCarrier( key, HtmlEncoderUtil.encodeCSS( value ), null ) ) ) {
       return;
     }
-    builder.append(key, value, replace);
+    builder.append( key, value, replace );
   }
 
-  public void append(final CSSKeys key, final String value, final String unit, final boolean replace)
-  {
-    if (isFiltered(key, new StyleCarrier(key, HtmlEncoderUtil.encodeCSS(value), unit)))
-    {
+  public void append( final CSSKeys key, final String value, final String unit, final boolean replace ) {
+    if ( isFiltered( key, new StyleCarrier( key, HtmlEncoderUtil.encodeCSS( value ), unit ) ) ) {
       return;
     }
-    builder.append(key, value, unit, replace);
+    builder.append( key, value, unit, replace );
   }
 
-  public String toString()
-  {
+  public String toString() {
     return builder.toString();
   }
 
-  public String toString(final boolean compact)
-  {
-    return builder.toString(compact);
+  public String toString( final boolean compact ) {
+    return builder.toString( compact );
   }
 
-  public void print(final Writer writer, final boolean compact) throws IOException
-  {
-    builder.print(writer, compact);
+  public void print( final Writer writer, final boolean compact ) throws IOException {
+    builder.print( writer, compact );
   }
 
-  public String printEdgeAsCSS(final BorderEdge edge)
-  {
-    return builder.printEdgeAsCSS(edge);
+  public String printEdgeAsCSS( final BorderEdge edge ) {
+    return builder.printEdgeAsCSS( edge );
   }
 
-  public String printCornerAsCSS(final BorderCorner edge)
-  {
-    return builder.printCornerAsCSS(edge);
+  public String printCornerAsCSS( final BorderCorner edge ) {
+    return builder.printCornerAsCSS( edge );
   }
 
-  public NumberFormat getPointConverter()
-  {
+  public NumberFormat getPointConverter() {
     return builder.getPointConverter();
   }
 
-  public StyleCarrier[] toArray()
-  {
+  public StyleCarrier[] toArray() {
     return builder.toArray();
   }
 
-  public boolean isEmpty()
-  {
+  public boolean isEmpty() {
     return builder.isEmpty();
   }
 }

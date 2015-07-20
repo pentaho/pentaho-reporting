@@ -24,6 +24,5 @@ package org.pentaho.reporting.engine.classic.core.function;
  *
  * @author Thomas Morgner
  */
-public interface LayoutProcessorFunction extends Function
-{
+public interface LayoutProcessorFunction extends Function {
 }

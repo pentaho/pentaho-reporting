@@ -17,27 +17,25 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.output.table.rtf;
 
+import org.pentaho.reporting.engine.classic.core.MasterReport;
+import org.pentaho.reporting.engine.classic.core.ReportProcessingException;
+import org.pentaho.reporting.engine.classic.core.modules.output.table.base.StreamReportProcessor;
+
 import java.io.BufferedOutputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-
-import org.pentaho.reporting.engine.classic.core.MasterReport;
-import org.pentaho.reporting.engine.classic.core.ReportProcessingException;
-import org.pentaho.reporting.engine.classic.core.modules.output.table.base.StreamReportProcessor;
 
 /**
  * Utility class to provide an easy to use default implementation of RTF exports.
  *
  * @author Thomas Morgner
  */
-public final class RTFReportUtil
-{
+public final class RTFReportUtil {
   /**
    * Default Constructor.
    */
-  private RTFReportUtil()
-  {
+  private RTFReportUtil() {
   }
 
   /**
@@ -48,58 +46,45 @@ public final class RTFReportUtil
    * @throws ReportProcessingException if the report processing failed.
    * @throws IOException               if there was an IOerror while processing the report.
    */
-  public static void createRTF(final MasterReport report, final String filename)
-      throws IOException, ReportProcessingException
-  {
-    if (report == null)
-    {
+  public static void createRTF( final MasterReport report, final String filename )
+    throws IOException, ReportProcessingException {
+    if ( report == null ) {
       throw new NullPointerException();
     }
-    if (filename == null)
-    {
+    if ( filename == null ) {
       throw new NullPointerException();
     }
 
 
-    OutputStream fout = new BufferedOutputStream(new FileOutputStream(filename));
-    try
-    {
-      createRTF(report, fout);
+    OutputStream fout = new BufferedOutputStream( new FileOutputStream( filename ) );
+    try {
+      createRTF( report, fout );
       fout.close();
       fout = null;
-    }
-    finally
-    {
-      if (fout != null)
-      {
-        try
-        {
+    } finally {
+      if ( fout != null ) {
+        try {
           fout.close();
-        }
-        catch (Exception e)
-        {
+        } catch ( Exception e ) {
           // ignore
         }
       }
     }
   }
 
-  public static void createRTF(final MasterReport report, final OutputStream outputStream)
-      throws ReportProcessingException
-  {
-    if (report == null)
-    {
+  public static void createRTF( final MasterReport report, final OutputStream outputStream )
+    throws ReportProcessingException {
+    if ( report == null ) {
       throw new NullPointerException();
     }
-    if (outputStream == null)
-    {
+    if ( outputStream == null ) {
       throw new NullPointerException();
     }
 
 
     final StreamRTFOutputProcessor target =
-        new StreamRTFOutputProcessor(report.getConfiguration(), outputStream, report.getResourceManager());
-    final StreamReportProcessor proc = new StreamReportProcessor(report, target);
+      new StreamRTFOutputProcessor( report.getConfiguration(), outputStream, report.getResourceManager() );
+    final StreamReportProcessor proc = new StreamReportProcessor( report, target );
     proc.processReport();
     proc.close();
   }

@@ -32,14 +32,12 @@ import org.xml.sax.SAXException;
  * @author Thomas Morgner
  */
 public class SQLDirectDataSourceReadHandler extends AbstractXmlReadHandler
-    implements DataFactoryReadHandler
-{
+  implements DataFactoryReadHandler {
   private ConnectionReadHandler connectionProviderReadHandler;
   private ConfigReadHandler configReadHandler;
   private DataFactory dataFactory;
 
-  public SQLDirectDataSourceReadHandler()
-  {
+  public SQLDirectDataSourceReadHandler() {
   }
 
   /**
@@ -50,26 +48,22 @@ public class SQLDirectDataSourceReadHandler extends AbstractXmlReadHandler
    * @return the handler or null, if the tagname is invalid.
    * @throws SAXException if there is a parsing error.
    */
-  protected XmlReadHandler getHandlerForChild(final String uri,
-                                              final String tagName,
-                                              final Attributes atts)
-      throws SAXException
-  {
+  protected XmlReadHandler getHandlerForChild( final String uri,
+                                               final String tagName,
+                                               final Attributes atts )
+    throws SAXException {
     final ConnectionReadHandlerFactory factory = ConnectionReadHandlerFactory.getInstance();
-    final ConnectionReadHandler handler = (ConnectionReadHandler) factory.getHandler(uri, tagName);
-    if (handler != null)
-    {
+    final ConnectionReadHandler handler = (ConnectionReadHandler) factory.getHandler( uri, tagName );
+    if ( handler != null ) {
       connectionProviderReadHandler = handler;
       return connectionProviderReadHandler;
     }
 
-    if (isSameNamespace(uri) == false)
-    {
+    if ( isSameNamespace( uri ) == false ) {
       return null;
     }
 
-    if ("config".equals(tagName))
-    {
+    if ( "config".equals( tagName ) ) {
       configReadHandler = new ConfigReadHandler();
       return configReadHandler;
     }
@@ -81,25 +75,21 @@ public class SQLDirectDataSourceReadHandler extends AbstractXmlReadHandler
    *
    * @throws SAXException if there is a parsing error.
    */
-  protected void doneParsing() throws SAXException
-  {
+  protected void doneParsing() throws SAXException {
     ConnectionProvider provider = null;
-    if (connectionProviderReadHandler != null)
-    {
+    if ( connectionProviderReadHandler != null ) {
       provider = (ConnectionProvider) connectionProviderReadHandler.getObject();
     }
-    if (provider == null)
-    {
+    if ( provider == null ) {
       provider = (ConnectionProvider)
-          getRootHandler().getHelperObject("connection-provider");
+        getRootHandler().getHelperObject( "connection-provider" );
     }
-    if (provider == null)
-    {
+    if ( provider == null ) {
       throw new SAXException(
-          "Unable to create SQL Factory: No connection provider specified or recognized.");
+        "Unable to create SQL Factory: No connection provider specified or recognized." );
     }
 
-    final SimpleSQLReportDataFactory srdf = new SimpleSQLReportDataFactory(provider);
+    final SimpleSQLReportDataFactory srdf = new SimpleSQLReportDataFactory( provider );
     dataFactory = srdf;
   }
 
@@ -109,13 +99,11 @@ public class SQLDirectDataSourceReadHandler extends AbstractXmlReadHandler
    * @return the object.
    * @throws SAXException if there is a parsing error.
    */
-  public Object getObject() throws SAXException
-  {
+  public Object getObject() throws SAXException {
     return dataFactory;
   }
 
-  public DataFactory getDataFactory()
-  {
+  public DataFactory getDataFactory() {
     return dataFactory;
   }
 }

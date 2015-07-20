@@ -17,14 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.gui.base;
 
-import java.awt.BorderLayout;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-import javax.swing.JComponent;
-import javax.swing.JMenu;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
@@ -32,18 +24,22 @@ import org.pentaho.reporting.engine.classic.core.ReportProcessingException;
 import org.pentaho.reporting.engine.classic.core.parameters.ReportParameterDefinition;
 import org.pentaho.reporting.engine.classic.core.util.ReportParameterValues;
 
+import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+import java.awt.*;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+
 /**
  * The default controller for all reports (unless redefined by the user). This controller is responsible for providing a
  * parameter-UI for the reports.
  *
  * @author Thomas Morgner
  */
-public class ParameterReportController implements ReportController
-{
-  private class ParameterUpdateHandler implements ChangeListener
-  {
-    private ParameterUpdateHandler()
-    {
+public class ParameterReportController implements ReportController {
+  private class ParameterUpdateHandler implements ChangeListener {
+    private ParameterUpdateHandler() {
     }
 
     /**
@@ -51,30 +47,25 @@ public class ParameterReportController implements ReportController
      *
      * @param e a ChangeEvent object
      */
-    public void stateChanged(final ChangeEvent e)
-    {
+    public void stateChanged( final ChangeEvent e ) {
       final PreviewPane previewPane = getPreviewPane();
-      if (previewPane == null)
-      {
+      if ( previewPane == null ) {
         return;
       }
       final ReportParameterValues properties = getControllerPane().getReportParameterValues();
       final MasterReport masterReport = previewPane.getReportJob();
       final ReportParameterValues reportParameters = masterReport.getParameterValues();
       final String[] strings = properties.getColumnNames();
-      for (int i = 0; i < strings.length; i++)
-      {
-        final String propertyName = strings[i];
-        reportParameters.put(propertyName, properties.get(propertyName));
+      for ( int i = 0; i < strings.length; i++ ) {
+        final String propertyName = strings[ i ];
+        reportParameters.put( propertyName, properties.get( propertyName ) );
       }
-      previewPane.setReportJob(masterReport);
+      previewPane.setReportJob( masterReport );
     }
   }
 
-  private class ReportUpdateHandler implements PropertyChangeListener
-  {
-    private ReportUpdateHandler()
-    {
+  private class ReportUpdateHandler implements PropertyChangeListener {
+    private ReportUpdateHandler() {
     }
 
     /**
@@ -83,44 +74,37 @@ public class ParameterReportController implements ReportController
      * @param evt A PropertyChangeEvent object describing the event source and the property that has changed.
      */
 
-    public void propertyChange(final PropertyChangeEvent evt)
-    {
+    public void propertyChange( final PropertyChangeEvent evt ) {
       final MasterReport report = getPreviewPane().getReportJob();
       final ParameterReportControllerPane reportControllerPane = getControllerPane();
-      try
-      {
-        reportControllerPane.setReport(report);
-      }
-      catch (ReportProcessingException e)
-      {
+      try {
+        reportControllerPane.setReport( report );
+      } catch ( ReportProcessingException e ) {
         // Cannot recover from that
-        reportControllerPane.setErrorMessage(e.getMessage());
-        logger.debug("Failed", e); // NON-NLS
+        reportControllerPane.setErrorMessage( e.getMessage() );
+        logger.debug( "Failed", e ); // NON-NLS
       }
     }
   }
 
-  private static final Log logger = LogFactory.getLog(ParameterReportController.class);
+  private static final Log logger = LogFactory.getLog( ParameterReportController.class );
   private ParameterReportControllerPane controllerPane;
   private PreviewPane previewPane;
   private ParameterReportController.ReportUpdateHandler reportUpdateHandler;
-  private static final JMenu[] EMPTY_MENUS = new JMenu[0];
+  private static final JMenu[] EMPTY_MENUS = new JMenu[ 0 ];
 
-  public ParameterReportController()
-  {
+  public ParameterReportController() {
     reportUpdateHandler = new ReportUpdateHandler();
 
     controllerPane = new ParameterReportControllerPane();
-    controllerPane.addChangeListener(new ParameterUpdateHandler());
+    controllerPane.addChangeListener( new ParameterUpdateHandler() );
   }
 
-  protected PreviewPane getPreviewPane()
-  {
+  protected PreviewPane getPreviewPane() {
     return previewPane;
   }
 
-  protected ParameterReportControllerPane getControllerPane()
-  {
+  protected ParameterReportControllerPane getControllerPane() {
     return controllerPane;
   }
 
@@ -133,20 +117,16 @@ public class ParameterReportController implements ReportController
    *
    * @return the controler component.
    */
-  public JComponent getControlPanel()
-  {
+  public JComponent getControlPanel() {
     final MasterReport report = controllerPane.getReport();
-    if (report == null)
-    {
+    if ( report == null ) {
       return null;
     }
     final ReportParameterDefinition definition = report.getParameterDefinition();
-    if (definition == null)
-    {
+    if ( definition == null ) {
       return null;
     }
-    if (definition.getParameterCount() == 0)
-    {
+    if ( definition.getParameterCount() == 0 ) {
       return null;
     }
     return controllerPane;
@@ -160,8 +140,7 @@ public class ParameterReportController implements ReportController
    *
    * @return the menus as array, never null.
    */
-  public JMenu[] getMenus()
-  {
+  public JMenu[] getMenus() {
     return EMPTY_MENUS;
   }
 
@@ -170,8 +149,7 @@ public class ParameterReportController implements ReportController
    *
    * @return true, if this is a inner component.
    */
-  public boolean isInnerComponent()
-  {
+  public boolean isInnerComponent() {
     return true;
   }
 
@@ -181,32 +159,25 @@ public class ParameterReportController implements ReportController
    *
    * @return the location;
    */
-  public String getControllerLocation()
-  {
+  public String getControllerLocation() {
     return BorderLayout.NORTH;
   }
 
-  public void initialize(final PreviewPane pane)
-  {
-    try
-    {
-      if (this.previewPane != null)
-      {
-        this.previewPane.removePropertyChangeListener(PreviewPane.REPORT_JOB_PROPERTY, reportUpdateHandler);
-        this.controllerPane.setReport(null);
+  public void initialize( final PreviewPane pane ) {
+    try {
+      if ( this.previewPane != null ) {
+        this.previewPane.removePropertyChangeListener( PreviewPane.REPORT_JOB_PROPERTY, reportUpdateHandler );
+        this.controllerPane.setReport( null );
       }
       this.previewPane = pane;
-      if (this.previewPane != null)
-      {
-        this.previewPane.addPropertyChangeListener(PreviewPane.REPORT_JOB_PROPERTY, reportUpdateHandler);
-        this.controllerPane.setReport(previewPane.getReportJob());
+      if ( this.previewPane != null ) {
+        this.previewPane.addPropertyChangeListener( PreviewPane.REPORT_JOB_PROPERTY, reportUpdateHandler );
+        this.controllerPane.setReport( previewPane.getReportJob() );
       }
-    }
-    catch (ReportProcessingException e)
-    {
+    } catch ( ReportProcessingException e ) {
       // Cannot recover from that
-      controllerPane.setErrorMessage(e.getMessage());
-      logger.debug("Failed", e);// NON-NLS
+      controllerPane.setErrorMessage( e.getMessage() );
+      logger.debug( "Failed", e );// NON-NLS
     }
 
   }
@@ -216,18 +187,14 @@ public class ParameterReportController implements ReportController
    *
    * @param pane
    */
-  public void deinitialize(final PreviewPane pane)
-  {
-    try
-    {
-      this.previewPane.removePropertyChangeListener(PreviewPane.REPORT_JOB_PROPERTY, reportUpdateHandler);
-      this.controllerPane.setReport(null);
-    }
-    catch (ReportProcessingException e)
-    {
+  public void deinitialize( final PreviewPane pane ) {
+    try {
+      this.previewPane.removePropertyChangeListener( PreviewPane.REPORT_JOB_PROPERTY, reportUpdateHandler );
+      this.controllerPane.setReport( null );
+    } catch ( ReportProcessingException e ) {
       // Cannot recover from that
-      controllerPane.setErrorMessage(e.getMessage());
-      logger.debug("Failed", e);// NON-NLS
+      controllerPane.setErrorMessage( e.getMessage() );
+      logger.debug( "Failed", e );// NON-NLS
     }
   }
 }

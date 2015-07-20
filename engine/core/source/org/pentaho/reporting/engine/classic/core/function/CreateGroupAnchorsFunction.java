@@ -30,8 +30,7 @@ import org.pentaho.reporting.engine.classic.core.event.ReportEvent;
  * @author Thomas Morgner
  * @deprecated It is easier to create anchors using a Style-expression. The Anchor-Field has been deprecated now.
  */
-public class CreateGroupAnchorsFunction extends AbstractFunction
-{
+public class CreateGroupAnchorsFunction extends AbstractFunction {
   /**
    * The name of the group for which anchors should be created.
    */
@@ -52,8 +51,7 @@ public class CreateGroupAnchorsFunction extends AbstractFunction
   /**
    * Default Constructor. Does nothing.
    */
-  public CreateGroupAnchorsFunction()
-  {
+  public CreateGroupAnchorsFunction() {
     anchorPrefix = "anchor";
   }
 
@@ -62,8 +60,7 @@ public class CreateGroupAnchorsFunction extends AbstractFunction
    *
    * @return the anchor prefix.
    */
-  public String getAnchorPrefix()
-  {
+  public String getAnchorPrefix() {
     return anchorPrefix;
   }
 
@@ -72,11 +69,9 @@ public class CreateGroupAnchorsFunction extends AbstractFunction
    *
    * @param anchorPrefix the prefix for the anchor.
    */
-  public void setAnchorPrefix(final String anchorPrefix)
-  {
-    if (anchorPrefix == null)
-    {
-      throw new NullPointerException("The Anchor-Prefix must not be null.");
+  public void setAnchorPrefix( final String anchorPrefix ) {
+    if ( anchorPrefix == null ) {
+      throw new NullPointerException( "The Anchor-Prefix must not be null." );
     }
     this.anchorPrefix = anchorPrefix;
   }
@@ -86,8 +81,7 @@ public class CreateGroupAnchorsFunction extends AbstractFunction
    *
    * @return the name of the group.
    */
-  public String getGroup()
-  {
+  public String getGroup() {
     return group;
   }
 
@@ -96,8 +90,7 @@ public class CreateGroupAnchorsFunction extends AbstractFunction
    *
    * @param group the name of the group.
    */
-  public void setGroup(final String group)
-  {
+  public void setGroup( final String group ) {
     this.group = group;
   }
 
@@ -107,16 +100,15 @@ public class CreateGroupAnchorsFunction extends AbstractFunction
    *
    * @param event The event.
    */
-  public void reportInitialized(final ReportEvent event)
-  {
+  public void reportInitialized( final ReportEvent event ) {
     count = 0;
 
     final StringBuilder targetBuffer = new StringBuilder();
     final String prefix = getAnchorPrefix();
-    targetBuffer.append(prefix);
-    targetBuffer.append(getGroup());
-    targetBuffer.append("%3D");
-    targetBuffer.append(count);
+    targetBuffer.append( prefix );
+    targetBuffer.append( getGroup() );
+    targetBuffer.append( "%3D" );
+    targetBuffer.append( count );
     anchor = targetBuffer.toString();
   }
 
@@ -125,19 +117,17 @@ public class CreateGroupAnchorsFunction extends AbstractFunction
    *
    * @param event the event.
    */
-  public void groupStarted(final ReportEvent event)
-  {
-    if (FunctionUtilities.isDefinedGroup(getGroup(), event) == false)
-    {
+  public void groupStarted( final ReportEvent event ) {
+    if ( FunctionUtilities.isDefinedGroup( getGroup(), event ) == false ) {
       return;
     }
 
     final StringBuilder targetBuffer = new StringBuilder();
     final String prefix = getAnchorPrefix();
-    targetBuffer.append(prefix);
-    targetBuffer.append(getGroup());
-    targetBuffer.append("%3D");
-    targetBuffer.append(count);
+    targetBuffer.append( prefix );
+    targetBuffer.append( getGroup() );
+    targetBuffer.append( "%3D" );
+    targetBuffer.append( count );
     anchor = targetBuffer.toString();
   }
 
@@ -146,8 +136,7 @@ public class CreateGroupAnchorsFunction extends AbstractFunction
    *
    * @return the value of the function.
    */
-  public Object getValue()
-  {
+  public Object getValue() {
     return anchor;
   }
 }

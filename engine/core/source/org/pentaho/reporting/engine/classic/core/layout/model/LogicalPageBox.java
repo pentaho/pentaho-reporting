@@ -30,8 +30,7 @@ import org.pentaho.reporting.engine.classic.core.util.InstanceID;
  *
  * @author Thomas Morgner
  */
-public final class LogicalPageBox extends BlockRenderBox
-{
+public final class LogicalPageBox extends BlockRenderBox {
   // All breaks along the major-axis.
   private PageBreakPositionList allVerticalBreaks;
   private long pageOffset;
@@ -51,115 +50,98 @@ public final class LogicalPageBox extends BlockRenderBox
   private PageAreaBox savedFooterArea;
   private PageAreaBox savedRepeatFooterArea;
 
-  public LogicalPageBox(final ReportDefinition report,
-                        final StyleSheet style,
-                        final BoxDefinition box)
-  {
-    super(style, report.getObjectID(), box, AutoLayoutBoxType.INSTANCE, report.getAttributes(), null);
+  public LogicalPageBox( final ReportDefinition report,
+                         final StyleSheet style,
+                         final BoxDefinition box ) {
+    super( style, report.getObjectID(), box, AutoLayoutBoxType.INSTANCE, report.getAttributes(), null );
     this.headerArea = new PageAreaBox();
-    this.headerArea.setName("Logical-Page-Header-Area");
-    this.headerArea.setLogicalPage(this);
+    this.headerArea.setName( "Logical-Page-Header-Area" );
+    this.headerArea.setLogicalPage( this );
 
     this.repeatFooterArea = new PageAreaBox();
-    this.repeatFooterArea.setName("Logical-Repeat-Footer-Area");
-    this.repeatFooterArea.setLogicalPage(this);
+    this.repeatFooterArea.setName( "Logical-Repeat-Footer-Area" );
+    this.repeatFooterArea.setLogicalPage( this );
 
     this.footerArea = new PageAreaBox();
-    this.footerArea.setName("Logical-Page-Footer-Area");
-    this.footerArea.setLogicalPage(this);
+    this.footerArea.setName( "Logical-Page-Footer-Area" );
+    this.footerArea.setLogicalPage( this );
 
     this.watermarkArea = new WatermarkAreaBox();
-    this.watermarkArea.setName("Logical-Page-Watermark-Area");
-    this.watermarkArea.setLogicalPage(this);
+    this.watermarkArea.setName( "Logical-Page-Watermark-Area" );
+    this.watermarkArea.setLogicalPage( this );
 
     final BlockRenderBox contentArea = new BlockRenderBox
-        (SimpleStyleSheet.EMPTY_STYLE, new InstanceID(), BoxDefinition.EMPTY, new MasterReportType(),
-            report.getAttributes(), null);
-    contentArea.setName("Logical-Page-Content-Area");
-    addChild(contentArea);
+      ( SimpleStyleSheet.EMPTY_STYLE, new InstanceID(), BoxDefinition.EMPTY, new MasterReportType(),
+        report.getAttributes(), null );
+    contentArea.setName( "Logical-Page-Content-Area" );
+    addChild( contentArea );
     contentAreaId = contentArea.getInstanceId();
-    this.pageGrid = new DefaultPageGrid(report.getPageDefinition());
+    this.pageGrid = new DefaultPageGrid( report.getPageDefinition() );
 
     this.allVerticalBreaks = new PageBreakPositionList();
   }
 
-  public BlockRenderBox getContentArea()
-  {
+  public BlockRenderBox getContentArea() {
     // this should be very inexpensive, as there is only one child, which already is the box in question.
-    final BlockRenderBox blockRenderBox = (BlockRenderBox) findNodeById(contentAreaId);
-    if (blockRenderBox == null)
-    {
-      throw new IllegalStateException("Cloning or deriving must have failed: No content area.");
+    final BlockRenderBox blockRenderBox = (BlockRenderBox) findNodeById( contentAreaId );
+    if ( blockRenderBox == null ) {
+      throw new IllegalStateException( "Cloning or deriving must have failed: No content area." );
     }
     return blockRenderBox;
   }
 
-  public BlockRenderBox getHeaderArea()
-  {
+  public BlockRenderBox getHeaderArea() {
     return headerArea;
   }
 
-  public BlockRenderBox getRepeatFooterArea()
-  {
+  public BlockRenderBox getRepeatFooterArea() {
     return repeatFooterArea;
   }
 
-  public BlockRenderBox getFooterArea()
-  {
+  public BlockRenderBox getFooterArea() {
     return footerArea;
   }
 
-  public WatermarkAreaBox getWatermarkArea()
-  {
+  public WatermarkAreaBox getWatermarkArea() {
     return watermarkArea;
   }
 
-  public LogicalPageBox getLogicalPage()
-  {
+  public LogicalPageBox getLogicalPage() {
     return this;
   }
 
-  public long getPageWidth()
-  {
+  public long getPageWidth() {
     return pageGrid.getMaximumPageWidth();
   }
 
-  public PageGrid getPageGrid()
-  {
+  public PageGrid getPageGrid() {
     return pageGrid;
   }
 
-  public long getPageOffset()
-  {
+  public long getPageOffset() {
     return pageOffset;
   }
 
-  public void setPageOffset(final long pageOffset)
-  {
+  public void setPageOffset( final long pageOffset ) {
     this.pageOffset = pageOffset;
   }
 
-  public long getPageEnd()
-  {
+  public long getPageEnd() {
     return pageEnd;
   }
 
-  public void setPageEnd(final long pageEnd)
-  {
+  public void setPageEnd( final long pageEnd ) {
     this.pageEnd = pageEnd;
   }
 
-  public long[] getPhysicalBreaks(final int axis)
-  {
-    if (axis == RenderNode.HORIZONTAL_AXIS)
-    {
+  public long[] getPhysicalBreaks( final int axis ) {
+    if ( axis == RenderNode.HORIZONTAL_AXIS ) {
       return pageGrid.getHorizontalBreaks();
     }
     return pageGrid.getVerticalBreaks();
   }
 
-  public long getPageHeight()
-  {
+  public long getPageHeight() {
     return pageGrid.getMaximumPageHeight();
   }
 
@@ -169,17 +151,16 @@ public final class LogicalPageBox extends BlockRenderBox
    *
    * @return
    */
-  public LogicalPageBox deriveFrozen(final boolean deepDerive)
-  {
-    final LogicalPageBox box = (LogicalPageBox) super.deriveFrozen(deepDerive);
-    box.headerArea = (PageAreaBox) headerArea.deriveFrozen(deepDerive);
-    box.headerArea.setLogicalPage(box);
-    box.footerArea = (PageAreaBox) footerArea.deriveFrozen(deepDerive);
-    box.footerArea.setLogicalPage(box);
-    box.repeatFooterArea = (PageAreaBox) repeatFooterArea.deriveFrozen(deepDerive);
-    box.repeatFooterArea.setLogicalPage(box);
-    box.watermarkArea = (WatermarkAreaBox) watermarkArea.deriveFrozen(deepDerive);
-    box.watermarkArea.setLogicalPage(box);
+  public LogicalPageBox deriveFrozen( final boolean deepDerive ) {
+    final LogicalPageBox box = (LogicalPageBox) super.deriveFrozen( deepDerive );
+    box.headerArea = (PageAreaBox) headerArea.deriveFrozen( deepDerive );
+    box.headerArea.setLogicalPage( box );
+    box.footerArea = (PageAreaBox) footerArea.deriveFrozen( deepDerive );
+    box.footerArea.setLogicalPage( box );
+    box.repeatFooterArea = (PageAreaBox) repeatFooterArea.deriveFrozen( deepDerive );
+    box.repeatFooterArea.setLogicalPage( box );
+    box.watermarkArea = (WatermarkAreaBox) watermarkArea.deriveFrozen( deepDerive );
+    box.watermarkArea.setLogicalPage( box );
 
     return box;
   }
@@ -190,37 +171,32 @@ public final class LogicalPageBox extends BlockRenderBox
    *
    * @return
    */
-  public LogicalPageBox derive(final boolean deepDerive)
-  {
-    final LogicalPageBox box = (LogicalPageBox) super.derive(deepDerive);
-    box.headerArea = (PageAreaBox) headerArea.derive(deepDerive);
-    box.headerArea.setLogicalPage(box);
-    box.footerArea = (PageAreaBox) footerArea.derive(deepDerive);
-    box.footerArea.setLogicalPage(box);
-    box.repeatFooterArea = (PageAreaBox) repeatFooterArea.derive(deepDerive);
-    box.repeatFooterArea.setLogicalPage(box);
-    box.watermarkArea = (WatermarkAreaBox) watermarkArea.derive(deepDerive);
-    box.watermarkArea.setLogicalPage(box);
+  public LogicalPageBox derive( final boolean deepDerive ) {
+    final LogicalPageBox box = (LogicalPageBox) super.derive( deepDerive );
+    box.headerArea = (PageAreaBox) headerArea.derive( deepDerive );
+    box.headerArea.setLogicalPage( box );
+    box.footerArea = (PageAreaBox) footerArea.derive( deepDerive );
+    box.footerArea.setLogicalPage( box );
+    box.repeatFooterArea = (PageAreaBox) repeatFooterArea.derive( deepDerive );
+    box.repeatFooterArea.setLogicalPage( box );
+    box.watermarkArea = (WatermarkAreaBox) watermarkArea.derive( deepDerive );
+    box.watermarkArea.setLogicalPage( box );
 
-    if (box.savedFooterArea != null)
-    {
-      box.savedFooterArea = (PageAreaBox) savedFooterArea.derive(deepDerive);
-      box.savedFooterArea.setLogicalPage(box);
+    if ( box.savedFooterArea != null ) {
+      box.savedFooterArea = (PageAreaBox) savedFooterArea.derive( deepDerive );
+      box.savedFooterArea.setLogicalPage( box );
     }
-    if (box.savedRepeatFooterArea != null)
-    {
-      box.savedRepeatFooterArea = (PageAreaBox) savedRepeatFooterArea.derive(deepDerive);
-      box.savedRepeatFooterArea.setLogicalPage(box);
+    if ( box.savedRepeatFooterArea != null ) {
+      box.savedRepeatFooterArea = (PageAreaBox) savedRepeatFooterArea.derive( deepDerive );
+      box.savedRepeatFooterArea.setLogicalPage( box );
     }
-    if (box.savedHeaderArea != null)
-    {
-      box.savedHeaderArea = (PageAreaBox) savedHeaderArea.derive(deepDerive);
-      box.savedHeaderArea.setLogicalPage(box);
+    if ( box.savedHeaderArea != null ) {
+      box.savedHeaderArea = (PageAreaBox) savedHeaderArea.derive( deepDerive );
+      box.savedHeaderArea.setLogicalPage( box );
     }
-    if (box.savedWatermarkArea != null)
-    {
-      box.savedWatermarkArea = (WatermarkAreaBox) savedWatermarkArea.derive(deepDerive);
-      box.savedWatermarkArea.setLogicalPage(box);
+    if ( box.savedWatermarkArea != null ) {
+      box.savedWatermarkArea = (WatermarkAreaBox) savedWatermarkArea.derive( deepDerive );
+      box.savedWatermarkArea.setLogicalPage( box );
     }
     return box;
   }
@@ -231,88 +207,72 @@ public final class LogicalPageBox extends BlockRenderBox
    *
    * @return
    */
-  public LogicalPageBox clone()
-  {
-    try
-    {
+  public LogicalPageBox clone() {
+    try {
       final LogicalPageBox o = (LogicalPageBox) super.clone();
       o.pageGrid = (DefaultPageGrid) pageGrid.clone();
       o.allVerticalBreaks = allVerticalBreaks;
       return o;
-    }
-    catch (CloneNotSupportedException e)
-    {
-      throw new IllegalStateException("Cloning *must* be supported.");
+    } catch ( CloneNotSupportedException e ) {
+      throw new IllegalStateException( "Cloning *must* be supported." );
     }
   }
 
-  public void setAllVerticalBreaks(final PageBreakPositionList allVerticalBreaks)
-  {
-    if (allVerticalBreaks == null)
-    {
+  public void setAllVerticalBreaks( final PageBreakPositionList allVerticalBreaks ) {
+    if ( allVerticalBreaks == null ) {
       throw new NullPointerException();
     }
     // create a new list-controller but share the backend with the old list.
-    this.allVerticalBreaks = new PageBreakPositionList(this.allVerticalBreaks);
-    this.allVerticalBreaks.copyFrom(allVerticalBreaks);
+    this.allVerticalBreaks = new PageBreakPositionList( this.allVerticalBreaks );
+    this.allVerticalBreaks.copyFrom( allVerticalBreaks );
   }
 
-  public PageBreakPositionList getAllVerticalBreaks()
-  {
+  public PageBreakPositionList getAllVerticalBreaks() {
     return allVerticalBreaks;
   }
 
-  public long computePageEnd()
-  {
+  public long computePageEnd() {
     final long pageOffset = getPageOffset();
     final PageBreakPositionList allVerticalBreaks = getAllVerticalBreaks();
     final long lastMasterBreak = allVerticalBreaks.getLastMasterBreak();
-    if (pageOffset == lastMasterBreak)
-    {
+    if ( pageOffset == lastMasterBreak ) {
       return getHeight();
     }
 
-    return allVerticalBreaks.findNextMajorBreakPosition(pageOffset + 1);
+    return allVerticalBreaks.findNextMajorBreakPosition( pageOffset + 1 );
   }
 
-  public String getPageName()
-  {
+  public String getPageName() {
     return pageName;
   }
 
-  public void setPageName(final String pageName)
-  {
+  public void setPageName( final String pageName ) {
     this.pageName = pageName;
   }
 
-  public int getNodeType()
-  {
+  public int getNodeType() {
     return LayoutNodeTypes.TYPE_BOX_LOGICALPAGE;
   }
 
-  public void storeSaveInformation()
-  {
-    savedFooterArea = ((PageAreaBox) getFooterArea().derive(true));
-    savedRepeatFooterArea = ((PageAreaBox) getRepeatFooterArea().derive(true));
-    savedHeaderArea = ((PageAreaBox) getHeaderArea().derive(true));
-    savedWatermarkArea = ((WatermarkAreaBox) getWatermarkArea().derive(true));
+  public void storeSaveInformation() {
+    savedFooterArea = ( (PageAreaBox) getFooterArea().derive( true ) );
+    savedRepeatFooterArea = ( (PageAreaBox) getRepeatFooterArea().derive( true ) );
+    savedHeaderArea = ( (PageAreaBox) getHeaderArea().derive( true ) );
+    savedWatermarkArea = ( (WatermarkAreaBox) getWatermarkArea().derive( true ) );
   }
 
-  public void rollbackSaveInformation()
-  {
-    headerArea = ((PageAreaBox) savedHeaderArea.derive(true));
-    footerArea = ((PageAreaBox) savedFooterArea.derive(true));
-    repeatFooterArea = ((PageAreaBox) savedRepeatFooterArea.derive(true));
-    watermarkArea = ((WatermarkAreaBox) savedWatermarkArea.derive(true));
+  public void rollbackSaveInformation() {
+    headerArea = ( (PageAreaBox) savedHeaderArea.derive( true ) );
+    footerArea = ( (PageAreaBox) savedFooterArea.derive( true ) );
+    repeatFooterArea = ( (PageAreaBox) savedRepeatFooterArea.derive( true ) );
+    watermarkArea = ( (WatermarkAreaBox) savedWatermarkArea.derive( true ) );
   }
 
-  public long getProcessedTableOffset()
-  {
+  public long getProcessedTableOffset() {
     return processedTableOffset;
   }
 
-  public void setProcessedTableOffset(final long processedTableOffset)
-  {
+  public void setProcessedTableOffset( final long processedTableOffset ) {
     this.processedTableOffset = processedTableOffset;
   }
 }

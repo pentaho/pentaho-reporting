@@ -26,8 +26,7 @@ package org.pentaho.reporting.engine.classic.core.filter;
  *
  * @author : Thomas Morgner
  */
-public class FormatSpecification
-{
+public class FormatSpecification {
   /**
    * A constant declaring that the format-type cannot be determined in a reliable way.
    */
@@ -58,11 +57,10 @@ public class FormatSpecification
   private String formatString;
 
   /**
-   * Creates an empty object. This object must be filled with valid values by calling {@link #redefine(int,String)}
+   * Creates an empty object. This object must be filled with valid values by calling {@link #redefine(int, String)}
    * later.
    */
-  public FormatSpecification()
-  {
+  public FormatSpecification() {
   }
 
   /**
@@ -71,8 +69,7 @@ public class FormatSpecification
    * @param type         the type, one of the constants declared in this class.
    * @param formatString the format string.
    */
-  public void redefine(final int type, final String formatString)
-  {
+  public void redefine( final int type, final String formatString ) {
     this.type = type;
     this.formatString = formatString;
   }
@@ -82,8 +79,7 @@ public class FormatSpecification
    *
    * @return the type.
    */
-  public int getType()
-  {
+  public int getType() {
     return type;
   }
 
@@ -92,8 +88,7 @@ public class FormatSpecification
    *
    * @return the format string.
    */
-  public String getFormatString()
-  {
+  public String getFormatString() {
     return formatString;
   }
 }

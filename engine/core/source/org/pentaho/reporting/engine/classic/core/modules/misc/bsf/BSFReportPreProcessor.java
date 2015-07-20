@@ -27,153 +27,124 @@ import org.pentaho.reporting.engine.classic.core.SubReport;
 import org.pentaho.reporting.engine.classic.core.states.datarow.DefaultFlowController;
 import org.pentaho.reporting.libraries.base.util.StringUtils;
 
-public class BSFReportPreProcessor extends AbstractReportPreProcessor
-{
+public class BSFReportPreProcessor extends AbstractReportPreProcessor {
   private String preDataScript;
   private String script;
   private String language;
 
-  public BSFReportPreProcessor()
-  {
+  public BSFReportPreProcessor() {
   }
 
-  public String getPreDataScript()
-  {
+  public String getPreDataScript() {
     return preDataScript;
   }
 
-  public void setPreDataScript(final String preDataScript)
-  {
+  public void setPreDataScript( final String preDataScript ) {
     this.preDataScript = preDataScript;
   }
 
-  public String getLanguage()
-  {
+  public String getLanguage() {
     return language;
   }
 
-  public void setLanguage(final String language)
-  {
+  public void setLanguage( final String language ) {
     this.language = language;
   }
 
-  public String getScript()
-  {
+  public String getScript() {
     return script;
   }
 
-  public void setScript(final String script)
-  {
+  public void setScript( final String script ) {
     this.script = script;
   }
 
 
-  public MasterReport performPreDataProcessing(final MasterReport definition,
-                                               final DefaultFlowController flowController) throws ReportProcessingException
-  {
-    if (preDataScript == null || language == null || StringUtils.isEmpty(preDataScript, true))
-    {
+  public MasterReport performPreDataProcessing( final MasterReport definition,
+                                                final DefaultFlowController flowController )
+    throws ReportProcessingException {
+    if ( preDataScript == null || language == null || StringUtils.isEmpty( preDataScript, true ) ) {
       return definition;
     }
 
-    try
-    {
+    try {
       final BSFManager interpreter = new BSFManager();
-      interpreter.declareBean("definition", definition, MasterReport.class); //$NON-NLS-1$
-      interpreter.declareBean("flowController", flowController, DefaultFlowController.class); //$NON-NLS-1$
-      final Object o = interpreter.eval(getLanguage(), "expression", 1, 1, preDataScript);
-      if (o instanceof MasterReport == false)
-      {
-        throw new ReportDataFactoryException("Not a MasterReport");
+      interpreter.declareBean( "definition", definition, MasterReport.class ); //$NON-NLS-1$
+      interpreter.declareBean( "flowController", flowController, DefaultFlowController.class ); //$NON-NLS-1$
+      final Object o = interpreter.eval( getLanguage(), "expression", 1, 1, preDataScript );
+      if ( o instanceof MasterReport == false ) {
+        throw new ReportDataFactoryException( "Not a MasterReport" );
       }
       return (MasterReport) o; //$NON-NLS-1$
 
-    }
-    catch (BSFException e)
-    {
-      throw new ReportDataFactoryException("Failed to initialize the BSF-Framework", e);
+    } catch ( BSFException e ) {
+      throw new ReportDataFactoryException( "Failed to initialize the BSF-Framework", e );
     }
   }
 
-  public MasterReport performPreProcessing(final MasterReport definition,
-                                           final DefaultFlowController flowController) throws ReportProcessingException
-  {
-    if (script == null || language == null || StringUtils.isEmpty(script, true))
-    {
+  public MasterReport performPreProcessing( final MasterReport definition,
+                                            final DefaultFlowController flowController )
+    throws ReportProcessingException {
+    if ( script == null || language == null || StringUtils.isEmpty( script, true ) ) {
       return definition;
     }
 
-    try
-    {
+    try {
       final BSFManager interpreter = new BSFManager();
-      interpreter.declareBean("definition", definition, MasterReport.class); //$NON-NLS-1$
-      interpreter.declareBean("flowController", flowController, DefaultFlowController.class); //$NON-NLS-1$
-      final Object o = interpreter.eval(getLanguage(), "expression", 1, 1, script);
-      if (o instanceof MasterReport == false)
-      {
-        throw new ReportDataFactoryException("Not a MasterReport");
+      interpreter.declareBean( "definition", definition, MasterReport.class ); //$NON-NLS-1$
+      interpreter.declareBean( "flowController", flowController, DefaultFlowController.class ); //$NON-NLS-1$
+      final Object o = interpreter.eval( getLanguage(), "expression", 1, 1, script );
+      if ( o instanceof MasterReport == false ) {
+        throw new ReportDataFactoryException( "Not a MasterReport" );
       }
       return (MasterReport) o; //$NON-NLS-1$
 
-    }
-    catch (BSFException e)
-    {
-      throw new ReportDataFactoryException("Failed to initialize the BSF-Framework", e);
+    } catch ( BSFException e ) {
+      throw new ReportDataFactoryException( "Failed to initialize the BSF-Framework", e );
     }
   }
 
 
-  public SubReport performPreDataProcessing(final SubReport definition,
-                                            final DefaultFlowController flowController) throws ReportProcessingException
-  {
-    if (script == null || language == null)
-    {
+  public SubReport performPreDataProcessing( final SubReport definition,
+                                             final DefaultFlowController flowController )
+    throws ReportProcessingException {
+    if ( script == null || language == null ) {
       return definition;
     }
 
-    try
-    {
+    try {
       final BSFManager interpreter = new BSFManager();
-      interpreter.declareBean("definition", definition, MasterReport.class); //$NON-NLS-1$
-      interpreter.declareBean("flowController", flowController, DefaultFlowController.class); //$NON-NLS-1$
-      final Object o = interpreter.eval(getLanguage(), "expression", 1, 1, preDataScript);
-      if (o instanceof SubReport == false)
-      {
-        throw new ReportDataFactoryException("Not a SubReport");
+      interpreter.declareBean( "definition", definition, MasterReport.class ); //$NON-NLS-1$
+      interpreter.declareBean( "flowController", flowController, DefaultFlowController.class ); //$NON-NLS-1$
+      final Object o = interpreter.eval( getLanguage(), "expression", 1, 1, preDataScript );
+      if ( o instanceof SubReport == false ) {
+        throw new ReportDataFactoryException( "Not a SubReport" );
       }
       return (SubReport) o; //$NON-NLS-1$
 
-    }
-    catch (BSFException e)
-    {
-      throw new ReportDataFactoryException("Failed to initialize the BSF-Framework", e);
+    } catch ( BSFException e ) {
+      throw new ReportDataFactoryException( "Failed to initialize the BSF-Framework", e );
     }
   }
 
-  public SubReport performPreProcessing(final SubReport definition,
-                                        final DefaultFlowController flowController) throws ReportProcessingException
-  {
-    if (script == null || language == null)
-    {
+  public SubReport performPreProcessing( final SubReport definition,
+                                         final DefaultFlowController flowController ) throws ReportProcessingException {
+    if ( script == null || language == null ) {
       return definition;
     }
 
-    try
-    {
+    try {
       final BSFManager interpreter = new BSFManager();
-      interpreter.declareBean("definition", definition, SubReport.class); //$NON-NLS-1$
-      interpreter.declareBean("flowController", flowController, DefaultFlowController.class); //$NON-NLS-1$
-      final Object o = interpreter.eval(getLanguage(), "expression", 1, 1, script);
-      if (o instanceof SubReport == false)
-      {
-        throw new ReportDataFactoryException("Not a MasterReport");
+      interpreter.declareBean( "definition", definition, SubReport.class ); //$NON-NLS-1$
+      interpreter.declareBean( "flowController", flowController, DefaultFlowController.class ); //$NON-NLS-1$
+      final Object o = interpreter.eval( getLanguage(), "expression", 1, 1, script );
+      if ( o instanceof SubReport == false ) {
+        throw new ReportDataFactoryException( "Not a MasterReport" );
       }
       return (SubReport) o; //$NON-NLS-1$
 
-    }
-    catch (BSFException e)
-    {
-      throw new ReportDataFactoryException("Failed to initialize the BSF-Framework", e);
+    } catch ( BSFException e ) {
+      throw new ReportDataFactoryException( "Failed to initialize the BSF-Framework", e );
     }
   }
 }

@@ -25,57 +25,47 @@ import org.pentaho.reporting.engine.classic.core.style.StyleSheet;
 import org.pentaho.reporting.engine.classic.core.util.InstanceID;
 import org.pentaho.reporting.libraries.base.util.LFUMap;
 
-public class FastExcelCellStyleProducer implements CellStyleProducer
-{
-  private static class CacheKey
-  {
+public class FastExcelCellStyleProducer implements CellStyleProducer {
+  private static class CacheKey {
     private final InstanceID id;
     private final CellBackground background;
     private final InstanceID styleSheetId;
 
-    private CacheKey(final InstanceID id,
-                     final CellBackground background,
-                     final InstanceID styleSheetId)
-    {
+    private CacheKey( final InstanceID id,
+                      final CellBackground background,
+                      final InstanceID styleSheetId ) {
       this.id = id;
       this.background = background;
       this.styleSheetId = styleSheetId;
     }
 
-    public boolean equals(final Object o)
-    {
-      if (this == o)
-      {
+    public boolean equals( final Object o ) {
+      if ( this == o ) {
         return true;
       }
-      if (o == null || getClass() != o.getClass())
-      {
+      if ( o == null || getClass() != o.getClass() ) {
         return false;
       }
 
       final CacheKey cacheKey = (CacheKey) o;
 
-      if (background != null ? !background.equals(cacheKey.background) : cacheKey.background != null)
-      {
+      if ( background != null ? !background.equals( cacheKey.background ) : cacheKey.background != null ) {
         return false;
       }
-      if (id != null ? !id.equals(cacheKey.id) : cacheKey.id != null)
-      {
+      if ( id != null ? !id.equals( cacheKey.id ) : cacheKey.id != null ) {
         return false;
       }
-      if (styleSheetId != null ? !styleSheetId.equals(cacheKey.styleSheetId) : cacheKey.styleSheetId != null)
-      {
+      if ( styleSheetId != null ? !styleSheetId.equals( cacheKey.styleSheetId ) : cacheKey.styleSheetId != null ) {
         return false;
       }
 
       return true;
     }
 
-    public int hashCode()
-    {
+    public int hashCode() {
       int result = id != null ? id.hashCode() : 0;
-      result = 31 * result + (background != null ? background.hashCode() : 0);
-      result = 31 * result + (styleSheetId != null ? styleSheetId.hashCode() : 0);
+      result = 31 * result + ( background != null ? background.hashCode() : 0 );
+      result = 31 * result + ( styleSheetId != null ? styleSheetId.hashCode() : 0 );
       return result;
     }
   }
@@ -85,54 +75,41 @@ public class FastExcelCellStyleProducer implements CellStyleProducer
   private final LFUMap<CellBackground, CellStyle> backgroundCache;
   private final LFUMap<CacheKey, CellStyle> contentCache;
 
-  public FastExcelCellStyleProducer(final CellStyleProducer backend)
-  {
-    if (backend == null)
-    {
+  public FastExcelCellStyleProducer( final CellStyleProducer backend ) {
+    if ( backend == null ) {
       throw new NullPointerException();
     }
-    this.contentCache = new LFUMap<CacheKey, CellStyle>(5000);
-    this.backgroundCache = new LFUMap<CellBackground, CellStyle>(5000);
+    this.contentCache = new LFUMap<CacheKey, CellStyle>( 5000 );
+    this.backgroundCache = new LFUMap<CellBackground, CellStyle>( 5000 );
     this.backend = backend;
   }
 
-  public CellStyle createCellStyle(final InstanceID id, final StyleSheet element, final CellBackground bg)
-  {
-    if (id == null)
-    {
-      CellStyle cellStyle = backgroundCache.get(bg);
-      if (cellStyle != null)
-      {
+  public CellStyle createCellStyle( final InstanceID id, final StyleSheet element, final CellBackground bg ) {
+    if ( id == null ) {
+      CellStyle cellStyle = backgroundCache.get( bg );
+      if ( cellStyle != null ) {
         return cellStyle;
       }
-    }
-    else
-    {
-      CellStyle cellStyle = contentCache.get(new CacheKey(id, bg, element.getId()));
-      if (cellStyle != null)
-      {
+    } else {
+      CellStyle cellStyle = contentCache.get( new CacheKey( id, bg, element.getId() ) );
+      if ( cellStyle != null ) {
         return cellStyle;
       }
     }
 
-    CellStyle cellStyle = backend.createCellStyle(id, element, bg);
-    if (cellStyle == null)
-    {
+    CellStyle cellStyle = backend.createCellStyle( id, element, bg );
+    if ( cellStyle == null ) {
       return null;
     }
-    if (id == null)
-    {
-      backgroundCache.put(bg, cellStyle);
-    }
-    else
-    {
-      contentCache.put(new CacheKey(id, bg, element.getId()), cellStyle);
+    if ( id == null ) {
+      backgroundCache.put( bg, cellStyle );
+    } else {
+      contentCache.put( new CacheKey( id, bg, element.getId() ), cellStyle );
     }
     return cellStyle;
   }
 
-  public ExcelFontFactory getFontFactory()
-  {
+  public ExcelFontFactory getFontFactory() {
     return backend.getFontFactory();
   }
 }

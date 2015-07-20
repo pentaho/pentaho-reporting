@@ -17,81 +17,67 @@
 
 package org.pentaho.reporting.engine.classic.core.states;
 
-import javax.swing.event.TableModelListener;
-import javax.swing.table.TableModel;
-
 import org.pentaho.reporting.engine.classic.core.MetaTableModel;
 import org.pentaho.reporting.engine.classic.core.wizard.DataAttributes;
 import org.pentaho.reporting.engine.classic.core.wizard.EmptyDataAttributes;
 
-public class LengthLimitingTableModel implements MetaTableModel
-{
+import javax.swing.event.TableModelListener;
+import javax.swing.table.TableModel;
+
+public class LengthLimitingTableModel implements MetaTableModel {
   private TableModel backend;
   private int queryLimit;
   private MetaTableModel metaBackend;
 
-  public LengthLimitingTableModel(final TableModel backend,
-                                  final int queryLimit)
-  {
-    if (backend == null)
-    {
+  public LengthLimitingTableModel( final TableModel backend,
+                                   final int queryLimit ) {
+    if ( backend == null ) {
       throw new NullPointerException();
     }
-    if (queryLimit <= 0)
-    {
+    if ( queryLimit <= 0 ) {
       throw new IllegalArgumentException();
     }
     this.backend = backend;
-    this.queryLimit = Math.min(queryLimit, backend.getRowCount());
-    if (backend instanceof MetaTableModel)
-    {
+    this.queryLimit = Math.min( queryLimit, backend.getRowCount() );
+    if ( backend instanceof MetaTableModel ) {
       metaBackend = (MetaTableModel) backend;
     }
   }
 
-  public int getRowCount()
-  {
+  public int getRowCount() {
     return queryLimit;
   }
 
-  public int getColumnCount()
-  {
+  public int getColumnCount() {
     return backend.getColumnCount();
   }
 
-  public String getColumnName(final int columnIndex)
-  {
-    return backend.getColumnName(columnIndex);
+  public String getColumnName( final int columnIndex ) {
+    return backend.getColumnName( columnIndex );
   }
 
-  public Class getColumnClass(final int columnIndex)
-  {
-    return backend.getColumnClass(columnIndex);
+  public Class getColumnClass( final int columnIndex ) {
+    return backend.getColumnClass( columnIndex );
   }
 
-  public boolean isCellEditable(final int rowIndex, final int columnIndex)
-  {
-    return backend.isCellEditable(rowIndex, columnIndex);
+  public boolean isCellEditable( final int rowIndex, final int columnIndex ) {
+    return backend.isCellEditable( rowIndex, columnIndex );
   }
 
-  public Object getValueAt(final int rowIndex, final int columnIndex)
-  {
-    return backend.getValueAt(rowIndex, columnIndex);
+  public Object getValueAt( final int rowIndex, final int columnIndex ) {
+    return backend.getValueAt( rowIndex, columnIndex );
   }
 
-  public void setValueAt(final Object aValue, final int rowIndex, final int columnIndex)
-  {
-    backend.setValueAt(aValue, rowIndex, columnIndex);
+  public void setValueAt( final Object aValue, final int rowIndex, final int columnIndex ) {
+    backend.setValueAt( aValue, rowIndex, columnIndex );
   }
 
-  public void addTableModelListener(final TableModelListener l)
-  {
-    backend.addTableModelListener(l);
+  public void addTableModelListener( final TableModelListener l ) {
+    backend.addTableModelListener( l );
   }
 
-  public void removeTableModelListener(final TableModelListener l)
-  {
-    backend.removeTableModelListener(l);
+  public void removeTableModelListener( final TableModelListener l ) {
+    backend.removeTableModelListener( l );
   }
 
   /**
@@ -105,29 +91,23 @@ public class LengthLimitingTableModel implements MetaTableModel
    * @param column the index of the column for which the meta-data is queried.
    * @return the meta-data object.
    */
-  public DataAttributes getCellDataAttributes(final int row, final int column)
-  {
-    if (metaBackend != null)
-    {
-      return metaBackend.getCellDataAttributes(row, column);
+  public DataAttributes getCellDataAttributes( final int row, final int column ) {
+    if ( metaBackend != null ) {
+      return metaBackend.getCellDataAttributes( row, column );
     }
     return EmptyDataAttributes.INSTANCE;
   }
 
-  public boolean isCellDataAttributesSupported()
-  {
-    if (metaBackend != null)
-    {
+  public boolean isCellDataAttributesSupported() {
+    if ( metaBackend != null ) {
       return metaBackend.isCellDataAttributesSupported();
     }
     return false;
   }
 
-  public DataAttributes getColumnAttributes(final int column)
-  {
-    if (metaBackend != null)
-    {
-      return metaBackend.getColumnAttributes(column);
+  public DataAttributes getColumnAttributes( final int column ) {
+    if ( metaBackend != null ) {
+      return metaBackend.getColumnAttributes( column );
     }
     return EmptyDataAttributes.INSTANCE;
   }
@@ -138,10 +118,8 @@ public class LengthLimitingTableModel implements MetaTableModel
    *
    * @return
    */
-  public DataAttributes getTableAttributes()
-  {
-    if (metaBackend != null)
-    {
+  public DataAttributes getTableAttributes() {
+    if ( metaBackend != null ) {
       return metaBackend.getTableAttributes();
     }
     return EmptyDataAttributes.INSTANCE;

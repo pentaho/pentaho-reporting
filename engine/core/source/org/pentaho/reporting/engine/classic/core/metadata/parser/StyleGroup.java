@@ -17,39 +17,35 @@
 
 package org.pentaho.reporting.engine.classic.core.metadata.parser;
 
+import org.pentaho.reporting.engine.classic.core.metadata.builder.StyleMetaDataBuilder;
+import org.pentaho.reporting.libraries.base.util.ArgumentNullException;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-
-import org.pentaho.reporting.engine.classic.core.metadata.builder.StyleMetaDataBuilder;
-import org.pentaho.reporting.libraries.base.util.ArgumentNullException;
 
 /**
  * A internal helper object to store an attribute-group definition.
  *
  * @author Thomas Morgner
  */
-public class StyleGroup
-{
+public class StyleGroup {
   private String name;
   private ArrayList<StyleMetaDataBuilder> metaData;
 
-  public StyleGroup(final String name, final Collection<StyleMetaDataBuilder> metaData)
-  {
-    ArgumentNullException.validate("name", name);
-    ArgumentNullException.validate("metaData", metaData);
+  public StyleGroup( final String name, final Collection<StyleMetaDataBuilder> metaData ) {
+    ArgumentNullException.validate( "name", name );
+    ArgumentNullException.validate( "metaData", metaData );
 
     this.name = name;
-    this.metaData = new ArrayList<StyleMetaDataBuilder>(metaData);
+    this.metaData = new ArrayList<StyleMetaDataBuilder>( metaData );
   }
 
-  public String getName()
-  {
+  public String getName() {
     return name;
   }
 
-  public List<StyleMetaDataBuilder> getMetaData()
-  {
+  public List<StyleMetaDataBuilder> getMetaData() {
     return (List<StyleMetaDataBuilder>) metaData.clone();
   }
 }

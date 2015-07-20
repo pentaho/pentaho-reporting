@@ -17,8 +17,7 @@
 
 package org.pentaho.reporting.engine.classic.core.style;
 
-public enum TableLayout
-{
+public enum TableLayout {
   auto,
   fixed
 }

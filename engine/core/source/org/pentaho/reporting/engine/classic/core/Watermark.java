@@ -33,28 +33,25 @@ import org.pentaho.reporting.engine.classic.core.style.RootLevelBandDefaultStyle
  *
  * @author David Gilbert
  */
-public class Watermark extends Band implements RootLevelBand
-{
+public class Watermark extends Band implements RootLevelBand {
   /**
    * A empty array defined here for performance reasons.
    */
-  private static final SubReport[] EMPTY_SUB_REPORT = new SubReport[0];
+  private static final SubReport[] EMPTY_SUB_REPORT = new SubReport[ 0 ];
 
 
   /**
    * A default style sheet for shape elements. This defined a default stroke for all shapes.
    */
-  private static class WatermarkDefaultStyleSheet extends RootLevelBandDefaultStyleSheet
-  {
+  private static class WatermarkDefaultStyleSheet extends RootLevelBandDefaultStyleSheet {
     /**
      * Creates a new style-sheet. The stylesheet is not modifiable
      */
-    protected WatermarkDefaultStyleSheet()
-    {
+    protected WatermarkDefaultStyleSheet() {
       // unlock the write protection
-      setLocked(false);
-      setStyleProperty(ElementStyleKeys.MIN_HEIGHT, new Float(-100));
-      setLocked(true);
+      setLocked( false );
+      setStyleProperty( ElementStyleKeys.MIN_HEIGHT, new Float( -100 ) );
+      setLocked( true );
     }
   }
 
@@ -68,10 +65,8 @@ public class Watermark extends Band implements RootLevelBand
    *
    * @return a default style sheet that can be shared among shape elements.
    */
-  public static synchronized ElementDefaultStyleSheet getDefaultStyle()
-  {
-    if (defaultStyle == null)
-    {
+  public static synchronized ElementDefaultStyleSheet getDefaultStyle() {
+    if ( defaultStyle == null ) {
       defaultStyle = new WatermarkDefaultStyleSheet();
     }
     return defaultStyle;
@@ -80,9 +75,8 @@ public class Watermark extends Band implements RootLevelBand
   /**
    * Constructs a watermark band.
    */
-  public Watermark()
-  {
-    setElementType(new WatermarkType());
+  public Watermark() {
+    setElementType( new WatermarkType() );
   }
 
   /**
@@ -91,8 +85,7 @@ public class Watermark extends Band implements RootLevelBand
    *
    * @return the global default stylesheet.
    */
-  public ElementStyleSheet getDefaultStyleSheet()
-  {
+  public ElementStyleSheet getDefaultStyleSheet() {
     return Watermark.getDefaultStyle();
   }
 
@@ -102,16 +95,13 @@ public class Watermark extends Band implements RootLevelBand
    * @param onFirstPage defines, whether the page header will be printed on the first page
    * @param onLastPage  defines, whether the page footer will be printed on the last page.
    */
-  public Watermark(final boolean onFirstPage, final boolean onLastPage)
-  {
+  public Watermark( final boolean onFirstPage, final boolean onLastPage ) {
     super();
-    if (onFirstPage == false)
-    {
-      setDisplayOnFirstPage(onFirstPage);
+    if ( onFirstPage == false ) {
+      setDisplayOnFirstPage( onFirstPage );
     }
-    if (onLastPage == false)
-    {
-      setDisplayOnLastPage(onLastPage);
+    if ( onLastPage == false ) {
+      setDisplayOnLastPage( onLastPage );
     }
   }
 
@@ -120,9 +110,8 @@ public class Watermark extends Band implements RootLevelBand
    *
    * @return true or false.
    */
-  public boolean isDisplayOnFirstPage()
-  {
-    return getStyle().getBooleanStyleProperty(BandStyleKeys.DISPLAY_ON_FIRSTPAGE);
+  public boolean isDisplayOnFirstPage() {
+    return getStyle().getBooleanStyleProperty( BandStyleKeys.DISPLAY_ON_FIRSTPAGE );
   }
 
   /**
@@ -130,9 +119,8 @@ public class Watermark extends Band implements RootLevelBand
    *
    * @param b a flag indicating whether or not the header is shown on the first page.
    */
-  public void setDisplayOnFirstPage(final boolean b)
-  {
-    getStyle().setBooleanStyleProperty(BandStyleKeys.DISPLAY_ON_FIRSTPAGE, b);
+  public void setDisplayOnFirstPage( final boolean b ) {
+    getStyle().setBooleanStyleProperty( BandStyleKeys.DISPLAY_ON_FIRSTPAGE, b );
     notifyNodePropertiesChanged();
   }
 
@@ -141,9 +129,8 @@ public class Watermark extends Band implements RootLevelBand
    *
    * @return true or false.
    */
-  public boolean isDisplayOnLastPage()
-  {
-    return getStyle().getBooleanStyleProperty(BandStyleKeys.DISPLAY_ON_LASTPAGE);
+  public boolean isDisplayOnLastPage() {
+    return getStyle().getBooleanStyleProperty( BandStyleKeys.DISPLAY_ON_LASTPAGE );
   }
 
   /**
@@ -151,9 +138,8 @@ public class Watermark extends Band implements RootLevelBand
    *
    * @param b a flag indicating whether or not the header is shown on the last page.
    */
-  public void setDisplayOnLastPage(final boolean b)
-  {
-    getStyle().setBooleanStyleProperty(BandStyleKeys.DISPLAY_ON_LASTPAGE, b);
+  public void setDisplayOnLastPage( final boolean b ) {
+    getStyle().setBooleanStyleProperty( BandStyleKeys.DISPLAY_ON_LASTPAGE, b );
     notifyNodePropertiesChanged();
   }
 
@@ -162,8 +148,7 @@ public class Watermark extends Band implements RootLevelBand
    *
    * @return the subreport count.
    */
-  public int getSubReportCount()
-  {
+  public int getSubReportCount() {
     return 0;
   }
 
@@ -173,9 +158,8 @@ public class Watermark extends Band implements RootLevelBand
    * @param index the index.
    * @return nothing, as an exception is thrown instead.
    */
-  public SubReport getSubReport(final int index)
-  {
-    throw new IndexOutOfBoundsException("Watermark bands cannot have subreports.");
+  public SubReport getSubReport( final int index ) {
+    throw new IndexOutOfBoundsException( "Watermark bands cannot have subreports." );
   }
 
   /**
@@ -183,8 +167,7 @@ public class Watermark extends Band implements RootLevelBand
    *
    * @return the sub-reports as array.
    */
-  public SubReport[] getSubReports()
-  {
+  public SubReport[] getSubReports() {
     return Watermark.EMPTY_SUB_REPORT;
   }
 
@@ -193,9 +176,8 @@ public class Watermark extends Band implements RootLevelBand
    *
    * @return true or false.
    */
-  public boolean isSticky()
-  {
-    return getStyle().getBooleanStyleProperty(BandStyleKeys.STICKY, false);
+  public boolean isSticky() {
+    return getStyle().getBooleanStyleProperty( BandStyleKeys.STICKY, false );
   }
 
   /**
@@ -203,9 +185,8 @@ public class Watermark extends Band implements RootLevelBand
    *
    * @param b a flag indicating whether or not the footer is shown on the first page.
    */
-  public void setSticky(final boolean b)
-  {
-    getStyle().setBooleanStyleProperty(BandStyleKeys.STICKY, b);
+  public void setSticky( final boolean b ) {
+    getStyle().setBooleanStyleProperty( BandStyleKeys.STICKY, b );
     notifyNodePropertiesChanged();
   }
 }

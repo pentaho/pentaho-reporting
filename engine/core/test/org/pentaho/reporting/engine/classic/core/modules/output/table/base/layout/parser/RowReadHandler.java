@@ -30,46 +30,38 @@ import org.xml.sax.SAXException;
  *
  * @author Thomas Morgner
  */
-public class RowReadHandler extends AbstractXmlReadHandler
-{
+public class RowReadHandler extends AbstractXmlReadHandler {
   private ResultTable table;
   private int row;
   private int column;
 
-  public RowReadHandler(final ResultTable table, final int row)
-  {
+  public RowReadHandler( final ResultTable table, final int row ) {
     this.table = table;
     this.row = row;
     this.column = -1;
   }
 
-  protected XmlReadHandler getHandlerForChild(final String uri, final String tagName, final Attributes atts)
-      throws SAXException
-  {
-    if (ObjectUtilities.equal(uri, getUri()) == false)
-    {
+  protected XmlReadHandler getHandlerForChild( final String uri, final String tagName, final Attributes atts )
+    throws SAXException {
+    if ( ObjectUtilities.equal( uri, getUri() ) == false ) {
       return null;
     }
-    if ("cell".equals(tagName))
-    {
+    if ( "cell".equals( tagName ) ) {
       column += 1;
-      return new CellReadHandler(table, row, column);
+      return new CellReadHandler( table, row, column );
     }
-    if ("empty-cell".equals(tagName))
-    {
+    if ( "empty-cell".equals( tagName ) ) {
       column += 1;
-      return new EmptyCellReadHandler(table, row, column);
+      return new EmptyCellReadHandler( table, row, column );
     }
-    if ("covered-cell".equals(tagName))
-    {
+    if ( "covered-cell".equals( tagName ) ) {
       column += 1;
       return new IgnoreAnyChildReadHandler();
     }
     return null;
   }
 
-  public Object getObject() throws SAXException
-  {
+  public Object getObject() throws SAXException {
     return null;
   }
 }

@@ -21,10 +21,8 @@ import org.pentaho.reporting.engine.classic.core.filter.types.ContentFieldType;
 import org.pentaho.reporting.libraries.xmlns.parser.ParseException;
 
 @Deprecated
-public class ContentFieldReadHandler extends AbstractElementReadHandler
-{
-  public ContentFieldReadHandler() throws ParseException
-  {
-    super(new ContentFieldType());
+public class ContentFieldReadHandler extends AbstractElementReadHandler {
+  public ContentFieldReadHandler() throws ParseException {
+    super( new ContentFieldType() );
   }
 }

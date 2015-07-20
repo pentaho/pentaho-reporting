@@ -22,12 +22,10 @@ package org.pentaho.reporting.engine.classic.core.modules.parser.ext.factory.sty
  *
  * @author Thomas Morgner
  */
-public class PageableLayoutStyleKeyFactory extends AbstractStyleKeyFactory
-{
+public class PageableLayoutStyleKeyFactory extends AbstractStyleKeyFactory {
   /**
    * Creates a new factory.
    */
-  public PageableLayoutStyleKeyFactory()
-  {
+  public PageableLayoutStyleKeyFactory() {
   }
 }

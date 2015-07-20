@@ -5,7 +5,9 @@
            xmlns:settings="http://reporting.pentaho.org/namespaces/engine/classic/bundle/settings/1.0">
   <xs:element name="settings" type="settings:settingsType">
     <xs:annotation>
-      <xs:documentation>The settings file contains global settings that apply to the master as well as all sub-reports.</xs:documentation>
+      <xs:documentation>The settings file contains global settings that apply to the master as well as all
+        sub-reports.
+      </xs:documentation>
     </xs:annotation>
   </xs:element>
   <xs:complexType name="runtimeType">
@@ -35,7 +37,8 @@
       <xs:element type="settings:runtimeType" name="runtime">
         <xs:annotation>
           <xs:documentation>The runtime section contains the list of dependencies required to run this report.
-   This allows applications to gracefully fail in case of missing dependencies.</xs:documentation>
+            This allows applications to gracefully fail in case of missing dependencies.
+          </xs:documentation>
         </xs:annotation>
       </xs:element>
     </xs:sequence>

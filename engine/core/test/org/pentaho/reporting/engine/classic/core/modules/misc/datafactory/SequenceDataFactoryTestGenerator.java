@@ -20,16 +20,14 @@ package org.pentaho.reporting.engine.classic.core.modules.misc.datafactory;
 import java.util.Locale;
 import java.util.TimeZone;
 
-public class SequenceDataFactoryTestGenerator
-{
-  public static void main(String[] args) throws Exception
-  {
-    Locale.setDefault(Locale.US);
-    TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
+public class SequenceDataFactoryTestGenerator {
+  public static void main( String[] args ) throws Exception {
+    Locale.setDefault( Locale.US );
+    TimeZone.setDefault( TimeZone.getTimeZone( "UTC" ) );
 
     final SequenceDataFactoryTest test = new SequenceDataFactoryTest();
     test.setUp();
-    test.runGenerate(SequenceDataFactoryTest.QUERIES_AND_RESULTS);
+    test.runGenerate( SequenceDataFactoryTest.QUERIES_AND_RESULTS );
   }
 
 }

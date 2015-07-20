@@ -22,8 +22,7 @@ package org.pentaho.reporting.engine.classic.core.style;
  *
  * @author Thomas Morgner
  */
-public class BandDefaultStyleSheet extends ElementDefaultStyleSheet
-{
+public class BandDefaultStyleSheet extends ElementDefaultStyleSheet {
   /**
    * A shared default style-sheet.
    */
@@ -32,15 +31,14 @@ public class BandDefaultStyleSheet extends ElementDefaultStyleSheet
   /**
    * Creates a new default style sheet.
    */
-  protected BandDefaultStyleSheet()
-  {
-    setLocked(false);
-    setStyleProperty(BandStyleKeys.PAGEBREAK_AFTER, Boolean.FALSE);
-    setStyleProperty(BandStyleKeys.PAGEBREAK_BEFORE, Boolean.FALSE);
-    setStyleProperty(BandStyleKeys.DISPLAY_ON_FIRSTPAGE, Boolean.TRUE);
-    setStyleProperty(BandStyleKeys.DISPLAY_ON_LASTPAGE, Boolean.TRUE);
-    setStyleProperty(BandStyleKeys.STICKY, Boolean.FALSE);
-    setLocked(true);
+  protected BandDefaultStyleSheet() {
+    setLocked( false );
+    setStyleProperty( BandStyleKeys.PAGEBREAK_AFTER, Boolean.FALSE );
+    setStyleProperty( BandStyleKeys.PAGEBREAK_BEFORE, Boolean.FALSE );
+    setStyleProperty( BandStyleKeys.DISPLAY_ON_FIRSTPAGE, Boolean.TRUE );
+    setStyleProperty( BandStyleKeys.DISPLAY_ON_LASTPAGE, Boolean.TRUE );
+    setStyleProperty( BandStyleKeys.STICKY, Boolean.FALSE );
+    setLocked( true );
   }
 
   /**
@@ -48,10 +46,8 @@ public class BandDefaultStyleSheet extends ElementDefaultStyleSheet
    *
    * @return the style-sheet.
    */
-  public static synchronized BandDefaultStyleSheet getBandDefaultStyle()
-  {
-    if (defaultStyle == null)
-    {
+  public static synchronized BandDefaultStyleSheet getBandDefaultStyle() {
+    if ( defaultStyle == null ) {
       defaultStyle = new BandDefaultStyleSheet();
     }
     return defaultStyle;

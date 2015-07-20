@@ -26,9 +26,8 @@ package org.pentaho.reporting.engine.classic.core.layout.model;
  *
  * @author Thomas Morgner
  */
-public interface PageGrid extends Cloneable
-{
-  public PhysicalPageBox getPage(int row, int col);
+public interface PageGrid extends Cloneable {
+  public PhysicalPageBox getPage( int row, int col );
 
   public int getRowCount();
 

@@ -29,9 +29,8 @@ import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
 import org.pentaho.reporting.libraries.base.util.StringUtils;
 import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 
-public class DefaultDataFactoryMetaData extends AbstractMetaData implements DataFactoryMetaData
-{
-  private static final Log logger = LogFactory.getLog(DefaultDataFactoryMetaData.class);
+public class DefaultDataFactoryMetaData extends AbstractMetaData implements DataFactoryMetaData {
+  private static final Log logger = LogFactory.getLog( DefaultDataFactoryMetaData.class );
 
   private Class<?> editorClass;
   private boolean editable;
@@ -40,7 +39,7 @@ public class DefaultDataFactoryMetaData extends AbstractMetaData implements Data
   private DataFactoryCore dataFactoryCore;
 
   @Deprecated
-  public DefaultDataFactoryMetaData(final String dataFactory,
+  public DefaultDataFactoryMetaData( final String dataFactory,
                                      final String bundleLocation,
                                      final String keyPrefix,
                                      final boolean expert,
@@ -52,31 +51,28 @@ public class DefaultDataFactoryMetaData extends AbstractMetaData implements Data
                                      final boolean formattingMetadataSource,
                                      final boolean experimental,
                                      final DataFactoryCore dataFactoryCore,
-                                     final int compatibilityLevel)
-  {
-    this(dataFactory, bundleLocation, keyPrefix, expert, preferred, hidden, deprecated, editable,
-        freeformQuery, formattingMetadataSource,
-        experimental ? MaturityLevel.Development : MaturityLevel.Production, dataFactoryCore, compatibilityLevel);
+                                     final int compatibilityLevel ) {
+    this( dataFactory, bundleLocation, keyPrefix, expert, preferred, hidden, deprecated, editable,
+      freeformQuery, formattingMetadataSource,
+      experimental ? MaturityLevel.Development : MaturityLevel.Production, dataFactoryCore, compatibilityLevel );
   }
 
-  public DefaultDataFactoryMetaData(final String dataFactory,
-                                    final String bundleLocation,
-                                    final String keyPrefix,
-                                    final boolean expert,
-                                    final boolean preferred,
-                                    final boolean hidden,
-                                    final boolean deprecated,
-                                    final boolean editable,
-                                    final boolean freeformQuery,
-                                    final boolean formattingMetadataSource,
-                                    final MaturityLevel maturityLevel,
-                                    final DataFactoryCore dataFactoryCore,
-                                    final int compatibilityLevel)
-  {
-    super(dataFactory, bundleLocation, keyPrefix, expert,
-        preferred, hidden, deprecated, maturityLevel, compatibilityLevel);
-    if (dataFactoryCore == null)
-    {
+  public DefaultDataFactoryMetaData( final String dataFactory,
+                                     final String bundleLocation,
+                                     final String keyPrefix,
+                                     final boolean expert,
+                                     final boolean preferred,
+                                     final boolean hidden,
+                                     final boolean deprecated,
+                                     final boolean editable,
+                                     final boolean freeformQuery,
+                                     final boolean formattingMetadataSource,
+                                     final MaturityLevel maturityLevel,
+                                     final DataFactoryCore dataFactoryCore,
+                                     final int compatibilityLevel ) {
+    super( dataFactory, bundleLocation, keyPrefix, expert,
+      preferred, hidden, deprecated, maturityLevel, compatibilityLevel );
+    if ( dataFactoryCore == null ) {
       throw new NullPointerException();
     }
 
@@ -86,94 +82,73 @@ public class DefaultDataFactoryMetaData extends AbstractMetaData implements Data
     this.dataFactoryCore = dataFactoryCore;
   }
 
-  public DefaultDataFactoryMetaData(final DataFactoryMetaDataBuilder builder)
-  {
-    super(builder);
+  public DefaultDataFactoryMetaData( final DataFactoryMetaDataBuilder builder ) {
+    super( builder );
     this.editable = builder.isEditable();
     this.freeformQuery = builder.isFreeformQuery();
     this.formattingMetadataSource = builder.isFormattingMetadataSource();
     this.dataFactoryCore = builder.getDataFactoryCore();
     this.editorClass = builder.getEditorClass();
 
-    if (dataFactoryCore == null)
-    {
+    if ( dataFactoryCore == null ) {
       throw new NullPointerException();
     }
   }
 
-  protected String computePrefix(final String keyPrefix, final String name)
-  {
-    if (StringUtils.isEmpty(keyPrefix))
-    {
+  protected String computePrefix( final String keyPrefix, final String name ) {
+    if ( StringUtils.isEmpty( keyPrefix ) ) {
       return "";
     }
-    return super.computePrefix(keyPrefix, name);
+    return super.computePrefix( keyPrefix, name );
   }
 
-  public String[] getReferencedFields(final DataFactory element, final String queryName, final DataRow parameter)
-  {
-    return dataFactoryCore.getReferencedFields(this, element, queryName, parameter);
+  public String[] getReferencedFields( final DataFactory element, final String queryName, final DataRow parameter ) {
+    return dataFactoryCore.getReferencedFields( this, element, queryName, parameter );
   }
 
-  public ResourceReference[] getReferencedResources(final DataFactory element,
-                                                    final ResourceManager resourceManager,
-                                                    final String queryName,
-                                                    final DataRow parameter)
-  {
-    return dataFactoryCore.getReferencedResources(this, element, resourceManager, queryName, parameter);
+  public ResourceReference[] getReferencedResources( final DataFactory element,
+                                                     final ResourceManager resourceManager,
+                                                     final String queryName,
+                                                     final DataRow parameter ) {
+    return dataFactoryCore.getReferencedResources( this, element, resourceManager, queryName, parameter );
   }
 
-  public boolean isEditable()
-  {
+  public boolean isEditable() {
     return editable && ensureEditorAvailable();
   }
 
-  public boolean isEditorAvailable()
-  {
+  public boolean isEditorAvailable() {
     return ensureEditorAvailable();
   }
 
-  public DataSourcePlugin createEditor()
-  {
-    if (ensureEditorAvailable() == false)
-    {
+  public DataSourcePlugin createEditor() {
+    if ( ensureEditorAvailable() == false ) {
       return null;
     }
 
-    if (editorClass == null)
-    {
+    if ( editorClass == null ) {
       return null;
     }
-    try
-    {
+    try {
       return (DataSourcePlugin) editorClass.newInstance();
-    }
-    catch (Exception e)
-    {
+    } catch ( Exception e ) {
       return null;
     }
   }
 
-  private boolean ensureEditorAvailable()
-  {
-    if (editorClass == null)
-    {
+  private boolean ensureEditorAvailable() {
+    if ( editorClass == null ) {
       final Configuration configuration = ClassicEngineBoot.getInstance().getGlobalConfig();
-      final String className = configuration.getConfigProperty(getEditorConfigurationKey());
-      if (className != null)
-      {
-        try
-        {
-          final ClassLoader loader = ObjectUtilities.getClassLoader(DefaultDataFactoryMetaData.class);
-          final Class maybeClass = Class.forName(className, false, loader);
-          if (DataSourcePlugin.class.isAssignableFrom(maybeClass))
-          {
+      final String className = configuration.getConfigProperty( getEditorConfigurationKey() );
+      if ( className != null ) {
+        try {
+          final ClassLoader loader = ObjectUtilities.getClassLoader( DefaultDataFactoryMetaData.class );
+          final Class maybeClass = Class.forName( className, false, loader );
+          if ( DataSourcePlugin.class.isAssignableFrom( maybeClass ) ) {
             editorClass = maybeClass;
           }
-        }
-        catch (ClassNotFoundException e)
-        {
-          logger.warn("Editor class " + className + " cannot be found.", e);
+        } catch ( ClassNotFoundException e ) {
+          logger.warn( "Editor class " + className + " cannot be found.", e );
           return false;
         }
       }
@@ -181,42 +156,36 @@ public class DefaultDataFactoryMetaData extends AbstractMetaData implements Data
     return editorClass != null;
   }
 
-  protected String getEditorConfigurationKey()
-  {
+  protected String getEditorConfigurationKey() {
     return "org.pentaho.reporting.engine.classic.metadata.datafactory-editor." + getName();
   }
 
-  public boolean isFreeFormQuery()
-  {
+  public boolean isFreeFormQuery() {
     return freeformQuery;
   }
 
-  public boolean isFormattingMetaDataSource()
-  {
+  public boolean isFormattingMetaDataSource() {
     return formattingMetadataSource;
   }
 
-  public String toString()
-  {
+  public String toString() {
     final StringBuilder sb = new StringBuilder();
-    sb.append("DefaultDataFactoryMetaData");
-    sb.append("{editorClass=").append(editorClass);
-    sb.append(", editable=").append(editable);
-    sb.append(", freeformQuery=").append(freeformQuery);
-    sb.append(", formattingMetadataSource=").append(formattingMetadataSource);
-    sb.append(", super=").append(super.toString());
-    sb.append('}');
+    sb.append( "DefaultDataFactoryMetaData" );
+    sb.append( "{editorClass=" ).append( editorClass );
+    sb.append( ", editable=" ).append( editable );
+    sb.append( ", freeformQuery=" ).append( freeformQuery );
+    sb.append( ", formattingMetadataSource=" ).append( formattingMetadataSource );
+    sb.append( ", super=" ).append( super.toString() );
+    sb.append( '}' );
     return sb.toString();
   }
 
-  public String getDisplayConnectionName(final DataFactory dataFactory)
-  {
-    return dataFactoryCore.getDisplayConnectionName(this, dataFactory);
+  public String getDisplayConnectionName( final DataFactory dataFactory ) {
+    return dataFactoryCore.getDisplayConnectionName( this, dataFactory );
   }
 
-  public Object getQueryHash(final DataFactory dataFactory, final String queryName, final DataRow parameter)
-  {
-    return dataFactoryCore.getQueryHash(this, dataFactory, queryName, parameter);
+  public Object getQueryHash( final DataFactory dataFactory, final String queryName, final DataRow parameter ) {
+    return dataFactoryCore.getQueryHash( this, dataFactory, queryName, parameter );
   }
 }
 

@@ -17,13 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.misc.datafactory.sql;
 
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import javax.sql.DataSource;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
@@ -31,57 +24,55 @@ import org.pentaho.reporting.engine.classic.core.modules.misc.connections.DataSo
 import org.pentaho.reporting.engine.classic.core.modules.misc.connections.DatasourceServiceException;
 import org.pentaho.reporting.libraries.base.util.StringUtils;
 
-public class JndiConnectionProvider implements ConnectionProvider
-{
+import javax.sql.DataSource;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.ArrayList;
+
+public class JndiConnectionProvider implements ConnectionProvider {
   private transient DataSourceService dataSourceService;
 
-  private static final Log logger = LogFactory.getLog(JndiConnectionProvider.class);
+  private static final Log logger = LogFactory.getLog( JndiConnectionProvider.class );
   private String connectionPath;
   private String username;
   private String password;
 
-  public JndiConnectionProvider()
-  {
-    dataSourceService = ClassicEngineBoot.getInstance().getObjectFactory().get(DataSourceService.class);
+  public JndiConnectionProvider() {
+    dataSourceService = ClassicEngineBoot.getInstance().getObjectFactory().get( DataSourceService.class );
   }
 
-  public JndiConnectionProvider(final String connectionPath,
-                                final String username,
-                                final String password)
-  {
+  public JndiConnectionProvider( final String connectionPath,
+                                 final String username,
+                                 final String password ) {
     this();
     this.connectionPath = connectionPath;
     this.username = username;
     this.password = password;
   }
 
-  public String getConnectionPath()
-  {
+  public String getConnectionPath() {
     return connectionPath;
   }
 
-  public void setConnectionPath(final String connectionPath)
-  {
+  public void setConnectionPath( final String connectionPath ) {
     this.connectionPath = connectionPath;
   }
 
-  public String getUsername()
-  {
+  public String getUsername() {
     return username;
   }
 
-  public void setUsername(final String username)
-  {
+  public void setUsername( final String username ) {
     this.username = username;
   }
 
-  public String getPassword()
-  {
+  public String getPassword() {
     return password;
   }
 
-  public void setPassword(final String password)
-  {
+  public void setPassword( final String password ) {
     this.password = password;
   }
 
@@ -95,111 +86,88 @@ public class JndiConnectionProvider implements ConnectionProvider
    * @return the connection.
    * @throws SQLException if the connection has errors.
    */
-  public Connection createConnection(final String user, final String password) throws SQLException
-  {
-    if (connectionPath == null)
-    {
-      throw new SQLException("JNDI DataSource is invalid; no connection path is defined.");
+  public Connection createConnection( final String user, final String password ) throws SQLException {
+    if ( connectionPath == null ) {
+      throw new SQLException( "JNDI DataSource is invalid; no connection path is defined." );
     }
-    try
-    {
-      final DataSource ds = dataSourceService.getDataSource(connectionPath);
+    try {
+      final DataSource ds = dataSourceService.getDataSource( connectionPath );
 
       final String realUser;
       final String realPassword;
-      if (StringUtils.isEmpty(username) == false)
-      {
+      if ( StringUtils.isEmpty( username ) == false ) {
         realUser = username;
-      }
-      else
-      {
+      } else {
         realUser = user;
       }
-      if (StringUtils.isEmpty(password) == false)
-      {
+      if ( StringUtils.isEmpty( password ) == false ) {
         realPassword = this.password;
-      }
-      else
-      {
+      } else {
         realPassword = password;
       }
 
-      if (StringUtils.isEmpty(realUser))
-      {
+      if ( StringUtils.isEmpty( realUser ) ) {
         final Connection connection = ds.getConnection();
-        if (connection == null)
-        {
-          throw new SQLException("JNDI DataSource is invalid; it returned null without throwing a meaningful error.");
+        if ( connection == null ) {
+          throw new SQLException( "JNDI DataSource is invalid; it returned null without throwing a meaningful error." );
         }
         return connection;
       }
 
-      final Connection connection = ds.getConnection(realUser, realPassword);
-      if (connection == null)
-      {
-        throw new SQLException("JNDI DataSource is invalid; it returned null without throwing a meaningful error.");
+      final Connection connection = ds.getConnection( realUser, realPassword );
+      if ( connection == null ) {
+        throw new SQLException( "JNDI DataSource is invalid; it returned null without throwing a meaningful error." );
       }
       return connection;
-    }
-    catch (DatasourceServiceException ne)
-    {
-      logger.warn("Failed to access the JDNI-System", ne);
-      throw new SQLException("Failed to access the JNDI system", ne);
+    } catch ( DatasourceServiceException ne ) {
+      logger.warn( "Failed to access the JDNI-System", ne );
+      throw new SQLException( "Failed to access the JNDI system", ne );
     }
   }
 
-  public boolean equals(final Object o)
-  {
-    if (this == o)
-    {
+  public boolean equals( final Object o ) {
+    if ( this == o ) {
       return true;
     }
-    if (o == null || getClass() != o.getClass())
-    {
+    if ( o == null || getClass() != o.getClass() ) {
       return false;
     }
 
     final JndiConnectionProvider that = (JndiConnectionProvider) o;
 
-    if (connectionPath != null ? !connectionPath.equals(that.connectionPath) : that.connectionPath != null)
-    {
+    if ( connectionPath != null ? !connectionPath.equals( that.connectionPath ) : that.connectionPath != null ) {
       return false;
     }
-    if (password != null ? !password.equals(that.password) : that.password != null)
-    {
+    if ( password != null ? !password.equals( that.password ) : that.password != null ) {
       return false;
     }
-    if (username != null ? !username.equals(that.username) : that.username != null)
-    {
+    if ( username != null ? !username.equals( that.username ) : that.username != null ) {
       return false;
     }
 
     return true;
   }
 
-  public Object getConnectionHash()
-  {
+  public Object getConnectionHash() {
     final ArrayList<Object> list = new ArrayList<Object>();
-    list.add(getClass().getName());
-    list.add(connectionPath);
-    list.add(username);
+    list.add( getClass().getName() );
+    list.add( connectionPath );
+    list.add( username );
     return list;
   }
 
-  public int hashCode()
-  {
+  public int hashCode() {
     int result;
-    result = (connectionPath != null ? connectionPath.hashCode() : 0);
-    result = 31 * result + (username != null ? username.hashCode() : 0);
-    result = 31 * result + (password != null ? password.hashCode() : 0);
+    result = ( connectionPath != null ? connectionPath.hashCode() : 0 );
+    result = 31 * result + ( username != null ? username.hashCode() : 0 );
+    result = 31 * result + ( password != null ? password.hashCode() : 0 );
     return result;
   }
 
-  private void readObject(final ObjectInputStream stream)
-      throws IOException, ClassNotFoundException
-  {
+  private void readObject( final ObjectInputStream stream )
+    throws IOException, ClassNotFoundException {
     stream.defaultReadObject();
-    dataSourceService = ClassicEngineBoot.getInstance().getObjectFactory().get(DataSourceService.class);
+    dataSourceService = ClassicEngineBoot.getInstance().getObjectFactory().get( DataSourceService.class );
   }
 
 }

@@ -17,12 +17,12 @@
 
 package org.pentaho.reporting.engine.classic.core.function;
 
+import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
-
-import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
 
 /**
  * Collects all expressions used in the report. Unlike earlier versions of this class, now expressions can have a
@@ -32,8 +32,7 @@ import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
  *
  * @author Thomas Morgner
  */
-public class ExpressionCollection implements Cloneable, Serializable
-{
+public class ExpressionCollection implements Cloneable, Serializable {
   /**
    * Ordered storage for the Expressions.
    */
@@ -42,8 +41,7 @@ public class ExpressionCollection implements Cloneable, Serializable
   /**
    * Creates a new expression collection (initially empty).
    */
-  public ExpressionCollection()
-  {
+  public ExpressionCollection() {
     expressionList = new ArrayList<Expression>();
   }
 
@@ -53,10 +51,9 @@ public class ExpressionCollection implements Cloneable, Serializable
    * @param expressions a collection of expressions.
    * @throws ClassCastException if the collection does not contain Expressions
    */
-  public ExpressionCollection(final Collection expressions)
-  {
+  public ExpressionCollection( final Collection expressions ) {
     this();
-    addAll(expressions);
+    addAll( expressions );
   }
 
   /**
@@ -66,15 +63,12 @@ public class ExpressionCollection implements Cloneable, Serializable
    * @param expressions the expressions to be added.
    * @throws ClassCastException if the collection does not contain expressions
    */
-  public void addAll(final Collection expressions)
-  {
-    if (expressions != null)
-    {
+  public void addAll( final Collection expressions ) {
+    if ( expressions != null ) {
       final Iterator iterator = expressions.iterator();
-      while (iterator.hasNext())
-      {
+      while ( iterator.hasNext() ) {
         final Expression f = (Expression) iterator.next();
-        add(f);
+        add( f );
       }
     }
   }
@@ -85,14 +79,12 @@ public class ExpressionCollection implements Cloneable, Serializable
    * @param name the expression name (<code>null</code> not permitted).
    * @return The expression.
    */
-  public Expression get(final String name)
-  {
-    final int position = findExpressionByName(name);
-    if (position == -1)
-    {
+  public Expression get( final String name ) {
+    final int position = findExpressionByName( name );
+    if ( position == -1 ) {
       return null;
     }
-    return getExpression(position);
+    return getExpression( position );
   }
 
   /**
@@ -101,13 +93,10 @@ public class ExpressionCollection implements Cloneable, Serializable
    * @param name the name, never null.
    * @return the position of the expression with that name or -1 if no expression contains that name.
    */
-  private int findExpressionByName(final String name)
-  {
-    for (int i = 0; i < expressionList.size(); i++)
-    {
-      final Expression expression = expressionList.get(i);
-      if (ObjectUtilities.equal(name, expression.getName()))
-      {
+  private int findExpressionByName( final String name ) {
+    for ( int i = 0; i < expressionList.size(); i++ ) {
+      final Expression expression = expressionList.get( i );
+      if ( ObjectUtilities.equal( name, expression.getName() ) ) {
         return i;
       }
     }
@@ -119,24 +108,20 @@ public class ExpressionCollection implements Cloneable, Serializable
    *
    * @param e the expression.
    */
-  public void add(final Expression e)
-  {
-    if (e == null)
-    {
-      throw new NullPointerException("Expression is null");
+  public void add( final Expression e ) {
+    if ( e == null ) {
+      throw new NullPointerException( "Expression is null" );
     }
 
-    expressionList.add(e);
+    expressionList.add( e );
   }
 
-  public void add(final int index, final Expression e)
-  {
-    if (e == null)
-    {
-      throw new NullPointerException("Expression is null");
+  public void add( final int index, final Expression e ) {
+    if ( e == null ) {
+      throw new NullPointerException( "Expression is null" );
     }
 
-    expressionList.add(index, e);
+    expressionList.add( index, e );
   }
 
   /**
@@ -146,13 +131,11 @@ public class ExpressionCollection implements Cloneable, Serializable
    * @return true if the expression can be removed from (was present in) the list
    * @throws NullPointerException if the given Expression is null.
    */
-  public boolean removeExpression(final Expression e)
-  {
-    if (e == null)
-    {
+  public boolean removeExpression( final Expression e ) {
+    if ( e == null ) {
       throw new NullPointerException();
     }
-    return expressionList.remove(e);
+    return expressionList.remove( e );
   }
 
   /**
@@ -160,9 +143,8 @@ public class ExpressionCollection implements Cloneable, Serializable
    *
    * @param index the index of the expression ro remove
    */
-  public void removeExpression(final int index)
-  {
-    expressionList.remove(index);
+  public void removeExpression( final int index ) {
+    expressionList.remove( index );
   }
 
   /**
@@ -170,8 +152,7 @@ public class ExpressionCollection implements Cloneable, Serializable
    *
    * @return the number of expressions in this collection
    */
-  public int size()
-  {
+  public int size() {
     return expressionList.size();
   }
 
@@ -182,27 +163,22 @@ public class ExpressionCollection implements Cloneable, Serializable
    * @return the expression.
    * @throws IndexOutOfBoundsException if the given position is invalid
    */
-  public Expression getExpression(final int pos)
-  {
-    return expressionList.get(pos);
+  public Expression getExpression( final int pos ) {
+    return expressionList.get( pos );
   }
 
-  public int indexOf(final Expression element)
-  {
-    if (element == null)
-    {
+  public int indexOf( final Expression element ) {
+    if ( element == null ) {
       throw new NullPointerException();
     }
-    return expressionList.indexOf(element);
+    return expressionList.indexOf( element );
   }
 
-  public Expression set(final int index, final Expression element)
-  {
-    if (element == null)
-    {
+  public Expression set( final int index, final Expression element ) {
+    if ( element == null ) {
       throw new NullPointerException();
     }
-    return expressionList.set(index, element);
+    return expressionList.set( index, element );
   }
 
   /**
@@ -210,25 +186,20 @@ public class ExpressionCollection implements Cloneable, Serializable
    *
    * @return The clone.
    */
-  public ExpressionCollection clone()
-  {
-    try
-    {
+  public ExpressionCollection clone() {
+    try {
       final ExpressionCollection col = (ExpressionCollection) super.clone();
       col.expressionList = (ArrayList<Expression>) expressionList.clone();
       col.expressionList.clear();
 
       final Iterator it = expressionList.iterator();
-      while (it.hasNext())
-      {
+      while ( it.hasNext() ) {
         final Expression ex = (Expression) it.next();
-        col.expressionList.add(ex.getInstance());
+        col.expressionList.add( ex.getInstance() );
       }
       return col;
-    }
-    catch (CloneNotSupportedException e)
-    {
-      throw new IllegalStateException("Unable to clone an expression: ", e);
+    } catch ( CloneNotSupportedException e ) {
+      throw new IllegalStateException( "Unable to clone an expression: ", e );
     }
   }
 
@@ -237,17 +208,14 @@ public class ExpressionCollection implements Cloneable, Serializable
    *
    * @return the expressions as array.
    */
-  public Expression[] getExpressions()
-  {
-    return expressionList.toArray(new Expression[expressionList.size()]);
+  public Expression[] getExpressions() {
+    return expressionList.toArray( new Expression[ expressionList.size() ] );
   }
 
-  public boolean contains(final Expression expression)
-  {
-    if (expression == null)
-    {
+  public boolean contains( final Expression expression ) {
+    if ( expression == null ) {
       throw new NullPointerException();
     }
-    return expressionList.contains(expression);
+    return expressionList.contains( expression );
   }
 }

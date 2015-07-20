@@ -26,13 +26,11 @@ import org.pentaho.reporting.engine.classic.core.modules.parser.ext.factory.base
  *
  * @author Thomas Morgner
  */
-public class BandLayoutClassFactory extends ClassFactoryImpl
-{
+public class BandLayoutClassFactory extends ClassFactoryImpl {
   /**
    * Creates a new band layout class factory.
    */
-  public BandLayoutClassFactory()
-  {
-    registerClass(BandLayoutManager.class, new ClassLoaderObjectDescription());
+  public BandLayoutClassFactory() {
+    registerClass( BandLayoutManager.class, new ClassLoaderObjectDescription() );
   }
 }

@@ -17,146 +17,139 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.misc.datafactory;
 
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
-
-import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.pentaho.reporting.engine.classic.core.DataFactory;
 import org.pentaho.reporting.engine.classic.core.DataRow;
 import org.pentaho.reporting.engine.classic.core.StaticDataRow;
 import org.pentaho.reporting.engine.classic.core.metadata.DataFactoryMetaData;
-import org.pentaho.reporting.engine.classic.core.metadata.DataFactoryRegistry;
 import org.pentaho.reporting.engine.classic.core.testsupport.DataSourceTestBase;
+
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 
 /**
  * Creation-Date: Jan 18, 2007, 5:48:56 PM
  *
  * @author Thomas Morgner
  */
-public class StaticDataSourceFactoryTest extends DataSourceTestBase
-{
-  public StaticDataSourceFactoryTest()
-  {
+public class StaticDataSourceFactoryTest extends DataSourceTestBase {
+  public StaticDataSourceFactoryTest() {
   }
 
-  public StaticDataSourceFactoryTest(String string)
-  {
-    super(string);
+  public StaticDataSourceFactoryTest( String string ) {
+    super( string );
   }
 
-  private static final String[][] QUERIES_AND_RESULTS = new String[][]{
-      {StaticDataSourceFactoryTest.class.getName() + "#createSimpleTableModel", "static-datafactory-1.txt"},
-      {StaticDataSourceFactoryTest.class.getName() + "#createSimpleTableModel()", "static-datafactory-2.txt"},
-      {StaticDataSourceFactoryTest.class.getName() + "#createParametrizedTableModel(parameter2,parameter1)", "static-datafactory-3.txt"},
+  private static final String[][] QUERIES_AND_RESULTS = new String[][] {
+    { StaticDataSourceFactoryTest.class.getName() + "#createSimpleTableModel", "static-datafactory-1.txt" },
+    { StaticDataSourceFactoryTest.class.getName() + "#createSimpleTableModel()", "static-datafactory-2.txt" },
+    { StaticDataSourceFactoryTest.class.getName() + "#createParametrizedTableModel(parameter2,parameter1)",
+      "static-datafactory-3.txt" },
 
-      {StaticDataSourceFactoryTestSupport.class.getName() + "#createSimpleTableModel", "static-datafactory-4.txt"},
-      {StaticDataSourceFactoryTestSupport.class.getName() + "#createSimpleTableModel()", "static-datafactory-5.txt"},
-      {StaticDataSourceFactoryTestSupport.class.getName() + "#createParametrizedTableModel(parameter2,parameter1)", "static-datafactory-6.txt"},
+    { StaticDataSourceFactoryTestSupport.class.getName() + "#createSimpleTableModel", "static-datafactory-4.txt" },
+    { StaticDataSourceFactoryTestSupport.class.getName() + "#createSimpleTableModel()", "static-datafactory-5.txt" },
+    { StaticDataSourceFactoryTestSupport.class.getName() + "#createParametrizedTableModel(parameter2,parameter1)",
+      "static-datafactory-6.txt" },
 
-      {StaticDataSourceFactoryTestSupport.class.getName() + "()", "static-datafactory-7.txt"},
-      {StaticDataSourceFactoryTestSupport.class.getName() + "()#createSimpleTableModel", "static-datafactory-8.txt"},
-      {StaticDataSourceFactoryTestSupport.class.getName() + "()#createSimpleTableModel()", "static-datafactory-9.txt"},
-      {StaticDataSourceFactoryTestSupport.class.getName() + "()#createParametrizedTableModel(parameter2,parameter1)", "static-datafactory-10.txt"},
+    { StaticDataSourceFactoryTestSupport.class.getName() + "()", "static-datafactory-7.txt" },
+    { StaticDataSourceFactoryTestSupport.class.getName() + "()#createSimpleTableModel", "static-datafactory-8.txt" },
+    { StaticDataSourceFactoryTestSupport.class.getName() + "()#createSimpleTableModel()", "static-datafactory-9.txt" },
+    { StaticDataSourceFactoryTestSupport.class.getName() + "()#createParametrizedTableModel(parameter2,parameter1)",
+      "static-datafactory-10.txt" },
 
-      {StaticDataSourceFactoryTestSupport.class.getName() + "(parameter1,parameter2)", "static-datafactory-11.txt"},
-      {StaticDataSourceFactoryTestSupport.class.getName() + "(parameter1,parameter2)#createSimpleTableModel", "static-datafactory-12.txt"},
-      {StaticDataSourceFactoryTestSupport.class.getName() + "(parameter1,parameter2)#createSimpleTableModel()", "static-datafactory-13.txt"},
-      {StaticDataSourceFactoryTestSupport.class.getName() + "(parameter1,parameter2)#createParametrizedTableModel(parameter2,parameter1)", "static-datafactory-14.txt"},
+    { StaticDataSourceFactoryTestSupport.class.getName() + "(parameter1,parameter2)", "static-datafactory-11.txt" },
+    { StaticDataSourceFactoryTestSupport.class.getName() + "(parameter1,parameter2)#createSimpleTableModel",
+      "static-datafactory-12.txt" },
+    { StaticDataSourceFactoryTestSupport.class.getName() + "(parameter1,parameter2)#createSimpleTableModel()",
+      "static-datafactory-13.txt" },
+    { StaticDataSourceFactoryTestSupport.class.getName()
+      + "(parameter1,parameter2)#createParametrizedTableModel(parameter2,parameter1)", "static-datafactory-14.txt" },
   };
 
-  protected DataFactory createDataFactory(final String query)
-  {
+  protected DataFactory createDataFactory( final String query ) {
     final NamedStaticDataFactory dataFactory = new NamedStaticDataFactory();
-    dataFactory.setQuery("default", query);
+    dataFactory.setQuery( "default", query );
     return dataFactory;
   }
 
-  public void testSaveAndLoad() throws Exception
-  {
-    runSaveAndLoad(QUERIES_AND_RESULTS);
+  public void testSaveAndLoad() throws Exception {
+    runSaveAndLoad( QUERIES_AND_RESULTS );
   }
 
-  public void testDerive() throws Exception
-  {
-    runDerive(QUERIES_AND_RESULTS);
+  public void testDerive() throws Exception {
+    runDerive( QUERIES_AND_RESULTS );
   }
 
-  public void testSerialize() throws Exception
-  {
-    runSerialize(QUERIES_AND_RESULTS);
+  public void testSerialize() throws Exception {
+    runSerialize( QUERIES_AND_RESULTS );
   }
 
-  public void testQuery() throws Exception
-  {
-    runTest(QUERIES_AND_RESULTS);
+  public void testQuery() throws Exception {
+    runTest( QUERIES_AND_RESULTS );
   }
 
-  public static void main(String[] args) throws Exception
-  {
+  public static void main( String[] args ) throws Exception {
     final StaticDataSourceFactoryTest test = new StaticDataSourceFactoryTest();
     test.setUp();
-    test.runGenerate(QUERIES_AND_RESULTS);
+    test.runGenerate( QUERIES_AND_RESULTS );
   }
 
-  protected DataRow getParameterForNextTest()
-  {
-    return new StaticDataRow(new String[]{"parameter1", "parameter2"},
-        new Object[]{"test", new Integer(5)});
+  protected DataRow getParameterForNextTest() {
+    return new StaticDataRow( new String[] { "parameter1", "parameter2" },
+      new Object[] { "test", new Integer( 5 ) } );
   }
 
-  public void testMetaData()
-  {
+  public void testMetaData() {
     final NamedStaticDataFactory sqlReportDataFactory = new NamedStaticDataFactory();
     final DataFactoryMetaData metaData = sqlReportDataFactory.getMetaData();
-    sqlReportDataFactory.setQuery("test", StaticDataSourceFactoryTestSupport.class.getName() + "()#createSimpleTableModel");
+    sqlReportDataFactory
+      .setQuery( "test", StaticDataSourceFactoryTestSupport.class.getName() + "()#createSimpleTableModel" );
 
-    assertNotNull("QueryHash must exist",
-        metaData.getQueryHash(sqlReportDataFactory, "test", new StaticDataRow()));
+    assertNotNull( "QueryHash must exist",
+      metaData.getQueryHash( sqlReportDataFactory, "test", new StaticDataRow() ) );
 
     final NamedStaticDataFactory sqlReportDataFactory2 = new NamedStaticDataFactory();
-    sqlReportDataFactory2.setQuery("test", StaticDataSourceFactoryTestSupport.class.getName() + "()#createSimpleTableModel()");
+    sqlReportDataFactory2
+      .setQuery( "test", StaticDataSourceFactoryTestSupport.class.getName() + "()#createSimpleTableModel()" );
 
-    assertNotEquals("Physical Queries do not match, so query hash must be different",
-        metaData.getQueryHash(sqlReportDataFactory, "test", new StaticDataRow()),
-        (metaData.getQueryHash(sqlReportDataFactory2, "test", new StaticDataRow())));
+    assertNotEquals( "Physical Queries do not match, so query hash must be different",
+      metaData.getQueryHash( sqlReportDataFactory, "test", new StaticDataRow() ),
+      ( metaData.getQueryHash( sqlReportDataFactory2, "test", new StaticDataRow() ) ) );
 
 
-    sqlReportDataFactory2.setQuery("test2", StaticDataSourceFactoryTestSupport.class.getName() + "()#createSimpleTableModel");
-    final Object qh1 = metaData.getQueryHash(sqlReportDataFactory, "test", new StaticDataRow());
-    final Object qh2 = metaData.getQueryHash(sqlReportDataFactory2, "test2", new StaticDataRow());
-    assertEquals("Physical Queries match, so queries are considered the same", qh1, qh2);
+    sqlReportDataFactory2
+      .setQuery( "test2", StaticDataSourceFactoryTestSupport.class.getName() + "()#createSimpleTableModel" );
+    final Object qh1 = metaData.getQueryHash( sqlReportDataFactory, "test", new StaticDataRow() );
+    final Object qh2 = metaData.getQueryHash( sqlReportDataFactory2, "test2", new StaticDataRow() );
+    assertEquals( "Physical Queries match, so queries are considered the same", qh1, qh2 );
   }
 
-  public void testParameterMetadata()
-  {
+  public void testParameterMetadata() {
     final NamedStaticDataFactory sqlReportDataFactory = new NamedStaticDataFactory();
     final DataFactoryMetaData metaData = sqlReportDataFactory.getMetaData();
-    sqlReportDataFactory.setQuery("test", StaticDataSourceFactoryTestSupport.class.getName() +
-        "(parameter1,parameter2)#createParametrizedTableModel(parameter2,parameter1,parameter3)");
-    final String[] fields = metaData.getReferencedFields(sqlReportDataFactory, "test", new StaticDataRow());
-    assertNotNull(fields);
-    assertEquals(3, fields.length);
-    assertEquals("parameter1", fields[0]);
-    assertEquals("parameter2", fields[1]);
-    assertEquals("parameter3", fields[2]);
+    sqlReportDataFactory.setQuery( "test", StaticDataSourceFactoryTestSupport.class.getName() +
+      "(parameter1,parameter2)#createParametrizedTableModel(parameter2,parameter1,parameter3)" );
+    final String[] fields = metaData.getReferencedFields( sqlReportDataFactory, "test", new StaticDataRow() );
+    assertNotNull( fields );
+    assertEquals( 3, fields.length );
+    assertEquals( "parameter1", fields[ 0 ] );
+    assertEquals( "parameter2", fields[ 1 ] );
+    assertEquals( "parameter3", fields[ 2 ] );
   }
 
 
   /**
    * @noinspection UnusedDeclaration
    */
-  public static TableModel createParametrizedTableModel(int i1, String s1)
-  {
-    assertEquals("Passing primitive parameters failed", 5, i1);
-    assertEquals("Passing object parameters failed", "test", s1);
+  public static TableModel createParametrizedTableModel( int i1, String s1 ) {
+    assertEquals( "Passing primitive parameters failed", 5, i1 );
+    assertEquals( "Passing object parameters failed", "test", s1 );
     return new DefaultTableModel();
   }
 
   /**
    * @noinspection UnusedDeclaration
    */
-  public static TableModel createSimpleTableModel()
-  {
+  public static TableModel createSimpleTableModel() {
     return new DefaultTableModel();
   }
 

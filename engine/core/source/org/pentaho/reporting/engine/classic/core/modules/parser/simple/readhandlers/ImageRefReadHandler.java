@@ -23,13 +23,11 @@ import org.pentaho.reporting.engine.classic.core.modules.parser.base.PropertyAtt
 import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 import org.xml.sax.SAXException;
 
-public class ImageRefReadHandler extends AbstractImageElementReadHandler
-{
+public class ImageRefReadHandler extends AbstractImageElementReadHandler {
   private ContentElementFactory elementFactory;
   private static final String SRC_ATT = "src";
 
-  public ImageRefReadHandler()
-  {
+  public ImageRefReadHandler() {
     this.elementFactory = new ContentElementFactory();
   }
 
@@ -39,23 +37,20 @@ public class ImageRefReadHandler extends AbstractImageElementReadHandler
    * @param atts the attributes.
    * @throws org.xml.sax.SAXException if there is a parsing error.
    */
-  protected void startParsing(final PropertyAttributes atts)
-      throws SAXException
-  {
-    super.startParsing(atts);
-    handleSource(atts);
+  protected void startParsing( final PropertyAttributes atts )
+    throws SAXException {
+    super.startParsing( atts );
+    handleSource( atts );
   }
 
-  private void handleSource(final PropertyAttributes atts)
-  {
+  private void handleSource( final PropertyAttributes atts ) {
     final ResourceManager resourceManager = getRootHandler().getResourceManager();
-    elementFactory.setBaseURL(resourceManager.toURL(getRootHandler().getContext()));
-    elementFactory.setContent(atts.getValue(getUri(), ImageRefReadHandler.SRC_ATT));
+    elementFactory.setBaseURL( resourceManager.toURL( getRootHandler().getContext() ) );
+    elementFactory.setContent( atts.getValue( getUri(), ImageRefReadHandler.SRC_ATT ) );
   }
 
 
-  protected ElementFactory getElementFactory()
-  {
+  protected ElementFactory getElementFactory() {
     return elementFactory;
   }
 }

@@ -17,12 +17,11 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.parser.bundle.writer.styles;
 
-import java.io.IOException;
-
 import org.pentaho.reporting.engine.classic.core.style.ElementStyleSheet;
 import org.pentaho.reporting.libraries.xmlns.writer.XmlWriter;
 
-public interface BundleStyleSetWriteHandler
-{
-  public void writeStyle(final XmlWriter writer, final ElementStyleSheet style) throws IOException;
+import java.io.IOException;
+
+public interface BundleStyleSetWriteHandler {
+  public void writeStyle( final XmlWriter writer, final ElementStyleSheet style ) throws IOException;
 }

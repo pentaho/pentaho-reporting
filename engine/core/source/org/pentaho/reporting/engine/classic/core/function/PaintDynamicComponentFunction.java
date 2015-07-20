@@ -17,16 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.core.function;
 
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.Dimension;
-import java.awt.Graphics2D;
-import java.awt.Image;
-import java.awt.geom.AffineTransform;
-import java.awt.geom.Rectangle2D;
-import java.awt.image.BufferedImage;
-import java.io.IOException;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.pentaho.reporting.engine.classic.core.DefaultImageReference;
@@ -36,17 +26,22 @@ import org.pentaho.reporting.engine.classic.core.util.ComponentDrawable;
 import org.pentaho.reporting.engine.classic.core.util.ImageUtils;
 import org.pentaho.reporting.libraries.base.config.Configuration;
 
+import java.awt.*;
+import java.awt.geom.AffineTransform;
+import java.awt.geom.Rectangle2D;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+
 /**
  * Paints a AWT or Swing Component. The component must be contained in the dataRow.
  *
  * @author Thomas Morgner
  * @deprecated Use the new Component-Element instead. It uses drawables for this job, and therefore the result looks
- *             much better.
+ * much better.
  */
-@SuppressWarnings("deprecation")
-public class PaintDynamicComponentFunction extends AbstractFunction implements PageEventListener
-{
-  private static final Log logger = LogFactory.getLog(PaintDynamicComponentFunction.class);
+@SuppressWarnings( "deprecation" )
+public class PaintDynamicComponentFunction extends AbstractFunction implements PageEventListener {
+  private static final Log logger = LogFactory.getLog( PaintDynamicComponentFunction.class );
   /**
    * the created image, cached for getValue().
    */
@@ -68,8 +63,7 @@ public class PaintDynamicComponentFunction extends AbstractFunction implements P
    * @throws IllegalStateException (HeadlessException) if no full AWT is available. This function needs a working layout
    *                               manager.
    */
-  public PaintDynamicComponentFunction()
-  {
+  public PaintDynamicComponentFunction() {
     scale = 1;
   }
 
@@ -78,8 +72,7 @@ public class PaintDynamicComponentFunction extends AbstractFunction implements P
    *
    * @return The field name.
    */
-  public String getField()
-  {
+  public String getField() {
     return field;
   }
 
@@ -88,8 +81,7 @@ public class PaintDynamicComponentFunction extends AbstractFunction implements P
    *
    * @param field the field name.
    */
-  public void setField(final String field)
-  {
+  public void setField( final String field ) {
     this.field = field;
   }
 
@@ -98,8 +90,7 @@ public class PaintDynamicComponentFunction extends AbstractFunction implements P
    *
    * @param event the event.
    */
-  public void reportStarted(final ReportEvent event)
-  {
+  public void reportStarted( final ReportEvent event ) {
     image = null;
   }
 
@@ -109,8 +100,7 @@ public class PaintDynamicComponentFunction extends AbstractFunction implements P
    *
    * @param event The event.
    */
-  public void reportInitialized(final ReportEvent event)
-  {
+  public void reportInitialized( final ReportEvent event ) {
     image = null;
   }
 
@@ -119,8 +109,7 @@ public class PaintDynamicComponentFunction extends AbstractFunction implements P
    *
    * @param event the event.
    */
-  public void reportFinished(final ReportEvent event)
-  {
+  public void reportFinished( final ReportEvent event ) {
     image = null;
   }
 
@@ -129,8 +118,7 @@ public class PaintDynamicComponentFunction extends AbstractFunction implements P
    *
    * @param event the event.
    */
-  public void pageStarted(final ReportEvent event)
-  {
+  public void pageStarted( final ReportEvent event ) {
     image = null;
   }
 
@@ -139,8 +127,7 @@ public class PaintDynamicComponentFunction extends AbstractFunction implements P
    *
    * @param event the event.
    */
-  public void pageFinished(final ReportEvent event)
-  {
+  public void pageFinished( final ReportEvent event ) {
     image = null;
   }
 
@@ -149,8 +136,7 @@ public class PaintDynamicComponentFunction extends AbstractFunction implements P
    *
    * @param event the event.
    */
-  public void groupStarted(final ReportEvent event)
-  {
+  public void groupStarted( final ReportEvent event ) {
     image = null;
   }
 
@@ -159,8 +145,7 @@ public class PaintDynamicComponentFunction extends AbstractFunction implements P
    *
    * @param event the event.
    */
-  public void groupFinished(final ReportEvent event)
-  {
+  public void groupFinished( final ReportEvent event ) {
     image = null;
   }
 
@@ -169,8 +154,7 @@ public class PaintDynamicComponentFunction extends AbstractFunction implements P
    *
    * @param event the event.
    */
-  public void itemsAdvanced(final ReportEvent event)
-  {
+  public void itemsAdvanced( final ReportEvent event ) {
     image = null;
   }
 
@@ -179,21 +163,16 @@ public class PaintDynamicComponentFunction extends AbstractFunction implements P
    *
    * @return the resolution defined in the report-configuration.
    */
-  private float getDeviceScale()
-  {
+  private float getDeviceScale() {
     final Configuration config = getReportConfiguration();
     final String resolution = config.getConfigProperty(
-        "org.pentaho.reporting.engine.classic.core.layout.DeviceResolution");
-    if (resolution == null)
-    {
+      "org.pentaho.reporting.engine.classic.core.layout.DeviceResolution" );
+    if ( resolution == null ) {
       return 1;
     }
-    try
-    {
-      return Float.parseFloat(resolution) / 72.0f;
-    }
-    catch (NumberFormatException nfe)
-    {
+    try {
+      return Float.parseFloat( resolution ) / 72.0f;
+    } catch ( NumberFormatException nfe ) {
       return 1;
     }
   }
@@ -203,30 +182,28 @@ public class PaintDynamicComponentFunction extends AbstractFunction implements P
    *
    * @return the created image or null, if no image could be created.
    */
-  private Image createComponentImage()
-  {
-    final Object o = getDataRow().get(getField());
-    if ((o instanceof Component) == false)
-    {
+  private Image createComponentImage() {
+    final Object o = getDataRow().get( getField() );
+    if ( ( o instanceof Component ) == false ) {
       return null;
     }
 
     final float scale = getScale() * getDeviceScale();
 
     final ComponentDrawable drawable = new ComponentDrawable();
-    drawable.setComponent((Component) o);
-    drawable.setAllowOwnPeer(true);
-    drawable.setPaintSynchronized(true);
+    drawable.setComponent( (Component) o );
+    drawable.setAllowOwnPeer( true );
+    drawable.setPaintSynchronized( true );
     final Dimension dim = drawable.getSize();
 
-    final int width = Math.max(1, (int) (scale * dim.width));
-    final int height = Math.max(1, (int) (scale * dim.height));
+    final int width = Math.max( 1, (int) ( scale * dim.width ) );
+    final int height = Math.max( 1, (int) ( scale * dim.height ) );
 
-    final BufferedImage bi = ImageUtils.createTransparentImage(width, height);
+    final BufferedImage bi = ImageUtils.createTransparentImage( width, height );
     final Graphics2D graph = bi.createGraphics();
-    graph.setBackground(new Color(0, 0, 0, 0));
-    graph.setTransform(AffineTransform.getScaleInstance(scale, scale));
-    drawable.draw(graph, new Rectangle2D.Float(0, 0, dim.width, dim.height));
+    graph.setBackground( new Color( 0, 0, 0, 0 ) );
+    graph.setTransform( AffineTransform.getScaleInstance( scale, scale ) );
+    drawable.draw( graph, new Rectangle2D.Float( 0, 0, dim.width, dim.height ) );
     graph.dispose();
 
     return bi;
@@ -237,27 +214,21 @@ public class PaintDynamicComponentFunction extends AbstractFunction implements P
    *
    * @return the value of the function.
    */
-  public Object getValue()
-  {
-    if (image == null)
-    {
+  public Object getValue() {
+    if ( image == null ) {
       image = createComponentImage();
     }
 
-    if (image == null)
-    {
+    if ( image == null ) {
       return null;
     }
-    
-    try
-    {
-      final DefaultImageReference ref = new DefaultImageReference(image);
-      ref.setScale(1.0f / getScale(), 1.0f / getScale());
+
+    try {
+      final DefaultImageReference ref = new DefaultImageReference( image );
+      ref.setScale( 1.0f / getScale(), 1.0f / getScale() );
       return ref;
-    }
-    catch (IOException e)
-    {
-      PaintDynamicComponentFunction.logger.warn("Unable to fully load a given image. (It should not happen here.)");
+    } catch ( IOException e ) {
+      PaintDynamicComponentFunction.logger.warn( "Unable to fully load a given image. (It should not happen here.)" );
       return null;
     }
   }
@@ -268,8 +239,7 @@ public class PaintDynamicComponentFunction extends AbstractFunction implements P
    *
    * @param scale the scale factor.
    */
-  public void setScale(final float scale)
-  {
+  public void setScale( final float scale ) {
     this.scale = scale;
   }
 
@@ -280,8 +250,7 @@ public class PaintDynamicComponentFunction extends AbstractFunction implements P
    *
    * @return the scale factor.
    */
-  public float getScale()
-  {
+  public float getScale() {
     return scale;
   }
 }

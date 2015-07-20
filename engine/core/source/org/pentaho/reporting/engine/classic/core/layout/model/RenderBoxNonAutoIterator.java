@@ -17,26 +17,22 @@
 
 package org.pentaho.reporting.engine.classic.core.layout.model;
 
-import java.util.Iterator;
-
 import org.pentaho.reporting.libraries.base.util.FastStack;
 
-public class RenderBoxNonAutoIterator implements Iterator<RenderNode>
-{
+import java.util.Iterator;
+
+public class RenderBoxNonAutoIterator implements Iterator<RenderNode> {
   private RenderNode result;
   private boolean beforeStart;
   private FastStack<RenderBox> boxes;
 
-  public RenderBoxNonAutoIterator(final RenderBox sectionRenderBox)
-  {
+  public RenderBoxNonAutoIterator( final RenderBox sectionRenderBox ) {
     this.result = sectionRenderBox.getFirstChild();
     this.beforeStart = true;
   }
 
-  public boolean hasNext()
-  {
-    if (beforeStart)
-    {
+  public boolean hasNext() {
+    if ( beforeStart ) {
       beforeStart = false;
 
       findNonAuto();
@@ -44,51 +40,38 @@ public class RenderBoxNonAutoIterator implements Iterator<RenderNode>
       return result != null;
     }
 
-    if (result == null)
-    {
+    if ( result == null ) {
       return false;
-    }
-    else
-    {
+    } else {
       result = result.getNext();
       findNonAuto();
     }
     return result != null;
   }
 
-  private void findNonAuto()
-  {
-    while (result != null)
-    {
-      if (result.getNodeType() != LayoutNodeTypes.TYPE_BOX_AUTOLAYOUT)
-      {
+  private void findNonAuto() {
+    while ( result != null ) {
+      if ( result.getNodeType() != LayoutNodeTypes.TYPE_BOX_AUTOLAYOUT ) {
         break;
       }
 
       final RenderBox box = (RenderBox) result;
       final RenderNode firstChild = box.getFirstChild();
-      if (firstChild != null)
-      {
-        if (boxes == null)
-        {
+      if ( firstChild != null ) {
+        if ( boxes == null ) {
           boxes = new FastStack<RenderBox>();
         }
 
-        boxes.push(box);
+        boxes.push( box );
         result = firstChild;
-      }
-      else
-      {
+      } else {
         result = result.getNext();
 
-        if (result == null && boxes != null)
-        {
-          while (boxes.isEmpty() == false)
-          {
+        if ( result == null && boxes != null ) {
+          while ( boxes.isEmpty() == false ) {
             final RenderBox parent = boxes.pop();
             result = parent.getNext();
-            if (result != null)
-            {
+            if ( result != null ) {
               break;
             }
           }
@@ -99,17 +82,14 @@ public class RenderBoxNonAutoIterator implements Iterator<RenderNode>
     }
   }
 
-  public RenderNode next()
-  {
-    if (beforeStart)
-    {
+  public RenderNode next() {
+    if ( beforeStart ) {
       return null;
     }
     return result;
   }
 
-  public void remove()
-  {
+  public void remove() {
     throw new UnsupportedOperationException();
   }
 }

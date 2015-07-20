@@ -17,11 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.core.sorting;
 
-import java.util.Arrays;
-import java.util.List;
-
-import static org.junit.Assert.assertArrayEquals;
-import static org.junit.Assert.assertEquals;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -30,12 +25,16 @@ import org.pentaho.reporting.engine.classic.core.DataFactory;
 import org.pentaho.reporting.engine.classic.core.StaticDataRow;
 import org.pentaho.reporting.engine.classic.core.states.QueryDataRowWrapper;
 
-public class QueryDataRowWrapperTest
-{
+import java.util.Arrays;
+import java.util.List;
+
+import static org.junit.Assert.assertArrayEquals;
+import static org.junit.Assert.assertEquals;
+
+public class QueryDataRowWrapperTest {
 
   @BeforeClass
-  public static void initEngine() throws Exception
-  {
+  public static void initEngine() throws Exception {
     ClassicEngineBoot.getInstance().start();
   }
 
@@ -43,41 +42,37 @@ public class QueryDataRowWrapperTest
   private List<SortConstraint> sortConstraintList;
 
   @Before
-  public void setUp() throws Exception
-  {
-    sortConstraintList = Arrays.asList(new SortConstraint("A", false), new SortConstraint("B", true));
+  public void setUp() throws Exception {
+    sortConstraintList = Arrays.asList( new SortConstraint( "A", false ), new SortConstraint( "B", true ) );
   }
 
   @Test
-  public void testExtraColumn()
-  {
-    QueryDataRowWrapper wrapper = new QueryDataRowWrapper(new StaticDataRow(), 10, 12, sortConstraintList);
-    String[] expecteds = {DataFactory.QUERY_LIMIT, DataFactory.QUERY_TIMEOUT, DataFactory.QUERY_SORT};
-    assertArrayEquals(expecteds, wrapper.getColumnNames());
-    assertEquals(wrapper.get(DataFactory.QUERY_LIMIT), Integer.valueOf(12));
-    assertEquals(wrapper.get(DataFactory.QUERY_TIMEOUT), Integer.valueOf(10));
-    assertEquals(wrapper.get(DataFactory.QUERY_SORT), sortConstraintList);
+  public void testExtraColumn() {
+    QueryDataRowWrapper wrapper = new QueryDataRowWrapper( new StaticDataRow(), 10, 12, sortConstraintList );
+    String[] expecteds = { DataFactory.QUERY_LIMIT, DataFactory.QUERY_TIMEOUT, DataFactory.QUERY_SORT };
+    assertArrayEquals( expecteds, wrapper.getColumnNames() );
+    assertEquals( wrapper.get( DataFactory.QUERY_LIMIT ), Integer.valueOf( 12 ) );
+    assertEquals( wrapper.get( DataFactory.QUERY_TIMEOUT ), Integer.valueOf( 10 ) );
+    assertEquals( wrapper.get( DataFactory.QUERY_SORT ), sortConstraintList );
   }
 
-  @SuppressWarnings("deprecation")
+  @SuppressWarnings( "deprecation" )
   @Test
-  public void deprecatedConstructor_int_int()
-  {
+  public void deprecatedConstructor_int_int() {
     final int limit = 1;
     final int timeout = 2;
-    QueryDataRowWrapper wrapper = new QueryDataRowWrapper(new StaticDataRow(), limit, timeout);
-    assertEquals(wrapper.get(DataFactory.QUERY_LIMIT), Integer.valueOf(limit));
-    assertEquals(wrapper.get(DataFactory.QUERY_TIMEOUT), Integer.valueOf(timeout));
+    QueryDataRowWrapper wrapper = new QueryDataRowWrapper( new StaticDataRow(), limit, timeout );
+    assertEquals( wrapper.get( DataFactory.QUERY_LIMIT ), Integer.valueOf( limit ) );
+    assertEquals( wrapper.get( DataFactory.QUERY_TIMEOUT ), Integer.valueOf( timeout ) );
   }
 
-  @SuppressWarnings("deprecation")
+  @SuppressWarnings( "deprecation" )
   @Test
-  public void deprecatedConstructor_Integer_Integer()
-  {
+  public void deprecatedConstructor_Integer_Integer() {
     final Integer limit = 1;
     final Integer timeout = 2;
-    QueryDataRowWrapper wrapper = new QueryDataRowWrapper(new StaticDataRow(), timeout, limit);
-    assertEquals(wrapper.get(DataFactory.QUERY_LIMIT), limit);
-    assertEquals(wrapper.get(DataFactory.QUERY_TIMEOUT), timeout);
+    QueryDataRowWrapper wrapper = new QueryDataRowWrapper( new StaticDataRow(), timeout, limit );
+    assertEquals( wrapper.get( DataFactory.QUERY_LIMIT ), limit );
+    assertEquals( wrapper.get( DataFactory.QUERY_TIMEOUT ), timeout );
   }
 }

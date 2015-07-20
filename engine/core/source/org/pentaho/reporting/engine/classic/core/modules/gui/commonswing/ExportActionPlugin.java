@@ -20,19 +20,19 @@ package org.pentaho.reporting.engine.classic.core.modules.gui.commonswing;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
 
 /**
- * An export plug-in is a class that can work with the {@link org.pentaho.reporting.engine.classic.core.modules.gui.base.actions.ExportAction}
+ * An export plug-in is a class that can work with the {@link org.pentaho.reporting.engine.classic.core.modules.gui
+ * .base.actions.ExportAction}
  * class to implement an export function for reports.
  *
  * @author Thomas Morgner.
  */
-public interface ExportActionPlugin extends ActionPlugin
-{
+public interface ExportActionPlugin extends ActionPlugin {
   /**
    * Exports a report.
    *
    * @param report the report.
    * @return A boolean.
    */
-  public boolean performExport(MasterReport report);
+  public boolean performExport( MasterReport report );
 
 }

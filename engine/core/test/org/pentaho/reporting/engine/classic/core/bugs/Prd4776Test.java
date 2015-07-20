@@ -29,30 +29,25 @@ import org.pentaho.reporting.engine.classic.core.style.TextStyleKeys;
 import org.pentaho.reporting.engine.classic.core.testsupport.DebugReportRunner;
 import org.pentaho.reporting.engine.classic.core.testsupport.selector.MatchFactory;
 
-public class Prd4776Test extends TestCase
-{
-  public Prd4776Test()
-  {
+public class Prd4776Test extends TestCase {
+  public Prd4776Test() {
   }
 
-  protected void setUp() throws Exception
-  {
+  protected void setUp() throws Exception {
     ClassicEngineBoot.getInstance().start();
   }
 
-  public void testRunReport() throws Exception
-  {
-    MasterReport report = DebugReportRunner.parseGoldenSampleReport("Prd-4776.prpt");
-    LogicalPageBox logicalPageBox = DebugReportRunner.layoutPage(report, 0);
-//    ModelPrinter.INSTANCE.print(logicalPageBox);
+  public void testRunReport() throws Exception {
+    MasterReport report = DebugReportRunner.parseGoldenSampleReport( "Prd-4776.prpt" );
+    LogicalPageBox logicalPageBox = DebugReportRunner.layoutPage( report, 0 );
+    //    ModelPrinter.INSTANCE.print(logicalPageBox);
 
-    RenderNode[] elementsByElementType = MatchFactory.findElementsByElementType(logicalPageBox, LabelType.INSTANCE);
-    for (int i = 0; i < elementsByElementType.length; i++)
-    {
-      RenderNode renderNode = elementsByElementType[i];
+    RenderNode[] elementsByElementType = MatchFactory.findElementsByElementType( logicalPageBox, LabelType.INSTANCE );
+    for ( int i = 0; i < elementsByElementType.length; i++ ) {
+      RenderNode renderNode = elementsByElementType[ i ];
       StyleSheet styleSheet = renderNode.getNodeLayoutProperties().getStyleSheet();
-      Object styleProperty = styleSheet.getStyleProperty(TextStyleKeys.FONT);
-      Assert.assertEquals("Arial", styleProperty);
+      Object styleProperty = styleSheet.getStyleProperty( TextStyleKeys.FONT );
+      Assert.assertEquals( "Arial", styleProperty );
     }
   }
 }

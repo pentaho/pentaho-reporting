@@ -17,11 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.gui.print;
 
-import java.util.Locale;
-import javax.swing.Icon;
-import javax.swing.KeyStroke;
-import javax.swing.WindowConstants;
-
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
 import org.pentaho.reporting.engine.classic.core.modules.gui.commonswing.AbstractExportActionPlugin;
@@ -31,14 +26,16 @@ import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
 import org.pentaho.reporting.libraries.base.util.ResourceBundleSupport;
 import org.pentaho.reporting.libraries.designtime.swing.LibSwingUtil;
 
+import javax.swing.*;
+import java.util.Locale;
+
 /**
  * An export plugin for the <code>java.awt.print</code> API.
  * <p/>
  *
  * @author Thomas Morgner
  */
-public class PrintingPlugin extends AbstractExportActionPlugin
-{
+public class PrintingPlugin extends AbstractExportActionPlugin {
   /**
    * Localised resources.
    */
@@ -48,27 +45,23 @@ public class PrintingPlugin extends AbstractExportActionPlugin
    * The base resource class.
    */
   public static final String BASE_RESOURCE_CLASS =
-      "org.pentaho.reporting.engine.classic.core.modules.gui.print.messages.messages"; //$NON-NLS-1$
+    "org.pentaho.reporting.engine.classic.core.modules.gui.print.messages.messages"; //$NON-NLS-1$
   public static final String PROGRESS_DIALOG_ENABLE_KEY =
-      "org.pentaho.reporting.engine.classic.core.modules.gui.print.ProgressDialogEnabled"; //$NON-NLS-1$
+    "org.pentaho.reporting.engine.classic.core.modules.gui.print.ProgressDialogEnabled"; //$NON-NLS-1$
 
   /**
    * DefaultConstructor.
    */
-  public PrintingPlugin()
-  {
-    resources = new ResourceBundleSupport(Locale.getDefault(), PrintingPlugin.BASE_RESOURCE_CLASS,
-          ObjectUtilities.getClassLoader(PrintingPlugin.class));
+  public PrintingPlugin() {
+    resources = new ResourceBundleSupport( Locale.getDefault(), PrintingPlugin.BASE_RESOURCE_CLASS,
+      ObjectUtilities.getClassLoader( PrintingPlugin.class ) );
   }
 
-  public boolean initialize(final SwingGuiContext context)
-  {
-    if (super.initialize(context) == false)
-    {
+  public boolean initialize( final SwingGuiContext context ) {
+    if ( super.initialize( context ) == false ) {
       return false;
     }
-    if (ClassicEngineBoot.getInstance().isModuleAvailable(AWTPrintingGUIModule.class.getName()) == false)
-    {
+    if ( ClassicEngineBoot.getInstance().isModuleAvailable( AWTPrintingGUIModule.class.getName() ) == false ) {
       return false;
     }
     return true;
@@ -80,8 +73,7 @@ public class PrintingPlugin extends AbstractExportActionPlugin
    *
    * @return the resourcebundle.
    */
-  protected ResourceBundleSupport getResources()
-  {
+  protected ResourceBundleSupport getResources() {
     return resources;
   }
 
@@ -90,18 +82,16 @@ public class PrintingPlugin extends AbstractExportActionPlugin
    *
    * @return the progress monitor dialog.
    */
-  protected ReportProgressDialog createProgressDialog()
-  {
+  protected ReportProgressDialog createProgressDialog() {
     final ReportProgressDialog progressDialog = super.createProgressDialog();
-    progressDialog.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
-    progressDialog.setMessage(resources.getString("printing-export.progressdialog.message")); //$NON-NLS-1$
+    progressDialog.setDefaultCloseOperation( WindowConstants.DO_NOTHING_ON_CLOSE );
+    progressDialog.setMessage( resources.getString( "printing-export.progressdialog.message" ) ); //$NON-NLS-1$
     progressDialog.pack();
-    LibSwingUtil.positionFrameRandomly(progressDialog);
+    LibSwingUtil.positionFrameRandomly( progressDialog );
     return progressDialog;
   }
 
-  protected String getConfigurationPrefix()
-  {
+  protected String getConfigurationPrefix() {
     return "org.pentaho.reporting.engine.classic.core.modules.gui.print.print."; //$NON-NLS-1$
   }
 
@@ -111,30 +101,24 @@ public class PrintingPlugin extends AbstractExportActionPlugin
    * @param report the report.
    * @return true, if the export was successfull, false otherwise.
    */
-  public boolean performExport(final MasterReport report)
-  {
+  public boolean performExport( final MasterReport report ) {
     // need to connect to the report pane to receive state updates ...
     final ReportProgressDialog progressDialog;
-    if ("true".equals(report.getReportConfiguration().getConfigProperty(PrintingPlugin.PROGRESS_DIALOG_ENABLE_KEY,
-        "false"))) //$NON-NLS-1$ //$NON-NLS-2$
+    if ( "true".equals( report.getReportConfiguration().getConfigProperty( PrintingPlugin.PROGRESS_DIALOG_ENABLE_KEY,
+      "false" ) ) ) //$NON-NLS-1$ //$NON-NLS-2$
     {
       progressDialog = createProgressDialog();
-      if (report.getTitle() == null)
-      {
-        progressDialog.setTitle(getResources().getString("ProgressDialog.EMPTY_TITLE"));
+      if ( report.getTitle() == null ) {
+        progressDialog.setTitle( getResources().getString( "ProgressDialog.EMPTY_TITLE" ) );
+      } else {
+        progressDialog.setTitle( getResources().formatMessage( "ProgressDialog.TITLE", report.getTitle() ) );
       }
-      else
-      {
-        progressDialog.setTitle(getResources().formatMessage("ProgressDialog.TITLE", report.getTitle()));
-      }
-    }
-    else
-    {
+    } else {
       progressDialog = null;
     }
 
-    final PrintExportTask task = new PrintExportTask(report, progressDialog, getContext());
-    final Thread worker = new Thread(task);
+    final PrintExportTask task = new PrintExportTask( report, progressDialog, getContext() );
+    final Thread worker = new Thread( task );
     worker.start();
     return true;
   }
@@ -144,9 +128,8 @@ public class PrintingPlugin extends AbstractExportActionPlugin
    *
    * @return The display name.
    */
-  public String getDisplayName()
-  {
-    return (resources.getString("action.print.name")); //$NON-NLS-1$
+  public String getDisplayName() {
+    return ( resources.getString( "action.print.name" ) ); //$NON-NLS-1$
   }
 
   /**
@@ -154,9 +137,8 @@ public class PrintingPlugin extends AbstractExportActionPlugin
    *
    * @return The short description.
    */
-  public String getShortDescription()
-  {
-    return (resources.getString("action.print.description")); //$NON-NLS-1$
+  public String getShortDescription() {
+    return ( resources.getString( "action.print.description" ) ); //$NON-NLS-1$
   }
 
   /**
@@ -164,10 +146,9 @@ public class PrintingPlugin extends AbstractExportActionPlugin
    *
    * @return The icon.
    */
-  public Icon getSmallIcon()
-  {
+  public Icon getSmallIcon() {
     final Locale locale = getContext().getLocale();
-    return getIconTheme().getSmallIcon(locale, "action.print.small-icon"); //$NON-NLS-1$
+    return getIconTheme().getSmallIcon( locale, "action.print.small-icon" ); //$NON-NLS-1$
   }
 
   /**
@@ -175,10 +156,9 @@ public class PrintingPlugin extends AbstractExportActionPlugin
    *
    * @return The icon.
    */
-  public Icon getLargeIcon()
-  {
+  public Icon getLargeIcon() {
     final Locale locale = getContext().getLocale();
-    return getIconTheme().getLargeIcon(locale, "action.print.icon"); //$NON-NLS-1$
+    return getIconTheme().getLargeIcon( locale, "action.print.icon" ); //$NON-NLS-1$
   }
 
   /**
@@ -186,9 +166,8 @@ public class PrintingPlugin extends AbstractExportActionPlugin
    *
    * @return The accelerator key.
    */
-  public KeyStroke getAcceleratorKey()
-  {
-    return (resources.getOptionalKeyStroke("action.print.accelerator")); //$NON-NLS-1$
+  public KeyStroke getAcceleratorKey() {
+    return ( resources.getOptionalKeyStroke( "action.print.accelerator" ) ); //$NON-NLS-1$
   }
 
   /**
@@ -196,9 +175,8 @@ public class PrintingPlugin extends AbstractExportActionPlugin
    *
    * @return The code.
    */
-  public Integer getMnemonicKey()
-  {
-    return (resources.getOptionalMnemonic("action.print.mnemonic")); //$NON-NLS-1$
+  public Integer getMnemonicKey() {
+    return ( resources.getOptionalMnemonic( "action.print.mnemonic" ) ); //$NON-NLS-1$
   }
 
 }

@@ -26,24 +26,20 @@ import org.pentaho.reporting.engine.classic.core.layout.model.RenderNode;
 import org.pentaho.reporting.engine.classic.core.testsupport.DebugReportRunner;
 import org.pentaho.reporting.engine.classic.core.testsupport.selector.MatchFactory;
 
-public class Prd4471Test extends TestCase
-{
-  public Prd4471Test()
-  {
+public class Prd4471Test extends TestCase {
+  public Prd4471Test() {
   }
 
-  protected void setUp() throws Exception
-  {
+  protected void setUp() throws Exception {
     ClassicEngineBoot.getInstance().start();
   }
 
-  public void testReportRun() throws Exception
-  {
-    final MasterReport elements = DebugReportRunner.parseGoldenSampleReport("Prd-4471.prpt");
-    final LogicalPageBox logicalPageBox = DebugReportRunner.layoutPage(elements, 0);
+  public void testReportRun() throws Exception {
+    final MasterReport elements = DebugReportRunner.parseGoldenSampleReport( "Prd-4471.prpt" );
+    final LogicalPageBox logicalPageBox = DebugReportRunner.layoutPage( elements, 0 );
 
     final RenderNode[] elementsByElementType = MatchFactory.findElementsByElementType
-        (logicalPageBox.getRepeatFooterArea(), GroupFooterType.INSTANCE);
-    assertEquals(0, elementsByElementType.length);
+      ( logicalPageBox.getRepeatFooterArea(), GroupFooterType.INSTANCE );
+    assertEquals( 0, elementsByElementType.length );
   }
 }

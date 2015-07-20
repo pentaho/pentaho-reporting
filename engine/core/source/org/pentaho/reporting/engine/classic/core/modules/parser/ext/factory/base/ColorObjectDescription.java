@@ -17,28 +17,26 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.parser.ext.factory.base;
 
-import java.awt.Color;
-
 import org.pentaho.reporting.engine.classic.core.util.beans.BeanException;
 import org.pentaho.reporting.engine.classic.core.util.beans.ColorValueConverter;
+
+import java.awt.*;
 
 /**
  * An object-description for a <code>Color</code> object.
  *
  * @author Thomas Morgner
  */
-public class ColorObjectDescription extends AbstractObjectDescription
-{
+public class ColorObjectDescription extends AbstractObjectDescription {
   private ColorValueConverter valueConverter;
 
   /**
    * Creates a new object description.
    */
-  public ColorObjectDescription()
-  {
-    super(Color.class);
+  public ColorObjectDescription() {
+    super( Color.class );
     valueConverter = new ColorValueConverter();
-    setParameterDefinition("value", String.class);
+    setParameterDefinition( "value", String.class );
   }
 
   /**
@@ -46,19 +44,14 @@ public class ColorObjectDescription extends AbstractObjectDescription
    *
    * @return The object.
    */
-  public Object createObject()
-  {
-    final String value = (String) getParameter("value");
-    if (value == null)
-    {
+  public Object createObject() {
+    final String value = (String) getParameter( "value" );
+    if ( value == null ) {
       return null;
     }
-    try
-    {
-      return valueConverter.toPropertyValue(value.trim());
-    }
-    catch (BeanException e)
-    {
+    try {
+      return valueConverter.toPropertyValue( value.trim() );
+    } catch ( BeanException e ) {
       return null;
     }
   }
@@ -69,20 +62,15 @@ public class ColorObjectDescription extends AbstractObjectDescription
    * @param o the object (should be an instance of <code>Color</code>).
    * @throws ObjectFactoryException if there is a problem while reading the properties of the given object.
    */
-  public void setParameterFromObject(final Object o) throws ObjectFactoryException
-  {
-    if (!(o instanceof Color))
-    {
-      throw new ObjectFactoryException("Is no instance of java.awt.Color");
+  public void setParameterFromObject( final Object o ) throws ObjectFactoryException {
+    if ( !( o instanceof Color ) ) {
+      throw new ObjectFactoryException( "Is no instance of java.awt.Color" );
     }
     final Color c = (Color) o;
-    try
-    {
-      setParameter("value", valueConverter.toAttributeValue(c));
-    }
-    catch (BeanException e)
-    {
-      throw new ObjectFactoryException("Failed to convert color to string", e);
+    try {
+      setParameter( "value", valueConverter.toAttributeValue( c ) );
+    } catch ( BeanException e ) {
+      throw new ObjectFactoryException( "Failed to convert color to string", e );
     }
   }
 }

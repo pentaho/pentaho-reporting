@@ -17,15 +17,15 @@
 
 package org.pentaho.reporting.engine.classic.core;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
-
 import org.pentaho.reporting.engine.classic.core.filter.types.bands.BandType;
 import org.pentaho.reporting.engine.classic.core.style.BandDefaultStyleSheet;
 import org.pentaho.reporting.engine.classic.core.style.BandStyleKeys;
 import org.pentaho.reporting.engine.classic.core.style.ElementStyleSheet;
 import org.pentaho.reporting.engine.classic.core.util.InstanceID;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
 
 /**
  * A report band is a collection of other elements and bands, similiar to an AWT-Container.
@@ -38,12 +38,11 @@ import org.pentaho.reporting.engine.classic.core.util.InstanceID;
  * @author David Gilbert
  * @author Thomas Morgner
  */
-public class Band extends Section
-{
+public class Band extends Section {
   /**
    * An empty array to prevent object creation.
    */
-  private static final Element[] EMPTY_ARRAY = new Element[0];
+  private static final Element[] EMPTY_ARRAY = new Element[ 0 ];
 
   /**
    * All the elements for this band.
@@ -63,15 +62,13 @@ public class Band extends Section
   /**
    * Constructs a new band (initially empty).
    */
-  public Band()
-  {
-    setElementType(new BandType());
+  public Band() {
+    setElementType( new BandType() );
   }
 
-  public Band(final InstanceID id)
-  {
-    super(id);
-    setElementType(new BandType());
+  public Band( final InstanceID id ) {
+    super( id );
+    setElementType( new BandType() );
   }
 
   /**
@@ -80,16 +77,13 @@ public class Band extends Section
    * @param pagebreakAfter  defines, whether a pagebreak should be done after that band was printed.
    * @param pagebreakBefore defines, whether a pagebreak should be done before that band gets printed.
    */
-  public Band(final boolean pagebreakBefore, final boolean pagebreakAfter)
-  {
+  public Band( final boolean pagebreakBefore, final boolean pagebreakAfter ) {
     this();
-    if (pagebreakBefore)
-    {
-      setPagebreakBeforePrint(pagebreakBefore);
+    if ( pagebreakBefore ) {
+      setPagebreakBeforePrint( pagebreakBefore );
     }
-    if (pagebreakAfter)
-    {
-      setPagebreakAfterPrint(pagebreakAfter);
+    if ( pagebreakAfter ) {
+      setPagebreakAfterPrint( pagebreakAfter );
     }
   }
 
@@ -99,8 +93,7 @@ public class Band extends Section
    *
    * @return the global default stylesheet.
    */
-  public ElementStyleSheet getDefaultStyleSheet()
-  {
+  public ElementStyleSheet getDefaultStyleSheet() {
     return BandDefaultStyleSheet.getBandDefaultStyle();
   }
 
@@ -112,9 +105,8 @@ public class Band extends Section
    * @throws IllegalArgumentException if the position is invalid, either negative or greater than the number of elements
    *                                  in this band or if the given element is a parent of this element.
    */
-  public void addElement(final Element element)
-  {
-    addElement(getElementCount(), element);
+  public void addElement( final Element element ) {
+    addElement( getElementCount(), element );
   }
 
   /**
@@ -126,38 +118,32 @@ public class Band extends Section
    * @throws IllegalArgumentException if the position is invalid, either negative or greater than the number of elements
    *                                  in this band or if the given element is a parent of this element.
    */
-  public void addElement(final int position, final Element element)
-  {
-    if (position < 0)
-    {
-      throw new IllegalArgumentException("Position < 0");
+  public void addElement( final int position, final Element element ) {
+    if ( position < 0 ) {
+      throw new IllegalArgumentException( "Position < 0" );
     }
-    if (position > getElementCount())
-    {
-      throw new IllegalArgumentException("Position < 0");
+    if ( position > getElementCount() ) {
+      throw new IllegalArgumentException( "Position < 0" );
     }
-    if (element == null)
-    {
-      throw new NullPointerException("Band.addElement(...): element is null.");
+    if ( element == null ) {
+      throw new NullPointerException( "Band.addElement(...): element is null." );
     }
 
-    validateLooping(element);
-    if (unregisterParent(element))
-    {
+    validateLooping( element );
+    if ( unregisterParent( element ) ) {
       return;
     }
 
-    if (allElements == null)
-    {
+    if ( allElements == null ) {
       allElements = new ArrayList<Element>();
     }
     // add the element, update the childs Parent and the childs stylesheet.
-    allElements.add(position, element);
+    allElements.add( position, element );
     allElementsCached = null;
 
     // then add the parents, or the band's parent will be unregistered ..
-    registerAsChild(element);
-    notifyNodeChildAdded(element);
+    registerAsChild( element );
+    notifyNodeChildAdded( element );
   }
 
   /**
@@ -167,18 +153,15 @@ public class Band extends Section
    * @throws NullPointerException     if one of the given elements is null
    * @throws IllegalArgumentException if one of the given element is a parent of this element.
    */
-  public void addElements(final Collection elements)
-  {
-    if (elements == null)
-    {
-      throw new NullPointerException("Band.addElements(...): collection is null.");
+  public void addElements( final Collection elements ) {
+    if ( elements == null ) {
+      throw new NullPointerException( "Band.addElements(...): collection is null." );
     }
 
     final Iterator iterator = elements.iterator();
-    while (iterator.hasNext())
-    {
+    while ( iterator.hasNext() ) {
       final Element element = (Element) iterator.next();
-      addElement(element);
+      addElement( element );
     }
   }
 
@@ -191,23 +174,18 @@ public class Band extends Section
    * @return the first element with the specified name, or <code>null</code> if there is no such element.
    * @throws NullPointerException if the given name is null.
    */
-  public Element getElement(final String name)
-  {
-    if (name == null)
-    {
-      throw new NullPointerException("Band.getElement(...): name is null.");
+  public Element getElement( final String name ) {
+    if ( name == null ) {
+      throw new NullPointerException( "Band.getElement(...): name is null." );
     }
 
     final Element[] elements = internalGetElementArray();
     final int elementsSize = elements.length;
-    for (int i = 0; i < elementsSize; i++)
-    {
-      final Element e = elements[i];
+    for ( int i = 0; i < elementsSize; i++ ) {
+      final Element e = elements[ i ];
       final String elementName = e.getName();
-      if (elementName != null)
-      {
-        if (elementName.equals(name))
-        {
+      if ( elementName != null ) {
+        if ( elementName.equals( name ) ) {
           return e;
         }
       }
@@ -222,78 +200,65 @@ public class Band extends Section
    * @param e the element to be removed.
    * @throws NullPointerException if the given element is null.
    */
-  public void removeElement(final Element e)
-  {
-    if (e == null)
-    {
+  public void removeElement( final Element e ) {
+    if ( e == null ) {
       throw new NullPointerException();
     }
-    if (e.getParentSection() != this)
-    {
+    if ( e.getParentSection() != this ) {
       // this is none of my childs, ignore the request ...
       return;
     }
-    if (allElements == null)
-    {
+    if ( allElements == null ) {
       return;
     }
 
-    e.setParent(null);
-    allElements.remove(e);
+    e.setParent( null );
+    allElements.remove( e );
     allElementsCached = null;
-    notifyNodeChildRemoved(e);
+    notifyNodeChildRemoved( e );
   }
 
-  public void removeElement(int index)
-  {
-    removeElement(getElement(index));
+  public void removeElement( int index ) {
+    removeElement( getElement( index ) );
   }
 
-  public void setElementAt(final int position, final Element element)
-  {
-    if (position < 0)
-    {
-      throw new IllegalArgumentException("Position < 0");
+  public void setElementAt( final int position, final Element element ) {
+    if ( position < 0 ) {
+      throw new IllegalArgumentException( "Position < 0" );
     }
-    if (position >= getElementCount())
-    {
-      throw new IllegalArgumentException("Position >= size");
+    if ( position >= getElementCount() ) {
+      throw new IllegalArgumentException( "Position >= size" );
     }
-    if (element == null)
-    {
-      throw new NullPointerException("Band.addElement(...): element is null.");
+    if ( element == null ) {
+      throw new NullPointerException( "Band.addElement(...): element is null." );
     }
 
-    validateLooping(element);
-    if (unregisterParent(element))
-    {
+    validateLooping( element );
+    if ( unregisterParent( element ) ) {
       return;
     }
 
-    if (allElements == null)
-    {
-      throw new IllegalStateException("The throws above should have caught that state");
+    if ( allElements == null ) {
+      throw new IllegalStateException( "The throws above should have caught that state" );
     }
     // add the element, update the childs Parent and the childs stylesheet.
-    final Element o = allElements.set(position, element);
-    o.setParent(null);
+    final Element o = allElements.set( position, element );
+    o.setParent( null );
     allElementsCached = null;
 
     // then add the parents, or the band's parent will be unregistered ..
-    registerAsChild(element);
-    notifyNodeChildRemoved(o);
-    notifyNodeChildAdded(element);
+    registerAsChild( element );
+    notifyNodeChildRemoved( o );
+    notifyNodeChildAdded( element );
 
 
   }
 
-  public void clear()
-  {
+  public void clear() {
     final Element[] elements = internalGetElementArray();
-    for (int i = 0; i < elements.length; i++)
-    {
-      final Element element = elements[i];
-      removeElement(element);
+    for ( int i = 0; i < elements.length; i++ ) {
+      final Element element = elements[ i ];
+      removeElement( element );
     }
   }
 
@@ -302,10 +267,8 @@ public class Band extends Section
    *
    * @return the number of elements of this band.
    */
-  public int getElementCount()
-  {
-    if (allElements == null)
-    {
+  public int getElementCount() {
+    if ( allElements == null ) {
       return 0;
     }
     return allElements.size();
@@ -320,8 +283,7 @@ public class Band extends Section
    *
    * @return the elements.
    */
-  public Element[] getElementArray()
-  {
+  public Element[] getElementArray() {
     return internalGetElementArray().clone();
   }
 
@@ -330,26 +292,20 @@ public class Band extends Section
    *
    * @return the elements as array.
    */
-  private Element[] internalGetElementArray()
-  {
-    if (allElementsCached == null)
-    {
-      if (allElements == null || allElements.isEmpty())
-      {
+  private Element[] internalGetElementArray() {
+    if ( allElementsCached == null ) {
+      if ( allElements == null || allElements.isEmpty() ) {
         allElementsCached = Band.EMPTY_ARRAY;
-      }
-      else
-      {
-        Element[] elements = new Element[allElements.size()];
-        elements = allElements.toArray(elements);
+      } else {
+        Element[] elements = new Element[ allElements.size() ];
+        elements = allElements.toArray( elements );
         allElementsCached = elements;
       }
     }
     return allElementsCached;
   }
 
-  public final Element[] unsafeGetElementArray()
-  {
+  public final Element[] unsafeGetElementArray() {
     return internalGetElementArray();
   }
 
@@ -360,13 +316,11 @@ public class Band extends Section
    * @return the element
    * @throws IndexOutOfBoundsException if the index is invalid.
    */
-  public Element getElement(final int index)
-  {
-    if (allElements == null)
-    {
-      throw new IndexOutOfBoundsException("This index is invalid.");
+  public Element getElement( final int index ) {
+    if ( allElements == null ) {
+      throw new IndexOutOfBoundsException( "This index is invalid." );
     }
-    return allElements.get(index);
+    return allElements.get( index );
   }
 
   /**
@@ -374,17 +328,16 @@ public class Band extends Section
    *
    * @return a string representation of this band.
    */
-  public String toString()
-  {
-    final StringBuilder b = new StringBuilder(100);
-    b.append(this.getClass().getName());
-    b.append("={name=\"");
-    b.append(getName());
-    b.append("\", size=\"");
-    b.append(getElementCount());
-    b.append("\", layout=\"");
-    b.append(getStyle().getStyleProperty(BandStyleKeys.LAYOUT));
-    b.append("\"}");
+  public String toString() {
+    final StringBuilder b = new StringBuilder( 100 );
+    b.append( this.getClass().getName() );
+    b.append( "={name=\"" );
+    b.append( getName() );
+    b.append( "\", size=\"" );
+    b.append( getElementCount() );
+    b.append( "\", layout=\"" );
+    b.append( getStyle().getStyleProperty( BandStyleKeys.LAYOUT ) );
+    b.append( "\"}" );
     return b.toString();
   }
 
@@ -394,35 +347,28 @@ public class Band extends Section
    *
    * @return the clone of this band.
    */
-  public Band clone()
-  {
+  public Band clone() {
     final Band b = (Band) super.clone();
-    if (allElements != null)
-    {
+    if ( allElements != null ) {
       final int elementSize = allElements.size();
       b.allElements = (ArrayList<Element>) allElements.clone();
       b.allElements.clear();
-      b.allElementsCached = new Element[elementSize];
+      b.allElementsCached = new Element[ elementSize ];
 
-      if (allElementsCached != null)
-      {
-        for (int i = 0; i < elementSize; i++)
-        {
-          final Element eC = (Element) allElementsCached[i].clone();
-          b.allElements.add(eC);
-          b.allElementsCached[i] = eC;
-          eC.setParent(b);
+      if ( allElementsCached != null ) {
+        for ( int i = 0; i < elementSize; i++ ) {
+          final Element eC = (Element) allElementsCached[ i ].clone();
+          b.allElements.add( eC );
+          b.allElementsCached[ i ] = eC;
+          eC.setParent( b );
         }
-      }
-      else
-      {
-        for (int i = 0; i < elementSize; i++)
-        {
-          final Element e = allElements.get(i);
+      } else {
+        for ( int i = 0; i < elementSize; i++ ) {
+          final Element e = allElements.get( i );
           final Element eC = (Element) e.clone();
-          b.allElements.add(eC);
-          b.allElementsCached[i] = eC;
-          eC.setParent(b);
+          b.allElements.add( eC );
+          b.allElementsCached[ i ] = eC;
+          eC.setParent( b );
         }
       }
     }
@@ -434,35 +380,28 @@ public class Band extends Section
    *
    * @return the copy of the element.
    */
-  public Band derive(final boolean preserveElementInstanceIds)
-  {
-    final Band b = (Band) super.derive(preserveElementInstanceIds);
-    if (allElements != null)
-    {
+  public Band derive( final boolean preserveElementInstanceIds ) {
+    final Band b = (Band) super.derive( preserveElementInstanceIds );
+    if ( allElements != null ) {
       final int elementSize = allElements.size();
       b.allElements = (ArrayList<Element>) allElements.clone();
       b.allElements.clear();
-      b.allElementsCached = new Element[elementSize];
+      b.allElementsCached = new Element[ elementSize ];
 
-      if (allElementsCached != null)
-      {
-        for (int i = 0; i < elementSize; i++)
-        {
-          final Element eC = allElementsCached[i].derive(preserveElementInstanceIds);
-          b.allElements.add(eC);
-          b.allElementsCached[i] = eC;
-          eC.setParent(b);
+      if ( allElementsCached != null ) {
+        for ( int i = 0; i < elementSize; i++ ) {
+          final Element eC = allElementsCached[ i ].derive( preserveElementInstanceIds );
+          b.allElements.add( eC );
+          b.allElementsCached[ i ] = eC;
+          eC.setParent( b );
         }
-      }
-      else
-      {
-        for (int i = 0; i < elementSize; i++)
-        {
-          final Element e = allElements.get(i);
-          final Element eC = e.derive(preserveElementInstanceIds);
-          b.allElements.add(eC);
-          b.allElementsCached[i] = eC;
-          eC.setParent(b);
+      } else {
+        for ( int i = 0; i < elementSize; i++ ) {
+          final Element e = allElements.get( i );
+          final Element eC = e.derive( preserveElementInstanceIds );
+          b.allElements.add( eC );
+          b.allElementsCached[ i ] = eC;
+          eC.setParent( b );
         }
       }
     }
@@ -475,9 +414,8 @@ public class Band extends Section
    *
    * @return true, if to force a pagebreak before this band is printed, false otherwise
    */
-  public boolean isPagebreakBeforePrint()
-  {
-    return getStyle().getBooleanStyleProperty(BandStyleKeys.PAGEBREAK_BEFORE);
+  public boolean isPagebreakBeforePrint() {
+    return getStyle().getBooleanStyleProperty( BandStyleKeys.PAGEBREAK_BEFORE );
   }
 
   /**
@@ -486,9 +424,8 @@ public class Band extends Section
    *
    * @param pagebreakBeforePrint set to true, if to force a pagebreak before this band is printed, false otherwise
    */
-  public void setPagebreakBeforePrint(final boolean pagebreakBeforePrint)
-  {
-    getStyle().setBooleanStyleProperty(BandStyleKeys.PAGEBREAK_BEFORE, pagebreakBeforePrint);
+  public void setPagebreakBeforePrint( final boolean pagebreakBeforePrint ) {
+    getStyle().setBooleanStyleProperty( BandStyleKeys.PAGEBREAK_BEFORE, pagebreakBeforePrint );
     notifyNodePropertiesChanged();
   }
 
@@ -498,9 +435,8 @@ public class Band extends Section
    *
    * @return true, if to force a pagebreak before this band is printed, false otherwise
    */
-  public boolean isPagebreakAfterPrint()
-  {
-    return getStyle().getBooleanStyleProperty(BandStyleKeys.PAGEBREAK_AFTER);
+  public boolean isPagebreakAfterPrint() {
+    return getStyle().getBooleanStyleProperty( BandStyleKeys.PAGEBREAK_AFTER );
   }
 
   /**
@@ -509,21 +445,18 @@ public class Band extends Section
    *
    * @param pagebreakAfterPrint set to true, if to force a pagebreak before this band is printed, false otherwise
    */
-  public void setPagebreakAfterPrint(final boolean pagebreakAfterPrint)
-  {
-    getStyle().setBooleanStyleProperty(BandStyleKeys.PAGEBREAK_AFTER, pagebreakAfterPrint);
+  public void setPagebreakAfterPrint( final boolean pagebreakAfterPrint ) {
+    getStyle().setBooleanStyleProperty( BandStyleKeys.PAGEBREAK_AFTER, pagebreakAfterPrint );
     notifyNodePropertiesChanged();
   }
 
-  public void setLayout(final String layout)
-  {
-    getStyle().setStyleProperty(BandStyleKeys.LAYOUT, layout);
+  public void setLayout( final String layout ) {
+    getStyle().setStyleProperty( BandStyleKeys.LAYOUT, layout );
     notifyNodePropertiesChanged();
   }
 
-  public String getLayout()
-  {
-    return (String) getStyle().getStyleProperty(BandStyleKeys.LAYOUT);
+  public String getLayout() {
+    return (String) getStyle().getStyleProperty( BandStyleKeys.LAYOUT );
   }
 
 }

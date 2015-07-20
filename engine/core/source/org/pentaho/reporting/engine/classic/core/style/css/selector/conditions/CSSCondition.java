@@ -17,12 +17,11 @@
 
 package org.pentaho.reporting.engine.classic.core.style.css.selector.conditions;
 
-import java.io.Serializable;
-
 import org.pentaho.reporting.engine.classic.core.style.css.namespaces.NamespaceCollection;
 import org.w3c.css.sac.Condition;
 
-public interface CSSCondition extends Condition, Serializable
-{
-  public String print (NamespaceCollection namespaces);
+import java.io.Serializable;
+
+public interface CSSCondition extends Condition, Serializable {
+  public String print( NamespaceCollection namespaces );
 }

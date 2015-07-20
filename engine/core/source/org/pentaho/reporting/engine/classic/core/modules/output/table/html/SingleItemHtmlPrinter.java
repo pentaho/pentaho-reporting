@@ -31,35 +31,29 @@ import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
  *
  * @author Thomas Morgner
  */
-public class SingleItemHtmlPrinter extends HtmlPrinter
-{
+public class SingleItemHtmlPrinter extends HtmlPrinter {
   private boolean printed;
 
-  public SingleItemHtmlPrinter(final ResourceManager resourceManager, final ContentItem documentContentItem)
-  {
-    super(resourceManager);
-    if (documentContentItem == null)
-    {
+  public SingleItemHtmlPrinter( final ResourceManager resourceManager, final ContentItem documentContentItem ) {
+    super( resourceManager );
+    if ( documentContentItem == null ) {
       throw new NullPointerException();
     }
 
-    setDocumentContentItem(documentContentItem);
+    setDocumentContentItem( documentContentItem );
   }
 
-  public void print(final LogicalPageKey logicalPageKey,
-                    final LogicalPageBox logicalPage,
-                    final TableContentProducer contentProducer,
-                    final OutputProcessorMetaData metaData,
-                    final boolean incremental) throws ContentProcessingException
-  {
-    if (printed)
-    {
+  public void print( final LogicalPageKey logicalPageKey,
+                     final LogicalPageBox logicalPage,
+                     final TableContentProducer contentProducer,
+                     final OutputProcessorMetaData metaData,
+                     final boolean incremental ) throws ContentProcessingException {
+    if ( printed ) {
       return;
     }
 
-    super.print(logicalPageKey, logicalPage, contentProducer, metaData, incremental);
-    if (incremental == false)
-    {
+    super.print( logicalPageKey, logicalPage, contentProducer, metaData, incremental );
+    if ( incremental == false ) {
       printed = true;
     }
   }

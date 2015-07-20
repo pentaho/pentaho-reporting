@@ -17,37 +17,31 @@
 
 package org.pentaho.reporting.engine.classic.core.util;
 
+import org.pentaho.reporting.engine.classic.core.DataRow;
+
 import java.io.Serializable;
 import java.util.LinkedHashMap;
 
-import org.pentaho.reporting.engine.classic.core.DataRow;
-
-public class ReportParameterValues implements Cloneable, Serializable, DataRow
-{
+public class ReportParameterValues implements Cloneable, Serializable, DataRow {
   private LinkedHashMap<String, Object> linkedMap;
 
-  public ReportParameterValues()
-  {
+  public ReportParameterValues() {
     this.linkedMap = new LinkedHashMap<String, Object>();
   }
 
-  public ReportParameterValues(final ReportParameterValues values)
-  {
-    if (values == null)
-    {
+  public ReportParameterValues( final ReportParameterValues values ) {
+    if ( values == null ) {
       throw new NullPointerException();
     }
     this.linkedMap = (LinkedHashMap<String, Object>) values.linkedMap.clone();
   }
 
-  public Object put(final String col, final Object value)
-  {
-    if (col == null)
-    {
+  public Object put( final String col, final Object value ) {
+    if ( col == null ) {
       throw new NullPointerException();
     }
 
-    return linkedMap.put(col, value);
+    return linkedMap.put( col, value );
   }
 
   /**
@@ -59,14 +53,12 @@ public class ReportParameterValues implements Cloneable, Serializable, DataRow
    * @param col the item index.
    * @return the value.
    */
-  public Object get(final String col)
-  {
-    return linkedMap.get(col);
+  public Object get( final String col ) {
+    return linkedMap.get( col );
   }
 
-  public String[] getColumnNames()
-  {
-    return linkedMap.keySet().toArray(new String[linkedMap.size()]);
+  public String[] getColumnNames() {
+    return linkedMap.keySet().toArray( new String[ linkedMap.size() ] );
   }
 
   /**
@@ -75,51 +67,41 @@ public class ReportParameterValues implements Cloneable, Serializable, DataRow
    * @param name the name of the column.
    * @return always false, as parameters are considered static during the report processing.
    */
-  public boolean isChanged(final String name)
-  {
+  public boolean isChanged( final String name ) {
     return false;
   }
 
-  public Object clone()
-  {
-    try
-    {
+  public Object clone() {
+    try {
       final ReportParameterValues o = (ReportParameterValues) super.clone();
       o.linkedMap = (LinkedHashMap<String, Object>) linkedMap.clone();
       return o;
-    }
-    catch (CloneNotSupportedException cne)
-    {
-      throw new IllegalStateException(cne);
+    } catch ( CloneNotSupportedException cne ) {
+      throw new IllegalStateException( cne );
     }
   }
 
-  public void putAll(final DataRow dataRow)
-  {
-    if (dataRow == null)
-    {
+  public void putAll( final DataRow dataRow ) {
+    if ( dataRow == null ) {
       throw new NullPointerException();
     }
 
     final String[] names = dataRow.getColumnNames();
-    for (int i = 0; i < names.length; i++)
-    {
-      final String name = names[i];
-      put(name, dataRow.get(name));
+    for ( int i = 0; i < names.length; i++ ) {
+      final String name = names[ i ];
+      put( name, dataRow.get( name ) );
     }
   }
 
-  public void clear()
-  {
+  public void clear() {
     linkedMap.clear();
   }
 
-  public String toString()
-  {
+  public String toString() {
     final StringBuilder sb = new StringBuilder();
-    sb.append("ReportParameterValues");
-    sb.append("{linkedMap=").append(linkedMap);
-    sb.append('}');
+    sb.append( "ReportParameterValues" );
+    sb.append( "{linkedMap=" ).append( linkedMap );
+    sb.append( '}' );
     return sb.toString();
   }
 

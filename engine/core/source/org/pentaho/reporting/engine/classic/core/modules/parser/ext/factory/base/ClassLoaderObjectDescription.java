@@ -17,28 +17,26 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.parser.ext.factory.base;
 
-import java.lang.reflect.Constructor;
-import java.lang.reflect.Modifier;
-
 import org.pentaho.reporting.engine.classic.core.modules.parser.base.compat.CompatibilityMapperUtil;
 import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
+
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Modifier;
 
 /**
  * An object-description for a class loader.
  *
  * @author Thomas Morgner
  */
-public class ClassLoaderObjectDescription extends AbstractObjectDescription
-{
-  private static final Class[] EMPTY_PARAMS = new Class[0];
+public class ClassLoaderObjectDescription extends AbstractObjectDescription {
+  private static final Class[] EMPTY_PARAMS = new Class[ 0 ];
 
   /**
    * Creates a new object description.
    */
-  public ClassLoaderObjectDescription()
-  {
-    super(Object.class);
-    setParameterDefinition("class", String.class);
+  public ClassLoaderObjectDescription() {
+    super( Object.class );
+    setParameterDefinition( "class", String.class );
   }
 
   /**
@@ -46,15 +44,11 @@ public class ClassLoaderObjectDescription extends AbstractObjectDescription
    *
    * @return The object.
    */
-  public Object createObject()
-  {
-    try
-    {
-      final String o = (String) getParameter("class");
-      return ObjectUtilities.loadAndInstantiate(CompatibilityMapperUtil.mapClassName(o), getClass(), null);
-    }
-    catch (Exception e)
-    {
+  public Object createObject() {
+    try {
+      final String o = (String) getParameter( "class" );
+      return ObjectUtilities.loadAndInstantiate( CompatibilityMapperUtil.mapClassName( o ), getClass(), null );
+    } catch ( Exception e ) {
       return null;
     }
   }
@@ -65,26 +59,20 @@ public class ClassLoaderObjectDescription extends AbstractObjectDescription
    * @param o the object.
    * @throws ObjectFactoryException if there is a problem while reading the properties of the given object.
    */
-  public void setParameterFromObject(final Object o) throws ObjectFactoryException
-  {
-    if (o == null)
-    {
-      throw new ObjectFactoryException("The Object is null.");
+  public void setParameterFromObject( final Object o ) throws ObjectFactoryException {
+    if ( o == null ) {
+      throw new ObjectFactoryException( "The Object is null." );
     }
-    try
-    {
-      final Constructor c = o.getClass().getConstructor(ClassLoaderObjectDescription.EMPTY_PARAMS);
-      if (!Modifier.isPublic(c.getModifiers()))
-      {
+    try {
+      final Constructor c = o.getClass().getConstructor( ClassLoaderObjectDescription.EMPTY_PARAMS );
+      if ( !Modifier.isPublic( c.getModifiers() ) ) {
         throw new ObjectFactoryException
-            ("The given object has no public default constructor. [" + o.getClass() + ']');
+          ( "The given object has no public default constructor. [" + o.getClass() + ']' );
       }
-      setParameter("class", o.getClass().getName());
-    }
-    catch (Exception e)
-    {
+      setParameter( "class", o.getClass().getName() );
+    } catch ( Exception e ) {
       throw new ObjectFactoryException
-          ("The given object has no default constructor. [" + o.getClass() + ']', e);
+        ( "The given object has no default constructor. [" + o.getClass() + ']', e );
     }
   }
 }

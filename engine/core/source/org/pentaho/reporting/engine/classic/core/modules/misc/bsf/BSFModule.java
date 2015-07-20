@@ -29,16 +29,14 @@ import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
  *
  * @author Thomas Morgner
  */
-public class BSFModule extends AbstractModule
-{
+public class BSFModule extends AbstractModule {
   /**
    * DefaultConstructor. Loads the module specification.
    *
    * @throws ModuleInitializeException if an error occured.
    */
   public BSFModule()
-      throws ModuleInitializeException
-  {
+    throws ModuleInitializeException {
     loadModuleInfo();
   }
 
@@ -50,24 +48,20 @@ public class BSFModule extends AbstractModule
    * @param subSystem the subSystem.
    * @throws ModuleInitializeException if an error ocurred while initializing the module.
    */
-  public void initialize(final SubSystem subSystem)
-      throws ModuleInitializeException
-  {
-    try
-    {
-      final ClassLoader classLoader = ObjectUtilities.getClassLoader(getClass());
-      Class.forName("org.apache.bsf.BSFManager", false, classLoader); //$NON-NLS-1$
-    }
-    catch (Exception e)
-    {
-      throw new ModuleInitializeException("Unable to load the bean scripting framework manager class. " + //$NON-NLS-1$
-          "This class is required to execute the BSFExpressions."); //$NON-NLS-1$
+  public void initialize( final SubSystem subSystem )
+    throws ModuleInitializeException {
+    try {
+      final ClassLoader classLoader = ObjectUtilities.getClassLoader( getClass() );
+      Class.forName( "org.apache.bsf.BSFManager", false, classLoader ); //$NON-NLS-1$
+    } catch ( Exception e ) {
+      throw new ModuleInitializeException( "Unable to load the bean scripting framework manager class. " + //$NON-NLS-1$
+        "This class is required to execute the BSFExpressions." ); //$NON-NLS-1$
     }
 
     ElementMetaDataParser.initializeOptionalExpressionsMetaData
-        ("org/pentaho/reporting/engine/classic/core/modules/misc/bsf/meta-expressions.xml");
+      ( "org/pentaho/reporting/engine/classic/core/modules/misc/bsf/meta-expressions.xml" );
 
     ElementMetaDataParser.initializeOptionalReportPreProcessorMetaData
-        ("org/pentaho/reporting/engine/classic/core/modules/misc/bsf/meta-report-preprocessors.xml");
+      ( "org/pentaho/reporting/engine/classic/core/modules/misc/bsf/meta-report-preprocessors.xml" );
   }
 }

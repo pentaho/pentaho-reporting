@@ -17,30 +17,27 @@
 
 package org.pentaho.reporting.engine.classic.core;
 
-import java.util.ArrayList;
-
 import org.pentaho.reporting.engine.classic.core.filter.types.bands.CrosstabCellBodyType;
 import org.pentaho.reporting.engine.classic.core.style.BandStyleKeys;
 import org.pentaho.reporting.engine.classic.core.style.ElementStyleKeys;
 
-public class CrosstabCellBody extends GroupBody
-{
-  private static final CrosstabCell[] EMPTY_ARRAY = new CrosstabCell[0];
+import java.util.ArrayList;
+
+public class CrosstabCellBody extends GroupBody {
+  private static final CrosstabCell[] EMPTY_ARRAY = new CrosstabCell[ 0 ];
   private ArrayList<CrosstabCell> allElements;
   private transient CrosstabCell[] allElementsCached;
   private DetailsHeader detailsHeader;
 
-  public CrosstabCellBody()
-  {
-    setElementType(CrosstabCellBodyType.INSTANCE);
-    getStyle().setStyleProperty(ElementStyleKeys.AVOID_PAGEBREAK_INSIDE, Boolean.FALSE);
+  public CrosstabCellBody() {
+    setElementType( CrosstabCellBodyType.INSTANCE );
+    getStyle().setStyleProperty( ElementStyleKeys.AVOID_PAGEBREAK_INSIDE, Boolean.FALSE );
 
     detailsHeader = new DetailsHeader();
-    registerAsChild(detailsHeader);
+    registerAsChild( detailsHeader );
   }
 
-  public Group getGroup()
-  {
+  public Group getGroup() {
     return null;
   }
 
@@ -50,8 +47,7 @@ public class CrosstabCellBody extends GroupBody
    *
    * @return the group header.
    */
-  public DetailsHeader getHeader()
-  {
+  public DetailsHeader getHeader() {
     return detailsHeader;
   }
 
@@ -61,25 +57,22 @@ public class CrosstabCellBody extends GroupBody
    * @param header the header (null not permitted).
    * @throws NullPointerException if the given header is null
    */
-  public void setHeader(final DetailsHeader header)
-  {
-    if (header == null)
-    {
-      throw new NullPointerException("Header must not be null");
+  public void setHeader( final DetailsHeader header ) {
+    if ( header == null ) {
+      throw new NullPointerException( "Header must not be null" );
     }
-    validateLooping(header);
-    if (unregisterParent(header))
-    {
+    validateLooping( header );
+    if ( unregisterParent( header ) ) {
       return;
     }
 
     final Element element = this.detailsHeader;
-    this.detailsHeader.setParent(null);
+    this.detailsHeader.setParent( null );
     this.detailsHeader = header;
-    this.detailsHeader.setParent(this);
+    this.detailsHeader.setParent( this );
 
-    notifyNodeChildRemoved(element);
-    notifyNodeChildAdded(this.detailsHeader);
+    notifyNodeChildRemoved( element );
+    notifyNodeChildAdded( this.detailsHeader );
   }
 
   /**
@@ -90,9 +83,8 @@ public class CrosstabCellBody extends GroupBody
    * @throws IllegalArgumentException if the position is invalid, either negative or greater than the number of elements
    *                                  in this band or if the given element is a parent of this element.
    */
-  public void addElement(final CrosstabCell element)
-  {
-    addElement(getElementCount(), element);
+  public void addElement( final CrosstabCell element ) {
+    addElement( getElementCount(), element );
   }
 
   /**
@@ -104,70 +96,60 @@ public class CrosstabCellBody extends GroupBody
    * @throws IllegalArgumentException if the position is invalid, either negative or greater than the number of elements
    *                                  in this band or if the given element is a parent of this element.
    */
-  public void addElement(final int position, final CrosstabCell element)
-  {
-    if (position < 1)
-    {
-      throw new IllegalArgumentException("Position < 1");
+  public void addElement( final int position, final CrosstabCell element ) {
+    if ( position < 1 ) {
+      throw new IllegalArgumentException( "Position < 1" );
     }
-    if (position > getElementCount())
-    {
-      throw new IllegalArgumentException("Position > ElementCount");
+    if ( position > getElementCount() ) {
+      throw new IllegalArgumentException( "Position > ElementCount" );
     }
-    if (element == null)
-    {
-      throw new NullPointerException("Band.addElement(...): element is null.");
+    if ( element == null ) {
+      throw new NullPointerException( "Band.addElement(...): element is null." );
     }
 
-    validateLooping(element);
-    if (unregisterParent(element))
-    {
+    validateLooping( element );
+    if ( unregisterParent( element ) ) {
       return;
     }
 
-    if (allElements == null)
-    {
+    if ( allElements == null ) {
       allElements = new ArrayList<CrosstabCell>();
     }
     // add the element, update the childs Parent and the childs stylesheet.
-    allElements.add(position - 1, element);
+    allElements.add( position - 1, element );
     allElementsCached = null;
 
     // then add the parents, or the band's parent will be unregistered ..
-    registerAsChild(element);
-    notifyNodeChildAdded(element);
+    registerAsChild( element );
+    notifyNodeChildAdded( element );
   }
 
   /**
-   * Returns the matching crosstab-cell for the given key set. When searching a detail cell, give an empty
-   * set. When searching for a column-summary cell, give the column group field. Same for row-summary-cells.
-   * For total cells, give both the column and row field.
+   * Returns the matching crosstab-cell for the given key set. When searching a detail cell, give an empty set. When
+   * searching for a column-summary cell, give the column group field. Same for row-summary-cells. For total cells, give
+   * both the column and row field.
    *
    * @param rowKeys the known row-keys for the lookup.
    * @param colKeys the known col-keys for the lookup.
    * @return the first element with the specified name, or <code>null</code> if there is no such element.
    * @throws NullPointerException if the given name is null.
    */
-  public CrosstabCell findElement(final String rowKeys, final String colKeys)
-  {
+  public CrosstabCell findElement( final String rowKeys, final String colKeys ) {
     final CrosstabCell[] elements = internalGetElementArray();
     final int elementsSize = elements.length;
 
-    for (int i = 0; i < elementsSize; i++)
-    {
-      final CrosstabCell e = elements[i];
-      if (e == null)
-      {
+    for ( int i = 0; i < elementsSize; i++ ) {
+      final CrosstabCell e = elements[ i ];
+      if ( e == null ) {
         continue;
       }
 
       final String cellColField = e.getColumnField();
       final String cellRowField = e.getRowField();
 
-      final boolean colFieldMatch = equalString(cellColField, colKeys);
-      final boolean rowFieldMatch = equalString(cellRowField, rowKeys);
-      if (colFieldMatch && rowFieldMatch)
-      {
+      final boolean colFieldMatch = equalString( cellColField, colKeys );
+      final boolean rowFieldMatch = equalString( cellRowField, rowKeys );
+      if ( colFieldMatch && rowFieldMatch ) {
         return e;
       }
     }
@@ -175,14 +157,10 @@ public class CrosstabCellBody extends GroupBody
     return null;
   }
 
-  private boolean equalString(final String s1, final String s2)
-  {
-    if (s1 != null)
-    {
-      return s1.equals(s2);
-    }
-    else
-    {
+  private boolean equalString( final String s1, final String s2 ) {
+    if ( s1 != null ) {
+      return s1.equals( s2 );
+    } else {
       return s2 == null;
     }
   }
@@ -193,92 +171,77 @@ public class CrosstabCellBody extends GroupBody
    * @param e the element to be removed.
    * @throws NullPointerException if the given element is null.
    */
-  public void removeElement(final Element e)
-  {
-    if (e == null)
-    {
+  public void removeElement( final Element e ) {
+    if ( e == null ) {
       throw new NullPointerException();
     }
-    if (e.getParentSection() != this)
-    {
+    if ( e.getParentSection() != this ) {
       // this is none of my childs, ignore the request ...
       return;
     }
 
-    if (allElements == null)
-    {
+    if ( allElements == null ) {
       return;
     }
 
-    e.setParent(null);
+    e.setParent( null );
     //noinspection SuspiciousMethodCalls
-    allElements.remove(e);
+    allElements.remove( e );
     allElementsCached = null;
-    notifyNodeChildRemoved(e);
+    notifyNodeChildRemoved( e );
   }
 
-  public void setElementAt(final int position, final Element element)
-  {
-    if (position < 0)
-    {
-      throw new IllegalArgumentException("Position < 0");
+  public void setElementAt( final int position, final Element element ) {
+    if ( position < 0 ) {
+      throw new IllegalArgumentException( "Position < 0" );
     }
-    if (position >= getElementCount())
-    {
-      throw new IllegalArgumentException("Position >= size");
+    if ( position >= getElementCount() ) {
+      throw new IllegalArgumentException( "Position >= size" );
     }
-    if (element == null)
-    {
-      throw new NullPointerException("Band.addElement(...): element is null.");
+    if ( element == null ) {
+      throw new NullPointerException( "Band.addElement(...): element is null." );
     }
-    if (position == 0)
-    {
-      if (element instanceof DetailsHeader == false)
-      {
+    if ( position == 0 ) {
+      if ( element instanceof DetailsHeader == false ) {
         throw new IllegalArgumentException();
       }
 
-      setHeader((DetailsHeader) element);
+      setHeader( (DetailsHeader) element );
       return;
     }
 
-    if (element instanceof CrosstabCell == false)
-    {
+    if ( element instanceof CrosstabCell == false ) {
       throw new IllegalArgumentException();
     }
 
-    validateLooping(element);
-    if (unregisterParent(element))
-    {
+    validateLooping( element );
+    if ( unregisterParent( element ) ) {
       return;
     }
 
     final int insertPosition = position - 1;
 
-    if (allElements == null)
-    {
-      throw new IllegalStateException("The throws above should have caught that state");
+    if ( allElements == null ) {
+      throw new IllegalStateException( "The throws above should have caught that state" );
     }
     // add the element, update the childs Parent and the childs stylesheet.
-    final Element o = allElements.set(insertPosition, (CrosstabCell) element);
-    o.setParent(null);
+    final Element o = allElements.set( insertPosition, (CrosstabCell) element );
+    o.setParent( null );
     allElementsCached = null;
 
     // then add the parents, or the band's parent will be unregistered ..
-    registerAsChild(element);
-    notifyNodeChildRemoved(o);
-    notifyNodeChildAdded(element);
+    registerAsChild( element );
+    notifyNodeChildRemoved( o );
+    notifyNodeChildAdded( element );
 
 
   }
 
-  public void clear()
-  {
+  public void clear() {
     final Element[] elements = internalGetElementArray();
-    for (int i = 0; i < elements.length; i++)
-    {
-      final Element element = elements[i];
-      removeElement(element);
+    for ( int i = 0; i < elements.length; i++ ) {
+      final Element element = elements[ i ];
+      removeElement( element );
     }
   }
 
@@ -287,10 +250,8 @@ public class CrosstabCellBody extends GroupBody
    *
    * @return the number of elements of this band.
    */
-  public int getElementCount()
-  {
-    if (allElements == null)
-    {
+  public int getElementCount() {
+    if ( allElements == null ) {
       return 1;
     }
     return 1 + allElements.size();
@@ -301,18 +262,13 @@ public class CrosstabCellBody extends GroupBody
    *
    * @return the elements as array.
    */
-  private CrosstabCell[] internalGetElementArray()
-  {
-    if (allElementsCached == null)
-    {
-      if (allElements == null || allElements.isEmpty())
-      {
+  private CrosstabCell[] internalGetElementArray() {
+    if ( allElementsCached == null ) {
+      if ( allElements == null || allElements.isEmpty() ) {
         allElementsCached = EMPTY_ARRAY;
-      }
-      else
-      {
-        CrosstabCell[] elements = new CrosstabCell[allElements.size()];
-        elements = allElements.toArray(elements);
+      } else {
+        CrosstabCell[] elements = new CrosstabCell[ allElements.size() ];
+        elements = allElements.toArray( elements );
         allElementsCached = elements;
       }
     }
@@ -326,18 +282,15 @@ public class CrosstabCellBody extends GroupBody
    * @return the element
    * @throws IndexOutOfBoundsException if the index is invalid.
    */
-  public Element getElement(final int index)
-  {
-    if (index == 0)
-    {
+  public Element getElement( final int index ) {
+    if ( index == 0 ) {
       return detailsHeader;
     }
 
-    if (allElements == null)
-    {
-      throw new IndexOutOfBoundsException("This index is invalid.");
+    if ( allElements == null ) {
+      throw new IndexOutOfBoundsException( "This index is invalid." );
     }
-    return allElements.get(index - 1);
+    return allElements.get( index - 1 );
   }
 
 
@@ -346,17 +299,16 @@ public class CrosstabCellBody extends GroupBody
    *
    * @return a string representation of this band.
    */
-  public String toString()
-  {
-    final StringBuilder b = new StringBuilder(100);
-    b.append(this.getClass().getName());
-    b.append("={name=\"");
-    b.append(getName());
-    b.append("\", size=\"");
-    b.append(getElementCount());
-    b.append("\", layout=\"");
-    b.append(getStyle().getStyleProperty(BandStyleKeys.LAYOUT));
-    b.append("\"}");
+  public String toString() {
+    final StringBuilder b = new StringBuilder( 100 );
+    b.append( this.getClass().getName() );
+    b.append( "={name=\"" );
+    b.append( getName() );
+    b.append( "\", size=\"" );
+    b.append( getElementCount() );
+    b.append( "\", layout=\"" );
+    b.append( getStyle().getStyleProperty( BandStyleKeys.LAYOUT ) );
+    b.append( "\"}" );
     return b.toString();
   }
 
@@ -366,38 +318,31 @@ public class CrosstabCellBody extends GroupBody
    *
    * @return the clone of this band.
    */
-  public CrosstabCellBody clone()
-  {
+  public CrosstabCellBody clone() {
     final CrosstabCellBody b = (CrosstabCellBody) super.clone();
     b.detailsHeader = (DetailsHeader) detailsHeader.clone();
-    b.registerAsChild(b.detailsHeader);
-    
-    if (allElements != null)
-    {
+    b.registerAsChild( b.detailsHeader );
+
+    if ( allElements != null ) {
       final int elementSize = allElements.size();
       b.allElements = (ArrayList<CrosstabCell>) allElements.clone();
       b.allElements.clear();
-      b.allElementsCached = new CrosstabCell[elementSize];
+      b.allElementsCached = new CrosstabCell[ elementSize ];
 
-      if (allElementsCached != null)
-      {
-        for (int i = 0; i < elementSize; i++)
-        {
-          final CrosstabCell eC = (CrosstabCell) allElementsCached[i].clone();
-          b.allElements.add(eC);
-          b.allElementsCached[i] = eC;
-          eC.setParent(b);
+      if ( allElementsCached != null ) {
+        for ( int i = 0; i < elementSize; i++ ) {
+          final CrosstabCell eC = (CrosstabCell) allElementsCached[ i ].clone();
+          b.allElements.add( eC );
+          b.allElementsCached[ i ] = eC;
+          eC.setParent( b );
         }
-      }
-      else
-      {
-        for (int i = 0; i < elementSize; i++)
-        {
-          final CrosstabCell e = allElements.get(i);
+      } else {
+        for ( int i = 0; i < elementSize; i++ ) {
+          final CrosstabCell e = allElements.get( i );
           final CrosstabCell eC = (CrosstabCell) e.clone();
-          b.allElements.add(eC);
-          b.allElementsCached[i] = eC;
-          eC.setParent(b);
+          b.allElements.add( eC );
+          b.allElementsCached[ i ] = eC;
+          eC.setParent( b );
         }
       }
     }
@@ -409,38 +354,31 @@ public class CrosstabCellBody extends GroupBody
    *
    * @return the copy of the element.
    */
-  public CrosstabCellBody derive(final boolean preserveElementInstanceIds)
-  {
-    final CrosstabCellBody b = (CrosstabCellBody) super.derive(preserveElementInstanceIds);
-    b.detailsHeader = (DetailsHeader) detailsHeader.derive(preserveElementInstanceIds);
-    b.registerAsChild(b.detailsHeader);
-    
-    if (allElements != null)
-    {
+  public CrosstabCellBody derive( final boolean preserveElementInstanceIds ) {
+    final CrosstabCellBody b = (CrosstabCellBody) super.derive( preserveElementInstanceIds );
+    b.detailsHeader = (DetailsHeader) detailsHeader.derive( preserveElementInstanceIds );
+    b.registerAsChild( b.detailsHeader );
+
+    if ( allElements != null ) {
       final int elementSize = allElements.size();
       b.allElements = (ArrayList<CrosstabCell>) allElements.clone();
       b.allElements.clear();
-      b.allElementsCached = new CrosstabCell[elementSize];
+      b.allElementsCached = new CrosstabCell[ elementSize ];
 
-      if (allElementsCached != null)
-      {
-        for (int i = 0; i < elementSize; i++)
-        {
-          final CrosstabCell eC = (CrosstabCell) allElementsCached[i].derive(preserveElementInstanceIds);
-          b.allElements.add(eC);
-          b.allElementsCached[i] = eC;
-          eC.setParent(b);
+      if ( allElementsCached != null ) {
+        for ( int i = 0; i < elementSize; i++ ) {
+          final CrosstabCell eC = (CrosstabCell) allElementsCached[ i ].derive( preserveElementInstanceIds );
+          b.allElements.add( eC );
+          b.allElementsCached[ i ] = eC;
+          eC.setParent( b );
         }
-      }
-      else
-      {
-        for (int i = 0; i < elementSize; i++)
-        {
-          final CrosstabCell e = allElements.get(i);
-          final CrosstabCell eC = (CrosstabCell) e.derive(preserveElementInstanceIds);
-          b.allElements.add(eC);
-          b.allElementsCached[i] = eC;
-          eC.setParent(b);
+      } else {
+        for ( int i = 0; i < elementSize; i++ ) {
+          final CrosstabCell e = allElements.get( i );
+          final CrosstabCell eC = (CrosstabCell) e.derive( preserveElementInstanceIds );
+          b.allElements.add( eC );
+          b.allElementsCached[ i ] = eC;
+          eC.setParent( b );
         }
       }
     }

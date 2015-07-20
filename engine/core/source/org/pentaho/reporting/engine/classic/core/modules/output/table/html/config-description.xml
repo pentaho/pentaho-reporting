@@ -8,84 +8,124 @@
     </enum>
   </key>
 
-  <key name="org.pentaho.reporting.engine.classic.core.modules.output.table.html.AssumeOverflowX" global="false" hidden="false">
-    <description>Indicates if the reporting engine should truncate the data to make it fit in the defined area (true) or if the engine will expect the viewer to truncate the data to the appropriate size (false) when generating HTML output.
+  <key name="org.pentaho.reporting.engine.classic.core.modules.output.table.html.AssumeOverflowX" global="false"
+       hidden="false">
+    <description>Indicates if the reporting engine should truncate the data to make it fit in the defined area (true) or
+      if the engine will expect the viewer to truncate the data to the appropriate size (false) when generating HTML
+      output.
 
-The default value is TRUE.</description>
+      The default value is TRUE.
+    </description>
     <enum>
       <text>true</text>
       <text>false</text>
     </enum>
   </key>
-  <key name="org.pentaho.reporting.engine.classic.core.modules.output.table.html.AssumeOverflowY" global="false" hidden="false">
-    <description>Indicates if the reporting engine should truncate the data to make it fit in the defined area (false) or if the engine will expect the viewer to truncate the data to the appropriate size (true) when generating HTML output.
+  <key name="org.pentaho.reporting.engine.classic.core.modules.output.table.html.AssumeOverflowY" global="false"
+       hidden="false">
+    <description>Indicates if the reporting engine should truncate the data to make it fit in the defined area (false)
+      or if the engine will expect the viewer to truncate the data to the appropriate size (true) when generating HTML
+      output.
 
-The default value is false.</description>
+      The default value is false.
+    </description>
     <text/>
   </key>
   <key name="org.pentaho.reporting.engine.classic.core.modules.output.table.html.Author" global="false" hidden="false">
     <description>Defines a author for generated HTML documents.</description>
     <text/>
   </key>
-  <key name="org.pentaho.reporting.engine.classic.core.modules.output.table.html.BodyFragment" global="false" hidden="false">
-    <description>Defines whether to define a body fragment only. This removes the header and body tags and makes it easy to include the generated content in own pages.</description>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.output.table.html.BodyFragment" global="false"
+       hidden="false">
+    <description>Defines whether to define a body fragment only. This removes the header and body tags and makes it easy
+      to include the generated content in own pages.
+    </description>
     <enum>
       <text>true</text>
       <text>false</text>
     </enum>
   </key>
-  <key name="org.pentaho.reporting.engine.classic.core.modules.output.table.html.CopyExternalImages" global="false" hidden="false">
-    <description>Defines, whether images referenced by an HTTP, HTTPS or FTP URL are copied to the output or included directly.</description>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.output.table.html.CopyExternalImages" global="false"
+       hidden="false">
+    <description>Defines, whether images referenced by an HTTP, HTTPS or FTP URL are copied to the output or included
+      directly.
+    </description>
     <enum>
       <text>true</text>
       <text>false</text>
     </enum>
   </key>
-  <key name="org.pentaho.reporting.engine.classic.core.modules.output.table.html.DeviceResolution" global="false" hidden="false">
-    <description>Adjusts the resultion of the images embedded in the HTML files. By default we use 96 DPI, which is the common default among all browsers.</description>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.output.table.html.DeviceResolution" global="false"
+       hidden="false">
+    <description>Adjusts the resultion of the images embedded in the HTML files. By default we use 96 DPI, which is the
+      common default among all browsers.
+    </description>
     <text/>
   </key>
-  <key name="org.pentaho.reporting.engine.classic.core.modules.output.table.html.EmptyCellsUseCSS" global="false" hidden="false">
-    <description>Defines, whether empty cells will be controled using CSS. If this is set to true, the Table get the style property &quot;empty-cells: show&quot; assigned and the otherwise required no-break-space entites will no longer be generated.
+  <key name="org.pentaho.reporting.engine.classic.core.modules.output.table.html.EmptyCellsUseCSS" global="false"
+       hidden="false">
+    <description>Defines, whether empty cells will be controled using CSS. If this is set to true, the Table get the
+      style property &quot;empty-cells: show&quot; assigned and the otherwise required no-break-space entites will no
+      longer be generated.
 
-The Internet-Explorer is not able to use correct CSS2 yet - they never obeyed to standards anyway, so that&apos;s no surprise that this defaults to &quot;false&quot;..</description>
+      The Internet-Explorer is not able to use correct CSS2 yet - they never obeyed to standards anyway, so that&apos;s
+      no surprise that this defaults to &quot;false&quot;..
+    </description>
     <enum>
       <text>true</text>
       <text>false</text>
     </enum>
   </key>
-  <key name="org.pentaho.reporting.engine.classic.core.modules.output.table.html.Encoding" global="false" hidden="false">
-    <description>Defines the document encoding. If undefined, it defaults to the platforms default encoding.</description>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.output.table.html.Encoding" global="false"
+       hidden="false">
+    <description>Defines the document encoding. If undefined, it defaults to the platforms default encoding.
+    </description>
     <text/>
   </key>
-  <key name="org.pentaho.reporting.engine.classic.core.modules.output.table.html.ExternalStyle" global="false" hidden="false">
+  <key name="org.pentaho.reporting.engine.classic.core.modules.output.table.html.ExternalStyle" global="false"
+       hidden="false">
     <description>Defines whether the report processing should generate external stylesheet files.
 
-If disabled, then the style information will be added as inline-stylesheet in the header of the generated file. If this option is enabled the engine will be able to directly stream the generated content to the output repository.
+      If disabled, then the style information will be added as inline-stylesheet in the header of the generated file. If
+      this option is enabled the engine will be able to directly stream the generated content to the output repository.
 
-Enabling external stylesheet files also enables the streaming mode, so that the generated content is written to disk immediately. However, as the reference to the CSS file will be sent to the browser before the full style is known, this will lead to subtle rendering errors when used to stream the page to the browser in web-environments.</description>
+      Enabling external stylesheet files also enables the streaming mode, so that the generated content is written to
+      disk immediately. However, as the reference to the CSS file will be sent to the browser before the full style is
+      known, this will lead to subtle rendering errors when used to stream the page to the browser in web-environments.
+    </description>
     <enum>
       <text>true</text>
       <text>false</text>
     </enum>
   </key>
-  <key name="org.pentaho.reporting.engine.classic.core.modules.output.table.html.ForceBufferedWriting" global="false" hidden="false">
-    <description>This setting can be used to fully disable the direct streaming of the generated content. All generated content will be held in memory until the report processing has been finished. Only if the report processing finishes successfully, the generated HTML content is written.
+  <key name="org.pentaho.reporting.engine.classic.core.modules.output.table.html.ForceBufferedWriting" global="false"
+       hidden="false">
+    <description>This setting can be used to fully disable the direct streaming of the generated content. All generated
+      content will be held in memory until the report processing has been finished. Only if the report processing
+      finishes successfully, the generated HTML content is written.
 
-This can be necessary in Web-Environments where the user&apos;s browser would try to read the CSS file before the stylesheet has been fully generated.
+      This can be necessary in Web-Environments where the user&apos;s browser would try to read the CSS file before the
+      stylesheet has been fully generated.
 
-Buffering the content may lead to OutOfMemory-Errors if the generated content is very large. However, most browsers have troubles rendering files that are larger than 20MB, therefore the browser usually fails first.</description>
+      Buffering the content may lead to OutOfMemory-Errors if the generated content is very large. However, most
+      browsers have troubles rendering files that are larger than 20MB, therefore the browser usually fails first.
+    </description>
     <enum>
       <text>true</text>
       <text>false</text>
     </enum>
   </key>
-  <key name="org.pentaho.reporting.engine.classic.core.modules.output.table.html.InlineStyles" global="false" hidden="false">
-    <description>This setting can be used to fully disable the generation of stylesheets. All style-information will be added directly to the generated elements. The resulting content will be larger, but the output can be streamed directly to the repository without using the content-buffering.
+  <key name="org.pentaho.reporting.engine.classic.core.modules.output.table.html.InlineStyles" global="false"
+       hidden="false">
+    <description>This setting can be used to fully disable the generation of stylesheets. All style-information will be
+      added directly to the generated elements. The resulting content will be larger, but the output can be streamed
+      directly to the repository without using the content-buffering.
 
-Inline styles are safe for streaming the content in Web-Applications, as the browser will not be tricked into accessing stylesheets before the style has been fully computed.
+      Inline styles are safe for streaming the content in Web-Applications, as the browser will not be tricked into
+      accessing stylesheets before the style has been fully computed.
 
-If &quot;BodyFragmentCreation&quot; is enabled, the engine always generates inline styles.</description>
+      If &quot;BodyFragmentCreation&quot; is enabled, the engine always generates inline styles.
+    </description>
     <enum>
       <text>true</text>
       <text>false</text>
@@ -95,51 +135,78 @@ If &quot;BodyFragmentCreation&quot; is enabled, the engine always generates inli
     <description>A module definition. Please do not edit this entry.</description>
     <class instanceof="org.pentaho.reporting.libraries.base.boot.Module"/>
   </key>
-  <key name="org.pentaho.reporting.engine.classic.core.modules.output.table.html.ProportionalColumnWidths" global="false" hidden="false">
-    <description>Enables the use of proportional column widths instead of static ones. The resulting table will have a width of 100% and the columns will have the proportional equivalent of their static widths as width.</description>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.output.table.html.ProportionalColumnWidths"
+       global="false" hidden="false">
+    <description>Enables the use of proportional column widths instead of static ones. The resulting table will have a
+      width of 100% and the columns will have the proportional equivalent of their static widths as width.
+    </description>
     <enum>
       <text>true</text>
       <text>false</text>
     </enum>
   </key>
-  <key name="org.pentaho.reporting.engine.classic.core.modules.output.table.html.SafariLengthHack" global="false" hidden="false">
-    <description>Defines, whether the Safari compatibility mode is enabled. Safari cannot parse CSS-lengths with fractions, and thus fails to bring borders in.</description>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.output.table.html.SafariLengthHack" global="false"
+       hidden="false">
+    <description>Defines, whether the Safari compatibility mode is enabled. Safari cannot parse CSS-lengths with
+      fractions, and thus fails to bring borders in.
+    </description>
     <enum>
       <text>true</text>
       <text>false</text>
     </enum>
   </key>
-  <key name="org.pentaho.reporting.engine.classic.core.modules.output.table.html.ShapeAsContent" global="false" hidden="false">
-    <description>Defines, whether Shape-content that is not one of the recognized background shapes will be printed as image. If set to false, the content will be removed, if set to true, the content ends up as image.</description>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.output.table.html.ShapeAsContent" global="false"
+       hidden="false">
+    <description>Defines, whether Shape-content that is not one of the recognized background shapes will be printed as
+      image. If set to false, the content will be removed, if set to true, the content ends up as image.
+    </description>
     <enum>
       <text>true</text>
       <text>false</text>
     </enum>
   </key>
-  <key name="org.pentaho.reporting.engine.classic.core.modules.output.table.html.UseTableLayoutFixed" global="false" hidden="false">
-    <description>Defines whether the generated tables should have the "table-layout:fixed" style defined. This is safe to set to true and should be set to false only if something really weird happens in your browser.</description>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.output.table.html.UseTableLayoutFixed" global="false"
+       hidden="false">
+    <description>Defines whether the generated tables should have the "table-layout:fixed" style defined. This is safe
+      to set to true and should be set to false only if something really weird happens in your browser.
+    </description>
     <enum>
       <text>true</text>
       <text>false</text>
     </enum>
   </key>
-  <key name="org.pentaho.reporting.engine.classic.core.modules.output.table.html.UseWhitespacePreWrap" global="false" hidden="false">
-    <description>Defines whether the reporting engine should generate "whitespace-collapse: pre-line" styles instead of "whitespace-collapse: pre" styles. This makes lines breakable so that they flow softly. See http://www.quirksmode.org/css/whitespace.html for details.</description>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.output.table.html.UseWhitespacePreWrap" global="false"
+       hidden="false">
+    <description>Defines whether the reporting engine should generate "whitespace-collapse: pre-line" styles instead of
+      "whitespace-collapse: pre" styles. This makes lines breakable so that they flow softly. See
+      http://www.quirksmode.org/css/whitespace.html for details.
+    </description>
     <enum>
       <text>true</text>
       <text>false</text>
     </enum>
   </key>
-  <key name="org.pentaho.reporting.engine.classic.core.modules.output.table.html.SheetNameClass" global="false" hidden="false">
-    <description>A space separated list of additional CSS-Classnames that should be applied to all sheetname sections generated during the report processing. This property can be used to link the generated report into a existing CSS-based layout.</description>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.output.table.html.SheetNameClass" global="false"
+       hidden="false">
+    <description>A space separated list of additional CSS-Classnames that should be applied to all sheetname sections
+      generated during the report processing. This property can be used to link the generated report into a existing
+      CSS-based layout.
+    </description>
     <text/>
   </key>
-  <key name="org.pentaho.reporting.engine.classic.core.modules.output.table.html.StyleClass" global="false" hidden="false">
-    <description>A space separated list of additional CSS-Classnames that should be applied to all tables generated during the report processing. This property can be used to link the generated report into a existing CSS-based layout.</description>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.output.table.html.StyleClass" global="false"
+       hidden="false">
+    <description>A space separated list of additional CSS-Classnames that should be applied to all tables generated
+      during the report processing. This property can be used to link the generated report into a existing CSS-based
+      layout.
+    </description>
     <text/>
   </key>
-  <key name="org.pentaho.reporting.engine.classic.core.modules.output.table.html.TableRowBorderDefinition" global="false" hidden="false">
-    <description>Defines, whether table rows should carry a border definition (in addition to the cell definitions). This is a workaround for a layout bug in the Mozilla browser family.</description>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.output.table.html.TableRowBorderDefinition"
+       global="false" hidden="false">
+    <description>Defines, whether table rows should carry a border definition (in addition to the cell definitions).
+      This is a workaround for a layout bug in the Mozilla browser family.
+    </description>
     <enum>
       <text>true</text>
       <text>false</text>
@@ -149,99 +216,123 @@ If &quot;BodyFragmentCreation&quot; is enabled, the engine always generates inli
     <description>Defines the default title for generated HTML documents.</description>
     <text/>
   </key>
-  <key name="org.pentaho.reporting.engine.classic.core.modules.output.table.html.default.html" global="true" hidden="true">
+  <key name="org.pentaho.reporting.engine.classic.core.modules.output.table.html.default.html" global="true"
+       hidden="true">
     <description>An internal property for the XML support. Do not edit this.</description>
     <text/>
   </key>
-  <key name="org.pentaho.reporting.engine.classic.core.modules.output.table.html.namespace.html" global="true" hidden="true">
+  <key name="org.pentaho.reporting.engine.classic.core.modules.output.table.html.namespace.html" global="true"
+       hidden="true">
     <description>A internal configuration that controls an XML-Generator. Do not edit.</description>
     <text/>
   </key>
-  <key name="org.pentaho.reporting.engine.classic.core.modules.output.table.html.tag.html.body" global="true" hidden="true">
+  <key name="org.pentaho.reporting.engine.classic.core.modules.output.table.html.tag.html.body" global="true"
+       hidden="true">
     <description>A internal configuration that controls an XML-Generator. Do not edit.</description>
     <text/>
   </key>
-  <key name="org.pentaho.reporting.engine.classic.core.modules.output.table.html.tag.html.br" global="true" hidden="true">
+  <key name="org.pentaho.reporting.engine.classic.core.modules.output.table.html.tag.html.br" global="true"
+       hidden="true">
     <description>A internal configuration that controls an XML-Generator. Do not edit.</description>
     <text/>
   </key>
-  <key name="org.pentaho.reporting.engine.classic.core.modules.output.table.html.tag.html.col" global="true" hidden="true">
+  <key name="org.pentaho.reporting.engine.classic.core.modules.output.table.html.tag.html.col" global="true"
+       hidden="true">
     <description>A internal configuration that controls an XML-Generator. Do not edit.</description>
     <text/>
   </key>
-  <key name="org.pentaho.reporting.engine.classic.core.modules.output.table.html.tag.html.colgroup" global="true" hidden="true">
+  <key name="org.pentaho.reporting.engine.classic.core.modules.output.table.html.tag.html.colgroup" global="true"
+       hidden="true">
     <description>A internal configuration that controls an XML-Generator. Do not edit.</description>
     <text/>
   </key>
-  <key name="org.pentaho.reporting.engine.classic.core.modules.output.table.html.tag.html.div" global="true" hidden="true">
+  <key name="org.pentaho.reporting.engine.classic.core.modules.output.table.html.tag.html.div" global="true"
+       hidden="true">
     <description>A internal configuration that controls an XML-Generator. Do not edit.</description>
     <text/>
   </key>
-  <key name="org.pentaho.reporting.engine.classic.core.modules.output.table.html.tag.html.head" global="true" hidden="true">
+  <key name="org.pentaho.reporting.engine.classic.core.modules.output.table.html.tag.html.head" global="true"
+       hidden="true">
     <description>A internal configuration that controls an XML-Generator. Do not edit.</description>
     <text/>
   </key>
-  <key name="org.pentaho.reporting.engine.classic.core.modules.output.table.html.tag.html.html" global="true" hidden="true">
+  <key name="org.pentaho.reporting.engine.classic.core.modules.output.table.html.tag.html.html" global="true"
+       hidden="true">
     <description>A internal configuration that controls an XML-Generator. Do not edit.</description>
     <text/>
   </key>
-  <key name="org.pentaho.reporting.engine.classic.core.modules.output.table.html.tag.html.img" global="true" hidden="true">
+  <key name="org.pentaho.reporting.engine.classic.core.modules.output.table.html.tag.html.img" global="true"
+       hidden="true">
     <description>A internal configuration that controls an XML-Generator. Do not edit.</description>
     <text/>
   </key>
-  <key name="org.pentaho.reporting.engine.classic.core.modules.output.table.html.tag.html.input" global="true" hidden="true">
+  <key name="org.pentaho.reporting.engine.classic.core.modules.output.table.html.tag.html.input" global="true"
+       hidden="true">
     <description>A internal configuration that controls an XML-Generator. Do not edit.</description>
     <text/>
   </key>
-  <key name="org.pentaho.reporting.engine.classic.core.modules.output.table.html.tag.html.meta" global="true" hidden="true">
+  <key name="org.pentaho.reporting.engine.classic.core.modules.output.table.html.tag.html.meta" global="true"
+       hidden="true">
     <description>A internal configuration that controls an XML-Generator. Do not edit.</description>
     <text/>
   </key>
-  <key name="org.pentaho.reporting.engine.classic.core.modules.output.table.html.tag.html.p" global="true" hidden="true">
+  <key name="org.pentaho.reporting.engine.classic.core.modules.output.table.html.tag.html.p" global="true"
+       hidden="true">
     <description>A internal configuration that controls an XML-Generator. Do not edit.</description>
     <text/>
   </key>
-  <key name="org.pentaho.reporting.engine.classic.core.modules.output.table.html.tag.html.pre" global="true" hidden="true">
+  <key name="org.pentaho.reporting.engine.classic.core.modules.output.table.html.tag.html.pre" global="true"
+       hidden="true">
     <description>A internal configuration that controls an XML-Generator. Do not edit.</description>
     <text/>
   </key>
-  <key name="org.pentaho.reporting.engine.classic.core.modules.output.table.html.tag.html.span" global="true" hidden="true">
+  <key name="org.pentaho.reporting.engine.classic.core.modules.output.table.html.tag.html.span" global="true"
+       hidden="true">
     <description>A internal configuration that controls an XML-Generator. Do not edit.</description>
     <text/>
   </key>
-  <key name="org.pentaho.reporting.engine.classic.core.modules.output.table.html.tag.html.style" global="true" hidden="true">
+  <key name="org.pentaho.reporting.engine.classic.core.modules.output.table.html.tag.html.style" global="true"
+       hidden="true">
     <description>A internal configuration that controls an XML-Generator. Do not edit.</description>
     <text/>
   </key>
-  <key name="org.pentaho.reporting.engine.classic.core.modules.output.table.html.tag.html.table" global="true" hidden="true">
+  <key name="org.pentaho.reporting.engine.classic.core.modules.output.table.html.tag.html.table" global="true"
+       hidden="true">
     <description>A internal configuration that controls an XML-Generator. Do not edit.</description>
     <text/>
   </key>
-  <key name="org.pentaho.reporting.engine.classic.core.modules.output.table.html.tag.html.tbody" global="true" hidden="true">
+  <key name="org.pentaho.reporting.engine.classic.core.modules.output.table.html.tag.html.tbody" global="true"
+       hidden="true">
     <description>A internal configuration that controls an XML-Generator. Do not edit.</description>
     <text/>
   </key>
-  <key name="org.pentaho.reporting.engine.classic.core.modules.output.table.html.tag.html.td" global="true" hidden="true">
+  <key name="org.pentaho.reporting.engine.classic.core.modules.output.table.html.tag.html.td" global="true"
+       hidden="true">
     <description>A internal configuration that controls an XML-Generator. Do not edit.</description>
     <text/>
   </key>
-  <key name="org.pentaho.reporting.engine.classic.core.modules.output.table.html.tag.html.tfoot" global="true" hidden="true">
+  <key name="org.pentaho.reporting.engine.classic.core.modules.output.table.html.tag.html.tfoot" global="true"
+       hidden="true">
     <description>A internal configuration that controls an XML-Generator. Do not edit.</description>
     <text/>
   </key>
-  <key name="org.pentaho.reporting.engine.classic.core.modules.output.table.html.tag.html.th" global="true" hidden="true">
+  <key name="org.pentaho.reporting.engine.classic.core.modules.output.table.html.tag.html.th" global="true"
+       hidden="true">
     <description>A internal configuration that controls an XML-Generator. Do not edit.</description>
     <text/>
   </key>
-  <key name="org.pentaho.reporting.engine.classic.core.modules.output.table.html.tag.html.thead" global="true" hidden="true">
+  <key name="org.pentaho.reporting.engine.classic.core.modules.output.table.html.tag.html.thead" global="true"
+       hidden="true">
     <description>A internal configuration that controls an XML-Generator. Do not edit.</description>
     <text/>
   </key>
-  <key name="org.pentaho.reporting.engine.classic.core.modules.output.table.html.tag.html.title" global="true" hidden="true">
+  <key name="org.pentaho.reporting.engine.classic.core.modules.output.table.html.tag.html.title" global="true"
+       hidden="true">
     <description>A internal configuration that controls an XML-Generator. Do not edit.</description>
     <text/>
   </key>
-  <key name="org.pentaho.reporting.engine.classic.core.modules.output.table.html.tag.html.tr" global="true" hidden="true">
+  <key name="org.pentaho.reporting.engine.classic.core.modules.output.table.html.tag.html.tr" global="true"
+       hidden="true">
     <description>A internal configuration that controls an XML-Generator. Do not edit.</description>
     <text/>
   </key>

@@ -17,26 +17,22 @@
 
 package org.pentaho.reporting.engine.classic.core.metadata.parser;
 
-import java.io.Serializable;
-
 import org.pentaho.reporting.engine.classic.core.metadata.ReportPreProcessorMetaData;
 
-public class ReportPreProcessorMetaDataCollection implements Serializable
-{
+import java.io.Serializable;
+
+public class ReportPreProcessorMetaDataCollection implements Serializable {
   private ReportPreProcessorMetaData[] expressionMetaData;
 
-  public ReportPreProcessorMetaDataCollection(final ReportPreProcessorMetaData[] expressionMetaData)
-  {
-    if (expressionMetaData == null)
-    {
+  public ReportPreProcessorMetaDataCollection( final ReportPreProcessorMetaData[] expressionMetaData ) {
+    if ( expressionMetaData == null ) {
       throw new NullPointerException();
     }
 
     this.expressionMetaData = expressionMetaData.clone();
   }
 
-  public ReportPreProcessorMetaData[] getReportPreProcessorMetaData()
-  {
+  public ReportPreProcessorMetaData[] getReportPreProcessorMetaData() {
     return expressionMetaData.clone();
   }
 }

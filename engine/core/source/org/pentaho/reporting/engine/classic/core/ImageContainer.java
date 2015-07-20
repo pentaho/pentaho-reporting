@@ -29,8 +29,7 @@ package org.pentaho.reporting.engine.classic.core;
  *
  * @author Thomas Morgner
  */
-public interface ImageContainer extends Cloneable
-{
+public interface ImageContainer extends Cloneable {
   /**
    * Returns the unscaled width of the contained image. The width must be known during the layouting process, returning
    * -1 to indicate an unknown size (as the AWT does) is not valid.

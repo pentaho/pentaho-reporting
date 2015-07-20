@@ -26,19 +26,18 @@ import java.sql.SQLException;
  *
  * @author Thomas Morgner
  */
-public interface ConnectionProvider extends Serializable
-{
+public interface ConnectionProvider extends Serializable {
   /**
    * Although named getConnection() this method should always return a new connection when being queried or should wrap
    * the connection in a way so that calls to "close()" on that connection do not prevent subsequent calls to this
    * method to fail.
    *
-   * @param user the user name.
+   * @param user     the user name.
    * @param password the password.
    * @return the connection.
    * @throws SQLException if the connection has errors.
    */
-  public Connection createConnection(String user, String password) throws SQLException;
+  public Connection createConnection( String user, String password ) throws SQLException;
 
   public Object getConnectionHash();
 }

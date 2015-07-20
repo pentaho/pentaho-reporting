@@ -46,8 +46,7 @@ import org.pentaho.reporting.libraries.fonts.encoding.CodePointBuffer;
  *
  * @author Thomas Morgner
  */
-public class DefaultTextExtractor extends IterateStructuralProcessStep
-{
+public class DefaultTextExtractor extends IterateStructuralProcessStep {
   private StringBuffer text;
   private Object rawResult;
   private RenderNode rawSource;
@@ -63,243 +62,190 @@ public class DefaultTextExtractor extends IterateStructuralProcessStep
   private boolean ellipseDrawn;
   private boolean clipOnWordBoundary;
 
-  public DefaultTextExtractor(final OutputProcessorMetaData metaData)
-  {
-    if (metaData == null)
-    {
+  public DefaultTextExtractor( final OutputProcessorMetaData metaData ) {
+    if ( metaData == null ) {
       throw new NullPointerException();
     }
 
-    codePointBuffer = new CodePointBuffer(400);
-    text = new StringBuffer(400);
+    codePointBuffer = new CodePointBuffer( 400 );
+    text = new StringBuffer( 400 );
     paragraphBounds = new StrictBounds();
-    revalidateTextEllipseProcessStep = new RevalidateTextEllipseProcessStep(metaData);
+    revalidateTextEllipseProcessStep = new RevalidateTextEllipseProcessStep( metaData );
     this.clipOnWordBoundary = "true".equals
-        (metaData.getConfiguration().getConfigProperty(
-            "org.pentaho.reporting.engine.classic.core.LastLineBreaksOnWordBoundary"));
+      ( metaData.getConfiguration().getConfigProperty(
+        "org.pentaho.reporting.engine.classic.core.LastLineBreaksOnWordBoundary" ) );
   }
 
-  protected CodePointBuffer getCodePointBuffer()
-  {
+  protected CodePointBuffer getCodePointBuffer() {
     return codePointBuffer;
   }
 
-  public Object compute(final RenderBox box)
-  {
+  public Object compute( final RenderBox box ) {
     rawResult = null;
     rawSource = null;
     // initialize it once. It may be overriden later, if there is a real paragraph
-    paragraphBounds.setRect(box.getX(), box.getY(), box.getWidth(), box.getHeight());
+    paragraphBounds.setRect( box.getX(), box.getY(), box.getWidth(), box.getHeight() );
     overflowX = box.isBoxOverflowX();
     overflowY = box.isBoxOverflowY();
     clearText();
-    startProcessing(box);
+    startProcessing( box );
 
     // A simple result. So there's no need to create a rich-text string.
-    if (rawResult != null)
-    {
+    if ( rawResult != null ) {
       return rawResult;
     }
     return text.toString();
   }
 
-  public String getFormattedtext()
-  {
+  public String getFormattedtext() {
     return text.toString();
   }
 
-  private long extractEllipseSize(final RenderNode node)
-  {
-    if (node == null)
-    {
+  private long extractEllipseSize( final RenderNode node ) {
+    if ( node == null ) {
       return 0;
     }
     final RenderBox parent = node.getParent();
-    if (parent == null)
-    {
+    if ( parent == null ) {
       return 0;
     }
     final RenderBox textEllipseBox = parent.getTextEllipseBox();
-    if (textEllipseBox == null)
-    {
+    if ( textEllipseBox == null ) {
       return 0;
     }
     return textEllipseBox.getWidth();
   }
 
-  protected void processOtherNode(final RenderNode node)
-  {
-    if (isTextLineOverflow())
-    {
-      if (handleOverflow(node))
-      {
+  protected void processOtherNode( final RenderNode node ) {
+    if ( isTextLineOverflow() ) {
+      if ( handleOverflow( node ) ) {
         return;
       }
     }
 
     final int nodeType = node.getNodeType();
-    if (nodeType == LayoutNodeTypes.TYPE_NODE_TEXT)
-    {
+    if ( nodeType == LayoutNodeTypes.TYPE_NODE_TEXT ) {
       final RenderableText textNode = (RenderableText) node;
-      processStandardText(textNode);
-      if (textNode.isForceLinebreak())
-      {
+      processStandardText( textNode );
+      if ( textNode.isForceLinebreak() ) {
         manualBreak = true;
       }
-    }
-    else if (nodeType == LayoutNodeTypes.TYPE_NODE_COMPLEX_TEXT)
-    {
+    } else if ( nodeType == LayoutNodeTypes.TYPE_NODE_COMPLEX_TEXT ) {
       final RenderableComplexText textNode = (RenderableComplexText) node;
-      if (processComplexText(textNode))
-      {
+      if ( processComplexText( textNode ) ) {
         return;
       }
-      if (textNode.isForceLinebreak())
-      {
+      if ( textNode.isForceLinebreak() ) {
         manualBreak = true;
       }
-    }
-    else if (nodeType == LayoutNodeTypes.TYPE_NODE_SPACER)
-    {
+    } else if ( nodeType == LayoutNodeTypes.TYPE_NODE_SPACER ) {
       final SpacerRenderNode spacer = (SpacerRenderNode) node;
-      final int count = Math.max(1, spacer.getSpaceCount());
-      for (int i = 0; i < count; i++)
-      {
-        this.text.append(' ');
+      final int count = Math.max( 1, spacer.getSpaceCount() );
+      for ( int i = 0; i < count; i++ ) {
+        this.text.append( ' ' );
       }
     }
   }
 
-  private boolean processComplexText(final RenderableComplexText textNode)
-  {
-    if (isTextLineOverflow())
-    {
-      if (textNode.isNodeVisible(paragraphBounds, overflowX, overflowY) == false)
-      {
+  private boolean processComplexText( final RenderableComplexText textNode ) {
+    if ( isTextLineOverflow() ) {
+      if ( textNode.isNodeVisible( paragraphBounds, overflowX, overflowY ) == false ) {
         return true;
       }
 
-      final long ellipseSize = extractEllipseSize(textNode);
+      final long ellipseSize = extractEllipseSize( textNode );
       final long x1 = textNode.getX();
       final long x2 = x1 + textNode.getWidth();
-      final long effectiveAreaX2 = (contentAreaX2 - ellipseSize);
-      if (x2 <= effectiveAreaX2)
-      {
+      final long effectiveAreaX2 = ( contentAreaX2 - ellipseSize );
+      if ( x2 <= effectiveAreaX2 ) {
         // the text will be fully visible.
-        drawComplexText(textNode);
-      }
-      else if (x1 < contentAreaX2)
-      {
+        drawComplexText( textNode );
+      } else if ( x1 < contentAreaX2 ) {
         // The text node that is printed will overlap with the ellipse we need to print.
-        drawComplexText(textNode);
+        drawComplexText( textNode );
 
         final RenderBox parent = textNode.getParent();
-        if (parent != null)
-        {
+        if ( parent != null ) {
           final RenderBox textEllipseBox = parent.getTextEllipseBox();
-          if (textEllipseBox != null)
-          {
-            processBoxChilds(textEllipseBox);
+          if ( textEllipseBox != null ) {
+            processBoxChilds( textEllipseBox );
           }
         }
       }
-    }
-    else
-    {
-      drawComplexText(textNode);
+    } else {
+      drawComplexText( textNode );
     }
     return false;
   }
 
-  private void processStandardText(final RenderableText textNode)
-  {
-    if (isTextLineOverflow())
-    {
-      if (textNode.isNodeVisible(paragraphBounds, overflowX, overflowY) == false)
-      {
+  private void processStandardText( final RenderableText textNode ) {
+    if ( isTextLineOverflow() ) {
+      if ( textNode.isNodeVisible( paragraphBounds, overflowX, overflowY ) == false ) {
         return;
       }
 
-      final long ellipseSize = extractEllipseSize(textNode);
+      final long ellipseSize = extractEllipseSize( textNode );
       final long x1 = textNode.getX();
       final long x2 = x1 + textNode.getWidth();
-      final long effectiveAreaX2 = (contentAreaX2 - ellipseSize);
-      if (x2 <= effectiveAreaX2)
-      {
+      final long effectiveAreaX2 = ( contentAreaX2 - ellipseSize );
+      if ( x2 <= effectiveAreaX2 ) {
         // the text will be fully visible.
-        drawText(textNode, x2);
-      }
-      else if (x1 < contentAreaX2)
-      {
+        drawText( textNode, x2 );
+      } else if ( x1 < contentAreaX2 ) {
         // The text node that is printed will overlap with the ellipse we need to print.
-        drawText(textNode, effectiveAreaX2);
+        drawText( textNode, effectiveAreaX2 );
         final RenderBox parent = textNode.getParent();
-        if (parent != null)
-        {
+        if ( parent != null ) {
           final RenderBox textEllipseBox = parent.getTextEllipseBox();
-          if (textEllipseBox != null)
-          {
-            processBoxChilds(textEllipseBox);
+          if ( textEllipseBox != null ) {
+            processBoxChilds( textEllipseBox );
           }
         }
       }
-    }
-    else
-    {
-      drawText(textNode, textNode.getX() + textNode.getWidth());
+    } else {
+      drawText( textNode, textNode.getX() + textNode.getWidth() );
     }
   }
 
-  private boolean handleOverflow(final RenderNode node)
-  {
-    if (node.isNodeVisible(paragraphBounds, overflowX, overflowY) == false)
-    {
+  private boolean handleOverflow( final RenderNode node ) {
+    if ( node.isNodeVisible( paragraphBounds, overflowX, overflowY ) == false ) {
       return true;
     }
 
-    if (node.isVirtualNode())
-    {
-      if (ellipseDrawn)
-      {
+    if ( node.isVirtualNode() ) {
+      if ( ellipseDrawn ) {
         return true;
       }
       ellipseDrawn = true;
 
       final int nodeType = node.getNodeType();
-      if (clipOnWordBoundary == false &&
-          nodeType == LayoutNodeTypes.TYPE_NODE_TEXT)
-      {
+      if ( clipOnWordBoundary == false &&
+        nodeType == LayoutNodeTypes.TYPE_NODE_TEXT ) {
         final RenderableText text = (RenderableText) node;
-        final long ellipseSize = extractEllipseSize(node);
+        final long ellipseSize = extractEllipseSize( node );
         final long x1 = text.getX();
-        final long effectiveAreaX2 = (contentAreaX2 - ellipseSize);
+        final long effectiveAreaX2 = ( contentAreaX2 - ellipseSize );
 
-        if (x1 < contentAreaX2)
-        {
+        if ( x1 < contentAreaX2 ) {
           // The text node that is printed will overlap with the ellipse we need to print.
-          drawText(text, effectiveAreaX2);
+          drawText( text, effectiveAreaX2 );
         }
-      }
-      else if (clipOnWordBoundary == false &&
-          nodeType == LayoutNodeTypes.TYPE_NODE_COMPLEX_TEXT)
-      {
+      } else if ( clipOnWordBoundary == false &&
+        nodeType == LayoutNodeTypes.TYPE_NODE_COMPLEX_TEXT ) {
         final RenderableComplexText text = (RenderableComplexText) node;
         final long x1 = text.getX();
 
-        if (x1 < contentAreaX2)
-        {
+        if ( x1 < contentAreaX2 ) {
           // The text node that is printed will overlap with the ellipse we need to print.
-          drawComplexText(text);
+          drawComplexText( text );
         }
       }
 
       final RenderBox parent = node.getParent();
-      if (parent != null)
-      {
+      if ( parent != null ) {
         final RenderBox textEllipseBox = parent.getTextEllipseBox();
-        if (textEllipseBox != null)
-        {
-          processBoxChilds(textEllipseBox);
+        if ( textEllipseBox != null ) {
+          processBoxChilds( textEllipseBox );
         }
       }
       return true;
@@ -313,150 +259,122 @@ public class DefaultTextExtractor extends IterateStructuralProcessStep
    * @param renderableText the text node that should be rendered.
    * @param contentX2
    */
-  protected void drawText(final RenderableText renderableText, final long contentX2)
-  {
-    if (renderableText.getLength() == 0)
-    {
+  protected void drawText( final RenderableText renderableText, final long contentX2 ) {
+    if ( renderableText.getLength() == 0 ) {
       // This text is empty.
       return;
     }
 
     final GlyphList gs = renderableText.getGlyphs();
-    final int maxLength = renderableText.computeMaximumTextSize(contentX2);
-    this.text.append(gs.getText(renderableText.getOffset(), maxLength, codePointBuffer));
+    final int maxLength = renderableText.computeMaximumTextSize( contentX2 );
+    this.text.append( gs.getText( renderableText.getOffset(), maxLength, codePointBuffer ) );
   }
 
-  protected void drawComplexText(final RenderableComplexText renderableComplexText)
-  {
+  protected void drawComplexText( final RenderableComplexText renderableComplexText ) {
     String text = renderableComplexText.getRawText();
-    if (text.length() == 0)
-    {
+    if ( text.length() == 0 ) {
       // This text is empty.
       return;
     }
 
-    this.text.append(text);
+    this.text.append( text );
   }
 
-  protected boolean startOtherBox(final RenderBox box)
-  {
+  protected boolean startOtherBox( final RenderBox box ) {
     return false;
   }
 
-  protected boolean isContentField(final RenderBox box)
-  {
-    return (box.getNodeType() == LayoutNodeTypes.TYPE_BOX_CONTENT);
+  protected boolean isContentField( final RenderBox box ) {
+    return ( box.getNodeType() == LayoutNodeTypes.TYPE_BOX_CONTENT );
   }
 
-  protected boolean startCanvasBox(final CanvasRenderBox box)
-  {
+  protected boolean startCanvasBox( final CanvasRenderBox box ) {
     return true;
   }
 
-  protected void processRenderableContent(final RenderableReplacedContentBox box)
-  {
+  protected void processRenderableContent( final RenderableReplacedContentBox box ) {
     final RenderableReplacedContent rpc = box.getContent();
     this.rawResult = rpc.getRawObject();
     this.rawSource = box;
   }
 
-  protected boolean startBlockBox(final BlockRenderBox box)
-  {
-    if (box.getStaticBoxLayoutProperties().isVisible() == false)
-    {
+  protected boolean startBlockBox( final BlockRenderBox box ) {
+    if ( box.getStaticBoxLayoutProperties().isVisible() == false ) {
       return false;
     }
     return true;
   }
 
-  protected boolean startRowBox(final RenderBox box)
-  {
-    if (box.getStaticBoxLayoutProperties().isVisible() == false)
-    {
+  protected boolean startRowBox( final RenderBox box ) {
+    if ( box.getStaticBoxLayoutProperties().isVisible() == false ) {
       return false;
     }
     return true;
   }
 
-  public RenderNode getRawSource()
-  {
+  public RenderNode getRawSource() {
     return rawSource;
   }
 
-  protected boolean startInlineBox(final InlineRenderBox box)
-  {
-    if (box.getStaticBoxLayoutProperties().isVisible() == false)
-    {
+  protected boolean startInlineBox( final InlineRenderBox box ) {
+    if ( box.getStaticBoxLayoutProperties().isVisible() == false ) {
       return false;
     }
 
     return true;
   }
 
-  protected boolean startTableCellBox(final TableCellRenderBox box)
-  {
-    if (box.getStaticBoxLayoutProperties().isVisible() == false)
-    {
+  protected boolean startTableCellBox( final TableCellRenderBox box ) {
+    if ( box.getStaticBoxLayoutProperties().isVisible() == false ) {
       return false;
     }
 
     return true;
   }
 
-  protected boolean startTableRowBox(final TableRowRenderBox box)
-  {
-    if (box.getStaticBoxLayoutProperties().isVisible() == false)
-    {
+  protected boolean startTableRowBox( final TableRowRenderBox box ) {
+    if ( box.getStaticBoxLayoutProperties().isVisible() == false ) {
       return false;
     }
 
     return true;
   }
 
-  protected boolean startTableSectionBox(final TableSectionRenderBox box)
-  {
-    if (box.getStaticBoxLayoutProperties().isVisible() == false)
-    {
+  protected boolean startTableSectionBox( final TableSectionRenderBox box ) {
+    if ( box.getStaticBoxLayoutProperties().isVisible() == false ) {
       return false;
     }
 
     return true;
   }
 
-  protected boolean startTableColumnGroupBox(final TableColumnGroupNode box)
-  {
-    if (box.getStaticBoxLayoutProperties().isVisible() == false)
-    {
+  protected boolean startTableColumnGroupBox( final TableColumnGroupNode box ) {
+    if ( box.getStaticBoxLayoutProperties().isVisible() == false ) {
       return false;
     }
 
     return true;
   }
 
-  protected boolean startTableBox(final TableRenderBox box)
-  {
-    if (box.getStaticBoxLayoutProperties().isVisible() == false)
-    {
+  protected boolean startTableBox( final TableRenderBox box ) {
+    if ( box.getStaticBoxLayoutProperties().isVisible() == false ) {
       return false;
     }
 
     return true;
   }
 
-  protected boolean startAutoBox(final RenderBox box)
-  {
-    if (box.getStaticBoxLayoutProperties().isVisible() == false)
-    {
+  protected boolean startAutoBox( final RenderBox box ) {
+    if ( box.getStaticBoxLayoutProperties().isVisible() == false ) {
       return false;
     }
 
     return true;
   }
 
-  protected void processParagraphChilds(final ParagraphRenderBox box)
-  {
+  protected void processParagraphChilds( final ParagraphRenderBox box ) {
     rawResult = box.getRawValue();
-    paragraphBounds.setRect(box.getX(), box.getY(), box.getWidth(), box.getHeight());
+    paragraphBounds.setRect( box.getX(), box.getY(), box.getWidth(), box.getHeight() );
     overflowX = box.isBoxOverflowX();
     overflowY = box.isBoxOverflowY();
     //final long y2 = box.getY() + box.getHeight();
@@ -464,22 +382,15 @@ public class DefaultTextExtractor extends IterateStructuralProcessStep
     contentAreaX2 = box.getContentAreaX2();
 
     RenderBox lineBox = (RenderBox) box.getFirstChild();
-    while (lineBox != null)
-    {
+    while ( lineBox != null ) {
       manualBreak = false;
-      processTextLine(lineBox, contentAreaX1, contentAreaX2);
-      if (manualBreak)
-      {
+      processTextLine( lineBox, contentAreaX1, contentAreaX2 );
+      if ( manualBreak ) {
         addLinebreak();
-      }
-      else if (lineBox.getNext() != null)
-      {
-        if (lineBox.getStaticBoxLayoutProperties().isPreserveSpace() == false)
-        {
+      } else if ( lineBox.getNext() != null ) {
+        if ( lineBox.getStaticBoxLayoutProperties().isPreserveSpace() == false ) {
           addSoftBreak();
-        }
-        else
-        {
+        } else {
           addEmptyBreak();
         }
       }
@@ -487,28 +398,23 @@ public class DefaultTextExtractor extends IterateStructuralProcessStep
     }
   }
 
-  protected void addEmptyBreak()
-  {
-    text.append(' ');
+  protected void addEmptyBreak() {
+    text.append( ' ' );
   }
 
-  protected void addSoftBreak()
-  {
-    text.append(' ');
+  protected void addSoftBreak() {
+    text.append( ' ' );
   }
 
-  protected void addLinebreak()
-  {
-    text.append('\n');
+  protected void addLinebreak() {
+    text.append( '\n' );
   }
 
 
-  protected void processTextLine(final RenderBox lineBox,
-                                 final long contentAreaX1,
-                                 final long contentAreaX2)
-  {
-    if (lineBox.isNodeVisible(paragraphBounds, overflowX, overflowY) == false)
-    {
+  protected void processTextLine( final RenderBox lineBox,
+                                  final long contentAreaX1,
+                                  final long contentAreaX2 ) {
+    if ( lineBox.isNodeVisible( paragraphBounds, overflowX, overflowY ) == false ) {
       return;
     }
     ellipseDrawn = false;
@@ -516,61 +422,51 @@ public class DefaultTextExtractor extends IterateStructuralProcessStep
     final boolean overflowProperty = lineBox.getParent().getStaticBoxLayoutProperties().isOverflowX();
 
     this.textLineOverflow =
-        ((lineBox.getX() + lineBox.getWidth()) > contentAreaX2) && overflowProperty == false;
+      ( ( lineBox.getX() + lineBox.getWidth() ) > contentAreaX2 ) && overflowProperty == false;
 
-    if (textLineOverflow)
-    {
-      revalidateTextEllipseProcessStep.compute(lineBox, contentAreaX1, contentAreaX2);
+    if ( textLineOverflow ) {
+      revalidateTextEllipseProcessStep.compute( lineBox, contentAreaX1, contentAreaX2 );
     }
 
-    startProcessing(lineBox);
+    startProcessing( lineBox );
   }
 
 
-  public Object getRawResult()
-  {
+  public Object getRawResult() {
     return rawResult;
   }
 
-  protected void setRawResult(final Object rawResult)
-  {
+  protected void setRawResult( final Object rawResult ) {
     this.rawResult = rawResult;
   }
 
-  public String getText()
-  {
+  public String getText() {
     return text.toString();
   }
 
-  public int getTextLength()
-  {
+  public int getTextLength() {
     return text.length();
   }
 
-  protected void clearText()
-  {
-    text.delete(0, text.length());
+  protected void clearText() {
+    text.delete( 0, text.length() );
   }
 
 
-  protected StrictBounds getParagraphBounds()
-  {
+  protected StrictBounds getParagraphBounds() {
     return paragraphBounds;
   }
 
 
-  public boolean isTextLineOverflow()
-  {
+  public boolean isTextLineOverflow() {
     return textLineOverflow;
   }
 
-  public boolean isOverflowX()
-  {
+  public boolean isOverflowX() {
     return overflowX;
   }
 
-  public boolean isOverflowY()
-  {
+  public boolean isOverflowY() {
     return overflowY;
   }
 }

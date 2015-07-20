@@ -25,37 +25,31 @@ import org.pentaho.reporting.libraries.resourceloader.ResourceKey;
  *
  * @author Thomas Morgner
  */
-public class ResourceReference
-{
+public class ResourceReference {
   private ResourceKey path;
   private boolean linked;
 
-  public ResourceReference(final ResourceKey path, final boolean linked)
-  {
-    if (path == null)
-    {
+  public ResourceReference( final ResourceKey path, final boolean linked ) {
+    if ( path == null ) {
       throw new NullPointerException();
     }
     this.path = path;
     this.linked = linked;
   }
 
-  public ResourceKey getPath()
-  {
+  public ResourceKey getPath() {
     return path;
   }
 
-  public boolean isLinked()
-  {
+  public boolean isLinked() {
     return linked;
   }
 
 
-  public String toString()
-  {
+  public String toString() {
     return "org.pentaho.reporting.engine.classic.core.metadata.ResourceReference{" +
-        "path=" + path +
-        ", linked=" + linked +
-        '}';
+      "path=" + path +
+      ", linked=" + linked +
+      '}';
   }
 }

@@ -21,24 +21,19 @@ import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.pentaho.reporting.libraries.base.config.Configuration;
 import org.pentaho.reporting.libraries.xmlns.parser.AbstractXmlResourceFactory;
 
-public class FontMetricsXmlResourceFactory extends AbstractXmlResourceFactory
-{
-  public FontMetricsXmlResourceFactory()
-  {
-    registerModule(new FontMetricsXmlFactoryModule());
+public class FontMetricsXmlResourceFactory extends AbstractXmlResourceFactory {
+  public FontMetricsXmlResourceFactory() {
+    registerModule( new FontMetricsXmlFactoryModule() );
   }
 
-  public void initializeDefaults()
-  {
+  public void initializeDefaults() {
   }
 
-  protected Configuration getConfiguration()
-  {
+  protected Configuration getConfiguration() {
     return ClassicEngineBoot.getInstance().getGlobalConfig();
   }
 
-  public Class getFactoryType()
-  {
+  public Class getFactoryType() {
     return FontMetricsCollection.class;
   }
 }

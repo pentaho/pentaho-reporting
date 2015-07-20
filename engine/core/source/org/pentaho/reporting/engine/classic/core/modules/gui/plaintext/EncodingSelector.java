@@ -17,38 +17,32 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.gui.plaintext;
 
-import java.awt.BorderLayout;
-import java.util.Locale;
-import javax.swing.JComboBox;
-import javax.swing.JPanel;
-
 import org.pentaho.reporting.engine.classic.core.modules.gui.commonswing.EncodingComboBoxModel;
-import org.pentaho.reporting.engine.classic.core.modules.gui.pdf.PdfExportPlugin;
 import org.pentaho.reporting.engine.classic.core.modules.output.pageable.plaintext.helper.PrinterEncoding;
 import org.pentaho.reporting.engine.classic.core.modules.output.pageable.plaintext.helper.PrinterSpecification;
 import org.pentaho.reporting.libraries.base.util.Messages;
 import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
 import org.pentaho.reporting.libraries.fonts.encoding.EncodingRegistry;
 
-public class EncodingSelector extends JPanel
-{
+import javax.swing.*;
+import java.awt.*;
+import java.util.Locale;
+
+public class EncodingSelector extends JPanel {
   /**
    * Provides access to externalized strings
    */
-  private static final Messages MESSAGES = new Messages(Locale.getDefault(),
-      PlainTextExportGUIModule.BUNDLE_NAME, ObjectUtilities.getClassLoader(PlainTextExportGUIModule.class));
+  private static final Messages MESSAGES = new Messages( Locale.getDefault(),
+    PlainTextExportGUIModule.BUNDLE_NAME, ObjectUtilities.getClassLoader( PlainTextExportGUIModule.class ) );
 
   public static class GenericPrinterSpecification
-      implements PrinterSpecification
-  {
-    private static final byte[] EMPTY_ARRAY = new byte[0];
+    implements PrinterSpecification {
+    private static final byte[] EMPTY_ARRAY = new byte[ 0 ];
 
-    public GenericPrinterSpecification()
-    {
+    public GenericPrinterSpecification() {
     }
 
-    public String getDisplayName()
-    {
+    public String getDisplayName() {
       return getName();
     }
 
@@ -59,15 +53,13 @@ public class EncodingSelector extends JPanel
      * @return the printer specific encoding.
      * @throws IllegalArgumentException if the given encoding is not supported.
      */
-    public PrinterEncoding getEncoding(final String encoding)
-    {
-      if (isEncodingSupported(encoding) == false)
-      {
-        throw new IllegalArgumentException(EncodingSelector.MESSAGES.getErrorString(
-            "EncodingSelector.ERROR_0001_ENCODING_NOT_SUPPORTED")); //$NON-NLS-1$
+    public PrinterEncoding getEncoding( final String encoding ) {
+      if ( isEncodingSupported( encoding ) == false ) {
+        throw new IllegalArgumentException( EncodingSelector.MESSAGES.getErrorString(
+          "EncodingSelector.ERROR_0001_ENCODING_NOT_SUPPORTED" ) ); //$NON-NLS-1$
       }
 
-      return new PrinterEncoding(encoding, encoding, encoding, GenericPrinterSpecification.EMPTY_ARRAY);
+      return new PrinterEncoding( encoding, encoding, encoding, GenericPrinterSpecification.EMPTY_ARRAY );
     }
 
     /**
@@ -75,9 +67,8 @@ public class EncodingSelector extends JPanel
      *
      * @return the printer model.
      */
-    public String getName()
-    {
-      return EncodingSelector.MESSAGES.getString("EncodingSelector.USER_GENERIC_PRINTER"); //$NON-NLS-1$
+    public String getName() {
+      return EncodingSelector.MESSAGES.getString( "EncodingSelector.USER_GENERIC_PRINTER" ); //$NON-NLS-1$
     }
 
     /**
@@ -86,10 +77,8 @@ public class EncodingSelector extends JPanel
      * @param encoding the java encoding that should be mapped into a printer specific encoding.
      * @return true, if there is a mapping, false otherwise.
      */
-    public boolean isEncodingSupported(final String encoding)
-    {
-      if (EncodingRegistry.getInstance().isSupportedEncoding(encoding))
-      {
+    public boolean isEncodingSupported( final String encoding ) {
+      if ( EncodingRegistry.getInstance().isSupportedEncoding( encoding ) ) {
         // if already checked there, then use it ...
         return true;
       }
@@ -102,8 +91,7 @@ public class EncodingSelector extends JPanel
      * @param operationName the operation, that should be performed
      * @return true, if the printer will be able to perform that operation, false otherwise.
      */
-    public boolean isFeatureAvailable(final String operationName)
-    {
+    public boolean isFeatureAvailable( final String operationName ) {
       // we accept the first default that is offered, we do not even check the operation
       return true;
     }
@@ -115,48 +103,41 @@ public class EncodingSelector extends JPanel
   /**
    * Create a new JPanel with a double buffer and a flow layout
    */
-  public EncodingSelector()
-  {
-    setLayout(new BorderLayout());
+  public EncodingSelector() {
+    setLayout( new BorderLayout() );
     encodingComboBox = new JComboBox();
-    add(encodingComboBox, BorderLayout.CENTER);
-    setEncodings(new GenericPrinterSpecification(), Locale.getDefault());
+    add( encodingComboBox, BorderLayout.CENTER );
+    setEncodings( new GenericPrinterSpecification(), Locale.getDefault() );
   }
 
-  public String getSelectedEncoding()
-  {
+  public String getSelectedEncoding() {
     return encodingComboBoxModel.getSelectedEncoding();
   }
 
-  public void setSelectedEncoding(final String encoding)
-  {
-    this.encodingComboBoxModel.setSelectedEncoding(encoding);
+  public void setSelectedEncoding( final String encoding ) {
+    this.encodingComboBoxModel.setSelectedEncoding( encoding );
   }
 
-  public void setEncodings(final PrinterSpecification printerSpecification,
-                           final Locale locale)
-  {
-    if (printerSpecification == null)
-    {
-      throw new NullPointerException(EncodingSelector.MESSAGES.getErrorString(
-          "EncodingSelector.ERROR_0002_NULL_SPECIFICATION")); //$NON-NLS-1$
+  public void setEncodings( final PrinterSpecification printerSpecification,
+                            final Locale locale ) {
+    if ( printerSpecification == null ) {
+      throw new NullPointerException( EncodingSelector.MESSAGES.getErrorString(
+        "EncodingSelector.ERROR_0002_NULL_SPECIFICATION" ) ); //$NON-NLS-1$
     }
-    final EncodingComboBoxModel defaultEncodingModel = EncodingComboBoxModel.createDefaultModel(locale);
+    final EncodingComboBoxModel defaultEncodingModel = EncodingComboBoxModel.createDefaultModel( locale );
 
-    final EncodingComboBoxModel retval = new EncodingComboBoxModel(locale);
-    for (int i = 0; i < defaultEncodingModel.getSize(); i++)
-    {
-      final String encoding = defaultEncodingModel.getEncoding(i);
-      if (printerSpecification.isEncodingSupported(encoding))
-      {
-        final String description = defaultEncodingModel.getDescription(i);
-        retval.addEncoding(encoding, description);
+    final EncodingComboBoxModel retval = new EncodingComboBoxModel( locale );
+    for ( int i = 0; i < defaultEncodingModel.getSize(); i++ ) {
+      final String encoding = defaultEncodingModel.getEncoding( i );
+      if ( printerSpecification.isEncodingSupported( encoding ) ) {
+        final String description = defaultEncodingModel.getDescription( i );
+        retval.addEncoding( encoding, description );
       }
     }
     retval.sort();
     final Object oldSelectedValue = encodingComboBox.getSelectedItem();
-    encodingComboBox.setModel(retval);
+    encodingComboBox.setModel( retval );
     encodingComboBoxModel = retval;
-    encodingComboBoxModel.setSelectedItem(oldSelectedValue);
+    encodingComboBoxModel.setSelectedItem( oldSelectedValue );
   }
 }

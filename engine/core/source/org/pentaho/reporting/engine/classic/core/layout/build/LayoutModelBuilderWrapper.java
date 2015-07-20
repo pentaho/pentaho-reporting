@@ -26,187 +26,150 @@ import org.pentaho.reporting.engine.classic.core.layout.model.RenderNode;
 import org.pentaho.reporting.engine.classic.core.states.ReportStateKey;
 import org.pentaho.reporting.engine.classic.core.util.InstanceID;
 
-public abstract class LayoutModelBuilderWrapper implements LayoutModelBuilder
-{
+public abstract class LayoutModelBuilderWrapper implements LayoutModelBuilder {
   private LayoutModelBuilder parent;
 
-  protected LayoutModelBuilderWrapper(final LayoutModelBuilder parent)
-  {
+  protected LayoutModelBuilderWrapper( final LayoutModelBuilder parent ) {
     this.parent = parent;
   }
 
-  public void initialize(final ProcessingContext processingContext,
-                         final RenderBox parentBox,
-                         final RenderNodeFactory renderNodeFactory)
-  {
-    parent.initialize(processingContext, parentBox, renderNodeFactory);
+  public void initialize( final ProcessingContext processingContext,
+                          final RenderBox parentBox,
+                          final RenderNodeFactory renderNodeFactory ) {
+    parent.initialize( processingContext, parentBox, renderNodeFactory );
   }
 
-  public void setLimitedSubReports(final boolean limitedSubReports)
-  {
-    parent.setLimitedSubReports(limitedSubReports);
+  public void setLimitedSubReports( final boolean limitedSubReports ) {
+    parent.setLimitedSubReports( limitedSubReports );
   }
 
-  public void updateState(final ReportStateKey stateKey)
-  {
-    parent.updateState(stateKey);
+  public void updateState( final ReportStateKey stateKey ) {
+    parent.updateState( stateKey );
   }
 
-  public InstanceID startBox(final ReportElement element)
-  {
-    return parent.startBox(element);
+  public InstanceID startBox( final ReportElement element ) {
+    return parent.startBox( element );
   }
 
-  public void startSection()
-  {
+  public void startSection() {
     parent.startSection();
   }
 
-  public void startSection(final ReportElement element, final int sectionSize)
-  {
-    parent.startSection(element, sectionSize);
+  public void startSection( final ReportElement element, final int sectionSize ) {
+    parent.startSection( element, sectionSize );
   }
 
-  public void processContent(final ReportElement element, final Object computedValue, final Object rawValue)
-  {
-    parent.processContent(element, computedValue, rawValue);
+  public void processContent( final ReportElement element, final Object computedValue, final Object rawValue ) {
+    parent.processContent( element, computedValue, rawValue );
   }
 
-  public InstanceID createSubflowPlaceholder(final ReportElement element)
-  {
-    return parent.createSubflowPlaceholder(element);
+  public InstanceID createSubflowPlaceholder( final ReportElement element ) {
+    return parent.createSubflowPlaceholder( element );
   }
 
-  public InlineSubreportMarker processSubReport(final SubReport element)
-  {
-    return parent.processSubReport(element);
+  public InlineSubreportMarker processSubReport( final SubReport element ) {
+    return parent.processSubReport( element );
   }
 
-  public boolean finishBox()
-  {
+  public boolean finishBox() {
     return parent.finishBox();
   }
 
-  public void endSection()
-  {
+  public void endSection() {
     parent.endSection();
   }
 
-  public boolean isEmptyElementsHaveSignificance()
-  {
+  public boolean isEmptyElementsHaveSignificance() {
     return parent.isEmptyElementsHaveSignificance();
   }
 
-  public boolean isEmpty()
-  {
+  public boolean isEmpty() {
     return parent.isEmpty();
   }
 
-  public void print()
-  {
+  public void print() {
     parent.print();
   }
 
-  public void startSubFlow(final InstanceID insertationPoint)
-  {
-    parent.startSubFlow(insertationPoint);
+  public void startSubFlow( final InstanceID insertationPoint ) {
+    parent.startSubFlow( insertationPoint );
   }
 
-  public void startSubFlow(final ReportElement element)
-  {
-    parent.startSubFlow(element);
+  public void startSubFlow( final ReportElement element ) {
+    parent.startSubFlow( element );
   }
 
-  public void suspendSubFlow()
-  {
+  public void suspendSubFlow() {
     parent.suspendSubFlow();
   }
 
-  public void endSubFlow()
-  {
+  public void endSubFlow() {
     parent.endSubFlow();
   }
 
-  public void addProgressMarkerBox()
-  {
+  public void addProgressMarkerBox() {
     parent.addProgressMarkerBox();
   }
 
-  public void addManualPageBreakBox(final long range)
-  {
-    parent.addManualPageBreakBox(range);
+  public void addManualPageBreakBox( final long range ) {
+    parent.addManualPageBreakBox( range );
   }
 
-  protected LayoutModelBuilder getParent()
-  {
+  protected LayoutModelBuilder getParent() {
     return parent;
   }
 
-  public LayoutModelBuilder deriveForStorage(final RenderBox clonedContent)
-  {
+  public LayoutModelBuilder deriveForStorage( final RenderBox clonedContent ) {
     final LayoutModelBuilderWrapper clone = (LayoutModelBuilderWrapper) clone();
-    clone.parent = parent.deriveForStorage(clonedContent);
+    clone.parent = parent.deriveForStorage( clonedContent );
     return clone;
   }
 
-  public LayoutModelBuilder deriveForPageBreak()
-  {
+  public LayoutModelBuilder deriveForPageBreak() {
     final LayoutModelBuilderWrapper clone = (LayoutModelBuilderWrapper) clone();
     clone.parent = parent.deriveForPageBreak();
     return clone;
   }
 
-  public void validateAfterCommit()
-  {
+  public void validateAfterCommit() {
     parent.validateAfterCommit();
   }
 
-  public void performParanoidModelCheck(final RenderBox logicalPageBox)
-  {
-    parent.performParanoidModelCheck(logicalPageBox);
+  public void performParanoidModelCheck( final RenderBox logicalPageBox ) {
+    parent.performParanoidModelCheck( logicalPageBox );
   }
 
-  public void restoreStateAfterRollback()
-  {
+  public void restoreStateAfterRollback() {
     parent.restoreStateAfterRollback();
   }
 
-  public void legacyAddPlaceholder(final ReportElement element)
-  {
-    parent.legacyAddPlaceholder(element);
+  public void legacyAddPlaceholder( final ReportElement element ) {
+    parent.legacyAddPlaceholder( element );
   }
 
-  public void legacyFlagNotEmpty()
-  {
+  public void legacyFlagNotEmpty() {
     parent.legacyFlagNotEmpty();
   }
 
-  public RenderNode dangerousRawAccess()
-  {
+  public RenderNode dangerousRawAccess() {
     return parent.dangerousRawAccess();
   }
 
-  public void close()
-  {
+  public void close() {
     parent.close();
   }
 
-  public void setCollapseProgressMarker(final boolean b)
-  {
-    parent.setCollapseProgressMarker(b);
+  public void setCollapseProgressMarker( final boolean b ) {
+    parent.setCollapseProgressMarker( b );
   }
 
-  public LayoutModelBuilder clone()
-  {
-    try
-    {
+  public LayoutModelBuilder clone() {
+    try {
       final LayoutModelBuilderWrapper clone = (LayoutModelBuilderWrapper) super.clone();
       clone.parent = parent.clone();
       return clone;
-    }
-    catch (CloneNotSupportedException e)
-    {
-      throw new IllegalStateException(e);
+    } catch ( CloneNotSupportedException e ) {
+      throw new IllegalStateException( e );
     }
   }
 }

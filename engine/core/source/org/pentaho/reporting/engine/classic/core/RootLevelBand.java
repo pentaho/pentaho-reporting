@@ -23,8 +23,7 @@ package org.pentaho.reporting.engine.classic.core;
  *
  * @author Thomas Morgner
  */
-public interface RootLevelBand extends ReportElement
-{
+public interface RootLevelBand extends ReportElement {
   /**
    * Returns the number of subreports attached to this root level band.
    *
@@ -39,7 +38,7 @@ public interface RootLevelBand extends ReportElement
    * @return the subreport stored at the given index.
    * @throws IndexOutOfBoundsException if there is no such subreport.
    */
-  public SubReport getSubReport(int index);
+  public SubReport getSubReport( int index );
 
   /**
    * Returns all sub-reports as array.

@@ -25,10 +25,8 @@ import java.util.StringTokenizer;
  *
  * @author Thomas Morgner
  */
-public class LocaleValueConverter implements ValueConverter
-{
-  public LocaleValueConverter()
-  {
+public class LocaleValueConverter implements ValueConverter {
+  public LocaleValueConverter() {
   }
 
   /**
@@ -38,28 +36,20 @@ public class LocaleValueConverter implements ValueConverter
    * @return the attribute value.
    * @throws BeanException if there was an error during the conversion.
    */
-  public String toAttributeValue(final Object o) throws BeanException
-  {
-    if (o == null)
-    {
+  public String toAttributeValue( final Object o ) throws BeanException {
+    if ( o == null ) {
       throw new NullPointerException();
     }
-    if (o instanceof Locale == false)
-    {
-      throw new BeanException("Failed to convert object of type " + o.getClass() + ": Not a Locale.");
+    if ( o instanceof Locale == false ) {
+      throw new BeanException( "Failed to convert object of type " + o.getClass() + ": Not a Locale." );
     }
-    
+
     final Locale l = (Locale) o;
-    if ("".equals(l.getCountry()))
-    {
+    if ( "".equals( l.getCountry() ) ) {
       return l.getLanguage();
-    }
-    else if ("".equals(l.getVariant()))
-    {
+    } else if ( "".equals( l.getVariant() ) ) {
       return l.getLanguage() + '_' + l.getCountry();
-    }
-    else
-    {
+    } else {
       return l.getLanguage() + '_' + l.getCountry() + '_' + l.getVariant();
     }
   }
@@ -71,28 +61,23 @@ public class LocaleValueConverter implements ValueConverter
    * @return a property value.
    * @throws BeanException if there was an error during the conversion.
    */
-  public Object toPropertyValue(final String s) throws BeanException
-  {
-    if (s == null)
-    {
+  public Object toPropertyValue( final String s ) throws BeanException {
+    if ( s == null ) {
       throw new NullPointerException();
     }
-    final StringTokenizer strtok = new StringTokenizer(s.trim(), "_");
-    if (strtok.hasMoreElements() == false)
-    {
-      throw new BeanException("This is no valid locale specification.");
+    final StringTokenizer strtok = new StringTokenizer( s.trim(), "_" );
+    if ( strtok.hasMoreElements() == false ) {
+      throw new BeanException( "This is no valid locale specification." );
     }
     final String language = strtok.nextToken();
     String country = "";
-    if (strtok.hasMoreTokens())
-    {
+    if ( strtok.hasMoreTokens() ) {
       country = strtok.nextToken();
     }
     String variant = "";
-    if (strtok.hasMoreTokens())
-    {
+    if ( strtok.hasMoreTokens() ) {
       variant = strtok.nextToken();
     }
-    return new Locale(language, country, variant);
+    return new Locale( language, country, variant );
   }
 }

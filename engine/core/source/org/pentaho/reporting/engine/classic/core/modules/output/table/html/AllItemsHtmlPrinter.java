@@ -29,32 +29,24 @@ import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
  *
  * @author Thomas Morgner
  */
-public class AllItemsHtmlPrinter extends HtmlPrinter
-{
-  public AllItemsHtmlPrinter(final ResourceManager resourceManager)
-  {
-    super(resourceManager);
+public class AllItemsHtmlPrinter extends HtmlPrinter {
+  public AllItemsHtmlPrinter( final ResourceManager resourceManager ) {
+    super( resourceManager );
   }
 
-  public void print(final LogicalPageKey logicalPageKey,
-                    final LogicalPageBox logicalPage,
-                    final TableContentProducer contentProducer,
-                    final OutputProcessorMetaData metaData,
-                    final boolean incremental)
-      throws ContentProcessingException
-  {
-    try
-    {
-      super.print(logicalPageKey, logicalPage, contentProducer, metaData, incremental);
-    }
-    catch (ContentProcessingException ce)
-    {
+  public void print( final LogicalPageKey logicalPageKey,
+                     final LogicalPageBox logicalPage,
+                     final TableContentProducer contentProducer,
+                     final OutputProcessorMetaData metaData,
+                     final boolean incremental )
+    throws ContentProcessingException {
+    try {
+      super.print( logicalPageKey, logicalPage, contentProducer, metaData, incremental );
+    } catch ( ContentProcessingException ce ) {
       throw ce;
-    }
-    catch (Exception e)
-    {
+    } catch ( Exception e ) {
       // ignore .. (for now)
-      throw new ContentProcessingException("Processing content failed", e);
+      throw new ContentProcessingException( "Processing content failed", e );
     }
   }
 }

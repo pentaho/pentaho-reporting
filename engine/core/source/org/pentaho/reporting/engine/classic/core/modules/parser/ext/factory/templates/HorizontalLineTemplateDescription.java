@@ -24,15 +24,13 @@ import org.pentaho.reporting.engine.classic.core.filter.templates.HorizontalLine
  *
  * @author Thomas Morgner
  */
-public class HorizontalLineTemplateDescription extends AbstractTemplateDescription
-{
+public class HorizontalLineTemplateDescription extends AbstractTemplateDescription {
   /**
    * Creates a new template description.
    *
    * @param name the name.
    */
-  public HorizontalLineTemplateDescription(final String name)
-  {
-    super(name, HorizontalLineTemplate.class, true);
+  public HorizontalLineTemplateDescription( final String name ) {
+    super( name, HorizontalLineTemplate.class, true );
   }
 }

@@ -17,28 +17,23 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.gui.commonswing;
 
+import javax.swing.*;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+import javax.swing.text.Document;
+import javax.swing.text.JTextComponent;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import javax.swing.AbstractButton;
-import javax.swing.Action;
-import javax.swing.JComboBox;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
-import javax.swing.text.Document;
-import javax.swing.text.JTextComponent;
 
-public abstract class FormValidator
-{
+public abstract class FormValidator {
 
   private class FormTextfieldListener
-      implements DocumentListener, PropertyChangeListener
-  {
-    private FormTextfieldListener()
-    {
+    implements DocumentListener, PropertyChangeListener {
+    private FormTextfieldListener() {
     }
 
     /**
@@ -46,14 +41,12 @@ public abstract class FormValidator
      *
      * @param evt A PropertyChangeEvent object describing the event source and the property that has changed.
      */
-    public void propertyChange(final PropertyChangeEvent evt)
-    {
-      if (FormValidator.DOCUMENT_PROPERTY_NAME.equals(evt.getPropertyName()))
-      {
+    public void propertyChange( final PropertyChangeEvent evt ) {
+      if ( FormValidator.DOCUMENT_PROPERTY_NAME.equals( evt.getPropertyName() ) ) {
         final Document olddoc = (Document) evt.getOldValue();
-        olddoc.removeDocumentListener(this);
+        olddoc.removeDocumentListener( this );
         final Document newdoc = (Document) evt.getOldValue();
-        newdoc.addDocumentListener(this);
+        newdoc.addDocumentListener( this );
       }
     }
 
@@ -62,8 +55,7 @@ public abstract class FormValidator
      *
      * @param e the document event
      */
-    public void changedUpdate(final DocumentEvent e)
-    {
+    public void changedUpdate( final DocumentEvent e ) {
       handleValidate();
     }
 
@@ -73,8 +65,7 @@ public abstract class FormValidator
      *
      * @param e the document event
      */
-    public void insertUpdate(final DocumentEvent e)
-    {
+    public void insertUpdate( final DocumentEvent e ) {
       handleValidate();
     }
 
@@ -84,39 +75,32 @@ public abstract class FormValidator
      *
      * @param e the document event
      */
-    public void removeUpdate(final DocumentEvent e)
-    {
+    public void removeUpdate( final DocumentEvent e ) {
       handleValidate();
     }
   }
 
-  private class FormActionListener implements ActionListener
-  {
-    private FormActionListener()
-    {
+  private class FormActionListener implements ActionListener {
+    private FormActionListener() {
     }
 
     /**
      * Invoked when an action occurs.
      */
-    public void actionPerformed(final ActionEvent e)
-    {
+    public void actionPerformed( final ActionEvent e ) {
       handleValidate();
     }
   }
 
-  private class FormItemListener implements ItemListener
-  {
-    private FormItemListener()
-    {
+  private class FormItemListener implements ItemListener {
+    private FormItemListener() {
     }
 
     /**
      * Invoked when an item has been selected or deselected by the user. The code written for this method performs the
      * operations that need to occur when an item is selected (or deselected).
      */
-    public void itemStateChanged(final ItemEvent e)
-    {
+    public void itemStateChanged( final ItemEvent e ) {
       handleValidate();
     }
   }
@@ -127,56 +111,45 @@ public abstract class FormValidator
   private FormItemListener itemListener;
   private boolean enabled;
 
-  protected FormValidator()
-  {
+  protected FormValidator() {
     this.formTextfieldListener = new FormTextfieldListener();
     this.actionListener = new FormActionListener();
     this.itemListener = new FormItemListener();
   }
 
-  public void registerTextField(final JTextComponent textField)
-  {
-    textField.getDocument().addDocumentListener(formTextfieldListener);
-    textField.addPropertyChangeListener(FormValidator.DOCUMENT_PROPERTY_NAME, formTextfieldListener);
+  public void registerTextField( final JTextComponent textField ) {
+    textField.getDocument().addDocumentListener( formTextfieldListener );
+    textField.addPropertyChangeListener( FormValidator.DOCUMENT_PROPERTY_NAME, formTextfieldListener );
   }
 
-  public void registerButton(final AbstractButton bt)
-  {
-    bt.addActionListener(actionListener);
+  public void registerButton( final AbstractButton bt ) {
+    bt.addActionListener( actionListener );
   }
 
-  public void registerComboBox(final JComboBox bt)
-  {
-    bt.addItemListener(itemListener);
+  public void registerComboBox( final JComboBox bt ) {
+    bt.addItemListener( itemListener );
   }
 
   public abstract Action getConfirmAction();
 
-  public final void handleValidate()
-  {
+  public final void handleValidate() {
     final Action confirmAction = getConfirmAction();
-    if (confirmAction == null || enabled == false)
-    {
+    if ( confirmAction == null || enabled == false ) {
       return;
     }
 
-    if (performValidate() == false)
-    {
-      confirmAction.setEnabled(false);
-    }
-    else
-    {
-      confirmAction.setEnabled(true);
+    if ( performValidate() == false ) {
+      confirmAction.setEnabled( false );
+    } else {
+      confirmAction.setEnabled( true );
     }
   }
 
-  public boolean isEnabled()
-  {
+  public boolean isEnabled() {
     return enabled;
   }
 
-  public void setEnabled(final boolean enabled)
-  {
+  public void setEnabled( final boolean enabled ) {
     this.enabled = enabled;
   }
 

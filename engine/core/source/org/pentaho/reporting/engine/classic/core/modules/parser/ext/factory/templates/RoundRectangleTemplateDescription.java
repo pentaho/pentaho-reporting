@@ -24,15 +24,13 @@ import org.pentaho.reporting.engine.classic.core.filter.templates.RoundRectangle
  *
  * @author Thomas Morgner
  */
-public class RoundRectangleTemplateDescription extends AbstractTemplateDescription
-{
+public class RoundRectangleTemplateDescription extends AbstractTemplateDescription {
   /**
    * Creates a new template description.
    *
    * @param name the name.
    */
-  public RoundRectangleTemplateDescription(final String name)
-  {
-    super(name, RoundRectangleTemplate.class, true);
+  public RoundRectangleTemplateDescription( final String name ) {
+    super( name, RoundRectangleTemplate.class, true );
   }
 }

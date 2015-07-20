@@ -17,15 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.parser.base;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStreamWriter;
-import java.io.Reader;
-import java.net.URL;
-import java.util.HashMap;
-import java.util.Iterator;
-
 import org.pentaho.reporting.engine.classic.core.MasterReport;
 import org.pentaho.reporting.libraries.base.util.IOUtils;
 import org.pentaho.reporting.libraries.base.util.MemoryByteArrayOutputStream;
@@ -39,6 +30,15 @@ import org.pentaho.reporting.libraries.resourceloader.ResourceLoadingException;
 import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 import org.xml.sax.InputSource;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStreamWriter;
+import java.io.Reader;
+import java.net.URL;
+import java.util.HashMap;
+import java.util.Iterator;
+
 /**
  * The reportgenerator initializes the parser and provides an interface the the default parser.
  * <p/>
@@ -48,13 +48,12 @@ import org.xml.sax.InputSource;
  * @author Thomas Morgner
  * @deprecated Use LibLoader directly.
  */
-public class ReportGenerator
-{
+public class ReportGenerator {
   /**
    * Enable DTD validation of the parsed XML.
    */
   public static final String PARSER_VALIDATE_KEY
-      = "org.pentaho.reporting.engine.classic.core.modules.parser.base.Validate";
+    = "org.pentaho.reporting.engine.classic.core.modules.parser.base.Validate";
 
   /**
    * disable DTD validation by default.
@@ -73,8 +72,7 @@ public class ReportGenerator
    * Creates a new report generator. The generator uses the singleton pattern by default, so use generator.getInstance()
    * to get the generator.
    */
-  protected ReportGenerator()
-  {
+  protected ReportGenerator() {
     helperObjects = new HashMap();
   }
 
@@ -83,8 +81,7 @@ public class ReportGenerator
    *
    * @param validate true, if the parser should validate the xml files.
    */
-  public void setValidateDTD(final boolean validate)
-  {
+  public void setValidateDTD( final boolean validate ) {
     this.validateDTD = validate;
   }
 
@@ -93,8 +90,7 @@ public class ReportGenerator
    *
    * @return true, if the parser should validate, false otherwise.
    */
-  public boolean isValidateDTD()
-  {
+  public boolean isValidateDTD() {
     return validateDTD;
   }
 
@@ -106,15 +102,13 @@ public class ReportGenerator
    * @return the report.
    * @throws java.io.IOException if an I/O error occurs.
    */
-  public MasterReport parseReport(final String file)
-      throws IOException, ResourceException
-  {
-    if (file == null)
-    {
-      throw new NullPointerException("File may not be null");
+  public MasterReport parseReport( final String file )
+    throws IOException, ResourceException {
+    if ( file == null ) {
+      throw new NullPointerException( "File may not be null" );
     }
 
-    return parseReport(new File(file));
+    return parseReport( new File( file ) );
   }
 
   /**
@@ -125,10 +119,9 @@ public class ReportGenerator
    * @return the report.
    * @throws java.io.IOException if an I/O error occurs.
    */
-  public MasterReport parseReport(final URL file)
-      throws IOException, ResourceException
-  {
-    return parseReport(file, file);
+  public MasterReport parseReport( final URL file )
+    throws IOException, ResourceException {
+    return parseReport( file, file );
   }
 
   /**
@@ -142,10 +135,9 @@ public class ReportGenerator
    * @param contentBase the URL for the report template content base.
    * @return the parsed report.
    */
-  public MasterReport parseReport(final URL file, final URL contentBase)
-      throws ResourceException
-  {
-    return parse(file, contentBase);
+  public MasterReport parseReport( final URL file, final URL contentBase )
+    throws ResourceException {
+    return parse( file, contentBase );
   }
 
   /**
@@ -156,65 +148,54 @@ public class ReportGenerator
    * @return the parsed report.
    * @throws ResourceException if parsing or loading failed for some reason.
    */
-  private MasterReport parse(final URL file, final URL contentBase)
-      throws ResourceException
-  {
+  private MasterReport parse( final URL file, final URL contentBase )
+    throws ResourceException {
     final ResourceManager resourceManager = new ResourceManager();
-    final ResourceKey contextKey = resourceManager.createKey(contentBase);
+    final ResourceKey contextKey = resourceManager.createKey( contentBase );
 
     // Build the main key. That key also contains all context/parse-time
     // parameters as they will influence the resulting report. It is not
     // wise to keep caching independent from that.
     final HashMap map = new HashMap();
     final Iterator it = this.helperObjects.keySet().iterator();
-    while (it.hasNext())
-    {
+    while ( it.hasNext() ) {
       final String name = (String) it.next();
-      map.put(new FactoryParameterKey(name), helperObjects.get(name));
+      map.put( new FactoryParameterKey( name ), helperObjects.get( name ) );
     }
 
-    final ResourceKey key = resourceManager.createKey(file, map);
-    final Resource resource = resourceManager.create(key, contextKey, MasterReport.class);
+    final ResourceKey key = resourceManager.createKey( file, map );
+    final Resource resource = resourceManager.create( key, contextKey, MasterReport.class );
     return (MasterReport) resource.getResource();
   }
 
   /**
    * @noinspection IOResourceOpenedButNotSafelyClosed
    */
-  private byte[] extractData(final InputSource input) throws IOException
-  {
+  private byte[] extractData( final InputSource input ) throws IOException {
     final InputStream byteStream = input.getByteStream();
-    if (byteStream != null)
-    {
-      try
-      {
+    if ( byteStream != null ) {
+      try {
         final MemoryByteArrayOutputStream bout = new MemoryByteArrayOutputStream();
-        IOUtils.getInstance().copyStreams(byteStream, bout);
+        IOUtils.getInstance().copyStreams( byteStream, bout );
         return bout.toByteArray();
-      }
-      finally
-      {
+      } finally {
         byteStream.close();
       }
     }
 
     final Reader characterStream = input.getCharacterStream();
-    if (characterStream == null)
-    {
+    if ( characterStream == null ) {
       throw new IOException
-          ("InputSource has neither an Byte nor a CharacterStream");
+        ( "InputSource has neither an Byte nor a CharacterStream" );
     }
 
-    try
-    {
+    try {
       final MemoryByteArrayOutputStream bout = new MemoryByteArrayOutputStream();
-      final OutputStreamWriter owriter = new OutputStreamWriter(bout);
-      IOUtils.getInstance().copyWriter(characterStream, owriter);
+      final OutputStreamWriter owriter = new OutputStreamWriter( bout );
+      IOUtils.getInstance().copyWriter( characterStream, owriter );
       owriter.close();
       return bout.toByteArray();
-    }
-    finally
-    {
+    } finally {
       characterStream.close();
     }
   }
@@ -227,34 +208,30 @@ public class ReportGenerator
    * @return the parsed report.
    * @throws java.io.IOException if an I/O error occurs.
    */
-  public MasterReport parseReport(final File file)
-      throws IOException, ResourceException
-  {
-    if (file == null)
-    {
+  public MasterReport parseReport( final File file )
+    throws IOException, ResourceException {
+    if ( file == null ) {
       throw new NullPointerException();
     }
-    if (file.isDirectory())
-    {
-      throw new IOException("File is not a directory.");
+    if ( file.isDirectory() ) {
+      throw new IOException( "File is not a directory." );
     }
     final File contentBase = file.getCanonicalFile().getParentFile();
     final ResourceManager resourceManager = new ResourceManager();
-    final ResourceKey contextKey = resourceManager.createKey(contentBase);
+    final ResourceKey contextKey = resourceManager.createKey( contentBase );
 
     // Build the main key. That key also contains all context/parse-time
     // parameters as they will influence the resulting report. It is not
     // wise to keep caching independent from that.
     final HashMap map = new HashMap();
     final Iterator it = this.helperObjects.keySet().iterator();
-    while (it.hasNext())
-    {
+    while ( it.hasNext() ) {
       final String name = (String) it.next();
-      map.put(new FactoryParameterKey(name), helperObjects.get(name));
+      map.put( new FactoryParameterKey( name ), helperObjects.get( name ) );
     }
 
-    final ResourceKey key = resourceManager.createKey(file, map);
-    final Resource resource = resourceManager.create(key, contextKey, MasterReport.class);
+    final ResourceKey key = resourceManager.createKey( file, map );
+    final Resource resource = resourceManager.create( key, contextKey, MasterReport.class );
     return (MasterReport) resource.getResource();
   }
 
@@ -267,65 +244,54 @@ public class ReportGenerator
    * @throws ResourceException if parsing or loading failed for some reason.
    * @throws IOException       if an IO-related error occurs.
    */
-  public MasterReport parseReport(final InputSource input, final URL contentBase)
-      throws IOException, ResourceException
-  {
-    if (input.getCharacterStream() != null)
-    {
+  public MasterReport parseReport( final InputSource input, final URL contentBase )
+    throws IOException, ResourceException {
+    if ( input.getCharacterStream() != null ) {
       // Sourceforge Bug #1712734. We cannot safely route the character-stream through libloader.
       // Therefore we skip libloader and parse the report directly. This is for backward compatibility,
       // all other xml-based objects will still rely on LibLoader.
 
-      return parseReportDirectly(input, contentBase);
+      return parseReportDirectly( input, contentBase );
     }
 
-    final byte[] bytes = extractData(input);
+    final byte[] bytes = extractData( input );
     final ResourceManager resourceManager = new ResourceManager();
     final ResourceKey contextKey;
-    if (contentBase != null)
-    {
-      contextKey = resourceManager.createKey(contentBase);
-    }
-    else
-    {
+    if ( contentBase != null ) {
+      contextKey = resourceManager.createKey( contentBase );
+    } else {
       contextKey = null;
     }
     final HashMap map = new HashMap();
 
     final Iterator it = this.helperObjects.keySet().iterator();
-    while (it.hasNext())
-    {
+    while ( it.hasNext() ) {
       final String name = (String) it.next();
-      map.put(new FactoryParameterKey(name), helperObjects.get(name));
+      map.put( new FactoryParameterKey( name ), helperObjects.get( name ) );
     }
 
-    final ResourceKey key = resourceManager.createKey(bytes, map);
-    final Resource resource = resourceManager.create(key, contextKey, MasterReport.class);
+    final ResourceKey key = resourceManager.createKey( bytes, map );
+    final Resource resource = resourceManager.create( key, contextKey, MasterReport.class );
     return (MasterReport) resource.getResource();
   }
 
-  private MasterReport parseReportDirectly(final InputSource input, final URL contentBase)
-      throws ResourceKeyCreationException, ResourceCreationException, ResourceLoadingException
-  {
+  private MasterReport parseReportDirectly( final InputSource input, final URL contentBase )
+    throws ResourceKeyCreationException, ResourceCreationException, ResourceLoadingException {
     final ResourceManager manager = new ResourceManager();
     final HashMap map = new HashMap();
 
     final Iterator it = this.helperObjects.keySet().iterator();
-    while (it.hasNext())
-    {
+    while ( it.hasNext() ) {
       final String name = (String) it.next();
-      map.put(new FactoryParameterKey(name), helperObjects.get(name));
+      map.put( new FactoryParameterKey( name ), helperObjects.get( name ) );
     }
 
     final MasterReportXmlResourceFactory resourceFactory = new MasterReportXmlResourceFactory();
     resourceFactory.initializeDefaults();
-    if (contentBase != null)
-    {
-      return (MasterReport) resourceFactory.parseDirectly(manager, input, manager.createKey(contentBase), map);
-    }
-    else
-    {
-      return (MasterReport) resourceFactory.parseDirectly(manager, input, null, map);
+    if ( contentBase != null ) {
+      return (MasterReport) resourceFactory.parseDirectly( manager, input, manager.createKey( contentBase ), map );
+    } else {
+      return (MasterReport) resourceFactory.parseDirectly( manager, input, null, map );
     }
   }
 
@@ -338,27 +304,24 @@ public class ReportGenerator
    * @return the parsed report.
    * @throws ResourceException if parsing or loading failed for some reason.
    */
-  public MasterReport parseReport(ResourceManager manager,
-                                  final ResourceKey input,
-                                  final ResourceKey contextKey)
-      throws ResourceException
-  {
-    if (manager == null)
-    {
+  public MasterReport parseReport( ResourceManager manager,
+                                   final ResourceKey input,
+                                   final ResourceKey contextKey )
+    throws ResourceException {
+    if ( manager == null ) {
       manager = new ResourceManager();
     }
 
-    final HashMap map = new HashMap(input.getFactoryParameters());
+    final HashMap map = new HashMap( input.getFactoryParameters() );
     final Iterator it = this.helperObjects.keySet().iterator();
-    while (it.hasNext())
-    {
+    while ( it.hasNext() ) {
       final String name = (String) it.next();
-      map.put(new FactoryParameterKey(name), helperObjects.get(name));
+      map.put( new FactoryParameterKey( name ), helperObjects.get( name ) );
     }
 
-    final ResourceKey key = new ResourceKey(input.getParent(),
-        input.getSchema(), input.getIdentifier(), input.getFactoryParameters());
-    final Resource resource = manager.create(key, contextKey, MasterReport.class);
+    final ResourceKey key = new ResourceKey( input.getParent(),
+      input.getSchema(), input.getIdentifier(), input.getFactoryParameters() );
+    final Resource resource = manager.create( key, contextKey, MasterReport.class );
     return (MasterReport) resource.getResource();
   }
 
@@ -368,10 +331,8 @@ public class ReportGenerator
    *
    * @return The shared report generator.
    */
-  public static synchronized ReportGenerator getInstance()
-  {
-    if (generator == null)
-    {
+  public static synchronized ReportGenerator getInstance() {
+    if ( generator == null ) {
       generator = new ReportGenerator();
     }
     return generator;
@@ -383,8 +344,7 @@ public class ReportGenerator
    *
    * @return The shared report generator.
    */
-  public static ReportGenerator createInstance()
-  {
+  public static ReportGenerator createInstance() {
     return new ReportGenerator();
   }
 
@@ -394,19 +354,14 @@ public class ReportGenerator
    * @param key   the parse-context key used to lookup the object later.
    * @param value the value.
    */
-  public void setObject(final String key, final Object value)
-  {
-    if (key == null)
-    {
+  public void setObject( final String key, final Object value ) {
+    if ( key == null ) {
       throw new NullPointerException();
     }
-    if (value == null)
-    {
-      helperObjects.remove(key);
-    }
-    else
-    {
-      helperObjects.put(key, value);
+    if ( value == null ) {
+      helperObjects.remove( key );
+    } else {
+      helperObjects.put( key, value );
     }
   }
 
@@ -416,8 +371,7 @@ public class ReportGenerator
    * @param key the key.
    * @return the value or null if there is no such value.
    */
-  public Object getObject(final String key)
-  {
-    return helperObjects.get(key);
+  public Object getObject( final String key ) {
+    return helperObjects.get( key );
   }
 }

@@ -17,9 +17,9 @@
 
 package org.pentaho.reporting.engine.classic.core;
 
-import javax.swing.table.TableModel;
-
 import org.pentaho.reporting.engine.classic.core.wizard.DataAttributes;
+
+import javax.swing.table.TableModel;
 
 /**
  * A extension of the classic table-model. If the tablemodel returned by the data-factory implements this interface, the
@@ -30,22 +30,21 @@ import org.pentaho.reporting.engine.classic.core.wizard.DataAttributes;
  *
  * @author Thomas Morgner
  */
-public interface MetaTableModel extends TableModel
-{
+public interface MetaTableModel extends TableModel {
   /**
    * Returns the meta-attribute as Java-Object. The object type that is expected by the caller is defined in the
    * TableMetaData property set. It is the responsibility of the implementor to map the native meta-data model into a
    * model suitable for reporting.
    * <p/>
-   * Be aware that cell-level attributes do not make it into the designtime dataschema, as this dataschema only looks
-   * at the structural metadata available and does not contain any data references.
+   * Be aware that cell-level attributes do not make it into the designtime dataschema, as this dataschema only looks at
+   * the structural metadata available and does not contain any data references.
    *
    * @param row    the row of the cell for which the meta-data is queried.
    * @param column the index of the column for which the meta-data is queried.
    * @return the meta-data object.
    */
-  public DataAttributes getCellDataAttributes(final int row,
-                                              final int column);
+  public DataAttributes getCellDataAttributes( final int row,
+                                               final int column );
 
   /**
    * Checks, whether cell-data attributes are supported by this tablemodel implementation.
@@ -60,7 +59,7 @@ public interface MetaTableModel extends TableModel
    * @param column the column.
    * @return data-attributes, never null.
    */
-  public DataAttributes getColumnAttributes(final int column);
+  public DataAttributes getColumnAttributes( final int column );
 
   /**
    * Returns table-wide attributes. This usually contain hints about the data-source used to query the data as well as

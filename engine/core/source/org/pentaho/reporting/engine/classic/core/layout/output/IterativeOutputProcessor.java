@@ -24,8 +24,7 @@ import org.pentaho.reporting.engine.classic.core.layout.model.LogicalPageBox;
  *
  * @author Thomas Morgner
  */
-public interface IterativeOutputProcessor extends OutputProcessor
-{
-  public void processIterativeContent(LogicalPageBox logicalPageBox,
-                                      boolean performOutput) throws ContentProcessingException;
+public interface IterativeOutputProcessor extends OutputProcessor {
+  public void processIterativeContent( LogicalPageBox logicalPageBox,
+                                       boolean performOutput ) throws ContentProcessingException;
 }

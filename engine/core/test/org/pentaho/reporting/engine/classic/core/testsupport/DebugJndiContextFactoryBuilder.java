@@ -18,19 +18,16 @@
 
 package org.pentaho.reporting.engine.classic.core.testsupport;
 
-import java.util.Hashtable;
 import javax.naming.NamingException;
 import javax.naming.spi.InitialContextFactory;
 import javax.naming.spi.InitialContextFactoryBuilder;
+import java.util.Hashtable;
 
-public class DebugJndiContextFactoryBuilder implements InitialContextFactoryBuilder
-{
-  public DebugJndiContextFactoryBuilder()
-  {
+public class DebugJndiContextFactoryBuilder implements InitialContextFactoryBuilder {
+  public DebugJndiContextFactoryBuilder() {
   }
 
-  public InitialContextFactory createInitialContextFactory(final Hashtable<?, ?> environment) throws NamingException
-  {
+  public InitialContextFactory createInitialContextFactory( final Hashtable<?, ?> environment ) throws NamingException {
     return new DebugJndiContextFactory();
   }
 }

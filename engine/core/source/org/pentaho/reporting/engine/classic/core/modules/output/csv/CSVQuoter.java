@@ -22,8 +22,7 @@ package org.pentaho.reporting.engine.classic.core.modules.output.csv;
  *
  * @author Thomas Morgner.
  */
-public class CSVQuoter
-{
+public class CSVQuoter {
   /**
    * The separator used in the CSV file.
    */
@@ -32,9 +31,8 @@ public class CSVQuoter
   /**
    * Creates a new CSVQuoter, which uses a comma as the default separator.
    */
-  public CSVQuoter()
-  {
-    this(",");
+  public CSVQuoter() {
+    this( "," );
   }
 
   /**
@@ -43,9 +41,8 @@ public class CSVQuoter
    * @param separator the separator.
    * @throws NullPointerException if the given separator is <code>null</code>.
    */
-  public CSVQuoter(final String separator)
-  {
-    setSeparator(separator);
+  public CSVQuoter( final String separator ) {
+    setSeparator( separator );
   }
 
   /**
@@ -55,18 +52,14 @@ public class CSVQuoter
    * @param original the unquoted string.
    * @return The quoted string
    */
-  public String doQuoting(final String original)
-  {
-    if (isQuotingNeeded(original))
-    {
-      final StringBuffer retval = new StringBuffer(original.length() + 10);
-      retval.append('\"');
-      applyQuote(retval, original);
-      retval.append('\"');
+  public String doQuoting( final String original ) {
+    if ( isQuotingNeeded( original ) ) {
+      final StringBuffer retval = new StringBuffer( original.length() + 10 );
+      retval.append( '\"' );
+      applyQuote( retval, original );
+      retval.append( '\"' );
       return retval.toString();
-    }
-    else
-    {
+    } else {
       return original;
     }
   }
@@ -78,32 +71,24 @@ public class CSVQuoter
    * @param nativeString the quoted string.
    * @return The unquoted string.
    */
-  public String undoQuoting(final String nativeString)
-  {
-    if (isQuotingNeeded(nativeString))
-    {
-      final StringBuffer b = new StringBuffer(nativeString.length());
+  public String undoQuoting( final String nativeString ) {
+    if ( isQuotingNeeded( nativeString ) ) {
+      final StringBuffer b = new StringBuffer( nativeString.length() );
       final int length = nativeString.length() - 1;
       int start = 1;
 
       int pos = start;
-      while (pos != -1)
-      {
-        pos = nativeString.indexOf("\"\"", start);
-        if (pos == -1)
-        {
-          b.append(nativeString.substring(start, length));
-        }
-        else
-        {
-          b.append(nativeString.substring(start, pos));
+      while ( pos != -1 ) {
+        pos = nativeString.indexOf( "\"\"", start );
+        if ( pos == -1 ) {
+          b.append( nativeString.substring( start, length ) );
+        } else {
+          b.append( nativeString.substring( start, pos ) );
           start = pos + 1;
         }
       }
       return b.toString();
-    }
-    else
-    {
+    } else {
       return nativeString;
     }
   }
@@ -115,18 +100,14 @@ public class CSVQuoter
    * @param str the string that should be tested.
    * @return true, if quoting needs to be applied, false otherwise.
    */
-  private boolean isQuotingNeeded(final String str)
-  {
-    if (str.indexOf(separator) != -1)
-    {
+  private boolean isQuotingNeeded( final String str ) {
+    if ( str.indexOf( separator ) != -1 ) {
       return true;
     }
-    if (str.indexOf('\n') != -1)
-    {
+    if ( str.indexOf( '\n' ) != -1 ) {
       return true;
     }
-    if (str.indexOf('\"', 1) != -1)
-    {
+    if ( str.indexOf( '\"', 1 ) != -1 ) {
       return true;
     }
     return false;
@@ -138,22 +119,17 @@ public class CSVQuoter
    * @param b        the result buffer
    * @param original the string, that should be quoted.
    */
-  private void applyQuote(final StringBuffer b, final String original)
-  {
+  private void applyQuote( final StringBuffer b, final String original ) {
     // This solution needs improvements. Copy blocks instead of single
     // characters.
     final int length = original.length();
 
-    for (int i = 0; i < length; i++)
-    {
-      final char c = original.charAt(i);
-      if (c == '"')
-      {
-        b.append("\"\"");
-      }
-      else
-      {
-        b.append(c);
+    for ( int i = 0; i < length; i++ ) {
+      final char c = original.charAt( i );
+      if ( c == '"' ) {
+        b.append( "\"\"" );
+      } else {
+        b.append( c );
       }
     }
   }
@@ -163,8 +139,7 @@ public class CSVQuoter
    *
    * @return the separator (never <code>null</code>).
    */
-  public String getSeparator()
-  {
+  public String getSeparator() {
     return separator;
   }
 
@@ -174,10 +149,8 @@ public class CSVQuoter
    *
    * @param separator the separator (<code>null</code> not permitted).
    */
-  public void setSeparator(final String separator)
-  {
-    if (separator == null)
-    {
+  public void setSeparator( final String separator ) {
+    if ( separator == null ) {
       throw new NullPointerException();
     }
     this.separator = separator;

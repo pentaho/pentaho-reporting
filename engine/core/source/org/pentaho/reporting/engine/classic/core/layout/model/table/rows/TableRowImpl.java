@@ -21,8 +21,7 @@ package org.pentaho.reporting.engine.classic.core.layout.model.table.rows;
 import org.pentaho.reporting.engine.classic.core.layout.model.Border;
 import org.pentaho.reporting.engine.classic.core.util.LongList;
 
-public class TableRowImpl implements TableRow
-{
+public class TableRowImpl implements TableRow {
   // Borders will be needed for the combined column model ..
   private Border border;
 
@@ -33,131 +32,108 @@ public class TableRowImpl implements TableRow
   private long validatedLeadingSize;
   private LongList validatedTrailingSize;
 
-  public TableRowImpl()
-  {
-    this(Border.EMPTY_BORDER);
+  public TableRowImpl() {
+    this( Border.EMPTY_BORDER );
   }
 
-  public TableRowImpl(final Border border)
-  {
+  public TableRowImpl( final Border border ) {
     this.border = border;
-    this.preferredSizes = new LongList(10);
+    this.preferredSizes = new LongList( 10 );
     this.validatedLeadingSize = 0;
-    this.validatedTrailingSize = new LongList(10);
+    this.validatedTrailingSize = new LongList( 10 );
   }
 
-  public long getPreferredSize()
-  {
+  public long getPreferredSize() {
     return preferredSize;
   }
 
-  public void setPreferredSize(final long preferredSize)
-  {
+  public void setPreferredSize( final long preferredSize ) {
     this.preferredSize = preferredSize;
   }
 
-  public long getPreferredSize(final int colspan)
-  {
+  public long getPreferredSize( final int colspan ) {
     final int index = colspan - 1;
-    if (index < 0)
-    {
+    if ( index < 0 ) {
       throw new IllegalArgumentException();
     }
 
-    if (preferredSizes.size() <= index)
-    {
+    if ( preferredSizes.size() <= index ) {
       return 0;
     }
-    return preferredSizes.get(index);
+    return preferredSizes.get( index );
   }
 
-  public void updateDefinedSize(final int rowSpan,
-                                final long preferredHeight)
-  {
-    if (rowSpan < 1)
-    {
+  public void updateDefinedSize( final int rowSpan,
+                                 final long preferredHeight ) {
+    if ( rowSpan < 1 ) {
       throw new IllegalArgumentException();
     }
     final int idx = rowSpan - 1;
 
-    if ((idx >= preferredSizes.size()) ||
-            (preferredSizes.get(idx) < preferredHeight))
-    {
-      preferredSizes.set(idx, preferredHeight);
+    if ( ( idx >= preferredSizes.size() ) ||
+      ( preferredSizes.get( idx ) < preferredHeight ) ) {
+      preferredSizes.set( idx, preferredHeight );
     }
   }
 
-  public long getValidatedLeadingSize()
-  {
+  public long getValidatedLeadingSize() {
     return validatedLeadingSize;
   }
 
-  public long getValidatedTrailingSize(final int rowSpan)
-  {
-    if (rowSpan > validatedTrailingSize.size())
-    {
+  public long getValidatedTrailingSize( final int rowSpan ) {
+    if ( rowSpan > validatedTrailingSize.size() ) {
       return 0;
     }
-    return validatedTrailingSize.get(rowSpan - 1);
+    return validatedTrailingSize.get( rowSpan - 1 );
   }
 
-  public int getMaxValidatedRowSpan()
-  {
+  public int getMaxValidatedRowSpan() {
     return this.validatedTrailingSize.size();
   }
 
-  public void updateValidatedSize(final int rowSpan,
-                                  final long leading,
-                                  final long trailing)
-  {
+  public void updateValidatedSize( final int rowSpan,
+                                   final long leading,
+                                   final long trailing ) {
     final int idx = rowSpan - 1;
-    if (validatedLeadingSize < leading)
-    {
+    if ( validatedLeadingSize < leading ) {
       validatedLeadingSize = leading;
     }
 
-    if ((idx >= validatedTrailingSize.size()) ||
-            (validatedTrailingSize.get(idx) < trailing))
-    {
-      validatedTrailingSize.set(idx, trailing);
+    if ( ( idx >= validatedTrailingSize.size() ) ||
+      ( validatedTrailingSize.get( idx ) < trailing ) ) {
+      validatedTrailingSize.set( idx, trailing );
     }
   }
 
-  public long getValidateSize()
-  {
+  public long getValidateSize() {
     return validateSize;
   }
 
-  public void setValidateSize(final long validateSize)
-  {
+  public void setValidateSize( final long validateSize ) {
     this.validateSize = validateSize;
   }
 
-  public Border getBorder()
-  {
+  public Border getBorder() {
     return border;
   }
 
-  public void clear()
-  {
+  public void clear() {
     this.validatedTrailingSize.clear();
     this.validateSize = 0;
   }
 
-  public int getMaximumRowSpan()
-  {
+  public int getMaximumRowSpan() {
     return preferredSizes.size();
   }
 
-  public String toString()
-  {
+  public String toString() {
     return "TableRowImpl{" +
-        "preferredSize=" + preferredSize +
-        ", validateSize=" + validateSize +
-        ", preferredSizes=" + preferredSizes +
-        ", validatedLeadingSize=" + validatedLeadingSize +
-        ", validatedTrailingSize=" + validatedTrailingSize +
-        ", border=" + border +
-        '}';
+      "preferredSize=" + preferredSize +
+      ", validateSize=" + validateSize +
+      ", preferredSizes=" + preferredSizes +
+      ", validatedLeadingSize=" + validatedLeadingSize +
+      ", validatedTrailingSize=" + validatedTrailingSize +
+      ", border=" + border +
+      '}';
   }
 }

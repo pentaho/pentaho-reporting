@@ -17,11 +17,10 @@
 
 package org.pentaho.reporting.engine.classic.core.parameters;
 
-public interface ParameterValues
-{
+public interface ParameterValues {
   public int getRowCount();
 
-  public Object getKeyValue(int row);
+  public Object getKeyValue( int row );
 
-  public Object getTextValue(int row);
+  public Object getTextValue( int row );
 }

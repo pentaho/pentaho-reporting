@@ -26,8 +26,7 @@ import org.pentaho.reporting.libraries.base.boot.SubSystem;
  *
  * @author Thomas Morgner
  */
-public class PdfExportGUIModule extends AbstractModule
-{
+public class PdfExportGUIModule extends AbstractModule {
   /**
    * A constant for the encryption type (40 bit).
    */
@@ -49,8 +48,7 @@ public class PdfExportGUIModule extends AbstractModule
    * @throws ModuleInitializeException if an error occured.
    */
   public PdfExportGUIModule()
-      throws ModuleInitializeException
-  {
+    throws ModuleInitializeException {
     loadModuleInfo();
   }
 
@@ -59,8 +57,7 @@ public class PdfExportGUIModule extends AbstractModule
    *
    * @throws ModuleInitializeException if an error occured.
    */
-  public void initialize(final SubSystem s)
-      throws ModuleInitializeException
-  {
+  public void initialize( final SubSystem s )
+    throws ModuleInitializeException {
   }
 }

@@ -21,9 +21,10 @@ import org.pentaho.reporting.engine.classic.core.layout.build.LayoutBuilderStrat
 import org.pentaho.reporting.engine.classic.core.layout.build.LayoutModelBuilder;
 import org.pentaho.reporting.engine.classic.core.layout.build.RenderNodeFactory;
 
-public interface RenderComponentFactory
-{
-  public LayoutModelBuilder createLayoutModelBuilder(String name);
-  public RenderNodeFactory createRenderNodeFactory ();
+public interface RenderComponentFactory {
+  public LayoutModelBuilder createLayoutModelBuilder( String name );
+
+  public RenderNodeFactory createRenderNodeFactory();
+
   public LayoutBuilderStrategy createLayoutBuilderStrategy();
 }

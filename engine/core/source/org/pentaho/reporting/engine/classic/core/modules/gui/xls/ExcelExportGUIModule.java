@@ -26,8 +26,7 @@ import org.pentaho.reporting.libraries.base.boot.SubSystem;
  *
  * @author Thomas Morgner
  */
-public class ExcelExportGUIModule extends AbstractModule
-{
+public class ExcelExportGUIModule extends AbstractModule {
 
   /**
    * DefaultConstructor. Loads the module specification.
@@ -35,8 +34,7 @@ public class ExcelExportGUIModule extends AbstractModule
    * @throws ModuleInitializeException if an error occured.
    */
   public ExcelExportGUIModule()
-      throws ModuleInitializeException
-  {
+    throws ModuleInitializeException {
     loadModuleInfo();
   }
 
@@ -48,8 +46,7 @@ public class ExcelExportGUIModule extends AbstractModule
    * @param subSystem the subSystem.
    * @throws ModuleInitializeException if an error ocurred while initializing the module.
    */
-  public void initialize(final SubSystem subSystem)
-      throws ModuleInitializeException
-  {
+  public void initialize( final SubSystem subSystem )
+    throws ModuleInitializeException {
   }
 }

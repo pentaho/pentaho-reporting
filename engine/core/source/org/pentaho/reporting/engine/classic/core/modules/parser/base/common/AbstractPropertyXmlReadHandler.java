@@ -23,17 +23,14 @@ import org.pentaho.reporting.libraries.xmlns.parser.XmlReadHandler;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 
-public abstract class AbstractPropertyXmlReadHandler extends AbstractXmlReadHandler
-{
-  protected AbstractPropertyXmlReadHandler()
-  {
+public abstract class AbstractPropertyXmlReadHandler extends AbstractXmlReadHandler {
+  protected AbstractPropertyXmlReadHandler() {
   }
 
-  protected XmlReadHandler getHandlerForChild(final String uri,
-                                              final String tagName,
-                                              final PropertyAttributes attrs)
-      throws SAXException
-  {
+  protected XmlReadHandler getHandlerForChild( final String uri,
+                                               final String tagName,
+                                               final PropertyAttributes attrs )
+    throws SAXException {
     return null;
   }
 
@@ -45,13 +42,12 @@ public abstract class AbstractPropertyXmlReadHandler extends AbstractXmlReadHand
    * @return the handler or null, if the tagname is invalid.
    * @throws org.xml.sax.SAXException if there is a parsing error.
    */
-  protected final XmlReadHandler getHandlerForChild(final String uri,
-                                                    final String tagName,
-                                                    final Attributes atts)
-      throws SAXException
-  {
-    return getHandlerForChild(uri, tagName,
-        new PropertyAttributes(getRootHandler(), atts));
+  protected final XmlReadHandler getHandlerForChild( final String uri,
+                                                     final String tagName,
+                                                     final Attributes atts )
+    throws SAXException {
+    return getHandlerForChild( uri, tagName,
+      new PropertyAttributes( getRootHandler(), atts ) );
   }
 
   /**
@@ -60,15 +56,13 @@ public abstract class AbstractPropertyXmlReadHandler extends AbstractXmlReadHand
    * @param attrs the attributes.
    * @throws org.xml.sax.SAXException if there is a parsing error.
    */
-  protected final void startParsing(final Attributes attrs)
-      throws SAXException
-  {
-    startParsing(new PropertyAttributes(getRootHandler(), attrs));
+  protected final void startParsing( final Attributes attrs )
+    throws SAXException {
+    startParsing( new PropertyAttributes( getRootHandler(), attrs ) );
   }
 
-  protected void startParsing(final PropertyAttributes attrs)
-      throws SAXException
-  {
+  protected void startParsing( final PropertyAttributes attrs )
+    throws SAXException {
   }
 
 }

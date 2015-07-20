@@ -17,20 +17,17 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.parser.bundle.writer.styles;
 
-import java.io.IOException;
-
 import org.pentaho.reporting.engine.classic.core.modules.parser.bundle.writer.StyleWriterUtility;
 import org.pentaho.reporting.engine.classic.core.style.ElementStyleSheet;
 import org.pentaho.reporting.libraries.xmlns.writer.XmlWriter;
 
-public class BorderStyleSetWriteHandler implements BundleStyleSetWriteHandler
-{
-  public BorderStyleSetWriteHandler()
-  {
+import java.io.IOException;
+
+public class BorderStyleSetWriteHandler implements BundleStyleSetWriteHandler {
+  public BorderStyleSetWriteHandler() {
   }
 
-  public void writeStyle(final XmlWriter writer, final ElementStyleSheet style) throws IOException
-  {
-    StyleWriterUtility.writeBorderStyles(writer, style);
+  public void writeStyle( final XmlWriter writer, final ElementStyleSheet style ) throws IOException {
+    StyleWriterUtility.writeBorderStyles( writer, style );
   }
 }

@@ -24,19 +24,16 @@ import org.pentaho.reporting.engine.classic.core.event.PageEventListener;
 import org.pentaho.reporting.engine.classic.core.event.ReportEvent;
 import org.pentaho.reporting.engine.classic.core.function.AbstractFunction;
 
-public class EventOrderFunction extends AbstractFunction implements PageEventListener
-{
-  private static final Log logger = LogFactory.getLog(EventOrderFunction.class);
+public class EventOrderFunction extends AbstractFunction implements PageEventListener {
+  private static final Log logger = LogFactory.getLog( EventOrderFunction.class );
   private int lastEventType;
   private boolean pageOpen;
 
-  public EventOrderFunction()
-  {
+  public EventOrderFunction() {
   }
 
-  public EventOrderFunction(final String name)
-  {
-    setName(name);
+  public EventOrderFunction( final String name ) {
+    setName( name );
   }
 
 
@@ -47,17 +44,14 @@ public class EventOrderFunction extends AbstractFunction implements PageEventLis
    *
    * @param event The event.
    */
-  public void reportInitialized(final ReportEvent event)
-  {
-    if ((event.getType() & ReportEvent.REPORT_INITIALIZED) != ReportEvent.REPORT_INITIALIZED)
-    {
+  public void reportInitialized( final ReportEvent event ) {
+    if ( ( event.getType() & ReportEvent.REPORT_INITIALIZED ) != ReportEvent.REPORT_INITIALIZED ) {
       TestCase.fail
-          ("ReportEvent was expected to be of type REPORT_INITIALIZED");
+        ( "ReportEvent was expected to be of type REPORT_INITIALIZED" );
     }
 
-    if (((lastEventType & ReportEvent.REPORT_DONE) != ReportEvent.REPORT_DONE) && lastEventType != 0)
-    {
-      TestCase.fail("Unexpected Event: ReportInitialized: " + lastEventType);
+    if ( ( ( lastEventType & ReportEvent.REPORT_DONE ) != ReportEvent.REPORT_DONE ) && lastEventType != 0 ) {
+      TestCase.fail( "Unexpected Event: ReportInitialized: " + lastEventType );
     }
 
     lastEventType = ReportEvent.REPORT_INITIALIZED;
@@ -68,16 +62,13 @@ public class EventOrderFunction extends AbstractFunction implements PageEventLis
    *
    * @param event the event.
    */
-  public void reportStarted(final ReportEvent event)
-  {
-    if ((event.getType() & ReportEvent.REPORT_STARTED) != ReportEvent.REPORT_STARTED)
-    {
-      TestCase.fail("ReportEvent was expected to be of type REPORT_STARTED");
+  public void reportStarted( final ReportEvent event ) {
+    if ( ( event.getType() & ReportEvent.REPORT_STARTED ) != ReportEvent.REPORT_STARTED ) {
+      TestCase.fail( "ReportEvent was expected to be of type REPORT_STARTED" );
     }
 
-    if ((lastEventType & ReportEvent.REPORT_INITIALIZED) != ReportEvent.REPORT_INITIALIZED)
-    {
-      TestCase.fail("Unexpected Event: ReportStarted: " + lastEventType);
+    if ( ( lastEventType & ReportEvent.REPORT_INITIALIZED ) != ReportEvent.REPORT_INITIALIZED ) {
+      TestCase.fail( "Unexpected Event: ReportStarted: " + lastEventType );
     }
 
     lastEventType = ReportEvent.REPORT_STARTED;
@@ -88,16 +79,13 @@ public class EventOrderFunction extends AbstractFunction implements PageEventLis
    *
    * @param event the event.
    */
-  public void reportFinished(final ReportEvent event)
-  {
-    if ((event.getType() & ReportEvent.REPORT_FINISHED) != ReportEvent.REPORT_FINISHED)
-    {
-      TestCase.fail("ReportEvent was expected to be of type REPORT_FINISHED");
+  public void reportFinished( final ReportEvent event ) {
+    if ( ( event.getType() & ReportEvent.REPORT_FINISHED ) != ReportEvent.REPORT_FINISHED ) {
+      TestCase.fail( "ReportEvent was expected to be of type REPORT_FINISHED" );
     }
 
-    if ((lastEventType & ReportEvent.GROUP_FINISHED) != ReportEvent.GROUP_FINISHED)
-    {
-      TestCase.fail("Unexpected Event: ReportFinished: " + lastEventType);
+    if ( ( lastEventType & ReportEvent.GROUP_FINISHED ) != ReportEvent.GROUP_FINISHED ) {
+      TestCase.fail( "Unexpected Event: ReportFinished: " + lastEventType );
     }
 
     lastEventType = ReportEvent.REPORT_FINISHED;
@@ -108,17 +96,14 @@ public class EventOrderFunction extends AbstractFunction implements PageEventLis
    *
    * @param event the event.
    */
-  public void pageStarted(final ReportEvent event)
-  {
-    logger.error("! EventOrderFunction: Page Started called !");
-    if ((event.getType() & ReportEvent.PAGE_STARTED) != ReportEvent.PAGE_STARTED)
-    {
-      TestCase.fail("ReportEvent was expected to be of type PAGE_STARTED");
+  public void pageStarted( final ReportEvent event ) {
+    logger.error( "! EventOrderFunction: Page Started called !" );
+    if ( ( event.getType() & ReportEvent.PAGE_STARTED ) != ReportEvent.PAGE_STARTED ) {
+      TestCase.fail( "ReportEvent was expected to be of type PAGE_STARTED" );
     }
 
-    if (pageOpen)
-    {
-      TestCase.fail("Unexpected Event: PageStarted: " + lastEventType);
+    if ( pageOpen ) {
+      TestCase.fail( "Unexpected Event: PageStarted: " + lastEventType );
     }
     pageOpen = true;
   }
@@ -128,18 +113,15 @@ public class EventOrderFunction extends AbstractFunction implements PageEventLis
    *
    * @param event the event.
    */
-  public void pageFinished(final ReportEvent event)
-  {
-    logger.error("! EventOrderFunction: Page Finished called !");
-    if ((event.getType() & ReportEvent.PAGE_FINISHED) != ReportEvent.PAGE_FINISHED)
-    {
-      TestCase.fail("ReportEvent was expected to be of type PAGE_FINISHED: " +
-          event.getType());
+  public void pageFinished( final ReportEvent event ) {
+    logger.error( "! EventOrderFunction: Page Finished called !" );
+    if ( ( event.getType() & ReportEvent.PAGE_FINISHED ) != ReportEvent.PAGE_FINISHED ) {
+      TestCase.fail( "ReportEvent was expected to be of type PAGE_FINISHED: " +
+        event.getType() );
     }
 
-    if (pageOpen == false)
-    {
-      TestCase.fail("Unexpected Event: PageFinished: " + lastEventType);
+    if ( pageOpen == false ) {
+      TestCase.fail( "Unexpected Event: PageFinished: " + lastEventType );
     }
     pageOpen = false;
   }
@@ -149,25 +131,22 @@ public class EventOrderFunction extends AbstractFunction implements PageEventLis
    *
    * @param event the event.
    */
-  public void groupStarted(final ReportEvent event)
-  {
-    logger.error("! EventOrderFunction: Group Started called !");
-    if ((event.getType() & ReportEvent.GROUP_STARTED) != ReportEvent.GROUP_STARTED)
-    {
-      TestCase.fail("ReportEvent was expected to be of type GROUP_STARTED");
+  public void groupStarted( final ReportEvent event ) {
+    logger.error( "! EventOrderFunction: Group Started called !" );
+    if ( ( event.getType() & ReportEvent.GROUP_STARTED ) != ReportEvent.GROUP_STARTED ) {
+      TestCase.fail( "ReportEvent was expected to be of type GROUP_STARTED" );
     }
-    logger.error("! EventOrderFunction: Group Started called !");
+    logger.error( "! EventOrderFunction: Group Started called !" );
 
-    if ((lastEventType & ReportEvent.GROUP_STARTED) != ReportEvent.GROUP_STARTED &&
-        (lastEventType & ReportEvent.REPORT_STARTED) != ReportEvent.REPORT_STARTED)
-    {
-      logger.error(" ++! EventOrderFunction: Group Started called !", new Exception());
-      TestCase.fail("Unexpected Event: GroupStarted: " + lastEventType);
+    if ( ( lastEventType & ReportEvent.GROUP_STARTED ) != ReportEvent.GROUP_STARTED &&
+      ( lastEventType & ReportEvent.REPORT_STARTED ) != ReportEvent.REPORT_STARTED ) {
+      logger.error( " ++! EventOrderFunction: Group Started called !", new Exception() );
+      TestCase.fail( "Unexpected Event: GroupStarted: " + lastEventType );
     }
-    logger.error("! EventOrderFunction: Group Started called !");
+    logger.error( "! EventOrderFunction: Group Started called !" );
 
     lastEventType = ReportEvent.GROUP_STARTED;
-    logger.error("! EventOrderFunction: Group Started called !");
+    logger.error( "! EventOrderFunction: Group Started called !" );
   }
 
   /**
@@ -175,17 +154,14 @@ public class EventOrderFunction extends AbstractFunction implements PageEventLis
    *
    * @param event the event.
    */
-  public void groupFinished(final ReportEvent event)
-  {
-    if ((event.getType() & ReportEvent.GROUP_FINISHED) != ReportEvent.GROUP_FINISHED)
-    {
-      TestCase.fail("ReportEvent was expected to be of type GROUP_FINISHED");
+  public void groupFinished( final ReportEvent event ) {
+    if ( ( event.getType() & ReportEvent.GROUP_FINISHED ) != ReportEvent.GROUP_FINISHED ) {
+      TestCase.fail( "ReportEvent was expected to be of type GROUP_FINISHED" );
     }
 
-    if ((lastEventType & ReportEvent.GROUP_FINISHED) != ReportEvent.GROUP_FINISHED &&
-        (lastEventType & ReportEvent.ITEMS_FINISHED) != ReportEvent.ITEMS_FINISHED)
-    {
-      TestCase.fail("Unexpected Event: GroupFinished: " + lastEventType);
+    if ( ( lastEventType & ReportEvent.GROUP_FINISHED ) != ReportEvent.GROUP_FINISHED &&
+      ( lastEventType & ReportEvent.ITEMS_FINISHED ) != ReportEvent.ITEMS_FINISHED ) {
+      TestCase.fail( "Unexpected Event: GroupFinished: " + lastEventType );
     }
 
     lastEventType = ReportEvent.GROUP_FINISHED;
@@ -196,17 +172,14 @@ public class EventOrderFunction extends AbstractFunction implements PageEventLis
    *
    * @param event the event.
    */
-  public void itemsAdvanced(final ReportEvent event)
-  {
-    if ((event.getType() & ReportEvent.ITEMS_ADVANCED) != ReportEvent.ITEMS_ADVANCED)
-    {
-      TestCase.fail("ReportEvent was expected to be of type ITEMS_ADVANCED");
+  public void itemsAdvanced( final ReportEvent event ) {
+    if ( ( event.getType() & ReportEvent.ITEMS_ADVANCED ) != ReportEvent.ITEMS_ADVANCED ) {
+      TestCase.fail( "ReportEvent was expected to be of type ITEMS_ADVANCED" );
     }
 
-    if ((lastEventType & ReportEvent.ITEMS_STARTED) != ReportEvent.ITEMS_STARTED &&
-        (lastEventType & ReportEvent.ITEMS_ADVANCED) != ReportEvent.ITEMS_ADVANCED)
-    {
-      TestCase.fail("Unexpected Event: ReportDone: " + lastEventType);
+    if ( ( lastEventType & ReportEvent.ITEMS_STARTED ) != ReportEvent.ITEMS_STARTED &&
+      ( lastEventType & ReportEvent.ITEMS_ADVANCED ) != ReportEvent.ITEMS_ADVANCED ) {
+      TestCase.fail( "Unexpected Event: ReportDone: " + lastEventType );
     }
 
     lastEventType = ReportEvent.ITEMS_ADVANCED;
@@ -220,16 +193,13 @@ public class EventOrderFunction extends AbstractFunction implements PageEventLis
    *
    * @param event The event.
    */
-  public void itemsStarted(final ReportEvent event)
-  {
-    if ((event.getType() & ReportEvent.ITEMS_STARTED) != ReportEvent.ITEMS_STARTED)
-    {
-      TestCase.fail("ReportEvent was expected to be of type ITEMS_STARTED");
+  public void itemsStarted( final ReportEvent event ) {
+    if ( ( event.getType() & ReportEvent.ITEMS_STARTED ) != ReportEvent.ITEMS_STARTED ) {
+      TestCase.fail( "ReportEvent was expected to be of type ITEMS_STARTED" );
     }
 
-    if ((lastEventType & ReportEvent.GROUP_STARTED) != ReportEvent.GROUP_STARTED)
-    {
-      TestCase.fail("Unexpected Event: ItemsStarted: " + lastEventType);
+    if ( ( lastEventType & ReportEvent.GROUP_STARTED ) != ReportEvent.GROUP_STARTED ) {
+      TestCase.fail( "Unexpected Event: ItemsStarted: " + lastEventType );
     }
 
     lastEventType = ReportEvent.ITEMS_STARTED;
@@ -243,16 +213,13 @@ public class EventOrderFunction extends AbstractFunction implements PageEventLis
    *
    * @param event The event.
    */
-  public void itemsFinished(final ReportEvent event)
-  {
-    if ((event.getType() & ReportEvent.ITEMS_FINISHED) != ReportEvent.ITEMS_FINISHED)
-    {
-      TestCase.fail("ReportEvent was expected to be of type ITEMS_FINISHED");
+  public void itemsFinished( final ReportEvent event ) {
+    if ( ( event.getType() & ReportEvent.ITEMS_FINISHED ) != ReportEvent.ITEMS_FINISHED ) {
+      TestCase.fail( "ReportEvent was expected to be of type ITEMS_FINISHED" );
     }
 
-    if ((lastEventType & ReportEvent.ITEMS_ADVANCED) != ReportEvent.ITEMS_ADVANCED)
-    {
-      TestCase.fail("Unexpected Event: ItemsFinished: " + lastEventType);
+    if ( ( lastEventType & ReportEvent.ITEMS_ADVANCED ) != ReportEvent.ITEMS_ADVANCED ) {
+      TestCase.fail( "Unexpected Event: ItemsFinished: " + lastEventType );
     }
 
     lastEventType = ReportEvent.ITEMS_FINISHED;
@@ -264,16 +231,13 @@ public class EventOrderFunction extends AbstractFunction implements PageEventLis
    *
    * @param event The event.
    */
-  public void reportDone(final ReportEvent event)
-  {
-    if ((event.getType() & ReportEvent.REPORT_DONE) != ReportEvent.REPORT_DONE)
-    {
-      TestCase.fail("ReportEvent was expected to be of type REPORT_DONE");
+  public void reportDone( final ReportEvent event ) {
+    if ( ( event.getType() & ReportEvent.REPORT_DONE ) != ReportEvent.REPORT_DONE ) {
+      TestCase.fail( "ReportEvent was expected to be of type REPORT_DONE" );
     }
 
-    if ((lastEventType & ReportEvent.REPORT_FINISHED) != ReportEvent.REPORT_FINISHED)
-    {
-      TestCase.fail("Unexpected Event: ReportDone: " + lastEventType);
+    if ( ( lastEventType & ReportEvent.REPORT_FINISHED ) != ReportEvent.REPORT_FINISHED ) {
+      TestCase.fail( "Unexpected Event: ReportDone: " + lastEventType );
     }
 
     lastEventType = ReportEvent.REPORT_DONE;
@@ -286,8 +250,7 @@ public class EventOrderFunction extends AbstractFunction implements PageEventLis
    *
    * @return the value of the function.
    */
-  public Object getValue()
-  {
-    return new Integer(lastEventType);
+  public Object getValue() {
+    return new Integer( lastEventType );
   }
 }

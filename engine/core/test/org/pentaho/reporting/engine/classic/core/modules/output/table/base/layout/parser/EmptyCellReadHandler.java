@@ -27,27 +27,23 @@ import org.xml.sax.SAXException;
  *
  * @author Thomas Morgner
  */
-public class EmptyCellReadHandler extends AbstractXmlReadHandler
-{
+public class EmptyCellReadHandler extends AbstractXmlReadHandler {
   private ResultTable table;
   private int row;
   private int column;
 
-  public EmptyCellReadHandler(final ResultTable table, final int row, final int column)
-  {
+  public EmptyCellReadHandler( final ResultTable table, final int row, final int column ) {
     this.table = table;
     this.row = row;
     this.column = column;
   }
 
-  protected void startParsing(final Attributes attrs) throws SAXException
-  {
-    super.startParsing(attrs);
-    table.setResultCell(row, column, null);
+  protected void startParsing( final Attributes attrs ) throws SAXException {
+    super.startParsing( attrs );
+    table.setResultCell( row, column, null );
   }
 
-  public Object getObject() throws SAXException
-  {
+  public Object getObject() throws SAXException {
     return null;
   }
 }

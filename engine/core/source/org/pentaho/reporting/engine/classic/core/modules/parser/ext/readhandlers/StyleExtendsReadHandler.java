@@ -17,22 +17,20 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.parser.ext.readhandlers;
 
-import java.util.HashMap;
-
 import org.pentaho.reporting.engine.classic.core.modules.parser.base.PropertyAttributes;
 import org.pentaho.reporting.engine.classic.core.modules.parser.base.common.AbstractPropertyXmlReadHandler;
 import org.pentaho.reporting.engine.classic.core.style.ElementStyleSheet;
 import org.pentaho.reporting.libraries.xmlns.parser.ParseException;
 import org.xml.sax.SAXException;
 
-public class StyleExtendsReadHandler extends AbstractPropertyXmlReadHandler
-{
-  private HashMap<String,ElementStyleSheet> styleSheetCollection;
+import java.util.HashMap;
+
+public class StyleExtendsReadHandler extends AbstractPropertyXmlReadHandler {
+  private HashMap<String, ElementStyleSheet> styleSheetCollection;
   private ElementStyleSheet styleSheet;
 
-  public StyleExtendsReadHandler(final HashMap<String,ElementStyleSheet> styleSheetCollection,
-                                 final ElementStyleSheet styleSheet)
-  {
+  public StyleExtendsReadHandler( final HashMap<String, ElementStyleSheet> styleSheetCollection,
+                                  final ElementStyleSheet styleSheet ) {
     this.styleSheetCollection = styleSheetCollection;
     this.styleSheet = styleSheet;
   }
@@ -43,24 +41,21 @@ public class StyleExtendsReadHandler extends AbstractPropertyXmlReadHandler
    * @param attrs the attributes.
    * @throws org.xml.sax.SAXException if there is a parsing error.
    */
-  protected void startParsing(final PropertyAttributes attrs)
-      throws SAXException
-  {
-    final String name = attrs.getValue(getUri(), "name");
-    if (name == null)
-    {
+  protected void startParsing( final PropertyAttributes attrs )
+    throws SAXException {
+    final String name = attrs.getValue( getUri(), "name" );
+    if ( name == null ) {
       throw new ParseException
-          ("Required attribute 'name' is missing.",
-              getRootHandler().getDocumentLocator());
+        ( "Required attribute 'name' is missing.",
+          getRootHandler().getDocumentLocator() );
     }
-    final ElementStyleSheet parent = styleSheetCollection.get(name);
-    if (parent == null)
-    {
+    final ElementStyleSheet parent = styleSheetCollection.get( name );
+    if ( parent == null ) {
       throw new ParseException
-          ("Specified parent stylesheet is not defined.",
-              getRootHandler().getDocumentLocator());
+        ( "Specified parent stylesheet is not defined.",
+          getRootHandler().getDocumentLocator() );
     }
-    styleSheet.addDefault(parent);
+    styleSheet.addDefault( parent );
   }
 
   /**
@@ -68,8 +63,7 @@ public class StyleExtendsReadHandler extends AbstractPropertyXmlReadHandler
    *
    * @return the object.
    */
-  public Object getObject()
-  {
+  public Object getObject() {
     return null;
   }
 }

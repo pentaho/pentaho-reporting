@@ -29,26 +29,22 @@ import org.pentaho.reporting.engine.classic.core.util.InstanceID;
  *
  * @author Thomas Morgner
  */
-public final class CanvasRenderBox extends RenderBox
-{
-  public CanvasRenderBox(final StyleSheet styleSheet,
-                         final InstanceID instanceID,
-                         final BoxDefinition boxDefinition,
-                         final ElementType elementType,
-                         final ReportAttributeMap attributes,
-                         final ReportStateKey stateKey)
-  {
-    super(RenderNode.VERTICAL_AXIS, RenderNode.HORIZONTAL_AXIS, styleSheet,
-        instanceID, boxDefinition, elementType, attributes, stateKey);
+public final class CanvasRenderBox extends RenderBox {
+  public CanvasRenderBox( final StyleSheet styleSheet,
+                          final InstanceID instanceID,
+                          final BoxDefinition boxDefinition,
+                          final ElementType elementType,
+                          final ReportAttributeMap attributes,
+                          final ReportStateKey stateKey ) {
+    super( RenderNode.VERTICAL_AXIS, RenderNode.HORIZONTAL_AXIS, styleSheet,
+      instanceID, boxDefinition, elementType, attributes, stateKey );
   }
 
-  public int getNodeType()
-  {
+  public int getNodeType() {
     return LayoutNodeTypes.TYPE_BOX_CANVAS;
   }
 
-  public long extendHeight(final RenderNode child, final long heightOffset)
-  {
-    return extendHeightInRowMode(child, heightOffset);
+  public long extendHeight( final RenderNode child, final long heightOffset ) {
+    return extendHeightInRowMode( child, heightOffset );
   }
 }

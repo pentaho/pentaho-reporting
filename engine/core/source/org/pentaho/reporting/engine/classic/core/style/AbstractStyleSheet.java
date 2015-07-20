@@ -19,15 +19,13 @@ package org.pentaho.reporting.engine.classic.core.style;
 
 import org.pentaho.reporting.engine.classic.core.util.InstanceID;
 
-public abstract class AbstractStyleSheet implements StyleSheet, Cloneable
-{
+public abstract class AbstractStyleSheet implements StyleSheet, Cloneable {
   /**
    * The instance id of this ElementStyleSheet. This id is shared among all clones.
    */
   private InstanceID id;
 
-  protected AbstractStyleSheet()
-  {
+  protected AbstractStyleSheet() {
     this.id = new InstanceID();
   }
 
@@ -38,9 +36,8 @@ public abstract class AbstractStyleSheet implements StyleSheet, Cloneable
    * @param key the style key.
    * @return the value.
    */
-  public Object getStyleProperty(final StyleKey key)
-  {
-    return getStyleProperty(key, null);
+  public Object getStyleProperty( final StyleKey key ) {
+    return getStyleProperty( key, null );
   }
 
   /**
@@ -49,11 +46,9 @@ public abstract class AbstractStyleSheet implements StyleSheet, Cloneable
    * @param key the style key.
    * @return <code>true</code> or <code>false</code>.
    */
-  public boolean getBooleanStyleProperty(final StyleKey key)
-  {
-    final Boolean b = (Boolean) getStyleProperty(key, null);
-    if (b == null)
-    {
+  public boolean getBooleanStyleProperty( final StyleKey key ) {
+    final Boolean b = (Boolean) getStyleProperty( key, null );
+    if ( b == null ) {
       return false;
     }
     return b.booleanValue();
@@ -66,11 +61,9 @@ public abstract class AbstractStyleSheet implements StyleSheet, Cloneable
    * @param defaultValue the default value.
    * @return true or false.
    */
-  public boolean getBooleanStyleProperty(final StyleKey key, final boolean defaultValue)
-  {
-    final Boolean b = (Boolean) getStyleProperty(key, null);
-    if (b == null)
-    {
+  public boolean getBooleanStyleProperty( final StyleKey key, final boolean defaultValue ) {
+    final Boolean b = (Boolean) getStyleProperty( key, null );
+    if ( b == null ) {
       return defaultValue;
     }
     return b.booleanValue();
@@ -84,11 +77,9 @@ public abstract class AbstractStyleSheet implements StyleSheet, Cloneable
    * @param def the default value.
    * @return the style value.
    */
-  public int getIntStyleProperty(final StyleKey key, final int def)
-  {
-    final Number i = (Number) getStyleProperty(key, null);
-    if (i == null)
-    {
+  public int getIntStyleProperty( final StyleKey key, final int def ) {
+    final Number i = (Number) getStyleProperty( key, null );
+    if ( i == null ) {
       return def;
     }
     return i.intValue();
@@ -101,11 +92,9 @@ public abstract class AbstractStyleSheet implements StyleSheet, Cloneable
    * @param def the default value.
    * @return the style value.
    */
-  public double getDoubleStyleProperty(final StyleKey key, final double def)
-  {
-    final Number i = (Number) getStyleProperty(key, null);
-    if (i == null)
-    {
+  public double getDoubleStyleProperty( final StyleKey key, final double def ) {
+    final Number i = (Number) getStyleProperty( key, null );
+    if ( i == null ) {
       return def;
     }
     return i.doubleValue();
@@ -117,54 +106,42 @@ public abstract class AbstractStyleSheet implements StyleSheet, Cloneable
    *
    * @return the ID of this stylesheet.
    */
-  public InstanceID getId()
-  {
+  public InstanceID getId() {
     return id;
   }
 
-  public boolean isLocalKey(final StyleKey key)
-  {
+  public boolean isLocalKey( final StyleKey key ) {
     return false;
   }
 
-  public StyleSheet derive(final boolean preserveId)
-  {
+  public StyleSheet derive( final boolean preserveId ) {
     final AbstractStyleSheet s = (AbstractStyleSheet) clone();
-    if (preserveId == false)
-    {
+    if ( preserveId == false ) {
       s.id = new InstanceID();
     }
     return s;
   }
 
-  public StyleSheet clone()
-  {
-    try
-    {
+  public StyleSheet clone() {
+    try {
       return (StyleSheet) super.clone();
-    }
-    catch (CloneNotSupportedException e)
-    {
+    } catch ( CloneNotSupportedException e ) {
       throw new IllegalStateException();
     }
   }
 
-  protected void setId(final InstanceID id)
-  {
-    if (id == null)
-    {
+  protected void setId( final InstanceID id ) {
+    if ( id == null ) {
       throw new NullPointerException();
     }
     this.id = id;
   }
 
-  public long getModificationCount()
-  {
+  public long getModificationCount() {
     return 0;
   }
 
-  public long getChangeTrackerHash()
-  {
+  public long getChangeTrackerHash() {
     return 0;
   }
 }

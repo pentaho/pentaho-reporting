@@ -17,10 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.parser.extwriter;
 
-import java.io.IOException;
-import java.io.Writer;
-import java.net.URL;
-
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
 import org.pentaho.reporting.engine.classic.core.modules.parser.ext.factory.base.ClassFactory;
@@ -43,14 +39,17 @@ import org.pentaho.reporting.libraries.xmlns.writer.DefaultTagDescription;
 import org.pentaho.reporting.libraries.xmlns.writer.TagDescription;
 import org.pentaho.reporting.libraries.xmlns.writer.XmlWriter;
 
+import java.io.IOException;
+import java.io.Writer;
+import java.net.URL;
+
 
 /**
  * A report writer.
  *
  * @author Thomas Morgner
  */
-public class ReportWriter extends ReportWriterContext
-{
+public class ReportWriter extends ReportWriterContext {
   /**
    * A data-source collector.
    */
@@ -94,29 +93,25 @@ public class ReportWriter extends ReportWriterContext
    * @param report the report for which to create the writer configuration.
    * @return the generated configuration.
    */
-  public static Configuration createDefaultConfiguration(final MasterReport report)
-  {
+  public static Configuration createDefaultConfiguration( final MasterReport report ) {
     final ModifiableConfiguration repConf =
-        new HierarchicalConfiguration(report.getReportConfiguration());
+      new HierarchicalConfiguration( report.getReportConfiguration() );
     final ResourceKey contentBase = report.getContentBase();
-    if (contentBase != null)
-    {
+    if ( contentBase != null ) {
       final ResourceManager resourceManager = report.getResourceManager();
-      final URL value = resourceManager.toURL(contentBase);
-      if (value != null)
-      {
+      final URL value = resourceManager.toURL( contentBase );
+      if ( value != null ) {
         repConf.setConfigProperty
-            (AbstractXmlResourceFactory.CONTENTBASE_KEY, value.toExternalForm());
+          ( AbstractXmlResourceFactory.CONTENTBASE_KEY, value.toExternalForm() );
       }
     }
 
     return repConf;
   }
 
-  public ReportWriter(final MasterReport reportDefinition,
-                      final String encoding)
-  {
-    this(reportDefinition, encoding, ReportWriter.createDefaultConfiguration(reportDefinition));
+  public ReportWriter( final MasterReport reportDefinition,
+                       final String encoding ) {
+    this( reportDefinition, encoding, ReportWriter.createDefaultConfiguration( reportDefinition ) );
   }
 
   /**
@@ -126,24 +121,21 @@ public class ReportWriter extends ReportWriterContext
    * @param encoding the encoding.
    * @param config   the write configuration.
    */
-  public ReportWriter(final MasterReport report,
-                      final String encoding,
-                      final Configuration config)
-  {
-    super(report);
-    if (encoding == null)
-    {
-      throw new NullPointerException("Encoding is null.");
+  public ReportWriter( final MasterReport report,
+                       final String encoding,
+                       final Configuration config ) {
+    super( report );
+    if ( encoding == null ) {
+      throw new NullPointerException( "Encoding is null." );
     }
-    if (config == null)
-    {
-      throw new NullPointerException("Configuration is null.");
+    if ( config == null ) {
+      throw new NullPointerException( "Configuration is null." );
     }
-//    if (config.getConfigProperty(AbstractXmlResourceFactory.CONTENTBASE_KEY) == null)
-//    {
-//      throw new IllegalStateException
-//          ("This report writer configuration does not define a content base.");
-//    }
+    //    if (config.getConfigProperty(AbstractXmlResourceFactory.CONTENTBASE_KEY) == null)
+    //    {
+    //      throw new IllegalStateException
+    //          ("This report writer configuration does not define a content base.");
+    //    }
 
     this.encoding = encoding;
     this.configuration = config;
@@ -151,14 +143,14 @@ public class ReportWriter extends ReportWriterContext
     dataSourceCollector = new DataSourceCollector();
     elementFactoryCollector = new ElementFactoryCollector();
     classFactoryCollector = new ClassFactoryCollector();
-    classFactoryCollector.addFactory(dataSourceCollector);
+    classFactoryCollector.addFactory( dataSourceCollector );
     styleKeyFactoryCollector = new StyleKeyFactoryCollector();
     templateCollector = new TemplateCollector();
 
     // configure all factories with the current report configuration ...
-    dataSourceCollector.configure(configuration);
-    classFactoryCollector.configure(configuration);
-    templateCollector.configure(configuration);
+    dataSourceCollector.configure( configuration );
+    classFactoryCollector.configure( configuration );
+    templateCollector.configure( configuration );
   }
 
   /**
@@ -166,8 +158,7 @@ public class ReportWriter extends ReportWriterContext
    *
    * @return The encoding.
    */
-  public String getEncoding()
-  {
+  public String getEncoding() {
     return encoding;
   }
 
@@ -176,9 +167,8 @@ public class ReportWriter extends ReportWriterContext
    *
    * @param dsf the data-source factory.
    */
-  public void addDataSourceFactory(final DataSourceFactory dsf)
-  {
-    dataSourceCollector.addFactory(dsf);
+  public void addDataSourceFactory( final DataSourceFactory dsf ) {
+    dataSourceCollector.addFactory( dsf );
   }
 
   /**
@@ -186,8 +176,7 @@ public class ReportWriter extends ReportWriterContext
    *
    * @return The data-source collector.
    */
-  public DataSourceCollector getDataSourceCollector()
-  {
+  public DataSourceCollector getDataSourceCollector() {
     return dataSourceCollector;
   }
 
@@ -196,9 +185,8 @@ public class ReportWriter extends ReportWriterContext
    *
    * @param ef the element factory.
    */
-  public void addElementFactory(final ElementFactory ef)
-  {
-    elementFactoryCollector.addFactory(ef);
+  public void addElementFactory( final ElementFactory ef ) {
+    elementFactoryCollector.addFactory( ef );
   }
 
   /**
@@ -206,8 +194,7 @@ public class ReportWriter extends ReportWriterContext
    *
    * @return The element factory collector.
    */
-  public ElementFactoryCollector getElementFactoryCollector()
-  {
+  public ElementFactoryCollector getElementFactoryCollector() {
     return elementFactoryCollector;
   }
 
@@ -216,9 +203,8 @@ public class ReportWriter extends ReportWriterContext
    *
    * @param cf the class factory.
    */
-  public void addClassFactoryFactory(final ClassFactory cf)
-  {
-    classFactoryCollector.addFactory(cf);
+  public void addClassFactoryFactory( final ClassFactory cf ) {
+    classFactoryCollector.addFactory( cf );
   }
 
   /**
@@ -226,8 +212,7 @@ public class ReportWriter extends ReportWriterContext
    *
    * @return The class factory collector.
    */
-  public ClassFactoryCollector getClassFactoryCollector()
-  {
+  public ClassFactoryCollector getClassFactoryCollector() {
     return classFactoryCollector;
   }
 
@@ -236,9 +221,8 @@ public class ReportWriter extends ReportWriterContext
    *
    * @param skf the style-key factory.
    */
-  public void addStyleKeyFactory(final StyleKeyFactory skf)
-  {
-    styleKeyFactoryCollector.addFactory(skf);
+  public void addStyleKeyFactory( final StyleKeyFactory skf ) {
+    styleKeyFactoryCollector.addFactory( skf );
   }
 
   /**
@@ -246,8 +230,7 @@ public class ReportWriter extends ReportWriterContext
    *
    * @return The style-key factory collector.
    */
-  public StyleKeyFactoryCollector getStyleKeyFactoryCollector()
-  {
+  public StyleKeyFactoryCollector getStyleKeyFactoryCollector() {
     return styleKeyFactoryCollector;
   }
 
@@ -256,9 +239,8 @@ public class ReportWriter extends ReportWriterContext
    *
    * @param collection the template collection.
    */
-  public void addTemplateCollection(final TemplateCollection collection)
-  {
-    templateCollector.addTemplateCollection(collection);
+  public void addTemplateCollection( final TemplateCollection collection ) {
+    templateCollector.addTemplateCollection( collection );
   }
 
   /**
@@ -266,8 +248,7 @@ public class ReportWriter extends ReportWriterContext
    *
    * @return The template collector.
    */
-  public TemplateCollector getTemplateCollector()
-  {
+  public TemplateCollector getTemplateCollector() {
     return templateCollector;
   }
 
@@ -278,22 +259,20 @@ public class ReportWriter extends ReportWriterContext
    * @throws IOException           if there is an I/O problem.
    * @throws ReportWriterException if there is a problem writing the report.
    */
-  public void write(final Writer w)
-      throws IOException, ReportWriterException
-  {
-    final XmlWriter xmlWriter = new XmlWriter(w, createTagDescription());
+  public void write( final Writer w )
+    throws IOException, ReportWriterException {
+    final XmlWriter xmlWriter = new XmlWriter( w, createTagDescription() );
 
-    xmlWriter.writeXmlDeclaration(getEncoding());
-    final ReportDefinitionWriter writer = new ReportDefinitionWriter(this, xmlWriter);
+    xmlWriter.writeXmlDeclaration( getEncoding() );
+    final ReportDefinitionWriter writer = new ReportDefinitionWriter( this, xmlWriter );
     writer.write();
   }
 
-  private TagDescription createTagDescription()
-  {
+  private TagDescription createTagDescription() {
     final DefaultTagDescription defaultTagDescription = new DefaultTagDescription();
     defaultTagDescription.configure
-        (ClassicEngineBoot.getInstance().getGlobalConfig(),
-            "org.pentaho.reporting.engine.classic.core.modules.parser.extwriter.");
+      ( ClassicEngineBoot.getInstance().getGlobalConfig(),
+        "org.pentaho.reporting.engine.classic.core.modules.parser.extwriter." );
     return defaultTagDescription;
   }
 
@@ -302,8 +281,7 @@ public class ReportWriter extends ReportWriterContext
    *
    * @return the writer configuration.
    */
-  public Configuration getConfiguration()
-  {
+  public Configuration getConfiguration() {
     return configuration;
   }
 }

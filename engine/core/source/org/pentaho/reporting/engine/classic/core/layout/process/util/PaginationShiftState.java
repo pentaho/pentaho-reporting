@@ -19,24 +19,26 @@ package org.pentaho.reporting.engine.classic.core.layout.process.util;
 
 import org.pentaho.reporting.engine.classic.core.util.InstanceID;
 
-public interface PaginationShiftState
-{
-  PaginationShiftState pop(InstanceID id);
+public interface PaginationShiftState {
+  PaginationShiftState pop( InstanceID id );
 
   long getShiftForNextChild();
 
-  void updateShiftFromChild (long absoluteValue);
-  void increaseShift(long increment);
-  void setShift (long absoluteValue);
+  void updateShiftFromChild( long absoluteValue );
+
+  void increaseShift( long increment );
+
+  void setShift( long absoluteValue );
 
   boolean isManualBreakSuspended();
 
   /**
-   * Defines whether any child will have its break suspended. Note that if you want to query whether it is
-   * ok to handle breaks defined on the current context, you have to ask "isManualBreakSuspended()"
+   * Defines whether any child will have its break suspended. Note that if you want to query whether it is ok to handle
+   * breaks defined on the current context, you have to ask "isManualBreakSuspended()"
    *
    * @return
    */
   boolean isManualBreakSuspendedForChilds();
+
   void suspendManualBreaks();
 }

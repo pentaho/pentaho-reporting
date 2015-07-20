@@ -17,70 +17,59 @@
 
 package org.pentaho.reporting.engine.classic.core.sorting;
 
-import java.io.Serializable;
-
 import org.pentaho.reporting.libraries.base.util.ArgumentNullException;
 
-public class SortConstraint implements Serializable
-{
+import java.io.Serializable;
+
+public class SortConstraint implements Serializable {
   private String field;
   private boolean ascending;
 
-  public SortConstraint(final String field, final boolean ascending)
-  {
-    ArgumentNullException.validate("field", field);
+  public SortConstraint( final String field, final boolean ascending ) {
+    ArgumentNullException.validate( "field", field );
 
     this.field = field;
     this.ascending = ascending;
   }
 
-  public String getField()
-  {
+  public String getField() {
     return field;
   }
 
-  public boolean isAscending()
-  {
+  public boolean isAscending() {
     return ascending;
   }
 
-  public String toString()
-  {
+  public String toString() {
     return "SortConstraint{" +
-        "field='" + field + '\'' +
-        ", ascending=" + ascending +
-        '}';
+      "field='" + field + '\'' +
+      ", ascending=" + ascending +
+      '}';
   }
 
-  public boolean equals(final Object o)
-  {
-    if (this == o)
-    {
+  public boolean equals( final Object o ) {
+    if ( this == o ) {
       return true;
     }
-    if (o == null || getClass() != o.getClass())
-    {
+    if ( o == null || getClass() != o.getClass() ) {
       return false;
     }
 
     final SortConstraint that = (SortConstraint) o;
 
-    if (ascending != that.ascending)
-    {
+    if ( ascending != that.ascending ) {
       return false;
     }
-    if (!field.equals(that.field))
-    {
+    if ( !field.equals( that.field ) ) {
       return false;
     }
 
     return true;
   }
 
-  public int hashCode()
-  {
+  public int hashCode() {
     int result = field.hashCode();
-    result = 31 * result + (ascending ? 1 : 0);
+    result = 31 * result + ( ascending ? 1 : 0 );
     return result;
   }
 }

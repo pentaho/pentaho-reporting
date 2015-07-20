@@ -22,8 +22,7 @@ package org.pentaho.reporting.engine.classic.core.modules.output.pageable.plaint
  *
  * @author Thomas Morgner
  */
-public class PrinterDriverCommands
-{
+public class PrinterDriverCommands {
   /**
    * the roman font.
    */
@@ -90,7 +89,6 @@ public class PrinterDriverCommands
   public static final float LPI_10 = 10;
   public static final float LPI_6 = 6;
 
-  private PrinterDriverCommands()
-  {
+  private PrinterDriverCommands() {
   }
 }

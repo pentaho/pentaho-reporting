@@ -20,17 +20,14 @@ package org.pentaho.reporting.engine.classic.core.filter.types.bands;
 import org.pentaho.reporting.engine.classic.core.PageHeader;
 import org.pentaho.reporting.engine.classic.core.ReportElement;
 
-public class PageHeaderType extends AbstractSectionType
-{
+public class PageHeaderType extends AbstractSectionType {
   public static final PageHeaderType INSTANCE = new PageHeaderType();
 
-  public PageHeaderType()
-  {
-    super("page-header", false);
+  public PageHeaderType() {
+    super( "page-header", false );
   }
 
-  public ReportElement create()
-  {
+  public ReportElement create() {
     return new PageHeader();
   }
 

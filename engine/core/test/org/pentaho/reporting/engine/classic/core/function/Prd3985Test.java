@@ -25,228 +25,185 @@ import org.pentaho.reporting.engine.classic.core.MasterReport;
 import org.pentaho.reporting.engine.classic.core.style.ElementStyleKeys;
 import org.pentaho.reporting.engine.classic.core.testsupport.DebugReportRunner;
 
-@SuppressWarnings("HardCodedStringLiteral")
-public class Prd3985Test extends TestCase
-{
-  public Prd3985Test()
-  {
+@SuppressWarnings( "HardCodedStringLiteral" )
+public class Prd3985Test extends TestCase {
+  public Prd3985Test() {
   }
 
-  protected void setUp() throws Exception
-  {
+  protected void setUp() throws Exception {
     ClassicEngineBoot.getInstance().start();
   }
 
 
-  public void testSyntaxErrorFormula()
-  {
+  public void testSyntaxErrorFormula() {
     final FormulaExpression function = new FormulaExpression();
-    function.setName("Test");
-    function.setFormula("=IF("); // clearly an bogus formula
-    function.setFailOnError(true);
+    function.setName( "Test" );
+    function.setFormula( "=IF(" ); // clearly an bogus formula
+    function.setFailOnError( true );
     final MasterReport report = new MasterReport();
-    report.addExpression(function);
+    report.addExpression( function );
 
-    try
-    {
-      DebugReportRunner.createPDF(report);
+    try {
+      DebugReportRunner.createPDF( report );
       Assert.fail();
-    }
-    catch (Exception e)
-    {
+    } catch ( Exception e ) {
       // empty is ok here.
     }
   }
 
-  public void testSyntaxErrorFormulaFunction()
-  {
+  public void testSyntaxErrorFormulaFunction() {
     final FormulaFunction function = new FormulaFunction();
-    function.setName("Test");
-    function.setFormula("=IF("); // clearly an bogus formula
-    function.setFailOnError(true);
+    function.setName( "Test" );
+    function.setFormula( "=IF(" ); // clearly an bogus formula
+    function.setFailOnError( true );
     final MasterReport report = new MasterReport();
-    report.addExpression(function);
+    report.addExpression( function );
 
-    try
-    {
-      DebugReportRunner.createPDF(report);
+    try {
+      DebugReportRunner.createPDF( report );
       Assert.fail();
-    }
-    catch (Exception e)
-    {
+    } catch ( Exception e ) {
       // empty is ok here.
     }
   }
 
-  public void testSyntaxErrorFormulaFunctionInit()
-  {
+  public void testSyntaxErrorFormulaFunctionInit() {
     final FormulaFunction function = new FormulaFunction();
-    function.setName("Test");
-    function.setInitial("=IF("); // clearly an bogus formula
-    function.setFormula("=TRUE()");
-    function.setFailOnError(true);
+    function.setName( "Test" );
+    function.setInitial( "=IF(" ); // clearly an bogus formula
+    function.setFormula( "=TRUE()" );
+    function.setFailOnError( true );
     final MasterReport report = new MasterReport();
-    report.addExpression(function);
+    report.addExpression( function );
 
-    try
-    {
-      DebugReportRunner.createPDF(report);
+    try {
+      DebugReportRunner.createPDF( report );
       Assert.fail();
-    }
-    catch (Exception e)
-    {
+    } catch ( Exception e ) {
       // empty is ok here.
     }
   }
 
-  public void testSyntaxErrorAttributeExpression()
-  {
+  public void testSyntaxErrorAttributeExpression() {
     final FormulaExpression function = new FormulaExpression();
-    function.setName("Test");
-    function.setFormula("=IF("); // clearly an bogus formula
+    function.setName( "Test" );
+    function.setFormula( "=IF(" ); // clearly an bogus formula
 
     final MasterReport report = new MasterReport();
     report.getReportConfiguration().setConfigProperty
-        ("org.pentaho.reporting.engine.classic.core.FailOnAttributeExpressionErrors", "true");
+      ( "org.pentaho.reporting.engine.classic.core.FailOnAttributeExpressionErrors", "true" );
     report.getReportHeader().setAttributeExpression
-        (AttributeNames.Core.NAMESPACE, AttributeNames.Core.NAME, function);
+      ( AttributeNames.Core.NAMESPACE, AttributeNames.Core.NAME, function );
 
-    try
-    {
-      DebugReportRunner.createPDF(report);
+    try {
+      DebugReportRunner.createPDF( report );
       Assert.fail();
-    }
-    catch (Exception e)
-    {
+    } catch ( Exception e ) {
       // empty is ok here.
     }
   }
 
-  public void testSyntaxErrorStyleExpression()
-  {
+  public void testSyntaxErrorStyleExpression() {
     final FormulaExpression function = new FormulaExpression();
-    function.setName("Test");
-    function.setFormula("=IF("); // clearly an bogus formula
+    function.setName( "Test" );
+    function.setFormula( "=IF(" ); // clearly an bogus formula
 
     final MasterReport report = new MasterReport();
     report.getReportConfiguration().setConfigProperty
-        ("org.pentaho.reporting.engine.classic.core.FailOnStyleExpressionErrors", "true");
-    report.getReportHeader().setStyleExpression(ElementStyleKeys.VISIBLE, function);
+      ( "org.pentaho.reporting.engine.classic.core.FailOnStyleExpressionErrors", "true" );
+    report.getReportHeader().setStyleExpression( ElementStyleKeys.VISIBLE, function );
 
-    try
-    {
-      DebugReportRunner.createPDF(report);
+    try {
+      DebugReportRunner.createPDF( report );
       Assert.fail();
-    }
-    catch (Exception e)
-    {
+    } catch ( Exception e ) {
       // empty is ok here.
     }
   }
 
 
-  public void testEvalErrorFormula()
-  {
+  public void testEvalErrorFormula() {
     final FormulaExpression function = new FormulaExpression();
-    function.setName("Test");
-    function.setFormula("=ERROR(\"test\")"); // clearly an bogus formula
-    function.setFailOnError(true);
+    function.setName( "Test" );
+    function.setFormula( "=ERROR(\"test\")" ); // clearly an bogus formula
+    function.setFailOnError( true );
     final MasterReport report = new MasterReport();
-    report.addExpression(function);
+    report.addExpression( function );
 
-    try
-    {
-      DebugReportRunner.createPDF(report);
+    try {
+      DebugReportRunner.createPDF( report );
       Assert.fail();
-    }
-    catch (Exception e)
-    {
+    } catch ( Exception e ) {
       // empty is ok here.
     }
   }
 
-  public void testEvalErrorFormulaFunction()
-  {
+  public void testEvalErrorFormulaFunction() {
     final FormulaFunction function = new FormulaFunction();
-    function.setName("Test");
-    function.setFormula("=ERROR(\"test\")"); // clearly an bogus formula
-    function.setFailOnError(true);
+    function.setName( "Test" );
+    function.setFormula( "=ERROR(\"test\")" ); // clearly an bogus formula
+    function.setFailOnError( true );
     final MasterReport report = new MasterReport();
-    report.addExpression(function);
+    report.addExpression( function );
 
-    try
-    {
-      DebugReportRunner.createPDF(report);
+    try {
+      DebugReportRunner.createPDF( report );
       Assert.fail();
-    }
-    catch (Exception e)
-    {
+    } catch ( Exception e ) {
       // empty is ok here.
     }
   }
 
-  public void testEvalErrorFormulaFunctionInit()
-  {
+  public void testEvalErrorFormulaFunctionInit() {
     final FormulaFunction function = new FormulaFunction();
-    function.setName("Test");
-    function.setInitial("=ERROR(\"test\")"); // clearly an bogus formula
-    function.setFormula("=TRUE()");
-    function.setFailOnError(true);
+    function.setName( "Test" );
+    function.setInitial( "=ERROR(\"test\")" ); // clearly an bogus formula
+    function.setFormula( "=TRUE()" );
+    function.setFailOnError( true );
     final MasterReport report = new MasterReport();
-    report.addExpression(function);
+    report.addExpression( function );
 
-    try
-    {
-      DebugReportRunner.createPDF(report);
+    try {
+      DebugReportRunner.createPDF( report );
       Assert.fail();
-    }
-    catch (Exception e)
-    {
+    } catch ( Exception e ) {
       // empty is ok here.
     }
   }
 
-  public void testEvalErrorAttributeExpression()
-  {
+  public void testEvalErrorAttributeExpression() {
     final FormulaExpression function = new FormulaExpression();
-    function.setName("Test");
-    function.setFormula("=ERROR(\"test\")"); // clearly an bogus formula
+    function.setName( "Test" );
+    function.setFormula( "=ERROR(\"test\")" ); // clearly an bogus formula
 
     final MasterReport report = new MasterReport();
     report.getReportConfiguration().setConfigProperty
-        ("org.pentaho.reporting.engine.classic.core.FailOnAttributeExpressionErrors", "true");
+      ( "org.pentaho.reporting.engine.classic.core.FailOnAttributeExpressionErrors", "true" );
     report.getReportHeader().setAttributeExpression
-        (AttributeNames.Core.NAMESPACE, AttributeNames.Core.NAME, function);
+      ( AttributeNames.Core.NAMESPACE, AttributeNames.Core.NAME, function );
 
-    try
-    {
-      DebugReportRunner.createPDF(report);
+    try {
+      DebugReportRunner.createPDF( report );
       Assert.fail();
-    }
-    catch (Exception e)
-    {
+    } catch ( Exception e ) {
       // empty is ok here.
     }
   }
 
-  public void testEvalErrorStyleExpression()
-  {
+  public void testEvalErrorStyleExpression() {
     final FormulaExpression function = new FormulaExpression();
-    function.setName("Test");
-    function.setFormula("=ERROR(\"test\")"); // clearly an bogus formula
+    function.setName( "Test" );
+    function.setFormula( "=ERROR(\"test\")" ); // clearly an bogus formula
 
     final MasterReport report = new MasterReport();
     report.getReportConfiguration().setConfigProperty
-        ("org.pentaho.reporting.engine.classic.core.FailOnStyleExpressionErrors", "true");
-    report.getReportHeader().setStyleExpression(ElementStyleKeys.VISIBLE, function);
+      ( "org.pentaho.reporting.engine.classic.core.FailOnStyleExpressionErrors", "true" );
+    report.getReportHeader().setStyleExpression( ElementStyleKeys.VISIBLE, function );
 
-    try
-    {
-      DebugReportRunner.createPDF(report);
+    try {
+      DebugReportRunner.createPDF( report );
       Assert.fail();
-    }
-    catch (Exception e)
-    {
+    } catch ( Exception e ) {
       // empty is ok here.
     }
   }

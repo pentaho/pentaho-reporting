@@ -17,46 +17,39 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.parser.base.common;
 
-import java.util.ArrayList;
-
 import org.pentaho.reporting.libraries.xmlns.parser.AbstractXmlReadHandler;
 import org.pentaho.reporting.libraries.xmlns.parser.XmlReadHandler;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 
-public class QueryDefinitionsReadHandler extends AbstractXmlReadHandler
-{
+import java.util.ArrayList;
+
+public class QueryDefinitionsReadHandler extends AbstractXmlReadHandler {
   private ArrayList<QueryDefinitionReadHandler> scriptedQueries;
 
-  public QueryDefinitionsReadHandler()
-  {
+  public QueryDefinitionsReadHandler() {
     scriptedQueries = new ArrayList<QueryDefinitionReadHandler>();
   }
 
-  protected XmlReadHandler getHandlerForChild(final String uri,
-                                              final String tagName,
-                                              final Attributes atts) throws SAXException
-  {
-    if (isSameNamespace(uri) == false)
-    {
+  protected XmlReadHandler getHandlerForChild( final String uri,
+                                               final String tagName,
+                                               final Attributes atts ) throws SAXException {
+    if ( isSameNamespace( uri ) == false ) {
       return null;
     }
-    if ("query".equals(tagName))
-    {
+    if ( "query".equals( tagName ) ) {
       final QueryDefinitionReadHandler queryReadHandler = new QueryDefinitionReadHandler();
-      scriptedQueries.add(queryReadHandler);
+      scriptedQueries.add( queryReadHandler );
       return queryReadHandler;
     }
     return null;
   }
 
-  public Object getObject() throws SAXException
-  {
+  public Object getObject() throws SAXException {
     return getScriptedQueries();
   }
 
-  public ArrayList<QueryDefinitionReadHandler> getScriptedQueries()
-  {
+  public ArrayList<QueryDefinitionReadHandler> getScriptedQueries() {
     return scriptedQueries;
   }
 }

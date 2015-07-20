@@ -17,11 +17,11 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.output.table.xls.helper;
 
-import java.awt.Color;
-import java.util.HashMap;
-
 import org.apache.poi.ss.usermodel.Font;
 import org.apache.poi.ss.usermodel.Workbook;
+
+import java.awt.*;
+import java.util.HashMap;
 
 /**
  * This class keeps track of all fonts that we have used so far in our Excel file.
@@ -30,8 +30,7 @@ import org.apache.poi.ss.usermodel.Workbook;
  *
  * @author Heiko Evermann
  */
-public class ExcelFontFactory
-{
+public class ExcelFontFactory {
   /**
    * The list of fonts that we have used so far.
    */
@@ -47,15 +46,12 @@ public class ExcelFontFactory
    *
    * @param workbook the workbook.
    */
-  public ExcelFontFactory(final Workbook workbook,
-                          final ExcelColorProducer colorProducer)
-  {
-    if (workbook == null)
-    {
+  public ExcelFontFactory( final Workbook workbook,
+                           final ExcelColorProducer colorProducer ) {
+    if ( workbook == null ) {
       throw new NullPointerException();
     }
-    if (colorProducer == null)
-    {
+    if ( colorProducer == null ) {
       throw new NullPointerException();
     }
 
@@ -66,18 +62,17 @@ public class ExcelFontFactory
     // Funny one: Please note that the layout will be broken if the first
     // font is not 'Arial 10'.
     final short numberOfFonts = this.workbook.getNumberOfFonts();
-    for (int i = 0; i < numberOfFonts; i++)
-    {
-      final Font font = workbook.getFontAt((short) i);
-      this.fonts.put(new HSSFFontWrapper(font), font);
+    for ( int i = 0; i < numberOfFonts; i++ ) {
+      final Font font = workbook.getFontAt( (short) i );
+      this.fonts.put( new HSSFFontWrapper( font ), font );
     }
 
     // add the default font
     // this MUST be the first one, that is created.
     // oh, I hate Excel ...
     final HSSFFontWrapper wrapper = new HSSFFontWrapper
-        ("Arial", (short) 10, false, false, false, false, colorProducer.getNearestColor(Color.black));
-    getExcelFont(wrapper);
+      ( "Arial", (short) 10, false, false, false, false, colorProducer.getNearestColor( Color.black ) );
+    getExcelFont( wrapper );
   }
 
   /**
@@ -86,21 +81,18 @@ public class ExcelFontFactory
    * @param wrapper the font information that should be used to produce the excel font
    * @return the created or a cached HSSFFont instance
    */
-  public Font getExcelFont(final HSSFFontWrapper wrapper)
-  {
-    if (wrapper == null)
-    {
+  public Font getExcelFont( final HSSFFontWrapper wrapper ) {
+    if ( wrapper == null ) {
       throw new NullPointerException();
     }
 
-    if (fonts.containsKey(wrapper))
-    {
-      return fonts.get(wrapper);
+    if ( fonts.containsKey( wrapper ) ) {
+      return fonts.get( wrapper );
     }
 
     // ok, we need a new one ...
-    final Font excelFont = createFont(wrapper);
-    fonts.put(wrapper, excelFont);
+    final Font excelFont = createFont( wrapper );
+    fonts.put( wrapper, excelFont );
     return excelFont;
   }
 
@@ -110,29 +102,22 @@ public class ExcelFontFactory
    * @param wrapper the font wrapper that holds all font information from the repagination.
    * @return the created font.
    */
-  private Font createFont(final HSSFFontWrapper wrapper)
-  {
+  private Font createFont( final HSSFFontWrapper wrapper ) {
     final Font font = workbook.createFont();
-    if (wrapper.isBold())
-    {
-      font.setBoldweight(Font.BOLDWEIGHT_BOLD);
+    if ( wrapper.isBold() ) {
+      font.setBoldweight( Font.BOLDWEIGHT_BOLD );
+    } else {
+      font.setBoldweight( Font.BOLDWEIGHT_NORMAL );
     }
-    else
-    {
-      font.setBoldweight(Font.BOLDWEIGHT_NORMAL);
-    }
-    font.setColor(wrapper.getColorIndex());
-    font.setFontName(wrapper.getFontName());
-    font.setFontHeightInPoints((short) wrapper.getFontHeight());
-    font.setItalic(wrapper.isItalic());
-    font.setStrikeout(wrapper.isStrikethrough());
-    if (wrapper.isUnderline())
-    {
-      font.setUnderline(Font.U_SINGLE);
-    }
-    else
-    {
-      font.setUnderline(Font.U_NONE);
+    font.setColor( wrapper.getColorIndex() );
+    font.setFontName( wrapper.getFontName() );
+    font.setFontHeightInPoints( (short) wrapper.getFontHeight() );
+    font.setItalic( wrapper.isItalic() );
+    font.setStrikeout( wrapper.isStrikethrough() );
+    if ( wrapper.isUnderline() ) {
+      font.setUnderline( Font.U_SINGLE );
+    } else {
+      font.setUnderline( Font.U_NONE );
     }
     return font;
   }

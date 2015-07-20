@@ -29,8 +29,7 @@ import java.io.Serializable;
  *
  * @author Thomas Morgner
  */
-public interface DataSchemaDefinition extends Serializable, Cloneable
-{
+public interface DataSchemaDefinition extends Serializable, Cloneable {
   /**
    * Returns all known rules.
    *

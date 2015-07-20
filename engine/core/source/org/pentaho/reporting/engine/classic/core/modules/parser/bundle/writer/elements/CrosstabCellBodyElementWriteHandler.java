@@ -17,8 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.parser.bundle.writer.elements;
 
-import java.io.IOException;
-
 import org.pentaho.reporting.engine.classic.core.Element;
 import org.pentaho.reporting.engine.classic.core.Section;
 import org.pentaho.reporting.engine.classic.core.modules.parser.bundle.BundleNamespaces;
@@ -29,11 +27,11 @@ import org.pentaho.reporting.libraries.xmlns.common.AttributeList;
 import org.pentaho.reporting.libraries.xmlns.writer.XmlWriter;
 import org.pentaho.reporting.libraries.xmlns.writer.XmlWriterSupport;
 
+import java.io.IOException;
+
 @Deprecated
-public class CrosstabCellBodyElementWriteHandler extends AbstractElementWriteHandler
-{
-  public CrosstabCellBodyElementWriteHandler()
-  {
+public class CrosstabCellBodyElementWriteHandler extends AbstractElementWriteHandler {
+  public CrosstabCellBodyElementWriteHandler() {
   }
 
   /**
@@ -43,36 +41,33 @@ public class CrosstabCellBodyElementWriteHandler extends AbstractElementWriteHan
    * @param state     the current write-state.
    * @param xmlWriter the xml writer.
    * @param element   the element.
-   * @throws java.io.IOException           if an IO error occured.
-   * @throws org.pentaho.reporting.engine.classic.core.modules.parser.bundle.writer.BundleWriterException if an Bundle writer.
+   * @throws java.io.IOException                                                                          if an IO error
+   *                                                                                                      occured.
+   * @throws org.pentaho.reporting.engine.classic.core.modules.parser.bundle.writer.BundleWriterException if an Bundle
+   *                                                                                                      writer.
    */
-  public void writeElement(final WriteableDocumentBundle bundle,
-                           final BundleWriterState state,
-                           final XmlWriter xmlWriter,
-                           final Element element)
-      throws IOException, BundleWriterException
-  {
-    if (bundle == null)
-    {
+  public void writeElement( final WriteableDocumentBundle bundle,
+                            final BundleWriterState state,
+                            final XmlWriter xmlWriter,
+                            final Element element )
+    throws IOException, BundleWriterException {
+    if ( bundle == null ) {
       throw new NullPointerException();
     }
-    if (state == null)
-    {
+    if ( state == null ) {
       throw new NullPointerException();
     }
-    if (xmlWriter == null)
-    {
+    if ( xmlWriter == null ) {
       throw new NullPointerException();
     }
-    if (element == null)
-    {
+    if ( element == null ) {
       throw new NullPointerException();
     }
 
-    final AttributeList attList = createMainAttributes(element, xmlWriter);
-    xmlWriter.writeTag(BundleNamespaces.LAYOUT, "crosstab-cell-body", attList, XmlWriterSupport.OPEN);
-    writeElementBody(bundle, state, element, xmlWriter);
-    writeChildElements(bundle, state, xmlWriter, (Section) element);
+    final AttributeList attList = createMainAttributes( element, xmlWriter );
+    xmlWriter.writeTag( BundleNamespaces.LAYOUT, "crosstab-cell-body", attList, XmlWriterSupport.OPEN );
+    writeElementBody( bundle, state, element, xmlWriter );
+    writeChildElements( bundle, state, xmlWriter, (Section) element );
     xmlWriter.writeCloseTag();
 
   }

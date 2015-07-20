@@ -22,12 +22,10 @@ import org.pentaho.reporting.libraries.base.boot.AbstractModule;
 import org.pentaho.reporting.libraries.base.boot.ModuleInitializeException;
 import org.pentaho.reporting.libraries.base.boot.SubSystem;
 
-public class XmlPageableModule extends AbstractModule
-{
+public class XmlPageableModule extends AbstractModule {
   public static final String PAGEABLE_XML_EXPORT_TYPE = "pageable/xml";
 
-  public XmlPageableModule() throws ModuleInitializeException
-  {
+  public XmlPageableModule() throws ModuleInitializeException {
     loadModuleInfo();
   }
 
@@ -39,9 +37,8 @@ public class XmlPageableModule extends AbstractModule
    * @param subSystem the subSystem.
    * @throws ModuleInitializeException if an error ocurred while initializing the module.
    */
-  public void initialize(final SubSystem subSystem) throws ModuleInitializeException
-  {
+  public void initialize( final SubSystem subSystem ) throws ModuleInitializeException {
     ElementMetaDataParser.initializeOptionalReportProcessTaskMetaData
-        ("org/pentaho/reporting/engine/classic/core/modules/output/pageable/xml/meta-report-process-tasks.xml");
+      ( "org/pentaho/reporting/engine/classic/core/modules/output/pageable/xml/meta-report-process-tasks.xml" );
   }
 }

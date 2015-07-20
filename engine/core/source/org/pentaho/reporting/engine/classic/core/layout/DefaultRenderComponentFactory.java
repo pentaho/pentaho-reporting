@@ -24,24 +24,19 @@ import org.pentaho.reporting.engine.classic.core.layout.build.LayoutBuilderStrat
 import org.pentaho.reporting.engine.classic.core.layout.build.LayoutModelBuilder;
 import org.pentaho.reporting.engine.classic.core.layout.build.RenderNodeFactory;
 
-public class DefaultRenderComponentFactory implements RenderComponentFactory
-{
-  public DefaultRenderComponentFactory()
-  {
+public class DefaultRenderComponentFactory implements RenderComponentFactory {
+  public DefaultRenderComponentFactory() {
   }
 
-  public LayoutModelBuilder createLayoutModelBuilder(final String name)
-  {
-    return new DefaultLayoutModelBuilder(name);
+  public LayoutModelBuilder createLayoutModelBuilder( final String name ) {
+    return new DefaultLayoutModelBuilder( name );
   }
 
-  public RenderNodeFactory createRenderNodeFactory()
-  {
+  public RenderNodeFactory createRenderNodeFactory() {
     return new DefaultRenderNodeFactory();
   }
 
-  public LayoutBuilderStrategy createLayoutBuilderStrategy()
-  {
+  public LayoutBuilderStrategy createLayoutBuilderStrategy() {
     return new DefaultLayoutBuilderStrategy();
   }
 }

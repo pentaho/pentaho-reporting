@@ -26,8 +26,7 @@ import org.pentaho.reporting.engine.classic.core.function.AbstractExpression;
  * @author Thomas Morgner
  * @deprecated This can be solved with a formula
  */
-public class ToLowerCaseStringExpression extends AbstractExpression
-{
+public class ToLowerCaseStringExpression extends AbstractExpression {
   /**
    * The field name from where to read the string that should be converted to lower case.
    */
@@ -36,8 +35,7 @@ public class ToLowerCaseStringExpression extends AbstractExpression
   /**
    * Default Constructor.
    */
-  public ToLowerCaseStringExpression()
-  {
+  public ToLowerCaseStringExpression() {
   }
 
   /**
@@ -45,8 +43,7 @@ public class ToLowerCaseStringExpression extends AbstractExpression
    *
    * @return the field.
    */
-  public String getField()
-  {
+  public String getField() {
     return field;
   }
 
@@ -55,8 +52,7 @@ public class ToLowerCaseStringExpression extends AbstractExpression
    *
    * @param field the field.
    */
-  public void setField(final String field)
-  {
+  public void setField( final String field ) {
     this.field = field;
   }
 
@@ -65,22 +61,17 @@ public class ToLowerCaseStringExpression extends AbstractExpression
    *
    * @return the value of the function.
    */
-  public Object getValue()
-  {
-    final Object raw = getDataRow().get(getField());
-    if (raw == null)
-    {
+  public Object getValue() {
+    final Object raw = getDataRow().get( getField() );
+    if ( raw == null ) {
       return null;
     }
-    final String text = String.valueOf(raw);
+    final String text = String.valueOf( raw );
     final ResourceBundleFactory rf = getResourceBundleFactory();
-    if (rf == null)
-    {
+    if ( rf == null ) {
       return text.toLowerCase();
-    }
-    else
-    {
-      return text.toLowerCase(rf.getLocale());
+    } else {
+      return text.toLowerCase( rf.getLocale() );
     }
   }
 }

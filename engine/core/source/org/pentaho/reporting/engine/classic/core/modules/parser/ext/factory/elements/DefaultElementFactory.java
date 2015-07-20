@@ -24,13 +24,11 @@ import org.pentaho.reporting.engine.classic.core.Element;
  *
  * @author Thomas Morgner
  */
-public class DefaultElementFactory implements ElementFactory
-{
+public class DefaultElementFactory implements ElementFactory {
   /**
    * Creates a new element factory.
    */
-  public DefaultElementFactory()
-  {
+  public DefaultElementFactory() {
   }
 
   /**
@@ -40,8 +38,7 @@ public class DefaultElementFactory implements ElementFactory
    * @param type the type.
    * @return The element.
    */
-  public Element getElementForType(final String type)
-  {
+  public Element getElementForType( final String type ) {
     return new Element();
   }
 
@@ -53,14 +50,11 @@ public class DefaultElementFactory implements ElementFactory
    * @return true, if the given object is equal, false otherwise.
    * @see java.lang.Object#equals(java.lang.Object)
    */
-  public boolean equals(final Object o)
-  {
-    if (this == o)
-    {
+  public boolean equals( final Object o ) {
+    if ( this == o ) {
       return true;
     }
-    if (!(o instanceof DefaultElementFactory))
-    {
+    if ( !( o instanceof DefaultElementFactory ) ) {
       return false;
     }
     return true;
@@ -72,8 +66,7 @@ public class DefaultElementFactory implements ElementFactory
    * @return the hashcode.
    * @see java.lang.Object#hashCode()
    */
-  public int hashCode()
-  {
+  public int hashCode() {
     return 0;
   }
 }

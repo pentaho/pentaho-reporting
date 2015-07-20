@@ -17,12 +17,12 @@
 
 package org.pentaho.reporting.engine.classic.core.function;
 
-import java.math.BigDecimal;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.pentaho.reporting.engine.classic.core.event.ReportEvent;
 import org.pentaho.reporting.engine.classic.core.util.Sequence;
+
+import java.math.BigDecimal;
 
 /**
  * A report function that calculates the average of one field (column) from the TableModel. This function produces a
@@ -39,14 +39,13 @@ import org.pentaho.reporting.engine.classic.core.util.Sequence;
  *
  * @author Thomas Morgner
  */
-public class ItemAvgFunction extends AbstractFunction implements FieldAggregationFunction
-{
-  private static final Log logger = LogFactory.getLog(ItemAvgFunction.class);
-  
+public class ItemAvgFunction extends AbstractFunction implements FieldAggregationFunction {
+  private static final Log logger = LogFactory.getLog( ItemAvgFunction.class );
+
   /**
    * Useful constant for one.
    */
-  private static final BigDecimal ONE = new BigDecimal(1.0);
+  private static final BigDecimal ONE = new BigDecimal( 1.0 );
 
   /**
    * The item sum.
@@ -81,8 +80,7 @@ public class ItemAvgFunction extends AbstractFunction implements FieldAggregatio
   /**
    * Constructs an unnamed function. Make sure to set a Name or function initialisation will fail.
    */
-  public ItemAvgFunction()
-  {
+  public ItemAvgFunction() {
     sum = new Sequence<BigDecimal>();
     itemCount = new Sequence<BigDecimal>();
     scale = 14;
@@ -94,10 +92,9 @@ public class ItemAvgFunction extends AbstractFunction implements FieldAggregatio
    *
    * @param name The function name.
    */
-  public ItemAvgFunction(final String name)
-  {
+  public ItemAvgFunction( final String name ) {
     this();
-    setName(name);
+    setName( name );
   }
 
   /**
@@ -105,13 +102,11 @@ public class ItemAvgFunction extends AbstractFunction implements FieldAggregatio
    *
    * @param event Information about the event.
    */
-  public void reportInitialized(final ReportEvent event)
-  {
+  public void reportInitialized( final ReportEvent event ) {
     clear();
   }
 
-  private void clear()
-  {
+  private void clear() {
     this.sum.clear();
     this.itemCount.clear();
     this.lastGroupSequenceNumber = 0;
@@ -123,17 +118,14 @@ public class ItemAvgFunction extends AbstractFunction implements FieldAggregatio
    *
    * @param event Information about the event.
    */
-  public void groupStarted(final ReportEvent event)
-  {
-    if (FunctionUtilities.isDefinedGroup(getGroup(), event))
-    {
+  public void groupStarted( final ReportEvent event ) {
+    if ( FunctionUtilities.isDefinedGroup( getGroup(), event ) ) {
       clear();
     }
 
-    if (FunctionUtilities.isDefinedGroup(getCrosstabFilterGroup(), event))
-    {
+    if ( FunctionUtilities.isDefinedGroup( getCrosstabFilterGroup(), event ) ) {
       final int groupIndex = event.getState().getCurrentGroupIndex();
-      this.lastGroupSequenceNumber = (int) event.getState().getCrosstabColumnSequenceCounter(groupIndex);
+      this.lastGroupSequenceNumber = (int) event.getState().getCrosstabColumnSequenceCounter( groupIndex );
     }
   }
 
@@ -142,8 +134,7 @@ public class ItemAvgFunction extends AbstractFunction implements FieldAggregatio
    *
    * @return The group name.
    */
-  public String getGroup()
-  {
+  public String getGroup() {
     return group;
   }
 
@@ -153,8 +144,7 @@ public class ItemAvgFunction extends AbstractFunction implements FieldAggregatio
    *
    * @param name The group name (null permitted).
    */
-  public void setGroup(final String name)
-  {
+  public void setGroup( final String name ) {
     this.group = name;
   }
 
@@ -163,8 +153,7 @@ public class ItemAvgFunction extends AbstractFunction implements FieldAggregatio
    *
    * @return The field name.
    */
-  public String getField()
-  {
+  public String getField() {
     return field;
   }
 
@@ -173,8 +162,7 @@ public class ItemAvgFunction extends AbstractFunction implements FieldAggregatio
    *
    * @param field the field name.
    */
-  public void setField(final String field)
-  {
+  public void setField( final String field ) {
     this.field = field;
   }
 
@@ -184,8 +172,7 @@ public class ItemAvgFunction extends AbstractFunction implements FieldAggregatio
    * @return the rounding mode.
    * @see java.math.BigDecimal#divide(java.math.BigDecimal, int)
    */
-  public int getRoundingMode()
-  {
+  public int getRoundingMode() {
     return roundingMode;
   }
 
@@ -195,8 +182,7 @@ public class ItemAvgFunction extends AbstractFunction implements FieldAggregatio
    * @param roundingMode the rounding mode.
    * @see java.math.BigDecimal#divide(java.math.BigDecimal, int)
    */
-  public void setRoundingMode(final int roundingMode)
-  {
+  public void setRoundingMode( final int roundingMode ) {
     this.roundingMode = roundingMode;
   }
 
@@ -205,8 +191,7 @@ public class ItemAvgFunction extends AbstractFunction implements FieldAggregatio
    *
    * @return the scale.
    */
-  public int getScale()
-  {
+  public int getScale() {
     return scale;
   }
 
@@ -215,8 +200,7 @@ public class ItemAvgFunction extends AbstractFunction implements FieldAggregatio
    *
    * @param scale the scale.
    */
-  public void setScale(final int scale)
-  {
+  public void setScale( final int scale ) {
     this.scale = scale;
   }
 
@@ -226,49 +210,36 @@ public class ItemAvgFunction extends AbstractFunction implements FieldAggregatio
    *
    * @param event Information about the event.
    */
-  public void itemsAdvanced(final ReportEvent event)
-  {
-    final Object fieldValue = event.getDataRow().get(getField());
-    if (fieldValue instanceof Number == false)
-    {
+  public void itemsAdvanced( final ReportEvent event ) {
+    final Object fieldValue = event.getDataRow().get( getField() );
+    if ( fieldValue instanceof Number == false ) {
       return;
     }
-    try
-    {
+    try {
       final Number n = (Number) fieldValue;
-      final BigDecimal number = ExpressionUtilities.convertToBigDecimal(n);
-      final BigDecimal oldSum = sum.get(lastGroupSequenceNumber);
-      if (oldSum == null)
-      {
-        sum.set(lastGroupSequenceNumber, number);
-      }
-      else
-      {
-        sum.set(lastGroupSequenceNumber, oldSum.add(number));
+      final BigDecimal number = ExpressionUtilities.convertToBigDecimal( n );
+      final BigDecimal oldSum = sum.get( lastGroupSequenceNumber );
+      if ( oldSum == null ) {
+        sum.set( lastGroupSequenceNumber, number );
+      } else {
+        sum.set( lastGroupSequenceNumber, oldSum.add( number ) );
       }
 
-      final BigDecimal oldValue = itemCount.get(lastGroupSequenceNumber);
-      if (oldValue == null)
-      {
-        itemCount.set(lastGroupSequenceNumber, ONE);
+      final BigDecimal oldValue = itemCount.get( lastGroupSequenceNumber );
+      if ( oldValue == null ) {
+        itemCount.set( lastGroupSequenceNumber, ONE );
+      } else {
+        itemCount.set( lastGroupSequenceNumber, oldValue.add( ONE ) );
       }
-      else
-      {
-        itemCount.set(lastGroupSequenceNumber, oldValue.add(ONE));
-      }
-    }
-    catch (final Exception e)
-    {
-      ItemAvgFunction.logger.error("ItemAvgFunction.advanceItems(): problem adding number.");
+    } catch ( final Exception e ) {
+      ItemAvgFunction.logger.error( "ItemAvgFunction.advanceItems(): problem adding number." );
     }
   }
 
-  public void summaryRowSelection(final ReportEvent event)
-  {
-    if (FunctionUtilities.isDefinedGroup(getCrosstabFilterGroup(), event))
-    {
+  public void summaryRowSelection( final ReportEvent event ) {
+    if ( FunctionUtilities.isDefinedGroup( getCrosstabFilterGroup(), event ) ) {
       final int groupIndex = event.getState().getCurrentGroupIndex();
-      this.lastGroupSequenceNumber = (int) event.getState().getCrosstabColumnSequenceCounter(groupIndex);
+      this.lastGroupSequenceNumber = (int) event.getState().getCrosstabColumnSequenceCounter( groupIndex );
     }
   }
 
@@ -278,24 +249,20 @@ public class ItemAvgFunction extends AbstractFunction implements FieldAggregatio
    *
    * @return The function value.
    */
-  public Object getValue()
-  {
-    final BigDecimal count = itemCount.get(lastGroupSequenceNumber);
-    if (count == null)
-    {
+  public Object getValue() {
+    final BigDecimal count = itemCount.get( lastGroupSequenceNumber );
+    if ( count == null ) {
       return null;
     }
-    final BigDecimal sum = this.sum.get(lastGroupSequenceNumber);
-    if (sum == null)
-    {
+    final BigDecimal sum = this.sum.get( lastGroupSequenceNumber );
+    if ( sum == null ) {
       return null;
     }
-    if (count.longValue() == 0)
-    {
+    if ( count.longValue() == 0 ) {
       return null;
     }
 
-    return sum.divide(count, scale, roundingMode);
+    return sum.divide( count, scale, roundingMode );
   }
 
   /**
@@ -304,8 +271,7 @@ public class ItemAvgFunction extends AbstractFunction implements FieldAggregatio
    *
    * @return a copy of this function.
    */
-  public Expression getInstance()
-  {
+  public Expression getInstance() {
     final ItemAvgFunction function = (ItemAvgFunction) super.getInstance();
     function.sum = function.sum.clone();
     function.itemCount = function.itemCount.clone();
@@ -313,28 +279,22 @@ public class ItemAvgFunction extends AbstractFunction implements FieldAggregatio
     return function;
   }
 
-  public Object clone()
-  {
-    try
-    {
+  public Object clone() {
+    try {
       final ItemAvgFunction clone = (ItemAvgFunction) super.clone();
       clone.sum = clone.sum.clone();
       clone.itemCount = clone.itemCount.clone();
       return clone;
-    }
-    catch (CloneNotSupportedException e)
-    {
+    } catch ( CloneNotSupportedException e ) {
       throw new IllegalStateException();
     }
   }
 
-  public String getCrosstabFilterGroup()
-  {
+  public String getCrosstabFilterGroup() {
     return crosstabFilterGroup;
   }
 
-  public void setCrosstabFilterGroup(final String crosstabFilterGroup)
-  {
+  public void setCrosstabFilterGroup( final String crosstabFilterGroup ) {
     this.crosstabFilterGroup = crosstabFilterGroup;
   }
 }

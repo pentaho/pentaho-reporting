@@ -17,38 +17,31 @@
 
 package org.pentaho.reporting.engine.classic.core.wizard;
 
-public class GlobalRule implements DataSchemaRule
-{
+public class GlobalRule implements DataSchemaRule {
   private DataAttributes attributes;
   private DataAttributeReferences references;
 
-  public GlobalRule(final DataAttributes attributes,
-                    final DataAttributeReferences references)
-  {
-    if (attributes == null)
-    {
+  public GlobalRule( final DataAttributes attributes,
+                     final DataAttributeReferences references ) {
+    if ( attributes == null ) {
       throw new NullPointerException();
     }
-    if (references == null)
-    {
+    if ( references == null ) {
       throw new NullPointerException();
     }
     this.attributes = attributes;
     this.references = references;
   }
 
-  public DataAttributes getStaticAttributes()
-  {
+  public DataAttributes getStaticAttributes() {
     return attributes;
   }
 
-  public DataAttributeReferences getMappedAttributes()
-  {
+  public DataAttributeReferences getMappedAttributes() {
     return references;
   }
 
-  public boolean isMatch(final DataAttributes dataAttributes, final DataAttributeContext context)
-  {
+  public boolean isMatch( final DataAttributes dataAttributes, final DataAttributeContext context ) {
     return true;
   }
 }

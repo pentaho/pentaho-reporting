@@ -17,20 +17,13 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.gui.pdf;
 
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.util.Locale;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
 import org.pentaho.reporting.engine.classic.core.ReportProcessingException;
 import org.pentaho.reporting.engine.classic.core.modules.gui.common.StatusListener;
-import org.pentaho.reporting.engine.classic.core.modules.gui.commonswing.ReportProgressDialog;
 import org.pentaho.reporting.engine.classic.core.modules.gui.common.StatusType;
+import org.pentaho.reporting.engine.classic.core.modules.gui.commonswing.ReportProgressDialog;
 import org.pentaho.reporting.engine.classic.core.modules.gui.commonswing.SwingGuiContext;
 import org.pentaho.reporting.engine.classic.core.modules.output.pageable.base.PageableReportProcessor;
 import org.pentaho.reporting.engine.classic.core.modules.output.pageable.pdf.PdfOutputProcessor;
@@ -38,14 +31,20 @@ import org.pentaho.reporting.libraries.base.config.Configuration;
 import org.pentaho.reporting.libraries.base.util.Messages;
 import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
 
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.util.Locale;
+
 /**
  * An export task implementation which writes a given report into a PDF file.
  *
  * @author Thomas Morgner
  */
-public class PdfExportTask implements Runnable
-{
-  private static final Log logger = LogFactory.getLog(PdfExportTask.class);
+public class PdfExportTask implements Runnable {
+  private static final Log logger = LogFactory.getLog( PdfExportTask.class );
   /**
    * Provides access to externalized strings
    */
@@ -59,44 +58,36 @@ public class PdfExportTask implements Runnable
   /**
    * Creates a new PDF export task.
    */
-  public PdfExportTask(final MasterReport report,
-                       final ReportProgressDialog progressListener,
-                       final SwingGuiContext swingGuiContext) throws ReportProcessingException
-  {
-    if (report == null)
-    {
-      throw new NullPointerException("PdfExportTask(..): Report parameter cannot be null");
+  public PdfExportTask( final MasterReport report,
+                        final ReportProgressDialog progressListener,
+                        final SwingGuiContext swingGuiContext ) throws ReportProcessingException {
+    if ( report == null ) {
+      throw new NullPointerException( "PdfExportTask(..): Report parameter cannot be null" );
     }
 
     this.report = report;
-    if (swingGuiContext != null)
-    {
+    if ( swingGuiContext != null ) {
       this.statusListener = swingGuiContext.getStatusListener();
-      this.messages = new Messages(swingGuiContext.getLocale(), PdfExportPlugin.BASE_RESOURCE_CLASS,
-          ObjectUtilities.getClassLoader(PdfExportPlugin.class));
-    }
-    else
-    {
-      this.messages = new Messages(Locale.getDefault(), PdfExportPlugin.BASE_RESOURCE_CLASS,
-          ObjectUtilities.getClassLoader(PdfExportPlugin.class));
+      this.messages = new Messages( swingGuiContext.getLocale(), PdfExportPlugin.BASE_RESOURCE_CLASS,
+        ObjectUtilities.getClassLoader( PdfExportPlugin.class ) );
+    } else {
+      this.messages = new Messages( Locale.getDefault(), PdfExportPlugin.BASE_RESOURCE_CLASS,
+        ObjectUtilities.getClassLoader( PdfExportPlugin.class ) );
     }
 
     this.progressListener = progressListener;
     final Configuration config = report.getConfiguration();
     final String targetFileName = config.getConfigProperty(
-        "org.pentaho.reporting.engine.classic.core.modules.gui.pdf.TargetFileName"); //$NON-NLS-1$
-    if (targetFileName == null)
-    {
-      throw new NullPointerException("TargetFileName must be set in the configuration.");
+      "org.pentaho.reporting.engine.classic.core.modules.gui.pdf.TargetFileName" ); //$NON-NLS-1$
+    if ( targetFileName == null ) {
+      throw new NullPointerException( "TargetFileName must be set in the configuration." );
     }
 
-    targetFile = new File(targetFileName);
-    if (targetFile.exists())
-    {
-      if (targetFile.delete() == false)
-      {
-        throw new ReportProcessingException(messages.getErrorString(
-            "PdfExportTask.ERROR_0001_TARGET_EXISTS")); //$NON-NLS-1$
+    targetFile = new File( targetFileName );
+    if ( targetFile.exists() ) {
+      if ( targetFile.delete() == false ) {
+        throw new ReportProcessingException( messages.getErrorString(
+          "PdfExportTask.ERROR_0001_TARGET_EXISTS" ) ); //$NON-NLS-1$
       }
     }
   }
@@ -109,62 +100,46 @@ public class PdfExportTask implements Runnable
    *
    * @see Thread#run()
    */
-  public void run()
-  {
+  public void run() {
     PageableReportProcessor proc = null;
     OutputStream fout = null;
-    try
-    {
-      fout = new BufferedOutputStream(new FileOutputStream(targetFile));
-      final PdfOutputProcessor outputProcessor = new PdfOutputProcessor(report.getConfiguration(), fout,
-          report.getResourceManager());
-      proc = new PageableReportProcessor(report, outputProcessor);
-      if (progressListener != null)
-      {
-        proc.addReportProgressListener(progressListener);
-        progressListener.setVisible(true);
+    try {
+      fout = new BufferedOutputStream( new FileOutputStream( targetFile ) );
+      final PdfOutputProcessor outputProcessor = new PdfOutputProcessor( report.getConfiguration(), fout,
+        report.getResourceManager() );
+      proc = new PageableReportProcessor( report, outputProcessor );
+      if ( progressListener != null ) {
+        proc.addReportProgressListener( progressListener );
+        progressListener.setVisible( true );
       }
       proc.processReport();
-      if (statusListener != null)
-      {
+      if ( statusListener != null ) {
         statusListener.setStatus
-            (StatusType.INFORMATION, messages.getString("PdfExportTask.USER_EXPORT_COMPLETE"), null); //$NON-NLS-1$
+          ( StatusType.INFORMATION, messages.getString( "PdfExportTask.USER_EXPORT_COMPLETE" ), null ); //$NON-NLS-1$
       }
-    }
-    catch (Exception e)
-    {
-      if (statusListener != null)
-      {
+    } catch ( Exception e ) {
+      if ( statusListener != null ) {
         statusListener.setStatus
-            (StatusType.ERROR, messages.getString("PdfExportTask.USER_EXPORT_FAILED"), e); //$NON-NLS-1$
+          ( StatusType.ERROR, messages.getString( "PdfExportTask.USER_EXPORT_FAILED" ), e ); //$NON-NLS-1$
       }
-      PdfExportTask.logger.error("Failed"); //$NON-NLS-1$
-    }
-    finally
-    {
-      if (proc != null)
-      {
-        if (progressListener != null)
-        {
-          proc.removeReportProgressListener(progressListener);
+      PdfExportTask.logger.error( "Failed" ); //$NON-NLS-1$
+    } finally {
+      if ( proc != null ) {
+        if ( progressListener != null ) {
+          proc.removeReportProgressListener( progressListener );
         }
         proc.close();
       }
-      if (fout != null)
-      {
-        try
-        {
+      if ( fout != null ) {
+        try {
           fout.close();
-        }
-        catch (IOException e)
-        {
+        } catch ( IOException e ) {
           // We tried our best ...
         }
       }
 
-      if (progressListener != null)
-      {
-        progressListener.setVisible(false);
+      if ( progressListener != null ) {
+        progressListener.setVisible( false );
       }
 
     }

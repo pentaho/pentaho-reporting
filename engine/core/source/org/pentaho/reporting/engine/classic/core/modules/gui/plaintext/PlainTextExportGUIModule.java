@@ -26,9 +26,9 @@ import org.pentaho.reporting.libraries.base.boot.SubSystem;
  *
  * @author Thomas Morgner
  */
-public class PlainTextExportGUIModule extends AbstractModule
-{
-  public static final String BUNDLE_NAME = "org.pentaho.reporting.engine.classic.core.modules.gui.plaintext.messages.messages"; //$NON-NLS-1$
+public class PlainTextExportGUIModule extends AbstractModule {
+  public static final String BUNDLE_NAME =
+    "org.pentaho.reporting.engine.classic.core.modules.gui.plaintext.messages.messages"; //$NON-NLS-1$
 
   /**
    * DefaultConstructor. Loads the module specification.
@@ -36,8 +36,7 @@ public class PlainTextExportGUIModule extends AbstractModule
    * @throws ModuleInitializeException if an error occured.
    */
   public PlainTextExportGUIModule()
-      throws ModuleInitializeException
-  {
+    throws ModuleInitializeException {
     loadModuleInfo();
   }
 
@@ -49,8 +48,7 @@ public class PlainTextExportGUIModule extends AbstractModule
    * @param subSystem the subSystem.
    * @throws ModuleInitializeException if an error ocurred while initializing the module.
    */
-  public void initialize(final SubSystem subSystem)
-      throws ModuleInitializeException
-  {
+  public void initialize( final SubSystem subSystem )
+    throws ModuleInitializeException {
   }
 }

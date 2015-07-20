@@ -17,6 +17,9 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.misc.tablemodel;
 
+import org.pentaho.reporting.libraries.base.util.CSVTokenizer;
+
+import javax.swing.table.TableModel;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -25,9 +28,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
-import javax.swing.table.TableModel;
-
-import org.pentaho.reporting.libraries.base.util.CSVTokenizer;
 
 
 /**
@@ -36,42 +36,35 @@ import org.pentaho.reporting.libraries.base.util.CSVTokenizer;
  *
  * @author Mimil
  */
-public class CSVTableModelProducer
-{
+public class CSVTableModelProducer {
   private BufferedReader reader;
   private String separator;
   private CSVTableModel tableModel;
   private boolean columnNameFirst;
 
-  public CSVTableModelProducer(final InputStream in)
-  {
-    this(new BufferedReader(new InputStreamReader(in)));
+  public CSVTableModelProducer( final InputStream in ) {
+    this( new BufferedReader( new InputStreamReader( in ) ) );
   }
 
-  public CSVTableModelProducer(final InputStream in, final String encoding) throws UnsupportedEncodingException
-  {
-    this(new BufferedReader(new InputStreamReader(in, encoding)));
+  public CSVTableModelProducer( final InputStream in, final String encoding ) throws UnsupportedEncodingException {
+    this( new BufferedReader( new InputStreamReader( in, encoding ) ) );
   }
 
-  public CSVTableModelProducer(final String filename)
-      throws FileNotFoundException
-  {
-    this(new BufferedReader(new FileReader(filename)));
+  public CSVTableModelProducer( final String filename )
+    throws FileNotFoundException {
+    this( new BufferedReader( new FileReader( filename ) ) );
   }
 
-  public CSVTableModelProducer(final BufferedReader r)
-  {
-    if (r == null)
-    {
-      throw new NullPointerException("The input stream must not be null"); //$NON-NLS-1$
+  public CSVTableModelProducer( final BufferedReader r ) {
+    if ( r == null ) {
+      throw new NullPointerException( "The input stream must not be null" ); //$NON-NLS-1$
     }
     this.reader = r;
     this.separator = ","; //$NON-NLS-1$
   }
 
   public void close()
-      throws IOException
-  {
+    throws IOException {
     this.reader.close();
   }
 
@@ -81,68 +74,57 @@ public class CSVTableModelProducer
    * @see this.getTableModel()
    */
   public synchronized TableModel parse()
-      throws IOException
-  {
-    if (tableModel != null)
-    {
+    throws IOException {
+    if ( tableModel != null ) {
       return tableModel;
     }
 
 
     this.tableModel = new CSVTableModel();
 
-    if (this.columnNameFirst == true)
-    {   //read the fisrt line
+    if ( this.columnNameFirst == true ) {   //read the fisrt line
       final String first = this.reader.readLine();
 
-      if (first == null)
-      {
+      if ( first == null ) {
         // after the end of the file it makes no sense to read anything.
         // so we can safely return ..
         return tableModel;
       }
-      this.tableModel.setColumnNames(splitLine(first, true));
+      this.tableModel.setColumnNames( splitLine( first, true ) );
     }
 
     final ArrayList data = new ArrayList();
     String line;
     int maxLength = 0;
-    while ((line = this.reader.readLine()) != null)
-    {
-      final String[] o = splitLine(line, false);
-      if (o.length > maxLength)
-      {
+    while ( ( line = this.reader.readLine() ) != null ) {
+      final String[] o = splitLine( line, false );
+      if ( o.length > maxLength ) {
         maxLength = o.length;
       }
-      data.add(o);
+      data.add( o );
     }
 
     close();
 
-    final Object[][] array = new Object[data.size()][];
-    data.toArray(array);
-    this.tableModel.setData(array);
+    final Object[][] array = new Object[ data.size() ][];
+    data.toArray( array );
+    this.tableModel.setData( array );
     return tableModel;
   }
 
-  private String[] splitLine(final String line, final boolean trim)
-  {
+  private String[] splitLine( final String line, final boolean trim ) {
     final ArrayList row = new ArrayList();
-    final CSVTokenizer tokenizer = new CSVTokenizer(line, getSeparator(), "\"", trim);
-    while (tokenizer.hasMoreElements())
-    {
+    final CSVTokenizer tokenizer = new CSVTokenizer( line, getSeparator(), "\"", trim );
+    while ( tokenizer.hasMoreElements() ) {
       final String o = (String) tokenizer.nextElement();
-      if (trim)
-      {
-        row.add(o.trim());
-      }
-      else
-      {
-        row.add(o);
+      if ( trim ) {
+        row.add( o.trim() );
+      } else {
+        row.add( o );
       }
 
     }
-    return (String[]) row.toArray(new String[row.size()]);
+    return (String[]) row.toArray( new String[ row.size() ] );
   }
 
   /**
@@ -150,8 +132,7 @@ public class CSVTableModelProducer
    *
    * @return a regexp
    */
-  public String getSeparator()
-  {
+  public String getSeparator() {
     return separator;
   }
 
@@ -161,8 +142,7 @@ public class CSVTableModelProducer
    *
    * @param separator a regexp
    */
-  public void setSeparator(final String separator)
-  {
+  public void setSeparator( final String separator ) {
     this.separator = separator;
   }
 
@@ -172,8 +152,7 @@ public class CSVTableModelProducer
    * @return the new TableModel
    */
   public TableModel getTableModel()
-      throws IOException
-  {
+    throws IOException {
     return this.parse();
   }
 
@@ -182,8 +161,7 @@ public class CSVTableModelProducer
    *
    * @return boolean
    */
-  public boolean isColumnNameFirstLine()
-  {
+  public boolean isColumnNameFirstLine() {
     return columnNameFirst;
   }
 
@@ -192,8 +170,7 @@ public class CSVTableModelProducer
    *
    * @param columnNameFirst boolean
    */
-  public void setColumnNameFirstLine(final boolean columnNameFirst)
-  {
+  public void setColumnNameFirstLine( final boolean columnNameFirst ) {
     this.columnNameFirst = columnNameFirst;
   }
 

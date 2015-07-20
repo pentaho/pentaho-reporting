@@ -28,8 +28,7 @@ import org.pentaho.reporting.libraries.base.config.Configuration;
  *
  * @author Thomas Morgner
  */
-public interface ConfigStorage
-{
+public interface ConfigStorage {
   /**
    * Stores the given properties on the defined path.
    *
@@ -37,8 +36,8 @@ public interface ConfigStorage
    * @param properties the properties which should be stored.
    * @throws ConfigStoreException if an error occured.
    */
-  public void store(String configPath, Configuration properties)
-      throws ConfigStoreException;
+  public void store( String configPath, Configuration properties )
+    throws ConfigStoreException;
 
   /**
    * Loads the properties from the given path, specifying the given properties as default.
@@ -48,8 +47,8 @@ public interface ConfigStorage
    * @return the loaded properties
    * @throws ConfigStoreException if an error occured.
    */
-  public Configuration load(String configPath, Configuration defaults)
-      throws ConfigStoreException;
+  public Configuration load( String configPath, Configuration defaults )
+    throws ConfigStoreException;
 
   /**
    * Tests, whether some configuration data exists for the given configuration.
@@ -57,5 +56,5 @@ public interface ConfigStorage
    * @param configPath the configuration path to the property storage.
    * @return true, if there are properties under this path, false otherwise.
    */
-  public boolean isAvailable(String configPath);
+  public boolean isAvailable( String configPath );
 }

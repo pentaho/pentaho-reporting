@@ -27,28 +27,19 @@ import org.pentaho.reporting.libraries.xmlns.parser.XmlReadHandler;
  *
  * @author Thomas Morgner
  */
-public class BundleSubReportXmlFactoryModule implements XmlFactoryModule
-{
-  public BundleSubReportXmlFactoryModule()
-  {
+public class BundleSubReportXmlFactoryModule implements XmlFactoryModule {
+  public BundleSubReportXmlFactoryModule() {
   }
 
-  public int getDocumentSupport(final XmlDocumentInfo documentInfo)
-  {
+  public int getDocumentSupport( final XmlDocumentInfo documentInfo ) {
     final String rootNamespace = documentInfo.getRootElementNameSpace();
-    if (rootNamespace != null && rootNamespace.length() > 0)
-    {
-      if (BundleNamespaces.CONTENT.equals(rootNamespace) == false)
-      {
+    if ( rootNamespace != null && rootNamespace.length() > 0 ) {
+      if ( BundleNamespaces.CONTENT.equals( rootNamespace ) == false ) {
         return XmlFactoryModule.NOT_RECOGNIZED;
-      }
-      else if ("content".equals(documentInfo.getRootElement()))
-      {
+      } else if ( "content".equals( documentInfo.getRootElement() ) ) {
         return XmlFactoryModule.RECOGNIZED_BY_NAMESPACE;
       }
-    }
-    else if ("content".equals(documentInfo.getRootElement()))
-    {
+    } else if ( "content".equals( documentInfo.getRootElement() ) ) {
       return XmlFactoryModule.RECOGNIZED_BY_TAGNAME;
     }
 
@@ -56,13 +47,11 @@ public class BundleSubReportXmlFactoryModule implements XmlFactoryModule
 
   }
 
-  public String getDefaultNamespace(final XmlDocumentInfo documentInfo)
-  {
+  public String getDefaultNamespace( final XmlDocumentInfo documentInfo ) {
     return BundleNamespaces.CONTENT;
   }
 
-  public XmlReadHandler createReadHandler(final XmlDocumentInfo documentInfo)
-  {
+  public XmlReadHandler createReadHandler( final XmlDocumentInfo documentInfo ) {
     return new SubContentRootElementHandler();
   }
 

@@ -22,21 +22,18 @@ import org.pentaho.reporting.engine.classic.core.Element;
 import org.pentaho.reporting.engine.classic.core.metadata.ElementType;
 import org.pentaho.reporting.libraries.xmlns.parser.ParseException;
 
-public class RootLevelContentReadHandler extends BandReadHandler
-{
+public class RootLevelContentReadHandler extends BandReadHandler {
   private AbstractRootLevelBand rootLevelBand;
 
-  public RootLevelContentReadHandler(final ElementType elementType,
-                                     final AbstractRootLevelBand rootLevelBand)
-      throws ParseException
-  {
-    super(elementType, false);
+  public RootLevelContentReadHandler( final ElementType elementType,
+                                      final AbstractRootLevelBand rootLevelBand )
+    throws ParseException {
+    super( elementType, false );
     this.rootLevelBand = rootLevelBand;
-    initialize(elementType);
+    initialize( elementType );
   }
 
-  protected Element createElement() throws ParseException
-  {
+  protected Element createElement() throws ParseException {
     return rootLevelBand;
   }
 }

@@ -19,8 +19,6 @@
 
 package org.pentaho.reporting.engine.classic.core.bugs;
 
-import javax.swing.table.DefaultTableModel;
-
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -34,173 +32,150 @@ import org.pentaho.reporting.engine.classic.core.function.AbstractFunction;
 import org.pentaho.reporting.engine.classic.core.states.ReportStateKey;
 import org.pentaho.reporting.engine.classic.core.testsupport.DebugReportRunner;
 
-public class Prd5041Test
-{
-  private static class DependencyFunction extends AbstractFunction
-  {
+import javax.swing.table.DefaultTableModel;
+
+public class Prd5041Test {
+  private static class DependencyFunction extends AbstractFunction {
     private ReportStateKey key;
 
-    private DependencyFunction(final int dependencyLevel, final String name)
-    {
-      setName(name);
-      setDependencyLevel(dependencyLevel);
+    private DependencyFunction( final int dependencyLevel, final String name ) {
+      setName( name );
+      setDependencyLevel( dependencyLevel );
     }
 
 
-    protected void validateHook()
-    {
+    protected void validateHook() {
     }
 
-    public void reportInitialized(final ReportEvent event)
-    {
+    public void reportInitialized( final ReportEvent event ) {
       key = event.getState().getProcessKey();
       validateHook();
     }
 
-    public void reportStarted(final ReportEvent event)
-    {
+    public void reportStarted( final ReportEvent event ) {
       key = event.getState().getProcessKey();
       validateHook();
     }
 
-    public void reportFinished(final ReportEvent event)
-    {
+    public void reportFinished( final ReportEvent event ) {
       key = event.getState().getProcessKey();
       validateHook();
     }
 
-    public void groupStarted(final ReportEvent event)
-    {
+    public void groupStarted( final ReportEvent event ) {
       key = event.getState().getProcessKey();
       validateHook();
     }
 
-    public void groupFinished(final ReportEvent event)
-    {
+    public void groupFinished( final ReportEvent event ) {
       key = event.getState().getProcessKey();
       validateHook();
     }
 
-    public void itemsAdvanced(final ReportEvent event)
-    {
+    public void itemsAdvanced( final ReportEvent event ) {
       key = event.getState().getProcessKey();
       validateHook();
     }
 
-    public void itemsStarted(final ReportEvent event)
-    {
+    public void itemsStarted( final ReportEvent event ) {
       key = event.getState().getProcessKey();
       validateHook();
     }
 
-    public void itemsFinished(final ReportEvent event)
-    {
+    public void itemsFinished( final ReportEvent event ) {
       key = event.getState().getProcessKey();
       validateHook();
     }
 
-    public void reportDone(final ReportEvent event)
-    {
+    public void reportDone( final ReportEvent event ) {
       key = event.getState().getProcessKey();
       validateHook();
     }
 
-    public void summaryRowSelection(final ReportEvent event)
-    {
+    public void summaryRowSelection( final ReportEvent event ) {
       key = event.getState().getProcessKey();
       validateHook();
     }
 
-    public Object getValue()
-    {
+    public Object getValue() {
       return key;
     }
   }
 
-  private static class ForwardExpression extends AbstractExpression
-  {
+  private static class ForwardExpression extends AbstractExpression {
     private String field;
 
-    private ForwardExpression(final int depLevel, final String name, final String field)
-    {
+    private ForwardExpression( final int depLevel, final String name, final String field ) {
       this.field = field;
-      setName(name);
-      setDependencyLevel(depLevel);
+      setName( name );
+      setDependencyLevel( depLevel );
     }
 
-    public Object getValue()
-    {
-      return getDataRow().get(field);
+    public Object getValue() {
+      return getDataRow().get( field );
     }
   }
 
-  private static class ValidateFunction extends DependencyFunction
-  {
+  private static class ValidateFunction extends DependencyFunction {
     private String field;
 
-    private ValidateFunction(final int depLevel, final String name, final String field)
-    {
-      super(depLevel, name);
+    private ValidateFunction( final int depLevel, final String name, final String field ) {
+      super( depLevel, name );
       this.field = field;
     }
 
-    protected void validateHook()
-    {
-      final Object o = getDataRow().get(field);
-      Assert.assertEquals(o, getValue());
+    protected void validateHook() {
+      final Object o = getDataRow().get( field );
+      Assert.assertEquals( o, getValue() );
     }
   }
+
   @Before
-  public void setUp() throws Exception
-  {
+  public void setUp() throws Exception {
     ClassicEngineBoot.getInstance().start();
   }
 
   @Test
-  public void testDependenciesSingleLevel() throws ReportProcessingException
-  {
+  public void testDependenciesSingleLevel() throws ReportProcessingException {
     final MasterReport report = new MasterReport();
-    report.setDataFactory(new TableDataFactory("query", new DefaultTableModel(2,2)));
-    report.addExpression(new DependencyFunction(1, "source"));
-    report.addExpression(new ForwardExpression(1, "forward", "source"));
-    report.addExpression(new ValidateFunction(1, "validate", "forward"));
+    report.setDataFactory( new TableDataFactory( "query", new DefaultTableModel( 2, 2 ) ) );
+    report.addExpression( new DependencyFunction( 1, "source" ) );
+    report.addExpression( new ForwardExpression( 1, "forward", "source" ) );
+    report.addExpression( new ValidateFunction( 1, "validate", "forward" ) );
 
-    DebugReportRunner.createPDF(report);
+    DebugReportRunner.createPDF( report );
   }
 
   @Test
-  public void testDependenciesMultiLevel() throws ReportProcessingException
-  {
+  public void testDependenciesMultiLevel() throws ReportProcessingException {
     final MasterReport report = new MasterReport();
-    report.setDataFactory(new TableDataFactory("query", new DefaultTableModel(2,2)));
-    report.addExpression(new DependencyFunction(1, "source"));
-    report.addExpression(new ForwardExpression(1, "forward", "source"));
-    report.addExpression(new ValidateFunction(0, "validate", "forward"));
+    report.setDataFactory( new TableDataFactory( "query", new DefaultTableModel( 2, 2 ) ) );
+    report.addExpression( new DependencyFunction( 1, "source" ) );
+    report.addExpression( new ForwardExpression( 1, "forward", "source" ) );
+    report.addExpression( new ValidateFunction( 0, "validate", "forward" ) );
 
-    DebugReportRunner.createPDF(report);
+    DebugReportRunner.createPDF( report );
   }
 
   @Test
-  public void testDependenciesMultiLevel2() throws ReportProcessingException
-  {
+  public void testDependenciesMultiLevel2() throws ReportProcessingException {
     final MasterReport report = new MasterReport();
-    report.setDataFactory(new TableDataFactory("query", new DefaultTableModel(2,2)));
-    report.addExpression(new DependencyFunction(1, "source"));
-    report.addExpression(new ForwardExpression(0, "forward", "source"));
-    report.addExpression(new ValidateFunction(0, "validate", "forward"));
+    report.setDataFactory( new TableDataFactory( "query", new DefaultTableModel( 2, 2 ) ) );
+    report.addExpression( new DependencyFunction( 1, "source" ) );
+    report.addExpression( new ForwardExpression( 0, "forward", "source" ) );
+    report.addExpression( new ValidateFunction( 0, "validate", "forward" ) );
 
-    DebugReportRunner.createPDF(report);
+    DebugReportRunner.createPDF( report );
   }
 
   @Test
-  public void testDependenciesTotalLevel() throws ReportProcessingException
-  {
+  public void testDependenciesTotalLevel() throws ReportProcessingException {
     final MasterReport report = new MasterReport();
-    report.setDataFactory(new TableDataFactory("query", new DefaultTableModel(2,2)));
-    report.addExpression(new DependencyFunction(2, "source"));
-    report.addExpression(new ForwardExpression(1, "forward", "source"));
-    report.addExpression(new ValidateFunction(0, "validate", "forward"));
+    report.setDataFactory( new TableDataFactory( "query", new DefaultTableModel( 2, 2 ) ) );
+    report.addExpression( new DependencyFunction( 2, "source" ) );
+    report.addExpression( new ForwardExpression( 1, "forward", "source" ) );
+    report.addExpression( new ValidateFunction( 0, "validate", "forward" ) );
 
-    DebugReportRunner.createPDF(report);
+    DebugReportRunner.createPDF( report );
   }
 }

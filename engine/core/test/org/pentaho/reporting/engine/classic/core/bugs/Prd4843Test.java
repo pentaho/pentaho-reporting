@@ -17,8 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.core.bugs;
 
-import java.net.URL;
-
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -29,28 +27,27 @@ import org.pentaho.reporting.engine.classic.core.modules.misc.datafactory.sql.Dr
 import org.pentaho.reporting.engine.classic.core.modules.misc.datafactory.sql.SQLReportDataFactory;
 import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 
-public class Prd4843Test
-{
+import java.net.URL;
+
+public class Prd4843Test {
   @Before
-  public void setUp() throws Exception
-  {
+  public void setUp() throws Exception {
     ClassicEngineBoot.getInstance().start();
   }
 
   @Test
-  public void testSampleReport() throws Exception
-  {
-    URL resource = getClass().getResource("Prd-4843.prpt");
+  public void testSampleReport() throws Exception {
+    URL resource = getClass().getResource( "Prd-4843.prpt" );
     MasterReport report = (MasterReport)
-        new ResourceManager().createDirectly(resource, MasterReport.class).getResource();
+      new ResourceManager().createDirectly( resource, MasterReport.class ).getResource();
     CompoundDataFactory dataFactory = (CompoundDataFactory) report.getDataFactory();
-    SQLReportDataFactory dataFactory1 = (SQLReportDataFactory) dataFactory.get(0);
+    SQLReportDataFactory dataFactory1 = (SQLReportDataFactory) dataFactory.get( 0 );
     DriverConnectionProvider conProv1 = (DriverConnectionProvider) dataFactory1.getConnectionProvider();
-    Assert.assertEquals("abcdefghijk", conProv1.getProperty("user"));
-    Assert.assertEquals("abcdefghijk", conProv1.getProperty("password"));
-    SQLReportDataFactory dataFactory2 = (SQLReportDataFactory) dataFactory.get(1);
+    Assert.assertEquals( "abcdefghijk", conProv1.getProperty( "user" ) );
+    Assert.assertEquals( "abcdefghijk", conProv1.getProperty( "password" ) );
+    SQLReportDataFactory dataFactory2 = (SQLReportDataFactory) dataFactory.get( 1 );
     DriverConnectionProvider conProv2 = (DriverConnectionProvider) dataFactory2.getConnectionProvider();
-    Assert.assertEquals("abcdefghijkl", conProv2.getProperty("user"));
-    Assert.assertEquals("abcdefghijkl", conProv2.getProperty("password"));
+    Assert.assertEquals( "abcdefghijkl", conProv2.getProperty( "user" ) );
+    Assert.assertEquals( "abcdefghijkl", conProv2.getProperty( "password" ) );
   }
 }

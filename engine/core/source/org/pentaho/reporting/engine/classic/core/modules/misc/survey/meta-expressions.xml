@@ -9,16 +9,20 @@
     <property name="highest" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
     <property name="lowest" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
     <property name="name" mandatory="true" preferred="true" value-role="Name" expert="false" hidden="false"/>
-    <property name="overrideShape" deprecated="true" mandatory="false" preferred="false" value-role="Value" expert="true" hidden="true" transient="true"/>
-    <property name="overrideShapeFilled" deprecated="true" mandatory="false" preferred="false" value-role="Value" expert="true"
+    <property name="overrideShape" deprecated="true" mandatory="false" preferred="false" value-role="Value"
+              expert="true" hidden="true" transient="true"/>
+    <property name="overrideShapeFilled" deprecated="true" mandatory="false" preferred="false" value-role="Value"
+              expert="true"
               hidden="true"/>
     <property name="rangeLowerBoundField" mandatory="false" preferred="false" value-role="Field" expert="false"
               hidden="false"/>
-    <property name="rangePaint" mandatory="true" preferred="false" value-role="Value" expert="true" hidden="true" deprecated="true" transient="true"/>
+    <property name="rangePaint" mandatory="true" preferred="false" value-role="Value" expert="true" hidden="true"
+              deprecated="true" transient="true"/>
     <property name="rangeUpperBoundField" mandatory="false" preferred="false" value-role="Field" expert="false"
               hidden="false"/>
 
-    <property name="scaleValuePaint" mandatory="true" preferred="false" value-role="Value" expert="false" hidden="false"/>
+    <property name="scaleValuePaint" mandatory="true" preferred="false" value-role="Value" expert="false"
+              hidden="false"/>
     <property name="rangeColor" mandatory="true" preferred="false" value-role="Value" expert="false" hidden="false"/>
     <property name="fillPaint" mandatory="true" preferred="false" value-role="Value" expert="false" hidden="false"/>
     <property name="tickMarkPaint" mandatory="true" preferred="false" value-role="Value" expert="false" hidden="false"/>
@@ -28,7 +32,8 @@
     <property name="fillShapes" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
     <property name="shapes" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
     <property name="defaultShape" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
-    <property name="outlineStroke" mandatory="false" preferred="false" value-role="Value" expert="false" hidden="false"/>
+    <property name="outlineStroke" mandatory="false" preferred="false" value-role="Value" expert="false"
+              hidden="false"/>
   </expression>
 
 </meta-data>

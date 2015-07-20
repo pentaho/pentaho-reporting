@@ -17,34 +17,27 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.gui.base.actions;
 
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-import javax.swing.Icon;
-import javax.swing.JComboBox;
-import javax.swing.KeyStroke;
-
 import org.pentaho.reporting.engine.classic.core.modules.gui.base.PreviewPane;
 import org.pentaho.reporting.engine.classic.core.modules.gui.commonswing.AbstractActionPlugin;
 import org.pentaho.reporting.engine.classic.core.modules.gui.commonswing.SwingGuiContext;
+
+import javax.swing.*;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 
 /**
  * This is a dummy plugin. When the system encouters this plugin, it will insert the Zoom-Combobox instead.
  *
  * @author Thomas Morgner
  */
-public class ZoomListActionPlugin extends AbstractActionPlugin
-{
-  private class ReportJobListener implements PropertyChangeListener
-  {
-    protected ReportJobListener()
-    {
+public class ZoomListActionPlugin extends AbstractActionPlugin {
+  private class ReportJobListener implements PropertyChangeListener {
+    protected ReportJobListener() {
     }
 
-    public void propertyChange(final PropertyChangeEvent evt)
-    {
-      if (component != null)
-      {
-        component.setEnabled(Boolean.TRUE.equals(evt.getNewValue()));
+    public void propertyChange( final PropertyChangeEvent evt ) {
+      if ( component != null ) {
+        component.setEnabled( Boolean.TRUE.equals( evt.getNewValue() ) );
       }
     }
   }
@@ -52,36 +45,30 @@ public class ZoomListActionPlugin extends AbstractActionPlugin
   private ReportJobListener jobListener;
   private JComboBox component;
 
-  public ZoomListActionPlugin()
-  {
+  public ZoomListActionPlugin() {
     jobListener = new ReportJobListener();
   }
 
-  public JComboBox getComponent()
-  {
+  public JComboBox getComponent() {
     return component;
   }
 
-  public void setComponent(final JComboBox component)
-  {
+  public void setComponent( final JComboBox component ) {
     this.component = component;
   }
 
-  public boolean initialize(final SwingGuiContext context)
-  {
-    super.initialize(context);
-    context.getEventSource().addPropertyChangeListener(PreviewPane.PAGINATED_PROPERTY, jobListener);
+  public boolean initialize( final SwingGuiContext context ) {
+    super.initialize( context );
+    context.getEventSource().addPropertyChangeListener( PreviewPane.PAGINATED_PROPERTY, jobListener );
     return true;
   }
 
-  public void deinitialize(final SwingGuiContext swingGuiContext)
-  {
-    super.deinitialize(swingGuiContext);
-    swingGuiContext.getEventSource().removePropertyChangeListener(PreviewPane.PAGINATED_PROPERTY, jobListener);
+  public void deinitialize( final SwingGuiContext swingGuiContext ) {
+    super.deinitialize( swingGuiContext );
+    swingGuiContext.getEventSource().removePropertyChangeListener( PreviewPane.PAGINATED_PROPERTY, jobListener );
   }
 
-  protected String getConfigurationPrefix()
-  {
+  protected String getConfigurationPrefix() {
     return "org.pentaho.reporting.engine.classic.core.modules.gui.base.zoom-list."; //$NON-NLS-1$
   }
 
@@ -90,8 +77,7 @@ public class ZoomListActionPlugin extends AbstractActionPlugin
    *
    * @return The display name.
    */
-  public String getDisplayName()
-  {
+  public String getDisplayName() {
     return null;
   }
 
@@ -100,8 +86,7 @@ public class ZoomListActionPlugin extends AbstractActionPlugin
    *
    * @return The short description.
    */
-  public String getShortDescription()
-  {
+  public String getShortDescription() {
     return null;
   }
 
@@ -110,8 +95,7 @@ public class ZoomListActionPlugin extends AbstractActionPlugin
    *
    * @return The icon.
    */
-  public Icon getSmallIcon()
-  {
+  public Icon getSmallIcon() {
     return null;
   }
 
@@ -120,8 +104,7 @@ public class ZoomListActionPlugin extends AbstractActionPlugin
    *
    * @return The icon.
    */
-  public Icon getLargeIcon()
-  {
+  public Icon getLargeIcon() {
     return null;
   }
 
@@ -130,8 +113,7 @@ public class ZoomListActionPlugin extends AbstractActionPlugin
    *
    * @return The accelerator key.
    */
-  public KeyStroke getAcceleratorKey()
-  {
+  public KeyStroke getAcceleratorKey() {
     return null;
   }
 
@@ -140,8 +122,7 @@ public class ZoomListActionPlugin extends AbstractActionPlugin
    *
    * @return The code.
    */
-  public Integer getMnemonicKey()
-  {
+  public Integer getMnemonicKey() {
     return null;
   }
 

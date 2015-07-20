@@ -28,8 +28,7 @@ import org.pentaho.reporting.engine.classic.core.function.AbstractExpression;
  *
  * @author Thomas Morgner
  */
-public class IsExportTypeExpression extends AbstractExpression
-{
+public class IsExportTypeExpression extends AbstractExpression {
   /**
    * The export type for which to test for.
    */
@@ -38,8 +37,7 @@ public class IsExportTypeExpression extends AbstractExpression
   /**
    * Default constructor.
    */
-  public IsExportTypeExpression()
-  {
+  public IsExportTypeExpression() {
   }
 
   /**
@@ -47,8 +45,7 @@ public class IsExportTypeExpression extends AbstractExpression
    *
    * @return the export type string.
    */
-  public String getExportType()
-  {
+  public String getExportType() {
     return exportType;
   }
 
@@ -57,8 +54,7 @@ public class IsExportTypeExpression extends AbstractExpression
    *
    * @param exportType the export type.
    */
-  public void setExportType(final String exportType)
-  {
+  public void setExportType( final String exportType ) {
     this.exportType = exportType;
   }
 
@@ -67,14 +63,11 @@ public class IsExportTypeExpression extends AbstractExpression
    *
    * @return the value of the function.
    */
-  public Object getValue()
-  {
-    if (exportType == null)
-    {
+  public Object getValue() {
+    if ( exportType == null ) {
       return Boolean.FALSE;
     }
-    if (getRuntime().getExportDescriptor().startsWith(exportType))
-    {
+    if ( getRuntime().getExportDescriptor().startsWith( exportType ) ) {
       return Boolean.TRUE;
     }
     return Boolean.FALSE;

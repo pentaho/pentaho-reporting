@@ -24,72 +24,55 @@ import org.pentaho.reporting.engine.classic.core.style.VerticalTextAlign;
  *
  * @author Thomas Morgner
  */
-public class VerticalTextAlignValueConverter implements ValueConverter
-{
-  public VerticalTextAlignValueConverter()
-  {
+public class VerticalTextAlignValueConverter implements ValueConverter {
+  public VerticalTextAlignValueConverter() {
   }
 
-  public String toAttributeValue(final Object o) throws BeanException
-  {
-    if (o == null)
-    {
+  public String toAttributeValue( final Object o ) throws BeanException {
+    if ( o == null ) {
       throw new NullPointerException();
     }
-    if (o instanceof VerticalTextAlign)
-    {
-      return String.valueOf(o);
+    if ( o instanceof VerticalTextAlign ) {
+      return String.valueOf( o );
     }
-    throw new BeanException("Failed to convert object of type " + o.getClass() + ": Not a VerticalTextAlign.");
+    throw new BeanException( "Failed to convert object of type " + o.getClass() + ": Not a VerticalTextAlign." );
   }
 
-  public Object toPropertyValue(final String o) throws BeanException
-  {
-    if (o == null)
-    {
+  public Object toPropertyValue( final String o ) throws BeanException {
+    if ( o == null ) {
       throw new NullPointerException();
     }
-    if ("use-script".equalsIgnoreCase(o))
-    {
+    if ( "use-script".equalsIgnoreCase( o ) ) {
       return VerticalTextAlign.USE_SCRIPT;
     }
-    if ("text-bottom".equalsIgnoreCase(o))
-    {
+    if ( "text-bottom".equalsIgnoreCase( o ) ) {
       return VerticalTextAlign.TEXT_BOTTOM;
     }
-    if ("bottom".equalsIgnoreCase(o))
-    {
+    if ( "bottom".equalsIgnoreCase( o ) ) {
       return VerticalTextAlign.BOTTOM;
     }
-    if ("text-top".equalsIgnoreCase(o))
-    {
+    if ( "text-top".equalsIgnoreCase( o ) ) {
       return VerticalTextAlign.TEXT_TOP;
     }
-    if ("top".equalsIgnoreCase(o))
-    {
+    if ( "top".equalsIgnoreCase( o ) ) {
       return VerticalTextAlign.TOP;
     }
-    if ("central".equalsIgnoreCase(o))
-    {
+    if ( "central".equalsIgnoreCase( o ) ) {
       return VerticalTextAlign.CENTRAL;
     }
-    if ("middle".equalsIgnoreCase(o))
-    {
+    if ( "middle".equalsIgnoreCase( o ) ) {
       return VerticalTextAlign.MIDDLE;
     }
 
-    if ("sub".equalsIgnoreCase(o))
-    {
+    if ( "sub".equalsIgnoreCase( o ) ) {
       return VerticalTextAlign.SUB;
     }
-    if ("super".equalsIgnoreCase(o))
-    {
+    if ( "super".equalsIgnoreCase( o ) ) {
       return VerticalTextAlign.SUPER;
     }
-    if ("baseline".equalsIgnoreCase(o))
-    {
+    if ( "baseline".equalsIgnoreCase( o ) ) {
       return VerticalTextAlign.BASELINE;
     }
-    throw new BeanException("Invalid value encountered for VerticalTextAlign");
+    throw new BeanException( "Invalid value encountered for VerticalTextAlign" );
   }
 }

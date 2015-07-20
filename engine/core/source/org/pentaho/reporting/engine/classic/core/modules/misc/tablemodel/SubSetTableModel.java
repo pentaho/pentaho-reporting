@@ -17,24 +17,22 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.misc.tablemodel;
 
-import java.util.ArrayList;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.TableModel;
+import java.util.ArrayList;
 
 /**
  * A TableModel that proxies an other tablemodel and cuts rows from the start and/or the end of the other tablemodel.
  *
  * @author Thomas Morgner
  */
-public class SubSetTableModel implements TableModel
-{
+public class SubSetTableModel implements TableModel {
   /**
    * A helper class, that translates tableevents received from the wrapped table model and forwards them with changed
    * indices to the registered listeners.
    */
-  private final class TableEventTranslator implements TableModelListener
-  {
+  private final class TableEventTranslator implements TableModelListener {
     /**
      * the registered listeners.
      */
@@ -43,8 +41,7 @@ public class SubSetTableModel implements TableModel
     /**
      * Default Constructor.
      */
-    private TableEventTranslator()
-    {
+    private TableEventTranslator() {
       listeners = new ArrayList();
     }
 
@@ -54,30 +51,26 @@ public class SubSetTableModel implements TableModel
      *
      * @param e the event, that should be translated.
      */
-    public void tableChanged(final TableModelEvent e)
-    {
+    public void tableChanged( final TableModelEvent e ) {
       int firstRow = e.getFirstRow();
-      if (e.getFirstRow() > 0)
-      {
+      if ( e.getFirstRow() > 0 ) {
         firstRow -= getStart();
       }
 
       int lastRow = e.getLastRow();
-      if (lastRow > 0)
-      {
+      if ( lastRow > 0 ) {
         lastRow -= getStart();
-        lastRow -= (getEnclosedModel().getRowCount() - getEnd());
+        lastRow -= ( getEnclosedModel().getRowCount() - getEnd() );
       }
       final int type = e.getType();
       final int column = e.getColumn();
 
       final TableModelEvent event =
-          new TableModelEvent(SubSetTableModel.this, firstRow, lastRow, column, type);
+        new TableModelEvent( SubSetTableModel.this, firstRow, lastRow, column, type );
 
-      for (int i = 0; i < listeners.size(); i++)
-      {
-        final TableModelListener l = (TableModelListener) listeners.get(i);
-        l.tableChanged(event);
+      for ( int i = 0; i < listeners.size(); i++ ) {
+        final TableModelListener l = (TableModelListener) listeners.get( i );
+        l.tableChanged( event );
       }
     }
 
@@ -86,9 +79,8 @@ public class SubSetTableModel implements TableModel
      *
      * @param l the tablemodel listener
      */
-    protected void addTableModelListener(final TableModelListener l)
-    {
-      listeners.add(l);
+    protected void addTableModelListener( final TableModelListener l ) {
+      listeners.add( l );
     }
 
     /**
@@ -96,9 +88,8 @@ public class SubSetTableModel implements TableModel
      *
      * @param l the tablemodel listener
      */
-    protected void removeTableModelListener(final TableModelListener l)
-    {
-      listeners.remove(l);
+    protected void removeTableModelListener( final TableModelListener l ) {
+      listeners.remove( l );
     }
   }
 
@@ -134,23 +125,18 @@ public class SubSetTableModel implements TableModel
    * @throws NullPointerException     if the given model is null
    * @throws IllegalArgumentException if start or end are invalid.
    */
-  public SubSetTableModel(final int start, final int end, final TableModel model)
-  {
-    if (start < 0)
-    {
-      throw new IllegalArgumentException("Start < 0"); //$NON-NLS-1$
+  public SubSetTableModel( final int start, final int end, final TableModel model ) {
+    if ( start < 0 ) {
+      throw new IllegalArgumentException( "Start < 0" ); //$NON-NLS-1$
     }
-    if (end <= start)
-    {
-      throw new IllegalArgumentException("end < start"); //$NON-NLS-1$
+    if ( end <= start ) {
+      throw new IllegalArgumentException( "end < start" ); //$NON-NLS-1$
     }
-    if (model == null)
-    {
+    if ( model == null ) {
       throw new NullPointerException();
     }
-    if (end >= model.getRowCount())
-    {
-      throw new IllegalArgumentException("End >= Model.RowCount"); //$NON-NLS-1$
+    if ( end >= model.getRowCount() ) {
+      throw new IllegalArgumentException( "End >= Model.RowCount" ); //$NON-NLS-1$
     }
 
     this.start = start;
@@ -165,8 +151,7 @@ public class SubSetTableModel implements TableModel
    * @param rowIndex the original row index.
    * @return the translated row index.
    */
-  private int getClientRowIndex(final int rowIndex)
-  {
+  private int getClientRowIndex( final int rowIndex ) {
     return rowIndex + start;
   }
 
@@ -177,10 +162,9 @@ public class SubSetTableModel implements TableModel
    * @return the number of rows in the model
    * @see #getColumnCount
    */
-  public int getRowCount()
-  {
+  public int getRowCount() {
     final int rowCount = model.getRowCount();
-    return rowCount - start - (rowCount - end);
+    return rowCount - start - ( rowCount - end );
   }
 
   /**
@@ -190,8 +174,7 @@ public class SubSetTableModel implements TableModel
    * @return the number of columns in the model
    * @see #getRowCount
    */
-  public int getColumnCount()
-  {
+  public int getColumnCount() {
     return model.getColumnCount();
   }
 
@@ -202,9 +185,8 @@ public class SubSetTableModel implements TableModel
    * @param columnIndex the index of the column
    * @return the name of the column
    */
-  public String getColumnName(final int columnIndex)
-  {
-    return model.getColumnName(columnIndex);
+  public String getColumnName( final int columnIndex ) {
+    return model.getColumnName( columnIndex );
   }
 
   /**
@@ -214,9 +196,8 @@ public class SubSetTableModel implements TableModel
    * @param columnIndex the index of the column
    * @return the base ancestor class of the object values in the model.
    */
-  public Class getColumnClass(final int columnIndex)
-  {
-    return model.getColumnClass(columnIndex);
+  public Class getColumnClass( final int columnIndex ) {
+    return model.getColumnClass( columnIndex );
   }
 
   /**
@@ -228,9 +209,8 @@ public class SubSetTableModel implements TableModel
    * @return true if the cell is editable
    * @see #setValueAt
    */
-  public boolean isCellEditable(final int rowIndex, final int columnIndex)
-  {
-    return model.isCellEditable(getClientRowIndex(rowIndex), columnIndex);
+  public boolean isCellEditable( final int rowIndex, final int columnIndex ) {
+    return model.isCellEditable( getClientRowIndex( rowIndex ), columnIndex );
   }
 
   /**
@@ -240,9 +220,8 @@ public class SubSetTableModel implements TableModel
    * @param columnIndex the column whose value is to be queried
    * @return the value Object at the specified cell
    */
-  public Object getValueAt(final int rowIndex, final int columnIndex)
-  {
-    return model.getValueAt(getClientRowIndex(rowIndex), columnIndex);
+  public Object getValueAt( final int rowIndex, final int columnIndex ) {
+    return model.getValueAt( getClientRowIndex( rowIndex ), columnIndex );
   }
 
   /**
@@ -254,9 +233,8 @@ public class SubSetTableModel implements TableModel
    * @see #getValueAt
    * @see #isCellEditable
    */
-  public void setValueAt(final Object aValue, final int rowIndex, final int columnIndex)
-  {
-    model.setValueAt(aValue, getClientRowIndex(rowIndex), columnIndex);
+  public void setValueAt( final Object aValue, final int rowIndex, final int columnIndex ) {
+    model.setValueAt( aValue, getClientRowIndex( rowIndex ), columnIndex );
   }
 
   /**
@@ -264,9 +242,8 @@ public class SubSetTableModel implements TableModel
    *
    * @param l the TableModelListener
    */
-  public void addTableModelListener(final TableModelListener l)
-  {
-    eventHandler.addTableModelListener(l);
+  public void addTableModelListener( final TableModelListener l ) {
+    eventHandler.addTableModelListener( l );
   }
 
   /**
@@ -274,9 +251,8 @@ public class SubSetTableModel implements TableModel
    *
    * @param l the TableModelListener
    */
-  public void removeTableModelListener(final TableModelListener l)
-  {
-    eventHandler.removeTableModelListener(l);
+  public void removeTableModelListener( final TableModelListener l ) {
+    eventHandler.removeTableModelListener( l );
   }
 
   /**
@@ -284,8 +260,7 @@ public class SubSetTableModel implements TableModel
    *
    * @return the enclosed table model, never null.
    */
-  protected TableModel getEnclosedModel()
-  {
+  protected TableModel getEnclosedModel() {
     return model;
   }
 
@@ -294,8 +269,7 @@ public class SubSetTableModel implements TableModel
    *
    * @return the first row that should be visible.
    */
-  protected int getStart()
-  {
+  protected int getStart() {
     return start;
   }
 
@@ -304,8 +278,7 @@ public class SubSetTableModel implements TableModel
    *
    * @return the number of the last row.
    */
-  protected int getEnd()
-  {
+  protected int getEnd() {
     return end;
   }
 }

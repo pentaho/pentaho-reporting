@@ -30,12 +30,11 @@ import java.util.EmptyStackException;
  *
  * @author Thomas Morgner
  */
-public class IntList implements Cloneable
-{
+public class IntList implements Cloneable {
   /**
    * An empty array used to avoid object creation.
    */
-  private static final int[] EMPTY_ARRAY = new int[0];
+  private static final int[] EMPTY_ARRAY = new int[ 0 ];
   /**
    * The array holding the list data.
    */
@@ -55,23 +54,18 @@ public class IntList implements Cloneable
    *
    * @param capacity the initial capacity.
    */
-  public IntList(final int capacity)
-  {
-    data = new int[capacity];
+  public IntList( final int capacity ) {
+    data = new int[ capacity ];
     increment = capacity;
   }
 
-  public Object clone()
-  {
-    try
-    {
+  public Object clone() {
+    try {
       final IntList i = (IntList) super.clone();
       i.data = data.clone();
       return i;
-    }
-    catch (CloneNotSupportedException ce)
-    {
-      throw new IllegalStateException(ce);
+    } catch ( CloneNotSupportedException ce ) {
+      throw new IllegalStateException( ce );
     }
   }
 
@@ -81,12 +75,10 @@ public class IntList implements Cloneable
    *
    * @param c the new capacity of the list.
    */
-  private void ensureCapacity(final int c)
-  {
-    if (data.length <= c)
-    {
-      final int[] newData = new int[Math.max(data.length + increment, c + 1)];
-      System.arraycopy(data, 0, newData, 0, size);
+  private void ensureCapacity( final int c ) {
+    if ( data.length <= c ) {
+      final int[] newData = new int[ Math.max( data.length + increment, c + 1 ) ];
+      System.arraycopy( data, 0, newData, 0, size );
       data = newData;
     }
   }
@@ -96,23 +88,20 @@ public class IntList implements Cloneable
    *
    * @param value the new value to be added.
    */
-  public void add(final int value)
-  {
-    ensureCapacity(size);
-    data[size] = value;
+  public void add( final int value ) {
+    ensureCapacity( size );
+    data[ size ] = value;
     size += 1;
   }
 
-  public int pop()
-  {
-    if (size == 0)
-    {
+  public int pop() {
+    if ( size == 0 ) {
       throw new EmptyStackException();
     }
 
     size -= 1;
-    final int retval = data[size];
-    data[size] = 0;
+    final int retval = data[ size ];
+    data[ size ] = 0;
     return retval;
   }
 
@@ -123,20 +112,17 @@ public class IntList implements Cloneable
    * @return the value at the given index
    * @throws IndexOutOfBoundsException if the index is greater or equal to the list size or if the index is negative.
    */
-  public int get(final int index)
-  {
-    if (index >= size || index < 0)
-    {
-      throw new IndexOutOfBoundsException(String.valueOf(index));
+  public int get( final int index ) {
+    if ( index >= size || index < 0 ) {
+      throw new IndexOutOfBoundsException( String.valueOf( index ) );
     }
-    return data[index];
+    return data[ index ];
   }
 
   /**
    * Clears the list.
    */
-  public void clear()
-  {
+  public void clear() {
     size = 0;
   }
 
@@ -145,8 +131,7 @@ public class IntList implements Cloneable
    *
    * @return the number of elements in the list
    */
-  public int size()
-  {
+  public int size() {
     return size;
   }
 
@@ -155,75 +140,61 @@ public class IntList implements Cloneable
    *
    * @return the list contents as array.
    */
-  public int[] toArray()
-  {
-    if (size == 0)
-    {
+  public int[] toArray() {
+    if ( size == 0 ) {
       return IntList.EMPTY_ARRAY;
     }
 
-    final int[] retval = new int[size];
-    System.arraycopy(data, 0, retval, 0, size);
+    final int[] retval = new int[ size ];
+    System.arraycopy( data, 0, retval, 0, size );
     return retval;
   }
 
-  public int[] toArray(final int fromIndex, final int toIndex)
-  {
-    if (fromIndex < 0)
-    {
-      throw new IndexOutOfBoundsException("fromIndex = " + fromIndex);
+  public int[] toArray( final int fromIndex, final int toIndex ) {
+    if ( fromIndex < 0 ) {
+      throw new IndexOutOfBoundsException( "fromIndex = " + fromIndex );
     }
-    if (toIndex > size())
-    {
-      throw new IndexOutOfBoundsException("toIndex = " + toIndex);
+    if ( toIndex > size() ) {
+      throw new IndexOutOfBoundsException( "toIndex = " + toIndex );
     }
-    if (fromIndex > toIndex)
-    {
-      throw new IllegalArgumentException("fromIndex(" + fromIndex + ") > toIndex(" + toIndex + ")");
+    if ( fromIndex > toIndex ) {
+      throw new IllegalArgumentException( "fromIndex(" + fromIndex + ") > toIndex(" + toIndex + ")" );
     }
 
-    if (size == 0)
-    {
+    if ( size == 0 ) {
       return IntList.EMPTY_ARRAY;
     }
     final int listSize = toIndex - fromIndex;
 
-    final int[] retval = new int[listSize];
-    System.arraycopy(data, fromIndex, retval, 0, listSize);
+    final int[] retval = new int[ listSize ];
+    System.arraycopy( data, fromIndex, retval, 0, listSize );
     return retval;
   }
 
-  public void set(final int index, final int value)
-  {
-    if (index >= size || index < 0)
-    {
-      throw new IndexOutOfBoundsException(String.valueOf(index));
+  public void set( final int index, final int value ) {
+    if ( index >= size || index < 0 ) {
+      throw new IndexOutOfBoundsException( String.valueOf( index ) );
     }
 
-    data[index] = value;
+    data[ index ] = value;
   }
 
-  public String toString()
-  {
+  public String toString() {
     final StringBuilder sb = new StringBuilder();
-    sb.append("IntList");
-    sb.append("{size=").append(size);
-    sb.append(", increment=").append(increment);
-    sb.append(", data=");
-    if (data == null)
-    {
-      sb.append("null");
-    }
-    else
-    {
-      sb.append("{");
-      for (int i = 0; data != null && i < size; ++i)
-      {
-        sb.append(i == 0 ? "" : ", ").append(data[i]);
+    sb.append( "IntList" );
+    sb.append( "{size=" ).append( size );
+    sb.append( ", increment=" ).append( increment );
+    sb.append( ", data=" );
+    if ( data == null ) {
+      sb.append( "null" );
+    } else {
+      sb.append( "{" );
+      for ( int i = 0; data != null && i < size; ++i ) {
+        sb.append( i == 0 ? "" : ", " ).append( data[ i ] );
       }
-      sb.append(data == null ? "null" : "}");
+      sb.append( data == null ? "null" : "}" );
     }
-    sb.append('}');
+    sb.append( '}' );
     return sb.toString();
   }
 }

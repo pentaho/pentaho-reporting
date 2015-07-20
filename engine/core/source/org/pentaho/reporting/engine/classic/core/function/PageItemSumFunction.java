@@ -26,13 +26,11 @@ import org.pentaho.reporting.engine.classic.core.event.ReportEvent;
  * @author Thomas Morgner
  */
 public class PageItemSumFunction extends ItemSumFunction
-    implements PageEventListener
-{
+  implements PageEventListener {
   /**
    * Default Constructor.
    */
-  public PageItemSumFunction()
-  {
+  public PageItemSumFunction() {
   }
 
   /**
@@ -40,8 +38,7 @@ public class PageItemSumFunction extends ItemSumFunction
    *
    * @param event the report event.
    */
-  public void pageStarted(final ReportEvent event)
-  {
+  public void pageStarted( final ReportEvent event ) {
     clear();
   }
 
@@ -50,7 +47,6 @@ public class PageItemSumFunction extends ItemSumFunction
    *
    * @param event the report event.
    */
-  public void pageFinished(final ReportEvent event)
-  {
+  public void pageFinished( final ReportEvent event ) {
   }
 }

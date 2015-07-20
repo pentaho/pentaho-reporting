@@ -17,9 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.core.layout.output;
 
-import java.util.HashMap;
-import java.util.HashSet;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineCoreModule;
@@ -46,12 +43,13 @@ import org.pentaho.reporting.libraries.fonts.registry.FontRecord;
 import org.pentaho.reporting.libraries.fonts.registry.FontRegistry;
 import org.pentaho.reporting.libraries.fonts.registry.FontStorage;
 
-public abstract class AbstractOutputProcessorMetaData implements OutputProcessorMetaData
-{
-  private static final Log logger = LogFactory.getLog(AbstractOutputProcessorMetaData.class);
+import java.util.HashMap;
+import java.util.HashSet;
 
-  private static class FontMetricsKey
-  {
+public abstract class AbstractOutputProcessorMetaData implements OutputProcessorMetaData {
+  private static final Log logger = LogFactory.getLog( AbstractOutputProcessorMetaData.class );
+
+  private static class FontMetricsKey {
     private int hashCode;
     private boolean hashValid;
     private String fontFamily;
@@ -62,12 +60,10 @@ public abstract class AbstractOutputProcessorMetaData implements OutputProcessor
     private boolean italics;
     private boolean bold;
 
-    private FontMetricsKey()
-    {
+    private FontMetricsKey() {
     }
 
-    private FontMetricsKey(final FontMetricsKey derived)
-    {
+    private FontMetricsKey( final FontMetricsKey derived ) {
       this.fontFamily = derived.fontFamily;
       this.fontSize = derived.fontSize;
       this.antiAliased = derived.antiAliased;
@@ -77,144 +73,117 @@ public abstract class AbstractOutputProcessorMetaData implements OutputProcessor
       this.bold = derived.bold;
     }
 
-    public String getFontFamily()
-    {
+    public String getFontFamily() {
       return fontFamily;
     }
 
-    public void setFontFamily(final String fontFamily)
-    {
+    public void setFontFamily( final String fontFamily ) {
       this.fontFamily = fontFamily;
       this.hashValid = false;
     }
 
-    public double getFontSize()
-    {
+    public double getFontSize() {
       return fontSize;
     }
 
-    public void setFontSize(final double fontSize)
-    {
+    public void setFontSize( final double fontSize ) {
       this.fontSize = fontSize;
       this.hashValid = false;
     }
 
-    public boolean isAntiAliased()
-    {
+    public boolean isAntiAliased() {
       return antiAliased;
     }
 
-    public void setAntiAliased(final boolean antiAliased)
-    {
+    public void setAntiAliased( final boolean antiAliased ) {
       this.antiAliased = antiAliased;
       this.hashValid = false;
     }
 
-    public boolean isEmbedded()
-    {
+    public boolean isEmbedded() {
       return embedded;
     }
 
-    public void setEmbedded(final boolean embedded)
-    {
+    public void setEmbedded( final boolean embedded ) {
       this.embedded = embedded;
       this.hashValid = false;
     }
 
-    public String getEncoding()
-    {
+    public String getEncoding() {
       return encoding;
     }
 
-    public void setEncoding(final String encoding)
-    {
+    public void setEncoding( final String encoding ) {
       this.encoding = encoding;
       this.hashValid = false;
     }
 
-    public boolean isItalics()
-    {
+    public boolean isItalics() {
       return italics;
     }
 
-    public void setItalics(final boolean italics)
-    {
+    public void setItalics( final boolean italics ) {
       this.italics = italics;
       this.hashValid = false;
     }
 
-    public boolean isBold()
-    {
+    public boolean isBold() {
       return bold;
     }
 
-    public void setBold(final boolean bold)
-    {
+    public void setBold( final boolean bold ) {
       this.bold = bold;
       this.hashValid = false;
     }
 
-    public boolean equals(final Object o)
-    {
-      if (this == o)
-      {
+    public boolean equals( final Object o ) {
+      if ( this == o ) {
         return true;
       }
-      if (o == null || getClass() != o.getClass())
-      {
+      if ( o == null || getClass() != o.getClass() ) {
         return false;
       }
 
       final FontMetricsKey that = (FontMetricsKey) o;
 
-      if (hashCode() != that.hashCode())
-      {
+      if ( hashCode() != that.hashCode() ) {
         return false;
       }
-      if (antiAliased != that.antiAliased)
-      {
+      if ( antiAliased != that.antiAliased ) {
         return false;
       }
-      if (embedded != that.embedded)
-      {
+      if ( embedded != that.embedded ) {
         return false;
       }
-      if (bold != that.bold)
-      {
+      if ( bold != that.bold ) {
         return false;
       }
-      if (italics != that.italics)
-      {
+      if ( italics != that.italics ) {
         return false;
       }
-      if (that.fontSize != fontSize)
-      {
+      if ( that.fontSize != fontSize ) {
         return false;
       }
-      if (encoding != null ? !encoding.equals(that.encoding) : that.encoding != null)
-      {
+      if ( encoding != null ? !encoding.equals( that.encoding ) : that.encoding != null ) {
         return false;
       }
-      if (!fontFamily.equals(that.fontFamily))
-      {
+      if ( !fontFamily.equals( that.fontFamily ) ) {
         return false;
       }
 
       return true;
     }
 
-    public int hashCode()
-    {
-      if (hashValid == false)
-      {
+    public int hashCode() {
+      if ( hashValid == false ) {
         int result = fontFamily.hashCode();
-        final long temp = fontSize != +0.0d ? Double.doubleToLongBits(fontSize) : 0L;
-        result = 29 * result + (int) (temp ^ (temp >>> 32));
-        result = 29 * result + (antiAliased ? 1 : 0);
-        result = 29 * result + (embedded ? 1 : 0);
-        result = 29 * result + (italics ? 1 : 0);
-        result = 29 * result + (bold ? 1 : 0);
-        result = 29 * result + (encoding != null ? encoding.hashCode() : 0);
+        final long temp = fontSize != +0.0d ? Double.doubleToLongBits( fontSize ) : 0L;
+        result = 29 * result + (int) ( temp ^ ( temp >>> 32 ) );
+        result = 29 * result + ( antiAliased ? 1 : 0 );
+        result = 29 * result + ( embedded ? 1 : 0 );
+        result = 29 * result + ( italics ? 1 : 0 );
+        result = 29 * result + ( bold ? 1 : 0 );
+        result = 29 * result + ( encoding != null ? encoding.hashCode() : 0 );
         this.hashCode = result;
         this.hashValid = true;
         return result;
@@ -223,45 +192,37 @@ public abstract class AbstractOutputProcessorMetaData implements OutputProcessor
     }
   }
 
-  protected static class ReusableFontContext implements FontContext
-  {
+  protected static class ReusableFontContext implements FontContext {
     private boolean antiAliased;
     private double fontSize;
     private boolean embedded;
     private String encoding;
 
 
-    protected ReusableFontContext()
-    {
+    protected ReusableFontContext() {
     }
 
-    public boolean isEmbedded()
-    {
+    public boolean isEmbedded() {
       return embedded;
     }
 
-    public void setEmbedded(final boolean embedded)
-    {
+    public void setEmbedded( final boolean embedded ) {
       this.embedded = embedded;
     }
 
-    public String getEncoding()
-    {
+    public String getEncoding() {
       return encoding;
     }
 
-    public void setEncoding(final String encoding)
-    {
+    public void setEncoding( final String encoding ) {
       this.encoding = encoding;
     }
 
-    public void setAntiAliased(final boolean antiAliased)
-    {
+    public void setAntiAliased( final boolean antiAliased ) {
       this.antiAliased = antiAliased;
     }
 
-    public void setFontSize(final double fontSize)
-    {
+    public void setFontSize( final double fontSize ) {
       this.fontSize = fontSize;
     }
 
@@ -271,8 +232,7 @@ public abstract class AbstractOutputProcessorMetaData implements OutputProcessor
      *
      * @return
      */
-    public boolean isAntiAliased()
-    {
+    public boolean isAntiAliased() {
       return antiAliased;
     }
 
@@ -281,8 +241,7 @@ public abstract class AbstractOutputProcessorMetaData implements OutputProcessor
      *
      * @return
      */
-    public boolean isFractionalMetrics()
-    {
+    public boolean isFractionalMetrics() {
       return true;
     }
 
@@ -292,119 +251,97 @@ public abstract class AbstractOutputProcessorMetaData implements OutputProcessor
      *
      * @return the font size.
      */
-    public double getFontSize()
-    {
+    public double getFontSize() {
       return fontSize;
     }
   }
 
 
-  private static class CacheKey
-  {
+  private static class CacheKey {
     private InstanceID instanceId;
     private String styleClass;
 
-    protected CacheKey()
-    {
+    protected CacheKey() {
     }
 
-    protected CacheKey(final InstanceID instanceId, final String styleClass)
-    {
-      if (instanceId == null)
-      {
+    protected CacheKey( final InstanceID instanceId, final String styleClass ) {
+      if ( instanceId == null ) {
         throw new NullPointerException();
       }
-      if (styleClass == null)
-      {
+      if ( styleClass == null ) {
         throw new NullPointerException();
       }
       this.instanceId = instanceId;
       this.styleClass = styleClass;
     }
 
-    public void reuse(final InstanceID instanceId, final String styleClass)
-    {
-      if (instanceId == null)
-      {
+    public void reuse( final InstanceID instanceId, final String styleClass ) {
+      if ( instanceId == null ) {
         throw new NullPointerException();
       }
-      if (styleClass == null)
-      {
+      if ( styleClass == null ) {
         throw new NullPointerException();
       }
       this.instanceId = instanceId;
       this.styleClass = styleClass;
     }
 
-    public Object getInstanceId()
-    {
+    public Object getInstanceId() {
       return instanceId;
     }
 
-    public String getStyleClass()
-    {
+    public String getStyleClass() {
       return styleClass;
     }
 
-    public boolean equals(final Object o)
-    {
-      if (this == o)
-      {
+    public boolean equals( final Object o ) {
+      if ( this == o ) {
         return true;
       }
-      if (o == null || getClass() != o.getClass())
-      {
+      if ( o == null || getClass() != o.getClass() ) {
         return false;
       }
 
       final CacheKey cacheKey = (CacheKey) o;
 
-      if (!instanceId.equals(cacheKey.instanceId))
-      {
+      if ( !instanceId.equals( cacheKey.instanceId ) ) {
         return false;
       }
-      if (!styleClass.equals(cacheKey.styleClass))
-      {
+      if ( !styleClass.equals( cacheKey.styleClass ) ) {
         return false;
       }
 
       return true;
     }
 
-    public int hashCode()
-    {
+    public int hashCode() {
       int result = instanceId.hashCode();
       result = 31 * result + styleClass.hashCode();
       return result;
     }
 
-    public String toString()
-    {
+    public String toString() {
       return "CacheKey{" +
-          "instanceId=" + instanceId +
-          ", styleClass='" + styleClass + '\'' +
-          '}';
+        "instanceId=" + instanceId +
+        ", styleClass='" + styleClass + '\'' +
+        '}';
     }
   }
 
-  private static class StyleCacheEntry
-  {
+  private static class StyleCacheEntry {
     private long changeTracker;
     private FontMetrics metrics;
 
-    private StyleCacheEntry(final long changeTracker, final FontMetrics metrics)
-    {
+    private StyleCacheEntry( final long changeTracker, final FontMetrics metrics ) {
       this.changeTracker = changeTracker;
       this.metrics = metrics;
     }
 
-    public long getChangeTracker()
-    {
+    public long getChangeTracker() {
       return changeTracker;
     }
 
-    public FontMetrics getMetrics()
-    {
+    public FontMetrics getMetrics() {
       return metrics;
     }
   }
@@ -428,16 +365,13 @@ public abstract class AbstractOutputProcessorMetaData implements OutputProcessor
   private double deviceResolution;
   private CacheKey lookupCacheKey;
 
-  protected AbstractOutputProcessorMetaData()
-  {
-    this(new DefaultFontStorage(new AWTFontRegistry()));
+  protected AbstractOutputProcessorMetaData() {
+    this( new DefaultFontStorage( new AWTFontRegistry() ) );
   }
 
 
-  protected AbstractOutputProcessorMetaData(final FontStorage fontStorage)
-  {
-    if (fontStorage == null)
-    {
+  protected AbstractOutputProcessorMetaData( final FontStorage fontStorage ) {
+    if ( fontStorage == null ) {
       throw new NullPointerException();
     }
 
@@ -445,199 +379,157 @@ public abstract class AbstractOutputProcessorMetaData implements OutputProcessor
     this.numericFeatures = new HashMap<OutputProcessorFeature.NumericOutputProcessorFeature, Double>();
     this.reusableFontContext = new ReusableFontContext();
     this.fontMetricsCache = new HashMap<FontMetricsKey, FontMetrics>(); // needs to be a strong reference ..
-    this.baselinesCache = new LFUMap<FontMetricsKey, ExtendedBaselineInfo>(200);
+    this.baselinesCache = new LFUMap<FontMetricsKey, ExtendedBaselineInfo>( 200 );
     this.lookupKey = new FontMetricsKey();
     this.lookupCacheKey = new CacheKey();
-    this.fontMetricsByStyleCache = new LFUMap<CacheKey, StyleCacheEntry>(200);
+    this.fontMetricsByStyleCache = new LFUMap<CacheKey, StyleCacheEntry>( 200 );
     this.fontFamilyMapping = new HashMap<String, String>();
 
     this.fontRegistry = fontStorage.getFontRegistry();
     this.fontStorage = fontStorage;
-    setFamilyMapping(null, "SansSerif");
+    setFamilyMapping( null, "SansSerif" );
   }
 
-  public void initialize(final Configuration configuration)
-  {
-    if (configuration == null)
-    {
+  public void initialize( final Configuration configuration ) {
+    if ( configuration == null ) {
       throw new NullPointerException();
     }
     this.configuration = configuration;
 
-    final ExtendedConfiguration extendedConfig = new ExtendedConfigurationWrapper(configuration);
+    final ExtendedConfiguration extendedConfig = new ExtendedConfigurationWrapper( configuration );
 
     final double defaultFontSize = extendedConfig.getIntProperty(
-        "org.pentaho.reporting.engine.classic.core.layout.defaults.FontSize", 12);
-    setNumericFeatureValue(OutputProcessorFeature.DEFAULT_FONT_SIZE, defaultFontSize);
+      "org.pentaho.reporting.engine.classic.core.layout.defaults.FontSize", 12 );
+    setNumericFeatureValue( OutputProcessorFeature.DEFAULT_FONT_SIZE, defaultFontSize );
 
     final double fontSmoothThreshold = extendedConfig.getIntProperty
-        ("org.pentaho.reporting.engine.classic.core.layout.defaults.FontSmoothThreshold", 8);
-    setNumericFeatureValue(OutputProcessorFeature.FONT_SMOOTH_THRESHOLD, fontSmoothThreshold);
+      ( "org.pentaho.reporting.engine.classic.core.layout.defaults.FontSmoothThreshold", 8 );
+    setNumericFeatureValue( OutputProcessorFeature.FONT_SMOOTH_THRESHOLD, fontSmoothThreshold );
 
-    if (extendedConfig.getBoolProperty
-        ("org.pentaho.reporting.engine.classic.core.layout.fontrenderer.UseMaxCharBounds", true) == false)
-    {
-      addFeature(OutputProcessorFeature.LEGACY_LINEHEIGHT_CALC);
+    if ( extendedConfig.getBoolProperty
+      ( "org.pentaho.reporting.engine.classic.core.layout.fontrenderer.UseMaxCharBounds", true ) == false ) {
+      addFeature( OutputProcessorFeature.LEGACY_LINEHEIGHT_CALC );
     }
-    if (extendedConfig.getBoolProperty
-        ("org.pentaho.reporting.engine.classic.core.layout.AlwaysPrintFirstLineOfText", true))
-    {
-      addFeature(OutputProcessorFeature.ALWAYS_PRINT_FIRST_LINE_OF_TEXT);
+    if ( extendedConfig.getBoolProperty
+      ( "org.pentaho.reporting.engine.classic.core.layout.AlwaysPrintFirstLineOfText", true ) ) {
+      addFeature( OutputProcessorFeature.ALWAYS_PRINT_FIRST_LINE_OF_TEXT );
     }
-    if (extendedConfig.getBoolProperty(ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY, false) == true)
-    {
-      addFeature(OutputProcessorFeature.COMPLEX_TEXT);
+    if ( extendedConfig.getBoolProperty( ClassicEngineCoreModule.COMPLEX_TEXT_CONFIG_OVERRIDE_KEY, false ) == true ) {
+      addFeature( OutputProcessorFeature.COMPLEX_TEXT );
     }
-    if (extendedConfig.getBoolProperty("org.pentaho.reporting.engine.classic.core.FixImageResolutionMapping", true))
-    {
-      addFeature(OutputProcessorFeature.IMAGE_RESOLUTION_MAPPING);
+    if ( extendedConfig
+      .getBoolProperty( "org.pentaho.reporting.engine.classic.core.FixImageResolutionMapping", true ) ) {
+      addFeature( OutputProcessorFeature.IMAGE_RESOLUTION_MAPPING );
     }
-    if (extendedConfig.getBoolProperty("org.pentaho.reporting.engine.classic.core.UseNativeScaling", true))
-    {
-      addFeature(OutputProcessorFeature.PREFER_NATIVE_SCALING);
+    if ( extendedConfig.getBoolProperty( "org.pentaho.reporting.engine.classic.core.UseNativeScaling", true ) ) {
+      addFeature( OutputProcessorFeature.PREFER_NATIVE_SCALING );
     }
-    if (extendedConfig.getBoolProperty("org.pentaho.reporting.engine.classic.core.DetectExtraContent", true))
-    {
-      addFeature(OutputProcessorFeature.DETECT_EXTRA_CONTENT);
+    if ( extendedConfig.getBoolProperty( "org.pentaho.reporting.engine.classic.core.DetectExtraContent", true ) ) {
+      addFeature( OutputProcessorFeature.DETECT_EXTRA_CONTENT );
     }
-    if (extendedConfig.getBoolProperty
-        ("org.pentaho.reporting.engine.classic.core.legacy.StrictCompatibility", false))
-    {
-      addFeature(OutputProcessorFeature.STRICT_COMPATIBILITY);
-      addFeature(OutputProcessorFeature.PRD_3750);
+    if ( extendedConfig.getBoolProperty
+      ( "org.pentaho.reporting.engine.classic.core.legacy.StrictCompatibility", false ) ) {
+      addFeature( OutputProcessorFeature.STRICT_COMPATIBILITY );
+      addFeature( OutputProcessorFeature.PRD_3750 );
     }
 
     final double deviceResolution = extendedConfig.getIntProperty(
-        "org.pentaho.reporting.engine.classic.core.layout.DeviceResolution", 72);
-    if (deviceResolution > 0)
-    {
-      setNumericFeatureValue(OutputProcessorFeature.DEVICE_RESOLUTION, deviceResolution);
+      "org.pentaho.reporting.engine.classic.core.layout.DeviceResolution", 72 );
+    if ( deviceResolution > 0 ) {
+      setNumericFeatureValue( OutputProcessorFeature.DEVICE_RESOLUTION, deviceResolution );
+    } else {
+      setNumericFeatureValue( OutputProcessorFeature.DEVICE_RESOLUTION, 72 );
     }
-    else
-    {
-      setNumericFeatureValue(OutputProcessorFeature.DEVICE_RESOLUTION, 72);
-    }
-    if ("true".equals(configuration.getConfigProperty
-        ("org.pentaho.reporting.engine.classic.core.WatermarkPrintedOnTopOfContent")))
-    {
-      addFeature(OutputProcessorFeature.WATERMARK_PRINTED_ON_TOP);
+    if ( "true".equals( configuration.getConfigProperty
+      ( "org.pentaho.reporting.engine.classic.core.WatermarkPrintedOnTopOfContent" ) ) ) {
+      addFeature( OutputProcessorFeature.WATERMARK_PRINTED_ON_TOP );
     }
 
   }
 
-  public Configuration getConfiguration()
-  {
-    if (configuration == null)
-    {
-      throw new InvalidReportStateException("Initialize() has not been called yet.");
+  public Configuration getConfiguration() {
+    if ( configuration == null ) {
+      throw new InvalidReportStateException( "Initialize() has not been called yet." );
     }
     return configuration;
   }
 
-  protected void setFamilyMapping(final String family, final String name)
-  {
-    if (name == null)
-    {
+  protected void setFamilyMapping( final String family, final String name ) {
+    if ( name == null ) {
       throw new NullPointerException();
     }
-    fontFamilyMapping.put(family, name);
+    fontFamilyMapping.put( family, name );
   }
 
-  protected void addFeature(final OutputProcessorFeature.BooleanOutputProcessorFeature feature)
-  {
-    if (feature == null)
-    {
+  protected void addFeature( final OutputProcessorFeature.BooleanOutputProcessorFeature feature ) {
+    if ( feature == null ) {
       throw new NullPointerException();
     }
-    this.booleanFeatures.add(feature);
+    this.booleanFeatures.add( feature );
   }
 
-  protected void removeFeature(final OutputProcessorFeature.BooleanOutputProcessorFeature feature)
-  {
-    if (feature == null)
-    {
+  protected void removeFeature( final OutputProcessorFeature.BooleanOutputProcessorFeature feature ) {
+    if ( feature == null ) {
       throw new NullPointerException();
     }
-    this.booleanFeatures.remove(feature);
+    this.booleanFeatures.remove( feature );
   }
 
-  public boolean isFeatureSupported(final OutputProcessorFeature.BooleanOutputProcessorFeature feature)
-  {
-    if (feature == null)
-    {
+  public boolean isFeatureSupported( final OutputProcessorFeature.BooleanOutputProcessorFeature feature ) {
+    if ( feature == null ) {
       throw new NullPointerException();
     }
-    return this.booleanFeatures.contains(feature);
+    return this.booleanFeatures.contains( feature );
   }
 
-  protected void setNumericFeatureValue(final OutputProcessorFeature.NumericOutputProcessorFeature feature,
-                                        final double value)
-  {
-    if (feature == null)
-    {
+  protected void setNumericFeatureValue( final OutputProcessorFeature.NumericOutputProcessorFeature feature,
+                                         final double value ) {
+    if ( feature == null ) {
       throw new NullPointerException();
     }
-    if (OutputProcessorFeature.DEFAULT_FONT_SIZE.equals(feature))
-    {
-      numericFeatures.put(OutputProcessorFeature.DEFAULT_FONT_SIZE, new Double(value));
+    if ( OutputProcessorFeature.DEFAULT_FONT_SIZE.equals( feature ) ) {
+      numericFeatures.put( OutputProcessorFeature.DEFAULT_FONT_SIZE, new Double( value ) );
       this.defaultFontSize = value;
-    }
-    else if (OutputProcessorFeature.FONT_SMOOTH_THRESHOLD.equals(feature))
-    {
-      numericFeatures.put(OutputProcessorFeature.FONT_SMOOTH_THRESHOLD, new Double(value));
+    } else if ( OutputProcessorFeature.FONT_SMOOTH_THRESHOLD.equals( feature ) ) {
+      numericFeatures.put( OutputProcessorFeature.FONT_SMOOTH_THRESHOLD, new Double( value ) );
       this.fontSmoothThreshold = value;
-    }
-    else if (OutputProcessorFeature.DEVICE_RESOLUTION.equals(feature))
-    {
-      numericFeatures.put(OutputProcessorFeature.DEVICE_RESOLUTION, new Double(value));
+    } else if ( OutputProcessorFeature.DEVICE_RESOLUTION.equals( feature ) ) {
+      numericFeatures.put( OutputProcessorFeature.DEVICE_RESOLUTION, new Double( value ) );
       this.deviceResolution = value;
-    }
-    else
-    {
-      numericFeatures.put(feature, new Double(value));
+    } else {
+      numericFeatures.put( feature, new Double( value ) );
     }
   }
 
-  public double getNumericFeatureValue(final OutputProcessorFeature.NumericOutputProcessorFeature feature)
-  {
-    if (feature == null)
-    {
+  public double getNumericFeatureValue( final OutputProcessorFeature.NumericOutputProcessorFeature feature ) {
+    if ( feature == null ) {
       throw new NullPointerException();
     }
 
-    if (OutputProcessorFeature.DEFAULT_FONT_SIZE == feature)
-    {
+    if ( OutputProcessorFeature.DEFAULT_FONT_SIZE == feature ) {
       return this.defaultFontSize;
-    }
-    else if (OutputProcessorFeature.FONT_SMOOTH_THRESHOLD == feature)
-    {
+    } else if ( OutputProcessorFeature.FONT_SMOOTH_THRESHOLD == feature ) {
       return fontSmoothThreshold;
-    }
-    else if (OutputProcessorFeature.DEVICE_RESOLUTION == feature)
-    {
+    } else if ( OutputProcessorFeature.DEVICE_RESOLUTION == feature ) {
       return this.deviceResolution;
     }
 
-    final Double d = numericFeatures.get(feature);
-    if (d == null)
-    {
+    final Double d = numericFeatures.get( feature );
+    if ( d == null ) {
       return 0;
     }
     return d.doubleValue();
   }
 
-  public boolean isContentSupported(final Object content)
-  {
+  public boolean isContentSupported( final Object content ) {
     return content != null;
   }
 
-  protected FontRegistry getFontRegistry()
-  {
+  protected FontRegistry getFontRegistry() {
     return fontRegistry;
   }
 
-  protected FontStorage getFontStorage()
-  {
+  protected FontStorage getFontStorage() {
     return fontStorage;
   }
 
@@ -645,14 +537,11 @@ public abstract class AbstractOutputProcessorMetaData implements OutputProcessor
    * @param name the raw name, maybe null.
    * @return the normalized name, but never null.
    */
-  public String getNormalizedFontFamilyName(final String name)
-  {
-    final String normalizedFontFamily = fontFamilyMapping.get(name);
-    if (normalizedFontFamily == null)
-    {
-      if (name == null)
-      {
-        throw new IllegalStateException("There is no default mapping for <null> fonts defined.");
+  public String getNormalizedFontFamilyName( final String name ) {
+    final String normalizedFontFamily = fontFamilyMapping.get( name );
+    if ( normalizedFontFamily == null ) {
+      if ( name == null ) {
+        throw new IllegalStateException( "There is no default mapping for <null> fonts defined." );
       }
       return name;
     }
@@ -675,130 +564,118 @@ public abstract class AbstractOutputProcessorMetaData implements OutputProcessor
    * @return the font metrics, never null.
    * @throws IllegalArgumentException if the font family was invalid and no default family could be located.
    */
-  public FontMetrics getFontMetrics(final String fontFamily,
-                                    final double fontSize,
-                                    final boolean bold,
-                                    final boolean italics,
-                                    final String encoding,
-                                    final boolean embedded,
-                                    final boolean antiAliasing) throws IllegalArgumentException
-  {
-    if (fontFamily == null)
-    {
+  public FontMetrics getFontMetrics( final String fontFamily,
+                                     final double fontSize,
+                                     final boolean bold,
+                                     final boolean italics,
+                                     final String encoding,
+                                     final boolean embedded,
+                                     final boolean antiAliasing ) throws IllegalArgumentException {
+    if ( fontFamily == null ) {
       throw new NullPointerException();
     }
 
-    lookupKey.setAntiAliased(antiAliasing);
-    lookupKey.setEncoding(encoding);
-    lookupKey.setEmbedded(embedded);
-    lookupKey.setFontFamily(fontFamily);
-    lookupKey.setFontSize(fontSize);
-    lookupKey.setBold(bold);
-    lookupKey.setItalics(italics);
+    lookupKey.setAntiAliased( antiAliasing );
+    lookupKey.setEncoding( encoding );
+    lookupKey.setEmbedded( embedded );
+    lookupKey.setFontFamily( fontFamily );
+    lookupKey.setFontSize( fontSize );
+    lookupKey.setBold( bold );
+    lookupKey.setItalics( italics );
 
-    final FontMetrics cached = fontMetricsCache.get(lookupKey);
-    if (cached != null)
-    {
+    final FontMetrics cached = fontMetricsCache.get( lookupKey );
+    if ( cached != null ) {
       return cached;
     }
 
     final FontRegistry registry = getFontRegistry();
-    FontFamily family = registry.getFontFamily(fontFamily);
-    if (family == null)
-    {
-      AbstractOutputProcessorMetaData.logger.warn("Unable to lookup the font family: " + fontFamily);
+    FontFamily family = registry.getFontFamily( fontFamily );
+    if ( family == null ) {
+      AbstractOutputProcessorMetaData.logger.warn( "Unable to lookup the font family: " + fontFamily );
 
       // Get the default font name
-      final String fallBack = getNormalizedFontFamilyName(null);
-      if (fallBack == null)
-      {
+      final String fallBack = getNormalizedFontFamilyName( null );
+      if ( fallBack == null ) {
         // If this case happens, the output-processor meta-data does not provide a sensible
         // fall-back value. As we cannot continue without a font, we fail here instead of
         // waiting for a NullPointer or other weird error later.
-        throw new IllegalArgumentException("No default family defined, aborting.");
+        throw new IllegalArgumentException( "No default family defined, aborting." );
       }
 
-      family = registry.getFontFamily(fallBack);
-      if (family == null)
-      {
+      family = registry.getFontFamily( fallBack );
+      if ( family == null ) {
         // If this case happens, the output-processor meta-data does not provide a sensible
         // fall-back value. As we cannot continue without a font, we fail here instead of
         // waiting for a NullPointer or other weird error later.
-        throw new IllegalArgumentException("Default family is invalid. Aborting.");
+        throw new IllegalArgumentException( "Default family is invalid. Aborting." );
       }
     }
 
 
-    reusableFontContext.setAntiAliased(antiAliasing);
-    reusableFontContext.setFontSize(fontSize);
-    reusableFontContext.setEncoding(encoding);
-    reusableFontContext.setEmbedded(embedded);
+    reusableFontContext.setAntiAliased( antiAliasing );
+    reusableFontContext.setFontSize( fontSize );
+    reusableFontContext.setEncoding( encoding );
+    reusableFontContext.setEmbedded( embedded );
 
-    final FontRecord record = family.getFontRecord(bold, italics);
-    final FontMetrics fm = getFontStorage().getFontMetrics(record.getIdentifier(), reusableFontContext);
-    if (fm == null)
-    {
+    final FontRecord record = family.getFontRecord( bold, italics );
+    final FontMetrics fm = getFontStorage().getFontMetrics( record.getIdentifier(), reusableFontContext );
+    if ( fm == null ) {
       // If this case happens, then the previous steps of mapping the font name into sensible
       // defaults failed. The font-system's font-registry is not in sync with the actual font-metrics
       // provider (which indicates that the LibFonts font-system implementation is invalid).
-      throw new NullPointerException("FontMetrics returned from factory is null.");
+      throw new NullPointerException( "FontMetrics returned from factory is null." );
     }
 
-    if (isFeatureSupported(OutputProcessorFeature.LEGACY_LINEHEIGHT_CALC))
-    {
+    if ( isFeatureSupported( OutputProcessorFeature.LEGACY_LINEHEIGHT_CALC ) ) {
       // Wrap the font metrics into the legacy-metrics ..
-      final LegacyFontMetrics legacyFontMetrics = new LegacyFontMetrics(fm, fontSize);
-      fontMetricsCache.put(new FontMetricsKey(lookupKey), legacyFontMetrics);
+      final LegacyFontMetrics legacyFontMetrics = new LegacyFontMetrics( fm, fontSize );
+      fontMetricsCache.put( new FontMetricsKey( lookupKey ), legacyFontMetrics );
       return legacyFontMetrics;
     }
 
-    fontMetricsCache.put(new FontMetricsKey(lookupKey), fm);
+    fontMetricsCache.put( new FontMetricsKey( lookupKey ), fm );
     return fm;
   }
 
-  public ExtendedBaselineInfo getBaselineInfo(final int codePoint, final StyleSheet styleSheet)
-  {
-    final FontMetrics fontMetrics = getFontMetrics(styleSheet);
-    if (fontMetrics.isUniformFontMetrics())
-    {
-      final String fontFamily = getNormalizedFontFamilyName((String) styleSheet.getStyleProperty(TextStyleKeys.FONT));
-      if (fontFamily == null)
-      {
+  public ExtendedBaselineInfo getBaselineInfo( final int codePoint, final StyleSheet styleSheet ) {
+    final FontMetrics fontMetrics = getFontMetrics( styleSheet );
+    if ( fontMetrics.isUniformFontMetrics() ) {
+      final String fontFamily =
+        getNormalizedFontFamilyName( (String) styleSheet.getStyleProperty( TextStyleKeys.FONT ) );
+      if ( fontFamily == null ) {
         // If this case happens, the stylesheet is not implemented correctly. At that point,
         // we have to assume that the whole engine is no longer behaving valid and therefore we
         // abort early.
-        throw new IllegalArgumentException("No valid font family specified.");
+        throw new IllegalArgumentException( "No valid font family specified." );
       }
 
       final double fontSize = styleSheet.getDoubleStyleProperty
-          (TextStyleKeys.FONTSIZE, defaultFontSize);
+        ( TextStyleKeys.FONTSIZE, defaultFontSize );
 
-      final boolean antiAliasing = RenderUtility.isFontSmooth(styleSheet, this);
-      final String encoding = (String) styleSheet.getStyleProperty(TextStyleKeys.FONTENCODING);
+      final boolean antiAliasing = RenderUtility.isFontSmooth( styleSheet, this );
+      final String encoding = (String) styleSheet.getStyleProperty( TextStyleKeys.FONTENCODING );
       final boolean embedded =
-          isFeatureSupported(OutputProcessorFeature.EMBED_ALL_FONTS) ||
-              styleSheet.getBooleanStyleProperty(TextStyleKeys.EMBEDDED_FONT);
-      final boolean bold = styleSheet.getBooleanStyleProperty(TextStyleKeys.BOLD, false);
-      final boolean italics = styleSheet.getBooleanStyleProperty(TextStyleKeys.ITALIC, false);
+        isFeatureSupported( OutputProcessorFeature.EMBED_ALL_FONTS ) ||
+          styleSheet.getBooleanStyleProperty( TextStyleKeys.EMBEDDED_FONT );
+      final boolean bold = styleSheet.getBooleanStyleProperty( TextStyleKeys.BOLD, false );
+      final boolean italics = styleSheet.getBooleanStyleProperty( TextStyleKeys.ITALIC, false );
 
-      lookupKey.setAntiAliased(antiAliasing);
-      lookupKey.setEncoding(encoding);
-      lookupKey.setEmbedded(embedded);
-      lookupKey.setFontFamily(fontFamily);
-      lookupKey.setFontSize(fontSize);
-      lookupKey.setBold(bold);
-      lookupKey.setItalics(italics);
+      lookupKey.setAntiAliased( antiAliasing );
+      lookupKey.setEncoding( encoding );
+      lookupKey.setEmbedded( embedded );
+      lookupKey.setFontFamily( fontFamily );
+      lookupKey.setFontSize( fontSize );
+      lookupKey.setBold( bold );
+      lookupKey.setItalics( italics );
 
-      final ExtendedBaselineInfo cached = baselinesCache.get(lookupKey);
-      if (cached != null)
-      {
+      final ExtendedBaselineInfo cached = baselinesCache.get( lookupKey );
+      if ( cached != null ) {
         return cached;
       }
     }
-    final ExtendedBaselineInfo baselineInfo = TextUtility.createBaselineInfo('x', fontMetrics, null);
-    if (fontMetrics.isUniformFontMetrics())
-    {
-      baselinesCache.put(new FontMetricsKey(lookupKey), baselineInfo);
+    final ExtendedBaselineInfo baselineInfo = TextUtility.createBaselineInfo( 'x', fontMetrics, null );
+    if ( fontMetrics.isUniformFontMetrics() ) {
+      baselinesCache.put( new FontMetricsKey( lookupKey ), baselineInfo );
     }
     return baselineInfo;
   }
@@ -811,75 +688,66 @@ public abstract class AbstractOutputProcessorMetaData implements OutputProcessor
    *
    * @param styleSheet ths style sheet from which the font information will be extracted
    * @return FontMetrics for the specified font. If the font family can not be found, the FontMetrics for the default
-   *         font family will be returned
+   * font family will be returned
    * @throws IllegalArgumentException indicated the font metrics could not be determined (this is thrown since methods
    *                                  depending upon this method can not handle a <code>null</code> return).
    */
-  public FontMetrics getFontMetrics(final StyleSheet styleSheet) throws IllegalArgumentException
-  {
-    lookupCacheKey.reuse(styleSheet.getId(), styleSheet.getClass().getName());
-    final StyleCacheEntry o = fontMetricsByStyleCache.get(lookupCacheKey);
-    if (o != null)
-    {
-      if (o.getChangeTracker() == styleSheet.getChangeTracker())
-      {
+  public FontMetrics getFontMetrics( final StyleSheet styleSheet ) throws IllegalArgumentException {
+    lookupCacheKey.reuse( styleSheet.getId(), styleSheet.getClass().getName() );
+    final StyleCacheEntry o = fontMetricsByStyleCache.get( lookupCacheKey );
+    if ( o != null ) {
+      if ( o.getChangeTracker() == styleSheet.getChangeTracker() ) {
         return o.getMetrics();
       }
     }
 
-    final String fontFamily = getNormalizedFontFamilyName((String) styleSheet.getStyleProperty(TextStyleKeys.FONT));
-    if (fontFamily == null)
-    {
+    final String fontFamily = getNormalizedFontFamilyName( (String) styleSheet.getStyleProperty( TextStyleKeys.FONT ) );
+    if ( fontFamily == null ) {
       // If this case happens, the stylesheet is not implemented correctly. At that point,
       // we have to assume that the whole engine is no longer behaving valid and therefore we
       // abort early.
-      throw new IllegalArgumentException("No valid font family specified.");
+      throw new IllegalArgumentException( "No valid font family specified." );
     }
 
     final double fontSize = styleSheet.getDoubleStyleProperty
-        (TextStyleKeys.FONTSIZE, defaultFontSize);
+      ( TextStyleKeys.FONTSIZE, defaultFontSize );
 
-    final boolean antiAliasing = RenderUtility.isFontSmooth(styleSheet, this);
-    final String encoding = (String) styleSheet.getStyleProperty(TextStyleKeys.FONTENCODING);
+    final boolean antiAliasing = RenderUtility.isFontSmooth( styleSheet, this );
+    final String encoding = (String) styleSheet.getStyleProperty( TextStyleKeys.FONTENCODING );
     final boolean embedded =
-        isFeatureSupported(OutputProcessorFeature.EMBED_ALL_FONTS) ||
-            styleSheet.getBooleanStyleProperty(TextStyleKeys.EMBEDDED_FONT);
-    final boolean bold = styleSheet.getBooleanStyleProperty(TextStyleKeys.BOLD, false);
-    final boolean italics = styleSheet.getBooleanStyleProperty(TextStyleKeys.ITALIC, false);
+      isFeatureSupported( OutputProcessorFeature.EMBED_ALL_FONTS ) ||
+        styleSheet.getBooleanStyleProperty( TextStyleKeys.EMBEDDED_FONT );
+    final boolean bold = styleSheet.getBooleanStyleProperty( TextStyleKeys.BOLD, false );
+    final boolean italics = styleSheet.getBooleanStyleProperty( TextStyleKeys.ITALIC, false );
 
-    final FontMetrics metrics = getFontMetrics(fontFamily, fontSize, bold, italics, encoding, embedded, antiAliasing);
-    final CacheKey key = new CacheKey(styleSheet.getId(), styleSheet.getClass().getName());
-    fontMetricsByStyleCache.put(key, new StyleCacheEntry(styleSheet.getChangeTracker(), metrics));
+    final FontMetrics metrics = getFontMetrics( fontFamily, fontSize, bold, italics, encoding, embedded, antiAliasing );
+    final CacheKey key = new CacheKey( styleSheet.getId(), styleSheet.getClass().getName() );
+    fontMetricsByStyleCache.put( key, new StyleCacheEntry( styleSheet.getChangeTracker(), metrics ) );
     return metrics;
   }
 
-  public void commit()
-  {
+  public void commit() {
     fontStorage.commit();
     fontMetricsByStyleCache.clear();
   }
 
 
   /**
-   * Checks whether this element provides some extra content that is not part of the visible layout structure.
-   * This can be embedded scripts, anchors etc.
+   * Checks whether this element provides some extra content that is not part of the visible layout structure. This can
+   * be embedded scripts, anchors etc.
    *
    * @param style
    * @param attributes
    * @return
    */
-  public boolean isExtraContentElement(final StyleSheet style, final ReportAttributeMap attributes)
-  {
-    if (isFeatureSupported(OutputProcessorFeature.DETECT_EXTRA_CONTENT) == false)
-    {
+  public boolean isExtraContentElement( final StyleSheet style, final ReportAttributeMap attributes ) {
+    if ( isFeatureSupported( OutputProcessorFeature.DETECT_EXTRA_CONTENT ) == false ) {
       return false;
     }
-    if (StringUtils.isEmpty((String) style.getStyleProperty(ElementStyleKeys.ANCHOR_NAME)) == false)
-    {
+    if ( StringUtils.isEmpty( (String) style.getStyleProperty( ElementStyleKeys.ANCHOR_NAME ) ) == false ) {
       return true;
     }
-    if (StringUtils.isEmpty((String) style.getStyleProperty(ElementStyleKeys.HREF_TARGET)) == false)
-    {
+    if ( StringUtils.isEmpty( (String) style.getStyleProperty( ElementStyleKeys.HREF_TARGET ) ) == false ) {
       return true;
     }
     return false;

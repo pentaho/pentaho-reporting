@@ -17,9 +17,10 @@
 
 package org.pentaho.reporting.engine.classic.core;
 
-public interface DataFactoryMetaProvider
-{
-  public Object getQueryHash(final String query, final DataRow dataRow) throws ReportDataFactoryException;
-  public String[] getReferencedFields(final String query, final DataRow dataRow) throws ReportDataFactoryException;
+public interface DataFactoryMetaProvider {
+  public Object getQueryHash( final String query, final DataRow dataRow ) throws ReportDataFactoryException;
+
+  public String[] getReferencedFields( final String query, final DataRow dataRow ) throws ReportDataFactoryException;
+
   public String getDisplayConnectionName();
 }

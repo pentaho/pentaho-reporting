@@ -26,80 +26,64 @@ import org.pentaho.reporting.libraries.xmlns.parser.XmlReadHandler;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 
-public class QueryDefinitionReadHandler extends AbstractXmlReadHandler
-{
+public class QueryDefinitionReadHandler extends AbstractXmlReadHandler {
   private String name;
   private PropertyReadHandler script;
   private StringReadHandler query;
 
-  public QueryDefinitionReadHandler()
-  {
+  public QueryDefinitionReadHandler() {
   }
 
-  protected void startParsing(final Attributes attrs) throws SAXException
-  {
-    name = attrs.getValue(getUri(), "name");
-    if (StringUtils.isEmpty(name))
-    {
-      throw new ParseException("Attribute 'name' is not defined.", getLocator());
+  protected void startParsing( final Attributes attrs ) throws SAXException {
+    name = attrs.getValue( getUri(), "name" );
+    if ( StringUtils.isEmpty( name ) ) {
+      throw new ParseException( "Attribute 'name' is not defined.", getLocator() );
     }
-    super.startParsing(attrs);
+    super.startParsing( attrs );
   }
 
-  protected XmlReadHandler getHandlerForChild(final String uri,
-                                              final String tagName,
-                                              final Attributes atts) throws SAXException
-  {
-    if (isSameNamespace(uri) == false)
-    {
+  protected XmlReadHandler getHandlerForChild( final String uri,
+                                               final String tagName,
+                                               final Attributes atts ) throws SAXException {
+    if ( isSameNamespace( uri ) == false ) {
       return null;
     }
-    if ("static-query".equals(tagName))
-    {
+    if ( "static-query".equals( tagName ) ) {
       query = new StringReadHandler();
       return query;
     }
-    if ("script".equals(tagName))
-    {
-      script = new PropertyReadHandler("language", false);
+    if ( "script".equals( tagName ) ) {
+      script = new PropertyReadHandler( "language", false );
       return script;
     }
 
     return null;
   }
 
-  public Object getObject() throws SAXException
-  {
+  public Object getObject() throws SAXException {
     return null;
   }
 
-  public String getName()
-  {
+  public String getName() {
     return name;
   }
 
-  public String getScriptLanguage()
-  {
-    if (script == null)
-    {
+  public String getScriptLanguage() {
+    if ( script == null ) {
       return null;
     }
     return script.getName();
   }
 
-  public String getScript()
-  {
-    if (script == null)
-    {
+  public String getScript() {
+    if ( script == null ) {
       return null;
     }
     return script.getResult();
   }
 
-  public String getQuery()
-  {
-    if (query == null)
-    {
+  public String getQuery() {
+    if ( query == null ) {
       return null;
     }
     return query.getResult();

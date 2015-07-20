@@ -17,30 +17,26 @@
 
 package org.pentaho.reporting.engine.classic.core.metadata.parser;
 
-import java.io.Serializable;
-
 import org.pentaho.reporting.engine.classic.core.metadata.DataFactoryMetaData;
+
+import java.io.Serializable;
 
 /**
  * This class represents a parse-result.
  *
  * @author Thomas Morgner
  */
-public class DataFactoryMetaDataCollection implements Serializable
-{
+public class DataFactoryMetaDataCollection implements Serializable {
   private DataFactoryMetaData[] elementTypes;
 
-  public DataFactoryMetaDataCollection(final DataFactoryMetaData[] elementTypes)
-  {
-    if (elementTypes == null)
-    {
+  public DataFactoryMetaDataCollection( final DataFactoryMetaData[] elementTypes ) {
+    if ( elementTypes == null ) {
       throw new NullPointerException();
     }
     this.elementTypes = elementTypes.clone();
   }
 
-  public DataFactoryMetaData[] getFactoryMetaData()
-  {
+  public DataFactoryMetaData[] getFactoryMetaData() {
     return elementTypes.clone();
   }
 }

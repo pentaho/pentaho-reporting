@@ -26,8 +26,7 @@ import javax.swing.table.TableModel;
  *
  * @author LordOfCode
  */
-public class PrintableTableModel implements TableModel
-{
+public class PrintableTableModel implements TableModel {
 
   /**
    * The original TableModel.
@@ -39,41 +38,34 @@ public class PrintableTableModel implements TableModel
   private String[] i18nKeys;
 
 
-  public PrintableTableModel(final TableModel source, final String[] keys)
-  {
+  public PrintableTableModel( final TableModel source, final String[] keys ) {
     model = source;
     i18nKeys = (String[]) keys.clone();
   }
 
-  public int getColumnCount()
-  {
+  public int getColumnCount() {
     return model.getColumnCount();
   }
 
-  public int getRowCount()
-  {
+  public int getRowCount() {
     return model.getRowCount();
   }
 
 
-  public boolean isCellEditable(final int rowIndex, final int columnIndex)
-  {
-    return model.isCellEditable(rowIndex, columnIndex);
+  public boolean isCellEditable( final int rowIndex, final int columnIndex ) {
+    return model.isCellEditable( rowIndex, columnIndex );
   }
 
-  public Class getColumnClass(final int columnIndex)
-  {
-    return model.getColumnClass(columnIndex);
+  public Class getColumnClass( final int columnIndex ) {
+    return model.getColumnClass( columnIndex );
   }
 
-  public Object getValueAt(final int rowIndex, final int columnIndex)
-  {
-    return model.getValueAt(rowIndex, columnIndex);
+  public Object getValueAt( final int rowIndex, final int columnIndex ) {
+    return model.getValueAt( rowIndex, columnIndex );
   }
 
-  public void setValueAt(final Object aValue, final int rowIndex, final int columnIndex)
-  {
-    model.setValueAt(aValue, rowIndex, columnIndex);
+  public void setValueAt( final Object aValue, final int rowIndex, final int columnIndex ) {
+    model.setValueAt( aValue, rowIndex, columnIndex );
   }
 
   /**
@@ -81,26 +73,21 @@ public class PrintableTableModel implements TableModel
    *
    * @see TableModel#getColumnName(int)
    */
-  public String getColumnName(final int columnIndex)
-  {
-    if (columnIndex < i18nKeys.length)
-    {
-      final String columnName = i18nKeys[columnIndex];
-      if (columnName != null)
-      {
+  public String getColumnName( final int columnIndex ) {
+    if ( columnIndex < i18nKeys.length ) {
+      final String columnName = i18nKeys[ columnIndex ];
+      if ( columnName != null ) {
         return columnName;
       }
     }
-    return model.getColumnName(columnIndex);
+    return model.getColumnName( columnIndex );
   }
 
-  public void addTableModelListener(final TableModelListener l)
-  {
-    model.addTableModelListener(l);
+  public void addTableModelListener( final TableModelListener l ) {
+    model.addTableModelListener( l );
   }
 
-  public void removeTableModelListener(final TableModelListener l)
-  {
-    model.removeTableModelListener(l);
+  public void removeTableModelListener( final TableModelListener l ) {
+    model.removeTableModelListener( l );
   }
 }

@@ -17,10 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.core;
 
-import java.util.Arrays;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
-
 import junit.framework.TestCase;
 import org.pentaho.reporting.engine.classic.core.metadata.DataFactoryRegistry;
 import org.pentaho.reporting.engine.classic.core.metadata.DefaultDataFactoryCore;
@@ -29,222 +25,195 @@ import org.pentaho.reporting.engine.classic.core.metadata.MaturityLevel;
 import org.pentaho.reporting.engine.classic.core.metadata.MetaDataLookupException;
 import org.pentaho.reporting.engine.classic.core.util.ReportParameterValues;
 
-public class CompoundDataFactoryTest extends TestCase
-{
-  private static class MockDataFactory extends AbstractDataFactory
-  {
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+import java.util.Arrays;
+
+public class CompoundDataFactoryTest extends TestCase {
+  private static class MockDataFactory extends AbstractDataFactory {
     private static final long serialVersionUID = 1L;
     private String[] queryNames;
     private boolean designTimeCalled;
 
-    public MockDataFactory(final String... queryNames)
-    {
+    public MockDataFactory( final String... queryNames ) {
       this.queryNames = queryNames;
     }
 
-    public TableModel queryData(final String query, final DataRow parameters) throws ReportDataFactoryException
-    {
+    public TableModel queryData( final String query, final DataRow parameters ) throws ReportDataFactoryException {
       return new DefaultTableModel();
     }
 
-    public DataFactory derive()
-    {
+    public DataFactory derive() {
       return this;
     }
 
-    public void close()
-    {
+    public void close() {
     }
 
-    public TableModel queryDesignTimeStructure(final String query,
-                                               final DataRow parameter) throws ReportDataFactoryException
-    {
+    public TableModel queryDesignTimeStructure( final String query,
+                                                final DataRow parameter ) throws ReportDataFactoryException {
       designTimeCalled = true;
-      return super.queryDesignTimeStructure(query, parameter);
+      return super.queryDesignTimeStructure( query, parameter );
     }
 
-    public boolean isDesignTimeCalled()
-    {
+    public boolean isDesignTimeCalled() {
       return designTimeCalled;
     }
 
-    public boolean isQueryExecutable(final String query, final DataRow parameters)
-    {
-      return queryNames != null && Arrays.binarySearch(queryNames, query) != -1;
+    public boolean isQueryExecutable( final String query, final DataRow parameters ) {
+      return queryNames != null && Arrays.binarySearch( queryNames, query ) != -1;
     }
 
-    public String[] getQueryNames()
-    {
+    public String[] getQueryNames() {
       return queryNames;
     }
 
     @Override
-    public MockDataFactory clone()
-    {
-      return new MockDataFactory(queryNames);
+    public MockDataFactory clone() {
+      return new MockDataFactory( queryNames );
     }
   }
 
 
-  public void testGetDataFactoryForName_no_metadata()
-  {
-    try
-    {
+  public void testGetDataFactoryForName_no_metadata() {
+    try {
       final String queryName = "test"; //$NON-NLS-1$
       final CompoundDataFactory cdf = new CompoundDataFactory();
-      cdf.add(new MockDataFactory(queryName));
+      cdf.add( new MockDataFactory( queryName ) );
 
-      assertFalse(DataFactoryRegistry.getInstance().isRegistered(MockDataFactory.class.getName()));
-      assertEquals(1, cdf.getQueryNames().length);
-      cdf.getDataFactoryForQuery(queryName);
+      assertFalse( DataFactoryRegistry.getInstance().isRegistered( MockDataFactory.class.getName() ) );
+      assertEquals( 1, cdf.getQueryNames().length );
+      cdf.getDataFactoryForQuery( queryName );
       fail();
-    }
-    catch (MetaDataLookupException e)
-    {
+    } catch ( MetaDataLookupException e ) {
       // we no longer allow data-factories without metadata in the system.
       // e.printStackTrace();
     }
 
   }
 
-  public void testGetDataFactoryForName_freeform()
-  {
+  public void testGetDataFactoryForName_freeform() {
     final DefaultDataFactoryMetaData metadata = new DefaultDataFactoryMetaData(
-        MockDataFactory.class.getName(),
-        "", //$NON-NLS-1$
-        "", //$NON-NLS-1$
-        false,
-        false,
-        false,
-        false,
-        false,
-        true, // freeform
-        false,
-        MaturityLevel.Limited,
-        new DefaultDataFactoryCore(), -1);
+      MockDataFactory.class.getName(),
+      "", //$NON-NLS-1$
+      "", //$NON-NLS-1$
+      false,
+      false,
+      false,
+      false,
+      false,
+      true, // freeform
+      false,
+      MaturityLevel.Limited,
+      new DefaultDataFactoryCore(), -1 );
 
-    try
-    {
+    try {
       final String queryName = "test"; //$NON-NLS-1$
       final CompoundDataFactory cdf = new CompoundDataFactory();
-      cdf.add(new MockDataFactory(queryName));
+      cdf.add( new MockDataFactory( queryName ) );
 
-      DataFactoryRegistry.getInstance().register(metadata);
+      DataFactoryRegistry.getInstance().register( metadata );
 
-      assertTrue(DataFactoryRegistry.getInstance().isRegistered(MockDataFactory.class.getName()));
-      assertEquals(1, cdf.getQueryNames().length);
-      assertNotNull("Could not find DataFactory for query", cdf.getDataFactoryForQuery(queryName)); //$NON-NLS-1$
-    }
-    finally
-    {
-      DataFactoryRegistry.getInstance().unregister(metadata);
+      assertTrue( DataFactoryRegistry.getInstance().isRegistered( MockDataFactory.class.getName() ) );
+      assertEquals( 1, cdf.getQueryNames().length );
+      assertNotNull( "Could not find DataFactory for query", cdf.getDataFactoryForQuery( queryName ) ); //$NON-NLS-1$
+    } finally {
+      DataFactoryRegistry.getInstance().unregister( metadata );
     }
   }
 
-  public void testGetDataFactoryForName_non_freeform()
-  {
+  public void testGetDataFactoryForName_non_freeform() {
     final DefaultDataFactoryMetaData metadata = new DefaultDataFactoryMetaData(
-        MockDataFactory.class.getName(),
-        "", //$NON-NLS-1$
-        "", //$NON-NLS-1$
-        false,
-        false,
-        false,
-        false,
-        false,
-        false, // freeform
-        false,
-        MaturityLevel.Limited,
-        new DefaultDataFactoryCore(), -1);
+      MockDataFactory.class.getName(),
+      "", //$NON-NLS-1$
+      "", //$NON-NLS-1$
+      false,
+      false,
+      false,
+      false,
+      false,
+      false, // freeform
+      false,
+      MaturityLevel.Limited,
+      new DefaultDataFactoryCore(), -1 );
 
-    try
-    {
-    final String queryName = "test"; //$NON-NLS-1$
-    final CompoundDataFactory cdf = new CompoundDataFactory();
-    cdf.add(new MockDataFactory(queryName));
-    DataFactoryRegistry.getInstance().register(metadata);
+    try {
+      final String queryName = "test"; //$NON-NLS-1$
+      final CompoundDataFactory cdf = new CompoundDataFactory();
+      cdf.add( new MockDataFactory( queryName ) );
+      DataFactoryRegistry.getInstance().register( metadata );
 
-    assertTrue(DataFactoryRegistry.getInstance().isRegistered(MockDataFactory.class.getName()));
-    assertEquals(1, cdf.getQueryNames().length);
-    assertNotNull("Could not find DataFactory for query", cdf.getDataFactoryForQuery(queryName)); //$NON-NLS-1$
-    }
-    finally
-    {
-      DataFactoryRegistry.getInstance().unregister(metadata);
+      assertTrue( DataFactoryRegistry.getInstance().isRegistered( MockDataFactory.class.getName() ) );
+      assertEquals( 1, cdf.getQueryNames().length );
+      assertNotNull( "Could not find DataFactory for query", cdf.getDataFactoryForQuery( queryName ) ); //$NON-NLS-1$
+    } finally {
+      DataFactoryRegistry.getInstance().unregister( metadata );
     }
   }
 
-  public void testGetQueryMetaData_freeform() throws ReportDataFactoryException
-  {
+  public void testGetQueryMetaData_freeform() throws ReportDataFactoryException {
     final DefaultDataFactoryMetaData metadata = new DefaultDataFactoryMetaData(
-        MockDataFactory.class.getName(),
-        "", //$NON-NLS-1$
-        "", //$NON-NLS-1$
-        false,
-        false,
-        false,
-        false,
-        false,
-        true, // freeform
-        false,
-        MaturityLevel.Limited,
-        new DefaultDataFactoryCore(), -1);
+      MockDataFactory.class.getName(),
+      "", //$NON-NLS-1$
+      "", //$NON-NLS-1$
+      false,
+      false,
+      false,
+      false,
+      false,
+      true, // freeform
+      false,
+      MaturityLevel.Limited,
+      new DefaultDataFactoryCore(), -1 );
 
-    try
-    {
+    try {
       final String queryName = "test"; //$NON-NLS-1$
       final CompoundDataFactory cdf = new CompoundDataFactory();
-      MockDataFactory factory = new MockDataFactory(queryName);
-      cdf.add(factory);
+      MockDataFactory factory = new MockDataFactory( queryName );
+      cdf.add( factory );
 
-      DataFactoryRegistry.getInstance().register(metadata);
-      assertFalse(factory.isDesignTimeCalled());
+      DataFactoryRegistry.getInstance().register( metadata );
+      assertFalse( factory.isDesignTimeCalled() );
 
-      assertTrue(DataFactoryRegistry.getInstance().isRegistered(MockDataFactory.class.getName()));
-      TableModel tableModel = cdf.queryDesignTimeStructure(queryName, new ReportParameterValues());
-      assertEquals(0, tableModel.getRowCount());
-      assertTrue(factory.isDesignTimeCalled());
-    }
-    finally
-    {
-      DataFactoryRegistry.getInstance().unregister(metadata);
+      assertTrue( DataFactoryRegistry.getInstance().isRegistered( MockDataFactory.class.getName() ) );
+      TableModel tableModel = cdf.queryDesignTimeStructure( queryName, new ReportParameterValues() );
+      assertEquals( 0, tableModel.getRowCount() );
+      assertTrue( factory.isDesignTimeCalled() );
+    } finally {
+      DataFactoryRegistry.getInstance().unregister( metadata );
     }
   }
 
-  public void testGetQueryMetaData_NonFreeForm () throws ReportDataFactoryException
-  {
+  public void testGetQueryMetaData_NonFreeForm() throws ReportDataFactoryException {
     final DefaultDataFactoryMetaData metadata = new DefaultDataFactoryMetaData(
-        MockDataFactory.class.getName(),
-        "", //$NON-NLS-1$
-        "", //$NON-NLS-1$
-        false,
-        false,
-        false,
-        false,
-        false,
-        false, // freeform
-        false,
-        MaturityLevel.Limited,
-        new DefaultDataFactoryCore(), -1);
+      MockDataFactory.class.getName(),
+      "", //$NON-NLS-1$
+      "", //$NON-NLS-1$
+      false,
+      false,
+      false,
+      false,
+      false,
+      false, // freeform
+      false,
+      MaturityLevel.Limited,
+      new DefaultDataFactoryCore(), -1 );
 
-    try
-    {
+    try {
       final String queryName = "test"; //$NON-NLS-1$
       final CompoundDataFactory cdf = new CompoundDataFactory();
-      MockDataFactory factory = new MockDataFactory(queryName);
-      cdf.add(factory);
+      MockDataFactory factory = new MockDataFactory( queryName );
+      cdf.add( factory );
 
-      DataFactoryRegistry.getInstance().register(metadata);
-      assertFalse(factory.isDesignTimeCalled());
+      DataFactoryRegistry.getInstance().register( metadata );
+      assertFalse( factory.isDesignTimeCalled() );
 
-      assertTrue(DataFactoryRegistry.getInstance().isRegistered(MockDataFactory.class.getName()));
-      TableModel tableModel = cdf.queryDesignTimeStructure(queryName, new ReportParameterValues());
-      assertEquals(0, tableModel.getRowCount());
-      assertTrue(factory.isDesignTimeCalled());
-    }
-    finally
-    {
-      DataFactoryRegistry.getInstance().unregister(metadata);
+      assertTrue( DataFactoryRegistry.getInstance().isRegistered( MockDataFactory.class.getName() ) );
+      TableModel tableModel = cdf.queryDesignTimeStructure( queryName, new ReportParameterValues() );
+      assertEquals( 0, tableModel.getRowCount() );
+      assertTrue( factory.isDesignTimeCalled() );
+    } finally {
+      DataFactoryRegistry.getInstance().unregister( metadata );
     }
   }
 

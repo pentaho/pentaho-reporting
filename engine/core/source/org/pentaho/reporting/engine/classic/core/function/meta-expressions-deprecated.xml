@@ -73,7 +73,7 @@
     <property name="exportDescriptor" mandatory="false" preferred="false" value-role="Value" expert="false"
               hidden="false"/>
   </expression>
-  
+
   <expression class="org.pentaho.reporting.engine.classic.core.function.ColumnSumExpression"
               bundle-name="org.pentaho.reporting.engine.classic.core.function.ColumnSumExpressionBundle"
               result="java.lang.Number" expert="true" hidden="false" preferred="false" deprecated="true">
@@ -212,7 +212,7 @@
     <property name="field" mandatory="false" preferred="false" value-role="Field" expert="false" hidden="false"/>
     <property name="name" mandatory="true" preferred="true" value-role="Name" expert="false" hidden="false"/>
   </expression>
-  
+
   <expression class="org.pentaho.reporting.engine.classic.core.function.ShowElementIfDataAvailableExpression"
               bundle-name="org.pentaho.reporting.engine.classic.core.function.ShowElementIfDataAvailableExpressionBundle"
               layout-processor-mode="element"
@@ -292,7 +292,7 @@
     <property name="field" mandatory="false" preferred="false" value-role="Field" expert="false" hidden="false"/>
     <property name="name" mandatory="true" preferred="true" value-role="Name" expert="false" hidden="false"/>
   </expression>
-  
+
   <expression class="org.pentaho.reporting.engine.classic.core.function.ShowElementByNameFunction"
               bundle-name="org.pentaho.reporting.engine.classic.core.function.ShowElementByNameFunctionBundle"
               result="java.lang.Object" expert="false" hidden="false" preferred="false" deprecated="true"
@@ -378,7 +378,8 @@
     <property name="field" mandatory="true" preferred="false" value-role="Field" expert="false" hidden="false"/>
     <property name="group" mandatory="false" preferred="false" value-role="Group" expert="false" hidden="false"/>
     <property name="name" mandatory="true" preferred="true" value-role="Name" expert="false" hidden="false"/>
-    <property name="crosstabFilterGroup" mandatory="false" preferred="false" value-role="Group" expert="false" hidden="false"/>
+    <property name="crosstabFilterGroup" mandatory="false" preferred="false" value-role="Group" expert="false"
+              hidden="false"/>
   </expression>
 
   <expression class="org.pentaho.reporting.engine.classic.core.function.ConvertToDateExpression"

@@ -27,14 +27,12 @@ import org.pentaho.reporting.libraries.xmlns.parser.ParseException;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 
-public class MetaSelectorReadHandler extends AbstractXmlReadHandler
-{
+public class MetaSelectorReadHandler extends AbstractXmlReadHandler {
   private String domain;
   private String name;
   private Object value;
 
-  public MetaSelectorReadHandler()
-  {
+  public MetaSelectorReadHandler() {
   }
 
   /**
@@ -43,45 +41,32 @@ public class MetaSelectorReadHandler extends AbstractXmlReadHandler
    * @param attrs the attributes.
    * @throws SAXException if there is a parsing error.
    */
-  protected void startParsing(final Attributes attrs) throws SAXException
-  {
-    domain = attrs.getValue(getUri(), "domain");
-    if (domain == null)
-    {
-      throw new ParseException("Required attribute 'domain' is missing.", getLocator());
+  protected void startParsing( final Attributes attrs ) throws SAXException {
+    domain = attrs.getValue( getUri(), "domain" );
+    if ( domain == null ) {
+      throw new ParseException( "Required attribute 'domain' is missing.", getLocator() );
     }
 
-    name = attrs.getValue(getUri(), "name");
-    if (name == null)
-    {
-      throw new ParseException("Required attribute 'name' is missing.", getLocator());
+    name = attrs.getValue( getUri(), "name" );
+    if ( name == null ) {
+      throw new ParseException( "Required attribute 'name' is missing.", getLocator() );
     }
 
-    final String type = attrs.getValue(getUri(), "type");
-    final String rawValue = attrs.getValue(getUri(), "value");
-    if (rawValue == null)
-    {
+    final String type = attrs.getValue( getUri(), "type" );
+    final String rawValue = attrs.getValue( getUri(), "value" );
+    if ( rawValue == null ) {
       value = null;
-    }
-    else if (type == null)
-    {
+    } else if ( type == null ) {
       value = rawValue;
-    }
-    else
-    {
-      try
-      {
-        final ClassLoader loader = ObjectUtilities.getClassLoader(MetaSelectorReadHandler.class);
-        final Class aClass = Class.forName(CompatibilityMapperUtil.mapClassName(type), false, loader);
-        value = ConverterRegistry.toPropertyValue(rawValue, aClass);
-      }
-      catch (ClassNotFoundException e)
-      {
-        throw new ParseException("Required attribute 'type' is invalid.", e, getLocator());
-      }
-      catch (BeanException e)
-      {
-        throw new ParseException("Required attribute 'value' is invalid.", e, getLocator());
+    } else {
+      try {
+        final ClassLoader loader = ObjectUtilities.getClassLoader( MetaSelectorReadHandler.class );
+        final Class aClass = Class.forName( CompatibilityMapperUtil.mapClassName( type ), false, loader );
+        value = ConverterRegistry.toPropertyValue( rawValue, aClass );
+      } catch ( ClassNotFoundException e ) {
+        throw new ParseException( "Required attribute 'type' is invalid.", e, getLocator() );
+      } catch ( BeanException e ) {
+        throw new ParseException( "Required attribute 'value' is invalid.", e, getLocator() );
       }
     }
   }
@@ -92,8 +77,7 @@ public class MetaSelectorReadHandler extends AbstractXmlReadHandler
    * @return the object.
    * @throws SAXException if an parser error occured.
    */
-  public Object getObject() throws SAXException
-  {
-    return new MetaSelector(domain, name, value);
+  public Object getObject() throws SAXException {
+    return new MetaSelector( domain, name, value );
   }
 }

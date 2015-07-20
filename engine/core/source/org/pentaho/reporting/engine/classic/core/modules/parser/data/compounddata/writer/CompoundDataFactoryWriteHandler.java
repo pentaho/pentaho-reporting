@@ -17,10 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.parser.data.compounddata.writer;
 
-import java.io.IOException;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-
 import org.pentaho.reporting.engine.classic.core.CompoundDataFactory;
 import org.pentaho.reporting.engine.classic.core.DataFactory;
 import org.pentaho.reporting.engine.classic.core.modules.parser.bundle.writer.BundleDataFactoryWriterHandler;
@@ -36,10 +32,12 @@ import org.pentaho.reporting.libraries.xmlns.writer.DefaultTagDescription;
 import org.pentaho.reporting.libraries.xmlns.writer.XmlWriter;
 import org.pentaho.reporting.libraries.xmlns.writer.XmlWriterSupport;
 
-public class CompoundDataFactoryWriteHandler implements BundleDataFactoryWriterHandler
-{
-  public CompoundDataFactoryWriteHandler()
-  {
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+
+public class CompoundDataFactoryWriteHandler implements BundleDataFactoryWriterHandler {
+  public CompoundDataFactoryWriteHandler() {
   }
 
   /**
@@ -53,61 +51,53 @@ public class CompoundDataFactoryWriteHandler implements BundleDataFactoryWriterH
    * @throws IOException           if any error occured
    * @throws BundleWriterException if a bundle-management error occured.
    */
-  public String writeDataFactory(final WriteableDocumentBundle bundle,
-                                 final DataFactory dataFactory,
-                                 final BundleWriterState state)
-      throws IOException, BundleWriterException
-  {
-    if (bundle == null)
-    {
+  public String writeDataFactory( final WriteableDocumentBundle bundle,
+                                  final DataFactory dataFactory,
+                                  final BundleWriterState state )
+    throws IOException, BundleWriterException {
+    if ( bundle == null ) {
       throw new NullPointerException();
     }
-    if (dataFactory == null)
-    {
+    if ( dataFactory == null ) {
       throw new NullPointerException();
     }
-    if (state == null)
-    {
+    if ( state == null ) {
       throw new NullPointerException();
     }
 
 
     final CompoundDataFactory compoundDataFactory = (CompoundDataFactory) dataFactory;
 
-    final String fileName = BundleUtilities.getUniqueName(bundle, state.getFileName(),
-        "datasources/compound-ds{0}.xml");
-    if (fileName == null)
-    {
-      throw new IOException("Unable to generate unique name for Inline-Data-Source");
+    final String fileName = BundleUtilities.getUniqueName( bundle, state.getFileName(),
+      "datasources/compound-ds{0}.xml" );
+    if ( fileName == null ) {
+      throw new IOException( "Unable to generate unique name for Inline-Data-Source" );
     }
 
-    final OutputStream outputStream = bundle.createEntry(fileName, "text/xml");
+    final OutputStream outputStream = bundle.createEntry( fileName, "text/xml" );
     final DefaultTagDescription tagDescription = new DefaultTagDescription();
-    tagDescription.setDefaultNamespace(CompoundDataFactoryModule.NAMESPACE);
-    tagDescription.setNamespaceHasCData(CompoundDataFactoryModule.NAMESPACE, false);
-    final XmlWriter xmlWriter = new XmlWriter(new OutputStreamWriter(outputStream, "UTF-8"), tagDescription, "  ",
-        "\n");
+    tagDescription.setDefaultNamespace( CompoundDataFactoryModule.NAMESPACE );
+    tagDescription.setNamespaceHasCData( CompoundDataFactoryModule.NAMESPACE, false );
+    final XmlWriter xmlWriter = new XmlWriter( new OutputStreamWriter( outputStream, "UTF-8" ), tagDescription, "  ",
+      "\n" );
     final AttributeList rootAttrs = new AttributeList();
-    rootAttrs.addNamespaceDeclaration("data", CompoundDataFactoryModule.NAMESPACE);
-    xmlWriter.writeTag(CompoundDataFactoryModule.NAMESPACE, "compound-datasource", rootAttrs, XmlWriterSupport.OPEN);
+    rootAttrs.addNamespaceDeclaration( "data", CompoundDataFactoryModule.NAMESPACE );
+    xmlWriter.writeTag( CompoundDataFactoryModule.NAMESPACE, "compound-datasource", rootAttrs, XmlWriterSupport.OPEN );
 
-    for (int i = 0; i < compoundDataFactory.size(); i++)
-    {
-      final DataFactory df = compoundDataFactory.get(i);
-      final BundleDataFactoryWriterHandler writerHandler = BundleWriterUtilities.lookupWriteHandler(df);
-      if (writerHandler == null)
-      {
-        throw new BundleWriterException("Unable to find writer-handler for data-factory " + df.getClass());
+    for ( int i = 0; i < compoundDataFactory.size(); i++ ) {
+      final DataFactory df = compoundDataFactory.get( i );
+      final BundleDataFactoryWriterHandler writerHandler = BundleWriterUtilities.lookupWriteHandler( df );
+      if ( writerHandler == null ) {
+        throw new BundleWriterException( "Unable to find writer-handler for data-factory " + df.getClass() );
       }
 
-      final String file = writerHandler.writeDataFactory(bundle, df, state);
-      if (file == null)
-      {
-        throw new BundleWriterException("Data-factory writer did not create a file for " + df.getClass());
+      final String file = writerHandler.writeDataFactory( bundle, df, state );
+      if ( file == null ) {
+        throw new BundleWriterException( "Data-factory writer did not create a file for " + df.getClass() );
       }
-      final String refFile = IOUtils.getInstance().createRelativePath(file, fileName);
-      xmlWriter.writeTag(CompoundDataFactoryModule.NAMESPACE, "data-factory", "href", refFile,
-          XmlWriterSupport.CLOSE);
+      final String refFile = IOUtils.getInstance().createRelativePath( file, fileName );
+      xmlWriter.writeTag( CompoundDataFactoryModule.NAMESPACE, "data-factory", "href", refFile,
+        XmlWriterSupport.CLOSE );
     }
 
     xmlWriter.writeCloseTag();

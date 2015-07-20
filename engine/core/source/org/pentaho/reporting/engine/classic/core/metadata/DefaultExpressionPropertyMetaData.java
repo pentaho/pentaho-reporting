@@ -17,9 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.core.metadata;
 
-import java.beans.PropertyDescriptor;
-import java.beans.PropertyEditor;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.pentaho.reporting.engine.classic.core.Element;
@@ -30,9 +27,11 @@ import org.pentaho.reporting.libraries.base.util.ArgumentNullException;
 import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
 import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 
-public class DefaultExpressionPropertyMetaData extends AbstractMetaData implements ExpressionPropertyMetaData
-{
-  private static final Log logger = LogFactory.getLog(DefaultExpressionPropertyMetaData.class);
+import java.beans.PropertyDescriptor;
+import java.beans.PropertyEditor;
+
+public class DefaultExpressionPropertyMetaData extends AbstractMetaData implements ExpressionPropertyMetaData {
+  private static final Log logger = LogFactory.getLog( DefaultExpressionPropertyMetaData.class );
 
   private boolean mandatory;
   private String propertyRole;
@@ -42,38 +41,37 @@ public class DefaultExpressionPropertyMetaData extends AbstractMetaData implemen
   private SharedPropertyDescriptorProxy propertyDescriptor;
 
   @Deprecated
-  public DefaultExpressionPropertyMetaData(final String name,
-                                           final String bundleLocation,
-                                           final boolean expert,
-                                           final boolean preferred,
-                                           final boolean hidden,
-                                           final boolean deprecated,
-                                           final boolean mandatory,
-                                           final boolean computed,
-                                           final String propertyRole,
-                                           final SharedBeanInfo beanInfo,
-                                           final String propertyEditorClass,
-                                           final ExpressionPropertyCore expressionPropertyCore,
-                                           final MaturityLevel maturityLevel,
-                                           final int compatibilityLevel)
-  {
-    super(name, bundleLocation, "property.", expert, preferred, hidden, deprecated, maturityLevel, compatibilityLevel);
-    ArgumentNullException.validate("propertyRole", propertyRole);
-    ArgumentNullException.validate("beanInfo", beanInfo);
-    ArgumentNullException.validate("expressionPropertyCore", expressionPropertyCore);
+  public DefaultExpressionPropertyMetaData( final String name,
+                                            final String bundleLocation,
+                                            final boolean expert,
+                                            final boolean preferred,
+                                            final boolean hidden,
+                                            final boolean deprecated,
+                                            final boolean mandatory,
+                                            final boolean computed,
+                                            final String propertyRole,
+                                            final SharedBeanInfo beanInfo,
+                                            final String propertyEditorClass,
+                                            final ExpressionPropertyCore expressionPropertyCore,
+                                            final MaturityLevel maturityLevel,
+                                            final int compatibilityLevel ) {
+    super( name, bundleLocation, "property.", expert, preferred, hidden, deprecated, maturityLevel,
+      compatibilityLevel );
+    ArgumentNullException.validate( "propertyRole", propertyRole );
+    ArgumentNullException.validate( "beanInfo", beanInfo );
+    ArgumentNullException.validate( "expressionPropertyCore", expressionPropertyCore );
 
-    this.propertyDescriptor = new SharedPropertyDescriptorProxy(beanInfo, name);
+    this.propertyDescriptor = new SharedPropertyDescriptorProxy( beanInfo, name );
     this.computed = computed;
     this.expressionPropertyCore = expressionPropertyCore;
     this.propertyEditorClass = ObjectUtilities.loadAndValidate
-        (propertyEditorClass, DefaultExpressionPropertyMetaData.class, PropertyEditor.class);
+      ( propertyEditorClass, DefaultExpressionPropertyMetaData.class, PropertyEditor.class );
     this.mandatory = mandatory;
     this.propertyRole = propertyRole;
   }
 
-  public DefaultExpressionPropertyMetaData(final ExpressionPropertyMetaDataBuilder builder)
-  {
-    super(builder);
+  public DefaultExpressionPropertyMetaData( final ExpressionPropertyMetaDataBuilder builder ) {
+    super( builder );
     this.propertyDescriptor = builder.getDescriptor();
     this.computed = builder.isComputed();
     this.expressionPropertyCore = builder.getCore();
@@ -82,79 +80,64 @@ public class DefaultExpressionPropertyMetaData extends AbstractMetaData implemen
     this.propertyRole = builder.getValueRole();
 
 
-    ArgumentNullException.validate("propertyRole", propertyRole);
-    ArgumentNullException.validate("propertyDescriptor", propertyDescriptor);
-    ArgumentNullException.validate("expressionPropertyCore", expressionPropertyCore);
+    ArgumentNullException.validate( "propertyRole", propertyRole );
+    ArgumentNullException.validate( "propertyDescriptor", propertyDescriptor );
+    ArgumentNullException.validate( "expressionPropertyCore", expressionPropertyCore );
   }
 
-  public boolean isComputed()
-  {
+  public boolean isComputed() {
     return computed;
   }
 
-  public Class<?> getPropertyType()
-  {
+  public Class<?> getPropertyType() {
     return getBeanDescriptor().getPropertyType();
   }
 
-  public String getPropertyRole()
-  {
+  public String getPropertyRole() {
     return propertyRole;
   }
 
-  public boolean isMandatory()
-  {
+  public boolean isMandatory() {
     return mandatory;
   }
 
-  public String[] getReferencedFields(final Expression element, final Object attributeValue)
-  {
-    return expressionPropertyCore.getReferencedFields(this, element, attributeValue);
+  public String[] getReferencedFields( final Expression element, final Object attributeValue ) {
+    return expressionPropertyCore.getReferencedFields( this, element, attributeValue );
   }
 
-  public String[] getReferencedGroups(final Expression element, final Object attributeValue)
-  {
-    return expressionPropertyCore.getReferencedGroups(this, element, attributeValue);
+  public String[] getReferencedGroups( final Expression element, final Object attributeValue ) {
+    return expressionPropertyCore.getReferencedGroups( this, element, attributeValue );
   }
 
-  public String[] getReferencedElements(final Expression expression, final Object attributeValue)
-  {
-    return expressionPropertyCore.getReferencedElements(this, expression, attributeValue);
+  public String[] getReferencedElements( final Expression expression, final Object attributeValue ) {
+    return expressionPropertyCore.getReferencedElements( this, expression, attributeValue );
   }
 
-  public ResourceReference[] getReferencedResources(final Expression expression,
-                                                    final Object attributeValue,
-                                                    final Element reportElement,
-                                                    final ResourceManager resourceManager)
-  {
+  public ResourceReference[] getReferencedResources( final Expression expression,
+                                                     final Object attributeValue,
+                                                     final Element reportElement,
+                                                     final ResourceManager resourceManager ) {
     return expressionPropertyCore.getReferencedResources
-        (this, expression, attributeValue, reportElement, resourceManager);
+      ( this, expression, attributeValue, reportElement, resourceManager );
   }
 
-  public PropertyDescriptor getBeanDescriptor() throws IllegalStateException
-  {
+  public PropertyDescriptor getBeanDescriptor() throws IllegalStateException {
     return propertyDescriptor.get();
   }
 
-  public PropertyEditor getEditor()
-  {
-    if (propertyEditorClass == null)
-    {
+  public PropertyEditor getEditor() {
+    if ( propertyEditorClass == null ) {
       return null;
     }
-    try
-    {
+    try {
       return propertyEditorClass.newInstance();
-    }
-    catch (Exception e)
-    {
-      logger.warn("Property editor for expression property '" + getName() + "' threw an Exception on instantiate", e);
+    } catch ( Exception e ) {
+      logger.warn( "Property editor for expression property '" + getName() + "' threw an Exception on instantiate", e );
       return null;
     }
   }
 
-  public String[] getExtraCalculationFields()
-  {
-    return expressionPropertyCore.getExtraCalculationFields(this);
+  public String[] getExtraCalculationFields() {
+    return expressionPropertyCore.getExtraCalculationFields( this );
   }
 }

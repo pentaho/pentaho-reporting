@@ -35,9 +35,8 @@ import org.pentaho.reporting.engine.classic.core.function.FormulaExpression;
  * @author Thomas Morgner
  * @see org.pentaho.reporting.engine.classic.core.DataRow
  */
-public class DataRowDataSource implements DataSource
-{
-  private static final Log logger = LogFactory.getLog(DataRowDataSource.class);
+public class DataRowDataSource implements DataSource {
+  private static final Log logger = LogFactory.getLog( DataRowDataSource.class );
 
   /**
    * The field name that should be queried.
@@ -54,9 +53,8 @@ public class DataRowDataSource implements DataSource
    * <p/>
    * The expression name is empty ("", not null), the value initially null.
    */
-  public DataRowDataSource()
-  {
-    this(null);
+  public DataRowDataSource() {
+    this( null );
   }
 
   /**
@@ -64,26 +62,23 @@ public class DataRowDataSource implements DataSource
    *
    * @param column the name of the field, function or expression in the data-row.
    */
-  public DataRowDataSource(final String column)
-  {
+  public DataRowDataSource( final String column ) {
     this.field = column;
   }
 
   /**
    * @deprecated Required for legacy-parsing, do not use elsewhere.
    */
-  public String getField()
-  {
+  public String getField() {
     return getDataSourceColumnName();
   }
 
   /**
-   * @deprecated Required for legacy-parsing, do not use elsewhere.
    * @param field
+   * @deprecated Required for legacy-parsing, do not use elsewhere.
    */
-  public void setField(final String field)
-  {
-    setDataSourceColumnName(field);
+  public void setField( final String field ) {
+    setDataSourceColumnName( field );
   }
 
   /**
@@ -91,8 +86,7 @@ public class DataRowDataSource implements DataSource
    *
    * @return the column name.
    */
-  public String getDataSourceColumnName()
-  {
+  public String getDataSourceColumnName() {
     return field;
   }
 
@@ -103,16 +97,13 @@ public class DataRowDataSource implements DataSource
    * @throws NullPointerException if the name is <code>null</code>.
    * @see org.pentaho.reporting.engine.classic.core.DataRow#get
    */
-  public void setDataSourceColumnName(final String dataSourceColumnName)
-  {
-    if (dataSourceColumnName == null)
-    {
+  public void setDataSourceColumnName( final String dataSourceColumnName ) {
+    if ( dataSourceColumnName == null ) {
       throw new NullPointerException();
     }
     this.field = dataSourceColumnName;
-    if (valueExpression != null)
-    {
-      this.valueExpression.setFormula(null);
+    if ( valueExpression != null ) {
+      this.valueExpression.setFormula( null );
     }
   }
 
@@ -121,10 +112,8 @@ public class DataRowDataSource implements DataSource
    *
    * @return the formula.
    */
-  public String getFormula()
-  {
-    if (valueExpression == null)
-    {
+  public String getFormula() {
+    if ( valueExpression == null ) {
       return null;
     }
     return valueExpression.getFormula();
@@ -135,25 +124,22 @@ public class DataRowDataSource implements DataSource
    *
    * @param formula the formula for the data source.
    */
-  public void setFormula(final String formula)
-  {
-    if (formula == null)
-    {
+  public void setFormula( final String formula ) {
+    if ( formula == null ) {
       throw new NullPointerException();
     }
 
     this.field = null;
-    if (valueExpression == null)
-    {
+    if ( valueExpression == null ) {
       valueExpression = new FormulaExpression();
     }
-    this.valueExpression.setFormula(formula);
-    if ("field".equals(valueExpression.getFormulaNamespace()))
-    {
+    this.valueExpression.setFormula( formula );
+    if ( "field".equals( valueExpression.getFormulaNamespace() ) ) {
       DataRowDataSource.logger.warn(
-          "Encountered formula with 'field' prefix. Direct access to field-data should not be done using a formula. Auto-Fixing.");
+        "Encountered formula with 'field' prefix. Direct access to field-data should not be done using a formula. "
+          + "Auto-Fixing." );
       this.field = valueExpression.getFormulaExpression();
-      this.valueExpression.setFormula(null);
+      this.valueExpression.setFormula( null );
     }
   }
 
@@ -165,35 +151,26 @@ public class DataRowDataSource implements DataSource
    * @param element
    * @return the value.
    */
-  public Object getValue(final ExpressionRuntime runtime, final ReportElement element)
-  {
-    if (runtime == null)
-    {
+  public Object getValue( final ExpressionRuntime runtime, final ReportElement element ) {
+    if ( runtime == null ) {
       return null;
     }
 
-    if (field != null)
-    {
-      return runtime.getDataRow().get(field);
+    if ( field != null ) {
+      return runtime.getDataRow().get( field );
     }
-    if (valueExpression == null)
-    {
+    if ( valueExpression == null ) {
       return null;
     }
 
-    valueExpression.setRuntime(runtime);
-    try
-    {
+    valueExpression.setRuntime( runtime );
+    try {
       return valueExpression.getValue();
-    }
-    catch (Exception e)
-    {
+    } catch ( Exception e ) {
       // ignore ..
       return null;
-    }
-    finally
-    {
-      valueExpression.setRuntime(null);
+    } finally {
+      valueExpression.setRuntime( null );
     }
   }
 
@@ -204,11 +181,9 @@ public class DataRowDataSource implements DataSource
    * @throws CloneNotSupportedException if the cloning is not supported.
    */
   public DataRowDataSource clone()
-      throws CloneNotSupportedException
-  {
+    throws CloneNotSupportedException {
     final DataRowDataSource drs = (DataRowDataSource) super.clone();
-    if (valueExpression != null)
-    {
+    if ( valueExpression != null ) {
       drs.valueExpression = (FormulaExpression) valueExpression.clone();
     }
     return drs;

@@ -17,24 +17,20 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.gui.base.internal;
 
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Graphics2D;
-import java.awt.RenderingHints;
+import org.pentaho.reporting.engine.classic.core.modules.output.pageable.graphics.PageDrawable;
+
+import javax.swing.*;
+import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Rectangle2D;
 import java.awt.print.PageFormat;
-import javax.swing.UIManager;
-
-import org.pentaho.reporting.engine.classic.core.modules.output.pageable.graphics.PageDrawable;
 
 /**
  * Creation-Date: 17.11.2006, 20:31:36
  *
  * @author Thomas Morgner
  */
-public class PageBackgroundDrawable
-{
+public class PageBackgroundDrawable {
   private int defaultWidth;
   private int defaultHeight;
   private PageDrawable backend;
@@ -42,89 +38,73 @@ public class PageBackgroundDrawable
   private float shadowSize;
   private double zoom;
 
-  public PageBackgroundDrawable()
-  {
+  public PageBackgroundDrawable() {
     this.shadowSize = 6;
     this.borderPainted = false;
     this.zoom = 1;
   }
 
-  public PageDrawable getBackend()
-  {
+  public PageDrawable getBackend() {
     return backend;
   }
 
-  public void setBackend(final PageDrawable backend)
-  {
+  public void setBackend( final PageDrawable backend ) {
     this.backend = backend;
   }
 
-  public boolean isBorderPainted()
-  {
+  public boolean isBorderPainted() {
     return borderPainted;
   }
 
-  public void setBorderPainted(final boolean borderPainted)
-  {
+  public void setBorderPainted( final boolean borderPainted ) {
     this.borderPainted = borderPainted;
   }
 
-  public double getZoom()
-  {
+  public double getZoom() {
     return zoom;
   }
 
-  public void setZoom(final double zoom)
-  {
+  public void setZoom( final double zoom ) {
     this.zoom = zoom;
   }
 
-  public int getDefaultWidth()
-  {
+  public int getDefaultWidth() {
     return defaultWidth;
   }
 
-  public void setDefaultWidth(final int defaultWidth)
-  {
+  public void setDefaultWidth( final int defaultWidth ) {
     this.defaultWidth = defaultWidth;
   }
 
-  public int getDefaultHeight()
-  {
+  public int getDefaultHeight() {
     return defaultHeight;
   }
 
-  public void setDefaultHeight(final int defaultHeight)
-  {
+  public void setDefaultHeight( final int defaultHeight ) {
     this.defaultHeight = defaultHeight;
   }
 
-  public Dimension getPreferredSize()
-  {
-    if (backend == null)
-    {
-      return new Dimension((int) ((defaultWidth + shadowSize) * zoom),
-          (int) ((defaultHeight + shadowSize) * zoom));
+  public Dimension getPreferredSize() {
+    if ( backend == null ) {
+      return new Dimension( (int) ( ( defaultWidth + shadowSize ) * zoom ),
+        (int) ( ( defaultHeight + shadowSize ) * zoom ) );
     }
     final Dimension preferredSize = backend.getPreferredSize();
 
     return new Dimension
-        ((int) ((preferredSize.width + shadowSize) * zoom),
-            (int) ((preferredSize.height + shadowSize) * zoom));
+      ( (int) ( ( preferredSize.width + shadowSize ) * zoom ),
+        (int) ( ( preferredSize.height + shadowSize ) * zoom ) );
   }
 
-  public boolean isPreserveAspectRatio()
-  {
+  public boolean isPreserveAspectRatio() {
     return true;
   }
 
-  public float getShadowSize()
-  {
+  public float getShadowSize() {
     return shadowSize;
   }
 
-  public void setShadowSize(final float shadowSize)
-  {
+  public void setShadowSize( final float shadowSize ) {
     this.shadowSize = shadowSize;
   }
 
@@ -132,12 +112,10 @@ public class PageBackgroundDrawable
    * Draws the object.
    *
    * @param graphics the graphics device.
-   * @param area the area inside which the object should be drawn.
+   * @param area     the area inside which the object should be drawn.
    */
-  public strictfp void draw(final Graphics2D graphics, final Rectangle2D area)
-  {
-    if (backend == null)
-    {
+  public strictfp void draw( final Graphics2D graphics, final Rectangle2D area ) {
+    if ( backend == null ) {
       return;
     }
 
@@ -154,46 +132,45 @@ public class PageBackgroundDrawable
     //double paperBorder = paperBorderPixel * zoomFactor;
 
     /** Prepare background **/
-    g2.transform(AffineTransform.getScaleInstance(getZoom(), getZoom()));
-    g2.setRenderingHint(RenderingHints.KEY_FRACTIONALMETRICS, RenderingHints.VALUE_FRACTIONALMETRICS_ON);
+    g2.transform( AffineTransform.getScaleInstance( getZoom(), getZoom() ) );
+    g2.setRenderingHint( RenderingHints.KEY_FRACTIONALMETRICS, RenderingHints.VALUE_FRACTIONALMETRICS_ON );
 
     /** Prepare background **/
-    final Rectangle2D pageArea = new Rectangle2D.Float(0, 0, outerW, outerH);
+    final Rectangle2D pageArea = new Rectangle2D.Float( 0, 0, outerW, outerH );
     /**
      * The border around the printable area is painted when the corresponding property is
      * set to true.
      */
-    final Rectangle2D printingArea = new Rectangle2D.Float(innerX, innerY, innerW, innerH);
+    final Rectangle2D printingArea = new Rectangle2D.Float( innerX, innerY, innerW, innerH );
 
     /** Paint Page Shadow */
     final Rectangle2D southborder = new Rectangle2D.Float
-        (getShadowSize(), outerH,
-            outerW, getShadowSize());
+      ( getShadowSize(), outerH,
+        outerW, getShadowSize() );
     final Rectangle2D eastborder = new Rectangle2D.Float
-        (outerW, getShadowSize(), getShadowSize(), outerH);
+      ( outerW, getShadowSize(), getShadowSize(), outerH );
 
-    g2.setPaint(UIManager.getColor("controlShadow")); //$NON-NLS-1$
+    g2.setPaint( UIManager.getColor( "controlShadow" ) ); //$NON-NLS-1$
 
-    g2.fill(southborder);
-    g2.fill(eastborder);
+    g2.fill( southborder );
+    g2.fill( eastborder );
 
-    if (isBorderPainted())
-    {
-      g2.setPaint(Color.gray);
-      g2.draw(printingArea);
+    if ( isBorderPainted() ) {
+      g2.setPaint( Color.gray );
+      g2.draw( printingArea );
     }
 
-    g2.setPaint(Color.white);
-    g2.fill(pageArea);
+    g2.setPaint( Color.white );
+    g2.fill( pageArea );
 
     final Graphics2D g22 = (Graphics2D) g2.create();
-    backend.draw(g22, new Rectangle2D.Double
-        (0, 0, pageFormat.getWidth(), pageFormat.getHeight()));
+    backend.draw( g22, new Rectangle2D.Double
+      ( 0, 0, pageFormat.getWidth(), pageFormat.getHeight() ) );
     g22.dispose();
-    
-    final Rectangle2D transPageArea = new Rectangle2D.Float(0, 0, outerW, outerH);
-    g2.setPaint(Color.black);
-    g2.draw(transPageArea);
+
+    final Rectangle2D transPageArea = new Rectangle2D.Float( 0, 0, outerW, outerH );
+    g2.setPaint( Color.black );
+    g2.draw( transPageArea );
 
 
     g2.dispose();

@@ -23,13 +23,11 @@ import org.pentaho.reporting.engine.classic.core.modules.parser.bundle.BundleNam
 import org.pentaho.reporting.libraries.xmlns.parser.ParseException;
 import org.xml.sax.SAXException;
 
-public class BulkExpressionReadHandler extends ExpressionReadHandler
-{
+public class BulkExpressionReadHandler extends ExpressionReadHandler {
   private String attributeName;
   private String attributeNameSpace;
 
-  public BulkExpressionReadHandler()
-  {
+  public BulkExpressionReadHandler() {
   }
 
   /**
@@ -38,29 +36,24 @@ public class BulkExpressionReadHandler extends ExpressionReadHandler
    * @param attrs the attributes.
    * @throws org.xml.sax.SAXException if there is a parsing error.
    */
-  protected void startParsing(final PropertyAttributes attrs) throws SAXException
-  {
-    attributeName = attrs.getValue(BundleNamespaces.LAYOUT, "attribute-name");
-    attributeNameSpace = attrs.getValue(BundleNamespaces.LAYOUT, "attribute-namespace");
+  protected void startParsing( final PropertyAttributes attrs ) throws SAXException {
+    attributeName = attrs.getValue( BundleNamespaces.LAYOUT, "attribute-name" );
+    attributeNameSpace = attrs.getValue( BundleNamespaces.LAYOUT, "attribute-namespace" );
 
-    if (attributeName == null)
-    {
-      throw new ParseException("Mandatory attribute 'attribute-name' is missing");
+    if ( attributeName == null ) {
+      throw new ParseException( "Mandatory attribute 'attribute-name' is missing" );
     }
-    if (attributeNameSpace == null)
-    {
-      throw new ParseException("Mandatory attribute 'attribute-namespace' is missing");
+    if ( attributeNameSpace == null ) {
+      throw new ParseException( "Mandatory attribute 'attribute-namespace' is missing" );
     }
-    super.startParsing(attrs);
+    super.startParsing( attrs );
   }
 
-  public String getAttributeName()
-  {
+  public String getAttributeName() {
     return attributeName;
   }
 
-  public String getAttributeNameSpace()
-  {
+  public String getAttributeNameSpace() {
     return attributeNameSpace;
   }
 }

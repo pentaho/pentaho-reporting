@@ -21,11 +21,9 @@ import org.pentaho.reporting.engine.classic.core.filter.types.TextFieldType;
 import org.pentaho.reporting.libraries.xmlns.parser.ParseException;
 
 @Deprecated
-public class TextFieldReadHandler extends AbstractElementReadHandler
-{
+public class TextFieldReadHandler extends AbstractElementReadHandler {
 
-  public TextFieldReadHandler() throws ParseException
-  {
-    super(TextFieldType.INSTANCE);
+  public TextFieldReadHandler() throws ParseException {
+    super( TextFieldType.INSTANCE );
   }
 }

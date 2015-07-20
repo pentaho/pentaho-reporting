@@ -17,9 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.core.bugs;
 
-import java.net.URL;
-import java.util.List;
-
 import junit.framework.TestCase;
 import org.junit.Assert;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
@@ -34,44 +31,41 @@ import org.pentaho.reporting.engine.classic.core.testsupport.selector.MatchFacto
 import org.pentaho.reporting.libraries.resourceloader.Resource;
 import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 
-public class Prd3154Test extends TestCase
-{
-  public Prd3154Test()
-  {
+import java.net.URL;
+import java.util.List;
+
+public class Prd3154Test extends TestCase {
+  public Prd3154Test() {
   }
 
-  public Prd3154Test(final String name)
-  {
-    super(name);
+  public Prd3154Test( final String name ) {
+    super( name );
   }
 
-  protected void setUp() throws Exception
-  {
+  protected void setUp() throws Exception {
     ClassicEngineBoot.getInstance().start();
   }
 
-  public void testReport() throws Exception
-  {
-    final URL url = getClass().getResource("Prd-3154.prpt");
-    assertNotNull(url);
+  public void testReport() throws Exception {
+    final URL url = getClass().getResource( "Prd-3154.prpt" );
+    assertNotNull( url );
     final ResourceManager resourceManager = new ResourceManager();
     resourceManager.registerDefaults();
-    final Resource directly = resourceManager.createDirectly(url, MasterReport.class);
+    final Resource directly = resourceManager.createDirectly( url, MasterReport.class );
     final MasterReport report = (MasterReport) directly.getResource();
 
     // having images in the header does not add any information, but slows down the report processing.
     PageHeader pageHeader = report.getPageHeader();
-    pageHeader.removeElement(pageHeader.getElement(5));
-    pageHeader.removeElement(pageHeader.getElement(0));
+    pageHeader.removeElement( pageHeader.getElement( 5 ) );
+    pageHeader.removeElement( pageHeader.getElement( 0 ) );
 
-    List<LogicalPageBox> logicalPageBoxes = DebugReportRunner.layoutPages(report, 0, 1);
-    for (LogicalPageBox box : logicalPageBoxes)
-    {
-      RenderNode[] elementsByElementType = MatchFactory.findElementsByElementType(box, PageHeaderType.INSTANCE);
-      Assert.assertEquals(1, elementsByElementType.length);
-      Assert.assertTrue(elementsByElementType[0] instanceof RenderBox);
-      RenderBox ph = (RenderBox) elementsByElementType[0];
-      Assert.assertEquals(4, ph.getChildCount());
+    List<LogicalPageBox> logicalPageBoxes = DebugReportRunner.layoutPages( report, 0, 1 );
+    for ( LogicalPageBox box : logicalPageBoxes ) {
+      RenderNode[] elementsByElementType = MatchFactory.findElementsByElementType( box, PageHeaderType.INSTANCE );
+      Assert.assertEquals( 1, elementsByElementType.length );
+      Assert.assertTrue( elementsByElementType[ 0 ] instanceof RenderBox );
+      RenderBox ph = (RenderBox) elementsByElementType[ 0 ];
+      Assert.assertEquals( 4, ph.getChildCount() );
     }
   }
 

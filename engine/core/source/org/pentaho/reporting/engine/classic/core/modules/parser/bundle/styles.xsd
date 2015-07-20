@@ -65,12 +65,14 @@
       <xs:element type="style:page-definitionType" name="page-definition" minOccurs="0" maxOccurs="1"/>
       <xs:element type="style:style-ruleType" name="style-rule" minOccurs="0" maxOccurs="1">
         <xs:annotation>
-          <xs:documentation>Contains a list of style-sheets keyed by a unique name. Style-Sheets can have an optional parent
-   stylesheet to allow some simple form of inheritance. Global stylesheets defined here always inherit
-   all style-properties.
+          <xs:documentation>Contains a list of style-sheets keyed by a unique name. Style-Sheets can have an optional
+            parent
+            stylesheet to allow some simple form of inheritance. Global stylesheets defined here always inherit
+            all style-properties.
 
-   Attributes not set here indicate that the parent's value should be used. If the style has
-   no parent, then the default-stylesheet's value will be used instead.</xs:documentation>
+            Attributes not set here indicate that the parent's value should be used. If the style has
+            no parent, then the default-stylesheet's value will be used instead.
+          </xs:documentation>
         </xs:annotation>
       </xs:element>
       <xs:element ref="layout:layout-processors" minOccurs="0" maxOccurs="1"/>

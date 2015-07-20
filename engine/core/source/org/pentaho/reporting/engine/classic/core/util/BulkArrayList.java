@@ -28,17 +28,15 @@ import java.util.Arrays;
  * @author Thomas Morgner
  * @noinspection unchecked, SuspiciousSystemArraycopy
  */
-public class BulkArrayList<T> implements Cloneable
-{
-  public static interface Func<T>
-  {
-    void process (T value, int index);
+public class BulkArrayList<T> implements Cloneable {
+  public static interface Func<T> {
+    void process( T value, int index );
   }
 
   /**
    * An empty array used to avoid object creation.
    */
-  private static final Object[] EMPTY_ARRAY = new Object[0];
+  private static final Object[] EMPTY_ARRAY = new Object[ 0 ];
   /**
    * The array holding the list data.
    */
@@ -58,18 +56,16 @@ public class BulkArrayList<T> implements Cloneable
    *
    * @param capacity the initial capacity.
    */
-  public BulkArrayList(final int capacity)
-  {
-    data = new Object[capacity];
+  public BulkArrayList( final int capacity ) {
+    data = new Object[ capacity ];
     increment = capacity;
   }
 
-  public BulkArrayList(final T[] data, final int increment)
-  {
-    this (Math.max (increment, data.length + increment));
+  public BulkArrayList( final T[] data, final int increment ) {
+    this( Math.max( increment, data.length + increment ) );
     this.increment = increment;
 
-    System.arraycopy(data, 0, this.data, 0, data.length);
+    System.arraycopy( data, 0, this.data, 0, data.length );
   }
 
   /**
@@ -78,12 +74,10 @@ public class BulkArrayList<T> implements Cloneable
    *
    * @param c the new capacity of the list.
    */
-  private void ensureCapacity(final int c)
-  {
-    if (data.length <= c)
-    {
-      final Object[] newData = new Object[Math.max(data.length + increment, c + 1)];
-      System.arraycopy(data, 0, newData, 0, size);
+  private void ensureCapacity( final int c ) {
+    if ( data.length <= c ) {
+      final Object[] newData = new Object[ Math.max( data.length + increment, c + 1 ) ];
+      System.arraycopy( data, 0, newData, 0, size );
       data = newData;
     }
   }
@@ -93,27 +87,23 @@ public class BulkArrayList<T> implements Cloneable
    *
    * @param value the new value to be added.
    */
-  public void add(final T value)
-  {
-    ensureCapacity(size);
-    data[size] = value;
+  public void add( final T value ) {
+    ensureCapacity( size );
+    data[ size ] = value;
     size += 1;
   }
 
-  public void remove(final int index)
-  {
-    if (index < 0 || index >= size)
-    {
+  public void remove( final int index ) {
+    if ( index < 0 || index >= size ) {
       throw new IllegalArgumentException();
     }
 
     final int tailSize = size - index - 1;
-    if (tailSize > 0)
-    {
-      System.arraycopy(data, index + 1, data, index, tailSize);
+    if ( tailSize > 0 ) {
+      System.arraycopy( data, index + 1, data, index, tailSize );
     }
     size -= 1;
-    data[size] = 0;
+    data[ size ] = 0;
   }
 
   /**
@@ -122,34 +112,28 @@ public class BulkArrayList<T> implements Cloneable
    * @param value the new value to be defined.
    * @param index the position of the valur that should be redefined.
    */
-  public void set(final int index, final T value)
-  {
-    ensureCapacity(index);
-    data[index] = value;
-    if (index >= size)
-    {
+  public void set( final int index, final T value ) {
+    ensureCapacity( index );
+    data[ index ] = value;
+    if ( index >= size ) {
       size = index + 1;
     }
   }
 
-  public void removeRange (final int index, final int count)
-  {
-    if (index < 0)
-    {
+  public void removeRange( final int index, final int count ) {
+    if ( index < 0 ) {
       throw new IndexOutOfBoundsException();
     }
-    if (count < 0)
-    {
+    if ( count < 0 ) {
       throw new IndexOutOfBoundsException();
     }
-    if (index + count > size)
-    {
+    if ( index + count > size ) {
       throw new IndexOutOfBoundsException();
     }
 
-    System.arraycopy(data, index + count, data, index, count);
+    System.arraycopy( data, index + count, data, index, count );
     size -= count;
-    Arrays.fill (data, size, size + count, null);
+    Arrays.fill( data, size, size + count, null );
   }
 
   /**
@@ -159,22 +143,19 @@ public class BulkArrayList<T> implements Cloneable
    * @return the value at the given index
    * @throws IndexOutOfBoundsException if the index is greater or equal to the list size or if the index is negative.
    */
-  public T get(final int index)
-  {
-    if (index >= size || index < 0)
-    {
-      throw new IndexOutOfBoundsException("Illegal Index: " + index + " Max:" + size);
+  public T get( final int index ) {
+    if ( index >= size || index < 0 ) {
+      throw new IndexOutOfBoundsException( "Illegal Index: " + index + " Max:" + size );
     }
-    return (T) data[index];
+    return (T) data[ index ];
   }
 
   /**
    * Clears the list.
    */
-  public void clear()
-  {
+  public void clear() {
     size = 0;
-    Arrays.fill(data, null);
+    Arrays.fill( data, null );
   }
 
   /**
@@ -182,8 +163,7 @@ public class BulkArrayList<T> implements Cloneable
    *
    * @return the number of elements in the list
    */
-  public int size()
-  {
+  public int size() {
     return size;
   }
 
@@ -193,15 +173,13 @@ public class BulkArrayList<T> implements Cloneable
    * @param retval the array that should receive the contents.
    * @return the list contents as array.
    */
-  public <T> T[] toArray(final T[] retval)
-  {
-    if (retval.length < size)
-    {
-      return (T[]) Arrays.copyOf(data, size, retval.getClass());
+  public <T> T[] toArray( final T[] retval ) {
+    if ( retval.length < size ) {
+      return (T[]) Arrays.copyOf( data, size, retval.getClass() );
     }
 
-    System.arraycopy(data, 0, retval, 0, size);
-    Arrays.fill(retval, size, retval.length, null);
+    System.arraycopy( data, 0, retval, 0, size );
+    Arrays.fill( retval, size, retval.length, null );
     return retval;
   }
 
@@ -211,23 +189,19 @@ public class BulkArrayList<T> implements Cloneable
    * @return a copy of this list.
    * @throws CloneNotSupportedException if something went wrong during the cloning.
    */
-  public BulkArrayList<T> clone() throws CloneNotSupportedException
-  {
+  public BulkArrayList<T> clone() throws CloneNotSupportedException {
     final BulkArrayList<T> intList = (BulkArrayList<T>) super.clone();
     intList.data = data.clone();
     return intList;
   }
 
-  public void foreach (Func<T> func)
-  {
-    foreach(func, 0, size);
+  public void foreach( Func<T> func ) {
+    foreach( func, 0, size );
   }
 
-  public void foreach (Func<T> func, int start, int end)
-  {
-    for (int i = start; i < end; i+= 1)
-    {
-      func.process((T) data[i], i);
+  public void foreach( Func<T> func, int start, int end ) {
+    for ( int i = start; i < end; i += 1 ) {
+      func.process( (T) data[ i ], i );
     }
   }
 }

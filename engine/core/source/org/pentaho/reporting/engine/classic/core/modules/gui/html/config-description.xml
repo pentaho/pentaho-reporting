@@ -4,125 +4,164 @@
     <description>A module definition. Please do not edit this entry.</description>
     <class instanceof="org.pentaho.reporting.libraries.base.boot.Module"/>
   </key>
-  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.html.ProgressDialogEnabled" global="true" hidden="false">
+  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.html.ProgressDialogEnabled" global="true"
+       hidden="false">
     <description>Defines, whether the progress dialog should be visible when exporting the report.</description>
     <enum>
       <text>true</text>
       <text>false</text>
     </enum>
   </key>
-  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.html.export.file.add-to-menu" global="true" hidden="false">
+  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.html.export.file.add-to-menu" global="true"
+       hidden="false">
     <description>Defines, whether this Action will be added to the menu.</description>
     <enum>
       <text>true</text>
       <text>false</text>
     </enum>
   </key>
-  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.html.export.file.add-to-toolbar" global="true" hidden="false">
+  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.html.export.file.add-to-toolbar" global="true"
+       hidden="false">
     <description>Defines, whether this Action will be added to the toolbar.</description>
     <enum>
       <text>true</text>
       <text>false</text>
     </enum>
   </key>
-  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.html.export.file.menu-order" global="true" hidden="false">
-    <description>Defines the sort-order of this Action in the menu. The sort-order is relative to all other Actions in the same menu.</description>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.html.export.file.menu-order" global="true"
+       hidden="false">
+    <description>Defines the sort-order of this Action in the menu. The sort-order is relative to all other Actions in
+      the same menu.
+    </description>
     <text/>
   </key>
   <key name="org.pentaho.reporting.engine.classic.core.modules.gui.html.export.file.role" global="true" hidden="false">
     <description>Defines the action-role for this Action.</description>
     <text/>
   </key>
-  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.html.export.file.role-preference" global="true" hidden="false">
-    <description>Defines the preference weight, this Action get over all other actions with the same role name. The action with the largest weight will win.</description>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.html.export.file.role-preference" global="true"
+       hidden="false">
+    <description>Defines the preference weight, this Action get over all other actions with the same role name. The
+      action with the largest weight will win.
+    </description>
     <text/>
   </key>
-  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.html.export.file.separated" global="true" hidden="false">
+  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.html.export.file.separated" global="true"
+       hidden="false">
     <description>Defines, whether this Action will be separated from other action in the same menu.</description>
     <enum>
       <text>true</text>
       <text>false</text>
     </enum>
   </key>
-  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.html.export.file.toolbar-order" global="true" hidden="false">
-    <description>Defines the sort-order of this Action in the toolbar. The sort-order is relative to all other Actions in the toolbar.</description>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.html.export.file.toolbar-order" global="true"
+       hidden="false">
+    <description>Defines the sort-order of this Action in the toolbar. The sort-order is relative to all other Actions
+      in the toolbar.
+    </description>
     <text/>
   </key>
-  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.html.export.stream.add-to-menu" global="true" hidden="false">
+  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.html.export.stream.add-to-menu" global="true"
+       hidden="false">
     <description>Defines, whether this Action will be added to the menu.</description>
     <enum>
       <text>true</text>
       <text>false</text>
     </enum>
   </key>
-  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.html.export.stream.add-to-toolbar" global="true" hidden="false">
+  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.html.export.stream.add-to-toolbar" global="true"
+       hidden="false">
     <description>Defines, whether this Action will be added to the toolbar.</description>
     <enum>
       <text>true</text>
       <text>false</text>
     </enum>
   </key>
-  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.html.export.stream.menu-order" global="true" hidden="false">
-    <description>Defines the sort-order of this Action in the menu. The sort-order is relative to all other Actions in the same menu.</description>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.html.export.stream.menu-order" global="true"
+       hidden="false">
+    <description>Defines the sort-order of this Action in the menu. The sort-order is relative to all other Actions in
+      the same menu.
+    </description>
     <text/>
   </key>
-  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.html.export.stream.role" global="true" hidden="false">
+  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.html.export.stream.role" global="true"
+       hidden="false">
     <description>Defines the action-role for this Action.</description>
     <text/>
   </key>
-  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.html.export.stream.role-preference" global="true" hidden="false">
-    <description>Defines the preference weight, this Action get over all other actions with the same role name. The action with the largest weight will win.</description>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.html.export.stream.role-preference" global="true"
+       hidden="false">
+    <description>Defines the preference weight, this Action get over all other actions with the same role name. The
+      action with the largest weight will win.
+    </description>
     <text/>
   </key>
-  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.html.export.stream.separated" global="true" hidden="false">
+  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.html.export.stream.separated" global="true"
+       hidden="false">
     <description>Defines, whether this Action will be separated from other action in the same menu.</description>
     <enum>
       <text>true</text>
       <text>false</text>
     </enum>
   </key>
-  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.html.export.stream.toolbar-order" global="true" hidden="false">
-    <description>Defines the sort-order of this Action in the toolbar. The sort-order is relative to all other Actions in the toolbar.</description>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.html.export.stream.toolbar-order" global="true"
+       hidden="false">
+    <description>Defines the sort-order of this Action in the toolbar. The sort-order is relative to all other Actions
+      in the toolbar.
+    </description>
     <text/>
   </key>
-  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.html.export.zip.add-to-menu" global="true" hidden="false">
+  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.html.export.zip.add-to-menu" global="true"
+       hidden="false">
     <description>Defines, whether this Action will be added to the menu.</description>
     <enum>
       <text>true</text>
       <text>false</text>
     </enum>
   </key>
-  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.html.export.zip.add-to-toolbar" global="true" hidden="false">
+  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.html.export.zip.add-to-toolbar" global="true"
+       hidden="false">
     <description>Defines, whether this Action will be added to the toolbar.</description>
     <enum>
       <text>true</text>
       <text>false</text>
     </enum>
   </key>
-  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.html.export.zip.menu-order" global="true" hidden="false">
-    <description>Defines the sort-order of this Action in the menu. The sort-order is relative to all other Actions in the same menu.</description>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.html.export.zip.menu-order" global="true"
+       hidden="false">
+    <description>Defines the sort-order of this Action in the menu. The sort-order is relative to all other Actions in
+      the same menu.
+    </description>
     <text/>
   </key>
   <key name="org.pentaho.reporting.engine.classic.core.modules.gui.html.export.zip.role" global="true" hidden="false">
     <description>Defines the action-role for this Action.</description>
     <text/>
   </key>
-  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.html.export.zip.role-preference" global="true" hidden="false">
-    <description>Defines the preference weight, this Action get over all other actions with the same role name. The action with the largest weight will win.</description>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.html.export.zip.role-preference" global="true"
+       hidden="false">
+    <description>Defines the preference weight, this Action get over all other actions with the same role name. The
+      action with the largest weight will win.
+    </description>
     <text/>
   </key>
-  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.html.export.zip.separated" global="true" hidden="false">
+  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.html.export.zip.separated" global="true"
+       hidden="false">
     <description>Defines, whether this Action will be separated from other action in the same menu.</description>
     <enum>
       <text>true</text>
       <text>false</text>
     </enum>
   </key>
-  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.html.export.zip.toolbar-order" global="true" hidden="false">
-    <description>Defines the sort-order of this Action in the toolbar. The sort-order is relative to all other Actions in the toolbar.</description>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.html.export.zip.toolbar-order" global="true"
+       hidden="false">
+    <description>Defines the sort-order of this Action in the toolbar. The sort-order is relative to all other Actions
+      in the toolbar.
+    </description>
     <text/>
   </key>
-  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.html.file.AdvancedSettingsAvailable" global="true" hidden="false">
+  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.html.file.AdvancedSettingsAvailable" global="true"
+       hidden="false">
     <description>Defines, whether the Advanced-Export-Settings tab will be available in the export dialog.</description>
     <enum>
       <text>true</text>
@@ -133,28 +172,36 @@
     <description>The export dialog implementation to use. This is a implementation configuration.</description>
     <text/>
   </key>
-  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.html.file.MetaDataSettingsAvailable" global="true" hidden="false">
-    <description>Defines, whether the Document-Meta-Data tab will be available in the export dialog. The Document-Meta-Data-Tab allows to edit the Author, Keywords, Description and Title of the report.</description>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.html.file.MetaDataSettingsAvailable" global="true"
+       hidden="false">
+    <description>Defines, whether the Document-Meta-Data tab will be available in the export dialog. The
+      Document-Meta-Data-Tab allows to edit the Author, Keywords, Description and Title of the report.
+    </description>
     <enum>
       <text>true</text>
       <text>false</text>
     </enum>
   </key>
-  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.html.file.ProgressDialogEnabled" global="true" hidden="false">
+  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.html.file.ProgressDialogEnabled" global="true"
+       hidden="false">
     <description>Defines, whether the progress dialog should be visible when exporting the report.</description>
     <enum>
       <text>true</text>
       <text>false</text>
     </enum>
   </key>
-  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.html.file.StoreDialogContents" global="true" hidden="false">
-    <description>Defines, whether the export dialogs will store the user-input for each report. Set this property to false, if you are concerned about any privacy leaks.</description>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.html.file.StoreDialogContents" global="true"
+       hidden="false">
+    <description>Defines, whether the export dialogs will store the user-input for each report. Set this property to
+      false, if you are concerned about any privacy leaks.
+    </description>
     <enum>
       <text>true</text>
       <text>false</text>
     </enum>
   </key>
-  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.html.stream.AdvancedSettingsAvailable" global="true" hidden="false">
+  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.html.stream.AdvancedSettingsAvailable" global="true"
+       hidden="false">
     <description>Defines, whether the Advanced-Export-Settings tab will be available in the export dialog.</description>
     <enum>
       <text>true</text>
@@ -165,28 +212,36 @@
     <description>The export dialog implementation to use. This is a implementation configuration.</description>
     <text/>
   </key>
-  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.html.stream.MetaDataSettingsAvailable" global="true" hidden="false">
-    <description>Defines, whether the Document-Meta-Data tab will be available in the export dialog. The Document-Meta-Data-Tab allows to edit the Author, Keywords, Description and Title of the report.</description>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.html.stream.MetaDataSettingsAvailable" global="true"
+       hidden="false">
+    <description>Defines, whether the Document-Meta-Data tab will be available in the export dialog. The
+      Document-Meta-Data-Tab allows to edit the Author, Keywords, Description and Title of the report.
+    </description>
     <enum>
       <text>true</text>
       <text>false</text>
     </enum>
   </key>
-  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.html.stream.ProgressDialogEnabled" global="true" hidden="false">
+  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.html.stream.ProgressDialogEnabled" global="true"
+       hidden="false">
     <description>Defines, whether the progress dialog should be visible when exporting the report.</description>
     <enum>
       <text>true</text>
       <text>false</text>
     </enum>
   </key>
-  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.html.stream.StoreDialogContents" global="true" hidden="false">
-    <description>Defines, whether the export dialogs will store the user-input for each report. Set this property to false, if you are concerned about any privacy leaks.</description>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.html.stream.StoreDialogContents" global="true"
+       hidden="false">
+    <description>Defines, whether the export dialogs will store the user-input for each report. Set this property to
+      false, if you are concerned about any privacy leaks.
+    </description>
     <enum>
       <text>true</text>
       <text>false</text>
     </enum>
   </key>
-  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.html.zip.AdvancedSettingsAvailable" global="true" hidden="false">
+  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.html.zip.AdvancedSettingsAvailable" global="true"
+       hidden="false">
     <description>Defines, whether the Advanced-Export-Settings tab will be available in the export dialog.</description>
     <enum>
       <text>true</text>
@@ -197,22 +252,29 @@
     <description>The export dialog implementation to use. This is a implementation configuration.</description>
     <text/>
   </key>
-  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.html.zip.MetaDataSettingsAvailable" global="true" hidden="false">
-    <description>Defines, whether the Document-Meta-Data tab will be available in the export dialog. The Document-Meta-Data-Tab allows to edit the Author, Keywords, Description and Title of the report.</description>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.html.zip.MetaDataSettingsAvailable" global="true"
+       hidden="false">
+    <description>Defines, whether the Document-Meta-Data tab will be available in the export dialog. The
+      Document-Meta-Data-Tab allows to edit the Author, Keywords, Description and Title of the report.
+    </description>
     <enum>
       <text>true</text>
       <text>false</text>
     </enum>
   </key>
-  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.html.zip.ProgressDialogEnabled" global="true" hidden="false">
+  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.html.zip.ProgressDialogEnabled" global="true"
+       hidden="false">
     <description>Defines, whether the progress dialog should be visible when exporting the report.</description>
     <enum>
       <text>true</text>
       <text>false</text>
     </enum>
   </key>
-  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.html.zip.StoreDialogContents" global="true" hidden="false">
-    <description>Defines, whether the export dialogs will store the user-input for each report. Set this property to false, if you are concerned about any privacy leaks.</description>
+  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.html.zip.StoreDialogContents" global="true"
+       hidden="false">
+    <description>Defines, whether the export dialogs will store the user-input for each report. Set this property to
+      false, if you are concerned about any privacy leaks.
+    </description>
     <enum>
       <text>true</text>
       <text>false</text>
@@ -220,32 +282,39 @@
   </key>
 
 
-  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.swing.actions.export.html.file" global="true" hidden="true">
+  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.swing.actions.export.html.file" global="true"
+       hidden="true">
     <description>A system level property that defines the menu-structure.</description>
     <text/>
   </key>
-  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.swing.actions.export.html.stream" global="true" hidden="true">
+  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.swing.actions.export.html.stream" global="true"
+       hidden="true">
     <description>A system level property that defines the menu-structure.</description>
     <text/>
   </key>
-  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.swing.actions.export.html.zip" global="true" hidden="true">
+  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.swing.actions.export.html.zip" global="true"
+       hidden="true">
     <description>A system level property that defines the menu-structure.</description>
     <text/>
   </key>
 
-  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.swing.category.export.html.enabled" global="true" hidden="true">
+  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.swing.category.export.html.enabled" global="true"
+       hidden="true">
     <description>A system level property that defines the menu-structure.</description>
     <text/>
   </key>
-  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.swing.category.export.html.position" global="true" hidden="true">
+  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.swing.category.export.html.position" global="true"
+       hidden="true">
     <description>A system level property that defines the menu-structure.</description>
     <text/>
   </key>
-  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.swing.category.export.html.resource-base" global="true" hidden="true">
+  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.swing.category.export.html.resource-base"
+       global="true" hidden="true">
     <description>A system level property that defines the menu-structure.</description>
     <text/>
   </key>
-  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.swing.category.export.html.resource-prefix" global="true" hidden="true">
+  <key name="org.pentaho.reporting.engine.classic.core.modules.gui.swing.category.export.html.resource-prefix"
+       global="true" hidden="true">
     <description>A system level property that defines the menu-structure.</description>
     <text/>
   </key>

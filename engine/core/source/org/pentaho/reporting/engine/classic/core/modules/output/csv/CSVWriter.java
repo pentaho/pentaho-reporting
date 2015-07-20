@@ -17,11 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.output.csv;
 
-import java.io.IOException;
-import java.io.Writer;
-import java.util.ArrayList;
-import java.util.Iterator;
-
 import org.pentaho.reporting.engine.classic.core.Band;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.pentaho.reporting.engine.classic.core.DataRow;
@@ -38,21 +33,24 @@ import org.pentaho.reporting.engine.classic.core.states.LayoutProcess;
 import org.pentaho.reporting.engine.classic.core.states.ReportState;
 import org.pentaho.reporting.engine.classic.core.states.process.SubReportProcessType;
 
+import java.io.IOException;
+import java.io.Writer;
+import java.util.ArrayList;
+import java.util.Iterator;
+
 /**
  * The CSV Writer is the content creation function used to create the CSV content. This implementation does no
  * layouting, the DataRow's raw data is written to the supplied writer.
  *
  * @author Thomas Morgner.
  * @noinspection HardCodedStringLiteral
- * @deprecated  Will be removed in the future, as PDI is a better CSV generator.
+ * @deprecated Will be removed in the future, as PDI is a better CSV generator.
  */
-public class CSVWriter extends AbstractFunction implements OutputFunction
-{
+public class CSVWriter extends AbstractFunction implements OutputFunction {
   /**
    * The CSVRow is used to collect the data of a single row of data.
    */
-  private static class CSVRow
-  {
+  private static class CSVRow {
     /**
      * The data.
      */
@@ -73,13 +71,12 @@ public class CSVWriter extends AbstractFunction implements OutputFunction
      *
      * @param quoter a utility class for quoting CSV strings.
      */
-    protected CSVRow(final CSVQuoter quoter)
-    {
+    protected CSVRow( final CSVQuoter quoter ) {
       data = new ArrayList<Object>();
       this.quoter = quoter;
       lineSeparator =
-          ClassicEngineBoot.getInstance().getGlobalConfig().getConfigProperty
-              ("line.separator", "\n");
+        ClassicEngineBoot.getInstance().getGlobalConfig().getConfigProperty
+          ( "line.separator", "\n" );
     }
 
     /**
@@ -87,9 +84,8 @@ public class CSVWriter extends AbstractFunction implements OutputFunction
      *
      * @param value the appended int value
      */
-    public void append(final int value)
-    {
-      data.add(value);
+    public void append( final int value ) {
+      data.add( value );
     }
 
     /**
@@ -97,9 +93,8 @@ public class CSVWriter extends AbstractFunction implements OutputFunction
      *
      * @param o the appended value
      */
-    public void append(final Object o)
-    {
-      data.add(o);
+    public void append( final Object o ) {
+      data.add( o );
     }
 
     /**
@@ -108,19 +103,16 @@ public class CSVWriter extends AbstractFunction implements OutputFunction
      * @param w the writer.
      * @throws IOException if an I/O error occurred.
      */
-    public void write(final Writer w)
-        throws IOException
-    {
+    public void write( final Writer w )
+      throws IOException {
       final Iterator it = data.iterator();
-      while (it.hasNext())
-      {
-        w.write(quoter.doQuoting(String.valueOf(it.next())));
-        if (it.hasNext())
-        {
-          w.write(quoter.getSeparator());
+      while ( it.hasNext() ) {
+        w.write( quoter.doQuoting( String.valueOf( it.next() ) ) );
+        if ( it.hasNext() ) {
+          w.write( quoter.getSeparator() );
         }
       }
-      w.write(lineSeparator);
+      w.write( lineSeparator );
     }
   }
 
@@ -155,9 +147,8 @@ public class CSVWriter extends AbstractFunction implements OutputFunction
   /**
    * DefaulConstructor. Creates a CSVWriter with a dependency level of -1 and a default CSVQuoter.
    */
-  public CSVWriter()
-  {
-    setDependencyLevel(LayoutProcess.LEVEL_PAGINATE);
+  public CSVWriter() {
+    setDependencyLevel( LayoutProcess.LEVEL_PAGINATE );
     quoter = new CSVQuoter();
     this.inlineSubreports = new ArrayList<InlineSubreportMarker>();
   }
@@ -167,8 +158,7 @@ public class CSVWriter extends AbstractFunction implements OutputFunction
    *
    * @return true, if column names are printed, false otherwise.
    */
-  public boolean isWriteDataRowNames()
-  {
+  public boolean isWriteDataRowNames() {
     return writeDataRowNames;
   }
 
@@ -177,68 +167,55 @@ public class CSVWriter extends AbstractFunction implements OutputFunction
    *
    * @param writeDataRowNames true, if column names are printed, false otherwise
    */
-  public void setWriteDataRowNames(final boolean writeDataRowNames)
-  {
+  public void setWriteDataRowNames( final boolean writeDataRowNames ) {
     this.writeDataRowNames = writeDataRowNames;
   }
 
-  public boolean isWriteStateColumns()
-  {
+  public boolean isWriteStateColumns() {
     return writeStateColumns;
   }
 
-  public void setWriteStateColumns(final boolean writeStateColumns)
-  {
+  public void setWriteStateColumns( final boolean writeStateColumns ) {
     this.writeStateColumns = writeStateColumns;
   }
 
-  public boolean isEnableGroupFooter()
-  {
+  public boolean isEnableGroupFooter() {
     return enableGroupFooter;
   }
 
-  public void setEnableGroupFooter(final boolean enableGroupFooter)
-  {
+  public void setEnableGroupFooter( final boolean enableGroupFooter ) {
     this.enableGroupFooter = enableGroupFooter;
   }
 
-  public boolean isEnableGroupHeader()
-  {
+  public boolean isEnableGroupHeader() {
     return enableGroupHeader;
   }
 
-  public void setEnableGroupHeader(final boolean enableGroupHeader)
-  {
+  public void setEnableGroupHeader( final boolean enableGroupHeader ) {
     this.enableGroupHeader = enableGroupHeader;
   }
 
-  public boolean isEnableItemband()
-  {
+  public boolean isEnableItemband() {
     return enableItemband;
   }
 
-  public void setEnableItemband(final boolean enableItemband)
-  {
+  public void setEnableItemband( final boolean enableItemband ) {
     this.enableItemband = enableItemband;
   }
 
-  public boolean isEnableReportFooter()
-  {
+  public boolean isEnableReportFooter() {
     return enableReportFooter;
   }
 
-  public void setEnableReportFooter(final boolean enableReportFooter)
-  {
+  public void setEnableReportFooter( final boolean enableReportFooter ) {
     this.enableReportFooter = enableReportFooter;
   }
 
-  public boolean isEnableReportHeader()
-  {
+  public boolean isEnableReportHeader() {
     return enableReportHeader;
   }
 
-  public void setEnableReportHeader(final boolean enableReportHeader)
-  {
+  public void setEnableReportHeader( final boolean enableReportHeader ) {
     this.enableReportHeader = enableReportHeader;
   }
 
@@ -247,8 +224,7 @@ public class CSVWriter extends AbstractFunction implements OutputFunction
    *
    * @return the writer
    */
-  public Writer getWriter()
-  {
+  public Writer getWriter() {
     return w;
   }
 
@@ -257,8 +233,7 @@ public class CSVWriter extends AbstractFunction implements OutputFunction
    *
    * @param w the writer
    */
-  public void setWriter(final Writer w)
-  {
+  public void setWriter( final Writer w ) {
     this.w = w;
   }
 
@@ -269,17 +244,14 @@ public class CSVWriter extends AbstractFunction implements OutputFunction
    * @throws NullPointerException     if the separator is null.
    * @throws IllegalArgumentException if the separator is an empty string.
    */
-  public void setSeparator(final String separator)
-  {
-    if (separator == null)
-    {
+  public void setSeparator( final String separator ) {
+    if ( separator == null ) {
       throw new NullPointerException();
     }
-    if (separator.length() == 0)
-    {
-      throw new IllegalArgumentException("Separator must not be an empty string");
+    if ( separator.length() == 0 ) {
+      throw new IllegalArgumentException( "Separator must not be an empty string" );
     }
-    this.quoter.setSeparator(separator);
+    this.quoter.setSeparator( separator );
   }
 
   /**
@@ -287,8 +259,7 @@ public class CSVWriter extends AbstractFunction implements OutputFunction
    *
    * @return the separator, never null.
    */
-  public String getSeparator()
-  {
+  public String getSeparator() {
     return quoter.getSeparator();
   }
 
@@ -298,14 +269,12 @@ public class CSVWriter extends AbstractFunction implements OutputFunction
    * @param dr  the dataRow which should be written
    * @param row the CSVRow used to collect the RowData.
    */
-  private void writeDataRow(final DataRow dr, final CSVRow row)
-  {
+  private void writeDataRow( final DataRow dr, final CSVRow row ) {
     final String[] names = dr.getColumnNames();
     final int length = names.length;
-    for (int i = 0; i < length; i++)
-    {
-      final Object o = dr.get(names[i]);
-      row.append(o);
+    for ( int i = 0; i < length; i++ ) {
+      final Object o = dr.get( names[ i ] );
+      row.append( o );
     }
   }
 
@@ -315,14 +284,12 @@ public class CSVWriter extends AbstractFunction implements OutputFunction
    * @param dr  the dataRow which should be written
    * @param row the CSVRow used to collect the RowData.
    */
-  private void writeDataRowNames(final DataRow dr, final CSVRow row)
-  {
+  private void writeDataRowNames( final DataRow dr, final CSVRow row ) {
     final String[] names = dr.getColumnNames();
     final int length = names.length;
-    for (int i = 0; i < length; i++)
-    {
-      final String columnName = names[i];
-      row.append(columnName);
+    for ( int i = 0; i < length; i++ ) {
+      final String columnName = names[ i ];
+      row.append( columnName );
     }
   }
 
@@ -331,47 +298,38 @@ public class CSVWriter extends AbstractFunction implements OutputFunction
    *
    * @param event the event.
    */
-  public void reportStarted(final ReportEvent event)
-  {
-    if (event.getState().isPrepareRun())
-    {
-      collectSubReports(event.getReport().getReportHeader());
+  public void reportStarted( final ReportEvent event ) {
+    if ( event.getState().isPrepareRun() ) {
+      collectSubReports( event.getReport().getReportHeader() );
       return;
     }
 
-    try
-    {
-      if (isWriteDataRowNames())
-      {
-        final CSVRow names = new CSVRow(quoter);
-        if (isWriteStateColumns())
-        {
-          names.append("report.currentgroup");
-          names.append("report.eventtype");
+    try {
+      if ( isWriteDataRowNames() ) {
+        final CSVRow names = new CSVRow( quoter );
+        if ( isWriteStateColumns() ) {
+          names.append( "report.currentgroup" );
+          names.append( "report.eventtype" );
         }
-        writeDataRowNames(event.getDataRow(), names);
-        names.write(getWriter());
+        writeDataRowNames( event.getDataRow(), names );
+        names.write( getWriter() );
       }
 
-      if (isEnableReportHeader() == false)
-      {
+      if ( isEnableReportHeader() == false ) {
         return;
       }
 
-      final CSVRow row = new CSVRow(quoter);
-      if (isWriteStateColumns())
-      {
-        row.append(-1);
-        row.append("reportheader");
+      final CSVRow row = new CSVRow( quoter );
+      if ( isWriteStateColumns() ) {
+        row.append( -1 );
+        row.append( "reportheader" );
       }
-      writeDataRow(event.getDataRow(), row);
-      row.write(getWriter());
+      writeDataRow( event.getDataRow(), row );
+      row.write( getWriter() );
 
-      collectSubReports(event.getReport().getReportHeader());
-    }
-    catch (IOException ioe)
-    {
-      throw new FunctionProcessingException("Error writing the current datarow", ioe);
+      collectSubReports( event.getReport().getReportHeader() );
+    } catch ( IOException ioe ) {
+      throw new FunctionProcessingException( "Error writing the current datarow", ioe );
     }
   }
 
@@ -380,36 +338,29 @@ public class CSVWriter extends AbstractFunction implements OutputFunction
    *
    * @param event the event.
    */
-  public void reportFinished(final ReportEvent event)
-  {
-    if (event.getState().isPrepareRun())
-    {
-      collectSubReports(event.getReport().getReportFooter());
+  public void reportFinished( final ReportEvent event ) {
+    if ( event.getState().isPrepareRun() ) {
+      collectSubReports( event.getReport().getReportFooter() );
       return;
     }
 
-    if (isEnableReportFooter() == false)
-    {
-      collectSubReports(event.getReport().getReportFooter());
+    if ( isEnableReportFooter() == false ) {
+      collectSubReports( event.getReport().getReportFooter() );
       return;
     }
 
-    try
-    {
-      final CSVRow row = new CSVRow(quoter);
-      if (isWriteStateColumns())
-      {
-        row.append(-1);
-        row.append("reportfooter");
+    try {
+      final CSVRow row = new CSVRow( quoter );
+      if ( isWriteStateColumns() ) {
+        row.append( -1 );
+        row.append( "reportfooter" );
       }
-      writeDataRow(event.getDataRow(), row);
-      row.write(getWriter());
+      writeDataRow( event.getDataRow(), row );
+      row.write( getWriter() );
 
-      collectSubReports(event.getReport().getReportFooter());
-    }
-    catch (IOException ioe)
-    {
-      throw new FunctionProcessingException("Error writing the current datarow", ioe);
+      collectSubReports( event.getReport().getReportFooter() );
+    } catch ( IOException ioe ) {
+      throw new FunctionProcessingException( "Error writing the current datarow", ioe );
     }
   }
 
@@ -418,38 +369,32 @@ public class CSVWriter extends AbstractFunction implements OutputFunction
    *
    * @param event the event.
    */
-  public void groupStarted(final ReportEvent event)
-  {
-    if ((event.getState().isPrepareRun()) || (isEnableGroupHeader() == false))
-    {
+  public void groupStarted( final ReportEvent event ) {
+    if ( ( event.getState().isPrepareRun() ) || ( isEnableGroupHeader() == false ) ) {
       final int currentIndex = event.getState().getCurrentGroupIndex();
-      final Group g = event.getReport().getGroup(currentIndex);
-      collectSubReports(g, ElementMetaData.TypeClassification.HEADER);
+      final Group g = event.getReport().getGroup( currentIndex );
+      collectSubReports( g, ElementMetaData.TypeClassification.HEADER );
       return;
     }
 
-    try
-    {
+    try {
       final int currentIndex = event.getState().getCurrentGroupIndex();
 
-      final CSVRow row = new CSVRow(quoter);
-      if (isWriteStateColumns())
-      {
-        row.append(currentIndex);
-        final Group g = event.getReport().getGroup(currentIndex);
+      final CSVRow row = new CSVRow( quoter );
+      if ( isWriteStateColumns() ) {
+        row.append( currentIndex );
+        final Group g = event.getReport().getGroup( currentIndex );
         final String bandInfo = "groupheader name=\"" + g.getName() + '\"';
-        row.append(bandInfo);
+        row.append( bandInfo );
       }
-      writeDataRow(event.getDataRow(), row);
-      row.write(getWriter());
+      writeDataRow( event.getDataRow(), row );
+      row.write( getWriter() );
 
-      final Group g = event.getReport().getGroup(currentIndex);
+      final Group g = event.getReport().getGroup( currentIndex );
 
-      collectSubReports(g, ElementMetaData.TypeClassification.RELATIONAL_HEADER);
-    }
-    catch (IOException ioe)
-    {
-      throw new FunctionProcessingException("Error writing the current datarow", ioe);
+      collectSubReports( g, ElementMetaData.TypeClassification.RELATIONAL_HEADER );
+    } catch ( IOException ioe ) {
+      throw new FunctionProcessingException( "Error writing the current datarow", ioe );
     }
   }
 
@@ -458,36 +403,30 @@ public class CSVWriter extends AbstractFunction implements OutputFunction
    *
    * @param event the event.
    */
-  public void groupFinished(final ReportEvent event)
-  {
-    if ((event.getState().isPrepareRun()) || (isEnableGroupFooter() == false))
-    {
+  public void groupFinished( final ReportEvent event ) {
+    if ( ( event.getState().isPrepareRun() ) || ( isEnableGroupFooter() == false ) ) {
       final int currentIndex = event.getState().getCurrentGroupIndex();
-      final Group g = event.getReport().getGroup(currentIndex);
-      collectSubReports(g, ElementMetaData.TypeClassification.FOOTER);
+      final Group g = event.getReport().getGroup( currentIndex );
+      collectSubReports( g, ElementMetaData.TypeClassification.FOOTER );
       return;
     }
 
-    try
-    {
+    try {
       final int currentIndex = event.getState().getCurrentGroupIndex();
 
-      final CSVRow row = new CSVRow(quoter);
-      if (isWriteStateColumns())
-      {
-        row.append(currentIndex);
-        final Group g = event.getReport().getGroup(currentIndex);
+      final CSVRow row = new CSVRow( quoter );
+      if ( isWriteStateColumns() ) {
+        row.append( currentIndex );
+        final Group g = event.getReport().getGroup( currentIndex );
         final String bandInfo = "groupfooter name=\"" + g.getName() + '\"';
-        row.append(bandInfo);
+        row.append( bandInfo );
       }
-      writeDataRow(event.getDataRow(), row);
-      row.write(getWriter());
-      final Group g = event.getReport().getGroup(currentIndex);
-      collectSubReports(g, ElementMetaData.TypeClassification.RELATIONAL_FOOTER);
-    }
-    catch (IOException ioe)
-    {
-      throw new FunctionProcessingException("Error writing the current datarow", ioe);
+      writeDataRow( event.getDataRow(), row );
+      row.write( getWriter() );
+      final Group g = event.getReport().getGroup( currentIndex );
+      collectSubReports( g, ElementMetaData.TypeClassification.RELATIONAL_FOOTER );
+    } catch ( IOException ioe ) {
+      throw new FunctionProcessingException( "Error writing the current datarow", ioe );
     }
   }
 
@@ -497,9 +436,8 @@ public class CSVWriter extends AbstractFunction implements OutputFunction
    *
    * @param event The event.
    */
-  public void itemsStarted(final ReportEvent event)
-  {
-    collectSubReports(event.getReport().getDetailsHeader());
+  public void itemsStarted( final ReportEvent event ) {
+    collectSubReports( event.getReport().getDetailsHeader() );
   }
 
   /**
@@ -508,9 +446,8 @@ public class CSVWriter extends AbstractFunction implements OutputFunction
    *
    * @param event The event.
    */
-  public void itemsFinished(final ReportEvent event)
-  {
-    collectSubReports(event.getReport().getDetailsFooter());
+  public void itemsFinished( final ReportEvent event ) {
+    collectSubReports( event.getReport().getDetailsFooter() );
   }
 
   /**
@@ -518,35 +455,28 @@ public class CSVWriter extends AbstractFunction implements OutputFunction
    *
    * @param event the event.
    */
-  public void itemsAdvanced(final ReportEvent event)
-  {
-    if (event.getState().isPrepareRun())
-    {
-      collectSubReports(event.getReport().getItemBand());
+  public void itemsAdvanced( final ReportEvent event ) {
+    if ( event.getState().isPrepareRun() ) {
+      collectSubReports( event.getReport().getItemBand() );
       return;
     }
 
-    if (isEnableItemband() == false)
-    {
-      collectSubReports(event.getReport().getItemBand());
+    if ( isEnableItemband() == false ) {
+      collectSubReports( event.getReport().getItemBand() );
       return;
     }
 
-    try
-    {
-      final CSVRow row = new CSVRow(quoter);
-      if (isWriteStateColumns())
-      {
-        row.append(event.getState().getCurrentGroupIndex());
-        row.append("itemband");
+    try {
+      final CSVRow row = new CSVRow( quoter );
+      if ( isWriteStateColumns() ) {
+        row.append( event.getState().getCurrentGroupIndex() );
+        row.append( "itemband" );
       }
-      writeDataRow(event.getDataRow(), row);
-      row.write(getWriter());
-      collectSubReports(event.getReport().getItemBand());
-    }
-    catch (IOException ioe)
-    {
-      throw new FunctionProcessingException("Error writing the current datarow", ioe);
+      writeDataRow( event.getDataRow(), row );
+      row.write( getWriter() );
+      collectSubReports( event.getReport().getItemBand() );
+    } catch ( IOException ioe ) {
+      throw new FunctionProcessingException( "Error writing the current datarow", ioe );
     }
   }
 
@@ -555,8 +485,7 @@ public class CSVWriter extends AbstractFunction implements OutputFunction
    *
    * @return this CSVWriter.
    */
-  public Object getValue()
-  {
+  public Object getValue() {
     return this;
   }
 
@@ -565,13 +494,12 @@ public class CSVWriter extends AbstractFunction implements OutputFunction
    * before lower dependency functions. For ordinary functions and expressions, the range for dependencies is defined to
    * start from 0 (lowest dependency possible) to 2^31 (upper limit of int).
    * <p/>
-   * PageLayouter functions override the default behaviour an place them self at depency level -1, an so before any
-   * user defined function.
+   * PageLayouter functions override the default behaviour an place them self at depency level -1, an so before any user
+   * defined function.
    *
    * @return the level.
    */
-  public int getDependencyLevel()
-  {
+  public int getDependencyLevel() {
     return depLevel;
   }
 
@@ -580,8 +508,7 @@ public class CSVWriter extends AbstractFunction implements OutputFunction
    *
    * @param deplevel the new depency level.
    */
-  public void setDependencyLevel(final int deplevel)
-  {
+  public void setDependencyLevel( final int deplevel ) {
     this.depLevel = deplevel;
   }
 
@@ -591,14 +518,10 @@ public class CSVWriter extends AbstractFunction implements OutputFunction
    *
    * @return the derived function.
    */
-  public OutputFunction deriveForStorage()
-  {
-    try
-    {
+  public OutputFunction deriveForStorage() {
+    try {
       return (OutputFunction) clone();
-    }
-    catch (CloneNotSupportedException e)
-    {
+    } catch ( CloneNotSupportedException e ) {
       throw new IllegalStateException();
     }
   }
@@ -609,14 +532,10 @@ public class CSVWriter extends AbstractFunction implements OutputFunction
    *
    * @return the derived function.
    */
-  public OutputFunction deriveForPagebreak()
-  {
-    try
-    {
+  public OutputFunction deriveForPagebreak() {
+    try {
       return (OutputFunction) clone();
-    }
-    catch (CloneNotSupportedException e)
-    {
+    } catch ( CloneNotSupportedException e ) {
       throw new IllegalStateException();
     }
   }
@@ -629,83 +548,66 @@ public class CSVWriter extends AbstractFunction implements OutputFunction
    * @return a clone of this expression.
    * @throws CloneNotSupportedException this should never happen.
    */
-  public Object clone() throws CloneNotSupportedException
-  {
+  public Object clone() throws CloneNotSupportedException {
     final CSVWriter o = (CSVWriter) super.clone();
     o.inlineSubreports = (ArrayList<InlineSubreportMarker>) inlineSubreports.clone();
     return o;
   }
 
-  public InlineSubreportMarker[] getInlineSubreports()
-  {
+  public InlineSubreportMarker[] getInlineSubreports() {
     return inlineSubreports.toArray
-        (new InlineSubreportMarker[inlineSubreports.size()]);
+      ( new InlineSubreportMarker[ inlineSubreports.size() ] );
   }
 
-  public void clearInlineSubreports(final SubReportProcessType inlineExecution)
-  {
+  public void clearInlineSubreports( final SubReportProcessType inlineExecution ) {
     final InlineSubreportMarker[] subreports = getInlineSubreports();
-    for (int i = 0; i < subreports.length; i++)
-    {
-      final InlineSubreportMarker subreport = subreports[i];
-      if (inlineExecution == subreport.getProcessType())
-      {
-        inlineSubreports.remove(i);
+    for ( int i = 0; i < subreports.length; i++ ) {
+      final InlineSubreportMarker subreport = subreports[ i ];
+      if ( inlineExecution == subreport.getProcessType() ) {
+        inlineSubreports.remove( i );
       }
     }
   }
 
-  private void collectSubReports(final Group g, final ElementMetaData.TypeClassification type)
-      throws FunctionProcessingException
-  {
+  private void collectSubReports( final Group g, final ElementMetaData.TypeClassification type )
+    throws FunctionProcessingException {
     final int elementCount = g.getElementCount();
-    for (int i = 0; i < elementCount; i += 1)
-    {
-      final Element e = g.getElement(i);
-      if (e.getMetaData().getReportElementType() != type)
-      {
+    for ( int i = 0; i < elementCount; i += 1 ) {
+      final Element e = g.getElement( i );
+      if ( e.getMetaData().getReportElementType() != type ) {
         continue;
       }
-      if (e instanceof Band == false)
-      {
+      if ( e instanceof Band == false ) {
         continue;
       }
 
-      collectSubReports((Band) e);
+      collectSubReports( (Band) e );
     }
   }
 
-  private void collectSubReports(final Band band) throws FunctionProcessingException
-  {
+  private void collectSubReports( final Band band ) throws FunctionProcessingException {
     final Element[] elements = band.getElementArray();
-    for (int i = 0; i < elements.length; i++)
-    {
-      final Element element = elements[i];
-      if (element instanceof SubReport)
-      {
+    for ( int i = 0; i < elements.length; i++ ) {
+      final Element element = elements[ i ];
+      if ( element instanceof SubReport ) {
         final InlineSubreportMarker marker =
-            new InlineSubreportMarker((SubReport) element.clone(), null, SubReportProcessType.BANDED);
-        inlineSubreports.add(marker);
-      }
-      else if (element instanceof Band)
-      {
-        collectSubReports((Band) element);
+          new InlineSubreportMarker( (SubReport) element.clone(), null, SubReportProcessType.BANDED );
+        inlineSubreports.add( marker );
+      } else if ( element instanceof Band ) {
+        collectSubReports( (Band) element );
       }
     }
   }
 
-  public void groupBodyFinished(final ReportEvent event)
-  {
+  public void groupBodyFinished( final ReportEvent event ) {
 
   }
 
-  public void restart(final ReportState state)
-  {
+  public void restart( final ReportState state ) {
 
   }
 
-  public boolean createRollbackInformation()
-  {
+  public boolean createRollbackInformation() {
     return false;
   }
 }

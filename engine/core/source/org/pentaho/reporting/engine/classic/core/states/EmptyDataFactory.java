@@ -17,23 +17,21 @@
 
 package org.pentaho.reporting.engine.classic.core.states;
 
-import javax.swing.table.TableModel;
-
 import org.pentaho.reporting.engine.classic.core.AbstractDataFactory;
 import org.pentaho.reporting.engine.classic.core.DataRow;
 import org.pentaho.reporting.engine.classic.core.ReportDataFactoryException;
+
+import javax.swing.table.TableModel;
 
 /**
  * A datafactory that does not do any real work.
  *
  * @author Thomas Morgner
  */
-public class EmptyDataFactory extends AbstractDataFactory
-{
-  private static final String[] EMPTY_NAMES = new String[0];
+public class EmptyDataFactory extends AbstractDataFactory {
+  private static final String[] EMPTY_NAMES = new String[ 0 ];
 
-  public EmptyDataFactory()
-  {
+  public EmptyDataFactory() {
   }
 
   /**
@@ -48,16 +46,14 @@ public class EmptyDataFactory extends AbstractDataFactory
    * @return the result of the query as table model.
    * @throws ReportDataFactoryException if an error occured while performing the query.
    */
-  public TableModel queryData(final String query, final DataRow parameters) throws ReportDataFactoryException
-  {
-    throw new ReportDataFactoryException("This factory does not understand any of the queries.");
+  public TableModel queryData( final String query, final DataRow parameters ) throws ReportDataFactoryException {
+    throw new ReportDataFactoryException( "This factory does not understand any of the queries." );
   }
 
   /**
    * Closes the data factory and frees all resources held by this instance.
    */
-  public void close()
-  {
+  public void close() {
     // no op.
   }
 
@@ -68,20 +64,17 @@ public class EmptyDataFactory extends AbstractDataFactory
    * @param parameters
    * @return
    */
-  public boolean isQueryExecutable(final String query, final DataRow parameters)
-  {
+  public boolean isQueryExecutable( final String query, final DataRow parameters ) {
     // none of the queries is executable here.
     return false;
   }
 
 
-  public String[] getQueryNames()
-  {
+  public String[] getQueryNames() {
     return EMPTY_NAMES;
   }
 
-  public EmptyDataFactory clone()
-  {
+  public EmptyDataFactory clone() {
     return (EmptyDataFactory) super.clone();
   }
 }

@@ -17,31 +17,25 @@
 
 package org.pentaho.reporting.engine.classic.core.layout.process.util;
 
-import java.util.ArrayList;
-
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.pentaho.reporting.libraries.base.config.Configuration;
 
-public abstract class StackedObjectPool<T>
-{
+import java.util.ArrayList;
+
+public abstract class StackedObjectPool<T> {
   private static final boolean paranoidModelChecks;
 
-  static
-  {
+  static {
     final Configuration configuration = ClassicEngineBoot.getInstance().getGlobalConfig();
-    if ("true".equals(configuration.getConfigProperty
-        ("org.pentaho.reporting.engine.classic.core.layout.ParanoidChecks")))
-    {
+    if ( "true".equals( configuration.getConfigProperty
+      ( "org.pentaho.reporting.engine.classic.core.layout.ParanoidChecks" ) ) ) {
       paranoidModelChecks = true;
-    }
-    else
-    {
+    } else {
       paranoidModelChecks = false;
     }
   }
 
-  public static boolean isParanoidModelChecks()
-  {
+  public static boolean isParanoidModelChecks() {
     return paranoidModelChecks;
   }
 
@@ -49,39 +43,32 @@ public abstract class StackedObjectPool<T>
   private int fillSize;
   private int useSize;
 
-  protected StackedObjectPool()
-  {
+  protected StackedObjectPool() {
     backend = new ArrayList<T>();
   }
 
   protected abstract T create();
 
-  protected T get()
-  {
-    if (useSize < fillSize)
-    {
-      final T retval = backend.get(useSize);
+  protected T get() {
+    if ( useSize < fillSize ) {
+      final T retval = backend.get( useSize );
       useSize += 1;
       return retval;
     }
 
     final T retval = create();
-    backend.add(retval);
+    backend.add( retval );
     fillSize += 1;
     useSize += 1;
     return retval;
   }
 
-  public void free(final T t)
-  {
-    if (isParanoidModelChecks())
-    {
-      if (useSize == 0)
-      {
+  public void free( final T t ) {
+    if ( isParanoidModelChecks() ) {
+      if ( useSize == 0 ) {
         throw new IndexOutOfBoundsException();
       }
-      if (backend.get(useSize - 1) != t)
-      {
+      if ( backend.get( useSize - 1 ) != t ) {
         throw new IllegalArgumentException();
       }
     }

@@ -17,10 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.core.elementfactory;
 
-import java.awt.Color;
-import java.awt.geom.Dimension2D;
-import java.awt.geom.Point2D;
-
 import org.pentaho.reporting.engine.classic.core.Element;
 import org.pentaho.reporting.engine.classic.core.ElementAlignment;
 import org.pentaho.reporting.engine.classic.core.style.BorderStyle;
@@ -30,6 +26,10 @@ import org.pentaho.reporting.engine.classic.core.style.FontSmooth;
 import org.pentaho.reporting.engine.classic.core.style.TextStyleKeys;
 import org.pentaho.reporting.libraries.base.util.FloatDimension;
 
+import java.awt.*;
+import java.awt.geom.Dimension2D;
+import java.awt.geom.Point2D;
+
 /**
  * The class element factory is the base class for all Element Factories. Element factories can be used to create
  * predefined element types. The properties allow null values, if a property is null, it will not be defined. Undefined
@@ -38,8 +38,7 @@ import org.pentaho.reporting.libraries.base.util.FloatDimension;
  *
  * @author Thomas Morgner
  */
-public abstract class ElementFactory
-{
+public abstract class ElementFactory {
   /**
    * The name of the new element.
    */
@@ -369,8 +368,7 @@ public abstract class ElementFactory
   /**
    * Default Constructor.
    */
-  protected ElementFactory()
-  {
+  protected ElementFactory() {
   }
 
   /**
@@ -380,8 +378,7 @@ public abstract class ElementFactory
    *
    * @return the padding or null, if none is defined here.
    */
-  public Float getPadding()
-  {
+  public Float getPadding() {
     return padding;
   }
 
@@ -392,8 +389,7 @@ public abstract class ElementFactory
    *
    * @param padding the padding or null, if the default should be used.
    */
-  public void setPadding(final Float padding)
-  {
+  public void setPadding( final Float padding ) {
     this.padding = padding;
   }
 
@@ -405,8 +401,7 @@ public abstract class ElementFactory
    *
    * @return the defined border-width or null, if none is defined here.
    */
-  public Float getBorderWidth()
-  {
+  public Float getBorderWidth() {
     return borderWidth;
   }
 
@@ -418,8 +413,7 @@ public abstract class ElementFactory
    *
    * @param borderWidth the defined border width or null, if the default should be used.
    */
-  public void setBorderWidth(final Float borderWidth)
-  {
+  public void setBorderWidth( final Float borderWidth ) {
     this.borderWidth = borderWidth;
   }
 
@@ -430,8 +424,7 @@ public abstract class ElementFactory
    *
    * @return the defined border-style or null, if the default should be used.
    */
-  public BorderStyle getBorderStyle()
-  {
+  public BorderStyle getBorderStyle() {
     return borderStyle;
   }
 
@@ -442,8 +435,7 @@ public abstract class ElementFactory
    *
    * @param borderStyle the defined border-style or null, if none is defined here.
    */
-  public void setBorderStyle(final BorderStyle borderStyle)
-  {
+  public void setBorderStyle( final BorderStyle borderStyle ) {
     this.borderStyle = borderStyle;
   }
 
@@ -453,8 +445,7 @@ public abstract class ElementFactory
    *
    * @return the border-color for all borders or null, if no global color is defined.
    */
-  public Color getBorderColor()
-  {
+  public Color getBorderColor() {
     return borderColor;
   }
 
@@ -464,8 +455,7 @@ public abstract class ElementFactory
    *
    * @param borderColor the defined color for all borders or null, if no global color is defined.
    */
-  public void setBorderColor(final Color borderColor)
-  {
+  public void setBorderColor( final Color borderColor ) {
     this.borderColor = borderColor;
   }
 
@@ -476,13 +466,11 @@ public abstract class ElementFactory
    *
    * @return the defined border-radius for all corners of this element or null, if no global default is defined here.
    */
-  public Dimension2D getBorderRadius()
-  {
-    if (borderRadiusWidth == null || borderRadiusHeight == null)
-    {
+  public Dimension2D getBorderRadius() {
+    if ( borderRadiusWidth == null || borderRadiusHeight == null ) {
       return null;
     }
-    return new FloatDimension(borderRadiusWidth.floatValue(), borderRadiusHeight.floatValue());
+    return new FloatDimension( borderRadiusWidth.floatValue(), borderRadiusHeight.floatValue() );
   }
 
   /**
@@ -494,17 +482,13 @@ public abstract class ElementFactory
    * @param borderRadius the defined border-radius for all corners of this element or null, if no global default should
    *                     be defined here.
    */
-  public void setBorderRadius(final Dimension2D borderRadius)
-  {
-    if (borderRadius == null)
-    {
+  public void setBorderRadius( final Dimension2D borderRadius ) {
+    if ( borderRadius == null ) {
       this.borderRadiusWidth = null;
       this.borderRadiusHeight = null;
-    }
-    else
-    {
-      this.borderRadiusWidth = new Float(borderRadius.getWidth());
-      this.borderRadiusHeight = new Float(borderRadius.getHeight());
+    } else {
+      this.borderRadiusWidth = new Float( borderRadius.getWidth() );
+      this.borderRadiusHeight = new Float( borderRadius.getHeight() );
     }
   }
 
@@ -514,10 +498,9 @@ public abstract class ElementFactory
    * border-radius properties.
    *
    * @return the defined width of the border-radius for all corners of this element or null, if no global default is
-   *         defined here.
+   * defined here.
    */
-  public Float getBorderRadiusWidth()
-  {
+  public Float getBorderRadiusWidth() {
     return borderRadiusWidth;
   }
 
@@ -530,8 +513,7 @@ public abstract class ElementFactory
    * @param borderRadiusWidth the defined width of the border-radius for all corners of this element or null, if no
    *                          global default should be defined here.
    */
-  public void setBorderRadiusWidth(final Float borderRadiusWidth)
-  {
+  public void setBorderRadiusWidth( final Float borderRadiusWidth ) {
     this.borderRadiusWidth = borderRadiusWidth;
   }
 
@@ -541,10 +523,9 @@ public abstract class ElementFactory
    * border-radius properties.
    *
    * @return the defined height of the border-radius for all corners of this element or null, if no global default is
-   *         defined here.
+   * defined here.
    */
-  public Float getBorderRadiusHeight()
-  {
+  public Float getBorderRadiusHeight() {
     return borderRadiusHeight;
   }
 
@@ -557,8 +538,7 @@ public abstract class ElementFactory
    * @param borderRadiusHeight the defined height of the border-radius for all corners of this element or null, if no
    *                           global default should be defined here.
    */
-  public void setBorderRadiusHeight(final Float borderRadiusHeight)
-  {
+  public void setBorderRadiusHeight( final Float borderRadiusHeight ) {
     this.borderRadiusHeight = borderRadiusHeight;
   }
 
@@ -567,15 +547,13 @@ public abstract class ElementFactory
    * height, the element's border will have a rounded bottom-left corner.
    *
    * @return the defined border-radius for the bottom-left corner of this element or null, if this property is
-   *         undefined.
+   * undefined.
    */
-  public Dimension2D getBorderBottomLeftRadius()
-  {
-    if (borderBottomLeftRadiusWidth == null || borderBottomLeftRadiusHeight == null)
-    {
+  public Dimension2D getBorderBottomLeftRadius() {
+    if ( borderBottomLeftRadiusWidth == null || borderBottomLeftRadiusHeight == null ) {
       return null;
     }
-    return new FloatDimension(borderBottomLeftRadiusWidth.floatValue(), borderBottomLeftRadiusHeight.floatValue());
+    return new FloatDimension( borderBottomLeftRadiusWidth.floatValue(), borderBottomLeftRadiusHeight.floatValue() );
   }
 
   /**
@@ -585,17 +563,13 @@ public abstract class ElementFactory
    * @param borderRadius the defined border-radius for the bottom-left corner of this element or null, if this property
    *                     should be undefined.
    */
-  public void setBorderBottomLeftRadius(final Dimension2D borderRadius)
-  {
-    if (borderRadius == null)
-    {
+  public void setBorderBottomLeftRadius( final Dimension2D borderRadius ) {
+    if ( borderRadius == null ) {
       this.borderBottomLeftRadiusWidth = null;
       this.borderBottomLeftRadiusHeight = null;
-    }
-    else
-    {
-      this.borderBottomLeftRadiusWidth = new Float(borderRadius.getWidth());
-      this.borderBottomLeftRadiusHeight = new Float(borderRadius.getHeight());
+    } else {
+      this.borderBottomLeftRadiusWidth = new Float( borderRadius.getWidth() );
+      this.borderBottomLeftRadiusHeight = new Float( borderRadius.getHeight() );
     }
   }
 
@@ -604,10 +578,9 @@ public abstract class ElementFactory
    * and height, the element's border will have a rounded bottom-left corner.
    *
    * @return the defined width of the border-radius for the bottom-left corner of this element or null, if this property
-   *         is undefined.
+   * is undefined.
    */
-  public Float getBorderBottomLeftRadiusWidth()
-  {
+  public Float getBorderBottomLeftRadiusWidth() {
     return borderBottomLeftRadiusWidth;
   }
 
@@ -618,8 +591,7 @@ public abstract class ElementFactory
    * @param borderBottomLeftRadiusWidth the width of the defined border-radius for the bottom-left corner of this
    *                                    element or null, if this property should be undefined.
    */
-  public void setBorderBottomLeftRadiusWidth(final Float borderBottomLeftRadiusWidth)
-  {
+  public void setBorderBottomLeftRadiusWidth( final Float borderBottomLeftRadiusWidth ) {
     this.borderBottomLeftRadiusWidth = borderBottomLeftRadiusWidth;
   }
 
@@ -628,10 +600,9 @@ public abstract class ElementFactory
    * and height, the element's border will have a rounded bottom-left corner.
    *
    * @return the defined height of the border-radius for the bottom-left corner of this element or null, if this
-   *         property is undefined.
+   * property is undefined.
    */
-  public Float getBorderBottomLeftRadiusHeight()
-  {
+  public Float getBorderBottomLeftRadiusHeight() {
     return borderBottomLeftRadiusHeight;
   }
 
@@ -642,8 +613,7 @@ public abstract class ElementFactory
    * @param borderBottomLeftRadiusHeight the height of the defined border-radius for the bottom-left corner of this
    *                                     element or null, if this property should be undefined.
    */
-  public void setBorderBottomLeftRadiusHeight(final Float borderBottomLeftRadiusHeight)
-  {
+  public void setBorderBottomLeftRadiusHeight( final Float borderBottomLeftRadiusHeight ) {
     this.borderBottomLeftRadiusHeight = borderBottomLeftRadiusHeight;
   }
 
@@ -652,15 +622,13 @@ public abstract class ElementFactory
    * height, the element's border will have a rounded bottom-right corner.
    *
    * @return the defined border-radius for the bottom-right corner of this element or null, if this property is
-   *         undefined.
+   * undefined.
    */
-  public Dimension2D getBorderBottomRightRadius()
-  {
-    if (borderBottomRightRadiusWidth == null || borderBottomRightRadiusHeight == null)
-    {
+  public Dimension2D getBorderBottomRightRadius() {
+    if ( borderBottomRightRadiusWidth == null || borderBottomRightRadiusHeight == null ) {
       return null;
     }
-    return new FloatDimension(borderBottomRightRadiusWidth.floatValue(), borderBottomRightRadiusHeight.floatValue());
+    return new FloatDimension( borderBottomRightRadiusWidth.floatValue(), borderBottomRightRadiusHeight.floatValue() );
   }
 
   /**
@@ -670,17 +638,13 @@ public abstract class ElementFactory
    * @param borderRadius the defined border-radius for the bottom-right corner of this element or null, if this property
    *                     should be undefined.
    */
-  public void setBorderBottomRightRadius(final Dimension2D borderRadius)
-  {
-    if (borderRadius == null)
-    {
+  public void setBorderBottomRightRadius( final Dimension2D borderRadius ) {
+    if ( borderRadius == null ) {
       this.borderBottomRightRadiusWidth = null;
       this.borderBottomRightRadiusHeight = null;
-    }
-    else
-    {
-      this.borderBottomRightRadiusWidth = new Float(borderRadius.getWidth());
-      this.borderBottomRightRadiusHeight = new Float(borderRadius.getHeight());
+    } else {
+      this.borderBottomRightRadiusWidth = new Float( borderRadius.getWidth() );
+      this.borderBottomRightRadiusHeight = new Float( borderRadius.getHeight() );
     }
   }
 
@@ -689,10 +653,9 @@ public abstract class ElementFactory
    * width and height, the element's border will have a rounded bottom-right corner.
    *
    * @return the width of the defined border-radius for the bottom-right corner of this element or null, if this
-   *         property is undefined.
+   * property is undefined.
    */
-  public Float getBorderBottomRightRadiusWidth()
-  {
+  public Float getBorderBottomRightRadiusWidth() {
     return borderBottomRightRadiusWidth;
   }
 
@@ -703,8 +666,7 @@ public abstract class ElementFactory
    * @param borderBottomRightRadiusWidth the width of the defined border-radius for the bottom-right corner of this
    *                                     element or null, if this property should be undefined.
    */
-  public void setBorderBottomRightRadiusWidth(final Float borderBottomRightRadiusWidth)
-  {
+  public void setBorderBottomRightRadiusWidth( final Float borderBottomRightRadiusWidth ) {
     this.borderBottomRightRadiusWidth = borderBottomRightRadiusWidth;
   }
 
@@ -713,10 +675,9 @@ public abstract class ElementFactory
    * width and height, the element's border will have a rounded bottom-right corner.
    *
    * @return the height of the defined border-radius for the bottom-right corner of this element or null, if this
-   *         property is undefined.
+   * property is undefined.
    */
-  public Float getBorderBottomRightRadiusHeight()
-  {
+  public Float getBorderBottomRightRadiusHeight() {
     return borderBottomRightRadiusHeight;
   }
 
@@ -727,8 +688,7 @@ public abstract class ElementFactory
    * @param borderBottomRightRadiusHeight the height of the defined border-radius for the bottom-right corner of this
    *                                      element or null, if this property should be undefined.
    */
-  public void setBorderBottomRightRadiusHeight(final Float borderBottomRightRadiusHeight)
-  {
+  public void setBorderBottomRightRadiusHeight( final Float borderBottomRightRadiusHeight ) {
     this.borderBottomRightRadiusHeight = borderBottomRightRadiusHeight;
   }
 
@@ -738,13 +698,11 @@ public abstract class ElementFactory
    *
    * @return the defined border-radius for the top-left corner of this element or null, if this property is undefined.
    */
-  public Dimension2D getBorderTopLeftRadius()
-  {
-    if (borderTopLeftRadiusWidth == null || borderTopLeftRadiusHeight == null)
-    {
+  public Dimension2D getBorderTopLeftRadius() {
+    if ( borderTopLeftRadiusWidth == null || borderTopLeftRadiusHeight == null ) {
       return null;
     }
-    return new FloatDimension(borderTopLeftRadiusWidth.floatValue(), borderTopLeftRadiusHeight.floatValue());
+    return new FloatDimension( borderTopLeftRadiusWidth.floatValue(), borderTopLeftRadiusHeight.floatValue() );
   }
 
   /**
@@ -754,17 +712,13 @@ public abstract class ElementFactory
    * @param borderRadius the defined border-radius for the top-left corner of this element or null, if this property
    *                     should be undefined.
    */
-  public void setBorderTopLeftRadius(final Dimension2D borderRadius)
-  {
-    if (borderRadius == null)
-    {
+  public void setBorderTopLeftRadius( final Dimension2D borderRadius ) {
+    if ( borderRadius == null ) {
       this.borderTopLeftRadiusWidth = null;
       this.borderTopLeftRadiusHeight = null;
-    }
-    else
-    {
-      this.borderTopLeftRadiusWidth = new Float(borderRadius.getWidth());
-      this.borderTopLeftRadiusHeight = new Float(borderRadius.getHeight());
+    } else {
+      this.borderTopLeftRadiusWidth = new Float( borderRadius.getWidth() );
+      this.borderTopLeftRadiusHeight = new Float( borderRadius.getHeight() );
     }
   }
 
@@ -773,10 +727,9 @@ public abstract class ElementFactory
    * and height, the element's border will have a rounded top-left corner.
    *
    * @return the width of the defined border-radius for the top-left corner of this element or null, if this property is
-   *         undefined.
+   * undefined.
    */
-  public Float getBorderTopLeftRadiusWidth()
-  {
+  public Float getBorderTopLeftRadiusWidth() {
     return borderTopLeftRadiusWidth;
   }
 
@@ -787,8 +740,7 @@ public abstract class ElementFactory
    * @param borderTopLeftRadiusWidth the width of the defined border-radius for the top-left corner of this element or
    *                                 null, if this property should be undefined.
    */
-  public void setBorderTopLeftRadiusWidth(final Float borderTopLeftRadiusWidth)
-  {
+  public void setBorderTopLeftRadiusWidth( final Float borderTopLeftRadiusWidth ) {
     this.borderTopLeftRadiusWidth = borderTopLeftRadiusWidth;
   }
 
@@ -797,10 +749,9 @@ public abstract class ElementFactory
    * width and height, the element's border will have a rounded top-left corner.
    *
    * @return the height of the defined border-radius for the top-left corner of this element or null, if this property
-   *         is undefined.
+   * is undefined.
    */
-  public Float getBorderTopLeftRadiusHeight()
-  {
+  public Float getBorderTopLeftRadiusHeight() {
     return borderTopLeftRadiusHeight;
   }
 
@@ -811,8 +762,7 @@ public abstract class ElementFactory
    * @param borderTopLeftRadiusHeight the height of the defined border-radius for the top-left corner of this element or
    *                                  null, if this property should be undefined.
    */
-  public void setBorderTopLeftRadiusHeight(final Float borderTopLeftRadiusHeight)
-  {
+  public void setBorderTopLeftRadiusHeight( final Float borderTopLeftRadiusHeight ) {
     this.borderTopLeftRadiusHeight = borderTopLeftRadiusHeight;
   }
 
@@ -822,13 +772,11 @@ public abstract class ElementFactory
    *
    * @return the defined border-radius for the top-right corner of this element or null, if this property is undefined.
    */
-  public Dimension2D getBorderTopRightRadius()
-  {
-    if (borderTopRightRadiusWidth == null || borderTopRightRadiusHeight == null)
-    {
+  public Dimension2D getBorderTopRightRadius() {
+    if ( borderTopRightRadiusWidth == null || borderTopRightRadiusHeight == null ) {
       return null;
     }
-    return new FloatDimension(borderTopRightRadiusWidth.floatValue(), borderTopRightRadiusHeight.floatValue());
+    return new FloatDimension( borderTopRightRadiusWidth.floatValue(), borderTopRightRadiusHeight.floatValue() );
   }
 
   /**
@@ -838,17 +786,13 @@ public abstract class ElementFactory
    * @param borderRadius the defined border-radius for the top-right corner of this element or null, if this property
    *                     should be undefined.
    */
-  public void setBorderTopRightRadius(final Dimension2D borderRadius)
-  {
-    if (borderRadius == null)
-    {
+  public void setBorderTopRightRadius( final Dimension2D borderRadius ) {
+    if ( borderRadius == null ) {
       this.borderTopRightRadiusWidth = null;
       this.borderTopRightRadiusHeight = null;
-    }
-    else
-    {
-      this.borderTopRightRadiusWidth = new Float(borderRadius.getWidth());
-      this.borderTopRightRadiusHeight = new Float(borderRadius.getHeight());
+    } else {
+      this.borderTopRightRadiusWidth = new Float( borderRadius.getWidth() );
+      this.borderTopRightRadiusHeight = new Float( borderRadius.getHeight() );
     }
   }
 
@@ -857,10 +801,9 @@ public abstract class ElementFactory
    * width and height, the element's border will have a rounded top-right corner.
    *
    * @return the width of the defined border-radius for the top-right corner of this element or null, if this property
-   *         is undefined.
+   * is undefined.
    */
-  public Float getBorderTopRightRadiusWidth()
-  {
+  public Float getBorderTopRightRadiusWidth() {
     return borderTopRightRadiusWidth;
   }
 
@@ -871,8 +814,7 @@ public abstract class ElementFactory
    * @param borderTopRightRadiusWidth the width of the defined border-radius for the top-right corner of this element or
    *                                  null, if this property should be undefined.
    */
-  public void setBorderTopRightRadiusWidth(final Float borderTopRightRadiusWidth)
-  {
+  public void setBorderTopRightRadiusWidth( final Float borderTopRightRadiusWidth ) {
     this.borderTopRightRadiusWidth = borderTopRightRadiusWidth;
   }
 
@@ -881,10 +823,9 @@ public abstract class ElementFactory
    * width and height, the element's border will have a rounded top-right corner.
    *
    * @return the height of the defined border-radius for the top-right corner of this element or null, if this property
-   *         is undefined.
+   * is undefined.
    */
-  public Float getBorderTopRightRadiusHeight()
-  {
+  public Float getBorderTopRightRadiusHeight() {
     return borderTopRightRadiusHeight;
   }
 
@@ -895,8 +836,7 @@ public abstract class ElementFactory
    * @param borderTopRightRadiusHeight the height of the defined border-radius for the top-right corner of this element
    *                                   or null, if this property should be undefined.
    */
-  public void setBorderTopRightRadiusHeight(final Float borderTopRightRadiusHeight)
-  {
+  public void setBorderTopRightRadiusHeight( final Float borderTopRightRadiusHeight ) {
     this.borderTopRightRadiusHeight = borderTopRightRadiusHeight;
   }
 
@@ -905,8 +845,7 @@ public abstract class ElementFactory
    *
    * @return the text color.
    */
-  public Color getColor()
-  {
+  public Color getColor() {
     return color;
   }
 
@@ -915,8 +854,7 @@ public abstract class ElementFactory
    *
    * @param color the text color.
    */
-  public void setColor(final Color color)
-  {
+  public void setColor( final Color color ) {
     this.color = color;
   }
 
@@ -925,8 +863,7 @@ public abstract class ElementFactory
    *
    * @return the vertical alignment.
    */
-  public ElementAlignment getVerticalAlignment()
-  {
+  public ElementAlignment getVerticalAlignment() {
     return verticalAlignment;
   }
 
@@ -935,8 +872,7 @@ public abstract class ElementFactory
    *
    * @param verticalAlignment the vertical alignment.
    */
-  public void setVerticalAlignment(final ElementAlignment verticalAlignment)
-  {
+  public void setVerticalAlignment( final ElementAlignment verticalAlignment ) {
     this.verticalAlignment = verticalAlignment;
   }
 
@@ -945,8 +881,7 @@ public abstract class ElementFactory
    *
    * @return the horizontal alignment.
    */
-  public ElementAlignment getHorizontalAlignment()
-  {
+  public ElementAlignment getHorizontalAlignment() {
     return horizontalAlignment;
   }
 
@@ -955,8 +890,7 @@ public abstract class ElementFactory
    *
    * @param horizontalAlignment the vertical alignment.
    */
-  public void setHorizontalAlignment(final ElementAlignment horizontalAlignment)
-  {
+  public void setHorizontalAlignment( final ElementAlignment horizontalAlignment ) {
     this.horizontalAlignment = horizontalAlignment;
   }
 
@@ -966,8 +900,7 @@ public abstract class ElementFactory
    *
    * @return the font-smooth constant or null, if this property is undefined.
    */
-  public FontSmooth getFontSmooth()
-  {
+  public FontSmooth getFontSmooth() {
     return fontSmooth;
   }
 
@@ -977,8 +910,7 @@ public abstract class ElementFactory
    *
    * @param fontSmooth the font-smooth constant or null, if this property should be left undefined.
    */
-  public void setFontSmooth(final FontSmooth fontSmooth)
-  {
+  public void setFontSmooth( final FontSmooth fontSmooth ) {
     this.fontSmooth = fontSmooth;
   }
 
@@ -989,8 +921,7 @@ public abstract class ElementFactory
    *
    * @return the border width for the top edge or null if the property should be left undefined.
    */
-  public Float getBorderTopWidth()
-  {
+  public Float getBorderTopWidth() {
     return borderTopWidth;
   }
 
@@ -1001,8 +932,7 @@ public abstract class ElementFactory
    *
    * @param borderTopWidth the border width for the top edge or null if the property should be left undefined.
    */
-  public void setBorderTopWidth(final Float borderTopWidth)
-  {
+  public void setBorderTopWidth( final Float borderTopWidth ) {
     this.borderTopWidth = borderTopWidth;
   }
 
@@ -1013,8 +943,7 @@ public abstract class ElementFactory
    *
    * @return the border width for the left edge or null if the property should be left undefined.
    */
-  public Float getBorderLeftWidth()
-  {
+  public Float getBorderLeftWidth() {
     return borderLeftWidth;
   }
 
@@ -1025,8 +954,7 @@ public abstract class ElementFactory
    *
    * @param borderLeftWidth the border width for the left edge or null if the property should be left undefined.
    */
-  public void setBorderLeftWidth(final Float borderLeftWidth)
-  {
+  public void setBorderLeftWidth( final Float borderLeftWidth ) {
     this.borderLeftWidth = borderLeftWidth;
   }
 
@@ -1037,8 +965,7 @@ public abstract class ElementFactory
    *
    * @return the border width for the left edge or null if the property should be left undefined.
    */
-  public Float getBorderBottomWidth()
-  {
+  public Float getBorderBottomWidth() {
     return borderBottomWidth;
   }
 
@@ -1049,8 +976,7 @@ public abstract class ElementFactory
    *
    * @param borderBottomWidth the border width for the bottom edge or null if the property should be left undefined.
    */
-  public void setBorderBottomWidth(final Float borderBottomWidth)
-  {
+  public void setBorderBottomWidth( final Float borderBottomWidth ) {
     this.borderBottomWidth = borderBottomWidth;
   }
 
@@ -1061,8 +987,7 @@ public abstract class ElementFactory
    *
    * @return the border width for the right edge or null if the property should be left undefined.
    */
-  public Float getBorderRightWidth()
-  {
+  public Float getBorderRightWidth() {
     return borderRightWidth;
   }
 
@@ -1073,8 +998,7 @@ public abstract class ElementFactory
    *
    * @param borderRightWidth the border width for the right edge or null if the property should be left undefined.
    */
-  public void setBorderRightWidth(final Float borderRightWidth)
-  {
+  public void setBorderRightWidth( final Float borderRightWidth ) {
     this.borderRightWidth = borderRightWidth;
   }
 
@@ -1087,8 +1011,7 @@ public abstract class ElementFactory
    *
    * @return the width of the break edge of the border or null, if not defined.
    */
-  public Float getBorderBreakWidth()
-  {
+  public Float getBorderBreakWidth() {
     return borderBreakWidth;
   }
 
@@ -1101,8 +1024,7 @@ public abstract class ElementFactory
    *
    * @param borderBreakWidth the width of the break edge of the border or null, if not defined.
    */
-  public void setBorderBreakWidth(final Float borderBreakWidth)
-  {
+  public void setBorderBreakWidth( final Float borderBreakWidth ) {
     this.borderBreakWidth = borderBreakWidth;
   }
 
@@ -1112,8 +1034,7 @@ public abstract class ElementFactory
    *
    * @return the border style for the top edge or null, if the style should remain undefined.
    */
-  public BorderStyle getBorderTopStyle()
-  {
+  public BorderStyle getBorderTopStyle() {
     return borderTopStyle;
   }
 
@@ -1123,8 +1044,7 @@ public abstract class ElementFactory
    *
    * @param borderTopStyle the border style for the top edge or null, if the style should remain undefined.
    */
-  public void setBorderTopStyle(final BorderStyle borderTopStyle)
-  {
+  public void setBorderTopStyle( final BorderStyle borderTopStyle ) {
     this.borderTopStyle = borderTopStyle;
   }
 
@@ -1134,8 +1054,7 @@ public abstract class ElementFactory
    *
    * @return the border style for the left edge or null, if the style should remain undefined.
    */
-  public BorderStyle getBorderLeftStyle()
-  {
+  public BorderStyle getBorderLeftStyle() {
     return borderLeftStyle;
   }
 
@@ -1145,8 +1064,7 @@ public abstract class ElementFactory
    *
    * @param borderLeftStyle the border style for the left edge or null, if the style should remain undefined.
    */
-  public void setBorderLeftStyle(final BorderStyle borderLeftStyle)
-  {
+  public void setBorderLeftStyle( final BorderStyle borderLeftStyle ) {
     this.borderLeftStyle = borderLeftStyle;
   }
 
@@ -1156,8 +1074,7 @@ public abstract class ElementFactory
    *
    * @return the border style for the bottom edge or null, if the style should remain undefined.
    */
-  public BorderStyle getBorderBottomStyle()
-  {
+  public BorderStyle getBorderBottomStyle() {
     return borderBottomStyle;
   }
 
@@ -1167,8 +1084,7 @@ public abstract class ElementFactory
    *
    * @param borderBottomStyle the border style for the bottom edge or null, if the style should remain undefined.
    */
-  public void setBorderBottomStyle(final BorderStyle borderBottomStyle)
-  {
+  public void setBorderBottomStyle( final BorderStyle borderBottomStyle ) {
     this.borderBottomStyle = borderBottomStyle;
   }
 
@@ -1178,8 +1094,7 @@ public abstract class ElementFactory
    *
    * @return the border style for the right edge or null, if the style should remain undefined.
    */
-  public BorderStyle getBorderRightStyle()
-  {
+  public BorderStyle getBorderRightStyle() {
     return borderRightStyle;
   }
 
@@ -1189,8 +1104,7 @@ public abstract class ElementFactory
    *
    * @param borderRightStyle the border style for the right edge or null, if the style should remain undefined.
    */
-  public void setBorderRightStyle(final BorderStyle borderRightStyle)
-  {
+  public void setBorderRightStyle( final BorderStyle borderRightStyle ) {
     this.borderRightStyle = borderRightStyle;
   }
 
@@ -1200,8 +1114,7 @@ public abstract class ElementFactory
    *
    * @return the border style for the break edge or null, if the style should remain undefined.
    */
-  public BorderStyle getBorderBreakStyle()
-  {
+  public BorderStyle getBorderBreakStyle() {
     return borderBreakStyle;
   }
 
@@ -1211,8 +1124,7 @@ public abstract class ElementFactory
    *
    * @param borderBreakStyle the border style for the break edge or null, if the style should remain undefined.
    */
-  public void setBorderBreakStyle(final BorderStyle borderBreakStyle)
-  {
+  public void setBorderBreakStyle( final BorderStyle borderBreakStyle ) {
     this.borderBreakStyle = borderBreakStyle;
   }
 
@@ -1221,8 +1133,7 @@ public abstract class ElementFactory
    *
    * @return the color for the top edge or null, if the value should be left undefined here.
    */
-  public Color getBorderTopColor()
-  {
+  public Color getBorderTopColor() {
     return borderTopColor;
   }
 
@@ -1231,8 +1142,7 @@ public abstract class ElementFactory
    *
    * @param borderTopColor the color for the top edge or null, if the value should be left undefined here.
    */
-  public void setBorderTopColor(final Color borderTopColor)
-  {
+  public void setBorderTopColor( final Color borderTopColor ) {
     this.borderTopColor = borderTopColor;
   }
 
@@ -1241,8 +1151,7 @@ public abstract class ElementFactory
    *
    * @return the color for the left edge or null, if the value should be left undefined here.
    */
-  public Color getBorderLeftColor()
-  {
+  public Color getBorderLeftColor() {
     return borderLeftColor;
   }
 
@@ -1251,8 +1160,7 @@ public abstract class ElementFactory
    *
    * @param borderLeftColor the color for the left edge or null, if the value should be left undefined here.
    */
-  public void setBorderLeftColor(final Color borderLeftColor)
-  {
+  public void setBorderLeftColor( final Color borderLeftColor ) {
     this.borderLeftColor = borderLeftColor;
   }
 
@@ -1261,8 +1169,7 @@ public abstract class ElementFactory
    *
    * @return the color for the bottom edge or null, if the value should be left undefined here.
    */
-  public Color getBorderBottomColor()
-  {
+  public Color getBorderBottomColor() {
     return borderBottomColor;
   }
 
@@ -1271,8 +1178,7 @@ public abstract class ElementFactory
    *
    * @param borderBottomColor the color for the bottom edge or null, if the value should be left undefined here.
    */
-  public void setBorderBottomColor(final Color borderBottomColor)
-  {
+  public void setBorderBottomColor( final Color borderBottomColor ) {
     this.borderBottomColor = borderBottomColor;
   }
 
@@ -1281,8 +1187,7 @@ public abstract class ElementFactory
    *
    * @return the color for the right edge or null, if the value should be left undefined here.
    */
-  public Color getBorderRightColor()
-  {
+  public Color getBorderRightColor() {
     return borderRightColor;
   }
 
@@ -1291,8 +1196,7 @@ public abstract class ElementFactory
    *
    * @param borderRightColor the color for the right edge or null, if the value should be left undefined here.
    */
-  public void setBorderRightColor(final Color borderRightColor)
-  {
+  public void setBorderRightColor( final Color borderRightColor ) {
     this.borderRightColor = borderRightColor;
   }
 
@@ -1301,8 +1205,7 @@ public abstract class ElementFactory
    *
    * @return the color for the break edge or null, if the value should be left undefined here.
    */
-  public Color getBorderBreakColor()
-  {
+  public Color getBorderBreakColor() {
     return borderBreakColor;
   }
 
@@ -1311,8 +1214,7 @@ public abstract class ElementFactory
    *
    * @param borderBreakColor the color for the break edge or null, if the value should be left undefined here.
    */
-  public void setBorderBreakColor(final Color borderBreakColor)
-  {
+  public void setBorderBreakColor( final Color borderBreakColor ) {
     this.borderBreakColor = borderBreakColor;
   }
 
@@ -1322,8 +1224,7 @@ public abstract class ElementFactory
    *
    * @return the padding or null, if the padding remains undefined here.
    */
-  public Float getPaddingTop()
-  {
+  public Float getPaddingTop() {
     return paddingTop;
   }
 
@@ -1333,8 +1234,7 @@ public abstract class ElementFactory
    *
    * @param paddingTop the padding or null, if the padding remains undefined here.
    */
-  public void setPaddingTop(final Float paddingTop)
-  {
+  public void setPaddingTop( final Float paddingTop ) {
     this.paddingTop = paddingTop;
   }
 
@@ -1344,8 +1244,7 @@ public abstract class ElementFactory
    *
    * @return the padding or null, if the padding remains undefined here.
    */
-  public Float getPaddingLeft()
-  {
+  public Float getPaddingLeft() {
     return paddingLeft;
   }
 
@@ -1355,8 +1254,7 @@ public abstract class ElementFactory
    *
    * @param paddingLeft the padding or null, if the padding remains undefined here.
    */
-  public void setPaddingLeft(final Float paddingLeft)
-  {
+  public void setPaddingLeft( final Float paddingLeft ) {
     this.paddingLeft = paddingLeft;
   }
 
@@ -1366,8 +1264,7 @@ public abstract class ElementFactory
    *
    * @return the padding or null, if the padding remains undefined here.
    */
-  public Float getPaddingBottom()
-  {
+  public Float getPaddingBottom() {
     return paddingBottom;
   }
 
@@ -1377,8 +1274,7 @@ public abstract class ElementFactory
    *
    * @param paddingBottom the padding or null, if the padding remains undefined here.
    */
-  public void setPaddingBottom(final Float paddingBottom)
-  {
+  public void setPaddingBottom( final Float paddingBottom ) {
     this.paddingBottom = paddingBottom;
   }
 
@@ -1388,8 +1284,7 @@ public abstract class ElementFactory
    *
    * @return the padding or null, if the padding remains undefined here.
    */
-  public Float getPaddingRight()
-  {
+  public Float getPaddingRight() {
     return paddingRight;
   }
 
@@ -1399,8 +1294,7 @@ public abstract class ElementFactory
    *
    * @param paddingRight the padding or null, if the padding remains undefined here.
    */
-  public void setPaddingRight(final Float paddingRight)
-  {
+  public void setPaddingRight( final Float paddingRight ) {
     this.paddingRight = paddingRight;
   }
 
@@ -1411,8 +1305,7 @@ public abstract class ElementFactory
    *
    * @return the number of widow-lines that control the pagebreak inside the paragraph.
    */
-  public Integer getWidows()
-  {
+  public Integer getWidows() {
     return widows;
   }
 
@@ -1422,8 +1315,7 @@ public abstract class ElementFactory
    *
    * @param widows the number of widow-lines that control the pagebreak inside the paragraph.
    */
-  public void setWidows(final Integer widows)
-  {
+  public void setWidows( final Integer widows ) {
     this.widows = widows;
   }
 
@@ -1434,8 +1326,7 @@ public abstract class ElementFactory
    *
    * @return the number of orphan-lines that control the pagebreak inside the paragraph.
    */
-  public Integer getOrphans()
-  {
+  public Integer getOrphans() {
     return orphans;
   }
 
@@ -1446,18 +1337,15 @@ public abstract class ElementFactory
    *
    * @param orphans the number of orphan-lines that control the pagebreak inside the paragraph.
    */
-  public void setOrphans(final Integer orphans)
-  {
+  public void setOrphans( final Integer orphans ) {
     this.orphans = orphans;
   }
 
-  public Boolean getWidowOrphanOptOut()
-  {
+  public Boolean getWidowOrphanOptOut() {
     return widowOrphanOptOut;
   }
 
-  public void setWidowOrphanOptOut(final Boolean widowOrphanOptOut)
-  {
+  public void setWidowOrphanOptOut( final Boolean widowOrphanOptOut ) {
     this.widowOrphanOptOut = widowOrphanOptOut;
   }
 
@@ -1466,8 +1354,7 @@ public abstract class ElementFactory
    *
    * @return the background color or null, if undefined.
    */
-  public Color getBackgroundColor()
-  {
+  public Color getBackgroundColor() {
     return backgroundColor;
   }
 
@@ -1476,8 +1363,7 @@ public abstract class ElementFactory
    *
    * @param backgroundColor the background color or null, if undefined.
    */
-  public void setBackgroundColor(final Color backgroundColor)
-  {
+  public void setBackgroundColor( final Color backgroundColor ) {
     this.backgroundColor = backgroundColor;
   }
 
@@ -1488,8 +1374,7 @@ public abstract class ElementFactory
    *
    * @return a boolean whether text can overflow the box boundaries or null, if this property is left undefined.
    */
-  public Boolean getOverflowY()
-  {
+  public Boolean getOverflowY() {
     return overflowY;
   }
 
@@ -1500,8 +1385,7 @@ public abstract class ElementFactory
    *
    * @param overflowY defines, whether text can overflow the box boundaries or null, to leave this property undefined.
    */
-  public void setOverflowY(final Boolean overflowY)
-  {
+  public void setOverflowY( final Boolean overflowY ) {
     this.overflowY = overflowY;
   }
 
@@ -1512,8 +1396,7 @@ public abstract class ElementFactory
    *
    * @return a boolean whether text can overflow the box boundaries or null, if this property is left undefined.
    */
-  public Boolean getOverflowX()
-  {
+  public Boolean getOverflowX() {
     return overflowX;
   }
 
@@ -1524,8 +1407,7 @@ public abstract class ElementFactory
    *
    * @param overflowX defines, whether text can overflow the box boundaries or null, to leave this property undefined.
    */
-  public void setOverflowX(final Boolean overflowX)
-  {
+  public void setOverflowX( final Boolean overflowX ) {
     this.overflowX = overflowX;
   }
 
@@ -1535,10 +1417,9 @@ public abstract class ElementFactory
    * hold this element, a pagebreak will be generated inside the element.
    *
    * @return a boolean defining whether pagebreaks are allowed inside the box or null, if this property has been left
-   *         undefined.
+   * undefined.
    */
-  public Boolean getAvoidPagebreaks()
-  {
+  public Boolean getAvoidPagebreaks() {
     return avoidPagebreaks;
   }
 
@@ -1550,8 +1431,7 @@ public abstract class ElementFactory
    * @param avoidPagebreaks a boolean defining whether pagebreaks are allowed inside the box or null, if this property
    *                        should be left undefined.
    */
-  public void setAvoidPagebreaks(final Boolean avoidPagebreaks)
-  {
+  public void setAvoidPagebreaks( final Boolean avoidPagebreaks ) {
     this.avoidPagebreaks = avoidPagebreaks;
   }
 
@@ -1560,8 +1440,7 @@ public abstract class ElementFactory
    *
    * @return the link target.
    */
-  public String getHRefTarget()
-  {
+  public String getHRefTarget() {
     return hRefTarget;
   }
 
@@ -1570,8 +1449,7 @@ public abstract class ElementFactory
    *
    * @param hRefTarget the link target.
    */
-  public void setHRefTarget(final String hRefTarget)
-  {
+  public void setHRefTarget( final String hRefTarget ) {
     this.hRefTarget = hRefTarget;
   }
 
@@ -1580,8 +1458,7 @@ public abstract class ElementFactory
    *
    * @return the name of the element.
    */
-  public String getName()
-  {
+  public String getName() {
     return name;
   }
 
@@ -1590,8 +1467,7 @@ public abstract class ElementFactory
    *
    * @param name the element name.
    */
-  public void setName(final String name)
-  {
+  public void setName( final String name ) {
     this.name = name;
   }
 
@@ -1602,21 +1478,17 @@ public abstract class ElementFactory
    * @see ElementFactory#getMinimumWidth()
    * @see ElementFactory#getMinimumHeight()
    */
-  public Dimension2D getMinimumSize()
-  {
-    if (minimumWidth == null && minimumHeight == null)
-    {
+  public Dimension2D getMinimumSize() {
+    if ( minimumWidth == null && minimumHeight == null ) {
       return null;
     }
-    if (minimumWidth == null)
-    {
-      return new FloatDimension(0, minimumHeight.floatValue());
+    if ( minimumWidth == null ) {
+      return new FloatDimension( 0, minimumHeight.floatValue() );
     }
-    if (minimumHeight == null)
-    {
-      return new FloatDimension(minimumWidth.floatValue(), 0);
+    if ( minimumHeight == null ) {
+      return new FloatDimension( minimumWidth.floatValue(), 0 );
     }
-    return new FloatDimension(minimumWidth.floatValue(), minimumHeight.floatValue());
+    return new FloatDimension( minimumWidth.floatValue(), minimumHeight.floatValue() );
   }
 
   /**
@@ -1626,17 +1498,13 @@ public abstract class ElementFactory
    * @see ElementFactory#setMinimumWidth(Float)
    * @see ElementFactory#setMinimumHeight(Float)
    */
-  public void setMinimumSize(final Dimension2D minimumSize)
-  {
-    if (minimumSize == null)
-    {
+  public void setMinimumSize( final Dimension2D minimumSize ) {
+    if ( minimumSize == null ) {
       this.minimumWidth = null;
       this.minimumHeight = null;
-    }
-    else
-    {
-      this.minimumWidth = new Float(minimumSize.getWidth());
-      this.minimumHeight = new Float(minimumSize.getHeight());
+    } else {
+      this.minimumWidth = new Float( minimumSize.getWidth() );
+      this.minimumHeight = new Float( minimumSize.getHeight() );
     }
   }
 
@@ -1647,21 +1515,17 @@ public abstract class ElementFactory
    * @see ElementFactory#getMinimumWidth()
    * @see ElementFactory#getMinimumHeight()
    */
-  public Dimension2D getMaximumSize()
-  {
-    if (maximumWidth == null && maximumHeight == null)
-    {
+  public Dimension2D getMaximumSize() {
+    if ( maximumWidth == null && maximumHeight == null ) {
       return null;
     }
-    if (maximumWidth == null)
-    {
-      return new FloatDimension(0, maximumHeight.floatValue());
+    if ( maximumWidth == null ) {
+      return new FloatDimension( 0, maximumHeight.floatValue() );
     }
-    if (maximumHeight == null)
-    {
-      return new FloatDimension(maximumWidth.floatValue(), 0);
+    if ( maximumHeight == null ) {
+      return new FloatDimension( maximumWidth.floatValue(), 0 );
     }
-    return new FloatDimension(maximumWidth.floatValue(), maximumHeight.floatValue());
+    return new FloatDimension( maximumWidth.floatValue(), maximumHeight.floatValue() );
   }
 
   /**
@@ -1671,17 +1535,13 @@ public abstract class ElementFactory
    * @see ElementFactory#setMaximumWidth(Float)
    * @see ElementFactory#setMaximumHeight(Float)
    */
-  public void setMaximumSize(final Dimension2D maximumSize)
-  {
-    if (maximumSize == null)
-    {
+  public void setMaximumSize( final Dimension2D maximumSize ) {
+    if ( maximumSize == null ) {
       this.maximumWidth = null;
       this.maximumHeight = null;
-    }
-    else
-    {
-      this.maximumWidth = new Float(maximumSize.getWidth());
-      this.maximumHeight = new Float(maximumSize.getHeight());
+    } else {
+      this.maximumWidth = new Float( maximumSize.getWidth() );
+      this.maximumHeight = new Float( maximumSize.getHeight() );
     }
   }
 
@@ -1692,21 +1552,17 @@ public abstract class ElementFactory
    * @see ElementFactory#getWidth()
    * @see ElementFactory#getHeight()
    */
-  public Dimension2D getPreferredSize()
-  {
-    if (width == null && height == null)
-    {
+  public Dimension2D getPreferredSize() {
+    if ( width == null && height == null ) {
       return null;
     }
-    if (width == null)
-    {
-      return new FloatDimension(0, height.floatValue());
+    if ( width == null ) {
+      return new FloatDimension( 0, height.floatValue() );
     }
-    if (height == null)
-    {
-      return new FloatDimension(width.floatValue(), 0);
+    if ( height == null ) {
+      return new FloatDimension( width.floatValue(), 0 );
     }
-    return new FloatDimension(width.floatValue(), height.floatValue());
+    return new FloatDimension( width.floatValue(), height.floatValue() );
   }
 
   /**
@@ -1716,17 +1572,13 @@ public abstract class ElementFactory
    * @see ElementFactory#setWidth(Float)
    * @see ElementFactory#setHeight(Float)
    */
-  public void setPreferredSize(final Dimension2D preferredSize)
-  {
-    if (preferredSize == null)
-    {
+  public void setPreferredSize( final Dimension2D preferredSize ) {
+    if ( preferredSize == null ) {
       this.width = null;
       this.height = null;
-    }
-    else
-    {
-      this.width = new Float(preferredSize.getWidth());
-      this.height = new Float(preferredSize.getHeight());
+    } else {
+      this.width = new Float( preferredSize.getWidth() );
+      this.height = new Float( preferredSize.getHeight() );
     }
   }
 
@@ -1738,21 +1590,17 @@ public abstract class ElementFactory
    * @see ElementFactory#getX()
    * @see ElementFactory#getY()
    */
-  public Point2D getAbsolutePosition()
-  {
-    if (x == null && y == null)
-    {
+  public Point2D getAbsolutePosition() {
+    if ( x == null && y == null ) {
       return null;
     }
-    if (x == null)
-    {
-      return new Point2D.Float(0, y.floatValue());
+    if ( x == null ) {
+      return new Point2D.Float( 0, y.floatValue() );
     }
-    if (y == null)
-    {
-      return new Point2D.Float(x.floatValue(), 0);
+    if ( y == null ) {
+      return new Point2D.Float( x.floatValue(), 0 );
     }
-    return new Point2D.Float(x.floatValue(), y.floatValue());
+    return new Point2D.Float( x.floatValue(), y.floatValue() );
   }
 
   /**
@@ -1763,17 +1611,13 @@ public abstract class ElementFactory
    * @see ElementFactory#setX(Float)
    * @see ElementFactory#setY(Float)
    */
-  public void setAbsolutePosition(final Point2D absolutePosition)
-  {
-    if (absolutePosition == null)
-    {
+  public void setAbsolutePosition( final Point2D absolutePosition ) {
+    if ( absolutePosition == null ) {
       this.x = null;
       this.y = null;
-    }
-    else
-    {
-      this.x = new Float(absolutePosition.getX());
-      this.y = new Float(absolutePosition.getY());
+    } else {
+      this.x = new Float( absolutePosition.getX() );
+      this.y = new Float( absolutePosition.getY() );
     }
   }
 
@@ -1782,8 +1626,7 @@ public abstract class ElementFactory
    *
    * @return the state of the dynamic feature or null, if the feature is undefined.
    */
-  public Boolean getDynamicHeight()
-  {
+  public Boolean getDynamicHeight() {
     return dynamicHeight;
   }
 
@@ -1792,8 +1635,7 @@ public abstract class ElementFactory
    *
    * @param dynamicHeight the new value of the elements dynamic height feature.
    */
-  public void setDynamicHeight(final Boolean dynamicHeight)
-  {
+  public void setDynamicHeight( final Boolean dynamicHeight ) {
     this.dynamicHeight = dynamicHeight;
   }
 
@@ -1806,8 +1648,7 @@ public abstract class ElementFactory
    * @return the layout-cachable flag.
    * @deprecated The layout cachable flag is no longer used.
    */
-  public Boolean getLayoutCachable()
-  {
+  public Boolean getLayoutCachable() {
     return null;
   }
 
@@ -1821,8 +1662,7 @@ public abstract class ElementFactory
    * @param layoutCachable the layout-cachable flag.
    * @deprecated The layout cachable flag is no longer used.
    */
-  public void setLayoutCachable(final Boolean layoutCachable)
-  {
+  public void setLayoutCachable( final Boolean layoutCachable ) {
     // does nothing.
   }
 
@@ -1831,8 +1671,7 @@ public abstract class ElementFactory
    *
    * @return the visibility of the element.
    */
-  public Boolean getVisible()
-  {
+  public Boolean getVisible() {
     return visible;
   }
 
@@ -1841,8 +1680,7 @@ public abstract class ElementFactory
    *
    * @param visible the visibility flag of the element.
    */
-  public void setVisible(final Boolean visible)
-  {
+  public void setVisible( final Boolean visible ) {
     this.visible = visible;
   }
 
@@ -1851,11 +1689,9 @@ public abstract class ElementFactory
    *
    * @param e the element which was created.
    */
-  protected void applyElementName(final Element e)
-  {
-    if (getName() != null)
-    {
-      e.setName(getName());
+  protected void applyElementName( final Element e ) {
+    if ( getName() != null ) {
+      e.setName( getName() );
     }
   }
 
@@ -1865,8 +1701,7 @@ public abstract class ElementFactory
    *
    * @return the href-window string.
    */
-  public String getHRefWindow()
-  {
+  public String getHRefWindow() {
     return hRefWindow;
   }
 
@@ -1876,8 +1711,7 @@ public abstract class ElementFactory
    *
    * @param hRefWindow the href-window string.
    */
-  public void setHRefWindow(final String hRefWindow)
-  {
+  public void setHRefWindow( final String hRefWindow ) {
     this.hRefWindow = hRefWindow;
   }
 
@@ -1887,8 +1721,7 @@ public abstract class ElementFactory
    *
    * @return the minimum width or null, if no minimum width is defined.
    */
-  public Float getMinimumWidth()
-  {
+  public Float getMinimumWidth() {
     return minimumWidth;
   }
 
@@ -1898,8 +1731,7 @@ public abstract class ElementFactory
    *
    * @param minimumWidth the minimum width or null, to leave this property undefined.
    */
-  public void setMinimumWidth(final Float minimumWidth)
-  {
+  public void setMinimumWidth( final Float minimumWidth ) {
     this.minimumWidth = minimumWidth;
   }
 
@@ -1909,8 +1741,7 @@ public abstract class ElementFactory
    *
    * @return the minimum height or null, if no minimum height is defined.
    */
-  public Float getMinimumHeight()
-  {
+  public Float getMinimumHeight() {
     return minimumHeight;
   }
 
@@ -1920,8 +1751,7 @@ public abstract class ElementFactory
    *
    * @param minimumHeight the minimum height or null, to leave this property undefined.
    */
-  public void setMinimumHeight(final Float minimumHeight)
-  {
+  public void setMinimumHeight( final Float minimumHeight ) {
     this.minimumHeight = minimumHeight;
   }
 
@@ -1930,8 +1760,7 @@ public abstract class ElementFactory
    *
    * @return the maximum width or null, if no maximum width is defined.
    */
-  public Float getMaximumWidth()
-  {
+  public Float getMaximumWidth() {
     return maximumWidth;
   }
 
@@ -1940,8 +1769,7 @@ public abstract class ElementFactory
    *
    * @param maximumWidth the maximum width or null, if no maximum width should be defined.
    */
-  public void setMaximumWidth(final Float maximumWidth)
-  {
+  public void setMaximumWidth( final Float maximumWidth ) {
     this.maximumWidth = maximumWidth;
   }
 
@@ -1950,8 +1778,7 @@ public abstract class ElementFactory
    *
    * @return the maximum height or null, if no maximum height is defined.
    */
-  public Float getMaximumHeight()
-  {
+  public Float getMaximumHeight() {
     return maximumHeight;
   }
 
@@ -1960,8 +1787,7 @@ public abstract class ElementFactory
    *
    * @param maximumHeight the maximum width or null, if no maximum height should be defined.
    */
-  public void setMaximumHeight(final Float maximumHeight)
-  {
+  public void setMaximumHeight( final Float maximumHeight ) {
     this.maximumHeight = maximumHeight;
   }
 
@@ -1972,8 +1798,7 @@ public abstract class ElementFactory
    *
    * @return the preferred width or null, if left undefined.
    */
-  public Float getWidth()
-  {
+  public Float getWidth() {
     return width;
   }
 
@@ -1983,8 +1808,7 @@ public abstract class ElementFactory
    *
    * @param width the preferred width or null, if left undefined.
    */
-  public void setWidth(final Float width)
-  {
+  public void setWidth( final Float width ) {
     this.width = width;
   }
 
@@ -1995,8 +1819,7 @@ public abstract class ElementFactory
    *
    * @return the preferred height or null, if left undefined.
    */
-  public Float getHeight()
-  {
+  public Float getHeight() {
     return height;
   }
 
@@ -2006,8 +1829,7 @@ public abstract class ElementFactory
    *
    * @param height the preferred height or null, if left undefined.
    */
-  public void setHeight(final Float height)
-  {
+  public void setHeight( final Float height ) {
     this.height = height;
   }
 
@@ -2019,8 +1841,7 @@ public abstract class ElementFactory
    *
    * @return the elements horizontal position or null, if not defined.
    */
-  public Float getX()
-  {
+  public Float getX() {
     return x;
   }
 
@@ -2031,8 +1852,7 @@ public abstract class ElementFactory
    *
    * @param x the elements horizontal position or null, if not defined.
    */
-  public void setX(final Float x)
-  {
+  public void setX( final Float x ) {
     this.x = x;
   }
 
@@ -2044,8 +1864,7 @@ public abstract class ElementFactory
    *
    * @return the elements vertical position or null, if not defined.
    */
-  public Float getY()
-  {
+  public Float getY() {
     return y;
   }
 
@@ -2056,8 +1875,7 @@ public abstract class ElementFactory
    *
    * @param y the elements vertical position or null, if not defined.
    */
-  public void setY(final Float y)
-  {
+  public void setY( final Float y ) {
     this.y = y;
   }
 
@@ -2066,8 +1884,7 @@ public abstract class ElementFactory
    *
    * @return the href-title as string.
    */
-  public String getHRefTitle()
-  {
+  public String getHRefTitle() {
     return hRefTitle;
   }
 
@@ -2076,8 +1893,7 @@ public abstract class ElementFactory
    *
    * @param hRefTitle the href-title as string.
    */
-  public void setHRefTitle(final String hRefTitle)
-  {
+  public void setHRefTitle( final String hRefTitle ) {
     this.hRefTitle = hRefTitle;
   }
 
@@ -2086,269 +1902,209 @@ public abstract class ElementFactory
    *
    * @param style the element stylesheet which should receive the style definition.
    */
-  protected void applyStyle(final ElementStyleSheet style)
-  {
-    if (getUseMinChunkWidth() != null)
-    {
+  protected void applyStyle( final ElementStyleSheet style ) {
+    if ( getUseMinChunkWidth() != null ) {
       style.setStyleProperty
-          (ElementStyleKeys.USE_MIN_CHUNKWIDTH, getUseMinChunkWidth());
+        ( ElementStyleKeys.USE_MIN_CHUNKWIDTH, getUseMinChunkWidth() );
     }
-    if (getX() != null)
-    {
-      style.setStyleProperty(ElementStyleKeys.POS_X, getX());
+    if ( getX() != null ) {
+      style.setStyleProperty( ElementStyleKeys.POS_X, getX() );
     }
-    if (getY() != null)
-    {
-      style.setStyleProperty(ElementStyleKeys.POS_Y, getY());
+    if ( getY() != null ) {
+      style.setStyleProperty( ElementStyleKeys.POS_Y, getY() );
     }
-    if (getDynamicHeight() != null)
-    {
-      style.setStyleProperty(ElementStyleKeys.DYNAMIC_HEIGHT, getDynamicHeight());
+    if ( getDynamicHeight() != null ) {
+      style.setStyleProperty( ElementStyleKeys.DYNAMIC_HEIGHT, getDynamicHeight() );
     }
-    if (getMaximumWidth() != null)
-    {
-      style.setStyleProperty(ElementStyleKeys.MAX_WIDTH, getMaximumWidth());
+    if ( getMaximumWidth() != null ) {
+      style.setStyleProperty( ElementStyleKeys.MAX_WIDTH, getMaximumWidth() );
     }
-    if (getMaximumHeight() != null)
-    {
-      style.setStyleProperty(ElementStyleKeys.MAX_HEIGHT, getMaximumHeight());
+    if ( getMaximumHeight() != null ) {
+      style.setStyleProperty( ElementStyleKeys.MAX_HEIGHT, getMaximumHeight() );
     }
-    if (getMinimumWidth() != null)
-    {
-      style.setStyleProperty(ElementStyleKeys.MIN_WIDTH, getMinimumWidth());
+    if ( getMinimumWidth() != null ) {
+      style.setStyleProperty( ElementStyleKeys.MIN_WIDTH, getMinimumWidth() );
     }
-    if (getMinimumHeight() != null)
-    {
-      style.setStyleProperty(ElementStyleKeys.MIN_HEIGHT, getMinimumHeight());
+    if ( getMinimumHeight() != null ) {
+      style.setStyleProperty( ElementStyleKeys.MIN_HEIGHT, getMinimumHeight() );
     }
-    if (getWidth() != null)
-    {
-      style.setStyleProperty(ElementStyleKeys.WIDTH, getWidth());
+    if ( getWidth() != null ) {
+      style.setStyleProperty( ElementStyleKeys.WIDTH, getWidth() );
     }
-    if (getHeight() != null)
-    {
-      style.setStyleProperty(ElementStyleKeys.HEIGHT, getHeight());
+    if ( getHeight() != null ) {
+      style.setStyleProperty( ElementStyleKeys.HEIGHT, getHeight() );
     }
-    if (getVisible() != null)
-    {
-      style.setStyleProperty(ElementStyleKeys.VISIBLE, getVisible());
+    if ( getVisible() != null ) {
+      style.setStyleProperty( ElementStyleKeys.VISIBLE, getVisible() );
     }
-    if (getHRefTarget() != null)
-    {
-      style.setStyleProperty(ElementStyleKeys.HREF_TARGET, getHRefTarget());
+    if ( getHRefTarget() != null ) {
+      style.setStyleProperty( ElementStyleKeys.HREF_TARGET, getHRefTarget() );
     }
-    if (getHRefWindow() != null)
-    {
-      style.setStyleProperty(ElementStyleKeys.HREF_WINDOW, getHRefWindow());
+    if ( getHRefWindow() != null ) {
+      style.setStyleProperty( ElementStyleKeys.HREF_WINDOW, getHRefWindow() );
     }
-    if (getHRefTitle() != null)
-    {
-      style.setStyleProperty(ElementStyleKeys.HREF_TITLE, getHRefTitle());
+    if ( getHRefTitle() != null ) {
+      style.setStyleProperty( ElementStyleKeys.HREF_TITLE, getHRefTitle() );
     }
-    if (getFontSmooth() != null)
-    {
-      style.setStyleProperty(TextStyleKeys.FONT_SMOOTH, getFontSmooth());
+    if ( getFontSmooth() != null ) {
+      style.setStyleProperty( TextStyleKeys.FONT_SMOOTH, getFontSmooth() );
     }
 
-    if (getBorderColor() != null)
-    {
-      style.setStyleProperty(ElementStyleKeys.BORDER_TOP_COLOR, getBorderColor());
-      style.setStyleProperty(ElementStyleKeys.BORDER_LEFT_COLOR, getBorderColor());
-      style.setStyleProperty(ElementStyleKeys.BORDER_BOTTOM_COLOR, getBorderColor());
-      style.setStyleProperty(ElementStyleKeys.BORDER_RIGHT_COLOR, getBorderColor());
-      style.setStyleProperty(ElementStyleKeys.BORDER_BREAK_COLOR, getBorderColor());
+    if ( getBorderColor() != null ) {
+      style.setStyleProperty( ElementStyleKeys.BORDER_TOP_COLOR, getBorderColor() );
+      style.setStyleProperty( ElementStyleKeys.BORDER_LEFT_COLOR, getBorderColor() );
+      style.setStyleProperty( ElementStyleKeys.BORDER_BOTTOM_COLOR, getBorderColor() );
+      style.setStyleProperty( ElementStyleKeys.BORDER_RIGHT_COLOR, getBorderColor() );
+      style.setStyleProperty( ElementStyleKeys.BORDER_BREAK_COLOR, getBorderColor() );
     }
-    if (getBorderWidth() != null)
-    {
-      style.setStyleProperty(ElementStyleKeys.BORDER_TOP_WIDTH, getBorderWidth());
-      style.setStyleProperty(ElementStyleKeys.BORDER_LEFT_WIDTH, getBorderWidth());
-      style.setStyleProperty(ElementStyleKeys.BORDER_BOTTOM_WIDTH, getBorderWidth());
-      style.setStyleProperty(ElementStyleKeys.BORDER_RIGHT_WIDTH, getBorderWidth());
-      style.setStyleProperty(ElementStyleKeys.BORDER_BREAK_WIDTH, getBorderWidth());
+    if ( getBorderWidth() != null ) {
+      style.setStyleProperty( ElementStyleKeys.BORDER_TOP_WIDTH, getBorderWidth() );
+      style.setStyleProperty( ElementStyleKeys.BORDER_LEFT_WIDTH, getBorderWidth() );
+      style.setStyleProperty( ElementStyleKeys.BORDER_BOTTOM_WIDTH, getBorderWidth() );
+      style.setStyleProperty( ElementStyleKeys.BORDER_RIGHT_WIDTH, getBorderWidth() );
+      style.setStyleProperty( ElementStyleKeys.BORDER_BREAK_WIDTH, getBorderWidth() );
     }
-    if (getBorderStyle() != null)
-    {
-      style.setStyleProperty(ElementStyleKeys.BORDER_TOP_STYLE, getBorderStyle());
-      style.setStyleProperty(ElementStyleKeys.BORDER_LEFT_STYLE, getBorderStyle());
-      style.setStyleProperty(ElementStyleKeys.BORDER_BOTTOM_STYLE, getBorderStyle());
-      style.setStyleProperty(ElementStyleKeys.BORDER_RIGHT_STYLE, getBorderStyle());
-      style.setStyleProperty(ElementStyleKeys.BORDER_BREAK_STYLE, getBorderStyle());
+    if ( getBorderStyle() != null ) {
+      style.setStyleProperty( ElementStyleKeys.BORDER_TOP_STYLE, getBorderStyle() );
+      style.setStyleProperty( ElementStyleKeys.BORDER_LEFT_STYLE, getBorderStyle() );
+      style.setStyleProperty( ElementStyleKeys.BORDER_BOTTOM_STYLE, getBorderStyle() );
+      style.setStyleProperty( ElementStyleKeys.BORDER_RIGHT_STYLE, getBorderStyle() );
+      style.setStyleProperty( ElementStyleKeys.BORDER_BREAK_STYLE, getBorderStyle() );
     }
-    if (getPadding() != null)
-    {
-      style.setStyleProperty(ElementStyleKeys.PADDING_TOP, getPadding());
-      style.setStyleProperty(ElementStyleKeys.PADDING_LEFT, getPadding());
-      style.setStyleProperty(ElementStyleKeys.PADDING_BOTTOM, getPadding());
-      style.setStyleProperty(ElementStyleKeys.PADDING_RIGHT, getPadding());
+    if ( getPadding() != null ) {
+      style.setStyleProperty( ElementStyleKeys.PADDING_TOP, getPadding() );
+      style.setStyleProperty( ElementStyleKeys.PADDING_LEFT, getPadding() );
+      style.setStyleProperty( ElementStyleKeys.PADDING_BOTTOM, getPadding() );
+      style.setStyleProperty( ElementStyleKeys.PADDING_RIGHT, getPadding() );
     }
 
-    if (borderTopColor != null)
-    {
-      style.setStyleProperty(ElementStyleKeys.BORDER_TOP_COLOR, getBorderTopColor());
+    if ( borderTopColor != null ) {
+      style.setStyleProperty( ElementStyleKeys.BORDER_TOP_COLOR, getBorderTopColor() );
     }
-    if (borderLeftColor != null)
-    {
-      style.setStyleProperty(ElementStyleKeys.BORDER_LEFT_COLOR, getBorderLeftColor());
+    if ( borderLeftColor != null ) {
+      style.setStyleProperty( ElementStyleKeys.BORDER_LEFT_COLOR, getBorderLeftColor() );
     }
-    if (borderBottomColor != null)
-    {
-      style.setStyleProperty(ElementStyleKeys.BORDER_BOTTOM_COLOR, getBorderBottomColor());
+    if ( borderBottomColor != null ) {
+      style.setStyleProperty( ElementStyleKeys.BORDER_BOTTOM_COLOR, getBorderBottomColor() );
     }
-    if (borderRightColor != null)
-    {
-      style.setStyleProperty(ElementStyleKeys.BORDER_RIGHT_COLOR, getBorderRightColor());
+    if ( borderRightColor != null ) {
+      style.setStyleProperty( ElementStyleKeys.BORDER_RIGHT_COLOR, getBorderRightColor() );
     }
-    if (borderBreakColor != null)
-    {
-      style.setStyleProperty(ElementStyleKeys.BORDER_BREAK_COLOR, getBorderBreakColor());
+    if ( borderBreakColor != null ) {
+      style.setStyleProperty( ElementStyleKeys.BORDER_BREAK_COLOR, getBorderBreakColor() );
     }
-    if (borderTopWidth != null)
-    {
-      style.setStyleProperty(ElementStyleKeys.BORDER_TOP_WIDTH, getBorderTopWidth());
+    if ( borderTopWidth != null ) {
+      style.setStyleProperty( ElementStyleKeys.BORDER_TOP_WIDTH, getBorderTopWidth() );
     }
-    if (borderLeftWidth != null)
-    {
-      style.setStyleProperty(ElementStyleKeys.BORDER_LEFT_WIDTH, getBorderLeftWidth());
+    if ( borderLeftWidth != null ) {
+      style.setStyleProperty( ElementStyleKeys.BORDER_LEFT_WIDTH, getBorderLeftWidth() );
     }
-    if (borderBottomWidth != null)
-    {
-      style.setStyleProperty(ElementStyleKeys.BORDER_BOTTOM_WIDTH, getBorderBottomWidth());
+    if ( borderBottomWidth != null ) {
+      style.setStyleProperty( ElementStyleKeys.BORDER_BOTTOM_WIDTH, getBorderBottomWidth() );
     }
-    if (borderRightWidth != null)
-    {
-      style.setStyleProperty(ElementStyleKeys.BORDER_RIGHT_WIDTH, getBorderRightWidth());
+    if ( borderRightWidth != null ) {
+      style.setStyleProperty( ElementStyleKeys.BORDER_RIGHT_WIDTH, getBorderRightWidth() );
     }
-    if (borderBreakWidth != null)
-    {
-      style.setStyleProperty(ElementStyleKeys.BORDER_BREAK_WIDTH, getBorderBreakWidth());
+    if ( borderBreakWidth != null ) {
+      style.setStyleProperty( ElementStyleKeys.BORDER_BREAK_WIDTH, getBorderBreakWidth() );
     }
-    if (borderTopStyle != null)
-    {
-      style.setStyleProperty(ElementStyleKeys.BORDER_TOP_STYLE, getBorderTopStyle());
+    if ( borderTopStyle != null ) {
+      style.setStyleProperty( ElementStyleKeys.BORDER_TOP_STYLE, getBorderTopStyle() );
     }
-    if (borderLeftStyle != null)
-    {
-      style.setStyleProperty(ElementStyleKeys.BORDER_LEFT_STYLE, getBorderLeftStyle());
+    if ( borderLeftStyle != null ) {
+      style.setStyleProperty( ElementStyleKeys.BORDER_LEFT_STYLE, getBorderLeftStyle() );
     }
-    if (borderBottomStyle != null)
-    {
-      style.setStyleProperty(ElementStyleKeys.BORDER_BOTTOM_STYLE, getBorderBottomStyle());
+    if ( borderBottomStyle != null ) {
+      style.setStyleProperty( ElementStyleKeys.BORDER_BOTTOM_STYLE, getBorderBottomStyle() );
     }
-    if (borderRightStyle != null)
-    {
-      style.setStyleProperty(ElementStyleKeys.BORDER_RIGHT_STYLE, getBorderRightStyle());
+    if ( borderRightStyle != null ) {
+      style.setStyleProperty( ElementStyleKeys.BORDER_RIGHT_STYLE, getBorderRightStyle() );
     }
-    if (borderBreakStyle != null)
-    {
-      style.setStyleProperty(ElementStyleKeys.BORDER_BREAK_STYLE, getBorderBreakStyle());
+    if ( borderBreakStyle != null ) {
+      style.setStyleProperty( ElementStyleKeys.BORDER_BREAK_STYLE, getBorderBreakStyle() );
     }
-    if (paddingTop != null)
-    {
-      style.setStyleProperty(ElementStyleKeys.PADDING_TOP, getPaddingTop());
+    if ( paddingTop != null ) {
+      style.setStyleProperty( ElementStyleKeys.PADDING_TOP, getPaddingTop() );
     }
-    if (paddingLeft != null)
-    {
-      style.setStyleProperty(ElementStyleKeys.PADDING_LEFT, getPaddingLeft());
+    if ( paddingLeft != null ) {
+      style.setStyleProperty( ElementStyleKeys.PADDING_LEFT, getPaddingLeft() );
     }
-    if (paddingBottom != null)
-    {
-      style.setStyleProperty(ElementStyleKeys.PADDING_BOTTOM, getPaddingBottom());
+    if ( paddingBottom != null ) {
+      style.setStyleProperty( ElementStyleKeys.PADDING_BOTTOM, getPaddingBottom() );
     }
-    if (paddingRight != null)
-    {
-      style.setStyleProperty(ElementStyleKeys.PADDING_RIGHT, getPaddingRight());
+    if ( paddingRight != null ) {
+      style.setStyleProperty( ElementStyleKeys.PADDING_RIGHT, getPaddingRight() );
     }
 
-    if (backgroundColor != null)
-    {
-      style.setStyleProperty(ElementStyleKeys.BACKGROUND_COLOR, getBackgroundColor());
+    if ( backgroundColor != null ) {
+      style.setStyleProperty( ElementStyleKeys.BACKGROUND_COLOR, getBackgroundColor() );
     }
-    if (avoidPagebreaks != null)
-    {
-      style.setStyleProperty(ElementStyleKeys.AVOID_PAGEBREAK_INSIDE, getAvoidPagebreaks());
+    if ( avoidPagebreaks != null ) {
+      style.setStyleProperty( ElementStyleKeys.AVOID_PAGEBREAK_INSIDE, getAvoidPagebreaks() );
     }
-    if (orphans != null)
-    {
-      style.setStyleProperty(ElementStyleKeys.ORPHANS, getOrphans());
+    if ( orphans != null ) {
+      style.setStyleProperty( ElementStyleKeys.ORPHANS, getOrphans() );
     }
-    if (widows != null)
-    {
-      style.setStyleProperty(ElementStyleKeys.WIDOWS, getWidows());
+    if ( widows != null ) {
+      style.setStyleProperty( ElementStyleKeys.WIDOWS, getWidows() );
     }
-    if (widowOrphanOptOut != null)
-    {
-      style.setStyleProperty(ElementStyleKeys.WIDOW_ORPHAN_OPT_OUT, getWidowOrphanOptOut());
+    if ( widowOrphanOptOut != null ) {
+      style.setStyleProperty( ElementStyleKeys.WIDOW_ORPHAN_OPT_OUT, getWidowOrphanOptOut() );
     }
-    if (overflowX != null)
-    {
-      style.setStyleProperty(ElementStyleKeys.OVERFLOW_X, getOverflowX());
+    if ( overflowX != null ) {
+      style.setStyleProperty( ElementStyleKeys.OVERFLOW_X, getOverflowX() );
     }
-    if (overflowY != null)
-    {
-      style.setStyleProperty(ElementStyleKeys.OVERFLOW_Y, getOverflowY());
+    if ( overflowY != null ) {
+      style.setStyleProperty( ElementStyleKeys.OVERFLOW_Y, getOverflowY() );
     }
-    if (fontSmooth != null)
-    {
-      style.setStyleProperty(TextStyleKeys.FONT_SMOOTH, getFontSmooth());
+    if ( fontSmooth != null ) {
+      style.setStyleProperty( TextStyleKeys.FONT_SMOOTH, getFontSmooth() );
     }
-    if (horizontalAlignment != null)
-    {
-      style.setStyleProperty(ElementStyleKeys.ALIGNMENT, getHorizontalAlignment());
+    if ( horizontalAlignment != null ) {
+      style.setStyleProperty( ElementStyleKeys.ALIGNMENT, getHorizontalAlignment() );
     }
-    if (verticalAlignment != null)
-    {
-      style.setStyleProperty(ElementStyleKeys.VALIGNMENT, getVerticalAlignment());
+    if ( verticalAlignment != null ) {
+      style.setStyleProperty( ElementStyleKeys.VALIGNMENT, getVerticalAlignment() );
     }
-    if (color != null)
-    {
-      style.setStyleProperty(ElementStyleKeys.PAINT, getColor());
+    if ( color != null ) {
+      style.setStyleProperty( ElementStyleKeys.PAINT, getColor() );
     }
 
-    if (borderRadiusWidth != null)
-    {
-      style.setStyleProperty(ElementStyleKeys.BORDER_TOP_LEFT_RADIUS_WIDTH, getBorderRadiusWidth());
-      style.setStyleProperty(ElementStyleKeys.BORDER_TOP_RIGHT_RADIUS_WIDTH, getBorderRadiusWidth());
-      style.setStyleProperty(ElementStyleKeys.BORDER_BOTTOM_LEFT_RADIUS_WIDTH, getBorderRadiusWidth());
-      style.setStyleProperty(ElementStyleKeys.BORDER_BOTTOM_RIGHT_RADIUS_WIDTH, getBorderRadiusWidth());
+    if ( borderRadiusWidth != null ) {
+      style.setStyleProperty( ElementStyleKeys.BORDER_TOP_LEFT_RADIUS_WIDTH, getBorderRadiusWidth() );
+      style.setStyleProperty( ElementStyleKeys.BORDER_TOP_RIGHT_RADIUS_WIDTH, getBorderRadiusWidth() );
+      style.setStyleProperty( ElementStyleKeys.BORDER_BOTTOM_LEFT_RADIUS_WIDTH, getBorderRadiusWidth() );
+      style.setStyleProperty( ElementStyleKeys.BORDER_BOTTOM_RIGHT_RADIUS_WIDTH, getBorderRadiusWidth() );
     }
-    if (borderRadiusHeight != null)
-    {
-      style.setStyleProperty(ElementStyleKeys.BORDER_TOP_LEFT_RADIUS_HEIGHT, getBorderRadiusHeight());
-      style.setStyleProperty(ElementStyleKeys.BORDER_TOP_RIGHT_RADIUS_HEIGHT, getBorderRadiusHeight());
-      style.setStyleProperty(ElementStyleKeys.BORDER_BOTTOM_LEFT_RADIUS_HEIGHT, getBorderRadiusHeight());
-      style.setStyleProperty(ElementStyleKeys.BORDER_BOTTOM_RIGHT_RADIUS_HEIGHT, getBorderRadiusHeight());
+    if ( borderRadiusHeight != null ) {
+      style.setStyleProperty( ElementStyleKeys.BORDER_TOP_LEFT_RADIUS_HEIGHT, getBorderRadiusHeight() );
+      style.setStyleProperty( ElementStyleKeys.BORDER_TOP_RIGHT_RADIUS_HEIGHT, getBorderRadiusHeight() );
+      style.setStyleProperty( ElementStyleKeys.BORDER_BOTTOM_LEFT_RADIUS_HEIGHT, getBorderRadiusHeight() );
+      style.setStyleProperty( ElementStyleKeys.BORDER_BOTTOM_RIGHT_RADIUS_HEIGHT, getBorderRadiusHeight() );
     }
-    if (borderTopLeftRadiusWidth != null)
-    {
-      style.setStyleProperty(ElementStyleKeys.BORDER_TOP_LEFT_RADIUS_WIDTH, getBorderTopLeftRadiusWidth());
+    if ( borderTopLeftRadiusWidth != null ) {
+      style.setStyleProperty( ElementStyleKeys.BORDER_TOP_LEFT_RADIUS_WIDTH, getBorderTopLeftRadiusWidth() );
     }
-    if (borderTopLeftRadiusHeight != null)
-    {
-      style.setStyleProperty(ElementStyleKeys.BORDER_TOP_LEFT_RADIUS_HEIGHT, getBorderTopLeftRadiusHeight());
+    if ( borderTopLeftRadiusHeight != null ) {
+      style.setStyleProperty( ElementStyleKeys.BORDER_TOP_LEFT_RADIUS_HEIGHT, getBorderTopLeftRadiusHeight() );
     }
-    if (borderTopRightRadiusWidth != null)
-    {
-      style.setStyleProperty(ElementStyleKeys.BORDER_TOP_RIGHT_RADIUS_WIDTH, getBorderTopRightRadiusWidth());
+    if ( borderTopRightRadiusWidth != null ) {
+      style.setStyleProperty( ElementStyleKeys.BORDER_TOP_RIGHT_RADIUS_WIDTH, getBorderTopRightRadiusWidth() );
     }
-    if (borderTopRightRadiusHeight != null)
-    {
-      style.setStyleProperty(ElementStyleKeys.BORDER_TOP_RIGHT_RADIUS_HEIGHT, getBorderTopRightRadiusHeight());
+    if ( borderTopRightRadiusHeight != null ) {
+      style.setStyleProperty( ElementStyleKeys.BORDER_TOP_RIGHT_RADIUS_HEIGHT, getBorderTopRightRadiusHeight() );
     }
-    if (borderBottomLeftRadiusWidth != null)
-    {
-      style.setStyleProperty(ElementStyleKeys.BORDER_BOTTOM_LEFT_RADIUS_WIDTH, getBorderBottomLeftRadiusWidth());
+    if ( borderBottomLeftRadiusWidth != null ) {
+      style.setStyleProperty( ElementStyleKeys.BORDER_BOTTOM_LEFT_RADIUS_WIDTH, getBorderBottomLeftRadiusWidth() );
     }
-    if (borderBottomLeftRadiusHeight != null)
-    {
-      style.setStyleProperty(ElementStyleKeys.BORDER_BOTTOM_LEFT_RADIUS_HEIGHT, getBorderBottomLeftRadiusHeight());
+    if ( borderBottomLeftRadiusHeight != null ) {
+      style.setStyleProperty( ElementStyleKeys.BORDER_BOTTOM_LEFT_RADIUS_HEIGHT, getBorderBottomLeftRadiusHeight() );
     }
-    if (borderBottomRightRadiusWidth != null)
-    {
-      style.setStyleProperty(ElementStyleKeys.BORDER_BOTTOM_RIGHT_RADIUS_WIDTH, getBorderBottomRightRadiusWidth());
+    if ( borderBottomRightRadiusWidth != null ) {
+      style.setStyleProperty( ElementStyleKeys.BORDER_BOTTOM_RIGHT_RADIUS_WIDTH, getBorderBottomRightRadiusWidth() );
     }
-    if (borderBottomRightRadiusHeight != null)
-    {
-      style.setStyleProperty(ElementStyleKeys.BORDER_BOTTOM_RIGHT_RADIUS_HEIGHT, getBorderBottomRightRadiusHeight());
+    if ( borderBottomRightRadiusHeight != null ) {
+      style.setStyleProperty( ElementStyleKeys.BORDER_BOTTOM_RIGHT_RADIUS_HEIGHT, getBorderBottomRightRadiusHeight() );
     }
   }
 
@@ -2365,22 +2121,18 @@ public abstract class ElementFactory
    * @param b the primitive value.
    * @return Boolean.TRUE or Boolean.FALSE.
    */
-  protected static Boolean getBooleanValue(final boolean b)
-  {
-    if (b)
-    {
+  protected static Boolean getBooleanValue( final boolean b ) {
+    if ( b ) {
       return Boolean.TRUE;
     }
     return Boolean.FALSE;
   }
 
-  public void setUseMinChunkWidth(final Boolean useMinChunkWidth)
-  {
+  public void setUseMinChunkWidth( final Boolean useMinChunkWidth ) {
     this.useMinChunkWidth = useMinChunkWidth;
   }
 
-  public Boolean getUseMinChunkWidth()
-  {
+  public Boolean getUseMinChunkWidth() {
     return useMinChunkWidth;
   }
 }

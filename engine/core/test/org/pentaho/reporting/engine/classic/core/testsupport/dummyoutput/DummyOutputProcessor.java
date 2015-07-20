@@ -26,71 +26,57 @@ import org.pentaho.reporting.engine.classic.core.layout.output.LogicalPageKey;
 import org.pentaho.reporting.engine.classic.core.layout.output.OutputProcessor;
 import org.pentaho.reporting.engine.classic.core.layout.output.OutputProcessorMetaData;
 
-public class DummyOutputProcessor implements OutputProcessor
-{
+public class DummyOutputProcessor implements OutputProcessor {
   private OutputProcessorMetaData metaData;
   private boolean finishedPage;
 
-  public DummyOutputProcessor()
-  {
+  public DummyOutputProcessor() {
     metaData = new GenericOutputProcessorMetaData();
   }
 
-  public void processingStarted(final ReportDefinition report, final ProcessingContext processingContext)
-  {
+  public void processingStarted( final ReportDefinition report, final ProcessingContext processingContext ) {
   }
-  
-  public OutputProcessorMetaData getMetaData()
-  {
+
+  public OutputProcessorMetaData getMetaData() {
     return metaData;
   }
 
-  public void processContent(final LogicalPageBox pageBox) throws ContentProcessingException
-  {
+  public void processContent( final LogicalPageBox pageBox ) throws ContentProcessingException {
   }
 
-  public void processRecomputedContent(final LogicalPageBox pageBox) throws ContentProcessingException
-  {
+  public void processRecomputedContent( final LogicalPageBox pageBox ) throws ContentProcessingException {
 
   }
 
-  public void processingFinished()
-  {
+  public void processingFinished() {
     finishedPage = true;
   }
 
-  public int getPageCursor()
-  {
+  public int getPageCursor() {
     return 0;
   }
 
-  public void setPageCursor(final int pc)
-  {
+  public void setPageCursor( final int pc ) {
 
   }
 
-  public int getLogicalPageCount()
-  {
-    return finishedPage ? 1: 0;
+  public int getLogicalPageCount() {
+    return finishedPage ? 1 : 0;
   }
 
-  public LogicalPageKey getLogicalPage(final int page)
-  {
+  public LogicalPageKey getLogicalPage( final int page ) {
     return null;
   }
 
-  public boolean isPaginationFinished()
-  {
+  public boolean isPaginationFinished() {
     return false;
   }
 
-  public boolean isNeedAlignedPage()
-  {
+  public boolean isNeedAlignedPage() {
     return false;
   }
 
-  public int getPhysicalPageCount()
-  {
-    return finishedPage ? 1: 0;
+  public int getPhysicalPageCount() {
+    return finishedPage ? 1 : 0;
   }
 }

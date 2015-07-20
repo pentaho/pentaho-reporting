@@ -26,8 +26,7 @@ import org.pentaho.reporting.engine.classic.core.function.ExpressionRuntime;
  * @author Thomas Morgner
  * @deprecated The anchor filter is deprecated now. Use the stylekey "anchor" instead.
  */
-public class AnchorFilter implements DataFilter
-{
+public class AnchorFilter implements DataFilter {
   /**
    * The data source from where to get the values for the anchor.
    */
@@ -36,8 +35,7 @@ public class AnchorFilter implements DataFilter
   /**
    * DefaultConstructor.
    */
-  public AnchorFilter()
-  {
+  public AnchorFilter() {
   }
 
   /**
@@ -47,15 +45,11 @@ public class AnchorFilter implements DataFilter
    * @throws CloneNotSupportedException this should never happen.
    */
   public AnchorFilter clone()
-      throws CloneNotSupportedException
-  {
+    throws CloneNotSupportedException {
     final AnchorFilter af = (AnchorFilter) super.clone();
-    if (dataSource == null)
-    {
+    if ( dataSource == null ) {
       af.dataSource = null;
-    }
-    else
-    {
+    } else {
       af.dataSource = dataSource.clone();
     }
     return af;
@@ -69,8 +63,7 @@ public class AnchorFilter implements DataFilter
    * @param element
    * @return the value.
    */
-  public Object getValue(final ExpressionRuntime runtime, final ReportElement element)
-  {
+  public Object getValue( final ExpressionRuntime runtime, final ReportElement element ) {
     return null;
   }
 
@@ -79,8 +72,7 @@ public class AnchorFilter implements DataFilter
    *
    * @return The datasource.
    */
-  public DataSource getDataSource()
-  {
+  public DataSource getDataSource() {
     return dataSource;
   }
 
@@ -89,8 +81,7 @@ public class AnchorFilter implements DataFilter
    *
    * @param ds The data source.
    */
-  public void setDataSource(final DataSource ds)
-  {
+  public void setDataSource( final DataSource ds ) {
     this.dataSource = ds;
   }
 }

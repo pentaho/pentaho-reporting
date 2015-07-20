@@ -25,8 +25,7 @@ import org.pentaho.reporting.engine.classic.core.layout.model.table.TableRenderB
 import org.pentaho.reporting.engine.classic.core.util.InstanceID;
 import org.pentaho.reporting.engine.classic.core.util.geom.StrictGeomUtility;
 
-public abstract class AbstractMajorAxisLayoutStep extends IterateVisualProcessStep
-{
+public abstract class AbstractMajorAxisLayoutStep extends IterateVisualProcessStep {
   // Set the maximum height to an incredibly high value. This is now 2^43 micropoints or more than
   // 3000 kilometers. Please call me directly at any time if you need more space for printing.
   protected static final long MAX_AUTO = StrictGeomUtility.MAX_AUTO;
@@ -35,112 +34,89 @@ public abstract class AbstractMajorAxisLayoutStep extends IterateVisualProcessSt
   private TableRowHeightCalculation tableRowHeightStep;
   private InstanceID allChildsDirtyMarker;
 
-  protected AbstractMajorAxisLayoutStep(final boolean secondPass)
-  {
-    this.tableRowHeightStep = new TableRowHeightCalculation(secondPass);
+  protected AbstractMajorAxisLayoutStep( final boolean secondPass ) {
+    this.tableRowHeightStep = new TableRowHeightCalculation( secondPass );
   }
 
-  protected TableRowHeightCalculation getTableRowHeightStep()
-  {
+  protected TableRowHeightCalculation getTableRowHeightStep() {
     return tableRowHeightStep;
   }
 
-  public void compute(final LogicalPageBox pageBox)
-  {
+  public void compute( final LogicalPageBox pageBox ) {
     getEventWatch().start();
     getSummaryWatch().start();
-    try
-    {
+    try {
       this.tableRowHeightStep.reset();
       this.cacheClean = true;
-      startProcessing(pageBox);
-    }
-    finally
-    {
-      getSummaryWatch().stop(true);
+      startProcessing( pageBox );
+    } finally {
+      getSummaryWatch().stop( true );
       getEventWatch().stop();
     }
   }
 
-  public void continueComputation(final RenderBox pageBox)
-  {
+  public void continueComputation( final RenderBox pageBox ) {
     this.tableRowHeightStep.reset();
     this.cacheClean = true;
-    startProcessing(pageBox);
+    startProcessing( pageBox );
   }
 
-  protected void markAllChildsDirty(final RenderNode node)
-  {
+  protected void markAllChildsDirty( final RenderNode node ) {
     InstanceID instanceId = node.getInstanceId();
-    if (instanceId == null)
-    {
+    if ( instanceId == null ) {
       return;
     }
-    if (this.allChildsDirtyMarker != null)
-    {
+    if ( this.allChildsDirtyMarker != null ) {
       return;
     }
     this.allChildsDirtyMarker = instanceId;
   }
 
-  public void clearAllChildsDirtyMarker(final RenderNode node)
-  {
+  public void clearAllChildsDirtyMarker( final RenderNode node ) {
     InstanceID instanceId = node.getInstanceId();
-    if (instanceId == null)
-    {
+    if ( instanceId == null ) {
       return;
     }
-    if (this.allChildsDirtyMarker == instanceId)
-    {
+    if ( this.allChildsDirtyMarker == instanceId ) {
       this.allChildsDirtyMarker = null;
     }
   }
 
-  protected boolean checkCacheValid(final RenderNode node)
-  {
-    if (cacheClean == false)
-    {
+  protected boolean checkCacheValid( final RenderNode node ) {
+    if ( cacheClean == false ) {
       return false;
     }
 
-    if (allChildsDirtyMarker != null)
-    {
+    if ( allChildsDirtyMarker != null ) {
       return false;
     }
 
     final RenderNode.CacheState cacheState = node.getCacheState();
-    if (cacheState == RenderNode.CacheState.DEEP_DIRTY)
-    {
+    if ( cacheState == RenderNode.CacheState.DEEP_DIRTY ) {
       cacheClean = false;
     }
 
-    if (cacheClean && node.isCacheValid())
-    {
+    if ( cacheClean && node.isCacheValid() ) {
       return true;
     }
     return false;
   }
 
-  protected void performStartTable(final RenderBox box)
-  {
+  protected void performStartTable( final RenderBox box ) {
     final int nodeType = box.getNodeType();
-    if (nodeType == LayoutNodeTypes.TYPE_BOX_TABLE)
-    {
-      tableRowHeightStep.startTableBox((TableRenderBox) box);
+    if ( nodeType == LayoutNodeTypes.TYPE_BOX_TABLE ) {
+      tableRowHeightStep.startTableBox( (TableRenderBox) box );
     }
   }
 
-  protected void performFinishTable(final RenderBox box)
-  {
+  protected void performFinishTable( final RenderBox box ) {
     final int nodeType = box.getNodeType();
-    if (nodeType == LayoutNodeTypes.TYPE_BOX_TABLE)
-    {
-      tableRowHeightStep.finishTable((TableRenderBox) box);
+    if ( nodeType == LayoutNodeTypes.TYPE_BOX_TABLE ) {
+      tableRowHeightStep.finishTable( (TableRenderBox) box );
     }
   }
 
-  protected boolean isCacheClean()
-  {
+  protected boolean isCacheClean() {
     return cacheClean;
   }
 }

@@ -17,20 +17,16 @@
 
 package org.pentaho.reporting.engine.classic.core;
 
-public class MetaAttributeNames
-{
-  private MetaAttributeNames()
-  {
+public class MetaAttributeNames {
+  private MetaAttributeNames() {
   }
 
-  public static class Numeric
-  {
-    private Numeric()
-    {
+  public static class Numeric {
+    private Numeric() {
     }
 
     public static final String NAMESPACE =
-        "http://reporting.pentaho.org/namespaces/engine/meta-attributes/numeric";
+      "http://reporting.pentaho.org/namespaces/engine/meta-attributes/numeric";
 
     public static final String CURRENCY = "currency";
     public static final String SCALE = "scale";
@@ -38,28 +34,24 @@ public class MetaAttributeNames
     public static final String SIGNED = "signed";
   }
 
-  public static class Database
-  {
-    private Database()
-    {
+  public static class Database {
+    private Database() {
     }
 
     public static final String NAMESPACE =
-        "http://reporting.pentaho.org/namespaces/engine/meta-attributes/database";
+      "http://reporting.pentaho.org/namespaces/engine/meta-attributes/database";
 
     public static final String TABLE = "table";
     public static final String SCHEMA = "schema";
     public static final String CATALOG = "catalog";
   }
 
-  public static class Formatting
-  {
-    private Formatting()
-    {
+  public static class Formatting {
+    private Formatting() {
     }
 
     public static final String NAMESPACE =
-        "http://reporting.pentaho.org/namespaces/engine/meta-attributes/formatting";
+      "http://reporting.pentaho.org/namespaces/engine/meta-attributes/formatting";
 
     public static final String DISPLAY_SIZE = "display-size";
     public static final String LABEL = "label";
@@ -67,15 +59,13 @@ public class MetaAttributeNames
     public static final String FORMAT = "format";
   }
 
-  public static class Core
-  {
+  public static class Core {
 
-    private Core()
-    {
+    private Core() {
     }
 
     public static final String NAMESPACE =
-        "http://reporting.pentaho.org/namespaces/engine/meta-attributes/core";
+      "http://reporting.pentaho.org/namespaces/engine/meta-attributes/core";
     /**
      * The field/column name
      */
@@ -105,40 +95,34 @@ public class MetaAttributeNames
     public static final String INDEXED_COLUMN = "indexed-column";
   }
 
-  public static class Expressions
-  {
+  public static class Expressions {
     public static final String CLASS = "class";
 
     public static final String NAMESPACE =
-        "http://reporting.pentaho.org/namespaces/engine/meta-attributes/expressions";
+      "http://reporting.pentaho.org/namespaces/engine/meta-attributes/expressions";
 
-    private Expressions()
-    {
+    private Expressions() {
     }
 
   }
 
-  public static class Parameters
-  {
+  public static class Parameters {
     public static final String INCLUDE_IN_WIZARD = "include-in-wizard";
 
     public static final String NAMESPACE =
-        "http://reporting.pentaho.org/namespaces/engine/meta-attributes/parameters";
+      "http://reporting.pentaho.org/namespaces/engine/meta-attributes/parameters";
 
-    private Parameters()
-    {
+    private Parameters() {
     }
 
   }
 
-  public static class Style
-  {
-    private Style()
-    {
+  public static class Style {
+    private Style() {
     }
 
     public static final String NAMESPACE =
-        "http://reporting.pentaho.org/namespaces/engine/meta-attributes/style";
+      "http://reporting.pentaho.org/namespaces/engine/meta-attributes/style";
 
     public static final String FONTFAMILY = "font-family";
     public static final String FONTSIZE = "font-size";

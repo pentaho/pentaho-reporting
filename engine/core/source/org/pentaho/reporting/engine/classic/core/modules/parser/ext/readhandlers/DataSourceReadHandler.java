@@ -26,13 +26,11 @@ import org.pentaho.reporting.libraries.xmlns.parser.ParseException;
 import org.pentaho.reporting.libraries.xmlns.parser.XmlReadHandler;
 import org.xml.sax.SAXException;
 
-public class DataSourceReadHandler extends CompoundObjectReadHandler
-{
+public class DataSourceReadHandler extends CompoundObjectReadHandler {
   private DataSourceReadHandler childHandler;
 
-  public DataSourceReadHandler()
-  {
-    super(null);
+  public DataSourceReadHandler() {
+    super( null );
   }
 
   /**
@@ -41,24 +39,21 @@ public class DataSourceReadHandler extends CompoundObjectReadHandler
    * @param attrs the attributes.
    * @throws org.xml.sax.SAXException if there is a parsing error.
    */
-  protected void startParsing(final PropertyAttributes attrs)
-      throws SAXException
-  {
-    final String typeName = attrs.getValue(getUri(), "type");
-    if (typeName == null)
-    {
-      throw new ParseException("The datasource type must be specified",
-          getRootHandler().getDocumentLocator());
+  protected void startParsing( final PropertyAttributes attrs )
+    throws SAXException {
+    final String typeName = attrs.getValue( getUri(), "type" );
+    if ( typeName == null ) {
+      throw new ParseException( "The datasource type must be specified",
+        getRootHandler().getDocumentLocator() );
     }
 
     final DataSourceCollector fc = (DataSourceCollector) getRootHandler()
-        .getHelperObject(ReportDefinitionReadHandler.DATASOURCE_FACTORY_KEY);
-    final ObjectDescription od = fc.getDataSourceDescription(typeName);
-    if (od == null)
-    {
-      throw new ParseException("The specified DataSource type is not defined", getLocator());
+      .getHelperObject( ReportDefinitionReadHandler.DATASOURCE_FACTORY_KEY );
+    final ObjectDescription od = fc.getDataSourceDescription( typeName );
+    if ( od == null ) {
+      throw new ParseException( "The specified DataSource type is not defined", getLocator() );
     }
-    setObjectDescription(od);
+    setObjectDescription( od );
   }
 
   /**
@@ -69,22 +64,19 @@ public class DataSourceReadHandler extends CompoundObjectReadHandler
    * @return the handler or null, if the tagname is invalid.
    * @throws org.xml.sax.SAXException if there is a parsing error.
    */
-  protected XmlReadHandler getHandlerForChild(final String uri,
-                                              final String tagName,
-                                              final PropertyAttributes atts)
-      throws SAXException
-  {
-    if (isSameNamespace(uri) == false)
-    {
+  protected XmlReadHandler getHandlerForChild( final String uri,
+                                               final String tagName,
+                                               final PropertyAttributes atts )
+    throws SAXException {
+    if ( isSameNamespace( uri ) == false ) {
       return null;
     }
 
-    if ("datasource".equals(tagName))
-    {
+    if ( "datasource".equals( tagName ) ) {
       childHandler = new DataSourceReadHandler();
       return childHandler;
     }
-    return super.getHandlerForChild(uri, tagName, atts);
+    return super.getHandlerForChild( uri, tagName, atts );
   }
 
   /**
@@ -92,13 +84,11 @@ public class DataSourceReadHandler extends CompoundObjectReadHandler
    *
    * @return the object.
    */
-  public Object getObject()
-  {
+  public Object getObject() {
     final DataSource ds = (DataSource) super.getObject();
-    if (childHandler != null && ds instanceof DataTarget)
-    {
+    if ( childHandler != null && ds instanceof DataTarget ) {
       final DataTarget dt = (DataTarget) ds;
-      dt.setDataSource((DataSource) childHandler.getObject());
+      dt.setDataSource( (DataSource) childHandler.getObject() );
     }
     return ds;
   }

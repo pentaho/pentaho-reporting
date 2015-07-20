@@ -17,8 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.core.metadata.parser;
 
-import java.util.Map;
-
 import org.pentaho.reporting.engine.classic.core.metadata.DefaultStyleKeyMetaData;
 import org.pentaho.reporting.engine.classic.core.metadata.StyleMetaData;
 import org.pentaho.reporting.engine.classic.core.metadata.builder.StyleMetaDataBuilder;
@@ -28,8 +26,9 @@ import org.pentaho.reporting.libraries.xmlns.parser.ParseException;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 
-public class StyleGroupRefReadHandler extends AbstractXmlReadHandler
-{
+import java.util.Map;
+
+public class StyleGroupRefReadHandler extends AbstractXmlReadHandler {
   private Map<StyleKey, StyleMetaData> styles;
   private GlobalMetaDefinition styleGroups;
   private String bundle;
@@ -40,10 +39,9 @@ public class StyleGroupRefReadHandler extends AbstractXmlReadHandler
    * @param bundle      the default resource-bundle that is used if the group defines no own bundle.
    * @noinspection AssignmentToCollectionOrArrayFieldFromParameter
    */
-  public StyleGroupRefReadHandler(final Map<StyleKey, StyleMetaData> styles,
-                                  final GlobalMetaDefinition styleGroups,
-                                  final String bundle)
-  {
+  public StyleGroupRefReadHandler( final Map<StyleKey, StyleMetaData> styles,
+                                   final GlobalMetaDefinition styleGroups,
+                                   final String bundle ) {
     this.styles = styles;
     this.styleGroups = styleGroups;
     this.bundle = bundle;
@@ -55,30 +53,25 @@ public class StyleGroupRefReadHandler extends AbstractXmlReadHandler
    * @param attrs the attributes.
    * @throws SAXException if there is a parsing error.
    */
-  protected void startParsing(final Attributes attrs) throws SAXException
-  {
-    final String name = attrs.getValue(getUri(), "ref");
-    if (name == null)
-    {
-      throw new ParseException("Attribute 'ref' is undefined", getLocator());
+  protected void startParsing( final Attributes attrs ) throws SAXException {
+    final String name = attrs.getValue( getUri(), "ref" );
+    if ( name == null ) {
+      throw new ParseException( "Attribute 'ref' is undefined", getLocator() );
     }
-    final StyleGroup group = styleGroups.getStyleGroup(name);
-    if (group == null)
-    {
+    final StyleGroup group = styleGroups.getStyleGroup( name );
+    if ( group == null ) {
       throw new ParseException
-          ("Attribute 'ref' is invalid. There is no style-group '" + name + "' defined.", getLocator());
+        ( "Attribute 'ref' is invalid. There is no style-group '" + name + "' defined.", getLocator() );
     }
 
-    for (StyleMetaDataBuilder handler : group.getMetaData())
-    {
+    for ( StyleMetaDataBuilder handler : group.getMetaData() ) {
       final StyleKey key = handler.getKey();
-      if (handler.getBundleLocation() == null)
-      {
-        handler = handler.clone().bundle(this.bundle, "style.");
+      if ( handler.getBundleLocation() == null ) {
+        handler = handler.clone().bundle( this.bundle, "style." );
       }
 
-      final DefaultStyleKeyMetaData metaData = new DefaultStyleKeyMetaData(handler);
-      styles.put(key, metaData);
+      final DefaultStyleKeyMetaData metaData = new DefaultStyleKeyMetaData( handler );
+      styles.put( key, metaData );
     }
   }
 
@@ -88,8 +81,7 @@ public class StyleGroupRefReadHandler extends AbstractXmlReadHandler
    * @return the object.
    * @throws SAXException if an parser error occured.
    */
-  public Object getObject() throws SAXException
-  {
+  public Object getObject() throws SAXException {
     return null;
   }
 }

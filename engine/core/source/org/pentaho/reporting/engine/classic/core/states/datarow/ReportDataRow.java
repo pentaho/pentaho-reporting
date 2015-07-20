@@ -19,40 +19,33 @@ package org.pentaho.reporting.engine.classic.core.states.datarow;
 
 import javax.swing.table.TableModel;
 
-public final class ReportDataRow
-{
+public final class ReportDataRow {
   private String[] names;
   private final TableModel reportData;
   private int cursor;
 
-  public ReportDataRow(final TableModel reportData)
-  {
-    if (reportData == null)
-    {
+  public ReportDataRow( final TableModel reportData ) {
+    if ( reportData == null ) {
       throw new NullPointerException();
     }
     this.reportData = reportData;
     this.cursor = 0;
 
     final int columnCount = reportData.getColumnCount();
-    this.names = new String[columnCount];
+    this.names = new String[ columnCount ];
 
-    for (int i = 0; i < columnCount; i++)
-    {
-      this.names[i] = reportData.getColumnName(i);
+    for ( int i = 0; i < columnCount; i++ ) {
+      this.names[ i ] = reportData.getColumnName( i );
     }
   }
 
-  private ReportDataRow(final TableModel reportData,
-                        final ReportDataRow reportDataRow)
-  {
-    if (reportData == null)
-    {
+  private ReportDataRow( final TableModel reportData,
+                         final ReportDataRow reportDataRow ) {
+    if ( reportData == null ) {
       throw new NullPointerException();
     }
 
-    if (reportDataRow == null)
-    {
+    if ( reportDataRow == null ) {
       throw new NullPointerException();
     }
 
@@ -72,9 +65,8 @@ public final class ReportDataRow
    * @return the value.
    * @throws IllegalStateException if the datarow detected a deadlock.
    */
-  public Object get(final int col)
-  {
-    return reportData.getValueAt(cursor, col);
+  public Object get( final int col ) {
+    return reportData.getValueAt( cursor, col );
   }
 
   /**
@@ -85,9 +77,8 @@ public final class ReportDataRow
    * @param col the item index.
    * @return the name.
    */
-  public String getColumnName(final int col)
-  {
-    return names[col];
+  public String getColumnName( final int col ) {
+    return names[ col ];
   }
 
   /**
@@ -95,8 +86,7 @@ public final class ReportDataRow
    *
    * @return the item count.
    */
-  public int getColumnCount()
-  {
+  public int getColumnCount() {
     return names.length;
   }
 
@@ -105,28 +95,23 @@ public final class ReportDataRow
    *
    * @return
    */
-  public ReportDataRow advance()
-  {
-    return new ReportDataRow(reportData, this);
+  public ReportDataRow advance() {
+    return new ReportDataRow( reportData, this );
   }
 
-  public boolean isAdvanceable()
-  {
-    return cursor < (reportData.getRowCount() - 1);
+  public boolean isAdvanceable() {
+    return cursor < ( reportData.getRowCount() - 1 );
   }
 
-  public boolean isReadable()
-  {
+  public boolean isReadable() {
     return cursor >= 0 && cursor < reportData.getRowCount();
   }
 
-  public TableModel getReportData()
-  {
+  public TableModel getReportData() {
     return reportData;
   }
 
-  public int getCursor()
-  {
+  public int getCursor() {
     return cursor;
   }
 }

@@ -25,65 +25,52 @@ import org.pentaho.reporting.engine.classic.core.DataRow;
 import org.pentaho.reporting.engine.classic.core.ReportDataFactoryException;
 import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 
-public class DefaultDataFactoryCore implements DataFactoryCore
-{
-  private static final Log logger = LogFactory.getLog(DefaultDataFactoryCore.class);
+public class DefaultDataFactoryCore implements DataFactoryCore {
+  private static final Log logger = LogFactory.getLog( DefaultDataFactoryCore.class );
 
-  public DefaultDataFactoryCore()
-  {
+  public DefaultDataFactoryCore() {
   }
 
-  public String[] getReferencedFields(final DataFactoryMetaData metaData,
-                                      final DataFactory element,
-                                      final String query,
-                                      final DataRow parameter)
-  {
-    if (element instanceof DataFactoryMetaProvider)
-    {
+  public String[] getReferencedFields( final DataFactoryMetaData metaData,
+                                       final DataFactory element,
+                                       final String query,
+                                       final DataRow parameter ) {
+    if ( element instanceof DataFactoryMetaProvider ) {
       try {
         DataFactoryMetaProvider p = (DataFactoryMetaProvider) element;
-        return p.getReferencedFields(query, parameter);
-      }
-      catch (final ReportDataFactoryException e)
-      {
-        logger.info("Unable to compute design-time data: Referenced fields", e);
+        return p.getReferencedFields( query, parameter );
+      } catch ( final ReportDataFactoryException e ) {
+        logger.info( "Unable to compute design-time data: Referenced fields", e );
       }
     }
     return null;
   }
 
-  public ResourceReference[] getReferencedResources(final DataFactoryMetaData metaData,
-                                                    final DataFactory element,
-                                                    final ResourceManager resourceManager,
-                                                    final String query, final DataRow parameter)
-  {
-    return new ResourceReference[0];
+  public ResourceReference[] getReferencedResources( final DataFactoryMetaData metaData,
+                                                     final DataFactory element,
+                                                     final ResourceManager resourceManager,
+                                                     final String query, final DataRow parameter ) {
+    return new ResourceReference[ 0 ];
   }
 
-  public String getDisplayConnectionName(final DataFactoryMetaData metaData,
-                                         final DataFactory dataFactory)
-  {
-    if (dataFactory instanceof DataFactoryMetaProvider)
-    {
+  public String getDisplayConnectionName( final DataFactoryMetaData metaData,
+                                          final DataFactory dataFactory ) {
+    if ( dataFactory instanceof DataFactoryMetaProvider ) {
       DataFactoryMetaProvider p = (DataFactoryMetaProvider) dataFactory;
       return p.getDisplayConnectionName();
     }
     return null;
   }
 
-  public Object getQueryHash(final DataFactoryMetaData dataFactoryMetaData,
-                             final DataFactory dataFactory,
-                             final String queryName, final DataRow parameter)
-  {
-    if (dataFactory instanceof DataFactoryMetaProvider)
-    {
+  public Object getQueryHash( final DataFactoryMetaData dataFactoryMetaData,
+                              final DataFactory dataFactory,
+                              final String queryName, final DataRow parameter ) {
+    if ( dataFactory instanceof DataFactoryMetaProvider ) {
       try {
         DataFactoryMetaProvider p = (DataFactoryMetaProvider) dataFactory;
-        return p.getReferencedFields(queryName, parameter);
-      }
-      catch (final ReportDataFactoryException e)
-      {
-        logger.info("Unable to compute design-time data: Query Hash", e);
+        return p.getReferencedFields( queryName, parameter );
+      } catch ( final ReportDataFactoryException e ) {
+        logger.info( "Unable to compute design-time data: Query Hash", e );
       }
     }
     return null;

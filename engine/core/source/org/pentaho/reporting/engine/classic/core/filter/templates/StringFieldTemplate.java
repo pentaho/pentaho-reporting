@@ -30,8 +30,7 @@ import org.pentaho.reporting.engine.classic.core.function.ExpressionRuntime;
  * @author Thomas Morgner
  */
 public class StringFieldTemplate extends AbstractTemplate
-    implements RawDataSource
-{
+  implements RawDataSource {
   /**
    * The data-row data source.
    */
@@ -45,11 +44,10 @@ public class StringFieldTemplate extends AbstractTemplate
   /**
    * Creates a new string field template.
    */
-  public StringFieldTemplate()
-  {
+  public StringFieldTemplate() {
     dataRowDataSource = new DataRowDataSource();
     stringFilter = new StringFilter();
-    stringFilter.setDataSource(dataRowDataSource);
+    stringFilter.setDataSource( dataRowDataSource );
   }
 
   /**
@@ -57,8 +55,7 @@ public class StringFieldTemplate extends AbstractTemplate
    *
    * @return The field name.
    */
-  public String getField()
-  {
+  public String getField() {
     return dataRowDataSource.getDataSourceColumnName();
   }
 
@@ -67,9 +64,8 @@ public class StringFieldTemplate extends AbstractTemplate
    *
    * @param field the field name.
    */
-  public void setField(final String field)
-  {
-    dataRowDataSource.setDataSourceColumnName(field);
+  public void setField( final String field ) {
+    dataRowDataSource.setDataSourceColumnName( field );
   }
 
   /**
@@ -77,8 +73,7 @@ public class StringFieldTemplate extends AbstractTemplate
    *
    * @return the formula.
    */
-  public String getFormula()
-  {
+  public String getFormula() {
     return dataRowDataSource.getFormula();
   }
 
@@ -87,9 +82,8 @@ public class StringFieldTemplate extends AbstractTemplate
    *
    * @param formula the formula for the data source.
    */
-  public void setFormula(final String formula)
-  {
-    dataRowDataSource.setFormula(formula);
+  public void setFormula( final String formula ) {
+    dataRowDataSource.setFormula( formula );
   }
 
   /**
@@ -97,8 +91,7 @@ public class StringFieldTemplate extends AbstractTemplate
    *
    * @return A value to represent <code>null</code>.
    */
-  public String getNullValue()
-  {
+  public String getNullValue() {
     return stringFilter.getNullValue();
   }
 
@@ -107,9 +100,8 @@ public class StringFieldTemplate extends AbstractTemplate
    *
    * @param nullValue the value that represents <code>null</code>.
    */
-  public void setNullValue(final String nullValue)
-  {
-    stringFilter.setNullValue(nullValue);
+  public void setNullValue( final String nullValue ) {
+    stringFilter.setNullValue( nullValue );
   }
 
   /**
@@ -120,9 +112,8 @@ public class StringFieldTemplate extends AbstractTemplate
    * @param element
    * @return the value.
    */
-  public Object getValue(final ExpressionRuntime runtime, final ReportElement element)
-  {
-    return stringFilter.getValue(runtime, element);
+  public Object getValue( final ExpressionRuntime runtime, final ReportElement element ) {
+    return stringFilter.getValue( runtime, element );
   }
 
   /**
@@ -132,8 +123,7 @@ public class StringFieldTemplate extends AbstractTemplate
    * @throws CloneNotSupportedException this should never happen.
    */
   public StringFieldTemplate clone()
-      throws CloneNotSupportedException
-  {
+    throws CloneNotSupportedException {
     final StringFieldTemplate template = (StringFieldTemplate) super.clone();
     template.stringFilter = stringFilter.clone();
     template.dataRowDataSource = (DataRowDataSource) template.stringFilter.getDataSource();
@@ -145,25 +135,21 @@ public class StringFieldTemplate extends AbstractTemplate
    *
    * @return the datarow data source.
    */
-  protected DataRowDataSource getDataRowDataSource()
-  {
+  protected DataRowDataSource getDataRowDataSource() {
     return dataRowDataSource;
   }
 
-  public Object getRawValue(final ExpressionRuntime runtime, final ReportElement element)
-  {
-    return stringFilter.getRawValue(runtime, element);
+  public Object getRawValue( final ExpressionRuntime runtime, final ReportElement element ) {
+    return stringFilter.getRawValue( runtime, element );
   }
 
-  public FormatSpecification getFormatString(final ExpressionRuntime runtime,
-                                             final ReportElement element,
-                                             FormatSpecification formatSpecification)
-  {
-    if (formatSpecification == null)
-    {
+  public FormatSpecification getFormatString( final ExpressionRuntime runtime,
+                                              final ReportElement element,
+                                              FormatSpecification formatSpecification ) {
+    if ( formatSpecification == null ) {
       formatSpecification = new FormatSpecification();
     }
-    formatSpecification.redefine(FormatSpecification.TYPE_UNDEFINED, null);
+    formatSpecification.redefine( FormatSpecification.TYPE_UNDEFINED, null );
     return formatSpecification;
   }
 }

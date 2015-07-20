@@ -19,7 +19,6 @@ package org.pentaho.reporting.engine.classic.core.testsupport.selector;
 
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderNode;
 
-public interface NodeMatcher
-{
-  public boolean matches(RenderNode node);
+public interface NodeMatcher {
+  public boolean matches( RenderNode node );
 }

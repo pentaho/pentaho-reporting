@@ -28,21 +28,24 @@ import org.pentaho.reporting.libraries.base.boot.SubSystem;
  *
  * @author Thomas Morgner
  */
-public class ExcelTableModule extends AbstractModule
-{
+public class ExcelTableModule extends AbstractModule {
   /**
    * The configuration prefix when reading the configuration settings from the report configuration.
    *
    * @deprecated The configuration prefix should not be needed anymore. Always provide the full name.
    */
-  public static final String CONFIGURATION_PREFIX = "org.pentaho.reporting.engine.classic.core.modules.output.table.xls";
-  
+  public static final String CONFIGURATION_PREFIX =
+    "org.pentaho.reporting.engine.classic.core.modules.output.table.xls";
+
   public static final String EXCEL_STREAM_EXPORT_TYPE = "table/excel;page-mode=stream";
   public static final String EXCEL_FLOW_EXPORT_TYPE = "table/excel;page-mode=flow";
   public static final String EXCEL_PAGE_EXPORT_TYPE = "table/excel;page-mode=page";
-  public static final String XLSX_STREAM_EXPORT_TYPE = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;page-mode=stream";
-  public static final String XLSX_FLOW_EXPORT_TYPE = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;page-mode=flow";
-  public static final String XLSX_PAGE_EXPORT_TYPE = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;page-mode=page";
+  public static final String XLSX_STREAM_EXPORT_TYPE =
+    "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;page-mode=stream";
+  public static final String XLSX_FLOW_EXPORT_TYPE =
+    "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;page-mode=flow";
+  public static final String XLSX_PAGE_EXPORT_TYPE =
+    "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;page-mode=page";
 
   /**
    * DefaultConstructor. Loads the module specification.
@@ -50,8 +53,7 @@ public class ExcelTableModule extends AbstractModule
    * @throws ModuleInitializeException if an error occured.
    */
   public ExcelTableModule()
-      throws ModuleInitializeException
-  {
+    throws ModuleInitializeException {
     loadModuleInfo();
   }
 
@@ -63,15 +65,14 @@ public class ExcelTableModule extends AbstractModule
    * @param subSystem the subSystem.
    * @throws ModuleInitializeException if an error ocurred while initializing the module.
    */
-  public void initialize(final SubSystem subSystem)
-      throws ModuleInitializeException
-  {
-    if (AbstractModule.isClassLoadable("org.apache.poi.hssf.usermodel.HSSFWorkbook", ExcelTableModule.class) == false)
-    {
-      throw new ModuleInitializeException("Unable to load POI classes.");
+  public void initialize( final SubSystem subSystem )
+    throws ModuleInitializeException {
+    if ( AbstractModule.isClassLoadable( "org.apache.poi.hssf.usermodel.HSSFWorkbook", ExcelTableModule.class )
+      == false ) {
+      throw new ModuleInitializeException( "Unable to load POI classes." );
     }
 
     ElementMetaDataParser.initializeOptionalReportProcessTaskMetaData
-        ("org/pentaho/reporting/engine/classic/core/modules/output/table/xls/meta-report-process-tasks.xml");
+      ( "org/pentaho/reporting/engine/classic/core/modules/output/table/xls/meta-report-process-tasks.xml" );
   }
 }

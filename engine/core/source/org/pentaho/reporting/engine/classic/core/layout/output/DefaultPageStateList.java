@@ -17,13 +17,13 @@
 
 package org.pentaho.reporting.engine.classic.core.layout.output;
 
-import java.util.ArrayList;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.pentaho.reporting.engine.classic.core.ReportProcessingException;
 import org.pentaho.reporting.engine.classic.core.util.WeakReferenceList;
 import org.pentaho.reporting.libraries.base.config.ExtendedConfigurationWrapper;
+
+import java.util.ArrayList;
 
 
 /**
@@ -41,9 +41,8 @@ import org.pentaho.reporting.libraries.base.config.ExtendedConfigurationWrapper;
  *
  * @author Thomas Morgner
  */
-public class DefaultPageStateList implements PageStateList
-{
-  private static final Log logger = LogFactory.getLog(DefaultPageStateList.class);
+public class DefaultPageStateList implements PageStateList {
+  private static final Log logger = LogFactory.getLog( DefaultPageStateList.class );
   /**
    * The position of the master element in the list. A greater value will reduce the
    * not-freeable memory used by the list, but restoring a single page will require more
@@ -74,8 +73,7 @@ public class DefaultPageStateList implements PageStateList
    * Internal WeakReferenceList that is capable to restore its elements. The elements in this list are page start report
    * states.
    */
-  private final class MasterList extends WeakReferenceList<InternalStorageState>
-  {
+  private final class MasterList extends WeakReferenceList<InternalStorageState> {
     /**
      * The master list.
      */
@@ -87,14 +85,12 @@ public class DefaultPageStateList implements PageStateList
      * @param list          the list.
      * @param maxChildCount the maximum number of elements in this list.
      */
-    private MasterList(final DefaultPageStateList list, final int maxChildCount)
-    {
-      super(maxChildCount);
+    private MasterList( final DefaultPageStateList list, final int maxChildCount ) {
+      super( maxChildCount );
       this.master = list;
     }
 
-    public Object clone() throws CloneNotSupportedException
-    {
+    public Object clone() throws CloneNotSupportedException {
       return super.clone();
     }
 
@@ -104,33 +100,27 @@ public class DefaultPageStateList implements PageStateList
      * @param index the index.
      * @return the restored ReportState of the given index, or null, if the state could not be restored.
      */
-    protected InternalStorageState restoreChild(final int index)
-    {
+    protected InternalStorageState restoreChild( final int index ) {
       InternalStorageState master = (InternalStorageState) getMaster();
-      if (master == null)
-      {
-        throw new IllegalStateException("We cannot have a master list without a master state");
+      if ( master == null ) {
+        throw new IllegalStateException( "We cannot have a master list without a master state" );
       }
-      try
-      {
-        final int max = getChildPos(index);
-        logger.info("Restoring weak state " + master.getStorePosition() + " for # " + max);
-        
-        if (master.isValidRestorePoint() == false)
-        {
+      try {
+        final int max = getChildPos( index );
+        logger.info( "Restoring weak state " + master.getStorePosition() + " for # " + max );
+
+        if ( master.isValidRestorePoint() == false ) {
           // not a safe point, so restore the master first ..
           final InternalStorageState state = DefaultPageStateList.this.restoreState
-              (master.getStorePosition(), master.getLastSavePosition(), getInternal(master.getLastSavePosition()));
-          setMaster(state);
+            ( master.getStorePosition(), master.getLastSavePosition(), getInternal( master.getLastSavePosition() ) );
+          setMaster( state );
           master = state;
         }
 
-        return restoreState(max, master);
-      }
-      catch (Exception rpe)
-      {
-        DefaultPageStateList.logger.debug("Caught exception while restoring a saved page-state", rpe);
-        throw new IllegalStateException("Something went wrong while trying to restore the child #" + index);
+        return restoreState( max, master );
+      } catch ( Exception rpe ) {
+        DefaultPageStateList.logger.debug( "Caught exception while restoring a saved page-state", rpe );
+        throw new IllegalStateException( "Something went wrong while trying to restore the child #" + index );
       }
     }
 
@@ -141,71 +131,59 @@ public class DefaultPageStateList implements PageStateList
      * @param count     the count.
      * @param rootstate the root state.
      * @return the report state.
-     * @throws org.pentaho.reporting.engine.classic.core.ReportProcessingException
-     *          if there was a problem processing the report.
+     * @throws org.pentaho.reporting.engine.classic.core.ReportProcessingException if there was a problem processing the
+     *                                                                             report.
      */
-    private InternalStorageState restoreState(final int count, final InternalStorageState rootstate)
-        throws ReportProcessingException
-    {
-      if (rootstate == null)
-      {
-        throw new NullPointerException("Master is null");
+    private InternalStorageState restoreState( final int count, final InternalStorageState rootstate )
+      throws ReportProcessingException {
+      if ( rootstate == null ) {
+        throw new NullPointerException( "Master is null" );
       }
 
       InternalStorageState state = rootstate;
-      for (int i = 0; i <= count; i++)
-      {
+      for ( int i = 0; i <= count; i++ ) {
         final ReportProcessor pageProcess = master.getPageProcess();
-        final PageState pageState = pageProcess.processPage(state.getPageState(), false);
-        if (pageState == null)
-        {
-          throw new IllegalStateException("State returned is null: Report processing reached premature end-point.");
+        final PageState pageState = pageProcess.processPage( state.getPageState(), false );
+        if ( pageState == null ) {
+          throw new IllegalStateException( "State returned is null: Report processing reached premature end-point." );
         }
         state = new InternalStorageState
-            (pageState, rootstate.getStorePosition() + i, rootstate.getLastSavePosition());
-        if (state.isValidRestorePoint())
-        {
-          set(state, i + 1);
+          ( pageState, rootstate.getStorePosition() + i, rootstate.getLastSavePosition() );
+        if ( state.isValidRestorePoint() ) {
+          set( state, i + 1 );
         }
       }
       return state;
     }
   }
 
-  private static class InternalStorageState
-  {
+  private static class InternalStorageState {
     private PageState pageState;
     private int storePosition;
     private int lastSavePosition;
 
-    private InternalStorageState(final PageState pageState,
-                                 final int storePosition,
-                                 final int lastSavePosition)
-    {
+    private InternalStorageState( final PageState pageState,
+                                  final int storePosition,
+                                  final int lastSavePosition ) {
       this.pageState = pageState;
       this.storePosition = storePosition;
       this.lastSavePosition = lastSavePosition;
     }
 
-    public PageState getPageState()
-    {
+    public PageState getPageState() {
       return pageState;
     }
 
-    public int getStorePosition()
-    {
+    public int getStorePosition() {
       return storePosition;
     }
 
-    public int getLastSavePosition()
-    {
+    public int getLastSavePosition() {
       return lastSavePosition;
     }
 
-    public boolean isValidRestorePoint()
-    {
-      if (pageState == null)
-      {
+    public boolean isValidRestorePoint() {
+      if ( pageState == null ) {
         return false;
       }
       return pageState.isSafeToStoreEarly();
@@ -251,44 +229,40 @@ public class DefaultPageStateList implements PageStateList
    * @param proc the reportprocessor used to restore lost states (null not permitted).
    * @throws NullPointerException if the report processor is <code>null</code>.
    */
-  public DefaultPageStateList(final ReportProcessor proc)
-  {
-    if (proc == null)
-    {
-      throw new NullPointerException("ReportProcessor null");
+  public DefaultPageStateList( final ReportProcessor proc ) {
+    if ( proc == null ) {
+      throw new NullPointerException( "ReportProcessor null" );
     }
 
     this.pageProcess = proc;
 
-    final ExtendedConfigurationWrapper config = new ExtendedConfigurationWrapper(proc.getConfiguration());
+    final ExtendedConfigurationWrapper config = new ExtendedConfigurationWrapper( proc.getConfiguration() );
 
     this.primaryPoolSize = config.getIntProperty
-        ("org.pentaho.reporting.engine.classic.core.performance.pagestates.PrimaryPoolSize", PRIMARY_MAX);
+      ( "org.pentaho.reporting.engine.classic.core.performance.pagestates.PrimaryPoolSize", PRIMARY_MAX );
     this.secondaryPoolFrequency = config.getIntProperty
-        ("org.pentaho.reporting.engine.classic.core.performance.pagestates.SecondaryPoolFrequency", MASTERPOSITIONS_MED);
+      ( "org.pentaho.reporting.engine.classic.core.performance.pagestates.SecondaryPoolFrequency",
+        MASTERPOSITIONS_MED );
     this.secondaryPoolSize = config.getIntProperty
-        ("org.pentaho.reporting.engine.classic.core.performance.pagestates.SecondaryPoolSize", MASTER4_MAX) + primaryPoolSize;
+      ( "org.pentaho.reporting.engine.classic.core.performance.pagestates.SecondaryPoolSize", MASTER4_MAX )
+      + primaryPoolSize;
     this.tertiaryPoolFrequency = config.getIntProperty
-        ("org.pentaho.reporting.engine.classic.core.performance.pagestates.TertiaryPoolFrequency", MASTERPOSITIONS_MAX);
+      ( "org.pentaho.reporting.engine.classic.core.performance.pagestates.TertiaryPoolFrequency", MASTERPOSITIONS_MAX );
 
-    if (primaryPoolSize < 1)
-    {
-      throw new IllegalStateException("Invalid configuration: Primary pool must be >= 1");
+    if ( primaryPoolSize < 1 ) {
+      throw new IllegalStateException( "Invalid configuration: Primary pool must be >= 1" );
     }
-    if (secondaryPoolSize < primaryPoolSize)
-    {
-      throw new IllegalStateException("Invalid configuration: Secondary pool must be >= primary pool");
+    if ( secondaryPoolSize < primaryPoolSize ) {
+      throw new IllegalStateException( "Invalid configuration: Secondary pool must be >= primary pool" );
     }
-    if (secondaryPoolFrequency < 1)
-    {
-      throw new IllegalStateException("Invalid configuration: Secondary pool frequency must be >= 1");
+    if ( secondaryPoolFrequency < 1 ) {
+      throw new IllegalStateException( "Invalid configuration: Secondary pool frequency must be >= 1" );
     }
-    if (tertiaryPoolFrequency < 1)
-    {
-      throw new IllegalStateException("Invalid configuration: Tertiary pool frequency must be >= 1");
+    if ( tertiaryPoolFrequency < 1 ) {
+      throw new IllegalStateException( "Invalid configuration: Tertiary pool frequency must be >= 1" );
     }
-    primaryStates = new ArrayList<InternalStorageState>(primaryPoolSize);
-    masterStates4 = new ArrayList<MasterList>(secondaryPoolSize);
+    primaryStates = new ArrayList<InternalStorageState>( primaryPoolSize );
+    masterStates4 = new ArrayList<MasterList>( secondaryPoolSize );
     masterStates10 = new ArrayList<MasterList>();
 
   }
@@ -300,14 +274,12 @@ public class DefaultPageStateList implements PageStateList
    * @param maxListSize the maximum list size.
    * @return the position within the masterStateList.
    */
-  private int getMasterPos(final int pos, final int maxListSize)
-  {
+  private int getMasterPos( final int pos, final int maxListSize ) {
     //return (int) Math.floor(pos / maxListSize);
-    return (pos / maxListSize);
+    return ( pos / maxListSize );
   }
 
-  protected ReportProcessor getPageProcess()
-  {
+  protected ReportProcessor getPageProcess() {
     return pageProcess;
   }
 
@@ -316,8 +288,7 @@ public class DefaultPageStateList implements PageStateList
    *
    * @return the number of elements in the list.
    */
-  public int size()
-  {
+  public int size() {
     return this.size;
   }
 
@@ -326,135 +297,108 @@ public class DefaultPageStateList implements PageStateList
    *
    * @param pageState the report state.
    */
-  public void add(final PageState pageState)
-  {
-    if (pageState == null)
-    {
+  public void add( final PageState pageState ) {
+    if ( pageState == null ) {
       throw new NullPointerException();
     }
 
     final int size = size();
     final InternalStorageState state;
-    if (pageState.isSafeToStoreEarly() == false)
-    {
-      state = new InternalStorageState(null, size, lastSafePosition);
-    }
-    else
-    {
+    if ( pageState.isSafeToStoreEarly() == false ) {
+      state = new InternalStorageState( null, size, lastSafePosition );
+    } else {
       lastSafePosition = size;
       pageState.prepareStorage();
-      state = new InternalStorageState(pageState, size, lastSafePosition);
+      state = new InternalStorageState( pageState, size, lastSafePosition );
     }
 
     // the first 20 Elements are stored directly into an ArrayList
-    if (size < primaryPoolSize)
-    {
-      primaryStates.add(state);
+    if ( size < primaryPoolSize ) {
+      primaryStates.add( state );
       this.size++;
     }
     // the next 100 Elements are stored into a list of 4-element weakReference
     //list. So if an Element gets lost (GCd), only 4 states need to be replayed.
-    else if (size < secondaryPoolSize)
-    {
+    else if ( size < secondaryPoolSize ) {
       final int secPos = size - primaryPoolSize;
-      final int masterPos = getMasterPos(secPos, secondaryPoolFrequency);
-      if (masterPos >= masterStates4.size())
-      {
-        final MasterList master = new MasterList(this, secondaryPoolFrequency);
-        masterStates4.add(master);
-        master.add(state);
-      }
-      else
-      {
-        final MasterList master = masterStates4.get(masterPos);
-        master.add(state);
+      final int masterPos = getMasterPos( secPos, secondaryPoolFrequency );
+      if ( masterPos >= masterStates4.size() ) {
+        final MasterList master = new MasterList( this, secondaryPoolFrequency );
+        masterStates4.add( master );
+        master.add( state );
+      } else {
+        final MasterList master = masterStates4.get( masterPos );
+        master.add( state );
       }
       this.size++;
     }
     // all other Elements are stored into a list of 10-element weakReference
     //list. So if an Element gets lost (GCd), 10 states need to be replayed.
-    else
-    {
+    else {
       final int thirdPos = size - secondaryPoolSize;
-      final int masterPos = getMasterPos(thirdPos, tertiaryPoolFrequency);
-      if (masterPos >= masterStates10.size())
-      {
-        final MasterList master = new MasterList(this, tertiaryPoolFrequency);
-        masterStates10.add(master);
-        master.add(state);
-      }
-      else
-      {
-        final MasterList master = masterStates10.get(masterPos);
-        master.add(state);
+      final int masterPos = getMasterPos( thirdPos, tertiaryPoolFrequency );
+      if ( masterPos >= masterStates10.size() ) {
+        final MasterList master = new MasterList( this, tertiaryPoolFrequency );
+        masterStates10.add( master );
+        master.add( state );
+      } else {
+        final MasterList master = masterStates10.get( masterPos );
+        master.add( state );
       }
       this.size++;
     }
   }
 
-  protected void set(final int index, final InternalStorageState state)
-  {
-    if (index >= size)
-    {
+  protected void set( final int index, final InternalStorageState state ) {
+    if ( index >= size ) {
       throw new IndexOutOfBoundsException();
     }
 
-    if (index != state.getStorePosition())
-    {
+    if ( index != state.getStorePosition() ) {
       throw new IllegalArgumentException();
     }
-    
+
     // the first 20 Elements are stored directly into an ArrayList
-    if (index < primaryPoolSize)
-    {
-      final InternalStorageState o = primaryStates.get(index);
-      if (o.isValidRestorePoint())
-      {
+    if ( index < primaryPoolSize ) {
+      final InternalStorageState o = primaryStates.get( index );
+      if ( o.isValidRestorePoint() ) {
         throw new IllegalArgumentException();
       }
 
-      primaryStates.set(index, state);
+      primaryStates.set( index, state );
     }
     // the next 100 Elements are stored into a list of 4-element weakReference
     //list. So if an Element gets lost (GCd), only 4 states need to be replayed.
-    else if (index < secondaryPoolSize)
-    {
+    else if ( index < secondaryPoolSize ) {
       final int secPos = index - primaryPoolSize;
-      final int masterPos = getMasterPos(secPos, secondaryPoolFrequency);
-      if (masterPos >= masterStates4.size())
-      {
-        throw new IllegalStateException("Replacing an existing entry must not generate a new list slot.");
+      final int masterPos = getMasterPos( secPos, secondaryPoolFrequency );
+      if ( masterPos >= masterStates4.size() ) {
+        throw new IllegalStateException( "Replacing an existing entry must not generate a new list slot." );
       }
 
-      final MasterList master = masterStates4.get(masterPos);
-      final InternalStorageState o = master.getRaw(secPos);
-      if (o != null && o.isValidRestorePoint())
-      {
+      final MasterList master = masterStates4.get( masterPos );
+      final InternalStorageState o = master.getRaw( secPos );
+      if ( o != null && o.isValidRestorePoint() ) {
         throw new IllegalArgumentException();
       }
 
-      master.set(state, secPos);
+      master.set( state, secPos );
     }
     // all other Elements are stored into a list of 10-element weakReference
     //list. So if an Element gets lost (GCd), 10 states need to be replayed.
-    else
-    {
+    else {
       final int thirdPos = index - secondaryPoolSize;
-      final int masterPos = getMasterPos(thirdPos, tertiaryPoolFrequency);
-      if (masterPos >= masterStates10.size())
-      {
-        throw new IllegalStateException("Replacing an existing entry must not generate a new list slot.");
-      }
-      else
-      {
-        final MasterList master = masterStates10.get(masterPos);
-        final InternalStorageState o = master.getRaw(thirdPos);
-        if (o != null && o.isValidRestorePoint())
-        {
+      final int masterPos = getMasterPos( thirdPos, tertiaryPoolFrequency );
+      if ( masterPos >= masterStates10.size() ) {
+        throw new IllegalStateException( "Replacing an existing entry must not generate a new list slot." );
+      } else {
+        final MasterList master = masterStates10.get( masterPos );
+        final InternalStorageState o = master.getRaw( thirdPos );
+        if ( o != null && o.isValidRestorePoint() ) {
           throw new IllegalArgumentException();
         }
 
-        master.set(state, thirdPos);
+        master.set( state, thirdPos );
       }
     }
   }
@@ -462,8 +406,7 @@ public class DefaultPageStateList implements PageStateList
   /**
    * Removes all elements in the list.
    */
-  public void clear()
-  {
+  public void clear() {
     masterStates10.clear();
     masterStates4.clear();
     primaryStates.clear();
@@ -476,18 +419,14 @@ public class DefaultPageStateList implements PageStateList
    * @param index the index.
    * @return the report state.
    */
-  public PageState get(final int index)
-  {
-    if (index >= size() || index < 0)
-    {
+  public PageState get( final int index ) {
+    if ( index >= size() || index < 0 ) {
       throw new IndexOutOfBoundsException
-          ("Index is invalid. Index was " + index + "; size was " + size());
+        ( "Index is invalid. Index was " + index + "; size was " + size() );
     }
-    final InternalStorageState internal = getInternal(index);
-    if (internal.isValidRestorePoint() == false)
-    {
-      try
-      {
+    final InternalStorageState internal = getInternal( index );
+    if ( internal.isValidRestorePoint() == false ) {
+      try {
         // From the 'internal' pagestate we know the worst case position where we can find a
         // page state to restore our report processing from. But maybe we have a cheaper solution
         // inbetween, maybe from previous restore runs. So we backtrack from the current target
@@ -495,20 +434,16 @@ public class DefaultPageStateList implements PageStateList
 
         final int targetPageCursor = internal.getStorePosition();
         final int stateCounter = internal.getLastSavePosition();
-        for (int i = targetPageCursor - 1; i >= stateCounter; i -= 1)
-        {
-          final InternalStorageState startState = getInternal(i);
-          if (startState.isValidRestorePoint())
-          {
-            final InternalStorageState internalStorageState = restoreState(targetPageCursor, i, startState);
+        for ( int i = targetPageCursor - 1; i >= stateCounter; i -= 1 ) {
+          final InternalStorageState startState = getInternal( i );
+          if ( startState.isValidRestorePoint() ) {
+            final InternalStorageState internalStorageState = restoreState( targetPageCursor, i, startState );
             return internalStorageState.getPageState();
           }
         }
         throw new IllegalStateException();
-      }
-      catch (ReportProcessingException e)
-      {
-        throw new IllegalStateException(e);
+      } catch ( ReportProcessingException e ) {
+        throw new IllegalStateException( e );
       }
     }
     return internal.getPageState();
@@ -522,60 +457,48 @@ public class DefaultPageStateList implements PageStateList
    * @param lastSaveState the page cursor for the start state of the restore sequence.
    * @param rootstate     the root state.
    * @return the report state.
-   * @throws org.pentaho.reporting.engine.classic.core.ReportProcessingException
-   *          if there was a problem processing the report.
+   * @throws org.pentaho.reporting.engine.classic.core.ReportProcessingException if there was a problem processing the
+   *                                                                             report.
    */
-  private InternalStorageState restoreState(final int pageCursor,
-                                            final int lastSaveState,
-                                            final InternalStorageState rootstate)
-      throws ReportProcessingException
-  {
-    logger.info("Restoring global state " + pageCursor + " from " + lastSaveState);
-    if (rootstate == null)
-    {
-      throw new NullPointerException("Master is null");
+  private InternalStorageState restoreState( final int pageCursor,
+                                             final int lastSaveState,
+                                             final InternalStorageState rootstate )
+    throws ReportProcessingException {
+    logger.info( "Restoring global state " + pageCursor + " from " + lastSaveState );
+    if ( rootstate == null ) {
+      throw new NullPointerException( "Master is null" );
     }
 
-    if (rootstate.isValidRestorePoint() == false)
-    {
+    if ( rootstate.isValidRestorePoint() == false ) {
       throw new IllegalArgumentException();
     }
 
     InternalStorageState state = rootstate;
-    for (int i = lastSaveState; i < pageCursor; i++)
-    {
+    for ( int i = lastSaveState; i < pageCursor; i++ ) {
       final ReportProcessor pageProcess = getPageProcess();
-      final PageState pageState = pageProcess.processPage(state.getPageState(), false);
-      if (pageState == null)
-      {
-        throw new IllegalStateException("State returned is null: Report processing reached premature end-point.");
+      final PageState pageState = pageProcess.processPage( state.getPageState(), false );
+      if ( pageState == null ) {
+        throw new IllegalStateException( "State returned is null: Report processing reached premature end-point." );
       }
-      state = new InternalStorageState(pageState, i + 1, rootstate.getLastSavePosition());
-      if (pageState.isSafeToStoreEarly())
-      {
-        set(i + 1, state);
+      state = new InternalStorageState( pageState, i + 1, rootstate.getLastSavePosition() );
+      if ( pageState.isSafeToStoreEarly() ) {
+        set( i + 1, state );
       }
     }
     return state;
   }
 
-  private InternalStorageState getInternal(int index)
-  {
-    if (index < primaryPoolSize)
-    {
-      return primaryStates.get(index);
-    }
-    else if (index < secondaryPoolSize)
-    {
+  private InternalStorageState getInternal( int index ) {
+    if ( index < primaryPoolSize ) {
+      return primaryStates.get( index );
+    } else if ( index < secondaryPoolSize ) {
       index -= primaryPoolSize;
-      final MasterList master = masterStates4.get(getMasterPos(index, secondaryPoolFrequency));
-      return (InternalStorageState) master.get(index);
-    }
-    else
-    {
+      final MasterList master = masterStates4.get( getMasterPos( index, secondaryPoolFrequency ) );
+      return (InternalStorageState) master.get( index );
+    } else {
       index -= secondaryPoolSize;
-      final MasterList master = masterStates10.get(getMasterPos(index, tertiaryPoolFrequency));
-      return (InternalStorageState) master.get(index);
+      final MasterList master = masterStates10.get( getMasterPos( index, tertiaryPoolFrequency ) );
+      return (InternalStorageState) master.get( index );
     }
   }
 }

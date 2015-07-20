@@ -17,11 +17,11 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.parser.ext.factory.datasource;
 
-import java.util.HashMap;
-import java.util.Iterator;
-
 import org.pentaho.reporting.engine.classic.core.modules.parser.ext.factory.base.ClassFactoryImpl;
 import org.pentaho.reporting.engine.classic.core.modules.parser.ext.factory.base.ObjectDescription;
+
+import java.util.HashMap;
+import java.util.Iterator;
 
 /**
  * A base class for implementing the {@link DataSourceFactory} interface.
@@ -29,8 +29,7 @@ import org.pentaho.reporting.engine.classic.core.modules.parser.ext.factory.base
  * @author Thomas Morgner
  */
 public abstract class AbstractDataSourceFactory
-    extends ClassFactoryImpl implements DataSourceFactory
-{
+  extends ClassFactoryImpl implements DataSourceFactory {
   /**
    * Storage for the data sources.
    */
@@ -39,8 +38,7 @@ public abstract class AbstractDataSourceFactory
   /**
    * Creates a new factory.
    */
-  protected AbstractDataSourceFactory()
-  {
+  protected AbstractDataSourceFactory() {
     dataSources = new HashMap();
   }
 
@@ -50,10 +48,9 @@ public abstract class AbstractDataSourceFactory
    * @param name the name.
    * @param o    the object description.
    */
-  public void registerDataSources(final String name, final ObjectDescription o)
-  {
-    dataSources.put(name, o);
-    registerClass(o.getObjectClass(), o);
+  public void registerDataSources( final String name, final ObjectDescription o ) {
+    dataSources.put( name, o );
+    registerClass( o.getObjectClass(), o );
   }
 
   /**
@@ -62,11 +59,9 @@ public abstract class AbstractDataSourceFactory
    * @param name the data source name.
    * @return The object description.
    */
-  public ObjectDescription getDataSourceDescription(final String name)
-  {
-    final ObjectDescription od = (ObjectDescription) dataSources.get(name);
-    if (od != null)
-    {
+  public ObjectDescription getDataSourceDescription( final String name ) {
+    final ObjectDescription od = (ObjectDescription) dataSources.get( name );
+    if ( od != null ) {
       return od.getInstance();
     }
     return null;
@@ -78,15 +73,12 @@ public abstract class AbstractDataSourceFactory
    * @param od the object description.
    * @return The name.
    */
-  public String getDataSourceName(final ObjectDescription od)
-  {
+  public String getDataSourceName( final ObjectDescription od ) {
     final Iterator keys = dataSources.keySet().iterator();
-    while (keys.hasNext())
-    {
+    while ( keys.hasNext() ) {
       final String key = (String) keys.next();
-      final ObjectDescription ds = (ObjectDescription) dataSources.get(key);
-      if (ds.getObjectClass().equals(od.getObjectClass()))
-      {
+      final ObjectDescription ds = (ObjectDescription) dataSources.get( key );
+      if ( ds.getObjectClass().equals( od.getObjectClass() ) ) {
         return key;
       }
     }
@@ -98,8 +90,7 @@ public abstract class AbstractDataSourceFactory
    *
    * @return the registered names.
    */
-  public Iterator getRegisteredNames()
-  {
+  public Iterator getRegisteredNames() {
     return dataSources.keySet().iterator();
   }
 }

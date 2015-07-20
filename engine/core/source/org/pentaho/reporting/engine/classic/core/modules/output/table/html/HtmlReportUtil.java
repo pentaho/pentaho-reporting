@@ -17,12 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.output.table.html;
 
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
@@ -38,20 +32,24 @@ import org.pentaho.reporting.libraries.repository.file.FileRepository;
 import org.pentaho.reporting.libraries.repository.stream.StreamRepository;
 import org.pentaho.reporting.libraries.repository.zipwriter.ZipRepository;
 
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+
 /**
  * Utility class to provide an easy to use default implementation of html exports.
  *
  * @author Thomas Morgner
  */
-public final class HtmlReportUtil
-{
-  private static final Log logger = LogFactory.getLog(HtmlReportUtil.class);
+public final class HtmlReportUtil {
+  private static final Log logger = LogFactory.getLog( HtmlReportUtil.class );
 
   /**
    * DefaultConstructor.
    */
-  private HtmlReportUtil()
-  {
+  private HtmlReportUtil() {
   }
 
   /**
@@ -62,52 +60,43 @@ public final class HtmlReportUtil
    * @throws ReportProcessingException if the report processing failed.
    * @throws java.io.IOException       if there was an IOerror while processing the report.
    */
-  public static void createStreamHTML(final MasterReport report, final String filename)
-      throws IOException, ReportProcessingException
-  {
-    if (report == null)
-    {
+  public static void createStreamHTML( final MasterReport report, final String filename )
+    throws IOException, ReportProcessingException {
+    if ( report == null ) {
       throw new NullPointerException();
     }
-    if (filename == null)
-    {
+    if ( filename == null ) {
       throw new NullPointerException();
     }
-    final File file = new File(filename);
-    final OutputStream fout = new BufferedOutputStream(new FileOutputStream(file));
-    try
-    {
-      createStreamHTML(report, fout);
-    }
-    finally
-    {
+    final File file = new File( filename );
+    final OutputStream fout = new BufferedOutputStream( new FileOutputStream( file ) );
+    try {
+      createStreamHTML( report, fout );
+    } finally {
       fout.close();
     }
   }
 
-  public static void createStreamHTML(final MasterReport report,
-                                      final OutputStream outputStream)
-      throws ReportProcessingException
-  {
-    if (report == null)
-    {
+  public static void createStreamHTML( final MasterReport report,
+                                       final OutputStream outputStream )
+    throws ReportProcessingException {
+    if ( report == null ) {
       throw new NullPointerException();
     }
-    if (outputStream == null)
-    {
+    if ( outputStream == null ) {
       throw new NullPointerException();
     }
-    final StreamRepository targetRepository = new StreamRepository(outputStream);
+    final StreamRepository targetRepository = new StreamRepository( outputStream );
     final ContentLocation targetRoot = targetRepository.getRoot();
 
-    final HtmlOutputProcessor outputProcessor = new StreamHtmlOutputProcessor(report.getConfiguration());
-    final HtmlPrinter printer = new AllItemsHtmlPrinter(report.getResourceManager());
-    printer.setContentWriter(targetRoot, new DefaultNameGenerator(targetRoot, "index", "html"));
-    printer.setDataWriter(null, null);
-    printer.setUrlRewriter(new FileSystemURLRewriter());
-    outputProcessor.setPrinter(printer);
+    final HtmlOutputProcessor outputProcessor = new StreamHtmlOutputProcessor( report.getConfiguration() );
+    final HtmlPrinter printer = new AllItemsHtmlPrinter( report.getResourceManager() );
+    printer.setContentWriter( targetRoot, new DefaultNameGenerator( targetRoot, "index", "html" ) );
+    printer.setDataWriter( null, null );
+    printer.setUrlRewriter( new FileSystemURLRewriter() );
+    outputProcessor.setPrinter( printer );
 
-    final StreamReportProcessor sp = new StreamReportProcessor(report, outputProcessor);
+    final StreamReportProcessor sp = new StreamReportProcessor( report, outputProcessor );
     sp.processReport();
     sp.close();
   }
@@ -125,60 +114,50 @@ public final class HtmlReportUtil
    * @throws ReportProcessingException if the report processing failed.
    * @throws IOException               if there was an IOerror while processing the report.
    */
-  public static void createDirectoryHTML(final MasterReport report,
-                                         final String targetFileName)
-      throws IOException, ReportProcessingException
-  {
-    if (report == null)
-    {
+  public static void createDirectoryHTML( final MasterReport report,
+                                          final String targetFileName )
+    throws IOException, ReportProcessingException {
+    if ( report == null ) {
       throw new NullPointerException();
     }
-    if (targetFileName == null)
-    {
+    if ( targetFileName == null ) {
       throw new NullPointerException();
     }
-    try
-    {
-      final File targetFile = new File(targetFileName).getCanonicalFile();
-      if (targetFile.exists())
-      {
+    try {
+      final File targetFile = new File( targetFileName ).getCanonicalFile();
+      if ( targetFile.exists() ) {
         // try to delete it ..
-        if (targetFile.delete() == false)
-        {
-          throw new IOException("Unable to remove the already existing target-file.");
+        if ( targetFile.delete() == false ) {
+          throw new IOException( "Unable to remove the already existing target-file." );
         }
       }
 
       final File targetDirectory = targetFile.getParentFile();
-      if (targetDirectory.exists() == false)
-      {
-        if (targetDirectory.mkdirs() == false)
-        {
-          throw new IOException("Unable to create the target-directory.");
+      if ( targetDirectory.exists() == false ) {
+        if ( targetDirectory.mkdirs() == false ) {
+          throw new IOException( "Unable to create the target-directory." );
         }
       }
 
-      final FileRepository targetRepository = new FileRepository(targetDirectory);
+      final FileRepository targetRepository = new FileRepository( targetDirectory );
       final ContentLocation targetRoot = targetRepository.getRoot();
 
-      final String suffix = getSuffix(targetFileName);
-      final String filename = IOUtils.getInstance().stripFileExtension(targetFile.getName());
+      final String suffix = getSuffix( targetFileName );
+      final String filename = IOUtils.getInstance().stripFileExtension( targetFile.getName() );
 
       final FlowHtmlOutputProcessor outputProcessor = new FlowHtmlOutputProcessor();
 
-      final HtmlPrinter printer = new AllItemsHtmlPrinter(report.getResourceManager());
-      printer.setContentWriter(targetRoot, new DefaultNameGenerator(targetRoot, filename, suffix));
-      printer.setDataWriter(targetRoot, new DefaultNameGenerator(targetRoot, "content"));
-      printer.setUrlRewriter(new FileSystemURLRewriter());
-      outputProcessor.setPrinter(printer);
+      final HtmlPrinter printer = new AllItemsHtmlPrinter( report.getResourceManager() );
+      printer.setContentWriter( targetRoot, new DefaultNameGenerator( targetRoot, filename, suffix ) );
+      printer.setDataWriter( targetRoot, new DefaultNameGenerator( targetRoot, "content" ) );
+      printer.setUrlRewriter( new FileSystemURLRewriter() );
+      outputProcessor.setPrinter( printer );
 
-      final FlowReportProcessor sp = new FlowReportProcessor(report, outputProcessor);
+      final FlowReportProcessor sp = new FlowReportProcessor( report, outputProcessor );
       sp.processReport();
       sp.close();
-    }
-    catch (ContentIOException e)
-    {
-      throw new IOException("Failed to get or create the repository-root.");
+    } catch ( ContentIOException e ) {
+      throw new IOException( "Failed to get or create the repository-root." );
     }
   }
 
@@ -195,105 +174,84 @@ public final class HtmlReportUtil
    * @throws ReportProcessingException if the report processing failed.
    * @throws IOException               if there was an IOerror while processing the report.
    */
-  public static void createDirectoryHTML(final MasterReport report,
-                                         final String targetFileName,
-                                         final String dataDirectoryName)
-      throws IOException, ReportProcessingException
-  {
-    if (report == null)
-    {
+  public static void createDirectoryHTML( final MasterReport report,
+                                          final String targetFileName,
+                                          final String dataDirectoryName )
+    throws IOException, ReportProcessingException {
+    if ( report == null ) {
       throw new NullPointerException();
     }
-    if (targetFileName == null)
-    {
+    if ( targetFileName == null ) {
       throw new NullPointerException();
     }
-    if (dataDirectoryName == null)
-    {
+    if ( dataDirectoryName == null ) {
       throw new NullPointerException();
     }
-    try
-    {
-      final File targetFile = new File(targetFileName);
-      if (targetFile.exists())
-      {
+    try {
+      final File targetFile = new File( targetFileName );
+      if ( targetFile.exists() ) {
         // try to delete it ..
-        if (targetFile.delete() == false)
-        {
-          throw new IOException("Unable to remove the already existing target-file.");
+        if ( targetFile.delete() == false ) {
+          throw new IOException( "Unable to remove the already existing target-file." );
         }
       }
 
       final File targetDirectory = targetFile.getParentFile().getCanonicalFile();
-      if (targetDirectory.exists() == false)
-      {
-        if (targetDirectory.mkdirs() == false)
-        {
-          throw new IOException("Unable to create the target-directory.");
+      if ( targetDirectory.exists() == false ) {
+        if ( targetDirectory.mkdirs() == false ) {
+          throw new IOException( "Unable to create the target-directory." );
         }
       }
 
-      final File tempDataDir = new File(dataDirectoryName).getCanonicalFile();
+      final File tempDataDir = new File( dataDirectoryName ).getCanonicalFile();
       File dataDirectory;
-      if (tempDataDir.isAbsolute())
-      {
+      if ( tempDataDir.isAbsolute() ) {
         dataDirectory = tempDataDir;
+      } else {
+        dataDirectory = new File( targetDirectory, dataDirectoryName ).getCanonicalFile();
       }
-      else
-      {
-        dataDirectory = new File(targetDirectory, dataDirectoryName).getCanonicalFile();
-      }
-      if (dataDirectory.exists() && dataDirectory.isDirectory() == false)
-      {
+      if ( dataDirectory.exists() && dataDirectory.isDirectory() == false ) {
         dataDirectory = dataDirectory.getParentFile();
-        if (dataDirectory.isDirectory() == false)
-        {
-          throw new ReportProcessingException("DataDirectory is invalid: " + dataDirectory);
+        if ( dataDirectory.isDirectory() == false ) {
+          throw new ReportProcessingException( "DataDirectory is invalid: " + dataDirectory );
         }
-      }
-      else if (dataDirectory.exists() == false)
-      {
-        if (dataDirectory.mkdirs() == false)
-        {
-          throw new IOException("Unable to create the data-directory.");
+      } else if ( dataDirectory.exists() == false ) {
+        if ( dataDirectory.mkdirs() == false ) {
+          throw new IOException( "Unable to create the data-directory." );
         }
       }
 
-      final FileRepository targetRepository = new FileRepository(targetDirectory);
+      final FileRepository targetRepository = new FileRepository( targetDirectory );
       final ContentLocation targetRoot = targetRepository.getRoot();
 
-      final FileRepository dataRepository = new FileRepository(dataDirectory);
+      final FileRepository dataRepository = new FileRepository( dataDirectory );
       final ContentLocation dataRoot = dataRepository.getRoot();
 
-      final String suffix = getSuffix(targetFileName);
-      final String filename = IOUtils.getInstance().stripFileExtension(targetFile.getName());
+      final String suffix = getSuffix( targetFileName );
+      final String filename = IOUtils.getInstance().stripFileExtension( targetFile.getName() );
 
       final FlowHtmlOutputProcessor outputProcessor = new FlowHtmlOutputProcessor();
 
-      final HtmlPrinter printer = new AllItemsHtmlPrinter(report.getResourceManager());
-      printer.setContentWriter(targetRoot, new DefaultNameGenerator(targetRoot, filename, suffix));
-      printer.setDataWriter(dataRoot, new DefaultNameGenerator(dataRoot, "content"));
-      printer.setUrlRewriter(new FileSystemURLRewriter());
-      outputProcessor.setPrinter(printer);
+      final HtmlPrinter printer = new AllItemsHtmlPrinter( report.getResourceManager() );
+      printer.setContentWriter( targetRoot, new DefaultNameGenerator( targetRoot, filename, suffix ) );
+      printer.setDataWriter( dataRoot, new DefaultNameGenerator( dataRoot, "content" ) );
+      printer.setUrlRewriter( new FileSystemURLRewriter() );
+      outputProcessor.setPrinter( printer );
 
-      final FlowReportProcessor sp = new FlowReportProcessor(report, outputProcessor);
+      final FlowReportProcessor sp = new FlowReportProcessor( report, outputProcessor );
       sp.processReport();
       sp.close();
-    }
-    catch (ContentIOException e)
-    {
-      throw new IOException("Failed to get repository-root.");
+    } catch ( ContentIOException e ) {
+      throw new IOException( "Failed to get repository-root." );
     }
   }
 
-  private static String getSuffix(final String filename)
-  {
-    final String suffix = IOUtils.getInstance().getFileExtension(filename);
-    if (suffix.length() == 0)
-    {
+  private static String getSuffix( final String filename ) {
+    final String suffix = IOUtils.getInstance().getFileExtension( filename );
+    if ( suffix.length() == 0 ) {
       return "";
     }
-    return suffix.substring(1);
+    return suffix.substring( 1 );
   }
 
   /**
@@ -305,50 +263,34 @@ public final class HtmlReportUtil
    * @throws ReportProcessingException if the report processing failed.
    * @throws IOException               if there was an IOerror while processing the report.
    */
-  public static void createZIPHTML(final MasterReport report, final String filename)
-      throws IOException, ReportProcessingException
-  {
-    if (report == null)
-    {
+  public static void createZIPHTML( final MasterReport report, final String filename )
+    throws IOException, ReportProcessingException {
+    if ( report == null ) {
       throw new NullPointerException();
     }
-    if (filename == null)
-    {
+    if ( filename == null ) {
       throw new NullPointerException();
     }
 
     OutputStream out = null;
-    try
-    {
-      out = new BufferedOutputStream(new FileOutputStream(filename));
-      createZIPHTML(report, out, "report");
+    try {
+      out = new BufferedOutputStream( new FileOutputStream( filename ) );
+      createZIPHTML( report, out, "report" );
       out.close();
       out = null;
-    }
-    catch (IOException ioe)
-    {
+    } catch ( IOException ioe ) {
       throw ioe;
-    }
-    catch (ReportProcessingException re)
-    {
+    } catch ( ReportProcessingException re ) {
       throw re;
-    }
-    catch (Exception re)
-    {
-      throw new ReportProcessingException("Failed to process the report", re);
-    }
-    finally
-    {
-      try
-      {
-        if (out != null)
-        {
+    } catch ( Exception re ) {
+      throw new ReportProcessingException( "Failed to process the report", re );
+    } finally {
+      try {
+        if ( out != null ) {
           out.close();
         }
-      }
-      catch (Exception e)
-      {
-        logger.error("Unable to close the output stream.", e);
+      } catch ( Exception e ) {
+        logger.error( "Unable to close the output stream.", e );
       }
     }
   }
@@ -363,53 +305,42 @@ public final class HtmlReportUtil
    * @throws ReportProcessingException if the report processing failed.
    * @throws IOException               if there was an IOerror while processing the report.
    */
-  public static void createZIPHTML(final MasterReport report, final OutputStream out, final String filename)
-      throws IOException, ReportProcessingException
-  {
-    if (report == null)
-    {
+  public static void createZIPHTML( final MasterReport report, final OutputStream out, final String filename )
+    throws IOException, ReportProcessingException {
+    if ( report == null ) {
       throw new NullPointerException();
     }
-    if (filename == null)
-    {
+    if ( filename == null ) {
       throw new NullPointerException();
     }
-    if (out == null)
-    {
+    if ( out == null ) {
       throw new NullPointerException();
     }
 
-    try
-    {
-      final ZipRepository zipRepository = new ZipRepository(out);
+    try {
+      final ZipRepository zipRepository = new ZipRepository( out );
       final ContentLocation root = zipRepository.getRoot();
       final ContentLocation data = RepositoryUtilities.createLocation
-          (zipRepository, RepositoryUtilities.splitPath("data", "/"));
+        ( zipRepository, RepositoryUtilities.splitPath( "data", "/" ) );
 
       final FlowHtmlOutputProcessor outputProcessor = new FlowHtmlOutputProcessor();
 
-      final HtmlPrinter printer = new AllItemsHtmlPrinter(report.getResourceManager());
-      printer.setContentWriter(root, new DefaultNameGenerator(root, filename));
-      printer.setDataWriter(data, new DefaultNameGenerator(data, "content"));
-      printer.setUrlRewriter(new SingleRepositoryURLRewriter());
-      outputProcessor.setPrinter(printer);
+      final HtmlPrinter printer = new AllItemsHtmlPrinter( report.getResourceManager() );
+      printer.setContentWriter( root, new DefaultNameGenerator( root, filename ) );
+      printer.setDataWriter( data, new DefaultNameGenerator( data, "content" ) );
+      printer.setUrlRewriter( new SingleRepositoryURLRewriter() );
+      outputProcessor.setPrinter( printer );
 
-      final FlowReportProcessor sp = new FlowReportProcessor(report, outputProcessor);
+      final FlowReportProcessor sp = new FlowReportProcessor( report, outputProcessor );
       sp.processReport();
       sp.close();
       zipRepository.close();
-    }
-    catch (IOException ioe)
-    {
+    } catch ( IOException ioe ) {
       throw ioe;
-    }
-    catch (ReportProcessingException re)
-    {
+    } catch ( ReportProcessingException re ) {
       throw re;
-    }
-    catch (Exception re)
-    {
-      throw new ReportProcessingException("Failed to process the report", re);
+    } catch ( Exception re ) {
+      throw new ReportProcessingException( "Failed to process the report", re );
     }
   }
 

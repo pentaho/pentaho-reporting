@@ -24,9 +24,8 @@ import org.pentaho.reporting.libraries.fonts.text.Spacing;
  *
  * @author Thomas Morgner
  */
-public final class DefaultGlyph implements Glyph
-{
-  private static final int[] EMPTY_EXTRA_CHARS = new int[0];
+public final class DefaultGlyph implements Glyph {
+  private static final int[] EMPTY_EXTRA_CHARS = new int[ 0 ];
 
   private int codepoint;
   private int breakWeight;
@@ -38,36 +37,27 @@ public final class DefaultGlyph implements Glyph
   private int kerning;
   private int[] extraChars;
 
-  public DefaultGlyph(final int codepoint,
-                      final int breakWeight,
-                      final int classification,
-                      final Spacing spacing,
-                      final int width,
-                      final int height,
-                      final int baseLine,
-                      final int kerning,
-                      final int[] extraChars)
-  {
+  public DefaultGlyph( final int codepoint,
+                       final int breakWeight,
+                       final int classification,
+                       final Spacing spacing,
+                       final int width,
+                       final int height,
+                       final int baseLine,
+                       final int kerning,
+                       final int[] extraChars ) {
 
     //  Log.debug ("Glyph: -" + ((char) (0xffff & codepoint)) + "- [" + baseLine + ", " + height + "]");
-    if (spacing == null)
-    {
+    if ( spacing == null ) {
       this.spacing = Spacing.EMPTY_SPACING;
-    }
-    else
-    {
+    } else {
       this.spacing = spacing;
     }
-    if (extraChars == null)
-    {
+    if ( extraChars == null ) {
       this.extraChars = DefaultGlyph.EMPTY_EXTRA_CHARS;
-    }
-    else if (extraChars.length == 0)
-    {
+    } else if ( extraChars.length == 0 ) {
       this.extraChars = DefaultGlyph.EMPTY_EXTRA_CHARS;
-    }
-    else
-    {
+    } else {
       this.extraChars = (int[]) extraChars.clone();
     }
 
@@ -80,98 +70,78 @@ public final class DefaultGlyph implements Glyph
     this.kerning = kerning;
   }
 
-  public int getClassification()
-  {
+  public int getClassification() {
     return classification;
   }
 
-  public int[] getExtraChars()
-  {
-    if (extraChars.length == 0)
-    {
+  public int[] getExtraChars() {
+    if ( extraChars.length == 0 ) {
       return DefaultGlyph.EMPTY_EXTRA_CHARS;
     }
     return (int[]) extraChars.clone();
   }
 
-  public int getBaseLine()
-  {
+  public int getBaseLine() {
     return baseLine;
   }
 
-  public int getCodepoint()
-  {
+  public int getCodepoint() {
     return codepoint;
   }
 
-  public int getBreakWeight()
-  {
+  public int getBreakWeight() {
     return breakWeight;
   }
 
-  public Spacing getSpacing()
-  {
+  public Spacing getSpacing() {
     return spacing;
   }
 
-  public int getWidth()
-  {
+  public int getWidth() {
     return width;
   }
 
-  public int getHeight()
-  {
+  public int getHeight() {
     return height;
   }
 
-  public int getKerning()
-  {
+  public int getKerning() {
     return kerning;
   }
 
-  public boolean equals(final Object o)
-  {
-    if (this == o)
-    {
+  public boolean equals( final Object o ) {
+    if ( this == o ) {
       return true;
     }
-    if (o == null || getClass() != o.getClass())
-    {
+    if ( o == null || getClass() != o.getClass() ) {
       return false;
     }
 
     final DefaultGlyph glyph = (DefaultGlyph) o;
 
-    if (breakWeight != glyph.breakWeight)
-    {
+    if ( breakWeight != glyph.breakWeight ) {
       return false;
     }
-    if (codepoint != glyph.codepoint)
-    {
+    if ( codepoint != glyph.codepoint ) {
       return false;
     }
-    if (height != glyph.height)
-    {
+    if ( height != glyph.height ) {
       return false;
     }
-    if (kerning != glyph.kerning)
-    {
+    if ( kerning != glyph.kerning ) {
       return false;
     }
-    if (width != glyph.width)
-    {
+    if ( width != glyph.width ) {
       return false;
     }
-    if (!spacing.equals(glyph.spacing))
-    {
+    if ( !spacing.equals( glyph.spacing ) ) {
       return false;
     }
 
     return true;
   }
 
-  public int hashCode()
-  {
+  public int hashCode() {
     int result = codepoint;
     result = 29 * result + breakWeight;
     result = 29 * result + spacing.hashCode();
@@ -181,8 +151,8 @@ public final class DefaultGlyph implements Glyph
     return result;
   }
 
-  public String toString()
-  {
-    return getClass().getName() + "={codepoint='" + ((char) (codepoint & 0xffff)) + ", extra-chars=" + extraChars.length + '}';
+  public String toString() {
+    return getClass().getName() + "={codepoint='" + ( (char) ( codepoint & 0xffff ) ) + ", extra-chars="
+      + extraChars.length + '}';
   }
 }

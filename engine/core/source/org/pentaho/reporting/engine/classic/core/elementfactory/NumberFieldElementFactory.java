@@ -17,11 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.core.elementfactory;
 
-import java.awt.Color;
-import java.awt.geom.Rectangle2D;
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
-
 import org.pentaho.reporting.engine.classic.core.AttributeNames;
 import org.pentaho.reporting.engine.classic.core.Element;
 import org.pentaho.reporting.engine.classic.core.ElementAlignment;
@@ -32,6 +27,11 @@ import org.pentaho.reporting.engine.classic.core.function.FormulaExpression;
 import org.pentaho.reporting.engine.classic.core.style.ElementStyleKeys;
 import org.pentaho.reporting.engine.classic.core.style.FontDefinition;
 
+import java.awt.*;
+import java.awt.geom.Rectangle2D;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+
 /**
  * The number format factory can be used to create numeric text elements. These text elements have special abilities to
  * format numeric values.
@@ -40,19 +40,18 @@ import org.pentaho.reporting.engine.classic.core.style.FontDefinition;
  *
  * @author Thomas Morgner
  */
-public class NumberFieldElementFactory extends TextFieldElementFactory
-{
+public class NumberFieldElementFactory extends TextFieldElementFactory {
   /**
    * The default format pattern that mimics the Integer.toString() result.
    */
   private static final String DECIMALFORMAT_DEFAULT_PATTERN =
-      "#,###.###################################################" +
-          "#########################################################" +
-          "#########################################################" +
-          "#########################################################" +
-          "#########################################################" +
-          "#########################################################" +
-          "####";
+    "#,###.###################################################" +
+      "#########################################################" +
+      "#########################################################" +
+      "#########################################################" +
+      "#########################################################" +
+      "#########################################################" +
+      "####";
 
   /**
    * The number format instance used to format numeric values in the text element.
@@ -66,8 +65,7 @@ public class NumberFieldElementFactory extends TextFieldElementFactory
   /**
    * Creates a new number field element factory.
    */
-  public NumberFieldElementFactory()
-  {
+  public NumberFieldElementFactory() {
   }
 
   /**
@@ -75,8 +73,7 @@ public class NumberFieldElementFactory extends TextFieldElementFactory
    *
    * @return the excel cell format.
    */
-  public String getExcelCellFormat()
-  {
+  public String getExcelCellFormat() {
     return excelCellFormat;
   }
 
@@ -85,8 +82,7 @@ public class NumberFieldElementFactory extends TextFieldElementFactory
    *
    * @param excelCellFormat the excel cell format
    */
-  public void setExcelCellFormat(final String excelCellFormat)
-  {
+  public void setExcelCellFormat( final String excelCellFormat ) {
     this.excelCellFormat = excelCellFormat;
   }
 
@@ -96,8 +92,7 @@ public class NumberFieldElementFactory extends TextFieldElementFactory
    *
    * @return the number format used in this factory.
    */
-  public NumberFormat getFormat()
-  {
+  public NumberFormat getFormat() {
     return format;
   }
 
@@ -107,8 +102,7 @@ public class NumberFieldElementFactory extends TextFieldElementFactory
    *
    * @param format the number format used in this factory.
    */
-  public void setFormat(final NumberFormat format)
-  {
+  public void setFormat( final NumberFormat format ) {
     this.format = format;
   }
 
@@ -118,10 +112,8 @@ public class NumberFieldElementFactory extends TextFieldElementFactory
    *
    * @return the formatstring of the number format instance.
    */
-  public String getFormatString()
-  {
-    if (getFormat() instanceof DecimalFormat)
-    {
+  public String getFormatString() {
+    if ( getFormat() instanceof DecimalFormat ) {
       final DecimalFormat decFormat = (DecimalFormat) getFormat();
       return decFormat.toPattern();
     }
@@ -134,22 +126,15 @@ public class NumberFieldElementFactory extends TextFieldElementFactory
    *
    * @param formatString the formatstring of the number format instance.
    */
-  public void setFormatString(final String formatString)
-  {
-    if (formatString == null)
-    {
+  public void setFormatString( final String formatString ) {
+    if ( formatString == null ) {
       format = null;
-    }
-    else
-    {
-      if (formatString.length() == 0)
-      {
+    } else {
+      if ( formatString.length() == 0 ) {
         // this is a workaround for a bug in JDK 1.5
-        setFormat(new DecimalFormat(NumberFieldElementFactory.DECIMALFORMAT_DEFAULT_PATTERN));
-      }
-      else
-      {
-        setFormat(new DecimalFormat(formatString));
+        setFormat( new DecimalFormat( NumberFieldElementFactory.DECIMALFORMAT_DEFAULT_PATTERN ) );
+      } else {
+        setFormat( new DecimalFormat( formatString ) );
       }
     }
   }
@@ -161,59 +146,47 @@ public class NumberFieldElementFactory extends TextFieldElementFactory
    * @return the generated numberic text element
    * @see org.pentaho.reporting.engine.classic.core.elementfactory.ElementFactory#createElement()
    */
-  public Element createElement()
-  {
+  public Element createElement() {
     final Element element = new Element();
 
-    if (format instanceof DecimalFormat || format == null)
-    {
-      element.setElementType(new NumberFieldType());
-      if (getFieldname() != null)
-      {
-        element.setAttribute(AttributeNames.Core.NAMESPACE, AttributeNames.Core.FIELD, getFieldname());
+    if ( format instanceof DecimalFormat || format == null ) {
+      element.setElementType( new NumberFieldType() );
+      if ( getFieldname() != null ) {
+        element.setAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.FIELD, getFieldname() );
       }
-      if (getFormula() != null)
-      {
+      if ( getFormula() != null ) {
         final FormulaExpression formulaExpression = new FormulaExpression();
-        formulaExpression.setFormula(getFormula());
-        element.setAttributeExpression(AttributeNames.Core.NAMESPACE, AttributeNames.Core.VALUE, formulaExpression);
+        formulaExpression.setFormula( getFormula() );
+        element.setAttributeExpression( AttributeNames.Core.NAMESPACE, AttributeNames.Core.VALUE, formulaExpression );
       }
-      if (format != null)
-      {
+      if ( format != null ) {
         final DecimalFormat decimalFormat = (DecimalFormat) format;
         final String formatString = decimalFormat.toPattern();
-        element.setAttribute(AttributeNames.Core.NAMESPACE, AttributeNames.Core.FORMAT_STRING, formatString);
+        element.setAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.FORMAT_STRING, formatString );
       }
-      element.setAttribute(AttributeNames.Core.NAMESPACE, AttributeNames.Core.NULL_VALUE, getNullString());
-    }
-    else
-    {
+      element.setAttribute( AttributeNames.Core.NAMESPACE, AttributeNames.Core.NULL_VALUE, getNullString() );
+    } else {
       final NumberFormatFilter dataSource = new NumberFormatFilter();
-      if (format != null)
-      {
-        dataSource.setFormatter(format);
+      if ( format != null ) {
+        dataSource.setFormatter( format );
       }
       final DataRowDataSource dds = new DataRowDataSource();
-      if (getFormula() != null)
-      {
-        dds.setFormula(getFormula());
-      }
-      else
-      {
-        dds.setDataSourceColumnName(getFieldname());
+      if ( getFormula() != null ) {
+        dds.setFormula( getFormula() );
+      } else {
+        dds.setDataSourceColumnName( getFieldname() );
       }
 
-      dataSource.setDataSource(dds);
-      if (getNullString() != null)
-      {
-        dataSource.setNullValue(getNullString());
+      dataSource.setDataSource( dds );
+      if ( getNullString() != null ) {
+        dataSource.setNullValue( getNullString() );
       }
-      element.setDataSource(dataSource);
+      element.setDataSource( dataSource );
     }
 
-    applyElementName(element);
-    applyStyle(element.getStyle());
-    element.getStyle().setStyleProperty(ElementStyleKeys.EXCEL_DATA_FORMAT_STRING, getExcelCellFormat());
+    applyElementName( element );
+    applyStyle( element.getStyle() );
+    element.getStyle().setStyleProperty( ElementStyleKeys.EXCEL_DATA_FORMAT_STRING, getExcelCellFormat() );
     return element;
   }
 
@@ -234,19 +207,18 @@ public class NumberFieldElementFactory extends TextFieldElementFactory
    * @throws IllegalArgumentException if the given alignment is invalid
    * @deprecated Use a more fine-grained approach to define this element by using the element-factory directly.
    */
-  public static Element createNumberElement(final String name,
-                                            final Rectangle2D bounds,
-                                            final Color paint,
-                                            final ElementAlignment alignment,
-                                            final FontDefinition font,
-                                            final String nullString,
-                                            final NumberFormat format,
-                                            final String field)
-  {
-    return createNumberElement(name, bounds, paint, alignment,
-        ElementAlignment.TOP,
-        font, nullString,
-        format, field);
+  public static Element createNumberElement( final String name,
+                                             final Rectangle2D bounds,
+                                             final Color paint,
+                                             final ElementAlignment alignment,
+                                             final FontDefinition font,
+                                             final String nullString,
+                                             final NumberFormat format,
+                                             final String field ) {
+    return createNumberElement( name, bounds, paint, alignment,
+      ElementAlignment.TOP,
+      font, nullString,
+      format, field );
   }
 
   /**
@@ -266,41 +238,39 @@ public class NumberFieldElementFactory extends TextFieldElementFactory
    * @throws IllegalArgumentException if the given alignment is invalid
    * @deprecated Use a more fine-grained approach to define this element by using the element-factory directly.
    */
-  public static Element createNumberElement(final String name,
-                                            final Rectangle2D bounds,
-                                            final Color color,
-                                            final ElementAlignment alignment,
-                                            final ElementAlignment valign,
-                                            final FontDefinition font,
-                                            final String nullString,
-                                            final NumberFormat format,
-                                            final String field)
-  {
+  public static Element createNumberElement( final String name,
+                                             final Rectangle2D bounds,
+                                             final Color color,
+                                             final ElementAlignment alignment,
+                                             final ElementAlignment valign,
+                                             final FontDefinition font,
+                                             final String nullString,
+                                             final NumberFormat format,
+                                             final String field ) {
 
     final NumberFieldElementFactory factory = new NumberFieldElementFactory();
-    factory.setX(new Float(bounds.getX()));
-    factory.setY(new Float(bounds.getY()));
-    factory.setMinimumWidth(new Float(bounds.getWidth()));
-    factory.setMinimumHeight(new Float(bounds.getHeight()));
-    factory.setName(name);
-    factory.setColor(color);
-    factory.setHorizontalAlignment(alignment);
-    factory.setVerticalAlignment(valign);
+    factory.setX( new Float( bounds.getX() ) );
+    factory.setY( new Float( bounds.getY() ) );
+    factory.setMinimumWidth( new Float( bounds.getWidth() ) );
+    factory.setMinimumHeight( new Float( bounds.getHeight() ) );
+    factory.setName( name );
+    factory.setColor( color );
+    factory.setHorizontalAlignment( alignment );
+    factory.setVerticalAlignment( valign );
 
-    if (font != null)
-    {
-      factory.setFontName(font.getFontName());
-      factory.setFontSize(new Integer(font.getFontSize()));
-      factory.setBold(ElementFactory.getBooleanValue(font.isBold()));
-      factory.setItalic(ElementFactory.getBooleanValue(font.isItalic()));
-      factory.setEncoding(font.getFontEncoding(null));
-      factory.setUnderline(ElementFactory.getBooleanValue(font.isUnderline()));
-      factory.setStrikethrough(ElementFactory.getBooleanValue(font.isStrikeThrough()));
-      factory.setEmbedFont(ElementFactory.getBooleanValue(font.isEmbeddedFont()));
+    if ( font != null ) {
+      factory.setFontName( font.getFontName() );
+      factory.setFontSize( new Integer( font.getFontSize() ) );
+      factory.setBold( ElementFactory.getBooleanValue( font.isBold() ) );
+      factory.setItalic( ElementFactory.getBooleanValue( font.isItalic() ) );
+      factory.setEncoding( font.getFontEncoding( null ) );
+      factory.setUnderline( ElementFactory.getBooleanValue( font.isUnderline() ) );
+      factory.setStrikethrough( ElementFactory.getBooleanValue( font.isStrikeThrough() ) );
+      factory.setEmbedFont( ElementFactory.getBooleanValue( font.isEmbeddedFont() ) );
     }
-    factory.setNullString(nullString);
-    factory.setFormat(format);
-    factory.setFieldname(field);
+    factory.setNullString( nullString );
+    factory.setFormat( format );
+    factory.setFieldname( field );
     return factory.createElement();
   }
 
@@ -320,19 +290,18 @@ public class NumberFieldElementFactory extends TextFieldElementFactory
    * @throws IllegalArgumentException if the given alignment is invalid
    * @deprecated Use a more fine-grained approach to define this element by using the element-factory directly.
    */
-  public static Element createNumberElement(final String name,
-                                            final Rectangle2D bounds,
-                                            final Color paint,
-                                            final ElementAlignment alignment,
-                                            final FontDefinition font,
-                                            final String nullString,
-                                            final String format,
-                                            final String field)
-  {
-    return createNumberElement(name, bounds, paint, alignment,
-        null,
-        font, nullString,
-        format, field);
+  public static Element createNumberElement( final String name,
+                                             final Rectangle2D bounds,
+                                             final Color paint,
+                                             final ElementAlignment alignment,
+                                             final FontDefinition font,
+                                             final String nullString,
+                                             final String format,
+                                             final String field ) {
+    return createNumberElement( name, bounds, paint, alignment,
+      null,
+      font, nullString,
+      format, field );
   }
 
   /**
@@ -352,41 +321,39 @@ public class NumberFieldElementFactory extends TextFieldElementFactory
    * @throws IllegalArgumentException if the given alignment is invalid
    * @deprecated Use a more fine-grained approach to define this element by using the element-factory directly.
    */
-  public static Element createNumberElement(final String name,
-                                            final Rectangle2D bounds,
-                                            final Color color,
-                                            final ElementAlignment alignment,
-                                            final ElementAlignment valign,
-                                            final FontDefinition font,
-                                            final String nullString,
-                                            final String format,
-                                            final String field)
-  {
+  public static Element createNumberElement( final String name,
+                                             final Rectangle2D bounds,
+                                             final Color color,
+                                             final ElementAlignment alignment,
+                                             final ElementAlignment valign,
+                                             final FontDefinition font,
+                                             final String nullString,
+                                             final String format,
+                                             final String field ) {
 
     final NumberFieldElementFactory factory = new NumberFieldElementFactory();
-    factory.setX(new Float(bounds.getX()));
-    factory.setY(new Float(bounds.getY()));
-    factory.setMinimumWidth(new Float(bounds.getWidth()));
-    factory.setMinimumHeight(new Float(bounds.getHeight()));
-    factory.setName(name);
-    factory.setColor(color);
-    factory.setHorizontalAlignment(alignment);
-    factory.setVerticalAlignment(valign);
+    factory.setX( new Float( bounds.getX() ) );
+    factory.setY( new Float( bounds.getY() ) );
+    factory.setMinimumWidth( new Float( bounds.getWidth() ) );
+    factory.setMinimumHeight( new Float( bounds.getHeight() ) );
+    factory.setName( name );
+    factory.setColor( color );
+    factory.setHorizontalAlignment( alignment );
+    factory.setVerticalAlignment( valign );
 
-    if (font != null)
-    {
-      factory.setFontName(font.getFontName());
-      factory.setFontSize(new Integer(font.getFontSize()));
-      factory.setBold(ElementFactory.getBooleanValue(font.isBold()));
-      factory.setItalic(ElementFactory.getBooleanValue(font.isItalic()));
-      factory.setEncoding(font.getFontEncoding(null));
-      factory.setUnderline(ElementFactory.getBooleanValue(font.isUnderline()));
-      factory.setStrikethrough(ElementFactory.getBooleanValue(font.isStrikeThrough()));
-      factory.setEmbedFont(ElementFactory.getBooleanValue(font.isEmbeddedFont()));
+    if ( font != null ) {
+      factory.setFontName( font.getFontName() );
+      factory.setFontSize( new Integer( font.getFontSize() ) );
+      factory.setBold( ElementFactory.getBooleanValue( font.isBold() ) );
+      factory.setItalic( ElementFactory.getBooleanValue( font.isItalic() ) );
+      factory.setEncoding( font.getFontEncoding( null ) );
+      factory.setUnderline( ElementFactory.getBooleanValue( font.isUnderline() ) );
+      factory.setStrikethrough( ElementFactory.getBooleanValue( font.isStrikeThrough() ) );
+      factory.setEmbedFont( ElementFactory.getBooleanValue( font.isEmbeddedFont() ) );
     }
-    factory.setNullString(nullString);
-    factory.setFormatString(format);
-    factory.setFieldname(field);
+    factory.setNullString( nullString );
+    factory.setFormatString( format );
+    factory.setFieldname( field );
     return factory.createElement();
   }
 

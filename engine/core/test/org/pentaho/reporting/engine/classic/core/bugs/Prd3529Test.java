@@ -17,9 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.core.bugs;
 
-import java.io.IOException;
-import java.net.URL;
-
 import junit.framework.TestCase;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -31,32 +28,30 @@ import org.pentaho.reporting.libraries.resourceloader.Resource;
 import org.pentaho.reporting.libraries.resourceloader.ResourceException;
 import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 
-public class Prd3529Test extends TestCase
-{
-  private static final Log logger = LogFactory.getLog(Prd3529Test.class);
+import java.io.IOException;
+import java.net.URL;
 
-  public Prd3529Test()
-  {
+public class Prd3529Test extends TestCase {
+  private static final Log logger = LogFactory.getLog( Prd3529Test.class );
+
+  public Prd3529Test() {
   }
 
-  protected void setUp() throws Exception
-  {
+  protected void setUp() throws Exception {
     ClassicEngineBoot.getInstance().start();
   }
 
-  public void testStrippedReport() throws ResourceException, IOException, ReportProcessingException
-  {
-    final URL url = getClass().getResource("Prd-3529-Stripped.prpt");
-    assertNotNull(url);
+  public void testStrippedReport() throws ResourceException, IOException, ReportProcessingException {
+    final URL url = getClass().getResource( "Prd-3529-Stripped.prpt" );
+    assertNotNull( url );
     final ResourceManager resourceManager = new ResourceManager();
     resourceManager.registerDefaults();
-    final Resource directly = resourceManager.createDirectly(url, MasterReport.class);
+    final Resource directly = resourceManager.createDirectly( url, MasterReport.class );
     final MasterReport report = (MasterReport) directly.getResource();
 
-    if (logger.isDebugEnabled())
-    {
-      final byte[] bytes = DebugReportRunner.createXmlTablePageable(report);
-      logger.debug(new String(bytes, "UTF-8"));
+    if ( logger.isDebugEnabled() ) {
+      final byte[] bytes = DebugReportRunner.createXmlTablePageable( report );
+      logger.debug( new String( bytes, "UTF-8" ) );
     }
   }
 }

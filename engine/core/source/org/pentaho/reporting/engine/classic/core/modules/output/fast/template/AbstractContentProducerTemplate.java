@@ -17,9 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.output.fast.template;
 
-import java.io.IOException;
-import java.util.HashMap;
-
 import org.pentaho.reporting.engine.classic.core.Band;
 import org.pentaho.reporting.engine.classic.core.InvalidReportStateException;
 import org.pentaho.reporting.engine.classic.core.ReportDefinition;
@@ -31,81 +28,68 @@ import org.pentaho.reporting.engine.classic.core.layout.output.OutputProcessorMe
 import org.pentaho.reporting.engine.classic.core.modules.output.fast.FastExportTemplate;
 import org.pentaho.reporting.engine.classic.core.modules.output.table.base.SheetLayout;
 
-public abstract class AbstractContentProducerTemplate implements FastExportTemplate
-{
+import java.io.IOException;
+import java.util.HashMap;
+
+public abstract class AbstractContentProducerTemplate implements FastExportTemplate {
   private SheetLayout sharedSheetLayout;
   private OutputProcessorMetaData metaData;
   private HashMap<DynamicStyleKey, FormattedDataBuilder> bandFormatter;
 
-  public AbstractContentProducerTemplate(final SheetLayout sharedSheetLayout)
-  {
+  public AbstractContentProducerTemplate( final SheetLayout sharedSheetLayout ) {
     this.sharedSheetLayout = sharedSheetLayout;
     this.bandFormatter = new HashMap<DynamicStyleKey, FormattedDataBuilder>();
   }
 
-  protected OutputProcessorMetaData getMetaData()
-  {
+  protected OutputProcessorMetaData getMetaData() {
     return metaData;
   }
 
-  protected SheetLayout getSharedSheetLayout()
-  {
+  protected SheetLayout getSharedSheetLayout() {
     return sharedSheetLayout;
   }
 
-  public void write(final Band band, final ExpressionRuntime runtime) throws InvalidReportStateException
-  {
-    try
-    {
-      DynamicStyleKey dynamicStyleKey = DynamicStyleKey.create(band, runtime);
-      FormattedDataBuilder messageFormatSupport = bandFormatter.get(dynamicStyleKey);
-      if (messageFormatSupport == null)
-      {
-        messageFormatSupport = createTemplate(band, runtime);
-        bandFormatter.put(dynamicStyleKey, messageFormatSupport);
+  public void write( final Band band, final ExpressionRuntime runtime ) throws InvalidReportStateException {
+    try {
+      DynamicStyleKey dynamicStyleKey = DynamicStyleKey.create( band, runtime );
+      FormattedDataBuilder messageFormatSupport = bandFormatter.get( dynamicStyleKey );
+      if ( messageFormatSupport == null ) {
+        messageFormatSupport = createTemplate( band, runtime );
+        bandFormatter.put( dynamicStyleKey, messageFormatSupport );
       }
 
-      writeContent(band, runtime, messageFormatSupport);
-    }
-    catch (IOException e)
-    {
-      throw new InvalidReportStateException("Failed to write content", e);
-    }
-    catch (ContentProcessingException e)
-    {
-      throw new InvalidReportStateException("Failed to write content", e);
-    }
-    catch (ReportProcessingException e)
-    {
-      throw new InvalidReportStateException("Failed to write content", e);
+      writeContent( band, runtime, messageFormatSupport );
+    } catch ( IOException e ) {
+      throw new InvalidReportStateException( "Failed to write content", e );
+    } catch ( ContentProcessingException e ) {
+      throw new InvalidReportStateException( "Failed to write content", e );
+    } catch ( ReportProcessingException e ) {
+      throw new InvalidReportStateException( "Failed to write content", e );
     }
   }
 
-  public void finishReport() throws ReportProcessingException
-  {
+  public void finishReport() throws ReportProcessingException {
 
   }
 
-  protected abstract void writeContent(final Band band,
-                                       final ExpressionRuntime runtime,
-                                       final FormattedDataBuilder messageFormatSupport)
-      throws IOException, ReportProcessingException, ContentProcessingException;
+  protected abstract void writeContent( final Band band,
+                                        final ExpressionRuntime runtime,
+                                        final FormattedDataBuilder messageFormatSupport )
+    throws IOException, ReportProcessingException, ContentProcessingException;
 
-  public void initialize(final ReportDefinition report,
-                         final ExpressionRuntime runtime,
-                         final boolean pagination)
-  {
+  public void initialize( final ReportDefinition report,
+                          final ExpressionRuntime runtime,
+                          final boolean pagination ) {
     metaData = runtime.getProcessingContext().getOutputProcessorMetaData();
   }
 
-  protected FormattedDataBuilder createTemplate(final Band band,
-                                                final ExpressionRuntime runtime)
-      throws ReportProcessingException, ContentProcessingException
-  {
+  protected FormattedDataBuilder createTemplate( final Band band,
+                                                 final ExpressionRuntime runtime )
+    throws ReportProcessingException, ContentProcessingException {
     FastExportTemplateProducer templateListener = createTemplateProducer();
     final OutputProcessor op = new TemplatingOutputProcessor
-        (runtime.getProcessingContext().getOutputProcessorMetaData(), templateListener);
-    FastSheetLayoutProducer.performLayout(band, runtime, op);
+      ( runtime.getProcessingContext().getOutputProcessorMetaData(), templateListener );
+    FastSheetLayoutProducer.performLayout( band, runtime, op );
     return templateListener.createDataBuilder();
   }
 

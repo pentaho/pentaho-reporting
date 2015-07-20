@@ -25,8 +25,7 @@ import java.util.ArrayList;
  *
  * @author Thomas Morgner.
  */
-public class StyleChangeSupport
-{
+public class StyleChangeSupport {
   /**
    * Storage for the listeners.
    */
@@ -42,8 +41,7 @@ public class StyleChangeSupport
    *
    * @param source the source of change events.
    */
-  public StyleChangeSupport(final ElementStyleSheet source)
-  {
+  public StyleChangeSupport( final ElementStyleSheet source ) {
     this.source = source;
   }
 
@@ -52,17 +50,14 @@ public class StyleChangeSupport
    *
    * @param l the listener.
    */
-  public void addListener(final StyleChangeListener l)
-  {
-    if (l == null)
-    {
-      throw new NullPointerException("Listener == null");
+  public void addListener( final StyleChangeListener l ) {
+    if ( l == null ) {
+      throw new NullPointerException( "Listener == null" );
     }
-    if (listeners == null)
-    {
-      listeners = new ArrayList(5);
+    if ( listeners == null ) {
+      listeners = new ArrayList( 5 );
     }
-    listeners.add(new WeakReference(l));
+    listeners.add( new WeakReference( l ) );
   }
 
   /**
@@ -70,17 +65,14 @@ public class StyleChangeSupport
    *
    * @param l the listener.
    */
-  public void removeListener(final StyleChangeListener l)
-  {
-    if (l == null)
-    {
-      throw new NullPointerException("Listener == null");
+  public void removeListener( final StyleChangeListener l ) {
+    if ( l == null ) {
+      throw new NullPointerException( "Listener == null" );
     }
-    if (listeners == null)
-    {
+    if ( listeners == null ) {
       return;
     }
-    listeners.remove(l);
+    listeners.remove( l );
   }
 
   /**
@@ -89,34 +81,26 @@ public class StyleChangeSupport
    * @param key   the style key.
    * @param value the new style value.
    */
-  public void fireStyleChanged(final StyleKey key, final Object value)
-  {
-    if (listeners == null)
-    {
+  public void fireStyleChanged( final StyleKey key, final Object value ) {
+    if ( listeners == null ) {
       return;
     }
     ArrayList removeList = null;
 
-    for (int i = 0; i < listeners.size(); i++)
-    {
-      final WeakReference ref = (WeakReference) listeners.get(i);
+    for ( int i = 0; i < listeners.size(); i++ ) {
+      final WeakReference ref = (WeakReference) listeners.get( i );
       final StyleChangeListener l = (StyleChangeListener) ref.get();
-      if (l != null)
-      {
-        l.styleChanged(source, key, value);
-      }
-      else
-      {
-        if (removeList == null)
-        {
-          removeList = new ArrayList(5);
+      if ( l != null ) {
+        l.styleChanged( source, key, value );
+      } else {
+        if ( removeList == null ) {
+          removeList = new ArrayList( 5 );
         }
-        removeList.add(ref);
+        removeList.add( ref );
       }
     }
-    if (removeList != null)
-    {
-      listeners.removeAll(removeList);
+    if ( removeList != null ) {
+      listeners.removeAll( removeList );
     }
   }
 
@@ -125,34 +109,26 @@ public class StyleChangeSupport
    *
    * @param key the style key.
    */
-  public void fireStyleRemoved(final StyleKey key)
-  {
-    if (listeners == null)
-    {
+  public void fireStyleRemoved( final StyleKey key ) {
+    if ( listeners == null ) {
       return;
     }
     ArrayList removeList = null;
 
-    for (int i = 0; i < listeners.size(); i++)
-    {
-      final WeakReference ref = (WeakReference) listeners.get(i);
+    for ( int i = 0; i < listeners.size(); i++ ) {
+      final WeakReference ref = (WeakReference) listeners.get( i );
       final StyleChangeListener l = (StyleChangeListener) ref.get();
-      if (l != null)
-      {
-        l.styleRemoved(source, key);
-      }
-      else
-      {
-        if (removeList == null)
-        {
-          removeList = new ArrayList(5);
+      if ( l != null ) {
+        l.styleRemoved( source, key );
+      } else {
+        if ( removeList == null ) {
+          removeList = new ArrayList( 5 );
         }
-        removeList.add(ref);
+        removeList.add( ref );
       }
     }
-    if (removeList != null)
-    {
-      listeners.removeAll(removeList);
+    if ( removeList != null ) {
+      listeners.removeAll( removeList );
     }
   }
 }

@@ -12,32 +12,28 @@ import org.pentaho.reporting.engine.classic.core.testsupport.DebugReportRunner;
 import org.pentaho.reporting.engine.classic.core.testsupport.selector.MatchFactory;
 import org.pentaho.reporting.engine.classic.core.util.geom.StrictGeomUtility;
 
-public class Prd4497Test extends TestCase
-{
-  public Prd4497Test()
-  {
+public class Prd4497Test extends TestCase {
+  public Prd4497Test() {
   }
 
-  protected void setUp() throws Exception
-  {
+  protected void setUp() throws Exception {
     ClassicEngineBoot.getInstance().start();
   }
 
-  public void testLayout() throws Exception
-  {
+  public void testLayout() throws Exception {
     // this report should generate only two pages of content. With the bug still active, it generates 3.
-    MasterReport report = DebugReportRunner.parseGoldenSampleReport("Prd-4497.prpt");
-    LogicalPageBox pageBox = DebugReportRunner.layoutPageStrict(report, 2, 0);
-    Assert.assertEquals(StrictGeomUtility.toInternalValue(784), pageBox.getPageEnd());
-    RenderNode[] elementsByNodeType = MatchFactory.findElementsByNodeType(pageBox, LayoutNodeTypes.TYPE_BOX_TABLE);
-    Assert.assertEquals(1, elementsByNodeType.length);
-    RenderBox box = (RenderBox) elementsByNodeType[0];
+    MasterReport report = DebugReportRunner.parseGoldenSampleReport( "Prd-4497.prpt" );
+    LogicalPageBox pageBox = DebugReportRunner.layoutPageStrict( report, 2, 0 );
+    Assert.assertEquals( StrictGeomUtility.toInternalValue( 784 ), pageBox.getPageEnd() );
+    RenderNode[] elementsByNodeType = MatchFactory.findElementsByNodeType( pageBox, LayoutNodeTypes.TYPE_BOX_TABLE );
+    Assert.assertEquals( 1, elementsByNodeType.length );
+    RenderBox box = (RenderBox) elementsByNodeType[ 0 ];
 
-//    ModelPrinter.INSTANCE.print(box);
+    //    ModelPrinter.INSTANCE.print(box);
     RenderNode lastChild = box.getLastChild();
 
-    Assert.assertEquals(StrictGeomUtility.toInternalValue(804), lastChild.getY2());
-    Assert.assertEquals(StrictGeomUtility.toInternalValue(800), box.getCachedHeight());
-    Assert.assertEquals(StrictGeomUtility.toInternalValue(804), box.getHeight());
+    Assert.assertEquals( StrictGeomUtility.toInternalValue( 804 ), lastChild.getY2() );
+    Assert.assertEquals( StrictGeomUtility.toInternalValue( 800 ), box.getCachedHeight() );
+    Assert.assertEquals( StrictGeomUtility.toInternalValue( 804 ), box.getHeight() );
   }
 }

@@ -17,70 +17,55 @@
 
 package org.pentaho.reporting.engine.classic.core.layout.process;
 
-import java.io.Serializable;
-
 import org.pentaho.reporting.engine.classic.core.layout.model.LayoutNodeTypes;
 import org.pentaho.reporting.engine.classic.core.layout.model.LogicalPageBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderNode;
 
-public abstract class IterateSimpleStructureProcessStep implements Serializable
-{
-  protected IterateSimpleStructureProcessStep()
-  {
+import java.io.Serializable;
+
+public abstract class IterateSimpleStructureProcessStep implements Serializable {
+  protected IterateSimpleStructureProcessStep() {
   }
 
-  protected final void startProcessing(final RenderNode node)
-  {
+  protected final void startProcessing( final RenderNode node ) {
     final int nodeType = node.getNodeType();
-    if (nodeType == LayoutNodeTypes.TYPE_BOX_LOGICALPAGE)
-    {
+    if ( nodeType == LayoutNodeTypes.TYPE_BOX_LOGICALPAGE ) {
       final LogicalPageBox box = (LogicalPageBox) node;
-      if (startBox(box))
-      {
-        startProcessing(box.getWatermarkArea());
-        startProcessing(box.getHeaderArea());
-        processBoxChilds(box);
-        startProcessing(box.getFooterArea());
-        startProcessing(box.getRepeatFooterArea());
+      if ( startBox( box ) ) {
+        startProcessing( box.getWatermarkArea() );
+        startProcessing( box.getHeaderArea() );
+        processBoxChilds( box );
+        startProcessing( box.getFooterArea() );
+        startProcessing( box.getRepeatFooterArea() );
       }
-      finishBox(box);
-    }
-    else if ((nodeType & LayoutNodeTypes.MASK_BOX) == LayoutNodeTypes.MASK_BOX)
-    {
+      finishBox( box );
+    } else if ( ( nodeType & LayoutNodeTypes.MASK_BOX ) == LayoutNodeTypes.MASK_BOX ) {
       final RenderBox box = (RenderBox) node;
-      if (startBox(box))
-      {
-        processBoxChilds(box);
+      if ( startBox( box ) ) {
+        processBoxChilds( box );
       }
-      finishBox(box);
-    }
-    else
-    {
-      processOtherNode(node);
+      finishBox( box );
+    } else {
+      processOtherNode( node );
     }
   }
 
-  protected void processBoxChilds(final RenderBox box)
-  {
+  protected void processBoxChilds( final RenderBox box ) {
     RenderNode node = box.getFirstChild();
-    while (node != null)
-    {
-      startProcessing(node);
+    while ( node != null ) {
+      startProcessing( node );
       node = node.getNext();
     }
   }
 
-  protected void processOtherNode(final RenderNode node)
-  {
+  protected void processOtherNode( final RenderNode node ) {
   }
 
-  protected void finishBox(final RenderBox box)
-  {
+  protected void finishBox( final RenderBox box ) {
   }
 
-  protected boolean startBox(final RenderBox box)
-  {
+  protected boolean startBox( final RenderBox box ) {
     return true;
   }
 

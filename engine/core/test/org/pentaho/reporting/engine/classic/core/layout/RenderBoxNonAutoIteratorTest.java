@@ -23,58 +23,51 @@ import org.pentaho.reporting.engine.classic.core.layout.model.AutoRenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.BlockRenderBox;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderBoxNonAutoIterator;
 
-public class RenderBoxNonAutoIteratorTest extends TestCase
-{
-  public RenderBoxNonAutoIteratorTest()
-  {
+public class RenderBoxNonAutoIteratorTest extends TestCase {
+  public RenderBoxNonAutoIteratorTest() {
   }
 
-  public RenderBoxNonAutoIteratorTest(final String name)
-  {
-    super(name);
+  public RenderBoxNonAutoIteratorTest( final String name ) {
+    super( name );
   }
 
-  protected void setUp() throws Exception
-  {
+  protected void setUp() throws Exception {
     ClassicEngineBoot.getInstance().start();
   }
 
-  public void testIteration()
-  {
+  public void testIteration() {
     BlockRenderBox payload = new BlockRenderBox();
 
     AutoRenderBox auto = new AutoRenderBox();
-    auto.addChild(new AutoRenderBox());
-    auto.addChild(payload);
+    auto.addChild( new AutoRenderBox() );
+    auto.addChild( payload );
 
     BlockRenderBox box = new BlockRenderBox();
-    box.addChild(auto);
+    box.addChild( auto );
 
-    RenderBoxNonAutoIterator it = new RenderBoxNonAutoIterator(box);
-    assertTrue(it.hasNext());
-    assertSame(payload, it.next());
+    RenderBoxNonAutoIterator it = new RenderBoxNonAutoIterator( box );
+    assertTrue( it.hasNext() );
+    assertSame( payload, it.next() );
   }
 
-  public void testIteration2()
-  {
+  public void testIteration2() {
     BlockRenderBox payload = new BlockRenderBox();
 
     AutoRenderBox auto = new AutoRenderBox();
-    auto.addChild(payload);
+    auto.addChild( payload );
 
     BlockRenderBox box = new BlockRenderBox();
-    box.addChild(auto);
+    box.addChild( auto );
 
-    RenderBoxNonAutoIterator it = new RenderBoxNonAutoIterator(box);
-    assertTrue(it.hasNext());
-    assertSame(payload, it.next());
+    RenderBoxNonAutoIterator it = new RenderBoxNonAutoIterator( box );
+    assertTrue( it.hasNext() );
+    assertSame( payload, it.next() );
   }
 
-  public void testEmpty()
-  {
+  public void testEmpty() {
     BlockRenderBox box = new BlockRenderBox();
 
-    RenderBoxNonAutoIterator it = new RenderBoxNonAutoIterator(box);
-    assertFalse(it.hasNext());
+    RenderBoxNonAutoIterator it = new RenderBoxNonAutoIterator( box );
+    assertFalse( it.hasNext() );
   }
 }

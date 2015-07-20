@@ -17,10 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.parser.data.staticdata.writer;
 
-import java.io.IOException;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-
 import org.pentaho.reporting.engine.classic.core.DataFactory;
 import org.pentaho.reporting.engine.classic.core.modules.parser.bundle.writer.BundleDataFactoryWriterHandler;
 import org.pentaho.reporting.engine.classic.core.modules.parser.bundle.writer.BundleWriterException;
@@ -33,10 +29,12 @@ import org.pentaho.reporting.libraries.xmlns.writer.DefaultTagDescription;
 import org.pentaho.reporting.libraries.xmlns.writer.XmlWriter;
 import org.pentaho.reporting.libraries.xmlns.writer.XmlWriterSupport;
 
-public class DirectStaticDataFactoryWriterHandler implements BundleDataFactoryWriterHandler
-{
-  public DirectStaticDataFactoryWriterHandler()
-  {
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+
+public class DirectStaticDataFactoryWriterHandler implements BundleDataFactoryWriterHandler {
+  public DirectStaticDataFactoryWriterHandler() {
   }
 
   /**
@@ -50,41 +48,37 @@ public class DirectStaticDataFactoryWriterHandler implements BundleDataFactoryWr
    * @throws IOException           if any error occured
    * @throws BundleWriterException if a bundle-management error occured.
    */
-  public String writeDataFactory(final WriteableDocumentBundle bundle,
-                                 final DataFactory dataFactory,
-                                 final BundleWriterState state) throws IOException, BundleWriterException
-  {
-    if (bundle == null)
-    {
+  public String writeDataFactory( final WriteableDocumentBundle bundle,
+                                  final DataFactory dataFactory,
+                                  final BundleWriterState state ) throws IOException, BundleWriterException {
+    if ( bundle == null ) {
       throw new NullPointerException();
     }
-    if (dataFactory == null)
-    {
+    if ( dataFactory == null ) {
       throw new NullPointerException();
     }
-    if (state == null)
-    {
+    if ( state == null ) {
       throw new NullPointerException();
     }
 
 
-    final String fileName = BundleUtilities.getUniqueName(bundle, state.getFileName(),
-        "datasources/direct-static-ds{0}.xml");
-    if (fileName == null)
-    {
-      throw new IOException("Unable to generate unique name for the direct Static-Data-Source");
+    final String fileName = BundleUtilities.getUniqueName( bundle, state.getFileName(),
+      "datasources/direct-static-ds{0}.xml" );
+    if ( fileName == null ) {
+      throw new IOException( "Unable to generate unique name for the direct Static-Data-Source" );
     }
-    final OutputStream outputStream = bundle.createEntry(fileName, "text/xml");
+    final OutputStream outputStream = bundle.createEntry( fileName, "text/xml" );
     final DefaultTagDescription tagDescription = new DefaultTagDescription();
-    tagDescription.setNamespaceHasCData(StaticDataFactoryModule.NAMESPACE, false);
-    
-    final XmlWriter xmlWriter = new XmlWriter(new OutputStreamWriter(outputStream, "UTF-8"), tagDescription, "  ",
-        "\n");
-    xmlWriter.writeXmlDeclaration("UTF-8");
+    tagDescription.setNamespaceHasCData( StaticDataFactoryModule.NAMESPACE, false );
+
+    final XmlWriter xmlWriter = new XmlWriter( new OutputStreamWriter( outputStream, "UTF-8" ), tagDescription, "  ",
+      "\n" );
+    xmlWriter.writeXmlDeclaration( "UTF-8" );
 
     final AttributeList rootAttrs = new AttributeList();
-    rootAttrs.addNamespaceDeclaration("data", StaticDataFactoryModule.NAMESPACE);
-    xmlWriter.writeTag(StaticDataFactoryModule.NAMESPACE, "direct-static-datasource", rootAttrs, XmlWriterSupport.CLOSE);
+    rootAttrs.addNamespaceDeclaration( "data", StaticDataFactoryModule.NAMESPACE );
+    xmlWriter
+      .writeTag( StaticDataFactoryModule.NAMESPACE, "direct-static-datasource", rootAttrs, XmlWriterSupport.CLOSE );
     xmlWriter.close();
     return fileName;
   }

@@ -18,9 +18,6 @@
 
 package org.pentaho.reporting.engine.classic.core.bugs;
 
-import java.awt.print.PageFormat;
-import java.awt.print.Paper;
-
 import junit.framework.TestCase;
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.pentaho.reporting.engine.classic.core.MasterReport;
@@ -32,71 +29,67 @@ import org.pentaho.reporting.libraries.base.util.MemoryByteArrayOutputStream;
 import org.pentaho.reporting.libraries.resourceloader.Resource;
 import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 
-public class Prd3425Test extends TestCase
-{
-  public Prd3425Test()
-  {
+import java.awt.print.PageFormat;
+import java.awt.print.Paper;
+
+public class Prd3425Test extends TestCase {
+  public Prd3425Test() {
   }
 
-  public Prd3425Test(final String name)
-  {
-    super(name);
+  public Prd3425Test( final String name ) {
+    super( name );
   }
 
-  public void setUp()
-  {
+  public void setUp() {
     ClassicEngineBoot.getInstance().start();
   }
 
-  public void testLandscapeLoadSave() throws Exception
-  {
+  public void testLandscapeLoadSave() throws Exception {
     final PageFormatFactory pff = PageFormatFactory.getInstance();
-    final Paper format = pff.createPaper(PageSize.LETTER);
-    pff.setBorders(format, 10, 20, 30, 40);
+    final Paper format = pff.createPaper( PageSize.LETTER );
+    pff.setBorders( format, 10, 20, 30, 40 );
 
     final MasterReport orgReport = new MasterReport();
-    orgReport.setPageDefinition(new SimplePageDefinition(pff.createPageFormat(format, PageFormat.LANDSCAPE)));
+    orgReport.setPageDefinition( new SimplePageDefinition( pff.createPageFormat( format, PageFormat.LANDSCAPE ) ) );
 
-    final MasterReport savedReport = postProcess(orgReport);
-    assertEquals(orgReport.getPageDefinition(), savedReport.getPageDefinition());
+    final MasterReport savedReport = postProcess( orgReport );
+    assertEquals( orgReport.getPageDefinition(), savedReport.getPageDefinition() );
   }
 
-  public void testReverseLandscapeLoadSave() throws Exception
-  {
+  public void testReverseLandscapeLoadSave() throws Exception {
     final PageFormatFactory pff = PageFormatFactory.getInstance();
-    final Paper format = pff.createPaper(PageSize.LETTER);
-    pff.setBorders(format, 10, 20, 30, 40);
+    final Paper format = pff.createPaper( PageSize.LETTER );
+    pff.setBorders( format, 10, 20, 30, 40 );
 
     final MasterReport orgReport = new MasterReport();
-    orgReport.setPageDefinition(new SimplePageDefinition(pff.createPageFormat(format, PageFormat.REVERSE_LANDSCAPE)));
+    orgReport
+      .setPageDefinition( new SimplePageDefinition( pff.createPageFormat( format, PageFormat.REVERSE_LANDSCAPE ) ) );
 
-    final MasterReport savedReport = postProcess(orgReport);
-    assertEquals(orgReport.getPageDefinition(), savedReport.getPageDefinition());
+    final MasterReport savedReport = postProcess( orgReport );
+    assertEquals( orgReport.getPageDefinition(), savedReport.getPageDefinition() );
   }
 
-  public void testPortraitLoadSave() throws Exception
-  {
+  public void testPortraitLoadSave() throws Exception {
     final PageFormatFactory pff = PageFormatFactory.getInstance();
-    final Paper format = pff.createPaper(PageSize.LETTER);
-    pff.setBorders(format, 10, 20, 30, 40);
+    final Paper format = pff.createPaper( PageSize.LETTER );
+    pff.setBorders( format, 10, 20, 30, 40 );
 
     final MasterReport orgReport = new MasterReport();
-    orgReport.setPageDefinition(new SimplePageDefinition(pff.createPageFormat(format, PageFormat.PORTRAIT)));
+    orgReport.setPageDefinition( new SimplePageDefinition( pff.createPageFormat( format, PageFormat.PORTRAIT ) ) );
 
-    final MasterReport savedReport = postProcess(orgReport);
-    assertEquals(orgReport.getPageDefinition(), savedReport.getPageDefinition());
+    final MasterReport savedReport = postProcess( orgReport );
+    assertEquals( orgReport.getPageDefinition(), savedReport.getPageDefinition() );
   }
 
 
-  protected MasterReport postProcess(final MasterReport originalReport) throws Exception
-  {
+  protected MasterReport postProcess( final MasterReport originalReport ) throws Exception {
     final MemoryByteArrayOutputStream bout = new MemoryByteArrayOutputStream();
-    BundleWriter.writeReportToZipStream(originalReport, bout);
-    assertTrue(bout.getLength() > 0);
+    BundleWriter.writeReportToZipStream( originalReport, bout );
+    assertTrue( bout.getLength() > 0 );
 
     final ResourceManager mgr = new ResourceManager();
     mgr.registerDefaults();
-    final Resource reportRes = mgr.createDirectly(bout.toByteArray(), MasterReport.class);
+    final Resource reportRes = mgr.createDirectly( bout.toByteArray(), MasterReport.class );
     return (MasterReport) reportRes.getResource();
   }
 

@@ -34,11 +34,10 @@ import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
  *
  * @author Thomas Morgner
  */
-public interface ParameterContext
-{
+public interface ParameterContext {
   /**
-   * the document metadata of the report. Can be null, if the report does not have a bundle associated or if
-   * this context is not part of a report-processing.
+   * the document metadata of the report. Can be null, if the report does not have a bundle associated or if this
+   * context is not part of a report-processing.
    *
    * @return
    */

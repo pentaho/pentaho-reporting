@@ -17,12 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.core.filter;
 
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.net.URL;
-import java.sql.Blob;
-import java.util.HashSet;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.pentaho.reporting.engine.classic.core.ReportElement;
@@ -31,6 +25,12 @@ import org.pentaho.reporting.libraries.resourceloader.Resource;
 import org.pentaho.reporting.libraries.resourceloader.ResourceException;
 import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 import org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableWrapper;
+
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.net.URL;
+import java.sql.Blob;
+import java.util.HashSet;
 
 /**
  * The DrawableLoadFilter is used to load drawable image files (like WMF's) during the report generation process. This
@@ -50,9 +50,8 @@ import org.pentaho.reporting.libraries.resourceloader.factory.drawable.DrawableW
  *
  * @author Thomas Morgner
  */
-public class DrawableLoadFilter implements DataFilter
-{
-  private static final Log logger = LogFactory.getLog(DrawableLoadFilter.class);
+public class DrawableLoadFilter implements DataFilter {
+  private static final Log logger = LogFactory.getLog( DrawableLoadFilter.class );
 
   /**
    * The cache for failed images. This prevents unneccessary retries on known-to-be-buggy URLs.
@@ -66,9 +65,8 @@ public class DrawableLoadFilter implements DataFilter
   /**
    * creates a new ImageLoadFilter with a cache size of 10.
    */
-  public DrawableLoadFilter()
-  {
-    this(10);
+  public DrawableLoadFilter() {
+    this( 10 );
   }
 
   /**
@@ -76,9 +74,8 @@ public class DrawableLoadFilter implements DataFilter
    *
    * @param cacheSize the cache size.
    */
-  public DrawableLoadFilter(final int cacheSize)
-  {
-    failureCache = new HashSet<String>(cacheSize);
+  public DrawableLoadFilter( final int cacheSize ) {
+    failureCache = new HashSet<String>( cacheSize );
   }
 
   /**
@@ -91,96 +88,67 @@ public class DrawableLoadFilter implements DataFilter
    * @param element
    * @return the current value for this filter.
    */
-  public Object getValue(final ExpressionRuntime runtime, final ReportElement element)
-  {
+  public Object getValue( final ExpressionRuntime runtime, final ReportElement element ) {
     final DataSource ds = getDataSource();
-    if (ds == null)
-    {
+    if ( ds == null ) {
       return null;
     }
-    final Object o = ds.getValue(runtime, element);
-    if (o == null)
-    {
+    final Object o = ds.getValue( runtime, element );
+    if ( o == null ) {
       return null;
     }
 
-    if (o instanceof URL)
-    {
+    if ( o instanceof URL ) {
 
       // a valid url is found, lookup the url in the cache, maybe the image is loaded and
       // still there.
       final URL url = (URL) o;
-      final String urlString = String.valueOf(url);
-      if (failureCache.contains(urlString))
-      {
+      final String urlString = String.valueOf( url );
+      if ( failureCache.contains( urlString ) ) {
         return null;
       }
-      try
-      {
+      try {
         final ResourceManager resManager = runtime.getProcessingContext().getResourceManager();
-        final Resource resource = resManager.createDirectly(url, DrawableWrapper.class);
+        final Resource resource = resManager.createDirectly( url, DrawableWrapper.class );
         return resource.getResource();
-      }
-      catch (ResourceException e)
-      {
-        if (DrawableLoadFilter.logger.isDebugEnabled())
-        {
-          DrawableLoadFilter.logger.debug("Error while loading the drawable from " + url, e);
+      } catch ( ResourceException e ) {
+        if ( DrawableLoadFilter.logger.isDebugEnabled() ) {
+          DrawableLoadFilter.logger.debug( "Error while loading the drawable from " + url, e );
+        } else if ( DrawableLoadFilter.logger.isWarnEnabled() ) {
+          DrawableLoadFilter.logger.warn( "Error while loading the drawable from " + url + ": " + e.getMessage() );
         }
-        else if (DrawableLoadFilter.logger.isWarnEnabled())
-        {
-          DrawableLoadFilter.logger.warn("Error while loading the drawable from " + url + ": " + e.getMessage());
-        }
-        failureCache.add(urlString);
+        failureCache.add( urlString );
         return null;
       }
-    }
-    else if (o instanceof byte[])
-    {
-      try
-      {
+    } else if ( o instanceof byte[] ) {
+      try {
         final ResourceManager resManager = runtime.getProcessingContext().getResourceManager();
-        final Resource resource = resManager.createDirectly(o, DrawableWrapper.class);
+        final Resource resource = resManager.createDirectly( o, DrawableWrapper.class );
         return resource.getResource();
-      }
-      catch (ResourceException e)
-      {
-        if (DrawableLoadFilter.logger.isDebugEnabled())
-        {
-          DrawableLoadFilter.logger.debug("Error while loading the drawable from byte[]", e);
-        }
-        else if (DrawableLoadFilter.logger.isWarnEnabled())
-        {
-          DrawableLoadFilter.logger.warn("Error while loading the drawable from byte[]: " + e.getMessage());
+      } catch ( ResourceException e ) {
+        if ( DrawableLoadFilter.logger.isDebugEnabled() ) {
+          DrawableLoadFilter.logger.debug( "Error while loading the drawable from byte[]", e );
+        } else if ( DrawableLoadFilter.logger.isWarnEnabled() ) {
+          DrawableLoadFilter.logger.warn( "Error while loading the drawable from byte[]: " + e.getMessage() );
         }
         return null;
       }
-    }
-    else if (o instanceof Blob)
-    {
-      try
-      {
+    } else if ( o instanceof Blob ) {
+      try {
         final Blob b = (Blob) o;
-        final byte[] data = b.getBytes(1, (int) b.length());
+        final byte[] data = b.getBytes( 1, (int) b.length() );
         final ResourceManager resManager = runtime.getProcessingContext().getResourceManager();
-        final Resource resource = resManager.createDirectly(data, DrawableWrapper.class);
+        final Resource resource = resManager.createDirectly( data, DrawableWrapper.class );
         return resource.getResource();
-      }
-      catch (Exception e)
-      {
-        if (DrawableLoadFilter.logger.isDebugEnabled())
-        {
-          DrawableLoadFilter.logger.warn("Error while loading the drawable from an blob", e);
-        }
-        else if (DrawableLoadFilter.logger.isWarnEnabled())
-        {
-          DrawableLoadFilter.logger.warn("Error while loading the drawable from an blob: " + e);
+      } catch ( Exception e ) {
+        if ( DrawableLoadFilter.logger.isDebugEnabled() ) {
+          DrawableLoadFilter.logger.warn( "Error while loading the drawable from an blob", e );
+        } else if ( DrawableLoadFilter.logger.isWarnEnabled() ) {
+          DrawableLoadFilter.logger.warn( "Error while loading the drawable from an blob: " + e );
         }
         return null;
       }
-    }
-    else
-    {
+    } else {
       return null;
     }
   }
@@ -190,8 +158,7 @@ public class DrawableLoadFilter implements DataFilter
    *
    * @return The data source.
    */
-  public DataSource getDataSource()
-  {
+  public DataSource getDataSource() {
     return source;
   }
 
@@ -200,10 +167,8 @@ public class DrawableLoadFilter implements DataFilter
    *
    * @param ds The data source.
    */
-  public void setDataSource(final DataSource ds)
-  {
-    if (ds == null)
-    {
+  public void setDataSource( final DataSource ds ) {
+    if ( ds == null ) {
       throw new NullPointerException();
     }
 
@@ -217,12 +182,10 @@ public class DrawableLoadFilter implements DataFilter
    * @throws CloneNotSupportedException this should never happen.
    */
   public DrawableLoadFilter clone()
-      throws CloneNotSupportedException
-  {
+    throws CloneNotSupportedException {
     final DrawableLoadFilter il = (DrawableLoadFilter) super.clone();
     il.failureCache = (HashSet<String>) failureCache.clone();
-    if (source != null)
-    {
+    if ( source != null ) {
       il.source = source.clone();
     }
     return il;
@@ -235,9 +198,8 @@ public class DrawableLoadFilter implements DataFilter
    * @throws IOException            if an IOError occurs.
    * @throws ClassNotFoundException if a dependent class cannot be found.
    */
-  private void readObject(final ObjectInputStream in)
-      throws IOException, ClassNotFoundException
-  {
+  private void readObject( final ObjectInputStream in )
+    throws IOException, ClassNotFoundException {
     in.defaultReadObject();
     failureCache = new HashSet<String>();
   }

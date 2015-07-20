@@ -21,30 +21,24 @@ import org.mozilla.javascript.NativeArray;
 import org.mozilla.javascript.NativeJavaObject;
 
 /**
- * In case we do not run on a JDK 1.6 from Oracle, the "sun" name-space may not be available.
- * We shield ourselves via dynamic class loading.
+ * In case we do not run on a JDK 1.6 from Oracle, the "sun" name-space may not be available. We shield ourselves via
+ * dynamic class loading.
  */
-public class RhinoValueConverter implements ScriptValueConverter
-{
-  public RhinoValueConverter()
-  {
+public class RhinoValueConverter implements ScriptValueConverter {
+  public RhinoValueConverter() {
   }
 
-  public Object convert(final Object o)
-  {
-    if (o instanceof NativeJavaObject)
-    {
+  public Object convert( final Object o ) {
+    if ( o instanceof NativeJavaObject ) {
       final NativeJavaObject object = (NativeJavaObject) o;
       return object.unwrap();
     }
-    if (o instanceof NativeArray)
-    {
+    if ( o instanceof NativeArray ) {
       final NativeArray array = (NativeArray) o;
-      final Object[] result = new Object[(int) array.getLength()];
-      for (final Object val : array.getIds())
-      {
+      final Object[] result = new Object[ (int) array.getLength() ];
+      for ( final Object val : array.getIds() ) {
         final int index = (Integer) val;
-        result[index] = array.get(index, null);
+        result[ index ] = array.get( index, null );
       }
       return result;
     }

@@ -17,23 +17,21 @@
 
 package org.pentaho.reporting.engine.classic.core.filter.types;
 
-import java.awt.geom.Rectangle2D;
-import java.awt.geom.RoundRectangle2D;
-import java.util.Locale;
-
 import org.pentaho.reporting.engine.classic.core.AttributeNames;
 import org.pentaho.reporting.engine.classic.core.ReportElement;
 import org.pentaho.reporting.engine.classic.core.function.ExpressionRuntime;
 import org.pentaho.reporting.engine.classic.core.style.ElementStyleKeys;
 import org.pentaho.reporting.libraries.xmlns.common.ParserUtil;
 
-public class RectangleType extends AbstractElementType
-{
+import java.awt.geom.Rectangle2D;
+import java.awt.geom.RoundRectangle2D;
+import java.util.Locale;
+
+public class RectangleType extends AbstractElementType {
   public static final RectangleType INSTANCE = new RectangleType();
-  
-  public RectangleType()
-  {
-    super("rectangle");
+
+  public RectangleType() {
+    super( "rectangle" );
   }
 
   /**
@@ -44,56 +42,43 @@ public class RectangleType extends AbstractElementType
    * @param element the element for which the data is computed.
    * @return the value.
    */
-  public Object getValue(final ExpressionRuntime runtime, final ReportElement element)
-  {
-    if (runtime == null)
-    {
-      throw new NullPointerException("Runtime must never be null.");
+  public Object getValue( final ExpressionRuntime runtime, final ReportElement element ) {
+    if ( runtime == null ) {
+      throw new NullPointerException( "Runtime must never be null." );
     }
-    if (element == null)
-    {
-      throw new NullPointerException("Element must never be null.");
+    if ( element == null ) {
+      throw new NullPointerException( "Element must never be null." );
     }
 
-    final float arcWidth = parseArcParam(element, AttributeNames.Core.ARC_WIDTH);
-    final float arcHeight = parseArcParam(element, AttributeNames.Core.ARC_HEIGHT);
+    final float arcWidth = parseArcParam( element, AttributeNames.Core.ARC_WIDTH );
+    final float arcHeight = parseArcParam( element, AttributeNames.Core.ARC_HEIGHT );
 
-    if (arcWidth <= 0 || arcHeight <= 0)
-    {
-      return new Rectangle2D.Float(0, 0, 100, 100);
+    if ( arcWidth <= 0 || arcHeight <= 0 ) {
+      return new Rectangle2D.Float( 0, 0, 100, 100 );
     }
-    return new RoundRectangle2D.Float(0, 0, 100, 100, arcWidth, arcHeight);
+    return new RoundRectangle2D.Float( 0, 0, 100, 100, arcWidth, arcHeight );
   }
 
-  public Object getDesignValue(final ExpressionRuntime runtime, final ReportElement element)
-  {
-    return getValue(runtime, element);
+  public Object getDesignValue( final ExpressionRuntime runtime, final ReportElement element ) {
+    return getValue( runtime, element );
   }
 
-  public void configureDesignTimeDefaults(final ReportElement element, final Locale locale)
-  {
-    element.getStyle().setStyleProperty(ElementStyleKeys.SCALE, Boolean.TRUE);
-    element.getStyle().setStyleProperty(ElementStyleKeys.DRAW_SHAPE, Boolean.TRUE);
+  public void configureDesignTimeDefaults( final ReportElement element, final Locale locale ) {
+    element.getStyle().setStyleProperty( ElementStyleKeys.SCALE, Boolean.TRUE );
+    element.getStyle().setStyleProperty( ElementStyleKeys.DRAW_SHAPE, Boolean.TRUE );
   }
 
-  private float parseArcParam(final ReportElement element, final String attrName)
-  {
+  private float parseArcParam( final ReportElement element, final String attrName ) {
     final float arcWidth;
-    final Object attributeArcWidth = element.getAttribute(AttributeNames.Core.NAMESPACE, attrName);
-    if (attributeArcWidth != null)
-    {
-      if (attributeArcWidth instanceof Number)
-      {
+    final Object attributeArcWidth = element.getAttribute( AttributeNames.Core.NAMESPACE, attrName );
+    if ( attributeArcWidth != null ) {
+      if ( attributeArcWidth instanceof Number ) {
         final Number n = (Number) attributeArcWidth;
         arcWidth = n.floatValue();
+      } else {
+        arcWidth = ParserUtil.parseFloat( String.valueOf( attributeArcWidth ), 0 );
       }
-      else
-      {
-        arcWidth = ParserUtil.parseFloat(String.valueOf(attributeArcWidth), 0);
-      }
-    }
-    else
-    {
+    } else {
       arcWidth = 0;
     }
     return arcWidth;

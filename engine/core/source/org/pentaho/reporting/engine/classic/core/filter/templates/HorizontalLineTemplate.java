@@ -17,10 +17,10 @@
 
 package org.pentaho.reporting.engine.classic.core.filter.templates;
 
-import java.awt.geom.Line2D;
-
 import org.pentaho.reporting.engine.classic.core.ReportElement;
 import org.pentaho.reporting.engine.classic.core.function.ExpressionRuntime;
+
+import java.awt.geom.Line2D;
 
 /**
  * Defines a horizontal line template. The line always has the width of 100 points. This implementation is used to cover
@@ -29,13 +29,11 @@ import org.pentaho.reporting.engine.classic.core.function.ExpressionRuntime;
  *
  * @author Thomas Morgner
  */
-public class HorizontalLineTemplate extends AbstractTemplate
-{
+public class HorizontalLineTemplate extends AbstractTemplate {
   /**
    * Default Constructor.
    */
-  public HorizontalLineTemplate()
-  {
+  public HorizontalLineTemplate() {
   }
 
   /**
@@ -46,8 +44,7 @@ public class HorizontalLineTemplate extends AbstractTemplate
    * @param element
    * @return a horizontal line with a width of 100.
    */
-  public Object getValue(final ExpressionRuntime runtime, final ReportElement element)
-  {
-    return new Line2D.Float(0, 0, 100, 0);
+  public Object getValue( final ExpressionRuntime runtime, final ReportElement element ) {
+    return new Line2D.Float( 0, 0, 100, 0 );
   }
 }

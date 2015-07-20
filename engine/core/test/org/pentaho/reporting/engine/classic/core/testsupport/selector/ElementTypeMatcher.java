@@ -20,34 +20,27 @@ package org.pentaho.reporting.engine.classic.core.testsupport.selector;
 import org.pentaho.reporting.engine.classic.core.layout.model.RenderNode;
 import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
 
-public class ElementTypeMatcher implements NodeMatcher
-{
+public class ElementTypeMatcher implements NodeMatcher {
   private String elementType;
 
-  public ElementTypeMatcher(final String name)
-  {
+  public ElementTypeMatcher( final String name ) {
     this.elementType = name;
   }
 
-  public boolean matches(final RenderNode node)
-  {
-    if (eval(node))
-    {
+  public boolean matches( final RenderNode node ) {
+    if ( eval( node ) ) {
       return true;
     }
     return false;
   }
 
-  private boolean eval(final RenderNode node)
-  {
-    return ObjectUtilities.equal(elementType, node.getElementType().getMetaData().getName());
+  private boolean eval( final RenderNode node ) {
+    return ObjectUtilities.equal( elementType, node.getElementType().getMetaData().getName() );
   }
 
-  public String toString()
-  {
+  public String toString() {
     String prefix = "ElementTypeMatcher(";
-    if (elementType != null)
-    {
+    if ( elementType != null ) {
       prefix += "; " + elementType;
     }
     return prefix + ")";

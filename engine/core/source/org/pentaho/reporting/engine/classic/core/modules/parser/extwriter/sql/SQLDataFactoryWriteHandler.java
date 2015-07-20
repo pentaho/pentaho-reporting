@@ -17,8 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.core.modules.parser.extwriter.sql;
 
-import java.io.IOException;
-
 import org.pentaho.reporting.engine.classic.core.ClassicEngineBoot;
 import org.pentaho.reporting.engine.classic.core.DataFactory;
 import org.pentaho.reporting.engine.classic.core.modules.misc.datafactory.sql.ConnectionProvider;
@@ -33,18 +31,18 @@ import org.pentaho.reporting.libraries.xmlns.common.AttributeList;
 import org.pentaho.reporting.libraries.xmlns.writer.XmlWriter;
 import org.pentaho.reporting.libraries.xmlns.writer.XmlWriterSupport;
 
+import java.io.IOException;
+
 /**
  * Creation-Date: Jan 19, 2007, 4:44:05 PM
  *
  * @author Thomas Morgner
  */
-public class SQLDataFactoryWriteHandler implements DataFactoryWriteHandler
-{
+public class SQLDataFactoryWriteHandler implements DataFactoryWriteHandler {
   public static final String PREFIX =
-      "org.pentaho.reporting.engine.classic.core.modules.parser.extwriter.handler.sql-connection-provider.";
+    "org.pentaho.reporting.engine.classic.core.modules.parser.extwriter.handler.sql-connection-provider.";
 
-  public SQLDataFactoryWriteHandler()
-  {
+  public SQLDataFactoryWriteHandler() {
   }
 
   /**
@@ -56,62 +54,53 @@ public class SQLDataFactoryWriteHandler implements DataFactoryWriteHandler
    * @throws IOException           if any error occured
    * @throws ReportWriterException if the data factory cannot be written.
    */
-  public void write(final ReportWriterContext reportWriter,
-                    final XmlWriter xmlWriter,
-                    final DataFactory dataFactory)
-      throws IOException, ReportWriterException
-  {
-    if (reportWriter == null)
-    {
+  public void write( final ReportWriterContext reportWriter,
+                     final XmlWriter xmlWriter,
+                     final DataFactory dataFactory )
+    throws IOException, ReportWriterException {
+    if ( reportWriter == null ) {
       throw new NullPointerException();
     }
-    if (dataFactory == null)
-    {
+    if ( dataFactory == null ) {
       throw new NullPointerException();
     }
-    if (xmlWriter == null)
-    {
+    if ( xmlWriter == null ) {
       throw new NullPointerException();
     }
 
     final SQLReportDataFactory sqlDataFactory = (SQLReportDataFactory) dataFactory;
 
     final AttributeList rootAttrs = new AttributeList();
-    if (xmlWriter.isNamespaceDefined(SQLDataFactoryModule.NAMESPACE) == false)
-    {
-      rootAttrs.addNamespaceDeclaration("data", SQLDataFactoryModule.NAMESPACE);
+    if ( xmlWriter.isNamespaceDefined( SQLDataFactoryModule.NAMESPACE ) == false ) {
+      rootAttrs.addNamespaceDeclaration( "data", SQLDataFactoryModule.NAMESPACE );
     }
-    xmlWriter.writeTag(SQLDataFactoryModule.NAMESPACE, "sql-datasource", rootAttrs, XmlWriterSupport.OPEN);
+    xmlWriter.writeTag( SQLDataFactoryModule.NAMESPACE, "sql-datasource", rootAttrs, XmlWriterSupport.OPEN );
 
-    writeConnectionInfo(reportWriter, xmlWriter, sqlDataFactory.getConnectionProvider());
+    writeConnectionInfo( reportWriter, xmlWriter, sqlDataFactory.getConnectionProvider() );
 
     final String[] queryNames = sqlDataFactory.getQueryNames();
-    for (int i = 0; i < queryNames.length; i++)
-    {
-      final String queryName = queryNames[i];
-      final String query = sqlDataFactory.getQuery(queryName);
-      xmlWriter.writeTag(SQLDataFactoryModule.NAMESPACE, "query", "name", queryName, XmlWriterSupport.OPEN);
-      xmlWriter.writeTextNormalized(query, false);
+    for ( int i = 0; i < queryNames.length; i++ ) {
+      final String queryName = queryNames[ i ];
+      final String query = sqlDataFactory.getQuery( queryName );
+      xmlWriter.writeTag( SQLDataFactoryModule.NAMESPACE, "query", "name", queryName, XmlWriterSupport.OPEN );
+      xmlWriter.writeTextNormalized( query, false );
       xmlWriter.writeCloseTag();
     }
     xmlWriter.writeCloseTag();
   }
 
-  private void writeConnectionInfo(final ReportWriterContext reportWriter,
-                                   final XmlWriter xmlWriter,
-                                   final ConnectionProvider connectionProvider)
-      throws IOException, ReportWriterException
-  {
+  private void writeConnectionInfo( final ReportWriterContext reportWriter,
+                                    final XmlWriter xmlWriter,
+                                    final ConnectionProvider connectionProvider )
+    throws IOException, ReportWriterException {
     final String configKey = SQLDataFactoryWriteHandler.PREFIX + connectionProvider.getClass().getName();
     final Configuration globalConfig = ClassicEngineBoot.getInstance().getGlobalConfig();
-    final String value = globalConfig.getConfigProperty(configKey);
-    if (value != null)
-    {
+    final String value = globalConfig.getConfigProperty( configKey );
+    if ( value != null ) {
       final ConnectionProviderWriteHandler handler = ObjectUtilities.loadAndInstantiate
-              (value, SQLReportDataFactory.class, ConnectionProviderWriteHandler.class);
-      if (handler != null)
-      {
-        handler.write(reportWriter, xmlWriter, connectionProvider);
+        ( value, SQLReportDataFactory.class, ConnectionProviderWriteHandler.class );
+      if ( handler != null ) {
+        handler.write( reportWriter, xmlWriter, connectionProvider );
       }
     }
 

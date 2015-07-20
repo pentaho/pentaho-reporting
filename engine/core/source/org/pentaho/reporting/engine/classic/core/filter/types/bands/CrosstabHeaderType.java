@@ -20,17 +20,14 @@ package org.pentaho.reporting.engine.classic.core.filter.types.bands;
 import org.pentaho.reporting.engine.classic.core.CrosstabHeader;
 import org.pentaho.reporting.engine.classic.core.ReportElement;
 
-public class CrosstabHeaderType extends AbstractSectionType
-{
+public class CrosstabHeaderType extends AbstractSectionType {
   public static final CrosstabHeaderType INSTANCE = new CrosstabHeaderType();
 
-  public CrosstabHeaderType()
-  {
-    super("crosstab-header", false);
+  public CrosstabHeaderType() {
+    super( "crosstab-header", false );
   }
 
-  public ReportElement create()
-  {
+  public ReportElement create() {
     return new CrosstabHeader();
   }
 

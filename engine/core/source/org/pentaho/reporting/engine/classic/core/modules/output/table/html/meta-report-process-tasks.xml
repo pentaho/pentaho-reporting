@@ -4,8 +4,8 @@
                 bundle-name="org.pentaho.reporting.engine.classic.core.modules.output.table.html.StreamHtmlReportProcessTaskBundle"
                 expert="false" hidden="true" preferred="false"
                 configuration-prefix="org.pentaho.reporting.engine.classic.core.modules.output.table.html.">
-      <alias>html</alias>
-      <alias>html+stream</alias>
+    <alias>html</alias>
+    <alias>html+stream</alias>
   </process-task>
 
   <process-task name="table/html;page-mode=flow"
@@ -13,7 +13,7 @@
                 bundle-name="org.pentaho.reporting.engine.classic.core.modules.output.table.html.FlowHtmlReportProcessTaskBundle"
                 expert="false" hidden="true" preferred="false"
                 configuration-prefix="org.pentaho.reporting.engine.classic.core.modules.output.table.html.">
-      <alias>html+flow</alias>
+    <alias>html+flow</alias>
   </process-task>
 
   <process-task name="table/html;page-mode=page"
@@ -21,7 +21,7 @@
                 bundle-name="org.pentaho.reporting.engine.classic.core.modules.output.table.html.PageableHtmlReportProcessTaskBundle"
                 expert="false" hidden="true" preferred="false"
                 configuration-prefix="org.pentaho.reporting.engine.classic.core.modules.output.table.html.">
-      <alias>html+page</alias>
+    <alias>html+page</alias>
   </process-task>
 
   <process-task name="application/zip;content=table/html;page-mode=flow"
@@ -29,6 +29,6 @@
                 bundle-name="org.pentaho.reporting.engine.classic.core.modules.output.table.html.ZipHtmlReportProcessTaskBundle"
                 expert="false" hidden="true" preferred="false"
                 configuration-prefix="org.pentaho.reporting.engine.classic.core.modules.output.table.html.">
-      <alias>html+zip</alias>
+    <alias>html+zip</alias>
   </process-task>
 </meta-data>

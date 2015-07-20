@@ -17,9 +17,6 @@
 
 package org.pentaho.reporting.engine.classic.core.layout.output;
 
-import java.util.ArrayList;
-import javax.swing.table.TableModel;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.pentaho.reporting.engine.classic.core.Band;
@@ -56,12 +53,14 @@ import org.pentaho.reporting.engine.classic.core.style.StyleSheet;
 import org.pentaho.reporting.engine.classic.core.util.InstanceID;
 import org.pentaho.reporting.libraries.base.util.FastStack;
 
+import javax.swing.table.TableModel;
+import java.util.ArrayList;
+
 public class DefaultOutputFunction extends AbstractFunction
-    implements OutputFunction, PageEventListener
-{
-  private static final Log logger = LogFactory.getLog(DefaultOutputFunction.class);
-  private static final LayouterLevel[] EMPTY_LAYOUTER_LEVEL = new LayouterLevel[0];
-  public static final InlineSubreportMarker[] EMPTY_INLINE_SUBREPORT_MARKERS = new InlineSubreportMarker[0];
+  implements OutputFunction, PageEventListener {
+  private static final Log logger = LogFactory.getLog( DefaultOutputFunction.class );
+  private static final LayouterLevel[] EMPTY_LAYOUTER_LEVEL = new LayouterLevel[ 0 ];
+  public static final InlineSubreportMarker[] EMPTY_INLINE_SUBREPORT_MARKERS = new InlineSubreportMarker[ 0 ];
 
   private ReportEvent currentEvent;
   private Renderer renderer;
@@ -85,8 +84,7 @@ public class DefaultOutputFunction extends AbstractFunction
    * Creates an unnamed function. Make sure the name of the function is set using {@link #setName} before the function
    * is added to the report's function collection.
    */
-  public DefaultOutputFunction()
-  {
+  public DefaultOutputFunction() {
     this.subReportFooterTracker = new ArrayList<InstanceID>();
     this.repeatingFooterValidator = new RepeatingFooterValidator();
     this.pagebreakHandler = new DefaultLayoutPagebreakHandler();
@@ -97,8 +95,7 @@ public class DefaultOutputFunction extends AbstractFunction
     this.elementChangeChecker = new ElementChangeChecker();
   }
 
-  protected OutputProcessorMetaData getMetaData()
-  {
+  protected OutputProcessorMetaData getMetaData() {
     return getRenderer().getOutputProcessor().getMetaData();
   }
 
@@ -107,58 +104,43 @@ public class DefaultOutputFunction extends AbstractFunction
    *
    * @return the value of the function.
    */
-  public Object getValue()
-  {
+  public Object getValue() {
     return null;
   }
 
-  public void reportInitialized(final ReportEvent event)
-  {
+  public void reportInitialized( final ReportEvent event ) {
     // there can be no pending page-start, we just have started ...
-    if (event.getState().getParentSubReportState() != null)
-    {
+    if ( event.getState().getParentSubReportState() != null ) {
       // except if we are a subreport, of course ..
-      clearPendingPageStart(event);
+      clearPendingPageStart( event );
     }
 
     // activating this state after the page has ended is invalid.
-    setCurrentEvent(event);
-    try
-    {
+    setCurrentEvent( event );
+    try {
       // activating this state after the page has ended is invalid.
       final ReportDefinition report = event.getReport();
-      if (event.getState().isSubReportEvent() == false)
-      {
-        renderer.startReport(report, getRuntime().getProcessingContext(), event.getState().getPerformanceMonitorContext());
+      if ( event.getState().isSubReportEvent() == false ) {
+        renderer
+          .startReport( report, getRuntime().getProcessingContext(), event.getState().getPerformanceMonitorContext() );
 
         final ReportState reportState = event.getState();
         final ExpressionRuntime runtime = getRuntime();
-        try
-        {
-          reportState.firePageStartedEvent(reportState.getEventCode());
-        }
-        finally
-        {
+        try {
+          reportState.firePageStartedEvent( reportState.getEventCode() );
+        } finally {
           // restore the current event, as the page-started event will clear it ..
-          setRuntime(runtime);
-          setCurrentEvent(event);
+          setRuntime( runtime );
+          setCurrentEvent( event );
         }
+      } else {
+        renderer.startSubReport( report, event.getState().getCurrentSubReportMarker().getInsertationPointId() );
       }
-      else
-      {
-        renderer.startSubReport(report, event.getState().getCurrentSubReportMarker().getInsertationPointId());
-      }
-    }
-    catch (final InvalidReportStateException fe)
-    {
+    } catch ( final InvalidReportStateException fe ) {
       throw fe;
-    }
-    catch (final Exception e)
-    {
-      throw new InvalidReportStateException("ReportInitialized failed", e);
-    }
-    finally
-    {
+    } catch ( final Exception e ) {
+      throw new InvalidReportStateException( "ReportInitialized failed", e );
+    } finally {
       clearCurrentEvent();
     }
   }
@@ -169,50 +151,39 @@ public class DefaultOutputFunction extends AbstractFunction
    *
    * @param event the event.
    */
-  public void reportStarted(final ReportEvent event)
-  {
-    clearPendingPageStart(event);
+  public void reportStarted( final ReportEvent event ) {
+    clearPendingPageStart( event );
 
     // activating this state after the page has ended is invalid.
-    setCurrentEvent(event);
-    try
-    {
+    setCurrentEvent( event );
+    try {
       // activating this state after the page has ended is invalid.
-      updateFooterArea(event);
+      updateFooterArea( event );
 
       final ReportDefinition report = event.getReport();
 
-      renderer.startSection(Renderer.SectionType.NORMALFLOW);
-      print(getRuntime(), report.getReportHeader());
-      addSubReportMarkers(renderer.endSection());
+      renderer.startSection( Renderer.SectionType.NORMALFLOW );
+      print( getRuntime(), report.getReportHeader() );
+      addSubReportMarkers( renderer.endSection() );
 
-      printDesigntimeHeader(event);
+      printDesigntimeHeader( event );
 
-    }
-    catch (final InvalidReportStateException fe)
-    {
+    } catch ( final InvalidReportStateException fe ) {
       throw fe;
-    }
-    catch (final Exception e)
-    {
-      throw new InvalidReportStateException("ReportStarted failed", e);
-    }
-    finally
-    {
+    } catch ( final Exception e ) {
+      throw new InvalidReportStateException( "ReportStarted failed", e );
+    } finally {
       clearCurrentEvent();
     }
   }
 
-  protected void printDesigntimeHeader(final ReportEvent event) throws ReportProcessingException
-  {
+  protected void printDesigntimeHeader( final ReportEvent event ) throws ReportProcessingException {
   }
 
-  public void addSubReportMarkers(final InlineSubreportMarker[] markers)
-  {
-    for (int i = 0; i < markers.length; i++)
-    {
-      final InlineSubreportMarker marker = markers[i];
-      inlineSubreports.add(marker);
+  public void addSubReportMarkers( final InlineSubreportMarker[] markers ) {
+    for ( int i = 0; i < markers.length; i++ ) {
+      final InlineSubreportMarker marker = markers[ i ];
+      inlineSubreports.add( marker );
     }
   }
 
@@ -221,36 +192,27 @@ public class DefaultOutputFunction extends AbstractFunction
    *
    * @param event Information about the event.
    */
-  public void groupStarted(final ReportEvent event)
-  {
+  public void groupStarted( final ReportEvent event ) {
     final int type = event.getType();
 
-    final GroupOutputHandler groupOutputHandler = groupOutputHandlerFactory.getOutputHandler(event, beginOfRow);
-    outputHandlers.push(groupOutputHandler);
-    if ((type & ReportEvent.CROSSTABBING_ROW) == ReportEvent.CROSSTABBING_ROW)
-    {
+    final GroupOutputHandler groupOutputHandler = groupOutputHandlerFactory.getOutputHandler( event, beginOfRow );
+    outputHandlers.push( groupOutputHandler );
+    if ( ( type & ReportEvent.CROSSTABBING_ROW ) == ReportEvent.CROSSTABBING_ROW ) {
       beginOfRow = event.getState().getCurrentRow();
     }
 
-    clearPendingPageStart(event);
+    clearPendingPageStart( event );
 
     // activating this state after the page has ended is invalid.
-    setCurrentEvent(event);
-    try
-    {
+    setCurrentEvent( event );
+    try {
       final GroupOutputHandler handler = outputHandlers.peek();
-      handler.groupStarted(this, event);
-    }
-    catch (final InvalidReportStateException fe)
-    {
+      handler.groupStarted( this, event );
+    } catch ( final InvalidReportStateException fe ) {
       throw fe;
-    }
-    catch (final Exception e)
-    {
-      throw new InvalidReportStateException("GroupStarted failed", e);
-    }
-    finally
-    {
+    } catch ( final Exception e ) {
+      throw new InvalidReportStateException( "GroupStarted failed", e );
+    } finally {
       clearCurrentEvent();
     }
   }
@@ -261,27 +223,19 @@ public class DefaultOutputFunction extends AbstractFunction
    *
    * @param event The event.
    */
-  public void itemsStarted(final ReportEvent event)
-  {
-    clearPendingPageStart(event);
+  public void itemsStarted( final ReportEvent event ) {
+    clearPendingPageStart( event );
 
-    setCurrentEvent(event);
+    setCurrentEvent( event );
 
-    try
-    {
+    try {
       final GroupOutputHandler handler = outputHandlers.peek();
-      handler.itemsStarted(this, event);
-    }
-    catch (final InvalidReportStateException fe)
-    {
+      handler.itemsStarted( this, event );
+    } catch ( final InvalidReportStateException fe ) {
       throw fe;
-    }
-    catch (final Exception e)
-    {
-      throw new InvalidReportStateException("ItemsStarted failed", e);
-    }
-    finally
-    {
+    } catch ( final Exception e ) {
+      throw new InvalidReportStateException( "ItemsStarted failed", e );
+    } finally {
       clearCurrentEvent();
     }
   }
@@ -291,26 +245,18 @@ public class DefaultOutputFunction extends AbstractFunction
    *
    * @param event Information about the event.
    */
-  public void itemsAdvanced(final ReportEvent event)
-  {
-    clearPendingPageStart(event);
+  public void itemsAdvanced( final ReportEvent event ) {
+    clearPendingPageStart( event );
 
-    setCurrentEvent(event);
-    try
-    {
+    setCurrentEvent( event );
+    try {
       final GroupOutputHandler handler = outputHandlers.peek();
-      handler.itemsAdvanced(this, event);
-    }
-    catch (final InvalidReportStateException fe)
-    {
+      handler.itemsAdvanced( this, event );
+    } catch ( final InvalidReportStateException fe ) {
       throw fe;
-    }
-    catch (final Exception e)
-    {
-      throw new InvalidReportStateException("ItemsAdvanced failed", e);
-    }
-    finally
-    {
+    } catch ( final Exception e ) {
+      throw new InvalidReportStateException( "ItemsAdvanced failed", e );
+    } finally {
       clearCurrentEvent();
     }
   }
@@ -321,51 +267,35 @@ public class DefaultOutputFunction extends AbstractFunction
    *
    * @param event The event.
    */
-  public void itemsFinished(final ReportEvent event)
-  {
-    clearPendingPageStart(event);
+  public void itemsFinished( final ReportEvent event ) {
+    clearPendingPageStart( event );
 
-    setCurrentEvent(event);
+    setCurrentEvent( event );
 
-    try
-    {
+    try {
       final GroupOutputHandler handler = outputHandlers.peek();
-      handler.itemsFinished(this, event);
-    }
-    catch (final InvalidReportStateException fe)
-    {
+      handler.itemsFinished( this, event );
+    } catch ( final InvalidReportStateException fe ) {
       throw fe;
-    }
-    catch (final Exception e)
-    {
-      throw new InvalidReportStateException("ItemsFinished failed", e);
-    }
-    finally
-    {
+    } catch ( final Exception e ) {
+      throw new InvalidReportStateException( "ItemsFinished failed", e );
+    } finally {
       clearCurrentEvent();
     }
   }
 
-  public void groupBodyFinished(final ReportEvent event)
-  {
-    clearPendingPageStart(event);
+  public void groupBodyFinished( final ReportEvent event ) {
+    clearPendingPageStart( event );
 
-    setCurrentEvent(event);
-    try
-    {
+    setCurrentEvent( event );
+    try {
       final GroupOutputHandler handler = outputHandlers.peek();
-      handler.groupBodyFinished(this, event);
-    }
-    catch (final InvalidReportStateException fe)
-    {
+      handler.groupBodyFinished( this, event );
+    } catch ( final InvalidReportStateException fe ) {
       throw fe;
-    }
-    catch (final Exception e)
-    {
-      throw new InvalidReportStateException("GroupBody failed", e);
-    }
-    finally
-    {
+    } catch ( final Exception e ) {
+      throw new InvalidReportStateException( "GroupBody failed", e );
+    } finally {
       clearCurrentEvent();
     }
   }
@@ -375,65 +305,44 @@ public class DefaultOutputFunction extends AbstractFunction
    *
    * @param event Information about the event.
    */
-  public void groupFinished(final ReportEvent event)
-  {
-    clearPendingPageStart(event);
+  public void groupFinished( final ReportEvent event ) {
+    clearPendingPageStart( event );
 
-    setCurrentEvent(event);
-    try
-    {
+    setCurrentEvent( event );
+    try {
       final GroupOutputHandler handler = outputHandlers.pop();
-      handler.groupFinished(this, event);
-    }
-    catch (final InvalidReportStateException fe)
-    {
+      handler.groupFinished( this, event );
+    } catch ( final InvalidReportStateException fe ) {
       throw fe;
-    }
-    catch (final Exception e)
-    {
-      throw new InvalidReportStateException("GroupFinished failed", e);
-    }
-    finally
-    {
+    } catch ( final Exception e ) {
+      throw new InvalidReportStateException( "GroupFinished failed", e );
+    } finally {
       clearCurrentEvent();
     }
   }
 
-  public void summaryRowSelection(final ReportEvent event)
-  {
-    clearPendingPageStart(event);
+  public void summaryRowSelection( final ReportEvent event ) {
+    clearPendingPageStart( event );
 
-    setCurrentEvent(event);
+    setCurrentEvent( event );
 
-    try
-    {
-      if ((event.getType() & ReportEvent.SUMMARY_ROW_START) == ReportEvent.SUMMARY_ROW_START)
-      {
+    try {
+      if ( ( event.getType() & ReportEvent.SUMMARY_ROW_START ) == ReportEvent.SUMMARY_ROW_START ) {
         final GroupOutputHandler handler = new CrosstabRowOutputHandler();
-        outputHandlers.push(handler);
-        handler.summaryRowStart(this, event);
-      }
-      else if ((event.getType() & ReportEvent.SUMMARY_ROW_END) == ReportEvent.SUMMARY_ROW_END)
-      {
+        outputHandlers.push( handler );
+        handler.summaryRowStart( this, event );
+      } else if ( ( event.getType() & ReportEvent.SUMMARY_ROW_END ) == ReportEvent.SUMMARY_ROW_END ) {
         final GroupOutputHandler handler = outputHandlers.pop();
-        handler.summaryRowEnd(this, event);
-      }
-      else
-      {
+        handler.summaryRowEnd( this, event );
+      } else {
         final GroupOutputHandler handler = outputHandlers.peek();
-        handler.summaryRow(this, event);
+        handler.summaryRow( this, event );
       }
-    }
-    catch (final InvalidReportStateException fe)
-    {
+    } catch ( final InvalidReportStateException fe ) {
       throw fe;
-    }
-    catch (final Exception e)
-    {
-      throw new InvalidReportStateException("Summary Row Selection event failed", e);
-    }
-    finally
-    {
+    } catch ( final Exception e ) {
+      throw new InvalidReportStateException( "Summary Row Selection event failed", e );
+    } finally {
       clearCurrentEvent();
     }
   }
@@ -443,46 +352,36 @@ public class DefaultOutputFunction extends AbstractFunction
    *
    * @param event Information about the event.
    */
-  public void reportFinished(final ReportEvent event)
-  {
-    clearPendingPageStart(event);
+  public void reportFinished( final ReportEvent event ) {
+    clearPendingPageStart( event );
 
-    setCurrentEvent(event);
-    try
-    {
+    setCurrentEvent( event );
+    try {
       // a deep traversing event means, we are in a subreport ..
 
       // force that this last pagebreak ... (This is an indicator for the
       // pagefooter's print-on-last-page) This is highly unclean and may or
       // may not work ..
-      renderer.startSection(Renderer.SectionType.NORMALFLOW);
-      print(getRuntime(), event.getReport().getReportFooter());
-      addSubReportMarkers(renderer.endSection());
+      renderer.startSection( Renderer.SectionType.NORMALFLOW );
+      print( getRuntime(), event.getReport().getReportFooter() );
+      addSubReportMarkers( renderer.endSection() );
 
-      if (event.isDeepTraversing() == false)
-      {
+      if ( event.isDeepTraversing() == false ) {
         lastPagebreak = true;
       }
-      updateFooterArea(event);
+      updateFooterArea( event );
 
-      printDesigntimeFooter(event);
-    }
-    catch (final InvalidReportStateException fe)
-    {
+      printDesigntimeFooter( event );
+    } catch ( final InvalidReportStateException fe ) {
       throw fe;
-    }
-    catch (final Exception e)
-    {
-      throw new InvalidReportStateException("ReportFinished failed", e);
-    }
-    finally
-    {
+    } catch ( final Exception e ) {
+      throw new InvalidReportStateException( "ReportFinished failed", e );
+    } finally {
       clearCurrentEvent();
     }
   }
 
-  protected void printDesigntimeFooter(final ReportEvent event) throws ReportProcessingException
-  {
+  protected void printDesigntimeFooter( final ReportEvent event ) throws ReportProcessingException {
   }
 
   /**
@@ -491,114 +390,94 @@ public class DefaultOutputFunction extends AbstractFunction
    *
    * @param event The event.
    */
-  public void reportDone(final ReportEvent event)
-  {
-    if (event.getState().isSubReportEvent() == false)
-    {
+  public void reportDone( final ReportEvent event ) {
+    if ( event.getState().isSubReportEvent() == false ) {
       renderer.endReport();
-    }
-    else
-    {
+    } else {
       renderer.endSubReport();
     }
 
     printPerformanceStats();
   }
 
-  protected void printPerformanceStats()
-  {
+  protected void printPerformanceStats() {
     elementChangeChecker.reportCachePerformance();
-    logger.info(String.format
-        ("Performance: footer-printed=%d footer-avoided=%d repeating-footer-printed=%d repeating-footer-avoided=%d",
-            printedFooter, avoidedFooter, printedRepeatingFooter, avoidedRepeatingFooter));
+    logger.info( String.format
+      ( "Performance: footer-printed=%d footer-avoided=%d repeating-footer-printed=%d repeating-footer-avoided=%d",
+        printedFooter, avoidedFooter, printedRepeatingFooter, avoidedRepeatingFooter ) );
   }
 
-  private static LayoutExpressionRuntime createRuntime(final MasterDataRow masterRow,
-                                                       final ReportState state,
-                                                       final ProcessingContext processingContext)
-  {
+  private static LayoutExpressionRuntime createRuntime( final MasterDataRow masterRow,
+                                                        final ReportState state,
+                                                        final ProcessingContext processingContext ) {
     final TableModel reportDataModel = masterRow.getReportData();
     return new LayoutExpressionRuntime
-        (masterRow.getGlobalView(), masterRow.getDataSchema(), state, reportDataModel, processingContext);
+      ( masterRow.getGlobalView(), masterRow.getDataSchema(), state, reportDataModel, processingContext );
   }
 
-  private static LayouterLevel[] collectSubReportStates(final ReportState state,
-                                                        final ProcessingContext processingContext)
-  {
-    if (processingContext == null)
-    {
+  private static LayouterLevel[] collectSubReportStates( final ReportState state,
+                                                         final ProcessingContext processingContext ) {
+    if ( processingContext == null ) {
       throw new NullPointerException();
     }
     ReportState parentState = state.getParentSubReportState();
-    if (parentState == null)
-    {
+    if ( parentState == null ) {
       return EMPTY_LAYOUTER_LEVEL;
     }
 
     MasterDataRow dataRow = state.getFlowController().getMasterRow();
     dataRow = dataRow.getParentDataRow();
-    if (dataRow == null)
-    {
-      throw new IllegalStateException("Parent-DataRow in a subreport-state must be defined.");
+    if ( dataRow == null ) {
+      throw new IllegalStateException( "Parent-DataRow in a subreport-state must be defined." );
     }
 
     final ArrayList<LayouterLevel> stack = new ArrayList<LayouterLevel>();
-    while (parentState != null)
-    {
-      if (parentState.isInlineProcess() == false)
-      {
-        final LayoutExpressionRuntime runtime = createRuntime(dataRow, parentState, processingContext);
-        stack.add(new LayouterLevel(parentState.getReport(),
-            parentState.getPresentationGroupIndex(), runtime, parentState.isInItemGroup()));
+    while ( parentState != null ) {
+      if ( parentState.isInlineProcess() == false ) {
+        final LayoutExpressionRuntime runtime = createRuntime( dataRow, parentState, processingContext );
+        stack.add( new LayouterLevel( parentState.getReport(),
+          parentState.getPresentationGroupIndex(), runtime, parentState.isInItemGroup() ) );
       }
       parentState = parentState.getParentSubReportState();
       dataRow = dataRow.getParentDataRow();
-      if (dataRow == null)
-      {
-        throw new IllegalStateException("Parent-DataRow in a subreport-state must be defined.");
+      if ( dataRow == null ) {
+        throw new IllegalStateException( "Parent-DataRow in a subreport-state must be defined." );
       }
     }
-    return stack.toArray(new LayouterLevel[stack.size()]);
+    return stack.toArray( new LayouterLevel[ stack.size() ] );
   }
 
-  private int computeCurrentPage()
-  {
+  private int computeCurrentPage() {
     return renderer.getPageCount() + 1;
   }
 
-  private boolean isPageHeaderPrinting(final Band b, final boolean testSticky)
-  {
+  private boolean isPageHeaderPrinting( final Band b, final boolean testSticky ) {
     final StyleSheet resolverStyleSheet = b.getComputedStyle();
-    if (resolverStyleSheet == null)
-    {
-      throw new InvalidReportStateException("Inv");
+    if ( resolverStyleSheet == null ) {
+      throw new InvalidReportStateException( "Inv" );
     }
-    if (isDesignTime()) {
+    if ( isDesignTime() ) {
       return true;
     }
 
-    if (testSticky && resolverStyleSheet.getBooleanStyleProperty(BandStyleKeys.STICKY) == false)
-    {
+    if ( testSticky && resolverStyleSheet.getBooleanStyleProperty( BandStyleKeys.STICKY ) == false ) {
       return false;
     }
 
-    final boolean displayOnFirstPage = resolverStyleSheet.getBooleanStyleProperty(BandStyleKeys.DISPLAY_ON_FIRSTPAGE);
-    if (computeCurrentPage() == 1 && displayOnFirstPage == false)
-    {
+    final boolean displayOnFirstPage = resolverStyleSheet.getBooleanStyleProperty( BandStyleKeys.DISPLAY_ON_FIRSTPAGE );
+    if ( computeCurrentPage() == 1 && displayOnFirstPage == false ) {
       return false;
     }
 
-    final boolean displayOnLastPage = resolverStyleSheet.getBooleanStyleProperty(BandStyleKeys.DISPLAY_ON_LASTPAGE);
-    if (isLastPagebreak() && (displayOnLastPage == false))
-    {
+    final boolean displayOnLastPage = resolverStyleSheet.getBooleanStyleProperty( BandStyleKeys.DISPLAY_ON_LASTPAGE );
+    if ( isLastPagebreak() && ( displayOnLastPage == false ) ) {
       return false;
     }
 
     return true;
   }
 
-  protected boolean isLastPagebreak()
-  {
+  protected boolean isLastPagebreak() {
     return lastPagebreak;
   }
 
@@ -618,51 +497,38 @@ public class DefaultOutputFunction extends AbstractFunction
    *
    * @param event Information about the event.
    */
-  public void pageStarted(final ReportEvent event)
-  {
+  public void pageStarted( final ReportEvent event ) {
     // activating this state after the page has ended is invalid.
-    setCurrentEvent(event);
-    try
-    {
+    setCurrentEvent( event );
+    try {
       final int mask = ReportEvent.REPORT_INITIALIZED | ReportEvent.NO_PARENT_PASSING_EVENT;
-      if (event.getState().isSubReportEvent() && (event.getType() & mask) == mask)
-      {
+      if ( event.getState().isSubReportEvent() && ( event.getType() & mask ) == mask ) {
         // if this is the artificial subreport-page-start event that is fired from the
         // init-report event handler, then do not rebuild the header if the page is not empty.
-        if (renderer.isCurrentPageEmpty() == false ||
-            renderer.validatePages() == Renderer.LayoutResult.LAYOUT_UNVALIDATABLE)
-        {
+        if ( renderer.isCurrentPageEmpty() == false ||
+          renderer.validatePages() == Renderer.LayoutResult.LAYOUT_UNVALIDATABLE ) {
           return;
         }
       }
       renderer.newPageStarted();
       clearedFooter = true;
-      updateHeaderArea(event.getState());
-    }
-    catch (final InvalidReportStateException fe)
-    {
+      updateHeaderArea( event.getState() );
+    } catch ( final InvalidReportStateException fe ) {
       throw fe;
-    }
-    catch (final Exception e)
-    {
-      throw new InvalidReportStateException("PageStarted failed", e);
-    }
-    finally
-    {
+    } catch ( final Exception e ) {
+      throw new InvalidReportStateException( "PageStarted failed", e );
+    } finally {
       clearCurrentEvent();
     }
   }
 
-  protected void updateHeaderArea(final ReportState givenState)
-      throws ReportProcessingException
-  {
+  protected void updateHeaderArea( final ReportState givenState )
+    throws ReportProcessingException {
     ReportState state = givenState;
-    while (state != null && state.isInlineProcess())
-    {
+    while ( state != null && state.isInlineProcess() ) {
       state = state.getParentSubReportState();
     }
-    if (state == null)
-    {
+    if ( state == null ) {
       return;
     }
 
@@ -671,179 +537,151 @@ public class DefaultOutputFunction extends AbstractFunction
     LayouterLevel[] levels = null;
     ExpressionRuntime runtime = null;
     final OutputProcessorMetaData metaData = renderer.getOutputProcessor().getMetaData();
-    if (metaData.isFeatureSupported(OutputProcessorFeature.WATERMARK_SECTION))
-    {
-      renderer.startSection(Renderer.SectionType.WATERMARK);
+    if ( metaData.isFeatureSupported( OutputProcessorFeature.WATERMARK_SECTION ) ) {
+      renderer.startSection( Renderer.SectionType.WATERMARK );
       // a new page has started, so reset the cursor ...
       // Check the subreport for sticky watermarks ...
-      levels = DefaultOutputFunction.collectSubReportStates(state, processingContext);
+      levels = DefaultOutputFunction.collectSubReportStates( state, processingContext );
 
-      runtime = updateWatermark(state, processingContext, report, levels, runtime);
-      addSubReportMarkers(renderer.endSection());
+      runtime = updateWatermark( state, processingContext, report, levels, runtime );
+      addSubReportMarkers( renderer.endSection() );
     }
 
-    if (metaData.isFeatureSupported(OutputProcessorFeature.PAGE_SECTIONS))
-    {
-      renderer.startSection(Renderer.SectionType.HEADER);
+    if ( metaData.isFeatureSupported( OutputProcessorFeature.PAGE_SECTIONS ) ) {
+      renderer.startSection( Renderer.SectionType.HEADER );
       // after printing the watermark, we are still at the top of the page.
 
-      if (levels == null)
-      {
-        levels = DefaultOutputFunction.collectSubReportStates(state, processingContext);
+      if ( levels == null ) {
+        levels = DefaultOutputFunction.collectSubReportStates( state, processingContext );
       }
 
-      runtime = updatePageHeader(state, processingContext, report, levels, runtime);
-      runtime = updateRepeatingGroupHeader(state, processingContext, report, levels, runtime);
-      updateDetailsHeader(state, processingContext, report, runtime);
+      runtime = updatePageHeader( state, processingContext, report, levels, runtime );
+      runtime = updateRepeatingGroupHeader( state, processingContext, report, levels, runtime );
+      updateDetailsHeader( state, processingContext, report, runtime );
 
-      addSubReportMarkers(renderer.endSection());
+      addSubReportMarkers( renderer.endSection() );
     }
     // mark the current position to calculate the maxBand-Height
   }
 
-  protected ExpressionRuntime updateWatermark(final ReportState state,
-                                              final ProcessingContext processingContext,
-                                              final ReportDefinition report,
-                                              final LayouterLevel[] levels,
-                                              ExpressionRuntime runtime) throws ReportProcessingException
-  {
-    for (int i = levels.length - 1; i >= 0; i -= 1)
-    {
-      final LayouterLevel level = levels[i];
+  protected ExpressionRuntime updateWatermark( final ReportState state,
+                                               final ProcessingContext processingContext,
+                                               final ReportDefinition report,
+                                               final LayouterLevel[] levels,
+                                               ExpressionRuntime runtime ) throws ReportProcessingException {
+    for ( int i = levels.length - 1; i >= 0; i -= 1 ) {
+      final LayouterLevel level = levels[ i ];
       final ReportDefinition def = level.getReportDefinition();
       final Watermark watermark = def.getWatermark();
-      if (isPageHeaderPrinting(watermark, true))
-      {
-        print(level.getRuntime(), watermark);
+      if ( isPageHeaderPrinting( watermark, true ) ) {
+        print( level.getRuntime(), watermark );
       }
     }
 
     // and finally print the watermark of the subreport itself ..
     final Band watermark = report.getWatermark();
-    if (isPageHeaderPrinting(watermark, false))
-    {
-      runtime = createRuntime(state.getFlowController().getMasterRow(), state, processingContext);
-      print(runtime, watermark);
+    if ( isPageHeaderPrinting( watermark, false ) ) {
+      runtime = createRuntime( state.getFlowController().getMasterRow(), state, processingContext );
+      print( runtime, watermark );
     }
     return runtime;
   }
 
-  protected ExpressionRuntime updatePageHeader(final ReportState state,
-                                               final ProcessingContext processingContext,
-                                               final ReportDefinition report,
-                                               final LayouterLevel[] levels,
-                                               ExpressionRuntime runtime) throws ReportProcessingException
-  {
-    for (int i = levels.length - 1; i >= 0; i -= 1)
-    {
+  protected ExpressionRuntime updatePageHeader( final ReportState state,
+                                                final ProcessingContext processingContext,
+                                                final ReportDefinition report,
+                                                final LayouterLevel[] levels,
+                                                ExpressionRuntime runtime ) throws ReportProcessingException {
+    for ( int i = levels.length - 1; i >= 0; i -= 1 ) {
       // This is propably wrong (or at least incomplete) in case a subreport uses header or footer which should
       // not be printed with the report-footer or header ..
-      final LayouterLevel level = levels[i];
+      final LayouterLevel level = levels[ i ];
       final ReportDefinition def = level.getReportDefinition();
       final PageHeader header = def.getPageHeader();
 
-      if (isPageHeaderPrinting(header, true))
-      {
-        print(level.getRuntime(), header);
+      if ( isPageHeaderPrinting( header, true ) ) {
+        print( level.getRuntime(), header );
       }
     }
 
     // and print the ordinary page header ..
     final Band b = report.getPageHeader();
-    if (isPageHeaderPrinting(b, false))
-    {
-      if (runtime == null)
-      {
-        runtime = createRuntime(state.getFlowController().getMasterRow(), state, processingContext);
+    if ( isPageHeaderPrinting( b, false ) ) {
+      if ( runtime == null ) {
+        runtime = createRuntime( state.getFlowController().getMasterRow(), state, processingContext );
       }
-      print(runtime, b);
+      print( runtime, b );
     }
     return runtime;
   }
 
-  protected ExpressionRuntime updateRepeatingGroupHeader(final ReportState state,
-                                                         final ProcessingContext processingContext,
-                                                         final ReportDefinition report,
-                                                         final LayouterLevel[] levels,
-                                                         ExpressionRuntime runtime) throws ReportProcessingException
-  {
-    if (isDesignTime())
-    {
+  protected ExpressionRuntime updateRepeatingGroupHeader( final ReportState state,
+                                                          final ProcessingContext processingContext,
+                                                          final ReportDefinition report,
+                                                          final LayouterLevel[] levels,
+                                                          ExpressionRuntime runtime ) throws ReportProcessingException {
+    if ( isDesignTime() ) {
       return runtime;
     }
     /**
      * Dive into the pending group to print the group header ...
      */
 
-    for (int i = levels.length - 1; i >= 0; i -= 1)
-    {
-      final LayouterLevel level = levels[i];
+    for ( int i = levels.length - 1; i >= 0; i -= 1 ) {
+      final LayouterLevel level = levels[ i ];
       final ReportDefinition def = level.getReportDefinition();
 
-      for (int gidx = 0; gidx <= level.getGroupIndex(); gidx++)
-      {
-        final Group g = def.getGroup(gidx);
-        if (g instanceof RelationalGroup)
-        {
+      for ( int gidx = 0; gidx <= level.getGroupIndex(); gidx++ ) {
+        final Group g = def.getGroup( gidx );
+        if ( g instanceof RelationalGroup ) {
           final RelationalGroup rg = (RelationalGroup) g;
           final GroupHeader header = rg.getHeader();
-          if (isGroupSectionPrintableInternal(header, true, true))
-          {
-            print(level.getRuntime(), header);
+          if ( isGroupSectionPrintableInternal( header, true, true ) ) {
+            print( level.getRuntime(), header );
           }
         }
       }
 
-      if (level.isInItemGroup())
-      {
+      if ( level.isInItemGroup() ) {
         final DetailsHeader detailsHeader = def.getDetailsHeader();
-        if (detailsHeader != null && isGroupSectionPrintableInternal(detailsHeader, true, true))
-        {
-          print(level.getRuntime(), detailsHeader);
+        if ( detailsHeader != null && isGroupSectionPrintableInternal( detailsHeader, true, true ) ) {
+          print( level.getRuntime(), detailsHeader );
         }
       }
     }
 
     final int groupsPrinted = state.getPresentationGroupIndex();
-    for (int gidx = 0; gidx <= groupsPrinted; gidx++)
-    {
-      final Group g = report.getGroup(gidx);
-      if (g instanceof RelationalGroup)
-      {
+    for ( int gidx = 0; gidx <= groupsPrinted; gidx++ ) {
+      final Group g = report.getGroup( gidx );
+      if ( g instanceof RelationalGroup ) {
         final RelationalGroup rg = (RelationalGroup) g;
         final GroupHeader header = rg.getHeader();
-        if (isGroupSectionPrintableInternal(header, false, true))
-        {
-          if (runtime == null)
-          {
-            runtime = createRuntime(state.getFlowController().getMasterRow(), state, processingContext);
+        if ( isGroupSectionPrintableInternal( header, false, true ) ) {
+          if ( runtime == null ) {
+            runtime = createRuntime( state.getFlowController().getMasterRow(), state, processingContext );
           }
-          print(runtime, header);
+          print( runtime, header );
         }
       }
     }
     return runtime;
   }
 
-  protected ExpressionRuntime updateDetailsHeader(final ReportState state,
-                                                  final ProcessingContext processingContext,
-                                                  final ReportDefinition report,
-                                                  ExpressionRuntime runtime) throws ReportProcessingException
-  {
-    if (isDesignTime()) {
+  protected ExpressionRuntime updateDetailsHeader( final ReportState state,
+                                                   final ProcessingContext processingContext,
+                                                   final ReportDefinition report,
+                                                   ExpressionRuntime runtime ) throws ReportProcessingException {
+    if ( isDesignTime() ) {
       return runtime;
     }
 
-    if (state.isInItemGroup())
-    {
+    if ( state.isInItemGroup() ) {
       final DetailsHeader detailsHeader = report.getDetailsHeader();
-      if (detailsHeader != null && isGroupSectionPrintableInternal(detailsHeader, false, true))
-      {
-        if (runtime == null)
-        {
-          runtime = createRuntime(state.getFlowController().getMasterRow(), state, processingContext);
+      if ( detailsHeader != null && isGroupSectionPrintableInternal( detailsHeader, false, true ) ) {
+        if ( runtime == null ) {
+          runtime = createRuntime( state.getFlowController().getMasterRow(), state, processingContext );
         }
-        print(runtime, detailsHeader);
+        print( runtime, detailsHeader );
       }
     }
     return runtime;
@@ -859,183 +697,147 @@ public class DefaultOutputFunction extends AbstractFunction
    *
    * @param event the report event.
    */
-  public void pageFinished(final ReportEvent event)
-  {
-    setCurrentEvent(event);
-    try
-    {
-      updateFooterArea(event);
-    }
-    catch (final InvalidReportStateException fe)
-    {
+  public void pageFinished( final ReportEvent event ) {
+    setCurrentEvent( event );
+    try {
+      updateFooterArea( event );
+    } catch ( final InvalidReportStateException fe ) {
       throw fe;
-    }
-    catch (final Exception e)
-    {
-      throw new InvalidReportStateException("PageFinished failed", e);
-    }
-    finally
-    {
+    } catch ( final Exception e ) {
+      throw new InvalidReportStateException( "PageFinished failed", e );
+    } finally {
       clearCurrentEvent();
     }
   }
 
-  public void updateFooterArea(final ReportEvent event)
-      throws ReportProcessingException
-  {
+  public void updateFooterArea( final ReportEvent event )
+    throws ReportProcessingException {
     final OutputProcessorMetaData metaData = renderer.getOutputProcessor().getMetaData();
-    if (metaData.isFeatureSupported(OutputProcessorFeature.PAGE_SECTIONS) == false)
-    {
+    if ( metaData.isFeatureSupported( OutputProcessorFeature.PAGE_SECTIONS ) == false ) {
       return;
     }
-    if (event.getState().isInlineProcess())
-    {
+    if ( event.getState().isInlineProcess() ) {
       return;
     }
 
-    final LayouterLevel[] levels = DefaultOutputFunction.collectSubReportStates(event.getState(), getRuntime().getProcessingContext());
-    if (isSubReportConfigurationChanged(levels))
-    {
+    final LayouterLevel[] levels =
+      DefaultOutputFunction.collectSubReportStates( event.getState(), getRuntime().getProcessingContext() );
+    if ( isSubReportConfigurationChanged( levels ) ) {
       clearedFooter = true;
-      refreshSubReportFooterConfiguration(levels);
+      refreshSubReportFooterConfiguration( levels );
     }
-    updateRepeatingFooters(event, levels);
-    updatePageFooter(event, levels);
+    updateRepeatingFooters( event, levels );
+    updatePageFooter( event, levels );
     clearedFooter = false;
   }
 
-  private void refreshSubReportFooterConfiguration(final LayouterLevel[] levels)
-  {
+  private void refreshSubReportFooterConfiguration( final LayouterLevel[] levels ) {
     subReportFooterTracker.clear();
-    for (final LayouterLevel level : levels)
-    {
-      subReportFooterTracker.add(level.getReportDefinition().getObjectID());
+    for ( final LayouterLevel level : levels ) {
+      subReportFooterTracker.add( level.getReportDefinition().getObjectID() );
     }
   }
 
-  private boolean isSubReportConfigurationChanged(final LayouterLevel[] levels)
-  {
-    if (levels.length != subReportFooterTracker.size())
-    {
+  private boolean isSubReportConfigurationChanged( final LayouterLevel[] levels ) {
+    if ( levels.length != subReportFooterTracker.size() ) {
       return true;
     }
 
-    for (int i = 0; i < subReportFooterTracker.size(); i++)
-    {
-      InstanceID instanceID = subReportFooterTracker.get(i);
-      if (levels[i].getReportDefinition().getObjectID() != instanceID)
-      {
+    for ( int i = 0; i < subReportFooterTracker.size(); i++ ) {
+      InstanceID instanceID = subReportFooterTracker.get( i );
+      if ( levels[ i ].getReportDefinition().getObjectID() != instanceID ) {
         return true;
       }
     }
     return false;
   }
 
-  protected boolean updatePageFooter(final ReportEvent event,
-                                     final LayouterLevel[] levels) throws ReportProcessingException
-  {
+  protected boolean updatePageFooter( final ReportEvent event,
+                                      final LayouterLevel[] levels ) throws ReportProcessingException {
     final ReportDefinition report = event.getReport();
     final int levelCount = levels.length;
     final DataRow dataRow = event.getDataRow();
 
     final PageFooter pageFooter = report.getPageFooter();
-    boolean needPrinting = isPageFooterPrinting(levels, levelCount, dataRow, pageFooter);
+    boolean needPrinting = isPageFooterPrinting( levels, levelCount, dataRow, pageFooter );
 
-    if (needPrinting == false)
-    {
+    if ( needPrinting == false ) {
       avoidedFooter += 1;
       return false;
     }
 
-    renderer.startSection(Renderer.SectionType.FOOTER);
-    if (isPageFooterPrintable(pageFooter, false))
-    {
-      print(getRuntime(), pageFooter);
-    }
-    else
-    {
+    renderer.startSection( Renderer.SectionType.FOOTER );
+    if ( isPageFooterPrintable( pageFooter, false ) ) {
+      print( getRuntime(), pageFooter );
+    } else {
       printEmptyRootLevelBand();
     }
 
-    for (int i = 0; i < levelCount; i++)
-    {
-      final LayouterLevel level = levels[i];
+    for ( int i = 0; i < levelCount; i++ ) {
+      final LayouterLevel level = levels[ i ];
       final ReportDefinition def = level.getReportDefinition();
       final PageFooter b = def.getPageFooter();
 
-      if (isPageFooterPrintable(b, true))
-      {
-        print(level.getRuntime(), b);
-      }
-      else
-      {
+      if ( isPageFooterPrintable( b, true ) ) {
+        print( level.getRuntime(), b );
+      } else {
         printEmptyRootLevelBand();
       }
     }
-    addSubReportMarkers(renderer.endSection());
+    addSubReportMarkers( renderer.endSection() );
     printedFooter += 1;
     return true;
   }
 
-  private boolean isPageFooterPrinting(final LayouterLevel[] levels,
-                                       final int levelCount,
-                                       final DataRow dataRow,
-                                       final PageFooter pageFooter)
-  {
-    if (isDesignTime())
-    {
+  private boolean isPageFooterPrinting( final LayouterLevel[] levels,
+                                        final int levelCount,
+                                        final DataRow dataRow,
+                                        final PageFooter pageFooter ) {
+    if ( isDesignTime() ) {
       return true;
     }
 
-    if (clearedFooter)
-    {
+    if ( clearedFooter ) {
       return true;
     }
 
-    if (isPageFooterPrintable(pageFooter, false) &&
-        elementChangeChecker.isBandChanged(pageFooter, dataRow))
-    {
+    if ( isPageFooterPrintable( pageFooter, false ) &&
+      elementChangeChecker.isBandChanged( pageFooter, dataRow ) ) {
       return true;
     }
 
-    for (int i = 0; i < levelCount; i++)
-    {
-      final LayouterLevel level = levels[i];
+    for ( int i = 0; i < levelCount; i++ ) {
+      final LayouterLevel level = levels[ i ];
       final ReportDefinition def = level.getReportDefinition();
       final PageFooter b = def.getPageFooter();
-      if (isPageFooterPrintable(b, true) &&
-          elementChangeChecker.isBandChanged(b, dataRow))
-      {
+      if ( isPageFooterPrintable( b, true ) &&
+        elementChangeChecker.isBandChanged( b, dataRow ) ) {
         return true;
       }
     }
     return false;
   }
 
-  protected boolean updateRepeatingFooters(final ReportEvent event,
-                                           final LayouterLevel[] levels) throws ReportProcessingException
-  {
+  protected boolean updateRepeatingFooters( final ReportEvent event,
+                                            final LayouterLevel[] levels ) throws ReportProcessingException {
     final ReportDefinition report = event.getReport();
     final ReportState state = event.getState();
     final int groupsPrinted = state.getPresentationGroupIndex();
     final int levelCount = levels.length;
 
-    final boolean needPrinting = isNeedPrintRepeatingFooter(event, levels);
+    final boolean needPrinting = isNeedPrintRepeatingFooter( event, levels );
 
-    if (needPrinting == false)
-    {
+    if ( needPrinting == false ) {
       avoidedRepeatingFooter += 1;
       return false;
     }
 
-    renderer.startSection(Renderer.SectionType.REPEAT_FOOTER);
+    renderer.startSection( Renderer.SectionType.REPEAT_FOOTER );
 
-    if (state.isInItemGroup())
-    {
+    if ( state.isInItemGroup() ) {
       final DetailsFooter footer = report.getDetailsFooter();
-      if (isGroupSectionPrintableInternal(footer, false, true))
-      {
-        print(getRuntime(), footer);
+      if ( isGroupSectionPrintableInternal( footer, false, true ) ) {
+        print( getRuntime(), footer );
       }
     }
 
@@ -1043,78 +845,64 @@ public class DefaultOutputFunction extends AbstractFunction
      * Repeating group header are only printed while ItemElements are
      * processed.
      */
-    for (int gidx = groupsPrinted; gidx >= 0; gidx -= 1)
-    {
-      final Group g = report.getGroup(gidx);
-      if (g instanceof RelationalGroup)
-      {
+    for ( int gidx = groupsPrinted; gidx >= 0; gidx -= 1 ) {
+      final Group g = report.getGroup( gidx );
+      if ( g instanceof RelationalGroup ) {
         final RelationalGroup rg = (RelationalGroup) g;
         final GroupFooter footer = rg.getFooter();
-        if (isGroupSectionPrintableInternal(footer, false, true))
-        {
-          print(getRuntime(), footer);
+        if ( isGroupSectionPrintableInternal( footer, false, true ) ) {
+          print( getRuntime(), footer );
         }
       }
     }
 
-    for (int i = 0; i < levelCount; i++)
-    {
-      final LayouterLevel level = levels[i];
+    for ( int i = 0; i < levelCount; i++ ) {
+      final LayouterLevel level = levels[ i ];
       final ReportDefinition def = level.getReportDefinition();
 
-      if (level.isInItemGroup())
-      {
+      if ( level.isInItemGroup() ) {
         final DetailsFooter detailsFooter = def.getDetailsFooter();
-        if (detailsFooter != null)
-        {
-          if (isGroupSectionPrintableInternal(detailsFooter, true, true))
-          {
-            print(level.getRuntime(), detailsFooter);
+        if ( detailsFooter != null ) {
+          if ( isGroupSectionPrintableInternal( detailsFooter, true, true ) ) {
+            print( level.getRuntime(), detailsFooter );
           }
         }
       }
 
-      for (int gidx = level.getGroupIndex(); gidx >= 0; gidx -= 1)
-      {
-        final Group g = def.getGroup(gidx);
-        if (g instanceof RelationalGroup)
-        {
+      for ( int gidx = level.getGroupIndex(); gidx >= 0; gidx -= 1 ) {
+        final Group g = def.getGroup( gidx );
+        if ( g instanceof RelationalGroup ) {
           final RelationalGroup rg = (RelationalGroup) g;
           final GroupFooter footer = rg.getFooter();
-          if (isGroupSectionPrintableInternal(footer, true, true))
-          {
-            print(level.getRuntime(), footer);
+          if ( isGroupSectionPrintableInternal( footer, true, true ) ) {
+            print( level.getRuntime(), footer );
           }
         }
       }
     }
 
-    addSubReportMarkers(renderer.endSection());
+    addSubReportMarkers( renderer.endSection() );
     printedRepeatingFooter += 1;
     return true;
   }
 
-  protected boolean isNeedPrintRepeatingFooter(final ReportEvent event,
-                                               final LayouterLevel[] levels)
-  {
+  protected boolean isNeedPrintRepeatingFooter( final ReportEvent event,
+                                                final LayouterLevel[] levels ) {
     final ReportDefinition report = event.getReport();
     final ReportState state = event.getState();
     final int groupsPrinted = state.getPresentationGroupIndex();
     final int levelCount = levels.length;
     final DataRow dataRow = event.getDataRow();
 
-    if (repeatingFooterValidator.isRepeatFooterValid(event, levels) == false)
-    {
+    if ( repeatingFooterValidator.isRepeatFooterValid( event, levels ) == false ) {
       return true;
     }
 
     boolean needPrinting = clearedFooter;
-    if (needPrinting == false && state.isInItemGroup())
-    {
+    if ( needPrinting == false && state.isInItemGroup() ) {
       final DetailsFooter footer = report.getDetailsFooter();
-      if (isGroupSectionPrintableInternal(footer, false, true) &&
-          elementChangeChecker.isBandChanged(footer, dataRow))
-      {
+      if ( isGroupSectionPrintableInternal( footer, false, true ) &&
+        elementChangeChecker.isBandChanged( footer, dataRow ) ) {
         needPrinting = true;
       }
     }
@@ -1123,56 +911,43 @@ public class DefaultOutputFunction extends AbstractFunction
      * Repeating group header are only printed while ItemElements are
      * processed.
      */
-    if (needPrinting == false)
-    {
-      for (int gidx = groupsPrinted; gidx >= 0; gidx -= 1)
-      {
-        final Group g = report.getGroup(gidx);
-        if (g instanceof RelationalGroup)
-        {
+    if ( needPrinting == false ) {
+      for ( int gidx = groupsPrinted; gidx >= 0; gidx -= 1 ) {
+        final Group g = report.getGroup( gidx );
+        if ( g instanceof RelationalGroup ) {
           final RelationalGroup rg = (RelationalGroup) g;
           final GroupFooter footer = rg.getFooter();
-          if (isGroupSectionPrintableInternal(footer, false, true) &&
-              elementChangeChecker.isBandChanged(footer, dataRow))
-          {
+          if ( isGroupSectionPrintableInternal( footer, false, true ) &&
+            elementChangeChecker.isBandChanged( footer, dataRow ) ) {
             needPrinting = true;
           }
         }
       }
     }
 
-    if (needPrinting == false)
-    {
-      for (int i = 0; i < levelCount; i++)
-      {
-        final LayouterLevel level = levels[i];
+    if ( needPrinting == false ) {
+      for ( int i = 0; i < levelCount; i++ ) {
+        final LayouterLevel level = levels[ i ];
         final ReportDefinition def = level.getReportDefinition();
 
-        if (level.isInItemGroup())
-        {
+        if ( level.isInItemGroup() ) {
           final DetailsFooter detailsFooter = def.getDetailsFooter();
-          if (detailsFooter != null)
-          {
-            if (isGroupSectionPrintableInternal(detailsFooter, true, true) &&
-                elementChangeChecker.isBandChanged(detailsFooter, dataRow))
-            {
+          if ( detailsFooter != null ) {
+            if ( isGroupSectionPrintableInternal( detailsFooter, true, true ) &&
+              elementChangeChecker.isBandChanged( detailsFooter, dataRow ) ) {
               needPrinting = true;
             }
           }
         }
 
-        if (needPrinting == false)
-        {
-          for (int gidx = level.getGroupIndex(); gidx >= 0; gidx -= 1)
-          {
-            final Group g = def.getGroup(gidx);
-            if (g instanceof RelationalGroup)
-            {
+        if ( needPrinting == false ) {
+          for ( int gidx = level.getGroupIndex(); gidx >= 0; gidx -= 1 ) {
+            final Group g = def.getGroup( gidx );
+            if ( g instanceof RelationalGroup ) {
               final RelationalGroup rg = (RelationalGroup) g;
               final GroupFooter footer = rg.getFooter();
-              if (isGroupSectionPrintableInternal(footer, true, true) &&
-                  elementChangeChecker.isBandChanged(footer, dataRow))
-              {
+              if ( isGroupSectionPrintableInternal( footer, true, true ) &&
+                elementChangeChecker.isBandChanged( footer, dataRow ) ) {
                 needPrinting = true;
               }
             }
@@ -1183,63 +958,46 @@ public class DefaultOutputFunction extends AbstractFunction
     return needPrinting;
   }
 
-  protected boolean isGroupSectionPrintableInternal(final Band b,
-                                                    final boolean testSticky,
-                                                    final boolean testRepeat)
-  {
-    return isGroupSectionPrintable(b, testSticky, testRepeat);
+  protected boolean isGroupSectionPrintableInternal( final Band b,
+                                                     final boolean testSticky,
+                                                     final boolean testRepeat ) {
+    return isGroupSectionPrintable( b, testSticky, testRepeat );
   }
 
-  public static boolean isGroupSectionPrintable(final Band b,
-                                                final boolean testSticky,
-                                                final boolean testRepeat)
-  {
+  public static boolean isGroupSectionPrintable( final Band b,
+                                                 final boolean testSticky,
+                                                 final boolean testRepeat ) {
     final StyleSheet resolverStyleSheet = b.getComputedStyle();
-    if (testSticky && resolverStyleSheet.getBooleanStyleProperty(BandStyleKeys.STICKY) == false)
-    {
+    if ( testSticky && resolverStyleSheet.getBooleanStyleProperty( BandStyleKeys.STICKY ) == false ) {
       return false;
     }
 
-    if (testRepeat && resolverStyleSheet.getBooleanStyleProperty(BandStyleKeys.REPEAT_HEADER) == false)
-    {
+    if ( testRepeat && resolverStyleSheet.getBooleanStyleProperty( BandStyleKeys.REPEAT_HEADER ) == false ) {
       return false;
     }
     return true;
   }
 
-  protected boolean isPageFooterPrintable(final Band b,
-                                          final boolean testSticky)
-  {
+  protected boolean isPageFooterPrintable( final Band b,
+                                           final boolean testSticky ) {
     final StyleSheet resolverStyleSheet = b.getComputedStyle();
-    if (testSticky && resolverStyleSheet.getBooleanStyleProperty(BandStyleKeys.STICKY) == false)
-    {
+    if ( testSticky && resolverStyleSheet.getBooleanStyleProperty( BandStyleKeys.STICKY ) == false ) {
       return false;
     }
 
-    if (computeCurrentPage() == 1)
-    {
-      if (resolverStyleSheet.getBooleanStyleProperty(BandStyleKeys.DISPLAY_ON_FIRSTPAGE) == true)
-      {
+    if ( computeCurrentPage() == 1 ) {
+      if ( resolverStyleSheet.getBooleanStyleProperty( BandStyleKeys.DISPLAY_ON_FIRSTPAGE ) == true ) {
         return true;
-      }
-      else
-      {
+      } else {
         return false;
       }
-    }
-    else if (isLastPagebreak())
-    {
-      if (resolverStyleSheet.getBooleanStyleProperty(BandStyleKeys.DISPLAY_ON_LASTPAGE) == true)
-      {
+    } else if ( isLastPagebreak() ) {
+      if ( resolverStyleSheet.getBooleanStyleProperty( BandStyleKeys.DISPLAY_ON_LASTPAGE ) == true ) {
         return true;
-      }
-      else
-      {
+      } else {
         return false;
       }
-    }
-    else
-    {
+    } else {
       return true;
     }
   }
@@ -1249,8 +1007,7 @@ public class DefaultOutputFunction extends AbstractFunction
    *
    * @return the event.
    */
-  protected ReportEvent getCurrentEvent()
-  {
+  protected ReportEvent getCurrentEvent() {
     return currentEvent;
   }
 
@@ -1259,29 +1016,25 @@ public class DefaultOutputFunction extends AbstractFunction
    *
    * @param currentEvent event.
    */
-  protected void setCurrentEvent(final ReportEvent currentEvent)
-  {
-    if (currentEvent == null)
-    {
-      throw new NullPointerException("Event must not be null.");
+  protected void setCurrentEvent( final ReportEvent currentEvent ) {
+    if ( currentEvent == null ) {
+      throw new NullPointerException( "Event must not be null." );
     }
     this.currentEvent = currentEvent;
-    this.pagebreakHandler.setReportState(currentEvent.getState());
-    this.renderer.setStateKey(currentEvent.getState().getProcessKey());
+    this.pagebreakHandler.setReportState( currentEvent.getState() );
+    this.renderer.setStateKey( currentEvent.getState().getProcessKey() );
   }
 
   /**
    * Clears the current event.
    */
-  protected void clearCurrentEvent()
-  {
-    if (currentEvent == null)
-    {
-      throw new IllegalStateException("ClearCurrentEvent called without Event set:");
+  protected void clearCurrentEvent() {
+    if ( currentEvent == null ) {
+      throw new IllegalStateException( "ClearCurrentEvent called without Event set:" );
     }
     this.currentEvent = null;
-    this.pagebreakHandler.setReportState(null);
-    this.renderer.setStateKey(null);
+    this.pagebreakHandler.setReportState( null );
+    this.renderer.setStateKey( null );
   }
 
   /**
@@ -1291,8 +1044,7 @@ public class DefaultOutputFunction extends AbstractFunction
    * @return a clone of this function.
    * @throws CloneNotSupportedException this should never happen.
    */
-  public final Object clone() throws CloneNotSupportedException
-  {
+  public final Object clone() throws CloneNotSupportedException {
     final DefaultOutputFunction sl = (DefaultOutputFunction) super.clone();
     sl.repeatingFooterValidator = repeatingFooterValidator.clone();
     sl.currentEvent = null;
@@ -1301,17 +1053,15 @@ public class DefaultOutputFunction extends AbstractFunction
     sl.renderedCrosstabLayouts = renderedCrosstabLayouts.clone();
     sl.renderedCrosstabLayouts.clear();
     final int rSize = renderedCrosstabLayouts.size();
-    for (int i = 0; i < rSize; i++)
-    {
-      final RenderedCrosstabLayout o = renderedCrosstabLayouts.get(i);
-      sl.renderedCrosstabLayouts.push((RenderedCrosstabLayout) o.clone());
+    for ( int i = 0; i < rSize; i++ ) {
+      final RenderedCrosstabLayout o = renderedCrosstabLayouts.get( i );
+      sl.renderedCrosstabLayouts.push( (RenderedCrosstabLayout) o.clone() );
     }
     return sl;
   }
 
 
-  public Expression getInstance()
-  {
+  public Expression getInstance() {
     return deriveForStorage();
   }
 
@@ -1323,30 +1073,25 @@ public class DefaultOutputFunction extends AbstractFunction
    *
    * @return the deep clone.
    */
-  public OutputFunction deriveForStorage()
-  {
-    try
-    {
+  public OutputFunction deriveForStorage() {
+    try {
       final DefaultOutputFunction sl = (DefaultOutputFunction) super.clone();
       sl.repeatingFooterValidator = repeatingFooterValidator.clone();
       sl.renderer = renderer.deriveForStorage();
       sl.inlineSubreports = (ArrayList<InlineSubreportMarker>) inlineSubreports.clone();
       sl.currentEvent = null;
       sl.pagebreakHandler = (DefaultLayoutPagebreakHandler) pagebreakHandler.clone();
-      sl.pagebreakHandler.setReportState(null);
+      sl.pagebreakHandler.setReportState( null );
       sl.outputHandlers = outputHandlers.clone();
       sl.renderedCrosstabLayouts = renderedCrosstabLayouts.clone();
       sl.renderedCrosstabLayouts.clear();
       final int rSize = renderedCrosstabLayouts.size();
-      for (int i = 0; i < rSize; i++)
-      {
-        final RenderedCrosstabLayout o = renderedCrosstabLayouts.get(i);
-        sl.renderedCrosstabLayouts.push(o.derive());
+      for ( int i = 0; i < rSize; i++ ) {
+        final RenderedCrosstabLayout o = renderedCrosstabLayouts.get( i );
+        sl.renderedCrosstabLayouts.push( o.derive() );
       }
       return sl;
-    }
-    catch (final CloneNotSupportedException e)
-    {
+    } catch ( final CloneNotSupportedException e ) {
       throw new IllegalStateException();
     }
   }
@@ -1360,10 +1105,8 @@ public class DefaultOutputFunction extends AbstractFunction
    *
    * @return the deep clone.
    */
-  public OutputFunction deriveForPagebreak()
-  {
-    try
-    {
+  public OutputFunction deriveForPagebreak() {
+    try {
       final DefaultOutputFunction sl = (DefaultOutputFunction) super.clone();
       sl.repeatingFooterValidator = repeatingFooterValidator.clone();
       sl.renderer = renderer.deriveForPagebreak();
@@ -1374,31 +1117,25 @@ public class DefaultOutputFunction extends AbstractFunction
       sl.renderedCrosstabLayouts = renderedCrosstabLayouts.clone();
       sl.renderedCrosstabLayouts.clear();
       final int rSize = renderedCrosstabLayouts.size();
-      for (int i = 0; i < rSize; i++)
-      {
-        final RenderedCrosstabLayout o = renderedCrosstabLayouts.get(i);
-        sl.renderedCrosstabLayouts.push(o.derive());
+      for ( int i = 0; i < rSize; i++ ) {
+        final RenderedCrosstabLayout o = renderedCrosstabLayouts.get( i );
+        sl.renderedCrosstabLayouts.push( o.derive() );
       }
       return sl;
-    }
-    catch (final CloneNotSupportedException e)
-    {
+    } catch ( final CloneNotSupportedException e ) {
       throw new IllegalStateException();
     }
   }
 
-  public void setRenderer(final Renderer renderer)
-  {
+  public void setRenderer( final Renderer renderer ) {
     this.renderer = renderer;
   }
 
-  protected boolean isDesignTime()
-  {
+  protected boolean isDesignTime() {
     return false;
   }
 
-  public Renderer getRenderer()
-  {
+  public Renderer getRenderer() {
     return renderer;
   }
 
@@ -1409,120 +1146,92 @@ public class DefaultOutputFunction extends AbstractFunction
    * @param band    the band to be printed.
    * @throws ReportProcessingException if an error occured during the layout computation.
    */
-  public void print(final ExpressionRuntime dataRow, final Band band) throws ReportProcessingException
-  {
-    renderer.add(band, dataRow);
+  public void print( final ExpressionRuntime dataRow, final Band band ) throws ReportProcessingException {
+    renderer.add( band, dataRow );
   }
 
-  protected void printEmptyRootLevelBand() throws ReportProcessingException
-  {
+  protected void printEmptyRootLevelBand() throws ReportProcessingException {
     renderer.addEmptyRootLevelBand();
   }
 
-  private void clearPendingPageStart(final ReportEvent event)
-  {
-    clearPendingPageStart(event, false);
+  private void clearPendingPageStart( final ReportEvent event ) {
+    clearPendingPageStart( event, false );
   }
 
-  private void clearPendingPageStart(final ReportEvent event, final boolean force)
-  {
-    pagebreakHandler.setReportState(event.getState());
-    try
-    {
-      if (renderer.clearPendingPageStart(pagebreakHandler))
-      {
+  private void clearPendingPageStart( final ReportEvent event, final boolean force ) {
+    pagebreakHandler.setReportState( event.getState() );
+    try {
+      if ( renderer.clearPendingPageStart( pagebreakHandler ) ) {
         // page started has been fired ...
         return;
       }
 
-      if (!force)
-      {
+      if ( !force ) {
         final boolean currentPageEmpty = renderer.isCurrentPageEmpty();
-        if (currentPageEmpty == false)
-        {
+        if ( currentPageEmpty == false ) {
           return;
         }
 
         final boolean validateResult = renderer.validatePages() != Renderer.LayoutResult.LAYOUT_UNVALIDATABLE;
-        if (validateResult == false)
-        {
+        if ( validateResult == false ) {
           return;
         }
       }
 
-      try
-      {
-        setCurrentEvent(event);
+      try {
+        setCurrentEvent( event );
         renderer.newPageStarted();
         clearedFooter = true;
-        updateHeaderArea(event.getState());
-      }
-      finally
-      {
+        updateHeaderArea( event.getState() );
+      } finally {
         clearCurrentEvent();
       }
-    }
-    catch (final ReportProcessingException e)
-    {
-      throw new InvalidReportStateException("Failed to update the page-header", e);
-    }
-    catch (final ContentProcessingException e)
-    {
-      throw new InvalidReportStateException("Failed to update the page-header", e);
-    }
-    finally
-    {
-      pagebreakHandler.setReportState(null);
+    } catch ( final ReportProcessingException e ) {
+      throw new InvalidReportStateException( "Failed to update the page-header", e );
+    } catch ( final ContentProcessingException e ) {
+      throw new InvalidReportStateException( "Failed to update the page-header", e );
+    } finally {
+      pagebreakHandler.setReportState( null );
     }
   }
 
-  public InlineSubreportMarker[] getInlineSubreports()
-  {
-    if (inlineSubreports.isEmpty())
-    {
+  public InlineSubreportMarker[] getInlineSubreports() {
+    if ( inlineSubreports.isEmpty() ) {
       return EMPTY_INLINE_SUBREPORT_MARKERS;
     }
-    return inlineSubreports.toArray(new InlineSubreportMarker[inlineSubreports.size()]);
+    return inlineSubreports.toArray( new InlineSubreportMarker[ inlineSubreports.size() ] );
   }
 
-  public void clearInlineSubreports(final SubReportProcessType inlineExecution)
-  {
+  public void clearInlineSubreports( final SubReportProcessType inlineExecution ) {
     final InlineSubreportMarker[] subreports = getInlineSubreports();
-    for (int i = subreports.length - 1; i >= 0; i--)
-    {
-      final InlineSubreportMarker subreport = subreports[i];
-      if (inlineExecution == subreport.getProcessType())
-      {
-        inlineSubreports.remove(i);
+    for ( int i = subreports.length - 1; i >= 0; i-- ) {
+      final InlineSubreportMarker subreport = subreports[ i ];
+      if ( inlineExecution == subreport.getProcessType() ) {
+        inlineSubreports.remove( i );
       }
     }
   }
 
-  public RenderedCrosstabLayout startRenderedCrosstabLayout()
-  {
+  public RenderedCrosstabLayout startRenderedCrosstabLayout() {
     final RenderedCrosstabLayout layout = new RenderedCrosstabLayout();
-    renderedCrosstabLayouts.push(layout);
+    renderedCrosstabLayouts.push( layout );
     return layout;
   }
 
-  public RenderedCrosstabLayout getCurrentRenderedCrosstabLayout()
-  {
+  public RenderedCrosstabLayout getCurrentRenderedCrosstabLayout() {
     return renderedCrosstabLayouts.peek();
   }
 
-  public void endRenderedCrosstabLayout()
-  {
+  public void endRenderedCrosstabLayout() {
     renderedCrosstabLayouts.pop();
   }
 
-  public void restart(final ReportState state) throws ReportProcessingException
-  {
-    final ReportEvent event = new ReportEvent(state, state.getEventCode());
-    clearPendingPageStart(event, true);
+  public void restart( final ReportState state ) throws ReportProcessingException {
+    final ReportEvent event = new ReportEvent( state, state.getEventCode() );
+    clearPendingPageStart( event, true );
   }
 
-  public boolean createRollbackInformation()
-  {
+  public boolean createRollbackInformation() {
     final Renderer commitableRenderer = getRenderer();
     commitableRenderer.createRollbackInformation();
     return true;

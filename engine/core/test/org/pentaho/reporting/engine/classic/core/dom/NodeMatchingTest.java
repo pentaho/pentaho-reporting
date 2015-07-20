@@ -32,26 +32,23 @@ import org.pentaho.reporting.engine.classic.core.filter.types.bands.ReportFooter
 import org.pentaho.reporting.engine.classic.core.filter.types.bands.ReportHeaderType;
 import org.pentaho.reporting.engine.classic.core.filter.types.bands.WatermarkType;
 
-public class NodeMatchingTest extends TestCase
-{
-  protected void setUp() throws Exception
-  {
+public class NodeMatchingTest extends TestCase {
+  protected void setUp() throws Exception {
     ClassicEngineBoot.getInstance().start();
   }
 
-  public void testMatchStandardElements() throws Exception
-  {
+  public void testMatchStandardElements() throws Exception {
     final MasterReport report = new MasterReport();
-    assertNotNull(report.getChildElementByType(ItemBandType.INSTANCE));
-    assertNotNull(report.getChildElementByType(NoDataBandType.INSTANCE));
-    assertNotNull(report.getChildElementByType(DetailsHeaderType.INSTANCE));
-    assertNotNull(report.getChildElementByType(DetailsFooterType.INSTANCE));
-    assertNotNull(report.getChildElementByType(GroupDataBodyType.INSTANCE));
-    assertNotNull(report.getChildElementByType(RelationalGroupType.INSTANCE));
-    assertNotNull(report.getChildElementByType(ReportHeaderType.INSTANCE));
-    assertNotNull(report.getChildElementByType(ReportFooterType.INSTANCE));
-    assertNotNull(report.getChildElementByType(PageHeaderType.INSTANCE));
-    assertNotNull(report.getChildElementByType(PageFooterType.INSTANCE));
-    assertNotNull(report.getChildElementByType(WatermarkType.INSTANCE));
+    assertNotNull( report.getChildElementByType( ItemBandType.INSTANCE ) );
+    assertNotNull( report.getChildElementByType( NoDataBandType.INSTANCE ) );
+    assertNotNull( report.getChildElementByType( DetailsHeaderType.INSTANCE ) );
+    assertNotNull( report.getChildElementByType( DetailsFooterType.INSTANCE ) );
+    assertNotNull( report.getChildElementByType( GroupDataBodyType.INSTANCE ) );
+    assertNotNull( report.getChildElementByType( RelationalGroupType.INSTANCE ) );
+    assertNotNull( report.getChildElementByType( ReportHeaderType.INSTANCE ) );
+    assertNotNull( report.getChildElementByType( ReportFooterType.INSTANCE ) );
+    assertNotNull( report.getChildElementByType( PageHeaderType.INSTANCE ) );
+    assertNotNull( report.getChildElementByType( PageFooterType.INSTANCE ) );
+    assertNotNull( report.getChildElementByType( WatermarkType.INSTANCE ) );
   }
 }

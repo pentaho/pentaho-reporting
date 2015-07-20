@@ -1,10 +1,5 @@
 package org.pentaho.reporting.engine.classic.core.layout.model;
 
-import java.awt.font.FontRenderContext;
-import java.awt.font.TextLayout;
-import java.text.AttributedCharacterIterator;
-import java.text.BreakIterator;
-
 import org.pentaho.reporting.engine.classic.core.ReportAttributeMap;
 import org.pentaho.reporting.engine.classic.core.layout.model.context.NodeLayoutProperties;
 import org.pentaho.reporting.engine.classic.core.layout.output.OutputProcessorFeature;
@@ -18,11 +13,14 @@ import org.pentaho.reporting.engine.classic.core.style.StyleSheet;
 import org.pentaho.reporting.engine.classic.core.style.TextStyleKeys;
 import org.pentaho.reporting.engine.classic.core.util.InstanceID;
 import org.pentaho.reporting.engine.classic.core.util.geom.StrictGeomUtility;
-import org.pentaho.reporting.libraries.base.util.DebugLog;
 import org.pentaho.reporting.libraries.resourceloader.ResourceManager;
 
-public class RenderableComplexText extends RenderNode
-{
+import java.awt.font.FontRenderContext;
+import java.awt.font.TextLayout;
+import java.text.AttributedCharacterIterator;
+import java.text.BreakIterator;
+
+public class RenderableComplexText extends RenderNode {
   private RichTextSpec richText;
   private int start;
   private int end;
@@ -31,13 +29,12 @@ public class RenderableComplexText extends RenderNode
   private boolean forceLinebreak;
   private ParagraphFontMetrics paragraphFontMetrics;
 
-  public RenderableComplexText(final StyleSheet styleSheet,
-                               final InstanceID instanceID,
-                               final ElementType elementType,
-                               final ReportAttributeMap<Object> attributes,
-                               final RichTextSpec text)
-  {
-    super(new NodeLayoutProperties(styleSheet, attributes, instanceID, elementType));
+  public RenderableComplexText( final StyleSheet styleSheet,
+                                final InstanceID instanceID,
+                                final ElementType elementType,
+                                final ReportAttributeMap<Object> attributes,
+                                final RichTextSpec text ) {
+    super( new NodeLayoutProperties( styleSheet, attributes, instanceID, elementType ) );
     this.text = text.getText();
     this.richText = text;
     this.forceLinebreak = false;
@@ -45,13 +42,12 @@ public class RenderableComplexText extends RenderNode
     this.end = text.length();
   }
 
-  public RenderableComplexText(final StyleSheet styleSheet,
-                               final InstanceID instanceID,
-                               final ElementType elementType,
-                               final ReportAttributeMap<Object> attributes,
-                               final String text)
-  {
-    super(new NodeLayoutProperties(styleSheet, attributes, instanceID, elementType));
+  public RenderableComplexText( final StyleSheet styleSheet,
+                                final InstanceID instanceID,
+                                final ElementType elementType,
+                                final ReportAttributeMap<Object> attributes,
+                                final String text ) {
+    super( new NodeLayoutProperties( styleSheet, attributes, instanceID, elementType ) );
     this.text = text;
     this.richText = null;
     this.forceLinebreak = false;
@@ -60,112 +56,94 @@ public class RenderableComplexText extends RenderNode
   }
 
 
-  public void computeMinimumChunkWidth(final OutputProcessorMetaData data,
-                                       final ResourceManager resourceManager)
-  {
-    if (getMinimumChunkWidth() != 0)
-    {
+  public void computeMinimumChunkWidth( final OutputProcessorMetaData data,
+                                        final ResourceManager resourceManager ) {
+    if ( getMinimumChunkWidth() != 0 ) {
       return;
     }
 
-    if (data.isFeatureSupported(OutputProcessorFeature.STRICT_COMPATIBILITY) == false &&
-         getStyleSheet().getBooleanStyleProperty(TextStyleKeys.WORDBREAK) == false)
-    {
+    if ( data.isFeatureSupported( OutputProcessorFeature.STRICT_COMPATIBILITY ) == false &&
+      getStyleSheet().getBooleanStyleProperty( TextStyleKeys.WORDBREAK ) == false ) {
       return;
     }
 
     long minimumChunkWidth = 0;
     BreakIterator wordInstance = BreakIterator.getWordInstance();
-    wordInstance.setText(text);
+    wordInstance.setText( text );
 
-    final boolean antiAliasing = RenderUtility.isFontSmooth(getStyleSheet(), data);
-    final FontRenderContext fontRenderContext = new FontRenderContext(null, antiAliasing, true);
+    final boolean antiAliasing = RenderUtility.isFontSmooth( getStyleSheet(), data );
+    final FontRenderContext fontRenderContext = new FontRenderContext( null, antiAliasing, true );
 
     int start = wordInstance.first();
-    for (int end = wordInstance.next(); end != BreakIterator.DONE; start = end, end = wordInstance.next())
-    {
-      String word = text.substring(start, end);
+    for ( int end = wordInstance.next(); end != BreakIterator.DONE; start = end, end = wordInstance.next() ) {
+      String word = text.substring( start, end );
       AttributedCharacterIterator attributedCharacterIterator =
-          new RichTextSpecProducer(data, resourceManager).computeText(this, word).createAttributedCharacterIterator();
-      TextLayout t = new TextLayout(attributedCharacterIterator, fontRenderContext);
+        new RichTextSpecProducer( data, resourceManager ).computeText( this, word ).createAttributedCharacterIterator();
+      TextLayout t = new TextLayout( attributedCharacterIterator, fontRenderContext );
       double width = t.getVisibleAdvance();
-      final long wordMinChunkWidth = StrictGeomUtility.toInternalValue(width);
-      minimumChunkWidth = Math.max(minimumChunkWidth, wordMinChunkWidth);
+      final long wordMinChunkWidth = StrictGeomUtility.toInternalValue( width );
+      minimumChunkWidth = Math.max( minimumChunkWidth, wordMinChunkWidth );
     }
 
-    setMinimumChunkWidth(minimumChunkWidth);
+    setMinimumChunkWidth( minimumChunkWidth );
   }
 
-  public int getNodeType()
-  {
+  public int getNodeType() {
     return LayoutNodeTypes.TYPE_NODE_COMPLEX_TEXT;
   }
 
-  public String getRawText()
-  {
+  public String getRawText() {
     return text;
   }
 
-  public RichTextSpec getRichText()
-  {
-    if (richText == null)
-    {
+  public RichTextSpec getRichText() {
+    if ( richText == null ) {
       // code-smell - we probably should introduce a "ProcessedComplexText" type to distinguish between
       // raw text and text that has been processed by the CanvasMinor-step.
-      throw new IllegalStateException("Calling 'getRichText' is only valid after layouting is complete.");
+      throw new IllegalStateException( "Calling 'getRichText' is only valid after layouting is complete." );
     }
-    return richText.substring(start, end);
+    return richText.substring( start, end );
   }
 
-  public TextLayout getTextLayout()
-  {
+  public TextLayout getTextLayout() {
     return textLayout;
   }
 
-  public void setTextLayout(final TextLayout textLayout)
-  {
+  public void setTextLayout( final TextLayout textLayout ) {
     this.textLayout = textLayout;
   }
 
-  public void setForceLinebreak(final boolean forceLinebreak)
-  {
+  public void setForceLinebreak( final boolean forceLinebreak ) {
     this.forceLinebreak = forceLinebreak;
   }
 
-  public boolean isForceLinebreak()
-  {
+  public boolean isForceLinebreak() {
     return forceLinebreak;
   }
 
-  public RenderableComplexText merge(final RenderableComplexText suffix)
-  {
-    if (richText != suffix.richText)
-    {
-      throw new IllegalStateException("Not from the same source");
+  public RenderableComplexText merge( final RenderableComplexText suffix ) {
+    if ( richText != suffix.richText ) {
+      throw new IllegalStateException( "Not from the same source" );
     }
 
-    final RenderableComplexText text = (RenderableComplexText) derive(true);
+    final RenderableComplexText text = (RenderableComplexText) derive( true );
     text.end = suffix.end;
-    text.setMinimumChunkWidth(Math.max (getMinimumChunkWidth(), suffix.getMinimumChunkWidth()));
+    text.setMinimumChunkWidth( Math.max( getMinimumChunkWidth(), suffix.getMinimumChunkWidth() ) );
     return text;
   }
 
-  public boolean isSameSource(final RenderableComplexText suffix)
-  {
-    if (richText != suffix.richText)
-    {
+  public boolean isSameSource( final RenderableComplexText suffix ) {
+    if ( richText != suffix.richText ) {
       return false;
     }
     return true;
   }
 
-  public void setParagraphFontMetrics(final ParagraphFontMetrics paragraphFontMetrics)
-  {
+  public void setParagraphFontMetrics( final ParagraphFontMetrics paragraphFontMetrics ) {
     this.paragraphFontMetrics = paragraphFontMetrics;
   }
 
-  public ParagraphFontMetrics getParagraphFontMetrics()
-  {
+  public ParagraphFontMetrics getParagraphFontMetrics() {
     return paragraphFontMetrics;
   }
 }

@@ -27,8 +27,7 @@ import org.pentaho.reporting.libraries.base.util.ObjectUtilities;
  * @author Thomas Morgner
  * @deprecated This should be done using Style-Expressions.
  */
-public class HideNullValuesFunction extends AbstractElementFormatFunction
-{
+public class HideNullValuesFunction extends AbstractElementFormatFunction {
   /**
    * The name of the data-row column that is checked for null-values.
    */
@@ -37,8 +36,7 @@ public class HideNullValuesFunction extends AbstractElementFormatFunction
   /**
    * Default Constructor.
    */
-  public HideNullValuesFunction()
-  {
+  public HideNullValuesFunction() {
   }
 
   /**
@@ -46,8 +44,7 @@ public class HideNullValuesFunction extends AbstractElementFormatFunction
    *
    * @return The field name.
    */
-  public String getField()
-  {
+  public String getField() {
     return field;
   }
 
@@ -56,41 +53,34 @@ public class HideNullValuesFunction extends AbstractElementFormatFunction
    *
    * @param field the field name.
    */
-  public void setField(final String field)
-  {
+  public void setField( final String field ) {
     this.field = field;
   }
 
-  protected boolean evaluateElement(final ReportElement e)
-  {
-    if (ObjectUtilities.equal(e.getName(), getElement()))
-    {
+  protected boolean evaluateElement( final ReportElement e ) {
+    if ( ObjectUtilities.equal( e.getName(), getElement() ) ) {
       final boolean visible = computeVisibility();
-      e.getStyle().setStyleProperty(ElementStyleKeys.VISIBLE, visible);
+      e.getStyle().setStyleProperty( ElementStyleKeys.VISIBLE, visible );
       return true;
     }
     return false;
   }
-  
+
   /**
    * Computes the visiblity of the specified element.
    *
    * @return true, if the element should be visible, false otherwise.
    */
-  protected boolean computeVisibility()
-  {
-    final Object value = getDataRow().get(getField());
-    if (value == null)
-    {
+  protected boolean computeVisibility() {
+    final Object value = getDataRow().get( getField() );
+    if ( value == null ) {
       return false;
     }
-    if (value instanceof String)
-    {
+    if ( value instanceof String ) {
       final String strValue = (String) value;
       return strValue.trim().length() > 0;
     }
-    if (value instanceof Number)
-    {
+    if ( value instanceof Number ) {
       final Number numValue = (Number) value;
       return numValue.doubleValue() != 0;
     }

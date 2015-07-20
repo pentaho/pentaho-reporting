@@ -22,14 +22,12 @@ package org.pentaho.reporting.engine.classic.core.util.beans;
  *
  * @author Thomas Morgner
  */
-public class BooleanValueConverter implements ValueConverter
-{
+public class BooleanValueConverter implements ValueConverter {
 
   /**
    * Creates a new value converter.
    */
-  public BooleanValueConverter()
-  {
+  public BooleanValueConverter() {
   }
 
   /**
@@ -38,17 +36,14 @@ public class BooleanValueConverter implements ValueConverter
    * @param o the attribute ({@link Boolean} expected).
    * @return A string representing the {@link Boolean} value.
    */
-  public String toAttributeValue(final Object o) throws BeanException
-  {
-    if (o == null)
-    {
+  public String toAttributeValue( final Object o ) throws BeanException {
+    if ( o == null ) {
       throw new NullPointerException();
     }
-    if (o instanceof Boolean)
-    {
+    if ( o instanceof Boolean ) {
       return o.toString();
     }
-    throw new BeanException("Failed to convert object of type " + o.getClass() + ": Not a boolean.");
+    throw new BeanException( "Failed to convert object of type " + o.getClass() + ": Not a boolean." );
   }
 
   /**
@@ -57,12 +52,10 @@ public class BooleanValueConverter implements ValueConverter
    * @param s the string.
    * @return a {@link Boolean}.
    */
-  public Object toPropertyValue(final String s)
-  {
-    if (s == null)
-    {
+  public Object toPropertyValue( final String s ) {
+    if ( s == null ) {
       throw new NullPointerException();
     }
-    return Boolean.valueOf(s.trim());
+    return Boolean.valueOf( s.trim() );
   }
 }

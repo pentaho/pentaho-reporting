@@ -19,20 +19,16 @@ package org.pentaho.reporting.engine.classic.core.wizard;
 
 import java.io.Serializable;
 
-public class MetaSelector implements Serializable
-{
+public class MetaSelector implements Serializable {
   private String domain;
   private String name;
   private Object value;
 
-  public MetaSelector(final String namespace, final String name, final Object value)
-  {
-    if (namespace == null)
-    {
+  public MetaSelector( final String namespace, final String name, final Object value ) {
+    if ( namespace == null ) {
       throw new NullPointerException();
     }
-    if (name == null)
-    {
+    if ( name == null ) {
       throw new NullPointerException();
     }
 
@@ -41,18 +37,15 @@ public class MetaSelector implements Serializable
     this.value = value;
   }
 
-  public String getDomain()
-  {
+  public String getDomain() {
     return domain;
   }
 
-  public String getName()
-  {
+  public String getName() {
     return name;
   }
 
-  public Object getValue()
-  {
+  public Object getValue() {
     return value;
   }
 }
